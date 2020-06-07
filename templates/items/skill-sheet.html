@@ -1,0 +1,49 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+    <div class="item-header flexrow" style="flex: 0 0 110px;">
+        <div class="item-property" style="display: flex; flex-direction: column; flex: 1;">
+            <div class="item-name" style="display: flex; flex-direction: row; height: 24px;">
+                <input class="item-class" style="flex: 1;" type="text" name="name" value="{{item.name}}" placeholder="name"/>
+                {{#if isSpecialized}}
+                    <span>/</span>
+                    <input class="item-subclass" style="flex: 1;" type="text" name="data.specialization" value="{{data.specialization}}" placeholder="specialization"/>
+                {{/if}}
+                {{#if hasOwner}}
+                <label >Value</label>
+                <input type="text" name="data.value" value="{{data.value}}"/>
+            {{else}}
+                <label>Base</label>
+                <input type="text" name="data.base" value="{{data.base}}"/>
+            {{/if}}
+            </div>
+            <div class="skill-value" style="display: flex; flex-direction: row;">
+
+            </div>
+            
+            <div class="skill-attributes" style="display: block;" data-set="properties">
+                {{#each _properties as |property key|}}
+                    <span class="toggle-switch {{#if property.isEnabled}} switched-on {{/if}}" data-property="{{property.id}}">{{property.name}}</span>
+                    <div style="display: none;">
+                        <input id="properties-{{property.id}}" type="checkbox" name="data.properties.{{property.id}}" {{checked property.isEnabled}}/>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+        <img class="profile-img" style="flex: 0 0 100px;" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="100" width="100"/>
+    </div>
+
+    
+    <!-- <div class="skill-attributes" style="flex: 0 0 25px;" data-set="eras">
+        {{#each _eras as |era key|}}
+            <span class="toggle-switch {{#if era.isEnabled}} switched-on {{/if}}" data-property="{{era.id}}">{{era.name}}</span>
+            <div style="display: none;">
+                <input id="eras-{{era.id}}" type="checkbox" name="data.eras.{{era.id}}" {{checked era.isEnabled}}/>
+            </div>
+        {{/each}}
+    </div> -->
+
+    
+    <div class="form-group" style="display: flex;border: 2px groove #eeede0;padding: 0 5px;">
+        {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
+    </div>
+</form>

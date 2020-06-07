@@ -1,0 +1,45 @@
+{
+	"name": "CoC7",
+	"title": "The Call of Cthulhu 7th edition",
+	"description": "The Call of Cthulhu 7th edition simple game system",
+	"version": "0.1.6",
+	"minimumCoreVersion": "0.5.2",
+	"compatibleCoreVersion": "0.6.0",
+	"templateVersion": 1,
+	"author": "HavelockV",
+	"esmodules": ["module/coc7.js"],
+	"styles": ["styles/coc7.css"],
+	"packs": [
+		{
+			"label": "Skills",
+			"entity": "Item",
+			"name": "skills",
+			"path": "./packs/skills.db",
+			"system": "CoC7"
+		},
+		{
+			"label": "Weapons",
+			"entity": "Item",
+			"name": "weapons",
+			"path": "./packs/weapons.db",
+			"system": "CoC7"
+		},
+		{
+			"label": "Examples",
+			"entity": "Actor",
+			"name": "examples",
+			"path": "./packs/examples.db",
+			"system": "CoC7"
+		}
+	],
+	"languages": [],
+	"socket": true,
+	"gridDistance": 5,
+	"gridUnits": "ft",
+	"primaryTokenAttribute": "health",
+	"secondaryTokenAttribute": "power",
+	"url": "https://github.com/HavlockV/CoC7-FoundryVTT/",
+	"manifest": "https://github.com/HavlockV/CoC7-FoundryVTT/raw/master/system.json",
+	"download": "https://github.com/HavlockV/CoC7-FoundryVTT/archive/0.1.6.zip"
+  }
+  

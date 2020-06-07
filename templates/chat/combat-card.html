@@ -1,0 +1,24 @@
+<div class="coc7 chat-card combat-card" data-actor-id="{{actor._id}}" data-item-id="{{item._id}}"
+     {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
+    <header class="card-header flexrow">
+        <img style="flex: none;" src="{{item.img}}" title="{{item.name}}" width="36" height="36"/>
+        <h3 style="text-align: center;font-weight: bolder;"class="item-name">{{item.name}}/{{item.data.value}}%</h3>
+    </header>
+
+    <div class="card-content">
+        {{{item.data.description.value}}}
+    </div>
+
+    <div class="card-buttons">
+        <button data-action="regular">Regular</button>
+        <button data-action="hard">Hard</button>
+        <button data-action="extreme">Extreme</button>
+    </div>
+
+    <div class="drop-zone">
+        <button data-action="dropped">DropZone</button>
+    </div>
+
+    <footer class="card-footer">
+    </footer>
+</div>

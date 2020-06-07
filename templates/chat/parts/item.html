@@ -1,0 +1,9 @@
+<div class="flex1 roll-protagonist" draggable="true" data-item-id="{{item.id}}" data-actor-id="{{actor.id}}" data-value="{{item.data.data.value}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
+    <!-- <img style="flex: none;" src="{{item.img}}" title="{{item.name}}" width="12" height="12/"/> -->
+    <!-- TODO : simplier if then else-->
+    {{#if item.data.data.properties.special}}
+    <span class="flex1" style="font-size: smaller;">{{#if actor.isToken}}(T){{token.name}}{{else}}{{actor.name}}{{/if}} - {{item.data.data.specialization}}({{item.name}}): {{item.data.data.value}}</span>
+    {{else}}
+    <span class="flex1" style="font-size: smaller;">{{#if actor.isToken}}(T){{token.name}}{{else}}{{actor.name}}{{/if}} - {{item.name}}: {{item.data.data.value}}</span>
+    {{/if}}
+</div>

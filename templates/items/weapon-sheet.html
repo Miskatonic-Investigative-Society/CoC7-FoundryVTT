@@ -1,0 +1,132 @@
+<form class="{{cssClass}} flexcol" style="border: groove 2px;" autocomplete="off">
+	<div class="item-header flexrow" style="flex: 0 0 110px;">
+		<div class="item-property" style="display: flex; flex-direction: column; flex: 1;">
+			<div class="item-name" style="display: flex; flex-direction: row; height: 24px;">
+				<input class="item-class" style="flex: 1;" type="text" name="name" value="{{item.name}}" placeholder="name"/>
+
+				<div class="flexrow" style="flex: 2;flex-wrap: nowrap;">
+				{{#if hasOwner}}
+					<select class="attribute-dtype" name="data.skill.main.id">
+						{{#select data.skill.main.id}}
+                        {{#each combatSkill as |cbs|}}
+                        	<option value="{{cbs.id}}">{{#if cbs.data.data.properties.special}}{{cbs.data.data.specialization}}-{{/if}}{{cbs.name}}</option>
+                        {{/each}}
+                        {{/select}}
+					</select>
+
+					{{#if data.properties.auto}}
+						<select class="attribute-dtype" name="data.skill.alternativ.id">
+							{{#select data.skill.alternativ.id}}
+							{{#each combatSkill as |cbs|}}
+								<option value="{{cbs.id}}">{{#if cbs.data.data.properties.special}}{{cbs.data.data.specialization}}-{{/if}}{{cbs.name}}</option>
+							{{/each}}
+							{{/select}}
+						</select>
+					{{/if}}
+				{{else}}
+					<input class="item-skill" style="flex: 1;overflow: hidden;" type="text" name="data.skill.main.name" value="{{data.skill.main.name}}" placeholder="Main skill"/>
+					{{#if usesAlternateSkill}}
+					<input class="item-skill" style="flex: 1;overflow: hidden;" type="text" name="data.skill.alternativ.name" value="{{data.skill.alternativ.name}}" placeholder="Alt. skill"/>
+					{{/if}}
+				{{/if}}
+				</div>
+
+			</div>
+
+			<div style="display: flex; flex-direction: row; height: 24px;">
+				{{#if data.properties.rngd}}
+					<div style="display: flex; flex: 0 0 50%;">
+						<label>Range:</label>
+						<input class="item-skill" style="flex: 1;" type="text" name="data.range.normal.value" value="{{data.range.normal.value}}" placeholder="Norm."/>
+						{{#if data.properties.xplv}}
+							<input class="item-skill" style="flex: 1;" type="text" name="data.range.long.value" value="{{data.range.long.value}}" placeholder="Long"/>
+							<input class="item-skill" style="flex: 1;" type="text" name="data.range.extreme.value" value="{{data.range.extreme.value}}" placeholder="Xtrm"/>
+						{{/if}}
+					</div>
+					<div style="display: flex; flex: 0 0 50%;">
+						<label>Damage:</label>
+						<input class="item-skill" style="flex: 1;" type="text" name="data.range.normal.damage" value="{{data.range.normal.damage}}" placeholder="0"/>
+						{{#if data.properties.xplv}}
+							<input class="item-skill" style="flex: 1;" type="text" name="data.range.long.damage" value="{{data.range.long.damage}}" placeholder="0"/>
+							<input class="item-skill" style="flex: 1;" type="text" name="data.range.extreme.damage" value="{{data.range.extreme.damage}}" placeholder="0"/>
+						{{/if}}
+					</div>
+				{{else}}
+					{{#if data.properties.blst}}
+						<div style="display: flex; flex: 0 0 50%;">
+							<label>Radius:</label>
+							<input class="item-skill" style="flex: 1;" type="text" name="data.range.normal.value" value="{{data.range.normal.value}}" placeholder="Radius"/>
+						</div>
+					{{else}}
+						<span style="flex: 0 0 50%; height: 22px; padding: 2px 3px;">Touch</span>
+					{{/if}}
+					<label>Damage:</label>
+					<input class="item-skill" style="flex: 1;" type="text" name="data.range.normal.damage" value="{{data.range.normal.damage}}" placeholder="0"/>
+				{{/if}}
+			</div>
+
+			<div class="skill-attributes" style="display: block;" data-set="properties">
+				{{#each _properties as |property key|}}
+					<span class="toggle-switch {{#if property.isEnabled}} switched-on {{/if}}" data-property="{{property.id}}">{{property.name}}</span>
+					<div style="display: none;">
+						<input id="properties-{{property.id}}" type="checkbox" name="data.properties.{{property.id}}" {{checked property.isEnabled}}/>
+					</div>
+				{{/each}}
+			</div>
+		
+		</div>
+
+		<img class="profile-img" style="flex: 0 0 100px;" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="100" width="100"/>
+	</div>
+	
+	{{!-- Sheet Tab Navigation --}}
+	<nav class="sheet-tabs tabs" data-group="primary">
+		<a class="item" data-tab="details">Details</a>
+		<a class="item" data-tab="description">Description</a>
+	</nav>
+
+	{{!-- Sheet Body --}}
+	<section class="sheet-body">
+		<div class="tab skills flexcol active" data-group="primary" data-tab="details">
+			<div class="skill-attributes" style="flex: 0 0 25px;" data-set="eras">
+				{{#each _eras as |era key|}}
+					<span class="toggle-switch {{#if era.isEnabled}} switched-on {{/if}}" data-property="{{era.id}}">{{era.name}}</span>
+					<div style="display: none;">
+						<input id="eras-{{era.id}}" type="checkbox" name="data.eras.{{era.id}}" {{checked era.isEnabled}}/>
+					</div>
+				{{/each}}
+			</div>
+
+			<div class="flexrow" style="flex: 0 0 auto;">
+				<label>Malfunction :</label>
+				<input class="wpn-malfunction" style="flex: 0 0 40px;" type="text" name="data.malfunction" value="{{data.malfunction}}" placeholder="-"/>
+				<label>  Uses/Round :</label>
+				<input class="wpn-upr-norm" style="flex: 0 0 40px;" type="text" name="data.usesPerRound.normal" value="{{data.usesPerRound.normal}}" placeholder="-"/>
+				<label>  Max :</label>
+				<input class="wpn-upr-max" style="flex: 0 0 40px;" type="text" name="data.usesPerRound.max" value="{{data.usesPerRound.max}}" placeholder="-"/>
+				<label>  Bullets in Mag :</label>
+				<input class="wpn-bim" style="flex: 0 0 40px;" type="text" name="data.bullets" value="{{data.bullets}}" placeholder="-"/>
+			</div>
+			
+			{{#if data.properties.spcl}}
+			<label>Special</label>
+				<div class="special" style="display: flex;border: 2px groove #eeede0;padding: 0 5px;">
+					{{editor content=data.description.special target="data.description.special" button=true owner=owner editable=editable}}
+				</div>
+			{{/if}}
+
+			<label>price</label>
+			<div class="flexrow">
+				{{#each _eras as |era key|}}
+					{{#if era.isEnabled}}
+						<span>{{era.name}}</span> : <input class="item-price" type="text" name="data.price.{{era.id}}" value="{{era.price}}" placeholder="0"/>
+					{{/if}}
+				{{/each}}
+			</div>
+		</div>
+
+		<div class="tab description flexcol" style="display: flex;border: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="description">
+			{{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
+		</div>
+	</section>
+</form>

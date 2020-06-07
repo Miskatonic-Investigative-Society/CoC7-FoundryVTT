@@ -1,0 +1,25 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+    <header class="sheet-header flexrow">
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="100" width="100"/>
+        <div class="header-fields">
+            <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+            <div class="resource">
+            	<label>Quantity</label>
+                <input type="text" name="data.quantity" value="{{data.quantity}}" data-dtype="Number"/>
+            </div>
+            <div class="resource">
+            	<label>Weight</label>
+                <input type="text" name="data.weight" value="{{data.weight}}" data-dtype="Number"/>
+            </div>
+        </div>
+    </header>
+
+
+
+        {{!-- Description Tab --}}
+        <div>
+            {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+        </div>
+
+</form>

@@ -1,0 +1,214 @@
+{
+	"Actor": {
+		"types": [
+			"character",
+			"npc",
+			"creature"
+		],
+		"templates": {
+			"characteristics": {
+				"characteristics": {
+					"str": {
+						"value": 0,
+						"short": "STR",
+						"label": "Strengh"
+					},
+					"con": {
+						"value": 0,
+						"short": "CON",
+						"label": "Constitution"
+					},
+					"siz": {
+						"value": 0,
+						"short": "SIZ",
+						"label": "Size"
+					},
+					"dex": {
+						"value": 0,
+						"short": "DEX",
+						"label": "Dexterity"
+					},
+					"app": {
+						"value": 0,
+						"short": "APP",
+						"label": "Appearance"
+					},
+					"int": {
+						"value": 0,
+						"short": "INT",
+						"label": "Intelligence"
+					},
+					"pow": {
+						"value": 0,
+						"short": "POW",
+						"label": "Power"
+					},
+					"edu": {
+						"value": 0,
+						"short": "EDU",
+						"label": "Education"
+					}
+				}
+			},
+			"attribs": {
+				"attribs": {
+					"hp": {
+						"value": -1,
+						"max": -1,
+						"short": "HP",
+						"label": "Hit points"
+					},
+					"mp": {
+						"value": -1,
+						"max": -1,
+						"short": "HP",
+						"label": "Magic points"
+					},
+					"lck": {
+						"value": 0,
+						"max": 0,
+						"short": "LCK",
+						"label": "Luck"
+					},
+					"san": {
+						"value": -1,
+						"max": 99,
+						"short": "SAN",
+						"label": "Sanity"
+					},
+					"mov": {
+						"value": "auto",
+						"short": "MOV",
+						"label": "Movement rate"
+					},
+					"db": {
+						"value": "auto",
+						"short": "DB",
+						"label": "Damage bonus"
+					},
+					"build": {
+						"value" : "auto",
+						"short": "BLD",
+						"label": "Build"
+					}
+				}
+			},
+			"status": {
+				"status": {
+					"criticalWounds": {
+						"type": "Boolean",
+						"value": "false"
+					},
+					"unconscious": {
+						"type": "Boolean",
+						"value": "false"
+					},
+					"dying": {
+						"type": "Boolean",
+						"value": "false"
+					},
+					"tempoInsane": {
+						"type": "boolean",
+						"value": "false"
+					},
+					"indefInsane": {
+						"type": "boolean",
+						"value": "false"
+					}
+				}
+			},
+			"biography": {
+				"personalDescription": {
+					"type": "string",
+					"value": ""
+				}
+			}
+		},
+		"character": {
+			"templates": [
+				"characteristics",
+				"attribs",
+				"status",
+				"biography"
+			],
+			"infos":{
+				"occupation" : "",
+				"age": "",
+				"sex": "",
+				"residence": "",
+				"birthplace": ""
+			},
+			"flags": {}
+		},
+
+		"npc":{
+			"templates": [
+				"characteristics",
+				"attribs",
+				"status",
+				"biography"
+			],
+			"infos":{
+				"occupation" : "",
+				"age": "",
+				"sex": ""
+			},
+			"flags": {}
+		},
+
+		"creature":{
+			"templates": [
+				"characteristics",
+				"attribs",
+				"status",
+				"biography"
+			],
+			"infos":{
+				"age": ""
+			},
+			"flags": {}
+		}
+	},
+	"Item": {
+		"types": [
+			"item", "weapon", "skill"
+		],
+		"item": {
+			"description": "",
+			"quantity": 1,
+			"weight": 0,
+			"attributes": {}
+		},
+
+		"weapon": {
+			"description": {"value":"", "chat": "", "special": ""},
+			"wpnType": "",
+			"skill": { 
+				"main": { "name": "", "id": ""},
+				"alternativ": { "name": "", "id": ""}
+			},
+			"range": {
+				"normal": { "value" : 0, "units" : "", "damage": ""},
+				"long": { "value" : 0, "units" : "", "damage": ""},
+				"extreme": { "value" : 0, "units" : "", "damage": ""}
+			},
+			"usesPerRound":{ "normal": "", "max": ""},
+			"bullets":"",
+			"malfunction": "",
+			"properties": {},
+			"eras": {},
+			"price": {}
+		},
+
+		"skill": {
+			"specialization": "",
+			"description": {"value":"", "opposingDifficulty":"", "pushedFaillureConsequences":"", "chat": ""},
+			"base": 0,
+			"value": -1,
+			"attributes": {},
+			"properties": {},
+			"eras": {},
+			"flags": {}
+		}
+	}
+}
