@@ -22,7 +22,7 @@ Compendium 'Weapons' contains a single test weapon.
 
 version 0.1.6 (07/06):
 
-* Lock mechanism to avoid inadvertent actor modification (NPC only so far).
+* Lock mechanism to avoid inadvertent actor modification (NPC only so far).  
 * Implementation of basic NPC sheet.
 * Using basic NPC sheet for creture.
 * Bug corretion :
