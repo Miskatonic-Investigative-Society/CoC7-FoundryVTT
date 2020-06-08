@@ -214,6 +214,7 @@
 .coc7.sheet.npc .section-header{
     border: 1px;
     background-color: grey;
+    height: 16px;
 }
 .coc7.sheet .skills-list span {
     flex: 0 0 80px;
