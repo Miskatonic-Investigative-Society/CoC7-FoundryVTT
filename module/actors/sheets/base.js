@@ -90,6 +90,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		event.preventDefault();
 		const isLocked = this.actor.locked
 		this.actor.locked = isLocked ? false : true;
+		const test = await this.actor.createSkill( "my awsome skill", 45);
 	}
 
 	async _onRollAttribTest( event){
