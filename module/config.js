@@ -16,6 +16,18 @@ COC7.eras = {
 	"mdrn": "Modern"
 };
 
+
+COC7.characteristics = {
+	"str" : "CoC7.CharacStr",
+	"con" : "CoC7.CharacCon",
+	"siz" : "CoC7.CharacSiz",
+	"dex" : "CoC7.CharacDex",
+	"app" : "CoC7.CharacApp",
+	"int" : "CoC7.CharacInt",
+	"pow" : "CoC7.CharacPow",
+	"edu" : "CoC7.CharacEdu"
+}
+
 /**
  * The set of Skills attributes used within the system
  * @type {Object}
@@ -74,3 +86,5 @@ COC7.formula.actorsheet = {
 	"@POW": "this.actor.data.data.characteristics.pow.value",
 	"@EDU": "this.actor.data.data.characteristics.edu.value"
 }
+
+COC7.newSkillName = "new skill";
