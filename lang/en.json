@@ -1,0 +1,39 @@
+{
+"CoC7.STR": "STR",
+"CoC7.Strengh": "TestStrengh",
+"CoC7.CON": "CON",
+"CoC7.Constitution": "Constitution",
+"CoC7.SIZ": "SIZ",
+"CoC7.Size": "Size",
+"CoC7.DEX": "DEX",
+"CoC7.Dexterity": "Dexterity",
+"CoC7.APP": "APP",
+"CoC7.Appearance": "Appearance",
+"CoC7.INT": "INT",
+"CoC7.Intelligence": "Intelligence",
+"CoC7.POW": "POW",
+"CoC7.Power": "Power",
+"CoC7.EDU": "EDU",
+"CoC7.Education": "Education",
+
+
+
+"CoC7.Name": "Name",
+"CoC7.Occupation": "Occupation",
+"CoC7.Age": "Age",
+"CoC7.Sex": "Sex",
+"CoC7.Residence": "Residence",
+"CoC7.Birthplace": "Birthplace",
+"CoC7.HitPoints": "Hit Points :",
+"CoC7.MagicPoints": "Magic Points :",
+"CoC7.Sanity": "Sanity :",
+"CoC7.Luck": "Luck :",
+"CoC7.Movement": "Movement",
+"CoC7.BonusDamage": "Bonus Damage",
+"CoC7.Build": "Build",
+"CoC7.Skills": "Skills",
+"CoC7.Combat": "Combat",
+"CoC7.Possession": "Possession",
+"CoC7.Background": "Background"
+
+}

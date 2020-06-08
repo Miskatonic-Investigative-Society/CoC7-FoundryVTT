@@ -32,7 +32,13 @@
 			"system": "CoC7"
 		}
 	],
-	"languages": [],
+	"languages": [
+		{
+		  "lang": "en",
+		  "name": "English",
+		  "path": "lang/en.json"
+		}
+	  ],
 	"socket": true,
 	"gridDistance": 5,
 	"gridUnits": "ft",
