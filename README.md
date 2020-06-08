@@ -20,6 +20,11 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.1.7 :
+
+* You can add skills directly from NPC/Creature sheet, without the need to pull them from compendium or items.
+* Starting to implement localization.
+
 version 0.1.6 (07/06):
 
 * Lock mechanism to avoid inadvertent actor modification (NPC only so far).  
