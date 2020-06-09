@@ -100,8 +100,14 @@
 	<section class="sheet-body">
 		
 		{{!-- Skills Tab --}}
-		<div class="section-header flexrow"> {{localize 'CoC7.Skills'}} </div>
-		<div class="skills flexrow" style="padding-top: 1px;border-bottom: 2px groove;">
+		<div class="section-header flexrow"> 
+			<h4 class="flex1" >{{localize 'CoC7.Skills'}}</h4>
+			<div style="flex: 0 0 14px;">
+				<a class="addskill" title="Add Skill"><i class="fas fa-plus-circle"></i></a>
+			</div>
+		</div>
+  
+    <div class="skills flexrow" style="padding-top: 1px;border-bottom: 2px groove;">
 			{{> "systems/CoC7/templates/actors/parts/npc-skills.html"}}
 		</div>
 		

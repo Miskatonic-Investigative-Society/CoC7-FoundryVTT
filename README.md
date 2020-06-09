@@ -20,9 +20,14 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.1.7 :
+
+* You can add skills directly from NPC/Creature sheet, without the need to pull them from compendium or items.
+* Starting to implement localization.
+
 version 0.1.6 (07/06):
 
-* Lock mechanism to avoid inadvertent actor modification (NPC only so far).
+* Lock mechanism to avoid inadvertent actor modification (NPC only so far).  
 * Implementation of basic NPC sheet.
 * Using basic NPC sheet for creture.
 * Bug corretion :
@@ -61,6 +66,7 @@ Version 0.1.3 :
 * [ ] Correcting bugs.  
 * [x] Implement luck rolls.
 * [ ] Implementing NPC and Creatures (with automatic and average carac/skill calculation).
+* [ ] Implementing creations of skills directly from the sheets.
 * [ ] Implementing localization.
 * [ ] Working on CSS/HTML to improve the look.  
 * [ ] Improving the combat tab, by adding combat skill to the weapon list.  
@@ -69,4 +75,4 @@ Version 0.1.3 :
 * [x] Implementing pushed rolls.  
 * [ ] Implementing advanced rolls (opposed, combined etc…).  
 * [ ] Implementing car chases.  
-* [ ] Localization.
+* [ ] Automation of character creation.

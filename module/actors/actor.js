@@ -2,7 +2,7 @@
 import { COC7 } from '../config.js'
 
 /**
- * Extend the base Actor class to implement additional logic specialized for D&D5e.
+ * Extend the base Actor class to implement additional logic specialized for CoC 7th.
  */
 export class CoCActor extends Actor {
 
@@ -10,18 +10,36 @@ export class CoCActor extends Actor {
     super(...args);
   }
 
-  createTokenActor( baseActor, token){
-    return super.createTokenActor( baseActor, token);
-  }
-
-  static preCreateToken( scene, actor, options, id){
-    let foo = "azerazer";
-  }
-
-  
   /** @override */
-  async createOwnedItem(itemData, options){
-    return super.createOwnedItem(itemData, options);
+  async createSkill( skillName, value, showSheet = false){
+    const data = {  
+      name: skillName,
+      type: "skill",
+      data: { 
+        "value": value,
+        properties: {
+          special: false,
+          rarity: false,
+          push: true,
+          combat: false,
+          shortlist: false
+        }
+      }
+    };
+    const created = await this.createEmbeddedEntity("OwnedItem", data, { renderSheet: showSheet});
+    return created;
+  }
+
+  async createEmptySkill( showSheet = false){
+    if( !this.getSkillIdByName(COC7.newSkillName)) return this.createSkill( COC7.newSkillName, null, showSheet);
+    let index=0;
+    let skillName = COC7.newSkillName + " " + index;
+    while( this.getSkillIdByName(skillName)){
+      index++;
+      skillName = COC7.newSkillName  + " " + index;
+    }
+
+    return this.createSkill( skillName, null, showSheet);
   }
 
   /**
@@ -35,8 +53,10 @@ export class CoCActor extends Actor {
   async createEmbeddedEntity(embeddedName, data, options){
     switch( data.type){
       case( "skill"):
-        if( data.data.base != data.data.value) {
-          data.data.value = data.data.base;
+        if( data.data.base){
+          if( data.data.base != data.data.value) {
+            data.data.value = data.data.base;
+          }
         }
 
         if( isNaN(Number(data.data.value)) ) {
@@ -50,7 +70,7 @@ export class CoCActor extends Actor {
           if( value) data.data.value = Math.floor(value);
         }
 
-        if( !this.getSkillByName(data.name))
+        if( !this.getSkillIdByName(data.name))
         {
           return super.createEmbeddedEntity(embeddedName, data, options);
         } 
@@ -61,7 +81,7 @@ export class CoCActor extends Actor {
     }
   }
 
-  getSkillByName( skillName){
+  getSkillIdByName( skillName){
     let id = null;
      this.items.forEach( (value, key, map) => {
       if( value.name == skillName) id = value.id;
