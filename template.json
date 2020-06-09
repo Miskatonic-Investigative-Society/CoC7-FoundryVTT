@@ -10,43 +10,43 @@
 				"characteristics": {
 					"str": {
 						"value": 0,
-						"short": "STR",
-						"label": "Strengh"
+						"short": "CHARAC.STR",
+						"label": "CHARAC.Strengh"
 					},
 					"con": {
 						"value": 0,
-						"short": "CON",
-						"label": "Constitution"
+						"short": "CHARAC.CON",
+						"label": "CHARAC.Constitution"
 					},
 					"siz": {
 						"value": 0,
-						"short": "SIZ",
-						"label": "Size"
+						"short": "CHARAC.SIZ",
+						"label": "CHARAC.Size"
 					},
 					"dex": {
 						"value": 0,
-						"short": "DEX",
-						"label": "Dexterity"
+						"short": "CHARAC.DEX",
+						"label": "CHARAC.Dexterity"
 					},
 					"app": {
 						"value": 0,
-						"short": "APP",
-						"label": "Appearance"
+						"short": "CHARAC.APP",
+						"label": "CHARAC.Appearance"
 					},
 					"int": {
 						"value": 0,
-						"short": "INT",
-						"label": "Intelligence"
+						"short": "CHARAC.INT",
+						"label": "CHARAC.Intelligence"
 					},
 					"pow": {
 						"value": 0,
-						"short": "POW",
-						"label": "Power"
+						"short": "CHARAC.POW",
+						"label": "CHARAC.Power"
 					},
 					"edu": {
 						"value": 0,
-						"short": "EDU",
-						"label": "Education"
+						"short": "CHARAC.EDU",
+						"label": "CHARAC.Education"
 					}
 				}
 			},
