@@ -14,7 +14,7 @@ I’m testing my dev on Chrome. Not sure how or if it will behave on other brows
 Install in foundry VTT from the Game Systems tab using the following manifest :  
 <https://raw.githubusercontent.com/HavlockV/CoC7-FoundryVTT/Develop/system.json>  
 
-Compendium 'Examples' contains a 1920's character sheet, you just need to import it to start a character.  
+Compendium 'Examples' contains a 1920's character sheet, you just need to import it to start a character. Contains also a NPC and a creture example.
 Compendium 'Skills' contains a set of basic skills that you can use for your PC/NPC.  
 Compendium 'Weapons' contains a single test weapon.  
 
@@ -22,7 +22,14 @@ Compendium 'Weapons' contains a single test weapon.
 
 version 0.1.7 :
 
-* You can add skills directly from NPC/Creature sheet, without the need to pull them from compendium or items.
+* Added a lock switch to allow editing of NPC/Creature sheet
+  * When locked you still can modify some of the sheet numbers by double clicking on them.
+  * Unlocking the sheet will allow more advanced modifications and additions of entities.
+* You can add skills/items directly from NPC/Creature sheet, without the need to pull them from compendium or items.
+  * Upon clicking the + sign the correponding entity will be created and the corresponding entity sheet will open.
+  * Holding shift while clicking the + sign will not open the sheet just create a generic entity.
+* Creatures have a formula button, allowing to enter formulas instead of characteristics.
+  * Formulas need to be valid roll strings (like the /r command).
 * Starting to implement localization.
 
 version 0.1.6 (07/06):
@@ -65,14 +72,16 @@ Version 0.1.3 :
 
 * [ ] Correcting bugs.  
 * [x] Implement luck rolls.
-* [ ] Implementing NPC and Creatures (with automatic and average carac/skill calculation).
-* [ ] Implementing creations of skills directly from the sheets.
-* [ ] Implementing localization.
+* [x] Implement Creatures (with automatic and average carac/skill calculation).
+* [ ] Implement NPC (with automatic and average carac/skill calculation).
+* [x] Implement creations of skills directly from the sheets.
+* [ ] Implement experience tracking.
+* [ ] Implement localization.
 * [ ] Working on CSS/HTML to improve the look.  
 * [ ] Improving the combat tab, by adding combat skill to the weapon list.  
 * [ ] Automatic skill assignment when adding a weapon.  
 * [ ] Combat automation (calculation of difficulty, assignement of damage, opposed check...).  
-* [x] Implementing pushed rolls.  
-* [ ] Implementing advanced rolls (opposed, combined etc…).  
-* [ ] Implementing car chases.  
+* [x] Implement pushed rolls.  
+* [ ] Implement advanced rolls (opposed, combined etc…).  
+* [ ] Implement car chases.  
 * [ ] Automation of character creation.

@@ -11,42 +11,50 @@
 					"str": {
 						"value": 0,
 						"short": "CHARAC.STR",
-						"label": "CHARAC.Strengh"
+						"label": "CHARAC.Strengh",
+						"formula": null
 					},
 					"con": {
 						"value": 0,
 						"short": "CHARAC.CON",
-						"label": "CHARAC.Constitution"
+						"label": "CHARAC.Constitution",
+						"formula": null
 					},
 					"siz": {
 						"value": 0,
 						"short": "CHARAC.SIZ",
-						"label": "CHARAC.Size"
+						"label": "CHARAC.Size",
+						"formula": null
 					},
 					"dex": {
 						"value": 0,
 						"short": "CHARAC.DEX",
-						"label": "CHARAC.Dexterity"
+						"label": "CHARAC.Dexterity",
+						"formula": null
 					},
 					"app": {
 						"value": 0,
 						"short": "CHARAC.APP",
-						"label": "CHARAC.Appearance"
+						"label": "CHARAC.Appearance",
+						"formula": null
 					},
 					"int": {
 						"value": 0,
 						"short": "CHARAC.INT",
-						"label": "CHARAC.Intelligence"
+						"label": "CHARAC.Intelligence",
+						"formula": null
 					},
 					"pow": {
 						"value": 0,
 						"short": "CHARAC.POW",
-						"label": "CHARAC.Power"
+						"label": "CHARAC.Power",
+						"formula": null
 					},
 					"edu": {
 						"value": 0,
 						"short": "CHARAC.EDU",
-						"label": "CHARAC.Education"
+						"label": "CHARAC.Education",
+						"formula": null
 					}
 				}
 			},
