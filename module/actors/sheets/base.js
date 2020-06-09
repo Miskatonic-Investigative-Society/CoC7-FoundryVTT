@@ -62,6 +62,11 @@ export class CoC7ActorSheet extends ActorSheet {
 			li.slideUp(200, () => this.render(false));
 		});
 
+		html.find('.addskill').click( ev => {
+			this.actor.createEmptySkill( ev.shiftKey);
+
+		});
+
 		// Add or Remove Attribute
 		//html.find(".attributes").on("click", ".attribute-control", this._onClickAttributeControl.bind(this));
 
@@ -85,6 +90,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		event.preventDefault();
 		const isLocked = this.actor.locked
 		this.actor.locked = isLocked ? false : true;
+		const test = await this.actor.createSkill( "my awsome skill", 45);
 	}
 
 	async _onRollAttribTest( event){
