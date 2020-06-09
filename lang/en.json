@@ -25,15 +25,21 @@
 "CoC7.Residence": "Residence",
 "CoC7.Birthplace": "Birthplace",
 "CoC7.HitPoints": "Hit Points :",
+"CoC7.HP": "HP :",
 "CoC7.MagicPoints": "Magic Points :",
+"CoC7.MP": "MP :",
 "CoC7.Sanity": "Sanity :",
+"CoC7.SAN": "SAN :",
 "CoC7.Luck": "Luck :",
 "CoC7.Movement": "Movement",
+"CoC7.Mov": "Mov",
 "CoC7.BonusDamage": "Bonus Damage",
+"CoC7.DB": "DB",
 "CoC7.Build": "Build",
 "CoC7.Skills": "Skills",
 "CoC7.Combat": "Combat",
-"CoC7.Possession": "Possession",
-"CoC7.Background": "Background"
+"CoC7.Possessions": "Possessions",
+"CoC7.Background": "Background",
+"CoC7.Notes": "Notes"
 
 }
