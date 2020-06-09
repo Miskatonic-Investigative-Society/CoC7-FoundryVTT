@@ -10,43 +10,51 @@
 				"characteristics": {
 					"str": {
 						"value": 0,
-						"short": "STR",
-						"label": "Strengh"
+						"short": "CHARAC.STR",
+						"label": "CHARAC.Strengh",
+						"formula": null
 					},
 					"con": {
 						"value": 0,
-						"short": "CON",
-						"label": "Constitution"
+						"short": "CHARAC.CON",
+						"label": "CHARAC.Constitution",
+						"formula": null
 					},
 					"siz": {
 						"value": 0,
-						"short": "SIZ",
-						"label": "Size"
+						"short": "CHARAC.SIZ",
+						"label": "CHARAC.Size",
+						"formula": null
 					},
 					"dex": {
 						"value": 0,
-						"short": "DEX",
-						"label": "Dexterity"
+						"short": "CHARAC.DEX",
+						"label": "CHARAC.Dexterity",
+						"formula": null
 					},
 					"app": {
 						"value": 0,
-						"short": "APP",
-						"label": "Appearance"
+						"short": "CHARAC.APP",
+						"label": "CHARAC.Appearance",
+						"formula": null
 					},
 					"int": {
 						"value": 0,
-						"short": "INT",
-						"label": "Intelligence"
+						"short": "CHARAC.INT",
+						"label": "CHARAC.Intelligence",
+						"formula": null
 					},
 					"pow": {
 						"value": 0,
-						"short": "POW",
-						"label": "Power"
+						"short": "CHARAC.POW",
+						"label": "CHARAC.Power",
+						"formula": null
 					},
 					"edu": {
 						"value": 0,
-						"short": "EDU",
-						"label": "Education"
+						"short": "CHARAC.EDU",
+						"label": "CHARAC.Education",
+						"formula": null
 					}
 				}
 			},

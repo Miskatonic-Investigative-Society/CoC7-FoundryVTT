@@ -16,6 +16,8 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
 	async getData() {
 		const data = super.getData();
 
+		data.displayFormula = false; // Put to false for now.
+		data.isToken = this.actor.isToken;
 		data.itemsByType = {};
 		data.skills = {};
 		data.combatSkills = {};
@@ -132,7 +134,7 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
 			data.tokenId = token ? `${token.scene._id}.${token.id}` : null;
 
 			for ( const characteristic of Object.values(data.data.characteristics)){
-				if( !characteristic.value) characteristic.editable = true;
+				if( !characteristic.value || !data.data.flags.locked) characteristic.editable = true;
 				characteristic.hard = Math.floor( characteristic.value / 2);
 				characteristic.extreme = Math.floor( characteristic.value / 5);
 			}

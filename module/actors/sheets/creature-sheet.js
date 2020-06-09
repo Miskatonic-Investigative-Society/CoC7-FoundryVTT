@@ -7,6 +7,7 @@ import { CoC7ActorSheet } from './base.js'
 export class CoC7CreatureSheet extends CoC7ActorSheet {
 	constructor(...args) {
 		super(...args);
+		//Si c'est un token = this.actor.isToken
 	}
 
 	/**
@@ -16,6 +17,9 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 	async getData() {
 		const data = super.getData();
 
+		data.allowFormula = true;
+		data.displayFormula = this.actor.getFlag( "displayFormula");
+		data.isToken = this.actor.isToken;
 		data.itemsByType = {};
 		data.skills = {};
 		data.combatSkills = {};
@@ -132,7 +136,7 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 			data.tokenId = token ? `${token.scene._id}.${token.id}` : null;
 
 			for ( const characteristic of Object.values(data.data.characteristics)){
-				if( !characteristic.value) characteristic.editable = true;
+				if( !characteristic.value || !data.data.flags.locked) characteristic.editable = true;
 				characteristic.hard = Math.floor( characteristic.value / 2);
 				characteristic.extreme = Math.floor( characteristic.value / 5);
 			}
