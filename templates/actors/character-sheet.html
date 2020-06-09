@@ -31,7 +31,7 @@
 			<div class="characteristics">
 				{{#each data.characteristics as |characteristic key|}}
 					<div class="characteristic-box" data-characteristic="{{key}}">
-						<div class="characteristics-label rollable">{{characteristic.label}}</div>
+						<div class="characteristics-label rollable">{{localize characteristic.label}}</div>
 						{{#if characteristic.editable}}
 						<input class="characteristic-score" type="text" name="data.characteristics.{{key}}.value" value="{{characteristic.value}}" data-dtype="Number">
 						{{else}}
@@ -99,7 +99,7 @@
 		<a class="item" data-tab="skills">{{localize 'CoC7.Skills'}}</a>
 		<a class="item" data-tab="combat">{{localize 'CoC7.Combat'}}</a>
 		<a class="item" data-tab="possession">{{localize 'CoC7.Possessions'}}</a>
-		<a class="item" data-tab="background">{{localyze 'CoC7.Background'}}</a>
+		<a class="item" data-tab="background">{{localize 'CoC7.Background'}}</a>
 	</nav>
 
 	{{!-- Sheet Body --}}
