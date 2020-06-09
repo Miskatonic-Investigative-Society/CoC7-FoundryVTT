@@ -30,17 +30,45 @@ export class CoCActor extends Actor {
     return created;
   }
 
-  async createEmptySkill( showSheet = false){
-    if( !this.getSkillIdByName(COC7.newSkillName)) return this.createSkill( COC7.newSkillName, null, showSheet);
+  async createItem( itemName, quantity = 1, showSheet = false){
+    const data = {  
+      name: itemName,
+      type: "item",
+      data: { 
+        "quantity": quantity
+      }
+    };
+    const created = await this.createEmbeddedEntity("OwnedItem", data, { renderSheet: showSheet});
+    return created;
+  }
+
+  async createEmptySkill( event = null){
+    let showSheet = event ?  !event.shiftKey: true;
+    if( !this.getItemIdByName(COC7.newSkillName)) return this.createSkill( COC7.newSkillName, null, showSheet);
     let index=0;
     let skillName = COC7.newSkillName + " " + index;
-    while( this.getSkillIdByName(skillName)){
+    while( this.getItemIdByName(skillName)){
       index++;
       skillName = COC7.newSkillName  + " " + index;
     }
 
     return this.createSkill( skillName, null, showSheet);
   }
+
+  async createEmptyItem( event = null){
+    let showSheet = event ?  !event.shiftKey: true;
+    if( !this.getItemIdByName(COC7.newItemName)) return this.createItem( COC7.newItemName, 1, showSheet);
+    let index=0;
+    let itemName = COC7.newItemName + " " + index;
+    while( this.getItemIdByName(itemName)){
+      index++;
+      itemName = COC7.newItemName  + " " + index;
+    }
+
+    return this.createItem( itemName, 1, showSheet);
+  }
+
+  
 
   /**
    * Create an item for that actor.
@@ -70,7 +98,7 @@ export class CoCActor extends Actor {
           if( value) data.data.value = Math.floor(value);
         }
 
-        if( !this.getSkillIdByName(data.name))
+        if( !this.getItemIdByName(data.name))
         {
           return super.createEmbeddedEntity(embeddedName, data, options);
         } 
@@ -81,10 +109,19 @@ export class CoCActor extends Actor {
     }
   }
 
-  getSkillIdByName( skillName){
+  // getSkillIdByName( skillName){
+  //   let id = null;
+  //    this.items.forEach( (value, key, map) => {
+  //     if( value.name == skillName) id = value.id;
+  //   });
+
+  //   return id;
+  // }
+
+  getItemIdByName( itemName){
     let id = null;
      this.items.forEach( (value, key, map) => {
-      if( value.name == skillName) id = value.id;
+      if( value.name == itemName) id = value.id;
     });
 
     return id;
@@ -178,6 +215,39 @@ export class CoCActor extends Actor {
 
   set locked( value){
     this.update( { "data.flags.locked": value});
+  }
+
+  async toggleFlag( flagName){
+    const flagValue =  this.data.data.flags[flagName] ? false: true;
+    const name = `data.flags.${flagName}`
+    let foo = await this.update( { [name]: flagValue});
+  }
+
+  getFlag( flagName){
+    if( !this.data.data.flags){
+      this.data.data.flags = {};
+      this.data.data.flags.locked = false;
+      this.update( { "data.flags": {}});
+      return false;
+    }
+
+    const flagValue =  this.data.data.flags[flagName];
+    return typeof flagValue === "undefined" ? false: flagValue;
+  }
+
+  /**
+   * Use the formula if available to roll some characteritics.
+   */
+  async rollCharacteristicsValue(){
+    for (let [key, value] of Object.entries(this.data.data.characteristics)) {
+      let r = new Roll( value.formula);
+      r.roll();
+      if( r.total){
+        let charKey = `data.characteristics.${key}.value`;
+        this.update( {[charKey]: r.total});
+      }
+    }
+
   }
 
 }

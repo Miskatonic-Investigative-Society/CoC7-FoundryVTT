@@ -33,9 +33,11 @@ export class CoC7ActorSheet extends ActorSheet {
 		// Owner Only Listeners
 		if ( this.actor.owner ) {
 			html.find('.characteristics-label').click(this._onRollCharacteriticTest.bind(this));
-            html.find('.skill-name').click(this._onRollSkillTest.bind(this));
+            html.find('.skill-name.rollable').click(this._onRollSkillTest.bind(this));
 			html.find('.attribute-label.rollable').click(this._onRollAttribTest.bind(this));
 			html.find('.lock').click(this._onLockClicked.bind(this));
+			html.find('.formula').click(this._onFormulaClicked.bind(this));
+			html.find('.roll-characteritics').click(this._onRollCharacteriticsValue.bind(this));
             const wheelInputs = html.find('.attribute-value');
             
             for( let wheelInput of wheelInputs){
@@ -62,9 +64,15 @@ export class CoC7ActorSheet extends ActorSheet {
 			li.slideUp(200, () => this.render(false));
 		});
 
-		html.find('.addskill').click( ev => {
-			this.actor.createEmptySkill( ev.shiftKey);
-
+		html.find('.add-item').click( ev => {
+			switch( event.currentTarget.dataset.type){
+				case "skill":
+					this.actor.createEmptySkill( ev);
+					break;
+				case "item":
+					this.actor.createEmptyItem( ev);
+					break;
+			}
 		});
 
 		// Add or Remove Attribute
@@ -86,10 +94,19 @@ export class CoC7ActorSheet extends ActorSheet {
 		// });
     }
 	
+	async _onRollCharacteriticsValue( event){
+		this.actor.rollCharacteristicsValue();
+	}
+
 	async _onLockClicked( event){
 		event.preventDefault();
 		const isLocked = this.actor.locked
 		this.actor.locked = isLocked ? false : true;
+	}
+
+	async _onFormulaClicked( event){
+		event.preventDefault();
+		this.actor.toggleFlag( 'displayFormula');
 	}
 
 	async _onRollAttribTest( event){
@@ -307,12 +324,34 @@ export class CoC7ActorSheet extends ActorSheet {
     _updateObject(event, formData) { // A deplacer dans la bonne classe !!
 		if( event.currentTarget){
 			if( event.currentTarget.classList){
+
 				if( event.currentTarget.classList.contains('npc-skill-score')){
 					let skill = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.skillId);
 					if( skill){
-						skill.update( {'data.value': parseInt(event.currentTarget.value)});
+						skill.update( {'data.value': event.currentTarget.value});
 					}
 				}
+
+				if( event.currentTarget.classList.contains('skill-name') || event.currentTarget.classList.contains('item-name')){
+					let item = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.skillId);
+					if( item){
+						item.update( {'name': event.currentTarget.value});
+					}
+				}
+
+				if( event.currentTarget.classList.contains('characteristic-formula')){
+					//tester si c'est vide
+					if( event.currentTarget.value.length != 0){
+						//On teste si c'est une formule valide !
+						let r = new Roll( event.currentTarget.value);
+						r.roll();
+						if( typeof(r.total) == "undefined"){
+							ui.notifications.error( event.currentTarget.value + " is not a valid formula");
+							formData[event.currentTarget.name] = "invalid";
+						}
+					}
+				}
+				
 			}
 		}
 

@@ -24,13 +24,19 @@
 					<div class="characteristics-label rollable" style="text-align: left;">
 						<label>{{localize characteristic.short}}</label>
 					</div>
-					<div style="text-align:center;border: 1px groove;margin-right: 2px;">
-						{{#if characteristic.editable}}
-						<input class="characteristic-score" style="text-align: center;" type="text" name="data.characteristics.{{key}}.value" value="{{characteristic.value}}" data-dtype="Number">
-						{{else}}
-						<input class="characteristic-score read-only" style="text-align: center;" type="text" name="data.characteristics.{{key}}.value" value="{{characteristic.value}}" data-dtype="Number" readonly>
-						{{/if}}
-					</div>
+					{{#if ../displayFormula}}
+						<div style="text-align:center;border: 1px groove;margin-right: 2px;">
+							<input class="characteristic-formula" style="text-align: center;" type="text" name="data.characteristics.{{key}}.formula" value="{{characteristic.formula}}">
+						</div>
+					{{else}}
+						<div style="text-align:center;border: 1px groove;margin-right: 2px;">
+							{{#if characteristic.editable}}
+							<input class="characteristic-score" style="text-align: center;" type="text" name="data.characteristics.{{key}}.value" value="{{characteristic.value}}" data-dtype="Number">
+							{{else}}
+							<input class="characteristic-score read-only" style="text-align: center;" type="text" name="data.characteristics.{{key}}.value" value="{{characteristic.value}}" data-dtype="Number" readonly>
+							{{/if}}
+						</div>
+					{{/if}}
 				</div>
 			{{/each}}
 			</div>
@@ -83,11 +89,31 @@
 					<label>{{localize 'CoC7.Build'}}</label>
 					<span style="flex: none;">{{build}}</span>
 				</div>
-				<div style="flex: 0 0 14px;">
-					{{#if data.flags.locked}}
-						<a class="lock" title="Unlock Actor" data-locked="true"> <i class="fas fa-lock"></i></a>
+				<div class="flexrow" style="flex: 0 0 50px;align-content: flex-start;">
+					{{#if allowFormula}}
+						{{#if data.flags.locked}}
+							<div style="flex: 0 0 16px;"></div>
+						{{else}}
+							{{#if displayFormula}}
+								<div style="flex: 0 0 16px;"></div>
+							{{else}}
+								<a class="roll-characteritics" style="flex: 0 0 16px;color: darkred;" title="Roll some dice"> <i class="fas fa-dice"></i></a>
+							{{/if}}
+						{{/if}}
 					{{else}}
-						<a class="lock" title="Lock Actor" data-locked="false"> <i class="fas fa-lock-open"></i></a>
+						<div style="flex: 0 0 16px;"></div>
+					{{/if}}
+					{{#if data.flags.locked}}
+						<a class="lock"  style="flex: 0 0 32px;align-content: flex-start;"  title="Unlock Actor" data-locked="true"> <i class="fas fa-lock"></i></a>
+					{{else}}
+						<a class="lock"  style="flex: 0 0 16px;" title="Lock Actor" data-locked="false"> <i class="fas fa-lock-open"></i></a>
+						{{#if allowFormula}}
+							{{#if displayFormula}}
+								<a class="formula"  style="flex: 0 0 16px;" title="Formula" data-locked="true"> <i class="fas fa-square-root-alt"></i></a>
+							{{else}}
+								<a class="formula"  style="flex: 0 0 16px;" title="Values" data-locked="false"> <i class="fas fa-user-edit"></i></a>
+							{{/if}}
+						{{/if}}
 					{{/if}}
 				</div>
 			</div>
@@ -102,38 +128,51 @@
 		{{!-- Skills Tab --}}
 		<div class="section-header flexrow"> 
 			<h4 class="flex1" >{{localize 'CoC7.Skills'}}</h4>
-			<div style="flex: 0 0 14px;">
-				<a class="addskill" title="Add Skill"><i class="fas fa-plus-circle"></i></a>
-			</div>
+			{{#unless data.flags.locked}}
+				<div style="flex: 0 0 14px;">
+					<a class="add-item" title="Add Skill" data-type="skill"><i class="fas fa-plus-circle"></i></a>
+				</div>
+			{{/unless}}
 		</div>
-  
-    <div class="skills flexrow" style="padding-top: 1px;border-bottom: 2px groove;">
+    	<div class="skills flexrow" style="padding-top: 1px;border-bottom: 2px groove;">
 			{{> "systems/CoC7/templates/actors/parts/npc-skills.html"}}
 		</div>
 		
 
-		<div class="section-header flexrow"> {{localize 'CoC7.Combat'}} </div>
+		<div class="section-header flexrow">
+			<h4 class="flex1">{{localize 'CoC7.Combat'}}</h4>
+		</div>
 		<div class="combat flexcol"  style="padding-top: 1px;border-bottom: 2px groove;">
 			{{> "systems/CoC7/templates/actors/parts/npc-combat.html"}}
 		</div>
 		
-		<div class="section-header flexrow"> {{localize 'CoC7.Possessions'}} </div>
+		<div class="section-header flexrow"> 
+			<h4 class="flex1">{{localize 'CoC7.Possessions'}}</h4>
+			{{#unless data.flags.locked}}
+			<div style="flex: 0 0 14px;">
+				<a class="add-item" title="Add Item" data-type="item"><i class="fas fa-plus-circle"></i></a>
+			</div>
+			{{/unless}}
+		</div>
 		<div class="possession flexrow" style="padding-top: 1px;border-bottom: 2px groove;">
 				{{#each itemsByType.item as |item id|}}
-					<div class="item flexrow {{#if skill.data.properties.combat}}combat-skill{{/if}}" style="flex: 0 0 33%;flex-wrap: wrap;" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
-						<div class="item-image" style="background-image: url({{item.img}})"></div>
-						<h4 class="item-name">{{item.name}}</h4>
-						{{#unless ../data.flags.locked}}
-							<div class="item-controls">
+					<div class="item flexrow" style="flex: 0 0 33%;flex-wrap: wrap;border-right: 1px groove;" data-skill-id="{{item._id}}" data-item-id="{{item._id}}">
+						{{#if ../data.flags.locked}}
+							<h4 class="item-name" style="height:18px;padding: 1px 0 1px 2px;margin: 0;overflow: hidden;">{{item.name}}</h4>
+						{{else}}
+							<input class="item-name flex1" style="height: fit-content;padding: 0 2px;text-align: left;" type="text" name="data.items.{{id}}.name" value="{{item.name}}">
+							<div class="item-controls" style="height: 18px;">
+								<a class="item-control item-delete" title="Delete skill"><i class="fas fa-trash"></i></a>
 								<a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-								<a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
 							</div>
-						{{/unless}}
+						{{/if}}
 					</div>
 				{{/each}}
 		</div>
 
-		<div class="section-header flexrow"> {{localize 'CoC7.Notes'}} </div>
+		<div class="section-header flexrow" style="padding-top: 1px;border-bottom: 2px groove;">
+			<h4 class="flex1">{{localize 'CoC7.Notes'}} </h4>
+		</div>
 		<div class="background" style="display: flex;border: 2px groove #eeede0;padding: 0 5px;height: auto;">
 			{{editor content=data.biography.personalDescription.value target="data.biography.personalDescription.value" button=true owner=owner editable=editable}}
 		</div>
