@@ -88,3 +88,4 @@ COC7.formula.actorsheet = {
 }
 
 COC7.newSkillName = "new skill";
+COC7.newItemName = "new item";
