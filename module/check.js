@@ -277,7 +277,7 @@ export class CoC7Check {
         const html = await renderTemplate(template, templateData);
         let flavor;
         if( this.actor){
-            if( this.skill ) flavor = `${this.skill.name} check (${this.skill.data.data.value}%) - ${this.difficulty} diffculty`;
+            if( this.skill ) flavor = `${this.skill.name} check (${this.skill.data.data.value}%) - ${this.difficulty} diffculty`; 
             if( this.item ) flavor = `${this.item.name} : ${this.skill.name} check (${this.skill.data.data.value}%) - ${this.difficulty} diffculty`;
             if( this.characteristic) flavor = `${this.actor.data.data.characteristics[this.characteristic].label} check (${this.actor.data.data.characteristics[this.characteristic].value}) - ${this.difficulty} diffculty`;
             if( this.attribute) flavor = `${this.actor.data.data.attribs[this.attribute].label} check (${this.actor.data.data.attribs[this.attribute].value}) - ${this.difficulty} diffculty`;
