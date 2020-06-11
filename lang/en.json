@@ -1,8 +1,8 @@
 {
 "CoC7.title": "Call of Cthulhu 7h Edition",
 
-"CHARAC.STR": "aSTR",
-"CHARAC.Strengh": "aStrengh",
+"CHARAC.STR": "STR",
+"CHARAC.Strengh": "Strengh",
 "CHARAC.CON": "CON",
 "CHARAC.Constitution": "Constitution",
 "CHARAC.SIZ": "SIZ",
@@ -17,8 +17,6 @@
 "CHARAC.Power": "Power",
 "CHARAC.EDU": "EDU",
 "CHARAC.Education": "Education",
-
-
 
 "CoC7.Name": "Name",
 "CoC7.Occupation": "Occupation",
@@ -42,6 +40,25 @@
 "CoC7.Combat": "Combat",
 "CoC7.Possessions": "Possessions",
 "CoC7.Background": "Background",
-"CoC7.Notes": "Notes"
+"CoC7.Notes": "Notes",
+
+"CoC7.DiceModifierBonus": "bonus",
+"CoC7.DiceModifierPenalty": "penalty",
+
+"CoC7.RegularSuccess": "Regular success",
+"CoC7.HardSuccess": "Hard success",
+"CoC7.ExtremeSuccess": "Extreme success",
+"CoC7.Failure": "Failure",
+
+"CoC7.Pushing": "Pushing : ",
+
+"CoC7.RegularDifficulty": "regular",
+"CoC7.HardDifficulty": "hard",
+"CoC7.ExtremeDifficulty": "extreme",
+
+"CoC7.CheckResult": "{name} check ({value}%) - {difficulty} difficulty",
+"CoC7.ItemCheckResult": "{item} - {skill} check ({value}%) - {difficulty} difficulty",
+"CoC7.CheckRawValue": "({rawvalue}%) - {difficulty} difficulty"
+
 
 }
