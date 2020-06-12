@@ -1,0 +1,47 @@
+{
+"CoC7.title": "La Llamada de Cthulhu 7a Edición",
+
+"CHARAC.STR": "FUE",
+"CHARAC.Strengh": "Fuerza",
+"CHARAC.CON": "CON",
+"CHARAC.Constitution": "Constitución",
+"CHARAC.SIZ": "TAM",
+"CHARAC.Size": "Tamaño",
+"CHARAC.DEX": "DES",
+"CHARAC.Dexterity": "Destreza",
+"CHARAC.APP": "APA",
+"CHARAC.Appearance": "Apariencia",
+"CHARAC.INT": "INT",
+"CHARAC.Intelligence": "Inteligencia",
+"CHARAC.POW": "POD",
+"CHARAC.Power": "Poder",
+"CHARAC.EDU": "EDU",
+"CHARAC.Education": "Educación",
+
+
+
+"CoC7.Name": "Nombre",
+"CoC7.Occupation": "Ocupación",
+"CoC7.Age": "Edad",
+"CoC7.Sex": "Género",
+"CoC7.Residence": "Residencia",
+"CoC7.Birthplace": "Nacimiento",
+"CoC7.HitPoints": "Puntos de vida :",
+"CoC7.HP": "PV :",
+"CoC7.MagicPoints": "Puntos de magia :",
+"CoC7.MP": "PM :",
+"CoC7.Sanity": "Cordura :",
+"CoC7.SAN": "COR :",
+"CoC7.Luck": "Suerte :",
+"CoC7.Movement": "Movimiento",
+"CoC7.Mov": "Mov",
+"CoC7.BonusDamage": "Bonif. Daño",
+"CoC7.DB": "BD",
+"CoC7.Build": "Corpulencia",
+"CoC7.Skills": "Habilidades",
+"CoC7.Combat": "Combate",
+"CoC7.Possessions": "Posesiones",
+"CoC7.Background": "Trasfondo",
+"CoC7.Notes": "Notas"
+
+}
