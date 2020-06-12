@@ -41,11 +41,11 @@
 		<div class="card-buttons owner-only" data-actor-id="{{actor._id}}" style="padding-top: 5px;">
 			{{#if canBePushed}}
 				{{#unless pushing}}
-				<button data-action="push">Push skill</button>
+				<button data-action="push">{{localize 'CoC7.PushSkill'}}</button>
 				{{/unless}}
 			{{/if}}
 			{{#if hasEnoughLuck}}
-				<button data-action="useLuck" data-luck-amount="{{luckNeeded}}">Spend {{luckNeeded}} luck</button>
+				<button data-action="useLuck" data-luck-amount="{{luckNeeded}}">{{luckNeededTxt}}</button>
 			{{/if}}
 		</div>
 
