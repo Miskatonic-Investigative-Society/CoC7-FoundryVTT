@@ -10,6 +10,23 @@ export class CoCActor extends Actor {
     super(...args);
   }
 
+  /**
+   * Early version on templates did not include possibility of auto calc
+   * Just check if auto is indefined, in which case it will be set to true
+   */
+  checkUndefinedAuto(){
+    let returnData = {};
+    if( this.data.data.attribs.hp.auto === undefined) returnData["attribs.hp.auto"] = true;
+    if( this.data.data.attribs.mp.auto === undefined) returnData["attribs.mp.auto"] = true;
+    if( this.data.data.attribs.san.auto === undefined) returnData["attribs.san.auto"] = true;
+    if( this.data.data.attribs.mov.auto === undefined) returnData["attribs.mov.auto"] = true;
+    if( this.data.data.attribs.db.auto === undefined) returnData["attribs.db.auto"] = true;
+    if( this.data.data.attribs.build.auto === undefined) returnData["attribs.build.auto"] = true;
+    
+    return returnData;
+
+  }
+
   /** @override */
   async createSkill( skillName, value, showSheet = false){
     const data = {  

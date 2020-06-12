@@ -147,29 +147,28 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 		}
 
-
-
-		//data.actor.data.characteristics.app.value = data.actor.data.characteristics.app.value - 1;
-		if( !data.data.attribs.mov.value) data.data.attribs.mov.value = "auto";
+		//For compat with previous characters test if auto is definied, if not we define it
+		let auto = this.actor.checkUndefinedAuto();
+		data.data = mergeObject( data.data, auto);
 
 		const DEX = data.data.characteristics.dex.value;
 		const STR = data.data.characteristics.str.value;
 		const SIZ = data.data.characteristics.siz.value;
+		
+		data.MOV = data.data.attribs.mov.value;
+		data.db = data.data.attribs.mov.value;
+		data.build = data.data.attribs.build.value
 
-		if( data.data.attribs.mov.value == "auto")
+		if( data.data.attribs.mov.auto)
 		{
 			if( DEX < SIZ && STR < SIZ) data.MOV = 	7;
 			if( DEX >= SIZ || STR >= SIZ) data.MOV = 8;
 			if( DEX >= SIZ && STR >= SIZ) data.MOV = 9;
 			if( !isNaN(parseInt(data.data.infos.age))) data.MOV = parseInt(data.data.infos.age) >= 40? data.MOV - Math.floor( parseInt(data.data.infos.age) / 10) + 3: data.MOV;
 		}
-		else data.MOV = data.data.attribs.mov.value
-
-		if( !data.data.attribs.db.value) data.data.attribs.mov.value = "auto";
 
 		data.hasDBFormula = false;
-
-		if( data.data.attribs.db.value == "auto")
+		if( data.data.attribs.db.auto)
 		{
 			if( STR+SIZ > 164){
 				let d6 = Math.floor( (STR + SIZ - 45) / 80);
@@ -196,8 +195,7 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 		}
 
-		if( !data.data.attribs.build.value) data.data.attribs.mov.value = "auto";
-		if( data.data.attribs.build.value == "auto")
+		if( data.data.attribs.build.auto)
 		{
 			if( STR+SIZ > 164){
 				data.build  = Math.floor( (STR + SIZ - 45) / 80) + 1;
@@ -221,11 +219,24 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 		}
 
-		if( data.data.attribs.mp.max == -1 && data.data.characteristics.pow.value > 0) data.data.attribs.mp.max = Math.floor( data.data.characteristics.pow.value / 5);
-		if( data.data.attribs.mp.value == -1) data.data.attribs.mp.value = data.data.attribs.mp.max;
-		if( data.data.attribs.san.value == -1 && data.data.characteristics.pow.value > 0) data.data.attribs.san.value = data.data.characteristics.pow.value;
-		if( data.data.attribs.hp.max == -1 && data.data.characteristics.siz.value > 0 && data.data.characteristics.con.value > 0) data.data.attribs.hp.max = Math.floor( (data.data.characteristics.siz.value + data.data.characteristics.con.value)/10);
-		if( data.data.attribs.hp.value == -1) data.data.attribs.hp.value = data.data.attribs.hp.max;
+		if( data.data.attribs.hp.auto ){
+			//TODO if any is null set max back to null.
+			if ( data.data.characteristics.siz.value != null && data.data.characteristics.con.value != null)
+				data.data.attribs.hp.max = Math.floor( data.data.characteristics.pow.value / 5);
+			if( data.data.attribs.hp.value > data.data.attribs.hp.max)
+				data.data.attribs.hp.value = Math.floor( (data.data.characteristics.siz.value + data.data.characteristics.con.value)/10);
+		}
+
+		if( data.data.attribs.mp.auto ){
+			//TODO if any is null set max back to null.
+			if( data.data.characteristics.pow.value != null) data.data.attribs.mp.max = Math.floor( data.data.characteristics.pow.value / 5);
+			if( data.data.attribs.mp.value > data.data.attribs.mp.max) data.data.attribs.mp.value = data.data.attribs.mp.max;
+		}
+
+		if( data.data.attribs.hp.value == null && data.data.attribs.hp.max != null) data.data.attribs.hp.value = data.data.attribs.hp.max;
+		if( data.data.attribs.mp.value == null && data.data.attribs.mp.max != null) data.data.attribs.mp.value = data.data.attribs.mp.max;
+
+		if( data.data.attribs.san.value == null && data.data.characteristics.pow.value != null) data.data.attribs.san.value = data.data.characteristics.pow.value;
 
 		return data;
 		
