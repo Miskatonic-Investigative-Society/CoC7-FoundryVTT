@@ -68,6 +68,36 @@ export class CoCActor extends Actor {
     return this.createItem( itemName, 1, showSheet);
   }
 
+  async createEmptyWeapon( event = null){
+    let showSheet = event ?  !event.shiftKey: true;
+    let weaponName = COC7.newWeaponName;
+    if( this.getItemIdByName(COC7.newWeaponName)) {
+      let index=0;
+      weaponName = COC7.newWeaponName + " " + index;
+      while( this.getItemIdByName(weaponName)){
+        index++;
+        weaponName = COC7.newWeaponName  + " " + index;
+      }
+    }
+
+    const data = {  
+      name: weaponName,
+      type: "weapon",
+      data : {
+        properties: {}
+      }
+    }
+
+    for( let [key, value] of Object.entries(COC7["weaponProperties"]))
+    {
+      data.data.properties[key] = false;
+    }
+
+
+
+    await this.createEmbeddedEntity("OwnedItem", data, { renderSheet: showSheet});
+  }
+
   
 
   /**

@@ -13,7 +13,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 	 * Prepare data for rendering the Actor sheet
 	 * The prepared data object contains both the actor data as well as additional sheet options
 	*/
-	async getData() {
+	getData() {
 		const data = super.getData();
 
 		data.itemsByType = {};
@@ -39,7 +39,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 						if( value){
 							item.data.value = value;
 							let itemToUpdate = this.actor.getOwnedItem( item._id);
-							let newitem = await itemToUpdate.update( {'data.value' : value});
+							let newitem = itemToUpdate.update( {'data.value' : value});
 							console.log( "found skill with formula : " + item.name + " formula : " + item.data.value)
 						}
 					}
