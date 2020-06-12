@@ -229,7 +229,7 @@ export class CoC7Check {
         if( this.dice.total <= Math.floor(this.rawValue / 2)) templateData.resultType = game.i18n.format("CoC7.HardSuccess");
         if( this.dice.total <= Math.floor(this.rawValue / 5)) templateData.resultType = game.i18n.format("CoC7.ExtremeSuccess");
         if( this.dice.total > this.rawValue) templateData.resultType = game.i18n.format("CoC7.Failure");
-        const fumble = this.rawValue <= 50 ? 96 : 100;
+        const fumble = this.rawValue < 50 ? 96 : 100;
 
         switch( this.difficulty)
         {
@@ -274,6 +274,7 @@ export class CoC7Check {
                 if( this.actor.luck > luckNeeded){
                     templateData.hasEnoughLuck = true;
                     templateData.luckNeeded = luckNeeded;
+                    templateData.luckNeededTxt = game.i18n.format("CoC7.SpendLuck", {luckNeededValue : luckNeeded});
                 }
             }
         }
