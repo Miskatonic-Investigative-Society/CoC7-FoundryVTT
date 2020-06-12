@@ -39,25 +39,24 @@ export class CoC7Item extends Item {
 		});
 	}
 
-  /**
-   * Roll the item to Chat, creating a chat card which contains follow up attack or damage roll options
-   * @return {Promise}
-   */
+	/**
+	 * Toggle on of the item property in data.data.properties
+	 * @param {String} propertyId : name for the property to toggle
+	 */	
 	async toggleProperty( propertyId){
-		return this.toggleInSet( "properties", propertyId);
+		const propName = `data.properties.${propertyId}`
+		const propValue = !this.data.data.properties[propertyId]
+		await this.update( {[propName]: propValue});
 	}
 
 	hasProperty( propertyId){
 		return this.isIncludedInSet( "properties", propertyId);
 	}
 
-	/**
-	 * Roll the item to Chat, creating a chat card which contains follow up attack or damage roll options
-	 * @return {Promise}
-	*/
-	async toggleInSet( set, propertyId){
-		if( this.data.data[set][propertyId] == "false") this.data.data[set][propertyId] = "true"; else this.data.data[set][propertyId] = "false";
-	}
+
+	// async toggleInSet( set, propertyId){
+	// 	if( this.data.data[set][propertyId] == "false") this.data.data[set][propertyId] = "true"; else this.data.data[set][propertyId] = "false";
+	// }
 
 	isIncludedInSet( set, propertyId){
 		if(!this.data.data[set]) this.data.data[set] = [];

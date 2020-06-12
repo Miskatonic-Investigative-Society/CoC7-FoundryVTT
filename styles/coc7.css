@@ -1,3 +1,64 @@
+.center-vertical {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.coc7.sheet.npc select {
+    width:100px;
+    height: 16px;
+    overflow:hidden; 
+    white-space:nowrap; 
+    text-overflow:ellipsis;
+    border: 1px solid whitesmoke;
+}
+
+.coc7.sheet.npc .item-controls {
+    height: auto;
+    font-size: 10px;
+}
+.coc7.sheet.npc select option {
+    width:100px;
+    text-overflow:ellipsis;
+    overflow:hidden;
+}
+
+.coc7.sheet.npc .toggle-switch {
+    margin: 1px 1px 0 0;
+    padding: 0 2px;
+    font-size: 10px;
+    line-height: 12px;
+}
+
+.coc7 .item-tag {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    display: inline-block;
+    margin: 0 2px 0 0;
+    padding: 0 3px;
+    font-size: 11px;
+    line-height: 14px;
+    border: 1px solid #999;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.coc7 .weapon-name {
+    height: 18px;
+    padding: 1px 0 1px 2px;
+    margin: 0;
+    overflow: hidden;
+}
+
+.coc7 .no-skill-set {
+    background-color: red;
+}
+
 .dice-roll .dice-total.critical{
     background-color: palegreen;
 }
@@ -207,7 +268,7 @@
 .coc7.sheet.npc .editor {
     width: 100%;
     height: auto;
-    min-height: 50px;
+    min-height: 130px;
 }
 
 
