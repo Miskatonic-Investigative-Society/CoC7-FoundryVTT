@@ -9,49 +9,49 @@
 			"characteristics": {
 				"characteristics": {
 					"str": {
-						"value": 0,
+						"value": null,
 						"short": "CHARAC.STR",
 						"label": "CHARAC.Strengh",
 						"formula": null
 					},
 					"con": {
-						"value": 0,
+						"value": null,
 						"short": "CHARAC.CON",
 						"label": "CHARAC.Constitution",
 						"formula": null
 					},
 					"siz": {
-						"value": 0,
+						"value": null,
 						"short": "CHARAC.SIZ",
 						"label": "CHARAC.Size",
 						"formula": null
 					},
 					"dex": {
-						"value": 0,
+						"value": null,
 						"short": "CHARAC.DEX",
 						"label": "CHARAC.Dexterity",
 						"formula": null
 					},
 					"app": {
-						"value": 0,
+						"value": null,
 						"short": "CHARAC.APP",
 						"label": "CHARAC.Appearance",
 						"formula": null
 					},
 					"int": {
-						"value": 0,
+						"value": null,
 						"short": "CHARAC.INT",
 						"label": "CHARAC.Intelligence",
 						"formula": null
 					},
 					"pow": {
-						"value": 0,
+						"value": null,
 						"short": "CHARAC.POW",
 						"label": "CHARAC.Power",
 						"formula": null
 					},
 					"edu": {
-						"value": 0,
+						"value": null,
 						"short": "CHARAC.EDU",
 						"label": "CHARAC.Education",
 						"formula": null
@@ -61,43 +61,52 @@
 			"attribs": {
 				"attribs": {
 					"hp": {
-						"value": -1,
-						"max": -1,
+						"value": null,
+						"max": null,
 						"short": "HP",
-						"label": "Hit points"
+						"label": "Hit points",
+						"auto": true
 					},
 					"mp": {
-						"value": -1,
-						"max": -1,
+						"value": null,
+						"max": null,
 						"short": "HP",
-						"label": "Magic points"
+						"label": "Magic points",
+						"auto": true
 					},
 					"lck": {
-						"value": 0,
-						"max": 0,
+						"value": null,
 						"short": "LCK",
 						"label": "Luck"
 					},
 					"san": {
-						"value": -1,
+						"value": null,
 						"max": 99,
 						"short": "SAN",
-						"label": "Sanity"
+						"label": "Sanity",
+						"auto": true
 					},
 					"mov": {
-						"value": "auto",
+						"value": null,
 						"short": "MOV",
-						"label": "Movement rate"
+						"label": "Movement rate",
+						"auto": true
 					},
 					"db": {
-						"value": "auto",
+						"value": null,
 						"short": "DB",
-						"label": "Damage bonus"
+						"label": "Damage bonus",
+						"auto": true
 					},
 					"build": {
-						"value" : "auto",
+						"value" : null,
 						"short": "BLD",
-						"label": "Build"
+						"label": "Build",
+						"auto": true
+					},
+					"armor": {
+						"value": null,
+						"auto": false
 					}
 				}
 			},
@@ -146,7 +155,9 @@
 				"residence": "",
 				"birthplace": ""
 			},
-			"flags": {}
+			"flags": {
+				"locked": true
+			}
 		},
 
 		"npc":{
@@ -161,7 +172,9 @@
 				"age": "",
 				"sex": ""
 			},
-			"flags": {}
+			"flags": {
+				"locked": false
+			}
 		},
 
 		"creature":{
@@ -171,10 +184,33 @@
 				"status",
 				"biography"
 			],
-			"infos":{
-				"age": ""
+			"special":{
+				"attribs": {
+					"move": {
+						"primary":{
+							"enabled": false,
+							"value": null,
+							"type": null
+						},
+						"secondary":{
+							"enabled": false,
+							"value": null,
+							"type": null
+						}
+					}
+				},
+				"sanLoss": {
+					"checkPassed":null,
+					"checkFailled":null
+				},
+				"attacksPerRound": 1
 			},
-			"flags": {}
+
+			"infos":{
+			},
+			"flags": {
+				"locked": false
+			}
 		}
 	},
 	"Item": {

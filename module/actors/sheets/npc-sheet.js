@@ -16,8 +16,8 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
 	getData() {
 		const data = super.getData();
 
-		data.allowFormula = false;
-		data.displayFormula = false; // Put to false for now.
+		data.allowFormula = true;
+		data.displayFormula = this.actor.getFlag( "displayFormula"); // Put to false for now.
 
 		return data;
 	}
