@@ -141,6 +141,11 @@
 
 		<div class="section-header flexrow">
 			<h4 class="flex1">{{localize 'CoC7.Combat'}}</h4>
+			{{#unless data.flags.locked}}
+			<div style="flex: 0 0 14px;">
+				<a class="add-item" title="Add Weapon" data-type="weapon"><i class="fas fa-plus-circle"></i></a>
+			</div>
+			{{/unless}}
 		</div>
 		<div class="combat flexcol"  style="padding-top: 1px;border-bottom: 2px groove;">
 			{{> "systems/CoC7/templates/actors/parts/npc-combat.html"}}
@@ -160,7 +165,7 @@
 						{{#if ../data.flags.locked}}
 							<h4 class="item-name" style="height:18px;padding: 1px 0 1px 2px;margin: 0;overflow: hidden;">{{item.name}}</h4>
 						{{else}}
-							<input class="item-name flex1" style="height: fit-content;padding: 0 2px;text-align: left;" type="text" name="data.items.{{id}}.name" value="{{item.name}}">
+							<input class="item-name flex1" style="height: fit-content;padding: 0 2px;text-align: left;" type="text" name="item-name.{{id}}" value="{{item.name}}">
 							<div class="item-controls" style="height: 18px;">
 								<a class="item-control item-delete" title="Delete skill"><i class="fas fa-trash"></i></a>
 								<a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>

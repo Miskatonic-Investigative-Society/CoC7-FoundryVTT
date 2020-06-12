@@ -12,7 +12,7 @@ I’m testing my dev on Chrome. Not sure how or if it will behave on other brows
 ## Installation/usage
 
 Install in foundry VTT from the Game Systems tab using the following manifest :  
-<https://raw.githubusercontent.com/HavlockV/CoC7-FoundryVTT/Develop/system.json>  
+<https://raw.githubusercontent.com/HavlockV/CoC7-FoundryVTT/master/system.json>  
 
 Compendium 'Examples' contains a 1920's character sheet, you just need to import it to start a character. Contains also a NPC and a creture example.
 Compendium 'Skills' contains a set of basic skills that you can use for your PC/NPC.  
