@@ -1,0 +1,28 @@
+<div class="coc7 chat-card close-combat-card"
+    {{#if actor.isToken}}
+    data-token-id="{{tokenKey}}"
+    {{else}}
+    data-actor-id="{{actor._id}}"
+    {{/if}}
+    data-item-id="{{item._id}}"
+    data-value="{{item.data.value}}"
+    >
+
+    <header class="card-header flexrow">
+        <img style="flex: none;" src="{{item.img}}" title="{{item.name}}" width="36" height="36"/>
+        <h3 style="text-align: center;font-weight: bolder;"class="item-name">{{item.name}}</h3>
+    </header>
+
+    <div class="warning"></div>
+
+    <div class="targets"></div>
+
+    <div class="defenders-actions-container"></div>
+
+    <div class="card-buttons">
+        <button data-action="roll">Roll</button>
+    </div>
+
+    <footer class="card-footer">
+    </footer>
+</div>

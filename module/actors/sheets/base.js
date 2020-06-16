@@ -2,6 +2,7 @@ import { RollDialog } from '../../apps/roll-dialog.js'
 // import { CoC7Dice } from '../../dice.js'
 import { CoC7Check } from '../../check.js'
 import { COC7 } from '../../config.js'
+import { CoC7Chat } from '../../chat.js'
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -12,9 +13,10 @@ export class CoC7ActorSheet extends ActorSheet {
 	}
 
 	getData() {
-		console.log("*********************CoC7ActorSheet getdata***************");
 		const data = super.getData();
+		console.log("*********************CoC7ActorSheet getdata***************");
 
+		// game.user.targets.forEach(t => t.setTarget(false, {user: game.user, releaseOthers: false, groupSelection: true}));
 		data.isToken = this.actor.isToken;
 		data.itemsByType = {};
 		data.skills = {};
@@ -104,7 +106,7 @@ export class CoC7ActorSheet extends ActorSheet {
 			if( weapons){
 				for( const weapon of weapons)
 				{
-					weapon.skillSet = true;
+					weapon.skillSet = true; //TODO : un truc qui ne va pas, pourquoi c'est a 0 ??
 					weapon.data.skill.main.name = "";
 					weapon.data.skill.main.value = 0;
 					weapon.data.skill.alternativ.name = "";
@@ -141,91 +143,45 @@ export class CoC7ActorSheet extends ActorSheet {
 			data.tokenId = token ? `${token.scene._id}.${token.id}` : null;
 
 			for ( const characteristic of Object.values(data.data.characteristics)){
-				if( !characteristic.value || !data.data.flags.locked) characteristic.editable = true;
+				if( !characteristic.value) characteristic.editable = true;
 				characteristic.hard = Math.floor( characteristic.value / 2);
 				characteristic.extreme = Math.floor( characteristic.value / 5);
 			}
 		}
 
+		//For compat with previous characters test if auto is definied, if not we define it
+		let auto = this.actor.checkUndefinedAuto();
+		data.data = mergeObject( data.data, auto);
 
+		
+		data.data.attribs.mov.value = this.actor.mov; //return computed values or fixed values if not auto.
+		data.data.attribs.db.value = this.actor.db;
+		data.data.attribs.build.value = this.actor.build; 
+		
 
-		//data.actor.data.characteristics.app.value = data.actor.data.characteristics.app.value - 1;
-		if( !data.data.attribs.mov.value) data.data.attribs.mov.value = "auto";
+		if( data.data.attribs.hp.value < 0) data.data.attribs.hp.value = null;
+		if( data.data.attribs.mp.value < 0) data.data.attribs.mp.value = null;
+		if( data.data.attribs.san.value < 0) data.data.attribs.san.value = null;
 
-		const DEX = data.data.characteristics.dex.value;
-		const STR = data.data.characteristics.str.value;
-		const SIZ = data.data.characteristics.siz.value;
-
-		if( data.data.attribs.mov.value == "auto")
-		{
-			if( DEX < SIZ && STR < SIZ) data.MOV = 	7;
-			if( DEX >= SIZ || STR >= SIZ) data.MOV = 8;
-			if( DEX >= SIZ && STR >= SIZ) data.MOV = 9;
-			if( !isNaN(parseInt(data.data.infos.age))) data.MOV = parseInt(data.data.infos.age) >= 40? data.MOV - Math.floor( parseInt(data.data.infos.age) / 10) + 3: data.MOV;
-		}
-		else data.MOV = data.data.attribs.mov.value
-
-		if( !data.data.attribs.db.value) data.data.attribs.mov.value = "auto";
-
-		data.hasDBFormula = false;
-
-		if( data.data.attribs.db.value == "auto")
-		{
-			if( STR+SIZ > 164){
-				let d6 = Math.floor( (STR + SIZ - 45) / 80);
-				data.DB = `${d6}D6`;
-				data.hasDBFormula = true;
-			}
-			else
-			{
-				switch( true){
-					case( STR + SIZ  < 65):
-						data.DB = -2;
-						break;
-					case( STR + SIZ < 85):
-						data.DB = -1;
-						break;
-					case( STR + SIZ < 125):
-						data.DB = 0;
-						break;
-					case( STR + SIZ < 165):
-						data.DB = "1D4";
-						data.hasDBFormula = true;
-						break;
-				}
-			}
+		if( data.data.attribs.hp.auto ){
+			//TODO if any is null set max back to null.
+			if ( data.data.characteristics.siz.value != null && data.data.characteristics.con.value != null)
+				data.data.attribs.hp.max = Math.floor( (data.data.characteristics.siz.value + data.data.characteristics.con.value)/10);
 		}
 
-		if( !data.data.attribs.build.value) data.data.attribs.mov.value = "auto";
-		if( data.data.attribs.build.value == "auto")
-		{
-			if( STR+SIZ > 164){
-				data.build  = Math.floor( (STR + SIZ - 45) / 80) + 1;
-			}
-			else
-			{
-				switch( true){
-					case( STR + SIZ  < 65):
-						data.build = -2;
-						break;
-					case( STR + SIZ < 85):
-						data.build = -1;
-						break;
-					case( STR + SIZ < 125):
-						data.build = 0;
-						break;
-					case( STR + SIZ < 165):
-						data.build = 1;
-						break;
-				}
-			}
+		if( data.data.attribs.mp.auto ){
+			//TODO if any is null set max back to null.
+			if( data.data.characteristics.pow.value != null) data.data.attribs.mp.max = Math.floor( data.data.characteristics.pow.value / 5);
 		}
 
-		if( data.data.attribs.mp.max == -1 && data.data.characteristics.pow.value > 0) data.data.attribs.mp.max = Math.floor( data.data.characteristics.pow.value / 5);
-		if( data.data.attribs.mp.value == -1) data.data.attribs.mp.value = data.data.attribs.mp.max;
-		if( data.data.attribs.san.value == -1 && data.data.characteristics.pow.value > 0) data.data.attribs.san.value = data.data.characteristics.pow.value;
-		if( data.data.attribs.hp.max == -1 && data.data.characteristics.siz.value > 0 && data.data.characteristics.con.value > 0) data.data.attribs.hp.max = Math.floor( (data.data.characteristics.siz.value + data.data.characteristics.con.value)/10);
-		if( data.data.attribs.hp.value == -1) data.data.attribs.hp.value = data.data.attribs.hp.max;
+		if( data.data.attribs.mp.value > data.data.attribs.mp.max || data.data.attribs.mp.max == null) data.data.attribs.mp.value = data.data.attribs.mp.max;
+		if( data.data.attribs.hp.value > data.data.attribs.hp.max || data.data.attribs.hp.max == null) data.data.attribs.hp.value = data.data.attribs.hp.max;
+
+		if( data.data.attribs.hp.value == null && data.data.attribs.hp.max != null) data.data.attribs.hp.value = data.data.attribs.hp.max;
+		if( data.data.attribs.mp.value == null && data.data.attribs.mp.max != null) data.data.attribs.mp.value = data.data.attribs.mp.max;
+
+		if( data.data.attribs.san.value == null && data.data.characteristics.pow.value != null) data.data.attribs.san.value = data.data.characteristics.pow.value;
+		if( data.data.attribs.san.value > data.data.attribs.san.max) data.data.attribs.san.value = data.data.attribs.san.max;
 
 		return data;
 		
@@ -260,7 +216,16 @@ export class CoC7ActorSheet extends ActorSheet {
 			html.find('.formula').click(this._onFormulaClicked.bind(this));
 			html.find('.roll-characteritics').click(this._onRollCharacteriticsValue.bind(this));
 			html.find('.toggle-switch').click( this._onToggle.bind(this));
-			
+			html.find('.auto-toggle').click( this._onAutoToggle.bind(this));
+			html.find('.status-monitor').click( this._onStatusToggle.bind(this));
+
+			html.find('.item .item-image').click(event => this._onItemRoll(event));
+			html.find('.weapon-name.rollable').click( event => this._onWeaponRoll(event));
+			html.find('.weapon-skill.rollable').click( event => this._onWeaponSkillRoll(event));
+			html.find('.skill-image').click(this._onRollSkillTest.bind(this));
+			html.find('.read-only').dblclick(this._toggleReadOnly.bind(this));
+	
+
 			const wheelInputs = html.find('.attribute-value');
             for( let wheelInput of wheelInputs){
                 wheelInput.addEventListener('wheel', event => this._onWheel(event));
@@ -304,11 +269,6 @@ export class CoC7ActorSheet extends ActorSheet {
 		//html.find(".attributes").on("click", ".attribute-control", this._onClickAttributeControl.bind(this));
 
 		// Roll item/skill check
-		html.find('.item .item-image').click(event => this._onItemRoll(event));
-		html.find('.weapon-name.rollable').click( event => this._onWeaponRoll(event));
-		// html.find('.weapon-damage').click( event => this._onWeaponDamage(event));
-		html.find('.skill-image').click(this._onRollSkillTest.bind(this));
-		html.find('.read-only').dblclick(this._toggleReadOnly.bind(this));
 
 		// Item Dragging
 		// TODO : a implémenter. Fait bugger quand on glisse une arme sur un autre perso. Cause : skills associé a l'arme de sont pas rentrés.
@@ -320,6 +280,18 @@ export class CoC7ActorSheet extends ActorSheet {
 		//  });
 	}
 	
+	async _onStatusToggle(event){
+		event.preventDefault();
+		const status = event.currentTarget.dataset.status;
+		if( status) this.actor.toggleStatus( status);
+
+	}
+
+	async _onAutoToggle( event){
+		const attrib = event.currentTarget.closest('.attribute').dataset.attrib;
+		this.actor.toggleAttribAuto( attrib);
+	}
+
 	async _onToggle( event){
 		let weapon = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.itemId);
 		if( weapon){
@@ -347,9 +319,27 @@ export class CoC7ActorSheet extends ActorSheet {
 	async _onRollAttribTest( event){
 		event.preventDefault();
 
+		const attrib = event.currentTarget.parentElement.dataset.attrib;
+		if( attrib === "db"){
+			if( !/^-{0,1}\d+$/.test(event.currentTarget.parentElement.dataset.rollFormula)){
+				const r=new Roll(event.currentTarget.parentElement.dataset.rollFormula);
+				r.roll();
+				if( !isNaN(r.total) && !(r.total === undefined)){
+					r.toMessage({
+						speaker: ChatMessage.getSpeaker(),
+						flavor: game.i18n.localize("CoC7.BonusDamageRoll")
+					});
+				}
+			}
+			return;
+		}
+
+		if( attrib === "lck"){
+			if( !this.actor.data.data.attribs.lck.value) return; //If luck is null, 0 or non defined stop there.
+		}
+
 		const actorId = event.currentTarget.closest('form').dataset.actorId;
 		let tokenKey = event.currentTarget.closest('form').dataset.tokenId;
-		const attrib = event.currentTarget.parentElement.dataset.attrib;
 
 		let check = new CoC7Check();	
 
@@ -456,6 +446,36 @@ export class CoC7ActorSheet extends ActorSheet {
 	}
 
 	async _onWeaponRoll(event) {
+		event.preventDefault();
+		const skillId = event.currentTarget.dataset.skillId;
+		const actorId = event.currentTarget.closest('form').dataset.actorId;
+		let tokenKey = event.currentTarget.closest('form').dataset.tokenId;
+		const itemId = event.currentTarget.closest('li').dataset.itemId;
+		const fastForward = event.shiftKey;
+
+		CoC7Chat.createAttackCard( actorId, itemId, tokenKey, fastForward);
+		// let check = new CoC7Check();
+		
+		// if( ! event.shiftKey) {
+		// 	const usage = await RollDialog.create();
+		// 	if( usage) {
+		// 		check.diceModifier = usage.get("bonusDice");
+		// 		check.difficulty = usage.get("difficulty");
+		// 	}
+		// }
+
+
+		// check.actor = !tokenKey ? actorId : tokenKey;
+		// check.skill = skillId;
+		// check.item = itemId;
+		// check.roll();
+		// check.toMessage();
+
+		// HACK: just to pop the advanced roll window 
+		// check.item.roll();
+	}
+
+	async _onWeaponSkillRoll(event) {
 		event.preventDefault();
 		const skillId = event.currentTarget.dataset.skillId;
 		const actorId = event.currentTarget.closest('form').dataset.actorId;
@@ -582,6 +602,19 @@ export class CoC7ActorSheet extends ActorSheet {
 						r.roll();
 						if( isNaN(r.total) || (typeof(r.total) == "undefined")){
 							ui.notifications.error( event.currentTarget.value + " is not a valid formula");
+							formData[event.currentTarget.name] = "invalid";
+						}
+					}
+				}
+
+				if( event.currentTarget.classList.contains('attribute-value')){
+					//tester si le db retourné est valide.
+					if( event.currentTarget.value.length != 0 && event.currentTarget.closest('.attribute').dataset.attrib == "db"){
+						//On teste si c'est une formule valide !
+						let r = new Roll( event.currentTarget.value);
+						r.roll();
+						if( isNaN(r.total) || (r.total === undefined)){
+							ui.notifications.error( event.currentTarget.value + " is not a valid formula");// TODO : localiz
 							formData[event.currentTarget.name] = "invalid";
 						}
 					}
