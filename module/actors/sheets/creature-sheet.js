@@ -7,6 +7,10 @@ import { COC7 } from '../../config.js'
 export class CoC7CreatureSheet extends CoC7ActorSheet {
 	constructor(...args) {
 		super(...args);
+		//Every creatures starts with a figthing skill and a corresponding natural attack
+
+		console.log("*********************CoC7CreatureSheet constructor***************");
+
 		//Si c'est un token = this.actor.isToken
 	}
 
@@ -15,11 +19,16 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 	 * The prepared data object contains both the actor data as well as additional sheet options
 	*/
 	getData() {
-		console.log("*********************CoC7CreatureSheet getdata***************");
 		const data = super.getData();
+		console.log("*********************CoC7CreatureSheet getdata***************");
 
+		//TODO : do we need that ?
 		data.allowFormula = true;
-		data.displayFormula = this.actor.getFlag( "displayFormula");
+		data.displayFormula = this.actor.getActorFlag( "displayFormula");
+		if( data.displayFormula === undefined) data.displayFormula = false;
+		// await this.actor.creatureInit();
+
+
 
 		return data;
 	}
@@ -35,7 +44,7 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 	static get defaultOptions() {
 		return mergeObject(super.defaultOptions, {
 			classes: ["coc7", "sheet", "actor", "npc", "creature"],
-			template: "systems/CoC7/templates/actors/npc-sheet.html",
+			template: "systems/CoC7/templates/actors/creature-sheet.html",
 			width: 600,
 			height: 'auto'
 		});

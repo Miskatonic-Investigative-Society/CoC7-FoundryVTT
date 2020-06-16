@@ -10,6 +10,30 @@ export class CoCActor extends Actor {
     super(...args);
   }
 
+
+  initialize() {
+    super.initialize();
+    this.creatureInit();
+  }
+
+
+  /**
+   * Early version on templates did not include possibility of auto calc
+   * Just check if auto is indefined, in which case it will be set to true
+   */
+  checkUndefinedAuto(){
+    let returnData = {};
+    if( this.data.data.attribs.hp.auto === undefined) returnData["attribs.hp.auto"] = true;
+    if( this.data.data.attribs.mp.auto === undefined) returnData["attribs.mp.auto"] = true;
+    if( this.data.data.attribs.san.auto === undefined) returnData["attribs.san.auto"] = true;
+    if( this.data.data.attribs.mov.auto === undefined) returnData["attribs.mov.auto"] = true;
+    if( this.data.data.attribs.db.auto === undefined) returnData["attribs.db.auto"] = true;
+    if( this.data.data.attribs.build.auto === undefined) returnData["attribs.build.auto"] = true;
+    
+    return returnData;
+
+  }
+
   /** @override */
   async createSkill( skillName, value, showSheet = false){
     const data = {  
@@ -22,12 +46,102 @@ export class CoCActor extends Actor {
           rarity: false,
           push: true,
           combat: false,
-          shortlist: false
+          shortlist: false //TODO: necessary ?
         }
       }
     };
     const created = await this.createEmbeddedEntity("OwnedItem", data, { renderSheet: showSheet});
     return created;
+  }
+
+  /**
+   * Initialize a creature with minimums skills
+   */
+  async creatureInit( ){
+    if( this.data.type != "creature") return;
+    if( this.getActorFlag("initialized")) return; //Change to return skill ?
+
+    //Check if fighting skills exists, if not create it and the associated attack.
+    const skills = await this.getSkillsByName( COC7.baseCreatureSkill);
+    if( skills.length == 0){
+      //Creating natural attack skill
+      try{
+        const skill = await this.createEmbeddedEntity(
+          "OwnedItem",
+          {
+            name: COC7.baseCreatureSkill,
+            type: "skill",
+            data:{
+              base: 0,
+              value: null,
+              properties: {
+                combat: true,
+              },
+              flags: {}
+            }
+          }, { renderSheet: false});
+          
+        const attack = await this.createEmbeddedEntity(
+          "OwnedItem",
+          {
+            name: "Innate attack",
+            type: "weapon",
+            data: {
+              description: {
+                value: "Creature's natural attack",
+                chat: "Creature's natural attack",
+              },
+              wpnType: "innate",
+              properties: {
+                "addb": true,
+                "slnt": true
+              }
+            }
+          }, { renderSheet: false});
+
+
+        const createdAttack = this.getOwnedItem( attack._id);
+        await createdAttack.update( 
+          { "data.skill.main.id": skill._id,
+            "data.skill.main.name": skill.name });
+
+        // const fightingSkill = await this.getSkillsByName( COC7.baseCreatureSkill);
+        // const innateAttack = await this.getItemsByName("Innate attack");
+        
+
+        // console.log("*****************************************************************");
+        // console.log("*********************Skill created*******************************");
+        // console.log("********************* fightingSkill " + fightingSkill[0].name + "**********************************");
+        // console.log("********************* fightingSkill " + fightingSkill[0].id + "**********************************");
+        // if( skills != null && skills.length != 0){
+        //   console.log("********************* skills " + skills[0].name + "**********************************");
+        //   console.log("********************* skills " + skills[0]._id + "**********************************");
+        // }
+        // else
+        // console.log("********************* skills is null **********************************");
+
+
+        // if( skill != null){
+        //   console.log("********************* skill " + skill.name + "**********************************");
+        //   console.log("********************* skill " + skill._id + "**********************************");
+        // }
+        // else
+        // console.log("********************* skill is null **********************************");
+
+        // console.log("*****************************************************************");
+        
+
+
+
+      }
+      catch(err){
+        console.log("error");
+      }
+
+      console.log( "Skill created");
+
+      //Creating corresponding weapon.
+    }
   }
 
   async createItem( itemName, quantity = 1, showSheet = false){
@@ -157,6 +271,29 @@ export class CoCActor extends Actor {
     return id;
   }
 
+  getItemsByName( itemName){
+    let itemList = [];
+    this.items.forEach( (value, key, map) => {
+     if( value.name == itemName) itemList.push( value);
+   });
+
+   return itemList;
+  }
+
+  /**
+   * 
+   * 
+   */
+  getSkillsByName( skillName){
+    let skillList = [];
+    this.items.forEach( (value, key, map) => {
+      if( value.name == skillName && value.type == "skill") skillList.push( value);
+    });
+
+    return skillList;
+  }
+
+
   parseFormula( formula){
     let parsedFormula = formula;
     for( let [key, value] of Object.entries(COC7.formula.actor)){
@@ -185,11 +322,20 @@ export class CoCActor extends Actor {
     return parseInt(this.data.data.attribs.hp.value);
   }
 
+  get hpMax(){
+    if( this.data.data.attribs.hp.auto){
+      if(this.data.data.characteristics.siz.value != null &&  this.data.data.characteristics.con.value !=null)
+        return Math.floor( (this.data.data.characteristics.siz.value + this.data.data.characteristics.con.value)/10);
+      else return null;
+    } 
+    return parseInt( this.data.data.attribs.hp.max);
+  }
+
   async setHp( value){
     // this.data.data.attribs.lck.value = value;
     // let test = await this.update( { "data.attribs.lck.value": value});
     if( value < 0) value = 0;
-    if( value > parseInt( this.data.data.attribs.hp.max)) value = parseInt( this.data.data.attribs.hp.value);
+    if( value > this.hpMax) value = parseInt( this.data.data.attribs.hp.value);
     return this.update( { "data.attribs.hp.value": value});
   }
 
@@ -197,11 +343,20 @@ export class CoCActor extends Actor {
     return parseInt(this.data.data.attribs.mp.value);
   }
 
+  get mpMax(){
+    if( this.data.data.attribs.mp.auto){
+      if(this.data.data.characteristics.pow.value != null)
+        return Math.floor( this.data.data.characteristics.pow.value / 5);
+      else return null;
+    } 
+    return parseInt( this.data.data.attribs.mp.max);
+  }
+
   async setMp( value){
     // this.data.data.attribs.lck.value = value;
     // let test = await this.update( { "data.attribs.lck.value": value});
     if( value < 0) value = 0;
-    if( value > parseInt( this.data.data.attribs.mp.max)) value = parseInt( this.data.data.attribs.mp.value);
+    if( value > parseInt( this.mpMax)) value = parseInt( this.data.data.attribs.mp.value);
     return this.update( { "data.attribs.mp.value": value});
   }
 
@@ -218,12 +373,62 @@ export class CoCActor extends Actor {
     return this.update( { "data.attribs.san.value": value});
   }
 
-  async setAttrib( value, attrib)
-  {
+  async setAttrib( value, attrib){
     if( value < 0) value = 0;
     if( value > parseInt( this.data.data.attribs[attrib].max)) value = parseInt( this.data.data.attribs[attrib].value);
     // const update = { `data.attribs[${attrib}].value`: value};
     // return this.update( { data.attribs[attrib].value: value});
+  }
+
+  async setAttribAuto( value, attrib){
+    const updatedKey = `data.attribs.${attrib}.auto`
+    return await this.update( {[updatedKey]: value});
+  }
+
+  async toggleAttribAuto( attrib){
+    this.setAttribAuto( !this.data.data.attribs[attrib].auto, attrib);
+  }
+
+  get build() {
+    if( this.data.data.attribs.build.auto)
+		{
+      const sum = this.data.data.characteristics.str.value + this.data.data.characteristics.siz.value;
+			if( sum > 164) return Math.floor( (sum - 45) / 80) + 1;
+			if( sum < 65) return -2;
+			if( sum < 85) return -1;
+			if( sum < 125) return 0;
+      if( sum < 165) return 1;
+    }
+
+    return this.data.data.attribs.build.value;
+  }
+
+  get db() {
+		if( this.data.data.attribs.db.auto)
+		{
+      const sum = this.data.data.characteristics.str.value + this.data.data.characteristics.siz.value;
+			if( sum > 164) return `${Math.floor( (sum - 45) / 80)}D6`;
+      if( sum  < 65) return -2;
+      if( sum < 85) return -1;
+			if( sum < 125) return 0;
+			if( sum < 165) return "1D4";
+		}
+    return this.data.data.attribs.db.value;
+  }
+
+  get mov() {
+    if( this.data.data.attribs.mov.auto)
+		{
+      let MOV;
+			if( this.data.data.characteristics.dex.value < this.data.data.characteristics.siz.value && this.data.data.characteristics.str.value < this.data.data.characteristics.siz.value) MOV = 	7;
+			if( this.data.data.characteristics.dex.value >= this.data.data.characteristics.siz.value || this.data.data.characteristics.str.value >= this.data.data.characteristics.siz.value) MOV = 8;
+			if( this.data.data.characteristics.dex.value >= this.data.data.characteristics.siz.value && this.data.data.characteristics.str.value >= this.data.data.characteristics.siz.value) MOV = 9;
+			if( this.data.data.type != "creature"){
+				if( !isNaN(parseInt(this.data.data.infos.age))) MOV = parseInt(this.data.data.infos.age) >= 40? MOV - Math.floor( parseInt(this.data.data.infos.age) / 10) + 3: MOV;
+			}
+			return MOV;
+    }
+    return this.data.data.attribs.mov.value;
   }
 
 
@@ -235,7 +440,7 @@ export class CoCActor extends Actor {
   get locked(){
     if( !this.data.data.flags){
       this.data.data.flags = {};
-      this.data.data.flags.locked = false;
+      this.data.data.flags.locked = true; //Locked by default
       this.update( { "data.flags": {}});
       this.update( { "data.flags.locked": false});
     }
@@ -253,31 +458,122 @@ export class CoCActor extends Actor {
     let foo = await this.update( { [name]: flagValue});
   }
 
-  getFlag( flagName){
+  getActorFlag( flagName){
     if( !this.data.data.flags){
       this.data.data.flags = {};
-      this.data.data.flags.locked = false;
+      this.data.data.flags.locked = true;
       this.update( { "data.flags": {}});
       return false;
     }
 
-    const flagValue =  this.data.data.flags[flagName];
-    return typeof flagValue === "undefined" ? false: flagValue;
+    return this.data.data.flags[flagName];
   }
 
   /**
    * Use the formula if available to roll some characteritics.
    */
   async rollCharacteristicsValue(){
+    let characteristics={};
     for (let [key, value] of Object.entries(this.data.data.characteristics)) {
       let r = new Roll( value.formula);
       r.roll();
       if( r.total){
-        let charKey = `data.characteristics.${key}.value`;
-        this.update( {[charKey]: r.total});
+        characteristics[`data.characteristics.${key}.value`] = r.total;
       }
     }
 
+    await this.update( characteristics);
   }
 
+  async toggleStatus(statusName){
+    let statusValue = this.data.data.status[statusName].value;
+    if(!(typeof statusValue === "boolean")) statusValue = statusValue === "false" ? true : false; //Necessary, incorrect template initialization
+    await this.update( {[`data.status.${statusName}.value`]: !statusValue})
+  }
+
+  getFightingSkills(){
+    let skillList = [];
+    this.items.forEach( (value) => {
+      if( value.type == "skill" && value.data.data.properties.fighting ) skillList.push( value);
+    });
+
+    skillList.sort( (a, b) => {
+      if ( a.name.toLowerCase() < b.name.toLowerCase() ){
+        return -1;
+      }
+      if ( a.name.toLowerCase() > b.name.toLowerCase() ){
+        return 1;
+      }
+      return 0;
+    });
+
+    return skillList;
+  }
+
+  getCloseCombatWeapons(){
+    let weaponList = [];
+    this.items.forEach( (value) => {
+      if( value.type == "weapon" && !value.data.data.properties.rngd ){
+        const skill = this.getOwnedItem( value.data.data.skill.main.id);
+        value.data.data.skill.main.value = skill? skill.data.data.value : 0;
+        weaponList.push( value);
+      }
+    });
+
+    weaponList.sort( (a, b) => {
+      if ( a.name.toLowerCase() < b.name.toLowerCase() ){
+        return -1;
+      }
+      if ( a.name.toLowerCase() > b.name.toLowerCase() ){
+        return 1;
+      }
+      return 0;
+    });
+
+    return weaponList;
+  }
+
+  getFirearmSkills(){
+    let skillList = [];
+    this.items.forEach( (value) => {
+      if( value.type == "skill" && value.data.data.properties.firearms ) skillList.push( value);
+    });
+
+    skillList.sort( (a, b) => {
+      if ( a.name.toLowerCase() < b.name.toLowerCase() ){
+        return -1;
+      }
+      if ( a.name.toLowerCase() > b.name.toLowerCase() ){
+        return 1;
+      }
+      return 0;
+    });
+
+    return skillList;
+  }
+
+  getDodgeSkill(){
+    let skillList = this.getSkillsByName( COC7.dodgeSkillName);
+    if( skillList.legnth != 0) return skillList[0];
+    return null;
+  }
+
+  getAllSkills(){
+    let skillList = [];
+    this.items.forEach( (value, key, map) => {
+      if( value.type == "skill" ) skillList.push( value);
+    });
+
+    skillList.sort( (a, b) => {
+      if ( a.name.toLowerCase() < b.name.toLowerCase() ){
+        return -1;
+      }
+      if ( a.name.toLowerCase() > b.name.toLowerCase() ){
+        return 1;
+      }
+      return 0;
+    });
+
+    return skillList;
+  }
 }

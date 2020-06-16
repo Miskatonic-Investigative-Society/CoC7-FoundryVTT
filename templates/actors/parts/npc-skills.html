@@ -3,6 +3,7 @@
 		{{#if ../data.flags.locked}}
 			<h4 class="skill-name rollable" style="height:18px;padding: 1px 0 1px 2px;margin: 0;overflow: hidden;">{{skill.name}}</h4>
 			<input class="npc-skill-score read-only" style="flex: 0 0 25px;height: fit-content;padding: 0 2px;text-align: right;" type="text" value="{{skill.data.value}}" data-dtype="Number" readonly>
+			<span style="flex: 0 0 10px;">%</span>
 		{{else}}
 			<input class="skill-name flex1" style="height: fit-content;padding: 0 1px;text-align: left;" type="text" value="{{skill.name}}">
 			<input class="npc-skill-score" style="flex: 0 0 25px;height: fit-content;padding: 0 2px;text-align: right;" type="text" value="{{skill.data.value}}" data-dtype="Number">
