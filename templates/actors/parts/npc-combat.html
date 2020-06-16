@@ -3,17 +3,17 @@
 		{{#if ../data.flags.locked}}
 			<li class="item flexcol" data-item-id="{{weapon._id}}">
 				<div class="flexrow" style="align-items: center;">
-					<div class="flex2 weapon-name">{{weapon.name}}</div>
+					<div class="flex2 weapon-name rollable">{{weapon.name}}</div>
 					<div class="flexrow flex4 weapon-skills">
 						{{#if weapon.skillSet}}
-							<div class="item-tag weapon-name rollable" style="flex: 0 0 45%" data-skill-id="{{weapon.data.skill.main.id}}" title="Roll {{weapon.data.skill.main.name}} skill">{{weapon.data.skill.main.name}} ({{weapon.data.skill.main.value}}%)</div>
+							<div class="item-tag weapon-skill rollable" style="flex: 0 0 45%" data-skill-id="{{weapon.data.skill.main.id}}" title="Roll {{weapon.data.skill.main.name}} skill">{{weapon.data.skill.main.name}} ({{weapon.data.skill.main.value}}%)</div>
 							{{#if weapon.data.properties.auto}}
-								<div class="item-tag weapon-name rollable" style="flex: 0 0 45%" data-skill-id="{{weapon.data.skill.alternativ.id}}" title="Roll {{weapon.data.skill.alternativ.name}} skill">{{weapon.data.skill.alternativ.name}} ({{weapon.data.skill.alternativ.value}}%)</div>
+								<div class="item-tag weapon-skill rollable" style="flex: 0 0 45%" data-skill-id="{{weapon.data.skill.alternativ.id}}" title="Roll {{weapon.data.skill.alternativ.name}} skill">{{weapon.data.skill.alternativ.name}} ({{weapon.data.skill.alternativ.value}}%)</div>
 							{{/if}}
 						{{else}}
-							<div class="item-tag weapon-name" style="flex: 0 0 45%; background-color: red;" title="Choose skill">No skill</div>
+							<div class="item-tag weapon-skil" style="flex: 0 0 45%; background-color: red;" title="Choose skill">No skill</div>
 							{{#if weapon.data.properties.auto}}
-								<div class="item-tag weapon-name" style="flex: 0 0 45%; background-color: red" title="Choose skill">No skill</div>
+								<div class="item-tag weapon-skill" style="flex: 0 0 45%; background-color: red" title="Choose skill">No skill</div>
 							{{/if}}
 						{{/if}}
 					</div>

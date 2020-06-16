@@ -1,7 +1,7 @@
 <form class="{{cssClass}} flexcol" autocomplete="off" data-actor-id="{{actor._id}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
 
 	{{!-- Sheet Header --}}
-	<header class="sheet-header flexcol" style="flex: 0 0 190px; flex-direction: column;">
+	<header class="sheet-header flexcol" style="flex: 0 0 200px; flex-direction: column; flex-wrap: nowrap;">
 		<div class="flexrow" style="display: flex;">
 			<div class="info-fields">
 				<div class="form-group">
@@ -28,7 +28,7 @@
 				</div>
 			</div>
 
-			<div class="characteristics">
+			<div class="characteristics flex3">
 				{{#each data.characteristics as |characteristic key|}}
 					<div class="characteristic-box" data-characteristic="{{key}}">
 						<div class="characteristics-label rollable">{{localize characteristic.label}}</div>
@@ -51,46 +51,65 @@
 				<label class="attribute-label">{{localize 'CoC7.HitPoints'}}</label>
 				<input class="attribute-value" type="text" name="data.attribs.hp.value" value="{{data.attribs.hp.value}}"  data-dtype="Number"/>
 				<span style="flex: none;font-size: large;">/</span>
-				<input class="attribute-max read-only" type="text" name="data.attribs.hp.max" value="{{data.attribs.hp.max}}" data-dtype="Number" readonly>
+				<input class="attribute-max read-only" type="text" name="data.attribs.hp.max" value="{{data.attribs.hp.max}}" data-dtype="Number" data-attrib="hp" readonly>
 				<div class="flex1"></div>
 			</div>
 			<div class="flexrow flex1">
 				<label class="attribute-label">{{localize 'CoC7.MagicPoints'}}</label>
 				<input class="attribute-value" type="text" name="data.attribs.mp.value" value="{{data.attribs.mp.value}}" data-dtype="Number"/>
 				<span style="flex: none;font-size: large;">/</span>
-				<input class="attribute-max read-only" type="text" name="data.attribs.mp.max" value="{{data.attribs.mp.max}}" data-dtype="Number" readonly>
+				<input class="attribute-max read-only" type="text" name="data.attribs.mp.max" value="{{data.attribs.mp.max}}" data-dtype="Number" data-attrib="mp" readonly>
 				<div class="flex1"></div>
 			</div>
 			<div class="flexrow flex1" data-attrib="san">
 				<label class="attribute-label rollable">{{localize 'CoC7.Sanity'}}</label>
 				<input class="attribute-value" type="text" name="data.attribs.san.value" value="{{data.attribs.san.value}}" data-dtype="Number"/>
 				<span style="flex: none;font-size: large;">/</span>
-				<input class="attribute-max read-only" type="text" name="data.attribs.san.max" value="{{data.attribs.san.max}}" data-dtype="Number" readonly>
+				<input class="attribute-max read-only" type="text" name="data.attribs.san.max" value="{{data.attribs.san.max}}" data-dtype="Number" data-attrib="san" readonly>
 				<div class="flex1"></div>
 			</div>
 			<div class="flexrow flex1" data-attrib="lck">
 				<label class="attribute-label rollable">{{localize 'CoC7.Luck'}}</label>
 				<!-- <input class="attribute-value" type="text" name="data.attribs.lck.value" value="{{data.attribs.lck.value}}" data-dtype="Number"/>
 				<span style="flex: none;font-size: large;">/</span> -->
-				<input class="attribute-value read-only" type="text" name="data.attribs.lck.value" value="{{data.attribs.lck.value}}" data-dtype="Number" readonly>
+				<input class="attribute-value read-only" type="text" name="data.attribs.lck.value" value="{{data.attribs.lck.value}}" data-dtype="Number" data-attrib="lck" readonly>
 				<div class="flex1"></div>
 			</div>
 		</div>
-		<div class="flexrow" style="flex: none;height: 20px;">
+		<div class="flexrow" style="align-items: center; flex: none;height: 20px;">
 			<div class="flex1">
-				<label class="attribute-label">{{localize 'CoC7.Movement'}}</label> <span style="flex: none;font-size: large;">{{MOV}}</span>
+				<label class="attribute-label">{{localize 'CoC7.Movement'}} :</label> <span style="flex: none;font-size: medium;line-height: 20px;">{{data.attribs.mov.value}}</span>
 			</div>
-			<div class="flex1">
-				<label class="attribute-label">{{localize 'CoC7.BonusDamage'}}</label>
-				{{#if hasDBFormula}}
-				<a class="inline-roll roll" data-mode="roll" data-formula="{{DB}}"><i class="fas fa-dice-d20"></i> {{DB}}</a>
+			<div class="flex1 flexrow rollable" data-attrib="db" data-roll-formula="{{data.attribs.db.value}}">
+				<label class="attribute-label rollable" data-attrib="db">{{localize 'CoC7.BonusDamage'}} :</label>
+				{{#if data.attribs.db.auto}}
+				<span class="attribute-value" type="text" style="line-height: 22px;"> {{data.attribs.db.value}} </span>
 				{{else}}
-				<span style="flex: none;font-size: large;">{{DB}}</span>
+				<input class="attribute-value {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.db.value" value="{{data.attribs.db.value}}" data-dtype="String" {{#if data.flags.locked}}readonly{{/if}}>
 				{{/if}}
+				<!-- {{#if hasDBFormula}}
+				<div style="line-height: 22px;" data-type="attrib" data-attrib="db" data-formula="{{data.attribs.db.value}}"><i class="fas fa-dice-d20"></i> {{data.attribs.db.value}}</div>
+				{{else}}
+				<span style="flex: none;font-size: large;">{{data.attribs.db.value}}</span>
+				{{/if}} -->
 			</div>
 			<div class="flex1">
-				<label class="attribute-label">{{localize 'CoC7.Build'}}</label> <span style="flex: none;font-size: large;">{{build}}</span>
+				<label class="attribute-label">{{localize 'CoC7.Build'}} :</label> <span style="flex: none;font-size: medium;line-height: 20px;">{{data.attribs.build.value}}</span>
 			</div>
+		</div>
+		<div class="status-monitors flexrow">
+			<a class="status-monitor {{#if data.status.unconscious.value}}status-on{{/if}}" title="Unconsious" data-status="unconscious"> <i class="fas fa-bed"></i></a>
+			<a class="status-monitor {{#if data.status.criticalWounds.value}}status-on{{/if}}" title="Critical" data-status="criticalWounds"> <i class="fas fa-user-injured"></i></a>
+			<a class="status-monitor {{#if data.status.dying.value}}status-on{{/if}}" title="Dying" data-status="dying"> <i class="fas fa-heartbeat"></i></a>
+			<div style="flex: 0 0 40px;"></div>
+			<a class="status-monitor {{#if data.status.tempoInsane.value}}status-on{{/if}}" title="Temporary insanity" data-status="tempoInsane"> <i class="fas fa-filter"></i></a>
+			<a class="status-monitor {{#if data.status.indefInsane.value}}status-on{{/if}}" title="Indefinite insanity" data-status="indefInsane"> <i class="far fa-hospital"></i></a>
+			<div class="flex1"></div>
+			{{#if data.flags.locked}}
+			<a class="lock"  style="flex: 0 0 16px;"  title="Unlock Actor" data-locked="true"> <i class="fas fa-lock"></i></a>
+			{{else}}
+			<a class="lock"  style="flex: 0 0 16px;" title="Lock Actor" data-locked="false"> <i class="fas fa-lock-open"></i></a>
+			{{/if}}
 		</div>
 	</header>
 
