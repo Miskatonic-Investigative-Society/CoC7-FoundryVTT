@@ -68,7 +68,7 @@
 
 "CoC7.CheckResult": "{name} check ({value}%) - {difficulty} difficulty",
 "CoC7.ItemCheckResult": "{item} - {skill} check ({value}%) - {difficulty} difficulty",
-"CoC7.CheckRawValue": "({rawvalue}%) - {difficulty} difficulty"
+"CoC7.CheckRawValue": "({rawvalue}%) - {difficulty} difficulty",
 
 
 "CoC7.BonusDamageRoll": "Rolling Damage Bonus",
