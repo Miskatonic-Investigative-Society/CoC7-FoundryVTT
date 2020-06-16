@@ -95,18 +95,18 @@ export class CoC7Chat{
 	}
 
 	static _onFlagSelected( event){
-		const selectedBox = event.currentTarget.closest('.defender-action-select').querySelector('.selected-action');
+		const actionButton = event.currentTarget.closest('.defender-action-select').querySelector('.selected-action').querySelector('button');
 
 		if( event.currentTarget.classList.contains('switched-on')){
 			event.currentTarget.classList.remove('switched-on');
 			event.currentTarget.dataset.selected='false';
-			selectedBox.dataset[event.currentTarget.dataset.flag] = "false";
+			actionButton.dataset[event.currentTarget.dataset.flag] = "false";
 		}
 		else
 		{
 			event.currentTarget.classList.add('switched-on');
 			event.currentTarget.dataset.selected='true';
-			selectedBox.dataset[event.currentTarget.dataset.flag] = "true";
+			actionButton.dataset[event.currentTarget.dataset.flag] = "true";
 		}
 
 	}
@@ -487,7 +487,9 @@ export class CoC7Chat{
 				}
 				else{
 					defender =this.getActorFromToken(defenderKey);
-				}				 
+				}
+
+				
 
 				ui.notifications.info(`${defender.name} (build: ${defender.build}) is defending vs initiator ${actor.name} (build: ${actor.build})`);
 				break;
@@ -602,7 +604,7 @@ export class CoC7Chat{
 	static async updatechatMessageTargets( oldCard){
 		const htmlCardContent = jQuery.parseHTML( oldCard.data.content);
 		const targets = htmlCardContent[0].querySelector('.targets');
-		// const initiator = this._getChatCardActor(oldCard);
+		const initiator = this._getChatCardActor(htmlCardContent[0]);
 
 		//Cleat targets list.
 		while (targets.firstChild) {
@@ -629,7 +631,7 @@ export class CoC7Chat{
 				templateData.dodgeSkill = target.actor.getDodgeSkill();
 				templateData.closeCombatWeapons = target.actor.getCloseCombatWeapons();
 				templateData.defenderBuild = target.actor.build;
-				// templateData.initiatorBuild = initiator.build;
+				templateData.initiatorBuild = initiator.build;
 				templateData.canManeuver = true;
 
 				const template = 'systems/CoC7/templates/chat/parts/defender-action.html';
