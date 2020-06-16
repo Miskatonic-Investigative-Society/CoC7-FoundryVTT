@@ -49,9 +49,17 @@
 "CoC7.HardSuccess": "Hard success",
 "CoC7.ExtremeSuccess": "Extreme success",
 "CoC7.Failure": "Failure",
+"CoC7.Malfunction": "had a malfunction",
 
+"CoC7.Dice": "Dice",
+"CoC7.UnitsDie" : "1 units die",
+"CoC7.TensDie": "tens die",
+"CoC7.TensDice": "tens dice",
+"CoC7.SuccessRequired": "success required",
 "CoC7.Pushing": "Pushing : ",
 "CoC7.PushSkill": "Push skill",
+"CoC7.PushedRoll": "(pushed roll)",
+
 "CoC7.SpendLuck": "Spend {luckNeededValue} Luck to pass",
 
 "CoC7.RegularDifficulty": "regular",

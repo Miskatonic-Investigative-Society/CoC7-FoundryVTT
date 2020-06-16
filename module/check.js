@@ -219,7 +219,7 @@ export class CoC7Check {
             if( this.attribute){
                 templateData.isAttribute = true;
                 templateData.attribute = this.attribute;
-                this.rowValue = this.actor.data.data.attribs[this.attribute].value;
+                this.rawValue = this.actor.data.data.attribs[this.attribute].value;
 
             }
 
