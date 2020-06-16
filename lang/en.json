@@ -26,13 +26,13 @@
 "CoC7.Sex": "Sex",
 "CoC7.Residence": "Residence",
 "CoC7.Birthplace": "Birthplace",
-"CoC7.HitPoints": "Hit Points :",
-"CoC7.HP": "HP :",
-"CoC7.MagicPoints": "Magic Points :",
-"CoC7.MP": "MP :",
-"CoC7.Sanity": "Sanity :",
-"CoC7.SAN": "SAN :",
-"CoC7.Luck": "Luck :",
+"CoC7.HitPoints": "Hit Points",
+"CoC7.HP": "HP",
+"CoC7.MagicPoints": "Magic Points",
+"CoC7.MP": "MP",
+"CoC7.Sanity": "Sanity",
+"CoC7.SAN": "SAN",
+"CoC7.Luck": "Luck",
 "CoC7.Movement": "Movement",
 "CoC7.Mov": "Mov",
 "CoC7.BonusDamage": "Bonus Damage",
@@ -42,6 +42,11 @@
 "CoC7.Combat": "Combat",
 "CoC7.Possessions": "Possessions",
 "CoC7.Background": "Background",
-"CoC7.Notes": "Notes"
+"CoC7.Notes": "Notes",
 
+"CoC7.BonusDamageRoll": "Rolling Damage Bonus",
+"CoC7.Type": "Type",
+"CoC7.fightBack": "Fighting Back",
+"CoC7.dodge": "Dodging",
+"CoC7.maneuver": "Maneuvering"
 }

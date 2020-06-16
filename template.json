@@ -114,23 +114,23 @@
 				"status": {
 					"criticalWounds": {
 						"type": "Boolean",
-						"value": "false"
+						"value": false
 					},
 					"unconscious": {
 						"type": "Boolean",
-						"value": "false"
+						"value": false
 					},
 					"dying": {
 						"type": "Boolean",
-						"value": "false"
+						"value": false
 					},
 					"tempoInsane": {
 						"type": "boolean",
-						"value": "false"
+						"value": false
 					},
 					"indefInsane": {
 						"type": "boolean",
-						"value": "false"
+						"value": false
 					}
 				}
 			},
@@ -207,6 +207,7 @@
 			},
 
 			"infos":{
+				"type": null
 			},
 			"flags": {
 				"locked": false
