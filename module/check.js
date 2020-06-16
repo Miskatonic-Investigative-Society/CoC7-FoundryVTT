@@ -32,12 +32,21 @@ export class CoC7Check {
     static push( card){
         const actorId = card.dataset.tokenId ? card.dataset.tokenId : card.dataset.actorId;
         const skillId = card.dataset.skillId;
+        const charac = card.dataset.characteristic;
         const itemId = card.dataset.itemId;
         const diceMod = card.dataset.diceMod;
         const difficulty = card.dataset.difficulty;
 
-        const pushedRoll = new CoC7Check( actorId, skillId, itemId, diceMod, difficulty);
-        pushedRoll.roll(); //Pushing only skill/item roll, not charac nor rawVal roll;
+        let pushedRoll;
+        if( skillId) pushedRoll = new CoC7Check( actorId, skillId, itemId, diceMod, difficulty);
+        else if( charac){ 
+            pushedRoll = new CoC7Check();
+            pushedRoll.diceModifier = diceMod;
+            pushedRoll.difficulty = difficulty;
+            pushedRoll.actor = actorId;
+            pushedRoll.characteristic = charac;
+        } else return;
+        pushedRoll.roll();
         pushedRoll.toMessage( true, card);
         // pushedRoll.
         
@@ -105,7 +114,7 @@ export class CoC7Check {
         if( diceMod ) this.diceModifier = diceMod;
         if( difficulty ) this.difficulty = difficulty;
 
-        if( !this.skill) return null;
+        // if( !this.skill) return null;
 
         this._perform();
         
