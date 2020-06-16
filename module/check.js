@@ -266,9 +266,10 @@ export class CoC7Check {
             }
         }
         templateData.canBePushed = this.skill ? this.skill.canBePushed() : false;
+        if( this.characteristic != null) templateData.canBePushed = true;
         
         if( !this.passed) {
-            if( this.skill){
+            if( this.skill || this.characteristic){
                 let luckNeeded = this.dice.total - this.succesThreshold;
                 if( this.actor.luck > luckNeeded){
                     templateData.hasEnoughLuck = true;
