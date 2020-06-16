@@ -34,9 +34,9 @@ export class CoC7Check {
         const skillId = card.dataset.skillId;
         const itemId = card.dataset.itemId;
         const diceMod = card.dataset.diceMod;
-        const diffculty = card.dataset.difficulty;
+        const difficulty = card.dataset.difficulty;
 
-        const pushedRoll = new CoC7Check( actorId, skillId, itemId, diceMod, diffculty);
+        const pushedRoll = new CoC7Check( actorId, skillId, itemId, diceMod, difficulty);
         pushedRoll.roll(); //Pushing only skill/item roll, not charac nor rawVal roll;
         pushedRoll.toMessage( true, card);
         // pushedRoll.
@@ -171,7 +171,7 @@ export class CoC7Check {
             hasBonus: this.diceModifier == 0 ? false : true,
             // hasModifier: this.modifier == 0 ? false : true,
             bonus: Math.abs(this.diceModifier),
-            bonusType: this.diceModifier < 0 ? "penalty" : "bonus",
+            bonusType: this.diceModifier < 0 ? game.i18n.format("CoC7.DiceModifierPenalty") : game.i18n.format("CoC7.DiceModifierBonus"),
             // modifier: this.modifer,
             difficulty: this.difficulty
         };
@@ -220,27 +220,32 @@ export class CoC7Check {
                 templateData.isAttribute = true;
                 templateData.attribute = this.attribute;
                 this.rawValue = this.actor.data.data.attribs[this.attribute].value; //bug correction : row->raw
-
             }
 
         }
 
-        if( this.dice.total <= this.rawValue) templateData.resultType = "Regular success";
-        if( this.dice.total <= Math.floor(this.rawValue / 2)) templateData.resultType = "Hard success";
-        if( this.dice.total <= Math.floor(this.rawValue / 5)) templateData.resultType = "Extreme success";
-        if( this.dice.total > this.rawValue) templateData.resultType = "Failure";
-        const fumble = this.rawValue <= 50 ? 96 : 100;
+        if( this.dice.total <= this.rawValue) templateData.resultType = game.i18n.format("CoC7.RegularSuccess");
+        if( this.dice.total <= Math.floor(this.rawValue / 2)) templateData.resultType = game.i18n.format("CoC7.HardSuccess");
+        if( this.dice.total <= Math.floor(this.rawValue / 5)) templateData.resultType = game.i18n.format("CoC7.ExtremeSuccess");
+        if( this.dice.total > this.rawValue) templateData.resultType = game.i18n.format("CoC7.Failure");
+        const fumble = this.rawValue < 50 ? 96 : 100;
 
         switch( this.difficulty)
         {
             case CoC7Check.difficulty.extreme:
+                this.difficulty = game.i18n.format("CoC7.ExtremeDifficulty");
                 this.succesThreshold = Math.floor( this.rawValue / 5);
                 break;
             case CoC7Check.difficulty.hard:
+                this.difficulty = game.i18n.format("CoC7.HardDifficulty");
                 this.succesThreshold = Math.floor( this.rawValue / 2);
                 break;
+            case CoC7Check.difficulty.regular:
+                this.difficulty = game.i18n.format("CoC7.RegularDifficulty");
+                this.succesThreshold = this.rawValue;
             default:
                 this.succesThreshold = this.rawValue;
+                break;
         }
 
 
@@ -260,7 +265,6 @@ export class CoC7Check {
                 templateData.itemName = this.item.name;
             }
         }
-        templateData.difficulty = this.difficulty;
         templateData.canBePushed = this.skill ? this.skill.canBePushed() : false;
         
         if( !this.passed) {
@@ -269,6 +273,7 @@ export class CoC7Check {
                 if( this.actor.luck > luckNeeded){
                     templateData.hasEnoughLuck = true;
                     templateData.luckNeeded = luckNeeded;
+                    templateData.luckNeededTxt = game.i18n.format("CoC7.SpendLuck", {luckNeededValue : luckNeeded});
                 }
             }
         }
@@ -277,17 +282,17 @@ export class CoC7Check {
         const html = await renderTemplate(template, templateData);
         let flavor;
         if( this.actor){
-            if( this.skill ) flavor = `${this.skill.name} check (${this.skill.data.data.value}%) - ${this.difficulty} diffculty`;
-            if( this.item ) flavor = `${this.item.name} : ${this.skill.name} check (${this.skill.data.data.value}%) - ${this.difficulty} diffculty`;
-            if( this.characteristic) flavor = `${this.actor.data.data.characteristics[this.characteristic].label} check (${this.actor.data.data.characteristics[this.characteristic].value}) - ${this.difficulty} diffculty`;
-            if( this.attribute) flavor = `${this.actor.data.data.attribs[this.attribute].label} check (${this.actor.data.data.attribs[this.attribute].value}) - ${this.difficulty} diffculty`;
+            if (this.skill) flavor = game.i18n.format("CoC7.CheckResult", {name : this.skill.name, value : this.skill.data.data.value, difficulty : this.difficulty});
+            if (this.item) flavor = game.i18n.format("CoC7.ItemCheckResult", {item : this.item.name, skill : this.skill.name, value : this.skill.data.data.value, difficulty : this.difficulty});
+            if (this.characteristic) flavor = game.i18n.format("CoC7.CheckResult", {name : game.i18n.format(this.actor.data.data.characteristics[this.characteristic].label), value : this.actor.data.data.characteristics[this.characteristic].value, difficulty : this.difficulty});
+            if (this.attribute) flavor = game.i18n.format("CoC7.CheckResult", {name : game.i18n.format(this.actor.data.data.attribs[this.attribute].label), value : this.actor.data.data.attribs[this.attribute].value, difficulty : this.difficulty});
         }
         else {
-            if( this.rawValue) flavor = `(${this.rawValue}%) - ${this.difficulty} diffculty`;
+            if( this.rawValue) flavor = game.i18n.format("CoC7.CheckRawValue", {rawvalue : this.rawValue, difficulty : this.difficulty});
         }
 
         if( pushing) {
-            flavor = 'Pushing : ' + flavor;
+            flavor = game.i18n.format("CoC7.Pushing") + flavor;
         }
 
         let speaker;

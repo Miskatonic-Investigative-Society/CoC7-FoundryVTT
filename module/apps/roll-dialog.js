@@ -47,11 +47,14 @@ export class RollDialog {
 				buttons: {
 					roll: {
 						label: 'Roll !',
-						callback: html => formData = new FormData(html[0].querySelector("#bonus-roll-form"))
+						callback: html => {
+							formData = new FormData(html[0].querySelector("#bonus-roll-form"));
+							return resolve(formData);
+						}
 					}
 				},
 				default: "roll",
-				close: () => resolve( formData)
+				close: () => {}
 			});
 			dlg.render(true);
 		});
