@@ -3,16 +3,16 @@
 	data-token-id="{{tokenId}}">
 	
 	<div class="flexrow bonus" title="Pouet pouet trouloulou">
-        <span class="flex1 toggle-switch is-outnumbered simple-flag" data-flag="outnumbered" data-selected="false">Outnumbered</span>
+        <span class="flex1 toggle-switch is-outnumbered simple-flag" data-flag="outnumbered" data-selected="false">{{localize 'CoC7.OutNumbered'}}</span>
     </div>
     <div class="flexrow response-selection">
 		<span class="flex1 toggle-switch dodge simple-toggle"
 			data-action="dodge"
 			data-skill-id="{{dodgeSkill._id}}"
 			data-skill-value="{{dodgeSkill.data.data.value}}"
-			data-skill-name="{{dodgeSkill.name}}">Dodge</span>
+			data-skill-name="{{dodgeSkill.name}}">{{localize 'CoC7.dodge'}}</span>
         <div class="flex1 toggle-switch fight-back dropdown">
-            <span class="combat-action dropbtn">Fight Back</span>
+            <span class="combat-action dropbtn">{{localize 'CoC7.fightBack'}}</span>
             <div class="actor-skill dropdown-content">
                 {{#each closeCombatWeapons as |weapon key|}}
 					<a class="dropdown-element"
@@ -26,7 +26,7 @@
             </div>        
         </div>
         <div class="flex1 toggle-switch maneuver dropdown">
-            <span class="combat-action dropbtn">Maneuver</span>
+            <span class="combat-action dropbtn">{{localize 'CoC7.maneuver'}}</span>
             <div class="actor-skill dropdown-content">
                 {{#each fightingSkills as |skill key|}}
 					<a class="dropdown-element"

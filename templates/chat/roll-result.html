@@ -31,10 +31,10 @@
 						</ol>
 					</div>
 				</section>
-				<h4>{{resultType}}, {{difficulty}} {{localize 'CoC7.SuccessRequired'}}</h4>
+				<h4>{{resultType}}, {{successRequired}}</h4>
 			</div>
 			<h4 id="diceResult" class="dice-total {{#if isSuccess}}success{{else}}failure{{/if}}{{#if isCritical}} critical{{/if}}{{#if isFumble}} fumble{{/if}} ">{{dices.total}} {{#if pushing}} {{localize 'CoC7.PushedRoll'}}{{/if}}</h4>
-			{{#if hasMalfunction}}<h4>{{itemName}} {{localize 'CoC7.Malfunction'}}</h4>{{/if}}
+			{{#if hasMalfunction}}<h4>{{malfunctionTxt}}</h4>{{/if}}
 		</div>
 	</div>
 	{{#unless isSuccess}}

@@ -256,7 +256,7 @@ export class CoC7Check {
                 this.succesThreshold = this.rawValue;
                 break;
         }
-
+        templateData.successRequired = game.i18n.format("CoC7.SuccessRequired", {successRequired : this.difficulty});
 
 
         this.passed = this.succesThreshold >= this.dice.total ? true : false;
@@ -271,7 +271,7 @@ export class CoC7Check {
             templateData.isItem = true;
             if( this.item.data.data.malfunction) {
                 if( this.dice.total >= this.item.data.data.malfunction) templateData.hasMalfunction = true;
-                templateData.itemName = this.item.name;
+                templateData.malfunctionTxt = game.i18n.format("CoC7.Malfunction", {itemName : this.item.name});
             }
         }
         templateData.canBePushed = this.skill ? this.skill.canBePushed() : false;
