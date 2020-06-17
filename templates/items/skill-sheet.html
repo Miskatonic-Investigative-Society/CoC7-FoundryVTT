@@ -9,10 +9,10 @@
                     <input class="item-subclass" style="flex: 1;" type="text" name="data.specialization" value="{{data.specialization}}" placeholder="specialization"/>
                 {{/if}}
                 {{#if hasOwner}}
-                <label >Value</label>
+                <label >{{localize 'CoC7.SkillValue'}}</label>
                 <input type="text" name="data.value" value="{{data.value}}"/>
             {{else}}
-                <label>Base</label>
+                <label>{{localize 'CoC7.SkillBase'}}</label>
                 <input type="text" name="data.base" value="{{data.base}}"/>
             {{/if}}
             </div>
