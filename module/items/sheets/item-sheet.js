@@ -4,38 +4,33 @@ import  { COC7 } from "../../config.js"
  * Extend the basic ItemSheet with some very simple modifications
  */
 export class CoCItemSheet extends ItemSheet {
-  constructor(...args) {
-    super(...args);
+	constructor(...args) {
+		super(...args);
+		this._sheetTab = "items";
+	}
 
-    /**
-     * Keep track of the currently active sheet tab
-     * @type {string}
-     */
-    this._sheetTab = "items";
-  }
 
   /**
    * Extend and override the default options used by the Simple Item Sheet
    * @returns {Object}
    */
-  static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
-      classes: ["coc7", "sheet", "item"],
-      width: 520,
-      height: 480,
-      tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "skills"}]
-    });
-
-  }
+	static get defaultOptions() {
+		return mergeObject(super.defaultOptions, {
+			classes: ["coc7", "sheet", "item"],
+			width: 520,
+			height: 480,
+			tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "skills"}]
+		});
+	}
 
   
   /* -------------------------------------------- */
 
   /** @override */
-  get template() {
-    const path = "systems/CoC7/templates/items";
-    return `${path}/${this.item.data.type}-sheet.html`;
-  }
+	get template() {
+		const path = "systems/CoC7/templates/items";
+		return `${path}/${this.item.data.type}-sheet.html`;
+	}
 
   /* -------------------------------------------- */
   
@@ -45,42 +40,38 @@ export class CoCItemSheet extends ItemSheet {
    * Prepare data for rendering the Item sheet
    * The prepared data object contains both the actor data as well as additional sheet options
    */
-  getData() {
-    const data = super.getData();
-    // data.dtypes = ["String", "Number", "Boolean"];
-    // for (let attr of Object.values(data.data.attributes)) {
-    //   attr.isCheckbox = attr.dtype === "Boolean";
-    // }
+	getData() {
+		// this.item.checkSkillProperties();
+		const data = super.getData();
+		data.hasOwner = this.item.actor != null;
+		
+		if( this.item.data.type == "skill"){
+			
+			data._properties = [];
+			for( let [key, value] of Object.entries(COC7["skillProperties"]))
+			{
+				let property = {};
+				property.id = key;
+				property.name = value;
+				property.isEnabled = this.item.data.data.properties[key] == true;
+				data._properties.push(property);
+			}
 
-    data.hasOwner = this.item.actor != null;
+			data._eras = [];
+			for( let [key, value] of Object.entries(COC7["eras"]))
+			{
+				let era = {};
+				era.id = key;
+				era.name = value;
+				era.isEnabled = this.item.data.data.eras[key] == true;
+				data._eras.push(era);
+			}
 
-    if( this.item.data.type == "skill")
-    {
-      data._properties = [];
-      for( let [key, value] of Object.entries(COC7["skillProperties"]))
-      {
-        let property = {};
-        property.id = key;
-        property.name = value;
-        property.isEnabled = this.item.data.data.properties[key] == true;
-        data._properties.push(property);
-      }
-
-      data._eras = [];
-      for( let [key, value] of Object.entries(COC7["eras"]))
-      {
-        let era = {};
-        era.id = key;
-        era.name = value;
-        era.isEnabled = this.item.data.data.eras[key] == true;
-        data._eras.push(era);
-      }
-
-      data.isSpecialized = this.item.data.data.properties.special == true;
-    }    
-
-    return data;
-  }
+			data.isSpecialized = this.item.data.data.properties.special;
+			data.canModifySpec = !this.item.data.data.properties.firearm && !this.item.data.data.properties.fighting;
+		}    
+		return data;
+	}
 
   /* -------------------------------------------- */
 
@@ -89,29 +80,25 @@ export class CoCItemSheet extends ItemSheet {
    * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
    */
   activateListeners(html) {
-    super.activateListeners(html);
-    // Everything below here is only needed if the sheet is editable
-    if (!this.options.editable) return;
+	super.activateListeners(html);
+	// Everything below here is only needed if the sheet is editable
+	if (!this.options.editable) return;
 
-    html.find('.toggle-switch').click(this._onClickToggle.bind(this));
+	html.find('.toggle-switch').click(this._onClickToggle.bind(this));
   }
 
   /* -------------------------------------------- */
 
-  async _onClickToggle(event) {
-    event.preventDefault();
-    const propertyId = event.currentTarget.closest(".toggle-switch").dataset.property;
-    const set = event.currentTarget.parentElement.dataset.set;
-    const elementName = set + "-" + propertyId;
-    const checkboxControl = this.form.elements.namedItem(elementName);
-
-    if( checkboxControl.checked) checkboxControl.checked = false; else checkboxControl.checked = true;
-
-    //if( properties[propertyId] == "false") this.object.data.data.properties[propertyId] = "true"; else this.object.data.data.properties[propertyId] = "false";
-    event.target.classList.toggle("switched-on");
-    // this.item.toggleInSet( set, propertyId);
-    await this._onSubmit(event);
+  _onClickToggle(event) {
+	event.preventDefault();
+	const propertyId = event.currentTarget.closest(".toggle-switch").dataset.property;
+	this.item.toggleProperty( propertyId);
   }
+
+  _toggleSwitch( propertyId){
+
+  }
+
 
   // async _onClickAttributeControl(event) {
   //   event.preventDefault();
