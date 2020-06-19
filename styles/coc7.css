@@ -7,6 +7,9 @@
     transform: translate(-50%, -50%);
 }
 
+.card-result{
+    margin-bottom: 5px;
+}
 
 .coc7.chat-card .dropbtn {
     font-size: 10px;
@@ -26,8 +29,7 @@
     position: relative;
     display: inline-block;
 }
-  
-  
+
 .coc7.chat-card .dropdown-content {
     display: none;
     position: absolute;
@@ -49,6 +51,19 @@
 }
   
 .coc7.chat-card .show {display: block;}
+
+.coc7.chat-card label{
+    text-align: left;
+    margin-bottom: 0;
+}
+
+.coc7.chat-card .defender-action-select {
+    border-bottom: groove 2px #FFF;
+}
+
+.coc7.chat-card .response-selection {
+    margin-bottom: 2px;
+}
 
 .coc7 .auto-on{
     color: green;
@@ -240,6 +255,24 @@
     background: transparent;
     font-style: italic;
     color: grey;
+}
+
+.coc7 .toggle-switch.inactive {
+    text-decoration: line-through;
+    border: 1px solid white;
+    color: white;
+}
+
+.coc7 .toggle-switch.inactive:hover {
+    cursor: not-allowed;
+    background-color: transparent;
+}
+
+.coc7 .malfunction{
+    text-align: center;
+    padding-top: 5px;
+    color: red;
+    font-size: 15px;
 }
 
 .coc7 .switched-on {
@@ -448,7 +481,8 @@
     box-shadow: 0 0 4px red;
 }
 
-.coc7.sheet .editable .rollable:hover {
+.coc7.sheet .editable .rollable:hover,
+.damage-roll.rollable:hover {
     color: #000;
     text-shadow: 0 0 10px red;
     cursor: pointer;

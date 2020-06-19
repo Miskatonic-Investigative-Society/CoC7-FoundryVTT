@@ -5,16 +5,21 @@
             <div class="item-name" style="display: flex; flex-direction: row; height: 24px;">
                 <input class="item-class" style="flex: 1;" type="text" name="name" value="{{item.name}}" placeholder="name"/>
                 {{#if isSpecialized}}
-                    <span>/</span>
+                    <span style="line-height: 22px;padding-right: 3px;">/</span>
+                    {{#if canModifySpec}}
                     <input class="item-subclass" style="flex: 1;" type="text" name="data.specialization" value="{{data.specialization}}" placeholder="specialization"/>
+                    {{else}}
+                    <div class="item-subclass" style="flex: 1;line-height: 22px;">{{data.specialization}}</div>
+                    {{/if}}
                 {{/if}}
                 {{#if hasOwner}}
                 <label >{{localize 'CoC7.SkillValue'}}</label>
                 <input type="text" name="data.value" value="{{data.value}}"/>
             {{else}}
                 <label>{{localize 'CoC7.SkillBase'}}</label>
+
                 <input type="text" name="data.base" value="{{data.base}}"/>
-            {{/if}}
+                {{/if}}
             </div>
             <div class="skill-value" style="display: flex; flex-direction: row;">
 
@@ -23,9 +28,9 @@
             <div class="skill-attributes" style="display: block;" data-set="properties">
                 {{#each _properties as |property key|}}
                     <span class="toggle-switch {{#if property.isEnabled}} switched-on {{/if}}" data-property="{{property.id}}">{{property.name}}</span>
-                    <div style="display: none;">
+                    <!-- <div style="display: none;">
                         <input id="properties-{{property.id}}" type="checkbox" name="data.properties.{{property.id}}" {{checked property.isEnabled}}/>
-                    </div>
+                    </div> -->
                 {{/each}}
             </div>
         </div>
