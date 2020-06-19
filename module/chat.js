@@ -11,32 +11,73 @@ export class CoC7Chat{
 	 *  Init sockets                                *
 	 *----------------------------------------------*/
 
-	static ready()
-	{
-		console.log('-->CoC7Chat.ready');
-		game.socket.on('message', function (data){console.log(data);});
-	}
+	// static ready()
+	// {
+	// 	console.log('-->CoC7Chat.ready');
+	// 	game.socket.on('message', function (data){console.log(data);});
+	// }
 
-	static onMessage( data) {
-		console.log('-->CoC7Chat.onMessage');
-		console.log(`message received send&er :${data.user} message type : ${data.action} for message :${data.messageId}`);
-	}
+	// static onMessage( data) {
+	// 	console.log('-->CoC7Chat.onMessage');
+	// 	console.log(`message received send&er :${data.user} message type : ${data.action} for message :${data.messageId}`);
+	// }
 
 	/* -------------------------------------------- *
 	 *  Chat Message Helpers                        *
 	 * -------------------------------------------- */
+
+
 	static chatListeners(app, html, data) {
 		console.log('-->CoC7Chat.chatListeners');
 		html.on('click', '.card-buttons button', CoC7Chat._onChatCardAction.bind(this));
-		html.on('click', '.card-header', CoC7Chat._onChatCardToggleContent.bind(this));
+		// html.on('click', '.card-buttons button', CoC7Chat._onChatCardTest.bind(this));
+		html.on('click', '.card-title', CoC7Chat._onChatCardToggleContent.bind(this));
 		html.on('click', '.radio-switch', CoC7Chat._onChatCardRadioSwitch.bind(this));
 		html.on('click', '.panel-switch', CoC7Chat._onChatCardToggleSwitch.bind(this));
-
-		
 	}
 
-	static messageListeners(app, html, data) {
-		console.log('-->CoC7Chat.messageListeners');
+	static preCreateChatMessageHook( chatMessage, content, diff, speaker){
+
+	}
+
+	static async renderMessageHook(message, html, data) {
+		console.log('************************************************************-->CoC7Chat.messageListeners message :' + message.id);
+		// message.data.content = "";
+		// data.message.content = "";
+
+		//When a new card is published, check wether it's a roll that modifies an other card.
+		if( game.user.isGM){
+			const card = html[0].querySelector('.coc7.chat-card');
+			if( card){
+				if( card.classList.contains('roll-card') && !(card.dataset.processed == "true") && card.dataset.refMessageId){
+
+					const rollData = {
+						rollType: card.dataset.rollType,
+						side: card.dataset.side,
+						action: card.dataset.action,
+						referenceMessageId: card.dataset.refMessageId,
+						successLevel: card.dataset.successLevel,
+						difficulty: card.dataset.difficulty,
+						tokenId: card.dataset.tokenId,
+						actorId: card.dataset.actorId,
+						skillId: card.dataset.skillId,
+						itemId: card.dataset.itemId,
+						diceMod: card.dataset.diceMod,
+						value: card.dataset.value,
+						characteristic: card.dataset.characteristic,
+						fumble: card.dataset.fumble == "true",
+						critical: card.dataset.critical  == "true"
+					}
+
+					if( card.dataset.side =="target") rollData.defendantId = card.dataset.tokenId ? card.dataset.tokenId : card.dataset.actorId;
+					if( card.dataset.side =="initiator") rollData.initiatorId = card.dataset.tokenId ? card.dataset.tokenId : card.dataset.actorId;
+					card.dataset.processed = "true";
+
+					CoC7Chat.updateCombatCardTarget( rollData);
+				}
+			}
+		}
+
 		html.on('click', '.dropdown-element', CoC7Chat._onDropDownElementSelected.bind(this));
 		html.on('click', '.simple-toggle', CoC7Chat._onToggleSelected.bind(this));
 		html.on('click', '.simple-flag', CoC7Chat._onFlagSelected.bind(this))
@@ -68,34 +109,230 @@ export class CoC7Chat{
 			const ownerOnly = html.find('.owner-only');
 			for( let zone of ownerOnly )
 			{
-				let actorId = zone.dataset.actorId;
-				let actor = game.actors.get( actorId);
-				if( !actor.owner) {zone.style.display = "none"} //if current user doesn't own this he can't interract
+				const cardActor = CoC7Chat._getChatCardActor(zone.closest('.chat-card'));
+				
+				// const actor = game.actors.get( actorId);
+				if( !cardActor.owner) {zone.style.display = "none"} //if current user doesn't own this he can't interract
 			}
 		}
+	}
 
-		const backersDropZone = html.find("#backers");
-		const advresariesDropZone = html.find('#adversaries');
-		const protagonists = html.find('.roll-protagonist');
+	static async resolveCombatCard( card){
+		const initiatorData = card.querySelector('.initiator-action-result').dataset;
+		const initiator = CoC7Chat._getActorFromKey( initiatorData.initiatorid);
+		let initiatorSuccess = {}
+		if( !initiator) return null;
+		const initiatorWeapon = initiator.getOwnedItem( initiatorData.itemid);
+		initiatorSuccess.successLevel = parseInt( initiatorData.successlevel);
+		initiatorSuccess.difficulty = parseInt( initiatorData.difficulty);
+		
+		if( initiatorSuccess.successLevel >= 1) initiatorSuccess.netSuccess = initiatorSuccess.successLevel - initiatorSuccess.difficulty + 1;
+		else initiatorSuccess.netSuccess = 0;
 
-		for( let protagonist of protagonists)
-		{
-			protagonist.addEventListener('contextmenu', event => this._onContextMenu( event), false);
-			protagonist.addEventListener('dragstart', event => this._onDragItemStart(event), false)
 
-		}
 
-		if( backersDropZone.length != 0){
-			backersDropZone[0].addEventListener('drop', event => CoC7Chat._onDrop( event));
-		}
+		const targets = card.querySelectorAll('.defender-action-result');
 
-		if( advresariesDropZone.length != 0){
-			advresariesDropZone[0].addEventListener('drop', event => CoC7Chat._onDrop( event));
+		[].forEach.call( targets, target => {
+			const targetActor = CoC7Chat._getActorFromKey( target.dataset.defendantid);
+			if( !targetActor){
+				ui.notifications.error( 'Actor does not exist');
+				return null;
+			}
+
+			let targetSuccess = {}
+			targetSuccess.successLevel = parseInt( target.dataset.successlevel);
+			targetSuccess.difficulty = parseInt( target.dataset.difficulty);
+			
+			if( targetSuccess.successLevel >= 1) targetSuccess.netSuccess = targetSuccess.successLevel - targetSuccess.difficulty + 1;
+			else targetSuccess.netSuccess = 0;
+	
+			let flavor;
+			let formula;
+			let db;
+			switch (target.dataset.action) {
+				case "maneuver":
+					if( initiatorSuccess.netSuccess >= targetSuccess.netSuccess && initiatorSuccess.successLevel >= 1){
+						db = "";
+						if( initiator.db == 0 ) db="";
+						else if( initiator.db == -2 && initiatorWeapon.data.data.properties.ahdb ) db="-1";
+						else if( initiator.db == -2 && initiatorWeapon.data.data.properties.addb ) db="-2";
+						else if( initiator.db == -1 && initiatorWeapon.data.data.properties.ahdb ) db="";
+						else if( initiator.db == -1 && initiatorWeapon.data.data.properties.addb ) db="-1";
+						else if( initiatorWeapon.data.data.properties.addb ) db = `+${initiator.db}`
+						else if( initiatorWeapon.data.data.properties.ahdb ) db = `+${initiator.db}/2`
+						formula = initiatorWeapon.data.data.range.normal.damage + db;
+//						flavor=`<div class='card-result'>${targetActor.name} maneuver failled. ${initiator.name} deals <span class='damage-roll rollable' data-target='${target.dataset.defendantid}' data-formula='${formula}'>${formula}</span> damage</div>`;
+						flavor=`<div class='card-result'>${targetActor.name} maneuver failled. ${initiator.name} deals <a class="inline-roll roll" data-mode="roll" data-flavor="" data-formula="${formula}" title="${formula}"><i class="fas fa-dice-d20"></i>${formula}</a> damage</div>`;
+					} else if(targetSuccess.netSuccess > initiatorSuccess.netSuccess && targetSuccess.successLevel >= 1) {
+						flavor=`<div class='card-result'>${targetActor.name} maneuver succeded. ${initiator.name} attack missed.</div>`;
+						
+					} else {
+						flavor=`<div class='card-result'>Both fail. Nothing happened</div>`;
+					}
+					break;
+				case "fightBack":
+					if( initiatorSuccess.netSuccess >= targetSuccess.netSuccess && initiatorSuccess.successLevel >= 1){
+						db = "";
+						if( initiator.db == 0 ) db="";
+						else if( initiator.db == -2 && initiatorWeapon.data.data.properties.ahdb ) db="-1";
+						else if( initiator.db == -2 && initiatorWeapon.data.data.properties.addb ) db="-2";
+						else if( initiator.db == -1 && initiatorWeapon.data.data.properties.ahdb ) db="";
+						else if( initiator.db == -1 && initiatorWeapon.data.data.properties.addb ) db="-1";
+						else if( initiatorWeapon.data.data.properties.addb ) db = `+${initiator.db}`
+						else if( initiatorWeapon.data.data.properties.ahdb ) db = `+${initiator.db}/2`
+						formula = initiatorWeapon.data.data.range.normal.damage + db;
+						flavor=`<div class='card-result'>${initiator.name} deals ${targetActor.name} <a class="inline-roll roll" data-mode="roll" data-flavor="" data-formula="${formula}" title="${formula}"><i class="fas fa-dice-d20"></i>${formula}</a> damage</div>`;
+					} else if(targetSuccess.netSuccess > initiatorSuccess.netSuccess && targetSuccess.successLevel >= 1) {
+						db = "";
+						const targetWeapon = targetActor.getOwnedItem( target.dataset.itemid);
+						if( !targetWeapon){
+							ui.notifications.error( 'Weapon not found');
+						}
+						if( targetActor.db == 0 ) db="";
+						else if( targetActor.db == -2 && targetWeapon.data.data.properties.ahdb ) db="-1";
+						else if( targetActor.db == -2 && targetWeapon.data.data.properties.addb ) db="-2";
+						else if( targetActor.db == -1 && targetWeapon.data.data.properties.ahdb ) db="";
+						else if( targetActor.db == -1 && targetWeapon.data.data.properties.addb ) db="-1";
+						else if( targetWeapon.data.data.properties.addb ) db = `+${targetActor.db}`
+						else if( targetWeapon.data.data.properties.ahdb ) db = `+${targetActor.db}/2`
+						formula = targetWeapon.data.data.range.normal.damage + db;
+						flavor=`<div class='card-result'>${targetActor.name} deals ${initiator.name} <a class="inline-roll roll" data-mode="roll" data-flavor="" data-formula="${formula}" title="${formula}"><i class="fas fa-dice-d20"></i>${formula}</a> damage</div>`;
+						
+					} else {
+						flavor=`<div class='card-result'>Both fail. Nothing happened.</div>`
+					}
+					break;
+				
+				case "dodging":
+					if( initiatorSuccess.netSuccess > targetSuccess.netSuccess && initiatorSuccess.successLevel >= 1){
+						db = "";
+						if( initiator.db <= 0 ) db="";
+						else if( initiator.db == -2 && initiatorWeapon.data.data.properties.ahdb ) db="-1";
+						else if( initiator.db == -2 && initiatorWeapon.data.data.properties.addb ) db="-2";
+						else if( initiator.db == -1 && initiatorWeapon.data.data.properties.ahdb ) db="";
+						else if( initiator.db == -1 && initiatorWeapon.data.data.properties.addb ) db="-1";
+						else if( initiatorWeapon.data.data.properties.addb ) db = `+${initiator.db}`
+						else if( initiatorWeapon.data.data.properties.ahdb ) db = `+0.5*${initiator.db}`
+						formula = initiatorWeapon.data.data.range.normal.damage + db;
+						flavor=`<div class='card-result'>${initiator.name} deals ${targetActor.name} <a class="inline-roll roll" data-mode="roll" data-flavor="" data-formula="${formula}" title="${formula}"><i class="fas fa-dice-d20"></i>${formula}</a> damage</div>`;
+					} else if(targetSuccess.netSuccess >= initiatorSuccess.netSuccess && targetSuccess.successLevel >= 1) {
+						flavor=`<div class='card-result'>${targetActor.name} successfully dodged ${initiator.name} attack</div>`;
+						
+					} else {
+						flavor=`<div class='card-result'>Both fail. Nothing happened.</div>`
+					}
+				
+					break;
+				default:
+					break;
+			}
+			const oldResult = target.querySelector('.card-result');
+			if( oldResult) oldResult.remove();
+			$(target).append(flavor);
+		});
+
+		return card;		
+	}
+	
+	static async updateCombatCardTarget( rollData){
+		const message = game.messages.get( rollData.referenceMessageId);
+		if( message == null) return;
+		const card = $( message.data.content )[ 0 ];
+		let cardIsReady = false;
+		if( card){
+			if( rollData.side == "target"){
+				const targetZones = card.querySelectorAll('.defender-action-select');
+				const initiatorZone = card.querySelector('.initiator-action-select');
+
+				let targetZone = null;
+				let resolved = true;
+
+				[].forEach.call( targetZones, zone => {
+					if( zone.dataset.tokenId == rollData.defendantId || zone.dataset.actorId == rollData.defendantId)
+					{
+						targetZone = zone;
+					} else if( !zone.classList.contains('resolved')) resolved = false;
+
+				});
+				
+				if( !targetZone) return;
+
+				const defendant = CoC7Chat._getActorFromKey( rollData.defendantId);
+				const initiator = CoC7Chat._getChatCardActor( card);
+				rollData.defendant = defendant;
+				rollData.initiator = initiator;
+				rollData.netSuccess = parseInt(rollData.successLevel) - parseInt(rollData.difficulty);
+				rollData.success = parseInt(rollData.successLevel) > 0;
+				if( rollData.success) rollData.successString = `${defendant.name} : ${rollData.action} was successfull. ${rollData.netSuccess + 1} net success`;
+					else rollData.successString = `${defendant.name} : ${rollData.action} failled`;
+				if( rollData.fumble) rollData.successString = `${defendant.name} made a fumble`;
+				if( rollData.critical) rollData.succesString = `${defendant.name} made a critical success !. ${rollData.netSuccess + 1} net success`
+
+				const template = 'systems/CoC7/templates/chat/parts/defender-result.html';
+				const htmlItem = await renderTemplate(template, rollData);
+
+				targetZone.innerHTML = htmlItem;
+				targetZone.classList.add('resolved');
+				targetZone.classList.remove('target-only');
+				if( resolved){
+					card.querySelector('.defenders-actions-container').classList.add('resolved');
+					if( initiatorZone.classList.contains('resolved'))
+					{
+						card.dataset.resolved = true;
+						card.classList.add('card-ready');
+						cardIsReady = true;
+					}
+				}
+			}
+
+			if( rollData.side == "initiator"){
+				const initiatorZone = card.querySelector('.initiator-action-select');
+
+				if( !initiatorZone) return;
+				const initiator = CoC7Chat._getChatCardActor( card);
+				rollData.initiator = initiator;
+				rollData.netSuccess = parseInt(rollData.successLevel) - parseInt(rollData.difficulty);
+				rollData.success = parseInt(rollData.successLevel) > 0;
+				if( rollData.success) rollData.successString = `${initiator.name} : ${rollData.action} was successfull. ${rollData.netSuccess + 1} net success`;
+					else rollData.successString = `${initiator.name} : ${rollData.action} failled`;
+				if( rollData.fumble) rollData.successString = `${initiator.name} made a fumble`;
+				if( rollData.critical) rollData.succesString = `${initiator.name} made a critical success !. ${rollData.netSuccess + 1} net success`
+
+				const template = 'systems/CoC7/templates/chat/parts/initiator-result.html';
+				const htmlItem = await renderTemplate(template, rollData);
+
+				initiatorZone.innerHTML = htmlItem;
+				initiatorZone.classList.remove('owner-only');
+				initiatorZone.classList.add('resolved');
+				if( card.querySelector('.defenders-actions-container').classList.contains('resolved'))
+				{
+					card.dataset.resolved = true;
+					card.classList.add('card-ready');
+					cardIsReady = true;
+				}
+
+			}
+
+			if( cardIsReady){
+				const newCard = await CoC7Chat.resolveCombatCard(card);
+			}
+
+			message.update({ content: card.outerHTML }).then(msg => {
+				ui.chat.updateMessage( msg, false);
+			});		
 		}
 	}
 
 	static _onFlagSelected( event){
-		const actionButton = event.currentTarget.closest('.defender-action-select').querySelector('.selected-action').querySelector('button');
+		let actionButton;
+		if( event.currentTarget.dataset.side == "initiator") {
+			actionButton = event.currentTarget.closest('.initiator-action-select').querySelector('button')
+		}
+		else if(  event.currentTarget.dataset.side == "target")
+		{
+			actionButton = event.currentTarget.closest('.defender-action-select').querySelector('button');
+		}
 
 		if( event.currentTarget.classList.contains('switched-on')){
 			event.currentTarget.classList.remove('switched-on');
@@ -108,7 +345,6 @@ export class CoC7Chat{
 			event.currentTarget.dataset.selected='true';
 			actionButton.dataset[event.currentTarget.dataset.flag] = "true";
 		}
-
 	}
 
 	static _onDropDownElementSelected( event){
@@ -132,7 +368,8 @@ export class CoC7Chat{
 		//Pass the defendant Id
 
 		//Pass the defendant action
-		button.dataset.action = "fighting";
+		button.dataset.action = "defending";
+		button.dataset.actionType = event.currentTarget.dataset.action;
 		button.dataset.defenderChoice = event.currentTarget.dataset.action;
 		button.dataset.skillId = event.currentTarget.dataset.skillId;
 		button.dataset.skillValue = event.currentTarget.dataset.skillValue;
@@ -166,7 +403,8 @@ export class CoC7Chat{
 		selectedBox.style.display = "block";
 		const button = selectedBox.querySelector('button');
 
-		button.dataset.action = "fighting";
+		button.dataset.action = "defending";
+		button.dataset.actionType = "dodging";
 		button.dataset.defenderChoice = event.currentTarget.dataset.action;
 		button.dataset.skillId = event.currentTarget.dataset.skillId;
 		button.dataset.skillValue = event.currentTarget.dataset.skillValue;
@@ -224,33 +462,33 @@ export class CoC7Chat{
 		CoC7Chat.removeFromProtagonists( HTMLmessage, dropZoneName, itemId);
 	}
 
-	static removeFromProtagonists( HTMLmessage, side, itemId){
-		// const oldChatMessage = game.messages.get( chatMessageId);
-		// let oldMessageHTML = document.createElement('div');
-		// oldMessageHTML.innerHTML = oldChatMessage.data.content;
-		// let newHTMLMessage = oldMessageHTML.firstChild;
+	// static removeFromProtagonists( HTMLmessage, side, itemId){
+	// 	// const oldChatMessage = game.messages.get( chatMessageId);
+	// 	// let oldMessageHTML = document.createElement('div');
+	// 	// oldMessageHTML.innerHTML = oldChatMessage.data.content;
+	// 	// let newHTMLMessage = oldMessageHTML.firstChild;
 
-		let chatCard = HTMLmessage.getElementsByClassName('chat-card')[0];
-		let protagonistsList = chatCard.getElementsByTagName('div')[side];
+	// 	let chatCard = HTMLmessage.getElementsByClassName('chat-card')[0];
+	// 	let protagonistsList = chatCard.getElementsByTagName('div')[side];
 
-		const protagonistsArray = [...protagonistsList.children];
+	// 	const protagonistsArray = [...protagonistsList.children];
 
-		const element = protagonistsArray.find( element => element.dataset.itemId == itemId);
-		element.remove();
+	// 	const element = protagonistsArray.find( element => element.dataset.itemId == itemId);
+	// 	element.remove();
 
-		let newMessage = {
-			user: game.user._id,
-			hideData: true,
-			content: chatCard.outerHTML
-		}
+	// 	let newMessage = {
+	// 		user: game.user._id,
+	// 		hideData: true,
+	// 		content: chatCard.outerHTML
+	// 	}
 
-		const chatMessageId = HTMLmessage.dataset.messageId;
-		const chatMessage = game.messages.get( chatMessageId);
+	// 	const chatMessageId = HTMLmessage.dataset.messageId;
+	// 	const chatMessage = game.messages.get( chatMessageId);
 
 
-		let newChatMessage = chatMessage.update(newMessage);
-		ui.chat.updateMessage( newChatMessage, false);
-	}
+	// 	let newChatMessage = chatMessage.update(newMessage);
+	// 	ui.chat.updateMessage( newChatMessage, false);
+	// }
 
 	static async _onDragItemStart( event){
 		console.log('-->CoC7Chat._onDragItemStart');
@@ -297,6 +535,23 @@ export class CoC7Chat{
 		// Case 2 - use Actor ID directory
 		const actorId = card.dataset.actorId;
 		return game.actors.get(actorId) || null;
+	}
+
+	static _getActorFromKey(key) {
+
+		// Case 1 - a synthetic actor from a Token
+		if (key.includes(".")) {
+		const [sceneId, tokenId] = key.split(".");
+		const scene = game.scenes.get(sceneId);
+		if (!scene) return null;
+		const tokenData = scene.getEmbeddedEntity("Token", tokenId);
+		if (!tokenData) return null;
+		const token = new Token(tokenData);
+		return token.actor;
+		}
+
+		// Case 2 - use Actor ID directory
+		return game.actors.get(key) || null;
 	}
 
 	static getActorFromToken( tokenKey)
@@ -355,8 +610,8 @@ export class CoC7Chat{
 			// oldMessageHtml.innerHTML = dropZone.closest('.chat-card').outerHTML;
 			let newHtmlMessage = dropZone.closest('.chat-card');
 
-			let foo = newHtmlMessage.getElementsByTagName('div')[dropZoneName];
-			foo.insertAdjacentHTML('beforeend', htmlItem);
+			let msg = newHtmlMessage.getElementsByTagName('div')[dropZoneName];
+			msg.insertAdjacentHTML('beforeend', htmlItem);
 
 			let newMessage = {
 				user: game.user._id,
@@ -373,17 +628,14 @@ export class CoC7Chat{
 	 * update a chat message with a new HTML content and populate it.
 	 * @param {HTMLElement} card 
 	 */
-	static updateChatCard( card){
-		const messageId = card.closest('.message').dataset.messageId;
-		let oldMessage = game.messages.get( messageId);
-		let newMessage = {
-			user: game.user._id,
-			hideData: true,
-			content: card.outerHTML
-		}
+	static async updateChatCard( card, messId = null){
+		const messageId = messId == null ? card.closest('.message').dataset.messageId: messId;
+		let message = game.messages.get( messageId);
 
-		let resultMsg = oldMessage.update(newMessage);
-		ui.chat.updateMessage( resultMsg, false);
+		message.update({ content: card.outerHTML }).then(msg => {
+			ui.chat.updateMessage( msg, false);
+			return msg;
+		});
 	}
 
 
@@ -435,6 +687,22 @@ export class CoC7Chat{
 	 * @returns {Promise}         A promise which resolves once the handler workflow is complete
 	 * @private
 	 */
+
+	static _onChatCardTest(event) {
+		console.log('-->CoC7Chat._onChatCardAction');
+		event.preventDefault();
+
+		const card = event.currentTarget.closest(".chat-card");
+		const messageId = card.closest('.message').dataset.messageId;
+		const message = game.messages.get( messageId);
+
+		card.querySelector('.card-buttons').remove();
+
+
+		message.update({ content: card.outerHTML }).then(msg => {
+			ui.chat.updateMessage( msg, false);
+		});
+	}
 	
 	static async _onChatCardAction(event) {
 
@@ -443,22 +711,22 @@ export class CoC7Chat{
 
 		const button = event.currentTarget;
 		const card = button.closest(".chat-card");
+		const originMessage = button.closest('.message');
 		const action = button.dataset.action;
-		// const roll = CoC7Chat.parseChatCard( card);
 
-
-		// Get the Actor from a synthetic Token
-		const actor = CoC7Item._getChatCardActor(card);
-		if ( !actor ) return;
+		if ( !CoC7Chat._getChatCardActor(card) ) return;
 
 		switch( action){
 			case "useLuck":
-				//ui.notifications.info("spending luck");
+				//TODO implémenter l'augmentation de niveau de réussite !
 				const luckAmount = parseInt(button.dataset.luckAmount);
+				let actor = CoC7Chat._getChatCardActor(card);
 
-				// let test = ;
-				if( await actor.spendLuck( luckAmount)){
+				if( actor.spendLuck( luckAmount)){
+
 					let result = card.querySelector('.dice-total');
+					card.dataset.successLevel = 1;
+					card.dataset.processed = "false"; //trigger 3 updates de card
 					result.innerText = `${luckAmount} luck spent to pass`;
 					result.classList.replace( 'failure', 'success');
 					result.classList.remove( 'fumble');
@@ -470,15 +738,15 @@ export class CoC7Chat{
 				break;
 
 			case "push":
-				let result = card.querySelector('.dice-total');
+				let newCard = card.cloneNode(true);
+				let result = newCard.querySelector('.dice-total');
 				result.innerText = result.innerText + ` pushing skill`;
 				result.classList.remove('failure');
-				card.querySelector('.card-buttons').remove();
-				CoC7Chat.updateChatCard( card);
+				newCard.querySelector('.card-buttons').remove();
+				let newMsg = await CoC7Chat.updateChatCard( newCard, originMessage.dataset.messageId);
 				CoC7Check.push( card);
-				//ui.notifications.info("pushing skill");
 				break;
-			case "fighting":
+			case "defending":
 				let defenderKey =  event.currentTarget.closest('.defender-action-select').dataset.tokenId;
 				let defender;
 				if( !defenderKey){
@@ -489,9 +757,77 @@ export class CoC7Chat{
 					defender =this.getActorFromToken(defenderKey);
 				}
 
-				
+				const responseType = event.currentTarget.dataset.actionType;
+				const outnumbered = event.currentTarget.dataset.outnumbered === "true";
+				let check = new CoC7Check();
+				check.referenceMessageId = originMessage.dataset.messageId;
+				check.rollType= "opposed";
+        		check.side = "target";
+				check.action = responseType;
+				switch (responseType) {
+					case "dodging":
+						check.actor = defender;
+						check.skill = event.currentTarget.dataset.skillId;
+						check.difficulty = CoC7Check.difficulty.regular;
+						if( outnumbered) check.diceModifier = -1;
 
-				ui.notifications.info(`${defender.name} (build: ${defender.build}) is defending vs initiator ${actor.name} (build: ${actor.build})`);
+						check.roll();
+						check.toMessage();
+						break;
+					case "fightBack":
+						check.actor = defender;
+						check.skill = event.currentTarget.dataset.skillId;
+						check.difficulty = CoC7Check.difficulty.regular;
+						check.item = event.currentTarget.dataset.itemId;
+						if( outnumbered) check.diceModifier = -1;
+
+						check.roll();
+						check.toMessage();
+						break;
+					case "maneuver":
+						let actor = CoC7Chat._getChatCardActor(card);
+						if( defender.build <= actor.build - 3) {
+							ui.notifications.error("Your opponant is too strong for you to perform a maneuver");
+							return;
+						}
+						check.actor = defender;
+						check.skill = event.currentTarget.dataset.skillId;
+						check.difficulty = CoC7Check.difficulty.regular;
+						if( outnumbered) check.diceModifier = -1;
+						if( defender.build < actor.build) check.diceModifier = check.diceModifier - (actor.build - defender.build);
+						
+						if( check.diceModifier < -2){
+							check.difficulty = check.difficulty + Math.abs( check.diceModifier) - 2;
+							check.diceModifier = -2;
+						}
+
+						check.roll();
+						check.toMessage();
+						break;
+				
+					default:
+						break;
+				}
+				break;
+								
+			case "initiator-roll":
+				let initiatorRollActor = CoC7Chat.getActorFromToken( event.currentTarget.dataset.tokenId);
+				if( initiatorRollActor == null) initiatorRollActor = game.actors.get( event.currentTarget.dataset.actorId);
+		
+				const initiatorCheck = new CoC7Check();
+				initiatorCheck.referenceMessageId = originMessage.dataset.messageId;
+				initiatorCheck.rollType= "opposed";
+        		initiatorCheck.side = "initiator";
+				initiatorCheck.action = "attack";
+				initiatorCheck.actor = initiatorRollActor;
+				initiatorCheck.difficulty = CoC7Check.difficulty.regular;
+				if( event.currentTarget.dataset.outnumbered === "true") initiatorCheck.diceModifier = -1;
+
+				initiatorCheck.item = event.currentTarget.dataset.itemId;
+
+				initiatorCheck.roll();
+				initiatorCheck.toMessage();
+
 				break;
 			default:
 				
@@ -615,16 +951,16 @@ export class CoC7Chat{
 			for( let target of game.user.targets){
 				const templateData = {};
 
-				let newTarget = $(`<div class="target">${target.name}</div>`);
+				// let newTarget = $(`<div class="target">${target.name}</div>`);
 				if( target.actor.isToken){
-					newTarget.attr('data-token-id', `${target.scene.id}.${target.id}`);
+					// newTarget.attr('data-token-id', `${target.scene.id}.${target.id}`);
 					templateData.tokenId = `${target.scene.id}.${target.id}`;
 				}
 				else{
-					newTarget.attr('data-actor-id', `${target.actor.id}`);
+					// newTarget.attr('data-actor-id', `${target.actor.id}`);
 					templateData.actorId = target.actor.id;
 				}
-				$(targets).append(newTarget);
+				// $(targets).append(newTarget);
 
 				//Incorrect !! figthing back = using a (close combat ?) weapon, a maneuver uses a skill.
 				templateData.fightingSkills = target.actor.getFightingSkills();
@@ -633,6 +969,8 @@ export class CoC7Chat{
 				templateData.defenderBuild = target.actor.build;
 				templateData.initiatorBuild = initiator.build;
 				templateData.canManeuver = true;
+				templateData.initiator = initiator;
+				templateData.defender = target.actor;
 
 				const template = 'systems/CoC7/templates/chat/parts/defender-action.html';
 				const htmlDefenderActions = await renderTemplate(template, templateData);
