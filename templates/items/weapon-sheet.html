@@ -36,7 +36,7 @@
 			<div style="display: flex; flex-direction: row; height: 24px;">
 				{{#if data.properties.rngd}}
 					<div style="display: flex; flex: 0 0 50%;">
-						<label>Range:</label>
+						<label>{{localize 'CoC7.WeaponRange'}}</label>
 						<input class="item-skill" style="flex: 1;" type="text" name="data.range.normal.value" value="{{data.range.normal.value}}" placeholder="Norm."/>
 						{{#if data.properties.xplv}}
 							<input class="item-skill" style="flex: 1;" type="text" name="data.range.long.value" value="{{data.range.long.value}}" placeholder="Long"/>
@@ -44,7 +44,7 @@
 						{{/if}}
 					</div>
 					<div style="display: flex; flex: 0 0 50%;">
-						<label>Damage:</label>
+						<label>{{localize 'CoC7.WeaponDamage'}}</label>
 						<input class="item-skill" style="flex: 1;" type="text" name="data.range.normal.damage" value="{{data.range.normal.damage}}" placeholder="0"/>
 						{{#if data.properties.xplv}}
 							<input class="item-skill" style="flex: 1;" type="text" name="data.range.long.damage" value="{{data.range.long.damage}}" placeholder="0"/>
@@ -54,13 +54,13 @@
 				{{else}}
 					{{#if data.properties.blst}}
 						<div style="display: flex; flex: 0 0 50%;">
-							<label>Radius:</label>
+							<label>{{localize 'CoC7.WeaponRadius'}}</label>
 							<input class="item-skill" style="flex: 1;" type="text" name="data.range.normal.value" value="{{data.range.normal.value}}" placeholder="Radius"/>
 						</div>
 					{{else}}
 						<span style="flex: 0 0 50%; height: 22px; padding: 2px 3px;">Touch</span>
 					{{/if}}
-					<label>Damage:</label>
+					<label>{{localize 'CoC7.WeaponDamage'}}</label>
 					<input class="item-skill" style="flex: 1;" type="text" name="data.range.normal.damage" value="{{data.range.normal.damage}}" placeholder="0"/>
 				{{/if}}
 			</div>
@@ -81,8 +81,8 @@
 	
 	{{!-- Sheet Tab Navigation --}}
 	<nav class="sheet-tabs tabs" data-group="primary">
-		<a class="item" data-tab="details">Details</a>
-		<a class="item" data-tab="description">Description</a>
+		<a class="item" data-tab="details">{{localize 'CoC7.ItemDetails'}}</a>
+		<a class="item" data-tab="description">{{localize 'CoC7.ItemDescription'}}</a>
 	</nav>
 
 	{{!-- Sheet Body --}}
@@ -98,24 +98,24 @@
 			</div>
 
 			<div class="flexrow" style="flex: 0 0 auto;">
-				<label>Malfunction :</label>
+				<label>{{localize 'CoC7.WeaponMalfunction'}}</label>
 				<input class="wpn-malfunction" style="flex: 0 0 40px;" type="text" name="data.malfunction" value="{{data.malfunction}}" placeholder="-"/>
-				<label>  Uses/Round :</label>
+				<label>{{localize 'CoC7.WeaponUsesPerRound'}}</label>
 				<input class="wpn-upr-norm" style="flex: 0 0 40px;" type="text" name="data.usesPerRound.normal" value="{{data.usesPerRound.normal}}" placeholder="-"/>
-				<label>  Max :</label>
+				<label>{{localize 'CoC7.WeaponMax'}}</label>
 				<input class="wpn-upr-max" style="flex: 0 0 40px;" type="text" name="data.usesPerRound.max" value="{{data.usesPerRound.max}}" placeholder="-"/>
-				<label>  Bullets in Mag :</label>
+				<label>{{localize 'CoC7.WeaponBulletsInMag'}}</label>
 				<input class="wpn-bim" style="flex: 0 0 40px;" type="text" name="data.bullets" value="{{data.bullets}}" placeholder="-"/>
 			</div>
 			
 			{{#if data.properties.spcl}}
-			<label>Special</label>
+			<label>{{localize 'CoC7.WeaponSpecial'}}</label>
 				<div class="special" style="display: flex;border: 2px groove #eeede0;padding: 0 5px;">
 					{{editor content=data.description.special target="data.description.special" button=true owner=owner editable=editable}}
 				</div>
 			{{/if}}
 
-			<label>price</label>
+			<label>{{localize 'CoC7.ItemPrice'}}</label>
 			<div class="flexrow">
 				{{#each _eras as |era key|}}
 					{{#if era.isEnabled}}
