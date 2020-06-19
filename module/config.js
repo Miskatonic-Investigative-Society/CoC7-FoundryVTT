@@ -96,7 +96,7 @@ COC7.baseCreatureSkill = "Fighting";
 
 COC7.dodgeSkillName = "Dodge";
 COC7.fightingSpecializationName = "Fighting";
-COC7.firearmsSpecializationName = "Firearms";
+COC7.firearmSpecializationName = "Firearms";
 
 COC7.combatCards = {
 	fightBack:	"CoC7.fightBack",
