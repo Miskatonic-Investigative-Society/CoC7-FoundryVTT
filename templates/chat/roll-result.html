@@ -1,4 +1,19 @@
-<div class="coc7 chat-card item-card" data-actor-id="{{actor._id}}" data-skill-id="{{skill.data._id}}" data-item-id="{{item.data._id}}" data-dice-mod={{diceMod}} data-difficulty={{difficulty}} data-value="{{value}}" data-characteristic="{{this.characteristic}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
+<div class="coc7 chat-card item-card roll-card"
+	data-roll-type="{{rollType}}"
+	data-side="{{side}}"
+	data-action="{{action}}"
+	data-ref-message-id="{{referenceMessageId}}"
+	data-success-level="{{successLevel}}"
+	data-difficulty="{{difficulty}}"
+	data-actor-id="{{actor._id}}" 
+	data-skill-id="{{skill.data._id}}" 
+	data-item-id="{{item.data._id}}" 
+	data-dice-mod="{{diceMod}}"
+	data-value="{{value}}" 
+	data-fumble="{{isFumble}}"
+	data-critical="{{isCritical}}"
+	data-characteristic="{{characteristic}}" 
+	{{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
 	<div class="dice-roll">
 		<div class="dice-result">
 			<div class="dice-formula">1D% {{#if dices.hasBonus}}{{dices.bonus}} {{dices.bonusType}} {{localize 'CoC7.Dice'}}{{/if}}</div>
@@ -31,7 +46,7 @@
 						</ol>
 					</div>
 				</section>
-				<h4>{{resultType}}, {{difficulty}} {{localize 'CoC7.SuccessRequired'}}</h4>
+				<h4>{{resultType}}, {{difficultyString}} {{localize 'CoC7.SuccessRequired'}}</h4>
 			</div>
 			<h4 id="diceResult" class="dice-total {{#if isSuccess}}success{{else}}failure{{/if}}{{#if isCritical}} critical{{/if}}{{#if isFumble}} fumble{{/if}} ">{{dices.total}} {{#if pushing}} {{localize 'CoC7.PushedRoll'}}{{/if}}</h4>
 			{{#if hasMalfunction}}<h4>{{itemName}} {{localize 'CoC7.Malfunction'}}</h4>{{/if}}

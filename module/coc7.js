@@ -50,9 +50,15 @@ Hooks.once("init", async function() {
 
 //Hooks.on("renderChatLog", (app, html, data) => CoC7Item.chatListeners(html));
 Hooks.on("renderChatLog", (app, html, data) => CoC7Chat.chatListeners(app, html, data));
-Hooks.on("renderChatMessage", (app, html, data) => CoC7Chat.messageListeners(app, html, data));
+Hooks.on("renderChatMessage", (app, html, data) => CoC7Chat.renderMessageHook(app, html, data));
+// Hooks.on('preCreateChatMessage', (app, html, data) => CoC7Chat.preCreateChatMessageHook(app, html, data));
 
 // Hooks.on('ready', CoC7Chat.ready);
 Hooks.on('getSceneControlButtons', CoC7Chat.getSceneControlButtons);
+
 // Hooks.on('preCreateToken', ( scene, actor, options, id) => CoCActor.preCreateToken( scene, actor, options, id))
 // Hooks.on('createToken', ( scene, actor, options, id) => CoCActor.preCreateToken( scene, actor, options, id))
+
+// Hooks.on("ready", async () => {
+
+// });
