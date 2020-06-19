@@ -6,7 +6,7 @@
         <span class="flex1 toggle-switch is-outnumbered simple-flag" data-side="target" data-flag="outnumbered" data-selected="false">Outnumbered</span>
     </div>
     <div class="flexrow response-selection">
-		<span class="flex1 toggle-switch dodge simple-toggle"
+		<span class="flex1 toggle-switch dodge {{#if dodgeSkill._id}}simple-toggle{{else}}inactive{{/if}}"
 			data-action="dodge"
 			data-skill-id="{{dodgeSkill._id}}"
 			data-skill-value="{{dodgeSkill.data.data.value}}"

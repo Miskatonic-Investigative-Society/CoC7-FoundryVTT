@@ -133,6 +133,28 @@ export class CoC7Chat{
 
 		const targets = card.querySelectorAll('.defender-action-result');
 
+		if( 0 == targets.length ){
+			let flavor="";
+			if( initiatorSuccess.successLevel >= 1){
+				let db = "";
+				if( initiator.db == 0 ) db="";
+				else if( initiator.db == -2 && initiatorWeapon.data.data.properties.ahdb ) db="-1";
+				else if( initiator.db == -2 && initiatorWeapon.data.data.properties.addb ) db="-2";
+				else if( initiator.db == -1 && initiatorWeapon.data.data.properties.ahdb ) db="";
+				else if( initiator.db == -1 && initiatorWeapon.data.data.properties.addb ) db="-1";
+				else if( initiatorWeapon.data.data.properties.addb ) db = `+${initiator.db}`
+				else if( initiatorWeapon.data.data.properties.ahdb ) db = `+${initiator.db}/2`
+				let formula = initiatorWeapon.data.data.range.normal.damage + db;
+				flavor=`<div class='card-result'>${initiator.name} used ${initiatorWeapon.name} and deals <a class="inline-roll roll" data-mode="roll" data-flavor="" data-formula="${formula}" title="${formula}"><i class="fas fa-dice-d20"></i>${formula}</a> damage</div>`;
+			} else {
+				flavor=`<div class='card-result'>${initiator.name} used ${initiatorWeapon.name} and missed.</div>`;
+			}
+			let result = card.querySelector('.initiator-action-result');
+			let oldResult = result.querySelector('.card-result');
+			if( oldResult) oldResult.remove();
+			$(result).append(flavor);
+		}
+
 		[].forEach.call( targets, target => {
 			const targetActor = CoC7Chat._getActorFromKey( target.dataset.defendantid);
 			if( !targetActor){
@@ -305,7 +327,7 @@ export class CoC7Chat{
 				initiatorZone.innerHTML = htmlItem;
 				initiatorZone.classList.remove('owner-only');
 				initiatorZone.classList.add('resolved');
-				if( card.querySelector('.defenders-actions-container').classList.contains('resolved'))
+				if( card.querySelector('.defenders-actions-container').classList.contains('resolved') || 0 == card.querySelectorAll('.defender-action-select').length )
 				{
 					card.dataset.resolved = true;
 					card.classList.add('card-ready');
@@ -393,6 +415,11 @@ export class CoC7Chat{
 	}
 
 	static _onToggleSelected( event){
+		if( event.currentTarget.dataset.skillId == ""){
+			ui.notifications.error("Actor doesn't have a dodge skill");
+			return;
+		}
+
 		//clear all drop down and highlight this particular one
 		const dropDownBoxes = event.currentTarget.closest('.response-selection').querySelectorAll('.toggle-switch');
 		[].forEach.call( dropDownBoxes, dpdnBox => dpdnBox.classList.remove('switched-on'));
@@ -843,12 +870,14 @@ export class CoC7Chat{
 	 * @private
 	*/
 	static _onChatCardToggleContent(event) {
-		console.log('-->CoC7Chat._onChatCardToggleContent');
 		event.preventDefault();
 		const header = event.currentTarget;
 		const card = header.closest(".chat-card");
 		const content = card.querySelector(".card-content");
-		content.style.display = content.style.display === "none" ? "block" : "none";
+		if( content){
+			if( !content.style.display) content.style.display = "block";
+			else content.style.display = content.style.display === "none" ? "block" : "none";
+		}
 	}
 	
 	/**

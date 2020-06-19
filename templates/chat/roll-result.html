@@ -49,11 +49,11 @@
 				<h4>{{resultType}}, {{difficultyString}} {{localize 'CoC7.SuccessRequired'}}</h4>
 			</div>
 			<h4 id="diceResult" class="dice-total {{#if isSuccess}}success{{else}}failure{{/if}}{{#if isCritical}} critical{{/if}}{{#if isFumble}} fumble{{/if}} ">{{dices.total}} {{#if pushing}} {{localize 'CoC7.PushedRoll'}}{{/if}}</h4>
-			{{#if hasMalfunction}}<h4>{{itemName}} {{localize 'CoC7.Malfunction'}}</h4>{{/if}}
+			{{#if hasMalfunction}}<h4 class="malfunction">{{itemName}} {{localize 'CoC7.Malfunction'}}</h4>{{/if}}
 		</div>
 	</div>
 	{{#unless isSuccess}}
-		<div class="card-buttons owner-only" data-actor-id="{{actor._id}}" style="padding-top: 5px;">
+		<div class="card-buttons owner-only" data-actor-id="{{actor._id}}" style="padding-top: 5px;margin: 0;">
 			{{#if canBePushed}}
 				{{#unless pushing}}
 				<button data-action="push">{{localize 'CoC7.PushSkill'}}</button>
@@ -63,6 +63,5 @@
 				<button data-action="useLuck" data-luck-amount="{{luckNeeded}}">{{luckNeededTxt}}</button>
 			{{/if}}
 		</div>
-
 	{{/unless}}
 </div>

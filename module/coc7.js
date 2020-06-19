@@ -54,7 +54,9 @@ Hooks.on("renderChatMessage", (app, html, data) => CoC7Chat.renderMessageHook(ap
 // Hooks.on('preCreateChatMessage', (app, html, data) => CoC7Chat.preCreateChatMessageHook(app, html, data));
 
 // Hooks.on('ready', CoC7Chat.ready);
-Hooks.on('getSceneControlButtons', CoC7Chat.getSceneControlButtons);
+
+// Add button on Token selection bar
+//Hooks.on('getSceneControlButtons', CoC7Chat.getSceneControlButtons);
 
 // Hooks.on('preCreateToken', ( scene, actor, options, id) => CoCActor.preCreateToken( scene, actor, options, id))
 // Hooks.on('createToken', ( scene, actor, options, id) => CoCActor.preCreateToken( scene, actor, options, id))
