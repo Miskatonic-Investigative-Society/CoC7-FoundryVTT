@@ -39,25 +39,152 @@ export class CoC7Item extends Item {
 		});
 	}
 
-  /**
-   * Roll the item to Chat, creating a chat card which contains follow up attack or damage roll options
-   * @return {Promise}
-   */
+	/**
+	 * Toggle on of the item property in data.data.properties
+	 * @param {String} propertyId : name for the property to toggle
+	 */	
 	async toggleProperty( propertyId){
-		return this.toggleInSet( "properties", propertyId);
+		const checkedProps = {};
+		if( "skill" == this.type){
+			let modif = false;
+			if( "combat" ==  propertyId) {
+				if( !this.data.data.properties.combat){
+					//Close combat by default
+					if( !this.data.data.properties.firearm){
+						this.data.data.properties.fighting = true;
+					}
+
+				}else{
+					this.data.data.properties.firearm = false;
+					this.data.data.properties.fighting = false;
+					checkedProps["data.properties.combat"] = false;
+					checkedProps["data.properties.special"] = false;
+					checkedProps["data.properties.fighting"] = false;
+					checkedProps["data.properties.firearm"] = false;
+					checkedProps["data.specialization"] = "";
+				}
+				modif = true;
+			}
+
+			if( "fighting" == propertyId){
+				if( !this.data.data.properties.fighting){
+					this.data.data.properties.firearm = false;
+					this.data.data.properties.fighting = true;
+				}else{
+					this.data.data.properties.firearm = true;
+					this.data.data.properties.fighting = false;
+				}
+				modif = true;
+			}
+
+			if( "firearm" == propertyId){
+				if( !this.data.data.properties.firearm){
+					this.data.data.properties.firearm = true;
+					this.data.data.properties.fighting = false;
+				}else{
+					this.data.data.properties.firearm = false;
+					this.data.data.properties.fighting = true;
+				}
+				modif = true;
+			}
+
+			if( modif){
+				//set specialisation if fighting or firearm
+				if(this.data.data.properties.fighting){
+					checkedProps["data.properties.combat"] = true;
+					checkedProps["data.properties.special"] = true;
+					checkedProps["data.properties.fighting"] = true;
+					checkedProps["data.properties.firearm"] = false;
+					checkedProps["data.specialization"] = COC7.fightingSpecializationName;
+				}
+				
+				if(this.data.data.properties.firearm){
+					checkedProps["data.properties.combat"] = true;
+					checkedProps["data.properties.special"] = true;
+					checkedProps["data.properties.fighting"] = false;
+					checkedProps["data.properties.firearm"] = true;
+					checkedProps["data.specialization"] = COC7.firearmSpecializationName;
+				}
+			}
+		}
+
+		if(Object.keys(checkedProps).length > 0){
+			await this.update( checkedProps);
+		} 
+		else {
+			const propName = `data.properties.${propertyId}`;
+			const propValue = !this.data.data.properties[propertyId];
+			await this.update( {[propName]: propValue});
+		}
 	}
 
 	hasProperty( propertyId){
 		return this.isIncludedInSet( "properties", propertyId);
 	}
 
-	/**
-	 * Roll the item to Chat, creating a chat card which contains follow up attack or damage roll options
-	 * @return {Promise}
-	*/
-	async toggleInSet( set, propertyId){
-		if( this.data.data[set][propertyId] == "false") this.data.data[set][propertyId] = "true"; else this.data.data[set][propertyId] = "false";
+
+	async checkWeaponProperties(){
+		if( this.type != "weapon") return;
+		for (const property in this.data.data.properties) {
+			
+		}
 	}
+
+	async checkSkillProperties(){
+		if( this.type != "skill") return;
+		const checkedProps = {};
+		if( this.data.data.properties.combat) {
+
+			//if skill is not a specialisation make it a specialisation
+			if(!this.data.data.properties.special){
+				this.data.data.properties.special = true;
+				checkedProps["data.properties.special"] = true;
+			}
+
+			//If skill is combat skill and no specialisation set then make it a fighting( closecombat) skill
+			if( !this.data.data.properties.fighting && !this.data.data.properties.firearm){
+				this.data.data.properties.fighting = true;
+				checkedProps["data.properties.fighting"] = true;
+			}
+
+
+			//if skill is close combat without specialisation name make set it according to the fightingSpecializationName
+			if(this.data.data.properties.fighting && (!this.data.data.specialization || this.data.data.specialization == "")){
+				this.data.data.specialization = COC7.fightingSpecializationName;
+				checkedProps["data.specialization"] = COC7.fightingSpecializationName;
+			}
+
+			//if skill is range combat without a specialisation name make set it according to the firearmSpecializationName
+			if(this.data.data.properties.firearm && (!this.data.data.specialization || this.data.data.specialization == "")){
+				this.data.data.specialization = COC7.firearmSpecializationName;
+				checkedProps["data.specialization"] = COC7.firearmSpecializationName;
+			}
+		}else{
+			if( this.data.data.properties.fighting){
+				this.data.data.properties.fighting = false;
+				checkedProps["data.properties.fighting"] = false;
+			}
+			if( this.data.data.properties.firearm){
+				this.data.data.properties.fighting = false;
+				checkedProps["data.properties.firearm"] = false;
+			}
+		}
+
+		if(Object.keys(checkedProps).length > 0){
+			await this.update( checkedProps);
+		}
+
+		return checkedProps;
+
+			
+		// for (const property in this.data.data.properties) {
+		// 	checkedProps[`data.data.properties${property}`] = true;
+		// }
+	}
+
+	// async toggleInSet( set, propertyId){
+	// 	if( this.data.data[set][propertyId] == "false") this.data.data[set][propertyId] = "true"; else this.data.data[set][propertyId] = "false";
+	// }
 
 	isIncludedInSet( set, propertyId){
 		if(!this.data.data[set]) this.data.data[set] = [];
