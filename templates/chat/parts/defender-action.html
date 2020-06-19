@@ -1,0 +1,44 @@
+<div class="defender-action-select flexcol target-only" style="flex-wrap: nowrap;text-align: center;"
+	data-actor-id="{{actorId}}"
+	data-token-id="{{tokenId}}">
+	<label class="defendant-name">{{defender.name}}</label>
+	<div class="flexrow bonus" title="Outnumbered ?">
+        <span class="flex1 toggle-switch is-outnumbered simple-flag" data-side="target" data-flag="outnumbered" data-selected="false">Outnumbered</span>
+    </div>
+    <div class="flexrow response-selection">
+		<span class="flex1 toggle-switch dodge {{#if dodgeSkill._id}}simple-toggle{{else}}inactive{{/if}}"
+			data-action="dodge"
+			data-skill-id="{{dodgeSkill._id}}"
+			data-skill-value="{{dodgeSkill.data.data.value}}"
+			data-skill-name="{{dodgeSkill.name}}">Dodge</span>
+        <div class="flex1 toggle-switch fight-back dropdown">
+            <span class="combat-action dropbtn">Fight Back</span>
+            <div class="actor-skill dropdown-content">
+                {{#each closeCombatWeapons as |weapon key|}}
+					<a class="dropdown-element"
+						data-action="fightBack"
+						data-weapon-id="{{weapon.id}}"
+						data-weapon-name="{{weapon.name}}"
+						data-skill-id="{{weapon.data.data.skill.main.id}}"
+						data-skill-value="{{weapon.data.data.skill.main.value}}"
+						data-skill-name="{{weapon.data.data.skill.main.name}}">{{weapon.name}} ({{weapon.data.data.skill.main.value}}%)</a>
+                {{/each}}
+            </div>        
+        </div>
+        <div class="flex1 toggle-switch maneuver dropdown">
+            <span class="combat-action dropbtn">Maneuver</span>
+            <div class="actor-skill dropdown-content">
+                {{#each fightingSkills as |skill key|}}
+					<a class="dropdown-element"
+						data-action="maneuver"
+						data-skill-id="{{skill.data._id}}"
+						data-skill-value="{{skill.data.data.value}}"
+						data-skill-name="{{skill.name}}">{{skill.name}} ({{skill.data.data.value}}%)</a>
+                {{/each}}
+            </div>        
+        </div>
+	</div>
+	<div class="selected-action card-buttons  owner-only" style='display: none;'>
+		<button></button>
+	</div>
+</div>

@@ -1,3 +1,144 @@
+.center-vertical {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.card-result{
+    margin-bottom: 5px;
+}
+
+.coc7.chat-card .dropbtn {
+    font-size: 10px;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+  
+.coc7.chat-card .dropdown:hover,
+.coc7.chat-card .toggle-switch:hover {
+    background-color: lightgray;
+}
+  
+.coc7.chat-card .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.coc7.chat-card .dropdown-content {
+    display: none;
+    position: absolute;
+    /* right: 20px; */
+    background-color: #f1f1f1;
+    min-width: 100px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+  
+.coc7.chat-card .dropdown-content a {
+    color: black;
+    text-decoration: none;
+    display: block;
+}
+  
+.coc7.chat-card .dropdown a:hover {background-color: #ddd;    text-shadow: 0 0 8px red;
+}
+  
+.coc7.chat-card .show {display: block;}
+
+.coc7.chat-card label{
+    text-align: left;
+    margin-bottom: 0;
+}
+
+.coc7.chat-card .defender-action-select {
+    border-bottom: groove 2px #FFF;
+}
+
+.coc7.chat-card .response-selection {
+    margin-bottom: 2px;
+}
+
+.coc7 .auto-on{
+    color: green;
+}
+
+.coc7 .auto-off{
+    color: grey;
+}
+
+.coc7.sheet .status-monitor{
+    flex: 0 0 25px;
+    color: darkgrey;
+    padding: 1px 6px;
+    text-align: center;
+}
+
+.coc7.sheet .status-monitor.invert{
+    transform: rotateZ(180deg);
+}
+.coc7.sheet .status-monitor.status-on{
+    color: darkred;
+}
+
+.coc7.sheet.npc select {
+    width:100px;
+    height: 16px;
+    overflow:hidden; 
+    white-space:nowrap; 
+    text-overflow:ellipsis;
+    border: 1px solid whitesmoke;
+}
+
+.coc7.sheet.npc .item-controls {
+    height: auto;
+    font-size: 10px;
+}
+.coc7.sheet.npc select option {
+    width:100px;
+    text-overflow:ellipsis;
+    overflow:hidden;
+}
+
+.coc7.sheet.npc .toggle-switch {
+    margin: 1px 1px 0 0;
+    padding: 0 2px;
+    font-size: 10px;
+    line-height: 12px;
+}
+
+.coc7 .item-tag {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    display: inline-block;
+    margin: 0 2px 0 0;
+    padding: 0 3px;
+    font-size: 11px;
+    line-height: 14px;
+    border: 1px solid #999;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.coc7 .weapon-name {
+    height: 18px;
+    padding: 1px 0 1px 2px;
+    margin: 0;
+    overflow: hidden;
+}
+
+.coc7 .no-skill-set {
+    background-color: red;
+}
+
 .dice-roll .dice-total.critical{
     background-color: palegreen;
 }
@@ -116,6 +257,24 @@
     color: grey;
 }
 
+.coc7 .toggle-switch.inactive {
+    text-decoration: line-through;
+    border: 1px solid white;
+    color: white;
+}
+
+.coc7 .toggle-switch.inactive:hover {
+    cursor: not-allowed;
+    background-color: transparent;
+}
+
+.coc7 .malfunction{
+    text-align: center;
+    padding-top: 5px;
+    color: red;
+    font-size: 15px;
+}
+
 .coc7 .switched-on {
     border: 1px solid red;
     border-radius: 3px;
@@ -207,7 +366,7 @@
 .coc7.sheet.npc .editor {
     width: 100%;
     height: auto;
-    min-height: 50px;
+    min-height: 130px;
 }
 
 
@@ -253,6 +412,7 @@
 .coc7.sheet .sheet-header .attribute-label {
     font-size: 14px;
     flex: 0;
+    margin: 0;
 }
 
 .coc7.sheet .sheet-header .attribute-value {
@@ -321,7 +481,8 @@
     box-shadow: 0 0 4px red;
 }
 
-.coc7.sheet .editable .rollable:hover {
+.coc7.sheet .editable .rollable:hover,
+.damage-roll.rollable:hover {
     color: #000;
     text-shadow: 0 0 10px red;
     cursor: pointer;
@@ -343,6 +504,7 @@
 .coc7.sheet.actor .info-fields {
     flex: 1;
     margin: 0 5px;
+    height: fit-content;
 }
 
 .coc7.sheet.actor .info-field label {
@@ -365,9 +527,9 @@
 .coc7.sheet.actor .characteristics {
     display: flex;
     flex-flow: row wrap;
-    flex: 3;
     border: 1px solid #c3c3c3;
     margin: 0 5px;
+    height: fit-content;
 }
 
 .coc7.sheet.actor .characteristics .characteristic-box {

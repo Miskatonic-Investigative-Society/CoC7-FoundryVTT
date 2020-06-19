@@ -89,6 +89,7 @@ export class CoC7Dice {
         const unitDie = new Die(10);
         unitDie.sides = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
         const tenDie = new Die(10);
+        modif = parseInt( modif);
         unitDie.roll(1);
         if( unitDie.total == 0)
         {
@@ -105,7 +106,7 @@ export class CoC7Dice {
         }
         else
         {
-            tenDie.roll( Math.abs(modif));
+            tenDie.roll( 1 + Math.abs(modif));
         }
 
         let total;
