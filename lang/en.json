@@ -76,9 +76,9 @@
 
 "CoC7.BonusDamageRoll": "Rolling Damage Bonus",
 "CoC7.Type": "Type",
-"CoC7.fightBack": "Fighting Back",
-"CoC7.dodge": "Dodging",
-"CoC7.maneuver": "Maneuvering",
+"CoC7.FightBack": "Fighting Back",
+"CoC7.Dodge": "Dodging",
+"CoC7.Maneuver": "Maneuvering",
 "CoC7.OutNumbered": "Outnumbered",
 "CoC7.DropZone": "DropZone",
 
