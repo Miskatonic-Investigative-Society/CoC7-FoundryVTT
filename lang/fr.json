@@ -76,9 +76,9 @@
     
     "CoC7.BonusDamageRoll": "Jet d'Impact",
     "CoC7.Type": "Type",
-    "CoC7.fightBack": "Rendre les coups",
-    "CoC7.dodge": "Esquive",
-    "CoC7.maneuver": "Manœuvre",
+    "CoC7.FightBack": "Rendre les coups",
+    "CoC7.Dodge": "Esquive",
+    "CoC7.Maneuver": "Manœuvre",
     "CoC7.OutNumbered": "En sous-nombre",
     "CoC7.DropZone": "DropZone",
 

@@ -99,8 +99,8 @@ COC7.fightingSpecializationName = "Fighting";
 COC7.firearmsSpecializationName = "Firearms";
 
 COC7.combatCards = {
-	fightBack:	"CoC7.fightBack",
-	dodge:		"CoC7.dodge",
-	maneuver:	"CoC7.maneuver",
+	fightBack:	"CoC7.FightBack",
+	dodge:		"CoC7.Dodge",
+	maneuver:	"CoC7.Maneuver",
 
 }
