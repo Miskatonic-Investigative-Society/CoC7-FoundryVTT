@@ -754,14 +754,15 @@ export class CoC7Chat{
 					let result = card.querySelector('.dice-total');
 					card.dataset.successLevel = 1;
 					card.dataset.processed = "false"; //trigger 3 updates de card
-					result.innerText = `${luckAmount} luck spent to pass`;
+					result.innerText = game.i18n.format("CoC7.LuckSpent", {luckAmount : luckAmount});
+					//result.innerText = `${luckAmount} luck spent to pass`; @HavelockV
 					result.classList.replace( 'failure', 'success');
 					result.classList.remove( 'fumble');
 					card.querySelector('.card-buttons').remove();
 					CoC7Chat.updateChatCard( card);
 				}
 				else
-					ui.notifications.error(`${actor.name} didn't have enough luck to pass the check`);
+					ui.notifications.error(game.i18n.format("CoC7.LuckError", {actorName : actor.name}));
 				break;
 
 			case "push":
@@ -934,13 +935,13 @@ export class CoC7Chat{
 		if( actor == null) actor = game.actors.get( actorId);
 
 		if( !actor) {
-			ui.notifications.error( "Couldn't locate actor");
+			ui.notifications.error(game.i18n.format("CoC7.ErrorActor"));
 			return;
 		}
 
 		const item = actor.getOwnedItem( itemId);
 		if( !item) {
-			ui.notifications.error( "Couldn't locate item");
+			ui.notifications.error(game.i18n.format("CoC7.ErrorItem"));
 			return;
 		}
 
