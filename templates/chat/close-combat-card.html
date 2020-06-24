@@ -6,22 +6,44 @@
     {{/if}}
     data-item-id="{{item._id}}"
     data-value="{{item.data.value}}"
+    data-resolved="false"
     >
 
-    <header class="card-header flexrow">
-        <img style="flex: none;" src="{{item.img}}" title="{{item.name}}" width="36" height="36"/>
-        <h3 style="text-align: center;font-weight: bolder;"class="item-name">{{item.name}}</h3>
+    <header class="card-header flexcol">
+        <div class="flexrow">
+            <img style="flex: none;" src="{{item.img}}" title="{{item.name}}" width="36" height="36"/>
+            <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{item.name}}</h3>
+        </div>
+        <div class="initiator-action-select owner-only">
+            <div class="flexrow bonus" title="Outnumbered ?" style="text-align: center;margin-bottom: 2px;">
+                <span class="flex1 toggle-switch is-outnumbered simple-flag"
+                    data-side="initiator"
+                    data-flag="outnumbered"
+                    data-selected="false">Outnumbered</span>
+            </div>
+            <div class="card-buttons">
+                <button
+                    data-action="initiator-roll"
+                    data-side="initiator"
+                    data-token-id="{{tokenKey}}"
+                    data-actor-id="{{actor._id}}"
+                    data-item-id="{{item._id}}">Roll</button>
+            </div>
+        </div>
+        <div class="initiator-result"></div>
     </header>
-
+    
+    <div class="card-content">
+        {{{item.data.data.description.value}}}
+    </div>
+    
     <div class="warning"></div>
 
     <div class="targets"></div>
 
     <div class="defenders-actions-container"></div>
 
-    <div class="card-buttons">
-        <button data-action="roll">{{localize 'CoC7.Roll'}}</button>
-    </div>
+    <div class="card-resolution"></div>
 
     <footer class="card-footer">
     </footer>

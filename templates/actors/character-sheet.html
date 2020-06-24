@@ -126,14 +126,39 @@
 		
 		{{!-- Skills Tab --}}
 		<div class="tab skills flexcol active" data-group="primary" data-tab="skills">
+			{{#unless data.flags.locked}}
+			<div class="flexrow" style="max-height: 14px;">
+				<div class="flex1"></div>
+				<div style="flex: 0 0 14px;">
+					<a class="add-item" title="Add Skill" data-type="skill"><i class="fas fa-plus-circle"></i></a>
+				</div>
+			</div>
+			{{/unless}}
 			{{> "systems/CoC7/templates/actors/parts/actor-skills.html"}}
 		</div>
 
 		<div class="tab combat flexcol" data-group="primary" data-tab="combat">
+			{{#unless data.flags.locked}}
+			<div class="flexrow" style="max-height: 14px;">
+				<div class="flex1"></div>
+				<div style="flex: 0 0 14px;">
+					<a class="add-item" title="Add Weapon" data-type="weapon"><i class="fas fa-plus-circle"></i></a>
+				</div>
+			</div>
+			{{/unless}}
 			{{> "systems/CoC7/templates/actors/parts/actor-weapons.html"}}
 		</div>
 		
 		<div class="tab possession flexcol" data-group="primary" data-tab="possession">
+			{{#unless data.flags.locked}}
+			<div class="flexrow" style="max-height: 14px;">
+				<div class="flex1"></div>
+				<div style="flex: 0 0 14px;">
+					<a class="add-item" title="Add Item" data-type="item"><i class="fas fa-plus-circle"></i></a>
+				</div>
+			</div>
+			{{/unless}}
+
 			<ol class="items-list">
 				{{#each itemsByType.item as |item id|}}
 					<li class="item flexrow" data-item-id="{{item._id}}">

@@ -1,12 +1,13 @@
 <div class="defender-action-select flexcol target-only" style="flex-wrap: nowrap;text-align: center;"
 	data-actor-id="{{actorId}}"
 	data-token-id="{{tokenId}}">
-	
-	<div class="flexrow bonus" title="Pouet pouet trouloulou">
-        <span class="flex1 toggle-switch is-outnumbered simple-flag" data-flag="outnumbered" data-selected="false">{{localize 'CoC7.OutNumbered'}}</span>
+
+	<label class="defendant-name">{{defender.name}}</label>
+	<div class="flexrow bonus" title="Outnumbered ?">
+        <span class="flex1 toggle-switch is-outnumbered simple-flag" data-side="target" data-flag="outnumbered" data-selected="false">{{localize 'CoC7.OutNumbered'}}</span>
     </div>
     <div class="flexrow response-selection">
-		<span class="flex1 toggle-switch dodge simple-toggle"
+		<span class="flex1 toggle-switch dodge {{#if dodgeSkill._id}}simple-toggle{{else}}inactive{{/if}}"
 			data-action="dodge"
 			data-skill-id="{{dodgeSkill._id}}"
 			data-skill-value="{{dodgeSkill.data.data.value}}"
@@ -38,7 +39,7 @@
             </div>        
         </div>
 	</div>
-	<div class="selected-action card-buttons" style='display: none;'>
+	<div class="selected-action card-buttons  owner-only" style='display: none;'>
 		<button></button>
 	</div>
 </div>
