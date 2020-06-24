@@ -58,7 +58,7 @@
 							<input class="item-skill" style="flex: 1;" type="text" name="data.range.normal.value" value="{{data.range.normal.value}}" placeholder="Radius"/>
 						</div>
 					{{else}}
-						<span style="flex: 0 0 50%; height: 22px; padding: 2px 3px;">Touch</span>
+						<span style="flex: 0 0 50%; height: 22px; padding: 2px 3px;">{{localize 'CoC7.WeaponTouch'}}</span>
 					{{/if}}
 					<label>{{localize 'CoC7.WeaponDamage'}}</label>
 					<input class="item-skill" style="flex: 1;" type="text" name="data.range.normal.damage" value="{{data.range.normal.damage}}" placeholder="0"/>
@@ -67,7 +67,7 @@
 
 			<div class="skill-attributes" style="display: block;" data-set="properties">
 				{{#each _properties as |property key|}}
-					<span class="toggle-switch {{#if property.isEnabled}} switched-on {{/if}}" data-property="{{property.id}}">{{property.name}}</span>
+					<span class="toggle-switch {{#if property.isEnabled}} switched-on {{/if}}" data-property="{{property.id}}">{{localize property.name}}</span>
 					<div style="display: none;">
 						<input id="properties-{{property.id}}" type="checkbox" name="data.properties.{{property.id}}" {{checked property.isEnabled}}/>
 					</div>
@@ -90,7 +90,7 @@
 		<div class="tab skills flexcol active" data-group="primary" data-tab="details">
 			<div class="skill-attributes" style="flex: 0 0 25px;" data-set="eras">
 				{{#each _eras as |era key|}}
-					<span class="toggle-switch {{#if era.isEnabled}} switched-on {{/if}}" data-property="{{era.id}}">{{era.name}}</span>
+					<span class="toggle-switch {{#if era.isEnabled}} switched-on {{/if}}" data-property="{{era.id}}">{{localize era.name}}</span>
 					<div style="display: none;">
 						<input id="eras-{{era.id}}" type="checkbox" name="data.eras.{{era.id}}" {{checked era.isEnabled}}/>
 					</div>
@@ -119,7 +119,7 @@
 			<div class="flexrow">
 				{{#each _eras as |era key|}}
 					{{#if era.isEnabled}}
-						<span>{{era.name}}</span> : <input class="item-price" type="text" name="data.price.{{era.id}}" value="{{era.price}}" placeholder="0"/>
+						<span>{{localize era.name}}</span> : <input class="item-price" type="text" name="data.price.{{era.id}}" value="{{era.price}}" placeholder="0"/>
 					{{/if}}
 				{{/each}}
 			</div>

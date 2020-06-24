@@ -130,7 +130,7 @@ export class CoC7ActorSheet extends ActorSheet {
 						let property = {};
 						property.id = key;
 						property.value = value;
-						property.name = COC7.weaponProperties[key]; //Localisation a faire ici
+						property.name = COC7.weaponProperties[key];
 						weapon.data._properties.push( property);
 					}
 					data.weapons[weapon._id] = weapon;
@@ -601,8 +601,8 @@ export class CoC7ActorSheet extends ActorSheet {
 						let r = new Roll( event.currentTarget.value);
 						r.roll();
 						if( isNaN(r.total) || (typeof(r.total) == "undefined")){
-							ui.notifications.error( event.currentTarget.value + " is not a valid formula");
-							formData[event.currentTarget.name] = "invalid";
+							ui.notifications.error(game.i18n.format("CoC7.ErrorInvalidFormula", {value : event.currentTarget.value}));
+							formData[event.currentTarget.name] = game.i18n.format("CoC7.ErrorInvalid");
 						}
 					}
 				}
@@ -614,8 +614,8 @@ export class CoC7ActorSheet extends ActorSheet {
 						let r = new Roll( event.currentTarget.value);
 						r.roll();
 						if( isNaN(r.total) || (r.total === undefined)){
-							ui.notifications.error( event.currentTarget.value + " is not a valid formula");// TODO : localiz
-							formData[event.currentTarget.name] = "invalid";
+							ui.notifications.error(game.i18n.format("CoC7.ErrorInvalidFormula", {value : event.currentTarget.value}));
+							formData[event.currentTarget.name] = game.i18n.format("CoC7.ErrorInvalid");
 						}
 					}
 				}

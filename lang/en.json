@@ -61,7 +61,10 @@
 "CoC7.PushSkill": "Push",
 "CoC7.PushedRoll": "(pushed roll)",
 "CoC7.SpendLuck": "Spend {luckNeededValue} Luck to pass",
+"CoC7.LuckSpent": "{luckAmount} luck spent to pass",
+"CoC7.LuckError": "{actorName} didn't have enough luck to pass the check",
 
+"CoC7.BonusSelectionWindow": "Bonus selection window",
 "CoC7.RegularDifficulty": "regular",
 "CoC7.HardDifficulty": "hard",
 "CoC7.ExtremeDifficulty": "extreme",
@@ -69,6 +72,7 @@
 "CoC7.RollDifficultyRegular": "Regular",
 "CoC7.RollDifficultyHard": "Hard",
 "CoC7.RollDifficultyExtreme": "Extreme",
+"CoC7.RollDice": "Roll !",
 
 "CoC7.CheckResult": "{name} check ({value}%) - {difficulty} difficulty",
 "CoC7.ItemCheckResult": "{item} - {skill} check ({value}%) - {difficulty} difficulty",
@@ -76,9 +80,9 @@
 
 "CoC7.BonusDamageRoll": "Rolling Damage Bonus",
 "CoC7.Type": "Type",
-"CoC7.fightBack": "Fighting Back",
-"CoC7.dodge": "Dodging",
-"CoC7.maneuver": "Maneuvering",
+"CoC7.FightBack": "Fighting Back",
+"CoC7.Dodge": "Dodging",
+"CoC7.Maneuver": "Maneuvering",
 "CoC7.OutNumbered": "Outnumbered",
 "CoC7.DropZone": "DropZone",
 
@@ -97,5 +101,41 @@
 "CoC7.WeaponMax": "Max :",
 "CoC7.WeaponBulletsInMag": "Bullets in Mag :",
 "CoC7.WeaponSpecial": "Special :",
-"CoC7.ItemPrice": "Price :"
+"CoC7.ItemPrice": "Price :",
+
+"CoC7.EraNvct": "Invictus",
+"CoC7.EraDrka": "Dark Ages",
+"CoC7.EraDdts": "Down Darker Trails",
+"CoC7.EraGlit": "Cthulhu by Gaslight",
+"CoC7.Era1920": "1920s",
+"CoC7.EraPulp": "Pulp Cthulhu",
+"CoC7.EraMdrn": "Modern",
+
+"CoC7.SkillSpecial": "Specialization",
+"CoC7.SkillRarity": "Uncommon",
+"CoC7.SkillPush": "Pushed",
+"CoC7.SkillCombat": "Combat",
+"CoC7.SkillFighting": "Fighting",
+"CoC7.SkillFirearm": "Firearms",
+
+"CoC7.WeaponRngd": "Range",
+"CoC7.WeaponTouch": "Touch",
+"CoC7.WeaponImpl": "Impale",
+"CoC7.WeaponRare": "Rare",
+"CoC7.WeaponAhdb": "+Half DB",
+"CoC7.WeaponAddb": "+DB",
+"CoC7.WeaponSlnt": "Silent",
+"CoC7.WeaponXplv": "Area of Effect",
+"CoC7.WeaponBrst": "Burst",
+"CoC7.WeaponAuto": "Full-auto",
+"CoC7.WeaponSpcl": "Special",
+"CoC7.WeaponMont": "Mounted",
+"CoC7.WeaponDbrl": "Dual barrel",
+"CoC7.WeaponBlst": "Blast",
+"CoC7.WeaponStun": "Stun",
+
+"CoC7.ErrorItem": "Couldn't locate item",
+"CoC7.ErrorActor": "Couldn't locate actor",
+"CoC7.ErrorInvalidFormula": "{value} is not a valid formula",
+"CoC7.ErrorInvalid": "invalid"
 }
