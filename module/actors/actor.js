@@ -431,6 +431,28 @@ export class CoCActor extends Actor {
     return this.data.data.flags[flagName];
   }
 
+  getWeaponSkills( itemId){
+    const weapon = this.getOwnedItem( itemId);
+    if( 'weapon' != weapon.data.type) return null;
+    const skills = [];
+    if( weapon.data.data.skill.main.id){
+      skills.push( this.getOwnedItem( weapon.data.data.skill.main.id));
+    }
+
+    if( weapon.data.data.skill.alternativ.id){
+      skills.push( this.getOwnedItem( weapon.data.data.skill.alternativ.id));
+    }
+
+    return skills;
+  }
+
+  get tokenKey(){
+    if( this.isToken){
+      return `${this.token.scene.id}.${this.token.id}`
+    }
+    return this.id;
+  }
+
   /**
    * Use the formula if available to roll some characteritics.
    */
@@ -453,7 +475,7 @@ export class CoCActor extends Actor {
     await this.update( {[`data.status.${statusName}.value`]: !statusValue})
   }
 
-  getFightingSkills(){
+  get fightingSkills(){
     let skillList = [];
     this.items.forEach( (value) => {
       if( value.type == "skill" && value.data.data.properties.fighting ) skillList.push( value);
@@ -472,7 +494,9 @@ export class CoCActor extends Actor {
     return skillList;
   }
 
-  getCloseCombatWeapons(){
+  get closeCombatWeapons(){
+    let prout = game.users.get("GUQOsauKujuje7KM"); 
+    let caca = game.users.get("joUDYOZV8IoEy19s");
     let weaponList = [];
     this.items.forEach( (value) => {
       if( value.type == "weapon" && !value.data.data.properties.rngd ){
@@ -495,7 +519,7 @@ export class CoCActor extends Actor {
     return weaponList;
   }
 
-  getFirearmSkills(){
+  get firearmSkills(){
     let skillList = [];
     this.items.forEach( (value) => {
       if( value.type == "skill" && value.data.data.properties.firearms ) skillList.push( value);
@@ -514,13 +538,23 @@ export class CoCActor extends Actor {
     return skillList;
   }
 
-  getDodgeSkill(){
+  get user(){
+    //is that actor impersonanted by a user ?
+    return game.users.find( user  => {
+      if( user.character ){
+        if( user.character.id == this.id) return true;
+      }
+      return false;
+    });
+  }
+
+  get dodgeSkill(){
     let skillList = this.getSkillsByName( COC7.dodgeSkillName);
     if( skillList.legnth != 0) return skillList[0];
     return null;
   }
 
-  getAllSkills(){
+  get skills(){
     let skillList = [];
     this.items.forEach( (value, key, map) => {
       if( value.type == "skill" ) skillList.push( value);

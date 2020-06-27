@@ -19,7 +19,98 @@
     width: 100%;
     height: 100%;
 }
-  
+
+/* .stars,
+.skulls,
+.plus,
+.minus {
+    font-family: FontAwesome;
+    display: inline-block;
+    padding-right: 6px;
+    vertical-align: middle;
+}
+
+.stars[data-count="1"]:before {
+    font-family: FontAwesome;
+    display: inline-block;
+    padding-right: 6px;
+    vertical-align: middle;
+    content: "\f005";
+}
+
+.stars[data-count="2"]:before {
+    font-family: FontAwesome;
+    display: inline-block;
+    padding-right: 6px;
+    vertical-align: middle;
+    content:  "\f005\f005";
+}
+
+.stars[data-count="3"]:before {
+    font-family: FontAwesome;
+    display: inline-block;
+    padding-right: 6px;
+    vertical-align: middle;
+   content:  "\f005\f005\f005";
+}
+
+.stars[data-countn="4"]:before {
+    font-family: FontAwesome;
+    display: inline-block;
+    padding-right: 6px;
+    vertical-align: middle;
+   content:  "\f005\f005\f005\f005";
+}
+
+.skulls[n="1"]:before {
+    content: "<i class='fas fa-skull'></i>";
+}
+ 
+.skulls[n="2"]:before {
+    content: "<i class='fas fa-skull'></i><i class='fas fa-skull'></i>";
+}
+ 
+.skulls[n="3"]:before {
+    content: "<i class='fas fa-skull'></i><i class='fas fa-skull'></i><i class='fas fa-skull'></i>";
+}
+ 
+.skulls[n="4"]:before {
+    content: "<i class='fas fa-skull'></i><i class='fas fa-skull'></i><i class='fas fa-skull'></i><i class='fas fa-skull'></i>";
+}
+
+.plus[n="1"]:before {
+    content: "<i class='fas fa-plus'></i>";
+}
+ 
+.plus[n="2"]:before {
+    content: "<i class='fas fa-plus'></i><i class='fas fa-plus'></i>";
+}
+ 
+.plus[n="3"]:before {
+    content: "<i class='fas fa-plus'></i><i class='fas fa-plus'></i><i class='fas fa-plus'></i>";
+}
+ 
+.plus[n="4"]:before {
+    content: "<i class='fas fa-plus'></i><i class='fas fa-plus'></i><i class='fas fa-plus'></i><i class='fas fa-plus'></i>";
+}
+
+.minus[n="1"]:before {
+    content: "<i class='fas fa-minus'></i>";
+}
+ 
+.minus[n="2"]:before {
+    content: "<i class='fas fa-minus'></i><i class='fas fa-minus'></i>";
+}
+ 
+.minus[n="3"]:before {
+    content: "<i class='fas fa-minus'></i><i class='fas fa-minus'></i><i class='fas fa-minus'></i>";
+}
+ 
+.minus[n="4"]:before {
+    content: "<i class='fas fa-minus'></i><i class='fas fa-minus'></i><i class='fas fa-minus'></i><i class='fas fa-minus'></i>";
+} */
+
+ 
 .coc7.chat-card .dropdown:hover,
 .coc7.chat-card .toggle-switch:hover {
     background-color: lightgray;
@@ -257,13 +348,14 @@
     color: grey;
 }
 
-.coc7 .toggle-switch.inactive {
-    text-decoration: line-through;
+.coc7 .toggle-switch.inactive,
+.coc7 .simple-flag.inactive {
     border: 1px solid white;
     color: white;
 }
 
-.coc7 .toggle-switch.inactive:hover {
+.coc7 .toggle-switch.inactive:hover,
+.coc7 .simple-flag.inactive:hover {
     cursor: not-allowed;
     background-color: transparent;
 }

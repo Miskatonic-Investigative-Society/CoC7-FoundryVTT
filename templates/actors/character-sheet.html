@@ -5,25 +5,25 @@
 		<div class="flexrow" style="display: flex;">
 			<div class="info-fields">
 				<div class="form-group">
-					<label>{{ localize 'CoC7.Name' }}</label>
+					<label style="width: fit-content; flex: unset; line-height: 18px;">{{ localize 'CoC7.Name' }} :</label>
 					<input name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
 				</div>
 				<div class="form-group">
-					<label>{{ localize 'CoC7.Occupation' }}</label>
+					<label>{{ localize 'CoC7.Occupation' }} :</label>
 					<input name="data.infos.occupation" type="text" value="{{data.infos.occupation}}"/>
 				</div>
 				<div class="form-group">
-					<label>{{ localize 'CoC7.Age' }}</label>
+					<label>{{ localize 'CoC7.Age' }} :</label>
 					<input name="data.infos.age" type="text" value="{{data.infos.age}}"/>
-					<label>{{ localize 'CoC7.Sex' }}</label>
+					<label>{{ localize 'CoC7.Sex' }} :</label>
 					<input name="data.infos.sex" type="text" value="{{data.infos.sex}}"/>
 				</div>
 				<div class="form-group">
-					<label>{{ localize 'CoC7.Residence' }}</label>
+					<label>{{ localize 'CoC7.Residence' }} :</label>
 					<input name="data.infos.residence" type="text" value="{{data.infos.residence}}"/>
 				</div>
 				<div class="form-group">
-					<label>{{ localize 'CoC7.Birthplace' }}</label>
+					<label>{{ localize 'CoC7.Birthplace' }} :</label>
 					<input name="data.infos.birthplace" type="text" value="{{data.infos.birthplace}}"/>
 				</div>
 			</div>
@@ -48,28 +48,28 @@
 
 		<div class="flexrow" style="flex: none;height: 20px;">
 			<div class="flexrow flex1 attribute" data-attrib="hp">
-				<label class="attribute-label">{{localize 'CoC7.HitPoints'}}</label>
+				<label class="attribute-label">{{localize 'CoC7.HitPoints'}} :</label>
 				<input class="attribute-value" type="text" name="data.attribs.hp.value" value="{{data.attribs.hp.value}}"  data-dtype="Number"/>
 				<span style="flex: none;font-size: large;">/</span>
 				<input class="attribute-max read-only" type="text" name="data.attribs.hp.max" value="{{data.attribs.hp.max}}" data-dtype="Number" data-attrib="hp" readonly>
 				<div class="flex1"></div>
 			</div>
 			<div class="flexrow flex1 attribute" data-attrib="mp">
-				<label class="attribute-label">{{localize 'CoC7.MagicPoints'}}</label>
+				<label class="attribute-label">{{localize 'CoC7.MagicPoints'}} :</label>
 				<input class="attribute-value" type="text" name="data.attribs.mp.value" value="{{data.attribs.mp.value}}" data-dtype="Number"/>
 				<span style="flex: none;font-size: large;">/</span>
 				<input class="attribute-max read-only" type="text" name="data.attribs.mp.max" value="{{data.attribs.mp.max}}" data-dtype="Number" data-attrib="mp" readonly>
 				<div class="flex1"></div>
 			</div>
 			<div class="flexrow flex1 attribute" data-attrib="san">
-				<label class="attribute-label rollable">{{localize 'CoC7.Sanity'}}</label>
+				<label class="attribute-label rollable">{{localize 'CoC7.Sanity'}} :</label>
 				<input class="attribute-value" type="text" name="data.attribs.san.value" value="{{data.attribs.san.value}}" data-dtype="Number"/>
 				<span style="flex: none;font-size: large;">/</span>
 				<input class="attribute-max read-only" type="text" name="data.attribs.san.max" value="{{data.attribs.san.max}}" data-dtype="Number" data-attrib="san" readonly>
 				<div class="flex1"></div>
 			</div>
 			<div class="flexrow flex1 attribute" data-attrib="lck">
-				<label class="attribute-label rollable">{{localize 'CoC7.Luck'}}</label>
+				<label class="attribute-label rollable">{{localize 'CoC7.Luck'}} :</label>
 				<!-- <input class="attribute-value" type="text" name="data.attribs.lck.value" value="{{data.attribs.lck.value}}" data-dtype="Number"/>
 				<span style="flex: none;font-size: large;">/</span> -->
 				<input class="attribute-value read-only" type="text" name="data.attribs.lck.value" value="{{data.attribs.lck.value}}" data-dtype="Number" data-attrib="lck" readonly>
@@ -95,6 +95,10 @@
 			</div>
 			<div class="flex1 attribute" data-attrib="build">
 				<label class="attribute-label">{{localize 'CoC7.Build'}} :</label> <span style="flex: none;font-size: medium;line-height: 20px;">{{data.attribs.build.value}}</span>
+			</div>
+			<div class="flexrow flex1 attribute" data-attrib="armor">
+				<label>{{localize 'CoC7.Armor'}} :</label>
+				<input class="attribute-value {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.armor.value" value="{{data.attribs.armor.value}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
 			</div>
 		</div>
 		<div class="status-monitors flexrow">
