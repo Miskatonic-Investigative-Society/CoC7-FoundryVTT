@@ -8,8 +8,9 @@
 	data-actor-id="{{actor._id}}" 
 	data-skill-id="{{skill.data._id}}" 
 	data-item-id="{{item.data._id}}" 
-	data-dice-mod="{{diceMod}}"
+	data-dice-mod="{{diceModifier}}"
 	data-value="{{value}}" 
+	data-result="{{dice.total}}"
 	data-fumble="{{isFumble}}"
 	data-critical="{{isCritical}}"
 	data-characteristic="{{characteristic}}" 
@@ -47,22 +48,32 @@
 					</div>
 				</section>
 
-				<h4>{{resultType}}, {{difficultyString}} {{localize 'CoC7.SuccessRequired'}}</h4>
+				<h4 class="result-details">{{resultType}}, {{successRequired}}</h4>
 			</div>
 			<h4 id="diceResult" class="dice-total {{#if isSuccess}}success{{else}}failure{{/if}}{{#if isCritical}} critical{{/if}}{{#if isFumble}} fumble{{/if}} ">{{dices.total}} {{#if pushing}} {{localize 'CoC7.PushedRoll'}}{{/if}}</h4>
-			{{#if hasMalfunction}}<h4 class="malfunction">{{itemName}} {{localize 'CoC7.Malfunction'}}</h4>{{/if}}
+			{{#if hasMalfunction}}<h4 class="malfunction">{{malfunctionTxt}}</h4>{{/if}}
 		</div>
 	</div>
-	{{#unless isSuccess}}
-		<div class="card-buttons owner-only" data-actor-id="{{actor._id}}" style="padding-top: 5px;margin: 0;">
+	<div class="card-buttons owner-only" data-actor-id="{{actor._id}}" style="padding-top: 5px;margin: 0;">
+		{{#unless isSuccess}}
 			{{#if canBePushed}}
 				{{#unless pushing}}
 				<button data-action="push">{{localize 'CoC7.PushSkill'}}</button>
 				{{/unless}}
 			{{/if}}
 			{{#if hasEnoughLuck}}
-				<button data-action="useLuck" data-luck-amount="{{luckNeeded}}">{{luckNeededTxt}}</button>
+				{{#unless pushing}}
+				<button data-action="useLuck" data-luck-amount="{{luckNeeded}}" data-new-success-level="{{difficultyLevel}}">{{luckNeededTxt}}</button>
+				{{/unless}}
 			{{/if}}
-		</div>
-	{{/unless}}
+		{{/unless}}
+		
+		{{#unless pushing}}
+		{{#if canIncreaseSuccess}}
+			{{#each increaseSuccess as |level|}}
+				<button data-action="useLuck" data-luck-amount="{{level.LuckToSpend}}" data-new-success-level="{{level.difficulty}}">Make it {{level.difficultyName}} for {{level.LuckToSpend}} luck.</button>
+			{{/each}}
+		{{/if}}
+		{{/unless}}
+	</div>
 </div>

@@ -1,0 +1,162 @@
+<div class="coc7 chat-card melee initiator"
+    data-actor-key="{{actorKey}}"
+    data-item-id="{{item._id}}"
+    data-fast-forward="{{fastForward}}"
+    data-resolved="{{resolved}}"
+    data-outnumbered="{{outnumbered}}"
+    data-surprised="{{surprised}}"
+    data-auto-success="{{autoSuccess}}"
+    data-advantage="{{advantage}}"
+    data-disadvantage="{{disadvantage}}"
+    data-target-card="{{targetCard}}">
+    <!-- data-dived={{dived}} -->
+    
+    <div class="roll"></div>
+
+    <header class="card-header flexcol">
+        <div class="flexrow">
+            <img style="flex: none;" src="{{item.img}}" title="{{item.name}}" width="36" height="36"/>
+            <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{item.name}}</h3>
+        </div>
+
+        <div class="card-content">
+            {{{item.data.data.description.value}}}
+        </div>
+
+        <div class="flexrow advantage-selection">
+            <span class="flex1 toggle-switch advantage {{#unless rolled}}simple-flag{{/unless}} {{#if advantage}}switched-on{{/if}} gm-select-only"
+            title="Add 1 bonus die (target is prone, restrained...)" 
+            style="text-align:center" 
+            data-flag="advantage" 
+            data-selected={{advantage}}>{{localize 'CoC7.Advantage'}}</span>
+            <span class="flex1 toggle-switch disadvantage {{#unless rolled}}simple-flag{{/unless}} {{#if disadvantage}}switched-on{{/if}} gm-select-only"
+            title="Add 1 malus die (for being prone, restrained...)" 
+            style="text-align:center" 
+            data-flag="disadvantage" 
+            data-selected={{disadvantage}}>{{localize 'CoC7.Disadvantage'}}</span>
+        </div>
+    </header>
+
+    <div class="target-name">
+        {{#if target}}
+        <label>Target : {{target.name}}</label>
+        {{/if}}
+    </div>
+
+    <div class="flexrow bonus-selection">
+        <span class="flex1 toggle-switch outnumbered {{#unless rolled}}simple-flag{{/unless}} {{#if outnumbered}}switched-on{{/if}} gm-select-only"
+            title="Add 1 bonus dice for outnumbered target" 
+            style="text-align:center" 
+            data-flag="outnumbered" 
+            data-selected={{outnumbered}}>{{localize 'CoC7.OutNumbered'}}</span>
+        <!-- <span class="flex1 toggle-switch dived {{#unless rolled}}simple-flag{{/unless}} {{#if dived}}switched-on{{/if}} gm-select-only"
+            title="Add 1 malus dice on succesfull dodge from target"
+            style="text-align:center"
+            data-flag="dived"
+            data-selected={{surprised}}>{{localize 'CoC7.combatCard.dive4cover'}}</span> -->
+        <span class="flex1 toggle-switch surprised {{#unless rolled}}simple-flag{{/unless}} {{#if surprised}}switched-on{{/if}} gm-select-only"
+            title="Add 1 bonus dice for surprised target"
+            style="text-align:center"
+            data-flag="surprised"
+            data-selected={{surprised}}>{{localize 'CoC7.combatCard.surpised'}}</span>
+        <span class="flex1 toggle-switch auto-success {{#unless rolled}}simple-flag{{/unless}} {{#if autoSuccess}}switched-on{{/if}} gm-select-only"
+            title="Attack automaticaly hit"
+            style="text-align:center"
+            data-flag="auto-success"
+            data-selected={{autoSuccess}}>{{localize 'CoC7.combatCard.autoSuccess'}}</span>
+    </div>
+
+    {{#if rolled}}
+    <div class="dice-roll" style="padding-top: 5px;"
+        data-roll-type={{roll.rollType}}
+        data-side={{roll.side}}
+        data-action={{roll.action}}
+        data-ref-message-id={{roll.referenceMessageId}}
+        data-success-level={{roll.successLevel}}
+        data-difficulty={{roll.difficulty}}
+        data-actor-id={{roll.actorId}}
+        data-token-id={{roll.tokenId}}
+        data-actor-key={{roll.actorKey}}
+        data-skill-id={{roll.skillId}}
+        data-item-id={{roll.itemId}}
+        data-dice-mod={{roll.diceMod}}
+        data-value={{roll.value}}
+        data-result={{roll.result}}
+        data-fumble={{roll.fumble}}
+        data-critical={{roll.critical}}
+        data-characteristic={{roll.characteristic}}
+        >
+		<div class="dice-result">
+			<!-- <div class="dice-formula">1D% {{#if check.dices.hasBonus}}{{check.dices.bonus}} {{check.dices.bonusType}} {{localize 'CoC7.Dice'}}{{/if}}</div> -->
+			<div class="dice-tooltip" style="display: none;">
+				<section class="tooltip-part">
+					<div class="dice">
+						<p class="part-formula">
+							{{#if check.dices.tenOnlyOneDie}}
+							{{localize 'CoC7.TensDie'}}
+							{{else}}
+							{{check.dices.tens.length}} {{localize 'CoC7.TensDice'}}
+							{{/if}}
+							<span class="part-total">{{check.dices.tenResult}}</span>
+						</p>
+						<ol class="dice-rolls">
+							{{#each check.dices.tens as |die key|}}
+								<li class="roll die d10 {{#unless die.selected}}discarded{{/unless}} {{#if die.isMax}}min{{/if}} {{#if die.isMin}}max{{/if}}">{{die.value}}</li>
+							{{/each}}
+						</ol>
+					</div>
+				</section>
+				<section class="tooltip-part">
+					<div class="dice">
+						<p class="part-formula">
+							{{localize 'CoC7.UnitsDie'}}
+							<span class="part-total">{{check.dices.unit.value}}</span>
+						</p>
+						<ol class="dice-rolls">
+							<li class="roll die d10">{{check.dices.unit.value}}</li>
+						</ol>
+					</div>
+				</section>
+
+                <h4 class="result-details" style="margin: 0">{{check.resultType}}</h4>
+
+                <div class="card-buttons owner-only" data-actor-id="{{check.actor._id}}" style="padding: 2px 0;margin: 0;">
+                    {{#unless check.isSuccess}}
+                        {{#if check.canBePushed}}
+                            {{#unless check.pushing}}
+                                <button data-action="push">{{localize 'CoC7.PushSkill'}}</button>
+                            {{/unless}}
+                        {{/if}}
+                        {{#if check.hasEnoughLuck}}
+                            {{#unless check.pushing}}
+                                <button data-action="useLuck" data-luck-amount="{{check.luckNeeded}}" data-new-success-level="{{check.difficultyLevel}}">{{check.luckNeededTxt}}</button>
+                            {{/unless}}
+                        {{/if}}
+                    {{/unless}}
+                    
+                    {{#unless check.pushing}}
+                        {{#if check.canIncreaseSuccess}}
+                            {{#each check.increaseSuccess as |level|}}
+                                <button data-action="useLuck" data-luck-amount="{{level.LuckToSpend}}" data-new-success-level="{{level.difficulty}}">Upgrade to {{level.difficultyName}} success for {{level.LuckToSpend}} luck.</button>
+                            {{/each}}
+                        {{/if}}
+                    {{/unless}}
+                </div>
+            
+			</div>
+            <div class="dice-total {{#if check.isSuccess}}success{{else}}failure{{/if}}{{#if check.isCritical}} critical{{/if}}{{#if check.isFumble}} fumble{{/if}} ">
+                {{check.dices.total}} {{check.resultType}}
+            </div>
+			{{#if check.hasMalfunction}}<h4 class="malfunction">{{check.malfunctionTxt}}</h4>{{/if}}
+		</div>
+	</div>
+    {{else}}
+    <div class="card-buttons owner-only">
+        {{#each skills as |skill id|}}
+            <button
+                data-action="melee-initiator-roll"
+                data-skill="skill._id">Roll {{skill.name}} ({{skill.data.data.value}}%)</button>
+        {{/each}}
+    </div>
+    {{/if}}
+</div>

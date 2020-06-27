@@ -119,14 +119,31 @@ export class CoC7Dice {
             total = Math.min( ...tenDie.results);
         }
 
-        total = total + unitDie.total;
 
+        if( game.dice3d){
+            const diceResults = [];
+            tenDie.results.forEach(dieResult => { 
+                diceResults.push( 100 == dieResult ?0:dieResult/10);
+            });
+            diceResults.push( unitDie.total);
+
+            const diceData = {
+                formula: `${tenDie.results.length}d100+1d10`,
+                results: diceResults,
+                whisper: null,
+                blind: false
+            };
+    
+            game.dice3d.show(diceData);
+        }
+
+        total = total + unitDie.total;
         let result = {};
         result.unit = unitDie;
         result.tens = tenDie;
         result.total = total;
+ 
 
         return result;
-
     }
 }

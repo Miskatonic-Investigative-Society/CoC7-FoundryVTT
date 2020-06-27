@@ -16,5 +16,19 @@
     data-characteristic="{{characteristic}}"
     >
 
-	<p>{{successString}}</p>
+    <div class="flexrow" style="margin: 2px 0;">
+        <div class="flex1">{{successString}}</div>
+        <div class="flexrow" style="font-size: 8px;line-height: 16px;flex:0 0 85px">
+            <div style="text-align:start;display:block;color: {{rollColor}};" title="{{rollTitle}}">
+                {{#each rollIcons as |incon key|}}
+                    <i class="fas fa-{{incon}}"></i>
+                {{/each}}
+            </div>
+            <div style="text-align:end;display:block;color: {{netColor}};" title="Net success">
+                {{#each rollNetIcons as |incon key|}}
+                    <i class="fas fa-{{incon}}"></i>
+                {{/each}}
+            </div>
+        </div>
+    </div>
 </div>
