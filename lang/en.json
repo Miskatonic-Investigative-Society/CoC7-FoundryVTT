@@ -2,7 +2,7 @@
 "CoC7.title": "Call of Cthulhu 7h Edition",
 
 "CHARAC.STR": "STR",
-"CHARAC.Strengh": "Strengh",
+"CHARAC.Strengh": "Strength",
 "CHARAC.CON": "CON",
 "CHARAC.Constitution": "Constitution",
 "CHARAC.SIZ": "SIZ",
@@ -45,6 +45,8 @@
 "CoC7.RegularSuccess": "Regular success",
 "CoC7.HardSuccess": "Hard success",
 "CoC7.ExtremeSuccess": "Extreme success",
+"CoC7.CriticalSuccess": "Critical success",
+"CoC7.Fumble": "Fumble",
 "CoC7.Failure": "Failure",
 "CoC7.Malfunction": "{itemName} had a malfunction",
 
@@ -68,10 +70,13 @@
 "CoC7.RegularDifficulty": "regular",
 "CoC7.HardDifficulty": "hard",
 "CoC7.ExtremeDifficulty": "extreme",
+"CoC7.CriticalDifficulty": "critical",
 "CoC7.RollDifficulty": "Roll Difficulty",
 "CoC7.RollDifficultyRegular": "Regular",
 "CoC7.RollDifficultyHard": "Hard",
 "CoC7.RollDifficultyExtreme": "Extreme",
+"CoC7.RollDifficultyCritical": "Critical",
+"CoC7.RollResult.LuckSpendText": "{luckAmount} luck spend, {successLevel} success",
 "CoC7.RollDice": "Roll !",
 
 "CoC7.CheckResult": "{name} check ({value}%) - {difficulty} difficulty",
@@ -84,6 +89,13 @@
 "CoC7.Dodge": "Dodging",
 "CoC7.Maneuver": "Maneuvering",
 "CoC7.OutNumbered": "Outnumbered",
+"CoC7.combatCard.surpised": "Surprised",
+"CoC7.combatCard.autoSuccess": "Auto. Success",
+"CoC7.Advantage": "Advantage",
+"CoC7.Disadvantage": "Disadvantage",
+
+"CoC7.combatCard.dive4cover": "Dive for Cover",
+
 "CoC7.DropZone": "DropZone",
 
 "CoC7.SkillValue": "Value",
@@ -102,6 +114,7 @@
 "CoC7.WeaponBulletsInMag": "Bullets in Mag :",
 "CoC7.WeaponSpecial": "Special :",
 "CoC7.ItemPrice": "Price :",
+"CoC7.Armor": "Armor"
 
 "CoC7.EraNvct": "Invictus",
 "CoC7.EraDrka": "Dark Ages",

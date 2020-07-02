@@ -1,3 +1,5 @@
+import { CoC7Check } from "../check.js";
+
 export class RollDialog {
 
 	// constructor( dialogData={}, options={}) {
@@ -38,7 +40,8 @@ export class RollDialog {
 
 	static async create()
 	{
-		const html = await renderTemplate("systems/CoC7/templates/apps/bonus.html", {});
+		let diff = CoC7Check.difficultyLevel;
+		const html = await renderTemplate("systems/CoC7/templates/apps/bonus.html", {difficulty: CoC7Check.difficultyLevel});
 		return new Promise((resolve) => {
 			let formData = null;
 			const dlg = new Dialog({
