@@ -77,7 +77,6 @@ export class CoC7Chat{
 						const target = CoC7MeleeTarget.getFromMessageId( chatMessage.id);
 						const initiator = CoC7MeleeInitiator.getFromMessageId( target.parentMessageId);
 
-						ui.notifications.info('resolution card found @'+ target.resolutionCard);
 						const resolutionCard = new CoC7MeleeResoltion( target.parentMessageId, chatMessage.id, target.resolutionCard)
 						resolutionCard.resolve();
 					}
