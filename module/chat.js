@@ -1139,13 +1139,13 @@ export class CoC7Chat{
 		if( actor == null) actor = game.actors.get( actorId);
 
 		if( !actor) {
-			ui.notifications.error( "Couldn't locate actor");
+			ui.notifications.error(game.i18n.format("CoC7.ErrorActor"));
 			return;
 		}
 
 		const item = actor.getOwnedItem( itemId);
 		if( !item) {
-			ui.notifications.error( "Couldn't locate item");
+			ui.notifications.error(game.i18n.format("CoC7.ErrorItem"));
 			return;
 		}
 

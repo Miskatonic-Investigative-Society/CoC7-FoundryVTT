@@ -7,13 +7,13 @@ export const COC7 = {};
  * @type {Object}
  */
 COC7.eras = {
-	"nvct": "Invictus",
-	"drka": "Dark Ages",
-	"ddts": "Down Darker Trails",
-	"glit": "Cthulhu by Gaslight",
-	"1920": "1920s",
-	"pulp": "Pulp Cthulhu",
-	"mdrn": "Modern"
+	"nvct": "CoC7.EraNvct",
+	"drka": "CoC7.EraDrka",
+	"ddts": "CoC7.EraDdts",
+	"glit": "CoC7.EraGlit",
+	"1920": "CoC7.Era1920",
+	"pulp": "CoC7.EraPulp",
+	"mdrn": "CoC7.EraMdrn"
 };
 
 
@@ -33,29 +33,29 @@ COC7.characteristics = {
  * @type {Object}
  */
 COC7.skillProperties = {
-	special:	"Specialization",
-	rarity:		"Uncommon",
-	push:		"Pushed",
-	combat:		"Combat",
-	fighting:	"Fighting",
-	firearm:	"Firearms"
+	special: "CoC7.SkillSpecial",
+	rarity: "CoC7.SkillRarity",
+	push: "CoC7.SkillPush",
+	combat:	"CoC7.SkillCombat",
+	fighting: "CoC7.SkillFighting",
+	firearm: "CoC7.SkillFirearm"
 }
 
 COC7.weaponProperties = {
-	rngd: "Range",
-	impl: "Impale",
-	rare: "Rare",
-	ahdb: "+Half DB",
-	addb: "+DB",
-	slnt: "Silent",
-	xplv: "Area of Effect",
-	brst: "Burst",
-	auto: "Full-auto",
-	spcl: "Special",
-	mont: "Mounted",
-	dbrl: "Dual barrel",
-	blst: "Blast",
-	stun: "Stun"
+	rngd: "CoC7.WeaponRngd",
+	impl: "CoC7.WeaponImpl",
+	rare: "CoC7.WeaponRare",
+	ahdb: "CoC7.WeaponAhdb",
+	addb: "CoC7.WeaponAddb",
+	slnt: "CoC7.WeaponSlnt",
+	xplv: "CoC7.WeaponXplv",
+	brst: "CoC7.WeaponBrst",
+	auto: "CoC7.WeaponAuto",
+	spcl: "CoC7.WeaponSpcl",
+	mont: "CoC7.WeaponMont",
+	dbrl: "CoC7.WeaponDbrl",
+	blst: "CoC7.WeaponBlst",
+	stun: "CoC7.WeaponStun"
 }
 
 COC7.formula = {}
@@ -92,8 +92,8 @@ COC7.fightingSpecializationName = "Fighting";
 COC7.firearmSpecializationName = "Firearms";
 
 COC7.combatCards = {
-	fightBack:	"CoC7.fightBack",
-	dodge:		"CoC7.dodge",
-	maneuver:	"CoC7.maneuver",
+	fightBack:	"CoC7.FightBack",
+	dodge:		"CoC7.Dodge",
+	maneuver:	"CoC7.Maneuver",
 
 }

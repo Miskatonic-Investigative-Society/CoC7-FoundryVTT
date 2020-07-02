@@ -45,11 +45,11 @@ export class RollDialog {
 		return new Promise((resolve) => {
 			let formData = null;
 			const dlg = new Dialog({
-				title: 'Bonus selection window',
+				title: game.i18n.localize('CoC7.BonusSelectionWindow'),
 				content: html,
 				buttons: {
 					roll: {
-						label: 'Roll !',
+						label: game.i18n.localize('CoC7.RollDice'),
 						callback: html => {
 							formData = new FormData(html[0].querySelector("#bonus-roll-form"));
 							return resolve(formData);

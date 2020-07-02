@@ -108,7 +108,7 @@
 				</div>
 				<div class="skill-attributes" style="margin-left: 2px;  display: block;" data-set="properties">
 					{{#each weapon.data._properties as | property key|}}
-						<span class="toggle-switch {{#if property.value}} switched-on {{/if}}" data-property="{{property.id}}">{{property.name}}</span>
+						<span class="toggle-switch {{#if property.value}} switched-on {{/if}}" data-property="{{property.id}}">{{localize property.name}}</span>
 					{{/each}}
 				</div>
 			</li>
