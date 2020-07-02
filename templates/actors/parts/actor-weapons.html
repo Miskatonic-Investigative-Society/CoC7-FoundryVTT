@@ -11,7 +11,7 @@
 <ol class="weapons-list" style="padding: 0;margin: 0;">
 	{{#each weapons as |weapon id|}}
 		{{#if ../data.flags.locked}}
-			<li class="item flexcol" data-item-id="{{weapon._id}}">
+			<li class="item weapon flexcol" data-item-id="{{weapon._id}}">
 				<div class="flexrow" style="align-items: center;">
 					<div class="flex2 weapon-name rollable" style="border-right: 1px groove; padding-left: 2px;">{{weapon.name}}</div>
 					<div class="flexrow flex4 weapon-skills" style="border-right: 1px groove; padding-left: 2px;">
@@ -27,22 +27,22 @@
 							{{/if}}
 						{{/if}}
 					</div>
-					<div class="flexrow flex2 weapon-damage" style="font-size: 10px; padding-left: 2px;">
+					<div class="flexrow flex2" style="font-size: 10px; padding-left: 2px;">
 						{{#if weapon.data.properties.rngd}}
 							{{#if weapon.data.properties.xplv}}
 								{{#each weapon.data.range as |range key|}}
-								<div class="flex1">
-									<a class="inline-roll roll" data-mode="roll" title="{{range.value}}" data-formula="{{range.damage}}"><i class="fas fa-dice-d20"></i> {{range.damage}}</a>
+								<div class="flex1 weapon-damage" data-range="{{key}}">
+									<a class="roll" data-mode="roll" title="{{range.value}}" data-formula="{{range.damage}}"><i class="fas fa-dice-d20"></i> {{range.damage}}</a>
 								</div>
 								{{/each}}
 							{{else}}
-							<div class="flex1">
-								<a class="inline-roll roll" data-mode="roll" title="{{weapon.data.range.normal.value}}" data-formula="{{weapon.data.range.normal.damage}}"><i class="fas fa-dice-d20"></i> {{weapon.data.range.normal.damage}}</a>
+							<div class="flex1 weapon-damage"  data-range="normal">
+								<a class="roll" data-mode="roll" title="{{weapon.data.range.normal.value}}" data-formula="{{weapon.data.range.normal.damage}}"><i class="fas fa-dice-d20"></i> {{weapon.data.range.normal.damage}}</a>
 							</div>
 							{{/if}}
 						{{else}}
-						<div class="flex1">
-							<a class="inline-roll roll" data-mode="roll" data-formula="{{weapon.data.range.normal.damage}}" title="{{weapon.data.range.normal.value}}"><i class="fas fa-dice-d20"></i> {{weapon.data.range.normal.damage}}</a>
+						<div class="flex1 weapon-damage"  data-range="normal">
+							<a class="roll" data-mode="roll" data-formula="{{weapon.data.range.normal.damage}}" title="{{weapon.data.range.normal.value}}"><i class="fas fa-dice-d20"></i> {{weapon.data.range.normal.damage}}</a>
 						</div>
 						{{/if}}
 					</div>

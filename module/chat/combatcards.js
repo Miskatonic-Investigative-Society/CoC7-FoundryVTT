@@ -1,4 +1,6 @@
 import { CoC7Check } from '../check.js'
+import { chatHelper } from './helper.js'
+import { CoC7Chat } from '../chat.js'
 
 export class CoC7MeleeInitiator{
 	constructor(actorKey = null, itemId = null, fastForward = false) {
@@ -22,6 +24,10 @@ export class CoC7MeleeInitiator{
 
     get item(){
         return this.actor.getOwnedItem( this.itemId);
+    }
+
+    get weapon(){
+        return this.item;
     }
 
     get targets(){
@@ -60,10 +66,9 @@ export class CoC7MeleeInitiator{
 
         const message = game.messages.get( this.messageId);
 
-		message.update({ content: html }).then(msg => {
-			ui.chat.updateMessage( msg, false);
-			return msg;
-		});
+        const msg = await message.update({ content: html });
+        await ui.chat.updateMessage( msg, false);
+		return msg;
     }
 
     toggleFlag( flagName){
@@ -80,7 +85,7 @@ export class CoC7MeleeInitiator{
         check.action = "attack";
         check.actor = this.actorKey;
         check.item = this.itemId;
-        check.skillId = skillId;
+        check.skill = skillId;
         check.difficulty = CoC7Check.difficultyLevel.regular;
         check.diceModifier = 0;
 
@@ -100,11 +105,10 @@ export class CoC7MeleeInitiator{
             const message = await target.createChatCard();
             this.targetCard = message.id;
         }
-
         return check;
     }
 
-    publishCheckResult( check = null){
+    async publishCheckResult( check = null){
         if( !check && !this.check) return null;
 
         if( check) this.check = check;
@@ -138,17 +142,23 @@ export class CoC7MeleeInitiator{
             this.roll.rollIcons.push( "skull");
         }
 
-        this.updateChatCard();
+        if( !this.targetCard){
+            const resolutionCard = new CoC7MeleeResoltion( this.parentMessageId, this.messageId);
+            const resolutionMessage = await resolutionCard.preCreateMessage();
+    
+            this.resolutionCard = resolutionMessage.id;
+        }
+        await this.updateChatCard();
     }
 
-    static getFromCard( card){
+    static getFromCard( card, messageId = null){
         const initiator = new CoC7MeleeInitiator();
         chatHelper.getObjectFromElement( initiator, card);
         initiator.roll = CoC7Roll.getFromCard( card);
         
         if( card.closest('.message'))
             initiator.messageId = card.closest('.message').dataset.messageId;
-        else initiator.messageId = null;
+        else initiator.messageId = messageId;
         return initiator;
     }
 
@@ -157,7 +167,7 @@ export class CoC7MeleeInitiator{
         if( ! message) return null;
         const card = $(message.data.content)[0];
 
-        const initiator = CoC7MeleeInitiator.getFromCard( card);
+        const initiator = CoC7MeleeInitiator.getFromCard( card, messageId);
         initiator.messageId = messageId;
 
         return initiator;
@@ -178,6 +188,51 @@ export class CoC7MeleeInitiator{
             initiator.toggleFlag(flag);
             initiator.updateChatCard();
         }
+    }
+
+    upgradeRoll( luckAmount, newSuccessLevel, oldCard){
+        if( !this.actor.spendLuck( luckAmount)) ui.notifications.error(`${actor.name} didn't have enough luck to pass the check`);
+        this.roll.value = null;
+        this.roll.successLevel = newSuccessLevel;
+        this.roll.luckSpent = true;
+        oldCard.dataset.processed = false;
+        
+        const diceRolls = oldCard.querySelector('.dice-roll');
+        diceRolls.dataset.value = null;
+        diceRolls.dataset.successLevel = newSuccessLevel;
+        diceRolls.dataset.luckSpent = true;
+
+        const resulDetails = oldCard.querySelector(".result-details");
+        const diceTotal = oldCard.querySelector('.dice-total');
+        switch (newSuccessLevel) {
+            case CoC7Check.successLevel.regular:
+                diceTotal.innerText = game.i18n.localize("CoC7.RegularSuccess");
+                resulDetails.innerText = game.i18n.format("CoC7.RollResult.LuckSpendText", {luckAmount: luckAmount, successLevel: game.i18n.localize("CoC7.RegularDifficulty")});
+                break;
+        
+            case CoC7Check.successLevel.hard:
+                diceTotal.innerText = game.i18n.localize("CoC7.HardSuccess");
+                resulDetails.innerText = game.i18n.format("CoC7.RollResult.LuckSpendText", {luckAmount: luckAmount, successLevel: game.i18n.localize("CoC7.HardDifficulty")});
+                break;
+        
+            case CoC7Check.successLevel.extreme:
+                diceTotal.innerText = game.i18n.localize("CoC7.ExtremeSuccess");
+                resulDetails.innerText = game.i18n.format("CoC7.RollResult.LuckSpendText", {luckAmount: luckAmount, successLevel: game.i18n.localize("CoC7.ExtremeDifficulty")});
+                break;
+        
+            case CoC7Check.successLevel.critical:
+                diceTotal.innerText = game.i18n.localize("CoC7.CriticalSuccess");
+                resulDetails.innerText = game.i18n.format("CoC7.RollResult.LuckSpendText", {luckAmount: luckAmount, successLevel: game.i18n.localize("CoC7.CriticalDifficulty")});
+                break;
+        
+            default:
+                    break;
+        }
+
+        diceTotal.classList.replace( 'failure', 'success');
+        oldCard.querySelector('.card-buttons').remove();
+        oldCard.querySelector('.dice-tooltip').style.display = "none";
+        CoC7Chat.updateChatCard( oldCard);
     }
 }
 
@@ -227,6 +282,17 @@ export class CoC7MeleeTarget{
 
     template = "systems/CoC7/templates/chat/combat/melee-target.html";
 
+    static getFromMessageId( messageId){
+        const message = game.messages.get( messageId);
+        if( ! message) return null;
+        const card = $(message.data.content)[0];
+
+        const target = CoC7MeleeTarget.getFromCard( card, messageId);
+        target.messageId = messageId;
+
+        return target;
+    }
+
     static updateCardSwitch( event, publishUpdate = true){
         const card = event.currentTarget.closest(".melee.target");
         const flag = event.currentTarget.dataset.flag;
@@ -269,19 +335,11 @@ export class CoC7MeleeTarget{
 
     async updateChatCard(){
         let html = await renderTemplate(this.template, this);
-
-
-        // const card = $(html)[0];
-        // const testDiv = card.querySelector('div.test');
-        // chatHelper.attachObjectToElement( this, testDiv);
-
-
         const message = game.messages.get( this.messageId);
 
-		message.update({ content: html }).then(msg => {
-			ui.chat.updateMessage( msg, false);
-			return msg;
-		});
+        const msg = await message.update({ content: html });
+        await ui.chat.updateMessage( msg, false);
+		return msg;
     }
 
     async getUpdatedChatCard(){
@@ -331,9 +389,9 @@ export class CoC7MeleeTarget{
         check.rollType= "opposed";
         check.side = "target";
         check.action = this.action;
-        check.actor = this.actorKey;
+        check.actor = this.actor;
         check.item = this.itemId;
-        check.skillId = skillId;
+        check.skill = skillId;
         check.difficulty = CoC7Check.difficultyLevel.regular;
         check.diceModifier = 0;
 
@@ -346,12 +404,13 @@ export class CoC7MeleeTarget{
         this.resolved = true;
         if( publish) check.toMessage();
 
-        const initiator = CoC7MeleeInitiator.getFromMessageId( this.parentMessageId);
+
+        // const initiator = CoC7MeleeInitiator.getFromMessageId( this.parentMessageId);
 
         return check;
     }
 
-    publishCheckResult( check = null){
+    async publishCheckResult( check = null){
         if( !check && !this.check) return null;
 
         if( check) this.check = check;
@@ -385,10 +444,14 @@ export class CoC7MeleeTarget{
             this.roll.rollIcons.push( "skull");
         }
 
-        this.updateChatCard();
+        const resolutionCard = new CoC7MeleeResoltion( this.parentMessageId, this.messageId);
+        const resolutionMessage = await resolutionCard.preCreateMessage();
+
+        this.resolutionCard = resolutionMessage.id;
+        const updatedCard = await this.updateChatCard();
     }
 
-    static getFromCard( card){
+    static getFromCard( card, messageId = null){
         const actorKey = card.dataset.actorKey;
         const parentMessageId = card.dataset.parentMessageId;
         const fastForward = "true" == card.dataset.fastForward;
@@ -397,11 +460,223 @@ export class CoC7MeleeTarget{
         target.roll = CoC7Roll.getFromCard( card);
         chatHelper.getObjectFromElement( target, card);
 
-        target.messageId = card.closest(".message").dataset.messageId;
+        if( card.closest('.message'))
+        target.messageId = card.closest('.message').dataset.messageId;
+        else target.messageId = messageId;
         return target;
+
+    }
+
+    upgradeRoll( luckAmount, newSuccessLevel, oldCard){
+        if( !this.actor.spendLuck( luckAmount)) ui.notifications.error(`${actor.name} didn't have enough luck to pass the check`);
+        this.roll.value = null;
+        this.roll.successLevel = newSuccessLevel;
+        this.roll.luckSpent = true;
+        oldCard.dataset.processed = false;
+        
+        const diceRolls = oldCard.querySelector('.dice-roll');
+        diceRolls.dataset.value = null;
+        diceRolls.dataset.successLevel = newSuccessLevel;
+        diceRolls.dataset.luckSpent = true;
+
+        const resulDetails = oldCard.querySelector(".result-details");
+        const diceTotal = oldCard.querySelector('.dice-total');
+        switch (newSuccessLevel) {
+            case CoC7Check.successLevel.regular:
+                diceTotal.innerText = game.i18n.localize("CoC7.RegularSuccess");
+                resulDetails.innerText = game.i18n.format("CoC7.RollResult.LuckSpendText", {luckAmount: luckAmount, successLevel: game.i18n.localize("CoC7.RegularDifficulty")});
+                break;
+        
+            case CoC7Check.successLevel.hard:
+                diceTotal.innerText = game.i18n.localize("CoC7.HardSuccess");
+                resulDetails.innerText = game.i18n.format("CoC7.RollResult.LuckSpendText", {luckAmount: luckAmount, successLevel: game.i18n.localize("CoC7.HardDifficulty")});
+                break;
+        
+            case CoC7Check.successLevel.extreme:
+                diceTotal.innerText = game.i18n.localize("CoC7.ExtremeSuccess");
+                resulDetails.innerText = game.i18n.format("CoC7.RollResult.LuckSpendText", {luckAmount: luckAmount, successLevel: game.i18n.localize("CoC7.ExtremeDifficulty")});
+                break;
+        
+            case CoC7Check.successLevel.critical:
+                diceTotal.innerText = game.i18n.localize("CoC7.CriticalSuccess");
+                resulDetails.innerText = game.i18n.format("CoC7.RollResult.LuckSpendText", {luckAmount: luckAmount, successLevel: game.i18n.localize("CoC7.CriticalDifficulty")});
+                break;
+        
+            default:
+                    break;
+        }
+
+        diceTotal.classList.replace( 'failure', 'success');
+        oldCard.querySelector('.card-buttons').remove();
+        oldCard.querySelector('.dice-tooltip').style.display = "none";
+        CoC7Chat.updateChatCard( oldCard);
     }
 }
 
+export class CoC7MeleeResoltion{
+    constructor(initiatorMessage = null, targetMessage = null, messageId = null) {
+        this.initiatorMessage = initiatorMessage;
+        this.targetMessage = targetMessage;
+        this.messageId = messageId;
+    }
+
+    async preCreateMessage(){
+        const html = await renderTemplate(this.template, this);
+		
+		// const speaker = ChatMessage.getSpeaker({actor: this.actor});
+        // if( this.actor.isToken) speaker.alias = this.actor.token.name;
+        
+        // const user = this.actor.user ? this.actor.user : game.user;
+
+		const chatMessage = await ChatMessage.create({
+			user: game.user._id,
+			// speaker,
+			content: html
+        });
+        
+        this.messageId = chatMessage.id;
+        return chatMessage;
+    }
+
+    get target(){
+        if(this.targetMessage) return CoC7MeleeTarget.getFromMessageId(this.targetMessage);
+        return null;
+    }
+
+    get initiator(){
+        if(this.initiatorMessage) return CoC7MeleeInitiator.getFromMessageId(this.initiatorMessage);
+        return null;
+    }
+
+
+    async resolve(){
+        if( this.target){
+            switch (this.target.action) {
+                case "dodge":
+                    if( this.initiator.roll.successLevel <= 0 && this.target.roll.successLevel <= 0){
+                        this.resultString = `Both side failed.`;
+                        this.winner = null;
+                    }
+                    else if( this.initiator.roll.successLevel > this.target.roll.successLevel){
+                        this.resultString = `${this.initiator.actor.name} won. Roll damage`;
+                        this.winner = this.initiator;
+                        this.action = 'roll-damage';
+                    }
+                    else if( this.initiator.roll.successLevel <= this.target.roll.successLevel){
+                        this.resultString = `${this.target.actor.name} dodged.`;
+                        this.winner = this.target;
+                        this.action = 'dodge';
+                    }
+                    
+                    break;
+            
+                case "fightBack":
+                    if( this.initiator.roll.successLevel <= 0 && this.target.roll.successLevel <= 0){
+                        this.resultString = `Both side failed.`;
+                        this.winner = null;
+                        this.rollDamage = false;
+                    }
+                    else if( this.initiator.roll.successLevel >= this.target.roll.successLevel){
+                        this.resultString = `${this.initiator.actor.name} won. Roll damage`;
+                        this.winner = this.initiator;
+                        this.looser = this.target;
+                        this.rollDamage = true;
+                    }
+                    else if( this.initiator.roll.successLevel <= this.target.roll.successLevel){
+                        this.resultString = `${this.target.actor.name} won. Roll damage`;
+                        this.winner = this.target;
+                        this.looser = this.initiator;
+                        this.rollDamage = true;
+                    }
+                    
+                    break;
+            
+                case "maneuver":
+                    if( this.initiator.roll.successLevel <= 0 && this.target.roll.successLevel <= 0){
+                        this.resultString = `Both side failed.`;
+                        this.winner = null;
+                        this.rollDamage = false;
+                    }
+                    else if( this.initiator.roll.successLevel >= this.target.roll.successLevel){
+                        this.resultString = `${this.initiator.actor.name} won. Roll damage`;
+                        this.winner = this.initiator;
+                        this.looser = this.target;
+                        this.rollDamage = true;
+                    }
+                    else if( this.initiator.roll.successLevel <= this.target.roll.successLevel){
+                        this.resultString = `${this.target.actor.name} maneuver was successful.`;
+                        this.winner = this.target;
+                        this.looser = this.initiator;
+                        this.rollDamage = false;
+                    }
+                    
+                    break;
+            
+                default:
+                    break;
+            }
+        } else {
+            if( this.initiator.roll.successLevel > 0){
+                this.resultString = `${this.initiator.actor.name} won. Roll damage`;
+                this.winner = this.initiator;
+                this.rollDamage = true;
+            } else {
+                this.resultString = `${this.initiator.actor.name} missed.`;
+                this.winner = this.initiator;
+                this.rollDamage = false;
+
+            }
+        }
+
+        if( this.winner){
+            if( this.winner.roll.successLevel >= CoC7Check.successLevel.extreme) this.winner.roll.criticalDamage = true;
+            else this.winner.roll.criticalDamage = false;
+        }
+
+
+        this.resolved = true;
+        const html = await renderTemplate(this.template, this);
+        if( this.messageId){
+            const message = game.messages.get( this.messageId);
+            const speaker = this.winner ? ChatMessage.getSpeaker({actor: this.winner.actor}) : null;
+            const user = this.winner ? this.winner.actor.user ? this.winner.actor.user : game.user : game.user;
+
+            let msg;
+            if( speaker) msg = await message.update({ 
+                user: user._id,
+                speaker,
+                content: html });
+            else  msg = await message.update({ 
+                user: user._id,
+                content: html });
+            await ui.chat.updateMessage( msg, false);
+            return msg;
+        }
+    }
+
+    template = "systems/CoC7/templates/chat/combat/melee-resolution.html";
+
+    // async createChatCard(){
+    //     this.resolve();
+	// 	// const html = await renderTemplate(this.template, this);
+		
+	// 	// const speaker = ChatMessage.getSpeaker({actor: this.actor});
+    //     // if( this.actor.isToken) speaker.alias = this.actor.token.name;
+        
+    //     // const user = this.actor.user ? this.actor.user : game.user;
+
+    //     // const message = await ChatMessage.create({
+	// 	// 	user: user._id,
+	// 	// 	speaker,
+	// 	// 	content: html
+    //     // });
+        
+    //     // this.messageId = message.id;
+    //     // return message;
+    // }
+
+
+}
 export class CoC7Roll{
     static getFromCard( card){
 
@@ -411,26 +686,6 @@ export class CoC7Roll{
         const roll = new CoC7Roll();
         chatHelper.getObjectFromElement( roll, rollDiv);
 
-        // roll.rollType = card.dataset.rollType;
-        // roll.side = card.dataset.side;
-        // roll.action = card.dataset.action;
-        // roll.refMessageId = card.dataset.refMessageId;
-        // roll.referenceMessageId = card.dataset.refMessageId;
-        // roll.successLevel = parseInt( card.dataset.successLevel);
-        // roll.difficulty = parseInt( card.dataset.difficulty);
-        // roll.skillId = card.dataset.skillId;
-        // roll.itemId = card.dataset.itemId;
-        // roll.diceMod = card.dataset.diceMod;
-        // roll.value = card.dataset.value;
-        // roll.fumble = "true" == card.dataset.fumble;
-        // roll.critical = "true" == card.dataset.critical;
-        // roll.characteristic = card.dataset.characteristic;
-        // roll.actorId = card.dataset.actorId;
-        // roll.tokenId = card.dataset.tokenId;
-        // roll.result = parseInt( card.dataset.result);
-
-        // roll.actorKey = roll.tokenId ? roll.tokenId : roll.actorId;
-    
         return roll;
     }
 
@@ -480,48 +735,3 @@ export class CoC7Roll{
     }
 }
 
-export class chatHelper{
-    static hyphenToCamelCase(string) {
-        return string.replace(/-([a-z])/g, function(string) {
-        return string[1].toUpperCase();
-        });
-    }
-    
-
-    static camelCaseToHyphen(string) {
-        return string.replace(/([A-Z])/g, function(string) {
-        return '-' + string.toLowerCase();
-        });
-    }
-
-    static getActorFromKey(key) {
-
-		// Case 1 - a synthetic actor from a Token
-		if (key.includes(".")) {
-		const [sceneId, tokenId] = key.split(".");
-		const scene = game.scenes.get(sceneId);
-		if (!scene) return null;
-		const tokenData = scene.getEmbeddedEntity("Token", tokenId);
-		if (!tokenData) return null;
-		const token = new Token(tokenData);
-		return token.actor;
-		}
-
-		// Case 2 - use Actor ID directory
-		return game.actors.get(key) || null;
-    }
-
-    static attachObjectToElement( object, element){
-        Object.keys(object).forEach( prop => {
-            element.dataset[prop]= object[prop];
-        })    
-    }
-
-    static getObjectFromElement( object, element){
-        Object.keys(element.dataset).forEach( prop => {
-            if( "true" == element.dataset[prop]) object[prop] = true;
-            else if ( "false" == element.dataset[prop]) object[prop] = false;
-            else if( "template" != prop) object[prop] = element.dataset[prop]; //ignore template
-        })    
-    }
-}

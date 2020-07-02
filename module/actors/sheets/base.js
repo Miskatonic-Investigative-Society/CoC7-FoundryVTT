@@ -4,6 +4,7 @@ import { CoC7Check } from '../../check.js'
 import { COC7 } from '../../config.js'
 import { CoC7Chat } from '../../chat.js'
 import { CoC7MeleeInitiator } from '../../chat/combatcards.js'
+import { CoC7DamageRoll } from '../../chat/damagecards.js'
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -225,7 +226,8 @@ export class CoC7ActorSheet extends ActorSheet {
 			html.find('.weapon-name.rollable').click( event => this._onWeaponRoll(event));
 			html.find('.weapon-skill.rollable').click( event => this._onWeaponSkillRoll(event));
 			html.find('.read-only').dblclick(this._toggleReadOnly.bind(this));
-	
+			html.on('click', '.weapon-damage', this._onWeaponDamage.bind(this));
+
 
 			const wheelInputs = html.find('.attribute-value');
             for( let wheelInput of wheelInputs){
@@ -512,9 +514,13 @@ export class CoC7ActorSheet extends ActorSheet {
 		// check.item.roll();
 	}
 
-	_onWeaponDamage( event) {
+	async _onWeaponDamage( event){
 		event.preventDefault();
-		alert("Damage clicked");
+		const itemId = event.currentTarget.closest(".weapon").dataset.itemId;
+		const range = event.currentTarget.closest(".weapon-damage").dataset.range;
+		const rollCard = new CoC7DamageRoll( itemId, this.actor.tokenKey);
+		rollCard.rollDamage( range);
+		console.log( "Weapon damage Clicked");
 	}
 
 	/**

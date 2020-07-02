@@ -453,6 +453,11 @@ export class CoCActor extends Actor {
     return this.id;
   }
 
+  
+  get actorKey(){
+    return this.tokenKey;
+  }
+
   /**
    * Use the formula if available to roll some characteritics.
    */

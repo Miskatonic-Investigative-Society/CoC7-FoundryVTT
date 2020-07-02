@@ -347,8 +347,6 @@ export class CoC7Check {
         return this._difficulty;
     }
 
-
-
     async toMessage( pushing = false)
     {
         const template = 'systems/CoC7/templates/chat/roll-result.html';
