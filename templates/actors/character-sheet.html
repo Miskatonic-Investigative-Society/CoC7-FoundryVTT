@@ -47,28 +47,42 @@
 		</div>
 
 		<div class="flexrow" style="flex: none;height: 20px;">
-			<div class="flexrow flex1 attribute" data-attrib="hp">
+			<div class="flexrow flex3 attribute" data-attrib="hp">
 				<label class="attribute-label">{{localize 'CoC7.HitPoints'}} :</label>
 				<input class="attribute-value" type="text" name="data.attribs.hp.value" value="{{data.attribs.hp.value}}"  data-dtype="Number"/>
 				<span style="flex: none;font-size: large;">/</span>
-				<input class="attribute-max read-only" type="text" name="data.attribs.hp.max" value="{{data.attribs.hp.max}}" data-dtype="Number" data-attrib="hp" readonly>
+				{{#if data.attribs.hp.auto}}
+				<span class="attribute-max" type="text" style="line-height: 22px;"> {{data.attribs.hp.max}} </span>
+				{{else}}
+				<input class="attribute-max {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.hp.max" value="{{data.attribs.hp.max}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
+				{{/if}}
+				{{#unless data.flags.locked}}
+				<div class="auto-toggle {{#if data.attribs.hp.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
+				{{/unless}}
 				<div class="flex1"></div>
 			</div>
-			<div class="flexrow flex1 attribute" data-attrib="mp">
+			<div class="flexrow flex3 attribute" data-attrib="mp">
 				<label class="attribute-label">{{localize 'CoC7.MagicPoints'}} :</label>
 				<input class="attribute-value" type="text" name="data.attribs.mp.value" value="{{data.attribs.mp.value}}" data-dtype="Number"/>
 				<span style="flex: none;font-size: large;">/</span>
-				<input class="attribute-max read-only" type="text" name="data.attribs.mp.max" value="{{data.attribs.mp.max}}" data-dtype="Number" data-attrib="mp" readonly>
+				{{#if data.attribs.mp.auto}}
+				<span class="attribute-max" type="text" style="line-height: 22px;"> {{data.attribs.mp.max}} </span>
+				{{else}}
+				<input class="attribute-max {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.mp.max" value="{{data.attribs.mp.max}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
+				{{/if}}
+				{{#unless data.flags.locked}}
+				<div class="auto-toggle {{#if data.attribs.mp.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
+				{{/unless}}
 				<div class="flex1"></div>
 			</div>
-			<div class="flexrow flex1 attribute" data-attrib="san">
+			<div class="flexrow flex2 attribute" data-attrib="san">
 				<label class="attribute-label rollable">{{localize 'CoC7.Sanity'}} :</label>
 				<input class="attribute-value" type="text" name="data.attribs.san.value" value="{{data.attribs.san.value}}" data-dtype="Number"/>
 				<span style="flex: none;font-size: large;">/</span>
 				<input class="attribute-max read-only" type="text" name="data.attribs.san.max" value="{{data.attribs.san.max}}" data-dtype="Number" data-attrib="san" readonly>
 				<div class="flex1"></div>
 			</div>
-			<div class="flexrow flex1 attribute" data-attrib="lck">
+			<div class="flexrow flex2 attribute" data-attrib="lck">
 				<label class="attribute-label rollable">{{localize 'CoC7.Luck'}} :</label>
 				<!-- <input class="attribute-value" type="text" name="data.attribs.lck.value" value="{{data.attribs.lck.value}}" data-dtype="Number"/>
 				<span style="flex: none;font-size: large;">/</span> -->
@@ -78,7 +92,8 @@
 		</div>
 		<div class="flexrow" style="align-items: center; flex: none;height: 20px;">
 			<div class="flex1 attribute" data-attrib="mov">
-				<label class="attribute-label">{{localize 'CoC7.Movement'}} :</label> <span style="flex: none;font-size: medium;line-height: 20px;">{{data.attribs.mov.value}}</span>
+				<label class="attribute-label">{{localize 'CoC7.Movement'}} :</label> 
+				<span style="flex: none;font-size: medium;line-height: 20px;">{{data.attribs.mov.value}}</span>
 			</div>
 			<div class="flex1 flexrow attribute" data-attrib="db" data-roll-formula="{{data.attribs.db.value}}">
 				<label class="attribute-label rollable" data-attrib="db">{{localize 'CoC7.BonusDamage'}} :</label>
@@ -87,11 +102,6 @@
 				{{else}}
 				<input class="attribute-value {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.db.value" value="{{data.attribs.db.value}}" data-dtype="String" {{#if data.flags.locked}}readonly{{/if}}>
 				{{/if}}
-				<!-- {{#if hasDBFormula}}
-				<div style="line-height: 22px;" data-type="attrib" data-attrib="db" data-formula="{{data.attribs.db.value}}"><i class="fas fa-dice-d20"></i> {{data.attribs.db.value}}</div>
-				{{else}}
-				<span style="flex: none;font-size: large;">{{data.attribs.db.value}}</span>
-				{{/if}} -->
 			</div>
 			<div class="flex1 attribute" data-attrib="build">
 				<label class="attribute-label">{{localize 'CoC7.Build'}} :</label> <span style="flex: none;font-size: medium;line-height: 20px;">{{data.attribs.build.value}}</span>

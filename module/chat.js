@@ -2,8 +2,9 @@ import { CoC7Item } from './items/item.js'
 import { CoC7Dice } from './dice.js'
 import { CoC7Check } from './check.js'
 import { COC7 } from './config.js'
-import { CoC7MeleeInitiator, CoC7MeleeTarget } from './chat/combatcards.js'
+import { CoC7MeleeInitiator, CoC7MeleeTarget, CoC7MeleeResoltion } from './chat/combatcards.js'
 import { CoC7Roll } from './chat/combatcards.js'
+import { CoC7DamageRoll } from './chat/damagecards.js'
 
 export class CoC7Chat{
 
@@ -37,18 +38,63 @@ export class CoC7Chat{
 		html.on('click', '.radio-switch', CoC7Chat._onChatCardRadioSwitch.bind(this));
 		html.on('click', '.panel-switch', CoC7Chat._onChatCardToggleSwitch.bind(this));
 
-		html.on('click', '.simple-flag', CoC7Chat._onChatCardToggleSwitch.bind(this))
+		html.on('click', '.simple-flag', CoC7Chat._onChatCardToggleSwitch.bind(this));
+
+		html.on('click', '.dropdown-element', CoC7Chat._onDropDownElementSelected.bind(this));
+		html.on('click', '.simple-toggle', CoC7Chat._onToggleSelected.bind(this));
+		html.on('click', '.is-outnumbered', CoC7Chat._onOutnumberedSelected.bind(this));
+
+
+
 	}
 
 	static preCreateChatMessageHook( chatMessage, content, diff, speaker){
 
 	}
 
-	static onUpdateChatMessage( chatMessage, content, diff, speaker){
+	static async onUpdateChatMessage( chatMessage, chatData, diff, speaker){
+		if( game.user.isGM){
+			const card = $(chatMessage.data.content)[0];
+			if( card.classList.contains('melee'))
+			{
+				if( "true" == card.dataset.resolved){
+					if( card.classList.contains('initiator')){
+						if( card.dataset.targetCard){
+							const initiator = CoC7MeleeInitiator.getFromMessageId( chatMessage.id);
+							const target = CoC7MeleeTarget.getFromMessageId( initiator.targetCard);
+							if( target.resolved){
+								const resolutionCard = new CoC7MeleeResoltion( chatMessage.id, target.messageId, target.resolutionCard)
+								resolutionCard.resolve();
+							}
+						}
+						else { 
+							const initiator = CoC7MeleeInitiator.getFromMessageId( chatMessage.id);
+							const resolutionCard = new CoC7MeleeResoltion( chatMessage.id, null, initiator.resolutionCard);
+							resolutionCard.resolve();
+						}
+					}
+					if( card.classList.contains('target')){
+						const target = CoC7MeleeTarget.getFromMessageId( chatMessage.id);
+						const initiator = CoC7MeleeInitiator.getFromMessageId( target.parentMessageId);
 
+						ui.notifications.info('resolution card found @'+ target.resolutionCard);
+						const resolutionCard = new CoC7MeleeResoltion( target.parentMessageId, chatMessage.id, target.resolutionCard)
+						resolutionCard.resolve();
+					}
+
+				}
+			}
+
+		}
+		
 	}
 
 	static async renderMessageHook(message, html, data) {
+
+		//Handle showing dropdown selection
+		html.find('.dropbtn').click(event => event.currentTarget.closest('.dropdown').querySelector('.dropdown-content').classList.toggle("show"));
+		html.find('.dropdown').mouseleave( event => event.currentTarget.querySelector('.dropdown-content').classList.remove("show"));
+
 		console.log('************************************************************-->CoC7Chat.messageListeners message :' + message.id);
 		// message.data.content = "";
 		// data.message.content = "";
@@ -70,14 +116,7 @@ export class CoC7Chat{
 			}
 		}
 
-		html.on('click', '.dropdown-element', CoC7Chat._onDropDownElementSelected.bind(this));
-		html.on('click', '.simple-toggle', CoC7Chat._onToggleSelected.bind(this));
-		html.on('click', '.is-outnumbered', CoC7Chat._onOutnumberedSelected.bind(this));
 
-
-		//Handle showing dropdown selection
-		html.find('.dropbtn').click(event => event.currentTarget.closest('.dropdown').querySelector('.dropdown-content').classList.toggle("show"));
-		html.find('.dropdown').mouseleave( event => event.currentTarget.querySelector('.dropdown-content').classList.remove("show"));
 
 		const userOnly = html.find('.target-only');
 		for( let element of userOnly )
@@ -567,6 +606,10 @@ export class CoC7Chat{
 			CoC7MeleeTarget.updateCardSwitch( event);
 		}
 
+		if( card.classList.contains('damage')){
+			// CoC7Item.updateCardSwitch( event);
+		}
+
 
 		// let visible = event.currentTarget.parentElement.dataset.selected == "true" ? true : false;
 		// let panel = event.currentTarget.parentElement.getElementsByClassName( 'panel-content');
@@ -586,15 +629,15 @@ export class CoC7Chat{
 	}
 
 
-	static async _onContextMenu(event) {
-		console.log('-->CoC7Chat._onContextMenu');
+	// static async _onContextMenu(event) {
+	// 	console.log('-->CoC7Chat._onContextMenu');
 
-		const HTMLmessage = event.currentTarget.closest(".message");
-		const dropZoneName = event.currentTarget.parentElement.getAttribute("id");
-		const itemId = event.currentTarget.dataset.itemId;
+	// 	const HTMLmessage = event.currentTarget.closest(".message");
+	// 	const dropZoneName = event.currentTarget.parentElement.getAttribute("id");
+	// 	const itemId = event.currentTarget.dataset.itemId;
 
-		CoC7Chat.removeFromProtagonists( HTMLmessage, dropZoneName, itemId);
-	}
+	// 	CoC7Chat.removeFromProtagonists( HTMLmessage, dropZoneName, itemId);
+	// }
 
 	// static removeFromProtagonists( HTMLmessage, side, itemId){
 	// 	// const oldChatMessage = game.messages.get( chatMessageId);
@@ -624,27 +667,27 @@ export class CoC7Chat{
 	// 	ui.chat.updateMessage( newChatMessage, false);
 	// }
 
-	static async _onDragItemStart( event){
-		console.log('-->CoC7Chat._onDragItemStart');
-		const itemId = event.currentTarget.dataset.itemId;
-		const actorId = event.currentTarget.dataset.actorId;
-		const tokenId = event.currentTarget.dataset.tokenId;
-		const HTMLmessage = event.currentTarget.closest(".message");
-		const chatMessageId = HTMLmessage.dataset.messageId;
-		const side = event.currentTarget.parentElement.getAttribute("id");
+	// static async _onDragItemStart( event){
+	// 	console.log('-->CoC7Chat._onDragItemStart');
+	// 	const itemId = event.currentTarget.dataset.itemId;
+	// 	const actorId = event.currentTarget.dataset.actorId;
+	// 	const tokenId = event.currentTarget.dataset.tokenId;
+	// 	const HTMLmessage = event.currentTarget.closest(".message");
+	// 	const chatMessageId = HTMLmessage.dataset.messageId;
+	// 	const side = event.currentTarget.parentElement.getAttribute("id");
 
-		var transferedData = {
-			'itemId': itemId,
-			'actorId': actorId,
-			'token': tokenId ? tokenId : null,
-			'origin': 'ChatMessage',
-			'chatMessageId': chatMessageId
-		}
-		event.dataTransfer.setData("text", JSON.stringify( transferedData));
+	// 	var transferedData = {
+	// 		'itemId': itemId,
+	// 		'actorId': actorId,
+	// 		'token': tokenId ? tokenId : null,
+	// 		'origin': 'ChatMessage',
+	// 		'chatMessageId': chatMessageId
+	// 	}
+	// 	event.dataTransfer.setData("text", JSON.stringify( transferedData));
 
-		//CoC7Chat.removeFromProtagonists( HTMLmessage, side, itemId);
-		//TODO : transferer l'effacement de la liste d'origine apres que l'élément est été créé.
-	}
+	// 	//CoC7Chat.removeFromProtagonists( HTMLmessage, side, itemId);
+	// 	//TODO : transferer l'effacement de la liste d'origine apres que l'élément est été créé.
+	// }
 
 	/**
 	 * Get the Actor which is the author of a chat card
@@ -710,55 +753,55 @@ export class CoC7Chat{
 	}
 
 
-	static async _onDrop( event) {
-		console.log('-->CoC7Chat._onDrop');
-		let data;
-		try {
-			data = JSON.parse(event.dataTransfer.getData('text/plain'));
-		} catch (err) {
-			return false;
-		}
+	// static async _onDrop( event) {
+	// 	console.log('-->CoC7Chat._onDrop');
+	// 	let data;
+	// 	try {
+	// 		data = JSON.parse(event.dataTransfer.getData('text/plain'));
+	// 	} catch (err) {
+	// 		return false;
+	// 	}
 
-		const token = this.getToken( data.token); //TODO check getToken is static method !
-		const actor = token ? token.actor : game.actors.get( data.actorId);
-		const item = actor.getOwnedItem( data.itemId);
+	// 	const token = this.getToken( data.token); //TODO check getToken is static method !
+	// 	const actor = token ? token.actor : game.actors.get( data.actorId);
+	// 	const item = actor.getOwnedItem( data.itemId);
 
-		const dropZone = event.currentTarget;
-		const dropZoneName = dropZone.getAttribute("id");
-		const message = dropZone.closest(".message");
-		const messageId = message.dataset.messageId;
+	// 	const dropZone = event.currentTarget;
+	// 	const dropZoneName = dropZone.getAttribute("id");
+	// 	const message = dropZone.closest(".message");
+	// 	const messageId = message.dataset.messageId;
 
-		// if( !CoC7Chat.messageContainsItem( messageId, data.itemId))
-		// {
-			const templateData = {
-				img: 'icons/svg/mystery-man.svg',
-				actor: actor,
-				item: item,
-				tokenId: data.token ? data.token : null,
-				token: token
-			}
+	// 	// if( !CoC7Chat.messageContainsItem( messageId, data.itemId))
+	// 	// {
+	// 		const templateData = {
+	// 			img: 'icons/svg/mystery-man.svg',
+	// 			actor: actor,
+	// 			item: item,
+	// 			tokenId: data.token ? data.token : null,
+	// 			token: token
+	// 		}
 
-			const template = 'systems/CoC7/templates/chat/parts/item.html';
-			const htmlItem = await renderTemplate(template, templateData);
+	// 		const template = 'systems/CoC7/templates/chat/parts/item.html';
+	// 		const htmlItem = await renderTemplate(template, templateData);
 
-			let oldMesssage = game.messages.get(messageId);
-			// let oldMessageHtml = document.createElement('div');
-			// oldMessageHtml.innerHTML = dropZone.closest('.chat-card').outerHTML;
-			let newHtmlMessage = dropZone.closest('.chat-card');
+	// 		let oldMesssage = game.messages.get(messageId);
+	// 		// let oldMessageHtml = document.createElement('div');
+	// 		// oldMessageHtml.innerHTML = dropZone.closest('.chat-card').outerHTML;
+	// 		let newHtmlMessage = dropZone.closest('.chat-card');
 
-			let msg = newHtmlMessage.getElementsByTagName('div')[dropZoneName];
-			msg.insertAdjacentHTML('beforeend', htmlItem);
+	// 		let msg = newHtmlMessage.getElementsByTagName('div')[dropZoneName];
+	// 		msg.insertAdjacentHTML('beforeend', htmlItem);
 
-			let newMessage = {
-				user: game.user._id,
-				hideData: true,
-				content: newHtmlMessage.outerHTML
-			}
+	// 		let newMessage = {
+	// 			user: game.user._id,
+	// 			hideData: true,
+	// 			content: newHtmlMessage.outerHTML
+	// 		}
 
-			let resultMsg = oldMesssage.update(newMessage);
-			ui.chat.updateMessage( resultMsg, false);
-		// }
-	}
+	// 		let resultMsg = oldMesssage.update(newMessage);
+	// 		ui.chat.updateMessage( resultMsg, false);
+	// 	// }
+	// }
 	
 	/**
 	 * update a chat message with a new HTML content and populate it.
@@ -768,10 +811,9 @@ export class CoC7Chat{
 		const messageId = messId == null ? card.closest('.message').dataset.messageId: messId;
 		let message = game.messages.get( messageId);
 
-		message.update({ content: card.outerHTML }).then(msg => {
-			ui.chat.updateMessage( msg, false);
-			return msg;
-		});
+		const msg = await message.update({ content: card.outerHTML })
+		await ui.chat.updateMessage( msg, false);
+		return msg;
 	}
 
 
@@ -856,6 +898,14 @@ export class CoC7Chat{
 			case "useLuck":
 				const luckAmount = parseInt(button.dataset.luckAmount);
 				const newSuccessLevel = parseInt(event.currentTarget.dataset.newSuccessLevel);
+
+				if( card.classList.contains('melee')){
+					let meleeCard;
+					if( card.classList.contains('target')) meleeCard = CoC7MeleeTarget.getFromCard( card);
+					if( card.classList.contains('initiator')) meleeCard = CoC7MeleeInitiator.getFromCard( card);
+					meleeCard.upgradeRoll( luckAmount, newSuccessLevel, card);
+				} else
+				{
 					let actor = CoC7Chat._getChatCardActor(card);
 					const detailedResultPlaceHolder = card.querySelector(".result-details");
 
@@ -891,10 +941,12 @@ export class CoC7Chat{
 						result.classList.replace( 'failure', 'success');
 						result.classList.remove( 'fumble');
 						card.querySelector('.card-buttons').remove();
+						card.querySelector('.dice-tooltip').style.display = "none";
 						CoC7Chat.updateChatCard( card);
 					}
 					else
 						ui.notifications.error(`${actor.name} didn't have enough luck to pass the check`);
+				}
 				break;
 
 			case "push":
@@ -993,17 +1045,22 @@ export class CoC7Chat{
 
 			case "melee-initiator-roll":
 				const initiator = CoC7MeleeInitiator.getFromCard( card);
-				const initiatorCheck2 = await initiator.performSkillCheck( event.currentTarget.dataset.skillId);
-				initiator.publishCheckResult();
-
+				await initiator.performSkillCheck( event.currentTarget.dataset.skill);
+				await initiator.publishCheckResult();
 				break;
 			case "melee-target-roll":
 				const target = CoC7MeleeTarget.getFromCard( card);
-				const targetCheck = await target.performSkillCheck( event.currentTarget.dataset.skillId);
-
-				target.publishCheckResult();
-
+				await target.performSkillCheck( event.currentTarget.dataset.skill);
+				await target.publishCheckResult();
 				break;
+
+			case "roll-damage":
+				const damageCard = new CoC7DamageRoll( button.dataset.weapon, button.dataset.dealer, button.dataset.target, "true" == button.dataset.critical );
+				damageCard.rollDamage( );
+				card.querySelector(".card-buttons").remove();
+				CoC7Chat.updateChatCard( card);
+				break;
+				
 			default:
 				
 				break;
@@ -1033,10 +1090,10 @@ export class CoC7Chat{
 	 * @param {*} messageId 
 	 * @param {*} itemId 
 	 */
-	static messageContainsItem( messageId, itemId){
-		const chatMessage = game.messages.get( messageId);
-		return !chatMessage ? false : chatMessage.data.content.includes( itemId);
-	}
+	// static messageContainsItem( messageId, itemId){
+	// 	const chatMessage = game.messages.get( messageId);
+	// 	return !chatMessage ? false : chatMessage.data.content.includes( itemId);
+	// }
 
 
 	static getSceneControlButtons(buttons) {

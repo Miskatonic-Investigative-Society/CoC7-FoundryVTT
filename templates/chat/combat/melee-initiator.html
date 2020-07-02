@@ -8,8 +8,8 @@
     data-auto-success="{{autoSuccess}}"
     data-advantage="{{advantage}}"
     data-disadvantage="{{disadvantage}}"
-    data-target-card="{{targetCard}}">
-    <!-- data-dived={{dived}} -->
+    data-target-card="{{targetCard}}"
+    data-resolution-card="{{resolutionCard}}">
     
     <div class="roll"></div>
 
@@ -155,7 +155,7 @@
         {{#each skills as |skill id|}}
             <button
                 data-action="melee-initiator-roll"
-                data-skill="skill._id">Roll {{skill.name}} ({{skill.data.data.value}}%)</button>
+                data-skill="{{skill._id}}">Roll {{skill.name}} ({{skill.data.data.value}}%)</button>
         {{/each}}
     </div>
     {{/if}}
