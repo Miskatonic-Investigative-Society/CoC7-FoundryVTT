@@ -89,10 +89,10 @@ export class CoCItemSheet extends ItemSheet {
 
   /* -------------------------------------------- */
 
-  _onClickToggle(event) {
+  async _onClickToggle(event) {
 	event.preventDefault();
 	const propertyId = event.currentTarget.closest(".toggle-switch").dataset.property;
-	this.item.toggleProperty( propertyId);
+	const item = await this.item.toggleProperty( propertyId);
   }
 
   _toggleSwitch( propertyId){

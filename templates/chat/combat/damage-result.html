@@ -1,0 +1,64 @@
+<div class="coc7 chat-card damage"
+    data-actor-key="{{actor.tokenKey}}"
+    data-item-id="{{weapon._id}}"
+    data-critical="{{critical}}"
+    data-impale="{{impale}}"
+    data-fast-forward="{{fastForward}}"
+    data-target-card="{{targetCard}}">
+
+    <header class="card-header flexcol">
+        <div class="flexrow">
+            <img style="flex: none;" src="{{weapon.img}}" title="{{weapon.name}}" width="36" height="36"/>
+            <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{weapon.name}}</h3>
+        </div>
+
+        <div class="card-content">
+            {{{weapon.data.data.description.value}}}
+        </div>
+
+        <div class="flexrow advantage-selection">
+            <span class="flex1 toggle-switch critical {{#unless rolled}}simple-flag{{/unless}} {{#if critical}}switched-on{{/if}}"
+            title="The blow is critical" 
+            style="text-align:center" 
+            data-flag="critical" 
+            data-selected={{critical}}>Critical</span>
+            <span class="flex1 toggle-switch impale {{#if weapon.impale}}switched-on{{/if}}"
+            title="The weapon can impale" 
+            style="text-align:center" 
+            data-flag="impale" 
+            data-selected={{weapon.impale}}>Impale</span>
+        </div>
+    </header>
+
+    <!-- <div class="dice-roll"></div> -->
+
+    <div class="dice-roll">
+        <div class="dice-result">
+            <div class="dice-formula">
+                    {{roll.formula}}
+                </div>
+
+            <div class="dice-tooltip" style="display: none;">
+                {{#each roll._dice as |die key| }}
+                <section class="tooltip-part">
+                    <div class="dice">
+                        <p class="part-formula">
+                            {{die.formula}}
+                            <span class="part-total">{{die.total}}</span>
+                        </p>
+                        <ol class="dice-rolls">
+                            {{#each die.rolls as |roll key|}}
+                            <li class="roll die d{{die.faces}}">{{roll.roll}}</li>
+                            {{/each}}
+                        </ol>
+                    </div>
+                </section>
+                {{/each}}
+            </div>
+
+            <div class="dice-total success {{#if critical}} critical{{/if}}">
+                {{result}}
+            </div> 
+        </div>
+    </div>
+</div>

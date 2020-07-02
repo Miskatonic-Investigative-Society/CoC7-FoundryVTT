@@ -131,46 +131,58 @@
 					<div class="auto-toggle {{#if data.attribs.build.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
 					{{/unless}}
 				</div>
-				<div class="flexrow sheet-controls" style="flex: 0 0 50px;align-content: flex-start;">
-					{{#if allowFormula}}
-						{{#if data.flags.locked}}
-							<div style="flex: 0 0 16px;"></div>
-						{{else}}
-							{{#if displayFormula}}
-								<div style="flex: 0 0 16px;"></div>
-							{{else}}
-								<a class="roll-characteritics" style="flex: 0 0 16px;color: darkred;" title="Roll some dice"> <i class="fas fa-dice"></i></a>
-							{{/if}}
-						{{/if}}
-					{{else}}
-						<div style="flex: 0 0 16px;"></div>
-					{{/if}}
-					{{#if data.flags.locked}}
-						<a class="lock"  style="flex: 0 0 32px;align-content: flex-start;"  title="Unlock Actor" data-locked="true"> <i class="fas fa-lock"></i></a>
-					{{else}}
-						<a class="lock"  style="flex: 0 0 16px;" title="Lock Actor" data-locked="false"> <i class="fas fa-lock-open"></i></a>
-						{{#if allowFormula}}
-							{{#if displayFormula}}
-								<a class="formula"  style="flex: 0 0 16px;" title="Formula" data-locked="true"> <i class="fas fa-square-root-alt"></i></a>
-							{{else}}
-								<a class="formula"  style="flex: 0 0 16px;" title="Values" data-locked="false"> <i class="fas fa-user-edit"></i></a>
-							{{/if}}
-						{{/if}}
-					{{/if}}
+				<div class="flexrow flex1 attribute" data-attrib="armor">
+					<label>{{localize 'CoC7.Armor'}} :</label>
+					<!-- {{#if data.attribs.armor.auto}}
+						<span class="attribute-value" type="text" style="line-height: 22px;"> {{data.attribs.build.value}} </span>
+					{{else}} -->
+					<input class="attribute-value {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.armor.value" value="{{data.attribs.armor.value}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
+					<!-- {{/if}}
+
+					{{#unless data.flags.locked}}
+					<div class="auto-toggle {{#if data.attribs.build.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
+					{{/unless}} -->
 				</div>
-			</div>
-			<div class="status-monitors flexrow">
-				<a class="status-monitor {{#if data.status.unconscious.value}}status-on{{/if}}" title="Unconsious" data-status="unconscious"> <i class="fas fa-bed"></i></a>
-				<a class="status-monitor {{#if data.status.criticalWounds.value}}status-on{{/if}}" title="Critical" data-status="criticalWounds"> <i class="fas fa-user-injured"></i></a>
-				<a class="status-monitor {{#if data.status.dying.value}}status-on{{/if}}" title="Dying" data-status="dying"> <i class="fas fa-heartbeat"></i></a>
-
-				<a class="status-monitor {{#if data.status.tempoInsane.value}}status-on{{/if}}" title="Temporary insanity" data-status="tempoInsane"> <i class="fas fa-filter"></i></a>
-				<a class="status-monitor {{#if data.status.indefInsane.value}}status-on{{/if}}" title="Indefinite insanity" data-status="indefInsane"> <i class="far fa-hospital"></i></a>
-
 			</div>
 		</div>
 		<img class="profile-img" src="{{actor.img}}" title="{{actor.name}}" data-edit="img" height="100" width="100"/>
 	</header>
+	<div class="status-monitors flexrow" style="max-height: 16px;">
+		<a class="status-monitor {{#if data.status.unconscious.value}}status-on{{/if}}" title="Unconsious" data-status="unconscious"> <i class="fas fa-bed"></i></a>
+		<a class="status-monitor {{#if data.status.criticalWounds.value}}status-on{{/if}}" title="Critical" data-status="criticalWounds"> <i class="fas fa-user-injured"></i></a>
+		<a class="status-monitor {{#if data.status.dying.value}}status-on{{/if}}" title="Dying" data-status="dying"> <i class="fas fa-heartbeat"></i></a>
+
+		<a class="status-monitor {{#if data.status.tempoInsane.value}}status-on{{/if}}" title="Temporary insanity" data-status="tempoInsane"> <i class="fas fa-filter"></i></a>
+		<a class="status-monitor {{#if data.status.indefInsane.value}}status-on{{/if}}" title="Indefinite insanity" data-status="indefInsane"> <i class="far fa-hospital"></i></a>
+		<div class="flex1"></div>
+		<div class="flexrow sheet-controls" style="flex: 0 0 50px;align-content: flex-start;">
+			{{#if allowFormula}}
+				{{#if data.flags.locked}}
+					<div style="flex: 0 0 16px;"></div>
+				{{else}}
+					{{#if displayFormula}}
+						<div style="flex: 0 0 16px;"></div>
+					{{else}}
+						<a class="roll-characteritics" style="flex: 0 0 16px;color: darkred;" title="Roll some dice"> <i class="fas fa-dice"></i></a>
+					{{/if}}
+				{{/if}}
+			{{else}}
+				<div style="flex: 0 0 16px;"></div>
+			{{/if}}
+			{{#if data.flags.locked}}
+				<a class="lock"  style="flex: 0 0 32px;align-content: flex-start;"  title="Unlock Actor" data-locked="true"> <i class="fas fa-lock"></i></a>
+			{{else}}
+				<a class="lock"  style="flex: 0 0 16px;" title="Lock Actor" data-locked="false"> <i class="fas fa-lock-open"></i></a>
+				{{#if allowFormula}}
+					{{#if displayFormula}}
+						<a class="formula"  style="flex: 0 0 16px;" title="Formula" data-locked="true"> <i class="fas fa-square-root-alt"></i></a>
+					{{else}}
+						<a class="formula"  style="flex: 0 0 16px;" title="Values" data-locked="false"> <i class="fas fa-user-edit"></i></a>
+					{{/if}}
+				{{/if}}
+			{{/if}}
+		</div>
+	</div>
 
 
 	{{!-- Sheet Body --}}

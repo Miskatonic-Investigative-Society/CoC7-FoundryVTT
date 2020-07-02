@@ -58,13 +58,6 @@ COC7.weaponProperties = {
 	stun: "CoC7.WeaponStun"
 }
 
-
-COC7.difficulty = {
-	regular: "Regular",
-	hard: "Hard",
-	extreme: "Extreme"
-}
-
 COC7.formula = {}
 
 COC7.formula.actor = {

@@ -25,8 +25,8 @@ Hooks.once("init", async function() {
 	 * @type {String}
 	 */
 	CONFIG.Combat.initiative = {
-	  formula: "1d20",
-    decimals: 2
+	  formula: "@characteristics.dex.value",
+    decimals: 0
   };
 
   //TODO : remove debug hooks
@@ -51,9 +51,12 @@ Hooks.once("init", async function() {
 //Hooks.on("renderChatLog", (app, html, data) => CoC7Item.chatListeners(html));
 Hooks.on("renderChatLog", (app, html, data) => CoC7Chat.chatListeners(app, html, data));
 Hooks.on("renderChatMessage", (app, html, data) => CoC7Chat.renderMessageHook(app, html, data));
+Hooks.on("updateChatMessage", (chatMessage, chatData, diff, speaker) => CoC7Chat.onUpdateChatMessage( chatMessage, chatData, diff, speaker));
 // Hooks.on('preCreateChatMessage', (app, html, data) => CoC7Chat.preCreateChatMessageHook(app, html, data));
 
-// Hooks.on('ready', CoC7Chat.ready);
+Hooks.on('ready', CoC7Chat.ready);
+Hooks.on('chatMessage', (chatLog, message, chatData) => { console.log("**************************************************************************************************chatMessage : "  + message)});
+
 
 // Add button on Token selection bar
 //Hooks.on('getSceneControlButtons', CoC7Chat.getSceneControlButtons);

@@ -1,38 +1,48 @@
-<ol class="weapons-list" style="padding: 0;">
+{{#if data.flags.locked}}
+<div class="flexrow combat-header" style="border-bottom: 1px groove;text-align: center;font-weight: bold;max-height: 17px;">
+	<div class="flex2" style="border-right: 1px groove; padding-left: 2px;">Name</div>
+	<div class="flex4 flexrow" style="border-right: 1px groove; padding-left: 2px;">
+		<div class="flex1">Skill</div>
+		<div class="flex1">Alt-skill</div>
+	</div>
+	<div class=" flex2" style="padding-left: 2px;">Damage</div>
+</div>
+{{/if}}
+<ol class="weapons-list" style="padding: 0;margin: 0;">
 	{{#each weapons as |weapon id|}}
 		{{#if ../data.flags.locked}}
-			<li class="item flexcol" data-item-id="{{weapon._id}}">
+			<li class="item weapon flexcol" data-item-id="{{weapon._id}}">
 				<div class="flexrow" style="align-items: center;">
-					<div class="flex2 weapon-name rollable">{{weapon.name}}</div>
-					<div class="flexrow flex4 weapon-skills">
+					<div class="flex2 weapon-name rollable" style="border-right: 1px groove; padding-left: 2px;">{{weapon.name}}</div>
+					<div class="flexrow flex4 weapon-skills" style="border-right: 1px groove; padding-left: 2px;">
 						{{#if weapon.skillSet}}
-							<div class="item-tag weapon-skill rollable" style="flex: 0 0 45%" data-skill-id="{{weapon.data.skill.main.id}}" title="Roll {{weapon.data.skill.main.name}} skill">{{weapon.data.skill.main.name}} ({{weapon.data.skill.main.value}}%)</div>
+							<div class="item-tag weapon-skill rollable" style="flex: 0 0 49%" data-skill-id="{{weapon.data.skill.main.id}}" title="Roll {{weapon.data.skill.main.name}} skill">{{weapon.data.skill.main.name}} ({{weapon.data.skill.main.value}}%)</div>
 							{{#if weapon.data.properties.auto}}
-								<div class="item-tag weapon-skill rollable" style="flex: 0 0 45%" data-skill-id="{{weapon.data.skill.alternativ.id}}" title="Roll {{weapon.data.skill.alternativ.name}} skill">{{weapon.data.skill.alternativ.name}} ({{weapon.data.skill.alternativ.value}}%)</div>
+								<div class="item-tag weapon-skill rollable" style="flex: 0 0 49%" data-skill-id="{{weapon.data.skill.alternativ.id}}" title="Roll {{weapon.data.skill.alternativ.name}} skill">{{weapon.data.skill.alternativ.name}} ({{weapon.data.skill.alternativ.value}}%)</div>
 							{{/if}}
 						{{else}}
-							<div class="item-tag weapon-skill" style="flex: 0 0 45%; background-color: red;" title="Choose skill">No skill</div>
+							<div class="item-tag weapon-skill" style="flex: 0 0 49%; background-color: red;" title="Choose skill">No skill</div>
 							{{#if weapon.data.properties.auto}}
-								<div class="item-tag weapon-skill" style="flex: 0 0 45%; background-color: red" title="Choose skill">No skill</div>
+								<div class="item-tag weapon-skill" style="flex: 0 0 49%; background-color: red" title="Choose skill">No skill</div>
 							{{/if}}
 						{{/if}}
 					</div>
-					<div class="flexrow flex2 weapon-damage" style="font-size: 10px;">
+					<div class="flexrow flex2" style="font-size: 10px; padding-left: 2px;">
 						{{#if weapon.data.properties.rngd}}
 							{{#if weapon.data.properties.xplv}}
 								{{#each weapon.data.range as |range key|}}
-								<div class="flex1">
-									<a class="inline-roll roll" data-mode="roll" title="{{range.value}}" data-formula="{{range.damage}}"><i class="fas fa-dice-d20"></i> {{range.damage}}</a>
+								<div class="flex1 weapon-damage" data-range="{{key}}">
+									<a class="roll" data-mode="roll" title="{{range.value}}" data-formula="{{range.damage}}"><i class="fas fa-dice-d20"></i> {{range.damage}}</a>
 								</div>
 								{{/each}}
 							{{else}}
-							<div class="flex1">
-								<a class="inline-roll roll" data-mode="roll" title="{{weapon.data.range.normal.value}}" data-formula="{{weapon.data.range.normal.damage}}"><i class="fas fa-dice-d20"></i> {{weapon.data.range.normal.damage}}</a>
+							<div class="flex1 weapon-damage"  data-range="normal">
+								<a class="roll" data-mode="roll" title="{{weapon.data.range.normal.value}}" data-formula="{{weapon.data.range.normal.damage}}"><i class="fas fa-dice-d20"></i> {{weapon.data.range.normal.damage}}</a>
 							</div>
 							{{/if}}
 						{{else}}
-						<div class="flex1">
-							<a class="inline-roll roll" data-mode="roll" data-formula="{{weapon.data.range.normal.damage}}" title="{{weapon.data.range.normal.value}}"><i class="fas fa-dice-d20"></i> {{weapon.data.range.normal.damage}}</a>
+						<div class="flex1 weapon-damage"  data-range="normal">
+							<a class="roll" data-mode="roll" data-formula="{{weapon.data.range.normal.damage}}" title="{{weapon.data.range.normal.value}}"><i class="fas fa-dice-d20"></i> {{weapon.data.range.normal.damage}}</a>
 						</div>
 						{{/if}}
 					</div>
