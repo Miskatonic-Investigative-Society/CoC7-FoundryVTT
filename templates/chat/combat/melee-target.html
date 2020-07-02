@@ -64,9 +64,9 @@
     <div class="flexrow response-selection">
 		<span class="flex1 toggle-switch dodge {{#if actor.dodgeSkill._id}}{{#unless rolled}}simple-toggle{{/unless}}{{else}}inactive{{/if}} {{#if dodging}}switched-on{{/if}}"
 			data-action="dodge"
-			data-skill-id="{{actor.dodgeSkill._id}}">{{localize 'CoC7.dodge'}}</span>
+			data-skill-id="{{actor.dodgeSkill._id}}">{{localize 'CoC7.Dodge'}}</span>
         <div class="flex1 toggle-switch fight-back {{#unless rolled}}dropdown{{/unless}} {{#if fightingBack}}switched-on{{/if}}">
-            <span class="combat-action {{#unless rolled}}dropbtn{{/unless}}">{{localize 'CoC7.fightBack'}}</span>
+            <span class="combat-action {{#unless rolled}}dropbtn{{/unless}}">{{localize 'CoC7.FightBack'}}</span>
             <div class="actor-skill dropdown-content">
                 {{#each actor.closeCombatWeapons as |weapon key|}}
 					<a class="dropdown-element"
@@ -77,7 +77,7 @@
             </div>        
         </div>
         <div class="flex1 toggle-switch maneuver {{#unless rolled}}dropdown{{/unless}} {{#if maneuvering}}switched-on{{/if}}">
-            <span class="combat-action {{#unless rolled}}dropbtn{{/unless}}">{{localize 'CoC7.maneuver'}}</span>
+            <span class="combat-action {{#unless rolled}}dropbtn{{/unless}}">{{localize 'CoC7.Maneuver'}}</span>
             <div class="actor-skill dropdown-content">
                 {{#each actor.fightingSkills as |skill key|}}
 					<a class="dropdown-element"
