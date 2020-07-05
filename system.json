@@ -47,6 +47,11 @@
 		  "lang": "es",
 		  "name": "Spanish",
 		  "path": "lang/es.json"
+		},
+		{
+			"lang": "de",
+			"name": "Deutsch",
+			"path": "lang/de.json"
 		}
 	  ],
 	"socket": true,
