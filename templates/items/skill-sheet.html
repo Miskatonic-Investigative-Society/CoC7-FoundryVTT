@@ -13,10 +13,11 @@
                     {{/if}}
                 {{/if}}
                 {{#if hasOwner}}
-                <label >Value</label>
+                <label >{{localize 'CoC7.SkillValue'}}</label>
                 <input type="text" name="data.value" value="{{data.value}}"/>
-                {{else}}
-                <label>Base</label>
+            {{else}}
+                <label>{{localize 'CoC7.SkillBase'}}</label>
+
                 <input type="text" name="data.base" value="{{data.base}}"/>
                 {{/if}}
             </div>
@@ -26,7 +27,7 @@
             
             <div class="skill-attributes" style="display: block;" data-set="properties">
                 {{#each _properties as |property key|}}
-                    <span class="toggle-switch {{#if property.isEnabled}} switched-on {{/if}}" data-property="{{property.id}}">{{property.name}}</span>
+                    <span class="toggle-switch {{#if property.isEnabled}} switched-on {{/if}}" data-property="{{property.id}}">{{localize property.name}}</span>
                     <!-- <div style="display: none;">
                         <input id="properties-{{property.id}}" type="checkbox" name="data.properties.{{property.id}}" {{checked property.isEnabled}}/>
                     </div> -->

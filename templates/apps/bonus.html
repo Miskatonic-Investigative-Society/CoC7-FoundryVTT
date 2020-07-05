@@ -3,16 +3,18 @@
  
     <div class="flexcol">
         <div class="flexrow">
-            <label>Roll Difficulty</label>
+            <label>{{localize 'CoC7.RollDifficulty'}}</label>
             <select name="difficulty">
-                <option value=1 selected>Regular</option>
-                <option value=2>Hard</option>
-                <option value=3>Extreme</option>
+
+                <option value="{{difficulty.regular}}" selected>{{localize 'CoC7.RollDifficultyRegular'}}</option>
+                <option value="{{difficulty.hard}}">{{localize 'CoC7.RollDifficultyHard'}}</option>
+                <option value="{{difficulty.extreme}}">{{localize 'CoC7.RollDifficultyExtreme'}}</option>
+
             </select>
         </div>
 
         <div class="flexrow" style="padding: 4px 0;">
-            <div style="flex: 1;"><label>Bonus Dice</label></div>
+            <div style="flex: 1;"><label>{{localize 'CoC7.BonusDice'}}</label></div>
             <div style="flex: 1;display: flex;flex-direction: column;">
                 <div class="flexrow">
                     <span style="flex: 1; text-align: left;">-2</span>

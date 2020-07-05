@@ -44,77 +44,84 @@ export class CoC7Item extends Item {
 	 * @param {String} propertyId : name for the property to toggle
 	 */	
 	async toggleProperty( propertyId){
-		const checkedProps = {};
+		let checkedProps = {};
+		let fighting;
+		let firearms;
 		if( "skill" == this.type){
 			let modif = false;
 			if( "combat" ==  propertyId) {
 				if( !this.data.data.properties.combat){
 					//Close combat by default
 					if( !this.data.data.properties.firearm){
-						this.data.data.properties.fighting = true;
-					}
+						fighting = true;
+					} else firearms = true;
 
 				}else{
-					this.data.data.properties.firearm = false;
-					this.data.data.properties.fighting = false;
-					checkedProps["data.properties.combat"] = false;
-					checkedProps["data.properties.special"] = false;
-					checkedProps["data.properties.fighting"] = false;
-					checkedProps["data.properties.firearm"] = false;
-					checkedProps["data.specialization"] = "";
+					checkedProps = {
+						"data.properties.combat": false,
+						"data.properties.special": false,
+						"data.properties.fighting": false,
+						"data.properties.firearm": false,
+						"data.specialization": null
+					}
 				}
 				modif = true;
 			}
 
 			if( "fighting" == propertyId){
 				if( !this.data.data.properties.fighting){
-					this.data.data.properties.firearm = false;
-					this.data.data.properties.fighting = true;
+					firearms = false;
+					fighting = true;
 				}else{
-					this.data.data.properties.firearm = true;
-					this.data.data.properties.fighting = false;
+					firearms = true;
+					fighting = false;
 				}
 				modif = true;
 			}
 
 			if( "firearm" == propertyId){
 				if( !this.data.data.properties.firearm){
-					this.data.data.properties.firearm = true;
-					this.data.data.properties.fighting = false;
+					firearms = true;
+					fighting = false;
 				}else{
-					this.data.data.properties.firearm = false;
-					this.data.data.properties.fighting = true;
+					firearms = false;
+					fighting = true;
 				}
 				modif = true;
 			}
 
 			if( modif){
 				//set specialisation if fighting or firearm
-				if(this.data.data.properties.fighting){
-					checkedProps["data.properties.combat"] = true;
-					checkedProps["data.properties.special"] = true;
-					checkedProps["data.properties.fighting"] = true;
-					checkedProps["data.properties.firearm"] = false;
-					checkedProps["data.specialization"] = COC7.fightingSpecializationName;
+				if(fighting){
+					checkedProps = {
+						"data.properties.fighting": true,
+						"data.properties.firearm": false,
+						"data.properties.combat": true,
+						"data.properties.special": true,
+						"data.specialization": COC7.fightingSpecializationName
+					}
 				}
 				
-				if(this.data.data.properties.firearm){
-					checkedProps["data.properties.combat"] = true;
-					checkedProps["data.properties.special"] = true;
-					checkedProps["data.properties.fighting"] = false;
-					checkedProps["data.properties.firearm"] = true;
-					checkedProps["data.specialization"] = COC7.firearmSpecializationName;
+				if(firearms){
+					checkedProps = {
+						"data.properties.fighting": false,
+						"data.properties.firearm": true,
+						"data.properties.combat": true,
+						"data.properties.special": true,
+						"data.specialization": COC7.firearmSpecializationName
+					}
 				}
 			}
 		}
 
 		if(Object.keys(checkedProps).length > 0){
-			await this.update( checkedProps);
+			const item = await this.update( checkedProps);
+			return item;
 		} 
 		else {
 			const propName = `data.properties.${propertyId}`;
 			const propValue = !this.data.data.properties[propertyId];
-			await this.update( {[propName]: propValue});
+			this.update( {[propName]: propValue}).then( item => { return item;});
 		}
 	}
 
@@ -165,7 +172,7 @@ export class CoC7Item extends Item {
 				checkedProps["data.properties.fighting"] = false;
 			}
 			if( this.data.data.properties.firearm){
-				this.data.data.properties.fighting = false;
+				this.data.data.properties.firearm = false;
 				checkedProps["data.properties.firearm"] = false;
 			}
 		}
@@ -283,4 +290,12 @@ export class CoC7Item extends Item {
 		return false;
 	}
 
+	weaponDamageCard( critical = false){
+		let foo = "poo";
+
+	}
+
+	get impale(){
+		return this.data.data.properties.impl;
+	}
 }
