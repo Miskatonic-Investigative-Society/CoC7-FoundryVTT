@@ -3,6 +3,8 @@ import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7Check } from '../../check.js'
 import { COC7 } from '../../config.js'
 import { CoC7Chat } from '../../chat.js'
+import { CoC7MeleeInitiator } from '../../chat/combatcards.js'
+import { CoC7DamageRoll } from '../../chat/damagecards.js'
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -130,7 +132,7 @@ export class CoC7ActorSheet extends ActorSheet {
 						let property = {};
 						property.id = key;
 						property.value = value;
-						property.name = COC7.weaponProperties[key]; //Localisation a faire ici
+						property.name = COC7.weaponProperties[key];
 						weapon.data._properties.push( property);
 					}
 					data.weapons[weapon._id] = weapon;
@@ -211,6 +213,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		if ( this.actor.owner ) {
 			html.find('.characteristics-label').click(this._onRollCharacteriticTest.bind(this));
             html.find('.skill-name.rollable').click(this._onRollSkillTest.bind(this));
+			html.find('.skill-image').click(this._onRollSkillTest.bind(this));
 			html.find('.attribute-label.rollable').click(this._onRollAttribTest.bind(this));
 			html.find('.lock').click(this._onLockClicked.bind(this));
 			html.find('.formula').click(this._onFormulaClicked.bind(this));
@@ -222,9 +225,9 @@ export class CoC7ActorSheet extends ActorSheet {
 			html.find('.item .item-image').click(event => this._onItemRoll(event));
 			html.find('.weapon-name.rollable').click( event => this._onWeaponRoll(event));
 			html.find('.weapon-skill.rollable').click( event => this._onWeaponSkillRoll(event));
-			html.find('.skill-image').click(this._onRollSkillTest.bind(this));
 			html.find('.read-only').dblclick(this._toggleReadOnly.bind(this));
-	
+			html.on('click', '.weapon-damage', this._onWeaponDamage.bind(this));
+
 
 			const wheelInputs = html.find('.attribute-value');
             for( let wheelInput of wheelInputs){
@@ -419,7 +422,7 @@ export class CoC7ActorSheet extends ActorSheet {
 				div.append(specialDiv);
 			}
 			let props = $(`<div class="item-properties"></div>`);
-			chatData.properties.forEach(p => props.append(`<span class="tag">${p}</span>`));
+			chatData.properties.forEach(p => props.append(`<span class="tag">${game.i18n.localize(p)}</span>`));
 			div.append(props);
 			li.append(div.hide());
 			div.slideDown(200);
@@ -449,30 +452,38 @@ export class CoC7ActorSheet extends ActorSheet {
 		event.preventDefault();
 		const skillId = event.currentTarget.dataset.skillId;
 		const actorId = event.currentTarget.closest('form').dataset.actorId;
-		let tokenKey = event.currentTarget.closest('form').dataset.tokenId;
+		const tokenKey = event.currentTarget.closest('form').dataset.tokenId;
 		const itemId = event.currentTarget.closest('li').dataset.itemId;
 		const fastForward = event.shiftKey;
+		const weapon = this.actor.getOwnedItem(itemId);
+		if( !weapon.data.data.properties.rngd){
+			if( game.user.targets.size > 1){
+				ui.notifications.error("Too many target selected. Keeping only last selected target");
+				// let it = game.user.targets.values();
+				// let done = false;
+				// while( !done){
+				// 	let obj = it.next();
+				// 	let actorName = "";
+				// 	done = obj.done;
+				// 	if( !done){
+				// 	 actorName = obj.value.actor.name;
+				// 	 console.log( actorName);
+				// 	}
+				// }
 
-		CoC7Chat.createAttackCard( actorId, itemId, tokenKey, fastForward);
-		// let check = new CoC7Check();
-		
-		// if( ! event.shiftKey) {
-		// 	const usage = await RollDialog.create();
-		// 	if( usage) {
-		// 		check.diceModifier = usage.get("bonusDice");
-		// 		check.difficulty = usage.get("difficulty");
-		// 	}
-		// }
+				// let targetArray = [...game.user.targets];
+				// targetArray.forEach( t => console.log(t.name))
+				
+				// for (let index = 1; index < game.user.targets.size; index++) {
+				// 	value[index].setTarget(false, {user: game.user, releaseOthers: false, groupSelection: true});
+				// }
+			}
 
+			const card = new CoC7MeleeInitiator( tokenKey ? tokenKey : actorId, itemId, fastForward);
+			card.createChatCard();
 
-		// check.actor = !tokenKey ? actorId : tokenKey;
-		// check.skill = skillId;
-		// check.item = itemId;
-		// check.roll();
-		// check.toMessage();
-
-		// HACK: just to pop the advanced roll window 
-		// check.item.roll();
+			//CoC7Chat.createAttackCard( actorId, itemId, tokenKey, fastForward);
+		}
 	}
 
 	async _onWeaponSkillRoll(event) {
@@ -503,9 +514,13 @@ export class CoC7ActorSheet extends ActorSheet {
 		// check.item.roll();
 	}
 
-	_onWeaponDamage( event) {
+	async _onWeaponDamage( event){
 		event.preventDefault();
-		alert("Damage clicked");
+		const itemId = event.currentTarget.closest(".weapon").dataset.itemId;
+		const range = event.currentTarget.closest(".weapon-damage").dataset.range;
+		const rollCard = new CoC7DamageRoll( itemId, this.actor.tokenKey);
+		rollCard.rollDamage( range);
+		console.log( "Weapon damage Clicked");
 	}
 
 	/**
@@ -601,8 +616,8 @@ export class CoC7ActorSheet extends ActorSheet {
 						let r = new Roll( event.currentTarget.value);
 						r.roll();
 						if( isNaN(r.total) || (typeof(r.total) == "undefined")){
-							ui.notifications.error( event.currentTarget.value + " is not a valid formula");
-							formData[event.currentTarget.name] = "invalid";
+							ui.notifications.error(game.i18n.format("CoC7.ErrorInvalidFormula", {value : event.currentTarget.value}));
+							formData[event.currentTarget.name] = game.i18n.format("CoC7.ErrorInvalid");
 						}
 					}
 				}
@@ -614,8 +629,8 @@ export class CoC7ActorSheet extends ActorSheet {
 						let r = new Roll( event.currentTarget.value);
 						r.roll();
 						if( isNaN(r.total) || (r.total === undefined)){
-							ui.notifications.error( event.currentTarget.value + " is not a valid formula");// TODO : localiz
-							formData[event.currentTarget.name] = "invalid";
+							ui.notifications.error(game.i18n.format("CoC7.ErrorInvalidFormula", {value : event.currentTarget.value}));
+							formData[event.currentTarget.name] = game.i18n.format("CoC7.ErrorInvalid");
 						}
 					}
 				}

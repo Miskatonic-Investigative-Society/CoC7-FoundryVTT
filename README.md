@@ -20,6 +20,14 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.1.9 :
+
+* Rework of the close combat mechanism. Select a target click on the weapon name and select the different options on the chat cards.
+* Implementation of damage bonus on weapon damage roll.
+* You can now override the auto calculation of max HP and MP for PC. Click the lock to edit the sheet, there will be a green cog next to max HP and MP. Clicking it will toggle between manual and auto calculation of max HP/MP.
+* Typo corrections.
+* German translation, thanks to MrViso.
+
 version 0.1.8 :
 
 * Started to implement the combat mechanisms (close combat only).
