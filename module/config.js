@@ -85,6 +85,7 @@ COC7.formula.actorsheet = {
 COC7.newSkillName = 'new skill';
 COC7.newItemName = 'new item';
 COC7.newWeaponName = 'new weapon';
+
 COC7.baseCreatureSkill = 'Fighting';
 
 COC7.dodgeSkillName = 'Dodge';
@@ -95,5 +96,27 @@ COC7.combatCards = {
 	fightBack:	'CoC7.FightBack',
 	dodge:		'CoC7.Dodge',
 	maneuver:	'CoC7.Maneuver',
+};
 
+COC7.dodge = {
+	'name': COC7.dodgeSkillName,
+	'type': 'skill',
+	'base': '1/2*@DEX',
+	'value': -1,
+	'data': {
+		'specialization': COC7.fightingSpecializationName },
+	'properties': {
+		'special': true,
+		'rarity': false,
+		'push': false,
+		'combat': true,
+		'fighting': true,
+		'firearm': false
+	},
+	'flags': { 'wpnexcl': true}
+};
+
+COC7.PcSkills = {
+	'dodge' : COC7.dodge,
+	'throw' : {}
 };

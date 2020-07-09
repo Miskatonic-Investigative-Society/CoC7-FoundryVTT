@@ -84,8 +84,6 @@
 			</div>
 			<div class="flexrow flex2 attribute" data-attrib="lck">
 				<label class="attribute-label rollable">{{localize 'CoC7.Luck'}} :</label>
-				<!-- <input class="attribute-value" type="text" name="data.attribs.lck.value" value="{{data.attribs.lck.value}}" data-dtype="Number"/>
-				<span style="flex: none;font-size: large;">/</span> -->
 				<input class="attribute-value read-only" type="text" name="data.attribs.lck.value" value="{{data.attribs.lck.value}}" data-dtype="Number" data-attrib="lck" readonly>
 				<div class="flex1"></div>
 			</div>
@@ -141,11 +139,9 @@
 		{{!-- Skills Tab --}}
 		<div class="tab skills flexcol active" data-group="primary" data-tab="skills">
 			{{#unless data.flags.locked}}
-			<div class="flexrow" style="max-height: 14px;">
-				<div class="flex1"></div>
-				<div style="flex: 0 0 14px;">
-					<a class="add-item" title="Add Skill" data-type="skill"><i class="fas fa-plus-circle"></i></a>
-				</div>
+			<div style='max-height: fit-content;'>
+				<div class="add-item button" title="Add Skill" data-type="skill">Add skill</div>
+				<div class="skill-developement button" title="Developement Phase">Developement Phase</div>
 			</div>
 			{{/unless}}
 			{{> "systems/CoC7/templates/actors/parts/actor-skills.html"}}
@@ -153,11 +149,8 @@
 
 		<div class="tab combat flexcol" data-group="primary" data-tab="combat">
 			{{#unless data.flags.locked}}
-			<div class="flexrow" style="max-height: 14px;">
-				<div class="flex1"></div>
-				<div style="flex: 0 0 14px;">
-					<a class="add-item" title="Add Weapon" data-type="weapon"><i class="fas fa-plus-circle"></i></a>
-				</div>
+			<div style='max-height: fit-content;'>
+				<div class="add-item button" title="Add Weapon" data-type="weapon">Add Weapon</div>
 			</div>
 			{{/unless}}
 			{{> "systems/CoC7/templates/actors/parts/actor-weapons.html"}}
@@ -165,11 +158,8 @@
 		
 		<div class="tab possession flexcol" data-group="primary" data-tab="possession">
 			{{#unless data.flags.locked}}
-			<div class="flexrow" style="max-height: 14px;">
-				<div class="flex1"></div>
-				<div style="flex: 0 0 14px;">
-					<a class="add-item" title="Add Item" data-type="item"><i class="fas fa-plus-circle"></i></a>
-				</div>
+			<div style='max-height: fit-content;'>
+				<div class="add-item button" title="Add Item" data-type="item">Add Item</div>
 			</div>
 			{{/unless}}
 
@@ -187,8 +177,34 @@
 			</ol>
 		</div>
 
-		<div class="tab background" style="display: flex;border: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="background">
-			{{editor content=data.biography.personalDescription.value target="data.biography.personalDescription.value" button=true owner=owner editable=editable}}
+		<div class="tab background flexcol" data-group="primary" data-tab="background">
+			{{#unless data.flags.locked}}
+				<div class='bio-control' style='max-height: fit-content;'>
+					<div class='add-new-section button' >Add new section</div>
+				</div>
+			{{/unless}}
+			<div class='flexrow'>
+				{{#each data.biography as |section index|}}
+				<div class='flexcol bio-section' data-index='{{index}}' style='flex: 0 0 50%;'>
+					{{#if ../data.flags.locked}}
+					<div class='flexrow' style='max-height: max-content;'>
+						<label style='height: fit-content;margin: 0;border: 0;'>{{section.title}}</label>
+					</div>
+					{{else}}
+					<div class='flexrow' style='max-height: max-content;'>
+						<input class='bio-section-title' style='height: fit-content;margin: 0;border: 0;'  type="text" value="{{section.title}}" placeholder="Enter section title">
+						<div class="flex1" style='height: fit-content;'></div>
+						<div class="item-controls" style='height: fit-content;font-size: 10px;line-height: 18px;'>
+							<a class="delete-section" title="Delete Seciton"><i class="fas fa-trash"></i></a>
+							{{#unless section.isFirst}}<a class="move-section-up" title="Move Up"><i class="fas fa-caret-up"></i></a>{{/unless}}
+							{{#unless section.isLast}}<a class="move-section-down" title="Move Down""><i class="fas fa-caret-down"></i></a>{{/unless}}
+						</div>
+					</div>
+					{{/if}}
+					<textarea class='bio-section-value' style="height: max-content;resize: none;" rows="4" >{{section.value}}</textarea>
+				</div>
+				{{/each}}
+			</div>
 		</div>
 	</section>
 </form>

@@ -4,7 +4,11 @@
             <div class="flexrow">
                 <div class="skill-image" style="background-image: url({{skill.img}})"></div>
                 {{#if ../data.flags.locked}}
+                {{#if skill.data.flags.developement}}
+                <h4 class="skill-name rollable" style="font-weight: bolder;">{{#if skill.data.properties.special}}{{skill.data.specialization}} ({{skill.name}}){{else}}{{skill.name}}{{/if}}:</h4>
+                {{else}}
                 <h4 class="skill-name rollable">{{#if skill.data.properties.special}}{{skill.data.specialization}} ({{skill.name}}){{else}}{{skill.name}}{{/if}}:</h4>
+                {{/if}}
                 <span>({{skill.data.value}}%)</span>
                 {{else}}
                 <input class="skill-name flex1" style="font-size: 12px;height: 20px;padding: 0;text-align: left;" type="text" value="{{skill.name}}">
@@ -13,6 +17,11 @@
     
                 <div class="item-controls">
                     {{#if ../data.flags.locked}}
+                    {{#if skill.data.flags.developement}}
+                    <a class="item-control development-flag" title="Unflag for developement" style='color: goldenrod;'><i class="fas fa-certificate"></i></a>
+                    {{else}}
+                    <a class="item-control development-flag" title="Flag for developement" style='color: darkgrey;'><i class="fas fa-certificate"></i></a>
+                    {{/if}}
                     <a class="item-control item-detail" title="Detail"><i class="fas fa-arrow-alt-circle-down"></i></a>
                     {{else}}
                     <a class="item-control item-edit" title="Edit skill"><i class="fas fa-edit"></i></a>

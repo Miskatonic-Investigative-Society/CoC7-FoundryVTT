@@ -192,6 +192,43 @@ export class CoC7Item extends Item {
 		return false;
 	}
 
+	async flagForDevelopement(){
+		if( !this.data.data.flags){
+			await this.update( { 'data.flags': {}});
+		}
+		await this.update( {'data.flags.developement' : true});
+	}
+
+	async unflagForDevelopement(){
+		if( !this.data.data.flags){
+			await this.update( { 'data.flags': {}});
+		}
+		await this.update( {'data.flags.developement' : false});
+	}
+
+
+	get developementFlag(){
+		return this.getItemFlag('developement');
+	}
+
+	async toggleItemFlag( flagName){
+		const flagValue =  this.data.data.flags[flagName] ? false: true;
+		const name = `data.flags.${flagName}`;
+		await this.update( { [name]: flagValue});
+	}
+
+	getItemFlag( flagName){
+		if( !this.data.data.flags){
+			this.data.data.flags = {};
+			this.data.data.flags.locked = true;
+			this.update( { 'data.flags': {}});
+			return false;
+		}
+
+		if( !this.data.data.flags[flagName]) return false;
+		return this.data.data.flags[flagName];
+	}
+
 	/**
 	 * Get the Actor which is the author of a chat card
 	 * @param {HTMLElement} card    The chat card being used

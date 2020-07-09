@@ -55,6 +55,7 @@ Hooks.on('updateChatMessage', (chatMessage, chatData, diff, speaker) => CoC7Chat
 // Hooks.on('preCreateChatMessage', (app, html, data) => CoC7Chat.preCreateChatMessageHook(app, html, data));
 
 Hooks.on('ready', CoC7Chat.ready);
+Hooks.on('preCreateActor', (createData) => CoCActor.initToken( createData));
 // Hooks.on('chatMessage', (chatLog, message, chatData) => { console.log('**************************************************************************************************chatMessage : '  + message);});
 
 
