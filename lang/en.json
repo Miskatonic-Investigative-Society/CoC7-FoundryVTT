@@ -38,8 +38,8 @@
 "CoC7.Build": "Build",
 "CoC7.Skills": "Skills",
 "CoC7.Combat": "Combat",
-"CoC7.Possessions": "Possessions",
-"CoC7.Background": "Background",
+"CoC7.Possessions": "Gear & Cash",
+"CoC7.Background": "Backstory",
 "CoC7.Notes": "Notes",
 
 "CoC7.RegularSuccess": "Regular success",
@@ -150,5 +150,7 @@
 "CoC7.ErrorItem": "Couldn't locate item",
 "CoC7.ErrorActor": "Couldn't locate actor",
 "CoC7.ErrorInvalidFormula": "{value} is not a valid formula",
-"CoC7.ErrorInvalid": "invalid"
+"CoC7.ErrorInvalid": "invalid",
+
+"CoC7.newBioSectionName": "New Section"
 }

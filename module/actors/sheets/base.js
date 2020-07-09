@@ -104,22 +104,32 @@ export class CoC7ActorSheet extends ActorSheet {
 			if( weapons){
 				for( const weapon of weapons)
 				{
-					weapon.skillSet = true; //TODO : un truc qui ne va pas, pourquoi c'est a 0 ??
-					weapon.data.skill.main.name = '';
-					weapon.data.skill.main.value = 0;
-					weapon.data.skill.alternativ.name = '';
-					weapon.data.skill.alternativ.value = 0;
+					weapon.skillSet = true;
+					// weapon.data.skill.main.name = '';
+					// weapon.data.skill.main.value = 0;
+					// weapon.data.skill.alternativ.name = '';
+					// weapon.data.skill.alternativ.value = 0;
 					if( weapon.data.skill.main.id == '')
 					{
+						//TODO : si l'ID n'ests pas définie mais qu'un nom a été donné, utiliser ce nom et tanter de retrouver le skill
 						weapon.skillSet = false;
 					}
 					else {
-						weapon.data.skill.main.name = data.combatSkills[weapon.data.skill.main.id].name;
-						weapon.data.skill.main.value = data.combatSkills[weapon.data.skill.main.id].data.value;
+						//TODO : avant d'assiger le skill vérifier qu'il existe toujours.
+						//si il n'existe plus il faut le retrouver ou passer skillset a false.
+						if( data.combatSkills[weapon.data.skill.main.id]){
+							weapon.data.skill.main.name = data.combatSkills[weapon.data.skill.main.id].name;
+							weapon.data.skill.main.value = data.combatSkills[weapon.data.skill.main.id].data.value;
+						} else {
+							weapon.skillSet = false;
+						}
+
 
 						if( weapon.data.skill.alternativ.id != ''){
-							weapon.data.skill.alternativ.name = data.combatSkills[weapon.data.skill.alternativ.id].name;
-							weapon.data.skill.alternativ.value = data.combatSkills[weapon.data.skill.alternativ.id].data.value;
+							if( data.combatSkills[weapon.data.skill.alternativ.id]){
+								weapon.data.skill.alternativ.name = data.combatSkills[weapon.data.skill.alternativ.id].name;
+								weapon.data.skill.alternativ.value = data.combatSkills[weapon.data.skill.alternativ.id].data.value;
+							}
 						}
 					}
 
@@ -134,8 +144,6 @@ export class CoC7ActorSheet extends ActorSheet {
 					data.weapons[weapon._id] = weapon;
 				}
 			}
-
-			
 
 			const token = this.actor.token;
 			data.tokenId = token ? `${token.scene._id}.${token.id}` : null;
@@ -181,6 +189,17 @@ export class CoC7ActorSheet extends ActorSheet {
 		if( data.data.attribs.san.value == null && data.data.characteristics.pow.value != null) data.data.attribs.san.value = data.data.characteristics.pow.value;
 		if( data.data.attribs.san.value > data.data.attribs.san.max) data.data.attribs.san.value = data.data.attribs.san.max;
 
+		if( data.data.biography instanceof Array && data.data.biography.length){
+			data.data.biography[0].isFirst = true;
+			data.data.biography[data.data.biography.length - 1].isLast = true;
+		}
+
+		// const first = data.data.biography[0];
+		// first.isFirst = true;
+		// data.data.biography[0] = first;
+		// const last = data.data.biography[data.data.biography.length - 1];
+		// last.isLast = true;
+		// data.data.biography[data.data.biography.length - 1] = last;
 		return data;
 		
 	}
@@ -264,19 +283,31 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 		});
 
-		// Add or Remove Attribute
-		//html.find(".attributes").on("click", ".attribute-control", this._onClickAttributeControl.bind(this));
+		html.find('.add-new-section').click( () => {this.actor.createBioSection();});
 
-		// Roll item/skill check
+		html.find('.delete-section').click( ev => {
+			const index = parseInt(ev.currentTarget.closest('.bio-section').dataset.index);
+			this.actor.deleteBioSection( index);
+		});
 
-		// Item Dragging
-		// TODO : a implémenter. Fait bugger quand on glisse une arme sur un autre perso. Cause : skills associé a l'arme de sont pas rentrés.
-		//  let handler = ev => this._onDragItemStart(ev);
-		//  html.find('li.item').each((i, li) => {
-		//  	if ( li.classList.contains("inventory-header") ) return;
-		//  	li.setAttribute("draggable", true);
-		//  	li.addEventListener("dragstart", handler, false);
-		//  });
+		html.find('.move-section-up').click( ev => {
+			const index = parseInt(ev.currentTarget.closest('.bio-section').dataset.index);
+			this.actor.moveBioSectionUp( index);
+		});
+
+		html.find('.move-section-down').click( ev => {
+			const index = parseInt(ev.currentTarget.closest('.bio-section').dataset.index);
+			this.actor.moveBioSectionDown( index);
+		});
+
+		html.find('.development-flag').dblclick( ev=> {
+			const item = this.actor.getOwnedItem( ev.currentTarget.closest('.item').dataset.itemId);
+			item.toggleItemFlag( 'developement');
+		});
+
+		html.find('.skill-developement').click( ev =>{
+			this.actor.developementPhase( ev.shiftKey);
+		});
 	}
 	
 	async _onStatusToggle(event){
@@ -312,7 +343,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
 	async _onFormulaClicked( event){
 		event.preventDefault();
-		this.actor.toggleFlag( 'displayFormula');
+		this.actor.toggleActorFlag( 'displayFormula');
 	}
 
 	async _onRollAttribTest( event){
@@ -454,30 +485,10 @@ export class CoC7ActorSheet extends ActorSheet {
 		if( !weapon.data.data.properties.rngd){
 			if( game.user.targets.size > 1){
 				ui.notifications.error('Too many target selected. Keeping only last selected target');
-				// let it = game.user.targets.values();
-				// let done = false;
-				// while( !done){
-				// 	let obj = it.next();
-				// 	let actorName = "";
-				// 	done = obj.done;
-				// 	if( !done){
-				// 	 actorName = obj.value.actor.name;
-				// 	 console.log( actorName);
-				// 	}
-				// }
-
-				// let targetArray = [...game.user.targets];
-				// targetArray.forEach( t => console.log(t.name))
-				
-				// for (let index = 1; index < game.user.targets.size; index++) {
-				// 	value[index].setTarget(false, {user: game.user, releaseOthers: false, groupSelection: true});
-				// }
 			}
 
 			const card = new CoC7MeleeInitiator( tokenKey ? tokenKey : actorId, itemId, fastForward);
 			card.createChatCard();
-
-			//CoC7Chat.createAttackCard( actorId, itemId, tokenKey, fastForward);
 		}
 	}
 
@@ -589,6 +600,16 @@ export class CoC7ActorSheet extends ActorSheet {
 	async _updateObject(event, formData) {
 		if( event.currentTarget){
 			if( event.currentTarget.classList){
+
+				if( event.currentTarget.classList.contains('bio-section-value')){
+					const index = parseInt(event.currentTarget.closest('.bio-section').dataset.index);
+					this.actor.updateBioValue( index, event.currentTarget.value);
+				}
+
+				if( event.currentTarget.classList.contains('bio-section-title')){
+					const index = parseInt(event.currentTarget.closest('.bio-section').dataset.index);
+					this.actor.updateBioTitle( index, event.currentTarget.value);
+				}
 
 				if( event.currentTarget.classList.contains('npc-skill-score')){
 					let skill = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.skillId);
@@ -702,33 +723,6 @@ export class CoC7ActorSheet extends ActorSheet {
 				
 			}
 		}
-
 		return this.object.update(formData);
-
-		// 	// Handle the free-form attributes list
-		// 	const data = expandObject(formData).data;
-		// 	if (!data) return null;
-		// 	const formAttrs = expandObject(formData).data.attributes || {};
-		// 	const attributes = Object.values(formAttrs).reduce((obj, v) => {
-		// 	let k = v["key"].trim();
-		// 	if ( /[\s\.]/.test(k) )  return ui.notifications.error("Attribute keys may not contain spaces or periods");
-		// 	delete v["key"];
-		// 	obj[k] = v;
-		// 	return obj;
-		// 	}, {});
-	
-		// 	// Remove attributes which are no longer used
-		// 	for ( let k of Object.keys(this.object.data.data.attributes) ) {
-		// 		if ( !attributes.hasOwnProperty(k) ) attributes[`-=${k}`] = null;
-		// 	}
-
-		// 	// Re-combine formData
-		// 	formData = Object.entries(formData).filter(e => !e[0].startsWith("data.attributes")).reduce((obj, e) => {
-		// 		obj[e[0]] = e[1];
-		// 		return obj;
-		// 	}, {_id: this.object._id, "data.attributes": attributes});
-	
-	// 	// Update the Actor
-	// 	return this.object.update(formData);
 	}
 }

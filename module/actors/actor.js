@@ -6,9 +6,9 @@ import { COC7 } from '../config.js';
  */
 export class CoCActor extends Actor {
 
-	initialize() {
+	async initialize() {
 		super.initialize();
-		this.creatureInit();
+		await this.creatureInit(); //TODO : move this in CoCActor.create(data, options)
 	}
 
 
@@ -26,9 +26,40 @@ export class CoCActor extends Actor {
 		if( this.data.data.attribs.build.auto === undefined) returnData['attribs.build.auto'] = true;
     
 		return returnData;
-
 	}
 
+	/**
+	 * Called upon token creation from preCreateActor hook
+	 * @param {*} createData 
+	 */
+	static async initToken(createData){
+		//called upon token creation.active
+		if( createData) {
+			return;
+		}
+	}
+
+	/**
+	 * Called upon new actor creation.
+	 * @param {*} data 
+	 * @param {*} options 
+	 */
+	static async create(data, options) {
+		// If the created actor has items (only applicable to duplicated actors) bypass the new actor creation logic
+		if (data.items)
+		{
+			return super.create(data, options);
+		}
+		// data.data= { 'biography' : {
+		// 	'ideology': {
+		// 		'value': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+		// 	}
+		// }};
+
+
+		return super.create(data, options);
+	}
+	
 	/** @override */
 	async createSkill( skillName, value, showSheet = false){
 		const data = {  
@@ -40,8 +71,7 @@ export class CoCActor extends Actor {
 					special: false,
 					rarity: false,
 					push: true,
-					combat: false,
-					shortlist: false //TODO: necessary ?
+					combat: false
 				}
 			}
 		};
@@ -108,7 +138,7 @@ export class CoCActor extends Actor {
 			}
 
 			// console.log( 'Skill created');
-
+			await this.setActorFlag('initialized');
 			//Creating corresponding weapon.
 		}
 	}
@@ -181,6 +211,49 @@ export class CoCActor extends Actor {
 		await this.createEmbeddedEntity('OwnedItem', data, { renderSheet: showSheet});
 	}
 
+	async createBioSection(){
+		const bio = this.data.data.biography ? duplicate( this.data.data.biography) : [];
+		bio.push( {
+			title : null,
+			value : null
+		});
+		await this.update( { 'data.biography' : bio});
+	}
+
+	async updateBioValue( index, content){
+		const bio = duplicate(this.data.data.biography);
+		bio[index].value = content;
+		await this.update( { 'data.biography' : bio});
+	}
+	
+	async updateBioTitle( index, title){
+		const bio = duplicate(this.data.data.biography);
+		bio[index].title = title;
+		await this.update( { 'data.biography' : bio});
+	}
+
+	async deleteBioSection( index){
+		const bio = duplicate(this.data.data.biography);
+		bio.splice( index, 1);
+		await this.update( { 'data.biography' : bio});
+	}
+
+	async moveBioSectionUp( index){
+		if( index === 0) return;
+		const bio = duplicate(this.data.data.biography);
+		if( index >= bio.length) return;
+		const elem = bio.splice( index, 1)[0];
+		bio.splice( index - 1, 0, elem);
+		await this.update( { 'data.biography' : bio});
+	}
+
+	async moveBioSectionDown( index){
+		const bio = duplicate(this.data.data.biography);
+		if( index >= bio.length - 1) return;
+		const elem = bio.splice( index, 1)[0];
+		bio.splice( index + 1, 0, elem);
+		await this.update( { 'data.biography' : bio});
+	}
   
 
 	/**
@@ -409,7 +482,7 @@ export class CoCActor extends Actor {
 		this.update( { 'data.flags.locked': value});
 	}
 
-	async toggleFlag( flagName){
+	async toggleActorFlag( flagName){
 		const flagValue =  this.data.data.flags[flagName] ? false: true;
 		const name = `data.flags.${flagName}`;
 		await this.update( { [name]: flagValue});
@@ -423,7 +496,12 @@ export class CoCActor extends Actor {
 			return false;
 		}
 
+		if( !this.data.data.flags[flagName]) return false;
 		return this.data.data.flags[flagName];
+	}
+
+	async setActorFlag( flagName){
+		await this.update( {[`data.flags.${flagName}`]: true});
 	}
 
 	getWeaponSkills( itemId){
@@ -467,6 +545,30 @@ export class CoCActor extends Actor {
 		}
 
 		await this.update( characteristics);
+	}
+
+	async developementPhase( fastForward){
+		for (let item of this.items){
+			if( 'skill' === item.type){
+				if( item.developementFlag){
+					const die = new Die(100);
+					die.roll(1);
+					let skillValue = parseInt(item.data.data.value);
+					if( die.total > skillValue || die.total >= 95)
+					{
+						const augmentDie = new Die(10);
+						augmentDie.roll();
+						skillValue += augmentDie.total;
+						if( fastForward) ui.notifications.info('skill upgraded');
+					}
+					await this.updateEmbeddedEntity('OwnedItem', {
+						_id: item._id,
+						'data.flags.developement': false,
+						'data.value': skillValue
+					});
+				}
+			}
+		}
 	}
 
 	async toggleStatus(statusName){
@@ -548,7 +650,7 @@ export class CoCActor extends Actor {
 
 	get dodgeSkill(){
 		let skillList = this.getSkillsByName( COC7.dodgeSkillName);
-		if( skillList.legnth != 0) return skillList[0];
+		if( skillList.length != 0) return skillList[0];
 		return null;
 	}
 

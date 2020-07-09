@@ -1,3 +1,29 @@
+.coc7 .button{
+    display: inline-block;
+    margin: 2px 2px 0 0;
+    padding: 0 3px;
+    font-size: 12px;
+    line-height: 16px;
+    border: 1px groove #999;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.coc7 .button:hover{
+    text-shadow: 0 0 8px red;
+    border: 1px solid #999;
+}
+
+.coc7 .button.inactive {
+    border: 1px solid white;
+    color: white;
+}
+
+.coc7 .button.inactive:hover {
+    cursor: not-allowed;
+    background-color: transparent;
+}
+
 .center-vertical {
     margin: 0;
     position: absolute;
@@ -157,10 +183,14 @@
 }
 
 .coc7 .auto-on{
+    padding-left: 4px;
+    line-height: 22px;
     color: green;
 }
 
 .coc7 .auto-off{
+    padding-left: 4px;
+    line-height: 22px;
     color: grey;
 }
 
@@ -410,12 +440,6 @@
     color: #191813;
 }
 
-/* .coc7 input[type="text"]:hover,
-.coc7 input[type="text"]:focus {
-    border: 1px solid #111;
-    box-shadow: 0 0 4px green;
-} */
-
 .coc7.sheet .editor {
     height: 100%;
 }
@@ -441,7 +465,7 @@
 .coc7.sheet .skills-list .item {
     width: 320px;
     line-height: 20px;
-     border-bottom: 1px solid #BBB;
+    border-bottom: 1px solid #BBB;
 }
 
 .coc7.sheet .skills-list .item img {
