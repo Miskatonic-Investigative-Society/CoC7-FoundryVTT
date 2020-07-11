@@ -20,6 +20,8 @@ export class CoC7ActorSheet extends ActorSheet {
 		data.skills = {};
 		data.combatSkills = {};
 		data.weapons = {};
+		data.rangeWpn = [];
+		data.meleeWpn = [];
 
 		if( data.items){
 			for (const item of data.items) {
@@ -142,6 +144,9 @@ export class CoC7ActorSheet extends ActorSheet {
 						weapon.data._properties.push( property);
 					}
 					data.weapons[weapon._id] = weapon;
+					if( weapon.data.properties.rngd) data.rangeWpn.push( weapon);
+					else data.meleeWpn.push(weapon);
+
 				}
 			}
 
@@ -305,11 +310,31 @@ export class CoC7ActorSheet extends ActorSheet {
 			item.toggleItemFlag( 'developement');
 		});
 
-		html.find('.skill-developement').click( ev =>{
-			this.actor.developementPhase( ev.shiftKey);
+		html.find('.skill-developement').click( event =>{
+			this.actor.developementPhase( event.shiftKey);
 		});
 	}
-	
+
+	// async _onSkillDevelopement( event){
+	// 	const result = await this.actor.developementPhase( event.shiftKey);
+	// 	const skills = this._element[0].querySelector('.skills');
+	// 	skills.style.color = 'yellowgreen';
+	// 	for( let element of result.failure){
+	// 		const skill = skills.querySelector(`[data-skill-id="${element}"]`);
+	// 		skill.querySelector('.skill-image').style.backgroundColor = 'red';
+	// 		skill.querySelectorAll('input').forEach(input => {
+	// 			input.style.color = 'red';
+	// 		});
+	// 	}
+
+	// 	result.success.forEach(element => {
+	// 		const skill = skills.querySelector(`[data-skill-id="${element}"]`);
+	// 		skill.querySelectorAll('input').forEach(input => {
+	// 			input.style.color = 'green';
+	// 		});
+	// 	});
+	// }
+
 	async _onStatusToggle(event){
 		event.preventDefault();
 		const status = event.currentTarget.dataset.status;
