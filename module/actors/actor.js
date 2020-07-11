@@ -547,7 +547,9 @@ export class CoCActor extends Actor {
 		await this.update( characteristics);
 	}
 
-	async developementPhase( fastForward){
+	async developementPhase( fastForward = false){
+		const failure = [];
+		const success = [];
 		for (let item of this.items){
 			if( 'skill' === item.type){
 				if( item.developementFlag){
@@ -556,19 +558,23 @@ export class CoCActor extends Actor {
 					let skillValue = parseInt(item.data.data.value);
 					if( die.total > skillValue || die.total >= 95)
 					{
+						success.push(item._id);
 						const augmentDie = new Die(10);
 						augmentDie.roll();
 						skillValue += augmentDie.total;
+
 						if( fastForward) ui.notifications.info('skill upgraded');
-					}
+					}else failure.push(item._id);
 					await this.updateEmbeddedEntity('OwnedItem', {
 						_id: item._id,
 						'data.flags.developement': false,
 						'data.value': skillValue
 					});
+
 				}
 			}
 		}
+		return( {failure : failure, success: success});
 	}
 
 	async toggleStatus(statusName){
