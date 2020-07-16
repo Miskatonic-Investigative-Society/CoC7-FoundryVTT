@@ -20,6 +20,10 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.2.1 :
+
+* Template and CSS correction.
+
 version 0.2.0 :
 
 * Implementation of experience tracking.
