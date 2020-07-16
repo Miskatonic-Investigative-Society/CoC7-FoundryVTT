@@ -1,7 +1,7 @@
 <form class="{{cssClass}} flexcol" autocomplete="off" data-actor-id="{{actor._id}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
 
 	{{!-- Sheet Header --}}
-	<header class="sheet-header flexcol" style="flex: 0 0 200px; flex-direction: column; flex-wrap: nowrap;">
+	<header class="sheet-header flexcol" style="flex: 0 0 205px; flex-direction: column; flex-wrap: nowrap;">
 		<div class="flexrow" style="display: flex;">
 			<div class="info-fields">
 				<div class="form-group">
@@ -31,7 +31,7 @@
 			<div class="characteristics flex3">
 				{{#each data.characteristics as |characteristic key|}}
 					<div class="characteristic-box" data-characteristic="{{key}}">
-						<div class="characteristics-label rollable">{{localize characteristic.label}}</div>
+						<div class="characteristics-label rollable">{{localize characteristic.short}}</div>
 						{{#if characteristic.editable}}
 						<input class="characteristic-score" type="text" name="data.characteristics.{{key}}.value" value="{{characteristic.value}}" data-dtype="Number">
 						{{else}}
@@ -59,7 +59,6 @@
 				{{#unless data.flags.locked}}
 				<div class="auto-toggle {{#if data.attribs.hp.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
 				{{/unless}}
-				<div class="flex1"></div>
 			</div>
 			<div class="flexrow flex3 attribute" data-attrib="mp">
 				<label class="attribute-label">{{localize 'CoC7.MagicPoints'}} :</label>
@@ -73,29 +72,24 @@
 				{{#unless data.flags.locked}}
 				<div class="auto-toggle {{#if data.attribs.mp.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
 				{{/unless}}
-				<div class="flex1"></div>
 			</div>
-			<div class="flexrow flex2 attribute" data-attrib="san">
+			<div class="flexrow flex3 attribute" data-attrib="san">
 				<label class="attribute-label rollable">{{localize 'CoC7.Sanity'}} :</label>
 				<input class="attribute-value" type="text" name="data.attribs.san.value" value="{{data.attribs.san.value}}" data-dtype="Number"/>
 				<span style="flex: none;font-size: large;">/</span>
 				<input class="attribute-max read-only" type="text" name="data.attribs.san.max" value="{{data.attribs.san.max}}" data-dtype="Number" data-attrib="san" readonly>
-				<div class="flex1"></div>
 			</div>
 			<div class="flexrow flex2 attribute" data-attrib="lck">
 				<label class="attribute-label rollable">{{localize 'CoC7.Luck'}} :</label>
-				<!-- <input class="attribute-value" type="text" name="data.attribs.lck.value" value="{{data.attribs.lck.value}}" data-dtype="Number"/>
-				<span style="flex: none;font-size: large;">/</span> -->
 				<input class="attribute-value read-only" type="text" name="data.attribs.lck.value" value="{{data.attribs.lck.value}}" data-dtype="Number" data-attrib="lck" readonly>
-				<div class="flex1"></div>
 			</div>
 		</div>
 		<div class="flexrow" style="align-items: center; flex: none;height: 20px;">
-			<div class="flex1 attribute" data-attrib="mov">
+			<div class="flex3 attribute" data-attrib="mov">
 				<label class="attribute-label">{{localize 'CoC7.Movement'}} :</label> 
 				<span style="flex: none;font-size: medium;line-height: 20px;">{{data.attribs.mov.value}}</span>
 			</div>
-			<div class="flex1 flexrow attribute" data-attrib="db" data-roll-formula="{{data.attribs.db.value}}">
+			<div class="flex3 flexrow attribute" data-attrib="db" data-roll-formula="{{data.attribs.db.value}}">
 				<label class="attribute-label rollable" data-attrib="db">{{localize 'CoC7.BonusDamage'}} :</label>
 				{{#if data.attribs.db.auto}}
 				<span class="attribute-value" type="text" style="line-height: 22px;"> {{data.attribs.db.value}} </span>
@@ -103,15 +97,19 @@
 				<input class="attribute-value {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.db.value" value="{{data.attribs.db.value}}" data-dtype="String" {{#if data.flags.locked}}readonly{{/if}}>
 				{{/if}}
 			</div>
-			<div class="flex1 attribute" data-attrib="build">
+			<div class="flex3 attribute" data-attrib="build">
 				<label class="attribute-label">{{localize 'CoC7.Build'}} :</label> <span style="flex: none;font-size: medium;line-height: 20px;">{{data.attribs.build.value}}</span>
 			</div>
-			<div class="flexrow flex1 attribute" data-attrib="armor">
-				<label>{{localize 'CoC7.Armor'}} :</label>
+			<div class="flexrow flex2 attribute" data-attrib="armor">
+				<label  class="attribute-label">{{localize 'CoC7.Armor'}} :</label>
 				<input class="attribute-value {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.armor.value" value="{{data.attribs.armor.value}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
 			</div>
 		</div>
-		<div class="status-monitors flexrow">
+		<div class="status-monitors flexrow" style="line-height: 22px;">
+			<label class="attribute-label">Daily San loss :</label>
+			<span style="max-width: 20px;font-size: 14px;height: 22px;padding: 1px 3px;border: 1px solid transparent;">{{data.attribs.san.dailyLoss}}</span>
+			<a class="reset-counter" style="flex: 0 0 25px;color: darkgrey;padding: 1px 6px;text-align: center;" data-counter="data.attribs.san.dailyLoss" title="Reset"><i class="fas fa-undo"></i></a>
+			<div style="flex: 0 0 20px;"></div>
 			<a class="status-monitor {{#if data.status.unconscious.value}}status-on{{/if}}" title="Unconsious" data-status="unconscious"> <i class="fas fa-bed"></i></a>
 			<a class="status-monitor {{#if data.status.criticalWounds.value}}status-on{{/if}}" title="Critical" data-status="criticalWounds"> <i class="fas fa-user-injured"></i></a>
 			<a class="status-monitor {{#if data.status.dying.value}}status-on{{/if}}" title="Dying" data-status="dying"> <i class="fas fa-heartbeat"></i></a>
@@ -141,54 +139,122 @@
 		{{!-- Skills Tab --}}
 		<div class="tab skills flexcol active" data-group="primary" data-tab="skills">
 			{{#unless data.flags.locked}}
-			<div class="flexrow" style="max-height: 14px;">
-				<div class="flex1"></div>
-				<div style="flex: 0 0 14px;">
-					<a class="add-item" title="Add Skill" data-type="skill"><i class="fas fa-plus-circle"></i></a>
-				</div>
+			<div style='max-height: fit-content;'>
+				<div class="add-item button" title="Add Skill" data-type="skill">Add skill</div>
+				<div class="skill-developement button" title="Developement Phase">Developement Phase</div>
 			</div>
 			{{/unless}}
 			{{> "systems/CoC7/templates/actors/parts/actor-skills.html"}}
 		</div>
 
 		<div class="tab combat flexcol" data-group="primary" data-tab="combat">
-			{{#unless data.flags.locked}}
-			<div class="flexrow" style="max-height: 14px;">
-				<div class="flex1"></div>
-				<div style="flex: 0 0 14px;">
-					<a class="add-item" title="Add Weapon" data-type="weapon"><i class="fas fa-plus-circle"></i></a>
-				</div>
-			</div>
-			{{/unless}}
 			{{> "systems/CoC7/templates/actors/parts/actor-weapons.html"}}
 		</div>
 		
 		<div class="tab possession flexcol" data-group="primary" data-tab="possession">
 			{{#unless data.flags.locked}}
-			<div class="flexrow" style="max-height: 14px;">
-				<div class="flex1"></div>
-				<div style="flex: 0 0 14px;">
-					<a class="add-item" title="Add Item" data-type="item"><i class="fas fa-plus-circle"></i></a>
-				</div>
+			<div style='max-height: fit-content;'>
+				<div class="add-item button" title="Add Item" data-type="item">Add Item</div>
 			</div>
 			{{/unless}}
 
-			<ol class="items-list">
-				{{#each itemsByType.item as |item id|}}
-					<li class="item flexrow" data-item-id="{{item._id}}">
-						<div class="item-image" style="background-image: url({{item.img}})"></div>
-						<h4 class="item-name">{{item.name}}</h4>
-						<div class="item-controls">
-							<a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-							<a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+			<div class="flexrow"> 
+				<div class="flexcol flex3" style="border: 1px groove;">
+					<ol class="items-list" style="margin: 0;padding: 0;" >
+						{{#each itemsByType.item as |item id|}}
+							<li class="item flexrow" data-item-id="{{item._id}}">
+								<div class="item-image" style="background-image: url({{item.img}})"></div>
+								<h4 class="item-name" style="line-height: 24px;">{{item.name}}</h4>
+								<div class="item-controls" style="line-height: 24px;padding-right: 5px;">
+									<a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+									<a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+								</div>
+							</li>
+						{{/each}}
+					</ol>
+				</div>
+				<div class="flexcol flex2 cash" style="border: 1px groove;">
+					{{#unless data.flags.locked}}
+					<div class="flexrow cash-row">
+						{{#if data.flags.manualCredit}}
+						<label>Manual Credit Values</label>
+						<div class='flex1'></div>
+						{{else}}
+						<label>Symbol :</label>
+						<input type="text" name="data.credit.monetarySymbol" value="{{data.credit.monetarySymbol}}">
+						<label>Factor :</label>
+						<input type="text" pattern="\d*" data-dtype="number" name="data.credit.multiplier" value="{{data.credit.multiplier}}">
+						{{/if}}
+						<div class="flag {{#if data.flags.manualCredit}}auto-off{{else}}auto-on{{/if}}" data-flag="manualCredit" title="Toggle Automatic calculation" style="flex: 0;margin-right: 5px;">
+						<i class="fas fa-cogs" style="padding-top: 4px;"></i>
 						</div>
-					</li>
-				{{/each}}
-			</ol>
+					</div>
+					{{/unless}}
+					<div class="flexrow cash-row">
+						<label>Spending Level :</label>
+						{{#if data.flags.manualCredit}}
+							<input type="text" name="data.credit.spendingLevel" value="{{data.credit.spendingLevel}}">
+						{{else}}
+							<span>{{credit.spendingLevel}}</span>
+						{{/if}}
+					</div>
+					<div class="flexrow cash-row">
+						<label>Cash :</label>
+						{{#if data.flags.manualCredit}}
+							<input type="text" name="data.credit.cash" value="{{data.credit.cash}}">
+						{{else}}
+							<span>{{credit.cash}}</span>
+						{{/if}}
+						<label>Spent :</label><input type="text" name="data.credit.spent" value="{{data.credit.spent}}">
+					</div>
+					<div class="flexrow  cash-row">
+							<label>Assets :</label>
+							{{#if data.flags.manualCredit}}
+								<input type="text" name="data.credit.assets" value="{{data.credit.assets}}">
+							{{else}}
+								<span style="line-height: 22px;">{{credit.assets}}</span>
+							{{/if}}
+					</div>
+					<div style="flex:none">
+						<textarea name="data.credit.assetsDetails" placeholder="Assets details" rows="4">{{data.credit.assetsDetails}}</textarea>
+					</div>
+					<label style="max-height: fit-content;">Notes :</label>
+					<div class="flex1">
+						<textarea name="data.notes" placeholder="Notes">{{data.notes}}</textarea>
+					</div>
+				</div>
+			</div>
 		</div>
 
-		<div class="tab background" style="display: flex;border: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="background">
-			{{editor content=data.biography.personalDescription.value target="data.biography.personalDescription.value" button=true owner=owner editable=editable}}
+		<div class="tab background flexcol" data-group="primary" data-tab="background">
+			{{#unless data.flags.locked}}
+				<div class='bio-control' style='max-height: fit-content;'>
+					<div class='add-new-section button' >Add new section</div>
+				</div>
+			{{/unless}}
+			<div class='flexrow'>
+				{{#each data.biography as |section index|}}
+				<div class='flexcol bio-section' data-index='{{index}}' style='flex: 0 0 50%;'>
+					{{#if ../data.flags.locked}}
+					<div class='flexrow' style='max-height: max-content;'>
+						<label style='height: fit-content;margin: 0;border: 0;font-family: "Nodesto", "Signika", "Palatino Linotype", serif;font-size: 12px;'>{{section.title}}</label>
+					</div>
+					{{else}}
+					<div class='flexrow' style='max-height: max-content;'>
+						<input class='bio-section-title' style='height: fit-content;margin: 0;border: 0;font-family: "Nodesto", "Signika", "Palatino Linotype", serif;font-size: 12px;font-weight: bolder;'  type="text" value="{{section.title}}" placeholder="Enter section title">
+						<div class="flex1" style='height: fit-content;'></div>
+						<div class="item-controls" style='height: fit-content;font-size: 10px;line-height: 18px;'>
+							<a class="delete-section" title="Delete Seciton"><i class="fas fa-trash"></i></a>
+							{{#unless section.isFirst}}<a class="move-section-up" title="Move Up"><i class="fas fa-caret-up"></i></a>{{/unless}}
+							{{#unless section.isLast}}<a class="move-section-down" title="Move Down""><i class="fas fa-caret-down"></i></a>{{/unless}}
+						</div>
+					</div>
+					{{/if}}
+					<textarea class='bio-section-value' style='height: max-content;resize: none;font-family: "Nodesto", "Signika", "Palatino Linotype", serif;font-size: 12px;' rows="4" >{{section.value}}</textarea>
+					<!-- {{editor content=section.value target="section.value" button=true editable=editable}} -->
+				</div>
+				{{/each}}
+			</div>
 		</div>
 	</section>
 </form>
