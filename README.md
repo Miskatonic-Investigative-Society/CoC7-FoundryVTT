@@ -20,6 +20,40 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.2.0 :
+
+* Implementation of experience tracking.
+  * A successful (no bonus, not pushed, no luck used) check will flag a skill for development. A skill flagged for development will show a gold star next to it’s score. You can flag or un-flag a skill by double clicking on the corresponding star in the skill tab.
+  * Addition of a new skill property 'No XP gain'. Set to false by default. A skill with this property enabled will not benefit from experience tracking.
+  * Unlock the character sheet to access the 'Development phase' button. Clicking it will roll experience and increase all skills accordingly.
+* Implementation of cash and assets under the Gear & Cash tab. Spending level, Cash ans Assets are calculated automatically according to 1920’s CoC rule book.
+  * Unlock the character sheet to allow modification of the calculations.
+  * Clicking the cog will toggle between manual and automatic modes.
+    * In manual mode (gray cog), just enter whatever you feel like in the fields.
+    * In automatic mode (green cog), you can change the monetary symbol and factor. By default the system uses $ and a factor of 1. The factor will just multiplies all values. Enter 20 for modern CoC for example.
+  * Addition of a spent counter. It is to track cash spent today and check it against the available cash.
+  * Addition of an 'Assets details' section.
+  * Addition of a 'Notes' section.
+* Implementation of backstory tab. Some backstory element are proposed with the default 1920’s character sheet.
+  * Unlocking the character sheet will allow you to:
+    * add a new section (Add section button).
+    * change section names.
+    * delete a section (Trash icon next to the section name).
+    * change sections order (Up and Down arrows next to the section name).
+* Addition of daily sanity loss counter and reset counter button.
+  * Upon changing sanity all losses will be recorded.
+  * Loosing 5 points at once or loosing more than 1/5 of current sanity will lit the according status (Indefinite insanity, temporary insanity).
+  * Clicking on the reset button next to the counter will reset it to 0.
+* Improvment of the combat tab.
+  * Melee and range weapon are shown in different sections
+  * The combat skill will show at the bottom of the combat section.
+  * Unlock the sheet to allow modifications of skills and weapons.
+* Addition of calculation of average values for characteristics of creatures and NPC.
+  * Unlock the creature/NPC sheet, pass the sheet in 'values' mode (icon next to the lock should display a small person with a pen).
+    * The red dices will roll characteristics when a formula is available.
+    * The red scale will average characteristics values when a formula is available.
+  * In 'formula' (icon next to the lock should display a small square-root symbol) you can now reference other characteristics (Enter @POW for example to set that characteristic to the same value as POW).
+
 version 0.1.9 :
 
 * Rework of the close combat mechanism. Select a target click on the weapon name and select the different options on the chat cards.
@@ -98,10 +132,10 @@ Version 0.1.3 :
 * [x] Implement Creatures (with automatic and average carac/skill calculation).
 * [x] Implement NPC (with automatic and average carac/skill calculation).
 * [x] Implement creations of skills directly from the sheets.
-* [ ] Implement experience tracking.
+* [x] Implement experience tracking.
 * [x] !!WIP. Implement localization.
 * [ ] Working on CSS/HTML to improve the look.  
-* [ ] Improving the combat tab, by adding combat skill to the weapon list.  
+* [x] Improving the combat tab, by adding combat skill to the weapon list.  
 * [ ] Automatic skill assignment when adding a weapon.  
 * [ ] Combat automation (calculation of difficulty, assignement of damage, opposed check...).  
 * [x] Implement pushed rolls.  

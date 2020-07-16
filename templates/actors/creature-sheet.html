@@ -148,15 +148,16 @@
 				<a class="status-monitor {{#if data.status.tempoInsane.value}}status-on{{/if}}" title="Temporary insanity" data-status="tempoInsane"> <i class="fas fa-filter"></i></a>
 				<a class="status-monitor {{#if data.status.indefInsane.value}}status-on{{/if}}" title="Indefinite insanity" data-status="indefInsane"> <i class="far fa-hospital"></i></a>
 				<div class="flex1"></div>
-				<div class="flexrow sheet-controls" style="flex: 0 0 50px;align-content: flex-start;">
+				<div class="flexrow sheet-controls" style="flex: 0 0 70px;align-content: flex-start;">
 					{{#if allowFormula}}
 						{{#if data.flags.locked}}
-							<div style="flex: 0 0 16px;"></div>
+							<div style="flex: 0 0 32px;"></div>
 						{{else}}
 							{{#if displayFormula}}
-								<div style="flex: 0 0 16px;"></div>
+								<div style="flex: 0 0 32px;"></div>
 							{{else}}
-								<a class="roll-characteritics" style="flex: 0 0 16px;color: darkred;" title="Roll some dice"> <i class="fas fa-dice"></i></a>
+								<a class="roll-characteritics" style="flex: 0 0 16px;color: darkred;" data-html="true" title="Roll characteristics"> <i class="fas fa-dice"></i></a>
+								<a class="average-characteritics" style="flex: 0 0 16px;color: darkred;" title="Average characteristics"> <i class="fas fa-balance-scale"></i></a>
 							{{/if}}
 						{{/if}}
 					{{else}}

@@ -145,8 +145,7 @@
 			"templates": [
 				"characteristics",
 				"attribs",
-				"status",
-				"biography"
+				"status"
 			],
 			"infos":{
 				"occupation" : "",
@@ -156,8 +155,16 @@
 				"birthplace": ""
 			},
 			"flags": {
-				"locked": true
-			}
+				"locked": true,
+				"manualCredit": false
+			},
+			"credit": {
+				"monetarySymbol": null,
+				"multiplier": null,
+				"spent": null,
+				"assetsDetails": null
+			},
+			"biography": []
 		},
 
 		"npc":{

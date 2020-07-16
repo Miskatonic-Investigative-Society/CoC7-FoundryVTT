@@ -33,6 +33,7 @@ COC7.characteristics = {
  * @type {Object}
  */
 COC7.skillProperties = {
+	noxpgain: 'CoC7.SkillNoXpGain',
 	special: 'CoC7.SkillSpecial',
 	rarity: 'CoC7.SkillRarity',
 	push: 'CoC7.SkillPush',
@@ -82,18 +83,51 @@ COC7.formula.actorsheet = {
 	'@EDU': 'this.actor.data.data.characteristics.edu.value'
 };
 
-COC7.newSkillName = 'new skill';
-COC7.newItemName = 'new item';
-COC7.newWeaponName = 'new weapon';
+COC7.status = {
+	tempoInsane: 'tempoInsane',
+	indefInsane: 'indefInsane',
+	unconscious: 'unconscious',
+	criticalWounds: 'criticalWounds',
+	dying: 'dying'
+};
+
+
+COC7.newSkillName = 'CoC7.newSkillName';
+COC7.newItemName = 'CoC7.newItemName';
+COC7.newWeaponName = 'CoC7.newWeaponName';
+
 COC7.baseCreatureSkill = 'Fighting';
 
-COC7.dodgeSkillName = 'Dodge';
-COC7.fightingSpecializationName = 'Fighting';
-COC7.firearmSpecializationName = 'Firearms';
+COC7.dodgeSkillName = 'CoC7.dodgeSkillName';
+COC7.creditRatingSkillName = 'CoC7.creditRatingSkillName';
+COC7.fightingSpecializationName = 'CoC7.fightingSpecializationName';
+COC7.firearmSpecializationName = 'CoC7.firearmSpecializationName';
 
 COC7.combatCards = {
 	fightBack:	'CoC7.FightBack',
 	dodge:		'CoC7.Dodge',
 	maneuver:	'CoC7.Maneuver',
-
 };
+
+// COC7.dodge = {
+// 	'name': COC7.dodgeSkillName,
+// 	'type': 'skill',
+// 	'base': '1/2*@DEX',
+// 	'value': -1,
+// 	'data': {
+// 		'specialization': COC7.fightingSpecializationName },
+// 	'properties': {
+// 		'special': true,
+// 		'rarity': false,
+// 		'push': false,
+// 		'combat': true,
+// 		'fighting': true,
+// 		'firearm': false
+// 	},
+// 	'flags': { 'wpnexcl': true}
+// };
+
+// COC7.PcSkills = {
+// 	'dodge' : COC7.dodge,
+// 	'throw' : {}
+// };

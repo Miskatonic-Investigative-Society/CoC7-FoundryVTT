@@ -98,7 +98,7 @@ export class CoC7Item extends Item {
 						'data.properties.firearm': false,
 						'data.properties.combat': true,
 						'data.properties.special': true,
-						'data.specialization': COC7.fightingSpecializationName
+						'data.specialization': game.i18n.localize(COC7.fightingSpecializationName)
 					};
 				}
 				
@@ -108,7 +108,7 @@ export class CoC7Item extends Item {
 						'data.properties.firearm': true,
 						'data.properties.combat': true,
 						'data.properties.special': true,
-						'data.specialization': COC7.firearmSpecializationName
+						'data.specialization': game.i18n.localize(COC7.firearmSpecializationName)
 					};
 				}
 			}
@@ -149,14 +149,14 @@ export class CoC7Item extends Item {
 
 			//if skill is close combat without specialisation name make set it according to the fightingSpecializationName
 			if(this.data.data.properties.fighting && (!this.data.data.specialization || this.data.data.specialization == '')){
-				this.data.data.specialization = COC7.fightingSpecializationName;
-				checkedProps['data.specialization'] = COC7.fightingSpecializationName;
+				this.data.data.specialization = game.i18n.localize(COC7.fightingSpecializationName);
+				checkedProps['data.specialization'] = game.i18n.localize(COC7.fightingSpecializationName);
 			}
 
 			//if skill is range combat without a specialisation name make set it according to the firearmSpecializationName
 			if(this.data.data.properties.firearm && (!this.data.data.specialization || this.data.data.specialization == '')){
-				this.data.data.specialization = COC7.firearmSpecializationName;
-				checkedProps['data.specialization'] = COC7.firearmSpecializationName;
+				this.data.data.specialization = game.i18n.localize(COC7.firearmSpecializationName);
+				checkedProps['data.specialization'] = game.i18n.localize(COC7.firearmSpecializationName);
 			}
 		}else{
 			if( this.data.data.properties.fighting){
@@ -190,6 +190,43 @@ export class CoC7Item extends Item {
 		const propertyIndex = this.data.data[set].indexOf( propertyId);
 		if( propertyIndex > -1) return true;
 		return false;
+	}
+
+	async flagForDevelopement(){
+		if( !this.data.data.flags){
+			await this.update( { 'data.flags': {}});
+		}
+		await this.update( {'data.flags.developement' : true});
+	}
+
+	async unflagForDevelopement(){
+		if( !this.data.data.flags){
+			await this.update( { 'data.flags': {}});
+		}
+		await this.update( {'data.flags.developement' : false});
+	}
+
+
+	get developementFlag(){
+		return this.getItemFlag('developement');
+	}
+
+	async toggleItemFlag( flagName){
+		const flagValue =  this.data.data.flags[flagName] ? false: true;
+		const name = `data.flags.${flagName}`;
+		await this.update( { [name]: flagValue});
+	}
+
+	getItemFlag( flagName){
+		if( !this.data.data.flags){
+			this.data.data.flags = {};
+			this.data.data.flags.locked = true;
+			this.update( { 'data.flags': {}});
+			return false;
+		}
+
+		if( !this.data.data.flags[flagName]) return false;
+		return this.data.data.flags[flagName];
 	}
 
 	/**

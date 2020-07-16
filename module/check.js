@@ -333,6 +333,10 @@ export class CoC7Check {
 		this.canIncreaseSuccess = this.increaseSuccess.length > 0 ? true : false;
 		if( this.isFumble) this.canIncreaseSuccess = false;
 		this.difficultyLevel = this.difficulty;
+
+		if( this.passed && this.diceModifier <= 0 && this.skill && !this.skill.data.data.properties.noxpgain){
+			this.skill.flagForDevelopement();
+		}
 	}
 
 	set difficulty(x){
