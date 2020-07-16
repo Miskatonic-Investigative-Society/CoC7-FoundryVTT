@@ -1,12 +1,12 @@
 <!-- Melee weapons -->
 {{#unless data.flags.locked}}
-<div style='max-height: fit-content;'>
+<div style='flex: initial;'>
 	<div class="add-item button" title="Add Weapon" data-type="weapon">Add Weapon</div>
 </div>
 {{/unless}}
 <div style='flex: none;background-color: darkgrey;'>Melee weapons</div>
 {{#if data.flags.locked}}
-<div class="flexrow combat-header" style="border-bottom: 1px groove;text-align: center;font-weight: bold;max-height: 17px;">
+<div class="flexrow combat-header" style="border-bottom: 1px groove;text-align: center;font-weight: bold;flex: none;">
 	<div class="flex2" style="border-right: 1px groove; padding-left: 2px;">Name</div>
 	<div class="flex4 flexrow" style="border-right: 1px groove; padding-left: 2px;">
 		<div class="flex1">Skill</div>
@@ -15,13 +15,13 @@
 	<div class=" flex2" style="padding-left: 2px;">Damage</div>
 </div>
 {{/if}}
-<ol class="weapons-list" style="padding: 0;margin: 0 0 10px 0;flex: none;">
+<ol class="weapons-list" style="padding: 0;border-bottom: 2px groove;margin: 0 0 10px 0;flex: none;">
 	{{#each meleeWpn as |weapon id|}}
 		{{#if ../data.flags.locked}}
 			<li class="item weapon flexcol" data-item-id="{{weapon._id}}">
 				<div class="flexrow" style="align-items: center;">
-					<div class="flex2 weapon-name rollable" style="border-right: 1px groove; padding-left: 2px;">{{weapon.name}}</div>
-					<div class="flexrow flex4 weapon-skills" style="border-right: 1px groove; padding-left: 2px;">
+					<div class="flex2 weapon-name rollable" style="border-right: 1px groove; padding: 1px 0 1px 2px;">{{weapon.name}}</div>
+					<div class="flexrow flex4 weapon-skills" style="border-right: 1px groove; padding: 1px 0 1px 2px;">
 						{{#if weapon.skillSet}}
 							<div class="item-tag weapon-skill rollable" style="flex: 0 0 49%" data-skill-id="{{weapon.data.skill.main.id}}" title="Roll {{weapon.data.skill.main.name}} skill">{{weapon.data.skill.main.name}} ({{weapon.data.skill.main.value}}%)</div>
 							{{#if weapon.data.properties.auto}}
@@ -126,7 +126,7 @@
 <!-- Range -->
 <div style='flex: none;background-color: darkgrey;'>Range weapons</div>
 {{#if data.flags.locked}}
-<div class="flexrow combat-header" style="border-bottom: 1px groove;text-align: center;font-weight: bold;max-height: 17px;">
+<div class="flexrow combat-header" style="border-bottom: 1px groove;text-align: center;font-weight: bold;flex: none;">
 	<div class="flex2" style="border-right: 1px groove; padding-left: 2px;">Name</div>
 	<div class="flex4 flexrow" style="border-right: 1px groove; padding-left: 2px;">
 		<div class="flex1">Skill</div>
@@ -135,13 +135,13 @@
 	<div class=" flex2" style="padding-left: 2px;">Damage</div>
 </div>
 {{/if}}
-<ol class="weapons-list" style="padding: 0;margin: 0 0 50px 0;flex: none;">
+<ol class="weapons-list" style="padding: 0;border-bottom: 2px groove;margin: 0 0 10px 0;flex: none;">
 	{{#each rangeWpn as |weapon id|}}
 		{{#if ../data.flags.locked}}
 			<li class="item weapon flexcol" data-item-id="{{weapon._id}}">
 				<div class="flexrow" style="align-items: center;">
-					<div class="flex2 weapon-name rollable" style="border-right: 1px groove; padding-left: 2px;">{{weapon.name}}</div>
-					<div class="flexrow flex4 weapon-skills" style="border-right: 1px groove; padding-left: 2px;">
+					<div class="flex2 weapon-name rollable" style="border-right: 1px groove; padding: 1px 0 1px 2px;">{{weapon.name}}</div>
+					<div class="flexrow flex4 weapon-skills" style="border-right: 1px groove; padding: 1px 0 1px 2px;">
 						{{#if weapon.skillSet}}
 							<div class="item-tag weapon-skill rollable" style="flex: 0 0 49%" data-skill-id="{{weapon.data.skill.main.id}}" title="Roll {{weapon.data.skill.main.name}} skill">{{weapon.data.skill.main.name}} ({{weapon.data.skill.main.value}}%)</div>
 							{{#if weapon.data.properties.auto}}
@@ -244,7 +244,7 @@
 </ol>
 
 {{#unless data.flags.locked}}
-<div style='max-height: fit-content;'>
+<div style='flex: initial;'>
 	<div class="add-item button" title="Add Skill" data-type="skill">Add skill</div>
 </div>
 {{/unless}}
