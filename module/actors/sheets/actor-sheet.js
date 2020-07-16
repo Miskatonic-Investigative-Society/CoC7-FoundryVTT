@@ -11,6 +11,24 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 	*/
 	getData() {
 		const data = super.getData();
+		data.manualCredit = this.actor.getActorFlag('manualCredit');
+		if( !data.manualCredit){
+			data.credit = {};
+			let factor;
+			let moneySymbol;
+			if( !data.data.credit){ 
+				factor = 1;
+				moneySymbol = '$';
+			}
+			else {
+				factor = parseInt(data.data.credit.multiplier)? parseInt(data.data.credit.multiplier): 1;
+				moneySymbol = data.data.credit.monetarySymbol? data.data.credit.monetarySymbol: '$';
+			}
+
+			data.credit.spendingLevel = `${this.actor.spendingLevel*factor}${moneySymbol}`;
+			data.credit.assets = `${this.actor.assets*factor}${moneySymbol}`;
+			data.credit.cash = `${this.actor.cash*factor}${moneySymbol}`;
+		}
 
 		return data;
 	}
@@ -27,7 +45,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 			classes: ['coc7', 'sheet', 'actor', 'character'],
 			template: 'systems/CoC7/templates/actors/character-sheet.html',
 			width: 600,
-			height: 600,
+			height: 650,
 			tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills'}]
 		});
 	}

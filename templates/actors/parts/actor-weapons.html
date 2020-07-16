@@ -1,5 +1,10 @@
 <!-- Melee weapons -->
-<div style='flex: none;background-color: darkgrey;'>Melee</div>
+{{#unless data.flags.locked}}
+<div style='max-height: fit-content;'>
+	<div class="add-item button" title="Add Weapon" data-type="weapon">Add Weapon</div>
+</div>
+{{/unless}}
+<div style='flex: none;background-color: darkgrey;'>Melee weapons</div>
 {{#if data.flags.locked}}
 <div class="flexrow combat-header" style="border-bottom: 1px groove;text-align: center;font-weight: bold;max-height: 17px;">
 	<div class="flex2" style="border-right: 1px groove; padding-left: 2px;">Name</div>
@@ -119,7 +124,7 @@
 </ol>
 
 <!-- Range -->
-<div style='flex: none;background-color: darkgrey;'>Range</div>
+<div style='flex: none;background-color: darkgrey;'>Range weapons</div>
 {{#if data.flags.locked}}
 <div class="flexrow combat-header" style="border-bottom: 1px groove;text-align: center;font-weight: bold;max-height: 17px;">
 	<div class="flex2" style="border-right: 1px groove; padding-left: 2px;">Name</div>
@@ -237,3 +242,53 @@
 		{{/if}}
 	{{/each}}
 </ol>
+
+{{#unless data.flags.locked}}
+<div style='max-height: fit-content;'>
+	<div class="add-item button" title="Add Skill" data-type="skill">Add skill</div>
+</div>
+{{/unless}}
+
+<div style="flex:none;margin: 0 0 4px 0;" class="flexcol">
+	<h4 style="margin: 0 0 2px 0;background-color: darkgrey;padding-bottom: 2px;">Melee skills</h4>
+	<div class="flexrow">
+		{{#each meleeSkills as |skill|}}
+		<div class='item {{#if ../data.flags.locked}}item-tag{{/if}}'  style="flex: 0 0 24%; height:fit-content" data-item-id="{{skill._id}}">
+			{{#if ../data.flags.locked}}
+				<div class="weapon-skill rollable" data-skill-id="{{skill._id}}" title="Roll {{skill.name}} skill">{{skill.name}} ({{skill.data.value}}%)</div>
+			{{else}}
+			<div class="flexrow" >
+				<input class="skill-name flex1" style="font-size: 12px;height: 20px;padding: 0;text-align: left;" type="text" value="{{skill.name}}">
+				<input class="npc-skill-score" style="font-size: 11px;flex: 0 0 20px;height: 20px;padding: 0 6px 0 0;margin: 0;text-align: right;" type="text" value="{{skill.data.value}}" data-dtype="Number">
+				<div class="item-controls">
+					<a class="item-control item-edit" title="Edit skill"><i class="fas fa-edit"></i></a>
+					<a class="item-control item-delete" title="Delete skill"><i class="fas fa-trash"></i></a>
+				</div>
+			</div>
+			{{/if}}
+		</div>
+		{{/each}}
+	</div>
+</div>
+
+<div style="flex:none;margin: 0 0 4px 0;" class="flexcol">
+	<h4 style="margin: 0 0 2px 0;background-color: darkgrey;padding-bottom: 2px;">Range skills</h4>
+	<div class="flexrow">
+		{{#each rangeSkills as |skill|}}
+		<div class='item {{#if ../data.flags.locked}}item-tag{{/if}}'  style="flex: 0 0 24%; height:fit-content" data-item-id="{{skill._id}}">
+			{{#if ../data.flags.locked}}
+				<div class="weapon-skill rollable" data-skill-id="{{skill._id}}" title="Roll {{skill.name}} skill">{{skill.name}} ({{skill.data.value}}%)</div>
+			{{else}}
+			<div class="flexrow" >
+				<input class="skill-name flex1" style="font-size: 12px;height: 20px;padding: 0;text-align: left;" type="text" value="{{skill.name}}">
+				<input class="npc-skill-score" style="font-size: 11px;flex: 0 0 20px;height: 20px;padding: 0 6px 0 0;margin: 0;text-align: right;" type="text" value="{{skill.data.value}}" data-dtype="Number">
+				<div class="item-controls">
+					<a class="item-control item-edit" title="Edit skill"><i class="fas fa-edit"></i></a>
+					<a class="item-control item-delete" title="Delete skill"><i class="fas fa-trash"></i></a>
+				</div>
+			</div>
+			{{/if}}
+		</div>
+		{{/each}}
+	</div>
+</div>

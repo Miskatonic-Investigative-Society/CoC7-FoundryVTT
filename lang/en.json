@@ -124,6 +124,7 @@
 "CoC7.EraPulp": "Pulp Cthulhu",
 "CoC7.EraMdrn": "Modern",
 
+"CoC7.SkillNoXpGain": "No XP gain",
 "CoC7.SkillSpecial": "Specialization",
 "CoC7.SkillRarity": "Uncommon",
 "CoC7.SkillPush": "Pushed",
@@ -152,5 +153,14 @@
 "CoC7.ErrorInvalidFormula": "{value} is not a valid formula",
 "CoC7.ErrorInvalid": "invalid",
 
-"CoC7.newBioSectionName": "New Section"
+"CoC7.newBioSectionName": "New Section",
+
+"CoC7.dodgeSkillName": "Dodge",
+"CoC7.creditRatingSkillName": "Credit Rating",
+"CoC7.fightingSpecializationName": "Fighting",
+"CoC7.firearmSpecializationName": "Firearms",
+
+"CoC7.newSkillName": "new skill",
+"CoC7.newItemName": "new item",
+"CoC7.newWeaponName": "new weapon"
 }

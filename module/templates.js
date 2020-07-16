@@ -10,18 +10,7 @@ export const preloadHandlebarsTemplates = async function() {
 		'systems/CoC7/templates/actors/parts/actor-skills.html',
 		'systems/CoC7/templates/actors/parts/npc-skills.html',
 		'systems/CoC7/templates/actors/parts/actor-weapons.html',
-		'systems/CoC7/templates/actors/parts/npc-combat.html'
-  
-		// Actor Sheet Partials
-		//   "systems/dnd5e/templates/actors/parts/actor-traits.html",
-		//   "systems/dnd5e/templates/actors/parts/actor-inventory.html",
-		//   "systems/dnd5e/templates/actors/parts/actor-features.html",
-		//   "systems/dnd5e/templates/actors/parts/actor-spellbook.html",
-  
-		// Item Sheet Partials
-		//   "systems/dnd5e/templates/items/parts/item-action.html",
-		//   "systems/dnd5e/templates/items/parts/item-activation.html",
-		//   "systems/dnd5e/templates/items/parts/item-description.html"
+		'systems/CoC7/templates/actors/parts/npc-combat.html',
 	];
   
 	// Load the template parts
