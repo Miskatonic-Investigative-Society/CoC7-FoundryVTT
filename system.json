@@ -2,7 +2,7 @@
 	"name": "CoC7",
 	"title": "The Call of Cthulhu 7th edition",
 	"description": "The Call of Cthulhu 7th edition simple game system",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"minimumCoreVersion": "0.5.2",
 	"compatibleCoreVersion": "0.6.5",
 	"templateVersion": 1,
@@ -61,6 +61,6 @@
 	"secondaryTokenAttribute": "power",
 	"url": "https://github.com/HavlockV/CoC7-FoundryVTT/",
 	"manifest": "https://github.com/HavlockV/CoC7-FoundryVTT/raw/master/system.json",
-	"download": "https://github.com/HavlockV/CoC7-FoundryVTT/archive/0.2.0.zip"
+	"download": "https://github.com/HavlockV/CoC7-FoundryVTT/archive/0.2.1.zip"
   }
   
