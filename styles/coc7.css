@@ -71,7 +71,7 @@
 }
 
 .coc7.sheet .cash .cash-row {
-    max-height: fit-content;
+    flex: initial;
 }
 
 .coc7.sheet .item-controls a.item-control.inactive:hover{
@@ -711,9 +711,9 @@
     display: flex;
     flex-flow: column wrap;
     list-style: none;
-    margin: 5px 5px 0;
-    padding: 2px 2px 0;
-    border: 2px groove #eeede0;
+    margin: 0;
+    padding: 0;
+    border: 0;
     border-radius: 3px;
 }
 
