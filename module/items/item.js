@@ -1,4 +1,4 @@
-import { COC7 } from '../config.js'
+import { COC7 } from '../config.js';
 
 /**
  * Override and extend the basic :class:`Item` implementation
@@ -13,26 +13,26 @@ export class CoC7Item extends Item {
 		super.prepareData();
 	}
 
-  /**
+	/**
    * Roll the item to Chat, creating a chat card which contains follow up attack or damage roll options
    * @return {Promise}
    */
-	async roll({configureDialog=true}={}) {
+	async roll() {
 		const token = this.actor.token;
 		const templateData = {
 			actor: this.actor,
 			tokenId: token ? `${token.scene._id}.${token.id}` : null,
 			item: this.data
-		}
+		};
 
-		const template = `systems/CoC7/templates/chat/skill-card.html`;
+		const template = 'systems/CoC7/templates/chat/skill-card.html';
 		const html = await renderTemplate(template, templateData);
 				
 		// TODO change the speaker for the token name not actor name
 		const speaker = ChatMessage.getSpeaker({actor: this.actor});
 		if( token) speaker.alias = token.name;
 
-		const test = await ChatMessage.create({
+		await ChatMessage.create({
 			user: game.user._id,
 			speaker,
 			content: html
@@ -47,9 +47,9 @@ export class CoC7Item extends Item {
 		let checkedProps = {};
 		let fighting;
 		let firearms;
-		if( "skill" == this.type){
+		if( 'skill' == this.type){
 			let modif = false;
-			if( "combat" ==  propertyId) {
+			if( 'combat' ==  propertyId) {
 				if( !this.data.data.properties.combat){
 					//Close combat by default
 					if( !this.data.data.properties.firearm){
@@ -58,17 +58,17 @@ export class CoC7Item extends Item {
 
 				}else{
 					checkedProps = {
-						"data.properties.combat": false,
-						"data.properties.special": false,
-						"data.properties.fighting": false,
-						"data.properties.firearm": false,
-						"data.specialization": null
-					}
+						'data.properties.combat': false,
+						'data.properties.special': false,
+						'data.properties.fighting': false,
+						'data.properties.firearm': false,
+						'data.specialization': null
+					};
 				}
 				modif = true;
 			}
 
-			if( "fighting" == propertyId){
+			if( 'fighting' == propertyId){
 				if( !this.data.data.properties.fighting){
 					firearms = false;
 					fighting = true;
@@ -79,7 +79,7 @@ export class CoC7Item extends Item {
 				modif = true;
 			}
 
-			if( "firearm" == propertyId){
+			if( 'firearm' == propertyId){
 				if( !this.data.data.properties.firearm){
 					firearms = true;
 					fighting = false;
@@ -94,22 +94,22 @@ export class CoC7Item extends Item {
 				//set specialisation if fighting or firearm
 				if(fighting){
 					checkedProps = {
-						"data.properties.fighting": true,
-						"data.properties.firearm": false,
-						"data.properties.combat": true,
-						"data.properties.special": true,
-						"data.specialization": COC7.fightingSpecializationName
-					}
+						'data.properties.fighting': true,
+						'data.properties.firearm': false,
+						'data.properties.combat': true,
+						'data.properties.special': true,
+						'data.specialization': game.i18n.localize(COC7.fightingSpecializationName)
+					};
 				}
 				
 				if(firearms){
 					checkedProps = {
-						"data.properties.fighting": false,
-						"data.properties.firearm": true,
-						"data.properties.combat": true,
-						"data.properties.special": true,
-						"data.specialization": COC7.firearmSpecializationName
-					}
+						'data.properties.fighting': false,
+						'data.properties.firearm': true,
+						'data.properties.combat': true,
+						'data.properties.special': true,
+						'data.specialization': game.i18n.localize(COC7.firearmSpecializationName)
+					};
 				}
 			}
 		}
@@ -126,54 +126,46 @@ export class CoC7Item extends Item {
 	}
 
 	hasProperty( propertyId){
-		return this.isIncludedInSet( "properties", propertyId);
-	}
-
-
-	async checkWeaponProperties(){
-		if( this.type != "weapon") return;
-		for (const property in this.data.data.properties) {
-			
-		}
+		return this.isIncludedInSet( 'properties', propertyId);
 	}
 
 	async checkSkillProperties(){
-		if( this.type != "skill") return;
+		if( this.type != 'skill') return;
 		const checkedProps = {};
 		if( this.data.data.properties.combat) {
 
 			//if skill is not a specialisation make it a specialisation
 			if(!this.data.data.properties.special){
 				this.data.data.properties.special = true;
-				checkedProps["data.properties.special"] = true;
+				checkedProps['data.properties.special'] = true;
 			}
 
 			//If skill is combat skill and no specialisation set then make it a fighting( closecombat) skill
 			if( !this.data.data.properties.fighting && !this.data.data.properties.firearm){
 				this.data.data.properties.fighting = true;
-				checkedProps["data.properties.fighting"] = true;
+				checkedProps['data.properties.fighting'] = true;
 			}
 
 
 			//if skill is close combat without specialisation name make set it according to the fightingSpecializationName
-			if(this.data.data.properties.fighting && (!this.data.data.specialization || this.data.data.specialization == "")){
-				this.data.data.specialization = COC7.fightingSpecializationName;
-				checkedProps["data.specialization"] = COC7.fightingSpecializationName;
+			if(this.data.data.properties.fighting && (!this.data.data.specialization || this.data.data.specialization == '')){
+				this.data.data.specialization = game.i18n.localize(COC7.fightingSpecializationName);
+				checkedProps['data.specialization'] = game.i18n.localize(COC7.fightingSpecializationName);
 			}
 
 			//if skill is range combat without a specialisation name make set it according to the firearmSpecializationName
-			if(this.data.data.properties.firearm && (!this.data.data.specialization || this.data.data.specialization == "")){
-				this.data.data.specialization = COC7.firearmSpecializationName;
-				checkedProps["data.specialization"] = COC7.firearmSpecializationName;
+			if(this.data.data.properties.firearm && (!this.data.data.specialization || this.data.data.specialization == '')){
+				this.data.data.specialization = game.i18n.localize(COC7.firearmSpecializationName);
+				checkedProps['data.specialization'] = game.i18n.localize(COC7.firearmSpecializationName);
 			}
 		}else{
 			if( this.data.data.properties.fighting){
 				this.data.data.properties.fighting = false;
-				checkedProps["data.properties.fighting"] = false;
+				checkedProps['data.properties.fighting'] = false;
 			}
 			if( this.data.data.properties.firearm){
 				this.data.data.properties.firearm = false;
-				checkedProps["data.properties.firearm"] = false;
+				checkedProps['data.properties.firearm'] = false;
 			}
 		}
 
@@ -200,6 +192,43 @@ export class CoC7Item extends Item {
 		return false;
 	}
 
+	async flagForDevelopement(){
+		if( !this.data.data.flags){
+			await this.update( { 'data.flags': {}});
+		}
+		await this.update( {'data.flags.developement' : true});
+	}
+
+	async unflagForDevelopement(){
+		if( !this.data.data.flags){
+			await this.update( { 'data.flags': {}});
+		}
+		await this.update( {'data.flags.developement' : false});
+	}
+
+
+	get developementFlag(){
+		return this.getItemFlag('developement');
+	}
+
+	async toggleItemFlag( flagName){
+		const flagValue =  this.data.data.flags[flagName] ? false: true;
+		const name = `data.flags.${flagName}`;
+		await this.update( { [name]: flagValue});
+	}
+
+	getItemFlag( flagName){
+		if( !this.data.data.flags){
+			this.data.data.flags = {};
+			this.data.data.flags.locked = true;
+			this.update( { 'data.flags': {}});
+			return false;
+		}
+
+		if( !this.data.data.flags[flagName]) return false;
+		return this.data.data.flags[flagName];
+	}
+
 	/**
 	 * Get the Actor which is the author of a chat card
 	 * @param {HTMLElement} card    The chat card being used
@@ -211,10 +240,10 @@ export class CoC7Item extends Item {
 		// Case 1 - a synthetic actor from a Token
 		const tokenKey = card.dataset.tokenId;
 		if (tokenKey) {
-			const [sceneId, tokenId] = tokenKey.split(".");
+			const [sceneId, tokenId] = tokenKey.split('.');
 			const scene = game.scenes.get(sceneId);
 			if (!scene) return null;
-			const tokenData = scene.getEmbeddedEntity("Token", tokenId);
+			const tokenData = scene.getEmbeddedEntity('Token', tokenId);
 			if (!tokenData) return null;
 			const token = new Token(tokenData);
 			return token.actor;
@@ -266,15 +295,15 @@ export class CoC7Item extends Item {
 		// 	);
 		// }
 
-		if( this.type == "weapon") {
-			for( let [key, value] of Object.entries(COC7["weaponProperties"]))
+		if( this.type == 'weapon') {
+			for( let [key, value] of Object.entries(COC7['weaponProperties']))
 			{
 				if(this.data.data.properties[key] == true) props.push(value);
 			}
 		}
 
-		if( this.type == "skill") {
-			for( let [key, value] of Object.entries(COC7["skillProperties"]))
+		if( this.type == 'skill') {
+			for( let [key, value] of Object.entries(COC7['skillProperties']))
 			{
 				if(this.data.data.properties[key] == true) props.push(value);
 			}
@@ -286,13 +315,8 @@ export class CoC7Item extends Item {
 	}
 
 	canBePushed(){
-		if( this.type == "skill" && this.data.data.properties.push ) return true;
+		if( this.type == 'skill' && this.data.data.properties.push ) return true;
 		return false;
-	}
-
-	weaponDamageCard( critical = false){
-		let foo = "poo";
-
 	}
 
 	get impale(){
