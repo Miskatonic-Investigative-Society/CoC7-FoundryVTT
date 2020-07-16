@@ -20,6 +20,9 @@ export class CoC7ActorSheet extends ActorSheet {
 		data.skills = {};
 		data.combatSkills = {};
 		data.weapons = {};
+		data.rangeWpn = [];
+		data.meleeWpn = [];
+		data.actorFlags = {};
 
 		if( data.items){
 			for (const item of data.items) {
@@ -32,7 +35,7 @@ export class CoC7ActorSheet extends ActorSheet {
 							value = Math.floor(eval(value));
 						}
 						catch(err){
-							console.error(`unable to parse formula :${item.data.value} for skill ${item.name}`);
+							console.warn(`unable to parse formula :${item.data.value} for skill ${item.name}`);
 							value = null;
 						}
 
@@ -91,6 +94,9 @@ export class CoC7ActorSheet extends ActorSheet {
 				return 0;
 			});
 
+			data.meleeSkills = data.skills.filter( skill => skill.data.properties.combat == true && skill.data.properties.fighting == true);
+			data.rangeSkills = data.skills.filter( skill => skill.data.properties.combat == true && skill.data.properties.firearm == true);
+
 			let cbtSkills = data.skills.filter( skill => skill.data.properties.combat == true);
 			if( cbtSkills)
 			{
@@ -104,22 +110,32 @@ export class CoC7ActorSheet extends ActorSheet {
 			if( weapons){
 				for( const weapon of weapons)
 				{
-					weapon.skillSet = true; //TODO : un truc qui ne va pas, pourquoi c'est a 0 ??
-					weapon.data.skill.main.name = '';
-					weapon.data.skill.main.value = 0;
-					weapon.data.skill.alternativ.name = '';
-					weapon.data.skill.alternativ.value = 0;
+					weapon.skillSet = true;
+					// weapon.data.skill.main.name = '';
+					// weapon.data.skill.main.value = 0;
+					// weapon.data.skill.alternativ.name = '';
+					// weapon.data.skill.alternativ.value = 0;
 					if( weapon.data.skill.main.id == '')
 					{
+						//TODO : si l'ID n'ests pas définie mais qu'un nom a été donné, utiliser ce nom et tanter de retrouver le skill
 						weapon.skillSet = false;
 					}
 					else {
-						weapon.data.skill.main.name = data.combatSkills[weapon.data.skill.main.id].name;
-						weapon.data.skill.main.value = data.combatSkills[weapon.data.skill.main.id].data.value;
+						//TODO : avant d'assiger le skill vérifier qu'il existe toujours.
+						//si il n'existe plus il faut le retrouver ou passer skillset a false.
+						if( data.combatSkills[weapon.data.skill.main.id]){
+							weapon.data.skill.main.name = data.combatSkills[weapon.data.skill.main.id].name;
+							weapon.data.skill.main.value = data.combatSkills[weapon.data.skill.main.id].data.value;
+						} else {
+							weapon.skillSet = false;
+						}
+
 
 						if( weapon.data.skill.alternativ.id != ''){
-							weapon.data.skill.alternativ.name = data.combatSkills[weapon.data.skill.alternativ.id].name;
-							weapon.data.skill.alternativ.value = data.combatSkills[weapon.data.skill.alternativ.id].data.value;
+							if( data.combatSkills[weapon.data.skill.alternativ.id]){
+								weapon.data.skill.alternativ.name = data.combatSkills[weapon.data.skill.alternativ.id].name;
+								weapon.data.skill.alternativ.value = data.combatSkills[weapon.data.skill.alternativ.id].data.value;
+							}
 						}
 					}
 
@@ -132,10 +148,11 @@ export class CoC7ActorSheet extends ActorSheet {
 						weapon.data._properties.push( property);
 					}
 					data.weapons[weapon._id] = weapon;
+					if( weapon.data.properties.rngd) data.rangeWpn.push( weapon);
+					else data.meleeWpn.push(weapon);
+
 				}
 			}
-
-			
 
 			const token = this.actor.token;
 			data.tokenId = token ? `${token.scene._id}.${token.id}` : null;
@@ -181,6 +198,17 @@ export class CoC7ActorSheet extends ActorSheet {
 		if( data.data.attribs.san.value == null && data.data.characteristics.pow.value != null) data.data.attribs.san.value = data.data.characteristics.pow.value;
 		if( data.data.attribs.san.value > data.data.attribs.san.max) data.data.attribs.san.value = data.data.attribs.san.max;
 
+		if( data.data.biography instanceof Array && data.data.biography.length){
+			data.data.biography[0].isFirst = true;
+			data.data.biography[data.data.biography.length - 1].isLast = true;
+		}
+
+		// const first = data.data.biography[0];
+		// first.isFirst = true;
+		// data.data.biography[0] = first;
+		// const last = data.data.biography[data.data.biography.length - 1];
+		// last.isLast = true;
+		// data.data.biography[data.data.biography.length - 1] = last;
 		return data;
 		
 	}
@@ -212,11 +240,14 @@ export class CoC7ActorSheet extends ActorSheet {
 			html.find('.skill-image').click(this._onRollSkillTest.bind(this));
 			html.find('.attribute-label.rollable').click(this._onRollAttribTest.bind(this));
 			html.find('.lock').click(this._onLockClicked.bind(this));
+			html.find('.flag').click(this._onFlagClicked.bind(this));
 			html.find('.formula').click(this._onFormulaClicked.bind(this));
 			html.find('.roll-characteritics').click(this._onRollCharacteriticsValue.bind(this));
+			html.find('.average-characteritics').click(this._onAverageCharacteriticsValue.bind(this));
 			html.find('.toggle-switch').click( this._onToggle.bind(this));
 			html.find('.auto-toggle').click( this._onAutoToggle.bind(this));
 			html.find('.status-monitor').click( this._onStatusToggle.bind(this));
+			html.find('.reset-counter').click( this._onResetCounter.bind(this));
 
 			html.find('.item .item-image').click(event => this._onItemRoll(event));
 			html.find('.weapon-name.rollable').click( event => this._onWeaponRoll(event));
@@ -264,31 +295,70 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 		});
 
-		// Add or Remove Attribute
-		//html.find(".attributes").on("click", ".attribute-control", this._onClickAttributeControl.bind(this));
+		html.find('.add-new-section').click( () => {this.actor.createBioSection();});
 
-		// Roll item/skill check
+		html.find('.delete-section').click( ev => {
+			const index = parseInt(ev.currentTarget.closest('.bio-section').dataset.index);
+			this.actor.deleteBioSection( index);
+		});
 
-		// Item Dragging
-		// TODO : a implémenter. Fait bugger quand on glisse une arme sur un autre perso. Cause : skills associé a l'arme de sont pas rentrés.
-		//  let handler = ev => this._onDragItemStart(ev);
-		//  html.find('li.item').each((i, li) => {
-		//  	if ( li.classList.contains("inventory-header") ) return;
-		//  	li.setAttribute("draggable", true);
-		//  	li.addEventListener("dragstart", handler, false);
-		//  });
+		html.find('.move-section-up').click( ev => {
+			const index = parseInt(ev.currentTarget.closest('.bio-section').dataset.index);
+			this.actor.moveBioSectionUp( index);
+		});
+
+		html.find('.move-section-down').click( ev => {
+			const index = parseInt(ev.currentTarget.closest('.bio-section').dataset.index);
+			this.actor.moveBioSectionDown( index);
+		});
+
+		html.find('.development-flag').dblclick( ev=> {
+			const item = this.actor.getOwnedItem( ev.currentTarget.closest('.item').dataset.itemId);
+			item.toggleItemFlag( 'developement');
+		});
+
+		html.find('.skill-developement').click( event =>{
+			this.actor.developementPhase( event.shiftKey);
+		});
 	}
-	
+
+	// async _onSkillDevelopement( event){
+	// 	const result = await this.actor.developementPhase( event.shiftKey);
+	// 	const skills = this._element[0].querySelector('.skills');
+	// 	skills.style.color = 'yellowgreen';
+	// 	for( let element of result.failure){
+	// 		const skill = skills.querySelector(`[data-skill-id="${element}"]`);
+	// 		skill.querySelector('.skill-image').style.backgroundColor = 'red';
+	// 		skill.querySelectorAll('input').forEach(input => {
+	// 			input.style.color = 'red';
+	// 		});
+	// 	}
+
+	// 	result.success.forEach(element => {
+	// 		const skill = skills.querySelector(`[data-skill-id="${element}"]`);
+	// 		skill.querySelectorAll('input').forEach(input => {
+	// 			input.style.color = 'green';
+	// 		});
+	// 	});
+	// }
+
 	async _onStatusToggle(event){
 		event.preventDefault();
 		const status = event.currentTarget.dataset.status;
 		if( status) this.actor.toggleStatus( status);
+	}
 
+	async _onResetCounter( event){
+		event.preventDefault();
+		const counter = event.currentTarget.dataset.counter;
+		if( counter) this.actor.resetCounter( counter);
 	}
 
 	async _onAutoToggle( event){
-		const attrib = event.currentTarget.closest('.attribute').dataset.attrib;
-		this.actor.toggleAttribAuto( attrib);
+		if( event.currentTarget.closest('.attribute')){
+			const attrib = event.currentTarget.closest('.attribute').dataset.attrib;
+			this.actor.toggleAttribAuto( attrib);
+		}
 	}
 
 	async _onToggle( event){
@@ -304,15 +374,25 @@ export class CoC7ActorSheet extends ActorSheet {
 		this.actor.rollCharacteristicsValue();
 	}
 
+	async _onAverageCharacteriticsValue(){
+		this.actor.averageCharacteristicsValue();
+	}
+
 	async _onLockClicked( event){
 		event.preventDefault();
 		const isLocked = this.actor.locked;
 		this.actor.locked = isLocked ? false : true;
 	}
 
+	async _onFlagClicked( event){
+		event.preventDefault();
+		const flagName = event.currentTarget.dataset.flag;
+		this.actor.toggleActorFlag( flagName);
+	}
+
 	async _onFormulaClicked( event){
 		event.preventDefault();
-		this.actor.toggleFlag( 'displayFormula');
+		this.actor.toggleActorFlag( 'displayFormula');
 	}
 
 	async _onRollAttribTest( event){
@@ -433,15 +513,15 @@ export class CoC7ActorSheet extends ActorSheet {
 	*/
 	async _onItemRoll(event) {
 		event.preventDefault();
-		const itemId = event.currentTarget.closest('.item').dataset.itemId;
-		const actorId = event.currentTarget.closest('form').dataset.actorId;
-		const tokenKey = event.currentTarget.closest('form').dataset.tokenId;
-		let check = new CoC7Check();
+		// const itemId = event.currentTarget.closest('.item').dataset.itemId;
+		// const actorId = event.currentTarget.closest('form').dataset.actorId;
+		// const tokenKey = event.currentTarget.closest('form').dataset.tokenId;
+		// let check = new CoC7Check();
 
-		check.actor = !tokenKey ? actorId : tokenKey;
-		check.item = itemId;
-		check.roll();
-		check.toMessage();
+		// check.actor = !tokenKey ? actorId : tokenKey;
+		// check.item = itemId;
+		// check.roll();
+		// check.toMessage();
 	}
 
 	async _onWeaponRoll(event) {
@@ -454,30 +534,10 @@ export class CoC7ActorSheet extends ActorSheet {
 		if( !weapon.data.data.properties.rngd){
 			if( game.user.targets.size > 1){
 				ui.notifications.error('Too many target selected. Keeping only last selected target');
-				// let it = game.user.targets.values();
-				// let done = false;
-				// while( !done){
-				// 	let obj = it.next();
-				// 	let actorName = "";
-				// 	done = obj.done;
-				// 	if( !done){
-				// 	 actorName = obj.value.actor.name;
-				// 	 console.log( actorName);
-				// 	}
-				// }
-
-				// let targetArray = [...game.user.targets];
-				// targetArray.forEach( t => console.log(t.name))
-				
-				// for (let index = 1; index < game.user.targets.size; index++) {
-				// 	value[index].setTarget(false, {user: game.user, releaseOthers: false, groupSelection: true});
-				// }
 			}
 
 			const card = new CoC7MeleeInitiator( tokenKey ? tokenKey : actorId, itemId, fastForward);
 			card.createChatCard();
-
-			//CoC7Chat.createAttackCard( actorId, itemId, tokenKey, fastForward);
 		}
 	}
 
@@ -486,7 +546,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		const skillId = event.currentTarget.dataset.skillId;
 		const actorId = event.currentTarget.closest('form').dataset.actorId;
 		let tokenKey = event.currentTarget.closest('form').dataset.tokenId;
-		const itemId = event.currentTarget.closest('li').dataset.itemId;
+		const itemId = event.currentTarget.closest('li') ? event.currentTarget.closest('li').dataset.itemId : null;
 
 		let check = new CoC7Check();		
 		
@@ -589,6 +649,30 @@ export class CoC7ActorSheet extends ActorSheet {
 	async _updateObject(event, formData) {
 		if( event.currentTarget){
 			if( event.currentTarget.classList){
+
+				if( event.currentTarget.classList.contains('attribute-value'))
+				{
+					if( 'data.attribs.san.value' === event.currentTarget.name)
+					{
+						this.actor.setSan(parseInt( event.currentTarget.value));
+						return;
+					}
+				}
+
+				if( event.currentTarget.classList.contains('text-area')){
+					this.actor.updateTextArea( event.currentTarget);
+					return;
+				}
+
+				if( event.currentTarget.classList.contains('bio-section-value')){
+					const index = parseInt(event.currentTarget.closest('.bio-section').dataset.index);
+					this.actor.updateBioValue( index, event.currentTarget.value);
+				}
+
+				if( event.currentTarget.classList.contains('bio-section-title')){
+					const index = parseInt(event.currentTarget.closest('.bio-section').dataset.index);
+					this.actor.updateBioTitle( index, event.currentTarget.value);
+				}
 
 				if( event.currentTarget.classList.contains('npc-skill-score')){
 					let skill = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.skillId);
@@ -702,33 +786,6 @@ export class CoC7ActorSheet extends ActorSheet {
 				
 			}
 		}
-
 		return this.object.update(formData);
-
-		// 	// Handle the free-form attributes list
-		// 	const data = expandObject(formData).data;
-		// 	if (!data) return null;
-		// 	const formAttrs = expandObject(formData).data.attributes || {};
-		// 	const attributes = Object.values(formAttrs).reduce((obj, v) => {
-		// 	let k = v["key"].trim();
-		// 	if ( /[\s\.]/.test(k) )  return ui.notifications.error("Attribute keys may not contain spaces or periods");
-		// 	delete v["key"];
-		// 	obj[k] = v;
-		// 	return obj;
-		// 	}, {});
-	
-		// 	// Remove attributes which are no longer used
-		// 	for ( let k of Object.keys(this.object.data.data.attributes) ) {
-		// 		if ( !attributes.hasOwnProperty(k) ) attributes[`-=${k}`] = null;
-		// 	}
-
-		// 	// Re-combine formData
-		// 	formData = Object.entries(formData).filter(e => !e[0].startsWith("data.attributes")).reduce((obj, e) => {
-		// 		obj[e[0]] = e[1];
-		// 		return obj;
-		// 	}, {_id: this.object._id, "data.attributes": attributes});
-	
-	// 	// Update the Actor
-	// 	return this.object.update(formData);
 	}
 }

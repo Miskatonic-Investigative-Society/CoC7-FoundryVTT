@@ -40,4 +40,25 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 			height: 'auto'
 		});
 	}
+
+
+	
+	/**
+	 * Implement the _updateObject method as required by the parent class spec
+	 * This defines how to update the subject of the form when the form is submitted
+	 * @private
+	*/
+
+	async _updateObject(event, formData) {
+		if( event.currentTarget){
+			if( event.currentTarget.classList){
+				if( event.currentTarget.classList.contains('characteristic-score'))
+				{
+					this.actor.setCharacteristic( event.currentTarget.name, event.currentTarget.value);
+					return;
+				}
+			}
+		}
+		return this.object.update(formData);
+	}
 }
