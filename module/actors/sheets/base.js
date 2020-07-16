@@ -22,6 +22,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		data.weapons = {};
 		data.rangeWpn = [];
 		data.meleeWpn = [];
+		data.actorFlags = {};
 
 		if( data.items){
 			for (const item of data.items) {
@@ -34,7 +35,7 @@ export class CoC7ActorSheet extends ActorSheet {
 							value = Math.floor(eval(value));
 						}
 						catch(err){
-							console.error(`unable to parse formula :${item.data.value} for skill ${item.name}`);
+							console.warn(`unable to parse formula :${item.data.value} for skill ${item.name}`);
 							value = null;
 						}
 
@@ -92,6 +93,9 @@ export class CoC7ActorSheet extends ActorSheet {
 				if( lca > lcb) return 1;
 				return 0;
 			});
+
+			data.meleeSkills = data.skills.filter( skill => skill.data.properties.combat == true && skill.data.properties.fighting == true);
+			data.rangeSkills = data.skills.filter( skill => skill.data.properties.combat == true && skill.data.properties.firearm == true);
 
 			let cbtSkills = data.skills.filter( skill => skill.data.properties.combat == true);
 			if( cbtSkills)
@@ -236,11 +240,14 @@ export class CoC7ActorSheet extends ActorSheet {
 			html.find('.skill-image').click(this._onRollSkillTest.bind(this));
 			html.find('.attribute-label.rollable').click(this._onRollAttribTest.bind(this));
 			html.find('.lock').click(this._onLockClicked.bind(this));
+			html.find('.flag').click(this._onFlagClicked.bind(this));
 			html.find('.formula').click(this._onFormulaClicked.bind(this));
 			html.find('.roll-characteritics').click(this._onRollCharacteriticsValue.bind(this));
+			html.find('.average-characteritics').click(this._onAverageCharacteriticsValue.bind(this));
 			html.find('.toggle-switch').click( this._onToggle.bind(this));
 			html.find('.auto-toggle').click( this._onAutoToggle.bind(this));
 			html.find('.status-monitor').click( this._onStatusToggle.bind(this));
+			html.find('.reset-counter').click( this._onResetCounter.bind(this));
 
 			html.find('.item .item-image').click(event => this._onItemRoll(event));
 			html.find('.weapon-name.rollable').click( event => this._onWeaponRoll(event));
@@ -339,12 +346,19 @@ export class CoC7ActorSheet extends ActorSheet {
 		event.preventDefault();
 		const status = event.currentTarget.dataset.status;
 		if( status) this.actor.toggleStatus( status);
+	}
 
+	async _onResetCounter( event){
+		event.preventDefault();
+		const counter = event.currentTarget.dataset.counter;
+		if( counter) this.actor.resetCounter( counter);
 	}
 
 	async _onAutoToggle( event){
-		const attrib = event.currentTarget.closest('.attribute').dataset.attrib;
-		this.actor.toggleAttribAuto( attrib);
+		if( event.currentTarget.closest('.attribute')){
+			const attrib = event.currentTarget.closest('.attribute').dataset.attrib;
+			this.actor.toggleAttribAuto( attrib);
+		}
 	}
 
 	async _onToggle( event){
@@ -360,10 +374,20 @@ export class CoC7ActorSheet extends ActorSheet {
 		this.actor.rollCharacteristicsValue();
 	}
 
+	async _onAverageCharacteriticsValue(){
+		this.actor.averageCharacteristicsValue();
+	}
+
 	async _onLockClicked( event){
 		event.preventDefault();
 		const isLocked = this.actor.locked;
 		this.actor.locked = isLocked ? false : true;
+	}
+
+	async _onFlagClicked( event){
+		event.preventDefault();
+		const flagName = event.currentTarget.dataset.flag;
+		this.actor.toggleActorFlag( flagName);
 	}
 
 	async _onFormulaClicked( event){
@@ -489,15 +513,15 @@ export class CoC7ActorSheet extends ActorSheet {
 	*/
 	async _onItemRoll(event) {
 		event.preventDefault();
-		const itemId = event.currentTarget.closest('.item').dataset.itemId;
-		const actorId = event.currentTarget.closest('form').dataset.actorId;
-		const tokenKey = event.currentTarget.closest('form').dataset.tokenId;
-		let check = new CoC7Check();
+		// const itemId = event.currentTarget.closest('.item').dataset.itemId;
+		// const actorId = event.currentTarget.closest('form').dataset.actorId;
+		// const tokenKey = event.currentTarget.closest('form').dataset.tokenId;
+		// let check = new CoC7Check();
 
-		check.actor = !tokenKey ? actorId : tokenKey;
-		check.item = itemId;
-		check.roll();
-		check.toMessage();
+		// check.actor = !tokenKey ? actorId : tokenKey;
+		// check.item = itemId;
+		// check.roll();
+		// check.toMessage();
 	}
 
 	async _onWeaponRoll(event) {
@@ -522,7 +546,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		const skillId = event.currentTarget.dataset.skillId;
 		const actorId = event.currentTarget.closest('form').dataset.actorId;
 		let tokenKey = event.currentTarget.closest('form').dataset.tokenId;
-		const itemId = event.currentTarget.closest('li').dataset.itemId;
+		const itemId = event.currentTarget.closest('li') ? event.currentTarget.closest('li').dataset.itemId : null;
 
 		let check = new CoC7Check();		
 		
@@ -625,6 +649,20 @@ export class CoC7ActorSheet extends ActorSheet {
 	async _updateObject(event, formData) {
 		if( event.currentTarget){
 			if( event.currentTarget.classList){
+
+				if( event.currentTarget.classList.contains('attribute-value'))
+				{
+					if( 'data.attribs.san.value' === event.currentTarget.name)
+					{
+						this.actor.setSan(parseInt( event.currentTarget.value));
+						return;
+					}
+				}
+
+				if( event.currentTarget.classList.contains('text-area')){
+					this.actor.updateTextArea( event.currentTarget);
+					return;
+				}
 
 				if( event.currentTarget.classList.contains('bio-section-value')){
 					const index = parseInt(event.currentTarget.closest('.bio-section').dataset.index);

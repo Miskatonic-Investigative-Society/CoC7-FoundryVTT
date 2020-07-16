@@ -556,16 +556,19 @@ export class CoC7MeleeResoltion{
 				if( this.initiator.roll.successLevel <= 0 && this.target.roll.successLevel <= 0){
 					this.resultString = 'Both side failed.';
 					this.winner = null;
+					this.rollDamage = false;
 				}
 				else if( this.initiator.roll.successLevel > this.target.roll.successLevel){
 					this.resultString = `${this.initiator.actor.name} won. Roll damage`;
 					this.winner = this.initiator;
 					this.action = 'roll-damage';
+					this.rollDamage = true;
 				}
 				else if( this.initiator.roll.successLevel <= this.target.roll.successLevel){
 					this.resultString = `${this.target.actor.name} dodged.`;
 					this.winner = this.target;
 					this.action = 'dodge';
+					this.rollDamage = false;
 				}
 					
 				break;
@@ -654,28 +657,9 @@ export class CoC7MeleeResoltion{
 		}
 	}
 
-	template = 'systems/CoC7/templates/chat/combat/melee-resolution.html';
-
-	// async createChatCard(){
-	//     this.resolve();
-	// 	// const html = await renderTemplate(this.template, this);
-		
-	// 	// const speaker = ChatMessage.getSpeaker({actor: this.actor});
-	//     // if( this.actor.isToken) speaker.alias = this.actor.token.name;
-		
-	//     // const user = this.actor.user ? this.actor.user : game.user;
-
-	//     // const message = await ChatMessage.create({
-	// 	// 	user: user._id,
-	// 	// 	speaker,
-	// 	// 	content: html
-	//     // });
-		
-	//     // this.messageId = message.id;
-	//     // return message;
-	// }
-
-
+	get template(){
+		return 'systems/CoC7/templates/chat/combat/melee-resolution.html';
+	}
 }
 export class CoC7Roll{
 	static getFromCard( card){

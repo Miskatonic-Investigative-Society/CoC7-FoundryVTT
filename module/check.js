@@ -334,7 +334,7 @@ export class CoC7Check {
 		if( this.isFumble) this.canIncreaseSuccess = false;
 		this.difficultyLevel = this.difficulty;
 
-		if( this.passed && this.diceModifier <= 0 && this.skill){
+		if( this.passed && this.diceModifier <= 0 && this.skill && !this.skill.data.data.properties.noxpgain){
 			this.skill.flagForDevelopement();
 		}
 	}

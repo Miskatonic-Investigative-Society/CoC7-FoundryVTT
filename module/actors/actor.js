@@ -99,7 +99,7 @@ export class CoCActor extends Actor {
 						data:{
 							base: 0,
 							value: null,
-							specialization: COC7.fightingSpecializationName,
+							specialization: game.i18n.localize( COC7.fightingSpecializationName),
 							properties: {
 								combat: true,
 								fighting: true,
@@ -157,12 +157,12 @@ export class CoCActor extends Actor {
 
 	async createEmptySkill( event = null){
 		let showSheet = event ?  !event.shiftKey: true;
-		if( !this.getItemIdByName(COC7.newSkillName)) return this.createSkill( COC7.newSkillName, null, showSheet);
+		if( !this.getItemIdByName(game.i18n.localize(COC7.newSkillName))) return this.createSkill( game.i18n.localize(COC7.newSkillName), null, showSheet);
 		let index=0;
-		let skillName = COC7.newSkillName + ' ' + index;
+		let skillName = game.i18n.localize(COC7.newSkillName) + ' ' + index;
 		while( this.getItemIdByName(skillName)){
 			index++;
-			skillName = COC7.newSkillName  + ' ' + index;
+			skillName = game.i18n.localize(COC7.newSkillName)  + ' ' + index;
 		}
 
 		return this.createSkill( skillName, null, showSheet);
@@ -170,12 +170,12 @@ export class CoCActor extends Actor {
 
 	async createEmptyItem( event = null){
 		let showSheet = event ?  !event.shiftKey: true;
-		if( !this.getItemIdByName(COC7.newItemName)) return this.createItem( COC7.newItemName, 1, showSheet);
+		if( !this.getItemIdByName(game.i18n.localize(COC7.newItemName))) return this.createItem( game.i18n.localize(COC7.newItemName), 1, showSheet);
 		let index=0;
-		let itemName = COC7.newItemName + ' ' + index;
+		let itemName = game.i18n.localize(COC7.newItemName) + ' ' + index;
 		while( this.getItemIdByName(itemName)){
 			index++;
-			itemName = COC7.newItemName  + ' ' + index;
+			itemName = game.i18n.localize(COC7.newItemName)  + ' ' + index;
 		}
 
 		return this.createItem( itemName, 1, showSheet);
@@ -183,13 +183,13 @@ export class CoCActor extends Actor {
 
 	async createEmptyWeapon( event = null){
 		let showSheet = event ?  !event.shiftKey: true;
-		let weaponName = COC7.newWeaponName;
-		if( this.getItemIdByName(COC7.newWeaponName)) {
+		let weaponName = game.i18n.localize(COC7.newWeaponName);
+		if( this.getItemIdByName(game.i18n.localize(COC7.newWeaponName))) {
 			let index=0;
-			weaponName = COC7.newWeaponName + ' ' + index;
+			weaponName = game.i18n.localize(COC7.newWeaponName) + ' ' + index;
 			while( this.getItemIdByName(weaponName)){
 				index++;
-				weaponName = COC7.newWeaponName  + ' ' + index;
+				weaponName = game.i18n.localize(COC7.newWeaponName)  + ' ' + index;
 			}
 		}
 
@@ -205,9 +205,6 @@ export class CoCActor extends Actor {
 		{
 			data.data.properties[key] = false;
 		}
-
-
-
 		await this.createEmbeddedEntity('OwnedItem', data, { renderSheet: showSheet});
 	}
 
@@ -253,6 +250,11 @@ export class CoCActor extends Actor {
 		const elem = bio.splice( index, 1)[0];
 		bio.splice( index + 1, 0, elem);
 		await this.update( { 'data.biography' : bio});
+	}
+
+	async updateTextArea( textArea){
+		const name = 'data.' + textArea.dataset.areaName;
+		await this.update( {[name]: textArea.value});		
 	}
   
 
@@ -404,8 +406,19 @@ export class CoCActor extends Actor {
 	async setSan( value){
 		if( value < 0) value = 0;
 		if( value > parseInt( this.data.data.attribs.san.max)) value = parseInt( this.data.data.attribs.san.value);
-		return await this.update( { 'data.attribs.san.value': value});
+		const loss = parseInt( this.data.data.attribs.san.value) - value;
+		if( loss > 0){
+			let totalLoss = parseInt( this.data.data.attribs.san.dailyLoss) ? parseInt( this.data.data.attribs.san.dailyLoss) : 0;
+			totalLoss = totalLoss + loss;
+			if( loss >= 5) this.setStatus( COC7.status.tempoInsane);
+			if( totalLoss >= Math.floor( this.san/5) ) this.setStatus( COC7.status.indefInsane);
+			return await this.update( { 
+				'data.attribs.san.value': value,
+				'data.attribs.san.dailyLoss': totalLoss});
+		}
+		else return await this.update( { 'data.attribs.san.value': value});
 	}
+
 
 	async setAttribAuto( value, attrib){
 		const updatedKey = `data.attribs.${attrib}.auto`;
@@ -537,14 +550,76 @@ export class CoCActor extends Actor {
 	async rollCharacteristicsValue(){
 		let characteristics={};
 		for (let [key, value] of Object.entries(this.data.data.characteristics)) {
-			let r = new Roll( value.formula);
-			r.roll();
-			if( r.total){
-				characteristics[`data.characteristics.${key}.value`] = r.total;
+			if( value.formula && !value.formula.startsWith('@')){
+				let r = new Roll( value.formula);
+				r.roll();
+				if( r.total){
+					characteristics[`data.characteristics.${key}.value`] = r.total;
+				}
 			}
 		}
 
 		await this.update( characteristics);
+		await this.reportCharactedriticsValue();
+	}
+
+	/**
+	 * If there is a formula, will set the characteristic to the average value ,if divisible by 5, or the closest 10.
+	 */
+	async averageCharacteristicsValue(){
+		let characteristics={};
+		for (let [key, value] of Object.entries(this.data.data.characteristics)) {
+			if( value.formula && !value.formula.startsWith('@')){
+				const max = Roll.maximize( value.formula).total;
+				const min = Roll.minimize( value.formula).total;
+				const average = Math.floor((max + min) / 2);
+				const charValue = average % 5 === 0 ? average : Math.round(average / 10) * 10;
+				if( charValue){
+					characteristics[`data.characteristics.${key}.value`] = charValue;
+				}
+			}
+		}
+
+		await this.update( characteristics);
+		await this.reportCharactedriticsValue();
+	}
+
+	/**
+	 * Test if a characterisitc formula is a reference to an other characteristic and set it accordingly.
+	 */
+	async reportCharactedriticsValue(){
+		let characteristics={};
+		for (let [key, value] of Object.entries(this.data.data.characteristics)) {
+			if( value.formula && value.formula.startsWith('@')){
+				let charValue;
+				try{
+					charValue = eval(this.parseFormula( value.formula));
+				}
+				catch(err){
+					charValue = null;
+				}
+				if( charValue){
+					characteristics[`data.characteristics.${key}.value`] = charValue;
+				}
+			}
+		}
+
+		await this.update( characteristics);
+	}
+
+	async setCharacteristic( name, value){
+		let characteristic={};
+		let charValue = isNaN(parseInt(value)) ? null : parseInt(value);
+		characteristic[name] = charValue;
+		if( !charValue){
+			if( value.startsWith('@')){
+				const formula = name.replace( '.value', '.formula');
+				characteristic[formula] = value;
+			}
+		}
+
+		await this.update( characteristic);
+		await this.reportCharactedriticsValue();
 	}
 
 	async developementPhase( fastForward = false){
@@ -581,6 +656,14 @@ export class CoCActor extends Actor {
 		let statusValue = this.data.data.status[statusName].value;
 		if(!(typeof statusValue === 'boolean')) statusValue = statusValue === 'false' ? true : false; //Necessary, incorrect template initialization
 		await this.update( {[`data.status.${statusName}.value`]: !statusValue});
+	}
+
+	async setStatus(statusName){
+		if( !this.data.data.status[statusName].value) await this.update( {[`data.status.${statusName}.value`]: true});
+	}
+
+	async resetCounter( counter){
+		await this.update( {[counter]: 0});
 	}
 
 	get fightingSkills(){
@@ -655,9 +738,51 @@ export class CoCActor extends Actor {
 	}
 
 	get dodgeSkill(){
-		let skillList = this.getSkillsByName( COC7.dodgeSkillName);
+		let skillList = this.getSkillsByName( game.i18n.localize(COC7.dodgeSkillName));
 		if( skillList.length != 0) return skillList[0];
 		return null;
+	}
+
+	get creditRatingSkill(){
+		let skillList = this.getSkillsByName( game.i18n.localize(COC7.creditRatingSkillName));
+		if( skillList.length != 0) return skillList[0];
+		return null;
+	}
+
+	get creditRating(){
+		const CR = this.creditRatingSkill;
+		if( CR) return parseInt(CR.data.data.value);
+		return 0;
+	}
+
+	get spendingLevel(){
+		const CR = this.creditRating;
+		if( CR >= 99 ) return 5000;
+		if( CR >= 90 ) return 250;
+		if( CR >= 50 ) return 50;
+		if( CR >= 10 ) return 10;
+		if( CR >= 1  ) return 2;
+		return 0.5;
+	}
+
+	get cash(){
+		const CR = this.creditRating;
+		if( CR >= 99 ) return 50000;
+		if( CR >= 90 ) return CR * 20;
+		if( CR >= 50 ) return CR * 5;
+		if( CR >= 10 ) return CR * 2;
+		if( CR >= 1  ) return CR;
+		return 0.5;
+	}
+
+	get assets(){
+		const CR = this.creditRating;
+		if( CR >= 99 ) return 5000000;
+		if( CR >= 90 ) return CR * 2000;
+		if( CR >= 50 ) return CR * 500;
+		if( CR >= 10 ) return CR * 50;
+		if( CR >= 1  ) return CR * 10;
+		return 0;
 	}
 
 	get skills(){
