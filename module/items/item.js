@@ -43,11 +43,11 @@ export class CoC7Item extends Item {
 	 * Toggle on of the item property in data.data.properties
 	 * @param {String} propertyId : name for the property to toggle
 	 */	
-	async toggleProperty( propertyId){
+	async toggleProperty( propertyId, override = false){
 		let checkedProps = {};
 		let fighting;
 		let firearms;
-		if( 'skill' == this.type){
+		if( 'skill' == this.type && !override){
 			let modif = false;
 			if( 'combat' ==  propertyId) {
 				if( !this.data.data.properties.combat){

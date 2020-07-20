@@ -87,14 +87,14 @@ export class CoCActor extends Actor {
 		if( this.getActorFlag('initialized')) return; //Change to return skill ?
 
 		//Check if fighting skills exists, if not create it and the associated attack.
-		const skills = this.getSkillsByName( COC7.baseCreatureSkill);
+		const skills = this.getSkillsByName( game.i18n.localize(COC7.creatureFightingSkill));
 		if( skills.length == 0){
 			//Creating natural attack skill
 			try{
 				const skill = await this.createEmbeddedEntity(
 					'OwnedItem',
 					{
-						name: COC7.baseCreatureSkill,
+						name: game.i18n.localize(COC7.creatureFightingSkill),
 						type: 'skill',
 						data:{
 							base: 0,

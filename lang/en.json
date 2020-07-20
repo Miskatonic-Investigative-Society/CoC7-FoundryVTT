@@ -162,5 +162,7 @@
 
 "CoC7.newSkillName": "new skill",
 "CoC7.newItemName": "new item",
-"CoC7.newWeaponName": "new weapon"
+"CoC7.newWeaponName": "new weapon",
+
+"CoC7.creatureFightingSkill": "Fighting"
 }

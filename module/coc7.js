@@ -14,6 +14,7 @@ import { CoC7CreatureSheet } from './actors/sheets/creature-sheet.js';
 import { CoC7CharacterSheet } from './actors/sheets/actor-sheet.js';
 import { preloadHandlebarsTemplates } from './templates.js';
 import { CoC7Chat } from './chat.js';
+import { CoC7Combat } from './combat.js';
 
 
 Hooks.once('init', async function() {
@@ -33,17 +34,16 @@ Hooks.once('init', async function() {
 	CONFIG.debug.hooks = true;
 	CONFIG.Actor.entityClass = CoCActor;
 	CONFIG.Item.entityClass = CoC7Item;
-
-
+	CONFIG.Combat.entityClass = CoC7Combat;
 
 	// Register sheet application classes
 	Actors.unregisterSheet('core', ActorSheet);
-	Actors.registerSheet('simple', CoC7NPCSheet, { types: ['npc'] });
-	Actors.registerSheet('simple', CoC7CreatureSheet, { types: ['creature'] });
-	Actors.registerSheet('simple', CoC7CharacterSheet, { types: ['character'], makeDefault: true });
+	Actors.registerSheet('coc7', CoC7NPCSheet, { types: ['npc'] });
+	Actors.registerSheet('coc7', CoC7CreatureSheet, { types: ['creature'] });
+	Actors.registerSheet('coc7', CoC7CharacterSheet, { types: ['character'], makeDefault: true });
 	Items.unregisterSheet('core', ItemSheet);
-	Items.registerSheet('simple', CoC7WeaponSheet, { types: ['weapon'], makeDefault: true});
-	Items.registerSheet('simple', CoCItemSheet, { makeDefault: true});
+	Items.registerSheet('coc7', CoC7WeaponSheet, { types: ['weapon'], makeDefault: true});
+	Items.registerSheet('coc7', CoCItemSheet, { makeDefault: true});
 
 	preloadHandlebarsTemplates();
 });
@@ -56,6 +56,7 @@ Hooks.on('updateChatMessage', (chatMessage, chatData, diff, speaker) => CoC7Chat
 
 Hooks.on('ready', CoC7Chat.ready);
 Hooks.on('preCreateActor', (createData) => CoCActor.initToken( createData));
+Hooks.on('renderCombatTracker', (combatTracker, html, options) => CoC7Combat.renderCombatTracker(combatTracker, html, options));
 // Hooks.on('chatMessage', (chatLog, message, chatData) => { console.log('**************************************************************************************************chatMessage : '  + message);});
 
 
