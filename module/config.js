@@ -96,7 +96,7 @@ COC7.newSkillName = 'CoC7.newSkillName';
 COC7.newItemName = 'CoC7.newItemName';
 COC7.newWeaponName = 'CoC7.newWeaponName';
 
-COC7.baseCreatureSkill = 'Fighting';
+COC7.creatureFightingSkill = 'CoC7.creatureFightingSkill';
 
 COC7.dodgeSkillName = 'CoC7.dodgeSkillName';
 COC7.creditRatingSkillName = 'CoC7.creditRatingSkillName';

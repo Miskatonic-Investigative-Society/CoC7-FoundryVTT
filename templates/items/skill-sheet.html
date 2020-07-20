@@ -27,7 +27,7 @@
             
             <div class="skill-attributes" style="display: block;" data-set="properties">
                 {{#each _properties as |property key|}}
-                    <span class="toggle-switch {{#if property.isEnabled}} switched-on {{/if}}" data-property="{{property.id}}">{{localize property.name}}</span>
+                    <span class="toggle-switch {{#if property.isEnabled}} switched-on {{/if}}" data-property="{{property.id}}">{{localize property.name}} </span>
                     <!-- <div style="display: none;">
                         <input id="properties-{{property.id}}" type="checkbox" name="data.properties.{{property.id}}" {{checked property.isEnabled}}/>
                     </div> -->
@@ -48,7 +48,7 @@
     </div> -->
 
     
-    <div class="form-group" style="display: flex;border: 2px groove #eeede0;padding: 0 5px;">
+    <div class="form-group" style="display: flex;border: 2px groove #eeede0;padding: 0 0 0 5px;overflow: auto;">
         {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
     </div>
 </form>

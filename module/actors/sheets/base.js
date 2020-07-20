@@ -364,7 +364,7 @@ export class CoC7ActorSheet extends ActorSheet {
 	async _onToggle( event){
 		let weapon = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.itemId);
 		if( weapon){
-			weapon.toggleProperty(event.currentTarget.dataset.property);
+			weapon.toggleProperty(event.currentTarget.dataset.property, event.ctrlKey);
 		}
 	}
 	

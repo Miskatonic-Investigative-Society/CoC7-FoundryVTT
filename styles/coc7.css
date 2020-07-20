@@ -436,7 +436,7 @@
     height: 16px;
 }
 .coc7.sheet .skills-list span {
-    flex: 0 0 80px;
+    flex: none;
     padding-right: 5px;
     text-align: right;
     font-size: 11px;
