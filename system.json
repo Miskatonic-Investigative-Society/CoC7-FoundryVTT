@@ -3,11 +3,14 @@
 	"title": "The Call of Cthulhu 7th edition",
 	"description": "The Call of Cthulhu 7th edition simple game system",
 	"version": "0.2.1",
+	"author": "HavelockV",
 	"minimumCoreVersion": "0.5.2",
 	"compatibleCoreVersion": "0.6.5",
+	"esmodules": [
+		"module/coc7.js",
+		"pdfoundry-dist/bundle.js"
+	],
 	"templateVersion": 1,
-	"author": "HavelockV",
-	"esmodules": ["module/coc7.js"],
 	"styles": ["styles/coc7.css"],
 	"packs": [
 		{

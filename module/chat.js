@@ -1,7 +1,7 @@
 import { CoC7Dice } from './dice.js';
 import { CoC7Check } from './check.js';
 import { COC7 } from './config.js';
-import { CoC7MeleeInitiator, CoC7MeleeTarget, CoC7MeleeResoltion } from './chat/combatcards.js';
+import { CoC7MeleeInitiator, CoC7MeleeTarget, CoC7MeleeResoltion, CoC7RangeInitiator } from './chat/combatcards.js';
 import { CoC7Roll } from './chat/combatcards.js';
 import { CoC7DamageRoll } from './chat/damagecards.js';
 
@@ -589,12 +589,20 @@ export class CoC7Chat{
 		event.preventDefault();
 
 		const card = event.currentTarget.closest('.chat-card');
-		if( card.classList.contains('initiator')){
-			CoC7MeleeInitiator.updateCardSwitch( event);
+		if( card.classList.contains( 'melee')){
+			if( card.classList.contains('initiator')){
+				CoC7MeleeInitiator.updateCardSwitch( event);
+			}
+
+			if( card.classList.contains('target')){
+				CoC7MeleeTarget.updateCardSwitch( event);
+			}
 		}
 
-		if( card.classList.contains('target')){
-			CoC7MeleeTarget.updateCardSwitch( event);
+		if( card.classList.contains( 'range')){
+			if( card.classList.contains('initiator')){
+				CoC7RangeInitiator.updateCardSwitch( event);
+			}
 		}
 
 		if( card.classList.contains('damage')){

@@ -2,7 +2,7 @@ import { RollDialog } from '../../apps/roll-dialog.js';
 // import { CoC7Dice } from '../../dice.js'
 import { CoC7Check } from '../../check.js';
 import { COC7 } from '../../config.js';
-import { CoC7MeleeInitiator } from '../../chat/combatcards.js';
+import { CoC7MeleeInitiator, CoC7RangeInitiator } from '../../chat/combatcards.js';
 import { CoC7DamageRoll } from '../../chat/damagecards.js';
 
 /**
@@ -43,7 +43,6 @@ export class CoC7ActorSheet extends ActorSheet {
 							item.data.value = value;
 							let itemToUpdate = this.actor.getOwnedItem( item._id);
 							itemToUpdate.update( {'data.value' : value});
-							// console.log( 'found skill with formula : ' + item.name + ' formula : ' + item.data.value);
 						}
 					}
 				}
@@ -537,6 +536,10 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 
 			const card = new CoC7MeleeInitiator( tokenKey ? tokenKey : actorId, itemId, fastForward);
+			card.createChatCard();
+		}
+		if( weapon.data.data.properties.rngd){
+			const card = new CoC7RangeInitiator( tokenKey ? tokenKey : actorId, itemId, fastForward);
 			card.createChatCard();
 		}
 	}
