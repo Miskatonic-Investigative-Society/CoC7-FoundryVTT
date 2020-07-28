@@ -95,7 +95,7 @@
 "CoC7.ItemDescription": "Description",
 "CoC7.WeaponRange": "Portée :",
 "CoC7.WeaponDamage": "Dégâts :",
-"CoC7.WeaponRadius": "Rayon",
+"CoC7.Weapon.BlastRadius": "Rayon",
 "CoC7.WeaponMalfunction": "Panne :",
 "CoC7.WeaponUsesPerRound": "Cadence :",
 "CoC7.WeaponMax": "Max :",

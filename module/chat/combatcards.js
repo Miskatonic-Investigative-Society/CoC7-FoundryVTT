@@ -719,3 +719,246 @@ export class CoC7Roll{
 	}
 }
 
+export class CoC7RangeInitiator{
+	constructor(actorKey = null, itemId = null, fastForward = false) {
+		this.actorKey = actorKey;
+		this.itemId = itemId;
+		this.fastForward = fastForward;
+		this.resolved = false;
+		this.cover = false;
+		this.surprised = false;
+		this.autoSuccess = false;
+		this.advantage = false;
+		this.disadvantage = false;
+		this.messageId = null;
+		this.targetCard = null;
+		this.rolled = false;
+		this.baseRange = true;
+		this.longRange = false;
+		this.extremeRange = false;
+	}
+
+	get actor(){
+		return chatHelper.getActorFromKey( this.actorKey);
+	}
+
+	get item(){
+		return this.actor.getOwnedItem( this.itemId);
+	}
+
+	get weapon(){
+		return this.item;
+	}
+
+	get targets(){
+		return [...game.user.targets];
+	}
+
+	get target(){
+		return this.targets.pop();
+	}
+
+	get skills(){
+		return this.actor.getWeaponSkills( this.itemId);
+	}
+
+	template = 'systems/CoC7/templates/chat/combat/range-initiator.html';
+
+	async createChatCard(){
+		const html = await renderTemplate(this.template, this);
+		
+		const speaker = ChatMessage.getSpeaker({actor: this.actor});
+		if( this.actor.isToken) speaker.alias = this.actor.token.name;
+		
+		const user = this.actor.user ? this.actor.user : game.user;
+
+		const chatMessage = await ChatMessage.create({
+			user: user._id,
+			speaker,
+			content: html
+		});
+		
+		return chatMessage;
+	}
+
+	async updateChatCard(){
+		let html = await renderTemplate(this.template, this);
+
+		const message = game.messages.get( this.messageId);
+
+		const msg = await message.update({ content: html });
+		await ui.chat.updateMessage( msg, false);
+		return msg;
+	}
+
+	toggleFlag( flagName){
+		const flag = flagName.includes('-') ? chatHelper.hyphenToCamelCase( flagName) : flagName;
+		if( 'baseRange' === flag || 'longRange' === flag || 'extremeRange' === flag	){	
+			this.baseRange = false;
+			this.longRange = false;
+			this.extremeRange = false;
+			this[flag] = true;
+		} else {
+			this[flag] = !this[flag];
+		}
+	}
+
+
+	async performSkillCheck( skillId = null, publish = false){
+		const check = new CoC7Check();
+		check.referenceMessageId = this.messageId;
+		check.rollType= 'opposed';
+		check.side = 'initiator';
+		check.action = 'attack';
+		check.actor = this.actorKey;
+		check.item = this.itemId;
+		check.skill = skillId;
+		check.difficulty = CoC7Check.difficultyLevel.regular;
+		check.diceModifier = 0;
+
+		if( this.outnumbered) check.diceModifier += 1;
+		if( this.surprised) check.diceModifier += 1;
+		if( this.disadvantage) check.diceModifier -= 1;
+		if( this.advantage) check.diceModifier += 1;
+
+		check.roll();
+		this.check = check;
+		this.rolled = true;
+		this.resolved = true;
+		if( publish) check.toMessage();
+
+		// if( this.target){
+		// 	const target = new CoC7MeleeTarget( this.target.actor.tokenKey, this.messageId, this.fastForward);
+		// 	const message = await target.createChatCard();
+		// 	this.targetCard = message.id;
+		// }
+		return check;
+	}
+
+	async publishCheckResult( check = null){
+		if( !check && !this.check) return null;
+
+		if( check) this.check = check;
+		this.roll = CoC7Roll.getFromCheck( this.check);
+		this.rolled = true;
+
+		this.roll.rollIcons = [];
+		if( this.roll.critical){
+			this.roll.rollColor = 'goldenrod';
+			this.roll.rollTitle = game.i18n.localize('CoC7.CriticalSuccess');
+			for( let index = 0; index < 4; index++){
+				this.roll.rollIcons.push( 'medal');
+			}
+		} else if(  this.roll.fumble) {
+			this.roll.rollColor = 'darkred';
+			this.roll.rollTitle = game.i18n.localize('CoC7.Fumble');
+			for( let index = 0; index < 4; index++){
+				this.roll.rollIcons.push( 'spider');
+			}
+		}else if(  this.roll.success){
+			this.roll.rollColor = 'goldenrod';
+			if( CoC7Check.successLevel.regular ==  this.roll.successLevel )  this.roll.rollTitle = game.i18n.localize('CoC7.RegularSuccess');
+			if( CoC7Check.successLevel.hard ==  this.roll.successLevel )  this.roll.rollTitle = game.i18n.localize('CoC7.HardSuccess');
+			if( CoC7Check.successLevel.extreme ==  this.roll.successLevel )  this.roll.rollTitle = game.i18n.localize('CoC7.ExtremeSuccess');
+			for (let index = 0; index <  this.roll.successLevel; index++) {
+				this.roll.rollIcons.push( 'star');
+			} 
+		} else {
+			this.roll.rollColor = 'black';
+			this.roll.rollTitle = game.i18n.localize('CoC7.Failure');
+			this.roll.rollIcons.push( 'skull');
+		}
+
+		if( !this.targetCard){
+			const resolutionCard = new CoC7RangeResoltion( this.parentMessageId, this.messageId);
+			const resolutionMessage = await resolutionCard.preCreateMessage();
+	
+			this.resolutionCard = resolutionMessage.id;
+		}
+		await this.updateChatCard();
+	}
+
+	static getFromCard( card, messageId = null){
+		const initiator = new CoC7RangeInitiator();
+		chatHelper.getObjectFromElement( initiator, card);
+		initiator.roll = CoC7Roll.getFromCard( card);
+		
+		if( card.closest('.message'))
+			initiator.messageId = card.closest('.message').dataset.messageId;
+		else initiator.messageId = messageId;
+		return initiator;
+	}
+
+	static getFromMessageId( messageId){
+		const message = game.messages.get( messageId);
+		if( ! message) return null;
+		const card = $(message.data.content)[0];
+
+		const initiator = CoC7RangeInitiator.getFromCard( card, messageId);
+		initiator.messageId = messageId;
+
+		return initiator;
+	}
+	
+	static updateCardSwitch( event, publishUpdate = true){
+		const card = event.currentTarget.closest('.range.initiator');
+		const flag = event.currentTarget.dataset.flag;
+		const camelFlag = chatHelper.hyphenToCamelCase(flag);
+
+		//update only for local player
+		if( !publishUpdate){
+			card.dataset[camelFlag] = 'true' == card.dataset[camelFlag] ? false : true;
+			event.currentTarget.classList.toggle('switched-on');
+			event.currentTarget.dataset.selected = card.dataset[camelFlag];
+		} else { //update card for all player
+			const initiator = CoC7RangeInitiator.getFromCard( card);
+			initiator.toggleFlag(flag);
+			initiator.updateChatCard();
+		}
+	}
+
+	upgradeRoll( luckAmount, newSuccessLevel, oldCard){
+		if( !this.actor.spendLuck( luckAmount)) ui.notifications.error(`${actor.name} didn't have enough luck to pass the check`);
+		this.roll.value = null;
+		this.roll.successLevel = newSuccessLevel;
+		this.roll.luckSpent = true;
+		oldCard.dataset.processed = false;
+		
+		const diceRolls = oldCard.querySelector('.dice-roll');
+		diceRolls.dataset.value = null;
+		diceRolls.dataset.successLevel = newSuccessLevel;
+		diceRolls.dataset.luckSpent = true;
+
+		const resulDetails = oldCard.querySelector('.result-details');
+		const diceTotal = oldCard.querySelector('.dice-total');
+		switch (newSuccessLevel) {
+		case CoC7Check.successLevel.regular:
+			diceTotal.innerText = game.i18n.localize('CoC7.RegularSuccess');
+			resulDetails.innerText = game.i18n.format('CoC7.RollResult.LuckSpendText', {luckAmount: luckAmount, successLevel: game.i18n.localize('CoC7.RegularDifficulty')});
+			break;
+		
+		case CoC7Check.successLevel.hard:
+			diceTotal.innerText = game.i18n.localize('CoC7.HardSuccess');
+			resulDetails.innerText = game.i18n.format('CoC7.RollResult.LuckSpendText', {luckAmount: luckAmount, successLevel: game.i18n.localize('CoC7.HardDifficulty')});
+			break;
+		
+		case CoC7Check.successLevel.extreme:
+			diceTotal.innerText = game.i18n.localize('CoC7.ExtremeSuccess');
+			resulDetails.innerText = game.i18n.format('CoC7.RollResult.LuckSpendText', {luckAmount: luckAmount, successLevel: game.i18n.localize('CoC7.ExtremeDifficulty')});
+			break;
+		
+		case CoC7Check.successLevel.critical:
+			diceTotal.innerText = game.i18n.localize('CoC7.CriticalSuccess');
+			resulDetails.innerText = game.i18n.format('CoC7.RollResult.LuckSpendText', {luckAmount: luckAmount, successLevel: game.i18n.localize('CoC7.CriticalDifficulty')});
+			break;
+		
+		default:
+			break;
+		}
+
+		diceTotal.classList.replace( 'failure', 'success');
+		oldCard.querySelector('.card-buttons').remove();
+		oldCard.querySelector('.dice-tooltip').style.display = 'none';
+		CoC7Chat.updateChatCard( oldCard);
+	}
+}

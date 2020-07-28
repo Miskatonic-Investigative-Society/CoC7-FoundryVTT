@@ -1,15 +1,17 @@
 export class CoC7Combat extends Combat {
-	static renderCombatTracker(combatTracker, html){
-		// html.find('.combatant-controls').prepend('<a class="combatant-control add-init" title="Toggle Visibility" data-control="azerazer"><i class="fas fa-monument"></i></a>');
+	static renderCombatTracker(combatTracker, html/*, data*/){
+		// TODO : Si le combat est deja debuté avant chargement la fonction d'initiative pointe vers l'ancienne.
+		// la fonction attribuée est data.combat.rollInitiative
 		html.find('.combatant-controls').each( function(){
-			if( game.combat.started){
-				const li = this.closest('.combatant');
-				const c = game.combat.getCombatant(li.dataset.combatantId);
-				if( c.initiative){
-					if( c.hasGun) $(this).prepend('<a class="combatant-control active add-init" title="Toggle Visibility" data-control="drawGun"><i class="fas fa-monument"></i></a>');
-					else $(this).prepend('<a class="combatant-control add-init" title="Toggle Visibility" data-control="drawGun"><i class="fas fa-monument"></i></a>');
-				}
+			// if( game.combat.started){
+			const li = this.closest('.combatant');
+			const c = game.combat.getCombatant(li.dataset.combatantId);
+			if( c.initiative){
+				if( c.hasGun) $(this).prepend('<a class="combatant-control active add-init" title="Has a gun ready" data-control="drawGun"><i class="fas fa-bullseye"></i></a>');
+				else $(this).prepend('<a class="combatant-control add-init" title="Has a gun ready" data-control="drawGun"><i class="fas fa-bullseye"></i></a>');
+				//'<img class="token-effect" src="systems/CoC7/pictures/icons/svg/noun_Gun_3441983.svg"></img>'
 			}
+			// }
 		});
 		html.find('.add-init').click(event => this._onAddInit(event));
 	}
@@ -96,5 +98,4 @@ export class CoC7Combat extends Combat {
 		// Return the updated Combat
 		return this;
 	}
-
 }

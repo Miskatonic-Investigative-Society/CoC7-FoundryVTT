@@ -56,7 +56,8 @@ COC7.weaponProperties = {
 	mont: 'CoC7.WeaponMont',
 	dbrl: 'CoC7.WeaponDbrl',
 	blst: 'CoC7.WeaponBlst',
-	stun: 'CoC7.WeaponStun'
+	stun: 'CoC7.WeaponStun',
+	burn: 'CoC7.Weapon.Property.Burn'
 };
 
 COC7.formula = {};
