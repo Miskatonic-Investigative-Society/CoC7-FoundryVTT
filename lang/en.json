@@ -59,7 +59,7 @@
 "CoC7.TensDice": "tens dice",
 "CoC7.SuccessRequired": "{successRequired} success required.",
 "CoC7.Roll": "Roll",
-"CoC7.Pushing": "Pushing : ",
+"CoC7.Pushing": "Pushing",
 "CoC7.PushSkill": "Push",
 "CoC7.PushedRoll": "(pushed roll)",
 "CoC7.SpendLuck": "Spend {luckNeededValue} Luck to pass",
@@ -96,6 +96,21 @@
 
 "CoC7.combatCard.dive4cover": "Dive for Cover",
 
+"CoC7.rangeCombatCard.SingleShot" : "Single Shot",
+"CoC7.rangeCombatCard.MultipleShots" : "Multi. Shots",
+"CoC7.rangeCombatCard.Burst" : "Burst Fire",
+"CoC7.rangeCombatCard.FullAuto" : "Full Auto",
+"CoC7.rangeCombatCard.BaseRange" : "Base range",
+"CoC7.rangeCombatCard.LongRange" : "Long range",
+"CoC7.rangeCombatCard.ExtremeRange" : "Xtrm range",
+"CoC7.rangeCombatCard.Cover" : "Under cover",
+"CoC7.rangeCombatCard.PointBlankRange" : "Point blank range",
+"CoC7.rangeCombatCard.BigTarget": "Big target",
+"CoC7.combatCard.SmallTarget": "Small target",
+"CoC7.rangeCombatCard.FastMovingTarget": "Fast",
+"CoC7.rangeCombatCard.InMelee": "In melee",
+"CoC7.rangeCombatCard.aiming": "Aiming",
+
 "CoC7.DropZone": "DropZone",
 
 "CoC7.SkillValue": "Value",
@@ -105,15 +120,17 @@
 "CoC7.ItemWeight": "Weight",
 "CoC7.ItemDetails": "Details",
 "CoC7.ItemDescription": "Description",
-"CoC7.WeaponRange": "Range :",
-"CoC7.WeaponDamage": "Damage :",
-"CoC7.WeaponRadius": "Radius",
-"CoC7.WeaponMalfunction": "Malfunction :",
-"CoC7.WeaponUsesPerRound": "Uses/Round :",
-"CoC7.WeaponMax": "Max :",
-"CoC7.WeaponBulletsInMag": "Bullets in Mag :",
-"CoC7.WeaponSpecial": "Special :",
-"CoC7.ItemPrice": "Price :",
+"CoC7.WeaponRange": "Range",
+"CoC7.WeaponDamage": "Damage",
+"CoC7.Weapon.BlastRadius": "Blast radius",
+"CoC7.WeaponMalfunction": "Malfunction",
+"CoC7.WeaponUsesPerRound": "Round(s)/use",
+"CoC7.WeaponSheet.RoundsPerUse.Info": "How many rounds are needed to get the weapon ready to shoot",
+"CoC7.WeaponMax": "Max uses/round",
+"CoC7.BurstSize": "Bullets/burst",
+"CoC7.WeaponBulletsInMag": "Magazine",
+"CoC7.WeaponSpecial": "Special",
+"CoC7.ItemPrice": "Price",
 "CoC7.Armor": "Armor",
 
 "CoC7.EraNvct": "Invictus",
@@ -139,7 +156,7 @@
 "CoC7.WeaponAhdb": "+Half DB",
 "CoC7.WeaponAddb": "+DB",
 "CoC7.WeaponSlnt": "Silent",
-"CoC7.WeaponXplv": "Area of Effect",
+"CoC7.WeaponXplv": "Shotgun",
 "CoC7.WeaponBrst": "Burst",
 "CoC7.WeaponAuto": "Full-auto",
 "CoC7.WeaponSpcl": "Special",
@@ -147,6 +164,7 @@
 "CoC7.WeaponDbrl": "Dual barrel",
 "CoC7.WeaponBlst": "Blast",
 "CoC7.WeaponStun": "Stun",
+"CoC7.Weapon.Property.Burn": "Burn",
 
 "CoC7.ErrorItem": "Couldn't locate item",
 "CoC7.ErrorActor": "Couldn't locate actor",
@@ -162,5 +180,7 @@
 
 "CoC7.newSkillName": "new skill",
 "CoC7.newItemName": "new item",
-"CoC7.newWeaponName": "new weapon"
+"CoC7.newWeaponName": "new weapon",
+
+"CoC7.creatureFightingSkill": "Fighting"
 }

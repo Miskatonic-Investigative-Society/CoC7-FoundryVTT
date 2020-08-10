@@ -56,7 +56,8 @@ COC7.weaponProperties = {
 	mont: 'CoC7.WeaponMont',
 	dbrl: 'CoC7.WeaponDbrl',
 	blst: 'CoC7.WeaponBlst',
-	stun: 'CoC7.WeaponStun'
+	stun: 'CoC7.WeaponStun',
+	burn: 'CoC7.Weapon.Property.Burn'
 };
 
 COC7.formula = {};
@@ -96,7 +97,7 @@ COC7.newSkillName = 'CoC7.newSkillName';
 COC7.newItemName = 'CoC7.newItemName';
 COC7.newWeaponName = 'CoC7.newWeaponName';
 
-COC7.baseCreatureSkill = 'Fighting';
+COC7.creatureFightingSkill = 'CoC7.creatureFightingSkill';
 
 COC7.dodgeSkillName = 'CoC7.dodgeSkillName';
 COC7.creditRatingSkillName = 'CoC7.creditRatingSkillName';

@@ -24,9 +24,9 @@
 "CoC7.Sex": "Sexe",
 "CoC7.Residence": "Résidence",
 "CoC7.Birthplace": "Lieu de naissance",
-"CoC7.HitPoints": "Points de vie",
+"CoC7.HitPoints": "Pts de vie",
 "CoC7.HP": "PV",
-"CoC7.MagicPoints": "Points de magie",
+"CoC7.MagicPoints": "Pts de magie",
 "CoC7.MP": "PM",
 "CoC7.Sanity": "Santé Mentale",
 "CoC7.SAN": "SAN",
@@ -95,7 +95,7 @@
 "CoC7.ItemDescription": "Description",
 "CoC7.WeaponRange": "Portée :",
 "CoC7.WeaponDamage": "Dégâts :",
-"CoC7.WeaponRadius": "Rayon",
+"CoC7.Weapon.BlastRadius": "Rayon",
 "CoC7.WeaponMalfunction": "Panne :",
 "CoC7.WeaponUsesPerRound": "Cadence :",
 "CoC7.WeaponMax": "Max :",
@@ -135,7 +135,18 @@
 "CoC7.WeaponStun": "Étourdissante",
 
 "CoC7.ErrorItem": "Impossible de trouver l'item",
-"CoC7.ErrorActor": "Impossible de trouver l'actor",
+"CoC7.ErrorActor": "Impossible de trouver l'acteur",
 "CoC7.ErrorInvalidFormula": "{value} n'est pas une formule valide",
-"CoC7.ErrorInvalid": "invalide"
+"CoC7.ErrorInvalid": "invalide",
+
+"CoC7.newBioSectionName": "New Section",
+
+"CoC7.dodgeSkillName": "Esquive",
+"CoC7.creditRatingSkillName": "Crédit",
+"CoC7.fightingSpecializationName": "Combat rapproché",
+"CoC7.firearmSpecializationName": "Combat à distance",
+
+"CoC7.newSkillName": "Nouvelle compétence",
+"CoC7.newItemName": "Nouvel objet",
+"CoC7.newWeaponName": "Nouvel arme"
 }

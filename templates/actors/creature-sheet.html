@@ -89,7 +89,7 @@
 					{{#if data.attribs.mov.auto}}
 						<span class="attribute-value" type="text" style="line-height: 22px;"> {{data.attribs.mov.value}} </span>
 					{{else}}
-						<input class="attribute-value {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.mov.value" value="{{data.attribs.mov.value}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
+						<input class="attribute-value {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.mov.value" value="{{data.attribs.mov.value}}" {{#if data.flags.locked}}readonly{{/if}}>
 					{{/if}}
 
 					{{#unless data.flags.locked}}

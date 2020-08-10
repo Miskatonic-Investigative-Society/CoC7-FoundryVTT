@@ -20,6 +20,34 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.2.2 :
+
+* PDFoundry Integration.
+* First implementation of range combat.
+  * Weapon sheet has been modified.
+  * select a target (or not) and in the combat tab click on a range weapon name. This will start the range combat flow and open a range combat chat-card.
+  * All bonus and penalties can be overridden by the keeper only.
+  * Range and difficulty are automatically calculated.
+  * Bonus for target size, speed are automatically applied.
+  * Bonus for shooting at point blank is automatically given.
+  * Calculation of bullets wasted when switching target in automatic fire mode.
+  * Penalty dice for multi/auto fire are applied.
+  * Difficulty automatically increased with mode than 2 penalty dice.
+  * If you don't have a target a fake 'dummy' target will be created.
+  * Supports auto-fire, burst, single shot, multi shots.
+  * Supports weapon malfunction.
+  * Damage rolls (armor is not taken in account).
+  * What is coming next:
+    * Implementation of shotgun type weapons and explosives.
+    * Distribution of damage to the targets and status applied.
+    * Attribution of malfunction to the corresponding weapons.
+    * Implementation of fast forwarding for range and melee combat.
+    * Implementation of bullets.
+    * Limitation on number of shot fired (depending on the weapon max shot per rounds and bullets in the magazine).
+* Support for Japanese translation thanks to AdmiralNyar.
+* Bugs correction
+  * Movement calculation.
+
 version 0.2.1 :
 
 * Template and CSS correction.

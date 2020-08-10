@@ -67,7 +67,7 @@
 					{{#unless pushing}}
 					{{#if canIncreaseSuccess}}
 						{{#each increaseSuccess as |level|}}
-							<button data-action="useLuck" data-luck-amount="{{level.LuckToSpend}}" data-new-success-level="{{level.difficulty}}">Make it {{level.difficultyName}} for {{level.LuckToSpend}} luck.</button>
+							<button data-action="useLuck" data-luck-amount="{{level.luckToSpend}}" data-new-success-level="{{level.difficulty}}">Make it {{level.difficultyName}} for {{level.luckToSpend}} luck.</button>
 						{{/each}}
 					{{/if}}
 					{{/unless}}
