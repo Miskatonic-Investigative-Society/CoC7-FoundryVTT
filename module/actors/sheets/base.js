@@ -2,7 +2,8 @@ import { RollDialog } from '../../apps/roll-dialog.js';
 // import { CoC7Dice } from '../../dice.js'
 import { CoC7Check } from '../../check.js';
 import { COC7 } from '../../config.js';
-import { CoC7MeleeInitiator } from '../../chat/combatcards.js';
+import { CoC7MeleeInitiator } from '../../chat/meleecombat.js';
+import { CoC7RangeInitiator } from '../../chat/rangecombat.js';
 import { CoC7DamageRoll } from '../../chat/damagecards.js';
 
 /**
@@ -43,7 +44,6 @@ export class CoC7ActorSheet extends ActorSheet {
 							item.data.value = value;
 							let itemToUpdate = this.actor.getOwnedItem( item._id);
 							itemToUpdate.update( {'data.value' : value});
-							// console.log( 'found skill with formula : ' + item.name + ' formula : ' + item.data.value);
 						}
 					}
 				}
@@ -110,6 +110,8 @@ export class CoC7ActorSheet extends ActorSheet {
 			if( weapons){
 				for( const weapon of weapons)
 				{
+					weapon.usesAlternateSkill = weapon.data.properties.auto == true || weapon.data.properties.brst == true;
+
 					weapon.skillSet = true;
 					// weapon.data.skill.main.name = '';
 					// weapon.data.skill.main.value = 0;
@@ -364,7 +366,7 @@ export class CoC7ActorSheet extends ActorSheet {
 	async _onToggle( event){
 		let weapon = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.itemId);
 		if( weapon){
-			weapon.toggleProperty(event.currentTarget.dataset.property);
+			weapon.toggleProperty(event.currentTarget.dataset.property, event.ctrlKey);
 		}
 	}
 	
@@ -537,6 +539,10 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 
 			const card = new CoC7MeleeInitiator( tokenKey ? tokenKey : actorId, itemId, fastForward);
+			card.createChatCard();
+		}
+		if( weapon.data.data.properties.rngd){
+			const card = new CoC7RangeInitiator( tokenKey ? tokenKey : actorId, itemId, fastForward);
 			card.createChatCard();
 		}
 	}
