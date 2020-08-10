@@ -479,7 +479,7 @@ export class CoC7RangeInitiator{
 		const normalDamageRoll = this.weapon.data.data.range.normal.damage;
 		const normalDamageDie = CoC7Damage.getMainDie( normalDamageRoll);
 		const maxDamage = Roll.maximize( normalDamageRoll).total;
-		const criticalDamageRoll = this.weapon.impale ? `${normalDamageRoll} + ${maxDamage}` : maxDamage;
+		const criticalDamageRoll = this.weapon.impale ? `${normalDamageRoll} + ${maxDamage}` : `${maxDamage}`;
 		const criticalDamageDie = CoC7Damage.getMainDie( criticalDamageRoll);
 		const hits=this.successfulHits;
 		
