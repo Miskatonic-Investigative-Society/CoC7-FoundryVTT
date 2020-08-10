@@ -20,6 +20,10 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.2.3 :
+
+* Hotfix.
+
 version 0.2.2 :
 
 * PDFoundry Integration.
