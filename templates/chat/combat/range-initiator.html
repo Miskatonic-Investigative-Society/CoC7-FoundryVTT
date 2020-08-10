@@ -16,7 +16,8 @@
 	data-aiming={{aiming}}
 	data-is-GM="{{isGM}}"
 	data-aimed="{{aimed}}"
-	data-damage-rolled={{damageRolled}}>
+	data-damage-rolled="{{damageRolled}}"
+	data-total-bullets-fired="{{totalBulletsFired}}">
 	
 	<header class="card-header flexcol">
 		<div class="flexrow">
@@ -32,8 +33,10 @@
 			</div>
 		</div>
 
+
 		{{#if rolled}}
 			<div class="shooter-modifier flex0">
+				<span class='tag'>Bullets fired : {{totalBulletsFired}}</span>
 				{{#if singleShot}}		<span class="tag" title="Single shot">{{localize 'CoC7.rangeCombatCard.SingleShot'}}</span>{{/if}}
 				{{#if multipleShots}}	<span class="tag" title="Multiple Shots (Penalty die)">{{localize 'CoC7.rangeCombatCard.MultipleShots'}}</span>{{/if}}
 				{{#if burst}}			<span class="tag" title="Bursts">{{localize 'CoC7.rangeCombatCard.Burst'}}</span>{{/if}}
@@ -43,6 +46,9 @@
 				{{#if aimed}}			<span class="tag" title="Add 1 bonus die for the first shot">{{localize 'CoC7.rangeCombatCard.aiming'}}</span>{{/if}}
 			</div>
 		{{else}}
+		<div class='total-bullets'>
+			<span class='tag'>Bullets fired : {{totalBulletsFired}}</span>
+		</div>
 		<div class="flexrow range-selection">
 			{{#if item.singleShot}}
 			<span class="flex1 toggle-switch singleShot {{#unless rolled}}simple-flag{{/unless}} {{#if singleShot}}switched-on{{/if}}"

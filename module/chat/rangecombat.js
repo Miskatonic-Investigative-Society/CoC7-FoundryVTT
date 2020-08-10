@@ -22,6 +22,7 @@ export class CoC7RangeInitiator{
 		this.fullAuto = false;
 		this.tokenKey = null;
 		this.aimed = false;
+		this.totalBulletsFired= 0;
 		this._targets = [];
 		[...game.user.targets].forEach( t =>
 		{
@@ -239,6 +240,7 @@ export class CoC7RangeInitiator{
 				if( previousShot.actorKey != this.activeTarget.actorKey){
 					const distance = chatHelper.getDistance( chatHelper.getTokenFromKey(previousShot.actorKey), chatHelper.getTokenFromKey(this.activeTarget.actorKey));
 					shot.transitBullets = Math.floor( chatHelper.toYards(distance));
+					this.totalBulletsFired = parseInt(this.totalBulletsFired) + shot.transitBullets;
 					shot.transit = true;
 				}
 			}
@@ -246,6 +248,8 @@ export class CoC7RangeInitiator{
 		if( this.burst){
 			shot.bulletsShot = this.weapon.data.data.usesPerRound.burst;
 		}
+
+		this.totalBulletsFired = parseInt(this.totalBulletsFired) + shot.bulletsShot;
 
 		if( this.aiming) {
 			this.aiming = false;
@@ -359,6 +363,7 @@ export class CoC7RangeInitiator{
 			check.diceModifier = shot.modifier;
 		} else {
 			this.calcTargetsDifficulty();
+			this.totalBulletsFired = parseInt( this.totalBulletsFired) + 1;
 			if( this.aiming){
 				this.aiming = false;
 				this.aimed = true;
