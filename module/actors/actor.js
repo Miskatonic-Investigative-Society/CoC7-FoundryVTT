@@ -463,9 +463,9 @@ export class CoCActor extends Actor {
 		if( this.data.data.attribs.mov.auto)
 		{
 			let MOV;
-			if( this.data.data.characteristics.dex.value < this.data.data.characteristics.siz.value && this.data.data.characteristics.str.value < this.data.data.characteristics.siz.value) MOV = 	7;
+			if( this.data.data.characteristics.dex.value < this.data.data.characteristics.siz.value && this.data.data.characteristics.str.value < this.data.data.characteristics.siz.value) MOV = 7;
 			if( this.data.data.characteristics.dex.value >= this.data.data.characteristics.siz.value || this.data.data.characteristics.str.value >= this.data.data.characteristics.siz.value) MOV = 8;
-			if( this.data.data.characteristics.dex.value >= this.data.data.characteristics.siz.value && this.data.data.characteristics.str.value >= this.data.data.characteristics.siz.value) MOV = 9;
+			if( this.data.data.characteristics.dex.value > this.data.data.characteristics.siz.value && this.data.data.characteristics.str.value > this.data.data.characteristics.siz.value) MOV = 9; // Bug correction by AdmiralNyar.
 			if( this.data.data.type != 'creature'){
 				if( !isNaN(parseInt(this.data.data.infos.age))) MOV = parseInt(this.data.data.infos.age) >= 40? MOV - Math.floor( parseInt(this.data.data.infos.age) / 10) + 3: MOV;
 			}

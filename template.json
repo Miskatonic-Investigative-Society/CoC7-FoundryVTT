@@ -266,7 +266,7 @@
                 }
             },
             "usesPerRound": {
-                "normal": null,
+                "normal": 1,
                 "max": null,
                 "burst": null
             },
