@@ -1,4 +1,5 @@
 import { CoC7Dice } from './dice.js';
+import { CoC7Item } from './items/item.js';
 
 export class CoC7Check {
 
@@ -57,6 +58,7 @@ export class CoC7Check {
 
 	set actor(x)
 	{
+		this.actorKey = x;
 		if( x == null) {
 			this._actor = x;
 			return;
@@ -65,6 +67,9 @@ export class CoC7Check {
 		if( x instanceof Actor) {
 			this._actor = x;
 			this._actor.alias = this.actor.name;
+			if( x.token && x.token.scene && x.token.scene.id){
+				this.actorKey=`${x.token.scene.id}.${x.token.id}`;
+			} else this.actorKey = `${game.scenes.active.id}.${x.id}`;
 			return;
 		}
 
@@ -147,7 +152,7 @@ export class CoC7Check {
 		this._perform();
 	}
 
-	_perform()
+	async _perform()
 	{
 		this.dice = CoC7Dice.roll( this.diceModifier);
 		AudioHelper.play({src: CONFIG.sounds.dice});
@@ -261,6 +266,10 @@ export class CoC7Check {
 			this.difficultyString = game.i18n.format('CoC7.RegularDifficulty');
 			this.succesThreshold = this.regularThreshold;
 			break;
+		case CoC7Check.difficultyLevel.critical:
+			this.difficultyString = game.i18n.format('CoC7.CriticalDifficulty');
+			this.succesThreshold = this.criticalThreshold;
+			break;
 		default:
 			this.succesThreshold = this.rawValue;
 			break;
@@ -287,15 +296,18 @@ export class CoC7Check {
 		{
 			this.isItem = true;
 			if( this.item.data.data.malfunction) {
-				if( this.dice.total >= this.item.data.data.malfunction) this.hasMalfunction = true;
-				this.malfunctionTxt = game.i18n.format('CoC7.Malfunction', {itemName : this.item.name});
+				if( this.dice.total >= this.item.data.data.malfunction){
+					this.hasMalfunction = true;
+					this.malfunctionTxt = game.i18n.format('CoC7.Malfunction', {itemName : this.item.name});
+					await this.item.toggleItemFlag(CoC7Item.flags.malfunction);
+				}
 			}
 		}
 		this.canBePushed = this.skill ? this.skill.canBePushed() : false;
 		if( this.characteristic != null) this.canBePushed = true;
 		if( this.isFumble) this.canBePushed = false;
 		
-		if( !this.passed && !this.isFumble) {
+		if( !this.passed && !this.isFumble && this.difficulty!=CoC7Check.difficultyLevel.critical) {
 			if( this.skill || this.characteristic){
 				let luckNeeded = this.dice.total - this.succesThreshold;
 				if( this.actor.luck > luckNeeded){
@@ -315,18 +327,18 @@ export class CoC7Check {
 				let nextLevel = {};
 				nextLevel.difficultyName = game.i18n.localize('CoC7.HardDifficulty');
 				nextLevel.difficulty = CoC7Check.difficultyLevel.hard;
-				nextLevel.LuckToSpend = this.dice.total - this.hardThreshold;
-				nextLevel.hasEnoughLuck = (nextLevel.LuckToSpend <= this.actor.luck);
-				if (nextLevel.LuckToSpend <= this.actor.luck) this.increaseSuccess.push(nextLevel);
+				nextLevel.luckToSpend = this.dice.total - this.hardThreshold;
+				nextLevel.hasEnoughLuck = (nextLevel.luckToSpend <= this.actor.luck);
+				if (nextLevel.luckToSpend <= this.actor.luck) this.increaseSuccess.push(nextLevel);
 			}
 
 			if(this.difficulty <= CoC7Check.difficultyLevel.hard  && this.dice.total > this.extremeThreshold){
 				let nextLevel = {};
 				nextLevel.difficultyName = game.i18n.localize('CoC7.ExtremeDifficulty');
 				nextLevel.difficulty = CoC7Check.difficultyLevel.extreme;
-				nextLevel.LuckToSpend = this.dice.total - this.extremeThreshold;
-				nextLevel.hasEnoughLuck = (nextLevel.LuckToSpend <= this.actor.luck);
-				if (nextLevel.LuckToSpend <= this.actor.luck) this.increaseSuccess.push(nextLevel);
+				nextLevel.luckToSpend = this.dice.total - this.extremeThreshold;
+				nextLevel.hasEnoughLuck = (nextLevel.luckToSpend <= this.actor.luck);
+				if (nextLevel.luckToSpend <= this.actor.luck) this.increaseSuccess.push(nextLevel);
 			}
 		}
 
@@ -380,6 +392,13 @@ export class CoC7Check {
 			content: html
 		}).then( msg => {return msg;});
 
+	}
+
+	async shortResult( details = false){
+		const template = 'systems/CoC7/templates/chat/roll.html';
+		this.details = details? details : false;
+		const html = await renderTemplate(template, this);
+		return html;
 	}
 
 }

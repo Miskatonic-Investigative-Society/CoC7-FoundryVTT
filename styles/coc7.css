@@ -1,3 +1,27 @@
+.dice-roll .dice-formula.success {
+    color: green;
+}
+.dice-roll .dice-formula.failure {
+    color: red;
+}
+
+.dice-roll .dice-formula.critical{
+    background-color: palegreen;
+}
+
+.dice-roll .dice-formula.fumble{
+    background-color: darkred;
+}
+
+.coc7 .invisible{
+    display: none;
+}
+
+.coc7.chat-card.range .card-buttons button{
+    height: 20px;
+    line-height: 16px;
+}
+
 .coc7 .button{
     display: inline-block;
     margin: 2px 2px 0 0;
@@ -436,7 +460,7 @@
     height: 16px;
 }
 .coc7.sheet .skills-list span {
-    flex: 0 0 80px;
+    flex: none;
     padding-right: 5px;
     text-align: right;
     font-size: 11px;

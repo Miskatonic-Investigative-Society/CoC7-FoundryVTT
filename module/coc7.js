@@ -14,6 +14,7 @@ import { CoC7CreatureSheet } from './actors/sheets/creature-sheet.js';
 import { CoC7CharacterSheet } from './actors/sheets/actor-sheet.js';
 import { preloadHandlebarsTemplates } from './templates.js';
 import { CoC7Chat } from './chat.js';
+import { CoC7Combat } from './combat.js';
 
 
 Hooks.once('init', async function() {
@@ -29,22 +30,30 @@ Hooks.once('init', async function() {
 		decimals: 0
 	};
 
+
 	//TODO : remove debug hooks
 	CONFIG.debug.hooks = true;
+	CONFIG.Combat.entityClass = CoC7Combat;
 	CONFIG.Actor.entityClass = CoCActor;
 	CONFIG.Item.entityClass = CoC7Item;
-
-
-
+	
+	game.settings.register('CoC7', 'creditRatingFactor', {
+		name: 'Factor for cash calculation',
+		hint: 'The amount to multiply to get cash and assets values',
+		scope: 'world',
+		config: true,
+		default: 1,
+		type: Number
+	});
+	
 	// Register sheet application classes
 	Actors.unregisterSheet('core', ActorSheet);
-	Actors.registerSheet('simple', CoC7NPCSheet, { types: ['npc'] });
-	Actors.registerSheet('simple', CoC7CreatureSheet, { types: ['creature'] });
-	Actors.registerSheet('simple', CoC7CharacterSheet, { types: ['character'], makeDefault: true });
+	Actors.registerSheet('CoC7', CoC7NPCSheet, { types: ['npc'] });
+	Actors.registerSheet('CoC7', CoC7CreatureSheet, { types: ['creature'] });
+	Actors.registerSheet('CoC7', CoC7CharacterSheet, { types: ['character'], makeDefault: true });
 	Items.unregisterSheet('core', ItemSheet);
-	Items.registerSheet('simple', CoC7WeaponSheet, { types: ['weapon'], makeDefault: true});
-	Items.registerSheet('simple', CoCItemSheet, { makeDefault: true});
-
+	Items.registerSheet('CoC7', CoC7WeaponSheet, { types: ['weapon'], makeDefault: true});
+	Items.registerSheet('CoC7', CoCItemSheet, { makeDefault: true});
 	preloadHandlebarsTemplates();
 });
 
@@ -56,6 +65,7 @@ Hooks.on('updateChatMessage', (chatMessage, chatData, diff, speaker) => CoC7Chat
 
 Hooks.on('ready', CoC7Chat.ready);
 Hooks.on('preCreateActor', (createData) => CoCActor.initToken( createData));
+Hooks.on('renderCombatTracker', (combatTracker, html, data) => CoC7Combat.renderCombatTracker(combatTracker, html, data));
 // Hooks.on('chatMessage', (chatLog, message, chatData) => { console.log('**************************************************************************************************chatMessage : '  + message);});
 
 
@@ -64,7 +74,3 @@ Hooks.on('preCreateActor', (createData) => CoCActor.initToken( createData));
 
 // Hooks.on('preCreateToken', ( scene, actor, options, id) => CoCActor.preCreateToken( scene, actor, options, id))
 // Hooks.on('createToken', ( scene, actor, options, id) => CoCActor.preCreateToken( scene, actor, options, id))
-
-// Hooks.on("ready", async () => {
-
-// });
