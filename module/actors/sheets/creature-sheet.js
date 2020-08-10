@@ -59,6 +59,6 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 				}
 			}
 		}
-		return this.object.update(formData);
+		return super._updateObject(event, formData);
 	}
 }

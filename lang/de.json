@@ -107,7 +107,7 @@
 "CoC7.ItemDescription": "Beschreibung",
 "CoC7.WeaponRange": "Reichweite :",
 "CoC7.WeaponDamage": "Schaden :",
-"CoC7.WeaponRadius": "Radius",
+"CoC7.Weapon.BlastRadius": "Radius",
 "CoC7.WeaponMalfunction": "Fehlfunktion :",
 "CoC7.WeaponUsesPerRound": "Einsatz/Runde :",
 "CoC7.WeaponMax": "Max :",

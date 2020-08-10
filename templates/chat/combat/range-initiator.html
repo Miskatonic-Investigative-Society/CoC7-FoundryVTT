@@ -1,0 +1,513 @@
+<div class="coc7 chat-card range initiator"
+	data-actor-key="{{actorKey}}"
+	data-item-id="{{item._id}}"
+	data-fast-forward="{{fastForward}}"
+	data-resolved="{{resolved}}"
+	data-rolled="{{rolled}}"
+	data-cover="{{cover}}"
+	data-surprised="{{surprised}}"
+	data-auto-success="{{autoSuccess}}"
+	data-single-shot="{{singleShot}}"
+	data-multiple-shots="{{multipleShots}}"
+	data-burst="{{burst}}"
+	data-full-auto="{{fullAuto}}"
+	data-advantage="{{advantage}}"
+	data-disadvantage="{{disadvantage}}"
+	data-aiming={{aiming}}
+	data-is-GM="{{isGM}}"
+	data-aimed="{{aimed}}"
+	data-damage-rolled="{{damageRolled}}"
+	data-total-bullets-fired="{{totalBulletsFired}}">
+	
+	<header class="card-header flexcol">
+		<div class="flexrow">
+			<img style="flex: none;" src="{{item.img}}" title="{{item.name}}" width="36" height="36"/>
+			<h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{item.name}}</h3>
+			<i style="flex: none;font-size: 36px;" title="Lock targets (Not implemented yet)" class="fas fa-bullseye"></i>
+		</div>
+
+		<div class="card-content">
+			{{{item.data.data.description.value}}}
+			<div class="weapon-properties">
+				<span class="tag">Ammo:</span><span class="tag">Mag Size</span><span class="tag">Burst</span>
+			</div>
+		</div>
+
+
+		{{#if rolled}}
+			<div class="shooter-modifier flex0">
+				<span class='tag'>Bullets fired : {{totalBulletsFired}}</span>
+				{{#if singleShot}}		<span class="tag" title="Single shot">{{localize 'CoC7.rangeCombatCard.SingleShot'}}</span>{{/if}}
+				{{#if multipleShots}}	<span class="tag" title="Multiple Shots (Penalty die)">{{localize 'CoC7.rangeCombatCard.MultipleShots'}}</span>{{/if}}
+				{{#if burst}}			<span class="tag" title="Bursts">{{localize 'CoC7.rangeCombatCard.Burst'}}</span>{{/if}}
+				{{#if fullAuto}}		<span class="tag" title="Full auto">{{localize 'CoC7.rangeCombatCard.FullAuto'}}</span> {{/if}}
+				{{#if advantage}}		<span class="tag" title="Add 1 bonus die (target is prone, restrained...)">{{localize 'CoC7.Advantage'}}</span>{{/if}}
+				{{#if disadvantage}}	<span class="tag" title="Add 1 malus die (for being prone, restrained...)">{{localize 'CoC7.Disadvantage'}}</span>{{/if}}
+				{{#if aimed}}			<span class="tag" title="Add 1 bonus die for the first shot">{{localize 'CoC7.rangeCombatCard.aiming'}}</span>{{/if}}
+			</div>
+		{{else}}
+		<div class='total-bullets'>
+			<span class='tag'>Bullets fired : {{totalBulletsFired}}</span>
+		</div>
+		<div class="flexrow range-selection">
+			{{#if item.singleShot}}
+			<span class="flex1 toggle-switch singleShot {{#unless rolled}}simple-flag{{/unless}} {{#if singleShot}}switched-on{{/if}}"
+			title="Single shot" 
+			style="text-align:center" 
+			data-flag="single-shot" 
+			data-selected={{singleShot}}>{{localize 'CoC7.rangeCombatCard.SingleShot'}}</span>
+			{{/if}}
+			{{#if item.multipleShots}}
+			<span class="flex1 toggle-switch multipleShots {{#unless rolled}}simple-flag{{/unless}} {{#if multipleShots}}switched-on{{/if}}"
+			title="Multiple Shots (Penalty die)" 
+			style="text-align:center" 
+			data-flag="multiple-shots" 
+			data-selected={{multipleShots}}>{{localize 'CoC7.rangeCombatCard.MultipleShots'}}</span>
+			{{/if}}
+			{{#if item.data.data.properties.brst}}
+			<span class="flex1 toggle-switch burst {{#unless rolled}}simple-flag{{/unless}} {{#if burst}}switched-on{{/if}}"
+			title="Bursts" 
+			style="text-align:center" 
+			data-flag="burst" 
+			data-selected={{burst}}>{{localize 'CoC7.rangeCombatCard.Burst'}}</span>
+			{{/if}}
+			{{#if item.data.data.properties.auto}}
+			<span class="flex1 toggle-switch fullAuto {{#unless rolled}}simple-flag{{/unless}} {{#if fullAuto}}switched-on{{/if}}"
+			title="Full auto" 
+			style="text-align:center" 
+			data-flag="full-auto" 
+			data-selected={{fullAuto}}>{{localize 'CoC7.rangeCombatCard.FullAuto'}}</span>
+			{{/if}}
+		</div>
+
+		<div class="flexrow advantage-selection">
+			<span class="flex1 toggle-switch advantage {{#unless rolled}}simple-flag{{/unless}} {{#if advantage}}switched-on{{/if}} gm-select-only"
+			title="Add 1 bonus die (target is prone, restrained...)" 
+			style="text-align:center" 
+			data-flag="advantage" 
+			data-selected={{advantage}}>{{localize 'CoC7.Advantage'}}</span>
+			<span class="flex1 toggle-switch disadvantage {{#unless rolled}}simple-flag{{/unless}} {{#if disadvantage}}switched-on{{/if}} gm-select-only"
+			title="Add 1 malus die (for being prone, restrained...)" 
+			style="text-align:center" 
+			data-flag="disadvantage" 
+			data-selected={{disadvantage}}>{{localize 'CoC7.Disadvantage'}}</span>
+			<span class="flex1 toggle-switch aiming {{#unless rolled}}simple-flag{{/unless}} {{#if aiming}}switched-on{{/if}} gm-select-only"
+			title="Add 1 bonus die for the first shot" 
+			style="text-align:center" 
+			data-flag="aiming" 
+			data-selected={{aiming}}>{{localize 'CoC7.rangeCombatCard.aiming'}}</span>
+		</div>
+		{{/if}}
+	</header>
+
+	<div class="targets">
+
+		<div class="flexrow targets-selector" style="max-height: 24px;">
+		{{#each targets as |trgt key|}}
+			<div class="target-selector" style="flex: none;" data-key="{{key}}">
+				{{#if trgt.active}}
+					<img style="flex: none;" src="{{trgt.img}}" title="{{trgt.name}}" alt="{{trgt.name}}" width="24" height="24"/>
+				{{else}}
+					<img style="flex: none;border:none" src="{{trgt.img}}" title="{{trgt.name}}" alt="{{trgt.name}}" width="24" height="24"/>
+				{{/if}}
+			</div>
+		{{/each}}
+		</div>
+		
+		{{#each targets as |trgt key|}}
+		<div class='target'
+			data-key="{{key}}"
+			data-target-key="{{key}}"
+			data-actor-key="{{trgt.actorKey}}"
+			data-base-range="{{trgt.baseRange}}"
+			data-long-range="{{trgt.longRange}}"
+			data-extreme-range="{{trgt.extremeRange}}"
+			data-cover="{{trgt.cover}}"
+			data-surprised="{{trgt.surprised}}"
+			data-point-blank-range="{{trgt.pointBlankRange}}"
+			data-big="{{trgt.big}}"
+			data-small="{{trgt.small}}"
+			data-fast="{{trgt.fast}}"
+			data-active="{{trgt.active}}"
+			data-in-melee="{{trgt.inMelee}}"
+			data-is-GM="{{../isGM}}"
+			{{#unless trgt.active}}style='display: none;'{{/unless}}>
+			<div class="target-name">
+				<label>Target : {{trgt.name}}</label>
+			</div>
+
+			<div class='gm-visible-only' style="margin-bottom: 2px;">
+				{{#if ../rolled}}
+					<span class="{{#if trgt.baseRange}}tag{{else}}invisible{{/if}}"
+					title="{{localize 'CoC7.rangeCombatCard.BaseRange'}}" 
+					>{{localize 'CoC7.rangeCombatCard.BaseRange'}}</span>
+					<span class="{{#if trgt.longRange}}tag{{else}}invisible{{/if}}"
+						title="{{localize 'CoC7.combatCard.LongRange'}}"
+						>{{localize 'CoC7.rangeCombatCard.LongRange'}}</span>
+					<span class="{{#if trgt.extremeRange}}tag{{else}}invisible{{/if}}"
+						title="{{localize 'CoC7.rangeCombatCard.ExtremeRange'}}"
+						>{{localize 'CoC7.rangeCombatCard.ExtremeRange'}}</span>
+					<span class="{{#if trgt.cover}}tag{{else}}invisible{{/if}}"
+						title="1 malus die. The target is under cover or successfully dived for cover" 
+						>{{localize 'CoC7.rangeCombatCard.Cover'}}</span>
+					<span class="{{#if trgt.surprised}}tag{{else}}invisible{{/if}}"
+						title="1 bonus die for surprised target"
+						>{{localize 'CoC7.combatCard.surpised'}}</span>
+					<span class="{{#if trgt.pointBlankRange}}tag{{else}}invisible{{/if}}"
+						title="1 bonus die. Target at point blank range"
+						>{{localize 'CoC7.rangeCombatCard.PointBlankRange'}}</span>
+					<span class="{{#if trgt.big}}tag{{else}}invisible{{/if}}"
+						title="1 bonus die for big target (Build > +4)" 
+						>{{localize 'CoC7.rangeCombatCard.BigTarget'}}</span>
+					<span class="{{#if trgt.small}}tag{{else}}invisible{{/if}}"
+						title="1 malus die for a small target"
+						>{{localize 'CoC7.combatCard.SmallTarget'}}</span>
+					<span class="{{#if trgt.inMelee}}tag{{else}}invisible{{/if}}"
+						title="1 malus die. Target is engaged in melee combat"
+						>{{localize 'CoC7.rangeCombatCard.InMelee'}}</span>
+					<span class="{{#if trgt.fast}}tag{{else}}invisible{{/if}}"
+						title="1 malus dir. Target is fast (mov +8) and moving at full speed"
+						>{{localize 'CoC7.rangeCombatCard.FastMovingTarget'}}</span>
+				{{else}}
+					<div class="flexrow range-selection">
+						<span class="flex1 toggle-switch baseRange target-flag {{#unless ../rolled}}simple-flag{{/unless}} {{#if trgt.baseRange}}switched-on{{/if}} gm-select-only"
+							title="{{localize 'CoC7.rangeCombatCard.BaseRange'}}" 
+							style="text-align:center" 
+							data-flag="base-range" 
+							data-selected={{trgt.baseRange}}>{{localize 'CoC7.rangeCombatCard.BaseRange'}}</span>
+						<span class="flex1 toggle-switch longRange target-flag {{#unless ../rolled}}simple-flag{{/unless}} {{#if trgt.longRange}}switched-on{{/if}} gm-select-only"
+							title="{{localize 'CoC7.combatCard.LongRange'}}"
+							style="text-align:center"
+							data-flag="long-range"
+							data-selected={{trgt.longRange}}>{{localize 'CoC7.rangeCombatCard.LongRange'}}</span>
+						<span class="flex1 toggle-switch extremeRange target-flag {{#unless ../rolled}}simple-flag{{/unless}} {{#if trgt.extremeRange}}switched-on{{/if}} gm-select-only"
+							title="{{localize 'CoC7.rangeCombatCard.ExtremeRange'}}"
+							style="text-align:center"
+							data-flag="extreme-range"
+							data-selected={{trgt.extremeRange}}>{{localize 'CoC7.rangeCombatCard.ExtremeRange'}}</span>
+					</div>
+
+					<div class="flexrow bonus-selection">
+						<span class="flex1 toggle-switch cover target-flag {{#unless ../rolled}}simple-flag{{/unless}} {{#if trgt.cover}}switched-on{{/if}} gm-select-only"
+							title="1 malus die. The target is under cover or successfully dived for cover" 
+							style="text-align:center" 
+							data-flag="cover" 
+							data-selected={{trgt.cover}}>{{localize 'CoC7.rangeCombatCard.Cover'}}</span>
+						<span class="flex1 toggle-switch surprised target-flag {{#unless ../rolled}}simple-flag{{/unless}} {{#if trgt.surprised}}switched-on{{/if}} gm-select-only"
+							title="1 bonus die for surprised target"
+							style="text-align:center"
+							data-flag="surprised"
+							data-selected={{trgt.surprised}}>{{localize 'CoC7.combatCard.surpised'}}</span>
+						<span class="flex1 toggle-switch pointBlankRange target-flag {{#unless ../rolled}}simple-flag{{/unless}} {{#if trgt.pointBlankRange}}switched-on{{/if}} gm-select-only"
+							title="1 bonus die. Target at point blank range"
+							style="text-align:center"
+							data-flag="point-blank-range"
+							data-selected={{trgt.pointBlankRange}}>{{localize 'CoC7.rangeCombatCard.PointBlankRange'}}</span>
+					</div>
+
+					<div class="flexrow bonus-selection">
+						<span class="flex1 toggle-switch size target-flag
+								{{#unless ../rolled}}simple-flag{{/unless}}
+								{{#if trgt.big}}switched-on{{/if}}
+								{{#if trgt.small}}switched-on{{/if}}
+								gm-select-only"
+							title="{{trgt.sizeText}}" 
+							style="text-align:center" 
+							data-flag="size">
+								{{trgt.sizeLabel}}
+							</span>
+						<span class="flex1 toggle-switch inMelee target-flag {{#unless ../rolled}}simple-flag{{/unless}} {{#if trgt.inMelee}}switched-on{{/if}} gm-select-only"
+							title="1 malus die for a target engage in melee"
+							style="text-align:center"
+							data-flag="in-melee"
+							data-selected={{trgt.inMelee}}>{{localize 'CoC7.rangeCombatCard.InMelee'}}</span>
+						<span class="flex1 toggle-switch fast target-flag {{#unless ../rolled}}simple-flag{{/unless}} {{#if trgt.fast}}switched-on{{/if}} gm-select-only"
+							title="1 malus dir. Target is fast (mov +8) and moving at full speed"
+							style="text-align:center"
+							data-flag="fast"
+							data-selected={{trgt.fast}}>{{localize 'CoC7.rangeCombatCard.FastMovingTarget'}}</span>
+					</div>
+				{{/if}}
+			</div>
+
+			<div class='user-visible-only' style="margin-bottom: 2px;">
+				<div class="bonus-selection" style="flex:none;">
+					<span class="{{#if trgt.baseRange}}tag{{else}}invisible{{/if}}"
+						title="{{localize 'CoC7.rangeCombatCard.BaseRange'}}" 
+						>{{localize 'CoC7.rangeCombatCard.BaseRange'}}</span>
+					<span class="{{#if trgt.longRange}}tag{{else}}invisible{{/if}}"
+						title="{{localize 'CoC7.combatCard.LongRange'}}"
+						>{{localize 'CoC7.rangeCombatCard.LongRange'}}</span>
+					<span class="{{#if trgt.extremeRange}}tag{{else}}invisible{{/if}}"
+						title="{{localize 'CoC7.rangeCombatCard.ExtremeRange'}}"
+						>{{localize 'CoC7.rangeCombatCard.ExtremeRange'}}</span>
+					<span class="{{#if trgt.cover}}tag{{else}}invisible{{/if}}"
+						title="1 malus die. The target is under cover or successfully dived for cover" 
+						>{{localize 'CoC7.rangeCombatCard.Cover'}}</span>
+					<span class="{{#if trgt.surprised}}tag{{else}}invisible{{/if}}"
+						title="1 bonus die for surprised target"
+						>{{localize 'CoC7.combatCard.surpised'}}</span>
+					<span class="{{#if trgt.pointBlankRange}}tag{{else}}invisible{{/if}}"
+						title="1 bonus die. Target at point blank range"
+						>{{localize 'CoC7.rangeCombatCard.PointBlankRange'}}</span>
+					<span class="{{#if trgt.big}}tag{{else}}invisible{{/if}}"
+						title="1 bonus die for big target (Build > +4)" 
+						>{{localize 'CoC7.rangeCombatCard.BigTarget'}}</span>
+					<span class="{{#if trgt.small}}tag{{else}}invisible{{/if}}"
+						title="1 malus die for a small target"
+						>{{localize 'CoC7.combatCard.SmallTarget'}}</span>
+					<span class="{{#if trgt.inMelee}}tag{{else}}invisible{{/if}}"
+						title="1 malus die. Target is engaged in melee combat"
+						>{{localize 'CoC7.rangeCombatCard.InMelee'}}</span>
+					<span class="{{#if trgt.fast}}tag{{else}}invisible{{/if}}"
+						title="1 malus dir. Target is fast (mov +8) and moving at full speed"
+						>{{localize 'CoC7.rangeCombatCard.FastMovingTarget'}}</span>
+				</div>
+			</div>
+			{{#unless ../rolled}}
+			<div class="card-buttons owner-only">
+				{{#if trgt.shotDifficulty.impossible}}
+					<button style='background:darkred; color: white;'>
+						Shot is impossible
+					</button>
+				{{else}}
+					{{#if ../multiTarget}}
+					<button
+						data-action="range-initiator-shoot"
+						data-skill="{{autoWeaponSkill._id}}">Shoot {{trgt.name}} {{../autoWeaponSkill.name}} ({{../autoWeaponSkill.data.data.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
+					</button>
+					{{else}}
+						{{#if ../autoFire}}
+							<button
+								data-action="range-initiator-roll"
+								data-skill="{{autoWeaponSkill._id}}">Roll {{../autoWeaponSkill.name}} ({{../autoWeaponSkill.data.data.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
+							</button>
+						{{else}}
+							<button
+								data-action="range-initiator-roll"
+								data-skill="{{mainWeaponSkill._id}}">Roll {{../mainWeaponSkill.name}} ({{../mainWeaponSkill.data.data.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
+							</button>
+						{{/if}}
+					{{/if}}
+				{{/if}}
+			</div>
+			{{/unless}}
+		</div>
+		{{/each}}
+
+	</div>
+
+	<div class="shots">
+		{{#if shots}}
+		<div class="shots flexcol {{#if rolled}}invisible{{/if}}" style="border: 1px groove">
+			{{#each shots as |shot key|}}
+				<div class='shot'
+				  data-shot-order="{{key}}"
+				  data-actor-key="{{shot.actorKey}}"
+				  data-actor-name="{{shot.actorName}}"
+				  data-difficulty-level="{{shot.difficultyLevel}}"
+				  data-modifier="{{shot.modifier}}"
+				  data-bullets-shot="{{shot.bulletsShot}}"
+				  data-transit-bullets="{{shot.transitBullets}}"
+				  data-transit="{{shot.transit}}">
+					({{key}})Shoot {{shot.bulletsShot}} {{#if shot.transit}}+ {{shot.transitBullets}}{{/if}} bullets at target {{shot.actorName}}.
+				</div>
+			{{/each}}
+		</div>
+			{{#unless rolled}}
+				<div class="card-buttons owner-only">
+					<button
+					  data-action="range-initiator-roll"
+					  data-skill="{{mainWeaponSkill._id}}">
+					  	Fire !!!
+					</button>
+				</div>
+			{{/unless}}
+		{{/if}}
+	</div>
+
+	<div class="results">
+		{{#if resolved}}
+			{{#each rolls as |roll key|}}
+				<div class="coc7 roll-result"
+				  data-actor-key="{{roll.actorKey}}"
+				  data-target-key="{{roll.targetKey}}"
+				  data-roll-type="{{roll.rollType}}"
+				  data-side="{{roll.side}}"
+				  data-action="{{roll.action}}"
+				  data-ref-message-id="{{roll.referenceMessageId}}"
+				  data-success-level="{{roll.successLevel}}"
+				  data-difficulty="{{roll.difficulty}}"
+				  data-actor-id="{{roll.actor._id}}" 
+				  data-skill-id="{{roll.skill.data._id}}" 
+				  data-item-id="{{roll.item.data._id}}" 
+				  data-dice-mod="{{roll.diceModifier}}"
+				  data-dice-modifier="{{roll.diceModifier}}"
+				  data-ten-only-one-die="{{roll.tenOnlyOneDie}}"
+				  data-value="{{roll.value}}" 
+				  data-result="{{roll.dice.total}}"
+				  data-is-success="{{roll.isSuccess}}"
+				  data-is-fumble="{{roll.isFumble}}"
+				  data-is-critical="{{roll.isCritical}}"
+				  data-characteristic="{{roll.characteristic}}"
+				  data-success-required="{{roll.successRequired}}"
+				  data-target-key="{{troll.argetKey}}"
+				  data-details="{{roll.details}}"
+				  data-can-be-pushed="{{roll.canBePushed}}"
+				  data-pushing="{{roll.pushing}}"
+				  data-has-enough-luck="{{roll.hasEnoughLuck}}"
+				  data-luck-needed="{{roll.luckNeeded}}"
+				  data-difficulty-level="{{roll.difficultyLevel}}"
+				  data-can-increase-success="{{roll.canIncreaseSuccess}}"
+				  data-has-malfunction="{{roll.hasMalfunction}}"
+				  data-malfunction-txt="{{roll.malfunctionTxt}}"
+				  data-token-id="{{roll.tokenId}}"
+				  data-index="{{key}}">
+					<div class="dice-roll">
+						<div
+						class="dice-result"
+						data-total="{{roll.dices.total}}"
+						data-ten-result="{{roll.dices.tenResult}}">
+							<div 
+							  class="dice-formula {{#if roll.isSuccess}}success{{else}}failure{{/if}}{{#if roll.isCritical}} critical{{/if}}{{#if roll.isFumble}} fumble{{/if}}"
+							  style="line-height: 16px;margin-bottom: 2px;">
+								{{#if roll.luckSpent}}
+									{{roll.skill.name}} ({{roll.skill.data.data.value}}) - Luck used ({{roll.resultType}})
+							  	{{else}}
+									{{roll.skill.name}} ({{roll.skill.data.data.value}}) {{#if roll.dices.hasBonus}}{{roll.dices.bonus}} {{roll.dices.bonusType}} {{localize 'CoC7.Dice'}}{{/if}} - {{roll.dices.total}} ({{roll.resultType}})
+								{{/if}}
+							</div>
+							<div class="dice-tooltip" style="display: none;">
+								<section class="tooltip-part">
+									<div class="dice ten-dice">
+										<p class="part-formula">
+											{{#if roll.tenOnlyOneDie}}
+											{{localize 'CoC7.TensDie'}}
+											{{else}}
+											{{roll.dices.tens.length}} {{localize 'CoC7.TensDice'}}
+											{{/if}}
+											<span class="part-total">{{roll.dices.tenResult}}</span>
+										</p>
+										<ol class="dice-rolls">
+											{{#each roll.dices.tens as |die key|}}
+												<li
+													data-selected="{{die.selected}}"
+													data-is-max="{{die.isMax}}"
+													data-is-min="{{die.isMin}}"
+													data-value="{{die.value}}"
+													class="roll die d10 {{#unless die.selected}}discarded{{/unless}} {{#if die.isMax}}min{{/if}} {{#if die.isMin}}max{{/if}}">{{die.value}}</li>
+											{{/each}}
+										</ol>
+									</div>
+								</section>
+								<section class="tooltip-part">
+									<div class="dice unit-die">
+										<p class="part-formula">
+											{{localize 'CoC7.UnitsDie'}}
+											<span class="part-total">{{roll.dices.unit.value}}</span>
+										</p>
+										<ol class="dice-rolls">
+											<li data-value="{{roll.dices.unit.value}}" class="roll die d10">{{roll.dices.unit.value}}</li>
+										</ol>
+									</div>
+								</section>
+				
+								<h4 class="result-details">{{roll.resultType}}, {{roll.successRequired}}</h4>
+								{{#if roll.details}}
+								<h4 class="result-details">{{roll.details}}</h4>
+								{{/if}}
+								
+								{{#unless ../damageRolled}}
+								<div class="card-buttons owner-only" data-actor-id="{{roll.actor._id}}" style="padding-top: 5px;margin: 0;">
+									{{#unless roll.isSuccess}}
+										{{#if roll.canBePushed}}
+											{{#unless roll.pushing}}
+											<button data-action="push">{{localize 'CoC7.PushSkill'}}</button>
+											{{/unless}}
+										{{/if}}
+										{{#if roll.hasEnoughLuck}}
+											{{#unless roll.pushing}}
+												<button class="pass-check" data-action="useLuck"  data-luck-amount="{{roll.luckNeeded}}" data-new-success-level="{{roll.difficultyLevel}}">{{roll.luckNeededTxt}}</button>
+											{{/unless}}
+										{{/if}}
+									{{/unless}}
+									
+									{{#unless roll.pushing}}
+									{{#if roll.canIncreaseSuccess}}
+									<div class="increase-success">
+										{{#each roll.increaseSuccess as |level key|}}
+										<button
+											data-index="{{key}}"
+											data-action="useLuck"
+											data-luck-amount="{{level.luckToSpend}}"
+											data-luck-to-spend="{{level.luckToSpend}}"
+											data-new-success-level="{{level.difficulty}}"
+											data-difficulty="{{level.difficulty}}"
+											data-difficulty-name="{{difficultyName}}">Make it {{level.difficultyName}} for {{level.luckToSpend}} luck.</button>
+										{{/each}}
+									</div>
+									{{/if}}
+									{{/unless}}
+								</div>
+								{{/unless}}
+							</div>
+							{{#if roll.hasMalfunction}}<h4 class="malfunction">{{roll.malfunctionTxt}}</h4>{{/if}}
+						</div>
+					</div>
+				</div>
+			{{/each}}
+			{{#if didAnyShotHit}}
+				{{#unless damageRolled}}
+				<div class="card-buttons owner-only">
+					<button data-action="roll-range-damage">Roll damage</button>			
+				</div>
+				{{/unless}}
+			{{/if}}
+		{{/if}}
+	</div>
+
+	<div class="damage">
+		{{#if damageRolled}}
+			{{#each damage as |d|}}
+				<div class="coc7 damage-results">
+					<div class="dice-roll">
+						<div class="dice-result">
+							<div class="dice-formula {{#if d.critical}} critical{{/if}}" style="line-height: 16px;margin-bottom: 2px;">
+								{{d.targetName}} takes {{d.total}} points of damage
+							</div>
+							<div class="dice-tooltip" style="display: none;">
+								<section class="tooltip-part">
+									<div class="dice ten-dice">
+										<p class="part-formula">
+											{{#each d.rolls as |roll|}}
+												<span class="part">{{roll.formula}}</span>
+											{{/each}}
+											<span class="part-total">{{d.total}}</span>
+										</p>
+										<ol class="dice-rolls">
+											{{#each d.rolls as |roll|}}
+												<li
+												  data-formula="{{roll.formula}}"
+												  data-total="{{roll.total}}"
+												  data-die="{{roll.die}}"
+												  data-critical="{{roll.critical}}"
+												  class="roll die {{roll.die}} {{#if roll.critical}}max{{/if}}">{{roll.total}}</li>
+											{{/each}}
+										</ol>
+									</div>
+								</section>
+				
+								<h4 class="damaged-target">target: {{d.targetName}}</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			{{/each}}
+			<!-- {{#if didAnyShotHit}}
+				<div class="card-buttons owner-only">
+					<button data-action="roll-range-damage">Roll damage</button>			
+				</div>
+ 			{{/if}} -->
+		{{/if}}
+	</div>
+</div>	

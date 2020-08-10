@@ -1,8 +1,9 @@
 import { CoC7Dice } from './dice.js';
 import { CoC7Check } from './check.js';
 import { COC7 } from './config.js';
-import { CoC7MeleeInitiator, CoC7MeleeTarget, CoC7MeleeResoltion } from './chat/combatcards.js';
-import { CoC7Roll } from './chat/combatcards.js';
+import { CoC7MeleeInitiator, CoC7MeleeTarget, CoC7MeleeResoltion } from './chat/meleecombat.js';
+import { CoC7RangeInitiator } from './chat/rangecombat.js';
+import { CoC7Roll } from './chat/helper.js';
 import { CoC7DamageRoll } from './chat/damagecards.js';
 
 export class CoC7Chat{
@@ -43,9 +44,10 @@ export class CoC7Chat{
 		html.on('click', '.simple-toggle', CoC7Chat._onToggleSelected.bind(this));
 		html.on('click', '.is-outnumbered', CoC7Chat._onOutnumberedSelected.bind(this));
 
-
-
+		html.on('click', '.target-selector', CoC7Chat._onTargetSelect.bind(this));
 	}
+
+
 
 	static async onUpdateChatMessage( chatMessage){
 		if( game.user.isGM){
@@ -128,6 +130,18 @@ export class CoC7Chat{
 		for( let zone of gmOnly )
 		{
 			if( !game.user.isGM){ zone.style.display = 'none';}
+		}
+
+		const userVisibleOnly = html.find('.user-visible-only');
+		for( let elem of userVisibleOnly)
+		{
+			if( game.user.isGM) elem.style.display='none';
+		}
+
+		const gmVisibleOnly = html.find('.gm-visible-only');
+		for( let elem of gmVisibleOnly)
+		{
+			if( !game.user.isGM) elem.style.display='none';
 		}
 
 		if( !game.user.isGM) // GM can see everything
@@ -455,6 +469,25 @@ export class CoC7Chat{
 		}
 	}
 
+	static _onTargetSelect( event){
+		const index = parseInt(event.currentTarget.dataset.key);
+		const targetsSelector = event.currentTarget.closest('.targets-selector');
+		targetsSelector.querySelectorAll('img').forEach( i =>{
+			i.style.border='none';
+		});
+		targetsSelector.querySelector(`[data-key="${index}"]`).querySelector('img').style.border='1px solid #000';
+		const targets = event.currentTarget.closest('.targets');
+		targets.querySelectorAll('.target').forEach( t => {
+			t.style.display='none';
+			t.dataset.active='false';
+		});
+		const targetToDisplay = targets.querySelector(`[data-target-key="${index}"]`);
+		targetToDisplay.style.display='block';
+		targetToDisplay.dataset.active='true';
+		// const chatCard = event.currentTarget.closest('.chat-card.range');
+		// const rangeInitiator = CoC7RangeInitiator.getFromCard( chatCard);
+	}
+
 	static _onOutnumberedSelected( event){
 		let actionButton;
 		const card = event.currentTarget.closest('.close-combat-card');
@@ -589,12 +622,20 @@ export class CoC7Chat{
 		event.preventDefault();
 
 		const card = event.currentTarget.closest('.chat-card');
-		if( card.classList.contains('initiator')){
-			CoC7MeleeInitiator.updateCardSwitch( event);
+		if( card.classList.contains( 'melee')){
+			if( card.classList.contains('initiator')){
+				CoC7MeleeInitiator.updateCardSwitch( event);
+			}
+
+			if( card.classList.contains('target')){
+				CoC7MeleeTarget.updateCardSwitch( event);
+			}
 		}
 
-		if( card.classList.contains('target')){
-			CoC7MeleeTarget.updateCardSwitch( event);
+		if( card.classList.contains( 'range')){
+			if( card.classList.contains('initiator')){
+				CoC7RangeInitiator.updateCardSwitch( event);
+			}
 		}
 
 		if( card.classList.contains('damage')){
@@ -892,7 +933,18 @@ export class CoC7Chat{
 				if( card.classList.contains('target')) meleeCard = CoC7MeleeTarget.getFromCard( card);
 				if( card.classList.contains('initiator')) meleeCard = CoC7MeleeInitiator.getFromCard( card);
 				meleeCard.upgradeRoll( luckAmount, newSuccessLevel, card);
-			} else
+			} else if( card.classList.contains('range')){
+				const rangeCard = CoC7RangeInitiator.getFromCard( card);
+				const rollResult = button.closest('.roll-result');
+				const rollIndex = rollResult ? parseInt(rollResult.dataset.index) : null;
+				if( button.classList.contains('pass-check')) {
+					rangeCard.passRoll(rollIndex);
+				} else {
+					const upgradeIndex = parseInt(button.dataset.index);
+					rangeCard.upgradeRoll( rollIndex, upgradeIndex);	
+				}			
+			}
+			else
 			{
 				let actor = CoC7Chat._getChatCardActor(card);
 				const detailedResultPlaceHolder = card.querySelector('.result-details');
@@ -1044,11 +1096,27 @@ export class CoC7Chat{
 			await target.publishCheckResult();
 			break;
 		}
-		case 'roll-damage':{
+		case 'roll-melee-damage':{
 			const damageCard = new CoC7DamageRoll( button.dataset.weapon, button.dataset.dealer, button.dataset.target, 'true' == button.dataset.critical );
 			damageCard.rollDamage( );
 			card.querySelector('.card-buttons').remove();
 			CoC7Chat.updateChatCard( card);
+			break;
+		}
+		case 'range-initiator-shoot':{
+			const rangeInitiator = CoC7RangeInitiator.getFromCard( card);
+			rangeInitiator.addShotAtCurrentTarget();
+			await rangeInitiator.updateChatCard();
+			break;
+		}
+		case 'range-initiator-roll':{
+			const rangeInitiator = CoC7RangeInitiator.getFromCard( card);
+			await rangeInitiator.resolveCard();
+			break;
+		}
+		case 'roll-range-damage':{
+			const rangeInitiator = CoC7RangeInitiator.getFromCard( card);
+			await rangeInitiator.rollDamage();
 			break;
 		}
 		default:

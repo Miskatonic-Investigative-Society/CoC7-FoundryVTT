@@ -1,5 +1,5 @@
 import { CoC7Check } from '../check.js';
-import { chatHelper } from './helper.js';
+import { chatHelper, CoC7Roll } from './helper.js';
 import { CoC7Chat } from '../chat.js';
 
 export class CoC7MeleeInitiator{
@@ -561,7 +561,7 @@ export class CoC7MeleeResoltion{
 				else if( this.initiator.roll.successLevel > this.target.roll.successLevel){
 					this.resultString = `${this.initiator.actor.name} won. Roll damage`;
 					this.winner = this.initiator;
-					this.action = 'roll-damage';
+					this.action = 'roll-melee-damage';
 					this.rollDamage = true;
 				}
 				else if( this.initiator.roll.successLevel <= this.target.roll.successLevel){
@@ -661,61 +661,3 @@ export class CoC7MeleeResoltion{
 		return 'systems/CoC7/templates/chat/combat/melee-resolution.html';
 	}
 }
-export class CoC7Roll{
-	static getFromCard( card){
-
-		const rollDiv = card.querySelector( 'div.dice-roll');
-		if( !rollDiv) return null;
-
-		const roll = new CoC7Roll();
-		chatHelper.getObjectFromElement( roll, rollDiv);
-
-		return roll;
-	}
-
-	static getFromCheck( check){
-		const roll = new CoC7Roll();
-
-		roll.rollType = check.rollType;
-		roll.side = check.side;
-		roll.action = check.action;
-		roll.refMessageId = check.refMessageId;
-		roll.referenceMessageId = check.referenceMessageId;
-
-		roll.successLevel = check.successLevel;
-		roll.difficulty = check.difficulty;
-		roll.skillId = check.skill ? check.skill.id : null;
-		roll.itemId = check.item ? check.item.id: null;
-		roll.diceMod = check.diceModifier;
-		roll.value = parseInt( check.rawValue);
-		roll.fumble = check.isFumble;
-		roll.critical = check.isCritical;
-		roll.characteristic = check.characteristic ? check.characteristic: null;
-		roll.result = check.dice.total;
-
-
-		roll.actorKey = check.actor.tokenKey;
-
-		if( check.actor.isToken){
-			roll.tokenId = check.actor.tokenKey;
-			roll.actorId = null;
-		} else {
-			roll.tokenKey = null;
-			roll.actorId = check.actor.tokenKey;
-		}
-
-		return roll;
-	}
-
-	static attachCheckToElement( card, check){
-		roll = CoC7Roll.getFromCheck( check);
-		roll.attachToElement( card);
-
-		return roll;
-	}
-
-	attachToElement( card){
-		chatHelper.attachObjectToElement(this, card);
-	}
-}
-
