@@ -39,6 +39,10 @@ export class CoC7Item extends Item {
 		});
 	}
 
+	static flags = {
+		malfunction: 'malfc'
+	}
+
 	/**
 	 * Toggle on of the item property in data.data.properties
 	 * @param {String} propertyId : name for the property to toggle
@@ -212,7 +216,7 @@ export class CoC7Item extends Item {
 	}
 
 	async toggleItemFlag( flagName){
-		const flagValue =  this.data.data.flags[flagName] ? false: true;
+		const flagValue =  !this.getItemFlag(flagName);
 		const name = `data.flags.${flagName}`;
 		await this.update( { [name]: flagValue});
 	}
@@ -229,7 +233,37 @@ export class CoC7Item extends Item {
 		return this.data.data.flags[flagName];
 	}
 
-	/**
+	get maxUsesPerRound(){
+		if( 'weapon' != this.type ) return null;
+		const multiShot = parseInt(this.data.data.usesPerRound.max);
+		if( isNaN(multiShot)) return 0;
+		return multiShot;
+	}
+
+	get usesPerRound(){
+		if( 'weapon' != this.type ) return null;
+		const singleShot = parseInt(this.data.data.usesPerRound.normal);
+		if( isNaN(singleShot)) return 0;
+		return singleShot;
+	}
+
+	get multipleShots(){
+		if( 'weapon' != this.type ) return null;
+		if( this.maxUsesPerRound <= 1){ return false;}
+		return true;
+	}
+
+	get singleShot(){
+		if( 'weapon' != this.type ) return null;
+		if( !this.usesPerRound){ return false;}
+		return true;
+	}
+
+	get baseRange(){
+		return parseInt( this.data.data.range.normal.value);
+	}
+
+	/** TODO : rien a faire ici !!
 	 * Get the Actor which is the author of a chat card
 	 * @param {HTMLElement} card    The chat card being used
 	 * @return {Actor|null}         The Actor entity or null

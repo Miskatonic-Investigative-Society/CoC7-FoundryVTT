@@ -89,7 +89,7 @@ export class CoC7WeaponSheet extends ItemSheet {
 			era.isEnabled = this.item.data.data.eras[key] == true;
 			data._eras.push(era);
 		}
-		data.usesAlternateSkill = this.item.data.data.properties.auto == true;
+		data.usesAlternateSkill = this.item.data.data.properties.auto == true || this.item.data.data.properties.brst == true;
 
 		return data;
 	}

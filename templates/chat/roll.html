@@ -1,4 +1,5 @@
-<div class="coc7 chat-card item-card roll-card"
+<div class="coc7 roll-result"
+	data-actor-key="{{actorKey}}"
 	data-roll-type="{{rollType}}"
 	data-side="{{side}}"
 	data-action="{{action}}"
@@ -9,18 +10,36 @@
 	data-skill-id="{{skill.data._id}}" 
 	data-item-id="{{item.data._id}}" 
 	data-dice-mod="{{diceModifier}}"
+	data-dice-modifier="{{diceModifier}}"
 	data-value="{{value}}" 
 	data-result="{{dice.total}}"
-	data-fumble="{{isFumble}}"
-	data-critical="{{isCritical}}"
-	data-characteristic="{{characteristic}}" 
+	data-is-success="{{isSuccess}}"
+	data-is-fumble="{{isFumble}}"
+	data-is-critical="{{isCritical}}"
+	data-characteristic="{{characteristic}}"
+	data-success-required="{{successRequired}}"
+	data-target-key="{{targetKey}}"
+	data-details="{{details}}"
+	data-can-be-pushed="{{canBePushed}}"
+	data-pushing="{{pushing}}"
+	data-has-enough-luck="{{hasEnoughLuck}}"
+	data-luck-needed="{{luckNeeded}}"
+	data-difficulty-level="{{difficultyLevel}}"
+	data-can-increase-success="{{canIncreaseSuccess}}"
+	data-has-malfunction="{{hasMalfunction}}"
 	{{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
 	<div class="dice-roll">
-		<div class="dice-result">
-			<div class="dice-formula">1D% {{#if dices.hasBonus}}{{dices.bonus}} {{dices.bonusType}} {{localize 'CoC7.Dice'}}{{/if}}</div>
+		<div
+		  class="dice-result"
+		  data-total="{{dices.total}}"
+		  data-ten-only-one-die="{{dices.tenOnlyOneDie}}"
+		  data-ten-result="{{dices.tenResult}}">
+			<div class="dice-formula {{#if isSuccess}}success{{else}}failure{{/if}}{{#if isCritical}} critical{{/if}}{{#if isFumble}} fumble{{/if}}">
+				{{skill.name}} ({{skill.data.data.value}}) {{#if dices.hasBonus}}{{dices.bonus}} {{dices.bonusType}} {{localize 'CoC7.Dice'}}{{/if}} - {{dices.total}}({{resultType}})
+			</div>
 			<div class="dice-tooltip" style="display: none;">
 				<section class="tooltip-part">
-					<div class="dice">
+					<div class="dice ten-dice">
 						<p class="part-formula">
 							{{#if dices.tenOnlyOneDie}}
 							{{localize 'CoC7.TensDie'}}
@@ -31,24 +50,32 @@
 						</p>
 						<ol class="dice-rolls">
 							{{#each dices.tens as |die key|}}
-								<li class="roll die d10 {{#unless die.selected}}discarded{{/unless}} {{#if die.isMax}}min{{/if}} {{#if die.isMin}}max{{/if}}">{{die.value}}</li>
+								<li
+									data-selected="{{die.selected}}"
+									data-is-max="{{die.isMax}}"
+									data-is-min="{{die.isMin}}"
+									data-value="{{die.value}}"
+									class="roll die d10 {{#unless die.selected}}discarded{{/unless}} {{#if die.isMax}}min{{/if}} {{#if die.isMin}}max{{/if}}">{{die.value}}</li>
 							{{/each}}
 						</ol>
 					</div>
 				</section>
 				<section class="tooltip-part">
-					<div class="dice">
+					<div class="dice unit-die">
 						<p class="part-formula">
 							{{localize 'CoC7.UnitsDie'}}
 							<span class="part-total">{{dices.unit.value}}</span>
 						</p>
 						<ol class="dice-rolls">
-							<li class="roll die d10">{{dices.unit.value}}</li>
+							<li data-value="{{dices.unit.value}}" class="roll die d10">{{dices.unit.value}}</li>
 						</ol>
 					</div>
 				</section>
 
 				<h4 class="result-details">{{resultType}}, {{successRequired}}</h4>
+				{{#if details}}
+				<h4 class="result-details">{{details}}</h4>
+				{{/if}}
 
 				<div class="card-buttons owner-only" data-actor-id="{{actor._id}}" style="padding-top: 5px;margin: 0;">
 					{{#unless isSuccess}}
@@ -66,16 +93,21 @@
 					
 					{{#unless pushing}}
 					{{#if canIncreaseSuccess}}
+					<div class="increase-success">
 						{{#each increaseSuccess as |level|}}
-							<button data-action="useLuck" data-luck-amount="{{level.luckToSpend}}" data-new-success-level="{{level.difficulty}}">Make it {{level.difficultyName}} for {{level.luckToSpend}} luck.</button>
+						<button 
+							data-action="useLuck"
+							data-luck-amount="{{level.luckToSpend}}"
+							data-luck-to-spend="{{level.luckToSpend}}"
+							data-new-success-level="{{level.difficulty}}"
+							data-difficulty="{{level.difficulty}}">Make it {{level.difficultyName}} for {{level.luckToSpend}} luck.</button>
 						{{/each}}
+					</div>
 					{{/if}}
 					{{/unless}}
 				</div>
 			</div>
-			<h4 id="diceResult" class="dice-total {{#if isSuccess}}success{{else}}failure{{/if}}{{#if isCritical}} critical{{/if}}{{#if isFumble}} fumble{{/if}} ">{{dices.total}} {{#if pushing}} {{localize 'CoC7.PushedRoll'}}{{/if}}</h4>
 			{{#if hasMalfunction}}<h4 class="malfunction">{{malfunctionTxt}}</h4>{{/if}}
 		</div>
 	</div>
-
 </div>

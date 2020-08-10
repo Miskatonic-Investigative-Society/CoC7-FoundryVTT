@@ -96,11 +96,20 @@
 
 "CoC7.combatCard.dive4cover": "Dive for Cover",
 
+"CoC7.rangeCombatCard.SingleShot" : "Single Shot",
+"CoC7.rangeCombatCard.MultipleShots" : "Multi. Shots",
+"CoC7.rangeCombatCard.Burst" : "Burst Fire",
+"CoC7.rangeCombatCard.FullAuto" : "Full Auto",
 "CoC7.rangeCombatCard.BaseRange" : "Base range",
 "CoC7.rangeCombatCard.LongRange" : "Long range",
 "CoC7.rangeCombatCard.ExtremeRange" : "Xtrm range",
 "CoC7.rangeCombatCard.Cover" : "Under cover",
 "CoC7.rangeCombatCard.PointBlankRange" : "Point blank range",
+"CoC7.rangeCombatCard.BigTarget": "Big target",
+"CoC7.combatCard.SmallTarget": "Small target",
+"CoC7.rangeCombatCard.FastMovingTarget": "Fast",
+"CoC7.rangeCombatCard.InMelee": "In melee",
+"CoC7.rangeCombatCard.aiming": "Aiming",
 
 "CoC7.DropZone": "DropZone",
 
@@ -115,7 +124,8 @@
 "CoC7.WeaponDamage": "Damage",
 "CoC7.Weapon.BlastRadius": "Blast radius",
 "CoC7.WeaponMalfunction": "Malfunction",
-"CoC7.WeaponUsesPerRound": "Uses/round",
+"CoC7.WeaponUsesPerRound": "Round(s)/use",
+"CoC7.WeaponSheet.RoundsPerUse.Info": "How many rounds are needed to get the weapon ready to shoot",
 "CoC7.WeaponMax": "Max uses/round",
 "CoC7.BurstSize": "Bullets/burst",
 "CoC7.WeaponBulletsInMag": "Magazine",

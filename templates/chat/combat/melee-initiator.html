@@ -137,7 +137,7 @@
                     {{#unless check.pushing}}
                         {{#if check.canIncreaseSuccess}}
                             {{#each check.increaseSuccess as |level|}}
-                                <button data-action="useLuck" data-luck-amount="{{level.LuckToSpend}}" data-new-success-level="{{level.difficulty}}">Upgrade to {{level.difficultyName}} success for {{level.LuckToSpend}} luck.</button>
+                                <button data-action="useLuck" data-luck-amount="{{level.luckToSpend}}" data-new-success-level="{{level.difficulty}}">Upgrade to {{level.difficultyName}} success for {{level.luckToSpend}} luck.</button>
                             {{/each}}
                         {{/if}}
                     {{/unless}}

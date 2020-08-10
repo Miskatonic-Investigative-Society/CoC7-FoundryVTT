@@ -14,7 +14,7 @@
                         {{/select}}
 					</select>
 
-					{{#if data.properties.auto}}
+					{{#if usesAlternateSkill}}
 						<select class="attribute-dtype" name="data.skill.alternativ.id">
 							{{#select data.skill.alternativ.id}}
 							{{#each combatSkill as |cbs|}}
@@ -97,8 +97,8 @@
 					<input class="weapon-property" style="flex: 0 0 40px;" type="text" name="data.malfunction" value="{{data.malfunction}}" placeholder="-"/>
 				</div>
 				<div class="flexrow" style="flex: 0 0 32%">
-					<label>{{localize 'CoC7.WeaponUsesPerRound'}} :</label>
-					<input class="weapon-property" style="flex: 0 0 40px;" type="text" name="data.usesPerRound.normal" value="{{data.usesPerRound.normal}}" placeholder="1"/>
+					<label title="{{localize 'CoC7.WeaponSheet.RoundsPerUse.Info'}}">{{localize 'CoC7.WeaponUsesPerRound'}} :</label>
+					<input class="weapon-property" style="flex: 0 0 40px;" type="text" name="data.usesPerRound.normal" value="{{data.usesPerRound.normal}}" placeholder="-"/>
 				</div>
 				<div class="flexrow" style="flex: 0 0 32%">
 					<label>{{localize 'CoC7.WeaponMax'}} :</label>

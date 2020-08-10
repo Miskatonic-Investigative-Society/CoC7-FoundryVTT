@@ -2,7 +2,8 @@ import { RollDialog } from '../../apps/roll-dialog.js';
 // import { CoC7Dice } from '../../dice.js'
 import { CoC7Check } from '../../check.js';
 import { COC7 } from '../../config.js';
-import { CoC7MeleeInitiator, CoC7RangeInitiator } from '../../chat/combatcards.js';
+import { CoC7MeleeInitiator } from '../../chat/meleecombat.js';
+import { CoC7RangeInitiator } from '../../chat/rangecombat.js';
 import { CoC7DamageRoll } from '../../chat/damagecards.js';
 
 /**
@@ -109,6 +110,8 @@ export class CoC7ActorSheet extends ActorSheet {
 			if( weapons){
 				for( const weapon of weapons)
 				{
+					weapon.usesAlternateSkill = weapon.data.properties.auto == true || weapon.data.properties.brst == true;
+
 					weapon.skillSet = true;
 					// weapon.data.skill.main.name = '';
 					// weapon.data.skill.main.value = 0;
