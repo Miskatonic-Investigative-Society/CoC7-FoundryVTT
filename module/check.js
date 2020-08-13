@@ -321,7 +321,7 @@ export class CoC7Check {
 		this.increaseSuccess = [];
 
 		// Can't spend luck on pushed rolls.
-		if( !this.pushing){
+		if( !this.pushing && 'lck' != this.attribute && 'san' != this.attribute){
 
 			if(this.difficulty <= CoC7Check.difficultyLevel.regular  && this.dice.total > this.hardThreshold){
 				let nextLevel = {};
