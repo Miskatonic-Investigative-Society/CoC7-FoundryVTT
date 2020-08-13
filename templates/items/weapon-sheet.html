@@ -1,4 +1,7 @@
-<form class="{{cssClass}} flexcol" style="border: groove 2px;" autocomplete="off">
+<form class="{{cssClass}} weapon flexcol" style="border: groove 2px;" autocomplete="off"
+  data-item-id="{{item._id}}"
+  data-has-owner="{{hasOwner}}"
+  data-actor-key="{{actorKey}}">
 	<div class="item-header flexrow" style="flex: 0 0 110px;">
 		<div class="item-property" style="display: flex; flex-direction: column; flex: 1;">
 			<div class="item-name" style="display: flex; flex-direction: row; height: 24px;">
@@ -38,7 +41,7 @@
 					<div style="display: flex; flex: 0 0 50%;">
 						<label>{{localize 'CoC7.WeaponRange'}} (yd) :</label>
 						<input class="item-skill" style="flex: 1;" type="text" name="data.range.normal.value" value="{{data.range.normal.value}}" placeholder="Base"/>
-						{{#if data.properties.xplv}}
+						{{#if data.properties.shotgun}}
 							<input class="item-skill" style="flex: 1;" type="text" name="data.range.long.value" value="{{data.range.long.value}}" placeholder="Long"/>
 							<input class="item-skill" style="flex: 1;" type="text" name="data.range.extreme.value" value="{{data.range.extreme.value}}" placeholder="Xtrm"/>
 						{{/if}}
@@ -46,7 +49,7 @@
 					<div style="display: flex; flex: 0 0 50%;">
 						<label>{{localize 'CoC7.WeaponDamage'}} :</label>
 						<input class="item-skill" style="flex: 1;" type="text" name="data.range.normal.damage" value="{{data.range.normal.damage}}" placeholder="0"/>
-						{{#if data.properties.xplv}}
+						{{#if data.properties.shotgun}}
 							<input class="item-skill" style="flex: 1;" type="text" name="data.range.long.damage" value="{{data.range.long.damage}}" placeholder="0"/>
 							<input class="item-skill" style="flex: 1;" type="text" name="data.range.extreme.damage" value="{{data.range.extreme.damage}}" placeholder="0"/>
 						{{/if}}
@@ -60,13 +63,9 @@
 
 			<div class="skill-attributes" style="display: block;" data-set="properties">
 				{{#each _properties as |property key|}}
-					<span class="toggle-switch {{#if property.isEnabled}} switched-on {{/if}}" data-property="{{property.id}}">{{localize property.name}}</span>
-					<div style="display: none;">
-						<input id="properties-{{property.id}}" type="checkbox" name="data.properties.{{property.id}}" {{checked property.isEnabled}}/>
-					</div>
+					<span class="weapon-property {{#if property.isEnabled}}switched-on{{/if}}" data-property="{{property.id}}">{{localize property.name}}</span>
 				{{/each}}
 			</div>
-		
 		</div>
 
 		<img class="profile-img" style="flex: 0 0 100px;" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="100" width="100"/>
@@ -94,30 +93,30 @@
 			<div class="flexrow" style="flex: 0 0 auto;">
 				<div class="flexrow" style="flex: 0 0 32%">
 					<label>{{localize 'CoC7.WeaponMalfunction'}} :</label>
-					<input class="weapon-property" style="flex: 0 0 40px;" type="text" name="data.malfunction" value="{{data.malfunction}}" placeholder="-"/>
+					<input class="weapon-detail" style="flex: 0 0 40px;" type="text" name="data.malfunction" value="{{data.malfunction}}" placeholder="-"/>
 				</div>
 				<div class="flexrow" style="flex: 0 0 32%">
 					<label title="{{localize 'CoC7.WeaponSheet.RoundsPerUse.Info'}}">{{localize 'CoC7.WeaponUsesPerRound'}} :</label>
-					<input class="weapon-property" style="flex: 0 0 40px;" type="text" name="data.usesPerRound.normal" value="{{data.usesPerRound.normal}}" placeholder="-"/>
+					<input class="weapon-detail" style="flex: 0 0 40px;" type="text" name="data.usesPerRound.normal" value="{{data.usesPerRound.normal}}" placeholder="-"/>
 				</div>
 				<div class="flexrow" style="flex: 0 0 32%">
 					<label>{{localize 'CoC7.WeaponMax'}} :</label>
-					<input class="weapon-property" style="flex: 0 0 40px;" type="text" name="data.usesPerRound.max" value="{{data.usesPerRound.max}}" placeholder="-"/>
+					<input class="weapon-detail" style="flex: 0 0 40px;" type="text" name="data.usesPerRound.max" value="{{data.usesPerRound.max}}" placeholder="-"/>
 				</div>
 				<div class="flexrow" style="flex: 0 0 32%">
 					<label>{{localize 'CoC7.WeaponBulletsInMag'}} :</label>
-					<input class="weapon-property" style="flex: 0 0 40px;" type="text" name="data.bullets" value="{{data.bullets}}" placeholder="-"/>
+					<input class="weapon-detail" style="flex: 0 0 40px;" type="text" name="data.bullets" value="{{data.bullets}}" placeholder="-"/>
 				</div>
 				{{#if data.properties.brst}}
 				<div class="flexrow" style="flex: 0 0 32%">
 					<label>{{localize 'CoC7.BurstSize'}} :</label>
-					<input class="weapon-property" style="flex: 0 0 40px;" type="text" name="data.usesPerRound.burst" value="{{data.usesPerRound.burst}}" placeholder="-"/>
+					<input class="weapon-detail" style="flex: 0 0 40px;" type="text" name="data.usesPerRound.burst" value="{{data.usesPerRound.burst}}" placeholder="-"/>
 				</div>
 				{{/if}}
 				{{#if data.properties.blst}}
 				<div style="display: flex; flex: 0 0 32%;">
 					<label>{{localize 'CoC7.Weapon.BlastRadius'}} :</label>
-					<input class="weapon-property" style="flex: 1;" type="text" name="data.blastRadius" value="{{data.blastRadius}}" placeholder="-"/>
+					<input class="weapon-detail" style="flex: 1;" type="text" name="data.blastRadius" value="{{data.blastRadius}}" placeholder="-"/>
 				</div>
 				{{/if}}
 			</div>
