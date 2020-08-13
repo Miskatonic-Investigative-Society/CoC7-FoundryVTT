@@ -27,7 +27,7 @@
 					</div>
 					<div class="flexrow flex2" style="font-size: 10px; padding-left: 2px;">
 						{{#if weapon.data.properties.rngd}}
-							{{#if weapon.data.properties.xplv}}
+							{{#if weapon.data.properties.shotgun}}
 								{{#each weapon.data.range as |range key|}}
 								<div class="flex1 weapon-damage" data-range="{{key}}">
 									<a class="roll" data-mode="roll" title="{{range.value}}" data-formula="{{range.damage}}"><i class="fas fa-dice-d20"></i> {{range.damage}}</a>
@@ -79,7 +79,7 @@
 
 					</div>
 					<div class="flexrow flex2 weapon-damage" style="font-size: 10px;">
-						{{#if weapon.data.properties.xplv}}
+						{{#if weapon.data.properties.shotgun}}
 							{{#each weapon.data.range as |range key|}}
 							<div class="flex1">
 								<input 

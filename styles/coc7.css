@@ -334,6 +334,7 @@
 }
 
 .coc7 .toggle-switch,
+.coc7 .weapon-property,
 .coc7 .radio-switch,
 .coc7 .panel-switch {
     display: inline-block;
