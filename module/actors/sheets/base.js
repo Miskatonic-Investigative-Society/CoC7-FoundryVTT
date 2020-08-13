@@ -142,13 +142,15 @@ export class CoC7ActorSheet extends ActorSheet {
 					}
 
 					weapon.data._properties = [];
-					for( let [key, value] of Object.entries(weapon.data.properties)){
+					for( let [key, value] of Object.entries(COC7['weaponProperties']))
+					{
 						let property = {};
 						property.id = key;
-						property.value = value;
-						property.name = COC7.weaponProperties[key];
-						weapon.data._properties.push( property);
+						property.name = value;
+						property.value = true == weapon.data.properties[key];
+						weapon.data._properties.push(property);
 					}
+
 					data.weapons[weapon._id] = weapon;
 					if( weapon.data.properties.rngd) data.rangeWpn.push( weapon);
 					else data.meleeWpn.push(weapon);

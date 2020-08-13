@@ -51,6 +51,41 @@ export class CoC7Item extends Item {
 		let checkedProps = {};
 		let fighting;
 		let firearms;
+		if( 'weapon' === this.type && !override ){
+			if( 'shotgun' === propertyId){
+				if( !this.data.data.properties.shotgun){
+					checkedProps = {
+						'data.properties.rngd': true,
+						'data.properties.melee': false,
+						'data.properties.shotgun': true
+					};
+				} else {
+					checkedProps = {
+						'data.properties.shotgun': false
+					};
+				}
+			}
+
+			if( 'melee' === propertyId || 'rngd' === propertyId){
+				let meleeWeapon;
+				if( 'melee' === propertyId && !this.data.data.properties.melee) meleeWeapon = true;
+				if( 'melee' === propertyId && this.data.data.properties.melee) meleeWeapon = false;
+				if( 'rngd' ===  propertyId && !this.data.data.properties.rngd) meleeWeapon = false;
+				if( 'rngd' ===  propertyId && this.data.data.properties.rngd) meleeWeapon = true;
+				if( meleeWeapon) {
+					checkedProps = {
+						'data.properties.melee': true,
+						'data.properties.rngd': false
+					};
+				} else {
+					checkedProps = {
+						'data.properties.melee': false,
+						'data.properties.rngd': true
+					};				
+				}
+			}
+		}
+
 		if( 'skill' == this.type && !override){
 			let modif = false;
 			if( 'combat' ==  propertyId) {
@@ -261,6 +296,14 @@ export class CoC7Item extends Item {
 
 	get baseRange(){
 		return parseInt( this.data.data.range.normal.value);
+	}
+
+	get longRange(){
+		return parseInt( this.data.data.range.long.value);
+	}
+
+	get extremeRange(){
+		return parseInt( this.data.data.range.extreme.value);
 	}
 
 	/** TODO : rien a faire ici !!
