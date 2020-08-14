@@ -43,7 +43,12 @@
 							<a class="roll" data-mode="roll" data-formula="{{weapon.data.range.normal.damage}}" title="{{weapon.data.range.normal.value}}"><i class="fas fa-dice-d20"></i> {{weapon.data.range.normal.damage}}</a>
 						</div>
 						{{/if}}
+						<div class="flex0">
+							{{#if weapon.data.properties.addb}}<span class="tag" title="Add DB">{{localize 'CoC7.WeaponAddb'}}</span>{{/if}}
+							{{#if weapon.data.properties.ahdb}}<span class="tag" title="Add DB">{{localize 'CoC7.WeaponAhdb'}}</span>{{/if}}
+						</div>
 					</div>
+
 				</div>
 			</li>
 		{{else}}
@@ -83,7 +88,7 @@
 							{{#each weapon.data.range as |range key|}}
 							<div class="flex1">
 								<input 
-									class="damage"
+									class="damage-formula"
 									style="display: flex; height: fit-content;padding: 0 1px;text-align: left;border: 1px solid whitesmoke;"
 									type="text" data-range="{{key}}"
 									value="{{range.damage}}">
@@ -92,7 +97,7 @@
 						{{else}}
 							<div class="flex1">
 								<input 
-								class="damage"
+								class="damage-formula"
 								style="display: flex; height: fit-content;padding: 0 1px;text-align: left;border: 1px solid whitesmoke;"
 								type="text" data-range="normal"
 								value="{{weapon.data.range.normal.damage}}">
