@@ -87,12 +87,12 @@
 						</div>
 
 					</div>
-					<div class="flexrow flex2 weapon-damage" style="font-size: 10px;">
+					<div class="flexrow flex2" style="font-size: 10px;">
 						{{#if weapon.data.properties.shotgun}}
 							{{#each weapon.data.range as |range key|}}
 							<div class="flex1">
 								<input 
-									class="weapon-damage"
+									class="damage"
 									style="display: flex; height: fit-content;padding: 0 1px;text-align: left;border: 1px solid whitesmoke;"
 									type="text" data-range="{{key}}"
 									value="{{range.damage}}">
@@ -101,7 +101,7 @@
 						{{else}}
 							<div class="flex1">
 								<input 
-								class="weapon-damage"
+								class="damage"
 								style="display: flex; height: fit-content;padding: 0 1px;text-align: left;border: 1px solid whitesmoke;"
 								type="text" data-range="normal"
 								value="{{weapon.data.range.normal.damage}}">
@@ -207,12 +207,12 @@
 						</div>
 
 					</div>
-					<div class="flexrow flex2 weapon-damage" style="font-size: 10px;">
+					<div class="flexrow flex2" style="font-size: 10px;">
 						{{#if weapon.data.properties.shotgun}}
 							{{#each weapon.data.range as |range key|}}
 							<div class="flex1">
 								<input 
-									class="weapon-damage"
+									class="damage"
 									style="display: flex; height: fit-content;padding: 0 1px;text-align: left;border: 1px solid whitesmoke;"
 									type="text" data-range="{{key}}"
 									value="{{range.damage}}">
@@ -221,7 +221,7 @@
 						{{else}}
 							<div class="flex1">
 								<input 
-								class="weapon-damage"
+								class="damage"
 								style="display: flex; height: fit-content;padding: 0 1px;text-align: left;border: 1px solid whitesmoke;"
 								type="text" data-range="normal"
 								value="{{weapon.data.range.normal.damage}}">

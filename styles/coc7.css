@@ -440,6 +440,8 @@
 .coc7.sheet .skills-list .item img {
     flex: 0 0 24px;
     margin-right: 5px;
+    object-fit: contain;
+    border: none;
 }
 .coc7.sheet .skills-list .skill-name {
     margin: 0;
@@ -665,6 +667,8 @@
     height: 100px;
     max-width: 100px;
     margin: 6px;
+    object-fit: contain;
+    border: none;
 }
 
 .coc7.sheet.actor.character {
@@ -829,6 +833,8 @@
 .coc7.chat-card .card-header img {
     flex: 0 0 36px;
     margin-right: 5px;
+    object-fit: contain;
+    border: none;
 }
 
 .coc7.chat-card .card-header h3 {
