@@ -83,7 +83,7 @@ export class CoC7Chat{
 		
 	}
 
-	static async renderMessageHook(message, html) {
+	static async renderMessageHook(message, html, data) {
 
 		//Handle showing dropdown selection
 		html.find('.dropbtn').click(event => event.currentTarget.closest('.dropdown').querySelector('.dropdown-content').classList.toggle('show'));

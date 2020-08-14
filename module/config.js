@@ -1,6 +1,7 @@
 // Namespace COC7 Configuration Values
 export const COC7 = {};
 
+CONFIG.ChatMessage.template = 'systems/CoC7/templates/chat/chat-message.html';
 
 /**
  * The set of Eras used within the system
