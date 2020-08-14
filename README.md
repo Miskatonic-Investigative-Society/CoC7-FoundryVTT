@@ -20,6 +20,13 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.2.5 :
+
+* Bug correction on creature sheets.
+  * Size is now limited and content will be scrolled.
+  * Weapon damage is now correctly entered.
+  * Added a small reminder for bonus damage after weapons damage formula
+
 version 0.2.4 :
 
 * Range combat supports shotguns.
