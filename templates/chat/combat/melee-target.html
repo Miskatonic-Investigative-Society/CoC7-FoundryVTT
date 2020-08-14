@@ -18,17 +18,20 @@
 
     <header class="card-header flexcol">
         <div class="flexrow">
-            <img style="flex: none;" src="{{actor.img}}" title="{{actor.name}}" width="36" height="36"/>
             {{#if dodging}}
+            <img style="flex: none;" src="{{actor.dodgeSkill.data.img}}" title="{{actor.name}}" width="36" height="36"/>
             <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{actor.dodgeSkill.name}}</h3>
+            <div style="flex: 0 0 36px;margin-left:5px"></div>
             {{else}}
                 {{#if fightingBack}}
+                <img style="flex: none;" src="{{weapon.img}}" title="{{actor.name}}" width="36" height="36"/>
                 <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{weapon.name}}</h3>
+                <div style="flex: 0 0 36px;margin-left:5px"></div>
                 {{else}}
                     {{#if maneuvering}}
+                    <img style="flex: none;" src="{{skill.data.img}}" title="{{actor.name}}" width="36" height="36"/>
                     <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{skill.name}}</h3>
-                    {{else}}
-                    <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{actor.name}}</h3>
+                    <div style="flex: 0 0 36px;margin-left:5px"></div>
                     {{/if}}
                 {{/if}}
             {{/if}}
@@ -44,8 +47,18 @@
             {{#if maneuvering}}
                 {{{skill.data.data.description.value}}}
             {{/if}}
+            {{#if rolled}}
+            <div class="flex0 advantage-selection">
+                {{#if dodging}}<span class="tag" title="{{actor.dodgeSkill.name}}">{{localize 'CoC7.Dodge'}}</span>{{/if}}
+                {{#if fightingBack}}<span class="tag" title="{{weapon.name}}">{{localize 'CoC7.FightBack'}}</span>{{/if}}
+                {{#if maneuvering}}<span class="tag" title="{{skill.name}}">{{localize 'CoC7.Maneuver'}}</span>{{/if}}
+                {{#if advantage}}<span class="tag" title="Advantage">{{localize 'CoC7.Advantage'}}</span>{{/if}}
+                {{#if disadvantage}}<span class="tag" title="Disadvantage">{{localize 'CoC7.Disadvantage'}}</span>{{/if}}
+            </div>
+            {{/if}}
         </div>
 
+        {{#unless rolled}}
         <div class="flexrow advantage-selection">
             <span class="flex1 toggle-switch advantage {{#unless rolled}}simple-flag{{/unless}} {{#if advantage}}switched-on{{/if}} gm-select-only"
             title="Add 1 bonus die (assailant is prone, restrained...)" 
@@ -58,9 +71,11 @@
             data-flag="disadvantage" 
             data-selected={{disadvantage}}>{{localize 'CoC7.Disadvantage'}}</span>
         </div>
+        {{/unless}}
 
     </header>
 
+    {{#unless rolled}}
     <div class="flexrow response-selection">
 		<span class="flex1 toggle-switch dodge {{#if actor.dodgeSkill._id}}{{#unless rolled}}simple-toggle{{/unless}}{{else}}inactive{{/if}} {{#if dodging}}switched-on{{/if}}"
 			data-action="dodge"
@@ -87,6 +102,7 @@
             </div>        
         </div>
     </div>
+    {{/unless}}
 
     {{#if rolled}}
     <div class="dice-roll" style="padding-top: 5px;"
