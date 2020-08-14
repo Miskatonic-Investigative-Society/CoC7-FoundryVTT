@@ -24,7 +24,7 @@ version 0.2.4 :
 
 * Range combat supports shotguns.
 * Bug correction (spending luck on luck and SAN rolls no more possible).
-* Slight range combat refactoring.
+* Slight range combat refactoring (more to come at a later stage. Aim is to reduce size and number of cards).
   * Additions of icons to the cards.
   * Bonus, penalties, target response have been moved to the card tooltip once the card is resolved.
 * Spanish translation updated thanks to Gerbek.
