@@ -42,6 +42,11 @@ export class CoC7MeleeInitiator{
 		return this.actor.getWeaponSkills( this.itemId);
 	}
 
+	get targetImg(){
+		if( this.target.actor.isToken) return this.target.data.img;
+		return this.target.actor.img;
+	}
+
 	template = 'systems/CoC7/templates/chat/combat/melee-initiator.html';
 
 	async createChatCard(){
@@ -52,11 +57,17 @@ export class CoC7MeleeInitiator{
 		
 		const user = this.actor.user ? this.actor.user : game.user;
 
-		const chatMessage = await ChatMessage.create({
+		const data = {
 			user: user._id,
 			speaker,
 			content: html
-		});
+		};
+
+		data.flags = {
+			img: this.actor.isToken ? this.actor.token.data.img: this.actor.img
+		};
+
+		const chatMessage = await ChatMessage.create(data);
 		
 		return chatMessage;
 	}
@@ -323,11 +334,17 @@ export class CoC7MeleeTarget{
 		
 		const user = this.actor.user ? this.actor.user : game.user;
 
-		const message = await ChatMessage.create({
+		const data = {
 			user: user._id,
 			speaker,
 			content: html
-		});
+		};
+
+		data.flags = {
+			img: this.actor.isToken ? this.actor.token.data.img: this.actor.img
+		};
+
+		const message = await ChatMessage.create(data);
 		
 		this.messageId = message.id;
 		return message;

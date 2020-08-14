@@ -50,13 +50,6 @@ export class CoCActor extends Actor {
 		{
 			return super.create(data, options);
 		}
-		// data.data= { 'biography' : {
-		// 	'ideology': {
-		// 		'value': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
-		// 	}
-		// }};
-
-
 		return super.create(data, options);
 	}
 	
@@ -538,10 +531,26 @@ export class CoCActor extends Actor {
 		}
 		return this.id;
 	}
-
   
 	get actorKey(){
 		return this.tokenKey;
+	}
+
+	static getActorFromKey(key) {
+
+		// Case 1 - a synthetic actor from a Token
+		if (key.includes('.')) {
+			const [sceneId, tokenId] = key.split('.');
+			const scene = game.scenes.get(sceneId);
+			if (!scene) return null;
+			const tokenData = scene.getEmbeddedEntity('Token', tokenId);
+			if (!tokenData) return null;
+			const token = new Token(tokenData);
+			return token.actor;
+		}
+
+		// Case 2 - use Actor ID directory
+		return game.actors.get(key) || null;
 	}
 
 	/**

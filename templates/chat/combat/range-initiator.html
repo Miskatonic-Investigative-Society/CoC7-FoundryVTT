@@ -122,6 +122,7 @@
 			data-base-range="{{trgt.baseRange}}"
 			data-long-range="{{trgt.longRange}}"
 			data-extreme-range="{{trgt.extremeRange}}"
+			data-out-of-range="{{trgt.outOfRange}}"
 			data-cover="{{trgt.cover}}"
 			data-surprised="{{trgt.surprised}}"
 			data-point-blank-range="{{trgt.pointBlankRange}}"
@@ -144,9 +145,12 @@
 					<span class="{{#if trgt.longRange}}tag{{else}}invisible{{/if}}"
 						title="{{localize 'CoC7.combatCard.LongRange'}}"
 						>{{localize 'CoC7.rangeCombatCard.LongRange'}}</span>
-					<span class="{{#if trgt.extremeRange}}tag{{else}}invisible{{/if}}"
+						<span class="{{#if trgt.extremeRange}}tag{{else}}invisible{{/if}}"
 						title="{{localize 'CoC7.rangeCombatCard.ExtremeRange'}}"
 						>{{localize 'CoC7.rangeCombatCard.ExtremeRange'}}</span>
+					<span class="{{#if trgt.outOfRange}}tag{{else}}invisible{{/if}}"
+						title="{{localize 'CoC7.rangeCombatCard.OutOfRange'}}"
+						>{{localize 'CoC7.rangeCombatCard.OutOfRange'}}</span>
 					<span class="{{#if trgt.cover}}tag{{else}}invisible{{/if}}"
 						title="1 malus die. The target is under cover or successfully dived for cover" 
 						>{{localize 'CoC7.rangeCombatCard.Cover'}}</span>
@@ -241,6 +245,9 @@
 					<span class="{{#if trgt.extremeRange}}tag{{else}}invisible{{/if}}"
 						title="{{localize 'CoC7.rangeCombatCard.ExtremeRange'}}"
 						>{{localize 'CoC7.rangeCombatCard.ExtremeRange'}}</span>
+					<span class="{{#if trgt.outOfRange}}tag{{else}}invisible{{/if}}"
+						title="{{localize 'CoC7.rangeCombatCard.OutOfRange'}}"
+						>{{localize 'CoC7.rangeCombatCard.OutOfRange'}}</span>
 					<span class="{{#if trgt.cover}}tag{{else}}invisible{{/if}}"
 						title="1 malus die. The target is under cover or successfully dived for cover" 
 						>{{localize 'CoC7.rangeCombatCard.Cover'}}</span>
@@ -266,27 +273,33 @@
 			</div>
 			{{#unless ../rolled}}
 			<div class="card-buttons owner-only">
-				{{#if trgt.shotDifficulty.impossible}}
+				{{#if trgt.outOfRange}}
 					<button style='background:darkred; color: white;'>
-						Shot is impossible
+						Target out of range
 					</button>
 				{{else}}
-					{{#if ../multiTarget}}
-					<button
-						data-action="range-initiator-shoot"
-						data-skill="{{autoWeaponSkill._id}}">Shoot {{trgt.name}} {{../autoWeaponSkill.name}} ({{../autoWeaponSkill.data.data.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
-					</button>
+					{{#if trgt.shotDifficulty.impossible}}
+						<button style='background:darkred; color: white;'>
+							Shot is impossible
+						</button>
 					{{else}}
-						{{#if ../autoFire}}
-							<button
-								data-action="range-initiator-roll"
-								data-skill="{{autoWeaponSkill._id}}">Roll {{../autoWeaponSkill.name}} ({{../autoWeaponSkill.data.data.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
-							</button>
+						{{#if ../multiTarget}}
+						<button
+							data-action="range-initiator-shoot"
+							data-skill="{{autoWeaponSkill._id}}">Shoot {{trgt.name}} {{../autoWeaponSkill.name}} ({{../autoWeaponSkill.data.data.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
+						</button>
 						{{else}}
-							<button
-								data-action="range-initiator-roll"
-								data-skill="{{mainWeaponSkill._id}}">Roll {{../mainWeaponSkill.name}} ({{../mainWeaponSkill.data.data.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
-							</button>
+							{{#if ../autoFire}}
+								<button
+									data-action="range-initiator-roll"
+									data-skill="{{autoWeaponSkill._id}}">Roll {{../autoWeaponSkill.name}} ({{../autoWeaponSkill.data.data.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
+								</button>
+							{{else}}
+								<button
+									data-action="range-initiator-roll"
+									data-skill="{{mainWeaponSkill._id}}">Roll {{../mainWeaponSkill.name}} ({{../mainWeaponSkill.data.data.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
+								</button>
+							{{/if}}
 						{{/if}}
 					{{/if}}
 				{{/if}}
@@ -306,6 +319,7 @@
 				  data-actor-key="{{shot.actorKey}}"
 				  data-actor-name="{{shot.actorName}}"
 				  data-difficulty-level="{{shot.difficultyLevel}}"
+				  data-damage="{{shot.damage}}"
 				  data-modifier="{{shot.modifier}}"
 				  data-bullets-shot="{{shot.bulletsShot}}"
 				  data-transit-bullets="{{shot.transitBullets}}"
