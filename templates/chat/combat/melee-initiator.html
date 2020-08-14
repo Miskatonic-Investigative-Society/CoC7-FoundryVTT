@@ -17,12 +17,28 @@
         <div class="flexrow">
             <img style="flex: none;" src="{{item.img}}" title="{{item.name}}" width="36" height="36"/>
             <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{item.name}}</h3>
+            <img style="flex: none;" src="{{targetImg}}" title="{{target.name}}" width="36" height="36"/>
         </div>
 
         <div class="card-content">
             {{{item.data.data.description.value}}}
+            {{#if rolled}}
+            <div class="flex0 advantage-selection">
+                {{#if advantage}}<span class="tag" title="Advantage">{{localize 'CoC7.Advantage'}}</span>{{/if}}
+                {{#if disadvantage}}<span class="tag" title="Disadvantage">{{localize 'CoC7.Disadvantage'}}</span>{{/if}}
+            </div>
+            <div class="flex0 bonus-selection">
+                <span class="tag">{{target.name}} :</span>
+                {{#if outnumbered}}<span class="tag" title="Outnumbered">{{localize 'CoC7.OutNumbered'}}</span>{{/if}}
+                {{#if surprised}}<span class="tag" title="Surprised">{{localize 'CoC7.combatCard.surpised'}}</span>{{/if}}
+                {{#if autoSuccess}}<span class="tag" title="Automatic success">{{localize 'CoC7.combatCard.autoSuccess'}}</span>{{/if}}
+            </div>
+            {{/if}}
         </div>
 
+  
+
+        {{#unless rolled}}
         <div class="flexrow advantage-selection">
             <span class="flex1 toggle-switch advantage {{#unless rolled}}simple-flag{{/unless}} {{#if advantage}}switched-on{{/if}} gm-select-only"
             title="Add 1 bonus die (target is prone, restrained...)" 
@@ -35,13 +51,17 @@
             data-flag="disadvantage" 
             data-selected={{disadvantage}}>{{localize 'CoC7.Disadvantage'}}</span>
         </div>
+        {{/unless}}
     </header>
+
+    {{#unless rolled}}
 
     <div class="target-name">
         {{#if target}}
         <label>Target : {{target.name}}</label>
         {{/if}}
     </div>
+
 
     <div class="flexrow bonus-selection">
         <span class="flex1 toggle-switch outnumbered {{#unless rolled}}simple-flag{{/unless}} {{#if outnumbered}}switched-on{{/if}} gm-select-only"
@@ -65,6 +85,7 @@
             data-flag="auto-success"
             data-selected={{autoSuccess}}>{{localize 'CoC7.combatCard.autoSuccess'}}</span>
     </div>
+    {{/unless}}
 
     {{#if rolled}}
     <div class="dice-roll" style="padding-top: 5px;"

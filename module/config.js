@@ -1,6 +1,7 @@
 // Namespace COC7 Configuration Values
 export const COC7 = {};
 
+CONFIG.ChatMessage.template = 'systems/CoC7/templates/chat/chat-message.html';
 
 /**
  * The set of Eras used within the system
@@ -43,20 +44,22 @@ COC7.skillProperties = {
 };
 
 COC7.weaponProperties = {
+	melee: 'CoC7.Weapon.Property.Melee',
 	rngd: 'CoC7.WeaponRngd',
+	thrown: 'CoC7.Weapon.Property.Thrown',
+	shotgun: 'CoC7.Weapon.Property.Shotgun',
+	dbrl: 'CoC7.WeaponDbrl',
 	impl: 'CoC7.WeaponImpl',
-	rare: 'CoC7.WeaponRare',
+	brst: 'CoC7.WeaponBrst',
+	auto: 'CoC7.WeaponAuto',
 	ahdb: 'CoC7.WeaponAhdb',
 	addb: 'CoC7.WeaponAddb',
 	slnt: 'CoC7.WeaponSlnt',
-	xplv: 'CoC7.WeaponXplv',
-	brst: 'CoC7.WeaponBrst',
-	auto: 'CoC7.WeaponAuto',
 	spcl: 'CoC7.WeaponSpcl',
 	mont: 'CoC7.WeaponMont',
-	dbrl: 'CoC7.WeaponDbrl',
 	blst: 'CoC7.WeaponBlst',
 	stun: 'CoC7.WeaponStun',
+	rare: 'CoC7.WeaponRare',
 	burn: 'CoC7.Weapon.Property.Burn'
 };
 
