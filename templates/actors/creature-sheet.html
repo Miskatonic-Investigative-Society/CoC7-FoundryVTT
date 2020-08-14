@@ -238,8 +238,8 @@
 		<div class="section-header flexrow" style="padding-top: 1px;border-bottom: 2px groove;">
 			<h4 class="flex1">{{localize 'CoC7.Notes'}} </h4>
 		</div>
-		<div class="background" style="display: flex;border: 2px groove #eeede0;padding: 0 5px;height: auto;">
-			{{editor content=data.biography.personalDescription.value target="data.biography.personalDescription.value" button=true owner=owner editable=editable}}
+		<div class="background" style="display: flex;border: 2px groove #eeede0;padding: 0 5px;max-height: 200px;">
+			{{editor content=data.biography.personalDescription.value target="data.biography.personalDescription.value" style="height:95%" button=true owner=owner editable=editable}}
 		</div>
 	</section>
 </form>

@@ -43,8 +43,11 @@ export class CoC7MeleeInitiator{
 	}
 
 	get targetImg(){
-		if( this.target.actor.isToken) return this.target.data.img;
-		return this.target.actor.img;
+		if( this.target){
+			if( this.target.actor.isToken) return this.target.data.img;
+			return this.target.actor.img;
+		}
+		return '../icons/svg/mystery-man-black.svg';
 	}
 
 	template = 'systems/CoC7/templates/chat/combat/melee-initiator.html';
