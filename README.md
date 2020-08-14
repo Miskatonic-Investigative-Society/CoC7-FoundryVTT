@@ -20,6 +20,15 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.2.4 :
+
+* Range combat supports shotguns.
+* Bug correction (spending luck on luck and SAN rolls no more possible).
+* Slight range combat refactoring.
+  * Additions of icons to the cards.
+  * Bonus, penalties, target response have been moved to the card tooltip once the card is resolved.
+* Spanish translation updated thanks to Gerbek.
+
 version 0.2.3 :
 
 * Hotfix.
