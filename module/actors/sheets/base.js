@@ -751,7 +751,7 @@ export class CoC7ActorSheet extends ActorSheet {
 				//les degats de l'arme on changés.
 				//TODO : Factorisation du switch
 				//TODO : remplacer les strings par de constantes (item.range.normal ...)
-				if( event.currentTarget.classList.contains('weapon-damage')){
+				if( event.currentTarget.classList.contains('damage-formula')){
 					let weapon = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.itemId);
 					if( weapon){
 						//teste la validité de la formule.
