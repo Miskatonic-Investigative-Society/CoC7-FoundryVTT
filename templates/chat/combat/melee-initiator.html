@@ -112,14 +112,15 @@
 			<div class="dice-tooltip" style="display: none;">
 				<section class="tooltip-part">
 					<div class="dice">
-						<p class="part-formula">
+						<span class="part-formula part-header flexrow">
 							{{#if check.dices.tenOnlyOneDie}}
 							{{localize 'CoC7.TensDie'}}
 							{{else}}
 							{{check.dices.tens.length}} {{localize 'CoC7.TensDice'}}
-							{{/if}}
-							<span class="part-total">{{check.dices.tenResult}}</span>
-						</p>
+                            {{/if}}
+                            <div class="flex1"></div>
+							<span class="part-total flex0">{{check.dices.tenResult}}</span>
+						</span>
 						<ol class="dice-rolls">
 							{{#each check.dices.tens as |die key|}}
 								<li class="roll die d10 {{#unless die.selected}}discarded{{/unless}} {{#if die.isMax}}min{{/if}} {{#if die.isMin}}max{{/if}}">{{die.value}}</li>
@@ -129,10 +130,11 @@
 				</section>
 				<section class="tooltip-part">
 					<div class="dice">
-						<p class="part-formula">
-							{{localize 'CoC7.UnitsDie'}}
-							<span class="part-total">{{check.dices.unit.value}}</span>
-						</p>
+						<span class="part-formula part-header flexrow">
+                            {{localize 'CoC7.UnitsDie'}}
+                            <div class="flex1"></div>
+							<span class="part-total flex0">{{check.dices.unit.value}}</span>
+						</span>
 						<ol class="dice-rolls">
 							<li class="roll die d10">{{check.dices.unit.value}}</li>
 						</ol>

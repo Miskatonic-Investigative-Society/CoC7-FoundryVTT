@@ -173,15 +173,21 @@ export class CoC7Check {
 
 		let max = (this.dice.unit.total == 0)? 100 : 90;
 		let min = (this.dice.unit.total == 0)? 10 : 0;
-		let highest = this.dice.total - this.dice.unit.total;
+		let selected = this.dice.total - this.dice.unit.total;
 	
 		for( let i = 0; i < this.dice.tens.results.length; i++)
 		{
 			let die = {};
 			die.value = this.dice.tens.results[i];
-			if( die.value == max) die.isMax = true; else die.isMax = false;
-			if( die.value == min) die.isMin = true; else die.isMin = false;
-			if( die.value == highest){ highest = 101; die.selected = true;}
+			if( die.value == selected) {
+				selected = 101;
+				die.selected = true;
+				if( this.dices.hasBonus) { die.isMax = true; die.isMin = false;}
+				else {die.isMin = true; die.isMax = false;}
+			} else {
+				if( die.value == max) die.isMax = true; else die.isMax = false;
+				if( die.value == min) die.isMin = true; else die.isMin = false;
+			}
 			// if( die.value == 100) die.value = "00";
 			this.dices.tens.push( die);
 		}
