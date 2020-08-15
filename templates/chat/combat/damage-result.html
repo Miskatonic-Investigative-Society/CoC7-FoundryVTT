@@ -36,13 +36,14 @@
                 {{#each roll._dice as |die key| }}
                 <section class="tooltip-part">
                     <div class="dice">
-                        <p class="part-formula">
+                        <span class="part-formula part-header flexrow">
                             {{die.formula}}
-                            <span class="part-total">{{die.total}}</span>
-                        </p>
+                            <div class="flex1"></div>
+                            <span class="part-total flex0">{{die.total}}</span>
+                        </span>
                         <ol class="dice-rolls">
                             {{#each die.rolls as |roll key|}}
-                            <li class="roll die d{{die.faces}}">{{roll.roll}}</li>
+                            <li class="roll die d{{die.faces}}">{{roll.result}}</li>
                             {{/each}}
                         </ol>
                     </div>

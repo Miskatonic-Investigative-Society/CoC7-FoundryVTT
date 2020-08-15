@@ -41,8 +41,10 @@ export class CoC7DamageRoll{
 
 		if( this.weapon.data.data.properties.addb) this.rollString = this.rollString + '+' + this.actor.db;
 		if( this.weapon.data.data.properties.ahdb) this.rollString = this.rollString + '+' + this.actor.db + '/2';
-		// const max =
-		this.maxDamage = Roll.maximize( this.rollString);
+		
+		const is7 = Object.prototype.hasOwnProperty.call(Roll, 'cleanTerms');
+
+		this.maxDamage = is7? Roll.maximize( this.rollString)._total: Roll.maximize( this.rollString);
 		this.roll = null;
 		if( this.critical){
 			if( this.weapon.impale) {
@@ -61,6 +63,11 @@ export class CoC7DamageRoll{
 			this.roll = new Roll( this.rollString);
 			this.roll.roll();
 			this.result = Math.floor( this.roll.total);
+		}
+
+		if( is7) this.roll._dice = this.roll.dice;
+		else{
+			this.roll._dice.forEach( d => d.rolls.forEach( r => {r.result = r.roll;}));
 		}
 
 		if( game.dice3d && this.roll){

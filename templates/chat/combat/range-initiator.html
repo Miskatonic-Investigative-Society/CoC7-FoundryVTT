@@ -394,14 +394,15 @@
 							<div class="dice-tooltip" style="display: none;">
 								<section class="tooltip-part">
 									<div class="dice ten-dice">
-										<p class="part-formula">
+										<span class="part-formula part-header flexrow">
 											{{#if roll.tenOnlyOneDie}}
 											{{localize 'CoC7.TensDie'}}
 											{{else}}
 											{{roll.dices.tens.length}} {{localize 'CoC7.TensDice'}}
 											{{/if}}
-											<span class="part-total">{{roll.dices.tenResult}}</span>
-										</p>
+											<div class="flex1"></div>
+											<span class="part-total flex0">{{roll.dices.tenResult}}</span>
+										</span>
 										<ol class="dice-rolls">
 											{{#each roll.dices.tens as |die key|}}
 												<li
@@ -416,10 +417,11 @@
 								</section>
 								<section class="tooltip-part">
 									<div class="dice unit-die">
-										<p class="part-formula">
+										<span class="part-formula part-header flexrow">
 											{{localize 'CoC7.UnitsDie'}}
-											<span class="part-total">{{roll.dices.unit.value}}</span>
-										</p>
+											<div class="flex1"></div>
+											<span class="part-total flex0">{{roll.dices.unit.value}}</span>
+										</span>
 										<ol class="dice-rolls">
 											<li data-value="{{roll.dices.unit.value}}" class="roll die d10">{{roll.dices.unit.value}}</li>
 										</ol>
@@ -492,12 +494,13 @@
 							<div class="dice-tooltip" style="display: none;">
 								<section class="tooltip-part">
 									<div class="dice ten-dice">
-										<p class="part-formula">
+										<span class="part-formula part-header flexrow">
 											{{#each d.rolls as |roll|}}
 												<span class="part">{{roll.formula}}</span>
 											{{/each}}
-											<span class="part-total">{{d.total}}</span>
-										</p>
+											<div class="flex1"></div>
+											<span class="part-total flex0">{{d.total}}</span>
+										</span>
 										<ol class="dice-rolls">
 											{{#each d.rolls as |roll|}}
 												<li
