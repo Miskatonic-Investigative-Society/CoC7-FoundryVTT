@@ -20,6 +20,11 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.2.6 :
+
+* Modification of rolls and dice to be compatible with 0.7.x.
+  * __This needs more testing. I *strongly* recommend not to upgrade to 0.7.x yet__
+
 version 0.2.5 :
 
 * Bug correction on creature sheets.
