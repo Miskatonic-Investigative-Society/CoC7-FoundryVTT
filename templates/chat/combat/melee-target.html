@@ -20,19 +20,19 @@
     <header class="card-header flexcol">
         <div class="flexrow">
             {{#if dodging}}
-            <img style="flex: none;" src="{{actor.dodgeSkill.data.img}}" title="{{actor.dodgeSkill.name}}" width="36" height="36"/>
+            <img class="open-actor" style="flex: none;" data-actor-key="{{actorKey}}" src="{{actor.dodgeSkill.data.img}}" title="{{actor.dodgeSkill.name}}" width="36" height="36"/>
             <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{actor.dodgeSkill.name}}</h3>
-            <img style="flex: none;" src="{{targetImg}}" title="{{target.name}}" width="36" height="36"/>
+            <img class="open-actor" style="flex: none;" data-actor-key="{{initiatorKey}}" src="{{targetImg}}" title="{{target.name}}" width="36" height="36"/>
             {{else}}
                 {{#if fightingBack}}
-                <img style="flex: none;" src="{{weapon.img}}" title="{{weapon.name}}" width="36" height="36"/>
+                <img class="open-actor" style="flex: none;" data-actor-key="{{actorKey}}" src="{{weapon.img}}" title="{{weapon.name}}" width="36" height="36"/>
                 <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{weapon.name}}</h3>
-                <img style="flex: none;" src="{{targetImg}}" title="{{target.name}}" width="36" height="36"/>
+                <img class="open-actor" style="flex: none;" data-actor-key="{{initiatorKey}}" src="{{targetImg}}" title="{{target.name}}" width="36" height="36"/>
                 {{else}}
                     {{#if maneuvering}}
-                    <img style="flex: none;" src="{{skill.data.img}}" title="{{skill.name}}" width="36" height="36"/>
+                    <img class="open-actor" style="flex: none;" data-actor-key="{{actorKey}}" src="{{skill.data.img}}" title="{{skill.name}}" width="36" height="36"/>
                     <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{skill.name}}</h3>
-                    <img style="flex: none;" src="{{targetImg}}" title="{{target.name}}" width="36" height="36"/>
+                    <img class="open-actor" style="flex: none;" data-actor-key="{{initiatorKey}}" src="{{targetImg}}" title="{{target.name}}" width="36" height="36"/>
                     {{/if}}
                 {{/if}}
             {{/if}}
