@@ -3,7 +3,7 @@ import { CoC7Check } from './check.js';
 import { COC7 } from './config.js';
 import { CoC7MeleeInitiator, CoC7MeleeTarget, CoC7MeleeResoltion } from './chat/meleecombat.js';
 import { CoC7RangeInitiator } from './chat/rangecombat.js';
-import { CoC7Roll } from './chat/helper.js';
+import { CoC7Roll, chatHelper } from './chat/helper.js';
 import { CoC7DamageRoll } from './chat/damagecards.js';
 
 export class CoC7Chat{
@@ -45,8 +45,19 @@ export class CoC7Chat{
 		html.on('click', '.is-outnumbered', CoC7Chat._onOutnumberedSelected.bind(this));
 
 		html.on('click', '.target-selector', CoC7Chat._onTargetSelect.bind(this));
+
+		html.on('dblclick', '.open-actor', CoC7Chat._onOpenActor.bind(this));
 	}
 
+
+	static _onOpenActor( event){
+		event.preventDefault();
+		const actorKey = event.currentTarget.dataset.actorKey;
+		if( actorKey){
+			const actor = chatHelper.getActorFromKey( actorKey);
+			if(actor.owner)	actor.sheet.render(true);
+		}
+	}
 
 
 	static async onUpdateChatMessage( chatMessage){
@@ -1099,7 +1110,7 @@ export class CoC7Chat{
 		case 'roll-melee-damage':{
 			const damageCard = new CoC7DamageRoll( button.dataset.weapon, button.dataset.dealer, button.dataset.target, 'true' == button.dataset.critical );
 			damageCard.rollDamage( );
-			card.querySelector('.card-buttons').remove();
+			card.querySelectorAll('.card-buttons').forEach( b => b.remove());
 			CoC7Chat.updateChatCard( card);
 			break;
 		}
