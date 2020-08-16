@@ -21,7 +21,7 @@
 	
 	<header class="card-header flexcol">
 		<div class="flexrow">
-			<img style="flex: none;" src="{{item.img}}" title="{{item.name}}" width="36" height="36"/>
+			<img class="open-actor" data-actor-key="{{actor.tokenKey}}" style="flex: none;" src="{{item.img}}" title="{{item.name}}" width="36" height="36"/>
 			<h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{item.name}}</h3>
 			<i style="flex: none;font-size: 36px;" title="Lock targets (Not implemented yet)" class="fas fa-bullseye"></i>
 		</div>
@@ -106,9 +106,9 @@
 		{{#each targets as |trgt key|}}
 			<div class="target-selector" style="flex: none;" data-key="{{key}}">
 				{{#if trgt.active}}
-					<img style="flex: none;" src="{{trgt.img}}" title="{{trgt.name}}" alt="{{trgt.name}}" width="24" height="24"/>
+					<img class="open-actor" data-actor-key="{{trgt.actorKey}}" style="flex: none;" src="{{trgt.img}}" title="{{trgt.name}}" alt="{{trgt.name}}" width="24" height="24"/>
 				{{else}}
-					<img style="flex: none;border:none" src="{{trgt.img}}" title="{{trgt.name}}" alt="{{trgt.name}}" width="24" height="24"/>
+					<img class="open-actor" data-actor-key="{{trgt.actorKey}}" style="flex: none;border:none" src="{{trgt.img}}" title="{{trgt.name}}" alt="{{trgt.name}}" width="24" height="24"/>
 				{{/if}}
 			</div>
 		{{/each}}

@@ -22,8 +22,9 @@ Compendium 'Weapons' contains a single test weapon.
 
 WIP :
 
-* Bug fix on melee flow cards.
-* Addition of portraits on cards.
+* Bug fix/improvepment on melee flow cards.
+  * Addition of portraits on cards.
+  * Double click on chatcard icons will open corresponding actor.
 
 version 0.2.6 :
 
