@@ -65,6 +65,7 @@
 "CoC7.SpendLuck": "Spend {luckNeededValue} Luck to pass",
 "CoC7.LuckSpent": "{luckAmount} luck spent to pass",
 "CoC7.LuckError": "{actorName} didn't have enough luck to pass the check",
+"CoC7.check.AutoSuccess" : "Auto. Succes",
 
 "CoC7.BonusSelectionWindow": "Bonus selection window",
 "CoC7.RegularDifficulty": "regular",

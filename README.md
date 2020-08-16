@@ -20,6 +20,11 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+WIP :
+
+* Bug fix on melee flow cards.
+* Addition of portraits on cards.
+
 version 0.2.6 :
 
 * Modification of rolls and dice to be compatible with 0.7.x.
