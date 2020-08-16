@@ -1,5 +1,6 @@
 <div class="coc7 chat-card melee initiator"
     data-actor-key="{{actorKey}}"
+    data-target-key="{{targetKey}}"
     data-item-id="{{item._id}}"
     data-fast-forward="{{fastForward}}"
     data-resolved="{{resolved}}"
@@ -79,7 +80,7 @@
             style="text-align:center"
             data-flag="surprised"
             data-selected={{surprised}}>{{localize 'CoC7.combatCard.surpised'}}</span>
-        <span class="flex1 toggle-switch auto-success {{#unless rolled}}simple-flag{{/unless}} {{#if autoSuccess}}switched-on{{/if}} gm-select-only"
+        <span class="flex1 toggle-switch auto-success {{#unless rolled}}simple-flag{{/unless}} {{#if autoSuccess}}switched-on{{/if}} gm-visible-only"
             title="Attack automaticaly hit"
             style="text-align:center"
             data-flag="auto-success"
@@ -172,7 +173,21 @@
             </div>
 			{{#if check.hasMalfunction}}<h4 class="malfunction">{{check.malfunctionTxt}}</h4>{{/if}}
 		</div>
-	</div>
+    </div>
+    {{#if autoSuccess}}
+        {{#unless check.isFumble}}
+        <div class="card-buttons owner-only" data-actor-id="{{actorKey}}" style="padding: 2px 0;margin: 0;">
+            <button 
+              data-action="roll-melee-damage"
+              data-target="{{targetKey}}"
+              data-dealer="{{actorKey}}"
+              data-weapon="{{item._id}}"
+              data-critical="{{criticalDamage}}">
+                Roll damage
+            </button>
+        </div>
+        {{/unless}}
+    {{/if}}
     {{else}}
     <div class="card-buttons owner-only">
         {{#each skills as |skill id|}}
