@@ -357,6 +357,17 @@ export class CoC7Check {
 		}
 	}
 
+	forcePass(){
+		if( !this.isSuccess){
+			this.isSuccess = true;
+			this.passed = true;
+			this.luckNeeded = 0;
+			this.luckNeededTxt = null;
+			this.resultType = game.i18n.localize( 'CoC7.check.AutoSuccess');
+			delete this.hasEnoughLuck;
+		}
+	}
+
 	set difficulty(x){
 		this._difficulty = parseInt(x);
 	}
