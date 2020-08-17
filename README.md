@@ -20,6 +20,33 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+WIP :
+
+* Bug fix/improvepment on melee flow cards.
+  * Addition of portraits on cards.
+  * Double click on chatcard icons will open corresponding actor.
+
+version 0.2.6 :
+
+* Modification of rolls and dice to be compatible with 0.7.x.
+  * 0.7.x bring a lot of changes. __This needs more testing. I *strongly* recommend not to upgrade to 0.7.x yet__
+
+version 0.2.5 :
+
+* Bug correction on creature sheets.
+  * Size is now limited and content will be scrolled.
+  * Weapon damage is now correctly entered.
+  * Added a small reminder for bonus damage after weapons damage formula
+
+version 0.2.4 :
+
+* Range combat supports shotguns.
+* Bug correction (spending luck on luck and SAN rolls no more possible).
+* Slight range combat refactoring (more to come at a later stage. Aim is to reduce size and number of cards).
+  * Additions of icons to the cards.
+  * Bonus, penalties, target response have been moved to the card tooltip once the card is resolved.
+* Spanish translation updated thanks to Gerbek.
+
 version 0.2.3 :
 
 * Hotfix.

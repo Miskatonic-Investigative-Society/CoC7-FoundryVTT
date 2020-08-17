@@ -1,5 +1,6 @@
 <div class="coc7 chat-card damage"
     data-actor-key="{{actor.tokenKey}}"
+    data-target-key="{{targetKey}}"
     data-item-id="{{weapon._id}}"
     data-critical="{{critical}}"
     data-impale="{{impale}}"
@@ -8,25 +9,19 @@
 
     <header class="card-header flexcol">
         <div class="flexrow">
-            <img style="flex: none;" src="{{weapon.img}}" title="{{weapon.name}}" width="36" height="36"/>
+            <img class="open-actor" style="flex: none;" data-actor-key="{{actor.tokenKey}}" src="{{weapon.img}}" title="{{weapon.name}}" width="36" height="36"/>
             <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{weapon.name}}</h3>
+            <img class="open-actor" style="flex: none;" data-actor-key="{{targetKey}}" src="{{targetImg}}" title="{{target.name}}" width="36" height="36"/>
         </div>
 
         <div class="card-content">
             {{{weapon.data.data.description.value}}}
         </div>
 
-        <div class="flexrow advantage-selection">
-            <span class="flex1 toggle-switch critical {{#unless rolled}}simple-flag{{/unless}} {{#if critical}}switched-on{{/if}}"
-            title="The blow is critical" 
-            style="text-align:center" 
-            data-flag="critical" 
-            data-selected={{critical}}>Critical</span>
-            <span class="flex1 toggle-switch impale {{#if weapon.impale}}switched-on{{/if}}"
-            title="The weapon can impale" 
-            style="text-align:center" 
-            data-flag="impale" 
-            data-selected={{weapon.impale}}>Impale</span>
+        <div class="flex0 advantage-selection">
+            {{#if critical}}<span class="tag" title="The blow is critical">Critical</span>
+            {{#if weapon.impale}}<span class="tag" title="The weapon can impale">Impale</span>{{/if}}
+            {{/if}}
         </div>
     </header>
 
@@ -42,13 +37,14 @@
                 {{#each roll._dice as |die key| }}
                 <section class="tooltip-part">
                     <div class="dice">
-                        <p class="part-formula">
+                        <span class="part-formula part-header flexrow">
                             {{die.formula}}
-                            <span class="part-total">{{die.total}}</span>
-                        </p>
+                            <div class="flex1"></div>
+                            <span class="part-total flex0">{{die.total}}</span>
+                        </span>
                         <ol class="dice-rolls">
                             {{#each die.rolls as |roll key|}}
-                            <li class="roll die d{{die.faces}}">{{roll.roll}}</li>
+                            <li class="roll die d{{die.faces}}">{{roll.result}}</li>
                             {{/each}}
                         </ol>
                     </div>

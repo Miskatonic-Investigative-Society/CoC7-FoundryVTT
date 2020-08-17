@@ -64,12 +64,19 @@ export class CoC7RangeInitiator{
 								t.baseRange = false;
 								t.longRange = false;
 								t.extremeRange = false;
-								t.impossible = false;
-								if( distInYd <= this.weapon.baseRange) t.baseRange = true;
-								if( distInYd > this.weapon.baseRange && distInYd <= (this.weapon.baseRange*2)) t.longRange = true;
-								if( distInYd > (this.weapon.baseRange*2) && distInYd <= (this.weapon.baseRange*4)) t.extremeRange = true;
-								if( distInYd > (this.weapon.baseRange*4)) t.impossible = true;
-								if( !(t.baseRange || t.longRange || t.extremeRange || t.impossible)) t.baseRange = true;
+								t.outOfRange = false;
+								if( this.weapon.data.data.properties.shotgun){
+									if( distInYd <= this.weapon.baseRange ) t.baseRange = true;
+									if( distInYd > this.weapon.baseRange && distInYd <= this.weapon.longRange) t.longRange = true;
+									if( distInYd > this.weapon.longRange && distInYd <= this.weapon.extremeRange) t.extremeRange = true;
+									if( distInYd > this.weapon.extremeRange ) t.outOfRange = true;
+								} else {
+									if( distInYd <= this.weapon.baseRange) t.baseRange = true;
+									if( distInYd > this.weapon.baseRange && distInYd <= (this.weapon.baseRange*2)) t.longRange = true;
+									if( distInYd > (this.weapon.baseRange*2) && distInYd <= (this.weapon.baseRange*4)) t.extremeRange = true;
+									if( distInYd > (this.weapon.baseRange*4)) t.outOfRange = true;
+								}
+								if( !(t.baseRange || t.longRange || t.extremeRange || t.outOfRange)) t.baseRange = true;
 							}
 						}
 					}
@@ -182,6 +189,11 @@ export class CoC7RangeInitiator{
 
 	shotDifficulty( t = null){
 		const target = t? t: this.activeTarget;
+		let damage = this.weapon.data.data.range.normal.damage;
+		if( this.weapon.data.data.properties.shotgun){
+			if( t.longRange) damage = this.weapon.data.data.range.long.damage;
+			if( t.extremeRange) damage = this.weapon.data.data.range.extreme.damage;
+		}
 		let modifier = target.modifier;
 		let difficulty = target.difficulty;
 		let difficultyName = '';
@@ -208,6 +220,7 @@ export class CoC7RangeInitiator{
 			level: difficulty,
 			name: difficultyName,
 			modifier: modifier,
+			damage: damage,
 			impossible: difficulty === CoC7Check.difficultyLevel.impossible
 		};
 
@@ -227,6 +240,7 @@ export class CoC7RangeInitiator{
 			actorName: this.activeTarget.name,
 			difficultyLevel: this.activeTarget.shotDifficulty.level,
 			modifier: this.activeTarget.shotDifficulty.modifier,
+			damage: this.activeTarget.shotDifficulty.damage,
 			bulletsShot: 1,
 			transitBullets: 0,
 			transit: false		
@@ -334,6 +348,7 @@ export class CoC7RangeInitiator{
 				actorName: this.activeTarget.name,
 				difficultyLevel: this.activeTarget.shotDifficulty.level,
 				modifier: this.activeTarget.shotDifficulty.modifier,
+				damage: this.activeTarget.shotDifficulty.damage,
 				bulletsShot: 1,
 				transitBullets: 0,
 				transit: false		
@@ -476,11 +491,6 @@ export class CoC7RangeInitiator{
 
 	rollDamage(){
 		this.damage = [];
-		const normalDamageRoll = this.weapon.data.data.range.normal.damage;
-		const normalDamageDie = CoC7Damage.getMainDie( normalDamageRoll);
-		const maxDamage = Roll.maximize( normalDamageRoll).total;
-		const criticalDamageRoll = this.weapon.impale ? `${normalDamageRoll} + ${maxDamage}` : `${maxDamage}`;
-		const criticalDamageDie = CoC7Damage.getMainDie( criticalDamageRoll);
 		const hits=this.successfulHits;
 		
 		let volleySize = 1;
@@ -491,6 +501,13 @@ export class CoC7RangeInitiator{
 		if( this.burst) volleySize = parseInt(this.weapon.data.data.usesPerRound.burst);
 		hits.forEach( h => {
 			const damageRolls = [];
+			
+			const damageFormula = h.shot.damage;
+			const damageDie = CoC7Damage.getMainDie( damageFormula);
+			const maxDamage = Roll.maximize( damageFormula).total;
+			const criticalDamageFormula = this.weapon.impale ? `${damageFormula} + ${maxDamage}` : `${maxDamage}`;
+			const criticalDamageDie = CoC7Damage.getMainDie( criticalDamageFormula);
+
 			let impalingShots = 0;
 			let successfulShots = 0;
 			if( this.fullAuto || this.burst) successfulShots = Math.floor(volleySize/2);
@@ -506,21 +523,21 @@ export class CoC7RangeInitiator{
 
 			let total = 0;
 			for (let index = 0; index < successfulShots; index++) {
-				const roll = new Roll(normalDamageRoll);
+				const roll = new Roll(damageFormula);
 				roll.roll();
 				damageRolls.push( {
-					formula: normalDamageRoll,
+					formula: damageFormula,
 					total: roll.total,
-					die: normalDamageDie,
+					die: damageDie,
 					critical: false
 				});
 				total += roll.total;
 			}
 			for (let index = 0; index < impalingShots; index++) {
-				const roll = new Roll(criticalDamageRoll);
+				const roll = new Roll(criticalDamageFormula);
 				roll.roll();
 				damageRolls.push( {
-					formula: criticalDamageRoll,
+					formula: criticalDamageFormula,
 					total: roll.total,
 					die: criticalDamageDie,
 					critical: true
@@ -646,7 +663,7 @@ export class CoC7RangeTarget{
 		if( this.baseRange) return CoC7Check.difficultyLevel.regular;
 		if( this.longRange) return CoC7Check.difficultyLevel.hard;
 		if( this.extremeRange) return CoC7Check.difficultyLevel.extreme;
-		return null;
+		return CoC7Check.difficultyLevel.impossible;
 	}
 
 	get modifier(){
@@ -688,6 +705,7 @@ export class CoC7RangeTarget{
 			this.baseRange = false;
 			this.longRange = false;
 			this.extremeRange = false;
+			this.outOfRange = false;
 			this[flag] = true;
 		} else if('size' === flag) {
 			if( this.small) {this.small = false; this.big=true;}
