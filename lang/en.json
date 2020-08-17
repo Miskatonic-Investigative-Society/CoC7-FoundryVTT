@@ -93,6 +93,11 @@
 "CoC7.combatCard.autoSuccess": "Auto. Success",
 "CoC7.Advantage": "Advantage",
 "CoC7.Disadvantage": "Disadvantage",
+"CoC7.TitleAdvantage": "Add 1 bonus die (target is prone, restrained...)",
+"CoC7.TitleDisadvantage": "Add 1 malus die (for being prone, restrained...)",
+"CoC7.TitleOutNumbered":"Add 1 bonus dice for outnumbered target",
+"CoC7.TitleSurprised": "Add 1 bonus dice for surprised target",
+"CoC7.TitleAutoSuccess": "Attack automaticaly hit",
 
 "CoC7.combatCard.dive4cover": "Dive for Cover",
 

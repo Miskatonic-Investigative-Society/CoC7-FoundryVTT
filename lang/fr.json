@@ -45,6 +45,8 @@
 "CoC7.RegularSuccess": "Réussite ordinaire",
 "CoC7.HardSuccess": "Réussite majeur",
 "CoC7.ExtremeSuccess": "Réussite extrême",
+"CoC7.CriticalSuccess": "Réussite critique",
+"CoC7.Fumble": "Échec critique",
 "CoC7.Failure": "Échec",
 "CoC7.Malfunction": "{itemName} subit une panne.",
 
@@ -68,10 +70,13 @@
 "CoC7.RegularDifficulty": "ordinaire",
 "CoC7.HardDifficulty": "majeur",
 "CoC7.ExtremeDifficulty": "extrême",
+"CoC7.CriticalDifficulty": "critique",
 "CoC7.RollDifficulty": "Difficulté du jet",
 "CoC7.RollDifficultyRegular": "Ordinaire",
 "CoC7.RollDifficultyHard": "Majeur",
 "CoC7.RollDifficultyExtreme": "Extrême",
+"CoC7.RollDifficultyCritical": "Critique",
+"CoC7.RollResult.LuckSpendText": "{luckAmount} point(s) de Chance dépensé(s), réussite {successLevel}",
 "CoC7.RollDice": "Lancer !",
 
 "CoC7.CheckResult": "test de {name} ({value}%) - difficulté {difficulty}",
@@ -84,6 +89,33 @@
 "CoC7.Dodge": "Esquive",
 "CoC7.Maneuver": "Manœuvre",
 "CoC7.OutNumbered": "En sous-nombre",
+"CoC7.combatCard.surpised": "Surpris",
+"CoC7.combatCard.autoSuccess": "Réussite Automatique",
+"CoC7.Advantage": "Bonus",
+"CoC7.Disadvantage": "Malus",
+"CoC7.TitleAdvantage": "Ajouter 1 dé bonus (cible au sol, immobilisée...)",
+"CoC7.TitleDisadvantage": "Ajouter 1 dé malus (si au sol, immobilisé...)",
+"CoC7.TitleOutNumbered": "Ajouter 1 dé bonus si la cible est en sous nombre",
+"CoC7.TitleSurprised": "Ajouter 1 dé bonus si la cible est surprise",
+"CoC7.TitleAutoSuccess": "L'attaque touche automatiquement",
+
+"CoC7.combatCard.dive4cover": "Plonger à couvert",
+
+"CoC7.rangeCombatCard.SingleShot" : "Tir simple",
+"CoC7.rangeCombatCard.MultipleShots" : "Tir semi-auto.",
+"CoC7.rangeCombatCard.Burst" : "Rafale",
+"CoC7.rangeCombatCard.FullAuto" : "Tir automatique",
+"CoC7.rangeCombatCard.BaseRange" : "Portée de base",
+"CoC7.rangeCombatCard.LongRange" : "Longue portée",
+"CoC7.rangeCombatCard.ExtremeRange" : "Très longue portée",
+"CoC7.rangeCombatCard.Cover" : "A couvert",
+"CoC7.rangeCombatCard.PointBlankRange" : "Bout portant",
+"CoC7.rangeCombatCard.BigTarget": "Grande cible",
+"CoC7.combatCard.SmallTarget": "Petite cible",
+"CoC7.rangeCombatCard.FastMovingTarget": "Tir rapide",
+"CoC7.rangeCombatCard.InMelee": "En mêlée",
+"CoC7.rangeCombatCard.aiming": "Viser",
+
 "CoC7.DropZone": "DropZone",
 
 "CoC7.SkillValue": "Valeur",
@@ -98,10 +130,13 @@
 "CoC7.Weapon.BlastRadius": "Rayon",
 "CoC7.WeaponMalfunction": "Panne :",
 "CoC7.WeaponUsesPerRound": "Cadence :",
-"CoC7.WeaponMax": "Max :",
-"CoC7.WeaponBulletsInMag": "Capacité :",
-"CoC7.WeaponSpecial": "Spécial :",
-"CoC7.ItemPrice": "Prix :",
+"CoC7.WeaponSheet.RoundsPerUse.Info": "Combien de tours sont nécessaires pour préparer l'arme à tirer",
+"CoC7.WeaponMax": "Max/round",
+"CoC7.BurstSize": "Balles/raffale",
+"CoC7.WeaponBulletsInMag": "Capacité",
+"CoC7.WeaponSpecial": "Spécial",
+"CoC7.ItemPrice": "Prix",
+"CoC7.Armor": "Armure",
 
 "CoC7.EraNvct": "Invictus",
 "CoC7.EraDrka": "Dark Ages",
@@ -111,6 +146,7 @@
 "CoC7.EraPulp": "Pulp Cthulhu",
 "CoC7.EraMdrn": "Moderne",
 
+"CoC7.SkillNoXpGain": "Pas de gain d'XP",
 "CoC7.SkillSpecial": "Spécialisation",
 "CoC7.SkillRarity": "Rare",
 "CoC7.SkillPush": "Redoublement",
@@ -133,13 +169,14 @@
 "CoC7.WeaponDbrl": "Canon Double",
 "CoC7.WeaponBlst": "À Souffle",
 "CoC7.WeaponStun": "Étourdissante",
+"CoC7.Weapon.Property.Burn": "Rafale",
 
 "CoC7.ErrorItem": "Impossible de trouver l'item",
 "CoC7.ErrorActor": "Impossible de trouver l'acteur",
 "CoC7.ErrorInvalidFormula": "{value} n'est pas une formule valide",
 "CoC7.ErrorInvalid": "invalide",
 
-"CoC7.newBioSectionName": "New Section",
+"CoC7.newBioSectionName": "Nouvelle Section",
 
 "CoC7.dodgeSkillName": "Esquive",
 "CoC7.creditRatingSkillName": "Crédit",
@@ -148,5 +185,7 @@
 
 "CoC7.newSkillName": "Nouvelle compétence",
 "CoC7.newItemName": "Nouvel objet",
-"CoC7.newWeaponName": "Nouvel arme"
+"CoC7.newWeaponName": "Nouvel arme",
+
+"CoC7.creatureFightingSkill": "Combat rapproché"
 }
