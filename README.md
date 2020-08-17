@@ -20,7 +20,7 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
-WIP :
+version 0.2.7 :
 
 * Bug fix/improvepment on melee flow cards.
   * Addition of portraits on cards.
@@ -33,7 +33,7 @@ WIP :
 version 0.2.6 :
 
 * Modification of rolls and dice to be compatible with 0.7.x.
-  * 0.7.x bring a lot of changes. __This needs more testing. I *strongly* recommend not to upgrade to 0.7.x yet__
+  * 0.7.x bring a lot of changes. __This needs more testing. I *strongly* recommend to wait before upgrading to 0.7.x__
 
 version 0.2.5 :
 
