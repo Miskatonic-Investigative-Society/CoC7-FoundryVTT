@@ -94,10 +94,16 @@ export class CoC7DamageRoll{
         
 		const user = this.actor.user ? this.actor.user : game.user;
 
-		await ChatMessage.create({
+		const chatData = {
 			user: user._id,
 			speaker,
 			content: html
-		});
+		};
+
+		let rollMode = game.settings.get('core', 'rollMode');
+		if ( ['gmroll', 'blindroll'].includes(rollMode) ) chatData['whisper'] = ChatMessage.getWhisperRecipients('GM');
+		if ( rollMode === 'blindroll' ) chatData['blind'] = true;
+
+		await ChatMessage.create(chatData);
 	}
 }
