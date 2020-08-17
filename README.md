@@ -22,7 +22,7 @@ Compendium 'Weapons' contains a single test weapon.
 
 version 0.2.7 :
 
-* Bug fix/improvepment on melee flow cards.
+* Bug fix/improvement on melee flow cards.
   * Addition of portraits on cards.
   * Double click on chatcard icons will open corresponding actor.
 * Implementation of blind and private GM rolls.
