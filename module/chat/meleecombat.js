@@ -18,6 +18,20 @@ export class CoC7MeleeInitiator{
 		this.rolled = false;
 	}
 
+
+	get isBlind(){
+		return 'blindroll' === this.rollMode;
+	}
+
+	get rollMode(){
+		if( !this._rollMode) this._rollMode = game.settings.get('core', 'rollMode');
+		return this._rollMode;
+	}
+
+	set rollMode(x){
+		this._rollMode = x;
+	}
+
 	get actor(){
 		return chatHelper.getActorFromKey( this.actorKey);
 	}
@@ -85,7 +99,7 @@ export class CoC7MeleeInitiator{
 		
 		const user = this.actor.user ? this.actor.user : game.user;
 
-		const data = {
+		const chatData = {
 			user: user._id,
 			speaker,
 			content: html
@@ -96,7 +110,10 @@ export class CoC7MeleeInitiator{
 		// 	img: this.actor.isToken ? this.actor.token.data.img: this.actor.img
 		// };
 
-		const chatMessage = await ChatMessage.create(data);
+		if ( ['gmroll', 'blindroll'].includes(this.rollMode) ) chatData['whisper'] = ChatMessage.getWhisperRecipients('GM');
+		if ( this.isBlind ) chatData['blind'] = true;
+
+		const chatMessage = await ChatMessage.create(chatData);
 		
 		return chatMessage;
 	}
@@ -310,6 +327,20 @@ export class CoC7MeleeTarget{
 		this.maneuvering = false;
 	}
 
+	
+	get isBlind(){
+		return 'blindroll' === this.rollMode;
+	}
+
+	get rollMode(){
+		if( !this._rollMode) this._rollMode = game.settings.get('core', 'rollMode');
+		return this._rollMode;
+	}
+
+	set rollMode(x){
+		this._rollMode = x;
+	}
+
 	get actor(){
 		return chatHelper.getActorFromKey( this.actorKey);
 	}
@@ -344,7 +375,7 @@ export class CoC7MeleeTarget{
 
 	get targetImg(){
 		if( this.initiator){
-			if( this.initiator.actor.isToken) return this.tinitiatorarget.data.img;
+			if( this.initiator.actor.isToken) return this.initiator.data.img;
 			return this.initiator.actor.img;
 		}
 		return '../icons/svg/mystery-man-black.svg';
@@ -393,17 +424,21 @@ export class CoC7MeleeTarget{
 		
 		const user = this.actor.user ? this.actor.user : game.user;
 
-		const data = {
+		const chatData = {
 			user: user._id,
 			speaker,
 			content: html
 		};
 
-		data.flags = {
-			img: this.actor.isToken ? this.actor.token.data.img: this.actor.img
-		};
+		// Add image to card.
+		// data.flags = {
+		// 	img: this.actor.isToken ? this.actor.token.data.img: this.actor.img
+		// };
 
-		const message = await ChatMessage.create(data);
+		if ( ['gmroll', 'blindroll'].includes(this.rollMode) ) chatData['whisper'] = ChatMessage.getWhisperRecipients('GM');
+		if ( this.isBlind ) chatData['blind'] = true;
+
+		const message = await ChatMessage.create(chatData);
 		
 		this.messageId = message.id;
 		return message;
@@ -604,12 +639,21 @@ export class CoC7MeleeResoltion{
 		
 		// const user = this.actor.user ? this.actor.user : game.user;
 
-		const chatMessage = await ChatMessage.create({
+		const chatData = {
 			user: game.user._id,
-			// speaker,
 			content: html
-		});
+		};
+
+		// Add image to card.
+		// data.flags = {
+		// 	img: this.actor.isToken ? this.actor.token.data.img: this.actor.img
+		// };
 		
+		let rollMode = game.settings.get('core', 'rollMode');
+		if ( ['gmroll', 'blindroll'].includes(rollMode) ) chatData['whisper'] = ChatMessage.getWhisperRecipients('GM');
+		if ( rollMode === 'blindroll' ) chatData['blind'] = true;
+
+		const chatMessage = await ChatMessage.create(chatData);
 		this.messageId = chatMessage.id;
 		return chatMessage;
 	}

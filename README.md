@@ -25,6 +25,10 @@ WIP :
 * Bug fix/improvepment on melee flow cards.
   * Addition of portraits on cards.
   * Double click on chatcard icons will open corresponding actor.
+* Implementation of blind and private GM rolls.
+  * Keeper has the possibility to force the check to pass or to fail.
+  * Keeper has the possibility to reveal the check result.
+  * Awarding experience automatically is disabled for blind check. Keeper can award experience.
 
 version 0.2.6 :
 
