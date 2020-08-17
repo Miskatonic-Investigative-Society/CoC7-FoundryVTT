@@ -65,6 +65,12 @@
 "CoC7.SpendLuck": "Spend {luckNeededValue} Luck to pass",
 "CoC7.LuckSpent": "{luckAmount} luck spent to pass",
 "CoC7.LuckError": "{actorName} didn't have enough luck to pass the check",
+"CoC7.check.AutoSuccess" : "Auto. Succes",
+"CoC7.check.AutoFailure" : "Auto. Fail",
+"CoC7.check.RevealCheck": "Reveal check",
+"CoC7.check.ForcePass": "Force pass",
+"CoC7.check.ForceFail": "Force fail",
+"CoC7.check.FlagForDevelopment": "Award experience",
 
 "CoC7.BonusSelectionWindow": "Bonus selection window",
 "CoC7.RegularDifficulty": "regular",
@@ -93,6 +99,11 @@
 "CoC7.combatCard.autoSuccess": "Auto. Success",
 "CoC7.Advantage": "Advantage",
 "CoC7.Disadvantage": "Disadvantage",
+"CoC7.TitleAdvantage": "Add 1 bonus die (target is prone, restrained...)",
+"CoC7.TitleDisadvantage": "Add 1 malus die (for being prone, restrained...)",
+"CoC7.TitleOutNumbered":"Add 1 bonus dice for outnumbered target",
+"CoC7.TitleSurprised": "Add 1 bonus dice for surprised target",
+"CoC7.TitleAutoSuccess": "Attack automaticaly hit",
 
 "CoC7.combatCard.dive4cover": "Dive for Cover",
 

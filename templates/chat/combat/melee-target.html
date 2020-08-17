@@ -1,5 +1,6 @@
 <div class="coc7 chat-card melee target"
     data-actor-key="{{actorKey}}"
+    data-initiator-key="{{initiatorKey}}"
     data-fast-forward="{{fastForward}}"
     data-resolved="{{resolved}}"
     data-outnumbered="{{outnumbered}}"
@@ -19,19 +20,19 @@
     <header class="card-header flexcol">
         <div class="flexrow">
             {{#if dodging}}
-            <img style="flex: none;" src="{{actor.dodgeSkill.data.img}}" title="{{actor.name}}" width="36" height="36"/>
+            <img class="open-actor" style="flex: none;" data-actor-key="{{actorKey}}" src="{{actor.dodgeSkill.data.img}}" title="{{actor.dodgeSkill.name}}" width="36" height="36"/>
             <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{actor.dodgeSkill.name}}</h3>
-            <div style="flex: 0 0 36px;margin-left:5px"></div>
+            <img class="open-actor" style="flex: none;" data-actor-key="{{initiatorKey}}" src="{{targetImg}}" title="{{target.name}}" width="36" height="36"/>
             {{else}}
                 {{#if fightingBack}}
-                <img style="flex: none;" src="{{weapon.img}}" title="{{actor.name}}" width="36" height="36"/>
+                <img class="open-actor" style="flex: none;" data-actor-key="{{actorKey}}" src="{{weapon.img}}" title="{{weapon.name}}" width="36" height="36"/>
                 <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{weapon.name}}</h3>
-                <div style="flex: 0 0 36px;margin-left:5px"></div>
+                <img class="open-actor" style="flex: none;" data-actor-key="{{initiatorKey}}" src="{{targetImg}}" title="{{target.name}}" width="36" height="36"/>
                 {{else}}
                     {{#if maneuvering}}
-                    <img style="flex: none;" src="{{skill.data.img}}" title="{{actor.name}}" width="36" height="36"/>
+                    <img class="open-actor" style="flex: none;" data-actor-key="{{actorKey}}" src="{{skill.data.img}}" title="{{skill.name}}" width="36" height="36"/>
                     <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{skill.name}}</h3>
-                    <div style="flex: 0 0 36px;margin-left:5px"></div>
+                    <img class="open-actor" style="flex: none;" data-actor-key="{{initiatorKey}}" src="{{targetImg}}" title="{{target.name}}" width="36" height="36"/>
                     {{/if}}
                 {{/if}}
             {{/if}}
@@ -76,7 +77,7 @@
     </header>
 
     {{#unless rolled}}
-    <div class="flexrow response-selection">
+    <div class="flexrow response-selection owner-only">
 		<span class="flex1 toggle-switch dodge {{#if actor.dodgeSkill._id}}{{#unless rolled}}simple-toggle{{/unless}}{{else}}inactive{{/if}} {{#if dodging}}switched-on{{/if}}"
 			data-action="dodge"
 			data-skill-id="{{actor.dodgeSkill._id}}">{{localize 'CoC7.Dodge'}}</span>

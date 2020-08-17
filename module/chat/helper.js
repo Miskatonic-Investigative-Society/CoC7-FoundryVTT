@@ -139,8 +139,8 @@ export class CoC7Roll{
 		return null;
 	}
 
-	static getFromElement( element){
-		const roll = new CoC7Roll();
+	static getFromElement( element, object = null){
+		const roll = object? object : new CoC7Roll();
 		chatHelper.getObjectFromElement( roll, element);
 		roll.dices = {
 			tens: [],
@@ -175,7 +175,7 @@ export class CoC7Roll{
 		}
 
 		roll.luckNeededTxt = game.i18n.format('CoC7.SpendLuck', {luckNeededValue : roll.luckNeeded});
-		return roll;
+		if( !object) return roll;
 	}
 
 	static getFromCheck( check){

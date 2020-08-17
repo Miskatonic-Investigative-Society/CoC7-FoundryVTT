@@ -1,5 +1,6 @@
 <div class="coc7 chat-card melee initiator"
     data-actor-key="{{actorKey}}"
+    data-target-key="{{targetKey}}"
     data-item-id="{{item._id}}"
     data-fast-forward="{{fastForward}}"
     data-resolved="{{resolved}}"
@@ -15,9 +16,9 @@
 
     <header class="card-header flexcol">
         <div class="flexrow">
-            <img style="flex: none;" src="{{item.img}}" title="{{item.name}}" width="36" height="36"/>
+            <img class="open-actor" data-actor-key="{{actorKey}}" style="flex: none;" src="{{item.img}}" title="{{item.name}}" width="36" height="36"/>
             <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{item.name}}</h3>
-            <img style="flex: none;" src="{{targetImg}}" title="{{target.name}}" width="36" height="36"/>
+            <img class="open-actor" style="flex: none;" data-actor-key="{{targetKey}}" src="{{targetImg}}" title="{{target.name}}" width="36" height="36"/>
         </div>
 
         <div class="card-content">
@@ -41,12 +42,12 @@
         {{#unless rolled}}
         <div class="flexrow advantage-selection">
             <span class="flex1 toggle-switch advantage {{#unless rolled}}simple-flag{{/unless}} {{#if advantage}}switched-on{{/if}} gm-select-only"
-            title="Add 1 bonus die (target is prone, restrained...)" 
+            title="{{localize 'CoC7.TitleAdvantage'}}"
             style="text-align:center" 
             data-flag="advantage" 
             data-selected={{advantage}}>{{localize 'CoC7.Advantage'}}</span>
             <span class="flex1 toggle-switch disadvantage {{#unless rolled}}simple-flag{{/unless}} {{#if disadvantage}}switched-on{{/if}} gm-select-only"
-            title="Add 1 malus die (for being prone, restrained...)" 
+            title="{{localize 'CoC7.TitleDisadvantage'}}" 
             style="text-align:center" 
             data-flag="disadvantage" 
             data-selected={{disadvantage}}>{{localize 'CoC7.Disadvantage'}}</span>
@@ -65,7 +66,7 @@
 
     <div class="flexrow bonus-selection">
         <span class="flex1 toggle-switch outnumbered {{#unless rolled}}simple-flag{{/unless}} {{#if outnumbered}}switched-on{{/if}} gm-select-only"
-            title="Add 1 bonus dice for outnumbered target" 
+            title="{{localize 'CoC7.TitleOutNumbered'}}" 
             style="text-align:center" 
             data-flag="outnumbered" 
             data-selected={{outnumbered}}>{{localize 'CoC7.OutNumbered'}}</span>
@@ -75,12 +76,12 @@
             data-flag="dived"
             data-selected={{surprised}}>{{localize 'CoC7.combatCard.dive4cover'}}</span> -->
         <span class="flex1 toggle-switch surprised {{#unless rolled}}simple-flag{{/unless}} {{#if surprised}}switched-on{{/if}} gm-select-only"
-            title="Add 1 bonus dice for surprised target"
+            title="{{localize 'CoC7.TitleSurprised'}}"
             style="text-align:center"
             data-flag="surprised"
             data-selected={{surprised}}>{{localize 'CoC7.combatCard.surpised'}}</span>
-        <span class="flex1 toggle-switch auto-success {{#unless rolled}}simple-flag{{/unless}} {{#if autoSuccess}}switched-on{{/if}} gm-select-only"
-            title="Attack automaticaly hit"
+        <span class="flex1 toggle-switch auto-success {{#unless rolled}}simple-flag{{/unless}} {{#if autoSuccess}}switched-on{{/if}} gm-visible-only"
+            title="{{localize 'CoC7.TitleAutoSuccess'}}"
             style="text-align:center"
             data-flag="auto-success"
             data-selected={{autoSuccess}}>{{localize 'CoC7.combatCard.autoSuccess'}}</span>
@@ -172,7 +173,21 @@
             </div>
 			{{#if check.hasMalfunction}}<h4 class="malfunction">{{check.malfunctionTxt}}</h4>{{/if}}
 		</div>
-	</div>
+    </div>
+    {{#if autoSuccess}}
+        {{#unless check.isFumble}}
+        <div class="card-buttons owner-only" data-actor-id="{{actorKey}}" style="padding: 2px 0;margin: 0;">
+            <button 
+              data-action="roll-melee-damage"
+              data-target="{{targetKey}}"
+              data-dealer="{{actorKey}}"
+              data-weapon="{{item._id}}"
+              data-critical="{{criticalDamage}}">
+                Roll damage
+            </button>
+        </div>
+        {{/unless}}
+    {{/if}}
     {{else}}
     <div class="card-buttons owner-only">
         {{#each skills as |skill id|}}

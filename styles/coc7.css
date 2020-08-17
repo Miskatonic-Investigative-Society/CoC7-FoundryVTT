@@ -1,18 +1,3 @@
-.dice-roll .dice-formula.success {
-    color: green;
-}
-.dice-roll .dice-formula.failure {
-    color: red;
-}
-
-.dice-roll .dice-formula.critical{
-    background-color: palegreen;
-}
-
-.dice-roll .dice-formula.fumble{
-    background-color: darkred;
-}
-
 .coc7 .invisible{
     display: none;
 }
@@ -242,6 +227,35 @@
     background-color: darkred;
 }
 
+.dice-roll .dice-total.regular-success{
+    background-color: #ffcc99;
+    color: #cc6600;
+}
+
+.dice-roll .dice-total.hard-success{
+    background-color: #ffff99;
+    color: #cc9900;
+}
+
+.dice-roll .dice-total.extreme-success{
+    background-color: #ccff99;
+    color: #009933;
+}
+
+.dice-roll .dice-formula.success {
+    color: green;
+}
+.dice-roll .dice-formula.failure {
+    color: red;
+}
+
+.dice-roll .dice-formula.critical{
+    background-color: palegreen;
+}
+
+.dice-roll .dice-formula.fumble{
+    background-color: darkred;
+}
 
 .tooltip {
     position: relative;
