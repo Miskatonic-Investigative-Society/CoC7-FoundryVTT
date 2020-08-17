@@ -1,4 +1,5 @@
 import  { COC7 } from '../../config.js';
+import { CoCActor } from '../../actors/actor.js';
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
@@ -34,6 +35,7 @@ export class CoC7WeaponSheet extends ItemSheet {
 		data.dtypes = ['String', 'Number', 'Boolean'];
 
 		data.hasOwner = this.item.actor != null;
+		if( data.hasOwner) data.actorKey = this.item.actor.actorKey;
 
 		data.combatSkill = [];
 		if( data.hasOwner) {
@@ -106,11 +108,8 @@ export class CoC7WeaponSheet extends ItemSheet {
 
 		// Everything below here is only needed if the sheet is editable
 		if (!this.options.editable) return;
-
-		// Add or Remove Attribute
-		// html.find(".attributes").on("click", ".attribute-control", this._onClickAttributeControl.bind(this));
-
 		html.find('.toggle-switch').click(this._onClickToggle.bind(this));
+		html.find('.weapon-property').click(this._onPropertyClick.bind(this));
 	}
 
 	/**
@@ -128,6 +127,23 @@ export class CoC7WeaponSheet extends ItemSheet {
 
 		event.target.classList.toggle('switched-on');
 		await this._onSubmit(event);
+	}
+
+	async _onPropertyClick(event){
+		event.preventDefault();
+		const property = event.currentTarget.closest('.weapon-property').dataset.property;
+		const weaponId = event.currentTarget.closest('.weapon').dataset.itemId;
+		const actorKey = event.currentTarget.closest('.weapon').dataset.actorKey;
+		let weapon = null;
+		if( actorKey){
+			const actor = CoCActor.getActorFromKey(actorKey);
+			weapon = actor.getOwnedItem( weaponId);
+		} else{
+			weapon = game.items.get(weaponId);
+		}
+		await weapon.toggleProperty( property);
+
+		return;
 	}
 
 }

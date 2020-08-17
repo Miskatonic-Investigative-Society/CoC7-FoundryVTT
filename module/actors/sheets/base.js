@@ -142,13 +142,15 @@ export class CoC7ActorSheet extends ActorSheet {
 					}
 
 					weapon.data._properties = [];
-					for( let [key, value] of Object.entries(weapon.data.properties)){
+					for( let [key, value] of Object.entries(COC7['weaponProperties']))
+					{
 						let property = {};
 						property.id = key;
-						property.value = value;
-						property.name = COC7.weaponProperties[key];
-						weapon.data._properties.push( property);
+						property.name = value;
+						property.value = true == weapon.data.properties[key];
+						weapon.data._properties.push(property);
 					}
+
 					data.weapons[weapon._id] = weapon;
 					if( weapon.data.properties.rngd) data.rangeWpn.push( weapon);
 					else data.meleeWpn.push(weapon);
@@ -749,7 +751,7 @@ export class CoC7ActorSheet extends ActorSheet {
 				//les degats de l'arme on changés.
 				//TODO : Factorisation du switch
 				//TODO : remplacer les strings par de constantes (item.range.normal ...)
-				if( event.currentTarget.classList.contains('weapon-damage')){
+				if( event.currentTarget.classList.contains('damage-formula')){
 					let weapon = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.itemId);
 					if( weapon){
 						//teste la validité de la formule.
