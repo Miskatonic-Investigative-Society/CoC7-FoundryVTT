@@ -1,5 +1,6 @@
 <div class="coc7 chat-card damage"
     data-actor-key="{{actor.tokenKey}}"
+    data-target-key="{{targetKey}}"
     data-item-id="{{weapon._id}}"
     data-critical="{{critical}}"
     data-impale="{{impale}}"
@@ -8,9 +9,9 @@
 
     <header class="card-header flexcol">
         <div class="flexrow">
-            <img style="flex: none;" src="{{weapon.img}}" title="{{weapon.name}}" width="36" height="36"/>
+            <img class="open-actor" style="flex: none;" data-actor-key="{{actor.tokenKey}}" src="{{weapon.img}}" title="{{weapon.name}}" width="36" height="36"/>
             <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{weapon.name}}</h3>
-            <div style="flex: 0 0 36px;margin-left:5px"></div>
+            <img class="open-actor" style="flex: none;" data-actor-key="{{targetKey}}" src="{{targetImg}}" title="{{target.name}}" width="36" height="36"/>
         </div>
 
         <div class="card-content">

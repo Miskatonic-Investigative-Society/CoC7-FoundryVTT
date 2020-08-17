@@ -20,10 +20,20 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.2.7 :
+
+* Bug fix/improvement on melee flow cards.
+  * Addition of portraits on cards.
+  * Double click on chatcard icons will open corresponding actor.
+* Implementation of blind and private GM rolls.
+  * Keeper has the possibility to force the check to pass or to fail.
+  * Keeper has the possibility to reveal the check result.
+  * Awarding experience automatically is disabled for blind check. Keeper can award experience.
+
 version 0.2.6 :
 
 * Modification of rolls and dice to be compatible with 0.7.x.
-  * 0.7.x bring a lot of changes. __This needs more testing. I *strongly* recommend not to upgrade to 0.7.x yet__
+  * 0.7.x bring a lot of changes. __This needs more testing. I *strongly* recommend to wait before upgrading to 0.7.x__
 
 version 0.2.5 :
 

@@ -282,17 +282,26 @@ export class CoC7RangeInitiator{
 		// const element = $(html)[0];
 		// const targetElement = element.querySelector('.targetTest');
 		// this.target.attachToElement(targetElement);
-		
-		const speaker = ChatMessage.getSpeaker({actor: this.actor});
-		if( this.actor.isToken) speaker.alias = this.actor.token.name;
+		const speakerData = {};
+		const token = chatHelper.getTokenFromKey( this.actorKey);
+		if( token) speakerData.token = token;
+		else speakerData.actor = this.actor;
+
+		const speaker = ChatMessage.getSpeaker(speakerData);
+		// if( this.actor.isToken) speaker.alias = this.actor.token.name;
 		
 		const user = this.actor.user ? this.actor.user : game.user;
-
-		const chatMessage = await ChatMessage.create({
+		const chatData = {
 			user: user._id,
 			speaker,
 			content: html
-		});
+		};
+
+		let rollMode = game.settings.get('core', 'rollMode');
+		if ( ['gmroll', 'blindroll'].includes(rollMode) ) chatData['whisper'] = ChatMessage.getWhisperRecipients('GM');
+		if ( rollMode === 'blindroll' ) chatData['blind'] = true;
+
+		const chatMessage = await ChatMessage.create(chatData);
 		
 		return chatMessage;
 	}
