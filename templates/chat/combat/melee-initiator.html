@@ -25,12 +25,12 @@
 
         <div class="flexrow advantage-selection">
             <span class="flex1 toggle-switch advantage {{#unless rolled}}simple-flag{{/unless}} {{#if advantage}}switched-on{{/if}} gm-select-only"
-            title="Add 1 bonus die (target is prone, restrained...)" 
+            title="{{localize 'CoC7.TitleAdvantage'}}"
             style="text-align:center" 
             data-flag="advantage" 
             data-selected={{advantage}}>{{localize 'CoC7.Advantage'}}</span>
             <span class="flex1 toggle-switch disadvantage {{#unless rolled}}simple-flag{{/unless}} {{#if disadvantage}}switched-on{{/if}} gm-select-only"
-            title="Add 1 malus die (for being prone, restrained...)" 
+            title="{{localize 'CoC7.TitleDisadvantage'}}" 
             style="text-align:center" 
             data-flag="disadvantage" 
             data-selected={{disadvantage}}>{{localize 'CoC7.Disadvantage'}}</span>
@@ -45,7 +45,7 @@
 
     <div class="flexrow bonus-selection">
         <span class="flex1 toggle-switch outnumbered {{#unless rolled}}simple-flag{{/unless}} {{#if outnumbered}}switched-on{{/if}} gm-select-only"
-            title="Add 1 bonus dice for outnumbered target" 
+            title="{{localize 'CoC7.TitleOutNumbered'}}" 
             style="text-align:center" 
             data-flag="outnumbered" 
             data-selected={{outnumbered}}>{{localize 'CoC7.OutNumbered'}}</span>
@@ -55,12 +55,12 @@
             data-flag="dived"
             data-selected={{surprised}}>{{localize 'CoC7.combatCard.dive4cover'}}</span> -->
         <span class="flex1 toggle-switch surprised {{#unless rolled}}simple-flag{{/unless}} {{#if surprised}}switched-on{{/if}} gm-select-only"
-            title="Add 1 bonus dice for surprised target"
+            title="{{localize 'CoC7.TitleSurprised'}}"
             style="text-align:center"
             data-flag="surprised"
             data-selected={{surprised}}>{{localize 'CoC7.combatCard.surpised'}}</span>
         <span class="flex1 toggle-switch auto-success {{#unless rolled}}simple-flag{{/unless}} {{#if autoSuccess}}switched-on{{/if}} gm-select-only"
-            title="Attack automaticaly hit"
+            title="{{localize 'CoC7.TitleAutoSuccess'}}"
             style="text-align:center"
             data-flag="auto-success"
             data-selected={{autoSuccess}}>{{localize 'CoC7.combatCard.autoSuccess'}}</span>
