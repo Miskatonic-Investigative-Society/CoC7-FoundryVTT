@@ -629,7 +629,7 @@ export class CoC7Chat{
 		event.currentTarget.parentElement.dataset.selected = event.currentTarget.dataset.property;
 	}
 
-	static _onChatCardToggleSwitch( event){
+	static async _onChatCardToggleSwitch( event){
 		event.preventDefault();
 
 		const card = event.currentTarget.closest('.chat-card');
@@ -651,6 +651,10 @@ export class CoC7Chat{
 
 		if( card.classList.contains('damage')){
 			// CoC7Item.updateCardSwitch( event);
+		}
+
+		if( card.classList.contains('roll-card')){
+			CoC7Check.updateCardSwitch(event);
 		}
 
 

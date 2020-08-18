@@ -45,6 +45,20 @@ Hooks.once('init', async function() {
 		default: 1,
 		type: Number
 	});
+
+	// Register deafult check difficulty
+	game.settings.register('CoC7', 'defaultCheckDifficulty', {
+		name: 'SETTINGS.DefaultDifficulty',
+		hint: 'SETTINGS.DefaultDifficultyHint',
+		scope: 'world',
+		config: true,
+		default: 'regular',
+		type: String,
+		choices: {
+			'regular': 'SETTINGS.CheckDifficultyRegular',
+			'unknown': 'SETTINGS.CheckDifficultyUnknown'
+		},
+	});
 	
 	// Register sheet application classes
 	Actors.unregisterSheet('core', ActorSheet);
