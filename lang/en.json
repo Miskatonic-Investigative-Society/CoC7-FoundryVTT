@@ -77,7 +77,9 @@
 "CoC7.HardDifficulty": "hard",
 "CoC7.ExtremeDifficulty": "extreme",
 "CoC7.CriticalDifficulty": "critical",
+"CoC7.UnknownDifficulty": "unknown",
 "CoC7.RollDifficulty": "Roll Difficulty",
+"CoC7.RollDifficulty.Unknown": "Blind",
 "CoC7.RollDifficultyRegular": "Regular",
 "CoC7.RollDifficultyHard": "Hard",
 "CoC7.RollDifficultyExtreme": "Extreme",
@@ -197,5 +199,11 @@
 "CoC7.newItemName": "new item",
 "CoC7.newWeaponName": "new weapon",
 
-"CoC7.creatureFightingSkill": "Fighting"
+"CoC7.creatureFightingSkill": "Fighting",
+
+
+"SETTINGS.DefaultDifficulty": "Default check difficulty",
+"SETTINGS.DefaultDifficultyHint": "You can choose the default difficulty for checks. Unknown will roll checks without the player knowing the check difficulty.",
+"SETTINGS.CheckDifficultyRegular": "Default difficulty",
+"SETTINGS.CheckDifficultyUnknown": "Unknown difficulty"
 }

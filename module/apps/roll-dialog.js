@@ -4,7 +4,8 @@ export class RollDialog {
 
 	static async create()
 	{
-		const html = await renderTemplate('systems/CoC7/templates/apps/bonus.html', {difficulty: CoC7Check.difficultyLevel});
+		const unknownDifficultyDefault = 'unknown' === game.settings.get('CoC7', 'defaultCheckDifficulty');
+		const html = await renderTemplate('systems/CoC7/templates/apps/bonus.html', {difficulty: CoC7Check.difficultyLevel, unknownDifficultyDefault: unknownDifficultyDefault});
 		return new Promise((resolve) => {
 			let formData = null;
 			const dlg = new Dialog({
