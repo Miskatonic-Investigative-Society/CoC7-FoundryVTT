@@ -153,14 +153,14 @@
 "CoC7.ErrorInvalidFormula": "{value} は有効な数式ではありません",
 "CoC7.ErrorInvalid": "無効です",
 
-"CoC7.newBioSectionName": "New Section",
+"CoC7.NewBioSectionName": "New Section",
 
-"CoC7.dodgeSkillName": "回避",
-"CoC7.creditRatingSkillName": "信用",
-"CoC7.fightingSpecializationName": "近接格闘",
-"CoC7.firearmSpecializationName": "射撃",
+"CoC7.DodgeSkillName": "回避",
+"CoC7.CreditRatingSkillName": "信用",
+"CoC7.FightingSpecializationName": "近接格闘",
+"CoC7.FirearmSpecializationName": "射撃",
 
-"CoC7.newSkillName": "新技能",
-"CoC7.newItemName": "新アイテム",
-"CoC7.newWeaponName": "新武器"
+"CoC7.NewSkillName": "新技能",
+"CoC7.NewItemName": "新アイテム",
+"CoC7.NewWeaponName": "新武器"
 }
