@@ -153,14 +153,14 @@
 "CoC7.ErrorInvalidFormula": "{value} no es una fórmula válida",
 "CoC7.ErrorInvalid": "inválido",
 
-"CoC7.newBioSectionName": "Nueva Sección",
+"CoC7.NewBioSectionName": "Nueva Sección",
 
-"CoC7.dodgeSkillName": "Esquivar",
-"CoC7.creditRatingSkillName": "Crédito",
-"CoC7.fightingSpecializationName": "Combatir",
-"CoC7.firearmSpecializationName": "Armas de fuego",
+"CoC7.DodgeSkillName": "Esquivar",
+"CoC7.CreditRatingSkillName": "Crédito",
+"CoC7.FightingSpecializationName": "Combatir",
+"CoC7.FirearmSpecializationName": "Armas de fuego",
 
-"CoC7.newSkillName": "nueva habilidad",
-"CoC7.newItemName": "nuevo ítem",
-"CoC7.newWeaponName": "nueva arma"
+"CoC7.NewSkillName": "nueva habilidad",
+"CoC7.NewItemName": "nuevo ítem",
+"CoC7.NewWeaponName": "nueva arma"
 }
