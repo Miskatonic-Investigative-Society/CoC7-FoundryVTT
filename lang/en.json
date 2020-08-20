@@ -261,5 +261,7 @@
 "SETTINGS.CheckDifficultyRegular": "Default difficulty",
 "SETTINGS.CheckDifficultyUnknown": "Unknown difficulty",
 "SETTINGS.UseToken":  "Use token image",
-"SETTINGS.UseTokenHint": "Use token image instead of portraits in chat-cards"
+"SETTINGS.UseTokenHint": "Use token image instead of portraits in chat-cards",
+"SETTINGS.DisplayActorOnCard":  "Display actor on card",
+"SETTINGS.DisplayActorOnCardHint": "Display the actor's image/token on combat chat-cards"
 }

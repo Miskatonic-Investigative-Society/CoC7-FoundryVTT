@@ -19,24 +19,26 @@
 
     <header class="card-header flexcol">
         <div class="flexrow">
+            {{#if displayActorOnCard}}
             <img class="open-actor" data-actor-key="{{actorKey}}" style="flex: none;" src="{{actorImg}}" title="{{name}}" width="36" height="36"/>
+            {{/if}}
             {{#if dodging}}
             <img class="open-actor" style="flex: none;" data-actor-key="{{actorKey}}" src="{{actor.dodgeSkill.data.img}}" title="{{actor.dodgeSkill.name}}" width="36" height="36"/>
             <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{actor.dodgeSkill.name}}</h3>
-            <img class="open-actor" style="flex: none;" data-actor-key="{{initiatorKey}}" src="{{targetImg}}" title="{{targetName}}" width="36" height="36"/>
             {{else}}
                 {{#if fightingBack}}
                 <img class="open-actor" style="flex: none;" data-actor-key="{{actorKey}}" src="{{weapon.img}}" title="{{weapon.name}}" width="36" height="36"/>
                 <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{weapon.name}}</h3>
-                <img class="open-actor" style="flex: none;" data-actor-key="{{initiatorKey}}" src="{{targetImg}}" title="{{targetName}}" width="36" height="36"/>
                 {{else}}
                     {{#if maneuvering}}
                     <img class="open-actor" style="flex: none;" data-actor-key="{{actorKey}}" src="{{skill.data.img}}" title="{{skill.name}}" width="36" height="36"/>
                     <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{skill.name}}</h3>
-                    <img class="open-actor" style="flex: none;" data-actor-key="{{initiatorKey}}" src="{{targetImg}}" title="{{targetName}}" width="36" height="36"/>
+                    {{else}}
+                    <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">...</h3>
                     {{/if}}
                 {{/if}}
             {{/if}}
+            <img class="open-actor" style="flex: none;" data-actor-key="{{initiatorKey}}" src="{{targetImg}}" title="{{targetName}}" width="36" height="36"/>
         </div>
 
         <div class="card-content">
