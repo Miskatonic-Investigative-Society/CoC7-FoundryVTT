@@ -468,7 +468,7 @@ export class CoCActor extends Actor {
 	}
 
 
-	get tokenId()
+	get tokenId() //TODO clarifier ca et tokenkey
 	{
 		return this.token ? `${this.token.scene._id}.${this.token.id}` : null;
 	}
@@ -525,10 +525,15 @@ export class CoCActor extends Actor {
 		return skills;
 	}
 
-	get tokenKey(){
-		if( this.isToken){
-			return `${this.token.scene.id}.${this.token.id}`;
-		}
+	get tokenKey() //Clarifier ca et tokenid
+	{
+		//Case 1: the actor is a synthetic actor and has a token, return token key.
+		if( this.isToken) return `${this.token.scene.id}.${this.token.id}`;
+
+		//Case 2: the actor is not a token (linked actor). If the sheet have an associated token return the token key.
+		if( this.sheet.token) return `${this.sheet.token.scene.id}.${this.sheet.token.id}`;
+
+		//Case 3: Actor has no token return his ID;
 		return this.id;
 	}
   

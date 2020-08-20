@@ -16,9 +16,10 @@
 
     <header class="card-header flexcol">
         <div class="flexrow">
+            <img class="open-actor" data-actor-key="{{actorKey}}" style="flex: none;" src="{{actorImg}}" title="{{name}}" width="36" height="36"/>
             <img class="open-actor" data-actor-key="{{actorKey}}" style="flex: none;" src="{{item.img}}" title="{{item.name}}" width="36" height="36"/>
             <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{item.name}}</h3>
-            <img class="open-actor" style="flex: none;" data-actor-key="{{targetKey}}" src="{{targetImg}}" title="{{target.name}}" width="36" height="36"/>
+            <img class="open-actor" style="flex: none;" data-actor-key="{{targetKey}}" src="{{targetImg}}" title="{{targetName}}" width="36" height="36"/>
         </div>
 
         <div class="card-content">
@@ -29,10 +30,12 @@
                 {{#if disadvantage}}<span class="tag" title="Disadvantage">{{localize 'CoC7.Disadvantage'}}</span>{{/if}}
             </div>
             <div class="flex0 bonus-selection">
-                <span class="tag">{{target.name}} :</span>
+                {{#if target}}
+                <span class="tag">{{targetName}} :</span>
                 {{#if outnumbered}}<span class="tag" title="Outnumbered">{{localize 'CoC7.OutNumbered'}}</span>{{/if}}
                 {{#if surprised}}<span class="tag" title="Surprised">{{localize 'CoC7.combatCard.surpised'}}</span>{{/if}}
                 {{#if autoSuccess}}<span class="tag" title="Automatic success">{{localize 'CoC7.combatCard.autoSuccess'}}</span>{{/if}}
+                {{/if}}
             </div>
             {{/if}}
         </div>
@@ -59,7 +62,7 @@
 
     <div class="target-name">
         {{#if target}}
-        <label>Target : {{target.name}}</label>
+        <label>Target : {{targetName}}</label>
         {{/if}}
     </div>
 
@@ -70,11 +73,6 @@
             style="text-align:center" 
             data-flag="outnumbered" 
             data-selected={{outnumbered}}>{{localize 'CoC7.OutNumbered'}}</span>
-        <!-- <span class="flex1 toggle-switch dived {{#unless rolled}}simple-flag{{/unless}} {{#if dived}}switched-on{{/if}} gm-select-only"
-            title="Add 1 malus dice on succesfull dodge from target"
-            style="text-align:center"
-            data-flag="dived"
-            data-selected={{surprised}}>{{localize 'CoC7.combatCard.dive4cover'}}</span> -->
         <span class="flex1 toggle-switch surprised {{#unless rolled}}simple-flag{{/unless}} {{#if surprised}}switched-on{{/if}} gm-select-only"
             title="{{localize 'CoC7.TitleSurprised'}}"
             style="text-align:center"
@@ -186,6 +184,20 @@
                 Roll damage
             </button>
         </div>
+        {{/unless}}
+    {{else}}
+        {{#unless hasTarget}}
+            <div class="card-buttons owner-only" data-actor-id="{{actorKey}}" style="padding: 2px 0;margin: 0;">
+                <button 
+                class="{{#unless check.isSuccess}}invisible{{/unless}}"
+                data-action="roll-melee-damage"
+                data-target="{{targetKey}}"
+                data-dealer="{{actorKey}}"
+                data-weapon="{{item._id}}"
+                data-critical="{{criticalDamage}}">
+                    Roll damage
+                </button>
+            </div>
         {{/unless}}
     {{/if}}
     {{else}}
