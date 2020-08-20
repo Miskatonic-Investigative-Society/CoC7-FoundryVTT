@@ -232,6 +232,10 @@ export class CoC7ActorSheet extends ActorSheet {
 		return this.actor.id;
 	}
 
+	onCloseSheet(){
+		this.actor.locked = true;
+	}
+
 	/* -------------------------------------------- */
 
 	/**
@@ -663,6 +667,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
 				if( event.currentTarget.classList.contains('attribute-value'))
 				{
+					//TODO : check why SAN only ?
 					if( 'data.attribs.san.value' === event.currentTarget.name)
 					{
 						this.actor.setSan(parseInt( event.currentTarget.value));

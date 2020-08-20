@@ -16,6 +16,22 @@
 
 			<div class="flexrow" style="flex: 0 0 auto;display: flex;">
 			{{#each data.characteristics as |characteristic key|}}
+				{{#if ../data.flags.locked}}
+					{{#if characteristic.value}}
+						<div class="flexcol" style=" margin-right: 2px;" data-characteristic="{{key}}">
+							<div class="characteristics-label rollable" style="text-align: left;">
+								<label>{{localize characteristic.short}}</label>
+							</div>
+							<div style="text-align:center;border: 1px groove;margin-right: 2px;">
+								{{#if characteristic.editable}}
+								<input class="characteristic-score" style="text-align: center;" type="text" name="data.characteristics.{{key}}.value" value="{{characteristic.value}}" data-dtype="Number">
+								{{else}}
+								<input class="characteristic-score read-only" style="text-align: center;" type="text" name="data.characteristics.{{key}}.value" value="{{characteristic.value}}" data-dtype="Number" {{#if ../data.flags.locked}}readonly{{/if}}>
+								{{/if}}
+							</div>
+						</div>
+					{{/if}}
+				{{else}}
 				<div class="flexcol" style=" margin-right: 2px;" data-characteristic="{{key}}">
 					<div class="characteristics-label rollable" style="text-align: left;">
 						<label>{{localize characteristic.short}}</label>
@@ -34,11 +50,12 @@
 						</div>
 					{{/if}}
 				</div>
+				{{/if}}
 			{{/each}}
 			</div>
 
 			<div class="flexrow attribute-list" style="display: flex;">
-				<div class="flexrow flex1 attribute" data-attrib="hp">
+				<div class="flexrow flex1 attribute" style="display: flex;" data-attrib="hp">
 					<label class="attribute-label">{{localize 'CoC7.HP'}} :</label>
 					<input class="attribute-value" type="text" name="data.attribs.hp.value" value="{{data.attribs.hp.value}}" data-dtype="Number"/>
 					<span style="flex: none;font-size: large;">/</span>
@@ -53,33 +70,66 @@
 					{{/unless}}
 					<div class="flex1"></div>
 				</div>
-				<div class="flexrow flex1 attribute" data-attrib="mp">
-					<label class="attribute-label">{{localize 'CoC7.MP'}} :</label>
-					<input class="attribute-value" type="text" name="data.attribs.mp.value" value="{{data.attribs.mp.value}}" data-dtype="Number"/>
-					<span style="flex: none;font-size: large;">/</span>
-					{{#if data.attribs.mp.auto}}
-					<span class="attribute-max" type="text" style="line-height: 22px;"> {{data.attribs.mp.max}} </span>
-					{{else}}
-					<input class="attribute-max {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.mp.max" value="{{data.attribs.mp.max}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
-					{{/if}}
+				{{#if data.flags.locked}}
+					<div class="flexrow flex1 attribute" data-attrib="mp">
+						{{#if hasMp}}
+						<label class="attribute-label">{{localize 'CoC7.MP'}} :</label>
+						<input class="attribute-value" type="text" name="data.attribs.mp.value" value="{{data.attribs.mp.value}}" data-dtype="Number"/>
+						<span style="flex: none;font-size: large;">/</span>
+						{{#if data.attribs.mp.auto}}
+						<span class="attribute-max" type="text" style="line-height: 22px;"> {{data.attribs.mp.max}} </span>
+						{{else}}
+						<input class="attribute-max {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.mp.max" value="{{data.attribs.mp.max}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
+						{{/if}}
+						<div class="flex1"></div>
+						{{/if}}
+					</div>
 
-					{{#unless data.flags.locked}}
-					<div class="auto-toggle {{#if data.attribs.mp.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
-					{{/unless}}
-					<div class="flex1"></div>
-				</div>
-				<div class="flexrow flex1 attribute"  data-attrib="san">
-					<label class="attribute-label rollable">{{localize 'CoC7.SAN'}} :</label>
-					<input class="attribute-value" type="text" name="data.attribs.san.value" value="{{data.attribs.san.value}}" data-dtype="Number"/>
-					<span style="flex: none;font-size: large;">/</span>
-					<input class="attribute-max {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.san.max" value="{{data.attribs.san.max}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
-					<div class="flex1"></div>
-				</div>
-				<div class="flexrow flex1 attribute"  data-attrib="lck">
-					<label class="attribute-label rollable">{{localize 'CoC7.Luck'}} :</label>
-					<input class="attribute-value read-only" type="text" name="data.attribs.lck.value" value="{{data.attribs.lck.value}}" data-dtype="Number" readonly>
-					<div class="flex1"></div>
-				</div>
+					<div class="flexrow flex1 attribute"  data-attrib="san">
+						{{#if hasSan}}
+						<label class="attribute-label rollable">{{localize 'CoC7.SAN'}} :</label>
+						<input class="attribute-value" type="text" name="data.attribs.san.value" value="{{data.attribs.san.value}}" data-dtype="Number"/>
+						<span style="flex: none;font-size: large;">/</span>
+						<input class="attribute-max {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.san.max" value="{{data.attribs.san.max}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
+						<div class="flex1"></div>
+						{{/if}}
+					</div>
+
+					<div class="flexrow flex1 attribute"  data-attrib="lck">
+						{{#if hasLuck}}
+						<label class="attribute-label rollable">{{localize 'CoC7.Luck'}} :</label>
+						<input class="attribute-value read-only" type="text" name="data.attribs.lck.value" value="{{data.attribs.lck.value}}" data-dtype="Number" readonly>
+						<div class="flex1"></div>
+						{{/if}}
+					</div>
+				{{else}}
+					<div class="flexrow flex1 attribute" data-attrib="mp">
+						<label class="attribute-label">{{localize 'CoC7.MP'}} :</label>
+						<input class="attribute-value" type="text" name="data.attribs.mp.value" value="{{data.attribs.mp.value}}" data-dtype="Number"/>
+						<span style="flex: none;font-size: large;">/</span>
+						{{#if data.attribs.mp.auto}}
+						<span class="attribute-max" type="text" style="line-height: 22px;"> {{data.attribs.mp.max}} </span>
+						{{else}}
+						<input class="attribute-max {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.mp.max" value="{{data.attribs.mp.max}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
+						{{/if}}
+						<div class="auto-toggle {{#if data.attribs.mp.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
+						<div class="flex1"></div>
+					</div>
+
+					<div class="flexrow flex1 attribute"  data-attrib="san">
+						<label class="attribute-label rollable">{{localize 'CoC7.SAN'}} :</label>
+						<input class="attribute-value" type="text" name="data.attribs.san.value" value="{{data.attribs.san.value}}" data-dtype="Number"/>
+						<span style="flex: none;font-size: large;">/</span>
+						<input class="attribute-max {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.san.max" value="{{data.attribs.san.max}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
+						<div class="flex1"></div>
+					</div>
+
+					<div class="flexrow flex1 attribute"  data-attrib="lck">
+						<label class="attribute-label rollable">{{localize 'CoC7.Luck'}} :</label>
+						<input class="attribute-value read-only" type="text" name="data.attribs.lck.value" value="{{data.attribs.lck.value}}" data-dtype="Number" readonly>
+						<div class="flex1"></div>
+					</div>
+					{{/if}}
 			</div>
 
 			<div class="flexrow" style="flex: none;height: 20px;">
