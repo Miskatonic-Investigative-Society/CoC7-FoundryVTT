@@ -57,9 +57,20 @@ Hooks.once('init', async function() {
 		choices: {
 			'regular': 'SETTINGS.CheckDifficultyRegular',
 			'unknown': 'SETTINGS.CheckDifficultyUnknown'
-		},
+		}
 	});
+
 	
+	// Register deafult check difficulty
+	game.settings.register('CoC7', 'useToken', {
+		name: 'SETTINGS.UseToken',
+		hint: 'SETTINGS.UseTokenHint',
+		scope: 'world',
+		config: true,
+		default: false,
+		type: Boolean
+	});
+
 	// Register sheet application classes
 	Actors.unregisterSheet('core', ActorSheet);
 	Actors.registerSheet('CoC7', CoC7NPCSheet, { types: ['npc'] });
