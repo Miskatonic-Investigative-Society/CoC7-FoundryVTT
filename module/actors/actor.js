@@ -368,13 +368,10 @@ export class CoCActor extends Actor {
 
 	async setHp( value){
 		if( value < 0) value = 0;
-		if( value > this.hpMax) value = parseInt( this.data.data.attribs.hp.value);
+		if( value > this.hpMax) value = parseInt( this.hpMax);
 		return await this.update( { 'data.attribs.hp.value': value});
 	}
 
-	get mp(){
-		return parseInt(this.data.data.attribs.mp.value);
-	}
 
 	get mpMax(){
 		if( this.data.data.attribs.mp.auto){
@@ -385,12 +382,15 @@ export class CoCActor extends Actor {
 		return parseInt( this.data.data.attribs.mp.max);
 	}
 
-	async setMp( value){
-		if( value < 0) value = 0;
-		if( value > parseInt( this.mpMax)) value = parseInt( this.data.data.attribs.mp.value);
-		return await this.update( { 'data.attribs.mp.value': value});
+	get mp(){
+		return parseInt(this.data.data.attribs.mp.value);
 	}
 
+	async setMp( value){
+		if( value < 0) value = 0;
+		if( value > parseInt( this.mpMax)) value = parseInt( this.mpMax);
+		return await this.update( { 'data.attribs.mp.value': value});
+	}
 
 	get san(){
 		return parseInt(this.data.data.attribs.san.value);
@@ -508,6 +508,10 @@ export class CoCActor extends Actor {
 
 	async setActorFlag( flagName){
 		await this.update( {[`data.flags.${flagName}`]: true});
+	}
+
+	async unsetActorFlag( flagName){
+		await this.update( {[`data.flags.${flagName}`]: false});
 	}
 
 	getWeaponSkills( itemId){

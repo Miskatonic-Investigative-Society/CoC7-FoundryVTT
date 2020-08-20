@@ -8,7 +8,8 @@
 	"compatibleCoreVersion": "0.6.5",
 	"esmodules": [
 		"module/coc7.js",
-		"pdfoundry-dist/bundle.js"
+		"pdfoundry-dist/bundle.js",
+		"module/dicebot.js"
 	],
 	"templateVersion": 1,
 	"styles": ["styles/coc7.css"],

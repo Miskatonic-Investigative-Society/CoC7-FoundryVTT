@@ -18,10 +18,16 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 		data.displayFormula = this.actor.getActorFlag( 'displayFormula');
 		if( data.displayFormula === undefined) data.displayFormula = false;
 		// await this.actor.creatureInit();
-
-
+		data.hasSan = (null !== data.data.attribs.san.value);
+		data.hasMp = (null !== data.data.attribs.mp.value);
+		data.hasLuck = (null !== data.data.attribs.lck.value);
 
 		return data;
+	}
+
+	onCloseSheet(){
+		this.actor.unsetActorFlag( 'displayFormula');
+		super.onCloseSheet();
 	}
 
 
