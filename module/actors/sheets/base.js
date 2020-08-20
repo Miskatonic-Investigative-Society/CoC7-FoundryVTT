@@ -2,7 +2,7 @@ import { RollDialog } from '../../apps/roll-dialog.js';
 // import { CoC7Dice } from '../../dice.js'
 import { CoC7Check } from '../../check.js';
 import { COC7 } from '../../config.js';
-import { CoC7MeleeInitiator } from '../../chat/meleecombat.js';
+import { CoC7MeleeInitiator } from '../../chat/combat/melee-initiator.js';
 import { CoC7RangeInitiator } from '../../chat/rangecombat.js';
 import { CoC7DamageRoll } from '../../chat/damagecards.js';
 
@@ -227,6 +227,10 @@ export class CoC7ActorSheet extends ActorSheet {
 		return parsedFormula;
 	}
 
+	get tokenKey(){
+		if( this.token) return `${this.token.scene._id}.${this.token.data._id}`;
+		return this.actor.id;
+	}
 
 	/* -------------------------------------------- */
 
@@ -530,21 +534,20 @@ export class CoC7ActorSheet extends ActorSheet {
 
 	async _onWeaponRoll(event) {
 		event.preventDefault();
-		const actorId = event.currentTarget.closest('form').dataset.actorId;
-		const tokenKey = event.currentTarget.closest('form').dataset.tokenId;
 		const itemId = event.currentTarget.closest('li').dataset.itemId;
 		const fastForward = event.shiftKey;
 		const weapon = this.actor.getOwnedItem(itemId);
+		const actorKey = !this.token? this.actor.actorKey : `${this.token.scene._id}.${this.token.data._id}`;
 		if( !weapon.data.data.properties.rngd){
 			if( game.user.targets.size > 1){
 				ui.notifications.error('Too many target selected. Keeping only last selected target');
 			}
 
-			const card = new CoC7MeleeInitiator( tokenKey ? tokenKey : actorId, itemId, fastForward);
+			const card = new CoC7MeleeInitiator( actorKey, itemId, fastForward);
 			card.createChatCard();
 		}
 		if( weapon.data.data.properties.rngd){
-			const card = new CoC7RangeInitiator( tokenKey ? tokenKey : actorId, itemId, fastForward);
+			const card = new CoC7RangeInitiator( actorKey, itemId, fastForward);
 			card.createChatCard();
 		}
 	}

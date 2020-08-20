@@ -38,7 +38,35 @@
 	data-critical="{{isCritical}}"
 	data-characteristic="{{characteristic}}" 
 	data-luck-spent="{{luckSpent}}"
+	data-gm-difficulty-regular="{{gmDifficultyRegular}}"
+	data-gm-difficulty-hard="{{gmDifficultyHard}}"
+	data-gm-difficulty-extreme="{{gmDifficultyExtreme}}"
+	data-gm-difficulty-critical="{{gmDifficultyCritical}}"
 	{{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
+	{{#if isUnknown}}
+	<div class="flexrow difficulty-selector gm-visible-only">
+		<span class="flex1 toggle-switch simple-flag {{#if gmDifficultyRegular}}switched-on{{/if}}"
+			title="Regular difficulty" 
+			style="text-align:center" 
+			data-flag="gmDifficultyRegular" 
+			data-selected={{gmDifficultyRegular}}>{{localize 'CoC7.RollDifficultyRegular'}}</span>
+		<span class="flex1 toggle-switch simple-flag {{#if gmDifficultyHard}}switched-on{{/if}}"
+			title="Hard difficulty" 
+			style="text-align:center" 
+			data-flag="gmDifficultyHard" 
+			data-selected={{gmDifficultyHard}}>{{localize 'CoC7.RollDifficultyHard'}}</span>
+		<span class="flex1 toggle-switch simple-flag {{#if gmDifficultyExtreme}}switched-on{{/if}}"
+			title="Extreme difficulty" 
+			style="text-align:center" 
+			data-flag="gmDifficultyExtreme" 
+			data-selected={{gmDifficultyExtreme}}>{{localize 'CoC7.RollDifficultyExtreme'}}</span>
+		<span class="flex1 toggle-switch simple-flag {{#if gmDifficultyCritical}}switched-on{{/if}}"
+			title="Critical difficulty" 
+			style="text-align:center" 
+			data-flag="gmDifficultyCritical" 
+			data-selected={{gmDifficultyCritical}}>{{localize 'CoC7.RollDifficultyCritical'}}</span>
+	</div>
+	{{/if}}
 	<div class="dice-roll {{#if isBlind}}gm-visible-only{{/if}}">
 		<div class="dice-result"
 			data-total="{{dices.total}}"
@@ -81,7 +109,11 @@
 					</div>
 				</section>
 
+				{{#if successRequired}}
 				<h4 class="result-details">{{resultType}}, {{successRequired}}</h4>
+				{{else}}
+				<h4 class="result-details">{{resultType}}</h4>
+				{{/if}}
 
 				<div class="card-buttons owner-only" data-actor-id="{{actor._id}}" style="padding-top: 5px;margin: 0;">
 					{{#unless isSuccess}}
