@@ -114,6 +114,7 @@ export class CoC7Check {
 	}
 
 	get unknownDifficulty(){
+		if( this.gmDifficultyCritical || this.gmDifficultyExtreme || this.gmDifficultyHard || this.gmDifficultyRegular) return false;
 		return CoC7Check.difficultyLevel.unknown === this.difficulty;
 	}
 
@@ -250,6 +251,11 @@ export class CoC7Check {
 	async computeCheck(){
 
 		this.isUnknown = this.unknownDifficulty;
+
+		if( this.gmDifficultyRegular) this.difficulty = CoC7Check.difficultyLevel.regular;
+		if( this.gmDifficultyHard) this.difficulty = CoC7Check.difficultyLevel.hard;
+		if( this.gmDifficultyExtreme) this.difficulty = CoC7Check.difficultyLevel.extreme;
+		if( this.gmDifficultyCritical) this.difficulty = CoC7Check.difficultyLevel.critical;
 
 		this.tenOnlyOneDie = this.dices.tens.length == 1;
 
@@ -575,7 +581,7 @@ export class CoC7Check {
 		let html = await renderTemplate(template, this);
 
 		const message = game.messages.get( this.messageId);
-		const msg = await message.update({ content: html });
+		const msg = await message.update({ flavor: this.flavor, content: html });
 		await ui.chat.updateMessage( msg, false);
 		return msg;
 	}
@@ -591,6 +597,7 @@ export class CoC7Check {
 		if( 'gmDifficultyHard' === event.currentTarget.dataset.flag){ check.gmDifficultyHard = true;}
 		if( 'gmDifficultyExtreme' === event.currentTarget.dataset.flag){ check.gmDifficultyExtreme = true;}
 		if( 'gmDifficultyCritical' === event.currentTarget.dataset.flag){ check.gmDifficultyCritical = true;}
+		check.computeCheck();
 		check.updateChatCard();
 	}
 

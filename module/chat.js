@@ -1126,9 +1126,12 @@ export class CoC7Chat{
 		}
 		case 'roll-melee-damage':{
 			const damageCard = new CoC7DamageRoll( button.dataset.weapon, button.dataset.dealer, button.dataset.target, 'true' == button.dataset.critical );
-			damageCard.rollDamage( );
-			card.querySelectorAll('.card-buttons').forEach( b => b.remove());
-			CoC7Chat.updateChatCard( card);
+			if( originMessage.dataset.messageId) damageCard.messageId = originMessage.dataset.messageId;
+			damageCard.rollDamage();
+			if( originMessage.dataset.messageId) {
+				card.querySelectorAll('.card-buttons').forEach( b => b.remove());
+				CoC7Chat.updateChatCard( card);
+			}
 			break;
 		}
 		case 'range-initiator-shoot':{

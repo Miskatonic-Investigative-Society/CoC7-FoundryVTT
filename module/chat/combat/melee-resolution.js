@@ -36,7 +36,11 @@ export class CoC7MeleeResoltion{
 		this.messageId = chatMessage.id;
 		return chatMessage;
 	}
-
+	
+	get displayActorOnCard(){
+		return game.settings.get('CoC7', 'displayActorOnCard');
+	}
+    
 	get target(){
 		if(this.targetMessage) return CoC7MeleeTarget.getFromMessageId(this.targetMessage);
 		return null;
@@ -56,7 +60,6 @@ export class CoC7MeleeResoltion{
 		if( this.initiator) return chatHelper.getTokenFromKey( this.initiator.actorKey);
 		return null;
 	}
-
 
 	async resolve(){
 		if( this.target){
@@ -145,13 +148,17 @@ export class CoC7MeleeResoltion{
 			else this.winner.roll.criticalDamage = false;
 		}
 
-
 		this.resolved = true;
 		const html = await renderTemplate(this.template, this);
 		if( this.messageId){
 			const message = game.messages.get( this.messageId);
-			const speaker = this.winner ? ChatMessage.getSpeaker({token: this.winner.token}) : null;
-			const user = this.winner ? this.winner.actor.user ? this.winner.actor.user : game.user : game.user;
+			const speakerData = {};
+			if( this.winner){
+				if( this.winner.token) speakerData.token = this.winner.token;
+				if( this.winner.actor) speakerData.actor = this.winner.actor;
+			}
+			const speaker = this.winner ? ChatMessage.getSpeaker(speakerData) : null;
+			const user = this.winner && this.winner.actor.user ? this.winner.actor.user : game.user;
 
 			let msg;
 			if( speaker) msg = await message.update({ 

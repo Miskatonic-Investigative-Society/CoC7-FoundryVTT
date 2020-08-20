@@ -46,7 +46,7 @@ Hooks.once('init', async function() {
 		type: Number
 	});
 
-	// Register deafult check difficulty
+	// Set default check difficulty.
 	game.settings.register('CoC7', 'defaultCheckDifficulty', {
 		name: 'SETTINGS.DefaultDifficulty',
 		hint: 'SETTINGS.DefaultDifficultyHint',
@@ -61,10 +61,20 @@ Hooks.once('init', async function() {
 	});
 
 	
-	// Register deafult check difficulty
+	// Set the use of token instead of portraits.
 	game.settings.register('CoC7', 'useToken', {
 		name: 'SETTINGS.UseToken',
 		hint: 'SETTINGS.UseTokenHint',
+		scope: 'world',
+		config: true,
+		default: false,
+		type: Boolean
+	});
+
+	// Set the need to display actor image on chat cards.
+	game.settings.register('CoC7', 'displayActorOnCard', {
+		name: 'SETTINGS.DisplayActorOnCard',
+		hint: 'SETTINGS.DisplayActorOnCardHint',
 		scope: 'world',
 		config: true,
 		default: false,
@@ -91,6 +101,7 @@ Hooks.on('updateChatMessage', (chatMessage, chatData, diff, speaker) => CoC7Chat
 Hooks.on('ready', CoC7Chat.ready);
 Hooks.on('preCreateActor', (createData) => CoCActor.initToken( createData));
 Hooks.on('renderCombatTracker', (combatTracker, html, data) => CoC7Combat.renderCombatTracker(combatTracker, html, data));
+Hooks.on('closeActorSheet', (characterSheet) => characterSheet.onCloseSheet());
 // Hooks.on('chatMessage', (chatLog, message, chatData) => { console.log('**************************************************************************************************chatMessage : '  + message);});
 
 

@@ -5,7 +5,10 @@ export class ChatCardActor{
 		this.actorKey = actorKey;
 		this.fastForward = fastForward;
 	}
- 
+
+	get displayActorOnCard(){
+		return game.settings.get('CoC7', 'displayActorOnCard');
+	}
     
 	get isBlind(){
 		if( !this.rollMode) return null;
