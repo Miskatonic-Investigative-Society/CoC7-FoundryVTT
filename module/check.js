@@ -3,7 +3,7 @@ import { CoC7Item } from './items/item.js';
 import { chatHelper, CoC7Roll } from './chat/helper.js';
 
 export class CoC7Check {
-	constructor( actor = null, skill = null, item = null, diceMod = 0, difficulty = CoC7Check.difficultyLevel.regular) {
+	constructor( actor = null, skill = null, item = null, diceMod = 0, difficulty = null) {
 		this.actor = actor;
 		this.skill = skill;
 		this.item = item;
@@ -16,9 +16,15 @@ export class CoC7Check {
 		this.referenceMessageId = null;
 		this.pushing = false;
 
+		if( null === difficulty){
+			const isUnknown = 'unknown' === game.settings.get('CoC7', 'defaultCheckDifficulty');
+			this.difficulty = isUnknown? CoC7Check.difficultyLevel.unknown: CoC7Check.difficultyLevel.regular; 
+		}
+
 	}
 
 	static difficultyLevel = {
+		unknown: -1,
 		regular: 1,
 		hard: 2,
 		extreme: 3,
@@ -105,6 +111,10 @@ export class CoC7Check {
 	
 	set isBlind(x){
 		this._isBlind = x;
+	}
+
+	get unknownDifficulty(){
+		return CoC7Check.difficultyLevel.unknown === this.difficulty;
 	}
 
 	get rollMode(){
@@ -239,7 +249,7 @@ export class CoC7Check {
 
 	async computeCheck(){
 
-		// this.isUnknown = this.isBlind;
+		this.isUnknown = this.unknownDifficulty;
 
 		this.tenOnlyOneDie = this.dices.tens.length == 1;
 
@@ -327,11 +337,17 @@ export class CoC7Check {
 			this.difficultyString = game.i18n.format('CoC7.CriticalDifficulty');
 			this.succesThreshold = this.criticalThreshold;
 			break;
+		case CoC7Check.difficultyLevel.unknown:
+			this.difficultyString = game.i18n.format('CoC7.UnknownDifficulty');
+			this.succesThreshold = -1;
+			break;
 		default:
 			this.succesThreshold = this.rawValue;
 			break;
 		}
-		this.successRequired = game.i18n.format('CoC7.SuccessRequired', {successRequired : this.difficultyString});
+
+		if( this.unknownDifficulty ) this.successRequired = '';
+		else this.successRequired = game.i18n.format('CoC7.SuccessRequired', {successRequired : this.difficultyString});
 
 
 		this.passed = this.succesThreshold >= this.dices.total ? true : false;
@@ -361,7 +377,7 @@ export class CoC7Check {
 		if( this.characteristic != null) this.canBePushed = true;
 		if( this.isFumble) this.canBePushed = false;
 		
-		if( !this.luckSpent && !this.passed && !this.isFumble && this.difficulty!=CoC7Check.difficultyLevel.critical) {
+		if( !this.luckSpent && !this.passed && !this.isFumble && this.difficulty!=CoC7Check.difficultyLevel.critical && !this.unknownDifficulty) {
 			if( this.skill || this.characteristic){
 				let luckNeeded = this.dices.total - this.succesThreshold;
 				if( this.actor.luck > luckNeeded){
@@ -377,6 +393,15 @@ export class CoC7Check {
 
 			// Can't spend luck on pushed rolls.
 			if( !this.pushing && 'lck' != this.attribute && 'san' != this.attribute){
+
+				if( this.unknownDifficulty && this.dices.total > this.regularThreshold){
+					let nextLevel = {};
+					nextLevel.difficultyName = game.i18n.localize('CoC7.RegularDifficulty');
+					nextLevel.difficulty = CoC7Check.difficultyLevel.regular;
+					nextLevel.luckToSpend = this.dices.total - this.regularThreshold;
+					nextLevel.hasEnoughLuck = (nextLevel.luckToSpend <= this.actor.luck);
+					if (nextLevel.luckToSpend <= this.actor.luck) this.increaseSuccess.push(nextLevel);
+				}
 
 				if(this.difficulty <= CoC7Check.difficultyLevel.regular  && this.dices.total > this.hardThreshold){
 					let nextLevel = {};
@@ -402,7 +427,7 @@ export class CoC7Check {
 		if( this.isFumble) this.canIncreaseSuccess = false;
 		this.difficultyLevel = this.difficulty;
 
-		if( this.passed && this.diceModifier <= 0 && this.skill && !this.skill.data.data.properties.noxpgain &&!this.luckSpent &&!this.forced &&!this.isBlind){
+		if( this.passed && this.diceModifier <= 0 && this.skill && !this.skill.data.data.properties.noxpgain &&!this.luckSpent &&!this.forced &&!this.isBlind &&!this.isUnknown){
 			this.flagForDevelopement();
 		}
 	}
@@ -553,6 +578,20 @@ export class CoC7Check {
 		const msg = await message.update({ content: html });
 		await ui.chat.updateMessage( msg, false);
 		return msg;
+	}
+
+	static async updateCardSwitch(event){
+		const card = event.currentTarget.closest('.chat-card');
+		const check = await CoC7Check.getFromCard(card);
+		check.gmDifficultyRegular = false;
+		check.gmDifficultyHard = false;
+		check.gmDifficultyExtreme = false;
+		check.gmDifficultyCritical = false;
+		if( 'gmDifficultyRegular' === event.currentTarget.dataset.flag){ check.gmDifficultyRegular = true;}
+		if( 'gmDifficultyHard' === event.currentTarget.dataset.flag){ check.gmDifficultyHard = true;}
+		if( 'gmDifficultyExtreme' === event.currentTarget.dataset.flag){ check.gmDifficultyExtreme = true;}
+		if( 'gmDifficultyCritical' === event.currentTarget.dataset.flag){ check.gmDifficultyCritical = true;}
+		check.updateChatCard();
 	}
 
 	async shortResult( details = false){
