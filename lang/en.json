@@ -99,6 +99,8 @@
 "CoC7.RollDifficultyCritical": "Critical",
 "CoC7.RollResult.LuckSpendText": "{luckAmount} luck spend, {successLevel} success",
 "CoC7.RollDice": "Roll !",
+"CoC7.SuccesLevelHint": "{value} level(s) of success",
+"CoC7.FailureLevelHint": "Failed by {value} level(s)",
 
 "CoC7.CheckResult": "{name} check ({value}%) - {difficulty} difficulty",
 "CoC7.ItemCheckResult": "{item} - {skill} check ({value}%) - {difficulty} difficulty",

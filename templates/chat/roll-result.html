@@ -72,7 +72,18 @@
 		<div class="dice-result"
 			data-total="{{dices.total}}"
 			data-ten-result="{{dices.tenResult}}">
-			<div class="dice-formula {{#if isSuccess}}success{{/if}} {{#if isCritial}}critical{{/if}} {{#if isFumble}}{{/if}}">1D% {{#if dices.hasBonus}}{{dices.bonus}} {{dices.bonusType}} {{localize 'CoC7.Dice'}}{{/if}}</div>
+			<div class="dice-formula {{#if isSuccess}}success{{/if}} {{#if isFailure}}failure{{/if}} {{#if isCritical}}critical{{/if}} {{#if isFumble}}fumble{{/if}}"
+			  title="{{successLevelIcons.hint}}">
+				{{#if successLevelIcons}}
+					<span class="roll-icons {{successLevelIcons.cssClass}}">
+					{{#each successLevelIcons.icons as |icon|}}
+						<i class="fas fa-{{icon}}"></i>
+					{{/each}}
+					</span>
+				{{else}}
+				1D% {{#if dices.hasBonus}}{{dices.bonus}} {{dices.bonusType}} {{localize 'CoC7.Dice'}}{{/if}}
+				{{/if}}
+			</div>
 			<div class="dice-tooltip" style="display: none;">
 				<section class="tooltip-part">
 					<div class="dice ten-dice">
@@ -148,7 +159,7 @@
 					{{/unless}}
 				</div>
 			</div>
-			<h4 id="diceResult" class="dice-total {{cssClass}}">{{dices.total}} {{#if pushing}} {{localize 'CoC7.PushedRoll'}}{{/if}} {{#if luckSpent}}Luck spent{{/if}}</h4>
+			<h4 id="diceResult" class="dice-total {{cssClass}}" title="{{resultType}}">{{dices.total}} {{#if pushing}} {{localize 'CoC7.PushedRoll'}}{{/if}} {{#if luckSpent}}Luck spent{{/if}}</h4>
 			{{#if hasMalfunction}}<h4 class="malfunction">{{malfunctionTxt}}</h4>{{/if}}
 		</div>
 	</div>

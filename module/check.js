@@ -104,6 +104,36 @@ export class CoC7Check {
 		this.actor.alias = this.actor.name;
 	}
 
+	get successLevelIcons(){
+		if( this.unknownDifficulty) return null;
+		if( this.successLevel >= this.difficultyLevel){
+			let icons = [];
+			for (let index = 0; index < (this.successLevel - this.difficultyLevel + 1); index++) {
+				icons.push( this.isCritical ? 'medal' : 'star');
+				
+			}
+			const successHint = game.i18n.format('CoC7.SuccesLevelHint', {value : this.successLevel - this.difficultyLevel + 1});
+			return {
+				success: true,
+				cssClass: this.isCritical ? 'critical' : 'success',
+				hint: successHint,
+				icons: icons};
+		} else {
+			let icons = [];
+			const successLevel = this.isFumble ? -1 : this.successLevel;
+			for (let index = 0; index < (this.difficultyLevel - successLevel); index++) {
+				icons.push(this.isFumble? 'skull' : 'spider');
+			}
+			const failureHint = game.i18n.format('CoC7.FailureLevelHint', {value : this.difficultyLevel - successLevel});
+			return {
+				success: false,
+				cssClass: this.isFumble? 'fumble' : 'failure',
+				hint: failureHint,
+				icons: icons};
+		}
+		
+	}
+
 	get isBlind(){
 		if( undefined === this._isBlind) this._isBlind = 'blindroll' === this.rollMode;
 		return this._isBlind;
@@ -361,7 +391,12 @@ export class CoC7Check {
 			this.passed = true; // 1 is always a success
 			this.successLevel = CoC7Check.successLevel.critical;
 		}
-		if( !this.luckSpent) this.isSuccess = this.passed;
+		if( !this.luckSpent && !this.isUnknown){
+			this.isFailure = !this.passed;
+			this.isSuccess = this.passed;
+		}
+
+	
 
 		this.isFumble = this.dices.total >= this.fumbleThreshold;
 		this.isCritical = this.dices.total == 1;
@@ -482,7 +517,10 @@ export class CoC7Check {
 				this.increaseSuccess.forEach( s => {s.luckToSpend = s.luckToSpend- luckAmount;});
 				this.luckSpent = true;
 				this.computeCheck();
-			} else this.removeUpgrades();
+			} else {
+				this.successLevel = this.difficulty; 
+				this.removeUpgrades();
+			}
 			this.isFailure = false;
 			this.isUnknown = false;
 			this.isSuccess = true;
@@ -500,6 +538,7 @@ export class CoC7Check {
 		this.forced = true;
 		this.removeUpgrades();
 		if( this.isSuccess){
+			this.successLevel = this.difficulty - 1;
 			this.isFailure = true;
 			this.isUnknown = false;
 			this.isSuccess = false;
