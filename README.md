@@ -34,14 +34,14 @@ version 0.2.8 :
     * Player rolling can see his numbers but not the check difficulty. He can spend luck to improve his success.
     * Roll difficulty and success level is revealed upon difficulty selection by the keeper.
   * Unknown difficulty check can be rolled as normal check (public, private and blind).
-* @ただいま#0125 Dicebot module has been integrated and will be supported in the system.
+* ただいま#0125 Dicebot module has been integrated and will be supported in the system.
   * Type commands /cc and /cbr to use it.
   * /cc xx will roll a D100 vs a xxx difficulty and display the level of success.
   * /cbr xx, yy will roll a D100 vs xx and yy difficulty and display the level of success.
-* Japanese translation improved and augmented thanks to @ただいま#0125!
-* Localization continues thanks to the efforts of @Kael79#8036.
-* French translation improved and augmented thanks to @Kael79#8036.
-* French community is helping with debugging and testing (special thanks to @Carter#2703 and @Drakenvar#8665).
+* Japanese translation improved and augmented thanks to ただいま#0125!
+* Localization continues thanks to the efforts of Kael79#8036.
+* French translation improved and augmented thanks to Kael79#8036.
+* French discord community is helping with debugging and testing (special thanks to Carter#2703 and Drakenvar#8665).
 * Tutorial videos are on the way !
 
 version 0.2.7 :
