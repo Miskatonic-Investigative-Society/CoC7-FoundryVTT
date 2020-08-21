@@ -20,6 +20,30 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.2.8 :
+
+* Bug fix/improvement on melee flow cards.
+  * Synthetic actors and token are retrieved from the viewed scene (use to be from active scene).
+  * Actors and target retrieval hardened.
+  * Flow simplification (Resolution card is replaced after resolution).
+* Rolls received a lot of work.
+  * Succed level is displayed as medals (critical), stars (success), spiders (failure) or skull (fumble).
+  * Addition of unknown difficulty rolls.
+    * Selection of difficulty is done in the roll dialogue. Select the '???' options.
+    * Default mode (unknown difficulty or normal difficulty) can be selected in the world options.
+    * Player rolling can see his numbers but not the check difficulty. He can spend luck to improve his success.
+    * Roll difficulty and succes level is revealed uppon difficulty selection by the keeper.
+  * Unknown difficulty check can be rolled as normal check (public, private and blind).
+* @ただいま#0125 Dicebot module has been integrated and will be supported in the system.
+  * Type commands /cc and /cbr to use it.
+  * /cc xx will roll a D100 vs a xxx difficulty and display the level od success.
+  * /cbr xx, yy will roll a D100 vs xx and yy difficulty and display the level od success.
+* Japanese translation improved and augmented thanks to @ただいま#0125!
+* Localization continues thanks to the efforts of @Kael79#8036.
+* French translation improved and augmented thanks to @Kael79#8036.
+* French community is helping with debugging and testing (pecial thanks to @Carter#2703 and @Drakenvar#8665).
+* Tutorial videos are on the way !
+
 version 0.2.7 :
 
 * Bug fix/improvement on melee flow cards.
