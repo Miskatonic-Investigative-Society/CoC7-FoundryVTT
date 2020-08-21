@@ -5,8 +5,8 @@
         <div class="flexrow">
             <label>{{localize 'CoC7.RollDifficulty'}}</label>
             <select name="difficulty">
-
-                <option value="{{difficulty.regular}}" selected>{{localize 'CoC7.RollDifficultyRegular'}}</option>
+                <option value="{{difficulty.unknown}}" {{#if unknownDifficultyDefault}}selected{{/if}}>???</option>
+                <option value="{{difficulty.regular}}" {{#unless unknownDifficultyDefault}}selected{{/unless}}>{{localize 'CoC7.RollDifficultyRegular'}}</option>
                 <option value="{{difficulty.hard}}">{{localize 'CoC7.RollDifficultyHard'}}</option>
                 <option value="{{difficulty.extreme}}">{{localize 'CoC7.RollDifficultyExtreme'}}</option>
 

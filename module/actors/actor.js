@@ -368,13 +368,10 @@ export class CoCActor extends Actor {
 
 	async setHp( value){
 		if( value < 0) value = 0;
-		if( value > this.hpMax) value = parseInt( this.data.data.attribs.hp.value);
+		if( value > this.hpMax) value = parseInt( this.hpMax);
 		return await this.update( { 'data.attribs.hp.value': value});
 	}
 
-	get mp(){
-		return parseInt(this.data.data.attribs.mp.value);
-	}
 
 	get mpMax(){
 		if( this.data.data.attribs.mp.auto){
@@ -385,12 +382,15 @@ export class CoCActor extends Actor {
 		return parseInt( this.data.data.attribs.mp.max);
 	}
 
-	async setMp( value){
-		if( value < 0) value = 0;
-		if( value > parseInt( this.mpMax)) value = parseInt( this.data.data.attribs.mp.value);
-		return await this.update( { 'data.attribs.mp.value': value});
+	get mp(){
+		return parseInt(this.data.data.attribs.mp.value);
 	}
 
+	async setMp( value){
+		if( value < 0) value = 0;
+		if( value > parseInt( this.mpMax)) value = parseInt( this.mpMax);
+		return await this.update( { 'data.attribs.mp.value': value});
+	}
 
 	get san(){
 		return parseInt(this.data.data.attribs.san.value);
@@ -468,7 +468,7 @@ export class CoCActor extends Actor {
 	}
 
 
-	get tokenId()
+	get tokenId() //TODO clarifier ca et tokenkey
 	{
 		return this.token ? `${this.token.scene._id}.${this.token.id}` : null;
 	}
@@ -510,6 +510,10 @@ export class CoCActor extends Actor {
 		await this.update( {[`data.flags.${flagName}`]: true});
 	}
 
+	async unsetActorFlag( flagName){
+		await this.update( {[`data.flags.${flagName}`]: false});
+	}
+
 	getWeaponSkills( itemId){
 		const weapon = this.getOwnedItem( itemId);
 		if( 'weapon' != weapon.data.type) return null;
@@ -525,10 +529,15 @@ export class CoCActor extends Actor {
 		return skills;
 	}
 
-	get tokenKey(){
-		if( this.isToken){
-			return `${this.token.scene.id}.${this.token.id}`;
-		}
+	get tokenKey() //Clarifier ca et tokenid
+	{
+		//Case 1: the actor is a synthetic actor and has a token, return token key.
+		if( this.isToken) return `${this.token.scene.id}.${this.token.id}`;
+
+		//Case 2: the actor is not a token (linked actor). If the sheet have an associated token return the token key.
+		if( this.sheet.token) return `${this.sheet.token.scene.id}.${this.sheet.token.id}`;
+
+		//Case 3: Actor has no token return his ID;
 		return this.id;
 	}
   
