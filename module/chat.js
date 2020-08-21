@@ -1,7 +1,9 @@
 import { CoC7Dice } from './dice.js';
 import { CoC7Check } from './check.js';
 import { COC7 } from './config.js';
-import { CoC7MeleeInitiator, CoC7MeleeTarget, CoC7MeleeResoltion } from './chat/meleecombat.js';
+import { CoC7MeleeInitiator} from './chat/combat/melee-initiator.js';
+import {  CoC7MeleeTarget} from './chat/combat/melee-target.js';
+import { CoC7MeleeResoltion } from './chat/combat/melee-resolution.js';
 import { CoC7RangeInitiator } from './chat/rangecombat.js';
 import { CoC7Roll, chatHelper } from './chat/helper.js';
 import { CoC7DamageRoll } from './chat/damagecards.js';
@@ -77,8 +79,10 @@ export class CoC7Chat{
 						}
 						else { 
 							const initiator = CoC7MeleeInitiator.getFromMessageId( chatMessage.id);
-							const resolutionCard = new CoC7MeleeResoltion( chatMessage.id, null, initiator.resolutionCard);
-							resolutionCard.resolve();
+							if( initiator.resolutionCard){
+								const resolutionCard = new CoC7MeleeResoltion( chatMessage.id, null, initiator.resolutionCard);
+								resolutionCard.resolve();
+							}
 						}
 					}
 					if( card.classList.contains('target')){
@@ -629,7 +633,7 @@ export class CoC7Chat{
 		event.currentTarget.parentElement.dataset.selected = event.currentTarget.dataset.property;
 	}
 
-	static _onChatCardToggleSwitch( event){
+	static async _onChatCardToggleSwitch( event){
 		event.preventDefault();
 
 		const card = event.currentTarget.closest('.chat-card');
@@ -651,6 +655,10 @@ export class CoC7Chat{
 
 		if( card.classList.contains('damage')){
 			// CoC7Item.updateCardSwitch( event);
+		}
+
+		if( card.classList.contains('roll-card')){
+			CoC7Check.updateCardSwitch(event);
 		}
 
 
@@ -1118,9 +1126,12 @@ export class CoC7Chat{
 		}
 		case 'roll-melee-damage':{
 			const damageCard = new CoC7DamageRoll( button.dataset.weapon, button.dataset.dealer, button.dataset.target, 'true' == button.dataset.critical );
-			damageCard.rollDamage( );
-			card.querySelectorAll('.card-buttons').forEach( b => b.remove());
-			CoC7Chat.updateChatCard( card);
+			if( originMessage.dataset.messageId) damageCard.messageId = originMessage.dataset.messageId;
+			damageCard.rollDamage();
+			if( originMessage.dataset.messageId) {
+				card.querySelectorAll('.card-buttons').forEach( b => b.remove());
+				CoC7Chat.updateChatCard( card);
+			}
 			break;
 		}
 		case 'range-initiator-shoot':{
@@ -1161,6 +1172,7 @@ export class CoC7Chat{
 		case 'reveal-check':{
 			const check = await CoC7Check.getFromCard( card);
 			check.isBlind = false;
+			check.computeCheck();
 			check.updateChatCard();
 			break;
 		}
@@ -1168,6 +1180,7 @@ export class CoC7Chat{
 		case 'flag-for-development':{
 			const check = await CoC7Check.getFromCard( card);
 			await check.flagForDevelopement();
+			check.computeCheck();
 			check.updateChatCard();
 			break;
 		}

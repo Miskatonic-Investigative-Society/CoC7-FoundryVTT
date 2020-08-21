@@ -21,6 +21,10 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
 		return data;
 	}
 
+	onCloseSheet(){
+		this.actor.unsetActorFlag( 'displayFormula');
+		super.onCloseSheet();
+	}
 
 	/* -------------------------------------------- */
 

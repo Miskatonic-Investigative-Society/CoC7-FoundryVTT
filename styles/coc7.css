@@ -250,12 +250,32 @@
 }
 
 .dice-roll .dice-formula.critical{
-    background-color: palegreen;
+    background-color: whitesmoke;
 }
 
 .dice-roll .dice-formula.fumble{
-    background-color: darkred;
+    background-color: black;
 }
+
+.dice-roll .dice-formula .roll-icons.success {
+    color: goldenrod;
+}
+.dice-roll .dice-formula .roll-icons.critical {
+    color: goldenrod;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.dice-roll .dice-formula .roll-icons.failure {
+    color: red;
+}
+
+.dice-roll .dice-formula .roll-icons.fumble {
+    color: darkred;
+    font-size: 20px;
+    font-weight: bold;
+}
+
 
 .tooltip {
     position: relative;

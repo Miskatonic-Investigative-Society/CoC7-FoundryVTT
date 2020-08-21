@@ -9,9 +9,12 @@
 
     <header class="card-header flexcol">
         <div class="flexrow">
-            <img class="open-actor" style="flex: none;" data-actor-key="{{actor.tokenKey}}" src="{{weapon.img}}" title="{{weapon.name}}" width="36" height="36"/>
-            <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{weapon.name}}</h3>
-            <img class="open-actor" style="flex: none;" data-actor-key="{{targetKey}}" src="{{targetImg}}" title="{{target.name}}" width="36" height="36"/>
+            {{#if displayActorOnCard}}
+            <img class="open-actor" data-actor-key="{{actorKey}}" style="flex: none;" src="{{actorImg}}" title="{{name}}" width="36" height="36"/>
+            {{/if}}
+            <img class="open-actor" data-actor-key="{{actorKey}}" style="flex: none;" src="{{item.img}}" title="{{item.name}}" width="36" height="36"/>
+            <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{item.name}}</h3>
+            <img class="open-actor" style="flex: none;" data-actor-key="{{targetKey}}" src="{{targetImg}}" title="{{targetName}}" width="36" height="36"/>
         </div>
 
         <div class="card-content">

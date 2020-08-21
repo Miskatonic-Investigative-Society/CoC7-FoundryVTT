@@ -97,16 +97,16 @@ COC7.status = {
 };
 
 
-COC7.newSkillName = 'CoC7.newSkillName';
-COC7.newItemName = 'CoC7.newItemName';
-COC7.newWeaponName = 'CoC7.newWeaponName';
+COC7.newSkillName = 'CoC7.NewSkillName';
+COC7.newItemName = 'CoC7.NewItemName';
+COC7.newWeaponName = 'CoC7.NewWeaponName';
 
 COC7.creatureFightingSkill = 'CoC7.creatureFightingSkill';
 
-COC7.dodgeSkillName = 'CoC7.dodgeSkillName';
-COC7.creditRatingSkillName = 'CoC7.creditRatingSkillName';
-COC7.fightingSpecializationName = 'CoC7.fightingSpecializationName';
-COC7.firearmSpecializationName = 'CoC7.firearmSpecializationName';
+COC7.dodgeSkillName = 'CoC7.DodgeSkillName';
+COC7.creditRatingSkillName = 'CoC7.CreditRatingSkillName';
+COC7.fightingSpecializationName = 'CoC7.FightingSpecializationName';
+COC7.firearmSpecializationName = 'CoC7.FirearmSpecializationName';
 
 COC7.combatCards = {
 	fightBack:	'CoC7.FightBack',
