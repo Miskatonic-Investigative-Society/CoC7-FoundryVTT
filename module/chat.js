@@ -1172,6 +1172,7 @@ export class CoC7Chat{
 		case 'reveal-check':{
 			const check = await CoC7Check.getFromCard( card);
 			check.isBlind = false;
+			check.computeCheck();
 			check.updateChatCard();
 			break;
 		}
@@ -1179,6 +1180,7 @@ export class CoC7Chat{
 		case 'flag-for-development':{
 			const check = await CoC7Check.getFromCard( card);
 			await check.flagForDevelopement();
+			check.computeCheck();
 			check.updateChatCard();
 			break;
 		}
