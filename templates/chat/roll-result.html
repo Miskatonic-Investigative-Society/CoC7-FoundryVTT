@@ -168,19 +168,37 @@
 		<div class="dice-result">
 			<div class="dice-formula">???</div>
 			{{#if forced}}
-			<h4 class="dice-total {{cssClass}}">{{#if isSuccess}}Pass !{{else}}{{#if isFailure}}Fail !{{else}}??{{/if}}{{/if}}</h4>
+			<h4 class="dice-total {{playerCssClass}}">
+				{{#if forcedSuccess}}
+					Pass !
+				{{else}}
+					{{#if forcedFailure}}
+						Fail !
+					{{else}}
+						{{#if isSuccess}}
+							Pass !
+						{{else}}
+							{{#if isFailure}}
+								Fail !
+							{{else}}
+								??
+							{{/if}}
+						{{/if}}
+					{{/if}}
+				{{/if}}
+			</h4>
 			{{else}}
-			<h4 class="dice-total">?</h4>
+				<h4 class="dice-total">?</h4>
 			{{/if}}
 		</div>
 	</div>
 	<div class="card-buttons gm-visible-only">
 		{{#unless isUnknown}}
-		<button data-action="reveal-check">{{localize 'CoC7.check.RevealCheck'}}</button>
+			<button data-action="reveal-check">{{localize 'CoC7.check.RevealCheck'}}</button>
 		{{/unless}}
 		{{#unless forced}}
-			{{#if isFailure}}<button data-action="force-pass">{{localize 'CoC7.check.ForcePass'}}</button>{{/if}}
-			{{#if isSuccess}}<button data-action="force-fail">{{localize 'CoC7.check.ForceFail'}}</button>{{/if}}
+			<button data-action="force-pass">{{localize 'CoC7.check.ForcePass'}}</button>
+			<button data-action="force-fail">{{localize 'CoC7.check.ForceFail'}}</button>
 			{{#unless isCritical}}
 				<button data-action="increase-success-level">{{localize 'CoC7.check.IncreaseSuccessLevel'}}</button>
 			{{/unless}}
@@ -190,8 +208,12 @@
 		{{/unless}}
 		
 		{{#unless skill.data.data.flags.developement}}
-			{{#if isSuccess}}
+			{{#if forcedSuccess}}
 				<button data-action="flag-for-development">{{localize 'CoC7.check.FlagForDevelopment'}}</button>
+			{{else}}
+				{{#if isSuccess}}
+					<button data-action="flag-for-development">{{localize 'CoC7.check.FlagForDevelopment'}}</button>
+				{{/if}}
 			{{/if}}
 		{{/unless}}
 	</div>
