@@ -30,7 +30,8 @@ export class CoC7MeleeResoltion{
 		
 		let rollMode = game.settings.get('core', 'rollMode');
 		if ( ['gmroll', 'blindroll'].includes(rollMode) ) chatData['whisper'] = ChatMessage.getWhisperRecipients('GM');
-		if ( rollMode === 'blindroll' ) chatData['blind'] = true;
+		// if ( rollMode === 'blindroll' ) chatData['blind'] = true;
+		chatData.blind = false;
 
 		const chatMessage = await ChatMessage.create(chatData);
 		this.messageId = chatMessage.id;

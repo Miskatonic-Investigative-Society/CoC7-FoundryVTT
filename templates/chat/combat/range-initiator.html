@@ -18,7 +18,8 @@
 	data-aimed="{{aimed}}"
 	data-damage-rolled="{{damageRolled}}"
 	data-total-bullets-fired="{{totalBulletsFired}}"
-	data-roll-mode={{rollMode}}>
+	data-roll-mode={{rollMode}}
+	data-is-blind="false">
 	
 	<header class="card-header flexcol">
 		<div class="flexrow">
@@ -133,6 +134,7 @@
 			data-active="{{trgt.active}}"
 			data-in-melee="{{trgt.inMelee}}"
 			data-is-GM="{{../isGM}}"
+			data-is-blind="false"
 			{{#unless trgt.active}}style='display: none;'{{/unless}}>
 			<div class="target-name">
 				<label>Target : {{trgt.name}}</label>
@@ -319,7 +321,7 @@
 				  data-shot-order="{{key}}"
 				  data-actor-key="{{shot.actorKey}}"
 				  data-actor-name="{{shot.actorName}}"
-				  data-difficulty-level="{{shot.difficultyLevel}}"
+				  data-difficulty="{{shot.difficulty}}"
 				  data-damage="{{shot.damage}}"
 				  data-modifier="{{shot.modifier}}"
 				  data-bullets-shot="{{shot.bulletsShot}}"
@@ -372,12 +374,13 @@
 				  data-pushing="{{roll.pushing}}"
 				  data-has-enough-luck="{{roll.hasEnoughLuck}}"
 				  data-luck-needed="{{roll.luckNeeded}}"
-				  data-difficulty-level="{{roll.difficultyLevel}}"
+				  data-difficulty="{{roll.difficulty}}"
 				  data-can-increase-success="{{roll.canIncreaseSuccess}}"
 				  data-has-malfunction="{{roll.hasMalfunction}}"
 				  data-malfunction-txt="{{roll.malfunctionTxt}}"
 				  data-token-id="{{roll.tokenId}}"
-				  data-index="{{key}}">
+				  data-index="{{key}}"
+				  data-is-blind="false">
 					<div class="dice-roll">
 						<div
 						class="dice-result"
@@ -444,7 +447,7 @@
 										{{/if}}
 										{{#if roll.hasEnoughLuck}}
 											{{#unless roll.pushing}}
-												<button class="pass-check" data-action="useLuck"  data-luck-amount="{{roll.luckNeeded}}" data-new-success-level="{{roll.difficultyLevel}}">{{roll.luckNeededTxt}}</button>
+												<button class="pass-check" data-action="useLuck"  data-luck-amount="{{roll.luckNeeded}}" data-new-success-level="{{roll.difficulty}}">{{roll.luckNeededTxt}}</button>
 											{{/unless}}
 										{{/if}}
 									{{/unless}}
