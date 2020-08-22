@@ -536,11 +536,13 @@ export class CoC7Check {
 		let cssClass = '';
 		if( this.isSuccess) cssClass = 'success';
 		if( this.isFailure) cssClass = 'failure';
-		if( this.isCritical && !this.isFailure) cssClass = 'success critical';
-		if( this.isFumble && !this.isSuccess) cssClass = 'failure fumble';
-		if( CoC7Check.successLevel.regular == this.successLevel) cssClass += ' regular-success';
-		if( CoC7Check.successLevel.hard == this.successLevel) cssClass += ' hard-success';
-		if( CoC7Check.successLevel.extreme == this.successLevel) cssClass += ' extreme-success';
+		if( !this.isBlind){
+			if( this.isCritical && !this.isFailure) cssClass = 'success critical';
+			if( this.isFumble && !this.isSuccess) cssClass = 'failure fumble';
+			if( CoC7Check.successLevel.regular == this.successLevel) cssClass += ' regular-success';
+			if( CoC7Check.successLevel.hard == this.successLevel) cssClass += ' hard-success';
+			if( CoC7Check.successLevel.extreme == this.successLevel) cssClass += ' extreme-success';
+		}
 		return cssClass;
 	}
 
