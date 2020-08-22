@@ -40,7 +40,8 @@ export class CoC7MeleeInitiator extends ChatCardActor{
 		};
 
 		if ( ['gmroll', 'blindroll'].includes(this.rollMode) ) chatData['whisper'] = ChatMessage.getWhisperRecipients('GM');
-		if ( this.isBlind ) chatData['blind'] = true;
+		// if ( this.isBlind ) chatData['blind'] = true;
+		chatData.blind = false;
 
 		const chatMessage = await ChatMessage.create(chatData);
 		
@@ -65,6 +66,9 @@ export class CoC7MeleeInitiator extends ChatCardActor{
 
 	async performSkillCheck( skillId = null, publish = false){
 		const check = new CoC7Check();
+		// Combat roll cannot be blind or unknown
+		check.isBlind = false;
+		check.isUnkonwn = false;
 		check.referenceMessageId = this.messageId;
 		check.rollType= 'opposed';
 		check.side = 'initiator';

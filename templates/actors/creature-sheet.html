@@ -17,7 +17,7 @@
 			<div class="flexrow" style="flex: 0 0 auto;display: flex;">
 			{{#each data.characteristics as |characteristic key|}}
 				{{#if ../data.flags.locked}}
-					{{#if characteristic.value}}
+					{{#if characteristic.display}}
 						<div class="flexcol" style=" margin-right: 2px;" data-characteristic="{{key}}">
 							<div class="characteristics-label rollable" style="text-align: left;">
 								<label>{{localize characteristic.short}}</label>
