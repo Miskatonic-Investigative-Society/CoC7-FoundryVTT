@@ -84,6 +84,8 @@
 "CoC7.check.ForcePass": "Force pass",
 "CoC7.check.ForceFail": "Force fail",
 "CoC7.check.FlagForDevelopment": "Award experience",
+"CoC7.check.IncreaseSuccessLevel": "Increase success",
+"CoC7.check.DecreaseSuccessLevel": "Decrease success",
 
 "CoC7.BonusSelectionWindow": "Bonus selection window",
 "CoC7.RegularDifficulty": "regular",

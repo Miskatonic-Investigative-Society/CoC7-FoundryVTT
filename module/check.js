@@ -9,9 +9,7 @@ export class CoC7Check {
 		this.item = item;
 		this.difficulty = difficulty;
 		this.diceModifier = diceMod;
-		this.succesThreshold = 0; //value needed for the check to succeed after difficulty is applied
 		this.rawValue = 0; //value needed before difficulty
-		this.passed = false; //did the check pass
 		this.successLevel = null;
 		this.referenceMessageId = null;
 		this.pushing = false;
@@ -41,6 +39,103 @@ export class CoC7Check {
 		critical: 4
 	}
 
+	get criticalThreshold(){
+		return 1;
+	}
+
+	get regularThreshold(){
+		if( this.rawValue)
+		{
+			if( this.rawValue >= 100) return 99;
+			return parseInt( this.rawValue);
+		}
+		return null;
+	}
+
+	get hardThreshold(){
+		if(this.rawValue) return Math.floor( this.rawValue / 2);
+		return null;
+	}
+
+	get extremeThreshold(){
+		if(this.rawValue) return Math.floor( this.rawValue / 5);
+		return null;
+	}
+
+	get fumbleThreshold(){
+		if(this.rawValue) return this.rawValue < 50 ? 96 : 100;
+		return null;
+	}
+
+	get succesThreshold(){
+		if( undefined !=  this.difficulty){
+			switch( this.difficulty) {
+			case CoC7Check.difficultyLevel.extreme: return this.extremeThreshold;
+			case CoC7Check.difficultyLevel.hard: return this.hardThreshold;
+			case CoC7Check.difficultyLevel.regular: return this.regularThreshold;
+			case CoC7Check.difficultyLevel.critical: return this.criticalThreshold;
+			case CoC7Check.difficultyLevel.unknown: return -1;
+			default : return this.rawValue;
+			}
+		}
+		return null;
+	}
+
+	get difficultyString(){
+		if( undefined != this.difficulty){
+			switch( this.difficulty) {
+			case CoC7Check.difficultyLevel.extreme: return game.i18n.format('CoC7.ExtremeDifficulty');
+			case CoC7Check.difficultyLevel.hard: return game.i18n.format('CoC7.HardDifficulty');
+			case CoC7Check.difficultyLevel.regular: return game.i18n.format('CoC7.RegularDifficulty');
+			case CoC7Check.difficultyLevel.critical: return game.i18n.format('CoC7.CriticalDifficulty');
+			case CoC7Check.difficultyLevel.unknown: return game.i18n.format('CoC7.UnknownDifficulty');
+			default: return '';
+			}
+		}
+		return '';
+	}
+
+	get isFumble(){
+		return this.dices.total >= this.fumbleThreshold;
+	}
+
+	get isCritical(){
+		return this.dices.total == 1;
+	}
+
+	get passed(){
+		return this.succesThreshold >= this.dices.total || this.isCritical;
+	}
+
+	get failed(){
+		return !this.passed;
+	}
+
+	get hasBonus(){
+		if( this.diceModifier && this.diceModifier > 0) return true;
+		return false;
+	}
+
+	get hasPenalty(){
+		if( this.diceModifier && this.diceModifier < 0) return true;
+		return false;
+	}
+
+	get hasModifier(){
+		if( this.diceModifier && this.diceModifier != 0) return true;
+		return false;
+	}
+
+	get diceModifier(){
+		if( this._diceModifier) return this._diceModifier;
+		return null;
+	}
+
+	set diceModifier(x){
+		this._diceModifier = parseInt( x);
+	}
+
+
 	static async getFromCard( card){
 		const check = new CoC7Check();
 		CoC7Roll.getFromElement(card, check);
@@ -69,6 +164,11 @@ export class CoC7Check {
 		pushedRoll.pushing = true;
 		pushedRoll.roll();
 		if(publish) pushedRoll.toMessage( true, card);
+	}
+
+	get token(){
+		if( !this.actor) return null;
+		return chatHelper.getTokenFromKey(this.actorKey);
 	}
 
 	set actor(x)
@@ -106,13 +206,13 @@ export class CoC7Check {
 
 	get successLevelIcons(){
 		if( this.unknownDifficulty) return null;
-		if( this.successLevel >= this.difficultyLevel){
+		if( this.successLevel >= this.difficulty){
 			let icons = [];
-			for (let index = 0; index < (this.successLevel - this.difficultyLevel + 1); index++) {
+			for (let index = 0; index < (this.successLevel - this.difficulty + 1); index++) {
 				icons.push( this.isCritical ? 'medal' : 'star');
 				
 			}
-			const successHint = game.i18n.format('CoC7.SuccesLevelHint', {value : this.successLevel - this.difficultyLevel + 1});
+			const successHint = game.i18n.format('CoC7.SuccesLevelHint', {value : this.successLevel - this.difficulty + 1});
 			return {
 				success: true,
 				cssClass: this.isCritical ? 'critical' : 'success',
@@ -121,10 +221,10 @@ export class CoC7Check {
 		} else {
 			let icons = [];
 			const successLevel = this.isFumble ? -1 : this.successLevel;
-			for (let index = 0; index < (this.difficultyLevel - successLevel); index++) {
+			for (let index = 0; index < (this.difficulty - successLevel); index++) {
 				icons.push(this.isFumble? 'skull' : 'spider');
 			}
-			const failureHint = game.i18n.format('CoC7.FailureLevelHint', {value : this.difficultyLevel - successLevel});
+			const failureHint = game.i18n.format('CoC7.FailureLevelHint', {value : this.difficulty - successLevel});
 			return {
 				success: false,
 				cssClass: this.isFumble? 'fumble' : 'failure',
@@ -154,6 +254,7 @@ export class CoC7Check {
 	}
 
 	set rollMode(x){
+		if( false === x) this._rollMode = game.settings.get('core', 'rollMode');
 		this._rollMode = x;
 	}
 
@@ -204,7 +305,6 @@ export class CoC7Check {
 	roll( diceMod = null, difficulty = null) {
 		if( diceMod ) this.diceModifier = diceMod;
 		if( difficulty ) this.difficulty = difficulty;
-
 		this._perform();
 	}
 
@@ -213,7 +313,6 @@ export class CoC7Check {
 	{
 		if( diceMod ) this.diceModifier = diceMod;
 		if( difficulty ) this.difficulty = difficulty;
-
 		this.characteristic = char;
 		this._perform();
 
@@ -222,7 +321,6 @@ export class CoC7Check {
 	rollAttribute( attrib, diceMod = null, difficulty = null){
 		if( diceMod ) this.diceModifier = diceMod;
 		if( difficulty ) this.difficulty = difficulty;
-
 		this.attribute = attrib;
 		this._perform();
 	}
@@ -230,7 +328,6 @@ export class CoC7Check {
 	rollValue( val, diceMod = null, difficulty = null){
 		if( diceMod ) this.diceModifier = diceMod;
 		if( difficulty ) this.difficulty = difficulty;
-
 		this.rawValue = val;
 		this._perform();
 	}
@@ -289,7 +386,6 @@ export class CoC7Check {
 
 		this.tenOnlyOneDie = this.dices.tens.length == 1;
 
-		//
 		this.isValue = false;
 		this.isCharactiristic = false;
 		this.isSkill = false;
@@ -312,16 +408,10 @@ export class CoC7Check {
 
 			if( this.attribute){
 				this.isAttribute = true;
-				this.rawValue = this.actor.data.data.attribs[this.attribute].value; //bug correction : row->raw
+				this.rawValue = this.actor.data.data.attribs[this.attribute].value;
 			}
 
 		}
-
-		this.criticalThreshold = 1;
-		this.extremeThreshold = Math.floor( this.rawValue / 5);
-		this.hardThreshold = Math.floor( this.rawValue / 2);
-		this.regularThreshold = this.rawValue;
-		this.fumbleThreshold = this.rawValue < 50 ? 96 : 100;
 
 		if( ! this.luckSpent){
 			if( this.dices.total <= this.rawValue) this.successLevel = CoC7Check.successLevel.regular;
@@ -356,50 +446,19 @@ export class CoC7Check {
 			break;
 		}
 
-		switch( this.difficulty) {
-		case CoC7Check.difficultyLevel.extreme:
-			this.difficultyString = game.i18n.format('CoC7.ExtremeDifficulty');
-			this.succesThreshold = this.extremeThreshold;
-			break;
-		case CoC7Check.difficultyLevel.hard:
-			this.difficultyString = game.i18n.format('CoC7.HardDifficulty');
-			this.succesThreshold = this.hardThreshold;
-			break;
-		case CoC7Check.difficultyLevel.regular:
-			this.difficultyString = game.i18n.format('CoC7.RegularDifficulty');
-			this.succesThreshold = this.regularThreshold;
-			break;
-		case CoC7Check.difficultyLevel.critical:
-			this.difficultyString = game.i18n.format('CoC7.CriticalDifficulty');
-			this.succesThreshold = this.criticalThreshold;
-			break;
-		case CoC7Check.difficultyLevel.unknown:
-			this.difficultyString = game.i18n.format('CoC7.UnknownDifficulty');
-			this.succesThreshold = -1;
-			break;
-		default:
-			this.succesThreshold = this.rawValue;
-			break;
-		}
 
 		if( this.unknownDifficulty ) this.successRequired = '';
 		else this.successRequired = game.i18n.format('CoC7.SuccessRequired', {successRequired : this.difficultyString});
 
 
-		this.passed = this.succesThreshold >= this.dices.total ? true : false;
 		if (this.dices.total == 1){
-			this.passed = true; // 1 is always a success
 			this.successLevel = CoC7Check.successLevel.critical;
 		}
 		if( !this.luckSpent && !this.isUnknown){
-			this.isFailure = !this.passed;
+			this.isFailure = this.failed;
 			this.isSuccess = this.passed;
 		}
 
-	
-
-		this.isFumble = this.dices.total >= this.fumbleThreshold;
-		this.isCritical = this.dices.total == 1;
 		this.hasMalfunction = false;
 		if( this.isFumble) this.successLevel = CoC7Check.successLevel.fumble;
 
@@ -414,6 +473,7 @@ export class CoC7Check {
 				}
 			}
 		}
+
 		this.canBePushed = this.skill ? this.skill.canBePushed() : false;
 		if( this.characteristic != null) this.canBePushed = true;
 		if( this.isFumble) this.canBePushed = false;
@@ -466,7 +526,6 @@ export class CoC7Check {
 
 		this.canIncreaseSuccess = this.increaseSuccess.length > 0 ? true : false;
 		if( this.isFumble) this.canIncreaseSuccess = false;
-		this.difficultyLevel = this.difficulty;
 
 		if( this.passed && this.diceModifier <= 0 && this.skill && !this.skill.data.data.properties.noxpgain &&!this.luckSpent &&!this.forced &&!this.isBlind &&!this.isUnknown){
 			this.flagForDevelopement();
@@ -502,7 +561,7 @@ export class CoC7Check {
 	}
 
 	removeUpgrades(){
-		this.ccanIncreaseSuccess = false;
+		this.canIncreaseSuccess = false;
 		this.increaseSuccess = [];
 		this.luckNeeded = 0;
 		this.luckNeededTxt = null;
@@ -511,46 +570,120 @@ export class CoC7Check {
 
 	forcePass(luckAmount = null){
 		this.forced = true;
-		if( !this.isSuccess){
-			if( luckAmount){
-				this.actor.spendLuck( luckAmount);
-				this.increaseSuccess.forEach( s => {s.luckToSpend = s.luckToSpend- luckAmount;});
-				this.luckSpent = true;
-				this.computeCheck();
-			} else {
-				this.successLevel = this.difficulty; 
-				this.removeUpgrades();
-			}
-			this.isFailure = false;
-			this.isUnknown = false;
-			this.isSuccess = true;
-			this.passed = true;
-			this.luckNeeded = 0;
-			this.luckNeededTxt = null;
-			this.resultType = game.i18n.localize( 'CoC7.check.AutoSuccess');
-			delete this.hasEnoughLuck;
-			// this.computeCheck();
+		if( luckAmount){
+			this.actor.spendLuck( luckAmount);
+			this.increaseSuccess.forEach( s => {s.luckToSpend = s.luckToSpend- luckAmount;});
+			this.luckSpent = true;
+			this.computeCheck();
 			this.updateChatCard();
+		} else {
+			if( !this.passed) this.forceSuccessLevel( this.difficulty); 
 		}
 	}
 
 	forceFail(){
 		this.forced = true;
-		this.removeUpgrades();
-		if( this.isSuccess){
-			this.successLevel = this.difficulty - 1;
-			this.isFailure = true;
-			this.isUnknown = false;
-			this.isSuccess = false;
-			this.passed = false;
-			this.luckNeeded = 0;
-			this.luckNeededTxt = null;
-			this.resultType = game.i18n.localize( 'CoC7.check.AutoFailure');
-			delete this.hasEnoughLuck;
-			this.isUnknown = false;
-			// this.computeCheck();
-			this.updateChatCard();
+		if( this.passed) this.forceSuccessLevel( this.difficulty - 1); 
+	}
+
+	_forceCheck( high, low){
+
+		let total = Math.floor(Math.random() * (high-low)) + low + 1;
+		const unitTotal = total % 10;
+		let tenTotal = Math.floor( total/10);
+		const tens = [];
+
+		let hasEnough = Math.abs(this.diceModifier) == tens.length;
+		while (!hasEnough) {
+			let ten = Math.floor(Math.random() * 10);
+			let roll = (ten * 10 + unitTotal);
+			if( 0 == roll){ roll = 100; ten = 100;}
+			if( this.hasPenalty && roll <= high){
+				tens.push(ten);
+				if( roll > total) total = roll;
+			}
+			if( this.hasBonus && roll > low){
+				tens.push(ten);
+				if( roll < total) total = roll;
+			}
+			hasEnough = ( tens.length == Math.abs(this.diceModifier));
 		}
+
+		// Insert result at random position.
+		if( 10 == tenTotal && 0 == unitTotal) { tenTotal = 100;}
+		tens.splice( Math.floor(Math.random() * tens.length + 1), 0, 10 == tenTotal? 0 : tenTotal);
+
+		this.dices.tens =[];
+		this.dices.unit.value = unitTotal;
+		this.dices.total = total;
+		this.dices.tenResult = total - unitTotal;
+
+		let max = (unitTotal == 0)? 100 : 90;
+		let min = (unitTotal == 0)? 10 : 0;
+		let selected = total - unitTotal;
+	
+		for( let i = 0; i < tens.length; i++)
+		{
+			let die = {};
+			die.value = tens[i];
+			if( die.value == selected) {
+				selected = 101;
+				die.selected = true;
+				if( this.hasBonus) { die.isMax = true; die.isMin = false;}
+				else {die.isMin = true; die.isMax = false;}
+			} else {
+				if( die.value == max) die.isMax = true; else die.isMax = false;
+				if( die.value == min) die.isMin = true; else die.isMin = false;
+			}
+			// if( die.value == 100) die.value = "00";
+			this.dices.tens.push( die);
+		}
+
+		this.computeCheck();
+		this.updateChatCard();
+	}
+
+	
+	forceSuccessLevel( successLevel){
+		let high, low;
+		if( CoC7Check.successLevel.fumble == successLevel)	{ high = 100; low = this.fumbleThreshold - 1;}
+		if( CoC7Check.successLevel.failure == successLevel) {
+			if( this.regularThreshold == (this.fumbleThreshold - 1)){ high = 100;}
+			else high = this.fumbleThreshold - 1;
+			low= this.regularThreshold;}
+		if( CoC7Check.successLevel.regular == successLevel) { high = this.regularThreshold; low= this.hardThreshold;}
+		if( CoC7Check.successLevel.hard == successLevel) { high = this.hardThreshold; low=this.extremeThreshold;}
+		if( CoC7Check.successLevel.extreme == successLevel) { high =this.extremeThreshold; low=1;}
+		if( CoC7Check.successLevel.critical == successLevel) { high =1; low=0;}
+		if( high == low) low--; 
+		if( 0 == high) high = this.fumbleThreshold - 1;
+		this._forceCheck( high, low);
+	}
+
+
+	increaseSuccessLevel(){
+		let high, low;
+		if( CoC7Check.successLevel.fumble == this.successLevel) { 
+			high = this.fumbleThreshold - 1;
+			if( this.regularThreshold == this.fumbleThreshold - 1) low = this.hardThreshold;
+			else low = this.regularThreshold; }
+		if( CoC7Check.successLevel.failure == this.successLevel) { high = this.regularThreshold; low = this.hardThreshold;}
+		if( CoC7Check.successLevel.regular == this.successLevel) { high = this.hardThreshold; low = this.extremeThreshold;}
+		if( CoC7Check.successLevel.hard == this.successLevel) { high = this.extremeThreshold; low = this.criticalThreshold;}
+		if( CoC7Check.successLevel.extreme == this.successLevel) { high = this.criticalThreshold; low = 0;}
+		if( high == low) low--; 
+		this._forceCheck( high, low);
+	}
+
+	decreaseSuccessLevel(){
+		let high, low;
+		if( CoC7Check.successLevel.failure == this.successLevel) { high = 100; low = this.fumbleThreshold - 1;}
+		if( CoC7Check.successLevel.regular == this.successLevel) { high = this.fumbleThreshold - 1; low = this.regularThreshold;}
+		if( CoC7Check.successLevel.hard == this.successLevel) { high = this.regularThreshold; low = this.hardThreshold;}
+		if( CoC7Check.successLevel.extreme == this.successLevel) { high = this.hardThreshold; low = this.extremeThreshold;}
+		if( CoC7Check.successLevel.critical == this.successLevel) { high = this.extremeThreshold; low = 1;}
+		if( 0 == high) high = this.fumbleThreshold - 1;
+		this._forceCheck( high, low);
 	}
 
 	async flagForDevelopement(){
@@ -593,16 +726,20 @@ export class CoC7Check {
 
 		const html = await renderTemplate(template, this);
 
-		//TODO: change for token !!
+		let speakerData = {};
 		let speaker;
 		if( this.actor){
-			speaker = ChatMessage.getSpeaker({actor: this.actor});
-			speaker.alias = this.actor.alias;
+			if( this.token) speakerData.token = this.token;
+			else speakerData.actor = this.actor;
+			speaker = ChatMessage.getSpeaker(speakerData);
+		} else {
+			speaker = ChatMessage.getSpeaker();
 		}
-		else speaker = ChatMessage.getSpeaker();
+
+		const user = this.actor.user ? this.actor.user : game.user;
 
 		const chatData = {
-			user: game.user._id,
+			user: user._id,
 			speaker: speaker,
 			flavor: this.flavor,
 			content: html
@@ -615,12 +752,18 @@ export class CoC7Check {
 
 	}
 
-	async updateChatCard(){
+	async updateChatCard( makePublic = false){
+		if( makePublic) this.rollMode = false; //reset roll mode
 		const template = 'systems/CoC7/templates/chat/roll-result.html';
 		let html = await renderTemplate(template, this);
 
 		const message = game.messages.get( this.messageId);
-		const msg = await message.update({ flavor: this.flavor, content: html });
+		const chatData = { flavor: this.flavor, content: html };
+		if( makePublic){
+			chatData.whisper = [];
+			chatData.blind = false;
+		}
+		const msg = await message.update(chatData);
 		await ui.chat.updateMessage( msg, false);
 		return msg;
 	}

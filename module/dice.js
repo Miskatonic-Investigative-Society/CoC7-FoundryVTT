@@ -1,5 +1,3 @@
-// import { RollDialog } from "./apps/roll-dialog";
-
 export class CoC7Dice {
 
 	static roll( modif=0, rollMode=null)
