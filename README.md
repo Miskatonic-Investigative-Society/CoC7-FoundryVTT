@@ -20,6 +20,10 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.3.0 :
+
+* Hot fix on luck spent.
+
 version 0.2.9 :
 
 * Bug fix forcing a fail or a pass should work as intended.
