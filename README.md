@@ -20,6 +20,18 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.2.9 :
+
+* Bug fix forcing a fail or a pass should work as intended.
+  * Doing so will show a fail or a pass to the player.
+* Bug fix, a combat roll will now flag the skill for experience correctly.
+* You can now 'cheat' bu modifying the success level of the rolls before revealing the (blind rolls only)
+  * On blind rolls you have 2 new buttons for the keeper use only: increase/decrease success.
+  * Once your happy with the result push reveal check.
+  * Experience will not be flagged, keeper needs to manually award it with the corresponding button.
+* On blind roll, the level of success will not be revealed until you push reveal check button.
+  * Pushing force fail/pass will just indicate to the player the failure or the success with no level indication.
+
 version 0.2.8 :
 
 * Bug fix/improvement on melee flow cards.
