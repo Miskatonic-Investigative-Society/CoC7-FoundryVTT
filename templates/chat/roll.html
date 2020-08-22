@@ -24,7 +24,6 @@
 	data-pushing="{{pushing}}"
 	data-has-enough-luck="{{hasEnoughLuck}}"
 	data-luck-needed="{{luckNeeded}}"
-	data-difficulty-level="{{difficultyLevel}}"
 	data-can-increase-success="{{canIncreaseSuccess}}"
 	data-has-malfunction="{{hasMalfunction}}"
 	{{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
@@ -88,7 +87,7 @@
 						{{/if}}
 						{{#if hasEnoughLuck}}
 							{{#unless pushing}}
-							<button data-action="useLuck" data-luck-amount="{{luckNeeded}}" data-new-success-level="{{difficultyLevel}}">{{luckNeededTxt}}</button>
+							<button data-action="useLuck" data-luck-amount="{{luckNeeded}}" data-new-success-level="{{difficulty}}">{{luckNeededTxt}}</button>
 							{{/unless}}
 						{{/if}}
 					{{/unless}}

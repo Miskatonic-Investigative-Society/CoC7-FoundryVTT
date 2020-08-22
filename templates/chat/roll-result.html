@@ -1,14 +1,19 @@
 <div class="coc7 chat-card item-card roll-card roll-result"
+	data-raw-value="{{rawValue}}" 
+	data-characteristic="{{characteristic}}" 
+	data-attribute="{{attribute}}"
+	data-skill-id="{{skill.data._id}}" 
 	data-success-required="{{successRequired}}"
 	data-flagged-for-development="{{flaggedForDevelopment}}"
-	data-foced="{{forced}}"
+	data-forced="{{forced}}"
+	data-forced-success="{{forcedSuccess}}"
+	data-forced-failure="{{forcedFailure}}"
 	data-result-type="{{resultType}}"
 	data-details="{{details}}"
 	data-can-be-pushed="{{canBePushed}}"
 	data-pushing="{{pushing}}"
 	data-has-enough-luck="{{hasEnoughLuck}}"
 	data-luck-needed="{{luckNeeded}}"
-	data-difficulty-level="{{difficultyLevel}}"
 	data-can-increase-success="{{canIncreaseSuccess}}"
 	data-has-malfunction="{{hasMalfunction}}"
 	data-malfunction-txt="{{malfunctionTxt}}"
@@ -22,21 +27,15 @@
 	data-success-level="{{successLevel}}"
 	data-difficulty="{{difficulty}}"
 	data-actor-id="{{actor._id}}" 
-	data-skill-id="{{skill.data._id}}" 
 	data-item-id="{{item.data._id}}" 
 	data-dice-mod="{{diceModifier}}"
 	data-dice-modifier="{{diceModifier}}"
 	data-ten-only-one-die="{{dices.tenOnlyOneDie}}"
-	data-value="{{value}}" 
+	data-raw-value="{{rawValue}}" 
 	data-result="{{dice.total}}"
 	data-is-success="{{isSuccess}}"
 	data-is-failure="{{isFailure}}"
 	data-is-unknown="{{isUnknown}}"
-	data-is-fumble="{{isFumble}}"
-	data-fumble="{{isFumble}}"
-	data-is-critical="{{isCritical}}"
-	data-critical="{{isCritical}}"
-	data-characteristic="{{characteristic}}" 
 	data-luck-spent="{{luckSpent}}"
 	data-gm-difficulty-regular="{{gmDifficultyRegular}}"
 	data-gm-difficulty-hard="{{gmDifficultyHard}}"
@@ -136,7 +135,7 @@
 						{{/if}}
 						{{#if hasEnoughLuck}}
 							{{#unless pushing}}
-							<button class="pass-check" data-action="useLuck" data-luck-amount="{{luckNeeded}}" data-new-success-level="{{difficultyLevel}}">{{luckNeededTxt}}</button>
+							<button class="pass-check" data-action="useLuck" data-luck-amount="{{luckNeeded}}" data-new-success-level="{{difficulty}}">{{luckNeededTxt}}</button>
 							{{/unless}}
 						{{/if}}
 					{{/unless}}
@@ -169,23 +168,31 @@
 		<div class="dice-result">
 			<div class="dice-formula">???</div>
 			{{#if forced}}
-			<h4 class="dice-total {{cssClass}}">{{#if isSuccess}}Pass !{{else}}{{#if isFailure}}Fail{{else}}??{{/if}}{{/if}}</h4>
+			<h4 class="dice-total {{cssClass}}">{{#if isSuccess}}Pass !{{else}}{{#if isFailure}}Fail !{{else}}??{{/if}}{{/if}}</h4>
 			{{else}}
 			<h4 class="dice-total">?</h4>
 			{{/if}}
 		</div>
 	</div>
 	<div class="card-buttons gm-visible-only">
+		{{#unless isUnknown}}
 		<button data-action="reveal-check">{{localize 'CoC7.check.RevealCheck'}}</button>
-		{{#if forced}}
-		{{#if isFailure}}<button data-action="force-pass">{{localize 'CoC7.check.ForcePass'}}</button>{{/if}}
-		{{#if isSuccess}}<button data-action="force-fail">{{localize 'CoC7.check.ForceFail'}}</button>{{/if}}
-		{{else}}
-		<button data-action="force-pass">{{localize 'CoC7.check.ForcePass'}}</button>
-		<button data-action="force-fail">{{localize 'CoC7.check.ForceFail'}}</button>
-		{{/if}}
+		{{/unless}}
+		{{#unless forced}}
+			{{#if isFailure}}<button data-action="force-pass">{{localize 'CoC7.check.ForcePass'}}</button>{{/if}}
+			{{#if isSuccess}}<button data-action="force-fail">{{localize 'CoC7.check.ForceFail'}}</button>{{/if}}
+			{{#unless isCritical}}
+				<button data-action="increase-success-level">{{localize 'CoC7.check.IncreaseSuccessLevel'}}</button>
+			{{/unless}}
+			{{#unless isFumble}}
+				<button data-action="decrease-success-level">{{localize 'CoC7.check.DecreaseSuccessLevel'}}</button>
+			{{/unless}}
+		{{/unless}}
+		
 		{{#unless skill.data.data.flags.developement}}
-		<button data-action="flag-for-development">{{localize 'CoC7.check.FlagForDevelopment'}}</button>
+			{{#if isSuccess}}
+				<button data-action="flag-for-development">{{localize 'CoC7.check.FlagForDevelopment'}}</button>
+			{{/if}}
 		{{/unless}}
 	</div>
 	{{/if}}

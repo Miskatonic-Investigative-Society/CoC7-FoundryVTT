@@ -92,21 +92,25 @@ Hooks.once('init', async function() {
 	preloadHandlebarsTemplates();
 });
 
-//Hooks.on("renderChatLog", (app, html, data) => CoC7Item.chatListeners(html));
 Hooks.on('renderChatLog', (app, html, data) => CoC7Chat.chatListeners(app, html, data));
 Hooks.on('renderChatMessage', (app, html, data) => CoC7Chat.renderMessageHook(app, html, data));
 Hooks.on('updateChatMessage', (chatMessage, chatData, diff, speaker) => CoC7Chat.onUpdateChatMessage( chatMessage, chatData, diff, speaker));
-// Hooks.on('preCreateChatMessage', (app, html, data) => CoC7Chat.preCreateChatMessageHook(app, html, data));
-
 Hooks.on('ready', CoC7Chat.ready);
+
 Hooks.on('preCreateActor', (createData) => CoCActor.initToken( createData));
+
+// Used to set initiative and add the draw gun icon
 Hooks.on('renderCombatTracker', (combatTracker, html, data) => CoC7Combat.renderCombatTracker(combatTracker, html, data));
+
+// Called on closing a character sheet to lock it on getting it to display values
 Hooks.on('closeActorSheet', (characterSheet) => characterSheet.onCloseSheet());
-// Hooks.on('chatMessage', (chatLog, message, chatData) => { console.log('**************************************************************************************************chatMessage : '  + message);});
 
 
 // Add button on Token selection bar
-//Hooks.on('getSceneControlButtons', CoC7Chat.getSceneControlButtons);
+// Hooks.on('getSceneControlButtons', CoC7Chat.getSceneControlButtons);
+// Hooks.on('preCreateChatMessage', (app, html, data) => CoC7Chat.preCreateChatMessageHook(app, html, data));
+// Hooks.on('chatMessage', (chatLog, message, chatData) => { console.log('**************************************************************************************************chatMessage : '  + message);});
 
 // Hooks.on('preCreateToken', ( scene, actor, options, id) => CoCActor.preCreateToken( scene, actor, options, id))
 // Hooks.on('createToken', ( scene, actor, options, id) => CoCActor.preCreateToken( scene, actor, options, id))
+// Hooks.on("renderChatLog", (app, html, data) => CoC7Item.chatListeners(html));

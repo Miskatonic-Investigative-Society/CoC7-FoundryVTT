@@ -161,10 +161,20 @@ export class CoC7ActorSheet extends ActorSheet {
 			const token = this.actor.token;
 			data.tokenId = token ? `${token.scene._id}.${token.id}` : null;
 
+			data.hasEmptyValueWithFormula = false;
 			for ( const characteristic of Object.values(data.data.characteristics)){
 				if( !characteristic.value) characteristic.editable = true;
 				characteristic.hard = Math.floor( characteristic.value / 2);
 				characteristic.extreme = Math.floor( characteristic.value / 5);
+
+				//If no value && no formula don't display charac.
+				if( !characteristic.value && !characteristic.formula) characteristic.display = false;
+				else characteristic.display = true;
+
+				//if any characteristic has no value but has a formula.
+				if( !characteristic.value && characteristic.formula) characteristic.hasEmptyValueWithFormula = true;
+
+				data.hasEmptyValueWithFormula = data.hasEmptyValueWithFormula || characteristic.hasEmptyValueWithFormula;
 			}
 		}
 

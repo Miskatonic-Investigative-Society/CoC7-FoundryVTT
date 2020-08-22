@@ -255,6 +255,7 @@
 
 .dice-roll .dice-formula.fumble{
     background-color: black;
+    color: crimson;
 }
 
 .dice-roll .dice-formula .roll-icons.success {
@@ -267,11 +268,11 @@
 }
 
 .dice-roll .dice-formula .roll-icons.failure {
-    color: red;
+    color: crimson;
 }
 
 .dice-roll .dice-formula .roll-icons.fumble {
-    color: darkred;
+    color: crimson;
     font-size: 20px;
     font-weight: bold;
 }

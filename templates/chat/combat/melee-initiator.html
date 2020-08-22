@@ -10,7 +10,8 @@
     data-advantage="{{advantage}}"
     data-disadvantage="{{disadvantage}}"
     data-target-card="{{targetCard}}"
-    data-resolution-card="{{resolutionCard}}">
+    data-resolution-card="{{resolutionCard}}"
+    data-is-blind="false">
     
     <div class="roll"></div>
 
@@ -107,6 +108,7 @@
         data-fumble={{roll.fumble}}
         data-critical={{roll.critical}}
         data-characteristic={{roll.characteristic}}
+        data-is-blind="false"
         >
 		<div class="dice-result">
 			<!-- <div class="dice-formula">1D% {{#if check.dices.hasBonus}}{{check.dices.bonus}} {{check.dices.bonusType}} {{localize 'CoC7.Dice'}}{{/if}}</div> -->
@@ -153,7 +155,7 @@
                         {{/if}}
                         {{#if check.hasEnoughLuck}}
                             {{#unless check.pushing}}
-                                <button data-action="useLuck" data-luck-amount="{{check.luckNeeded}}" data-new-success-level="{{check.difficultyLevel}}">{{check.luckNeededTxt}}</button>
+                                <button data-action="useLuck" data-luck-amount="{{check.luckNeeded}}" data-new-success-level="{{check.difficulty}}">{{check.luckNeededTxt}}</button>
                             {{/unless}}
                         {{/if}}
                     {{/unless}}
