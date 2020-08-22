@@ -536,14 +536,19 @@ export class CoC7Check {
 		let cssClass = '';
 		if( this.isSuccess) cssClass = 'success';
 		if( this.isFailure) cssClass = 'failure';
-		if( !this.isBlind){
-			if( this.isCritical && !this.isFailure) cssClass = 'success critical';
-			if( this.isFumble && !this.isSuccess) cssClass = 'failure fumble';
-			if( CoC7Check.successLevel.regular == this.successLevel) cssClass += ' regular-success';
-			if( CoC7Check.successLevel.hard == this.successLevel) cssClass += ' hard-success';
-			if( CoC7Check.successLevel.extreme == this.successLevel) cssClass += ' extreme-success';
-		}
+		if( this.isCritical && !this.isFailure) cssClass = 'success critical';
+		if( this.isFumble && !this.isSuccess) cssClass = 'failure fumble';
+		if( CoC7Check.successLevel.regular == this.successLevel) cssClass += ' regular-success';
+		if( CoC7Check.successLevel.hard == this.successLevel) cssClass += ' hard-success';
+		if( CoC7Check.successLevel.extreme == this.successLevel) cssClass += ' extreme-success';
+
 		return cssClass;
+	}
+
+	get playerCssClass(){
+		if( this.isSuccess || this.forcedSuccess) return 'success';
+		if( this.isFailure || this.forcedFailure) return 'failure';
+		return null;
 	}
 
 	upgradeCheck( upgradeindex){
@@ -571,25 +576,34 @@ export class CoC7Check {
 	}
 
 	forcePass(luckAmount = null){
-		this.forced = true;
 		if( luckAmount){
 			this.actor.spendLuck( luckAmount);
+			this.successLevel = this.difficulty;
 			this.increaseSuccess.forEach( s => {s.luckToSpend = s.luckToSpend- luckAmount;});
 			this.luckSpent = true;
+			this.isSuccess = true;
 			this.computeCheck();
 			this.updateChatCard();
 		} else {
-			if( !this.passed) this.forceSuccessLevel( this.difficulty); 
+			this.forced = true;
+			this.forcedSuccess = true;
+			if( this.isUnknown) this.forceSuccessLevel( CoC7Check.successLevel.regular);
+			else{
+				this.forceSuccessLevel( this.difficulty); 
+			}
 		}
 	}
 
 	forceFail(){
 		this.forced = true;
-		if( this.passed) this.forceSuccessLevel( this.difficulty - 1); 
+		this.forcedFailure = true;
+		if( this.isUnknown) this.forceSuccessLevel( CoC7Check.successLevel.failure);
+		else {
+			this.forceSuccessLevel( this.difficulty - 1); 
+		}
 	}
 
 	_forceCheck( high, low){
-
 		let total = Math.floor(Math.random() * (high-low)) + low + 1;
 		const unitTotal = total % 10;
 		let tenTotal = Math.floor( total/10);
