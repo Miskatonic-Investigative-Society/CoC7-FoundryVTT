@@ -1092,26 +1092,26 @@ export class CoC7Chat{
 			}
 			break;
 		}					
-		case 'initiator-roll': { //Roll against each target
-			let initiatorRollActor = CoC7Chat.getActorFromToken( event.currentTarget.dataset.tokenId);
-			if( initiatorRollActor == null) initiatorRollActor = game.actors.get( event.currentTarget.dataset.actorId);
+		// case 'initiator-roll': { //Roll against each target
+		// 	let initiatorRollActor = CoC7Chat.getActorFromToken( event.currentTarget.dataset.tokenId);
+		// 	if( initiatorRollActor == null) initiatorRollActor = game.actors.get( event.currentTarget.dataset.actorId);
 		
-			const initiatorCheck = new CoC7Check();
-			initiatorCheck.referenceMessageId = originMessage.dataset.messageId;
-			initiatorCheck.rollType= 'opposed';
-			initiatorCheck.side = 'initiator';
-			initiatorCheck.action = 'attack';
-			initiatorCheck.actor = initiatorRollActor;
-			initiatorCheck.difficulty = CoC7Check.difficultyLevel.regular;
-			if( event.currentTarget.dataset.outnumbered === 'true') initiatorCheck.diceModifier = +1;
+		// 	const initiatorCheck = new CoC7Check();
+		// 	initiatorCheck.referenceMessageId = originMessage.dataset.messageId;
+		// 	initiatorCheck.rollType= 'opposed';
+		// 	initiatorCheck.side = 'initiator';
+		// 	initiatorCheck.action = 'attack';
+		// 	initiatorCheck.actor = initiatorRollActor;
+		// 	initiatorCheck.difficulty = CoC7Check.difficultyLevel.regular;
+		// 	if( event.currentTarget.dataset.outnumbered === 'true') initiatorCheck.diceModifier = +1;
 
-			initiatorCheck.item = event.currentTarget.dataset.itemId;
+		// 	initiatorCheck.item = event.currentTarget.dataset.itemId;
 
-			initiatorCheck.roll();
-			initiatorCheck.toMessage();
+		// 	initiatorCheck.roll();
+		// 	initiatorCheck.toMessage();
 
-			break;
-		}
+		// 	break;
+		// }
 		case 'melee-initiator-roll':{
 			const initiator = CoC7MeleeInitiator.getFromCard( card);
 			await initiator.performSkillCheck( event.currentTarget.dataset.skill);
@@ -1169,11 +1169,24 @@ export class CoC7Chat{
 			break;
 		}
 
+		case 'increase-success-level':{
+			const check = await CoC7Check.getFromCard( card);
+			check.increaseSuccessLevel();
+			break;
+		}
+
+		case 'decrease-success-level':{
+			const check = await CoC7Check.getFromCard( card);
+			check.decreaseSuccessLevel();
+			break;
+		}
+
 		case 'reveal-check':{
 			const check = await CoC7Check.getFromCard( card);
 			check.isBlind = false;
 			check.computeCheck();
-			check.updateChatCard();
+			if( event.ctrlKey) check.updateChatCard( true);
+			else  check.updateChatCard();
 			break;
 		}
 
@@ -1209,92 +1222,6 @@ export class CoC7Chat{
 		}
 	}
 	
-	/**
-	 * TODO : unclear, confusion itemId générique et ne dépend pas de l'acteur (plusieurs acteur avec meme itemId)
-	 * @param {*} messageId 
-	 * @param {*} itemId 
-	 */
-	// static messageContainsItem( messageId, itemId){
-	// 	const chatMessage = game.messages.get( messageId);
-	// 	return !chatMessage ? false : chatMessage.data.content.includes( itemId);
-	// }
-
-
-	// static getSceneControlButtons(buttons) {
-	// 	// console.log('-->CoC7Chat.getSceneControlButtons');
-	// 	let tokenButton = buttons.find(b => b.name == 'token');
-
-	// 	if (tokenButton) {
-	// 		tokenButton.tools.push({
-	// 			name: 'request-roll',
-	// 			title: 'Request Roll',
-	// 			icon: 'fas fa-dice',
-	// 			visible: game.user.isGM,
-	// 			onClick: () => CoC7Chat.createChatCard()
-	// 		});
-	// 	}
-	// }
-	
-	// static async createChatCard(){
-	// 	const token = this.actor.token;
-	// 	const templateData = {
-	// 		actor: this.actor,
-	// 		tokenId: token ? `${token.scene._id}.${token.id}` : null,
-	// 		item: this.data
-	// 	};
-
-	// 	const template = 'systems/CoC7/templates/chat/skill-card.html';
-	// 	const html = await renderTemplate(template, templateData);
-				
-	// 	// TODO change the speaker for the token name not actor name
-	// 	const speaker = ChatMessage.getSpeaker({actor: this.actor});
-	// 	if( token) speaker.alias = token.name;
-
-	// 	await ChatMessage.create({
-	// 		user: game.user._id,
-	// 		speaker,
-	// 		content: html
-	// 	});
-	// }
-
-	// static async createAttackCard(actorId, itemId, tokenKey = null){
-
-	// 	let actor = CoC7Chat.getActorFromToken( tokenKey);
-	// 	if( actor == null) actor = game.actors.get( actorId);
-
-	// 	if( !actor) {
-	// 		ui.notifications.error(game.i18n.format('CoC7.ErrorActor'));
-	// 		return;
-	// 	}
-
-	// 	const item = actor.getOwnedItem( itemId);
-	// 	if( !item) {
-	// 		ui.notifications.error(game.i18n.format('CoC7.ErrorItem'));
-	// 		return;
-	// 	}
-
-	// 	const templateData = {
-	// 		actor: actor,
-	// 		item: item,
-	// 		tokenKey: tokenKey
-	// 	};
-
-
-	// 	const template = 'systems/CoC7/templates/chat/close-combat-card.html';
-	// 	const html = await renderTemplate(template, templateData);
-		
-	// 	const speaker = ChatMessage.getSpeaker({actor: actor});
-	// 	if( actor.isToken) speaker.alias = actor.token.name;
-
-	// 	const chatMessage = await ChatMessage.create({
-	// 		user: game.user._id,
-	// 		speaker,
-	// 		content: html
-	// 	});
-		
-	// 	CoC7Chat.updatechatMessageTargets( chatMessage);
-	// }
-
 	static async updatechatMessageTargets( oldCard){
 		const htmlCardContent = jQuery.parseHTML( oldCard.data.content);
 		const targets = htmlCardContent[0].querySelector('.targets');

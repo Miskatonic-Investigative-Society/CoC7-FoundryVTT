@@ -69,7 +69,7 @@ export class CoC7DamageRoll extends ChatCardActor{
 		} else {
 
 			let speakerData = {};
-			if( this.actorToken) speakerData.token = this.actorToken;
+			if( this.token) speakerData.token = this.token;
 			else speakerData.actor = this.actor;
 			const speaker = ChatMessage.getSpeaker(speakerData);
 			if( this.actor.isToken) speaker.alias = this.actor.token.name;
@@ -84,7 +84,8 @@ export class CoC7DamageRoll extends ChatCardActor{
 
 			let rollMode = game.settings.get('core', 'rollMode');
 			if ( ['gmroll', 'blindroll'].includes(rollMode) ) chatData['whisper'] = ChatMessage.getWhisperRecipients('GM');
-			if ( rollMode === 'blindroll' ) chatData['blind'] = true;
+			// if ( rollMode === 'blindroll' ) chatData['blind'] = true;
+			chatData.blind = false;
 
 			await ChatMessage.create(chatData);
 		}

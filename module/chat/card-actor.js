@@ -12,7 +12,12 @@ export class ChatCardActor{
     
 	get isBlind(){
 		if( !this.rollMode) return null;
-		return 'blindroll' === this.rollMode;
+		if( undefined === this._isBlind) this._isBlind = 'blindroll' === this.rollMode;
+		return this._isBlind;
+	}
+
+	set isBlind(x){
+		this._isBlind = x;
 	}
 
 	get rollMode(){

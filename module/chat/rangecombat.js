@@ -238,7 +238,7 @@ export class CoC7RangeInitiator{
 			extremeRange: this.activeTarget.extremeRange,
 			actorKey: this.activeTarget.actorKey,
 			actorName: this.activeTarget.name,
-			difficultyLevel: this.activeTarget.shotDifficulty.level,
+			difficulty: this.activeTarget.shotDifficulty.level,
 			modifier: this.activeTarget.shotDifficulty.modifier,
 			damage: this.activeTarget.shotDifficulty.damage,
 			bulletsShot: 1,
@@ -299,7 +299,8 @@ export class CoC7RangeInitiator{
 
 		let rollMode = game.settings.get('core', 'rollMode');
 		if ( ['gmroll', 'blindroll'].includes(rollMode) ) chatData['whisper'] = ChatMessage.getWhisperRecipients('GM');
-		if ( rollMode === 'blindroll' ) chatData['blind'] = true;
+		// if ( rollMode === 'blindroll' ) chatData['blind'] = true;
+		chatData.blind = false;
 
 		const chatMessage = await ChatMessage.create(chatData);
 		
@@ -355,7 +356,7 @@ export class CoC7RangeInitiator{
 				extremeRange: this.activeTarget.extremeRange,
 				actorKey: this.activeTarget.actorKey,
 				actorName: this.activeTarget.name,
-				difficultyLevel: this.activeTarget.shotDifficulty.level,
+				difficulty: this.activeTarget.shotDifficulty.level,
 				modifier: this.activeTarget.shotDifficulty.modifier,
 				damage: this.activeTarget.shotDifficulty.damage,
 				bulletsShot: 1,
@@ -380,10 +381,13 @@ export class CoC7RangeInitiator{
 		check.actorKey = this.actorKey;
 		check.actor = this.actorKey;
 		check.item = this.itemId;
+		// Combat roll cannot be blind or unknown
+		check.isBlind = false;
+		check.isUnkonwn = false;
 		if( this.autoFire) check.skill = this.autoWeaponSkill;
 		else check.skill = this.mainWeaponSkill;
 		if( this.multiTarget){ 
-			check.difficulty = shot.difficultyLevel;
+			check.difficulty = shot.difficulty;
 			check.diceModifier = shot.modifier;
 		} else {
 			this.calcTargetsDifficulty();
@@ -440,7 +444,7 @@ export class CoC7RangeInitiator{
 		const roll = this.rolls[rollIndex];
 		const luckAmount = parseInt(roll.luckNeeded);
 		if( !this.actor.spendLuck( luckAmount)){ ui.notifications.error(`${actor.name} does not have enough luck to pass the check`); return;}
-		roll.successLevel = roll.difficultyLevel;
+		roll.successLevel = roll.difficulty;
 		roll.isSuccess = true;
 		roll.luckSpent = true;
 		this.updateChatCard();
