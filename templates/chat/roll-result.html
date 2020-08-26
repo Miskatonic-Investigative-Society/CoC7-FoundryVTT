@@ -37,6 +37,7 @@
 	data-is-failure="{{isFailure}}"
 	data-is-unknown="{{isUnknown}}"
 	data-luck-spent="{{luckSpent}}"
+	data-total-luck-spent="{{totalLuckSpent}}"
 	data-gm-difficulty-regular="{{gmDifficultyRegular}}"
 	data-gm-difficulty-hard="{{gmDifficultyHard}}"
 	data-gm-difficulty-extreme="{{gmDifficultyExtreme}}"
@@ -158,7 +159,7 @@
 					{{/unless}}
 				</div>
 			</div>
-			<h4 id="diceResult" class="dice-total {{cssClass}}" title="{{resultType}}">{{dices.total}} {{#if pushing}} {{localize 'CoC7.PushedRoll'}}{{/if}} {{#if luckSpent}}Luck spent{{/if}}</h4>
+			<h4 id="diceResult" class="dice-total {{cssClass}}" title="{{resultType}}">{{dices.total}} {{#if pushing}} {{localize 'CoC7.PushedRoll'}}{{/if}} {{#if luckSpent}} - Luck spent ({{totalLuckSpent}}){{/if}}</h4>
 			{{#if hasMalfunction}}<h4 class="malfunction">{{malfunctionTxt}}</h4>{{/if}}
 		</div>
 	</div>
