@@ -555,6 +555,8 @@ export class CoC7Check {
 		const increasedSuccess = this.increaseSuccess[upgradeindex];
 		const luckAmount = parseInt(increasedSuccess.luckAmount);
 		if( !this.actor.spendLuck( luckAmount)){ ui.notifications.error(`${actor.name} does not have enough luck to pass the check`); return;}
+		this.totalLuckSpent = !parseInt(this.totalLuckSpent)?0:parseInt(this.totalLuckSpent);
+		this.totalLuckSpent += parseInt(luckAmount);
 		const newSuccessLevel = parseInt( increasedSuccess.newSuccessLevel);
 		this.successLevel = newSuccessLevel;
 		if( this.difficulty <= newSuccessLevel) this.isSuccess = true;
@@ -582,6 +584,8 @@ export class CoC7Check {
 			this.increaseSuccess.forEach( s => {s.luckToSpend = s.luckToSpend- luckAmount;});
 			this.luckSpent = true;
 			this.isSuccess = true;
+			this.totalLuckSpent = !parseInt(this.totalLuckSpent)?0:parseInt(this.totalLuckSpent);
+			this.totalLuckSpent += parseInt(luckAmount);
 			this.computeCheck();
 			this.updateChatCard();
 		} else {

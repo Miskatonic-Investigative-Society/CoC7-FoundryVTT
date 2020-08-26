@@ -64,6 +64,23 @@ COC7.weaponProperties = {
 	burn: 'CoC7.Weapon.Property.Burn'
 };
 
+COC7.spellProperties = {
+	call: 'CoC7.CallSpell',
+	dismiss: 'CoC7.DismissSpell',
+	contact: 'CoC7.ContactSpell',
+	summon: 'CoC7.SummonSpell',
+	bind: 'CoC7.BindSpell',
+	enchantment: 'CoC7.EnchantmentSpell',
+	gate: 'CoC7.GateSpell',
+	combat: 'CoC7.CombatSpell'
+};
+
+COC7.bookType = {
+	mythos: 'CoC7.MythosBook',
+	occult: 'CoC7.OccultBook',
+	other: 'CoC7.Other'
+};
+
 COC7.formula = {};
 
 COC7.formula.actor = {

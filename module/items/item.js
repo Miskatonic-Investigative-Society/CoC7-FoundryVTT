@@ -5,13 +5,62 @@ import { COC7 } from '../config.js';
  */
 export class CoC7Item extends Item {
 
+	// constructor(...args) {
+	// 	super(...args);
+
+	// 	this.items;
+	// }
+
+	// static get config(){
+	// 	// let config =  {
+	// 	// 	baseEntity: Item,
+	// 	// 	collection: game.items,
+	// 	// 	embeddedEntities: {'OwnedItem': 'items'},
+	// 	// 	label: 'ENTITY.Item',
+	// 	// 	permissions: {
+	// 	// 		create: 'ITEM_CREATE'
+	// 	// 	}
+	// 	// };
+	// 	const config = Item.config;
+	// 	config.embeddedEntities = {'OwnedItem': 'items'};
+	// 	return config;
+	// }
 
 	/**
 	 * Augment the basic Item data model with additional dynamic data.
 	*/
-	prepareData() {
-		super.prepareData();
+	// prepareData() {
+	// 	super.prepareData();
+	// }
+
+
+	/** @override */
+	prepareEmbeddedEntities() {
+	// 	if( 'book' == this.data.type){
+	// 		const prior = this.items;
+	// 		const spells = new Collection();
+	// 		if( this.data.data.spells){
+	// 			for ( let i of this.data.data.spells ) {
+	// 				let item = null;
+	
+		// 				// Update existing items
+		// 				if ( prior && prior.has(i._id ) ) {
+		// 					item = prior.get(i._id);
+		// 					item.data = i;
+		// 					item.prepareData();
+		// 				}
+	
+		// 				// Construct new items
+		// 				else item = Item.createOwned(i, this);
+		// 				spells.set(i._id, item);
+		// 			}
+		// 		}
+	
+	// 		// Assign Items to the Actor
+	// 		this.items = spells;
+	// 	}
 	}
+	
 
 	/**
    * Roll the item to Chat, creating a chat card which contains follow up attack or damage roll options
