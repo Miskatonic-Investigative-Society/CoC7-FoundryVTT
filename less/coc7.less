@@ -1,0 +1,134 @@
+@headerHeight: 100px;
+@borderGroove: 2px groove #eeede0;
+@detailsHeight: 16px;
+
+.coc7{
+
+	// Item Sheet form fields
+	input[type="text"], select {
+		height: calc(100% - 2px);
+		border: 1px solid @colorTan;
+		background: rgba(0, 0, 0, 0.05);
+		color: @colorDark;
+	}
+	
+	// Hovered Fields
+	input[type="text"] {
+		&:hover,
+		&:focus {
+			border: 1px solid #111;
+			box-shadow: 0 0 8px red;
+		}
+	}
+	
+	// Disabled Fields
+	input:disabled,
+	select:disabled,
+	textarea:disabled {
+		color: @colorOlive;
+		&:hover,
+		&:focus {
+			box-shadow: none !important;
+			border: 1px solid transparent !important;
+			outline: none !important;
+		}
+	}
+
+	label.checkbox {
+		flex: auto;
+		padding: 0;
+		margin: 0;
+		height: 22px;
+		line-height: 22px;
+		font-size: 11px;
+		width: auto;
+		> input[type="checkbox"] {
+			width: 16px;
+			height: 16px;
+			margin: 0 2px 0 0;
+			position: relative;
+			top: 4px;
+		}
+		&.right > input[type="checkbox"] {
+			margin: 0 0 0 2px;
+		}
+	}
+
+	.sheet-header {
+		flex: 0 0 @headerHeight;
+		border-bottom: @borderGroove;
+
+		.summary {
+			flex: 0 0 100%;
+			height: @detailsHeight;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			border-top: 1px groove;
+			border-bottom: 1px;
+
+			input{
+				height: 16px;
+			}
+	  
+			li {
+				height: @detailsHeight;
+				float: left;
+				margin: 0;
+				padding: 0;
+				border-right: @borderGroove;
+				line-height: 16px;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+	  
+				&:last-child {
+					border-right: none;
+				}
+			}
+		}
+	}
+
+	.form-group {
+		label {
+		flex: 2;
+		color: @colorOlive;
+		font-weight: bold;
+		}
+		.form-fields {
+		.flexrow();
+		> * {
+			margin: 0 3px 0 0;
+			&:last-child { margin-right: 0; }
+		}
+		}
+	}
+	
+  // Stacked Groups
+	.form-group.stacked {
+		label {
+			flex: 0 0 100%;
+			margin: 0;
+		}
+		label.checkbox {
+			flex: auto;
+			text-align: left;
+		}
+	}
+
+	.form-header {
+    margin: 0 0 0.25em 0;
+    padding: 2px 0;
+    border-top: @borderGroove;
+    border-bottom: @borderGroove;
+    font-family: "Modesto Condensed", "Palatino Linotype", serif;
+	}
+	
+	.editor {
+    height: 100%;
+    .tox-toolbar-overlord,
+    .tox-toolbar__primary {
+      background: none;
+    }
+  }
+}
