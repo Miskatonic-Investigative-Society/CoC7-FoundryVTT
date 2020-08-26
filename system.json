@@ -12,7 +12,10 @@
 		"module/dicebot.js"
 	],
 	"templateVersion": 1,
-	"styles": ["styles/coc7.css"],
+	"styles": [
+		"styles/coc7.css",
+		"coc7g.css"
+	],
 	"packs": [
 		{
 			"label": "Skills",

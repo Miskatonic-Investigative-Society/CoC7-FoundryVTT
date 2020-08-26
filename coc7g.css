@@ -1,0 +1,438 @@
+/* Deprecated vars */
+/* ----------------------------------------- */
+/*  Fonts                                    */
+/* ----------------------------------------- */
+@font-face {
+  font-family: 'Modesto Condensed';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../../fonts/modesto-condensed/modesto-condensed.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Modesto Condensed';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../../fonts/modesto-condensed/modesto-condensed-bold.woff2') format('woff2');
+}
+.modesto {
+  font-family: "Modesto Condensed", "Palatino Linotype", serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+/* ----------------------------------------- */
+/*  Sheet Styles                             */
+/* ----------------------------------------- */
+/* ----------------------------------------- */
+/*  Flexbox                                  */
+/* ----------------------------------------- */
+.flexrow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.flexrow > * {
+  flex: 1;
+}
+.flexrow .flex1 {
+  flex: 1;
+}
+.flexrow .flex2 {
+  flex: 2;
+}
+.flexrow .flex3 {
+  flex: 3;
+}
+.flexrow .flex4 {
+  flex: 4;
+}
+.flexcol {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+.flexcol > * {
+  flex: 1;
+}
+.flexcol .flex1 {
+  flex: 1;
+}
+.flexcol .flex2 {
+  flex: 2;
+}
+.flexcol .flex3 {
+  flex: 3;
+}
+.flexcol .flex4 {
+  flex: 4;
+}
+.coc7.sheet.book,
+.coc7.sheet.spell {
+  /* ----------------------------------------- */
+  /*  Item Details Form                        */
+  /* ----------------------------------------- */
+}
+.coc7.sheet.book .sheet-header img.profile,
+.coc7.sheet.spell .sheet-header img.profile {
+  border: 1px groove greenyellow;
+  flex: 0 0 64px;
+  max-width: 64px;
+  height: 64px;
+  object-fit: contain;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+.coc7.sheet.book .sheet-header .name input,
+.coc7.sheet.spell .sheet-header .name input {
+  margin: 0;
+  padding: 0;
+}
+.coc7.sheet.book .details .editor,
+.coc7.sheet.spell .details .editor {
+  height: 100px;
+}
+.coc7.sheet.book .details .editor button,
+.coc7.sheet.spell .details .editor button {
+  height: 20px;
+}
+.coc7.sheet.book .details input[type="text"],
+.coc7.sheet.spell .details input[type="text"],
+.coc7.sheet.book .details select,
+.coc7.sheet.spell .details select {
+  height: 20px;
+  border: 1px solid #7a7971;
+  background: rgba(0, 0, 0, 0.05);
+}
+.coc7.sheet.book .details .form-group,
+.coc7.sheet.spell .details .form-group {
+  border: 0;
+  margin: 0;
+}
+.coc7.sheet.book .details .form-group span,
+.coc7.sheet.spell .details .form-group span {
+  text-align: center;
+  line-height: 20px;
+}
+.coc7.sheet.book .details .form-group.input-select select,
+.coc7.sheet.spell .details .form-group.input-select select {
+  flex: 1.8;
+}
+.coc7.sheet.book .details .form-group.input-select-select select,
+.coc7.sheet.spell .details .form-group.input-select-select select {
+  flex: 1.5;
+}
+.coc7.sheet.book .details .form-group.uses-per input,
+.coc7.sheet.spell .details .form-group.uses-per input {
+  flex: 1;
+}
+.coc7.sheet.book .details .form-group.uses-per span,
+.coc7.sheet.spell .details .form-group.uses-per span {
+  flex: 0 0 16px;
+}
+.coc7.sheet.book .details .form-group.uses-per select,
+.coc7.sheet.spell .details .form-group.uses-per select {
+  flex: 3;
+}
+.coc7.sheet.book .details span.sep,
+.coc7.sheet.spell .details span.sep {
+  flex: 0 0 8px;
+}
+.coc7.sheet.book .details .prepared,
+.coc7.sheet.spell .details .prepared {
+  flex: 1.3 !important;
+  text-align: right;
+  padding-right: 10px;
+}
+.coc7.sheet.book .details .spell-materials,
+.coc7.sheet.spell .details .spell-materials {
+  flex: 0 0 100%;
+  margin: 0.25em 0;
+  justify-content: flex-end;
+}
+.coc7.sheet.book .details .spell-materials label,
+.coc7.sheet.spell .details .spell-materials label {
+  flex: 0 0 64px;
+  text-align: right;
+  margin-right: 5px;
+  font-size: 12px;
+  line-height: 24px;
+}
+.coc7.sheet.book .details .spell-materials input[type="text"],
+.coc7.sheet.spell .details .spell-materials input[type="text"] {
+  flex: 0 0 48px;
+  margin-right: 10px;
+}
+.coc7.sheet.book .sheet-navigation,
+.coc7.sheet.spell .sheet-navigation {
+  margin-bottom: 5px;
+}
+.coc7.sheet.book .sheet-navigation .item,
+.coc7.sheet.spell .sheet-navigation .item {
+  font-size: 18px;
+}
+.coc7.sheet.book .sheet-body,
+.coc7.sheet.spell .sheet-body {
+  overflow: hidden;
+}
+.coc7.sheet.book .sheet-body .tab,
+.coc7.sheet.spell .sheet-body .tab {
+  padding: 0 5px;
+  overflow: hidden auto;
+}
+.coc7.sheet.book .sheet-body .item-properties,
+.coc7.sheet.spell .sheet-body .item-properties {
+  flex: 0 0 120px;
+  margin: 5px 5px 5px 0;
+  padding-right: 5px;
+  border-right: 2px groove #eeede0;
+}
+.coc7.sheet.book .sheet-body .item-properties .form-group,
+.coc7.sheet.spell .sheet-body .item-properties .form-group {
+  margin: 0;
+}
+.coc7.sheet.book .sheet-body .item-properties .form-group label,
+.coc7.sheet.spell .sheet-body .item-properties .form-group label {
+  line-height: 20px;
+}
+.coc7.sheet.book .sheet-body .item-properties .form-group input,
+.coc7.sheet.spell .sheet-body .item-properties .form-group input {
+  text-align: right;
+}
+.coc7.sheet.book .sheet-body .item-properties .properties-list,
+.coc7.sheet.spell .sheet-body .item-properties .properties-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.coc7.sheet.book .sheet-body .item-properties .properties-list li,
+.coc7.sheet.spell .sheet-body .item-properties .properties-list li {
+  margin: 3px 0;
+  padding: 0 2px;
+  background: rgba(0, 0, 0, 0.05);
+  border: 2px groove #eeede0;
+  text-align: center;
+  font-size: 12px;
+  line-height: 18px;
+}
+.coc7.sheet.book .sheet-body .spell-list,
+.coc7.sheet.spell .sheet-body .spell-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 5px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.coc7.sheet.book .sheet-body .spell-list .spell,
+.coc7.sheet.spell .sheet-body .spell-list .spell {
+  line-height: 16px;
+  padding: 0 2px;
+  border-bottom: 1px solid #c9c7b8;
+}
+.coc7.sheet.book .sheet-body .spell-list .spell:last-child,
+.coc7.sheet.spell .sheet-body .spell-list .spell:last-child {
+  border-bottom: none;
+}
+.coc7.sheet.book .sheet-body .spell-list .spell .spell-name,
+.coc7.sheet.spell .sheet-body .spell-list .spell .spell-name {
+  cursor: pointer;
+  max-height: 24px;
+  overflow: hidden;
+}
+.coc7.sheet.book .sheet-body .spell-list .spell .spell-name .spell-image,
+.coc7.sheet.spell .sheet-body .spell-list .spell .spell-name .spell-image {
+  flex: 0 0 16px;
+  background-size: 16px;
+  margin-right: 5px;
+}
+.coc7.sheet.book .sheet-body .spell-list .spell .spell-name h4,
+.coc7.sheet.spell .sheet-body .spell-list .spell .spell-name h4 {
+  margin: 0;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+.coc7.sheet.book .sheet-body .spell-list .spell .spell-name.rollable:hover .item-image,
+.coc7.sheet.spell .sheet-body .spell-list .spell .spell-name.rollable:hover .item-image {
+  background-image: url("/icons/svg/d20-grey.svg") !important;
+}
+.coc7.sheet.book .sheet-body .spell-list .spell .spell-name.rollable .item-image:hover,
+.coc7.sheet.spell .sheet-body .spell-list .spell .spell-name.rollable .item-image:hover {
+  background-image: url("/icons/svg/d20-black.svg") !important;
+}
+.coc7.sheet.book .sheet-body .spell-list .spell .spell-name i.attuned,
+.coc7.sheet.spell .sheet-body .spell-list .spell .spell-name i.attuned {
+  color: #7a7971;
+}
+.coc7.sheet.book .sheet-body .spell-list .item-controls,
+.coc7.sheet.spell .sheet-body .spell-list .item-controls {
+  flex: 0 0 32px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  justify-content: flex-end;
+}
+.coc7.sheet.book .sheet-body .spell-list .item-controls > *,
+.coc7.sheet.spell .sheet-body .spell-list .item-controls > * {
+  flex: 1;
+}
+.coc7.sheet.book .sheet-body .spell-list .item-controls .flex1,
+.coc7.sheet.spell .sheet-body .spell-list .item-controls .flex1 {
+  flex: 1;
+}
+.coc7.sheet.book .sheet-body .spell-list .item-controls .flex2,
+.coc7.sheet.spell .sheet-body .spell-list .item-controls .flex2 {
+  flex: 2;
+}
+.coc7.sheet.book .sheet-body .spell-list .item-controls .flex3,
+.coc7.sheet.spell .sheet-body .spell-list .item-controls .flex3 {
+  flex: 3;
+}
+.coc7.sheet.book .sheet-body .spell-list .item-controls .flex4,
+.coc7.sheet.spell .sheet-body .spell-list .item-controls .flex4 {
+  flex: 4;
+}
+.coc7.sheet.book .sheet-body .spell-list .item-controls a,
+.coc7.sheet.spell .sheet-body .spell-list .item-controls a {
+  flex: 0 0 16px;
+  font-size: 10px;
+  text-align: center;
+  color: #7a7971;
+}
+.coc7.sheet.book .sheet-body .spell-list .item-summary,
+.coc7.sheet.spell .sheet-body .spell-list .item-summary {
+  flex: 0 0 100%;
+  font-size: 10px;
+  line-height: 11px;
+  padding: 0.25em 0.5em;
+  border-top: 1px solid #c9c7b8;
+}
+.coc7 input[type="text"],
+.coc7 select {
+  height: calc(100% - 2px);
+  border: 1px solid #7a7971;
+  background: rgba(0, 0, 0, 0.05);
+  color: #191813;
+}
+.coc7 input[type="text"]:hover,
+.coc7 input[type="text"]:focus {
+  border: 1px solid #111;
+  box-shadow: 0 0 8px red;
+}
+.coc7 input:disabled,
+.coc7 select:disabled,
+.coc7 textarea:disabled {
+  color: #4b4a44;
+}
+.coc7 input:disabled:hover,
+.coc7 select:disabled:hover,
+.coc7 textarea:disabled:hover,
+.coc7 input:disabled:focus,
+.coc7 select:disabled:focus,
+.coc7 textarea:disabled:focus {
+  box-shadow: none !important;
+  border: 1px solid transparent !important;
+  outline: none !important;
+}
+.coc7 label.checkbox {
+  flex: auto;
+  padding: 0;
+  margin: 0;
+  height: 22px;
+  line-height: 22px;
+  font-size: 11px;
+  width: auto;
+}
+.coc7 label.checkbox > input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0 2px 0 0;
+  position: relative;
+  top: 4px;
+}
+.coc7 label.checkbox.right > input[type="checkbox"] {
+  margin: 0 0 0 2px;
+}
+.coc7 .sheet-header {
+  flex: 0 0 100px;
+  border-bottom: 2px groove #eeede0;
+}
+.coc7 .sheet-header .summary {
+  flex: 0 0 100%;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px groove;
+  border-bottom: 1px;
+}
+.coc7 .sheet-header .summary input {
+  height: 16px;
+}
+.coc7 .sheet-header .summary li {
+  height: 16px;
+  float: left;
+  margin: 0;
+  padding: 0;
+  border-right: 2px groove #eeede0;
+  line-height: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.coc7 .sheet-header .summary li:last-child {
+  border-right: none;
+}
+.coc7 .form-group label {
+  flex: 2;
+  color: #4b4a44;
+  font-weight: bold;
+}
+.coc7 .form-group .form-fields {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.coc7 .form-group .form-fields > * {
+  flex: 1;
+}
+.coc7 .form-group .form-fields .flex1 {
+  flex: 1;
+}
+.coc7 .form-group .form-fields .flex2 {
+  flex: 2;
+}
+.coc7 .form-group .form-fields .flex3 {
+  flex: 3;
+}
+.coc7 .form-group .form-fields .flex4 {
+  flex: 4;
+}
+.coc7 .form-group .form-fields > * {
+  margin: 0 3px 0 0;
+}
+.coc7 .form-group .form-fields > *:last-child {
+  margin-right: 0;
+}
+.coc7 .form-group.stacked label {
+  flex: 0 0 100%;
+  margin: 0;
+}
+.coc7 .form-group.stacked label.checkbox {
+  flex: auto;
+  text-align: left;
+}
+.coc7 .form-header {
+  margin: 0 0 0.25em 0;
+  padding: 2px 0;
+  border-top: 2px groove #eeede0;
+  border-bottom: 2px groove #eeede0;
+  font-family: "Modesto Condensed", "Palatino Linotype", serif;
+}
+.coc7 .editor {
+  height: 100%;
+}
+.coc7 .editor .tox-toolbar-overlord,
+.coc7 .editor .tox-toolbar__primary {
+  background: none;
+}
