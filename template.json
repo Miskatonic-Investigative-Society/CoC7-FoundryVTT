@@ -223,6 +223,8 @@
             "item",
             "weapon",
             "skill",
+            "book",
+            "spell",
             "PDFoundry_PDF"
         ],
         "item": {
@@ -297,6 +299,62 @@
             "code": "",
             "offset": 0,
             "cache": false
+        },
+        "spell":{
+            "source":null,
+            "castingTime":null,
+            "cost":{
+                "mp": null,
+                "san": null,
+                "pow": null,
+                "hp": null,
+                "other": []
+            },
+            "description":{
+                "value": "",
+                "chat": "",
+                "unidentified": "",
+                "notes": ""},
+            "type":{
+                "call": false,
+                "dismiss": false,
+                "contact": false,
+                "summon": false,
+                "bind": false,
+                "enchantment": false,
+                "gate": false,
+                "combat": false
+            },
+            "alternativeNames":[],
+            "effects":[],
+            "properties": {},
+            "flags":{}
+        },
+        "book":{
+            "language": null,
+            "author": null,
+            "date": null,
+            "description": {
+                "value": "",
+                "chat": "",
+                "unidentified": "",
+                "notes": ""},
+            "type":{
+                "occult": false,
+                "mythos": false,
+                "other": false
+            },
+            "sanLoss": null,
+            "mythosRating": null,
+            "weeksStudyTime": 0,
+            "gain":{
+                "cthulhuMythos": {"CMI":null, "CMF":null},
+                "occult": null
+            },
+            "spells": [],
+            "properties": {},
+            "flags": {}
         }
+
     }
 }

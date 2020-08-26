@@ -364,6 +364,10 @@ export class CoC7ActorSheet extends ActorSheet {
 	// 	});
 	// }
 
+	async _onDrop(event){
+		super._onDrop(event);
+	}
+
 	async _onStatusToggle(event){
 		event.preventDefault();
 		const status = event.currentTarget.dataset.status;

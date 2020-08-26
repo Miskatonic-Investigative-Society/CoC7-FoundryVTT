@@ -11,7 +11,6 @@ export class CoCActor extends Actor {
 		await this.creatureInit(); //TODO : move this in CoCActor.create(data, options)
 	}
 
-
 	/**
    * Early version on templates did not include possibility of auto calc
    * Just check if auto is indefined, in which case it will be set to true
