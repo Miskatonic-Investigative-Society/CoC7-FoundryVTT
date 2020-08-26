@@ -20,6 +20,13 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.3.1 :
+
+* Templates for books and spells added.
+  * You can add a spell to a book by dragging it (from item directory only for the time beeing) on the book.
+* Bug fix, luck amount spent is now correctly displayed on the roll result.
+* Japanese translation improved thanks to AdmiralNyar
+
 version 0.3.0 :
 
 * Hot fix on luck spent.
