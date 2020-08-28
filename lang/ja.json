@@ -94,7 +94,7 @@
 "CoC7.CriticalDifficulty": "クリティカル",
 "CoC7.UnknownDifficulty": "不明",
 "CoC7.RollDifficulty": "ロールの難易度",
-"CoC7.RollDifficulty.Unknown": "見えない",
+"CoC7.RollDifficultyUnknown": "見えない",
 "CoC7.RollDifficultyRegular": "レギュラーの難易度",
 "CoC7.RollDifficultyHard": "ハードの難易度",
 "CoC7.RollDifficultyExtreme": "イクストリームの難易度",
