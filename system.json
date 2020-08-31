@@ -2,13 +2,20 @@
 	"name": "CoC7",
 	"title": "The Call of Cthulhu 7th edition",
 	"description": "The Call of Cthulhu 7th edition simple game system",
-	"version": "0.1.7",
-	"minimumCoreVersion": "0.5.2",
-	"compatibleCoreVersion": "0.6.0",
-	"templateVersion": 1,
+	"version": "0.3.1",
 	"author": "HavelockV",
-	"esmodules": ["module/coc7.js"],
-	"styles": ["styles/coc7.css"],
+	"minimumCoreVersion": "0.5.2",
+	"compatibleCoreVersion": "0.6.5",
+	"esmodules": [
+		"module/coc7.js",
+		"pdfoundry-dist/bundle.js",
+		"module/dicebot.js"
+	],
+	"templateVersion": 1,
+	"styles": [
+		"styles/coc7.css",
+		"coc7g.css"
+	],
 	"packs": [
 		{
 			"label": "Skills",
@@ -37,6 +44,26 @@
 		  "lang": "en",
 		  "name": "English",
 		  "path": "lang/en.json"
+		},
+		{
+			"lang": "fr",
+			"name": "Français",
+			"path": "lang/fr.json"
+		  },
+		{
+		  "lang": "es",
+		  "name": "Spanish",
+		  "path": "lang/es.json"
+		},
+		{
+			"lang": "de",
+			"name": "Deutsch",
+			"path": "lang/de.json"
+		},
+		{
+			"lang": "ja",
+			"name": "日本語",
+			"path": "lang/ja.json"
 		}
 	  ],
 	"socket": true,
@@ -46,6 +73,6 @@
 	"secondaryTokenAttribute": "power",
 	"url": "https://github.com/HavlockV/CoC7-FoundryVTT/",
 	"manifest": "https://github.com/HavlockV/CoC7-FoundryVTT/raw/master/system.json",
-	"download": "https://github.com/HavlockV/CoC7-FoundryVTT/archive/0.1.7.zip"
+	"download": "https://github.com/HavlockV/CoC7-FoundryVTT/archive/0.3.1.zip"
   }
   

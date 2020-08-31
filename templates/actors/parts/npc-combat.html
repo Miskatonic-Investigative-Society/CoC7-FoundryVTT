@@ -1,46 +1,120 @@
-<ol class="weapons-list" style="padding: 0;">
-    {{#each weapons as |item id|}}
-        <li class="item flexcol" data-item-id="{{item._id}}">
-            <div class="flexrow">
-                <div class="flexrow" style="flex: 0 0 48px;background-color: {{#if item.skillSet}}transparent{{else}}red{{/if}};">
-                    <div class="weapon-image main" style="background-image: url({{item.img}})" data-skill-id="{{item.data.skill.main.id}}" title="Roll {{item.data.skill.main.name}} skill"></div>
-                    {{#if item.data.properties.auto}}
-                        <div class="weapon-image alternative" style="background-image: url({{item.img}})" data-skill-id="{{item.data.skill.alternativ.id}}" title="Roll {{item.data.skill.alternativ.name}} skill"></div>
-                    {{/if}}
-                </div>
-                <h4 class="skill-name">{{item.name}}:</h4>
-                <div style="flex: 0 0 100px;">
-                    <span class="skill-value main">({{item.data.skill.main.value}}%)</span>
-                    {{#if item.data.properties.auto}}
-                        <span class="skill-value alternativ"> - ({{item.data.skill.alternativ.value}}%)</span>
-                    {{/if}}
-                </div>
-                <div class="flex1 flexrow">
-                    {{#if item.data.properties.rngd}}
-                        {{#if item.data.properties.xplv}}
-                            {{#each item.data.range as |range key|}}
-                            <div class="flex1">
-                                <a class="inline-roll roll" data-mode="roll" title="{{range.value}}" data-formula="{{range.damage}}"><i class="fas fa-dice-d20"></i> {{range.damage}}</a>
-                            </div>
-                            {{/each}}
-                        {{else}}
-                        <div class="flex1">
-                            <a class="inline-roll roll" data-mode="roll" title="{{item.data.range.normal.value}}" data-formula="{{item.data.range.normal.damage}}"><i class="fas fa-dice-d20"></i> {{item.data.range.normal.damage}}</a>
-                        </div>
-                        {{/if}}
-                    {{else}}
-                    <div class="flex1">
-                        <a class="inline-roll roll" data-mode="roll" data-formula="{{item.data.range.normal.damage}}" title="{{item.data.range.normal.value}}"><i class="fas fa-dice-d20"></i> {{item.data.range.normal.damage}}</a>
-                    </div>
-                    {{/if}}
-                </div>
-                {{#unless ../data.flags.locked}}
-                <div class="item-controls">
-                    <a class="item-control item-edit" title="Edit Weapon"><i class="fas fa-edit"></i></a>
-                    <a class="item-control item-delete" title="Delete Weapon"><i class="fas fa-trash"></i></a>
-                </div>
-                {{/unless}}
-            </div>
-        </li>
-    {{/each}}
+<div class="flexrow combat-header" style="border-bottom: 1px groove;text-align: center;font-weight: bold;">
+	<div class="flex2" style="border-right: 1px groove; padding-left: 2px;">Name</div>
+	<div class="flex4 flexrow" style="border-right: 1px groove; padding-left: 2px;">
+		<div class="flex1">Skill</div>
+		<div class="flex1">Alt-skill</div>
+	</div>
+	<div class=" flex2" style="padding-left: 2px;">Damage</div>
+</div>
+<ol class="weapons-list" style="padding: 0; margin: 0;">
+	{{#each weapons as |weapon id|}}
+		{{#if ../data.flags.locked}}
+			<li class="item weapon flexcol" data-item-id="{{weapon._id}}">
+				<div class="flexrow" style="align-items: center;">
+					<div class="flex2 weapon-name rollable" style="border-right: 1px groove;">{{weapon.name}}</div>
+					<div class="flexrow flex4 weapon-skills" style="border-right: 1px groove; padding-left: 2px;">
+						{{#if weapon.skillSet}}
+							<div class="item-tag weapon-skill rollable" style="flex: 0 0 49%" data-skill-id="{{weapon.data.skill.main.id}}" title="Roll {{weapon.data.skill.main.name}} skill">{{weapon.data.skill.main.name}} ({{weapon.data.skill.main.value}}%)</div>
+							{{#if weapon.usesAlternateSkill}}
+								<div class="item-tag weapon-skill rollable" style="flex: 0 0 49%" data-skill-id="{{weapon.data.skill.alternativ.id}}" title="Roll {{weapon.data.skill.alternativ.name}} skill">{{weapon.data.skill.alternativ.name}} ({{weapon.data.skill.alternativ.value}}%)</div>
+							{{/if}}
+						{{else}}
+							<div class="item-tag weapon-skil" style="flex: 0 0 49%; background-color: red;" title="Choose skill">No skill</div>
+							{{#if weapon.usesAlternateSkill}}
+								<div class="item-tag weapon-skill" style="flex: 0 0 49%; background-color: red" title="Choose skill">No skill</div>
+							{{/if}}
+						{{/if}}
+					</div>
+					<div class="flexrow flex2" style="font-size: 10px; padding-left: 2px;">
+						{{#if weapon.data.properties.rngd}}
+							{{#if weapon.data.properties.shotgun}}
+								{{#each weapon.data.range as |range key|}}
+								<div class="flex1 weapon-damage" data-range="{{key}}">
+									<a class="roll" data-mode="roll" title="{{range.value}}" data-formula="{{range.damage}}"><i class="fas fa-dice-d20"></i> {{range.damage}}</a>
+								</div>
+								{{/each}}
+							{{else}}
+							<div class="flex1 weapon-damage"  data-range="normal">
+								<a class="roll" data-mode="roll" title="{{weapon.data.range.normal.value}}" data-formula="{{weapon.data.range.normal.damage}}"><i class="fas fa-dice-d20"></i> {{weapon.data.range.normal.damage}}</a>
+							</div>
+							{{/if}}
+						{{else}}
+						<div class="flex1 weapon-damage"  data-range="normal">
+							<a class="roll" data-mode="roll" data-formula="{{weapon.data.range.normal.damage}}" title="{{weapon.data.range.normal.value}}"><i class="fas fa-dice-d20"></i> {{weapon.data.range.normal.damage}}</a>
+						</div>
+						{{/if}}
+						<div class="flex0">
+							{{#if weapon.data.properties.addb}}<span class="tag" title="Add DB">{{localize 'CoC7.WeaponAddb'}}</span>{{/if}}
+							{{#if weapon.data.properties.ahdb}}<span class="tag" title="Add DB">{{localize 'CoC7.WeaponAhdb'}}</span>{{/if}}
+						</div>
+					</div>
+
+				</div>
+			</li>
+		{{else}}
+			<li class="item flexcol" style="border-bottom: 1px groove; margin-bottom: 2px; padding-bottom: 2px;" data-item-id="{{weapon._id}}">
+				<div class="flexrow" style="align-items: center;">
+					<div class="flex2" >
+						<input class="weapon-name" style="display: flex; height: fit-content;padding: 0 1px;text-align: left;" type="text" value="{{weapon.name}}">
+					</div>
+					<div class="flexrow flex4 weapon-skills" style="flex-wrap: nowrap;" >
+						
+						<div class="flex1 flexrow" >
+							<select class="item-tag weapon-skill {{#unless weapon.skillSet}}no-skill-set{{/unless}}" data-skill="main" data-skill-id="{{weapon.data.skill.main.id}}">
+								{{#select weapon.data.skill.main.id}}
+									{{#unless weapon.skillSet}}<option></option>{{/unless}}
+									{{#each ../combatSkills as |cbs|}}
+										<option value="{{cbs._id}}">{{cbs.name}}</option>
+									{{/each}}
+								{{/select}}
+							</select>
+						</div>
+						<div class="flex1 flexrow" >
+							{{#if weapon.usesAlternateSkill}}
+								<select class="item-tag weapon-skill {{#unless weapon.skillSet}}no-skill-set{{/unless}}" data-skill="alternativ" data-skill-id="{{weapon.data.skill.alternativ.id}}">
+									{{#select weapon.data.skill.alternativ.id}}
+										{{#unless weapon.skillSet}}<option></option>{{/unless}}
+										{{#each ../combatSkills as |cbs|}}
+											<option value="{{cbs._id}}">{{cbs.name}}</option>
+										{{/each}}
+									{{/select}}
+								</select>
+							{{/if}}
+						</div>
+
+					</div>
+					<div class="flexrow flex2" style="font-size: 10px;">
+						{{#if weapon.data.properties.shotgun}}
+							{{#each weapon.data.range as |range key|}}
+							<div class="flex1">
+								<input 
+									class="damage-formula"
+									style="display: flex; height: fit-content;padding: 0 1px;text-align: left;border: 1px solid whitesmoke;"
+									type="text" data-range="{{key}}"
+									value="{{range.damage}}">
+							</div>
+							{{/each}}
+						{{else}}
+							<div class="flex1">
+								<input 
+								class="damage-formula"
+								style="display: flex; height: fit-content;padding: 0 1px;text-align: left;border: 1px solid whitesmoke;"
+								type="text" data-range="normal"
+								value="{{weapon.data.range.normal.damage}}">
+							</div>
+						{{/if}}
+					</div>
+					<div class="item-controls">
+						<a class="item-control item-edit" title="{{localize 'CoC7.EditWeapon'}}"><i class="fas fa-edit"></i></a>
+						<a class="item-control item-delete" title="{{localize 'CoC7.DeleteWeapon'}}"><i class="fas fa-trash"></i></a>
+					</div>
+				</div>
+				<div class="skill-attributes" style="margin-left: 2px;  display: block;" data-set="properties">
+					{{#each weapon.data._properties as | property key|}}
+						<span class="toggle-switch {{#if property.value}} switched-on {{/if}}" data-property="{{property.id}}">{{localize property.name}}</span>
+					{{/each}}
+				</div>
+			</li>
+		{{/if}}
+	{{/each}}
 </ol>
