@@ -1,0 +1,63 @@
+<div class="coc7 chat-card damage"
+    data-actor-key="{{actor.tokenKey}}"
+    data-target-key="{{targetKey}}"
+    data-item-id="{{weapon._id}}"
+    data-critical="{{critical}}"
+    data-impale="{{impale}}"
+    data-fast-forward="{{fastForward}}"
+    data-target-card="{{targetCard}}">
+
+    <header class="card-header flexcol">
+        <div class="flexrow">
+            {{#if displayActorOnCard}}
+            <img class="open-actor" data-actor-key="{{actorKey}}" style="flex: none;" src="{{actorImg}}" title="{{name}}" width="36" height="36"/>
+            {{/if}}
+            <img class="open-actor" data-actor-key="{{actorKey}}" style="flex: none;" src="{{item.img}}" title="{{item.name}}" width="36" height="36"/>
+            <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{item.name}}</h3>
+            <img class="open-actor" style="flex: none;" data-actor-key="{{targetKey}}" src="{{targetImg}}" title="{{targetName}}" width="36" height="36"/>
+        </div>
+
+        <div class="card-content">
+            {{{weapon.data.data.description.value}}}
+        </div>
+
+        <div class="flex0 advantage-selection">
+            {{#if critical}}<span class="tag" title="The blow is critical">Critical</span>
+            {{#if weapon.impale}}<span class="tag" title="The weapon can impale">Impale</span>{{/if}}
+            {{/if}}
+        </div>
+    </header>
+
+    <!-- <div class="dice-roll"></div> -->
+
+    <div class="dice-roll">
+        <div class="dice-result">
+            <div class="dice-formula">
+                    {{roll.formula}}
+                </div>
+
+            <div class="dice-tooltip" style="display: none;">
+                {{#each roll._dice as |die key| }}
+                <section class="tooltip-part">
+                    <div class="dice">
+                        <span class="part-formula part-header flexrow">
+                            {{die.formula}}
+                            <div class="flex1"></div>
+                            <span class="part-total flex0">{{die.total}}</span>
+                        </span>
+                        <ol class="dice-rolls">
+                            {{#each die.rolls as |roll key|}}
+                            <li class="roll die d{{die.faces}}">{{roll.result}}</li>
+                            {{/each}}
+                        </ol>
+                    </div>
+                </section>
+                {{/each}}
+            </div>
+
+            <div class="dice-total success {{#if critical}} critical{{/if}}">
+                {{result}}
+            </div> 
+        </div>
+    </div>
+</div>

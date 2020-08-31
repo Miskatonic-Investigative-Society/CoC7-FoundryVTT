@@ -1,0 +1,218 @@
+<div class="coc7 chat-card melee target"
+    data-actor-key="{{actorKey}}"
+    data-initiator-key="{{initiatorKey}}"
+    data-fast-forward="{{fastForward}}"
+    data-resolved="{{resolved}}"
+    data-outnumbered="{{outnumbered}}"
+    data-surprised="{{surprised}}"
+    data-auto-success="{{autoSuccess}}"
+    data-advantage="{{advantage}}"
+    data-disadvantage="{{disadvantage}}"
+    data-parent-message-id="{{parentMessageId}}"
+    data-skill-id="{{skillId}}"
+    data-item-id="{{itemId}}"
+    data-dodging="{{dodging}}"
+    data-fighting-back="{{fightingBack}}"
+    data-maneuvering="{{maneuvering}}"
+    data-resolution-card="{{resolutionCard}}"
+    data-is-blind="false"
+    >
+
+    <header class="card-header flexcol">
+        <div class="flexrow">
+            {{#if displayActorOnCard}}
+            <img class="open-actor" data-actor-key="{{actorKey}}" style="flex: none;" src="{{actorImg}}" title="{{name}}" width="36" height="36"/>
+            {{/if}}
+            {{#if dodging}}
+            <img class="open-actor" style="flex: none;" data-actor-key="{{actorKey}}" src="{{actor.dodgeSkill.data.img}}" title="{{actor.dodgeSkill.name}}" width="36" height="36"/>
+            <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{actor.dodgeSkill.name}}</h3>
+            {{else}}
+                {{#if fightingBack}}
+                <img class="open-actor" style="flex: none;" data-actor-key="{{actorKey}}" src="{{weapon.img}}" title="{{weapon.name}}" width="36" height="36"/>
+                <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{weapon.name}}</h3>
+                {{else}}
+                    {{#if maneuvering}}
+                    <img class="open-actor" style="flex: none;" data-actor-key="{{actorKey}}" src="{{skill.data.img}}" title="{{skill.name}}" width="36" height="36"/>
+                    <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{skill.name}}</h3>
+                    {{else}}
+                    <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">...</h3>
+                    {{/if}}
+                {{/if}}
+            {{/if}}
+            <img class="open-actor" style="flex: none;" data-actor-key="{{initiatorKey}}" src="{{targetImg}}" title="{{targetName}}" width="36" height="36"/>
+        </div>
+
+        <div class="card-content">
+            {{#if dodging}}
+                {{{actor.dodgeSkill.data.data.description.value}}}
+            {{/if}}
+            {{#if fightingBack}}
+                {{{weapon.data.data.description.value}}}
+            {{/if}}
+            {{#if maneuvering}}
+                {{{skill.data.data.description.value}}}
+            {{/if}}
+            {{#if rolled}}
+            <div class="flex0 advantage-selection">
+                {{#if dodging}}<span class="tag" title="{{actor.dodgeSkill.name}}">{{localize 'CoC7.Dodge'}}</span>{{/if}}
+                {{#if fightingBack}}<span class="tag" title="{{weapon.name}}">{{localize 'CoC7.FightBack'}}</span>{{/if}}
+                {{#if maneuvering}}<span class="tag" title="{{skill.name}}">{{localize 'CoC7.Maneuver'}}</span>{{/if}}
+                {{#if advantage}}<span class="tag" title="Advantage">{{localize 'CoC7.Advantage'}}</span>{{/if}}
+                {{#if disadvantage}}<span class="tag" title="Disadvantage">{{localize 'CoC7.Disadvantage'}}</span>{{/if}}
+            </div>
+            {{/if}}
+        </div>
+
+        {{#unless rolled}}
+        <div class="flexrow advantage-selection">
+            <span class="flex1 toggle-switch advantage {{#unless rolled}}simple-flag{{/unless}} {{#if advantage}}switched-on{{/if}} gm-select-only"
+            title="Add 1 bonus die (assailant is prone, restrained...)" 
+            style="text-align:center" 
+            data-flag="advantage" 
+            data-selected={{advantage}}>{{localize 'CoC7.Advantage'}}</span>
+            <span class="flex1 toggle-switch disadvantage {{#unless rolled}}simple-flag{{/unless}} {{#if disadvantage}}switched-on{{/if}} gm-select-only"
+            title="Add 1 malus die (for being prone, restrained...)" 
+            style="text-align:center" 
+            data-flag="disadvantage" 
+            data-selected={{disadvantage}}>{{localize 'CoC7.Disadvantage'}}</span>
+        </div>
+        {{/unless}}
+
+    </header>
+
+    {{#unless rolled}}
+    <div class="flexrow response-selection owner-only">
+		<span class="flex1 toggle-switch dodge {{#if actor.dodgeSkill._id}}{{#unless rolled}}simple-toggle{{/unless}}{{else}}inactive{{/if}} {{#if dodging}}switched-on{{/if}}"
+			data-action="dodge"
+			data-skill-id="{{actor.dodgeSkill._id}}">{{localize 'CoC7.Dodge'}}</span>
+        <div class="flex1 toggle-switch fight-back {{#unless rolled}}dropdown{{/unless}} {{#if fightingBack}}switched-on{{/if}}">
+            <span class="combat-action {{#unless rolled}}dropbtn{{/unless}}">{{localize 'CoC7.FightBack'}}</span>
+            <div class="actor-skill dropdown-content">
+                {{#each actor.closeCombatWeapons as |weapon key|}}
+					<a class="dropdown-element"
+						data-action="fightBack"
+						data-weapon-id="{{weapon.id}}"
+						data-skill-id="{{weapon.data.data.skill.main.id}}">{{weapon.name}} ({{weapon.data.data.skill.main.value}}%)</a>
+                {{/each}}
+            </div>        
+        </div>
+        <div class="flex1 toggle-switch maneuver {{#unless rolled}}dropdown{{/unless}} {{#if maneuvering}}switched-on{{/if}}">
+            <span class="combat-action {{#unless rolled}}dropbtn{{/unless}}">{{localize 'CoC7.Maneuver'}}</span>
+            <div class="actor-skill dropdown-content">
+                {{#each actor.fightingSkills as |skill key|}}
+					<a class="dropdown-element"
+						data-action="maneuver"
+						data-skill-id="{{skill.data._id}}">{{skill.name}} ({{skill.data.data.value}}%)</a>
+                {{/each}}
+            </div>        
+        </div>
+    </div>
+    {{/unless}}
+
+    {{#if rolled}}
+    <div class="dice-roll" style="padding-top: 5px;"
+        data-roll-type={{roll.rollType}}
+        data-side={{roll.side}}
+        data-action={{roll.action}}
+        data-ref-message-id={{roll.referenceMessageId}}
+        data-success-level={{roll.successLevel}}
+        data-difficulty={{roll.difficulty}}
+        data-actor-id={{roll.actorId}}
+        data-token-id={{roll.tokenId}}
+        data-actor-key={{roll.actorKey}}
+        data-skill-id={{roll.skillId}}
+        data-item-id={{roll.itemId}}
+        data-dice-mod={{roll.diceMod}}
+        data-value={{roll.value}}
+        data-result={{roll.result}}
+        data-fumble={{roll.fumble}}
+        data-critical={{roll.critical}}
+        data-characteristic={{roll.characteristic}}
+        data-is-blind="false"
+        >
+		<div class="dice-result">
+			<!-- <div class="dice-formula">1D% {{#if check.dices.hasBonus}}{{check.dices.bonus}} {{check.dices.bonusType}} {{localize 'CoC7.Dice'}}{{/if}}</div> -->
+			<div class="dice-tooltip" style="display: none;">
+				<section class="tooltip-part">
+					<div class="dice">
+						<span class="part-formula part-header flexrow">
+							{{#if check.dices.tenOnlyOneDie}}
+							{{localize 'CoC7.TensDie'}}
+							{{else}}
+							{{check.dices.tens.length}} {{localize 'CoC7.TensDice'}}
+                            {{/if}}
+                            <div class="flex1"></div>
+							<span class="part-total flex0">{{check.dices.tenResult}}</span>
+						</span>
+						<ol class="dice-rolls">
+							{{#each check.dices.tens as |die key|}}
+								<li class="roll die d10 {{#unless die.selected}}discarded{{/unless}} {{#if die.isMax}}min{{/if}} {{#if die.isMin}}max{{/if}}">{{die.value}}</li>
+							{{/each}}
+						</ol>
+					</div>
+				</section>
+				<section class="tooltip-part">
+					<div class="dice">
+						<span class="part-formula part-header flexrow">
+                            {{localize 'CoC7.UnitsDie'}}
+                            <div class="flex1"></div>
+							<span class="part-total flex0">{{check.dices.unit.value}}</span>
+						</span>
+						<ol class="dice-rolls">
+							<li class="roll die d10">{{check.dices.unit.value}}</li>
+						</ol>
+					</div>
+				</section>
+
+                <h4 class="result-details" style="margin: 0">{{check.resultType}}</h4>
+
+                <div class="card-buttons owner-only" data-actor-id="{{check.actor._id}}" style="padding: 2px 0;margin: 0;">
+                    {{#unless check.isSuccess}}
+                        {{#if check.canBePushed}}
+                            {{#unless check.pushing}}
+                            <button data-action="push">{{localize 'CoC7.PushSkill'}}</button>
+                            {{/unless}}
+                        {{/if}}
+                        {{#if check.hasEnoughLuck}}
+                            {{#unless check.pushing}}
+                            <button data-action="useLuck" data-luck-amount="{{check.luckNeeded}}" data-new-success-level="{{check.difficulty}}">{{check.luckNeededTxt}}</button>
+                            {{/unless}}
+                        {{/if}}
+                    {{/unless}}
+                    
+                    {{#unless check.pushing}}
+                    {{#if check.canIncreaseSuccess}}
+                        {{#each check.increaseSuccess as |level|}}
+                            <button data-action="useLuck" data-luck-amount="{{level.luckToSpend}}" data-new-success-level="{{level.difficulty}}">Upgrade to {{level.difficultyName}} success for {{level.luckToSpend}} luck.</button>
+                        {{/each}}
+                    {{/if}}
+                    {{/unless}}
+                </div>
+            
+			</div>
+            <div class="dice-total {{#if check.isSuccess}}success{{else}}failure{{/if}}{{#if check.isCritical}} critical{{/if}}{{#if check.isFumble}} fumble{{/if}} ">
+                {{check.dices.total}} {{check.resultType}}
+            </div>
+			{{#if check.hasMalfunction}}<h4 class="malfunction">{{check.malfunctionTxt}}</h4>{{/if}}
+		</div>
+	</div>
+    {{else}}
+        {{#if actionSelected}}
+        <div class="selected-action card-buttons owner-only">
+            {{#unless fightingBack}}
+                <button
+                    data-action="melee-target-roll"
+                    data-skill="{{skill._id}}"
+                    data-action="{{action}}">{{skill.name}} ({{skill.data.data.value}}%)</button>
+            {{/unless}}
+            {{#if fightingBack}}
+                <button
+                data-action="melee-target-roll"
+                data-skill="{{skill._id}}"
+                data-item-id="{{weapon.id}}"
+                data-action="{{action}}">{{weapon.name}}: {{skill.name}} ({{skill.data.data.value}}%)</button>
+            {{/if}}
+        </div>
+        {{/if}}
+    {{/if}}
+</div>
