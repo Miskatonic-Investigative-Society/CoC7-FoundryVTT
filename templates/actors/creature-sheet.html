@@ -198,6 +198,20 @@
 				<a class="status-monitor {{#if data.status.tempoInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.TemporaryInsanity'}}" data-status="tempoInsane"> <i class="fas fa-filter"></i></a>
 				<a class="status-monitor {{#if data.status.indefInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.IndefiniteInsanity'}}" data-status="indefInsane"> <i class="far fa-hospital"></i></a>
 				<div class="flex1"></div>
+				<div class="san-check flexrow flex3">
+					<!-- <a class='roll-san flex2' title='Roll san check for targets'><i class="fas fa-dice"></i></a> -->
+					<label class="roll-san rollable" style="text-align: right;" title="Roll san check for targets">San Loss :</label>
+					{{#if data.flags.locked}}
+					<span class="san-value flex1" style="line-height: 22px;padding-left: 2px;" placeholder="pass">{{data.special.sanLoss.checkPassed}}</span>
+					<span class="flex0" style="line-height: 22px;">/</span>
+					<span class="san-value flex1" style="line-height: 22px;padding-left: 2px;" placeholder="fail">{{data.special.sanLoss.checkFailled}}</span>
+					{{else}}
+					<input class="san-value flex1" type="text" name="data.special.sanLoss.checkPassed" value="{{data.special.sanLoss.checkPassed}}" data-dtype="String" placeholder="pass">
+					<span class="flex0" style="line-height: 22px;">/</span>
+					<input class="san-value flex1" type="text" name="data.special.sanLoss.checkFailled" value="{{data.special.sanLoss.checkFailled}}" data-dtype="String" placeholder="fail">
+					{{/if}}
+				</div>
+				<div class="flex1"></div>
 				<div class="flexrow sheet-controls" style="flex: 0 0 70px;align-content: flex-start;">
 					{{#if allowFormula}}
 						{{#if data.flags.locked}}

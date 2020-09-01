@@ -1,0 +1,35 @@
+<div class="coc7 chat-card san-loss-card"
+    data-san-loss="{{sanLoss}}" 
+    data-san-loss-fail="{{sanLossFail}}"
+    data-actor-id="{{actorId}}"
+    data-total-san-loss="{{totalSanLoss}}"
+    data-applied="{{applied}}"
+    {{#if tokenKey}}data-token-key="{{actorId}}"{{/if}}
+
+>
+
+<div class='roll-result'></div>
+
+<div class='san-roll'></div>
+{{#if isSanLossRolled}}
+    {{#if sanLost}}
+        <h4 class="san-result loss">SAN loss : {{totalSanLoss}}</h4>
+        {{#unless applied}}
+            <div class='card-buttons gm-only'>
+                <button data-action="apply-san-loss">Apply</button>
+            </div>
+        {{/unless}}
+    {{else}}
+        <h4 class="san-result resist">{{actor.name}} doesn't loose any SAN</h4>
+    {{/if}}
+{{else}}
+<div class='card-buttons owner-only'>
+    {{#if isRolled}}
+        <button data-action="roll-san-loss">Roll san loss ({{sanLossFormula}})</button>
+    {{else}}
+        <button data-action="roll-san-check">Sanity check ({{actor.data.data.attribs.san.value}}%)</button>
+    {{/if}}
+</div>
+{{/if}}
+    
+</div>

@@ -42,6 +42,7 @@
 	data-gm-difficulty-hard="{{gmDifficultyHard}}"
 	data-gm-difficulty-extreme="{{gmDifficultyExtreme}}"
 	data-gm-difficulty-critical="{{gmDifficultyCritical}}"
+	data-hide-dice-result="{{hideDiceResult}}"
 	{{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
 
 	{{#if isUnknown}}
@@ -159,7 +160,9 @@
 					{{/unless}}
 				</div>
 			</div>
+			{{#unless hideDiceResult}}
 			<h4 id="diceResult" class="dice-total {{cssClass}}" title="{{resultType}}">{{dices.total}} {{#if pushing}} {{localize 'CoC7.PushedRoll'}}{{/if}} {{#if luckSpent}} - Luck spent ({{totalLuckSpent}}){{/if}}</h4>
+			{{/unless}}
 			{{#if hasMalfunction}}<h4 class="malfunction">{{malfunctionTxt}}</h4>{{/if}}
 		</div>
 	</div>

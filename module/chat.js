@@ -7,6 +7,7 @@ import { CoC7MeleeResoltion } from './chat/combat/melee-resolution.js';
 import { CoC7RangeInitiator } from './chat/rangecombat.js';
 import { CoC7Roll, chatHelper } from './chat/helper.js';
 import { CoC7DamageRoll } from './chat/damagecards.js';
+import { CoC7SanCheck } from './chat/sancheck.js';
 
 export class CoC7Chat{
 
@@ -168,6 +169,7 @@ export class CoC7Chat{
 				
 				// const actor = game.actors.get( actorId);
 				if( !cardActor.owner) {zone.style.display = 'none';} //if current user doesn't own this he can't interract
+				// if( !CoC7Chat.isCardOwner( zone.closest('.chat-card'))) {zone.style.display = 'none';}
 			}
 
 			const gmSelectOnly = html.find('.gm-select-only');
@@ -764,7 +766,28 @@ export class CoC7Chat{
 
 		// Case 2 - use Actor ID directory
 		const actorId = card.dataset.actorId;
-		return game.actors.get(actorId) || null;
+		if( actorId) return game.actors.get(actorId);
+
+		const message = card.closest('.message');
+		const messageId = message? message.dataset.messageId: null;
+		if( messageId){
+			const chatMessage = game.messages.get( messageId);
+			if( chatMessage.user) return chatMessage.user.character;
+		}
+
+		return null;
+
+	}
+
+	static isCardOwner( card){
+		const message = card.closest('.message');
+		const messageId = message? message.dataset.messageId: null;
+		if( messageId){
+			const chatMessage = game.messages.get( messageId);
+			return chatMessage.ownner  || false;
+		}
+
+		return false;
 	}
 
 	static _getActorFromKey(key) {
@@ -1198,12 +1221,30 @@ export class CoC7Chat{
 			break;
 		}
 
-		default:
-				
+		case 'roll-san-check':{
+			const sanCheck = CoC7SanCheck.getFromCard( card);
+			await sanCheck.rollSan();
+			sanCheck.updateChatCard();
 			break;
-
 		}
-		// console.log(`button ${action} clicked`);
+
+		case 'roll-san-loss':{
+			const sanCheck = CoC7SanCheck.getFromCard( card);
+			await sanCheck.rollSanLoss();
+			sanCheck.updateChatCard();
+			break;
+		}
+
+		case 'apply-san-loss':{
+			const sanCheck = CoC7SanCheck.getFromCard( card);
+			await sanCheck.applySanLoss();
+			sanCheck.updateChatCard();
+			break;
+		}
+
+		default:
+			break;
+		}
 	}
 
 	/**
