@@ -5,10 +5,9 @@
 	"version": "0.3.1",
 	"author": "HavelockV",
 	"minimumCoreVersion": "0.5.2",
-	"compatibleCoreVersion": "0.6.5",
+	"compatibleCoreVersion": "0.6.6",
 	"esmodules": [
 		"module/coc7.js",
-		"pdfoundry-dist/bundle.js",
 		"module/dicebot.js"
 	],
 	"templateVersion": 1,
