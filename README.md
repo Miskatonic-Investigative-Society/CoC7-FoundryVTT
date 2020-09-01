@@ -20,6 +20,22 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.3.2 :
+
+* First implementation of SAN checks (to be localized):
+  * You can select one or many targets and click on the new SAN loss field in the creature sheet to trigger a SAN check.
+  * Keeper can then apply the SAN loss to the PC/Actor.
+  * Rule - Getting Used to the Awfulness (Keeper's rule book P169) - not yet implemented.
+  * Optional rules not implemented.
+* PDFoundry removed !!
+  * PDFoundry is now a fully independant module (as per 0.7.x+). Install it and convert your existing items to jounal entries.
+  * Thanks to Djphoenix719 for this amazing module.
+* Spanish translation by Gerbek and lozalojo merged.
+* Japanese translation by AdmiralNyar merged.
+* Unknown difficulty text fix by DavidCMeier merged.
+* Missing sheets (items, vehicules, *talents, occupation* ...) coming ASAP.
+* Lot's of requests for PULP cthulhu, I'm having a look at it.
+
 version 0.3.1 :
 
 * Templates for books and spells added.
