@@ -107,7 +107,7 @@
 "CoC7.CriticalDifficulty": "crítica",
 "CoC7.UnknownDifficulty": "desconocida",
 "CoC7.RollDifficulty": "Dificultad de la Tirada",
-"CoC7.RollDifficulty.Unknown": "Ciega",
+"CoC7.RollDifficultyUnknown": "Ciega",
 "CoC7.RollDifficultyRegular": "Normal",
 "CoC7.RollDifficultyHard": "Difícil",
 "CoC7.RollDifficultyExtreme": "Extrema",
