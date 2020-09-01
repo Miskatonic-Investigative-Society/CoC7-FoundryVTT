@@ -66,12 +66,6 @@
 .flexcol .flex4 {
   flex: 4;
 }
-.coc7.sheet.book,
-.coc7.sheet.spell {
-  /* ----------------------------------------- */
-  /*  Item Details Form                        */
-  /* ----------------------------------------- */
-}
 .coc7.sheet.book .sheet-header img.profile,
 .coc7.sheet.spell .sheet-header img.profile {
   border: 1px groove greenyellow;
