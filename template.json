@@ -164,7 +164,8 @@
                 "spent": null,
                 "assetsDetails": null
             },
-            "biography": []
+            "biography": [],
+            "encounteredCreatures": []
         },
         "npc": {
             "templates": [
@@ -224,8 +225,7 @@
             "weapon",
             "skill",
             "book",
-            "spell",
-            "PDFoundry_PDF"
+            "spell"
         ],
         "item": {
             "description": "",
@@ -293,12 +293,6 @@
             "properties": {},
             "eras": {},
             "flags": {}
-        },
-        "PDFoundry_PDF": {
-            "url": "",
-            "code": "",
-            "offset": 0,
-            "cache": false
         },
         "spell":{
             "source":null,
