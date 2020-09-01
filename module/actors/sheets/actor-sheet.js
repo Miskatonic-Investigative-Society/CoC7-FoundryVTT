@@ -46,6 +46,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 			template: 'systems/CoC7/templates/actors/character-sheet.html',
 			width: 600,
 			height: 650,
+			dragDrop: [{dragSelector: '.item', dropSelector: null}],
 			tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills'}]
 		});
 	}
