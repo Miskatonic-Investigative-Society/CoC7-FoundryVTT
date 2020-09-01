@@ -33,8 +33,10 @@ version 0.3.2 :
 * Spanish translation by Gerbek and lozalojo merged.
 * Japanese translation by AdmiralNyar merged.
 * Unknown difficulty text fix by DavidCMeier merged.
-* Missing sheets (items, vehicules, *talents, occupation* ...) coming ASAP.
-* Lot's of requests for PULP cthulhu, I'm having a look at it.
+* Coming next :
+  * Missing sheets (items, vehicules, *talents, occupation* ...) coming ASAP.
+  * Hardening of what has been implemented so far.
+  * Lot's of requests for PULP cthulhu, I'm having a look at it.
 
 version 0.3.1 :
 
