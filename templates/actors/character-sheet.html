@@ -52,7 +52,7 @@
 				<input class="attribute-value" type="text" name="data.attribs.hp.value" value="{{data.attribs.hp.value}}"  data-dtype="Number"/>
 				<span style="flex: none;font-size: large;">/</span>
 				{{#if data.attribs.hp.auto}}
-				<span class="attribute-max" type="text" style="line-height: 22px;"> {{data.attribs.hp.max}} </span>
+				<input class="attribute-max locked" type="text" name="data.attribs.hp.max" value="{{data.attribs.hp.max}}" data-dtype="Number" readonly/>
 				{{else}}
 				<input class="attribute-max {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.hp.max" value="{{data.attribs.hp.max}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
 				{{/if}}
@@ -65,7 +65,8 @@
 				<input class="attribute-value" type="text" name="data.attribs.mp.value" value="{{data.attribs.mp.value}}" data-dtype="Number"/>
 				<span style="flex: none;font-size: large;">/</span>
 				{{#if data.attribs.mp.auto}}
-				<span class="attribute-max" type="text" style="line-height: 22px;"> {{data.attribs.mp.max}} </span>
+				<input class="attribute-max locked" type="text" name="data.attribs.mp.max" value="{{data.attribs.mp.max}}" data-dtype="Number" readonly/>
+				<!-- <span class="attribute-max" type="text" style="line-height: 22px;"> {{data.attribs.mp.max}} </span> -->
 				{{else}}
 				<input class="attribute-max {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.mp.max" value="{{data.attribs.mp.max}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
 				{{/if}}
@@ -92,7 +93,8 @@
 			<div class="flex3 flexrow attribute" data-attrib="db" data-roll-formula="{{data.attribs.db.value}}">
 				<label class="attribute-label rollable" data-attrib="db">{{localize 'CoC7.BonusDamage'}} :</label>
 				{{#if data.attribs.db.auto}}
-				<span class="attribute-value" type="text" style="line-height: 22px;"> {{data.attribs.db.value}} </span>
+				<input class="attribute-value locked" type="text" name="data.attribs.db.value" value="{{data.attribs.db.value}}" data-dtype="String" readonly>
+				<!-- <span class="attribute-value" type="text" style="line-height: 22px;"> {{data.attribs.db.value}} </span> -->
 				{{else}}
 				<input class="attribute-value {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.db.value" value="{{data.attribs.db.value}}" data-dtype="String" {{#if data.flags.locked}}readonly{{/if}}>
 				{{/if}}
@@ -106,6 +108,10 @@
 			</div>
 		</div>
 		<div class="status-monitors flexrow" style="line-height: 22px;">
+			<div style="display: none;">
+				<input class="locked" type="text" name="data.indefiniteInsanityLevel.value" value="{{data.indefiniteInsanityLevel.value}}" data-dtype="Number" readonly/>
+				<input class="locked" type="text" name="data.indefiniteInsanityLevel.max" value="{{data.indefiniteInsanityLevel.max}}" data-dtype="Number" readonly/>
+			</div>
 			<label class="attribute-label">{{localize 'CoC7.DailySanLoss'}}</label>
 			<span style="max-width: 20px;font-size: 14px;height: 22px;padding: 1px 3px;border: 1px solid transparent;">{{data.attribs.san.dailyLoss}}</span>
 			<a class="reset-counter" style="flex: 0 0 25px;color: darkgrey;padding: 1px 6px;text-align: center;" data-counter="data.attribs.san.dailyLoss" title="{{localize 'CoC7.DailySanIconOver'}}"><i class="fas fa-undo"></i></a>
