@@ -34,6 +34,7 @@ export class chatHelper{
 	}
 
 	static getObjectFromElement( object, element){
+		if( !element || !object) return;
 		Object.keys(element.dataset).forEach( prop => {
 			if( 'true' == element.dataset[prop]) object[prop] = true;
 			else if ( 'false' == element.dataset[prop]) object[prop] = false;
@@ -177,6 +178,7 @@ export class CoC7Roll{
 	}
 
 	static getFromElement( element, object = null){
+		if( !element) return;
 		const roll = object? object : new CoC7Roll();
 		chatHelper.getObjectFromElement( roll, element);
 		roll.dices = {
@@ -188,16 +190,18 @@ export class CoC7Roll{
 		roll.dices.bonus =  Math.abs(roll.diceModifier);
 		roll.dices.bonusType = roll.diceModifier < 0 ? game.i18n.format('CoC7.DiceModifierPenalty') : game.i18n.format('CoC7.DiceModifierBonus');
 		const tenDice = element.querySelector('.ten-dice');
-		tenDice.querySelectorAll('li').forEach( d => {
-			const die = {
-				selected: false,
-				isMax: false,
-				isMin: false,
-				value: -1
-			};
-			chatHelper.getObjectFromElement( die, d);
-			roll.dices.tens.push( die);
-		});
+		if( tenDice){
+			tenDice.querySelectorAll('li').forEach( d => {
+				const die = {
+					selected: false,
+					isMax: false,
+					isMin: false,
+					value: -1
+				};
+				chatHelper.getObjectFromElement( die, d);
+				roll.dices.tens.push( die);
+			});
+		}
 		const unitDie = element.querySelector('.unit-die')? element.querySelector('.unit-die').querySelector('li'): null;
 		roll.dices.unit.value = unitDie ? parseInt(unitDie.dataset.value): null;
 
@@ -211,7 +215,7 @@ export class CoC7Roll{
 			});
 		}
 
-		roll.luckNeededTxt = game.i18n.format('CoC7.SpendLuck', {luckNeededValue : roll.luckNeeded});
+		if( roll.luckNeeded) roll.luckNeededTxt = game.i18n.format('CoC7.SpendLuck', {luckNeededValue : roll.luckNeeded});
 		if( !object) return roll;
 	}
 
