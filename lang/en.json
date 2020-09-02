@@ -107,7 +107,7 @@
 "CoC7.CriticalDifficulty": "critical",
 "CoC7.UnknownDifficulty": "unknown",
 "CoC7.RollDifficulty": "Roll Difficulty",
-"CoC7.RollDifficulty.Unknown": "Blind",
+"CoC7.RollDifficultyUnknown": "Blind",
 "CoC7.RollDifficultyRegular": "Regular",
 "CoC7.RollDifficultyHard": "Hard",
 "CoC7.RollDifficultyExtreme": "Extreme",

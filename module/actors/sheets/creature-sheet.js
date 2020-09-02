@@ -1,4 +1,5 @@
 import { CoC7ActorSheet } from './base.js';
+import { CoC7SanCheck } from '../../chat/sancheck.js';
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -24,6 +25,23 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 
 		return data;
 	}
+
+	activateListeners(html){
+		super.activateListeners( html);
+
+		html.find('.roll-san').click(this._onSanCheck.bind(this));
+
+	}
+
+	async _onSanCheck(){
+		event.preventDefault();
+		if( !this.actor.data.data.special.sanLoss.checkPassed && !this.actor.data.data.special.sanLoss.checkFailled) {
+			ui.notifications.info('No sanity loss value');
+			return;
+		}
+		CoC7SanCheck.checkTargets( this.actor.data.data.special.sanLoss.checkPassed, this.actor.data.data.special.sanLoss.checkFailled, event.shiftKey);
+	}
+
 
 	onCloseSheet(){
 		this.actor.unsetActorFlag( 'displayFormula');
@@ -67,4 +85,6 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 		}
 		return super._updateObject(event, formData);
 	}
+
+
 }

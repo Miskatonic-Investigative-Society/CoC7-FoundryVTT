@@ -66,12 +66,6 @@
 .flexcol .flex4 {
   flex: 4;
 }
-.coc7.sheet.book,
-.coc7.sheet.spell {
-  /* ----------------------------------------- */
-  /*  Item Details Form                        */
-  /* ----------------------------------------- */
-}
 .coc7.sheet.book .sheet-header img.profile,
 .coc7.sheet.spell .sheet-header img.profile {
   border: 1px groove greenyellow;
@@ -435,4 +429,21 @@
 .coc7 .editor .tox-toolbar-overlord,
 .coc7 .editor .tox-toolbar__primary {
   background: none;
+}
+.chat-card.san-loss-card h4.san-result {
+  flex: 0 0 100%;
+  line-height: 24px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid #999;
+  border-radius: 3px;
+  box-shadow: 0 0 2px #FFF inset;
+  font-size: 20px;
+  font-weight: bold;
+}
+.chat-card.san-loss-card h4.san-result.loss {
+  color: darkred;
+}
+.chat-card.san-loss-card h4.san-result.resist {
+  color: green;
 }
