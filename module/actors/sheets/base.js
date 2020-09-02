@@ -217,6 +217,10 @@ export class CoC7ActorSheet extends ActorSheet {
 			data.data.biography[data.data.biography.length - 1].isLast = true;
 		}
 
+		data.data.indefiniteInsanityLevel = {};
+		data.data.indefiniteInsanityLevel.value = data.data.attribs.san.dailyLoss ? data.data.attribs.san.dailyLoss:0;
+		data.data.indefiniteInsanityLevel.max = Math.floor( data.data.attribs.san.value/5);
+
 		// const first = data.data.biography[0];
 		// first.isFirst = true;
 		// data.data.biography[0] = first;
