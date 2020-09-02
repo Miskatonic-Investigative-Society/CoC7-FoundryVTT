@@ -556,6 +556,15 @@
     box-shadow: 0 0 4px black;
 }
 
+.coc7.sheet input[type="text"].locked:hover,
+.coc7.sheet input[type="text"].locked:focus,
+.coc7.sheet input[type="number"].locked:hover,
+.coc7.sheet input[type="number"].locked:focus {
+    border: 1px solid transparent;
+    box-shadow: none;
+    cursor: default;
+}
+
 .coc7.sheet .sheet-tabs {
     flex: 0 0 30px;
     margin-bottom: 5px;
