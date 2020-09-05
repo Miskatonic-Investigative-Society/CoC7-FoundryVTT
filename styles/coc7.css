@@ -481,7 +481,7 @@
 .coc7.sheet .skills-list .skill-name {
     margin: 0;
     overflow: hidden;
-    height: 20px;
+    height: 16px;
     font-size: 12px;
 }
 
@@ -502,17 +502,19 @@
     padding-right: 5px;
     text-align: right;
     font-size: 11px;
+    height: 16px;
+    line-height: 16px;
 }
 
 .coc7.sheet .skills-list .item-controls {
     flex: 0 0 auto;
-    height: 20px;
+    height: 16px;
     font-size: 10px;
 }
 
 .coc7.sheet .skill-image {
-    height: 20px;
-    flex: 0 0 20px;
+    height: 16px;
+    flex: 0 0 16px;
     background-size: 18px;
     margin-right: 5px;
     background-repeat: no-repeat;
@@ -521,7 +523,7 @@
 
 .coc7.sheet .item-controls {
     flex: 0 0 auto;
-    height: 24px;
+    height: 16px;
 }
 
 .coc7.sheet .sheet-header {
