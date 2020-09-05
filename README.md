@@ -22,6 +22,12 @@ Compendium 'Weapons' contains a single test weapon.
 
 version 0.3.2 :
 
+* Token will now correctly display bars.
+* Skills will now popup in a separate modal.
+* Option added for initiative. You can select the regular or the optional way of rolling initiative.
+
+version 0.3.2 :
+
 * First implementation of SAN checks (to be localized):
   * You can select one or many targets and click on the new SAN loss field in the creature sheet to trigger a SAN check.
   * Keeper can then apply the SAN loss to the PC/Actor.

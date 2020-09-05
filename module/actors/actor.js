@@ -1,5 +1,7 @@
 
 import { COC7 } from '../config.js';
+import { CoC7Check } from '../check.js';
+
 
 /**
  * Extend the base Actor class to implement additional logic specialized for CoC 7th.
@@ -491,6 +493,25 @@ export class CoCActor extends Actor {
 		const flagValue =  this.data.data.flags[flagName] ? false: true;
 		const name = `data.flags.${flagName}`;
 		await this.update( { [name]: flagValue});
+	}
+
+
+	rollInitiative( hasGun = false){
+		switch (game.settings.get('CoC7', 'initiativeRule')) {
+		case 'optional':{
+			const roll = new CoC7Check( this.actorKey);
+			roll.denyPush = true;
+			roll.denyLuck = true;
+			roll.denyBlindTampering = true;
+			roll.hideDice = game.settings.get('CoC7', 'displayInitDices') === false;
+			roll.flavor = 'Initiative roll';
+			roll.rollCharacteristic('dex', hasGun?1:0);
+			roll.toMessage();
+			return roll.successLevel + this.data.data.characteristics.dex.value / 100;
+		}
+			
+		default: return hasGun? this.data.data.characteristics.dex.value + 50: this.data.data.characteristics.dex.value;
+		}
 	}
 
 	getActorFlag( flagName){
