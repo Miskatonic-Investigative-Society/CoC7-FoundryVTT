@@ -42,13 +42,13 @@ Hooks.once('init', async function() {
 	Combat.prototype.rollInitiative = rollInitiative;
 
 	
-	game.settings.register('CoC7', 'creditRatingFactor', {
-		name: 'Factor for cash calculation',
-		hint: 'The amount to multiply to get cash and assets values',
+	game.settings.register('CoC7', 'pulpRules', {
+		name: 'SETTINGS.PulpRules',
+		hint: 'SETTINGS.PulpRulesHint',
 		scope: 'world',
 		config: true,
-		default: 1,
-		type: Number
+		default: false,
+		type: Boolean
 	});
 
 	// Set default check difficulty.

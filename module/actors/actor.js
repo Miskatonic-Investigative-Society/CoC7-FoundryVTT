@@ -360,8 +360,10 @@ export class CoCActor extends Actor {
 
 	get hpMax(){
 		if( this.data.data.attribs.hp.auto){
-			if(this.data.data.characteristics.siz.value != null &&  this.data.data.characteristics.con.value !=null)
-				return Math.floor( (this.data.data.characteristics.siz.value + this.data.data.characteristics.con.value)/10);
+			if(this.data.data.characteristics.siz.value != null &&  this.data.data.characteristics.con.value !=null){
+				const maxHP = Math.floor( (this.data.data.characteristics.siz.value + this.data.data.characteristics.con.value)/10);
+				return game.settings.get('CoC7', 'pulpRules')? maxHP*2:maxHP;
+			}
 			else return null;
 		} 
 		return parseInt( this.data.data.attribs.hp.max);
