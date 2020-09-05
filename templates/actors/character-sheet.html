@@ -28,7 +28,7 @@
 				</div>
 			</div>
 
-			<div class="characteristics flex3">
+			<div class="characteristics flex2">
 				{{#each data.characteristics as |characteristic key|}}
 					<div class="characteristic-box" data-characteristic="{{key}}">
 						<div class="characteristics-label rollable">{{localize characteristic.short}}</div>
@@ -93,7 +93,7 @@
 			<div class="flex3 flexrow attribute" data-attrib="db" data-roll-formula="{{data.attribs.db.value}}">
 				<label class="attribute-label rollable" data-attrib="db">{{localize 'CoC7.BonusDamage'}} :</label>
 				{{#if data.attribs.db.auto}}
-				<input class="attribute-value locked" type="text" name="data.attribs.db.value" value="{{data.attribs.db.value}}" data-dtype="String" readonly>
+				<input class="attribute-value locked" style="flex: 1;text-align: left;height: 22px;" type="text" name="data.attribs.db.value" value="{{data.attribs.db.value}}" data-dtype="String" readonly>
 				<!-- <span class="attribute-value" type="text" style="line-height: 22px;"> {{data.attribs.db.value}} </span> -->
 				{{else}}
 				<input class="attribute-value {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.db.value" value="{{data.attribs.db.value}}" data-dtype="String" {{#if data.flags.locked}}readonly{{/if}}>
@@ -158,24 +158,71 @@
 		</div>
 		
 		<div class="tab possession flexcol" data-group="primary" data-tab="possession">
-			<div class="flexrow"> 
-				<div class="flexcol flex3" style="border: 1px groove;">
+			<div class="flexrow" style="height: 100%"> 
+				<div class="flexcol flex3 inventory">
 					{{#unless data.flags.locked}}
 					<div style='flex:initial;'>
 						<div class="add-item button" title="{{localize 'CoC7.AddItem'}}" data-type="item">{{localize 'CoC7.AddItem'}}</div>
 					</div>
 					{{/unless}}
-					<ol class="items-list" style="margin: 0;padding: 0;" >
-						{{#each itemsByType.item as |item id|}}
-							<li class="item flexrow" data-item-id="{{item._id}}">
-								<div class="item-image" style="background-image: url({{item.img}})"></div>
-								<h4 class="item-name" style="line-height: 24px;">{{item.name}}</h4>
-								<div class="item-controls" style="line-height: 24px;padding-right: 5px;">
-									<a class="item-control item-edit" title="{{localize 'CoC7.EditItem'}}"><i class="fas fa-edit"></i></a>
-									<a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
+					<ol class="inventory-list">
+						<div class="inventory-section">
+							<li class="flexrow inventory-header">
+								<div class="item-name flexrow">
+									<h3>{{localize 'CoC7.Items'}}</h3>
 								</div>
 							</li>
-						{{/each}}
+							<ol class="item-list">
+							{{#each itemsByType.item as |item id|}}
+								<li class="item flexrow" data-item-id="{{item._id}}">
+									<div class="item-image" style="background-image: url({{item.img}})"></div>
+									<h4 class="item-name show-detail">{{item.name}}</h4>
+									<div class="item-controls">
+										<a class="item-control item-edit" title="{{localize 'CoC7.EditItem'}}"><i class="fas fa-edit"></i></a>
+										<a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
+									</div>
+								</li>
+							{{/each}}
+							</ol>
+						</div>
+						<div class="inventory-section">
+							<li class="flexrow inventory-header">
+								<div class="item-name flexrow">
+									<h3>{{localize 'CoC7.Books'}}</h3>
+								</div>
+							</li>
+							<ol class="item-list">
+							{{#each itemsByType.book as |item id|}}
+								<li class="item flexrow" data-item-id="{{item._id}}">
+									<div class="item-image" style="background-image: url({{item.img}})"></div>
+									<h4 class="item-name show-detail">{{item.name}}</h4>
+									<div class="item-controls">
+										<a class="item-control item-edit" title="{{localize 'CoC7.EditItem'}}"><i class="fas fa-edit"></i></a>
+										<a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
+									</div>
+								</li>
+							{{/each}}
+							</ol>
+						</div>
+						<div class="inventory-section">
+							<li class="flexrow inventory-header">
+								<div class="item-name flexrow">
+									<h3>{{localize 'CoC7.Spells'}}</h3>
+								</div>
+							</li>
+							<ol class="item-list">
+							{{#each itemsByType.spell as |item id|}}
+								<li class="item flexrow" data-item-id="{{item._id}}">
+									<div class="item-image" style="background-image: url({{item.img}})"></div>
+									<h4 class="item-name show-detail">{{item.name}}</h4>
+									<div class="item-controls">
+										<a class="item-control item-edit" title="{{localize 'CoC7.EditItem'}}"><i class="fas fa-edit"></i></a>
+										<a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
+									</div>
+								</li>
+							{{/each}}
+							</ol>
+						</div>
 					</ol>
 				</div>
 				<div class="flexcol flex2 cash" style="border: 1px groove;">

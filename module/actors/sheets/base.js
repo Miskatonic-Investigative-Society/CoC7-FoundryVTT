@@ -213,7 +213,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		if( data.data.attribs.hp.auto ){
 			//TODO if any is null set max back to null.
 			if ( data.data.characteristics.siz.value != null && data.data.characteristics.con.value != null)
-				data.data.attribs.hp.max = Math.floor( (data.data.characteristics.siz.value + data.data.characteristics.con.value)/10);
+				data.data.attribs.hp.max = this.actor.hpMax;
 		}
 
 		if( data.data.attribs.mp.auto ){
@@ -299,6 +299,8 @@ export class CoC7ActorSheet extends ActorSheet {
 			html.find('.read-only').dblclick(this._toggleReadOnly.bind(this));
 			html.on('click', '.weapon-damage', this._onWeaponDamage.bind(this));
 
+			html.find( '.inventory-header').click( this._onInventoryHeader.bind(this));
+
 
 			const wheelInputs = html.find('.attribute-value');
 			for( let wheelInput of wheelInputs){
@@ -309,7 +311,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		// Everything below here is only needed if the sheet is editable
 		if (!this.options.editable) return;
 
-		html.find('.item-detail').click(event => this._onItemSummary(event));
+		html.find('.show-detail').click(event => this._onItemSummary(event));
 		html.find('.item-popup').click( this._onItemPopup.bind(this));
 
 		// Update Inventory Item
@@ -553,6 +555,13 @@ export class CoC7ActorSheet extends ActorSheet {
 			div.slideDown(200);
 		}
 		li.toggleClass('expanded');
+	}
+
+	_onInventoryHeader(event){
+		event.preventDefault();
+		let li = $(event.currentTarget).parents('.inventory-section'),
+			details = li.find('ol');
+		details.toggle();
 	}
 
 	async _onItemPopup(event) {

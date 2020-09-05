@@ -20,11 +20,19 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
-version 0.3.2 :
+version 0.3.3 :
 
-* Token will now correctly display bars.
-* Skills will now popup in a separate modal.
-* Option added for initiative. You can select the regular or the optional way of rolling initiative.
+* Inventory (Gear&Cash tab) displays items, books and spells.
+  * clicking on a section will toggle the display of it's content.
+  * clicking on an item name will display it's description.
+* Combat tracker now correctly displays actor's turn.
+  * Option added for initiative. You can select the regular (DEX value) or the optional (DEX roll) initiative rule.
+  * A small target icon has been added to each combat participant. Clicking it will ready the actor's gun and modify it's initiative.
+* Spells can now be properly dragged and dropped to and from books.
+* Token will now correctly displays bars.
+* Skills will now popup in a separate window.
+* Option added for Pulp HP.
+* Bug correction on skill specialization localization.
 
 version 0.3.2 :
 
