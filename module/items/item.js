@@ -355,6 +355,17 @@ export class CoC7Item extends Item {
 		return parseInt( this.data.data.range.extreme.value);
 	}
 
+	get skillProperties(){
+		if(  'skill' != this.type )	return [];
+
+		const skillProperties = [];
+		for (let [key, value] of Object.entries(COC7['skillProperties'])) {
+			if(this.data.data.properties[key] == true)  skillProperties.push(game.i18n.localize(value));
+			// if( value) data.itemProperties.push( COC7.spellProperties[key]?COC7.spellProperties[key]:null);
+		}
+		return skillProperties;
+	}
+
 	/** TODO : rien a faire ici !!
 	 * Get the Actor which is the author of a chat card
 	 * @param {HTMLElement} card    The chat card being used

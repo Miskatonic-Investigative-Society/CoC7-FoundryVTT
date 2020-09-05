@@ -1,5 +1,7 @@
 
 import { COC7 } from '../config.js';
+import { CoC7Check } from '../check.js';
+
 
 /**
  * Extend the base Actor class to implement additional logic specialized for CoC 7th.
@@ -358,8 +360,10 @@ export class CoCActor extends Actor {
 
 	get hpMax(){
 		if( this.data.data.attribs.hp.auto){
-			if(this.data.data.characteristics.siz.value != null &&  this.data.data.characteristics.con.value !=null)
-				return Math.floor( (this.data.data.characteristics.siz.value + this.data.data.characteristics.con.value)/10);
+			if(this.data.data.characteristics.siz.value != null &&  this.data.data.characteristics.con.value !=null){
+				const maxHP = Math.floor( (this.data.data.characteristics.siz.value + this.data.data.characteristics.con.value)/10);
+				return game.settings.get('CoC7', 'pulpRules')? maxHP*2:maxHP;
+			}
 			else return null;
 		} 
 		return parseInt( this.data.data.attribs.hp.max);
@@ -491,6 +495,25 @@ export class CoCActor extends Actor {
 		const flagValue =  this.data.data.flags[flagName] ? false: true;
 		const name = `data.flags.${flagName}`;
 		await this.update( { [name]: flagValue});
+	}
+
+
+	rollInitiative( hasGun = false){
+		switch (game.settings.get('CoC7', 'initiativeRule')) {
+		case 'optional':{
+			const roll = new CoC7Check( this.actorKey);
+			roll.denyPush = true;
+			roll.denyLuck = true;
+			roll.denyBlindTampering = true;
+			roll.hideDice = game.settings.get('CoC7', 'displayInitDices') === false;
+			roll.flavor = 'Initiative roll';
+			roll.rollCharacteristic('dex', hasGun?1:0);
+			roll.toMessage();
+			return roll.successLevel + this.data.data.characteristics.dex.value / 100;
+		}
+			
+		default: return hasGun? this.data.data.characteristics.dex.value + 50: this.data.data.characteristics.dex.value;
+		}
 	}
 
 	getActorFlag( flagName){

@@ -1,6 +1,6 @@
 export class CoC7Dice {
 
-	static roll( modif=0, rollMode=null)
+	static roll( modif=0, rollMode=null, hideDice = false)
 	{
 		let unitDie;
 		let tenDie;
@@ -79,7 +79,7 @@ export class CoC7Dice {
 
 
 		const isBlind = 'blindroll' === (rollMode? rollMode: game.settings.get('core', 'rollMode'));
-		if( !isBlind){
+		if( !isBlind && !hideDice){
 			if( game.dice3d){
 				const diceResults = [];
 				tenDie.results.forEach(dieResult => { 
