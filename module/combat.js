@@ -13,10 +13,10 @@ export class CoC7Combat {
 			const combatant = currentCombat.data.combatants.find((c) => c._id == combId);
 
 			if( combatant.hasGun) {
-				$(combatantControlsDiv).prepend('<a class="combatant-control active add-init" title="Has a gun ready" data-control="drawGun"><i class="fas fa-bullseye"></i></a>');
+				$(combatantControlsDiv).prepend(`<a class="combatant-control active add-init" title="${game.i18n.localize('CoC7.PutGunAway')}" data-control="drawGun"><i class="fas fa-bullseye"></i></a>`);
 			}
 			else {
-				$(combatantControlsDiv).prepend('<a class="combatant-control add-init" title="Has a gun ready" data-control="drawGun"><i class="fas fa-bullseye"></i></a>');
+				$(combatantControlsDiv).prepend(`<a class="combatant-control add-init" title="${game.i18n.localize('CoC7.DrawGun')}" data-control="drawGun"><i class="fas fa-bullseye"></i></a>`);
 			}
 			if (combatant.initiative < 0) {
 				const h4 = el.querySelector('.token-name').querySelector('h4');
