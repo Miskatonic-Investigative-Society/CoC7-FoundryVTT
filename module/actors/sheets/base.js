@@ -30,6 +30,24 @@ export class CoC7ActorSheet extends ActorSheet {
 				//si c'est une formule et qu'on peut l'evaluer
 				//ce bloc devrait etre déplacé dans le bloc _updateFormData
 				if( item.type == 'skill'){
+					if( item.data.properties.special){
+						if( item.data.properties.fighting){
+							if( item.data.specialization != game.i18n.localize('CoC7.FightingSpecializationName')){
+								let itemToUpdate = this.actor.getOwnedItem( item._id);
+								itemToUpdate.update( {'data.specialization' : game.i18n.localize('CoC7.FightingSpecializationName')});
+								item.data.specialization =  game.i18n.localize('CoC7.FightingSpecializationName');
+							}
+						}
+						if( item.data.properties.firearm)
+						{
+							if( item.data.specialization != game.i18n.localize('CoC7.FirearmSpecializationName')){
+								let itemToUpdate = this.actor.getOwnedItem( item._id);
+								itemToUpdate.update( {'data.specialization' : game.i18n.localize('CoC7.FirearmSpecializationName')});
+								item.data.specialization =  game.i18n.localize('CoC7.FirearmSpecializationName');
+							}
+						}
+					}
+
 					if( isNaN(Number(item.data.value))){
 						let value = CoC7ActorSheet.parseFormula( item.data.value);
 						try{
@@ -195,7 +213,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		if( data.data.attribs.hp.auto ){
 			//TODO if any is null set max back to null.
 			if ( data.data.characteristics.siz.value != null && data.data.characteristics.con.value != null)
-				data.data.attribs.hp.max = Math.floor( (data.data.characteristics.siz.value + data.data.characteristics.con.value)/10);
+				data.data.attribs.hp.max = this.actor.hpMax;
 		}
 
 		if( data.data.attribs.mp.auto ){
@@ -216,6 +234,10 @@ export class CoC7ActorSheet extends ActorSheet {
 			data.data.biography[0].isFirst = true;
 			data.data.biography[data.data.biography.length - 1].isLast = true;
 		}
+
+		data.data.indefiniteInsanityLevel = {};
+		data.data.indefiniteInsanityLevel.value = data.data.attribs.san.dailyLoss ? data.data.attribs.san.dailyLoss:0;
+		data.data.indefiniteInsanityLevel.max = Math.floor( data.data.attribs.san.value/5);
 
 		// const first = data.data.biography[0];
 		// first.isFirst = true;
@@ -277,6 +299,8 @@ export class CoC7ActorSheet extends ActorSheet {
 			html.find('.read-only').dblclick(this._toggleReadOnly.bind(this));
 			html.on('click', '.weapon-damage', this._onWeaponDamage.bind(this));
 
+			html.find( '.inventory-header').click( this._onInventoryHeader.bind(this));
+
 
 			const wheelInputs = html.find('.attribute-value');
 			for( let wheelInput of wheelInputs){
@@ -287,7 +311,8 @@ export class CoC7ActorSheet extends ActorSheet {
 		// Everything below here is only needed if the sheet is editable
 		if (!this.options.editable) return;
 
-		html.find('.item-detail').click(event => this._onItemSummary(event));
+		html.find('.show-detail').click(event => this._onItemSummary(event));
+		html.find('.item-popup').click( this._onItemPopup.bind(this));
 
 		// Update Inventory Item
 		html.find('.item-edit').click(ev => {
@@ -530,6 +555,37 @@ export class CoC7ActorSheet extends ActorSheet {
 			div.slideDown(200);
 		}
 		li.toggleClass('expanded');
+	}
+
+	_onInventoryHeader(event){
+		event.preventDefault();
+		let li = $(event.currentTarget).parents('.inventory-section'),
+			details = li.find('ol');
+		details.toggle();
+	}
+
+	async _onItemPopup(event) {
+		event.preventDefault();
+		let li = $(event.currentTarget).parents('.item'),
+			item = this.actor.getOwnedItem(li.data('item-id'));
+		
+		CoC7ActorSheet.popupSkill( item);
+	}
+
+	static async popupSkill(skill){
+		const dlg = new Dialog({
+			title: game.i18n.localize('CoC7.SkillDetailsWindow'),
+			content: skill,
+			buttons:{},
+			close: () => {return;}
+		},{
+			classes: ['coc7', 'sheet', 'skill'],
+			width: 520,
+			height: 480,
+			scrollY: ['.item-description'],
+			template: 'systems/CoC7/templates/apps/skill-details.html'
+		});
+		dlg.render(true);
 	}
 
 
