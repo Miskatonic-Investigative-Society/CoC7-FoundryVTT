@@ -101,6 +101,7 @@
 "CoC7.check.DecreaseSuccessLevel": "Decrease success",
 
 "CoC7.BonusSelectionWindow": "Bonus selection window",
+"CoC7.SkillDetailsWindow" : "Skill details window",
 "CoC7.RegularDifficulty": "regular",
 "CoC7.HardDifficulty": "hard",
 "CoC7.ExtremeDifficulty": "extreme",
@@ -304,5 +305,11 @@
 "SETTINGS.UseToken":  "Use token image",
 "SETTINGS.UseTokenHint": "Use token image instead of portraits in chat-cards",
 "SETTINGS.DisplayActorOnCard":  "Display actor on card",
-"SETTINGS.DisplayActorOnCardHint": "Display the actor's image/token on combat chat-cards"
+"SETTINGS.DisplayActorOnCardHint": "Display the actor's image/token on combat chat-cards",
+"SETTINGS.InitiativeRule": "Select initiative rule",
+"SETTINGS.InitiativeRuleHint": "You can select basic initiative rule (using DEX value) or optional rule (using a roll)",
+"SETTINGS.InitiativeRuleBasic": "Basic",
+"SETTINGS.InitiativeRuleOptional": "Optional",
+"SETTINGS.displayInitDices": "Display init dice",
+"SETTINGS.displayInitDicesHint": "Display the dices when rolling for initiative (Optional rules only)"
 }

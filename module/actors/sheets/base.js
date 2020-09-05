@@ -30,6 +30,24 @@ export class CoC7ActorSheet extends ActorSheet {
 				//si c'est une formule et qu'on peut l'evaluer
 				//ce bloc devrait etre déplacé dans le bloc _updateFormData
 				if( item.type == 'skill'){
+					if( item.data.properties.special){
+						if( item.data.properties.fighting){
+							if( item.data.specialization != game.i18n.localize('CoC7.FightingSpecializationName')){
+								let itemToUpdate = this.actor.getOwnedItem( item._id);
+								itemToUpdate.update( {'data.specialization' : game.i18n.localize('CoC7.FightingSpecializationName')});
+								item.data.specialization =  game.i18n.localize('CoC7.FightingSpecializationName');
+							}
+						}
+						if( item.data.properties.firearm)
+						{
+							if( item.data.specialization != game.i18n.localize('CoC7.FirearmSpecializationName')){
+								let itemToUpdate = this.actor.getOwnedItem( item._id);
+								itemToUpdate.update( {'data.specialization' : game.i18n.localize('CoC7.FirearmSpecializationName')});
+								item.data.specialization =  game.i18n.localize('CoC7.FirearmSpecializationName');
+							}
+						}
+					}
+
 					if( isNaN(Number(item.data.value))){
 						let value = CoC7ActorSheet.parseFormula( item.data.value);
 						try{
@@ -292,6 +310,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		if (!this.options.editable) return;
 
 		html.find('.item-detail').click(event => this._onItemSummary(event));
+		html.find('.item-popup').click( this._onItemPopup.bind(this));
 
 		// Update Inventory Item
 		html.find('.item-edit').click(ev => {
@@ -534,6 +553,30 @@ export class CoC7ActorSheet extends ActorSheet {
 			div.slideDown(200);
 		}
 		li.toggleClass('expanded');
+	}
+
+	async _onItemPopup(event) {
+		event.preventDefault();
+		let li = $(event.currentTarget).parents('.item'),
+			item = this.actor.getOwnedItem(li.data('item-id'));
+		
+		CoC7ActorSheet.popupSkill( item);
+	}
+
+	static async popupSkill(skill){
+		const dlg = new Dialog({
+			title: game.i18n.localize('CoC7.SkillDetailsWindow'),
+			content: skill,
+			buttons:{},
+			close: () => {return;}
+		},{
+			classes: ['coc7', 'sheet', 'skill'],
+			width: 520,
+			height: 480,
+			scrollY: ['.item-description'],
+			template: 'systems/CoC7/templates/apps/skill-details.html'
+		});
+		dlg.render(true);
 	}
 
 

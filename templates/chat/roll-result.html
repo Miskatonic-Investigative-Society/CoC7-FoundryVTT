@@ -43,6 +43,8 @@
 	data-gm-difficulty-extreme="{{gmDifficultyExtreme}}"
 	data-gm-difficulty-critical="{{gmDifficultyCritical}}"
 	data-hide-dice-result="{{hideDiceResult}}"
+	data-deny-luck="{{denyLuck}}"
+	data-deny-push="{{denyPush}}"
 	{{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
 
 	{{#if isUnknown}}
@@ -196,6 +198,7 @@
 			{{/if}}
 		</div>
 	</div>
+	{{#unless denyBlindTampering}}
 	<div class="card-buttons gm-visible-only">
 		{{#unless isUnknown}}
 			<button data-action="reveal-check">{{localize 'CoC7.check.RevealCheck'}}</button>
@@ -221,6 +224,7 @@
 			{{/if}}
 		{{/unless}}
 	</div>
+	{{/unless}}
 	{{/if}}
 
 

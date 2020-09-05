@@ -14,7 +14,7 @@ import { CoC7CreatureSheet } from './actors/sheets/creature-sheet.js';
 import { CoC7CharacterSheet } from './actors/sheets/actor-sheet.js';
 import { preloadHandlebarsTemplates } from './templates.js';
 import { CoC7Chat } from './chat.js';
-import { CoC7Combat } from './combat.js';
+import { CoC7Combat, rollInitiative } from './combat.js';
 import { CoC7BookSheet } from './items/sheets/book.js';
 import { CoC7SpellSheet } from './items/sheets/spell.js';
 import { COC7 } from './config.js';
@@ -30,15 +30,17 @@ Hooks.once('init', async function() {
 	 */
 	CONFIG.Combat.initiative = {
 		formula: '@characteristics.dex.value',
-		decimals: 0
+		decimals: 4
 	};
 
 
 	//TODO : remove debug hooks
 	CONFIG.debug.hooks = true;
-	CONFIG.Combat.entityClass = CoC7Combat;
+	// CONFIG.Combat.entityClass = CoC7Combat;
 	CONFIG.Actor.entityClass = CoCActor;
 	CONFIG.Item.entityClass = CoC7Item;
+	Combat.prototype.rollInitiative = rollInitiative;
+
 	
 	game.settings.register('CoC7', 'creditRatingFactor', {
 		name: 'Factor for cash calculation',
@@ -83,6 +85,52 @@ Hooks.once('init', async function() {
 		type: Boolean
 	});
 
+	// Set the initiative rule.
+	game.settings.register( 'CoC7', 'initiativeRule',{
+		name: 'SETTINGS.InitiativeRule',
+		hint: 'SETTINGS.InitiativeRuleHint',
+		scope: 'world',
+		config: true,
+		default: 'basic',
+		type: String,
+		choices: {
+			'basic': 'SETTINGS.InitiativeRuleBasic',
+			'optional': 'SETTINGS.InitiativeRuleOptional'
+		},
+		onChange: rule => _setInitiativeOptions(rule)
+	});
+	
+	// Set displaying dices for init Roll.
+	game.settings.register('CoC7', 'displayInitDices', {
+		name: 'SETTINGS.displayInitDices',
+		hint: 'SETTINGS.displayInitDicesHint',
+		scope: 'world',
+		config: true,
+		default: true,
+		type: Boolean
+	});
+
+	function _setInitiativeOptions(rule)
+	{
+		let decimals = 0;
+		switch (rule)
+		{
+		case 'optional':
+
+			decimals = 2;
+			break;
+
+		case 'basic':
+			decimals = 0;
+			break;
+		}
+		CONFIG.Combat.initiative = {
+			formula: null,
+			decimals: decimals
+		};
+
+	}
+
 	// Register sheet application classes
 	Actors.unregisterSheet('core', ActorSheet);
 	Actors.registerSheet('CoC7', CoC7NPCSheet, { types: ['npc'] });
@@ -95,6 +143,23 @@ Hooks.once('init', async function() {
 	Items.registerSheet('CoC7', CoCItemSheet, { makeDefault: true});
 	preloadHandlebarsTemplates();
 });
+
+Hooks.on('renderCombatTracker', (app, html, data) => CoC7Combat.renderCombatTracker( app, html, data));
+
+// {
+// 	const currentCombat = data.combats[data.currentIndex - 1];
+// 	html.find('.combatant').each((i, el) => {
+// 		const combId = el.getAttribute('data-combatant-id');
+// 		const combatant = currentCombat.data.combatants.find((c) => c._id == combId);
+// 		const initdiv = el.getElementsByClassName('token-initiative');
+// 		if (combatant.hasRolled) {
+// 			initdiv[0].innerHTML = `<span class="initiative">${combatant.flags.swade.cardString}</span>`;
+// 		}
+// 		else if (!data.user.isGM) {
+// 			initdiv[0].innerHTML = '';
+// 		}
+// 	});
+// }
 
 Hooks.once('setup', function() {
 
@@ -119,9 +184,6 @@ Hooks.on('updateChatMessage', (chatMessage, chatData, diff, speaker) => CoC7Chat
 Hooks.on('ready', CoC7Chat.ready);
 
 Hooks.on('preCreateActor', (createData) => CoCActor.initToken( createData));
-
-// Used to set initiative and add the draw gun icon
-Hooks.on('renderCombatTracker', (combatTracker, html, data) => CoC7Combat.renderCombatTracker(combatTracker, html, data));
 
 // Called on closing a character sheet to lock it on getting it to display values
 Hooks.on('closeActorSheet', (characterSheet) => characterSheet.onCloseSheet());
