@@ -12,8 +12,8 @@
                     <span>({{skill.data.value}}%)</span>
                 {{else}}
                     {{#if skill.data.properties.special}}<span style="max-width: fit-content;">{{skill.data.specialization}} :</span>{{/if}}
-                    <input class="skill-name flex1" style="font-size: 12px;height: 20px;padding: 0;text-align: left;" type="text" value="{{skill.name}}">
-                    <input class="npc-skill-score" style="font-size: 11px;flex: 0 0 30px;height: 20px;padding: 0 6px 0 0;margin: 0;text-align: right;" type="text" value="{{skill.data.value}}" data-dtype="Number">
+                    <input class="skill-name flex1" style="font-size: 12px;height: 16px;padding: 0;text-align: left;" type="text" value="{{skill.name}}">
+                    <input class="npc-skill-score" style="font-size: 11px;flex: 0 0 30px;height: 16px;padding: 0 6px 0 0;margin: 0;text-align: right;" type="text" value="{{skill.data.value}}" data-dtype="Number">
                 {{/if}}
     
                 <div class="item-controls">
@@ -27,7 +27,7 @@
                                 <a class="item-control development-flag" title="{{localize 'CoC7.SkillFlagForDevelopement'}}" style='color: darkgrey;'><i class="fas fa-certificate"></i></a>
                             {{/if}}
                         {{/if}}
-                        <a class="item-control item-detail" title="{{localize 'CoC7.SkillDetail'}}"><i class="fas fa-arrow-alt-circle-down"></i></a>
+                        <a class="item-control item-popup" title="{{localize 'CoC7.SkillDetail'}}"><i class="fas fa-info-circle"></i></a>
                     {{else}}
                         <a class="item-control item-edit" title="{{localize 'CoC7.EditSkill'}}"><i class="fas fa-edit"></i></a>
                         <a class="item-control item-delete" title="{{localize 'CoC7.DeleteSkill'}}"><i class="fas fa-trash"></i></a>

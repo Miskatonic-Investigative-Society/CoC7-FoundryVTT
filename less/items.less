@@ -1,5 +1,12 @@
-.coc7.sheet.book,
-.coc7.sheet.spell {
+.coc7.sheet.skill,
+.coc7.sheet.item {
+	input:read-only:hover,
+	input:read-only:focus {
+    	border: 1px solid transparent;
+    	box-shadow: none;
+    	cursor: default;
+	}
+	
 	.sheet-header {
 		img.profile {
 			border: 1px groove;
@@ -105,6 +112,11 @@
 		.tab {
 			padding: 0 5px;
 			overflow: hidden auto;
+		}
+
+		.item-description {
+			height: 100%;
+    		overflow-y: auto;
 		}
 
 		.item-properties {
