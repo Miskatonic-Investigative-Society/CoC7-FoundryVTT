@@ -98,7 +98,7 @@ export class CoC7BookSheet extends ItemSheet {
 			width: 520,
 			height: 480,
 			resizable: false,
-			dragDrop: [{dragSelector: null, dropSelector: null}],
+			dragDrop: [{dragSelector: '.spell', dropSelector: null}],
 			scrollY: ['.tab.description'],
 			tabs: [{navSelector: '.sheet-navigation', contentSelector: '.sheet-body', initial: 'description'}]
 		});
@@ -106,6 +106,14 @@ export class CoC7BookSheet extends ItemSheet {
 
 	get template() {
 		return 'systems/CoC7/templates/items/book.html';
+	}
+
+	_onDragStart(event) {
+		let li = event.currentTarget.closest('.spell'),
+			spell = this.item.data.data.spells.find(s => { return s._id === li.dataset.spellId;});
+
+		const dragData = { type: 'Item', data: spell };
+		event.dataTransfer.setData('text/plain', JSON.stringify(dragData));
 	}
 
 	getData(){

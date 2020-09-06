@@ -178,6 +178,7 @@ export class CoC7SanCheck {
 	async applySanLoss(){
 		const san = this.actor.san - this.totalSanLoss;
 		await this.actor.setSan( san);
+		// TODO : find a way to refresh token data
 		this.applied = true;
 	}
 }
