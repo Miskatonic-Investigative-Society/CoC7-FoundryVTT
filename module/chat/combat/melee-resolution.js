@@ -74,12 +74,18 @@ export class CoC7MeleeResoltion{
 				else if( this.initiator.roll.successLevel > this.target.roll.successLevel){
 					this.resultString = `${this.initiator.name} won. Roll damage`;
 					this.winner = this.initiator;
+					this.winnerImg = this.initiator.weapon.img;
+					this.winnerTitle = this.initiator.weapon.name;
+					this.looser = this.target;
 					this.action = 'roll-melee-damage';
 					this.rollDamage = true;
 				}
 				else if( this.initiator.roll.successLevel <= this.target.roll.successLevel){
 					this.resultString = `${this.target.name} dodged.`;
 					this.winner = this.target;
+					this.looser = this.initiator;
+					this.winnerImg = this.target.skill.data.img;
+					this.winnerTitle = this.target.skill.name;
 					this.action = 'dodge';
 					this.rollDamage = false;
 				}
@@ -95,12 +101,16 @@ export class CoC7MeleeResoltion{
 				else if( this.initiator.roll.successLevel >= this.target.roll.successLevel){
 					this.resultString = `${this.initiator.name} won. Roll damage`;
 					this.winner = this.initiator;
+					this.winnerImg = this.initiator.weapon.img;
+					this.winnerTitle = this.initiator.weapon.name;
 					this.looser = this.target;
 					this.rollDamage = true;
 				}
 				else if( this.initiator.roll.successLevel <= this.target.roll.successLevel){
 					this.resultString = `${this.target.name} won. Roll damage`;
 					this.winner = this.target;
+					this.winnerImg = this.target.weapon.img;
+					this.winnerTitle = this.target.weapon.name;
 					this.looser = this.initiator;
 					this.rollDamage = true;
 				}
@@ -116,12 +126,16 @@ export class CoC7MeleeResoltion{
 				else if( this.initiator.roll.successLevel >= this.target.roll.successLevel){
 					this.resultString = `${this.initiator.name} won. Roll damage`;
 					this.winner = this.initiator;
+					this.winnerImg = this.initiator.weapon.img;
+					this.winnerTitle = this.initiator.weapon.name;
 					this.looser = this.target;
 					this.rollDamage = true;
 				}
 				else if( this.initiator.roll.successLevel <= this.target.roll.successLevel){
 					this.resultString = `${this.target.name} maneuver was successful.`;
 					this.winner = this.target;
+					this.winnerImg = this.target.skill.data.img;
+					this.winnerTitle = this.target.skill.name;
 					this.looser = this.initiator;
 					this.rollDamage = false;
 				}

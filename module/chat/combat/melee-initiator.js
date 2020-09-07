@@ -5,6 +5,7 @@ import { CoC7MeleeTarget } from './melee-target.js';
 import { CoC7MeleeResoltion } from './melee-resolution.js';
 import { ChatCardActor } from '../card-actor.js';
 
+//TODO : récupérer le jet en tant qu'objet !!!
 export class CoC7MeleeInitiator extends ChatCardActor{
 	constructor(actorKey = null, itemId = null, fastForward = false) {
 		super( actorKey, fastForward);
@@ -21,6 +22,14 @@ export class CoC7MeleeInitiator extends ChatCardActor{
 	}
 
 	template = 'systems/CoC7/templates/chat/combat/melee-initiator.html';
+
+	async revealCheck(){
+		//TODO : on utilise l'update du message au lieu de reconstruire l'objet. Changer ce comportement.
+		const chatMessage = game.messages.get( this.messageId);
+
+		await chatMessage.setFlag( 'CoC7', 'checkRevealed', true);
+		await ui.chat.updateMessage( chatMessage, false);
+	}
 
 	async createChatCard(){
 		chatHelper.getActorImgFromKey(this.actorKey);
@@ -78,6 +87,9 @@ export class CoC7MeleeInitiator extends ChatCardActor{
 		check.skill = skillId;
 		check.difficulty = CoC7Check.difficultyLevel.regular;
 		check.diceModifier = 0;
+
+		if( game.user.isGM) this.checkRevealed = false;
+		else this.checkRevealed = true;
 
 		if( this.outnumbered) check.diceModifier += 1;
 		if( this.surprised) check.diceModifier += 1;
