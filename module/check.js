@@ -370,11 +370,9 @@ export class CoC7Check {
 			// if( die.value == 100) die.value = "00";
 			this.dices.tens.push( die);
 		}
-
 		this.computeCheck();
-
 	}
-
+	
 	async computeCheck(){
 
 		this.isUnknown = this.unknownDifficulty;
@@ -532,6 +530,24 @@ export class CoC7Check {
 
 		if( this.passed && this.diceModifier <= 0 && this.skill && !this.skill.data.data.properties.noxpgain &&!this.luckSpent &&!this.forced &&!this.isBlind &&!this.isUnknown){
 			this.flagForDevelopement();
+		}
+	}
+
+	showDiceRoll(){
+		if( game.dice3d){
+			const diceResults = [];
+			this.dices.tens.forEach(dieResult => { 
+				diceResults.push( 100 == dieResult.value ?0:dieResult.value/10);
+			});
+			diceResults.push( this.dices.unit.value);
+
+			const diceData = {
+				formula: `${this.dices.tens.length}d100+1d10`,
+				results: diceResults,
+				whisper: null,
+				blind: false
+			};
+			game.dice3d.show(diceData);
 		}
 	}
 

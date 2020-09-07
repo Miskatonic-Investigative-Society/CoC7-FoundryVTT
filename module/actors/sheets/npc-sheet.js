@@ -15,8 +15,12 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
 
 		//TODO : do we need that ?
 		data.allowFormula = true;
-		data.displayFormula = this.actor.getActorFlag( 'displayFormula'); // Put to false for now.
+		data.displayFormula = this.actor.getActorFlag( 'displayFormula');
 		if( data.displayFormula === undefined) data.displayFormula = false;
+		// await this.actor.creatureInit();
+		data.hasSan = (null !== data.data.attribs.san.value);
+		data.hasMp = (null !== data.data.attribs.mp.value);
+		data.hasLuck = (null !== data.data.attribs.lck.value);
 
 		return data;
 	}
@@ -37,8 +41,20 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
 		return mergeObject(super.defaultOptions, {
 			classes: ['coc7', 'sheet', 'actor', 'npc'],
 			template: 'systems/CoC7/templates/actors/npc-sheet.html',
-			width: 600,
-			height: 'auto'
+			width: 560,
+			height: 'auto',
+			resizable: true
 		});
+	}
+
+	
+	static forceAuto( app, html){
+		html[0].style.height = 'auto';
+	}
+
+	setPosition(position={}) {
+		const test = super.setPosition(position);
+		test.height = 'auto';
+		return test; 
 	}
 }
