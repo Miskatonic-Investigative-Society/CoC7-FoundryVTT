@@ -37,8 +37,20 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
 		return mergeObject(super.defaultOptions, {
 			classes: ['coc7', 'sheet', 'actor', 'npc'],
 			template: 'systems/CoC7/templates/actors/npc-sheet.html',
-			width: 600,
-			height: 'auto'
+			width: 560,
+			height: 'auto',
+			resizable: true
 		});
+	}
+
+	
+	static forceAuto( app, html){
+		html[0].style.height = 'auto';
+	}
+
+	setPosition(position={}) {
+		const test = super.setPosition(position);
+		test.height = 'auto';
+		return test; 
 	}
 }

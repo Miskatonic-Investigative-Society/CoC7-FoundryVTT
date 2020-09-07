@@ -57,16 +57,23 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 	*/
 
 	static get defaultOptions() {
-		return mergeObject(super.defaultOptions, {
-			classes: ['coc7', 'sheet', 'actor', 'npc', 'creature'],
+		const options=mergeObject(super.defaultOptions, {
 			template: 'systems/CoC7/templates/actors/creature-sheet.html',
-			width: 600,
-			height: 'auto'
+			width: 560,
+			height: 'auto',
+			classes: ['coc7', 'sheet', 'actor', 'npc', 'creature'],
+			resizable: true
 		});
+		return options;
 	}
 
 
-	
+	setPosition(position={}) {
+		const test = super.setPosition(position);
+		test.height = 'auto';
+		return test; 
+	}
+
 	/**
 	 * Implement the _updateObject method as required by the parent class spec
 	 * This defines how to update the subject of the form when the form is submitted
@@ -86,5 +93,7 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 		return super._updateObject(event, formData);
 	}
 
-
+	static forceAuto( app, html){
+		html[0].style.height = 'auto';
+	}
 }

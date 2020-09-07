@@ -187,6 +187,8 @@ Hooks.on('preCreateActor', (createData) => CoCActor.initToken( createData));
 
 // Called on closing a character sheet to lock it on getting it to display values
 Hooks.on('closeActorSheet', (characterSheet) => characterSheet.onCloseSheet());
+Hooks.on('renderCoC7CreatureSheet', (app, html, data) => CoC7CreatureSheet.forceAuto(app, html, data));
+Hooks.on('renderCoC7NPCSheet', (app, html, data) => CoC7NPCSheet.forceAuto(app, html, data));
 
 
 // Add button on Token selection bar

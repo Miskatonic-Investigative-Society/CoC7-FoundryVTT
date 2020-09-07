@@ -1,15 +1,57 @@
 .coc7.sheet.actor{
-    .info-fields{
-        .form-group{
-            label{
-                width: auto;
-                flex: unset;
-                line-height: 18px;
-                height: 18px;
-                border: 0;
-                margin: 0;
-                font-weight: bold;
-            }
-        }
-    }
+
+	.sheet-section{
+
+		h3{
+			margin: 0 -5px 0 0;
+			padding-left: 5px;
+			font-family: "Signika", sans-serif;
+			font-weight: bold;
+			font-size: 13px;
+		}
+
+		.editor{
+			width: 100%;
+			height: 200px;
+			border: 2px groove #eeede0;
+			padding: 0;
+			line-height: normal;
+    		font-size: 12px;
+		}
+
+		.editor-content{
+			overflow-x: hidden;
+		}
+
+		.section-header{
+			margin: 2px 0 0 0;
+			padding: 0;
+			background: rgba(0, 0, 0, 0.05);
+			border: 2px groove #eeede0;
+			font-weight: bold;
+			line-height: 15px;
+			height: 100%;
+		}
+	}
+
+	input:read-only:hover,
+	input:read-only:focus {
+		border: 1px solid transparent;
+		box-shadow: none;
+		cursor: default;
+	}
+	
+	.info-fields{
+		.form-group{
+			label{
+				width: auto;
+				flex: unset;
+				line-height: 18px;
+				height: 18px;
+				border: 0;
+				margin: 0;
+				font-weight: bold;
+			}
+		}
+	}
 }

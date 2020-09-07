@@ -295,10 +295,10 @@
 .coc7.sheet.book .sheet-body .spell-list .item-summary,
 .coc7.sheet.spell .sheet-body .spell-list .item-summary {
   flex: 0 0 100%;
-  font-size: 10px;
-  line-height: 11px;
+  font-size: 12px;
+  line-height: 13px;
   padding: 0.25em 0.5em;
-  border-top: 1px solid #c9c7b8;
+  border-top: 2px groove #eeede0;
 }
 .coc7 input[type="text"],
 .coc7 select {
@@ -689,10 +689,10 @@
 .coc7.sheet.skill .sheet-body .spell-list .item-summary,
 .coc7.sheet.item .sheet-body .spell-list .item-summary {
   flex: 0 0 100%;
-  font-size: 10px;
-  line-height: 11px;
+  font-size: 12px;
+  line-height: 13px;
   padding: 0.25em 0.5em;
-  border-top: 1px solid #c9c7b8;
+  border-top: 2px groove #eeede0;
 }
 .coc7.sheet .inventory {
   height: 100%;
@@ -822,16 +822,49 @@
 }
 .coc7.sheet .inventory-list .item-controls a {
   flex: 0 0 16px;
-  font-size: 12px;
+  font-size: 10px;
   text-align: center;
   color: #7a7971;
 }
 .coc7.sheet .inventory-list .item-summary {
   flex: 0 0 100%;
   font-size: 12px;
-  line-height: 16px;
+  line-height: 13px;
   padding: 0.25em 0.5em;
-  border-top: 1px solid #c9c7b8;
+  border-top: 2px groove #eeede0;
+}
+.coc7.sheet.actor .sheet-section h3 {
+  margin: 0 -5px 0 0;
+  padding-left: 5px;
+  font-family: "Signika", sans-serif;
+  font-weight: bold;
+  font-size: 13px;
+}
+.coc7.sheet.actor .sheet-section .editor {
+  width: 100%;
+  height: 200px;
+  border: 2px groove #eeede0;
+  padding: 0;
+  line-height: normal;
+  font-size: 12px;
+}
+.coc7.sheet.actor .sheet-section .editor-content {
+  overflow-x: hidden;
+}
+.coc7.sheet.actor .sheet-section .section-header {
+  margin: 2px 0 0 0;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.05);
+  border: 2px groove #eeede0;
+  font-weight: bold;
+  line-height: 15px;
+  height: 100%;
+}
+.coc7.sheet.actor input:read-only:hover,
+.coc7.sheet.actor input:read-only:focus {
+  border: 1px solid transparent;
+  box-shadow: none;
+  cursor: default;
 }
 .coc7.sheet.actor .info-fields .form-group label {
   width: auto;
