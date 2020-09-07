@@ -101,6 +101,7 @@
 "CoC7.check.DecreaseSuccessLevel": "成功レベルを減少させる",
 
 "CoC7.BonusSelectionWindow": "ボーナス選択ウィンドウ",
+"CoC7.SkillDetailsWindow" : "技能詳細ウィンドウ",
 "CoC7.RegularDifficulty": "レギュラー",
 "CoC7.HardDifficulty": "ハード",
 "CoC7.ExtremeDifficulty": "イクストリーム",
@@ -296,6 +297,11 @@
 "CoC7.OccultBook": "オカルトの本",
 "CoC7.Unidentified": "独自の書き込み",
 
+"CoC7.Items": "アイテム",
+"CoC7.Books": "魔導書",
+
+"CoC7.PutGunAway": "銃をしまう",
+"CoC7.DrawGun": "銃を抜く",
 
 "SETTINGS.DefaultDifficulty": "デフォルトの難易度",
 "SETTINGS.DefaultDifficultyHint": "判定におけるデフォルトの難易度を選択できる。不明を選べば、プレイヤーは難易度を知らずに判定をロールすることになる。",
@@ -304,5 +310,13 @@
 "SETTINGS.UseToken": "トークンのイメージを使用する",
 "SETTINGS.UseTokenHint": "チャットカードの絵にトークンのイメージを使用する",
 "SETTINGS.DisplayActorOnCard": "アクター（あるいはトークン）を表示させる",
-"SETTINGS.DisplayActorOnCardHint": "アクター（あるいはトークン）のイメージを戦闘のチャットカードで表示させる"
+"SETTINGS.DisplayActorOnCardHint": "アクター（あるいはトークン）のイメージを戦闘のチャットカードで表示させる",
+"SETTINGS.InitiativeRule": "イニシアチブのルールの選択",
+"SETTINGS.InitiativeRuleHint": "通常のイニシアチブのルール（DEXの値で決定）か、選択ルール（ロールで決定）を選ぶことができる",
+"SETTINGS.InitiativeRuleBasic": "通常ルール",
+"SETTINGS.InitiativeRuleOptional": "選択ルール",
+"SETTINGS.displayInitDices": "イニシアチブのダイスを表示する",
+"SETTINGS.displayInitDicesHint": "イニシアチブ決定のためのロールのダイスを表示する（選択ルール使用時のみ）",
+"SETTINGS.PulpRules" : "パルプのHPを使用する",
+"SETTINGS.PulpRulesHint" : "パルプ・クトゥルフのHP計算ルールを使用する"
 }
