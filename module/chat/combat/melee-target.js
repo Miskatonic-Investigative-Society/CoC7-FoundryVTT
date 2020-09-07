@@ -27,7 +27,7 @@ export class CoC7MeleeTarget extends ChatCardActor{
 		this.fightingBack = false;
 		this.maneuvering = false;
 	}
-    
+	
 	get actionSelected(){
 		return this.dodging || this.fightingBack || this.maneuvering;
 	}
@@ -74,6 +74,11 @@ export class CoC7MeleeTarget extends ChatCardActor{
 		return chatHelper.getActorFromKey( this.initiatorKey);
 	}
 
+	get meleeInitiator(){
+		if( !this._initiator) this._initiator = CoC7MeleeInitiator.getFromMessageId( this.parentMessageId);
+		return this._initiator;
+	}
+
 	template = 'systems/CoC7/templates/chat/combat/melee-target.html';
 
 	static getFromMessageId( messageId){
@@ -111,8 +116,13 @@ export class CoC7MeleeTarget extends ChatCardActor{
 
 	async createChatCard(){
 		const html = await renderTemplate(this.template, this);
+
+		const speakerData = {};
+		const token = chatHelper.getTokenFromKey( this.actorKey);
+		if( token) speakerData.token = token;
+		else speakerData.actor = this.actor;
 		
-		const speaker = ChatMessage.getSpeaker({token: this.token});
+		const speaker = ChatMessage.getSpeaker(speakerData);
 		if( this.actor.isToken) speaker.alias = this.actor.token.name;
 		
 		const user = this.actor.user ? this.actor.user : game.user;
