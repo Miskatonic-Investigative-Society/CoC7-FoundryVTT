@@ -30,6 +30,7 @@ version 0.3.4 :
   * The PC has to choose to retaliate/dodge without knowing the outcome of the attack.
   * GM can see everything.
 * Creature and NPC sheet design sliglty reworked.
+* Japanese transalation updated thanks to AdmiralNyar.
 
 version 0.3.3 :
 
