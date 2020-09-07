@@ -239,6 +239,8 @@ export class CoC7ActorSheet extends ActorSheet {
 		data.data.indefiniteInsanityLevel.value = data.data.attribs.san.dailyLoss ? data.data.attribs.san.dailyLoss:0;
 		data.data.indefiniteInsanityLevel.max = Math.floor( data.data.attribs.san.value/5);
 
+		data.hasInventory = Object.prototype.hasOwnProperty.call( data.itemsByType, 'item') || Object.prototype.hasOwnProperty.call( data.itemsByType, 'book') || Object.prototype.hasOwnProperty.call( data.itemsByType, 'spell');
+
 		// const first = data.data.biography[0];
 		// first.isFirst = true;
 		// data.data.biography[0] = first;
@@ -300,6 +302,7 @@ export class CoC7ActorSheet extends ActorSheet {
 			html.on('click', '.weapon-damage', this._onWeaponDamage.bind(this));
 
 			html.find( '.inventory-header').click( this._onInventoryHeader.bind(this));
+			html.find( '.section-header').click( this._onSectionHeader.bind(this));
 
 
 			const wheelInputs = html.find('.attribute-value');
@@ -555,6 +558,19 @@ export class CoC7ActorSheet extends ActorSheet {
 			div.slideDown(200);
 		}
 		li.toggleClass('expanded');
+	}
+
+	_onSectionHeader(event){
+		event.preventDefault();
+		let section = $(event.currentTarget).parents('section'),
+			pannelClass = $(event.currentTarget).data('pannel'),
+			pannel = section.find( `.${pannelClass}`);
+		pannel.toggle();
+		// if( pannel.hasClass('expanded'))
+		// 	pannel.slideUp(200);
+		// else
+		// 	pannel.slideDown(200);
+		// pannel.toggleClass('expanded');		
 	}
 
 	_onInventoryHeader(event){
