@@ -20,6 +20,18 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.3.4 :
+
+* Inventory tab added to NPC and Creatures. Inventory can contains items, books and spells.
+  * Items, book and spells can be dragged/dropped.
+  * Any empty section will not be displayed.
+  * Is empty the inventory will not be displayed.
+* Close combat flow: if the target is a PC, only GM can see the initiator roll.
+  * The PC has to choose to retaliate/dodge without knowing the outcome of the attack.
+  * GM can see everything.
+* Creature and NPC sheet design sliglty reworked.
+* Japanese transalation updated thanks to AdmiralNyar.
+
 version 0.3.3 :
 
 * Inventory (Gear&Cash tab) displays items, books and spells.

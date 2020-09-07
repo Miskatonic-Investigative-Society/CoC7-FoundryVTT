@@ -177,6 +177,24 @@ export class CoC7Roll{
 		return null;
 	}
 
+	showDiceRoll(){
+		if( game.dice3d){
+			const diceResults = [];
+			this.dices.tens.forEach(dieResult => { 
+				diceResults.push( 100 == dieResult.value ?0:dieResult.value/10);
+			});
+			diceResults.push( this.dices.unit.value);
+
+			const diceData = {
+				formula: `${this.dices.tens.length}d100+1d10`,
+				results: diceResults,
+				whisper: null,
+				blind: false
+			};
+			game.dice3d.show(diceData);
+		}
+	}
+
 	static getFromElement( element, object = null){
 		if( !element) return;
 		const roll = object? object : new CoC7Roll();

@@ -11,6 +11,7 @@
     data-disadvantage="{{disadvantage}}"
     data-target-card="{{targetCard}}"
     data-resolution-card="{{resolutionCard}}"
+    data-check-revealed="{{checkRevealed}}"
     data-is-blind="false">
     
     <div class="roll"></div>
@@ -90,31 +91,35 @@
     {{/unless}}
 
     {{#if rolled}}
-    <div class="dice-roll" style="padding-top: 5px;"
-        data-roll-type={{roll.rollType}}
-        data-side={{roll.side}}
-        data-action={{roll.action}}
-        data-ref-message-id={{roll.referenceMessageId}}
-        data-success-level={{roll.successLevel}}
-        data-difficulty={{roll.difficulty}}
-        data-actor-id={{roll.actorId}}
-        data-token-id={{roll.tokenId}}
-        data-actor-key={{roll.actorKey}}
-        data-skill-id={{roll.skillId}}
-        data-item-id={{roll.itemId}}
-        data-dice-mod={{roll.diceMod}}
-        data-value={{roll.value}}
-        data-result={{roll.result}}
-        data-fumble={{roll.fumble}}
-        data-critical={{roll.critical}}
-        data-characteristic={{roll.characteristic}}
+    <div class="dice-roll {{#unless checkRevealed}}gm-visible-only{{/unless}}" style="padding-top: 5px;"
+        data-roll-type="{{roll.rollType}}"
+        data-side="{{roll.side}}"
+        data-action="{{roll.action}}"
+        data-ref-message-id="{{roll.referenceMessageId}}"
+        data-success-level="{{roll.successLevel}}"
+        data-difficulty="{{roll.difficulty}}"
+        data-actor-id="{{roll.actorId}}"
+        data-token-id="{{roll.tokenId}}"
+        data-actor-key="{{roll.actorKey}}"
+        data-skill-id="{{roll.skillId}}"
+        data-item-id="{{roll.itemId}}"
+        data-dice-mod="{{roll.diceMod}}"
+        data-value="{{roll.value}}"
+        data-result="{{roll.result}}"
+        data-fumble="{{roll.fumble}}"
+        data-critical="{{roll.critical}}"
+        data-characteristic="{{roll.characteristic}}"
+        data-dice-modifier="{{check.diceModifier}}"
         data-is-blind="false"
         >
-		<div class="dice-result">
+
+        <div class="dice-result"
+            data-total="{{check.dices.total}}"
+            data-ten-result="{{check.dices.tenResult}}">
 			<!-- <div class="dice-formula">1D% {{#if check.dices.hasBonus}}{{check.dices.bonus}} {{check.dices.bonusType}} {{localize 'CoC7.Dice'}}{{/if}}</div> -->
 			<div class="dice-tooltip" style="display: none;">
 				<section class="tooltip-part">
-					<div class="dice">
+					<div class="dice ten-dice">
 						<span class="part-formula part-header flexrow">
 							{{#if check.dices.tenOnlyOneDie}}
 							{{localize 'CoC7.TensDie'}}
@@ -126,20 +131,25 @@
 						</span>
 						<ol class="dice-rolls">
 							{{#each check.dices.tens as |die key|}}
-								<li class="roll die d10 {{#unless die.selected}}discarded{{/unless}} {{#if die.isMax}}min{{/if}} {{#if die.isMin}}max{{/if}}">{{die.value}}</li>
+								<li
+                                    data-selected="{{#if die.selected}}true{{else}}false{{/if}}"
+                                    data-is-max="{{die.isMax}}"
+                                    data-is-min="{{die.isMin}}"
+                                    data-value="{{die.value}}"
+                                    class="roll die d10 {{#unless die.selected}}discarded{{/unless}} {{#if die.isMax}}min{{/if}} {{#if die.isMin}}max{{/if}}">{{die.value}}</li>
 							{{/each}}
 						</ol>
 					</div>
 				</section>
 				<section class="tooltip-part">
-					<div class="dice">
+					<div class="dice unit-die">
 						<span class="part-formula part-header flexrow">
                             {{localize 'CoC7.UnitsDie'}}
                             <div class="flex1"></div>
 							<span class="part-total flex0">{{check.dices.unit.value}}</span>
 						</span>
 						<ol class="dice-rolls">
-							<li class="roll die d10">{{check.dices.unit.value}}</li>
+							<li data-value="{{check.dices.unit.value}}"  class="roll die d10">{{check.dices.unit.value}}</li>
 						</ol>
 					</div>
 				</section>

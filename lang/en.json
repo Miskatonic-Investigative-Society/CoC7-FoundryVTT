@@ -137,6 +137,10 @@
 "CoC7.TitleOutNumbered":"Add 1 bonus dice for outnumbered target",
 "CoC7.TitleSurprised": "Add 1 bonus dice for surprised target",
 "CoC7.TitleAutoSuccess": "Attack automaticaly hit",
+"CoC7.WinnerRollDamage": "{name} won. Roll damage.",
+"CoC7.NoWinner": "Both side failed.",
+"CoC7.DodgeSuccess": "{name} dodged!",
+"CoC7.ManeuverSuccess": "{name} maneuver was successful.",
 
 "CoC7.combatCard.dive4cover": "Dive for Cover",
 
@@ -250,6 +254,7 @@
 "CoC7.WeaponName": "Name",
 "CoC7.WeaponSkill": "Skill",
 "CoC7.WeaponSkillAlt": "Alt-skill",
+"CoC7.Inventory": "Inventory",
 
 
 "CoC7.ManualCreditValues": "Manual Credit Values",
