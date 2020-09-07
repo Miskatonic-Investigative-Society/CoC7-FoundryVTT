@@ -64,6 +64,8 @@ export class CoC7Chat{
 
 
 	static async onUpdateChatMessage( chatMessage){
+		// if( chatMessage.getFlag( 'CoC7', 'reveled')){
+		// }
 		if( game.user.isGM){
 			const card = $(chatMessage.data.content)[0];
 			if( card.classList.contains('melee'))
@@ -75,21 +77,25 @@ export class CoC7Chat{
 							const target = CoC7MeleeTarget.getFromMessageId( initiator.targetCard);
 							if( target.resolved){
 								const resolutionCard = new CoC7MeleeResoltion( chatMessage.id, target.messageId, target.resolutionCard);
-								resolutionCard.resolve();
+								await resolutionCard.resolve();
+								if( !initiator.checkRevealed) await initiator.revealCheck();
+
 							}
 						}
 						else { 
 							const initiator = CoC7MeleeInitiator.getFromMessageId( chatMessage.id);
 							if( initiator.resolutionCard){
 								const resolutionCard = new CoC7MeleeResoltion( chatMessage.id, null, initiator.resolutionCard);
-								resolutionCard.resolve();
+								await resolutionCard.resolve();
+								if( !initiator.checkRevealed) await initiator.revealCheck();
 							}
 						}
 					}
 					if( card.classList.contains('target')){
 						const target = CoC7MeleeTarget.getFromMessageId( chatMessage.id);
 						const resolutionCard = new CoC7MeleeResoltion( target.parentMessageId, chatMessage.id, target.resolutionCard);
-						resolutionCard.resolve();
+						await resolutionCard.resolve();
+						if( !target.meleeInitiator.checkRevealed) await target.meleeInitiator.revealCheck();
 					}
 
 				}
@@ -100,6 +106,18 @@ export class CoC7Chat{
 	}
 
 	static async renderMessageHook(message, html) {
+
+		if( message.getFlag( 'CoC7', 'checkRevealed')){
+			html.find('.dice-roll').removeClass('gm-visible-only');
+			html[0].dataset.checkRevealed = true;
+
+			// const htmlMessage = $(chatMessage.data.content);
+			// const roll = new CoC7Check;
+			// CoC7Roll.getFromElement(htmlMessage.find('.dice-roll')[0], roll );
+			// roll.showDiceRoll();
+	
+
+		}
 
 		//Handle showing dropdown selection
 		html.find('.dropbtn').click(event => event.currentTarget.closest('.dropdown').querySelector('.dropdown-content').classList.toggle('show'));
