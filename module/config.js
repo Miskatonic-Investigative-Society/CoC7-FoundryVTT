@@ -47,6 +47,7 @@ COC7.skillProperties = {
 COC7.weaponProperties = {
 	melee: 'CoC7.Weapon.Property.Melee',
 	rngd: 'CoC7.WeaponRngd',
+	mnvr: 'CoC7.WeaponProperyManeuver',
 	thrown: 'CoC7.Weapon.Property.Thrown',
 	shotgun: 'CoC7.Weapon.Property.Shotgun',
 	dbrl: 'CoC7.WeaponDbrl',

@@ -251,6 +251,7 @@
 
 .dice-roll .dice-formula.critical{
     background-color: whitesmoke;
+    color: goldenrod;
 }
 
 .dice-roll .dice-formula.fumble{
