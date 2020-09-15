@@ -499,6 +499,13 @@ export class CoC7RangeInitiator{
 			rangeInitiator.rolls.push(roll);
 		});
 
+		rangeInitiator.damage = [];
+		const damageRolls = card.querySelectorAll('.damage-results');
+		damageRolls.forEach( dr => {
+			const damageRoll = CoC7Damage.getFromElement( dr);
+			rangeInitiator.damage.push( damageRoll);
+		});
+
 		return rangeInitiator;
 	}
 
@@ -523,14 +530,17 @@ export class CoC7RangeInitiator{
 
 			let impalingShots = 0;
 			let successfulShots = 0;
+			let critical = false;
 			if( this.fullAuto || this.burst) successfulShots = Math.floor(volleySize/2);
 			if( 0 == successfulShots) successfulShots = 1;
 			if( h.roll.successLevel >= CoC7Check.difficultyLevel.extreme){
 				impalingShots = successfulShots;
 				successfulShots = volleySize - impalingShots;
+				critical = true;
 				if( CoC7Check.difficultyLevel.critical != h.roll.successLevel && ((CoC7Check.difficultyLevel.extreme <= h.roll.difficulty) || h.shot.extremeRange)){
 					successfulShots = volleySize;
 					impalingShots = 0;
+					critical = false;
 				}
 			}
 
@@ -568,11 +578,26 @@ export class CoC7RangeInitiator{
 				targetKey: h.roll.targetKey,
 				targetName: targetName,
 				rolls: damageRolls,
-				total: total
+				total: total,
+				critical: critical,
+				dealt:false,
+				resultString: game.i18n.format('CoC7.rangeCombatDamage', {name : targetName, total: total})
 			});
 		});
 
 		this.damageRolled = 0 != this.damage.length;
+		this.updateChatCard();
+	}
+
+	async dealDamage(){
+		for (let dIndex = 0; dIndex < this.damage.length; dIndex++) {
+			const actor = chatHelper.getActorFromKey( this.damage[dIndex].targetKey);
+			for( let rIndex = 0; rIndex < this.damage[dIndex].rolls.length; rIndex++){
+				await actor.dealDamage( this.damage[dIndex].rolls[rIndex].total);
+			}
+			this.damage[dIndex].dealt = true;
+		}
+		this.damageDealt = true;
 		this.updateChatCard();
 	}
 

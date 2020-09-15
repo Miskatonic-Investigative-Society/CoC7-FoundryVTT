@@ -1191,6 +1191,25 @@ export class CoC7Chat{
 			await rangeInitiator.rollDamage();
 			break;
 		}
+		case 'deal-melee-damage':{
+			const targetKey = card.dataset.targetKey;
+			const amount = card.dataset.result;
+			const targetActor = chatHelper.getActorFromKey( targetKey);
+			await targetActor.dealDamage( amount);
+			const buttons = card.querySelector('.card-buttons');
+			const diceTotal = card.querySelector('.dice-total');
+			$(diceTotal).append('<i class="fas fa-check"></i>');
+			if( buttons) buttons.remove();
+			await CoC7Chat.updateChatCard( card);
+
+			break;
+		}
+
+		case 'deal-range-damage':{
+			const rangeInitiator = CoC7RangeInitiator.getFromCard( card);
+			await rangeInitiator.dealDamage();
+			break;
+		}
 
 		case 'testcheck':{
 			const check = await CoC7Check.getFromCard( card);

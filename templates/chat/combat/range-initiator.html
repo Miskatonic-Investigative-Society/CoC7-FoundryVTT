@@ -17,8 +17,9 @@
 	data-is-GM="{{isGM}}"
 	data-aimed="{{aimed}}"
 	data-damage-rolled="{{damageRolled}}"
+	data-damage-dealt="{{damageDealt}}"
 	data-total-bullets-fired="{{totalBulletsFired}}"
-	data-roll-mode={{rollMode}}
+	data-roll-mode="{{rollMode}}"
 	data-is-blind="false">
 	
 	<header class="card-header flexcol">
@@ -343,10 +344,10 @@
 		{{/if}}
 	</div>
 
-	<div class="results">
+	<div class="results" style='padding-top: 5px; border-top: 2px groove'>
 		{{#if resolved}}
 			{{#each rolls as |roll key|}}
-				<div class="coc7 roll-result"
+				<div class="coc7 roll-result {{#if ../damageDealt}}invisible{{/if}}"
 				  data-actor-key="{{roll.actorKey}}"
 				  data-target-key="{{roll.targetKey}}"
 				  data-roll-type="{{roll.rollType}}"
@@ -380,7 +381,7 @@
 				  data-malfunction-txt="{{roll.malfunctionTxt}}"
 				  data-token-id="{{roll.tokenId}}"
 				  data-index="{{key}}"
-				  data-is-blind="false">
+				  data-is-blind="false" >
 					<div class="dice-roll">
 						<div
 						class="dice-result"
@@ -489,11 +490,17 @@
 	<div class="damage">
 		{{#if damageRolled}}
 			{{#each damage as |d|}}
-				<div class="coc7 damage-results">
+				<div class="coc7 damage-results"
+				  data-target-name="{{d.targetName}}"
+				  data-target-key="{{targetKey}}"
+				  data-total="{{d.total}}"
+				  data-critical="{{d.critical}}"
+				  data-dealt="{{d.dealt}}"
+				  data-result-string="{{resultString}}">
 					<div class="dice-roll">
 						<div class="dice-result">
-							<div class="dice-formula {{#if d.critical}} critical{{/if}}" style="line-height: 16px;margin-bottom: 2px;">
-								{{d.targetName}} takes {{d.total}} points of damage
+							<div class="dice-formula {{#if d.critical}}critical{{/if}}" style="line-height: 16px;margin-bottom: 2px;">
+								{{resultString}} {{#if d.dealt}}<i class="fas fa-check"></i>{{/if}}
 							</div>
 							<div class="dice-tooltip" style="display: none;">
 								<section class="tooltip-part">
@@ -524,11 +531,13 @@
 					</div>
 				</div>
 			{{/each}}
-			<!-- {{#if didAnyShotHit}}
-				<div class="card-buttons owner-only">
-					<button data-action="roll-range-damage">Roll damage</button>			
-				</div>
- 			{{/if}} -->
+			{{#unless damageDealt}}
+				{{#if didAnyShotHit}}
+					<div class="card-buttons gm-visible-only">
+						<button data-action="deal-range-damage">Deal damage</button>			
+					</div>
+				{{/if}}
+			{{/unless}}
 		{{/if}}
 	</div>
 </div>	
