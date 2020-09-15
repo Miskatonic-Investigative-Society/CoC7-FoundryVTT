@@ -1,11 +1,12 @@
 <div class="coc7 chat-card damage"
     data-actor-key="{{actor.tokenKey}}"
     data-target-key="{{targetKey}}"
-    data-item-id="{{weapon._id}}"
+    data-item-id="{{item._id}}"
     data-critical="{{critical}}"
     data-impale="{{impale}}"
     data-fast-forward="{{fastForward}}"
-    data-target-card="{{targetCard}}">
+    data-target-card="{{targetCard}}"
+    data-result="{{result}}">
 
     <header class="card-header flexcol">
         <div class="flexrow">
@@ -32,10 +33,6 @@
 
     <div class="dice-roll">
         <div class="dice-result">
-            <div class="dice-formula">
-                    {{roll.formula}}
-                </div>
-
             <div class="dice-tooltip" style="display: none;">
                 {{#each roll._dice as |die key| }}
                 <section class="tooltip-part">
@@ -59,5 +56,9 @@
                 {{result}}
             </div> 
         </div>
+    </div>
+
+    <div class="card-buttons gm-visible-only">
+        <button data-action="deal-melee-damage">Assign damage</button>
     </div>
 </div>
