@@ -20,10 +20,19 @@ import { CoC7SpellSheet } from './items/sheets/spell.js';
 import { COC7 } from './config.js';
 
 
+// const olfFunc = TextEditor.enrichHTML;
+
+// function test(...args){
+// 	// ui.notifications.info('test called !!!!!!!!!!!!!!!!!!');
+// 	// return olfFunc(args[0], args[1]);
+// 	return null;
+// }
+
 Hooks.once('init', async function() {
 	// console.log('-->Hooks.once Init');
 	// console.log(`Initializing Simple  System`);
 
+	// TextEditor.prototype.enrichHTML = test;
 	/**
 	 * Set an initiative formula for the system
 	 * @type {String}

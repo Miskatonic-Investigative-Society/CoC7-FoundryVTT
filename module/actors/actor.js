@@ -843,4 +843,12 @@ export class CoCActor extends Actor {
 
 		return skillList;
 	}
+
+	async dealDamage(amount, ignoreArmor = false){
+		let total = parseInt(amount);
+		if( this.data.data.attribs.armor.value && !ignoreArmor ) total = total - this.data.data.attribs.armor.value;
+		if( total <= 0) return;
+		await this.setHp( this.hp - total);
+		await this.setFlag('CoC7', 'injuried', true);
+	}
 }

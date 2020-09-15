@@ -159,6 +159,7 @@
 "CoC7.rangeCombatCard.FastMovingTarget": "Fast",
 "CoC7.rangeCombatCard.InMelee": "In melee",
 "CoC7.rangeCombatCard.aiming": "Aiming",
+"CoC7.rangeCombatDamage" : "{name} takes {total} points of damage",
 
 "CoC7.DropZone": "DropZone",
 
@@ -199,6 +200,7 @@
 "CoC7.SkillFirearm": "Firearms",
 
 "CoC7.WeaponRngd": "Range",
+"CoC7.WeaponProperyManeuver": "Maneuver",
 "CoC7.WeaponTouch": "Touch",
 "CoC7.WeaponImpl": "Impale",
 "CoC7.WeaponRare": "Rare",
@@ -217,6 +219,7 @@
 "CoC7.Weapon.Property.Thrown": "Thrown",
 "CoC7.Weapon.Property.Burn": "Burn",
 "CoC7.Weapon.Property.Shotgun": "Shotgun",
+
 
 "CoC7.ErrorItem": "Couldn't locate item",
 "CoC7.ErrorActor": "Couldn't locate actor",
