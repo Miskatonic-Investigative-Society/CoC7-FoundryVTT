@@ -650,7 +650,7 @@
 
 .coc7.sheet.actor .info-fields .form-group,
 .coc7.sheet.actor .info-fields .form-group-stacked {
-    margin: 0 0 1px 0;
+    margin: 0;
     justify-content: space-between;
 }
 

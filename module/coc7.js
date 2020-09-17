@@ -17,6 +17,7 @@ import { CoC7Chat } from './chat.js';
 import { CoC7Combat, rollInitiative } from './combat.js';
 import { CoC7BookSheet } from './items/sheets/book.js';
 import { CoC7SpellSheet } from './items/sheets/spell.js';
+import { CoC7TalentSheet } from './items/sheets/talent.js';
 import { COC7 } from './config.js';
 // import { CoC7ActorSheet } from './actors/sheets/base.js';
 
@@ -133,10 +134,12 @@ Hooks.once('init', async function() {
 	Actors.registerSheet('CoC7', CoC7NPCSheet, { types: ['npc'] });
 	Actors.registerSheet('CoC7', CoC7CreatureSheet, { types: ['creature'] });
 	Actors.registerSheet('CoC7', CoC7CharacterSheet, { types: ['character'], makeDefault: true });
+	
 	Items.unregisterSheet('core', ItemSheet);
 	Items.registerSheet('CoC7', CoC7WeaponSheet, { types: ['weapon'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7BookSheet, { types: ['book'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7SpellSheet, { types: ['spell'], makeDefault: true});
+	Items.registerSheet('CoC7', CoC7TalentSheet, { types: ['talent'], makeDefault: true});
 	Items.registerSheet('CoC7', CoCItemSheet, { makeDefault: true});
 	preloadHandlebarsTemplates();
 });
@@ -145,7 +148,7 @@ Hooks.on('renderCombatTracker', (app, html, data) => CoC7Combat.renderCombatTrac
 Hooks.once('setup', function() {
 
 	// Localize CONFIG objects once up-front
-	const toLocalize = [ 'spellProperties', 'bookType'];
+	const toLocalize = [ 'spellProperties', 'bookType', 'talentType'];
 
 	for ( let o of toLocalize ) {
 		const localized = Object.entries(COC7[o]).map(e => {

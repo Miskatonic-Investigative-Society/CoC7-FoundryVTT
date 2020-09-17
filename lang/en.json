@@ -19,11 +19,13 @@
 "CHARAC.Education": "Education",
 
 "CoC7.Name": "Name",
+"CoC7.Archetype": "Archetype",
 "CoC7.Occupation": "Occupation",
 "CoC7.Age": "Age",
 "CoC7.Sex": "Sex",
 "CoC7.Residence": "Residence",
 "CoC7.Birthplace": "Birthplace",
+"CoC7.Organization": "Organization",
 "CoC7.HitPoints": "Hit Points",
 "CoC7.HP": "HP",
 "CoC7.MagicPoints": "Magic Points",
@@ -306,6 +308,16 @@
 "CoC7.OccultBook": "Occult Tome",
 "CoC7.Unidentified": "Unidentified description",
 
+"CoC7.PulpTalents": "Pulp Talents",
+"CoC7.TalentType": "Talent Type",
+"CoC7.PhysicalTalent": "Physical",
+"CoC7.MentalTalent": "Mental",
+"CoC7.CombatTalent": "Combat",
+"CoC7.MiscellaneousTalent": "Miscellaneous",
+"CoC7.BasicTalent": "Basic",
+"CoC7.InsaneTalent": "Insane",
+"CoC7.OtherTalent": "Other",
+
 "CoC7.Items": "Items",
 "CoC7.Books": "Books",
 
@@ -326,6 +338,6 @@
 "SETTINGS.InitiativeRuleOptional": "Optional",
 "SETTINGS.displayInitDices": "Display init dice",
 "SETTINGS.displayInitDicesHint": "Display the dices when rolling for initiative (Optional rules only)",
-"SETTINGS.PulpRules" : "Use Pulp HP",
-"SETTINGS.PulpRulesHint" : "Use Pulp Rules for HP calculation"
+"SETTINGS.PulpRules" : "Pulp rules",
+"SETTINGS.PulpRulesHint" : "Alow the usage of Pulp Rules (Archetype, Talent, HP), !early implementation!"
 }

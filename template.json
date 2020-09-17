@@ -160,7 +160,9 @@
                 "age": "",
                 "sex": "",
                 "residence": "",
-                "birthplace": ""
+                "birthplace": "",
+                "archetype": "",
+                "organization": ""
             },
             "flags": {
                 "locked": true,
@@ -228,13 +230,7 @@
         }
     },
     "Item": {
-        "types": [
-            "item",
-            "weapon",
-            "skill",
-            "book",
-            "spell"
-        ],
+        "types": [ "item", "weapon", "skill", "book", "spell", "talent"],
         "item": {
             "description": "",
             "quantity": 1,
@@ -356,6 +352,22 @@
             "spells": [],
             "properties": {},
             "flags": {}
+        },
+        "talent":{
+            "source": null,
+            "description": {
+                "value": "",
+                "chat": "",
+                "notes": ""},
+            "type":{
+                "physical": false,
+                "mental": false,
+                "combat": false,
+                "miscellaneous": false,
+                "basic": false,
+                "insane": false,
+                "other": false
+            }
         }
 
     }
