@@ -5,6 +5,7 @@ import { COC7 } from '../../config.js';
 import { CoC7MeleeInitiator } from '../../chat/combat/melee-initiator.js';
 import { CoC7RangeInitiator } from '../../chat/rangecombat.js';
 import { CoC7DamageRoll } from '../../chat/damagecards.js';
+import { CoC7ConCheck } from '../../chat/concheck.js';
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -24,6 +25,9 @@ export class CoC7ActorSheet extends ActorSheet {
 		data.rangeWpn = [];
 		data.meleeWpn = [];
 		data.actorFlags = {};
+
+		data.isDead = this.actor.dead;
+		data.isDying = this.actor.dying;
 
 		if( data.items){
 			for (const item of data.items) {
@@ -129,6 +133,7 @@ export class CoC7ActorSheet extends ActorSheet {
 				for( const weapon of weapons)
 				{
 					weapon.usesAlternateSkill = weapon.data.properties.auto == true || weapon.data.properties.brst == true;
+					if( !weapon.data.ammo) weapon.data.ammo = 0;
 
 					weapon.skillSet = true;
 					// weapon.data.skill.main.name = '';
@@ -279,6 +284,17 @@ export class CoC7ActorSheet extends ActorSheet {
 	activateListeners(html) {
 		super.activateListeners(html);
 
+		if( this.actor.dead){
+			if( game.user.isGM) html.find( '.is-dead').dblclick( this.revive.bind(this));
+			return;
+		}
+
+		if( this.actor.dying){
+			if( game.user.isGM) html.find('.is-dying').dblclick( this.heal.bind(this));
+			html.find('.dying-check').click( this.checkForDeath.bind(this));
+			return;
+		}
+
 		// Owner Only Listeners
 		if ( this.actor.owner ) {
 			html.find('.characteristics-label').click(this._onRollCharacteriticTest.bind(this));
@@ -298,6 +314,8 @@ export class CoC7ActorSheet extends ActorSheet {
 			html.find('.item .item-image').click(event => this._onItemRoll(event));
 			html.find('.weapon-name.rollable').click( event => this._onWeaponRoll(event));
 			html.find('.weapon-skill.rollable').click( event => this._onWeaponSkillRoll(event));
+			html.find('.reload-weapon').click( event => this._onReloadWeapon(event));
+			html.find('.add-ammo').click( this._onAddAmo.bind(this));
 			html.find('.read-only').dblclick(this._toggleReadOnly.bind(this));
 			html.on('click', '.weapon-damage', this._onWeaponDamage.bind(this));
 
@@ -400,6 +418,20 @@ export class CoC7ActorSheet extends ActorSheet {
 		event.preventDefault();
 		const status = event.currentTarget.dataset.status;
 		if( status) this.actor.toggleStatus( status);
+	}
+
+	async revive(){
+		if( game.user.isGM) this.actor.unsetStatus(COC7.status.dead);
+	}
+
+	async heal(){
+		if( game.user.isGM) this.actor.unsetStatus(COC7.status.dying);
+	}
+
+	async checkForDeath(event){
+		const conCheck = new CoC7ConCheck( this.actor.isToken? this.actor.tokenKey : this.actor._id);
+		conCheck.stayAlive = true;
+		conCheck.toMessage(event.shiftKey);
 	}
 
 	async _onResetCounter( event){
@@ -640,6 +672,20 @@ export class CoC7ActorSheet extends ActorSheet {
 			const card = new CoC7RangeInitiator( actorKey, itemId, fastForward);
 			card.createChatCard();
 		}
+	}
+
+	async _onReloadWeapon(event){
+		const itemId = event.currentTarget.closest('.item') ? event.currentTarget.closest('.item').dataset.itemId : null;
+		if( !itemId) return;
+		const weapon = this.actor.getOwnedItem( itemId);
+		await weapon.reload();
+	}
+
+	async _onAddAmo(event){
+		const itemId = event.currentTarget.closest('.item') ? event.currentTarget.closest('.item').dataset.itemId : null;
+		if( !itemId) return;
+		const weapon = this.actor.getOwnedItem( itemId);
+		await weapon.addBullet();
 	}
 
 	async _onWeaponSkillRoll(event) {

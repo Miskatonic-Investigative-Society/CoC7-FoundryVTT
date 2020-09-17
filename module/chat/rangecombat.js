@@ -176,6 +176,30 @@ export class CoC7RangeInitiator{
 		if( hits.length != 0) return hits; else return null;
 	}
 
+	get shotFired(){
+		return this.shots? this.shots.length : 0;
+	}
+
+	get totalAmmo(){
+		return this.weapon.getBulletLeft();
+	}
+
+	get maxShots(){
+		if(this.fullAuto) return '∞';
+		// return this.weapon.data.data.usesPerRound.max;
+
+		return this.weapon.data.data.usesPerRound.max? parseInt( this.weapon.data.data.usesPerRound.max) : 1;
+	}
+
+	get outOfAmmo(){
+		if( this.totalBulletsFired >= this.weapon.getBulletLeft()) return true;
+		return false;
+	}
+
+	get outOfShots(){
+		if( this.shots) return this.shots.length >= this.maxShots;
+		return false;
+	}
 
 	getTargetFromKey( key){
 		return this._targets.find( t => key === t.actorKey);
@@ -246,21 +270,35 @@ export class CoC7RangeInitiator{
 			transit: false		
 		};
 
+		let bulletLeft = this.totalAmmo - this.totalBulletsFired;
+
 		if( this.fullAuto){
-			shot.bulletsShot = Math.floor(this.autoWeaponSkill.data.data.value/10);
-			if( shot.bulletsShot <= 3) shot.bulletsShot = 3;
 			if( this.currentShotRank > 1){
 				const previousShot = this.shots[this.currentShotRank - 2];
 				if( previousShot.actorKey != this.activeTarget.actorKey){
 					const distance = chatHelper.getDistance( chatHelper.getTokenFromKey(previousShot.actorKey), chatHelper.getTokenFromKey(this.activeTarget.actorKey));
 					shot.transitBullets = Math.floor( chatHelper.toYards(distance));
+					if( shot.transitBullets >= bulletLeft) {
+						shot.transitBullets = bulletLeft;
+						bulletLeft = 0;
+					}
 					this.totalBulletsFired = parseInt(this.totalBulletsFired) + shot.transitBullets;
 					shot.transit = true;
 				}
 			}
+			shot.bulletsShot = Math.floor(this.autoWeaponSkill.data.data.value/10);
+			if( shot.bulletsShot <= 3) shot.bulletsShot = 3;
+			if( shot.bulletsShot >= bulletLeft){
+				shot.bulletsShot = bulletLeft;
+				bulletLeft = 0;
+			}
 		}
 		if( this.burst){
-			shot.bulletsShot = this.weapon.data.data.usesPerRound.burst;
+			shot.bulletsShot = parseInt( this.weapon.data.data.usesPerRound.burst)? parseInt( this.weapon.data.data.usesPerRound.burst):1;
+			if( shot.bulletsShot >= bulletLeft){
+				shot.bulletsShot = bulletLeft;
+				bulletLeft = 0;
+			}
 		}
 
 		this.totalBulletsFired = parseInt(this.totalBulletsFired) + shot.bulletsShot;
@@ -342,6 +380,7 @@ export class CoC7RangeInitiator{
 			let index = 0;
 			while( !weaponMalfunction && this.shots.length > index){
 				const roll = this.shootAtTarget(this.shots[index]);
+				await this.weapon.shootBullets( this.shots[index].bulletsShot + this.shots[index].transitBullets );
 				if( roll.hasMalfunction){
 					roll.isSuccess = false;
 					weaponMalfunction = true;
@@ -351,6 +390,8 @@ export class CoC7RangeInitiator{
 			}			
 		} else {
 			const roll = this.shootAtTarget();
+			let bulletFired = this.burst? parseInt(this.weapon.data.data.usesPerRound.burst) :1;
+			if( bulletFired >= this.totalAmmo) bulletFired = this.totalAmmo;
 			const shot = {
 				target: this.activeTarget,
 				extremeRange: this.activeTarget.extremeRange,
@@ -359,10 +400,12 @@ export class CoC7RangeInitiator{
 				difficulty: this.activeTarget.shotDifficulty.level,
 				modifier: this.activeTarget.shotDifficulty.modifier,
 				damage: this.activeTarget.shotDifficulty.damage,
-				bulletsShot: 1,
+				bulletsShot: bulletFired,
 				transitBullets: 0,
 				transit: false		
 			};
+			await this.weapon.shootBullets( bulletFired);
+
 			if( roll.hasMalfunction){
 				roll.isSuccess = false;
 			}
