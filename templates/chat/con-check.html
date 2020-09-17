@@ -1,0 +1,42 @@
+<div class="coc7 chat-card con-check-card"
+	data-actor-id="{{actorId}}"
+	data-applied="{{applied}}"
+	data-is-blind="{{isBlind}}"
+	data-stay-alive="{{stayAlive}}"
+	{{#if tokenKey}}data-token-id="{{tokenKey}}"{{/if}}>
+
+	<div class='roll-result'></div>
+
+	<div class='con-roll'></div>
+	
+	{{#if isBlind}}
+		{{#if isRolled}}
+		<div class='card-buttons gm-visible-only'>
+			<button data-action="reveal-con-check">Reveal Con Check</button>
+		</div>
+		{{else}}
+		<div class='card-buttons owner-only'>
+			<button data-action="roll-con-check">Consitution check ({{actor.data.data.characteristics.con.value}}%)</button>
+		</div>
+		{{/if}}
+	{{else}}
+		{{#if isRolled}}
+			<div class='card-buttons'>
+				{{#if isSuccess}}
+					<h4 class="con-result resist">{{actor.name}} resist</h4>
+				{{else}}
+					{{#if stayAlive}}
+						<h4 class="con-result loss">{{actor.name}} is dead!</h4>
+					{{else}}
+						<h4 class="con-result loss">{{actor.name}} fall unconscious!</h4>
+					{{/if}}
+				{{/if}}
+			</div>
+		{{else}}
+			<div class='card-buttons owner-only'>
+				<button data-action="roll-con-check">Consitution check ({{actor.data.data.characteristics.con.value}}%)</button>
+			</div>
+		{{/if}}
+		</div>
+	{{/if}}
+</div>

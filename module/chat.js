@@ -8,6 +8,7 @@ import { CoC7RangeInitiator } from './chat/rangecombat.js';
 import { CoC7Roll, chatHelper } from './chat/helper.js';
 import { CoC7DamageRoll } from './chat/damagecards.js';
 import { CoC7SanCheck } from './chat/sancheck.js';
+import { CoC7ConCheck } from './chat/concheck.js';
 
 export class CoC7Chat{
 
@@ -1003,7 +1004,7 @@ export class CoC7Chat{
 					const upgradeIndex = parseInt(button.dataset.index);
 					rangeCard.upgradeRoll( rollIndex, upgradeIndex);	
 				}			
-			} else if( card.classList.contains('roll-card')) {
+			} else if( card.classList.contains('roll-card') || null != card.querySelector('.roll-result')) {
 				const check = await CoC7Check.getFromCard( card);
 				if( button.classList.contains('pass-check')) {
 					const luckAmount = parseInt( button.dataset.luckAmount);
@@ -1191,6 +1192,25 @@ export class CoC7Chat{
 			await rangeInitiator.rollDamage();
 			break;
 		}
+		case 'deal-melee-damage':{
+			const targetKey = card.dataset.targetKey;
+			const amount = card.dataset.result;
+			const targetActor = chatHelper.getActorFromKey( targetKey);
+			await targetActor.dealDamage( amount);
+			const buttons = card.querySelector('.card-buttons');
+			const diceTotal = card.querySelector('.dice-total');
+			$(diceTotal).append('<i class="fas fa-check"></i>');
+			if( buttons) buttons.remove();
+			await CoC7Chat.updateChatCard( card);
+
+			break;
+		}
+
+		case 'deal-range-damage':{
+			const rangeInitiator = CoC7RangeInitiator.getFromCard( card);
+			await rangeInitiator.dealDamage();
+			break;
+		}
 
 		case 'testcheck':{
 			const check = await CoC7Check.getFromCard( card);
@@ -1257,6 +1277,27 @@ export class CoC7Chat{
 			const sanCheck = CoC7SanCheck.getFromCard( card);
 			await sanCheck.applySanLoss();
 			sanCheck.updateChatCard();
+			break;
+		}
+
+		case 'reveal-san-check':{
+			const sanCheck = CoC7SanCheck.getFromCard( card);
+			sanCheck.isBlind = false;
+			sanCheck.updateChatCard();
+			break;
+		}
+
+		case 'roll-con-check':{
+			const conCheck = CoC7ConCheck.getFromCard(card);
+			await conCheck.rollCon();
+			conCheck.updateChatCard();
+			break;
+		}
+
+		case 'reveal-con-check':{
+			const conCheck = CoC7ConCheck.getFromCard( card);
+			conCheck.isBlind = false;
+			conCheck.updateChatCard();
 			break;
 		}
 
