@@ -20,6 +20,20 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.3.6 :
+
+* Addition of pulp talents (To be tested, I’m not familiar with Pulp Cthulhu, all of this is mainly cosmetic, no automation implemented so far)
+  * There's a new sheet for pulp talents.
+  * Talents can be dragged/dropped on actors (PC & NPC).
+  * Talents are displayed as a section of the "Gear&Cash" tab.
+  * Talents have no effect in play (e.g. the "Resilient" talent will NOT be taken in account for sanity loss, you'll have to do it "manually")
+* Two fields added to the character sheet for pulp heroes (Archetype and Organization).
+  * To have those displayed, as well as the auto HP calculation you will have to enable the "Pulp Rules" option from the system's options.
+* Bug correction: Ammo loaded in weapons is now correctly saved between sessions.
+* On the combat chat card you can now increase/decrease the volley size in full-auto mode.
+* Added option to ignore bullets limitation.
+* Added option to ignore uses per round limitation.
+
 version 0.3.5 :
 
 * Automatic damage.
