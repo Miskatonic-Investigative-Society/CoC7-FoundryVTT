@@ -294,4 +294,18 @@ export class CoC7Damage{
 		return 'd6';
 	}
 
+	static getFromElement( element, object = null){
+		if( !element) return;
+		const damage = object? object : {};
+		chatHelper.getObjectFromElement( damage, element);
+		const rolls = element.querySelector('.dice-rolls').querySelectorAll('li');
+		damage.rolls = [];
+		rolls.forEach( r => {
+			const roll = {};
+			chatHelper.getObjectFromElement( roll, r);
+			damage.rolls.push(roll);
+		});
+
+		if( !object) return damage;
+	}
 }
