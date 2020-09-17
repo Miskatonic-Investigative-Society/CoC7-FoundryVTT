@@ -23,11 +23,11 @@ Compendium 'Weapons' contains a single test weapon.
 version 0.3.5 :
 
 * Automatic damage.
-  * When a combat card is resolved an option will appear to automaticaly deal the damage to the target(s).
-  * When damage is dealt status (major wounds, dying, unconscious ...) will be triggered.
+  * When a combat card is resolved an option will appear to automatically deal the damage to the target(s).
+  * When damage is dealt status (major wounds, dying, unconscious...) will be triggered.
   * When receiving major wounds status a CON roll card will be triggered.
   * When dying, the only option for the player will be ti do a CON roll by clicking on the dice in the header of the sheet.
-  * On failling a dying CON check or receiving more damage than max HP a player will die.
+  * On failing a dying CON check or receiving more damage than max HP a player will die.
   * When dying or death, the actor portrait will be replaced by the dying/death icon.
   * Only the keeper can clear the dying/dead status by DOUBLE clicking on the portrait.
 * Ammunition/Uses per round.
