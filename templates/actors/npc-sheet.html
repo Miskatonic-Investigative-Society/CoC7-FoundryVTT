@@ -12,6 +12,12 @@
 					<label>{{localize 'CoC7.Occupation'}}</label>
 					<input name="data.infos.occupation" type="text" value="{{data.infos.occupation}}"/>
 				</div>
+				{{#if pulpCharacter}}
+				<div class="flexrow flex2">
+					<label>{{localize 'CoC7.Organization'}}</label>
+					<input name="data.infos.organization" type="text" value="{{data.infos.organization}}"/>
+				</div>
+				{{/if}}
 				<div class="flexrow flex1">
 					<label>{{localize 'CoC7.Age'}}</label>
 					<input name="data.infos.age" type="text" value="{{data.infos.age}}"/>
@@ -360,6 +366,29 @@
 						{{/each}}
 						</ol>
 					</div>
+					{{/if}}
+					{{#if pulpCharacter}}
+						{{#if  itemsByType.talent}}
+							<div class="inventory-section">
+								<li class="flexrow inventory-header">
+									<div class="item-name flexrow">
+										<h3>{{localize 'CoC7.PulpTalents'}}</h3>
+									</div>
+								</li>
+								<ol class="item-list">
+								{{#each itemsByType.talent as |item id|}}
+									<li class="item flexrow" data-item-id="{{item._id}}">
+										<div class="item-image" style="background-image: url({{item.img}})"></div>
+										<h4 class="item-name show-detail">{{item.name}}</h4>
+										<div class="item-controls">
+											<a class="item-control item-edit" title="{{localize 'CoC7.EditItem'}}"><i class="fas fa-edit"></i></a>
+											<a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
+										</div>
+									</li>
+								{{/each}}
+								</ol>
+							</div>
+						{{/if}}
 					{{/if}}
 				</ol>
 			</div>
