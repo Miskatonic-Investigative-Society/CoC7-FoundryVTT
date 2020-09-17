@@ -413,8 +413,8 @@ export class CoC7RangeInitiator{
 			let weaponMalfunction = false;
 			let index = 0;
 			while( !weaponMalfunction && this.shots.length > index){
-				const roll = this.shootAtTarget(this.shots[index]);
-				await this.weapon.shootBullets( this.shots[index].bulletsShot + this.shots[index].transitBullets );
+				const roll = this.shootAtTarget( this.shots[index]);
+				await this.weapon.shootBullets( parseInt(this.shots[index].bulletsShot) + parseInt(this.shots[index].transitBullets));
 				if( roll.hasMalfunction){
 					roll.isSuccess = false;
 					weaponMalfunction = true;
@@ -770,8 +770,8 @@ export class CoC7RangeTarget{
 
 	get sizeText(){
 		if( this.big) return '1 bonus die for big target (Build > +4)';
-		if( this.small) return '1 malus die for a small target';
-		return 'Target has a normal size, no bonus/malus';
+		if( this.small) return '1 penalty die for a small target';
+		return 'Target has a normal size, no bonus/penalty';
 	}
 
 	get sizeLabel(){
