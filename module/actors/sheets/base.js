@@ -29,6 +29,8 @@ export class CoC7ActorSheet extends ActorSheet {
 		data.isDead = this.actor.dead;
 		data.isDying = this.actor.dying;
 
+		data.pulpCharacter = game.settings.get('CoC7', 'pulpRules');
+
 		if( data.items){
 			for (const item of data.items) {
 				//si c'est une formule et qu'on peut l'evaluer
@@ -579,7 +581,7 @@ export class CoC7ActorSheet extends ActorSheet {
 			summary.slideUp(200, () => summary.remove());
 		} else {
 			let div = $(`<div class="item-summary">${chatData.description.value}</div>`);
-			if( item.data.data.properties.spcl) {
+			if( item.data.data.properties?.spcl) {
 				let specialDiv = $(`<div class="item-summary">${chatData.description.special}</div>`);
 				div.append(specialDiv);
 			}

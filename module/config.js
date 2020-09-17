@@ -82,6 +82,16 @@ COC7.bookType = {
 	other: 'CoC7.Other'
 };
 
+COC7.talentType = {
+	physical: 'CoC7.PhysicalTalent',
+	mental: 'CoC7.MentalTalent',
+	combat: 'CoC7.CombatTalent',
+	miscellaneous: 'CoC7.MiscellaneousTalent',
+	basic: 'CoC7.BasicTalent',
+	insane: 'CoC7.InsaneTalent',
+	other: 'CoC7.OtherTalent'
+};
+
 COC7.formula = {};
 
 COC7.formula.actor = {

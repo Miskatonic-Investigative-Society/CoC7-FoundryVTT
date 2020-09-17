@@ -43,6 +43,7 @@ export class CoC7Chat{
 		html.on('click', '.panel-switch', CoC7Chat._onChatCardToggleSwitch.bind(this));
 
 		html.on('click', '.simple-flag', CoC7Chat._onChatCardToggleSwitch.bind(this));
+		html.on('click', '.volley-size', CoC7Chat._onChatCardVolleySize.bind(this));
 
 		html.on('click', '.dropdown-element', CoC7Chat._onDropDownElementSelected.bind(this));
 		html.on('click', '.simple-toggle', CoC7Chat._onToggleSelected.bind(this));
@@ -652,6 +653,19 @@ export class CoC7Chat{
 			}
 		}
 		event.currentTarget.parentElement.dataset.selected = event.currentTarget.dataset.property;
+	}
+
+	static async _onChatCardVolleySize( event){
+		const card = event.currentTarget.closest('.chat-card');
+		
+		if( card.classList.contains( 'range')){
+			if( card.classList.contains('initiator')){
+				const rangeCard = CoC7RangeInitiator.getFromCard( card);
+				if( event.currentTarget.classList.contains('increase')) rangeCard.changeVolleySize( 1);
+				else if( event.currentTarget.classList.contains('decrease'))  rangeCard.changeVolleySize( -1);
+			}
+		}
+
 	}
 
 	static async _onChatCardToggleSwitch( event){
