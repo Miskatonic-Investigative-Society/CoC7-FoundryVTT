@@ -191,12 +191,22 @@ export class CoC7RangeInitiator{
 		return this.weapon.data.data.usesPerRound.max? parseInt( this.weapon.data.data.usesPerRound.max) : 1;
 	}
 
+	get ignoreAmmo(){
+		return game.settings.get('CoC7', 'disregardAmmo');
+	}
+
+	get ignoreUsesPerRound(){
+		return game.settings.get('CoC7', 'disregardUsePerRound');
+	}
+
 	get outOfAmmo(){
+		if( this.ignoreAmmo) return false;
 		if( this.totalBulletsFired >= this.weapon.getBulletLeft()) return true;
 		return false;
 	}
 
 	get outOfShots(){
+		if( this.ignoreUsesPerRound) return false;
 		if( this.shots) return this.shots.length >= this.maxShots;
 		return false;
 	}
@@ -302,7 +312,7 @@ export class CoC7RangeInitiator{
 				if( previousShot.actorKey != this.activeTarget.actorKey){
 					const distance = chatHelper.getDistance( chatHelper.getTokenFromKey(previousShot.actorKey), chatHelper.getTokenFromKey(this.activeTarget.actorKey));
 					shot.transitBullets = Math.floor( chatHelper.toYards(distance));
-					if( shot.transitBullets >= bulletLeft) {
+					if( shot.transitBullets >= bulletLeft && !this.ignoreAmmo) {
 						shot.transitBullets = bulletLeft;
 						bulletLeft = 0;
 					}
@@ -312,14 +322,14 @@ export class CoC7RangeInitiator{
 			}
 			shot.bulletsShot = this.volleySize;
 			if( shot.bulletsShot <= 3) shot.bulletsShot = 3;
-			if( shot.bulletsShot >= bulletLeft){
+			if( shot.bulletsShot >= bulletLeft && !this.ignoreAmmo){
 				shot.bulletsShot = bulletLeft;
 				bulletLeft = 0;
 			}
 		}
 		if( this.burst){
 			shot.bulletsShot = parseInt( this.weapon.data.data.usesPerRound.burst)? parseInt( this.weapon.data.data.usesPerRound.burst):1;
-			if( shot.bulletsShot >= bulletLeft){
+			if( shot.bulletsShot >= bulletLeft  && !this.ignoreAmmo){
 				shot.bulletsShot = bulletLeft;
 				bulletLeft = 0;
 			}
