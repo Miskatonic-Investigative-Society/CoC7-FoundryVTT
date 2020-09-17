@@ -20,6 +20,10 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.3.7 :
+
+* Bug correction typo on the character sheet.
+
 version 0.3.6 :
 
 * Addition of pulp talents (To be tested, I’m not familiar with Pulp Cthulhu, all of this is mainly cosmetic, no automation implemented so far)
