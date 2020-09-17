@@ -339,5 +339,9 @@
 "SETTINGS.displayInitDices": "Display init dice",
 "SETTINGS.displayInitDicesHint": "Display the dices when rolling for initiative (Optional rules only)",
 "SETTINGS.PulpRules" : "Pulp rules",
-"SETTINGS.PulpRulesHint" : "Alow the usage of Pulp Rules (Archetype, Talent, HP), !early implementation!"
+"SETTINGS.PulpRulesHint" : "Alow the usage of Pulp Rules (Archetype, Talent, HP), !early implementation!",
+"SETTINGS.DisregardAmmo": "Disregard Ammo count.",
+"SETTINGS.DisregardAmmoHint": "Enabling this will not take in account the number of bullets loaded in the gun.",
+"SETTINGS.DisregardUsePerRound": "Disregard Uses per Rounds.",
+"SETTINGS.DisregardUsePerRoundHint": "Enabling this will allow you to fire as much as you want, regardless of the uses per round of the weapon."
 }
