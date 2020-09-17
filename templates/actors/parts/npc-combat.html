@@ -1,10 +1,10 @@
 <div class="flexrow combat-header" style="border-bottom: 1px groove;text-align: center;font-weight: bold;">
-	<div class="flex2" style="border-right: 1px groove; padding-left: 2px;">Name</div>
+	<div class="flex2" style="border-right: 1px groove; padding-left: 2px;">{{localize 'CoC7.WeaponName'}}</div>
 	<div class="flex4 flexrow" style="border-right: 1px groove; padding-left: 2px;">
-		<div class="flex1">Skill</div>
-		<div class="flex1">Alt-skill</div>
+		<div class="flex1">{{localize 'CoC7.WeaponSkill'}}</div>
+		<div class="flex1">{{localize 'CoC7.WeaponSkillAlt'}}</div>
 	</div>
-	<div class=" flex2" style="padding-left: 2px;">Damage</div>
+	<div class=" flex2" style="padding-left: 2px;">{{localize 'CoC7.WeaponDamage'}}</div>
 </div>
 <ol class="weapons-list" style="padding: 0; margin: 0;">
 	{{#each weapons as |weapon id|}}
@@ -38,6 +38,13 @@
 								<a class="roll" data-mode="roll" title="{{weapon.data.range.normal.value}}" data-formula="{{weapon.data.range.normal.damage}}"><i class="fas fa-dice-d20"></i> {{weapon.data.range.normal.damage}}</a>
 							</div>
 							{{/if}}
+							<div class='flexrow' style='flex: 0 0 35px;'>
+								<span class="tag" style='line-height: 16px;font-size: 10px;'>{{weapon.data.ammo}}</span>
+								<div class='flexcol' style='font-size: 9px;'>
+									<i class="fas fa-redo-alt reload-weapon" title="Reload"></i>
+									<i class="far fa-plus-square add-ammo" title="Add 1 ammunition"></i>
+								</div>
+							</div>
 						{{else}}
 						<div class="flex1 weapon-damage"  data-range="normal">
 							<a class="roll" data-mode="roll" data-formula="{{weapon.data.range.normal.damage}}" title="{{weapon.data.range.normal.value}}"><i class="fas fa-dice-d20"></i> {{weapon.data.range.normal.damage}}</a>

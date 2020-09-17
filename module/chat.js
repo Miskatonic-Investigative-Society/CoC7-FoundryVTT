@@ -8,6 +8,7 @@ import { CoC7RangeInitiator } from './chat/rangecombat.js';
 import { CoC7Roll, chatHelper } from './chat/helper.js';
 import { CoC7DamageRoll } from './chat/damagecards.js';
 import { CoC7SanCheck } from './chat/sancheck.js';
+import { CoC7ConCheck } from './chat/concheck.js';
 
 export class CoC7Chat{
 
@@ -42,6 +43,7 @@ export class CoC7Chat{
 		html.on('click', '.panel-switch', CoC7Chat._onChatCardToggleSwitch.bind(this));
 
 		html.on('click', '.simple-flag', CoC7Chat._onChatCardToggleSwitch.bind(this));
+		html.on('click', '.volley-size', CoC7Chat._onChatCardVolleySize.bind(this));
 
 		html.on('click', '.dropdown-element', CoC7Chat._onDropDownElementSelected.bind(this));
 		html.on('click', '.simple-toggle', CoC7Chat._onToggleSelected.bind(this));
@@ -64,6 +66,8 @@ export class CoC7Chat{
 
 
 	static async onUpdateChatMessage( chatMessage){
+		// if( chatMessage.getFlag( 'CoC7', 'reveled')){
+		// }
 		if( game.user.isGM){
 			const card = $(chatMessage.data.content)[0];
 			if( card.classList.contains('melee'))
@@ -75,21 +79,25 @@ export class CoC7Chat{
 							const target = CoC7MeleeTarget.getFromMessageId( initiator.targetCard);
 							if( target.resolved){
 								const resolutionCard = new CoC7MeleeResoltion( chatMessage.id, target.messageId, target.resolutionCard);
-								resolutionCard.resolve();
+								await resolutionCard.resolve();
+								if( !initiator.checkRevealed) await initiator.revealCheck();
+
 							}
 						}
 						else { 
 							const initiator = CoC7MeleeInitiator.getFromMessageId( chatMessage.id);
 							if( initiator.resolutionCard){
 								const resolutionCard = new CoC7MeleeResoltion( chatMessage.id, null, initiator.resolutionCard);
-								resolutionCard.resolve();
+								await resolutionCard.resolve();
+								if( !initiator.checkRevealed) await initiator.revealCheck();
 							}
 						}
 					}
 					if( card.classList.contains('target')){
 						const target = CoC7MeleeTarget.getFromMessageId( chatMessage.id);
 						const resolutionCard = new CoC7MeleeResoltion( target.parentMessageId, chatMessage.id, target.resolutionCard);
-						resolutionCard.resolve();
+						await resolutionCard.resolve();
+						if( !target.meleeInitiator.checkRevealed) await target.meleeInitiator.revealCheck();
 					}
 
 				}
@@ -100,6 +108,18 @@ export class CoC7Chat{
 	}
 
 	static async renderMessageHook(message, html) {
+
+		if( message.getFlag( 'CoC7', 'checkRevealed')){
+			html.find('.dice-roll').removeClass('gm-visible-only');
+			html[0].dataset.checkRevealed = true;
+
+			// const htmlMessage = $(chatMessage.data.content);
+			// const roll = new CoC7Check;
+			// CoC7Roll.getFromElement(htmlMessage.find('.dice-roll')[0], roll );
+			// roll.showDiceRoll();
+	
+
+		}
 
 		//Handle showing dropdown selection
 		html.find('.dropbtn').click(event => event.currentTarget.closest('.dropdown').querySelector('.dropdown-content').classList.toggle('show'));
@@ -635,6 +655,19 @@ export class CoC7Chat{
 		event.currentTarget.parentElement.dataset.selected = event.currentTarget.dataset.property;
 	}
 
+	static async _onChatCardVolleySize( event){
+		const card = event.currentTarget.closest('.chat-card');
+		
+		if( card.classList.contains( 'range')){
+			if( card.classList.contains('initiator')){
+				const rangeCard = CoC7RangeInitiator.getFromCard( card);
+				if( event.currentTarget.classList.contains('increase')) rangeCard.changeVolleySize( 1);
+				else if( event.currentTarget.classList.contains('decrease'))  rangeCard.changeVolleySize( -1);
+			}
+		}
+
+	}
+
 	static async _onChatCardToggleSwitch( event){
 		event.preventDefault();
 
@@ -985,7 +1018,7 @@ export class CoC7Chat{
 					const upgradeIndex = parseInt(button.dataset.index);
 					rangeCard.upgradeRoll( rollIndex, upgradeIndex);	
 				}			
-			} else if( card.classList.contains('roll-card')) {
+			} else if( card.classList.contains('roll-card') || null != card.querySelector('.roll-result')) {
 				const check = await CoC7Check.getFromCard( card);
 				if( button.classList.contains('pass-check')) {
 					const luckAmount = parseInt( button.dataset.luckAmount);
@@ -1173,6 +1206,25 @@ export class CoC7Chat{
 			await rangeInitiator.rollDamage();
 			break;
 		}
+		case 'deal-melee-damage':{
+			const targetKey = card.dataset.targetKey;
+			const amount = card.dataset.result;
+			const targetActor = chatHelper.getActorFromKey( targetKey);
+			await targetActor.dealDamage( amount);
+			const buttons = card.querySelector('.card-buttons');
+			const diceTotal = card.querySelector('.dice-total');
+			$(diceTotal).append('<i class="fas fa-check"></i>');
+			if( buttons) buttons.remove();
+			await CoC7Chat.updateChatCard( card);
+
+			break;
+		}
+
+		case 'deal-range-damage':{
+			const rangeInitiator = CoC7RangeInitiator.getFromCard( card);
+			await rangeInitiator.dealDamage();
+			break;
+		}
 
 		case 'testcheck':{
 			const check = await CoC7Check.getFromCard( card);
@@ -1239,6 +1291,27 @@ export class CoC7Chat{
 			const sanCheck = CoC7SanCheck.getFromCard( card);
 			await sanCheck.applySanLoss();
 			sanCheck.updateChatCard();
+			break;
+		}
+
+		case 'reveal-san-check':{
+			const sanCheck = CoC7SanCheck.getFromCard( card);
+			sanCheck.isBlind = false;
+			sanCheck.updateChatCard();
+			break;
+		}
+
+		case 'roll-con-check':{
+			const conCheck = CoC7ConCheck.getFromCard(card);
+			await conCheck.rollCon();
+			conCheck.updateChatCard();
+			break;
+		}
+
+		case 'reveal-con-check':{
+			const conCheck = CoC7ConCheck.getFromCard( card);
+			conCheck.isBlind = false;
+			conCheck.updateChatCard();
 			break;
 		}
 

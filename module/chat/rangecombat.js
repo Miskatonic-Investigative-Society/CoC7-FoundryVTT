@@ -176,6 +176,64 @@ export class CoC7RangeInitiator{
 		if( hits.length != 0) return hits; else return null;
 	}
 
+	get shotFired(){
+		return this.shots? this.shots.length : 0;
+	}
+
+	get totalAmmo(){
+		return this.weapon.getBulletLeft();
+	}
+
+	get maxShots(){
+		if(this.fullAuto) return '∞';
+		// return this.weapon.data.data.usesPerRound.max;
+
+		return this.weapon.data.data.usesPerRound.max? parseInt( this.weapon.data.data.usesPerRound.max) : 1;
+	}
+
+	get ignoreAmmo(){
+		return game.settings.get('CoC7', 'disregardAmmo');
+	}
+
+	get ignoreUsesPerRound(){
+		return game.settings.get('CoC7', 'disregardUsePerRound');
+	}
+
+	get outOfAmmo(){
+		if( this.ignoreAmmo) return false;
+		if( this.totalBulletsFired >= this.weapon.getBulletLeft()) return true;
+		return false;
+	}
+
+	get outOfShots(){
+		if( this.ignoreUsesPerRound) return false;
+		if( this.shots) return this.shots.length >= this.maxShots;
+		return false;
+	}
+
+	get volleySize(){
+		if( ! this.weapon.data.data.properties.auto) return 1;
+		if( this._volleySize) return this._volleySize;
+		const size = Math.floor(this.autoWeaponSkill.data.data.value/10);
+		return (size < 3) ? 3:size;
+	}
+
+	set volleySize(x){
+		if( x >= Math.floor(this.autoWeaponSkill.data.data.value/10)) this._volleySize = Math.floor(this.autoWeaponSkill.data.data.value/10);
+		else if ( x <= 3) this._volleySize = 3;
+		this._volleySize = parseInt(x);
+	}
+
+	get isVolleyMinSize(){
+		if( 3 == this.volleySize ) return true;
+		return false;
+	}
+
+	get isVolleyMaxSize(){
+		const maxSize = Math.floor(this.autoWeaponSkill.data.data.value/10) < 3 ? 3 : Math.floor(this.autoWeaponSkill.data.data.value/10);
+		if( maxSize == this.volleySize ) return true;
+		return false;
+	}
 
 	getTargetFromKey( key){
 		return this._targets.find( t => key === t.actorKey);
@@ -246,21 +304,35 @@ export class CoC7RangeInitiator{
 			transit: false		
 		};
 
+		let bulletLeft = this.totalAmmo - this.totalBulletsFired;
+
 		if( this.fullAuto){
-			shot.bulletsShot = Math.floor(this.autoWeaponSkill.data.data.value/10);
-			if( shot.bulletsShot <= 3) shot.bulletsShot = 3;
 			if( this.currentShotRank > 1){
 				const previousShot = this.shots[this.currentShotRank - 2];
 				if( previousShot.actorKey != this.activeTarget.actorKey){
 					const distance = chatHelper.getDistance( chatHelper.getTokenFromKey(previousShot.actorKey), chatHelper.getTokenFromKey(this.activeTarget.actorKey));
 					shot.transitBullets = Math.floor( chatHelper.toYards(distance));
+					if( shot.transitBullets >= bulletLeft && !this.ignoreAmmo) {
+						shot.transitBullets = bulletLeft;
+						bulletLeft = 0;
+					}
 					this.totalBulletsFired = parseInt(this.totalBulletsFired) + shot.transitBullets;
 					shot.transit = true;
 				}
 			}
+			shot.bulletsShot = this.volleySize;
+			if( shot.bulletsShot <= 3) shot.bulletsShot = 3;
+			if( shot.bulletsShot >= bulletLeft && !this.ignoreAmmo){
+				shot.bulletsShot = bulletLeft;
+				bulletLeft = 0;
+			}
 		}
 		if( this.burst){
-			shot.bulletsShot = this.weapon.data.data.usesPerRound.burst;
+			shot.bulletsShot = parseInt( this.weapon.data.data.usesPerRound.burst)? parseInt( this.weapon.data.data.usesPerRound.burst):1;
+			if( shot.bulletsShot >= bulletLeft  && !this.ignoreAmmo){
+				shot.bulletsShot = bulletLeft;
+				bulletLeft = 0;
+			}
 		}
 
 		this.totalBulletsFired = parseInt(this.totalBulletsFired) + shot.bulletsShot;
@@ -342,6 +414,7 @@ export class CoC7RangeInitiator{
 			let index = 0;
 			while( !weaponMalfunction && this.shots.length > index){
 				const roll = this.shootAtTarget(this.shots[index]);
+				await this.weapon.shootBullets( this.shots[index].bulletsShot + this.shots[index].transitBullets );
 				if( roll.hasMalfunction){
 					roll.isSuccess = false;
 					weaponMalfunction = true;
@@ -351,6 +424,8 @@ export class CoC7RangeInitiator{
 			}			
 		} else {
 			const roll = this.shootAtTarget();
+			let bulletFired = this.burst? parseInt(this.weapon.data.data.usesPerRound.burst) :1;
+			if( bulletFired >= this.totalAmmo) bulletFired = this.totalAmmo;
 			const shot = {
 				target: this.activeTarget,
 				extremeRange: this.activeTarget.extremeRange,
@@ -359,10 +434,12 @@ export class CoC7RangeInitiator{
 				difficulty: this.activeTarget.shotDifficulty.level,
 				modifier: this.activeTarget.shotDifficulty.modifier,
 				damage: this.activeTarget.shotDifficulty.damage,
-				bulletsShot: 1,
+				bulletsShot: bulletFired,
 				transitBullets: 0,
 				transit: false		
 			};
+			await this.weapon.shootBullets( bulletFired);
+
 			if( roll.hasMalfunction){
 				roll.isSuccess = false;
 			}
@@ -417,6 +494,12 @@ export class CoC7RangeInitiator{
 		initiator.messageId = messageId;
 
 		return initiator;
+	}
+
+	
+	changeVolleySize( x){
+		this.volleySize = this.volleySize + x;
+		this.updateChatCard();
 	}
 	
 	static updateCardSwitch( event, publishUpdate = true){
@@ -499,6 +582,13 @@ export class CoC7RangeInitiator{
 			rangeInitiator.rolls.push(roll);
 		});
 
+		rangeInitiator.damage = [];
+		const damageRolls = card.querySelectorAll('.damage-results');
+		damageRolls.forEach( dr => {
+			const damageRoll = CoC7Damage.getFromElement( dr);
+			rangeInitiator.damage.push( damageRoll);
+		});
+
 		return rangeInitiator;
 	}
 
@@ -506,13 +596,14 @@ export class CoC7RangeInitiator{
 		this.damage = [];
 		const hits=this.successfulHits;
 		
-		let volleySize = 1;
-		if( this.fullAuto) {
-			volleySize = Math.floor(this.autoWeaponSkill.data.data.value/10);
-			if(volleySize < 3) volleySize = 3;
-		}
-		if( this.burst) volleySize = parseInt(this.weapon.data.data.usesPerRound.burst);
+		// let volleySize = 1;
+		// if( this.fullAuto) {
+		// 	volleySize = this.volleySize;
+		// 	if(volleySize < 3) volleySize = 3;
+		// }
+		// if( this.burst) volleySize = parseInt(this.weapon.data.data.usesPerRound.burst);
 		hits.forEach( h => {
+			const volleySize = parseInt(h.shot.bulletsShot);
 			const damageRolls = [];
 			
 			const damageFormula = h.shot.damage;
@@ -523,14 +614,17 @@ export class CoC7RangeInitiator{
 
 			let impalingShots = 0;
 			let successfulShots = 0;
+			let critical = false;
 			if( this.fullAuto || this.burst) successfulShots = Math.floor(volleySize/2);
 			if( 0 == successfulShots) successfulShots = 1;
 			if( h.roll.successLevel >= CoC7Check.difficultyLevel.extreme){
 				impalingShots = successfulShots;
 				successfulShots = volleySize - impalingShots;
+				critical = true;
 				if( CoC7Check.difficultyLevel.critical != h.roll.successLevel && ((CoC7Check.difficultyLevel.extreme <= h.roll.difficulty) || h.shot.extremeRange)){
 					successfulShots = volleySize;
 					impalingShots = 0;
+					critical = false;
 				}
 			}
 
@@ -568,11 +662,26 @@ export class CoC7RangeInitiator{
 				targetKey: h.roll.targetKey,
 				targetName: targetName,
 				rolls: damageRolls,
-				total: total
+				total: total,
+				critical: critical,
+				dealt:false,
+				resultString: game.i18n.format('CoC7.rangeCombatDamage', {name : targetName, total: total})
 			});
 		});
 
 		this.damageRolled = 0 != this.damage.length;
+		this.updateChatCard();
+	}
+
+	async dealDamage(){
+		for (let dIndex = 0; dIndex < this.damage.length; dIndex++) {
+			const actor = chatHelper.getActorFromKey( this.damage[dIndex].targetKey);
+			for( let rIndex = 0; rIndex < this.damage[dIndex].rolls.length; rIndex++){
+				await actor.dealDamage( this.damage[dIndex].rolls[rIndex].total);
+			}
+			this.damage[dIndex].dealt = true;
+		}
+		this.damageDealt = true;
 		this.updateChatCard();
 	}
 
