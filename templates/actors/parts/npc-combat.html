@@ -38,6 +38,13 @@
 								<a class="roll" data-mode="roll" title="{{weapon.data.range.normal.value}}" data-formula="{{weapon.data.range.normal.damage}}"><i class="fas fa-dice-d20"></i> {{weapon.data.range.normal.damage}}</a>
 							</div>
 							{{/if}}
+							<div class='flexrow' style='flex: 0 0 35px;'>
+								<span class="tag" style='line-height: 16px;font-size: 10px;'>{{weapon.data.ammo}}</span>
+								<div class='flexcol' style='font-size: 9px;'>
+									<i class="fas fa-redo-alt reload-weapon" title="Reload"></i>
+									<i class="far fa-plus-square add-ammo" title="Add 1 ammunition"></i>
+								</div>
+							</div>
 						{{else}}
 						<div class="flex1 weapon-damage"  data-range="normal">
 							<a class="roll" data-mode="roll" data-formula="{{weapon.data.range.normal.damage}}" title="{{weapon.data.range.normal.value}}"><i class="fas fa-dice-d20"></i> {{weapon.data.range.normal.damage}}</a>
