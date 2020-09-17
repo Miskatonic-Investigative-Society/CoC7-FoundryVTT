@@ -29,6 +29,8 @@ version 0.3.6 :
   * Talents have no effect in play (e.g. the "Resilient" talent will NOT be taken in account for sanity loss, you'll have to do it "manually")
 * Two fields added to the character sheet for pulp heroes (Archetype and Organization).
   * To have those displayed, as well as the auto HP calculation you will have to enable the "Pulp Rules" option from the system's options.
+* Bug correction: Ammo loaded in weapons is now correctly saved between sessions.
+* Option added on the combat chat card to increase/decrease the volley size in full-auto mode.
 
 version 0.3.5 :
 

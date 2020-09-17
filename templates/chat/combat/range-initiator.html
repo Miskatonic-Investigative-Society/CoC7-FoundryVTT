@@ -20,7 +20,8 @@
 	data-damage-dealt="{{damageDealt}}"
 	data-total-bullets-fired="{{totalBulletsFired}}"
 	data-roll-mode="{{rollMode}}"
-	data-is-blind="false">
+	data-is-blind="false"
+	data-volley-size="{{volleySize}}">
 	
 	<header class="card-header flexcol">
 		<div class="flexrow">
@@ -52,6 +53,9 @@
 		<div class='total-bullets'>
 			<span class='tag'>Bullets fired : {{totalBulletsFired}}/{{totalAmmo}}</span>
 			<span class='tag'>Shots fired : {{shotFired}}{{#unless fullAuto}}/{{maxShots}}{{/unless}}</span>
+			{{#if fullAuto}}
+				<span class='tag'>Volley size: {{#unless isVolleyMinSize}}<i class="volley-size decrease far fa-minus-square"></i> {{/unless}}{{volleySize}}{{#unless isVolleyMaxSize}} <i class="volley-size increase far fa-plus-square"></i>{{/unless}}</span>
+			{{/if}}
 		</div>
 		<div class="flexrow range-selection">
 			{{#if item.singleShot}}

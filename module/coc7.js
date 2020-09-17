@@ -107,6 +107,24 @@ Hooks.once('init', async function() {
 		default: true,
 		type: Boolean
 	});
+		
+	game.settings.register('CoC7', 'disregardAmmo', {
+		name: 'SETTINGS.DisregardAmmo',
+		hint: 'SETTINGS.DisregardAmmoHint',
+		scope: 'world',
+		config: true,
+		default: false,
+		type: Boolean
+	});
+		
+	game.settings.register('CoC7', 'disregardUsePerRound', {
+		name: 'SETTINGS.DisregardUsePerRound',
+		hint: 'SETTINGS.DisregardUsePerRoundHint',
+		scope: 'world',
+		config: true,
+		default: false,
+		type: Boolean
+	});
 
 	function _setInitiativeOptions(rule)
 	{

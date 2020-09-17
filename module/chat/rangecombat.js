@@ -201,6 +201,30 @@ export class CoC7RangeInitiator{
 		return false;
 	}
 
+	get volleySize(){
+		if( ! this.weapon.data.data.properties.auto) return 1;
+		if( this._volleySize) return this._volleySize;
+		const size = Math.floor(this.autoWeaponSkill.data.data.value/10);
+		return (size < 3) ? 3:size;
+	}
+
+	set volleySize(x){
+		if( x >= Math.floor(this.autoWeaponSkill.data.data.value/10)) this._volleySize = Math.floor(this.autoWeaponSkill.data.data.value/10);
+		else if ( x <= 3) this._volleySize = 3;
+		this._volleySize = parseInt(x);
+	}
+
+	get isVolleyMinSize(){
+		if( 3 == this.volleySize ) return true;
+		return false;
+	}
+
+	get isVolleyMaxSize(){
+		const maxSize = Math.floor(this.autoWeaponSkill.data.data.value/10) < 3 ? 3 : Math.floor(this.autoWeaponSkill.data.data.value/10);
+		if( maxSize == this.volleySize ) return true;
+		return false;
+	}
+
 	getTargetFromKey( key){
 		return this._targets.find( t => key === t.actorKey);
 	}
@@ -286,7 +310,7 @@ export class CoC7RangeInitiator{
 					shot.transit = true;
 				}
 			}
-			shot.bulletsShot = Math.floor(this.autoWeaponSkill.data.data.value/10);
+			shot.bulletsShot = this.volleySize;
 			if( shot.bulletsShot <= 3) shot.bulletsShot = 3;
 			if( shot.bulletsShot >= bulletLeft){
 				shot.bulletsShot = bulletLeft;
@@ -461,6 +485,12 @@ export class CoC7RangeInitiator{
 
 		return initiator;
 	}
+
+	
+	changeVolleySize( x){
+		this.volleySize = this.volleySize + x;
+		this.updateChatCard();
+	}
 	
 	static updateCardSwitch( event, publishUpdate = true){
 		const card = event.currentTarget.closest('.range.initiator');
@@ -556,13 +586,14 @@ export class CoC7RangeInitiator{
 		this.damage = [];
 		const hits=this.successfulHits;
 		
-		let volleySize = 1;
-		if( this.fullAuto) {
-			volleySize = Math.floor(this.autoWeaponSkill.data.data.value/10);
-			if(volleySize < 3) volleySize = 3;
-		}
-		if( this.burst) volleySize = parseInt(this.weapon.data.data.usesPerRound.burst);
+		// let volleySize = 1;
+		// if( this.fullAuto) {
+		// 	volleySize = this.volleySize;
+		// 	if(volleySize < 3) volleySize = 3;
+		// }
+		// if( this.burst) volleySize = parseInt(this.weapon.data.data.usesPerRound.burst);
 		hits.forEach( h => {
+			const volleySize = parseInt(h.shot.bulletsShot);
 			const damageRolls = [];
 			
 			const damageFormula = h.shot.damage;
