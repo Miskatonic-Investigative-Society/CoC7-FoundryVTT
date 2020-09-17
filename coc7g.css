@@ -430,7 +430,7 @@
 .coc7 .editor .tox-toolbar__primary {
   background: none;
 }
-.chat-card.san-loss-card h4.san-result {
+.chat-card h4.san-result {
   flex: 0 0 100%;
   line-height: 24px;
   text-align: center;
@@ -441,10 +441,27 @@
   font-size: 20px;
   font-weight: bold;
 }
-.chat-card.san-loss-card h4.san-result.loss {
+.chat-card h4.san-result.loss {
   color: darkred;
 }
-.chat-card.san-loss-card h4.san-result.resist {
+.chat-card h4.san-result.resist {
+  color: green;
+}
+.chat-card h4.con-result {
+  flex: 0 0 100%;
+  line-height: 24px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid #999;
+  border-radius: 3px;
+  box-shadow: 0 0 2px #FFF inset;
+  font-size: 20px;
+  font-weight: bold;
+}
+.chat-card h4.con-result.loss {
+  color: darkred;
+}
+.chat-card h4.con-result.resist {
   color: green;
 }
 .coc7.sheet.skill input:read-only:hover,
@@ -454,6 +471,12 @@
   border: 1px solid transparent;
   box-shadow: none;
   cursor: default;
+}
+.coc7.sheet.skill .read-only:hover,
+.coc7.sheet.item .read-only:hover,
+.coc7.sheet.skill .read-only:focus,
+.coc7.sheet.item .read-only:focus {
+  border: 1px solid black;
 }
 .coc7.sheet.skill .sheet-header img.profile,
 .coc7.sheet.item .sheet-header img.profile {
@@ -865,6 +888,10 @@
   border: 1px solid transparent;
   box-shadow: none;
   cursor: default;
+}
+.coc7.sheet.actor .read-only:hover,
+.coc7.sheet.actor .read-only:focus {
+  border: 1px solid black;
 }
 .coc7.sheet.actor .info-fields .form-group label {
   width: auto;

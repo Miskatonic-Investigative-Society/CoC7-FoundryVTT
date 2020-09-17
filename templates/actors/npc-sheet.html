@@ -199,9 +199,10 @@
 			</div>
 
 			<div class="status-monitors flexrow">
-				<a class="status-monitor {{#if data.status.unconscious.value}}status-on{{/if}}" title="{{localize 'CoC7.Unconsious'}}" data-status="unconscious"> <i class="fas fa-bed"></i></a>
+				<a class="status-monitor {{#if data.status.prone.value}}status-on{{/if}}" title="{{localize 'CoC7.Prone'}}" data-status='prone'> <i class="fas fa-angle-double-down"></i></a>
+				<a class="status-monitor {{#if data.status.unconscious.value}}status-on{{/if}}" title="{{localize 'CoC7.Unconsious'}}" data-status="unconscious"> <i class="fas fa-dizzy"></i></a>
 				<a class="status-monitor {{#if data.status.criticalWounds.value}}status-on{{/if}}" title="{{localize 'CoC7.CriticalWounds'}}" data-status="criticalWounds"> <i class="fas fa-user-injured"></i></a>
-				<a class="status-monitor {{#if data.status.dying.value}}status-on{{/if}}" title="Dying" data-status="{{localize 'CoC7.Dying'}}"> <i class="fas fa-heartbeat"></i></a>
+				<a class="status-monitor {{#if data.status.dying.value}}status-on{{/if}}" title="{{localize 'CoC7.Dying'}}" data-status="dying"> <i class="fas fa-heartbeat"></i></a>
 
 				<a class="status-monitor {{#if data.status.tempoInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.TemporaryInsanity'}}" data-status="tempoInsane"> <i class="fas fa-filter"></i></a>
 				<a class="status-monitor {{#if data.status.indefInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.IndefiniteInsanity'}}" data-status="indefInsane"> <i class="far fa-hospital"></i></a>
@@ -237,7 +238,19 @@
 				</div>
 			</div>
 		</div>
-		<img class="profile-img" src="{{actor.img}}" title="{{actor.name}}" data-edit="img" height="100" width="100"/>
+		{{#if isDead}}
+		<div class='is-dead' style="flex: 0 0 100px;margin: 6px;">
+			<i style="font-size: 100px;color: darkred;line-height: 100px;" class="fas fa-skull-crossbones"></i>
+		</div>
+		{{else}}
+			{{#if isDying}}
+				<div class='is-dying' style="flex: 0 0 100px;margin: 6px;">
+					<i style="font-size: 100px;color: darkred;line-height: 100px;" class="fas fa-heartbeat"></i>
+				</div>
+			{{else}}
+				<img class="profile-img" src="{{actor.img}}" title="{{actor.name}}" data-edit="img" height="100" width="100"/>
+			{{/if}}
+		{{/if}}
 	</header>
 
 

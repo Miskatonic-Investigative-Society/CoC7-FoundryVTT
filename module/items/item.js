@@ -366,6 +366,41 @@ export class CoC7Item extends Item {
 		return skillProperties;
 	}
 
+	getBulletLeft(){
+		if( 'weapon' != this.type) return null;
+		if( !this.data.data.ammo){ 
+			this.setBullets(0);
+			return 0;
+		}
+		return this.data.data.ammo;
+	}
+
+	async reload(){
+		if( 'weapon' != this.type) return null;
+		const maxBullet = this.data.data.bullets? parseInt(this.data.data.bullets):1;
+		await this.setBullets(maxBullet);
+	}
+
+	async setBullets( bullets){
+		if( 'weapon' != this.type) return null;
+		await this.update( { 'data.ammo': bullets?bullets:0});
+	}
+
+	async addBullet(){
+		if( 'weapon' != this.type) return null;
+		const bullets = await this.getBulletLeft();
+		await this.setBullets( bullets + 1);
+	}
+
+	async shootBullets(x){
+		if( 'weapon' != this.type) return null;
+		let bullets = await this.getBulletLeft();
+		if( x > bullets) await this.setBullets(0);
+		else await this.setBullets( bullets - x);
+	}
+
+
+
 	/** TODO : rien a faire ici !!
 	 * Get the Actor which is the author of a chat card
 	 * @param {HTMLElement} card    The chat card being used

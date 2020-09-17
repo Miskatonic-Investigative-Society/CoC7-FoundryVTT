@@ -111,7 +111,9 @@ COC7.status = {
 	indefInsane: 'indefInsane',
 	unconscious: 'unconscious',
 	criticalWounds: 'criticalWounds',
-	dying: 'dying'
+	dying: 'dying',
+	prone: 'prone',
+	dead: 'dead'
 };
 
 

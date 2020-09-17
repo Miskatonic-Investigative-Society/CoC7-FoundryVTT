@@ -158,7 +158,7 @@
 							{{/if}}
 						{{/if}}
 					</div>
-					<div class="flexrow flex2" style="font-size: 10px; padding-left: 2px;">
+					<div class="flexrow flex2" style="font-size: 10px; padding-left: 2px;line-height: 18px;">
 						{{#if weapon.data.properties.rngd}}
 							{{#if weapon.data.properties.shotgun}}
 								{{#each weapon.data.range as |range key|}}
@@ -176,7 +176,13 @@
 							<a class="roll" data-mode="roll" data-formula="{{weapon.data.range.normal.damage}}" title="{{weapon.data.range.normal.value}}"><i class="fas fa-dice-d20"></i> {{weapon.data.range.normal.damage}}</a>
 						</div>
 						{{/if}}
-						
+						<div class='flexrow' style='flex: 0 0 35px;'>
+							<span class="tag" style='line-height: 16px;font-size: 10px;'>{{weapon.data.ammo}}</span>
+							<div class='flexcol' style='font-size: 9px;'>
+								<i class="fas fa-redo-alt reload-weapon" title="Reload"></i>
+								<i class="far fa-plus-square add-ammo" title="Add 1 ammunition"></i>
+							</div>
+						</div>
 					</div>
 				</div>
 			</li>

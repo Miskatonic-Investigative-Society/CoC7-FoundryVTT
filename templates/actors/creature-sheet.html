@@ -195,58 +195,75 @@
 			</div>
 
 			<div class="status-monitors flexrow">
-				<a class="status-monitor {{#if data.status.unconscious.value}}status-on{{/if}}" title="{{localize 'CoC7.Unconsious'}}" data-status="unconscious"> <i class="fas fa-bed"></i></a>
-				<a class="status-monitor {{#if data.status.criticalWounds.value}}status-on{{/if}}" title="{{localize 'CoC7.CriticalWounds'}}" data-status="criticalWounds"> <i class="fas fa-user-injured"></i></a>
-				<a class="status-monitor {{#if data.status.dying.value}}status-on{{/if}}" title="Dying" data-status="{{localize 'CoC7.Dying'}}"> <i class="fas fa-heartbeat"></i></a>
+				{{#if isDying}}
+					<a class='dying-check' style="text-align: center;font-size: 20px;" title="Check if you'll die immediately"><i class="fas fa-dice-d20"></i></a>
+				{{else}}
+					<a class="status-monitor {{#if data.status.prone.value}}status-on{{/if}}" title="{{localize 'CoC7.Prone'}}" data-status='prone'> <i class="fas fa-angle-double-down"></i></a>
+					<a class="status-monitor {{#if data.status.unconscious.value}}status-on{{/if}}" title="{{localize 'CoC7.Unconsious'}}" data-status="unconscious"> <i class="fas fa-dizzy"></i></a>
+					<a class="status-monitor {{#if data.status.criticalWounds.value}}status-on{{/if}}" title="{{localize 'CoC7.CriticalWounds'}}" data-status="criticalWounds"> <i class="fas fa-user-injured"></i></a>
+					<a class="status-monitor {{#if data.status.dying.value}}status-on{{/if}}" title="{{localize 'CoC7.Dying'}}" data-status="dying"> <i class="fas fa-heartbeat"></i></a>
 
-				<a class="status-monitor {{#if data.status.tempoInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.TemporaryInsanity'}}" data-status="tempoInsane"> <i class="fas fa-filter"></i></a>
-				<a class="status-monitor {{#if data.status.indefInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.IndefiniteInsanity'}}" data-status="indefInsane"> <i class="far fa-hospital"></i></a>
-				<div class="flex1"></div>
-				<div class="san-check flexrow flex3">
-					<!-- <a class='roll-san flex2' title='Roll san check for targets'><i class="fas fa-dice"></i></a> -->
-					<label class="roll-san rollable" style="text-align: right;" title="Roll san check for targets">San Loss :</label>
-					{{#if data.flags.locked}}
-					<span class="san-value flex1" style="line-height: 22px;padding-left: 2px;" placeholder="pass">{{data.special.sanLoss.checkPassed}}</span>
-					<span class="flex0" style="line-height: 22px;">/</span>
-					<span class="san-value flex1" style="line-height: 22px;padding-left: 2px;" placeholder="fail">{{data.special.sanLoss.checkFailled}}</span>
-					{{else}}
-					<input class="san-value flex1" type="text" name="data.special.sanLoss.checkPassed" value="{{data.special.sanLoss.checkPassed}}" data-dtype="String" placeholder="pass">
-					<span class="flex0" style="line-height: 22px;">/</span>
-					<input class="san-value flex1" type="text" name="data.special.sanLoss.checkFailled" value="{{data.special.sanLoss.checkFailled}}" data-dtype="String" placeholder="fail">
-					{{/if}}
-				</div>
-				<div class="flex1"></div>
-				<div class="flexrow sheet-controls" style="flex: 0 0 70px;align-content: flex-start;">
-					{{#if allowFormula}}
+					<a class="status-monitor {{#if data.status.tempoInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.TemporaryInsanity'}}" data-status="tempoInsane"> <i class="fas fa-filter"></i></a>
+					<a class="status-monitor {{#if data.status.indefInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.IndefiniteInsanity'}}" data-status="indefInsane"> <i class="far fa-hospital"></i></a>
+					<div class="flex1"></div>
+					<div class="san-check flexrow flex3">
+						<!-- <a class='roll-san flex2' title='Roll san check for targets'><i class="fas fa-dice"></i></a> -->
+						<label class="roll-san rollable" style="text-align: right;" title="Roll san check for targets">San Loss :</label>
 						{{#if data.flags.locked}}
-							<div style="flex: 0 0 32px;"></div>
+						<span class="san-value flex1" style="line-height: 22px;padding-left: 2px;" placeholder="pass">{{data.special.sanLoss.checkPassed}}</span>
+						<span class="flex0" style="line-height: 22px;">/</span>
+						<span class="san-value flex1" style="line-height: 22px;padding-left: 2px;" placeholder="fail">{{data.special.sanLoss.checkFailled}}</span>
 						{{else}}
-							{{#if displayFormula}}
+						<input class="san-value flex1" type="text" name="data.special.sanLoss.checkPassed" value="{{data.special.sanLoss.checkPassed}}" data-dtype="String" placeholder="pass">
+						<span class="flex0" style="line-height: 22px;">/</span>
+						<input class="san-value flex1" type="text" name="data.special.sanLoss.checkFailled" value="{{data.special.sanLoss.checkFailled}}" data-dtype="String" placeholder="fail">
+						{{/if}}
+					</div>
+					<div class="flex1"></div>
+					<div class="flexrow sheet-controls" style="flex: 0 0 70px;align-content: flex-start;">
+						{{#if allowFormula}}
+							{{#if data.flags.locked}}
 								<div style="flex: 0 0 32px;"></div>
 							{{else}}
-								<a class="roll-characteritics" style="flex: 0 0 16px;color: darkred;" data-html="true" title="{{localize 'CoC7.NpcRollCharacteristics'}}"> <i class="fas fa-dice"></i></a>
-								<a class="average-characteritics" style="flex: 0 0 16px;color: darkred;" title="{{localize 'CoC7.NpcAvarageCharacteristics'}}"> <i class="fas fa-balance-scale"></i></a>
+								{{#if displayFormula}}
+									<div style="flex: 0 0 32px;"></div>
+								{{else}}
+									<a class="roll-characteritics" style="flex: 0 0 16px;color: darkred;" data-html="true" title="{{localize 'CoC7.NpcRollCharacteristics'}}"> <i class="fas fa-dice"></i></a>
+									<a class="average-characteritics" style="flex: 0 0 16px;color: darkred;" title="{{localize 'CoC7.NpcAvarageCharacteristics'}}"> <i class="fas fa-balance-scale"></i></a>
+								{{/if}}
+							{{/if}}
+						{{else}}
+							<div style="flex: 0 0 16px;"></div>
+						{{/if}}
+						{{#if data.flags.locked}}
+							<a class="lock"  style="flex: 0 0 32px;align-content: flex-start;"  title="{{localize 'CoC7.UnlockActor'}}" data-locked="true"> <i class="fas fa-lock"></i></a>
+						{{else}}
+							<a class="lock"  style="flex: 0 0 16px;" title="{{localize 'CoC7.LockActor'}}" data-locked="false"> <i class="fas fa-lock-open"></i></a>
+							{{#if allowFormula}}
+								{{#if displayFormula}}
+									<a class="formula"  style="flex: 0 0 16px;" title="{{localize 'CoC7.NpcCharacteristicsFormula'}}" data-locked="true"> <i class="fas fa-square-root-alt"></i></a>
+								{{else}}
+									<a class="formula"  style="flex: 0 0 16px;" title="{{localize 'CoC7.NpcCharacteristicsValues'}}" data-locked="false"> <i class="fas fa-user-edit"></i></a>
+								{{/if}}
 							{{/if}}
 						{{/if}}
-					{{else}}
-						<div style="flex: 0 0 16px;"></div>
-					{{/if}}
-					{{#if data.flags.locked}}
-						<a class="lock"  style="flex: 0 0 32px;align-content: flex-start;"  title="{{localize 'CoC7.UnlockActor'}}" data-locked="true"> <i class="fas fa-lock"></i></a>
-					{{else}}
-						<a class="lock"  style="flex: 0 0 16px;" title="{{localize 'CoC7.LockActor'}}" data-locked="false"> <i class="fas fa-lock-open"></i></a>
-						{{#if allowFormula}}
-							{{#if displayFormula}}
-								<a class="formula"  style="flex: 0 0 16px;" title="{{localize 'CoC7.NpcCharacteristicsFormula'}}" data-locked="true"> <i class="fas fa-square-root-alt"></i></a>
-							{{else}}
-								<a class="formula"  style="flex: 0 0 16px;" title="{{localize 'CoC7.NpcCharacteristicsValues'}}" data-locked="false"> <i class="fas fa-user-edit"></i></a>
-							{{/if}}
-						{{/if}}
-					{{/if}}
-				</div>
+					</div>
+				{{/if}}
 			</div>
 		</div>
-		<img class="profile-img" src="{{actor.img}}" title="{{actor.name}}" data-edit="img" height="100" width="100"/>
+		{{#if isDead}}
+		<div class='is-dead' style="flex: 0 0 100px;margin: 6px;">
+			<i style="font-size: 100px;color: darkred;line-height: 100px;" class="fas fa-skull-crossbones"></i>
+		</div>
+		{{else}}
+			{{#if isDying}}
+				<div class='is-dying' style="flex: 0 0 100px;margin: 6px;">
+					<i style="font-size: 100px;color: darkred;line-height: 100px;" class="fas fa-heartbeat"></i>
+				</div>
+			{{else}}
+				<img class="profile-img" src="{{actor.img}}" title="{{actor.name}}" data-edit="img" height="100" width="100"/>
+			{{/if}}
+		{{/if}}
 	</header>
 
 
