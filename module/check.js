@@ -137,8 +137,9 @@ export class CoC7Check {
 
 
 	static async getFromCard( card){
+		const rollResult = card.classList.contains('roll-result')? card : card.querySelector('.roll-result');
 		const check = new CoC7Check();
-		CoC7Roll.getFromElement(card, check);
+		CoC7Roll.getFromElement(rollResult, check);
 		const message = card.closest('.message');
 		check.messageId = message.dataset.messageId;
 		return check;
@@ -799,10 +800,19 @@ export class CoC7Check {
 	async updateChatCard( makePublic = false){
 		if( makePublic) this.rollMode = false; //reset roll mode
 		const template = 'systems/CoC7/templates/chat/roll-result.html';
-		let html = await renderTemplate(template, this);
+		const html = await renderTemplate(template, this);
+		let newContent = html;
 
 		const message = game.messages.get( this.messageId);
-		const chatData = { flavor: this.flavor, content: html };
+		const htmlMessage = $.parseHTML( message.data.content)[0];
+		if( !(htmlMessage.classList.contains('roll-result'))){
+			const htmlCheck = $.parseHTML( html)[0];
+			const rollResultElement = htmlMessage.querySelector('.roll-result');
+			rollResultElement?.replaceWith( htmlCheck);
+			newContent = htmlMessage.outerHTML;
+		}
+		
+		const chatData = { flavor: this.flavor, content: newContent };
 		if( makePublic){
 			chatData.whisper = [];
 			chatData.blind = false;

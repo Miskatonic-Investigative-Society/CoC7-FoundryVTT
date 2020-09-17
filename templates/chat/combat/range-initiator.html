@@ -50,7 +50,8 @@
 			</div>
 		{{else}}
 		<div class='total-bullets'>
-			<span class='tag'>Bullets fired : {{totalBulletsFired}}</span>
+			<span class='tag'>Bullets fired : {{totalBulletsFired}}/{{totalAmmo}}</span>
+			<span class='tag'>Shots fired : {{shotFired}}{{#unless fullAuto}}/{{maxShots}}{{/unless}}</span>
 		</div>
 		<div class="flexrow range-selection">
 			{{#if item.singleShot}}
@@ -287,22 +288,34 @@
 							Shot is impossible
 						</button>
 					{{else}}
-						{{#if ../multiTarget}}
-						<button
-							data-action="range-initiator-shoot"
-							data-skill="{{autoWeaponSkill._id}}">Shoot {{trgt.name}} {{../autoWeaponSkill.name}} ({{../autoWeaponSkill.data.data.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
-						</button>
-						{{else}}
-							{{#if ../autoFire}}
-								<button
-									data-action="range-initiator-roll"
-									data-skill="{{autoWeaponSkill._id}}">Roll {{../autoWeaponSkill.name}} ({{../autoWeaponSkill.data.data.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
-								</button>
+						{{#if ../outOfAmmo}}
+							<button style='background:darkred; color: white;'>
+								Out of Ammo
+							</button>
 							{{else}}
-								<button
-									data-action="range-initiator-roll"
-									data-skill="{{mainWeaponSkill._id}}">Roll {{../mainWeaponSkill.name}} ({{../mainWeaponSkill.data.data.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
+							{{#if ../outOfShots}}
+								<button style='background:darkred; color: white;'>
+									Out of shots
 								</button>
+								{{else}}
+								{{#if ../multiTarget}}
+								<button
+									data-action="range-initiator-shoot"
+									data-skill="{{autoWeaponSkill._id}}">Shoot {{trgt.name}} {{../autoWeaponSkill.name}} ({{../autoWeaponSkill.data.data.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
+								</button>
+								{{else}}
+									{{#if ../autoFire}}
+										<button
+											data-action="range-initiator-roll"
+											data-skill="{{autoWeaponSkill._id}}">Roll {{../autoWeaponSkill.name}} ({{../autoWeaponSkill.data.data.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
+										</button>
+									{{else}}
+										<button
+											data-action="range-initiator-roll"
+											data-skill="{{mainWeaponSkill._id}}">Roll {{../mainWeaponSkill.name}} ({{../mainWeaponSkill.data.data.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
+										</button>
+									{{/if}}
+								{{/if}}
 							{{/if}}
 						{{/if}}
 					{{/if}}

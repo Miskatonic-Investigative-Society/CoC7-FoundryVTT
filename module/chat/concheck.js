@@ -3,13 +3,12 @@ import { CoC7Check } from '../check.js';
 // import { CoC7Item } from '../items/item.js';
 import { chatHelper, CoC7Roll } from './helper.js';
 
-export class CoC7SanCheck {
-	constructor( actorId = null, sanLoss = null, sanLossFail = null, difficulty = CoC7Check.difficultyLevel.regular){
+export class CoC7ConCheck {
+	constructor( actorId = null, difficulty = CoC7Check.difficultyLevel.regular){
 		this.check = new CoC7Check( actorId);
-		this.check.attribute = 'san';
+		this.check.characteristic = 'con';
 		this.check.difficulty = difficulty;
-		this.sanLoss = sanLoss;
-		this.sanLossFail = sanLossFail;
+		this.check.denyPush = true;
 		this.actorId = actorId;
 	}
 
@@ -52,14 +51,6 @@ export class CoC7SanCheck {
 		return null;
 	}
 
-	get sanLossFormula(){
-		if( this.isRolled){
-			if( this.isSuccess) return this.sanLoss?this.sanLoss:'0';
-			else return this.sanLossFail?this.sanLossFail:'0';
-		}
-		else return null;
-	}
-
 	get isSuccess(){
 		if( this.check) return this.check.isSuccess;
 		else return false;
@@ -69,45 +60,14 @@ export class CoC7SanCheck {
 		if( this.check && this.check.dices && this.check.dices.total) return true;
 		else return false;
 	}
-
-	get isSanLossRolled(){
-		if( this.totalSanLoss) return true;
-		else return false;
-	}
-
-	get isSanLossFormula(){
-		if( this.sanLossFormula){
-			if( this.sanLossFormula.match(Roll.diceRgx)) return true;
-			// const rgx = RegExp( Die.rgx.dice);
-			// return rgx.test(this.sanLossFormula);
-		}
-		return false;
-	}
-
-	get sanLost(){
-		if( this.totalSanLoss > 0) return true;
-		return false;
-	}
-
-	static checkTargets( sanLoss, sanLossFail, fastForward=false){
-		const targets = [...game.user.targets];
-		if( targets.length){
-			targets.forEach( t => {
-				let check;
-				if( t.actor.isToken) check = new CoC7SanCheck( t.actor.tokenKey, sanLoss, sanLossFail);
-				else check  = new CoC7SanCheck( t.actor.id, sanLoss, sanLossFail);
-				check.toMessage( fastForward);
-			});
-		} else ui.notifications.error('No target selected');
-	}
-
+    
 	static getFromCard( card){
-		const sanCheck = new CoC7SanCheck();
-		chatHelper.getObjectFromElement( sanCheck, card);
+		const conCheck = new CoC7ConCheck();
+		chatHelper.getObjectFromElement( conCheck, card);
 		const htmlCheck = card.querySelector( '.roll-result');
-		CoC7Roll.getFromElement( htmlCheck, sanCheck.check);
-		sanCheck.messageId = card.closest('.message').dataset.messageId;
-		return sanCheck;
+		CoC7Roll.getFromElement( htmlCheck, conCheck.check);
+		conCheck.messageId = card.closest('.message').dataset.messageId;
+		return conCheck;
 	}
 
 	async getCheckElement(){
@@ -122,10 +82,10 @@ export class CoC7SanCheck {
 	}
 
 	async toMessage( fastForward=false){
-		const template = 'systems/CoC7/templates/chat/san-check.html';
+		const template = 'systems/CoC7/templates/chat/con-check.html';
 
 		if( fastForward){
-			await this.rollSan();
+			await this.rollCon();
 		}
 
 		const html = await renderTemplate(template, this);
@@ -161,35 +121,29 @@ export class CoC7SanCheck {
 		ChatMessage.create(chatData).then( msg => {return msg;});
 	}
 
-	async rollSan(){
+	async rollCon(){
 		this.check.hideDiceResult = true;
 		await this.check._perform();
-		if( !this.isSanLossFormula){
-			this.totalSanLoss = this.sanLossFormula;
-		}
-	}
-
-	async rollSanLoss(){
-		if( this.isSanLossFormula){
-			const r = new Roll(this.sanLossFormula);
-			r.roll();
-			this.totalSanLoss = r.total;
-		} else this.totalSanLoss = this.sanLossFormula;
+		if( !this.isSuccess && !this.isBlind) {
+			if( this.stayAlive) await this.actor.fallDead();
+			else await this.actor.fallUnconscious();
+		} 
+		this.applied = true;
 	}
 
 	async updateChatCard(){
-		const template = 'systems/CoC7/templates/chat/san-check.html';
-
-		if( !this.isSanLossFormula && this.isRolled){
-			this.totalSanLoss = this.sanLossFormula;
-		}
-
+		const template = 'systems/CoC7/templates/chat/con-check.html';
 
 		let html = await renderTemplate(template, this);
 		const htmlElement = $.parseHTML( html)[0];
 
 		const check = htmlElement.querySelector('.roll-result');
 		check.replaceWith( await this.getCheckElement());
+        
+		if( !this.isBlind && this.isRolled && !this.isSuccess) {
+			if( this.stayAlive) await this.actor.fallDead();
+			else await this.actor.fallUnconscious();
+		} 
 
 		if( !this.messageId) return;
 		const chatMessage = game.messages.get( this.messageId);
@@ -199,11 +153,6 @@ export class CoC7SanCheck {
 		return msg;
 	}
 
-	async applySanLoss(){
-		const san = this.actor.san - this.totalSanLoss;
-		await this.actor.setSan( san);
-		// TODO : find a way to refresh token data
-		this.applied = true;
-	}
+
 }
 
