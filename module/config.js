@@ -47,6 +47,7 @@ COC7.skillProperties = {
 COC7.weaponProperties = {
 	melee: 'CoC7.Weapon.Property.Melee',
 	rngd: 'CoC7.WeaponRngd',
+	mnvr: 'CoC7.WeaponProperyManeuver',
 	thrown: 'CoC7.Weapon.Property.Thrown',
 	shotgun: 'CoC7.Weapon.Property.Shotgun',
 	dbrl: 'CoC7.WeaponDbrl',
@@ -81,6 +82,16 @@ COC7.bookType = {
 	other: 'CoC7.Other'
 };
 
+COC7.talentType = {
+	physical: 'CoC7.PhysicalTalent',
+	mental: 'CoC7.MentalTalent',
+	combat: 'CoC7.CombatTalent',
+	miscellaneous: 'CoC7.MiscellaneousTalent',
+	basic: 'CoC7.BasicTalent',
+	insane: 'CoC7.InsaneTalent',
+	other: 'CoC7.OtherTalent'
+};
+
 COC7.formula = {};
 
 COC7.formula.actor = {
@@ -110,7 +121,9 @@ COC7.status = {
 	indefInsane: 'indefInsane',
 	unconscious: 'unconscious',
 	criticalWounds: 'criticalWounds',
-	dying: 'dying'
+	dying: 'dying',
+	prone: 'prone',
+	dead: 'dead'
 };
 
 

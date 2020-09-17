@@ -251,6 +251,7 @@
 
 .dice-roll .dice-formula.critical{
     background-color: whitesmoke;
+    color: goldenrod;
 }
 
 .dice-roll .dice-formula.fumble{
@@ -596,6 +597,7 @@
     height: 100%;
     overflow-y: auto;
     align-content: flex-start;
+    padding: 0 5px;
 }
 
 .coc7.sheet input[type="text"],
@@ -648,7 +650,7 @@
 
 .coc7.sheet.actor .info-fields .form-group,
 .coc7.sheet.actor .info-fields .form-group-stacked {
-    margin: 0 0 1px 0;
+    margin: 0;
     justify-content: space-between;
 }
 

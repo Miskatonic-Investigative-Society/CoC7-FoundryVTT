@@ -1,6 +1,7 @@
 
 import { COC7 } from '../config.js';
 import { CoC7Check } from '../check.js';
+import { CoC7ConCheck } from '../chat/concheck.js';
 
 
 /**
@@ -693,13 +694,33 @@ export class CoCActor extends Actor {
 	}
 
 	async toggleStatus(statusName){
-		let statusValue = this.data.data.status[statusName].value;
+		let statusValue = this.data.data.status[statusName]?.value;
 		if(!(typeof statusValue === 'boolean')) statusValue = statusValue === 'false' ? true : false; //Necessary, incorrect template initialization
+
+		if( COC7.status.criticalWounds == statusName){
+			if( statusValue) this.cureMajorWound(); else this.inflictMajorWound();
+			return;
+		}
+
 		await this.update( {[`data.status.${statusName}.value`]: !statusValue});
+		// if( !statusValue) await this.setFlag('CoC7', statusName, true);
+		// else await this.unsetFlag('CoC7', statusName);
+
+	}
+
+	getStatus(statusName){
+		let statusValue = this.data.data.status[statusName]?.value;
+		if( undefined === statusValue) return false;
+		if(!(typeof statusValue === 'boolean')) statusValue = statusValue === 'false' ? true : false; //Necessary, incorrect template initialization
+		return statusValue;
 	}
 
 	async setStatus(statusName){
-		if( !this.data.data.status[statusName].value) await this.update( {[`data.status.${statusName}.value`]: true});
+		await this.update( {[`data.status.${statusName}.value`]: true});
+	}
+
+	async unsetStatus( statusName){
+		await this.update( {[`data.status.${statusName}.value`]: false});
 	}
 
 	async resetCounter( counter){
@@ -842,5 +863,95 @@ export class CoCActor extends Actor {
 		});
 
 		return skillList;
+	}
+
+	async dealDamage(amount, ignoreArmor = false){
+		let total = parseInt(amount);
+		if( this.data.data.attribs.armor.value && !ignoreArmor ) total = total - this.data.data.attribs.armor.value;
+		if( total <= 0) return;
+		await this.setHp( this.hp - total);
+		if( total >= this.hpMax) this.fallDead();
+		else{
+			if( total >= Math.floor(this.hpMax/2)) this.inflictMajorWound();
+			if( this.hp == 0){
+				if( !this.getStatus(COC7.status.unconscious)) await this.fallUnconscious();
+				if( this.majorWound) this.fallDying();
+			}
+		}
+	}
+
+	async inflictMajorWound(){
+		if( !this.majorWound) await this.setStatus(COC7.status.criticalWounds);
+		await this.fallProne();
+		if( !this.getStatus(COC7.status.unconscious)){
+			const conCheck = new CoC7ConCheck( this.isToken? this.tokenKey : this._id);
+			conCheck.toMessage();
+		}
+		// await this.setFlag('CoC7', COC7.status.criticalWounds, true);
+	}
+
+	async cureMajorWound(){
+		await this.unsetStatus(COC7.status.criticalWounds);
+		// await this.unsetFlag('CoC7', COC7.status.criticalWounds);
+	}
+
+	async fallProne(){
+		await this.setStatus(COC7.status.prone);
+		// await this.setFlag('CoC7', COC7.status.prone, true);
+	}
+
+	async fallUnconscious(){
+		await this.setStatus( COC7.status.unconscious);
+		// await this.setFlag('CoC7', COC7.status.unconscious, true);
+	}
+
+	async fallDying(){
+		await this.setStatus( COC7.status.dying);
+	}
+
+	async fallDead(){
+		await this.setStatus(COC7.status.criticalWounds);
+		await this.unsetStatus( COC7.status.dying);
+		await this.fallProne();
+		await this.fallUnconscious();
+		await this.setStatus( COC7.status.dead);
+		// await this.setFlag( 'CoC7', 'dead', true);
+	}
+
+	get majorWound(){
+		return this.getStatus(COC7.status.criticalWounds);
+	}
+
+	get dying(){
+		return this.getStatus(COC7.status.dying);
+	}
+
+	get unconscious(){
+		return this.getStatus(COC7.status.unconscious);
+	}
+
+	get dead(){
+		return this.getStatus(COC7.status.dead);
+	}
+
+	static updateActor( actor, dataUpdate){
+		if( game.user.isGM){
+			// ui.notifications.info( `updating actor ${actor.name}`);
+			const prone = dataUpdate?.flags?.CoC7[COC7.status.prone];
+			const unconscious = dataUpdate?.flags?.CoC7[COC7.status.unconscious];
+			const criticalWounds = dataUpdate?.flags?.CoC7[COC7.status.criticalWounds];
+			const dying = dataUpdate?.flags?.CoC7[COC7.status.dying];
+			if( prone) ui.notifications.info( `${actor.name} fall prone`);
+			if( unconscious) ui.notifications.info( `${actor.name} fall unconscious`);
+			if( criticalWounds) ui.notifications.info( `${actor.name} get a major wound`);
+			if( dying) ui.notifications.info( `${actor.name} is dying`);
+		}
+		return;
+	}
+
+	static updateToken( scene, token, dataUpdate){
+		const injuried = dataUpdate?.actorData?.flags?.CoC7?.injuried;
+		if( injuried) ui.notifications.info( `actor ${token.name} is injuried !!`);
+		return;
 	}
 }

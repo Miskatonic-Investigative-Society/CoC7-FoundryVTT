@@ -6,6 +6,11 @@
     	box-shadow: none;
     	cursor: default;
 	}
+
+	.read-only:hover,
+	.read-only:focus {
+		border: 1px solid black;
+	}
 	
 	.sheet-header {
 		img.profile {
@@ -214,10 +219,10 @@
 			// Item Dropdown Summary
 			.item-summary {
 				flex: 0 0 100%;
-				font-size: 10px;
-				line-height: 11px;
+				font-size: 12px;
+				line-height: 13px;
 				padding: 0.25em 0.5em;
-				border-top: 1px solid @colorFaint;
+				border-top: @borderGroove;
 			}
 		}
 	}

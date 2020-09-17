@@ -67,7 +67,8 @@
   flex: 4;
 }
 .coc7.sheet.book .sheet-header img.profile,
-.coc7.sheet.spell .sheet-header img.profile {
+.coc7.sheet.spell .sheet-header img.profile,
+.coc7.sheet.talent .sheet-header img.profile {
   border: 1px groove;
   flex: 0 0 64px;
   max-width: 64px;
@@ -77,74 +78,90 @@
   margin-right: 4px;
 }
 .coc7.sheet.book .sheet-header .name input,
-.coc7.sheet.spell .sheet-header .name input {
+.coc7.sheet.spell .sheet-header .name input,
+.coc7.sheet.talent .sheet-header .name input {
   margin: 0;
   padding: 0;
 }
 .coc7.sheet.book .details .editor,
-.coc7.sheet.spell .details .editor {
+.coc7.sheet.spell .details .editor,
+.coc7.sheet.talent .details .editor {
   height: 100px;
 }
 .coc7.sheet.book .details .editor button,
-.coc7.sheet.spell .details .editor button {
+.coc7.sheet.spell .details .editor button,
+.coc7.sheet.talent .details .editor button {
   height: 20px;
 }
 .coc7.sheet.book .details input[type="text"],
 .coc7.sheet.spell .details input[type="text"],
+.coc7.sheet.talent .details input[type="text"],
 .coc7.sheet.book .details select,
-.coc7.sheet.spell .details select {
+.coc7.sheet.spell .details select,
+.coc7.sheet.talent .details select {
   height: 20px;
   border: 1px solid #7a7971;
   background: rgba(0, 0, 0, 0.05);
 }
 .coc7.sheet.book .details .form-group,
-.coc7.sheet.spell .details .form-group {
+.coc7.sheet.spell .details .form-group,
+.coc7.sheet.talent .details .form-group {
   border: 0;
   margin: 0;
 }
 .coc7.sheet.book .details .form-group span,
-.coc7.sheet.spell .details .form-group span {
+.coc7.sheet.spell .details .form-group span,
+.coc7.sheet.talent .details .form-group span {
   text-align: center;
   line-height: 20px;
 }
 .coc7.sheet.book .details .form-group.input-select select,
-.coc7.sheet.spell .details .form-group.input-select select {
+.coc7.sheet.spell .details .form-group.input-select select,
+.coc7.sheet.talent .details .form-group.input-select select {
   flex: 1.8;
 }
 .coc7.sheet.book .details .form-group.input-select-select select,
-.coc7.sheet.spell .details .form-group.input-select-select select {
+.coc7.sheet.spell .details .form-group.input-select-select select,
+.coc7.sheet.talent .details .form-group.input-select-select select {
   flex: 1.5;
 }
 .coc7.sheet.book .details .form-group.uses-per input,
-.coc7.sheet.spell .details .form-group.uses-per input {
+.coc7.sheet.spell .details .form-group.uses-per input,
+.coc7.sheet.talent .details .form-group.uses-per input {
   flex: 1;
 }
 .coc7.sheet.book .details .form-group.uses-per span,
-.coc7.sheet.spell .details .form-group.uses-per span {
+.coc7.sheet.spell .details .form-group.uses-per span,
+.coc7.sheet.talent .details .form-group.uses-per span {
   flex: 0 0 16px;
 }
 .coc7.sheet.book .details .form-group.uses-per select,
-.coc7.sheet.spell .details .form-group.uses-per select {
+.coc7.sheet.spell .details .form-group.uses-per select,
+.coc7.sheet.talent .details .form-group.uses-per select {
   flex: 3;
 }
 .coc7.sheet.book .details span.sep,
-.coc7.sheet.spell .details span.sep {
+.coc7.sheet.spell .details span.sep,
+.coc7.sheet.talent .details span.sep {
   flex: 0 0 8px;
 }
 .coc7.sheet.book .details .prepared,
-.coc7.sheet.spell .details .prepared {
+.coc7.sheet.spell .details .prepared,
+.coc7.sheet.talent .details .prepared {
   flex: 1.3 !important;
   text-align: right;
   padding-right: 10px;
 }
 .coc7.sheet.book .details .spell-materials,
-.coc7.sheet.spell .details .spell-materials {
+.coc7.sheet.spell .details .spell-materials,
+.coc7.sheet.talent .details .spell-materials {
   flex: 0 0 100%;
   margin: 0.25em 0;
   justify-content: flex-end;
 }
 .coc7.sheet.book .details .spell-materials label,
-.coc7.sheet.spell .details .spell-materials label {
+.coc7.sheet.spell .details .spell-materials label,
+.coc7.sheet.talent .details .spell-materials label {
   flex: 0 0 64px;
   text-align: right;
   margin-right: 5px;
@@ -152,54 +169,65 @@
   line-height: 24px;
 }
 .coc7.sheet.book .details .spell-materials input[type="text"],
-.coc7.sheet.spell .details .spell-materials input[type="text"] {
+.coc7.sheet.spell .details .spell-materials input[type="text"],
+.coc7.sheet.talent .details .spell-materials input[type="text"] {
   flex: 0 0 48px;
   margin-right: 10px;
 }
 .coc7.sheet.book .sheet-navigation,
-.coc7.sheet.spell .sheet-navigation {
+.coc7.sheet.spell .sheet-navigation,
+.coc7.sheet.talent .sheet-navigation {
   margin-bottom: 5px;
 }
 .coc7.sheet.book .sheet-navigation .item,
-.coc7.sheet.spell .sheet-navigation .item {
+.coc7.sheet.spell .sheet-navigation .item,
+.coc7.sheet.talent .sheet-navigation .item {
   font-size: 18px;
 }
 .coc7.sheet.book .sheet-body,
-.coc7.sheet.spell .sheet-body {
+.coc7.sheet.spell .sheet-body,
+.coc7.sheet.talent .sheet-body {
   overflow: hidden;
 }
 .coc7.sheet.book .sheet-body .tab,
-.coc7.sheet.spell .sheet-body .tab {
+.coc7.sheet.spell .sheet-body .tab,
+.coc7.sheet.talent .sheet-body .tab {
   padding: 0 5px;
   overflow: hidden auto;
 }
 .coc7.sheet.book .sheet-body .item-properties,
-.coc7.sheet.spell .sheet-body .item-properties {
+.coc7.sheet.spell .sheet-body .item-properties,
+.coc7.sheet.talent .sheet-body .item-properties {
   flex: 0 0 120px;
   margin: 5px 5px 5px 0;
   padding-right: 5px;
   border-right: 2px groove #eeede0;
 }
 .coc7.sheet.book .sheet-body .item-properties .form-group,
-.coc7.sheet.spell .sheet-body .item-properties .form-group {
+.coc7.sheet.spell .sheet-body .item-properties .form-group,
+.coc7.sheet.talent .sheet-body .item-properties .form-group {
   margin: 0;
 }
 .coc7.sheet.book .sheet-body .item-properties .form-group label,
-.coc7.sheet.spell .sheet-body .item-properties .form-group label {
+.coc7.sheet.spell .sheet-body .item-properties .form-group label,
+.coc7.sheet.talent .sheet-body .item-properties .form-group label {
   line-height: 20px;
 }
 .coc7.sheet.book .sheet-body .item-properties .form-group input,
-.coc7.sheet.spell .sheet-body .item-properties .form-group input {
+.coc7.sheet.spell .sheet-body .item-properties .form-group input,
+.coc7.sheet.talent .sheet-body .item-properties .form-group input {
   text-align: right;
 }
 .coc7.sheet.book .sheet-body .item-properties .properties-list,
-.coc7.sheet.spell .sheet-body .item-properties .properties-list {
+.coc7.sheet.spell .sheet-body .item-properties .properties-list,
+.coc7.sheet.talent .sheet-body .item-properties .properties-list {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 .coc7.sheet.book .sheet-body .item-properties .properties-list li,
-.coc7.sheet.spell .sheet-body .item-properties .properties-list li {
+.coc7.sheet.spell .sheet-body .item-properties .properties-list li,
+.coc7.sheet.talent .sheet-body .item-properties .properties-list li {
   margin: 3px 0;
   padding: 0 2px;
   background: rgba(0, 0, 0, 0.05);
@@ -209,7 +237,8 @@
   line-height: 18px;
 }
 .coc7.sheet.book .sheet-body .spell-list,
-.coc7.sheet.spell .sheet-body .spell-list {
+.coc7.sheet.spell .sheet-body .spell-list,
+.coc7.sheet.talent .sheet-body .spell-list {
   list-style: none;
   margin: 0;
   padding: 0 5px;
@@ -217,47 +246,56 @@
   scrollbar-width: thin;
 }
 .coc7.sheet.book .sheet-body .spell-list .spell,
-.coc7.sheet.spell .sheet-body .spell-list .spell {
+.coc7.sheet.spell .sheet-body .spell-list .spell,
+.coc7.sheet.talent .sheet-body .spell-list .spell {
   line-height: 16px;
   padding: 0 2px;
   border-bottom: 1px solid #c9c7b8;
 }
 .coc7.sheet.book .sheet-body .spell-list .spell:last-child,
-.coc7.sheet.spell .sheet-body .spell-list .spell:last-child {
+.coc7.sheet.spell .sheet-body .spell-list .spell:last-child,
+.coc7.sheet.talent .sheet-body .spell-list .spell:last-child {
   border-bottom: none;
 }
 .coc7.sheet.book .sheet-body .spell-list .spell .spell-name,
-.coc7.sheet.spell .sheet-body .spell-list .spell .spell-name {
+.coc7.sheet.spell .sheet-body .spell-list .spell .spell-name,
+.coc7.sheet.talent .sheet-body .spell-list .spell .spell-name {
   cursor: pointer;
   max-height: 24px;
   overflow: hidden;
 }
 .coc7.sheet.book .sheet-body .spell-list .spell .spell-name .spell-image,
-.coc7.sheet.spell .sheet-body .spell-list .spell .spell-name .spell-image {
+.coc7.sheet.spell .sheet-body .spell-list .spell .spell-name .spell-image,
+.coc7.sheet.talent .sheet-body .spell-list .spell .spell-name .spell-image {
   flex: 0 0 16px;
   background-size: 16px;
   margin-right: 5px;
 }
 .coc7.sheet.book .sheet-body .spell-list .spell .spell-name h4,
-.coc7.sheet.spell .sheet-body .spell-list .spell .spell-name h4 {
+.coc7.sheet.spell .sheet-body .spell-list .spell .spell-name h4,
+.coc7.sheet.talent .sheet-body .spell-list .spell .spell-name h4 {
   margin: 0;
   white-space: nowrap;
   overflow-x: hidden;
 }
 .coc7.sheet.book .sheet-body .spell-list .spell .spell-name.rollable:hover .item-image,
-.coc7.sheet.spell .sheet-body .spell-list .spell .spell-name.rollable:hover .item-image {
+.coc7.sheet.spell .sheet-body .spell-list .spell .spell-name.rollable:hover .item-image,
+.coc7.sheet.talent .sheet-body .spell-list .spell .spell-name.rollable:hover .item-image {
   background-image: url("/icons/svg/d20-grey.svg") !important;
 }
 .coc7.sheet.book .sheet-body .spell-list .spell .spell-name.rollable .item-image:hover,
-.coc7.sheet.spell .sheet-body .spell-list .spell .spell-name.rollable .item-image:hover {
+.coc7.sheet.spell .sheet-body .spell-list .spell .spell-name.rollable .item-image:hover,
+.coc7.sheet.talent .sheet-body .spell-list .spell .spell-name.rollable .item-image:hover {
   background-image: url("/icons/svg/d20-black.svg") !important;
 }
 .coc7.sheet.book .sheet-body .spell-list .spell .spell-name i.attuned,
-.coc7.sheet.spell .sheet-body .spell-list .spell .spell-name i.attuned {
+.coc7.sheet.spell .sheet-body .spell-list .spell .spell-name i.attuned,
+.coc7.sheet.talent .sheet-body .spell-list .spell .spell-name i.attuned {
   color: #7a7971;
 }
 .coc7.sheet.book .sheet-body .spell-list .item-controls,
-.coc7.sheet.spell .sheet-body .spell-list .item-controls {
+.coc7.sheet.spell .sheet-body .spell-list .item-controls,
+.coc7.sheet.talent .sheet-body .spell-list .item-controls {
   flex: 0 0 32px;
   display: flex;
   flex-direction: row;
@@ -266,39 +304,46 @@
   justify-content: flex-end;
 }
 .coc7.sheet.book .sheet-body .spell-list .item-controls > *,
-.coc7.sheet.spell .sheet-body .spell-list .item-controls > * {
+.coc7.sheet.spell .sheet-body .spell-list .item-controls > *,
+.coc7.sheet.talent .sheet-body .spell-list .item-controls > * {
   flex: 1;
 }
 .coc7.sheet.book .sheet-body .spell-list .item-controls .flex1,
-.coc7.sheet.spell .sheet-body .spell-list .item-controls .flex1 {
+.coc7.sheet.spell .sheet-body .spell-list .item-controls .flex1,
+.coc7.sheet.talent .sheet-body .spell-list .item-controls .flex1 {
   flex: 1;
 }
 .coc7.sheet.book .sheet-body .spell-list .item-controls .flex2,
-.coc7.sheet.spell .sheet-body .spell-list .item-controls .flex2 {
+.coc7.sheet.spell .sheet-body .spell-list .item-controls .flex2,
+.coc7.sheet.talent .sheet-body .spell-list .item-controls .flex2 {
   flex: 2;
 }
 .coc7.sheet.book .sheet-body .spell-list .item-controls .flex3,
-.coc7.sheet.spell .sheet-body .spell-list .item-controls .flex3 {
+.coc7.sheet.spell .sheet-body .spell-list .item-controls .flex3,
+.coc7.sheet.talent .sheet-body .spell-list .item-controls .flex3 {
   flex: 3;
 }
 .coc7.sheet.book .sheet-body .spell-list .item-controls .flex4,
-.coc7.sheet.spell .sheet-body .spell-list .item-controls .flex4 {
+.coc7.sheet.spell .sheet-body .spell-list .item-controls .flex4,
+.coc7.sheet.talent .sheet-body .spell-list .item-controls .flex4 {
   flex: 4;
 }
 .coc7.sheet.book .sheet-body .spell-list .item-controls a,
-.coc7.sheet.spell .sheet-body .spell-list .item-controls a {
+.coc7.sheet.spell .sheet-body .spell-list .item-controls a,
+.coc7.sheet.talent .sheet-body .spell-list .item-controls a {
   flex: 0 0 16px;
   font-size: 10px;
   text-align: center;
   color: #7a7971;
 }
 .coc7.sheet.book .sheet-body .spell-list .item-summary,
-.coc7.sheet.spell .sheet-body .spell-list .item-summary {
+.coc7.sheet.spell .sheet-body .spell-list .item-summary,
+.coc7.sheet.talent .sheet-body .spell-list .item-summary {
   flex: 0 0 100%;
-  font-size: 10px;
-  line-height: 11px;
+  font-size: 12px;
+  line-height: 13px;
   padding: 0.25em 0.5em;
-  border-top: 1px solid #c9c7b8;
+  border-top: 2px groove #eeede0;
 }
 .coc7 input[type="text"],
 .coc7 select {
@@ -430,7 +475,7 @@
 .coc7 .editor .tox-toolbar__primary {
   background: none;
 }
-.chat-card.san-loss-card h4.san-result {
+.chat-card h4.san-result {
   flex: 0 0 100%;
   line-height: 24px;
   text-align: center;
@@ -441,10 +486,27 @@
   font-size: 20px;
   font-weight: bold;
 }
-.chat-card.san-loss-card h4.san-result.loss {
+.chat-card h4.san-result.loss {
   color: darkred;
 }
-.chat-card.san-loss-card h4.san-result.resist {
+.chat-card h4.san-result.resist {
+  color: green;
+}
+.chat-card h4.con-result {
+  flex: 0 0 100%;
+  line-height: 24px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid #999;
+  border-radius: 3px;
+  box-shadow: 0 0 2px #FFF inset;
+  font-size: 20px;
+  font-weight: bold;
+}
+.chat-card h4.con-result.loss {
+  color: darkred;
+}
+.chat-card h4.con-result.resist {
   color: green;
 }
 .coc7.sheet.skill input:read-only:hover,
@@ -454,6 +516,12 @@
   border: 1px solid transparent;
   box-shadow: none;
   cursor: default;
+}
+.coc7.sheet.skill .read-only:hover,
+.coc7.sheet.item .read-only:hover,
+.coc7.sheet.skill .read-only:focus,
+.coc7.sheet.item .read-only:focus {
+  border: 1px solid black;
 }
 .coc7.sheet.skill .sheet-header img.profile,
 .coc7.sheet.item .sheet-header img.profile {
@@ -689,10 +757,10 @@
 .coc7.sheet.skill .sheet-body .spell-list .item-summary,
 .coc7.sheet.item .sheet-body .spell-list .item-summary {
   flex: 0 0 100%;
-  font-size: 10px;
-  line-height: 11px;
+  font-size: 12px;
+  line-height: 13px;
   padding: 0.25em 0.5em;
-  border-top: 1px solid #c9c7b8;
+  border-top: 2px groove #eeede0;
 }
 .coc7.sheet .inventory {
   height: 100%;
@@ -822,16 +890,53 @@
 }
 .coc7.sheet .inventory-list .item-controls a {
   flex: 0 0 16px;
-  font-size: 12px;
+  font-size: 10px;
   text-align: center;
   color: #7a7971;
 }
 .coc7.sheet .inventory-list .item-summary {
   flex: 0 0 100%;
   font-size: 12px;
-  line-height: 16px;
+  line-height: 13px;
   padding: 0.25em 0.5em;
-  border-top: 1px solid #c9c7b8;
+  border-top: 2px groove #eeede0;
+}
+.coc7.sheet.actor .sheet-section h3 {
+  margin: 0 -5px 0 0;
+  padding-left: 5px;
+  font-family: "Signika", sans-serif;
+  font-weight: bold;
+  font-size: 13px;
+}
+.coc7.sheet.actor .sheet-section .editor {
+  width: 100%;
+  height: 200px;
+  border: 2px groove #eeede0;
+  padding: 0;
+  line-height: normal;
+  font-size: 12px;
+}
+.coc7.sheet.actor .sheet-section .editor-content {
+  overflow-x: hidden;
+}
+.coc7.sheet.actor .sheet-section .section-header {
+  margin: 2px 0 0 0;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.05);
+  border: 2px groove #eeede0;
+  font-weight: bold;
+  line-height: 15px;
+  height: 100%;
+}
+.coc7.sheet.actor input:read-only:hover,
+.coc7.sheet.actor input:read-only:focus {
+  border: 1px solid transparent;
+  box-shadow: none;
+  cursor: default;
+}
+.coc7.sheet.actor .read-only:hover,
+.coc7.sheet.actor .read-only:focus {
+  border: 1px solid black;
 }
 .coc7.sheet.actor .info-fields .form-group label {
   width: auto;

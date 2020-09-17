@@ -17,13 +17,11 @@ import { CoC7Chat } from './chat.js';
 import { CoC7Combat, rollInitiative } from './combat.js';
 import { CoC7BookSheet } from './items/sheets/book.js';
 import { CoC7SpellSheet } from './items/sheets/spell.js';
+import { CoC7TalentSheet } from './items/sheets/talent.js';
 import { COC7 } from './config.js';
-
+// import { CoC7ActorSheet } from './actors/sheets/base.js';
 
 Hooks.once('init', async function() {
-	// console.log('-->Hooks.once Init');
-	// console.log(`Initializing Simple  System`);
-
 	/**
 	 * Set an initiative formula for the system
 	 * @type {String}
@@ -109,6 +107,24 @@ Hooks.once('init', async function() {
 		default: true,
 		type: Boolean
 	});
+		
+	game.settings.register('CoC7', 'disregardAmmo', {
+		name: 'SETTINGS.DisregardAmmo',
+		hint: 'SETTINGS.DisregardAmmoHint',
+		scope: 'world',
+		config: true,
+		default: false,
+		type: Boolean
+	});
+		
+	game.settings.register('CoC7', 'disregardUsePerRound', {
+		name: 'SETTINGS.DisregardUsePerRound',
+		hint: 'SETTINGS.DisregardUsePerRoundHint',
+		scope: 'world',
+		config: true,
+		default: false,
+		type: Boolean
+	});
 
 	function _setInitiativeOptions(rule)
 	{
@@ -136,35 +152,21 @@ Hooks.once('init', async function() {
 	Actors.registerSheet('CoC7', CoC7NPCSheet, { types: ['npc'] });
 	Actors.registerSheet('CoC7', CoC7CreatureSheet, { types: ['creature'] });
 	Actors.registerSheet('CoC7', CoC7CharacterSheet, { types: ['character'], makeDefault: true });
+	
 	Items.unregisterSheet('core', ItemSheet);
 	Items.registerSheet('CoC7', CoC7WeaponSheet, { types: ['weapon'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7BookSheet, { types: ['book'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7SpellSheet, { types: ['spell'], makeDefault: true});
+	Items.registerSheet('CoC7', CoC7TalentSheet, { types: ['talent'], makeDefault: true});
 	Items.registerSheet('CoC7', CoCItemSheet, { makeDefault: true});
 	preloadHandlebarsTemplates();
 });
 
 Hooks.on('renderCombatTracker', (app, html, data) => CoC7Combat.renderCombatTracker( app, html, data));
-
-// {
-// 	const currentCombat = data.combats[data.currentIndex - 1];
-// 	html.find('.combatant').each((i, el) => {
-// 		const combId = el.getAttribute('data-combatant-id');
-// 		const combatant = currentCombat.data.combatants.find((c) => c._id == combId);
-// 		const initdiv = el.getElementsByClassName('token-initiative');
-// 		if (combatant.hasRolled) {
-// 			initdiv[0].innerHTML = `<span class="initiative">${combatant.flags.swade.cardString}</span>`;
-// 		}
-// 		else if (!data.user.isGM) {
-// 			initdiv[0].innerHTML = '';
-// 		}
-// 	});
-// }
-
 Hooks.once('setup', function() {
 
 	// Localize CONFIG objects once up-front
-	const toLocalize = [ 'spellProperties', 'bookType'];
+	const toLocalize = [ 'spellProperties', 'bookType', 'talentType'];
 
 	for ( let o of toLocalize ) {
 		const localized = Object.entries(COC7[o]).map(e => {
@@ -183,10 +185,14 @@ Hooks.on('renderChatMessage', (app, html, data) => CoC7Chat.renderMessageHook(ap
 Hooks.on('updateChatMessage', (chatMessage, chatData, diff, speaker) => CoC7Chat.onUpdateChatMessage( chatMessage, chatData, diff, speaker));
 Hooks.on('ready', CoC7Chat.ready);
 
-Hooks.on('preCreateActor', (createData) => CoCActor.initToken( createData));
+// Hooks.on('preCreateActor', (createData) => CoCActor.initToken( createData));
 
 // Called on closing a character sheet to lock it on getting it to display values
 Hooks.on('closeActorSheet', (characterSheet) => characterSheet.onCloseSheet());
+Hooks.on('renderCoC7CreatureSheet', (app, html, data) => CoC7CreatureSheet.forceAuto(app, html, data));
+Hooks.on('renderCoC7NPCSheet', (app, html, data) => CoC7NPCSheet.forceAuto(app, html, data));
+// Hooks.on('updateActor', (actor, dataUpdate) => CoCActor.updateActor( actor, dataUpdate));
+// Hooks.on('pdateToken', (scene, token, dataUpdate) => CoCActor.updateToken( scene, token, dataUpdate));
 
 
 // Add button on Token selection bar

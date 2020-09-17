@@ -67,19 +67,25 @@ export class CoC7MeleeResoltion{
 			switch (this.target.action) {
 			case 'dodge':
 				if( this.initiator.roll.successLevel <= 0 && this.target.roll.successLevel <= 0){
-					this.resultString = 'Both side failed.';
+					this.resultString = game.i18n.localize('CoC7.NoWinner');
 					this.winner = null;
 					this.rollDamage = false;
 				}
 				else if( this.initiator.roll.successLevel > this.target.roll.successLevel){
-					this.resultString = `${this.initiator.name} won. Roll damage`;
+					this.resultString = game.i18n.format('CoC7.WinnerRollDamage', {name : this.initiator.name});
 					this.winner = this.initiator;
+					this.winnerImg = this.initiator.weapon.img;
+					this.winnerTitle = this.initiator.weapon.name;
+					this.looser = this.target;
 					this.action = 'roll-melee-damage';
 					this.rollDamage = true;
 				}
 				else if( this.initiator.roll.successLevel <= this.target.roll.successLevel){
-					this.resultString = `${this.target.name} dodged.`;
+					this.resultString = game.i18n.format('CoC7.DodgeSuccess', {name : this.target.name});
 					this.winner = this.target;
+					this.looser = this.initiator;
+					this.winnerImg = this.target.skill.data.img;
+					this.winnerTitle = this.target.skill.name;
 					this.action = 'dodge';
 					this.rollDamage = false;
 				}
@@ -88,19 +94,23 @@ export class CoC7MeleeResoltion{
 			
 			case 'fightBack':
 				if( this.initiator.roll.successLevel <= 0 && this.target.roll.successLevel <= 0){
-					this.resultString = 'Both side failed.';
+					this.resultString = game.i18n.localize('CoC7.NoWinner');
 					this.winner = null;
 					this.rollDamage = false;
 				}
 				else if( this.initiator.roll.successLevel >= this.target.roll.successLevel){
-					this.resultString = `${this.initiator.name} won. Roll damage`;
+					this.resultString = game.i18n.format('CoC7.WinnerRollDamage', {name : this.initiator.name});
 					this.winner = this.initiator;
+					this.winnerImg = this.initiator.weapon.img;
+					this.winnerTitle = this.initiator.weapon.name;
 					this.looser = this.target;
 					this.rollDamage = true;
 				}
-				else if( this.initiator.roll.successLevel <= this.target.roll.successLevel){
-					this.resultString = `${this.target.name} won. Roll damage`;
+				else if( this.initiator.roll.successLevel <= this.target.roll.successLevel){ //TODO verifier la condition <= vs <
+					this.resultString = game.i18n.format('CoC7.WinnerRollDamage', {name : this.target.name});
 					this.winner = this.target;
+					this.winnerImg = this.target.weapon.img;
+					this.winnerTitle = this.target.weapon.name;
 					this.looser = this.initiator;
 					this.rollDamage = true;
 				}
@@ -109,19 +119,23 @@ export class CoC7MeleeResoltion{
 			
 			case 'maneuver':
 				if( this.initiator.roll.successLevel <= 0 && this.target.roll.successLevel <= 0){
-					this.resultString = 'Both side failed.';
+					this.resultString = game.i18n.localize('CoC7.NoWinner');
 					this.winner = null;
 					this.rollDamage = false;
 				}
 				else if( this.initiator.roll.successLevel >= this.target.roll.successLevel){
-					this.resultString = `${this.initiator.name} won. Roll damage`;
+					this.resultString = game.i18n.format('CoC7.WinnerRollDamage', {name : this.initiator.name});
 					this.winner = this.initiator;
+					this.winnerImg = this.initiator.weapon.img;
+					this.winnerTitle = this.initiator.weapon.name;
 					this.looser = this.target;
 					this.rollDamage = true;
 				}
 				else if( this.initiator.roll.successLevel <= this.target.roll.successLevel){
-					this.resultString = `${this.target.name} maneuver was successful.`;
+					this.resultString = game.i18n.format('CoC7.ManeuverSuccess', {name : this.target.name});
 					this.winner = this.target;
+					this.winnerImg = this.target.skill.data.img;
+					this.winnerTitle = this.target.skill.name;
 					this.looser = this.initiator;
 					this.rollDamage = false;
 				}

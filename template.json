@@ -124,6 +124,14 @@
                         "type": "Boolean",
                         "value": false
                     },
+                    "dead": {
+                        "type": "Boolean",
+                        "value": false
+                    },
+                    "prone": {
+                        "type": "Boolean",
+                        "value": false
+                    },
                     "tempoInsane": {
                         "type": "boolean",
                         "value": false
@@ -152,7 +160,9 @@
                 "age": "",
                 "sex": "",
                 "residence": "",
-                "birthplace": ""
+                "birthplace": "",
+                "archetype": "",
+                "organization": ""
             },
             "flags": {
                 "locked": true,
@@ -220,13 +230,7 @@
         }
     },
     "Item": {
-        "types": [
-            "item",
-            "weapon",
-            "skill",
-            "book",
-            "spell"
-        ],
+        "types": [ "item", "weapon", "skill", "book", "spell", "talent"],
         "item": {
             "description": "",
             "quantity": 1,
@@ -273,6 +277,7 @@
                 "burst": null
             },
             "bullets": null,
+            "ammo": 0,
             "malfunction": null,
             "blastRadius": null,
             "properties": {},
@@ -348,6 +353,22 @@
             "spells": [],
             "properties": {},
             "flags": {}
+        },
+        "talent":{
+            "source": null,
+            "description": {
+                "value": "",
+                "chat": "",
+                "notes": ""},
+            "type":{
+                "physical": false,
+                "mental": false,
+                "combat": false,
+                "miscellaneous": false,
+                "basic": false,
+                "insane": false,
+                "other": false
+            }
         }
 
     }

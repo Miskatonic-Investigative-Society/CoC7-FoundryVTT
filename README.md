@@ -20,6 +20,46 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.3.6 :
+
+* Addition of pulp talents (To be tested, I’m not familiar with Pulp Cthulhu, all of this is mainly cosmetic, no automation implemented so far)
+  * There's a new sheet for pulp talents.
+  * Talents can be dragged/dropped on actors (PC & NPC).
+  * Talents are displayed as a section of the "Gear&Cash" tab.
+  * Talents have no effect in play (e.g. the "Resilient" talent will NOT be taken in account for sanity loss, you'll have to do it "manually")
+* Two fields added to the character sheet for pulp heroes (Archetype and Organization).
+  * To have those displayed, as well as the auto HP calculation you will have to enable the "Pulp Rules" option from the system's options.
+* Bug correction: Ammo loaded in weapons is now correctly saved between sessions.
+* On the combat chat card you can now increase/decrease the volley size in full-auto mode.
+* Added option to ignore bullets limitation.
+* Added option to ignore uses per round limitation.
+
+version 0.3.5 :
+
+* Automatic damage.
+  * When a combat card is resolved an option will appear to automatically deal the damage to the target(s).
+  * When damage is dealt status (major wounds, dying, unconscious...) will be triggered.
+  * When receiving major wounds status a CON roll card will be triggered.
+  * When dying, the only option for the player will be ti do a CON roll by clicking on the dice in the header of the sheet.
+  * On failing a dying CON check or receiving more damage than max HP a player will die.
+  * When dying or death, the actor portrait will be replaced by the dying/death icon.
+  * Only the keeper can clear the dying/dead status by DOUBLE clicking on the portrait.
+* Ammunition/Uses per round.
+  * Using a range weapon will now compare the number of bullet shot to the number of bullets available.
+  * Shots will be limited by the max uses/round of the weapon.
+
+version 0.3.4 :
+
+* Inventory tab added to NPC and Creatures. Inventory can contains items, books and spells.
+  * Items, book and spells can be dragged/dropped.
+  * Any empty section will not be displayed.
+  * Is empty the inventory will not be displayed.
+* Close combat flow: if the target is a PC, only GM can see the initiator roll.
+  * The PC has to choose to retaliate/dodge without knowing the outcome of the attack.
+  * GM can see everything.
+* Creature and NPC sheet design sliglty reworked.
+* Japanese transalation updated thanks to AdmiralNyar.
+
 version 0.3.3 :
 
 * Inventory (Gear&Cash tab) displays items, books and spells.
