@@ -30,7 +30,9 @@ version 0.3.6 :
 * Two fields added to the character sheet for pulp heroes (Archetype and Organization).
   * To have those displayed, as well as the auto HP calculation you will have to enable the "Pulp Rules" option from the system's options.
 * Bug correction: Ammo loaded in weapons is now correctly saved between sessions.
-* Option added on the combat chat card to increase/decrease the volley size in full-auto mode.
+* On the combat chat card you can now increase/decrease the volley size in full-auto mode.
+* Added option to ignore bullets limitation.
+* Added option to ignore uses per round limitation.
 
 version 0.3.5 :
 
