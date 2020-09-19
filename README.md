@@ -22,7 +22,15 @@ Compendium 'Weapons' contains a single test weapon.
 
 version 0.3.7 :
 
-* Bug correction typo on the character sheet.
+* Bug correction:
+  * Typo on the character sheet.
+  * Typo correction on the range chat-card.
+  * Typo correction malus->penalty.
+  * Calculation of bullets fired was wrongly deducted from the weapon magazine.
+* Added distance to target on the range chat-card.
+  * You can now see the distance from the taget below the target selector in the chat-card and on the tooltip of the target.
+* Added an option to restrict measurement to grid space.
+  * By default, for combat range calculation, the distance measured is the euclidean distance. To see that distance using the ruller you'll need to hold shift while measuring. An option is added to use grid spaces instead of euclidean distance. By selecting it, distance will be calculated as per the default ruler for that grid type (Grid less; Square, Hex...)
 
 version 0.3.6 :
 

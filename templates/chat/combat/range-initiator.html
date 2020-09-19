@@ -114,9 +114,9 @@
 		{{#each targets as |trgt key|}}
 			<div class="target-selector" style="flex: none;" data-key="{{key}}">
 				{{#if trgt.active}}
-					<img class="open-actor" data-actor-key="{{trgt.actorKey}}" style="flex: none;" src="{{trgt.img}}" title="{{trgt.name}}" alt="{{trgt.name}}" width="24" height="24"/>
+					<img class="open-actor" data-actor-key="{{trgt.actorKey}}" style="flex: none;" src="{{trgt.img}}" title="{{trgt.name}}, {{trgt.distance.rounded}} {{trgt.distance.unit}}." alt="{{trgt.name}}" width="24" height="24"/>
 				{{else}}
-					<img class="open-actor" data-actor-key="{{trgt.actorKey}}" style="flex: none;border:none" src="{{trgt.img}}" title="{{trgt.name}}" alt="{{trgt.name}}" width="24" height="24"/>
+					<img class="open-actor" data-actor-key="{{trgt.actorKey}}" style="flex: none;border:none" src="{{trgt.img}}" title="{{trgt.name}}, {{trgt.distance.rounded}} {{trgt.distance.unit}}." alt="{{trgt.name}}" width="24" height="24"/>
 				{{/if}}
 			</div>
 		{{/each}}
@@ -143,7 +143,7 @@
 			data-is-blind="false"
 			{{#unless trgt.active}}style='display: none;'{{/unless}}>
 			<div class="target-name">
-				<label>Target : {{trgt.name}}</label>
+				<label>Target : {{trgt.name}} ({{trgt.distance.rounded}} {{trgt.distance.unit}})</label>
 			</div>
 
 			<div class='gm-visible-only' style="margin-bottom: 2px;">
@@ -345,7 +345,7 @@
 				  data-bullets-shot="{{shot.bulletsShot}}"
 				  data-transit-bullets="{{shot.transitBullets}}"
 				  data-transit="{{shot.transit}}">
-					({{key}})Shoot {{shot.bulletsShot}} {{#if shot.transit}}+ {{shot.transitBullets}}{{/if}} bullets at target {{shot.actorName}}.
+					({{key}})Shot {{shot.bulletsShot}} {{#if shot.transit}}+ {{shot.transitBullets}}{{/if}} bullets at target {{shot.actorName}}.
 				</div>
 			{{/each}}
 		</div>
