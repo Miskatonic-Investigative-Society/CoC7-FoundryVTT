@@ -104,10 +104,12 @@ export class chatHelper{
 
 	static getDistance( startToken, endToken){
 		const ray = new Ray( startToken.center, endToken.center);
+		const segment = [{ray}];
 		const distance = {
-			gridUnit: ray.distance/game.scenes.active.data.grid,
-			value: (ray.distance/game.scenes.active.data.grid)*game.scenes.active.data.gridDistance,
-			unit: game.scenes.active.data.gridUnits
+			gridUnit: ray.distance/canvas.scene.data.grid,
+			// value: (ray.distance/canvas.scene.data.grid)*canvas.scene.data.gridDistance,
+			value: canvas.grid.measureDistances(segment, {gridSpaces:game.settings.get('CoC7', 'gridSpaces')})[0],
+			unit: canvas.scene.data.gridUnits
 		};
 		return distance;
 	}
