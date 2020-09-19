@@ -46,7 +46,7 @@
 				{{#if burst}}			<span class="tag" title="Bursts">{{localize 'CoC7.rangeCombatCard.Burst'}}</span>{{/if}}
 				{{#if fullAuto}}		<span class="tag" title="Full auto">{{localize 'CoC7.rangeCombatCard.FullAuto'}}</span> {{/if}}
 				{{#if advantage}}		<span class="tag" title="Add 1 bonus die (target is prone, restrained...)">{{localize 'CoC7.Advantage'}}</span>{{/if}}
-				{{#if disadvantage}}	<span class="tag" title="Add 1 malus die (for being prone, restrained...)">{{localize 'CoC7.Disadvantage'}}</span>{{/if}}
+				{{#if disadvantage}}	<span class="tag" title="Add 1 penalty die (for being prone, restrained...)">{{localize 'CoC7.Disadvantage'}}</span>{{/if}}
 				{{#if aimed}}			<span class="tag" title="Add 1 bonus die for the first shot">{{localize 'CoC7.rangeCombatCard.aiming'}}</span>{{/if}}
 			</div>
 		{{else}}
@@ -95,7 +95,7 @@
 			data-flag="advantage" 
 			data-selected={{advantage}}>{{localize 'CoC7.Advantage'}}</span>
 			<span class="flex1 toggle-switch disadvantage {{#unless rolled}}simple-flag{{/unless}} {{#if disadvantage}}switched-on{{/if}} gm-select-only"
-			title="Add 1 malus die (for being prone, restrained...)" 
+			title="Add 1 penalty die (for being prone, restrained...)" 
 			style="text-align:center" 
 			data-flag="disadvantage" 
 			data-selected={{disadvantage}}>{{localize 'CoC7.Disadvantage'}}</span>
@@ -114,9 +114,9 @@
 		{{#each targets as |trgt key|}}
 			<div class="target-selector" style="flex: none;" data-key="{{key}}">
 				{{#if trgt.active}}
-					<img class="open-actor" data-actor-key="{{trgt.actorKey}}" style="flex: none;" src="{{trgt.img}}" title="{{trgt.name}}" alt="{{trgt.name}}" width="24" height="24"/>
+					<img class="open-actor" data-actor-key="{{trgt.actorKey}}" style="flex: none;" src="{{trgt.img}}" title="{{trgt.name}}, {{trgt.distance.rounded}} {{trgt.distance.unit}}." alt="{{trgt.name}}" width="24" height="24"/>
 				{{else}}
-					<img class="open-actor" data-actor-key="{{trgt.actorKey}}" style="flex: none;border:none" src="{{trgt.img}}" title="{{trgt.name}}" alt="{{trgt.name}}" width="24" height="24"/>
+					<img class="open-actor" data-actor-key="{{trgt.actorKey}}" style="flex: none;border:none" src="{{trgt.img}}" title="{{trgt.name}}, {{trgt.distance.rounded}} {{trgt.distance.unit}}." alt="{{trgt.name}}" width="24" height="24"/>
 				{{/if}}
 			</div>
 		{{/each}}
@@ -143,7 +143,7 @@
 			data-is-blind="false"
 			{{#unless trgt.active}}style='display: none;'{{/unless}}>
 			<div class="target-name">
-				<label>Target : {{trgt.name}}</label>
+				<label>Target : {{trgt.name}} ({{trgt.distance.rounded}} {{trgt.distance.unit}})</label>
 			</div>
 
 			<div class='gm-visible-only' style="margin-bottom: 2px;">
@@ -161,7 +161,7 @@
 						title="{{localize 'CoC7.rangeCombatCard.OutOfRange'}}"
 						>{{localize 'CoC7.rangeCombatCard.OutOfRange'}}</span>
 					<span class="{{#if trgt.cover}}tag{{else}}invisible{{/if}}"
-						title="1 malus die. The target is under cover or successfully dived for cover" 
+						title="1 penalty die. The target is under cover or successfully dived for cover" 
 						>{{localize 'CoC7.rangeCombatCard.Cover'}}</span>
 					<span class="{{#if trgt.surprised}}tag{{else}}invisible{{/if}}"
 						title="1 bonus die for surprised target"
@@ -173,13 +173,13 @@
 						title="1 bonus die for big target (Build > +4)" 
 						>{{localize 'CoC7.rangeCombatCard.BigTarget'}}</span>
 					<span class="{{#if trgt.small}}tag{{else}}invisible{{/if}}"
-						title="1 malus die for a small target"
+						title="1 penalty die for a small target"
 						>{{localize 'CoC7.combatCard.SmallTarget'}}</span>
 					<span class="{{#if trgt.inMelee}}tag{{else}}invisible{{/if}}"
-						title="1 malus die. Target is engaged in melee combat"
+						title="1 penalty die. Target is engaged in melee combat"
 						>{{localize 'CoC7.rangeCombatCard.InMelee'}}</span>
 					<span class="{{#if trgt.fast}}tag{{else}}invisible{{/if}}"
-						title="1 malus dir. Target is fast (mov +8) and moving at full speed"
+						title="1 penalty dir. Target is fast (mov +8) and moving at full speed"
 						>{{localize 'CoC7.rangeCombatCard.FastMovingTarget'}}</span>
 				{{else}}
 					<div class="flexrow range-selection">
@@ -202,7 +202,7 @@
 
 					<div class="flexrow bonus-selection">
 						<span class="flex1 toggle-switch cover target-flag {{#unless ../rolled}}simple-flag{{/unless}} {{#if trgt.cover}}switched-on{{/if}} gm-select-only"
-							title="1 malus die. The target is under cover or successfully dived for cover" 
+							title="1 penalty die. The target is under cover or successfully dived for cover" 
 							style="text-align:center" 
 							data-flag="cover" 
 							data-selected={{trgt.cover}}>{{localize 'CoC7.rangeCombatCard.Cover'}}</span>
@@ -230,12 +230,12 @@
 								{{trgt.sizeLabel}}
 							</span>
 						<span class="flex1 toggle-switch inMelee target-flag {{#unless ../rolled}}simple-flag{{/unless}} {{#if trgt.inMelee}}switched-on{{/if}} gm-select-only"
-							title="1 malus die for a target engage in melee"
+							title="1 penalty die for a target engage in melee"
 							style="text-align:center"
 							data-flag="in-melee"
 							data-selected={{trgt.inMelee}}>{{localize 'CoC7.rangeCombatCard.InMelee'}}</span>
 						<span class="flex1 toggle-switch fast target-flag {{#unless ../rolled}}simple-flag{{/unless}} {{#if trgt.fast}}switched-on{{/if}} gm-select-only"
-							title="1 malus dir. Target is fast (mov +8) and moving at full speed"
+							title="1 penalty dir. Target is fast (mov +8) and moving at full speed"
 							style="text-align:center"
 							data-flag="fast"
 							data-selected={{trgt.fast}}>{{localize 'CoC7.rangeCombatCard.FastMovingTarget'}}</span>
@@ -258,7 +258,7 @@
 						title="{{localize 'CoC7.rangeCombatCard.OutOfRange'}}"
 						>{{localize 'CoC7.rangeCombatCard.OutOfRange'}}</span>
 					<span class="{{#if trgt.cover}}tag{{else}}invisible{{/if}}"
-						title="1 malus die. The target is under cover or successfully dived for cover" 
+						title="1 penalty die. The target is under cover or successfully dived for cover" 
 						>{{localize 'CoC7.rangeCombatCard.Cover'}}</span>
 					<span class="{{#if trgt.surprised}}tag{{else}}invisible{{/if}}"
 						title="1 bonus die for surprised target"
@@ -270,13 +270,13 @@
 						title="1 bonus die for big target (Build > +4)" 
 						>{{localize 'CoC7.rangeCombatCard.BigTarget'}}</span>
 					<span class="{{#if trgt.small}}tag{{else}}invisible{{/if}}"
-						title="1 malus die for a small target"
+						title="1 penalty die for a small target"
 						>{{localize 'CoC7.combatCard.SmallTarget'}}</span>
 					<span class="{{#if trgt.inMelee}}tag{{else}}invisible{{/if}}"
-						title="1 malus die. Target is engaged in melee combat"
+						title="1 penalty die. Target is engaged in melee combat"
 						>{{localize 'CoC7.rangeCombatCard.InMelee'}}</span>
 					<span class="{{#if trgt.fast}}tag{{else}}invisible{{/if}}"
-						title="1 malus dir. Target is fast (mov +8) and moving at full speed"
+						title="1 penalty die. Target is fast (mov +8) and moving at full speed"
 						>{{localize 'CoC7.rangeCombatCard.FastMovingTarget'}}</span>
 				</div>
 			</div>
@@ -345,7 +345,7 @@
 				  data-bullets-shot="{{shot.bulletsShot}}"
 				  data-transit-bullets="{{shot.transitBullets}}"
 				  data-transit="{{shot.transit}}">
-					({{key}})Shoot {{shot.bulletsShot}} {{#if shot.transit}}+ {{shot.transitBullets}}{{/if}} bullets at target {{shot.actorName}}.
+					({{key}})Shot {{shot.bulletsShot}} {{#if shot.transit}}+ {{shot.transitBullets}}{{/if}} bullets at target {{shot.actorName}}.
 				</div>
 			{{/each}}
 		</div>
