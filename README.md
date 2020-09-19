@@ -30,7 +30,7 @@ version 0.3.7 :
 * On the range chat-card, the fast option is not default anymore.
   * When targeting a target with MOV of 8+, the fast option will not be selected by default. Instead, selecting fast for a target with MOV less than 8 will trigger a warning. You will still be able to select it.
 * Added distance to target on the range chat-card.
-  * Distance are calculated center of token to center of token. This may have an incidence on what the ruler display if for example your token is 2x2 on a square grid (in that case you can't put the ruler end on the center of the token).
+  * Distance are calculated center of token to center of token. This may have an incidence on what the ruler displays if, for example, your token is 2x2 on a square grid (in that case you can't put the ruler end on the center of the token).
   * You can now see the distance from the target below the target selector in the chat-card and on the tool-tip of the target.
 * Added an option to restrict measurement to grid space.
   * By default, for combat range calculation, the distance measured is the euclidean distance. To see that distance using the ruler you'll need to hold shift while measuring. An option is added to use grid spaces instead of euclidean distance. By selecting it, distance will be calculated as per the default ruler for that grid type (Grid less; Square, Hex...)
