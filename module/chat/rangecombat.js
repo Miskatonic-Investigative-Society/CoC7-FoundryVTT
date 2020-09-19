@@ -52,7 +52,8 @@ export class CoC7RangeInitiator{
 			this._targets.forEach( t =>{
 				if( t.token && this.token){
 					t.distance = chatHelper.getDistance( t.token, this.token);
-					const distInYd = chatHelper.toYards( t.distance);
+					t.distance.rounded = Math.round(t.distance.value * 100)/100;
+					const distInYd = Math.round(chatHelper.toYards( t.distance)* 100)/100;
 					if( distInYd){
 						if( this.actor){
 							t.pointBlankRange = false;
@@ -413,8 +414,8 @@ export class CoC7RangeInitiator{
 			let weaponMalfunction = false;
 			let index = 0;
 			while( !weaponMalfunction && this.shots.length > index){
-				const roll = this.shootAtTarget(this.shots[index]);
-				await this.weapon.shootBullets( this.shots[index].bulletsShot + this.shots[index].transitBullets );
+				const roll = this.shootAtTarget( this.shots[index]);
+				await this.weapon.shootBullets( parseInt(this.shots[index].bulletsShot) + parseInt(this.shots[index].transitBullets));
 				if( roll.hasMalfunction){
 					roll.isSuccess = false;
 					weaponMalfunction = true;
@@ -730,11 +731,17 @@ export class CoC7RangeTarget{
 		this._big = false;
 		this._small = false;
 	}
+
+	get isFast(){
+		if( this.actor && this.actor.mov) return this.actor.mov >= 8;
+		return false;
+	}
 	
 	get fast(){
 		if( undefined === this._fast){
-			if( this.actor && this.actor.mov) this._fast = this.actor.mov >= 8;
-			else this._fast = false;
+			// if( this.actor && this.actor.mov) this._fast = this.actor.mov >= 8;
+			// else this._fast = false;
+			this._fast = false;
 		} 
 		return this._fast;
 	}
@@ -770,8 +777,8 @@ export class CoC7RangeTarget{
 
 	get sizeText(){
 		if( this.big) return '1 bonus die for big target (Build > +4)';
-		if( this.small) return '1 malus die for a small target';
-		return 'Target has a normal size, no bonus/malus';
+		if( this.small) return '1 penalty die for a small target';
+		return 'Target has a normal size, no bonus/penalty';
 	}
 
 	get sizeLabel(){
@@ -835,5 +842,6 @@ export class CoC7RangeTarget{
 			else this.small = true;
 		}
 		else this[flag] = !this[flag];
+		if( 'fast' === flag && this.fast && !this.isFast) ui.notifications.warn( `Fast selected on a target with less than 8 MOV. (MOV: ${this.actor.mov})`);
 	}
 }

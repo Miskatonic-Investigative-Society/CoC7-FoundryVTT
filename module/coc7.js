@@ -39,6 +39,14 @@ Hooks.once('init', async function() {
 	CONFIG.Item.entityClass = CoC7Item;
 	Combat.prototype.rollInitiative = rollInitiative;
 
+	game.settings.register('CoC7', 'gridSpaces', {
+		name: 'SETTINGS.RestrictGridSpaces',
+		hint: 'SETTINGS.RestrictGridSpacesHint',
+		scope: 'world',
+		config: true,
+		default: false,
+		type: Boolean
+	});	
 	
 	game.settings.register('CoC7', 'pulpRules', {
 		name: 'SETTINGS.PulpRules',
