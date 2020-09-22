@@ -92,7 +92,7 @@
 					<a class="dropdown-element"
 						data-action="fightBack"
 						data-weapon-id="{{weapon.id}}"
-						data-skill-id="{{weapon.data.data.skill.main.id}}">{{weapon.name}} ({{weapon.data.data.skill.main.value}}%)</a>
+						data-skill-id="{{weapon.data.data.skill.main.id}}">{{weapon.name}} ({{weapon.data.data.skill.main.value}}%)</a> {{!-- TODO: Check skill value correctly displayed --}}
                 {{/each}}
             </div>        
         </div>
@@ -102,7 +102,7 @@
                 {{#each actor.fightingSkills as |skill key|}}
 					<a class="dropdown-element"
 						data-action="maneuver"
-						data-skill-id="{{skill.data._id}}">{{skill.name}} ({{skill.data.data.value}}%)</a>
+						data-skill-id="{{skill.data._id}}">{{skill.name}} ({{skill.value}}%)</a>
                 {{/each}}
             </div>        
         </div>
