@@ -277,7 +277,7 @@ export class CoC7MeleeTarget extends ChatCardActor{
 
 	}
 
-	upgradeRoll( luckAmount, newSuccessLevel, oldCard){
+	upgradeRoll( luckAmount, newSuccessLevel, oldCard){  //TODO : Check if this needs to be async
 		if( !this.actor.spendLuck( luckAmount)) ui.notifications.error(`${token.name} didn't have enough luck to pass the check`);
 		this.roll.value = null;
 		this.roll.successLevel = newSuccessLevel;
@@ -319,7 +319,7 @@ export class CoC7MeleeTarget extends ChatCardActor{
 		diceTotal.classList.replace( 'failure', 'success');
 		oldCard.querySelector('.card-buttons').remove();
 		oldCard.querySelector('.dice-tooltip').style.display = 'none';
-		CoC7Chat.updateChatCard( oldCard);
+		CoC7Chat.updateChatCard( oldCard);  //TODO : Check if this needs to be async
 	}
 }
 
