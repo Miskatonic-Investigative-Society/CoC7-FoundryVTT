@@ -264,29 +264,27 @@ export class CoCActor extends Actor {
 	async createEmbeddedEntity(embeddedName, data, options){
 		switch( data.type){
 		case( 'skill'):
-			if( data.data.base){
-				if( data.data.base != data.data.value) {
-					data.data.value = data.data.base;
-				}
-			}
+			if( 'character' != this.data.type){ //If not a PC set skill value to base
+				if( this.getItemIdByName(data.name)) return; //If skill with this name exist return
 
-			if( isNaN(Number(data.data.value)) ) {
-				let value;
-				try{
-					value = eval(this.parseFormula( data.data.value));
+				if( data.data.base){
+					if( data.data.base != data.data.value) {
+						data.data.value = data.data.base;
+					}
 				}
-				catch(err){
-					value = null;
-				}
-				if( value) data.data.value = Math.floor(value);
-			}
 
-			if( !this.getItemIdByName(data.name))
-			{
-				return await super.createEmbeddedEntity(embeddedName, data, options);
-			} 
-			return null;
-        
+				if( isNaN(Number(data.data.value)) ) {
+					let value;
+					try{
+						value = eval(this.parseFormula( data.data.value));
+					}
+					catch(err){
+						value = null;
+					}
+					if( value) data.data.value = Math.floor(value);
+				}
+			} else data.data.value = null;
+			return await super.createEmbeddedEntity(embeddedName, data, options);
 		default:
 			return await super.createEmbeddedEntity(embeddedName, data, options);
 		}
@@ -398,6 +396,53 @@ export class CoCActor extends Actor {
 
 	get san(){
 		return parseInt(this.data.data.attribs.san.value);
+	}
+
+	get occupationPoints(){
+		let occupationPoints = 0;
+		for( let skill of this.skills){
+			if( skill.data.data.adjustments?.occupation){
+				occupationPoints += skill.data.data.adjustments.occupation;
+			}
+		}
+		return occupationPoints;
+	}
+
+	get archetypePoints(){
+		let archetypePoints = 0;
+		for( let skill of this.skills){
+			if( skill.data.data.adjustments?.archetype){
+				archetypePoints += skill.data.data.adjustments.archetype;
+			}
+		}
+		return archetypePoints;
+	}
+
+	get experiencePoints(){
+		let experiencePoints = 0;
+		for( let skill of this.skills){
+			if( skill.data.data.adjustments?.experience){
+				experiencePoints += skill.data.data.adjustments.experience;
+			}
+		}
+		return experiencePoints;
+	}
+
+	get personalPoints(){
+		let personalPoints = 0;
+		for( let skill of this.skills){
+			if( skill.data.data.adjustments?.personal){
+				personalPoints += skill.data.data.adjustments.personal;
+			}
+		}
+		return personalPoints;
+	}
+
+	get hasSkillFlaggedForExp(){
+		for( let skill of this.skills){
+			if( skill.data.data.flags?.developement) return true;
+		}
+		return false;
 	}
 
 	async setSan( value){
@@ -671,22 +716,18 @@ export class CoCActor extends Actor {
 				if( item.developementFlag){
 					const die = new Die(100);
 					die.roll(1);
-					let skillValue = parseInt(item.data.data.value);
+					let skillValue = item.value;
+					let augment = null;
 					if( die.total > skillValue || die.total >= 95)
 					{
 						success.push(item._id);
 						const augmentDie = new Die(10);
 						augmentDie.roll();
-						skillValue += augmentDie.total;
-
+						augment += augmentDie.total;
+						await item.increaseExperience( augment);
 						if( fastForward) ui.notifications.info('skill upgraded');
 					}else failure.push(item._id);
-					await this.updateEmbeddedEntity('OwnedItem', {
-						_id: item._id,
-						'data.flags.developement': false,
-						'data.value': skillValue
-					});
-
+					await item.unflagForDevelopement();
 				}
 			}
 		}
@@ -897,6 +938,7 @@ export class CoCActor extends Actor {
 
 	async fallProne(){
 		await this.setStatus(COC7.status.prone);
+		
 		// await this.setFlag('CoC7', COC7.status.prone, true);
 	}
 

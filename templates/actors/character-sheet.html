@@ -105,6 +105,7 @@
 			<div class="flexrow flex2 attribute" data-attrib="lck">
 				<label class="attribute-label rollable">{{localize 'CoC7.Luck'}} :</label>
 				<input class="attribute-value" type="text" name="data.attribs.lck.value" value="{{data.attribs.lck.value}}" data-dtype="Number" data-attrib="lck">
+				<input class="attribute-value invisible" type="text" name="data.attribs.lck.max" value="99" data-dtype="Number" data-attrib="lck" readonly>
 			</div>
 		</div>
 		<div class="flexrow" style="align-items: center; flex: none;height: 20px;">
@@ -160,6 +161,7 @@
 
 	{{!-- Sheet Tab Navigation --}}
 	<nav class="sheet-tabs tabs" data-group="primary">
+		<a class="item" data-tab="development">{{localize 'CoC7.CharacterDevelopment'}}</a>
 		<a class="item" data-tab="skills">{{localize 'CoC7.Skills'}}</a>
 		<a class="item" data-tab="combat">{{localize 'CoC7.Combat'}}</a>
 		<a class="item" data-tab="possession">{{localize 'CoC7.Possessions'}}</a>
@@ -169,12 +171,15 @@
 	{{!-- Sheet Body --}}
 	<section class="sheet-body">
 		
+		<div class="tab combat flexcol" data-group="primary" data-tab="development" style="border: 2px groove #eeede0;padding: 1px;">
+			{{> "systems/CoC7/templates/actors/parts/character-development.html"}}
+		</div>
+
 		{{!-- Skills Tab --}}
 		<div class="tab skills flexcol active" data-group="primary" data-tab="skills" style="border: 2px groove #eeede0;padding: 1px;">
 			{{#unless data.flags.locked}}
 			<div style='flex:initial;'>
 				<div class="add-item button" title="{{localize 'CoC7.AddSkill'}}" data-type="skill">{{localize 'CoC7.AddSkill'}}</div>
-				<div class="skill-developement button" title="{{localize 'CoC7.DevelopemmentPhase'}}">{{localize 'CoC7.DevelopemmentPhase'}}</div>
 			</div>
 			{{/unless}}
 			{{> "systems/CoC7/templates/actors/parts/actor-skills.html"}}

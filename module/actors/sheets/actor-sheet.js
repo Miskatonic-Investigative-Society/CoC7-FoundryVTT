@@ -11,6 +11,14 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 	*/
 	getData() {
 		const data = super.getData();
+
+		data.totalExperience = this.actor.experiencePoints;
+		data.totalOccupation = this.actor.occupationPoints;
+		data.totalArchetype = this.actor.archetypePoints;
+		data.totalPersonal = this.actor.personalPoints;
+
+		data.hasSkillFlaggedForExp = this.actor.hasSkillFlaggedForExp;
+
 		data.manualCredit = this.actor.getActorFlag('manualCredit');
 		if( !data.manualCredit){
 			data.credit = {};

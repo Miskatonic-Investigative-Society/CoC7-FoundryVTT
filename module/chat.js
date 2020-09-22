@@ -47,7 +47,7 @@ export class CoC7Chat{
 
 		html.on('click', '.dropdown-element', CoC7Chat._onDropDownElementSelected.bind(this));
 		html.on('click', '.simple-toggle', CoC7Chat._onToggleSelected.bind(this));
-		html.on('click', '.is-outnumbered', CoC7Chat._onOutnumberedSelected.bind(this));
+		// html.on('click', '.is-outnumbered', CoC7Chat._onOutnumberedSelected.bind(this));
 
 		html.on('click', '.target-selector', CoC7Chat._onTargetSelect.bind(this));
 
@@ -201,145 +201,145 @@ export class CoC7Chat{
 		}
 	}
 
-	static async resolveCombatCard( card){
-		const initiatorData = card.querySelector('.initiator-action-result').dataset;
-		const initiator = CoC7Chat._getActorFromKey( initiatorData.initiatorid);
-		let initiatorSuccess = {};
-		if( !initiator) return null;
-		const initiatorWeapon = initiator.getOwnedItem( initiatorData.itemid);
-		initiatorSuccess.successLevel = parseInt( initiatorData.successlevel);
-		initiatorSuccess.difficulty = parseInt( initiatorData.difficulty);
+	// static async resolveCombatCard( card){ //TODO : To be removed ?
+	// 	const initiatorData = card.querySelector('.initiator-action-result').dataset;
+	// 	const initiator = CoC7Chat._getActorFromKey( initiatorData.initiatorid);
+	// 	let initiatorSuccess = {};
+	// 	if( !initiator) return null;
+	// 	const initiatorWeapon = initiator.getOwnedItem( initiatorData.itemid);
+	// 	initiatorSuccess.successLevel = parseInt( initiatorData.successlevel);
+	// 	initiatorSuccess.difficulty = parseInt( initiatorData.difficulty);
 		
-		if( initiatorSuccess.successLevel >= 1) initiatorSuccess.netSuccess = initiatorSuccess.successLevel - initiatorSuccess.difficulty + 1;
-		else initiatorSuccess.netSuccess = 0;
+	// 	if( initiatorSuccess.successLevel >= 1) initiatorSuccess.netSuccess = initiatorSuccess.successLevel - initiatorSuccess.difficulty + 1;
+	// 	else initiatorSuccess.netSuccess = 0;
 
 
 
-		const targets = card.querySelectorAll('.defender-action-result');
+	// 	const targets = card.querySelectorAll('.defender-action-result');
 
-		if( 0 == targets.length ){
-			let flavor='';
-			if( initiatorSuccess.successLevel >= 1){
-				let db = '';
-				if( initiator.db == 0 ) db='';
-				else if( initiator.db == -2 && initiatorWeapon.data.data.properties.ahdb ) db='-1';
-				else if( initiator.db == -2 && initiatorWeapon.data.data.properties.addb ) db='-2';
-				else if( initiator.db == -1 && initiatorWeapon.data.data.properties.ahdb ) db='';
-				else if( initiator.db == -1 && initiatorWeapon.data.data.properties.addb ) db='-1';
-				else if( initiatorWeapon.data.data.properties.addb ) db = `+${initiator.db}`;
-				else if( initiatorWeapon.data.data.properties.ahdb ) db = `+${initiator.db}/2`;
-				let formula = initiatorWeapon.data.data.range.normal.damage + db;
-				flavor=`<div class='card-result'>${initiator.name} used ${initiatorWeapon.name} and deals <a class="inline-roll roll" data-mode="roll" data-flavor="" data-formula="${formula}" title="${formula}"><i class="fas fa-dice-d20"></i>${formula}</a> damage</div>`;
-			} else {
-				flavor=`<div class='card-result'>${initiator.name} used ${initiatorWeapon.name} and missed.</div>`;
-			}
-			let result = card.querySelector('.initiator-action-result');
-			let oldResult = result.querySelector('.card-result');
-			if( oldResult) oldResult.remove();
-			$(result).append(flavor);
-		}
+	// 	if( 0 == targets.length ){
+	// 		let flavor='';
+	// 		if( initiatorSuccess.successLevel >= 1){
+	// 			let db = '';
+	// 			if( initiator.db == 0 ) db='';
+	// 			else if( initiator.db == -2 && initiatorWeapon.data.data.properties.ahdb ) db='-1';
+	// 			else if( initiator.db == -2 && initiatorWeapon.data.data.properties.addb ) db='-2';
+	// 			else if( initiator.db == -1 && initiatorWeapon.data.data.properties.ahdb ) db='';
+	// 			else if( initiator.db == -1 && initiatorWeapon.data.data.properties.addb ) db='-1';
+	// 			else if( initiatorWeapon.data.data.properties.addb ) db = `+${initiator.db}`;
+	// 			else if( initiatorWeapon.data.data.properties.ahdb ) db = `+${initiator.db}/2`;
+	// 			let formula = initiatorWeapon.data.data.range.normal.damage + db;
+	// 			flavor=`<div class='card-result'>${initiator.name} used ${initiatorWeapon.name} and deals <a class="inline-roll roll" data-mode="roll" data-flavor="" data-formula="${formula}" title="${formula}"><i class="fas fa-dice-d20"></i>${formula}</a> damage</div>`;
+	// 		} else {
+	// 			flavor=`<div class='card-result'>${initiator.name} used ${initiatorWeapon.name} and missed.</div>`;
+	// 		}
+	// 		let result = card.querySelector('.initiator-action-result');
+	// 		let oldResult = result.querySelector('.card-result');
+	// 		if( oldResult) oldResult.remove();
+	// 		$(result).append(flavor);
+	// 	}
 
-		[].forEach.call( targets, target => {
-			const targetActor = CoC7Chat._getActorFromKey( target.dataset.defendantid);
-			if( !targetActor){
-				ui.notifications.error( 'Actor does not exist');
-				return null;
-			}
+	// 	[].forEach.call( targets, target => {
+	// 		const targetActor = CoC7Chat._getActorFromKey( target.dataset.defendantid);
+	// 		if( !targetActor){
+	// 			ui.notifications.error( 'Actor does not exist');
+	// 			return null;
+	// 		}
 
-			let targetSuccess = {};
-			targetSuccess.successLevel = parseInt( target.dataset.successlevel);
-			targetSuccess.difficulty = parseInt( target.dataset.difficulty);
+	// 		let targetSuccess = {};
+	// 		targetSuccess.successLevel = parseInt( target.dataset.successlevel);
+	// 		targetSuccess.difficulty = parseInt( target.dataset.difficulty);
 			
-			if( targetSuccess.successLevel >= 1) targetSuccess.netSuccess = targetSuccess.successLevel - targetSuccess.difficulty + 1;
-			else targetSuccess.netSuccess = 0;
+	// 		if( targetSuccess.successLevel >= 1) targetSuccess.netSuccess = targetSuccess.successLevel - targetSuccess.difficulty + 1;
+	// 		else targetSuccess.netSuccess = 0;
 	
-			let flavor;
-			let formula;
-			let db;
-			switch (target.dataset.action) {
-			case 'maneuver':
-				if( initiatorSuccess.netSuccess >= targetSuccess.netSuccess && initiatorSuccess.successLevel >= 1){
-					db = '';
-					if( initiator.db == 0 ) db='';
-					else if( initiator.db == -2 && initiatorWeapon.data.data.properties.ahdb ) db='-1';
-					else if( initiator.db == -2 && initiatorWeapon.data.data.properties.addb ) db='-2';
-					else if( initiator.db == -1 && initiatorWeapon.data.data.properties.ahdb ) db='';
-					else if( initiator.db == -1 && initiatorWeapon.data.data.properties.addb ) db='-1';
-					else if( initiatorWeapon.data.data.properties.addb ) db = `+${initiator.db}`;
-					else if( initiatorWeapon.data.data.properties.ahdb ) db = `+${initiator.db}/2`;
-					formula = initiatorWeapon.data.data.range.normal.damage + db;
-					//						flavor=`<div class='card-result'>${targetActor.name} maneuver failled. ${initiator.name} deals <span class='damage-roll rollable' data-target='${target.dataset.defendantid}' data-formula='${formula}'>${formula}</span> damage</div>`;
-					flavor=`<div class='card-result'>${targetActor.name} maneuver failled. ${initiator.name} deals <a class="inline-roll roll" data-mode="roll" data-flavor="" data-formula="${formula}" title="${formula}"><i class="fas fa-dice-d20"></i>${formula}</a> damage</div>`;
-				} else if(targetSuccess.netSuccess > initiatorSuccess.netSuccess && targetSuccess.successLevel >= 1) {
-					flavor=`<div class='card-result'>${targetActor.name} maneuver succeded. ${initiator.name} attack missed.</div>`;
+	// 		let flavor;
+	// 		let formula;
+	// 		let db;
+	// 		switch (target.dataset.action) {
+	// 		case 'maneuver':
+	// 			if( initiatorSuccess.netSuccess >= targetSuccess.netSuccess && initiatorSuccess.successLevel >= 1){
+	// 				db = '';
+	// 				if( initiator.db == 0 ) db='';
+	// 				else if( initiator.db == -2 && initiatorWeapon.data.data.properties.ahdb ) db='-1';
+	// 				else if( initiator.db == -2 && initiatorWeapon.data.data.properties.addb ) db='-2';
+	// 				else if( initiator.db == -1 && initiatorWeapon.data.data.properties.ahdb ) db='';
+	// 				else if( initiator.db == -1 && initiatorWeapon.data.data.properties.addb ) db='-1';
+	// 				else if( initiatorWeapon.data.data.properties.addb ) db = `+${initiator.db}`;
+	// 				else if( initiatorWeapon.data.data.properties.ahdb ) db = `+${initiator.db}/2`;
+	// 				formula = initiatorWeapon.data.data.range.normal.damage + db;
+	// 				//						flavor=`<div class='card-result'>${targetActor.name} maneuver failled. ${initiator.name} deals <span class='damage-roll rollable' data-target='${target.dataset.defendantid}' data-formula='${formula}'>${formula}</span> damage</div>`;
+	// 				flavor=`<div class='card-result'>${targetActor.name} maneuver failled. ${initiator.name} deals <a class="inline-roll roll" data-mode="roll" data-flavor="" data-formula="${formula}" title="${formula}"><i class="fas fa-dice-d20"></i>${formula}</a> damage</div>`;
+	// 			} else if(targetSuccess.netSuccess > initiatorSuccess.netSuccess && targetSuccess.successLevel >= 1) {
+	// 				flavor=`<div class='card-result'>${targetActor.name} maneuver succeded. ${initiator.name} attack missed.</div>`;
 						
-				} else {
-					flavor='<div class=\'card-result\'>Both fail. Nothing happened</div>';
-				}
-				break;
-			case 'fightBack':
-				if( initiatorSuccess.netSuccess >= targetSuccess.netSuccess && initiatorSuccess.successLevel >= 1){
-					db = '';
-					if( initiator.db == 0 ) db='';
-					else if( initiator.db == -2 && initiatorWeapon.data.data.properties.ahdb ) db='-1';
-					else if( initiator.db == -2 && initiatorWeapon.data.data.properties.addb ) db='-2';
-					else if( initiator.db == -1 && initiatorWeapon.data.data.properties.ahdb ) db='';
-					else if( initiator.db == -1 && initiatorWeapon.data.data.properties.addb ) db='-1';
-					else if( initiatorWeapon.data.data.properties.addb ) db = `+${initiator.db}`;
-					else if( initiatorWeapon.data.data.properties.ahdb ) db = `+${initiator.db}/2`;
-					formula = initiatorWeapon.data.data.range.normal.damage + db;
-					flavor=`<div class='card-result'>${initiator.name} deals ${targetActor.name} <a class="inline-roll roll" data-mode="roll" data-flavor="" data-formula="${formula}" title="${formula}"><i class="fas fa-dice-d20"></i>${formula}</a> damage</div>`;
-				} else if(targetSuccess.netSuccess > initiatorSuccess.netSuccess && targetSuccess.successLevel >= 1) {
-					db = '';
-					const targetWeapon = targetActor.getOwnedItem( target.dataset.itemid);
-					if( !targetWeapon){
-						ui.notifications.error( 'Weapon not found');
-					}
-					if( targetActor.db == 0 ) db='';
-					else if( targetActor.db == -2 && targetWeapon.data.data.properties.ahdb ) db='-1';
-					else if( targetActor.db == -2 && targetWeapon.data.data.properties.addb ) db='-2';
-					else if( targetActor.db == -1 && targetWeapon.data.data.properties.ahdb ) db='';
-					else if( targetActor.db == -1 && targetWeapon.data.data.properties.addb ) db='-1';
-					else if( targetWeapon.data.data.properties.addb ) db = `+${targetActor.db}`;
-					else if( targetWeapon.data.data.properties.ahdb ) db = `+${targetActor.db}/2`;
-					formula = targetWeapon.data.data.range.normal.damage + db;
-					flavor=`<div class='card-result'>${targetActor.name} deals ${initiator.name} <a class="inline-roll roll" data-mode="roll" data-flavor="" data-formula="${formula}" title="${formula}"><i class="fas fa-dice-d20"></i>${formula}</a> damage</div>`;
+	// 			} else {
+	// 				flavor='<div class=\'card-result\'>Both fail. Nothing happened</div>';
+	// 			}
+	// 			break;
+	// 		case 'fightBack':
+	// 			if( initiatorSuccess.netSuccess >= targetSuccess.netSuccess && initiatorSuccess.successLevel >= 1){
+	// 				db = '';
+	// 				if( initiator.db == 0 ) db='';
+	// 				else if( initiator.db == -2 && initiatorWeapon.data.data.properties.ahdb ) db='-1';
+	// 				else if( initiator.db == -2 && initiatorWeapon.data.data.properties.addb ) db='-2';
+	// 				else if( initiator.db == -1 && initiatorWeapon.data.data.properties.ahdb ) db='';
+	// 				else if( initiator.db == -1 && initiatorWeapon.data.data.properties.addb ) db='-1';
+	// 				else if( initiatorWeapon.data.data.properties.addb ) db = `+${initiator.db}`;
+	// 				else if( initiatorWeapon.data.data.properties.ahdb ) db = `+${initiator.db}/2`;
+	// 				formula = initiatorWeapon.data.data.range.normal.damage + db;
+	// 				flavor=`<div class='card-result'>${initiator.name} deals ${targetActor.name} <a class="inline-roll roll" data-mode="roll" data-flavor="" data-formula="${formula}" title="${formula}"><i class="fas fa-dice-d20"></i>${formula}</a> damage</div>`;
+	// 			} else if(targetSuccess.netSuccess > initiatorSuccess.netSuccess && targetSuccess.successLevel >= 1) {
+	// 				db = '';
+	// 				const targetWeapon = targetActor.getOwnedItem( target.dataset.itemid);
+	// 				if( !targetWeapon){
+	// 					ui.notifications.error( 'Weapon not found');
+	// 				}
+	// 				if( targetActor.db == 0 ) db='';
+	// 				else if( targetActor.db == -2 && targetWeapon.data.data.properties.ahdb ) db='-1';
+	// 				else if( targetActor.db == -2 && targetWeapon.data.data.properties.addb ) db='-2';
+	// 				else if( targetActor.db == -1 && targetWeapon.data.data.properties.ahdb ) db='';
+	// 				else if( targetActor.db == -1 && targetWeapon.data.data.properties.addb ) db='-1';
+	// 				else if( targetWeapon.data.data.properties.addb ) db = `+${targetActor.db}`;
+	// 				else if( targetWeapon.data.data.properties.ahdb ) db = `+${targetActor.db}/2`;
+	// 				formula = targetWeapon.data.data.range.normal.damage + db;
+	// 				flavor=`<div class='card-result'>${targetActor.name} deals ${initiator.name} <a class="inline-roll roll" data-mode="roll" data-flavor="" data-formula="${formula}" title="${formula}"><i class="fas fa-dice-d20"></i>${formula}</a> damage</div>`;
 						
-				} else {
-					flavor='<div class=\'card-result\'>Both fail. Nothing happened.</div>';
-				}
-				break;
+	// 			} else {
+	// 				flavor='<div class=\'card-result\'>Both fail. Nothing happened.</div>';
+	// 			}
+	// 			break;
 				
-			case 'dodging':
-				if( initiatorSuccess.netSuccess > targetSuccess.netSuccess && initiatorSuccess.successLevel >= 1){
-					db = '';
-					if( initiator.db <= 0 ) db='';
-					else if( initiator.db == -2 && initiatorWeapon.data.data.properties.ahdb ) db='-1';
-					else if( initiator.db == -2 && initiatorWeapon.data.data.properties.addb ) db='-2';
-					else if( initiator.db == -1 && initiatorWeapon.data.data.properties.ahdb ) db='';
-					else if( initiator.db == -1 && initiatorWeapon.data.data.properties.addb ) db='-1';
-					else if( initiatorWeapon.data.data.properties.addb ) db = `+${initiator.db}`;
-					else if( initiatorWeapon.data.data.properties.ahdb ) db = `+0.5*${initiator.db}`;
-					formula = initiatorWeapon.data.data.range.normal.damage + db;
-					flavor=`<div class='card-result'>${initiator.name} deals ${targetActor.name} <a class="inline-roll roll" data-mode="roll" data-flavor="" data-formula="${formula}" title="${formula}"><i class="fas fa-dice-d20"></i>${formula}</a> damage</div>`;
-				} else if(targetSuccess.netSuccess >= initiatorSuccess.netSuccess && targetSuccess.successLevel >= 1) {
-					flavor=`<div class='card-result'>${targetActor.name} successfully dodged ${initiator.name} attack</div>`;
+	// 		case 'dodging':
+	// 			if( initiatorSuccess.netSuccess > targetSuccess.netSuccess && initiatorSuccess.successLevel >= 1){
+	// 				db = '';
+	// 				if( initiator.db <= 0 ) db='';
+	// 				else if( initiator.db == -2 && initiatorWeapon.data.data.properties.ahdb ) db='-1';
+	// 				else if( initiator.db == -2 && initiatorWeapon.data.data.properties.addb ) db='-2';
+	// 				else if( initiator.db == -1 && initiatorWeapon.data.data.properties.ahdb ) db='';
+	// 				else if( initiator.db == -1 && initiatorWeapon.data.data.properties.addb ) db='-1';
+	// 				else if( initiatorWeapon.data.data.properties.addb ) db = `+${initiator.db}`;
+	// 				else if( initiatorWeapon.data.data.properties.ahdb ) db = `+0.5*${initiator.db}`;
+	// 				formula = initiatorWeapon.data.data.range.normal.damage + db;
+	// 				flavor=`<div class='card-result'>${initiator.name} deals ${targetActor.name} <a class="inline-roll roll" data-mode="roll" data-flavor="" data-formula="${formula}" title="${formula}"><i class="fas fa-dice-d20"></i>${formula}</a> damage</div>`;
+	// 			} else if(targetSuccess.netSuccess >= initiatorSuccess.netSuccess && targetSuccess.successLevel >= 1) {
+	// 				flavor=`<div class='card-result'>${targetActor.name} successfully dodged ${initiator.name} attack</div>`;
 						
-				} else {
-					flavor='<div class=\'card-result\'>Both fail. Nothing happened.</div>';
-				}
+	// 			} else {
+	// 				flavor='<div class=\'card-result\'>Both fail. Nothing happened.</div>';
+	// 			}
 				
-				break;
-			default:
-				break;
-			}
-			const oldResult = target.querySelector('.card-result');
-			if( oldResult) oldResult.remove();
-			$(target).append(flavor);
-		});
+	// 			break;
+	// 		default:
+	// 			break;
+	// 		}
+	// 		const oldResult = target.querySelector('.card-result');
+	// 		if( oldResult) oldResult.remove();
+	// 		$(target).append(flavor);
+	// 	});
 
-		return card;		
-	}
+	// 	return card;		
+	// }
 
 	static actionTypeString = {
 		fightBack: 'CoC7.fightBack',
@@ -347,164 +347,164 @@ export class CoC7Chat{
 		dodging: 'CoC7.dodge'
 	}
 	
-	static async updateCombatCardTarget( rollData){
-		const message = game.messages.get( rollData.referenceMessageId);
-		if( message == null) return;
-		const card = $( message.data.content )[ 0 ];
-		let cardIsReady = false;
-		if( card){
-			if( rollData.side == 'target'){
-				const targetZones = card.querySelectorAll('.defender-action-select');
-				const initiatorZone = card.querySelector('.initiator-action-select');
+	// static async updateCombatCardTarget( rollData){ //TODO : To be removed ?
+	// 	const message = game.messages.get( rollData.referenceMessageId);
+	// 	if( message == null) return;
+	// 	const card = $( message.data.content )[ 0 ];
+	// 	let cardIsReady = false;
+	// 	if( card){
+	// 		if( rollData.side == 'target'){
+	// 			const targetZones = card.querySelectorAll('.defender-action-select');
+	// 			const initiatorZone = card.querySelector('.initiator-action-select');
 
-				let targetZone = null;
-				let resolved = true;
+	// 			let targetZone = null;
+	// 			let resolved = true;
 
-				[].forEach.call( targetZones, zone => {
-					if( zone.dataset.tokenId == rollData.defendantId || zone.dataset.actorId == rollData.defendantId)
-					{
-						targetZone = zone;
-					} else if( !zone.classList.contains('resolved')) resolved = false;
+	// 			[].forEach.call( targetZones, zone => {
+	// 				if( zone.dataset.tokenId == rollData.defendantId || zone.dataset.actorId == rollData.defendantId)
+	// 				{
+	// 					targetZone = zone;
+	// 				} else if( !zone.classList.contains('resolved')) resolved = false;
 
-				});
+	// 			});
 				
-				if( !targetZone) return;
+	// 			if( !targetZone) return;
 
-				const defendant = CoC7Chat._getActorFromKey( rollData.defendantId);
-				const initiator = CoC7Chat._getChatCardActor( card);
-				rollData.defendant = defendant;
-				rollData.initiator = initiator;
-				rollData.netSuccess = parseInt(rollData.successLevel) - parseInt(rollData.difficulty);
-				rollData.success = parseInt(rollData.successLevel) > 0;
-				rollData.successString = `${defendant.name} : ${game.i18n.localize(CoC7Chat.actionTypeString[rollData.action])}`;
+	// 			const defendant = CoC7Chat._getActorFromKey( rollData.defendantId);
+	// 			const initiator = CoC7Chat._getChatCardActor( card);
+	// 			rollData.defendant = defendant;
+	// 			rollData.initiator = initiator;
+	// 			rollData.netSuccess = parseInt(rollData.successLevel) - parseInt(rollData.difficulty);
+	// 			rollData.success = parseInt(rollData.successLevel) > 0;
+	// 			rollData.successString = `${defendant.name} : ${game.i18n.localize(CoC7Chat.actionTypeString[rollData.action])}`;
 
-				rollData.rollIcons = [];
-				if( rollData.critical){
-					rollData.rollColor = 'goldenrod';
-					rollData.rollTitle = game.i18n.localize('CoC7.CriticalSuccess');
-					for( let index = 0; index < 4; index++){
-						rollData.rollIcons.push( 'medal');
-					}
-				} else if( rollData.fumble) {
-					rollData.rollColor = 'darkred';
-					rollData.rollTitle = game.i18n.localize('CoC7.Fumble');
-					for( let index = 0; index < 4; index++){
-						rollData.rollIcons.push( 'spider');
-					}
-				}else if( rollData.success){
-					rollData.rollColor = 'goldenrod';
-					if( CoC7Check.successLevel.regular == rollData.successLevel ) rollData.rollTitle = game.i18n.localize('CoC7.RegularSuccess');
-					if( CoC7Check.successLevel.hard == rollData.successLevel ) rollData.rollTitle = game.i18n.localize('CoC7.HardSuccess');
-					if( CoC7Check.successLevel.extreme == rollData.successLevel ) rollData.rollTitle = game.i18n.localize('CoC7.ExtremeSuccess');
-					for (let index = 0; index < rollData.successLevel; index++) {
-						rollData.rollIcons.push( 'star');
-					} 
-				} else {
-					rollData.rollColor = 'black';
-					rollData.rollTitle = game.i18n.localize('CoC7.Failure');
-					rollData.rollIcons.push( 'skull');
-				}
+	// 			rollData.rollIcons = [];
+	// 			if( rollData.critical){
+	// 				rollData.rollColor = 'goldenrod';
+	// 				rollData.rollTitle = game.i18n.localize('CoC7.CriticalSuccess');
+	// 				for( let index = 0; index < 4; index++){
+	// 					rollData.rollIcons.push( 'medal');
+	// 				}
+	// 			} else if( rollData.fumble) {
+	// 				rollData.rollColor = 'darkred';
+	// 				rollData.rollTitle = game.i18n.localize('CoC7.Fumble');
+	// 				for( let index = 0; index < 4; index++){
+	// 					rollData.rollIcons.push( 'spider');
+	// 				}
+	// 			}else if( rollData.success){
+	// 				rollData.rollColor = 'goldenrod';
+	// 				if( CoC7Check.successLevel.regular == rollData.successLevel ) rollData.rollTitle = game.i18n.localize('CoC7.RegularSuccess');
+	// 				if( CoC7Check.successLevel.hard == rollData.successLevel ) rollData.rollTitle = game.i18n.localize('CoC7.HardSuccess');
+	// 				if( CoC7Check.successLevel.extreme == rollData.successLevel ) rollData.rollTitle = game.i18n.localize('CoC7.ExtremeSuccess');
+	// 				for (let index = 0; index < rollData.successLevel; index++) {
+	// 					rollData.rollIcons.push( 'star');
+	// 				} 
+	// 			} else {
+	// 				rollData.rollColor = 'black';
+	// 				rollData.rollTitle = game.i18n.localize('CoC7.Failure');
+	// 				rollData.rollIcons.push( 'skull');
+	// 			}
 				
-				rollData.rollNetIcons = [];
-				let netSuccessCount;
-				if( rollData.fumble) netSuccessCount = Math.abs(-1 - parseInt(rollData.difficulty));
-				else netSuccessCount = Math.abs(rollData.netSuccess);
-				for (let index = 0; index < netSuccessCount; index++) {
-					rollData.rollNetIcons.push( rollData.netSuccess < 0 ? 'minus':'plus');
-				}
-				rollData.netColor = rollData.netSuccess < 0 ? 'darkred'	: 'green';
+	// 			rollData.rollNetIcons = [];
+	// 			let netSuccessCount;
+	// 			if( rollData.fumble) netSuccessCount = Math.abs(-1 - parseInt(rollData.difficulty));
+	// 			else netSuccessCount = Math.abs(rollData.netSuccess);
+	// 			for (let index = 0; index < netSuccessCount; index++) {
+	// 				rollData.rollNetIcons.push( rollData.netSuccess < 0 ? 'minus':'plus');
+	// 			}
+	// 			rollData.netColor = rollData.netSuccess < 0 ? 'darkred'	: 'green';
 									
 
 
 
-				const template = 'systems/CoC7/templates/chat/parts/defender-result.html';
-				const htmlItem = await renderTemplate(template, rollData);
+	// 			const template = 'systems/CoC7/templates/chat/parts/defender-result.html';
+	// 			const htmlItem = await renderTemplate(template, rollData);
 
-				targetZone.innerHTML = htmlItem;
-				targetZone.classList.add('resolved');
-				targetZone.classList.remove('target-only');
-				if( resolved){
-					card.querySelector('.defenders-actions-container').classList.add('resolved');
-					if( initiatorZone.classList.contains('resolved'))
-					{
-						card.dataset.resolved = true;
-						card.classList.add('card-ready');
-						cardIsReady = true;
-					}
-				}
-			}
+	// 			targetZone.innerHTML = htmlItem;
+	// 			targetZone.classList.add('resolved');
+	// 			targetZone.classList.remove('target-only');
+	// 			if( resolved){
+	// 				card.querySelector('.defenders-actions-container').classList.add('resolved');
+	// 				if( initiatorZone.classList.contains('resolved'))
+	// 				{
+	// 					card.dataset.resolved = true;
+	// 					card.classList.add('card-ready');
+	// 					cardIsReady = true;
+	// 				}
+	// 			}
+	// 		}
 
-			if( rollData.side == 'initiator'){
-				const initiatorZone = card.querySelector('.initiator-action-select');
+	// 		if( rollData.side == 'initiator'){
+	// 			const initiatorZone = card.querySelector('.initiator-action-select');
 
-				if( !initiatorZone) return;
-				const initiator = CoC7Chat._getChatCardActor( card);
-				rollData.initiator = initiator;
-				rollData.netSuccess = parseInt(rollData.successLevel) - parseInt(rollData.difficulty);
-				rollData.success = parseInt(rollData.successLevel) > 0;
-				rollData.successString = `${initiator.name} :`;
+	// 			if( !initiatorZone) return;
+	// 			const initiator = CoC7Chat._getChatCardActor( card);
+	// 			rollData.initiator = initiator;
+	// 			rollData.netSuccess = parseInt(rollData.successLevel) - parseInt(rollData.difficulty);
+	// 			rollData.success = parseInt(rollData.successLevel) > 0;
+	// 			rollData.successString = `${initiator.name} :`;
 
-				rollData.rollIcons = [];
-				if( rollData.critical){
-					rollData.rollColor = 'goldenrod';
-					rollData.rollTitle = game.i18n.localize('CoC7.CriticalSuccess');
-					for( let index = 0; index < 4; index++){
-						rollData.rollIcons.push( 'medal');
-					}
-				} else if( rollData.fumble) {
-					rollData.rollColor = 'darkred';
-					rollData.rollTitle = game.i18n.localize('CoC7.Fumble');
-					for( let index = 0; index < 4; index++){
-						rollData.rollIcons.push( 'spider');
-					}
-				}else if( rollData.success){
-					rollData.rollColor = 'goldenrod';
-					if( CoC7Check.successLevel.regular == rollData.successLevel ) rollData.rollTitle = game.i18n.localize('CoC7.RegularSuccess');
-					if( CoC7Check.successLevel.hard == rollData.successLevel ) rollData.rollTitle = game.i18n.localize('CoC7.HardSuccess');
-					if( CoC7Check.successLevel.extreme == rollData.successLevel ) rollData.rollTitle = game.i18n.localize('CoC7.ExtremeSuccess');
-					for (let index = 0; index < rollData.successLevel; index++) {
-						rollData.rollIcons.push( 'star');
-					} 
-				} else {
-					rollData.rollColor = 'black';
-					rollData.rollTitle = game.i18n.localize('CoC7.Failure');
-					rollData.rollIcons.push( 'skull');
-				}
+	// 			rollData.rollIcons = [];
+	// 			if( rollData.critical){
+	// 				rollData.rollColor = 'goldenrod';
+	// 				rollData.rollTitle = game.i18n.localize('CoC7.CriticalSuccess');
+	// 				for( let index = 0; index < 4; index++){
+	// 					rollData.rollIcons.push( 'medal');
+	// 				}
+	// 			} else if( rollData.fumble) {
+	// 				rollData.rollColor = 'darkred';
+	// 				rollData.rollTitle = game.i18n.localize('CoC7.Fumble');
+	// 				for( let index = 0; index < 4; index++){
+	// 					rollData.rollIcons.push( 'spider');
+	// 				}
+	// 			}else if( rollData.success){
+	// 				rollData.rollColor = 'goldenrod';
+	// 				if( CoC7Check.successLevel.regular == rollData.successLevel ) rollData.rollTitle = game.i18n.localize('CoC7.RegularSuccess');
+	// 				if( CoC7Check.successLevel.hard == rollData.successLevel ) rollData.rollTitle = game.i18n.localize('CoC7.HardSuccess');
+	// 				if( CoC7Check.successLevel.extreme == rollData.successLevel ) rollData.rollTitle = game.i18n.localize('CoC7.ExtremeSuccess');
+	// 				for (let index = 0; index < rollData.successLevel; index++) {
+	// 					rollData.rollIcons.push( 'star');
+	// 				} 
+	// 			} else {
+	// 				rollData.rollColor = 'black';
+	// 				rollData.rollTitle = game.i18n.localize('CoC7.Failure');
+	// 				rollData.rollIcons.push( 'skull');
+	// 			}
 				
-				rollData.rollNetIcons = [];
-				let netSuccessCount;
-				if( rollData.fumble) netSuccessCount = Math.abs(-1 - parseInt(rollData.difficulty));
-				else netSuccessCount = Math.abs(rollData.netSuccess);
-				for (let index = 0; index < netSuccessCount; index++) {
-					rollData.rollNetIcons.push( rollData.netSuccess < 0 ? 'minus':'plus');
-				}
-				rollData.netColor = rollData.netSuccess < 0 ? 'darkred'	: 'green';
+	// 			rollData.rollNetIcons = [];
+	// 			let netSuccessCount;
+	// 			if( rollData.fumble) netSuccessCount = Math.abs(-1 - parseInt(rollData.difficulty));
+	// 			else netSuccessCount = Math.abs(rollData.netSuccess);
+	// 			for (let index = 0; index < netSuccessCount; index++) {
+	// 				rollData.rollNetIcons.push( rollData.netSuccess < 0 ? 'minus':'plus');
+	// 			}
+	// 			rollData.netColor = rollData.netSuccess < 0 ? 'darkred'	: 'green';
 
-				const template = 'systems/CoC7/templates/chat/parts/initiator-result.html';
-				const htmlItem = await renderTemplate(template, rollData);
+	// 			const template = 'systems/CoC7/templates/chat/parts/initiator-result.html';
+	// 			const htmlItem = await renderTemplate(template, rollData);
 
-				initiatorZone.innerHTML = htmlItem;
-				initiatorZone.classList.remove('owner-only');
-				initiatorZone.classList.add('resolved');
-				[].forEach.call(card.querySelectorAll('.is-outnumbered'), outNumButton => outNumButton.remove());
-				if( card.querySelector('.defenders-actions-container').classList.contains('resolved') || 0 == card.querySelectorAll('.defender-action-select').length )
-				{
-					card.dataset.resolved = true;
-					card.classList.add('card-ready');
-					cardIsReady = true;
-				}
+	// 			initiatorZone.innerHTML = htmlItem;
+	// 			initiatorZone.classList.remove('owner-only');
+	// 			initiatorZone.classList.add('resolved');
+	// 			[].forEach.call(card.querySelectorAll('.is-outnumbered'), outNumButton => outNumButton.remove());
+	// 			if( card.querySelector('.defenders-actions-container').classList.contains('resolved') || 0 == card.querySelectorAll('.defender-action-select').length )
+	// 			{
+	// 				card.dataset.resolved = true;
+	// 				card.classList.add('card-ready');
+	// 				cardIsReady = true;
+	// 			}
 
-			}
+	// 		}
 
-			if( cardIsReady){
-				await CoC7Chat.resolveCombatCard(card);
-			}
+	// 		if( cardIsReady){
+	// 			await CoC7Chat.resolveCombatCard(card);
+	// 		}
 
-			message.update({ content: card.outerHTML }).then(msg => {
-				ui.chat.updateMessage( msg, false);
-			});		
-		}
-	}
+	// 		message.update({ content: card.outerHTML }).then(msg => {
+	// 			ui.chat.updateMessage( msg, false);
+	// 		});		
+	// 	}
+	// }
 
 	static _onTargetSelect( event){
 		const index = parseInt(event.currentTarget.dataset.key);
@@ -525,30 +525,30 @@ export class CoC7Chat{
 		// const rangeInitiator = CoC7RangeInitiator.getFromCard( chatCard);
 	}
 
-	static _onOutnumberedSelected( event){
-		let actionButton;
-		const card = event.currentTarget.closest('.close-combat-card');
-		if( event.currentTarget.dataset.side == 'initiator') {
-			actionButton = event.currentTarget.closest('.initiator-action-select').querySelector('button');
-		}
-		else if(  event.currentTarget.dataset.side == 'target')
-		{
-			actionButton = card.querySelector('.initiator-action-select').querySelector('button');
-		}
+	// static _onOutnumberedSelected( event){ //TODO: To be removed
+	// 	let actionButton;
+	// 	const card = event.currentTarget.closest('.close-combat-card');
+	// 	if( event.currentTarget.dataset.side == 'initiator') {
+	// 		actionButton = event.currentTarget.closest('.initiator-action-select').querySelector('button');
+	// 	}
+	// 	else if(  event.currentTarget.dataset.side == 'target')
+	// 	{
+	// 		actionButton = card.querySelector('.initiator-action-select').querySelector('button');
+	// 	}
 
-		if( event.currentTarget.classList.contains('switched-on')){
-			event.currentTarget.classList.remove('switched-on');
-			event.currentTarget.dataset.selected='false';
-			actionButton.dataset[event.currentTarget.dataset.flag] = 'false';
-		}
-		else
-		{
-			event.currentTarget.classList.add('switched-on');
-			event.currentTarget.dataset.selected='true';
-			actionButton.dataset[event.currentTarget.dataset.flag] = 'true';
-		}
-		CoC7Chat.updateChatCard( card);
-	}
+	// 	if( event.currentTarget.classList.contains('switched-on')){
+	// 		event.currentTarget.classList.remove('switched-on');
+	// 		event.currentTarget.dataset.selected='false';
+	// 		actionButton.dataset[event.currentTarget.dataset.flag] = 'false';
+	// 	}
+	// 	else
+	// 	{
+	// 		event.currentTarget.classList.add('switched-on');
+	// 		event.currentTarget.dataset.selected='true';
+	// 		actionButton.dataset[event.currentTarget.dataset.flag] = 'true';
+	// 	}
+	// 	CoC7Chat.updateChatCard( card);
+	// }
 
 	static _onDropDownElementSelected( event){
 
@@ -1007,7 +1007,7 @@ export class CoC7Chat{
 				let meleeCard;
 				if( card.classList.contains('target')) meleeCard = CoC7MeleeTarget.getFromCard( card);
 				if( card.classList.contains('initiator')) meleeCard = CoC7MeleeInitiator.getFromCard( card);
-				meleeCard.upgradeRoll( luckAmount, newSuccessLevel, card);
+				meleeCard.upgradeRoll( luckAmount, newSuccessLevel, card); //TODO : Check if this needs to be async
 			} else if( card.classList.contains('range')){
 				const rangeCard = CoC7RangeInitiator.getFromCard( card);
 				const rollResult = button.closest('.roll-result');
@@ -1016,7 +1016,7 @@ export class CoC7Chat{
 					rangeCard.passRoll(rollIndex);
 				} else {
 					const upgradeIndex = parseInt(button.dataset.index);
-					rangeCard.upgradeRoll( rollIndex, upgradeIndex);	
+					rangeCard.upgradeRoll( rollIndex, upgradeIndex); //TODO : Check if this needs to be async	
 				}			
 			} else if( card.classList.contains('roll-card') || null != card.querySelector('.roll-result')) {
 				const check = await CoC7Check.getFromCard( card);
@@ -1066,7 +1066,7 @@ export class CoC7Chat{
 					result.classList.remove( 'fumble');
 					card.querySelector('.card-buttons').remove();
 					card.querySelector('.dice-tooltip').style.display = 'none';
-					CoC7Chat.updateChatCard( card);
+					await CoC7Chat.updateChatCard( card);
 				}
 				else
 					ui.notifications.error(`${actor.name} didn't have enough luck to pass the check`);
@@ -1186,7 +1186,7 @@ export class CoC7Chat{
 			damageCard.rollDamage();
 			if( originMessage.dataset.messageId) {
 				card.querySelectorAll('.card-buttons').forEach( b => b.remove());
-				CoC7Chat.updateChatCard( card);
+				await CoC7Chat.updateChatCard( card);
 			}
 			break;
 		}
@@ -1336,58 +1336,58 @@ export class CoC7Chat{
 		}
 	}
 	
-	static async updatechatMessageTargets( oldCard){
-		const htmlCardContent = jQuery.parseHTML( oldCard.data.content);
-		const targets = htmlCardContent[0].querySelector('.targets');
-		const initiator = this._getChatCardActor(htmlCardContent[0]);
+	// static async updatechatMessageTargets( oldCard){ //TODO : To be removed ?
+	// 	const htmlCardContent = jQuery.parseHTML( oldCard.data.content);
+	// 	const targets = htmlCardContent[0].querySelector('.targets');
+	// 	const initiator = this._getChatCardActor(htmlCardContent[0]);
 
-		//Cleat targets list.
-		while (targets.firstChild) {
-			targets.removeChild(targets.lastChild);
-		}
+	// 	//Cleat targets list.
+	// 	while (targets.firstChild) {
+	// 		targets.removeChild(targets.lastChild);
+	// 	}
 
-		if (game.user.targets.size != 0){
-			for( let target of game.user.targets){
-				const templateData = {};
+	// 	if (game.user.targets.size != 0){
+	// 		for( let target of game.user.targets){
+	// 			const templateData = {};
 
-				// let newTarget = $(`<div class="target">${target.name}</div>`);
-				if( target.actor.isToken){
-					// newTarget.attr('data-token-id', `${target.scene.id}.${target.id}`);
-					templateData.tokenId = `${target.scene.id}.${target.id}`;
-				}
-				else{
-					// newTarget.attr('data-actor-id', `${target.actor.id}`);
-					templateData.actorId = target.actor.id;
-				}
-				// $(targets).append(newTarget);
+	// 			// let newTarget = $(`<div class="target">${target.name}</div>`);
+	// 			if( target.actor.isToken){
+	// 				// newTarget.attr('data-token-id', `${target.scene.id}.${target.id}`);
+	// 				templateData.tokenId = `${target.scene.id}.${target.id}`;
+	// 			}
+	// 			else{
+	// 				// newTarget.attr('data-actor-id', `${target.actor.id}`);
+	// 				templateData.actorId = target.actor.id;
+	// 			}
+	// 			// $(targets).append(newTarget);
 
-				//Incorrect !! figthing back = using a (close combat ?) weapon, a maneuver uses a skill.
-				templateData.fightingSkills = target.actor.fightingSkills;
-				templateData.dodgeSkill = target.actor.dodgeSkill;
-				templateData.closeCombatWeapons = target.actor.closeCombatWeapons;
-				templateData.defenderBuild = target.actor.build;
-				templateData.initiatorBuild = initiator.build;
-				templateData.canManeuver = true;
-				templateData.initiator = initiator;
-				templateData.defender = target.actor;
+	// 			//Incorrect !! figthing back = using a (close combat ?) weapon, a maneuver uses a skill.
+	// 			templateData.fightingSkills = target.actor.fightingSkills;
+	// 			templateData.dodgeSkill = target.actor.dodgeSkill;
+	// 			templateData.closeCombatWeapons = target.actor.closeCombatWeapons;
+	// 			templateData.defenderBuild = target.actor.build;
+	// 			templateData.initiatorBuild = initiator.build;
+	// 			templateData.canManeuver = true;
+	// 			templateData.initiator = initiator;
+	// 			templateData.defender = target.actor;
 
-				const template = 'systems/CoC7/templates/chat/parts/defender-action.html';
-				const htmlDefenderActions = await renderTemplate(template, templateData);
+	// 			const template = 'systems/CoC7/templates/chat/parts/defender-action.html';
+	// 			const htmlDefenderActions = await renderTemplate(template, templateData);
 
-				let container = htmlCardContent[0].querySelector('.defenders-actions-container');
-				container.insertAdjacentHTML('beforeend', htmlDefenderActions);
-			}
-		}
+	// 			let container = htmlCardContent[0].querySelector('.defenders-actions-container');
+	// 			container.insertAdjacentHTML('beforeend', htmlDefenderActions);
+	// 		}
+	// 	}
 
-		const newCardData={
-			user: game.user._id,
-			content: htmlCardContent[0].outerHTML
-		};
+	// 	const newCardData={
+	// 		user: game.user._id,
+	// 		content: htmlCardContent[0].outerHTML
+	// 	};
 
-		oldCard.update(newCardData).then( resultMessage => {
-			ui.chat.updateMessage( resultMessage);
-			return resultMessage;
-		});
-	}
+	// 	oldCard.update(newCardData).then( resultMessage => {
+	// 		ui.chat.updateMessage( resultMessage);
+	// 		return resultMessage;
+	// 	});
+	// }
 
 }
