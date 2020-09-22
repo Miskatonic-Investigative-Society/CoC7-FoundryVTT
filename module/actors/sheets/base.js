@@ -54,21 +54,56 @@ export class CoC7ActorSheet extends ActorSheet {
 						}
 					}
 
-					if( isNaN(Number(item.data.value))){
-						let value = CoC7ActorSheet.parseFormula( item.data.value);
-						try{
-							value = Math.floor(eval(value));
-						}
-						catch(err){
-							console.warn(`unable to parse formula :${item.data.value} for skill ${item.name}`);
-							value = null;
-						}
+					if( 'character' != this.actor.data.type){
+						if( isNaN(Number(item.data.value))){
+							let value = CoC7ActorSheet.parseFormula( item.data.value);
+							try{
+								value = Math.floor(eval(value));
+							}
+							catch(err){
+								console.warn(`unable to parse formula :${item.data.value} for skill ${item.name}`);
+								value = null;
+							}
 
-						if( value){
-							item.data.value = value;
-							let itemToUpdate = this.actor.getOwnedItem( item._id);
-							itemToUpdate.update( {'data.value' : value});
+							if( value){
+								item.data.value = value;
+								let itemToUpdate = this.actor.getOwnedItem( item._id);
+								itemToUpdate.update( {'data.value' : value});
+							}
 						}
+					}
+					else {
+						let skill = this.actor.getOwnedItem( item._id);
+						item.data.base = skill.base;
+						// if( isNaN(Number(item.data.base))){
+						// 	let value = CoC7ActorSheet.parseFormula( item.data.base);
+						// 	try{
+						// 		value = Math.floor(eval(value));
+						// 	}
+						// 	catch(err){
+						// 		console.warn(`unable to parse formula :${item.data.base} for skill ${item.name}`);
+						// 		value = null;
+						// 	}
+
+						// 	if( value){
+						// 		item.data.base = value;
+						// 	}
+						// }
+
+						if( item.data.value){
+							const value = item.data.value;
+							const exp = item.data.adjustments?.experience ? parseInt(item.data.adjustments.experience) : 0;
+							let updatedExp = exp + parseInt( item.data.value) - skill.value;
+							if( updatedExp <= 0) updatedExp = null;
+							this.actor.updateEmbeddedEntity('OwnedItem', {
+								_id: item._id,
+								'data.adjustments.experience': updatedExp,
+								'data.value': null
+							});
+							if( !item.data.adjustments) item.data.adjustments = {};
+							item.data.adjustments.experience =  updatedExp;
+							item.data.value = value;
+						} else item.data.value = skill.value;
 					}
 				}
 
@@ -151,8 +186,9 @@ export class CoC7ActorSheet extends ActorSheet {
 						//TODO : avant d'assiger le skill vérifier qu'il existe toujours.
 						//si il n'existe plus il faut le retrouver ou passer skillset a false.
 						if( data.combatSkills[weapon.data.skill.main.id]){
+							const skill = this.actor.getOwnedItem( weapon.data.skill.main.id);
 							weapon.data.skill.main.name = data.combatSkills[weapon.data.skill.main.id].name;
-							weapon.data.skill.main.value = data.combatSkills[weapon.data.skill.main.id].data.value;
+							weapon.data.skill.main.value = skill.value;
 						} else {
 							weapon.skillSet = false;
 						}
@@ -160,8 +196,9 @@ export class CoC7ActorSheet extends ActorSheet {
 
 						if( weapon.data.skill.alternativ.id != ''){
 							if( data.combatSkills[weapon.data.skill.alternativ.id]){
+								const skill = this.actor.getOwnedItem( weapon.data.skill.alternativ.id);
 								weapon.data.skill.alternativ.name = data.combatSkills[weapon.data.skill.alternativ.id].name;
-								weapon.data.skill.alternativ.value = data.combatSkills[weapon.data.skill.alternativ.id].data.value;
+								weapon.data.skill.alternativ.value = skill.value;
 							}
 						}
 					}
@@ -385,6 +422,16 @@ export class CoC7ActorSheet extends ActorSheet {
 		html.find('.development-flag').dblclick( ev=> {
 			const item = this.actor.getOwnedItem( ev.currentTarget.closest('.item').dataset.itemId);
 			item.toggleItemFlag( 'developement');
+		});
+
+		html.find('.occupation-skill-flag').click( ev=> {
+			const item = this.actor.getOwnedItem( ev.currentTarget.closest('.item').dataset.itemId);
+			item.toggleItemFlag( 'occupation');
+		});
+
+		html.find('.archetype-skill-flag').click( ev=> {
+			const item = this.actor.getOwnedItem( ev.currentTarget.closest('.item').dataset.itemId);
+			item.toggleItemFlag( 'archetype');
 		});
 
 		html.find('.skill-developement').click( event =>{
@@ -799,6 +846,17 @@ export class CoC7ActorSheet extends ActorSheet {
 		if( event.currentTarget){
 			if( event.currentTarget.classList){
 
+				if( event.currentTarget.classList.contains('skill-adjustment')){
+					let item = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.itemId);
+					if( item){
+						if( !event.currentTarget.value) await item.update( {[event.currentTarget.name]: null});
+						else{
+							const value = parseInt(event.currentTarget.value);
+							if( !isNaN(value)) await item.update( {[event.currentTarget.name]: value});
+						}
+					}
+				}
+
 				if( event.currentTarget.classList.contains('attribute-value'))
 				{
 					//TODO : check why SAN only ?
@@ -827,7 +885,7 @@ export class CoC7ActorSheet extends ActorSheet {
 				if( event.currentTarget.classList.contains('npc-skill-score')){
 					let skill = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.skillId);
 					if( skill){
-						await skill.update( {'data.value': event.currentTarget.value});
+						await skill.updateValue( event.currentTarget.value);
 					}
 				}
 
