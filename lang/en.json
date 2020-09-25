@@ -168,6 +168,15 @@
 
 "CoC7.SkillValue": "Value",
 "CoC7.SkillBase": "Base",
+"CoC7.SkillExperience": "Experience",
+"CoC7.SkillArchetype": "Archetype",
+"CoC7.SkillOccupation": "Occupation",
+"CoC7.SkillPersonal": "Personal",
+
+"CoC7.SkillTotalExperience": "Experience points",
+"CoC7.SkillTotalArchetype": "Archetype points",
+"CoC7.SkillTotalOccupation": "Occupation points",
+"CoC7.SkillTotalPersonal": "Personal points",
 
 "CoC7.ItemQuantity": "Quantity",
 "CoC7.ItemWeight": "Weight",
@@ -194,6 +203,7 @@
 "CoC7.EraPulp": "Pulp Cthulhu",
 "CoC7.EraMdrn": "Modern",
 
+"CoC7.SkillNoAdjustments": "No adjustment",
 "CoC7.SkillNoXpGain": "No XP gain",
 "CoC7.SkillSpecial": "Specialization",
 "CoC7.SkillRarity": "Uncommon",
@@ -239,7 +249,7 @@
 "CoC7.NewSkillName": "new skill",
 "CoC7.AddSkill": "Add skill",
 "CoC7.DevelopemmentPhase": "Developement Phase",
-"CoC7.SkillCantGainXp": "Skill can't gain XP",
+"CoC7.SkillCantGainXp": "Skill can't gain XP automatically",
 "CoC7.SkillUnflagForDevelopement": "Unflag for developement",
 "CoC7.SkillFlagForDevelopement": "Flag for developement",
 "CoC7.SkillDetail": "Detail",
@@ -261,6 +271,9 @@
 "CoC7.WeaponSkill": "Skill",
 "CoC7.WeaponSkillAlt": "Alt-skill",
 "CoC7.Inventory": "Inventory",
+"CoC7.CharacterDevelopment": "Development",
+"CoC7.OccupationSkill": "Occupation Skill",
+"CoC7.ArchetypeSkill": "Archetype Skill",
 
 
 "CoC7.ManualCreditValues": "Manual Credit Values",

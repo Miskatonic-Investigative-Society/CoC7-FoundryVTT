@@ -35,6 +35,7 @@ COC7.characteristics = {
  * @type {Object}
  */
 COC7.skillProperties = {
+	noadjustments: 'CoC7.SkillNoAdjustments',
 	noxpgain: 'CoC7.SkillNoXpGain',
 	special: 'CoC7.SkillSpecial',
 	rarity: 'CoC7.SkillRarity',

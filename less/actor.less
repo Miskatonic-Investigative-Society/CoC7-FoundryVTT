@@ -1,5 +1,79 @@
 .coc7.sheet.actor{
 
+	.development{
+
+		&.header{
+			flex: initial;
+			border-bottom: 1px groove;
+			line-height: 20px;
+
+			.header-section{
+				border-right: 1px groove;
+				&:last-child { border-right: none; }
+			}
+
+			input {
+				width: 30px;
+				padding: 0;
+				margin: 0;
+			}
+		}
+
+		.button{
+			flex: 0 0 auto;
+		    margin: 1px;
+		}
+
+		.item {
+			flex: 0 0 10px;
+
+			.skill-name{ 
+				flex: 1;
+				font-size: 12px;
+				height: 16px;
+				padding: 0;
+				text-align: left;
+				
+				&.flagged4dev{
+					color: goldenrod;
+					
+					&:hover{
+						cursor: pointer;
+					}
+				}
+			}
+
+			.item-controls{
+				flex: 0 0 30px;
+				line-height: 16px;
+				font-size: 10px;
+				padding: 0 2px;
+			}
+
+		}
+
+		.adjustment-value{
+
+			&.not-available{
+				background: white;
+			}
+
+			border-right: groove 1px;
+			flex: 0;
+			height: 16px;
+			line-height: 16px;
+
+			input {
+				font-size: 11px;
+				flex: 0 0 15px;
+				height: 16px;
+				padding: 0 1px;
+				margin: 0;
+				text-align: right;
+			}
+		}
+	}
+
 	.sheet-section{
 
 		h3{

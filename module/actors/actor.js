@@ -1,7 +1,9 @@
-
 import { COC7 } from '../config.js';
 import { CoC7Check } from '../check.js';
 import { CoC7ConCheck } from '../chat/concheck.js';
+import { RollDialog } from '../apps/roll-dialog.js';
+import { CoC7MeleeInitiator } from '../chat/combat/melee-initiator.js';
+import { CoC7RangeInitiator } from '../chat/rangecombat.js';
 
 
 /**
@@ -264,29 +266,27 @@ export class CoCActor extends Actor {
 	async createEmbeddedEntity(embeddedName, data, options){
 		switch( data.type){
 		case( 'skill'):
-			if( data.data.base){
-				if( data.data.base != data.data.value) {
-					data.data.value = data.data.base;
-				}
-			}
+			if( 'character' != this.data.type){ //If not a PC set skill value to base
+				if( this.getItemIdByName(data.name)) return; //If skill with this name exist return
 
-			if( isNaN(Number(data.data.value)) ) {
-				let value;
-				try{
-					value = eval(this.parseFormula( data.data.value));
+				if( data.data.base){
+					if( data.data.base != data.data.value) {
+						data.data.value = data.data.base;
+					}
 				}
-				catch(err){
-					value = null;
-				}
-				if( value) data.data.value = Math.floor(value);
-			}
 
-			if( !this.getItemIdByName(data.name))
-			{
-				return await super.createEmbeddedEntity(embeddedName, data, options);
-			} 
-			return null;
-        
+				if( isNaN(Number(data.data.value)) ) {
+					let value;
+					try{
+						value = eval(this.parseFormula( data.data.value));
+					}
+					catch(err){
+						value = null;
+					}
+					if( value) data.data.value = Math.floor(value);
+				}
+			} else data.data.value = null;
+			return await super.createEmbeddedEntity(embeddedName, data, options);
 		default:
 			return await super.createEmbeddedEntity(embeddedName, data, options);
 		}
@@ -400,6 +400,53 @@ export class CoCActor extends Actor {
 		return parseInt(this.data.data.attribs.san.value);
 	}
 
+	get occupationPoints(){
+		let occupationPoints = 0;
+		for( let skill of this.skills){
+			if( skill.data.data.adjustments?.occupation){
+				occupationPoints += skill.data.data.adjustments.occupation;
+			}
+		}
+		return occupationPoints;
+	}
+
+	get archetypePoints(){
+		let archetypePoints = 0;
+		for( let skill of this.skills){
+			if( skill.data.data.adjustments?.archetype){
+				archetypePoints += skill.data.data.adjustments.archetype;
+			}
+		}
+		return archetypePoints;
+	}
+
+	get experiencePoints(){
+		let experiencePoints = 0;
+		for( let skill of this.skills){
+			if( skill.data.data.adjustments?.experience){
+				experiencePoints += skill.data.data.adjustments.experience;
+			}
+		}
+		return experiencePoints;
+	}
+
+	get personalPoints(){
+		let personalPoints = 0;
+		for( let skill of this.skills){
+			if( skill.data.data.adjustments?.personal){
+				personalPoints += skill.data.data.adjustments.personal;
+			}
+		}
+		return personalPoints;
+	}
+
+	get hasSkillFlaggedForExp(){
+		for( let skill of this.skills){
+			if( skill.data.data.flags?.developement) return true;
+		}
+		return false;
+	}
+
 	async setSan( value){
 		if( value < 0) value = 0;
 		if( value > parseInt( this.data.data.attribs.san.max)) value = parseInt( this.data.data.attribs.san.value);
@@ -498,6 +545,60 @@ export class CoCActor extends Actor {
 		await this.update( { [name]: flagValue});
 	}
 
+	async skillCheck( skillName, fastForward){
+		const skill = this.getSkillsByName(skillName);
+		if( !skill.length ) {
+			ui.notifications.warn(`No skill ${skillName} found for actor ${this.name}`);
+			return;
+		}
+
+		let check = new CoC7Check();
+
+		if( !fastForward) {
+			const usage = await RollDialog.create();
+			if( usage) {
+				check.diceModifier = usage.get('bonusDice');
+				check.difficulty = usage.get('difficulty');
+			}
+		}
+
+		check.actor = this.id;
+		check.skill = skill[0].id;
+		check.roll();
+		check.toMessage();
+	}
+
+	async weaponCheck( weaponData, event){
+		event.preventDefault();
+		const itemId = weaponData.id;
+		const fastForward = event.shiftKey;
+		let weapon;
+		weapon = this.getOwnedItem(itemId);
+		if( !weapon){
+			const weapons = this.items.filter(i => i.name === weaponData.name);
+			if( 0 == weapons.length){
+				ui.notifications.warn(`Actor ${this.name} has no weapon named ${weaponData.name}`);
+				return;
+			} else if( 1 < weapons.length) {
+				ui.notifications.warn(`Actor ${this.name} has more than one weapon named ${weaponData.name}. The first found will be used`);
+			}
+			weapon = weapons[0];
+		}
+
+		const actorKey = !this.isToken? this.actorKey : `${this.token.scene._id}.${this.token.data._id}`;
+		if( !weapon.data.data.properties.rngd){
+			if( game.user.targets.size > 1){
+				ui.notifications.warn('Too many target selected. The last selected target will be attacked');
+			}
+
+			const card = new CoC7MeleeInitiator( actorKey, itemId, fastForward);
+			card.createChatCard();
+		}
+		if( weapon.data.data.properties.rngd){
+			const card = new CoC7RangeInitiator( actorKey, itemId, fastForward);
+			card.createChatCard();
+		}
+	}
 
 	rollInitiative( hasGun = false){
 		switch (game.settings.get('CoC7', 'initiativeRule')) {
@@ -516,6 +617,8 @@ export class CoCActor extends Actor {
 		default: return hasGun? this.data.data.characteristics.dex.value + 50: this.data.data.characteristics.dex.value;
 		}
 	}
+
+
 
 	getActorFlag( flagName){
 		if( !this.data.data.flags){
@@ -671,26 +774,37 @@ export class CoCActor extends Actor {
 				if( item.developementFlag){
 					const die = new Die(100);
 					die.roll(1);
-					let skillValue = parseInt(item.data.data.value);
+					let skillValue = item.value;
+					let augment = null;
 					if( die.total > skillValue || die.total >= 95)
 					{
 						success.push(item._id);
 						const augmentDie = new Die(10);
 						augmentDie.roll();
-						skillValue += augmentDie.total;
-
+						augment += augmentDie.total;
+						await item.increaseExperience( augment);
 						if( fastForward) ui.notifications.info('skill upgraded');
 					}else failure.push(item._id);
-					await this.updateEmbeddedEntity('OwnedItem', {
-						_id: item._id,
-						'data.flags.developement': false,
-						'data.value': skillValue
-					});
-
+					await item.unflagForDevelopement();
 				}
 			}
 		}
 		return( {failure : failure, success: success});
+	}
+
+	async developSkill( skillId, fastForward = false){
+		const skill = this.getOwnedItem( skillId);
+		if( !skill) return;
+		const die = new Die(100);
+		die.roll(1);
+		if( die.total > skill.value || die.total >= 95)
+		{
+			const augmentDie = new Die(10);
+			augmentDie.roll();
+			await skill.increaseExperience( augmentDie.total);
+			if( !fastForward) ui.notifications.info('skill upgraded');
+		} else if( !fastForward) ui.notifications.warn('skill NOT upgraded');
+		await skill.unflagForDevelopement();
 	}
 
 	async toggleStatus(statusName){
@@ -751,7 +865,7 @@ export class CoCActor extends Actor {
 		this.items.forEach( (value) => {
 			if( value.type == 'weapon' && !value.data.data.properties.rngd ){
 				const skill = this.getOwnedItem( value.data.data.skill.main.id);
-				value.data.data.skill.main.value = skill? skill.data.data.value : 0;
+				value.data.data.skill.main.value = skill? skill.value : 0;
 				weaponList.push( value);
 			}
 		});
@@ -897,6 +1011,7 @@ export class CoCActor extends Actor {
 
 	async fallProne(){
 		await this.setStatus(COC7.status.prone);
+		
 		// await this.setFlag('CoC7', COC7.status.prone, true);
 	}
 
