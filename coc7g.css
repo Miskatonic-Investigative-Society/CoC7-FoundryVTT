@@ -901,6 +901,65 @@
   padding: 0.25em 0.5em;
   border-top: 2px groove #eeede0;
 }
+.coc7.sheet.actor .development.header {
+  flex: initial;
+  border-bottom: 1px groove;
+  line-height: 20px;
+}
+.coc7.sheet.actor .development.header .header-section {
+  border-right: 1px groove;
+}
+.coc7.sheet.actor .development.header .header-section:last-child {
+  border-right: none;
+}
+.coc7.sheet.actor .development.header input {
+  width: 30px;
+  padding: 0;
+  margin: 0;
+}
+.coc7.sheet.actor .development .button {
+  flex: 0 0 auto;
+  margin: 1px;
+}
+.coc7.sheet.actor .development .item {
+  flex: 0 0 10px;
+}
+.coc7.sheet.actor .development .item .skill-name {
+  flex: 1;
+  font-size: 12px;
+  height: 16px;
+  padding: 0;
+  text-align: left;
+}
+.coc7.sheet.actor .development .item .skill-name.flagged4dev {
+  color: goldenrod;
+}
+.coc7.sheet.actor .development .item .skill-name.flagged4dev:hover {
+  cursor: pointer;
+}
+.coc7.sheet.actor .development .item .item-controls {
+  flex: 0 0 30px;
+  line-height: 16px;
+  font-size: 10px;
+  padding: 0 2px;
+}
+.coc7.sheet.actor .development .adjustment-value {
+  border-right: groove 1px;
+  flex: 0;
+  height: 16px;
+  line-height: 16px;
+}
+.coc7.sheet.actor .development .adjustment-value.not-available {
+  background: white;
+}
+.coc7.sheet.actor .development .adjustment-value input {
+  font-size: 11px;
+  flex: 0 0 15px;
+  height: 16px;
+  padding: 0 1px;
+  margin: 0;
+  text-align: right;
+}
 .coc7.sheet.actor .sheet-section h3 {
   margin: 0 -5px 0 0;
   padding-left: 5px;

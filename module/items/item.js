@@ -302,7 +302,11 @@ export class CoC7Item extends Item {
 	async toggleItemFlag( flagName){
 		const flagValue =  !this.getItemFlag(flagName);
 		const name = `data.flags.${flagName}`;
-		await this.update( { [name]: flagValue});
+		if( ('occupation' == flagName || 'archetype' == flagName) && !flagValue){
+			await this.update( { 
+				[`data.adjustments.${flagName}`] : null,
+				[name]: flagValue});
+		} else await this.update( { [name]: flagValue});
 	}
 
 	getItemFlag( flagName){
@@ -364,6 +368,63 @@ export class CoC7Item extends Item {
 			// if( value) data.itemProperties.push( COC7.spellProperties[key]?COC7.spellProperties[key]:null);
 		}
 		return skillProperties;
+	}
+
+	get base(){
+		if(  'skill' != this.type )	return null;
+		if( 'string' != (typeof this.data.data.base)) return this.data.data.base;
+		if( this.data.data.base.includes('@')){
+			let parsedFormula = this.data.data.base;
+			for( let [key, value] of Object.entries(COC7.formula.actorsheet)){
+				parsedFormula = parsedFormula.replace( key, value);
+			}
+			let value;
+			try{
+				value = Math.floor(eval(parsedFormula));
+			}
+			catch(err){
+				value = 0;
+			}
+
+			if( value){
+				this.update( {'data.base': value});
+			}
+			return  value;
+		}
+		return ( parseInt(this.data.data.base));
+	}
+
+	get value(){
+		if(  'skill' != this.type )	return null;
+		let value = 0;
+		if( 'character' === this.actor.data.type) {	
+			value = this.base;
+			value += (this.data.data.adjustments?.personal)?parseInt( this.data.data.adjustments?.personal):0;
+			value += (this.data.data.adjustments?.experience)?parseInt( this.data.data.adjustments?.experience):0;
+			if( game.settings.get('CoC7', 'pulpRules')){
+				if( this.data.data.adjustments?.archetype) value += parseInt( this.data.data.adjustments?.archetype);
+			}
+		}else {
+			value = parseInt( this.data.data.value);
+		}
+		return value;
+	}
+
+	async updateValue( value){
+		if(  'skill' != this.type )	return null;
+		if( 'character' === this.actor.data.type) {
+			const delta = parseInt(value) - this.value;
+			const exp = (this.data.data.adjustments?.experience? parseInt( this.data.data.adjustments.experience) : 0) + delta;
+			await this.update( { 'data.adjustments.experience' : exp > 0 ? exp : 0});
+		} else await this.update({'data.value': value});
+	}
+
+	async increaseExperience(x){
+		if(  'skill' != this.type )	return null;
+		if( 'character' === this.actor.data.type) {
+			const exp = (this.data.data.adjustments?.experience? parseInt( this.data.data.adjustments.experience) : 0) + parseInt(x);
+			await this.update( { 'data.adjustments.experience' : exp > 0 ? exp : 0});
+		}
 	}
 
 	getBulletLeft(){

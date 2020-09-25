@@ -19,9 +19,18 @@ import { CoC7BookSheet } from './items/sheets/book.js';
 import { CoC7SpellSheet } from './items/sheets/spell.js';
 import { CoC7TalentSheet } from './items/sheets/talent.js';
 import { COC7 } from './config.js';
+import { Updater } from './updater.js';
 // import { CoC7ActorSheet } from './actors/sheets/base.js';
+import {CoC7Utilities} from './utilities.js';
 
 Hooks.once('init', async function() {
+
+	game.CoC7 = {
+		macros:{
+			skillCheck: CoC7Utilities.skillCheckMacro,
+			weaponCheck: CoC7Utilities.weaponCheckMacro
+		}
+	};
 	/**
 	 * Set an initiative formula for the system
 	 * @type {String}
@@ -38,6 +47,14 @@ Hooks.once('init', async function() {
 	CONFIG.Actor.entityClass = CoCActor;
 	CONFIG.Item.entityClass = CoC7Item;
 	Combat.prototype.rollInitiative = rollInitiative;
+
+	game.settings.register('CoC7', 'systemUpdateVersion', {
+		name: 'System update version',
+		scope: 'world',
+		config: false,
+		type: Number,
+		default: 0
+	});
 
 	game.settings.register('CoC7', 'gridSpaces', {
 		name: 'SETTINGS.RestrictGridSpaces',
@@ -188,10 +205,12 @@ Hooks.once('setup', function() {
 
 });
 
+Hooks.on('hotbarDrop', async (bar, data, slot) => CoC7Utilities.createMacro( bar, data, slot));
+
 Hooks.on('renderChatLog', (app, html, data) => CoC7Chat.chatListeners(app, html, data));
 Hooks.on('renderChatMessage', (app, html, data) => CoC7Chat.renderMessageHook(app, html, data));
 Hooks.on('updateChatMessage', (chatMessage, chatData, diff, speaker) => CoC7Chat.onUpdateChatMessage( chatMessage, chatData, diff, speaker));
-Hooks.on('ready', CoC7Chat.ready);
+Hooks.on('ready', async () => Updater.checkForUpdate());
 
 // Hooks.on('preCreateActor', (createData) => CoCActor.initToken( createData));
 
