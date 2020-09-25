@@ -924,23 +924,24 @@
 .coc7.sheet.actor .development .item {
   flex: 0 0 10px;
 }
-.coc7.sheet.actor .development .item .flagged4dev {
+.coc7.sheet.actor .development .item .skill-name {
+  flex: 1;
+  font-size: 12px;
+  height: 16px;
+  padding: 0;
+  text-align: left;
+}
+.coc7.sheet.actor .development .item .skill-name.flagged4dev {
   color: goldenrod;
+}
+.coc7.sheet.actor .development .item .skill-name.flagged4dev:hover {
+  cursor: pointer;
 }
 .coc7.sheet.actor .development .item .item-controls {
   flex: 0 0 30px;
   line-height: 16px;
   font-size: 10px;
   padding: 0 2px;
-}
-.coc7.sheet.actor .development .item .specialization {
-  max-width: fit-content;
-}
-.coc7.sheet.actor .development .item .skill-name {
-  font-size: 12px;
-  height: 16px;
-  padding: 0;
-  text-align: left;
 }
 .coc7.sheet.actor .development .adjustment-value {
   border-right: groove 1px;

@@ -52,8 +52,7 @@
 				{{/unless}}
 			</div>
 			
-			{{#if skill.data.properties.special}}<span class="specialization">{{skill.data.specialization}} :</span>{{/if}}
-			<input class="skill-name flex1 {{#if skill.data.flags.developement}}flagged4dev{{/if}}" type="text" value="{{skill.name}}">
+			<span class="skill-name {{#if skill.data.flags.developement}}flagged4dev{{/if}}">{{#if skill.data.properties.special}}{{skill.data.specialization}} :{{/if}}{{skill.name}}</span>
 			<div class="adjustment-value not-available" title="{{localize 'CoC7.SkillBase'}}">
 				<input type="text" value="{{skill.data.base}}" data-dtype="Number" readonly>
 			</div>
