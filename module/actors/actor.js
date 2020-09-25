@@ -1,7 +1,9 @@
-
 import { COC7 } from '../config.js';
 import { CoC7Check } from '../check.js';
 import { CoC7ConCheck } from '../chat/concheck.js';
+import { RollDialog } from '../apps/roll-dialog.js';
+import { CoC7MeleeInitiator } from '../chat/combat/melee-initiator.js';
+import { CoC7RangeInitiator } from '../chat/rangecombat.js';
 
 
 /**
@@ -543,6 +545,60 @@ export class CoCActor extends Actor {
 		await this.update( { [name]: flagValue});
 	}
 
+	async skillCheck( skillName, fastForward){
+		const skill = this.getSkillsByName(skillName);
+		if( !skill.length ) {
+			ui.notifications.warn(`No skill ${skillName} found for actor ${this.name}`);
+			return;
+		}
+
+		let check = new CoC7Check();
+
+		if( !fastForward) {
+			const usage = await RollDialog.create();
+			if( usage) {
+				check.diceModifier = usage.get('bonusDice');
+				check.difficulty = usage.get('difficulty');
+			}
+		}
+
+		check.actor = this.id;
+		check.skill = skill[0].id;
+		check.roll();
+		check.toMessage();
+	}
+
+	async weaponCheck( weaponData, event){
+		event.preventDefault();
+		const itemId = weaponData.id;
+		const fastForward = event.shiftKey;
+		let weapon;
+		weapon = this.getOwnedItem(itemId);
+		if( !weapon){
+			const weapons = this.items.filter(i => i.name === weaponData.name);
+			if( 0 == weapons.length){
+				ui.notifications.warn(`Actor ${this.name} has no weapon named ${weaponData.name}`);
+				return;
+			} else if( 1 < weapons.length) {
+				ui.notifications.warn(`Actor ${this.name} has more than one weapon named ${weaponData.name}. The first found will be used`);
+			}
+			weapon = weapons[0];
+		}
+
+		const actorKey = !this.isToken? this.actorKey : `${this.token.scene._id}.${this.token.data._id}`;
+		if( !weapon.data.data.properties.rngd){
+			if( game.user.targets.size > 1){
+				ui.notifications.warn('Too many target selected. The last selected target will be attacked');
+			}
+
+			const card = new CoC7MeleeInitiator( actorKey, itemId, fastForward);
+			card.createChatCard();
+		}
+		if( weapon.data.data.properties.rngd){
+			const card = new CoC7RangeInitiator( actorKey, itemId, fastForward);
+			card.createChatCard();
+		}
+	}
 
 	rollInitiative( hasGun = false){
 		switch (game.settings.get('CoC7', 'initiativeRule')) {
@@ -561,6 +617,8 @@ export class CoCActor extends Actor {
 		default: return hasGun? this.data.data.characteristics.dex.value + 50: this.data.data.characteristics.dex.value;
 		}
 	}
+
+
 
 	getActorFlag( flagName){
 		if( !this.data.data.flags){
@@ -734,6 +792,21 @@ export class CoCActor extends Actor {
 		return( {failure : failure, success: success});
 	}
 
+	async developSkill( skillId, fastForward = false){
+		const skill = this.getOwnedItem( skillId);
+		if( !skill) return;
+		const die = new Die(100);
+		die.roll(1);
+		if( die.total > skill.value || die.total >= 95)
+		{
+			const augmentDie = new Die(10);
+			augmentDie.roll();
+			await skill.increaseExperience( augmentDie.total);
+			if( !fastForward) ui.notifications.info('skill upgraded');
+		} else if( !fastForward) ui.notifications.warn('skill NOT upgraded');
+		await skill.unflagForDevelopement();
+	}
+
 	async toggleStatus(statusName){
 		let statusValue = this.data.data.status[statusName]?.value;
 		if(!(typeof statusValue === 'boolean')) statusValue = statusValue === 'false' ? true : false; //Necessary, incorrect template initialization
@@ -792,7 +865,7 @@ export class CoCActor extends Actor {
 		this.items.forEach( (value) => {
 			if( value.type == 'weapon' && !value.data.data.properties.rngd ){
 				const skill = this.getOwnedItem( value.data.data.skill.main.id);
-				value.data.data.skill.main.value = skill? skill.data.data.value : 0;
+				value.data.data.skill.main.value = skill? skill.value : 0;
 				weaponList.push( value);
 			}
 		});

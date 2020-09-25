@@ -27,8 +27,20 @@
 		.item {
 			flex: 0 0 10px;
 
-			.flagged4dev{
-				color: goldenrod;
+			.skill-name{ 
+				flex: 1;
+				font-size: 12px;
+				height: 16px;
+				padding: 0;
+				text-align: left;
+				
+				&.flagged4dev{
+					color: goldenrod;
+					
+					&:hover{
+						cursor: pointer;
+					}
+				}
 			}
 
 			.item-controls{
@@ -38,16 +50,6 @@
 				padding: 0 2px;
 			}
 
-			.specialization {
-				max-width: fit-content;
-			}
-
-			.skill-name {
-				font-size: 12px;
-				height: 16px;
-				padding: 0;
-				text-align: left;
-			}
 		}
 
 		.adjustment-value{
