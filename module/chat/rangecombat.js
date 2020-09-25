@@ -54,33 +54,33 @@ export class CoC7RangeInitiator{
 					t.distance = chatHelper.getDistance( t.token, this.token);
 					t.distance.rounded = Math.round(t.distance.value * 100)/100;
 					const distInYd = Math.round(chatHelper.toYards( t.distance)* 100)/100;
-					if( distInYd){
-						if( this.actor){
-							t.pointBlankRange = false;
-							const pbRangeInYd = this.actor.data.data.characteristics.dex.value/15;
-							if( distInYd <= pbRangeInYd) t.pointBlankRange = true;
-						}
-						if( this.weapon){
-							if( this.weapon.baseRange){
-								t.baseRange = false;
-								t.longRange = false;
-								t.extremeRange = false;
-								t.outOfRange = false;
-								if( this.weapon.data.data.properties.shotgun){
-									if( distInYd <= this.weapon.baseRange ) t.baseRange = true;
-									if( distInYd > this.weapon.baseRange && distInYd <= this.weapon.longRange) t.longRange = true;
-									if( distInYd > this.weapon.longRange && distInYd <= this.weapon.extremeRange) t.extremeRange = true;
-									if( distInYd > this.weapon.extremeRange ) t.outOfRange = true;
-								} else {
-									if( distInYd <= this.weapon.baseRange) t.baseRange = true;
-									if( distInYd > this.weapon.baseRange && distInYd <= (this.weapon.baseRange*2)) t.longRange = true;
-									if( distInYd > (this.weapon.baseRange*2) && distInYd <= (this.weapon.baseRange*4)) t.extremeRange = true;
-									if( distInYd > (this.weapon.baseRange*4)) t.outOfRange = true;
-								}
-								if( !(t.baseRange || t.longRange || t.extremeRange || t.outOfRange)) t.baseRange = true;
+					// if( distInYd){
+					if( this.actor){
+						t.pointBlankRange = false;
+						const pbRangeInYd = this.actor.data.data.characteristics.dex.value/15;
+						if( distInYd <= pbRangeInYd) t.pointBlankRange = true;
+					}
+					if( this.weapon){
+						if( this.weapon.baseRange){
+							t.baseRange = false;
+							t.longRange = false;
+							t.extremeRange = false;
+							t.outOfRange = false;
+							if( this.weapon.data.data.properties.shotgun){
+								if( distInYd <= this.weapon.baseRange ) t.baseRange = true;
+								if( distInYd > this.weapon.baseRange && distInYd <= this.weapon.longRange) t.longRange = true;
+								if( distInYd > this.weapon.longRange && distInYd <= this.weapon.extremeRange) t.extremeRange = true;
+								if( distInYd > this.weapon.extremeRange ) t.outOfRange = true;
+							} else {
+								if( distInYd <= this.weapon.baseRange) t.baseRange = true;
+								if( distInYd > this.weapon.baseRange && distInYd <= (this.weapon.baseRange*2)) t.longRange = true;
+								if( distInYd > (this.weapon.baseRange*2) && distInYd <= (this.weapon.baseRange*4)) t.extremeRange = true;
+								if( distInYd > (this.weapon.baseRange*4)) t.outOfRange = true;
 							}
+							if( !(t.baseRange || t.longRange || t.extremeRange || t.outOfRange)) t.baseRange = true;
 						}
 					}
+					// }
 				} else t.baseRange = true;
 			});
 		}

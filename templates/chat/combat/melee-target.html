@@ -203,14 +203,14 @@
                 <button
                     data-action="melee-target-roll"
                     data-skill="{{skill._id}}"
-                    data-action="{{action}}">{{skill.name}} ({{skill.data.data.value}}%)</button>
+                    data-action="{{action}}">{{skill.name}} ({{skill.value}}%)</button>
             {{/unless}}
             {{#if fightingBack}}
                 <button
                 data-action="melee-target-roll"
                 data-skill="{{skill._id}}"
                 data-item-id="{{weapon.id}}"
-                data-action="{{action}}">{{weapon.name}}: {{skill.name}} ({{skill.data.data.value}}%)</button>
+                data-action="{{action}}">{{weapon.name}}: {{skill.name}} ({{skill.value}}%)</button>
             {{/if}}
         </div>
         {{/if}}
