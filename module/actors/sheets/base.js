@@ -41,7 +41,7 @@ export class CoC7ActorSheet extends ActorSheet {
 							if( item.data.specialization != game.i18n.localize('CoC7.FightingSpecializationName')){
 								let itemToUpdate = this.actor.getOwnedItem( item._id);
 								itemToUpdate.update( {'data.specialization' : game.i18n.localize('CoC7.FightingSpecializationName')});
-								item.data.specialization =  game.i18n.localize('CoC7.FightingSpecializationName');
+								item.data.specialization =  game.i18n.localize('CoC7.FightingSpecializationName'); // TODO : Client with different language = recursive call when opening the same sheet.
 							}
 						}
 						if( item.data.properties.firearm)

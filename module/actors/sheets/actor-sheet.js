@@ -43,11 +43,24 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 
 	/* -------------------------------------------- */
 
+	activateListeners(html) {
+		super.activateListeners(html);
+
+		if ( this.actor.owner ) {
+			html.find('.skill-name.flagged4dev').click(this._onSkillDev.bind(this));
+		}
+	}
+
+
+	async _onSkillDev( event){
+		const skillId = event.currentTarget.closest( '.item').dataset.itemId;
+		await this.actor.developSkill( skillId);
+	}
+
 	/**
    	 * Extend and override the default options used by the 5e Actor Sheet
    	 * @returns {Object}
 	*/
-
 	static get defaultOptions() {
 		return mergeObject(super.defaultOptions, {
 			classes: ['coc7', 'sheet', 'actor', 'character'],
