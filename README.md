@@ -31,8 +31,14 @@ version 0.3.8 :
   * the first one allows the skill to be rolled for XP for all players.
   * the second one allows player to modify their skills value (useful for character creation).
 * You can now add weapons and skills to the macro bar.
+  * If you are a player, your default character is used for the macro unless you have an owned token selected.
   * If you are the GM you need to have an actor selected before clicking the macro.
   * Macro skills/items are retrieved using names. If 2 weapons have the same name the first retrieved is used.
+* New items added : setup, occupation and archetype.
+  * setup (Not started yet): a set of skills you can just drop on a character sheet. It will add all skills to the character.
+  * occupation (WiP): sheet is finished, you can create occupation for your character. Dropping this on a char will create corresponding skills if they don't exist, flag them as occupation skills and calculate your occupation points.
+  * archeype (Not started yet): Same as occupation for pulp (Pulp rules need to be enabled).
+  * comportment on dropping an occupation/archetype on a char with an already exixting one [TBD].
 
 version 0.3.7 :
 

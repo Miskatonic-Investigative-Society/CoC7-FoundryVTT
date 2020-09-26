@@ -334,6 +334,19 @@
 "CoC7.Items": "Items",
 "CoC7.Books": "Books",
 
+"CoC7.Classic": "Classic",
+"CoC7.Lovecraftian": "Lovecraftian",
+"CoC7.Modern": "Modern",
+"CoC7.Related": "Related Occupation",
+"CoC7.OccupationType": "Occupation Type",
+"CoC7.OccupationPoints": "Occupation Points",
+"CoC7.Selected": "Selected",
+"CoC7.Multiplier": "Multiplier",
+"CoC7.Optional": "Optional",
+"CoC7.Or": "or",
+"CoC7.Minimum": "Minimum",
+"CoC7.Maximum": "Maximum",
+
 "CoC7.PutGunAway": "Put your gun away",
 "CoC7.DrawGun": "Draw your gun",
 

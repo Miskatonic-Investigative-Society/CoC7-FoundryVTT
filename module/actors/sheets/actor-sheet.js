@@ -50,7 +50,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 		super.activateListeners(html);
 
 		if ( this.actor.owner ) {
-			html.find('.skill-name.rollable.flagged4dev').click(this._onSkillDev.bind(this));
+			html.find('.skill-name.rollable.flagged4dev').click( async (event) => this._onSkillDev(event));
 		}
 	}
 
@@ -58,7 +58,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 	async _onSkillDev( event){
 		event.preventDefault();
 		const skillId = event.currentTarget.closest( '.item').dataset.itemId;
-		await this.actor.developSkill( skillId);
+		await this.actor.developSkill( skillId, event.shiftKey);
 	}
 
 	/**

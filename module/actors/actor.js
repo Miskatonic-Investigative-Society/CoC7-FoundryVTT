@@ -5,6 +5,7 @@ import { RollDialog } from '../apps/roll-dialog.js';
 import { CoC7MeleeInitiator } from '../chat/combat/melee-initiator.js';
 import { CoC7RangeInitiator } from '../chat/rangecombat.js';
 import { chatHelper } from '../chat/helper.js';
+import { CoC7Dice } from '../dice.js';
 
 
 /**
@@ -288,6 +289,13 @@ export class CoCActor extends Actor {
 				}
 			} else data.data.value = null;
 			return await super.createEmbeddedEntity(embeddedName, data, options);
+		case( 'occupation'):
+			if( 'character' == this.data.type){ //Occupation only for PCs
+				ui.notifications.warn('Adding an occupation is not yet implemented');
+				await this.addSkills( data.data.skills);
+			}
+			break;
+
 		default:
 			return await super.createEmbeddedEntity(embeddedName, data, options);
 		}
@@ -375,6 +383,14 @@ export class CoCActor extends Actor {
 		if( value < 0) value = 0;
 		if( value > this.hpMax) value = parseInt( this.hpMax);
 		return await this.update( { 'data.attribs.hp.value': value});
+	}
+
+	async addSkills( skillList){
+		for( let skill of skillList){
+			if( !this.getItemIdByName(skill.name)){
+				await this.createOwnedItem( skill, {renderSheet:false});
+			}
+		}
 	}
 
 
@@ -785,8 +801,8 @@ export class CoCActor extends Actor {
 						const augmentDie = new Die(10);
 						augmentDie.roll();
 						augment += augmentDie.total;
-						await item.increaseExperience( augment);
 						message += `<span class="upgrade-success">${item.name} upgraded  (${die.total}/${item.value}%) by ${augmentDie.total}%</span><br>`;
+						await item.increaseExperience( augment);
 					}else{
 						message += `<span class="upgrade-failed">${item.name} NOT upgraded (${die.total}/${item.value}%)</span><br>`;
 						failure.push(item._id);
@@ -808,21 +824,23 @@ export class CoCActor extends Actor {
 		if( !skill) return;
 		let title = '';
 		let message = '';
-		const die = new Die(100);
-		die.roll(1);
-		if( die.total > skill.value || die.total >= 95)
+		const upgradeRoll = new Roll('1D100');
+		upgradeRoll.roll();
+		if( !fastForward) await CoC7Dice.showRollDice3d(upgradeRoll);
+		if( upgradeRoll.total > skill.value || upgradeRoll.total >= 95)
 		{
-			const augmentDie = new Die(10);
-			augmentDie.roll();
-			await skill.increaseExperience( augmentDie.total);
+			const augmentRoll = new Roll('1D10');
+			augmentRoll.roll();
+			if( !fastForward) await CoC7Dice.showRollDice3d(augmentRoll);
+			await skill.increaseExperience( augmentRoll.total);
 			title = `${skill.name} upgraded`;
-			message = `Roll : ${die.total} VS ${skill.value}%.<br>Skill ${skill.name} gained ${augmentDie.total}%.`;
+			message = `Roll : ${upgradeRoll.total} VS ${skill.value}%.<br>Skill ${skill.name} gained ${augmentRoll.total}%.`;
 		} else {
 			title = `${skill.name} NOT upgraded`;
-			message = `Roll : ${die.total} VS ${skill.value}%.<br>Skill ${skill.name} didn't gain any XP.`;
+			message = `Roll : ${upgradeRoll.total} VS ${skill.value}%.<br>Skill ${skill.name} didn't gain any XP.`;
 		}
 		const speaker = { actor: this._id};
-		if( !fastForward) await chatHelper.createMessage( title, message, speaker);
+		await chatHelper.createMessage( title, message, speaker);
 		await skill.unflagForDevelopement();
 	}
 
