@@ -37,7 +37,7 @@
 				&.flagged4dev{
 					color: goldenrod;
 					
-					&:hover{
+					&rollable:hover{
 						cursor: pointer;
 					}
 				}
@@ -48,6 +48,17 @@
 				line-height: 16px;
 				font-size: 10px;
 				padding: 0 2px;
+
+				.item-control{
+					
+					&:hover{
+						cursor: default;
+					}
+
+					&.clickable:hover{
+						cursor: pointer;
+					}
+				}
 			}
 
 		}

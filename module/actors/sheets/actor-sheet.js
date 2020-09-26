@@ -19,6 +19,9 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 
 		data.hasSkillFlaggedForExp = this.actor.hasSkillFlaggedForExp;
 
+		data.allowDevelopment = game.settings.get('CoC7', 'developmentEnabled');
+		data.allowCharCreation = game.settings.get( 'CoC7', 'charCreationEnabled');
+
 		data.manualCredit = this.actor.getActorFlag('manualCredit');
 		if( !data.manualCredit){
 			data.credit = {};
@@ -47,12 +50,13 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 		super.activateListeners(html);
 
 		if ( this.actor.owner ) {
-			html.find('.skill-name.flagged4dev').click(this._onSkillDev.bind(this));
+			html.find('.skill-name.rollable.flagged4dev').click(this._onSkillDev.bind(this));
 		}
 	}
 
 
 	async _onSkillDev( event){
+		event.preventDefault();
 		const skillId = event.currentTarget.closest( '.item').dataset.itemId;
 		await this.actor.developSkill( skillId);
 	}
