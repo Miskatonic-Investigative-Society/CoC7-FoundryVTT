@@ -424,12 +424,12 @@ export class CoC7ActorSheet extends ActorSheet {
 			item.toggleItemFlag( 'developement');
 		});
 
-		html.find('.occupation-skill-flag').click( ev=> {
+		html.find('.occupation-skill-flag.clickable').click( ev=> {
 			const item = this.actor.getOwnedItem( ev.currentTarget.closest('.item').dataset.itemId);
 			item.toggleItemFlag( 'occupation');
 		});
 
-		html.find('.archetype-skill-flag').click( ev=> {
+		html.find('.archetype-skill-flag.clickable').click( ev=> {
 			const item = this.actor.getOwnedItem( ev.currentTarget.closest('.item').dataset.itemId);
 			item.toggleItemFlag( 'archetype');
 		});
@@ -810,6 +810,7 @@ export class CoC7ActorSheet extends ActorSheet {
 	 * @private
 	*/
 	async _onRollSkillTest(event) {
+		if( event.currentTarget.classList.contains('flagged4dev')) return;
 		event.preventDefault();
 		const skillId = event.currentTarget.closest('.item').dataset.skillId;
 		const actorId = event.currentTarget.closest('form').dataset.actorId;

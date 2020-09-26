@@ -48,6 +48,22 @@ Hooks.once('init', async function() {
 	CONFIG.Item.entityClass = CoC7Item;
 	Combat.prototype.rollInitiative = rollInitiative;
 
+	game.settings.register('CoC7', 'developmentEnabled', {
+		name: 'Dev phased allowed',
+		scope: 'world',
+		config: false,
+		type: Boolean,
+		default: false
+	});
+
+	game.settings.register('CoC7', 'charCreationEnabled', {
+		name: 'Char creation allowed',
+		scope: 'world',
+		config: false,
+		type: Boolean,
+		default: false
+	});
+
 	game.settings.register('CoC7', 'systemUpdateVersion', {
 		name: 'System update version',
 		scope: 'world',
@@ -210,7 +226,14 @@ Hooks.on('hotbarDrop', async (bar, data, slot) => CoC7Utilities.createMacro( bar
 Hooks.on('renderChatLog', (app, html, data) => CoC7Chat.chatListeners(app, html, data));
 Hooks.on('renderChatMessage', (app, html, data) => CoC7Chat.renderMessageHook(app, html, data));
 Hooks.on('updateChatMessage', (chatMessage, chatData, diff, speaker) => CoC7Chat.onUpdateChatMessage( chatMessage, chatData, diff, speaker));
-Hooks.on('ready', async () => Updater.checkForUpdate());
+Hooks.on('ready', async () =>{
+	await Updater.checkForUpdate();
+
+	game.socket.on('system.CoC7', data => {
+		if (data.type == 'updateChar')
+			CoC7Utilities.updateCharSheets();
+	});
+});
 
 // Hooks.on('preCreateActor', (createData) => CoCActor.initToken( createData));
 
@@ -230,3 +253,29 @@ Hooks.on('renderCoC7NPCSheet', (app, html, data) => CoC7NPCSheet.forceAuto(app, 
 // Hooks.on('preCreateToken', ( scene, actor, options, id) => CoCActor.preCreateToken( scene, actor, options, id))
 // Hooks.on('createToken', ( scene, actor, options, id) => CoCActor.preCreateToken( scene, actor, options, id))
 // Hooks.on("renderChatLog", (app, html, data) => CoC7Item.chatListeners(html));
+
+Hooks.on('getSceneControlButtons', (buttons) => {
+	if( game.user.isGM){
+		let group = buttons.find(b => b.name == 'token');
+		group.tools.push({
+			toggle: true,
+			icon : 'fas fa-angle-double-up',
+			name: 'devphase',
+			active: game.settings.get('CoC7', 'developmentEnabled'), 
+			title: game.settings.get('CoC7', 'developmentEnabled')? 'Development phase enabled': 'Development phase disabled',
+			onClick :async () => await CoC7Utilities.toggleDevPhase()
+		});
+		group.tools.push({
+			toggle: true,
+			icon : 'fas fas fa-user-edit',
+			name: 'charcreate',
+			active: game.settings.get('CoC7', 'charCreationEnabled'), 
+			title: game.settings.get('CoC7', 'charCreationEnabled')? 'Character creation mode enabled': 'Character creation mode disabled',
+			onClick :async () => await CoC7Utilities.toggleCharCreation()
+		});
+	}
+});
+
+Hooks.on('renderSceneControls', () => CoC7Utilities.updateCharSheets());
+Hooks.on('renderSceneNavigation', () => CoC7Utilities.updateCharSheets());
+ 
