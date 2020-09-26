@@ -4,6 +4,7 @@ import { CoC7ConCheck } from '../chat/concheck.js';
 import { RollDialog } from '../apps/roll-dialog.js';
 import { CoC7MeleeInitiator } from '../chat/combat/melee-initiator.js';
 import { CoC7RangeInitiator } from '../chat/rangecombat.js';
+import { chatHelper } from '../chat/helper.js';
 
 
 /**
@@ -769,6 +770,8 @@ export class CoCActor extends Actor {
 	async developementPhase( fastForward = false){
 		const failure = [];
 		const success = [];
+		const title = 'Rolling all skills for development';
+		let message = '<p class="chat-card">';
 		for (let item of this.items){
 			if( 'skill' === item.type){
 				if( item.developementFlag){
@@ -783,11 +786,19 @@ export class CoCActor extends Actor {
 						augmentDie.roll();
 						augment += augmentDie.total;
 						await item.increaseExperience( augment);
-						if( fastForward) ui.notifications.info('skill upgraded');
-					}else failure.push(item._id);
+						message += `<span class="upgrade-success">${item.name} upgraded  (${die.total}/${item.value}%) by ${augmentDie.total}%</span><br>`;
+					}else{
+						message += `<span class="upgrade-failed">${item.name} NOT upgraded (${die.total}/${item.value}%)</span><br>`;
+						failure.push(item._id);
+					}
 					await item.unflagForDevelopement();
 				}
 			}
+		}
+		if( !fastForward){
+			message += '</p>';
+			const speaker = { actor: this.actor};
+			await chatHelper.createMessage( title, message, speaker);
 		}
 		return( {failure : failure, success: success});
 	}
@@ -795,6 +806,8 @@ export class CoCActor extends Actor {
 	async developSkill( skillId, fastForward = false){
 		const skill = this.getOwnedItem( skillId);
 		if( !skill) return;
+		let title = '';
+		let message = '';
 		const die = new Die(100);
 		die.roll(1);
 		if( die.total > skill.value || die.total >= 95)
@@ -802,8 +815,14 @@ export class CoCActor extends Actor {
 			const augmentDie = new Die(10);
 			augmentDie.roll();
 			await skill.increaseExperience( augmentDie.total);
-			if( !fastForward) ui.notifications.info('skill upgraded');
-		} else if( !fastForward) ui.notifications.warn('skill NOT upgraded');
+			title = `${skill.name} upgraded`;
+			message = `Roll : ${die.total} VS ${skill.value}%.<br>Skill ${skill.name} gained ${augmentDie.total}%.`;
+		} else {
+			title = `${skill.name} NOT upgraded`;
+			message = `Roll : ${die.total} VS ${skill.value}%.<br>Skill ${skill.name} didn't gain any XP.`;
+		}
+		const speaker = { actor: this._id};
+		if( !fastForward) await chatHelper.createMessage( title, message, speaker);
 		await skill.unflagForDevelopement();
 	}
 

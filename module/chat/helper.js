@@ -5,6 +5,16 @@ export class chatHelper{
 			return string[1].toUpperCase();
 		});
 	}
+
+	static async createMessage( title, message, speaker = null){
+		const messageData = {};
+		messageData.flavor = title;
+		messageData.speaker = speaker || ChatMessage.getSpeaker();
+		messageData.user = game.user._id;
+		messageData.content = message;
+
+		ChatMessage.create(messageData).then( msg => {return msg;});
+	}
     
 
 	static camelCaseToHyphen(string) {
