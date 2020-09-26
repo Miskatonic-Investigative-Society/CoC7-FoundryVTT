@@ -365,7 +365,6 @@ export class CoC7Item extends Item {
 		const skillProperties = [];
 		for (let [key, value] of Object.entries(COC7['skillProperties'])) {
 			if(this.data.data.properties[key] == true)  skillProperties.push(game.i18n.localize(value));
-			// if( value) data.itemProperties.push( COC7.spellProperties[key]?COC7.spellProperties[key]:null);
 		}
 		return skillProperties;
 	}
@@ -391,7 +390,7 @@ export class CoC7Item extends Item {
 			}
 			return  value;
 		}
-		return ( parseInt(this.data.data.base));
+		return ( !isNaN(parseInt(this.data.data.base))? parseInt(this.data.data.base): null);
 	}
 
 	get value(){
@@ -400,6 +399,7 @@ export class CoC7Item extends Item {
 		if( 'character' === this.actor.data.type) {	
 			value = this.base;
 			value += (this.data.data.adjustments?.personal)?parseInt( this.data.data.adjustments?.personal):0;
+			value += (this.data.data.adjustments?.occupation)?parseInt( this.data.data.adjustments?.occupation):0;
 			value += (this.data.data.adjustments?.experience)?parseInt( this.data.data.adjustments?.experience):0;
 			if( game.settings.get('CoC7', 'pulpRules')){
 				if( this.data.data.adjustments?.archetype) value += parseInt( this.data.data.adjustments?.archetype);
@@ -407,7 +407,7 @@ export class CoC7Item extends Item {
 		}else {
 			value = parseInt( this.data.data.value);
 		}
-		return value;
+		return !isNaN(value)? value: null;
 	}
 
 	async updateValue( value){
