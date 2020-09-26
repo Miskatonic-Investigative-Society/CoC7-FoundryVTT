@@ -23,6 +23,16 @@ Compendium 'Weapons' contains a single test weapon.
 version 0.3.8 :
 
 * SAN can be displayed as a bar on token.
+* New tab added to the character sheet for character development. In this tab you can:
+  * see/modify how skills are calculated (base + personal + occupation + experience).
+  * roll your skills for development. You can either click each skill individually or trigger a check for all skill by clicking the 'development' button.
+* Controls have been added for the GM.
+  * Controls are located under the token group.
+  * the first one allows the skill to be rolled for XP for all players.
+  * the second one allows player to modify their skills value (useful for character creation).
+* You can now add weapons and skills to the macro bar.
+  * If you are the GM you need to have an actor selected before clicking the macro.
+  * Macro skills/items are retrieved using names. If 2 weapons have the same name the first retrieved is used.
 
 version 0.3.7 :
 
