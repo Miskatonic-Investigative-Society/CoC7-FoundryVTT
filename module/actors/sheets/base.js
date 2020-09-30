@@ -389,7 +389,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		});
 
 		html.find('.add-item').click( ev => {
-			switch( event.currentTarget.dataset.type){
+			switch( ev.currentTarget.dataset.type){
 			case 'skill':
 				this.actor.createEmptySkill( ev);
 				break;

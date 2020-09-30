@@ -346,6 +346,13 @@
 "CoC7.Or": "or",
 "CoC7.Minimum": "Minimum",
 "CoC7.Maximum": "Maximum",
+"CoC7.CommonSkills": "Common skills",
+"CoC7.OptionSkills": "Optional skills groups",
+"CoC7.ChoiceNumber": "Options",
+"CoC7.Choose": "Number to choose from",
+"CoC7.EmptySkillList": "Add a skill by dropping it here.",
+"CoC7.PersonalSpeciality": "Number of personal or era specialty",
+"CoC7.AdditionalSkills": "Additional Skills",
 
 "CoC7.PutGunAway": "Put your gun away",
 "CoC7.DrawGun": "Draw your gun",

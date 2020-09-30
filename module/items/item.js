@@ -309,6 +309,19 @@ export class CoC7Item extends Item {
 		} else await this.update( { [name]: flagValue});
 	}
 
+	async setItemFlag( flagName){
+		await this.update( { [`data.flags.${flagName}`]: true});
+	}
+
+	async unsetItemFlag( flagName){
+		const name = `data.flags.${flagName}`;
+		if( ('occupation' == flagName || 'archetype' == flagName) && !flagValue){
+			await this.update( { 
+				[`data.adjustments.${flagName}`] : null,
+				[name]: flagValue});
+		} else await this.update( { [name]: false});
+	}
+
 	getItemFlag( flagName){
 		if( !this.data.data.flags){
 			this.data.data.flags = {};

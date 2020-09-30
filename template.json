@@ -344,6 +344,8 @@
             "creditRating": { "min": null, "max": null},
             "suggestedContacts": "",
             "skills": [],
+            "groups": [],
+            "personal": null,
             "attributes": {},
             "properties": {},
             "eras": {},

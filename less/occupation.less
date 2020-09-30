@@ -1,0 +1,101 @@
+.coc7.sheet.occupation {
+
+    .item-list {
+        list-style: none;
+        margin: 5px 0;
+        padding: 0 5px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+
+        // Inventory Item
+        .item {
+            line-height: 16px;
+            padding: 0 2px; // to align with the header border
+            border-bottom: 1px solid @colorFaint;
+            &:last-child { border-bottom: none; }
+
+            // Item Header Name
+            .item-name {
+                cursor: pointer;
+                max-height: 24px;
+                overflow: hidden;
+
+                .item-image {
+                    flex: 0 0 16px;
+                    background-size: 16px;
+                    margin-right: 5px;
+                }
+
+                h4 {
+                    margin: 0;
+                    white-space: nowrap;
+                    overflow-x: hidden;
+                }
+
+                &.rollable:hover .item-image {
+                    background-image: url("/icons/svg/d20-grey.svg") !important;
+                }
+                &.rollable .item-image:hover {
+                    background-image: url("/icons/svg/d20-black.svg") !important;
+                }
+
+                i.attuned {
+                    color: @colorTan;
+                }
+            }
+        }
+
+        // Item Control Buttons
+        .item-controls {
+            flex: 0 0 32px;
+            .flexrow();
+            justify-content: flex-end;
+
+            a {
+                flex: 0 0 16px;
+                font-size: 10px;
+                text-align: center;
+                color: @colorTan;
+            }
+        }
+
+        // Item Dropdown Summary
+        .item-summary {
+            flex: 0 0 100%;
+            font-size: 12px;
+            line-height: 13px;
+            padding: 0.25em 0.5em;
+            border-top: @borderGroove;
+        }
+
+    }
+
+    .optional-skills.form-group{
+        label{
+            height: 16px;
+        }
+    } 
+
+
+	.group-control{
+		width: 18px;
+		flex: 0 0 18px;
+		line-height: 16px;
+		float: right;
+		text-align: right;
+		color: #7a7971;
+	}
+
+	.optional-skills{
+		.form-group{
+			border-bottom: 1px groove;
+			margin: 1px 0;
+			padding-right: 5px;
+    		font-size: 12px;
+		}
+    }
+
+    h3.warning{
+        text-align: center;
+    }
+}

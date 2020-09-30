@@ -16,11 +16,26 @@ export class CoC7OccupationSheet extends ItemSheet {
 		// html.on('drop', (event) => this._onDrop(event, 'skill', 'skills'));
 		html.find('.item .item-name h4').click(event => this._onItemSummary(event, 'skills'));
 		html.find('.item-delete').click(event => this._onItemDelete(event, 'skills'));
+		
+		html.find('.group-item-delete').click(this._onGroupItemDelete.bind(this));
+		html.find('.group-control').click(this._onGroupControl.bind(this));
+
+
+		const dragDrop = new DragDrop({
+			dropSelector: '.droppable',
+			callbacks: { drop: this._onDrop.bind(this) }
+		});
+		dragDrop.bind(html[0]);
 	}
 
 	async _onDrop(event, type = 'skill', collectionName = 'skills'){
 		event.preventDefault();  
 		event.stopPropagation();
+
+		const optionalSkill =  event?.currentTarget?.classList?.contains('optional-skills');
+		const ol = event?.currentTarget?.closest('ol');
+		const index = ol?.dataset?.group;
+
 		if( event.originalEvent) return;
 		let data;
 		try {
@@ -30,7 +45,8 @@ export class CoC7OccupationSheet extends ItemSheet {
 			return false;
 		}
 
-		let item = game.items.get(data.id);
+		let item;
+
 		// // Case 2 - Data explicitly provided
 		// else if (data.data) {
 		// 	let sameItem = data._id === item._id;
@@ -44,13 +60,40 @@ export class CoC7OccupationSheet extends ItemSheet {
 			const pack = game.packs.get(data.pack);
 			if (pack.metadata.entity !== 'Item') return;
 			item = await pack.getEntity(data.id);
+		} else if (data.data) {
+			item = data;
 		} else {
 			item = game.items.get(data.id);
 		}
 		if (!item || !(type === item.data.type)) return;
-		const collection = this.item.data.data[collectionName] ? duplicate( this.item.data.data[collectionName]) : [];
-		collection.push( duplicate(item.data));
-		await this.item.update( { [`data.${collectionName}`] : collection});
+
+		if( optionalSkill){
+			if( this.item.data.data.skills.find( el => el.name === item.data.name)) return;
+			if( this.item.data.data.groups[index].skills.find( el => el.name === item.data.name)) return;
+
+			const groups = duplicate(this.item.data.data.groups);
+			groups[index].skills = groups[index].skills.concat([item.data]);
+			await this.item.update({ ['data.groups']: groups});
+		} else {
+			if( this.item.data.data.skills.find( el => el.name === item.data.name)) return;
+
+			for (let i = 0; i < this.item.data.data.groups.length; i++) {
+				const index = this.item.data.data.groups[i].skills.findIndex( el => el.name === item.data.name);
+				if( -1 !=  index){
+					const groups =  duplicate(this.item.data.data.groups);
+					groups[i].skills.splice( index, 1);
+					await this.item.update( {'data.groups': groups});
+				}
+				
+			}
+
+			const collection = this.item.data.data[collectionName] ? duplicate( this.item.data.data[collectionName]) : [];
+			collection.push( duplicate(item.data));
+			await this.item.update( { [`data.${collectionName}`] : collection});
+		}
+
+		
+
 		// const spells = this.item.data.data.spells;
 		// spells.push( duplicate(item.data));
 		// const update = {};
@@ -58,6 +101,26 @@ export class CoC7OccupationSheet extends ItemSheet {
 		// await this.item.update( update);
 		// this.item.createEmbeddedEntity('OwnedItem', duplicate(item.data));
 		// }
+	}
+
+	async _onGroupControl(event){
+		event.preventDefault();
+		const a = event.currentTarget;
+	
+		// Add new damage component
+		if ( a.classList.contains('add-group') ) {
+			await this._onSubmit(event);  // Submit any unsaved changes
+			const groups =  this.item.data.data.groups;
+			await this.item.update( {'data.groups': groups.concat( [ { options : 0, skills: []	}])});
+		}	
+
+		if( a.classList.contains('remove-group')){
+			await this._onSubmit(event);  // Submit any unsaved changes
+			const groups =  duplicate(this.item.data.data.groups);
+			const ol = a.closest('.item-list.group');
+			groups.splice( Number(ol.dataset.group), 1);
+			await this.item.update( {'data.groups': groups});
+		}
 	}
 
 	_onItemSummary(event, collectionName='items') {
@@ -86,6 +149,15 @@ export class CoC7OccupationSheet extends ItemSheet {
 		if( itemIndex) await this.removeItem(itemIndex, collectionName);
 	}
 
+	async _onGroupItemDelete( event){
+		const a = event.currentTarget;
+		const li = a.closest('.item');
+		const ol = li.closest('.item-list.group');
+		const groups =  duplicate(this.item.data.data.groups);
+		groups[Number(ol.dataset.group)].skills.splice( Number(li.dataset.itemIndex), 1);
+		await this.item.update( {'data.groups': groups});
+	}
+
 	async removeItem( itemId, collectionName = 'items'){
 		const itemIndex = this.item.data.data[collectionName].findIndex( s => { return s._id === itemId;});
 		if( -1 < itemIndex){
@@ -101,7 +173,7 @@ export class CoC7OccupationSheet extends ItemSheet {
 			width: 520,
 			height: 480,
 			resizable: false,
-			dragDrop: [{dragSelector: '.item', dropSelector: null}],
+			dragDrop: [{dragSelector: '.item'}],
 			scrollY: ['.tab.description'],
 			tabs: [{navSelector: '.sheet-navigation', contentSelector: '.sheet-body', initial: 'description'}]
 		});
@@ -131,6 +203,12 @@ export class CoC7OccupationSheet extends ItemSheet {
 				if( carac.selected && !carac.optional) mandatory.push(`${caracName}x${carac.multiplier}`);
 			}
 		}
+
+		data.skillListEmpty = (0 == data.data.skills.length);
+
+		for (let index = 0; index < data.data.groups.length; index++) {
+			data.data.groups[index].isEmpty = (0 == data.data.groups[index].skills.length);
+		}
         
 		data.occupationPointsString = '';
 		const orString = ` ${game.i18n.localize('CoC7.Or')} `;
@@ -146,6 +224,20 @@ export class CoC7OccupationSheet extends ItemSheet {
 			if( value) data.itemProperties.push( COC7.occupationProperties[key]?COC7.occupationProperties[key]:null);
 		}
 		return data;
+	}
+
+	_updateObject(event, formData) {
+		// TODO: This can be removed once 0.7.x is release channel
+		if ( !formData.data ) formData = expandObject(formData);
+
+		if ( formData.data.groups ){
+			formData.data.groups = Object.values( formData.data?.groups || {});
+			for(let index = 0; index < this.item.data.data.groups.length; index++) {
+				formData.data.groups[index].skills = duplicate(this.item.data.data.groups[index].skills);
+			}
+		}
+
+		super._updateObject(event, formData);
 	}
 
 
