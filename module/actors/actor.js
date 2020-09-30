@@ -2,11 +2,11 @@ import { COC7 } from '../config.js';
 import { CoC7Check } from '../check.js';
 import { CoC7ConCheck } from '../chat/concheck.js';
 import { RollDialog } from '../apps/roll-dialog.js';
+import { SkillSelectDialog } from '../apps/skill-selection-dialog.js';
 import { CoC7MeleeInitiator } from '../chat/combat/melee-initiator.js';
 import { CoC7RangeInitiator } from '../chat/rangecombat.js';
 import { chatHelper } from '../chat/helper.js';
 import { CoC7Dice } from '../dice.js';
-
 
 /**
  * Extend the base Actor class to implement additional logic specialized for CoC 7th.
@@ -292,7 +292,68 @@ export class CoCActor extends Actor {
 		case( 'occupation'):
 			if( 'character' == this.data.type){ //Occupation only for PCs
 				ui.notifications.warn('Adding an occupation is not yet implemented');
+
+				//Add main skills
 				await this.addSkills( data.data.skills, 'occupation');
+
+				//Add optional skills
+				for (let index = 0; index < data.data.groups.length; index++) {
+					const dialogData = {};
+					dialogData.skills = [];
+					dialogData.type = 'occupation';
+					dialogData.actorId = this.id;
+					dialogData.options = Number(data.data.groups[index].options);
+					dialogData.title = game.i18n.localize('CoC7.SkillSelectionWindow');
+
+					//Select only skills that are not present or are not flagged as occupation.
+					data.data.groups[index].skills.forEach( value => {
+						const skill = this.items.find( item => { return (item.name == value.name && 'skill' == item.type);});
+						if( !skill || !skill.data.data.flags?.occupation){
+							dialogData.skills.push( value);
+						}
+					});
+
+					//if there's none, do nothing.
+					if( 0 != dialogData.skills.length){
+						if( dialogData.skills.length <= dialogData.options){
+							//If there's is less skill than options, add them all.
+							ui.notifications.info( `There's only ${dialogData.skills.length} and ${dialogData.options} options, adding all of them`);
+							await this.addSkills( dialogData.skills, 'occupation');
+						} else {
+							//Wait for skill selection.
+							await SkillSelectDialog.create( dialogData);
+						}
+					} else ui.notifications.info( 'All skills are already selected.');
+				}
+
+
+				//Add extra skills
+				if( Number(data.data.personal)){
+					const dialogData = {};
+					dialogData.skills = [];
+					dialogData.type = 'occupation';
+					dialogData.actorId = this.id;
+					dialogData.options = Number(data.data.personal);
+					dialogData.title = game.i18n.format('CoC7.SelectPersonalSkills', { number: Number(data.data.personal)});
+
+					//Select only skills that are not present or are not flagged as occupation.
+					this.skills.forEach( s => {
+						if( !s.data.data.flags.occupation && !s.data.data.properties.noadjustments && !s.data.data.properties.noxpgain) dialogData.skills.push( s.data);
+					});
+
+					//if there's none, do nothing.
+					if( 0 != dialogData.skills.length){
+						if( dialogData.skills.length <= dialogData.options){
+						//If there's is less skill than options, add them all.
+							ui.notifications.info( `There's only ${dialogData.skills.length} and ${dialogData.options} options, adding all of them`);
+							await this.addSkills( dialogData.skills, 'occupation');
+						} else {
+						//Wait for skill selection.
+							await SkillSelectDialog.create( dialogData);
+						}
+					} else ui.notifications.info( 'All skills are already selected.');
+				}
+				ui.notifications.info( 'Job\'s done');
 			}
 			break;
 
@@ -337,7 +398,6 @@ export class CoCActor extends Actor {
 		this.items.forEach( (value) => {
 			if( value.name == skillName && value.type == 'skill') skillList.push( value);
 		});
-
 		return skillList;
 	}
 
@@ -398,6 +458,20 @@ export class CoCActor extends Actor {
 				const item = this.getOwnedItem( itemId);
 				await item.setItemFlag( flag);
 			}
+		}
+	}
+
+	async addSkill( skill, flag = null){
+		const itemId = this.getItemIdByName(skill.name);
+		if( !itemId){
+			if( flag){
+				skill.data.flags = {};
+				skill.data.flags[flag] = true;
+			}
+			await this.createOwnedItem( skill, {renderSheet:false});
+		}else if( flag){
+			const item = this.getOwnedItem( itemId);
+			await item.setItemFlag( flag);
 		}
 	}
 
