@@ -1068,3 +1068,98 @@
   margin: 0;
   font-weight: bold;
 }
+.coc7.sheet.occupation .item-list {
+  list-style: none;
+  margin: 5px 0;
+  padding: 0 5px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.coc7.sheet.occupation .item-list .item {
+  line-height: 16px;
+  padding: 0 2px;
+  border-bottom: 1px solid #c9c7b8;
+}
+.coc7.sheet.occupation .item-list .item:last-child {
+  border-bottom: none;
+}
+.coc7.sheet.occupation .item-list .item .item-name {
+  cursor: pointer;
+  max-height: 24px;
+  overflow: hidden;
+}
+.coc7.sheet.occupation .item-list .item .item-name .item-image {
+  flex: 0 0 16px;
+  background-size: 16px;
+  margin-right: 5px;
+}
+.coc7.sheet.occupation .item-list .item .item-name h4 {
+  margin: 0;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+.coc7.sheet.occupation .item-list .item .item-name.rollable:hover .item-image {
+  background-image: url("/icons/svg/d20-grey.svg") !important;
+}
+.coc7.sheet.occupation .item-list .item .item-name.rollable .item-image:hover {
+  background-image: url("/icons/svg/d20-black.svg") !important;
+}
+.coc7.sheet.occupation .item-list .item .item-name i.attuned {
+  color: #7a7971;
+}
+.coc7.sheet.occupation .item-list .item-controls {
+  flex: 0 0 32px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  justify-content: flex-end;
+}
+.coc7.sheet.occupation .item-list .item-controls > * {
+  flex: 1;
+}
+.coc7.sheet.occupation .item-list .item-controls .flex1 {
+  flex: 1;
+}
+.coc7.sheet.occupation .item-list .item-controls .flex2 {
+  flex: 2;
+}
+.coc7.sheet.occupation .item-list .item-controls .flex3 {
+  flex: 3;
+}
+.coc7.sheet.occupation .item-list .item-controls .flex4 {
+  flex: 4;
+}
+.coc7.sheet.occupation .item-list .item-controls a {
+  flex: 0 0 16px;
+  font-size: 10px;
+  text-align: center;
+  color: #7a7971;
+}
+.coc7.sheet.occupation .item-list .item-summary {
+  flex: 0 0 100%;
+  font-size: 12px;
+  line-height: 13px;
+  padding: 0.25em 0.5em;
+  border-top: 2px groove #eeede0;
+}
+.coc7.sheet.occupation .optional-skills.form-group label {
+  height: 16px;
+}
+.coc7.sheet.occupation .group-control {
+  width: 18px;
+  flex: 0 0 18px;
+  line-height: 16px;
+  float: right;
+  text-align: right;
+  color: #7a7971;
+}
+.coc7.sheet.occupation .optional-skills .form-group {
+  border-bottom: 1px groove;
+  margin: 1px 0;
+  padding-right: 5px;
+  font-size: 12px;
+}
+.coc7.sheet.occupation h3.warning {
+  text-align: center;
+}

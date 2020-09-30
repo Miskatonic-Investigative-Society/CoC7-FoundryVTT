@@ -292,7 +292,7 @@ export class CoCActor extends Actor {
 		case( 'occupation'):
 			if( 'character' == this.data.type){ //Occupation only for PCs
 				ui.notifications.warn('Adding an occupation is not yet implemented');
-				await this.addSkills( data.data.skills);
+				await this.addSkills( data.data.skills, 'occupation');
 			}
 			break;
 
@@ -385,10 +385,18 @@ export class CoCActor extends Actor {
 		return await this.update( { 'data.attribs.hp.value': value});
 	}
 
-	async addSkills( skillList){
+	async addSkills( skillList, flag = null){
 		for( let skill of skillList){
-			if( !this.getItemIdByName(skill.name)){
+			const itemId = this.getItemIdByName(skill.name);
+			if( !itemId){
+				if( flag){
+					skill.data.flags = {};
+					skill.data.flags[flag] = true;
+				}
 				await this.createOwnedItem( skill, {renderSheet:false});
+			}else if( flag){
+				const item = this.getOwnedItem( itemId);
+				await item.setItemFlag( flag);
 			}
 		}
 	}
