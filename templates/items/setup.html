@@ -1,0 +1,119 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+	<header class="sheet-header flexrow" style="flex: 0 0 64px;padding-bottom: 2px;">
+		<div class="header-details flexrow">
+			<h1 class="name" style="height: 48px;">
+				<input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
+			</h1>
+
+			<ul class="summary flexrow">
+				<li class="flex2">
+					<input type="text" name="data.source" value="{{data.source}}" placeholder="{{ localize 'CoC7.Source' }}"/>
+				</li>
+			</ul>
+
+		</div>
+		<img class="profile" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+
+	</header>
+
+	{{!-- Item Sheet Navigation --}}
+	<nav style="flex: 0 0 24px;margin-bottom: 4px;font-family: 'Modesto Condensed', 'Palatino Linotype', serif;font-size: 16px;font-weight: 700;"
+	  class="sheet-navigation tabs" data-group="primary">
+		<a style="line-height: 24px;" class="item active" data-tab="description">{{ localize "CoC7.ItemDescription" }}</a>
+		<a style="line-height: 24px;" class="item" data-tab="details">{{ localize "CoC7.Details" }}</a>
+		<a style="line-height: 24px;" class="item" data-tab="skills">{{ localize "CoC7.Skills" }}</a>
+	</nav>
+
+	
+	{{!-- Item Sheet Body --}}
+	<section style="overflow: hidden;flex: 1;" class="sheet-body">
+
+		{{!-- Description Tab --}}
+		<div class="tab flexrow active" data-group="primary" data-tab="description">
+
+			<div class="item-properties">
+				<ol class="properties-list">
+					{{#each itemProperties}}
+					<li>{{this}}</li>
+					{{/each}}
+				</ol>
+            </div>
+            
+            {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
+ 		</div>
+
+		{{!-- Details Tab --}}
+		<div class="tab details" data-group="primary" data-tab="details">
+
+			<h3 class="form-header">{{ localize "CoC7.Eras" }}</h3>
+			<div class="form-group stacked">
+                {{#each data.eras as |era key|}}
+				<label class="checkbox">
+					<input type="checkbox" name="data.eras.{{key}}.selected" {{#if this.selected}}checked{{/if}}/> {{ era.name }}
+                </label>
+                {{/each}}
+			</div>
+			
+			<h3 class="form-header">
+				{{ localize "CoC7.BioSections" }}
+				<a class="item-control add-bio"><i class="fas fa-plus"></i></a>
+			</h3>
+
+			{{#each data.bioSections as |value index|}}
+			<div class="form-group item" data-index="{{index}}">
+				<input type="text" name="data.bioSections.{{index}}" value="{{value}}" placeholder="{{ localize 'CoC7.BioSectionName' }}"/>
+				<a class="remove-section"><i class="fas fa-minus" style="line-height: 20px;"></i></a>
+			</div>
+			{{/each}}
+
+			<div class='droppable main-skills'>
+				<h3 class="form-header">{{ localize "CoC7.Items" }}</h3>
+
+				{{#if skillListEmpty}}
+					<h3 class="warning">{{ localize "CoC7.EmptySkillList" }}</h3>
+				{{/if}}
+
+				<ol class="item-list">
+					{{#each otherItems as |item|}}
+					<li class="item flexrow" data-item-id="{{item._id}}">
+						<div class="item-name flexrow">
+							<h4>{{item.name}} ({{item.type}})</h4>    
+						</div>
+
+						<div class="item-controls">
+                            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                            {{!-- <a class="item-control item-edit" title="{{localize 'CoC7.EditItem'}}"><i class="fas fa-edit"></i></a> --}}
+						</div>
+					</li>
+					{{/each}}
+				</ol>
+			</div>
+		</div>
+		<div class="tab details" data-group="primary" data-tab="skills">
+            <div class='droppable main-skills'>
+
+				<h3 class="form-header">{{ localize "CoC7.CommonSkills" }}</h3>
+
+				{{#if skillListEmpty}}
+					<h3 class="warning">{{ localize "CoC7.EmptySkillList" }}</h3>
+				{{/if}}
+
+				<ol class="item-list">
+					{{#each skills as |skill|}}
+					<li class="item flexrow" data-item-id="{{skill._id}}">
+						<div class="item-name flexrow">
+							<h4>{{skill.displayName}} ({{skill.data.base}}%)</h4>    
+						</div>
+
+						<div class="item-controls">
+                            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                            {{!-- <a class="item-control item-edit" title="{{localize 'CoC7.EditItem'}}"><i class="fas fa-edit"></i></a> --}}
+						</div>
+					</li>
+					{{/each}}
+				</ol>
+			</div>
+		</div>
+
+	</section>
+</form>

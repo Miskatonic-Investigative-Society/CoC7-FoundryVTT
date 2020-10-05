@@ -10,14 +10,13 @@
 		<span>{{totalOccupation}}/</span>
 		<input class="{{#if invalidOccupationPoints}}warning{{/if}}" type="text" name="data.development.occupation"  value="{{data.development.occupation}}" data-dtype="Number" {{#unless allowCharCreation}}readonly{{/unless}}/>
 	</div>
-	{{#if pulpCharacter}}
-		<div class="header-section {{#if invalidArchetypePoints}}warning{{/if}}" title="{{localize 'CoC7.SkillTotalArchetype'}}">
-			<label>{{localize 'CoC7.SkillTotalArchetype'}}:</label>
-			<span>{{totalArchetype}}/</span>
-			<input class="{{#if invalidArchetypePoints}}warning{{/if}}" type="text" name="data.development.archetype"  value="{{data.development.archetype}}" data-dtype="Number" {{#unless allowCharCreation}}readonly{{/unless}}/>
-		</div>
-
-	{{/if}}
+		{{#if pulpCharacter}}
+			<div class="header-section {{#if invalidArchetypePoints}}warning{{/if}}" title="{{localize 'CoC7.SkillTotalArchetype'}}">
+				<label>{{localize 'CoC7.SkillTotalArchetype'}}:</label>
+				<span>{{totalArchetype}}/</span>
+				<input class="{{#if invalidArchetypePoints}}warning{{/if}}" type="text" name="data.development.archetype"  value="{{data.development.archetype}}" data-dtype="Number" {{#unless allowCharCreation}}readonly{{/unless}}/>
+			</div>
+		{{/if}}
 	{{/if}}
 </div>
 <div class="header development flexrow">

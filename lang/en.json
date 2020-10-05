@@ -202,6 +202,7 @@
 "CoC7.Era1920": "1920s",
 "CoC7.EraPulp": "Pulp Cthulhu",
 "CoC7.EraMdrn": "Modern",
+"CoC7.Eras": "Cthulhu Flavors",
 
 "CoC7.SkillNoAdjustments": "No adjustment",
 "CoC7.SkillNoXpGain": "No XP gain",
@@ -361,6 +362,8 @@
 "CoC7.ResetArchetype": "Reset Archetype",
 "CoC7.ResetArchetypeHint": "Actor {name} already have an archetype. Do you want to reset it ?",
 "CoC7.CreditOutOfRange": "Credit rating should be between {min} and {max}",
+"CoC7.BioSections":"Biography Sections",
+"CoC7.BioSectionName": "Biography Section Name",
 
 "CoC7.CoreCharacteristics": "Core Characteristics",
 "CoC7.BonusPoints": "Bonus Points",
