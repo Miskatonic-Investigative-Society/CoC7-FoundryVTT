@@ -957,6 +957,10 @@
   padding: 0.25em 0.5em;
   border-top: 2px groove #eeede0;
 }
+.coc7.sheet.actor .development .warning {
+  color: darkred;
+  font-weight: bolder;
+}
 .coc7.sheet.actor .development.header {
   flex: initial;
   border-bottom: 1px groove;
@@ -1162,4 +1166,16 @@
 }
 .coc7.sheet.occupation h3.warning {
   text-align: center;
+}
+.coc7.dialogue .selectable:hover {
+  text-shadow: 0 0 8px red;
+}
+.coc7.dialogue .selected {
+  text-shadow: 0 0 4px red;
+}
+.coc7.dialogue .selected h4 {
+  font-weight: bold;
+}
+.coc7.dialogue button.inactive:hover {
+  box-shadow: 0 0 5px grey;
 }

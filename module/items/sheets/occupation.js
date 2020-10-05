@@ -193,7 +193,9 @@ export class CoC7OccupationSheet extends ItemSheet {
 
 	getData(){
 		const data=super.getData();
-        
+
+		data.isOwned = this.item.isOwned;
+
 		const optionnal = [];
 		const mandatory = [];
 		for( let [key, carac] of Object.entries(data.data.occupationSkillPoints)){

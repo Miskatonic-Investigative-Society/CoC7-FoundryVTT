@@ -8,15 +8,18 @@ export class SkillSelectDialog extends Dialog {
 
 	async _onSelectSkillClicked( event){
 		const li = event.currentTarget.closest('.item');
-		const actor = game.actors.get( this.data.data.actorId);
-		await actor.addSkill( this.data.data.skills[Number(li.dataset.index)], this.data.data.type);
+		// const actor = game.actors.get( this.data.data.actorId);
+		// await actor.addSkill( this.data.data.skills[Number(li.dataset.index)], this.data.data.type);
+		this.data.data.skills[Number(li.dataset.index)].selected = true;
 		event.currentTarget.style.display = 'none';
 		if( !this.data.data.added) this.data.data.added = 0;
 		this.data.data.added++;
 		const form = event.currentTarget.closest('.skill-selector');
 		const divCount = form.querySelector('.count');
 		divCount.innerText = this.data.data.added;
-		if( this.data.data.added >= this.data.data.options) this.close();
+		if( this.data.data.added >= this.data.data.options) {
+			this.close();
+		}
 	}
 
 	static async create( data){
@@ -27,7 +30,11 @@ export class SkillSelectDialog extends Dialog {
 				content: html,
 				data: data,
 				buttons: {},
-				close: resolve
+				close: () => {
+					if( !data.added >= data.options) return resolve(false);
+					const selected = data.skills.filter( skill => skill.selected);
+					return resolve(selected);
+				}
 			});
 			dlg.render(true);
 		});

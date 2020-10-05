@@ -1,23 +1,32 @@
 <div class="header development flexrow">
-	<div class="header-section" title="{{localize 'CoC7.SkillTotalPersonal'}}">
+	{{#if allowCharCreation}}
+	<div class="header-section {{#if invalidPersonalPoints}}warning{{/if}}" title="{{localize 'CoC7.SkillTotalPersonal'}}">
 		<label>{{localize 'CoC7.SkillTotalPersonal'}}:</label>
 		<span>{{totalPersonal}}/</span>
-		<input type="text" name="data.development.personal"  value="{{data.development.personal}}" data-dtype="Number" {{#unless allowCharCreation}}readonly{{/unless}}/>
+		<input class="{{#if invalidPersonalPoints}}warning{{/if}}" type="text" name="data.development.personal"  value="{{data.development.personal}}" data-dtype="Number" {{#unless allowCharCreation}}readonly{{/unless}}/>
 	</div>
-	<div class="header-section" title="{{localize 'CoC7.SkillTotalOccupation'}}">
+	<div class="header-section {{#if invalidOccupationPoints}}warning{{/if}}" title="{{localize 'CoC7.SkillTotalOccupation'}}">
 		<label>{{localize 'CoC7.SkillTotalOccupation'}}:</label>
 		<span>{{totalOccupation}}/</span>
-		<input type="text" name="data.development.occupation"  value="{{data.development.occupation}}" data-dtype="Number" {{#unless allowCharCreation}}readonly{{/unless}}/>
+		<input class="{{#if invalidOccupationPoints}}warning{{/if}}" type="text" name="data.development.occupation"  value="{{data.development.occupation}}" data-dtype="Number" {{#unless allowCharCreation}}readonly{{/unless}}/>
 	</div>
 	{{#if pulpCharacter}}
-		<div class="header-section" title="{{localize 'CoC7.SkillTotalArchetype'}}">
+		<div class="header-section {{#if invalidArchetypePoints}}warning{{/if}}" title="{{localize 'CoC7.SkillTotalArchetype'}}">
 			<label>{{localize 'CoC7.SkillTotalArchetype'}}:</label>
 			<span>{{totalArchetype}}/</span>
-			<input type="text" name="data.development.archetype"  value="{{data.development.archetype}}" data-dtype="Number" {{#unless allowCharCreation}}readonly{{/unless}}/>
+			<input class="{{#if invalidArchetypePoints}}warning{{/if}}" type="text" name="data.development.archetype"  value="{{data.development.archetype}}" data-dtype="Number" {{#unless allowCharCreation}}readonly{{/unless}}/>
 		</div>
+	{{/if}}
 	{{/if}}
 </div>
 <div class="header development flexrow">
+	{{#if allowCharCreation}}
+		{{#if data.infos.occupationSet}}
+		<div class="header-section {{#if invalidCreditRating}}warning{{/if}}" title="{{localize 'CoC7.CreditRatingSkillName'}}">
+			<label>{{creditRatingMin}}&lt{{localize 'CoC7.CreditRatingSkillName'}}&lt{{creditRatingMax}}</label>
+		</div>
+		{{/if}}
+	{{/if}}
 	<div class="flex1" title="{{localize 'CoC7.SkillTotalExperience'}}">
 		<label>{{localize 'CoC7.SkillTotalExperience'}}:</label>
 		<span>{{totalExperience}}</span>
