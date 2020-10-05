@@ -351,6 +351,36 @@
             "eras": {},
             "flags": {}
         },
+        "archetype":{
+            "description":{
+                "value": ""
+            },
+            "source": null,
+            "type": {
+                "classic": false,
+                "lovecraftian": false,
+                "modern": false
+            },
+            "bonusPoints": 100,
+            "coreCharacteristics":{
+                "str": false,
+                "con": false,
+                "siz": false,
+                "dex": false,
+                "app": false,
+                "int": false,
+                "pow": false,
+                "edu": false
+            },
+            "suggestedOccupations": "",
+            "suggestedTraits": "",
+            "talents": 2,
+            "skills": [],
+            "attributes": {},
+            "properties": {},
+            "eras": {},
+            "flags": {}
+        },
         "spell":{
             "source":null,
             "castingTime":null,

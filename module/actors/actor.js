@@ -4,6 +4,7 @@ import { CoC7ConCheck } from '../chat/concheck.js';
 import { RollDialog } from '../apps/roll-dialog.js';
 import { SkillSelectDialog } from '../apps/skill-selection-dialog.js';
 import { PointSelectDialog } from '../apps/point-selection-dialog.js';
+import { CharacSelectDialog } from '../apps/char-selection-dialog.js';
 import { CoC7MeleeInitiator } from '../chat/combat/melee-initiator.js';
 import { CoC7RangeInitiator } from '../chat/rangecombat.js';
 import { chatHelper } from '../chat/helper.js';
@@ -291,10 +292,55 @@ export class CoCActor extends Actor {
 				}
 			} else data.data.value = null;
 			return await super.createEmbeddedEntity(embeddedName, data, options);
+			
+		case( 'archetype'):
+			if( 'character' == this.data.type){ //Archetypre only for PCs
+				if( this.archetype) {
+					let resetArchetype = false;
+					await Dialog.confirm({
+						title: game.i18n.localize( 'CoC7.ResetArchetype'),
+						content: `<p>${game.i18n.format('CoC7.ResetArchetypeHint', { name: this.name})}</p>`,
+						yes: () => { resetArchetype = true;},
+						defaultYes: false
+					});
+					if( resetArchetype) await this.resetArchetype();
+					else return;
+				}
+
+
+				const coreCharac = [];
+				Object.entries(data.data.coreCharacteristics).forEach(entry => {
+					const[ key, value] = entry;
+					data.data.coreCharacteristics[key] = false;
+					if( value){
+						const char = this.getCharacteristic( key);
+						char.key = key;
+						coreCharac.push( char);
+					}
+				});
+				if( coreCharac.length > 1){
+					
+					const charDialogData = {};
+					charDialogData.characteristics = coreCharac;
+					const charac = await CharacSelectDialog.create( charDialogData);
+					if( !charac) return;
+					data.data.coreCharacteristics[charac]=true;
+				}
+				//Add all skills
+				await this.addSkills( data.data.skills, 'archetype');
+
+				const newArchetype = await super.createEmbeddedEntity(embeddedName, data, options);
+				//setting points
+				await this.update( {
+					'data.development.archetype': this.archetypePoints,
+				});
+
+				return newArchetype;
+			}
+
+			break;
 		case( 'occupation'):
 			if( 'character' == this.data.type){ //Occupation only for PCs
-				ui.notifications.warn('Adding an occupation is not yet implemented');
-
 				if( this.occupation) {
 					let resetOccupation = false;
 					await Dialog.confirm({
@@ -487,6 +533,11 @@ export class CoCActor extends Actor {
 		return occupation[0];
 	}
 
+	get archetype(){
+		const archetype = this.items.filter( item => item.type == 'archetype');
+		return archetype[0];
+	}
+
 	async resetOccupation( eraseOld = true){
 		if( eraseOld){
 			const occupationSkill = this.items.filter( item => item.getItemFlag('occupation'));
@@ -496,6 +547,17 @@ export class CoCActor extends Actor {
 		}
 		if( this.occupation) await this.deleteOwnedItem(this.occupation.id);
 		await this.update({ 'data.development.occupation': null});
+	}
+
+	async resetArchetype( eraseOld = true){
+		if( eraseOld){
+			const archetypeSkill = this.items.filter( item => item.getItemFlag('archetype'));
+			for (let index = 0; index < archetypeSkill.length; index++) {
+				await archetypeSkill[index].unsetItemFlag('archetype');
+			}
+		}
+		if( this.archetype) await this.deleteOwnedItem(this.archetype.id);
+		await this.update({ 'data.development.archetype': null});
 	}
 
 	get luck(){
@@ -618,6 +680,11 @@ export class CoCActor extends Actor {
 			}
 		}
 		return archetypePoints;
+	}
+
+	get archetypePoints(){
+		if( !this.archetype) return 0;
+		return this.archetype.data.data.bonusPoints;
 	}
 
 	get experiencePoints(){

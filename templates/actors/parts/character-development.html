@@ -16,6 +16,7 @@
 			<span>{{totalArchetype}}/</span>
 			<input class="{{#if invalidArchetypePoints}}warning{{/if}}" type="text" name="data.development.archetype"  value="{{data.development.archetype}}" data-dtype="Number" {{#unless allowCharCreation}}readonly{{/unless}}/>
 		</div>
+
 	{{/if}}
 	{{/if}}
 </div>
@@ -25,18 +26,34 @@
 		<div class="header-section {{#if invalidCreditRating}}warning{{/if}}" title="{{localize 'CoC7.CreditRatingSkillName'}}">
 			<label>{{creditRatingMin}}&lt{{localize 'CoC7.CreditRatingSkillName'}}&lt{{creditRatingMax}}</label>
 		</div>
+		{{else}}
+			<div class="flex1"></div>
 		{{/if}}
+		{{#if data.infos.archetypeSet}}
+		<div class="header-section {{#if invalidPulpTalents}}warning{{/if}}" title="{{localize 'CoC7.PulpTalents'}}">
+			<label>{{localize 'CoC7.PulpTalents'}}: {{pulpTalentCount}}/{{minPulpTalents}}</label>
+		</div>
+		{{else}}
+			<div class="flex1"></div>
+		{{/if}}
+		{{#unless allowDevelopment}}
+		<div class="header-section  {{#if hasSkillFlaggedForExp}}flagged4dev{{/if}}" title="{{localize 'CoC7.SkillTotalExperience'}}">
+			<label>{{localize 'CoC7.SkillTotalExperience'}}:</label>
+			<span>{{totalExperience}}</span>
+		</div>
+		{{/unless}}
 	{{/if}}
-	<div class="flex1" title="{{localize 'CoC7.SkillTotalExperience'}}">
-		<label>{{localize 'CoC7.SkillTotalExperience'}}:</label>
-		<span>{{totalExperience}}</span>
-	</div>
-	<div class="flex1"></div>
 	{{#if allowDevelopment}}
+	<div class="header-section" title="{{localize 'CoC7.SkillTotalExperience'}}">
 		{{#if hasSkillFlaggedForExp}}
-			<div class="skill-developement button flex1" style="flex: 0 0 auto;" title="{{localize 'CoC7.DevelopemmentPhase'}}">{{localize 'CoC7.DevelopemmentPhase'}}</div>
+			<div class="skill-developement button" title="{{localize 'CoC7.DevelopemmentPhase'}}">{{localize 'CoC7.DevelopemmentPhase'}}</div>
+		{{else}}
+			<label>{{localize 'CoC7.SkillTotalExperience'}}:</label>
+			<span>{{totalExperience}}</span>
 		{{/if}}
+	</div>
 	{{/if}}
+
 </div>
 
 <ol class="skills-list development flexcol" >
