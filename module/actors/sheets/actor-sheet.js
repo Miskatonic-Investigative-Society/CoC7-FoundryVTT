@@ -12,10 +12,22 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 	getData() {
 		const data = super.getData();
 
+		if( this.actor.occupation){
+			data.data.infos.occupation = this.actor.occupation.name;
+			data.data.infos.occupationSet = true;
+		} else data.data.infos.occupationSet = false;
+
 		data.totalExperience = this.actor.experiencePoints;
-		data.totalOccupation = this.actor.occupationPoints;
-		data.totalArchetype = this.actor.archetypePoints;
-		data.totalPersonal = this.actor.personalPoints;
+		data.totalOccupation = this.actor.occupationPointsSpent;
+		data.invalidOccupationPoints = ( this.actor.occupationPointsSpent != Number(this.actor.data.data.development.occupation));
+		data.totalArchetype = this.actor.archetypePointsSpent;
+		data.invalidArchetypePoints = ( this.actor.archetypePointsSpent != Number(this.actor.data.data.development.archetype));
+		data.totalPersonal = this.actor.personalPointsSpent;
+		data.invalidPersonalPoints = ( this.actor.personalPointsSpent != Number(this.actor.data.data.development.personal));
+		data.creditRatingMax = Number(this.actor.occupation?.data.data.creditRating.max);
+		data.creditRatingMin = Number(this.actor.occupation?.data.data.creditRating.min);
+		data.invalidCreditRating = ( this.actor.creditRatingSkill.data.data.adjustments.occupation > data.creditRatingMax || this.actor.creditRatingSkill.data.data.adjustments.occupation < data.creditRatingMin);
+
 
 		data.hasSkillFlaggedForExp = this.actor.hasSkillFlaggedForExp;
 
@@ -50,7 +62,9 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 		super.activateListeners(html);
 
 		if ( this.actor.owner ) {
-			html.find('.skill-name.rollable.flagged4dev').click(this._onSkillDev.bind(this));
+			html.find('.skill-name.rollable.flagged4dev').click( async (event) => this._onSkillDev(event));
+			html.find('.reset-occupation').click( async () => await this.actor.resetOccupation());
+			html.find('.open-occupation').click( event => this._onOccupationDetails(event));
 		}
 	}
 
@@ -58,7 +72,13 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 	async _onSkillDev( event){
 		event.preventDefault();
 		const skillId = event.currentTarget.closest( '.item').dataset.itemId;
-		await this.actor.developSkill( skillId);
+		await this.actor.developSkill( skillId, event.shiftKey);
+	}
+
+	_onOccupationDetails( event){
+		event.preventDefault();
+		const occupation = this.actor.occupation;
+		if( occupation) occupation.sheet.render(true);
 	}
 
 	/**

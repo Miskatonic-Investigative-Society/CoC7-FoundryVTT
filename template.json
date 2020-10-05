@@ -11,7 +11,7 @@
                     "str": {
                         "value": null,
                         "short": "CHARAC.STR",
-                        "label": "CHARAC.Strengh",
+                        "label": "CHARAC.Strength",
                         "formula": null
                     },
                     "con": {
@@ -235,7 +235,7 @@
         }
     },
     "Item": {
-        "types": [ "item", "weapon", "skill", "book", "spell", "talent"],
+        "types": [ "item", "weapon", "skill", "setup", "occupation", "archetype", "book", "spell", "talent"],
         "item": {
             "description": "",
             "quantity": 1,
@@ -305,6 +305,47 @@
                 "experience": null
             },
             "value": -1,
+            "attributes": {},
+            "properties": {},
+            "eras": {},
+            "flags": {}
+        },
+        "setup":{
+            "description":{
+                "value": ""
+            },
+            "skills": [],
+            "attributes": {},
+            "properties": {},
+            "eras": {},
+            "flags": {}
+        },
+        "occupation":{
+            "description":{
+                "value": ""
+            },
+            "source": null,
+            "type": {
+                "classic": false,
+                "lovecraftian": false,
+                "modern": false
+            },
+            "related": null,
+            "occupationSkillPoints":{
+                "str": { "multiplier": null, "selected" : false, "optional": false, "active": false},
+                "con": { "multiplier": null, "selected" : false, "optional": false, "active": false},
+                "siz": { "multiplier": null, "selected" : false, "optional": false, "active": false},
+                "dex": { "multiplier": null, "selected" : false, "optional": false, "active": false},
+                "app": { "multiplier": null, "selected" : false, "optional": false, "active": false},
+                "int": { "multiplier": null, "selected" : false, "optional": false, "active": false},
+                "pow": { "multiplier": null, "selected" : false, "optional": false, "active": false},
+                "edu": { "multiplier": null, "selected" : false, "optional": false, "active": false}
+            },
+            "creditRating": { "min": null, "max": null},
+            "suggestedContacts": "",
+            "skills": [],
+            "groups": [],
+            "personal": null,
             "attributes": {},
             "properties": {},
             "eras": {},

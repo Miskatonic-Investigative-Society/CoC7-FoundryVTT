@@ -299,14 +299,27 @@ export class CoC7Item extends Item {
 		return this.getItemFlag('developement');
 	}
 
-	async toggleItemFlag( flagName){
+	async toggleItemFlag( flagName, eraseAdjustment = true){
 		const flagValue =  !this.getItemFlag(flagName);
 		const name = `data.flags.${flagName}`;
-		if( ('occupation' == flagName || 'archetype' == flagName) && !flagValue){
+		if( ('occupation' == flagName || 'archetype' == flagName) && !flagValue && eraseAdjustment){
 			await this.update( { 
 				[`data.adjustments.${flagName}`] : null,
 				[name]: flagValue});
 		} else await this.update( { [name]: flagValue});
+	}
+
+	async setItemFlag( flagName){
+		await this.update( { [`data.flags.${flagName}`]: true});
+	}
+
+	async unsetItemFlag( flagName, eraseAdjustment = true){
+		const name = `data.flags.${flagName}`;
+		if( ('occupation' == flagName || 'archetype' == flagName) && eraseAdjustment){
+			await this.update( { 
+				[`data.adjustments.${flagName}`] : null,
+				[name]: false});
+		} else await this.update( { [name]: false});
 	}
 
 	getItemFlag( flagName){
@@ -365,7 +378,6 @@ export class CoC7Item extends Item {
 		const skillProperties = [];
 		for (let [key, value] of Object.entries(COC7['skillProperties'])) {
 			if(this.data.data.properties[key] == true)  skillProperties.push(game.i18n.localize(value));
-			// if( value) data.itemProperties.push( COC7.spellProperties[key]?COC7.spellProperties[key]:null);
 		}
 		return skillProperties;
 	}
@@ -391,7 +403,7 @@ export class CoC7Item extends Item {
 			}
 			return  value;
 		}
-		return ( parseInt(this.data.data.base));
+		return ( !isNaN(parseInt(this.data.data.base))? parseInt(this.data.data.base): null);
 	}
 
 	get value(){
@@ -400,6 +412,7 @@ export class CoC7Item extends Item {
 		if( 'character' === this.actor.data.type) {	
 			value = this.base;
 			value += (this.data.data.adjustments?.personal)?parseInt( this.data.data.adjustments?.personal):0;
+			value += (this.data.data.adjustments?.occupation)?parseInt( this.data.data.adjustments?.occupation):0;
 			value += (this.data.data.adjustments?.experience)?parseInt( this.data.data.adjustments?.experience):0;
 			if( game.settings.get('CoC7', 'pulpRules')){
 				if( this.data.data.adjustments?.archetype) value += parseInt( this.data.data.adjustments?.archetype);
@@ -407,7 +420,7 @@ export class CoC7Item extends Item {
 		}else {
 			value = parseInt( this.data.data.value);
 		}
-		return value;
+		return !isNaN(value)? value: null;
 	}
 
 	async updateValue( value){
@@ -458,6 +471,28 @@ export class CoC7Item extends Item {
 		let bullets = await this.getBulletLeft();
 		if( x > bullets) await this.setBullets(0);
 		else await this.setBullets( bullets - x);
+	}
+
+	static mergeOptionalSkills( skillList, options){
+		const jointArray = skillList.concat( options);
+		return jointArray.reduce( (newArray, item) => {
+			if( newArray.find( skill => skill.name == item.name)) return newArray;
+			return [...newArray, item];
+		}, []).sort( (a, b) => {
+			let lca;
+			let lcb;
+			if( a.data.properties && b.data.properties) {
+				lca = a.data.properties.special ? a.data.specialization.toLowerCase() + a.name.toLowerCase() : a.name.toLowerCase();
+				lcb = b.data.properties.special ? b.data.specialization.toLowerCase() + b.name.toLowerCase() : b.name.toLowerCase();
+			}
+			else {
+				lca = a.name.toLowerCase();
+				lcb = b.name.toLowerCase();
+			}
+			if( lca < lcb) return -1;
+			if( lca > lcb) return 1;
+			return 0;
+		});
 	}
 
 
