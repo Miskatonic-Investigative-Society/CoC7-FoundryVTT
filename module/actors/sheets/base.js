@@ -860,7 +860,6 @@ export class CoC7ActorSheet extends ActorSheet {
 							const creditValue = value ? value : 0;
 							if( creditValue > Number(this.actor.occupation.data.data.creditRating.max) || creditValue <  Number(this.actor.occupation.data.data.creditRating.min))
 								ui.notifications.warn( game.i18n.format( 'CoC7.CreditOutOfRange', { min :Number(this.actor.occupation.data.data.creditRating.min), max:Number(this.actor.occupation.data.data.creditRating.max)}));
-
 						}
 					}
 				}

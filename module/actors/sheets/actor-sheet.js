@@ -17,6 +17,11 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 			data.data.infos.occupationSet = true;
 		} else data.data.infos.occupationSet = false;
 
+		if( this.actor.archetype){
+			data.data.infos.archetype = this.actor.archetype.name;
+			data.data.infos.archetypeSet = true;
+		} else data.data.infos.archetypeSet = false;
+
 		data.totalExperience = this.actor.experiencePoints;
 		data.totalOccupation = this.actor.occupationPointsSpent;
 		data.invalidOccupationPoints = ( this.actor.occupationPointsSpent != Number(this.actor.data.data.development.occupation));
@@ -27,6 +32,9 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 		data.creditRatingMax = Number(this.actor.occupation?.data.data.creditRating.max);
 		data.creditRatingMin = Number(this.actor.occupation?.data.data.creditRating.min);
 		data.invalidCreditRating = ( this.actor.creditRatingSkill.data.data.adjustments.occupation > data.creditRatingMax || this.actor.creditRatingSkill.data.data.adjustments.occupation < data.creditRatingMin);
+		data.pulpTalentCount = data.itemsByType.talent?.length ? data.itemsByType.talent?.length : 0;
+		data.minPulpTalents = this.actor.archetype?.data.data.talents ? this.actor.archetype?.data.data.talents : 0;
+		data.invalidPulpTalents = data.pulpTalentCount < data.minPulpTalents;
 
 
 		data.hasSkillFlaggedForExp = this.actor.hasSkillFlaggedForExp;
@@ -64,7 +72,8 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 		if ( this.actor.owner ) {
 			html.find('.skill-name.rollable.flagged4dev').click( async (event) => this._onSkillDev(event));
 			html.find('.reset-occupation').click( async () => await this.actor.resetOccupation());
-			html.find('.open-occupation').click( event => this._onOccupationDetails(event));
+			html.find('.reset-archetype').click( async () => await this.actor.resetArchetype());
+			html.find('.open-item').click( event => this._onItemDetails(event));
 		}
 	}
 
@@ -75,10 +84,11 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 		await this.actor.developSkill( skillId, event.shiftKey);
 	}
 
-	_onOccupationDetails( event){
+	_onItemDetails( event){
 		event.preventDefault();
-		const occupation = this.actor.occupation;
-		if( occupation) occupation.sheet.render(true);
+		const type = event.currentTarget.dataset.type;
+		const item = this.actor[type];
+		if( item) item.sheet.render(true);
 	}
 
 	/**

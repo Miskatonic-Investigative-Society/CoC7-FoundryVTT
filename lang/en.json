@@ -358,7 +358,14 @@
 "CoC7.SelectPersonalSkills": "Select {number} skill(s) as personal interest skills",
 "CoC7.ResetOccupation": "Reset Occupation",
 "CoC7.ResetOccupationHint": "Actor {name} already have an occupation. Do you want to reset it ?",
+"CoC7.ResetArchetype": "Reset Archetype",
+"CoC7.ResetArchetypeHint": "Actor {name} already have an archetype. Do you want to reset it ?",
 "CoC7.CreditOutOfRange": "Credit rating should be between {min} and {max}",
+
+"CoC7.CoreCharacteristics": "Core Characteristics",
+"CoC7.BonusPoints": "Bonus Points",
+"CoC7.SuggestedOccupations": "Suggested Occupations",
+"CoC7.SuggestedTraits": "Suggested Traits",
 
 "CoC7.PutGunAway": "Put your gun away",
 "CoC7.DrawGun": "Draw your gun",
