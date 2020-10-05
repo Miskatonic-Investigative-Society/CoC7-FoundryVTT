@@ -310,16 +310,6 @@
             "eras": {},
             "flags": {}
         },
-        "setup":{
-            "description":{
-                "value": ""
-            },
-            "skills": [],
-            "attributes": {},
-            "properties": {},
-            "eras": {},
-            "flags": {}
-        },
         "occupation":{
             "description":{
                 "value": ""
@@ -380,6 +370,18 @@
             "properties": {},
             "eras": {},
             "flags": {}
+        },
+        "setup":{
+            "description":{
+                "value": ""
+            },
+            "source": null,
+            "items": [],
+            "bioSections": [],
+            "attributes": {},
+            "properties": {},
+            "eras": {},
+            "flags": {}            
         },
         "spell":{
             "source":null,

@@ -210,10 +210,10 @@ export class CoCActor extends Actor {
 		await this.createEmbeddedEntity('OwnedItem', data, { renderSheet: showSheet});
 	}
 
-	async createBioSection(){
+	async createBioSection( title = null){
 		const bio = this.data.data.biography ? duplicate( this.data.data.biography) : [];
 		bio.push( {
-			title : null,
+			title : title,
 			value : null
 		});
 		await this.update( { 'data.biography' : bio});
@@ -292,6 +292,9 @@ export class CoCActor extends Actor {
 				}
 			} else data.data.value = null;
 			return await super.createEmbeddedEntity(embeddedName, data, options);
+		case( 'setup'):
+			await this.addSkills( data.data.skills);
+			break;
 			
 		case( 'archetype'):
 			if( 'character' == this.data.type){ //Archetypre only for PCs
