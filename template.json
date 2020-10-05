@@ -332,14 +332,14 @@
             },
             "related": null,
             "occupationSkillPoints":{
-                "str": { "multiplier": null, "selected" : false, "optional": false},
-                "con": { "multiplier": null, "selected" : false, "optional": false},
-                "siz": { "multiplier": null, "selected" : false, "optional": false},
-                "dex": { "multiplier": null, "selected" : false, "optional": false},
-                "app": { "multiplier": null, "selected" : false, "optional": false},
-                "int": { "multiplier": null, "selected" : false, "optional": false},
-                "pow": { "multiplier": null, "selected" : false, "optional": false},
-                "edu": { "multiplier": null, "selected" : false, "optional": false}
+                "str": { "multiplier": null, "selected" : false, "optional": false, "active": false},
+                "con": { "multiplier": null, "selected" : false, "optional": false, "active": false},
+                "siz": { "multiplier": null, "selected" : false, "optional": false, "active": false},
+                "dex": { "multiplier": null, "selected" : false, "optional": false, "active": false},
+                "app": { "multiplier": null, "selected" : false, "optional": false, "active": false},
+                "int": { "multiplier": null, "selected" : false, "optional": false, "active": false},
+                "pow": { "multiplier": null, "selected" : false, "optional": false, "active": false},
+                "edu": { "multiplier": null, "selected" : false, "optional": false, "active": false}
             },
             "creditRating": { "min": null, "max": null},
             "suggestedContacts": "",

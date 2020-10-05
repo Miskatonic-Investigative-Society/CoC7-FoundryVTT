@@ -20,7 +20,14 @@
 				{{/if}}
 				<div class="form-group">
 					<label>{{ localize 'CoC7.Occupation' }} :</label>
+					{{#if data.infos.occupationSet}}
+					<span class="rollable open-occupation" style="line-height: 18px;padding: 1px 3px;">{{data.infos.occupation}}</span>
+					{{#unless data.flags.locked}}
+					<a class="reset-occupation" title="{{ localize 'CoC7.ResetOccupation'}}" style="flex: 0;" data-type="occupation"><i class="far fa-times-circle"></i></a>
+					{{/unless}}
+					{{else}}
 					<input name="data.infos.occupation" type="text" value="{{data.infos.occupation}}"/>
+					{{/if}}
 				</div>
 				<div class="form-group">
 					<label>{{ localize 'CoC7.Age' }} :</label>

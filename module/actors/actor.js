@@ -3,10 +3,12 @@ import { CoC7Check } from '../check.js';
 import { CoC7ConCheck } from '../chat/concheck.js';
 import { RollDialog } from '../apps/roll-dialog.js';
 import { SkillSelectDialog } from '../apps/skill-selection-dialog.js';
+import { PointSelectDialog } from '../apps/point-selection-dialog.js';
 import { CoC7MeleeInitiator } from '../chat/combat/melee-initiator.js';
 import { CoC7RangeInitiator } from '../chat/rangecombat.js';
 import { chatHelper } from '../chat/helper.js';
 import { CoC7Dice } from '../dice.js';
+import { CoC7Item } from '../items/item.js';
 
 /**
  * Extend the base Actor class to implement additional logic specialized for CoC 7th.
@@ -293,9 +295,40 @@ export class CoCActor extends Actor {
 			if( 'character' == this.data.type){ //Occupation only for PCs
 				ui.notifications.warn('Adding an occupation is not yet implemented');
 
-				//Add main skills
-				await this.addSkills( data.data.skills, 'occupation');
+				if( this.occupation) {
+					let resetOccupation = false;
+					await Dialog.confirm({
+						title: game.i18n.localize( 'CoC7.ResetOccupation'),
+						content: `<p>${game.i18n.format('CoC7.ResetOccupationHint', { name: this.name})}</p>`,
+						yes: () => { resetOccupation = true;},
+						defaultYes: false
+					});
+					if( resetOccupation) await this.resetOccupation();
+					else return;
+				}
 
+				// Select characteristic
+				const pointsDialogData = {};
+				pointsDialogData.characteristics = data.data.occupationSkillPoints;
+				let total = 0;
+				let optionalChar = false;
+				Object.entries(data.data.occupationSkillPoints).forEach(entry => {
+					const [key, value] = entry;
+					const char = this.getCharacteristic( key);
+					pointsDialogData.characteristics[key].name = char.label;
+					pointsDialogData.characteristics[key].value = char.value;
+					if( value.selected){
+						pointsDialogData.characteristics[key].total = char.value*Number(pointsDialogData.characteristics[key].multiplier);
+						if( !value.optional) total += pointsDialogData.characteristics[key].total;
+						else optionalChar = true;
+					}
+				});
+				pointsDialogData.total = total;
+				if( optionalChar){ //Is there any optional char to choose for points calc ?
+					const result = await PointSelectDialog.create( pointsDialogData);
+					if( !result) return; // Point not selected => exit.
+				}
+				
 				//Add optional skills
 				for (let index = 0; index < data.data.groups.length; index++) {
 					const dialogData = {};
@@ -309,7 +342,9 @@ export class CoCActor extends Actor {
 					data.data.groups[index].skills.forEach( value => {
 						const skill = this.items.find( item => { return (item.name == value.name && 'skill' == item.type);});
 						if( !skill || !skill.data.data.flags?.occupation){
-							dialogData.skills.push( value);
+							//if skill was added to skill list previously, remove it
+							const alreadySelectedSkill = data.data.skills.find( item => { return (item.name == value.name);});
+							if( !alreadySelectedSkill) dialogData.skills.push( value);
 						}
 					});
 
@@ -318,10 +353,15 @@ export class CoCActor extends Actor {
 						if( dialogData.skills.length <= dialogData.options){
 							//If there's is less skill than options, add them all.
 							ui.notifications.info( `There's only ${dialogData.skills.length} and ${dialogData.options} options, adding all of them`);
-							await this.addSkills( dialogData.skills, 'occupation');
+							// await this.addSkills( dialogData.skills, 'occupation');
+							const merged = CoC7Item.mergeOptionalSkills( data.data.skills, dialogData.skills);
+							data.data.skills = merged;
 						} else {
 							//Wait for skill selection.
-							await SkillSelectDialog.create( dialogData);
+							const selected = await SkillSelectDialog.create( dialogData);
+							if( !selected) return;
+							const merged = CoC7Item.mergeOptionalSkills( data.data.skills, selected);
+							data.data.skills = merged;
 						}
 					} else ui.notifications.info( 'All skills are already selected.');
 				}
@@ -338,7 +378,12 @@ export class CoCActor extends Actor {
 
 					//Select only skills that are not present or are not flagged as occupation.
 					this.skills.forEach( s => {
-						if( !s.data.data.flags.occupation && !s.data.data.properties.noadjustments && !s.data.data.properties.noxpgain) dialogData.skills.push( s.data);
+						//Select all skills that are not already flagged as occupation, can have adjustments and XP.
+						if( !s.data.data.flags.occupation && !s.data.data.properties.noadjustments && !s.data.data.properties.noxpgain){
+							// if skill already selected don't add it
+							const alreadySelectedSkill = data.data.skills.find( item => { return (item.name == s.name);});
+							if( !alreadySelectedSkill) dialogData.skills.push( s.data);
+						}
 					});
 
 					//if there's none, do nothing.
@@ -346,14 +391,33 @@ export class CoCActor extends Actor {
 						if( dialogData.skills.length <= dialogData.options){
 						//If there's is less skill than options, add them all.
 							ui.notifications.info( `There's only ${dialogData.skills.length} and ${dialogData.options} options, adding all of them`);
-							await this.addSkills( dialogData.skills, 'occupation');
+							// await this.addSkills( dialogData.skills, 'occupation');
+							const merged = CoC7Item.mergeOptionalSkills( data.data.skills, dialogData.skills);
+							data.data.skills = merged;
 						} else {
 						//Wait for skill selection.
-							await SkillSelectDialog.create( dialogData);
-						}
+							const selected = await SkillSelectDialog.create( dialogData);
+							if( !selected) return;
+							const merged = CoC7Item.mergeOptionalSkills( data.data.skills, selected);
+							data.data.skills = merged;						}
 					} else ui.notifications.info( 'All skills are already selected.');
 				}
-				ui.notifications.info( 'Job\'s done');
+
+				//Add all skills
+				await this.addSkills( data.data.skills, 'occupation');
+				//Credit rating is always part of occupation
+				await this.creditRatingSkill.setItemFlag( 'occupation');
+				//setting it to min credit rating
+				await this.creditRatingSkill.update( {'data.adjustments.occupation': Number(data.data.creditRating.min)});
+
+				const newSkill = await super.createEmbeddedEntity(embeddedName, data, options);
+				//setting points
+				await this.update( {
+					'data.development.occupation': this.occupationPoints,
+					'data.development.personal': this.personalPoints
+				});
+
+				return newSkill;
 			}
 			break;
 
@@ -408,6 +472,30 @@ export class CoCActor extends Actor {
 			parsedFormula = parsedFormula.replace( key, value);
 		}
 		return parsedFormula;
+	}
+
+	getCharacteristic( charName){
+		return {
+			shortName: game.i18n.localize(this.data.data.characteristics[charName].short),
+			label: game.i18n.localize( this.data.data.characteristics[charName].label),
+			value: this.data.data.characteristics[charName].value
+		};
+	}
+
+	get occupation(){
+		const occupation = this.items.filter( item => item.type == 'occupation');
+		return occupation[0];
+	}
+
+	async resetOccupation( eraseOld = true){
+		if( eraseOld){
+			const occupationSkill = this.items.filter( item => item.getItemFlag('occupation'));
+			for (let index = 0; index < occupationSkill.length; index++) {
+				await occupationSkill[index].unsetItemFlag('occupation');
+			}
+		}
+		if( this.occupation) await this.deleteOwnedItem(this.occupation.id);
+		await this.update({ 'data.development.occupation': null});
 	}
 
 	get luck(){
@@ -499,7 +587,7 @@ export class CoCActor extends Actor {
 		return parseInt(this.data.data.attribs.san.value);
 	}
 
-	get occupationPoints(){
+	get occupationPointsSpent(){
 		let occupationPoints = 0;
 		for( let skill of this.skills){
 			if( skill.data.data.adjustments?.occupation){
@@ -509,7 +597,20 @@ export class CoCActor extends Actor {
 		return occupationPoints;
 	}
 
-	get archetypePoints(){
+	get occupationPoints(){
+		if( !this.occupation) return 0;
+		let points = 0;
+		Object.entries(this.occupation.data.data.occupationSkillPoints).forEach(entry => {
+			const [key, value] = entry;
+			const char = this.getCharacteristic( key);
+			if( value.selected){
+				points += char.value*Number(value.multiplier);
+			}
+		});
+		return points;
+	}
+
+	get archetypePointsSpent(){
 		let archetypePoints = 0;
 		for( let skill of this.skills){
 			if( skill.data.data.adjustments?.archetype){
@@ -529,7 +630,7 @@ export class CoCActor extends Actor {
 		return experiencePoints;
 	}
 
-	get personalPoints(){
+	get personalPointsSpent(){
 		let personalPoints = 0;
 		for( let skill of this.skills){
 			if( skill.data.data.adjustments?.personal){
@@ -537,6 +638,10 @@ export class CoCActor extends Actor {
 			}
 		}
 		return personalPoints;
+	}
+
+	get personalPoints(){
+		return 2*Number(this.data.data.characteristics.int.value);
 	}
 
 	get hasSkillFlaggedForExp(){
