@@ -5,6 +5,7 @@ import { RollDialog } from '../apps/roll-dialog.js';
 import { SkillSelectDialog } from '../apps/skill-selection-dialog.js';
 import { PointSelectDialog } from '../apps/point-selection-dialog.js';
 import { CharacSelectDialog } from '../apps/char-selection-dialog.js';
+import { CharacRollDialog } from '../apps/char-roll-dialog.js';
 import { CoC7MeleeInitiator } from '../chat/combat/melee-initiator.js';
 import { CoC7RangeInitiator } from '../chat/rangecombat.js';
 import { chatHelper } from '../chat/helper.js';
@@ -78,6 +79,32 @@ export class CoCActor extends Actor {
 			}
 		};
 		const created = await this.createEmbeddedEntity('OwnedItem', data, { renderSheet: showSheet});
+		return created;
+	}
+
+	async createWeaponSkill( name, firearms = false, base = null){
+		//TODO : Ask for base value if null
+		const data = {
+			name: name,
+			type: 'skill',
+			data: {
+				specialization: game.i18n.localize( firearms? 'CoC7.FirearmSpecializationName': 'CoC7.FightingSpecializationName'),
+				base: base,
+				adjustments: {
+					personal: null,
+					occupation: null,
+					archetype: null,
+					experience: null
+				},
+				properties: {
+					special: true,
+					fighting: !firearms,
+					firearm: firearms,
+					combat: true
+				}
+			}
+		};
+		const created = await this.createEmbeddedEntity('OwnedItem', data, { renderSheet: !base});
 		return created;
 	}
 
@@ -270,7 +297,7 @@ export class CoCActor extends Actor {
    */
 	async createEmbeddedEntity(embeddedName, data, options){
 		switch( data.type){
-		case( 'skill'):
+		case 'skill':
 			if( 'character' != this.data.type){ //If not a PC set skill value to base
 				if( this.getItemIdByName(data.name)) return; //If skill with this name exist return
 
@@ -292,11 +319,79 @@ export class CoCActor extends Actor {
 				}
 			} else data.data.value = null;
 			return await super.createEmbeddedEntity(embeddedName, data, options);
-		case( 'setup'):
-			await this.addSkills( data.data.skills);
+		case 'weapon':{
+			const mainSkill = data.data.skill.main.name;
+			if( mainSkill){
+				let skill = this.getSkillsByName( mainSkill)[0];
+				if( !skill){
+					skill = await this.createWeaponSkill( mainSkill, data.data.properties.rngd);
+				}
+				if( skill) data.data.skill.main.id = skill._id;
+			} //TODO : Else : selectionner le skill dans la liste ou en créer un nouveau
+			const secondSkill = data.data.skill.alternativ.name;
+			if( secondSkill){
+				let skill = this.getSkillsByName( secondSkill)[0];
+				if( !skill){
+					skill = await this.createWeaponSkill( secondSkill, data.data.properties.rngd);
+				}
+				if( skill) data.data.skill.alternativ.id = skill._id;
+			} //TODO : Else : selectionner le skill dans la liste ou en créer un nouveau
+
+			return await super.createEmbeddedEntity(embeddedName, data, options);
+		}
+		case 'setup':{
+			if( data.data.enableCharacterisitics){
+				data.data.characteristics.list = {};
+				data.data.characteristics.list.str = this.getCharacteristic('str');
+				data.data.characteristics.list.con = this.getCharacteristic('con');
+				data.data.characteristics.list.siz = this.getCharacteristic('siz');
+				data.data.characteristics.list.dex = this.getCharacteristic('dex');
+				data.data.characteristics.list.app = this.getCharacteristic('app');
+				data.data.characteristics.list.int = this.getCharacteristic('int');
+				data.data.characteristics.list.pow = this.getCharacteristic('pow');
+				data.data.characteristics.list.edu = this.getCharacteristic('edu');
+
+				data.data.characteristics.list.luck = {};
+				data.data.characteristics.list.luck.value = isNaN(this.luck)? null: this.luck;
+				data.data.characteristics.list.luck.label = game.i18n.localize( 'CoC7.Luck');
+				data.data.characteristics.list.luck.shortName = game.i18n.localize( 'CoC7.Luck');
+				
+
+				if( !data.data.characteristics.values) data.data.characteristics.values = {};
+				data.data.characteristics.values.str = data.data.characteristics.list.str.value;
+				data.data.characteristics.values.con = data.data.characteristics.list.con.value;
+				data.data.characteristics.values.siz = data.data.characteristics.list.siz.value;
+				data.data.characteristics.values.dex = data.data.characteristics.list.dex.value;
+				data.data.characteristics.values.app = data.data.characteristics.list.app.value;
+				data.data.characteristics.values.int = data.data.characteristics.list.int.value;
+				data.data.characteristics.values.pow = data.data.characteristics.list.pow.value;
+				data.data.characteristics.values.edu = data.data.characteristics.list.edu.value;
+				data.data.characteristics.values.luck = data.data.characteristics.list.luck.value;
+				if( data.data.characteristics.points.enabled) data.data.title = game.i18n.localize('CoC7.SpendPoints');
+				else data.data.title = game.i18n.localize('CoC7.RollCharac');
+				const rolled = await CharacRollDialog.create( data.data);
+				if( rolled){
+					const updateData = {};
+					['str', 'con', 'siz' ,'dex' ,'app' ,'int' ,'pow', 'edu'].forEach( key => {
+						if( data.data.characteristics.values[key]){
+							updateData[`data.characteristics.${key}.value`] = data.data.characteristics.values[key];
+							updateData[`data.characteristics.${key}.formula`] = data.data.characteristics.rolls[key];
+						}
+					});
+					if( data.data.characteristics.values.luck) updateData['data.attribs.lck.value'] = data.data.characteristics.values.luck;
+					await this.update( updateData);
+				} else return;
+			}
+			const skills = data.data.items.filter( it => 'skill' == it.type);
+			const othersItems = data.data.items.filter( it => 'skill' != it.type);
+			await this.addItems( othersItems);
+			await this.addUniqueItems( skills);
+			for( const sectionName of data.data.bioSections){
+				if( !this.data.data.biography.find( el => sectionName == el.title) && sectionName) await this.createBioSection( sectionName);
+			}
 			break;
-			
-		case( 'archetype'):
+		}
+		case 'archetype':
 			if( 'character' == this.data.type){ //Archetypre only for PCs
 				if( this.archetype) {
 					let resetArchetype = false;
@@ -322,15 +417,26 @@ export class CoCActor extends Actor {
 					}
 				});
 				if( coreCharac.length > 1){
-					
 					const charDialogData = {};
 					charDialogData.characteristics = coreCharac;
+					charDialogData.title = game.i18n.localize( 'CoC7.SelectCoreCharac');
 					const charac = await CharacSelectDialog.create( charDialogData);
 					if( !charac) return;
 					data.data.coreCharacteristics[charac]=true;
+					if( data.data.coreCharacteristicsFormula.enabled){
+						let value = Number(data.data.coreCharacteristicsFormula.value);
+						if( isNaN(value)){
+							const char = this.getCharacteristic( charac);
+							const roll = new Roll( data.data.coreCharacteristicsFormula.value);
+							roll.roll();
+							roll.toMessage({flavor: `Rolling characterisitic ${char.label}: ${data.data.coreCharacteristicsFormula.value}`});
+							value = (char.value < roll.total)? roll.total: char.value;
+						}
+						await this.update({ [`data.characteristics.${charac}.value`]: value});
+					}
 				}
 				//Add all skills
-				await this.addSkills( data.data.skills, 'archetype');
+				await this.addUniqueItems( data.data.skills, 'archetype');
 
 				const newArchetype = await super.createEmbeddedEntity(embeddedName, data, options);
 				//setting points
@@ -342,7 +448,7 @@ export class CoCActor extends Actor {
 			}
 
 			break;
-		case( 'occupation'):
+		case 'occupation':
 			if( 'character' == this.data.type){ //Occupation only for PCs
 				if( this.occupation) {
 					let resetOccupation = false;
@@ -402,7 +508,7 @@ export class CoCActor extends Actor {
 						if( dialogData.skills.length <= dialogData.options){
 							//If there's is less skill than options, add them all.
 							ui.notifications.info( `There's only ${dialogData.skills.length} and ${dialogData.options} options, adding all of them`);
-							// await this.addSkills( dialogData.skills, 'occupation');
+							// await this.addUniqueItems( dialogData.skills, 'occupation');
 							const merged = CoC7Item.mergeOptionalSkills( data.data.skills, dialogData.skills);
 							data.data.skills = merged;
 						} else {
@@ -440,7 +546,7 @@ export class CoCActor extends Actor {
 						if( dialogData.skills.length <= dialogData.options){
 						//If there's is less skill than options, add them all.
 							ui.notifications.info( `There's only ${dialogData.skills.length} and ${dialogData.options} options, adding all of them`);
-							// await this.addSkills( dialogData.skills, 'occupation');
+							// await this.addUniqueItems( dialogData.skills, 'occupation');
 							const merged = CoC7Item.mergeOptionalSkills( data.data.skills, dialogData.skills);
 							data.data.skills = merged;
 						} else {
@@ -453,7 +559,7 @@ export class CoCActor extends Actor {
 				}
 
 				//Add all skills
-				await this.addSkills( data.data.skills, 'occupation');
+				await this.addUniqueItems( data.data.skills, 'occupation');
 				//Credit rating is always part of occupation
 				await this.creditRatingSkill.setItemFlag( 'occupation');
 				//setting it to min credit rating
@@ -598,12 +704,12 @@ export class CoCActor extends Actor {
 		return await this.update( { 'data.attribs.hp.value': value});
 	}
 
-	async addSkills( skillList, flag = null){
+	async addUniqueItems( skillList, flag = null){
 		for( let skill of skillList){
 			const itemId = this.getItemIdByName(skill.name);
 			if( !itemId){
 				if( flag){
-					skill.data.flags = {};
+					if( ! skill.data.flag) skill.data.flags = {};
 					skill.data.flags[flag] = true;
 				}
 				await this.createOwnedItem( skill, {renderSheet:false});
@@ -614,11 +720,21 @@ export class CoCActor extends Actor {
 		}
 	}
 
-	async addSkill( skill, flag = null){
+	async addItems( itemList, flag = null){
+		for( let item of itemList){
+			if( flag){
+				if( ! item.data.flag) item.data.flags = {};
+				item.data.flags[flag] = true;
+			}
+			await this.createOwnedItem( item, {renderSheet:false});
+		}	
+	}
+
+	async addUniqueItem( skill, flag = null){
 		const itemId = this.getItemIdByName(skill.name);
 		if( !itemId){
 			if( flag){
-				skill.data.flags = {};
+				if( ! skill.data.flag) skill.data.flags = {};
 				skill.data.flags[flag] = true;
 			}
 			await this.createOwnedItem( skill, {renderSheet:false});

@@ -505,6 +505,9 @@
 .coc7 .form-group .form-fields > *:last-child {
   margin-right: 0;
 }
+.coc7 .form-group .item-control {
+  flex: 0;
+}
 .coc7 .form-group.stacked label {
   flex: 0 0 100%;
   margin: 0;
@@ -519,6 +522,9 @@
   border-top: 2px groove #eeede0;
   border-bottom: 2px groove #eeede0;
   font-family: "Modesto Condensed", "Palatino Linotype", serif;
+}
+.coc7 .form-header .item-control {
+  float: right;
 }
 .coc7 .editor {
   height: 100%;
@@ -1281,4 +1287,43 @@
 }
 .coc7.dialogue button.inactive:hover {
   box-shadow: 0 0 5px grey;
+}
+.coc7.dialogue.char-select .item-list .item {
+  text-align: center;
+}
+.coc7.dialogue.char-select a.roll-characteristic,
+.coc7.dialogue.skill-select a.roll-characteristic {
+  flex: 0;
+  padding-left: 5px;
+}
+.coc7.dialogue.char-select .item-controls,
+.coc7.dialogue.skill-select .item-controls {
+  flex: 0;
+  padding-right: 20px;
+}
+.coc7.dialogue.char-select .points,
+.coc7.dialogue.skill-select .points,
+.coc7.dialogue.char-select .counter,
+.coc7.dialogue.skill-select .counter {
+  justify-content: center;
+}
+.coc7.dialogue.char-select .points.warning,
+.coc7.dialogue.skill-select .points.warning,
+.coc7.dialogue.char-select .counter.warning,
+.coc7.dialogue.skill-select .counter.warning {
+  color: red;
+}
+.coc7.dialogue.char-select .points span,
+.coc7.dialogue.skill-select .points span,
+.coc7.dialogue.char-select .counter span,
+.coc7.dialogue.skill-select .counter span {
+  height: 22px;
+  line-height: 22px;
+  flex: 0;
+}
+.coc7.dialogue.char-select .points span.sep,
+.coc7.dialogue.skill-select .points span.sep,
+.coc7.dialogue.char-select .counter span.sep,
+.coc7.dialogue.skill-select .counter span.sep {
+  padding: 0 2px;
 }

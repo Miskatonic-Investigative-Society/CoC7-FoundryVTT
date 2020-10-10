@@ -92,7 +92,16 @@
 				<label class="checkbox">
 					<input type="checkbox" name="data.coreCharacteristics.edu" {{checked data.coreCharacteristics.edu}}/> {{ localize "CHARAC.Education" }}
 				</label>
-            </div>
+			</div>
+			
+			<div class="form-group">
+				<label class="checkbox">
+					<input type="checkbox" name="data.coreCharacteristicsFormula.enabled" {{checked data.coreCharacteristicsFormula.enabled}}/> {{ localize "CoC7.UseFormula" }}
+				</label>
+				{{#if data.coreCharacteristicsFormula.enabled}}
+					<input type="text" name="data.coreCharacteristicsFormula.value" value="{{data.coreCharacteristicsFormula.value}}" placeholder="{{ localize 'CoC7.EnterFormula' }}"/>
+				{{/if}}
+			</div>
            
             <h3 class="form-header">{{ localize "CoC7.SuggestedOccupations"}}</h3>
             {{editor content=data.suggestedOccupations target="data.suggestedOccupations" button=true owner=owner editable=editable}}

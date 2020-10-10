@@ -1,18 +1,59 @@
 .coc7.dialogue{
-    .selectable:hover{
-        text-shadow: 0 0 8px red;
-    }
+	.selectable:hover{
+		text-shadow: 0 0 8px red;
+	}
 
-    .selected{
-        text-shadow: 0 0 4px red;
-        h4{
-            font-weight: bold;
-        }
-    }
+	.selected{
+		text-shadow: 0 0 4px red;
+		h4{
+			font-weight: bold;
+		}
+	}
 
-    button{
-        &.inactive:hover{
-            box-shadow: 0 0 5px grey;
-        }
-    }
+	button{
+		&.inactive:hover{
+			box-shadow: 0 0 5px grey;
+		}
+	}
+
+
+	&.char-select{
+		.item-list{
+			.item {
+				text-align: center;
+			}
+		}
+	}
+
+
+	&.char-select,
+	&.skill-select{  
+		a.roll-characteristic{
+			flex: 0;
+			padding-left: 5px;
+		}
+
+		.item-controls{
+			flex: 0;
+    		padding-right: 20px;
+		}
+
+		.points,
+		.counter{
+			justify-content: center;
+
+			&.warning{
+				color: red;
+			}
+
+			span{
+				height: 22px;
+				line-height: 22px;
+				flex: 0;
+				&.sep{
+					padding : 0 2px;
+				}
+			}
+		}
+	}
 }
