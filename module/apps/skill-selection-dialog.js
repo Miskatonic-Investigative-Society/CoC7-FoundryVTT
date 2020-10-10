@@ -35,7 +35,7 @@ export class SkillSelectDialog extends Dialog {
 					const selected = data.skills.filter( skill => skill.selected);
 					return resolve(selected);
 				}
-			});
+			}, {classes:[ 'coc7', 'dialogue', 'skill-select']});
 			dlg.render(true);
 		});
 	}

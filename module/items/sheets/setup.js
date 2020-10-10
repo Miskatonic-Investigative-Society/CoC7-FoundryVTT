@@ -56,7 +56,7 @@ export class CoC7SetupSheet extends ItemSheet {
 		} else {
 			item = game.items.get(data.id);
 		}
-		// if (!item || !(type === item.data.type)) return;
+		if (!item || !item.data) return;
 		if( !['item', 'weapon', 'skill', 'book', 'spell'].includes( item.data.type)) return;
 
 		if( this.item.data.data.items.find( el => el.name === item.data.name)) return;
@@ -189,6 +189,14 @@ export class CoC7SetupSheet extends ItemSheet {
 			// for(let index = 0; index < this.item.data.data.bioSections.length; index++) {
 			// 	formData.data.bioSections[index] = duplicate(this.item.data.data.bioSections[index]);
 			// }
+		}
+
+		if( event.currentTarget?.name == 'data.characteristics.points.enabled'){
+			formData.data.characteristics.rolls.enabled = !event.currentTarget.checked;
+		}
+
+		if( event.currentTarget?.name == 'data.characteristics.rolls.enabled'){
+			formData.data.characteristics.points.enabled = !event.currentTarget.checked;
 		}
 
 		super._updateObject(event, formData);

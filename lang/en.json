@@ -3,6 +3,7 @@
 
 "CHARAC.STR": "STR",
 "CHARAC.Strengh": "Strength",
+"CHARAC.Strength": "Strength",
 "CHARAC.CON": "CON",
 "CHARAC.Constitution": "Constitution",
 "CHARAC.SIZ": "SIZ",
@@ -177,6 +178,7 @@
 "CoC7.SkillTotalArchetype": "Archetype points",
 "CoC7.SkillTotalOccupation": "Occupation points",
 "CoC7.SkillTotalPersonal": "Personal points",
+"CoC7.CharacteristicsPoints": "Characteristics points",
 
 "CoC7.ItemQuantity": "Quantity",
 "CoC7.ItemWeight": "Weight",
@@ -239,6 +241,7 @@
 "CoC7.ErrorActor": "Couldn't locate actor",
 "CoC7.ErrorInvalidFormula": "{value} is not a valid formula",
 "CoC7.ErrorInvalid": "invalid",
+"CoC7.Validate": "validate",
 
 "CoC7.NewBioSectionName": "New Section",
 
@@ -275,6 +278,8 @@
 "CoC7.CharacterDevelopment": "Development",
 "CoC7.OccupationSkill": "Occupation Skill",
 "CoC7.ArchetypeSkill": "Archetype Skill",
+"CoC7.UseFormula": "Use dice roll",
+"CoC7.EnterFormula": "Enter formula",
 
 
 "CoC7.ManualCreditValues": "Manual Credit Values",
@@ -364,7 +369,14 @@
 "CoC7.CreditOutOfRange": "Credit rating should be between {min} and {max}",
 "CoC7.BioSections":"Biography Sections",
 "CoC7.BioSectionName": "Biography Section Name",
+"CoC7.SpendPoints": "Allocate characteristics points",
+"CoC7.RollCharac": "Roll characteristics",
+"CoC7.SelectCoreCharac": "Select core characteristic",
 
+"CoC7.Characteristics": "Characteristics",
+"CoC7.EnableCharacteristics": "Enable characteristics",
+"CoC7.UsePoints": "Use points",
+"CoC7.UseRolls": "Use rolls",
 "CoC7.CoreCharacteristics": "Core Characteristics",
 "CoC7.BonusPoints": "Bonus Points",
 "CoC7.SuggestedOccupations": "Suggested Occupations",
