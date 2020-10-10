@@ -104,7 +104,7 @@
 "CoC7.check.DecreaseSuccessLevel": "Disminuir nivel de éxito",
 
 "CoC7.BonusSelectionWindow": "Seleccionar dificultad y bonificación",
-"CoC7.SkillDetailsWindow" : "Ventana de detalles de la habilidad",
+"CoC7.SkillDetailsWindow": "Ventana de detalles de la habilidad",
 "CoC7.RegularDifficulty": "normal",
 "CoC7.HardDifficulty": "difícil",
 "CoC7.ExtremeDifficulty": "extrema",
@@ -162,12 +162,21 @@
 "CoC7.rangeCombatCard.FastMovingTarget": "Objetivo rápido",
 "CoC7.rangeCombatCard.InMelee": "En combate cuerpo a cuerpo",
 "CoC7.rangeCombatCard.aiming": "Apuntando",
-"CoC7.rangeCombatDamage" : "{name} recibe {total} puntos de daño",
+"CoC7.rangeCombatDamage": "{name} recibe {total} puntos de daño",
 
 "CoC7.DropZone": "DropZone",
 
 "CoC7.SkillValue": "Valor",
 "CoC7.SkillBase": "Base",
+"CoC7.SkillExperience": "Experiencia",
+"CoC7.SkillArchetype": "Arquetipo",
+"CoC7.SkillOccupation": "Ocupacion",
+"CoC7.SkillPersonal": "Particulares",
+
+"CoC7.SkillTotalExperience": "Puntos de experiencia",
+"CoC7.SkillTotalArchetype": "Puntos de arquetipo",
+"CoC7.SkillTotalOccupation": "Puntos de ocupación",
+"CoC7.SkillTotalPersonal": "Intereses particulares",
 
 "CoC7.ItemQuantity": "Cantidad",
 "CoC7.ItemWeight": "Peso",
@@ -194,6 +203,7 @@
 "CoC7.EraPulp": "Pulp Cthulhu",
 "CoC7.EraMdrn": "Época Actual",
 
+"CoC7.SkillNoAdjustments": "Sin ajustes",
 "CoC7.SkillNoXpGain": "Sin ganancia de EXP",
 "CoC7.SkillSpecial": "Especialización",
 "CoC7.SkillRarity": "Infrecuente",
@@ -239,7 +249,7 @@
 "CoC7.NewSkillName": "nueva habilidad",
 "CoC7.AddSkill": "Añadir habilidad",
 "CoC7.DevelopemmentPhase": "Fase de Desarrollo",
-"CoC7.SkillCantGainXp": "Esta habilidad no se puede marcar para desarrollo",
+"CoC7.SkillCantGainXp": "Esta habilidad no puede ganar XP automáticamente",
 "CoC7.SkillUnflagForDevelopement": "Desmarcar para desarrollo",
 "CoC7.SkillFlagForDevelopement": "Marcar para desarrollo",
 "CoC7.SkillDetail": "Detalles",
@@ -261,6 +271,9 @@
 "CoC7.WeaponSkill": "Habilidad",
 "CoC7.WeaponSkillAlt": "Hab. alternativa",
 "CoC7.Inventory": "Inventario",
+"CoC7.CharacterDevelopment": "Desarrollo",
+"CoC7.OccupationSkill": "Habilidad de ocupación",
+"CoC7.ArchetypeSkill": "Habilidad de arquetipo",
 
 
 "CoC7.ManualCreditValues": "Crédito manual",
@@ -338,10 +351,12 @@
 "SETTINGS.InitiativeRuleOptional": "Opcional",
 "SETTINGS.displayInitDices": "Mostrar dado de iniciativa",
 "SETTINGS.displayInitDicesHint": "Mostrar los dados cuando se tire iniciativa (solo cuando se usa la regla opcional)",
-"SETTINGS.PulpRules" : "PV Pulp",
-"SETTINGS.PulpRulesHint" : "Usar las reglas de Pulp para el cálculo de los PV",
+"SETTINGS.PulpRules": "Reglas Pulp",
+"SETTINGS.PulpRulesHint": "Permite usar las reglas de Pulp Cthulhu (Arquetipos, Talentos, PV), ¡en fase de desarrollo!",
 "SETTINGS.DisregardAmmo": "Ignorar la munición.",
 "SETTINGS.DisregardAmmoHint": "Al activar esta opción no se tendrán en cuenta la munición cargada en el arma a la hora de disparar.",
 "SETTINGS.DisregardUsePerRound": "Ignorar el número de usos por asalto.",
-"SETTINGS.DisregardUsePerRoundHint": "Al activar esta opción, se podrá disparar sin restricciones, ignorando el número de disparos que un arma puede realizar por asalto."
+"SETTINGS.DisregardUsePerRoundHint": "Al activar esta opción, se podrá disparar sin restricciones, ignorando el número de disparos que un arma puede realizar por asalto.",
+"SETTINGS.RestrictGridSpaces": "Medir usando espacios de rejilla",
+"SETTINGS.RestrictGridSpacesHint": "En el combate a distancia, si se selecciona esta opción las distancias se medirán usando espacios de rejilla (cuadrados o hexágonos) en lugar de la distancia 'real' (euclidiana)."
 }

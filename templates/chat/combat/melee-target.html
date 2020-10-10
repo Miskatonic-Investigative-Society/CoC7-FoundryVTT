@@ -92,7 +92,7 @@
 					<a class="dropdown-element"
 						data-action="fightBack"
 						data-weapon-id="{{weapon.id}}"
-						data-skill-id="{{weapon.data.data.skill.main.id}}">{{weapon.name}} ({{weapon.data.data.skill.main.value}}%)</a>
+						data-skill-id="{{weapon.data.data.skill.main.id}}">{{weapon.name}} ({{weapon.data.data.skill.main.value}}%)</a> {{!-- TODO: Check skill value correctly displayed --}}
                 {{/each}}
             </div>        
         </div>
@@ -102,7 +102,7 @@
                 {{#each actor.fightingSkills as |skill key|}}
 					<a class="dropdown-element"
 						data-action="maneuver"
-						data-skill-id="{{skill.data._id}}">{{skill.name}} ({{skill.data.data.value}}%)</a>
+						data-skill-id="{{skill.data._id}}">{{skill.name}} ({{skill.value}}%)</a>
                 {{/each}}
             </div>        
         </div>
@@ -203,14 +203,14 @@
                 <button
                     data-action="melee-target-roll"
                     data-skill="{{skill._id}}"
-                    data-action="{{action}}">{{skill.name}} ({{skill.data.data.value}}%)</button>
+                    data-action="{{action}}">{{skill.name}} ({{skill.value}}%)</button>
             {{/unless}}
             {{#if fightingBack}}
                 <button
                 data-action="melee-target-roll"
                 data-skill="{{skill._id}}"
                 data-item-id="{{weapon.id}}"
-                data-action="{{action}}">{{weapon.name}}: {{skill.name}} ({{skill.data.data.value}}%)</button>
+                data-action="{{action}}">{{weapon.name}}: {{skill.name}} ({{skill.value}}%)</button>
             {{/if}}
         </div>
         {{/if}}

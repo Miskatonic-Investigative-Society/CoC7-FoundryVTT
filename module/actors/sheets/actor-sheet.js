@@ -11,6 +11,37 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 	*/
 	getData() {
 		const data = super.getData();
+
+		if( this.actor.occupation){
+			data.data.infos.occupation = this.actor.occupation.name;
+			data.data.infos.occupationSet = true;
+		} else data.data.infos.occupationSet = false;
+
+		if( this.actor.archetype){
+			data.data.infos.archetype = this.actor.archetype.name;
+			data.data.infos.archetypeSet = true;
+		} else data.data.infos.archetypeSet = false;
+
+		data.totalExperience = this.actor.experiencePoints;
+		data.totalOccupation = this.actor.occupationPointsSpent;
+		data.invalidOccupationPoints = ( this.actor.occupationPointsSpent != Number(this.actor.data.data.development.occupation));
+		data.totalArchetype = this.actor.archetypePointsSpent;
+		data.invalidArchetypePoints = ( this.actor.archetypePointsSpent != Number(this.actor.data.data.development.archetype));
+		data.totalPersonal = this.actor.personalPointsSpent;
+		data.invalidPersonalPoints = ( this.actor.personalPointsSpent != Number(this.actor.data.data.development.personal));
+		data.creditRatingMax = Number(this.actor.occupation?.data.data.creditRating.max);
+		data.creditRatingMin = Number(this.actor.occupation?.data.data.creditRating.min);
+		data.invalidCreditRating = ( this.actor.creditRatingSkill?.data.data.adjustments.occupation > data.creditRatingMax || this.actor.creditRatingSkill?.data.data.adjustments.occupation < data.creditRatingMin);
+		data.pulpTalentCount = data.itemsByType.talent?.length ? data.itemsByType.talent?.length : 0;
+		data.minPulpTalents = this.actor.archetype?.data.data.talents ? this.actor.archetype?.data.data.talents : 0;
+		data.invalidPulpTalents = data.pulpTalentCount < data.minPulpTalents;
+
+
+		data.hasSkillFlaggedForExp = this.actor.hasSkillFlaggedForExp;
+
+		data.allowDevelopment = game.settings.get('CoC7', 'developmentEnabled');
+		data.allowCharCreation = game.settings.get( 'CoC7', 'charCreationEnabled');
+
 		data.manualCredit = this.actor.getActorFlag('manualCredit');
 		if( !data.manualCredit){
 			data.credit = {};
@@ -35,11 +66,35 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 
 	/* -------------------------------------------- */
 
+	activateListeners(html) {
+		super.activateListeners(html);
+
+		if ( this.actor.owner ) {
+			html.find('.skill-name.rollable.flagged4dev').click( async (event) => this._onSkillDev(event));
+			html.find('.reset-occupation').click( async () => await this.actor.resetOccupation());
+			html.find('.reset-archetype').click( async () => await this.actor.resetArchetype());
+			html.find('.open-item').click( event => this._onItemDetails(event));
+		}
+	}
+
+
+	async _onSkillDev( event){
+		event.preventDefault();
+		const skillId = event.currentTarget.closest( '.item').dataset.itemId;
+		await this.actor.developSkill( skillId, event.shiftKey);
+	}
+
+	_onItemDetails( event){
+		event.preventDefault();
+		const type = event.currentTarget.dataset.type;
+		const item = this.actor[type];
+		if( item) item.sheet.render(true);
+	}
+
 	/**
    	 * Extend and override the default options used by the 5e Actor Sheet
    	 * @returns {Object}
 	*/
-
 	static get defaultOptions() {
 		return mergeObject(super.defaultOptions, {
 			classes: ['coc7', 'sheet', 'actor', 'character'],

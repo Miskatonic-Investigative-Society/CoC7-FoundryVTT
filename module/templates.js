@@ -11,6 +11,7 @@ export const preloadHandlebarsTemplates = async function() {
 		'systems/CoC7/templates/actors/parts/npc-skills.html',
 		'systems/CoC7/templates/actors/parts/actor-weapons.html',
 		'systems/CoC7/templates/actors/parts/npc-combat.html',
+		'systems/CoC7/templates/actors/parts/character-development.html'
 	];
   
 	// Load the template parts
