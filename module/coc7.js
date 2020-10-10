@@ -19,6 +19,8 @@ import { CoC7BookSheet } from './items/sheets/book.js';
 import { CoC7SpellSheet } from './items/sheets/spell.js';
 import { CoC7TalentSheet } from './items/sheets/talent.js';
 import { CoC7OccupationSheet } from './items/sheets/occupation.js';
+import { CoC7ArchetypeSheet } from './items/sheets/archetype.js';
+import { CoC7SetupSheet } from './items/sheets/setup.js';
 import { COC7 } from './config.js';
 import { Updater } from './updater.js';
 // import { CoC7ActorSheet } from './actors/sheets/base.js';
@@ -201,6 +203,8 @@ Hooks.once('init', async function() {
 	Items.registerSheet('CoC7', CoC7SpellSheet, { types: ['spell'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7TalentSheet, { types: ['talent'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7OccupationSheet, { types: ['occupation'], makeDefault: true});
+	Items.registerSheet('CoC7', CoC7ArchetypeSheet, { types: ['archetype'], makeDefault: true});
+	Items.registerSheet('CoC7', CoC7SetupSheet, { types: ['setup'], makeDefault: true});
 	Items.registerSheet('CoC7', CoCItemSheet, { makeDefault: true});
 	preloadHandlebarsTemplates();
 });
