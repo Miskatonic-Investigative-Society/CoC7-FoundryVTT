@@ -20,6 +20,11 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.3.9 :
+
+* Typo correction and missing strings
+* Spanish translation updated thanks to Lozalojo.
+
 version 0.3.8 :
 
 * SAN can be displayed as a bar on token.
