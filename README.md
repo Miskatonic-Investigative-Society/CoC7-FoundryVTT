@@ -45,6 +45,7 @@ version 0.3.8 :
   * occupation: You can create occupation for your character. Dropping an occupation on a char will create corresponding skills if they don't exist, flag them as occupation skills and calculate your occupation points.
   * archetype: Same as occupation for pulp (Pulp rules need to be enabled).
   * [Example of char creation](https://www.youtube.com/watch?v=OnUPIgj4Gdc&t=4s)
+* Spanish translation updated thanks to Lozalojo.
 
 version 0.3.7 :
 
