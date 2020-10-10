@@ -1,0 +1,117 @@
+<div class="header development flexrow">
+	{{#if allowCharCreation}}
+	<div class="header-section {{#if invalidPersonalPoints}}warning{{/if}}" title="{{localize 'CoC7.SkillTotalPersonal'}}">
+		<label>{{localize 'CoC7.SkillTotalPersonal'}}:</label>
+		<span>{{totalPersonal}}/</span>
+		<input class="{{#if invalidPersonalPoints}}warning{{/if}}" type="text" name="data.development.personal"  value="{{data.development.personal}}" data-dtype="Number" {{#unless allowCharCreation}}readonly{{/unless}}/>
+	</div>
+	<div class="header-section {{#if invalidOccupationPoints}}warning{{/if}}" title="{{localize 'CoC7.SkillTotalOccupation'}}">
+		<label>{{localize 'CoC7.SkillTotalOccupation'}}:</label>
+		<span>{{totalOccupation}}/</span>
+		<input class="{{#if invalidOccupationPoints}}warning{{/if}}" type="text" name="data.development.occupation"  value="{{data.development.occupation}}" data-dtype="Number" {{#unless allowCharCreation}}readonly{{/unless}}/>
+	</div>
+		{{#if pulpCharacter}}
+			<div class="header-section {{#if invalidArchetypePoints}}warning{{/if}}" title="{{localize 'CoC7.SkillTotalArchetype'}}">
+				<label>{{localize 'CoC7.SkillTotalArchetype'}}:</label>
+				<span>{{totalArchetype}}/</span>
+				<input class="{{#if invalidArchetypePoints}}warning{{/if}}" type="text" name="data.development.archetype"  value="{{data.development.archetype}}" data-dtype="Number" {{#unless allowCharCreation}}readonly{{/unless}}/>
+			</div>
+		{{/if}}
+	{{/if}}
+</div>
+<div class="header development flexrow">
+	{{#if allowCharCreation}}
+		{{#if data.infos.occupationSet}}
+		<div class="header-section {{#if invalidCreditRating}}warning{{/if}}" title="{{localize 'CoC7.CreditRatingSkillName'}}">
+			<label>{{creditRatingMin}}&lt{{localize 'CoC7.CreditRatingSkillName'}}&lt{{creditRatingMax}}</label>
+		</div>
+		{{else}}
+			<div class="flex1"></div>
+		{{/if}}
+		{{#if data.infos.archetypeSet}}
+		<div class="header-section {{#if invalidPulpTalents}}warning{{/if}}" title="{{localize 'CoC7.PulpTalents'}}">
+			<label>{{localize 'CoC7.PulpTalents'}}: {{pulpTalentCount}}/{{minPulpTalents}}</label>
+		</div>
+		{{else}}
+			<div class="flex1"></div>
+		{{/if}}
+		{{#unless allowDevelopment}}
+		<div class="header-section  {{#if hasSkillFlaggedForExp}}flagged4dev{{/if}}" title="{{localize 'CoC7.SkillTotalExperience'}}">
+			<label>{{localize 'CoC7.SkillTotalExperience'}}:</label>
+			<span>{{totalExperience}}</span>
+		</div>
+		{{/unless}}
+	{{/if}}
+	{{#if allowDevelopment}}
+	<div class="header-section" title="{{localize 'CoC7.SkillTotalExperience'}}">
+		{{#if hasSkillFlaggedForExp}}
+			<div class="skill-developement button" title="{{localize 'CoC7.DevelopemmentPhase'}}">{{localize 'CoC7.DevelopemmentPhase'}}</div>
+		{{else}}
+			<label>{{localize 'CoC7.SkillTotalExperience'}}:</label>
+			<span>{{totalExperience}}</span>
+		{{/if}}
+	</div>
+	{{/if}}
+
+</div>
+
+<ol class="skills-list development flexcol" >
+	{{#each skills as |skill id|}}
+		<li class="item flexrow" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
+			<div class="item-controls flexrow">
+				{{#unless skill.data.properties.noadjustments}}
+					<div class="item-control occupation-skill-flag {{#if../allowCharCreation}}clickable{{/if}}" title="{{localize 'CoC7.OccupationSkill'}}">
+						{{#if skill.data.flags.occupation}}
+							<i class="fas fa-circle"></i>
+						{{else}}
+							<i class="far fa-circle"></i>
+						{{/if}}
+					</div>
+					{{#if ../pulpCharacter}}
+					<div class="item-control archetype-skill-flag {{#if../allowCharCreation}}clickable{{/if}}" title="{{localize 'CoC7.ArchetypeSkill'}}">
+						{{#if skill.data.flags.archetype}}
+							<i class="fas fa-circle"></i>
+						{{else}}
+							<i class="far fa-circle"></i>
+						{{/if}}
+					</div>
+					{{/if}}
+				{{/unless}}
+			</div>
+			
+			<span class="skill-name {{#if skill.data.flags.developement}}{{#if ../allowDevelopment}}rollable{{/if}} flagged4dev{{/if}}">{{#if skill.data.properties.special}}{{skill.data.specialization}} :{{/if}}{{skill.name}}</span>
+			<div class="adjustment-value not-available" title="{{localize 'CoC7.SkillBase'}}">
+				<input type="text" value="{{skill.data.base}}" data-dtype="Number" readonly>
+			</div>
+			<div class="adjustment-value {{#if skill.data.properties.noadjustments}}not-available{{/if}}" title="{{localize 'CoC7.SkillPersonal'}}">
+				{{#if skill.data.properties.noadjustments}}
+					<input type="text" value="" data-dtype="Number" readonly>
+				{{else}}
+					<input type="text" class="skill-adjustment" name="data.adjustments.personal" value="{{skill.data.adjustments.personal}}" data-dtype="Number" {{#unless ../allowCharCreation}}readonly{{/unless}}>
+				{{/if}}
+			</div>
+			<div class="adjustment-value {{#unless skill.data.flags.occupation}}not-available{{/unless}}" title="{{localize 'CoC7.SkillOccupation'}}">
+				{{#if skill.data.flags.occupation}}
+				<input type="text" class="skill-adjustment" name="data.adjustments.occupation"  value="{{skill.data.adjustments.occupation}}" data-dtype="Number" {{#unless ../allowCharCreation}}readonly{{/unless}}>
+				{{else}}
+				<input type="text" value="" data-dtype="Number" readonly>
+				{{/if}}
+			</div>
+			{{#if ../pulpCharacter}}
+			<div class="adjustment-value {{#unless skill.data.flags.archetype}}not-available{{/unless}}" title="{{localize 'CoC7.SkillArchetype'}}">
+				{{#if skill.data.flags.archetype}}
+				<input type="text" class="skill-adjustment" name="data.adjustments.archetype" value="{{skill.data.adjustments.archetype}}" data-dtype="Number" {{#unless ../allowCharCreation}}readonly{{/unless}}>
+				{{else}}
+				<input type="text" value="" data-dtype="Number" readonly>
+				{{/if}}
+			</div>
+			{{/if}}
+			<div class="adjustment-value" title="{{localize 'CoC7.SkillExperience'}}">
+				<input type="text" class="skill-adjustment" name="data.adjustments.experience" value="{{skill.data.adjustments.experience}}" data-dtype="Number" {{#unless ../allowCharCreation}}readonly{{/unless}}>
+			</div>
+			<div class="adjustment-value not-available" title="{{localize 'CoC7.SkillValue'}}">
+				<input type="text" value="{{skill.data.value}}" data-dtype="Number" readonly>
+			</div>
+		</li>
+	{{/each}}
+</ol>

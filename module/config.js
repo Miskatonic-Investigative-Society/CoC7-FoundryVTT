@@ -35,6 +35,7 @@ COC7.characteristics = {
  * @type {Object}
  */
 COC7.skillProperties = {
+	noadjustments: 'CoC7.SkillNoAdjustments',
 	noxpgain: 'CoC7.SkillNoXpGain',
 	special: 'CoC7.SkillSpecial',
 	rarity: 'CoC7.SkillRarity',
@@ -90,6 +91,12 @@ COC7.talentType = {
 	basic: 'CoC7.BasicTalent',
 	insane: 'CoC7.InsaneTalent',
 	other: 'CoC7.OtherTalent'
+};
+
+COC7.occupationProperties = {
+	classic: 'CoC7.Classic',
+	lovecraftian: 'CoC7.Lovecraftian',
+	modern: 'CoC7.Modern'	
 };
 
 COC7.formula = {};
