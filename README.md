@@ -23,16 +23,24 @@ Compendium 'Weapons' contains a single test weapon.
 version 0.3.8 :
 
 * SAN can be displayed as a bar on token.
+* Bug correction :
+  * when weapon malfunction threshold was 100 spending luck on the roll was resulting in a malfunction.
 * New tab added to the character sheet for character development. In this tab you can:
   * see/modify how skills are calculated (base + personal + occupation + experience).
   * roll your skills for development. You can either click each skill individually or trigger a check for all skill by clicking the 'development' button.
 * Controls have been added for the GM.
   * Controls are located under the token group.
   * the first one allows the skill to be rolled for XP for all players.
-  * the second one allows player to modify their skills value (useful for character creation).
+  * the second one allows player to modify their skills value and allocates points (useful for character creation).
+  * A validation report is displayed on top of the development tab.
 * You can now add weapons and skills to the macro bar.
+  * If you are a player, your default character is used for the macro unless you have an owned token selected.
   * If you are the GM you need to have an actor selected before clicking the macro.
   * Macro skills/items are retrieved using names. If 2 weapons have the same name the first retrieved is used.
+* New items added : setup, occupation and archetype.
+  * setup (Not started yet): a set of skills you can just drop on a character sheet. It will add all skills to the character.
+  * occupation: You can create occupation for your character. Dropping an occupation on a char will create corresponding skills if they don't exist, flag them as occupation skills and calculate your occupation points.
+  * archeype (Not started yet): Same as occupation for pulp (Pulp rules need to be enabled).
 
 version 0.3.7 :
 

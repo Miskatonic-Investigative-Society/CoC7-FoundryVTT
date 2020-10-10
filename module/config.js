@@ -93,6 +93,12 @@ COC7.talentType = {
 	other: 'CoC7.OtherTalent'
 };
 
+COC7.occupationProperties = {
+	classic: 'CoC7.Classic',
+	lovecraftian: 'CoC7.Lovecraftian',
+	modern: 'CoC7.Modern'	
+};
+
 COC7.formula = {};
 
 COC7.formula.actor = {
