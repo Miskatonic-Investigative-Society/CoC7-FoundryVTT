@@ -465,7 +465,7 @@ export class CoC7Check {
 		{
 			this.isItem = true;
 			if( this.item.data.data.malfunction) {
-				if( this.dices.total >= this.item.data.data.malfunction){
+				if( Number(this.dices.total) >= Number(this.item.data.data.malfunction)){
 					this.hasMalfunction = true;
 					this.malfunctionTxt = game.i18n.format('CoC7.Malfunction', {itemName : this.item.name});
 					await this.item.toggleItemFlag(CoC7Item.flags.malfunction);

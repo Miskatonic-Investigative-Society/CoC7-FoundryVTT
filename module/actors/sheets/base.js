@@ -389,7 +389,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		});
 
 		html.find('.add-item').click( ev => {
-			switch( event.currentTarget.dataset.type){
+			switch( ev.currentTarget.dataset.type){
 			case 'skill':
 				this.actor.createEmptySkill( ev);
 				break;
@@ -850,10 +850,16 @@ export class CoC7ActorSheet extends ActorSheet {
 				if( event.currentTarget.classList.contains('skill-adjustment')){
 					let item = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.itemId);
 					if( item){
+						const value = event.currentTarget.value? parseInt(event.currentTarget.value) : null;
+
 						if( !event.currentTarget.value) await item.update( {[event.currentTarget.name]: null});
 						else{
-							const value = parseInt(event.currentTarget.value);
 							if( !isNaN(value)) await item.update( {[event.currentTarget.name]: value});
+						}
+						if( game.i18n.localize(COC7.creditRatingSkillName) == item.name){
+							const creditValue = value ? value : 0;
+							if( creditValue > Number(this.actor.occupation.data.data.creditRating.max) || creditValue <  Number(this.actor.occupation.data.data.creditRating.min))
+								ui.notifications.warn( game.i18n.format( 'CoC7.CreditOutOfRange', { min :Number(this.actor.occupation.data.data.creditRating.min), max:Number(this.actor.occupation.data.data.creditRating.max)}));
 						}
 					}
 				}
