@@ -320,19 +320,19 @@ export class CoCActor extends Actor {
 			} else data.data.value = null;
 			return await super.createEmbeddedEntity(embeddedName, data, options);
 		case 'weapon':{
-			const mainSkill = data.data.skill.main.name;
+			const mainSkill = data?.data?.skill?.main?.name;
 			if( mainSkill){
 				let skill = this.getSkillsByName( mainSkill)[0];
 				if( !skill){
-					skill = await this.createWeaponSkill( mainSkill, data.data.properties.rngd);
+					skill = await this.createWeaponSkill( mainSkill, data.data.properties?.rngd ? true: false);
 				}
 				if( skill) data.data.skill.main.id = skill._id;
 			} //TODO : Else : selectionner le skill dans la liste ou en créer un nouveau
-			const secondSkill = data.data.skill.alternativ.name;
+			const secondSkill = data?.data?.skill?.alternativ?.name;
 			if( secondSkill){
 				let skill = this.getSkillsByName( secondSkill)[0];
 				if( !skill){
-					skill = await this.createWeaponSkill( secondSkill, data.data.properties.rngd);
+					skill = await this.createWeaponSkill( secondSkill, data.data.properties?.rngd ? true: false);
 				}
 				if( skill) data.data.skill.alternativ.id = skill._id;
 			} //TODO : Else : selectionner le skill dans la liste ou en créer un nouveau
