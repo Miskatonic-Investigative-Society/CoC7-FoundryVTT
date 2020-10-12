@@ -22,7 +22,10 @@ Compendium 'Weapons' contains a single test weapon.
 
 version 0.3.9 :
 
-* Typo correction and missing strings
+* Bug correction:
+  * Typo correction and missing strings.
+  * Damage card displays roll correctly.
+  * When holding shift while clicking on a weapon damage this will make the damage critical.
 * Spanish translation updated thanks to Lozalojo.
 
 version 0.3.8 :
