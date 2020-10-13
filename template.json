@@ -318,7 +318,8 @@
             "type": {
                 "classic": false,
                 "lovecraftian": false,
-                "modern": false
+                "modern": false,
+                "pulp": false
             },
             "related": null,
             "occupationSkillPoints":{
