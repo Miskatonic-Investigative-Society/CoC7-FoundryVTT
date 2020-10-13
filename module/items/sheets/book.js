@@ -30,20 +30,18 @@ export class CoC7BookSheet extends ItemSheet {
 			return false;
 		}
 
-		// if (data.pack) {
-		// 	return this.importItemFromCollection(data.pack, data.id);
-		// }
+		let item;
 
-		// // Case 2 - Data explicitly provided
-		// else if (data.data) {
-		// 	let sameItem = data._id === item._id;
-		// 	if (sameItem) return null;//this._onSortItem(event, data.data); // Sort existing items
-		// 	else return this.spells.push( data);  // Create a new Item
-		// }
-
-		// Case 3 - Import from World entity
-		// else {
-		let item = game.items.get(data.id);
+		if (data.pack) {
+			const pack = game.packs.get(data.pack);
+			if (pack.metadata.entity !== 'Item') return;
+			item = await pack.getEntity(data.id);
+		} else if (data.data) {
+			item = data;
+		} else {
+			item = game.items.get(data.id);
+		}
+		
 		if (!item || !('spell' === item.data.type)) return;
 		const spells = this.item.data.data.spells ? duplicate( this.item.data.data.spells) : [];
 		spells.push( duplicate(item.data));

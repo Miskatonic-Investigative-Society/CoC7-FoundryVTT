@@ -4,62 +4,9 @@ import { COC7 } from '../config.js';
  * Override and extend the basic :class:`Item` implementation
  */
 export class CoC7Item extends Item {
-
-	// constructor(...args) {
-	// 	super(...args);
-
-	// 	this.items;
+	// /** @override */
+	// prepareEmbeddedEntities() {
 	// }
-
-	// static get config(){
-	// 	// let config =  {
-	// 	// 	baseEntity: Item,
-	// 	// 	collection: game.items,
-	// 	// 	embeddedEntities: {'OwnedItem': 'items'},
-	// 	// 	label: 'ENTITY.Item',
-	// 	// 	permissions: {
-	// 	// 		create: 'ITEM_CREATE'
-	// 	// 	}
-	// 	// };
-	// 	const config = Item.config;
-	// 	config.embeddedEntities = {'OwnedItem': 'items'};
-	// 	return config;
-	// }
-
-	/**
-	 * Augment the basic Item data model with additional dynamic data.
-	*/
-	// prepareData() {
-	// 	super.prepareData();
-	// }
-
-
-	/** @override */
-	prepareEmbeddedEntities() {
-	// 	if( 'book' == this.data.type){
-	// 		const prior = this.items;
-	// 		const spells = new Collection();
-	// 		if( this.data.data.spells){
-	// 			for ( let i of this.data.data.spells ) {
-	// 				let item = null;
-	
-		// 				// Update existing items
-		// 				if ( prior && prior.has(i._id ) ) {
-		// 					item = prior.get(i._id);
-		// 					item.data = i;
-		// 					item.prepareData();
-		// 				}
-	
-		// 				// Construct new items
-		// 				else item = Item.createOwned(i, this);
-		// 				spells.set(i._id, item);
-		// 			}
-		// 		}
-	
-	// 		// Assign Items to the Actor
-	// 		this.items = spells;
-	// 	}
-	}
 	
 
 	/**
@@ -215,6 +162,37 @@ export class CoC7Item extends Item {
 
 	hasProperty( propertyId){
 		return this.isIncludedInSet( 'properties', propertyId);
+	}
+
+	get name() {
+		if( 'skill' != this.type || !this.data.data?.properties?.special) return super.name;
+		if( this.data.name.toLowerCase().includes( this.data.data.specialization?.toLowerCase())) return super.name;
+		return `${this.data.data.specialization} (${this.data.name})`;
+	}
+
+	static getNameWithoutSpec( item){
+		if( item instanceof CoC7Item){
+			if( item.data.data?.properties?.special){
+				const specNameRegex = new RegExp(item.data.data.specialization, 'ig');
+				return item.name.replace( specNameRegex, '').trim().replace(/^\(+|\)+$/gm,'');
+			}
+		} else {
+			if( item.data.properties?.special){
+				const specNameRegex = new RegExp(item.data.specialization, 'ig');
+				return item.name.replace( specNameRegex, '').trim().replace(/^\(+|\)+$/gm,'');
+			}
+		}
+		return item.name;
+	}
+
+	static isAnySpec( item){
+		if( item instanceof CoC7Item){
+			if( 'skill' != item.type || !item.data.data.properties?.special) return false;
+			return( CoC7Item.getNameWithoutSpec(item).toLowerCase() == game.i18n.localize('CoC7.AnySpecName').toLowerCase());
+		} else { //Assume it's data only
+			if( 'skill' != item.type || !item.data.properties?.special) return false;
+			return( CoC7Item.getNameWithoutSpec(item).toLowerCase() == game.i18n.localize('CoC7.AnySpecName').toLowerCase());
+		}
 	}
 
 	async checkSkillProperties(){
@@ -476,7 +454,9 @@ export class CoC7Item extends Item {
 	static mergeOptionalSkills( skillList, options){
 		const jointArray = skillList.concat( options);
 		return jointArray.reduce( (newArray, item) => {
-			if( newArray.find( skill => skill.name == item.name)) return newArray;
+			//If skill is not a generic spec and is already included we don't add item
+			if( !CoC7Item.isAnySpec(item) && newArray.find( skill => skill.name == item.name)) return newArray;
+			//Else item is added
 			return [...newArray, item];
 		}, []).sort( (a, b) => {
 			let lca;

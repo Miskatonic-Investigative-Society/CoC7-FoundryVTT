@@ -769,7 +769,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		event.preventDefault();
 		const itemId = event.currentTarget.closest('.weapon').dataset.itemId;
 		const range = event.currentTarget.closest('.weapon-damage').dataset.range;
-		const rollCard = new CoC7DamageRoll( itemId, this.actor.tokenKey);
+		const rollCard = new CoC7DamageRoll( itemId, this.actor.tokenKey, null, event.shiftKey);
 		rollCard.rollDamage( range);
 		// console.log( 'Weapon damage Clicked');
 	}
