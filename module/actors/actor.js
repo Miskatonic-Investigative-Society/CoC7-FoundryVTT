@@ -1222,7 +1222,7 @@ export class CoCActor extends Actor {
 	async developementPhase( fastForward = false){
 		const failure = [];
 		const success = [];
-		const title = 'Rolling all skills for development';
+		const title = game.i18n.localize('CoC7.RollAll4Dev');
 		let message = '<p class="chat-card">';
 		for (let item of this.items){
 			if( 'skill' === item.type){
@@ -1237,10 +1237,10 @@ export class CoCActor extends Actor {
 						const augmentDie = new Die(10);
 						augmentDie.roll();
 						augment += augmentDie.total;
-						message += `<span class="upgrade-success">${item.name} upgraded  (${die.total}/${item.value}%) by ${augmentDie.total}%</span><br>`;
+						message += `<span class="upgrade-success">${game.i18n.format( 'CoC7.DevSuccess', {item : item.data.name, die: die.total, score: item.value, augment: augmentDie.total})}</span><br>`;
 						await item.increaseExperience( augment);
 					}else{
-						message += `<span class="upgrade-failed">${item.name} NOT upgraded (${die.total}/${item.value}%)</span><br>`;
+						message += `<span class="upgrade-failed">${game.i18n.format( 'CoC7.DevFailure', {item : item.data.name, die: die.total, score: item.value})}</span><br>`;
 						failure.push(item._id);
 					}
 					await item.unflagForDevelopement();
