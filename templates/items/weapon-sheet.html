@@ -11,18 +11,30 @@
 				{{#if hasOwner}}
 					<select class="attribute-dtype" name="data.skill.main.id">
 						{{#select data.skill.main.id}}
-                        {{#each combatSkill as |cbs|}}
-                        	<option value="{{cbs.id}}">{{#if cbs.data.data.properties.special}}{{cbs.data.data.specialization}}-{{/if}}{{cbs.name}}</option>
-                        {{/each}}
+							{{#if data.properties.rngd}}
+								{{#each firearmSkills as |cbs|}}
+									<option value="{{cbs.id}}">{{cbs.data.name}}</option>
+								{{/each}}
+							{{else}}
+								{{#each fightingSkills as |cbs|}}
+									<option value="{{cbs.id}}">{{cbs.data.name}}</option>
+								{{/each}}
+							{{/if}}
                         {{/select}}
 					</select>
 
 					{{#if usesAlternateSkill}}
 						<select class="attribute-dtype" name="data.skill.alternativ.id">
 							{{#select data.skill.alternativ.id}}
-							{{#each combatSkill as |cbs|}}
-								<option value="{{cbs.id}}">{{#if cbs.data.data.properties.special}}{{cbs.data.data.specialization}}-{{/if}}{{cbs.name}}</option>
-							{{/each}}
+								{{#if data.properties.rngd}}
+									{{#each firearmSkills as |cbs|}}
+										<option value="{{cbs.id}}">{{cbs.data.name}}</option>
+									{{/each}}
+								{{else}}
+									{{#each fightingSkills as |cbs|}}
+										<option value="{{cbs.id}}">{{cbs.data.name}}</option>
+									{{/each}}
+								{{/if}}
 							{{/select}}
 						</select>
 					{{/if}}
