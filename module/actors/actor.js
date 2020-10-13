@@ -1359,7 +1359,7 @@ export class CoCActor extends Actor {
 	get firearmSkills(){
 		let skillList = [];
 		this.items.forEach( (value) => {
-			if( value.type == 'skill' && value.data.data.properties.firearms ) skillList.push( value);
+			if( value.type == 'skill' && value.data.data.properties.firearm ) skillList.push( value);
 		});
 
 		skillList.sort( (a, b) => {

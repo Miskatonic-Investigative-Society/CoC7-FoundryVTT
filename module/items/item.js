@@ -13,27 +13,28 @@ export class CoC7Item extends Item {
    * Roll the item to Chat, creating a chat card which contains follow up attack or damage roll options
    * @return {Promise}
    */
-	async roll() {
-		const token = this.actor.token;
-		const templateData = {
-			actor: this.actor,
-			tokenId: token ? `${token.scene._id}.${token.id}` : null,
-			item: this.data
-		};
+	// DEPRECATED
+	// async roll() {
+	// 	const token = this.actor.token;
+	// 	const templateData = {
+	// 		actor: this.actor,
+	// 		tokenId: token ? `${token.scene._id}.${token.id}` : null,
+	// 		item: this.data
+	// 	};
 
-		const template = 'systems/CoC7/templates/chat/skill-card.html';
-		const html = await renderTemplate(template, templateData);
+	// 	const template = 'systems/CoC7/templates/chat/skill-card.html';
+	// 	const html = await renderTemplate(template, templateData);
 				
-		// TODO change the speaker for the token name not actor name
-		const speaker = ChatMessage.getSpeaker({actor: this.actor});
-		if( token) speaker.alias = token.name;
+	// 	// TODO change the speaker for the token name not actor name
+	// 	const speaker = ChatMessage.getSpeaker({actor: this.actor});
+	// 	if( token) speaker.alias = token.name;
 
-		await ChatMessage.create({
-			user: game.user._id,
-			speaker,
-			content: html
-		});
-	}
+	// 	await ChatMessage.create({
+	// 		user: game.user._id,
+	// 		speaker,
+	// 		content: html
+	// 	});
+	// }
 
 	static flags = {
 		malfunction: 'malfc'

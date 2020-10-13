@@ -51,6 +51,8 @@
 "CoC7.Unconsious": "Unconsious",
 "CoC7.CriticalWounds": "Major Wound",
 "CoC7.Dying": "Dying",
+"CoC7.Dead": "Dead",
+"CoC7.Resist": "Resist",
 "CoC7.TemporaryInsanity": "Temporary insanity",
 "CoC7.IndefiniteInsanity": "Indefinite insanity",
 "CoC7.UnlockActor": "Unlock Actor",
@@ -94,15 +96,18 @@
 "CoC7.PushedRoll": "(pushed roll)",
 "CoC7.SpendLuck": "Spend {luckNeededValue} Luck to pass",
 "CoC7.LuckSpent": "{luckAmount} luck spent to pass",
+"CoC7.LuckSpentAlt": "Luck spent",
 "CoC7.LuckError": "{actorName} didn't have enough luck to pass the check",
 "CoC7.check.AutoSuccess": "Auto. Success",
 "CoC7.check.AutoFailure": "Auto. Fail",
-"CoC7.check.RevealCheck": "Reveal check",
+"CoC7.RevealCheck": "Reveal check",
 "CoC7.check.ForcePass": "Force pass",
 "CoC7.check.ForceFail": "Force fail",
 "CoC7.check.FlagForDevelopment": "Award experience",
-"CoC7.check.IncreaseSuccessLevel": "Increase success",
+"CoC7.IncreaseSuccessLevel": "Increase success",
 "CoC7.check.DecreaseSuccessLevel": "Decrease success",
+
+"CoC7.ConsitutionCheck": "Consitution check",
 
 "CoC7.BonusSelectionWindow": "Bonus selection window",
 "CoC7.SkillDetailsWindow": "Skill details window",
@@ -145,6 +150,7 @@
 "CoC7.NoWinner": "Both side failed.",
 "CoC7.DodgeSuccess": "{name} dodged!",
 "CoC7.ManeuverSuccess": "{name} maneuver was successful.",
+"CoC7.InflictPain": "Inflict pain",
 
 "CoC7.combatCard.dive4cover": "Dive for Cover",
 
@@ -164,6 +170,10 @@
 "CoC7.rangeCombatCard.InMelee": "In melee",
 "CoC7.rangeCombatCard.aiming": "Aiming",
 "CoC7.rangeCombatDamage": "{name} takes {total} points of damage",
+"CoC7.RollDamage": "Roll damage",
+"CoC7.BulletsFired": "Bullets fired",
+"CoC7.Shots": "Shots",
+"CoC7.Shoot": "Shoot",
 
 "CoC7.DropZone": "DropZone",
 
@@ -243,7 +253,8 @@
 "CoC7.ErrorActor": "Couldn't locate actor",
 "CoC7.ErrorInvalidFormula": "{value} is not a valid formula",
 "CoC7.ErrorInvalid": "invalid",
-"CoC7.Validate": "validate",
+"CoC7.Validate": "Validate",
+"CoC7.Apply": "Apply",
 
 "CoC7.NewBioSectionName": "New Section",
 
@@ -286,6 +297,8 @@
 "CoC7.ArchetypeSkill": "Archetype Skill",
 "CoC7.UseFormula": "Use dice roll",
 "CoC7.EnterFormula": "Enter formula",
+"CoC7.SanRollHint":"Roll san check for targets",
+"CoC7.NoSkill": "No skill",
 
 
 "CoC7.ManualCreditValues": "Manual Credit Values",
@@ -309,6 +322,8 @@
 
 "CoC7.creatureFightingSkill": "Fighting",
 
+"CoC7.SanityCheck": "Sanity check",
+"CoC7.NoSanLoss": "No SAN loss",
 "CoC7.SANLoss": "SAN Loss",
 "CoC7.CMI": "CMI",
 "CoC7.CthuluMythosInitial": "Cthulhu Mythos Initial",

@@ -208,7 +208,7 @@
 					<div class="flex1"></div>
 					<div class="san-check flexrow flex3">
 						<!-- <a class='roll-san flex2' title='Roll san check for targets'><i class="fas fa-dice"></i></a> -->
-						<label class="roll-san rollable" style="text-align: right;" title="Roll san check for targets">San Loss :</label>
+						<label class="roll-san rollable" style="text-align: right;" title="{{ localize 'CoC7.SanRollHint'}}">{{ localize "CoC7.SANLoss" }} :</label>
 						{{#if data.flags.locked}}
 						<span class="san-value flex1" style="line-height: 22px;padding-left: 2px;" placeholder="pass">{{data.special.sanLoss.checkPassed}}</span>
 						<span class="flex0" style="line-height: 22px;">/</span>
