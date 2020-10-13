@@ -26,6 +26,9 @@ version 0.3.9 :
   * Typo correction and missing strings.
   * Damage card displays roll correctly.
   * When holding shift while clicking on a weapon damage this will make the damage critical.
+  * Occupations, Archetypes and Setups can have multiple generics specializations e.g. Art/Craft(Any).
+  * Add-weapon button fixed.
+* Occupation type added : Pulp.
 * Spanish translation updated thanks to Lozalojo.
 
 version 0.3.8 :

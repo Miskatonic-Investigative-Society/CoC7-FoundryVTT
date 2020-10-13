@@ -6,6 +6,7 @@ import { SkillSelectDialog } from '../apps/skill-selection-dialog.js';
 import { PointSelectDialog } from '../apps/point-selection-dialog.js';
 import { CharacSelectDialog } from '../apps/char-selection-dialog.js';
 import { CharacRollDialog } from '../apps/char-roll-dialog.js';
+import { SkillSpecSelectDialog } from '../apps/skill-spec-select-dialog.js';
 import { CoC7MeleeInitiator } from '../chat/combat/melee-initiator.js';
 import { CoC7RangeInitiator } from '../chat/rangecombat.js';
 import { chatHelper } from '../chat/helper.js';
@@ -318,13 +319,51 @@ export class CoCActor extends Actor {
 					if( value) data.data.value = Math.floor(value);
 				}
 			} else data.data.value = null;
+
+			if( CoC7Item.isAnySpec( data)){
+				const specialization = data.data.specialization?.toLowerCase();
+				if( specialization){
+					let skillList = [];
+					if( data.data?.flags?.occupation || data.data?.flags?.archetype)
+						skillList = this.skills.filter( el => {
+							if( !el.data.data.specialization) return false;
+							if( data.data?.flags?.occupation && el.data.data.flags?.occupation) return false;
+							if( data.data?.flags?.archetype && el.data.data.flags?.archetype) return false;
+							return specialization.toLowerCase() == el.data.data.specialization?.toLowerCase();
+						});
+					// if( 1 <= skillList.length) {
+					const skillData = await SkillSpecSelectDialog.create(skillList, data.data.specialization, data.data.base);
+					if( skillData){
+						if( skillData.get('existing-skill')){
+							const existingItem = this.getOwnedItem( skillData.get('existing-skill'));
+							for( let [key, value] of Object.entries( data.data.flags)){
+								if( value) await existingItem.setItemFlag( key);
+							}
+							return;
+						} else {
+							if( skillData.get('new-skill-name')){
+								data.name = skillData.get('new-skill-name');
+							} else data.name = CoC7Item.getNameWithoutSpec(data);
+
+							if( skillData.get('base-value')){
+								const value = Number( skillData.get('base-value'));
+								if( !isNaN(value)) data.data.base = value;
+							}
+						}
+
+					}
+				}
+				// }
+			}
+
 			return await super.createEmbeddedEntity(embeddedName, data, options);
 		case 'weapon':{
 			const mainSkill = data?.data?.skill?.main?.name;
 			if( mainSkill){
 				let skill = this.getSkillsByName( mainSkill)[0];
 				if( !skill){
-					skill = await this.createWeaponSkill( mainSkill, data.data.properties?.rngd ? true: false);
+					const name = mainSkill.match(/\(([^)]+)\)/)? mainSkill.match(/\(([^)]+)\)/)[1]: mainSkill;
+					skill = await this.createWeaponSkill( name, data.data.properties?.rngd ? true: false);
 				}
 				if( skill) data.data.skill.main.id = skill._id;
 			} //TODO : Else : selectionner le skill dans la liste ou en créer un nouveau
@@ -332,7 +371,8 @@ export class CoCActor extends Actor {
 			if( secondSkill){
 				let skill = this.getSkillsByName( secondSkill)[0];
 				if( !skill){
-					skill = await this.createWeaponSkill( secondSkill, data.data.properties?.rngd ? true: false);
+					const name = mainSkill.match(/\(([^)]+)\)/)? mainSkill.match(/\(([^)]+)\)/)[1]: mainSkill;
+					skill = await this.createWeaponSkill( name, data.data.properties?.rngd ? true: false);
 				}
 				if( skill) data.data.skill.alternativ.id = skill._id;
 			} //TODO : Else : selectionner le skill dans la liste ou en créer un nouveau
@@ -384,8 +424,8 @@ export class CoCActor extends Actor {
 			}
 			const skills = data.data.items.filter( it => 'skill' == it.type);
 			const othersItems = data.data.items.filter( it => 'skill' != it.type);
-			await this.addItems( othersItems);
 			await this.addUniqueItems( skills);
+			await this.addItems( othersItems);
 			for( const sectionName of data.data.bioSections){
 				if( !this.data.data.biography.find( el => sectionName == el.title) && sectionName) await this.createBioSection( sectionName);
 			}
@@ -495,16 +535,25 @@ export class CoCActor extends Actor {
 
 					//Select only skills that are not present or are not flagged as occupation.
 					data.data.groups[index].skills.forEach( value => {
-						const skill = this.items.find( item => { return (item.name == value.name && 'skill' == item.type);});
-						if( !skill || !skill.data.data.flags?.occupation){
+						if( CoC7Item.isAnySpec( value)) dialogData.skills.push( value); //If it's a generic spec we always add it
+						else{
+							const skill = this.items.find( item => { return (item.name == value.name && 'skill' == item.type);});
+							if( !skill || !skill.data.data.flags?.occupation){
 							//if skill was added to skill list previously, remove it
-							const alreadySelectedSkill = data.data.skills.find( item => { return (item.name == value.name);});
-							if( !alreadySelectedSkill) dialogData.skills.push( value);
+								const alreadySelectedSkill = data.data.skills.find( item => { return (item.name == value.name);});
+								if( !alreadySelectedSkill) dialogData.skills.push( value);
+							}
 						}
 					});
 
 					//if there's none, do nothing.
 					if( 0 != dialogData.skills.length){
+						dialogData.skills.forEach( skill =>{
+							if( skill.data.specialization && !skill.name.includes(skill.data.specialization))
+								skill.displayName = `${skill.data.specialization} (${skill.name})`;
+							else skill.displayName = skill.name;
+						});
+
 						if( dialogData.skills.length <= dialogData.options){
 							//If there's is less skill than options, add them all.
 							ui.notifications.info( `There's only ${dialogData.skills.length} and ${dialogData.options} options, adding all of them`);
@@ -543,6 +592,11 @@ export class CoCActor extends Actor {
 
 					//if there's none, do nothing.
 					if( 0 != dialogData.skills.length){
+						dialogData.skills.forEach( skill =>{
+							if( skill.data.specialization && !skill.name.includes(skill.data.specialization))
+								skill.displayName = `${skill.data.specialization} (${skill.name})`;
+							else skill.displayName = skill.name;
+						});
 						if( dialogData.skills.length <= dialogData.options){
 						//If there's is less skill than options, add them all.
 							ui.notifications.info( `There's only ${dialogData.skills.length} and ${dialogData.options} options, adding all of them`);
@@ -565,14 +619,14 @@ export class CoCActor extends Actor {
 				//setting it to min credit rating
 				await this.creditRatingSkill.update( {'data.adjustments.occupation': Number(data.data.creditRating.min)});
 
-				const newSkill = await super.createEmbeddedEntity(embeddedName, data, options);
+				const newOccupation = await super.createEmbeddedEntity(embeddedName, data, options);
 				//setting points
 				await this.update( {
 					'data.development.occupation': this.occupationPoints,
 					'data.development.personal': this.personalPoints
 				});
 
-				return newSkill;
+				return newOccupation;
 			}
 			break;
 
@@ -592,8 +646,9 @@ export class CoCActor extends Actor {
 
 	getItemIdByName( itemName){
 		let id = null;
+		const name = itemName.match(/\(([^)]+)\)/)? itemName.match(/\(([^)]+)\)/)[1]: itemName;
 		this.items.forEach( (value) => {
-			if( value.name == itemName) id = value.id;
+			if( CoC7Item.getNameWithoutSpec(value).toLowerCase() == name.toLowerCase()) id = value.id;
 		});
 
 		return id;
@@ -612,10 +667,12 @@ export class CoCActor extends Actor {
    * 
    * 
    */
-	getSkillsByName( skillName){
+	getSkillsByName( skillName){ // TODO : more aggressive finding including specs
 		let skillList = [];
+		const name = skillName.match(/\(([^)]+)\)/)? skillName.match(/\(([^)]+)\)/)[1]: skillName;
+
 		this.items.forEach( (value) => {
-			if( value.name == skillName && value.type == 'skill') skillList.push( value);
+			if( CoC7Item.getNameWithoutSpec(value).toLowerCase() == name.toLowerCase() && value.type == 'skill') skillList.push( value);
 		});
 		return skillList;
 	}
@@ -706,16 +763,22 @@ export class CoCActor extends Actor {
 
 	async addUniqueItems( skillList, flag = null){
 		for( let skill of skillList){
-			const itemId = this.getItemIdByName(skill.name);
-			if( !itemId){
-				if( flag){
-					if( ! skill.data.flag) skill.data.flags = {};
-					skill.data.flags[flag] = true;
+			if( CoC7Item.isAnySpec(skill)){
+				if( flag) skill.data.flags[flag] = true;
+				await this.createOwnedItem( skill, {renderSheet:true});
+			}
+			else {
+				const itemId = this.getItemIdByName(skill.name);
+				if( !itemId){
+					if( flag){
+						if( ! skill.data.flag) skill.data.flags = {};
+						skill.data.flags[flag] = true;
+					}
+					await this.createOwnedItem( skill, {renderSheet:false});
+				}else if( flag){
+					const item = this.getOwnedItem( itemId);
+					await item.setItemFlag( flag);
 				}
-				await this.createOwnedItem( skill, {renderSheet:false});
-			}else if( flag){
-				const item = this.getOwnedItem( itemId);
-				await item.setItemFlag( flag);
 			}
 		}
 	}
