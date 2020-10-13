@@ -28,13 +28,22 @@ export class CoCActor extends Actor {
    * Just check if auto is indefined, in which case it will be set to true
    */
 	checkUndefinedAuto(){
-		let returnData = {};
-		if( this.data.data.attribs.hp.auto === undefined) returnData['attribs.hp.auto'] = true;
-		if( this.data.data.attribs.mp.auto === undefined) returnData['attribs.mp.auto'] = true;
-		if( this.data.data.attribs.san.auto === undefined) returnData['attribs.san.auto'] = true;
-		if( this.data.data.attribs.mov.auto === undefined) returnData['attribs.mov.auto'] = true;
-		if( this.data.data.attribs.db.auto === undefined) returnData['attribs.db.auto'] = true;
-		if( this.data.data.attribs.build.auto === undefined) returnData['attribs.build.auto'] = true;
+		let returnData = {
+			attribs:{
+				hp:{ auto:false},
+				mp:{ auto:false},
+				san:{ auto:false},
+				mov:{ auto:false},
+				db:{ auto:false},
+				build:{ auto:false}
+			}
+		};
+		if( this.data.data.attribs?.hp?.auto === undefined) returnData.attribs.hp.auto = true;
+		if( this.data.data.attribs?.mp?.auto === undefined) returnData.attribs.mp.auto = true;
+		if( this.data.data.attribs?.san?.auto === undefined) returnData.attribs.san.auto = true;
+		if( this.data.data.attribs?.mov?.auto === undefined) returnData.attribs.mov.auto = true;
+		if( this.data.data.attribs?.db?.auto === undefined) returnData.attribs.db.auto = true;
+		if( this.data.data.attribs?.build?.auto === undefined) returnData.attribs.build.auto = true;
     
 		return returnData;
 	}
@@ -927,6 +936,8 @@ export class CoCActor extends Actor {
 	}
 
 	get build() {
+		if( !this.data.data.attribs) return null;
+		if( !this.data.data.attribs.build) return null;
 		if( this.data.data.attribs.build.value == 'auto') this.data.data.attribs.build.auto = true;
 		if( this.data.data.attribs.build.auto)
 		{
@@ -942,6 +953,8 @@ export class CoCActor extends Actor {
 	}
 
 	get db() {
+		if( !this.data.data.attribs) return null;
+		if( !this.data.data.attribs.db) return null;
 		if( this.data.data.attribs.db.value == 'auto') this.data.data.attribs.db.auto = true;
 		if( this.data.data.attribs.db.auto)
 		{
@@ -956,6 +969,8 @@ export class CoCActor extends Actor {
 	}
 
 	get mov() {
+		if( !this.data.data.attribs) return null;
+		if( !this.data.data.attribs.mov) return null;
 		if( this.data.data.attribs.mov.value == 'auto') this.data.data.attribs.mov.auto = true;
 		if( this.data.data.attribs.mov.auto)
 		{
@@ -1296,6 +1311,7 @@ export class CoCActor extends Actor {
 	}
 
 	getStatus(statusName){
+		if( !this.data.data.status ) return false;
 		let statusValue = this.data.data.status[statusName]?.value;
 		if( undefined === statusValue) return false;
 		if(!(typeof statusValue === 'boolean')) statusValue = statusValue === 'false' ? true : false; //Necessary, incorrect template initialization
