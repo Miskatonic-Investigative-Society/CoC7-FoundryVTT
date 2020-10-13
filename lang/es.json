@@ -51,6 +51,8 @@
 "CoC7.Unconsious": "Inconsciente",
 "CoC7.CriticalWounds": "Herida grave",
 "CoC7.Dying": "Moribundo",
+"CoC7.Dead": "Muerto",
+"CoC7.Resist": "Resistido",
 "CoC7.TemporaryInsanity": "Locura temporal",
 "CoC7.IndefiniteInsanity": "Locura indefinida",
 "CoC7.UnlockActor": "Desbloquear Actor",
@@ -94,6 +96,7 @@
 "CoC7.PushedRoll": "(tirada forzada)",
 "CoC7.SpendLuck": "Gastar {luckNeededValue} puntos de Suerte para superar la tirada",
 "CoC7.LuckSpent": "{luckAmount} puntos de Suerte gastados para superar la tirada",
+"CoC7.LuckSpentAlt": "Suerte gastada",
 "CoC7.LuckError": "{actorName} no tiene suficiente Suerte para superar la tirada",
 "CoC7.check.AutoSuccess": "Éxito Autom.",
 "CoC7.check.AutoFailure": "Fallo Autom.",
@@ -103,6 +106,8 @@
 "CoC7.check.FlagForDevelopment": "Premiar experiencia",
 "CoC7.IncreaseSuccessLevel": "Incrementar nivel de éxito",
 "CoC7.check.DecreaseSuccessLevel": "Disminuir nivel de éxito",
+
+"CoC7.ConsitutionCheck": "Tirada de Constitución",
 
 "CoC7.BonusSelectionWindow": "Seleccionar dificultad y bonificación",
 "CoC7.SkillDetailsWindow": "Ventana de detalles de la habilidad",
@@ -144,7 +149,8 @@
 "CoC7.WinnerRollDamage": "{name} ha ganado. Tirar daño.",
 "CoC7.NoWinner": "Ambas partes han fallado.",
 "CoC7.DodgeSuccess": "{name} ha esquivado!",
-"CoC7.ManeuverSuccess": "La maniobra de {name} ha tenido éxito.",
+"CoC7.ManeuverSuccess": "La maniobra {name} ha tenido éxito.",
+"CoC7.InflictPain": "Infligir dolor",
 
 "CoC7.combatCard.dive4cover": "Ponerse a Cubierto",
 
@@ -164,6 +170,10 @@
 "CoC7.rangeCombatCard.InMelee": "En combate cuerpo a cuerpo",
 "CoC7.rangeCombatCard.aiming": "Apuntando",
 "CoC7.rangeCombatDamage": "{name} recibe {total} puntos de daño",
+"CoC7.RollDamage": "Tirada de daño",
+"CoC7.BulletsFired": "Balas disparadas",
+"CoC7.Shots": "Disparos",
+"CoC7.Shoot": "Disparar",
 
 "CoC7.DropZone": "DropZone",
 
@@ -243,7 +253,8 @@
 "CoC7.ErrorActor": "No se pudo localizar al actor",
 "CoC7.ErrorInvalidFormula": "{value} no es una fórmula válida",
 "CoC7.ErrorInvalid": "inválido",
-"CoC7.Validate": "validar",
+"CoC7.Validate": "Validar",
+"CoC7.Apply": "Aplicar",
 
 "CoC7.NewBioSectionName": "Nueva Sección",
 
@@ -286,6 +297,8 @@
 "CoC7.ArchetypeSkill": "Habilidad de arquetipo",
 "CoC7.UseFormula": "Usar tirada de dados",
 "CoC7.EnterFormula": "Introducir fórmula",
+"CoC7.SanRollHint":"Tirar Cordura a todos los objetivos seleccionados",
+"CoC7.NoSkill": "Sin habilidad",
 
 
 "CoC7.ManualCreditValues": "Crédito manual",
@@ -309,7 +322,9 @@
 
 "CoC7.creatureFightingSkill": "Combatir",
 
-"CoC7.SANLoss": "Pérdida COR",
+"CoC7.SanityCheck": "Tirada de Cordura",
+"CoC7.NoSanLoss": "Sin pérdida de COR",
+"CoC7.SANLoss": "Pérdida de COR",
 "CoC7.CMI": "MCI",
 "CoC7.CthuluMythosInitial": "Mitos de Cthulhu Inicial",
 "CoC7.CMF": "MCC",
