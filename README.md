@@ -374,12 +374,12 @@ Version 0.1.3 :
 * [x] Implement NPC (with automatic and average carac/skill calculation).
 * [x] Implement creations of skills directly from the sheets.
 * [x] Implement experience tracking.
-* [x] !!WIP. Implement localization.
+* [x] Implement localization.
 * [ ] Working on CSS/HTML to improve the look.  
 * [x] Improving the combat tab, by adding combat skill to the weapon list.  
-* [ ] Automatic skill assignment when adding a weapon.  
-* [ ] Combat automation (calculation of difficulty, assignement of damage, opposed check...).  
+* [x] Automatic skill assignment when adding a weapon.  
+* [x] Combat automation (calculation of difficulty, assignement of damage, opposed check...).  
 * [x] Implement pushed rolls.  
 * [ ] Implement advanced rolls (opposed, combined etc…).  
 * [ ] Implement car chases.  
-* [ ] Automation of character creation.
+* [x] Automation of character creation.
