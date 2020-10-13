@@ -60,7 +60,9 @@
         </div>
     </div>
 
+    {{#if targetKey}}
     <div class="card-buttons gm-visible-only">
-        <button data-action="deal-melee-damage">Assign damage</button>
+        <button data-action="deal-melee-damage">{{ localize 'CoC7.InflictPain' }}</button>
     </div>
+    {{/if}}
 </div>

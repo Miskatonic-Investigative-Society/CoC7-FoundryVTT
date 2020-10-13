@@ -97,11 +97,11 @@
 "CoC7.LuckError": "{actorName} no tiene suficiente Suerte para superar la tirada",
 "CoC7.check.AutoSuccess": "Éxito Autom.",
 "CoC7.check.AutoFailure": "Fallo Autom.",
-"CoC7.check.RevealCheck": "Mostrar tirada",
+"CoC7.RevealCheck": "Mostrar tirada",
 "CoC7.check.ForcePass": "Forzar éxito",
 "CoC7.check.ForceFail": "Forzar fallo",
 "CoC7.check.FlagForDevelopment": "Premiar experiencia",
-"CoC7.check.IncreaseSuccessLevel": "Incrementar nivel de éxito",
+"CoC7.IncreaseSuccessLevel": "Incrementar nivel de éxito",
 "CoC7.check.DecreaseSuccessLevel": "Disminuir nivel de éxito",
 
 "CoC7.BonusSelectionWindow": "Seleccionar dificultad y bonificación",
