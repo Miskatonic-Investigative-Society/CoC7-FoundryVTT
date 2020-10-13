@@ -1,4 +1,5 @@
 import  { COC7 } from '../../config.js';
+import { CoC7Item } from '../item.js';
 // import { CoCItemSheet } from './item-sheet.js';
 // import { CoC7Item } from '../item.js';
 // import { CoCActor } from '../../actors/actor.js';
@@ -59,7 +60,9 @@ export class CoC7SetupSheet extends ItemSheet {
 		if (!item || !item.data) return;
 		if( !['item', 'weapon', 'skill', 'book', 'spell'].includes( item.data.type)) return;
 
-		if( this.item.data.data.items.find( el => el.name === item.data.name)) return;
+		if( !CoC7Item.isAnySpec(item)){
+			if( this.item.data.data.items.find( el => el.name === item.data.name)) return;
+		}
 
 		const collection = this.item.data.data[collectionName] ? duplicate( this.item.data.data[collectionName]) : [];
 		collection.push( duplicate(item.data));
@@ -162,6 +165,13 @@ export class CoC7SetupSheet extends ItemSheet {
 				skill.displayName = `${skill.data.specialization} (${skill.name})`;
 			else skill.displayName = skill.name;
 		});
+		
+		data.skills.sort( (a,b) => {
+			if( a.displayName.toLowerCase() < b.displayName.toLowerCase()) return -1;
+			if( a.displayName.toLowerCase() > b.displayName.toLowerCase()) return 1;
+			return 0;
+		});
+
 		data.eras = {};
 		data.itemProperties = [];
         

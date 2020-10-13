@@ -195,7 +195,7 @@
 					{{#each data.skills as |skill|}}
 					<li class="item flexrow" data-item-id="{{skill._id}}">
 						<div class="item-name flexrow">
-							<h4>{{skill.name}} ({{skill.data.base}}%)</h4>    
+							<h4>{{skill.displayName}} ({{skill.data.base}}%)</h4>    
 						</div>
 
 						<div class="item-controls">
@@ -228,7 +228,7 @@
 					{{#each group.skills as |skill index|}}
 					<li class="item flexrow" data-item-id="{{skill._id}}" data-item-index="{{index}}">
 						<div class="item-name flexrow">
-							<h4>{{skill.name}} ({{skill.data.base}}%)</h4>    
+							<h4>{{skill.displayName}} ({{skill.data.base}}%)</h4>    
 						</div>
 						<div class="item-controls">
 							<a class="item-control group-item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>

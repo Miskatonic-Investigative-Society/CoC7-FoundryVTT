@@ -169,6 +169,7 @@
 
 "CoC7.SkillValue": "Value",
 "CoC7.SkillBase": "Base",
+"CoC7.BaseSkillValue": "Base skill value",
 "CoC7.SkillExperience": "Experience",
 "CoC7.SkillArchetype": "Archetype",
 "CoC7.SkillOccupation": "Occupation",
@@ -250,6 +251,7 @@
 "CoC7.CreditRatingSkillName": "Credit Rating",
 "CoC7.FightingSpecializationName": "Fighting",
 "CoC7.FirearmSpecializationName": "Firearms",
+"CoC7.AnySpecName": "Any",
 
 "CoC7.NewSkillName": "new skill",
 "CoC7.AddSkill": "Add skill",
@@ -373,6 +375,9 @@
 "CoC7.SpendPoints": "Allocate characteristics points",
 "CoC7.RollCharac": "Roll characteristics",
 "CoC7.SelectCoreCharac": "Select core characteristic",
+"CoC7.SkillSpecSelectTitle": "Select/create skill of {specialization} specialization",
+"CoC7.SelectSkill": "Select an existing skill",
+"CoC7.CreateNewSkill": "Create a new skill",
 
 "CoC7.Characteristics": "Characteristics",
 "CoC7.EnableCharacteristics": "Enable characteristics",
