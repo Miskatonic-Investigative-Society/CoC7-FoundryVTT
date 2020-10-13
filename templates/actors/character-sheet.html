@@ -12,7 +12,7 @@
 				<div class="form-group">
 					<label>{{ localize 'CoC7.Archetype' }} :</label>
 					{{#if data.infos.archetypeSet}}
-					<span class="rollable open-item" data-type="archetype" style="line-height: 18px;padding: 1px 3px;">{{data.infos.archetype}}</span>
+					<span class="rollable open-item" data-type="archetype" style="line-height: 18px;padding: 1px 3px;white-space: nowrap;">{{data.infos.archetype}}</span>
 					{{#unless data.flags.locked}}
 					<a class="reset-archetype" title="{{ localize 'CoC7.ResetArchetype'}}" style="flex: 0;" data-type="archetype"><i class="far fa-times-circle"></i></a>
 					{{/unless}}
@@ -28,7 +28,7 @@
 				<div class="form-group">
 					<label>{{ localize 'CoC7.Occupation' }} :</label>
 					{{#if data.infos.occupationSet}}
-					<span class="rollable open-item" data-type="occupation" style="line-height: 18px;padding: 1px 3px;">{{data.infos.occupation}}</span>
+					<span class="rollable open-item" data-type="occupation" style="line-height: 18px;padding: 1px 3px;white-space: nowrap;">{{data.infos.occupation}}</span>
 					{{#unless data.flags.locked}}
 					<a class="reset-occupation" title="{{ localize 'CoC7.ResetOccupation'}}" style="flex: 0;" data-type="occupation"><i class="far fa-times-circle"></i></a>
 					{{/unless}}
