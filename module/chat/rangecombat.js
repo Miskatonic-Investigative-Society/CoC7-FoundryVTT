@@ -54,33 +54,33 @@ export class CoC7RangeInitiator{
 					t.distance = chatHelper.getDistance( t.token, this.token);
 					t.distance.rounded = Math.round(t.distance.value * 100)/100;
 					const distInYd = Math.round(chatHelper.toYards( t.distance)* 100)/100;
-					if( distInYd){
-						if( this.actor){
-							t.pointBlankRange = false;
-							const pbRangeInYd = this.actor.data.data.characteristics.dex.value/15;
-							if( distInYd <= pbRangeInYd) t.pointBlankRange = true;
-						}
-						if( this.weapon){
-							if( this.weapon.baseRange){
-								t.baseRange = false;
-								t.longRange = false;
-								t.extremeRange = false;
-								t.outOfRange = false;
-								if( this.weapon.data.data.properties.shotgun){
-									if( distInYd <= this.weapon.baseRange ) t.baseRange = true;
-									if( distInYd > this.weapon.baseRange && distInYd <= this.weapon.longRange) t.longRange = true;
-									if( distInYd > this.weapon.longRange && distInYd <= this.weapon.extremeRange) t.extremeRange = true;
-									if( distInYd > this.weapon.extremeRange ) t.outOfRange = true;
-								} else {
-									if( distInYd <= this.weapon.baseRange) t.baseRange = true;
-									if( distInYd > this.weapon.baseRange && distInYd <= (this.weapon.baseRange*2)) t.longRange = true;
-									if( distInYd > (this.weapon.baseRange*2) && distInYd <= (this.weapon.baseRange*4)) t.extremeRange = true;
-									if( distInYd > (this.weapon.baseRange*4)) t.outOfRange = true;
-								}
-								if( !(t.baseRange || t.longRange || t.extremeRange || t.outOfRange)) t.baseRange = true;
+					// if( distInYd){
+					if( this.actor){
+						t.pointBlankRange = false;
+						const pbRangeInYd = this.actor.data.data.characteristics.dex.value/15;
+						if( distInYd <= pbRangeInYd) t.pointBlankRange = true;
+					}
+					if( this.weapon){
+						if( this.weapon.baseRange){
+							t.baseRange = false;
+							t.longRange = false;
+							t.extremeRange = false;
+							t.outOfRange = false;
+							if( this.weapon.data.data.properties.shotgun){
+								if( distInYd <= this.weapon.baseRange ) t.baseRange = true;
+								if( distInYd > this.weapon.baseRange && distInYd <= this.weapon.longRange) t.longRange = true;
+								if( distInYd > this.weapon.longRange && distInYd <= this.weapon.extremeRange) t.extremeRange = true;
+								if( distInYd > this.weapon.extremeRange ) t.outOfRange = true;
+							} else {
+								if( distInYd <= this.weapon.baseRange) t.baseRange = true;
+								if( distInYd > this.weapon.baseRange && distInYd <= (this.weapon.baseRange*2)) t.longRange = true;
+								if( distInYd > (this.weapon.baseRange*2) && distInYd <= (this.weapon.baseRange*4)) t.extremeRange = true;
+								if( distInYd > (this.weapon.baseRange*4)) t.outOfRange = true;
 							}
+							if( !(t.baseRange || t.longRange || t.extremeRange || t.outOfRange)) t.baseRange = true;
 						}
 					}
+					// }
 				} else t.baseRange = true;
 			});
 		}
@@ -215,12 +215,12 @@ export class CoC7RangeInitiator{
 	get volleySize(){
 		if( ! this.weapon.data.data.properties.auto) return 1;
 		if( this._volleySize) return this._volleySize;
-		const size = Math.floor(this.autoWeaponSkill.data.data.value/10);
+		const size = Math.floor(this.autoWeaponSkill.value/10);
 		return (size < 3) ? 3:size;
 	}
 
 	set volleySize(x){
-		if( x >= Math.floor(this.autoWeaponSkill.data.data.value/10)) this._volleySize = Math.floor(this.autoWeaponSkill.data.data.value/10);
+		if( x >= Math.floor(this.autoWeaponSkill.value/10)) this._volleySize = Math.floor(this.autoWeaponSkill.value/10);
 		else if ( x <= 3) this._volleySize = 3;
 		this._volleySize = parseInt(x);
 	}
@@ -231,7 +231,7 @@ export class CoC7RangeInitiator{
 	}
 
 	get isVolleyMaxSize(){
-		const maxSize = Math.floor(this.autoWeaponSkill.data.data.value/10) < 3 ? 3 : Math.floor(this.autoWeaponSkill.data.data.value/10);
+		const maxSize = Math.floor(this.autoWeaponSkill.value/10) < 3 ? 3 : Math.floor(this.autoWeaponSkill.value/10);
 		if( maxSize == this.volleySize ) return true;
 		return false;
 	}
@@ -534,7 +534,7 @@ export class CoC7RangeInitiator{
 		this.updateChatCard();
 	}
 
-	upgradeRoll( rollIndex, upgradeindex){
+	upgradeRoll( rollIndex, upgradeindex){  //TODO : Check if this needs to be async
 		const roll = this.rolls[rollIndex];
 		const increasedSuccess = roll.increaseSuccess[upgradeindex];
 		const luckAmount = parseInt(increasedSuccess.luckAmount);
@@ -543,7 +543,7 @@ export class CoC7RangeInitiator{
 		roll.successLevel = newSuccessLevel;
 		if( roll.difficulty <= newSuccessLevel) roll.isSuccess = true;
 		roll.luckSpent = true;
-		this.updateChatCard();
+		this.updateChatCard();  //TODO : Check if this needs to be async
 	}
 
 	static getFromCard( card, messageId = null){

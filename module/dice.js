@@ -107,4 +107,13 @@ export class CoC7Dice {
 
 		return result;
 	}
+
+	static async showRollDice3d(roll)
+	{
+		if(game.modules.get('dice-so-nice')?.active)
+		{
+			await game.dice3d.showForRoll(roll,game.user,true);
+		}
+	}
+  
 }

@@ -96,11 +96,14 @@
 		font-weight: bold;
 		}
 		.form-fields {
-		.flexrow();
-		> * {
-			margin: 0 3px 0 0;
-			&:last-child { margin-right: 0; }
+			.flexrow();
+			> * {
+				margin: 0 3px 0 0;
+				&:last-child { margin-right: 0; }
+			}
 		}
+		.item-control{
+			flex: 0;
 		}
 	}
 	
@@ -121,7 +124,10 @@
     padding: 2px 0;
     border-top: @borderGroove;
     border-bottom: @borderGroove;
-    font-family: "Modesto Condensed", "Palatino Linotype", serif;
+	font-family: "Modesto Condensed", "Palatino Linotype", serif;
+		.item-control{
+			float: right;
+		}
 	}
 	
 	.editor {

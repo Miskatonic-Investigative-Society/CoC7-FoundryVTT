@@ -402,7 +402,7 @@ export class CoC7Check {
 
 			if( this.skill){
 				this.isSkill = true;
-				this.rawValue = this.skill.data.data.value;
+				this.rawValue = this.skill.value;
 			}
 
 			if( this.attribute){
@@ -465,7 +465,7 @@ export class CoC7Check {
 		{
 			this.isItem = true;
 			if( this.item.data.data.malfunction) {
-				if( this.dices.total >= this.item.data.data.malfunction){
+				if( Number(this.dices.total) >= Number(this.item.data.data.malfunction)){
 					this.hasMalfunction = true;
 					this.malfunctionTxt = game.i18n.format('CoC7.Malfunction', {itemName : this.item.name});
 					await this.item.toggleItemFlag(CoC7Item.flags.malfunction);
@@ -747,8 +747,8 @@ export class CoC7Check {
 		if( this._flavor) return this._flavor;
 		let flavor = '';
 		if( this.actor){
-			if (this.skill) flavor = game.i18n.format('CoC7.CheckResult', {name : this.skill.name, value : this.skill.data.data.value, difficulty : this.difficultyString});
-			if (this.item) flavor = game.i18n.format('CoC7.ItemCheckResult', {item : this.item.name, skill : this.skill.name, value : this.skill.data.data.value, difficulty : this.difficultyString});
+			if (this.skill) flavor = game.i18n.format('CoC7.CheckResult', {name : this.skill.name, value : this.skill.value, difficulty : this.difficultyString});
+			if (this.item) flavor = game.i18n.format('CoC7.ItemCheckResult', {item : this.item.name, skill : this.skill.name, value : this.skill.value, difficulty : this.difficultyString});
 			if (this.characteristic) flavor = game.i18n.format('CoC7.CheckResult', {name : game.i18n.format(this.actor.data.data.characteristics[this.characteristic].label), value : this.actor.data.data.characteristics[this.characteristic].value, difficulty : this.difficultyString});
 			if (this.attribute) flavor = game.i18n.format('CoC7.CheckResult', {name : game.i18n.format(this.actor.data.data.attribs[this.attribute].label), value : this.actor.data.data.attribs[this.attribute].value, difficulty : this.difficultyString});
 		}
