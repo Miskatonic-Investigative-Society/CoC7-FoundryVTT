@@ -93,11 +93,11 @@
 "CoC7.LuckError": "{actorName} には、成功に必要な幸運が残っていない",
 "CoC7.check.AutoSuccess" : "自動成功",
 "CoC7.check.AutoFailure" : "自動失敗",
-"CoC7.check.RevealCheck": "判定を明らかにする",
+"CoC7.RevealCheck": "判定を明らかにする",
 "CoC7.check.ForcePass": "強制成功",
 "CoC7.check.ForceFail": "強制失敗",
 "CoC7.check.FlagForDevelopment": "経験チェックを与える",
-"CoC7.check.IncreaseSuccessLevel": "成功レベルを増加させる",
+"CoC7.IncreaseSuccessLevel": "成功レベルを増加させる",
 "CoC7.check.DecreaseSuccessLevel": "成功レベルを減少させる",
 
 "CoC7.BonusSelectionWindow": "ボーナス選択ウィンドウ",

@@ -80,7 +80,7 @@
 "CoC7.LuckError": "{actorName} n'a pas assez de Chance pour réussir le test",
 "CoC7.check.AutoSuccess" : "Réussite Auto",
 "CoC7.check.AutoFailure" : "Échec Auto",
-"CoC7.check.RevealCheck": "Révéler le résultat",
+"CoC7.RevealCheck": "Révéler le résultat",
 "CoC7.check.ForcePass": "Forcer la Réussite",
 "CoC7.check.ForceFail": "Forcer l'Échec",
 "CoC7.check.FlagForDevelopment": "Valider l'expérience",
