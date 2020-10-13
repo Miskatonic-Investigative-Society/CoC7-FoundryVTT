@@ -424,8 +424,8 @@ export class CoCActor extends Actor {
 			}
 			const skills = data.data.items.filter( it => 'skill' == it.type);
 			const othersItems = data.data.items.filter( it => 'skill' != it.type);
-			await this.addItems( othersItems);
 			await this.addUniqueItems( skills);
+			await this.addItems( othersItems);
 			for( const sectionName of data.data.bioSections){
 				if( !this.data.data.biography.find( el => sectionName == el.title) && sectionName) await this.createBioSection( sectionName);
 			}
