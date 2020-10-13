@@ -29,6 +29,7 @@ version 0.3.9 :
   * Occupations, Archetypes and Setups can have multiple generics specializations e.g. Art/Craft(Any).
   * Add-weapon button fixed.
 * Occupation type added : Pulp.
+* Localization strings added for development chat card
 * Spanish translation updated thanks to Lozalojo.
 
 version 0.3.8 :
