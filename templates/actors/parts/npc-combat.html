@@ -19,9 +19,9 @@
 								<div class="item-tag weapon-skill rollable" style="flex: 0 0 49%" data-skill-id="{{weapon.data.skill.alternativ.id}}" title="Roll {{weapon.data.skill.alternativ.name}} skill">{{weapon.data.skill.alternativ.name}} ({{weapon.data.skill.alternativ.value}}%)</div>
 							{{/if}}
 						{{else}}
-							<div class="item-tag weapon-skil" style="flex: 0 0 49%; background-color: red;" title="Choose skill">No skill</div>
+							<div class="item-tag weapon-skil" style="flex: 0 0 49%; background-color: red;" title="{{ localize 'CoC7.SelectSkill' }}">{{ localize 'CoC7.NoSkill' }}</div>
 							{{#if weapon.usesAlternateSkill}}
-								<div class="item-tag weapon-skill" style="flex: 0 0 49%; background-color: red" title="Choose skill">No skill</div>
+								<div class="item-tag weapon-skill" style="flex: 0 0 49%; background-color: red" title="{{ localize 'CoC7.SelectSkill' }}">{{ localize 'CoC7.NoSkill' }}</div>
 							{{/if}}
 						{{/if}}
 					</div>
