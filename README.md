@@ -28,6 +28,9 @@ version 0.3.9 :
   * When holding shift while clicking on a weapon damage this will make the damage critical.
   * Occupations, Archetypes and Setups can have multiple generics specializations e.g. Art/Craft(Any).
   * Add-weapon button fixed.
+  * Automatic cash&assests calculation was broken, now working as intended.
+* Macro for skills and weapon can be created with items from directory and compendiums.
+  * As a GM if you click on a weapon macro, if the actor doesn't have a corresponding weapon, you will be prompt to create one.
 * Occupation type added : Pulp.
 * Localization strings added for previous cards/sheet.
 * Spanish translation updated thanks to Lozalojo.

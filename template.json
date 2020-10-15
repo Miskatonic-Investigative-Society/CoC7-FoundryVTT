@@ -77,7 +77,8 @@
                     "lck": {
                         "value": null,
                         "short": "LCK",
-                        "label": "Luck"
+                        "label": "Luck",
+                        "max": 99
                     },
                     "san": {
                         "value": null,
