@@ -1,12 +1,12 @@
 export class SkillSpecSelectDialog {
 
-	static async create( skills, specializationName, baseValue = null)
+	static async create( skills, specializationName, baseValue = null, name = null)
 	{
-		const html = await renderTemplate('systems/CoC7/templates/apps/skill-spec-select.html', {hasSkills: 0 < skills.length, skills: skills, base: baseValue });
+		const html = await renderTemplate('systems/CoC7/templates/apps/skill-spec-select.html', {hasSkills: 0 < skills.length, skills: skills, base: baseValue, name: name });
 		return new Promise((resolve) => {
 			let formData = null;
 			const dlg = new Dialog({
-				title: game.i18n.format('CoC7.SkillSpecSelectTitle', {specialization: specializationName}),
+				title: name? game.i18n.format('CoC7.SkillSelectBase', {name: name}) :game.i18n.format('CoC7.SkillSpecSelectTitle', {specialization: specializationName}),
 				content: html,
 				buttons: {
 					validate: {
