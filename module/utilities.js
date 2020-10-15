@@ -78,6 +78,7 @@ export class CoC7Utilities {
 		game.socket.emit('system.CoC7', {
 			type : 'updateChar'
 		});
+		CoC7Utilities.updateCharSheets();
 	}
 
 	static async toggleCharCreation(){
@@ -90,12 +91,13 @@ export class CoC7Utilities {
 		game.socket.emit('system.CoC7', {
 			type : 'updateChar'
 		});		
+		CoC7Utilities.updateCharSheets();
 	}
 
 	static updateCharSheets(){
 		if( game.user.isGM){
 			game.actors.entities.forEach( a => {
-				if( 'character' == a.data.type && a.sheet && a.sheet.rendered){
+				if( 'character' == a?.data?.type && a?.sheet && a?.sheet?.rendered){
 					a.render( false);
 				}
 			});

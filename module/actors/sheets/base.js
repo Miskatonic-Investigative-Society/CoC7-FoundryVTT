@@ -27,7 +27,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		data.actorFlags = {};
 
 
-		if( !data.data.characteristic) {
+		if( !data.data.characteristics) {
 			data.data.characteristics =  {
 				str: { value: null, short: 'CHARAC.STR', label: 'CHARAC.Strength', formula: null},
 				con: { value: null,	short: 'CHARAC.CON', label: 'CHARAC.Constitution', formula: null },
