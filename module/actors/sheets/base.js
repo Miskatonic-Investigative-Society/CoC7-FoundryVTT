@@ -26,6 +26,69 @@ export class CoC7ActorSheet extends ActorSheet {
 		data.meleeWpn = [];
 		data.actorFlags = {};
 
+
+		if( !data.data.characteristics) {
+			data.data.characteristics =  {
+				str: { value: null, short: 'CHARAC.STR', label: 'CHARAC.Strength', formula: null},
+				con: { value: null,	short: 'CHARAC.CON', label: 'CHARAC.Constitution', formula: null },
+				siz: { value: null, short: 'CHARAC.SIZ', label: 'CHARAC.Size', formula: null },
+				dex: { value: null, short: 'CHARAC.DEX', label: 'CHARAC.Dexterity', formula: null },
+				app: { value: null, short: 'CHARAC.APP', label: 'CHARAC.Appearance', formula: null },
+				int: { value: null, short: 'CHARAC.INT', label: 'CHARAC.Intelligence', formula: null },
+				pow: { value: null, short: 'CHARAC.POW', label: 'CHARAC.Power', formula: null },
+				edu: { value: null, short: 'CHARAC.EDU', label: 'CHARAC.Education', formula: null }
+			};
+		}
+
+		if( !data.data.attribs) {
+			data.data.attribs = {
+				hp: {value: null,max: null,short: 'HP',label: 'Hit points',auto: true},
+				mp: {value: null,max: null,short: 'HP',label: 'Magic points',auto: true},
+				lck: {value: null,short: 'LCK',label: 'Luck'},
+				san: {value: null,max: 99,short: 'SAN',label: 'Sanity',auto: true},
+				mov: {value: null,short: 'MOV',label: 'Movement rate',auto: true},
+				db: {value: null,short: 'DB',label: 'Damage bonus',auto: true},
+				build: {value: null,short: 'BLD',label: 'Build',auto: true},
+				armor: {value: null,auto: false}
+			};
+		}
+
+		if( !data.data.status){
+			data.data.status = {
+				criticalWounds: {type: 'Boolean',value: false},
+				unconscious: {type: 'Boolean',value: false},
+				dying: {type: 'Boolean',value: false},
+				dead: {type: 'Boolean',value: false},
+				prone: {type: 'Boolean',value: false},
+				tempoInsane: {type: 'boolean',value: false},
+				indefInsane: {type: 'boolean',value: false}
+			};
+		}
+
+		if( !data.data.biography){
+			data.data.biography = { personalDescription: { type: 'string', value: '' }};
+		}
+
+		if( !data.data.infos){
+			data.data.infos = { occupation: '', age: '', sex: '', residence: '', birthplace: '', archetype: '', organization: '' };
+		}
+
+		if( !data.data.flags){
+			data.data.flags = { locked: true, manualCredit: false };
+		}
+
+		if( !data.data.credit){
+			data.data.credit = { monetarySymbol: null, multiplier: null, spent: null, assetsDetails: null};
+		}
+
+		if( !data.data.development){
+			data.data.development = { personal: null, occupation: null, archetype: null};
+		}
+
+		if( !data.data.biography) data.data.biography = [];
+		if( !data.data.encounteredCreatures) data.data.encounteredCreatures = [];
+
+
 		data.isDead = this.actor.dead;
 		data.isDying = this.actor.dying;
 
@@ -224,19 +287,21 @@ export class CoC7ActorSheet extends ActorSheet {
 			data.tokenId = token ? `${token.scene._id}.${token.id}` : null;
 
 			data.hasEmptyValueWithFormula = false;
-			for ( const characteristic of Object.values(data.data.characteristics)){
-				if( !characteristic.value) characteristic.editable = true;
-				characteristic.hard = Math.floor( characteristic.value / 2);
-				characteristic.extreme = Math.floor( characteristic.value / 5);
+			if( data.data.characteristics){
+				for ( const characteristic of Object.values(data.data.characteristics)){
+					if( !characteristic.value) characteristic.editable = true;
+					characteristic.hard = Math.floor( characteristic.value / 2);
+					characteristic.extreme = Math.floor( characteristic.value / 5);
 
-				//If no value && no formula don't display charac.
-				if( !characteristic.value && !characteristic.formula) characteristic.display = false;
-				else characteristic.display = true;
+					//If no value && no formula don't display charac.
+					if( !characteristic.value && !characteristic.formula) characteristic.display = false;
+					else characteristic.display = true;
 
-				//if any characteristic has no value but has a formula.
-				if( !characteristic.value && characteristic.formula) characteristic.hasEmptyValueWithFormula = true;
+					//if any characteristic has no value but has a formula.
+					if( !characteristic.value && characteristic.formula) characteristic.hasEmptyValueWithFormula = true;
 
-				data.hasEmptyValueWithFormula = data.hasEmptyValueWithFormula || characteristic.hasEmptyValueWithFormula;
+					data.hasEmptyValueWithFormula = data.hasEmptyValueWithFormula || characteristic.hasEmptyValueWithFormula;
+				}
 			}
 		}
 
