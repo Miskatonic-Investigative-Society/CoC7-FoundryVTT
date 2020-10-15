@@ -94,12 +94,15 @@ export class CoCActor extends Actor {
 
 	async createWeaponSkill( name, firearms = false, base = null){
 		//TODO : Ask for base value if null
+
+		const skillData = await SkillSpecSelectDialog.create( [], game.i18n.localize( firearms? 'CoC7.FirearmSpecializationName': 'CoC7.FightingSpecializationName'), 0, name);
+		const value = Number( skillData.get('base-value'));
 		const data = {
 			name: name,
 			type: 'skill',
 			data: {
 				specialization: game.i18n.localize( firearms? 'CoC7.FirearmSpecializationName': 'CoC7.FightingSpecializationName'),
-				base: base,
+				base: isNaN(value)? 0: value,
 				adjustments: {
 					personal: null,
 					occupation: null,
@@ -114,8 +117,10 @@ export class CoCActor extends Actor {
 				}
 			}
 		};
-		const created = await this.createEmbeddedEntity('OwnedItem', data, { renderSheet: !base});
-		return created;
+		await this.createEmbeddedEntity('OwnedItem', data, { renderSheet: !base});
+		//		const created = await this.createEmbeddedEntity('OwnedItem', data, { renderSheet: !base});
+		const skill = this.getSkillsByName( name);
+		return skill[0];
 	}
 
 	/**
@@ -1003,6 +1008,11 @@ export class CoCActor extends Actor {
 		return this.data.data.flags.locked;
 	}
 
+	getItemsFromName( name){
+		return this.items.filter(i => i.name === name);
+	}
+
+
 	set locked( value){
 		this.update( { 'data.flags.locked': value});
 	}
@@ -1043,10 +1053,38 @@ export class CoCActor extends Actor {
 		let weapon;
 		weapon = this.getOwnedItem(itemId);
 		if( !weapon){
-			const weapons = this.items.filter(i => i.name === weaponData.name);
+			let weapons = this.getItemsFromName( weaponData.name);
 			if( 0 == weapons.length){
-				ui.notifications.warn(`Actor ${this.name} has no weapon named ${weaponData.name}`);
-				return;
+				if( game.user.isGM){
+					let item = null;
+					if( 'pack' == weaponData.origin){
+						const pack = game.packs.get(weaponData.pack);
+						if (pack.metadata.entity !== 'Item') return;
+						item = await pack.getEntity(weaponData.id);
+					}
+
+					if( 'game' == weaponData.origin){
+						item = game.items.get(weaponData.id);
+					}
+
+					if( !item) return ui.notifications.warning( game.i18n.localize( 'CoC7.WarnMacroNoItemFound'));
+
+					let create = false;
+					await Dialog.confirm({
+						title: `${game.i18n.localize('CoC7.AddWeapon')}`,
+						content: `<p>${game.i18n.format('CoC7.AddWeapontHint', {weapon: weaponData.name, actor: this.name})}</p>`,
+						yes: () => create = true
+					});
+
+					if(true ==  create){ await this.createOwnedItem( duplicate(item.data));}
+					else return;
+					weapons = this.getItemsFromName( item.name);
+					if( !weapons) return;
+					await weapons[0].reload();
+				} else {
+					ui.notifications.warn(`Actor ${this.name} has no weapon named ${weaponData.name}`);
+					return;
+				}
 			} else if( 1 < weapons.length) {
 				ui.notifications.warn(`Actor ${this.name} has more than one weapon named ${weaponData.name}. The first found will be used`);
 			}
@@ -1059,11 +1097,11 @@ export class CoCActor extends Actor {
 				ui.notifications.warn('Too many target selected. The last selected target will be attacked');
 			}
 
-			const card = new CoC7MeleeInitiator( actorKey, itemId, fastForward);
+			const card = new CoC7MeleeInitiator( actorKey, weapon.id, fastForward);
 			card.createChatCard();
 		}
 		if( weapon.data.data.properties.rngd){
-			const card = new CoC7RangeInitiator( actorKey, itemId, fastForward);
+			const card = new CoC7RangeInitiator( actorKey, weapon.id, fastForward);
 			card.createChatCard();
 		}
 	}
@@ -1415,7 +1453,11 @@ export class CoCActor extends Actor {
 
 	get creditRating(){
 		const CR = this.creditRatingSkill;
-		if( CR) return parseInt(CR.data.data.value);
+		if( CR){
+			const value = CR.value;
+			if( value) return value;
+			return parseInt(CR.data.data.value);
+		}
 		return 0;
 	}
 

@@ -1,3 +1,5 @@
+import { CoC7Item } from './items/item.js';
+
 export class CoC7Utilities {
 	static test(event){
 		if( event.shiftKey) ui.notifications.info('Hello from SHIFT utilities');
@@ -17,7 +19,7 @@ export class CoC7Utilities {
 		if (!actor) actor = game.actors.get(speaker.actor);
 
 		if( !actor){
-			ui.notifications.warn('You do not have any actor controled nor selected');
+			ui.notifications.warn( game.i18n.localize( 'CoC7.WarnNoActorAvailable'));
 			return;
 		}
 
@@ -31,7 +33,7 @@ export class CoC7Utilities {
 		if (!actor) actor = game.actors.get(speaker.actor);
 
 		if( !actor){
-			ui.notifications.warn('You do not have any actor controled nor selected');
+			ui.notifications.warn( game.i18n.localize( 'CoC7.WarnNoActorAvailable'));
 			return;
 		}
 		
@@ -40,17 +42,36 @@ export class CoC7Utilities {
 
 	static async createMacro(bar, data, slot){
 		if ( data.type !== 'Item' ) return;
-		if (!( 'data' in data ) ) return ui.notifications.warn('You can only create macro buttons for owned Items');
-		const item = data.data;
+
+		let item;
+		let origin;
+		let packName = null;
+
+		if (data.pack) {
+			const pack = game.packs.get(data.pack);
+			if (pack.metadata.entity !== 'Item') return;
+			packName = data.pack;
+			item = await pack.getEntity(data.id);
+			origin = 'pack';
+		} else if (data.data) {
+			item = data.data;
+			origin = 'actor';
+		} else {
+			item = game.items.get(data.id);
+			origin = 'game';
+		}
+
+		if( !item) return ui.notifications.warn( game.i18n.localize( 'CoC7.WarnMacroNoItemFound'));
+		if( !('weapon' == item.type) && !('skill' == item.type)) return ui.notifications.warn( game.i18n.localize( 'CoC7.WarnMacroIncorrectType'));
 
 		let command;
 
 		if( 'weapon' == item.type){
-			command = `game.CoC7.macros.weaponCheck({name:'${item.name}', id:'${item._id}'}, event);`;
-			
+			command = `game.CoC7.macros.weaponCheck({name:'${item.name}', id:'${item._id}', origin:'${origin}', pack: '${packName}'}, event);`;
 		}
 
 		if( 'skill' == item.type){
+			if( CoC7Item.isAnySpec( item)) return ui.notifications.warn( game.i18n.localize( 'CoC7.WarnNoGlobalSpec'));
 			command = `game.CoC7.macros.skillCheck('${item.name}', event);`;
 		}
 
@@ -73,7 +94,8 @@ export class CoC7Utilities {
 		await game.settings.set( 'CoC7', 'developmentEnabled', !isDevEnabled);
 		let group = ui.controls.controls.find(b => b.name == 'token');
 		let tool = group.tools.find( t => t.name == 'devphase');
-		tool.title = game.settings.get('CoC7', 'developmentEnabled')? 'Development phase enabled': 'Development phase disabled';
+		tool.title = game.settings.get('CoC7', 'developmentEnabled')? game.i18n.localize( 'CoC7.DevPhaseEnabled'): game.i18n.localize( 'CoC7.DevPhaseDisabled');
+		ui.notifications.info( game.settings.get('CoC7', 'developmentEnabled')? game.i18n.localize( 'CoC7.DevPhaseEnabled'): game.i18n.localize( 'CoC7.DevPhaseDisabled'));
 		ui.controls.render();
 		game.socket.emit('system.CoC7', {
 			type : 'updateChar'
@@ -86,7 +108,8 @@ export class CoC7Utilities {
 		await game.settings.set( 'CoC7', 'charCreationEnabled', !isCharCreation);
 		let group = ui.controls.controls.find(b => b.name == 'token');
 		let tool = group.tools.find( t => t.name == 'charcreate');
-		tool.title = game.settings.get('CoC7', 'charCreationEnabled')? 'Character creation mode enabled': 'Character creation mode disabled';
+		tool.title = game.settings.get('CoC7', 'charCreationEnabled')? game.i18n.localize( 'CoC7.CharCreationEnabled'): game.i18n.localize( 'CoC7.CharCreationDisabled');
+		ui.notifications.info( game.settings.get('CoC7', 'charCreationEnabled')? game.i18n.localize( 'CoC7.CharCreationEnabled'): game.i18n.localize( 'CoC7.CharCreationDisabled'));
 		ui.controls.render();
 		game.socket.emit('system.CoC7', {
 			type : 'updateChar'
