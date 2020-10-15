@@ -282,6 +282,6 @@ Hooks.on('getSceneControlButtons', (buttons) => {
 	}
 });
 
-Hooks.on('renderSceneControls', () => CoC7Utilities.updateCharSheets());
-Hooks.on('renderSceneNavigation', () => CoC7Utilities.updateCharSheets());
+// Hooks.on('renderSceneControls', () => CoC7Utilities.updateCharSheets());
+// Hooks.on('renderSceneNavigation', () => CoC7Utilities.updateCharSheets());
  
