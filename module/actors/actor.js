@@ -30,12 +30,12 @@ export class CoCActor extends Actor {
 	checkUndefinedAuto(){
 		let returnData = {
 			attribs:{
-				hp:{ auto:false},
-				mp:{ auto:false},
-				san:{ auto:false},
-				mov:{ auto:false},
-				db:{ auto:false},
-				build:{ auto:false}
+				hp:{},
+				mp:{},
+				san:{},
+				mov:{},
+				db:{},
+				build:{}
 			}
 		};
 		if( this.data.data.attribs?.hp?.auto === undefined) returnData.attribs.hp.auto = true;
@@ -757,7 +757,7 @@ export class CoCActor extends Actor {
 		if( this.data.data.attribs.hp.auto){
 			if(this.data.data.characteristics.siz.value != null &&  this.data.data.characteristics.con.value !=null){
 				const maxHP = Math.floor( (this.data.data.characteristics.siz.value + this.data.data.characteristics.con.value)/10);
-				return game.settings.get('CoC7', 'pulpRules')? maxHP*2:maxHP;
+				return game.settings.get('CoC7', 'pulpRules') && 'character' == this.type? maxHP*2:maxHP;
 			}
 			else return null;
 		} 
