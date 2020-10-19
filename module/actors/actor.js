@@ -1532,23 +1532,18 @@ export class CoCActor extends Actor {
 			const conCheck = new CoC7ConCheck( this.isToken? this.tokenKey : this._id);
 			conCheck.toMessage();
 		}
-		// await this.setFlag('CoC7', COC7.status.criticalWounds, true);
 	}
 
 	async cureMajorWound(){
 		await this.unsetStatus(COC7.status.criticalWounds);
-		// await this.unsetFlag('CoC7', COC7.status.criticalWounds);
 	}
 
 	async fallProne(){
 		await this.setStatus(COC7.status.prone);
-		
-		// await this.setFlag('CoC7', COC7.status.prone, true);
 	}
 
 	async fallUnconscious(){
 		await this.setStatus( COC7.status.unconscious);
-		// await this.setFlag('CoC7', COC7.status.unconscious, true);
 	}
 
 	async fallDying(){
