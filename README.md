@@ -29,7 +29,8 @@ version 0.3.9 :
   * Occupations, Archetypes and Setups can have multiple generics specializations e.g. Art/Craft(Any).
   * Add-weapon button fixed.
   * Automatic cash&assets calculation was broken, now working as intended.
-  * Riffle and shotgun skills are now one (Riffle/shotgun)
+  * Riffle and shotgun skills are now one (Riffle/shotgun).
+  * Skill details windows now correctly parse HTML content (All links except PDFFoundry).
 * Macro for skills and weapon can be created with items from directory and compendiums.
   * As a GM if you click on a weapon macro, if the actor doesn't have a corresponding weapon, you will be prompt to create one.
   * If you click on a skill macro, if the actor doesn't have the corresponding skill it will be created. As a GM you'll be prompted for the skill value.

@@ -135,4 +135,12 @@ export class CoC7Utilities {
 		
 		return;
 	}
+
+	// static async enrichHTML(html){
+	// 	const pdf = game.modules.get('pdfoundry');
+	// 	if( pdf){
+	// 		let pdfModule = await import( '/' + pdf.esmodules[0]);
+	// 		pdfModule.HTMLEnricher.EnrichHTML(html);
+	// 	}
+	// }
 }

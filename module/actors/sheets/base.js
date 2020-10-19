@@ -714,6 +714,8 @@ export class CoC7ActorSheet extends ActorSheet {
 	}
 
 	static async popupSkill(skill){
+		skill.data.data.description.enrichedValue = TextEditor.enrichHTML( skill.data.data.description.value);
+		// game.CoC7.enricher( skill.data.data.description.enrichedValue);
 		const dlg = new Dialog({
 			title: game.i18n.localize('CoC7.SkillDetailsWindow'),
 			content: skill,
