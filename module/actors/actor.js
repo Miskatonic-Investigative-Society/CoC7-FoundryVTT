@@ -354,6 +354,7 @@ export class CoCActor extends Actor {
 							for( let [key, value] of Object.entries( data.data.flags)){
 								if( value) await existingItem.setItemFlag( key);
 							}
+							data.name = CoC7Item.getNameWithoutSpec( existingItem);
 							return;
 						} else {
 							if( skillData.get('new-skill-name')){
@@ -780,7 +781,7 @@ export class CoCActor extends Actor {
 		for( let skill of skillList){
 			if( CoC7Item.isAnySpec(skill)){
 				if( flag) skill.data.flags[flag] = true;
-				await this.createOwnedItem( skill, {renderSheet:true});
+				await this.createOwnedItem( skill, {renderSheet:false});
 			}
 			else {
 				const itemId = this.getItemIdByName(skill.name);
