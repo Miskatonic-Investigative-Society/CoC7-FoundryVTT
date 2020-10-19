@@ -7,6 +7,7 @@ import { PointSelectDialog } from '../apps/point-selection-dialog.js';
 import { CharacSelectDialog } from '../apps/char-selection-dialog.js';
 import { CharacRollDialog } from '../apps/char-roll-dialog.js';
 import { SkillSpecSelectDialog } from '../apps/skill-spec-select-dialog.js';
+import { SkillValueDialog } from '../apps/skill-value-dialog.js';
 import { CoC7MeleeInitiator } from '../chat/combat/melee-initiator.js';
 import { CoC7RangeInitiator } from '../chat/rangecombat.js';
 import { chatHelper } from '../chat/helper.js';
@@ -1023,11 +1024,41 @@ export class CoCActor extends Actor {
 		await this.update( { [name]: flagValue});
 	}
 
-	async skillCheck( skillName, fastForward){
-		const skill = this.getSkillsByName(skillName);
+	async skillCheck( skillData, fastForward){
+		let skill = this.getSkillsByName(skillData.name? skillData.name : skillData);
 		if( !skill.length ) {
-			ui.notifications.warn(`No skill ${skillName} found for actor ${this.name}`);
-			return;
+			let item = null;
+			if( 'pack' == skillData.origin){
+				const pack = game.packs.get(skillData.pack);
+				if (pack.metadata.entity !== 'Item') return;
+				item = await pack.getEntity(skillData.id);
+			}
+
+			if( 'game' == skillData.origin){
+				item = game.items.get(skillData.id);
+			}
+
+			if( !item) ui.notifications.warn(`No skill ${skillData.name? skillData.name : skillData} found for actor ${this.name}`);
+
+			let create = false;
+			await Dialog.confirm({
+				title: `${game.i18n.localize('CoC7.AddWeapon')}`,
+				content: `<p>${game.i18n.format('CoC7.AddWeapontHint', {weapon: skillData.name, actor: this.name})}</p>`,
+				yes: () => create = true
+			});
+
+			if(true ==  create){ await this.createOwnedItem( duplicate(item.data));}
+			else return;
+
+			skill = this.getSkillsByName(item.name);
+
+			if( !skill.length) return;
+
+			if( game.user.isGM){
+				const skillValue = await SkillValueDialog.create( skill[0].name, skill[0].base);
+				const value = Number( skillValue.get('base-value'));
+				await skill[0].updateValue( value);
+			}
 		}
 
 		let check = new CoC7Check();
@@ -1040,7 +1071,7 @@ export class CoCActor extends Actor {
 			}
 		}
 
-		check.actor = this.id;
+		check.actor = this;
 		check.skill = skill[0].id;
 		check.roll();
 		check.toMessage();
@@ -1091,17 +1122,17 @@ export class CoCActor extends Actor {
 			weapon = weapons[0];
 		}
 
-		const actorKey = !this.isToken? this.actorKey : `${this.token.scene._id}.${this.token.data._id}`;
+		// const actorKey = !this.isToken? this.actorKey : `${this.token.scene._id}.${this.token.data._id}`;
 		if( !weapon.data.data.properties.rngd){
 			if( game.user.targets.size > 1){
 				ui.notifications.warn('Too many target selected. The last selected target will be attacked');
 			}
 
-			const card = new CoC7MeleeInitiator( actorKey, weapon.id, fastForward);
+			const card = new CoC7MeleeInitiator( this.tokenKey, weapon.id, fastForward);
 			card.createChatCard();
 		}
 		if( weapon.data.data.properties.rngd){
-			const card = new CoC7RangeInitiator( actorKey, weapon.id, fastForward);
+			const card = new CoC7RangeInitiator( this.tokenKey, weapon.id, fastForward);
 			card.createChatCard();
 		}
 	}

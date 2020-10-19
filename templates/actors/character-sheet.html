@@ -180,7 +180,9 @@
 
 	{{!-- Sheet Tab Navigation --}}
 	<nav class="sheet-tabs tabs" data-group="primary">
+		{{#if showDevPannel}}
 		<a class="item" data-tab="development">{{localize 'CoC7.CharacterDevelopment'}}</a>
+		{{/if}}
 		<a class="item" data-tab="skills">{{localize 'CoC7.Skills'}}</a>
 		<a class="item" data-tab="combat">{{localize 'CoC7.Combat'}}</a>
 		<a class="item" data-tab="possession">{{localize 'CoC7.Possessions'}}</a>
@@ -189,10 +191,11 @@
 
 	{{!-- Sheet Body --}}
 	<section class="sheet-body">
-		
+		{{#if showDevPannel}}
 		<div class="tab combat flexcol" data-group="primary" data-tab="development" style="border: 2px groove #eeede0;padding: 1px;">
 			{{> "systems/CoC7/templates/actors/parts/character-development.html"}}
 		</div>
+		{{/if}}
 
 		{{!-- Skills Tab --}}
 		<div class="tab skills flexcol active" data-group="primary" data-tab="skills" style="border: 2px groove #eeede0;padding: 1px;">

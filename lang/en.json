@@ -177,7 +177,8 @@
 
 "CoC7.DropZone": "DropZone",
 
-"CoC7.SkillValue": "Value",
+"CoC7.Value": "Value",
+"CoC7.SkillValue": "Skill value",
 "CoC7.SkillBase": "Base",
 "CoC7.BaseSkillValue": "Base skill value",
 "CoC7.SkillExperience": "Experience",
