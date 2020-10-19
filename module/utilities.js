@@ -12,7 +12,7 @@ export class CoC7Utilities {
 		actor.inflictMajorWound();
 	}
 
-	static skillCheckMacro( skillName, event){
+	static skillCheckMacro( skill, event){
 		const speaker = ChatMessage.getSpeaker();
 		let actor;
 		if (speaker.token) actor = game.actors.tokens[speaker.token];
@@ -23,13 +23,13 @@ export class CoC7Utilities {
 			return;
 		}
 
-		actor.skillCheck( skillName, event.shiftKey);
+		actor.skillCheck( skill, event.shiftKey);
 	}
 
 	static weaponCheckMacro( weapon, event){
 		const speaker = ChatMessage.getSpeaker();
 		let actor;
-		if (speaker.token) actor = game.actors.tokens[speaker.token];
+		if (speaker.token) actor = game.actors.tokens[speaker.token]; //!! Ca recupere l'acteur pas l'acteur du token !!
 		if (!actor) actor = game.actors.get(speaker.actor);
 
 		if( !actor){
@@ -72,7 +72,7 @@ export class CoC7Utilities {
 
 		if( 'skill' == item.type){
 			if( CoC7Item.isAnySpec( item)) return ui.notifications.warn( game.i18n.localize( 'CoC7.WarnNoGlobalSpec'));
-			command = `game.CoC7.macros.skillCheck('${item.name}', event);`;
+			command = `game.CoC7.macros.skillCheck({name:'${item.name}', id:'${item._id}', origin:'${origin}', pack: '${packName}'}, event);`;
 		}
 
 		// Create the macro command
