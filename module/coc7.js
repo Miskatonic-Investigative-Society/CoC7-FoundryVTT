@@ -151,6 +151,16 @@ Hooks.once('init', async function() {
 		default: true,
 		type: Boolean
 	});
+
+	// Allow player to modify status.
+	game.settings.register('CoC7', 'statusPlayerEditable', {
+		name: 'SETTINGS.StatusPlayerEditable',
+		hint: 'SETTINGS.StatusPlayerEditableHint',
+		scope: 'world',
+		config: true,
+		default: true,
+		type: Boolean
+	});
 		
 	game.settings.register('CoC7', 'disregardAmmo', {
 		name: 'SETTINGS.DisregardAmmo',
