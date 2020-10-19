@@ -33,7 +33,10 @@ Hooks.once('init', async function() {
 			skillCheck: CoC7Utilities.skillCheckMacro,
 			weaponCheck: CoC7Utilities.weaponCheckMacro
 		}
+		// ,enricher: CoC7Utilities.enrichHTML
 	};
+
+
 	/**
 	 * Set an initiative formula for the system
 	 * @type {String}
