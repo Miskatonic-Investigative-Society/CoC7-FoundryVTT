@@ -33,6 +33,9 @@ version 0.3.9 :
   * As a GM if you click on a weapon macro, if the actor doesn't have a corresponding weapon, you will be prompt to create one.
 * Occupation type added : Pulp.
 * Localization strings added for previous cards/sheet.
+* Option added to prevent players from modifying their status.
+  * By default player can modify their status.
+  * Player can now modify dying and dead status.
 * Spanish translation updated thanks to Lozalojo.
 
 version 0.3.8 :
