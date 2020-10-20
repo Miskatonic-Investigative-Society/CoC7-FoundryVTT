@@ -178,6 +178,7 @@
 "CoC7.DropZone": "DropZone",
 
 "CoC7.Value": "Valor",
+"CoC7.SkillValue": "Valor Habilidad",
 "CoC7.SkillBase": "Base",
 "CoC7.BaseSkillValue": "Valor base de la habilidad",
 "CoC7.SkillExperience": "Experiencia",
@@ -299,6 +300,7 @@
 "CoC7.EnterFormula": "Introducir fórmula",
 "CoC7.SanRollHint":"Tirar Cordura a todos los objetivos seleccionados",
 "CoC7.NoSkill": "Sin habilidad",
+"CoC7.AddWeapontHint": "<p>{actor} no dispone de {weapon}.<br>¿Desea crearlo ?</p>",
 
 
 "CoC7.ManualCreditValues": "Crédito manual",
@@ -395,6 +397,7 @@
 "CoC7.RollCharac": "Tirar características",
 "CoC7.SelectCoreCharac": "Seleccione características básicas",
 "CoC7.SkillSpecSelectTitle": "Seleccione/cree la especialización {specialization} de la habilidad",
+"CoC7.SkillSelectBase": "Seleccione el valor base de la habilidad {name}",
 "CoC7.SelectSkill": "Seleccione una habilidad existente",
 "CoC7.CreateNewSkill": "Cree una habilidad nueva",
 
@@ -409,6 +412,15 @@
 
 "CoC7.PutGunAway": "Bajar el arma",
 "CoC7.DrawGun": "Desenfundar el arma",
+
+"CoC7.DevPhaseEnabled": "Fase de desarrollo habilitada",
+"CoC7.DevPhaseDisabled": "Fase de desarrollo deshabilitada",
+"CoC7.CharCreationEnabled": "Modo de creación de personajes habilitado",
+"CoC7.CharCreationDisabled": "Modo de creación de personajes deshabilitado",
+"CoC7.WarnNoActorAvailable": "No tiene control ni tiene seleccionado ningún actor",
+"CoC7.WarnMacroIncorrectType": "Solo puede crear macros para armas y habilidades",
+"CoC7.WarnNoGlobalSpec": "No puede crear macros para especializaciones sin especificar",
+"CoC7.WarnMacroNoItemFound": "No se ha encontrado ningún objeto usable",
 
 "SETTINGS.DefaultDifficulty": "Dificultad por defecto",
 "SETTINGS.DefaultDifficultyHint": "Puedes indicar la dificultad por defecto de las tiradas. Desconocida lanzará tiradas sin que el jugador conozca la dificultad.",
@@ -431,5 +443,7 @@
 "SETTINGS.DisregardUsePerRound": "Ignorar el número de usos por asalto.",
 "SETTINGS.DisregardUsePerRoundHint": "Al activar esta opción, se podrá disparar sin restricciones, ignorando el número de disparos que un arma puede realizar por asalto.",
 "SETTINGS.RestrictGridSpaces": "Medir usando espacios de rejilla",
-"SETTINGS.RestrictGridSpacesHint": "En el combate a distancia, si se selecciona esta opción las distancias se medirán usando espacios de rejilla (cuadrados o hexágonos) en lugar de la distancia 'real' (euclidiana)."
+"SETTINGS.RestrictGridSpacesHint": "En el combate a distancia, si se selecciona esta opción las distancias se medirán usando espacios de rejilla (cuadrados o hexágonos) en lugar de la distancia 'real' (euclidiana).",
+"SETTINGS.StatusPlayerEditable": "Los jugadores pueden modificar estados",
+"SETTINGS.StatusPlayerEditableHint": "Permite que el jugador modifique sus estados (caído, inconsciente, moribundo, muerto) y reinicie su perdida diaria de COR"
 }
