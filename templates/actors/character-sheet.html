@@ -149,9 +149,6 @@
 				<input class="locked" type="text" name="data.indefiniteInsanityLevel.value" value="{{data.indefiniteInsanityLevel.value}}" data-dtype="Number" readonly/>
 				<input class="locked" type="text" name="data.indefiniteInsanityLevel.max" value="{{data.indefiniteInsanityLevel.max}}" data-dtype="Number" readonly/>
 			</div>
-			{{#if isDying}}
-				<a class='dying-check' style="text-align: center;font-size: 20px;" title="Check if you'll die immediately"><i class="fas fa-dice-d20"></i></a>
-			{{else}}
 				<label class="attribute-label">{{localize 'CoC7.DailySanLoss'}}</label>
 				<span style="max-width: 20px;font-size: 14px;height: 22px;padding: 1px 3px;border: 1px solid transparent;">{{data.attribs.san.dailyLoss}}</span>
 				<a class="reset-counter" style="flex: 0 0 25px;color: darkgrey;padding: 1px 6px;text-align: center;" data-counter="data.attribs.san.dailyLoss" title="{{localize 'CoC7.DailySanIconOver'}}"><i class="fas fa-undo"></i></a>
@@ -160,22 +157,32 @@
 				<a class="status-monitor {{#if data.status.unconscious.value}}status-on{{/if}}" title="{{localize 'CoC7.Unconsious'}}" data-status="unconscious"> <i class="fas fa-dizzy"></i></a>
 				<a class="status-monitor {{#if data.status.criticalWounds.value}}status-on{{/if}}" title="{{localize 'CoC7.CriticalWounds'}}" data-status="criticalWounds"> <i class="fas fa-user-injured"></i></a>
 				<a class="status-monitor {{#if data.status.dying.value}}status-on{{/if}}" title="{{localize 'CoC7.Dying'}}" data-status="dying"> <i class="fas fa-heartbeat"></i></a>
+				<a class='status-monitor {{#if data.status.dead.value}}status-on{{/if}} is-dead' title="{{localize 'CoC7.Dead'}}" data-status="dead"><i class="fas fa-skull-crossbones"></i></a>
+
+				<div style="flex: 0 0 25px;"></div>
+				{{#if isDying}}
+				<a class='status-monitor dying-check' title="Check if you'll die immediately"><i class="fas fa-dice-d20"></i></a>
+				{{else}}
+				<div style="flex: 0 0 25px;"></div>
+				{{/if}}
 				<div style="flex: 0 0 40px;"></div>
 				<a class="status-monitor {{#if data.status.tempoInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.TemporaryInsanity'}}" data-status="tempoInsane"> <i class="fas fa-filter"></i></a>
 				<a class="status-monitor {{#if data.status.indefInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.IndefiniteInsanity'}}" data-status="indefInsane"> <i class="far fa-hospital"></i></a>
+
 				<div class="flex1"></div>
 				{{#if data.flags.locked}}
 				<a class="lock"  style="flex: 0 0 16px;"  title="{{localize 'CoC7.UnlockActor'}}" data-locked="true"> <i class="fas fa-lock"></i></a>
 				{{else}}
 				<a class="lock"  style="flex: 0 0 16px;" title="{{localize 'CoC7.LockActor'}}" data-locked="false"> <i class="fas fa-lock-open"></i></a>
 				{{/if}}
-			{{/if}}
 		</div>
 	</header>
 
 	{{!-- Sheet Tab Navigation --}}
 	<nav class="sheet-tabs tabs" data-group="primary">
+		{{#if showDevPannel}}
 		<a class="item" data-tab="development">{{localize 'CoC7.CharacterDevelopment'}}</a>
+		{{/if}}
 		<a class="item" data-tab="skills">{{localize 'CoC7.Skills'}}</a>
 		<a class="item" data-tab="combat">{{localize 'CoC7.Combat'}}</a>
 		<a class="item" data-tab="possession">{{localize 'CoC7.Possessions'}}</a>
@@ -184,10 +191,11 @@
 
 	{{!-- Sheet Body --}}
 	<section class="sheet-body">
-		
+		{{#if showDevPannel}}
 		<div class="tab combat flexcol" data-group="primary" data-tab="development" style="border: 2px groove #eeede0;padding: 1px;">
 			{{> "systems/CoC7/templates/actors/parts/character-development.html"}}
 		</div>
+		{{/if}}
 
 		{{!-- Skills Tab --}}
 		<div class="tab skills flexcol active" data-group="primary" data-tab="skills" style="border: 2px groove #eeede0;padding: 1px;">

@@ -177,7 +177,8 @@
 
 "CoC7.DropZone": "DropZone",
 
-"CoC7.SkillValue": "Value",
+"CoC7.Value": "Value",
+"CoC7.SkillValue": "Skill value",
 "CoC7.SkillBase": "Base",
 "CoC7.BaseSkillValue": "Base skill value",
 "CoC7.SkillExperience": "Experience",
@@ -299,6 +300,7 @@
 "CoC7.EnterFormula": "Enter formula",
 "CoC7.SanRollHint":"Roll san check for targets",
 "CoC7.NoSkill": "No skill",
+"CoC7.AddWeapontHint": "<p>{actor} doen't have a {weapon}.<br>Do you want to create one ?</p>",
 
 
 "CoC7.ManualCreditValues": "Manual Credit Values",
@@ -395,6 +397,7 @@
 "CoC7.RollCharac": "Roll characteristics",
 "CoC7.SelectCoreCharac": "Select core characteristic",
 "CoC7.SkillSpecSelectTitle": "Select/create skill of {specialization} specialization",
+"CoC7.SkillSelectBase": "Select base value for skill {name}",
 "CoC7.SelectSkill": "Select an existing skill",
 "CoC7.CreateNewSkill": "Create a new skill",
 
@@ -409,6 +412,15 @@
 
 "CoC7.PutGunAway": "Put your gun away",
 "CoC7.DrawGun": "Draw your gun",
+
+"CoC7.DevPhaseEnabled": "Development phase enabled",
+"CoC7.DevPhaseDisabled": "Development phase disabled",
+"CoC7.CharCreationEnabled": "Character creation mode enabled",
+"CoC7.CharCreationDisabled": "Character creation mode disabled",
+"CoC7.WarnNoActorAvailable": "You do not have any actor controled nor selected",
+"CoC7.WarnMacroIncorrectType": "You can create macro for weapons and skills only",
+"CoC7.WarnNoGlobalSpec": "You can't create macro for unspecified specializations",
+"CoC7.WarnMacroNoItemFound": "No usable item found",
 
 "SETTINGS.DefaultDifficulty": "Default check difficulty",
 "SETTINGS.DefaultDifficultyHint": "You can choose the default difficulty for checks. Unknown will roll checks without the player knowing the check difficulty.",
@@ -431,5 +443,7 @@
 "SETTINGS.DisregardUsePerRound": "Disregard Uses per Rounds.",
 "SETTINGS.DisregardUsePerRoundHint": "Enabling this will allow you to fire as much as you want, regardless of the uses per round of the weapon.",
 "SETTINGS.RestrictGridSpaces": "Restrict measurement to grid spaces",
-"SETTINGS.RestrictGridSpacesHint": "For range combat, if selected the distances will be mesured in grid spaces, if not the 'real' (euclidean) distance will be used."
+"SETTINGS.RestrictGridSpacesHint": "For range combat, if selected the distances will be mesured in grid spaces, if not the 'real' (euclidean) distance will be used.",
+"SETTINGS.StatusPlayerEditable": "Player can modify status",
+"SETTINGS.StatusPlayerEditableHint": "Let you player modify their status (prone, unconscious, dying, dead) and reset their daily SAN loss"
 }

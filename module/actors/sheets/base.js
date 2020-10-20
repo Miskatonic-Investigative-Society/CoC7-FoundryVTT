@@ -388,16 +388,6 @@ export class CoC7ActorSheet extends ActorSheet {
 	activateListeners(html) {
 		super.activateListeners(html);
 
-		if( this.actor.dead){
-			if( game.user.isGM) html.find( '.is-dead').dblclick( this.revive.bind(this));
-			return;
-		}
-
-		if( this.actor.dying){
-			if( game.user.isGM) html.find('.is-dying').dblclick( this.heal.bind(this));
-			html.find('.dying-check').click( this.checkForDeath.bind(this));
-			return;
-		}
 
 		// Owner Only Listeners
 		if ( this.actor.owner ) {
@@ -412,8 +402,17 @@ export class CoC7ActorSheet extends ActorSheet {
 			html.find('.average-characteritics').click(this._onAverageCharacteriticsValue.bind(this));
 			html.find('.toggle-switch').click( this._onToggle.bind(this));
 			html.find('.auto-toggle').click( this._onAutoToggle.bind(this));
-			html.find('.status-monitor').click( this._onStatusToggle.bind(this));
-			html.find('.reset-counter').click( this._onResetCounter.bind(this));
+
+			// Status monitor
+			if( game.user.isGM || game.settings.get('CoC7', 'statusPlayerEditable')) {
+				html.find('.reset-counter').click( this._onResetCounter.bind(this));
+				html.find('.status-monitor').click( this._onStatusToggle.bind(this));
+				html.find('.is-dying').click( this.heal.bind(this));
+				html.find('.is-dead').click( this.revive.bind(this));
+			}
+
+			html.find('.dying-check').click( this.checkForDeath.bind(this));
+
 
 			html.find('.item .item-image').click(event => this._onItemRoll(event));
 			html.find('.weapon-name.rollable').click( event => this._onWeaponRoll(event));
@@ -503,26 +502,6 @@ export class CoC7ActorSheet extends ActorSheet {
 			this.actor.developementPhase( event.shiftKey);
 		});
 	}
-
-	// async _onSkillDevelopement( event){
-	// 	const result = await this.actor.developementPhase( event.shiftKey);
-	// 	const skills = this._element[0].querySelector('.skills');
-	// 	skills.style.color = 'yellowgreen';
-	// 	for( let element of result.failure){
-	// 		const skill = skills.querySelector(`[data-skill-id="${element}"]`);
-	// 		skill.querySelector('.skill-image').style.backgroundColor = 'red';
-	// 		skill.querySelectorAll('input').forEach(input => {
-	// 			input.style.color = 'red';
-	// 		});
-	// 	}
-
-	// 	result.success.forEach(element => {
-	// 		const skill = skills.querySelector(`[data-skill-id="${element}"]`);
-	// 		skill.querySelectorAll('input').forEach(input => {
-	// 			input.style.color = 'green';
-	// 		});
-	// 	});
-	// }
 
 	async _onDrop(event){
 		super._onDrop(event);
@@ -735,6 +714,8 @@ export class CoC7ActorSheet extends ActorSheet {
 	}
 
 	static async popupSkill(skill){
+		skill.data.data.description.enrichedValue = TextEditor.enrichHTML( skill.data.data.description.value);
+		// game.CoC7.enricher( skill.data.data.description.enrichedValue);
 		const dlg = new Dialog({
 			title: game.i18n.localize('CoC7.SkillDetailsWindow'),
 			content: skill,
