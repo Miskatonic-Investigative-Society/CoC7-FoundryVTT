@@ -28,8 +28,22 @@ version 0.3.9 :
   * When holding shift while clicking on a weapon damage this will make the damage critical.
   * Occupations, Archetypes and Setups can have multiple generics specializations e.g. Art/Craft(Any).
   * Add-weapon button fixed.
+  * Automatic cash&assets calculation was broken, now working as intended.
+  * Riffle and shotgun skills are now one (Riffle/shotgun).
+  * Skill details windows now correctly parse HTML content (All links except PDFFoundry).
+  * Selected specializations now display correctly in character's occupation.
+* Macro for skills and weapon can be created with items from directory and compendiums.
+  * As a GM if you click on a weapon macro, if the actor doesn't have a corresponding weapon, you will be prompt to create one.
+  * If you click on a skill macro, if the actor doesn't have the corresponding skill it will be created. As a GM you'll be prompted for the skill value.
+* Specialization reworked. A specialization with a name set to 'Any' will be considered generic.
+  * The generic name can be changed in lang.json.
+  * When dropping a specialization with name 'Any' on a sheet, you will be prompted for a name and a base value. If you skip that the skill will be created as 'Any'. You can modify that later in the sheet.
+  * When an occupation/archetype containing one or many 'Any' specialization, you will be prompted to select and existing one or to create a new one.
 * Occupation type added : Pulp.
 * Localization strings added for previous cards/sheet.
+* Option added to prevent players from modifying their status.
+  * By default player can modify their status.
+  * Player can now modify dying and dead status.
 * Spanish translation updated thanks to Lozalojo.
 
 version 0.3.8 :
