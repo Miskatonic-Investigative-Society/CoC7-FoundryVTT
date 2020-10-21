@@ -32,8 +32,8 @@
                 <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{weapon.name}}</h3>
                 {{else}}
                     {{#if maneuvering}}
-                    <img class="open-actor" style="flex: none;" data-actor-key="{{actorKey}}" src="{{skill.data.img}}" title="{{skill.name}}" width="36" height="36"/>
-                    <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{skill.name}}</h3>
+                    <img class="open-actor" style="flex: none;" data-actor-key="{{actorKey}}" src="{{skill.data.img}}" title="{{skill.data.name}}" width="36" height="36"/>
+                    <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{skill.data.name}}</h3>
                     {{else}}
                     <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">...</h3>
                     {{/if}}
@@ -56,7 +56,7 @@
             <div class="flex0 advantage-selection">
                 {{#if dodging}}<span class="tag" title="{{actor.dodgeSkill.name}}">{{localize 'CoC7.Dodge'}}</span>{{/if}}
                 {{#if fightingBack}}<span class="tag" title="{{weapon.name}}">{{localize 'CoC7.FightBack'}}</span>{{/if}}
-                {{#if maneuvering}}<span class="tag" title="{{skill.name}}">{{localize 'CoC7.Maneuver'}}</span>{{/if}}
+                {{#if maneuvering}}<span class="tag" title="{{skill.data.name}}">{{localize 'CoC7.Maneuver'}}</span>{{/if}}
                 {{#if advantage}}<span class="tag" title="Advantage">{{localize 'CoC7.Advantage'}}</span>{{/if}}
                 {{#if disadvantage}}<span class="tag" title="Disadvantage">{{localize 'CoC7.Disadvantage'}}</span>{{/if}}
             </div>
@@ -102,7 +102,7 @@
                 {{#each actor.fightingSkills as |skill key|}}
 					<a class="dropdown-element"
 						data-action="maneuver"
-						data-skill-id="{{skill.data._id}}">{{skill.name}} ({{skill.value}}%)</a>
+						data-skill-id="{{skill.data._id}}">{{skill.data.name}} ({{skill.value}}%)</a>
                 {{/each}}
             </div>        
         </div>
@@ -203,14 +203,14 @@
                 <button
                     data-action="melee-target-roll"
                     data-skill="{{skill._id}}"
-                    data-action="{{action}}">{{skill.name}} ({{skill.value}}%)</button>
+                    data-action="{{action}}">{{skill.data.name}} ({{skill.value}}%)</button>
             {{/unless}}
             {{#if fightingBack}}
                 <button
                 data-action="melee-target-roll"
                 data-skill="{{skill._id}}"
                 data-item-id="{{weapon.id}}"
-                data-action="{{action}}">{{weapon.name}}: {{skill.name}} ({{skill.value}}%)</button>
+                data-action="{{action}}">{{weapon.name}}: {{skill.data.name}} ({{skill.value}}%)</button>
             {{/if}}
         </div>
         {{/if}}

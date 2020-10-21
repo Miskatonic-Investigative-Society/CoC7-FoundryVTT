@@ -1,4 +1,5 @@
 import  { COC7 } from '../../config.js';
+import { CoC7Item } from '../item.js';
 // import { CoCActor } from '../../actors/actor.js';
 
 /**
@@ -13,7 +14,7 @@ export class CoC7OccupationSheet extends ItemSheet {
 		super.activateListeners(html);
 		// Everything below here is only needed if the sheet is editable
 		if (!this.options.editable) return;
-		// html.on('drop', (event) => this._onDrop(event, 'skill', 'skills'));
+
 		html.find('.item .item-name h4').click(event => this._onItemSummary(event, 'skills'));
 		html.find('.item-delete').click(event => this._onItemDelete(event, 'skills'));
 		
@@ -47,15 +48,6 @@ export class CoC7OccupationSheet extends ItemSheet {
 
 		let item;
 
-		// // Case 2 - Data explicitly provided
-		// else if (data.data) {
-		// 	let sameItem = data._id === item._id;
-		// 	if (sameItem) return null;//this._onSortItem(event, data.data); // Sort existing items
-		// 	else return this.spells.push( data);  // Create a new Item
-		// }
-
-		// Case 3 - Import from World entity
-		// else {
 		if (data.pack) {
 			const pack = game.packs.get(data.pack);
 			if (pack.metadata.entity !== 'Item') return;
@@ -68,39 +60,34 @@ export class CoC7OccupationSheet extends ItemSheet {
 		if (!item || !(type === item.data.type)) return;
 
 		if( optionalSkill){
-			if( this.item.data.data.skills.find( el => el.name === item.data.name)) return;
-			if( this.item.data.data.groups[index].skills.find( el => el.name === item.data.name)) return;
+			if( !CoC7Item.isAnySpec(item)){ //Generic specialization can be included many times
+				if( this.item.data.data.skills.find( el => el.name === item.data.name)) return; //If skill is already in main don't add it
+				if( this.item.data.data.groups[index].skills.find( el => el.name === item.name)) return; //If skill is already in group don't add it
+			}
 
 			const groups = duplicate(this.item.data.data.groups);
 			groups[index].skills = groups[index].skills.concat([item.data]);
 			await this.item.update({ ['data.groups']: groups});
 		} else {
-			if( this.item.data.data.skills.find( el => el.name === item.data.name)) return;
-
-			for (let i = 0; i < this.item.data.data.groups.length; i++) {
-				const index = this.item.data.data.groups[i].skills.findIndex( el => el.name === item.data.name);
-				if( -1 !=  index){
-					const groups =  duplicate(this.item.data.data.groups);
-					groups[i].skills.splice( index, 1);
-					await this.item.update( {'data.groups': groups});
-				}
+			if( !CoC7Item.isAnySpec(item)){ //Generic specialization can be included many times
 				
+				if( this.item.data.data.skills.find( el => el.name === item.data.name)) return;
+
+				for (let i = 0; i < this.item.data.data.groups.length; i++) { //If the same skill is in one of the group remove it from the groups
+					const index = this.item.data.data.groups[i].skills.findIndex( el => el.name === item.data.name);
+					if( -1 !=  index){
+						const groups =  duplicate(this.item.data.data.groups);
+						groups[i].skills.splice( index, 1);
+						await this.item.update( {'data.groups': groups});
+					}
+				
+				}
 			}
 
 			const collection = this.item.data.data[collectionName] ? duplicate( this.item.data.data[collectionName]) : [];
 			collection.push( duplicate(item.data));
 			await this.item.update( { [`data.${collectionName}`] : collection});
 		}
-
-		
-
-		// const spells = this.item.data.data.spells;
-		// spells.push( duplicate(item.data));
-		// const update = {};
-		// update.spells = spells;
-		// await this.item.update( update);
-		// this.item.createEmbeddedEntity('OwnedItem', duplicate(item.data));
-		// }
 	}
 
 	async _onGroupControl(event){
@@ -207,9 +194,33 @@ export class CoC7OccupationSheet extends ItemSheet {
 		}
 
 		data.skillListEmpty = (0 == data.data.skills.length);
+		data.data.skills.forEach( skill => { //For each skill if it's a spec and spac name not included in the name add it
+			if( skill.data.specialization && !skill.name.includes(skill.data.specialization))
+				skill.displayName = `${skill.data.specialization} (${skill.name})`;
+			else skill.displayName = skill.name;
+		});
+
+		data.data.skills.sort( (a,b) => {
+			if( a.displayName.toLowerCase() < b.displayName.toLowerCase()) return -1;
+			if( a.displayName.toLowerCase() > b.displayName.toLowerCase()) return 1;
+			return 0;
+		});
+
+
 
 		for (let index = 0; index < data.data.groups.length; index++) {
 			data.data.groups[index].isEmpty = (0 == data.data.groups[index].skills.length);
+			data.data.groups[index].skills.forEach( skill => { //For each skill of each sub group if it's a spec and spac name not included in the name add it
+				if( skill.data.specialization && !skill.name.includes(skill.data.specialization))
+					skill.displayName = `${skill.data.specialization} (${skill.name})`;
+				else skill.displayName = skill.name;
+			});
+
+			data.data.groups[index].skills.sort( (a,b) => {
+				if( a.displayName.toLowerCase() < b.displayName.toLowerCase()) return -1;
+				if( a.displayName.toLowerCase() > b.displayName.toLowerCase()) return 1;
+				return 0;
+			});
 		}
         
 		data.occupationPointsString = '';

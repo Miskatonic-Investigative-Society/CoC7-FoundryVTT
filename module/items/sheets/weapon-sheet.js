@@ -39,6 +39,8 @@ export class CoC7WeaponSheet extends ItemSheet {
 
 		data.combatSkill = [];
 		if( data.hasOwner) {
+			data.firearmSkills = this.actor.firearmSkills;
+			data.fightingSkills = this.actor.fightingSkills;
 			data.combatSkill = this.item.actor.items.filter( item =>{ 
 				if( item.type == 'skill')
 				{

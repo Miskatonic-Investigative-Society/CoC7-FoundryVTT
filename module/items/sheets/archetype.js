@@ -1,6 +1,8 @@
 // import  { COC7 } from '../../config.js';
 // import { CoCActor } from '../../actors/actor.js';
 
+import { CoC7Item } from '../item.js';
+
 /**
  * Extend the basic ItemSheet with some very simple modifications
  */
@@ -13,19 +15,9 @@ export class CoC7ArchetypeSheet extends ItemSheet {
 		super.activateListeners(html);
 		// Everything below here is only needed if the sheet is editable
 		if (!this.options.editable) return;
-		// html.on('drop', (event) => this._onDrop(event, 'skill', 'skills'));
+
 		html.find('.item .item-name h4').click(event => this._onItemSummary(event, 'skills'));
 		html.find('.item-delete').click(event => this._onItemDelete(event, 'skills'));
-		
-		// html.find('.group-item-delete').click(this._onGroupItemDelete.bind(this));
-		// html.find('.group-control').click(this._onGroupControl.bind(this));
-
-
-		// const dragDrop = new DragDrop({
-		// 	dropSelector: '.droppable',
-		// 	callbacks: { drop: this._onDrop.bind(this) }
-		// });
-		// dragDrop.bind(html[0]);
 	}
 
 	async _onDrop(event, type = 'skill', collectionName = 'skills'){
@@ -43,15 +35,6 @@ export class CoC7ArchetypeSheet extends ItemSheet {
 
 		let item;
 
-		// // Case 2 - Data explicitly provided
-		// else if (data.data) {
-		// 	let sameItem = data._id === item._id;
-		// 	if (sameItem) return null;//this._onSortItem(event, data.data); // Sort existing items
-		// 	else return this.spells.push( data);  // Create a new Item
-		// }
-
-		// Case 3 - Import from World entity
-		// else {
 		if (data.pack) {
 			const pack = game.packs.get(data.pack);
 			if (pack.metadata.entity !== 'Item') return;
@@ -63,7 +46,9 @@ export class CoC7ArchetypeSheet extends ItemSheet {
 		}
 		if (!item || !(type === item.data.type)) return;
 
-		if( this.item.data.data.skills.find( el => el.name === item.data.name)) return;
+		if( !CoC7Item.isAnySpec(item)){
+			if( this.item.data.data.skills.find( el => el.name === item.data.name)) return;
+		}
 
 		const collection = this.item.data.data[collectionName] ? duplicate( this.item.data.data[collectionName]) : [];
 		collection.push( duplicate(item.data));
@@ -144,6 +129,17 @@ export class CoC7ArchetypeSheet extends ItemSheet {
 		}
 
 		data.skillListEmpty = (0 == data.data.skills.length);
+		data.data.skills.forEach( skill => { //For each skill if it's a spec and spac name not included in the name add it
+			if( skill.data.specialization && !skill.name.includes(skill.data.specialization))
+				skill.displayName = `${skill.data.specialization} (${skill.name})`;
+			else skill.displayName = skill.name;
+		});
+
+		data.data.skills.sort( (a,b) => {
+			if( a.displayName.toLowerCase() < b.displayName.toLowerCase()) return -1;
+			if( a.displayName.toLowerCase() > b.displayName.toLowerCase()) return 1;
+			return 0;
+		});
 
 		data.coreCharacteristicsString = '';
 		const orString = ` ${game.i18n.localize('CoC7.Or')} `;

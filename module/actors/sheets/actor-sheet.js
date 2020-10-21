@@ -24,11 +24,11 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 
 		data.totalExperience = this.actor.experiencePoints;
 		data.totalOccupation = this.actor.occupationPointsSpent;
-		data.invalidOccupationPoints = ( this.actor.occupationPointsSpent != Number(this.actor.data.data.development.occupation));
+		data.invalidOccupationPoints = ( this.actor.occupationPointsSpent != Number(this.actor.data.data.development?.occupation));
 		data.totalArchetype = this.actor.archetypePointsSpent;
-		data.invalidArchetypePoints = ( this.actor.archetypePointsSpent != Number(this.actor.data.data.development.archetype));
+		data.invalidArchetypePoints = ( this.actor.archetypePointsSpent != Number(this.actor.data.data.development?.archetype));
 		data.totalPersonal = this.actor.personalPointsSpent;
-		data.invalidPersonalPoints = ( this.actor.personalPointsSpent != Number(this.actor.data.data.development.personal));
+		data.invalidPersonalPoints = ( this.actor.personalPointsSpent != Number(this.actor.data.data.development?.personal));
 		data.creditRatingMax = Number(this.actor.occupation?.data.data.creditRating.max);
 		data.creditRatingMin = Number(this.actor.occupation?.data.data.creditRating.min);
 		data.invalidCreditRating = ( this.actor.creditRatingSkill?.data.data.adjustments.occupation > data.creditRatingMax || this.actor.creditRatingSkill?.data.data.adjustments.occupation < data.creditRatingMin);
@@ -41,6 +41,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 
 		data.allowDevelopment = game.settings.get('CoC7', 'developmentEnabled');
 		data.allowCharCreation = game.settings.get( 'CoC7', 'charCreationEnabled');
+		data.showDevPannel = data.allowDevelopment || data.allowCharCreation;
 
 		data.manualCredit = this.actor.getActorFlag('manualCredit');
 		if( !data.manualCredit){
