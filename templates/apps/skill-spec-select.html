@@ -1,0 +1,36 @@
+<form id="skill-select-form">
+
+    <div class="flexcol">
+        {{#if hasSkills}}
+            <div class="flexrow">
+                <select name="existing-skill">
+                    <option value="" disabled  selected>{{localize 'CoC7.SelectSkill'}}</option>
+                    {{#each skills as |skill|}}
+                    <option value="{{skill.id}}">{{skill.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+
+            <div class="flexrow">
+                <label>{{localize 'CoC7.Or'}}</label>
+            </div>
+        {{/if}}
+
+
+        {{#unless name}}
+        <div class="flexrow">
+            <input name="new-skill-name" type="text" placeholder="{{ localize 'CoC7.CreateNewSkill' }}"/>
+        </div>
+        {{/unless}}
+
+        <br>
+
+        <div class="flexrow">
+            <label>{{localize 'CoC7.BaseSkillValue'}} :</label>
+            <input name="base-value" type="text" value="{{base}}" placeholder="{{ localize 'CoC7.SkillBase' }}"/>
+        </div>
+
+        <br>
+
+    </div>
+</form>

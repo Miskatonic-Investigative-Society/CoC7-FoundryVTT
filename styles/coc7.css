@@ -652,6 +652,7 @@
 .coc7.sheet.actor .info-fields .form-group-stacked {
     margin: 0;
     justify-content: space-between;
+    flex-wrap: nowrap;
 }
 
 .coc7.sheet.actor .characteristics {

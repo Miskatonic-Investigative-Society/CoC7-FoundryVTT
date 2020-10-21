@@ -12,29 +12,29 @@
 	{{#if isBlind}}
 		{{#if isRolled}}
 		<div class='card-buttons gm-visible-only'>
-			<button data-action="reveal-con-check">Reveal Con Check</button>
+			<button data-action="reveal-con-check">{{ localize 'CoC7.RevealCheck' }}</button>
 		</div>
 		{{else}}
 		<div class='card-buttons owner-only'>
-			<button data-action="roll-con-check">Consitution check ({{actor.data.data.characteristics.con.value}}%)</button>
+			<button data-action="roll-con-check">{{ localize 'CoC7.ConstitutionCheck'}} ({{actor.data.data.characteristics.con.value}}%)</button>
 		</div>
 		{{/if}}
 	{{else}}
 		{{#if isRolled}}
 			<div class='card-buttons'>
 				{{#if isSuccess}}
-					<h4 class="con-result resist">{{actor.name}} resist</h4>
+					<h4 class="con-result resist">{{ localize 'CoC7.Resist'}}</h4>
 				{{else}}
 					{{#if stayAlive}}
-						<h4 class="con-result loss">{{actor.name}} is dead!</h4>
+						<h4 class="con-result loss">{{ localize 'CoC7.Dead' }}</h4>
 					{{else}}
-						<h4 class="con-result loss">{{actor.name}} fall unconscious!</h4>
+						<h4 class="con-result loss">{{ localize 'CoC7.Unconsious'}}</h4>
 					{{/if}}
 				{{/if}}
 			</div>
 		{{else}}
 			<div class='card-buttons owner-only'>
-				<button data-action="roll-con-check">Consitution check ({{actor.data.data.characteristics.con.value}}%)</button>
+				<button data-action="roll-con-check">{{ localize 'CoC7.ConstitutionCheck'}} ({{actor.data.data.characteristics.con.value}}%)</button>
 			</div>
 		{{/if}}
 		</div>

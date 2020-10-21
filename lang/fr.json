@@ -80,7 +80,7 @@
 "CoC7.LuckError": "{actorName} n'a pas assez de Chance pour réussir le test",
 "CoC7.check.AutoSuccess" : "Réussite Auto",
 "CoC7.check.AutoFailure" : "Échec Auto",
-"CoC7.check.RevealCheck": "Révéler le résultat",
+"CoC7.RevealCheck": "Révéler le résultat",
 "CoC7.check.ForcePass": "Forcer la Réussite",
 "CoC7.check.ForceFail": "Forcer l'Échec",
 "CoC7.check.FlagForDevelopment": "Valider l'expérience",
@@ -138,7 +138,7 @@
 
 "CoC7.DropZone": "DropZone",
 
-"CoC7.SkillValue": "Valeur",
+"CoC7.Value": "Valeur",
 "CoC7.SkillBase": "Base",
 
 "CoC7.ItemQuantity": "Quantité",
@@ -205,6 +205,7 @@
 "CoC7.CreditRatingSkillName": "Crédit",
 "CoC7.FightingSpecializationName": "Combat rapproché",
 "CoC7.FirearmSpecializationName": "Combat à distance",
+"CoC7.AnySpecName": "Au choix",
 
 "CoC7.NewSkillName": "Nouvelle compétence",
 "CoC7.AddSkill": "Ajouter une compétence",

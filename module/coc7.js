@@ -33,7 +33,10 @@ Hooks.once('init', async function() {
 			skillCheck: CoC7Utilities.skillCheckMacro,
 			weaponCheck: CoC7Utilities.weaponCheckMacro
 		}
+		// ,enricher: CoC7Utilities.enrichHTML
 	};
+
+
 	/**
 	 * Set an initiative formula for the system
 	 * @type {String}
@@ -146,6 +149,16 @@ Hooks.once('init', async function() {
 	game.settings.register('CoC7', 'displayInitDices', {
 		name: 'SETTINGS.displayInitDices',
 		hint: 'SETTINGS.displayInitDicesHint',
+		scope: 'world',
+		config: true,
+		default: true,
+		type: Boolean
+	});
+
+	// Allow player to modify status.
+	game.settings.register('CoC7', 'statusPlayerEditable', {
+		name: 'SETTINGS.StatusPlayerEditable',
+		hint: 'SETTINGS.StatusPlayerEditableHint',
 		scope: 'world',
 		config: true,
 		default: true,
@@ -282,6 +295,6 @@ Hooks.on('getSceneControlButtons', (buttons) => {
 	}
 });
 
-Hooks.on('renderSceneControls', () => CoC7Utilities.updateCharSheets());
-Hooks.on('renderSceneNavigation', () => CoC7Utilities.updateCharSheets());
+// Hooks.on('renderSceneControls', () => CoC7Utilities.updateCharSheets());
+// Hooks.on('renderSceneNavigation', () => CoC7Utilities.updateCharSheets());
  

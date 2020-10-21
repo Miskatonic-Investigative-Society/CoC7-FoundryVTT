@@ -77,7 +77,8 @@
                     "lck": {
                         "value": null,
                         "short": "LCK",
-                        "label": "Luck"
+                        "label": "Luck",
+                        "max": 99
                     },
                     "san": {
                         "value": null,
@@ -318,7 +319,8 @@
             "type": {
                 "classic": false,
                 "lovecraftian": false,
-                "modern": false
+                "modern": false,
+                "pulp": false
             },
             "related": null,
             "occupationSkillPoints":{

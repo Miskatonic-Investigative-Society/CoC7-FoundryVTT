@@ -32,15 +32,15 @@
 
 		<div class="card-content">
 			{{{item.data.data.description.value}}}
-			<div class="weapon-properties">
+			{{!-- <!-- <div class="weapon-properties">
 				<span class="tag">Ammo:</span><span class="tag">Mag Size</span><span class="tag">Burst</span>
-			</div>
+			</div> --> --}}
 		</div>
 
 
 		{{#if rolled}}
 			<div class="shooter-modifier flex0">
-				<span class='tag'>Bullets fired : {{totalBulletsFired}}</span>
+				<span class='tag'>{{ localize 'CoC7.BulletsFired' }} : {{totalBulletsFired}}</span>
 				{{#if singleShot}}		<span class="tag" title="Single shot">{{localize 'CoC7.rangeCombatCard.SingleShot'}}</span>{{/if}}
 				{{#if multipleShots}}	<span class="tag" title="Multiple Shots (Penalty die)">{{localize 'CoC7.rangeCombatCard.MultipleShots'}}</span>{{/if}}
 				{{#if burst}}			<span class="tag" title="Bursts">{{localize 'CoC7.rangeCombatCard.Burst'}}</span>{{/if}}
@@ -51,10 +51,10 @@
 			</div>
 		{{else}}
 		<div class='total-bullets'>
-			<span class='tag'>Bullets fired : {{totalBulletsFired}}/{{totalAmmo}}</span>
-			<span class='tag'>Shots fired : {{shotFired}}{{#unless fullAuto}}/{{maxShots}}{{/unless}}</span>
+			<span class='tag'>{{ localize 'CoC7.BulletsFired' }} : {{totalBulletsFired}}/{{totalAmmo}}</span>
+			<span class='tag'>{{ localize 'CoC7.Shots'}} : {{shotFired}}{{#unless fullAuto}}/{{maxShots}}{{/unless}}</span>
 			{{#if fullAuto}}
-				<span class='tag'>Volley size: {{#unless isVolleyMinSize}}<i class="volley-size decrease far fa-minus-square"></i> {{/unless}}{{volleySize}}{{#unless isVolleyMaxSize}} <i class="volley-size increase far fa-plus-square"></i>{{/unless}}</span>
+				<span class='tag'>{{ localize 'CoC7.BurstSize' }}: {{#unless isVolleyMinSize}}<i class="volley-size decrease far fa-minus-square"></i> {{/unless}}{{volleySize}}{{#unless isVolleyMaxSize}} <i class="volley-size increase far fa-plus-square"></i>{{/unless}}</span>
 			{{/if}}
 		</div>
 		<div class="flexrow range-selection">
@@ -305,18 +305,18 @@
 								{{#if ../multiTarget}}
 								<button
 									data-action="range-initiator-shoot"
-									data-skill="{{autoWeaponSkill._id}}">Shoot {{trgt.name}} {{../autoWeaponSkill.name}} ({{../autoWeaponSkill.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
+									data-skill="{{autoWeaponSkill._id}}">{{ localize 'CoC7.Shoot'}} {{trgt.name}} {{../autoWeaponSkill.data.name}} ({{../autoWeaponSkill.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
 								</button>
 								{{else}}
 									{{#if ../autoFire}}
 										<button
 											data-action="range-initiator-roll"
-											data-skill="{{autoWeaponSkill._id}}">Roll {{../autoWeaponSkill.name}} ({{../autoWeaponSkill.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
+											data-skill="{{autoWeaponSkill._id}}">{{ localize 'CoC7.Roll' }} {{../autoWeaponSkill.data.name}} ({{../autoWeaponSkill.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
 										</button>
 									{{else}}
 										<button
 											data-action="range-initiator-roll"
-											data-skill="{{mainWeaponSkill._id}}">Roll {{../mainWeaponSkill.name}} ({{../mainWeaponSkill.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
+											data-skill="{{mainWeaponSkill._id}}">{{ localize 'CoC7.Roll' }} {{../mainWeaponSkill.data.name}} ({{../mainWeaponSkill.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
 										</button>
 									{{/if}}
 								{{/if}}
@@ -354,7 +354,7 @@
 					<button
 					  data-action="range-initiator-roll"
 					  data-skill="{{mainWeaponSkill._id}}">
-					  	Fire !!!
+					  {{ localize 'CoC7.Shoot'}} !!!
 					</button>
 				</div>
 			{{/unless}}
@@ -408,9 +408,9 @@
 							  class="dice-formula {{#if roll.isSuccess}}success{{else}}failure{{/if}}{{#if roll.isCritical}} critical{{/if}}{{#if roll.isFumble}} fumble{{/if}}"
 							  style="line-height: 16px;margin-bottom: 2px;">
 								{{#if roll.luckSpent}}
-									{{roll.skill.name}} ({{roll.skill.value}}) - Luck used ({{roll.resultType}})
+									{{roll.skill.data.name}} ({{roll.skill.value}}) - {{ localize 'CoC7.LuckSpentAlt'}} ({{roll.resultType}})
 							  	{{else}}
-									{{roll.skill.name}} ({{roll.skill.value}}) {{#if roll.dices.hasBonus}}{{roll.dices.bonus}} {{roll.dices.bonusType}} {{localize 'CoC7.Dice'}}{{/if}} - {{roll.dices.total}} ({{roll.resultType}})
+									{{roll.skill.data.name}} ({{roll.skill.value}}) {{#if roll.dices.hasBonus}}{{roll.dices.bonus}} {{roll.dices.bonusType}} {{localize 'CoC7.Dice'}}{{/if}} - {{roll.dices.total}} ({{roll.resultType}})
 								{{/if}}
 							</div>
 							<div class="dice-tooltip" style="display: none;">
@@ -481,7 +481,7 @@
 											data-luck-to-spend="{{level.luckToSpend}}"
 											data-new-success-level="{{level.difficulty}}"
 											data-difficulty="{{level.difficulty}}"
-											data-difficulty-name="{{difficultyName}}">Make it {{level.difficultyName}} for {{level.luckToSpend}} luck.</button>
+											data-difficulty-name="{{difficultyName}}">{{localize 'CoC7.IncreaseSuccessLevel'}} : {{level.difficultyName}} - {{level.luckToSpend}} {{ localize 'CoC7.Luck'}}.</button>
 										{{/each}}
 									</div>
 									{{/if}}
@@ -497,7 +497,7 @@
 			{{#if didAnyShotHit}}
 				{{#unless damageRolled}}
 				<div class="card-buttons owner-only">
-					<button data-action="roll-range-damage">Roll damage</button>			
+					<button data-action="roll-range-damage">{{ localize 'CoC7.RollDamage' }}</button>			
 				</div>
 				{{/unless}}
 			{{/if}}
@@ -551,7 +551,7 @@
 			{{#unless damageDealt}}
 				{{#if didAnyShotHit}}
 					<div class="card-buttons gm-visible-only">
-						<button data-action="deal-range-damage">Deal damage</button>			
+						<button data-action="deal-range-damage">{{ localize 'CoC7.InflictPain' }}</button>			
 					</div>
 				{{/if}}
 			{{/unless}}
