@@ -45,7 +45,7 @@ Hooks.on('chatMessage', (html,content) => {
 		else res= game.i18n.localize('CoC7.Failure');
 
 		//The resulting output.
-		res += (game.i18n.localize('CoC7.SkillValue') + m);
+		res += (game.i18n.localize('CoC7.Value') + m);
 		r.toMessage(
 			{speaker: ChatMessage.getSpeaker(),
 				flavor: res,
@@ -79,7 +79,7 @@ Hooks.on('chatMessage', (html,content) => {
 		else res= game.i18n.localize('CoC7.Failure');}
 		else res= game.i18n.localize('CoC7.Failure');
 		//Record the first results.
-		res += (game.i18n.localize('CoC7.SkillValue') + m);
+		res += (game.i18n.localize('CoC7.Value') + m);
 
 		//Determine the second number.
 		if(s <= 1) res += game.i18n.localize('CoC7.CriticalSuccess');
@@ -91,7 +91,7 @@ Hooks.on('chatMessage', (html,content) => {
 		else res += game.i18n.localize('CoC7.Failure');}
 		else res += game.i18n.localize('CoC7.Failure');
 		//The resulting output.
-		res += (game.i18n.localize('CoC7.SkillValue') + n);
+		res += (game.i18n.localize('CoC7.Value') + n);
 		r.toMessage(
 			{speaker: ChatMessage.getSpeaker(),
 				flavor: res,
