@@ -36,8 +36,8 @@ export class CoC7MeleeInitiator extends ChatCardActor{
 		const html = await renderTemplate(this.template, this);
 		
 		const speakerData = {};
-		if( this.token) speakerData.token = this.token;
-		else speakerData.actor = this.actor;
+		if( this.token) speakerData.token = this;
+		else speakerData.actor = this;
 		const speaker = ChatMessage.getSpeaker(speakerData);
 		
 		const user = this.actor.user ? this.actor.user : game.user;
