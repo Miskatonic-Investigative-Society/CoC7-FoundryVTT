@@ -61,6 +61,7 @@ export class chatHelper{
 			const tokenData = scene.getEmbeddedEntity('Token', tokenId);
 			if (!tokenData) return null;
 			const token = new Token(tokenData);
+			if( !token.scene) token.scene = scene;
 			return token;
 		} else {
 			const actor = game.actors.get( key);
@@ -113,6 +114,8 @@ export class chatHelper{
 	}
 
 	static getDistance( startToken, endToken){
+		// startToken.updateSource();
+		// canvas.sight.initializeTokens();
 		const ray = new Ray( startToken.center, endToken.center);
 		const segment = [{ray}];
 		const distance = {
