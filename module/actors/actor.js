@@ -374,25 +374,6 @@ export class CoCActor extends Actor {
 
 			return await super.createEmbeddedEntity(embeddedName, data, options);
 		case 'weapon':{
-			const mainSkill = data?.data?.skill?.main?.name;
-			if( mainSkill){
-				let skill = this.getSkillsByName( mainSkill)[0];
-				if( !skill){
-					const name = mainSkill.match(/\(([^)]+)\)/)? mainSkill.match(/\(([^)]+)\)/)[1]: mainSkill;
-					skill = await this.createWeaponSkill( name, data.data.properties?.rngd ? true: false);
-				}
-				if( skill) data.data.skill.main.id = skill._id;
-			} //TODO : Else : selectionner le skill dans la liste ou en créer un nouveau
-			const secondSkill = data?.data?.skill?.alternativ?.name;
-			if( secondSkill){
-				let skill = this.getSkillsByName( secondSkill)[0];
-				if( !skill){
-					const name = mainSkill.match(/\(([^)]+)\)/)? mainSkill.match(/\(([^)]+)\)/)[1]: mainSkill;
-					skill = await this.createWeaponSkill( name, data.data.properties?.rngd ? true: false);
-				}
-				if( skill) data.data.skill.alternativ.id = skill._id;
-			} //TODO : Else : selectionner le skill dans la liste ou en créer un nouveau
-
 			return await super.createEmbeddedEntity(embeddedName, data, options);
 		}
 		case 'setup':{
@@ -1039,7 +1020,7 @@ export class CoCActor extends Actor {
 				item = game.items.get(skillData.id);
 			}
 
-			if( !item) ui.notifications.warn(`No skill ${skillData.name? skillData.name : skillData} found for actor ${this.name}`);
+			if( !item) return ui.notifications.warn(`No skill ${skillData.name? skillData.name : skillData} found for actor ${this.name}`);
 
 			let create = false;
 			await Dialog.confirm({
@@ -1099,7 +1080,7 @@ export class CoCActor extends Actor {
 						item = game.items.get(weaponData.id);
 					}
 
-					if( !item) return ui.notifications.warning( game.i18n.localize( 'CoC7.WarnMacroNoItemFound'));
+					if( !item) return ui.notifications.warn( game.i18n.localize( 'CoC7.WarnMacroNoItemFound'));
 
 					let create = false;
 					await Dialog.confirm({
@@ -1108,7 +1089,30 @@ export class CoCActor extends Actor {
 						yes: () => create = true
 					});
 
-					if(true ==  create){ await this.createOwnedItem( duplicate(item.data));}
+					if(true ==  create){ 
+
+						const mainSkill = item.data?.data?.skill?.main?.name;
+						if( mainSkill){
+							let skill = this.getSkillsByName( mainSkill)[0];
+							if( !skill){
+								const name = mainSkill.match(/\(([^)]+)\)/)? mainSkill.match(/\(([^)]+)\)/)[1]: mainSkill;
+								skill = await this.createWeaponSkill( name, item.data.data.properties?.rngd ? true: false);
+							}
+							if( skill) item.data.data.skill.main.id = skill._id;
+						} //TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
+
+						const secondSkill = item.data?.data?.skill?.alternativ?.name;
+						if( secondSkill){
+							let skill = this.getSkillsByName( secondSkill)[0];
+							if( !skill){
+								const name = mainSkill.match(/\(([^)]+)\)/)? mainSkill.match(/\(([^)]+)\)/)[1]: mainSkill;
+								skill = await this.createWeaponSkill( name, item.data.data.properties?.rngd ? true: false);
+							}
+							if( skill) item.data.data.skill.alternativ.id = skill._id;
+						} //TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
+						
+						await this.createEmbeddedEntity('OwnedItem', duplicate(item.data));
+					}
 					else return;
 					weapons = this.getItemsFromName( item.name);
 					if( !weapons) return;

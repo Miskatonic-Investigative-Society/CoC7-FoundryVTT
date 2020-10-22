@@ -30,6 +30,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
+  width: 100%;
 }
 .flexrow > * {
   flex: 1;
@@ -346,6 +347,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
+  width: 100%;
   justify-content: flex-end;
 }
 .coc7.sheet.book .sheet-body .spell-list .item-controls > *,
@@ -483,6 +485,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
+  width: 100%;
 }
 .coc7 .form-group .form-fields > * {
   flex: 1;
@@ -875,6 +878,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
+  width: 100%;
   justify-content: flex-end;
 }
 .coc7.sheet.skill .sheet-body .spell-list .item-controls > *,
@@ -1034,6 +1038,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
+  width: 100%;
   justify-content: flex-end;
   height: 16px;
 }
@@ -1226,6 +1231,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
+  width: 100%;
   justify-content: flex-end;
 }
 .coc7.sheet.occupation .item-list .item-controls > * {

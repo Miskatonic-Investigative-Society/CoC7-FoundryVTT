@@ -90,11 +90,16 @@ export class CoC7Dice {
 				const diceData = {
 					formula: `${tenDie.results.length}d100+1d10`,
 					results: diceResults,
+					throws: [],
 					whisper: null,
 					blind: false
 				};
-    
-				game.dice3d.show(diceData);
+	
+				try{
+					game.dice3d.show(diceData);
+				} catch(err){
+					console.error('Roll: ' + err.message);
+				}
 			}
 		}
 
