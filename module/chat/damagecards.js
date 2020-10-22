@@ -28,18 +28,22 @@ export class CoC7DamageRoll extends ChatCardActor{
 		
 		const is7 = Object.prototype.hasOwnProperty.call(Roll, 'cleanTerms');
 
+		// 0.7.5 this.maxDamage.result -> this.maxDamage
 		this.maxDamage = is7? Roll.maximize( this.rollString)._total: Roll.maximize( this.rollString);
 		this.roll = null;
 		if( this.critical){
 			if( this.weapon.impale) {
-				this.rollString = this.rollString + '+' + this.maxDamage.total;
+				this.rollString = this.rollString + '+' + this.maxDamage;
 				this.roll = new Roll( this.rollString);
 				this.roll.roll();
 				this.result = Math.floor( this.roll.total);
 			}
 			else{ 
-				this.result = this.maxDamage.total;
-				this.roll = this.maxDamage;
+				this.result = this.maxDamage;
+				this.roll = {
+					formula: this.maxDamage,
+					dice: [{ formula: this.maxDamage, total: this.maxDamage, rolls: [{ resul: this.maxDamage}]}]
+				};
 				this.resultString = `Max(${this.rollString})`;
 			}
 
