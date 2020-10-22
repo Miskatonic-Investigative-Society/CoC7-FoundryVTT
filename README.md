@@ -20,6 +20,11 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+vesion 0.4.0 :
+
+* Ready for 0.7.5
+* The latest version of 'Dice So Nice!' will not work with skills check. You  have to keep an older version to see the dice.
+
 version 0.3.9 :
 
 * Bug correction:
