@@ -33,17 +33,22 @@ export class CoC7DamageRoll extends ChatCardActor{
 		this.roll = null;
 		if( this.critical){
 			if( this.weapon.impale) {
-				this.rollString = this.rollString + '+' + this.maxDamage;
+				if( is7) this.rollString = this.rollString + '+' + this.maxDamage;
+				else this.rollString = this.rollString + '+' + this.maxDamage.result;
 				this.roll = new Roll( this.rollString);
 				this.roll.roll();
 				this.result = Math.floor( this.roll.total);
 			}
 			else{ 
-				this.result = this.maxDamage;
-				this.roll = {
-					formula: this.maxDamage,
-					dice: [{ formula: this.maxDamage, total: this.maxDamage, rolls: [{ resul: this.maxDamage}]}]
-				};
+				if( is7){
+					this.roll = new Roll( `${this.maxDamage}`);
+					this.roll.roll();
+					this.result = this.maxDamage;
+				} else {
+					this.roll = new Roll( this.maxDamage.result);
+					this.roll.roll();
+					this.result = this.maxDamage.result;
+				}
 				this.resultString = `Max(${this.rollString})`;
 			}
 
