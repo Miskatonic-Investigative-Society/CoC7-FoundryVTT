@@ -20,6 +20,13 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.4.2 :
+
+* Bug correction :
+  * Not having a credit rating skill will not block char creation.
+  * Bug correction on DsN V2 with 0.6.6
+* Typo correction validate
+
 version 0.4.1 :
 
 * Quick fix, DsN V3 is now working.
