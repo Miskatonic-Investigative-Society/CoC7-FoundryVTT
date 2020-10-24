@@ -20,6 +20,11 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.4.1 :
+
+* Quick fix, DsN V3 is now working.
+* A few settingd added for DsN V3, color set for unit and ten dice, and a setting to sync dice rolls between players.
+
 vesion 0.4.0 :
 
 * Ready for 0.7.5
