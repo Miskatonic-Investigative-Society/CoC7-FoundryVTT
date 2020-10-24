@@ -79,13 +79,18 @@ export class CoC7Dice {
 
 
 		const isBlind = 'blindroll' === (rollMode? rollMode: game.settings.get('core', 'rollMode'));
-		const syncDice = game.settings.get('CoC7', 'syncDice3d');
-		const unitDieColorset = game.settings.get('CoC7', 'unitDieColorset');
-		const tenDieNoMod = game.settings.get('CoC7', 'tenDieNoMod');
-		const tenDieBonus = game.settings.get('CoC7', 'tenDieBonus');
-		const tenDiePenalty = game.settings.get('CoC7', 'tenDiePenalty');
+
 		if( !isBlind && !hideDice){
 			if( game.dice3d){
+				
+				const [version] = game.modules.get('dice-so-nice')?.data.version.split('.');
+				const DsN3 = Number(version) >= 3;
+				const syncDice = game.settings.get('CoC7', 'syncDice3d');
+				const unitDieColorset = DsN3? game.settings.get('CoC7', 'unitDieColorset'): null;
+				const tenDieNoMod = DsN3? game.settings.get('CoC7', 'tenDieNoMod'): null;
+				const tenDieBonus = DsN3? game.settings.get('CoC7', 'tenDieBonus'): null;
+				const tenDiePenalty = DsN3? game.settings.get('CoC7', 'tenDiePenalty'): null;
+				
 				const diceResults = [];
 				tenDie.results.forEach(dieResult => { 
 					diceResults.push( 100 == dieResult ?0:dieResult/10);
@@ -144,10 +149,11 @@ export class CoC7Dice {
 
 	static async showRollDice3d(roll)
 	{
-		const syncDice = game.settings.get('CoC7', 'syncDice3d');
 
 		if(game.modules.get('dice-so-nice')?.active)
 		{
+			const syncDice = game.settings.get('CoC7', 'syncDice3d');
+
 			await game.dice3d.showForRoll(roll,game.user,syncDice);
 		}
 	}
