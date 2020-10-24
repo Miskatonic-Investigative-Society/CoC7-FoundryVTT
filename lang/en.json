@@ -445,5 +445,15 @@
 "SETTINGS.RestrictGridSpaces": "Restrict measurement to grid spaces",
 "SETTINGS.RestrictGridSpacesHint": "For range combat, if selected the distances will be mesured in grid spaces, if not the 'real' (euclidean) distance will be used.",
 "SETTINGS.StatusPlayerEditable": "Player can modify status",
-"SETTINGS.StatusPlayerEditableHint": "Let you player modify their status (prone, unconscious, dying, dead) and reset their daily SAN loss"
+"SETTINGS.StatusPlayerEditableHint": "Let you player modify their status (prone, unconscious, dying, dead) and reset their daily SAN loss",
+"SETTINGS.SyncDice3D": "[DsN] Sync dice",
+"SETTINGS.SyncDice3DHint": "When using DsN, sync dice between clients",
+"SETTINGS.UnitDieColorset": "[DsN] Unit die colorset",
+"SETTINGS.UnitDieColorsetHint": "When using DsN, colorset to use for unit die. (default to use player default)",
+"SETTINGS.TenDieNoMod": "[DsN] Ten die colorset",
+"SETTINGS.TenDieNoModHint": "When using DsN, colorset to use for single ten die (default to use player default)",
+"SETTINGS.TenDieBonus": "[DsN] Ten bonus dice colorset",
+"SETTINGS.TenDieBonusHint": "When using DsN, colorset to use for ten bonus dice",
+"SETTINGS.TenDiePenalty": "[DsN] Ten penalty dice colorset",
+"SETTINGS.TenDiePenaltyHint": "When using DsN, colorset to use for penalty bonus dice"
 }
