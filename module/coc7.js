@@ -183,6 +183,58 @@ Hooks.once('init', async function() {
 		type: Boolean
 	});
 
+	if(game.modules.get('dice-so-nice')?.active){
+		const [version] = game.modules.get('dice-so-nice')?.data.version.split('.');
+
+		if( !isNaN(Number(version)) && Number(version) >= 3){
+			game.settings.register('CoC7', 'syncDice3d',{
+				name: 'SETTINGS.SyncDice3D',
+				hint: 'SETTINGS.SyncDice3DHint',
+				scope: 'world',
+				config: true,
+				default: true,
+				type: Boolean
+			});
+
+			game.settings.register('CoC7', 'unitDieColorset',{
+				name: 'SETTINGS.UnitDieColorset',
+				hint: 'SETTINGS.UnitDieColorsetHint',
+				scope: 'world',
+				config: true,
+				default: 'white',
+				type: String
+			});
+			
+			game.settings.register('CoC7', 'tenDieNoMod',{
+				name: 'SETTINGS.TenDieNoMod',
+				hint: 'SETTINGS.TenDieNoModHint',
+				scope: 'world',
+				config: true,
+				default: 'foundry',
+				type: String
+			});
+			
+			game.settings.register('CoC7', 'tenDieBonus',{
+				name: 'SETTINGS.TenDieBonus',
+				hint: 'SETTINGS.TenDieBonusHint',
+				scope: 'world',
+				config: true,
+				default: 'bronze',
+				type: String
+			});
+			
+			game.settings.register('CoC7', 'tenDiePenalty',{
+				name: 'SETTINGS.TenDiePenalty',
+				hint: 'SETTINGS.TenDiePenaltyHint',
+				scope: 'world',
+				config: true,
+				default: 'bloodmoon',
+				type: String
+			});
+
+		}
+	}
+
 	function _setInitiativeOptions(rule)
 	{
 		let decimals = 0;
