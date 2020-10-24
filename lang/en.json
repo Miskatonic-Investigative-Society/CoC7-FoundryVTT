@@ -451,9 +451,9 @@
 "SETTINGS.UnitDieColorset": "[DsN] Unit die colorset",
 "SETTINGS.UnitDieColorsetHint": "When using DsN, colorset to use for unit die. (default to use player default)",
 "SETTINGS.TenDieNoMod": "[DsN] Ten die colorset",
-"SETTINGS.TenDieNoModHint": "When using DsN, colorset to use for single ten die (default to use player default)",
+"SETTINGS.TenDieNoModHint": "When using DsN, colorset to use for single ten die. (default to use player default)",
 "SETTINGS.TenDieBonus": "[DsN] Ten bonus dice colorset",
-"SETTINGS.TenDieBonusHint": "When using DsN, colorset to use for ten bonus dice",
+"SETTINGS.TenDieBonusHint": "When using DsN, colorset to use for ten bonus dice. (default to use player default)",
 "SETTINGS.TenDiePenalty": "[DsN] Ten penalty dice colorset",
-"SETTINGS.TenDiePenaltyHint": "When using DsN, colorset to use for penalty bonus dice"
+"SETTINGS.TenDiePenaltyHint": "When using DsN, colorset to use for penalty bonus dice. (default to use player default)"
 }
