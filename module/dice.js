@@ -79,6 +79,11 @@ export class CoC7Dice {
 
 
 		const isBlind = 'blindroll' === (rollMode? rollMode: game.settings.get('core', 'rollMode'));
+		const syncDice = game.settings.get('CoC7', 'syncDice3d');
+		const unitDieColorset = game.settings.get('CoC7', 'unitDieColorset');
+		const tenDieNoMod = game.settings.get('CoC7', 'tenDieNoMod');
+		const tenDieBonus = game.settings.get('CoC7', 'tenDieBonus');
+		const tenDiePenalty = game.settings.get('CoC7', 'tenDiePenalty');
 		if( !isBlind && !hideDice){
 			if( game.dice3d){
 				const diceResults = [];
@@ -90,13 +95,37 @@ export class CoC7Dice {
 				const diceData = {
 					formula: `${tenDie.results.length}d100+1d10`,
 					results: diceResults,
-					throws: [],
+					throws: [{
+						dice:[]
+					}],
 					whisper: null,
 					blind: false
 				};
+
+				tenDie.results.forEach( dieResult => {
+					diceData.throws[0].dice.push({
+						result:100 == dieResult ?0:dieResult/10,
+						resultLabel:100 == dieResult ?0:dieResult/10,
+						type: 'd100',
+						vectors:[],
+						options:{
+							colorset: !modif? tenDieNoMod : 0 > modif? tenDiePenalty: tenDieBonus
+						}
+					});
+				});//acid (vert), necrotic (red), inspired (white), bloodmoon (red), Foundry, toxic (green), bronze, white
+
+				diceData.throws[0].dice.push({
+					result:unitDie.total,
+					resultLabel:unitDie.total,
+					type: 'd10',
+					vectors:[],
+					options:{
+						colorset: unitDieColorset
+					}
+				});
 	
 				try{
-					game.dice3d.show(diceData);
+					game.dice3d.show(diceData, game.user, syncDice);
 				} catch(err){
 					console.error('Roll: ' + err.message);
 				}
@@ -115,9 +144,11 @@ export class CoC7Dice {
 
 	static async showRollDice3d(roll)
 	{
+		const syncDice = game.settings.get('CoC7', 'syncDice3d');
+
 		if(game.modules.get('dice-so-nice')?.active)
 		{
-			await game.dice3d.showForRoll(roll,game.user,true);
+			await game.dice3d.showForRoll(roll,game.user,syncDice);
 		}
 	}
   
