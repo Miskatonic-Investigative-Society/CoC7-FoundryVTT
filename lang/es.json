@@ -1,4 +1,7 @@
 {
+"I18N.LANGUAGE": "Español",
+"I18N.MAINTAINERS": "@Viriato139ac#0342",
+  
 "CoC7.title": "La Llamada de Cthulhu 7a Edición",
 
 "CHARAC.STR": "FUE",
@@ -445,5 +448,16 @@
 "SETTINGS.RestrictGridSpaces": "Medir usando espacios de rejilla",
 "SETTINGS.RestrictGridSpacesHint": "En el combate a distancia, si se selecciona esta opción las distancias se medirán usando espacios de rejilla (cuadrados o hexágonos) en lugar de la distancia 'real' (euclidiana).",
 "SETTINGS.StatusPlayerEditable": "Los jugadores pueden modificar estados",
-"SETTINGS.StatusPlayerEditableHint": "Permite que el jugador modifique sus estados (caído, inconsciente, moribundo, muerto) y reinicie su perdida diaria de COR"
+"SETTINGS.StatusPlayerEditableHint": "Permite que el jugador modifique sus estados (caído, inconsciente, moribundo, muerto) y reinicie su perdida diaria de COR",
+"SETTINGS.SyncDice3D": "[DsN] Sincronizar dados",
+"SETTINGS.SyncDice3DHint": "Cuando se usa Dice so Nice (DsN), permite sincronizar los dados entre clientes",
+"SETTINGS.UnitDieColorset": "[DsN] Configuración de dado de unidades",
+"SETTINGS.UnitDieColorsetHint": "Cuando se usa Dice so Nice (DsN), configuración de dado de unidades (si no se especifica otra cosa, usa los valores por defecto del jugador)",
+"SETTINGS.TenDieNoMod": "[DsN] Configuración de dado de decenas",
+"SETTINGS.TenDieNoModHint": "Cuando se usa Dice so Nice (DsN), configuración de dado de decenas (si no se especifica otra cosa, usa los valores por defecto del jugador)",
+"SETTINGS.TenDieBonus": "[DsN] Configuración de dado de bonificación",
+"SETTINGS.TenDieBonusHint": "Cuando se usa Dice so Nice (DsN), configuración de dado de bonificación (si no se especifica otra cosa, usa los valores por defecto del jugador)",
+"SETTINGS.TenDiePenalty": "[DsN] Configuración de dado de penalización",
+"SETTINGS.TenDiePenaltyHint": "Cuando se usa Dice so Nice (DsN), configuración de dado de penalización (si no se especifica otra cosa, usa los valores por defecto del jugador)"
+
 }
