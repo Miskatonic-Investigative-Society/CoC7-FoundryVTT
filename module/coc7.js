@@ -184,17 +184,19 @@ Hooks.once('init', async function() {
 	});
 
 	if(game.modules.get('dice-so-nice')?.active){
+
+		game.settings.register('CoC7', 'syncDice3d',{
+			name: 'SETTINGS.SyncDice3D',
+			hint: 'SETTINGS.SyncDice3DHint',
+			scope: 'world',
+			config: true,
+			default: true,
+			type: Boolean
+		});
+		
 		const [version] = game.modules.get('dice-so-nice')?.data.version.split('.');
 
 		if( !isNaN(Number(version)) && Number(version) >= 3){
-			game.settings.register('CoC7', 'syncDice3d',{
-				name: 'SETTINGS.SyncDice3D',
-				hint: 'SETTINGS.SyncDice3DHint',
-				scope: 'world',
-				config: true,
-				default: true,
-				type: Boolean
-			});
 
 			game.settings.register('CoC7', 'unitDieColorset',{
 				name: 'SETTINGS.UnitDieColorset',
