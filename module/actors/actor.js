@@ -602,7 +602,7 @@ export class CoCActor extends Actor {
 							data.data.skills = merged;
 						} else {
 						//Wait for skill selection.
-							const selected = await SkillSelectDialog.create( dialogData);
+							const selected = await SkillSelectDialog.create( dialogData);//Dialog data bug ???
 							if( !selected) return;
 							const merged = CoC7Item.mergeOptionalSkills( data.data.skills, selected);
 							data.data.skills = merged;						}
@@ -612,9 +612,9 @@ export class CoCActor extends Actor {
 				//Add all skills
 				await this.addUniqueItems( data.data.skills, 'occupation');
 				//Credit rating is always part of occupation
-				await this.creditRatingSkill.setItemFlag( 'occupation');
+				await this.creditRatingSkill?.setItemFlag( 'occupation');
 				//setting it to min credit rating
-				await this.creditRatingSkill.update( {'data.adjustments.occupation': Number(data.data.creditRating.min)});
+				await this.creditRatingSkill?.update( {'data.adjustments.occupation': Number(data.data.creditRating.min)});
 
 				const newOccupation = await super.createEmbeddedEntity(embeddedName, data, options);
 				//setting points
@@ -849,6 +849,24 @@ export class CoCActor extends Actor {
 			}
 		});
 		return points;
+	}
+
+	async resetOccupationPoints(){
+		await this.update( {
+			'data.development.occupation': this.occupationPoints
+		});
+	}
+
+	async resetArchetypePoints(){
+		await this.update( {
+			'data.development.archetype': this.occupationPoints
+		});
+	}
+
+	async resetPersonalPoints(){
+		await this.update( {
+			'data.development.personal': this.personalPoints
+		});		
 	}
 
 	get archetypePointsSpent(){
