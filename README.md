@@ -20,6 +20,10 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.4.1 :
+
+* Quick fix, DsN V3 is now working.
+
 vesion 0.4.0 :
 
 * Ready for 0.7.5

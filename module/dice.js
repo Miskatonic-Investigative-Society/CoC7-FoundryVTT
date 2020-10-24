@@ -90,13 +90,37 @@ export class CoC7Dice {
 				const diceData = {
 					formula: `${tenDie.results.length}d100+1d10`,
 					results: diceResults,
-					throws: [],
+					throws: [{
+						dice:[]
+					}],
 					whisper: null,
 					blind: false
 				};
+
+				tenDie.results.forEach( dieResult => {
+					diceData.throws[0].dice.push({
+						result:100 == dieResult ?0:dieResult/10,
+						resultLabel:100 == dieResult ?0:dieResult/10,
+						type: 'd100',
+						vectors:[],
+						options:{
+							colorset: 'toxic'
+						}
+					});
+				});
+
+				diceData.throws[0].dice.push({
+					result:unitDie.total,
+					resultLabel:unitDie.total,
+					type: 'd10',
+					vectors:[],
+					options:{
+						colorset: 'toxic'
+					}
+				});
 	
 				try{
-					game.dice3d.show(diceData);
+					game.dice3d.show(diceData, game.user, true);
 				} catch(err){
 					console.error('Roll: ' + err.message);
 				}
