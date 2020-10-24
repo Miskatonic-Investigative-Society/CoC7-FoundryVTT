@@ -26,6 +26,7 @@ version 0.4.2 :
   * Not having a credit rating skill will not block char creation.
   * Bug correction on DsN V2 with 0.6.6
 * Typo correction validate
+* Spanish translation updated thanks to Lozalojo.
 
 version 0.4.1 :
 
