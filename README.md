@@ -20,6 +20,11 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+version 0.4.3 :
+
+* Bug correction :
+  * localization for individual development roll added.
+
 version 0.4.2 :
 
 * Bug correction :
