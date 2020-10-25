@@ -23,7 +23,7 @@ export class SkillSelectDialog extends Dialog {
 	}
 
 	static async create( data){
-		const html = await renderTemplate('systems/CoC7/templates/apps/skill-select.html', data);
+		const html = await renderTemplate('systems/CoC7/templates/apps/skill-select.html', data); //Render template bug avec certaines data
 		return new Promise( resolve => {
 			const dlg = new SkillSelectDialog({
 				title: data.title,
