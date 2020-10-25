@@ -175,12 +175,14 @@ export class CoC7Item extends Item {
 		if( item instanceof CoC7Item){
 			if( item.data.data?.properties?.special){
 				const specNameRegex = new RegExp(item.data.data.specialization, 'ig');
-				return item.name.replace( specNameRegex, '').trim().replace(/^\(+|\)+$/gm,'');
+				const filteredName = item.name.replace( specNameRegex, '').trim().replace(/^\(+|\)+$/gm,'');
+				return filteredName.length?filteredName:item.name;
 			}
 		} else {
 			if( item.data.properties?.special){
 				const specNameRegex = new RegExp(item.data.specialization, 'ig');
-				return item.name.replace( specNameRegex, '').trim().replace(/^\(+|\)+$/gm,'');
+				const filteredName =  item.name.replace( specNameRegex, '').trim().replace(/^\(+|\)+$/gm,'');
+				return filteredName.length?filteredName:item.name;
 			}
 		}
 		return item.name;
