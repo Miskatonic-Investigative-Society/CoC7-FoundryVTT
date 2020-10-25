@@ -1375,12 +1375,12 @@ export class CoCActor extends Actor {
 			const augmentRoll = new Roll('1D10');
 			augmentRoll.roll();
 			if( !fastForward) await CoC7Dice.showRollDice3d(augmentRoll);
+			message = game.i18n.format( 'CoC7.DevSuccessDetails', {item : skill.name, augment: augmentRoll.total});
+			title = game.i18n.format( 'CoC7.DevRollTitle', {item : skill.name, die: upgradeRoll.total, score: skill.value});
 			await skill.increaseExperience( augmentRoll.total);
-			title = `${skill.name} upgraded`;
-			message = `Roll : ${upgradeRoll.total} VS ${skill.value}%.<br>Skill ${skill.name} gained ${augmentRoll.total}%.`;
 		} else {
-			title = `${skill.name} NOT upgraded`;
-			message = `Roll : ${upgradeRoll.total} VS ${skill.value}%.<br>Skill ${skill.name} didn't gain any XP.`;
+			title = game.i18n.format( 'CoC7.DevRollTitle', {item : skill.name, die: upgradeRoll.total, score: skill.value});
+			message = game.i18n.format( 'CoC7.DevFailureDetails', {item : skill.name});
 		}
 		const speaker = { actor: this._id};
 		await chatHelper.createMessage( title, message, speaker);
