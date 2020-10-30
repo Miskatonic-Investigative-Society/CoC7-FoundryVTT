@@ -374,7 +374,27 @@ export class CoCActor extends Actor {
 
 			return await super.createEmbeddedEntity(embeddedName, data, options);
 		case 'weapon':{
-			return await super.createEmbeddedEntity(embeddedName, data, options);
+			const mainSkill = data.data?.skill?.main?.name;
+			if( mainSkill){
+				let skill = this.getSkillsByName( mainSkill)[0];
+				if( !skill){
+					const name = mainSkill.match(/\(([^)]+)\)/)? mainSkill.match(/\(([^)]+)\)/)[1]: mainSkill;
+					skill = await this.createWeaponSkill( name, data.data.properties?.rngd ? true: false);
+				}
+				if( skill) data.data.skill.main.id = skill._id;
+			} //TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
+
+			const secondSkill = data.data?.skill?.alternativ?.name;
+			if( secondSkill){
+				let skill = this.getSkillsByName( secondSkill)[0];
+				if( !skill){
+					const name = mainSkill.match(/\(([^)]+)\)/)? mainSkill.match(/\(([^)]+)\)/)[1]: mainSkill;
+					skill = await this.createWeaponSkill( name, data.data.properties?.rngd ? true: false);
+				}
+				if( skill) data.data.skill.alternativ.id = skill._id;
+			} //TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
+			
+			return await super.createEmbeddedEntity(embeddedName, duplicate(data), options);
 		}
 		case 'setup':{
 			if( data.data.enableCharacterisitics){
@@ -745,7 +765,7 @@ export class CoCActor extends Actor {
 		if( this.data.data.attribs.hp.auto){
 			if(this.data.data.characteristics.siz.value != null &&  this.data.data.characteristics.con.value !=null){
 				const maxHP = Math.floor( (this.data.data.characteristics.siz.value + this.data.data.characteristics.con.value)/10);
-				return game.settings.get('CoC7', 'pulpRules') && 'character' == this.type? maxHP*2:maxHP;
+				return game.settings.get('CoC7', 'pulpRules') && 'character' == this.data.type? maxHP*2:maxHP;
 			}
 			else return null;
 		} 
