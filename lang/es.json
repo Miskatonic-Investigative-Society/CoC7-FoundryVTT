@@ -153,7 +153,7 @@
 "CoC7.NoWinner": "Ambas partes han fallado.",
 "CoC7.DodgeSuccess": "{name} ha esquivado!",
 "CoC7.ManeuverSuccess": "La maniobra {name} ha tenido éxito.",
-"CoC7.InflictPain": "Infligir dolor",
+"CoC7.InflictPain": "Aplicar daño",
 
 "CoC7.combatCard.dive4cover": "Ponerse a Cubierto",
 
@@ -275,6 +275,9 @@
 "CoC7.SkillUnflagForDevelopement": "Desmarcar para desarrollo",
 "CoC7.SkillFlagForDevelopement": "Marcar para desarrollo",
 "CoC7.RollAll4Dev": "Tirando desarrollo de todas las habilidades",
+"CoC7.DevRollTitle": "Tirando desarrollo de {item}: {die}/{score}%",
+"CoC7.DevSuccessDetails": "{item} se ha aumentado un {augment}%",
+"CoC7.DevFailureDetails": "{item} NO se ha aumentado",
 "CoC7.DevSuccess": "({die}/{score}%), {item} se ha aumentado un {augment}%",
 "CoC7.DevFailure": "({die}/{score}%), {item} NO se ha aumentado",
 "CoC7.SkillDetail": "Detalles",
@@ -399,7 +402,7 @@
 "CoC7.SpendPoints": "Asignar puntos de características",
 "CoC7.RollCharac": "Tirar características",
 "CoC7.SelectCoreCharac": "Seleccione características básicas",
-"CoC7.SkillSpecSelectTitle": "Seleccione/cree la especialización {specialization} de la habilidad",
+"CoC7.SkillSpecSelectTitle": "Especialización de {specialization}",
 "CoC7.SkillSelectBase": "Seleccione el valor base de la habilidad {name}",
 "CoC7.SelectSkill": "Seleccione una habilidad existente",
 "CoC7.CreateNewSkill": "Cree una habilidad nueva",
@@ -459,5 +462,4 @@
 "SETTINGS.TenDieBonusHint": "Cuando se usa Dice so Nice (DsN), configuración de dado de bonificación (si no se especifica otra cosa, usa los valores por defecto del jugador)",
 "SETTINGS.TenDiePenalty": "[DsN] Configuración de dado de penalización",
 "SETTINGS.TenDiePenaltyHint": "Cuando se usa Dice so Nice (DsN), configuración de dado de penalización (si no se especifica otra cosa, usa los valores por defecto del jugador)"
-
 }
