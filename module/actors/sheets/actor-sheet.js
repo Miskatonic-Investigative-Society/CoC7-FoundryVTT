@@ -31,7 +31,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 		data.invalidPersonalPoints = ( this.actor.personalPointsSpent != Number(this.actor.data.data.development?.personal));
 		data.creditRatingMax = Number(this.actor.occupation?.data.data.creditRating.max);
 		data.creditRatingMin = Number(this.actor.occupation?.data.data.creditRating.min);
-		data.invalidCreditRating = ( this.actor.creditRatingSkill?.data.data.adjustments.occupation > data.creditRatingMax || this.actor.creditRatingSkill?.data.data.adjustments.occupation < data.creditRatingMin);
+		data.invalidCreditRating = ( this.actor.creditRatingSkill?.data.data.adjustments?.occupation > data.creditRatingMax || this.actor.creditRatingSkill?.data.data.adjustments?.occupation < data.creditRatingMin);
 		data.pulpTalentCount = data.itemsByType.talent?.length ? data.itemsByType.talent?.length : 0;
 		data.minPulpTalents = this.actor.archetype?.data.data.talents ? this.actor.archetype?.data.data.talents : 0;
 		data.invalidPulpTalents = data.pulpTalentCount < data.minPulpTalents;
