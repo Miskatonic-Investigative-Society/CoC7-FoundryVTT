@@ -24,6 +24,11 @@ version 0.4.3 :
 
 * Bug correction :
   * localization for individual development roll added.
+  * 1920's Character example updated.
+  * Bug on opening character from compendium corrected.
+  * Double HP for pulp character corrected.
+* German translation updated thanks to Taglar
+* Spanish translation updated thanks to Lozalojo.
 
 version 0.4.2 :
 
