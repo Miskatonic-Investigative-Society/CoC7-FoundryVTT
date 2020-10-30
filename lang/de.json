@@ -66,7 +66,7 @@
 "CoC7.LuckSpent": "{luckAmount} Glückspunkt(e) eingesetzt.",
 "CoC7.LuckError": "{actorName} hat nicht genügend Glückspunkte.",
 
-"CoC7.BonusSelectionWindow": "Bonus selection window",
+"CoC7.BonusSelectionWindow": "Bonus-Auswahlfenster",
 "CoC7.RegularDifficulty": "regulärer",
 "CoC7.HardDifficulty": "schwieriger",
 "CoC7.ExtremeDifficulty": "extremer",
@@ -147,8 +147,8 @@
 "CoC7.WeaponBlst": "Schuss",
 "CoC7.WeaponStun": "Betäubung",
 
-"CoC7.ErrorItem": "Couldn't locate item",
-"CoC7.ErrorActor": "Couldn't locate actor",
+"CoC7.ErrorItem": "Gegenstand kann nicht gefunden werden",
+"CoC7.ErrorActor": "Investigator kann nicht gefunden werden",
 "CoC7.ErrorInvalidFormula": "{value} ist keine gültige Eingabe.",
 "CoC7.ErrorInvalid": "ungültig"
 }
