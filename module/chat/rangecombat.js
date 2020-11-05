@@ -87,6 +87,16 @@ export class CoC7RangeInitiator{
 
 	}
 
+	get displayActorOnCard(){
+		return game.settings.get('CoC7', 'displayActorOnCard');
+	}
+
+	get actorImg(){
+		const img =  chatHelper.getActorImgFromKey( this.actorKey);
+		if( img ) return img;
+		return '../icons/svg/mystery-man-black.svg';
+	}
+
 	get actor(){
 		return chatHelper.getActorFromKey( this.actorKey);
 	}
