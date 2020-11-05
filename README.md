@@ -20,6 +20,11 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+Version 0.4.4 :
+
+* Bug correction :
+  * Portrait correctly displayed on range combat card.
+
 version 0.4.3 :
 
 * Bug correction :
