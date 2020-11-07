@@ -439,6 +439,8 @@
 "SETTINGS.InitiativeRuleOptional": "Optional",
 "SETTINGS.displayInitDices": "Display init dice",
 "SETTINGS.displayInitDicesHint": "Display the dices when rolling for initiative (Optional rules only)",
+"SETTINGS.displayInitAsText": "Display init text",
+"SETTINGS.displayInitAsTextHint": "Display initiative as text instead of number (Optional rules only)",
 "SETTINGS.PulpRules": "Pulp rules",
 "SETTINGS.PulpRulesHint": "Alow the usage of Pulp Rules (Archetype, Talent, HP), !early implementation!",
 "SETTINGS.DisregardAmmo": "Disregard Ammo count.",
