@@ -1349,20 +1349,34 @@ export class CoCActor extends Actor {
 	async developementPhase( fastForward = false){
 		const failure = [];
 		const success = [];
+		const is07x = isNewerVersion(game.data.version, '0.6.9');
+
 		const title = game.i18n.localize('CoC7.RollAll4Dev');
 		let message = '<p class="chat-card">';
 		for (let item of this.items){
 			if( 'skill' === item.type){
 				if( item.developementFlag){
-					const die = new Die(100);
-					die.roll(1);
+					let die;
+					if( is07x){
+						die = new Die({faces: 100}).evaluate();
+					} else {
+						die = new Die(100);
+						die.roll(1);
+					}
 					let skillValue = item.value;
 					let augment = null;
 					if( die.total > skillValue || die.total >= 95)
 					{
+						let augmentDie;
+						if( is07x){
+							augmentDie = new Die({faces: 10}).evaluate();
+						}
+						else{
+							augmentDie = new Die(10);
+							augmentDie.roll(1);
+						}	
 						success.push(item._id);
-						const augmentDie = new Die(10);
-						augmentDie.roll();
+
 						augment += augmentDie.total;
 						message += `<span class="upgrade-success">${game.i18n.format( 'CoC7.DevSuccess', {item : item.data.name, die: die.total, score: item.value, augment: augmentDie.total})}</span><br>`;
 						await item.increaseExperience( augment);
