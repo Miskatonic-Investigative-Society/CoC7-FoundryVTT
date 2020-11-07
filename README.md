@@ -20,6 +20,30 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+Version 0.4.4 :
+
+* **Last version to support foundry 0.6.x.**
+* Bug correction :
+  * Portrait correctly displayed on range combat card.
+  * Dice roll migration to 0.7.x in dev. phase.
+  * Initiative decimals properly set after reload.
+  * Distance on range combat card is now memorised when card refresh.
+* Optional initiative rule text
+  * When using optional initiative rule, you can display the initiative as text instead of number.
+  * Settings added to switch between text and values.
+* French translation updated thanks to Mandaar
+* French translation updated thanks to Ferin29
+
+version 0.4.3 :
+
+* Bug correction :
+  * localization for individual development roll added.
+  * 1920's Character example updated.
+  * Bug on opening character from compendium corrected.
+  * Double HP for pulp character corrected.
+* German translation updated thanks to Taglar
+* Spanish translation updated thanks to Lozalojo.
+
 version 0.4.2 :
 
 * Bug correction :

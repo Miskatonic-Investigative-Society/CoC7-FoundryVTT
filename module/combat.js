@@ -1,6 +1,8 @@
+import { CoC7Check} from './check.js';
 export class CoC7Combat {
 	static renderCombatTracker(app, html, data){
 		const currentCombat = data.combats[data.currentIndex - 1];
+		if( !currentCombat) return;
 
 		// TODO : Si le combat est deja debuté avant chargement la fonction d'initiative pointe vers l'ancienne.
 		// la fonction attribuée est data.combat.rollInitiative
@@ -18,7 +20,45 @@ export class CoC7Combat {
 			else {
 				$(combatantControlsDiv).prepend(`<a class="combatant-control add-init" title="${game.i18n.localize('CoC7.DrawGun')}" data-control="drawGun"><i class="fas fa-bullseye"></i></a>`);
 			}
-			if (combatant.initiative < 0) {
+			if( 'optional' == game.settings.get('CoC7', 'initiativeRule') && game.settings.get('CoC7', 'displayInitAsText')){
+				if( combatant.initiative){
+					const tokenInitiative = el.querySelector('.token-initiative');
+					const initiativeTest = tokenInitiative.querySelector('.initiative');
+					const roll = 100*combatant.initiative - 100*Math.floor(combatant.initiative);
+					switch( Math.floor(combatant.initiative)){
+					case CoC7Check.successLevel.fumble:
+						tokenInitiative.classList.add( 'fumble');
+						initiativeTest.innerText = game.i18n.localize('CoC7.Fumble');
+						initiativeTest.title = roll;
+						break;
+					case CoC7Check.successLevel.failure :
+						tokenInitiative.classList.add( 'failure');
+						initiativeTest.innerText = game.i18n.localize('CoC7.Failure');
+						initiativeTest.title = roll;
+						break;
+					case CoC7Check.successLevel.regular :
+						tokenInitiative.classList.add( 'regular-success');
+						initiativeTest.innerText = game.i18n.localize('CoC7.RollDifficultyRegular');
+						initiativeTest.title = roll;
+						break;
+					case CoC7Check.successLevel.hard :
+						tokenInitiative.classList.add( 'hard-success');
+						initiativeTest.innerText = game.i18n.localize('CoC7.RollDifficultyHard');
+						initiativeTest.title = roll;
+						break;
+					case CoC7Check.successLevel.extreme :
+						tokenInitiative.classList.add( 'extreme-success');
+						initiativeTest.innerText = game.i18n.localize('CoC7.RollDifficultyExtreme');
+						initiativeTest.title = roll;
+						break;
+					case CoC7Check.successLevel.critical :
+						tokenInitiative.classList.add( 'critical');
+						initiativeTest.innerText = game.i18n.localize('CoC7.RollDifficultyCritical');
+						initiativeTest.title = roll;
+						break;
+					}
+				}
+			} else if (combatant.initiative < 0) {
 				const h4 = el.querySelector('.token-name').querySelector('h4');
 				const span = el.querySelector('span.initiative');
 				h4.style.fontWeight = '900';

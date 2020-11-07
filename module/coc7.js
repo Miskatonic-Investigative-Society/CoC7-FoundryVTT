@@ -46,7 +46,6 @@ Hooks.once('init', async function() {
 		decimals: 4
 	};
 
-
 	//TODO : remove debug hooks
 	CONFIG.debug.hooks = true;
 	// CONFIG.Combat.entityClass = CoC7Combat;
@@ -155,6 +154,16 @@ Hooks.once('init', async function() {
 		type: Boolean
 	});
 
+	// Set displaying dices for init Roll.
+	game.settings.register('CoC7', 'displayInitAsText', {
+		name: 'SETTINGS.displayInitAsText',
+		hint: 'SETTINGS.displayInitAsTextHint',
+		scope: 'world',
+		config: true,
+		default: true,
+		type: Boolean
+	});
+
 	// Allow player to modify status.
 	game.settings.register('CoC7', 'statusPlayerEditable', {
 		name: 'SETTINGS.StatusPlayerEditable',
@@ -236,6 +245,9 @@ Hooks.once('init', async function() {
 
 		}
 	}
+
+	_setInitiativeOptions(game.settings.get('CoC7', 'initiativeRule'));
+
 
 	function _setInitiativeOptions(rule)
 	{
