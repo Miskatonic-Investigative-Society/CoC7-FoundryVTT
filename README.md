@@ -22,7 +22,7 @@ Compendium 'Weapons' contains a single test weapon.
 
 Version 0.4.4 :
 
-* Last version to support 0.6.x version.
+* **Last version to support foundry 0.6.x.**
 * Bug correction :
   * Portrait correctly displayed on range combat card.
   * Dice roll migration to 0.7.x in dev. phase.
