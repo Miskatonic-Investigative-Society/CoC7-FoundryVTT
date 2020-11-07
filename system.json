@@ -4,7 +4,7 @@
 	"description": "The Call of Cthulhu 7th edition simple game system",
 	"version": "0.4.4",
 	"author": "HavelockV",
-	"minimumCoreVersion": "0.7.0",
+	"minimumCoreVersion": "0.6.0",
 	"compatibleCoreVersion": "0.7.5",
 	"esmodules": [
 		"module/coc7.js",
