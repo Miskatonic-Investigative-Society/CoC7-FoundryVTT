@@ -374,7 +374,27 @@ export class CoCActor extends Actor {
 
 			return await super.createEmbeddedEntity(embeddedName, data, options);
 		case 'weapon':{
-			return await super.createEmbeddedEntity(embeddedName, data, options);
+			const mainSkill = data.data?.skill?.main?.name;
+			if( mainSkill){
+				let skill = this.getSkillsByName( mainSkill)[0];
+				if( !skill){
+					const name = mainSkill.match(/\(([^)]+)\)/)? mainSkill.match(/\(([^)]+)\)/)[1]: mainSkill;
+					skill = await this.createWeaponSkill( name, data.data.properties?.rngd ? true: false);
+				}
+				if( skill) data.data.skill.main.id = skill._id;
+			} //TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
+
+			const secondSkill = data.data?.skill?.alternativ?.name;
+			if( secondSkill){
+				let skill = this.getSkillsByName( secondSkill)[0];
+				if( !skill){
+					const name = mainSkill.match(/\(([^)]+)\)/)? mainSkill.match(/\(([^)]+)\)/)[1]: mainSkill;
+					skill = await this.createWeaponSkill( name, data.data.properties?.rngd ? true: false);
+				}
+				if( skill) data.data.skill.alternativ.id = skill._id;
+			} //TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
+			
+			return await super.createEmbeddedEntity(embeddedName, duplicate(data), options);
 		}
 		case 'setup':{
 			if( data.data.enableCharacterisitics){
@@ -745,7 +765,7 @@ export class CoCActor extends Actor {
 		if( this.data.data.attribs.hp.auto){
 			if(this.data.data.characteristics.siz.value != null &&  this.data.data.characteristics.con.value !=null){
 				const maxHP = Math.floor( (this.data.data.characteristics.siz.value + this.data.data.characteristics.con.value)/10);
-				return game.settings.get('CoC7', 'pulpRules') && 'character' == this.type? maxHP*2:maxHP;
+				return game.settings.get('CoC7', 'pulpRules') && 'character' == this.data.type? maxHP*2:maxHP;
 			}
 			else return null;
 		} 
@@ -1329,20 +1349,34 @@ export class CoCActor extends Actor {
 	async developementPhase( fastForward = false){
 		const failure = [];
 		const success = [];
+		const is07x = isNewerVersion(game.data.version, '0.6.9');
+
 		const title = game.i18n.localize('CoC7.RollAll4Dev');
 		let message = '<p class="chat-card">';
 		for (let item of this.items){
 			if( 'skill' === item.type){
 				if( item.developementFlag){
-					const die = new Die(100);
-					die.roll(1);
+					let die;
+					if( is07x){
+						die = new Die({faces: 100}).evaluate();
+					} else {
+						die = new Die(100);
+						die.roll(1);
+					}
 					let skillValue = item.value;
 					let augment = null;
 					if( die.total > skillValue || die.total >= 95)
 					{
+						let augmentDie;
+						if( is07x){
+							augmentDie = new Die({faces: 10}).evaluate();
+						}
+						else{
+							augmentDie = new Die(10);
+							augmentDie.roll(1);
+						}	
 						success.push(item._id);
-						const augmentDie = new Die(10);
-						augmentDie.roll();
+
 						augment += augmentDie.total;
 						message += `<span class="upgrade-success">${game.i18n.format( 'CoC7.DevSuccess', {item : item.data.name, die: die.total, score: item.value, augment: augmentDie.total})}</span><br>`;
 						await item.increaseExperience( augment);
