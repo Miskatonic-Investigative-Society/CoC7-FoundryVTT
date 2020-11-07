@@ -25,7 +25,12 @@ Version 0.4.4 :
 * Last version to support 0.6.x version.
 * Bug correction :
   * Portrait correctly displayed on range combat card.
-  * Dice roll migration to 0.7.x in dev. phase
+  * Dice roll migration to 0.7.x in dev. phase.
+  * Initiative decimals properly set after reload.
+  * Distance on range combat card is now memorised when card refresh.
+* Optional initiative rule text
+  * When using optional initiative rule, you can display the initiative as text instead of number.
+  * Settings added to switch between text and values.
 * French translation updated thanks to Mandaar
 * French translation updated thanks to Ferin29
 
