@@ -881,7 +881,7 @@
 
 .coc7.chat-card .card-header img {
     flex: 0 0 36px;
-    margin-right: 5px;
+    margin: 0;
     object-fit: contain;
     border: none;
 }

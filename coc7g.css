@@ -1333,3 +1333,22 @@
 .coc7.dialogue.skill-select .counter span.sep {
   padding: 0 2px;
 }
+#combat-tracker .token-initiative.fumble {
+  background-color: black;
+  color: crimson;
+}
+#combat-tracker .token-initiative.failure {
+  color: red;
+}
+#combat-tracker .token-initiative.regular-success {
+  color: #cc6600;
+}
+#combat-tracker .token-initiative.hard-success {
+  color: #cc9900;
+}
+#combat-tracker .token-initiative.extreme-success {
+  color: #009933;
+}
+#combat-tracker .token-initiative.critical {
+  color: goldenrod;
+}
