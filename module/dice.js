@@ -81,7 +81,7 @@ export class CoC7Dice {
 		const isBlind = 'blindroll' === (rollMode? rollMode: game.settings.get('core', 'rollMode'));
 
 		if( !isBlind && !hideDice){
-			if( game.dice3d){
+			if( game.modules.get('dice-so-nice')?.active){
 				
 				const [version] = game.modules.get('dice-so-nice')?.data.version.split('.');
 				const DsN3 = Number(version) >= 3;
