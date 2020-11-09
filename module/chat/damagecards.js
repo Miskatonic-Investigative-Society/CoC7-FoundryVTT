@@ -63,7 +63,7 @@ export class CoC7DamageRoll extends ChatCardActor{
 			this.roll._dice.forEach( d => d.rolls.forEach( r => {r.result = r.roll;}));
 		}
 
-		if( game.dice3d && this.roll){
+		if( game.modules.get('dice-so-nice')?.active && this.roll){
 			game.dice3d.showForRoll(this.roll);
 		}
 

@@ -781,6 +781,7 @@ export class CoCActor extends Actor {
 	async addUniqueItems( skillList, flag = null){
 		for( let skill of skillList){
 			if( CoC7Item.isAnySpec(skill)){
+				if( ! skill.data.flags) skill.data.flags = {};
 				if( flag) skill.data.flags[flag] = true;
 				await this.createOwnedItem( skill, {renderSheet:false});
 			}
@@ -788,7 +789,7 @@ export class CoCActor extends Actor {
 				const itemId = this.getItemIdByName(skill.name);
 				if( !itemId){
 					if( flag){
-						if( ! skill.data.flag) skill.data.flags = {};
+						if( ! skill.data.flags) skill.data.flags = {};
 						skill.data.flags[flag] = true;
 					}
 					await this.createOwnedItem( skill, {renderSheet:false});
@@ -803,7 +804,7 @@ export class CoCActor extends Actor {
 	async addItems( itemList, flag = null){
 		for( let item of itemList){
 			if( flag){
-				if( ! item.data.flag) item.data.flags = {};
+				if( ! item.data.flags) item.data.flags = {};
 				item.data.flags[flag] = true;
 			}
 			await this.createOwnedItem( item, {renderSheet:false});
@@ -814,7 +815,7 @@ export class CoCActor extends Actor {
 		const itemId = this.getItemIdByName(skill.name);
 		if( !itemId){
 			if( flag){
-				if( ! skill.data.flag) skill.data.flags = {};
+				if( ! skill.data.flags) skill.data.flags = {};
 				skill.data.flags[flag] = true;
 			}
 			await this.createOwnedItem( skill, {renderSheet:false});
@@ -832,6 +833,14 @@ export class CoCActor extends Actor {
 			else return null;
 		} 
 		return parseInt( this.data.data.attribs.mp.max);
+	}
+
+	get sanMax(){
+		if( this.data.data.attribs.san.auto){
+			if( this.cthulhuMythos) return 99 - this.cthulhuMythos;
+			return 99;
+		} 
+		return parseInt( this.data.data.attribs.san.max);
 	}
 
 	get mp(){
@@ -937,7 +946,7 @@ export class CoCActor extends Actor {
 
 	async setSan( value){
 		if( value < 0) value = 0;
-		if( value > parseInt( this.data.data.attribs.san.max)) value = parseInt( this.data.data.attribs.san.value);
+		if( value > this.sanMax) value = this.sanMax;
 		const loss = parseInt( this.data.data.attribs.san.value) - value;
 		if( loss > 0){
 			let totalLoss = parseInt( this.data.data.attribs.san.dailyLoss) ? parseInt( this.data.data.attribs.san.dailyLoss) : 0;
@@ -1278,7 +1287,7 @@ export class CoCActor extends Actor {
 				let r = new Roll( value.formula);
 				r.roll();
 				if( r.total){
-					characteristics[`data.characteristics.${key}.value`] = r.total;
+					characteristics[`data.characteristics.${key}.value`] = Math.floor(r.total);
 				}
 			}
 		}
@@ -1537,6 +1546,22 @@ export class CoCActor extends Actor {
 		let skillList = this.getSkillsByName( game.i18n.localize(COC7.creditRatingSkillName));
 		if( skillList.length != 0) return skillList[0];
 		return null;
+	}
+
+	get cthulhuMythosSkill(){
+		let skillList = this.getSkillsByName( game.i18n.localize(COC7.CthulhuMythosName));
+		if( skillList.length != 0) return skillList[0];
+		return null;
+	}
+
+	get cthulhuMythos(){
+		const CM = this.cthulhuMythosSkill;
+		if( CM){
+			const value = CM.value;
+			if( value) return value;
+			return parseInt(CM.data.data.value);
+		}
+		return 0;
 	}
 
 	get creditRating(){

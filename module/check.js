@@ -535,7 +535,7 @@ export class CoC7Check {
 	}
 
 	showDiceRoll(){
-		if( game.dice3d){
+		if( game.modules.get('dice-so-nice')?.active){
 			const diceResults = [];
 			this.dices.tens.forEach(dieResult => { 
 				diceResults.push( 100 == dieResult.value ?0:dieResult.value/10);
