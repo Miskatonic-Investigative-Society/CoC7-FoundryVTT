@@ -20,6 +20,17 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+Vesion 0.4.5 :
+
+* Bug correction :
+  * Internal field datas integrity check missing.
+  * Rolling characteristics may provide non integer results.
+  * Sheets not set as default are now working as intended. Thank to Sharcashmo for his help.
+* Max SAN is automatically calculated
+  * Skill 'Cthulhu Mythos' is defined in the lang.json.
+  * Max SAN is calculated as 99-Cthlhu Mythos.
+  * Auto calc can be bypassed in the same way as the other attributes.
+
 Version 0.4.4 :
 
 * **Last version to support foundry 0.6.x.**

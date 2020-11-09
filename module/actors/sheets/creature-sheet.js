@@ -59,7 +59,7 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 	static get defaultOptions() {
 		const options=mergeObject(super.defaultOptions, {
 			template: 'systems/CoC7/templates/actors/creature-sheet.html',
-			width: 560,
+			width: 580,
 			height: 'auto',
 			classes: ['coc7', 'sheet', 'actor', 'npc', 'creature'],
 			dragDrop: [{dragSelector: '.item', dropSelector: null}],
