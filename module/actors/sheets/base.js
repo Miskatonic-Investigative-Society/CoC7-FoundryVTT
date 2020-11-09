@@ -330,6 +330,10 @@ export class CoC7ActorSheet extends ActorSheet {
 			if( data.data.characteristics.pow.value != null) data.data.attribs.mp.max = Math.floor( data.data.characteristics.pow.value / 5);
 		}
 
+		if( data.data.attribs.san.auto){
+			data.data.attribs.san.max = this.actor.sanMax;
+		}
+
 		if( data.data.attribs.mp.value > data.data.attribs.mp.max || data.data.attribs.mp.max == null) data.data.attribs.mp.value = data.data.attribs.mp.max;
 		if( data.data.attribs.hp.value > data.data.attribs.hp.max || data.data.attribs.hp.max == null) data.data.attribs.hp.value = data.data.attribs.hp.max;
 
