@@ -123,7 +123,12 @@
 						<label class="attribute-label rollable">{{localize 'CoC7.SAN'}} :</label>
 						<input class="attribute-value" type="text" name="data.attribs.san.value" value="{{data.attribs.san.value}}" data-dtype="Number"/>
 						<span style="flex: none;font-size: large;">/</span>
+						{{#if data.attribs.san.auto}}
+						<input class="attribute-max" type="text" name="data.attribs.san.max" value="{{data.attribs.san.max}}" data-dtype="Number" readonly/>
+						{{else}}
 						<input class="attribute-max {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.san.max" value="{{data.attribs.san.max}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
+						{{/if}}
+						<div class="auto-toggle {{#if data.attribs.san.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
 						<div class="flex1"></div>
 					</div>
 
@@ -208,7 +213,7 @@
 					<div class="flex1"></div>
 					<div class="san-check flexrow flex3">
 						<!-- <a class='roll-san flex2' title='Roll san check for targets'><i class="fas fa-dice"></i></a> -->
-						<label class="roll-san rollable" style="text-align: right;" title="Roll san check for targets">San Loss :</label>
+						<label class="roll-san rollable" style="text-align: right;" title="{{ localize 'CoC7.SanRollHint'}}">{{ localize "CoC7.SANLoss" }} :</label>
 						{{#if data.flags.locked}}
 						<span class="san-value flex1" style="line-height: 22px;padding-left: 2px;" placeholder="pass">{{data.special.sanLoss.checkPassed}}</span>
 						<span class="flex0" style="line-height: 22px;">/</span>

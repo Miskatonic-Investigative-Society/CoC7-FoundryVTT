@@ -18,6 +18,9 @@ import { CoC7Combat, rollInitiative } from './combat.js';
 import { CoC7BookSheet } from './items/sheets/book.js';
 import { CoC7SpellSheet } from './items/sheets/spell.js';
 import { CoC7TalentSheet } from './items/sheets/talent.js';
+import { CoC7OccupationSheet } from './items/sheets/occupation.js';
+import { CoC7ArchetypeSheet } from './items/sheets/archetype.js';
+import { CoC7SetupSheet } from './items/sheets/setup.js';
 import { COC7 } from './config.js';
 import { Updater } from './updater.js';
 // import { CoC7ActorSheet } from './actors/sheets/base.js';
@@ -30,7 +33,10 @@ Hooks.once('init', async function() {
 			skillCheck: CoC7Utilities.skillCheckMacro,
 			weaponCheck: CoC7Utilities.weaponCheckMacro
 		}
+		// ,enricher: CoC7Utilities.enrichHTML
 	};
+
+
 	/**
 	 * Set an initiative formula for the system
 	 * @type {String}
@@ -39,7 +45,6 @@ Hooks.once('init', async function() {
 		formula: '@characteristics.dex.value',
 		decimals: 4
 	};
-
 
 	//TODO : remove debug hooks
 	CONFIG.debug.hooks = true;
@@ -148,6 +153,26 @@ Hooks.once('init', async function() {
 		default: true,
 		type: Boolean
 	});
+
+	// Set displaying dices for init Roll.
+	game.settings.register('CoC7', 'displayInitAsText', {
+		name: 'SETTINGS.displayInitAsText',
+		hint: 'SETTINGS.displayInitAsTextHint',
+		scope: 'world',
+		config: true,
+		default: true,
+		type: Boolean
+	});
+
+	// Allow player to modify status.
+	game.settings.register('CoC7', 'statusPlayerEditable', {
+		name: 'SETTINGS.StatusPlayerEditable',
+		hint: 'SETTINGS.StatusPlayerEditableHint',
+		scope: 'world',
+		config: true,
+		default: true,
+		type: Boolean
+	});
 		
 	game.settings.register('CoC7', 'disregardAmmo', {
 		name: 'SETTINGS.DisregardAmmo',
@@ -166,6 +191,63 @@ Hooks.once('init', async function() {
 		default: false,
 		type: Boolean
 	});
+
+	if(game.modules.get('dice-so-nice')?.active){
+
+		game.settings.register('CoC7', 'syncDice3d',{
+			name: 'SETTINGS.SyncDice3D',
+			hint: 'SETTINGS.SyncDice3DHint',
+			scope: 'world',
+			config: true,
+			default: true,
+			type: Boolean
+		});
+		
+		const [version] = game.modules.get('dice-so-nice')?.data.version.split('.');
+
+		if( !isNaN(Number(version)) && Number(version) >= 3){
+
+			game.settings.register('CoC7', 'unitDieColorset',{
+				name: 'SETTINGS.UnitDieColorset',
+				hint: 'SETTINGS.UnitDieColorsetHint',
+				scope: 'world',
+				config: true,
+				default: 'white',
+				type: String
+			});
+			
+			game.settings.register('CoC7', 'tenDieNoMod',{
+				name: 'SETTINGS.TenDieNoMod',
+				hint: 'SETTINGS.TenDieNoModHint',
+				scope: 'world',
+				config: true,
+				default: 'foundry',
+				type: String
+			});
+			
+			game.settings.register('CoC7', 'tenDieBonus',{
+				name: 'SETTINGS.TenDieBonus',
+				hint: 'SETTINGS.TenDieBonusHint',
+				scope: 'world',
+				config: true,
+				default: 'bronze',
+				type: String
+			});
+			
+			game.settings.register('CoC7', 'tenDiePenalty',{
+				name: 'SETTINGS.TenDiePenalty',
+				hint: 'SETTINGS.TenDiePenaltyHint',
+				scope: 'world',
+				config: true,
+				default: 'bloodmoon',
+				type: String
+			});
+
+		}
+	}
+
+	_setInitiativeOptions(game.settings.get('CoC7', 'initiativeRule'));
+
 
 	function _setInitiativeOptions(rule)
 	{
@@ -190,15 +272,18 @@ Hooks.once('init', async function() {
 
 	// Register sheet application classes
 	Actors.unregisterSheet('core', ActorSheet);
-	Actors.registerSheet('CoC7', CoC7NPCSheet, { types: ['npc'] });
-	Actors.registerSheet('CoC7', CoC7CreatureSheet, { types: ['creature'] });
-	Actors.registerSheet('CoC7', CoC7CharacterSheet, { types: ['character'], makeDefault: true });
+	Actors.registerSheet('CoC7', CoC7NPCSheet, { types: ['npc'], makeDefault: true});
+	Actors.registerSheet('CoC7', CoC7CreatureSheet, { types: ['creature'], makeDefault: true});
+	Actors.registerSheet('CoC7', CoC7CharacterSheet, { types: ['character'], makeDefault: true});
 	
 	Items.unregisterSheet('core', ItemSheet);
 	Items.registerSheet('CoC7', CoC7WeaponSheet, { types: ['weapon'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7BookSheet, { types: ['book'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7SpellSheet, { types: ['spell'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7TalentSheet, { types: ['talent'], makeDefault: true});
+	Items.registerSheet('CoC7', CoC7OccupationSheet, { types: ['occupation'], makeDefault: true});
+	Items.registerSheet('CoC7', CoC7ArchetypeSheet, { types: ['archetype'], makeDefault: true});
+	Items.registerSheet('CoC7', CoC7SetupSheet, { types: ['setup'], makeDefault: true});
 	Items.registerSheet('CoC7', CoCItemSheet, { makeDefault: true});
 	preloadHandlebarsTemplates();
 });
@@ -207,7 +292,7 @@ Hooks.on('renderCombatTracker', (app, html, data) => CoC7Combat.renderCombatTrac
 Hooks.once('setup', function() {
 
 	// Localize CONFIG objects once up-front
-	const toLocalize = [ 'spellProperties', 'bookType', 'talentType'];
+	const toLocalize = [ 'spellProperties', 'bookType', 'talentType', 'occupationProperties'];
 
 	for ( let o of toLocalize ) {
 		const localized = Object.entries(COC7[o]).map(e => {
@@ -276,6 +361,6 @@ Hooks.on('getSceneControlButtons', (buttons) => {
 	}
 });
 
-Hooks.on('renderSceneControls', () => CoC7Utilities.updateCharSheets());
-Hooks.on('renderSceneNavigation', () => CoC7Utilities.updateCharSheets());
+// Hooks.on('renderSceneControls', () => CoC7Utilities.updateCharSheets());
+// Hooks.on('renderSceneNavigation', () => CoC7Utilities.updateCharSheets());
  

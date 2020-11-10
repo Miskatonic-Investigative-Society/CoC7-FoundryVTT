@@ -20,19 +20,111 @@ Compendium 'Weapons' contains a single test weapon.
 
 ## What is working
 
+Vesion 0.4.5 :
+
+* Bug correction :
+  * Internal field datas integrity check missing.
+  * Rolling characteristics may provide non integer results.
+  * Sheets not set as default are now working as intended. Thank to Sharcashmo for his help.
+* Max SAN is automatically calculated
+  * Skill 'Cthulhu Mythos' is defined in the lang.json.
+  * Max SAN is calculated as 99-Cthlhu Mythos.
+  * Auto calc can be bypassed in the same way as the other attributes.
+
+Version 0.4.4 :
+
+* **Last version to support foundry 0.6.x.**
+* Bug correction :
+  * Portrait correctly displayed on range combat card.
+  * Dice roll migration to 0.7.x in dev. phase.
+  * Initiative decimals properly set after reload.
+  * Distance on range combat card is now memorised when card refresh.
+* Optional initiative rule text
+  * When using optional initiative rule, you can display the initiative as text instead of number.
+  * Settings added to switch between text and values.
+* French translation updated thanks to Mandaar
+* French translation updated thanks to Ferin29
+
+version 0.4.3 :
+
+* Bug correction :
+  * localization for individual development roll added.
+  * 1920's Character example updated.
+  * Bug on opening character from compendium corrected.
+  * Double HP for pulp character corrected.
+* German translation updated thanks to Taglar
+* Spanish translation updated thanks to Lozalojo.
+
+version 0.4.2 :
+
+* Bug correction :
+  * Not having a credit rating skill will not block char creation.
+  * Bug correction on DsN V2 with 0.6.6
+* Typo correction validate
+* Spanish translation updated thanks to Lozalojo.
+
+version 0.4.1 :
+
+* Quick fix, DsN V3 is now working.
+* A few settingd added for DsN V3, color set for unit and ten dice, and a setting to sync dice rolls between players.
+
+vesion 0.4.0 :
+
+* Ready for 0.7.5
+* The latest version of 'Dice So Nice!' will not work with skills check. You  have to keep an older version to see the dice.
+
+version 0.3.9 :
+
+* Bug correction:
+  * Typo correction and missing strings.
+  * Damage card displays roll correctly.
+  * When holding shift while clicking on a weapon damage this will make the damage critical.
+  * Occupations, Archetypes and Setups can have multiple generics specializations e.g. Art/Craft(Any).
+  * Add-weapon button fixed.
+  * Automatic cash&assets calculation was broken, now working as intended.
+  * Riffle and shotgun skills are now one (Riffle/shotgun).
+  * Skill details windows now correctly parse HTML content (All links except PDFFoundry).
+  * Selected specializations now display correctly in character's occupation.
+* Macro for skills and weapon can be created with items from directory and compendiums.
+  * As a GM if you click on a weapon macro, if the actor doesn't have a corresponding weapon, you will be prompt to create one.
+  * If you click on a skill macro, if the actor doesn't have the corresponding skill it will be created. As a GM you'll be prompted for the skill value.
+* Specialization reworked. A specialization with a name set to 'Any' will be considered generic.
+  * The generic name can be changed in lang.json.
+  * When dropping a specialization with name 'Any' on a sheet, you will be prompted for a name and a base value. If you skip that the skill will be created as 'Any'. You can modify that later in the sheet.
+  * When an occupation/archetype containing one or many 'Any' specialization, you will be prompted to select and existing one or to create a new one.
+* Occupation type added : Pulp.
+* Localization strings added for previous cards/sheet.
+* Option added to prevent players from modifying their status.
+  * By default player can modify their status.
+  * Player can now modify dying and dead status.
+* Spanish translation updated thanks to Lozalojo.
+
 version 0.3.8 :
 
 * SAN can be displayed as a bar on token.
+* Bug correction:
+  * when weapon malfunction threshold was 100 spending luck on the roll was resulting in a malfunction.
+  * spells can be added to books from compendium.
+* When adding a weapon to a character the system will try to find the matching skill (if the weapon specifies one).
+  * If no skill is found, the system will create the corresponding skill and open the skill sheet for you to crosscheck and fill the base value.
 * New tab added to the character sheet for character development. In this tab you can:
   * see/modify how skills are calculated (base + personal + occupation + experience).
   * roll your skills for development. You can either click each skill individually or trigger a check for all skill by clicking the 'development' button.
 * Controls have been added for the GM.
   * Controls are located under the token group.
   * the first one allows the skill to be rolled for XP for all players.
-  * the second one allows player to modify their skills value (useful for character creation).
+  * the second one allows player to modify their skills value and allocates points (useful for character creation).
+  * A validation report is displayed on top of the development tab.
 * You can now add weapons and skills to the macro bar.
+  * If you are a player, your default character is used for the macro unless you have an owned token selected.
   * If you are the GM you need to have an actor selected before clicking the macro.
   * Macro skills/items are retrieved using names. If 2 weapons have the same name the first retrieved is used.
+* New items added : setup, occupation and archetype.
+  * setup: A character setup that can contains a list of skills, items, characteristics (points allocation or rolls). Drop this on a character.
+  * occupation: You can create occupation for your character. Dropping an occupation on a char will create corresponding skills if they don't exist, flag them as occupation skills and calculate your occupation points.
+  * archetype: Same as occupation for pulp (Pulp rules need to be enabled).
+  * [Example of char creation](https://www.youtube.com/watch?v=OnUPIgj4Gdc&t=4s)
+* Spanish translation updated thanks to Lozalojo.
 
 version 0.3.7 :
 
@@ -349,12 +441,12 @@ Version 0.1.3 :
 * [x] Implement NPC (with automatic and average carac/skill calculation).
 * [x] Implement creations of skills directly from the sheets.
 * [x] Implement experience tracking.
-* [x] !!WIP. Implement localization.
+* [x] Implement localization.
 * [ ] Working on CSS/HTML to improve the look.  
 * [x] Improving the combat tab, by adding combat skill to the weapon list.  
-* [ ] Automatic skill assignment when adding a weapon.  
-* [ ] Combat automation (calculation of difficulty, assignement of damage, opposed check...).  
+* [x] Automatic skill assignment when adding a weapon.  
+* [x] Combat automation (calculation of difficulty, assignement of damage, opposed check...).  
 * [x] Implement pushed rolls.  
 * [ ] Implement advanced rolls (opposed, combined etc…).  
 * [ ] Implement car chases.  
-* [ ] Automation of character creation.
+* [x] Automation of character creation.

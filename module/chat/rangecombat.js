@@ -52,7 +52,8 @@ export class CoC7RangeInitiator{
 			this._targets.forEach( t =>{
 				if( t.token && this.token){
 					t.distance = chatHelper.getDistance( t.token, this.token);
-					t.distance.rounded = Math.round(t.distance.value * 100)/100;
+					t.roundedDistance = Math.round(t.distance.value * 100)/100;
+					t.distanceUnit = t.distance.unit;
 					const distInYd = Math.round(chatHelper.toYards( t.distance)* 100)/100;
 					// if( distInYd){
 					if( this.actor){
@@ -85,6 +86,16 @@ export class CoC7RangeInitiator{
 			});
 		}
 
+	}
+
+	get displayActorOnCard(){
+		return game.settings.get('CoC7', 'displayActorOnCard');
+	}
+
+	get actorImg(){
+		const img =  chatHelper.getActorImgFromKey( this.actorKey);
+		if( img ) return img;
+		return '../icons/svg/mystery-man-black.svg';
 	}
 
 	get actor(){

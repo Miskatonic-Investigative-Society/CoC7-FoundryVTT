@@ -11,7 +11,7 @@
                     "str": {
                         "value": null,
                         "short": "CHARAC.STR",
-                        "label": "CHARAC.Strengh",
+                        "label": "CHARAC.Strength",
                         "formula": null
                     },
                     "con": {
@@ -77,7 +77,8 @@
                     "lck": {
                         "value": null,
                         "short": "LCK",
-                        "label": "Luck"
+                        "label": "Luck",
+                        "max": 99
                     },
                     "san": {
                         "value": null,
@@ -235,7 +236,7 @@
         }
     },
     "Item": {
-        "types": [ "item", "weapon", "skill", "book", "spell", "talent"],
+        "types": [ "item", "weapon", "skill", "setup", "occupation", "archetype", "book", "spell", "talent"],
         "item": {
             "description": "",
             "quantity": 1,
@@ -309,6 +310,115 @@
             "properties": {},
             "eras": {},
             "flags": {}
+        },
+        "occupation":{
+            "description":{
+                "value": ""
+            },
+            "source": null,
+            "type": {
+                "classic": false,
+                "lovecraftian": false,
+                "modern": false,
+                "pulp": false
+            },
+            "related": null,
+            "occupationSkillPoints":{
+                "str": { "multiplier": null, "selected" : false, "optional": false, "active": false},
+                "con": { "multiplier": null, "selected" : false, "optional": false, "active": false},
+                "siz": { "multiplier": null, "selected" : false, "optional": false, "active": false},
+                "dex": { "multiplier": null, "selected" : false, "optional": false, "active": false},
+                "app": { "multiplier": null, "selected" : false, "optional": false, "active": false},
+                "int": { "multiplier": null, "selected" : false, "optional": false, "active": false},
+                "pow": { "multiplier": null, "selected" : false, "optional": false, "active": false},
+                "edu": { "multiplier": null, "selected" : false, "optional": false, "active": false}
+            },
+            "creditRating": { "min": null, "max": null},
+            "suggestedContacts": "",
+            "skills": [],
+            "groups": [],
+            "personal": null,
+            "attributes": {},
+            "properties": {},
+            "eras": {},
+            "flags": {}
+        },
+        "archetype":{
+            "description":{
+                "value": ""
+            },
+            "source": null,
+            "type": {
+                "classic": false,
+                "lovecraftian": false,
+                "modern": false
+            },
+            "bonusPoints": 100,
+            "coreCharacteristics":{
+                "str": false,
+                "con": false,
+                "siz": false,
+                "dex": false,
+                "app": false,
+                "int": false,
+                "pow": false,
+                "edu": false
+            },
+            "coreCharacteristicsFormula": {
+                "enabled": true,
+                "value": "(1D6+13)*5"
+            },
+            "suggestedOccupations": "",
+            "suggestedTraits": "",
+            "talents": 2,
+            "skills": [],
+            "attributes": {},
+            "properties": {},
+            "eras": {},
+            "flags": {}
+        },
+        "setup":{
+            "description":{
+                "value": ""
+            },
+            "characteristics":{
+                "points": {
+                    "enabled": false,
+                    "value": 460
+                },
+                "rolls": {
+                    "enabled": true,
+                    "enableIndividualRolls": true,
+                    "str": "(3D6)*5",
+                    "con": "(3D6)*5",
+                    "siz": "(2D6+6)*5",
+                    "dex": "(3D6)*5",
+                    "app": "(3D6)*5",
+                    "int": "(2D6+6)*5",
+                    "pow": "(3D6)*5",
+                    "edu": "(2D6+6)*5",
+                    "luck": "(3D6)*5"
+                },
+                "values":{
+                    "str": null,
+                    "con": null,
+                    "siz": null,
+                    "dex": null,
+                    "app": null,
+                    "int": null,
+                    "pow": null,
+                    "edu": null,
+                    "luck": null
+                }
+            },
+            "source": null,
+            "enableCharacterisitics": true,
+            "items": [],
+            "bioSections": [],
+            "attributes": {},
+            "properties": {},
+            "eras": {},
+            "flags": {}            
         },
         "spell":{
             "source":null,

@@ -93,6 +93,13 @@ COC7.talentType = {
 	other: 'CoC7.OtherTalent'
 };
 
+COC7.occupationProperties = {
+	classic: 'CoC7.Classic',
+	lovecraftian: 'CoC7.Lovecraftian',
+	modern: 'CoC7.Modern',
+	pulp: 'CoC7.Pulp'	
+};
+
 COC7.formula = {};
 
 COC7.formula.actor = {
@@ -136,6 +143,7 @@ COC7.creatureFightingSkill = 'CoC7.creatureFightingSkill';
 
 COC7.dodgeSkillName = 'CoC7.DodgeSkillName';
 COC7.creditRatingSkillName = 'CoC7.CreditRatingSkillName';
+COC7.CthulhuMythosName = 'CoC7.CthulhuMythosName';
 COC7.fightingSpecializationName = 'CoC7.FightingSpecializationName';
 COC7.firearmSpecializationName = 'CoC7.FirearmSpecializationName';
 

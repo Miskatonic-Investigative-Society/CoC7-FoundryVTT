@@ -1,0 +1,254 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+	<header class="sheet-header flexrow" style="flex: 0 0 64px;padding-bottom: 2px;">
+		<div class="header-details flexrow">
+			<h1 class="name" style="height: 48px;">
+				<input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
+			</h1>
+
+			<ul class="summary flexrow">
+				<li class="flex2">
+					<input type="text" name="data.source" value="{{data.source}}" placeholder="{{ localize 'CoC7.Source' }}"/>
+				</li>
+				<!-- <li class="flex2">
+					<input type="text" name="data.related" value="{{data.related}}" placeholder="{{ localize 'CoC7.Related' }}"/>
+				</li> -->
+				<li class="flex3">
+					{{occupationPointsString}}
+				</li>
+			</ul>
+
+		</div>
+		<img class="profile" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+
+	</header>
+
+	{{!-- Item Sheet Navigation --}}
+	<nav style="flex: 0 0 24px;margin-bottom: 4px;font-family: 'Modesto Condensed', 'Palatino Linotype', serif;font-size: 16px;font-weight: 700;"
+	  class="sheet-navigation tabs" data-group="primary">
+		<a style="line-height: 24px;" class="item active" data-tab="description">{{ localize "CoC7.ItemDescription" }}</a>
+		{{#unless isOwned}}<a style="line-height: 24px;" class="item" data-tab="details">{{ localize "CoC7.Details" }}</a>{{/unless}}
+		<a style="line-height: 24px;" class="item" data-tab="skills">{{ localize "CoC7.Skills" }}</a>
+	</nav>
+
+	
+	{{!-- Item Sheet Body --}}
+	<section style="overflow: hidden;flex: 1;" class="sheet-body">
+
+		{{!-- Description Tab --}}
+		<div class="tab flexrow active" data-group="primary" data-tab="description">
+
+			<div class="item-properties">
+				<ol class="properties-list">
+					{{#each itemProperties}}
+					<li>{{this}}</li>
+					{{/each}}
+				</ol>
+			</div>
+		
+			{{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
+		</div>
+
+		{{!-- Spells Tab --}}
+		<div class="tab details" data-group="primary" data-tab="details">
+
+			<h3 class="form-header">{{ localize "CoC7.OccupationType" }}</h3>
+			<div class="occupation-type form-group stacked">
+				<div class="flexrow">
+				<label class="checkbox">
+					<input type="checkbox" name="data.type.classic" {{checked data.type.classic}}/> {{ localize "CoC7.Classic" }}
+				</label>
+				<label class="checkbox">
+					<input type="checkbox" name="data.type.lovecraftian" {{checked data.type.lovecraftian}}/> {{ localize "CoC7.Lovecraftian" }}
+				</label>
+				<label class="checkbox">
+					<input type="checkbox" name="data.type.modern" {{checked data.type.modern}}/> {{ localize "CoC7.Modern" }}
+				</label>
+				<label class="checkbox">
+					<input type="checkbox" name="data.type.pulp" {{checked data.type.pulp}}/> {{ localize "CoC7.Pulp" }}
+				</label>
+				</div>
+			</div>
+
+			<h3 class="form-header">{{ localize "CoC7.OccupationPoints" }}</h3>
+
+			<div class="form-group">
+				<label class="checkbox">
+					<input type="checkbox" name="data.occupationSkillPoints.str.selected" {{checked data.occupationSkillPoints.str.selected}}/> {{ localize "CHARAC.Strengh" }}
+				</label>
+				{{#if data.occupationSkillPoints.str.selected}}
+					<label class="checkbox">
+						<input type="checkbox" name="data.occupationSkillPoints.str.optional" {{checked data.occupationSkillPoints.str.optional}}/> {{ localize "CoC7.Optional" }}
+					</label>
+					<input type="text" name="data.occupationSkillPoints.str.multiplier" value="{{data.occupationSkillPoints.str.multiplier}}" data-dtype="Number" placeholder="{{ localize 'CoC7.Multiplier' }}"/>
+				{{/if}}
+			</div>
+
+			<div class="form-group">
+				<label class="checkbox">
+					<input type="checkbox" name="data.occupationSkillPoints.con.selected" {{checked data.occupationSkillPoints.con.selected}}/> {{ localize "CHARAC.Constitution" }}
+				</label>
+				{{#if data.occupationSkillPoints.con.selected}}
+					<label class="checkbox">
+						<input type="checkbox" name="data.occupationSkillPoints.con.optional" {{checked data.occupationSkillPoints.con.optional}}/> {{ localize "CoC7.Optional" }}
+					</label>
+					<input type="text" name="data.occupationSkillPoints.con.multiplier" value="{{data.occupationSkillPoints.con.multiplier}}" data-dtype="Number" placeholder="{{ localize 'CoC7.Multiplier' }}"/>
+				{{/if}}
+			</div>
+
+
+			<div class="form-group">
+				<label class="checkbox">
+					<input type="checkbox" name="data.occupationSkillPoints.siz.selected" {{checked data.occupationSkillPoints.siz.selected}}/> {{ localize "CHARAC.Size" }}
+				</label>
+				{{#if data.occupationSkillPoints.siz.selected}}
+					<label class="checkbox">
+						<input type="checkbox" name="data.occupationSkillPoints.siz.optional" {{checked data.occupationSkillPoints.siz.optional}}/> {{ localize "CoC7.Optional" }}
+					</label>
+					<input type="text" name="data.occupationSkillPoints.siz.multiplier" value="{{data.occupationSkillPoints.siz.multiplier}}" data-dtype="Number" placeholder="{{ localize 'CoC7.Multiplier' }}"/>
+				{{/if}}
+			</div>
+
+
+			<div class="form-group">
+				<label class="checkbox">
+					<input type="checkbox" name="data.occupationSkillPoints.dex.selected" {{checked data.occupationSkillPoints.dex.selected}}/> {{ localize "CHARAC.Dexterity" }}
+				</label>
+				{{#if data.occupationSkillPoints.dex.selected}}
+					<label class="checkbox">
+						<input type="checkbox" name="data.occupationSkillPoints.dex.optional" {{checked data.occupationSkillPoints.dex.optional}}/> {{ localize "CoC7.Optional" }}
+					</label>
+					<input type="text" name="data.occupationSkillPoints.dex.multiplier" value="{{data.occupationSkillPoints.dex.multiplier}}" data-dtype="Number" placeholder="{{ localize 'CoC7.Multiplier' }}"/>
+				{{/if}}
+			</div>
+
+
+			<div class="form-group">
+				<label class="checkbox">
+					<input type="checkbox" name="data.occupationSkillPoints.app.selected" {{checked data.occupationSkillPoints.app.selected}}/> {{ localize "CHARAC.Appearance" }}
+				</label>
+				{{#if data.occupationSkillPoints.app.selected}}
+					<label class="checkbox">
+						<input type="checkbox" name="data.occupationSkillPoints.app.optional" {{checked data.occupationSkillPoints.app.optional}}/> {{ localize "CoC7.Optional" }}
+					</label>
+					<input type="text" name="data.occupationSkillPoints.app.multiplier" value="{{data.occupationSkillPoints.app.multiplier}}" data-dtype="Number" placeholder="{{ localize 'CoC7.Multiplier' }}"/>
+				{{/if}}
+			</div>
+
+
+			<div class="form-group">
+				<label class="checkbox">
+					<input type="checkbox" name="data.occupationSkillPoints.int.selected" {{checked data.occupationSkillPoints.int.selected}}/> {{ localize "CHARAC.Intelligence" }}
+				</label>
+				{{#if data.occupationSkillPoints.int.selected}}
+					<label class="checkbox">
+						<input type="checkbox" name="data.occupationSkillPoints.int.optional" {{checked data.occupationSkillPoints.int.optional}}/> {{ localize "CoC7.Optional" }}
+					</label>
+					<input type="text" name="data.occupationSkillPoints.int.multiplier" value="{{data.occupationSkillPoints.int.multiplier}}" data-dtype="Number" placeholder="{{ localize 'CoC7.Multiplier' }}"/>
+				{{/if}}
+			</div>
+
+
+			<div class="form-group">
+				<label class="checkbox">
+					<input type="checkbox" name="data.occupationSkillPoints.pow.selected" {{checked data.occupationSkillPoints.pow.selected}}/> {{ localize "CHARAC.Power" }}
+				</label>
+				{{#if data.occupationSkillPoints.pow.selected}}
+					<label class="checkbox">
+						<input type="checkbox" name="data.occupationSkillPoints.pow.optional" {{checked data.occupationSkillPoints.pow.optional}}/> {{ localize "CoC7.Optional" }}
+					</label>
+					<input type="text" name="data.occupationSkillPoints.pow.multiplier" value="{{data.occupationSkillPoints.pow.multiplier}}" data-dtype="Number" placeholder="{{ localize 'CoC7.Multiplier' }}"/>
+				{{/if}}
+			</div>
+
+
+			<div class="form-group">
+				<label class="checkbox">
+					<input type="checkbox" name="data.occupationSkillPoints.edu.selected" {{checked data.occupationSkillPoints.edu.selected}}/> {{ localize "CHARAC.Education" }}
+				</label>
+				{{#if data.occupationSkillPoints.edu.selected}}
+					<label class="checkbox">
+						<input type="checkbox" name="data.occupationSkillPoints.edu.optional" {{checked data.occupationSkillPoints.edu.optional}}/> {{ localize "CoC7.Optional" }}
+					</label>
+					<input type="text" name="data.occupationSkillPoints.edu.multiplier" value="{{data.occupationSkillPoints.edu.multiplier}}" data-dtype="Number" placeholder="{{ localize 'CoC7.Multiplier' }}"/>
+				{{/if}}
+			</div>
+
+			<h3 class="form-header">{{ localize "CoC7.CreditRatingSkillName" }}</h3>
+			<div class="form-group">
+				<input type="text" name="data.creditRating.min" value="{{data.creditRating.min}}" placeholder="{{  localize 'CoC7.Minimum' }}"/>
+				<input type="text" name="data.creditRating.max" value="{{data.creditRating.max}}" placeholder="{{  localize 'CoC7.Maximum' }}"/>
+			</div>
+<!-- 
+			<h3 class="form-header">{{ localize "CoC7.Notes"}}</h3>
+			{{editor content=data.description.notes target="data.description.notes" button=true owner=owner editable=editable}} -->
+
+		</div>
+		
+		{{!-- Spells Tab --}}
+		<div class="tab skills" data-group="primary" data-tab="skills">
+			<div class='{{#unless isOwned}}droppable{{/unless}} main-skills'>
+
+				<h3 class="form-header">{{ localize "CoC7.CommonSkills" }}</h3>
+
+				{{#if skillListEmpty}}
+					<h3 class="warning">{{ localize "CoC7.EmptySkillList" }}</h3>
+				{{/if}}
+
+				<ol class="item-list">
+					{{#each data.skills as |skill|}}
+					<li class="item flexrow" data-item-id="{{skill._id}}">
+						<div class="item-name flexrow">
+							<h4>{{skill.displayName}} ({{skill.data.base}}%)</h4>    
+						</div>
+
+						<div class="item-controls">
+							{{#unless ../isOwned}}
+							<a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+							{{/unless}}
+						</div>
+					</li>
+					{{/each}}
+				</ol>
+			</div>
+
+			{{#unless isOwned}}
+			<h3 class="form-header">
+				{{ localize "CoC7.OptionSkills" }}
+				<a class="group-control add-group"><i class="fas fa-plus"></i></a>
+			</h3>
+
+			{{#each data.groups as |group i|}}
+			<ol class="item-list group" style='border: 1px groove;' data-group={{i}}>
+				<div class='droppable optional-skills'>
+					<div class="form-group">
+						<label>{{ localize "CoC7.Choose" }}</label>
+						<input type="text" name="data.groups.{{i}}.options" value="{{lookup this 'options'}}" placeholder="{{ localize 'CoC7.ChoiceNumber' }}"/>
+						<a class="group-control remove-group"><i class="fas fa-minus" style="line-height: 20px;"></i></a>
+					</div>
+					{{#if group.isEmpty}}
+						<h3 class="warning">{{ localize "CoC7.EmptySkillList" }}</h3>
+					{{/if}}
+					{{#each group.skills as |skill index|}}
+					<li class="item flexrow" data-item-id="{{skill._id}}" data-item-index="{{index}}">
+						<div class="item-name flexrow">
+							<h4>{{skill.displayName}} ({{skill.data.base}}%)</h4>    
+						</div>
+						<div class="item-controls">
+							<a class="item-control group-item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+						</div>
+					</li>
+					{{/each}}
+				</div>
+			</ol>
+			{{/each}}
+
+			<h3 class="form-header">
+				{{ localize "CoC7.AdditionalSkills" }}
+			</h3>
+			<div class='form-group'>
+				<input type="text" name="data.personal" value="{{data.personal}}" data-dtype="Number" placeholder="{{ localize 'CoC7.PersonalSpeciality' }}"/>
+			</div>
+			{{/unless}}
+		</div>
+	</section>
+</form>

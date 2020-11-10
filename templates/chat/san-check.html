@@ -12,32 +12,32 @@
     <div class='san-roll'></div>
     {{#if isSanLossRolled}}
         {{#if sanLost}}
-            <h4 class="san-result loss">SAN loss : {{totalSanLoss}}</h4>
+            <h4 class="san-result loss">{{ localize 'CoC7.SANLoss' }} : {{totalSanLoss}}</h4>
             {{#unless applied}}
                 <div class='card-buttons gm-only'>
-                    <button data-action="apply-san-loss">Apply</button>
+                    <button data-action="apply-san-loss">{{ localize 'CoC7.Apply' }}</button>
                 </div>
             {{/unless}}
         {{else}}
-            <h4 class="san-result resist">{{actor.name}} doesn't loose any SAN</h4>
+            <h4 class="san-result resist">{{ localize 'CoC7.NoSanLoss' }}</h4>
         {{/if}}
     {{else}}
         {{#if isBlind}}
             {{#if isRolled}}
             <div class='card-buttons gm-visible-only'>
-                <button data-action="reveal-san-check">Reveal San Check</button>
+                <button data-action="reveal-san-check">{{ localize 'CoC7.RevealCheck'}}</button>
             </div>
             {{else}}
             <div class='card-buttons owner-only'>
-                <button data-action="roll-san-check">Sanity check ({{actor.data.data.attribs.san.value}}%)</button>
+                <button data-action="roll-san-check">{{ localize 'CoC7.SanityCheck' }} ({{actor.data.data.attribs.san.value}}%)</button>
             </div>
             {{/if}}
         {{else}}
             <div class='card-buttons owner-only'>
                 {{#if isRolled}}
-                    <button data-action="roll-san-loss">Roll san loss ({{sanLossFormula}})</button>
+                    <button data-action="roll-san-loss">{{ localize 'CoC7.SANLoss' }} : {{sanLossFormula}}</button>
                 {{else}}
-                    <button data-action="roll-san-check">Sanity check ({{actor.data.data.attribs.san.value}}%)</button>
+                    <button data-action="roll-san-check">{{ localize 'CoC7.SanityCheck' }} ({{actor.data.data.attribs.san.value}}%)</button>
                 {{/if}}
             </div>
         {{/if}}

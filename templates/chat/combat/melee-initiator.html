@@ -195,7 +195,7 @@
               data-dealer="{{actorKey}}"
               data-weapon="{{item._id}}"
               data-critical="{{criticalDamage}}">
-                Roll damage
+                {{ localize 'CoC7.RollDamage' }}
             </button>
         </div>
         {{/unless}}
@@ -209,7 +209,7 @@
                 data-dealer="{{actorKey}}"
                 data-weapon="{{item._id}}"
                 data-critical="{{criticalDamage}}">
-                    Roll damage
+                {{ localize 'CoC7.RollDamage' }}
                 </button>
             </div>
         {{/unless}}
@@ -219,7 +219,7 @@
         {{#each skills as |skill id|}}
             <button
                 data-action="melee-initiator-roll"
-                data-skill="{{skill._id}}">Roll {{skill.name}} ({{skill.value}}%)</button>
+                data-skill="{{skill._id}}">{{skill.data.name}} : ({{skill.value}}%)</button>
         {{/each}}
     </div>
     {{/if}}
