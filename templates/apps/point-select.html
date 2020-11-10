@@ -1,0 +1,21 @@
+<form id="skill-selection-form" class="coc7 skill-selector">
+    <div class="flexcol">
+        <div class='flexrow header'>{{ localize 'CoC7.SkillTotalOccupation' }} :<div class="points">{{total}}</div></div>
+        <ol class="item-list">
+            {{#each characteristics as |characteristic key|}}
+                {{#if characteristic.selected}}
+                    <li class="item flexrow {{#if characteristic.optional}}selectable{{else}}selected{{/if}}" data-key="{{key}}">
+                        <div class="item-name flexrow">
+                            <h4>{{characteristic.name}} ({{characteristic.value}}x{{characteristic.multiplier}}:{{characteristic.total}})</h4>    
+                        </div>
+                    </li>
+                {{/if}}
+            {{/each}}
+        </ol>
+
+        <div class='card-buttons owner-only'>
+            <button class='inactive validate' data-action="validate">{{ localize 'CoC7.Validate' }}</button>
+        </div>
+
+    </div>
+</form>

@@ -28,18 +28,27 @@ export class CoC7DamageRoll extends ChatCardActor{
 		
 		const is7 = Object.prototype.hasOwnProperty.call(Roll, 'cleanTerms');
 
+		// 0.7.5 this.maxDamage.result -> this.maxDamage
 		this.maxDamage = is7? Roll.maximize( this.rollString)._total: Roll.maximize( this.rollString);
 		this.roll = null;
 		if( this.critical){
 			if( this.weapon.impale) {
-				this.rollString = this.rollString + '+' + this.maxDamage.total;
+				if( is7) this.rollString = this.rollString + '+' + this.maxDamage;
+				else this.rollString = this.rollString + '+' + this.maxDamage.result;
 				this.roll = new Roll( this.rollString);
 				this.roll.roll();
 				this.result = Math.floor( this.roll.total);
 			}
 			else{ 
-				this.result = this.maxDamage.total;
-				this.roll = this.maxDamage;
+				if( is7){
+					this.roll = new Roll( `${this.maxDamage}`);
+					this.roll.roll();
+					this.result = this.maxDamage;
+				} else {
+					this.roll = new Roll( this.maxDamage.result);
+					this.roll.roll();
+					this.result = this.maxDamage.result;
+				}
 				this.resultString = `Max(${this.rollString})`;
 			}
 
@@ -54,7 +63,7 @@ export class CoC7DamageRoll extends ChatCardActor{
 			this.roll._dice.forEach( d => d.rolls.forEach( r => {r.result = r.roll;}));
 		}
 
-		if( game.dice3d && this.roll){
+		if( game.modules.get('dice-so-nice')?.active && this.roll){
 			game.dice3d.showForRoll(this.roll);
 		}
 

@@ -1,0 +1,113 @@
+<form id="char-roll-form" class="coc7 skill-selector">
+	<div class="flexcol">
+		<ol class="item-list">
+			<li class="item flexrow" data-key="str">
+				<div class="item-name flexrow">
+					<label class="flex2">{{characteristics.list.str.label}}{{#if characteristics.rolls.enabled}} - {{characteristics.rolls.str}}{{/if}}:</label>
+					<input class="flex1" type="text" name="str" value="{{characteristics.values.str}}" placeholder="{{ localize 'CoC7.Value' }}"/>
+					{{#if characteristics.rolls.enabled}}
+						{{#if characteristics.rolls.enableIndividualRolls}}<a class="roll-characteristic"><i class="fas fa-dice"></i></a>{{/if}}
+					{{/if}}
+				</div>
+			</li>
+			<li class="item flexrow" data-key="con">
+				<div class="item-name flexrow">
+					<label class="flex2">{{characteristics.list.con.label}}{{#if characteristics.rolls.enabled}} - {{characteristics.rolls.con}}{{/if}}:</label>
+					<input class="flex1" type="text" name="con" value="{{characteristics.values.con}}" placeholder="{{ localize 'CoC7.Value' }}"/>
+					{{#if characteristics.rolls.enabled}}
+						{{#if characteristics.rolls.enableIndividualRolls}}<a class="roll-characteristic"><i class="fas fa-dice"></i></a>{{/if}}
+					{{/if}}
+				</div>
+			</li>
+			<li class="item flexrow" data-key="siz">
+				<div class="item-name flexrow">
+					<label class="flex2">{{characteristics.list.siz.label}}{{#if characteristics.rolls.enabled}} - {{characteristics.rolls.siz}}{{/if}}:</label>
+					<input class="flex1" type="text" name="siz" value="{{characteristics.values.siz}}" placeholder="{{ localize 'CoC7.Value' }}"/>
+					{{#if characteristics.rolls.enabled}}
+						{{#if characteristics.rolls.enableIndividualRolls}}<a class="roll-characteristic"><i class="fas fa-dice"></i></a>{{/if}}
+					{{/if}}
+				</div>
+			</li>
+			<li class="item flexrow" data-key="dex">
+				<div class="item-name flexrow">
+					<label class="flex2">{{characteristics.list.dex.label}}{{#if characteristics.rolls.enabled}} - {{characteristics.rolls.dex}}{{/if}}:</label>
+					<input class="flex1" type="text" name="dex" value="{{characteristics.values.dex}}" placeholder="{{ localize 'CoC7.Value' }}"/>
+					{{#if characteristics.rolls.enabled}}
+						{{#if characteristics.rolls.enableIndividualRolls}}<a class="roll-characteristic"><i class="fas fa-dice"></i></a>{{/if}}
+					{{/if}}
+				</div>
+			</li>
+			<li class="item flexrow" data-key="app">
+				<div class="item-name flexrow">
+					<label class="flex2">{{characteristics.list.app.label}}{{#if characteristics.rolls.enabled}} - {{characteristics.rolls.app}}{{/if}}:</label>
+					<input class="flex1" type="text" name="app" value="{{characteristics.values.app}}" placeholder="{{ localize 'CoC7.Value' }}"/>
+					{{#if characteristics.rolls.enabled}}
+						{{#if characteristics.rolls.enableIndividualRolls}}<a class="roll-characteristic"><i class="fas fa-dice"></i></a>{{/if}}
+					{{/if}}
+				</div>
+			</li>
+			<li class="item flexrow" data-key="int">
+				<div class="item-name flexrow">
+					<label class="flex2">{{characteristics.list.int.label}}{{#if characteristics.rolls.enabled}} - {{characteristics.rolls.int}}{{/if}}:</label>
+					<input class="flex1" type="text" name="int" value="{{characteristics.values.int}}" placeholder="{{ localize 'CoC7.Value' }}"/>
+					{{#if characteristics.rolls.enabled}}
+						{{#if characteristics.rolls.enableIndividualRolls}}<a class="roll-characteristic"><i class="fas fa-dice"></i></a>{{/if}}
+					{{/if}}
+				</div>
+			</li>
+			<li class="item flexrow" data-key="pow">
+				<div class="item-name flexrow">
+					<label class="flex2">{{characteristics.list.pow.label}}{{#if characteristics.rolls.enabled}} - {{characteristics.rolls.pow}}{{/if}}:</label>
+					<input class="flex1" type="text" name="pow" value="{{characteristics.values.pow}}" placeholder="{{ localize 'CoC7.Value' }}"/>
+					{{#if characteristics.rolls.enabled}}
+						{{#if characteristics.rolls.enableIndividualRolls}}<a class="roll-characteristic"><i class="fas fa-dice"></i></a>{{/if}}
+					{{/if}}
+				</div>
+			</li>
+			<li class="item flexrow" data-key="edu">
+				<div class="item-name flexrow">
+					<label class="flex2">{{characteristics.list.edu.label}}{{#if characteristics.rolls.enabled}} - {{characteristics.rolls.edu}}{{/if}}:</label>
+					<input class="flex1" type="text" name="edu" value="{{characteristics.values.edu}}" placeholder="{{ localize 'CoC7.Value' }}"/>
+					{{#if characteristics.rolls.enabled}}
+						{{#if characteristics.rolls.enableIndividualRolls}}<a class="roll-characteristic"><i class="fas fa-dice"></i></a>{{/if}}
+					{{/if}}
+				</div>
+			</li>
+			<li class="item flexrow" data-key="luck">
+				<div class="item-name flexrow">
+					<label class="flex2">{{characteristics.list.luck.label}}{{#if characteristics.rolls.enabled}} - {{characteristics.rolls.luck}}{{/if}}:</label>
+					<input class="flex1" type="text" name="luck" value="{{characteristics.values.luck}}" placeholder="{{ localize 'CoC7.Value' }}"/>
+					{{#if characteristics.rolls.enabled}}
+						{{#if characteristics.rolls.enableIndividualRolls}}<a class="roll-characteristic"><i class="fas fa-dice"></i></a>{{/if}}
+					{{/if}}
+				</div>
+			</li>
+		</ol>
+
+		{{#if characteristics.points.enabled}}
+			<div class='points flexrow {{#if pointsWarning}}warning{{/if}}'>
+				<label>{{ localize 'CoC7.CharacteristicsPoints'}} :</label>
+				<span class='total'>{{characteristics.points.total}}</span>
+				<span class='sep'>/</span>
+				<span class='value'>{{characteristics.points.value}}</span>
+			</div>
+
+			<div class="card-buttons flexrow">
+				<button class='validate {{#if pointsWarning}}inactive{{/if}}' data-action="validate">{{ localize "CoC7.Validate" }}</button>
+			</div>
+		{{/if}}
+
+		{{#if characteristics.rolls.enabled}}
+		<div class='points flexrow {{#if pointsWarning}}warning{{/if}}'>
+			<label>{{ localize 'CoC7.CharacteristicsPoints'}} :</label>
+			<span class='total'>{{characteristics.points.total}}</span>
+		</div>
+
+		<div class="card-buttons flexrow">
+			<button data-action="roll">{{ localize "CoC7.RollDice" }}</button>
+			<button class='validate inactive' data-action="validate">{{ localize "CoC7.Validate" }}</button>
+		</div>
+		{{/if}}
+
+	</div>
+</form>

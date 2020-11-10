@@ -26,6 +26,69 @@ export class CoC7ActorSheet extends ActorSheet {
 		data.meleeWpn = [];
 		data.actorFlags = {};
 
+
+		if( !data.data.characteristics) {
+			data.data.characteristics =  {
+				str: { value: null, short: 'CHARAC.STR', label: 'CHARAC.Strength', formula: null},
+				con: { value: null,	short: 'CHARAC.CON', label: 'CHARAC.Constitution', formula: null },
+				siz: { value: null, short: 'CHARAC.SIZ', label: 'CHARAC.Size', formula: null },
+				dex: { value: null, short: 'CHARAC.DEX', label: 'CHARAC.Dexterity', formula: null },
+				app: { value: null, short: 'CHARAC.APP', label: 'CHARAC.Appearance', formula: null },
+				int: { value: null, short: 'CHARAC.INT', label: 'CHARAC.Intelligence', formula: null },
+				pow: { value: null, short: 'CHARAC.POW', label: 'CHARAC.Power', formula: null },
+				edu: { value: null, short: 'CHARAC.EDU', label: 'CHARAC.Education', formula: null }
+			};
+		}
+
+		if( !data.data.attribs) {
+			data.data.attribs = {
+				hp: {value: null,max: null,short: 'HP',label: 'Hit points',auto: true},
+				mp: {value: null,max: null,short: 'HP',label: 'Magic points',auto: true},
+				lck: {value: null,short: 'LCK',label: 'Luck'},
+				san: {value: null,max: 99,short: 'SAN',label: 'Sanity',auto: true},
+				mov: {value: null,short: 'MOV',label: 'Movement rate',auto: true},
+				db: {value: null,short: 'DB',label: 'Damage bonus',auto: true},
+				build: {value: null,short: 'BLD',label: 'Build',auto: true},
+				armor: {value: null,auto: false}
+			};
+		}
+
+		if( !data.data.status){
+			data.data.status = {
+				criticalWounds: {type: 'Boolean',value: false},
+				unconscious: {type: 'Boolean',value: false},
+				dying: {type: 'Boolean',value: false},
+				dead: {type: 'Boolean',value: false},
+				prone: {type: 'Boolean',value: false},
+				tempoInsane: {type: 'boolean',value: false},
+				indefInsane: {type: 'boolean',value: false}
+			};
+		}
+
+		if( !data.data.biography){
+			data.data.biography = { personalDescription: { type: 'string', value: '' }};
+		}
+
+		if( !data.data.infos){
+			data.data.infos = { occupation: '', age: '', sex: '', residence: '', birthplace: '', archetype: '', organization: '' };
+		}
+
+		if( !data.data.flags){
+			data.data.flags = { locked: true, manualCredit: false };
+		}
+
+		if( !data.data.credit){
+			data.data.credit = { monetarySymbol: null, multiplier: null, spent: null, assetsDetails: null};
+		}
+
+		if( !data.data.development){
+			data.data.development = { personal: null, occupation: null, archetype: null};
+		}
+
+		if( !data.data.biography) data.data.biography = [];
+		if( !data.data.encounteredCreatures) data.data.encounteredCreatures = [];
+
+
 		data.isDead = this.actor.dead;
 		data.isDying = this.actor.dying;
 
@@ -224,19 +287,21 @@ export class CoC7ActorSheet extends ActorSheet {
 			data.tokenId = token ? `${token.scene._id}.${token.id}` : null;
 
 			data.hasEmptyValueWithFormula = false;
-			for ( const characteristic of Object.values(data.data.characteristics)){
-				if( !characteristic.value) characteristic.editable = true;
-				characteristic.hard = Math.floor( characteristic.value / 2);
-				characteristic.extreme = Math.floor( characteristic.value / 5);
+			if( data.data.characteristics){
+				for ( const characteristic of Object.values(data.data.characteristics)){
+					if( !characteristic.value) characteristic.editable = true;
+					characteristic.hard = Math.floor( characteristic.value / 2);
+					characteristic.extreme = Math.floor( characteristic.value / 5);
 
-				//If no value && no formula don't display charac.
-				if( !characteristic.value && !characteristic.formula) characteristic.display = false;
-				else characteristic.display = true;
+					//If no value && no formula don't display charac.
+					if( !characteristic.value && !characteristic.formula) characteristic.display = false;
+					else characteristic.display = true;
 
-				//if any characteristic has no value but has a formula.
-				if( !characteristic.value && characteristic.formula) characteristic.hasEmptyValueWithFormula = true;
+					//if any characteristic has no value but has a formula.
+					if( !characteristic.value && characteristic.formula) characteristic.hasEmptyValueWithFormula = true;
 
-				data.hasEmptyValueWithFormula = data.hasEmptyValueWithFormula || characteristic.hasEmptyValueWithFormula;
+					data.hasEmptyValueWithFormula = data.hasEmptyValueWithFormula || characteristic.hasEmptyValueWithFormula;
+				}
 			}
 		}
 
@@ -263,6 +328,10 @@ export class CoC7ActorSheet extends ActorSheet {
 		if( data.data.attribs.mp.auto ){
 			//TODO if any is null set max back to null.
 			if( data.data.characteristics.pow.value != null) data.data.attribs.mp.max = Math.floor( data.data.characteristics.pow.value / 5);
+		}
+
+		if( data.data.attribs.san.auto){
+			data.data.attribs.san.max = this.actor.sanMax;
 		}
 
 		if( data.data.attribs.mp.value > data.data.attribs.mp.max || data.data.attribs.mp.max == null) data.data.attribs.mp.value = data.data.attribs.mp.max;
@@ -323,16 +392,6 @@ export class CoC7ActorSheet extends ActorSheet {
 	activateListeners(html) {
 		super.activateListeners(html);
 
-		if( this.actor.dead){
-			if( game.user.isGM) html.find( '.is-dead').dblclick( this.revive.bind(this));
-			return;
-		}
-
-		if( this.actor.dying){
-			if( game.user.isGM) html.find('.is-dying').dblclick( this.heal.bind(this));
-			html.find('.dying-check').click( this.checkForDeath.bind(this));
-			return;
-		}
 
 		// Owner Only Listeners
 		if ( this.actor.owner ) {
@@ -347,8 +406,17 @@ export class CoC7ActorSheet extends ActorSheet {
 			html.find('.average-characteritics').click(this._onAverageCharacteriticsValue.bind(this));
 			html.find('.toggle-switch').click( this._onToggle.bind(this));
 			html.find('.auto-toggle').click( this._onAutoToggle.bind(this));
-			html.find('.status-monitor').click( this._onStatusToggle.bind(this));
-			html.find('.reset-counter').click( this._onResetCounter.bind(this));
+
+			// Status monitor
+			if( game.user.isGM || game.settings.get('CoC7', 'statusPlayerEditable')) {
+				html.find('.reset-counter').click( this._onResetCounter.bind(this));
+				html.find('.status-monitor').click( this._onStatusToggle.bind(this));
+				html.find('.is-dying').click( this.heal.bind(this));
+				html.find('.is-dead').click( this.revive.bind(this));
+			}
+
+			html.find('.dying-check').click( this.checkForDeath.bind(this));
+
 
 			html.find('.item .item-image').click(event => this._onItemRoll(event));
 			html.find('.weapon-name.rollable').click( event => this._onWeaponRoll(event));
@@ -389,7 +457,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		});
 
 		html.find('.add-item').click( ev => {
-			switch( event.currentTarget.dataset.type){
+			switch( ev.currentTarget.dataset.type){
 			case 'skill':
 				this.actor.createEmptySkill( ev);
 				break;
@@ -438,26 +506,6 @@ export class CoC7ActorSheet extends ActorSheet {
 			this.actor.developementPhase( event.shiftKey);
 		});
 	}
-
-	// async _onSkillDevelopement( event){
-	// 	const result = await this.actor.developementPhase( event.shiftKey);
-	// 	const skills = this._element[0].querySelector('.skills');
-	// 	skills.style.color = 'yellowgreen';
-	// 	for( let element of result.failure){
-	// 		const skill = skills.querySelector(`[data-skill-id="${element}"]`);
-	// 		skill.querySelector('.skill-image').style.backgroundColor = 'red';
-	// 		skill.querySelectorAll('input').forEach(input => {
-	// 			input.style.color = 'red';
-	// 		});
-	// 	}
-
-	// 	result.success.forEach(element => {
-	// 		const skill = skills.querySelector(`[data-skill-id="${element}"]`);
-	// 		skill.querySelectorAll('input').forEach(input => {
-	// 			input.style.color = 'green';
-	// 		});
-	// 	});
-	// }
 
 	async _onDrop(event){
 		super._onDrop(event);
@@ -670,6 +718,8 @@ export class CoC7ActorSheet extends ActorSheet {
 	}
 
 	static async popupSkill(skill){
+		skill.data.data.description.enrichedValue = TextEditor.enrichHTML( skill.data.data.description.value);
+		// game.CoC7.enricher( skill.data.data.description.enrichedValue);
 		const dlg = new Dialog({
 			title: game.i18n.localize('CoC7.SkillDetailsWindow'),
 			content: skill,
@@ -769,7 +819,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		event.preventDefault();
 		const itemId = event.currentTarget.closest('.weapon').dataset.itemId;
 		const range = event.currentTarget.closest('.weapon-damage').dataset.range;
-		const rollCard = new CoC7DamageRoll( itemId, this.actor.tokenKey);
+		const rollCard = new CoC7DamageRoll( itemId, this.actor.tokenKey, null, event.shiftKey);
 		rollCard.rollDamage( range);
 		// console.log( 'Weapon damage Clicked');
 	}
@@ -850,10 +900,16 @@ export class CoC7ActorSheet extends ActorSheet {
 				if( event.currentTarget.classList.contains('skill-adjustment')){
 					let item = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.itemId);
 					if( item){
+						const value = event.currentTarget.value? parseInt(event.currentTarget.value) : null;
+
 						if( !event.currentTarget.value) await item.update( {[event.currentTarget.name]: null});
 						else{
-							const value = parseInt(event.currentTarget.value);
 							if( !isNaN(value)) await item.update( {[event.currentTarget.name]: value});
+						}
+						if( game.i18n.localize(COC7.creditRatingSkillName) == item.name){
+							const creditValue = value ? value : 0;
+							if( creditValue > Number(this.actor.occupation.data.data.creditRating.max) || creditValue <  Number(this.actor.occupation.data.data.creditRating.min))
+								ui.notifications.warn( game.i18n.format( 'CoC7.CreditOutOfRange', { min :Number(this.actor.occupation.data.data.creditRating.min), max:Number(this.actor.occupation.data.data.creditRating.max)}));
 						}
 					}
 				}

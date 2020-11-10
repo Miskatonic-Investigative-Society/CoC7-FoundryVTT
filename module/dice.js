@@ -79,8 +79,18 @@ export class CoC7Dice {
 
 
 		const isBlind = 'blindroll' === (rollMode? rollMode: game.settings.get('core', 'rollMode'));
+
 		if( !isBlind && !hideDice){
-			if( game.dice3d){
+			if( game.modules.get('dice-so-nice')?.active){
+				
+				const [version] = game.modules.get('dice-so-nice')?.data.version.split('.');
+				const DsN3 = Number(version) >= 3;
+				const syncDice = game.settings.get('CoC7', 'syncDice3d');
+				const unitDieColorset = DsN3? game.settings.get('CoC7', 'unitDieColorset'): null;
+				const tenDieNoMod = DsN3? game.settings.get('CoC7', 'tenDieNoMod'): null;
+				const tenDieBonus = DsN3? game.settings.get('CoC7', 'tenDieBonus'): null;
+				const tenDiePenalty = DsN3? game.settings.get('CoC7', 'tenDiePenalty'): null;
+				
 				const diceResults = [];
 				tenDie.results.forEach(dieResult => { 
 					diceResults.push( 100 == dieResult ?0:dieResult/10);
@@ -90,11 +100,40 @@ export class CoC7Dice {
 				const diceData = {
 					formula: `${tenDie.results.length}d100+1d10`,
 					results: diceResults,
+					throws: [{
+						dice:[]
+					}],
 					whisper: null,
 					blind: false
 				};
-    
-				game.dice3d.show(diceData);
+
+				tenDie.results.forEach( dieResult => {
+					diceData.throws[0].dice.push({
+						result:100 == dieResult ?0:dieResult/10,
+						resultLabel:100 == dieResult ?0:dieResult/10,
+						type: 'd100',
+						vectors:[],
+						options:{
+							colorset: !modif? tenDieNoMod : 0 > modif? tenDiePenalty: tenDieBonus
+						}
+					});
+				});//acid (vert), necrotic (red), inspired (white), bloodmoon (red), Foundry, toxic (green), bronze, white
+
+				diceData.throws[0].dice.push({
+					result:unitDie.total,
+					resultLabel:unitDie.total,
+					type: 'd10',
+					vectors:[],
+					options:{
+						colorset: unitDieColorset
+					}
+				});
+	
+				try{
+					game.dice3d.show(diceData, game.user, syncDice);
+				} catch(err){
+					console.error('Roll: ' + err.message);
+				}
 			}
 		}
 
@@ -107,4 +146,16 @@ export class CoC7Dice {
 
 		return result;
 	}
+
+	static async showRollDice3d(roll)
+	{
+
+		if(game.modules.get('dice-so-nice')?.active)
+		{
+			const syncDice = game.settings.get('CoC7', 'syncDice3d');
+
+			await game.dice3d.showForRoll(roll,game.user,syncDice);
+		}
+	}
+  
 }

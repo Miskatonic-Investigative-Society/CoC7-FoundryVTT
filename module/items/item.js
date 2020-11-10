@@ -4,89 +4,37 @@ import { COC7 } from '../config.js';
  * Override and extend the basic :class:`Item` implementation
  */
 export class CoC7Item extends Item {
-
-	// constructor(...args) {
-	// 	super(...args);
-
-	// 	this.items;
+	// /** @override */
+	// prepareEmbeddedEntities() {
 	// }
-
-	// static get config(){
-	// 	// let config =  {
-	// 	// 	baseEntity: Item,
-	// 	// 	collection: game.items,
-	// 	// 	embeddedEntities: {'OwnedItem': 'items'},
-	// 	// 	label: 'ENTITY.Item',
-	// 	// 	permissions: {
-	// 	// 		create: 'ITEM_CREATE'
-	// 	// 	}
-	// 	// };
-	// 	const config = Item.config;
-	// 	config.embeddedEntities = {'OwnedItem': 'items'};
-	// 	return config;
-	// }
-
-	/**
-	 * Augment the basic Item data model with additional dynamic data.
-	*/
-	// prepareData() {
-	// 	super.prepareData();
-	// }
-
-
-	/** @override */
-	prepareEmbeddedEntities() {
-	// 	if( 'book' == this.data.type){
-	// 		const prior = this.items;
-	// 		const spells = new Collection();
-	// 		if( this.data.data.spells){
-	// 			for ( let i of this.data.data.spells ) {
-	// 				let item = null;
-	
-		// 				// Update existing items
-		// 				if ( prior && prior.has(i._id ) ) {
-		// 					item = prior.get(i._id);
-		// 					item.data = i;
-		// 					item.prepareData();
-		// 				}
-	
-		// 				// Construct new items
-		// 				else item = Item.createOwned(i, this);
-		// 				spells.set(i._id, item);
-		// 			}
-		// 		}
-	
-	// 		// Assign Items to the Actor
-	// 		this.items = spells;
-	// 	}
-	}
 	
 
 	/**
    * Roll the item to Chat, creating a chat card which contains follow up attack or damage roll options
    * @return {Promise}
    */
-	async roll() {
-		const token = this.actor.token;
-		const templateData = {
-			actor: this.actor,
-			tokenId: token ? `${token.scene._id}.${token.id}` : null,
-			item: this.data
-		};
+	// DEPRECATED
+	// async roll() {
+	// 	const token = this.actor.token;
+	// 	const templateData = {
+	// 		actor: this.actor,
+	// 		tokenId: token ? `${token.scene._id}.${token.id}` : null,
+	// 		item: this.data
+	// 	};
 
-		const template = 'systems/CoC7/templates/chat/skill-card.html';
-		const html = await renderTemplate(template, templateData);
+	// 	const template = 'systems/CoC7/templates/chat/skill-card.html';
+	// 	const html = await renderTemplate(template, templateData);
 				
-		// TODO change the speaker for the token name not actor name
-		const speaker = ChatMessage.getSpeaker({actor: this.actor});
-		if( token) speaker.alias = token.name;
+	// 	// TODO change the speaker for the token name not actor name
+	// 	const speaker = ChatMessage.getSpeaker({actor: this.actor});
+	// 	if( token) speaker.alias = token.name;
 
-		await ChatMessage.create({
-			user: game.user._id,
-			speaker,
-			content: html
-		});
-	}
+	// 	await ChatMessage.create({
+	// 		user: game.user._id,
+	// 		speaker,
+	// 		content: html
+	// 	});
+	// }
 
 	static flags = {
 		malfunction: 'malfc'
@@ -217,6 +165,39 @@ export class CoC7Item extends Item {
 		return this.isIncludedInSet( 'properties', propertyId);
 	}
 
+	get name() {
+		if( 'skill' != this.type || !this.data.data?.properties?.special) return super.name;
+		if( this.data.name.toLowerCase().includes( this.data.data.specialization?.toLowerCase())) return super.name;
+		return `${this.data.data.specialization} (${this.data.name})`;
+	}
+
+	static getNameWithoutSpec( item){
+		if( item instanceof CoC7Item){
+			if( item.data.data?.properties?.special){
+				const specNameRegex = new RegExp(item.data.data.specialization, 'ig');
+				const filteredName = item.name.replace( specNameRegex, '').trim().replace(/^\(+|\)+$/gm,'');
+				return filteredName.length?filteredName:item.name;
+			}
+		} else {
+			if( item.data.properties?.special){
+				const specNameRegex = new RegExp(item.data.specialization, 'ig');
+				const filteredName =  item.name.replace( specNameRegex, '').trim().replace(/^\(+|\)+$/gm,'');
+				return filteredName.length?filteredName:item.name;
+			}
+		}
+		return item.name;
+	}
+
+	static isAnySpec( item){
+		if( item instanceof CoC7Item){
+			if( 'skill' != item.type || !item.data.data.properties?.special) return false;
+			return( CoC7Item.getNameWithoutSpec(item).toLowerCase() == game.i18n.localize('CoC7.AnySpecName').toLowerCase());
+		} else { //Assume it's data only
+			if( 'skill' != item.type || !item.data.properties?.special) return false;
+			return( CoC7Item.getNameWithoutSpec(item).toLowerCase() == game.i18n.localize('CoC7.AnySpecName').toLowerCase());
+		}
+	}
+
 	async checkSkillProperties(){
 		if( this.type != 'skill') return;
 		const checkedProps = {};
@@ -299,14 +280,27 @@ export class CoC7Item extends Item {
 		return this.getItemFlag('developement');
 	}
 
-	async toggleItemFlag( flagName){
+	async toggleItemFlag( flagName, eraseAdjustment = true){
 		const flagValue =  !this.getItemFlag(flagName);
 		const name = `data.flags.${flagName}`;
-		if( ('occupation' == flagName || 'archetype' == flagName) && !flagValue){
+		if( ('occupation' == flagName || 'archetype' == flagName) && !flagValue && eraseAdjustment){
 			await this.update( { 
 				[`data.adjustments.${flagName}`] : null,
 				[name]: flagValue});
 		} else await this.update( { [name]: flagValue});
+	}
+
+	async setItemFlag( flagName){
+		await this.update( { [`data.flags.${flagName}`]: true});
+	}
+
+	async unsetItemFlag( flagName, eraseAdjustment = true){
+		const name = `data.flags.${flagName}`;
+		if( ('occupation' == flagName || 'archetype' == flagName) && eraseAdjustment){
+			await this.update( { 
+				[`data.adjustments.${flagName}`] : null,
+				[name]: false});
+		} else await this.update( { [name]: false});
 	}
 
 	getItemFlag( flagName){
@@ -365,7 +359,6 @@ export class CoC7Item extends Item {
 		const skillProperties = [];
 		for (let [key, value] of Object.entries(COC7['skillProperties'])) {
 			if(this.data.data.properties[key] == true)  skillProperties.push(game.i18n.localize(value));
-			// if( value) data.itemProperties.push( COC7.spellProperties[key]?COC7.spellProperties[key]:null);
 		}
 		return skillProperties;
 	}
@@ -391,7 +384,7 @@ export class CoC7Item extends Item {
 			}
 			return  value;
 		}
-		return ( parseInt(this.data.data.base));
+		return ( !isNaN(parseInt(this.data.data.base))? parseInt(this.data.data.base): null);
 	}
 
 	get value(){
@@ -400,6 +393,7 @@ export class CoC7Item extends Item {
 		if( 'character' === this.actor.data.type) {	
 			value = this.base;
 			value += (this.data.data.adjustments?.personal)?parseInt( this.data.data.adjustments?.personal):0;
+			value += (this.data.data.adjustments?.occupation)?parseInt( this.data.data.adjustments?.occupation):0;
 			value += (this.data.data.adjustments?.experience)?parseInt( this.data.data.adjustments?.experience):0;
 			if( game.settings.get('CoC7', 'pulpRules')){
 				if( this.data.data.adjustments?.archetype) value += parseInt( this.data.data.adjustments?.archetype);
@@ -407,7 +401,7 @@ export class CoC7Item extends Item {
 		}else {
 			value = parseInt( this.data.data.value);
 		}
-		return value;
+		return !isNaN(value)? value: null;
 	}
 
 	async updateValue( value){
@@ -458,6 +452,30 @@ export class CoC7Item extends Item {
 		let bullets = await this.getBulletLeft();
 		if( x > bullets) await this.setBullets(0);
 		else await this.setBullets( bullets - x);
+	}
+
+	static mergeOptionalSkills( skillList, options){
+		const jointArray = skillList.concat( options);
+		return jointArray.reduce( (newArray, item) => {
+			//If skill is not a generic spec and is already included we don't add item
+			if( !CoC7Item.isAnySpec(item) && newArray.find( skill => skill.name == item.name)) return newArray;
+			//Else item is added
+			return [...newArray, item];
+		}, []).sort( (a, b) => {
+			let lca;
+			let lcb;
+			if( a.data.properties && b.data.properties) {
+				lca = a.data.properties.special ? a.data.specialization.toLowerCase() + a.name.toLowerCase() : a.name.toLowerCase();
+				lcb = b.data.properties.special ? b.data.specialization.toLowerCase() + b.name.toLowerCase() : b.name.toLowerCase();
+			}
+			else {
+				lca = a.name.toLowerCase();
+				lcb = b.name.toLowerCase();
+			}
+			if( lca < lcb) return -1;
+			if( lca > lcb) return 1;
+			return 0;
+		});
 	}
 
 

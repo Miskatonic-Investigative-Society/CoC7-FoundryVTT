@@ -465,7 +465,7 @@ export class CoC7Check {
 		{
 			this.isItem = true;
 			if( this.item.data.data.malfunction) {
-				if( this.dices.total >= this.item.data.data.malfunction){
+				if( Number(this.dices.total) >= Number(this.item.data.data.malfunction)){
 					this.hasMalfunction = true;
 					this.malfunctionTxt = game.i18n.format('CoC7.Malfunction', {itemName : this.item.name});
 					await this.item.toggleItemFlag(CoC7Item.flags.malfunction);
@@ -535,7 +535,7 @@ export class CoC7Check {
 	}
 
 	showDiceRoll(){
-		if( game.dice3d){
+		if( game.modules.get('dice-so-nice')?.active){
 			const diceResults = [];
 			this.dices.tens.forEach(dieResult => { 
 				diceResults.push( 100 == dieResult.value ?0:dieResult.value/10);

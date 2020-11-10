@@ -40,8 +40,9 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
 	static get defaultOptions() {
 		return mergeObject(super.defaultOptions, {
 			classes: ['coc7', 'sheet', 'actor', 'npc'],
+			dragDrop: [{dragSelector: '.item', dropSelector: null}],
 			template: 'systems/CoC7/templates/actors/npc-sheet.html',
-			width: 560,
+			width: 580,
 			height: 'auto',
 			resizable: true
 		});

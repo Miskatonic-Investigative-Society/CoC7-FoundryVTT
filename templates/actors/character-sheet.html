@@ -11,7 +11,14 @@
 				{{#if pulpCharacter}}
 				<div class="form-group">
 					<label>{{ localize 'CoC7.Archetype' }} :</label>
+					{{#if data.infos.archetypeSet}}
+					<span class="rollable open-item" data-type="archetype" style="line-height: 18px;padding: 1px 3px;white-space: nowrap;">{{data.infos.archetype}}</span>
+					{{#unless data.flags.locked}}
+					<a class="reset-archetype" title="{{ localize 'CoC7.ResetArchetype'}}" style="flex: 0;" data-type="archetype"><i class="far fa-times-circle"></i></a>
+					{{/unless}}
+					{{else}}
 					<input name="data.infos.archetype" type="text" value="{{data.infos.archetype}}"/>
+					{{/if}}
 				</div>
 				<div class="form-group">
 					<label>{{ localize 'CoC7.Organization' }} :</label>
@@ -20,7 +27,14 @@
 				{{/if}}
 				<div class="form-group">
 					<label>{{ localize 'CoC7.Occupation' }} :</label>
+					{{#if data.infos.occupationSet}}
+					<span class="rollable open-item" data-type="occupation" style="line-height: 18px;padding: 1px 3px;white-space: nowrap;">{{data.infos.occupation}}</span>
+					{{#unless data.flags.locked}}
+					<a class="reset-occupation" title="{{ localize 'CoC7.ResetOccupation'}}" style="flex: 0;" data-type="occupation"><i class="far fa-times-circle"></i></a>
+					{{/unless}}
+					{{else}}
 					<input name="data.infos.occupation" type="text" value="{{data.infos.occupation}}"/>
+					{{/if}}
 				</div>
 				<div class="form-group">
 					<label>{{ localize 'CoC7.Age' }} :</label>
@@ -88,7 +102,6 @@
 				<span style="flex: none;font-size: large;">/</span>
 				{{#if data.attribs.mp.auto}}
 				<input class="attribute-max locked" type="text" name="data.attribs.mp.max" value="{{data.attribs.mp.max}}" data-dtype="Number" readonly/>
-				<!-- <span class="attribute-max" type="text" style="line-height: 22px;"> {{data.attribs.mp.max}} </span> -->
 				{{else}}
 				<input class="attribute-max {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.mp.max" value="{{data.attribs.mp.max}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
 				{{/if}}
@@ -100,7 +113,14 @@
 				<label class="attribute-label rollable">{{localize 'CoC7.Sanity'}} :</label>
 				<input class="attribute-value" type="text" name="data.attribs.san.value" value="{{data.attribs.san.value}}" data-dtype="Number"/>
 				<span style="flex: none;font-size: large;">/</span>
-				<input class="attribute-max read-only" type="text" name="data.attribs.san.max" value="{{data.attribs.san.max}}" data-dtype="Number" data-attrib="san" readonly>
+				{{#if data.attribs.san.auto}}
+				<input class="attribute-max locked" type="text" name="data.attribs.san.max" value="{{data.attribs.san.max}}" data-dtype="Number" readonly/>
+				{{else}}
+				<input class="attribute-max {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.san.max" value="{{data.attribs.san.max}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
+				{{/if}}
+				{{#unless data.flags.locked}}
+				<div class="auto-toggle {{#if data.attribs.san.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
+				{{/unless}}
 			</div>
 			<div class="flexrow flex2 attribute" data-attrib="lck">
 				<label class="attribute-label rollable">{{localize 'CoC7.Luck'}} :</label>
@@ -135,9 +155,6 @@
 				<input class="locked" type="text" name="data.indefiniteInsanityLevel.value" value="{{data.indefiniteInsanityLevel.value}}" data-dtype="Number" readonly/>
 				<input class="locked" type="text" name="data.indefiniteInsanityLevel.max" value="{{data.indefiniteInsanityLevel.max}}" data-dtype="Number" readonly/>
 			</div>
-			{{#if isDying}}
-				<a class='dying-check' style="text-align: center;font-size: 20px;" title="Check if you'll die immediately"><i class="fas fa-dice-d20"></i></a>
-			{{else}}
 				<label class="attribute-label">{{localize 'CoC7.DailySanLoss'}}</label>
 				<span style="max-width: 20px;font-size: 14px;height: 22px;padding: 1px 3px;border: 1px solid transparent;">{{data.attribs.san.dailyLoss}}</span>
 				<a class="reset-counter" style="flex: 0 0 25px;color: darkgrey;padding: 1px 6px;text-align: center;" data-counter="data.attribs.san.dailyLoss" title="{{localize 'CoC7.DailySanIconOver'}}"><i class="fas fa-undo"></i></a>
@@ -146,22 +163,32 @@
 				<a class="status-monitor {{#if data.status.unconscious.value}}status-on{{/if}}" title="{{localize 'CoC7.Unconsious'}}" data-status="unconscious"> <i class="fas fa-dizzy"></i></a>
 				<a class="status-monitor {{#if data.status.criticalWounds.value}}status-on{{/if}}" title="{{localize 'CoC7.CriticalWounds'}}" data-status="criticalWounds"> <i class="fas fa-user-injured"></i></a>
 				<a class="status-monitor {{#if data.status.dying.value}}status-on{{/if}}" title="{{localize 'CoC7.Dying'}}" data-status="dying"> <i class="fas fa-heartbeat"></i></a>
+				<a class='status-monitor {{#if data.status.dead.value}}status-on{{/if}} is-dead' title="{{localize 'CoC7.Dead'}}" data-status="dead"><i class="fas fa-skull-crossbones"></i></a>
+
+				<div style="flex: 0 0 25px;"></div>
+				{{#if isDying}}
+				<a class='status-monitor dying-check' title="Check if you'll die immediately"><i class="fas fa-dice-d20"></i></a>
+				{{else}}
+				<div style="flex: 0 0 25px;"></div>
+				{{/if}}
 				<div style="flex: 0 0 40px;"></div>
 				<a class="status-monitor {{#if data.status.tempoInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.TemporaryInsanity'}}" data-status="tempoInsane"> <i class="fas fa-filter"></i></a>
 				<a class="status-monitor {{#if data.status.indefInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.IndefiniteInsanity'}}" data-status="indefInsane"> <i class="far fa-hospital"></i></a>
+
 				<div class="flex1"></div>
 				{{#if data.flags.locked}}
 				<a class="lock"  style="flex: 0 0 16px;"  title="{{localize 'CoC7.UnlockActor'}}" data-locked="true"> <i class="fas fa-lock"></i></a>
 				{{else}}
 				<a class="lock"  style="flex: 0 0 16px;" title="{{localize 'CoC7.LockActor'}}" data-locked="false"> <i class="fas fa-lock-open"></i></a>
 				{{/if}}
-			{{/if}}
 		</div>
 	</header>
 
 	{{!-- Sheet Tab Navigation --}}
 	<nav class="sheet-tabs tabs" data-group="primary">
+		{{#if showDevPannel}}
 		<a class="item" data-tab="development">{{localize 'CoC7.CharacterDevelopment'}}</a>
+		{{/if}}
 		<a class="item" data-tab="skills">{{localize 'CoC7.Skills'}}</a>
 		<a class="item" data-tab="combat">{{localize 'CoC7.Combat'}}</a>
 		<a class="item" data-tab="possession">{{localize 'CoC7.Possessions'}}</a>
@@ -170,10 +197,11 @@
 
 	{{!-- Sheet Body --}}
 	<section class="sheet-body">
-		
+		{{#if showDevPannel}}
 		<div class="tab combat flexcol" data-group="primary" data-tab="development" style="border: 2px groove #eeede0;padding: 1px;">
 			{{> "systems/CoC7/templates/actors/parts/character-development.html"}}
 		</div>
+		{{/if}}
 
 		{{!-- Skills Tab --}}
 		<div class="tab skills flexcol active" data-group="primary" data-tab="skills" style="border: 2px groove #eeede0;padding: 1px;">

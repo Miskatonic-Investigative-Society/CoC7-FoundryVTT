@@ -1,0 +1,142 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+	<header class="sheet-header flexrow" style="flex: 0 0 64px;padding-bottom: 2px;">
+		<div class="header-details flexrow">
+			<h1 class="name" style="height: 48px;">
+				<input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
+			</h1>
+
+			<ul class="summary flexrow">
+				<li class="flex2">
+					<input type="text" name="data.source" value="{{data.source}}" placeholder="{{ localize 'CoC7.Source' }}"/>
+				</li>
+				<li class="flex3">
+					{{coreCharacteristicsString}}
+				</li>
+			</ul>
+
+		</div>
+		<img class="profile" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+
+	</header>
+
+	{{!-- Item Sheet Navigation --}}
+	<nav style="flex: 0 0 24px;margin-bottom: 4px;font-family: 'Modesto Condensed', 'Palatino Linotype', serif;font-size: 16px;font-weight: 700;"
+	  class="sheet-navigation tabs" data-group="primary">
+		<a style="line-height: 24px;" class="item active" data-tab="description">{{ localize "CoC7.ItemDescription" }}</a>
+		<a style="line-height: 24px;" class="item" data-tab="details">{{ localize "CoC7.Details" }}</a>
+		<a style="line-height: 24px;" class="item" data-tab="skills">{{ localize "CoC7.Skills" }}</a>
+	</nav>
+
+	
+	{{!-- Item Sheet Body --}}
+	<section style="overflow: hidden;flex: 1;" class="sheet-body">
+
+		{{!-- Description Tab --}}
+		<div class="tab flexrow active" data-group="primary" data-tab="description">
+
+			<div class="item-properties">
+				<ol class="properties-list">
+					{{#each itemProperties}}
+					<li>{{this}}</li>
+					{{/each}}
+				</ol>
+			</div>
+		
+			{{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
+		</div>
+
+		{{!-- Details Tab --}}
+		<div class="tab details" data-group="primary" data-tab="details">
+
+            {{#if isOwned}}
+            <h3 class="form-header">{{ localize "CoC7.SuggestedOccupations"}}</h3>
+            <span>{{{data.suggestedOccupations}}}</span>
+            
+            <h3 class="form-header">{{ localize "CoC7.SuggestedTraits"}}</h3>
+            <span>{{{data.suggestedTraits}}}</span>
+            {{else}}
+            <h3 class="form-header">{{ localize "CoC7.Details" }}</h3>
+            <div class="form-group">
+                <label>{{ localize "CoC7.BonusPoints" }}</label>
+                <input type="text" name="data.bonusPoints" value="{{data.bonusPoints}}" data-dtype="Number"/>
+            </div>
+            <div class="form-group">
+                <label>{{ localize "CoC7.PulpTalents" }}</label>
+                <input type="text" name="data.talents" value="{{data.talents}}" data-dtype="Number"/>
+            </div>
+
+
+			<h3 class="form-header">{{ localize "CoC7.CoreCharacteristics" }}</h3>
+			<div class="form-group stacked">
+				<label class="checkbox">
+					<input type="checkbox" name="data.coreCharacteristics.str" {{checked data.coreCharacteristics.str}}/> {{ localize "CHARAC.Strengh" }}
+				</label>
+				<label class="checkbox">
+					<input type="checkbox" name="data.coreCharacteristics.con" {{checked data.coreCharacteristics.con}}/> {{ localize "CHARAC.Constitution" }}
+				</label>
+				<label class="checkbox">
+					<input type="checkbox" name="data.coreCharacteristics.siz" {{checked data.coreCharacteristics.siz}}/> {{ localize "CHARAC.Size" }}
+				</label>
+				<label class="checkbox">
+					<input type="checkbox" name="data.coreCharacteristics.dex" {{checked data.coreCharacteristics.dex}}/> {{ localize "CHARAC.Dexterity" }}
+				</label>
+				<label class="checkbox">
+					<input type="checkbox" name="data.coreCharacteristics.app" {{checked data.coreCharacteristics.app}}/> {{ localize "CHARAC.Appearance" }}
+				</label>
+				<label class="checkbox">
+					<input type="checkbox" name="data.coreCharacteristics.int" {{checked data.coreCharacteristics.int}}/> {{ localize "CHARAC.Intelligence" }}
+				</label>
+				<label class="checkbox">
+					<input type="checkbox" name="data.coreCharacteristics.pow" {{checked data.coreCharacteristics.pow}}/> {{ localize "CHARAC.Power" }}
+				</label>
+				<label class="checkbox">
+					<input type="checkbox" name="data.coreCharacteristics.edu" {{checked data.coreCharacteristics.edu}}/> {{ localize "CHARAC.Education" }}
+				</label>
+			</div>
+			
+			<div class="form-group">
+				<label class="checkbox">
+					<input type="checkbox" name="data.coreCharacteristicsFormula.enabled" {{checked data.coreCharacteristicsFormula.enabled}}/> {{ localize "CoC7.UseFormula" }}
+				</label>
+				{{#if data.coreCharacteristicsFormula.enabled}}
+					<input type="text" name="data.coreCharacteristicsFormula.value" value="{{data.coreCharacteristicsFormula.value}}" placeholder="{{ localize 'CoC7.EnterFormula' }}"/>
+				{{/if}}
+			</div>
+           
+            <h3 class="form-header">{{ localize "CoC7.SuggestedOccupations"}}</h3>
+            {{editor content=data.suggestedOccupations target="data.suggestedOccupations" button=true owner=owner editable=editable}}
+            
+            <h3 class="form-header">{{ localize "CoC7.SuggestedTraits"}}</h3>
+            {{editor content=data.suggestedTraits target="data.suggestedTraits" button=true owner=owner editable=editable}}
+            {{/if}}
+		</div>
+		
+		{{!-- Skills Tab --}}
+		<div class="tab skills" data-group="primary" data-tab="skills">
+			<div class='{{#unless isOwned}}droppable{{/unless}} main-skills'>
+
+				<h3 class="form-header">{{ localize "CoC7.CommonSkills" }}</h3>
+
+				{{#if skillListEmpty}}
+					<h3 class="warning">{{ localize "CoC7.EmptySkillList" }}</h3>
+				{{/if}}
+
+				<ol class="item-list">
+					{{#each data.skills as |skill|}}
+					<li class="item flexrow" data-item-id="{{skill._id}}">
+						<div class="item-name flexrow">
+							<h4>{{skill.displayName}} ({{skill.data.base}}%)</h4>    
+						</div>
+
+						<div class="item-controls">
+							{{#unless ../isOwned}}
+							<a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+							{{/unless}}
+						</div>
+					</li>
+					{{/each}}
+				</ol>
+			</div>
+		</div>
+	</section>
+</form>
