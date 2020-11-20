@@ -9,6 +9,7 @@ import { CoC7Roll, chatHelper } from './chat/helper.js';
 import { CoC7DamageRoll } from './chat/damagecards.js';
 import { CoC7SanCheck } from './chat/sancheck.js';
 import { CoC7ConCheck } from './chat/concheck.js';
+import { CoC7Parser } from './apps/parser.js';
 
 export class CoC7Chat{
 
@@ -52,6 +53,7 @@ export class CoC7Chat{
 		html.on('click', '.target-selector', CoC7Chat._onTargetSelect.bind(this));
 
 		html.on('dblclick', '.open-actor', CoC7Chat._onOpenActor.bind(this));
+		html.on('click', '.coc7-link', CoC7Parser._onCheck.bind(this));
 	}
 
 
@@ -613,7 +615,7 @@ export class CoC7Chat{
 		}
 
 		if( event.currentTarget.dataset.skillId == ''){
-			ui.notifications.error('Actor doesn\'t have a dodge skill');
+			ui.notifications.error(game.i18n.localize('CoC7.ErrorNoDodgeSkill'));
 			return;
 		}
 
@@ -1069,7 +1071,7 @@ export class CoC7Chat{
 					await CoC7Chat.updateChatCard( card);
 				}
 				else
-					ui.notifications.error(`${actor.name} didn't have enough luck to pass the check`);
+					ui.notifications.error(game.i18n.format('CoC7.ErrorNotEnoughLuck', {actor: actor.name}));
 			}
 			break;
 		}
@@ -1125,7 +1127,7 @@ export class CoC7Chat{
 			case 'maneuver':{
 				let actor = CoC7Chat._getChatCardActor(card);
 				if( defender.build <= actor.build - 3) {
-					ui.notifications.error('Your opponant is too strong for you to perform a maneuver');
+					ui.notifications.error(game.i18n.localize('CoC7.ErrorManeuverNotPossible'));
 					return;
 				}
 				check.actor = defender;

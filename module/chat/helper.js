@@ -36,6 +36,22 @@ export class chatHelper{
 		return game.actors.get(key) || null;
 	}
 
+	static getSpeakerFromKey( actorKey){
+		const speaker = {};
+		const actor = chatHelper.getActorFromKey( actorKey);
+		if (actorKey.includes('.')) {
+			const [sceneId, tokenId] = actorKey.split('.');
+			speaker.token = tokenId;
+			speaker.scene = sceneId;
+			if( actor.token?.name) speaker.alias = actor.token.name;
+			speaker.actor = actor.id;
+		} else {
+			speaker.actor = actorKey;
+			speaker.alias = actor.name;
+		}
+		return speaker;
+	}
+
 	static attachObjectToElement( object, element){
 		Object.keys(object).forEach( prop => {
 			if( !prop.startsWith('_'))
