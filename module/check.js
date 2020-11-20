@@ -39,6 +39,34 @@ export class CoC7Check {
 		critical: 4
 	}
 
+	static difficultyString(difficultyLevel) {
+		switch (difficultyLevel) {
+		case '?':
+			return game.i18n.localize('CoC7.UnknownDifficulty');
+		case '+':
+			return game.i18n.localize('CoC7.HardDifficulty');
+		case '++':
+			return game.i18n.localize('CoC7.ExtremeDifficulty');
+		case '+++':
+			return game.i18n.localize('CoC7.CriticalDifficulty');
+		case '0':
+			return game.i18n.localize('CoC7.RegularDifficulty');
+		case CoC7Check.difficultyLevel.unknown:
+			return game.i18n.localize('CoC7.UnknownDifficulty');
+		case CoC7Check.difficultyLevel.regular:
+			return game.i18n.localize('CoC7.RegularDifficulty');
+		case CoC7Check.difficultyLevel.hard:
+			return game.i18n.localize('CoC7.HardDifficulty');
+		case CoC7Check.difficultyLevel.extreme:
+			return game.i18n.localize('CoC7.ExtremeDifficulty');
+		case CoC7Check.difficultyLevel.critical:
+			return game.i18n.localize('CoC7.CriticalDifficulty');
+		default:
+			return '';
+		}
+	
+	}
+
 	get criticalThreshold(){
 		return 1;
 	}
@@ -574,7 +602,7 @@ export class CoC7Check {
 	upgradeCheck( upgradeindex){
 		const increasedSuccess = this.increaseSuccess[upgradeindex];
 		const luckAmount = parseInt(increasedSuccess.luckAmount);
-		if( !this.actor.spendLuck( luckAmount)){ ui.notifications.error(`${actor.name} does not have enough luck to pass the check`); return;}
+		if( !this.actor.spendLuck( luckAmount)){ ui.notifications.error(game.i18n.format('CoC7.ErrorNotEnoughLuck', {actor: actor.name})); return;}
 		this.totalLuckSpent = !parseInt(this.totalLuckSpent)?0:parseInt(this.totalLuckSpent);
 		this.totalLuckSpent += parseInt(luckAmount);
 		const newSuccessLevel = parseInt( increasedSuccess.newSuccessLevel);

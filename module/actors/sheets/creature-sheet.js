@@ -33,13 +33,13 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 
 	}
 
-	async _onSanCheck(){
+	async _onSanCheck(event){
 		event.preventDefault();
 		if( !this.actor.data.data.special.sanLoss.checkPassed && !this.actor.data.data.special.sanLoss.checkFailled) {
-			ui.notifications.info('No sanity loss value');
+			// ui.notifications.info('No sanity loss value');
 			return;
 		}
-		CoC7SanCheck.checkTargets( this.actor.data.data.special.sanLoss.checkPassed, this.actor.data.data.special.sanLoss.checkFailled, event.shiftKey);
+		CoC7SanCheck.checkTargets( this.actor.data.data.special.sanLoss.checkPassed, this.actor.data.data.special.sanLoss.checkFailled, event.shiftKey, this.tokenKey);
 	}
 
 
