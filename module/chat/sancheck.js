@@ -1,13 +1,13 @@
 import { CoC7Check } from '../check.js';
+import { CoC7Dice } from '../dice.js';
 // import { CoC7Dice } from '../dice.js';
 // import { CoC7Item } from '../items/item.js';
 import { chatHelper, CoC7Roll } from './helper.js';
 
 export class CoC7SanCheck {
-	constructor( actorId = null, sanLoss = null, sanLossFail = null, difficulty = CoC7Check.difficultyLevel.regular){
-		this.check = new CoC7Check( actorId);
-		this.check.attribute = 'san';
-		this.check.difficulty = difficulty;
+	constructor( actorId = null, sanLoss = null, sanLossFail = null, difficulty = CoC7Check.difficultyLevel.regular, modifier = 0){
+		this.difficulty = difficulty;
+		this.modifier = modifier;
 		this.sanLoss = sanLoss;
 		this.sanLossFail = sanLossFail;
 		this.actorId = actorId;
@@ -39,7 +39,6 @@ export class CoC7SanCheck {
 
 	set actorId(x){
 		this._actorId = x;
-		this.check.actor = x;
 	}
 
 	get actorId(){
@@ -89,22 +88,29 @@ export class CoC7SanCheck {
 		return false;
 	}
 
-	static checkTargets( sanLoss, sanLossFail, fastForward=false){
+	static checkTargets( sanMin, sanMax, fastForward=false, tokenKey=null){
 		const targets = [...game.user.targets];
 		if( targets.length){
 			targets.forEach( t => {
 				let check;
-				if( t.actor.isToken) check = new CoC7SanCheck( t.actor.tokenKey, sanLoss, sanLossFail);
-				else check  = new CoC7SanCheck( t.actor.id, sanLoss, sanLossFail);
+				if( t.actor.isToken) check = new CoC7SanCheck( t.actor.tokenKey, sanMin, sanMax);
+				else check  = new CoC7SanCheck( t.actor.id, sanMin, sanMax);
 				check.toMessage( fastForward);
 			});
-		} else ui.notifications.error('No target selected');
+		} else{
+			if( tokenKey){
+				const speaker = chatHelper.getSpeakerFromKey( tokenKey);
+				const title = game.i18n.format('CoC7.SANCheckTitle', {name: speaker.alias, sanMin: sanMin, sanMax: sanMax});
+				chatHelper.createMessage(null, `@coc7.sanloss[sanMax:${sanMax},sanMin:${sanMin}]{${title}}`, speaker);
+			} else ui.notifications.error('No target selected');
+		}
 	}
 
 	static getFromCard( card){
 		const sanCheck = new CoC7SanCheck();
 		chatHelper.getObjectFromElement( sanCheck, card);
 		const htmlCheck = card.querySelector( '.roll-result');
+		sanCheck.check = new CoC7Check();
 		CoC7Roll.getFromElement( htmlCheck, sanCheck.check);
 		sanCheck.messageId = card.closest('.message').dataset.messageId;
 		return sanCheck;
@@ -162,6 +168,11 @@ export class CoC7SanCheck {
 	}
 
 	async rollSan(){
+		this.check = new CoC7Check();
+		this.check.actor = this.actorId;
+		this.check.attribute = 'san';
+		this.check.difficulty = this.difficulty;
+		this.check.diceModifier = this.modifier;
 		this.check.hideDiceResult = true;
 		await this.check._perform();
 		if( !this.isSanLossFormula){
@@ -173,6 +184,9 @@ export class CoC7SanCheck {
 		if( this.isSanLossFormula){
 			const r = new Roll(this.sanLossFormula);
 			r.roll();
+			CoC7Dice.showRollDice3d( r);
+
+
 			this.totalSanLoss = r.total;
 		} else this.totalSanLoss = this.sanLossFormula;
 	}

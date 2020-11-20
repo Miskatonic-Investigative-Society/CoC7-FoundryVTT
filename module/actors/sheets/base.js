@@ -761,7 +761,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		const actorKey = !this.token? this.actor.actorKey : `${this.token.scene._id}.${this.token.data._id}`;
 		if( !weapon.data.data.properties.rngd){
 			if( game.user.targets.size > 1){
-				ui.notifications.error('Too many target selected. Keeping only last selected target');
+				ui.notifications.warn(game.i18n.localize('CoC7.WarnTooManyTarget'));
 			}
 
 			const card = new CoC7MeleeInitiator( actorKey, itemId, fastForward);
@@ -849,8 +849,6 @@ export class CoC7ActorSheet extends ActorSheet {
 		check.actor = !tokenKey ? actorId : tokenKey;
 		check.rollCharacteristic(characteristic );
 		check.toMessage();
-
-		// this.actor.rollCharacteristic(characteristic, {event: event});
 	}
 
 

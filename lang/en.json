@@ -42,6 +42,7 @@
 "CoC7.DB": "DB",
 "CoC7.Build": "Build",
 "CoC7.Skills": "Skills",
+"CoC7.Skill": "Skill",
 "CoC7.Combat": "Combat",
 "CoC7.Possessions": "Gear & Cash",
 "CoC7.Background": "Backstory",
@@ -110,6 +111,7 @@
 "CoC7.ConstitutionCheck": "Constitution check",
 
 "CoC7.BonusSelectionWindow": "Bonus selection window",
+"CoC7.BonusSelectionWindowNamed": "Select modifier for {name} check",
 "CoC7.SkillDetailsWindow": "Skill details window",
 "CoC7.RegularDifficulty": "regular",
 "CoC7.HardDifficulty": "hard",
@@ -303,8 +305,12 @@
 "CoC7.UseFormula": "Use dice roll",
 "CoC7.EnterFormula": "Enter formula",
 "CoC7.SanRollHint":"Roll san check for targets",
+"CoC7.SANCheckTitle": "SAN loss : {name} ({sanMin}/{sanMax})",
 "CoC7.NoSkill": "No skill",
 "CoC7.AddWeapontHint": "<p>{actor} doen't have a {weapon}.<br>Do you want to create one ?</p>",
+
+"CoC7.LinkCheck": "{type} check: {name} [{difficulty}/{modifier}]",
+"CoC7.LinkSanLoss": "SAN loss : ({sanMin}/{sanMax}) [{difficulty}/{modifier}]",
 
 
 "CoC7.ManualCreditValues": "Manual Credit Values",
@@ -425,6 +431,20 @@
 "CoC7.WarnMacroIncorrectType": "You can create macro for weapons and skills only",
 "CoC7.WarnNoGlobalSpec": "You can't create macro for unspecified specializations",
 "CoC7.WarnMacroNoItemFound": "No usable item found",
+"CoC7.WarnNoControlledActor": "You don't have any controlled actor",
+"CoC7.WarnFastTargetWithWrongMOV": "Fast selected on a target with less than 8 MOV. (MOV: {mov})",
+"CoC7.WarnTooManyTarget": "Too many target selected. Keeping only last selected target",
+
+"CoC7.ErrorNoDodgeSkill": "Actor doesn't have a dodge skill",
+"CoC7.ErrorNotEnoughLuck": "{actor} didn't have enough luck to pass the check",
+"CoC7.ErrorManeuverNotPossible": "Your opponant is too strong for you to perform a maneuver",
+"CoC7.ErrorNotFound": "{missing} not found!",
+"CoC7.ErrorNotFoundForActor": "{missing} not found for actor {actor}!",
+
+"CoC7.InfoLessSkillThanOptions": "There's only {skillCount} and {optionsCount} options, adding all of them",
+"CoC7.InfoAllSkillsAlreadySelected": "All skills are already selected.",
+
+"CoC7.MessageWaitForKeeperToClick": "Your keeper is requesting a check.<br>Wait for him to ask you before clicking it!<br>",
 
 "SETTINGS.DefaultDifficulty": "Default check difficulty",
 "SETTINGS.DefaultDifficultyHint": "You can choose the default difficulty for checks. Unknown will roll checks without the player knowing the check difficulty.",
