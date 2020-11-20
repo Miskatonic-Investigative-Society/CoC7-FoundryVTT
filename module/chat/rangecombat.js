@@ -853,6 +853,6 @@ export class CoC7RangeTarget{
 			else this.small = true;
 		}
 		else this[flag] = !this[flag];
-		if( 'fast' === flag && this.fast && !this.isFast) ui.notifications.warn( `Fast selected on a target with less than 8 MOV. (MOV: ${this.actor.mov})`);
+		if( 'fast' === flag && this.fast && !this.isFast) ui.notifications.warn( game.i18n.format( 'CoC7.WarnFastTargetWithWrongMOV', {mov: this.actor.mov}));
 	}
 }

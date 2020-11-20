@@ -1352,3 +1352,11 @@
 #combat-tracker .token-initiative.critical {
   color: goldenrod;
 }
+.coc7-link {
+  background: #DDD;
+  padding: 1px 4px;
+  border: 1px solid #4b4a44;
+  border-radius: 2px;
+  white-space: nowrap;
+  word-break: break-all;
+}

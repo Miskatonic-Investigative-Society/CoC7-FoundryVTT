@@ -1,4 +1,5 @@
 // import { chatHelper } from './helper.js';
+import { CoC7Dice } from '../dice.js';
 import { ChatCardActor } from './card-actor.js';
 
 
@@ -55,16 +56,13 @@ export class CoC7DamageRoll extends ChatCardActor{
 		} else {
 			this.roll = new Roll( this.rollString);
 			this.roll.roll();
+			CoC7Dice.showRollDice3d(this.roll);
 			this.result = Math.floor( this.roll.total);
 		}
 
 		if( is7) this.roll._dice = this.roll.dice;
 		else{
 			this.roll._dice.forEach( d => d.rolls.forEach( r => {r.result = r.roll;}));
-		}
-
-		if( game.modules.get('dice-so-nice')?.active && this.roll){
-			game.dice3d.showForRoll(this.roll);
 		}
 
 		const html = await renderTemplate('systems/CoC7/templates/chat/combat/damage-result.html', this);

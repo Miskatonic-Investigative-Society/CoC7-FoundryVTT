@@ -26,10 +26,35 @@ Vesion 0.4.5 :
   * Internal field datas integrity check missing.
   * Rolling characteristics may provide non integer results.
   * Sheets not set as default are now working as intended. Thank to Sharcashmo for his help.
+  * Rolling damage of weapon with DsN was showing the dice twice.
 * Max SAN is automatically calculated
   * Skill 'Cthulhu Mythos' is defined in the lang.json.
   * Max SAN is calculated as 99-Cthlhu Mythos.
   * Auto calc can be bypassed in the same way as the other attributes.
+* First implementation of CoC7 links for chatmessages and sheet editors.
+  * Format of link is @coc7.TYPE_OF_REQUEST[OPTIONS]{TEXT_TO_DISPLAY}
+    * TYPE_OF_REQUEST :
+      * 'sanloss' : trigger a san check, upon failure will propose to deduct the corresponding SAN.
+      * 'check' : trigger a check depending on the options.
+    * OPTIONS: [] = optional, __*default*__
+      * sanloss:
+        * sanMax: max SAN loss
+        * sanMin: min SAN loss
+      * check:
+        * type: type of check (characteristic, skill, attrib).
+        * name: name of the skill/characteristic/attrib.
+      * all:
+        * [difficulty]: ? (blind), __*0 (regular)*__, + (hard), ++ (extreme), +++ (critical).
+        * [modifier]: -x (x penalty dice), +x (x bonus dice), __*0 (no modifier)*__.
+        * [icon]: icon tu use (font awsome, __*fas fa-dice*__).
+    * TEXT_TO_DISPLAY: Name to display, this is optional.
+  * Some examples :
+    * `@coc7.sanloss[sanMax:1D6,sanMin:1,difficulty:++,modifier:-1]{Hard San Loss (-1) 1/1D6}`
+    * `@coc7.check[type:charac,name:STR,difficulty:+,modifier:-1]{Hard STR check(-1)}`
+    * `@coc7.check[type:attrib,name:lck,difficulty:+,modifier:-1]{Hard luck check(-1)}`
+    * With icon : `@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,difficulty:+,modifier:-1]{Hard Anthropology check(-1)}`
+    * Without name, difficulty nor modifier : `@coc7.sanloss[sanMax:1D6,sanMin:1]`
+    * With icon, without name nor difficulty `@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,modifier:+1]`
 
 Version 0.4.4 :
 
