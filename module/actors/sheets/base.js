@@ -330,6 +330,10 @@ export class CoC7ActorSheet extends ActorSheet {
 			if( data.data.characteristics.pow.value != null) data.data.attribs.mp.max = Math.floor( data.data.characteristics.pow.value / 5);
 		}
 
+		if( data.data.attribs.san.auto){
+			data.data.attribs.san.max = this.actor.sanMax;
+		}
+
 		if( data.data.attribs.mp.value > data.data.attribs.mp.max || data.data.attribs.mp.max == null) data.data.attribs.mp.value = data.data.attribs.mp.max;
 		if( data.data.attribs.hp.value > data.data.attribs.hp.max || data.data.attribs.hp.max == null) data.data.attribs.hp.value = data.data.attribs.hp.max;
 
@@ -757,7 +761,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		const actorKey = !this.token? this.actor.actorKey : `${this.token.scene._id}.${this.token.data._id}`;
 		if( !weapon.data.data.properties.rngd){
 			if( game.user.targets.size > 1){
-				ui.notifications.error('Too many target selected. Keeping only last selected target');
+				ui.notifications.warn(game.i18n.localize('CoC7.WarnTooManyTarget'));
 			}
 
 			const card = new CoC7MeleeInitiator( actorKey, itemId, fastForward);
@@ -845,8 +849,6 @@ export class CoC7ActorSheet extends ActorSheet {
 		check.actor = !tokenKey ? actorId : tokenKey;
 		check.rollCharacteristic(characteristic );
 		check.toMessage();
-
-		// this.actor.rollCharacteristic(characteristic, {event: event});
 	}
 
 

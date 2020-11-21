@@ -1,18 +1,18 @@
 import { CoC7Item } from './items/item.js';
 
 export class CoC7Utilities {
-	static test(event){
-		if( event.shiftKey) ui.notifications.info('Hello from SHIFT utilities');
-		else ui.notifications.info('Hello from utilities');
-		const speaker = ChatMessage.getSpeaker();
-		let actor;
-		if (speaker.token) actor = game.actors.tokens[speaker.token];
-		if (!actor) actor = game.actors.get(speaker.actor);
+	// static test(event){
+	// 	if( event.shiftKey) ui.notifications.info('Hello from SHIFT utilities');
+	// 	else ui.notifications.info('Hello from utilities');
+	// 	const speaker = ChatMessage.getSpeaker();
+	// 	let actor;
+	// 	if (speaker.token) actor = game.actors.tokens[speaker.token];
+	// 	if (!actor) actor = game.actors.get(speaker.actor);
 
-		actor.inflictMajorWound();
-	}
+	// 	actor.inflictMajorWound();
+	// }
 
-	static skillCheckMacro( skill, event){
+	static skillCheckMacro( skill, event, options={}){
 		const speaker = ChatMessage.getSpeaker();
 		let actor;
 		if (speaker.token) actor = game.actors.tokens[speaker.token];
@@ -23,7 +23,7 @@ export class CoC7Utilities {
 			return;
 		}
 
-		actor.skillCheck( skill, event.shiftKey);
+		actor.skillCheck( skill, event.shiftKey, options);
 	}
 
 	static weaponCheckMacro( weapon, event){
@@ -135,12 +135,4 @@ export class CoC7Utilities {
 		
 		return;
 	}
-
-	// static async enrichHTML(html){
-	// 	const pdf = game.modules.get('pdfoundry');
-	// 	if( pdf){
-	// 		let pdfModule = await import( '/' + pdf.esmodules[0]);
-	// 		pdfModule.HTMLEnricher.EnrichHTML(html);
-	// 	}
-	// }
 }

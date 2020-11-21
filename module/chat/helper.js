@@ -36,6 +36,22 @@ export class chatHelper{
 		return game.actors.get(key) || null;
 	}
 
+	static getSpeakerFromKey( actorKey){
+		const speaker = {};
+		const actor = chatHelper.getActorFromKey( actorKey);
+		if (actorKey.includes('.')) {
+			const [sceneId, tokenId] = actorKey.split('.');
+			speaker.token = tokenId;
+			speaker.scene = sceneId;
+			if( actor.token?.name) speaker.alias = actor.token.name;
+			speaker.actor = actor.id;
+		} else {
+			speaker.actor = actorKey;
+			speaker.alias = actor.name;
+		}
+		return speaker;
+	}
+
 	static attachObjectToElement( object, element){
 		Object.keys(object).forEach( prop => {
 			if( !prop.startsWith('_'))
@@ -193,7 +209,7 @@ export class CoC7Roll{
 	}
 
 	showDiceRoll(){
-		if( game.dice3d){
+		if( game.modules.get('dice-so-nice')?.active){
 			const diceResults = [];
 			this.dices.tens.forEach(dieResult => { 
 				diceResults.push( 100 == dieResult.value ?0:dieResult.value/10);

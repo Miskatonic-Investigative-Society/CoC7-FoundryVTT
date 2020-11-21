@@ -573,7 +573,7 @@ export class CoCActor extends Actor {
 
 						if( dialogData.skills.length <= dialogData.options){
 							//If there's is less skill than options, add them all.
-							ui.notifications.info( `There's only ${dialogData.skills.length} and ${dialogData.options} options, adding all of them`);
+							ui.notifications.info( game.i18n.format('CoC7.InfoLessSkillThanOptions',{skillCount: dialogData.skills.length, optionsCount: dialogData.options}));
 							// await this.addUniqueItems( dialogData.skills, 'occupation');
 							const merged = CoC7Item.mergeOptionalSkills( data.data.skills, dialogData.skills);
 							data.data.skills = merged;
@@ -584,7 +584,7 @@ export class CoCActor extends Actor {
 							const merged = CoC7Item.mergeOptionalSkills( data.data.skills, selected);
 							data.data.skills = merged;
 						}
-					} else ui.notifications.info( 'All skills are already selected.');
+					} else ui.notifications.info( game.i18n.localize('CoC7.InfoAllSkillsAlreadySelected'));
 				}
 
 
@@ -616,7 +616,7 @@ export class CoCActor extends Actor {
 						});
 						if( dialogData.skills.length <= dialogData.options){
 						//If there's is less skill than options, add them all.
-							ui.notifications.info( `There's only ${dialogData.skills.length} and ${dialogData.options} options, adding all of them`);
+							ui.notifications.info( game.i18n.format('CoC7.InfoLessSkillThanOptions',{skillCount: dialogData.skills.length, optionsCount: dialogData.options}));
 							// await this.addUniqueItems( dialogData.skills, 'occupation');
 							const merged = CoC7Item.mergeOptionalSkills( data.data.skills, dialogData.skills);
 							data.data.skills = merged;
@@ -626,7 +626,7 @@ export class CoCActor extends Actor {
 							if( !selected) return;
 							const merged = CoC7Item.mergeOptionalSkills( data.data.skills, selected);
 							data.data.skills = merged;						}
-					} else ui.notifications.info( 'All skills are already selected.');
+					} else ui.notifications.info( game.i18n.localize('CoC7.InfoAllSkillsAlreadySelected'));
 				}
 
 				//Add all skills
@@ -704,11 +704,43 @@ export class CoCActor extends Actor {
 	}
 
 	getCharacteristic( charName){
-		return {
-			shortName: game.i18n.localize(this.data.data.characteristics[charName].short),
-			label: game.i18n.localize( this.data.data.characteristics[charName].label),
-			value: this.data.data.characteristics[charName].value
-		};
+		for( let [key, value] of Object.entries(this.data.data.characteristics)){
+			if( 
+				game.i18n.localize(value.short).toLowerCase() == charName.toLowerCase() || 
+					game.i18n.localize(value.label).toLowerCase() == charName.toLowerCase() ||
+					key == charName.toLowerCase())
+			{
+				return {
+					key: key,
+					shortName: game.i18n.localize(value.short),
+					label: game.i18n.localize( value.label),
+					value: value.value
+				};
+			}
+		}
+		return null;
+	}
+
+	getAttribute( attribName){
+		if( ['lck', 'luck', game.i18n.localize('CoC7.Luck').toLowerCase()].includes(attribName.toLowerCase()))
+		{
+			return {
+				key: 'lck',
+				shortName: 'luck',
+				label: game.i18n.localize('CoC7.Luck'),
+				value: this.data.data.attribs.lck.value
+			};
+		}
+		if( ['san', game.i18n.localize('CoC7.SAN').toLowerCase(), game.i18n.localize('CoC7.Sanity').toLowerCase()].includes(attribName.toLowerCase()))
+		{
+			return {
+				key: 'san',
+				shortName: game.i18n.localize('CoC7.SAN'),
+				label: game.i18n.localize('CoC7.Sanity'),
+				value: this.data.data.attribs.san.value
+			};
+		}
+		return null;
 	}
 
 	get occupation(){
@@ -767,7 +799,8 @@ export class CoCActor extends Actor {
 				const maxHP = Math.floor( (this.data.data.characteristics.siz.value + this.data.data.characteristics.con.value)/10);
 				return game.settings.get('CoC7', 'pulpRules') && 'character' == this.data.type? maxHP*2:maxHP;
 			}
-			else return null;
+			if( this.data.data.attribs.hp.max) return parseInt(this.data.data.attribs.hp.max);
+			return null;
 		} 
 		return parseInt( this.data.data.attribs.hp.max);
 	}
@@ -781,6 +814,7 @@ export class CoCActor extends Actor {
 	async addUniqueItems( skillList, flag = null){
 		for( let skill of skillList){
 			if( CoC7Item.isAnySpec(skill)){
+				if( ! skill.data.flags) skill.data.flags = {};
 				if( flag) skill.data.flags[flag] = true;
 				await this.createOwnedItem( skill, {renderSheet:false});
 			}
@@ -788,7 +822,7 @@ export class CoCActor extends Actor {
 				const itemId = this.getItemIdByName(skill.name);
 				if( !itemId){
 					if( flag){
-						if( ! skill.data.flag) skill.data.flags = {};
+						if( ! skill.data.flags) skill.data.flags = {};
 						skill.data.flags[flag] = true;
 					}
 					await this.createOwnedItem( skill, {renderSheet:false});
@@ -803,7 +837,7 @@ export class CoCActor extends Actor {
 	async addItems( itemList, flag = null){
 		for( let item of itemList){
 			if( flag){
-				if( ! item.data.flag) item.data.flags = {};
+				if( ! item.data.flags) item.data.flags = {};
 				item.data.flags[flag] = true;
 			}
 			await this.createOwnedItem( item, {renderSheet:false});
@@ -814,7 +848,7 @@ export class CoCActor extends Actor {
 		const itemId = this.getItemIdByName(skill.name);
 		if( !itemId){
 			if( flag){
-				if( ! skill.data.flag) skill.data.flags = {};
+				if( ! skill.data.flags) skill.data.flags = {};
 				skill.data.flags[flag] = true;
 			}
 			await this.createOwnedItem( skill, {renderSheet:false});
@@ -832,6 +866,14 @@ export class CoCActor extends Actor {
 			else return null;
 		} 
 		return parseInt( this.data.data.attribs.mp.max);
+	}
+
+	get sanMax(){
+		if( this.data.data.attribs.san.auto){
+			if( this.cthulhuMythos) return 99 - this.cthulhuMythos;
+			return 99;
+		} 
+		return parseInt( this.data.data.attribs.san.max);
 	}
 
 	get mp(){
@@ -937,7 +979,7 @@ export class CoCActor extends Actor {
 
 	async setSan( value){
 		if( value < 0) value = 0;
-		if( value > parseInt( this.data.data.attribs.san.max)) value = parseInt( this.data.data.attribs.san.value);
+		if( value > this.sanMax) value = this.sanMax;
 		const loss = parseInt( this.data.data.attribs.san.value) - value;
 		if( loss > 0){
 			let totalLoss = parseInt( this.data.data.attribs.san.dailyLoss) ? parseInt( this.data.data.attribs.san.dailyLoss) : 0;
@@ -1044,7 +1086,75 @@ export class CoCActor extends Actor {
 		await this.update( { [name]: flagValue});
 	}
 
-	async skillCheck( skillData, fastForward){
+	/**
+	 * 
+	 * @param {*} attributeName key of attribute to check in ['lck']
+	 * @param {*} fastForward 
+	 * @param {*} options difficulty in CoC7Check.difficultyLevel, modifier (-2 +2), name
+	 */
+	async attributeCheck( attributeName, fastForward = false, options = {}){
+		let attrib = this.getAttribute(attributeName.toLowerCase());
+		if(!attrib) {
+			ui.notifications.error(game.i18n.format('CoC7.ErrorNotFound', {missing: attributeName}));
+			return null;
+		}
+
+		const check = new CoC7Check();
+
+		if( options.modifier) check.diceModifier = Number(options.modifier);
+		if( options.difficulty) check.difficulty = Number(options.difficulty);
+
+		if( !fastForward){
+			if( !options.difficulty || !options.modifier){
+				const usage = await RollDialog.create(options);
+				if( usage) {
+					check.diceModifier = usage.get('bonusDice');
+					check.difficulty = usage.get('difficulty');
+				}
+			}
+		}
+
+		check.actor = this.tokenKey;
+		check.rollAttribute(attrib.key);
+		check.toMessage();
+	}
+
+	/**
+	 * 
+	 * @param {*} characteristicName key of characteristic to check in ['str','con','siz','dex','app','int','pow','edu']
+	 * @param {*} fastForward 
+	 * @param {*} options difficulty in CoC7Check.difficultyLevel, modifier (-2 +2), name
+	 */
+	async characteristicCheck( characteristicName, fastForward = false, options = {}){
+		const char = this.getCharacteristic(characteristicName);
+
+		if(!char) {
+			ui.notifications.error(game.i18n.format('CoC7.ErrorNotFoundForActor', {missing: characteristicName, actor: this.name}));
+			return;
+		}
+
+		const check = new CoC7Check();
+
+		if( options.modifier) check.diceModifier = Number(options.modifier);
+		if( options.difficulty) check.difficulty = Number(options.difficulty);
+
+		if( !fastForward){
+			if( !options.difficulty || !options.modifier){
+				options.displayName = char.label;
+				const usage = await RollDialog.create(options);
+				if( usage) {
+					check.diceModifier = usage.get('bonusDice');
+					check.difficulty = usage.get('difficulty');
+				}
+			}
+		}
+
+		check.actor = this.tokenKey;
+		check.rollCharacteristic(char.key);
+		check.toMessage();
+	}
+
+	async skillCheck( skillData, fastForward, options = {}){
 		let skill = this.getSkillsByName(skillData.name? skillData.name : skillData);
 		if( !skill.length ) {
 			let item = null;
@@ -1056,6 +1166,10 @@ export class CoCActor extends Actor {
 
 			if( 'game' == skillData.origin){
 				item = game.items.get(skillData.id);
+			}
+
+			if( !item){
+				game.settings.get( 'CoC7', 'DefaultCompendium');
 			}
 
 			if( !item) return ui.notifications.warn(`No skill ${skillData.name? skillData.name : skillData} found for actor ${this.name}`);
@@ -1083,15 +1197,20 @@ export class CoCActor extends Actor {
 
 		let check = new CoC7Check();
 
-		if( !fastForward) {
-			const usage = await RollDialog.create();
-			if( usage) {
-				check.diceModifier = usage.get('bonusDice');
-				check.difficulty = usage.get('difficulty');
+		if( options.modifier) check.diceModifier = Number(options.modifier);
+		if( options.difficulty) check.difficulty = Number(options.difficulty);
+
+		if( !fastForward){
+			if( !options.difficulty || !options.modifier){
+				const usage = await RollDialog.create(options);
+				if( usage) {
+					check.diceModifier = usage.get('bonusDice');
+					check.difficulty = usage.get('difficulty');
+				}
 			}
 		}
 
-		check.actor = this;
+		check.actor = this.tokenKey;
 		check.skill = skill[0].id;
 		check.roll();
 		check.toMessage();
@@ -1168,7 +1287,7 @@ export class CoCActor extends Actor {
 		// const actorKey = !this.isToken? this.actorKey : `${this.token.scene._id}.${this.token.data._id}`;
 		if( !weapon.data.data.properties.rngd){
 			if( game.user.targets.size > 1){
-				ui.notifications.warn('Too many target selected. The last selected target will be attacked');
+				ui.notifications.warn(game.i18n.localize('CoC7.WarnTooManyTarget'));
 			}
 
 			const card = new CoC7MeleeInitiator( this.tokenKey, weapon.id, fastForward);
@@ -1278,7 +1397,7 @@ export class CoCActor extends Actor {
 				let r = new Roll( value.formula);
 				r.roll();
 				if( r.total){
-					characteristics[`data.characteristics.${key}.value`] = r.total;
+					characteristics[`data.characteristics.${key}.value`] = Math.floor(r.total);
 				}
 			}
 		}
@@ -1539,6 +1658,22 @@ export class CoCActor extends Actor {
 		return null;
 	}
 
+	get cthulhuMythosSkill(){
+		let skillList = this.getSkillsByName( game.i18n.localize(COC7.CthulhuMythosName));
+		if( skillList.length != 0) return skillList[0];
+		return null;
+	}
+
+	get cthulhuMythos(){
+		const CM = this.cthulhuMythosSkill;
+		if( CM){
+			const value = CM.value;
+			if( value) return value;
+			return parseInt(CM.data.data.value);
+		}
+		return 0;
+	}
+
 	get creditRating(){
 		const CR = this.creditRatingSkill;
 		if( CR){
@@ -1663,24 +1798,30 @@ export class CoCActor extends Actor {
 		return this.getStatus(COC7.status.dead);
 	}
 
-	static updateActor( actor, dataUpdate){
-		if( game.user.isGM){
-			// ui.notifications.info( `updating actor ${actor.name}`);
-			const prone = dataUpdate?.flags?.CoC7[COC7.status.prone];
-			const unconscious = dataUpdate?.flags?.CoC7[COC7.status.unconscious];
-			const criticalWounds = dataUpdate?.flags?.CoC7[COC7.status.criticalWounds];
-			const dying = dataUpdate?.flags?.CoC7[COC7.status.dying];
-			if( prone) ui.notifications.info( `${actor.name} fall prone`);
-			if( unconscious) ui.notifications.info( `${actor.name} fall unconscious`);
-			if( criticalWounds) ui.notifications.info( `${actor.name} get a major wound`);
-			if( dying) ui.notifications.info( `${actor.name} is dying`);
-		}
-		return;
-	}
+	// static updateActor( actor, dataUpdate){
+	// 	if( game.user.isGM){
+	// 		// ui.notifications.info( `updating actor ${actor.name}`);
+	// 		const prone = dataUpdate?.flags?.CoC7[COC7.status.prone];
+	// 		const unconscious = dataUpdate?.flags?.CoC7[COC7.status.unconscious];
+	// 		const criticalWounds = dataUpdate?.flags?.CoC7[COC7.status.criticalWounds];
+	// 		const dying = dataUpdate?.flags?.CoC7[COC7.status.dying];
+	// 		if( prone) ui.notifications.info( game.i18n.format('CoC7.InfoActorProne', {actor: actor.name}));
+	// 		if( unconscious) ui.notifications.info( game.i18n.format('CoC7.InfoActorUnconscious', {actor: actor.name}));
+	// 		if( criticalWounds) ui.notifications.info( game.i18n.format('CoC7.InfoActorMajorWound', {actor: actor.name}));
+	// 		if( dying) ui.notifications.info( game.i18n.format('CoC7.InfoActorDying', {actor: actor.name}));
+	// 	}
+	// 	return;
+	// }
 
-	static updateToken( scene, token, dataUpdate){
-		const injuried = dataUpdate?.actorData?.flags?.CoC7?.injuried;
-		if( injuried) ui.notifications.info( `actor ${token.name} is injuried !!`);
-		return;
-	}
+	// "CoC7.InfoActorProne": "{actor} fall prone",
+	// "CoC7.InfoActorUnconscious": "{actor} fall unconscious",
+	// "CoC7.InfoActorMajorWound": "{actor} get a major wound",
+	// "CoC7.InfoActorDying": "{acor} is dying",
+	// "CoC7.InfoActorInjuried": "{actor} is injuried",
+
+	// static updateToken( scene, token, dataUpdate){
+	// 	const injuried = dataUpdate?.actorData?.flags?.CoC7?.injuried;
+	// 	if( injuried) ui.notifications.info( game.i18n.format('CoC7.InfoActorInjuried', {actor: token.name}));
+	// 	return;
+	// }
 }

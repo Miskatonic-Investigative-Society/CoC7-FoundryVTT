@@ -25,6 +25,7 @@ import { COC7 } from './config.js';
 import { Updater } from './updater.js';
 // import { CoC7ActorSheet } from './actors/sheets/base.js';
 import {CoC7Utilities} from './utilities.js';
+import {CoC7Parser} from './apps/parser.js';
 
 Hooks.once('init', async function() {
 
@@ -272,9 +273,9 @@ Hooks.once('init', async function() {
 
 	// Register sheet application classes
 	Actors.unregisterSheet('core', ActorSheet);
-	Actors.registerSheet('CoC7', CoC7NPCSheet, { types: ['npc'] });
-	Actors.registerSheet('CoC7', CoC7CreatureSheet, { types: ['creature'] });
-	Actors.registerSheet('CoC7', CoC7CharacterSheet, { types: ['character'], makeDefault: true });
+	Actors.registerSheet('CoC7', CoC7NPCSheet, { types: ['npc'], makeDefault: true});
+	Actors.registerSheet('CoC7', CoC7CreatureSheet, { types: ['creature'], makeDefault: true});
+	Actors.registerSheet('CoC7', CoC7CharacterSheet, { types: ['character'], makeDefault: true});
 	
 	Items.unregisterSheet('core', ItemSheet);
 	Items.registerSheet('CoC7', CoC7WeaponSheet, { types: ['weapon'], makeDefault: true});
@@ -327,8 +328,7 @@ Hooks.on('closeActorSheet', (characterSheet) => characterSheet.onCloseSheet());
 Hooks.on('renderCoC7CreatureSheet', (app, html, data) => CoC7CreatureSheet.forceAuto(app, html, data));
 Hooks.on('renderCoC7NPCSheet', (app, html, data) => CoC7NPCSheet.forceAuto(app, html, data));
 // Hooks.on('updateActor', (actor, dataUpdate) => CoCActor.updateActor( actor, dataUpdate));
-// Hooks.on('pdateToken', (scene, token, dataUpdate) => CoCActor.updateToken( scene, token, dataUpdate));
-
+// Hooks.on('updateToken', (scene, token, dataUpdate) => CoCActor.updateToken( scene, token, dataUpdate));
 
 // Add button on Token selection bar
 // Hooks.on('getSceneControlButtons', CoC7Chat.getSceneControlButtons);
@@ -363,4 +363,8 @@ Hooks.on('getSceneControlButtons', (buttons) => {
 
 // Hooks.on('renderSceneControls', () => CoC7Utilities.updateCharSheets());
 // Hooks.on('renderSceneNavigation', () => CoC7Utilities.updateCharSheets());
- 
+Hooks.on('renderItemSheet', CoC7Parser.ParseSheetContent);
+Hooks.on('renderJournalSheet', CoC7Parser.ParseSheetContent);
+Hooks.on('renderActorSheet', CoC7Parser.ParseSheetContent);
+// Chat command processing
+Hooks.on('preCreateChatMessage', CoC7Parser.ParseMessage);
