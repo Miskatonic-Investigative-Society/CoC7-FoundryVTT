@@ -33,13 +33,13 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 
 	}
 
-	async _onSanCheck(){
+	async _onSanCheck(event){
 		event.preventDefault();
 		if( !this.actor.data.data.special.sanLoss.checkPassed && !this.actor.data.data.special.sanLoss.checkFailled) {
-			ui.notifications.info('No sanity loss value');
+			// ui.notifications.info('No sanity loss value');
 			return;
 		}
-		CoC7SanCheck.checkTargets( this.actor.data.data.special.sanLoss.checkPassed, this.actor.data.data.special.sanLoss.checkFailled, event.shiftKey);
+		CoC7SanCheck.checkTargets( this.actor.data.data.special.sanLoss.checkPassed, this.actor.data.data.special.sanLoss.checkFailled, event.shiftKey, this.tokenKey);
 	}
 
 
@@ -59,7 +59,7 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 	static get defaultOptions() {
 		const options=mergeObject(super.defaultOptions, {
 			template: 'systems/CoC7/templates/actors/creature-sheet.html',
-			width: 560,
+			width: 580,
 			height: 'auto',
 			classes: ['coc7', 'sheet', 'actor', 'npc', 'creature'],
 			dragDrop: [{dragSelector: '.item', dropSelector: null}],

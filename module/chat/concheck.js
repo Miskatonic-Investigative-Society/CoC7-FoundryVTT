@@ -1,6 +1,4 @@
 import { CoC7Check } from '../check.js';
-// import { CoC7Dice } from '../dice.js';
-// import { CoC7Item } from '../items/item.js';
 import { chatHelper, CoC7Roll } from './helper.js';
 
 export class CoC7ConCheck {
@@ -152,7 +150,4 @@ export class CoC7ConCheck {
 		await ui.chat.updateMessage( msg, false);
 		return msg;
 	}
-
-
 }
-
