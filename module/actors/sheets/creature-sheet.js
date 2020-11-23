@@ -1,5 +1,8 @@
 import { CoC7ActorSheet } from './base.js';
 import { CoC7SanCheck } from '../../chat/sancheck.js';
+import { RollDialog } from '../../apps/roll-dialog.js';
+import { CoC7Parser } from '../../apps/parser.js';
+import { chatHelper } from '../../chat/helper.js';
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -39,7 +42,28 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 			// ui.notifications.info('No sanity loss value');
 			return;
 		}
-		CoC7SanCheck.checkTargets( this.actor.data.data.special.sanLoss.checkPassed, this.actor.data.data.special.sanLoss.checkFailled, event.shiftKey, this.tokenKey);
+		if( event.ctrlKey && game.user.isGM){
+			let difficulty, modifier;
+			if( !event.shiftKey) {
+				const usage = await RollDialog.create();
+				if( usage) {
+					modifier = Number(usage.get('bonusDice'));
+					difficulty = Number(usage.get('difficulty'));
+				}
+			}
+			const linkData = {
+				check: 'sanloss',
+				sanMin: this.actor.data.data.special.sanLoss.checkPassed,
+				sanMax: this.actor.data.data.special.sanLoss.checkFailled
+			};
+			if( 'blindroll' === game.settings.get('core', 'rollMode')) linkData.blind = true;
+			if( undefined != modifier) linkData.modifier = modifier;
+			if( undefined != difficulty) linkData.difficulty = difficulty;
+			const link = CoC7Parser.createCoC7Link(linkData);
+			if( link) chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), link);
+		} else {
+			CoC7SanCheck.checkTargets( this.actor.data.data.special.sanLoss.checkPassed, this.actor.data.data.special.sanLoss.checkFailled, event.shiftKey, this.tokenKey);
+		}
 	}
 
 
