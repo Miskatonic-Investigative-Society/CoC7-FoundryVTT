@@ -215,11 +215,13 @@
 		{{/unless}}
 		
 		{{#unless skill.data.data.flags.developement}}
-			{{#if forcedSuccess}}
-				<button data-action="flag-for-development">{{localize 'CoC7.check.FlagForDevelopment'}}</button>
-			{{else}}
-				{{#if isSuccess}}
+			{{#if canAwardExperience}}
+				{{#if forcedSuccess}}
 					<button data-action="flag-for-development">{{localize 'CoC7.check.FlagForDevelopment'}}</button>
+				{{else}}
+					{{#if isSuccess}}
+						<button data-action="flag-for-development">{{localize 'CoC7.check.FlagForDevelopment'}}</button>
+					{{/if}}
 				{{/if}}
 			{{/if}}
 		{{/unless}}
