@@ -13,6 +13,20 @@ export class CoC7Utilities {
 	// 	actor.inflictMajorWound();
 	// }
 
+	static getCharacteristicNames( char){
+		switch( char.toLowerCase()){
+		case 'str': return { short: game.i18n.localize('CHARAC.STR'), label: game.i18n.localize('CHARAC.Strength')};
+		case 'con': return { short: game.i18n.localize('CHARAC.CON'), label: game.i18n.localize('CHARAC.Constitution')};
+		case 'siz': return { short: game.i18n.localize('CHARAC.SIZ'), label: game.i18n.localize('CHARAC.Size')};
+		case 'dex': return { short: game.i18n.localize('CHARAC.DEX'), label: game.i18n.localize('CHARAC.Dexterity')};
+		case 'app': return { short: game.i18n.localize('CHARAC.APP'), label: game.i18n.localize('CHARAC.Appearance')};
+		case 'int': return { short: game.i18n.localize('CHARAC.INT'), label: game.i18n.localize('CHARAC.Intelligence')};
+		case 'pow': return { short: game.i18n.localize('CHARAC.POW'), label: game.i18n.localize('CHARAC.Power')};
+		case 'edu': return { short: game.i18n.localize('CHARAC.EDU'), label: game.i18n.localize('CHARAC.Education')};
+		default: return null;
+		}
+	}
+
 	static convertDifficulty( difficulty){
 		if( typeof( difficulty) != 'string') return difficulty;
 		if( !isNaN(Number(difficulty))) return Number(difficulty);

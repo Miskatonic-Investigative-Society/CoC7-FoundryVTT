@@ -26,11 +26,13 @@ import { chatHelper } from '../chat/helper.js';
 import { CoC7SanCheck } from '../chat/sancheck.js';
 import { CoC7Check } from '../check.js';
 import { CoC7Utilities } from '../utilities.js';
+import { RollDialog } from './roll-dialog.js';
 
 export class CoC7Parser{
 
 	static async onEditorDrop( event, editor){
-		// event.preventDefault();
+		event.preventDefault();
+
 		//check key pressed (CTRL ?)
 		// if CTRL check if item is skill/weapon
 		// if item from game or pack add ref to the link !
@@ -43,6 +45,8 @@ export class CoC7Parser{
 				editor.insertContent(link);
 				event.stopPropagation();}
 		} else if( event.ctrlKey) {
+			event.stopPropagation();
+
 			if(  data.type !== 'Item' ) return;
 			
 			let item;
@@ -65,8 +69,16 @@ export class CoC7Parser{
 			if( data.id) linkData.id = data.id;
 			
 			if( 'skill' == item.type){
+				if( !event.shiftKey) {
+					const usage = await RollDialog.create();
+					if( usage) {
+						linkData.modifier = usage.get('bonusDice');
+						linkData.difficulty = usage.get('difficulty');
+					}
+				}
 				linkData.check = 'check';
 				linkData.type = 'skill';
+				if( 'blindroll' === game.settings.get('core', 'rollMode')) linkData.blind = true;
 			} else if( 'weapon' == item.type){
 				linkData.check = 'item';
 				linkData.type = 'weapon';
@@ -75,7 +87,7 @@ export class CoC7Parser{
 			const link = CoC7Parser.createCoC7Link( linkData);
 			if( link) {
 				editor.insertContent(link);
-				event.stopPropagation();}
+			}
 		}
 	}
 
@@ -85,9 +97,9 @@ export class CoC7Parser{
 		//@coc7.check[type:attrib,name:lck,difficulty:+,modifier:-1]{Hard luck check(-1)}
 		//@coc7.check[type:skill,name:anthropology,difficulty:+,modifier:-1]{Hard Anthropology check(-1)}
 		//@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,difficulty:+,modifier:-1]{Hard Anthropology check(-1)}
-		//@coc7.item[name:Shotgun,icon:fas fa-arrow-alt-circle-right,difficulty:+,modifier:-1]{Use shotgun}
-		//@coc7.damage[formula:1D6]{Damage 1D6}
-		//@coc7.roll[threshold:50]{Simple roll}
+		//@coc7.item[name:Shotgun,icon:fas fa-bullseye,difficulty:+,modifier:-1]{Use shotgun}
+		//[TBI]@coc7.damage[formula:1D6]{Damage 1D6}
+		//[TBI]@coc7.roll[threshold:50]{Simple roll}
 		data.content = CoC7Parser.EnrichHTML(data.content);
 		return true;	
 	}
@@ -98,7 +110,9 @@ export class CoC7Parser{
 		case 'check':{
 			// @coc7.check[type:charac,name:STR,difficulty:+,modifier:-1]{Hard STR check(-1)}
 			if( !data.type || !data.name) return;
-			let options = `type:${data.type},name:${data.name},difficulty:${data.difficulty?data.difficulty:0},modifier:${data.modifier?data.modifier:0}`;
+			let options = `${data.blind?'blind,':''}type:${data.type},name:${data.name}`;
+			if( undefined != data.difficulty) options += `,difficulty:${data.difficulty}`;
+			if( undefined != data.modifier) options += `,modifier:${data.modifier}`;
 			if( data.icon) options += `,icon:${data.icon}`;
 			if( data.pack) options += `,pack:${data.pack}`;
 			if( data.id) options += `,id:${data.id}`;
@@ -110,7 +124,9 @@ export class CoC7Parser{
 		case 'sanloss':{
 			//@coc7.sanloss[sanMax:1D6,sanMin:1,difficulty:++,modifier:-1]{Hard San Loss (-1) 1/1D6}
 			if( !data.sanMax || !data.sanMin) return;
-			let options = `sanMax:${data.sanMax},sanMin:${data.sanMin},difficulty:${data.difficulty?data.difficulty:0},modifier:${data.modifier?data.modifier:0}`;
+			let options = `${data.blind?'blind,':''}sanMax:${data.sanMax},sanMin:${data.sanMin}`;
+			if( data.difficulty) options += `,difficulty:${data.difficulty}`;
+			if( data.modifier) options += `,modifier:${data.modifier}`;
 			if( data.icon) options += `,icon:${data.icon}`;
 			let link = `@coc7.sanloss[${options}]`;
 			if( data.displayName) link += `{${data.displayName}}`;
@@ -121,7 +137,9 @@ export class CoC7Parser{
 		case 'item':{
 			// @coc7.item[type:optional,name:Shotgun,difficulty:+,modifier:-1]{Hard Shitgun check(-1)}
 			if( !data.type || !data.name) return;
-			let options = `type:${data.type},name:${data.name},difficulty:${data.difficulty?data.difficulty:0},modifier:${data.modifier?data.modifier:0}`;
+			let options = `${data.blind?'blind,':''}type:${data.type},name:${data.name}`;
+			if( data.difficulty) options += `,difficulty:${data.difficulty}`;
+			if( data.modifier) options += `,modifier:${data.modifier}`;
 			if( data.icon) options += `,icon:${data.icon}`;
 			if( data.pack) options += `,pack:${data.pack}`;
 			if( data.id) options += `,id:${data.id}`;
@@ -160,24 +178,23 @@ export class CoC7Parser{
 	}
 
 	static _onDragCoC7Link(event) {
-		event.stopPropagation();
 		const a = event.currentTarget;
-		const i = a.querySelector('i');
+		const i = a.querySelector('i.link-icon');
 		const data = duplicate( a.dataset);
 		data.linkType = 'coc7-link';
 		data.icon = null;
-		if( i){
-			if( i.classList.length) data.icon = i.classList.value;
-			if( data.icon == 'fas fa-dice') data.icon = null;
+		
+		if( i.dataset && i.dataset.linkIcon && 'fas fa-dice' != i.dataset.linkIcon){
+			data.icon = i.dataset.linkIcon;
 		}
-		data.displayName = a.innerText;
+		data.displayName = a.dataset.displayName?a.innerText:null;
 		event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data));
 	}
 
 	static _createLink(match, tag, type, options, name){
 		const data = {
 			cls: ['coc7-link'],
-			dataset: { check: type, difficulty:CoC7Check.difficultyLevel.regular, modifier:0},
+			dataset: { check: type},
 			icon: 'fas fa-dice',
 			blind: false,
 			name: name
@@ -199,14 +216,23 @@ export class CoC7Parser{
 		const difficulty = CoC7Check.difficultyString(data.dataset.difficulty);
 
 		switch (type.toLowerCase()) {
-		case 'check':
-			title = game.i18n.format(`CoC7.LinkCheck${0==data.dataset.difficulty?'':'Diff'}${0==data.dataset.modifier?'':'Modif'}`, {difficulty: difficulty, modifier: data.dataset.modifier, type: data.dataset.type, name: data.dataset.name});
+		case 'check':{
+			let humanName = data.dataset.name;
+			if( ['attributes', 'attribute', 'attrib', 'attribs'].includes( data.dataset.type?.toLowerCase())){
+				if( 'lck'== data.dataset.name) humanName = game.i18n.localize( 'CoC7.Luck');
+				if( 'san'== data.dataset.name) humanName = game.i18n.localize( 'CoC7.Sanity');
+			}
+			if( ['charac', 'char', 'characteristic', 'characteristics'].includes( data.dataset.type?.toLowerCase())){
+				humanName= CoC7Utilities.getCharacteristicNames( data.dataset.name)?.label;
+			}
+			title = game.i18n.format(`CoC7.LinkCheck${!data.dataset.difficulty?'':'Diff'}${!data.dataset.modifier?'':'Modif'}`, {difficulty: difficulty, modifier: data.dataset.modifier, name: humanName});
 			break;
+		}
 		case 'sanloss':
-			title = game.i18n.format(`CoC7.LinkSanLoss${0==data.dataset.difficulty?'':'Diff'}${0==data.dataset.modifier?'':'Modif'}`, {difficulty: difficulty, modifier: data.dataset.modifier, sanMin: data.dataset.sanMin, sanMax: data.dataset.sanMax});
+			title = game.i18n.format(`CoC7.LinkSanLoss${!data.dataset.difficulty?'':'Diff'}${!data.dataset.modifier?'':'Modif'}`, {difficulty: difficulty, modifier: data.dataset.modifier, sanMin: data.dataset.sanMin, sanMax: data.dataset.sanMax});
 			break;
 		case 'item':
-			title = game.i18n.format(`CoC7.LinkItem${0==data.dataset.difficulty?'':'Diff'}${0==data.dataset.modifier?'':'Modif'}`, {difficulty: difficulty, modifier: data.dataset.modifier, type: data.dataset.type, name: data.dataset.name});
+			title = game.i18n.format(`CoC7.LinkItem${!data.dataset.difficulty?'':'Diff'}${!data.dataset.modifier?'':'Modif'}`, {difficulty: difficulty, modifier: data.dataset.modifier, name: data.dataset.name});
 			break;
 		default:
 			break;
@@ -214,7 +240,7 @@ export class CoC7Parser{
 
 		if( !name){
 			data.name = title;
-		}
+		} else data.dataset.displayName = true;
 
 		const a = document.createElement('a');
 		a.title = title;
@@ -223,7 +249,7 @@ export class CoC7Parser{
 			a.dataset[k] = v;
 		}
 		a.draggable = true;
-		a.innerHTML = `${data.blind?'<i class="fas fa-eye-slash"></i>':''}<i class="${data.icon}"></i>${data.name}`;
+		a.innerHTML = `${data.blind?'<i class="fas fa-eye-slash"></i>':''}<i data-link-icon="${data.icon}" class="link-icon ${data.icon}"></i>${data.name}`;
 
 		return a;
 	}
@@ -236,12 +262,7 @@ export class CoC7Parser{
 	*/
 	static _onCheck( event){
 		const options = event.currentTarget.dataset;
-		if( options.difficulty){
-			options.difficulty = CoC7Utilities.convertDifficulty(options.difficulty);
-		} else {
-			options.difficulty = CoC7Check.difficultyLevel.regular;
-		}
-		if( !options.modifier) options.modifier = 0;
+		if( options.difficulty) options.difficulty = CoC7Utilities.convertDifficulty(options.difficulty);
 
 		//Click origin (from message or from sheet)
 		const fromSheet = event.currentTarget.closest('.chat-message')?false:true;
@@ -256,11 +277,16 @@ export class CoC7Parser{
 					case 'check':
 						if( ['charac', 'char', 'characteristic', 'characteristics'].includes( options.type.toLowerCase())) return token.actor.characteristicCheck( options.name, event.shiftKey, options);
 						if( ['skill'].includes( options.type.toLowerCase())) return token.actor.skillCheck( options, event.shiftKey, options);
-						if( ['attribute', 'attrib', 'attribs'].includes( options.type.toLowerCase())) return token.actor.attributeCheck( options.name, event.shiftKey, options);
+						if( ['attributes', 'attribute', 'attrib', 'attribs'].includes( options.type.toLowerCase())) return token.actor.attributeCheck( options.name, event.shiftKey, options);
 						break;
 
 					case 'sanloss':{
-						const check = new CoC7SanCheck( token.actor.id, options.sanMin, options.sanMax, Number(options.difficulty), Number(options.modifier));
+						const check = new CoC7SanCheck( 
+							token.actor.id,
+							options.sanMin,
+							options.sanMax,
+							undefined != options.difficulty?CoC7Utilities.convertDifficulty(options.difficulty):CoC7Check.difficultyLevel.regular,
+							undefined != options.modifier?Number(options.modifier):0);
 						check.toMessage( event.shiftKey);
 						break;
 					}
@@ -286,11 +312,16 @@ export class CoC7Parser{
 				case 'check':
 					if( ['charac', 'char', 'characteristic', 'characteristics'].includes( options.type.toLowerCase())) return actor.characteristicCheck( options.name, event.shiftKey, options);
 					if( ['skill'].includes( options.type.toLowerCase())) return actor.skillCheck( options, event.shiftKey, options);
-					if( ['attribute', 'attrib', 'attribs'].includes( options.type.toLowerCase())) return actor.attributeCheck( options.name, event.shiftKey, options);
+					if( ['attributes', 'attribute', 'attrib', 'attribs'].includes( options.type.toLowerCase())) return actor.attributeCheck( options.name, event.shiftKey, options);
 					break;
 
 				case 'sanloss':{
-					const check = new CoC7SanCheck( actor.id, options.sanMin, options.sanMax, Number(options.difficulty), Number(options.modifier));
+					const check = new CoC7SanCheck( 
+						actor.id,
+						options.sanMin,
+						options.sanMax,
+						undefined != options.difficulty?CoC7Utilities.convertDifficulty(options.difficulty):CoC7Check.difficultyLevel.regular,
+						undefined != options.modifier?Number(options.modifier):0);
 					check.toMessage( event.shiftKey);
 					break;
 				}
