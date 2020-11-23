@@ -1200,8 +1200,6 @@ export class CoCActor extends Actor {
 
 		if( undefined !== options.modifier) check.diceModifier = Number(options.modifier);
 		if( undefined !== options.difficulty) check.difficulty = CoC7Utilities.convertDifficulty(options.difficulty);
-		if( 'false' == options.blind) options.blind = false;
-		options.blind = !!options.blind;
 
 		if( !fastForward){
 			if( undefined === options.difficulty || undefined === options.modifier){
@@ -1215,7 +1213,8 @@ export class CoCActor extends Actor {
 
 		check.actor = this.tokenKey;
 		check.skill = skill[0].id;
-		if( options.blind) check.isBlind = true;
+		if( 'false' == options.blind) check.isBlind = false;
+		else check.isBlind = !!options.blind;
 		check.roll();
 		check.toMessage();
 	}
