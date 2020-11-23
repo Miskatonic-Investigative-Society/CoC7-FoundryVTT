@@ -256,7 +256,7 @@ export class CoC7Parser{
 					case 'check':
 						if( ['charac', 'char', 'characteristic', 'characteristics'].includes( options.type.toLowerCase())) return token.actor.characteristicCheck( options.name, event.shiftKey, options);
 						if( ['skill'].includes( options.type.toLowerCase())) return token.actor.skillCheck( options, event.shiftKey, options);
-						if( ['attribute', 'attrib'].includes( options.type.toLowerCase())) return token.actor.attributeCheck( options.name, event.shiftKey, options);
+						if( ['attribute', 'attrib', 'attribs'].includes( options.type.toLowerCase())) return token.actor.attributeCheck( options.name, event.shiftKey, options);
 						break;
 
 					case 'sanloss':{
@@ -292,9 +292,12 @@ export class CoC7Parser{
 				case 'sanloss':{
 					const check = new CoC7SanCheck( actor.id, options.sanMin, options.sanMax, Number(options.difficulty), Number(options.modifier));
 					check.toMessage( event.shiftKey);
-				}
 					break;
-					
+				}
+
+				case 'item':{
+					return actor.weaponCheck( options, event.shiftKey);
+				}	
 				default:
 					return;
 				}
