@@ -132,9 +132,9 @@
 "CoC7.SuccesLevelHint": "{value} nivel(es) de éxito",
 "CoC7.FailureLevelHint": "Fallo por {value} nivel(es)",
 
-"CoC7.CheckResult": "Tirada de {name} {value}%) - dificultad {difficulty}",
-"CoC7.ItemCheckResult": "{item} - tirada de {skill} ({value}%) - dificultad {difficulty}",
-"CoC7.CheckRawValue": "({rawvalue}%) - dificultad {difficulty}",
+"CoC7.CheckResult": "Tirada de {name} ({value}%), dificultad {difficulty}",
+"CoC7.ItemCheckResult": "{item} - tirada de {skill} ({value}%), dificultad {difficulty}",
+"CoC7.CheckRawValue": "({rawvalue}%), dificultad {difficulty}",
 
 "CoC7.BonusDamageRoll": "Tirada de Bonificación de Daño",
 "CoC7.Type": "Tipo",
@@ -312,9 +312,18 @@
 "CoC7.NoSkill": "Sin habilidad",
 "CoC7.AddWeapontHint": "<p>{actor} no dispone de {weapon}.<br>¿Desea crearlo ?</p>",
 
-"CoC7.LinkCheck": "Tirada {type}: {name} [{difficulty}/{modifier}]",
-"CoC7.LinkSanLoss": "Pérdida de COR : ({sanMin}/{sanMax}) [{difficulty}/{modifier}]",
-
+"CoC7.LinkCheck": "Tirada de {type}: {name}",
+"CoC7.LinkCheckDiff": "Tirada [{difficulty}] de {type}: {name}",
+"CoC7.LinkCheckModif": "Tirada de {type} ({modifier}): {name}",
+"CoC7.LinkCheckDiffModif": "Tirada [{difficulty}] de {type} ({modifier}): {name}",
+"CoC7.LinkSanLoss": "Tirada de COR : ({sanMin}/{sanMax}) [{difficulty}/{modifier}]",
+"CoC7.LinkSanLossDiff": "Tirada [{difficulty}] de COR: ({sanMin}/{sanMax})",
+"CoC7.LinkSanLossModif": "Tirada de COR ({modifier}): ({sanMin}/{sanMax})",
+"CoC7.LinkSanLossDiffModif": "Tirada [{difficulty}] de COR ({modifier}): ({sanMin}/{sanMax})",
+"CoC7.LinkItem": "{type}: {name}",
+"CoC7.LinkItemDiff": "[{difficulty}]{type}: {name}",
+"CoC7.LinkItemModif": "{type} ({modifier}): {name}",
+"CoC7.LinkItemDiffModif": "[{difficulty}]{type} ({modifier}): {name}",
 
 "CoC7.ManualCreditValues": "Crédito manual",
 "CoC7.MonetarySymbol": "Símbolo :",
@@ -447,7 +456,7 @@
 "CoC7.InfoLessSkillThanOptions": "Solo existen {skillCount} y {optionsCount} opciones, anadiéndose todas",
 "CoC7.InfoAllSkillsAlreadySelected": "Ya se han seleccionado todas las habilidades.",
 
-"CoC7.MessageWaitForKeeperToClick": "El guardián ha realizado una petición de una tirada.<br>¡Espere a que se lo confirme antes de continuar!<br>",
+"CoC7.MessageWaitForKeeperToClick": "El guardián ha pedido una tirada.<br>¡Espere a que se lo confirme antes de continuar!<br>",
 
 "SETTINGS.DefaultDifficulty": "Dificultad por defecto",
 "SETTINGS.DefaultDifficultyHint": "Puedes indicar la dificultad por defecto de las tiradas. Desconocida lanzará tiradas sin que el jugador conozca la dificultad.",
