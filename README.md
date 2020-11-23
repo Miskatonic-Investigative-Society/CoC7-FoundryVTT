@@ -44,7 +44,7 @@ Vesion 0.4.5 :
       * check:
         * type: type of check (characteristic, skill, attrib).
         * name: name of the skill/characteristic/attrib.
-        * [blind] : will trigger a blind check.
+        * [blind] : will force a blind check, if not present the check will depend on your selected roll mode.
       * all:
         * [difficulty]: ? (blind), __*0 (regular)*__, + (hard), ++ (extreme), +++ (critical).
         * [modifier]: -x (x penalty dice), +x (x bonus dice), __*0 (no modifier)*__.
