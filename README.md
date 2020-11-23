@@ -59,6 +59,9 @@ Vesion 0.4.5 :
     * With icon, without name nor difficulty `@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,modifier:+1]`
   * You can drag/drop links from chat to sheets and between sheets.
   * You can drag/drop items and skills on a journal entry while holding CTRL, this will create the corresponding check with regular difficulty and 0 modifier.
+  * You can create link in the chat by clicking and holding CTRL from any sheet (PC/NPC/Creature) corresponding characteristic/luck/SAN/Competence/weapon/San loss.
+    * This will open the select penalty/difficulty dialogue. Clicking on the generated link will then trigger the check with all parameters.
+    * Holding Shift on top will not open the penalty/difficulty dialogue. Clicking on the generated link will open the penalty/difficulty dialogue then trigger the check.
 * Skill macro updated to accept and optional 3rd parameter options.
   * e.g. options = {difficulty:'++', modifier:-1, blind:true}. All those parameter are optionals, default will be regular difficulty, no modifier, non blind check.
 * Chinese translation added thanks to hmqgg.

@@ -207,7 +207,7 @@ export class CoC7Parser{
 			if( 'icon' == key) data.icon = value;
 			if( 'blind' == key && undefined == value) {
 				value = true;
-				data.blind = true && 'check' == type.toLowerCase();
+				data.blind = true && ['check'].includes( type.toLowerCase());
 			}
 			data.dataset[key] = value;
 		}
