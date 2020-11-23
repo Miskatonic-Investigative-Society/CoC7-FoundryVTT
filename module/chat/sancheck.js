@@ -5,12 +5,13 @@ import { CoC7Dice } from '../dice.js';
 import { chatHelper, CoC7Roll } from './helper.js';
 
 export class CoC7SanCheck {
-	constructor( actorId = null, sanLoss = null, sanLossFail = null, difficulty = CoC7Check.difficultyLevel.regular, modifier = 0){
+	constructor( actorId = null, sanLoss = null, sanLossFail = null, difficulty = CoC7Check.difficultyLevel.regular, modifier = 0, blind = false){
 		this.difficulty = difficulty;
 		this.modifier = modifier;
 		this.sanLoss = sanLoss;
 		this.sanLossFail = sanLossFail;
 		this.actorId = actorId;
+		if( blind) this.isBlind = true;
 	}
 
 	get isBlind(){
