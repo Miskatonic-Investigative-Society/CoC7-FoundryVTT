@@ -1,3 +1,4 @@
+import { CoC7Check } from './check.js';
 import { CoC7Item } from './items/item.js';
 
 export class CoC7Utilities {
@@ -12,7 +13,26 @@ export class CoC7Utilities {
 	// 	actor.inflictMajorWound();
 	// }
 
+	static convertDifficulty( difficulty){
+		if( typeof( difficulty) != 'string') return difficulty;
+		if( !isNaN(Number(difficulty))) return Number(difficulty);
+
+		switch (difficulty) {
+		case '?':
+			return CoC7Check.difficultyLevel.unknown;
+		case '+':
+			return CoC7Check.difficultyLevel.hard;
+		case '++':
+			return CoC7Check.difficultyLevel.extreme;
+		case '+++':
+			return CoC7Check.difficultyLevel.critical;
+		default:
+			return CoC7Check.difficultyLevel.regular;
+		}
+	}
+
 	static skillCheckMacro( skill, event, options={}){
+		event.preventDefault();
 		const speaker = ChatMessage.getSpeaker();
 		let actor;
 		if (speaker.token) actor = game.actors.tokens[speaker.token];
@@ -27,6 +47,7 @@ export class CoC7Utilities {
 	}
 
 	static weaponCheckMacro( weapon, event){
+		event.preventDefault();
 		const speaker = ChatMessage.getSpeaker();
 		let actor;
 		if (speaker.token) actor = game.actors.tokens[speaker.token]; //!! Ca recupere l'acteur pas l'acteur du token !!
@@ -37,7 +58,7 @@ export class CoC7Utilities {
 			return;
 		}
 		
-		actor.weaponCheck( weapon, event);
+		actor.weaponCheck( weapon, event.shiftKey);
 	}
 
 	static async createMacro(bar, data, slot){
