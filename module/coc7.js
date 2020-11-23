@@ -330,11 +330,7 @@ Hooks.on('renderCoC7NPCSheet', (app, html, data) => CoC7NPCSheet.forceAuto(app, 
 // Hooks.on('updateActor', (actor, dataUpdate) => CoCActor.updateActor( actor, dataUpdate));
 // Hooks.on('updateToken', (scene, token, dataUpdate) => CoCActor.updateToken( scene, token, dataUpdate));
 
-// Add button on Token selection bar
-// Hooks.on('getSceneControlButtons', CoC7Chat.getSceneControlButtons);
-// Hooks.on('preCreateChatMessage', (app, html, data) => CoC7Chat.preCreateChatMessageHook(app, html, data));
-// Hooks.on('chatMessage', (chatLog, message, chatData) => { console.log('**************************************************************************************************chatMessage : '  + message);});
-
+// Hooks.on('chatMessage', (chatLog, message, chatData) => { console.log('chatMessage : '  + message);});
 // Hooks.on('preCreateToken', ( scene, actor, options, id) => CoCActor.preCreateToken( scene, actor, options, id))
 // Hooks.on('createToken', ( scene, actor, options, id) => CoCActor.preCreateToken( scene, actor, options, id))
 // Hooks.on("renderChatLog", (app, html, data) => CoC7Item.chatListeners(html));
@@ -346,7 +342,7 @@ Hooks.on('getSceneControlButtons', (buttons) => {
 			toggle: true,
 			icon : 'fas fa-angle-double-up',
 			name: 'devphase',
-			active: game.settings.get('CoC7', 'developmentEnabled'), 
+			active: game.settings.get('CoC7', 'developmentEnabled'),
 			title: game.settings.get('CoC7', 'developmentEnabled')? 'Development phase enabled': 'Development phase disabled',
 			onClick :async () => await CoC7Utilities.toggleDevPhase()
 		});
@@ -368,3 +364,8 @@ Hooks.on('renderJournalSheet', CoC7Parser.ParseSheetContent);
 Hooks.on('renderActorSheet', CoC7Parser.ParseSheetContent);
 // Chat command processing
 Hooks.on('preCreateChatMessage', CoC7Parser.ParseMessage);
+
+tinyMCE.PluginManager.add('CoC7_Editor_OnDrop', function (editor) {
+	editor.on('drop', (event) => CoC7Parser.onEditorDrop(event, editor));
+});
+CONFIG.TinyMCE.plugins = `CoC7_Editor_OnDrop ${CONFIG.TinyMCE.plugins}`;
