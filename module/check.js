@@ -40,7 +40,7 @@ export class CoC7Check {
 	}
 
 	static difficultyString(difficultyLevel) {
-		switch (difficultyLevel) {
+		switch (!isNaN(Number(difficultyLevel))?Number(difficultyLevel):difficultyLevel) {
 		case '?':
 			return game.i18n.localize('CoC7.UnknownDifficulty');
 		case '+':
@@ -49,7 +49,7 @@ export class CoC7Check {
 			return game.i18n.localize('CoC7.ExtremeDifficulty');
 		case '+++':
 			return game.i18n.localize('CoC7.CriticalDifficulty');
-		case '0':
+		case 0:
 			return game.i18n.localize('CoC7.RegularDifficulty');
 		case CoC7Check.difficultyLevel.unknown:
 			return game.i18n.localize('CoC7.UnknownDifficulty');
@@ -62,7 +62,7 @@ export class CoC7Check {
 		case CoC7Check.difficultyLevel.critical:
 			return game.i18n.localize('CoC7.CriticalDifficulty');
 		default:
-			return '';
+			return null;
 		}
 	
 	}
@@ -556,6 +556,8 @@ export class CoC7Check {
 			this.canIncreaseSuccess = this.increaseSuccess.length > 0 ? true : false;
 			if( this.isFumble) this.canIncreaseSuccess = false;
 		}
+
+		this.canAwardExperience = this.skill && !this.skill.data.data.properties.noxpgain;
 
 		if( this.passed && this.diceModifier <= 0 && this.skill && !this.skill.data.data.properties.noxpgain &&!this.luckSpent &&!this.forced &&!this.isBlind &&!this.isUnknown){
 			this.flagForDevelopement();

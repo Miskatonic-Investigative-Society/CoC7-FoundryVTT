@@ -1103,19 +1103,21 @@ export class CoCActor extends Actor {
 		const check = new CoC7Check();
 
 		if( options.modifier) check.diceModifier = Number(options.modifier);
-		if( options.difficulty) check.difficulty = Number(options.difficulty);
+		if( options.difficulty) check.difficulty = CoC7Utilities.convertDifficulty(options.difficulty);
 
 		if( !fastForward){
-			if( !options.difficulty || !options.modifier){
+			if( undefined === options.difficulty || undefined === options.modifier){
 				const usage = await RollDialog.create(options);
 				if( usage) {
-					check.diceModifier = usage.get('bonusDice');
-					check.difficulty = usage.get('difficulty');
+					check.diceModifier = Number(usage.get('bonusDice'));
+					check.difficulty = Number(usage.get('difficulty'));
 				}
 			}
 		}
 
 		check.actor = this.tokenKey;
+		if( 'false' == options.blind) check.isBlind = false;
+		else check.isBlind = !!options.blind;
 		check.rollAttribute(attrib.key);
 		check.toMessage();
 	}
@@ -1137,20 +1139,22 @@ export class CoCActor extends Actor {
 		const check = new CoC7Check();
 
 		if( options.modifier) check.diceModifier = Number(options.modifier);
-		if( options.difficulty) check.difficulty = Number(options.difficulty);
+		if( options.difficulty) check.difficulty = CoC7Utilities.convertDifficulty(options.difficulty);
 
 		if( !fastForward){
-			if( !options.difficulty || !options.modifier){
+			if( undefined === options.difficulty || undefined === options.modifier){
 				options.displayName = char.label;
 				const usage = await RollDialog.create(options);
 				if( usage) {
-					check.diceModifier = usage.get('bonusDice');
-					check.difficulty = usage.get('difficulty');
+					check.diceModifier = Number(usage.get('bonusDice'));
+					check.difficulty = Number(usage.get('difficulty'));
 				}
 			}
 		}
 
 		check.actor = this.tokenKey;
+		if( 'false' == options.blind) check.isBlind = false;
+		else check.isBlind = !!options.blind;
 		check.rollCharacteristic(char.key);
 		check.toMessage();
 	}
@@ -1205,8 +1209,8 @@ export class CoCActor extends Actor {
 			if( undefined === options.difficulty || undefined === options.modifier){
 				const usage = await RollDialog.create(options);
 				if( usage) {
-					check.diceModifier = usage.get('bonusDice');
-					check.difficulty = usage.get('difficulty');
+					check.diceModifier = Number(usage.get('bonusDice'));
+					check.difficulty = Number(usage.get('difficulty'));
 				}
 			}
 		}
