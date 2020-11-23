@@ -53,7 +53,10 @@ export class CoC7Chat{
 		html.on('click', '.target-selector', CoC7Chat._onTargetSelect.bind(this));
 
 		html.on('dblclick', '.open-actor', CoC7Chat._onOpenActor.bind(this));
+		
 		html.on('click', '.coc7-link', CoC7Parser._onCheck.bind(this));
+		html.on('dragstart', 'a.coc7-link', CoC7Parser._onDragCoC7Link.bind(this));
+
 	}
 
 

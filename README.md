@@ -31,11 +31,12 @@ Vesion 0.4.5 :
   * Skill 'Cthulhu Mythos' is defined in the lang.json.
   * Max SAN is calculated as 99-Cthlhu Mythos.
   * Auto calc can be bypassed in the same way as the other attributes.
-* First implementation of CoC7 links for chatmessages and sheet editors.
+* First implementation of CoC7 links for chatmessages and sheet editors (NPC, Journal entries...).
   * Format of link is @coc7.TYPE_OF_REQUEST[OPTIONS]{TEXT_TO_DISPLAY}
     * TYPE_OF_REQUEST :
-      * 'sanloss' : trigger a san check, upon failure will propose to deduct the corresponding SAN.
-      * 'check' : trigger a check depending on the options.
+      * 'sanloss': trigger a san check, upon failure will propose to deduct the corresponding SAN.
+      * 'check': trigger a check depending on the options.
+      * 'item': trigger use of a weapon. Only items of type weapon can be triggered.
     * OPTIONS: [] = optional, __*default*__
       * sanloss:
         * sanMax: max SAN loss
@@ -43,6 +44,7 @@ Vesion 0.4.5 :
       * check:
         * type: type of check (characteristic, skill, attrib).
         * name: name of the skill/characteristic/attrib.
+        * [blind] : will trigger a blind check.
       * all:
         * [difficulty]: ? (blind), __*0 (regular)*__, + (hard), ++ (extreme), +++ (critical).
         * [modifier]: -x (x penalty dice), +x (x bonus dice), __*0 (no modifier)*__.
@@ -55,6 +57,10 @@ Vesion 0.4.5 :
     * With icon : `@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,difficulty:+,modifier:-1]{Hard Anthropology check(-1)}`
     * Without name, difficulty nor modifier : `@coc7.sanloss[sanMax:1D6,sanMin:1]`
     * With icon, without name nor difficulty `@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,modifier:+1]`
+  * You can drag/drop links from chat to sheets and between sheets.
+  * You can drag/drop items and skills on a journal entry while holding CTRL, this will create the corresponding check with regular difficulty and 0 modifier.
+* Skill macro updated to accept and optional 3rd parameter options.
+  * e.g. options = {difficulty:'++', modifier:-1, blind:true}. All those parameter are optionals, default will be regular difficulty, no modifier, non blind check.
 
 Version 0.4.4 :
 
