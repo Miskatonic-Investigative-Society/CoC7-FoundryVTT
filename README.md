@@ -61,6 +61,7 @@ Vesion 0.4.5 :
   * You can drag/drop items and skills on a journal entry while holding CTRL, this will create the corresponding check with regular difficulty and 0 modifier.
 * Skill macro updated to accept and optional 3rd parameter options.
   * e.g. options = {difficulty:'++', modifier:-1, blind:true}. All those parameter are optionals, default will be regular difficulty, no modifier, non blind check.
+* Chinese translation added thanks to hmqgg.
 
 Version 0.4.4 :
 
