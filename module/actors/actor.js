@@ -13,6 +13,7 @@ import { CoC7RangeInitiator } from '../chat/rangecombat.js';
 import { chatHelper } from '../chat/helper.js';
 import { CoC7Dice } from '../dice.js';
 import { CoC7Item } from '../items/item.js';
+import { CoC7Utilities } from '../utilities.js';
 
 /**
  * Extend the base Actor class to implement additional logic specialized for CoC 7th.
@@ -1158,18 +1159,18 @@ export class CoCActor extends Actor {
 		let skill = this.getSkillsByName(skillData.name? skillData.name : skillData);
 		if( !skill.length ) {
 			let item = null;
-			if( 'pack' == skillData.origin){
+			if( skillData.pack){
 				const pack = game.packs.get(skillData.pack);
 				if (pack.metadata.entity !== 'Item') return;
 				item = await pack.getEntity(skillData.id);
-			}
-
-			if( 'game' == skillData.origin){
+			} else if( skillData.id){
 				item = game.items.get(skillData.id);
 			}
 
+			//No skill found, try to get get it from compendium !
 			if( !item){
-				game.settings.get( 'CoC7', 'DefaultCompendium');
+				//TODO: Implement retrieval of skill from compendium !!
+				// game.settings.get( 'CoC7', 'DefaultCompendium');
 			}
 
 			if( !item) return ui.notifications.warn(`No skill ${skillData.name? skillData.name : skillData} found for actor ${this.name}`);
@@ -1197,11 +1198,11 @@ export class CoCActor extends Actor {
 
 		let check = new CoC7Check();
 
-		if( options.modifier) check.diceModifier = Number(options.modifier);
-		if( options.difficulty) check.difficulty = Number(options.difficulty);
+		if( undefined !== options.modifier) check.diceModifier = Number(options.modifier);
+		if( undefined !== options.difficulty) check.difficulty = CoC7Utilities.convertDifficulty(options.difficulty);
 
 		if( !fastForward){
-			if( !options.difficulty || !options.modifier){
+			if( undefined === options.difficulty || undefined === options.modifier){
 				const usage = await RollDialog.create(options);
 				if( usage) {
 					check.diceModifier = usage.get('bonusDice');
@@ -1212,14 +1213,14 @@ export class CoCActor extends Actor {
 
 		check.actor = this.tokenKey;
 		check.skill = skill[0].id;
+		if( 'false' == options.blind) check.isBlind = false;
+		else check.isBlind = !!options.blind;
 		check.roll();
 		check.toMessage();
 	}
 
-	async weaponCheck( weaponData, event){
-		event.preventDefault();
+	async weaponCheck( weaponData, fastForward = false){
 		const itemId = weaponData.id;
-		const fastForward = event.shiftKey;
 		let weapon;
 		weapon = this.getOwnedItem(itemId);
 		if( !weapon){
@@ -1227,13 +1228,11 @@ export class CoCActor extends Actor {
 			if( 0 == weapons.length){
 				if( game.user.isGM){
 					let item = null;
-					if( 'pack' == weaponData.origin){
+					if( weaponData.pack){
 						const pack = game.packs.get(weaponData.pack);
 						if (pack.metadata.entity !== 'Item') return;
 						item = await pack.getEntity(weaponData.id);
-					}
-
-					if( 'game' == weaponData.origin){
+					} else if( weaponData.id){
 						item = game.items.get(weaponData.id);
 					}
 
