@@ -48,7 +48,7 @@
 			"lang": "fr",
 			"name": "Français",
 			"path": "lang/fr.json"
-		  },
+		},
 		{
 		  "lang": "es",
 		  "name": "Español",
@@ -63,6 +63,11 @@
 			"lang": "ja",
 			"name": "日本語",
 			"path": "lang/ja.json"
+		},
+		{
+			"lang": "cn",
+			"name": "中文",
+			"path": "lang/cn.json"
 		}
 	  ],
 	"socket": true,

@@ -309,9 +309,18 @@
 "CoC7.NoSkill": "No skill",
 "CoC7.AddWeapontHint": "<p>{actor} doen't have a {weapon}.<br>Do you want to create one ?</p>",
 
-"CoC7.LinkCheck": "{type} check: {name} [{difficulty}/{modifier}]",
-"CoC7.LinkSanLoss": "SAN loss : ({sanMin}/{sanMax}) [{difficulty}/{modifier}]",
-
+"CoC7.LinkCheck": "{type} check: {name}",
+"CoC7.LinkCheckDiff": "[{difficulty}]{type} check: {name}",
+"CoC7.LinkCheckModif": "{type} check({modifier}): {name}",
+"CoC7.LinkCheckDiffModif": "[{difficulty}]{type} check({modifier}): {name}",
+"CoC7.LinkSanLoss": "SAN loss : ({sanMin}/{sanMax})",
+"CoC7.LinkSanLossDiff": "[{difficulty}]SAN loss: ({sanMin}/{sanMax})",
+"CoC7.LinkSanLossModif": "SAN loss({modifier}): ({sanMin}/{sanMax})",
+"CoC7.LinkSanLossDiffModif": "[{difficulty}]SAN loss({modifier}): ({sanMin}/{sanMax})",
+"CoC7.LinkItem": "{type}: {name}",
+"CoC7.LinkItemDiff": "[{difficulty}]{type}: {name}",
+"CoC7.LinkItemModif": "{type} ({modifier}): {name}",
+"CoC7.LinkItemDiffModif": "[{difficulty}]{type} ({modifier}): {name}",
 
 "CoC7.ManualCreditValues": "Manual Credit Values",
 "CoC7.MonetarySymbol": "Symbol :",
