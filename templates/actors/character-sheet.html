@@ -55,7 +55,7 @@
 			<div class="characteristics flex2">
 				{{#each data.characteristics as |characteristic key|}}
 					<div class="characteristic-box" data-characteristic="{{key}}">
-						<div class="characteristics-label rollable">{{localize characteristic.short}}</div>
+						<div class="characteristics-label rollable" draggable="true">{{localize characteristic.short}}</div>
 						{{#if characteristic.editable}}
 						<input class="characteristic-score" type="text" name="data.characteristics.{{key}}.value" value="{{characteristic.value}}" data-dtype="Number">
 						{{else}}
@@ -110,7 +110,7 @@
 				{{/unless}}
 			</div>
 			<div class="flexrow flex3 attribute" data-attrib="san">
-				<label class="attribute-label rollable">{{localize 'CoC7.Sanity'}} :</label>
+				<label class="attribute-label rollable" draggable="true">{{localize 'CoC7.Sanity'}} :</label>
 				<input class="attribute-value" type="text" name="data.attribs.san.value" value="{{data.attribs.san.value}}" data-dtype="Number"/>
 				<span style="flex: none;font-size: large;">/</span>
 				{{#if data.attribs.san.auto}}
@@ -123,7 +123,7 @@
 				{{/unless}}
 			</div>
 			<div class="flexrow flex2 attribute" data-attrib="lck">
-				<label class="attribute-label rollable">{{localize 'CoC7.Luck'}} :</label>
+				<label class="attribute-label rollable" draggable="true">{{localize 'CoC7.Luck'}} :</label>
 				<input class="attribute-value" type="text" name="data.attribs.lck.value" value="{{data.attribs.lck.value}}" data-dtype="Number" data-attrib="lck">
 				<input class="attribute-value invisible" type="text" name="data.attribs.lck.max" value="99" data-dtype="Number" data-attrib="lck" readonly>
 			</div>
