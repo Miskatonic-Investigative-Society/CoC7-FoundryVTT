@@ -29,7 +29,7 @@
 				{{#if ../data.flags.locked}}
 					{{#if characteristic.display}}
 						<div class="flexcol" style=" margin-right: 2px;" data-characteristic="{{key}}">
-							<div class="characteristics-label rollable" style="text-align: left;">
+							<div class="characteristics-label rollable" draggable="true" style="text-align: left;">
 								<label>{{localize characteristic.short}}</label>
 							</div>
 							<div style="text-align:center;border: 1px groove;margin-right: 2px;">
@@ -43,7 +43,7 @@
 					{{/if}}
 				{{else}}
 				<div class="flexcol" style=" margin-right: 2px;" data-characteristic="{{key}}">
-					<div class="characteristics-label rollable" style="text-align: left;">
+					<div class="characteristics-label rollable" draggable="true" style="text-align: left;">
 						<label>{{localize characteristic.short}}</label>
 					</div>
 					{{#if ../displayFormula}}
@@ -99,7 +99,7 @@
 
 					<div class="flexrow flex1 attribute"  data-attrib="san">
 						{{#if hasSan}}
-						<label class="attribute-label rollable">{{localize 'CoC7.SAN'}} :</label>
+						<label class="attribute-label rollable" draggable="true">{{localize 'CoC7.SAN'}} :</label>
 						<input class="attribute-value" type="text" name="data.attribs.san.value" value="{{data.attribs.san.value}}" data-dtype="Number"/>
 						<span style="flex: none;font-size: large;">/</span>
 						{{#if data.attribs.san.auto}}
@@ -120,7 +120,7 @@
 					</div>
 				{{else}}
 					<div class="flexrow flex1 attribute" data-attrib="mp">
-						<label class="attribute-label">{{localize 'CoC7.MP'}} :</label>
+						<label class="attribute-label" draggable="true">{{localize 'CoC7.MP'}} :</label>
 						<input class="attribute-value" type="text" name="data.attribs.mp.value" value="{{data.attribs.mp.value}}" data-dtype="Number"/>
 						<span style="flex: none;font-size: large;">/</span>
 						{{#if data.attribs.mp.auto}}

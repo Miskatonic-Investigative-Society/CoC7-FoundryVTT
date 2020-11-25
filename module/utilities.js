@@ -14,7 +14,9 @@ export class CoC7Utilities {
 	// }
 
 	static getCharacteristicNames( char){
-		switch( char.toLowerCase()){
+		const charKey = char.toLowerCase();
+
+		switch( charKey){
 		case 'str': return { short: game.i18n.localize('CHARAC.STR'), label: game.i18n.localize('CHARAC.Strength')};
 		case 'con': return { short: game.i18n.localize('CHARAC.CON'), label: game.i18n.localize('CHARAC.Constitution')};
 		case 'siz': return { short: game.i18n.localize('CHARAC.SIZ'), label: game.i18n.localize('CHARAC.Size')};
@@ -23,9 +25,15 @@ export class CoC7Utilities {
 		case 'int': return { short: game.i18n.localize('CHARAC.INT'), label: game.i18n.localize('CHARAC.Intelligence')};
 		case 'pow': return { short: game.i18n.localize('CHARAC.POW'), label: game.i18n.localize('CHARAC.Power')};
 		case 'edu': return { short: game.i18n.localize('CHARAC.EDU'), label: game.i18n.localize('CHARAC.Education')};
-		default: return null;
+		default: {
+			for (const [, value] of Object.entries(game.system.template.Actor.templates.characteristics.characteristics)) {
+				if( charKey == game.i18n.localize( value.short).toLowerCase()) return { short: game.i18n.localize(value.short), label: game.i18n.localize(value.label)};
+			} 
+			return null;
+		}
 		}
 	}
+
 
 	static convertDifficulty( difficulty){
 		if( typeof( difficulty) != 'string') return difficulty;

@@ -397,6 +397,12 @@ export class CoC7ActorSheet extends ActorSheet {
 
 		// Owner Only Listeners
 		if ( this.actor.owner ) {
+
+			html.find('.characteristics-label').on( 'dragstart', (event)=> this._onDragCharacteristic(event));
+			html.find('.attribute-label').on( 'dragstart', (event)=> this._onDragAttribute(event));
+			html.find('.san-check').on( 'dragstart', (event)=> this._onDragSanCheck(event));
+
+
 			html.find('.characteristics-label').click(this._onRollCharacteriticTest.bind(this));
 			html.find('.skill-name.rollable').click(this._onRollSkillTest.bind(this));
 			html.find('.skill-image').click(this._onRollSkillTest.bind(this));
@@ -507,6 +513,46 @@ export class CoC7ActorSheet extends ActorSheet {
 		html.find('.skill-developement').click( event =>{
 			this.actor.developementPhase( event.shiftKey);
 		});
+	}
+
+	_onDragCharacteristic(event){
+		const box = event.currentTarget.parentElement;
+		const data = {
+			linkType: 'coc7-link',
+			check: 'check',
+			type: 'characteristic',
+			name: box.dataset.characteristic,
+			icon: null
+		};
+
+		event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data));
+	}
+
+	_onDragAttribute(event){
+		const box = event.currentTarget.parentElement;
+		const data = {
+			linkType: 'coc7-link',
+			check: 'check',
+			type: 'attribute',
+			name: box.dataset.attrib,
+			icon: null
+		};
+		
+		event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data));
+	}
+
+	_onDragSanCheck(event){
+		const sanMin = event.currentTarget.querySelector('.san-value.pass');
+		const sanMax = event.currentTarget.querySelector('.san-value.failed');
+		const data = {
+			linkType: 'coc7-link',
+			check: 'sanloss',
+			sanMin: sanMin.innerText,
+			sanMax: sanMax.innerText,
+			icon: null
+		};
+
+		event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data));
 	}
 
 	async _onDrop(event){
