@@ -48,6 +48,7 @@ export class CoC7Parser{
 					data.difficulty = usage.get('difficulty');
 				}
 			}
+			if( 'blindroll' === game.settings.get('core', 'rollMode')) data.blind = true;
 
 			const link = CoC7Parser.createCoC7Link( data);
 
