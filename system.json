@@ -75,6 +75,11 @@
 			"lang": "cn",
 			"name": "中文",
 			"path": "lang/cn.json"
+		},
+		{
+			"lang": "PL",
+			"name": "Polski",
+			"path": "lang/pl.json"
 		}
 	  ],
 	"socket": true,
