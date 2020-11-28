@@ -21,7 +21,7 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
-Vesion 0.4.5 :
+Version 0.4.5 :
 
 * Bug correction :
   * Internal field datas integrity check missing.
@@ -82,7 +82,7 @@ Vesion 0.4.5 :
 * Skill macro updated to accept and optional 3rd parameter options.
   * e.g. options = {difficulty:'++', modifier:-1, blind:true}. All those parameter are optional, default will be regular difficulty, no modifier, non blind check.
 * Chinese translation added thanks to hmqgg.
-* Compendium (Journal entries) with links example, courtesy of lozalojo.
+* Compendium (Journal entries) with links example, courtesy of Lozalojo.
 
 Version 0.4.4 :
 
