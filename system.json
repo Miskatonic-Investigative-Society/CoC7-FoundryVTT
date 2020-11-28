@@ -2,10 +2,10 @@
 	"name": "CoC7",
 	"title": "The Call of Cthulhu 7th edition",
 	"description": "The Call of Cthulhu 7th edition simple game system",
-	"version": "0.4.5",
+	"version": "0.4.6",
 	"author": "HavelockV",
-	"minimumCoreVersion": "0.6.0",
-	"compatibleCoreVersion": "0.7.5",
+	"minimumCoreVersion": "0.7.0",
+	"compatibleCoreVersion": "0.7.7",
 	"esmodules": [
 		"module/coc7.js",
 		"module/dicebot.js"
@@ -35,6 +35,13 @@
 			"entity": "Actor",
 			"name": "examples",
 			"path": "./packs/examples.db",
+			"system": "CoC7"
+		},
+		{
+			"label": "Roll Requests",
+			"entity": "JournalEntry",
+			"name": "roll-requests",
+			"path": "./packs/roll-requests.db",
 			"system": "CoC7"
 		}
 	],
@@ -68,6 +75,11 @@
 			"lang": "cn",
 			"name": "中文",
 			"path": "lang/cn.json"
+		},
+		{
+			"lang": "PL",
+			"name": "Polski",
+			"path": "lang/pl.json"
 		}
 	  ],
 	"socket": true,
@@ -77,6 +89,6 @@
 	"secondaryTokenAttribute": "power",
 	"url": "https://github.com/HavlockV/CoC7-FoundryVTT/",
 	"manifest": "https://github.com/HavlockV/CoC7-FoundryVTT/raw/master/system.json",
-	"download": "https://github.com/HavlockV/CoC7-FoundryVTT/archive/0.4.5.zip"
+	"download": "https://github.com/HavlockV/CoC7-FoundryVTT/archive/0.4.6.zip"
 }
   
