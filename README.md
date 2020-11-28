@@ -21,6 +21,12 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+version 0.4.6 :
+
+* Bug correction :
+  * Regular difficulty was misinterpreted in links.
+* Polish translation added thanks to Yossabart.
+
 Version 0.4.5 :
 
 * Bug correction :
