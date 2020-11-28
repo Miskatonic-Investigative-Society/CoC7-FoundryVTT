@@ -2,7 +2,7 @@
 	"name": "CoC7",
 	"title": "The Call of Cthulhu 7th edition",
 	"description": "The Call of Cthulhu 7th edition simple game system",
-	"version": "0.4.4",
+	"version": "0.4.5",
 	"author": "HavelockV",
 	"minimumCoreVersion": "0.6.0",
 	"compatibleCoreVersion": "0.7.5",
@@ -36,6 +36,13 @@
 			"name": "examples",
 			"path": "./packs/examples.db",
 			"system": "CoC7"
+		},
+		{
+			"label": "Roll Requests",
+			"entity": "JournalEntry",
+			"name": "roll-requests",
+			"path": "./packs/roll-requests.db",
+			"system": "CoC7"
 		}
 	],
 	"languages": [
@@ -48,7 +55,7 @@
 			"lang": "fr",
 			"name": "Français",
 			"path": "lang/fr.json"
-		  },
+		},
 		{
 		  "lang": "es",
 		  "name": "Español",
@@ -63,6 +70,11 @@
 			"lang": "ja",
 			"name": "日本語",
 			"path": "lang/ja.json"
+		},
+		{
+			"lang": "cn",
+			"name": "中文",
+			"path": "lang/cn.json"
 		}
 	  ],
 	"socket": true,
@@ -72,6 +84,6 @@
 	"secondaryTokenAttribute": "power",
 	"url": "https://github.com/HavlockV/CoC7-FoundryVTT/",
 	"manifest": "https://github.com/HavlockV/CoC7-FoundryVTT/raw/master/system.json",
-	"download": "https://github.com/HavlockV/CoC7-FoundryVTT/archive/0.4.4.zip"
+	"download": "https://github.com/HavlockV/CoC7-FoundryVTT/archive/0.4.5.zip"
 }
   
