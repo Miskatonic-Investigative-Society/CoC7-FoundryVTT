@@ -40,10 +40,20 @@ export class CoC7Parser{
 		const dataString = event.dataTransfer.getData('text/plain');
 		const data = JSON.parse( dataString);
 		if( 'coc7-link' == data.linkType){
+			event.stopPropagation();
+			if( !event.shiftKey && (undefined == data.difficulty || undefined == data.modifier)) {
+				const usage = await RollDialog.create();
+				if( usage) {
+					data.modifier = usage.get('bonusDice');
+					data.difficulty = usage.get('difficulty');
+				}
+			}
+
 			const link = CoC7Parser.createCoC7Link( data);
+
 			if( link) {
 				editor.insertContent(link);
-				event.stopPropagation();}
+			}
 		} else if( event.ctrlKey) {
 			event.stopPropagation();
 
@@ -138,8 +148,8 @@ export class CoC7Parser{
 			// @coc7.item[type:optional,name:Shotgun,difficulty:+,modifier:-1]{Hard Shitgun check(-1)}
 			if( !data.type || !data.name) return;
 			let options = `${data.blind?'blind,':''}type:${data.type},name:${data.name}`;
-			if( data.difficulty) options += `,difficulty:${data.difficulty}`;
-			if( data.modifier) options += `,modifier:${data.modifier}`;
+			// if( data.difficulty) options += `,difficulty:${data.difficulty}`;
+			// if( data.modifier) options += `,modifier:${data.modifier}`;
 			if( data.icon) options += `,icon:${data.icon}`;
 			if( data.pack) options += `,pack:${data.pack}`;
 			if( data.id) options += `,id:${data.id}`;
@@ -156,7 +166,7 @@ export class CoC7Parser{
 	static ParseSheetContent(app, html){
 		//Check in all editors content for a link.
 		for (const element of html.find('div.editor-content > *, p')) {
-			element.innerHTML = CoC7Parser.EnrichHTML( element.innerHTML);
+			element.outerHTML = CoC7Parser.EnrichHTML( element.outerHTML);
 		}
 
 		//Bind the click to execute the check.
@@ -166,11 +176,20 @@ export class CoC7Parser{
 		return;
 	}
 
+	static _getTextNodes(parent) {
+		const text = [];
+		const walk = document.createTreeWalker(parent, NodeFilter.SHOW_TEXT, null, false);
+		while( walk.nextNode() ) text.push(walk.currentNode);
+		return text;
+	}
+
 	static EnrichHTML(content){
 		const html = document.createElement('div');
 		html.innerHTML = String(content);
 
-		const text = TextEditor._getTextNodes(html);
+		let text = [];
+
+		text = TextEditor._getTextNodes(html);
 		// Alternative regex : '@(coc7).([^\[]+)\[([^\]]+)\](?:{([^}]+)})?'
 		const rgx = new RegExp('@(coc7).(.*?)\\[([^\\]]+)\\](?:{([^}]+)})?', 'gi');
 		TextEditor._replaceTextContent( text, rgx, CoC7Parser._createLink);
