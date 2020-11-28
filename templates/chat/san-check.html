@@ -5,6 +5,9 @@
     data-total-san-loss="{{totalSanLoss}}"
     data-applied="{{applied}}"
     data-is-blind="{{isBlind}}"
+    data-difficulty="{{difficulty}}"
+    data-modifier="{{modifier}}"
+
     {{#if tokenKey}}data-token-id="{{actorId}}"{{/if}}>
 
     <div class='roll-result'></div>
@@ -25,7 +28,7 @@
         {{#if isBlind}}
             {{#if isRolled}}
             <div class='card-buttons gm-visible-only'>
-                <button data-action="reveal-san-check">{{ localize 'CoC7.RevealCheck'}}</button>
+                <button data-action="reveal-san-check">{{ localize 'CoC7.RevealSanLoss'}}</button>
             </div>
             {{else}}
             <div class='card-buttons owner-only'>

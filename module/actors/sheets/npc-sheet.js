@@ -42,7 +42,7 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
 			classes: ['coc7', 'sheet', 'actor', 'npc'],
 			dragDrop: [{dragSelector: '.item', dropSelector: null}],
 			template: 'systems/CoC7/templates/actors/npc-sheet.html',
-			width: 560,
+			width: 580,
 			height: 'auto',
 			resizable: true
 		});

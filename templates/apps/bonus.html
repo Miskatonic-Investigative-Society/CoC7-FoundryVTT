@@ -5,11 +5,17 @@
         <div class="flexrow">
             <label>{{localize 'CoC7.RollDifficulty'}}</label>
             <select name="difficulty">
-                <option value="{{difficulty.unknown}}" {{#if unknownDifficultyDefault}}selected{{/if}}>{{localize 'CoC7.RollDifficultyUnknown'}}</option>
-                <option value="{{difficulty.regular}}" {{#unless unknownDifficultyDefault}}selected{{/unless}}>{{localize 'CoC7.RollDifficultyRegular'}}</option>
-                <option value="{{difficulty.hard}}">{{localize 'CoC7.RollDifficultyHard'}}</option>
-                <option value="{{difficulty.extreme}}">{{localize 'CoC7.RollDifficultyExtreme'}}</option>
-
+                {{#if options.difficulty}}
+                    <option value="{{difficulty.unknown}}" {{#if options.difficultyLevel.unknown}}selected{{/if}}>{{localize 'CoC7.RollDifficultyUnknown'}}</option>
+                    <option value="{{difficulty.regular}}"  {{#if options.difficultyLevel.regular}}selected{{/if}}>{{localize 'CoC7.RollDifficultyRegular'}}</option>
+                    <option value="{{difficulty.hard}}" {{#if options.difficultyLevel.hard}}selected{{/if}}>{{localize 'CoC7.RollDifficultyHard'}}</option>
+                    <option value="{{difficulty.extreme}}"{{#if options.difficultyLevel.extreme}}selected{{/if}}>{{localize 'CoC7.RollDifficultyExtreme'}}</option>
+                {{else}}
+                    <option value="{{difficulty.unknown}}" {{#if unknownDifficultyDefault}}selected{{/if}}>{{localize 'CoC7.RollDifficultyUnknown'}}</option>
+                    <option value="{{difficulty.regular}}" {{#unless unknownDifficultyDefault}}selected{{/unless}}>{{localize 'CoC7.RollDifficultyRegular'}}</option>
+                    <option value="{{difficulty.hard}}">{{localize 'CoC7.RollDifficultyHard'}}</option>
+                    <option value="{{difficulty.extreme}}">{{localize 'CoC7.RollDifficultyExtreme'}}</option>
+                {{/if}}
             </select>
         </div>
 
@@ -27,7 +33,7 @@
                     <span style="flex: 1; text-align: center;"></span>
                     <span style="flex: 1; text-align: right;">+2</span>
                 </div>
-                <input type="range" name="bonusDice" min="-2" max="2" value="0" class="slider" id="myslider">
+                <input type="range" name="bonusDice" min="-2" max="2" value="{{#if options.modifier}}{{options.modifier}}{{else}}0{{/if}}" class="slider" id="myslider">
             </div>
         </div>
     </div>

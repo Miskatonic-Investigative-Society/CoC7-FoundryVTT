@@ -1,18 +1,60 @@
+import { CoC7Check } from './check.js';
 import { CoC7Item } from './items/item.js';
 
 export class CoC7Utilities {
-	static test(event){
-		if( event.shiftKey) ui.notifications.info('Hello from SHIFT utilities');
-		else ui.notifications.info('Hello from utilities');
-		const speaker = ChatMessage.getSpeaker();
-		let actor;
-		if (speaker.token) actor = game.actors.tokens[speaker.token];
-		if (!actor) actor = game.actors.get(speaker.actor);
+	// static test(event){
+	// 	if( event.shiftKey) ui.notifications.info('Hello from SHIFT utilities');
+	// 	else ui.notifications.info('Hello from utilities');
+	// 	const speaker = ChatMessage.getSpeaker();
+	// 	let actor;
+	// 	if (speaker.token) actor = game.actors.tokens[speaker.token];
+	// 	if (!actor) actor = game.actors.get(speaker.actor);
 
-		actor.inflictMajorWound();
+	// 	actor.inflictMajorWound();
+	// }
+
+	static getCharacteristicNames( char){
+		const charKey = char.toLowerCase();
+
+		switch( charKey){
+		case 'str': return { short: game.i18n.localize('CHARAC.STR'), label: game.i18n.localize('CHARAC.Strength')};
+		case 'con': return { short: game.i18n.localize('CHARAC.CON'), label: game.i18n.localize('CHARAC.Constitution')};
+		case 'siz': return { short: game.i18n.localize('CHARAC.SIZ'), label: game.i18n.localize('CHARAC.Size')};
+		case 'dex': return { short: game.i18n.localize('CHARAC.DEX'), label: game.i18n.localize('CHARAC.Dexterity')};
+		case 'app': return { short: game.i18n.localize('CHARAC.APP'), label: game.i18n.localize('CHARAC.Appearance')};
+		case 'int': return { short: game.i18n.localize('CHARAC.INT'), label: game.i18n.localize('CHARAC.Intelligence')};
+		case 'pow': return { short: game.i18n.localize('CHARAC.POW'), label: game.i18n.localize('CHARAC.Power')};
+		case 'edu': return { short: game.i18n.localize('CHARAC.EDU'), label: game.i18n.localize('CHARAC.Education')};
+		default: {
+			for (const [, value] of Object.entries(game.system.template.Actor.templates.characteristics.characteristics)) {
+				if( charKey == game.i18n.localize( value.short).toLowerCase()) return { short: game.i18n.localize(value.short), label: game.i18n.localize(value.label)};
+			} 
+			return null;
+		}
+		}
 	}
 
-	static skillCheckMacro( skill, event){
+
+	static convertDifficulty( difficulty){
+		if( typeof( difficulty) != 'string') return difficulty;
+		if( !isNaN(Number(difficulty))) return Number(difficulty);
+
+		switch (difficulty) {
+		case '?':
+			return CoC7Check.difficultyLevel.unknown;
+		case '+':
+			return CoC7Check.difficultyLevel.hard;
+		case '++':
+			return CoC7Check.difficultyLevel.extreme;
+		case '+++':
+			return CoC7Check.difficultyLevel.critical;
+		default:
+			return CoC7Check.difficultyLevel.regular;
+		}
+	}
+
+	static skillCheckMacro( skill, event, options={}){
+		event.preventDefault();
 		const speaker = ChatMessage.getSpeaker();
 		let actor;
 		if (speaker.token) actor = game.actors.tokens[speaker.token];
@@ -23,10 +65,11 @@ export class CoC7Utilities {
 			return;
 		}
 
-		actor.skillCheck( skill, event.shiftKey);
+		actor.skillCheck( skill, event.shiftKey, options);
 	}
 
 	static weaponCheckMacro( weapon, event){
+		event.preventDefault();
 		const speaker = ChatMessage.getSpeaker();
 		let actor;
 		if (speaker.token) actor = game.actors.tokens[speaker.token]; //!! Ca recupere l'acteur pas l'acteur du token !!
@@ -37,7 +80,7 @@ export class CoC7Utilities {
 			return;
 		}
 		
-		actor.weaponCheck( weapon, event);
+		actor.weaponCheck( weapon, event.shiftKey);
 	}
 
 	static async createMacro(bar, data, slot){
@@ -135,12 +178,4 @@ export class CoC7Utilities {
 		
 		return;
 	}
-
-	// static async enrichHTML(html){
-	// 	const pdf = game.modules.get('pdfoundry');
-	// 	if( pdf){
-	// 		let pdfModule = await import( '/' + pdf.esmodules[0]);
-	// 		pdfModule.HTMLEnricher.EnrichHTML(html);
-	// 	}
-	// }
 }
