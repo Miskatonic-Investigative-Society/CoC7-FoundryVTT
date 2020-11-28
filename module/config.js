@@ -143,6 +143,7 @@ COC7.creatureFightingSkill = 'CoC7.creatureFightingSkill';
 
 COC7.dodgeSkillName = 'CoC7.DodgeSkillName';
 COC7.creditRatingSkillName = 'CoC7.CreditRatingSkillName';
+COC7.CthulhuMythosName = 'CoC7.CthulhuMythosName';
 COC7.fightingSpecializationName = 'CoC7.FightingSpecializationName';
 COC7.firearmSpecializationName = 'CoC7.FirearmSpecializationName';
 

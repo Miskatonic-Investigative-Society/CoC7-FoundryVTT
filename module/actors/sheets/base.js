@@ -6,6 +6,8 @@ import { CoC7MeleeInitiator } from '../../chat/combat/melee-initiator.js';
 import { CoC7RangeInitiator } from '../../chat/rangecombat.js';
 import { CoC7DamageRoll } from '../../chat/damagecards.js';
 import { CoC7ConCheck } from '../../chat/concheck.js';
+import { chatHelper } from '../../chat/helper.js';
+import { CoC7Parser } from '../../apps/parser.js';
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -330,6 +332,10 @@ export class CoC7ActorSheet extends ActorSheet {
 			if( data.data.characteristics.pow.value != null) data.data.attribs.mp.max = Math.floor( data.data.characteristics.pow.value / 5);
 		}
 
+		if( data.data.attribs.san.auto){
+			data.data.attribs.san.max = this.actor.sanMax;
+		}
+
 		if( data.data.attribs.mp.value > data.data.attribs.mp.max || data.data.attribs.mp.max == null) data.data.attribs.mp.value = data.data.attribs.mp.max;
 		if( data.data.attribs.hp.value > data.data.attribs.hp.max || data.data.attribs.hp.max == null) data.data.attribs.hp.value = data.data.attribs.hp.max;
 
@@ -391,6 +397,12 @@ export class CoC7ActorSheet extends ActorSheet {
 
 		// Owner Only Listeners
 		if ( this.actor.owner ) {
+
+			html.find('.characteristics-label').on( 'dragstart', (event)=> this._onDragCharacteristic(event));
+			html.find('.attribute-label').on( 'dragstart', (event)=> this._onDragAttribute(event));
+			html.find('.san-check').on( 'dragstart', (event)=> this._onDragSanCheck(event));
+
+
 			html.find('.characteristics-label').click(this._onRollCharacteriticTest.bind(this));
 			html.find('.skill-name.rollable').click(this._onRollSkillTest.bind(this));
 			html.find('.skill-image').click(this._onRollSkillTest.bind(this));
@@ -503,6 +515,46 @@ export class CoC7ActorSheet extends ActorSheet {
 		});
 	}
 
+	_onDragCharacteristic(event){
+		const box = event.currentTarget.parentElement;
+		const data = {
+			linkType: 'coc7-link',
+			check: 'check',
+			type: 'characteristic',
+			name: box.dataset.characteristic,
+			icon: null
+		};
+
+		event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data));
+	}
+
+	_onDragAttribute(event){
+		const box = event.currentTarget.parentElement;
+		const data = {
+			linkType: 'coc7-link',
+			check: 'check',
+			type: 'attribute',
+			name: box.dataset.attrib,
+			icon: null
+		};
+		
+		event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data));
+	}
+
+	_onDragSanCheck(event){
+		const sanMin = event.currentTarget.querySelector('.san-value.pass');
+		const sanMax = event.currentTarget.querySelector('.san-value.failed');
+		const data = {
+			linkType: 'coc7-link',
+			check: 'sanloss',
+			sanMin: sanMin.innerText,
+			sanMax: sanMax.innerText,
+			icon: null
+		};
+
+		event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data));
+	}
+
 	async _onDrop(event){
 		super._onDrop(event);
 	}
@@ -574,46 +626,6 @@ export class CoC7ActorSheet extends ActorSheet {
 		this.actor.toggleActorFlag( 'displayFormula');
 	}
 
-	async _onRollAttribTest( event){
-		event.preventDefault();
-
-		const attrib = event.currentTarget.parentElement.dataset.attrib;
-		if( attrib === 'db'){
-			if( !/^-{0,1}\d+$/.test(event.currentTarget.parentElement.dataset.rollFormula)){
-				const r=new Roll(event.currentTarget.parentElement.dataset.rollFormula);
-				r.roll();
-				if( !isNaN(r.total) && !(r.total === undefined)){
-					r.toMessage({
-						speaker: ChatMessage.getSpeaker(),
-						flavor: game.i18n.localize('CoC7.BonusDamageRoll')
-					});
-				}
-			}
-			return;
-		}
-
-		if( attrib === 'lck'){
-			if( !this.actor.data.data.attribs.lck.value) return; //If luck is null, 0 or non defined stop there.
-		}
-
-		const actorId = event.currentTarget.closest('form').dataset.actorId;
-		let tokenKey = event.currentTarget.closest('form').dataset.tokenId;
-
-		let check = new CoC7Check();	
-
-		if( ! event.shiftKey) {
-			const usage = await RollDialog.create();
-			if( usage) {
-				check.diceModifier = usage.get('bonusDice');
-				check.difficulty = usage.get('difficulty');
-			}
-		}
-
-		check.actor = !tokenKey ? actorId : tokenKey;
-		check.rollAttribute(attrib );
-		check.toMessage();
-	}
-
 	async _onWheel( event) {
 		let value = parseInt(event.currentTarget.value);
 		if( event.deltaY > 0){
@@ -644,21 +656,6 @@ export class CoC7ActorSheet extends ActorSheet {
 		event.currentTarget.readOnly = event.currentTarget.readOnly ? false : true;
 		event.currentTarget.classList.toggle( 'read-only');
 	}
-
-	// _onDragItemStart( event) {
-	// 	const id = event.currentTarget.closest(".item").dataset.itemId;
-
-	// 	const dragIcon = event.currentTarget.getElementsByClassName('skill-image')[0];
-	// 	event.dataTransfer.setDragImage( dragIcon, -10, -10);
-	// 	var transferedData = {
-	// 		'itemId': id,
-	// 		'actorId': this.actor.id,
-	// 		'token': this.token ? `${this.token.scene._id}.${this.token.id}` : null,
-	// 		'scene': this.token ? this.token.scene.id : null,
-	// 		'origin': 'CoC7ActorSheet'
-	// 	}
-	// 	event.dataTransfer.setData("text", JSON.stringify( transferedData));
-	// }
 
 	_onItemSummary(event) {
 		event.preventDefault();
@@ -755,17 +752,28 @@ export class CoC7ActorSheet extends ActorSheet {
 		const fastForward = event.shiftKey;
 		const weapon = this.actor.getOwnedItem(itemId);
 		const actorKey = !this.token? this.actor.actorKey : `${this.token.scene._id}.${this.token.data._id}`;
-		if( !weapon.data.data.properties.rngd){
-			if( game.user.targets.size > 1){
-				ui.notifications.error('Too many target selected. Keeping only last selected target');
-			}
 
-			const card = new CoC7MeleeInitiator( actorKey, itemId, fastForward);
-			card.createChatCard();
-		}
-		if( weapon.data.data.properties.rngd){
-			const card = new CoC7RangeInitiator( actorKey, itemId, fastForward);
-			card.createChatCard();
+		if( event.ctrlKey && game.user.isGM){
+			const linkData = {
+				check: 'item',
+				type: 'weapon',
+				name: weapon.name
+			};
+			const link = CoC7Parser.createCoC7Link(linkData);
+			if( link) chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), link);
+		} else{
+			if( !weapon.data.data.properties.rngd){
+				if( game.user.targets.size > 1){
+					ui.notifications.warn(game.i18n.localize('CoC7.WarnTooManyTarget'));
+				}
+
+				const card = new CoC7MeleeInitiator( actorKey, itemId, fastForward);
+				card.createChatCard();
+			}
+			if( weapon.data.data.properties.rngd){
+				const card = new CoC7RangeInitiator( actorKey, itemId, fastForward);
+				card.createChatCard();
+			}
 		}
 	}
 
@@ -832,21 +840,90 @@ export class CoC7ActorSheet extends ActorSheet {
 		let tokenKey = event.currentTarget.closest('form').dataset.tokenId;
 		const characteristic = event.currentTarget.parentElement.dataset.characteristic;
 
-		let check = new CoC7Check();	
-
-		if( ! event.shiftKey) {
+		let difficulty, modifier;
+		if( !event.shiftKey) {
 			const usage = await RollDialog.create();
 			if( usage) {
-				check.diceModifier = usage.get('bonusDice');
-				check.difficulty = usage.get('difficulty');
+				modifier = Number(usage.get('bonusDice'));
+				difficulty = Number(usage.get('difficulty'));
 			}
 		}
 
-		check.actor = !tokenKey ? actorId : tokenKey;
-		check.rollCharacteristic(characteristic );
-		check.toMessage();
+		if( event.ctrlKey && game.user.isGM){
+			const linkData = {
+				check: 'check',
+				type: 'characteristic',
+				name: characteristic
+			};
+			if( 'blindroll' === game.settings.get('core', 'rollMode')) linkData.blind = true;
+			if( undefined != modifier) linkData.modifier = modifier;
+			if( undefined != difficulty) linkData.difficulty = difficulty;
+			const link = CoC7Parser.createCoC7Link(linkData);
+			if( link) chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), link);
+		} else {
+			let check = new CoC7Check();	
+			if( undefined != modifier ) check.diceModifier = modifier;
+			if( undefined != difficulty ) check.difficulty = difficulty;
+			check.actor = !tokenKey ? actorId : tokenKey;
+			check.rollCharacteristic(characteristic );
+			check.toMessage();
+		}
+	}
 
-		// this.actor.rollCharacteristic(characteristic, {event: event});
+	async _onRollAttribTest( event){
+		event.preventDefault();
+
+		const attrib = event.currentTarget.parentElement.dataset.attrib;
+		if( attrib === 'db'){
+			if( !/^-{0,1}\d+$/.test(event.currentTarget.parentElement.dataset.rollFormula)){
+				const r=new Roll(event.currentTarget.parentElement.dataset.rollFormula);
+				r.roll();
+				if( !isNaN(r.total) && !(r.total === undefined)){
+					r.toMessage({
+						speaker: ChatMessage.getSpeaker(),
+						flavor: game.i18n.localize('CoC7.BonusDamageRoll')
+					});
+				}
+			}
+			return;
+		}
+
+		if( attrib === 'lck'){
+			if( !this.actor.data.data.attribs.lck.value) return; //If luck is null, 0 or non defined stop there.
+		}
+
+		const actorId = event.currentTarget.closest('form').dataset.actorId;
+		let tokenKey = event.currentTarget.closest('form').dataset.tokenId;
+
+		let difficulty, modifier;
+		if( !event.shiftKey) {
+			const usage = await RollDialog.create();
+			if( usage) {
+				modifier = Number(usage.get('bonusDice'));
+				difficulty = Number(usage.get('difficulty'));
+			}
+		}
+
+		if( event.ctrlKey && game.user.isGM && ['lck', 'san'].includes(attrib)){
+			const linkData = {
+				check: 'check',
+				type: 'attribute',
+				name: attrib
+			};
+			if( 'blindroll' === game.settings.get('core', 'rollMode')) linkData.blind = true;
+			if( undefined != modifier) linkData.modifier = modifier;
+			if( undefined != difficulty) linkData.difficulty = difficulty;
+			const link = CoC7Parser.createCoC7Link(linkData);
+			if( link) chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), link);
+		} else {
+			let check = new CoC7Check();
+			if( undefined != modifier ) check.diceModifier = modifier;
+			if( undefined != difficulty ) check.difficulty = difficulty;
+			check.actor = !tokenKey ? actorId : tokenKey;
+			check.rollAttribute(attrib );
+			check.toMessage();
+	
+		}
 	}
 
 
@@ -862,21 +939,37 @@ export class CoC7ActorSheet extends ActorSheet {
 		const actorId = event.currentTarget.closest('form').dataset.actorId;
 		const tokenKey = event.currentTarget.closest('form').dataset.tokenId;
 		
-		let check = new CoC7Check();		
-		
-		if( ! event.shiftKey) {
+		let difficulty, modifier;
+		if( !event.shiftKey) {
 			const usage = await RollDialog.create();
 			if( usage) {
-				check.diceModifier = usage.get('bonusDice');
-				check.difficulty = usage.get('difficulty');
+				modifier = Number(usage.get('bonusDice'));
+				difficulty = Number(usage.get('difficulty'));
 			}
 		}
 
-
-		check.actor = !tokenKey ? actorId : tokenKey;
-		check.skill = skillId;
-		check.roll();
-		check.toMessage();
+		if( event.ctrlKey && game.user.isGM){
+			const name = this.actor.items.get(skillId)?.name;
+			if( !name) return;
+			const linkData = {
+				check: 'check',
+				type: 'skill',
+				name: name
+			};
+			if( 'blindroll' === game.settings.get('core', 'rollMode')) linkData.blind = true;
+			if( undefined != modifier) linkData.modifier = modifier;
+			if( undefined != difficulty) linkData.difficulty = difficulty;
+			const link = CoC7Parser.createCoC7Link(linkData);
+			if( link) chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), link);
+		} else {
+			let check = new CoC7Check();		
+			if( undefined != modifier ) check.diceModifier = modifier;
+			if( undefined != difficulty ) check.difficulty = difficulty;
+			check.actor = !tokenKey ? actorId : tokenKey;
+			check.skill = skillId;
+			check.roll();
+			check.toMessage();
+		}
 	}
 	
 
