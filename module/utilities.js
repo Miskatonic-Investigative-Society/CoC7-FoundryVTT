@@ -36,6 +36,7 @@ export class CoC7Utilities {
 
 
 	static convertDifficulty( difficulty){
+		if( 0 == difficulty || '0' == difficulty) return CoC7Check.difficultyLevel.regular;
 		if( typeof( difficulty) != 'string') return difficulty;
 		if( !isNaN(Number(difficulty))) return Number(difficulty);
 
