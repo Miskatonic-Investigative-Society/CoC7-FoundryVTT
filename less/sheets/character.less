@@ -1,0 +1,159 @@
+.sheetV2{
+	&.character{
+		min-width: 687px;
+		min-height: 629px;
+		
+		form{
+			display: inline-block;
+			border: 1px solid;
+			border-image: url( './artwork/backgrounds/character-sheet.png') 4 repeat;
+			border-image-slice: 450 200 50 200 fill;
+			border-image-width: 450 200 50 200;
+			.container{
+				background-image: url(./artwork/tentacules.png);
+				background-repeat: no-repeat;
+				margin: -1px;
+				display: grid;
+				width: 100%;
+				height: 100%;
+
+				.sheet-header{
+					width: 100%;
+					height: 170px;
+					border: 0;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					
+					.photo{
+						flex: 0 0 140px;
+						max-width: 140px;
+						max-height: 170px;
+						object-fit: contain;
+						border: 0;
+						// background-color: rgb( 0, 255, 0, 0.1);
+					}
+
+					.infos{
+						display: inline-block;
+						width: 235px;
+						padding-right: 5px;
+						border-right: 2px solid;
+						border-color: @borderColorBlue;
+						// background-color: rgb( 255, 255, 0, 0.1);
+						.row{
+							a{
+								display: contents;
+							}
+
+							i{
+								padding-top: 7px;
+							}
+						}
+					}
+
+					.characteristics{
+						flex: 1;
+						display: grid;
+						height: 100%;
+						width: 100%;
+						grid-template-areas:	"header header header"
+												". charBoxes ."
+												"footer footer footer";
+						grid-template-columns: auto 240px auto;
+						grid-template-rows: auto 96px auto;
+						// background-color: #2196F3;
+						grid-gap: 1px;
+					
+
+						.header{
+							grid-area: header;
+							// background-color: LightSeaGreen ;
+						}
+
+						.footer{
+							grid-area: footer;
+							// background-color: lightgreen;
+						}
+
+						.char-boxes{
+							grid-area: charBoxes;
+							// background-color: lightgrey;
+							// border: 1px groove;
+							display: grid;
+							grid-template-columns: repeat( 4, 60px);
+							grid-template-rows: repeat( 2, 48px);
+						}
+
+						.char-box{
+							display: grid;
+							grid-template-columns: 16px 44px;
+							grid-template-rows: 16px 32px;
+							grid-template-areas: "rollIcon characName"
+												 "characScore characScore";
+
+							.roll-icon{
+								color: @colorBlue;
+								grid-area: rollIcon;
+							}
+
+							.charac-name{
+								color: @colorBlue;
+								grid-area : characName;
+							}
+
+							.charac-score{
+								grid-area: characScore;
+								margin-top: 4px;
+								margin-right: 8px;
+								border-radius: 4px;
+								color: @colorRed;
+								background: @whiteBackground;
+								display: grid;
+								grid-template-columns: 38px 14px;
+								grid-template-rows: 14px 14px;
+								grid-template-areas: "mainScore halfScore"
+													 "mainScore fithScore";
+
+								.main-score{
+									grid-area: mainScore;
+									justify-self: center;
+									align-self: center;
+								}
+
+								.half-score{
+									grid-area: halfScore;
+									font-size: 10px;
+									justify-self: center;
+									align-self: center;
+								}
+
+								.fith-score{
+									grid-area: fithScore;
+									font-size: 10px;
+									justify-self: center;
+									align-self: center;
+								}
+							}
+
+						}
+
+						input{
+							text-align: center;
+							color: @colorRed;
+							&:hover, &:focus{
+								background: transparent;
+							}
+
+							&:read-only{
+								border: 1px solid transparent;
+								box-shadow: none;
+								cursor: default;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

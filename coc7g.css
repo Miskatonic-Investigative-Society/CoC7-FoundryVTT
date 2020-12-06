@@ -1360,3 +1360,187 @@
   white-space: nowrap;
   word-break: break-all;
 }
+.defaultFont {
+  font-family: 'Bradley Hand', cursive;
+}
+.sheetV2 {
+  font-family: 'Bradley Hand', cursive;
+}
+.sheetV2.app {
+  background: #670b0b;
+}
+.sheetV2 .window-header {
+  background: #2b3753;
+  margin: 4px 4px 0 4px;
+  width: auto;
+}
+.sheetV2 .window-content {
+  margin: 0 8px 8px 8px;
+  padding: 0;
+  color: #2b3753;
+  font-size: 13px;
+}
+.sheetV2 .window-content .rollable:hover {
+  color: #000;
+  text-shadow: 0 0 10px #9A0B0B;
+  cursor: pointer;
+}
+.sheetV2 .window-content span {
+  color: #000;
+  height: 22px;
+  line-height: 22px;
+  padding: 1px 3px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: block;
+}
+.sheetV2 .window-content label {
+  height: 22px;
+  line-height: 22px;
+  display: contents;
+  font-weight: bold;
+}
+.sheetV2 .window-content input[type='text'] {
+  flex: 1;
+  height: 22px;
+  border: 0;
+  margin: 0;
+  width: 100%;
+  border-radius: 4px;
+  background: transparent;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.sheetV2 .window-content input[type='text']:hover,
+.sheetV2 .window-content input[type='text']:focus {
+  box-shadow: 0 0 8px #670b0b;
+  background: rgba(0, 0, 0, 0.1);
+}
+.sheetV2.character {
+  min-width: 687px;
+  min-height: 629px;
+}
+.sheetV2.character form {
+  display: inline-block;
+  border: 1px solid;
+  border-image: url('./artwork/backgrounds/character-sheet.png') 4 repeat;
+  border-image-slice: 450 200 50 200 fill;
+  border-image-width: 450 200 50 200;
+}
+.sheetV2.character form .container {
+  background-image: url(./artwork/tentacules.png);
+  background-repeat: no-repeat;
+  margin: -1px;
+  display: grid;
+  width: 100%;
+  height: 100%;
+}
+.sheetV2.character form .container .sheet-header {
+  width: 100%;
+  height: 170px;
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sheetV2.character form .container .sheet-header .photo {
+  flex: 0 0 140px;
+  max-width: 140px;
+  max-height: 170px;
+  object-fit: contain;
+  border: 0;
+}
+.sheetV2.character form .container .sheet-header .infos {
+  display: inline-block;
+  width: 235px;
+  padding-right: 5px;
+  border-right: 2px solid;
+  border-color: rgba(43, 55, 83, 0.5);
+}
+.sheetV2.character form .container .sheet-header .infos .row a {
+  display: contents;
+}
+.sheetV2.character form .container .sheet-header .infos .row i {
+  padding-top: 7px;
+}
+.sheetV2.character form .container .sheet-header .characteristics {
+  flex: 1;
+  display: grid;
+  height: 100%;
+  width: 100%;
+  grid-template-areas: "header header header" ". charBoxes ." "footer footer footer";
+  grid-template-columns: auto 240px auto;
+  grid-template-rows: auto 96px auto;
+  grid-gap: 1px;
+}
+.sheetV2.character form .container .sheet-header .characteristics .header {
+  grid-area: header;
+}
+.sheetV2.character form .container .sheet-header .characteristics .footer {
+  grid-area: footer;
+}
+.sheetV2.character form .container .sheet-header .characteristics .char-boxes {
+  grid-area: charBoxes;
+  display: grid;
+  grid-template-columns: repeat(4, 60px);
+  grid-template-rows: repeat(2, 48px);
+}
+.sheetV2.character form .container .sheet-header .characteristics .char-box {
+  display: grid;
+  grid-template-columns: 16px 44px;
+  grid-template-rows: 16px 32px;
+  grid-template-areas: "rollIcon characName" "characScore characScore";
+}
+.sheetV2.character form .container .sheet-header .characteristics .char-box .roll-icon {
+  color: #2b3753;
+  grid-area: rollIcon;
+}
+.sheetV2.character form .container .sheet-header .characteristics .char-box .charac-name {
+  color: #2b3753;
+  grid-area: characName;
+}
+.sheetV2.character form .container .sheet-header .characteristics .char-box .charac-score {
+  grid-area: characScore;
+  margin-top: 4px;
+  margin-right: 8px;
+  border-radius: 4px;
+  color: #670b0b;
+  background: rgba(255, 255, 255, 0.5);
+  display: grid;
+  grid-template-columns: 38px 14px;
+  grid-template-rows: 14px 14px;
+  grid-template-areas: "mainScore halfScore" "mainScore fithScore";
+}
+.sheetV2.character form .container .sheet-header .characteristics .char-box .charac-score .main-score {
+  grid-area: mainScore;
+  justify-self: center;
+  align-self: center;
+}
+.sheetV2.character form .container .sheet-header .characteristics .char-box .charac-score .half-score {
+  grid-area: halfScore;
+  font-size: 10px;
+  justify-self: center;
+  align-self: center;
+}
+.sheetV2.character form .container .sheet-header .characteristics .char-box .charac-score .fith-score {
+  grid-area: fithScore;
+  font-size: 10px;
+  justify-self: center;
+  align-self: center;
+}
+.sheetV2.character form .container .sheet-header .characteristics input {
+  text-align: center;
+  color: #670b0b;
+}
+.sheetV2.character form .container .sheet-header .characteristics input:hover,
+.sheetV2.character form .container .sheet-header .characteristics input:focus {
+  background: transparent;
+}
+.sheetV2.character form .container .sheet-header .characteristics input:read-only {
+  border: 1px solid transparent;
+  box-shadow: none;
+  cursor: default;
+}

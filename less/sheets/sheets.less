@@ -1,0 +1,67 @@
+.sheetV2{
+	.defaultFont();
+
+	&.app{
+		background: @colorRed;
+	}
+
+
+	.window-header{
+		background: @colorBlue;
+		margin: 4px 4px 0 4px;
+		width: auto;
+	}
+
+	.window-content{
+		margin: 0 8px 8px 8px;
+		padding: 0;
+		color: @colorBlue;
+		font-size: 13px;
+
+		.rollable:hover{
+			color: #000;
+    		text-shadow: 0 0 10px #9A0B0B;
+	    	cursor: pointer;
+		}
+
+
+		span{
+			color: #000;
+			height: 22px;
+			line-height: 22px;
+			padding: 1px 3px;
+			overflow: hidden;
+			white-space:nowrap;
+			text-overflow:ellipsis;
+			max-width: 100%;
+			display: block
+		}
+
+		label{
+			height: 22px;
+			line-height: 22px;
+			display: contents;
+			font-weight: bold;
+		}
+
+		input[type='text']{
+			flex: 1;
+			height: 22px;
+			border: 0;
+			margin: 0;
+			width: 100%;
+			border-radius: 4px;
+			background: transparent;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+
+			&:hover, &:focus{
+				box-shadow: 0 0 8px @colorRed;
+				background: @greyBackground;
+			}
+		}
+	}
+	
+
+}

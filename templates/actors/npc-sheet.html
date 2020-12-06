@@ -29,7 +29,7 @@
 				{{#if ../data.flags.locked}}
 					{{#if characteristic.display}}
 						<div class="flexcol" style=" margin-right: 2px;" data-characteristic="{{key}}">
-							<div class="characteristics-label rollable" draggable="true" style="text-align: left;">
+							<div class="characteristic-label rollable" draggable="true" style="text-align: left;">
 								<label>{{localize characteristic.short}}</label>
 							</div>
 							<div style="text-align:center;border: 1px groove;margin-right: 2px;">
@@ -43,7 +43,7 @@
 					{{/if}}
 				{{else}}
 				<div class="flexcol" style=" margin-right: 2px;" data-characteristic="{{key}}">
-					<div class="characteristics-label rollable" draggable="true" style="text-align: left;">
+					<div class="characteristic-label rollable" draggable="true" style="text-align: left;">
 						<label>{{localize characteristic.short}}</label>
 					</div>
 					{{#if ../displayFormula}}

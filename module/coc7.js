@@ -12,6 +12,7 @@ import { CoC7Item } from './items/item.js';
 import { CoC7NPCSheet } from './actors/sheets/npc-sheet.js';
 import { CoC7CreatureSheet } from './actors/sheets/creature-sheet.js';
 import { CoC7CharacterSheet } from './actors/sheets/actor-sheet.js';
+import { CoC7CharacterSheetV2 } from './actors/sheets/character.js';
 import { preloadHandlebarsTemplates } from './templates.js';
 import { CoC7Chat } from './chat.js';
 import { CoC7Combat, rollInitiative } from './combat.js';
@@ -276,6 +277,7 @@ Hooks.once('init', async function() {
 	Actors.registerSheet('CoC7', CoC7NPCSheet, { types: ['npc'], makeDefault: true});
 	Actors.registerSheet('CoC7', CoC7CreatureSheet, { types: ['creature'], makeDefault: true});
 	Actors.registerSheet('CoC7', CoC7CharacterSheet, { types: ['character'], makeDefault: true});
+	Actors.registerSheet('CoC7', CoC7CharacterSheetV2, { types: ['character']});
 	
 	Items.unregisterSheet('core', ItemSheet);
 	Items.registerSheet('CoC7', CoC7WeaponSheet, { types: ['weapon'], makeDefault: true});
@@ -343,7 +345,7 @@ Hooks.on('getSceneControlButtons', (buttons) => {
 			icon : 'fas fa-angle-double-up',
 			name: 'devphase',
 			active: game.settings.get('CoC7', 'developmentEnabled'),
-			title: game.settings.get('CoC7', 'developmentEnabled')? 'Development phase enabled': 'Development phase disabled',
+			title: game.settings.get('CoC7', 'developmentEnabled')? game.i18n.localize( 'CoC7.DevPhaseEnabled'): game.i18n.localize( 'CoC7.DevPhaseDisabled'),
 			onClick :async () => await CoC7Utilities.toggleDevPhase()
 		});
 		group.tools.push({
@@ -351,7 +353,7 @@ Hooks.on('getSceneControlButtons', (buttons) => {
 			icon : 'fas fas fa-user-edit',
 			name: 'charcreate',
 			active: game.settings.get('CoC7', 'charCreationEnabled'), 
-			title: game.settings.get('CoC7', 'charCreationEnabled')? 'Character creation mode enabled': 'Character creation mode disabled',
+			title: game.settings.get('CoC7', 'charCreationEnabled')? game.i18n.localize( 'CoC7.CharCreationEnabled'): game.i18n.localize( 'CoC7.CharCreationDisabled'),
 			onClick :async () => await CoC7Utilities.toggleCharCreation()
 		});
 	}
