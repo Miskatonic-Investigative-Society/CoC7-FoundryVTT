@@ -1,0 +1,91 @@
+<form class="{{cssClass}} flexcol" autocomplete="off" data-actor-id="{{actor._id}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
+	<div class="container">
+		<section class="sheet-header">
+			<img class="photo" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
+			<div class="infos">
+				<div class="row flexrow">
+					<label>{{ localize 'CoC7.Name' }} :</label>
+					<input name="name" type="text" value="{{actor.name}}"/>
+				</div>
+				{{#if pulpCharacter}}
+				<div class="row flexrow">
+					<label>{{ localize 'CoC7.Archetype' }} :</label>
+					{{#if data.infos.archetypeSet}}
+						<span class="rollable open-item" data-type="archetype">{{data.infos.archetype}}</span>
+						{{#unless data.flags.locked}}
+							<a class="reset-archetype" title="{{ localize 'CoC7.ResetArchetype'}}" data-type="archetype"><i class="far fa-times-circle"></i></a>
+						{{/unless}}
+					{{else}}
+						<input name="data.infos.archetype" type="text" value="{{data.infos.archetype}}"/>
+					{{/if}}
+				</div>
+				<div class="row flexrow">
+					<label>{{ localize 'CoC7.Organization' }} :</label>
+					<input name="data.infos.organization" type="text" value="{{data.infos.organization}}"/>
+				</div>
+				{{/if}}
+				<div class="row flexrow">
+					<label>{{ localize 'CoC7.Occupation' }} :</label>
+					{{#if data.infos.occupationSet}}
+						<span class="rollable open-item" data-type="occupation">{{data.infos.occupation}}</span>
+						{{#unless data.flags.locked}}
+							<a class="reset-occupation" title="{{ localize 'CoC7.ResetOccupation'}}" data-type="occupation"><i class="far fa-times-circle"></i></a>
+						{{/unless}}
+					{{else}}
+						<input name="data.infos.occupation" type="text" value="{{data.infos.occupation}}"/>
+					{{/if}}
+				</div>
+				<div class="row flexrow">
+					<label>{{ localize 'CoC7.Age' }} :</label>
+					<input name="data.infos.age" type="text" value="{{data.infos.age}}"/>
+					<label>{{ localize 'CoC7.Sex' }} :</label>
+					<input name="data.infos.sex" type="text" value="{{data.infos.sex}}"/>
+				</div>
+				<div class="row flexrow">
+					<label>{{ localize 'CoC7.Residence' }} :</label>
+					<input name="data.infos.residence" type="text" value="{{data.infos.residence}}"/>
+				</div>
+				<div class="row flexrow">
+					<label>{{ localize 'CoC7.Birthplace' }} :</label>
+					<input name="data.infos.birthplace" type="text" value="{{data.infos.birthplace}}"/>
+				</div>
+			</div>
+			<div class="characteristics">
+				<div class="header"></div>
+				<div class="footer"></div>
+				<div class="char-boxes">
+					{{#each data.characteristics as |characteristic key|}}
+						<div class="char-box"  data-characteristic="{{key}}">
+							<div class="roll-icon"><i class="fas fa-dice-d20"></i></div>
+							<div class="charac-name characteristic-label rollable">{{localize characteristic.short}}</div>
+							<div class="charac-score">
+								<div class="main-score">
+									{{#if characteristic.editable}}
+										<input class="characteristic-score" type="text" name="data.characteristics.{{key}}.value" value="{{characteristic.value}}" data-dtype="Number"/>
+									{{else}}
+										<input class="characteristic-score read-only" type="text" name="data.characteristics.{{key}}.value" value="{{characteristic.value}}" data-dtype="Number" readonly/>
+									{{/if}}
+								</div>
+								<div class="half-score">{{characteristic.hard}}</div>
+								<div class="fith-score">{{characteristic.extreme}}</div>
+							</div>
+						</div>
+					{{/each}}
+				</div>
+			</div>
+		</section>
+		<section class="sheet-tabs"></section>
+
+	
+	<!-- <header class="sheet-header">
+	</header>
+	
+	{{!-- Sheet Tab Navigation --}}
+	<nav class="sheet-tabs tabs" data-group="primary">
+	</nav>
+
+	{{!-- Sheet Body --}}
+	<section class="sheet-body">
+	</section> -->
+	</div>
+</form>
