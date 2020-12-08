@@ -14,6 +14,8 @@
 				background-repeat: no-repeat;
 				margin: -1px;
 				display: grid;
+				grid-template-columns: auto;
+				grid-template-rows: 195px 30px auto;
 				width: 100%;
 				height: 100%;
 
@@ -54,32 +56,84 @@
 
 					.characteristics{
 						flex: 1;
-						display: grid;
+						font-weight: bold;
+						display: flex;
+						flex-direction: column;
 						height: 100%;
-						width: 100%;
-						grid-template-areas:	"header header header"
-												". charBoxes ."
-												"footer footer footer";
-						grid-template-columns: auto 240px auto;
-						grid-template-rows: auto 96px auto;
+						// grid-template-columns: auto 240px auto;
+						// grid-template-rows: auto 96px auto;
 						// background-color: #2196F3;
-						grid-gap: 1px;
+						// grid-gap: 1px;
 					
 
 						.header{
-							grid-area: header;
-							// background-color: LightSeaGreen ;
+							flex:1;
 						}
 
 						.footer{
-							grid-area: footer;
+							flex:1;
+							display: flex;
+							flex-direction: row;
+
 							// background-color: lightgreen;
+
+							.attribute{
+								flex: 0 0 25%;
+								display: grid;
+								grid-template-columns: auto 32px;
+								align-items: center;
+								justify-content: center;
+								
+								&.manual-override{
+									h2{
+										text-decoration: underline;
+										text-decoration-color: red;
+									}
+								}
+							}
+
+							.attribute-label{
+								min-width: 0;
+
+								&.auto-toggle{
+									cursor: pointer;
+								}
+
+								h2{
+									border: 0;
+									padding: 0;
+									margin: 0;
+									line-height: 22px;
+									font-size: 12px;
+									color: @colorBlue;
+									font-weight: normal;
+									text-align: right;
+									text-overflow: ellipsis;
+									white-space: nowrap;
+									overflow: hidden;
+								}
+							}
+
+							.attribute-value{
+								text-align: center;
+								font-size: 12px;
+								color: @colorBlue;
+								font-weight: normal;
+								
+								input{
+									padding: 0;
+									font-size: 12px;
+									color: @colorBlue;
+									background-color: @greyBackground;
+									font-weight: normal;
+								}
+							}
+							
 						}
 
 						.char-boxes{
-							grid-area: charBoxes;
-							// background-color: lightgrey;
-							// border: 1px groove;
+							flex: 0 0 96px;
+							justify-content: center;
 							display: grid;
 							grid-template-columns: repeat( 4, 60px);
 							grid-template-rows: repeat( 2, 48px);
@@ -141,6 +195,7 @@
 						input{
 							text-align: center;
 							color: @colorRed;
+							font-size: large;
 							&:hover, &:focus{
 								background: transparent;
 							}
@@ -152,6 +207,64 @@
 							}
 						}
 					}
+				}
+
+				.sheet-nav{
+					border-top: 1px solid @colorBlue;
+					color: @colorBlue;
+					font-weight: bold;
+					font-size: 15px;
+					margin: 0 8px;
+					display: flex;
+    				flex-direction: row;
+    				flex-wrap: wrap;
+					justify-content: flex-start;
+					
+					a{
+						&:hover{
+						text-shadow: none;
+						}
+
+						&.active{
+							span{
+								color: white;
+								background-color: @colorBlue;
+							}
+						}
+					}
+
+					.tab-name{
+						text-align: center;
+						align-items: center;
+						justify-content: center;
+					}
+
+					span{
+						display: inline-block;
+						width: fit-content;
+						color: @colorBlue;
+						border: 1px solid transparent;
+						border-radius: 4px;
+						height: 20px;
+    					line-height: 18px;
+    					padding: 0 8px;
+    					margin: 4px;
+
+						&:hover{
+							border: 1px solid @colorBlue;
+						}
+					}
+					
+					.unlock-control{
+						flex: 0 0 24px;
+						margin-top: 2px;
+					}
+				}
+
+				.sheet-body{
+					border: 1px solid @colorBlue;
+					margin: 0 8px 8px 8px;
+					overflow: scroll;
 				}
 			}
 		}

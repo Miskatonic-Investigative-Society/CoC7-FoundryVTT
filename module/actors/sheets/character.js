@@ -14,7 +14,7 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
 			height: 623,
 			resizable: true,
 			dragDrop: [{dragSelector: '.item', dropSelector: null}],
-			tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills'}]
+			tabs: [{navSelector: '.sheet-nav', contentSelector: '.sheet-body', initial: 'skills'}]
 		});
 	}
     
