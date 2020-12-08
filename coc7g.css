@@ -1435,6 +1435,8 @@
   background-repeat: no-repeat;
   margin: -1px;
   display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: 195px 30px auto;
   width: 100%;
   height: 100%;
 }
@@ -1468,22 +1470,65 @@
 }
 .sheetV2.character form .container .sheet-header .characteristics {
   flex: 1;
-  display: grid;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  width: 100%;
-  grid-template-areas: "header header header" ". charBoxes ." "footer footer footer";
-  grid-template-columns: auto 240px auto;
-  grid-template-rows: auto 96px auto;
-  grid-gap: 1px;
 }
 .sheetV2.character form .container .sheet-header .characteristics .header {
-  grid-area: header;
+  flex: 1;
 }
 .sheetV2.character form .container .sheet-header .characteristics .footer {
-  grid-area: footer;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+.sheetV2.character form .container .sheet-header .characteristics .footer .attribute {
+  flex: 0 0 25%;
+  display: grid;
+  grid-template-columns: auto 32px;
+  align-items: center;
+  justify-content: center;
+}
+.sheetV2.character form .container .sheet-header .characteristics .footer .attribute.manual-override h2 {
+  text-decoration: underline;
+  text-decoration-color: red;
+}
+.sheetV2.character form .container .sheet-header .characteristics .footer .attribute-label {
+  min-width: 0;
+}
+.sheetV2.character form .container .sheet-header .characteristics .footer .attribute-label.auto-toggle {
+  cursor: pointer;
+}
+.sheetV2.character form .container .sheet-header .characteristics .footer .attribute-label h2 {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  line-height: 22px;
+  font-size: 12px;
+  color: #2b3753;
+  font-weight: normal;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.sheetV2.character form .container .sheet-header .characteristics .footer .attribute-value {
+  text-align: center;
+  font-size: 12px;
+  color: #2b3753;
+  font-weight: normal;
+}
+.sheetV2.character form .container .sheet-header .characteristics .footer .attribute-value input {
+  padding: 0;
+  font-size: 12px;
+  color: #2b3753;
+  background-color: rgba(0, 0, 0, 0.1);
+  font-weight: normal;
 }
 .sheetV2.character form .container .sheet-header .characteristics .char-boxes {
-  grid-area: charBoxes;
+  flex: 0 0 96px;
+  justify-content: center;
   display: grid;
   grid-template-columns: repeat(4, 60px);
   grid-template-rows: repeat(2, 48px);
@@ -1534,6 +1579,7 @@
 .sheetV2.character form .container .sheet-header .characteristics input {
   text-align: center;
   color: #670b0b;
+  font-size: large;
 }
 .sheetV2.character form .container .sheet-header .characteristics input:hover,
 .sheetV2.character form .container .sheet-header .characteristics input:focus {
@@ -1543,4 +1589,50 @@
   border: 1px solid transparent;
   box-shadow: none;
   cursor: default;
+}
+.sheetV2.character form .container .sheet-nav {
+  border-top: 1px solid #2b3753;
+  color: #2b3753;
+  font-weight: bold;
+  font-size: 15px;
+  margin: 0 8px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.sheetV2.character form .container .sheet-nav a:hover {
+  text-shadow: none;
+}
+.sheetV2.character form .container .sheet-nav a.active span {
+  color: white;
+  background-color: #2b3753;
+}
+.sheetV2.character form .container .sheet-nav .tab-name {
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+.sheetV2.character form .container .sheet-nav span {
+  display: inline-block;
+  width: fit-content;
+  color: #2b3753;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  height: 20px;
+  line-height: 18px;
+  padding: 0 8px;
+  margin: 4px;
+}
+.sheetV2.character form .container .sheet-nav span:hover {
+  border: 1px solid #2b3753;
+}
+.sheetV2.character form .container .sheet-nav .unlock-control {
+  flex: 0 0 24px;
+  margin-top: 2px;
+}
+.sheetV2.character form .container .sheet-body {
+  border: 1px solid #2b3753;
+  margin: 0 8px 8px 8px;
+  overflow: scroll;
 }
