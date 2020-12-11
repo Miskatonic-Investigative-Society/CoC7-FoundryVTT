@@ -382,7 +382,7 @@ export class CoC7ActorSheet extends ActorSheet {
 	}
 
 	onCloseSheet(){
-		this.actor.locked = true;
+		//this.actor.locked = true;
 	}
 
 	/* -------------------------------------------- */
@@ -398,12 +398,12 @@ export class CoC7ActorSheet extends ActorSheet {
 		// Owner Only Listeners
 		if ( this.actor.owner ) {
 
-			html.find('.characteristics-label').on( 'dragstart', (event)=> this._onDragCharacteristic(event));
+			html.find('.characteristic-label').on( 'dragstart', (event)=> this._onDragCharacteristic(event));
 			html.find('.attribute-label').on( 'dragstart', (event)=> this._onDragAttribute(event));
 			html.find('.san-check').on( 'dragstart', (event)=> this._onDragSanCheck(event));
 
 
-			html.find('.characteristics-label').click(this._onRollCharacteriticTest.bind(this));
+			html.find('.characteristic-label').click(this._onRollCharacteriticTest.bind(this));
 			html.find('.skill-name.rollable').click(this._onRollSkillTest.bind(this));
 			html.find('.skill-image').click(this._onRollSkillTest.bind(this));
 			html.find('.attribute-label.rollable').click(this._onRollAttribTest.bind(this));
