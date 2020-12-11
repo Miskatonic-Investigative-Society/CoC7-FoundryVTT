@@ -55,7 +55,7 @@
 			<div class="characteristics flex2">
 				{{#each data.characteristics as |characteristic key|}}
 					<div class="characteristic-box" data-characteristic="{{key}}">
-						<div class="characteristics-label rollable" draggable="true">{{localize characteristic.short}}</div>
+						<div class="characteristic-label rollable" draggable="true">{{localize characteristic.short}}</div>
 						{{#if characteristic.editable}}
 						<input class="characteristic-score" type="text" name="data.characteristics.{{key}}.value" value="{{characteristic.value}}" data-dtype="Number">
 						{{else}}
