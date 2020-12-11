@@ -1081,6 +1081,9 @@
 }
 .coc7.sheet.actor .development.header .header-section {
   border-right: 1px groove;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
 .coc7.sheet.actor .development.header .header-section:last-child {
   border-right: none;
@@ -1359,4 +1362,514 @@
   border-radius: 2px;
   white-space: nowrap;
   word-break: break-all;
+}
+.defaultFont {
+  font-family: "Signika", sans-serif;
+}
+.cursive {
+  font-family: 'Bradley Hand', cursive;
+}
+.sheetV2 {
+  font-family: "Signika", sans-serif;
+}
+.sheetV2 .coc7.sheet.actor.temp-retro-compat {
+  background-image: url('./artwork/background.png');
+  overflow: auto;
+}
+.sheetV2.app {
+  background: #670b0b;
+}
+.sheetV2 .window-header {
+  background: #2b3753;
+  margin: 4px 4px 0 4px;
+  width: auto;
+}
+.sheetV2 .window-content {
+  margin: 0 8px 8px 8px;
+  padding: 0;
+  color: #2b3753;
+  font-size: 13px;
+}
+.sheetV2 .window-content .rollable:hover {
+  color: #000;
+  text-shadow: 0 0 10px #9A0B0B;
+  cursor: pointer;
+}
+.sheetV2 .window-content span {
+  color: #000;
+  height: 22px;
+  line-height: 22px;
+  padding: 1px 3px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: block;
+}
+.sheetV2 .window-content label {
+  height: 22px;
+  line-height: 22px;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: bold;
+}
+.sheetV2 .window-content input[type='text'] {
+  flex: 1;
+  height: 22px;
+  border: 0;
+  margin: 0;
+  width: 100%;
+  border-radius: 4px;
+  background: transparent;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.sheetV2 .window-content input[type='text']:hover,
+.sheetV2 .window-content input[type='text']:focus {
+  box-shadow: 0 0 8px #670b0b;
+  background: rgba(0, 0, 0, 0.1);
+}
+.sheetV2.character {
+  min-width: 687px;
+  min-height: 629px;
+}
+.sheetV2.character .manual-override {
+  text-decoration: underline;
+  text-decoration-color: red;
+}
+.sheetV2.character .auto-toggle {
+  cursor: pointer;
+}
+.sheetV2.character form {
+  display: inline-block;
+  border: 1px solid;
+  border-image: url('./artwork/backgrounds/character-sheet.png') 4 repeat;
+  border-image-slice: 450 200 50 200 fill;
+  border-image-width: 450 200 50 200;
+}
+.sheetV2.character form .container {
+  background-image: url(./artwork/tentacules.png);
+  background-repeat: no-repeat;
+  margin: -1px;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: 195px 30px auto;
+  width: 100%;
+  height: 100%;
+}
+.sheetV2.character form .container .sheet-header {
+  width: 100%;
+  height: 170px;
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sheetV2.character form .container .sheet-header .photo {
+  flex: 0 0 140px;
+  max-width: 140px;
+  max-height: 170px;
+  object-fit: contain;
+  border: 0;
+}
+.sheetV2.character form .container .sheet-header .infos {
+  display: inline-block;
+  width: 235px;
+  padding-right: 5px;
+  border-right: 2px solid;
+  border-color: rgba(43, 55, 83, 0.5);
+}
+.sheetV2.character form .container .sheet-header .infos .row a {
+  display: contents;
+}
+.sheetV2.character form .container .sheet-header .infos .row i {
+  padding-top: 7px;
+}
+.sheetV2.character form .container .sheet-header .characteristics {
+  flex: 1;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.sheetV2.character form .container .sheet-header .characteristics .header {
+  flex: 1;
+}
+.sheetV2.character form .container .sheet-header .characteristics .footer {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+.sheetV2.character form .container .sheet-header .characteristics .footer .attribute {
+  flex: 0 0 25%;
+  display: grid;
+  grid-template-columns: auto 32px;
+  align-items: center;
+  justify-content: center;
+}
+.sheetV2.character form .container .sheet-header .characteristics .footer .attribute-label {
+  min-width: 0;
+}
+.sheetV2.character form .container .sheet-header .characteristics .footer .attribute-label h2 {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  line-height: 22px;
+  font-size: 12px;
+  color: #2b3753;
+  font-weight: normal;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.sheetV2.character form .container .sheet-header .characteristics .footer .attribute-value {
+  text-align: center;
+  font-size: 12px;
+  color: #2b3753;
+  font-weight: normal;
+}
+.sheetV2.character form .container .sheet-header .characteristics .footer .attribute-value input {
+  padding: 0;
+  font-size: 12px;
+  color: #2b3753;
+  background-color: rgba(0, 0, 0, 0.1);
+  font-weight: normal;
+}
+.sheetV2.character form .container .sheet-header .characteristics .char-boxes {
+  flex: 0 0 96px;
+  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(4, 60px);
+  grid-template-rows: repeat(2, 48px);
+}
+.sheetV2.character form .container .sheet-header .characteristics .char-box {
+  display: grid;
+  grid-template-columns: 16px 44px;
+  grid-template-rows: 16px 32px;
+  grid-template-areas: "rollIcon characName" "characScore characScore";
+}
+.sheetV2.character form .container .sheet-header .characteristics .char-box .roll-icon {
+  color: #2b3753;
+  grid-area: rollIcon;
+}
+.sheetV2.character form .container .sheet-header .characteristics .char-box .charac-name {
+  color: #2b3753;
+  grid-area: characName;
+}
+.sheetV2.character form .container .sheet-header .characteristics .char-box .charac-score {
+  font-family: 'Bradley Hand', cursive;
+  grid-area: characScore;
+  margin-top: 4px;
+  margin-right: 8px;
+  border-radius: 4px;
+  color: #670b0b;
+  background: rgba(255, 255, 255, 0.5);
+  display: grid;
+  grid-template-columns: 38px 14px;
+  grid-template-rows: 14px 14px;
+  grid-template-areas: "mainScore halfScore" "mainScore fithScore";
+}
+.sheetV2.character form .container .sheet-header .characteristics .char-box .charac-score .main-score {
+  grid-area: mainScore;
+  justify-self: center;
+  align-self: center;
+}
+.sheetV2.character form .container .sheet-header .characteristics .char-box .charac-score .half-score {
+  grid-area: halfScore;
+  font-size: 10px;
+  justify-self: center;
+  align-self: center;
+}
+.sheetV2.character form .container .sheet-header .characteristics .char-box .charac-score .fith-score {
+  grid-area: fithScore;
+  font-size: 10px;
+  justify-self: center;
+  align-self: center;
+}
+.sheetV2.character form .container .sheet-header .characteristics input {
+  font-family: 'Bradley Hand', cursive;
+  text-align: center;
+  color: #670b0b;
+  font-size: large;
+}
+.sheetV2.character form .container .sheet-header .characteristics input:hover,
+.sheetV2.character form .container .sheet-header .characteristics input:focus {
+  background: transparent;
+}
+.sheetV2.character form .container .sheet-header .characteristics input:read-only {
+  border: 1px solid transparent;
+  box-shadow: none;
+  cursor: default;
+}
+.sheetV2.character form .container .sheet-nav {
+  border-top: 1px solid #2b3753;
+  color: #2b3753;
+  font-weight: bold;
+  font-size: 15px;
+  margin: 0 8px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.sheetV2.character form .container .sheet-nav a:hover {
+  text-shadow: none;
+}
+.sheetV2.character form .container .sheet-nav a.active span {
+  color: white;
+  background-color: #2b3753;
+}
+.sheetV2.character form .container .sheet-nav .tab-name {
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+.sheetV2.character form .container .sheet-nav span {
+  display: inline-block;
+  width: fit-content;
+  color: #2b3753;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  height: 20px;
+  line-height: 18px;
+  padding: 0 8px;
+  margin: 4px;
+}
+.sheetV2.character form .container .sheet-nav span:hover {
+  border: 1px solid #2b3753;
+}
+.sheetV2.character form .container .sheet-nav .unlock-control {
+  flex: 0 0 24px;
+  margin-top: 2px;
+}
+.sheetV2.character form .container .sheet-body {
+  border: 1px solid #2b3753;
+  margin: 0 16px 8px 16px;
+  overflow: hidden;
+}
+.sheetV2.character form .container .sheet-body ul,
+.sheetV2.character form .container .sheet-body ol {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.sheetV2.character form .container .sheet-body .tab {
+  height: 100%;
+}
+.sheetV2.character form .container .sheet-body .two-panes-content {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+.sheetV2.character form .container .sheet-body .two-panes-content .left-panel {
+  flex: 0 0 130px;
+  height: auto;
+  margin: 8px 0;
+  padding: 0;
+  border-right: 1px solid;
+  text-align: center;
+}
+.sheetV2.character form .container .sheet-body .two-panes-content .left-panel a:hover {
+  text-shadow: 0 0 10px red;
+}
+.sheetV2.character form .container .sheet-body .two-panes-content .right-panel {
+  flex: 1;
+  height: auto;
+  padding: 4px;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+.sheetV2.character form .container .sheet-body .item-list {
+  display: flex;
+  width: fit-content;
+  height: 100%;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+.sheetV2.character form .container .sheet-body .specialization-header {
+  width: 160px;
+  margin-right: 8px;
+}
+.sheetV2.character form .container .sheet-body .itemV2 {
+  flex: 0 0 16px;
+  width: 160px;
+  margin-right: 8px;
+  display: grid;
+  font-size: 12px;
+  grid-template-columns: 16px auto 24px 24px;
+  border-bottom: 1px solid;
+}
+.sheetV2.character form .container .sheet-body .itemV2.specialization {
+  margin-left: 8px;
+  width: 152px;
+  border-left: 1px solid;
+}
+.sheetV2.character form .container .sheet-body .itemV2 .item-image {
+  height: 16px;
+  background-size: contain;
+  margin: 0;
+}
+.sheetV2.character form .container .sheet-body .itemV2 .item-name {
+  font-family: 'Bradley Hand', cursive;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sheetV2.character form .container .sheet-body .itemV2 .item-name input {
+  height: 16px;
+  padding: 0;
+  overflow: visible;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #2b3753;
+}
+.sheetV2.character form .container .sheet-body .itemV2 .item-score {
+  font-family: 'Bradley Hand', cursive;
+  color: #670b0b;
+  text-align: end;
+  margin-right: 2px;
+}
+.sheetV2.character form .container .sheet-body .itemV2 .item-score input {
+  height: 16px;
+  padding: 0;
+  margin-right: 2px;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #670b0b;
+  text-align: end;
+}
+.sheetV2.character form .container .sheet-body .itemV2 .item-controls {
+  font-size: 10px;
+  line-height: 16px;
+  flex: 0 0 20px;
+  display: block;
+  text-align: end;
+}
+.sheetV2.character form .container .sheet-body .itemV2 .item-controls a:hover {
+  text-shadow: none;
+  color: #670b0b;
+}
+.sheetV2.character form .container .sheet-body .itemV2 .item-controls .item-control.active {
+  color: goldenrod;
+}
+.sheetV2.character form .container .sheet-body .weapons-list .item {
+  display: flex;
+  width: auto;
+}
+.sheetV2.character form .container .sheet-body .luck-group {
+  display: inline-block;
+  width: fit-content;
+}
+.sheetV2.character form .container .sheet-body .monitor {
+  height: 22px;
+  display: grid;
+  grid-template-columns: auto 35px 5px 35px auto;
+  grid-template-areas: ". currentValue separator maxValue .";
+}
+.sheetV2.character form .container .sheet-body .monitor .current-value {
+  grid-area: currentValue;
+  text-align: right;
+  padding-right: 4px;
+}
+.sheetV2.character form .container .sheet-body .monitor .separator {
+  grid-area: separator;
+}
+.sheetV2.character form .container .sheet-body .monitor .max-value {
+  grid-area: maxValue;
+  text-align: left;
+  padding-left: 4px;
+}
+.sheetV2.character form .container .sheet-body .monitor .max-value input {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.sheetV2.character form .container .sheet-body .monitor input {
+  height: auto;
+  padding: 0;
+  font-weight: bold;
+}
+.sheetV2.character form .container .sheet-body .monitor input:read-only {
+  border: 0px;
+  background-color: transparent;
+  box-shadow: none;
+  cursor: default;
+}
+.sheetV2.character form .container .sheet-body .luck-group input {
+  height: 16px;
+  width: 25px;
+  margin-bottom: 6px;
+  color: #2b3753;
+  font-weight: bold;
+}
+.sheetV2.character form .container .sheet-body .hp-group {
+  background-image: url('./artwork/backgrounds/hp-background.svg');
+  height: 110px;
+  width: auto;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: #670b0b;
+}
+.sheetV2.character form .container .sheet-body .hp-group .status-on {
+  color: #670b0b;
+  text-shadow: 0 0 10px red;
+}
+.sheetV2.character form .container .sheet-body .hp-group a:hover {
+  text-shadow: 0 0 8px red !important;
+}
+.sheetV2.character form .container .sheet-body .hp-group input {
+  color: #670b0b;
+}
+.sheetV2.character form .container .sheet-body .hp-group .hp-text {
+  padding-top: 5px;
+}
+.sheetV2.character form .container .sheet-body .san-group {
+  background-image: url('./artwork/backgrounds/san-background.svg');
+  height: 125px;
+  width: auto;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-top: 5px;
+  color: #234337;
+}
+.sheetV2.character form .container .sheet-body .san-group .status-on {
+  color: #234337;
+  text-shadow: 0 0 10px green;
+}
+.sheetV2.character form .container .sheet-body .san-group a {
+  padding: 0 8px;
+}
+.sheetV2.character form .container .sheet-body .san-group a:hover {
+  text-shadow: 0 0 8px green !important;
+}
+.sheetV2.character form .container .sheet-body .san-group .monitor {
+  height: 14px;
+}
+.sheetV2.character form .container .sheet-body .san-group input {
+  color: #234337;
+}
+.sheetV2.character form .container .sheet-body .san-group .san-text {
+  padding-top: 16px;
+}
+.sheetV2.character form .container .sheet-body .san-group .san-text .control {
+  margin-top: -4px;
+  font-size: 16px;
+}
+.sheetV2.character form .container .sheet-body .status {
+  font-size: 20px;
+  color: grey;
+  height: 22px;
+  text-align: center;
+}
+.sheetV2.character form .container .sheet-body .status a.inative-status:hover {
+  text-shadow: none !important;
+  cursor: default;
+}
+.sheetV2.character form .container .sheet-body .magic-group {
+  color: #2b3753;
+}
+.sheetV2.character form .container .sheet-body .magic-group input {
+  color: #2b3753;
 }
