@@ -1864,7 +1864,7 @@
   text-align: center;
 }
 .sheetV2.character form .container .sheet-body .status a.inative-status:hover {
-  text-shadow: none;
+  text-shadow: none !important;
   cursor: default;
 }
 .sheetV2.character form .container .sheet-body .magic-group {
