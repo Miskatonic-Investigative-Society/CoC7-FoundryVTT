@@ -24,6 +24,7 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 version 0.4.7 :
 
 * early sheet V2 implementation.
+  * using [game-icons](https://game-icons.net/) fonts from [seiyria](https://github.com/seiyria/gameicons-font).
   * Skill tab completed.
   * Other tabs working and displaying in the same way as before.
 
