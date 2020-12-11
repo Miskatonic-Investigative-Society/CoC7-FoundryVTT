@@ -21,6 +21,12 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+version 0.4.7 :
+
+* early sheet V2 implementation.
+  * Skill tab completed.
+  * Other tabs working and displaying in the same way as before.
+
 version 0.4.6 :
 
 * Bug correction :
