@@ -276,8 +276,8 @@ Hooks.once('init', async function() {
 	Actors.unregisterSheet('core', ActorSheet);
 	Actors.registerSheet('CoC7', CoC7NPCSheet, { types: ['npc'], makeDefault: true});
 	Actors.registerSheet('CoC7', CoC7CreatureSheet, { types: ['creature'], makeDefault: true});
-	Actors.registerSheet('CoC7', CoC7CharacterSheet, { types: ['character'], makeDefault: true});
-	Actors.registerSheet('CoC7', CoC7CharacterSheetV2, { types: ['character']});
+	Actors.registerSheet('CoC7', CoC7CharacterSheet, { types: ['character']});
+	Actors.registerSheet('CoC7', CoC7CharacterSheetV2, { types: ['character'], makeDefault: true});
 	
 	Items.unregisterSheet('core', ItemSheet);
 	Items.registerSheet('CoC7', CoC7WeaponSheet, { types: ['weapon'], makeDefault: true});
