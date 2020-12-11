@@ -58,7 +58,7 @@
 				<div class="char-boxes">
 					{{#each data.characteristics as |characteristic key|}}
 						<div class="char-box"  data-characteristic="{{key}}" draggable="true">
-							<div class="roll-icon"><i class="fas fa-dice-d20"></i></div>
+							<div class="roll-icon"><i class="game-icon game-icon-d10"></i></div>
 							<div class="charac-name characteristic-label rollable">{{localize characteristic.short}}</div>
 							<div class="charac-score">
 								<div class="main-score">
@@ -143,24 +143,24 @@
 
 		<section class="sheet-body">
 			{{#if showDevPannel}}
-			<div class="tab combat flexcol" data-group="primary" data-tab="development">
+			<div class="tab coc7 sheet actor temp-retro-compat" data-group="primary" data-tab="development">
 				{{> "systems/CoC7/templates/actors/parts/character-development.html"}}
 			</div>
 			{{/if}}
 
-			<div class="tab skills flexcol active" data-group="primary" data-tab="skills">
-				{{> "systems/CoC7/templates/actors/parts/actor-skills.html"}}
+			<div class="tab" data-group="primary" data-tab="skills">
+				{{> "systems/CoC7/templates/actors/parts/actor-skills-v2.html"}}
 			</div>
 
-			<div class="tab combat flexcol" data-group="primary" data-tab="combat">
+			<div class="tab coc7 sheet actor temp-retro-compat" data-group="primary" data-tab="combat">
 				{{> "systems/CoC7/templates/actors/parts/actor-weapons.html"}}
 			</div>
 
-			<div class="tab possession flexcol" data-group="primary" data-tab="possession">
+			<div class="tab coc7 sheet actor temp-retro-compat" data-group="primary" data-tab="possession">
 				{{> "systems/CoC7/templates/actors/parts/actor-inventory.html"}}
 			</div>
 
-			<div class="tab background flexcol" data-group="primary" data-tab="background">
+			<div class="tab coc7 sheet actor temp-retro-compat" data-group="primary" data-tab="background">
 				{{> "systems/CoC7/templates/actors/parts/actor-background.html"}}
 			</div>
 			

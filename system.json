@@ -13,7 +13,8 @@
 	"templateVersion": 1,
 	"styles": [
 		"styles/coc7.css",
-		"coc7g.css"
+		"coc7g.css",
+		"artwork/fonts/game-icons.css"
 	],
 	"packs": [
 		{
