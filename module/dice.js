@@ -84,7 +84,7 @@ export class CoC7Dice {
 			if( game.modules.get('dice-so-nice')?.active){
 				
 				const [version] = game.modules.get('dice-so-nice')?.data.version.split('.');
-				const DsN3 = Number(version) >= 3;
+				const DsN3 = Number(version) >= 3 /*&& game.settings.get('CoC7', 'overrideDsNStyle')*/;
 				const syncDice = game.settings.get('CoC7', 'syncDice3d');
 				const unitDieColorset = DsN3? game.settings.get('CoC7', 'unitDieColorset'): null;
 				const tenDieNoMod = DsN3? game.settings.get('CoC7', 'tenDieNoMod'): null;

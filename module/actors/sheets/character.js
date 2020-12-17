@@ -31,7 +31,7 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
 	static get defaultOptions() {
 		return mergeObject(super.defaultOptions, {
 			classes: ['coc7', 'sheetV2', 'actor', 'character'],
-			template: 'systems/CoC7/templates/actors/character-sheet-V2.html',
+			template: 'systems/CoC7/templates/actors/character-sheet-v2.html',
 			width: 687,
 			height: 623,
 			resizable: true,
