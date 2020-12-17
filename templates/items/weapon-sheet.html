@@ -107,8 +107,8 @@
 					<label>{{localize 'CoC7.WeaponMalfunction'}} :</label>
 					<input class="weapon-detail" style="flex: 0 0 40px;" type="text" name="data.malfunction" value="{{data.malfunction}}" placeholder="-"/>
 				</div>
-				<div class="flexrow" style="flex: 0 0 32%">
-					<label title="{{localize 'CoC7.WeaponSheet.RoundsPerUse.Info'}}">{{localize 'CoC7.WeaponUsesPerRound'}} :</label>
+				<div class="flexrow" title="{{localize 'CoC7.WeaponUsesPerRoundHint'}}" style="flex: 0 0 32%">
+					<label>{{localize 'CoC7.WeaponUsesPerRound'}} :</label>
 					<input class="weapon-detail" style="flex: 0 0 40px;" type="text" name="data.usesPerRound.normal" value="{{data.usesPerRound.normal}}" placeholder="-"/>
 				</div>
 				<div class="flexrow" style="flex: 0 0 32%">
@@ -120,7 +120,7 @@
 					<input class="weapon-detail" style="flex: 0 0 40px;" type="text" name="data.bullets" value="{{data.bullets}}" placeholder="-"/>
 				</div>
 				{{#if data.properties.brst}}
-				<div class="flexrow" style="flex: 0 0 32%">
+				<div class="flexrow" title="{{localize 'CoC7.BurstSizeHint'}}" style="flex: 0 0 32%">
 					<label>{{localize 'CoC7.BurstSize'}} :</label>
 					<input class="weapon-detail" style="flex: 0 0 40px;" type="text" name="data.usesPerRound.burst" value="{{data.usesPerRound.burst}}" placeholder="-"/>
 				</div>
