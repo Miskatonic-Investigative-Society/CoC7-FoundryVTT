@@ -111,7 +111,7 @@ export class CoC7Parser{
 		//@coc7.item[name:Shotgun,icon:fas fa-bullseye,difficulty:+,modifier:-1]{Use shotgun}
 		//[TBI]@coc7.damage[formula:1D6]{Damage 1D6}
 		//[TBI]@coc7.roll[threshold:50]{Simple roll}
-		data.content = CoC7Parser.EnrichHTML(data.content);
+		data.content = CoC7Parser.enrichHTML(data.content);
 		return true;	
 	}
 
@@ -167,7 +167,7 @@ export class CoC7Parser{
 	static ParseSheetContent(app, html){
 		//Check in all editors content for a link.
 		for (const element of html.find('div.editor-content > *, p')) {
-			element.outerHTML = CoC7Parser.EnrichHTML( element.outerHTML);
+			element.outerHTML = CoC7Parser.enrichHTML( element.outerHTML);
 		}
 
 		//Bind the click to execute the check.
@@ -184,7 +184,7 @@ export class CoC7Parser{
 		return text;
 	}
 
-	static EnrichHTML(content){
+	static enrichHTML(content){
 		const html = document.createElement('div');
 		html.innerHTML = String(content);
 
@@ -195,6 +195,11 @@ export class CoC7Parser{
 		const rgx = new RegExp('@(coc7).(.*?)\\[([^\\]]+)\\](?:{([^}]+)})?', 'gi');
 		TextEditor._replaceTextContent( text, rgx, CoC7Parser._createLink);
 		return html.innerHTML;
+	}
+
+	static bindEventsHandler( html){
+		html.find('a.coc7-link').on( 'click', (event)=> CoC7Parser._onCheck(event));
+		html.find('a.coc7-link').on( 'dragstart', (event)=> CoC7Parser._onDragCoC7Link(event));
 	}
 
 	static _onDragCoC7Link(event) {
