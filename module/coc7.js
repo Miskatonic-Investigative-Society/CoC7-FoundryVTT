@@ -209,10 +209,19 @@ Hooks.once('init', async function() {
 
 		if( !isNaN(Number(version)) && Number(version) >= 3){
 
+			// game.settings.register( 'CoC7', 'overrideDsNStyle',{
+			// 	name: 'SETTINGS.OverrideDsNStyle',
+			// 	hint: 'SETTINGS.OverrideDsNStyleHint',
+			// 	scope: 'client',
+			// 	config: true,
+			// 	default: true,
+			// 	type: Boolean
+			// });
+
 			game.settings.register('CoC7', 'unitDieColorset',{
 				name: 'SETTINGS.UnitDieColorset',
 				hint: 'SETTINGS.UnitDieColorsetHint',
-				scope: 'world',
+				scope: 'client',
 				config: true,
 				default: 'white',
 				type: String
@@ -221,7 +230,7 @@ Hooks.once('init', async function() {
 			game.settings.register('CoC7', 'tenDieNoMod',{
 				name: 'SETTINGS.TenDieNoMod',
 				hint: 'SETTINGS.TenDieNoModHint',
-				scope: 'world',
+				scope: 'client',
 				config: true,
 				default: 'foundry',
 				type: String
@@ -230,7 +239,7 @@ Hooks.once('init', async function() {
 			game.settings.register('CoC7', 'tenDieBonus',{
 				name: 'SETTINGS.TenDieBonus',
 				hint: 'SETTINGS.TenDieBonusHint',
-				scope: 'world',
+				scope: 'client',
 				config: true,
 				default: 'bronze',
 				type: String
@@ -239,7 +248,7 @@ Hooks.once('init', async function() {
 			game.settings.register('CoC7', 'tenDiePenalty',{
 				name: 'SETTINGS.TenDiePenalty',
 				hint: 'SETTINGS.TenDiePenaltyHint',
-				scope: 'world',
+				scope: 'client',
 				config: true,
 				default: 'bloodmoon',
 				type: String
