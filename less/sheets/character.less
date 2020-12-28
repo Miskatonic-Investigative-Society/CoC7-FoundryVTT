@@ -16,11 +16,11 @@
 		form{
 			display: inline-block;
 			border: 1px solid;
-			border-image: url( './artwork/backgrounds/character-sheet.png') 4 repeat;
+			border-image: var(--main-sheet-bg);
 			border-image-slice: 450 200 50 200 fill;
 			border-image-width: 450 200 50 200;
 			.container{
-				background-image: url(./artwork/tentacules.png);
+				background-image: var(--main-sheet-image);
 				background-repeat: no-repeat;
 				margin: -1px;
 				display: grid;
@@ -100,7 +100,7 @@
 									margin: 0;
 									line-height: 22px;
 									font-size: 12px;
-									color: @colorBlue;
+									color: var(--main-sheet-front-color);
 									font-weight: normal;
 									text-align: right;
 									text-overflow: ellipsis;
@@ -112,13 +112,13 @@
 							.attribute-value{
 								text-align: center;
 								font-size: 12px;
-								color: @colorBlue;
+								color: var(--main-sheet-front-color);
 								font-weight: normal;
 								
 								input{
 									padding: 0;
 									font-size: 12px;
-									color: @colorBlue;
+									color: var(--main-sheet-front-color);
 									background-color: @greyBackground;
 									font-weight: normal;
 								}
@@ -142,12 +142,12 @@
 												 "characScore characScore";
 
 							.roll-icon{
-								color: @colorBlue;
+								color: var(--main-sheet-front-color);
 								grid-area: rollIcon;
 							}
 
 							.charac-name{
-								color: @colorBlue;
+								color: var(--main-sheet-front-color);
 								grid-area : characName;
 							}
 
@@ -157,7 +157,7 @@
 								margin-top: 4px;
 								margin-right: 8px;
 								border-radius: 4px;
-								color: @colorRed;
+								color: var(--main-sheet-back-color);
 								background: @whiteBackground;
 								display: grid;
 								grid-template-columns: 38px 14px;
@@ -191,7 +191,7 @@
 						input{
 							.cursive();
 							text-align: center;
-							color: @colorRed;
+							color: var(--main-sheet-back-color);
 							font-size: large;
 
 							&:hover, &:focus{
@@ -208,8 +208,8 @@
 				}
 
 				.sheet-nav{
-					border-top: 1px solid @colorBlue;
-					color: @colorBlue;
+					border-top: 1px solid var(--main-sheet-front-color);
+					color: var(--main-sheet-front-color);
 					font-weight: bold;
 					font-size: 15px;
 					margin: 0 8px;
@@ -226,7 +226,7 @@
 						&.active{
 							span{
 								color: white;
-								background-color: @colorBlue;
+								background-color: var(--main-sheet-front-color);
 							}
 						}
 					}
@@ -240,7 +240,7 @@
 					span{
 						display: inline-block;
 						width: fit-content;
-						color: @colorBlue;
+						color: var(--main-sheet-front-color);
 						border: 1px solid transparent;
 						border-radius: 4px;
 						height: 20px;
@@ -249,7 +249,7 @@
     					margin: 4px;
 
 						&:hover{
-							border: 1px solid @colorBlue;
+							border: 1px solid var(--main-sheet-front-color);
 						}
 					}
 					
@@ -260,7 +260,7 @@
 				}
 
 				.sheet-body{
-					border: 1px solid @colorBlue;
+					border: 1px solid var(--main-sheet-front-color);
 					margin: 0 16px 8px 16px;
 					overflow: hidden;
 
@@ -288,7 +288,7 @@
 							text-align: center;
 
 							a:hover{
-								text-shadow: 0 0 10px red;
+								text-shadow: 0 0 10px var( --main-sheet-interactie-color);
 							}
 						}
 
@@ -340,20 +340,20 @@
 							white-space: nowrap;
 							overflow: hidden;
 							text-overflow: ellipsis;
-	
+							padding-left: 3px;
+
 							input{
 								height: 16px;
 								padding: 0;
 								overflow: visible;
 								background-color: @greyBackground;
-								color: @colorBlue;
+								color: var(--main-sheet-front-color);
 							}
-							
 						}
 	
 						.item-score{
 							.cursive();
-							color: @colorRed;
+							color: var(--main-sheet-back-color);
 							text-align: end;
 							margin-right: 2px;
 							
@@ -362,7 +362,7 @@
 								padding: 0;
 								margin-right: 2px;
 								background-color: @greyBackground;
-								color: @colorRed;
+								color: var(--main-sheet-back-color);
 								text-align: end;
 							}
 						}
@@ -376,7 +376,7 @@
 							
 							a:hover{
 								text-shadow: none;
-								color: @colorRed;
+								color: var(--main-sheet-back-color);
 							}
 	
 							.item-control{
@@ -406,6 +406,7 @@
 						display: grid;
 						grid-template-columns: auto 35px 5px 35px auto;
 						grid-template-areas: ". currentValue separator maxValue .";
+						align-items: center;
 
 						.current-value{
 							grid-area: currentValue;
@@ -427,11 +428,15 @@
 							}
 						}
 
+						span{
+							height: 16px;
+    						line-height: 16px;
+						}
+
 						input{
 							height: auto;
 							padding: 0;
 							font-weight: bold;
-
 
 							&:read-only{
 								border: 0px;
@@ -447,7 +452,7 @@
 							height: 16px;
 							width: 35px;
 							margin-bottom: 6px;
-							color:@colorBlue;
+							color:var(--main-sheet-front-color);
 							font-weight: bold;
 						}
 					}
@@ -520,6 +525,10 @@
 							}
 						}
 
+						.rollable:hover{
+							text-shadow: 0 0 10px green;
+						}
+
 
 					}
 
@@ -540,10 +549,10 @@
 					}
 
 					.magic-group{
-						color: @colorBlue;
+						color: var(--main-sheet-front-color);
 
 						input{
-							color: @colorBlue;
+							color: var(--main-sheet-front-color);
 						}
 					}
 				}
