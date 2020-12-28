@@ -1,6 +1,10 @@
 import { CoC7CharacterSheet } from './actor-sheet.js';
 
 export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
+	
+	// constructor(...args) {
+	// 	super(...args);
+	// }
 
 	getData() {
 		const data = super.getData();
@@ -38,6 +42,27 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
 			dragDrop: [{dragSelector: '.item', dropSelector: null}],
 			tabs: [{navSelector: '.sheet-nav', contentSelector: '.sheet-body', initial: 'skills'}]
 		});
+	}
+
+	static renderSheet( sheet/*, html*/){
+		// html.css('--main-sheet-bg',  'url( \'./artwork/backgrounds/character-sheet.png\') 4 repeat');
+		if( game.settings.get('CoC7', 'overrideSheetArtwork')){
+			if( game.settings.get('CoC7', 'artWorkSheetBackground'))
+				sheet.element.css('--main-sheet-bg',  game.settings.get('CoC7', 'artWorkSheetBackground'));
+			else if( 'null' == game.settings.get('CoC7', 'artWorkSheetBackground').toLowerCase())
+				sheet.element.css('--main-sheet-bg',  'url( \'./artwork/backgrounds/void.png\')');
+				
+			if(game.settings.get('CoC7', 'artworkSheetImage'))
+				sheet.element.css('--main-sheet-image',  game.settings.get('CoC7', 'artworkSheetImage'));
+			else if( 'null' == game.settings.get('CoC7', 'artworkSheetImage').toLowerCase())
+				sheet.element.css('--main-sheet-image',  'url( \'./artwork/backgrounds/void.png\')');
+
+			if(game.settings.get('CoC7', 'artworkFrontColor')) sheet.element.css('--main-sheet-front-color',  game.settings.get('CoC7', 'artworkFrontColor'));
+			if(game.settings.get('CoC7', 'artworkBackgroundColor')) sheet.element.css('--main-sheet-back-color',  game.settings.get('CoC7', 'artworkBackgroundColor'));
+			if(game.settings.get('CoC7', 'artworkInteractiveColor')) sheet.element.css('--main-sheet-interactie-color',  game.settings.get('CoC7', 'artworkInteractiveColor'));
+			if(game.settings.get('CoC7', 'artworkMainFont')) sheet.element.css('--main-sheet-font',  game.settings.get('CoC7', 'artworkMainFont'));
+			if(game.settings.get('CoC7', 'artworkCursiveFont')) sheet.element.css('--main-sheet-cursive-font',  game.settings.get('CoC7', 'artworkCursiveFont'));
+		}
 	}
     
 }

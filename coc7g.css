@@ -1287,10 +1287,10 @@
   text-align: center;
 }
 .coc7.dialogue .selectable:hover {
-  text-shadow: 0 0 8px red;
+  text-shadow: 0 0 8px var(--main-sheet-interactie-color);
 }
 .coc7.dialogue .selected {
-  text-shadow: 0 0 4px red;
+  text-shadow: 0 0 4px var(--main-sheet-interactie-color);
 }
 .coc7.dialogue .selected h4 {
   font-weight: bold;
@@ -1365,34 +1365,43 @@
   word-break: break-all;
 }
 .defaultFont {
-  font-family: "Signika", sans-serif;
+  font-family: 'Signika', sans-serif;
 }
 .cursive {
   font-family: 'Bradley Hand', cursive;
 }
+:root {
+  --main-sheet-bg: url('./artwork/backgrounds/character-sheet.png') 4 repeat;
+  --main-sheet-image: url(./artwork/tentacules.png);
+  --main-sheet-back-color: #670b0b;
+  --main-sheet-front-color: #2b3753;
+  --main-sheet-interactie-color: #670b0b;
+  --main-sheet-font: 'Signika', sans-serif;
+  --main-sheet-cursive-font: 'Bradley Hand', cursive;
+}
 .sheetV2 {
-  font-family: "Signika", sans-serif;
+  font-family: 'Signika', sans-serif;
 }
 .sheetV2 .coc7.sheet.actor.temp-retro-compat {
   overflow: auto;
 }
 .sheetV2.app {
-  background: #670b0b;
+  background: var(--main-sheet-back-color);
 }
 .sheetV2 .window-header {
-  background: #2b3753;
+  background: var(--main-sheet-front-color);
   margin: 4px 4px 0 4px;
   width: auto;
 }
 .sheetV2 .window-content {
   margin: 0 8px 8px 8px;
   padding: 0;
-  color: #2b3753;
+  color: var(--main-sheet-front-color);
   font-size: 13px;
 }
 .sheetV2 .window-content .rollable:hover {
   color: #000;
-  text-shadow: 0 0 10px #9A0B0B;
+  text-shadow: 0 0 10px var(--main-sheet-interactie-color);
   cursor: pointer;
 }
 .sheetV2 .window-content span {
@@ -1443,7 +1452,7 @@
 }
 .sheetV2 .window-content input[type='text']:hover,
 .sheetV2 .window-content input[type='text']:focus {
-  box-shadow: 0 0 8px #670b0b;
+  box-shadow: 0 0 8px var(--main-sheet-interactie-color);
   background: rgba(0, 0, 0, 0.1);
 }
 .sheetV2.character {
@@ -1460,12 +1469,12 @@
 .sheetV2.character form {
   display: inline-block;
   border: 1px solid;
-  border-image: url('./artwork/backgrounds/character-sheet.png') 4 repeat;
+  border-image: var(--main-sheet-bg);
   border-image-slice: 450 200 50 200 fill;
   border-image-width: 450 200 50 200;
 }
 .sheetV2.character form .container {
-  background-image: url(./artwork/tentacules.png);
+  background-image: var(--main-sheet-image);
   background-repeat: no-repeat;
   margin: -1px;
   display: grid;
@@ -1537,7 +1546,7 @@
   margin: 0;
   line-height: 22px;
   font-size: 12px;
-  color: #2b3753;
+  color: var(--main-sheet-front-color);
   font-weight: normal;
   text-align: right;
   text-overflow: ellipsis;
@@ -1547,13 +1556,13 @@
 .sheetV2.character form .container .sheet-header .characteristics .footer .attribute-value {
   text-align: center;
   font-size: 12px;
-  color: #2b3753;
+  color: var(--main-sheet-front-color);
   font-weight: normal;
 }
 .sheetV2.character form .container .sheet-header .characteristics .footer .attribute-value input {
   padding: 0;
   font-size: 12px;
-  color: #2b3753;
+  color: var(--main-sheet-front-color);
   background-color: rgba(0, 0, 0, 0.1);
   font-weight: normal;
 }
@@ -1571,11 +1580,11 @@
   grid-template-areas: "rollIcon characName" "characScore characScore";
 }
 .sheetV2.character form .container .sheet-header .characteristics .char-box .roll-icon {
-  color: #2b3753;
+  color: var(--main-sheet-front-color);
   grid-area: rollIcon;
 }
 .sheetV2.character form .container .sheet-header .characteristics .char-box .charac-name {
-  color: #2b3753;
+  color: var(--main-sheet-front-color);
   grid-area: characName;
 }
 .sheetV2.character form .container .sheet-header .characteristics .char-box .charac-score {
@@ -1584,7 +1593,7 @@
   margin-top: 4px;
   margin-right: 8px;
   border-radius: 4px;
-  color: #670b0b;
+  color: var(--main-sheet-back-color);
   background: rgba(255, 255, 255, 0.5);
   display: grid;
   grid-template-columns: 38px 14px;
@@ -1611,7 +1620,7 @@
 .sheetV2.character form .container .sheet-header .characteristics input {
   font-family: 'Bradley Hand', cursive;
   text-align: center;
-  color: #670b0b;
+  color: var(--main-sheet-back-color);
   font-size: large;
 }
 .sheetV2.character form .container .sheet-header .characteristics input:hover,
@@ -1624,8 +1633,8 @@
   cursor: default;
 }
 .sheetV2.character form .container .sheet-nav {
-  border-top: 1px solid #2b3753;
-  color: #2b3753;
+  border-top: 1px solid var(--main-sheet-front-color);
+  color: var(--main-sheet-front-color);
   font-weight: bold;
   font-size: 15px;
   margin: 0 8px;
@@ -1639,7 +1648,7 @@
 }
 .sheetV2.character form .container .sheet-nav a.active span {
   color: white;
-  background-color: #2b3753;
+  background-color: var(--main-sheet-front-color);
 }
 .sheetV2.character form .container .sheet-nav .tab-name {
   text-align: center;
@@ -1649,7 +1658,7 @@
 .sheetV2.character form .container .sheet-nav span {
   display: inline-block;
   width: fit-content;
-  color: #2b3753;
+  color: var(--main-sheet-front-color);
   border: 1px solid transparent;
   border-radius: 4px;
   height: 20px;
@@ -1658,14 +1667,14 @@
   margin: 4px;
 }
 .sheetV2.character form .container .sheet-nav span:hover {
-  border: 1px solid #2b3753;
+  border: 1px solid var(--main-sheet-front-color);
 }
 .sheetV2.character form .container .sheet-nav .unlock-control {
   flex: 0 0 24px;
   margin-top: 2px;
 }
 .sheetV2.character form .container .sheet-body {
-  border: 1px solid #2b3753;
+  border: 1px solid var(--main-sheet-front-color);
   margin: 0 16px 8px 16px;
   overflow: hidden;
 }
@@ -1692,7 +1701,7 @@
   text-align: center;
 }
 .sheetV2.character form .container .sheet-body .two-panes-content .left-panel a:hover {
-  text-shadow: 0 0 10px red;
+  text-shadow: 0 0 10px var(--main-sheet-interactie-color);
 }
 .sheetV2.character form .container .sheet-body .two-panes-content .right-panel {
   flex: 1;
@@ -1736,17 +1745,18 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-left: 3px;
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-name input {
   height: 16px;
   padding: 0;
   overflow: visible;
   background-color: rgba(0, 0, 0, 0.1);
-  color: #2b3753;
+  color: var(--main-sheet-front-color);
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-score {
   font-family: 'Bradley Hand', cursive;
-  color: #670b0b;
+  color: var(--main-sheet-back-color);
   text-align: end;
   margin-right: 2px;
 }
@@ -1755,7 +1765,7 @@
   padding: 0;
   margin-right: 2px;
   background-color: rgba(0, 0, 0, 0.1);
-  color: #670b0b;
+  color: var(--main-sheet-back-color);
   text-align: end;
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-controls {
@@ -1767,7 +1777,7 @@
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-controls a:hover {
   text-shadow: none;
-  color: #670b0b;
+  color: var(--main-sheet-back-color);
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-controls .item-control.active {
   color: goldenrod;
@@ -1785,6 +1795,7 @@
   display: grid;
   grid-template-columns: auto 35px 5px 35px auto;
   grid-template-areas: ". currentValue separator maxValue .";
+  align-items: center;
 }
 .sheetV2.character form .container .sheet-body .monitor .current-value {
   grid-area: currentValue;
@@ -1802,6 +1813,10 @@
 .sheetV2.character form .container .sheet-body .monitor .max-value input {
   background-color: rgba(0, 0, 0, 0.1);
 }
+.sheetV2.character form .container .sheet-body .monitor span {
+  height: 16px;
+  line-height: 16px;
+}
 .sheetV2.character form .container .sheet-body .monitor input {
   height: auto;
   padding: 0;
@@ -1817,7 +1832,7 @@
   height: 16px;
   width: 35px;
   margin-bottom: 6px;
-  color: #2b3753;
+  color: var(--main-sheet-front-color);
   font-weight: bold;
 }
 .sheetV2.character form .container .sheet-body .hp-group {
@@ -1875,6 +1890,9 @@
   margin-top: -4px;
   font-size: 16px;
 }
+.sheetV2.character form .container .sheet-body .san-group .rollable:hover {
+  text-shadow: 0 0 10px green;
+}
 .sheetV2.character form .container .sheet-body .status {
   font-size: 20px;
   color: grey;
@@ -1886,10 +1904,10 @@
   cursor: default;
 }
 .sheetV2.character form .container .sheet-body .magic-group {
-  color: #2b3753;
+  color: var(--main-sheet-front-color);
 }
 .sheetV2.character form .container .sheet-body .magic-group input {
-  color: #2b3753;
+  color: var(--main-sheet-front-color);
 }
 .combat-pane {
   padding: 0 4px;
@@ -1903,7 +1921,7 @@
   width: 100%;
   text-align: left;
   color: white;
-  background-color: #2b3753;
+  background-color: var(--main-sheet-front-color);
   border: 1px solid transparent;
   border-radius: 4px;
   height: 22px;
@@ -1925,7 +1943,7 @@
   color: white;
 }
 .combat-pane .section-header .add-item:hover {
-  color: #670b0b;
+  color: var(--main-sheet-back-color);
 }
 .combat-pane .item-list {
   display: flex !important;
@@ -1950,7 +1968,7 @@
   height: 0;
   border-top: 6px solid transparent;
   border-bottom: 6px solid transparent;
-  border-left: 8px solid #2b3753;
+  border-left: 8px solid var(--main-sheet-front-color);
   vertical-align: middle;
   margin-right: 0.7rem;
   transform: translate(6px, 4px);
@@ -2042,4 +2060,71 @@
 }
 .combat-pane .weapon-list .weapon-row .item-summary .item-properties .item-property {
   margin: 0 2px 2px 0;
+}
+.sheetV2 .development-infos {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  margin: 40px 0;
+}
+.sheetV2 .development-infos .warning {
+  border: 1px solid red;
+  color: var(--main-sheet-back-color);
+  border-radius: 3px;
+}
+.sheetV2 .development-infos .warning span {
+  color: var(--main-sheet-back-color);
+}
+.sheetV2 .development-infos .monitor span {
+  padding: 0 3px !important;
+}
+.sheetV2 .development-infos .monitor input {
+  text-align: center;
+}
+.sheetV2 .development-infos .validation {
+  margin-top: 8px;
+}
+.sheetV2 .development .skills-list {
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding-top: 8px !important;
+}
+.sheetV2 .development .skills-list .item {
+  color: var(--main-sheet-front-color);
+  display: grid;
+  grid-template-columns: 30px auto 21px 21px 21px 21px 21px;
+  grid-template-rows: 16px;
+  border-bottom: 1px solid var(--main-sheet-front-color);
+  margin-right: 8px;
+}
+.sheetV2 .development .skills-list .item.pulpCharacter {
+  grid-template-columns: 30px auto 21px 21px 21px 21px 21px 21px;
+}
+.sheetV2 .development .skills-list .item .flagged4dev {
+  color: goldenrod;
+}
+.sheetV2 .development .skills-list .item span {
+  height: 16px;
+  line-height: 16px;
+  font-size: 13px;
+  color: var(--main-sheet-front-color);
+}
+.sheetV2 .development .skills-list .item input {
+  height: 16px;
+  line-height: 16px;
+  font-size: 13px;
+  color: var(--main-sheet-front-color);
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 0 1px;
+  margin: 0;
+  text-align: right;
+}
+.sheetV2 .development .skills-list .item .adjustment-value {
+  border-right: 1px solid var(--main-sheet-front-color);
+}
+.sheetV2 .development .skills-list .item .adjustment-value.locked {
+  background-color: white;
 }
