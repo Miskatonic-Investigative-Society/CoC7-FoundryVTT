@@ -496,5 +496,21 @@
 "SETTINGS.TenDieBonus": "[DsN] Ten bonus dice colorset",
 "SETTINGS.TenDieBonusHint": "When using DsN, colorset to use for ten bonus dice. (leave blank to use player default)",
 "SETTINGS.TenDiePenalty": "[DsN] Ten penalty dice colorset",
-"SETTINGS.TenDiePenaltyHint": "When using DsN, colorset to use for penalty bonus dice. (leave blank to use player default)"
+"SETTINGS.TenDiePenaltyHint": "When using DsN, colorset to use for penalty bonus dice. (leave blank to use player default)",
+"SETTINGS.OverrideSheetArtwork": "Override Sheet Artwork",
+"SETTINGS.OverrideSheetArtworkHint": "!!RESTART REQUIRED!! gives access to advance sheet config, leave blank for default",
+"SETTINGS.ArtWorkSheetBackground": "Character sheet background",
+"SETTINGS.ArtWorkSheetBackgroundHint": "type 'null' to remove background",
+"SETTINGS.ArtworkSheetImage": "Character sheet image",
+"SETTINGS.ArtworkSheetImageHint": "type 'null' to remove image",
+"SETTINGS.ArtworkFrontColor": "Main color",
+"SETTINGS.ArtworkFrontColorHint": "Used for all elements",
+"SETTINGS.ArtworkBackgroundColor": "Secondary color",
+"SETTINGS.ArtworkBackgroundColorHint": "Used for background and inputs",
+"SETTINGS.ArtworkInteractiveColor": "Interactive elements color",
+"SETTINGS.ArtworkInteractiveColorHint": "Used for interactives/rollables elements",
+"SETTINGS.ArtworkMainFont": "Main font",
+"SETTINGS.ArtworkMainFontHint": "Used for labels and all sheet elements",
+"SETTINGS.ArtworkCursiveFont": "Cursive font",
+"SETTINGS.ArtworkCursiveFontHint": "Used for player inputs"
 }
