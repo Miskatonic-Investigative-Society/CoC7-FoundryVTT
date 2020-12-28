@@ -25,8 +25,13 @@ version 0.4.7 :
 
 * early sheet V2 implementation.
   * using [game-icons](https://game-icons.net/) fonts from [seiyria](https://github.com/seiyria/gameicons-font).
-  * Skill tab completed.
+  * Skill, Development and combat tab completed.
   * Other tabs working and displaying in the same way as before.
+* Options added to override sheet look and feel.
+  * Upon activation/deactivation of artwork override you have to restart/refresh your client.
+  * Leaving a field blank will revert it to default colors/artwork.
+  * Setting and image to null will remove it (sheet background and tentacle).
+  * Fonts not implemented yet.
 
 version 0.4.6 :
 
