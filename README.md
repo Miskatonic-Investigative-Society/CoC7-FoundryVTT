@@ -30,8 +30,9 @@ version 0.4.7 :
 * Options added to override sheet look and feel.
   * Upon activation/deactivation of artwork override you have to restart/refresh your client.
   * Leaving a field blank will revert it to default colors/artwork.
-  * Setting and image to null will remove it (sheet background and tentacle).
-  * Fonts not implemented yet.
+  * Setting and image to 'null' will remove it (sheet background and tentacle).
+  * Fonts can be changed
+    * blanc for default font or you can use a custom font e.g. "url( '/fonts/TT2020Base-Regular.ttf')  format('truetype')".
 
 version 0.4.6 :
 

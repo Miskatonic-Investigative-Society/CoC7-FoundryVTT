@@ -310,13 +310,13 @@
 					}
 
 					.specialization-header{
-						width: 160px;
+						width: var(--skill-length);
 						margin-right: 8px;
 					}
 
 					.itemV2{
 						max-height: 20px;
-						width: 160px;
+						width: var(--skill-length);
 						margin-right: 8px;
 						display: grid;
 						font-size: 12px;
@@ -325,7 +325,7 @@
 
 						&.specialization{
 							margin-left: 8px;
-   							width: 152px;
+   							width: var(--skill-specialization-length);
     						border-left: 1px solid;
 						}
 
@@ -368,6 +368,7 @@
 						}
 	
 						.item-controls{
+							font-family: system-ui;
 							font-size: 10px;
 							line-height: 16px;
 							flex: 0 0 20px;

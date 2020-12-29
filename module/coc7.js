@@ -311,6 +311,15 @@ Hooks.once('init', async function() {
 			default: 'rgba(103,11,11,1)',
 			type: String
 		});
+		
+		game.settings.register('CoC7', 'artworkFixedSkillLength',{
+			name: 'SETTINGS.ArtworkFixedSkillLength',
+			hint: 'SETTINGS.ArtworkFixedSkillLengthHint',
+			scope: 'world',
+			config: true,
+			default: true,
+			type: Boolean
+		});
 
 		game.settings.register('CoC7', 'artworkMainFont',{
 			name: 'SETTINGS.ArtworkMainFont',
