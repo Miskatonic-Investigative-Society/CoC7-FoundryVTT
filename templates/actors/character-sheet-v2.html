@@ -132,7 +132,7 @@
 			{{#if showDevPannel}}
 			<a class="tab-name" data-tab="development"><span>{{localize 'CoC7.CharacterDevelopment'}}</span></a>
 			{{/if}}
-			<a class="tab-name" data-tab="skills"><span>{{localize 'CoC7.Skills'}}</span></a>
+			<a class="tab-name" data-tab="skills"><span>{{localize 'CoC7.Skills'}} <div class="add-item" title="Add Weapon" data-type="weapon">{{#if data.flags.locked}}<i class="fas fa-plus"></i>{{/if}}</div></span></a>
 			<a class="tab-name" data-tab="combat"><span>{{localize 'CoC7.Combat'}}</span></a>
 			<a class="tab-name" data-tab="possession"><span>{{localize 'CoC7.Possessions'}}</span></a>
 			<a class="tab-name" data-tab="background"><span>{{localize 'CoC7.Background'}}</span></a>
@@ -146,13 +146,17 @@
 		<section class="sheet-body">
 			<div class="two-panes-content">
 				<div class="left-panel">
-					{{> "systems/CoC7/templates/actors/parts/vitals.html"}}
+					{{#if showDevPannel}}
+						{{> "systems/CoC7/templates/actors/parts/development-controls.html"}}
+					{{else}}
+						{{> "systems/CoC7/templates/actors/parts/vitals.html"}}
+					{{/if}}
 				</div>
 			
 				<div class="right-panel">
 					{{#if showDevPannel}}
-					<div class="tab coc7 sheet actor temp-retro-compat" data-group="primary" data-tab="development">
-						{{> "systems/CoC7/templates/actors/parts/character-development.html"}}
+					<div class="tab development" data-group="primary" data-tab="development">
+						{{> "systems/CoC7/templates/actors/parts/character-development-v2.html"}}
 					</div>
 					{{/if}}
 		
@@ -160,7 +164,7 @@
 						{{> "systems/CoC7/templates/actors/parts/actor-skills-v2.html"}}
 					</div>
 		
-					<div class="tab" data-group="primary" data-tab="combat">
+					<div class="tab combat" data-group="primary" data-tab="combat">
 						{{> "systems/CoC7/templates/actors/parts/combat.html"}}
 					</div>
 		
