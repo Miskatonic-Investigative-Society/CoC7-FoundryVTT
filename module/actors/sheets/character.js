@@ -60,8 +60,29 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
 			if(game.settings.get('CoC7', 'artworkFrontColor')) sheet.element.css('--main-sheet-front-color',  game.settings.get('CoC7', 'artworkFrontColor'));
 			if(game.settings.get('CoC7', 'artworkBackgroundColor')) sheet.element.css('--main-sheet-back-color',  game.settings.get('CoC7', 'artworkBackgroundColor'));
 			if(game.settings.get('CoC7', 'artworkInteractiveColor')) sheet.element.css('--main-sheet-interactie-color',  game.settings.get('CoC7', 'artworkInteractiveColor'));
-			if(game.settings.get('CoC7', 'artworkMainFont')) sheet.element.css('--main-sheet-font',  game.settings.get('CoC7', 'artworkMainFont'));
-			if(game.settings.get('CoC7', 'artworkCursiveFont')) sheet.element.css('--main-sheet-cursive-font',  game.settings.get('CoC7', 'artworkCursiveFont'));
+
+			if(!game.settings.get('CoC7', 'artworkFixedSkillLength')){
+				sheet.element.css('--skill-length',  'auto');
+				sheet.element.css('--skill-specialization-length',  'auto');
+			}
+			
+			if(game.settings.get('CoC7', 'artworkMainFont')){
+				var customSheetFont  = new FontFace('customSheetFont', game.settings.get('CoC7', 'artworkMainFont'));
+				customSheetFont.load().then(function(loaded_face) {
+					document.fonts.add(loaded_face);
+				}).catch(function(error) {
+					ui.notifications.error( error);
+				});
+			}
+
+			if(game.settings.get('CoC7', 'artworkCursiveFont')){
+				var customSheetCursiveFont = new FontFace('customSheetCursiveFont', game.settings.get('CoC7', 'artworkCursiveFont'));
+				customSheetCursiveFont.load().then(function(loaded_face) {
+					document.fonts.add(loaded_face);
+				}).catch(function(error) {
+					ui.notifications.error( error);
+				});
+			}
 		}
 	}
     
