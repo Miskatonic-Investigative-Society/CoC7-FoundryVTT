@@ -509,6 +509,8 @@
 "SETTINGS.ArtworkBackgroundColorHint": "Used for background and inputs",
 "SETTINGS.ArtworkInteractiveColor": "Interactive elements color",
 "SETTINGS.ArtworkInteractiveColorHint": "Used for interactives/rollables elements",
+"SETTINGS.ArtworkFixedSkillLength": "Limit skill name lenght",
+"SETTINGS.ArtworkFixedSkillLengthHint": "The skill length in the skill tab will be limited for a more compact sheet",
 "SETTINGS.ArtworkMainFont": "Main font",
 "SETTINGS.ArtworkMainFontHint": "Used for labels and all sheet elements",
 "SETTINGS.ArtworkCursiveFont": "Cursive font",

@@ -40,11 +40,14 @@
 			padding-top: 8px !important;
 
 			.item{
+				.item-controls{
+					font-family: system-ui;
+				}
 				color: var(--main-sheet-front-color);
 				display: grid;
-				grid-template-columns: 30px auto 21px 21px 21px 21px 21px;
+				grid-template-columns: 15px auto 23px 23px 23px 23px 23px;
 				&.pulpCharacter{
-					grid-template-columns: 30px auto 21px 21px 21px 21px 21px 21px;
+					grid-template-columns: 30px auto 23px 23px 23px 23px 23px 23px;
 				}
 
 				grid-template-rows: 16px;
@@ -79,6 +82,7 @@
 					}
 
 					border-right: 1px solid var(--main-sheet-front-color);
+					text-align: right;
 				}
 			}
 		}

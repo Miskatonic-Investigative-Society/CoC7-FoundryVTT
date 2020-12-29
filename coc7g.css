@@ -1364,23 +1364,25 @@
   white-space: nowrap;
   word-break: break-all;
 }
-.defaultFont {
-  font-family: 'Signika', sans-serif;
-}
-.cursive {
-  font-family: 'Bradley Hand', cursive;
-}
 :root {
   --main-sheet-bg: url('./artwork/backgrounds/character-sheet.png') 4 repeat;
   --main-sheet-image: url(./artwork/tentacules.png);
   --main-sheet-back-color: #670b0b;
   --main-sheet-front-color: #2b3753;
   --main-sheet-interactie-color: #670b0b;
-  --main-sheet-font: 'Signika', sans-serif;
-  --main-sheet-cursive-font: 'Bradley Hand', cursive;
+  --main-sheet-font: '';
+  --main-sheet-cursive-font: '';
+  --skill-length: 160px;
+  --skill-specialization-length: 152px;
+}
+.defaultFont {
+  font-family: customSheetFont, 'Signika', sans-serif;
+}
+.cursive {
+  font-family: customSheetCursiveFont, 'Bradley Hand', cursive;
 }
 .sheetV2 {
-  font-family: 'Signika', sans-serif;
+  font-family: customSheetFont, 'Signika', sans-serif;
 }
 .sheetV2 .coc7.sheet.actor.temp-retro-compat {
   overflow: auto;
@@ -1588,7 +1590,7 @@
   grid-area: characName;
 }
 .sheetV2.character form .container .sheet-header .characteristics .char-box .charac-score {
-  font-family: 'Bradley Hand', cursive;
+  font-family: customSheetCursiveFont, 'Bradley Hand', cursive;
   grid-area: characScore;
   margin-top: 4px;
   margin-right: 8px;
@@ -1618,7 +1620,7 @@
   align-self: center;
 }
 .sheetV2.character form .container .sheet-header .characteristics input {
-  font-family: 'Bradley Hand', cursive;
+  font-family: customSheetCursiveFont, 'Bradley Hand', cursive;
   text-align: center;
   color: var(--main-sheet-back-color);
   font-size: large;
@@ -1718,12 +1720,12 @@
   flex-wrap: wrap;
 }
 .sheetV2.character form .container .sheet-body .specialization-header {
-  width: 160px;
+  width: var(--skill-length);
   margin-right: 8px;
 }
 .sheetV2.character form .container .sheet-body .itemV2 {
   max-height: 20px;
-  width: 160px;
+  width: var(--skill-length);
   margin-right: 8px;
   display: grid;
   font-size: 12px;
@@ -1732,7 +1734,7 @@
 }
 .sheetV2.character form .container .sheet-body .itemV2.specialization {
   margin-left: 8px;
-  width: 152px;
+  width: var(--skill-specialization-length);
   border-left: 1px solid;
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-image {
@@ -1741,7 +1743,7 @@
   margin: 0;
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-name {
-  font-family: 'Bradley Hand', cursive;
+  font-family: customSheetCursiveFont, 'Bradley Hand', cursive;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1755,7 +1757,7 @@
   color: var(--main-sheet-front-color);
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-score {
-  font-family: 'Bradley Hand', cursive;
+  font-family: customSheetCursiveFont, 'Bradley Hand', cursive;
   color: var(--main-sheet-back-color);
   text-align: end;
   margin-right: 2px;
@@ -1769,6 +1771,7 @@
   text-align: end;
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-controls {
+  font-family: system-ui;
   font-size: 10px;
   line-height: 16px;
   flex: 0 0 20px;
@@ -2095,13 +2098,16 @@
 .sheetV2 .development .skills-list .item {
   color: var(--main-sheet-front-color);
   display: grid;
-  grid-template-columns: 30px auto 21px 21px 21px 21px 21px;
+  grid-template-columns: 15px auto 23px 23px 23px 23px 23px;
   grid-template-rows: 16px;
   border-bottom: 1px solid var(--main-sheet-front-color);
   margin-right: 8px;
 }
+.sheetV2 .development .skills-list .item .item-controls {
+  font-family: system-ui;
+}
 .sheetV2 .development .skills-list .item.pulpCharacter {
-  grid-template-columns: 30px auto 21px 21px 21px 21px 21px 21px;
+  grid-template-columns: 30px auto 23px 23px 23px 23px 23px 23px;
 }
 .sheetV2 .development .skills-list .item .flagged4dev {
   color: goldenrod;
@@ -2124,6 +2130,7 @@
 }
 .sheetV2 .development .skills-list .item .adjustment-value {
   border-right: 1px solid var(--main-sheet-front-color);
+  text-align: right;
 }
 .sheetV2 .development .skills-list .item .adjustment-value.locked {
   background-color: white;

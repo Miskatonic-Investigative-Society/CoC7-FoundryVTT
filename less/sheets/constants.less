@@ -5,21 +5,32 @@
 @whiteBackground: rgba(255,255,255,0.5);
 @greyBackground: rgba(0, 0, 0, 0.1);
 
-.defaultFont{
-	// font-family: 'Bradley Hand', cursive;
-	font-family: 'Signika', sans-serif;
-}
-
-.cursive{
-	font-family: 'Bradley Hand', cursive;
-}
-
 :root {
 	--main-sheet-bg: url( './artwork/backgrounds/character-sheet.png') 4 repeat;
 	--main-sheet-image: url(./artwork/tentacules.png);
 	--main-sheet-back-color: @colorRed;
 	--main-sheet-front-color: @colorBlue;
 	--main-sheet-interactie-color: @colorRed;
-	--main-sheet-font: 'Signika', sans-serif;
-	--main-sheet-cursive-font: 'Bradley Hand', cursive;
+	--main-sheet-font: '';
+	--main-sheet-cursive-font: '';
+	--skill-length : 160px;
+	--skill-specialization-length: 152px;
+}
+
+// @font-face{
+// 	font-family: mainSheetFont;
+// 	src: var(--main-sheet-font);
+// }
+
+// @font-face{
+// 	font-family: mainSheetCursiveFont;
+// 	src: var(--main-sheet-cursive-font);
+// }
+
+.defaultFont{
+	font-family: customSheetFont, 'Signika', sans-serif;
+}
+
+.cursive{
+	font-family: customSheetCursiveFont, 'Bradley Hand', cursive;
 }
