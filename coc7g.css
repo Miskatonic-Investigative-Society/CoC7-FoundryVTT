@@ -1748,6 +1748,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   padding-left: 3px;
+  line-height: 16px;
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-name input {
   height: 16px;
@@ -1761,6 +1762,7 @@
   color: var(--main-sheet-back-color);
   text-align: end;
   margin-right: 2px;
+  line-height: 16px;
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-score input {
   height: 16px;
@@ -1897,6 +1899,7 @@
   text-shadow: 0 0 10px green;
 }
 .sheetV2.character form .container .sheet-body .status {
+  font-family: system-ui;
   font-size: 20px;
   color: grey;
   height: 22px;
