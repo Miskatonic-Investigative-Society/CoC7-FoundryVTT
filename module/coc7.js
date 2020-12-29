@@ -257,6 +257,89 @@ Hooks.once('init', async function() {
 		}
 	}
 
+	game.settings.register('CoC7', 'overrideSheetArtwork', {
+		name: 'SETTINGS.OverrideSheetArtwork',
+		hint: 'SETTINGS.OverrideSheetArtworkHint',
+		scope: 'world',
+		config: true,
+		default: true,
+		type: Boolean
+	});
+
+	if( game.settings.get('CoC7', 'overrideSheetArtwork')){
+		game.settings.register('CoC7', 'artWorkSheetBackground',{
+			name: 'SETTINGS.ArtWorkSheetBackground',
+			hint: 'SETTINGS.ArtWorkSheetBackgroundHint',
+			scope: 'world',
+			config: true,
+			default: 'url( \'./artwork/backgrounds/character-sheet.png\') 4 repeat',
+			type: String
+		});
+
+		game.settings.register('CoC7', 'artworkSheetImage',{
+			name: 'SETTINGS.ArtworkSheetImage',
+			hint: 'SETTINGS.ArtworkSheetImageHint',
+			scope: 'world',
+			config: true,
+			default: 'url(\'./artwork/tentacules.png\')',
+			type: String
+		});
+
+		game.settings.register('CoC7', 'artworkFrontColor',{
+			name: 'SETTINGS.ArtworkFrontColor',
+			hint: 'SETTINGS.ArtworkFrontColorHint',
+			scope: 'world',
+			config: true,
+			default: 'rgba(43,55,83,1)',
+			type: String
+		});
+
+		game.settings.register('CoC7', 'artworkBackgroundColor',{
+			name: 'SETTINGS.ArtworkBackgroundColor',
+			hint: 'SETTINGS.ArtworkBackgroundColorHint',
+			scope: 'world',
+			config: true,
+			default: 'rgba(103,11,11,1)',
+			type: String
+		});
+
+		game.settings.register('CoC7', 'artworkInteractiveColor',{
+			name: 'SETTINGS.ArtworkInteractiveColor',
+			hint: 'SETTINGS.ArtworkInteractiveColorHint',
+			scope: 'world',
+			config: true,
+			default: 'rgba(103,11,11,1)',
+			type: String
+		});
+		
+		game.settings.register('CoC7', 'artworkFixedSkillLength',{
+			name: 'SETTINGS.ArtworkFixedSkillLength',
+			hint: 'SETTINGS.ArtworkFixedSkillLengthHint',
+			scope: 'world',
+			config: true,
+			default: true,
+			type: Boolean
+		});
+
+		game.settings.register('CoC7', 'artworkMainFont',{
+			name: 'SETTINGS.ArtworkMainFont',
+			hint: 'SETTINGS.ArtworkMainFontHint',
+			scope: 'world',
+			config: true,
+			default: '\'Signika\', sans-serif',
+			type: String
+		});
+
+		game.settings.register('CoC7', 'artworkCursiveFont',{
+			name: 'SETTINGS.ArtworkCursiveFont',
+			hint: 'SETTINGS.ArtworkCursiveFontHint',
+			scope: 'client',
+			config: true,
+			default: '\'Bradley Hand\', cursive',
+			type: String
+		});
+	}
+
 	_setInitiativeOptions(game.settings.get('CoC7', 'initiativeRule'));
 
 
@@ -375,6 +458,8 @@ Hooks.on('renderJournalSheet', CoC7Parser.ParseSheetContent);
 Hooks.on('renderActorSheet', CoC7Parser.ParseSheetContent);
 // Chat command processing
 Hooks.on('preCreateChatMessage', CoC7Parser.ParseMessage);
+// Sheet V2 css options
+Hooks.on('renderCoC7CharacterSheetV2', CoC7CharacterSheetV2.renderSheet);
 
 tinyMCE.PluginManager.add('CoC7_Editor_OnDrop', function (editor) {
 	editor.on('drop', (event) => CoC7Parser.onEditorDrop(event, editor));

@@ -1,21 +1,48 @@
 <div class="development-infos">
     <div class="skill-points">
         {{#if allowCharCreation}}
-        <div class="header-section {{#if invalidPersonalPoints}}warning{{/if}}" title="{{localize 'CoC7.SkillTotalPersonal'}}">
+        <div class="header-section" title="{{localize 'CoC7.SkillTotalPersonal'}}">
             <label>{{localize 'CoC7.SkillTotalPersonal'}}:</label>
-            <span>{{totalPersonal}}/</span>
-            <input class="{{#if invalidPersonalPoints}}warning{{/if}}" type="text" name="data.development.personal"  value="{{data.development.personal}}" data-dtype="Number" {{#unless allowCharCreation}}readonly{{/unless}}/>
+            <div class="monitor {{#if invalidPersonalPoints}}warning{{/if}}">
+                <div class="current-value"><span>{{totalPersonal}}</span></div>
+                <div class="separator">/</div>
+                <div class="max-value">
+                    {{#if allowCharCreation}}
+                        <input type="text" name="data.development.personal"  value="{{data.development.personal}}" data-dtype="Number"/>
+                    {{else}}
+                        <span>{{data.development.personal}}</span>
+                    {{/if}}
+                </div>
+            </div>
         </div>
-        <div class="header-section {{#if invalidOccupationPoints}}warning{{/if}}" title="{{localize 'CoC7.SkillTotalOccupation'}}">
+        <div class="header-section " title="{{localize 'CoC7.SkillTotalOccupation'}}">
             <label>{{localize 'CoC7.SkillTotalOccupation'}}:</label>
-            <span>{{totalOccupation}}/</span>
-            <input class="{{#if invalidOccupationPoints}}warning{{/if}}" type="text" name="data.development.occupation"  value="{{data.development.occupation}}" data-dtype="Number" {{#unless allowCharCreation}}readonly{{/unless}}/>
+            <div class="monitor  {{#if invalidOccupationPoints}}warning{{/if}}">
+                <div class="current-value"><span>{{totalOccupation}}</span></div>
+                <div class="separator">/</div>
+                <div class="max-value">
+                    {{#if allowCharCreation}}
+                        <input type="text" name="data.development.occupation"  value="{{data.development.occupation}}" data-dtype="Number"/>
+                    {{else}}
+                        <span>{{data.development.occupation}}</span>
+                    {{/if}}
+                </div>
+            </div>
         </div>
             {{#if pulpCharacter}}
-                <div class="header-section {{#if invalidArchetypePoints}}warning{{/if}}" title="{{localize 'CoC7.SkillTotalArchetype'}}">
+                <div class="header-section" title="{{localize 'CoC7.SkillTotalArchetype'}}">
                     <label>{{localize 'CoC7.SkillTotalArchetype'}}:</label>
-                    <span>{{totalArchetype}}/</span>
-                    <input class="{{#if invalidArchetypePoints}}warning{{/if}}" type="text" name="data.development.archetype"  value="{{data.development.archetype}}" data-dtype="Number" {{#unless allowCharCreation}}readonly{{/unless}}/>
+                    <div class="monitor {{#if invalidArchetypePoints}}warning{{/if}}">
+                        <div class="current-value"><span>{{totalArchetype}}</span></div>
+                        <div class="separator">/</div>
+                        <div class="max-value">
+                            {{#if allowCharCreation}}
+                                <input type="text" name="data.development.archetype"  value="{{data.development.archetype}}" data-dtype="Number"/>
+                            {{else}}
+                                <span>{{data.development.archetype}}</span>
+                            {{/if}}
+                        </div>
+                    </div>
                 </div>
             {{/if}}
         {{/if}}
@@ -24,24 +51,21 @@
     <div class="validation">
         {{#if allowCharCreation}}
             {{#if data.infos.occupationSet}}
-            <div class="header-section {{#if invalidCreditRating}}warning{{/if}}" title="{{localize 'CoC7.CreditRatingSkillName'}}">
-                <label>{{creditRatingMin}}&lt{{localize 'CoC7.CreditRatingSkillName'}}&lt{{creditRatingMax}}</label>
-            </div>
-            {{else}}
-                <div class="flex1"></div>
+                <div class="header-section {{#if invalidCreditRating}}warning{{/if}}" title="{{localize 'CoC7.CreditRatingSkillName'}}">
+                    <label>{{creditRatingMin}}&lt{{localize 'CoC7.CreditRatingSkillName'}}&lt{{creditRatingMax}}</label>
+                </div>
             {{/if}}
             {{#if data.infos.archetypeSet}}
-            <div class="header-section {{#if invalidPulpTalents}}warning{{/if}}" title="{{localize 'CoC7.PulpTalents'}}">
-                <label>{{localize 'CoC7.PulpTalents'}}: {{pulpTalentCount}}/{{minPulpTalents}}</label>
-            </div>
-            {{else}}
-                <div class="flex1"></div>
+                <div class="header-section {{#if invalidPulpTalents}}warning{{/if}}" title="{{localize 'CoC7.PulpTalents'}}">
+                    <label>{{localize 'CoC7.PulpTalents'}}: {{pulpTalentCount}}/{{minPulpTalents}}</label>
+                </div>
             {{/if}}
+
             {{#unless allowDevelopment}}
-            <div class="header-section  {{#if hasSkillFlaggedForExp}}flagged4dev{{/if}}" title="{{localize 'CoC7.SkillTotalExperience'}}">
-                <label>{{localize 'CoC7.SkillTotalExperience'}}:</label>
-                <span>{{totalExperience}}</span>
-            </div>
+                <div class="header-section  {{#if hasSkillFlaggedForExp}}flagged4dev{{/if}}" title="{{localize 'CoC7.SkillTotalExperience'}}">
+                    <label>{{localize 'CoC7.SkillTotalExperience'}}:</label>
+                    <span>{{totalExperience}}</span>
+                </div>
             {{/unless}}
         {{/if}}
 
