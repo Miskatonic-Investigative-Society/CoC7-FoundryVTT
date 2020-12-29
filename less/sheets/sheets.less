@@ -8,12 +8,12 @@
 	.defaultFont();
 
 	&.app{
-		background: @colorRed;
+		background: var(--main-sheet-back-color);
 	}
 
 
 	.window-header{
-		background: @colorBlue;
+		background: var(--main-sheet-front-color);
 		margin: 4px 4px 0 4px;
 		width: auto;
 	}
@@ -21,12 +21,12 @@
 	.window-content{
 		margin: 0 8px 8px 8px;
 		padding: 0;
-		color: @colorBlue;
+		color: var(--main-sheet-front-color);
 		font-size: 13px;
 
 		.rollable:hover{
 			color: #000;
-    		text-shadow: 0 0 10px #9A0B0B;
+    		text-shadow: 0 0 10px var( --main-sheet-interactie-color);
 	    	cursor: pointer;
 		}
 
@@ -81,7 +81,7 @@
 			overflow: hidden;
 
 			&:hover, &:focus{
-				box-shadow: 0 0 8px @colorRed;
+				box-shadow: 0 0 8px var(--main-sheet-interactie-color);
 				background: @greyBackground;
 			}
 		}
