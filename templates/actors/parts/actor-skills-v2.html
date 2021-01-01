@@ -1,3 +1,8 @@
+{{#unless data.flags.locked}}
+<div class="floating-left" title='{{localize "CoC7.AddSkill"}}'>
+<a class="add-item" data-type="skill"><i class="fas fa-plus"></i></a>
+</div>
+{{/unless}}
 <ol class="item-list">
 	{{#each skillList as |skill|}}
 		{{#if skill.isSpecialization}}
