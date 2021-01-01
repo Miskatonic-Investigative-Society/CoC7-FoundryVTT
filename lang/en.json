@@ -512,7 +512,6 @@
 "SETTINGS.ArtworkFixedSkillLength": "Limit skill name lenght",
 "SETTINGS.ArtworkFixedSkillLengthHint": "The skill length in the skill tab will be limited for a more compact sheet",
 "SETTINGS.ArtworkMainFont": "Main font",
-"SETTINGS.ArtworkMainFontHint": "Used for labels and all sheet elements",
-"SETTINGS.ArtworkCursiveFont": "Cursive font",
-"SETTINGS.ArtworkCursiveFontHint": "Used for player inputs"
+"SETTINGS.ArtworkMainFontBold": "Main font (bold)",
+"SETTINGS.ArtworkMainFontSize": "Default font size (px)"
 }
