@@ -26,6 +26,7 @@ version 0.4.7 :
 * early sheet V2 implementation.
   * using [game-icons](https://game-icons.net/) fonts from [seiyria](https://github.com/seiyria/gameicons-font).
   * Skill, Development and combat tab completed.
+  * Gear and Backstory tabs will be reworked later.
   * Other tabs working and displaying in the same way as before.
 * Options added to override sheet look and feel.
   * Upon activation/deactivation of artwork override you have to restart/refresh your client.
@@ -33,6 +34,7 @@ version 0.4.7 :
   * Setting and image to 'null' will remove it (sheet background and tentacle).
   * Fonts can be changed
     * blanc for default font or you can use a custom font e.g. "url( '/fonts/TT2020Base-Regular.ttf')  format('truetype')".
+    * you can set 2 types of fonts, normal and bold.
 
 version 0.4.6 :
 
