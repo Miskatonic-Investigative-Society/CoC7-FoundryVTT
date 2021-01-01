@@ -44,7 +44,7 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
 		});
 	}
 
-	static renderSheet( sheet/*, html*/){
+	static renderSheet( sheet){
 		// html.css('--main-sheet-bg',  'url( \'./artwork/backgrounds/character-sheet.png\') 4 repeat');
 		if( game.settings.get('CoC7', 'overrideSheetArtwork')){
 			if( game.settings.get('CoC7', 'artWorkSheetBackground'))
@@ -75,13 +75,19 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
 				});
 			}
 
-			if(game.settings.get('CoC7', 'artworkCursiveFont')){
-				var customSheetCursiveFont = new FontFace('customSheetCursiveFont', game.settings.get('CoC7', 'artworkCursiveFont'));
+			if(game.settings.get('CoC7', 'artworkMainFontBold')){
+				var customSheetCursiveFont = new FontFace('customSheetFont', game.settings.get('CoC7', 'artworkMainFontBold'), {weight:'bold'});
 				customSheetCursiveFont.load().then(function(loaded_face) {
 					document.fonts.add(loaded_face);
 				}).catch(function(error) {
 					ui.notifications.error( error);
 				});
+			}
+
+			if( game.settings.get('CoC7', 'artworkMainFontSize')){
+				const size = `${game.settings.get('CoC7', 'artworkMainFontSize')}px`;
+				if( size != $(':root').css('font-size'))
+					$(':root').css('font-size', size);
 			}
 		}
 	}
