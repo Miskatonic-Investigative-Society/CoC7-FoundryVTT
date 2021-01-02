@@ -74,7 +74,7 @@
     resize: vertical;
     margin: 0;
     border: 0;
-    font-family: "Nodesto", "Signika", "Palatino Linotype", "serif";
+    font-family: "Modesto", "Signika", "Palatino Linotype", "serif";
     font-size: 12px;
     white-space: pre-line;
 }
@@ -341,7 +341,7 @@
 }
 
 .coc7 .weapon-image:hover {
-    background-image: url("/icons/svg/d20-black.svg") !important;
+    background-image: url("/icons/svg/d20-grey.svg") !important;
 }
 
 
@@ -530,7 +530,7 @@
 .coc7.sheet .sheet-header {
     flex: 0 0 100px;
     border-bottom: 2px groove #eeede0;
-    font-family: "Nodesto", "Signika", "Palatino Linotype", serif;
+    font-family: customSheetFont, "Modesto Condensed", "Palatino Linotype", serif;
     font-size: 12px;
 }
 
@@ -571,7 +571,7 @@
 .coc7.sheet .sheet-tabs {
     flex: 0 0 20px;
     margin-bottom: 5px;
-    font-family: "Nodesto", "Signika", "Palatino Linotype", serif;
+    font-family: customSheetFont, "Modesto Condensed", "Palatino Linotype", serif;
     font-size: 20px;
 }
 
@@ -672,7 +672,7 @@
 }
 
 
-.coc7.sheet.actor .characteristics .characteristic-box .characteristics-label{
+.coc7.sheet.actor .characteristics .characteristic-box .characteristic-label{
     line-height: 16px;
     margin: 4px 8px 2px;
     font-size: 15px;
@@ -890,7 +890,7 @@
     flex: 1;
     margin: 0;
     line-height: 36px;
-    font-family: "Nodesto", "Signika", "Palatino Linotype", serif;
+    font-family: customSheetFont, "Modesto Condensed", "Palatino Linotype", serif;
     font-size: 20px;
     color: #4b4a44;
 }

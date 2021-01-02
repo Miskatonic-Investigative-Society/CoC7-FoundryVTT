@@ -11,7 +11,17 @@ export const preloadHandlebarsTemplates = async function() {
 		'systems/CoC7/templates/actors/parts/npc-skills.html',
 		'systems/CoC7/templates/actors/parts/actor-weapons.html',
 		'systems/CoC7/templates/actors/parts/npc-combat.html',
-		'systems/CoC7/templates/actors/parts/character-development.html'
+		'systems/CoC7/templates/actors/parts/character-development.html',
+		
+		'systems/CoC7/templates/actors/parts/actor-inventory.html',
+		'systems/CoC7/templates/actors/parts/actor-background.html',
+		'systems/CoC7/templates/actors/parts/actor-skills-v2.html',
+		'systems/CoC7/templates/actors/parts/actor-weapons-v2.html',
+		'systems/CoC7/templates/actors/parts/character-development-v2.html',
+		'systems/CoC7/templates/actors/parts/development-controls.html',
+		'systems/CoC7/templates/actors/parts/vitals.html',
+		'systems/CoC7/templates/actors/parts/combat.html'
+
 	];
   
 	// Load the template parts

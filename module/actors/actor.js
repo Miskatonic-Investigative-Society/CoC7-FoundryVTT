@@ -1350,7 +1350,7 @@ export class CoCActor extends Actor {
 			skills.push( this.getOwnedItem( weapon.data.data.skill.main.id));
 		}
 
-		if( weapon.data.data.skill.alternativ.id){
+		if( weapon.usesAlternativeSkill && weapon.data.data.skill.alternativ.id){
 			skills.push( this.getOwnedItem( weapon.data.data.skill.alternativ.id));
 		}
 

@@ -300,17 +300,24 @@
 							<button style='background:darkred; color: white;'>
 								Out of Ammo
 							</button>
-							{{else}}
+						{{else}}
 							{{#if ../outOfShots}}
 								<button style='background:darkred; color: white;'>
 									Out of shots
 								</button>
-								{{else}}
+							{{else}}
 								{{#if ../multiTarget}}
-								<button
-									data-action="range-initiator-shoot"
-									data-skill="{{autoWeaponSkill._id}}">{{ localize 'CoC7.Shoot'}} {{trgt.name}} {{../autoWeaponSkill.data.name}} ({{../autoWeaponSkill.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
-								</button>
+									{{#if ../autoFire}}
+										<button
+											data-action="range-initiator-shoot"
+											data-skill="{{autoWeaponSkill._id}}">{{ localize 'CoC7.Shoot'}} {{trgt.name}} {{../autoWeaponSkill.data.name}} ({{../autoWeaponSkill.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
+										</button>
+									{{else}}
+										<button
+											data-action="range-initiator-shoot"
+											data-skill="{{mainWeaponSkill._id}}">{{ localize 'CoC7.Shoot' }} {{../mainWeaponSkill.data.name}} ({{../mainWeaponSkill.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
+										</button>
+									{{/if}}
 								{{else}}
 									{{#if ../autoFire}}
 										<button

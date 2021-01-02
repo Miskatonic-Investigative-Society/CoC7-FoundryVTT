@@ -1,0 +1,42 @@
+{{#unless data.flags.locked}}
+<div class="floating-left" title='{{localize "CoC7.AddSkill"}}'>
+<a class="add-item" data-type="skill"><i class="fas fa-plus"></i></a>
+</div>
+{{/unless}}
+<ol class="item-list">
+	{{#each skillList as |skill|}}
+		{{#if skill.isSpecialization}}
+			<li class="specialization-header"> {{skill.name}} </li>
+		{{else}}
+			<li class="item itemV2 {{#if skill.data.properties.special}}specialization{{/if}}" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
+				<div class="item-image" style="background-image: url('{{skill.img}}')"></div>
+				{{#if ../data.flags.locked}}
+					<div class="item-name skill-name rollable"  title="{{skill.name}}">{{skill.name}}</div>
+					<div class="item-score">{{skill.data.value}}</div>
+					<div class="item-controls">
+						{{#unless skill.data.properties.noxpgain}}
+							<!-- <a class="item-control inactive" title="{{localize 'CoC7.SkillCantGainXp'}}"><i class="fas fa-certificate"></i></a> -->
+							{{#if skill.data.flags.developement}}
+								<a class="item-control development-flag active" title="{{localize 'CoC7.SkillUnflagForDevelopement'}}"><i class="fas fa-certificate"></i></a>
+							{{else}}
+								<a class="item-control development-flag" title="{{localize 'CoC7.SkillFlagForDevelopement'}}"><i class="fas fa-certificate"></i></a>
+							{{/if}}
+						{{/unless}}
+						<a class="item-control item-popup" title="{{localize 'CoC7.SkillDetail'}}"><i class="fas fa-info-circle"></i></a>
+					</div>
+				{{else}}
+					<div class="item-name">
+						<input class="skill-name" type="text" value="{{skill.name}}" data-dtype="String">
+					</div>
+					<div class="item-score">
+						<input class="npc-skill-score" type="text" value="{{skill.data.value}}" data-dtype="Number">
+					</div>
+					<div class="item-controls">
+						<a class="item-control item-edit" title="{{localize 'CoC7.EditSkill'}}"><i class="fas fa-edit"></i></a>
+						<a class="item-control item-delete" title="{{localize 'CoC7.DeleteSkill'}}"><i class="fas fa-trash"></i></a>
+					</div>
+				{{/if}}
+			</li>
+		{{/if}}
+	{{/each}}
+</ol>
