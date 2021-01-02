@@ -1,0 +1,185 @@
+<form class="{{cssClass}} flexcol" autocomplete="off" data-actor-id="{{actor._id}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
+	<div class="container">
+		<section class="sheet-header">
+
+			<div class="sheet-portrait">
+				<img class="photo" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
+			</div>
+			
+			<div class="infos">
+				<div class="row flexrow">
+					<label>{{ localize 'CoC7.Name' }} :</label>
+					<input name="name" type="text" value="{{actor.name}}"/>
+				</div>
+				{{#if pulpCharacter}}
+				<div class="row flexrow">
+					<label>{{ localize 'CoC7.Archetype' }} :</label>
+					{{#if data.infos.archetypeSet}}
+						<span class="rollable open-item" data-type="archetype">{{data.infos.archetype}}</span>
+						{{#unless data.flags.locked}}
+							<a class="reset-archetype" title="{{ localize 'CoC7.ResetArchetype'}}" data-type="archetype"><i class="far fa-times-circle"></i></a>
+						{{/unless}}
+					{{else}}
+						<input name="data.infos.archetype" type="text" value="{{data.infos.archetype}}"/>
+					{{/if}}
+				</div>
+				<div class="row flexrow">
+					<label>{{ localize 'CoC7.Organization' }} :</label>
+					<input name="data.infos.organization" type="text" value="{{data.infos.organization}}"/>
+				</div>
+				{{/if}}
+				<div class="row flexrow">
+					<label>{{ localize 'CoC7.Occupation' }} :</label>
+					{{#if data.infos.occupationSet}}
+						<span class="rollable open-item" data-type="occupation">{{data.infos.occupation}}</span>
+						{{#unless data.flags.locked}}
+							<a class="reset-occupation" title="{{ localize 'CoC7.ResetOccupation'}}" data-type="occupation"><i class="far fa-times-circle"></i></a>
+						{{/unless}}
+					{{else}}
+						<input name="data.infos.occupation" type="text" value="{{data.infos.occupation}}"/>
+					{{/if}}
+				</div>
+				<div class="row flexrow">
+					<label>{{ localize 'CoC7.Age' }} :</label>
+					<input name="data.infos.age" type="text" value="{{data.infos.age}}"/>
+					<label>{{ localize 'CoC7.Sex' }} :</label>
+					<input name="data.infos.sex" type="text" value="{{data.infos.sex}}"/>
+				</div>
+				<div class="row flexrow">
+					<label>{{ localize 'CoC7.Residence' }} :</label>
+					<input name="data.infos.residence" type="text" value="{{data.infos.residence}}"/>
+				</div>
+				<div class="row flexrow">
+					<label>{{ localize 'CoC7.Birthplace' }} :</label>
+					<input name="data.infos.birthplace" type="text" value="{{data.infos.birthplace}}"/>
+				</div>
+			</div>
+
+			<div class="characteristics">
+				<div class="header"></div>
+				<div class="char-boxes">
+					{{#each data.characteristics as |characteristic key|}}
+						<div class="char-box"  data-characteristic="{{key}}" draggable="true">
+							<div class="roll-icon"><i class="game-icon game-icon-d10"></i></div>
+							<div class="charac-name characteristic-label rollable">{{localize characteristic.short}}</div>
+							<div class="charac-score">
+								<div class="main-score">
+									<input class="characteristic-score" type="text" name="data.characteristics.{{key}}.value" value="{{characteristic.value}}" data-dtype="Number"/>
+								</div>
+								<div class="half-score">{{characteristic.hard}}</div>
+								<div class="fith-score">{{characteristic.extreme}}</div>
+							</div>
+						</div>
+					{{/each}}
+				</div>
+				<div class="footer">
+					{{#if data.flags.locked}}
+						<div class="attribute">
+							<div class="attribute-label"><h2>{{localize 'CoC7.Mov'}}:</h2></div>
+							<div class="attribute-value">{{data.attribs.mov.value}}</div>
+						</div>
+						<div class="attribute">
+							<div class="attribute-label"><h2>{{localize 'CoC7.Build'}}:</h2></div>
+							<div class="attribute-value">{{data.attribs.build.value}}</div>
+						</div>
+						<div class="attribute" data-attrib="db" data-roll-formula="{{data.attribs.db.value}}">
+							<div class="attribute-label rollable"><h2>{{localize 'CoC7.DB'}}:</h2></div>
+							<div class="attribute-value">{{data.attribs.db.value}}</div>
+						</div>
+						<div class="attribute">
+							<div class="attribute-label"><h2>{{localize 'CoC7.Armor'}}:</h2></div>
+							<div class="attribute-value">{{data.attribs.armor.value}}</div>
+						</div>
+					{{else}}
+						<div class="attribute {{#unless data.attribs.mov.auto}}manual-override{{/unless}}" data-attrib="mov">
+							<div class="attribute-label auto-toggle"><h2>{{localize 'CoC7.Mov'}}:</h2></div>
+							<div class="attribute-value">
+							{{#if data.attribs.mov.auto}}
+								{{data.attribs.mov.value}}
+							{{else}}
+								<input type="text" name="data.attribs.mov.value" value="{{data.attribs.mov.value}}" data-dtype="Number"/>
+							{{/if}}
+							</div>
+						</div>
+						<div class="attribute {{#unless data.attribs.build.auto}}manual-override{{/unless}}" data-attrib="build">
+							<div class="attribute-label auto-toggle"><h2>{{localize 'CoC7.Build'}}:</h2></div>
+							<div class="attribute-value">
+							{{#if data.attribs.build.auto}}
+								{{data.attribs.build.value}}
+							{{else}}
+								<input type="text" name="data.attribs.build.value" value="{{data.attribs.build.value}}" data-dtype="Number"/>
+							{{/if}}
+							</div>
+						</div>
+						<div class="attribute  {{#unless data.attribs.db.auto}}manual-override{{/unless}}" data-attrib="db" data-roll-formula="{{data.attribs.db.value}}">
+							<div class="attribute-label auto-toggle"><h2>{{localize 'CoC7.DB'}}:</h2></div>
+							{{#if data.attribs.db.auto}}
+								<div class="attribute-value">{{data.attribs.db.value}}</div>
+							{{else}}
+								<div class="attribute-value"><input type="text" name="data.attribs.db.value" value="{{data.attribs.db.value}}" data-dtype="String"/></div>
+							{{/if}}
+						</div>
+						<div class="attribute">
+							<div class="attribute-label"><h2>{{localize 'CoC7.Armor'}}:</h2></div>
+							<div class="attribute-value"><input type="text" name="data.attribs.armor.value" value="{{data.attribs.armor.value}}" data-dtype="String"/></div>
+						</div>
+					{{/if}}
+				</div>
+			</div>
+		</section>
+
+		<nav class="sheet-nav tabs" data-group="primary">
+			{{#if showDevPannel}}
+			<a data-tab="development"><div class="tab-name" ><span>{{localize 'CoC7.CharacterDevelopment'}}</span></div></a>
+			{{/if}}
+			<a data-tab="skills"><div class="tab-name" ><span>{{localize 'CoC7.Skills'}}</span></div></a>
+			<a data-tab="combat"><div class="tab-name" ><span>{{localize 'CoC7.Combat'}}</span></div></a>
+			<a data-tab="possession"><div class="tab-name" ><span>{{localize 'CoC7.Possessions'}}</span></div></a>
+			<a data-tab="background"><div class="tab-name" ><span>{{localize 'CoC7.Background'}}</span></div></a>
+			{{#if data.flags.locked}}
+			<a class="unlock-control lock" title="{{localize 'CoC7.UnlockActor'}}"> <i class="fas fa-lock"></i> </a>
+			{{else}}
+			<a class="unlock-control lock" title="{{localize 'CoC7.LockActor'}}"> <i class="fas fa-lock-open"></i></a>
+			{{/if}}
+		</nav>
+
+		<section class="sheet-body">
+			<div class="two-panes-content">
+				<div class="left-panel">
+					{{#if showDevPannel}}
+						{{> "systems/CoC7/templates/actors/parts/development-controls.html"}}
+					{{else}}
+						{{> "systems/CoC7/templates/actors/parts/vitals.html"}}
+					{{/if}}
+				</div>
+			
+				<div class="right-panel">
+					{{#if showDevPannel}}
+					<div class="tab development" data-group="primary" data-tab="development">
+						{{> "systems/CoC7/templates/actors/parts/character-development-v2.html"}}
+					</div>
+					{{/if}}
+		
+					<div class="tab" data-group="primary" data-tab="skills">
+						{{> "systems/CoC7/templates/actors/parts/actor-skills-v2.html"}}
+					</div>
+		
+					<div class="tab combat" data-group="primary" data-tab="combat">
+						{{> "systems/CoC7/templates/actors/parts/combat.html"}}
+					</div>
+		
+					<div class="tab coc7 sheet actor temp-retro-compat" data-group="primary" data-tab="possession">
+						{{> "systems/CoC7/templates/actors/parts/actor-inventory.html"}}
+					</div>
+		
+					<div class="tab coc7 sheet actor temp-retro-compat" data-group="primary" data-tab="background">
+						{{> "systems/CoC7/templates/actors/parts/actor-background.html"}}
+					</div>
+				</div>
+			</div>
+		
+		</section>
+
+
+	</div>
+</form>

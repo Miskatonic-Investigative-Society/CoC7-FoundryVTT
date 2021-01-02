@@ -1,0 +1,181 @@
+.combat-pane{
+    padding: 0 4px;
+    height: 100%;
+    overflow-y: auto;
+
+    .section-header{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        width: 100%;
+        text-align: left;
+        color:white;
+        background-color: var(--main-sheet-front-color);
+        border: 1px solid transparent;
+        border-radius: 4px;
+        height: 22px;
+        line-height: 22px;
+        padding: 0 8px;
+        margin: 4px;
+
+        &.skill{
+            background-color: grey;
+        }
+
+        span{
+            flex: 1;
+            display: inline-block;
+            padding: 0;
+            color: white;
+        }
+
+        .add-item{
+            flex: 0 0 20px;
+            color: white;
+
+            &:hover{
+                color: var(--main-sheet-back-color);
+            }
+        }
+    }
+
+    .item-list{
+        .itemV2{
+            margin-right: 3px !important;
+            width: 160px !important;
+        }
+
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+    }
+
+    .weapon-list{
+
+        .weapon-row{
+            width: 100%;
+            height: auto;
+            display: grid;
+            border-bottom: 1px solid;
+            grid-template-columns: 16px 22px 1fr 168px 44px 36px;
+            grid-template-rows: 22px 1fr;
+            grid-template-areas: "expand image name range weaponControl itemControl"
+                                "details details details details details details";
+            
+            .expand-arrow{
+                grid-area: expand;
+                width: 0; 
+                height: 0; 
+                border-top: 6px solid transparent;
+                border-bottom: 6px solid transparent;
+                border-left: 8px solid var(--main-sheet-front-color);
+                vertical-align: middle;
+                margin-right: .7rem;
+                transform: translate(6px, 4px);
+                transition: transform .2s ease-out;
+            }
+
+            &.expanded .expand-arrow{
+                transform: rotate(90deg) translate(6px, -4px);
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+
+            .item-summary{
+                background-color: rgba(255, 255, 255, 0.3);
+                font-size: 0.75rem;
+                line-height: 14px;
+                margin: 4px 0;
+                border-radius: 4px;
+            }
+
+            .weapon-image{
+                grid-area: image;
+                background-size: 22px;
+            }
+
+            .weapon-name{
+                grid-area: name;
+                height: 22px;
+                line-height: 22px;
+                padding: 0 4px;
+            }
+
+            .weapon-range{
+                grid-area: range;
+                height: 22px;
+                line-height: 22px;
+                display: grid;
+                grid-template-columns: 56px 56px 56px;
+                grid-template-rows: 22px;
+                
+                .weapon-damage{
+                    text-align: center;
+                }
+            }
+
+            .weapon-control{
+                text-align: center;
+                line-height: 22px;
+                grid-area: weaponControl;
+            }
+
+            .weapon-controls{
+                line-height: 22px;
+                text-align: center;
+                display: grid;
+                grid-template-columns: 22px 22px;
+                grid-template-rows: 22px;
+                grid-area: weaponControl;
+            }
+
+            .item-controls{
+                line-height: 22px;
+                display: block;
+                text-align: end;
+                grid-area: itemControl;
+            }
+
+            .item-summary{
+                grid-area: details;
+                display: flex;
+                flex-direction: column;
+                flex-wrap: nowrap;
+
+                .item-labels{
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    margin: 4px 0;
+
+                    .item-label{
+                        display: flex;
+                        flex-direction: row;
+                        flex-wrap: nowrap;
+                        margin-right: 6px;
+                        font-weight: bold;
+                        border: 1px groove;
+                        border-radius: 3px;
+                        margin: 0 2px 2px 0;
+
+                        span{
+                            height: 16px;
+                            line-height: 16px;
+                            padding: 0 3px;
+                        }
+                    }
+                }
+
+                .item-properties{
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+
+                    .item-property{
+                        margin: 0 2px 2px 0;
+                    }
+                }
+            }
+        }
+    }
+}
