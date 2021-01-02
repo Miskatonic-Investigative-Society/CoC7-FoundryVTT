@@ -12,6 +12,7 @@ import { CoC7Item } from './items/item.js';
 import { CoC7NPCSheet } from './actors/sheets/npc-sheet.js';
 import { CoC7CreatureSheet } from './actors/sheets/creature-sheet.js';
 import { CoC7CharacterSheet } from './actors/sheets/actor-sheet.js';
+import { CoC7CharacterSheetV2 } from './actors/sheets/character.js';
 import { preloadHandlebarsTemplates } from './templates.js';
 import { CoC7Chat } from './chat.js';
 import { CoC7Combat, rollInitiative } from './combat.js';
@@ -208,10 +209,19 @@ Hooks.once('init', async function() {
 
 		if( !isNaN(Number(version)) && Number(version) >= 3){
 
+			// game.settings.register( 'CoC7', 'overrideDsNStyle',{
+			// 	name: 'SETTINGS.OverrideDsNStyle',
+			// 	hint: 'SETTINGS.OverrideDsNStyleHint',
+			// 	scope: 'client',
+			// 	config: true,
+			// 	default: true,
+			// 	type: Boolean
+			// });
+
 			game.settings.register('CoC7', 'unitDieColorset',{
 				name: 'SETTINGS.UnitDieColorset',
 				hint: 'SETTINGS.UnitDieColorsetHint',
-				scope: 'world',
+				scope: 'client',
 				config: true,
 				default: 'white',
 				type: String
@@ -220,7 +230,7 @@ Hooks.once('init', async function() {
 			game.settings.register('CoC7', 'tenDieNoMod',{
 				name: 'SETTINGS.TenDieNoMod',
 				hint: 'SETTINGS.TenDieNoModHint',
-				scope: 'world',
+				scope: 'client',
 				config: true,
 				default: 'foundry',
 				type: String
@@ -229,7 +239,7 @@ Hooks.once('init', async function() {
 			game.settings.register('CoC7', 'tenDieBonus',{
 				name: 'SETTINGS.TenDieBonus',
 				hint: 'SETTINGS.TenDieBonusHint',
-				scope: 'world',
+				scope: 'client',
 				config: true,
 				default: 'bronze',
 				type: String
@@ -238,13 +248,105 @@ Hooks.once('init', async function() {
 			game.settings.register('CoC7', 'tenDiePenalty',{
 				name: 'SETTINGS.TenDiePenalty',
 				hint: 'SETTINGS.TenDiePenaltyHint',
-				scope: 'world',
+				scope: 'client',
 				config: true,
 				default: 'bloodmoon',
 				type: String
 			});
 
 		}
+	}
+
+	game.settings.register('CoC7', 'overrideSheetArtwork', {
+		name: 'SETTINGS.OverrideSheetArtwork',
+		hint: 'SETTINGS.OverrideSheetArtworkHint',
+		scope: 'world',
+		config: true,
+		default: false,
+		type: Boolean
+	});
+
+	if( game.settings.get('CoC7', 'overrideSheetArtwork')){
+		game.settings.register('CoC7', 'artWorkSheetBackground',{
+			name: 'SETTINGS.ArtWorkSheetBackground',
+			hint: 'SETTINGS.ArtWorkSheetBackgroundHint',
+			scope: 'world',
+			config: true,
+			default: 'url( \'./artwork/backgrounds/character-sheet.png\') 4 repeat',
+			type: String
+		});
+
+		game.settings.register('CoC7', 'artworkSheetImage',{
+			name: 'SETTINGS.ArtworkSheetImage',
+			hint: 'SETTINGS.ArtworkSheetImageHint',
+			scope: 'world',
+			config: true,
+			default: 'url(\'./artwork/tentacules.png\')',
+			type: String
+		});
+
+		game.settings.register('CoC7', 'artworkFrontColor',{
+			name: 'SETTINGS.ArtworkFrontColor',
+			hint: 'SETTINGS.ArtworkFrontColorHint',
+			scope: 'world',
+			config: true,
+			default: 'rgba(43,55,83,1)',
+			type: String
+		});
+
+		game.settings.register('CoC7', 'artworkBackgroundColor',{
+			name: 'SETTINGS.ArtworkBackgroundColor',
+			hint: 'SETTINGS.ArtworkBackgroundColorHint',
+			scope: 'world',
+			config: true,
+			default: 'rgba(103,11,11,1)',
+			type: String
+		});
+
+		game.settings.register('CoC7', 'artworkInteractiveColor',{
+			name: 'SETTINGS.ArtworkInteractiveColor',
+			hint: 'SETTINGS.ArtworkInteractiveColorHint',
+			scope: 'world',
+			config: true,
+			default: 'rgba(103,11,11,1)',
+			type: String
+		});
+		
+		game.settings.register('CoC7', 'artworkFixedSkillLength',{
+			name: 'SETTINGS.ArtworkFixedSkillLength',
+			hint: 'SETTINGS.ArtworkFixedSkillLengthHint',
+			scope: 'world',
+			config: true,
+			default: true,
+			type: Boolean
+		});
+
+		game.settings.register('CoC7', 'artworkMainFont',{
+			name: 'SETTINGS.ArtworkMainFont',
+			// hint: 'SETTINGS.ArtworkMainFontHint',
+			scope: 'world',
+			config: true,
+			default: '',
+			type: String
+		});
+
+		game.settings.register('CoC7', 'artworkMainFontBold',{
+			name: 'SETTINGS.ArtworkMainFontBold',
+			// hint: 'SETTINGS.ArtworkMainFontBoldHint',
+			scope: 'world',
+			config: true,
+			default: '',
+			type: String
+		});
+
+		game.settings.register('CoC7', 'artworkMainFontSize',{
+			name: 'SETTINGS.ArtworkMainFontSize',
+			// hint: 'SETTINGS.ArtworkMainFontSizeHint',
+			scope: 'world',
+			config: true,
+			default: 16,
+			type: Number
+		});
 	}
 
 	_setInitiativeOptions(game.settings.get('CoC7', 'initiativeRule'));
@@ -275,7 +377,8 @@ Hooks.once('init', async function() {
 	Actors.unregisterSheet('core', ActorSheet);
 	Actors.registerSheet('CoC7', CoC7NPCSheet, { types: ['npc'], makeDefault: true});
 	Actors.registerSheet('CoC7', CoC7CreatureSheet, { types: ['creature'], makeDefault: true});
-	Actors.registerSheet('CoC7', CoC7CharacterSheet, { types: ['character'], makeDefault: true});
+	Actors.registerSheet('CoC7', CoC7CharacterSheet, { types: ['character']});
+	Actors.registerSheet('CoC7', CoC7CharacterSheetV2, { types: ['character'], makeDefault: true});
 	
 	Items.unregisterSheet('core', ItemSheet);
 	Items.registerSheet('CoC7', CoC7WeaponSheet, { types: ['weapon'], makeDefault: true});
@@ -343,7 +446,7 @@ Hooks.on('getSceneControlButtons', (buttons) => {
 			icon : 'fas fa-angle-double-up',
 			name: 'devphase',
 			active: game.settings.get('CoC7', 'developmentEnabled'),
-			title: game.settings.get('CoC7', 'developmentEnabled')? 'Development phase enabled': 'Development phase disabled',
+			title: game.settings.get('CoC7', 'developmentEnabled')? game.i18n.localize( 'CoC7.DevPhaseEnabled'): game.i18n.localize( 'CoC7.DevPhaseDisabled'),
 			onClick :async () => await CoC7Utilities.toggleDevPhase()
 		});
 		group.tools.push({
@@ -351,7 +454,7 @@ Hooks.on('getSceneControlButtons', (buttons) => {
 			icon : 'fas fas fa-user-edit',
 			name: 'charcreate',
 			active: game.settings.get('CoC7', 'charCreationEnabled'), 
-			title: game.settings.get('CoC7', 'charCreationEnabled')? 'Character creation mode enabled': 'Character creation mode disabled',
+			title: game.settings.get('CoC7', 'charCreationEnabled')? game.i18n.localize( 'CoC7.CharCreationEnabled'): game.i18n.localize( 'CoC7.CharCreationDisabled'),
 			onClick :async () => await CoC7Utilities.toggleCharCreation()
 		});
 	}
@@ -364,6 +467,8 @@ Hooks.on('renderJournalSheet', CoC7Parser.ParseSheetContent);
 Hooks.on('renderActorSheet', CoC7Parser.ParseSheetContent);
 // Chat command processing
 Hooks.on('preCreateChatMessage', CoC7Parser.ParseMessage);
+// Sheet V2 css options
+Hooks.on('renderCoC7CharacterSheetV2', CoC7CharacterSheetV2.renderSheet);
 
 tinyMCE.PluginManager.add('CoC7_Editor_OnDrop', function (editor) {
 	editor.on('drop', (event) => CoC7Parser.onEditorDrop(event, editor));

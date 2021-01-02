@@ -1,0 +1,141 @@
+<div class="flexrow" style="height: 100%"> 
+    <div class="flexcol flex3 inventory">
+        {{#unless data.flags.locked}}
+        <div style='flex:initial;'>
+            <div class="add-item button" title="{{localize 'CoC7.AddItem'}}" data-type="item">{{localize 'CoC7.AddItem'}}</div>
+        </div>
+        {{/unless}}
+        <ol class="inventory-list">
+            <div class="inventory-section">
+                <li class="flexrow inventory-header">
+                    <div class="item-name flexrow">
+                        <h3>{{localize 'CoC7.Items'}}</h3>
+                    </div>
+                </li>
+                <ol class="item-list">
+                {{#each itemsByType.item as |item id|}}
+                    <li class="item flexrow" data-item-id="{{item._id}}">
+                        <div class="item-image" style="background-image: url({{item.img}})"></div>
+                        <h4 class="item-name show-detail">{{item.name}}</h4>
+                        <div class="item-controls">
+                            <a class="item-control item-edit" title="{{localize 'CoC7.EditItem'}}"><i class="fas fa-edit"></i></a>
+                            <a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </li>
+                {{/each}}
+                </ol>
+            </div>
+            <div class="inventory-section">
+                <li class="flexrow inventory-header">
+                    <div class="item-name flexrow">
+                        <h3>{{localize 'CoC7.Books'}}</h3>
+                    </div>
+                </li>
+                <ol class="item-list">
+                {{#each itemsByType.book as |item id|}}
+                    <li class="item flexrow" data-item-id="{{item._id}}">
+                        <div class="item-image" style="background-image: url({{item.img}})"></div>
+                        <h4 class="item-name show-detail">{{item.name}}</h4>
+                        <div class="item-controls">
+                            <a class="item-control item-edit" title="{{localize 'CoC7.EditItem'}}"><i class="fas fa-edit"></i></a>
+                            <a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </li>
+                {{/each}}
+                </ol>
+            </div>
+            <div class="inventory-section">
+                <li class="flexrow inventory-header">
+                    <div class="item-name flexrow">
+                        <h3>{{localize 'CoC7.Spells'}}</h3>
+                    </div>
+                </li>
+                <ol class="item-list">
+                {{#each itemsByType.spell as |item id|}}
+                    <li class="item flexrow" data-item-id="{{item._id}}">
+                        <div class="item-image" style="background-image: url({{item.img}})"></div>
+                        <h4 class="item-name show-detail">{{item.name}}</h4>
+                        <div class="item-controls">
+                            <a class="item-control item-edit" title="{{localize 'CoC7.EditItem'}}"><i class="fas fa-edit"></i></a>
+                            <a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </li>
+                {{/each}}
+                </ol>
+            </div>
+            {{#if pulpCharacter}}
+                {{#if  itemsByType.talent}}
+                    <div class="inventory-section">
+                        <li class="flexrow inventory-header">
+                            <div class="item-name flexrow">
+                                <h3>{{localize 'CoC7.PulpTalents'}}</h3>
+                            </div>
+                        </li>
+                        <ol class="item-list">
+                        {{#each itemsByType.talent as |item id|}}
+                            <li class="item flexrow" data-item-id="{{item._id}}">
+                                <div class="item-image" style="background-image: url({{item.img}})"></div>
+                                <h4 class="item-name show-detail">{{item.name}}</h4>
+                                <div class="item-controls">
+                                    <a class="item-control item-edit" title="{{localize 'CoC7.EditItem'}}"><i class="fas fa-edit"></i></a>
+                                    <a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
+                                </div>
+                            </li>
+                        {{/each}}
+                        </ol>
+                    </div>
+                {{/if}}
+            {{/if}}
+        </ol>
+    </div>
+    <div class="flexcol flex2 cash" style="border: 1px groove;">
+        {{#unless data.flags.locked}}
+        <div class="flexrow cash-row">
+            {{#if data.flags.manualCredit}}
+            <label>{{localize 'CoC7.ManualCreditValues'}}</label>
+            <div class='flex1'></div>
+            {{else}}
+            <label>{{localize 'CoC7.MonetarySymbol'}}</label>
+            <input type="text" name="data.credit.monetarySymbol" value="{{data.credit.monetarySymbol}}">
+            <label>{{localize 'CoC7.MonetaryFactor'}}</label>
+            <input type="text" pattern="\d*" data-dtype="number" name="data.credit.multiplier" value="{{data.credit.multiplier}}">
+            {{/if}}
+            <div class="flag {{#if data.flags.manualCredit}}auto-off{{else}}auto-on{{/if}}" data-flag="manualCredit" title="{{localize 'CoC7.AutoCreditValues'}}" style="flex: 0;margin-right: 5px;">
+            <i class="fas fa-cogs" style="padding-top: 4px;"></i>
+            </div>
+        </div>
+        {{/unless}}
+        <div class="flexrow cash-row">
+            <label>{{localize 'CoC7.MonetarySpendingLevel'}}</label>
+            {{#if data.flags.manualCredit}}
+                <input type="text" name="data.credit.spendingLevel" value="{{data.credit.spendingLevel}}">
+            {{else}}
+                <span>{{credit.spendingLevel}}</span>
+            {{/if}}
+        </div>
+        <div class="flexrow cash-row">
+            <label>{{localize 'CoC7.MonetaryCash'}}</label>
+            {{#if data.flags.manualCredit}}
+                <input type="text" name="data.credit.cash" value="{{data.credit.cash}}">
+            {{else}}
+                <span>{{credit.cash}}</span>
+            {{/if}}
+            <label>{{localize 'CoC7.MonetarySpent'}}</label><input type="text" name="data.credit.spent" value="{{data.credit.spent}}">
+        </div>
+        <div class="flexrow  cash-row">
+                <label>{{localize 'CoC7.MonetaryAssets'}}</label>
+                {{#if data.flags.manualCredit}}
+                    <input type="text" name="data.credit.assets" value="{{data.credit.assets}}">
+                {{else}}
+                    <span style="line-height: 22px;">{{credit.assets}}</span>
+                {{/if}}
+        </div>
+        <div style="flex:none">
+            <textarea name="data.credit.assetsDetails" placeholder="{{localize 'CoC7.MonetaryAssetsDetails'}}" rows="4">{{data.credit.assetsDetails}}</textarea>
+        </div>
+        <label style="flex: initial;">{{localize 'CoC7.PossessionsNotes'}}</label>
+        <div class="flex1">
+            <textarea name="data.notes" placeholder="{{localize 'CoC7.PossessionsNotesHolder'}}">{{data.notes}}</textarea>
+        </div>
+    </div>
+</div>

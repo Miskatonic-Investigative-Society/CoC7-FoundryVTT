@@ -382,7 +382,7 @@ export class CoC7ActorSheet extends ActorSheet {
 	}
 
 	onCloseSheet(){
-		this.actor.locked = true;
+		//this.actor.locked = true;
 	}
 
 	/* -------------------------------------------- */
@@ -398,12 +398,12 @@ export class CoC7ActorSheet extends ActorSheet {
 		// Owner Only Listeners
 		if ( this.actor.owner ) {
 
-			html.find('.characteristics-label').on( 'dragstart', (event)=> this._onDragCharacteristic(event));
+			html.find('.characteristic-label').on( 'dragstart', (event)=> this._onDragCharacteristic(event));
 			html.find('.attribute-label').on( 'dragstart', (event)=> this._onDragAttribute(event));
 			html.find('.san-check').on( 'dragstart', (event)=> this._onDragSanCheck(event));
 
 
-			html.find('.characteristics-label').click(this._onRollCharacteriticTest.bind(this));
+			html.find('.characteristic-label').click(this._onRollCharacteriticTest.bind(this));
 			html.find('.skill-name.rollable').click(this._onRollSkillTest.bind(this));
 			html.find('.skill-image').click(this._onRollSkillTest.bind(this));
 			html.find('.attribute-label.rollable').click(this._onRollAttribTest.bind(this));
@@ -430,6 +430,7 @@ export class CoC7ActorSheet extends ActorSheet {
 			html.find('.weapon-name.rollable').click( event => this._onWeaponRoll(event));
 			html.find('.weapon-skill.rollable').click( event => this._onWeaponSkillRoll(event));
 			html.find('.reload-weapon').click( event => this._onReloadWeapon(event));
+			html.find('.reload-weapon').on( 'contextmenu', event => this._onReloadWeapon(event));
 			html.find('.add-ammo').click( this._onAddAmo.bind(this));
 			html.find('.read-only').dblclick(this._toggleReadOnly.bind(this));
 			html.on('click', '.weapon-damage', this._onWeaponDamage.bind(this));
@@ -513,6 +514,9 @@ export class CoC7ActorSheet extends ActorSheet {
 		html.find('.skill-developement').click( event =>{
 			this.actor.developementPhase( event.shiftKey);
 		});
+
+		html.find('a.coc7-link').on( 'click', (event)=> CoC7Parser._onCheck(event));
+		html.find('a.coc7-link').on( 'dragstart', (event)=> CoC7Parser._onDragCoC7Link(event));
 	}
 
 	_onDragCharacteristic(event){
@@ -661,25 +665,37 @@ export class CoC7ActorSheet extends ActorSheet {
 		event.preventDefault();
 		let li = $(event.currentTarget).parents('.item'),
 			item = this.actor.getOwnedItem(li.data('item-id')),
-			chatData = item.getChatData({secrets: this.actor.owner});
+			chatData = item.getChatData({secrets: this.actor.owner, owner: this.actor});
+
 
 		// Toggle summary
 		if ( li.hasClass('expanded') ) {
 			let summary = li.children('.item-summary');
 			summary.slideUp(200, () => summary.remove());
 		} else {
-			let div = $(`<div class="item-summary">${chatData.description.value}</div>`);
-			if( item.data.data.properties?.spcl) {
-				let specialDiv = $(`<div class="item-summary">${chatData.description.special}</div>`);
+			let div = $('<div class="item-summary"></div>');
+
+			let labels = $('<div class="item-labels"></div>');
+			chatData.labels.forEach(p => labels.append(`<div class="item-label"><span class="label-name">${p.name} :</span><span class="label-value">${p.value}</span></div>`));
+			div.append(labels);
+
+			div.append($(`<div class="item-description">${chatData.description.value}</div>`));
+
+			if( item.data.data.properties?.spcl){
+				let specialDiv = $(`<div class="item-special">${chatData.description.special}</div>`);
 				div.append(specialDiv);
 			}
+
 			let props = $('<div class="item-properties"></div>');
-			chatData.properties.forEach(p => props.append(`<span class="tag">${game.i18n.localize(p)}</span>`));
+			chatData.properties.forEach(p => props.append(`<div class="tag item-property">${game.i18n.localize(p)}</div>`));
 			div.append(props);
+
 			li.append(div.hide());
+			CoC7Parser.bindEventsHandler(div);
 			div.slideDown(200);
 		}
 		li.toggleClass('expanded');
+		// $(event.currentTarget).toggleClass('expanded');
 	}
 
 	_onSectionHeader(event){
@@ -781,7 +797,14 @@ export class CoC7ActorSheet extends ActorSheet {
 		const itemId = event.currentTarget.closest('.item') ? event.currentTarget.closest('.item').dataset.itemId : null;
 		if( !itemId) return;
 		const weapon = this.actor.getOwnedItem( itemId);
-		await weapon.reload();
+		if( 0 == event.button){
+			if( event.shiftKey) await weapon.reload();
+			else await weapon.addBullet();
+		} else if( 2 == event.button)
+		{
+			if( event.shiftKey) await weapon.setBullets(0);
+			else await weapon.shootBullets(1);
+		}
 	}
 
 	async _onAddAmo(event){

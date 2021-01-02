@@ -1,3 +1,4 @@
+import { CoC7Parser } from '../apps/parser.js';
 import { COC7 } from '../config.js';
 
 /**
@@ -49,6 +50,33 @@ export class CoC7Item extends Item {
 		let fighting;
 		let firearms;
 		if( 'weapon' === this.type && !override ){
+
+			if( 'ahdb' === propertyId){
+				if( !this.data.data.properties.ahdb){
+					checkedProps = {
+						'data.properties.ahdb': true,
+						'data.properties.addb': false
+					};
+				} else {
+					checkedProps = {
+						'data.properties.ahdb': false
+					};
+				}
+			}
+
+			if( 'addb' === propertyId){
+				if( !this.data.data.properties.addb){
+					checkedProps = {
+						'data.properties.addb': true,
+						'data.properties.ahdb': false
+					};
+				} else {
+					checkedProps = {
+						'data.properties.addb': false
+					};
+				}
+			}
+
 			if( 'shotgun' === propertyId){
 				if( !this.data.data.properties.shotgun){
 					checkedProps = {
@@ -58,7 +86,11 @@ export class CoC7Item extends Item {
 					};
 				} else {
 					checkedProps = {
-						'data.properties.shotgun': false
+						'data.properties.shotgun': false,
+						'data.range.extreme.value': null,
+						'data.range.extreme.damage': null,
+						'data.range.long.value': null,
+						'data.range.long.damage': null
 					};
 				}
 			}
@@ -72,7 +104,11 @@ export class CoC7Item extends Item {
 				if( meleeWeapon) {
 					checkedProps = {
 						'data.properties.melee': true,
-						'data.properties.rngd': false
+						'data.properties.rngd': false,
+						'data.properties.shotgun': false,
+						'data.properties.brst': false,
+						'data.properties.auto':false,
+						'data.properties.dbrl':false
 					};
 				} else {
 					checkedProps = {
@@ -315,6 +351,10 @@ export class CoC7Item extends Item {
 		return this.data.data.flags[flagName];
 	}
 
+	get usesAlternativeSkill(){
+		return 'weapon' == this.type && ( this.data.data.properties?.auto == true || this.data.data.properties?.brst == true || this.data.data.properties?.thrown == true);
+	}
+
 	get maxUsesPerRound(){
 		if( 'weapon' != this.type ) return null;
 		const multiShot = parseInt(this.data.data.usesPerRound.max);
@@ -327,6 +367,20 @@ export class CoC7Item extends Item {
 		const singleShot = parseInt(this.data.data.usesPerRound.normal);
 		if( isNaN(singleShot)) return 0;
 		return singleShot;
+	}
+
+	get usesPerRoundString(){
+		let usesPerRound;
+		if( this.data.data.usesPerRound.normal) usesPerRound = this.data.data.usesPerRound.normal;
+		else usesPerRound = '1';
+		if( this.data.data.usesPerRound.max) usesPerRound += `(${this.data.data.usesPerRound.max})`;
+		if( this.data.data.properties.auto) usesPerRound += ` ${game.i18n.localize('CoC7.WeaponAuto')}`;
+		if( this.data.data.properties.brst) {
+			usesPerRound += ` ${game.i18n.localize('CoC7.WeaponBrst')}`;
+			if( this.data.data.usesPerRound.burst) usesPerRound += `(${this.data.data.usesPerRound.burst})`;
+		}
+
+		return usesPerRound;
 	}
 
 	get multipleShots(){
@@ -444,7 +498,9 @@ export class CoC7Item extends Item {
 	async addBullet(){
 		if( 'weapon' != this.type) return null;
 		const bullets = await this.getBulletLeft();
-		await this.setBullets( bullets + 1);
+		const maxBullets = this.data.data.bullets? parseInt(this.data.data.bullets):1;
+		if( bullets + 1 >= maxBullets) await this.setBullets( maxBullets);
+		else await this.setBullets( bullets + 1);
 	}
 
 	async shootBullets(x){
@@ -517,16 +573,19 @@ export class CoC7Item extends Item {
 	 */
 	getChatData(htmlOptions) {
 		const data = duplicate(this.data.data);
-		const labels = this.labels;
+		const labels = [];
 
 		// Rich text description
 		data.description.value = TextEditor.enrichHTML(data.description.value, htmlOptions);
+		data.description.value = CoC7Parser.enrichHTML( data.description.value);
 		data.description.special = TextEditor.enrichHTML(data.description.special, htmlOptions);
+		data.description.special = CoC7Parser.enrichHTML(data.description.special);
+
 
 		// Item type specific properties
 		const props = [];
 		const fn = this[`_${this.data.type}ChatData`];
-		if ( fn ) fn.bind(this)(data, labels, props);
+		if ( fn ) fn.bind(this)(data, labels, props, htmlOptions);
 
 		// General equipment properties
 		// if ( data.hasOwnProperty("equipped") && !["loot", "tool"].includes(this.data.type) ) {
@@ -546,13 +605,6 @@ export class CoC7Item extends Item {
 		// 	);
 		// }
 
-		if( this.type == 'weapon') {
-			for( let [key, value] of Object.entries(COC7['weaponProperties']))
-			{
-				if(this.data.data.properties[key] == true) props.push(value);
-			}
-		}
-
 		if( this.type == 'skill') {
 			for( let [key, value] of Object.entries(COC7['skillProperties']))
 			{
@@ -562,7 +614,72 @@ export class CoC7Item extends Item {
 
 		// Filter properties and return
 		data.properties = props.filter(p => !!p);
+		data.labels = labels;
 		return data;
+	}
+
+	_weaponChatData(data, labels, props, htmlOptions){
+		for( let [key, value] of Object.entries(COC7['weaponProperties']))
+		{
+			if(this.data.data.properties[key] == true) props.push(value);
+		}
+
+		let skillLabel = game.i18n.localize('CoC7.Skill');
+		let skillName = '';
+		let found = false;
+		if( this.data.data.skill.main.id) {
+			const skill = htmlOptions?.owner.getOwnedItem( this.data.data.skill.main.id);
+			if( skill){
+				skillName += CoC7Item.getNameWithoutSpec( skill);
+				found = true;
+			}
+		}
+
+		if( this.usesAlternativeSkill && this.data.data.skill.alternativ.id) {
+			skillLabel = game.i18n.localize('CoC7.Skills');
+			const skill = htmlOptions?.owner.getOwnedItem( this.data.data.skill.alternativ.id);
+			if( skill){
+				skillName += `/${CoC7Item.getNameWithoutSpec( skill)}`;
+				found = true;
+			}
+		}
+
+		if( !found){
+			skillName = this.data.data.skill.main.name;
+			if( this.usesAlternativeSkill && this.data.data.skill.alternativ.name) skillName += `/${this.data.data.skill.alternativ.name}`;
+		}
+
+		if( skillName){
+			labels.push(
+				{
+					name: skillLabel,
+					value: skillName
+				}
+			);
+		}
+
+		labels.push(
+			{
+				name: game.i18n.localize('CoC7.WeaponUsesPerRound'),
+				value: this.usesPerRoundString
+			}
+		);
+
+		labels.push(
+			{
+				name: game.i18n.localize('CoC7.WeaponMalfunction'),
+				value: this.data.data.malfunction?this.data.data.malfunction:'-'
+			}
+		);
+
+		if( this.data.data.bullets){
+			labels.push(
+				{
+					name: game.i18n.localize('CoC7.WeaponBulletsInMag'),
+					value: this.data.data.bullets
+				}
+			);
+		}
 	}
 
 	canBePushed(){
