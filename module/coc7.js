@@ -388,6 +388,7 @@ Hooks.once('init', async function() {
 	Items.registerSheet('CoC7', CoC7OccupationSheet, { types: ['occupation'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7ArchetypeSheet, { types: ['archetype'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7SetupSheet, { types: ['setup'], makeDefault: true});
+	// Items.registerSheet('CoC7', CoC7ManeuverSheet, { types: ['maneuver'], makeDefault: true});
 	Items.registerSheet('CoC7', CoCItemSheet, { makeDefault: true});
 	preloadHandlebarsTemplates();
 });
