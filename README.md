@@ -23,16 +23,24 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 version 0.4.7 :
 
-* early sheet V2 implementation.
+* First sheet V2 implementation.
+* **Special thanks to Darshyne for providing the initial sheets design.**
   * using [game-icons](https://game-icons.net/) fonts from [seiyria](https://github.com/seiyria/gameicons-font).
-  * Skill, Development and combat tab completed.
-  * Other tabs working and displaying in the same way as before.
+  * Skills, development and combat tab completed.
+  * Gear and backstory tabs will be reworked later.
 * Options added to override sheet look and feel.
   * Upon activation/deactivation of artwork override you have to restart/refresh your client.
   * Leaving a field blank will revert it to default colors/artwork.
   * Setting and image to 'null' will remove it (sheet background and tentacle).
   * Fonts can be changed
-    * blanc for default font or you can use a custom font e.g. "url( '/fonts/TT2020Base-Regular.ttf')  format('truetype')".
+    * blank for default font or you can use a custom font e.g. "url( '/fonts/TT2020Base-Regular.ttf')  format('truetype')".
+    * you can set 2 types of fonts, normal and bold.
+    * you can specify the base font size.
+* Português (Brasil) translation added thanks to Vittinho and Lozalojo.
+* Spanish translation updated thanks to Lozalojo.
+* German translation updated thanks to Barti-meaus.
+* Polish translation updated thanks to Yossabart.
+* Typo correction thanks to drober76.
 
 version 0.4.6 :
 

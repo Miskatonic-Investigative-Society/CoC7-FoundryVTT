@@ -262,7 +262,7 @@ Hooks.once('init', async function() {
 		hint: 'SETTINGS.OverrideSheetArtworkHint',
 		scope: 'world',
 		config: true,
-		default: true,
+		default: false,
 		type: Boolean
 	});
 
@@ -323,20 +323,29 @@ Hooks.once('init', async function() {
 
 		game.settings.register('CoC7', 'artworkMainFont',{
 			name: 'SETTINGS.ArtworkMainFont',
-			hint: 'SETTINGS.ArtworkMainFontHint',
+			// hint: 'SETTINGS.ArtworkMainFontHint',
 			scope: 'world',
 			config: true,
-			default: '\'Signika\', sans-serif',
+			default: '',
 			type: String
 		});
 
-		game.settings.register('CoC7', 'artworkCursiveFont',{
-			name: 'SETTINGS.ArtworkCursiveFont',
-			hint: 'SETTINGS.ArtworkCursiveFontHint',
-			scope: 'client',
+		game.settings.register('CoC7', 'artworkMainFontBold',{
+			name: 'SETTINGS.ArtworkMainFontBold',
+			// hint: 'SETTINGS.ArtworkMainFontBoldHint',
+			scope: 'world',
 			config: true,
-			default: '\'Bradley Hand\', cursive',
+			default: '',
 			type: String
+		});
+
+		game.settings.register('CoC7', 'artworkMainFontSize',{
+			name: 'SETTINGS.ArtworkMainFontSize',
+			// hint: 'SETTINGS.ArtworkMainFontSizeHint',
+			scope: 'world',
+			config: true,
+			default: 16,
+			type: Number
 		});
 	}
 
