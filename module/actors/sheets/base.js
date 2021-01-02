@@ -687,7 +687,7 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 
 			let props = $('<div class="item-properties"></div>');
-			chatData.properties.forEach(p => props.append(`<span class="tag item-property">${game.i18n.localize(p)}</span>`));
+			chatData.properties.forEach(p => props.append(`<div class="tag item-property">${game.i18n.localize(p)}</div>`));
 			div.append(props);
 
 			li.append(div.hide());

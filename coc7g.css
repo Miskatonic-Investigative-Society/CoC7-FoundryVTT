@@ -15,7 +15,7 @@
   src: url('../../fonts/modesto-condensed/modesto-condensed-bold.woff2') format('woff2');
 }
 .modesto {
-  font-family: "Modesto Condensed", "Palatino Linotype", serif;
+  font-family: customSheetFont, "Modesto Condensed", "Palatino Linotype", serif;
   font-size: 20px;
   font-weight: 700;
 }
@@ -999,7 +999,7 @@
 .coc7.sheet .inventory-list .inventory-header h3 {
   margin: 0 -5px 0 0;
   padding-left: 5px;
-  font-family: "Modesto Condensed", "Palatino Linotype", serif;
+  font-family: customSheetFont, "Modesto Condensed", "Palatino Linotype", serif;
   font-size: 20px;
   font-weight: 700;
   font-size: 1.125em;
@@ -1376,13 +1376,13 @@
   --skill-specialization-length: 152px;
 }
 .defaultFont {
-  font-family: customSheetFont, 'Signika', sans-serif;
+  font-family: customSheetFont, 'Bradley Hand', cursive;
 }
-.cursive {
-  font-family: customSheetCursiveFont, 'Bradley Hand', cursive;
+html {
+  font-size: 16px;
 }
 .sheetV2 {
-  font-family: customSheetFont, 'Signika', sans-serif;
+  font-family: customSheetFont, 'Bradley Hand', cursive;
 }
 .sheetV2 .coc7.sheet.actor.temp-retro-compat {
   overflow: auto;
@@ -1399,7 +1399,7 @@
   margin: 0 8px 8px 8px;
   padding: 0;
   color: var(--main-sheet-front-color);
-  font-size: 13px;
+  font-size: 0.8rem;
 }
 .sheetV2 .window-content .rollable:hover {
   color: #000;
@@ -1428,14 +1428,14 @@
 }
 .sheetV2 .window-content .tag {
   display: inline;
-  height: 16px;
-  line-height: 16px;
+  height: auto;
+  line-height: unset;
   vertical-align: middle;
   text-align: center;
   padding: 0 3px;
   white-space: nowrap;
   text-overflow: ellipsis;
-  font-size: 9px;
+  font-size: 0.6rem;
   border: 1px solid #999;
   border-radius: 3px;
   background: rgba(0, 0, 0, 0.05);
@@ -1460,6 +1460,11 @@
 .sheetV2.character {
   min-width: 687px;
   min-height: 629px;
+}
+.sheetV2.character .floating-left {
+  position: absolute;
+  left: 140px;
+  color: var(--main-sheet-front-color);
 }
 .sheetV2.character .manual-override {
   text-decoration: underline;
@@ -1511,6 +1516,17 @@
   border-right: 2px solid;
   border-color: rgba(43, 55, 83, 0.5);
 }
+.sheetV2.character form .container .sheet-header .infos .row {
+  align-items: center;
+}
+.sheetV2.character form .container .sheet-header .infos .row label {
+  height: auto;
+  line-height: normal;
+}
+.sheetV2.character form .container .sheet-header .infos .row input {
+  height: auto;
+  line-height: normal;
+}
 .sheetV2.character form .container .sheet-header .infos .row a {
   display: contents;
 }
@@ -1547,7 +1563,7 @@
   padding: 0;
   margin: 0;
   line-height: 22px;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--main-sheet-front-color);
   font-weight: normal;
   text-align: right;
@@ -1557,13 +1573,13 @@
 }
 .sheetV2.character form .container .sheet-header .characteristics .footer .attribute-value {
   text-align: center;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--main-sheet-front-color);
   font-weight: normal;
 }
 .sheetV2.character form .container .sheet-header .characteristics .footer .attribute-value input {
   padding: 0;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--main-sheet-front-color);
   background-color: rgba(0, 0, 0, 0.1);
   font-weight: normal;
@@ -1580,17 +1596,19 @@
   grid-template-columns: 16px 44px;
   grid-template-rows: 16px 32px;
   grid-template-areas: "rollIcon characName" "characScore characScore";
+  align-items: baseline;
 }
 .sheetV2.character form .container .sheet-header .characteristics .char-box .roll-icon {
   color: var(--main-sheet-front-color);
   grid-area: rollIcon;
+  line-height: 1.4rem;
 }
 .sheetV2.character form .container .sheet-header .characteristics .char-box .charac-name {
   color: var(--main-sheet-front-color);
   grid-area: characName;
+  line-height: 1.4rem;
 }
 .sheetV2.character form .container .sheet-header .characteristics .char-box .charac-score {
-  font-family: customSheetCursiveFont, 'Bradley Hand', cursive;
   grid-area: characScore;
   margin-top: 4px;
   margin-right: 8px;
@@ -1609,21 +1627,23 @@
 }
 .sheetV2.character form .container .sheet-header .characteristics .char-box .charac-score .half-score {
   grid-area: halfScore;
-  font-size: 10px;
+  font-size: 0.6rem;
   justify-self: center;
   align-self: center;
 }
 .sheetV2.character form .container .sheet-header .characteristics .char-box .charac-score .fith-score {
   grid-area: fithScore;
-  font-size: 10px;
+  font-size: 0.6rem;
   justify-self: center;
   align-self: center;
 }
+.sheetV2.character form .container .sheet-header .characteristics .char-box .charac-score input {
+  font-weight: bold;
+}
 .sheetV2.character form .container .sheet-header .characteristics input {
-  font-family: customSheetCursiveFont, 'Bradley Hand', cursive;
   text-align: center;
   color: var(--main-sheet-back-color);
-  font-size: large;
+  font-size: 1.3rem;
 }
 .sheetV2.character form .container .sheet-header .characteristics input:hover,
 .sheetV2.character form .container .sheet-header .characteristics input:focus {
@@ -1638,12 +1658,16 @@
   border-top: 1px solid var(--main-sheet-front-color);
   color: var(--main-sheet-front-color);
   font-weight: bold;
-  font-size: 15px;
+  font-size: 1rem;
   margin: 0 8px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
+  align-items: center;
+}
+.sheetV2.character form .container .sheet-nav a {
+  text-align: center;
 }
 .sheetV2.character form .container .sheet-nav a:hover {
   text-shadow: none;
@@ -1653,22 +1677,20 @@
   background-color: var(--main-sheet-front-color);
 }
 .sheetV2.character form .container .sheet-nav .tab-name {
-  text-align: center;
-  align-items: center;
-  justify-content: center;
+  height: 1.2rem;
 }
-.sheetV2.character form .container .sheet-nav span {
+.sheetV2.character form .container .sheet-nav .tab-name span {
   display: inline-block;
   width: fit-content;
   color: var(--main-sheet-front-color);
   border: 1px solid transparent;
   border-radius: 4px;
-  height: 20px;
-  line-height: 18px;
+  height: auto;
+  line-height: 1.1rem;
   padding: 0 8px;
-  margin: 4px;
+  margin: 0;
 }
-.sheetV2.character form .container .sheet-nav span:hover {
+.sheetV2.character form .container .sheet-nav .tab-name span:hover {
   border: 1px solid var(--main-sheet-front-color);
 }
 .sheetV2.character form .container .sheet-nav .unlock-control {
@@ -1722,13 +1744,14 @@
 .sheetV2.character form .container .sheet-body .specialization-header {
   width: var(--skill-length);
   margin-right: 8px;
+  font-weight: bold;
 }
 .sheetV2.character form .container .sheet-body .itemV2 {
   max-height: 20px;
   width: var(--skill-length);
   margin-right: 8px;
   display: grid;
-  font-size: 12px;
+  font-size: 0.75rem;
   grid-template-columns: 16px auto 24px 24px;
   border-bottom: 1px solid;
 }
@@ -1738,12 +1761,11 @@
   border-left: 1px solid;
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-image {
-  height: 16px;
+  height: 14px;
   background-size: contain;
-  margin: 0;
+  margin: 1px 0;
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-name {
-  font-family: customSheetCursiveFont, 'Bradley Hand', cursive;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1758,7 +1780,6 @@
   color: var(--main-sheet-front-color);
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-score {
-  font-family: customSheetCursiveFont, 'Bradley Hand', cursive;
   color: var(--main-sheet-back-color);
   text-align: end;
   margin-right: 2px;
@@ -1796,9 +1817,9 @@
   width: fit-content;
 }
 .sheetV2.character form .container .sheet-body .monitor {
-  height: 22px;
+  height: auto;
   display: grid;
-  grid-template-columns: auto 35px 5px 35px auto;
+  grid-template-columns: auto 45px 5px 45px auto;
   grid-template-areas: ". currentValue separator maxValue .";
   align-items: center;
 }
@@ -1834,7 +1855,7 @@
   cursor: default;
 }
 .sheetV2.character form .container .sheet-body .luck-group input {
-  height: 16px;
+  height: auto;
   width: 35px;
   margin-bottom: 6px;
   color: var(--main-sheet-front-color);
@@ -1860,7 +1881,7 @@
   color: #670b0b;
 }
 .sheetV2.character form .container .sheet-body .hp-group .hp-text {
-  padding-top: 5px;
+  padding-top: 15px;
 }
 .sheetV2.character form .container .sheet-body .san-group {
   background-image: url('./artwork/backgrounds/san-background.svg');
@@ -1893,7 +1914,7 @@
 }
 .sheetV2.character form .container .sheet-body .san-group .san-text .control {
   margin-top: -4px;
-  font-size: 16px;
+  font-size: 12px;
 }
 .sheetV2.character form .container .sheet-body .san-group .rollable:hover {
   text-shadow: 0 0 10px green;
@@ -1958,6 +1979,7 @@
 }
 .combat-pane .item-list .itemV2 {
   margin-right: 3px !important;
+  width: 160px !important;
 }
 .combat-pane .weapon-list .weapon-row {
   width: 100%;
@@ -1987,7 +2009,7 @@
 }
 .combat-pane .weapon-list .weapon-row .item-summary {
   background-color: rgba(255, 255, 255, 0.3);
-  font-size: 12px;
+  font-size: 0.75rem;
   line-height: 14px;
   margin: 4px 0;
   border-radius: 4px;
@@ -2102,12 +2124,14 @@
   color: var(--main-sheet-front-color);
   display: grid;
   grid-template-columns: 15px auto 23px 23px 23px 23px 23px;
+  align-items: center;
   grid-template-rows: 16px;
   border-bottom: 1px solid var(--main-sheet-front-color);
   margin-right: 8px;
 }
 .sheetV2 .development .skills-list .item .item-controls {
   font-family: system-ui;
+  font-size: 12px;
 }
 .sheetV2 .development .skills-list .item.pulpCharacter {
   grid-template-columns: 30px auto 23px 23px 23px 23px 23px 23px;
@@ -2118,13 +2142,13 @@
 .sheetV2 .development .skills-list .item span {
   height: 16px;
   line-height: 16px;
-  font-size: 13px;
+  font-size: 0.8rem;
   color: var(--main-sheet-front-color);
 }
 .sheetV2 .development .skills-list .item input {
   height: 16px;
   line-height: 16px;
-  font-size: 13px;
+  font-size: 0.8rem;
   color: var(--main-sheet-front-color);
   background-color: rgba(0, 0, 0, 0.1);
   padding: 0 1px;
