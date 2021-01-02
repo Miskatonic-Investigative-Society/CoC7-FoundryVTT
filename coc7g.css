@@ -1761,9 +1761,9 @@ html {
   border-left: 1px solid;
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-image {
-  height: 16px;
+  height: 14px;
   background-size: contain;
-  margin: 0;
+  margin: 1px 0;
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-name {
   white-space: nowrap;
