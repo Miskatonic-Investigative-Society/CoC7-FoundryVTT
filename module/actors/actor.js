@@ -985,7 +985,16 @@ export class CoCActor extends Actor {
 		if( loss > 0){
 			let totalLoss = parseInt( this.data.data.attribs.san.dailyLoss) ? parseInt( this.data.data.attribs.san.dailyLoss) : 0;
 			totalLoss = totalLoss + loss;
-			if( loss >= 5) this.setStatus( COC7.status.tempoInsane);
+			if( loss >= 5) {
+			let chatData = {
+				user: game.user_id,
+				speaker: ChatMessage.getSpeaker(),
+				content: this.data.name + " " + game.i18n.localize('CoC7.rollComprehendSanityCheck') + " [[/roll 1d100]]"
+			}
+			ChatMessage.create(chatData, {})
+			// TODO Grab results from dice roll and assign tempoInsane?
+			//this.setStatus( COC7.status.tempoInsane);
+			}
 			if( totalLoss >= Math.floor( this.san/5) ) this.setStatus( COC7.status.indefInsane);
 			return await this.update( { 
 				'data.attribs.san.value': value,

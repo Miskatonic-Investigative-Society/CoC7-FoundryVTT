@@ -350,6 +350,7 @@
 "CoC7.creatureFightingSkill": "Fighting",
 
 "CoC7.SanityCheck": "Sanity check",
+"CoC7.rollComprehendSanityCheck": " makes a temporary insanity check",
 "CoC7.NoSanLoss": "No SAN loss",
 "CoC7.SANLoss": "SAN Loss",
 "CoC7.CMI": "CMI",
