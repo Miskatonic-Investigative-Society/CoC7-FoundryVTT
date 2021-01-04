@@ -989,7 +989,8 @@ export class CoCActor extends Actor {
 				let chatData = {
 					user: game.user_id,
 					speaker: ChatMessage.getSpeaker(),
-					content: this.data.name + " " + game.i18n.localize('CoC7.rollComprehendSanityCheck') + " [[/roll 1d100]]"
+					content: this.data.name + " " + game.i18n.localize('CoC7.rollComprehendSanityCheck') +
+						" @coc7.check[type:characteristic,name:INT,difficulty:0,modifier:0,icon:fas fa-brain]"
 				}
 				ChatMessage.create(chatData, {})
 				// TODO Grab results from dice roll and assign tempoInsane?
