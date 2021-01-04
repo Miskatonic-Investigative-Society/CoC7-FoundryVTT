@@ -288,7 +288,7 @@
 
 		<section class="sheet-section">
 			<div class="section-header flexrow" data-pannel="combat">
-				<h3 class="flex1">{{localize 'CoC7.Combat'}}</h4>
+				<h3 class="flex1">{{localize 'CoC7.Combat'}}</h3>
 				{{#unless data.flags.locked}}
 				<div style="flex: 0 0 14px;">
 					<a class="add-item" title="{{localize 'CoC7.AddWeapon'}}" data-type="weapon"><i class="fas fa-plus-circle"></i></a>
@@ -299,6 +299,22 @@
 				{{> "systems/CoC7/templates/actors/parts/npc-combat.html"}}
 			</div>
 		</section>
+
+		{{#if pulpCharacter}}
+		<section class="sheet-section">
+			<div class="section-header flexrow"   data-pannel="talents">
+				<h3 class="flex1" >{{localize 'CoC7.Talents'}}</h3>
+				{{#unless data.flags.locked}}
+					<div style="flex: 0 0 14px;">
+						<a class="add-item" title="{{localize 'CoC7.AddTalent'}}" data-type="talent"><i class="fas fa-plus-circle"></i></a>
+					</div>
+				{{/unless}}
+			</div>
+			<div class="skills flexrow" style="padding-top: 1px;border-bottom: 2px groove;">
+				{{> "systems/CoC7/templates/actors/parts/npc-talents.html"}}
+			</div>
+		</section>
+		{{/if}}
 		
 		{{#if hasInventory}}
 		<section class="sheet-section">

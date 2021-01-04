@@ -138,6 +138,7 @@ COC7.status = {
 COC7.newSkillName = 'CoC7.NewSkillName';
 COC7.newItemName = 'CoC7.NewItemName';
 COC7.newWeaponName = 'CoC7.NewWeaponName';
+COC7.newTalentName = 'CoC7.NewTalentName';
 
 COC7.creatureFightingSkill = 'CoC7.creatureFightingSkill';
 

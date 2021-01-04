@@ -254,6 +254,29 @@ export class CoCActor extends Actor {
 		await this.createEmbeddedEntity('OwnedItem', data, { renderSheet: showSheet});
 	}
 
+	async createEmptyTalent( event = null){
+		let showSheet = event ?  !event.shiftKey: true;
+		let talentName = game.i18n.localize(COC7.newTalentName);
+		if( this.getItemIdByName(game.i18n.localize(COC7.newTalentName))) {
+			let index=0;
+			talentName = game.i18n.localize(COC7.newTalentName) + ' ' + index;
+			while( this.getItemIdByName(talentName)){
+				index++;
+				talentName = game.i18n.localize(COC7.newTalentName)  + ' ' + index;
+			}
+		}
+
+		const data = {
+			name: talentName,
+			type: 'talent',
+			data : {
+				type: {}
+			}
+		};
+
+		await this.createEmbeddedEntity('OwnedItem', data, { renderSheet: showSheet});
+	}
+
 	async createBioSection( title = null){
 		const bio = this.data.data.biography ? duplicate( this.data.data.biography) : [];
 		bio.push( {
@@ -394,7 +417,7 @@ export class CoCActor extends Actor {
 				}
 				if( skill) data.data.skill.alternativ.id = skill._id;
 			} //TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
-			
+
 			return await super.createEmbeddedEntity(embeddedName, duplicate(data), options);
 		}
 		case 'setup':{
@@ -647,7 +670,8 @@ export class CoCActor extends Actor {
 				return newOccupation;
 			}
 			break;
-
+		case 'talent':
+			return await super.createEmbeddedEntity(embeddedName, data, options);
 		default:
 			return await super.createEmbeddedEntity(embeddedName, data, options);
 		}
