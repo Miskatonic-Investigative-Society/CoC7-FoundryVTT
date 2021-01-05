@@ -524,7 +524,7 @@
   padding: 2px 0;
   border-top: 2px groove #eeede0;
   border-bottom: 2px groove #eeede0;
-  font-family: "Modesto Condensed", "Palatino Linotype", serif;
+  font-family: customSheetFont, "Palatino Linotype", serif;
 }
 .coc7 .form-header .item-control {
   float: right;
@@ -1383,6 +1383,10 @@ html {
 }
 .sheetV2 {
   font-family: customSheetFont, 'Bradley Hand', cursive;
+}
+.sheetV2 .no-skill-set,
+.sheetV2 .error {
+  background-color: red;
 }
 .sheetV2 .coc7.sheet.actor.temp-retro-compat {
   overflow: auto;

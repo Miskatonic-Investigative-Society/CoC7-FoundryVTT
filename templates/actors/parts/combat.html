@@ -11,10 +11,10 @@
         </div>
         <ol>
             {{#each meleeWpn as |weapon id|}}
-            <li class="weapon-row item weapon" data-item-id="{{weapon._id}}">
+            <li class="weapon-row item weapon {{#unless weapon.skillSet}}error{{/unless}}" data-item-id="{{weapon._id}}" title="{{#unless weapon.skillSet}}{{localize 'CoC7.NoSkill'}}{{/unless}}">
                 <div class="expand-arrow show-detail"></div>
                 <div class="weapon-image" style="background-image: url('{{weapon.img}}')"></div>
-                <div class="weapon-name rollable">{{weapon.name}}</div>
+                <div class="weapon-name {{#if weapon.skillSet}}rollable{{else}}item-edit{{/if}}">{{weapon.name}}</div>
                 <div class="weapon-range">
                     {{#each weapon.data.range as |range key|}}
                     {{#if range.damage}}
@@ -51,10 +51,10 @@
         </div>
             <ol>
             {{#each rangeWpn as |weapon id|}}
-            <li class="weapon-row item weapon" data-item-id="{{weapon._id}}">
+            <li class="weapon-row item weapon {{#unless weapon.skillSet}}error{{/unless}}" data-item-id="{{weapon._id}}" title="{{#unless weapon.skillSet}}{{localize 'CoC7.NoSkill'}}{{/unless}}">
                 <div class="expand-arrow show-detail"></div>
                 <div class="weapon-image" style="background-image: url('{{weapon.img}}')"></div>
-                <div class="weapon-name rollable">{{weapon.name}}</div>
+                <div class="weapon-name {{#if weapon.skillSet}}rollable{{else}}item-edit{{/if}}">{{weapon.name}}</div>
                 <div class="weapon-range">
                     {{#each weapon.data.range as |range key|}}
                     {{#if range.damage}}
