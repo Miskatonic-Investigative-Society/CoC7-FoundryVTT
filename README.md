@@ -21,6 +21,13 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+version 0.4.8 :
+
+* Bug correction :
+  * Accent are now sorted correctly (é = e when it comes to sorting).
+  * Weapon without skill associated are shown in red.
+* Sanity system reworked.
+
 version 0.4.7 :
 
 * First sheet V2 implementation.
