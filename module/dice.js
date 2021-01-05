@@ -143,7 +143,10 @@ export class CoC7Dice {
 		result.tens = tenDie;
 		result.total = total;
  
-
+		//CHEAT :
+		result.unit= { total:5, results:[5]};
+		result.tens= { total:0, results:[0]};
+		result.total= 5;
 		return result;
 	}
 

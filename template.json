@@ -10,48 +10,56 @@
                 "characteristics": {
                     "str": {
                         "value": null,
+                        "tempValue": null,
                         "short": "CHARAC.STR",
                         "label": "CHARAC.Strength",
                         "formula": null
                     },
                     "con": {
                         "value": null,
+                        "tempValue": null,
                         "short": "CHARAC.CON",
                         "label": "CHARAC.Constitution",
                         "formula": null
                     },
                     "siz": {
                         "value": null,
+                        "tempValue": null,
                         "short": "CHARAC.SIZ",
                         "label": "CHARAC.Size",
                         "formula": null
                     },
                     "dex": {
                         "value": null,
+                        "tempValue": null,
                         "short": "CHARAC.DEX",
                         "label": "CHARAC.Dexterity",
                         "formula": null
                     },
                     "app": {
                         "value": null,
+                        "tempValue": null,
                         "short": "CHARAC.APP",
                         "label": "CHARAC.Appearance",
                         "formula": null
                     },
                     "int": {
                         "value": null,
+                        "tempValue": null,
                         "short": "CHARAC.INT",
                         "label": "CHARAC.Intelligence",
                         "formula": null
                     },
                     "pow": {
                         "value": null,
+                        "tempValue": null,
                         "short": "CHARAC.POW",
                         "label": "CHARAC.Power",
                         "formula": null
                     },
                     "edu": {
                         "value": null,
+                        "tempValue": null,
                         "short": "CHARAC.EDU",
                         "label": "CHARAC.Education",
                         "formula": null
