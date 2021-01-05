@@ -372,11 +372,11 @@
 				<div class='flexcol bio-section' data-index='{{index}}' style='flex: 0 0 50%;'>
 					{{#if ../data.flags.locked}}
 					<div class='flexrow' style='flex: initial;'>
-						<label style='height: 17px;margin: 0;border: 0;font-family: customSheetFont, "Modesto Condensed", "Palatino Linotype", serif;font-size: 12px;'>{{section.title}}</label>
+						<label style='height: 17px;margin: 0;border: 0;font-family: customSheetFont, "Palatino Linotype", serif;font-size: 12px;'>{{section.title}}</label>
 					</div>
 					{{else}}
 					<div class='flexrow' style='flex: initial;'>
-						<input class='bio-section-title' style='height: fit-content;margin: 0;border: 0;font-family: customSheetFont, "Modesto Condensed", "Palatino Linotype", serif;font-size: 12px;font-weight: bolder;'  type="text" value="{{section.title}}" placeholder="{{localize 'CoC7.BackgroundSectionNameHolder'}}">
+						<input class='bio-section-title' style='height: fit-content;margin: 0;border: 0;font-family: customSheetFont, "Palatino Linotype", serif;font-size: 12px;font-weight: bolder;'  type="text" value="{{section.title}}" placeholder="{{localize 'CoC7.BackgroundSectionNameHolder'}}">
 						<div class="flex1" style='height: fit-content;'></div>
 						<div class="item-controls" style='height: fit-content;font-size: 10px;line-height: 18px;'>
 							<a class="delete-section" title="{{localize 'CoC7.BackgroundDeleteSection'}}"><i class="fas fa-trash"></i></a>
@@ -385,7 +385,7 @@
 						</div>
 					</div>
 					{{/if}}
-					<textarea class='bio-section-value' style='height: max-content;resize: none;font-family: customSheetFont, "Modesto Condensed", "Palatino Linotype", serif;font-size: 12px;' rows="4" >{{section.value}}</textarea>
+					<textarea class='bio-section-value' style='height: max-content;resize: none;font-family: customSheetFont, "Palatino Linotype", serif;font-size: 12px;' rows="4" >{{section.value}}</textarea>
 					<!-- {{editor content=section.value target="section.value" button=true editable=editable}} -->
 				</div>
 				{{/each}}

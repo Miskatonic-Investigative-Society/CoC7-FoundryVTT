@@ -530,7 +530,7 @@
 .coc7.sheet .sheet-header {
     flex: 0 0 100px;
     border-bottom: 2px groove #eeede0;
-    font-family: customSheetFont, "Modesto Condensed", "Palatino Linotype", serif;
+    font-family: customSheetFont, "Palatino Linotype", serif;
     font-size: 12px;
 }
 
@@ -571,8 +571,9 @@
 .coc7.sheet .sheet-tabs {
     flex: 0 0 20px;
     margin-bottom: 5px;
-    font-family: customSheetFont, "Modesto Condensed", "Palatino Linotype", serif;
+    font-family: customSheetFont, "Palatino Linotype", serif;
     font-size: 20px;
+    border: 0;
 }
 
 .coc7.sheet .sheet-tabs .item {
@@ -890,7 +891,7 @@
     flex: 1;
     margin: 0;
     line-height: 36px;
-    font-family: customSheetFont, "Modesto Condensed", "Palatino Linotype", serif;
+    font-family: customSheetFont, "Palatino Linotype", serif;
     font-size: 20px;
     color: #4b4a44;
 }
