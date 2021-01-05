@@ -13,6 +13,7 @@ The following is a set of guidelines for contributing to CoC7-FoundryVTT and its
 [How Can I Contribute?](#how-can-i-contribute)
   * [Reporting Bugs](#reporting-bugs)
   * [Suggesting Enhancements](#suggesting-enhancements)
+  * [Suggesting Features](#suggesting-features)
   * [Translators Wanted!](#translators-wanted)
   * [Creating a Pull Request](#creating-a-pull-request)
   * [Your First Code Contribution](#your-first-code-contribution)
@@ -71,6 +72,16 @@ Enhancements should be labelled [Enhancement] when an issue is created.
 
 * **Use a clear and descriptive title** for the issue to identify the suggestion.
 * **Provide a step-by-step description of the suggested enhancement** in as many details as possible.
+
+### Suggesting Features
+
+Features should be labelled [Feature] when an issue is created.
+
+#### How Do I Submit A (Good) Feature Suggestion?
+
+* **Use a clear and descriptive title** for the issue to identify the suggestion.
+* **Provide a step-by-step description of the suggested feature** in as many details as possible.
+* **Add quotes of the system** if system changes are required (such as Pulp Cthulhu), not all maintainers are familiar with the systems
 
 ### Translators Wanted
 
