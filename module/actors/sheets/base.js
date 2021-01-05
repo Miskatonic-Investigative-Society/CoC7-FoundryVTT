@@ -186,12 +186,12 @@ export class CoC7ActorSheet extends ActorSheet {
 					let lca;
 					let lcb;
 					if( a.data.properties && b.data.properties) {
-						lca = a.data.properties.special ? a.data.specialization.toLowerCase() + a.name.toLowerCase() : a.name.toLowerCase();
-						lcb = b.data.properties.special ? b.data.specialization.toLowerCase() + b.name.toLowerCase() : b.name.toLowerCase();
+						lca = a.data.properties.special ? a.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+						lcb = b.data.properties.special ? b.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 					}
 					else {
-						lca = a.name.toLowerCase();
-						lcb = b.name.toLowerCase();
+						lca = a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+						lcb = b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 					}
 					if( lca < lcb) return -1;
 					if( lca > lcb) return 1;
@@ -206,12 +206,12 @@ export class CoC7ActorSheet extends ActorSheet {
 				let lca;
 				let lcb;
 				if( a.data.properties && b.data.properties) {
-					lca = a.data.properties.special ? a.data.specialization.toLowerCase() + a.name.toLowerCase() : a.name.toLowerCase();
-					lcb = b.data.properties.special ? b.data.specialization.toLowerCase() + b.name.toLowerCase() : b.name.toLowerCase();
+					lca = a.data.properties.special ? a.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+					lcb = b.data.properties.special ? b.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 				}
 				else {
-					lca = a.name.toLowerCase();
-					lcb = b.name.toLowerCase();
+					lca = a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+					lcb = b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 				}
 				if( lca < lcb) return -1;
 				if( lca > lcb) return 1;
