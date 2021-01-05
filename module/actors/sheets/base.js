@@ -219,7 +219,7 @@ export class CoC7ActorSheet extends ActorSheet {
 				return 0;
 			});
 
-			data.talents = data.items.filter(item => item.type = "talent")
+			data.talents = data.items.filter(item => item.type == "talent")
 
 			data.meleeSkills = data.skills.filter( skill => skill.data.properties.combat == true && skill.data.properties.fighting == true);
 			data.rangeSkills = data.skills.filter( skill => skill.data.properties.combat == true && skill.data.properties.firearm == true);
