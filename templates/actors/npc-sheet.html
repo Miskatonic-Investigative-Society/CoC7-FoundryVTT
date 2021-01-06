@@ -288,7 +288,7 @@
 
 		<section class="sheet-section">
 			<div class="section-header flexrow" data-pannel="combat">
-				<h3 class="flex1">{{localize 'CoC7.Combat'}}</h4>
+				<h3 class="flex1">{{localize 'CoC7.Combat'}}</h3>
 				{{#unless data.flags.locked}}
 				<div style="flex: 0 0 14px;">
 					<a class="add-item" title="{{localize 'CoC7.AddWeapon'}}" data-type="weapon"><i class="fas fa-plus-circle"></i></a>
@@ -310,7 +310,7 @@
 				</div>
 				{{/unless}}
 			</div>
-			<div class="inventory flexrow" style="display: none;">
+			<div class="inventory flexrow">
 				<ol class="inventory-list">
 					{{#if  itemsByType.item}}
 					<div class="inventory-section">
