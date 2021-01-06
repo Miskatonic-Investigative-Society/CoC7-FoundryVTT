@@ -66,14 +66,14 @@ export class CoCActor extends Actor {
 	 * @param {*} data 
 	 * @param {*} options 
 	 */
-	static async create(data, options) {
-		// If the created actor has items (only applicable to duplicated actors) bypass the new actor creation logic
-		if (data.items)
-		{
-			return super.create(data, options);
-		}
-		return super.create(data, options);
-	}
+	// static async create(data, options) {
+	// 	// If the created actor has items (only applicable to duplicated actors) bypass the new actor creation logic
+	// 	if (data.items)
+	// 	{
+	// 		return super.create(data, options);
+	// 	}
+	// 	return super.create(data, options);
+	// }
 	
 	/** @override */
 	async createSkill( skillName, value, showSheet = false){
@@ -548,7 +548,7 @@ export class CoCActor extends Actor {
 					dialogData.skills = [];
 					dialogData.type = 'occupation';
 					dialogData.actorId = this.id;
-					dialogData.options = Number(data.data.groups[index].options);
+					dialogData.optionsCount = Number(data.data.groups[index].options);
 					dialogData.title = game.i18n.localize('CoC7.SkillSelectionWindow');
 
 					//Select only skills that are not present or are not flagged as occupation.
@@ -572,9 +572,9 @@ export class CoCActor extends Actor {
 							else skill.displayName = skill.name;
 						});
 
-						if( dialogData.skills.length <= dialogData.options){
+						if( dialogData.skills.length <= dialogData.optionsCount){
 							//If there's is less skill than options, add them all.
-							ui.notifications.info( game.i18n.format('CoC7.InfoLessSkillThanOptions',{skillCount: dialogData.skills.length, optionsCount: dialogData.options}));
+							ui.notifications.info( game.i18n.format('CoC7.InfoLessSkillThanOptions',{skillCount: dialogData.skills.length, optionsCount: dialogData.optionsCount}));
 							// await this.addUniqueItems( dialogData.skills, 'occupation');
 							const merged = CoC7Item.mergeOptionalSkills( data.data.skills, dialogData.skills);
 							data.data.skills = merged;
@@ -595,7 +595,7 @@ export class CoCActor extends Actor {
 					dialogData.skills = [];
 					dialogData.type = 'occupation';
 					dialogData.actorId = this.id;
-					dialogData.options = Number(data.data.personal);
+					dialogData.optionsCount = Number(data.data.personal);
 					dialogData.title = game.i18n.format('CoC7.SelectPersonalSkills', { number: Number(data.data.personal)});
 
 					//Select only skills that are not present or are not flagged as occupation.
@@ -615,9 +615,9 @@ export class CoCActor extends Actor {
 								skill.displayName = `${skill.data.specialization} (${skill.name})`;
 							else skill.displayName = skill.name;
 						});
-						if( dialogData.skills.length <= dialogData.options){
+						if( dialogData.skills.length <= dialogData.optionsCount){
 						//If there's is less skill than options, add them all.
-							ui.notifications.info( game.i18n.format('CoC7.InfoLessSkillThanOptions',{skillCount: dialogData.skills.length, optionsCount: dialogData.options}));
+							ui.notifications.info( game.i18n.format('CoC7.InfoLessSkillThanOptions',{skillCount: dialogData.skills.length, optionsCount: dialogData.optionsCount}));
 							// await this.addUniqueItems( dialogData.skills, 'occupation');
 							const merged = CoC7Item.mergeOptionalSkills( data.data.skills, dialogData.skills);
 							data.data.skills = merged;

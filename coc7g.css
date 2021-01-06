@@ -1387,6 +1387,7 @@ html {
 .sheetV2 .no-skill-set,
 .sheetV2 .error {
   background-color: red;
+  border-radius: 4px;
 }
 .sheetV2 .coc7.sheet.actor.temp-retro-compat {
   overflow: auto;
@@ -1429,6 +1430,7 @@ html {
   padding: 0;
   border: 0;
   font-weight: bold;
+  width: auto;
 }
 .sheetV2 .window-content .tag {
   display: inline;
