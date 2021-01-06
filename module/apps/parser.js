@@ -114,9 +114,8 @@ export class CoC7Parser{
 
 		if( data.content.toLocaleLowerCase().includes('@coc7')){
 			data.content = CoC7Parser.enrichHTML(data.content);
-			return true;	
 		}
-		return false;
+		return true; //allow message to be published !
 	}
 
 	static createCoC7Link( data){

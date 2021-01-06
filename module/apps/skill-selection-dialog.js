@@ -17,7 +17,7 @@ export class SkillSelectDialog extends Dialog {
 		const form = event.currentTarget.closest('.skill-selector');
 		const divCount = form.querySelector('.count');
 		divCount.innerText = this.data.data.added;
-		if( this.data.data.added >= this.data.data.options) {
+		if( this.data.data.added >= this.data.data.optionsCount) {
 			this.close();
 		}
 	}
@@ -31,7 +31,7 @@ export class SkillSelectDialog extends Dialog {
 				data: data,
 				buttons: {},
 				close: () => {
-					if( !data.added >= data.options) return resolve(false);
+					if( !data.added >= data.optionsCount) return resolve(false);
 					const selected = data.skills.filter( skill => skill.selected);
 					return resolve(selected);
 				}
