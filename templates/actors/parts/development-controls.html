@@ -2,7 +2,7 @@
     <div class="skill-points">
         {{#if allowCharCreation}}
         <div class="header-section" title="{{localize 'CoC7.SkillTotalPersonal'}}">
-            <label>{{localize 'CoC7.SkillTotalPersonal'}}:</label>
+            <label class="{{#if invalidPersonalPoints}}error{{/if}}">{{localize 'CoC7.SkillTotalPersonal'}}:</label>
             <div class="monitor {{#if invalidPersonalPoints}}warning{{/if}}">
                 <div class="current-value"><span>{{totalPersonal}}</span></div>
                 <div class="separator">/</div>
@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="header-section " title="{{localize 'CoC7.SkillTotalOccupation'}}">
-            <label>{{localize 'CoC7.SkillTotalOccupation'}}:</label>
+            <label class="{{#if invalidOccupationPoints}}error{{/if}}">{{localize 'CoC7.SkillTotalOccupation'}}:</label>
             <div class="monitor  {{#if invalidOccupationPoints}}warning{{/if}}">
                 <div class="current-value"><span>{{totalOccupation}}</span></div>
                 <div class="separator">/</div>
@@ -31,7 +31,7 @@
         </div>
             {{#if pulpCharacter}}
                 <div class="header-section" title="{{localize 'CoC7.SkillTotalArchetype'}}">
-                    <label>{{localize 'CoC7.SkillTotalArchetype'}}:</label>
+                    <label class="{{#if invalidArchetypePoints}}error{{/if}}">{{localize 'CoC7.SkillTotalArchetype'}}:</label>
                     <div class="monitor {{#if invalidArchetypePoints}}warning{{/if}}">
                         <div class="current-value"><span>{{totalArchetype}}</span></div>
                         <div class="separator">/</div>
@@ -52,12 +52,12 @@
         {{#if allowCharCreation}}
             {{#if data.infos.occupationSet}}
                 <div class="header-section {{#if invalidCreditRating}}warning{{/if}}" title="{{localize 'CoC7.CreditRatingSkillName'}}">
-                    <label>{{creditRatingMin}}&lt{{localize 'CoC7.CreditRatingSkillName'}}&lt{{creditRatingMax}}</label>
+                    <label class="{{#if invalidCreditRating}}error{{/if}}">{{creditRatingMin}}&lt{{localize 'CoC7.CreditRatingSkillName'}}&lt{{creditRatingMax}}</label>
                 </div>
             {{/if}}
             {{#if data.infos.archetypeSet}}
                 <div class="header-section {{#if invalidPulpTalents}}warning{{/if}}" title="{{localize 'CoC7.PulpTalents'}}">
-                    <label>{{localize 'CoC7.PulpTalents'}}: {{pulpTalentCount}}/{{minPulpTalents}}</label>
+                    <label class="{{#if invalidPulpTalents}}error{{/if}}">{{localize 'CoC7.PulpTalents'}}: {{pulpTalentCount}}/{{minPulpTalents}}</label>
                 </div>
             {{/if}}
 

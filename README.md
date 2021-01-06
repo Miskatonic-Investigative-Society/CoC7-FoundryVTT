@@ -24,9 +24,15 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 version 0.4.8 :
 
 * Bug correction :
+  * Kckaiwei helped to tackle some issues :
+    * (#323: Pulp talents don't show when added to npc sheet unless another item type is added.)
+    * (#222: [Bug] Inventory panel continously collapsing in creature/NPC templates.)
   * Accent are now sorted correctly (é = e when it comes to sorting).
   * Weapon without skill associated are shown in red.
+  * Compatibility issue with The Furnace.
 * Sanity system reworked.
+* Japanese transalation updated thanks to AdmiralNyar.
+* Polish translation updated thanks to Yossabart.
 
 version 0.4.7 :
 
