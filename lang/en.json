@@ -349,7 +349,10 @@
 
 "CoC7.creatureFightingSkill": "Fighting",
 
+"CoC7.InvoluntaryAction": "Involuntary action",
+"CoC7.InvoluntaryActionPerfomed": "Involuntary action performed",
 "CoC7.SanityCheck": "Sanity check",
+"CoC7.IntCheck": "Intelligence check",
 "CoC7.NoSanLoss": "No SAN loss",
 "CoC7.SANLoss": "SAN Loss",
 "CoC7.CMI": "CMI",

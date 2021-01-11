@@ -1,5 +1,4 @@
 import { RollDialog } from '../../apps/roll-dialog.js';
-// import { CoC7Dice } from '../../dice.js'
 import { CoC7Check } from '../../check.js';
 import { COC7 } from '../../config.js';
 import { CoC7MeleeInitiator } from '../../chat/combat/melee-initiator.js';
@@ -517,6 +516,12 @@ export class CoC7ActorSheet extends ActorSheet {
 
 		html.find('a.coc7-link').on( 'click', (event)=> CoC7Parser._onCheck(event));
 		html.find('a.coc7-link').on( 'dragstart', (event)=> CoC7Parser._onDragCoC7Link(event));
+
+		html.find('.test-trigger').click( async event =>{
+			await this.actor.update( {['data.encounteredCreatures'] : []});
+			if( event.shiftKey) ui.notifications.info( 'Shift cliecked');
+			// SanCheckCard.create( this.actor.actorKey, {min:'1D10',max:'1D12'}, {fastForward:event.shiftKey});
+		});
 	}
 
 	_onDragCharacteristic(event){

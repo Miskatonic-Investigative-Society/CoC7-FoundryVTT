@@ -1,6 +1,7 @@
 import { CoC7Dice } from './dice.js';
 import { CoC7Item } from './items/item.js';
 import { chatHelper, CoC7Roll } from './chat/helper.js';
+import { CoCActor } from './actors/actor.js';
 
 export class CoC7Check {
 	constructor( actor = null, skill = null, item = null, diceMod = 0, difficulty = null) {
@@ -163,13 +164,17 @@ export class CoC7Check {
 		this._diceModifier = parseInt( x);
 	}
 
-
+	/**
+	 * Get a check from an HTMLElement or a chat card.
+	 * @param {HTMLElement} card	The HTMLElement that is a roll-result or a chat card containing a single roll-result.
+	 * @return {CoC7Check}			A CoC7Check.
+	 */
 	static async getFromCard( card){
 		const rollResult = card.classList.contains('roll-result')? card : card.querySelector('.roll-result');
 		const check = new CoC7Check();
 		CoC7Roll.getFromElement(rollResult, check);
 		const message = card.closest('.message');
-		check.messageId = message.dataset.messageId;
+		check.messageId = message?message.dataset.messageId:null;
 		return check;
 	}
 
@@ -302,6 +307,9 @@ export class CoC7Check {
 		if( !this._actor){
 			if( this.actorKey) this._actor = chatHelper.getActorFromKey( this.actorKey);
 			if( this.actorId) this._actor = chatHelper.getActorFromKey( this.actorId);
+		} else if( this._actor.constructor.name == 'Object'){
+			const actor = new CoCActor(this._actor);
+			this._actor = actor;
 		}
 		return this._actor; 
 	}
@@ -601,7 +609,7 @@ export class CoC7Check {
 		return null;
 	}
 
-	upgradeCheck( upgradeindex){
+	async upgradeCheck( upgradeindex){
 		const increasedSuccess = this.increaseSuccess[upgradeindex];
 		const luckAmount = parseInt(increasedSuccess.luckAmount);
 		if( !this.actor.spendLuck( luckAmount)){ ui.notifications.error(game.i18n.format('CoC7.ErrorNotEnoughLuck', {actor: actor.name})); return;}
@@ -616,7 +624,7 @@ export class CoC7Check {
 		this.increaseSuccess.forEach( s => {s.luckToSpend = s.luckToSpend- luckAmount;});
 		this.luckSpent = true;
 		this.computeCheck();
-		this.updateChatCard();
+		return await this.updateChatCard();
 	}
 
 	removeUpgrades(){
@@ -794,7 +802,14 @@ export class CoC7Check {
 
 	}
 
-	async toMessage( pushing = false)
+	async getHtmlRollElement( ){
+		const template = 'systems/CoC7/templates/chat/rolls/in-card-roll.html';
+		const html = await renderTemplate(template, this);
+		if( html) return $.parseHTML( html)[0];
+		return null;
+	}
+
+	async toMessage( pushing = false)//If card is provided atttached the roll to the card. If URID provided attach at this position.?
 	{
 		this.pushing = pushing;
 		const template = 'systems/CoC7/templates/chat/roll-result.html';
@@ -827,11 +842,18 @@ export class CoC7Check {
 
 	}
 
+	/**
+	 * 
+	 * @param {*} makePublic 	Will change the roll mode to public
+	 */
 	async updateChatCard( makePublic = false){
 		if( makePublic) this.rollMode = false; //reset roll mode
 		const template = 'systems/CoC7/templates/chat/roll-result.html';
 		const html = await renderTemplate(template, this);
 		let newContent = html;
+
+		if( !this.messageId) return $.parseHTML( html)[0]; //If no messageId return the HTMLElement containing the roll.
+		//If no messageId
 
 		const message = game.messages.get( this.messageId);
 		const htmlMessage = $.parseHTML( message.data.content)[0];

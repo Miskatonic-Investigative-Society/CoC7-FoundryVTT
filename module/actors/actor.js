@@ -869,6 +869,227 @@ export class CoCActor extends Actor {
 		return parseInt( this.data.data.attribs.mp.max);
 	}
 
+	encounteredCreaturesSanData(creature){
+		const i = this.encounteredCreaturesSanDataIndex(creature);
+		if( i != -1) return this.data.data.encounteredCreatures[i];
+		return null;
+	}
+
+	encounteredCreaturesSanDataIndex(creature){
+		const sanData = CoC7Utilities.getCreatureSanData( creature);
+		return this.data.data.encounteredCreatures.findIndex( cd =>{
+			return( cd.id == sanData?.id || cd.name.toLowerCase() == sanData.name?.toLocaleLowerCase());
+		});
+	}
+
+	sanLostToCreature( creature){
+		const sanData = this.encounteredCreaturesSanData(creature);
+		if( sanData){
+			// check for if specie already encountered return max of both;
+			if( sanData.specie)
+				return Math.max(sanData.specie.totalLoss, sanData.totalLoss);
+
+			return sanData.totalLoss || 0;
+		}
+		else { //That creature was never encountered. What about his specie.
+			const creatureSanData = CoC7Utilities.getCreatureSanData( creature);
+			if( creatureSanData.specie){
+				let specieEncountered = this.encounteredCreaturesSanData(creatureSanData.specie);
+				if( specieEncountered) return specieEncountered.totalLoss;
+			}
+			return 0;//Never encountered that specie or this creature.
+
+		} 
+	}
+
+	maxPossibleSanLossToCreature( creature){
+		// Do we know you ?
+		const sanData = this.encounteredCreaturesSanData(creature);
+		if( sanData) return sanData.sanLossMax - sanData.totalLoss;
+
+		// We don't know you.
+		const creatureSanData = CoC7Utilities.getCreatureSanData( creature);
+		if( creatureSanData){
+			const sanLostToCreature = this.sanLostToCreature(creature);
+			return Math.max( 0, creatureSanData.sanLossMax - sanLostToCreature);
+		}
+		return 99;
+	}
+
+	creatureEncountered( creature){
+		return( !!~this.encounteredCreaturesSanDataIndex(creature));
+	}
+
+	creatureSpecieEncountered( creature){
+		const creatureSanData = CoC7Utilities.getCreatureSanData( creature);
+		if( creatureSanData.specie){
+			return( !!~this.encounteredCreaturesSanDataIndex(creatureSanData.specie));
+		}
+		return this.creatureEncountered( creature);
+	}
+
+	_updateAllOfSameSpecie( encounteredCreaturesList, specieSanData){
+		for (let index = 0; index < encounteredCreaturesList.length; index++) {
+			if( encounteredCreaturesList[index].specie?.id == specieSanData.id || encounteredCreaturesList[index].specie?.name.toLowerCase() == specieSanData.name?.toLowerCase()){
+				//New encounter with that specie.
+				if( encounteredCreaturesList[index].specie.totalLoss != specieSanData.totalLoss){
+					const delta = specieSanData.totalLoss - encounteredCreaturesList[index].specie.totalLoss;
+					if( delta > 0) {
+						encounteredCreaturesList[index].specie = specieSanData;
+						encounteredCreaturesList[index].totalLoss += delta;
+						encounteredCreaturesList[index].totalLoss = Math.min( encounteredCreaturesList[index].totalLoss, encounteredCreaturesList[index].sanLossMax);
+					}
+				}
+			}
+		}
+
+	}
+
+	async looseSanToCreature( sanLoss, creature){
+
+		let exactSanLoss = sanLoss;
+		// Get that creature SAN data.
+		const creatureSanData = CoC7Utilities.getCreatureSanData( creature);
+
+		// Get actor SAN data for that creature.
+		const i_sanData = this.encounteredCreaturesSanDataIndex( creature);
+
+		// Check if that creature belongs to a specie and have we already encoutered it.
+		let i_specieSanData = -1;
+		if( creatureSanData.specie?.id) i_specieSanData = this.encounteredCreaturesSanDataIndex( creatureSanData.specie.id);
+		if( -1 == i_specieSanData && creatureSanData.specie?.name) i_specieSanData = this.encounteredCreaturesSanDataIndex( creatureSanData.specie.name);
+
+		//Copy the array for updating.
+		const encounteredCreaturesList = this.data.data.encounteredCreatures ? duplicate( this.data.data.encounteredCreatures) : [];
+
+		//Creature already encountered.
+		if( ~i_sanData){
+			const oldSanData = encounteredCreaturesList[i_sanData];
+			let newSanData;
+			//Update sanData with new SAN data (might have been updated ?)
+			if( creatureSanData){
+				newSanData = creatureSanData;
+				newSanData.totalLoss = oldSanData.totalLoss || 0;
+				if( newSanData.specie){
+					newSanData.specie.totalLoss = oldSanData.specie?.totalLoss?oldSanData.specie.totalLoss:0;
+				} else {
+					if( oldSanData.specie) newSanData.specie = oldSanData.specie;//Should never happen
+				}
+			}
+
+			newSanData.totalLoss = newSanData.totalLoss?newSanData.totalLoss+sanLoss:sanLoss;
+			if( newSanData.totalLoss > newSanData.sanLossMax){
+				exactSanLoss = exactSanLoss - ( newSanData.totalLoss-newSanData.sanLossMax);
+				newSanData.totalLoss = newSanData.sanLossMax;
+			}
+
+			//Credit the loss to that creature specie as well if it exists.
+			if( newSanData.specie){
+				newSanData.specie.totalLoss = newSanData.specie.totalLoss?newSanData.specie.totalLoss+exactSanLoss:exactSanLoss;
+				if( newSanData.specie.totalLoss > newSanData.specie.sanLossMax) newSanData.specie.totalLoss = newSanData.specie.sanLossMax;
+
+				//Update all creture from the same specie.
+				this._updateAllOfSameSpecie( encounteredCreaturesList, newSanData.specie);
+			}
+
+			encounteredCreaturesList[i_sanData] = newSanData;
+			//Update the specie also :
+			if( ~i_specieSanData && newSanData.specie) encounteredCreaturesList[i_specieSanData] = newSanData.specie; //We already encoutered that specie
+			else{
+				//Should never happen (encountered that creature but never his specie).
+				if( newSanData.specie) encounteredCreaturesList.push( newSanData.specie); 
+			}
+		} else {
+			//Creature never encountered.
+			const newSanData = creatureSanData;
+			
+			if( newSanData.specie){
+				//Specie already encountered.
+				if( ~i_specieSanData){
+					newSanData.specie.totalLoss = encounteredCreaturesList[i_specieSanData].totalLoss;
+
+					// We already loss SAN to this specie of creature. The base los for this creature is the specie base loss.
+					newSanData.totalLoss = newSanData.specie.totalLoss;
+					if( newSanData.totalLoss > newSanData.sanLossMax)  newSanData.totalLoss = newSanData.sanLossMax;
+				}
+				else{
+					//We never encountered specie or creature.
+					newSanData.specie.totalLoss = 0;
+					newSanData.totalLoss = 0;
+				}
+			}
+
+			//Apply the san loss to that creature.
+			newSanData.totalLoss = newSanData.totalLoss + sanLoss;
+
+			//If loss is more thant creature Max.
+			if( newSanData.totalLoss > newSanData.sanLossMax){
+				//Get the exact san loss = loss - (overflow - max)
+				exactSanLoss = exactSanLoss - ( newSanData.totalLoss-newSanData.sanLossMax);
+				newSanData.totalLoss = newSanData.sanLossMax;
+			}
+
+			// Deduct the exact loss to that specie.
+			if( newSanData.specie){ //Wait for exact san LOSS before deduciting it from specie.
+				newSanData.specie.totalLoss = newSanData.specie.totalLoss + exactSanLoss;
+				if( newSanData.specie.totalLoss > newSanData.specie.sanLossMax) newSanData.specie.totalLoss = newSanData.specie.sanLossMax;
+				
+				//If we now that specie update it. If we don't add it.
+				if( ~i_specieSanData) encounteredCreaturesList[i_specieSanData] = newSanData.specie;
+				else encounteredCreaturesList.push( newSanData.specie);
+				
+				//Update all creature from the same specie.
+				this._updateAllOfSameSpecie( encounteredCreaturesList, newSanData.specie);
+
+			}
+
+			encounteredCreaturesList.push( newSanData);
+		}
+
+		await this.setSan( this.san - exactSanLoss);
+		await this.update( { ['data.encounteredCreatures'] : encounteredCreaturesList});
+		return exactSanLoss;
+	}
+
+
+	get sanData(){
+		return CoC7Utilities.getCreatureSanData( this);
+	}
+
+	sanLoss( checkPassed){
+		if( checkPassed) return this.sanLossCheckPassed;
+		return this.sanLossCheckFailled;
+	}
+
+	get sanLossCheckPassed(){
+		return this.data.data.special?.sanLoss?.checkPassed;
+	}
+
+	get sanLossCheckFailled(){
+		return this.data.data.special?.sanLoss?.checkFailled;
+	}
+
+	get sanLossMax(){
+		if( this.sanLossCheckFailled){
+			if( !isNaN( Number(this.sanLossCheckFailled)) ) return Number(this.sanLossCheckFailled);
+			return new Roll(this.sanLossCheckFailled).evaluate({maximize: true}).total;
+		}
+		return 0;
+	}
+
+	get sanLossMin(){
+		if( this.sanLossCheckPassed){
+			if( !isNaN( Number(this.sanLossCheckPassed)) ) return Number(this.sanLossCheckPassed);
+			return new Roll(this.sanLossCheckPassed).evaluate({maximize: true}).total;
+		}
+		return 0;
+	}
+
+	get dailySanLoss()
+	{
+		return this.data.data.attribs.san?.dailyLoss || 0;
+	}
+
 	get sanMax(){
 		if( this.data.data.attribs.san.auto){
 			if( this.cthulhuMythos) return 99 - this.cthulhuMythos;
@@ -890,6 +1111,12 @@ export class CoCActor extends Actor {
 	get san(){
 		return parseInt(this.data.data.attribs.san.value);
 	}
+
+	
+	get int(){
+		return this.getCharacteristic( 'int');
+	}
+
 
 	get occupationPointsSpent(){
 		let occupationPoints = 0;
@@ -981,7 +1208,32 @@ export class CoCActor extends Actor {
 	async setSan( value){
 		if( value < 0) value = 0;
 		if( value > this.sanMax) value = this.sanMax;
-		const loss = parseInt( this.data.data.attribs.san.value) - value;
+		let loss = parseInt( this.data.data.attribs.san.value) - value;
+		// if( creatureData){
+		// 	const creatureIndex = this.data.data.encounteredCreatures.findIndex( c => {
+		// 		if( c.id && c.id == creatureData.id) return true;
+		// 		if( c.name && c.name.toLowerCase() == creatureData.name?.toLowerCase()) return true;
+		// 		return false;});
+		// 	let encounteredCreaturesList;
+		// 	if( -1 < creatureIndex){
+		// 		encounteredCreaturesList = this.data.data.encounteredCreatures ? duplicate( this.data.data.encounteredCreatures) : [];
+		// 		const maxLossRemaining = encounteredCreaturesList[creatureIndex].maxLoss - encounteredCreaturesList[creatureIndex].totalLoss;
+		// 		if( loss > maxLossRemaining) loss = maxLossRemaining;
+		// 		encounteredCreaturesList[creatureIndex].totalLoss += loss;
+		// 	} else {
+		// 		if( loss > createData.maxLoss) loss = createData.maxLoss;
+		// 		encounteredCreaturesList = [
+		// 			{
+		// 				id: creatureData.id,
+		// 				name: creatureData.name,
+		// 				maxLoss: createData.maxLoss,
+		// 				totalLoss: loss
+		// 			}];
+		// 	}
+
+		// 	await this.item.update( { ['data.encounteredCreatures'] : encounteredCreaturesList});
+		// }
+
 		if( loss > 0){
 			let totalLoss = parseInt( this.data.data.attribs.san.dailyLoss) ? parseInt( this.data.data.attribs.san.dailyLoss) : 0;
 			totalLoss = totalLoss + loss;
