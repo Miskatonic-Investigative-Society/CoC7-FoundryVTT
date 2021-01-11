@@ -2168,3 +2168,78 @@ html {
 .sheetV2 .development .skills-list .item .adjustment-value.locked {
   background-color: white;
 }
+.chat-card-v2 .card-header {
+  display: grid;
+  grid-template-columns: 36px auto 36px;
+  grid-template-areas: "left-portrait card-title right-portrait";
+}
+.chat-card-v2 .card-header .left-portrait {
+  height: 36px;
+  grid-area: left-portrait;
+}
+.chat-card-v2 .card-header .card-title {
+  height: 36px;
+  grid-area: card-title;
+}
+.chat-card-v2 .card-header .right-portrait {
+  height: 36px;
+  grid-area: right-portrait;
+}
+.chat-card-v2 .portrait {
+  object-fit: contain;
+  border: 0;
+}
+.chat-card-v2 .status-list {
+  padding: 3px 0;
+  border-bottom: 2px groove #FFF;
+}
+.chat-card-v2 .player-actions {
+  margin: 0 !important;
+  padding: 3px 0;
+  border-bottom: 2px groove #FFF;
+}
+.chat-card-v2 .player-actions:empty {
+  display: none;
+}
+.chat-card-v2 .gm-actions {
+  margin: 0 !important;
+  padding: 3px 0;
+  border-bottom: 2px groove #FFF;
+}
+.chat-card-v2 .gm-actions:empty {
+  display: none;
+}
+.chat-card-v2 .status {
+  display: inline;
+  height: auto;
+  line-height: unset;
+  vertical-align: middle;
+  text-align: center;
+  padding: 0 3px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 0.6rem;
+  border: 1px solid #999;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.05);
+}
+.chat-card-v2 .status.pending {
+  box-shadow: 0 0 4px red;
+}
+.chat-card-v2 .roll-results {
+  padding: 0 0 3px 0;
+  border-bottom: 2px groove #FFF;
+}
+.chat-card-v2 .dice-formula {
+  margin: 0 !important;
+}
+.chat-card-v2 .dice-roll {
+  padding-top: 3px;
+}
+.chat-card-v2 .san-check .check-result,
+.chat-card-v2 .int-check .check-result {
+  display: none;
+}
+.chat-card-v2 .san-loss-roll .dice-formula {
+  display: none;
+}

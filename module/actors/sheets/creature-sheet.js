@@ -1,8 +1,8 @@
 import { CoC7ActorSheet } from './base.js';
-import { CoC7SanCheck } from '../../chat/sancheck.js';
 import { RollDialog } from '../../apps/roll-dialog.js';
 import { CoC7Parser } from '../../apps/parser.js';
 import { chatHelper } from '../../chat/helper.js';
+import { SanCheckCard } from '../../chat/cards/san-check.js';
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -62,7 +62,8 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 			const link = CoC7Parser.createCoC7Link(linkData);
 			if( link) chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), link);
 		} else {
-			CoC7SanCheck.checkTargets( this.actor.data.data.special.sanLoss.checkPassed, this.actor.data.data.special.sanLoss.checkFailled, event.shiftKey, this.tokenKey);
+			SanCheckCard.checkTargets( this.tokenKey, event.shiftKey);
+			// CoC7SanCheck.checkTargets( this.actor.data.data.special.sanLoss.checkPassed, this.actor.data.data.special.sanLoss.checkFailled, event.shiftKey, this.tokenKey);
 		}
 	}
 
