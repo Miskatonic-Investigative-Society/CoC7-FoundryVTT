@@ -93,6 +93,11 @@ COC7.talentType = {
 	other: 'CoC7.OtherTalent'
 };
 
+COC7.statusType = {
+	mania: 'CoC7.Mania',
+	phobia: 'CoC7.Phobia'
+};
+
 COC7.occupationProperties = {
 	classic: 'CoC7.Classic',
 	lovecraftian: 'CoC7.Lovecraftian',

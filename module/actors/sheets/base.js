@@ -27,6 +27,8 @@ export class CoC7ActorSheet extends ActorSheet {
 		data.meleeWpn = [];
 		data.actorFlags = {};
 
+		data.isGM = game.user.isGM;
+
 
 		if( !data.data.characteristics) {
 			data.data.characteristics =  {
@@ -92,6 +94,11 @@ export class CoC7ActorSheet extends ActorSheet {
 
 		data.isDead = this.actor.dead;
 		data.isDying = this.actor.dying;
+		data.isInABoutOfMadness = this.actor.isInABoutOfMadness;
+		data.isInsane = this.actor.isInsane;
+		data.boutOfMadness = this.actor.boutOfMadness;
+		data.sanity = this.actor.sanity;
+
 
 		data.pulpCharacter = game.settings.get('CoC7', 'pulpRules');
 
@@ -518,7 +525,18 @@ export class CoC7ActorSheet extends ActorSheet {
 		html.find('a.coc7-link').on( 'dragstart', (event)=> CoC7Parser._onDragCoC7Link(event));
 
 		html.find('.test-trigger').click( async event =>{
-			await this.actor.update( {['data.encounteredCreatures'] : []});
+			// const val = getProperty( this.actor, 'data.data.attribs.san.value');
+
+			// this.actor.enterBoutOfMadness( true, 10);
+
+			for (const effect of this.actor.effects) {
+				await effect.sheet.render(true);				
+				// effect.delete();				
+			}
+			// this.actor.effects.forEach( e => e.delete());
+			// await setProperty( this.actor, 'data.data.encounteredCreatures', []);
+
+			// await this.actor.update( {['data.encounteredCreatures'] : []});
 			if( event.shiftKey) ui.notifications.info( 'Shift cliecked');
 			// SanCheckCard.create( this.actor.actorKey, {min:'1D10',max:'1D12'}, {fastForward:event.shiftKey});
 		});
@@ -570,8 +588,12 @@ export class CoC7ActorSheet extends ActorSheet {
 
 	async _onStatusToggle(event){
 		event.preventDefault();
-		const status = event.currentTarget.dataset.status;
-		if( status) this.actor.toggleStatus( status);
+		if( event.currentTarget.dataset.status){
+			await this.actor.toggleStatus( event.currentTarget.dataset.status);
+		} else if( event.currentTarget.dataset.effect){
+			await this.actor.toggleEffect( event.currentTarget.dataset.effect);
+		}
+
 	}
 
 	async revive(){
@@ -1011,6 +1033,7 @@ export class CoC7ActorSheet extends ActorSheet {
 	*/
 
 	async _updateObject(event, formData) {
+		// ui.notifications.info('_updateObject');
 		if( event.currentTarget){
 			if( event.currentTarget.classList){
 
