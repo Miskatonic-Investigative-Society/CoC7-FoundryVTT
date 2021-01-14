@@ -1,0 +1,143 @@
+<div class="coc7 chat-card chat-card-v2 san-loss-card">
+	<header class="card-header">
+		<div class="left-portrait">
+			{{#if displayActorOnCard}}
+			<img class="portrait open-actor" data-actor-key="{{actor.actorKey}}" src="{{actor.img}}" title="{{actor.name}}"/>
+			{{/if}}
+		</div>
+		<div class="card-title">
+			SAN CHECK
+		</div>
+		<div class="right-portrait">
+			<img class="portrait open-actor" data-actor-key="{{creature.actorKey}}"  src="{{creature.img}}" title="{{creature.name}}"/>
+		</div>
+	</header>
+
+	<div class="infos">
+		<div class="loss-min"></div>
+		<div class="loss-max"></div>
+		<div class="max-loss"></div>
+	</div>
+
+	<div class="status-list">
+		<div class="status">{{localize 'CoC7.DailyLoss'}}: {{actor.dailySanLoss}}</div>
+		<div class="status">{{localize 'CoC7.Sanity'}}: {{actor.san}}/{{actor.sanMax}}</div>
+		{{#if creature}}
+			{{#if creatureEncountered}}<div class="status">Creature encountered</div>{{/if}}
+			{{#if creatureSpecieEncountered}}<div class="status">Specie encountered</div>{{/if}}
+			<div class="status">Already lost: {{sanLostToThisCreature}}</div>
+			<div class="status">Creature max loss: {{creature.sanLossMax}}</div>
+			<div class="status">Max loss to this creature: {{maxSanLossToThisCreature}}</div>
+		{{else}}
+			<div class="status">Max loss: {{maxSanLoss}}</div>
+		{{/if}}
+		{{#if state.sanRolled}}
+			{{#if sanCheck.failed}}
+				<div class="status">Check failed</div>
+				<div class="status {{#unless state.involuntaryActionPerformed}}pending{{/unless}}">{{localize 'CoC7.InvoluntaryAction'}} {{#if state.involuntaryActionPerformed}}<i class="fas fa-check"></i>{{/if}}</div>
+			{{else}}
+				<div class="status">Check passed</div>
+			{{/if}}
+			{{#if state.sanLossRolled}}
+				<div class="status {{#unless state.sanLossApplied}}pending{{/unless}}">{{ localize 'CoC7.SANLoss' }}: {{sanLoss}} {{#if state.sanLossApplied}}<i class="fas fa-check"></i>{{/if}}</div>
+			{{/if}}
+		{{/if}}
+		{{#if state.insanity}}
+			<div class="status">Insanity</div>
+		{{/if}}
+		{{#if state.sane}}
+			<div class="status">Sane</div>
+		{{/if}}
+		{{#if state.memoryRepressed}}
+			<div class="status">Memory repressed</div>
+		{{/if}}
+		{{#if state.inSanity}}
+			<div class="status">Insanity</div>
+		{{/if}}
+		{{#if state.temporaryInsane}}
+			<div class="status">Temporary insannity</div>
+		{{/if}}
+		{{#if state.indefinitelyInsane}}
+			<div class="status">Indefinitely insane</div>
+		{{/if}}
+		{{#if state.definitelyInsane}}
+			<div class="status">Good for the asylum</div>
+		{{/if}}
+
+		{{#if state.finish}}
+			<div class="status">--F-I-N-I-S-H--</div>
+		{{/if}}
+		
+	</div>
+
+	<div class='roll-results'>
+		<div class='san-check'>
+		</div>
+		<div class='san-loss-roll'>
+		</div>
+		<div class='int-check'>
+		</div>
+	</div>
+
+	<div class='card-buttons player-actions'>
+		{{#if state.sanRolled}}
+			{{#if state.involuntaryActionPerformed}}
+				{{#if state.sanLossRolled}}
+					{{#if state.sanLossApplied}}
+						<h4>{{ localize 'CoC7.SANLoss' }}: {{sanLoss}}</h4>
+						{{#if state.intRolled}}
+							{{#if state.memoryRepressed}}
+								<h4>You repress a memory</h4>
+							{{/if}}
+							{{#if state.insanity}}
+								<h4>You enter a bout of madness</h4>
+								{{#if state.boutOfMadnessResolved}}
+									{{#if state.indefinitelyInsane}}
+										<h4>Indefinitely insane</h4>
+									{{/if}}
+									{{#if state.temporaryInsane}}
+										<h4>You remember EVERYTHING : Temporary insannity</h4>
+									{{/if}}
+									{{#if state.definitelyInsane}}
+										<h4>Good for the asylum</h4>
+									{{/if}}
+								{{/if}}
+							{{else}}
+								<h4>Flow end</h4>
+							{{/if}}
+						{{else}}
+							<button data-action="roll-int-check">{{ localize 'CoC7.IntCheck' }}: ({{actor.int.value}}%)</button>
+						{{/if}}
+					{{/if}}
+				{{else}}
+					<button data-action="roll-san-loss">Roll {{ localize 'CoC7.SANLoss' }}: {{sanLossFormula}}</button>
+				{{/if}}
+			{{/if}}
+		{{else}}
+			<button data-action="roll-san-check">{{ localize 'CoC7.SanityCheck' }}: ({{actor.san}}%)</button>
+		{{/if}}
+	</div>
+
+	<div class='card-buttons gm-actions gm-visible-only'>
+		{{#if state.insanity}}
+			{{#unless state.boutOfMadnessResolved}}
+				<button data-action="advance-state" data-state="enterBoutOfMadnessRealTime">{{ localize 'CoC7.BoutRealTime' }}</button>
+				<button data-action="advance-state" data-state="enterBoutOfMadnessSummary">{{ localize 'CoC7.BoutSummary' }}</button>
+			{{/unless}}
+		{{/if}}
+		{{#if sanCheck.failed}}
+			{{#unless state.involuntaryActionPerformed}}
+				<button data-action="advance-state" data-state="involuntaryActionPerformed">{{ localize 'CoC7.InvoluntaryActionPerfomed' }}</button>
+			{{/unless}}
+		{{/if}}
+
+		{{#if state.sanLossRolled}}
+			{{#unless state.sanLossApplied}}
+				<button data-action="advance-state" data-state="sanLossApplied">{{ localize 'CoC7.Apply' }} : {{sanLoss}}</button>
+				<!-- <input type="text" value="{{sanLoss}}" data-dtype="Number"/> -->
+			{{/unless}}
+		{{/if}}
+	</div>
+
+
+</div>

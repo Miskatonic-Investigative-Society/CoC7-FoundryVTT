@@ -10,6 +10,7 @@ import { CoC7DamageRoll } from './chat/damagecards.js';
 import { CoC7SanCheck } from './chat/sancheck.js';
 import { CoC7ConCheck } from './chat/concheck.js';
 import { CoC7Parser } from './apps/parser.js';
+import { SanCheckCard } from './chat/cards/san-check.js';
 
 export class CoC7Chat{
 
@@ -929,7 +930,7 @@ export class CoC7Chat{
 	}
 
 
-	static parseChatCard( card)
+	static parseChatCard( card)  //DEPRECATED !
 	{
 		//TODO control de validité des éléments
 		//TODO implement
@@ -999,6 +1000,7 @@ export class CoC7Chat{
 		const button = event.currentTarget;
 		const card = button.closest('.chat-card');
 		const originMessage = button.closest('.message');
+		// const messageId = originMessage.dataset.messageId;
 		const action = button.dataset.action;
 
 		if ( !CoC7Chat._getChatCardActor(card) ) return;
@@ -1030,7 +1032,7 @@ export class CoC7Chat{
 					check.forcePass(luckAmount);
 				} else {
 					const upgradeIndex = parseInt(button.dataset.index);
-					check.upgradeCheck(upgradeIndex);
+					await check.upgradeCheck(upgradeIndex);
 				}
 			}
 			else
@@ -1279,32 +1281,47 @@ export class CoC7Chat{
 		}
 
 		case 'roll-san-check':{
-			const sanCheck = CoC7SanCheck.getFromCard( card);
+			const sanCheck = SanCheckCard.getFromCard( card);
 			await sanCheck.rollSan();
-			sanCheck.updateChatCard();
+			await sanCheck.updateChatCard();
 			break;
 		}
 
+		case 'advance-state':{
+			const sanCheck = SanCheckCard.getFromCard( card);
+			await sanCheck.advanceState(button.dataset.state);
+			await sanCheck.updateChatCard();
+			break;
+
+		}
+
 		case 'roll-san-loss':{
-			const sanCheck = CoC7SanCheck.getFromCard( card);
+			const sanCheck = SanCheckCard.getFromCard( card);
 			await sanCheck.rollSanLoss();
 			sanCheck.updateChatCard();
 			break;
 		}
 
-		case 'apply-san-loss':{
-			const sanCheck = CoC7SanCheck.getFromCard( card);
-			await sanCheck.applySanLoss();
+		case 'roll-int-check':{
+			const sanCheck = SanCheckCard.getFromCard( card);
+			await sanCheck.rollInt();
 			sanCheck.updateChatCard();
 			break;
 		}
+		
+		// case 'apply-san-loss':{
+		// 	const sanCheck = CoC7SanCheck.getFromCard( card);
+		// 	await sanCheck.applySanLoss();
+		// 	sanCheck.updateChatCard();
+		// 	break;
+		// }
 
-		case 'reveal-san-check':{
-			const sanCheck = CoC7SanCheck.getFromCard( card);
-			sanCheck.isBlind = false;
-			sanCheck.updateChatCard();
-			break;
-		}
+		// case 'reveal-san-check':{
+		// 	const sanCheck = CoC7SanCheck.getFromCard( card);
+		// 	sanCheck.isBlind = false;
+		// 	sanCheck.updateChatCard();
+		// 	break;
+		// }
 
 		case 'roll-con-check':{
 			const conCheck = CoC7ConCheck.getFromCard(card);

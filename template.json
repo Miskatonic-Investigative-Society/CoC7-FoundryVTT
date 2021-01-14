@@ -244,7 +244,7 @@
         }
     },
     "Item": {
-        "types": [ "item", "weapon", "skill", "setup", "occupation", "archetype", "book", "spell", "talent"],
+        "types": [ "item", "weapon", "skill", "setup", "occupation", "archetype", "book", "spell", "talent", "status"],
         "item": {
             "description": "",
             "quantity": 1,
@@ -498,7 +498,26 @@
                 "insane": false,
                 "other": false
             }
+        },
+        "status":{
+            "active": false,
+            "source": null,
+            "description": {
+                "value": "",
+                "chat": "",
+                "notes": ""},
+            "duration":{
+                "permanent":true,
+                "hours":null,
+                "minutes":null,
+                "rounds":null
+            },
+            "type":{
+                "mania":false,
+                "phobia":false
+            }
         }
+
 
     }
 }

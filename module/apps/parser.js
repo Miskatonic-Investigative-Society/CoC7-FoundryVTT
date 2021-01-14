@@ -22,8 +22,9 @@
  * 
  */
 
+import { SanCheckCard } from '../chat/cards/san-check.js';
 import { chatHelper } from '../chat/helper.js';
-import { CoC7SanCheck } from '../chat/sancheck.js';
+// import { CoC7SanCheck } from '../chat/sancheck.js';
 import { CoC7Check } from '../check.js';
 import { CoC7Utilities } from '../utilities.js';
 import { RollDialog } from './roll-dialog.js';
@@ -114,9 +115,8 @@ export class CoC7Parser{
 
 		if( data.content.toLocaleLowerCase().includes('@coc7')){
 			data.content = CoC7Parser.enrichHTML(data.content);
-			return true;	
 		}
-		return false;
+		return true; //allow message to be published !
 	}
 
 	static createCoC7Link( data){
@@ -311,13 +311,14 @@ export class CoC7Parser{
 						break;
 
 					case 'sanloss':{
-						const check = new CoC7SanCheck( 
-							token.actor.id,
-							options.sanMin,
-							options.sanMax,
-							undefined != options.difficulty?CoC7Utilities.convertDifficulty(options.difficulty):CoC7Check.difficultyLevel.regular,
-							undefined != options.modifier?Number(options.modifier):0);
-						check.toMessage( event.shiftKey);
+						SanCheckCard.create(token.actor.id,options,{fastForward:event.shiftKey});
+						// const check = new CoC7SanCheck( 
+						// 	token.actor.id,
+						// 	options.sanMin,
+						// 	options.sanMax,
+						// 	undefined != options.difficulty?CoC7Utilities.convertDifficulty(options.difficulty):CoC7Check.difficultyLevel.regular,
+						// 	undefined != options.modifier?Number(options.modifier):0);
+						// check.toMessage( event.shiftKey);
 						break;
 					}
 
@@ -346,13 +347,14 @@ export class CoC7Parser{
 					break;
 
 				case 'sanloss':{
-					const check = new CoC7SanCheck( 
-						actor.id,
-						options.sanMin,
-						options.sanMax,
-						undefined != options.difficulty?CoC7Utilities.convertDifficulty(options.difficulty):CoC7Check.difficultyLevel.regular,
-						undefined != options.modifier?Number(options.modifier):0);
-					check.toMessage( event.shiftKey);
+					SanCheckCard.create(actor.id,options,{fastForward:event.shiftKey});
+					// const check = new CoC7SanCheck( 
+					// 	actor.id,
+					// 	options.sanMin,
+					// 	options.sanMax,
+					// 	undefined != options.difficulty?CoC7Utilities.convertDifficulty(options.difficulty):CoC7Check.difficultyLevel.regular,
+					// 	undefined != options.modifier?Number(options.modifier):0);
+					// check.toMessage( event.shiftKey);
 					break;
 				}
 

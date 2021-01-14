@@ -56,6 +56,7 @@
 "CoC7.DyingCheck": "Check if you'll die immediately",
 "CoC7.Dead": "Dead",
 "CoC7.Resist": "Resist",
+"CoC7.UnderlyingInsanity": "Underlying insanity",
 "CoC7.TemporaryInsanity": "Temporary insanity",
 "CoC7.IndefiniteInsanity": "Indefinite insanity",
 "CoC7.UnlockActor": "Unlock Actor",
@@ -273,6 +274,8 @@
 "CoC7.FightingSpecializationName": "Fighting",
 "CoC7.FirearmSpecializationName": "Firearms",
 "CoC7.AnySpecName": "Any",
+"CoC7.BoutOfMadnessName": "Bout of Madness",
+"CoC7.InsanityName": "Insanity",
 
 "CoC7.NewSkillName": "new skill",
 "CoC7.AddSkill": "Add skill",
@@ -349,7 +352,10 @@
 
 "CoC7.creatureFightingSkill": "Fighting",
 
+"CoC7.InvoluntaryAction": "Involuntary action",
+"CoC7.InvoluntaryActionPerfomed": "Involuntary action performed",
 "CoC7.SanityCheck": "Sanity check",
+"CoC7.IntCheck": "Intelligence check",
 "CoC7.NoSanLoss": "No SAN loss",
 "CoC7.SANLoss": "SAN Loss",
 "CoC7.CMI": "CMI",
@@ -385,8 +391,17 @@
 "CoC7.InsaneTalent": "Insane",
 "CoC7.OtherTalent": "Other",
 
+"CoC7.BoutOfMadness": "Bout of madness",
+"CoC7.EnterBoutOfMadness": "Enter Bout of madness",
+"CoC7.BoutRealTime": "Bout of madness: Real time",
+"CoC7.BoutSummary": "Bout of madness: Summary",
+"CoC7.InsanityType": "Type of insanity",
+"CoC7.Phobia": "Phobia",
+"CoC7.Mania": "Mania",
+
 "CoC7.Items": "Items",
 "CoC7.Books": "Books",
+"CoC7.Status": "Status",
 
 "CoC7.Classic": "Classic",
 "CoC7.Lovecraftian": "Lovecraftian",
@@ -513,5 +528,14 @@
 "SETTINGS.ArtworkFixedSkillLengthHint": "The skill length in the skill tab will be limited for a more compact sheet",
 "SETTINGS.ArtworkMainFont": "Main font",
 "SETTINGS.ArtworkMainFontBold": "Main font (bold)",
-"SETTINGS.ArtworkMainFontSize": "Default font size (px)"
+"SETTINGS.ArtworkMainFontSize": "Default font size (px)",
+"SETTINGS.BoutOfMadnessSummaryTable": "Bout of madness (Summary) table",
+"SETTINGS.BoutOfMadnessRealTimeTable": "Bout of madness (Real Time) table",
+"SETTINGS.BoutOfMadnessPhobiasIndex": "Phobias index",
+"SETTINGS.BoutOfMadnessPhobiasIndexHint": "The index (roll result) that will trigger a roll in the phobias table",
+"SETTINGS.BoutOfMadnessManiasIndex": "Manias index",
+"SETTINGS.BoutOfMadnessManiasIndexHint": "The index (roll result) that will trigger a roll in the manias table",
+"SETTINGS.SamplePhobiasTable": "Sample phobias table",
+"SETTINGS.SampleManiasTable": "Sample Manias table",
+"SETTINGS.LetKeeperDecide": "Let keeper decide"
 }
