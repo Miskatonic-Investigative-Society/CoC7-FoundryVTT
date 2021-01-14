@@ -1,0 +1,69 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+    <header class="sheet-header flexrow" style="flex: 0 0 64px;padding-bottom: 2px;">
+        <div class="header-details flexrow">
+            <h1 class="name" style="height: 48px;">
+                <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
+            </h1>
+
+            <ul class="summary flexrow">
+                <li class="flex1">
+                    <input type="text" name="data.source" value="{{data.source}}" placeholder="{{ localize 'CoC7.Source' }}"/>
+                </li class="flex1">
+            </ul>
+
+        </div>
+        <img class="profile" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+
+    </header>
+    {{!-- Item Sheet Navigation --}}
+    <nav style="flex: 0 0 24px;margin-bottom: 4px;font-family: 'Modesto Condensed', 'Palatino Linotype', serif;font-size: 16px;font-weight: 700;"
+      class="sheet-navigation tabs" data-group="primary">
+        <a style="line-height: 24px;" class="item active" data-tab="description">{{ localize "CoC7.ItemDescription" }}</a>
+        <a style="line-height: 24px;" class="item" data-tab="details">{{ localize "CoC7.Details" }}</a>
+        <a style="line-height: 24px;" class="item" data-tab="effects">{{ localize "CoC7.Effects" }}</a>
+    </nav>
+
+    
+    {{!-- Item Sheet Body --}}
+    <section class="sheet-body">
+
+        {{!-- Description Tab --}}
+        <div class="tab flexrow active" data-group="primary" data-tab="description">
+
+            <div class="item-properties">
+                <ol class="properties-list">
+                    {{#each itemProperties}}
+                    <li>{{this}}</li>
+                    {{/each}}
+                </ol>
+            </div>
+        
+            {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
+        </div>
+
+        {{!-- Details Tab --}}
+        <div class="tab details" data-group="primary" data-tab="details">
+
+            <h3 class="form-header">{{ localize "CoC7.Details" }}</h3>
+            {{!-- Talent Type --}}
+            <div class="spell-type form-group stacked">
+                <label>{{ localize "CoC7.InsanityType" }}</label>
+                <div class="flexrow">
+                    <label class="checkbox">
+                        <input type="checkbox" name="data.type.mania" {{checked data.type.mania}}/> {{ localize "CoC7.Mania" }}
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" name="data.type.phobia" {{checked data.type.phobia}}/> {{ localize "CoC7.Phobia" }}
+                    </label>
+                </div>
+            </div>
+
+            <h3 class="form-header">{{ localize "CoC7.Notes"}}</h3>
+            {{editor content=data.description.notes target="data.description.notes" button=true owner=owner editable=editable}}
+        </div>
+        <div class="tab effects" data-group="primary" data-tab="effects">
+            <h1>To be implemented</h1>
+        </div>
+    </section>
+
+</form>

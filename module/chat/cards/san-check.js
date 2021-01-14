@@ -38,8 +38,8 @@ export class SanCheckCard extends ChatCardActor{
 
 	get sanLossFormula(){
 		if( this.state.sanRolled){
-			if( this.sanData.sanMax && this.sanCheck.failed) return this.sanData.sanMax;
-			if( this.sanData.sanMin && this.sanCheck.passed) return this.sanData.sanMin;
+			if( this.sanData.sanMax && this.sanCheck.failed) return !isNaN(Number(this.sanData.sanMax))?Number(this.sanData.sanMax):this.sanData.sanMax;
+			if( this.sanData.sanMin && this.sanCheck.passed) return !isNaN(Number(this.sanData.sanMin))?Number(this.sanData.sanMin):this.sanData.sanMin;
 
 			const formula = this.creature.sanLoss( this.sanCheck.passed);
 			if( formula){
@@ -52,34 +52,62 @@ export class SanCheckCard extends ChatCardActor{
 	}
 
 	get sanLostToThisCreature(){
-		return this.actor.sanLostToCreature(this.creature);
+		if( this.creature) return this.actor.sanLostToCreature(this.creature);
+		return undefined;
 	}
 
 	get maxSanLossToThisCreature(){
-		return this.actor.maxPossibleSanLossToCreature(this.creature);
+		if( this.creature) return this.actor.maxPossibleSanLossToCreature(this.creature);
+		return undefined;
+	}
+
+	get maxSanLoss(){
+		if( this.creature) return this.maxSanLossToThisCreature;
+		if( this.sanData.sanMax){
+			if( !isNaN( Number(this.sanData.sanMax)) ) return Number(this.sanData.sanMax);
+			return new Roll(this.sanData.sanMax).evaluate({maximize: true}).total;
+		}
+		return null;
 	}
 
 	get creatureEncountered(){
-		return this.actor.creatureEncountered( this.creature);
+		if( this.creature) return this.actor.creatureEncountered( this.creature);
+		return undefined;
 	}
 
 	get creatureSpecieEncountered(){
-		return this.actor.creatureSpecieEncountered( this.creature);
+		if( this.creature) return this.actor.creatureSpecieEncountered( this.creature);
+		return undefined;
 	}
 
 	get isActorLoosingSan(){
-		// Creature has no san loss (what are we doing here ???)
-		if( !this.creature.sanLossMax) return false;
+		// No san loss during bout of mad.
+		if( this.actor.isInABoutOfMadness) return false;
 
 		// The san loss is a 0
 		if( this.sanLossFormula === 0) return false;
+				
+		if( this.creature){
+		// Creature has no san loss (what are we doing here ???)
+			if( !this.creature.sanLossMax) return false;
 
-		// Actor already encountered that creature and lost already more or equal than max creature SAN loss.
-		if( this.actor.sanLostToCreature(this.creature) >= this.creature.sanLossMax) return false;
+			// Actor already encountered that creature and lost already more or equal than max creature SAN loss.
+			if( this.actor.sanLostToCreature(this.creature) >= this.creature.sanLossMax) return false;
 
-		// Max possible actor loos to this creature is 0
-		if( this.actor.maxPossibleSanLossToCreature( this.creature) == 0) return false;
+			// Max possible actor loos to this creature is 0
+			if( this.actor.maxPossibleSanLossToCreature( this.creature) == 0) return false;
+		}
+
 		return true;
+	}
+
+	get boutDurationText(){
+		if( this.boutDuration)
+		{
+			if( this.boutRealTime) return `${this.boutDuration} rounds`;
+			if( this.boutSummary) return `${this.boutDuration} hours`;
+		}
+		return null;
 	}
 
 	async advanceState( state){
@@ -90,6 +118,26 @@ export class SanCheckCard extends ChatCardActor{
 		}
 		case 'sanLossApplied':{
 			await this.applySanLoss();
+			break;
+		}
+		case 'enterBoutOfMadnessRealTime':{
+			this.boutDuration = new Roll('1D10').roll().total;
+			this.boutRealTime = true;
+			this.boutResult = await this.actor.enterBoutOfMadness(true, this.boutDuration);
+			if( this.boutResult.phobia) this.state.phobia = true;
+			if( this.boutResult.mania) this.state.mania = true;
+			if( this.boutResult.description) this.boutDescription = this.boutResult.description;
+			this.state.boutOfMadnessResolved = true;
+			break;
+		}
+		case 'enterBoutOfMadnessSummary':{
+			this.boutDuration = new Roll('1D10').roll().total;
+			this.boutSummary = true;
+			this.boutResult = await this.actor.enterBoutOfMadness(false, this.boutDuration);
+			if( this.boutResult.phobia) this.state.phobia = true;
+			if( this.boutResult.mania) this.state.mania = true;
+			if( this.boutResult.description) this.boutDescription = this.boutResult.description;
+			this.state.boutOfMadnessResolved = true;
 			break;
 		}
 		default:
@@ -109,14 +157,18 @@ export class SanCheckCard extends ChatCardActor{
 		if( !this.isActorLoosingSan){
 			this.state.sanLossRolled = true;
 			this.state.sanLossApplied = true;
+			this.state.intRolled = true;
+			this.state.insanity = false;
 			this.state.finish = true;
 			this.sanLoss = 0;
-		}
-
-		if( 'number' == typeof this.sanLossFormula){
+		} else if( 'number' == typeof this.sanLossFormula){
 			this.state.sanLossRolled = true;
-			this.sanLoss = Math.min( this.sanLossFormula, this.maxSanLossToThisCreature);
-		} else {
+			if( this.creature) this.sanLoss = Math.min( this.sanLossFormula, this.maxSanLossToThisCreature);
+			else this.sanLoss = this.sanLossFormula;
+		} else if( this.sanCheck.isFumble){
+			this.state.sanLossRolled = true;
+			this.sanLoss = this.maxSanLoss;
+		} else if( this.creature){
 			const min = new Roll(this.sanLossFormula).evaluate({minimize: true}).total;
 			if( min >= this.maxSanLossToThisCreature) {
 				this.state.sanLossRolled = true;
@@ -131,18 +183,26 @@ export class SanCheckCard extends ChatCardActor{
 	}
 
 	async rollSanLoss(){
-		this.sanLossRoll = new Roll(`{${this.sanLossFormula},${this.maxSanLossToThisCreature}}kl`);
+		if( this.creature){
+			this.sanLossRoll = new Roll(`{${this.sanLossFormula},${this.maxSanLossToThisCreature}}kl`);
+		} else {
+			this.sanLossRoll = new Roll(`${this.sanLossFormula}`);
+		}
+
 		this.sanLossRoll.roll();
 
 		await CoC7Dice.showRollDice3d( this.sanLossRoll);
 		
-		this.sanLoss = this.sanLossRoll.total;
-		this.sanLoss = Math.min( this.sanLoss, this.maxSanLossToThisCreature);
+		this.sanLoss = this.creature?Math.min( this.sanLossRoll.total, this.maxSanLossToThisCreature):this.sanLossRoll.total;
 		this.state.sanLossRolled = true;
 	}
 
 	async applySanLoss(){
-		await this.actor.looseSanToCreature( this.sanLoss, this.creature);
+		if( this.creature){
+			await this.actor.looseSanToCreature( this.sanLoss, this.creature);
+		} else {
+			await this.actor.looseSan( this.sanLoss);
+		}
 		this.state.sanLossApplied = true;
 		if( this.actor.san <= 0){
 			this.state.definitelyInsane = true;
@@ -156,10 +216,7 @@ export class SanCheckCard extends ChatCardActor{
 			this.state.shaken = true;
 			this.state.insanityTableRolled = true;
 			this.state.finish = true;
-		}
-
-		if( this.sanLoss >= 5)
-		{
+		} else {
 			this.state.intRolled = false;
 		} 
 
@@ -187,6 +244,10 @@ export class SanCheckCard extends ChatCardActor{
 		if( this.intCheck.passed){
 			this.state.insanity = true;
 			this.state.temporaryInsane = true;
+			this.state.indefinitelyInsane = false;
+		} else {
+			this.state.insanity = false;
+			this.state.temporaryInsane = false;
 			this.state.indefinitelyInsane = false;
 		}
 	}
@@ -272,7 +333,7 @@ export class SanCheckCard extends ChatCardActor{
 		}
 
 		if( 'Object' == sanCheckCard.intCheck?.constructor?.name){
-			sanCheckCard.sanCheck = Object.assign( new CoC7Check(), sanCheckCard.intCheck);
+			sanCheckCard.intCheck = Object.assign( new CoC7Check(), sanCheckCard.intCheck);
 		}
 
 		if( 'Object' == sanCheckCard.sanLossRoll?.constructor?.name){

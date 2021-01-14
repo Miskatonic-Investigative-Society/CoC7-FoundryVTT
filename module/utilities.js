@@ -13,6 +13,10 @@ export class CoC7Utilities {
 	// 	actor.inflictMajorWound();
 	// }
 
+	static async test(){
+		ui.notifications.infos('Do some stuff');
+	}
+
 
 	static getCreatureSanData( creature){
 		let creatureData;

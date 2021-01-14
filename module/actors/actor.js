@@ -25,6 +25,39 @@ export class CoCActor extends Actor {
 		await this.creatureInit(); //TODO : move this in CoCActor.create(data, options)
 	}
 
+	// ********************** Testing
+	// async update(data, options={}) {
+	// 	ui.notifications.info('return super.update(data, options);');
+	// 	ui.notifications.info(`int : ${this.characteristics.int}`);
+	// 	this.characteristics.int = 15;
+	// 	ui.notifications.info(`modified int : ${this.characteristics.int}`);
+	// 	return super.update(data, options);
+	// }
+
+
+	// get characteristics(){
+	// 	const actor = this;
+	// 	return {
+	// 		get int(){
+	// 			return actor.getProp('_int');
+	// 		},
+
+	// 		set int(x){
+	// 			actor.setProp('_int', x);
+	// 		}
+	// 	};
+	// }
+
+	// setProp(key, x){
+	// 	this[key] = x;
+	// }
+
+	// getProp(key){
+	// 	return this[key]||0;
+	// }
+	// gnitseT **********************
+
+
 	/**
    * Early version on templates did not include possibility of auto calc
    * Just check if auto is indefined, in which case it will be set to true
@@ -60,6 +93,148 @@ export class CoCActor extends Actor {
 			return;
 		}
 	}
+
+	get boutOfMadness(){
+		return this.effects.find( e => e.data.label == game.i18n.localize( 'CoC7.BoutOfMadnessName'));
+	}
+	
+	get insanity(){
+		return this.effects.find( e => e.data.label == game.i18n.localize( 'CoC7.InsanityName'));
+	}
+
+	get isInABoutOfMadness(){
+		if( !this.boutOfMadness) return false;
+		return !this.boutOfMadness.data.disabled;
+	}
+	
+	get isInsane(){
+		if( !this.insanity) return false;
+		return !this.insanity.data.disabled;
+	}
+
+	get sanity(){
+		let boutRealTime = this.boutOfMadness?.data.flags?.CoC7?.realTime? true: false;
+		let duration = boutRealTime? this.boutOfMadness?.data?.duration?.rounds: this.boutOfMadness?.data?.duration.seconds;
+		if( !boutRealTime && duration) duration = Math.round( boutRealTime/3600);
+		let indefiniteInstanity = this.insanity?.data.flags?.CoC7.indefinite? true: false;
+		let insaneDuration = indefiniteInstanity? null: this.insanity?.data?.duration.seconds;
+		if( !indefiniteInstanity && insaneDuration) insaneDuration = insaneDuration/3600;
+		let boutDurationText = this.isInABoutOfMadness?boutRealTime?`${duration} round(s)`:`${duration} hour(s)`:null;
+		const insanityDurationText = insaneDuration?this.isInsane?indefiniteInstanity?null:`${duration} hour(s)`:null:null;
+		if( !insanityDurationText && !indefiniteInstanity) indefiniteInstanity = true;
+		if( !duration) boutDurationText = '';
+
+
+		return {
+			boutOfMadness: {
+				active : this.isInABoutOfMadness,
+				realTime: this.isInABoutOfMadness?boutRealTime:undefined,
+				summary: this.isInABoutOfMadness?!boutRealTime:undefined,
+				duration: this.isInABoutOfMadness?duration:undefined,
+				durationText: this.isInABoutOfMadness?`${game.i18n.localize('CoC7.BoutOfMadness')} ${boutDurationText?boutDurationText:''}`:game.i18n.localize('CoC7.BoutOfMadness')
+			},
+			underlying:{
+				active: this.isInsane,
+				indefintie: this.isInsane?indefiniteInstanity:undefined,
+				duration: insaneDuration,
+				durationText: this.isInsane?indefiniteInstanity?game.i18n.localize('CoC7.IndefiniteInsanity'):`${game.i18n.localize('CoC7.TemporaryInsanity')} ${insanityDurationText?insanityDurationText:''}`:''
+			}
+		};
+	}
+
+	async enterBoutOfMadness( realTime = true, duration = 1){
+		// const duration = {rounds: 1,
+		// 	seconds: 17,
+		// 	startRound: 3,
+		// 	startTime: 58,
+		// 	startTurn: 4,
+		// 	turns: 2};
+		// await this.boutOfMadness?.setFlag( 'CoC7', 'madness', true);
+
+		const result = { 
+			phobia: false,
+			mania: false,
+			description: null
+		};
+		const boutOfMadnessTableId = realTime? game.settings.get( 'CoC7', 'boutOfMadnessRealTimeTable') :game.settings.get( 'CoC7', 'boutOfMadnessSummaryTable');
+		if( boutOfMadnessTableId != 'none'){
+			const boutOfMadnessTable = game.tables.get( boutOfMadnessTableId);
+			result.tableRoll = boutOfMadnessTable.roll();
+			if( TABLE_RESULT_TYPES.ENTITY == result.tableRoll.results[0].type){
+				const item = game.items.get(result.tableRoll.results[0].resultId);
+				if( item.data.data.type.phobia) result.phobia = true;
+				if( item.data.data.type.mania) result.mania = true;
+				result.description = `${item.name}:${item.data.data.description.value}`;
+				delete item.data._id;
+				await this.createOwnedItem( item.data);
+				ui.notifications.info( 'Item added');
+			}
+			if( TABLE_RESULT_TYPES.TEXT == result.tableRoll.results[0].type){
+				ui.notifications.info( 'Text added');
+				result.description = result.tableRoll.results[0].text;
+			}
+			// boutOfMadnessTable.sheet.render(true);
+		}
+		
+
+		if( this.boutOfMadness){
+			await this.boutOfMadness.update( {disabled: false,duration: {rounds: realTime&&duration?duration:undefined,seconds:realTime?undefined:duration*3600, turns: 1}});
+		} else {
+			// const effectData = 
+			await ActiveEffect.create({
+				label: game.i18n.localize( 'CoC7.BoutOfMadnessName'),
+				icon: 'systems/CoC7/artwork/icons/hanging-spider.svg',
+				origin: this.uuid,
+				duration: {rounds: realTime&&duration?duration:undefined,seconds:realTime?undefined:duration*3600, turns: 1},
+				flags:{
+					CoC7: {
+						madness: true,
+						realTime: realTime
+					}
+				},
+				// tint: '#ff0000',
+				disabled: false
+			}, this).create();
+			// const effect = this.effects.get( effectData._id);
+			// effect.sheet.render(true);
+		}
+		// const effect = this.effects.get( effectData._id);
+		// effect.sheet.render(true);
+
+		return result;
+	}
+	
+	async enterInsanity( indefinite = true, duration = undefined){
+		if( this.insanity){
+			await this.insanity.update( {disabled: false, duration: {seconds: !indefinite&&duration?duration*3600:undefined, turns: 1}});
+		} else {
+			// const effectData = 
+			await ActiveEffect.create({
+				label: game.i18n.localize( 'CoC7.InsanityName'),
+				icon: 'systems/CoC7/artwork/icons/tentacles-skull.svg',
+				origin: this.uuid,
+				duration: {seconds: !indefinite&&duration?duration*3600:undefined, turns: 1},
+				flags:{
+					CoC7: {
+						madness: true,
+						indefinite: indefinite
+					}
+				},
+				disabled: false
+			}, this).create();
+		}
+
+	}
+
+	async exitBoutOfMadness(){
+		return await this.boutOfMadness?.update( { disabled: true});
+	}
+
+	
+	async exitInsanity(){
+		return await this.insanity?.update( { disabled: true});
+	}
+
 
 	/**
 	 * Called upon new actor creation.
@@ -905,10 +1080,32 @@ export class CoCActor extends Actor {
 	maxPossibleSanLossToCreature( creature){
 		// Do we know you ?
 		const sanData = this.encounteredCreaturesSanData(creature);
-		if( sanData) return sanData.sanLossMax - sanData.totalLoss;
-
-		// We don't know you.
 		const creatureSanData = CoC7Utilities.getCreatureSanData( creature);
+
+		if( sanData){
+			//Was there any update to that creature ?
+			let changes = false;
+			if( creatureSanData.sanLossMax != sanData.sanLossMax) { sanData.sanLossMax = creatureSanData.sanLossMax; changes=true;}
+			if( creatureSanData.specie && !sanData.specie ) { sanData.specie = creatureSanData.specie; changes=true;}
+			if( creatureSanData.specie && creatureSanData.specie.sanLossMax != sanData.specie.sanLossMax) { sanData.specie.sanLossMax = creatureSanData.specie.sanLossMax; changes=true;}
+			if( sanData.totalLoss > sanData.sanLossMax) { sanData.totalLoss = sanData.sanLossMax; changes=true;}
+			if( sanData.specie && sanData.specie.totalLoss > sanData.specie.sanLossMax) { sanData.specie.totalLoss = sanData.specie.sanLossMax; changes=true;}
+
+			if( changes){
+				const encounteredCreaturesList = this.data.data.encounteredCreatures ? duplicate( this.data.data.encounteredCreatures) : [];
+				const sanDataIndex = this.encounteredCreaturesSanDataIndex( creature);
+				encounteredCreaturesList[sanDataIndex] = sanData;
+				if( sanData.specie)
+					this._updateAllOfSameSpecie( encounteredCreaturesList, sanData.specie);
+
+				this.update( { ['data.encounteredCreatures'] : encounteredCreaturesList});
+
+			}
+
+
+			return sanData.sanLossMax - sanData.totalLoss;
+		}
+		// We don't know you.
 		if( creatureSanData){
 			const sanLostToCreature = this.sanLostToCreature(creature);
 			return Math.max( 0, creatureSanData.sanLossMax - sanLostToCreature);
@@ -1049,6 +1246,11 @@ export class CoCActor extends Actor {
 		await this.setSan( this.san - exactSanLoss);
 		await this.update( { ['data.encounteredCreatures'] : encounteredCreaturesList});
 		return exactSanLoss;
+	}
+
+	async looseSan( sanLoss, creature = null){
+		if( creature) await this.looseSanToCreature( sanLoss, creature);
+		else await this.setSan( this.san - sanLoss);
 	}
 
 
@@ -1808,6 +2010,63 @@ export class CoCActor extends Actor {
 		// if( !statusValue) await this.setFlag('CoC7', statusName, true);
 		// else await this.unsetFlag('CoC7', statusName);
 
+	}
+
+	async toggleEffect( effectName){
+		switch (effectName) {
+		case 'boutOfMadness':
+			if( this.boutOfMadness){
+				const boutOfMadness = this.boutOfMadness;
+				if( boutOfMadness){
+					await boutOfMadness.update({ disabled: !boutOfMadness.data.disabled, duration: {seconds: undefined, rounds: undefined, turns: 1}});
+				}
+			} else {
+				// const effectData = 
+				await ActiveEffect.create({
+					label: game.i18n.localize( 'CoC7.BoutOfMadnessName'),
+					icon: 'systems/CoC7/artwork/icons/hanging-spider.svg',
+					origin: this.uuid,
+					duration: {seconds: undefined, rounds: undefined, turns: 1},
+					flags:{
+						CoC7: {
+							madness: true,
+							realTime: true
+						}
+					},
+					// tint: '#ff0000',
+					disabled: false
+				}, this).create();
+			}
+				
+			break;
+		case 'insanity':
+			if( this.insanity){
+				const insanity = this.insanity;
+				if( insanity){
+					await insanity.update({ disabled: !insanity.data.disabled, duration: {seconds: undefined, rounds: undefined, turns: 1}});
+				}
+			} else {
+				// const effectData = 
+				await ActiveEffect.create({
+					label: game.i18n.localize( 'CoC7.InsanityName'),
+					icon: 'systems/CoC7/artwork/icons/tentacles-skull.svg',
+					origin: this.uuid,
+					duration: {seconds: undefined, rounds: undefined, turns: 1},
+					flags:{
+						CoC7: {
+							madness: true,
+							indefinite: true
+						}
+					},
+					// tint: '#ff0000',
+					disabled: false
+				}, this).create();
+			}
+			break;
+		
+		default:
+			break;
+		}
 	}
 
 	getStatus(statusName){
