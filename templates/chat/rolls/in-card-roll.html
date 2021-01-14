@@ -1,0 +1,183 @@
+<div class="coc7 roll-result">
+	{{#if isUnknown}}
+	<div class="flexrow difficulty-selector gm-visible-only" style="padding-bottom: 2px;">
+		<span class="flex1 toggle-switch simple-flag {{#if gmDifficultyRegular}}switched-on{{/if}}"
+			title="Regular difficulty" 
+			style="text-align:center;white-space: nowrap;"
+			data-flag="gmDifficultyRegular" 
+			data-selected={{gmDifficultyRegular}}>{{localize 'CoC7.RollDifficultyRegular'}} {{regularThreshold}}%</span>
+		<span class="flex1 toggle-switch simple-flag {{#if gmDifficultyHard}}switched-on{{/if}}"
+			title="Hard difficulty" 
+			style="text-align:center;white-space: nowrap;" 
+			data-flag="gmDifficultyHard" 
+			data-selected={{gmDifficultyHard}}>{{localize 'CoC7.RollDifficultyHard'}} {{hardThreshold}}%</span>
+		<span class="flex1 toggle-switch simple-flag {{#if gmDifficultyExtreme}}switched-on{{/if}}"
+			title="Extreme difficulty" 
+			style="text-align:center;white-space: nowrap;" 
+			data-flag="gmDifficultyExtreme" 
+			data-selected={{gmDifficultyExtreme}}>{{localize 'CoC7.RollDifficultyExtreme'}} {{extremeThreshold}}%</span>
+		<span class="flex1 toggle-switch simple-flag {{#if gmDifficultyCritical}}switched-on{{/if}}"
+			title="Critical difficulty" 
+			style="text-align:center;white-space: nowrap;" 
+			data-flag="gmDifficultyCritical" 
+			data-selected={{gmDifficultyCritical}}>{{localize 'CoC7.RollDifficultyCritical'}}</span>
+	</div>
+	{{/if}}
+	<div class="dice-roll {{#if isBlind}}gm-visible-only{{/if}}">
+		<div class="dice-result"
+			data-total="{{dices.total}}"
+			data-ten-result="{{dices.tenResult}}">
+			<div class="dice-formula {{#if isSuccess}}success{{/if}} {{#if isFailure}}failure{{/if}} {{#if isCritical}}critical{{/if}} {{#if isFumble}}fumble{{/if}}"
+			  title="{{successLevelIcons.hint}}">
+				{{#if successLevelIcons}}
+					<span class="roll-icons {{successLevelIcons.cssClass}}">
+					{{#each successLevelIcons.icons as |icon|}}
+						<i class="fas fa-{{icon}}"></i>
+					{{/each}}
+					</span>
+				{{else}}
+				1D% {{#if dices.hasBonus}}{{dices.bonus}} {{dices.bonusType}} {{localize 'CoC7.Dice'}}{{/if}}
+				{{/if}}
+			</div>
+			<div class="dice-tooltip" style="display: none;">
+				<section class="tooltip-part">
+					<div class="dice ten-dice">
+						<span class="part-formula part-header flexrow">
+							{{#if dices.tenOnlyOneDie}}
+							{{localize 'CoC7.TensDie'}}
+							{{else}}
+							{{dices.tens.length}} {{localize 'CoC7.TensDice'}}
+							{{/if}}
+							<div class="flex1"></div>
+							<span class="part-total flex0">{{dices.tenResult}}</span>
+						</span>
+						<ol class="dice-rolls">
+							{{#each dices.tens as |die key|}}
+								<li
+									data-selected="{{die.selected}}"
+									data-is-max="{{die.isMax}}"
+									data-is-min="{{die.isMin}}"
+									data-value="{{die.value}}"
+									class="roll die d10 {{#unless die.selected}}discarded{{/unless}} {{#if die.isMax}}min{{/if}} {{#if die.isMin}}max{{/if}}">{{die.value}}</li>
+							{{/each}}
+						</ol>
+					</div>
+				</section>
+				<section class="tooltip-part">
+					<div class="dice unit-die">
+						<span class="part-formula part-header flexrow">
+							{{localize 'CoC7.UnitsDie'}}
+							<div class="flex1"></div>
+							<span class="part-total flex0">{{dices.unit.value}}</span>
+						</span>
+						<ol class="dice-rolls">
+							<li data-value="{{dices.unit.value}}" class="roll die d10">{{dices.unit.value}}</li>
+						</ol>
+					</div>
+				</section>
+
+				{{#if successRequired}}
+				<h4 class="result-details">{{resultType}}, {{successRequired}}</h4>
+				{{else}}
+				<h4 class="result-details">{{resultType}}</h4>
+				{{/if}}
+
+				<div class="card-buttons owner-only" data-actor-id="{{actor._id}}" style="padding-top: 5px;margin: 0;">
+					{{#unless isSuccess}}
+						{{#if canBePushed}}
+							{{#unless pushing}}
+							<button data-action="push">{{localize 'CoC7.PushSkill'}}</button>
+							{{/unless}}
+						{{/if}}
+						{{#if hasEnoughLuck}}
+							{{#unless pushing}}
+							<button class="pass-check" data-action="useLuck" data-luck-amount="{{luckNeeded}}" data-new-success-level="{{difficulty}}">{{luckNeededTxt}}</button>
+							{{/unless}}
+						{{/if}}
+					{{/unless}}
+					
+					{{#unless pushing}}
+					{{#if canIncreaseSuccess}}
+						<div class="increase-success">
+						{{#each increaseSuccess as |level key|}}
+							<button
+							data-index="{{key}}"
+							data-action="useLuck"
+							data-luck-amount="{{level.luckToSpend}}"
+							data-luck-to-spend="{{level.luckToSpend}}"
+							data-new-success-level="{{level.difficulty}}"
+							data-difficulty="{{level.difficulty}}"
+							data-difficulty-name="{{difficultyName}}">{{localize 'CoC7.IncreaseSuccessLevel'}} : {{level.difficultyName}} - {{level.luckToSpend}} {{ localize 'CoC7.Luck'}}.</button>
+						{{/each}}
+						</div>
+					{{/if}}
+					{{/unless}}
+				</div>
+			</div>
+			{{#unless hideDiceResult}}
+			<h4 class="check-result dice-total {{cssClass}}" title="{{resultType}}">{{dices.total}} {{#if pushing}} {{localize 'CoC7.PushedRoll'}}{{/if}} {{#if luckSpent}} - {{ localize 'CoC7.LuckSpentAlt' }} ({{totalLuckSpent}}){{/if}}</h4>
+			{{/unless}}
+			{{#if hasMalfunction}}<h4 class="malfunction">{{malfunctionTxt}}</h4>{{/if}}
+		</div>
+	</div>
+
+	{{#if isBlind}}
+	<div class="dice-roll user-visible-only">
+		<div class="dice-result">
+			<div class="dice-formula">???</div>
+			{{#if forced}}
+			<h4 class="dice-total {{playerCssClass}}">
+				{{#if forcedSuccess}}
+					Pass !
+				{{else}}
+					{{#if forcedFailure}}
+						Fail !
+					{{else}}
+						{{#if isSuccess}}
+							Pass !
+						{{else}}
+							{{#if isFailure}}
+								Fail !
+							{{else}}
+								??
+							{{/if}}
+						{{/if}}
+					{{/if}}
+				{{/if}}
+			</h4>
+			{{else}}
+				<h4 class="dice-total">?</h4>
+			{{/if}}
+		</div>
+	</div>
+	{{#unless denyBlindTampering}}
+	<div class="card-buttons gm-visible-only">
+		{{#unless isUnknown}}
+			<button data-action="reveal-check">{{localize 'CoC7.RevealCheck'}}</button>
+		{{/unless}}
+		{{#unless forced}}
+			<button data-action="force-pass">{{localize 'CoC7.check.ForcePass'}}</button>
+			<button data-action="force-fail">{{localize 'CoC7.check.ForceFail'}}</button>
+			{{#unless isCritical}}
+				<button data-action="increase-success-level">{{localize 'CoC7.IncreaseSuccessLevel'}}</button>
+			{{/unless}}
+			{{#unless isFumble}}
+				<button data-action="decrease-success-level">{{localize 'CoC7.check.DecreaseSuccessLevel'}}</button>
+			{{/unless}}
+		{{/unless}}
+		
+		{{#unless skill.data.data.flags.developement}}
+			{{#if canAwardExperience}}
+				{{#if forcedSuccess}}
+					<button data-action="flag-for-development">{{localize 'CoC7.check.FlagForDevelopment'}}</button>
+				{{else}}
+					{{#if isSuccess}}
+						<button data-action="flag-for-development">{{localize 'CoC7.check.FlagForDevelopment'}}</button>
+					{{/if}}
+				{{/if}}
+			{{/if}}
+		{{/unless}}
+	</div>
+	{{/unless}}
+	{{/if}}
+</div>

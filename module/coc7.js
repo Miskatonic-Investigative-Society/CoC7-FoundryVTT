@@ -27,6 +27,7 @@ import { Updater } from './updater.js';
 // import { CoC7ActorSheet } from './actors/sheets/base.js';
 import {CoC7Utilities} from './utilities.js';
 import {CoC7Parser} from './apps/parser.js';
+import { CoC7StatusSheet } from './items/sheets/status.js';
 
 Hooks.once('init', async function() {
 
@@ -385,6 +386,7 @@ Hooks.once('init', async function() {
 	Items.registerSheet('CoC7', CoC7BookSheet, { types: ['book'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7SpellSheet, { types: ['spell'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7TalentSheet, { types: ['talent'], makeDefault: true});
+	Items.registerSheet('CoC7', CoC7StatusSheet, { types: ['status'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7OccupationSheet, { types: ['occupation'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7ArchetypeSheet, { types: ['archetype'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7SetupSheet, { types: ['setup'], makeDefault: true});
@@ -397,7 +399,7 @@ Hooks.on('renderCombatTracker', (app, html, data) => CoC7Combat.renderCombatTrac
 Hooks.once('setup', function() {
 
 	// Localize CONFIG objects once up-front
-	const toLocalize = [ 'spellProperties', 'bookType', 'talentType', 'occupationProperties'];
+	const toLocalize = [ 'spellProperties', 'bookType', 'talentType', 'occupationProperties', 'statusType'];
 
 	for ( let o of toLocalize ) {
 		const localized = Object.entries(COC7[o]).map(e => {
@@ -423,6 +425,89 @@ Hooks.on('ready', async () =>{
 		if (data.type == 'updateChar')
 			CoC7Utilities.updateCharSheets();
 	});
+
+	function _tableSettingsChanged( table, id){
+		if( 'none' == id ) game.CoC7.tables[table]=null;
+		else game.CoC7.tables[table]=game.tables.get(id);		
+	}
+
+	// function _tableIndexChanged( table, index){
+	// 	game.CoC7.tables[table]=index;		
+	// }
+	
+	const tableChoice = { 'none': 'SETTINGS.LetKeeperDecide'};
+	game.tables.forEach(t => {
+		tableChoice[t.data._id] = t.data.name;		
+	});
+
+	game.settings.register('CoC7', 'boutOfMadnessSummaryTable',{
+		name: 'SETTINGS.BoutOfMadnessSummaryTable',
+		scope: 'world',
+		config: true,
+		default: 'none',
+		type: String,
+		choices: tableChoice,
+		onChange:  id => _tableSettingsChanged( 'boutOfMadness_Summary', id)
+	});
+
+	game.settings.register('CoC7', 'boutOfMadnessRealTimeTable',{
+		name: 'SETTINGS.BoutOfMadnessRealTimeTable',
+		scope: 'world',
+		config: true,
+		default: 'none',
+		type: String,
+		choices: tableChoice,
+		onChange:  id => _tableSettingsChanged( 'boutOfMadness_RealTime', id)
+	});
+
+	// game.settings.register('CoC7', 'boutOfMadnessPhobiasIndex',{
+	// 	name: 'SETTINGS.BoutOfMadnessPhobiasIndex',
+	// 	hint: 'SETTINGS.BoutOfMadnessPhobiasIndexHint',
+	// 	scope: 'world',
+	// 	config: true,
+	// 	default: 9,
+	// 	type: Number,
+	// 	onChange:  id => _tableIndexChanged( 'phobiasIndex', id)	
+	// });
+
+	// game.settings.register('CoC7', 'boutOfMadnessManiasIndex',{
+	// 	name: 'SETTINGS.BoutOfMadnessManiasIndex',
+	// 	hint: 'SETTINGS.BoutOfMadnessManiasIndexHint',
+	// 	scope: 'world',
+	// 	config: true,
+	// 	default: 10,
+	// 	type: Number,
+	// 	onChange:  id => _tableIndexChanged( 'maniasIndex', id)	
+	// });
+
+	game.settings.register('CoC7', 'samplePhobiasTable',{
+		name: 'SETTINGS.SamplePhobiasTable',
+		scope: 'world',
+		config: true,
+		default: 'none',
+		type: String,
+		choices: tableChoice,
+		onChange:  id => _tableSettingsChanged( 'phobias', id)
+	});
+
+	game.settings.register('CoC7', 'sampleManiasTable',{
+		name: 'SETTINGS.SampleManiasTable',
+		scope: 'world',
+		config: true,
+		default: 'none',
+		type: String,
+		choices: tableChoice,
+		onChange:  id => _tableSettingsChanged( 'manias', id)
+	});
+
+	game.CoC7.tables = {
+		boutOfMadness_Summary: ('none' == game.settings.get('CoC7', 'boutOfMadnessSummaryTable'))?null:game.tables.get(game.settings.get('CoC7', 'boutOfMadnessSummaryTable')),
+		boutOfMadness_RealTime: ('none' == game.settings.get('CoC7', 'boutOfMadnessRealTimeTable'))?null:game.tables.get(game.settings.get('CoC7', 'boutOfMadnessRealTimeTable')),
+		// maniasIndex: ge.settings.get('CoC7', 'boutOfMadnessPhobiasIndex'),
+		// phobiasIndex: game.settings.get('CoC7', 'boutOfMadnessManiasIndex'),
+		phobias: ('none' == game.settings.get('CoC7', 'samplePhobiasTable'))?null:game.tables.get(game.settings.get('CoC7', 'samplePhobiasTable')),
+		manias: ('none' == game.settings.get('CoC7', 'sampleManiasTable'))?null:game.tables.get(game.settings.get('CoC7', 'sampleManiasTable')),
+	};
 });
 
 // Hooks.on('preCreateActor', (createData) => CoCActor.initToken( createData));
@@ -459,6 +544,25 @@ Hooks.on('getSceneControlButtons', (buttons) => {
 			onClick :async () => await CoC7Utilities.toggleCharCreation()
 		});
 	}
+
+
+	// buttons.push({
+	// 	activeTool: 'diceroll',
+	// 	icon: 'game-icon game-icon-d10',
+	// 	layer: 'TokenLayer',
+	// 	name: 'token',
+	// 	title: 'CONTROLS.GroupBasic',
+	// 	tools:[
+	// 		{
+	// 			toggle: false,
+	// 			icon: 'game-icon game-icon-d10',
+	// 			name:'diceroll',
+	// 			title: 'roll some dice',
+	// 			onClick: async() => await CoC7Utilities.test()
+	// 		}
+	// 	],
+	// 	visible: true
+	// });
 });
 
 // Hooks.on('renderSceneControls', () => CoC7Utilities.updateCharSheets());

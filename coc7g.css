@@ -70,6 +70,7 @@
 .coc7.sheet.book .sheet-header img.profile,
 .coc7.sheet.spell .sheet-header img.profile,
 .coc7.sheet.talent .sheet-header img.profile,
+.coc7.sheet.status .sheet-header img.profile,
 .coc7.sheet.archetype .sheet-header img.profile {
   border: 1px groove;
   flex: 0 0 64px;
@@ -82,6 +83,7 @@
 .coc7.sheet.book .sheet-header .name input,
 .coc7.sheet.spell .sheet-header .name input,
 .coc7.sheet.talent .sheet-header .name input,
+.coc7.sheet.status .sheet-header .name input,
 .coc7.sheet.archetype .sheet-header .name input {
   margin: 0;
   padding: 0;
@@ -89,22 +91,26 @@
 .coc7.sheet.book .details .editor,
 .coc7.sheet.spell .details .editor,
 .coc7.sheet.talent .details .editor,
+.coc7.sheet.status .details .editor,
 .coc7.sheet.archetype .details .editor {
   height: 100px;
 }
 .coc7.sheet.book .details .editor button,
 .coc7.sheet.spell .details .editor button,
 .coc7.sheet.talent .details .editor button,
+.coc7.sheet.status .details .editor button,
 .coc7.sheet.archetype .details .editor button {
   height: 20px;
 }
 .coc7.sheet.book .details input[type="text"],
 .coc7.sheet.spell .details input[type="text"],
 .coc7.sheet.talent .details input[type="text"],
+.coc7.sheet.status .details input[type="text"],
 .coc7.sheet.archetype .details input[type="text"],
 .coc7.sheet.book .details select,
 .coc7.sheet.spell .details select,
 .coc7.sheet.talent .details select,
+.coc7.sheet.status .details select,
 .coc7.sheet.archetype .details select {
   height: 20px;
   border: 1px solid #7a7971;
@@ -113,6 +119,7 @@
 .coc7.sheet.book .details .form-group,
 .coc7.sheet.spell .details .form-group,
 .coc7.sheet.talent .details .form-group,
+.coc7.sheet.status .details .form-group,
 .coc7.sheet.archetype .details .form-group {
   border: 0;
   margin: 0;
@@ -120,6 +127,7 @@
 .coc7.sheet.book .details .form-group .stacked,
 .coc7.sheet.spell .details .form-group .stacked,
 .coc7.sheet.talent .details .form-group .stacked,
+.coc7.sheet.status .details .form-group .stacked,
 .coc7.sheet.archetype .details .form-group .stacked {
   flex: none;
   padding-right: 5px;
@@ -127,6 +135,7 @@
 .coc7.sheet.book .details .form-group span,
 .coc7.sheet.spell .details .form-group span,
 .coc7.sheet.talent .details .form-group span,
+.coc7.sheet.status .details .form-group span,
 .coc7.sheet.archetype .details .form-group span {
   text-align: center;
   line-height: 20px;
@@ -134,42 +143,49 @@
 .coc7.sheet.book .details .form-group.input-select select,
 .coc7.sheet.spell .details .form-group.input-select select,
 .coc7.sheet.talent .details .form-group.input-select select,
+.coc7.sheet.status .details .form-group.input-select select,
 .coc7.sheet.archetype .details .form-group.input-select select {
   flex: 1.8;
 }
 .coc7.sheet.book .details .form-group.input-select-select select,
 .coc7.sheet.spell .details .form-group.input-select-select select,
 .coc7.sheet.talent .details .form-group.input-select-select select,
+.coc7.sheet.status .details .form-group.input-select-select select,
 .coc7.sheet.archetype .details .form-group.input-select-select select {
   flex: 1.5;
 }
 .coc7.sheet.book .details .form-group.uses-per input,
 .coc7.sheet.spell .details .form-group.uses-per input,
 .coc7.sheet.talent .details .form-group.uses-per input,
+.coc7.sheet.status .details .form-group.uses-per input,
 .coc7.sheet.archetype .details .form-group.uses-per input {
   flex: 1;
 }
 .coc7.sheet.book .details .form-group.uses-per span,
 .coc7.sheet.spell .details .form-group.uses-per span,
 .coc7.sheet.talent .details .form-group.uses-per span,
+.coc7.sheet.status .details .form-group.uses-per span,
 .coc7.sheet.archetype .details .form-group.uses-per span {
   flex: 0 0 16px;
 }
 .coc7.sheet.book .details .form-group.uses-per select,
 .coc7.sheet.spell .details .form-group.uses-per select,
 .coc7.sheet.talent .details .form-group.uses-per select,
+.coc7.sheet.status .details .form-group.uses-per select,
 .coc7.sheet.archetype .details .form-group.uses-per select {
   flex: 3;
 }
 .coc7.sheet.book .details span.sep,
 .coc7.sheet.spell .details span.sep,
 .coc7.sheet.talent .details span.sep,
+.coc7.sheet.status .details span.sep,
 .coc7.sheet.archetype .details span.sep {
   flex: 0 0 8px;
 }
 .coc7.sheet.book .details .prepared,
 .coc7.sheet.spell .details .prepared,
 .coc7.sheet.talent .details .prepared,
+.coc7.sheet.status .details .prepared,
 .coc7.sheet.archetype .details .prepared {
   flex: 1.3 !important;
   text-align: right;
@@ -178,6 +194,7 @@
 .coc7.sheet.book .details .spell-materials,
 .coc7.sheet.spell .details .spell-materials,
 .coc7.sheet.talent .details .spell-materials,
+.coc7.sheet.status .details .spell-materials,
 .coc7.sheet.archetype .details .spell-materials {
   flex: 0 0 100%;
   margin: 0.25em 0;
@@ -186,6 +203,7 @@
 .coc7.sheet.book .details .spell-materials label,
 .coc7.sheet.spell .details .spell-materials label,
 .coc7.sheet.talent .details .spell-materials label,
+.coc7.sheet.status .details .spell-materials label,
 .coc7.sheet.archetype .details .spell-materials label {
   flex: 0 0 64px;
   text-align: right;
@@ -196,6 +214,7 @@
 .coc7.sheet.book .details .spell-materials input[type="text"],
 .coc7.sheet.spell .details .spell-materials input[type="text"],
 .coc7.sheet.talent .details .spell-materials input[type="text"],
+.coc7.sheet.status .details .spell-materials input[type="text"],
 .coc7.sheet.archetype .details .spell-materials input[type="text"] {
   flex: 0 0 48px;
   margin-right: 10px;
@@ -203,24 +222,28 @@
 .coc7.sheet.book .sheet-navigation,
 .coc7.sheet.spell .sheet-navigation,
 .coc7.sheet.talent .sheet-navigation,
+.coc7.sheet.status .sheet-navigation,
 .coc7.sheet.archetype .sheet-navigation {
   margin-bottom: 5px;
 }
 .coc7.sheet.book .sheet-navigation .item,
 .coc7.sheet.spell .sheet-navigation .item,
 .coc7.sheet.talent .sheet-navigation .item,
+.coc7.sheet.status .sheet-navigation .item,
 .coc7.sheet.archetype .sheet-navigation .item {
   font-size: 18px;
 }
 .coc7.sheet.book .sheet-body,
 .coc7.sheet.spell .sheet-body,
 .coc7.sheet.talent .sheet-body,
+.coc7.sheet.status .sheet-body,
 .coc7.sheet.archetype .sheet-body {
   overflow: hidden;
 }
 .coc7.sheet.book .sheet-body .tab,
 .coc7.sheet.spell .sheet-body .tab,
 .coc7.sheet.talent .sheet-body .tab,
+.coc7.sheet.status .sheet-body .tab,
 .coc7.sheet.archetype .sheet-body .tab {
   padding: 0 5px;
   overflow: hidden auto;
@@ -228,6 +251,7 @@
 .coc7.sheet.book .sheet-body .item-properties,
 .coc7.sheet.spell .sheet-body .item-properties,
 .coc7.sheet.talent .sheet-body .item-properties,
+.coc7.sheet.status .sheet-body .item-properties,
 .coc7.sheet.archetype .sheet-body .item-properties {
   flex: 0 0 120px;
   margin: 5px 5px 5px 0;
@@ -237,24 +261,28 @@
 .coc7.sheet.book .sheet-body .item-properties .form-group,
 .coc7.sheet.spell .sheet-body .item-properties .form-group,
 .coc7.sheet.talent .sheet-body .item-properties .form-group,
+.coc7.sheet.status .sheet-body .item-properties .form-group,
 .coc7.sheet.archetype .sheet-body .item-properties .form-group {
   margin: 0;
 }
 .coc7.sheet.book .sheet-body .item-properties .form-group label,
 .coc7.sheet.spell .sheet-body .item-properties .form-group label,
 .coc7.sheet.talent .sheet-body .item-properties .form-group label,
+.coc7.sheet.status .sheet-body .item-properties .form-group label,
 .coc7.sheet.archetype .sheet-body .item-properties .form-group label {
   line-height: 20px;
 }
 .coc7.sheet.book .sheet-body .item-properties .form-group input,
 .coc7.sheet.spell .sheet-body .item-properties .form-group input,
 .coc7.sheet.talent .sheet-body .item-properties .form-group input,
+.coc7.sheet.status .sheet-body .item-properties .form-group input,
 .coc7.sheet.archetype .sheet-body .item-properties .form-group input {
   text-align: right;
 }
 .coc7.sheet.book .sheet-body .item-properties .properties-list,
 .coc7.sheet.spell .sheet-body .item-properties .properties-list,
 .coc7.sheet.talent .sheet-body .item-properties .properties-list,
+.coc7.sheet.status .sheet-body .item-properties .properties-list,
 .coc7.sheet.archetype .sheet-body .item-properties .properties-list {
   list-style: none;
   margin: 0;
@@ -263,6 +291,7 @@
 .coc7.sheet.book .sheet-body .item-properties .properties-list li,
 .coc7.sheet.spell .sheet-body .item-properties .properties-list li,
 .coc7.sheet.talent .sheet-body .item-properties .properties-list li,
+.coc7.sheet.status .sheet-body .item-properties .properties-list li,
 .coc7.sheet.archetype .sheet-body .item-properties .properties-list li {
   margin: 3px 0;
   padding: 0 2px;
@@ -275,6 +304,7 @@
 .coc7.sheet.book .sheet-body .spell-list,
 .coc7.sheet.spell .sheet-body .spell-list,
 .coc7.sheet.talent .sheet-body .spell-list,
+.coc7.sheet.status .sheet-body .spell-list,
 .coc7.sheet.archetype .sheet-body .spell-list {
   list-style: none;
   margin: 0;
@@ -285,6 +315,7 @@
 .coc7.sheet.book .sheet-body .spell-list .spell,
 .coc7.sheet.spell .sheet-body .spell-list .spell,
 .coc7.sheet.talent .sheet-body .spell-list .spell,
+.coc7.sheet.status .sheet-body .spell-list .spell,
 .coc7.sheet.archetype .sheet-body .spell-list .spell {
   line-height: 16px;
   padding: 0 2px;
@@ -293,12 +324,14 @@
 .coc7.sheet.book .sheet-body .spell-list .spell:last-child,
 .coc7.sheet.spell .sheet-body .spell-list .spell:last-child,
 .coc7.sheet.talent .sheet-body .spell-list .spell:last-child,
+.coc7.sheet.status .sheet-body .spell-list .spell:last-child,
 .coc7.sheet.archetype .sheet-body .spell-list .spell:last-child {
   border-bottom: none;
 }
 .coc7.sheet.book .sheet-body .spell-list .spell .spell-name,
 .coc7.sheet.spell .sheet-body .spell-list .spell .spell-name,
 .coc7.sheet.talent .sheet-body .spell-list .spell .spell-name,
+.coc7.sheet.status .sheet-body .spell-list .spell .spell-name,
 .coc7.sheet.archetype .sheet-body .spell-list .spell .spell-name {
   cursor: pointer;
   max-height: 24px;
@@ -307,6 +340,7 @@
 .coc7.sheet.book .sheet-body .spell-list .spell .spell-name .spell-image,
 .coc7.sheet.spell .sheet-body .spell-list .spell .spell-name .spell-image,
 .coc7.sheet.talent .sheet-body .spell-list .spell .spell-name .spell-image,
+.coc7.sheet.status .sheet-body .spell-list .spell .spell-name .spell-image,
 .coc7.sheet.archetype .sheet-body .spell-list .spell .spell-name .spell-image {
   flex: 0 0 16px;
   background-size: 16px;
@@ -315,6 +349,7 @@
 .coc7.sheet.book .sheet-body .spell-list .spell .spell-name h4,
 .coc7.sheet.spell .sheet-body .spell-list .spell .spell-name h4,
 .coc7.sheet.talent .sheet-body .spell-list .spell .spell-name h4,
+.coc7.sheet.status .sheet-body .spell-list .spell .spell-name h4,
 .coc7.sheet.archetype .sheet-body .spell-list .spell .spell-name h4 {
   margin: 0;
   white-space: nowrap;
@@ -323,24 +358,28 @@
 .coc7.sheet.book .sheet-body .spell-list .spell .spell-name.rollable:hover .item-image,
 .coc7.sheet.spell .sheet-body .spell-list .spell .spell-name.rollable:hover .item-image,
 .coc7.sheet.talent .sheet-body .spell-list .spell .spell-name.rollable:hover .item-image,
+.coc7.sheet.status .sheet-body .spell-list .spell .spell-name.rollable:hover .item-image,
 .coc7.sheet.archetype .sheet-body .spell-list .spell .spell-name.rollable:hover .item-image {
   background-image: url("/icons/svg/d20-grey.svg") !important;
 }
 .coc7.sheet.book .sheet-body .spell-list .spell .spell-name.rollable .item-image:hover,
 .coc7.sheet.spell .sheet-body .spell-list .spell .spell-name.rollable .item-image:hover,
 .coc7.sheet.talent .sheet-body .spell-list .spell .spell-name.rollable .item-image:hover,
+.coc7.sheet.status .sheet-body .spell-list .spell .spell-name.rollable .item-image:hover,
 .coc7.sheet.archetype .sheet-body .spell-list .spell .spell-name.rollable .item-image:hover {
   background-image: url("/icons/svg/d20-black.svg") !important;
 }
 .coc7.sheet.book .sheet-body .spell-list .spell .spell-name i.attuned,
 .coc7.sheet.spell .sheet-body .spell-list .spell .spell-name i.attuned,
 .coc7.sheet.talent .sheet-body .spell-list .spell .spell-name i.attuned,
+.coc7.sheet.status .sheet-body .spell-list .spell .spell-name i.attuned,
 .coc7.sheet.archetype .sheet-body .spell-list .spell .spell-name i.attuned {
   color: #7a7971;
 }
 .coc7.sheet.book .sheet-body .spell-list .item-controls,
 .coc7.sheet.spell .sheet-body .spell-list .item-controls,
 .coc7.sheet.talent .sheet-body .spell-list .item-controls,
+.coc7.sheet.status .sheet-body .spell-list .item-controls,
 .coc7.sheet.archetype .sheet-body .spell-list .item-controls {
   flex: 0 0 32px;
   display: flex;
@@ -353,36 +392,42 @@
 .coc7.sheet.book .sheet-body .spell-list .item-controls > *,
 .coc7.sheet.spell .sheet-body .spell-list .item-controls > *,
 .coc7.sheet.talent .sheet-body .spell-list .item-controls > *,
+.coc7.sheet.status .sheet-body .spell-list .item-controls > *,
 .coc7.sheet.archetype .sheet-body .spell-list .item-controls > * {
   flex: 1;
 }
 .coc7.sheet.book .sheet-body .spell-list .item-controls .flex1,
 .coc7.sheet.spell .sheet-body .spell-list .item-controls .flex1,
 .coc7.sheet.talent .sheet-body .spell-list .item-controls .flex1,
+.coc7.sheet.status .sheet-body .spell-list .item-controls .flex1,
 .coc7.sheet.archetype .sheet-body .spell-list .item-controls .flex1 {
   flex: 1;
 }
 .coc7.sheet.book .sheet-body .spell-list .item-controls .flex2,
 .coc7.sheet.spell .sheet-body .spell-list .item-controls .flex2,
 .coc7.sheet.talent .sheet-body .spell-list .item-controls .flex2,
+.coc7.sheet.status .sheet-body .spell-list .item-controls .flex2,
 .coc7.sheet.archetype .sheet-body .spell-list .item-controls .flex2 {
   flex: 2;
 }
 .coc7.sheet.book .sheet-body .spell-list .item-controls .flex3,
 .coc7.sheet.spell .sheet-body .spell-list .item-controls .flex3,
 .coc7.sheet.talent .sheet-body .spell-list .item-controls .flex3,
+.coc7.sheet.status .sheet-body .spell-list .item-controls .flex3,
 .coc7.sheet.archetype .sheet-body .spell-list .item-controls .flex3 {
   flex: 3;
 }
 .coc7.sheet.book .sheet-body .spell-list .item-controls .flex4,
 .coc7.sheet.spell .sheet-body .spell-list .item-controls .flex4,
 .coc7.sheet.talent .sheet-body .spell-list .item-controls .flex4,
+.coc7.sheet.status .sheet-body .spell-list .item-controls .flex4,
 .coc7.sheet.archetype .sheet-body .spell-list .item-controls .flex4 {
   flex: 4;
 }
 .coc7.sheet.book .sheet-body .spell-list .item-controls a,
 .coc7.sheet.spell .sheet-body .spell-list .item-controls a,
 .coc7.sheet.talent .sheet-body .spell-list .item-controls a,
+.coc7.sheet.status .sheet-body .spell-list .item-controls a,
 .coc7.sheet.archetype .sheet-body .spell-list .item-controls a {
   flex: 0 0 16px;
   font-size: 10px;
@@ -392,6 +437,7 @@
 .coc7.sheet.book .sheet-body .spell-list .item-summary,
 .coc7.sheet.spell .sheet-body .spell-list .item-summary,
 .coc7.sheet.talent .sheet-body .spell-list .item-summary,
+.coc7.sheet.status .sheet-body .spell-list .item-summary,
 .coc7.sheet.archetype .sheet-body .spell-list .item-summary {
   flex: 0 0 100%;
   font-size: 12px;
@@ -2167,4 +2213,79 @@ html {
 }
 .sheetV2 .development .skills-list .item .adjustment-value.locked {
   background-color: white;
+}
+.chat-card-v2 .card-header {
+  display: grid;
+  grid-template-columns: 36px auto 36px;
+  grid-template-areas: "left-portrait card-title right-portrait";
+}
+.chat-card-v2 .card-header .left-portrait {
+  height: 36px;
+  grid-area: left-portrait;
+}
+.chat-card-v2 .card-header .card-title {
+  height: 36px;
+  grid-area: card-title;
+}
+.chat-card-v2 .card-header .right-portrait {
+  height: 36px;
+  grid-area: right-portrait;
+}
+.chat-card-v2 .portrait {
+  object-fit: contain;
+  border: 0;
+}
+.chat-card-v2 .status-list {
+  padding: 3px 0;
+  border-bottom: 2px groove #FFF;
+}
+.chat-card-v2 .player-actions {
+  margin: 0 !important;
+  padding: 3px 0;
+  border-bottom: 2px groove #FFF;
+}
+.chat-card-v2 .player-actions:empty {
+  display: none;
+}
+.chat-card-v2 .gm-actions {
+  margin: 0 !important;
+  padding: 3px 0;
+  border-bottom: 2px groove #FFF;
+}
+.chat-card-v2 .gm-actions:empty {
+  display: none;
+}
+.chat-card-v2 .status {
+  display: inline;
+  height: auto;
+  line-height: unset;
+  vertical-align: middle;
+  text-align: center;
+  padding: 0 3px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 0.6rem;
+  border: 1px solid #999;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.05);
+}
+.chat-card-v2 .status.pending {
+  box-shadow: 0 0 4px red;
+}
+.chat-card-v2 .roll-results {
+  padding: 0 0 3px 0;
+  border-bottom: 2px groove #FFF;
+}
+.chat-card-v2 .dice-formula {
+  margin: 0 !important;
+}
+.chat-card-v2 .dice-roll {
+  padding-top: 3px;
+}
+.chat-card-v2 .san-check .check-result,
+.chat-card-v2 .int-check .check-result {
+  display: none;
+}
+.chat-card-v2 .san-loss-roll .dice-formula {
+  display: none;
 }
