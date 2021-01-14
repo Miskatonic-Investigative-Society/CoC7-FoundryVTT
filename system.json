@@ -44,6 +44,12 @@
 			"name": "roll-requests",
 			"path": "./packs/roll-requests.db",
 			"system": "CoC7"
+		},{
+			"label": "Sanity Roll Table",
+			"entity": "RollTable",
+			"name": "roll-requests",
+			"path": "./packs/sanity-tables-examples.db",
+			"system": "CoC7"
 		}
 	],
 	"languages": [
