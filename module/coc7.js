@@ -28,6 +28,7 @@ import { Updater } from './updater.js';
 import {CoC7Utilities} from './utilities.js';
 import {CoC7Parser} from './apps/parser.js';
 import { CoC7StatusSheet } from './items/sheets/status.js';
+import { CoC7Check } from './check.js';
 
 Hooks.once('init', async function() {
 
@@ -396,6 +397,7 @@ Hooks.once('init', async function() {
 });
 
 Hooks.on('renderCombatTracker', (app, html, data) => CoC7Combat.renderCombatTracker( app, html, data));
+
 Hooks.once('setup', function() {
 
 	// Localize CONFIG objects once up-front
@@ -418,8 +420,12 @@ Hooks.on('hotbarDrop', async (bar, data, slot) => CoC7Utilities.createMacro( bar
 Hooks.on('renderChatLog', (app, html, data) => CoC7Chat.chatListeners(app, html, data));
 Hooks.on('renderChatMessage', (app, html, data) => CoC7Chat.renderMessageHook(app, html, data));
 Hooks.on('updateChatMessage', (chatMessage, chatData, diff, speaker) => CoC7Chat.onUpdateChatMessage( chatMessage, chatData, diff, speaker));
+
 Hooks.on('ready', async () =>{
 	await Updater.checkForUpdate();
+
+	activateGlobalListener();
+	
 
 	game.socket.on('system.CoC7', data => {
 		if (data.type == 'updateChar')
@@ -578,4 +584,15 @@ Hooks.on('renderCoC7CharacterSheetV2', CoC7CharacterSheetV2.renderSheet);
 tinyMCE.PluginManager.add('CoC7_Editor_OnDrop', function (editor) {
 	editor.on('drop', (event) => CoC7Parser.onEditorDrop(event, editor));
 });
+
 CONFIG.TinyMCE.plugins = `CoC7_Editor_OnDrop ${CONFIG.TinyMCE.plugins}`;
+
+function activateGlobalListener(){
+	const body=$('body');
+	body.on('click', 'a.coc7-inline-check', CoC7Check._onClickInlineRoll);
+	document.addEventListener('mousedown', _onLeftClick);
+}
+
+function _onLeftClick( event){
+	return event.shiftKey;
+}
