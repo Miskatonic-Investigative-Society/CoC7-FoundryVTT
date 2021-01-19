@@ -31,6 +31,19 @@ version 0.4.8 :
   * Weapon without skill associated are shown in red.
   * Compatibility issue with The Furnace.
 * Sanity system reworked.
+  * Card is divided into two main part, The top one for the player, the botom one for the keeper.
+  * System keep track of encoutered creatures.
+  * If a token creature have a customized san loss (different from orignal actor) it's considered like a different creature from the same specie. e.g. A Byakhee will be a 1/1D6 SAN. A baby will be 1/1D3. A monstruous may be 2/2D6. They all will be the same specie but baby and monstruous will have less/more SAN loss.
+    * All creatures of that specie get credited for SAN loss.
+    * When rolling the chat card will propose the keeper with option to reset that ceature/specie history.
+  * The SAN flow should be fully implmented. Int roll will trigered, bout will make you immune ...
+  * A bout of madness result can be rolled from a table. Table to be defined in system settings.
+    * A table can contains :
+      * A text (including inline defered or not rolls [[/r 1D10]] [[ 1D10]]).
+      * An other table (for phobia or mania for example).
+      * An item of type status (Simple item with a description).
+    * Nested calls will be resolved.
+    * If the final result is a status (Phobia or mania) it will be added to that character (under Gear&Cash).
 * Japanese transalation updated thanks to AdmiralNyar.
 * Polish translation updated thanks to Yossabart.
 
