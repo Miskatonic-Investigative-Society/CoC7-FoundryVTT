@@ -7,7 +7,6 @@ import { CoC7MeleeResoltion } from './chat/combat/melee-resolution.js';
 import { CoC7RangeInitiator } from './chat/rangecombat.js';
 import { CoC7Roll, chatHelper } from './chat/helper.js';
 import { CoC7DamageRoll } from './chat/damagecards.js';
-import { CoC7SanCheck } from './chat/sancheck.js';
 import { CoC7ConCheck } from './chat/concheck.js';
 import { CoC7Parser } from './apps/parser.js';
 import { SanCheckCard } from './chat/cards/san-check.js';
@@ -57,6 +56,8 @@ export class CoC7Chat{
 		
 		html.on('click', '.coc7-link', CoC7Parser._onCheck.bind(this));
 		html.on('dragstart', 'a.coc7-link', CoC7Parser._onDragCoC7Link.bind(this));
+
+		html.on('click', 'coc7-inline-result', CoC7Chat._onInline.bind(this));
 
 	}
 
@@ -608,6 +609,19 @@ export class CoC7Chat{
 			break;
 		}
 		//Save action for the roll
+	}
+
+	static async _onInline( event){
+		event.preventDefault();
+		const a = event.currentTarget;
+		
+		if ( a.classList.contains('inline-result') ) {
+			if ( a.classList.contains('expanded') ) {
+				return CoC7Check._collapseInlineResult(a);
+			} else {
+				return CoC7Check._expandInlineResult(a);
+			}
+		}
 	}
 
 	static _onToggleSelected( event){
@@ -1277,6 +1291,20 @@ export class CoC7Chat{
 			await check.flagForDevelopement();
 			check.computeCheck();
 			check.updateChatCard();
+			break;
+		}
+
+		case 'reset-creature-san-data':{
+			const sanCheck = SanCheckCard.getFromCard( card);
+			await sanCheck.resetCreatureSanData();
+			await sanCheck.updateChatCard();
+			break;
+		}
+
+		case 'reset-specie-san-data':{
+			const sanCheck = SanCheckCard.getFromCard( card);
+			await sanCheck.resetSpecieSanData();
+			await sanCheck.updateChatCard();
 			break;
 		}
 

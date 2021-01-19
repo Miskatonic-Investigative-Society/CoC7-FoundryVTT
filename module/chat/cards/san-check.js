@@ -1,14 +1,21 @@
 import { CoC7Check } from '../../check.js';
 import { CoC7Dice } from '../../dice.js';
+import { CoC7Utilities } from '../../utilities.js';
 import { ChatCardActor } from '../card-actor.js';
-import { exclude_, chatHelper } from '../helper.js';
+import { createInlineRoll, exclude_, chatHelper } from '../helper.js';
 
 export class SanCheckCard extends ChatCardActor{
 	constructor( actorKey = null, sanData={}, options={}){
 		super( actorKey, options.fastForward != undefined?Boolean(options.fastForward):false);
 		this.sanData = sanData;
 		this.options = options;
-		this.options.obj={test:1,test2:2};
+		if( sanData.modifier && !isNaN( Number(sanData.modifier))){
+			this.options.sanModifier = Number(sanData.modifier);
+		}
+		if( sanData.difficulty && !isNaN( Number(sanData.difficulty))){
+			this.options.sanDifficulty = Number(sanData.difficulty);
+		}
+		// this.options.obj={test:1,test2:2};
 		this.state={};
 	}
     
@@ -80,6 +87,12 @@ export class SanCheckCard extends ChatCardActor{
 		return undefined;
 	}
 
+	get creatureHasSpecie(){
+		const creatureSanData = CoC7Utilities.getCreatureSanData( this.creature);
+		if( creatureSanData.specie) return true;
+		return false;
+	}
+
 	get isActorLoosingSan(){
 		// No san loss during bout of mad.
 		if( this.actor.isInABoutOfMadness) return false;
@@ -110,10 +123,23 @@ export class SanCheckCard extends ChatCardActor{
 		return null;
 	}
 
+	get alreadyInsaneText(){
+		if( this.actor.sanity.underlying.indefintie){
+			return game.i18n.localize( 'CoC7.AlreadyUnderlyingInsanity');
+		} else {
+			return game.i18n.localize( 'CoC7.AlreadyUnderlyingInsanity') + ` (${this.actor.sanity.underlying.durationText})`;
+		}
+	}
+
 	async advanceState( state){
 		switch (state) {
+		case 'keepCreatureSanData':{
+			this.state['keepCreatureSanData'] = true;
+			break;
+		}
 		case 'involuntaryActionPerformed':{
 			this.state[state] = true;
+			if( !this.isActorLoosingSan) this.state.finish = true;
 			break;
 		}
 		case 'sanLossApplied':{
@@ -123,25 +149,28 @@ export class SanCheckCard extends ChatCardActor{
 		case 'enterBoutOfMadnessRealTime':{
 			this.boutDuration = new Roll('1D10').roll().total;
 			this.boutRealTime = true;
+			this.boutSummary = false;
 			this.boutResult = await this.actor.enterBoutOfMadness(true, this.boutDuration);
-			if( this.boutResult.phobia) this.state.phobia = true;
-			if( this.boutResult.mania) this.state.mania = true;
-			if( this.boutResult.description) this.boutDescription = this.boutResult.description;
 			this.state.boutOfMadnessResolved = true;
+			this.state.boutOfMadnessOver = false;
 			break;
 		}
 		case 'enterBoutOfMadnessSummary':{
 			this.boutDuration = new Roll('1D10').roll().total;
+			this.boutRealTime = false;
 			this.boutSummary = true;
 			this.boutResult = await this.actor.enterBoutOfMadness(false, this.boutDuration);
-			if( this.boutResult.phobia) this.state.phobia = true;
-			if( this.boutResult.mania) this.state.mania = true;
-			if( this.boutResult.description) this.boutDescription = this.boutResult.description;
 			this.state.boutOfMadnessResolved = true;
+			await this.triggerInsanity();
+			// if( this.state.indefinitelyInsane) this.actor.
 			break;
 		}
-		default:
+		case 'boutOfMadnessOver':{
+			await this.actor.exitBoutOfMadness();
+			await this.triggerInsanity();
 			break;
+		}
+
 		}
 	}
 
@@ -155,11 +184,15 @@ export class SanCheckCard extends ChatCardActor{
 		this.state.sanRolled = true;
 		this.state.involuntaryActionPerformed = this.sanCheck.passed;
 		if( !this.isActorLoosingSan){
+			this.state.finish = true;
+			if( this.actor.isInABoutOfMadness) {
+				this.state.immuneAlreadyInBout = true;
+				if( !this.sanCheck.passed) this.state.finish = false;
+			}
 			this.state.sanLossRolled = true;
 			this.state.sanLossApplied = true;
 			this.state.intRolled = true;
 			this.state.insanity = false;
-			this.state.finish = true;
 			this.sanLoss = 0;
 		} else if( 'number' == typeof this.sanLossFormula){
 			this.state.sanLossRolled = true;
@@ -205,31 +238,38 @@ export class SanCheckCard extends ChatCardActor{
 		}
 		this.state.sanLossApplied = true;
 		if( this.actor.san <= 0){
-			this.state.definitelyInsane = true;
+			this.state.permenatlyInsane = true;
 			this.state.finish = true;
 			return;
 		}
 
 		if( this.sanLoss < 5) {
 			this.state.intRolled = true;
-			this.state.insanity = false;
-			this.state.shaken = true;
-			this.state.insanityTableRolled = true;
-			this.state.finish = true;
+			if( this.actor.isInsane){
+				this.state.insanity = true;
+				this.state.shaken = true;
+				this.state.insanityTableRolled = false;
+				this.state.finish = false;
+				this.state.intRolled = true;
+			} else {
+				this.state.insanity = false;
+				this.state.shaken = true;
+				this.state.insanityTableRolled = true;
+				this.state.finish = true;
+			}
 		} else {
 			this.state.intRolled = false;
 		} 
 
 		if( this.actor.dailySanLoss >= this.actor.san/5 )
 		{
-			this.state.inSanity = true;
+			this.state.insanity = true;
 			this.state.intRolled = true;
 			this.state.temporaryInsane = false;
 			this.state.indefinitelyInsane = true;
 			this.state.insanityTableRolled = false;
 			this.state.memoryRepressed = false;
 			this.state.finish = false;
-
 		}
 	}
 
@@ -241,44 +281,71 @@ export class SanCheckCard extends ChatCardActor{
 		this.intCheck.diceModifier = this.options.intModifier || 0;
 		await this.intCheck._perform();
 		this.state.intRolled = true;
-		if( this.intCheck.passed){
+		if( this.intCheck.passed || this.state.alreadyInsane){
 			this.state.insanity = true;
 			this.state.temporaryInsane = true;
 			this.state.indefinitelyInsane = false;
+			this.state.memoryRepressed=false;
 		} else {
 			this.state.insanity = false;
 			this.state.temporaryInsane = false;
 			this.state.indefinitelyInsane = false;
+			this.state.memoryRepressed = true;
+			this.state.finish = true;
 		}
 	}
 
+	async triggerInsanity(){
+		this.state.boutOfMadnessOver = true;
+		if( this.state.indefinitelyInsane) await this.actor.enterInsanity( true);
+		if( this.state.temporaryInsane){
+			if( this.actor.sanity.underlying.active && this.actor.sanity.underlying.indefintie){
+				//Already indefinite insanity
+				this.state.finish = true;
+				return;
+			}
+			this.insanityDurationRoll = new Roll( '1D10').roll();
+			this.insanityDuration = this.insanityDurationRoll.total;
+			if( this.actor.sanity.underlying.duration) this.insanityDuration += this.actor.sanity.underlying.duration;
+			await this.actor.enterInsanity( false, this.insanityDuration);
+		}
+		this.state.finish = true;
+	}
+
+	async resetCreatureSanData(){
+		await this.actor.resetCreature( this.creature);
+		if( !this.creatureEncountered && !this.creatureSpecieEncountered) this.state.keepCreatureSanData = true;
+	}
+
+	async resetSpecieSanData(){
+		await this.actor.resetSpecie( this.creature);
+		if( !this.creatureEncountered && !this.creatureSpecieEncountered) this.state.keepCreatureSanData = true;
+	}
+
+
 	async updateChatCard(){
+
+		//Attache the sanCheck result to the message.
+		if( this.state.sanRolled){
+			this._inlineSanCheck = this.sanCheck.inlineCheck.outerHTML;
+		}
+
+		if( this.sanLossRoll)
+		{
+			const a = createInlineRoll(this.sanLossRoll);
+			this._inlineSanLossRoll = a.outerHTML;
+		}
+
+		
+		if( this.state.intRolled && this.intCheck ){
+			this._inlineIntCheck = this.intCheck.inlineCheck.outerHTML;
+		}
+				
 		const html = await renderTemplate(SanCheckCard.template, this);
 		const htmlCardElement = $.parseHTML( html)[0];
 
 		//Attach the sanCheckCard object to the message.
 		htmlCardElement.dataset.object = JSON.stringify(this, exclude_);
-
-		//Attache the sanCheck result to the message.
-		if( this.state.sanRolled){
-			const htmlSanCheckEment = await this.sanCheck.getHtmlRollElement();
-			if( htmlSanCheckEment) htmlCardElement.querySelector('.san-check').appendChild(htmlSanCheckEment);
-		}
-
-		if( this.sanLossRoll)
-		{
-			this.sanLossRoll.tooltip = await renderTemplate(Roll.TOOLTIP_TEMPLATE, this.sanLossRoll);
-			const htmlRoll =  await renderTemplate(Roll.CHAT_TEMPLATE, this.sanLossRoll);
-			const htmlSanLossRollEment = $.parseHTML( htmlRoll)[0];
-			if( htmlSanLossRollEment) htmlCardElement.querySelector('.san-loss-roll').appendChild(htmlSanLossRollEment);
-
-		}
-
-		if( this.state.intRolled && this.intCheck ){
-			const htmlIntCheckEment = await this.intCheck.getHtmlRollElement();
-			if( htmlIntCheckEment) htmlCardElement.querySelector('.int-check').appendChild(htmlIntCheckEment);
-		}
-
 
 		//Update the message.
 		const chatMessage = game.messages.get( this.messageId);
@@ -304,6 +371,13 @@ export class SanCheckCard extends ChatCardActor{
 
 	static async create(...args){
 		const chatCard = new SanCheckCard( ...args);
+
+		if( chatCard.actor.isInsane){
+			chatCard.state.alreadyInsane = true;
+		}
+
+		if( !chatCard.creatureEncountered && !chatCard.creatureSpecieEncountered) chatCard.state.keepCreatureSanData = true;
+
 
 		const html = await renderTemplate(SanCheckCard.template, chatCard);
 		const htmlCardElement = $.parseHTML( html)[0];
