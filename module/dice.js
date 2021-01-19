@@ -144,9 +144,9 @@ export class CoC7Dice {
 		result.total = total;
  
 		//CHEAT :
-		result.unit= { total:7, results:[7]};
-		result.tens= { total:9, results:[9]};
-		result.total= 97;
+		// result.unit= { total:7, results:[7]};
+		// result.tens= { total:9, results:[9]};
+		// result.total= 97;
 		return result;
 	}
 
