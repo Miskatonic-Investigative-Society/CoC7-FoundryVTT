@@ -529,6 +529,15 @@ export class CoC7ActorSheet extends ActorSheet {
 
 			// this.actor.enterBoutOfMadness( true, 10);
 
+			const roll = new CoC7Check();
+			roll.actor = this.actorKey;
+			roll.attribute = 'san';
+			roll.difficulty = this.options.sanDifficulty || CoC7Check.difficultyLevel.regular;
+			roll.diceModifier = this.options.sanModifier || 0;
+			await roll._perform();
+
+
+
 			for (const effect of this.actor.effects) {
 				await effect.sheet.render(true);				
 				// effect.delete();				

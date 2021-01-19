@@ -1,6 +1,36 @@
 import {CoC7Check} from '../check.js';
 
 /**
+   * Return <a> element of a roll instance. foundry.js ref:TextEditor._createInlineRoll
+   * @param {Roll} roll      The roll object
+   */
+export function createInlineRoll( roll){
+
+	const data = {
+		cls: ['inline-roll'],
+		dataset: {}
+	};
+
+	try{
+		data.cls.push('inline-result');
+		data.result = roll.total;
+		data.title = roll.formula;
+		data.dataset.roll = escape(JSON.stringify(roll));
+	}
+	catch(err) { return null; }
+
+	// Construct and return the formed link element
+	const a = document.createElement('a');
+	a.classList.add(...data.cls);
+	a.title = data.title;
+	for (let [k, v] of Object.entries(data.dataset)) {
+		a.dataset[k] = v;
+	}
+	a.innerHTML = `<i class="fas fa-dice-d20"></i> ${data.result}`;
+	return a;
+}
+
+/**
  * Function used for JSON.stringify replacer.
  * Exclude any key starting with _
  * @param {*} key 		The object's property Key
