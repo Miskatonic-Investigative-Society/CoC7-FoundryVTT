@@ -70,74 +70,153 @@
 		
 	</div>
 
-	<div class='roll-results'>
-		<div class='san-check'>
-		</div>
-		<div class='san-loss-roll'>
-		</div>
-		<div class='int-check'>
-		</div>
-	</div>
-
-	<div class='card-buttons player-actions'>
+	<div class='player-actions'>
 		{{#if state.sanRolled}}
+			<div class='info'>{{ localize 'CoC7.SanityCheckPerformed' }}: {{{_inlineSanCheck}}}</div>
 			{{#if state.involuntaryActionPerformed}}
-				{{#if state.sanLossRolled}}
-					{{#if state.sanLossApplied}}
-						<h4>{{ localize 'CoC7.SANLoss' }}: {{sanLoss}}</h4>
-						{{#if state.intRolled}}
-							{{#if state.memoryRepressed}}
-								<h4>You repress a memory</h4>
-							{{/if}}
-							{{#if state.insanity}}
-								<h4>You enter a bout of madness</h4>
-								{{#if state.boutOfMadnessResolved}}
-									{{#if state.indefinitelyInsane}}
-										<h4>Indefinitely insane</h4>
-									{{/if}}
-									{{#if state.temporaryInsane}}
-										<h4>You remember EVERYTHING : Temporary insannity</h4>
-									{{/if}}
-									{{#if state.definitelyInsane}}
-										<h4>Good for the asylum</h4>
-									{{/if}}
-								{{/if}}
-							{{else}}
-								<h4>Flow end</h4>
-							{{/if}}
-						{{else}}
-							<button data-action="roll-int-check">{{ localize 'CoC7.IntCheck' }}: ({{actor.int.value}}%)</button>
+				{{#unless sanCheck.passed}}
+					<div class='info'>{{ localize 'CoC7.InvoluntaryActionPerformed' }}</div>
+				{{/unless}}
+			{{#if state.sanLossRolled}}
+				{{#if state.sanLossApplied}}
+					{{#if isActorLoosingSan}}
+						<div class='info'>{{ localize 'CoC7.SanityLost' }}: {{#if _inlineSanLossRoll}}{{{_inlineSanLossRoll}}}{{else}}{{sanLoss}}{{/if}}</div>
+					{{else}}
+						{{#if state.immuneAlreadyInBout}}
+							<div class='info'>{{ localize 'CoC7.AlreadyInABoot' }}</div>
 						{{/if}}
 					{{/if}}
-				{{else}}
-					<button data-action="roll-san-loss">Roll {{ localize 'CoC7.SANLoss' }}: {{sanLossFormula}}</button>
+					{{#if state.intRolled}}
+						{{#if state.memoryRepressed}}
+							<div class='info'>{{{_inlineIntCheck}}} {{ localize 'CoC7.MemoryRepressed' }}</div>
+						{{/if}}
+						{{#if state.temporaryInsane}}
+							<div class='info'>{{{_inlineIntCheck}}} {{ localize 'CoC7.RememberEverything' }}</div>
+						{{/if}}
+						{{#if state.insanity}}
+							{{#unless state.boutOfMadnessOver}}
+								<div class='info'>{{ localize 'CoC7.EnteringBoutOfMadness' }} {{#if state.boutOfMadnessResolved}}({{actor.sanity.boutOfMadness.durationText}}){{/if}}</div>
+							{{/unless}}
+							{{#if state.boutOfMadnessResolved}}
+								{{#if boutResult.phobia}}
+									<div class='info'>{{ localize 'CoC7.PhobiaGained' }}: {{boutResult.name}}</div>
+								{{/if}}
+
+								{{#if boutResult.mania}}
+									<div class='info'>{{ localize 'CoC7.ManiaGained' }}: {{boutResult.name}}</div>
+								{{/if}}
+
+								{{#if state.boutOfMadnessOver}}
+									<div class='info'>{{ localize 'CoC7.BootOfMadnesslasted' }} {{boutDuration}} {{#if boutRealTime}}{{ localize 'CoC7.rounds'}}{{/if}}{{#if boutSummary}}{{ localize 'CoC7.hours'}}{{/if}}</div>
+
+									{{#if state.indefinitelyInsane}}
+										<div class='info'>{{ localize 'CoC7.IndefinitelyInsane' }}</div>
+									{{/if}}
+									{{#if state.temporaryInsane}}
+										<div class='info'>{{ localize 'CoC7.TemporaryInsane' }} ({{actor.sanity.underlying.durationText}})</div>
+									{{/if}}
+									{{#if state.definitelyInsane}}
+										<div class='info'>{{ localize 'CoC7.GoodForAsylum' }}</div>
+									{{/if}}
+								{{/if}}
+							{{/if}}
+						{{else}}
+							<div class='flow-ended'></div>
+						{{/if}}
+					{{else}}
+						<div class='card-buttons'>
+							<button data-action="roll-int-check">{{ localize 'CoC7.IntCheck' }}: ({{actor.int.value}}%)</button>
+						</div>
+					{{/if}}
 				{{/if}}
+			{{else}}
+				<div class='card-buttons'>
+					<button data-action="roll-san-loss">Roll {{ localize 'CoC7.SANLoss' }}: {{sanLossFormula}}</button>
+				</div>
+			{{/if}}
 			{{/if}}
 		{{else}}
-			<button data-action="roll-san-check">{{ localize 'CoC7.SanityCheck' }}: ({{actor.san}}%)</button>
+			<div class='card-buttons'>
+				<button data-action="roll-san-check">{{ localize 'CoC7.SanityCheck' }}: ({{actor.san}}%)</button>
+			</div>
 		{{/if}}
 	</div>
 
-	<div class='card-buttons gm-actions gm-visible-only'>
+	<div class='gm-actions gm-visible-only'>
+		{{#if state.alreadyInsane}}
+			<div class='info'>{{alreadyInsaneText}}</div>
+		{{/if}}
+		{{#if state.boutOfMadnessResolved}}
+			{{#if boutResult.phobia}}
+				<div class='info'>{{ localize 'CoC7.InvestigatorPhobiaGained'}}</div>
+			{{/if}}
+			{{#if boutResult.mania}}
+				<div class='card-buttons'>
+					<div class='info'>{{ localize 'CoC7.InvestigatorManiaGained'}}</div>
+				</div>
+			{{/if}}
+			<div class="bout-info">{{{boutResult.description}}}</div>
+			{{#unless state.boutOfMadnessOver}}
+				<div class='card-buttons'>
+					<button data-action="advance-state" data-state="boutOfMadnessOver">{{ localize 'CoC7.EndBoutOfMadness' }}</button>
+				</div>
+			{{/unless}}
+		{{/if}}
 		{{#if state.insanity}}
 			{{#unless state.boutOfMadnessResolved}}
-				<button data-action="advance-state" data-state="enterBoutOfMadnessRealTime">{{ localize 'CoC7.BoutRealTime' }}</button>
-				<button data-action="advance-state" data-state="enterBoutOfMadnessSummary">{{ localize 'CoC7.BoutSummary' }}</button>
+				<div class='card-buttons'>
+					<button data-action="advance-state" data-state="enterBoutOfMadnessRealTime">{{ localize 'CoC7.BoutRealTime' }}</button>
+					<button data-action="advance-state" data-state="enterBoutOfMadnessSummary">{{ localize 'CoC7.BoutSummary' }}</button>
+				</div>
 			{{/unless}}
 		{{/if}}
 		{{#if sanCheck.failed}}
 			{{#unless state.involuntaryActionPerformed}}
-				<button data-action="advance-state" data-state="involuntaryActionPerformed">{{ localize 'CoC7.InvoluntaryActionPerfomed' }}</button>
+				<div class='card-buttons'>
+					<button data-action="advance-state" data-state="involuntaryActionPerformed">{{ localize 'CoC7.InvoluntaryActionPerfomed' }}</button>
+				</div>
 			{{/unless}}
 		{{/if}}
 
 		{{#if state.sanLossRolled}}
 			{{#unless state.sanLossApplied}}
-				<button data-action="advance-state" data-state="sanLossApplied">{{ localize 'CoC7.Apply' }} : {{sanLoss}}</button>
-				<!-- <input type="text" value="{{sanLoss}}" data-dtype="Number"/> -->
+				<div class='card-buttons'>
+					<button data-action="advance-state" data-state="sanLossApplied">{{ localize 'CoC7.Apply' }} : {{sanLoss}}</button>
+				</div>
 			{{/unless}}
 		{{/if}}
+
+		{{#if actor.isInABoutOfMadness}}
+			<div class="status">{{ localize 'CoC7.BootActive'}}</div>
+		{{/if}}
+
+		{{#if creature}}
+			{{#if creatureEncountered}}<div class="status">Creature encountered</div>{{/if}}
+			{{#if creatureHasSpecie}}{{#if creatureSpecieEncountered}}<div class="status">Specie encountered</div>{{/if}}{{/if}}
+			<div class="status">{{ localize 'CoC7.AlreadyLost'}}: {{sanLostToThisCreature}}</div>
+			<div class="status">{{ localize 'CoC7.CreatureMaxLoss'}}: {{creature.sanLossMax}}</div>
+			<div class="status">{{ localize 'CoC7.MaxLossToCreature'}}: {{maxSanLossToThisCreature}}</div>
+			
+			{{#unless state.keepCreatureSanData}}
+				<div class='card-buttons'>
+
+				{{#if creatureEncountered}}
+					<button data-action="reset-creature-san-data">{{ localize 'CoC7.ResetCreatureSan' }}</button>
+				{{/if}}
+				{{#if creatureHasSpecie}}
+					{{#if creatureSpecieEncountered}}
+						<button data-action="reset-specie-san-data">{{ localize 'CoC7.ResetSpecieSan' }}</button>
+					{{/if}}
+				{{/if}}
+					<button data-action="advance-state" data-state="keepCreatureSanData">{{ localize 'CoC7.KeepData' }}</button>
+				</div>
+			{{/unless}}
+		{{else}}
+			<div class="status">{{localize 'CoC7.MaxSanloss'}}: {{maxSanLoss}}</div>
+		{{/if}}
+		
+		{{#if state.finish}}
+			<div class="status">{{localize 'CoC7.CardResolved'}}</div>
+		{{/if}}
 	</div>
-
-
 </div>

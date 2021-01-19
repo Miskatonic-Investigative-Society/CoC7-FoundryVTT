@@ -1402,13 +1402,134 @@
 #combat-tracker .token-initiative.critical {
   color: goldenrod;
 }
-.coc7-link {
+.coc7-link,
+.coc7-inline {
   background: #DDD;
   padding: 1px 4px;
   border: 1px solid #4b4a44;
   border-radius: 2px;
   white-space: nowrap;
   word-break: break-all;
+}
+.coc7-link i,
+.coc7-inline i {
+  vertical-align: middle;
+}
+.regular-success-color {
+  background-color: #ffcc99;
+  color: #cc6600;
+}
+.hard-success-color {
+  background-color: #ffff99;
+  color: #cc9900;
+}
+.extreme-success-color {
+  background-color: #ccff99;
+  color: #009933;
+}
+.critical-color {
+  background-color: whitesmoke;
+  color: goldenrod;
+}
+.fumble-color {
+  background-color: black;
+  color: crimson;
+}
+.success-color {
+  color: green;
+}
+.failure-color {
+  color: red;
+}
+.coc7-check-tooltip {
+  width: 280px;
+  position: fixed;
+  background: url(../../ui/parchment.jpg) repeat;
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 5px 5px 0;
+  box-shadow: 0 0 10px #000;
+  text-shadow: none;
+  color: #191813;
+}
+.coc7-check-tooltip .roll-icons.success {
+  color: goldenrod;
+}
+.coc7-check-tooltip .roll-icons.critical {
+  color: goldenrod;
+  font-size: 20px;
+  font-weight: bold;
+}
+.coc7-check-tooltip .roll-icons.failure {
+  color: crimson;
+}
+.coc7-check-tooltip .roll-icons.fumble {
+  color: crimson;
+  font-size: 20px;
+  font-weight: bold;
+}
+.coc7-check-tooltip .dice-rolls {
+  display: flex;
+}
+.coc7-check-tooltip .dice-rolls .check-result {
+  font-size: 16px;
+  padding: 0 5px;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: flex-end;
+}
+.coc7-check-tooltip .part-total.regular-success {
+  background-color: #ffcc99;
+  color: #cc6600;
+}
+.coc7-check-tooltip .part-total.hard-success {
+  background-color: #ffff99;
+  color: #cc9900;
+}
+.coc7-check-tooltip .part-total.extreme-success {
+  background-color: #ccff99;
+  color: #009933;
+}
+.coc7-check-tooltip .part-total.critical {
+  background-color: whitesmoke;
+  color: goldenrod;
+}
+.coc7-check-tooltip .part-total.fumble {
+  background-color: black;
+  color: crimson;
+}
+.coc7-check-tooltip .part-total.success {
+  color: green;
+}
+.coc7-check-tooltip .part-total.failure {
+  color: red;
+}
+.coc7-check-result.regular-success {
+  background-color: #ffcc99;
+  color: #cc6600;
+}
+.coc7-check-result.hard-success {
+  background-color: #ffff99;
+  color: #cc9900;
+}
+.coc7-check-result.extreme-success {
+  background-color: #ccff99;
+  color: #009933;
+}
+.coc7-check-result.critical {
+  background-color: whitesmoke;
+  color: goldenrod;
+}
+.coc7-check-result.fumble {
+  background-color: black;
+  color: crimson;
+}
+.coc7-check-result.success {
+  color: green;
+}
+.coc7-check-result.failure {
+  color: red;
 }
 :root {
   --main-sheet-bg: url('./artwork/backgrounds/character-sheet.png') 4 repeat;
@@ -2250,7 +2371,7 @@ html {
 .chat-card-v2 .gm-actions {
   margin: 0 !important;
   padding: 3px 0;
-  border-bottom: 2px groove #FFF;
+  background-color: gainsboro;
 }
 .chat-card-v2 .gm-actions:empty {
   display: none;
@@ -2282,10 +2403,9 @@ html {
 .chat-card-v2 .dice-roll {
   padding-top: 3px;
 }
-.chat-card-v2 .san-check .check-result,
-.chat-card-v2 .int-check .check-result {
+.chat-card-v2 .san-loss-roll .dice-formula {
   display: none;
 }
-.chat-card-v2 .san-loss-roll .dice-formula {
+.chat-card-v2 .status-list {
   display: none;
 }
