@@ -72,26 +72,32 @@
 
 	<div class='player-actions'>
 		{{#if state.sanRolled}}
-			<div class='info'>{{ localize 'CoC7.SanityCheckPerformed' }}: {{{_inlineSanCheck}}}</div>
+			<div class='info'>{{ localize 'CoC7.SanityCheckPerformed' }}: {{{__inlineSanCheck}}}</div>
 			{{#if state.involuntaryActionPerformed}}
 				{{#unless sanCheck.passed}}
 					<div class='info'>{{ localize 'CoC7.InvoluntaryActionPerformed' }}</div>
 				{{/unless}}
 			{{#if state.sanLossRolled}}
 				{{#if state.sanLossApplied}}
-					{{#if isActorLoosingSan}}
-						<div class='info'>{{ localize 'CoC7.SanityLost' }}: {{#if _inlineSanLossRoll}}{{{_inlineSanLossRoll}}}{{else}}{{sanLoss}}{{/if}}</div>
+					{{#if state.actorLostSan}}
+						<div class='info'>{{ localize 'CoC7.SanityLost' }}: {{#if __inlineSanLossRoll}}{{{__inlineSanLossRoll}}}{{else}}{{sanLoss}}{{/if}}</div>
+						{{#if state.limitedLossToCreature}}
+							<div class='info'>{{ localize 'CoC7.GrowingAccustomedToAwfulness' }}: {{sanLoss}}</div>
+						{{/if}}
 					{{else}}
 						{{#if state.immuneAlreadyInBout}}
 							<div class='info'>{{ localize 'CoC7.AlreadyInABoot' }}</div>
 						{{/if}}
+						{{#if state.immuneToCreature}}
+							<div class='info'>{{ localize 'CoC7.ImmuneToAwfulness' }}</div>
+						{{/if}}
 					{{/if}}
 					{{#if state.intRolled}}
 						{{#if state.memoryRepressed}}
-							<div class='info'>{{{_inlineIntCheck}}} {{ localize 'CoC7.MemoryRepressed' }}</div>
+							<div class='info'>{{{__inlineIntCheck}}} {{ localize 'CoC7.MemoryRepressed' }}</div>
 						{{/if}}
 						{{#if state.temporaryInsane}}
-							<div class='info'>{{{_inlineIntCheck}}} {{ localize 'CoC7.RememberEverything' }}</div>
+							<div class='info'>{{{__inlineIntCheck}}} {{ localize 'CoC7.RememberEverything' }}</div>
 						{{/if}}
 						{{#if state.insanity}}
 							{{#unless state.boutOfMadnessOver}}

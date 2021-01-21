@@ -432,6 +432,13 @@ Hooks.on('ready', async () =>{
 			CoC7Utilities.updateCharSheets();
 	});
 
+	// "SETTINGS.BoutOfMadnessPhobiasIndex": "Phobias index",
+	// "SETTINGS.BoutOfMadnessPhobiasIndexHint": "The index (roll result) that will trigger a roll in the phobias table",
+	// "SETTINGS.BoutOfMadnessManiasIndex": "Manias index",
+	// "SETTINGS.BoutOfMadnessManiasIndexHint": "The index (roll result) that will trigger a roll in the manias table",
+	// "SETTINGS.SamplePhobiasTable": "Sample phobias table",
+	// "SETTINGS.SampleManiasTable": "Sample Manias table",
+
 	function _tableSettingsChanged( table, id){
 		if( 'none' == id ) game.CoC7.tables[table]=null;
 		else game.CoC7.tables[table]=game.tables.get(id);		
@@ -486,33 +493,33 @@ Hooks.on('ready', async () =>{
 	// 	onChange:  id => _tableIndexChanged( 'maniasIndex', id)	
 	// });
 
-	game.settings.register('CoC7', 'samplePhobiasTable',{
-		name: 'SETTINGS.SamplePhobiasTable',
-		scope: 'world',
-		config: true,
-		default: 'none',
-		type: String,
-		choices: tableChoice,
-		onChange:  id => _tableSettingsChanged( 'phobias', id)
-	});
+	// game.settings.register('CoC7', 'samplePhobiasTable',{
+	// 	name: 'SETTINGS.SamplePhobiasTable',
+	// 	scope: 'world',
+	// 	config: true,
+	// 	default: 'none',
+	// 	type: String,
+	// 	choices: tableChoice,
+	// 	onChange:  id => _tableSettingsChanged( 'phobias', id)
+	// });
 
-	game.settings.register('CoC7', 'sampleManiasTable',{
-		name: 'SETTINGS.SampleManiasTable',
-		scope: 'world',
-		config: true,
-		default: 'none',
-		type: String,
-		choices: tableChoice,
-		onChange:  id => _tableSettingsChanged( 'manias', id)
-	});
+	// game.settings.register('CoC7', 'sampleManiasTable',{
+	// 	name: 'SETTINGS.SampleManiasTable',
+	// 	scope: 'world',
+	// 	config: true,
+	// 	default: 'none',
+	// 	type: String,
+	// 	choices: tableChoice,
+	// 	onChange:  id => _tableSettingsChanged( 'manias', id)
+	// });
 
 	game.CoC7.tables = {
 		boutOfMadness_Summary: ('none' == game.settings.get('CoC7', 'boutOfMadnessSummaryTable'))?null:game.tables.get(game.settings.get('CoC7', 'boutOfMadnessSummaryTable')),
 		boutOfMadness_RealTime: ('none' == game.settings.get('CoC7', 'boutOfMadnessRealTimeTable'))?null:game.tables.get(game.settings.get('CoC7', 'boutOfMadnessRealTimeTable')),
 		// maniasIndex: ge.settings.get('CoC7', 'boutOfMadnessPhobiasIndex'),
 		// phobiasIndex: game.settings.get('CoC7', 'boutOfMadnessManiasIndex'),
-		phobias: ('none' == game.settings.get('CoC7', 'samplePhobiasTable'))?null:game.tables.get(game.settings.get('CoC7', 'samplePhobiasTable')),
-		manias: ('none' == game.settings.get('CoC7', 'sampleManiasTable'))?null:game.tables.get(game.settings.get('CoC7', 'sampleManiasTable')),
+		// phobias: ('none' == game.settings.get('CoC7', 'samplePhobiasTable'))?null:game.tables.get(game.settings.get('CoC7', 'samplePhobiasTable')),
+		// manias: ('none' == game.settings.get('CoC7', 'sampleManiasTable'))?null:game.tables.get(game.settings.get('CoC7', 'sampleManiasTable')),
 	};
 });
 

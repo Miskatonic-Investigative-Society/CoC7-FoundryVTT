@@ -816,7 +816,9 @@ export class CoC7Check {
 	}
 
 	get tooltipHeader(){
-		if (this.attribute) return game.i18n.format(`CoC7.LinkCheck${this.difficulty==CoC7Check.difficultyLevel.regular?'':'Diff'}${!this.diceModifier?'':'Modif'}`, {difficulty: this.difficultyString, modifier: this.diceModifier, name: game.i18n.format(`CoC7.${this.actor.data.data.attribs[this.attribute].label}`)}) + ` (${this.actor.data.data.attribs[this.attribute].value}%)`;
+		if (this.attribute) return game.i18n.format(`CoC7.LinkCheck${this.difficulty==CoC7Check.difficultyLevel.regular?'':'Diff'}${!this.diceModifier?'':'Modif'}`, { difficulty: this.difficultyString, modifier: this.diceModifier, name: game.i18n.format(`CoC7.${this.actor.data.data.attribs[this.attribute].label}`)}) + ` (${this.actor.data.data.attribs[this.attribute].value}%)`;
+		if (this.characteristic) return game.i18n.format(`CoC7.LinkCheck${this.difficulty==CoC7Check.difficultyLevel.regular?'':'Diff'}${!this.diceModifier?'':'Modif'}`, {difficulty: this.difficultyString, modifier: this.diceModifier, name: game.i18n.localize(this.actor.data.data.characteristics[this.characteristic].label)}) + ` (${this.actor.data.data.characteristics[this.characteristic].value}%)`;
+		if (this.skill) return game.i18n.format(`CoC7.LinkCheck${this.difficulty==CoC7Check.difficultyLevel.regular?'':'Diff'}${!this.diceModifier?'':'Modif'}`, {difficulty: this.difficultyString, modifier: this.diceModifier, name: this.skill.name}) + ` (${this.skill.value}%)`;
 		return null;
 	}
 
@@ -925,7 +927,7 @@ export class CoC7Check {
 		a.classList.add( 'coc7-inline');
 		a.classList.add( ...this.cssClassList);
 		a.title = this.tooltipHeader;
-		a.dataset.roll=escape(JSON.stringify(this, exclude_));
+		a.dataset.roll=escape(JSON.stringify(this));
 		a.innerHTML= `<i class="game-icon game-icon-d10"></i> ${this.dices.total}`;
 		return a;
 		// return renderTemplate( 'systems/CoC7/templates/chat/rolls/inline-roll.html', this);
@@ -936,6 +938,7 @@ export class CoC7Check {
 		const tens = this.dices.tens.map( r => {
 			return{
 				result: r.value,
+				selected: r.selected,
 				classes: [
 					'die',
 					'd10',
@@ -948,6 +951,7 @@ export class CoC7Check {
 		const unit = [
 			{
 				result: this.dices.unit.value,
+				selected: true,
 				classes: 'die d10'
 			}
 		];
