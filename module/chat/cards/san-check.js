@@ -2,7 +2,7 @@ import { CoC7Check } from '../../check.js';
 import { CoC7Dice } from '../../dice.js';
 import { CoC7Utilities } from '../../utilities.js';
 import { ChatCardActor } from '../card-actor.js';
-import { createInlineRoll, exclude_, chatHelper } from '../helper.js';
+import { createInlineRoll, exclude__, chatHelper } from '../helper.js';
 
 export class SanCheckCard extends ChatCardActor{
 	constructor( actorKey = null, sanData={}, options={}){
@@ -32,10 +32,10 @@ export class SanCheckCard extends ChatCardActor{
 	}
 
 	get creature(){ //TODO : check constructor
-		if( this.sanData.creatureKey && (!this._creature || this._creature.constructor.name == 'Object')){
-			this._creature = chatHelper.getActorFromKey( this.sanData.creatureKey);
+		if( this.sanData.creatureKey && (!this.__creature || this.__creature.constructor.name == 'Object')){
+			this.__creature = chatHelper.getActorFromKey( this.sanData.creatureKey);
 		}
-		return this._creature;
+		return this.__creature;
 	}
 
 	get involuntaryAction(){
@@ -95,7 +95,9 @@ export class SanCheckCard extends ChatCardActor{
 
 	get isActorLoosingSan(){
 		// No san loss during bout of mad.
-		if( this.actor.isInABoutOfMadness) return false;
+		if( this.actor.isInABoutOfMadness){
+			return false;
+		}
 
 		// The san loss is a 0
 		if( this.sanLossFormula === 0) return false;
@@ -105,10 +107,16 @@ export class SanCheckCard extends ChatCardActor{
 			if( !this.creature.sanLossMax) return false;
 
 			// Actor already encountered that creature and lost already more or equal than max creature SAN loss.
-			if( this.actor.sanLostToCreature(this.creature) >= this.creature.sanLossMax) return false;
+			if( this.actor.sanLostToCreature(this.creature) >= this.creature.sanLossMax){
+				this.state.immuneToCreature = true;
+				return false;
+			}
 
 			// Max possible actor loos to this creature is 0
-			if( this.actor.maxPossibleSanLossToCreature( this.creature) == 0) return false;
+			if( this.actor.maxPossibleSanLossToCreature( this.creature) == 0){
+				this.state.immuneToCreature = true;
+				return false;
+			}
 		}
 
 		return true;
@@ -196,7 +204,10 @@ export class SanCheckCard extends ChatCardActor{
 			this.sanLoss = 0;
 		} else if( 'number' == typeof this.sanLossFormula){
 			this.state.sanLossRolled = true;
-			if( this.creature) this.sanLoss = Math.min( this.sanLossFormula, this.maxSanLossToThisCreature);
+			if( this.creature) {
+				this.sanLoss = Math.min( this.sanLossFormula, this.maxSanLossToThisCreature);
+				if( this.sanLossFormula > this.maxSanLossToThisCreature) this.state.limitedLossToCreature = true;
+			}
 			else this.sanLoss = this.sanLossFormula;
 		} else if( this.sanCheck.isFumble){
 			this.state.sanLossRolled = true;
@@ -206,18 +217,15 @@ export class SanCheckCard extends ChatCardActor{
 			if( min >= this.maxSanLossToThisCreature) {
 				this.state.sanLossRolled = true;
 				this.sanLoss = this.maxSanLossToThisCreature;
+				this.state.limitedLossToCreature = true;
 			}
 		}
-		// const data = CoC7Utilities.getCreatureSanData('Byakhee T');
-		// token key 	"dARanq8Eb5f13aVb.xUkMEwxuTSYYAZiq"
-		// token name	"Byakhee T"
-		// actor id  	"SOzhC4mT3mVFqX5n"
-		// acotr name	"Byakhee"
 	}
 
 	async rollSanLoss(){
 		if( this.creature){
-			this.sanLossRoll = new Roll(`{${this.sanLossFormula},${this.maxSanLossToThisCreature}}kl`);
+			// this.sanLossRoll = new Roll(`{${this.sanLossFormula},${this.maxSanLossToThisCreature}}kl`);
+			this.sanLossRoll = new Roll(`${this.sanLossFormula}`);
 		} else {
 			this.sanLossRoll = new Roll(`${this.sanLossFormula}`);
 		}
@@ -225,6 +233,10 @@ export class SanCheckCard extends ChatCardActor{
 		this.sanLossRoll.roll();
 
 		await CoC7Dice.showRollDice3d( this.sanLossRoll);
+
+		if( this.creature){//Will never happen
+			if( this.sanLossRoll.total > this.maxSanLossToThisCreature) this.state.limitedLossToCreature = true;
+		}
 		
 		this.sanLoss = this.creature?Math.min( this.sanLossRoll.total, this.maxSanLossToThisCreature):this.sanLossRoll.total;
 		this.state.sanLossRolled = true;
@@ -236,6 +248,8 @@ export class SanCheckCard extends ChatCardActor{
 		} else {
 			await this.actor.looseSan( this.sanLoss);
 		}
+
+		if( this.sanLoss > 0) this.state.actorLostSan = true;
 		this.state.sanLossApplied = true;
 		if( this.actor.san <= 0){
 			this.state.permenatlyInsane = true;
@@ -327,25 +341,25 @@ export class SanCheckCard extends ChatCardActor{
 
 		//Attache the sanCheck result to the message.
 		if( this.state.sanRolled){
-			this._inlineSanCheck = this.sanCheck.inlineCheck.outerHTML;
+			this.__inlineSanCheck = this.sanCheck.inlineCheck.outerHTML;
 		}
 
 		if( this.sanLossRoll)
 		{
 			const a = createInlineRoll(this.sanLossRoll);
-			this._inlineSanLossRoll = a.outerHTML;
+			this.__inlineSanLossRoll = a.outerHTML;
 		}
 
 		
 		if( this.state.intRolled && this.intCheck ){
-			this._inlineIntCheck = this.intCheck.inlineCheck.outerHTML;
+			this.__inlineIntCheck = this.intCheck.inlineCheck.outerHTML;
 		}
 				
 		const html = await renderTemplate(SanCheckCard.template, this);
 		const htmlCardElement = $.parseHTML( html)[0];
 
 		//Attach the sanCheckCard object to the message.
-		htmlCardElement.dataset.object = JSON.stringify(this, exclude_);
+		htmlCardElement.dataset.object = escape(JSON.stringify(this, exclude__));
 
 		//Update the message.
 		const chatMessage = game.messages.get( this.messageId);
@@ -382,7 +396,7 @@ export class SanCheckCard extends ChatCardActor{
 		const html = await renderTemplate(SanCheckCard.template, chatCard);
 		const htmlCardElement = $.parseHTML( html)[0];
 		
-		htmlCardElement.dataset.object = JSON.stringify(chatCard, exclude_);
+		htmlCardElement.dataset.object = escape(JSON.stringify(chatCard, exclude__));
 		await chatCard.say( htmlCardElement.outerHTML);
 	}
 
@@ -396,7 +410,7 @@ export class SanCheckCard extends ChatCardActor{
 	}
 
 	static getFromCard( card){
-		const sanCheckCardData = JSON.parse(card.dataset.object);
+		const sanCheckCardData = JSON.parse(unescape(card.dataset.object));
 
 		const sanCheckCard = new SanCheckCard();
 		Object.assign( sanCheckCard, sanCheckCardData);
@@ -411,12 +425,7 @@ export class SanCheckCard extends ChatCardActor{
 		}
 
 		if( 'Object' == sanCheckCard.sanLossRoll?.constructor?.name){
-			// const toll = new Roll(`3D10kh`);
-			// toll.roll();
-			// const roll = Roll.create( sanCheckCard.sanLossRoll.formula, sanCheckCard.sanLossRoll);
 			sanCheckCard.sanLossRoll = Roll.fromData(sanCheckCard.sanLossRoll);
-			// sanCheckCard.sanLossRoll = Roll.fromJSON(JSON.stringify(sanCheckCard.sanLossRoll));
-			// sanCheckCard.sanLossRoll = Object.assign( new Roll(), sanCheckCard.sanLossRoll);
 		}
 
 		// sanCheckCard.sanCheck?.toMessage();
