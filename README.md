@@ -27,9 +27,10 @@ version 0.4.8 :
   * Kckaiwei helped to tackle some issues :
     * (#323: Pulp talents don't show when added to npc sheet unless another item type is added.)
     * (#222: [Bug] Inventory panel continuously collapsing in creature/NPC templates.)
-  * Accent are now sorted correctly (é = e when it comes to sorting).
-  * Weapon without skill associated are shown in red.
-  * Compatibility issue with The Furnace.
+  * #329 Accent are now sorted correctly (é = e when it comes to sorting).
+  * #329 Weapon without skill associated are shown in red.
+  * #317 Compatibility issue with The Furnace.
+  * #339 Private GM rolls are now seen only by player and GM.
 * Sanity system reworked.
   * Card is divided into two main part, The top one for the player, the bottom one for the keeper.
   * System keep track of encountered creatures.
