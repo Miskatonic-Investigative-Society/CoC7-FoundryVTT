@@ -367,6 +367,8 @@
 "CoC7.RememberEverything": "You remember EVERYTHING.",
 "CoC7.BootOfMadnesslasted": "Your bout of madness lasted",
 "CoC7.EnteringBoutOfMadness": "You experience a bout of madness",
+"CoC7.GrowingAccustomedToAwfulness": "Your getting used to horror. (Your sanity loss is limited).",
+"CoC7.ImmuneToAwfulness": "Your mind is immune to this awfulness. (No sanity loss).",
 "CoC7.InvestigatorPhobiaGained": "The investigator gain a phobia",
 "CoC7.PhobiaGained": "You gain a phobia",
 "CoC7.InvestigatorManiaGained": "The investigator gain a mania",
@@ -558,11 +560,5 @@
 "SETTINGS.ArtworkMainFontSize": "Default font size (px)",
 "SETTINGS.BoutOfMadnessSummaryTable": "Bout of madness (Summary) table",
 "SETTINGS.BoutOfMadnessRealTimeTable": "Bout of madness (Real Time) table",
-"SETTINGS.BoutOfMadnessPhobiasIndex": "Phobias index",
-"SETTINGS.BoutOfMadnessPhobiasIndexHint": "The index (roll result) that will trigger a roll in the phobias table",
-"SETTINGS.BoutOfMadnessManiasIndex": "Manias index",
-"SETTINGS.BoutOfMadnessManiasIndexHint": "The index (roll result) that will trigger a roll in the manias table",
-"SETTINGS.SamplePhobiasTable": "Sample phobias table",
-"SETTINGS.SampleManiasTable": "Sample Manias table",
 "SETTINGS.LetKeeperDecide": "Let keeper decide"
 }

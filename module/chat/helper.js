@@ -44,6 +44,20 @@ export function exclude_(key, value) {
 	return value; // return as is
 }
 
+/**
+ * Function used for JSON.stringify replacer.
+ * Exclude any key starting with __
+ * @param {*} key 		The object's property Key
+ * @param {*} value 	The associated value
+ */
+export function exclude__(key, value) {
+	// convert RegExp to string
+	if ( key.startsWith('__')) {
+		return undefined; // remove from result
+	}
+	return value; // return as is
+}
+
 export class chatHelper{
 	static hyphenToCamelCase(string) {
 		return string.replace(/-([a-z])/g, function(string) {
