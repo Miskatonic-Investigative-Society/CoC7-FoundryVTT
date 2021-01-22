@@ -47,7 +47,7 @@
 		},{
 			"label": "Sanity Roll Table",
 			"entity": "RollTable",
-			"name": "roll-requests",
+			"name": "sanity-tables-examples",
 			"path": "./packs/sanity-tables-examples.db",
 			"system": "CoC7"
 		}
