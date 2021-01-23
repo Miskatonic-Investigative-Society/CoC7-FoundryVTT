@@ -560,5 +560,7 @@
 "SETTINGS.ArtworkMainFontSize": "Default font size (px)",
 "SETTINGS.BoutOfMadnessSummaryTable": "Bout of madness (Summary) table",
 "SETTINGS.BoutOfMadnessRealTimeTable": "Bout of madness (Real Time) table",
-"SETTINGS.LetKeeperDecide": "Let keeper decide"
+"SETTINGS.LetKeeperDecide": "Let keeper decide",
+"SETTINGS.DisplayResultType": "Display dice result type (text)",
+"SETTINGS.DisplayCheckSuccessLevel":"Display check level of success (stars)"
 }

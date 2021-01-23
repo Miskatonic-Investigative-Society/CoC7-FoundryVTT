@@ -75,18 +75,28 @@
 		<div class="dice-result"
 			data-total="{{dices.total}}"
 			data-ten-result="{{dices.tenResult}}">
+			{{#unless displayNoSuccessLevel}}
 			<div class="dice-formula {{#if isSuccess}}success{{/if}} {{#if isFailure}}failure{{/if}} {{#if isCritical}}critical{{/if}} {{#if isFumble}}fumble{{/if}}"
 			  title="{{successLevelIcons.hint}}">
-				{{#if successLevelIcons}}
-					<span class="roll-icons {{successLevelIcons.cssClass}}">
-					{{#each successLevelIcons.icons as |icon|}}
-						<i class="fas fa-{{icon}}"></i>
-					{{/each}}
-					</span>
-				{{else}}
-				1D% {{#if dices.hasBonus}}{{dices.bonus}} {{dices.bonusType}} {{localize 'CoC7.Dice'}}{{/if}}
+				{{#if displayResultType}}
+					{{resultType}}
+				{{/if}}
+				
+				{{#if displayBothSuccessLevel}} - {{/if}}
+
+				{{#if displayCheckSuccessLevel}}
+					{{#if successLevelIcons}}
+						<span class="roll-icons {{successLevelIcons.cssClass}}">
+						{{#each successLevelIcons.icons as |icon|}}
+							<i class="fas fa-{{icon}}"></i>
+						{{/each}}
+						</span>
+					{{else}}
+					1D% {{#if dices.hasBonus}}{{dices.bonus}} {{dices.bonusType}} {{localize 'CoC7.Dice'}}{{/if}}
+					{{/if}}
 				{{/if}}
 			</div>
+			{{/unless}}
 			<div class="dice-tooltip" style="display: none;">
 				<section class="tooltip-part">
 					<div class="dice ten-dice">

@@ -339,6 +339,23 @@ export class CoC7Check {
 	}
 
 
+	get displayResultType(){
+		return game.settings.get('CoC7', 'displayResultType');
+	}
+
+	get displayCheckSuccessLevel(){
+		return game.settings.get('CoC7', 'displayCheckSuccessLevel');
+	}
+
+	get displayBothSuccessLevel(){
+		return this.displayResultType && this.displayCheckSuccessLevel;
+	}
+
+	get displayNoSuccessLevel(){
+		return !this.displayResultType && !this.displayCheckSuccessLevel;
+	}
+
+
 	roll( diceMod = null, difficulty = null) {
 		if( diceMod ) this.diceModifier = diceMod;
 		if( difficulty ) this.difficulty = difficulty;
