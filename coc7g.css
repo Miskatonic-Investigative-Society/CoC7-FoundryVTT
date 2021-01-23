@@ -2376,6 +2376,12 @@ html {
 .chat-card-v2 .gm-actions:empty {
   display: none;
 }
+.chat-card-v2 .info.important {
+  color: darkred;
+  text-align: center;
+  font-size: large;
+  font-weight: bold;
+}
 .chat-card-v2 .status {
   display: inline;
   height: auto;
@@ -2390,8 +2396,12 @@ html {
   border-radius: 3px;
   background: rgba(0, 0, 0, 0.05);
 }
+.chat-card-v2 .status.important {
+  background-color: black;
+  color: red;
+}
 .chat-card-v2 .status.pending {
-  box-shadow: 0 0 4px red;
+  box-shadow: 0 0 4px darkred;
 }
 .chat-card-v2 .roll-results {
   padding: 0 0 3px 0;
