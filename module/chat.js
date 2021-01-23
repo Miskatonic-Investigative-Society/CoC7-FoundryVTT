@@ -1317,7 +1317,7 @@ export class CoC7Chat{
 
 		case 'advance-state':{
 			const sanCheck = SanCheckCard.getFromCard( card);
-			await sanCheck.advanceState(button.dataset.state);
+			await sanCheck.advanceState(button.dataset.state, button.dataset.param);
 			await sanCheck.updateChatCard();
 			break;
 
