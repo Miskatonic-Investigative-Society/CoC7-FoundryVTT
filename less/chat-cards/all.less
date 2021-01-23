@@ -51,6 +51,15 @@
         background-color: gainsboro;
     }
 
+    .info{
+        &.important{
+            color: darkred;
+            text-align: center;
+            font-size: large;
+            font-weight: bold;
+        }
+    }
+
     .status{
         display: inline;
         height: auto;
@@ -65,8 +74,13 @@
         border-radius: 3px;
         background: rgba(0, 0, 0, 0.05);
 
+        &.important{
+            background-color: black;
+            color: red;
+        }
+
         &.pending{
-            box-shadow: 0 0 4px red;
+            box-shadow: 0 0 4px darkred;
         }
     }
 }
