@@ -87,6 +87,10 @@ export class SanCheckCard extends ChatCardActor{
 		return undefined;
 	}
 
+	get firstEncounter(){
+		return !this.creatureEncountered && !this.creatureSpecieEncountered;
+	}
+
 	get creatureHasSpecie(){
 		const creatureSanData = CoC7Utilities.getCreatureSanData( this.creature);
 		if( creatureSanData.specie) return true;
@@ -139,7 +143,11 @@ export class SanCheckCard extends ChatCardActor{
 		}
 	}
 
-	async advanceState( state){
+	get youGainCthulhuMythosString(){
+		return game.i18n.format( 'CoC7.YouGainedCthulhuMythos', {value: this.mythosGain});
+	}
+
+	async advanceState( state, data){
 		switch (state) {
 		case 'keepCreatureSanData':{
 			this.state['keepCreatureSanData'] = true;
@@ -176,6 +184,18 @@ export class SanCheckCard extends ChatCardActor{
 		case 'boutOfMadnessOver':{
 			await this.actor.exitBoutOfMadness();
 			await this.triggerInsanity();
+			break;
+		}
+
+		case 'cthulhuMythosAwarded':{
+			const gain = !isNaN( Number( data))?Number( data):0;
+			this.state.cthulhuMythosAwarded = true;
+			if( data > 0) {
+				const cthulhuMythosSkill = this.actor.cthulhuMythosSkill;
+				const oldValue = cthulhuMythosSkill.data.data.adjustments.experience || 0;
+				if( cthulhuMythosSkill ) await cthulhuMythosSkill.update( {['data.adjustments.experience']: oldValue + gain});
+				this.mythosGain = gain;
+			}
 			break;
 		}
 
@@ -252,7 +272,12 @@ export class SanCheckCard extends ChatCardActor{
 		if( this.sanLoss > 0) this.state.actorLostSan = true;
 		this.state.sanLossApplied = true;
 		if( this.actor.san <= 0){
-			this.state.permenatlyInsane = true;
+			this.state.intRolled = true;
+			this.state.boutOfMadnessOver = true;
+
+			this.state.insanity = true;
+			this.state.permanentlyInsane = true;
+
 			this.state.finish = true;
 			return;
 		}
@@ -388,6 +413,16 @@ export class SanCheckCard extends ChatCardActor{
 
 		if( chatCard.actor.isInsane){
 			chatCard.state.alreadyInsane = true;
+		}
+
+		if( chatCard.actor.san <= 0){
+			chatCard.state.intRolled = true;
+			chatCard.state.boutOfMadnessOver = true;
+
+			chatCard.state.insanity = true;
+			chatCard.state.permanentlyInsane = true;
+
+			chatCard.state.finish = true;
 		}
 
 		if( !chatCard.creatureEncountered && !chatCard.creatureSpecieEncountered) chatCard.state.keepCreatureSanData = true;
