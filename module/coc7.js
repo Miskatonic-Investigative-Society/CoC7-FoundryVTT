@@ -112,6 +112,24 @@ Hooks.once('init', async function() {
 			'unknown': 'SETTINGS.CheckDifficultyUnknown'
 		}
 	});
+
+	// Display result type.
+	game.settings.register('CoC7', 'displayResultType', {
+		name: 'SETTINGS.DisplayResultType',
+		scope: 'client',
+		config: true,
+		default: false,
+		type: Boolean
+	});
+	
+	// Display check success level.
+	game.settings.register('CoC7', 'displayCheckSuccessLevel', {
+		name: 'SETTINGS.DisplayCheckSuccessLevel',
+		scope: 'client',
+		config: true,
+		default: true,
+		type: Boolean
+	});
 	
 	// Set the use of token instead of portraits.
 	game.settings.register('CoC7', 'useToken', {
