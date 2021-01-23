@@ -211,6 +211,7 @@ export class CoC7SanCheck {
 
 		const msg = await chatMessage.update({ content: htmlElement.outerHTML });
 		await ui.chat.updateMessage( msg, false);
+		ui.chat.scrollBottom();
 		return msg;
 	}
 

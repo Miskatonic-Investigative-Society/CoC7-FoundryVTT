@@ -23,7 +23,7 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 version 0.4.8 :
 
-* Bug correction :
+* Bug correction/Feature :
   * Kckaiwei helped to tackle some issues :
     * (#323: Pulp talents don't show when added to npc sheet unless another item type is added.)
     * (#222: [Bug] Inventory panel continuously collapsing in creature/NPC templates.)
@@ -31,6 +31,7 @@ version 0.4.8 :
   * #329 Weapon without skill associated are shown in red.
   * #317 Compatibility issue with The Furnace.
   * #339 Private GM rolls are now seen only by player and GM.
+  * #349 setting added to display success level/text. Settings are client scope.
 * Sanity system reworked.
   * Card is divided into two main part, The top one for the player, the bottom one for the keeper.
   * System keep track of encountered creatures.
