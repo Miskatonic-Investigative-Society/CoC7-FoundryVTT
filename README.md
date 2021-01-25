@@ -21,6 +21,16 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+version 0.4.9 :
+
+* Bout roll tables example added.
+  * You can import those talbe from the incliuded 'Sanity Roll Table' compendium. Once imported you need to restart your client.
+  * Table VII: Bouts of Madness - Real Time. This table is to be set in the Bout of Madness (Realtime) settings under system settings.
+  * Table VIII: Bouts of Madness - Summary. This table is to be set in the Bout of Madness (Summary) settings under system settings.
+  * Table IX: Sample Phobias & Table X: Sample Manias are part of the previous tables.
+  * Phobias and Manias tables can contain text or a status item. Each table contain text and items.
+  * Table rolls are recursive until an item or a text is found.
+
 version 0.4.8 :
 
 * Bug correction/Feature :
