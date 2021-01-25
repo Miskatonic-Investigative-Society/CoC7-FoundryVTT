@@ -88,7 +88,8 @@ export class SanCheckCard extends ChatCardActor{
 	}
 
 	get firstEncounter(){
-		return !this.creatureEncountered && !this.creatureSpecieEncountered;
+		if( !this._firstEncounter) this._firstEncounter = !this.creatureEncountered && !this.creatureSpecieEncountered;
+		return this._firstEncounter;
 	}
 
 	get creatureHasSpecie(){
@@ -144,7 +145,8 @@ export class SanCheckCard extends ChatCardActor{
 	}
 
 	get youGainCthulhuMythosString(){
-		return game.i18n.format( 'CoC7.YouGainedCthulhuMythos', {value: this.mythosGain});
+		if( this.mythosGain) return game.i18n.format( 'CoC7.YouGainedCthulhuMythos', {value: this.mythosGain});
+		return null;
 	}
 
 	async advanceState( state, data){
@@ -425,7 +427,7 @@ export class SanCheckCard extends ChatCardActor{
 			chatCard.state.finish = true;
 		}
 
-		if( !chatCard.creatureEncountered && !chatCard.creatureSpecieEncountered) chatCard.state.keepCreatureSanData = true;
+		if( chatCard.firstEncounter) chatCard.state.keepCreatureSanData = true;
 
 
 		const html = await renderTemplate(SanCheckCard.template, chatCard);
