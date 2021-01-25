@@ -61,8 +61,8 @@
                 <input class="locked" type="text" name="data.indefiniteInsanityLevel.value" value="{{data.indefiniteInsanityLevel.value}}" data-dtype="Number" readonly/>
                 <input class="locked" type="text" name="data.indefiniteInsanityLevel.max" value="{{data.indefiniteInsanityLevel.max}}" data-dtype="Number" readonly/>
             </div>
-            <a class="status-monitor {{#if data.status.tempoInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.TemporaryInsanity'}}" data-status="tempoInsane"><i class="game-icon game-icon-hanging-spider"></i></a>
-            <a class="status-monitor {{#if data.status.indefInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.IndefiniteInsanity'}}" data-status="indefInsane"><i class="game-icon game-icon-tentacles-skull"></i></a>
+            <a class="status-monitor {{#if isInABoutOfMadness}}status-on{{/if}}" title="{{sanity.boutOfMadness.hint}}" data-effect="boutOfMadness"><i class="game-icon game-icon-hanging-spider"></i></a>
+            <a class="status-monitor {{#if isInsane}}status-on{{/if}}" title="{{localize 'CoC7.UnderlyingInsanity'}}: {{sanity.underlying.hint}}" data-effect="insanity"><i class="game-icon game-icon-tentacles-skull"></i></a>
         </div>
         <div class="control">
             <a class="reset-counter" title="{{localize 'CoC7.DailySanIconOver'}}" data-counter="data.attribs.san.dailyLoss"><i class="fas fa-undo"></i></a>

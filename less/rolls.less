@@ -1,0 +1,139 @@
+.regular-success-color{
+    background-color: #ffcc99;
+    color: #cc6600;
+}
+
+.hard-success-color{
+    background-color: #ffff99;
+    color: #cc9900;
+}
+
+.extreme-success-color{
+    background-color: #ccff99;
+    color: #009933;
+}
+
+.critical-color{
+    background-color: whitesmoke;
+    color: goldenrod;
+}
+
+.fumble-color{
+    background-color: black;
+    color: crimson;
+}
+
+.success-color{
+    color: green;
+}
+
+.failure-color{
+    color: red;
+}
+
+.coc7-check-tooltip {
+    width: 280px;
+    position: fixed;
+    background: url(../../ui/parchment.jpg) repeat;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 5px 5px 0;
+    box-shadow: 0 0 10px #000;
+    text-shadow: none;
+    color: #191813;
+
+
+
+    .roll-icons.success {
+        color: goldenrod;
+    }
+    .roll-icons.critical {
+        color: goldenrod;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .roll-icons.failure {
+        color: crimson;
+    }
+
+    .roll-icons.fumble {
+        color: crimson;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .dice-rolls{
+        display: flex;
+
+        .check-result{
+            font-size: 16px;
+            padding: 0 5px;
+            display: flex;
+            flex: 1;
+            align-items: center;
+            justify-content: flex-end;
+        }
+    }
+
+
+    // .part-total.fumble{
+        // background-color: darkred;
+    // }
+    
+    .part-total.regular-success{
+        .regular-success-color();
+    }
+    
+    .part-total.hard-success{
+        .hard-success-color();
+    }
+    
+    .part-total.extreme-success{
+        .extreme-success-color()
+    }
+
+    .part-total.critical{
+        .critical-color();
+    }
+    
+    .part-total.fumble{
+        .fumble-color();
+    }
+
+    .part-total.success {
+        .success-color();
+    }
+    .part-total.failure {
+        .failure-color();
+    }
+}
+
+.coc7-check-result{
+    &.regular-success{
+        .regular-success-color();
+    }
+    
+    &.hard-success{
+        .hard-success-color();
+    }
+    
+    &.extreme-success{
+        .extreme-success-color()
+    }
+
+    &.critical{
+        .critical-color();
+    }
+    
+    &.fumble{
+        .fumble-color();
+    }
+
+    &.success {
+        .success-color();
+    }
+    &.failure {
+        .failure-color();
+    }
+}

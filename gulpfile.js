@@ -5,7 +5,7 @@ const less = require('gulp-less');
 /*  Compile LESS
 /* ----------------------------------------- */
 
-const COC7_LESS = ['less/*.less', 'less/sheets/*.less'];
+const COC7_LESS = ['less/*.less', 'less/sheets/*.less', 'less/chat-cards/*.less'];
 function compileLESS() {
 	return gulp.src('less/coc7g.less')
 		.pipe(less())

@@ -124,4 +124,30 @@ export class ChatCardActor{
 		if( img ) return img;
 		return '../icons/svg/mystery-man-black.svg';
 	}
+
+	async say(message, flavor = null){
+		let speakerData = {};
+		let speaker;
+		if( this.actor){
+			if( this.token) speakerData.token = this.token;
+			else speakerData.actor = this.actor;
+			speaker = ChatMessage.getSpeaker(speakerData);
+		} else {
+			speaker = ChatMessage.getSpeaker();
+		}
+
+		const user = this.actor.user ? this.actor.user : game.user;
+
+		const chatData = {
+			user: user._id,
+			speaker: speaker,
+			flavor: flavor,
+			content: message
+		};
+
+		if ( ['gmroll', 'blindroll'].includes(game.settings.get('core', 'rollMode')) ) chatData['whisper'] = ChatMessage.getWhisperRecipients('GM');//Change for user
+		if ( this.rollMode === 'blindroll' ) chatData['blind'] = true;
+
+		ChatMessage.create(chatData).then( msg => {return msg;});
+	}
 }
