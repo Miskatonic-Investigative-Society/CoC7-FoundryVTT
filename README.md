@@ -41,13 +41,14 @@ version 0.4.8 :
   * The SAN flow should be fully implemented. Int roll will triggered, bout will make you immune ...
   * A bout of madness result can be rolled from a table. Table to be defined in system settings.
     * A table can contains:
-      * A text (including inline deferred or not rolls [[/r 1D10]] [[ 1D10]]).
+      * A text (including inline deferred or not rolls [[/r 1D10]] [[1D10]]).
       * An other table (for phobia or mania for example).
       * An item of type status (Simple item with a description).
     * Nested calls will be resolved.
     * If the final result is a status (Phobia or mania) it will be added to that character (under Gear&Cash).
 * Japanese translation updated thanks to AdmiralNyar.
 * Polish translation updated thanks to Yossabart.
+* French translation updated.
 
 version 0.4.7 :
 
