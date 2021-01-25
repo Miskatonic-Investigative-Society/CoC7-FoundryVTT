@@ -1,4 +1,63 @@
 import {CoC7Check} from '../check.js';
+
+/**
+   * Return <a> element of a roll instance. foundry.js ref:TextEditor._createInlineRoll
+   * @param {Roll} roll      The roll object
+   */
+export function createInlineRoll( roll){
+
+	const data = {
+		cls: ['inline-roll'],
+		dataset: {}
+	};
+
+	try{
+		data.cls.push('inline-result');
+		data.result = roll.total;
+		data.title = roll.formula;
+		data.dataset.roll = escape(JSON.stringify(roll));
+	}
+	catch(err) { return null; }
+
+	// Construct and return the formed link element
+	const a = document.createElement('a');
+	a.classList.add(...data.cls);
+	a.title = data.title;
+	for (let [k, v] of Object.entries(data.dataset)) {
+		a.dataset[k] = v;
+	}
+	a.innerHTML = `<i class="fas fa-dice-d20"></i> ${data.result}`;
+	return a;
+}
+
+/**
+ * Function used for JSON.stringify replacer.
+ * Exclude any key starting with _
+ * @param {*} key 		The object's property Key
+ * @param {*} value 	The associated value
+ */
+export function exclude_(key, value) {
+	// convert RegExp to string
+	if ( key.startsWith('_')) {
+		return undefined; // remove from result
+	}
+	return value; // return as is
+}
+
+/**
+ * Function used for JSON.stringify replacer.
+ * Exclude any key starting with __
+ * @param {*} key 		The object's property Key
+ * @param {*} value 	The associated value
+ */
+export function exclude__(key, value) {
+	// convert RegExp to string
+	if ( key.startsWith('__')) {
+		return undefined; // remove from result
+	}
+	return value; // return as is
+}
+
 export class chatHelper{
 	static hyphenToCamelCase(string) {
 		return string.replace(/-([a-z])/g, function(string) {
@@ -52,19 +111,41 @@ export class chatHelper{
 		return speaker;
 	}
 
-	static attachObjectToElement( object, element){
+	static attachObjectToElement( object, element, objectName = ''){
 		Object.keys(object).forEach( prop => {
-			if( !prop.startsWith('_'))
-				element.dataset[prop]= object[prop];
+			if( !prop.startsWith('_')){
+				if( typeof( object[prop]) == 'object')
+				{
+					chatHelper.attachObjectToElement( object[prop], element, `${objectName}:${prop}:`);
+				}
+				else{
+					element.dataset[`${objectName}${prop}`]= object[prop];
+				}
+			}
 		});    
 	}
 
 	static getObjectFromElement( object, element){
+		function deserialize( obj, key, value){
+			if( key.startsWith(':')){
+				const s = key.slice(1);
+				const objProp = s.slice(s.indexOf(':')+1);
+				const objName = s.substring(0, s.indexOf(':'));
+				if( obj[objName] == undefined) obj[objName] = {};
+				deserialize( obj[objName], objProp, value);
+			} else {
+				if( 'true' == value) obj[key] = true;
+				else if ( 'false' == value) obj[key] = false;
+				else if( Number(value).toString() == value ) obj[key] = Number(value);
+				else obj[key] = value;
+			}
+		}
+
 		if( !element || !object) return;
 		Object.keys(element.dataset).forEach( prop => {
-			if( 'true' == element.dataset[prop]) object[prop] = true;
-			else if ( 'false' == element.dataset[prop]) object[prop] = false;
-			else if( 'template' != prop) object[prop] = element.dataset[prop]; //ignore template
+			if( 'template' == prop) return;
+			deserialize( object, prop, element.dataset[prop]);
+
 		});    
 	}
 
@@ -302,15 +383,15 @@ export class CoC7Roll{
 		return roll;
 	}
 
-	static attachCheckToElement( card, check){
+	static attachCheckToElement( htmlElement, check){
 		roll = CoC7Roll.getFromCheck( check);
-		roll.attachToElement( card);
+		roll.attachToElement( htmlElement);
 
 		return roll;
 	}
 
-	attachToElement( card){
-		chatHelper.attachObjectToElement(this, card);
+	attachToElement( htmlElement){
+		chatHelper.attachObjectToElement(this, htmlElement);
 	}
 
 }

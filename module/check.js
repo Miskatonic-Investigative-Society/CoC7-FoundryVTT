@@ -1,6 +1,7 @@
 import { CoC7Dice } from './dice.js';
 import { CoC7Item } from './items/item.js';
-import { chatHelper, CoC7Roll } from './chat/helper.js';
+import { exclude_, chatHelper, CoC7Roll } from './chat/helper.js';
+import { CoCActor } from './actors/actor.js';
 
 export class CoC7Check {
 	constructor( actor = null, skill = null, item = null, diceMod = 0, difficulty = null) {
@@ -163,13 +164,17 @@ export class CoC7Check {
 		this._diceModifier = parseInt( x);
 	}
 
-
+	/**
+	 * Get a check from an HTMLElement or a chat card.
+	 * @param {HTMLElement} card	The HTMLElement that is a roll-result or a chat card containing a single roll-result.
+	 * @return {CoC7Check}			A CoC7Check.
+	 */
 	static async getFromCard( card){
 		const rollResult = card.classList.contains('roll-result')? card : card.querySelector('.roll-result');
 		const check = new CoC7Check();
 		CoC7Roll.getFromElement(rollResult, check);
 		const message = card.closest('.message');
-		check.messageId = message.dataset.messageId;
+		check.messageId = message?message.dataset.messageId:null;
 		return check;
 	}
 
@@ -302,6 +307,9 @@ export class CoC7Check {
 		if( !this._actor){
 			if( this.actorKey) this._actor = chatHelper.getActorFromKey( this.actorKey);
 			if( this.actorId) this._actor = chatHelper.getActorFromKey( this.actorId);
+		} else if( this._actor.constructor.name == 'Object'){
+			const actor = new CoCActor(this._actor);
+			this._actor = actor;
 		}
 		return this._actor; 
 	}
@@ -328,6 +336,23 @@ export class CoC7Check {
 			this._item = this.actor.getOwnedItem( this.itemId);
 		}
 		return this._item; 
+	}
+
+
+	get displayResultType(){
+		return game.settings.get('CoC7', 'displayResultType');
+	}
+
+	get displayCheckSuccessLevel(){
+		return game.settings.get('CoC7', 'displayCheckSuccessLevel');
+	}
+
+	get displayBothSuccessLevel(){
+		return this.displayResultType && this.displayCheckSuccessLevel;
+	}
+
+	get displayNoSuccessLevel(){
+		return !this.displayResultType && !this.displayCheckSuccessLevel;
 	}
 
 
@@ -595,13 +620,26 @@ export class CoC7Check {
 		return cssClass;
 	}
 
+	get cssClassList(){
+		let cssClass = [];
+		if( this.isSuccess) cssClass.push('success');
+		if( this.isFailure) cssClass.push('failure');
+		if( this.isCritical && !this.isFailure) cssClass.push('success', 'critical');
+		if( this.isFumble && !this.isSuccess) cssClass.push('failure', 'fumble');
+		if( CoC7Check.successLevel.regular == this.successLevel) cssClass.push('regular-success');
+		if( CoC7Check.successLevel.hard == this.successLevel) cssClass.push('hard-success');
+		if( CoC7Check.successLevel.extreme == this.successLevel) cssClass.push('extreme-success');
+
+		return cssClass;
+	}
+
 	get playerCssClass(){
 		if( this.isSuccess || this.forcedSuccess) return 'success';
 		if( this.isFailure || this.forcedFailure) return 'failure';
 		return null;
 	}
 
-	upgradeCheck( upgradeindex){
+	async upgradeCheck( upgradeindex){
 		const increasedSuccess = this.increaseSuccess[upgradeindex];
 		const luckAmount = parseInt(increasedSuccess.luckAmount);
 		if( !this.actor.spendLuck( luckAmount)){ ui.notifications.error(game.i18n.format('CoC7.ErrorNotEnoughLuck', {actor: actor.name})); return;}
@@ -616,7 +654,7 @@ export class CoC7Check {
 		this.increaseSuccess.forEach( s => {s.luckToSpend = s.luckToSpend- luckAmount;});
 		this.luckSpent = true;
 		this.computeCheck();
-		this.updateChatCard();
+		return await this.updateChatCard();
 	}
 
 	removeUpgrades(){
@@ -794,7 +832,21 @@ export class CoC7Check {
 
 	}
 
-	async toMessage( pushing = false)
+	get tooltipHeader(){
+		if (this.attribute) return game.i18n.format(`CoC7.LinkCheck${this.difficulty==CoC7Check.difficultyLevel.regular?'':'Diff'}${!this.diceModifier?'':'Modif'}`, { difficulty: this.difficultyString, modifier: this.diceModifier, name: game.i18n.format(`CoC7.${this.actor.data.data.attribs[this.attribute].label}`)}) + ` (${this.actor.data.data.attribs[this.attribute].value}%)`;
+		if (this.characteristic) return game.i18n.format(`CoC7.LinkCheck${this.difficulty==CoC7Check.difficultyLevel.regular?'':'Diff'}${!this.diceModifier?'':'Modif'}`, {difficulty: this.difficultyString, modifier: this.diceModifier, name: game.i18n.localize(this.actor.data.data.characteristics[this.characteristic].label)}) + ` (${this.actor.data.data.characteristics[this.characteristic].value}%)`;
+		if (this.skill) return game.i18n.format(`CoC7.LinkCheck${this.difficulty==CoC7Check.difficultyLevel.regular?'':'Diff'}${!this.diceModifier?'':'Modif'}`, {difficulty: this.difficultyString, modifier: this.diceModifier, name: this.skill.name}) + ` (${this.skill.value}%)`;
+		return null;
+	}
+
+	async getHtmlRollElement( ){
+		const template = 'systems/CoC7/templates/chat/rolls/in-card-roll.html';
+		const html = await renderTemplate(template, this);
+		if( html) return $.parseHTML( html)[0];
+		return null;
+	}
+
+	async toMessage( pushing = false)//If card is provided atttached the roll to the card. If URID provided attach at this position.?
 	{
 		this.pushing = pushing;
 		const template = 'systems/CoC7/templates/chat/roll-result.html';
@@ -827,11 +879,18 @@ export class CoC7Check {
 
 	}
 
+	/**
+	 * 
+	 * @param {*} makePublic 	Will change the roll mode to public
+	 */
 	async updateChatCard( makePublic = false){
 		if( makePublic) this.rollMode = false; //reset roll mode
 		const template = 'systems/CoC7/templates/chat/roll-result.html';
 		const html = await renderTemplate(template, this);
 		let newContent = html;
+
+		if( !this.messageId) return $.parseHTML( html)[0]; //If no messageId return the HTMLElement containing the roll.
+		//If no messageId
 
 		const message = game.messages.get( this.messageId);
 		const htmlMessage = $.parseHTML( message.data.content)[0];
@@ -872,6 +931,107 @@ export class CoC7Check {
 		this.details = details? details : false;
 		const html = await renderTemplate(template, this);
 		return html;
+	}
+
+	get tooltip(){
+		return renderTemplate( 'systems/CoC7/templates/chat/rolls/roll-tooltip.html', this);
+	}
+
+	get inlineCheck(){
+		const a = document.createElement('a');
+		a.classList.add( 'coc7-inline-check');
+		a.classList.add( 'coc7-check-result');
+		a.classList.add( 'coc7-inline');
+		a.classList.add( ...this.cssClassList);
+		a.title = this.tooltipHeader;
+		a.dataset.roll=escape(JSON.stringify(this));
+		a.innerHTML= `<i class="game-icon game-icon-d10"></i> ${this.dices.total}`;
+		return a;
+		// return renderTemplate( 'systems/CoC7/templates/chat/rolls/inline-roll.html', this);
+	}
+
+	get rollToolTip(){
+		const parts = [];
+		const tens = this.dices.tens.map( r => {
+			return{
+				result: r.value,
+				selected: r.selected,
+				classes: [
+					'die',
+					'd10',
+					!r.selected?'discarded':null,
+					r.isMin?'min':null,
+					r.isMax?'max':null
+				].filter(c => c).join(' ')
+			};
+		});
+		const unit = [
+			{
+				result: this.dices.unit.value,
+				selected: true,
+				classes: 'die d10'
+			}
+		];
+		
+		parts.push( {
+			formula: this.tooltipHeader,
+			total: this.dices.total,
+			icons: this.successLevelIcons,
+			class: this.cssClass,
+			successRequired: this.successRequired,
+			resultType: this.resultType,
+			face: 10,
+			rolls: [ ...tens, ...unit]
+		});
+		return renderTemplate( 'systems/CoC7/templates/chat/rolls/roll-tooltip.html', {parts});
+	}
+
+	get JSONRollData(){
+		return JSON.stringify(this, exclude_);
+	}
+
+	static async _onClickInlineRoll( event){
+		event.preventDefault();
+		const a = event.currentTarget;
+
+		if ( a.classList.contains('coc7-check-result') ) {
+			if ( a.classList.contains('expanded') ) {
+				return CoC7Check._collapseInlineResult(a);
+			} else {
+				return CoC7Check._expandInlineResult(a);
+			}
+		}
+	}
+
+	static _collapseInlineResult(a) {
+		if ( !a.classList.contains('coc7-inline-check') ) return;
+		if ( !a.classList.contains('expanded') ) return;
+		const tooltip = a.querySelector('.coc7-check-tooltip');
+		if ( tooltip ) tooltip.remove();
+		return a.classList.remove('expanded');
+	}
+
+	static async _expandInlineResult(a) {
+		if ( !a.classList.contains('coc7-inline-check') ) return;
+		if ( a.classList.contains('expanded') ) return;
+	
+		// Create a new tooltip
+		const check = Object.assign( new CoC7Check(), JSON.parse(unescape(a.dataset.roll)));
+		const tip = document.createElement('div');
+		tip.innerHTML = await check.rollToolTip;
+	
+		// Add the tooltip
+		const tooltip = tip.children[0];
+		a.appendChild(tooltip);
+		a.classList.add('expanded');
+	
+		// Set the position
+		const pa = a.getBoundingClientRect();
+		const pt = tooltip.getBoundingClientRect();
+		tooltip.style.left = `${Math.min(pa.x, window.innerWidth - (pt.width + 3))}px`;
+		tooltip.style.top = `${Math.min(pa.y + pa.height + 3, window.innerHeight - (pt.height + 3))}px`;
+		const zi = getComputedStyle(a).zIndex;
+		tooltip.style.zIndex = Number.isNumeric(zi) ? zi + 1 : 100;
 	}
 
 }

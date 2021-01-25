@@ -7,9 +7,9 @@ import { CoC7MeleeResoltion } from './chat/combat/melee-resolution.js';
 import { CoC7RangeInitiator } from './chat/rangecombat.js';
 import { CoC7Roll, chatHelper } from './chat/helper.js';
 import { CoC7DamageRoll } from './chat/damagecards.js';
-import { CoC7SanCheck } from './chat/sancheck.js';
 import { CoC7ConCheck } from './chat/concheck.js';
 import { CoC7Parser } from './apps/parser.js';
+import { SanCheckCard } from './chat/cards/san-check.js';
 
 export class CoC7Chat{
 
@@ -56,6 +56,8 @@ export class CoC7Chat{
 		
 		html.on('click', '.coc7-link', CoC7Parser._onCheck.bind(this));
 		html.on('dragstart', 'a.coc7-link', CoC7Parser._onDragCoC7Link.bind(this));
+
+		html.on('click', 'coc7-inline-result', CoC7Chat._onInline.bind(this));
 
 	}
 
@@ -609,6 +611,19 @@ export class CoC7Chat{
 		//Save action for the roll
 	}
 
+	static async _onInline( event){
+		event.preventDefault();
+		const a = event.currentTarget;
+		
+		if ( a.classList.contains('inline-result') ) {
+			if ( a.classList.contains('expanded') ) {
+				return CoC7Check._collapseInlineResult(a);
+			} else {
+				return CoC7Check._expandInlineResult(a);
+			}
+		}
+	}
+
 	static _onToggleSelected( event){
 
 		const card = event.currentTarget.closest('.chat-card');
@@ -929,7 +944,7 @@ export class CoC7Chat{
 	}
 
 
-	static parseChatCard( card)
+	static parseChatCard( card)  //DEPRECATED !
 	{
 		//TODO control de validité des éléments
 		//TODO implement
@@ -999,6 +1014,7 @@ export class CoC7Chat{
 		const button = event.currentTarget;
 		const card = button.closest('.chat-card');
 		const originMessage = button.closest('.message');
+		// const messageId = originMessage.dataset.messageId;
 		const action = button.dataset.action;
 
 		if ( !CoC7Chat._getChatCardActor(card) ) return;
@@ -1030,7 +1046,7 @@ export class CoC7Chat{
 					check.forcePass(luckAmount);
 				} else {
 					const upgradeIndex = parseInt(button.dataset.index);
-					check.upgradeCheck(upgradeIndex);
+					await check.upgradeCheck(upgradeIndex);
 				}
 			}
 			else
@@ -1278,33 +1294,62 @@ export class CoC7Chat{
 			break;
 		}
 
-		case 'roll-san-check':{
-			const sanCheck = CoC7SanCheck.getFromCard( card);
-			await sanCheck.rollSan();
-			sanCheck.updateChatCard();
+		case 'reset-creature-san-data':{
+			const sanCheck = SanCheckCard.getFromCard( card);
+			await sanCheck.resetCreatureSanData();
+			await sanCheck.updateChatCard();
 			break;
 		}
 
+		case 'reset-specie-san-data':{
+			const sanCheck = SanCheckCard.getFromCard( card);
+			await sanCheck.resetSpecieSanData();
+			await sanCheck.updateChatCard();
+			break;
+		}
+
+		case 'roll-san-check':{
+			const sanCheck = SanCheckCard.getFromCard( card);
+			await sanCheck.rollSan();
+			await sanCheck.updateChatCard();
+			break;
+		}
+
+		case 'advance-state':{
+			const sanCheck = SanCheckCard.getFromCard( card);
+			await sanCheck.advanceState(button.dataset.state, button.dataset.param);
+			await sanCheck.updateChatCard();
+			break;
+
+		}
+
 		case 'roll-san-loss':{
-			const sanCheck = CoC7SanCheck.getFromCard( card);
+			const sanCheck = SanCheckCard.getFromCard( card);
 			await sanCheck.rollSanLoss();
 			sanCheck.updateChatCard();
 			break;
 		}
 
-		case 'apply-san-loss':{
-			const sanCheck = CoC7SanCheck.getFromCard( card);
-			await sanCheck.applySanLoss();
+		case 'roll-int-check':{
+			const sanCheck = SanCheckCard.getFromCard( card);
+			await sanCheck.rollInt();
 			sanCheck.updateChatCard();
 			break;
 		}
+		
+		// case 'apply-san-loss':{
+		// 	const sanCheck = CoC7SanCheck.getFromCard( card);
+		// 	await sanCheck.applySanLoss();
+		// 	sanCheck.updateChatCard();
+		// 	break;
+		// }
 
-		case 'reveal-san-check':{
-			const sanCheck = CoC7SanCheck.getFromCard( card);
-			sanCheck.isBlind = false;
-			sanCheck.updateChatCard();
-			break;
-		}
+		// case 'reveal-san-check':{
+		// 	const sanCheck = CoC7SanCheck.getFromCard( card);
+		// 	sanCheck.isBlind = false;
+		// 	sanCheck.updateChatCard();
+		// 	break;
+		// }
 
 		case 'roll-con-check':{
 			const conCheck = CoC7ConCheck.getFromCard(card);

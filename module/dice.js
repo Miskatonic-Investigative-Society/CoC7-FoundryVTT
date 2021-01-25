@@ -79,6 +79,7 @@ export class CoC7Dice {
 
 
 		const isBlind = 'blindroll' === (rollMode? rollMode: game.settings.get('core', 'rollMode'));
+		const isPrivateGM = 'gmroll' === (rollMode? rollMode: game.settings.get('core', 'rollMode'));
 
 		if( !isBlind && !hideDice){
 			if( game.modules.get('dice-so-nice')?.active){
@@ -130,7 +131,11 @@ export class CoC7Dice {
 				});
 	
 				try{
-					game.dice3d.show(diceData, game.user, syncDice);
+					const users = isPrivateGM||isBlind?game.users.filter( u => {
+						if(u.isGM) return true;
+						return false;
+					}):null;
+					game.dice3d.show(diceData, game.user, syncDice, users, isBlind);
 				} catch(err){
 					console.error('Roll: ' + err.message);
 				}
@@ -143,7 +148,10 @@ export class CoC7Dice {
 		result.tens = tenDie;
 		result.total = total;
  
-
+		//CHEAT :
+		// result.unit= { total:7, results:[7]};
+		// result.tens= { total:9, results:[9]};
+		// result.total= 97;
 		return result;
 	}
 
