@@ -21,6 +21,45 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+version 0.4.9 :
+
+* Bout roll tables example added.
+  * You can import those talbe from the incliuded 'Sanity Roll Table' compendium. Once imported you need to restart your client.
+  * Table VII: Bouts of Madness - Real Time. This table is to be set in the Bout of Madness (Realtime) settings under system settings.
+  * Table VIII: Bouts of Madness - Summary. This table is to be set in the Bout of Madness (Summary) settings under system settings.
+  * Table IX: Sample Phobias & Table X: Sample Manias are part of the previous tables.
+  * Phobias and Manias tables can contain text or a status item. Each table contain text and items.
+  * Table rolls are recursive until an item or a text is found.
+
+version 0.4.8 :
+
+* Bug correction/Feature :
+  * Kckaiwei helped to tackle some issues :
+    * (#323: Pulp talents don't show when added to npc sheet unless another item type is added.)
+    * (#222: [Bug] Inventory panel continuously collapsing in creature/NPC templates.)
+  * #329 Accent are now sorted correctly (é = e when it comes to sorting).
+  * #329 Weapon without skill associated are shown in red.
+  * #317 Compatibility issue with The Furnace.
+  * #339 Private GM rolls are now seen only by player and GM.
+  * #349 setting added to display success level/text. Settings are client scope.
+* Sanity system reworked.
+  * Card is divided into two main part, The top one for the player, the bottom one for the keeper.
+  * System keep track of encountered creatures.
+  * If a token creature have a customized san loss (different from orignal actor) it's considered like a different creature from the same specie. e.g. A Byakhee will be a 1/1D6 SAN. A baby will be 1/1D3. A monstrous may be 2/2D6. They all will be the same specie but baby and monstruous will have less/more SAN loss.
+    * All creatures of that specie get credited for SAN loss.
+    * When rolling the chat card will propose the keeper with option to reset that ceature/specie history.
+  * The SAN flow should be fully implemented. Int roll will triggered, bout will make you immune ...
+  * A bout of madness result can be rolled from a table. Table to be defined in system settings.
+    * A table can contains:
+      * A text (including inline deferred or not rolls [[/r 1D10]] [[1D10]]).
+      * An other table (for phobia or mania for example).
+      * An item of type status (Simple item with a description).
+    * Nested calls will be resolved.
+    * If the final result is a status (Phobia or mania) it will be added to that character (under Gear&Cash).
+* Japanese translation updated thanks to AdmiralNyar.
+* Polish translation updated thanks to Yossabart.
+* French translation updated.
+
 version 0.4.7 :
 
 * First sheet V2 implementation.

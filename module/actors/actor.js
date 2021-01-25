@@ -25,6 +25,39 @@ export class CoCActor extends Actor {
 		await this.creatureInit(); //TODO : move this in CoCActor.create(data, options)
 	}
 
+	// ********************** Testing
+	// async update(data, options={}) {
+	// 	ui.notifications.info('return super.update(data, options);');
+	// 	ui.notifications.info(`int : ${this.characteristics.int}`);
+	// 	this.characteristics.int = 15;
+	// 	ui.notifications.info(`modified int : ${this.characteristics.int}`);
+	// 	return super.update(data, options);
+	// }
+
+
+	// get characteristics(){
+	// 	const actor = this;
+	// 	return {
+	// 		get int(){
+	// 			return actor.getProp('_int');
+	// 		},
+
+	// 		set int(x){
+	// 			actor.setProp('_int', x);
+	// 		}
+	// 	};
+	// }
+
+	// setProp(key, x){
+	// 	this[key] = x;
+	// }
+
+	// getProp(key){
+	// 	return this[key]||0;
+	// }
+	// gnitseT **********************
+
+
 	/**
    * Early version on templates did not include possibility of auto calc
    * Just check if auto is indefined, in which case it will be set to true
@@ -61,19 +94,196 @@ export class CoCActor extends Actor {
 		}
 	}
 
+	get boutOfMadness(){
+		return this.effects.find( e => e.data.label == game.i18n.localize( 'CoC7.BoutOfMadnessName'));
+	}
+	
+	get insanity(){
+		return this.effects.find( e => e.data.label == game.i18n.localize( 'CoC7.InsanityName'));
+	}
+
+	get isInABoutOfMadness(){
+		if( !this.boutOfMadness) return false;
+		return !this.boutOfMadness.data.disabled;
+	}
+	
+	get isInsane(){
+		if( !this.insanity) return false;
+		return !this.insanity.data.disabled;
+	}
+
+	get sanity(){
+		let boutRealTime = this.boutOfMadness?.data.flags?.CoC7?.realTime? true: false;
+		let duration = boutRealTime? this.boutOfMadness?.data?.duration?.rounds: this.boutOfMadness?.data?.duration.seconds;
+		if( !boutRealTime && duration) duration = Math.round( duration/3600);
+		let indefiniteInstanity = this.insanity?.data.flags?.CoC7.indefinite? true: false;
+		let insaneDuration = indefiniteInstanity? null: this.insanity?.data?.duration.seconds;
+		if( !indefiniteInstanity && insaneDuration) insaneDuration = insaneDuration/3600;
+		let boutDurationText = this.isInABoutOfMadness?boutRealTime?`${duration} ${game.i18n.localize('CoC7.rounds')}`:`${duration} ${game.i18n.localize('CoC7.hours')}`:null;
+		const insanityDurationText = insaneDuration?this.isInsane?indefiniteInstanity?null:`${insaneDuration} ${game.i18n.localize('CoC7.hours')}`:null:null;
+		if( this.isInsane && !insanityDurationText && !indefiniteInstanity) indefiniteInstanity = true;
+		if( !duration) boutDurationText = '';
+
+
+		return {
+			boutOfMadness: {
+				active : this.isInABoutOfMadness,
+				realTime: this.isInABoutOfMadness?boutRealTime:undefined,
+				summary: this.isInABoutOfMadness?!boutRealTime:undefined,
+				duration: this.isInABoutOfMadness?duration:undefined,
+				durationText: boutDurationText?boutDurationText:'',
+				hint: 
+					this.isInABoutOfMadness?
+						`${game.i18n.localize('CoC7.BoutOfMadness')}${boutDurationText?': ' +boutDurationText:''}`:
+						game.i18n.localize('CoC7.BoutOfMadness')
+			},
+			underlying:{
+				active: this.isInsane,
+				indefintie: this.isInsane?indefiniteInstanity:undefined,
+				duration: insaneDuration,
+				durationText: insanityDurationText?insanityDurationText:'',
+				hint: 
+					this.isInsane?
+						indefiniteInstanity?
+							game.i18n.localize('CoC7.IndefiniteInsanity'):
+							`${game.i18n.localize('CoC7.TemporaryInsanity')} ${insanityDurationText?insanityDurationText:''}`
+						:''
+			}
+		};
+	}
+
+	async enterBoutOfMadness( realTime = true, duration = 1){
+		// const duration = {rounds: 1,
+		// 	seconds: 17,
+		// 	startRound: 3,
+		// 	startTime: 58,
+		// 	startTurn: 4,
+		// 	turns: 2};
+		// await this.boutOfMadness?.setFlag( 'CoC7', 'madness', true);
+
+		let result = null;
+		const boutOfMadnessTableId = realTime? game.settings.get( 'CoC7', 'boutOfMadnessRealTimeTable') :game.settings.get( 'CoC7', 'boutOfMadnessSummaryTable');
+		if( boutOfMadnessTableId != 'none'){
+			result = { 
+				phobia: false,
+				mania: false,
+				description: null
+			};
+			const boutOfMadnessTable = game.tables.get( boutOfMadnessTableId);
+			result.tableRoll = boutOfMadnessTable.roll();
+			if( TABLE_RESULT_TYPES.ENTITY == result.tableRoll.results[0].type){
+				const item = game.items.get(result.tableRoll.results[0].resultId);
+				if( item.data.data.type.phobia) result.phobia = true;
+				if( item.data.data.type.mania) result.mania = true;
+				result.description = `${item.name}:${TextEditor.enrichHTML( item.data.data.description.value)}`;
+				result.name = item.name;
+				delete item.data._id;
+				await this.createOwnedItem( item.data);
+			}
+			if( TABLE_RESULT_TYPES.TEXT == result.tableRoll.results[0].type){
+				result.description = TextEditor.enrichHTML(result.tableRoll.results[0].text);
+			}
+		}
+
+		//If it's not a real time no need to activate the bout
+		if( !realTime) return result;
+		
+
+		if( this.boutOfMadness){
+			await this.boutOfMadness.update( 
+				{
+					disabled: false,
+					duration: {
+						rounds: realTime&&duration?duration:undefined,
+						seconds:realTime?undefined:duration*3600, turns: 1
+					},
+					flags:{
+						CoC7:{
+							realTime: realTime
+						}
+					}
+				});
+		} else {
+			// const effectData = 
+			await ActiveEffect.create({
+				label: game.i18n.localize( 'CoC7.BoutOfMadnessName'),
+				icon: 'systems/CoC7/artwork/icons/hanging-spider.svg',
+				origin: this.uuid,
+				duration: {rounds: realTime&&duration?duration:undefined,seconds:realTime?undefined:duration*3600, turns: 1},
+				flags:{
+					CoC7: {
+						madness: true,
+						realTime: realTime
+					}
+				},
+				// tint: '#ff0000',
+				disabled: false
+			}, this).create();
+			// const effect = this.effects.get( effectData._id);
+			// effect.sheet.render(true);
+		}
+		// const effect = this.effects.get( effectData._id);
+		// effect.sheet.render(true);
+
+		return result;
+	}
+	
+	async enterInsanity( indefinite = true, duration = undefined){
+		if( this.insanity){
+			await this.insanity.update( {
+				disabled: false,
+				duration: {
+					seconds: !indefinite&&duration?duration*3600:undefined,
+					turns: 1
+				},
+				flags:{
+					CoC7:{
+						indefinite: indefinite
+					}
+				}
+			});
+		} else {
+			// const effectData = 
+			await ActiveEffect.create({
+				label: game.i18n.localize( 'CoC7.InsanityName'),
+				icon: 'systems/CoC7/artwork/icons/tentacles-skull.svg',
+				origin: this.uuid,
+				duration: {seconds: !indefinite&&duration?duration*3600:undefined, turns: 1},
+				flags:{
+					CoC7: {
+						madness: true,
+						indefinite: indefinite
+					}
+				},
+				disabled: false
+			}, this).create();
+		}
+
+	}
+
+	async exitBoutOfMadness(){
+		return await this.boutOfMadness?.update( { disabled: true});
+	}
+
+	
+	async exitInsanity(){
+		return await this.insanity?.update( { disabled: true});
+	}
+
+
 	/**
 	 * Called upon new actor creation.
 	 * @param {*} data 
 	 * @param {*} options 
 	 */
-	static async create(data, options) {
-		// If the created actor has items (only applicable to duplicated actors) bypass the new actor creation logic
-		if (data.items)
-		{
-			return super.create(data, options);
-		}
-		return super.create(data, options);
-	}
+	// static async create(data, options) {
+	// 	// If the created actor has items (only applicable to duplicated actors) bypass the new actor creation logic
+	// 	if (data.items)
+	// 	{
+	// 		return super.create(data, options);
+	// 	}
+	// 	return super.create(data, options);
+	// }
 	
 	/** @override */
 	async createSkill( skillName, value, showSheet = false){
@@ -548,7 +758,7 @@ export class CoCActor extends Actor {
 					dialogData.skills = [];
 					dialogData.type = 'occupation';
 					dialogData.actorId = this.id;
-					dialogData.options = Number(data.data.groups[index].options);
+					dialogData.optionsCount = Number(data.data.groups[index].options);
 					dialogData.title = game.i18n.localize('CoC7.SkillSelectionWindow');
 
 					//Select only skills that are not present or are not flagged as occupation.
@@ -572,9 +782,9 @@ export class CoCActor extends Actor {
 							else skill.displayName = skill.name;
 						});
 
-						if( dialogData.skills.length <= dialogData.options){
+						if( dialogData.skills.length <= dialogData.optionsCount){
 							//If there's is less skill than options, add them all.
-							ui.notifications.info( game.i18n.format('CoC7.InfoLessSkillThanOptions',{skillCount: dialogData.skills.length, optionsCount: dialogData.options}));
+							ui.notifications.info( game.i18n.format('CoC7.InfoLessSkillThanOptions',{skillCount: dialogData.skills.length, optionsCount: dialogData.optionsCount}));
 							// await this.addUniqueItems( dialogData.skills, 'occupation');
 							const merged = CoC7Item.mergeOptionalSkills( data.data.skills, dialogData.skills);
 							data.data.skills = merged;
@@ -595,7 +805,7 @@ export class CoCActor extends Actor {
 					dialogData.skills = [];
 					dialogData.type = 'occupation';
 					dialogData.actorId = this.id;
-					dialogData.options = Number(data.data.personal);
+					dialogData.optionsCount = Number(data.data.personal);
 					dialogData.title = game.i18n.format('CoC7.SelectPersonalSkills', { number: Number(data.data.personal)});
 
 					//Select only skills that are not present or are not flagged as occupation.
@@ -615,9 +825,9 @@ export class CoCActor extends Actor {
 								skill.displayName = `${skill.data.specialization} (${skill.name})`;
 							else skill.displayName = skill.name;
 						});
-						if( dialogData.skills.length <= dialogData.options){
+						if( dialogData.skills.length <= dialogData.optionsCount){
 						//If there's is less skill than options, add them all.
-							ui.notifications.info( game.i18n.format('CoC7.InfoLessSkillThanOptions',{skillCount: dialogData.skills.length, optionsCount: dialogData.options}));
+							ui.notifications.info( game.i18n.format('CoC7.InfoLessSkillThanOptions',{skillCount: dialogData.skills.length, optionsCount: dialogData.optionsCount}));
 							// await this.addUniqueItems( dialogData.skills, 'occupation');
 							const merged = CoC7Item.mergeOptionalSkills( data.data.skills, dialogData.skills);
 							data.data.skills = merged;
@@ -869,6 +1079,297 @@ export class CoCActor extends Actor {
 		return parseInt( this.data.data.attribs.mp.max);
 	}
 
+	encounteredCreaturesSanData(creature){
+		const i = this.encounteredCreaturesSanDataIndex(creature);
+		if( i != -1) return this.data.data.encounteredCreatures[i];
+		return null;
+	}
+
+	encounteredCreaturesSanDataIndex(creature){
+		const sanData = CoC7Utilities.getCreatureSanData( creature);
+		return this.data.data.encounteredCreatures.findIndex( cd =>{
+			return( cd.id == sanData?.id || cd.name.toLowerCase() == sanData.name?.toLocaleLowerCase());
+		});
+	}
+
+	sanLostToCreature( creature){
+		const sanData = this.encounteredCreaturesSanData(creature);
+		if( sanData){
+			// check for if specie already encountered return max of both;
+			if( sanData.specie)
+				return Math.max(sanData.specie.totalLoss || 0, sanData.totalLoss);
+
+			return sanData.totalLoss || 0;
+		}
+		else { //That creature was never encountered. What about his specie.
+			const creatureSanData = CoC7Utilities.getCreatureSanData( creature);
+			if( creatureSanData.specie){
+				let specieEncountered = this.encounteredCreaturesSanData(creatureSanData.specie);
+				if( specieEncountered) return specieEncountered.totalLoss;
+			}
+			return 0;//Never encountered that specie or this creature.
+
+		} 
+	}
+
+	maxPossibleSanLossToCreature( creature){
+		// Do we know you ?
+		const sanData = this.encounteredCreaturesSanData(creature);
+		const creatureSanData = CoC7Utilities.getCreatureSanData( creature);
+
+		if( sanData){
+			//Was there any update to that creature ?
+			let changes = false;
+			if( creatureSanData.sanLossMax != sanData.sanLossMax) { sanData.sanLossMax = creatureSanData.sanLossMax; changes=true;}
+			if( creatureSanData.specie && !sanData.specie ) { sanData.specie = creatureSanData.specie; changes=true;}
+			if( creatureSanData.specie && creatureSanData.specie.sanLossMax != sanData.specie.sanLossMax) { sanData.specie.sanLossMax = creatureSanData.specie.sanLossMax; changes=true;}
+			if( sanData.totalLoss > sanData.sanLossMax) { sanData.totalLoss = sanData.sanLossMax; changes=true;}
+			if( sanData.specie && sanData.specie.totalLoss > sanData.specie.sanLossMax) { sanData.specie.totalLoss = sanData.specie.sanLossMax; changes=true;}
+
+			if( changes){
+				const encounteredCreaturesList = this.data.data.encounteredCreatures ? duplicate( this.data.data.encounteredCreatures) : [];
+				const sanDataIndex = this.encounteredCreaturesSanDataIndex( creature);
+				encounteredCreaturesList[sanDataIndex] = sanData;
+				if( sanData.specie)
+					this._updateAllOfSameSpecie( encounteredCreaturesList, sanData.specie);
+
+				this.update( { ['data.encounteredCreatures'] : encounteredCreaturesList});
+
+			}
+
+
+			return sanData.sanLossMax - sanData.totalLoss;
+		}
+		// We don't know you.
+		if( creatureSanData){
+			const sanLostToCreature = this.sanLostToCreature(creature);
+			return Math.max( 0, creatureSanData.sanLossMax - sanLostToCreature);
+		}
+		return 99;
+	}
+
+	creatureEncountered( creature){
+		return( !!~this.encounteredCreaturesSanDataIndex(creature));
+	}
+
+	creatureSpecieEncountered( creature){
+		const creatureSanData = CoC7Utilities.getCreatureSanData( creature);
+		if( creatureSanData.specie){
+			return( !!~this.encounteredCreaturesSanDataIndex(creatureSanData.specie));
+		}
+		return this.creatureEncountered( creature);
+	}
+
+	_updateAllOfSameSpecie( encounteredCreaturesList, specieSanData){
+		for (let index = 0; index < encounteredCreaturesList.length; index++) {
+			if( encounteredCreaturesList[index].specie?.id == specieSanData.id || encounteredCreaturesList[index].specie?.name.toLowerCase() == specieSanData.name?.toLowerCase()){
+				//New encounter with that specie.
+				if( encounteredCreaturesList[index].specie.totalLoss != specieSanData.totalLoss){
+					const delta = specieSanData.totalLoss - encounteredCreaturesList[index].specie.totalLoss;
+					if( delta > 0) {
+						encounteredCreaturesList[index].specie = specieSanData;
+						encounteredCreaturesList[index].totalLoss += delta;
+						encounteredCreaturesList[index].totalLoss = Math.min( encounteredCreaturesList[index].totalLoss, encounteredCreaturesList[index].sanLossMax);
+					}
+				}
+			}
+		}
+	}
+
+	
+	_removeSpecie( encounteredCreaturesList, specieSanData){
+		for (let index = 0; index < encounteredCreaturesList.length; index++) {
+			if( encounteredCreaturesList[index].specie?.id == specieSanData.id || encounteredCreaturesList[index].specie?.name.toLowerCase() == specieSanData.name?.toLowerCase()){
+				const previousSpecieLost =  encounteredCreaturesList[index].specie.totalLoss;
+				delete encounteredCreaturesList[index].specie;
+
+				encounteredCreaturesList[index].totalLoss = encounteredCreaturesList[index].totalLoss - previousSpecieLost;
+				if( encounteredCreaturesList[index].totalLoss < 0) {
+					encounteredCreaturesList[index].totalLoss = 0;
+				}
+			}
+		}
+	}
+
+	async resetCreature( creature){
+		const i_sanData = this.encounteredCreaturesSanDataIndex( creature);
+		if( ~i_sanData){
+			const creatureSanData = CoC7Utilities.getCreatureSanData( creature);
+			const encounteredCreaturesList = this.data.data.encounteredCreatures ? duplicate( this.data.data.encounteredCreatures) : [];
+			encounteredCreaturesList.splice( i_sanData, 1);
+			creatureSanData.totalLoss = 0;
+			if( creatureSanData.specie) delete creatureSanData.specie;
+			this._updateAllOfSameSpecie( encounteredCreaturesList, creatureSanData);
+			await this.update( { ['data.encounteredCreatures'] : encounteredCreaturesList});
+		}
+	}
+
+	async resetSpecie( creature){
+		const encounteredCreaturesList = this.data.data.encounteredCreatures ? duplicate( this.data.data.encounteredCreatures) : [];
+		const creatureSanData = CoC7Utilities.getCreatureSanData( creature);
+		if( !creatureSanData.specie) return;
+		const i_sanData = this.encounteredCreaturesSanDataIndex( creatureSanData.specie);
+		if( ~i_sanData){
+			encounteredCreaturesList.splice( i_sanData, 1);
+		}
+		this._removeSpecie( encounteredCreaturesList, creatureSanData.specie);
+		await this.update( { ['data.encounteredCreatures'] : encounteredCreaturesList});
+
+		return false;
+	}
+
+	async looseSanToCreature( sanLoss, creature){
+
+		let exactSanLoss = sanLoss;
+		// Get that creature SAN data.
+		const creatureSanData = CoC7Utilities.getCreatureSanData( creature);
+
+		// Get actor SAN data for that creature.
+		const i_sanData = this.encounteredCreaturesSanDataIndex( creature);
+
+		// Check if that creature belongs to a specie and have we already encoutered it.
+		let i_specieSanData = -1;
+		if( creatureSanData.specie?.id) i_specieSanData = this.encounteredCreaturesSanDataIndex( creatureSanData.specie.id);
+		if( -1 == i_specieSanData && creatureSanData.specie?.name) i_specieSanData = this.encounteredCreaturesSanDataIndex( creatureSanData.specie.name);
+
+		//Copy the array for updating.
+		const encounteredCreaturesList = this.data.data.encounteredCreatures ? duplicate( this.data.data.encounteredCreatures) : [];
+
+		//Creature already encountered.
+		if( ~i_sanData){
+			const oldSanData = encounteredCreaturesList[i_sanData];
+			let newSanData;
+			//Update sanData with new SAN data (might have been updated ?)
+			if( creatureSanData){
+				newSanData = creatureSanData;
+				newSanData.totalLoss = oldSanData.totalLoss || 0;
+				if( newSanData.specie){
+					newSanData.specie.totalLoss = oldSanData.specie?.totalLoss?oldSanData.specie.totalLoss:0;
+				} else {
+					if( oldSanData.specie) newSanData.specie = oldSanData.specie;//Should never happen
+				}
+			}
+
+			newSanData.totalLoss = newSanData.totalLoss?newSanData.totalLoss+sanLoss:sanLoss;
+			if( newSanData.totalLoss > newSanData.sanLossMax){
+				exactSanLoss = exactSanLoss - ( newSanData.totalLoss-newSanData.sanLossMax);
+				newSanData.totalLoss = newSanData.sanLossMax;
+			}
+
+			//Credit the loss to that creature specie as well if it exists.
+			if( newSanData.specie){
+				newSanData.specie.totalLoss = newSanData.specie.totalLoss?newSanData.specie.totalLoss+exactSanLoss:exactSanLoss;
+				if( newSanData.specie.totalLoss > newSanData.specie.sanLossMax) newSanData.specie.totalLoss = newSanData.specie.sanLossMax;
+
+				//Update all creture from the same specie.
+				this._updateAllOfSameSpecie( encounteredCreaturesList, newSanData.specie);
+			}
+
+			encounteredCreaturesList[i_sanData] = newSanData;
+			//Update the specie also :
+			if( ~i_specieSanData && newSanData.specie) encounteredCreaturesList[i_specieSanData] = newSanData.specie; //We already encoutered that specie
+			else{
+				//Should never happen (encountered that creature but never his specie).
+				if( newSanData.specie) encounteredCreaturesList.push( newSanData.specie); 
+			}
+		} else {
+			//Creature never encountered.
+			const newSanData = creatureSanData;
+			newSanData.totalLoss = 0;
+
+			
+			if( newSanData.specie){
+				//Specie already encountered.
+				if( ~i_specieSanData){
+					newSanData.specie.totalLoss = encounteredCreaturesList[i_specieSanData].totalLoss;
+
+					// We already loss SAN to this specie of creature. The base los for this creature is the specie base loss.
+					newSanData.totalLoss = newSanData.specie.totalLoss;
+					if( newSanData.totalLoss > newSanData.sanLossMax)  newSanData.totalLoss = newSanData.sanLossMax;
+				}
+				else{
+					//We never encountered specie or creature.
+					newSanData.specie.totalLoss = 0;
+					newSanData.totalLoss = 0;
+				}
+			}
+
+			//Apply the san loss to that creature.
+			newSanData.totalLoss = newSanData.totalLoss + sanLoss;
+
+			//If loss is more thant creature Max.
+			if( newSanData.totalLoss > newSanData.sanLossMax){
+				//Get the exact san loss = loss - (overflow - max)
+				exactSanLoss = exactSanLoss - ( newSanData.totalLoss-newSanData.sanLossMax);
+				newSanData.totalLoss = newSanData.sanLossMax;
+			}
+
+			// Deduct the exact loss to that specie.
+			if( newSanData.specie){ //Wait for exact san LOSS before deduciting it from specie.
+				newSanData.specie.totalLoss = newSanData.specie.totalLoss + exactSanLoss;
+				if( newSanData.specie.totalLoss > newSanData.specie.sanLossMax) newSanData.specie.totalLoss = newSanData.specie.sanLossMax;
+				
+				//If we now that specie update it. If we don't add it.
+				if( ~i_specieSanData) encounteredCreaturesList[i_specieSanData] = newSanData.specie;
+				else encounteredCreaturesList.push( newSanData.specie);
+				
+				//Update all creature from the same specie.
+				this._updateAllOfSameSpecie( encounteredCreaturesList, newSanData.specie);
+
+			}
+
+			encounteredCreaturesList.push( newSanData);
+		}
+
+		await this.setSan( this.san - exactSanLoss);
+		await this.update( { ['data.encounteredCreatures'] : encounteredCreaturesList});
+		return exactSanLoss;
+	}
+
+	async looseSan( sanLoss, creature = null){
+		if( creature) await this.looseSanToCreature( sanLoss, creature);
+		else await this.setSan( this.san - sanLoss);
+	}
+
+
+	get sanData(){
+		return CoC7Utilities.getCreatureSanData( this);
+	}
+
+	sanLoss( checkPassed){
+		if( checkPassed) return this.sanLossCheckPassed;
+		return this.sanLossCheckFailled;
+	}
+
+	get sanLossCheckPassed(){
+		return this.data.data.special?.sanLoss?.checkPassed;
+	}
+
+	get sanLossCheckFailled(){
+		return this.data.data.special?.sanLoss?.checkFailled;
+	}
+
+	get sanLossMax(){
+		if( this.sanLossCheckFailled){
+			if( !isNaN( Number(this.sanLossCheckFailled)) ) return Number(this.sanLossCheckFailled);
+			return new Roll(this.sanLossCheckFailled).evaluate({maximize: true}).total;
+		}
+		return 0;
+	}
+
+	get sanLossMin(){
+		if( this.sanLossCheckPassed){
+			if( !isNaN( Number(this.sanLossCheckPassed)) ) return Number(this.sanLossCheckPassed);
+			return new Roll(this.sanLossCheckPassed).evaluate({maximize: true}).total;
+		}
+		return 0;
+	}
+
+	get dailySanLoss()
+	{
+		return this.data.data.attribs.san?.dailyLoss || 0;
+	}
+
 	get sanMax(){
 		if( this.data.data.attribs.san.auto){
 			if( this.cthulhuMythos) return 99 - this.cthulhuMythos;
@@ -890,6 +1391,12 @@ export class CoCActor extends Actor {
 	get san(){
 		return parseInt(this.data.data.attribs.san.value);
 	}
+
+	
+	get int(){
+		return this.getCharacteristic( 'int');
+	}
+
 
 	get occupationPointsSpent(){
 		let occupationPoints = 0;
@@ -981,7 +1488,32 @@ export class CoCActor extends Actor {
 	async setSan( value){
 		if( value < 0) value = 0;
 		if( value > this.sanMax) value = this.sanMax;
-		const loss = parseInt( this.data.data.attribs.san.value) - value;
+		let loss = parseInt( this.data.data.attribs.san.value) - value;
+		// if( creatureData){
+		// 	const creatureIndex = this.data.data.encounteredCreatures.findIndex( c => {
+		// 		if( c.id && c.id == creatureData.id) return true;
+		// 		if( c.name && c.name.toLowerCase() == creatureData.name?.toLowerCase()) return true;
+		// 		return false;});
+		// 	let encounteredCreaturesList;
+		// 	if( -1 < creatureIndex){
+		// 		encounteredCreaturesList = this.data.data.encounteredCreatures ? duplicate( this.data.data.encounteredCreatures) : [];
+		// 		const maxLossRemaining = encounteredCreaturesList[creatureIndex].maxLoss - encounteredCreaturesList[creatureIndex].totalLoss;
+		// 		if( loss > maxLossRemaining) loss = maxLossRemaining;
+		// 		encounteredCreaturesList[creatureIndex].totalLoss += loss;
+		// 	} else {
+		// 		if( loss > createData.maxLoss) loss = createData.maxLoss;
+		// 		encounteredCreaturesList = [
+		// 			{
+		// 				id: creatureData.id,
+		// 				name: creatureData.name,
+		// 				maxLoss: createData.maxLoss,
+		// 				totalLoss: loss
+		// 			}];
+		// 	}
+
+		// 	await this.item.update( { ['data.encounteredCreatures'] : encounteredCreaturesList});
+		// }
+
 		if( loss > 0){
 			let totalLoss = parseInt( this.data.data.attribs.san.dailyLoss) ? parseInt( this.data.data.attribs.san.dailyLoss) : 0;
 			totalLoss = totalLoss + loss;
@@ -1556,6 +2088,63 @@ export class CoCActor extends Actor {
 		// if( !statusValue) await this.setFlag('CoC7', statusName, true);
 		// else await this.unsetFlag('CoC7', statusName);
 
+	}
+
+	async toggleEffect( effectName){
+		switch (effectName) {
+		case 'boutOfMadness':
+			if( this.boutOfMadness){
+				const boutOfMadness = this.boutOfMadness;
+				if( boutOfMadness){
+					await boutOfMadness.update({ disabled: !boutOfMadness.data.disabled, duration: {seconds: undefined, rounds: undefined, turns: 1}});
+				}
+			} else {
+				// const effectData = 
+				await ActiveEffect.create({
+					label: game.i18n.localize( 'CoC7.BoutOfMadnessName'),
+					icon: 'systems/CoC7/artwork/icons/hanging-spider.svg',
+					origin: this.uuid,
+					duration: {seconds: undefined, rounds: undefined, turns: 1},
+					flags:{
+						CoC7: {
+							madness: true,
+							realTime: true
+						}
+					},
+					// tint: '#ff0000',
+					disabled: false
+				}, this).create();
+			}
+				
+			break;
+		case 'insanity':
+			if( this.insanity){
+				const insanity = this.insanity;
+				if( insanity){
+					await insanity.update({ disabled: !insanity.data.disabled, duration: {seconds: undefined, rounds: undefined, turns: 1}});
+				}
+			} else {
+				// const effectData = 
+				await ActiveEffect.create({
+					label: game.i18n.localize( 'CoC7.InsanityName'),
+					icon: 'systems/CoC7/artwork/icons/tentacles-skull.svg',
+					origin: this.uuid,
+					duration: {seconds: undefined, rounds: undefined, turns: 1},
+					flags:{
+						CoC7: {
+							madness: true,
+							indefinite: true
+						}
+					},
+					// tint: '#ff0000',
+					disabled: false
+				}, this).create();
+			}
+			break;
+		
+		default:
+			break;
+		}
 	}
 
 	getStatus(statusName){

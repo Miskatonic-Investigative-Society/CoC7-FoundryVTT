@@ -1,52 +1,4 @@
-<div class="coc7 chat-card item-card roll-card roll-result"
-	data-raw-value="{{rawValue}}" 
-	data-characteristic="{{characteristic}}" 
-	data-attribute="{{attribute}}"
-	data-skill-id="{{skill.data._id}}" 
-	data-success-required="{{successRequired}}"
-	data-flagged-for-development="{{flaggedForDevelopment}}"
-	data-forced="{{forced}}"
-	data-forced-success="{{forcedSuccess}}"
-	data-forced-failure="{{forcedFailure}}"
-	data-result-type="{{resultType}}"
-	data-details="{{details}}"
-	data-can-be-pushed="{{canBePushed}}"
-	data-pushing="{{pushing}}"
-	data-has-enough-luck="{{hasEnoughLuck}}"
-	data-luck-needed="{{luckNeeded}}"
-	data-can-increase-success="{{canIncreaseSuccess}}"
-	data-has-malfunction="{{hasMalfunction}}"
-	data-malfunction-txt="{{malfunctionTxt}}"
-	data-token-id="{{tokenId}}"
-	data-roll-type="{{rollType}}"
-	data-actor-key="{{actorKey}}"
-	data-is-blind="{{isBlind}}"
-	data-side="{{side}}"
-	data-action="{{action}}"
-	data-ref-message-id="{{referenceMessageId}}"
-	data-success-level="{{successLevel}}"
-	data-difficulty="{{difficulty}}"
-	data-actor-id="{{actor._id}}" 
-	data-item-id="{{item.data._id}}" 
-	data-dice-mod="{{diceModifier}}"
-	data-dice-modifier="{{diceModifier}}"
-	data-ten-only-one-die="{{dices.tenOnlyOneDie}}"
-	data-raw-value="{{rawValue}}" 
-	data-result="{{dice.total}}"
-	data-is-success="{{isSuccess}}"
-	data-is-failure="{{isFailure}}"
-	data-is-unknown="{{isUnknown}}"
-	data-luck-spent="{{luckSpent}}"
-	data-total-luck-spent="{{totalLuckSpent}}"
-	data-gm-difficulty-regular="{{gmDifficultyRegular}}"
-	data-gm-difficulty-hard="{{gmDifficultyHard}}"
-	data-gm-difficulty-extreme="{{gmDifficultyExtreme}}"
-	data-gm-difficulty-critical="{{gmDifficultyCritical}}"
-	data-hide-dice-result="{{hideDiceResult}}"
-	data-deny-luck="{{denyLuck}}"
-	data-deny-push="{{denyPush}}"
-	{{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
-
+<div class="coc7 roll-result">
 	{{#if isUnknown}}
 	<div class="flexrow difficulty-selector gm-visible-only" style="padding-bottom: 2px;">
 		<span class="flex1 toggle-switch simple-flag {{#if gmDifficultyRegular}}switched-on{{/if}}"
@@ -75,28 +27,18 @@
 		<div class="dice-result"
 			data-total="{{dices.total}}"
 			data-ten-result="{{dices.tenResult}}">
-			{{#unless displayNoSuccessLevel}}
 			<div class="dice-formula {{#if isSuccess}}success{{/if}} {{#if isFailure}}failure{{/if}} {{#if isCritical}}critical{{/if}} {{#if isFumble}}fumble{{/if}}"
 			  title="{{successLevelIcons.hint}}">
-				{{#if displayResultType}}
-					{{resultType}}
-				{{/if}}
-				
-				{{#if displayBothSuccessLevel}} - {{/if}}
-
-				{{#if displayCheckSuccessLevel}}
-					{{#if successLevelIcons}}
-						<span class="roll-icons {{successLevelIcons.cssClass}}">
-						{{#each successLevelIcons.icons as |icon|}}
-							<i class="fas fa-{{icon}}"></i>
-						{{/each}}
-						</span>
-					{{else}}
-					1D% {{#if dices.hasBonus}}{{dices.bonus}} {{dices.bonusType}} {{localize 'CoC7.Dice'}}{{/if}}
-					{{/if}}
+				{{#if successLevelIcons}}
+					<span class="roll-icons {{successLevelIcons.cssClass}}">
+					{{#each successLevelIcons.icons as |icon|}}
+						<i class="fas fa-{{icon}}"></i>
+					{{/each}}
+					</span>
+				{{else}}
+				1D% {{#if dices.hasBonus}}{{dices.bonus}} {{dices.bonusType}} {{localize 'CoC7.Dice'}}{{/if}}
 				{{/if}}
 			</div>
-			{{/unless}}
 			<div class="dice-tooltip" style="display: none;">
 				<section class="tooltip-part">
 					<div class="dice ten-dice">
@@ -173,7 +115,7 @@
 				</div>
 			</div>
 			{{#unless hideDiceResult}}
-			<h4 id="diceResult" class="dice-total {{cssClass}}" title="{{resultType}}">{{dices.total}} {{#if pushing}} {{localize 'CoC7.PushedRoll'}}{{/if}} {{#if luckSpent}} - {{ localize 'CoC7.LuckSpentAlt' }} ({{totalLuckSpent}}){{/if}}</h4>
+			<h4 class="check-result dice-total {{cssClass}}" title="{{resultType}}">{{dices.total}} {{#if pushing}} {{localize 'CoC7.PushedRoll'}}{{/if}} {{#if luckSpent}} - {{ localize 'CoC7.LuckSpentAlt' }} ({{totalLuckSpent}}){{/if}}</h4>
 			{{/unless}}
 			{{#if hasMalfunction}}<h4 class="malfunction">{{malfunctionTxt}}</h4>{{/if}}
 		</div>
@@ -238,7 +180,4 @@
 	</div>
 	{{/unless}}
 	{{/if}}
-
-
-
 </div>

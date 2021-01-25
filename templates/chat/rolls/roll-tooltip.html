@@ -1,0 +1,24 @@
+<div class="inline-roll dice-tooltip coc7-check-tooltip">
+    {{#each parts}}
+    <section class="tooltip-part">
+        <div class="dice">
+            <header class="part-header flexrow">
+                <span class="part-formula" title="{{this.successRequired}}">{{this.formula}}</span>
+                <span class="part-total {{this.class}}" title="{{this.resultType}}">{{this.total}}</span>
+            </header>
+            <ol class="dice-rolls">
+            {{#each this.rolls}}
+                <li class="roll {{this.classes}}" title="{{this.result}} {{#if this.selected}}*{{/if}}" >{{{this.result}}}</li>
+			{{/each}}
+				<li class="check-result" title="{{this.icons.hint}}">
+					<span class="roll-icons {{this.icons.cssClass}}">
+						{{#each this.icons.icons as |icon|}}
+							<i class="fas fa-{{icon}}"></i>
+						{{/each}}
+					</span>
+				</li>
+            </ol>
+        </div>
+    </section>
+    {{/each}}
+</div>

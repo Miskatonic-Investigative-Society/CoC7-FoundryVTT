@@ -13,6 +13,97 @@ export class CoC7Utilities {
 	// 	actor.inflictMajorWound();
 	// }
 
+	static async test(){
+		ui.notifications.infos('Do some stuff');
+	}
+
+
+	static getCreatureSanData( creature){
+		let creatureData;
+		let actor;
+		if( 'CoCActor' === creature.constructor.name)
+			actor = creature;
+
+		if( 'string' === typeof(creature))
+			actor = CoC7Utilities.getActorFromString( creature);
+		
+		if( actor){
+			if( actor.isToken){
+				const specie = game.actors.get(actor.id);				
+				// The token has a different maximum san loss.
+				// We assume it's a special represantant of his specie.
+				// The san loss for encoutered creature will counted for that token in particular
+				// and for the all specie
+				if( specie && specie.sanLossMax != actor.sanLossMax){
+					creatureData = {
+						id: actor.token.id,
+						name: actor.name,
+						sanLossMax: actor.sanLossMax,
+						specie: {
+							id: specie.id,
+							name: specie.name,
+							sanLossMax: specie.sanLossMax
+						}
+					};
+				} else {
+					// If they induce the same SAN loos credit everything to the specie.
+					// If the actor doen't exist in actor directory use the token data instead.
+					creatureData = {
+						id: specie?specie.id:actor.id,
+						name: specie?specie.name:actor.name,
+						sanLossMax: specie?specie.sanLossMax:actor.sanLossMax
+					};
+				}
+			} else {
+				creatureData = {
+					id: actor.id,
+					name: actor.name,
+					sanLossMax: actor.sanLossMax
+				};
+			}
+			return creatureData;				
+		}
+		else if( 'object' == typeof creature) return creature;
+		return null;
+	}
+
+	static getActorFromString( actorString){
+		let actor;
+
+		// Token is better than actor.
+		// Case 1 : trying with ID.
+		// Case 1.1 : token found.
+		if( game.actors.tokens[actorString]) return game.actors.tokens[actorString];
+		// Case 1.2 : actor found.
+		actor = game.actors.get( actorString);
+		if( actor) return actor;
+
+		// Case 2 : trying with name
+		// Case 2.1 : token found.
+		actor = Object.values(game.actors.tokens).find( t =>{
+			if( t.name.toLowerCase() == actorString.toLowerCase()) return true;
+			return false;
+		});
+		if( !actor){
+			// Case 2.2 : actor found.
+			actor = game.actors.find( a => {
+				if( a.name.toLowerCase() == actorString.toLowerCase()) return true;
+				return false;
+			});
+		}
+		if( actor) return actor;
+
+
+		// Case 3 string maybe an actorKey
+		if( creature.includes('.')){
+			let [, actorId] = key.split('.');
+			return CoC7Utilities.getActorFromString( actorId);
+		}
+
+		//No joy
+		return null;
+	}
+
 	static getCharacteristicNames( char){
 		const charKey = char.toLowerCase();
 
