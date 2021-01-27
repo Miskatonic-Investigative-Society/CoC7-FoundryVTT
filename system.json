@@ -24,6 +24,27 @@
 			"path": "./packs/skills.db",
 			"system": "CoC7"
 		},
+{
+			"label": "Zawody",
+			"entity": "Item",
+			"name": "Zawody",
+			"path": "./packs/zawody.db",
+			"system": "CoC7"
+		},
+{
+			"label": "Bronie",
+			"entity": "Item",
+			"name": "Bronie",
+			"path": "./packs/bronie.db",
+			"system": "CoC7"
+		},
+{
+			"label": "Umiejętności",
+			"entity": "Item",
+			"name": "umiejętności",
+			"path": "./packs/umiejetnosci.db",
+			"system": "CoC7"
+		},
 		{
 			"label": "Items Examples",
 			"entity": "Item",
@@ -44,11 +65,32 @@
 			"name": "roll-requests",
 			"path": "./packs/roll-requests.db",
 			"system": "CoC7"
+		},
+		{
+			"label": "Podręcznik",
+			"entity": "JournalEntry",
+			"name": "Podręcznik",
+			"path": "./packs/podrecznik.db",
+			"system": "CoC7"
+		},
+		{
+			"label": "LATA DWUDZIESTE XX WIEKU",
+			"entity": "JournalEntry",
+			"name": "LATA DWUDZIESTE XX WIEKU",
+			"path": "./packs/lata-dwudzieste-xx-wieku.db",
+			"system": "CoC7"
 		},{
 			"label": "Sanity Roll Table",
 			"entity": "RollTable",
 			"name": "sanity-tables-examples",
 			"path": "./packs/sanity-tables-examples.db",
+			"system": "CoC7"
+		},
+		{
+			"label": "Tworzenie Postaci Tabele",
+			"entity": "RollTable",
+			"name": "Tworzenie Postaci Tabele",
+			"path": "./packs/tworzenie-postaci-tabele.db",
 			"system": "CoC7"
 		}
 	],
