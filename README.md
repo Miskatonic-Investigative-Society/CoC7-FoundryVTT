@@ -21,6 +21,14 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+version 0.5.0 :
+
+* Bug correction:
+  * a bug preventing the chatCards to retrieve unassign actors corrected.
+  * #201 Scroll to end of chat on message change.
+  * Insanity Side-Effects 3: Insanity and the Cthulhu Mythos rule (P163 of keeper's handbook) is now correctly implemented. 5% on first mythos related insanity (used to be per creature), 1% on the following.
+  * Minor label correction on setup items.
+
 version 0.4.9 :
 
 * Bout roll tables example added.
