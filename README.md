@@ -28,6 +28,7 @@ version 0.5.0 :
   * #201 Scroll to end of chat on message change.
   * Insanity Side-Effects 3: Insanity and the Cthulhu Mythos rule (P163 of keeper's handbook) is now correctly implemented. 5% on first mythos related insanity (used to be per creature), 1% on the following.
   * Minor label correction on setup items.
+* Taiwanese Mandarin transaltion added thanks to zeteticl
 
 version 0.4.9 :
 
