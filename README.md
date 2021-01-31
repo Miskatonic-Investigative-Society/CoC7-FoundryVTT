@@ -28,6 +28,10 @@ version 0.5.0 :
   * #201 Scroll to end of chat on message change.
   * Insanity Side-Effects 3: Insanity and the Cthulhu Mythos rule (P163 of keeper's handbook) is now correctly implemented. 5% on first mythos related insanity (used to be per creature), 1% on the following.
   * Minor label correction on setup items.
+* Option added to create sanity chat card from sheet.
+  * holding alt while clicking on sanity will open a dialogue to enter sanituy loss (min and max).
+  * holding shift in the mean time will fast forward the bonus/penalty/difficulty selection dialogue.
+  * holding ctrl in the mean time will, if you're the GM, create a CoC7 link in the chat log.
 * Taiwanese Mandarin transaltion added thanks to zeteticl.
 
 version 0.4.9 :
