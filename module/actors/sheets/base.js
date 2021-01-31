@@ -7,6 +7,8 @@ import { CoC7DamageRoll } from '../../chat/damagecards.js';
 import { CoC7ConCheck } from '../../chat/concheck.js';
 import { chatHelper } from '../../chat/helper.js';
 import { CoC7Parser } from '../../apps/parser.js';
+import { SanDataDialog } from '../../apps/sandata-dialog.js';
+import { SanCheckCard } from '../../chat/cards/san-check.js';
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -963,17 +965,42 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 		}
 
+		let sanMin, sanMax;
+		if( event.altKey && attrib == 'san'){
+			const sanData = await SanDataDialog.create();
+			if( sanData){
+				sanMin = sanData.get( 'sanMin')||0;
+				sanMax = sanData.get( 'sanMax')||0;
+				if( !isNaN(Number(sanMin))) sanMin=Number(sanMin);
+				if( !isNaN(Number(sanMax))) sanMax=Number(sanMax);
+			}
+		}
+
+		const isSanCheck = undefined != sanMin && undefined != sanMax;
+
 		if( event.ctrlKey && game.user.isGM && ['lck', 'san'].includes(attrib)){
-			const linkData = {
-				check: 'check',
-				type: 'attribute',
-				name: attrib
-			};
+			const linkData = isSanCheck?
+				{
+					check: 'sanloss',
+					sanMax: sanMin,
+					sanMin: sanMax
+				}:{
+					check: 'check',
+					type: 'attribute',
+					name: attrib
+				};
 			if( 'blindroll' === game.settings.get('core', 'rollMode')) linkData.blind = true;
 			if( undefined != modifier) linkData.modifier = modifier;
 			if( undefined != difficulty) linkData.difficulty = difficulty;
 			const link = CoC7Parser.createCoC7Link(linkData);
-			if( link) chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), link);
+			if( link) {
+				chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), link);
+				return;
+			}
+		}
+
+		if( isSanCheck){
+			SanCheckCard.create( this.actor.actorKey, {sanMin: sanMin, sanMax: sanMax}, { sanModifier: modifier,sanDifficulty: difficulty,fastForward:event.shiftKey});
 		} else {
 			let check = new CoC7Check();
 			if( undefined != modifier ) check.diceModifier = modifier;
@@ -981,7 +1008,6 @@ export class CoC7ActorSheet extends ActorSheet {
 			check.actor = !tokenKey ? actorId : tokenKey;
 			check.rollAttribute(attrib );
 			check.toMessage();
-	
 		}
 	}
 
