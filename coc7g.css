@@ -1870,6 +1870,12 @@ html {
   flex: 0 0 24px;
   margin-top: 2px;
 }
+.sheetV2.character form .container .sheet-nav .unlock-control-disabbled {
+  flex: 0 0 24px;
+  margin-top: 2px;
+  color: darkred;
+  cursor: not-allowed;
+}
 .sheetV2.character form .container .sheet-body {
   border: 1px solid var(--main-sheet-front-color);
   margin: 0 16px 8px 16px;

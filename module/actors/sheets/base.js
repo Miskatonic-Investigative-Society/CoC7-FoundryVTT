@@ -30,6 +30,11 @@ export class CoC7ActorSheet extends ActorSheet {
 		data.actorFlags = {};
 
 		data.isGM = game.user.isGM;
+		data.alowUnlock =
+			game.settings.get( 'CoC7', 'playerUnlockSheetMode') == 'always' ||
+			game.user.isGM ||
+			(game.settings.get( 'CoC7', 'playerUnlockSheetMode') == 'creation' && game.settings.get( 'CoC7', 'charCreationEnabled'));
+		if( game.settings.get( 'CoC7', 'playerUnlockSheetMode') == 'creation' && game.settings.get( 'CoC7', 'charCreationEnabled')) data['data.flags.locked'] = false;
 
 
 		if( !data.data.characteristics) {
