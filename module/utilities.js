@@ -256,18 +256,18 @@ export class CoC7Utilities {
 		if( game.user.isGM){
 			game.actors.entities.forEach( a => {
 				if( 'character' == a?.data?.type && a?.sheet && a?.sheet?.rendered){
+					a.update( { ['data.flags.locked']: true});
 					a.render( false);
 				}
 			});
 		} else{
 			game.actors.entities.forEach( a => {
 				if( a.owner){
+					a.update( { ['data.flags.locked']: true});
 					a.render( false);
 				}
 			});
-		}
-
-		
+		}		
 		return;
 	}
 }

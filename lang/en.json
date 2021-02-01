@@ -569,5 +569,9 @@
 "SETTINGS.BoutOfMadnessRealTimeTable": "Bout of madness (Real Time) table",
 "SETTINGS.LetKeeperDecide": "Let keeper decide",
 "SETTINGS.DisplayResultType": "Display dice result type (text)",
-"SETTINGS.DisplayCheckSuccessLevel":"Display check level of success (stars)"
+"SETTINGS.DisplayCheckSuccessLevel":"Display check level of success (stars)",
+"SETTINGS.PlayerUnlockSheetMode": "Player can unlock sheet",
+"SETTINGS.AlwaysEditable": "always",
+"SETTINGS.CreationModeOnly": "in creation mode only",
+"SETTINGS.NeverEditable": "never (GM only)"
 }
