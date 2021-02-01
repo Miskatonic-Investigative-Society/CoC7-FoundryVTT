@@ -987,8 +987,8 @@ export class CoC7ActorSheet extends ActorSheet {
 			const linkData = isSanCheck?
 				{
 					check: 'sanloss',
-					sanMax: sanMin,
-					sanMin: sanMax
+					sanMax: sanMax,
+					sanMin: sanMin
 				}:{
 					check: 'check',
 					type: 'attribute',

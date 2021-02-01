@@ -1,11 +1,12 @@
-# My Call of Cthulhu implementation for Foundry VTT
+# My (Unofficial) Call of Cthulhu implementation for Foundry VTT
 
-My implementation of the call of Cthulhu for foundry-vtt  
+My (Unofficial) implementation of the call of Cthulhu for foundry-vtt  
 
 ## Disclaimer
 
 This system doesn’t include any materials from the books and you’ll have to enter manually, weapons, skills, items etc… to be able to play.
-I’ve just provided some basics skills that you can use.
+I’ve just provided some basics skills that you can use as example.
+This system is completely Unofficial.
 
 I’m testing my dev on Chrome. Not sure how or if it will behave on other browser.
 

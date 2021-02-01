@@ -1,7 +1,7 @@
 {
 	"name": "CoC7",
-	"title": "The Call of Cthulhu 7th edition",
-	"description": "The Call of Cthulhu 7th edition simple game system",
+	"title": "Call of Cthulhu 7th edition (Unofficial)",
+	"description": "Call of Cthulhu 7th edition (Unofficial) for FoundryVTT",
 	"version": "0.5.0",
 	"author": "HavelockV",
 	"minimumCoreVersion": "0.7.0",
