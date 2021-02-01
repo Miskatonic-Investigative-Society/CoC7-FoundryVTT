@@ -23,16 +23,28 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 version 0.5.0 :
 
+* General reminder:
+  * Most sheet component can be clicked on the trigger a check/roll.
+  * As a general rule you can modify those requests:
+    * shift will fast forward the request [Partial implem. (characteristics/attributes/skills only)].
+    * ctrl [GM only] will create a link in the chat with that request [Fully implem.].
+    * alt will modify the comportment [sanity only (will allow selection of loss min/max)].
+  * You can combine stuff. shift+ctrl+alt+click sanity will create a san check link in the chat without difficulty/penalty selection for the alt sanity (will ask you for min/max)
 * Bug correction:
-  * a bug preventing the chatCards to retrieve unassign actors corrected.
+  * a bug preventing the chatCards to retrieve unassigned actors corrected.
   * #201 Scroll to end of chat on message change.
+  * #361 Item description bug.
   * Insanity Side-Effects 3: Insanity and the Cthulhu Mythos rule (P163 of keeper's handbook) is now correctly implemented. 5% on first mythos related insanity (used to be per creature), 1% on the following.
   * Minor label correction on setup items.
 * Option added to create sanity chat card from sheet.
-  * holding alt while clicking on sanity will open a dialogue to enter sanituy loss (min and max).
+  * holding alt while clicking on sanity will open a dialogue to enter sanity loss (min and max).
   * holding shift in the mean time will fast forward the bonus/penalty/difficulty selection dialogue.
   * holding ctrl in the mean time will, if you're the GM, create a CoC7 link in the chat log.
-* Taiwanese Mandarin transaltion added thanks to zeteticl.
+* Option added to allow/prevent players from unlocking sheets.
+  * When unlocking is disabled for players, only keeper can unlock the sheet.
+  * If the keeper unlock the sheet the player will see an unlocked sheet.
+  * Upon exiting creation mode, all sheets get locked.
+* Taiwanese Mandarin translation added thanks to zeteticl.
 
 version 0.4.9 :
 
