@@ -88,7 +88,7 @@ export class SanCheckCard extends ChatCardActor{
 	}
 
 	get firstEncounter(){
-		return !this.creatureEncountered && !this.creatureSpecieEncountered;
+		return !this.actor.mythosInsanityExperienced;
 	}
 
 	get creatureHasSpecie(){
@@ -144,10 +144,11 @@ export class SanCheckCard extends ChatCardActor{
 	}
 
 	get youGainCthulhuMythosString(){
-		return game.i18n.format( 'CoC7.YouGainedCthulhuMythos', {value: this.mythosGain});
+		if( this.mythosGain) return game.i18n.format( 'CoC7.YouGainedCthulhuMythos', {value: this.mythosGain});
+		return null;
 	}
 
-	async advanceState( state, data){
+	async advanceState( state){
 		switch (state) {
 		case 'keepCreatureSanData':{
 			this.state['keepCreatureSanData'] = true;
@@ -187,15 +188,23 @@ export class SanCheckCard extends ChatCardActor{
 			break;
 		}
 
-		case 'cthulhuMythosAwarded':{
-			const gain = !isNaN( Number( data))?Number( data):0;
+		case 'noMythosGained':{
 			this.state.cthulhuMythosAwarded = true;
-			if( data > 0) {
-				const cthulhuMythosSkill = this.actor.cthulhuMythosSkill;
-				const oldValue = cthulhuMythosSkill.data.data.adjustments.experience || 0;
-				if( cthulhuMythosSkill ) await cthulhuMythosSkill.update( {['data.adjustments.experience']: oldValue + gain});
-				this.mythosGain = gain;
+			this.mythosGain = 0;
+			break;
+		}
+
+		case 'cthulhuMythosAwarded':{
+			let amountGained = 1;
+			if( !this.actor.mythosInsanityExperienced){
+				amountGained = 5;
+				await this.actor.experienceFirstMythosInsanity();
 			}
+			this.state.cthulhuMythosAwarded = true;
+			const cthulhuMythosSkill = this.actor.cthulhuMythosSkill;
+			const oldValue = cthulhuMythosSkill.data.data.adjustments.experience || 0;
+			if( cthulhuMythosSkill ) await cthulhuMythosSkill.update( {['data.adjustments.experience']: oldValue + amountGained});
+			this.mythosGain = amountGained;
 			break;
 		}
 
