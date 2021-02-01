@@ -195,6 +195,21 @@ Hooks.once('init', async function() {
 		default: true,
 		type: Boolean
 	});
+
+	// Allow player to unlock the sheet outside of creation mode.
+	game.settings.register( 'CoC7', 'playerUnlockSheetMode',{
+		name: 'SETTINGS.PlayerUnlockSheetMode',
+		// hint: 'SETTINGS.PlayerCanUnlockSheetHint',
+		scope: 'world',
+		config: true,
+		default: 'always',
+		type: String,
+		choices: {
+			'always': 'SETTINGS.AlwaysEditable',
+			'creation': 'SETTINGS.CreationModeOnly',
+			'never': 'SETTINGS.NeverEditable'
+		}
+	});
 		
 	game.settings.register('CoC7', 'disregardAmmo', {
 		name: 'SETTINGS.DisregardAmmo',
