@@ -1,6 +1,6 @@
-# My Call of Cthulhu implementation for Foundry VTT
+# My (Unofficial) Call of Cthulhu implementation for Foundry VTT
 
-My implementation of the call of Cthulhu for foundry-vtt  
+My (Unofficial) implementation of the call of Cthulhu for foundry-vtt  
 
 ## Disclaimer
 
