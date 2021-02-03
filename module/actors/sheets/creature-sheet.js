@@ -32,11 +32,12 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 	activateListeners(html){
 		super.activateListeners( html);
 
-		html.find('.roll-san').click(this._onSanCheck.bind(this));
+		html.find('.roll-san').mousedown(this._onSanCheck.bind(this));
 
 	}
 
 	async _onSanCheck(event){
+		if (event.button !== 0) return;
 		event.preventDefault();
 		if( !this.actor.data.data.special.sanLoss.checkPassed && !this.actor.data.data.special.sanLoss.checkFailled) {
 			// ui.notifications.info('No sanity loss value');

@@ -84,12 +84,13 @@ export class CoCItemSheet extends ItemSheet {
 		// Everything below here is only needed if the sheet is editable
 		if (!this.options.editable) return;
 
-		html.find('.toggle-switch').click(this._onClickToggle.bind(this));
+		html.find('.toggle-switch').mousedown(this._onClickToggle.bind(this));
 	}
 
 	/* -------------------------------------------- */
 
 	async _onClickToggle(event) {
+		if (event.button !== 0) return;
 		event.preventDefault();
 		const propertyId = event.currentTarget.closest('.toggle-switch').dataset.property;
 		await this.item.toggleProperty( propertyId, event.ctrlKey);
