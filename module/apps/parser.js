@@ -177,7 +177,7 @@ export class CoC7Parser{
 
 		//Bind the click to execute the check.
 		// html.on('click', 'a.coc7-link', CoC7Parser._onCheck.bind(this));
-		html.find('a.coc7-link').on( 'click', (event)=> CoC7Parser._onCheck(event));
+		html.find('a.coc7-link').on( 'mousedown', (event)=> CoC7Parser._onCheck(event));
 		html.find('a.coc7-link').on( 'dragstart', (event)=> CoC7Parser._onDragCoC7Link(event));
 		return;
 	}
@@ -203,7 +203,7 @@ export class CoC7Parser{
 	}
 
 	static bindEventsHandler( html){
-		html.find('a.coc7-link').on( 'click', (event)=> CoC7Parser._onCheck(event));
+		html.find('a.coc7-link').on( 'mousedown', (event)=> CoC7Parser._onCheck(event));
 		html.find('a.coc7-link').on( 'dragstart', (event)=> CoC7Parser._onDragCoC7Link(event));
 	}
 
@@ -291,6 +291,7 @@ export class CoC7Parser{
 	 * 
 	*/
 	static _onCheck( event){
+		if (event.button !== 0) return;
 		const options = event.currentTarget.dataset;
 		if( options.difficulty) options.difficulty = CoC7Utilities.convertDifficulty(options.difficulty);
 

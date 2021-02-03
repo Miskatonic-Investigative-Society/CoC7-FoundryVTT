@@ -37,7 +37,7 @@ export class CoC7Chat{
 
 	static chatListeners(app, html) {
 		// console.log('-->CoC7Chat.chatListeners');
-		html.on('click', '.card-buttons button', CoC7Chat._onChatCardAction.bind(this));
+		html.on('mousedown', '.card-buttons button', CoC7Chat._onChatCardAction.bind(this));
 		// html.on('click', '.card-buttons button', CoC7Chat._onChatCardTest.bind(this));
 		html.on('click', '.card-title', CoC7Chat._onChatCardToggleContent.bind(this));
 		html.on('click', '.radio-switch', CoC7Chat._onChatCardRadioSwitch.bind(this));
@@ -54,7 +54,7 @@ export class CoC7Chat{
 
 		html.on('dblclick', '.open-actor', CoC7Chat._onOpenActor.bind(this));
 		
-		html.on('click', '.coc7-link', CoC7Parser._onCheck.bind(this));
+		html.on('mousedown', '.coc7-link', CoC7Parser._onCheck.bind(this));
 		html.on('dragstart', 'a.coc7-link', CoC7Parser._onDragCoC7Link.bind(this));
 
 		html.on('click', 'coc7-inline-result', CoC7Chat._onInline.bind(this));
@@ -1015,7 +1015,7 @@ export class CoC7Chat{
 	// }
 	
 	static async _onChatCardAction(event) {
-
+		if (event.button !== 0) return;
 		// console.log('-->CoC7Chat._onChatCardAction');
 		event.preventDefault();
 
