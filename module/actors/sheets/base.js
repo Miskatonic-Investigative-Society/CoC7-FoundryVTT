@@ -416,16 +416,16 @@ export class CoC7ActorSheet extends ActorSheet {
 			html.find('.san-check').on( 'dragstart', (event)=> this._onDragSanCheck(event));
 
 
-			html.find('.characteristic-label').mousedown(this._onRollCharacteriticTest.bind(this));
-			html.find('.skill-name.rollable').mousedown(this._onRollSkillTest.bind(this));
-			html.find('.skill-image').mousedown(this._onRollSkillTest.bind(this));
-			html.find('.attribute-label.rollable').mousedown(this._onRollAttribTest.bind(this));
+			html.find('.characteristic-label').click(this._onRollCharacteriticTest.bind(this));
+			html.find('.skill-name.rollable').click(this._onRollSkillTest.bind(this));
+			html.find('.skill-image').click(this._onRollSkillTest.bind(this));
+			html.find('.attribute-label.rollable').click(this._onRollAttribTest.bind(this));
 			html.find('.lock').click(this._onLockClicked.bind(this));
 			html.find('.flag').click(this._onFlagClicked.bind(this));
 			html.find('.formula').click(this._onFormulaClicked.bind(this));
 			html.find('.roll-characteritics').click(this._onRollCharacteriticsValue.bind(this));
 			html.find('.average-characteritics').click(this._onAverageCharacteriticsValue.bind(this));
-			html.find('.toggle-switch').mousedown( this._onToggle.bind(this));
+			html.find('.toggle-switch').click( this._onToggle.bind(this));
 			html.find('.auto-toggle').click( this._onAutoToggle.bind(this));
 
 			// Status monitor
@@ -440,7 +440,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
 
 			html.find('.item .item-image').click(event => this._onItemRoll(event));
-			html.find('.weapon-name.rollable').mousedown( event => this._onWeaponRoll(event));
+			html.find('.weapon-name.rollable').click( event => this._onWeaponRoll(event));
 			html.find('.weapon-skill.rollable').click( event => this._onWeaponSkillRoll(event));
 			html.find('.reload-weapon').click( event => this._onReloadWeapon(event));
 			html.find('.reload-weapon').on( 'contextmenu', event => this._onReloadWeapon(event));
@@ -528,7 +528,7 @@ export class CoC7ActorSheet extends ActorSheet {
 			this.actor.developementPhase( event.shiftKey);
 		});
 
-		html.find('a.coc7-link').on( 'mousedown', (event)=> CoC7Parser._onCheck(event));
+		html.find('a.coc7-link').on( 'click', (event)=> CoC7Parser._onCheck(event));
 		html.find('a.coc7-link').on( 'dragstart', (event)=> CoC7Parser._onDragCoC7Link(event));
 
 		html.find('.test-trigger').click( async event =>{
@@ -640,10 +640,9 @@ export class CoC7ActorSheet extends ActorSheet {
 	}
 
 	async _onToggle( event){
-		if (event.button !== 0) return;
 		let weapon = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.itemId);
 		if( weapon){
-			weapon.toggleProperty(event.currentTarget.dataset.property, event.ctrlKey);
+			weapon.toggleProperty(event.currentTarget.dataset.property, (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224));
 		}
 	}
 	
@@ -807,14 +806,13 @@ export class CoC7ActorSheet extends ActorSheet {
 	}
 
 	async _onWeaponRoll(event) {
-		if (event.button !== 0) return;
 		event.preventDefault();
 		const itemId = event.currentTarget.closest('li').dataset.itemId;
 		const fastForward = event.shiftKey;
 		const weapon = this.actor.getOwnedItem(itemId);
 		const actorKey = !this.token? this.actor.actorKey : `${this.token.scene._id}.${this.token.data._id}`;
 
-		if( event.ctrlKey && game.user.isGM){
+		if((event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM){
 			const linkData = {
 				check: 'item',
 				type: 'weapon',
@@ -902,7 +900,6 @@ export class CoC7ActorSheet extends ActorSheet {
 	 * @private
 	*/
 	async _onRollCharacteriticTest(event) {
-		if (event.button !== 0) return;
 		event.preventDefault();
 
 		const actorId = event.currentTarget.closest('form').dataset.actorId;
@@ -918,7 +915,7 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 		}
 
-		if( event.ctrlKey && game.user.isGM){
+		if((event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM){
 			const linkData = {
 				check: 'check',
 				type: 'characteristic',
@@ -940,7 +937,6 @@ export class CoC7ActorSheet extends ActorSheet {
 	}
 
 	async _onRollAttribTest( event){
-		if (event.button !== 0) return;
 		event.preventDefault();
 
 		const attrib = event.currentTarget.parentElement.dataset.attrib;
@@ -987,7 +983,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
 		const isSanCheck = undefined != sanMin && undefined != sanMax;
 
-		if( event.ctrlKey && game.user.isGM && ['lck', 'san'].includes(attrib)){
+		if((event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM && ['lck', 'san'].includes(attrib)){
 			const linkData = isSanCheck?
 				{
 					check: 'sanloss',
@@ -1027,8 +1023,6 @@ export class CoC7ActorSheet extends ActorSheet {
 	 * @private
 	*/
 	async _onRollSkillTest(event) {
-	
-		if (event.button !== 0) return;
 		if( event.currentTarget.classList.contains('flagged4dev')) return;
 		event.preventDefault();
 		const skillId = event.currentTarget.closest('.item').dataset.skillId;
@@ -1044,7 +1038,7 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 		}
 
-		if( event.ctrlKey && game.user.isGM){
+		if((event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM){
 			const name = this.actor.items.get(skillId)?.name;
 			if( !name) return;
 			const linkData = {

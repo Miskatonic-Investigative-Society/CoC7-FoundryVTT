@@ -56,7 +56,7 @@ export class CoC7Parser{
 			if( link) {
 				editor.insertContent(link);
 			}
-		} else if( event.ctrlKey) {
+		} else if(event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) {
 			event.stopPropagation();
 
 			if(  data.type !== 'Item' ) return;
@@ -177,7 +177,7 @@ export class CoC7Parser{
 
 		//Bind the click to execute the check.
 		// html.on('click', 'a.coc7-link', CoC7Parser._onCheck.bind(this));
-		html.find('a.coc7-link').on( 'mousedown', (event)=> CoC7Parser._onCheck(event));
+		html.find('a.coc7-link').on( 'click', (event)=> CoC7Parser._onCheck(event));
 		html.find('a.coc7-link').on( 'dragstart', (event)=> CoC7Parser._onDragCoC7Link(event));
 		return;
 	}
@@ -203,7 +203,7 @@ export class CoC7Parser{
 	}
 
 	static bindEventsHandler( html){
-		html.find('a.coc7-link').on( 'mousedown', (event)=> CoC7Parser._onCheck(event));
+		html.find('a.coc7-link').on( 'click', (event)=> CoC7Parser._onCheck(event));
 		html.find('a.coc7-link').on( 'dragstart', (event)=> CoC7Parser._onDragCoC7Link(event));
 	}
 
@@ -291,7 +291,6 @@ export class CoC7Parser{
 	 * 
 	*/
 	static _onCheck( event){
-		if (event.button !== 0) return;
 		const options = event.currentTarget.dataset;
 		if( options.difficulty) options.difficulty = CoC7Utilities.convertDifficulty(options.difficulty);
 
@@ -300,7 +299,7 @@ export class CoC7Parser{
 
 		if( game.user.isGM){
 			//If GM and from sheet and CTRL clicked publish a message asking for the click.
-			if( fromSheet && event.ctrlKey){
+			if( fromSheet && (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)){
 				chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), event.currentTarget.outerHTML);
 			} else if( canvas.tokens.controlled.length){
 				canvas.tokens.controlled.forEach( token =>{
