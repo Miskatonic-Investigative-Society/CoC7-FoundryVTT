@@ -31,6 +31,25 @@ import { RollDialog } from './roll-dialog.js';
 
 export class CoC7Parser{
 
+	// static async onDropSomething( canvas, item){
+	// 	let grid_size = canvas.scene.data.grid;
+	// 	const number_marked = canvas.tokens.targetObjects({
+	// 		x: item.x-grid_size/2,
+	// 		y: item.y-grid_size/2,
+	// 		height: grid_size,
+	// 		width: grid_size
+	// 	});
+	// 	if (number_marked) {
+	// 		// Change item type to avoid that Foundry processes it
+	// 		item.type = 'Custom';
+	// 		if (item.hasOwnProperty('id')) {
+	// 			game.macros.get(item.id).execute();
+	// 		} else {
+	// 			eval(item.data.command);
+	// 		}
+	// 	}
+	// }
+
 	static async onEditorDrop( event, editor){
 		event.preventDefault();
 

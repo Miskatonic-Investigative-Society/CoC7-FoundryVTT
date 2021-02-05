@@ -22,6 +22,12 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+verison 0.5.1 :
+
+* Bug correction:
+  * Corrected a bug preventing attribute and sanity to be dragged onto a jounal entry to create a link.
+  * Corrected a bug on sanity chat-card where the full actor was embeded in the card resulting in high chat-log size. ( This is a temporary fix until refactorisation.)
+
 version 0.5.0 :
 
 * General reminder:
