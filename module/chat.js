@@ -1289,7 +1289,7 @@ export class CoC7Chat{
 			const check = await CoC7Check.getFromCard( card);
 			check.isBlind = false;
 			check.computeCheck();
-			if( event.ctrlKey) check.updateChatCard( true);
+			if(event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) check.updateChatCard( true);
 			else  check.updateChatCard();
 			break;
 		}

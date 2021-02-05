@@ -642,7 +642,7 @@ export class CoC7ActorSheet extends ActorSheet {
 	async _onToggle( event){
 		let weapon = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.itemId);
 		if( weapon){
-			weapon.toggleProperty(event.currentTarget.dataset.property, event.ctrlKey);
+			weapon.toggleProperty(event.currentTarget.dataset.property, (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224));
 		}
 	}
 	
@@ -812,7 +812,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		const weapon = this.actor.getOwnedItem(itemId);
 		const actorKey = !this.token? this.actor.actorKey : `${this.token.scene._id}.${this.token.data._id}`;
 
-		if( event.ctrlKey && game.user.isGM){
+		if((event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM){
 			const linkData = {
 				check: 'item',
 				type: 'weapon',
@@ -915,7 +915,7 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 		}
 
-		if( event.ctrlKey && game.user.isGM){
+		if((event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM){
 			const linkData = {
 				check: 'check',
 				type: 'characteristic',
@@ -983,7 +983,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
 		const isSanCheck = undefined != sanMin && undefined != sanMax;
 
-		if( event.ctrlKey && game.user.isGM && ['lck', 'san'].includes(attrib)){
+		if((event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM && ['lck', 'san'].includes(attrib)){
 			const linkData = isSanCheck?
 				{
 					check: 'sanloss',
@@ -1038,7 +1038,7 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 		}
 
-		if( event.ctrlKey && game.user.isGM){
+		if((event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM){
 			const name = this.actor.items.get(skillId)?.name;
 			if( !name) return;
 			const linkData = {
