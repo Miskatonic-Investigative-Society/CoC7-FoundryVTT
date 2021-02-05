@@ -32,18 +32,17 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 	activateListeners(html){
 		super.activateListeners( html);
 
-		html.find('.roll-san').mousedown(this._onSanCheck.bind(this));
+		html.find('.roll-san').click(this._onSanCheck.bind(this));
 
 	}
 
 	async _onSanCheck(event){
-		if (event.button !== 0) return;
 		event.preventDefault();
 		if( !this.actor.data.data.special.sanLoss.checkPassed && !this.actor.data.data.special.sanLoss.checkFailled) {
 			// ui.notifications.info('No sanity loss value');
 			return;
 		}
-		if( event.ctrlKey && game.user.isGM){
+		if((event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM){
 			let difficulty, modifier;
 			if( !event.shiftKey) {
 				const usage = await RollDialog.create();
