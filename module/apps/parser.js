@@ -75,7 +75,7 @@ export class CoC7Parser{
 			if( link) {
 				editor.insertContent(link);
 			}
-		} else if( event.ctrlKey) {
+		} else if(event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) {
 			event.stopPropagation();
 
 			if(  data.type !== 'Item' ) return;
@@ -318,7 +318,7 @@ export class CoC7Parser{
 
 		if( game.user.isGM){
 			//If GM and from sheet and CTRL clicked publish a message asking for the click.
-			if( fromSheet && event.ctrlKey){
+			if( fromSheet && (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)){
 				chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), event.currentTarget.outerHTML);
 			} else if( canvas.tokens.controlled.length){
 				canvas.tokens.controlled.forEach( token =>{
