@@ -1,6 +1,6 @@
 import { CoC7Dice } from './dice.js';
 import { CoC7Item } from './items/item.js';
-import { exclude_, chatHelper, CoC7Roll } from './chat/helper.js';
+import { chatHelper, CoC7Roll } from './chat/helper.js';
 import { CoCActor } from './actors/actor.js';
 
 export class CoC7Check {
@@ -19,7 +19,6 @@ export class CoC7Check {
 			const isUnknown = 'unknown' === game.settings.get('CoC7', 'defaultCheckDifficulty');
 			this.difficulty = isUnknown? CoC7Check.difficultyLevel.unknown: CoC7Check.difficultyLevel.regular; 
 		}
-
 	}
 
 	static difficultyLevel = {
@@ -987,7 +986,10 @@ export class CoC7Check {
 	}
 
 	get JSONRollData(){
-		return JSON.stringify(this, exclude_);
+		return JSON.parse(JSON.stringify(this, (k,v)=>{
+			if( null === v) return undefined;
+			return v;
+		}));
 	}
 
 	static async _onClickInlineRoll( event){

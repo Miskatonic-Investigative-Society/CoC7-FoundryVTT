@@ -31,6 +31,25 @@ import { RollDialog } from './roll-dialog.js';
 
 export class CoC7Parser{
 
+	// static async onDropSomething( canvas, item){
+	// 	let grid_size = canvas.scene.data.grid;
+	// 	const number_marked = canvas.tokens.targetObjects({
+	// 		x: item.x-grid_size/2,
+	// 		y: item.y-grid_size/2,
+	// 		height: grid_size,
+	// 		width: grid_size
+	// 	});
+	// 	if (number_marked) {
+	// 		// Change item type to avoid that Foundry processes it
+	// 		item.type = 'Custom';
+	// 		if (item.hasOwnProperty('id')) {
+	// 			game.macros.get(item.id).execute();
+	// 		} else {
+	// 			eval(item.data.command);
+	// 		}
+	// 	}
+	// }
+
 	static async onEditorDrop( event, editor){
 		event.preventDefault();
 
@@ -56,7 +75,7 @@ export class CoC7Parser{
 			if( link) {
 				editor.insertContent(link);
 			}
-		} else if( event.ctrlKey) {
+		} else if(event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) {
 			event.stopPropagation();
 
 			if(  data.type !== 'Item' ) return;
@@ -299,7 +318,7 @@ export class CoC7Parser{
 
 		if( game.user.isGM){
 			//If GM and from sheet and CTRL clicked publish a message asking for the click.
-			if( fromSheet && event.ctrlKey){
+			if( fromSheet && (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)){
 				chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), event.currentTarget.outerHTML);
 			} else if( canvas.tokens.controlled.length){
 				canvas.tokens.controlled.forEach( token =>{
