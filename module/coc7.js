@@ -620,6 +620,7 @@ Hooks.on('renderActorSheet', CoC7Parser.ParseSheetContent);
 Hooks.on('preCreateChatMessage', CoC7Parser.ParseMessage);
 // Sheet V2 css options
 Hooks.on('renderCoC7CharacterSheetV2', CoC7CharacterSheetV2.renderSheet);
+// Hooks.on('dropCanvasData', CoC7Parser.onDropSomething);
 
 tinyMCE.PluginManager.add('CoC7_Editor_OnDrop', function (editor) {
 	editor.on('drop', (event) => CoC7Parser.onEditorDrop(event, editor));
