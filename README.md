@@ -22,6 +22,11 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+verison 0.5.2 :
+
+* Bug correction:
+  * Corrected a bug on inline check where the full actor was embeded. ( This is a temporary fix until refactorisation.)
+
 verison 0.5.1 :
 
 * Bug correction:
