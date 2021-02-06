@@ -943,7 +943,7 @@ export class CoC7Check {
 		a.classList.add( 'coc7-inline');
 		a.classList.add( ...this.cssClassList);
 		a.title = this.tooltipHeader;
-		a.dataset.roll=escape(JSON.stringify(this));
+		a.dataset.roll=escape(this.JSONRollString);//TODO!IMPORTANT!!!
 		a.innerHTML= `<i class="game-icon game-icon-d10"></i> ${this.dices.total}`;
 		return a;
 		// return renderTemplate( 'systems/CoC7/templates/chat/rolls/inline-roll.html', this);
@@ -986,10 +986,16 @@ export class CoC7Check {
 	}
 
 	get JSONRollData(){
-		return JSON.parse(JSON.stringify(this, (k,v)=>{
-			if( null === v) return undefined;
-			return v;
-		}));
+		return JSON.parse(this.JSONRollString);
+	}
+
+	get JSONRollString(){
+		return JSON.stringify(this, (key,value)=>{
+			if( null === value) return undefined;
+			const exclude = ['_actor', '_skill', '_item'];
+			if( exclude.includes(key)) return undefined;
+			return value;
+		});
 	}
 
 	static async _onClickInlineRoll( event){
@@ -1018,7 +1024,7 @@ export class CoC7Check {
 		if ( a.classList.contains('expanded') ) return;
 	
 		// Create a new tooltip
-		const check = Object.assign( new CoC7Check(), JSON.parse(unescape(a.dataset.roll)));
+		const check = Object.assign( new CoC7Check(), JSON.parse(unescape(a.dataset.roll)));// TODO : find stringify unescape !! 20210205
 		const tip = document.createElement('div');
 		tip.innerHTML = await check.rollToolTip;
 	
