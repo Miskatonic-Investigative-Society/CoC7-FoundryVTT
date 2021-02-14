@@ -998,6 +998,21 @@ export class CoC7Check {
 		});
 	}
 
+	static fromData( data){
+		return Object.assign( new CoC7Check(), data);
+	}
+
+	static fromRollString( dataString){
+		let data;
+		try{
+			data = JSON.parse(unescape( dataString));
+		} catch(err) {
+			ui.notifications.error( err.message);
+			return null;
+		}
+		return CoC7Check.fromData( data);
+	}
+
 	static async _onClickInlineRoll( event){
 		event.preventDefault();
 		const a = event.currentTarget;
@@ -1041,5 +1056,4 @@ export class CoC7Check {
 		const zi = getComputedStyle(a).zIndex;
 		tooltip.style.zIndex = Number.isNumeric(zi) ? zi + 1 : 100;
 	}
-
 }
