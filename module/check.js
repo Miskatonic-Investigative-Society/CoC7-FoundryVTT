@@ -4,7 +4,7 @@ import { chatHelper, CoC7Roll } from './chat/helper.js';
 import { CoCActor } from './actors/actor.js';
 
 export class CoC7Check {
-	constructor( actor = null, skill = null, item = null, diceMod = 0, difficulty = null) {
+	constructor( actor = null, skill = null, item = null, diceMod = 0, difficulty = null, flatModifier = 0) {
 		this.actor = actor;
 		this.skill = skill;
 		this.item = item;
@@ -14,6 +14,7 @@ export class CoC7Check {
 		this.successLevel = null;
 		this.referenceMessageId = null;
 		this.pushing = false;
+		this.flatModifier = flatModifier;
 
 		if( null === difficulty){
 			const isUnknown = 'unknown' === game.settings.get('CoC7', 'defaultCheckDifficulty');
@@ -123,16 +124,32 @@ export class CoC7Check {
 		return '';
 	}
 
+	get modifiedResult(){
+		if( this.flatModifier){
+			let modified = this.dices.total + this.flatModifier;
+			if( modified < 1) return 1;
+			if( modified > 100) return 100;
+			return modified;
+		}
+		return this.dices.total;
+	}
+
+	get flatModifierString(){
+		if( !this.flatModifier) return null;
+		if( this.flatModifier > 0) return `+${this.flatModifier}`;
+		return this.flatModifier.toString();
+	}
+
 	get isFumble(){
-		return this.dices.total >= this.fumbleThreshold;
+		return this.modifiedResult >= this.fumbleThreshold;
 	}
 
 	get isCritical(){
-		return this.dices.total == 1;
+		return this.modifiedResult == 1;
 	}
 
 	get passed(){
-		return this.succesThreshold >= this.dices.total || this.isCritical;
+		return this.succesThreshold >= (this.modifiedResult) || this.isCritical;
 	}
 
 	get failed(){
@@ -465,12 +482,12 @@ export class CoC7Check {
 		}
 
 		if( ! this.luckSpent){
-			if( this.dices.total <= this.rawValue) this.successLevel = CoC7Check.successLevel.regular;
-			if( this.dices.total <= this.hardThreshold) this.successLevel = CoC7Check.successLevel.hard;
-			if( this.dices.total <= this.extremeThreshold) this.successLevel = CoC7Check.successLevel.extreme;
-			if( this.dices.total > this.rawValue) this.successLevel = CoC7Check.successLevel.failure;
-			if( 1 == this.dices.total) this.successLevel = CoC7Check.successLevel.critical;
-			if( this.fumbleThreshold <= this.dices.total) this.successLevel = CoC7Check.successLevel.fumble;
+			if( this.modifiedResult <= this.rawValue) this.successLevel = CoC7Check.successLevel.regular;
+			if( this.modifiedResult <= this.hardThreshold) this.successLevel = CoC7Check.successLevel.hard;
+			if( this.modifiedResult <= this.extremeThreshold) this.successLevel = CoC7Check.successLevel.extreme;
+			if( this.modifiedResult > this.rawValue) this.successLevel = CoC7Check.successLevel.failure;
+			if( 1 == this.modifiedResult) this.successLevel = CoC7Check.successLevel.critical;
+			if( this.fumbleThreshold <= this.modifiedResult) this.successLevel = CoC7Check.successLevel.fumble;
 		}
 
 		switch (this.successLevel) {
@@ -502,7 +519,7 @@ export class CoC7Check {
 		else this.successRequired = game.i18n.format('CoC7.SuccessRequired', {successRequired : this.difficultyString});
 
 
-		if (this.dices.total == 1){
+		if (this.modifiedResult == 1){
 			this.successLevel = CoC7Check.successLevel.critical;
 		}
 		if( !this.luckSpent && !this.isUnknown){
@@ -517,7 +534,7 @@ export class CoC7Check {
 		{
 			this.isItem = true;
 			if( this.item.data.data.malfunction) {
-				if( Number(this.dices.total) >= Number(this.item.data.data.malfunction)){
+				if( Number(this.modifiedResult) >= Number(this.item.data.data.malfunction)){
 					this.hasMalfunction = true;
 					this.malfunctionTxt = game.i18n.format('CoC7.Malfunction', {itemName : this.item.name});
 					await this.item.toggleItemFlag(CoC7Item.flags.malfunction);
@@ -530,10 +547,10 @@ export class CoC7Check {
 		if( this.isFumble) this.canBePushed = false;
 		if( this.denyPush) this.canBePushed = false;
 		
-		if( !this.denyLuck){
+		if( !this.denyLuck && this.actor){
 			if( !this.luckSpent && !this.passed && !this.isFumble && this.difficulty!=CoC7Check.difficultyLevel.critical && !this.unknownDifficulty) {
 				if( this.skill || this.characteristic){
-					let luckNeeded = this.dices.total - this.succesThreshold;
+					let luckNeeded = this.modifiedResult - this.succesThreshold;
 					if( this.actor.luck > luckNeeded){
 						this.hasEnoughLuck = true;
 						this.luckNeeded = luckNeeded;
@@ -548,29 +565,29 @@ export class CoC7Check {
 				// Can't spend luck on pushed rolls.
 				if( !this.pushing && 'lck' != this.attribute && 'san' != this.attribute){
 
-					if( this.unknownDifficulty && this.dices.total > this.regularThreshold){
+					if( this.unknownDifficulty && this.modifiedResult > this.regularThreshold){
 						let nextLevel = {};
 						nextLevel.difficultyName = game.i18n.localize('CoC7.RegularDifficulty');
 						nextLevel.difficulty = CoC7Check.difficultyLevel.regular;
-						nextLevel.luckToSpend = this.dices.total - this.regularThreshold;
+						nextLevel.luckToSpend = this.modifiedResult - this.regularThreshold;
 						nextLevel.hasEnoughLuck = (nextLevel.luckToSpend <= this.actor.luck);
 						if (nextLevel.luckToSpend <= this.actor.luck) this.increaseSuccess.push(nextLevel);
 					}
 
-					if(this.difficulty <= CoC7Check.difficultyLevel.regular  && this.dices.total > this.hardThreshold){
+					if(this.difficulty <= CoC7Check.difficultyLevel.regular  && this.modifiedResult > this.hardThreshold){
 						let nextLevel = {};
 						nextLevel.difficultyName = game.i18n.localize('CoC7.HardDifficulty');
 						nextLevel.difficulty = CoC7Check.difficultyLevel.hard;
-						nextLevel.luckToSpend = this.dices.total - this.hardThreshold;
+						nextLevel.luckToSpend = this.modifiedResult - this.hardThreshold;
 						nextLevel.hasEnoughLuck = (nextLevel.luckToSpend <= this.actor.luck);
 						if (nextLevel.luckToSpend <= this.actor.luck) this.increaseSuccess.push(nextLevel);
 					}
 
-					if(this.difficulty <= CoC7Check.difficultyLevel.hard  && this.dices.total > this.extremeThreshold){
+					if(this.difficulty <= CoC7Check.difficultyLevel.hard  && this.modifiedResult > this.extremeThreshold){
 						let nextLevel = {};
 						nextLevel.difficultyName = game.i18n.localize('CoC7.ExtremeDifficulty');
 						nextLevel.difficulty = CoC7Check.difficultyLevel.extreme;
-						nextLevel.luckToSpend = this.dices.total - this.extremeThreshold;
+						nextLevel.luckToSpend = this.modifiedResult - this.extremeThreshold;
 						nextLevel.hasEnoughLuck = (nextLevel.luckToSpend <= this.actor.luck);
 						if (nextLevel.luckToSpend <= this.actor.luck) this.increaseSuccess.push(nextLevel);
 					}
@@ -722,7 +739,7 @@ export class CoC7Check {
 
 		this.dices.tens =[];
 		this.dices.unit.value = unitTotal;
-		this.dices.total = total;
+		this.modifiedResult = total;
 		this.dices.tenResult = total - unitTotal;
 
 		let max = (unitTotal == 0)? 100 : 90;
@@ -819,7 +836,8 @@ export class CoC7Check {
 			if (this.characteristic) flavor = game.i18n.format('CoC7.CheckResult', {name : game.i18n.format(this.actor.data.data.characteristics[this.characteristic].label), value : this.actor.data.data.characteristics[this.characteristic].value, difficulty : this.difficultyString});
 			if (this.attribute) flavor = game.i18n.format('CoC7.CheckResult', {name : game.i18n.format(`CoC7.${this.actor.data.data.attribs[this.attribute].label}`), value : this.actor.data.data.attribs[this.attribute].value, difficulty : this.difficultyString});
 		}
-		else {
+
+		if(!flavor){
 			if( this.rawValue) flavor = game.i18n.format('CoC7.CheckRawValue', {rawvalue : this.rawValue, difficulty : this.difficultyString});
 		}
 
@@ -862,7 +880,7 @@ export class CoC7Check {
 			speaker = ChatMessage.getSpeaker();
 		}
 
-		const user = this.actor.user ? this.actor.user : game.user;
+		const user = this.actor?.user ? this.actor.user : game.user;
 
 		const chatData = {
 			user: user._id,
@@ -944,9 +962,8 @@ export class CoC7Check {
 		a.classList.add( ...this.cssClassList);
 		a.title = this.tooltipHeader;
 		a.dataset.roll=escape(this.JSONRollString);//TODO!IMPORTANT!!!
-		a.innerHTML= `<i class="game-icon game-icon-d10"></i> ${this.dices.total}`;
+		a.innerHTML= `<i class="game-icon game-icon-d10"></i> ${this.modifiedResult}`;
 		return a;
-		// return renderTemplate( 'systems/CoC7/templates/chat/rolls/inline-roll.html', this);
 	}
 
 	get rollToolTip(){
@@ -974,7 +991,7 @@ export class CoC7Check {
 		
 		parts.push( {
 			formula: this.tooltipHeader,
-			total: this.dices.total,
+			total: this.modifiedResult,
 			icons: this.successLevelIcons,
 			class: this.cssClass,
 			successRequired: this.successRequired,
