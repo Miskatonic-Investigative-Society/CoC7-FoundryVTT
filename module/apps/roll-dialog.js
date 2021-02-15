@@ -14,7 +14,7 @@ export class RollDialog {
 
 		if( options.name && !options.displayName) options.displayName = options.name;
 		const unknownDifficultyDefault = 'unknown' === game.settings.get('CoC7', 'defaultCheckDifficulty');
-		const html = await renderTemplate('systems/CoC7/templates/apps/bonus.html', {difficulty: CoC7Check.difficultyLevel, unknownDifficultyDefault: unknownDifficultyDefault, options});
+		const html = await renderTemplate('systems/CoC7/templates/apps/bonus.html', {systemAllowFlatModifier: game.settings.get('CoC7', 'allowFlatModifier') && !options.disableFlatModifier,difficulty: CoC7Check.difficultyLevel, unknownDifficultyDefault: unknownDifficultyDefault, options});
 		return new Promise((resolve) => {
 			let formData = null;
 			const dlg = new Dialog({

@@ -1,9 +1,3 @@
-/**
- * A simple and flexible system for world-building using an arbitrary collection of character and item attributes
- * Author: Atropos
- * Software License: GNU GPLv3
- */
-
 // Import Modules
 import { CoCActor } from './actors/actor.js';
 import { CoC7WeaponSheet } from './items/sheets/weapon-sheet.js';
@@ -36,7 +30,8 @@ Hooks.once('init', async function() {
 	game.CoC7 = {
 		macros:{
 			skillCheck: CoC7Utilities.skillCheckMacro,
-			weaponCheck: CoC7Utilities.weaponCheckMacro
+			weaponCheck: CoC7Utilities.weaponCheckMacro,
+			check: CoC7Utilities.checkMacro
 		},
 	};
 
@@ -128,6 +123,16 @@ Hooks.once('init', async function() {
 		scope: 'client',
 		config: true,
 		default: true,
+		type: Boolean
+	});
+
+	// Display check success level.
+	game.settings.register('CoC7', 'allowFlatModifier', {
+		name: 'SETTINGS.AllowFlatModifier',
+		hint: 'SETTINGS.AllowFlatModifierHint',
+		scope: 'world',
+		config: true,
+		default: false,
 		type: Boolean
 	});
 	
@@ -457,6 +462,8 @@ Hooks.on('updateChatMessage', (chatMessage, chatData, diff, speaker) => CoC7Chat
 Hooks.on('ready', async () =>{
 	await Updater.checkForUpdate();
 
+	// game.CoC7.menus = new CoC7Menu();
+
 	activateGlobalListener();
 	
 
@@ -570,26 +577,26 @@ Hooks.on('renderCoC7NPCSheet', (app, html, data) => CoC7NPCSheet.forceAuto(app, 
 // Hooks.on('createToken', ( scene, actor, options, id) => CoCActor.preCreateToken( scene, actor, options, id))
 // Hooks.on("renderChatLog", (app, html, data) => CoC7Item.chatListeners(html));
 
-Hooks.on('getSceneControlButtons', (controls) => {
-	if( game.user.isGM){
-		let group = controls.find(b => b.name == 'token');
-		group.tools.push({
-			toggle: true,
-			icon : 'fas fa-angle-double-up',
-			name: 'devphase',
-			active: game.settings.get('CoC7', 'developmentEnabled'),
-			title: game.settings.get('CoC7', 'developmentEnabled')? game.i18n.localize( 'CoC7.DevPhaseEnabled'): game.i18n.localize( 'CoC7.DevPhaseDisabled'),
-			onClick :async () => await CoC7Utilities.toggleDevPhase()
-		});
-		group.tools.push({
-			toggle: true,
-			icon : 'fas fas fa-user-edit',
-			name: 'charcreate',
-			active: game.settings.get('CoC7', 'charCreationEnabled'), 
-			title: game.settings.get('CoC7', 'charCreationEnabled')? game.i18n.localize( 'CoC7.CharCreationEnabled'): game.i18n.localize( 'CoC7.CharCreationDisabled'),
-			onClick :async () => await CoC7Utilities.toggleCharCreation()
-		});
-	}
+Hooks.on('getSceneControlButtons', (/*controls*/) => {
+	// if( game.user.isGM){
+	// 	let group = controls.find(b => b.name == 'token');
+	// 	group.tools.push({
+	// 		toggle: true,
+	// 		icon : 'fas fa-angle-double-up',
+	// 		name: 'devphase',
+	// 		active: game.settings.get('CoC7', 'developmentEnabled'),
+	// 		title: game.settings.get('CoC7', 'developmentEnabled')? game.i18n.localize( 'CoC7.DevPhaseEnabled'): game.i18n.localize( 'CoC7.DevPhaseDisabled'),
+	// 		onClick :async () => await CoC7Utilities.toggleDevPhase()
+	// 	});
+	// 	group.tools.push({
+	// 		toggle: true,
+	// 		icon : 'fas fas fa-user-edit',
+	// 		name: 'charcreate',
+	// 		active: game.settings.get('CoC7', 'charCreationEnabled'), 
+	// 		title: game.settings.get('CoC7', 'charCreationEnabled')? game.i18n.localize( 'CoC7.CharCreationEnabled'): game.i18n.localize( 'CoC7.CharCreationDisabled'),
+	// 		onClick :async () => await CoC7Utilities.toggleCharCreation()
+	// 	});
+	// }
 });
 
 // Hooks.on('renderSceneControls', () => CoC7Utilities.updateCharSheets());

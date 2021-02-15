@@ -22,6 +22,15 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+version 0.5.3 :
+
+* Implementation of systel soecific controls.
+  * Keeper's tools for GM will allow to enable/disable creation and development modes.
+  * Dice will allow to roll a generic check.
+* new macro check( [Threshold, [event]]) allow to roll a generic check.
+* #385 Optional flat modifier added.
+  * Disabled by default, can be enabled in options.
+
 verison 0.5.2 :
 
 * Bug correction:
@@ -53,7 +62,7 @@ version 0.5.0 :
   * holding alt while clicking on sanity will open a dialogue to enter sanity loss (min and max).
   * holding shift in the mean time will fast forward the bonus/penalty/difficulty selection dialogue.
   * holding ctrl in the mean time will, if you're the GM, create a CoC7 link in the chat log.
-* Option added to allow/prevent players from unlocking sheets.
+* #342 Option added to allow/prevent players from unlocking sheets.
   * When unlocking is disabled for players, only keeper can unlock the sheet.
   * If the keeper unlock the sheet the player will see an unlocked sheet.
   * Upon exiting creation mode, all sheets get locked.

@@ -7,29 +7,40 @@ export class CoC7Menu {
 	}
 	
 	static async renderMenu( controls, html){
-
+		// This could be made non static by moving the game.CoC7.menus initialization to getSceneControlButtons hook
 		if( !game.CoC7.menus){
 			game.CoC7.menus = new CoC7Menu();
-			ui.notifications.info( 'Menu init');
+			// ui.notifications.info( 'Menu init');
 		}
 
 		const menu = await renderTemplate( 'systems/CoC7/templates/coc7-menu.html', game.CoC7.menus.getData());
-
 		const coc7Button = $(menu);
 		
-		coc7Button.find('.scene-control').click( async ev => game.CoC7.menus._onClickMenu(ev, html));
-		coc7Button.find('.control-tool').click(game.CoC7.menus._onClickTool.bind(this));
+		coc7Button.find('.scene-control').click(game.CoC7.menus._onClickMenu.bind(game.CoC7.menus));
+		coc7Button.find('.control-tool').click(game.CoC7.menus._onClickTool.bind(game.CoC7.menus));
 
 		if( game.CoC7.menus.activeControl) html.find('.scene-control').removeClass('active');
 
-		html.find('.scene-control').click( game.CoC7.menus._clearActive.bind(this));
+		html.find('.scene-control').click( game.CoC7.menus._clearActive.bind(game.CoC7.menus));
 
 		html.append( coc7Button);
+		game.CoC7.menus.html = html;
 	}
 
-	_clearActive(){
-		game.CoC7.menus.activeControl = '';
-		ui.controls.render();
+	get control(){
+		if ( !this.controls ) return null;
+		return this.controls.find(c => c.name === this.activeControl) || null;
+	}
+
+	_clearActive(event){
+		event.preventDefault();
+		const customMenuActive = !!this.activeControl;
+		this.activeControl = '';
+		const li = event.currentTarget;
+		const controlName = li.dataset?.control;
+		if( ui.controls.activeControl == controlName && customMenuActive){
+			ui.controls.render();
+		}
 	}
 
 	_onClickTool(event){
@@ -37,9 +48,9 @@ export class CoC7Menu {
 		if ( !canvas?.ready ) return;
 		const li = event.currentTarget;
 		const toolName = li.dataset.tool;
-		const tool = this.tools.find(t => t.name === toolName);
+		const tool = this.control.tools.find(t => t.name === toolName);
 
-		ui.notifications.info( `found tool: ${tool.name}`);
+		// ui.notifications.info( `found tool: ${tool.name}`);
 	
 		// Handle Toggles
 		if ( tool.toggle ) {
@@ -49,7 +60,7 @@ export class CoC7Menu {
 	
 		// Handle Buttons
 		else if ( tool.button ) {
-			if ( tool.onClick instanceof Function ) tool.onClick();
+			if ( tool.onClick instanceof Function ) tool.onClick(event);
 		}
 	
 		// Handle Tools
@@ -59,7 +70,7 @@ export class CoC7Menu {
 		}
 	}
 
-	_onClickMenu(event, html){
+	_onClickMenu(event){
 		event.preventDefault();
 		if ( !canvas?.ready ) return;
 		const li = event.currentTarget;
@@ -67,17 +78,15 @@ export class CoC7Menu {
 		const control = this.controls.find(t => t.name === controlName);
 
 		if( control.button){
-			if ( control.onClick instanceof Function ) control.onClick();
+			if ( control.onClick instanceof Function ) control.onClick( event); //If control is a button, don't make it active.
 			// ui.controls.render();
-		} else if( !event.currentTarget.classList.contains('active')){
-			// await canvas.getLayer('TokenLayer').activate(); // Activate token layer
-			html.find('.scene-control').removeClass('active'); // Deactivate other menu
-			event.currentTarget.classList.add('active'); //Activate this menu
-			this.activeControl = controlName;
 		} else {
-			this.activeControl = '';
+			//If control is a menu and is not active.
+			// html.find('.scene-control').removeClass('active'); // Deactivate other menu.
+			// event.currentTarget.classList.add('active'); //Activate this menu.
+			this.activeControl = controlName;//Set curstom active control to that control.
 			ui.controls.render();
-		}
+		} 
 	}
 
 	getData(){
@@ -87,10 +96,16 @@ export class CoC7Menu {
 		let controls = this.controls.filter(s => s.visible !== false).map(s => {
 			s = duplicate(s);
 
-			if(s.button) return s;
-
 			// Add styling rules
-			s.css = isActive && (this.activeControl === s.name) ? 'active' : '';
+			s.css = [
+				'custom-control',
+				s.button ? 'button' : null,
+				isActive && (this.activeControl === s.name) ? 'active' : ''
+			].filter(t => !!t).join(' ');
+
+			// if( this.activeControl === s.name) ui.notifications.warn( `Active control: ${this.activeControl}`);
+
+			if(s.button) return s;
 
 			// Prepare contained tools
 			s.tools = s.tools.filter(t => t.visible !== false).map(t => {
@@ -116,63 +131,37 @@ export class CoC7Menu {
 		const isGM = game.user.isGM;
 		const controls = [];
 		controls.push({
-			css: 'coc7-menu',
 			icon: 'game-icon game-icon-tentacle-strike',
 			name: 'main-menu',
-			title: 'Title',
+			title: 'CoC7.GmTools',
+			visible: isGM,
 			tools: [
+				{
+					toggle: true,
+					icon : 'fas fa-angle-double-up',
+					name: 'devphase',
+					active: game.settings.get('CoC7', 'developmentEnabled'),
+					title: 'CoC7.DevPhase',
+					onClick :async () => await CoC7Utilities.toggleDevPhase()
+				},
 				{
 					toggle: true,
 					icon : 'fas fas fa-user-edit',
 					name: 'charcreate',
 					active: game.settings.get('CoC7', 'charCreationEnabled'), 
-					title: game.settings.get('CoC7', 'charCreationEnabled')? game.i18n.localize( 'CoC7.CharCreationEnabled'): game.i18n.localize( 'CoC7.CharCreationDisabled'),
-					onClick :async () => await CoC7Utilities.toggleCharCreation()}
-			]
-		});
-
-		controls.push({
-			css: 'coc7-menu',
-			icon: 'game-icon game-icon-d10',
-			name: 'check',
-			title: 'Title',
-			button: true,
-			onClick: async () => await CoC7Utilities.toggleCharCreation()
-		});
-
-		controls.push({
-			css: 'coc7-menu',
-			icon: 'game-icon game-icon-tentacurl',
-			name: 'CoC7 Menu 2',
-			title: 'Title',
-			tools: [
-				{
-					toggle: true,
-					name: 'clear',
-					title: 'CONTROLS.MeasureClear',
-					icon: 'fas fa-trash',
-					visible: isGM,
-					onClick: () => canvas.templates.deleteAll(),
-					button: true
-				},
-				{
-					name: 'clear',
-					title: 'CONTROLS.MeasureClear',
-					icon: 'fas fa-trash',
-					visible: isGM,
-					onClick: () => canvas.templates.deleteAll(),
-					button: true
-				},
-				{
-					name: 'clear',
-					title: 'CONTROLS.MeasureClear',
-					icon: 'fas fa-trash',
-					visible: isGM,
-					onClick: () => canvas.templates.deleteAll(),
+					title: 'CoC7.CharCreationMode',
+					onClick :async () => await CoC7Utilities.toggleCharCreation()
 				}
 			]
 		});
 
+		controls.push({
+			icon: 'game-icon game-icon-d10',
+			name: 'dice-roll',
+			title: 'CoC7.RollDice',
+			button: true,
+			onClick: (event) => CoC7Utilities.rollDice(event)
+		});
 		return controls;
 	}
 }
