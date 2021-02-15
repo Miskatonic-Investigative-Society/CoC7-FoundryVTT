@@ -871,6 +871,7 @@ export class CoC7ActorSheet extends ActorSheet {
 			if( usage) {
 				check.diceModifier = usage.get('bonusDice');
 				check.difficulty = usage.get('difficulty');
+				check.flatModifier = Number( usage.get('flatModifier'));
 			}
 		}
 
@@ -899,19 +900,20 @@ export class CoC7ActorSheet extends ActorSheet {
 	 * @	param {Event} event   The originating click event
 	 * @private
 	*/
-	async _onRollCharacteriticTest(event) {
+	async _onRollCharacteriticTest(event) { //FLATMODIF
 		event.preventDefault();
 
 		const actorId = event.currentTarget.closest('form').dataset.actorId;
 		let tokenKey = event.currentTarget.closest('form').dataset.tokenId;
 		const characteristic = event.currentTarget.parentElement.dataset.characteristic;
 
-		let difficulty, modifier;
+		let difficulty, modifier, flatModifier;
 		if( !event.shiftKey) {
-			const usage = await RollDialog.create();
+			const usage = await RollDialog.create( {disableFlatModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
 			if( usage) {
 				modifier = Number(usage.get('bonusDice'));
 				difficulty = Number(usage.get('difficulty'));
+				flatModifier = Number( usage.get('flatModifier'));
 			}
 		}
 
@@ -931,12 +933,13 @@ export class CoC7ActorSheet extends ActorSheet {
 			if( undefined != modifier ) check.diceModifier = modifier;
 			if( undefined != difficulty ) check.difficulty = difficulty;
 			check.actor = !tokenKey ? actorId : tokenKey;
+			check.flatModifier = flatModifier;
 			check.rollCharacteristic(characteristic );
 			check.toMessage();
 		}
 	}
 
-	async _onRollAttribTest( event){
+	async _onRollAttribTest( event){ //FLATMODIFIER
 		event.preventDefault();
 
 		const attrib = event.currentTarget.parentElement.dataset.attrib;
@@ -961,12 +964,13 @@ export class CoC7ActorSheet extends ActorSheet {
 		const actorId = event.currentTarget.closest('form').dataset.actorId;
 		let tokenKey = event.currentTarget.closest('form').dataset.tokenId;
 
-		let difficulty, modifier;
+		let difficulty, modifier, flatModifier;
 		if( !event.shiftKey) {
-			const usage = await RollDialog.create();
+			const usage = await RollDialog.create( {disableFlatModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
 			if( usage) {
 				modifier = Number(usage.get('bonusDice'));
 				difficulty = Number(usage.get('difficulty'));
+				flatModifier = Number( usage.get('flatModifier'));
 			}
 		}
 
@@ -1010,6 +1014,7 @@ export class CoC7ActorSheet extends ActorSheet {
 			let check = new CoC7Check();
 			if( undefined != modifier ) check.diceModifier = modifier;
 			if( undefined != difficulty ) check.difficulty = difficulty;
+			check.flatModifier = flatModifier;
 			check.actor = !tokenKey ? actorId : tokenKey;
 			check.rollAttribute(attrib );
 			check.toMessage();
@@ -1022,19 +1027,20 @@ export class CoC7ActorSheet extends ActorSheet {
 	 * @param {Event} event   The originating click event
 	 * @private
 	*/
-	async _onRollSkillTest(event) {
+	async _onRollSkillTest(event) { //FLATMODIF
 		if( event.currentTarget.classList.contains('flagged4dev')) return;
 		event.preventDefault();
 		const skillId = event.currentTarget.closest('.item').dataset.skillId;
 		const actorId = event.currentTarget.closest('form').dataset.actorId;
 		const tokenKey = event.currentTarget.closest('form').dataset.tokenId;
 		
-		let difficulty, modifier;
+		let difficulty, modifier, flatModifier;
 		if( !event.shiftKey) {
-			const usage = await RollDialog.create();
+			const usage = await RollDialog.create( {disableFlatModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
 			if( usage) {
 				modifier = Number(usage.get('bonusDice'));
 				difficulty = Number(usage.get('difficulty'));
+				flatModifier = Number( usage.get('flatModifier'));
 			}
 		}
 
@@ -1057,6 +1063,7 @@ export class CoC7ActorSheet extends ActorSheet {
 			if( undefined != difficulty ) check.difficulty = difficulty;
 			check.actor = !tokenKey ? actorId : tokenKey;
 			check.skill = skillId;
+			check.flatModifier = flatModifier;
 			check.roll();
 			check.toMessage();
 		}

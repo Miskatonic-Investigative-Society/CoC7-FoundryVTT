@@ -1,5 +1,6 @@
 import { CoC7Check } from './check.js';
 import { CoC7Item } from './items/item.js';
+import { RollDialog } from './apps/roll-dialog.js';
 
 export class CoC7Utilities {
 	// static test(event){
@@ -175,6 +176,10 @@ export class CoC7Utilities {
 		actor.weaponCheck( weapon, event.shiftKey);
 	}
 
+	static async checkMacro( threshold = 50, event){
+		await CoC7Utilities.rollDice( event, {threshold: threshold});
+	}
+
 	static async createMacro(bar, data, slot){
 		if ( data.type !== 'Item' ) return;
 
@@ -250,6 +255,56 @@ export class CoC7Utilities {
 			type : 'updateChar'
 		});		
 		CoC7Utilities.updateCharSheets();
+	}
+
+	static async rollDice( event, options ={}){
+
+		options.rawValue = true;
+		if( !options.threshold) options.threshold = 50;
+		let diceModifier, difficulty, flatModifier;
+		let threshold = options.threshold;
+
+		if( undefined !== options.modifier) diceModifier = Number(options.modifier);
+		if( undefined !== options.difficulty) difficulty = CoC7Utilities.convertDifficulty(options.difficulty);
+
+		if( !event?.shiftKey && !options.fastForward){
+			const usage = await RollDialog.create(options);
+			if( usage) {
+				diceModifier = Number(usage.get('bonusDice'));
+				difficulty = Number(usage.get('difficulty'));
+				threshold = Number( usage.get('threshold'));
+				flatModifier = Number( usage.get('flatModifier'));
+			}
+		}
+
+		const actors = [];
+
+		if( game.user.isGM && canvas.tokens.controlled.length){
+			canvas.tokens.controlled.forEach( token =>{  actors.push( token.actor.tokenKey);  });
+		} else if( game.user.character){
+			actors.push(game.user.character.tokenKey);
+		}
+
+		actors.forEach( tk => {
+			const check = new CoC7Check();
+			check.diceModifier = diceModifier || 0;
+			check.difficulty = difficulty || CoC7Check.difficultyLevel.regular;
+			check.rawValue = threshold;
+			check.flatModifier = flatModifier;
+			check.actor = tk;
+			check.roll();
+			check.toMessage();
+		});
+
+		if( !actors.length){
+			const check = new CoC7Check();
+			check.diceModifier = diceModifier || 0;
+			check.difficulty = difficulty || CoC7Check.difficultyLevel.regular;
+			check.rawValue = threshold;
+			check.flatModifier = flatModifier;
+			check.roll();
+			check.toMessage();
+		}
 	}
 
 	static updateCharSheets(){

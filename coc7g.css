@@ -2431,3 +2431,12 @@ html {
 .chat-card-v2 .status-list {
   display: none;
 }
+#controls .scene-control.custom-control {
+  background: rgba(30, 80, 80, 0.5) !important;
+}
+#controls .scene-control.custom-control.active,
+#controls .scene-control.custom-control:hover {
+  border: 1px solid green !important;
+  border-bottom: 1px solid #008060 !important;
+  box-shadow: 0 0 10px #008060 !important;
+}

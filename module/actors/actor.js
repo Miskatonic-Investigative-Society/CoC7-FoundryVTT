@@ -1643,6 +1643,7 @@ export class CoCActor extends Actor {
 				if( usage) {
 					check.diceModifier = Number(usage.get('bonusDice'));
 					check.difficulty = Number(usage.get('difficulty'));
+					check.flatModifier = Number( usage.get('flatModifier'));
 				}
 			}
 		}
@@ -1680,6 +1681,8 @@ export class CoCActor extends Actor {
 				if( usage) {
 					check.diceModifier = Number(usage.get('bonusDice'));
 					check.difficulty = Number(usage.get('difficulty'));
+					check.flatModifier = Number( usage.get('flatModifier'));
+
 				}
 			}
 		}
@@ -1743,6 +1746,8 @@ export class CoCActor extends Actor {
 				if( usage) {
 					check.diceModifier = Number(usage.get('bonusDice'));
 					check.difficulty = Number(usage.get('difficulty'));
+					check.flatModifier = Number( usage.get('flatModifier'));
+
 				}
 			}
 		}
