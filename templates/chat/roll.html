@@ -11,6 +11,7 @@
 	data-item-id="{{item.data._id}}" 
 	data-dice-mod="{{diceModifier}}"
 	data-dice-modifier="{{diceModifier}}"
+	data-flat-modifier="{{flatModifier}}"
 	data-value="{{value}}" 
 	data-result="{{dice.total}}"
 	data-is-success="{{isSuccess}}"
@@ -34,7 +35,7 @@
 		  data-ten-only-one-die="{{dices.tenOnlyOneDie}}"
 		  data-ten-result="{{dices.tenResult}}">
 			<div class="dice-formula {{#if isSuccess}}success{{else}}failure{{/if}}{{#if isCritical}} critical{{/if}}{{#if isFumble}} fumble{{/if}}">
-				{{skill.name}} ({{skill.data.data.value}}) {{#if dices.hasBonus}}{{dices.bonus}} {{dices.bonusType}} {{localize 'CoC7.Dice'}}{{/if}} - {{dices.total}}({{resultType}})
+				{{skill.name}} ({{skill.data.data.value}}) {{#if dices.hasBonus}}{{dices.bonus}} {{dices.bonusType}} {{localize 'CoC7.Dice'}}{{/if}} - {{dices.total}}{{#if flatModifier}} ({{flatModifierString}}){{/if}}({{resultType}})
 			</div>
 			<div class="dice-tooltip" style="display: none;">
 				<section class="tooltip-part">
