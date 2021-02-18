@@ -31,6 +31,7 @@ version 0.5.3 :
 * #385 Optional flat dice and threshold modifier added.
   * Disabled by default, can be enabled in options.
 * [bug] Actor san loss refers to actor, not synthetic actor.
+* German translation updated thanks to acd-jake.
 
 verison 0.5.2 :
 
