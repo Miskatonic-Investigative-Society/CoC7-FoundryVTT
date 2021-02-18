@@ -871,7 +871,8 @@ export class CoC7ActorSheet extends ActorSheet {
 			if( usage) {
 				check.diceModifier = usage.get('bonusDice');
 				check.difficulty = usage.get('difficulty');
-				check.flatModifier = Number( usage.get('flatModifier'));
+				check.flatDiceModifier = Number( usage.get('flatDiceModifier'));
+				check.flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
 			}
 		}
 
@@ -907,13 +908,16 @@ export class CoC7ActorSheet extends ActorSheet {
 		let tokenKey = event.currentTarget.closest('form').dataset.tokenId;
 		const characteristic = event.currentTarget.parentElement.dataset.characteristic;
 
-		let difficulty, modifier, flatModifier;
+		let difficulty, modifier, flatDiceModifier, flatThresholdModifier;
 		if( !event.shiftKey) {
-			const usage = await RollDialog.create( {disableFlatModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
+			const usage = await RollDialog.create( {
+				disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224),
+				disableFlatDiceModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
 			if( usage) {
 				modifier = Number(usage.get('bonusDice'));
 				difficulty = Number(usage.get('difficulty'));
-				flatModifier = Number( usage.get('flatModifier'));
+				flatDiceModifier = Number( usage.get('flatDiceModifier'));
+				flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
 			}
 		}
 
@@ -933,7 +937,8 @@ export class CoC7ActorSheet extends ActorSheet {
 			if( undefined != modifier ) check.diceModifier = modifier;
 			if( undefined != difficulty ) check.difficulty = difficulty;
 			check.actor = !tokenKey ? actorId : tokenKey;
-			check.flatModifier = flatModifier;
+			check.flatDiceModifier = flatDiceModifier;
+			check.flatThresholdModifier = flatThresholdModifier;
 			check.rollCharacteristic(characteristic );
 			check.toMessage();
 		}
@@ -964,13 +969,16 @@ export class CoC7ActorSheet extends ActorSheet {
 		const actorId = event.currentTarget.closest('form').dataset.actorId;
 		let tokenKey = event.currentTarget.closest('form').dataset.tokenId;
 
-		let difficulty, modifier, flatModifier;
+		let difficulty, modifier, flatDiceModifier, flatThresholdModifier;
 		if( !event.shiftKey) {
-			const usage = await RollDialog.create( {disableFlatModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
+			const usage = await RollDialog.create( {
+				disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224),
+				disableFlatDiceModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
 			if( usage) {
 				modifier = Number(usage.get('bonusDice'));
 				difficulty = Number(usage.get('difficulty'));
-				flatModifier = Number( usage.get('flatModifier'));
+				flatDiceModifier = Number( usage.get('flatDiceModifier'));
+				flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
 			}
 		}
 
@@ -1014,7 +1022,8 @@ export class CoC7ActorSheet extends ActorSheet {
 			let check = new CoC7Check();
 			if( undefined != modifier ) check.diceModifier = modifier;
 			if( undefined != difficulty ) check.difficulty = difficulty;
-			check.flatModifier = flatModifier;
+			check.flatDiceModifier = flatDiceModifier;
+			check.flatThresholdModifier = flatThresholdModifier;
 			check.actor = !tokenKey ? actorId : tokenKey;
 			check.rollAttribute(attrib );
 			check.toMessage();
@@ -1034,13 +1043,16 @@ export class CoC7ActorSheet extends ActorSheet {
 		const actorId = event.currentTarget.closest('form').dataset.actorId;
 		const tokenKey = event.currentTarget.closest('form').dataset.tokenId;
 		
-		let difficulty, modifier, flatModifier;
+		let difficulty, modifier, flatDiceModifier, flatThresholdModifier;
 		if( !event.shiftKey) {
-			const usage = await RollDialog.create( {disableFlatModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
+			const usage = await RollDialog.create( {
+				disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224),
+				disableFlatDiceModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
 			if( usage) {
 				modifier = Number(usage.get('bonusDice'));
 				difficulty = Number(usage.get('difficulty'));
-				flatModifier = Number( usage.get('flatModifier'));
+				flatDiceModifier = Number( usage.get('flatDiceModifier'));
+				flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
 			}
 		}
 
@@ -1063,7 +1075,8 @@ export class CoC7ActorSheet extends ActorSheet {
 			if( undefined != difficulty ) check.difficulty = difficulty;
 			check.actor = !tokenKey ? actorId : tokenKey;
 			check.skill = skillId;
-			check.flatModifier = flatModifier;
+			check.flatDiceModifier = flatDiceModifier;
+			check.flatThresholdModifier = flatThresholdModifier;
 			check.roll();
 			check.toMessage();
 		}
