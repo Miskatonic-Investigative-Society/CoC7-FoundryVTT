@@ -415,8 +415,8 @@ export class CoC7ActorSheet extends ActorSheet {
 			html.find('.attribute-label').on( 'dragstart', (event)=> this._onDragAttribute(event));
 			html.find('.san-check').on( 'dragstart', (event)=> this._onDragSanCheck(event));
 
-
 			html.find('.characteristic-label').click(this._onRollCharacteriticTest.bind(this));
+			html.find('.characteristic-label').contextmenu(this._onRollAltCharacteristic.bind(this));
 			html.find('.skill-name.rollable').click(this._onRollSkillTest.bind(this));
 			html.find('.skill-image').click(this._onRollSkillTest.bind(this));
 			html.find('.attribute-label.rollable').click(this._onRollAttribTest.bind(this));
@@ -894,6 +894,40 @@ export class CoC7ActorSheet extends ActorSheet {
 		const rollCard = new CoC7DamageRoll( itemId, this.actor.tokenKey, null, event.shiftKey);
 		rollCard.rollDamage( range);
 		// console.log( 'Weapon damage Clicked');
+	}
+
+	async _onRollAltCharacteristic( event){
+		event.preventDefault();
+		
+		let data = {type: 'opposedCheck'};
+		data.actorId = event.currentTarget.closest('form').dataset.actorId;
+		data.tokenKey = event.currentTarget.closest('form').dataset.tokenId;
+		const characteristic = event.currentTarget.parentElement.dataset.characteristic;
+
+		let difficulty, modifier, flatDiceModifier, flatThresholdModifier;
+		if( !event.shiftKey) {
+			const usage = await RollDialog.create( {
+				disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224),
+				disableFlatDiceModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
+			if( usage) {
+				modifier = Number(usage.get('bonusDice'));
+				difficulty = Number(usage.get('difficulty'));
+				flatDiceModifier = Number( usage.get('flatDiceModifier'));
+				flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
+			}
+		}
+
+		if( undefined != modifier ) data.diceModifier = modifier;
+		if( undefined != difficulty ) data.difficulty = difficulty;
+		if( undefined != flatDiceModifier ) data.flatDiceModifier = flatDiceModifier;
+		if( undefined != flatThresholdModifier ) data.flatThresholdModifier = flatThresholdModifier;
+
+		data.check = characteristic;
+		data.checkType = 'characteristic';
+
+		game.socket.emit( 'system.CoC7',{
+			type : 'opposedCheck'
+		});
 	}
 
 	/**
