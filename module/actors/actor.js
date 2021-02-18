@@ -1643,7 +1643,8 @@ export class CoCActor extends Actor {
 				if( usage) {
 					check.diceModifier = Number(usage.get('bonusDice'));
 					check.difficulty = Number(usage.get('difficulty'));
-					check.flatModifier = Number( usage.get('flatModifier'));
+					check.flatDiceModifier = Number( usage.get('flatDiceModifier'));
+					check.flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
 				}
 			}
 		}
@@ -1681,8 +1682,8 @@ export class CoCActor extends Actor {
 				if( usage) {
 					check.diceModifier = Number(usage.get('bonusDice'));
 					check.difficulty = Number(usage.get('difficulty'));
-					check.flatModifier = Number( usage.get('flatModifier'));
-
+					check.flatDiceModifier = Number( usage.get('flatDiceModifier'));
+					check.flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
 				}
 			}
 		}
@@ -1746,8 +1747,8 @@ export class CoCActor extends Actor {
 				if( usage) {
 					check.diceModifier = Number(usage.get('bonusDice'));
 					check.difficulty = Number(usage.get('difficulty'));
-					check.flatModifier = Number( usage.get('flatModifier'));
-
+					check.flatDiceModifier = Number( usage.get('flatDiceModifier'));
+					check.flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
 				}
 			}
 		}

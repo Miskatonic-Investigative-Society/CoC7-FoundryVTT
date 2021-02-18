@@ -126,10 +126,20 @@ Hooks.once('init', async function() {
 		type: Boolean
 	});
 
-	// Display check success level.
-	game.settings.register('CoC7', 'allowFlatModifier', {
-		name: 'SETTINGS.AllowFlatModifier',
-		hint: 'SETTINGS.AllowFlatModifierHint',
+	// Allow usage of a flat dice modifier.
+	game.settings.register('CoC7', 'allowFlatDiceModifier', {
+		name: 'SETTINGS.AllowFlatDiceModifier',
+		hint: 'SETTINGS.AllowFlatDiceModifierHint',
+		scope: 'world',
+		config: true,
+		default: false,
+		type: Boolean
+	});
+
+	// Allow usage of a flat threshold modifier.
+	game.settings.register('CoC7', 'allowFlatThresholdModifier', {
+		name: 'SETTINGS.AllowFlatThresholdModifier',
+		hint: 'SETTINGS.AllowFlatThresholdModifierHint',
 		scope: 'world',
 		config: true,
 		default: false,

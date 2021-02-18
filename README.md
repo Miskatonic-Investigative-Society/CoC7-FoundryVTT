@@ -28,8 +28,9 @@ version 0.5.3 :
   * Keeper's tools for GM will allow to enable/disable creation and development modes.
   * Dice will allow to roll a generic check.
 * new macro check( [Threshold, [event]]) allow to roll a generic check.
-* #385 Optional flat modifier added.
+* #385 Optional flat dice and threshold modifier added.
   * Disabled by default, can be enabled in options.
+* [bug] Actor san loss refers to actor, not synthetic actor.
 
 verison 0.5.2 :
 

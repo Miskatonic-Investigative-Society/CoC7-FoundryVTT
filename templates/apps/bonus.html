@@ -26,10 +26,17 @@
             </select>
         </div>
 
-        {{#if systemAllowFlatModifier}}
+        {{#if allowFlatDiceModifier}}
+        <div class="flexrow">
+            <label>{{localize 'CoC7.FlatDiceModifier'}}</label>
+            <input type="number" name="flatDiceModifier" value="0"/>
+        </div>
+        {{/if}}
+
+        {{#if allowFlatThresholdModifier}}
         <div class="flexrow">
             <label>{{localize 'CoC7.FlatModifier'}}</label>
-            <input type="number" name="flatModifier" value="0"/>
+            <input type="number" name="flatThresholdModifier" value="0"/>
         </div>
         {{/if}}
 
