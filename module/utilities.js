@@ -232,7 +232,7 @@ export class CoC7Utilities {
 	static async toggleDevPhase(){
 		const isDevEnabled = game.settings.get('CoC7', 'developmentEnabled');
 		await game.settings.set( 'CoC7', 'developmentEnabled', !isDevEnabled);
-		let group = ui.controls.controls.find(b => b.name == 'token');
+		let group = game.CoC7.menus.controls.find(b => b.name == 'main-menu');
 		let tool = group.tools.find( t => t.name == 'devphase');
 		tool.title = game.settings.get('CoC7', 'developmentEnabled')? game.i18n.localize( 'CoC7.DevPhaseEnabled'): game.i18n.localize( 'CoC7.DevPhaseDisabled');
 		ui.notifications.info( game.settings.get('CoC7', 'developmentEnabled')? game.i18n.localize( 'CoC7.DevPhaseEnabled'): game.i18n.localize( 'CoC7.DevPhaseDisabled'));
@@ -246,7 +246,7 @@ export class CoC7Utilities {
 	static async toggleCharCreation(){
 		const isCharCreation = game.settings.get('CoC7', 'charCreationEnabled');
 		await game.settings.set( 'CoC7', 'charCreationEnabled', !isCharCreation);
-		let group = ui.controls.controls.find(b => b.name == 'token');
+		let group = game.CoC7.menus.controls.find(b => b.name == 'main-menu');
 		let tool = group.tools.find( t => t.name == 'charcreate');
 		tool.title = game.settings.get('CoC7', 'charCreationEnabled')? game.i18n.localize( 'CoC7.CharCreationEnabled'): game.i18n.localize( 'CoC7.CharCreationDisabled');
 		ui.notifications.info( game.settings.get('CoC7', 'charCreationEnabled')? game.i18n.localize( 'CoC7.CharCreationEnabled'): game.i18n.localize( 'CoC7.CharCreationDisabled'));
@@ -261,7 +261,7 @@ export class CoC7Utilities {
 
 		options.rawValue = true;
 		if( !options.threshold) options.threshold = 50;
-		let diceModifier, difficulty, flatModifier;
+		let diceModifier, difficulty, flatDiceModifier, flatThresholdModifier;
 		let threshold = options.threshold;
 
 		if( undefined !== options.modifier) diceModifier = Number(options.modifier);
@@ -273,7 +273,8 @@ export class CoC7Utilities {
 				diceModifier = Number(usage.get('bonusDice'));
 				difficulty = Number(usage.get('difficulty'));
 				threshold = Number( usage.get('threshold'));
-				flatModifier = Number( usage.get('flatModifier'));
+				flatDiceModifier = Number( usage.get('flatDiceModifier'));
+				flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
 			}
 		}
 
@@ -290,7 +291,8 @@ export class CoC7Utilities {
 			check.diceModifier = diceModifier || 0;
 			check.difficulty = difficulty || CoC7Check.difficultyLevel.regular;
 			check.rawValue = threshold;
-			check.flatModifier = flatModifier;
+			check.flatDiceModifier = flatDiceModifier;
+			check.flatThresholdModifier = flatThresholdModifier;
 			check.actor = tk;
 			check.roll();
 			check.toMessage();
@@ -301,7 +303,8 @@ export class CoC7Utilities {
 			check.diceModifier = diceModifier || 0;
 			check.difficulty = difficulty || CoC7Check.difficultyLevel.regular;
 			check.rawValue = threshold;
-			check.flatModifier = flatModifier;
+			check.flatDiceModifier = flatDiceModifier;
+			check.flatThresholdModifier = flatThresholdModifier;
 			check.roll();
 			check.toMessage();
 		}

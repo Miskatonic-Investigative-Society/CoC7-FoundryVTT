@@ -4,7 +4,7 @@ import { chatHelper, CoC7Roll } from './chat/helper.js';
 import { CoCActor } from './actors/actor.js';
 
 export class CoC7Check {
-	constructor( actor = null, skill = null, item = null, diceMod = 0, difficulty = null, flatModifier = 0) {
+	constructor( actor = null, skill = null, item = null, diceMod = 0, difficulty = null, flatThresholdModifier = 0, flatDiceModifier = 0) {
 		this.actor = actor;
 		this.skill = skill;
 		this.item = item;
@@ -14,7 +14,8 @@ export class CoC7Check {
 		this.successLevel = null;
 		this.referenceMessageId = null;
 		this.pushing = false;
-		this.flatModifier = flatModifier;
+		this.flatDiceModifier = flatDiceModifier;
+		this.flatThresholdModifier = flatThresholdModifier;
 
 		if( null === difficulty){
 			const isUnknown = 'unknown' === game.settings.get('CoC7', 'defaultCheckDifficulty');
@@ -66,6 +67,30 @@ export class CoC7Check {
 			return null;
 		}
 	
+	}
+
+	get rawValue(){
+		if( this._rawValue){
+			if( this.flatThresholdModifier && game.settings.get( 'CoC7', 'allowFlatThresholdModifier')){
+				if( this._rawValue + this.flatThresholdModifier < 1) return 1;
+				return this._rawValue + this.flatThresholdModifier;
+			}
+			return this._rawValue;
+		}
+		return undefined;
+	}
+
+	set rawValue(x){
+		this._rawValue = x;
+	}
+
+	get rawValueString(){
+		if( this.flatThresholdModifier && game.settings.get( 'CoC7', 'allowFlatThresholdModifier')){
+			if( this.flatThresholdModifier < 0)
+				return this._rawValue.toString() + this.flatThresholdModifier.toString();
+			return this._rawValue.toString() + '+' + this.flatThresholdModifier.toString();
+
+		} else return this.rawValue.toString();
 	}
 
 	get criticalThreshold(){
@@ -125,8 +150,8 @@ export class CoC7Check {
 	}
 
 	get modifiedResult(){
-		if( this.flatModifier){
-			let modified = this.dices.total + this.flatModifier;
+		if( this.flatDiceModifier){
+			let modified = this.dices.total + this.flatDiceModifier;
 			if( modified < 1) return 1;
 			if( modified > 100) return 100;
 			return modified;
@@ -134,10 +159,10 @@ export class CoC7Check {
 		return this.dices.total;
 	}
 
-	get flatModifierString(){
-		if( !this.flatModifier) return null;
-		if( this.flatModifier > 0) return `+${this.flatModifier}`;
-		return this.flatModifier.toString();
+	get flatDiceModifierString(){
+		if( !this.flatDiceModifier) return null;
+		if( this.flatDiceModifier > 0) return `+${this.flatDiceModifier}`;
+		return this.flatDiceModifier.toString();
 	}
 
 	get isFumble(){
@@ -145,7 +170,7 @@ export class CoC7Check {
 	}
 
 	get isCritical(){
-		return this.modifiedResult == 1;
+		return 1 == this.modifiedResult;
 	}
 
 	get passed(){
@@ -831,10 +856,10 @@ export class CoC7Check {
 		if( this._flavor) return this._flavor;
 		let flavor = '';
 		if( this.actor){
-			if (this.skill) flavor = game.i18n.format('CoC7.CheckResult', {name : this.skill.name, value : this.skill.value, difficulty : this.difficultyString});
-			if (this.item) flavor = game.i18n.format('CoC7.ItemCheckResult', {item : this.item.name, skill : this.skill.name, value : this.skill.value, difficulty : this.difficultyString});
-			if (this.characteristic) flavor = game.i18n.format('CoC7.CheckResult', {name : game.i18n.format(this.actor.data.data.characteristics[this.characteristic].label), value : this.actor.data.data.characteristics[this.characteristic].value, difficulty : this.difficultyString});
-			if (this.attribute) flavor = game.i18n.format('CoC7.CheckResult', {name : game.i18n.format(`CoC7.${this.actor.data.data.attribs[this.attribute].label}`), value : this.actor.data.data.attribs[this.attribute].value, difficulty : this.difficultyString});
+			if (this.skill) flavor = game.i18n.format('CoC7.CheckResult', {name : this.skill.name, value : this.rawValueString, difficulty : this.difficultyString});
+			if (this.item) flavor = game.i18n.format('CoC7.ItemCheckResult', {item : this.item.name, skill : this.skill.name, value : this.rawValueString, difficulty : this.difficultyString});
+			if (this.characteristic) flavor = game.i18n.format('CoC7.CheckResult', {name : game.i18n.format(this.actor.data.data.characteristics[this.characteristic].label), value : this.rawValueString, difficulty : this.difficultyString});
+			if (this.attribute) flavor = game.i18n.format('CoC7.CheckResult', {name : game.i18n.format(`CoC7.${this.actor.data.data.attribs[this.attribute].label}`), value : this.rawValueString, difficulty : this.difficultyString});
 		}
 
 		if(!flavor){
