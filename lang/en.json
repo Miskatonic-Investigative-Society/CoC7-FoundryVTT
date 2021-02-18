@@ -126,6 +126,7 @@
 "CoC7.UnknownDifficulty": "unknown",
 "CoC7.RollDifficulty": "Roll Difficulty",
 "CoC7.RollThreshold": "Roll threshold",
+"CoC7.FlatDiceModifier": "Flat dice modifier",
 "CoC7.FlatModifier": "Flat modifier",
 "CoC7.RollDifficultyUnknown": "Blind",
 "CoC7.RollDifficultyRegular": "Regular",
@@ -579,6 +580,8 @@
 "SETTINGS.AlwaysEditable": "always",
 "SETTINGS.CreationModeOnly": "in creation mode only",
 "SETTINGS.NeverEditable": "never (GM only)",
-"SETTINGS.AllowFlatModifier": "Flat dice modifier",
-"SETTINGS.AllowFlatModifierHint": "Allow dice roll results to be modified by a flat value"
+"SETTINGS.AllowFlatDiceModifier": "Flat dice modifier",
+"SETTINGS.AllowFlatDiceModifierHint": "Allows dice roll results to be modified by a flat value.",
+"SETTINGS.AllowFlatThresholdModifier": "Flat value modifier",
+"SETTINGS.AllowFlatThresholdModifierHint":"Allows checks succes value to be modified by a flat value." 
 }

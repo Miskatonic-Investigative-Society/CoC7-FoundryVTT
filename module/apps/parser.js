@@ -50,7 +50,7 @@ export class CoC7Parser{
 	// 	}
 	// }
 
-	static async onEditorDrop( event, editor){
+	static async onEditorDrop( event, editor){ //TODO: MANAGE FLAT MODIFIER THERE
 		event.preventDefault();
 
 		//check key pressed (CTRL ?)
@@ -62,7 +62,7 @@ export class CoC7Parser{
 		if( 'coc7-link' == data.linkType){
 			event.stopPropagation();
 			if( !event.shiftKey && (undefined == data.difficulty || undefined == data.modifier)) {
-				const usage = await RollDialog.create( {disableFlatModifier: true});
+				const usage = await RollDialog.create( {disableFlatDiceModifier: true});
 				if( usage) {
 					data.modifier = usage.get('bonusDice');
 					data.difficulty = usage.get('difficulty');
@@ -101,7 +101,7 @@ export class CoC7Parser{
 			
 			if( 'skill' == item.type){
 				if( !event.shiftKey) {
-					const usage = await RollDialog.create( {disableFlatModifier: true});
+					const usage = await RollDialog.create( {disableFlatDiceModifier: true});
 					if( usage) {
 						linkData.modifier = usage.get('bonusDice');
 						linkData.difficulty = usage.get('difficulty');
