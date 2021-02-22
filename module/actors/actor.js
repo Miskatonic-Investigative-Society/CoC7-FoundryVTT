@@ -152,6 +152,15 @@ export class CoCActor extends Actor {
 		};
 	}
 
+	get portrait(){
+		if( !game.settings.get( 'CoC7', 'useToken')) return this.img;
+		if( this.isToken){
+			return this.token?.data?.img || this.img;
+		} else {
+			return this.data.token?.img || this.img;
+		}
+	}
+
 	async enterBoutOfMadness( realTime = true, duration = 1){
 		// const duration = {rounds: 1,
 		// 	seconds: 17,

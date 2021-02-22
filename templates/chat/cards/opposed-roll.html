@@ -1,0 +1,20 @@
+<div class="coc7 chat-card chat-card-v2 opposed-roll-card">
+    <ol>
+        {{#each rolls as |r id| }}
+            <li class='actor-roll' data-rank='{{id}}' data-actor-key="{{r.actor.actorKey}}">
+                <img class="open-actor" data-actor-key="{{r.actor.actorKey}}" src="{{r.actor.portrait}}" title="{{r.actor.name}}"/>
+                {{#if r.rolled}}
+                    {{{r._htmlRoll}}}
+                {{else}}
+                    <div class='card-buttons actor-card-buttons'>
+                        <button data-action='roll-check'><!--<img class="item-image" src="{{r.image}}"/>-->{{ r.fullName }}: ({{r.rawValue}}%)</button>
+                    </div>
+                    <a class="gm-visible-only" data-action="remove-roll" title="{{localize 'CoC7.remove'}}"><i class="far fa-times-circle"></i></a>
+                {{/if}}
+            </li>
+        {{/each}}
+    </ol>
+    <div class='card-buttons gm-visible-only'>
+        <button data-action='close-card'>Close card</button>
+    </div>
+</div>

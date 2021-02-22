@@ -79,6 +79,7 @@
 "CoC7.Other": "Other",
 "CoC7.rounds": "round(s)",
 "CoC7.hours": "hour(s)",
+"CoC7.remove": "Remove",
 
 "CoC7.RegularSuccess": "Regular success",
 "CoC7.HardSuccess": "Hard success",
