@@ -10,6 +10,7 @@ import { CoC7DamageRoll } from './chat/damagecards.js';
 import { CoC7ConCheck } from './chat/concheck.js';
 import { CoC7Parser } from './apps/parser.js';
 import { SanCheckCard } from './chat/cards/san-check.js';
+import { OpposedCheckCard } from './chat/cards/opposed-roll.js';
 
 export class CoC7Chat{
 
@@ -59,6 +60,7 @@ export class CoC7Chat{
 
 		html.on('click', 'coc7-inline-result', CoC7Chat._onInline.bind(this));
 
+		OpposedCheckCard.bindListerners( html);
 	}
 
 

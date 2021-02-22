@@ -2,6 +2,7 @@ import { CoC7Dice } from './dice.js';
 import { CoC7Item } from './items/item.js';
 import { chatHelper, CoC7Roll } from './chat/helper.js';
 import { CoCActor } from './actors/actor.js';
+import { CoC7Utilities } from './utilities.js';
 
 export class CoC7Check {
 	constructor( actor = null, skill = null, item = null, diceMod = 0, difficulty = null, flatThresholdModifier = 0, flatDiceModifier = 0) {
@@ -70,6 +71,11 @@ export class CoC7Check {
 	}
 
 	get rawValue(){
+		if( !this._rawValue){
+			if( this.characteristic) this.rawValue = this.actor.data.data.characteristics[this.characteristic].value;
+			if( this.skill) this.rawValue = this.skill.value;
+			if( this.attribute) this.rawValue = this.actor.data.data.attribs[this.attribute].value;
+		} 
 		if( this._rawValue){
 			if( this.flatThresholdModifier && game.settings.get( 'CoC7', 'allowFlatThresholdModifier')){
 				if( this._rawValue + this.flatThresholdModifier < 1) return 1;
@@ -205,6 +211,30 @@ export class CoC7Check {
 		this._diceModifier = parseInt( x);
 	}
 
+	get name(){
+		if( this.actor){
+			if (this.skill) return this.skill.name;
+			if (this.item) return this.item.name;
+			if (this.characteristic) return CoC7Utilities.getCharacteristicNames( this.characteristic)?.label;
+			if (this.attribute){
+				if( 'lck'== data.dataset.name) return game.i18n.localize( 'CoC7.Luck');
+				if( 'san'== data.dataset.name) return game.i18n.localize( 'CoC7.Sanity');
+			}
+		}
+		return null;
+	}
+
+	get fullName(){
+		const difficulty = this._difficulty==CoC7Check.difficultyLevel.regular?false:CoC7Check.difficultyString(this._difficulty);
+		const modifier = this._diceModifier > 0?`+${this._diceModifier}`:this._diceModifier.toString();
+		return game.i18n.format(`CoC7.LinkCheck${!difficulty?'':'Diff'}${!this._diceModifier?'':'Modif'}`, {difficulty: difficulty, modifier: modifier, name: this.name});
+	}
+
+	get rolled(){
+		if( this.dice) return true;
+		return false;
+	}
+
 	/**
 	 * Get a check from an HTMLElement or a chat card.
 	 * @param {HTMLElement} card	The HTMLElement that is a roll-result or a chat card containing a single roll-result.
@@ -333,8 +363,15 @@ export class CoC7Check {
 		this._rollMode = x;
 	}
 
-	set skill(x) { this._skill = this._getItemFromId( x); }
-	set item(x) { this._item = this._getItemFromId( x); }
+	set skill(x) { 
+		this._skill = this._getItemFromId( x);
+		this.skillId = x;
+	}
+
+	set item(x) { 
+		this._item = this._getItemFromId( x);
+		this.itemId = x;
+	}
 
 	_getItemFromId( x)
 	{
@@ -379,7 +416,6 @@ export class CoC7Check {
 		return this._item; 
 	}
 
-
 	get displayResultType(){
 		return game.settings.get('CoC7', 'displayResultType');
 	}
@@ -394,6 +430,35 @@ export class CoC7Check {
 
 	get displayNoSuccessLevel(){
 		return !this.displayResultType && !this.displayCheckSuccessLevel;
+	}
+
+	get image(){
+		if( this.skill) return this.skill.img;
+		if( this.item) return this.item.img;
+		return undefined;
+	}
+
+	get link(){
+		return this.getLinkElement().outerHTML;
+	}
+
+	getLinkElement( classes = null){
+		const data = {
+			cls: ['coc7-link','coc7-roll'].concat( classes),
+			dataset: { check: 'check'},
+			icon: this.image?`<div style="background-image: url(${this.image})"></div>`:'<i class="fas fa-dice"></i>',
+			blind: this.isBlind
+		};
+
+		const difficulty = CoC7Check.difficultyString(this._difficulty);
+		const title = game.i18n.format(`CoC7.LinkCheck${!this._difficulty?'':'Diff'}${!this._diceModifier?'':'Modif'}`, {difficulty: difficulty, modifier: this._diceModifier, name: this.name});
+
+		const a = document.createElement('a');
+		a.title = title;
+		a.classList.add(...data.cls);
+		a.innerHTML = `${data.blind?'<i class="fas fa-eye-slash"></i>':''}${data.icon}${this.name}`;
+
+		return a;
 	}
 
 
@@ -628,6 +693,7 @@ export class CoC7Check {
 		if( this.passed && this.diceModifier <= 0 && this.skill && !this.skill.data.data.properties.noxpgain &&!this.luckSpent &&!this.forced &&!this.isBlind &&!this.isUnknown){
 			this.flagForDevelopement();
 		}
+
 	}
 
 	showDiceRoll(){
@@ -886,6 +952,12 @@ export class CoC7Check {
 		const html = await renderTemplate(template, this);
 		if( html) return $.parseHTML( html)[0];
 		return null;
+	}
+
+	async getHtmlRoll( ){
+		const template = 'systems/CoC7/templates/chat/rolls/in-card-roll.html';
+		const html = await renderTemplate(template, this);
+		return html|| undefined;
 	}
 
 	async toMessage( pushing = false)//If card is provided atttached the roll to the card. If URID provided attach at this position.?
