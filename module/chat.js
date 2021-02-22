@@ -73,6 +73,8 @@ export class CoC7Chat{
 
 
 	static async onUpdateChatMessage( chatMessage){
+		ui.chat.scrollBottom();
+
 		// if( chatMessage.getFlag( 'CoC7', 'reveled')){
 		// }
 		if( game.user.isGM){
@@ -115,6 +117,8 @@ export class CoC7Chat{
 	}
 
 	static async renderMessageHook(message, html) {
+		ui.chat.scrollBottom();
+
 
 		if( message.getFlag( 'CoC7', 'checkRevealed')){
 			html.find('.dice-roll').removeClass('gm-visible-only');
@@ -803,10 +807,14 @@ export class CoC7Chat{
 	 */
 	static _getChatCardActor(card) {
 
-		if( card.dataset.actorKey) return CoC7Chat._getActorFromKey( card.dataset.actorKey);
+		//if dataset.object is there => need to unescape things !!
+		//if not use the dataset directly.
+		const cardData = card.dataset.object?JSON.parse(unescape((card.dataset.object))):card.dataset;
+
+		if( cardData.actorKey) return CoC7Chat._getActorFromKey( cardData.actorKey);
 
 		// Case 1 - a synthetic actor from a Token
-		const tokenKey = card.dataset.tokenId;
+		const tokenKey = cardData.tokenId;
 		if (tokenKey) {
 			const [sceneId, tokenId] = tokenKey.split('.');
 			const scene = game.scenes.get(sceneId);
@@ -818,7 +826,7 @@ export class CoC7Chat{
 		}
 
 		// Case 2 - use Actor ID directory
-		const actorId = card.dataset.actorId;
+		const actorId = cardData.actorId;
 		if( actorId) return game.actors.get(actorId);
 
 		const message = card.closest('.message');
@@ -1281,7 +1289,7 @@ export class CoC7Chat{
 			const check = await CoC7Check.getFromCard( card);
 			check.isBlind = false;
 			check.computeCheck();
-			if( event.ctrlKey) check.updateChatCard( true);
+			if(event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) check.updateChatCard( true);
 			else  check.updateChatCard();
 			break;
 		}
@@ -1317,7 +1325,7 @@ export class CoC7Chat{
 
 		case 'advance-state':{
 			const sanCheck = SanCheckCard.getFromCard( card);
-			await sanCheck.advanceState(button.dataset.state, button.dataset.param);
+			await sanCheck.advanceState(button.dataset.state/*, button.dataset.param*/);
 			await sanCheck.updateChatCard();
 			break;
 

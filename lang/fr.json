@@ -457,6 +457,7 @@
 "CoC7.Choose": "Nombre à choisir",
 "CoC7.Chosen": "Choisi",
 "CoC7.EmptySkillList": "Ajouter une compétence en la déposant ici.",
+"CoC7.EmptyItemList": "Ajouter un objet en la déposant ici.",
 "CoC7.PersonalSpeciality": "Nombre de spécialités personnelles ou d'ère",
 "CoC7.AdditionalSkills": "Compétences supplémentaires",
 "CoC7.SkillSelectionWindow": "Sélectionner les compétences optionnelles",
@@ -568,5 +569,9 @@
 "SETTINGS.BoutOfMadnessRealTimeTable": "Table des folies passagères (temps réel)",
 "SETTINGS.LetKeeperDecide": "Laisser le gardien seul juge",
 "SETTINGS.DisplayResultType": "Afficher le niveau de succès des jets de dès (texte)",
-"SETTINGS.DisplayCheckSuccessLevel":"Afficher le niveau de réussite des tests (étoiles)"
+"SETTINGS.DisplayCheckSuccessLevel":"Afficher le niveau de réussite des tests (étoiles)",
+"SETTINGS.PlayerUnlockSheetMode": "Le joueur peut deverouiller sa fiche",
+"SETTINGS.AlwaysEditable": "toujours",
+"SETTINGS.CreationModeOnly": "en mode creation de perso. seulement",
+"SETTINGS.NeverEditable": "jamais (gardien seulement)"
 }

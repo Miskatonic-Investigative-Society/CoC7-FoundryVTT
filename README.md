@@ -1,11 +1,12 @@
-# My Call of Cthulhu implementation for Foundry VTT
+# My (Unofficial) Call of Cthulhu implementation for Foundry VTT
 
-My implementation of the call of Cthulhu for foundry-vtt  
+My (Unofficial) implementation of the call of Cthulhu for foundry-vtt  
 
 ## Disclaimer
 
 This system doesn’t include any materials from the books and you’ll have to enter manually, weapons, skills, items etc… to be able to play.
-I’ve just provided some basics skills that you can use.
+I’ve just provided some basics skills that you can use as example.
+This system is completely Unofficial.
 
 I’m testing my dev on Chrome. Not sure how or if it will behave on other browser.
 
@@ -20,6 +21,53 @@ Compendium 'Weapons' contains a single test weapon.
 Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
+
+version 0.5.3 :
+
+* Implementation of systel soecific controls.
+  * Keeper's tools for GM will allow to enable/disable creation and development modes.
+  * Dice will allow to roll a generic check.
+* new macro check( [Threshold, [event]]) allow to roll a generic check.
+* #385 Optional flat dice and threshold modifier added.
+  * Disabled by default, can be enabled in options.
+* [bug] Actor san loss refers to actor, not synthetic actor.
+
+verison 0.5.2 :
+
+* Bug correction:
+  * Corrected a bug on inline check where the full actor was embeded. ( This is a temporary fix until refactorisation.)
+
+verison 0.5.1 :
+
+* Bug correction:
+  * Corrected a bug preventing attribute and sanity to be dragged onto a jounal entry to create a link.
+  * Corrected a bug on sanity chat-card where the full actor was embeded in the card resulting in high chat-log size. ( This is a temporary fix until refactorisation.)
+  * PR #373 thanks to Pengouin. Fix a bug on MAC where ctrl key wasn't properly implemented.
+
+version 0.5.0 :
+
+* General reminder:
+  * Most sheet component can be clicked on the trigger a check/roll.
+  * As a general rule you can modify those requests:
+    * shift will fast forward the request [Partial implem. (characteristics/attributes/skills only)].
+    * ctrl [GM only] will create a link in the chat with that request [Fully implem.].
+    * alt will modify the comportment [sanity only (will allow selection of loss min/max)].
+  * You can combine stuff. shift+ctrl+alt+click sanity will create a san check link in the chat without difficulty/penalty selection for the alt sanity (will ask you for min/max)
+* Bug correction:
+  * a bug preventing the chatCards to retrieve unassigned actors corrected.
+  * #201 Scroll to end of chat on message change.
+  * #361 Item description bug.
+  * Insanity Side-Effects 3: Insanity and the Cthulhu Mythos rule (P163 of keeper's handbook) is now correctly implemented. 5% on first mythos related insanity (used to be per creature), 1% on the following.
+  * Minor label correction on setup items.
+* Option added to create sanity chat card from sheet.
+  * holding alt while clicking on sanity will open a dialogue to enter sanity loss (min and max).
+  * holding shift in the mean time will fast forward the bonus/penalty/difficulty selection dialogue.
+  * holding ctrl in the mean time will, if you're the GM, create a CoC7 link in the chat log.
+* #342 Option added to allow/prevent players from unlocking sheets.
+  * When unlocking is disabled for players, only keeper can unlock the sheet.
+  * If the keeper unlock the sheet the player will see an unlocked sheet.
+  * Upon exiting creation mode, all sheets get locked.
+* Taiwanese Mandarin translation added thanks to zeteticl.
 
 version 0.4.9 :
 

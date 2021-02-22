@@ -173,8 +173,8 @@ export class CoCActor extends Actor {
 			result.tableRoll = boutOfMadnessTable.roll();
 			if( TABLE_RESULT_TYPES.ENTITY == result.tableRoll.results[0].type){
 				const item = game.items.get(result.tableRoll.results[0].resultId);
-				if( item.data.data.type.phobia) result.phobia = true;
-				if( item.data.data.type.mania) result.mania = true;
+				if( item.data?.data?.type?.phobia) result.phobia = true;
+				if( item.data?.data?.type?.mania) result.mania = true;
 				result.description = `${item.name}:${TextEditor.enrichHTML( item.data.data.description.value)}`;
 				result.name = item.name;
 				delete item.data._id;
@@ -1643,6 +1643,8 @@ export class CoCActor extends Actor {
 				if( usage) {
 					check.diceModifier = Number(usage.get('bonusDice'));
 					check.difficulty = Number(usage.get('difficulty'));
+					check.flatDiceModifier = Number( usage.get('flatDiceModifier'));
+					check.flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
 				}
 			}
 		}
@@ -1680,6 +1682,8 @@ export class CoCActor extends Actor {
 				if( usage) {
 					check.diceModifier = Number(usage.get('bonusDice'));
 					check.difficulty = Number(usage.get('difficulty'));
+					check.flatDiceModifier = Number( usage.get('flatDiceModifier'));
+					check.flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
 				}
 			}
 		}
@@ -1743,6 +1747,8 @@ export class CoCActor extends Actor {
 				if( usage) {
 					check.diceModifier = Number(usage.get('bonusDice'));
 					check.difficulty = Number(usage.get('difficulty'));
+					check.flatDiceModifier = Number( usage.get('flatDiceModifier'));
+					check.flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
 				}
 			}
 		}
@@ -2264,6 +2270,14 @@ export class CoCActor extends Actor {
 			return parseInt(CM.data.data.value);
 		}
 		return 0;
+	}
+
+	get mythosInsanityExperienced(){
+		return this.getFlag( 'CoC7', 'mythosInsanityExperienced') || false;
+	}
+
+	async experienceFirstMythosInsanity(){
+		await this.setFlag( 'CoC7', 'mythosInsanityExperienced', true);
 	}
 
 	get creditRating(){
