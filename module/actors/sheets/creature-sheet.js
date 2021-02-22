@@ -42,10 +42,10 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 			// ui.notifications.info('No sanity loss value');
 			return;
 		}
-		if( event.ctrlKey && game.user.isGM){
+		if((event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM){
 			let difficulty, modifier;
 			if( !event.shiftKey) {
-				const usage = await RollDialog.create();
+				const usage = await RollDialog.create( {disableFlatDiceModifier: true});
 				if( usage) {
 					modifier = Number(usage.get('bonusDice'));
 					difficulty = Number(usage.get('difficulty'));

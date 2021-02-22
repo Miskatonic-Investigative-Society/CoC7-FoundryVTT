@@ -1,5 +1,6 @@
 import { CoC7Check } from './check.js';
 import { CoC7Item } from './items/item.js';
+import { RollDialog } from './apps/roll-dialog.js';
 
 export class CoC7Utilities {
 	// static test(event){
@@ -175,6 +176,10 @@ export class CoC7Utilities {
 		actor.weaponCheck( weapon, event.shiftKey);
 	}
 
+	static async checkMacro( threshold = 50, event){
+		await CoC7Utilities.rollDice( event, {threshold: threshold});
+	}
+
 	static async createMacro(bar, data, slot){
 		if ( data.type !== 'Item' ) return;
 
@@ -227,7 +232,7 @@ export class CoC7Utilities {
 	static async toggleDevPhase(){
 		const isDevEnabled = game.settings.get('CoC7', 'developmentEnabled');
 		await game.settings.set( 'CoC7', 'developmentEnabled', !isDevEnabled);
-		let group = ui.controls.controls.find(b => b.name == 'token');
+		let group = game.CoC7.menus.controls.find(b => b.name == 'main-menu');
 		let tool = group.tools.find( t => t.name == 'devphase');
 		tool.title = game.settings.get('CoC7', 'developmentEnabled')? game.i18n.localize( 'CoC7.DevPhaseEnabled'): game.i18n.localize( 'CoC7.DevPhaseDisabled');
 		ui.notifications.info( game.settings.get('CoC7', 'developmentEnabled')? game.i18n.localize( 'CoC7.DevPhaseEnabled'): game.i18n.localize( 'CoC7.DevPhaseDisabled'));
@@ -241,7 +246,7 @@ export class CoC7Utilities {
 	static async toggleCharCreation(){
 		const isCharCreation = game.settings.get('CoC7', 'charCreationEnabled');
 		await game.settings.set( 'CoC7', 'charCreationEnabled', !isCharCreation);
-		let group = ui.controls.controls.find(b => b.name == 'token');
+		let group = game.CoC7.menus.controls.find(b => b.name == 'main-menu');
 		let tool = group.tools.find( t => t.name == 'charcreate');
 		tool.title = game.settings.get('CoC7', 'charCreationEnabled')? game.i18n.localize( 'CoC7.CharCreationEnabled'): game.i18n.localize( 'CoC7.CharCreationDisabled');
 		ui.notifications.info( game.settings.get('CoC7', 'charCreationEnabled')? game.i18n.localize( 'CoC7.CharCreationEnabled'): game.i18n.localize( 'CoC7.CharCreationDisabled'));
@@ -252,22 +257,75 @@ export class CoC7Utilities {
 		CoC7Utilities.updateCharSheets();
 	}
 
+	static async rollDice( event, options ={}){
+
+		options.rawValue = true;
+		if( !options.threshold) options.threshold = 50;
+		let diceModifier, difficulty, flatDiceModifier, flatThresholdModifier;
+		let threshold = options.threshold;
+
+		if( undefined !== options.modifier) diceModifier = Number(options.modifier);
+		if( undefined !== options.difficulty) difficulty = CoC7Utilities.convertDifficulty(options.difficulty);
+
+		if( !event?.shiftKey && !options.fastForward){
+			const usage = await RollDialog.create(options);
+			if( usage) {
+				diceModifier = Number(usage.get('bonusDice'));
+				difficulty = Number(usage.get('difficulty'));
+				threshold = Number( usage.get('threshold'));
+				flatDiceModifier = Number( usage.get('flatDiceModifier'));
+				flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
+			}
+		}
+
+		const actors = [];
+
+		if( game.user.isGM && canvas.tokens.controlled.length){
+			canvas.tokens.controlled.forEach( token =>{  actors.push( token.actor.tokenKey);  });
+		} else if( game.user.character){
+			actors.push(game.user.character.tokenKey);
+		}
+
+		actors.forEach( tk => {
+			const check = new CoC7Check();
+			check.diceModifier = diceModifier || 0;
+			check.difficulty = difficulty || CoC7Check.difficultyLevel.regular;
+			check.rawValue = threshold;
+			check.flatDiceModifier = flatDiceModifier;
+			check.flatThresholdModifier = flatThresholdModifier;
+			check.actor = tk;
+			check.roll();
+			check.toMessage();
+		});
+
+		if( !actors.length){
+			const check = new CoC7Check();
+			check.diceModifier = diceModifier || 0;
+			check.difficulty = difficulty || CoC7Check.difficultyLevel.regular;
+			check.rawValue = threshold;
+			check.flatDiceModifier = flatDiceModifier;
+			check.flatThresholdModifier = flatThresholdModifier;
+			check.roll();
+			check.toMessage();
+		}
+	}
+
 	static updateCharSheets(){
 		if( game.user.isGM){
 			game.actors.entities.forEach( a => {
 				if( 'character' == a?.data?.type && a?.sheet && a?.sheet?.rendered){
+					a.update( { ['data.flags.locked']: true});
 					a.render( false);
 				}
 			});
 		} else{
 			game.actors.entities.forEach( a => {
 				if( a.owner){
+					a.update( { ['data.flags.locked']: true});
 					a.render( false);
 				}
 			});
-		}
-
-		
+		}		
 		return;
 	}
 }

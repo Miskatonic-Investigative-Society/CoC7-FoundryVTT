@@ -573,6 +573,13 @@ export class CoC7Item extends Item {
 	 */
 	getChatData(htmlOptions) {
 		const data = duplicate(this.data.data);
+		//Fix : data can have description directly in field, not under value.
+		if( data.description && !data.description.value){
+			const value = data.description;
+			data.description = {
+				value: value
+			};
+		}
 		const labels = [];
 
 		// Rich text description
@@ -586,24 +593,6 @@ export class CoC7Item extends Item {
 		const props = [];
 		const fn = this[`_${this.data.type}ChatData`];
 		if ( fn ) fn.bind(this)(data, labels, props, htmlOptions);
-
-		// General equipment properties
-		// if ( data.hasOwnProperty("equipped") && !["loot", "tool"].includes(this.data.type) ) {
-		// 	props.push(
-		// 		data.equipped ? "Equipped" : "Not Equipped",
-		// 		data.proficient ? "Proficient": "Not Proficient",
-		// 	);
-		// }
-
-		// Ability activation properties
-		// if ( data.hasOwnProperty("activation")) {
-		// 	props.push(
-		// 		labels.target,
-		// 		labels.activation,
-		// 		labels.range,
-		// 		labels.duration
-		// 	);
-		// }
 
 		if( this.type == 'skill') {
 			for( let [key, value] of Object.entries(COC7['skillProperties']))

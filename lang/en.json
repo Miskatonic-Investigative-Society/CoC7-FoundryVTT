@@ -1,5 +1,5 @@
 {
-"CoC7.title": "Call of Cthulhu 7h Edition",
+"CoC7.title": "Call of Cthulhu 7h Edition (Unofficial)",
 
 "CHARAC.STR": "STR",
 "CHARAC.Strengh": "Strength",
@@ -125,6 +125,9 @@
 "CoC7.CriticalDifficulty": "critical",
 "CoC7.UnknownDifficulty": "unknown",
 "CoC7.RollDifficulty": "Roll Difficulty",
+"CoC7.RollThreshold": "Roll threshold",
+"CoC7.FlatDiceModifier": "Flat dice modifier",
+"CoC7.FlatModifier": "Flat modifier",
 "CoC7.RollDifficultyUnknown": "Blind",
 "CoC7.RollDifficultyRegular": "Regular",
 "CoC7.RollDifficultyHard": "Hard",
@@ -457,6 +460,7 @@
 "CoC7.Choose": "Number to choose from",
 "CoC7.Chosen": "Chosen",
 "CoC7.EmptySkillList": "Add a skill by dropping it here.",
+"CoC7.EmptyItemList": "Add an item by dropping it here.",
 "CoC7.PersonalSpeciality": "Number of personal or era specialty",
 "CoC7.AdditionalSkills": "Additional Skills",
 "CoC7.SkillSelectionWindow": "Select opional skills",
@@ -488,8 +492,11 @@
 "CoC7.PutGunAway": "Put your gun away",
 "CoC7.DrawGun": "Draw your gun",
 
+"CoC7.GmTools": "Keeper's tools",
+"CoC7.DevPhase": "Development phase",
 "CoC7.DevPhaseEnabled": "Development phase enabled",
 "CoC7.DevPhaseDisabled": "Development phase disabled",
+"CoC7.CharCreationMode": "Character creation mode",
 "CoC7.CharCreationEnabled": "Character creation mode enabled",
 "CoC7.CharCreationDisabled": "Character creation mode disabled",
 "CoC7.WarnNoActorAvailable": "You do not have any actor controled nor selected",
@@ -568,5 +575,13 @@
 "SETTINGS.BoutOfMadnessRealTimeTable": "Bout of madness (Real Time) table",
 "SETTINGS.LetKeeperDecide": "Let keeper decide",
 "SETTINGS.DisplayResultType": "Display dice result type (text)",
-"SETTINGS.DisplayCheckSuccessLevel":"Display check level of success (stars)"
+"SETTINGS.DisplayCheckSuccessLevel":"Display check level of success (stars)",
+"SETTINGS.PlayerUnlockSheetMode": "Player can unlock sheet",
+"SETTINGS.AlwaysEditable": "always",
+"SETTINGS.CreationModeOnly": "in creation mode only",
+"SETTINGS.NeverEditable": "never (GM only)",
+"SETTINGS.AllowFlatDiceModifier": "Flat dice modifier",
+"SETTINGS.AllowFlatDiceModifierHint": "Allows dice roll results to be modified by a flat value.",
+"SETTINGS.AllowFlatThresholdModifier": "Flat value modifier",
+"SETTINGS.AllowFlatThresholdModifierHint":"Allows checks succes value to be modified by a flat value." 
 }

@@ -216,11 +216,11 @@
 					{{#unless state.cthulhuMythosAwarded}}
 					<div class='card-buttons'>
 						{{#if firstEncounter}}
-							<button data-action="advance-state" data-state="cthulhuMythosAwarded" data-param="5">{{ localize 'CoC7.MythosFirstEncounter' }}</button>
+							<button data-action="advance-state" data-state="cthulhuMythosAwarded">{{ localize 'CoC7.MythosFirstEncounter' }}</button>
 						{{else}}
-							<button data-action="advance-state" data-state="cthulhuMythosAwarded" data-param="1">{{ localize 'CoC7.MythosAlreadyEncountered' }}</button>
+							<button data-action="advance-state" data-state="cthulhuMythosAwarded">{{ localize 'CoC7.MythosAlreadyEncountered' }}</button>
 						{{/if}}
-						<button data-action="advance-state" data-state="cthulhuMythosAwarded" data-param="0">{{ localize 'CoC7.DisregardMythosGain' }}</button>
+						<button data-action="advance-state" data-state="noMythosGained">{{ localize 'CoC7.DisregardMythosGain' }}</button>
 					</div>				
 					{{/unless}}
 				{{/if}}
