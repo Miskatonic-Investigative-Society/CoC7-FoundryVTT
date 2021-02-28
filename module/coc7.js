@@ -25,6 +25,7 @@ import { CoC7StatusSheet } from './items/sheets/status.js';
 import { CoC7Check } from './check.js';
 import { CoC7Menu } from './menu.js';
 import { OpposedCheckCard } from './chat/cards/opposed-roll.js';
+import { CombinedCheckCard } from './chat/cards/combined-roll.js';
 
 Hooks.once('init', async function() {
 
@@ -48,7 +49,6 @@ Hooks.once('init', async function() {
 
 	//TODO : remove debug hooks
 	CONFIG.debug.hooks = true;
-	// CONFIG.Combat.entityClass = CoC7Combat;
 	CONFIG.Actor.entityClass = CoCActor;
 	CONFIG.Item.entityClass = CoC7Item;
 	Combat.prototype.rollInitiative = rollInitiative;
@@ -107,6 +107,16 @@ Hooks.once('init', async function() {
 			'regular': 'SETTINGS.CheckDifficultyRegular',
 			'unknown': 'SETTINGS.CheckDifficultyUnknown'
 		}
+	});
+
+	// Opposed rolls tie breaker.
+	game.settings.register('CoC7', 'opposedRollTieBreaker', {
+		name: 'SETTINGS.OpposedRollTieBreaker',
+		hint: 'SETTINGS.OpposedRollTieBreakerHint',
+		scope: 'wolrd',
+		config: true,
+		default: false,
+		type: Boolean
 	});
 
 	// Display result type.
@@ -481,8 +491,11 @@ Hooks.on('ready', async () =>{
 	game.socket.on('system.CoC7', data => {
 		if (data.type == 'updateChar')
 			CoC7Utilities.updateCharSheets();
-		if( 'opposedCheck' == data.type){
+		if( OpposedCheckCard.defaultConfig.type == data.type){
 			OpposedCheckCard.dispatch( data);
+		}
+		if( CombinedCheckCard.defaultConfig.type == data.type){
+			CombinedCheckCard.dispatch( data);
 		}
 	});
 

@@ -1,4 +1,14 @@
-<div class="coc7 chat-card chat-card-v2 roll-card opposed">
+<div class="coc7 chat-card chat-card-v2 roll-card combined">
+    <div class='flexrow toggle gm-visible-only'>
+        <span class="flex1 toggle-switch gm-select-only {{#if any}}switched-on{{/if}} "
+        title="Any roll must succeed" 
+        data-flag="any" 
+        data-selected={{any}}>{{localize 'CoC7.Any'}}</span>
+        <span class="flex1 toggle-switch gm-select-only {{#if all}}switched-on{{/if}}"
+        title="Any roll must succeed" 
+        data-flag="all" 
+        data-selected={{all}}>{{localize 'CoC7.All'}}</span>
+    </div>
     <ol>
         {{#each rolls as |r id| }}
             <li class='actor-roll{{#if r.winner}} won{{/if}} {{#if r.tie}} tie{{/if}}' data-rank='{{id}}' data-actor-key="{{r.actor.actorKey}}">
@@ -6,9 +16,7 @@
                 {{#if r.rolled}}
                     {{{r._htmlRoll}}}
                 {{else}}
-                    <div class='card-buttons actor-card-buttons owner-only'>
-                        <button data-action='roll-check'><!--<img class="item-image" src="{{r.image}}"/>-->{{ r.fullName }}: ({{r.rawValue}}%)</button>
-                    </div>
+                    <span class='pending'>{{ r.fullName }}: ({{r.rawValue}}%)</span>
                     <a class="gm-visible-only" data-action="remove-roll" title="{{localize 'CoC7.remove'}}"><i class="far fa-times-circle"></i></a>
                 {{/if}}
             </li>
@@ -18,6 +26,12 @@
     {{#if resolved}}
     <h4>RESOLVED !!!</h4>
     {{/if}}
+
+    {{#unless closed}}
+    <div class='card-buttons'>
+        <button data-action='roll-card'>Roll card</button>
+    </div>
+    {{/unless}}
 
     {{#unless closed}}
     <div class='card-buttons gm-visible-only'>

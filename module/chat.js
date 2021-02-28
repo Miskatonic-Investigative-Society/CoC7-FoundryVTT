@@ -11,6 +11,7 @@ import { CoC7ConCheck } from './chat/concheck.js';
 import { CoC7Parser } from './apps/parser.js';
 import { SanCheckCard } from './chat/cards/san-check.js';
 import { OpposedCheckCard } from './chat/cards/opposed-roll.js';
+import { CombinedCheckCard } from './chat/cards/combined-roll.js';
 
 export class CoC7Chat{
 
@@ -61,6 +62,8 @@ export class CoC7Chat{
 		html.on('click', 'coc7-inline-result', CoC7Chat._onInline.bind(this));
 
 		OpposedCheckCard.bindListerners( html);
+		CombinedCheckCard.bindListerners( html);
+
 	}
 
 
@@ -198,10 +201,14 @@ export class CoC7Chat{
 			const ownerOnly = html.find('.owner-only');
 			for( let zone of ownerOnly )
 			{
-				const cardActor = CoC7Chat._getChatCardActor(zone.closest('.chat-card'));
+				//Try retrieving actor
+				let actor = CoC7Chat._getChatCardActor(zone.closest('.chat-card'));//Try with closest chat card.
+				if( !actor) actor = CoC7Chat._getActorFromKey( zone.parentElement.dataset.actorKey);//Try with parent element.
+				if( !actor) actor = CoC7Chat._getActorFromKey( zone.closest('[data-actor-key]')?.dataset.actorKey);//Try with closest data-actor-key
+				if( !actor) actor = CoC7Chat._getActorFromKey( zone.closest('[data-token-key]')?.dataset.actorKey);//Try with closest data-token-key
 				
 				// const actor = game.actors.get( actorId);
-				if( !cardActor.owner) {zone.style.display = 'none';} //if current user doesn't own this he can't interract
+				if( !actor.owner) {zone.style.display = 'none';} //if current user doesn't own this he can't interract
 				// if( !CoC7Chat.isCardOwner( zone.closest('.chat-card'))) {zone.style.display = 'none';}
 			}
 
@@ -855,6 +862,7 @@ export class CoC7Chat{
 
 	static _getActorFromKey(key) {
 
+		if( !key) return undefined;
 		// Case 1 - a synthetic actor from a Token
 		if (key.includes('.')) {
 			const [sceneId, tokenId] = key.split('.');
@@ -1179,26 +1187,8 @@ export class CoC7Chat{
 			}
 			break;
 		}					
-		// case 'initiator-roll': { //Roll against each target
-		// 	let initiatorRollActor = CoC7Chat.getActorFromToken( event.currentTarget.dataset.tokenId);
-		// 	if( initiatorRollActor == null) initiatorRollActor = game.actors.get( event.currentTarget.dataset.actorId);
+
 		
-		// 	const initiatorCheck = new CoC7Check();
-		// 	initiatorCheck.referenceMessageId = originMessage.dataset.messageId;
-		// 	initiatorCheck.rollType= 'opposed';
-		// 	initiatorCheck.side = 'initiator';
-		// 	initiatorCheck.action = 'attack';
-		// 	initiatorCheck.actor = initiatorRollActor;
-		// 	initiatorCheck.difficulty = CoC7Check.difficultyLevel.regular;
-		// 	if( event.currentTarget.dataset.outnumbered === 'true') initiatorCheck.diceModifier = +1;
-
-		// 	initiatorCheck.item = event.currentTarget.dataset.itemId;
-
-		// 	initiatorCheck.roll();
-		// 	initiatorCheck.toMessage();
-
-		// 	break;
-		// }
 		case 'melee-initiator-roll':{
 			const initiator = CoC7MeleeInitiator.getFromCard( card);
 			await initiator.performSkillCheck( event.currentTarget.dataset.skill);

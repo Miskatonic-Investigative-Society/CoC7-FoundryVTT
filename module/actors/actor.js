@@ -57,6 +57,22 @@ export class CoCActor extends Actor {
 	// }
 	// gnitseT **********************
 
+	/** @override */
+	static async create(data, options={}) {
+		data.token = data.token || {};
+		if ( data.type === 'character' ) {
+			mergeObject(data.token, {
+				vision: true,
+				dimSight: 30,
+				brightSight: 0,
+				actorLink: true,
+				disposition: 1
+			}, {overwrite: false});
+		}
+		return super.create(data, options);
+	}
+	
+
 
 	/**
    * Early version on templates did not include possibility of auto calc
@@ -1915,8 +1931,9 @@ export class CoCActor extends Actor {
 		//Case 3: Actor has no token return his ID;
 		return this.id;
 	}
-  
+
 	get actorKey(){
+		if( this.data.token.actorLink) return this._id;
 		return this.tokenKey;
 	}
 
