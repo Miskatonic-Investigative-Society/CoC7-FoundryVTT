@@ -584,5 +584,7 @@
 "SETTINGS.AllowFlatDiceModifier": "Flat dice modifier",
 "SETTINGS.AllowFlatDiceModifierHint": "Allows dice roll results to be modified by a flat value.",
 "SETTINGS.AllowFlatThresholdModifier": "Flat value modifier",
-"SETTINGS.AllowFlatThresholdModifierHint":"Allows checks succes value to be modified by a flat value." 
+"SETTINGS.AllowFlatThresholdModifierHint":"Allows checks succes value to be modified by a flat value." ,
+"SETTINGS.OpposedRollTieBreaker": "Opposed rolls Viriato139ac tie breaker",
+"SETTINGS.OpposedRollTieBreakerHint": "In case of a tie during opposed roll, winner is determined by lowest rolled value, not higher skill."
 }

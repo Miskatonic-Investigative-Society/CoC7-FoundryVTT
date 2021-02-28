@@ -493,7 +493,6 @@ export class CoC7RangeInitiator{
 		check.targetKey = target.actorKey;
 
 		check.roll();
-		// const result = await check.shortResult( details);
 		return check;
 	}
 

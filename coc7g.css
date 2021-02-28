@@ -1589,6 +1589,16 @@ html {
   max-width: 100%;
   display: block;
 }
+.sheetV2 .window-content p {
+  white-space: normal;
+}
+.sheetV2 .window-content p span {
+  display: inline-block;
+  width: auto;
+  height: auto;
+  max-width: none;
+  white-space: normal;
+}
 .sheetV2 .window-content label {
   height: 22px;
   line-height: 22px;
@@ -2165,7 +2175,7 @@ html {
   height: auto;
   display: grid;
   border-bottom: 1px solid;
-  grid-template-columns: 16px 22px 1fr 168px 44px 36px;
+  grid-template-columns: 16px 22px 1fr 168px 44px 44px;
   grid-template-rows: 22px 1fr;
   grid-template-areas: "expand image name range weaponControl itemControl" "details details details details details details";
 }
@@ -2431,14 +2441,17 @@ html {
 .chat-card-v2 .status-list {
   display: none;
 }
-.chat-card-v2.opposed-roll-card ol {
+.chat-card-v2.roll-card .dice-roll {
+  padding: 0;
+}
+.chat-card-v2.roll-card ol {
   padding: 0;
   list-style: none;
   background: none;
   box-shadow: none;
   border: none;
 }
-.chat-card-v2.opposed-roll-card ol li.actor-roll {
+.chat-card-v2.roll-card ol li.actor-roll {
   list-style: none;
   display: flex;
   flex-direction: row;
@@ -2446,13 +2459,32 @@ html {
   justify-content: flex-start;
   width: 100%;
   align-items: center;
+  margin-bottom: 4px;
 }
-.chat-card-v2.opposed-roll-card ol li.actor-roll a {
+.chat-card-v2.roll-card ol li.actor-roll span.pending {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid #b5b3a4;
+  border-radius: 3px;
+  font-size: 12px;
+  height: 24px;
+  line-height: 20px;
+  margin: 2px 0;
+  display: inline-block;
+  text-align: center;
+}
+.chat-card-v2.roll-card ol li.actor-roll.won {
+  border: 2px groove goldenrod;
+}
+.chat-card-v2.roll-card ol li.actor-roll.won.tie {
+  border-color: red;
+}
+.chat-card-v2.roll-card ol li.actor-roll a {
   line-height: 36px;
   height: 36px;
   flex: none;
 }
-.chat-card-v2.opposed-roll-card ol li.actor-roll img {
+.chat-card-v2.roll-card ol li.actor-roll img {
   width: 36px;
   height: 36px;
   flex: none;
@@ -2461,7 +2493,7 @@ html {
   border: none;
   margin-right: 2px;
 }
-.chat-card-v2.opposed-roll-card ol li.actor-roll .actor-card-buttons {
+.chat-card-v2.roll-card ol li.actor-roll .actor-card-buttons {
   flex: 1;
   display: flex;
   align-items: center;
@@ -2469,7 +2501,7 @@ html {
   margin: 0;
   align-self: center;
 }
-.chat-card-v2.opposed-roll-card ol li.actor-roll .roll-result {
+.chat-card-v2.roll-card ol li.actor-roll .roll-result {
   width: 100%;
 }
 #controls .scene-control.custom-control {

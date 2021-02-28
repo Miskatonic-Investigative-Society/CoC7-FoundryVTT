@@ -1,34 +1,59 @@
 import { CoC7Check } from '../../check.js';
+import { RollCard } from './roll-card.js';
 
-export class OpposedCheckCard{
-	constructor( data){
-		this.rolls = [];
-		if( data) this.addRollData( data);
-	}
-
-	static async dispatch( data){
-		if( game.user.isGM){
-			ui.notifications.info(`Dipatched ! ${data.tokenKey||data.actorId}`);
-			const messages = ui.chat.collection.filter( message => {
-				if( 'opposedCard' == message.getFlag( 'CoC7', 'type') && 'resolved' != message.getFlag('CoC7', 'state')) return true;
-				return false;
-			});
-
-			if( !messages.length) await OpposedCheckCard.create( data);
-			else{
-				const card = await OpposedCheckCard.fromMessage( messages[0]);
-				card.process( data);
-				await card.updateChatCard();
-			}
-			
-		} else game.socket.emit( 'system.CoC7',data);
-	}
+export class OpposedCheckCard extends RollCard{
 
 	static async bindListerners( html){
 		// html.find('.opposed-roll-card a').click(async (event) => OpposedCheckCard._onClick( event));
-		html.on( 'click', '.opposed-roll-card a', OpposedCheckCard._onClick.bind(this) );
-		html.on( 'click', '.opposed-roll-card button', OpposedCheckCard._onClick.bind(this));
+		super.bindListerners( html);
+		html.on( 'click', '.roll-card.opposed a', OpposedCheckCard._onClick.bind(this) );
+		html.on( 'click', '.roll-card.opposed button', OpposedCheckCard._onClick.bind(this));
 	}
+
+	static get defaultConfig(){
+		return mergeObject(super.defaultConfig, {
+			template: 'systems/CoC7/templates/chat/cards/opposed-roll.html',
+			type: 'opposedCard',
+			title: 'CoC7.OpposedRollCard'
+		});
+	}
+
+	get config(){
+		return OpposedCheckCard.defaultConfig;
+	}
+
+	process( data){
+		switch (data.action) {
+		case 'new':
+			this.addRollData( data);
+			break;
+		
+		case 'roll':
+			this.addRollData( data);
+			break;
+
+		case 'updateRoll':
+			this.updateRoll( data);
+			break;
+		}
+
+		if( game.user.isGM) this.updateChatCard();
+		else game.socket.emit('system.CoC7', data);
+	}
+
+	async roll(rank){
+		this.rolls[rank]._perform();
+		const data = {
+			type: this.config.type,
+			action: 'updateRoll',
+			rank: rank,
+			fromGM: game.user.isGM
+		};
+		if( !game.user.isGM) data.roll = this.rolls[rank].JSONRollData;
+		return data;
+	}
+
+
 
 	static async _onClick( event){
 		event.preventDefault();
@@ -37,7 +62,7 @@ export class OpposedCheckCard{
 		const action = a.dataset.action;
 		const li = a.closest('li.actor-roll');
 		const message = a.closest('.chat-message');
-		const cardElement = a.closest('div.opposed-roll-card');
+		const cardElement = a.closest('div.roll-card');
 		const card = await OpposedCheckCard.fromHTMLCardElement( cardElement);
 		card.messageId = message.dataset.messageId;
 		const rank = Number(li?.dataset?.rank);
@@ -49,184 +74,83 @@ export class OpposedCheckCard{
 			break;
 		}
 
-		case 'roll-check':{
-			await card.roll( rank);
+		case 'close-card':{
+			card.closeCard();			
 			await card.updateChatCard();
 			break;
 		}
-		
-		default:
+
+		case 'roll-check':{
+			const data = await card.roll( rank);
+			await card.process( data);
 			break;
 		}
+
+		default:{
+			const options={
+				update: false,
+				data: a.dataset,
+				classes: a.classList,
+				target: a
+			};
+			await CoC7Check.alter( card.rolls[ rank], action, options);
+			const data = {
+				type: this.defaultConfig.type,
+				action: 'updateRoll',
+				rank: rank,
+				fromGM: game.user.isGM};
+			if( !game.user.isGM) data.roll = card.rolls[rank].JSONRollData;
+			card.process( data);
+			break;
+		}
+		}
 	}
 
-	static async create( data){
-		const card = new OpposedCheckCard( data);
-		await card.toMessage();
-	}
+	async compute( rank = undefined)
+	{
+		if( !rank){
+			for (let i = 0; i < this.rolls.length; i++) {
+				if( this.rolls[i].rolled) this.rolls[i]._htmlRoll = await this.rolls[i].getHtmlRoll();				
+			}
+		}else {
+			if( this.rolls[rank].rolled) this.rolls[rank]._htmlRoll = await this.rolls[rank].getHtmlRoll();
+		}
+		
+		this.rolls.sort( (a, b)=>{
+			if( a.rolled && !b.rolled) return -1;
+			if( !a.rolled && b.rolled) return 1;
+			if( !a.rolled && !b.rolled) return 0;
+			if( a.successLevel > b.successLevel) {this.resolved = true; return -1;}
+			if( a.successLevel < b.successLevel) {this.resolved = true; return 1;}
+			if( game.settings.get('CoC7', 'opposedRollTieBreaker')){
+				if( a.modifiedResult > b.modifiedResult) {this.resolved = true; return 1;}
+				if( a.modifiedResult < b.modifiedResult) {this.resolved = true; return -1;}
+			} else {
+				if( a.rawValue > b.rawValue) {this.resolved = true; return -1;}
+				if( a.rawValue < b.rawValue) {this.resolved = true; return 1;}
+			}
+			return 0;
+		});
 
-	static async fromMessageId( messageId){
-		const message = game.messages.get( messageId);
-		if( ! message) return undefined;
-		const card = await OpposedCheckCard.fromMessage( message);
-		card.messageId = messageId;
-		return card;
-	}
-	
-	static async fromMessage( message){
-		const cardElement = $(message.data.content)[0];
-		if( ! cardElement) return undefined;
-		const card = await OpposedCheckCard.fromHTMLCardElement( cardElement);
-		card.message = message;
-		return card;
-	}
-
-	static async fromHTMLCardElement( card){
-		const cardData = JSON.parse(unescape( card.dataset.object));
-		return await OpposedCheckCard.fromData( cardData);
-	}
-
-	static async fromData(data){
-		const card = new OpposedCheckCard();
-		Object.assign( card, data);
-		for (let index = 0; index < card.rolls.length; index++) {
-			if( 'Object' == card.rolls[index]?.constructor?.name){
-				card.rolls[index] = Object.assign( new CoC7Check(), card.rolls[index]);
-				if( card.rolls[index].rolled) card.rolls[index]._htmlRoll = await card.rolls[index].getHtmlRoll();
+		this.winCount = 0;
+		if( this.rolls[0] && this.rolls[0].rolled && !this.rolls[0].failed){
+			this.winCount = 1;
+			for (let i = 1; i < this.rolls.length; i++) {
+				if(
+					this.rolls[i] && this.rolls[i].rolled &&
+					this.rolls[0].successLevel == this.rolls[i].successLevel &&
+					(game.settings.get('CoC7', 'opposedRollTieBreaker')?this.rolls[0].modifiedResult == this.rolls[i].modifiedResult:this.rolls[0].rawValue == this.rolls[i].rawValue)
+				) this.winCount = this.winCount + 1;
 			}
 		}
-		return card;
+
+		for (let i = 0; i < this.rolls.length; i++) {
+			this.rolls[i].winner = (i < this.winCount);
+			this.rolls[i].tie = this.rolls[i].winner && this.winCount > 1;
+		}
 	}
 
-	static get template(){
-		return 'systems/CoC7/templates/chat/cards/opposed-roll.html';
-	}
-
-	async toMessage(){
-		const html = await renderTemplate( OpposedCheckCard.template, this);
-		const htmlCardElement = $(html);
-		htmlCardElement[0].dataset.object = escape(this.dataString);
-
-
-		let chatData = {
-			user: game.user._id,
-			flavor: game.i18n.localize( 'CoC7.OpposedRollCard'),
-			content: htmlCardElement[0].outerHTML,
-			flags:{
-				CoC7:{
-					type: 'opposedCard',
-					state: 'initiated'
-				}
-			}
-		};
-
-		if ( ['gmroll', 'blindroll'].includes(this.rollMode) ) chatData['whisper'] = ChatMessage.getWhisperRecipients('GM');
-		if ( this.rollMode === 'blindroll' ) chatData['blind'] = true;
-
-		// const chatMessage = await ChatMessage.create(chatData);
-		// chatMessage.setFlag( 'CoC7', 'type', 'opposedCard');
-		// chatMessage.setFlag('CoC7', 'state', 'initiated');
-		// await ui.chat.updateMessage( chatMessage, false);
-		ChatMessage.create(chatData).then( msg => {return msg;});
-	}
-
-	async updateChatCard(){
-		const html = await renderTemplate(OpposedCheckCard.template, this);
-		const htmlCardElement = $.parseHTML( html)[0];
-
-		//Attach the sanCheckCard object to the message.
-		htmlCardElement.dataset.object = escape(this.dataString);
-
-		//Update the message.
-		const chatMessage = game.messages.get( this.messageId);
-
-		const msg = await chatMessage.update({ content: htmlCardElement.outerHTML });
-		await ui.chat.updateMessage( msg, false);
-		return msg;
-	}
-
-	async roll(rank){
-		this.rolls[rank]._perform();
-		this.rolls[rank]._htmlRoll = await this.rolls[rank].getHtmlRoll();
-	}
-
-	addRollData( data){
-		const check = new CoC7Check();
-		check.actor = data.tokenKey || data.actorId;
-		check.diceModifier = Number(data.modifier);
-		check.difficulty = Number(data.difficulty);
-		if( CoC7Check.difficultyLevel.unknown == check.difficulty) check.difficulty = CoC7Check.difficultyLevel.regular;
-		check.flatDiceModifier = Number( data.flatDiceModifier);
-		check.flatThresholdModifier = Number( data.flatThresholdModifier);
-		if( data.characteristic) check.characteristic = data.characteristic;
-		if( data.attribute) check.attribute = data.attribute;
-		if( data.skillId) check.skill = data.skillId;
-		this.rolls.push(check);
-	}
-
-	process( data){
-		this.addRollData( data);
-	}
-
-	removeRoll( rank){
-		this.rolls.splice( rank, 1);
-	}
-
-	get message(){
-		if( this._message) return this._message;
-		if( this._messageId) return game.message.get( this._messageId);
-		return undefined;
-	}
-
-	set message(x){
-		this._message = x;
-	}
-
-	get messageId(){
-		if(this._messageId) return this._messageId;
-		if( this._message) return this._message.id;
-		return undefined;
-	}
-
-	set messageId(x){
-		this._messageId = x;
-	}
-
-	////////////////////////////
-
-	get _options(){
-		return {
-			exclude : ['_actor', '_skill', '_item', '_message', '_htmlRoll'],
-			excludeStartWith: '__'
-		};
-	}
-
-	///////////////////////////
-
-	get isGM(){
-		return game.user.isGM;
-	}
-
-	get rollMode(){
-		if( !this._rollMode) this._rollMode = game.settings.get('core', 'rollMode');
-		return this._rollMode;
-	}
-
-	set rollMode(x){
-		if( false === x) this._rollMode = game.settings.get('core', 'rollMode');
-		this._rollMode = x;
-	}
-
-	get data(){
-		return JSON.parse(this.JSONRollString);
-	}
-
-	get dataString(){
-		return JSON.stringify(this, (key,value)=>{
-			if( null === value) return undefined;
-			if( this._options.exclude?.includes(key)) return undefined;
-			if( key.startsWith(this._options.excludeStartWith)) return undefined;
-			return value;
-		});
+	closeCard(){
+		this.closed = true;
 	}
 }

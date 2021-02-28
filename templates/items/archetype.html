@@ -50,10 +50,10 @@
 
             {{#if isOwned}}
             <h3 class="form-header">{{ localize "CoC7.SuggestedOccupations"}}</h3>
-            <span>{{{data.suggestedOccupations}}}</span>
+			{{editor content=data.suggestedOccupations target="data.suggestedOccupations" button=true owner=owner editable=editable}}
             
             <h3 class="form-header">{{ localize "CoC7.SuggestedTraits"}}</h3>
-            <span>{{{data.suggestedTraits}}}</span>
+            {{editor content=data.suggestedTraits target="data.suggestedTraits" button=true owner=owner editable=editable}}
             {{else}}
             <h3 class="form-header">{{ localize "CoC7.Details" }}</h3>
             <div class="form-group">

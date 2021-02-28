@@ -1,4 +1,8 @@
-.chat-card-v2.opposed-roll-card{
+.chat-card-v2.roll-card{
+	.dice-roll{
+		padding: 0;
+	}
+
 	ol{
 		padding: 0;
 		list-style: none;
@@ -14,6 +18,27 @@
 			justify-content: flex-start;
 			width: 100%;
 			align-items: center;
+			margin-bottom: 4px;
+
+			span.pending{
+				width: 100%;
+				background: rgba(0, 0, 0, 0.05);
+				border: 1px solid #b5b3a4;
+				border-radius: 3px;
+				font-size: 12px;
+				height: 24px;
+				line-height: 20px;
+   				margin: 2px 0;
+				display: inline-block;
+    			text-align: center;
+			}
+
+			&.won{
+				border: 2px groove goldenrod;
+				&.tie{
+					border-color: red;
+				}
+			}
 
 			a{
 				line-height: 36px;
