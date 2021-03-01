@@ -183,6 +183,7 @@ export class CoC7Check {
 	}
 
 	get isFumble(){
+		if( this.isSimpleRoll) return undefined;
 		return this.modifiedResult >= this.fumbleThreshold;
 	}
 
@@ -191,12 +192,18 @@ export class CoC7Check {
 	}
 
 	get passed(){
+		if( this.isSimpleRoll) return undefined;
 		if( this.luckSpent) return this.difficulty <= this.successLevel;
 		return this.succesThreshold >= (this.modifiedResult) || this.isCritical;
 	}
 
 	get failed(){
+		if( this.isSimpleRoll) return undefined;
 		return !this.passed;
+	}
+
+	get isSimpleRoll(){
+		return undefined == this.rawValue;
 	}
 
 	get hasBonus(){
@@ -301,7 +308,7 @@ export class CoC7Check {
 			this._actor.alias = this.actor.name;
 			if( x.token && x.token.scene && x.token.scene.id){
 				this.actorKey=`${x.token.scene.id}.${x.token.id}`;
-			} else this.actorKey = `${game.scenes.active.id}.${x.id}`;
+			} else this.actorKey = x.id;
 			return;
 		}
 
@@ -323,6 +330,7 @@ export class CoC7Check {
 
 	get successLevelIcons(){
 		if( this.unknownDifficulty) return null;
+		if( this.isSimpleRoll) return null;
 		if( this.successLevel >= this.difficulty){
 			let icons = [];
 			for (let index = 0; index < (this.successLevel - this.difficulty + 1); index++) {
@@ -440,7 +448,7 @@ export class CoC7Check {
 		return this.displayResultType && this.displayCheckSuccessLevel;
 	}
 
-	get displayNoSuccessLevel(){
+	get dontDisplaySuccessLevel(){
 		return !this.displayResultType && !this.displayCheckSuccessLevel;
 	}
 
@@ -516,7 +524,7 @@ export class CoC7Check {
 			},
 			total: this.dice.total,
 			tenResult: this.dice.total - this.dice.unit.total,
-			hasBonus: this.diceModifier == 0 ? false : true,
+			hasBonus: !this.diceModifier?false:true,
 			bonus: Math.abs(this.diceModifier),
 			bonusType: this.diceModifier < 0 ? game.i18n.format('CoC7.DiceModifierPenalty') : game.i18n.format('CoC7.DiceModifierBonus'),
 			difficulty: this.difficulty
@@ -561,7 +569,10 @@ export class CoC7Check {
 		this.isSkill = false;
 		this.isItem = false;
 		this.isAttribute = false;
-		if( this.actor == null){
+		if( this.isSimpleRoll){
+			this.denyPush = true;
+			this.denyLuck = true;
+		} else if( this.actor == null){
 			this.isValue = true;
 		}
 		else
@@ -583,7 +594,7 @@ export class CoC7Check {
 
 		}
 
-		if( ! this.luckSpent){
+		if( !this.luckSpent && !this.isSimpleRoll){
 			if( this.modifiedResult <= this.rawValue) this.successLevel = CoC7Check.successLevel.regular;
 			if( this.modifiedResult <= this.hardThreshold) this.successLevel = CoC7Check.successLevel.hard;
 			if( this.modifiedResult <= this.extremeThreshold) this.successLevel = CoC7Check.successLevel.extreme;
@@ -618,13 +629,13 @@ export class CoC7Check {
 
 
 		if( this.unknownDifficulty ) this.successRequired = '';
-		else this.successRequired = game.i18n.format('CoC7.SuccessRequired', {successRequired : this.difficultyString});
+		else if( !this.isSimpleRoll) this.successRequired = game.i18n.format('CoC7.SuccessRequired', {successRequired : this.difficultyString});
 
 
 		if (this.modifiedResult == 1){
 			this.successLevel = CoC7Check.successLevel.critical;
 		}
-		if( !this.luckSpent && !this.isUnknown){
+		if( !this.luckSpent && !this.isUnknown &&!this.isSimpleRoll){
 			this.isFailure = this.failed;
 			this.isSuccess = this.passed;
 		}

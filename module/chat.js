@@ -208,7 +208,7 @@ export class CoC7Chat{
 				if( !actor) actor = CoC7Chat._getActorFromKey( zone.closest('[data-token-key]')?.dataset.actorKey);//Try with closest data-token-key
 				
 				// const actor = game.actors.get( actorId);
-				if( !actor.owner) {zone.style.display = 'none';} //if current user doesn't own this he can't interract
+				if( actor && !actor.owner) {zone.style.display = 'none';} //if current user doesn't own this he can't interract
 				// if( !CoC7Chat.isCardOwner( zone.closest('.chat-card'))) {zone.style.display = 'none';}
 			}
 

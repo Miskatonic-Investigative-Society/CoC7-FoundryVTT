@@ -35,7 +35,19 @@ version 0.5.3 :
   * Roll winner will be highlighted in gold.
   * Tie will be highlighted in red.
   * Rolls are sorted by succes/check value.
-  * Optional rule from José Lozano/Viriato139ac. In a tie, the lowest roll wins.
+  * Optional rule from José Lozano/Viriato139ac. In a tie, the highest roll wins.
+* Implementation of combined rolls.
+  * Alt + right click on any element to include it in a combined roll.
+  * As long as the card is opened all rolls will be added to that card.
+  * Click the roll button to trigger the roll.
+  * Only keeper and first character added to the card will see the button.
+* Implementation of /r 1d% command.
+  * This will trigger a D%.
+  * You can add options :
+    * (xx) for a threshold value.
+    * +x/-x for x bonus/penalty dice.
+    * [xx] for  a difficulty : ?, +, ++, +++ = unknown, hard, extreme, critical
+    * ? to force a bonus selection windows [bug] works once only....
 * new macro check( [Threshold, [event]]) allow to roll a generic check. `game.CoC7.macros.check(75, event)`
 * #385 Optional flat dice and threshold modifier added.
   * Disabled by default, can be enabled in options.
