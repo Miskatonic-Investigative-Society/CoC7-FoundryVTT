@@ -599,7 +599,7 @@ Hooks.on('renderCoC7NPCSheet', (app, html, data) => CoC7NPCSheet.forceAuto(app, 
 // Hooks.on('updateActor', (actor, dataUpdate) => CoCActor.updateActor( actor, dataUpdate));
 // Hooks.on('updateToken', (scene, token, dataUpdate) => CoCActor.updateToken( scene, token, dataUpdate));
 
-// Hooks.on('chatMessage', (chatLog, message, chatData) => { console.log('chatMessage : '  + message);});
+Hooks.on('chatMessage', CoC7Utilities.ParseChatEntry);
 // Hooks.on('preCreateToken', ( scene, actor, options, id) => CoCActor.preCreateToken( scene, actor, options, id))
 // Hooks.on('createToken', ( scene, actor, options, id) => CoCActor.preCreateToken( scene, actor, options, id))
 // Hooks.on("renderChatLog", (app, html, data) => CoC7Item.chatListeners(html));

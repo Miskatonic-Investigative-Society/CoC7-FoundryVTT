@@ -77,7 +77,7 @@
 		<div class="dice-result"
 			data-total="{{dices.total}}"
 			data-ten-result="{{dices.tenResult}}">
-			{{#unless displayNoSuccessLevel}}
+			{{#unless dontDisplaySuccessLevel}}
 			<div class="dice-formula {{#if isSuccess}}success{{/if}} {{#if isFailure}}failure{{/if}} {{#if isCritical}}critical{{/if}} {{#if isFumble}}fumble{{/if}}"
 			  title="{{successLevelIcons.hint}}">
 				{{#if displayResultType}}
