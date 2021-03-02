@@ -26,6 +26,7 @@ version 0.5.3 :
 
 * Bug correction:
   * Corrected a bug where editor in archetype sheet did not display correctly.
+  * #390 Character sheet elements changed from px to rem.
 * Implementation of system specific controls.
   * Keeper's tools for GM will allow to enable/disable creation and development modes.
   * Dice will allow to roll a generic check.
