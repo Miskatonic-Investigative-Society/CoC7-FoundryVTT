@@ -6,7 +6,7 @@ import { RollCard } from './roll-card.js';
 export class CombinedCheckCard extends RollCard{
 
 	static async bindListerners( html){
-		super.bindListerners( html);
+		html.on( 'click', '.roll-card.combined .toggle-switch', this._onToggle.bind(this));
 		// html.find('.roll-card a').click(async (event) => CombinedCheckCard._onClick( event));
 		html.on( 'click', '.roll-card.combined a', CombinedCheckCard._onClick.bind(this) );
 		html.on( 'click', '.roll-card.combined button', CombinedCheckCard._onClick.bind(this));
@@ -24,6 +24,43 @@ export class CombinedCheckCard extends RollCard{
 		return CombinedCheckCard.defaultConfig;
 	}
 
+	get successCount(){
+		if( this.rolled){
+			let count = 0;
+			this.rolls.forEach( r => {if( r.passed) count += 1;});
+			return count;}
+		return undefined;
+	}
+
+	get mainActorKey(){
+		return this.rolls[0]?.actor?.actorKey || undefined;
+	}
+
+	get success(){
+		if( undefined == this.successCount) return undefined;
+		if( this.any){
+			if( this.successCount > 0) return true;
+			return false;
+		}
+		if( this.all){
+			if( this.successCount == this.rolls.length) return true;
+			return false;
+		}
+		return undefined;
+	}
+
+	get failure(){
+		if( undefined == this.success) return undefined;
+		return !this.success;
+	}
+
+	async getHtmlRoll(){
+		if( !this.rolled) return undefined;
+		const check = new CoC7Check();
+		check._perform( this._roll);
+		return await check.getHtmlRoll( { hideSuccess: true});
+	}
+
 	process( data){
 		switch (data.action) {
 		case 'new':
@@ -34,25 +71,30 @@ export class CombinedCheckCard extends RollCard{
 			this.addRollData( data);
 			break;
 
-		case 'updateRoll':
+		case 'updateRoll':{
 			this.updateRoll( data);
 			break;
+		}
+
+		case 'assignRoll':{
+			this.assignRoll( data);
+			break;
+		}
 		}
 
 		if( game.user.isGM) this.updateChatCard();
 		else game.socket.emit('system.CoC7', data);
 	}
 
-	async performRoll( options ={}){
-		if( !this.rolled){
-			this.rolled=true;
-			this._roll = CoC7Dice.roll( options.modifier||0);
-			this.options = options;
+	async assignRoll( data){
+		if( game.user.isGM){
+			if( !this.rolled){
+				this.rolled = true;
+				this._roll = data.roll;
+				this.options = data.options;
+			}
 		}
-		await this.updateChatCard();
 	}
-
-
 
 	static async _onClick( event){
 		event.preventDefault();
@@ -94,7 +136,14 @@ export class CombinedCheckCard extends RollCard{
 				}
 			}
 
-			card.performRoll( roll);
+			const data = {
+				type: this.defaultConfig.type,
+				action: 'assignRoll',
+				fromGM: game.user.isGM,
+				options: roll
+			};
+			data.roll = CoC7Dice.roll( roll.modifier||0);
+			card.process( data);
 			break;
 		}
 
@@ -132,8 +181,10 @@ export class CombinedCheckCard extends RollCard{
 		});
 
 		for (let i = 0; i < this.rolls.length; i++) {
-			if( this.rolls[i].rolled) this.rolls[i]._htmlRoll = await this.rolls[i].getHtmlRoll();				
+			if( this.rolls[i].rolled) this.rolls[i]._htmlRoll = await this.rolls[i].getHtmlRoll( {hideDiceResult: true});				
 		}
+
+		this._htmlRoll = await this.getHtmlRoll();
 	}
 
 	closeCard(){

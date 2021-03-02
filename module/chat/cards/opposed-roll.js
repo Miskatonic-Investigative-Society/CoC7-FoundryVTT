@@ -5,7 +5,7 @@ export class OpposedCheckCard extends RollCard{
 
 	static async bindListerners( html){
 		// html.find('.opposed-roll-card a').click(async (event) => OpposedCheckCard._onClick( event));
-		super.bindListerners( html);
+		// super.bindListerners( html);
 		html.on( 'click', '.roll-card.opposed a', OpposedCheckCard._onClick.bind(this) );
 		html.on( 'click', '.roll-card.opposed button', OpposedCheckCard._onClick.bind(this));
 	}
@@ -123,8 +123,8 @@ export class OpposedCheckCard extends RollCard{
 			if( a.successLevel > b.successLevel) {this.resolved = true; return -1;}
 			if( a.successLevel < b.successLevel) {this.resolved = true; return 1;}
 			if( game.settings.get('CoC7', 'opposedRollTieBreaker')){
-				if( a.modifiedResult > b.modifiedResult) {this.resolved = true; return 1;}
-				if( a.modifiedResult < b.modifiedResult) {this.resolved = true; return -1;}
+				if( a.modifiedResult > b.modifiedResult) {this.resolved = true; return -1;}
+				if( a.modifiedResult < b.modifiedResult) {this.resolved = true; return 1;}
 			} else {
 				if( a.rawValue > b.rawValue) {this.resolved = true; return -1;}
 				if( a.rawValue < b.rawValue) {this.resolved = true; return 1;}

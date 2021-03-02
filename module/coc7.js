@@ -491,11 +491,14 @@ Hooks.on('ready', async () =>{
 	game.socket.on('system.CoC7', data => {
 		if (data.type == 'updateChar')
 			CoC7Utilities.updateCharSheets();
-		if( OpposedCheckCard.defaultConfig.type == data.type){
-			OpposedCheckCard.dispatch( data);
-		}
-		if( CombinedCheckCard.defaultConfig.type == data.type){
-			CombinedCheckCard.dispatch( data);
+
+		if( game.user.isGM){
+			if( OpposedCheckCard.defaultConfig.type == data.type){
+				OpposedCheckCard.dispatch( data);
+			}
+			if( CombinedCheckCard.defaultConfig.type == data.type){
+				CombinedCheckCard.dispatch( data);
+			}
 		}
 	});
 

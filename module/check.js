@@ -236,8 +236,8 @@ export class CoC7Check {
 			if (this.item) return this.item.name;
 			if (this.characteristic) return CoC7Utilities.getCharacteristicNames( this.characteristic)?.label;
 			if (this.attribute){
-				if( 'lck'== data.dataset.name) return game.i18n.localize( 'CoC7.Luck');
-				if( 'san'== data.dataset.name) return game.i18n.localize( 'CoC7.Sanity');
+				if( 'lck'== this.attribute) return game.i18n.localize( 'CoC7.Luck');
+				if( 'san'== this.attribute) return game.i18n.localize( 'CoC7.Sanity');
 			}
 		}
 		return null;
@@ -973,15 +973,19 @@ export class CoC7Check {
 		return null;
 	}
 
-	async getHtmlRollElement( ){
+	async getHtmlRollElement( options = {}){
 		const template = 'systems/CoC7/templates/chat/rolls/in-card-roll.html';
+		if( this.options) this.options = mergeObject( this.options, options);
+		else this.options = options;
 		const html = await renderTemplate(template, this);
 		if( html) return $.parseHTML( html)[0];
 		return null;
 	}
 
-	async getHtmlRoll( ){
+	async getHtmlRoll( options = {}){
 		const template = 'systems/CoC7/templates/chat/rolls/in-card-roll.html';
+		if( this.options) this.options = mergeObject( this.options, options);
+		else this.options = options;
 		const html = await renderTemplate(template, this);
 		return html|| undefined;
 	}
