@@ -46,7 +46,7 @@
 					.sheet-portrait{
 						width: 140px;
 						height: 100%;
-						padding: 0 0.5rem;
+						padding: 0 8px;
 
 						.photo{
 							object-fit: contain;
@@ -59,7 +59,7 @@
 					.infos{
 						display: inline-block;
 						width: 235px;
-						padding: 0 0.5rem;
+						padding: 0 8px;
 						border-right: 2px solid;
 						border-color: @borderColorBlue;
 						.row{
@@ -104,7 +104,7 @@
 							.attribute{
 								flex: 0 0 25%;
 								display: grid;
-								grid-template-columns: auto 2rem;
+								grid-template-columns: auto 32px;
 								align-items: center;
 								justify-content: center;
 							}
@@ -116,7 +116,7 @@
 									border: 0;
 									padding: 0;
 									margin: 0;
-									line-height: 1.375rem;
+									line-height: 22px;
 									font-size: 0.75rem;
 									color: var(--main-sheet-front-color);
 									font-weight: normal;
@@ -145,17 +145,17 @@
 						}
 
 						.char-boxes{
-							flex: 0 0 6rem;
+							flex: 0 0 96px;
 							justify-content: center;
 							display: grid;
-							grid-template-columns: repeat( 4, 3.75rem);
-							grid-template-rows: repeat( 2, 3rem);
+							grid-template-columns: repeat( 4, 60px);
+							grid-template-rows: repeat( 2, 48px);
 						}
 
 						.char-box{
 							display: grid;
-							grid-template-columns: 1rem 2.75rem;
-							grid-template-rows: 1rem 2rem;
+							grid-template-columns: 16px 44px;
+							grid-template-rows: 16px 32px;
 							grid-template-areas: "rollIcon characName"
 												 "characScore characScore";
 							align-items: baseline;
@@ -175,14 +175,14 @@
 							.charac-score{
 								// .cursive();
 								grid-area: characScore;
-								margin-top: 0.25rem;
-								margin-right: 0.5rem;
-								border-radius: 0.25rem;
+								margin-top: 4px;
+								margin-right: 8px;
+								border-radius: 4px;
 								color: var(--main-sheet-back-color);
 								background: @whiteBackground;
 								display: grid;
-								grid-template-columns: 2.375rem 0.875rem;
-								grid-template-rows: 0.875rem 0.875rem;
+								grid-template-columns: 38px 14px;
+								grid-template-rows: 14px 14px;
 								grid-template-areas: "mainScore halfScore"
 													 "mainScore fithScore";
 
@@ -237,7 +237,7 @@
 					color: var(--main-sheet-front-color);
 					font-weight: bold;
 					font-size: 1rem;
-					margin: 0 0.5rem;
+					margin: 0 8px;
 					display: flex;
     				flex-direction: row;
     				flex-wrap: wrap;
@@ -268,10 +268,10 @@
 							width: fit-content;
 							color: var(--main-sheet-front-color);
 							border: 1px solid transparent;
-							border-radius: 0.25rem;
+							border-radius: 4px;
 							height: auto;
 							line-height: 1.1rem;
-							padding: 0 0.5rem;
+							padding: 0 8px;
 							margin: 0;
 	
 							&:hover{
@@ -282,12 +282,12 @@
 
 					
 					.unlock-control{
-						flex: 0 0 1.5rem;
+						flex: 0 0 24px;
 						margin-top: 2px;
 					}
 
 					.unlock-control-disabbled{
-						flex: 0 0 1.5rem;
+						flex: 0 0 24px;
 						margin-top: 2px;
 						color:darkred;
 						cursor: not-allowed;
@@ -296,7 +296,7 @@
 
 				.sheet-body{
 					border: 1px solid var(--main-sheet-front-color);
-					margin: 0 1rem 0.5rem 1rem;
+					margin: 0 16px 8px 16px;
 					overflow: hidden;
 
 					ul, ol{
@@ -317,7 +317,7 @@
 						.left-panel{
 							flex: 0 0 130px;
 							height: auto;
-							margin: 0.5rem 0;
+							margin: 8px 0;
     						padding: 0;
 							border-right: 1px solid;
 							text-align: center;
@@ -330,7 +330,7 @@
 						.right-panel{
 							flex: 1;
 							height: auto;
-							padding: 0.25rem;
+							padding: 4px;
 							overflow-y: hidden;
 							overflow-x: auto;
 						}
@@ -346,29 +346,29 @@
 
 					.specialization-header{
 						width: var(--skill-length);
-						margin-right: 0.5rem;
+						margin-right: 8px;
 						font-weight: bold;
 					}
 
 					.itemV2{
 						max-height: 20px;
 						width: var(--skill-length);
-						margin-right: 0.5rem;
+						margin-right: 8px;
 						display: grid;
 						font-size: 0.75rem;
-						grid-template-columns: 1rem auto 1.5rem 1.5rem;
+						grid-template-columns: 16px auto 24px 24px;
 						border-bottom: 1px solid;
 
 						&.specialization{
-							margin-left: 0.5rem;
+							margin-left: 8px;
    							width: var(--skill-specialization-length);
     						border-left: 1px solid;
 						}
 
 						.item-image{
-							height: 0.875rem;
+							height: 14px;
 							background-size: contain;
-							// margin: 1px 0;
+							margin: 1px 0;
 						}
 
 						.item-name{
@@ -377,10 +377,10 @@
 							overflow: hidden;
 							text-overflow: ellipsis;
 							padding-left: 3px;
-							line-height: 1rem;
+							line-height: 16px;
 
 							input{
-								height: 1rem;
+								height: 16px;
 								padding: 0;
 								overflow: visible;
 								background-color: @greyBackground;
@@ -393,10 +393,10 @@
 							color: var(--main-sheet-back-color);
 							text-align: end;
 							margin-right: 2px;
-							line-height: 1rem;
+							line-height: 16px;
 							
 							input{
-								height: 1rem;
+								height: 16px;
 								padding: 0;
 								margin-right: 2px;
 								background-color: @greyBackground;
@@ -408,7 +408,7 @@
 						.item-controls{
 							font-family: system-ui;
 							font-size: 10px;
-							line-height: 1rem;
+							line-height: 16px;
 							flex: 0 0 20px;
 							display: block;
 							text-align: end;
@@ -450,7 +450,7 @@
 						.current-value{
 							grid-area: currentValue;
 							text-align: right;
-							padding-right: 0.25rem;
+							padding-right: 4px;
 						}
 
 						.separator{
@@ -460,7 +460,7 @@
 						.max-value{
 							grid-area: maxValue;
 							text-align: left;
-							padding-left: 0.25rem;
+							padding-left: 4px;
 
 							input{
 								background-color: rgba(0, 0, 0, 0.1);
@@ -468,8 +468,8 @@
 						}
 
 						span{
-							height: 1rem;
-    						line-height: 1rem;
+							height: 16px;
+    						line-height: 16px;
 						}
 
 						input{
@@ -512,7 +512,7 @@
 
 						a{
 							&:hover{
-								text-shadow: 0 0 0.5rem red !important;
+								text-shadow: 0 0 8px red !important;
 							}
 						}
 
@@ -541,14 +541,14 @@
 						}
 						
 						a{
-							padding: 0 0.5rem;
+							padding: 0 8px;
 							&:hover{
-								text-shadow: 0 0 0.5rem green !important;
+								text-shadow: 0 0 8px green !important;
 							}
 						}
 
 						.monitor{
-							height: 0.875rem;
+							height: 14px;
 						}
 
 						input{
@@ -556,10 +556,10 @@
 						}
 
 						.san-text{
-							padding-top: 1rem;
+							padding-top: 16px;
 
 							.control{
-								margin-top: -0.25rem;
+								margin-top: -4px;
 								font-size: 12px;
 							}
 						}
@@ -575,7 +575,7 @@
 						font-family: system-ui;
 						font-size: 20px;
 						color: grey;
-						height: 1.375rem;
+						height: 22px;
 						text-align: center;
 
 						a{
