@@ -9,6 +9,8 @@ import { chatHelper } from '../../chat/helper.js';
 import { CoC7Parser } from '../../apps/parser.js';
 import { SanDataDialog } from '../../apps/sandata-dialog.js';
 import { SanCheckCard } from '../../chat/cards/san-check.js';
+import { OpposedCheckCard } from '../../chat/cards/opposed-roll.js';
+import { CombinedCheckCard } from '../../chat/cards/combined-roll.js';
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -415,6 +417,9 @@ export class CoC7ActorSheet extends ActorSheet {
 			html.find('.attribute-label').on( 'dragstart', (event)=> this._onDragAttribute(event));
 			html.find('.san-check').on( 'dragstart', (event)=> this._onDragSanCheck(event));
 
+			html.find('.characteristic-label').contextmenu(this._onOpposedRoll.bind(this));
+			html.find('.skill-name.rollable').contextmenu(this._onOpposedRoll.bind(this));
+			html.find('.attribute-label.rollable').contextmenu(this._onOpposedRoll.bind(this));
 
 			html.find('.characteristic-label').click(this._onRollCharacteriticTest.bind(this));
 			html.find('.skill-name.rollable').click(this._onRollSkillTest.bind(this));
@@ -894,6 +899,62 @@ export class CoC7ActorSheet extends ActorSheet {
 		const rollCard = new CoC7DamageRoll( itemId, this.actor.tokenKey, null, event.shiftKey);
 		rollCard.rollDamage( range);
 		// console.log( 'Weapon damage Clicked');
+	}
+
+	async _onOpposedRoll( event){
+		event.preventDefault();
+
+		if( !event.altKey){
+			let data = {
+				type: OpposedCheckCard.defaultConfig.type,
+				action: 'new'};
+			const roll = new CoC7Check();
+			roll.actor = event.currentTarget.closest('form').dataset.actorId || event.currentTarget.closest('form').dataset.tokenId;
+			roll.characteristic = event.currentTarget.parentElement.dataset.characteristic;
+			roll.attribute = event.currentTarget.parentElement.dataset.attrib;
+			roll.skillId = event.currentTarget.closest('.item')?.dataset.skillId;
+			roll.rollMode = game.settings.get('core', 'rollMode');
+			roll.initiator = game.user.id;
+
+			if( 'db' == roll.attrib) return;
+
+			if( !event.shiftKey) {
+				const usage = await RollDialog.create( {
+					disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224),
+					disableFlatDiceModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
+				if( usage) {
+					roll.modifier = Number(usage.get('bonusDice'));
+					roll.difficulty = Number(usage.get('difficulty'));
+					roll.flatDiceModifier = Number( usage.get('flatDiceModifier'));
+					roll.flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
+				}
+			}
+
+			roll.denyPush = true; // Opposed rolled can't be pushed.
+
+			roll._perform();
+
+			data.roll = roll.JSONRollData;
+
+			OpposedCheckCard.dispatch(data);
+		} else {
+			let data = {
+				type: CombinedCheckCard.defaultConfig.type,
+				action: 'new'};
+			const roll = new CoC7Check();
+			roll.actor = event.currentTarget.closest('form').dataset.actorId || event.currentTarget.closest('form').dataset.tokenId;
+			roll.characteristic = event.currentTarget.parentElement.dataset.characteristic;
+			roll.attribute = event.currentTarget.parentElement.dataset.attrib;
+			roll.skillId = event.currentTarget.closest('.item')?.dataset.skillId;
+			roll.rollMode = game.settings.get('core', 'rollMode');
+			roll.initiator = game.user.id;
+
+			if( 'db' == roll.attrib) return;
+
+			data.roll = roll.JSONRollData;
+
+			CombinedCheckCard.dispatch(data);
+		}
 	}
 
 	/**
