@@ -37,11 +37,6 @@ export class RollCard{
 		return card;
 	}
 
-	static async bindListerners( html){
-		html.on( 'click', '.toggle-switch', this._onToggle.bind(this));
-		return;
-	}
-
 	static async _onToggle( event){
 		event.preventDefault();
 

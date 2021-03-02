@@ -1,17 +1,19 @@
 <div class="coc7 chat-card chat-card-v2 roll-card combined">
+    {{#unless closed}}
     <div class='flexrow toggle gm-visible-only'>
         <span class="flex1 toggle-switch gm-select-only {{#if any}}switched-on{{/if}} "
-        title="Any roll must succeed" 
+        title="{{localize CoC7.CombinedAnyHint}}" 
         data-flag="any" 
         data-selected={{any}}>{{localize 'CoC7.Any'}}</span>
         <span class="flex1 toggle-switch gm-select-only {{#if all}}switched-on{{/if}}"
-        title="Any roll must succeed" 
+        title="{{localize CoC7.CombinedAllHint}}" 
         data-flag="all" 
         data-selected={{all}}>{{localize 'CoC7.All'}}</span>
     </div>
+    {{/unless}}
     <ol>
         {{#each rolls as |r id| }}
-            <li class='actor-roll{{#if r.winner}} won{{/if}} {{#if r.tie}} tie{{/if}}' data-rank='{{id}}' data-actor-key="{{r.actor.actorKey}}">
+            <li class='actor-roll' data-rank='{{id}}' data-actor-key="{{r.actor.actorKey}}">
                 <img class="open-actor" data-actor-key="{{r.actor.actorKey}}" src="{{r.actor.portrait}}" title="{{r.actor.name}}"/>
                 {{#if r.rolled}}
                     {{{r._htmlRoll}}}
@@ -23,15 +25,21 @@
         {{/each}}
     </ol>
 
-    {{#if resolved}}
-    <h4>RESOLVED !!!</h4>
+    {{#if rolled}}
+        {{{_htmlRoll}}}
+    {{else}}
+    <div class='card-buttons owner-only' data-actor-key="{{mainActorKey}}">
+        <button data-action='roll-card'>{{localize 'CoC7.RollDice'}}</button>
+    </div>
     {{/if}}
 
-    {{#unless rolled}}
-    <div class='card-buttons'>
-        <button data-action='roll-card'>Roll card</button>
-    </div>
-    {{/unless}}
+    {{#if success}}
+    <h4 class="card-result success">{{localize 'CoC7.Success'}}</h4>
+    {{/if}}
+    
+    {{#if failure}}
+    <h4 class="card-result failure">{{localize 'CoC7.Failure'}}</h4>
+    {{/if}}
 
     {{#unless closed}}
     <div class='card-buttons gm-visible-only'>

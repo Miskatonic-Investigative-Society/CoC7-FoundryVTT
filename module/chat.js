@@ -38,7 +38,6 @@ export class CoC7Chat{
 
 
 	static chatListeners(app, html) {
-		// console.log('-->CoC7Chat.chatListeners');
 		html.on('click', '.card-buttons button', CoC7Chat._onChatCardAction.bind(this));
 		// html.on('click', '.card-buttons button', CoC7Chat._onChatCardTest.bind(this));
 		html.on('click', '.card-title', CoC7Chat._onChatCardToggleContent.bind(this));
@@ -61,9 +60,9 @@ export class CoC7Chat{
 
 		html.on('click', 'coc7-inline-result', CoC7Chat._onInline.bind(this));
 
+		// RollCard.bindListerners( html);
 		OpposedCheckCard.bindListerners( html);
 		CombinedCheckCard.bindListerners( html);
-
 	}
 
 
@@ -128,13 +127,6 @@ export class CoC7Chat{
 		if( message.getFlag( 'CoC7', 'checkRevealed')){
 			html.find('.dice-roll').removeClass('gm-visible-only');
 			html[0].dataset.checkRevealed = true;
-
-			// const htmlMessage = $(chatMessage.data.content);
-			// const roll = new CoC7Check;
-			// CoC7Roll.getFromElement(htmlMessage.find('.dice-roll')[0], roll );
-			// roll.showDiceRoll();
-	
-
 		}
 
 		//Handle showing dropdown selection
@@ -203,12 +195,13 @@ export class CoC7Chat{
 			{
 				//Try retrieving actor
 				let actor = CoC7Chat._getChatCardActor(zone.closest('.chat-card'));//Try with closest chat card.
+				if( !actor) actor = CoC7Chat._getActorFromKey( zone.dataset?.actorKey);//Try with self.
 				if( !actor) actor = CoC7Chat._getActorFromKey( zone.parentElement.dataset.actorKey);//Try with parent element.
 				if( !actor) actor = CoC7Chat._getActorFromKey( zone.closest('[data-actor-key]')?.dataset.actorKey);//Try with closest data-actor-key
 				if( !actor) actor = CoC7Chat._getActorFromKey( zone.closest('[data-token-key]')?.dataset.actorKey);//Try with closest data-token-key
 				
 				// const actor = game.actors.get( actorId);
-				if( actor && !actor.owner) {zone.style.display = 'none';} //if current user doesn't own this he can't interract
+				if( (actor && !actor.owner) || (!actor && !game.user.isGM)) {zone.style.display = 'none';} //if current user doesn't own this he can't interract
 				// if( !CoC7Chat.isCardOwner( zone.closest('.chat-card'))) {zone.style.display = 'none';}
 			}
 

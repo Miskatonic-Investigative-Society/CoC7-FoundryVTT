@@ -27,6 +27,7 @@
 		<div class="dice-result"
 			data-total="{{dices.total}}"
 			data-ten-result="{{dices.tenResult}}">
+			{{#unless options.hideSuccess}}
 			<div class="dice-formula {{#if isSuccess}}success{{/if}} {{#if isFailure}}failure{{/if}} {{#if isCritical}}critical{{/if}} {{#if isFumble}}fumble{{/if}}"
 			  title="{{successLevelIcons.hint}}">
 				{{#if successLevelIcons}}
@@ -39,6 +40,7 @@
 				1D% {{#if dices.hasBonus}}{{dices.bonus}} {{dices.bonusType}} {{localize 'CoC7.Dice'}}{{/if}}
 				{{/if}}
 			</div>
+			{{/unless}}
 			<div class="dice-tooltip" style="display: none;">
 				<section class="tooltip-part">
 					<h4>{{flavor}}</h4>
@@ -118,7 +120,9 @@
 				</div>
 			</div>
 			{{#unless hideDiceResult}}
+			{{#unless options.hideDiceResult}}
 			<h4 class="check-result dice-total {{cssClass}}" title="{{flavor}}: {{resultType}}">{{modifiedResult}}{{#if flatDiceModifier}} ({{flatDiceModifierString}}){{/if}} {{#if pushing}} {{localize 'CoC7.PushedRoll'}}{{/if}} {{#if luckSpent}} - {{ localize 'CoC7.LuckSpentAlt' }} ({{totalLuckSpent}}){{/if}}</h4>
+			{{/unless}}
 			{{/unless}}
 			{{#if hasMalfunction}}<h4 class="malfunction">{{malfunctionTxt}}</h4>{{/if}}
 		</div>
