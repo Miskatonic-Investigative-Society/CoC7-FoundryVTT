@@ -34,7 +34,7 @@ version 0.5.3 :
   * As long as the card is opened all rolls will be added to that card.
   * Roll winner will be highlighted in gold.
   * Tie will be highlighted in red.
-  * Rolls are sorted by succes/check value.
+  * Rolls are sorted by success/check value.
   * Optional rule from José Lozano/Viriato139ac. In a tie, the highest roll wins.
 * Implementation of combined rolls.
   * Alt + right click on any element to include it in a combined roll.
@@ -637,6 +637,6 @@ Version 0.1.3 :
 * [x] Automatic skill assignment when adding a weapon.  
 * [x] Combat automation (calculation of difficulty, assignement of damage, opposed check...).  
 * [x] Implement pushed rolls.  
-* [ ] Implement advanced rolls (opposed, combined etc…).  
-* [ ] Implement car chases.  
+* [x] Implement advanced rolls (opposed, combined etc…).  
+* [ ] Implement car chases.
 * [x] Automation of character creation.
