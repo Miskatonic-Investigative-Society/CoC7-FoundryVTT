@@ -1554,7 +1554,7 @@ html {
 .sheetV2 .no-skill-set,
 .sheetV2 .error {
   background-color: red;
-  border-radius: 4px;
+  border-radius: 0.25rem;
 }
 .sheetV2 .coc7.sheet.actor.temp-retro-compat {
   overflow: auto;
@@ -1564,11 +1564,11 @@ html {
 }
 .sheetV2 .window-header {
   background: var(--main-sheet-front-color);
-  margin: 4px 4px 0 4px;
+  margin: 0.25rem 0.25rem 0 0.25rem;
   width: auto;
 }
 .sheetV2 .window-content {
-  margin: 0 8px 8px 8px;
+  margin: 0 0.5rem 0.5rem 0.5rem;
   padding: 0;
   color: var(--main-sheet-front-color);
   font-size: 0.8rem;
@@ -1580,8 +1580,8 @@ html {
 }
 .sheetV2 .window-content span {
   color: #000;
-  height: 22px;
-  line-height: 22px;
+  height: 1.375rem;
+  line-height: 1.375rem;
   padding: 1px 3px;
   overflow: hidden;
   white-space: nowrap;
@@ -1600,8 +1600,8 @@ html {
   white-space: normal;
 }
 .sheetV2 .window-content label {
-  height: 22px;
-  line-height: 22px;
+  height: 1.375rem;
+  line-height: 1.375rem;
   display: block;
   margin: 0;
   padding: 0;
@@ -1625,11 +1625,11 @@ html {
 }
 .sheetV2 .window-content input[type='text'] {
   flex: 1;
-  height: 22px;
+  height: 1.375rem;
   border: 0;
   margin: 0;
   width: 100%;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   background: transparent;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1637,12 +1637,12 @@ html {
 }
 .sheetV2 .window-content input[type='text']:hover,
 .sheetV2 .window-content input[type='text']:focus {
-  box-shadow: 0 0 8px var(--main-sheet-interactie-color);
+  box-shadow: 0 0 0.5rem var(--main-sheet-interactie-color);
   background: rgba(0, 0, 0, 0.1);
 }
 .sheetV2.character {
-  min-width: 687px;
-  min-height: 629px;
+  min-width: 688px;
+  min-height: 640px;
 }
 .sheetV2.character .floating-left {
   position: absolute;
@@ -1906,7 +1906,7 @@ html {
   height: 100%;
 }
 .sheetV2.character form .container .sheet-body .two-panes-content .left-panel {
-  flex: 0 0 130px;
+  flex: 0 0 8.125rem;
   height: auto;
   margin: 0.5rem 0;
   padding: 0;
@@ -1936,7 +1936,7 @@ html {
   font-weight: bold;
 }
 .sheetV2.character form .container .sheet-body .itemV2 {
-  max-height: 20px;
+  max-height: 1.25rem;
   width: var(--skill-length);
   margin-right: 0.5rem;
   display: grid;
@@ -1952,6 +1952,7 @@ html {
 .sheetV2.character form .container .sheet-body .itemV2 .item-image {
   height: 0.875rem;
   background-size: contain;
+  margin: 1px 0 0 0;
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-name {
   white-space: nowrap;
@@ -1983,9 +1984,9 @@ html {
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-controls {
   font-family: system-ui;
-  font-size: 10px;
+  font-size: 0.625rem;
   line-height: 1rem;
-  flex: 0 0 20px;
+  flex: 0 0 1.25rem;
   display: block;
   text-align: end;
 }
@@ -2007,7 +2008,7 @@ html {
 .sheetV2.character form .container .sheet-body .monitor {
   height: auto;
   display: grid;
-  grid-template-columns: auto 45px 5px 45px auto;
+  grid-template-columns: auto 2.875rem 5px 2.875rem auto;
   grid-template-areas: ". currentValue separator maxValue .";
   align-items: center;
 }
@@ -2044,14 +2045,14 @@ html {
 }
 .sheetV2.character form .container .sheet-body .luck-group input {
   height: auto;
-  width: 35px;
-  margin-bottom: 6px;
+  width: 2.25rem;
+  margin-bottom: 0.75rem;
   color: var(--main-sheet-front-color);
   font-weight: bold;
 }
 .sheetV2.character form .container .sheet-body .hp-group {
   background-image: url('./artwork/backgrounds/hp-background.svg');
-  height: 110px;
+  height: 6.875rem;
   width: auto;
   background-size: contain;
   background-repeat: no-repeat;
@@ -2069,11 +2070,11 @@ html {
   color: #670b0b;
 }
 .sheetV2.character form .container .sheet-body .hp-group .hp-text {
-  padding-top: 15px;
+  padding-top: 1rem;
 }
 .sheetV2.character form .container .sheet-body .san-group {
   background-image: url('./artwork/backgrounds/san-background.svg');
-  height: 125px;
+  height: 7.875rem;
   width: auto;
   background-size: contain;
   background-repeat: no-repeat;
@@ -2102,14 +2103,14 @@ html {
 }
 .sheetV2.character form .container .sheet-body .san-group .san-text .control {
   margin-top: -0.25rem;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .sheetV2.character form .container .sheet-body .san-group .rollable:hover {
   text-shadow: 0 0 10px green;
 }
 .sheetV2.character form .container .sheet-body .status {
   font-family: system-ui;
-  font-size: 20px;
+  font-size: 1.25rem;
   color: grey;
   height: 1.375rem;
   text-align: center;
@@ -2311,7 +2312,7 @@ html {
 .sheetV2 .development .skills-list .item {
   color: var(--main-sheet-front-color);
   display: grid;
-  grid-template-columns: 15px auto 1.3rem 1.3rem 1.3rem 1.3rem 1.3rem;
+  grid-template-columns: 1rem auto 1.3rem 1.3rem 1.3rem 1.3rem 1.3rem;
   align-items: center;
   grid-template-rows: 1rem;
   border-bottom: 1px solid var(--main-sheet-front-color);
@@ -2319,10 +2320,10 @@ html {
 }
 .sheetV2 .development .skills-list .item .item-controls {
   font-family: system-ui;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .sheetV2 .development .skills-list .item.pulpCharacter {
-  grid-template-columns: 30px auto 1.3rem 1.3rem 1.3rem 1.3rem 1.3rem 1.3rem;
+  grid-template-columns: 1.875rem auto 1.3rem 1.3rem 1.3rem 1.3rem 1.3rem 1.3rem;
 }
 .sheetV2 .development .skills-list .item .flagged4dev {
   color: goldenrod;
@@ -2333,7 +2334,7 @@ html {
   padding: 0 1px;
   margin: 0;
   font-size: 0.8rem;
-  text-align: right;
+  text-align: left;
   color: var(--main-sheet-front-color);
 }
 .sheetV2 .development .skills-list .item input {
