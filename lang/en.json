@@ -79,6 +79,10 @@
 "CoC7.Other": "Other",
 "CoC7.rounds": "round(s)",
 "CoC7.hours": "hour(s)",
+"CoC7.remove": "Remove",
+"CoC7.Any": "Any",
+"CoC7.All": "All",
+"CoC7.Success": "Success",
 
 "CoC7.RegularSuccess": "Regular success",
 "CoC7.HardSuccess": "Hard success",
@@ -137,6 +141,10 @@
 "CoC7.RollDice": "Roll !",
 "CoC7.SuccesLevelHint": "{value} level(s) of success",
 "CoC7.FailureLevelHint": "Failed by {value} level(s)",
+"CoC7.CombinedRollCard": "Combined roll card",
+"CoC7.OpposedRollCard": "Opposed roll card",
+"CoC7.CombinedAnyHint": "Any roll must succeed",
+"CoC7.CombinedAllHint": "All rolls must succeed",
 
 "CoC7.CheckResult": "{name} check ({value}%) - {difficulty} difficulty",
 "CoC7.ItemCheckResult": "{item} - {skill} check ({value}%) - {difficulty} difficulty",
@@ -583,5 +591,7 @@
 "SETTINGS.AllowFlatDiceModifier": "Flat dice modifier",
 "SETTINGS.AllowFlatDiceModifierHint": "Allows dice roll results to be modified by a flat value.",
 "SETTINGS.AllowFlatThresholdModifier": "Flat value modifier",
-"SETTINGS.AllowFlatThresholdModifierHint":"Allows checks succes value to be modified by a flat value." 
+"SETTINGS.AllowFlatThresholdModifierHint":"Allows checks succes value to be modified by a flat value." ,
+"SETTINGS.OpposedRollTieBreaker": "Opposed rolls Viriato139ac tie breaker",
+"SETTINGS.OpposedRollTieBreakerHint": "In case of a tie during opposed roll, winner is determined by lowest rolled value, not higher skill."
 }

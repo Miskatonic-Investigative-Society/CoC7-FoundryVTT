@@ -24,13 +24,36 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 version 0.5.3 :
 
-* Implementation of systel soecific controls.
+* Bug correction:
+  * Corrected a bug where editor in archetype sheet did not display correctly.
+* Implementation of system specific controls.
   * Keeper's tools for GM will allow to enable/disable creation and development modes.
   * Dice will allow to roll a generic check.
-* new macro check( [Threshold, [event]]) allow to roll a generic check.
+* Implementation of opposed rolls.
+  * Right click on any element to include it in an opposed roll.
+  * As long as the card is opened all rolls will be added to that card.
+  * Roll winner will be highlighted in gold.
+  * Tie will be highlighted in red.
+  * Rolls are sorted by succes/check value.
+  * Optional rule from José Lozano/Viriato139ac. In a tie, the highest roll wins.
+* Implementation of combined rolls.
+  * Alt + right click on any element to include it in a combined roll.
+  * As long as the card is opened all rolls will be added to that card.
+  * Click the roll button to trigger the roll.
+  * Only keeper and first character added to the card will see the button.
+* Implementation of /r 1d% command.
+  * This will trigger a D%.
+  * You can add options :
+    * (xx) for a threshold value.
+    * +x/-x for x bonus/penalty dice.
+    * [xx] for  a difficulty : ?, +, ++, +++ = unknown, hard, extreme, critical
+    * ? to force a bonus selection windows [bug] works once only....
+* new macro check( [Threshold, [event]]) allow to roll a generic check. `game.CoC7.macros.check(75, event)`
 * #385 Optional flat dice and threshold modifier added.
   * Disabled by default, can be enabled in options.
 * [bug] Actor san loss refers to actor, not synthetic actor.
+* Actors of character's type are now created with vision and linked actor data by default.
+* German translation updated thanks to acd-jake.
 
 verison 0.5.2 :
 

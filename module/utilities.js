@@ -1,6 +1,7 @@
 import { CoC7Check } from './check.js';
 import { CoC7Item } from './items/item.js';
 import { RollDialog } from './apps/roll-dialog.js';
+import { chatHelper } from './chat/helper.js';
 
 export class CoC7Utilities {
 	// static test(event){
@@ -13,6 +14,80 @@ export class CoC7Utilities {
 
 	// 	actor.inflictMajorWound();
 	// }
+
+	static ParseChatEntry( html,content){
+		const regX = /(\S+)/g;
+		const terms = content.match(regX);
+		if( terms[0]?.toLowerCase() == '/r' && terms[1]?.toLowerCase().startsWith( '1d%')){
+			CoC7Utilities._ExecCommand( content);
+			return false;
+		}
+	}
+
+	static async _ExecCommand( content){
+		const options = content.toLowerCase().split(' ')?.join('')?.replace( '/r1d%', '');
+		const check = new CoC7Check();
+		if( options.length){
+			let escaped = options;
+			let threshold = undefined;
+			let difficulty = CoC7Check.difficultyLevel.regular;
+			let diceModifier = 0;
+			let ask = false;
+			let flatDiceModifier = undefined;
+			let flatThresholdModifier = undefined;
+			const thresholdRegex = new RegExp('[^\\(]+(?=\\))', 'g');
+			const thresholdStr = escaped.match( thresholdRegex);
+			if( thresholdStr && thresholdStr.length){
+				threshold = Number( thresholdStr[0]);
+				thresholdStr.forEach( match => escaped = escaped.replace( `(${match})`, ''));
+			}
+			const difficultydRegex = new RegExp('[^\\[]]+(?=\\])', 'g');
+			const difficultyStr = escaped.match( difficultydRegex);
+			if( difficultyStr && difficultyStr.length){
+				difficulty = CoC7Utilities.convertDifficulty( difficultyStr[0]);
+				difficultyStr.forEach( match => escaped = escaped.replace( `[${match}]`, ''));
+			}
+			if( escaped.includes( '?')){
+				ask = true;
+				escaped = escaped.replace( '?', '');
+			}
+			if( !isNaN(Number(escaped))) diceModifier = Number(escaped);
+
+			if( ask){
+				const dialogOptions={
+					threshold: threshold,
+					modifier: diceModifier,
+					difficulty: difficulty,
+					askValue: true
+				};
+				const usage = await RollDialog.create(dialogOptions);
+				if( usage) {
+					diceModifier = Number(usage.get('bonusDice'));
+					difficulty = Number(usage.get('difficulty'));
+					threshold = Number( usage.get('threshold')) || threshold;
+					flatDiceModifier = Number( usage.get('flatDiceModifier'));
+					flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
+				}
+			}
+
+			check.diceModifier = diceModifier || 0;
+			check.difficulty = difficulty || CoC7Check.difficultyLevel.regular;
+			check.rawValue = threshold;
+			check.flatDiceModifier = flatDiceModifier;
+			check.flatThresholdModifier = flatThresholdModifier;
+			if( threshold) check.rawValue = !isNaN(threshold)?threshold:undefined;
+		}
+		const speaker = ChatMessage.getSpeaker();
+		if( speaker.token && speaker.scene){
+			const actor = chatHelper.getActorFromKey( `${speaker.scene}.${speaker.token}`);
+			if( actor) check.actor = actor;
+		} else if( speaker.actor){
+			const actor = game.actors.get( speaker.actor);
+			if( actor) check.actor = actor;
+		}
+		check.roll();
+		check.toMessage();
+	}
 
 	static async test(){
 		ui.notifications.infos('Do some stuff');
@@ -176,7 +251,7 @@ export class CoC7Utilities {
 		actor.weaponCheck( weapon, event.shiftKey);
 	}
 
-	static async checkMacro( threshold = 50, event){
+	static async checkMacro( threshold = undefined, event = null){
 		await CoC7Utilities.rollDice( event, {threshold: threshold});
 	}
 
@@ -259,8 +334,7 @@ export class CoC7Utilities {
 
 	static async rollDice( event, options ={}){
 
-		options.rawValue = true;
-		if( !options.threshold) options.threshold = 50;
+		options.askValue = !options.threshold;
 		let diceModifier, difficulty, flatDiceModifier, flatThresholdModifier;
 		let threshold = options.threshold;
 
