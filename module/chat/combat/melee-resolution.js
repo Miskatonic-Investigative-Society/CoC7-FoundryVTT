@@ -176,7 +176,11 @@ export class CoC7MeleeResoltion{
 			const user = this.winner && this.winner.actor.user ? this.winner.actor.user : game.user;
 
 			let msg;
-			if( speaker) msg = await message.update({ 
+			if( !message) {//TODO: If card isn't found (card was deleted before completion) ?
+				ui.notifications.warn( 'Resolition card missing, was deleted ?');
+				return;
+			}
+			if( speaker) msg = await message.update({ //TODO: If card isn't found (card was deleted before completion) ?
 				user: user._id,
 				speaker,
 				content: html });

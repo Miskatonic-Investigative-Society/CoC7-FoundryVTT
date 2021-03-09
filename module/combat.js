@@ -121,29 +121,8 @@ export async function rollInitiative(ids/*, formula=null, messageOptions={}*/) {
 		if ( !c ) return results;
 
 		// Roll initiative
-		// const cf = formula || this._getInitiativeFormula(c);
-		// const roll = this._getInitiativeRoll(c, cf);
-		// const initiative = c.hasGun ? roll.total + 50: roll.total;
 		const initiative = c.actor.rollInitiative(c.hasGun);
 		updates.push({_id: id, initiative: initiative});
-
-		// Determine the roll mode
-		// let rollMode = messageOptions.rollMode || game.settings.get('core', 'rollMode');
-		// if (( c.token.hidden || c.hidden ) && (rollMode === 'roll') ) rollMode = 'gmroll';
-
-		// Construct chat message data
-		// let messageData = mergeObject({
-		// 	speaker: {
-		// 		scene: canvas.scene._id,
-		// 		actor: c.actor ? c.actor._id : null,
-		// 		token: c.token._id,
-		// 		alias: c.token.name
-		// 	},
-		// 	flavor: `${c.token.name} rolls for Initiative!`
-		// }, messageOptions);
-		// const chatData = roll.toMessage(messageData, {rollMode, create:false});
-		// if ( i > 0 ) chatData.sound = null;   // Only play 1 sound for the whole set
-		// messages.push(chatData);
 
 		// Return the Roll and the chat data
 		return results;

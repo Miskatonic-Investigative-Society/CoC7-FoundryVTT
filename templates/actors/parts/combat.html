@@ -14,7 +14,12 @@
             <li class="weapon-row item weapon {{#unless weapon.skillSet}}error{{/unless}}" data-item-id="{{weapon._id}}" title="{{#unless weapon.skillSet}}{{localize 'CoC7.NoSkill'}}{{/unless}}">
                 <div class="expand-arrow show-detail"></div>
                 <div class="weapon-image" style="background-image: url('{{weapon.img}}')"></div>
-                <div class="weapon-name {{#if weapon.skillSet}}rollable{{else}}item-edit{{/if}}">{{weapon.name}}</div>
+                <div class="flexrow">
+                    <div class="weapon-name combat {{#if weapon.skillSet}}rollable{{else}}item-edit{{/if}}">{{weapon.name}}</div>
+                    {{#if weapon.data.properties.thrown}}
+                        <a class="weapon-name combat alternativ-skill {{#if weapon.skillSet}}rollable{{else}}item-edit{{/if}}" title="Throw"><i class="game-icon game-icon-thrown-knife"></i></a>
+                    {{/if}}
+                </div>
                 <div class="weapon-range">
                     {{#each weapon.data.range as |range key|}}
                     {{#if range.damage}}
@@ -54,7 +59,12 @@
             <li class="weapon-row item weapon {{#unless weapon.skillSet}}error{{/unless}}" data-item-id="{{weapon._id}}" title="{{#unless weapon.skillSet}}{{localize 'CoC7.NoSkill'}}{{/unless}}">
                 <div class="expand-arrow show-detail"></div>
                 <div class="weapon-image" style="background-image: url('{{weapon.img}}')"></div>
-                <div class="weapon-name {{#if weapon.skillSet}}rollable{{else}}item-edit{{/if}}">{{weapon.name}}</div>
+                <div class="flexrow">
+                    <div class="weapon-name combat {{#if weapon.skillSet}}rollable{{else}}item-edit{{/if}}">{{weapon.name}}</div>
+                    {{#if weapon.usesAlternateSkill}}
+                        <a class="weapon-name combat alternativ-skill {{#if weapon.skillSet}}rollable{{else}}item-edit{{/if}}" title="Automatic fire"><i class="game-icon game-icon-machine-gun-magazine"></i></a>
+                    {{/if}}
+                </div>
                 <div class="weapon-range">
                     {{#each weapon.data.range as |range key|}}
                     {{#if range.damage}}
@@ -102,7 +112,7 @@
             <li class="skill-tag item itemV2" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
                 <div class="item-image" style="background-image: url('{{skill.img}}')"></div>
 				{{#if ../data.flags.locked}}
-					<div class="item-name skill-name rollable"  title="{{skill.name}}">{{skill.name}}</div>
+					<div class="item-name skill-name combat rollable"  title="{{skill.name}}">{{skill.name}}</div>
 					<div class="item-score">{{skill.data.value}}</div>
 					<div class="item-controls">
 						{{#unless skill.data.properties.noxpgain}}
@@ -146,7 +156,7 @@
             <li class="skill-tag item itemV2" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
                 <div class="item-image" style="background-image: url('{{skill.img}}')"></div>
 				{{#if ../data.flags.locked}}
-					<div class="item-name skill-name rollable"  title="{{skill.name}}">{{skill.name}}</div>
+					<div class="item-name skill-name combat rollable"  title="{{skill.name}}">{{skill.name}}</div>
 					<div class="item-score">{{skill.data.value}}</div>
 					<div class="item-controls">
 						{{#unless skill.data.properties.noxpgain}}
