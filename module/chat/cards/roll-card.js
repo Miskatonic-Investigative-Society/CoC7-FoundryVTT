@@ -41,6 +41,7 @@ export class RollCard{
 		event.preventDefault();
 
 		const span = event.currentTarget;
+		if( span && span.classList.contains( 'gm-select-only') && !game.user.isGM) return;
 		const message = span.closest('.chat-message');
 		const card = await this.fromMessageId( message.dataset.messageId);
 		if( !card) return;
@@ -175,6 +176,30 @@ export class RollCard{
 
 	///////////////////////////
 
+	get winners(){
+		return this.rolls.filter( r => r.winner);
+	}
+
+	get winner(){
+		if( this.winners.length) return this.winners[0];
+		return undefined;
+	}
+
+	
+	get loosers (){
+		return this.rolls.filter( r => !r.winner);
+	}
+
+	get looser(){
+		if( this.loosers.length) return this.loosers[0];
+		return undefined;
+	}
+
+	get hasWinner(){
+		if( this.winners.length > 0) return true;
+		return false;
+	}
+
 	get isGM(){
 		return game.user.isGM;
 	}
@@ -190,7 +215,7 @@ export class RollCard{
 	}
 
 	get data(){
-		return JSON.parse(this.JSONRollString);
+		return JSON.parse(this.dataString);
 	}
 
 	get dataString(){

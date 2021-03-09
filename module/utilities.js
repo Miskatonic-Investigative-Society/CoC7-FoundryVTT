@@ -15,6 +15,13 @@ export class CoC7Utilities {
 	// 	actor.inflictMajorWound();
 	// }
 
+
+	static isFormula(x){
+		if( typeof( x) != 'string') return false;
+		if( !isNaN(Number(x))) return false;
+		return Roll.validate( x);
+	}
+
 	static ParseChatEntry( html,content){
 		const regX = /(\S+)/g;
 		const terms = content.match(regX);
@@ -79,7 +86,7 @@ export class CoC7Utilities {
 		}
 		const speaker = ChatMessage.getSpeaker();
 		if( speaker.token && speaker.scene){
-			const actor = chatHelper.getActorFromKey( `${speaker.scene}.${speaker.token}`);
+			const actor = chatHelper.getActorFromKey( `${speaker.scene}.${speaker.token}`);//REFACTORING (2) +++ why speaker.scene.
 			if( actor) check.actor = actor;
 		} else if( speaker.actor){
 			const actor = game.actors.get( speaker.actor);

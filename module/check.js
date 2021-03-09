@@ -4,12 +4,6 @@ import { chatHelper, CoC7Roll } from './chat/helper.js';
 import { CoCActor } from './actors/actor.js';
 import { CoC7Utilities } from './utilities.js';
 
-/**
- * REFACTORING:
- * 	(1)
- *		new-success-level/newSuccessLevel
- *		luck-amount/luckAmount are redundant. Needs to eliminate one.
- */
 export class CoC7Check {
 	constructor( actor = null, skill = null, item = null, diceMod = 0, difficulty = null, flatThresholdModifier = 0, flatDiceModifier = 0) {
 		this.actor = actor;
@@ -191,6 +185,10 @@ export class CoC7Check {
 		return 1 == this.modifiedResult;
 	}
 
+	get isExtremeSuccess(){
+		return this.successLevel >= CoC7Check.successLevel.extreme;
+	}
+
 	get passed(){
 		if( this.isSimpleRoll) return undefined;
 		if( this.luckSpent) return this.difficulty <= this.successLevel;
@@ -303,24 +301,29 @@ export class CoC7Check {
 			return;
 		}
 
-		if( x instanceof Actor) {
+		if( x instanceof Actor) { //REFACTORING (2)
 			this._actor = x;
 			this._actor.alias = this.actor.name;
 			if( x.token && x.token.scene && x.token.scene.id){
 				this.actorKey=`${x.token.scene.id}.${x.token.id}`;
-			} else this.actorKey = x.id;
+			} else this.actorKey = x.id; //REFACTORING (2)
 			return;
 		}
 
 		if (x.includes('.')) {
-			const [sceneId, tokenId] = x.split('.');
-			const scene = game.scenes.get(sceneId);
-			if (!scene) return;
-			const tokenData = scene.getEmbeddedEntity('Token', tokenId);
-			if (!tokenData) return;
-			const token = new Token(tokenData);
-			this._actor = token.actor;
-			this._actor.alias = token.name;
+			const [sceneId, tokenId] = x.split('.'); //REFACTORING (2)
+			if( 'TOKEN' == sceneId){
+				this._actor = game.actors.tokens[tokenId];//REFACTORING (2)
+				this._actor.alias = this._actor.name;//REFACTORING (2)
+			} else {
+				const scene = game.scenes.get(sceneId);
+				if (!scene) return;
+				const tokenData = scene.getEmbeddedEntity('Token', tokenId);
+				if (!tokenData) return;
+				const token = new Token(tokenData);
+				this._actor = token.actor;
+				this._actor.alias = token.name;
+			}
 			return;
 		}
 		
@@ -390,7 +393,12 @@ export class CoC7Check {
 
 	set item(x) { 
 		this._item = this._getItemFromId( x);
-		this.itemId = x;
+		if( 'weapon' == this._item?.type)
+			this.itemId = x;
+		else {
+			this._item = undefined;
+			this.itemId = undefined;
+		}
 	}
 
 	_getItemFromId( x)
@@ -403,8 +411,8 @@ export class CoC7Check {
 
 	get actor() { 
 		if( !this._actor){
-			if( this.actorKey) this._actor = chatHelper.getActorFromKey( this.actorKey);
-			if( this.actorId) this._actor = chatHelper.getActorFromKey( this.actorId);
+			if( this.actorKey) this._actor = chatHelper.getActorFromKey( this.actorKey);//REFACTORING (2)
+			if( this.actorId) this._actor = chatHelper.getActorFromKey( this.actorId);//REFACTORING (2)
 		} else if( this._actor.constructor.name == 'Object'){
 			const actor = new CoCActor(this._actor);
 			this._actor = actor;
@@ -420,9 +428,11 @@ export class CoC7Check {
 		{
 			if( this.item.data.data.skill)
 			{
-				if( this.item.data.data.skill.main.id)
+				if( this.item.data.data.skill.main.id && !this.weaponAltSkill)
 				{
 					this._skill = this._actor.getOwnedItem( this.item.data.data.skill.main.id);
+				} else if( this.item.data.data.skill.alternativ.id && this.weaponAltSkill){
+					this._skill = this._actor.getOwnedItem( this.item.data.data.skill.alternativ.id);
 				}
 			}
 		}
@@ -512,10 +522,10 @@ export class CoC7Check {
 		this._perform();
 	}
 
-	async _perform( roll = undefined)
+	async _perform( options = {})
 	{
-		this.dice = roll||CoC7Dice.roll( this.diceModifier, this.rollMode, this.isBlind);
-		AudioHelper.play({src: CONFIG.sounds.dice});
+		this.dice = options.roll||CoC7Dice.roll( this.diceModifier, this.rollMode, this.isBlind);
+		if( !options.silent) AudioHelper.play({src: CONFIG.sounds.dice});
 
 		this.dices = {
 			tens : [],

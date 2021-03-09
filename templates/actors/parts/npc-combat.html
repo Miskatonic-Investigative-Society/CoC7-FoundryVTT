@@ -11,7 +11,7 @@
 		{{#if ../data.flags.locked}}
 			<li class="item weapon flexcol" data-item-id="{{weapon._id}}">
 				<div class="flexrow" style="align-items: center;">
-					<div class="flex2 weapon-name rollable" style="border-right: 1px groove;">{{weapon.name}}</div>
+					<div class="flex2 weapon-name combat rollable" style="border-right: 1px groove;">{{weapon.name}}</div>
 					<div class="flexrow flex4 weapon-skills" style="border-right: 1px groove; padding-left: 2px;">
 						{{#if weapon.skillSet}}
 							<div class="item-tag weapon-skill rollable" style="flex: 0 0 49%" data-skill-id="{{weapon.data.skill.main.id}}" title="Roll {{weapon.data.skill.main.name}} skill">{{weapon.data.skill.main.name}} ({{weapon.data.skill.main.value}}%)</div>
