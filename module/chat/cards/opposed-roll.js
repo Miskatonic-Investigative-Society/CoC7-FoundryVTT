@@ -235,8 +235,11 @@ export class OpposedCheckCard extends RollCard{
 				delete this.rolls[i].maneuver;
 				if( this.combat &&
 					(!this.rolls[i].item || this.rolls[i].item.data.data.properties?.mnvr) && 
-					this.rolls[i]?.actor?.dodgeSkill?.name && this.rolls[i]?.skill?.name &&
-					this.rolls[i].actor.dodgeSkill.name.toLowerCase() != this.rolls[i].skill.name.toLowerCase()) this.rolls[i].maneuver = true;
+					(
+						(this.rolls[i]?.actor?.dodgeSkill?.name && this.rolls[i]?.skill?.name &&
+						this.rolls[i].actor.dodgeSkill.name.toLowerCase() != this.rolls[i].skill.name.toLowerCase()) || 
+						!this.rolls[i]?.actor?.dodgeSkill?.name
+					)) this.rolls[i].maneuver = true;
 				if( this.rolls[i].rolled) this.rolls[i]._htmlRoll = await this.rolls[i].getHtmlRoll( { hideDiceResult: true});				
 			}
 		}else {
