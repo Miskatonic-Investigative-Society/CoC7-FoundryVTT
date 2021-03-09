@@ -651,4 +651,9 @@ export class CoC7Item extends Item {
 	get impale(){
 		return this.data.data.properties.impl;
 	}
+
+	get isDodge(){
+		if( 'skill' != this.type) return false;
+		return this.name.toLowerCase() == game.i18n.localize( 'CoC7.DodgeSkillName').toLowerCase();
+	}
 }
