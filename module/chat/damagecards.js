@@ -4,14 +4,15 @@ import { ChatCardActor } from './card-actor.js';
 
 
 export class CoC7DamageRoll extends ChatCardActor{
-	constructor(itemId, actorKey, targetKey = null, critical = false, ignoreArmor = false, fastForward = false) {
-		super( actorKey, fastForward);
+	constructor( itemId, actorKey, options) {
+		// itemId, actorKey, targetKey = null, critical = false, ignoreArmor = false, fastForward = false
+		super( actorKey, options.fastForward);
 		this.itemId = itemId;
 		this.actorKey = actorKey;
-		this.targetKey = targetKey;
-		this.critical = critical;
-		this.fastForward = fastForward;
-		this.ignoreArmor = ignoreArmor;
+		this.targetKey = options.targetKey;
+		this.critical = options.critical;
+		this.fastForward = options.fastForward;
+		this.ignoreArmor = options.ignoreArmor;
 	}
 
 	/**
@@ -74,7 +75,6 @@ export class CoC7DamageRoll extends ChatCardActor{
 				ui.chat.updateMessage( msg, false);
 			});
 		} else {
-
 			let speakerData = {};
 			if( this.token) speakerData.token = this.token;
 			else speakerData.actor = this.actor;

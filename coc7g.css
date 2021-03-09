@@ -2213,6 +2213,9 @@ html {
   line-height: 22px;
   padding: 0 4px;
 }
+.combat-pane .weapon-list .weapon-row .alternativ-skill {
+  flex: 0 0 24px;
+}
 .combat-pane .weapon-list .weapon-row .weapon-range {
   grid-area: range;
   height: 22px;
@@ -2448,6 +2451,28 @@ html {
 .chat-card-v2.roll-card .dice-roll {
   padding: 0;
 }
+.chat-card-v2.roll-card .card-result {
+  position: relative;
+  margin: 0;
+  line-height: 24px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid #999;
+  border-radius: 3px;
+  box-shadow: 0 0 2px #fff inset;
+  word-break: break-all;
+  margin-top: 5px;
+}
+.chat-card-v2.roll-card.opposed.combat .attacker img {
+  border: 1px solid red;
+}
+.chat-card-v2.roll-card .opposed-card-flag {
+  flex: none;
+  color: white;
+}
+.chat-card-v2.roll-card .opposed-card-flag.active {
+  color: red;
+}
 .chat-card-v2.roll-card h4.card-result {
   flex: 0;
   display: block;
@@ -2486,6 +2511,24 @@ html {
   width: 100%;
   align-items: center;
   margin-bottom: 4px;
+}
+.chat-card-v2.roll-card ol li.actor-roll .roll-details {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.chat-card-v2.roll-card ol li.actor-roll .roll-details .header {
+  height: 16px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.chat-card-v2.roll-card ol li.actor-roll .roll-details .header .name {
+  flex: 1;
+}
+.chat-card-v2.roll-card ol li.actor-roll .roll-details .header a {
+  height: 16px;
+  line-height: 16px;
 }
 .chat-card-v2.roll-card ol li.actor-roll span.pending {
   width: 100%;
@@ -2529,6 +2572,103 @@ html {
 }
 .chat-card-v2.roll-card ol li.actor-roll .roll-result {
   width: 100%;
+}
+.interactive-card span.ic-radio-switch,
+.interactive-card span.ic-switch {
+  display: inline-block;
+  margin: 2px 2px 0 0;
+  padding: 0 3px;
+  font-size: 10px;
+  line-height: 16px;
+  border: 1px solid whitesmoke;
+  border-radius: 3px;
+  background: transparent;
+  font-style: italic;
+  color: grey;
+}
+.interactive-card span.ic-radio-switch:hover,
+.interactive-card span.ic-switch:hover {
+  background-color: lightgray;
+}
+.interactive-card span.ic-radio-switch.switched-on,
+.interactive-card span.ic-switch.switched-on {
+  border: 1px solid red;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 4px red;
+  color: black;
+  font-style: normal;
+}
+.interactive-card a.ic-radio-switch,
+.interactive-card a.ic-switch {
+  display: inline-block;
+  flex: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  line-height: 20px;
+  background: transparent;
+  font-weight: normal;
+  color: grey;
+}
+.interactive-card a.ic-radio-switch:hover,
+.interactive-card a.ic-switch:hover {
+  background-color: lightgray;
+}
+.interactive-card a.ic-radio-switch.switched-on,
+.interactive-card a.ic-switch.switched-on {
+  color: black;
+  border: none;
+  box-shadow: none;
+  font-weight: bold;
+}
+.interactive-card .card-result {
+  position: relative;
+  margin: 0;
+  line-height: 24px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid #999;
+  border-radius: 3px;
+  box-shadow: 0 0 2px #fff inset;
+  word-break: break-all;
+  margin-top: 5px;
+}
+.chat-card.damage .flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+.chat-card.damage .options {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+.chat-card.damage .armor {
+  justify-content: flex-end;
+  align-items: center;
+}
+.chat-card.damage .ic-switch {
+  height: 16px;
+  line-height: 16px;
+  flex: 0;
+}
+.chat-card.damage label {
+  height: 16px;
+  line-height: 16px;
+}
+.chat-card.damage form {
+  flex: 0 0 40px;
+}
+.chat-card.damage form input {
+  text-align: end;
+  height: 16px;
+  line-height: 16px;
+}
+.chat-card.damage .owner-info {
+  flex: 0 0 content;
+  line-height: 22px;
+  height: 22px;
 }
 #controls .scene-control.custom-control {
   background: rgba(30, 80, 80, 0.5) !important;

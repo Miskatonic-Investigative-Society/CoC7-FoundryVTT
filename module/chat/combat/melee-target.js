@@ -71,7 +71,7 @@ export class CoC7MeleeTarget extends ChatCardActor{
 				this.initiatorKey = this._initiator.actorKey;
 			} else return null;
 		}
-		return chatHelper.getActorFromKey( this.initiatorKey);
+		return chatHelper.getActorFromKey( this.initiatorKey);//REFACTORING (2)
 	}
 
 	get meleeInitiator(){
