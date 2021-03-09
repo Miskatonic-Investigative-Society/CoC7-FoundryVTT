@@ -72,6 +72,7 @@ version 0.5.3 :
 * Actors of character's type are now created with vision and linked actor data by default.
 * German translation updated thanks to acd-jake.
 * Português (Brasil) translation updated thanks to Castanho.
+* Taiwanese Mandarin and Chinese translations updated thanks to Zeteticl.
 
 verison 0.5.2 :
 
