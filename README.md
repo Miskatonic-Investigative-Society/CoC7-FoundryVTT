@@ -27,16 +27,32 @@ version 0.5.3 :
 * Bug correction:
   * Corrected a bug where editor in archetype sheet did not display correctly.
   * #390 Character sheet elements changed from px to rem.
+* #359-1 Armor can now be defined as a roll string (1D6).
+* Changes in damage cards.
+  * Damage cards have been reworked.
+  * A switch added to ignore armor.
+  * An armor field added to change armor.
+  * Armor can be defined as a roll formula.
+  * 2 switches added to toggle critical/impale.
+* Changed in range cards.
+  * Damage mitigated will be displayed on the damage roll.
 * Implementation of system specific controls.
   * Keeper's tools for GM will allow to enable/disable creation and development modes.
   * Dice will allow to roll a generic check.
 * Implementation of opposed rolls.
   * Right click on any element to include it in an opposed roll.
   * As long as the card is opened all rolls will be added to that card.
+  * Luck can be spend on checks.
   * Roll winner will be highlighted in gold.
   * Tie will be highlighted in red.
   * Rolls are sorted by success/check value.
   * Optional rule from José Lozano/Viriato139ac. In a tie, the highest roll wins.
+* Opposed roll cards can be used for combat.
+  * A switch is added to toggle from regular opposed roll to (range) combat.
+  * If needed, a toggle switch allows to change the tie breaker (from attacker to defender win).
+  * Opposed rolls triggered from combat panel will automatically switch the card in combat.
+  * Opposed combat roll cards can only have 2 opponents.
+  * As long as the card is not closed, the check of the opponent will not be revealed.
 * Implementation of combined rolls.
   * Alt + right click on any element to include it in a combined roll.
   * As long as the card is opened all rolls will be added to that card.
@@ -55,6 +71,8 @@ version 0.5.3 :
 * [bug] Actor san loss refers to actor, not synthetic actor.
 * Actors of character's type are now created with vision and linked actor data by default.
 * German translation updated thanks to acd-jake.
+* Português (Brasil) translation updated thanks to Castanho.
+* Taiwanese Mandarin and Chinese translations updated thanks to Zeteticl.
 
 verison 0.5.2 :
 

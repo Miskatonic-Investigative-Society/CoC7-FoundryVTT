@@ -57,7 +57,7 @@ export class CombinedCheckCard extends RollCard{
 	async getHtmlRoll(){
 		if( !this.rolled) return undefined;
 		const check = new CoC7Check();
-		check._perform( this._roll);
+		check._perform( {roll: this._roll, silent: true});
 		return await check.getHtmlRoll( { hideSuccess: true});
 	}
 
@@ -129,7 +129,7 @@ export class CombinedCheckCard extends RollCard{
 					disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224),
 					disableFlatDiceModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
 				if( usage) {
-					roll.modifier = Number(usage.get('bonusDice'));
+					roll.diceModifier = Number(usage.get('bonusDice'));
 					roll.difficulty = Number(usage.get('difficulty'));
 					roll.flatDiceModifier = Number( usage.get('flatDiceModifier'));
 					roll.flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
@@ -143,6 +143,7 @@ export class CombinedCheckCard extends RollCard{
 				options: roll
 			};
 			data.roll = CoC7Dice.roll( roll.modifier||0);
+			AudioHelper.play({src: CONFIG.sounds.dice});
 			card.process( data);
 			break;
 		}
@@ -176,7 +177,7 @@ export class CombinedCheckCard extends RollCard{
 				r.difficulty = this.options.difficulty || CoC7Check.difficultyLevel.regular;
 				r.flatDiceModifier = this.options.flatDiceModifier || 0;
 				r.flatThresholdModifier = this.options.flatThresholdModifier || 0;
-				r._perform( this._roll);
+				r._perform( {roll: this._roll, silent:true});
 			}
 		});
 

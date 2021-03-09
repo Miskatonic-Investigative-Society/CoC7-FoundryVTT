@@ -6,12 +6,14 @@ import {  CoC7MeleeTarget} from './chat/combat/melee-target.js';
 import { CoC7MeleeResoltion } from './chat/combat/melee-resolution.js';
 import { CoC7RangeInitiator } from './chat/rangecombat.js';
 import { CoC7Roll, chatHelper } from './chat/helper.js';
-import { CoC7DamageRoll } from './chat/damagecards.js';
+// import { CoC7DamageRoll } from './chat/damagecards.js';
 import { CoC7ConCheck } from './chat/concheck.js';
 import { CoC7Parser } from './apps/parser.js';
 import { SanCheckCard } from './chat/cards/san-check.js';
 import { OpposedCheckCard } from './chat/cards/opposed-roll.js';
 import { CombinedCheckCard } from './chat/cards/combined-roll.js';
+import { InteractiveChatCard } from './chat/interactive-chat-card.js';
+import { DamageCard } from './chat/cards/damage.js';
 
 export class CoC7Chat{
 
@@ -70,7 +72,7 @@ export class CoC7Chat{
 		event.preventDefault();
 		const actorKey = event.currentTarget.dataset.actorKey;
 		if( actorKey){
-			const actor = chatHelper.getActorFromKey( actorKey);
+			const actor = chatHelper.getActorFromKey( actorKey); //REFACTORING (2)
 			if(actor.owner)	actor.sheet.render(true);
 		}
 	}
@@ -122,6 +124,8 @@ export class CoC7Chat{
 
 	static async renderMessageHook(message, html) {
 		ui.chat.scrollBottom();
+
+		InteractiveChatCard.bindListeners( html);
 
 
 		if( message.getFlag( 'CoC7', 'checkRevealed')){
@@ -188,14 +192,29 @@ export class CoC7Chat{
 			if( !game.user.isGM) elem.style.display='none';
 		}
 
+		const ownerVisibleOnly = html.find('.owner-visible-only');
+		for( let zone of ownerVisibleOnly )
+		{
+			//Try retrieving actor
+			let actor = CoC7Chat._getActorFromKey( zone.dataset?.actorKey);//Try with self.
+			if( !actor) actor = CoC7Chat._getChatCardActor(zone.closest('.chat-card'));//Try with closest chat card.
+			if( !actor) actor = CoC7Chat._getActorFromKey( zone.parentElement.dataset.actorKey);//Try with parent element.
+			if( !actor) actor = CoC7Chat._getActorFromKey( zone.closest('[data-actor-key]')?.dataset.actorKey);//Try with closest data-actor-key
+			if( !actor) actor = CoC7Chat._getActorFromKey( zone.closest('[data-token-key]')?.dataset.actorKey);//Try with closest data-token-key
+			
+			// const actor = game.actors.get( actorId);
+			if((actor && !actor.owner) || game.user.isGM) {zone.style.display = 'none';} //if current user doesn't own this he can't interract
+			// if( !CoC7Chat.isCardOwner( zone.closest('.chat-card'))) {zone.style.display = 'none';}
+		}
+
 		if( !game.user.isGM) // GM can see everything
 		{
 			const ownerOnly = html.find('.owner-only');
 			for( let zone of ownerOnly )
 			{
 				//Try retrieving actor
-				let actor = CoC7Chat._getChatCardActor(zone.closest('.chat-card'));//Try with closest chat card.
-				if( !actor) actor = CoC7Chat._getActorFromKey( zone.dataset?.actorKey);//Try with self.
+				let actor = CoC7Chat._getActorFromKey( zone.dataset?.actorKey);//Try with self.
+				if( !actor) actor = CoC7Chat._getChatCardActor(zone.closest('.chat-card'));//Try with closest chat card.
 				if( !actor) actor = CoC7Chat._getActorFromKey( zone.parentElement.dataset.actorKey);//Try with parent element.
 				if( !actor) actor = CoC7Chat._getActorFromKey( zone.closest('[data-actor-key]')?.dataset.actorKey);//Try with closest data-actor-key
 				if( !actor) actor = CoC7Chat._getActorFromKey( zone.closest('[data-token-key]')?.dataset.actorKey);//Try with closest data-token-key
@@ -819,12 +838,16 @@ export class CoC7Chat{
 		const tokenKey = cardData.tokenId;
 		if (tokenKey) {
 			const [sceneId, tokenId] = tokenKey.split('.');
-			const scene = game.scenes.get(sceneId);
-			if (!scene) return null;
-			const tokenData = scene.getEmbeddedEntity('Token', tokenId);
-			if (!tokenData) return null;
-			const token = new Token(tokenData);
-			return token.actor;
+			if( 'TOKEN' == sceneId){
+				return game.actors.tokens[tokenId];//REFACTORING (2)
+			} else {
+				const scene = game.scenes.get(sceneId);
+				if (!scene) return null;
+				const tokenData = scene.getEmbeddedEntity('Token', tokenId);
+				if (!tokenData) return null;
+				const token = new Token(tokenData);
+				return token.actor;
+			}
 		}
 
 		// Case 2 - use Actor ID directory
@@ -857,14 +880,18 @@ export class CoC7Chat{
 
 		if( !key) return undefined;
 		// Case 1 - a synthetic actor from a Token
-		if (key.includes('.')) {
+		if (key.includes('.')) { //REFACTORING (2)
 			const [sceneId, tokenId] = key.split('.');
-			const scene = game.scenes.get(sceneId);
-			if (!scene) return null;
-			const tokenData = scene.getEmbeddedEntity('Token', tokenId);
-			if (!tokenData) return null;
-			const token = new Token(tokenData);
-			return token.actor;
+			if( 'TOKEN' == sceneId){
+				return game.actors.tokens[tokenId];//REFACTORING (2)
+			} else {
+				const scene = game.scenes.get(sceneId);
+				if (!scene) return null;
+				const tokenData = scene.getEmbeddedEntity('Token', tokenId);
+				if (!tokenData) return null;
+				const token = new Token(tokenData);
+				return token.actor;
+			}
 		}
 
 		// Case 2 - use Actor ID directory
@@ -880,12 +907,16 @@ export class CoC7Chat{
 	static getToken( tokenKey){
 		if (tokenKey) {
 			const [sceneId, tokenId] = tokenKey.split('.');
-			const scene = game.scenes.get(sceneId);
-			if (!scene) return null;
-			const tokenData = scene.getEmbeddedEntity('Token', tokenId);
-			if (!tokenData) return null;
-			const token = new Token(tokenData);
-			return token;
+			if( 'TOKEN' == sceneId){
+				return game.actors.tokens[tokenId]?.token;//REFACTORING (2)
+			} else {
+				const scene = game.scenes.get(sceneId);
+				if (!scene) return null;
+				const tokenData = scene.getEmbeddedEntity('Token', tokenId);
+				if (!tokenData) return null;
+				const token = new Token(tokenData);
+				return token;
+			}
 		}
 		return null;
 	}
@@ -1195,13 +1226,27 @@ export class CoC7Chat{
 			break;
 		}
 		case 'roll-melee-damage':{
-			const damageCard = new CoC7DamageRoll( button.dataset.weapon, button.dataset.dealer, button.dataset.target, 'true' == button.dataset.critical );
-			if( originMessage.dataset.messageId) damageCard.messageId = originMessage.dataset.messageId;
-			damageCard.rollDamage();
-			if( originMessage.dataset.messageId) {
-				card.querySelectorAll('.card-buttons').forEach( b => b.remove());
-				await CoC7Chat.updateChatCard( card);
-			}
+			const damageChatCard = new DamageCard({	critical: 'true' == button.dataset.critical, fastForward: event.shiftKey});
+			damageChatCard.actorKey = button.dataset.dealer;
+			damageChatCard.targetKey = button.dataset.target;
+			damageChatCard.itemId = button.dataset.weapon;
+			if( originMessage.dataset.messageId) damageChatCard.messageId = originMessage.dataset.messageId;
+			damageChatCard.updateChatCard();
+
+			// const damageCard = new CoC7DamageRoll( 
+			// 	button.dataset.weapon, 
+			// 	button.dataset.dealer, 
+			// 	{
+			// 		targetKey: button.dataset.target,
+			// 		critical: 'true' == button.dataset.critical,
+			// 		fastForward: event.shiftKey
+			// 	});
+			// if( originMessage.dataset.messageId) damageCard.messageId = originMessage.dataset.messageId;
+			// damageCard.rollDamage();
+			// if( originMessage.dataset.messageId) {
+			// 	card.querySelectorAll('.card-buttons').forEach( b => b.remove());
+			// 	await CoC7Chat.updateChatCard( card);
+			// }
 			break;
 		}
 		case 'range-initiator-shoot':{
@@ -1223,7 +1268,7 @@ export class CoC7Chat{
 		case 'deal-melee-damage':{
 			const targetKey = card.dataset.targetKey;
 			const amount = card.dataset.result;
-			const targetActor = chatHelper.getActorFromKey( targetKey);
+			const targetActor = chatHelper.getActorFromKey( targetKey); //REFACTORING (2)
 			await targetActor.dealDamage( amount);
 			const buttons = card.querySelector('.card-buttons');
 			const diceTotal = card.querySelector('.dice-total');
@@ -1378,59 +1423,4 @@ export class CoC7Chat{
 			else content.style.display = content.style.display === 'none' ? 'block' : 'none';
 		}
 	}
-	
-	// static async updatechatMessageTargets( oldCard){ //TODO : To be removed ?
-	// 	const htmlCardContent = jQuery.parseHTML( oldCard.data.content);
-	// 	const targets = htmlCardContent[0].querySelector('.targets');
-	// 	const initiator = this._getChatCardActor(htmlCardContent[0]);
-
-	// 	//Cleat targets list.
-	// 	while (targets.firstChild) {
-	// 		targets.removeChild(targets.lastChild);
-	// 	}
-
-	// 	if (game.user.targets.size != 0){
-	// 		for( let target of game.user.targets){
-	// 			const templateData = {};
-
-	// 			// let newTarget = $(`<div class="target">${target.name}</div>`);
-	// 			if( target.actor.isToken){
-	// 				// newTarget.attr('data-token-id', `${target.scene.id}.${target.id}`);
-	// 				templateData.tokenId = `${target.scene.id}.${target.id}`;
-	// 			}
-	// 			else{
-	// 				// newTarget.attr('data-actor-id', `${target.actor.id}`);
-	// 				templateData.actorId = target.actor.id;
-	// 			}
-	// 			// $(targets).append(newTarget);
-
-	// 			//Incorrect !! figthing back = using a (close combat ?) weapon, a maneuver uses a skill.
-	// 			templateData.fightingSkills = target.actor.fightingSkills;
-	// 			templateData.dodgeSkill = target.actor.dodgeSkill;
-	// 			templateData.closeCombatWeapons = target.actor.closeCombatWeapons;
-	// 			templateData.defenderBuild = target.actor.build;
-	// 			templateData.initiatorBuild = initiator.build;
-	// 			templateData.canManeuver = true;
-	// 			templateData.initiator = initiator;
-	// 			templateData.defender = target.actor;
-
-	// 			const template = 'systems/CoC7/templates/chat/parts/defender-action.html';
-	// 			const htmlDefenderActions = await renderTemplate(template, templateData);
-
-	// 			let container = htmlCardContent[0].querySelector('.defenders-actions-container');
-	// 			container.insertAdjacentHTML('beforeend', htmlDefenderActions);
-	// 		}
-	// 	}
-
-	// 	const newCardData={
-	// 		user: game.user._id,
-	// 		content: htmlCardContent[0].outerHTML
-	// 	};
-
-	// 	oldCard.update(newCardData).then( resultMessage => {
-	// 		ui.chat.updateMessage( resultMessage);
-	// 		return resultMessage;
-	// 	});
-	// }
-
 }

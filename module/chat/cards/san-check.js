@@ -51,7 +51,7 @@ export class SanCheckCard extends ChatCardActor{
 
 	get creature(){ //TODO : check constructor
 		if( this.sanData.creatureKey && (!this.__creature || this.__creature.constructor.name == 'Object')){
-			this.__creature = chatHelper.getActorFromKey( this.sanData.creatureKey);
+			this.__creature = chatHelper.getActorFromKey( this.sanData.creatureKey);//REFACTORING (2)
 		}
 		return this.__creature;
 	}

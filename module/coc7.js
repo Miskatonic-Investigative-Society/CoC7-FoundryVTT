@@ -26,6 +26,7 @@ import { CoC7Check } from './check.js';
 import { CoC7Menu } from './menu.js';
 import { OpposedCheckCard } from './chat/cards/opposed-roll.js';
 import { CombinedCheckCard } from './chat/cards/combined-roll.js';
+import { DamageCard } from './chat/cards/damage.js';
 
 Hooks.once('init', async function() {
 
@@ -35,7 +36,11 @@ Hooks.once('init', async function() {
 			weaponCheck: CoC7Utilities.weaponCheckMacro,
 			check: CoC7Utilities.checkMacro
 		},
+		cards:{
+			DamageCard: DamageCard
+		}
 	};
+
 
 
 	/**

@@ -3,6 +3,37 @@
 		padding: 0;
 	}
 
+	.card-result{
+        position: relative;
+        margin: 0;
+        line-height: 24px;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.1);
+        border: 1px solid #999;
+        border-radius: 3px;
+        box-shadow: 0 0 2px #fff inset;
+        word-break: break-all;
+        margin-top: 5px;
+    }
+
+	&.opposed{
+		&.combat{
+			.attacker{
+				img{
+					border: 1px solid red;
+				}
+			}
+		}
+	}
+
+	.opposed-card-flag{
+		flex: none;
+		color: white;
+		&.active{
+			color: red
+		}
+	}
+
 	h4.card-result{
 		flex: 0;
 		display: block;
@@ -44,6 +75,28 @@
 			width: 100%;
 			align-items: center;
 			margin-bottom: 4px;
+
+			.roll-details{
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+
+				.header{
+					height: 16px;
+					width: 100%;
+					display: flex;
+					flex-direction: row;
+
+					.name{
+						flex: 1;
+					}
+					
+					a{
+						height: 16px;
+						line-height: 16px;
+					}
+				}
+			}
 
 			span.pending{
 				width: 100%;

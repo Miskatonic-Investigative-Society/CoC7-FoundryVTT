@@ -1,23 +1,105 @@
-<div class="coc7 chat-card chat-card-v2 roll-card opposed">
+<div class="coc7 chat-card chat-card-v2 roll-card opposed {{#if combat}}combat{{/if}}">
+    <div class="title flexrow">
+        <div class="opposed-card-flag gm-visible-only {{#if combat}}active{{/if}}">
+            <a data-action='toggle-combat'><i class="game-icon game-icon-crossed-swords"></i></a>
+        </div>
+        <div>{{localize 'CoC7.OpposedRollCard'}} {{#if isAttackManeuver}}({{localize 'CoC7.AttackManeuver'}}){{/if}}</div>
+    </div>
+
+    {{#if combat}}
+        {{#if closed}}
+            <div>
+                {{#if isTie}}<span class="tag">{{localize 'CoC7.Tie'}}</span>{{/if}}
+                {{#if needsTieBreaker}}
+                    {{#if advantageAttacker}}<span class="tag">{{localize 'CoC7.AdvantageAttacker'}}</span>{{/if}}
+                    {{#if advantageDefender}}<span class="tag">{{localize 'CoC7.AdvantageDefender'}}</span>{{/if}}
+                {{/if}}
+                {{#if defenderIsDodging}}<span class="tag">Defender is dodging</span>{{/if}}
+            </div>
+        {{else}}
+            {{#if needsTieBreaker}}
+                <div class="flexrow gm-visible-only toggle">
+                    <span class="flex1 toggle-switch gm-select-only {{#if advantageAttacker}}switched-on{{/if}} "
+                    title="{{localize CoC7.AdvantageAttacker}}" 
+                    data-flag="advantageAttacker" 
+                    data-selected={{advantageAttacker}}>{{localize 'CoC7.AdvantageAttacker'}}</span>
+                    <span class="flex1 toggle-switch gm-select-only {{#if advantageDefender}}switched-on{{/if}}"
+                    title="{{localize CoC7.AdvantageDefender}}" 
+                    data-flag="advantageDefender" 
+                    data-selected={{advantageDefender}}>{{localize 'CoC7.AdvantageDefender'}}</span>
+                </div>
+                <div class='user-visible-only'>
+                    {{#if advantageAttacker}}
+                        <span class="tag">{{localize 'CoC7.AdvantageAttacker'}}</span>
+                    {{/if}}
+                    {{#if advantageDefender}}
+                        <span class="tag">{{localize 'CoC7.AdvantageDefender'}}</span>
+                    {{/if}}
+                </div>
+            {{/if}}
+        {{/if}}
+    {{else}}
+        <div>
+            {{#if isTie}}<span class="tag">{{localize 'CoC7.Tie'}}</span>{{/if}}
+        </div>
+    {{/if}}
+
     <ol>
         {{#each rolls as |r id| }}
-            <li class='actor-roll{{#if r.winner}} won{{/if}} {{#if r.tie}} tie{{/if}}' data-rank='{{id}}' data-actor-key="{{r.actor.actorKey}}">
+            <li class= 'actor-roll{{#if r.winner}} won{{/if}}{{#if r.tie}} tie{{/if}}{{#if r.attacker}} attacker{{/if}}'
+                data-rank='{{id}}' data-actor-key="{{r.actor.actorKey}}">
                 <img class="open-actor" data-actor-key="{{r.actor.actorKey}}" src="{{r.actor.portrait}}" title="{{r.actor.name}}"/>
-                {{#if r.rolled}}
-                    {{{r._htmlRoll}}}
-                {{else}}
-                    <div class='card-buttons actor-card-buttons owner-only'>
-                        <button data-action='roll-check'><!--<img class="item-image" src="{{r.image}}"/>-->{{ r.fullName }}: ({{r.rawValue}}%)</button>
-                    </div>
-                    <a class="gm-visible-only" data-action="remove-roll" title="{{localize 'CoC7.remove'}}"><i class="far fa-times-circle"></i></a>
-                {{/if}}
+                <div class="roll-details">
+                    <div class="header">
+                        <div class='name'>
+                            {{#if r.item}}
+                                <span class="tag">{{r.item.name}}</span>
+                            {{/if}}
+                            <span class="tag">{{r.skill.name}}</span>
+                            {{#if r.maneuver}}
+                                <span class='tag'>{{localize 'CoC7.WeaponProperyManeuver'}} ({{localize 'CoC7.Build'}}: {{r.actor.build}})</span>
+                            {{/if}}
+                        </div>
+                        {{#unless ../closed}}
+                            <a class="gm-visible-only" data-action="remove-roll" title="{{localize 'CoC7.remove'}}"><i class="far fa-times-circle"></i></a>
+                        {{/unless}}
+                        </div>
+                    {{#if r.rolled}}
+                        {{#if ../combat}}
+                            {{#if ../closed}}
+                                {{{r._htmlRoll}}}
+                            {{else}}
+                                <div class='flexrow owner-only'>{{{r._htmlRoll}}}</div>
+                            {{/if}}
+                        {{else}}
+                            {{{r._htmlRoll}}}
+                        {{/if}}
+                    {{else}}
+                        <div class='card-buttons actor-card-buttons owner-only'>
+                            <button data-action='roll-check'>{{ r.fullName }}: ({{r.rawValue}}%)</button>
+                        </div>
+                        {{#unless ../closed}}
+                            <a class="gm-visible-only" data-action="remove-roll" title="{{localize 'CoC7.remove'}}"><i class="far fa-times-circle"></i></a>
+                        {{/unless}}
+                    {{/if}}
+                </div>
             </li>
         {{/each}}
     </ol>
 
+    {{#if resultText}}
+        <div class='card-result'>{{resultText}}</div>
+    {{/if}}
+
     {{#unless closed}}
-    <div class='card-buttons gm-visible-only'>
-        <button data-action='close-card'>Close card</button>
-    </div>
+        {{#if winnerRollsDamage}}
+            <div class='card-buttons gm-visible-only'>
+                <button data-action='roll-damage'>Roll damage</button>
+            </div>
+        {{else}}
+            <div class='card-buttons gm-visible-only'>
+                <button data-action='close-card'>Close card</button>
+            </div>
+        {{/if}}
     {{/unless}}
 </div>

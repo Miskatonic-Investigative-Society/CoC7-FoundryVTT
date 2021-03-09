@@ -169,7 +169,11 @@
 "CoC7.NoWinner": "Both side failed.",
 "CoC7.DodgeSuccess": "{name} dodged!",
 "CoC7.ManeuverSuccess": "{name} maneuver was successful.",
+"CoC7.AttackSuccess": "{name} landed a blow.",
 "CoC7.InflictPain": "Inflict pain",
+"CoC7.AdvantageAttacker": "Advantage: Attacker",
+"CoC7.AdvantageDefender": "Advantage: Defender",
+"CoC7.Tie": "Tie",
 
 "CoC7.combatCard.dive4cover": "Dive for Cover",
 
@@ -189,6 +193,7 @@
 "CoC7.rangeCombatCard.InMelee": "In melee",
 "CoC7.rangeCombatCard.aiming": "Aiming",
 "CoC7.rangeCombatDamage": "{name} takes {total} points of damage",
+"CoC7.rangeCombatDamageArmor": "{name} takes {total} damage. ({armor} mitigated)",
 "CoC7.RollDamage": "Roll damage",
 "CoC7.BulletsFired": "Bullets fired",
 "CoC7.Shots": "Shots",

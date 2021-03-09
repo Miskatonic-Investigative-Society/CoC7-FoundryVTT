@@ -15,12 +15,22 @@
         {{#each rolls as |r id| }}
             <li class='actor-roll' data-rank='{{id}}' data-actor-key="{{r.actor.actorKey}}">
                 <img class="open-actor" data-actor-key="{{r.actor.actorKey}}" src="{{r.actor.portrait}}" title="{{r.actor.name}}"/>
-                {{#if r.rolled}}
-                    {{{r._htmlRoll}}}
-                {{else}}
-                    <span class='pending'>{{ r.fullName }}: ({{r.rawValue}}%)</span>
-                    <a class="gm-visible-only" data-action="remove-roll" title="{{localize 'CoC7.remove'}}"><i class="far fa-times-circle"></i></a>
-                {{/if}}
+                <div class="roll">
+                    <div class="header">
+                        <div class='name'>
+                            {{#if r.item}}
+                                <span class="tag">{{r.item.name}}</span>
+                            {{/if}}
+                            <span class="tag">{{r.skill.name}}</span>
+                        </div>
+                        <a class="gm-visible-only" data-action="remove-roll" title="{{localize 'CoC7.remove'}}"><i class="far fa-times-circle"></i></a>
+                    </div>
+                    {{#if r.rolled}}
+                        {{{r._htmlRoll}}}
+                    {{else}}
+                        <span class='pending'>{{ r.fullName }}: ({{r.rawValue}}%)</span>
+                    {{/if}}
+                </div>
             </li>
         {{/each}}
     </ol>

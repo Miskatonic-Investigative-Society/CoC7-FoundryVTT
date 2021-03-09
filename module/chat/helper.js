@@ -86,7 +86,11 @@ export class chatHelper{
 
 		if( !key) return null;
 		// Case 1 - a synthetic actor from a Token
-		if (key.includes('.')) {
+		if (key.includes('.')) {//REFACTORING (2)
+			const [sceneId, tokenId] = key.split('.');
+			if( 'TOKEN' == sceneId){
+				return game.actors.tokens[tokenId];//REFACTORING (2)
+			}
 			const token = chatHelper.getTokenFromKey(key);
 			return token.actor;
 		}
@@ -97,9 +101,9 @@ export class chatHelper{
 
 	static getSpeakerFromKey( actorKey){
 		const speaker = {};
-		const actor = chatHelper.getActorFromKey( actorKey);
+		const actor = chatHelper.getActorFromKey( actorKey);//REFACTORING (2)
 		if (actorKey.includes('.')) {
-			const [sceneId, tokenId] = actorKey.split('.');
+			const [sceneId, tokenId] = actorKey.split('.'); //REFACTORING (2)
 			speaker.token = tokenId;
 			speaker.scene = sceneId;
 			if( actor.token?.name) speaker.alias = actor.token.name;
@@ -153,13 +157,17 @@ export class chatHelper{
 		if( !key) return null;
 		if (key.includes('.')) {
 			const [sceneId, tokenId] = key.split('.');
-			const scene = game.scenes.get(sceneId);
-			if (!scene) return null;
-			const tokenData = scene.getEmbeddedEntity('Token', tokenId);
-			if (!tokenData) return null;
-			const token = new Token(tokenData);
-			if( !token.scene) token.scene = scene;
-			return token;
+			if( 'TOKEN' == sceneId){
+				return game.actors.tokens[tokenId]?.token;//REFACTORING (2)
+			} else {
+				const scene = game.scenes.get(sceneId);
+				if (!scene) return null;
+				const tokenData = scene.getEmbeddedEntity('Token', tokenId);
+				if (!tokenData) return null;
+				const token = new Token(tokenData);
+				if( !token.scene) token.scene = duplicate( scene.data);
+				return token;
+			}
 		} else {
 			const actor = game.actors.get( key);
 			return chatHelper.getActorToken( actor, false);
@@ -202,7 +210,7 @@ export class chatHelper{
 			const token = chatHelper.getTokenFromKey(actorKey);
 			if( token) return token.data.img;
 		}
-		const actor = chatHelper.getActorFromKey(actorKey);
+		const actor = chatHelper.getActorFromKey(actorKey);//REFACTORING (2)
 		if( game.settings.get('CoC7', 'useToken')){
 			// if no token found for that actor return the prototype token image.
 			if( actor.data.token) return actor.data.token.img;
@@ -275,7 +283,7 @@ export class CoC7Roll{
 	}
 
 	get actor(){
-		if( this.actorKey) return chatHelper.getActorFromKey( this.actorKey);
+		if( this.actorKey) return chatHelper.getActorFromKey( this.actorKey);//REFACTORING (2)
 		return null;
 	}
 
@@ -370,14 +378,14 @@ export class CoC7Roll{
 		roll.result = check.dice.total;
 
 
-		roll.actorKey = check.actor.tokenKey;
+		roll.actorKey = check.actor.tokenKey; //REFACTORING (2)
 
 		if( check.actor.isToken){
-			roll.tokenId = check.actor.tokenKey;
+			roll.tokenId = check.actor.tokenKey;  //REFACTORING (2)
 			roll.actorId = null;
 		} else {
 			roll.tokenKey = null;
-			roll.actorId = check.actor.tokenKey;
+			roll.actorId = check.actor.tokenKey;  //REFACTORING (2)
 		}
 
 		return roll;
