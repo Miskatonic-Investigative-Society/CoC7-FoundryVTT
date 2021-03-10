@@ -27,6 +27,10 @@ version 0.5.3 :
 * Bug correction:
   * Corrected a bug where editor in archetype sheet did not display correctly.
   * #390 Character sheet elements changed from px to rem.
+* #401 addressed thanks to @jantoniomartin !
+  * During character setup, using points, you can now roll luck.
+  * Luck is not part of the point budget
+  * Buttons added to increase/deacrease characteristic.
 * #359-1 Armor can now be defined as a roll string (1D6).
 * Changes in damage cards.
   * Damage cards have been reworked.
