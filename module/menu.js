@@ -1,3 +1,4 @@
+import { CoC7Chat } from './chat.js';
 import { CoC7Utilities } from './utilities.js';
 
 export class CoC7Menu {
@@ -65,7 +66,7 @@ export class CoC7Menu {
 	
 		// Handle Tools
 		else {
-			control.activeTool = toolName;
+			tool.activeTool = toolName;
 			if ( tool.onClick instanceof Function ) tool.onClick();
 		}
 	}
@@ -151,6 +152,13 @@ export class CoC7Menu {
 					active: game.settings.get('CoC7', 'charCreationEnabled'), 
 					title: 'CoC7.CharCreationMode',
 					onClick :async () => await CoC7Utilities.toggleCharCreation()
+				},
+				{
+					button: true,
+					icon: 'game-icon game-icon-card-joker',
+					name: 'fakeroll',
+					title: 'CoC7.FakeRoll',
+					onClick : CoC7Chat.fakeRollMessage
 				}
 			]
 		});

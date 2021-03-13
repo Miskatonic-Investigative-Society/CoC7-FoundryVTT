@@ -1026,8 +1026,42 @@ export class CoC7Check {
 			content: html
 		};
 
-		if ( ['gmroll', 'blindroll'].includes(this.rollMode) ) chatData['whisper'] = ChatMessage.getWhisperRecipients('GM');
-		if ( this.rollMode === 'blindroll' ) chatData['blind'] = true;
+		if( 'selfroll' == this.rollMode ){
+			if( game.user.isGM){
+				chatData.user = game.user._id;
+				chatData.flavor = `[${this.actor.name}] ${chatData.flavor}`;
+				chatData.flags = {
+					CoC7:{
+						GMSelfRoll: true,
+						originalSpeaker: duplicate( chatData.speaker)
+					}
+				};
+				if( game.user.isGM){
+					switch (game.settings.get( 'CoC7', 'selfRollWhisperTarget')) {
+					case 'owners':
+						delete chatData.speaker;
+						chatData.whisper = this.actor.owners;
+						chatData.type = CHAT_MESSAGE_TYPES.WHISPER;
+						break;
+
+					case 'everyone':
+						delete chatData.speaker;
+						chatData.whisper = game.users.players;
+						chatData.type = CHAT_MESSAGE_TYPES.WHISPER;
+						break;
+
+					default:
+						ChatMessage.applyRollMode( chatData, this.rollMode);
+						break;
+					}
+				}
+			} else ChatMessage.applyRollMode( chatData, this.rollMode);
+		}
+
+		// if ( ['gmroll', 'blindroll'].includes(this.rollMode) ) chatData['whisper'] = ChatMessage.getWhisperRecipients('GM');
+		if ( this.rollMode === 'blindroll' ) chatData.blind = true;
+
+		// ChatMessage.applyRollMode( chatData, this.rollMode);
 
 		ChatMessage.create(chatData).then( msg => {return msg;});
 
@@ -1060,6 +1094,9 @@ export class CoC7Check {
 			chatData.whisper = [];
 			chatData.blind = false;
 		}
+
+		ChatMessage.applyRollMode( chatData);
+
 		const msg = await message.update(chatData);
 		await ui.chat.updateMessage( msg, false);
 		return msg;
