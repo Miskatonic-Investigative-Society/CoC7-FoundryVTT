@@ -12,9 +12,10 @@ export class RollDialog {
 			if( CoC7Check.difficultyLevel.extreme == options.difficulty) options.difficultyLevel.extreme = true;
 		}
 
+		// if( undefined == options.askValue) options.askValue = true;
 		if( options.name && !options.displayName) options.displayName = options.name;
 		const unknownDifficultyDefault = 'unknown' === game.settings.get('CoC7', 'defaultCheckDifficulty');
-		const html = await renderTemplate('systems/CoC7/templates/apps/bonus.html', {difficulty: CoC7Check.difficultyLevel, unknownDifficultyDefault: unknownDifficultyDefault, options});
+		const html = await renderTemplate('systems/CoC7/templates/apps/bonus.html', {allowFlatDiceModifier: game.settings.get('CoC7', 'allowFlatDiceModifier') && !options.disableFlatDiceModifier,allowFlatThresholdModifier: game.settings.get('CoC7', 'allowFlatThresholdModifier') && !options.disableFlatThresholdModifier,difficulty: CoC7Check.difficultyLevel, unknownDifficultyDefault: unknownDifficultyDefault, options});
 		return new Promise((resolve) => {
 			let formData = null;
 			const dlg = new Dialog({

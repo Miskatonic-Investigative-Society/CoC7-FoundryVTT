@@ -1,0 +1,23 @@
+<div>{{#each controls as |c|}}
+<li class="scene-control {{c.css}}" data-control="{{c.name}}" data-canvas-layer="{{c.layer}}" title="{{localize c.title}}">
+    <i class="{{c.icon}}"></i>
+    <ol class="control-tools">
+        {{#each c.tools as |t|}}
+        <li class="control-tool {{t.css}}" title="{{localize t.title}}" data-tool="{{t.name}}">
+            <i class="{{t.icon}}"></i>
+        </li>
+        {{/each}}
+    </ol>
+</li>
+{{/each}}
+</div>
+<!-- <li class="scene-control {{css}}" data-control="{{name}}" title="{{localize title}}">
+    <i class="{{icon}}"></i>
+    <ol class="control-tools">
+        {{#each tools as |t|}}
+        <li class="control-tool {{t.css}}" title="{{localize t.title}}" data-tool="{{t.name}}">
+            <i class="{{t.icon}}"></i>
+        </li>
+        {{/each}}
+    </ol>
+</li> -->

@@ -5,6 +5,9 @@ export class CharacRollDialog extends Dialog {
 		html.on('change', 'input', this._onChangeInput.bind(this));
 		html.on('submit', 'form', this._onSubmit.bind(this));
 		html.on('click', '.roll-characteristic', this._onRollCharacteristic.bind(this));
+		html.on('click', '.increase-characteristic', this._onIncreaseCharacteristic.bind(this));
+		html.on('click', '.decrease-characteristic', this._onDecreaseCharacteristic.bind(this));
+		html.on('click', '.reset-characteristic', this._onResetCharacteristic.bind(this));
 		html.on('click', 'button', this._onButton.bind(this));
 	}
     
@@ -13,6 +16,27 @@ export class CharacRollDialog extends Dialog {
 		const li = event.currentTarget.closest('.item');
 		const characKey = li.dataset.key;
 		this.rollCharacteristic( characKey);
+	}
+
+	async _onIncreaseCharacteristic( event){
+		event.preventDefault();
+		const li = event.currentTarget.closest('.item');
+		const characKey = li.dataset.key;
+		this.increaseCharacteristic( characKey);
+	}
+
+	async _onDecreaseCharacteristic( event){
+		event.preventDefault();
+		const li = event.currentTarget.closest('.item');
+		const characKey = li.dataset.key;
+		this.decreaseCharacteristic( characKey);
+	}
+
+	async _onResetCharacteristic( event){
+		event.preventDefault();
+		const li = event.currentTarget.closest('.item');
+		const characKey = li.dataset.key;
+		this.resetCharacteristic( characKey);
 	}
     
 	async _onButton( event){
@@ -39,6 +63,36 @@ export class CharacRollDialog extends Dialog {
 			this.data.data.characteristics.values[key] = Number(input.value);
 			if( !this.rolled) this.rolled={};
 			this.rolled[key]=true;
+		}
+		this.checkTotal();
+	}
+
+	async increaseCharacteristic( key){
+		const li = this._element[0].querySelector(`li.item[data-key=${key}]`);
+		const input = li?.querySelector('input');
+		if( input ){
+			input.value = Number(input.value) + 1;
+			this.data.data.characteristics.values[key] = Number(input.value);
+		}
+		this.checkTotal();
+	}
+
+	async decreaseCharacteristic( key){
+		const li = this._element[0].querySelector(`li.item[data-key=${key}]`);
+		const input = li?.querySelector('input');
+		if( input && Number(input.value) > 0){
+			input.value = Number(input.value) - 1;
+			this.data.data.characteristics.values[key] = Number(input.value);
+		}
+		this.checkTotal();
+	}
+
+	async resetCharacteristic( key){
+		const li = this._element[0].querySelector(`li.item[data-key=${key}]`);
+		const input = li?.querySelector('input');
+		if( input ){
+			input.value = null;
+			this.data.data.characteristics.values[key] = 0;
 		}
 		this.checkTotal();
 	}

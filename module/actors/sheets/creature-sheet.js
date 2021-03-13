@@ -45,7 +45,7 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 		if((event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM){
 			let difficulty, modifier;
 			if( !event.shiftKey) {
-				const usage = await RollDialog.create();
+				const usage = await RollDialog.create( {disableFlatDiceModifier: true});
 				if( usage) {
 					modifier = Number(usage.get('bonusDice'));
 					difficulty = Number(usage.get('difficulty'));

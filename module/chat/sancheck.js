@@ -34,7 +34,7 @@ export class CoC7SanCheck {
 	}
 
 	get actor(){
-		if( this.actorId) return chatHelper.getActorFromKey( this.actorId);
+		if( this.actorId) return chatHelper.getActorFromKey( this.actorId);//REFACTORING (2) [bug 0.5.3]
 		return null;
 	}
 

@@ -79,6 +79,10 @@
 "CoC7.Other": "Other",
 "CoC7.rounds": "round(s)",
 "CoC7.hours": "hour(s)",
+"CoC7.remove": "Remove",
+"CoC7.Any": "Any",
+"CoC7.All": "All",
+"CoC7.Success": "Success",
 
 "CoC7.RegularSuccess": "Regular success",
 "CoC7.HardSuccess": "Hard success",
@@ -113,6 +117,9 @@
 "CoC7.check.FlagForDevelopment": "Award experience",
 "CoC7.IncreaseSuccessLevel": "Increase success",
 "CoC7.check.DecreaseSuccessLevel": "Decrease success",
+"CoC7.RollSecretDice": "Gamemaster privately rolled some dice",
+"CoC7.KeeperSentDecoy": "Decoy roll sent to players",
+"CoC7.FakeRoll": "Send a decoy roll to players",
 
 "CoC7.ConstitutionCheck": "Constitution check",
 
@@ -125,6 +132,9 @@
 "CoC7.CriticalDifficulty": "critical",
 "CoC7.UnknownDifficulty": "unknown",
 "CoC7.RollDifficulty": "Roll Difficulty",
+"CoC7.RollThreshold": "Roll threshold",
+"CoC7.FlatDiceModifier": "Flat dice modifier",
+"CoC7.FlatModifier": "Flat modifier",
 "CoC7.RollDifficultyUnknown": "Blind",
 "CoC7.RollDifficultyRegular": "Regular",
 "CoC7.RollDifficultyHard": "Hard",
@@ -134,6 +144,10 @@
 "CoC7.RollDice": "Roll !",
 "CoC7.SuccesLevelHint": "{value} level(s) of success",
 "CoC7.FailureLevelHint": "Failed by {value} level(s)",
+"CoC7.CombinedRollCard": "Combined roll card",
+"CoC7.OpposedRollCard": "Opposed roll card",
+"CoC7.CombinedAnyHint": "Any roll must succeed",
+"CoC7.CombinedAllHint": "All rolls must succeed",
 
 "CoC7.CheckResult": "{name} check ({value}%) - {difficulty} difficulty",
 "CoC7.ItemCheckResult": "{item} - {skill} check ({value}%) - {difficulty} difficulty",
@@ -158,7 +172,11 @@
 "CoC7.NoWinner": "Both side failed.",
 "CoC7.DodgeSuccess": "{name} dodged!",
 "CoC7.ManeuverSuccess": "{name} maneuver was successful.",
+"CoC7.AttackSuccess": "{name} landed a blow.",
 "CoC7.InflictPain": "Inflict pain",
+"CoC7.AdvantageAttacker": "Advantage: Attacker",
+"CoC7.AdvantageDefender": "Advantage: Defender",
+"CoC7.Tie": "Tie",
 
 "CoC7.combatCard.dive4cover": "Dive for Cover",
 
@@ -178,6 +196,7 @@
 "CoC7.rangeCombatCard.InMelee": "In melee",
 "CoC7.rangeCombatCard.aiming": "Aiming",
 "CoC7.rangeCombatDamage": "{name} takes {total} points of damage",
+"CoC7.rangeCombatDamageArmor": "{name} takes {total} damage. ({armor} mitigated)",
 "CoC7.RollDamage": "Roll damage",
 "CoC7.BulletsFired": "Bullets fired",
 "CoC7.Shots": "Shots",
@@ -489,8 +508,11 @@
 "CoC7.PutGunAway": "Put your gun away",
 "CoC7.DrawGun": "Draw your gun",
 
+"CoC7.GmTools": "Keeper's tools",
+"CoC7.DevPhase": "Development phase",
 "CoC7.DevPhaseEnabled": "Development phase enabled",
 "CoC7.DevPhaseDisabled": "Development phase disabled",
+"CoC7.CharCreationMode": "Character creation mode",
 "CoC7.CharCreationEnabled": "Character creation mode enabled",
 "CoC7.CharCreationDisabled": "Character creation mode disabled",
 "CoC7.WarnNoActorAvailable": "You do not have any actor controled nor selected",
@@ -573,5 +595,16 @@
 "SETTINGS.PlayerUnlockSheetMode": "Player can unlock sheet",
 "SETTINGS.AlwaysEditable": "always",
 "SETTINGS.CreationModeOnly": "in creation mode only",
-"SETTINGS.NeverEditable": "never (GM only)"
+"SETTINGS.NeverEditable": "never (GM only)",
+"SETTINGS.AllowFlatDiceModifier": "Flat dice modifier",
+"SETTINGS.AllowFlatDiceModifierHint": "Allows dice roll results to be modified by a flat value.",
+"SETTINGS.AllowFlatThresholdModifier": "Flat value modifier",
+"SETTINGS.AllowFlatThresholdModifierHint":"Allows checks succes value to be modified by a flat value." ,
+"SETTINGS.OpposedRollTieBreaker": "Opposed rolls Viriato139ac tie breaker",
+"SETTINGS.OpposedRollTieBreakerHint": "In case of a tie during opposed roll, winner is determined by highest rolled value, not higher skill.",
+"SETTINGS.SelfRollWhisperTarget": "Self roll notification:",
+"SETTINGS.SelfRollWhisperTargetHint": "As a GM, when doing self check roll, who do you want to send a notification to.",
+"SETTINGS.DoNotAdvise": "Keep it for yourself.",
+"SETTINGS.AdviseOwnersOnly": "Notify actor's owner",
+"SETTINGS.AdviseAllPlayer": "Notify all players"
 }
