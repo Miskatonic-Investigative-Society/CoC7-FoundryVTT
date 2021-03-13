@@ -30,7 +30,7 @@ export class CoC7ConCheck {
 	}
 
 	get actor(){
-		if( this.actorId) return chatHelper.getActorFromKey( this.actorId);
+		if( this.actorId) return chatHelper.getActorFromKey( this.actorId);//REFACTORING (2)
 		return null;
 	}
 

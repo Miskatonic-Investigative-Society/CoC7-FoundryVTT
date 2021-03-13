@@ -57,6 +57,22 @@ export class CoCActor extends Actor {
 	// }
 	// gnitseT **********************
 
+	/** @override */
+	static async create(data, options={}) {
+		data.token = data.token || {};
+		if ( data.type === 'character' ) {
+			mergeObject(data.token, {
+				vision: true,
+				dimSight: 30,
+				brightSight: 0,
+				actorLink: true,
+				disposition: 1
+			}, {overwrite: false});
+		}
+		return super.create(data, options);
+	}
+	
+
 
 	/**
    * Early version on templates did not include possibility of auto calc
@@ -152,6 +168,15 @@ export class CoCActor extends Actor {
 		};
 	}
 
+	get portrait(){
+		if( !game.settings.get( 'CoC7', 'useToken')) return this.img;
+		if( this.isToken){
+			return this.token?.data?.img || this.img;
+		} else {
+			return this.data.token?.img || this.img;
+		}
+	}
+
 	async enterBoutOfMadness( realTime = true, duration = 1){
 		// const duration = {rounds: 1,
 		// 	seconds: 17,
@@ -173,8 +198,8 @@ export class CoCActor extends Actor {
 			result.tableRoll = boutOfMadnessTable.roll();
 			if( TABLE_RESULT_TYPES.ENTITY == result.tableRoll.results[0].type){
 				const item = game.items.get(result.tableRoll.results[0].resultId);
-				if( item.data.data.type.phobia) result.phobia = true;
-				if( item.data.data.type.mania) result.mania = true;
+				if( item.data?.data?.type?.phobia) result.phobia = true;
+				if( item.data?.data?.type?.mania) result.mania = true;
 				result.description = `${item.name}:${TextEditor.enrichHTML( item.data.data.description.value)}`;
 				result.name = item.name;
 				delete item.data._id;
@@ -1590,7 +1615,7 @@ export class CoCActor extends Actor {
 
 	get tokenId() //TODO clarifier ca et tokenkey
 	{
-		return this.token ? `${this.token.scene._id}.${this.token.id}` : null;
+		return this.token ? `${this.token.scene._id}.${this.token.id}` : null;  //REFACTORING (2)
 	}
 
 	get locked(){
@@ -1643,6 +1668,8 @@ export class CoCActor extends Actor {
 				if( usage) {
 					check.diceModifier = Number(usage.get('bonusDice'));
 					check.difficulty = Number(usage.get('difficulty'));
+					check.flatDiceModifier = Number( usage.get('flatDiceModifier'));
+					check.flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
 				}
 			}
 		}
@@ -1680,6 +1707,8 @@ export class CoCActor extends Actor {
 				if( usage) {
 					check.diceModifier = Number(usage.get('bonusDice'));
 					check.difficulty = Number(usage.get('difficulty'));
+					check.flatDiceModifier = Number( usage.get('flatDiceModifier'));
+					check.flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
 				}
 			}
 		}
@@ -1743,6 +1772,8 @@ export class CoCActor extends Actor {
 				if( usage) {
 					check.diceModifier = Number(usage.get('bonusDice'));
 					check.difficulty = Number(usage.get('difficulty'));
+					check.flatDiceModifier = Number( usage.get('flatDiceModifier'));
+					check.flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
 				}
 			}
 		}
@@ -1819,7 +1850,6 @@ export class CoCActor extends Actor {
 			weapon = weapons[0];
 		}
 
-		// const actorKey = !this.isToken? this.actorKey : `${this.token.scene._id}.${this.token.data._id}`;
 		if( !weapon.data.data.properties.rngd){
 			if( game.user.targets.size > 1){
 				ui.notifications.warn(game.i18n.localize('CoC7.WarnTooManyTarget'));
@@ -1892,30 +1922,35 @@ export class CoCActor extends Actor {
 	get tokenKey() //Clarifier ca et tokenid
 	{
 		//Case 1: the actor is a synthetic actor and has a token, return token key.
-		if( this.isToken) return `${this.token.scene.id}.${this.token.id}`;
+		if( this.isToken) return `${this.token.scene?._id?this.token.scene._id:'TOKEN'}.${this.token.id}`;  //REFACTORING (2)
 
 		//Case 2: the actor is not a token (linked actor). If the sheet have an associated token return the token key.
-		if( this.sheet.token) return `${this.sheet.token.scene.id}.${this.sheet.token.id}`;
+		if( this.sheet.token) return `${this.sheet.token.scene?.id?this.sheet.token.scene.id:'TOKEN'}.${this.sheet.token.id}`;
 
 		//Case 3: Actor has no token return his ID;
 		return this.id;
 	}
-  
+
 	get actorKey(){
+		if( this.data.token.actorLink) return this._id;
 		return this.tokenKey;
 	}
 
 	static getActorFromKey(key) {
 
 		// Case 1 - a synthetic actor from a Token
-		if (key.includes('.')) {
+		if (key.includes('.')) {//REFACTORING (2)
 			const [sceneId, tokenId] = key.split('.');
-			const scene = game.scenes.get(sceneId);
-			if (!scene) return null;
-			const tokenData = scene.getEmbeddedEntity('Token', tokenId);
-			if (!tokenData) return null;
-			const token = new Token(tokenData);
-			return token.actor;
+			if( 'TOKEN' == sceneId){
+				return game.actors.tokens[tokenId];//REFACTORING (2)
+			} else {
+				const scene = game.scenes.get(sceneId);
+				if (!scene) return null;
+				const tokenData = scene.getEmbeddedEntity('Token', tokenId);
+				if (!tokenData) return null;
+				const token = new Token(tokenData);
+				return token.actor;
+			}
 		}
 
 		// Case 2 - use Actor ID directory
@@ -2266,6 +2301,14 @@ export class CoCActor extends Actor {
 		return 0;
 	}
 
+	get mythosInsanityExperienced(){
+		return this.getFlag( 'CoC7', 'mythosInsanityExperienced') || false;
+	}
+
+	async experienceFirstMythosInsanity(){
+		await this.setFlag( 'CoC7', 'mythosInsanityExperienced', true);
+	}
+
 	get creditRating(){
 		const CR = this.creditRatingSkill;
 		if( CR){
@@ -2325,12 +2368,36 @@ export class CoCActor extends Actor {
 		return skillList;
 	}
 
-	async dealDamage(amount, ignoreArmor = false){
+	get owners(){
+		return game.users.filter( u => this.hasPerm( u, 'OWNER')  && !u.isGM);
+	}
+
+	get characterUser(){
+		if( !this.isPC) return null;
+		return game.users.filter( u => u.character.id == this.id)[0];
+	}
+
+	async dealDamage(amount, options={}){
 		let total = parseInt(amount);
-		if( this.data.data.attribs.armor.value && !ignoreArmor ) total = total - this.data.data.attribs.armor.value;
-		if( total <= 0) return;
+		// let initialHp = this.hp;
+		if( this.data.data.attribs.armor.value && !options.ignoreArmor ){
+			let armorValue;
+			if( CoC7Utilities.isFormula(this.data.data.attribs.armor.value)){
+				const armorRoll = new Roll(this.data.data.attribs.armor.value).roll();
+				armorValue = armorRoll.total;
+			} else if(!isNaN(Number(this.data.data.attribs.armor.value))) armorValue = Number(this.data.data.attribs.armor.value);
+			else {
+				ui.notifications.warn( `Unable to process armor value :${this.data.data.attribs.armor.value}. Ignoring armor`);
+				armorValue = 0;
+			}
+			total = total - armorValue;
+		}
+		if( total <= 0) return 0;
 		await this.setHp( this.hp - total);
-		if( total >= this.hpMax) this.fallDead();
+		if( total >= this.hpMax) {
+			this.fallDead();
+			// return this.hpMax;
+		}
 		else{
 			if( total >= Math.floor(this.hpMax/2)) this.inflictMajorWound();
 			if( this.hp == 0){
@@ -2338,6 +2405,8 @@ export class CoCActor extends Actor {
 				if( this.majorWound) this.fallDying();
 			}
 		}
+		// if( total>initialHp) return initialHp;
+		return total;
 	}
 
 	async inflictMajorWound(){

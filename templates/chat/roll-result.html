@@ -30,6 +30,8 @@
 	data-item-id="{{item.data._id}}" 
 	data-dice-mod="{{diceModifier}}"
 	data-dice-modifier="{{diceModifier}}"
+	data-flat-dice-modifier="{{flatDiceModifier}}"
+	data-flat-threshold-modifier="{{flatThresholdModifier}}"
 	data-ten-only-one-die="{{dices.tenOnlyOneDie}}"
 	data-raw-value="{{rawValue}}" 
 	data-result="{{dice.total}}"
@@ -75,7 +77,7 @@
 		<div class="dice-result"
 			data-total="{{dices.total}}"
 			data-ten-result="{{dices.tenResult}}">
-			{{#unless displayNoSuccessLevel}}
+			{{#unless dontDisplaySuccessLevel}}
 			<div class="dice-formula {{#if isSuccess}}success{{/if}} {{#if isFailure}}failure{{/if}} {{#if isCritical}}critical{{/if}} {{#if isFumble}}fumble{{/if}}"
 			  title="{{successLevelIcons.hint}}">
 				{{#if displayResultType}}
@@ -173,7 +175,7 @@
 				</div>
 			</div>
 			{{#unless hideDiceResult}}
-			<h4 id="diceResult" class="dice-total {{cssClass}}" title="{{resultType}}">{{dices.total}} {{#if pushing}} {{localize 'CoC7.PushedRoll'}}{{/if}} {{#if luckSpent}} - {{ localize 'CoC7.LuckSpentAlt' }} ({{totalLuckSpent}}){{/if}}</h4>
+			<h4 id="diceResult" class="dice-total {{cssClass}}" title="{{resultType}}">{{modifiedResult}}{{#if flatDiceModifier}} ({{flatDiceModifierString}}){{/if}} {{#if pushing}} {{localize 'CoC7.PushedRoll'}}{{/if}} {{#if luckSpent}} - {{ localize 'CoC7.LuckSpentAlt' }} ({{totalLuckSpent}}){{/if}}</h4>
 			{{/unless}}
 			{{#if hasMalfunction}}<h4 class="malfunction">{{malfunctionTxt}}</h4>{{/if}}
 		</div>

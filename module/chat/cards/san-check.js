@@ -2,8 +2,26 @@ import { CoC7Check } from '../../check.js';
 import { CoC7Dice } from '../../dice.js';
 import { CoC7Utilities } from '../../utilities.js';
 import { ChatCardActor } from '../card-actor.js';
-import { createInlineRoll, exclude__, chatHelper } from '../helper.js';
+import { createInlineRoll, chatHelper } from '../helper.js';
 
+function replacer(key, value){
+	if ( key.startsWith('__')) {
+		return undefined; // remove from result
+	}
+
+	const exclude = ['_actor', '_creature'];
+	if( exclude.includes(key)){
+		return undefined;
+	}
+
+	const checks = ['sanCheck', 'intCheck'];
+	if( checks.includes(key))
+	{
+		return value.JSONRollData;
+	}
+
+	return value; // return as is
+}
 export class SanCheckCard extends ChatCardActor{
 	constructor( actorKey = null, sanData={}, options={}){
 		super( actorKey, options.fastForward != undefined?Boolean(options.fastForward):false);
@@ -33,7 +51,7 @@ export class SanCheckCard extends ChatCardActor{
 
 	get creature(){ //TODO : check constructor
 		if( this.sanData.creatureKey && (!this.__creature || this.__creature.constructor.name == 'Object')){
-			this.__creature = chatHelper.getActorFromKey( this.sanData.creatureKey);
+			this.__creature = chatHelper.getActorFromKey( this.sanData.creatureKey);//REFACTORING (2)
 		}
 		return this.__creature;
 	}
@@ -88,7 +106,7 @@ export class SanCheckCard extends ChatCardActor{
 	}
 
 	get firstEncounter(){
-		return !this.creatureEncountered && !this.creatureSpecieEncountered;
+		return !this.actor.mythosInsanityExperienced;
 	}
 
 	get creatureHasSpecie(){
@@ -144,10 +162,11 @@ export class SanCheckCard extends ChatCardActor{
 	}
 
 	get youGainCthulhuMythosString(){
-		return game.i18n.format( 'CoC7.YouGainedCthulhuMythos', {value: this.mythosGain});
+		if( this.mythosGain) return game.i18n.format( 'CoC7.YouGainedCthulhuMythos', {value: this.mythosGain});
+		return null;
 	}
 
-	async advanceState( state, data){
+	async advanceState( state){
 		switch (state) {
 		case 'keepCreatureSanData':{
 			this.state['keepCreatureSanData'] = true;
@@ -187,15 +206,23 @@ export class SanCheckCard extends ChatCardActor{
 			break;
 		}
 
-		case 'cthulhuMythosAwarded':{
-			const gain = !isNaN( Number( data))?Number( data):0;
+		case 'noMythosGained':{
 			this.state.cthulhuMythosAwarded = true;
-			if( data > 0) {
-				const cthulhuMythosSkill = this.actor.cthulhuMythosSkill;
-				const oldValue = cthulhuMythosSkill.data.data.adjustments.experience || 0;
-				if( cthulhuMythosSkill ) await cthulhuMythosSkill.update( {['data.adjustments.experience']: oldValue + gain});
-				this.mythosGain = gain;
+			this.mythosGain = 0;
+			break;
+		}
+
+		case 'cthulhuMythosAwarded':{
+			let amountGained = 1;
+			if( !this.actor.mythosInsanityExperienced){
+				amountGained = 5;
+				await this.actor.experienceFirstMythosInsanity();
 			}
+			this.state.cthulhuMythosAwarded = true;
+			const cthulhuMythosSkill = this.actor.cthulhuMythosSkill;
+			const oldValue = cthulhuMythosSkill.data.data.adjustments.experience || 0;
+			if( cthulhuMythosSkill ) await cthulhuMythosSkill.update( {['data.adjustments.experience']: oldValue + amountGained});
+			this.mythosGain = amountGained;
 			break;
 		}
 
@@ -384,7 +411,7 @@ export class SanCheckCard extends ChatCardActor{
 		const htmlCardElement = $.parseHTML( html)[0];
 
 		//Attach the sanCheckCard object to the message.
-		htmlCardElement.dataset.object = escape(JSON.stringify(this, exclude__));
+		htmlCardElement.dataset.object = escape(JSON.stringify(this, replacer));
 
 		//Update the message.
 		const chatMessage = game.messages.get( this.messageId);
@@ -431,7 +458,7 @@ export class SanCheckCard extends ChatCardActor{
 		const html = await renderTemplate(SanCheckCard.template, chatCard);
 		const htmlCardElement = $.parseHTML( html)[0];
 		
-		htmlCardElement.dataset.object = escape(JSON.stringify(chatCard, exclude__));
+		htmlCardElement.dataset.object = escape(JSON.stringify(chatCard, replacer));
 		await chatCard.say( htmlCardElement.outerHTML);
 	}
 

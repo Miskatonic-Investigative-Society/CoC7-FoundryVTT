@@ -1,9 +1,3 @@
-/**
- * A simple and flexible system for world-building using an arbitrary collection of character and item attributes
- * Author: Atropos
- * Software License: GNU GPLv3
- */
-
 // Import Modules
 import { CoCActor } from './actors/actor.js';
 import { CoC7WeaponSheet } from './items/sheets/weapon-sheet.js';
@@ -29,16 +23,24 @@ import {CoC7Utilities} from './utilities.js';
 import {CoC7Parser} from './apps/parser.js';
 import { CoC7StatusSheet } from './items/sheets/status.js';
 import { CoC7Check } from './check.js';
+import { CoC7Menu } from './menu.js';
+import { OpposedCheckCard } from './chat/cards/opposed-roll.js';
+import { CombinedCheckCard } from './chat/cards/combined-roll.js';
+import { DamageCard } from './chat/cards/damage.js';
 
 Hooks.once('init', async function() {
 
 	game.CoC7 = {
 		macros:{
 			skillCheck: CoC7Utilities.skillCheckMacro,
-			weaponCheck: CoC7Utilities.weaponCheckMacro
+			weaponCheck: CoC7Utilities.weaponCheckMacro,
+			check: CoC7Utilities.checkMacro
+		},
+		cards:{
+			DamageCard: DamageCard
 		}
-		// ,enricher: CoC7Utilities.enrichHTML
 	};
+
 
 
 	/**
@@ -52,7 +54,6 @@ Hooks.once('init', async function() {
 
 	//TODO : remove debug hooks
 	CONFIG.debug.hooks = true;
-	// CONFIG.Combat.entityClass = CoC7Combat;
 	CONFIG.Actor.entityClass = CoCActor;
 	CONFIG.Item.entityClass = CoC7Item;
 	Combat.prototype.rollInitiative = rollInitiative;
@@ -113,6 +114,31 @@ Hooks.once('init', async function() {
 		}
 	});
 
+	// Allow player to unlock the sheet outside of creation mode.
+	game.settings.register( 'CoC7', 'selfRollWhisperTarget',{
+		name: 'SETTINGS.SelfRollWhisperTarget',
+		hint: 'SETTINGS.SelfRollWhisperTargetHint',
+		scope: 'world',
+		config: true,
+		default: 'everyone',
+		type: String,
+		choices: {
+			'nobody': 'SETTINGS.DoNotAdvise',
+			'owners': 'SETTINGS.AdviseOwnersOnly',
+			'everyone': 'SETTINGS.AdviseAllPlayer'
+		}
+	});
+
+	// Opposed rolls tie breaker.
+	game.settings.register('CoC7', 'opposedRollTieBreaker', {
+		name: 'SETTINGS.OpposedRollTieBreaker',
+		hint: 'SETTINGS.OpposedRollTieBreakerHint',
+		scope: 'wolrd',
+		config: true,
+		default: false,
+		type: Boolean
+	});
+
 	// Display result type.
 	game.settings.register('CoC7', 'displayResultType', {
 		name: 'SETTINGS.DisplayResultType',
@@ -128,6 +154,26 @@ Hooks.once('init', async function() {
 		scope: 'client',
 		config: true,
 		default: true,
+		type: Boolean
+	});
+
+	// Allow usage of a flat dice modifier.
+	game.settings.register('CoC7', 'allowFlatDiceModifier', {
+		name: 'SETTINGS.AllowFlatDiceModifier',
+		hint: 'SETTINGS.AllowFlatDiceModifierHint',
+		scope: 'world',
+		config: true,
+		default: false,
+		type: Boolean
+	});
+
+	// Allow usage of a flat threshold modifier.
+	game.settings.register('CoC7', 'allowFlatThresholdModifier', {
+		name: 'SETTINGS.AllowFlatThresholdModifier',
+		hint: 'SETTINGS.AllowFlatThresholdModifierHint',
+		scope: 'world',
+		config: true,
+		default: false,
 		type: Boolean
 	});
 	
@@ -194,6 +240,21 @@ Hooks.once('init', async function() {
 		config: true,
 		default: true,
 		type: Boolean
+	});
+
+	// Allow player to unlock the sheet outside of creation mode.
+	game.settings.register( 'CoC7', 'playerUnlockSheetMode',{
+		name: 'SETTINGS.PlayerUnlockSheetMode',
+		// hint: 'SETTINGS.PlayerCanUnlockSheetHint',
+		scope: 'world',
+		config: true,
+		default: 'always',
+		type: String,
+		choices: {
+			'always': 'SETTINGS.AlwaysEditable',
+			'creation': 'SETTINGS.CreationModeOnly',
+			'never': 'SETTINGS.NeverEditable'
+		}
 	});
 		
 	game.settings.register('CoC7', 'disregardAmmo', {
@@ -429,7 +490,7 @@ Hooks.once('setup', function() {
 			obj[e[0]] = e[1];
 			return obj;
 		}, {});
-	}	
+	}
 
 });
 
@@ -442,12 +503,23 @@ Hooks.on('updateChatMessage', (chatMessage, chatData, diff, speaker) => CoC7Chat
 Hooks.on('ready', async () =>{
 	await Updater.checkForUpdate();
 
+	// game.CoC7.menus = new CoC7Menu();
+
 	activateGlobalListener();
 	
 
 	game.socket.on('system.CoC7', data => {
 		if (data.type == 'updateChar')
 			CoC7Utilities.updateCharSheets();
+
+		if( game.user.isGM){
+			if( OpposedCheckCard.defaultConfig.type == data.type){
+				OpposedCheckCard.dispatch( data);
+			}
+			if( CombinedCheckCard.defaultConfig.type == data.type){
+				CombinedCheckCard.dispatch( data);
+			}
+		}
 	});
 
 	// "SETTINGS.BoutOfMadnessPhobiasIndex": "Phobias index",
@@ -550,50 +622,31 @@ Hooks.on('renderCoC7NPCSheet', (app, html, data) => CoC7NPCSheet.forceAuto(app, 
 // Hooks.on('updateActor', (actor, dataUpdate) => CoCActor.updateActor( actor, dataUpdate));
 // Hooks.on('updateToken', (scene, token, dataUpdate) => CoCActor.updateToken( scene, token, dataUpdate));
 
-// Hooks.on('chatMessage', (chatLog, message, chatData) => { console.log('chatMessage : '  + message);});
+Hooks.on('chatMessage', CoC7Utilities.ParseChatEntry);
 // Hooks.on('preCreateToken', ( scene, actor, options, id) => CoCActor.preCreateToken( scene, actor, options, id))
 // Hooks.on('createToken', ( scene, actor, options, id) => CoCActor.preCreateToken( scene, actor, options, id))
 // Hooks.on("renderChatLog", (app, html, data) => CoC7Item.chatListeners(html));
 
-Hooks.on('getSceneControlButtons', (buttons) => {
-	if( game.user.isGM){
-		let group = buttons.find(b => b.name == 'token');
-		group.tools.push({
-			toggle: true,
-			icon : 'fas fa-angle-double-up',
-			name: 'devphase',
-			active: game.settings.get('CoC7', 'developmentEnabled'),
-			title: game.settings.get('CoC7', 'developmentEnabled')? game.i18n.localize( 'CoC7.DevPhaseEnabled'): game.i18n.localize( 'CoC7.DevPhaseDisabled'),
-			onClick :async () => await CoC7Utilities.toggleDevPhase()
-		});
-		group.tools.push({
-			toggle: true,
-			icon : 'fas fas fa-user-edit',
-			name: 'charcreate',
-			active: game.settings.get('CoC7', 'charCreationEnabled'), 
-			title: game.settings.get('CoC7', 'charCreationEnabled')? game.i18n.localize( 'CoC7.CharCreationEnabled'): game.i18n.localize( 'CoC7.CharCreationDisabled'),
-			onClick :async () => await CoC7Utilities.toggleCharCreation()
-		});
-	}
-
-
-	// buttons.push({
-	// 	activeTool: 'diceroll',
-	// 	icon: 'game-icon game-icon-d10',
-	// 	layer: 'TokenLayer',
-	// 	name: 'token',
-	// 	title: 'CONTROLS.GroupBasic',
-	// 	tools:[
-	// 		{
-	// 			toggle: false,
-	// 			icon: 'game-icon game-icon-d10',
-	// 			name:'diceroll',
-	// 			title: 'roll some dice',
-	// 			onClick: async() => await CoC7Utilities.test()
-	// 		}
-	// 	],
-	// 	visible: true
-	// });
+Hooks.on('getSceneControlButtons', (/*controls*/) => {
+	// if( game.user.isGM){
+	// 	let group = controls.find(b => b.name == 'token');
+	// 	group.tools.push({
+	// 		toggle: true,
+	// 		icon : 'fas fa-angle-double-up',
+	// 		name: 'devphase',
+	// 		active: game.settings.get('CoC7', 'developmentEnabled'),
+	// 		title: game.settings.get('CoC7', 'developmentEnabled')? game.i18n.localize( 'CoC7.DevPhaseEnabled'): game.i18n.localize( 'CoC7.DevPhaseDisabled'),
+	// 		onClick :async () => await CoC7Utilities.toggleDevPhase()
+	// 	});
+	// 	group.tools.push({
+	// 		toggle: true,
+	// 		icon : 'fas fas fa-user-edit',
+	// 		name: 'charcreate',
+	// 		active: game.settings.get('CoC7', 'charCreationEnabled'), 
+	// 		title: game.settings.get('CoC7', 'charCreationEnabled')? game.i18n.localize( 'CoC7.CharCreationEnabled'): game.i18n.localize( 'CoC7.CharCreationDisabled'),
+	// 		onClick :async () => await CoC7Utilities.toggleCharCreation()
+	// 	});
+	// }
 });
 
 // Hooks.on('renderSceneControls', () => CoC7Utilities.updateCharSheets());
@@ -603,8 +656,13 @@ Hooks.on('renderJournalSheet', CoC7Parser.ParseSheetContent);
 Hooks.on('renderActorSheet', CoC7Parser.ParseSheetContent);
 // Chat command processing
 Hooks.on('preCreateChatMessage', CoC7Parser.ParseMessage);
+// Hooks.on('createChatMessage', CoC7Chat.createChatMessageHook);
+Hooks.on('renderChatMessage', CoC7Chat.renderChatMessageHook);
 // Sheet V2 css options
 Hooks.on('renderCoC7CharacterSheetV2', CoC7CharacterSheetV2.renderSheet);
+// Hooks.on('dropCanvasData', CoC7Parser.onDropSomething);
+Hooks.on('renderSceneControls', CoC7Menu.renderMenu);
+
 
 tinyMCE.PluginManager.add('CoC7_Editor_OnDrop', function (editor) {
 	editor.on('drop', (event) => CoC7Parser.onEditorDrop(event, editor));
@@ -621,3 +679,4 @@ function activateGlobalListener(){
 function _onLeftClick( event){
 	return event.shiftKey;
 }
+

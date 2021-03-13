@@ -26,7 +26,7 @@ export class CoC7RangeInitiator{
 		this._targets = [];
 		[...game.user.targets].forEach( t =>
 		{
-			const target = new CoC7RangeTarget(`${t.scene.id}.${t.id}`);
+			const target = new CoC7RangeTarget(`${t.scene.id}.${t.id}`);//
 			target.token = t;
 			this._targets.push(target);
 		});
@@ -37,8 +37,8 @@ export class CoC7RangeInitiator{
 			this._targets.push(target);
 		}
 		if( actorKey) {
-			const actor = chatHelper.getActorFromKey( actorKey);
-			this.token = chatHelper.getTokenFromKey( actorKey);
+			const actor = chatHelper.getActorFromKey( actorKey);//REFACTORING (2)
+			this.token = chatHelper.getTokenFromKey( actorKey);//REFACTORING (2)
 			if( this.token) this.tokenKey = `${game.scenes.active.id}.${this.token._id?this.token._id:this.token.data._id}`;
 			if( itemId) {
 				const weapon = actor.getOwnedItem( itemId);
@@ -99,7 +99,7 @@ export class CoC7RangeInitiator{
 	}
 
 	get actor(){
-		return chatHelper.getActorFromKey( this.actorKey);
+		return chatHelper.getActorFromKey( this.actorKey);//REFACTORING (2)
 	}
 
 	get item(){
@@ -493,7 +493,6 @@ export class CoC7RangeInitiator{
 		check.targetKey = target.actorKey;
 
 		check.roll();
-		// const result = await check.shortResult( details);
 		return check;
 	}
 
@@ -666,7 +665,7 @@ export class CoC7RangeInitiator{
 
 			let targetName = 'dummy';
 			let target = chatHelper.getTokenFromKey( h.roll.targetKey);
-			if( !target) target = chatHelper.getActorFromKey( h.roll.targetKey);
+			if( !target) target = chatHelper.getActorFromKey( h.roll.targetKey);//REFACTORING (2)
 			if( target) targetName = target.name;
 
 
@@ -687,11 +686,18 @@ export class CoC7RangeInitiator{
 
 	async dealDamage(){
 		for (let dIndex = 0; dIndex < this.damage.length; dIndex++) {
-			const actor = chatHelper.getActorFromKey( this.damage[dIndex].targetKey);
+			const actor = chatHelper.getActorFromKey( this.damage[dIndex].targetKey);//REFACTORING (2)
+			this.damage[dIndex].totalTaken = 0;
+			this.damage[dIndex].totalAbsorbed = 0;
 			for( let rIndex = 0; rIndex < this.damage[dIndex].rolls.length; rIndex++){
-				await actor.dealDamage( this.damage[dIndex].rolls[rIndex].total);
+				const dealtAmount = await actor.dealDamage( this.damage[dIndex].rolls[rIndex].total);
+				this.damage[dIndex].totalTaken += dealtAmount;
+				this.damage[dIndex].rolls[rIndex].taken = dealtAmount;
+				this.damage[dIndex].rolls[rIndex].absorbed = this.damage[dIndex].rolls[rIndex].total - dealtAmount;
+				this.damage[dIndex].totalAbsorbed += this.damage[dIndex].rolls[rIndex].total - dealtAmount;
 			}
 			this.damage[dIndex].dealt = true;
+			this.damage[dIndex].resultString = game.i18n.format('CoC7.rangeCombatDamageArmor', {name : this.damage[dIndex].targetName, total: this.damage[dIndex].totalTaken, armor: this.damage[dIndex].totalAbsorbed });
 		}
 		this.damageDealt = true;
 		this.updateChatCard();
@@ -763,7 +769,7 @@ export class CoC7RangeTarget{
 	
 
 	get actor(){
-		if( this.actorKey && !this._actor) this._actor = chatHelper.getActorFromKey(this.actorKey);
+		if( this.actorKey && !this._actor) this._actor = chatHelper.getActorFromKey(this.actorKey);//REFACTORING (2)
 		return this._actor;
 	}
 
