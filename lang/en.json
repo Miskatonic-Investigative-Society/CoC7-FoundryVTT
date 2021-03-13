@@ -117,6 +117,9 @@
 "CoC7.check.FlagForDevelopment": "Award experience",
 "CoC7.IncreaseSuccessLevel": "Increase success",
 "CoC7.check.DecreaseSuccessLevel": "Decrease success",
+"CoC7.RollSecretDice": "Gamemaster privately rolled some dice",
+"CoC7.KeeperSentDecoy": "Decoy roll sent to players",
+"CoC7.FakeRoll": "Send a decoy roll to players",
 
 "CoC7.ConstitutionCheck": "Constitution check",
 
@@ -598,5 +601,10 @@
 "SETTINGS.AllowFlatThresholdModifier": "Flat value modifier",
 "SETTINGS.AllowFlatThresholdModifierHint":"Allows checks succes value to be modified by a flat value." ,
 "SETTINGS.OpposedRollTieBreaker": "Opposed rolls Viriato139ac tie breaker",
-"SETTINGS.OpposedRollTieBreakerHint": "In case of a tie during opposed roll, winner is determined by lowest rolled value, not higher skill."
+"SETTINGS.OpposedRollTieBreakerHint": "In case of a tie during opposed roll, winner is determined by highest rolled value, not higher skill.",
+"SETTINGS.SelfRollWhisperTarget": "Self roll notification:",
+"SETTINGS.SelfRollWhisperTargetHint": "As a GM, when doing self check roll, who do you want to send a notification to.",
+"SETTINGS.DoNotAdvise": "Keep it for yourself.",
+"SETTINGS.AdviseOwnersOnly": "Notify actor's owner",
+"SETTINGS.AdviseAllPlayer": "Notify all players"
 }

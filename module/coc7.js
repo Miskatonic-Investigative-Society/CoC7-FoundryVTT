@@ -114,6 +114,21 @@ Hooks.once('init', async function() {
 		}
 	});
 
+	// Allow player to unlock the sheet outside of creation mode.
+	game.settings.register( 'CoC7', 'selfRollWhisperTarget',{
+		name: 'SETTINGS.SelfRollWhisperTarget',
+		hint: 'SETTINGS.SelfRollWhisperTargetHint',
+		scope: 'world',
+		config: true,
+		default: 'everyone',
+		type: String,
+		choices: {
+			'nobody': 'SETTINGS.DoNotAdvise',
+			'owners': 'SETTINGS.AdviseOwnersOnly',
+			'everyone': 'SETTINGS.AdviseAllPlayer'
+		}
+	});
+
 	// Opposed rolls tie breaker.
 	game.settings.register('CoC7', 'opposedRollTieBreaker', {
 		name: 'SETTINGS.OpposedRollTieBreaker',
@@ -641,6 +656,8 @@ Hooks.on('renderJournalSheet', CoC7Parser.ParseSheetContent);
 Hooks.on('renderActorSheet', CoC7Parser.ParseSheetContent);
 // Chat command processing
 Hooks.on('preCreateChatMessage', CoC7Parser.ParseMessage);
+// Hooks.on('createChatMessage', CoC7Chat.createChatMessageHook);
+Hooks.on('renderChatMessage', CoC7Chat.renderChatMessageHook);
 // Sheet V2 css options
 Hooks.on('renderCoC7CharacterSheetV2', CoC7CharacterSheetV2.renderSheet);
 // Hooks.on('dropCanvasData', CoC7Parser.onDropSomething);
