@@ -15,7 +15,48 @@ import { CombinedCheckCard } from './chat/cards/combined-roll.js';
 import { InteractiveChatCard } from './chat/interactive-chat-card.js';
 import { DamageCard } from './chat/cards/damage.js';
 
+const CHAT_COC7_MESSAGE = {
+	FAKEROLL: '<div class="dice-roll"><div class="dice-result"><div class="dice-formula">???</div><h4 class="dice-total">?</h4></div></div>'
+};
 export class CoC7Chat{
+
+	// static createChatMessageHook(chatMessage, options, user){
+	// }
+
+	static renderChatMessageHook(chatMessage, html){
+		if( chatMessage.getFlag( 'CoC7', 'GMSelfRoll') && !game.user.isGM){
+			html.find('.whisper-to').remove();
+			html.find('.flavor-text').replaceWith( `<span class="flavor-text">${game.i18n.localize('CoC7.RollSecretDice')}</span>` );
+			html.find('.message-content').replaceWith(`<div class="message-content">${CHAT_COC7_MESSAGE.FAKEROLL}</div>`);
+		}
+
+		if( chatMessage.getFlag('CoC7', 'removeWisperTargets') && !game.user.isGM)
+			html.find('.whisper-to').remove();
+
+		if( chatMessage.getFlag('CoC7', 'fakeRoll')  && game.user.isGM){
+			html.find('.flavor-text').replaceWith( game.i18n.localize('CoC7.KeeperSentDecoy'));
+			html.find('.message-content').remove();
+		}
+	}
+
+	static fakeRollMessage(){
+		const chatData = {
+			user: game.user._id,
+			flavor: game.i18n.localize('CoC7.RollSecretDice'),
+			whisper: game.users.players,
+			type: CHAT_MESSAGE_TYPES.WHISPER,
+			flags: {
+				CoC7:{
+					GMSelfRoll: false,
+					removeWisperTargets: true,
+					fakeRoll: true
+				}
+			},
+			content: CHAT_COC7_MESSAGE.FAKEROLL
+		};
+
+		ChatMessage.create(chatData);
+	}
 
 	//TODO remplacer les getElementsByxxxx par querySelector
 	

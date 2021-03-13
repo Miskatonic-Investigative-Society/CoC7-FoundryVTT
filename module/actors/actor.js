@@ -2368,6 +2368,15 @@ export class CoCActor extends Actor {
 		return skillList;
 	}
 
+	get owners(){
+		return game.users.filter( u => this.hasPerm( u, 'OWNER')  && !u.isGM);
+	}
+
+	get characterUser(){
+		if( !this.isPC) return null;
+		return game.users.filter( u => u.character.id == this.id)[0];
+	}
+
 	async dealDamage(amount, options={}){
 		let total = parseInt(amount);
 		// let initialHp = this.hp;
