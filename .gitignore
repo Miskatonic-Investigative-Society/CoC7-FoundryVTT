@@ -5,3 +5,6 @@ package.json
 package-lock.json
 node_modules
 *.bak
+._sync*
+.owncloud*
+Desktop.ini

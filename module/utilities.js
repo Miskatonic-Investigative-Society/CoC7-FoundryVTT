@@ -1,5 +1,7 @@
 import { CoC7Check } from './check.js';
 import { CoC7Item } from './items/item.js';
+import { RollDialog } from './apps/roll-dialog.js';
+import { chatHelper } from './chat/helper.js';
 
 export class CoC7Utilities {
 	// static test(event){
@@ -12,6 +14,87 @@ export class CoC7Utilities {
 
 	// 	actor.inflictMajorWound();
 	// }
+
+
+	static isFormula(x){
+		if( typeof( x) != 'string') return false;
+		if( !isNaN(Number(x))) return false;
+		return Roll.validate( x);
+	}
+
+	static ParseChatEntry( html,content){
+		const regX = /(\S+)/g;
+		const terms = content.match(regX);
+		if( terms[0]?.toLowerCase() == '/r' && terms[1]?.toLowerCase().startsWith( '1d%')){
+			CoC7Utilities._ExecCommand( content);
+			return false;
+		}
+	}
+
+	static async _ExecCommand( content){
+		const options = content.toLowerCase().split(' ')?.join('')?.replace( '/r1d%', '');
+		const check = new CoC7Check();
+		if( options.length){
+			let escaped = options;
+			let threshold = undefined;
+			let difficulty = CoC7Check.difficultyLevel.regular;
+			let diceModifier = 0;
+			let ask = false;
+			let flatDiceModifier = undefined;
+			let flatThresholdModifier = undefined;
+			const thresholdRegex = new RegExp('[^\\(]+(?=\\))', 'g');
+			const thresholdStr = escaped.match( thresholdRegex);
+			if( thresholdStr && thresholdStr.length){
+				threshold = Number( thresholdStr[0]);
+				thresholdStr.forEach( match => escaped = escaped.replace( `(${match})`, ''));
+			}
+			const difficultydRegex = new RegExp('[^\\[]]+(?=\\])', 'g');
+			const difficultyStr = escaped.match( difficultydRegex);
+			if( difficultyStr && difficultyStr.length){
+				difficulty = CoC7Utilities.convertDifficulty( difficultyStr[0]);
+				difficultyStr.forEach( match => escaped = escaped.replace( `[${match}]`, ''));
+			}
+			if( escaped.includes( '?')){
+				ask = true;
+				escaped = escaped.replace( '?', '');
+			}
+			if( !isNaN(Number(escaped))) diceModifier = Number(escaped);
+
+			if( ask){
+				const dialogOptions={
+					threshold: threshold,
+					modifier: diceModifier,
+					difficulty: difficulty,
+					askValue: true
+				};
+				const usage = await RollDialog.create(dialogOptions);
+				if( usage) {
+					diceModifier = Number(usage.get('bonusDice'));
+					difficulty = Number(usage.get('difficulty'));
+					threshold = Number( usage.get('threshold')) || threshold;
+					flatDiceModifier = Number( usage.get('flatDiceModifier'));
+					flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
+				}
+			}
+
+			check.diceModifier = diceModifier || 0;
+			check.difficulty = difficulty || CoC7Check.difficultyLevel.regular;
+			check.rawValue = threshold;
+			check.flatDiceModifier = flatDiceModifier;
+			check.flatThresholdModifier = flatThresholdModifier;
+			if( threshold) check.rawValue = !isNaN(threshold)?threshold:undefined;
+		}
+		const speaker = ChatMessage.getSpeaker();
+		if( speaker.token && speaker.scene){
+			const actor = chatHelper.getActorFromKey( `${speaker.scene}.${speaker.token}`);//REFACTORING (2) +++ why speaker.scene.
+			if( actor) check.actor = actor;
+		} else if( speaker.actor){
+			const actor = game.actors.get( speaker.actor);
+			if( actor) check.actor = actor;
+		}
+		check.roll();
+		check.toMessage();
+	}
 
 	static async test(){
 		ui.notifications.infos('Do some stuff');
@@ -175,6 +258,10 @@ export class CoC7Utilities {
 		actor.weaponCheck( weapon, event.shiftKey);
 	}
 
+	static async checkMacro( threshold = undefined, event = null){
+		await CoC7Utilities.rollDice( event, {threshold: threshold});
+	}
+
 	static async createMacro(bar, data, slot){
 		if ( data.type !== 'Item' ) return;
 
@@ -227,7 +314,7 @@ export class CoC7Utilities {
 	static async toggleDevPhase(){
 		const isDevEnabled = game.settings.get('CoC7', 'developmentEnabled');
 		await game.settings.set( 'CoC7', 'developmentEnabled', !isDevEnabled);
-		let group = ui.controls.controls.find(b => b.name == 'token');
+		let group = game.CoC7.menus.controls.find(b => b.name == 'main-menu');
 		let tool = group.tools.find( t => t.name == 'devphase');
 		tool.title = game.settings.get('CoC7', 'developmentEnabled')? game.i18n.localize( 'CoC7.DevPhaseEnabled'): game.i18n.localize( 'CoC7.DevPhaseDisabled');
 		ui.notifications.info( game.settings.get('CoC7', 'developmentEnabled')? game.i18n.localize( 'CoC7.DevPhaseEnabled'): game.i18n.localize( 'CoC7.DevPhaseDisabled'));
@@ -241,7 +328,7 @@ export class CoC7Utilities {
 	static async toggleCharCreation(){
 		const isCharCreation = game.settings.get('CoC7', 'charCreationEnabled');
 		await game.settings.set( 'CoC7', 'charCreationEnabled', !isCharCreation);
-		let group = ui.controls.controls.find(b => b.name == 'token');
+		let group = game.CoC7.menus.controls.find(b => b.name == 'main-menu');
 		let tool = group.tools.find( t => t.name == 'charcreate');
 		tool.title = game.settings.get('CoC7', 'charCreationEnabled')? game.i18n.localize( 'CoC7.CharCreationEnabled'): game.i18n.localize( 'CoC7.CharCreationDisabled');
 		ui.notifications.info( game.settings.get('CoC7', 'charCreationEnabled')? game.i18n.localize( 'CoC7.CharCreationEnabled'): game.i18n.localize( 'CoC7.CharCreationDisabled'));
@@ -250,6 +337,58 @@ export class CoC7Utilities {
 			type : 'updateChar'
 		});		
 		CoC7Utilities.updateCharSheets();
+	}
+
+	static async rollDice( event, options ={}){
+
+		options.askValue = !options.threshold;
+		let diceModifier, difficulty, flatDiceModifier, flatThresholdModifier;
+		let threshold = options.threshold;
+
+		if( undefined !== options.modifier) diceModifier = Number(options.modifier);
+		if( undefined !== options.difficulty) difficulty = CoC7Utilities.convertDifficulty(options.difficulty);
+
+		if( !event?.shiftKey && !options.fastForward){
+			const usage = await RollDialog.create(options);
+			if( usage) {
+				diceModifier = Number(usage.get('bonusDice'));
+				difficulty = Number(usage.get('difficulty'));
+				threshold = Number( usage.get('threshold'));
+				flatDiceModifier = Number( usage.get('flatDiceModifier'));
+				flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
+			}
+		}
+
+		const actors = [];
+
+		if( game.user.isGM && canvas.tokens.controlled.length){
+			canvas.tokens.controlled.forEach( token =>{  actors.push( token.actor.tokenKey);  });
+		} else if( game.user.character){
+			actors.push(game.user.character.tokenKey);
+		}
+
+		actors.forEach( tk => {
+			const check = new CoC7Check();
+			check.diceModifier = diceModifier || 0;
+			check.difficulty = difficulty || CoC7Check.difficultyLevel.regular;
+			check.rawValue = threshold;
+			check.flatDiceModifier = flatDiceModifier;
+			check.flatThresholdModifier = flatThresholdModifier;
+			check.actor = tk;
+			check.roll();
+			check.toMessage();
+		});
+
+		if( !actors.length){
+			const check = new CoC7Check();
+			check.diceModifier = diceModifier || 0;
+			check.difficulty = difficulty || CoC7Check.difficultyLevel.regular;
+			check.rawValue = threshold;
+			check.flatDiceModifier = flatDiceModifier;
+			check.flatThresholdModifier = flatThresholdModifier;
+			check.roll();
+			check.toMessage();
+		}
 	}
 
 	static updateCharSheets(){

@@ -22,6 +22,65 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+version 0.5.3 :
+
+* Bug correction:
+  * Corrected a bug where editor in archetype sheet did not display correctly.
+  * #390 Character sheet elements changed from px to rem.
+* Check can use selfRoll mode.
+  * An option is added to specify who will receive a notification in case of a GM self roll.
+  * Defaulted to all players (Foundry default behaviour).
+* #401 addressed thanks to @jantoniomartin !
+  * During character setup, using points, you can now roll luck.
+  * Luck is not part of the point budget
+  * Buttons added to increase/deacrease characteristic.
+* #359-1 Armor can now be defined as a roll string (1D6).
+* Changes in damage cards.
+  * Damage cards have been reworked.
+  * A switch added to ignore armor.
+  * An armor field added to change armor.
+  * Armor can be defined as a roll formula.
+  * 2 switches added to toggle critical/impale.
+* Changed in range cards.
+  * Damage mitigated will be displayed on the damage roll.
+* Implementation of system specific controls.
+  * Keeper's tools for GM will allow to enable/disable creation and development modes.
+  * Keeper's tools has a button to simulate a fake GM self roll.
+  * Dice will allow to roll a generic check.
+* Implementation of opposed rolls.
+  * Right click on any element to include it in an opposed roll.
+  * As long as the card is opened all rolls will be added to that card.
+  * Luck can be spend on checks.
+  * Roll winner will be highlighted in gold.
+  * Tie will be highlighted in red.
+  * Rolls are sorted by success/check value.
+  * Optional rule from José Lozano/Viriato139ac. In a tie, the highest roll wins.
+* Opposed roll cards can be used for combat.
+  * A switch is added to toggle from regular opposed roll to (range) combat.
+  * If needed, a toggle switch allows to change the tie breaker (from attacker to defender win).
+  * Opposed rolls triggered from combat panel will automatically switch the card in combat.
+  * Opposed combat roll cards can only have 2 opponents.
+  * As long as the card is not closed, the check of the opponent will not be revealed.
+* Implementation of combined rolls.
+  * Alt + right click on any element to include it in a combined roll.
+  * As long as the card is opened all rolls will be added to that card.
+  * Click the roll button to trigger the roll.
+  * Only keeper and first character added to the card will see the button.
+* Implementation of /r 1d% command.
+  * This will trigger a D%.
+  * You can add options :
+    * (xx) for a threshold value.
+    * +x/-x for x bonus/penalty dice.
+    * [xx] for  a difficulty : ?, +, ++, +++ = unknown, hard, extreme, critical
+    * ? to force a bonus selection windows [bug] works once only....
+* new macro check( [Threshold, [event]]) allow to roll a generic check. `game.CoC7.macros.check(75, event)`
+* #385 Optional flat dice and threshold modifier added.
+  * Disabled by default, can be enabled in options.
+* Actors of type 'character' are now created with vision and linked actor data by default.
+* German translation updated thanks to acd-jake.
+* Português (Brasil) translation updated thanks to Castanho.
+* Taiwanese Mandarin and Chinese translations updated thanks to Zeteticl.
+
 verison 0.5.2 :
 
 * Bug correction:
@@ -53,7 +112,7 @@ version 0.5.0 :
   * holding alt while clicking on sanity will open a dialogue to enter sanity loss (min and max).
   * holding shift in the mean time will fast forward the bonus/penalty/difficulty selection dialogue.
   * holding ctrl in the mean time will, if you're the GM, create a CoC7 link in the chat log.
-* Option added to allow/prevent players from unlocking sheets.
+* #342 Option added to allow/prevent players from unlocking sheets.
   * When unlocking is disabled for players, only keeper can unlock the sheet.
   * If the keeper unlock the sheet the player will see an unlocked sheet.
   * Upon exiting creation mode, all sheets get locked.
@@ -604,6 +663,6 @@ Version 0.1.3 :
 * [x] Automatic skill assignment when adding a weapon.  
 * [x] Combat automation (calculation of difficulty, assignement of damage, opposed check...).  
 * [x] Implement pushed rolls.  
-* [ ] Implement advanced rolls (opposed, combined etc…).  
-* [ ] Implement car chases.  
+* [x] Implement advanced rolls (opposed, combined etc…).  
+* [ ] Implement car chases.
 * [x] Automation of character creation.

@@ -5,38 +5,6 @@ import { COC7 } from '../config.js';
  * Override and extend the basic :class:`Item` implementation
  */
 export class CoC7Item extends Item {
-	// /** @override */
-	// prepareEmbeddedEntities() {
-	// }
-	
-
-	/**
-   * Roll the item to Chat, creating a chat card which contains follow up attack or damage roll options
-   * @return {Promise}
-   */
-	// DEPRECATED
-	// async roll() {
-	// 	const token = this.actor.token;
-	// 	const templateData = {
-	// 		actor: this.actor,
-	// 		tokenId: token ? `${token.scene._id}.${token.id}` : null,
-	// 		item: this.data
-	// 	};
-
-	// 	const template = 'systems/CoC7/templates/chat/skill-card.html';
-	// 	const html = await renderTemplate(template, templateData);
-				
-	// 	// TODO change the speaker for the token name not actor name
-	// 	const speaker = ChatMessage.getSpeaker({actor: this.actor});
-	// 	if( token) speaker.alias = token.name;
-
-	// 	await ChatMessage.create({
-	// 		user: game.user._id,
-	// 		speaker,
-	// 		content: html
-	// 	});
-	// }
-
 	static flags = {
 		malfunction: 'malfc'
 	}
@@ -548,12 +516,16 @@ export class CoC7Item extends Item {
 		const tokenKey = card.dataset.tokenId;
 		if (tokenKey) {
 			const [sceneId, tokenId] = tokenKey.split('.');
-			const scene = game.scenes.get(sceneId);
-			if (!scene) return null;
-			const tokenData = scene.getEmbeddedEntity('Token', tokenId);
-			if (!tokenData) return null;
-			const token = new Token(tokenData);
-			return token.actor;
+			if( 'TOKEN' == sceneId){
+				return game.actors.tokens[tokenId];//REFACTORING (2)
+			} else {
+				const scene = game.scenes.get(sceneId);
+				if (!scene) return null;
+				const tokenData = scene.getEmbeddedEntity('Token', tokenId);
+				if (!tokenData) return null;
+				const token = new Token(tokenData);
+				return token.actor;
+			}
 		}
 
 		// Case 2 - use Actor ID directory
@@ -678,5 +650,10 @@ export class CoC7Item extends Item {
 
 	get impale(){
 		return this.data.data.properties.impl;
+	}
+
+	get isDodge(){
+		if( 'skill' != this.type) return false;
+		return this.name.toLowerCase() == game.i18n.localize( 'CoC7.DodgeSkillName').toLowerCase();
 	}
 }

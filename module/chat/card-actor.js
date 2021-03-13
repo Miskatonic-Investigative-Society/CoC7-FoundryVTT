@@ -31,7 +31,7 @@ export class ChatCardActor{
     
 	get actor(){
 		if( !this.actorKey) return null;
-		return chatHelper.getActorFromKey( this.actorKey);
+		return chatHelper.getActorFromKey( this.actorKey);//REFACTORING (2)
 	}
 
 	get token(){
@@ -68,7 +68,7 @@ export class ChatCardActor{
 				this._targetToken = chatHelper.getTokenFromKey( this._targetKey);
 			} else {
 				this._targetToken = this.targetedTokens.pop();
-				if( this._targetToken) this._targetKey = `${this._targetToken.scene._id}.${this._targetToken.id}`;
+				if( this._targetToken) this._targetKey = `${this._targetToken.scene._id}.${this._targetToken.id}`; //REFACTORING (2)
 				else {
 					this._targetToken = null;
 				}
@@ -80,7 +80,7 @@ export class ChatCardActor{
 	get targetActor(){
 		if( !this._targetActor){
 			if( this.targetToken) this._targetActor = this.targetToken.actor;
-			else this._targetActor = chatHelper.getActorFromKey( this._targetKey);
+			else this._targetActor = chatHelper.getActorFromKey( this._targetKey);//REFACTORING (2)
 		}
 		return this._targetActor;
 	}

@@ -42,41 +42,45 @@
 			.item{
 				.item-controls{
 					font-family: system-ui;
-					font-size: 12px;
+					font-size: 0.75rem;
 				}
 				color: var(--main-sheet-front-color);
 				display: grid;
-				grid-template-columns: 15px auto 23px 23px 23px 23px 23px;
+				grid-template-columns: 1rem auto 1.3rem 1.3rem 1.3rem 1.3rem 1.3rem;
 				align-items: center;
 				
 				&.pulpCharacter{
-					grid-template-columns: 30px auto 23px 23px 23px 23px 23px 23px;
+					grid-template-columns: 1.875rem auto 1.3rem 1.3rem 1.3rem 1.3rem 1.3rem 1.3rem;
 				}
 
-				grid-template-rows: 16px;
+				grid-template-rows: 1rem;
 				border-bottom: 1px solid var(--main-sheet-front-color);
-				margin-right: 8px;
+				margin-right: 0.5rem;
 
 				.flagged4dev{
 					color: goldenrod;
 				}
 
 				span{
-					height: 16px;
-					line-height: 16px;
+					height: 1rem;
+					line-height: 1rem;
+					padding: 0 1px;
+					margin: 0;
 					font-size: 0.8rem;
+					text-align: left;
 					color: var(--main-sheet-front-color);
 				}
 
 				input{
-					height: 16px;
-					line-height: 16px;
+					height: 1rem;
+					line-height: 1rem;
 					font-size: 0.8rem;
 					color: var(--main-sheet-front-color);
 					background-color: rgba(0, 0, 0, 0.1);
 					padding: 0 1px;
 					margin: 0;
 					text-align: right;
+					min-width: 0;
 				}
 
 				.adjustment-value{

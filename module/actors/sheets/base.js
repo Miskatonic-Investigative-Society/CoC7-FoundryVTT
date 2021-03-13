@@ -3,12 +3,15 @@ import { CoC7Check } from '../../check.js';
 import { COC7 } from '../../config.js';
 import { CoC7MeleeInitiator } from '../../chat/combat/melee-initiator.js';
 import { CoC7RangeInitiator } from '../../chat/rangecombat.js';
-import { CoC7DamageRoll } from '../../chat/damagecards.js';
+// import { CoC7DamageRoll } from '../../chat/damagecards.js';
 import { CoC7ConCheck } from '../../chat/concheck.js';
 import { chatHelper } from '../../chat/helper.js';
 import { CoC7Parser } from '../../apps/parser.js';
 import { SanDataDialog } from '../../apps/sandata-dialog.js';
 import { SanCheckCard } from '../../chat/cards/san-check.js';
+import { OpposedCheckCard } from '../../chat/cards/opposed-roll.js';
+import { CombinedCheckCard } from '../../chat/cards/combined-roll.js';
+import { DamageCard } from '../../chat/cards/damage.js';
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -299,7 +302,7 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 
 			const token = this.actor.token;
-			data.tokenId = token ? `${token.scene._id}.${token.id}` : null;
+			data.tokenId = token ? `${token.scene?._id?token.scene._id:'TOKEN'}.${token.id}` : null;  //REFACTORING (2)
 
 			data.hasEmptyValueWithFormula = false;
 			if( data.data.characteristics){
@@ -390,7 +393,7 @@ export class CoC7ActorSheet extends ActorSheet {
 	}
 
 	get tokenKey(){
-		if( this.token) return `${this.token.scene._id}.${this.token.data._id}`;
+		if( this.token) return `${this.token.scene?._id?this.token.scene._id:'TOKEN'}.${this.token.data._id}`;  //REFACTORING (2)
 		return this.actor.id;
 	}
 
@@ -415,6 +418,10 @@ export class CoC7ActorSheet extends ActorSheet {
 			html.find('.attribute-label').on( 'dragstart', (event)=> this._onDragAttribute(event));
 			html.find('.san-check').on( 'dragstart', (event)=> this._onDragSanCheck(event));
 
+			html.find('.characteristic-label').contextmenu(this._onOpposedRoll.bind(this));
+			html.find('.skill-name.rollable').contextmenu(this._onOpposedRoll.bind(this));
+			html.find('.attribute-label.rollable').contextmenu(this._onOpposedRoll.bind(this));
+			html.find('.weapon-name.rollable').contextmenu(this._onOpposedRoll.bind(this));
 
 			html.find('.characteristic-label').click(this._onRollCharacteriticTest.bind(this));
 			html.find('.skill-name.rollable').click(this._onRollSkillTest.bind(this));
@@ -810,7 +817,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		const itemId = event.currentTarget.closest('li').dataset.itemId;
 		const fastForward = event.shiftKey;
 		const weapon = this.actor.getOwnedItem(itemId);
-		const actorKey = !this.token? this.actor.actorKey : `${this.token.scene._id}.${this.token.data._id}`;
+		const actorKey = !this.token? this.actor.actorKey : `${this.token.scene?._id?this.token.scene._id:'TOKEN'}.${this.token.data._id}`; //REFACTORING (2)
 
 		if((event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM){
 			const linkData = {
@@ -871,6 +878,8 @@ export class CoC7ActorSheet extends ActorSheet {
 			if( usage) {
 				check.diceModifier = usage.get('bonusDice');
 				check.difficulty = usage.get('difficulty');
+				check.flatDiceModifier = Number( usage.get('flatDiceModifier'));
+				check.flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
 			}
 		}
 
@@ -889,9 +898,74 @@ export class CoC7ActorSheet extends ActorSheet {
 		event.preventDefault();
 		const itemId = event.currentTarget.closest('.weapon').dataset.itemId;
 		const range = event.currentTarget.closest('.weapon-damage').dataset.range;
-		const rollCard = new CoC7DamageRoll( itemId, this.actor.tokenKey, null, event.shiftKey);
-		rollCard.rollDamage( range);
+		const damageChatCard = new DamageCard({ fastForward: event.shiftKey, range: range});
+		damageChatCard.actorKey = this.actor.tokenKey;
+		damageChatCard.itemId = itemId;
+		damageChatCard.updateChatCard();
 		// console.log( 'Weapon damage Clicked');
+	}
+
+	async _onOpposedRoll( event){
+		event.preventDefault();
+
+
+
+		if( !event.altKey){
+			
+			// if( event.ctrlKey) ui.notifications.info('CTRL pressed!');
+			let data = {
+				type: OpposedCheckCard.defaultConfig.type,
+				combat: event.currentTarget.classList?.contains('combat'),
+				action: 'new'};
+			const roll = new CoC7Check();
+			roll.actor = event.currentTarget.closest('form').dataset.tokenId || event.currentTarget.closest('form').dataset.actorId;
+			roll.characteristic = event.currentTarget.parentElement.dataset.characteristic;
+			roll.attribute = event.currentTarget.parentElement.dataset.attrib;
+			roll.item = event.currentTarget.closest('.item')?.dataset.itemId;
+			roll.weaponAltSkill = event.currentTarget.classList.contains( 'alternativ-skill');
+			roll.skillId = event.currentTarget.closest('.item')?.dataset.skillId;
+			roll.rollMode = game.settings.get('core', 'rollMode');
+			roll.initiator = game.user.id;
+
+			if( 'db' == roll.attrib) return;
+
+			if( !event.shiftKey) {
+				const usage = await RollDialog.create( {
+					disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224),
+					disableFlatDiceModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
+				if( usage) {
+					roll.diceModifier = Number(usage.get('bonusDice'));
+					roll.difficulty = Number(usage.get('difficulty'));
+					roll.flatDiceModifier = Number( usage.get('flatDiceModifier'));
+					roll.flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
+				}
+			}
+
+			roll.denyPush = true; // Opposed rolled can't be pushed.
+
+			roll._perform();
+
+			data.roll = roll.JSONRollData;
+
+			OpposedCheckCard.dispatch(data);
+		} else {
+			let data = {
+				type: CombinedCheckCard.defaultConfig.type,
+				action: 'new'};
+			const roll = new CoC7Check();
+			roll.actor = event.currentTarget.closest('form').dataset.tokenId || event.currentTarget.closest('form').dataset.actorId;
+			roll.characteristic = event.currentTarget.parentElement.dataset.characteristic;
+			roll.attribute = event.currentTarget.parentElement.dataset.attrib;
+			roll.skillId = event.currentTarget.closest('.item')?.dataset.skillId;
+			roll.rollMode = game.settings.get('core', 'rollMode');
+			roll.initiator = game.user.id;
+
+			if( 'db' == roll.attrib) return;
+
+			data.roll = roll.JSONRollData;
+
+			CombinedCheckCard.dispatch(data);
+		}
 	}
 
 	/**
@@ -899,19 +973,23 @@ export class CoC7ActorSheet extends ActorSheet {
 	 * @	param {Event} event   The originating click event
 	 * @private
 	*/
-	async _onRollCharacteriticTest(event) {
+	async _onRollCharacteriticTest(event) { //FLATMODIF
 		event.preventDefault();
 
 		const actorId = event.currentTarget.closest('form').dataset.actorId;
 		let tokenKey = event.currentTarget.closest('form').dataset.tokenId;
 		const characteristic = event.currentTarget.parentElement.dataset.characteristic;
 
-		let difficulty, modifier;
+		let difficulty, modifier, flatDiceModifier, flatThresholdModifier;
 		if( !event.shiftKey) {
-			const usage = await RollDialog.create();
+			const usage = await RollDialog.create( {
+				disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224),
+				disableFlatDiceModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
 			if( usage) {
 				modifier = Number(usage.get('bonusDice'));
 				difficulty = Number(usage.get('difficulty'));
+				flatDiceModifier = Number( usage.get('flatDiceModifier'));
+				flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
 			}
 		}
 
@@ -931,12 +1009,14 @@ export class CoC7ActorSheet extends ActorSheet {
 			if( undefined != modifier ) check.diceModifier = modifier;
 			if( undefined != difficulty ) check.difficulty = difficulty;
 			check.actor = !tokenKey ? actorId : tokenKey;
+			check.flatDiceModifier = flatDiceModifier;
+			check.flatThresholdModifier = flatThresholdModifier;
 			check.rollCharacteristic(characteristic );
 			check.toMessage();
 		}
 	}
 
-	async _onRollAttribTest( event){
+	async _onRollAttribTest( event){ //FLATMODIFIER
 		event.preventDefault();
 
 		const attrib = event.currentTarget.parentElement.dataset.attrib;
@@ -961,12 +1041,16 @@ export class CoC7ActorSheet extends ActorSheet {
 		const actorId = event.currentTarget.closest('form').dataset.actorId;
 		let tokenKey = event.currentTarget.closest('form').dataset.tokenId;
 
-		let difficulty, modifier;
+		let difficulty, modifier, flatDiceModifier, flatThresholdModifier;
 		if( !event.shiftKey) {
-			const usage = await RollDialog.create();
+			const usage = await RollDialog.create( {
+				disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224),
+				disableFlatDiceModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
 			if( usage) {
 				modifier = Number(usage.get('bonusDice'));
 				difficulty = Number(usage.get('difficulty'));
+				flatDiceModifier = Number( usage.get('flatDiceModifier'));
+				flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
 			}
 		}
 
@@ -1010,6 +1094,8 @@ export class CoC7ActorSheet extends ActorSheet {
 			let check = new CoC7Check();
 			if( undefined != modifier ) check.diceModifier = modifier;
 			if( undefined != difficulty ) check.difficulty = difficulty;
+			check.flatDiceModifier = flatDiceModifier;
+			check.flatThresholdModifier = flatThresholdModifier;
 			check.actor = !tokenKey ? actorId : tokenKey;
 			check.rollAttribute(attrib );
 			check.toMessage();
@@ -1022,19 +1108,23 @@ export class CoC7ActorSheet extends ActorSheet {
 	 * @param {Event} event   The originating click event
 	 * @private
 	*/
-	async _onRollSkillTest(event) {
+	async _onRollSkillTest(event) { //FLATMODIF
 		if( event.currentTarget.classList.contains('flagged4dev')) return;
 		event.preventDefault();
 		const skillId = event.currentTarget.closest('.item').dataset.skillId;
 		const actorId = event.currentTarget.closest('form').dataset.actorId;
 		const tokenKey = event.currentTarget.closest('form').dataset.tokenId;
 		
-		let difficulty, modifier;
+		let difficulty, modifier, flatDiceModifier, flatThresholdModifier;
 		if( !event.shiftKey) {
-			const usage = await RollDialog.create();
+			const usage = await RollDialog.create( {
+				disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224),
+				disableFlatDiceModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
 			if( usage) {
 				modifier = Number(usage.get('bonusDice'));
 				difficulty = Number(usage.get('difficulty'));
+				flatDiceModifier = Number( usage.get('flatDiceModifier'));
+				flatThresholdModifier = Number( usage.get('flatThresholdModifier'));
 			}
 		}
 
@@ -1057,11 +1147,29 @@ export class CoC7ActorSheet extends ActorSheet {
 			if( undefined != difficulty ) check.difficulty = difficulty;
 			check.actor = !tokenKey ? actorId : tokenKey;
 			check.skill = skillId;
+			check.flatDiceModifier = flatDiceModifier;
+			check.flatThresholdModifier = flatThresholdModifier;
 			check.roll();
 			check.toMessage();
 		}
 	}
 	
+	/** @override */
+	// _getSubmitData(updateData={}) {
+
+	// 	// Create the expanded update data object
+	// 	const fd = new FormDataExtended(this.form, {editors: this.editors});
+	// 	let data = fd.toObject();
+	// 	if ( updateData ) data = mergeObject(data, updateData);
+	// 	else data = expandObject(data);
+
+	// 	// Handle Damage array
+	// 	const damage = data.data?.damage;
+	// 	if ( damage ) damage.parts = Object.values(damage?.parts || {}).map(d => [d[0] || '', d[1] || '']);
+
+	// 	// Return the flattened submission data
+	// 	return flattenObject(data);
+	// }
 
 
 	/* -------------------------------------------- */
@@ -1074,6 +1182,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
 	async _updateObject(event, formData) {
 		// ui.notifications.info('_updateObject');
+		// TODO: Replace with   _getSubmitData(updateData={}) Cf. sheet.js(243)
 		if( event.currentTarget){
 			if( event.currentTarget.classList){
 
