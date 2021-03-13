@@ -27,6 +27,13 @@ version 0.5.3 :
 * Bug correction:
   * Corrected a bug where editor in archetype sheet did not display correctly.
   * #390 Character sheet elements changed from px to rem.
+* Check can use selfRoll mode.
+  * An option is added to specify who will receive a notification in case of a GM self roll.
+  * Defaulted to all players (Foundry default behaviour).
+* #401 addressed thanks to @jantoniomartin !
+  * During character setup, using points, you can now roll luck.
+  * Luck is not part of the point budget
+  * Buttons added to increase/deacrease characteristic.
 * #359-1 Armor can now be defined as a roll string (1D6).
 * Changes in damage cards.
   * Damage cards have been reworked.
@@ -38,6 +45,7 @@ version 0.5.3 :
   * Damage mitigated will be displayed on the damage roll.
 * Implementation of system specific controls.
   * Keeper's tools for GM will allow to enable/disable creation and development modes.
+  * Keeper's tools has a button to simulate a fake GM self roll.
   * Dice will allow to roll a generic check.
 * Implementation of opposed rolls.
   * Right click on any element to include it in an opposed roll.
@@ -68,8 +76,7 @@ version 0.5.3 :
 * new macro check( [Threshold, [event]]) allow to roll a generic check. `game.CoC7.macros.check(75, event)`
 * #385 Optional flat dice and threshold modifier added.
   * Disabled by default, can be enabled in options.
-* [bug] Actor san loss refers to actor, not synthetic actor.
-* Actors of character's type are now created with vision and linked actor data by default.
+* Actors of type 'character' are now created with vision and linked actor data by default.
 * German translation updated thanks to acd-jake.
 * Português (Brasil) translation updated thanks to Castanho.
 * Taiwanese Mandarin and Chinese translations updated thanks to Zeteticl.
