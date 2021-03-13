@@ -30,8 +30,7 @@ import { CoC7Utilities } from '../utilities.js';
 import { RollDialog } from './roll-dialog.js';
 
 export class CoC7Parser{
-
-	static async onEditorDrop( event, editor){
+	static async onEditorDrop( event, editor){ //TODO: MANAGE FLAT MODIFIER THERE
 		event.preventDefault();
 
 		//check key pressed (CTRL ?)
@@ -43,7 +42,7 @@ export class CoC7Parser{
 		if( 'coc7-link' == data.linkType){
 			event.stopPropagation();
 			if( !event.shiftKey && (undefined == data.difficulty || undefined == data.modifier)) {
-				const usage = await RollDialog.create();
+				const usage = await RollDialog.create( {disableFlatDiceModifier: true});
 				if( usage) {
 					data.modifier = usage.get('bonusDice');
 					data.difficulty = usage.get('difficulty');
@@ -56,7 +55,7 @@ export class CoC7Parser{
 			if( link) {
 				editor.insertContent(link);
 			}
-		} else if( event.ctrlKey) {
+		} else if(event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) {
 			event.stopPropagation();
 
 			if(  data.type !== 'Item' ) return;
@@ -82,7 +81,7 @@ export class CoC7Parser{
 			
 			if( 'skill' == item.type){
 				if( !event.shiftKey) {
-					const usage = await RollDialog.create();
+					const usage = await RollDialog.create( {disableFlatDiceModifier: true});
 					if( usage) {
 						linkData.modifier = usage.get('bonusDice');
 						linkData.difficulty = usage.get('difficulty');
@@ -299,7 +298,7 @@ export class CoC7Parser{
 
 		if( game.user.isGM){
 			//If GM and from sheet and CTRL clicked publish a message asking for the click.
-			if( fromSheet && event.ctrlKey){
+			if( fromSheet && (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)){
 				chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), event.currentTarget.outerHTML);
 			} else if( canvas.tokens.controlled.length){
 				canvas.tokens.controlled.forEach( token =>{

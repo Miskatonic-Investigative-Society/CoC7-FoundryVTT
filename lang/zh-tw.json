@@ -1,6 +1,6 @@
 {
     "CoC7.title": "克蘇魯的呼喚 第7版",
-    
+
     "CHARAC.STR": "力量",
     "CHARAC.Strengh": "力量",
     "CHARAC.CON": "體質",
@@ -9,15 +9,15 @@
     "CHARAC.Size": "體型",
     "CHARAC.DEX": "敏捷",
     "CHARAC.Dexterity": "敏捷",
-    "CHARAC.APP": "魅力",
-    "CHARAC.Appearance": "魅力",
+    "CHARAC.APP": "外貌",
+    "CHARAC.Appearance": "外貌",
     "CHARAC.INT": "智力",
     "CHARAC.Intelligence": "靈感",
     "CHARAC.POW": "意志",
     "CHARAC.Power": "意志",
     "CHARAC.EDU": "教育",
     "CHARAC.Education": "教育",
-    
+
     "CoC7.Name": "名字",
     "CoC7.Archetype": "類型",
     "CoC7.Occupation": "職業",
@@ -72,7 +72,7 @@
     "CoC7.SpellDetails": "咒文詳情",
     "CoC7.Details": "詳情",
     "CoC7.Other": "其他",
-    
+
     "CoC7.RegularSuccess": "普通 成功",
     "CoC7.HardSuccess": "困難 成功",
     "CoC7.ExtremeSuccess": "極端 成功",
@@ -80,33 +80,33 @@
     "CoC7.Fumble": "大失敗",
     "CoC7.Failure": "失敗",
     "CoC7.Malfunction": "{itemName} 出現了故障!",
-    
+
     "CoC7.Dice": "骰子",
     "CoC7.DiceModifierBonus": "獎勵",
     "CoC7.DiceModifierPenalty": "懲罰",
     "CoC7.BonusDice": "獎勵骰",
-    "CoC7.UnitsDie" : "個位骰",
+    "CoC7.UnitsDie": "個位骰",
     "CoC7.TensDie": "十位骰",
     "CoC7.TensDice": "十位骰",
     "CoC7.SuccessRequired": "{successRequired} 成功需要.",
     "CoC7.Roll": "Roll",
-    "CoC7.Pushing": "對抗",
-    "CoC7.PushSkill": "對抗",
-    "CoC7.PushedRoll": "(對抗檢定)",
+    "CoC7.Pushing": "進行 孤注一擲",
+    "CoC7.PushSkill": "孤注一擲",
+    "CoC7.PushedRoll": "(孤注一擲)",
     "CoC7.SpendLuck": "燃燒 {luckNeededValue} 幸運 檢定成功",
     "CoC7.LuckSpent": "{luckAmount} 幸運成功",
     "CoC7.LuckError": "{actorName} 幸運檢定失敗",
-    "CoC7.check.AutoSuccess" : "自動成功",
-    "CoC7.check.AutoFailure" : "自動失敗",
+    "CoC7.check.AutoSuccess": "自動成功",
+    "CoC7.check.AutoFailure": "自動失敗",
     "CoC7.check.RevealCheck": "顯示檢定",
     "CoC7.check.ForcePass": "强制成功",
     "CoC7.check.ForceFail": "强制失敗",
     "CoC7.check.FlagForDevelopment": "技能成長標記",
     "CoC7.check.IncreaseSuccessLevel": "增加成功",
     "CoC7.check.DecreaseSuccessLevel": "减少成功",
-    
+
     "CoC7.ConstitutionCheck": "體質檢定",
-    
+
     "CoC7.BonusSelectionWindow": "選擇獎勵視窗",
     "CoC7.SkillDetailsWindow": "技能詳情視窗",
     "CoC7.RegularDifficulty": "普通",
@@ -124,11 +124,11 @@
     "CoC7.RollDice": "Roll !",
     "CoC7.SuccesLevelHint": "{value} level(s) of 成功",
     "CoC7.FailureLevelHint": "失敗 by {value} level(s)",
-    
+
     "CoC7.CheckResult": "{name} 檢定 ({value}%) - {difficulty} 難度",
     "CoC7.ItemCheckResult": "{item} - {skill} 檢定 ({value}%) - {difficulty} 難度",
     "CoC7.CheckRawValue": "({rawvalue}%) - {difficulty} 難度",
-    
+
     "CoC7.BonusDamageRoll": "Rolling 傷害加成",
     "CoC7.Type": "類型",
     "CoC7.FightBack": "反擊",
@@ -149,19 +149,19 @@
     "CoC7.DodgeSuccess": "{name} 閃避成功!",
     "CoC7.ManeuverSuccess": "{name} 戰技成功!.",
     "CoC7.InflictPain": "造成疼痛",
-    
+
     "CoC7.combatCard.dive4cover": "尋找掩體",
-    
-    "CoC7.rangeCombatCard.SingleShot" : "單發",
-    "CoC7.rangeCombatCard.MultipleShots" : "多發",
-    "CoC7.rangeCombatCard.Burst" : "三點射擊",
-    "CoC7.rangeCombatCard.FullAuto" : "全自動",
-    "CoC7.rangeCombatCard.BaseRange" : "基礎射程",
-    "CoC7.rangeCombatCard.LongRange" : "長距離",
-    "CoC7.rangeCombatCard.ExtremeRange" : "超長距離",
+
+    "CoC7.rangeCombatCard.SingleShot": "單發",
+    "CoC7.rangeCombatCard.MultipleShots": "多發",
+    "CoC7.rangeCombatCard.Burst": "三點射擊",
+    "CoC7.rangeCombatCard.FullAuto": "全自動",
+    "CoC7.rangeCombatCard.BaseRange": "基礎射程",
+    "CoC7.rangeCombatCard.LongRange": "長距離",
+    "CoC7.rangeCombatCard.ExtremeRange": "超長距離",
     "CoC7.rangeCombatCard.OutOfRange": "射程外",
-    "CoC7.rangeCombatCard.Cover" : "在掩體內的目標",
-    "CoC7.rangeCombatCard.PointBlankRange" : "零距離",
+    "CoC7.rangeCombatCard.Cover": "在掩體內的目標",
+    "CoC7.rangeCombatCard.PointBlankRange": "零距離",
     "CoC7.rangeCombatCard.BigTarget": "大型目標",
     "CoC7.combatCard.SmallTarget": "小型目標",
     "CoC7.rangeCombatCard.FastMovingTarget": "快速移動的目標",
@@ -172,9 +172,9 @@
     "CoC7.BulletsFired": "子彈射擊",
     "CoC7.Shots": "射擊",
     "CoC7.Shoot": "射擊",
-    
+
     "CoC7.DropZone": "拖拉區",
-    
+
     "CoC7.SkillValue": "技能 值",
     "CoC7.SkillBase": "基礎成功率",
     "CoC7.BaseSkillValue": "基礎 技能 值",
@@ -182,14 +182,14 @@
     "CoC7.SkillArchetype": "類型",
     "CoC7.SkillOccupation": "職業",
     "CoC7.SkillPersonal": "興趣",
-    
+
     "CoC7.SkillTotalExperience": "經歷點",
     "CoC7.SkillTotalArchetype": "類型點",
     "CoC7.SkillTotalOccupation": "職業點",
     "CoC7.SkillTotalPersonal": "興趣點",
     "CoC7.CharacteristicsPoints": "角色屬性點",
     "CoC7.TotalPoints": "總技能點",
-    
+
     "CoC7.ItemQuantity": "數量",
     "CoC7.ItemWeight": "重量",
     "CoC7.ItemDetails": "詳細",
@@ -206,7 +206,7 @@
     "CoC7.WeaponSpecial": "特殊效果",
     "CoC7.ItemPrice": "價格",
     "CoC7.Armor": "護甲",
-    
+
     "CoC7.EraNvct": "克蘇魯不敗",
     "CoC7.EraDrka": "克蘇魯黑暗時代",
     "CoC7.EraDdts": "神秘冰島",
@@ -215,7 +215,7 @@
     "CoC7.EraPulp": "低俗克蘇魯",
     "CoC7.EraMdrn": "現代",
     "CoC7.Eras": "Cthulhu Flavors",
-    
+
     "CoC7.SkillNoAdjustments": "無調整",
     "CoC7.SkillNoXpGain": "無法成長",
     "CoC7.SkillSpecial": "專業",
@@ -224,7 +224,7 @@
     "CoC7.SkillCombat": "戰鬥",
     "CoC7.SkillFighting": "近戰技能",
     "CoC7.SkillFirearm": "射擊",
-    
+
     "CoC7.WeaponRngd": "基本射程",
     "CoC7.WeaponTouch": "接觸",
     "CoC7.WeaponImpl": "貫通",
@@ -244,22 +244,22 @@
     "CoC7.Weapon.Property.Thrown": "投擲武器",
     "CoC7.Weapon.Property.Burn": "燃燒",
     "CoC7.Weapon.Property.Shotgun": "射擊武器",
-    
+
     "CoC7.ErrorItem": "無法找到 道具",
     "CoC7.ErrorActor": "無法找到 角色卡",
     "CoC7.ErrorInvalidFormula": "{value} 不是一個有效的數式",
     "CoC7.ErrorInvalid": "無效",
     "CoC7.Validate": "驗證",
     "CoC7.Apply": "應用",
-    
+
     "CoC7.NewBioSectionName": "New Section",
-    
+
     "CoC7.DodgeSkillName": "閃避",
     "CoC7.CreditRatingSkillName": "信譽",
-    "CoC7.FightingSpecializationName": "近身戰鬥",
-    "CoC7.FirearmSpecializationName": "射擊",
+    "CoC7.FightingSpecializationName": "(戰鬥)近身",
+    "CoC7.FirearmSpecializationName": "(戰鬥)射擊",
     "CoC7.AnySpecName": "任何",
-    
+
     "CoC7.NewSkillName": "新 技能",
     "CoC7.AddSkill": "增加 技能",
     "CoC7.DevelopemmentPhase": "幕間成長",
@@ -296,10 +296,10 @@
     "CoC7.ArchetypeSkill": "類型 Skill",
     "CoC7.UseFormula": "滾動骰子",
     "CoC7.EnterFormula": "輸入公式",
-    "CoC7.SanRollHint":"爲目標進行SAN Check",
+    "CoC7.SanRollHint": "爲目標進行SAN Check",
     "CoC7.NoSkill": "沒有技能",
     "CoC7.AddWeapontHint": "<p>{actor} 沒有一個 {weapon}.<br>你想新增一個嗎 ?</p>",
-    
+
     "CoC7.ManualCreditValues": "收入與財産[手動輸入模式]",
     "CoC7.MonetarySymbol": "更改貨幣單位 :",
     "CoC7.MonetaryFactor": "倍率 :",
@@ -309,18 +309,18 @@
     "CoC7.MonetarySpent": "消費 :",
     "CoC7.MonetaryAssets": "資産 :",
     "CoC7.MonetaryAssetsDetails": "資産內容",
-    
+
     "CoC7.PossessionsNotes": "筆記 :",
     "CoC7.PossessionsNotesHolder": "筆記",
-    
+
     "CoC7.BackgroundNewSection": "新增章節",
     "CoC7.BackgroundSectionNameHolder": "章節標題",
     "CoC7.BackgroundDeleteSection": "删除章節",
     "CoC7.BackgroundSectionMoveUp": "上移",
     "CoC7.BackgroundSectionMoveDown": "下移",
-    
+
     "CoC7.creatureFightingSkill": "近身戰鬥",
-    
+
     "CoC7.SanityCheck": "理智檢定",
     "CoC7.SANLoss": "失去的San值",
     "CoC7.CMI": "CMI",
@@ -345,7 +345,7 @@
     "CoC7.MythosBook": "克蘇魯神話典籍",
     "CoC7.OccultBook": "神秘學書籍",
     "CoC7.Unidentified": "不可名狀",
-    
+
     "CoC7.PulpTalents": "英雄 天賦",
     "CoC7.TalentType": "天賦類型",
     "CoC7.PhysicalTalent": "肉體",
@@ -355,10 +355,10 @@
     "CoC7.BasicTalent": "基礎",
     "CoC7.InsaneTalent": "瘋狂",
     "CoC7.OtherTalent": "其他",
-    
+
     "CoC7.Items": "道具",
     "CoC7.Books": "書籍",
-    
+
     "CoC7.Classic": "原作",
     "CoC7.Lovecraftian": "洛夫克拉夫特",
     "CoC7.Pulp": "低俗",
@@ -387,7 +387,7 @@
     "CoC7.ResetArchetype": "重置 類型",
     "CoC7.ResetArchetypeHint": "角色 {name} 已經有一個類型。你想重置它嗎?",
     "CoC7.CreditOutOfRange": "信用評級應該在{min}和{max}之間",
-    "CoC7.BioSections":"簡介部分",
+    "CoC7.BioSections": "簡介部分",
     "CoC7.BioSectionName": "簡介部分名稱",
     "CoC7.SpendPoints": "分配 特質 points",
     "CoC7.RollCharac": "Roll 特徵",
@@ -396,7 +396,7 @@
     "CoC7.SkillSelectBase": "選擇技能的基礎值 {name}",
     "CoC7.SelectSkill": "選擇一個現有的技能",
     "CoC7.CreateNewSkill": "創造一項新技能",
-    
+
     "CoC7.Characteristics": "屬性",
     "CoC7.EnableCharacteristics": "開啓屬性骰",
     "CoC7.UsePoints": "使用 點數",
@@ -405,10 +405,10 @@
     "CoC7.BonusPoints": "Bonus 點",
     "CoC7.SuggestedOccupations": "建議職業",
     "CoC7.SuggestedTraits": "建議特長",
-    
+
     "CoC7.PutGunAway": "收槍",
     "CoC7.DrawGun": "拔槍",
-    
+
     "CoC7.DevPhaseEnabled": "啓用開發模式",
     "CoC7.DevPhaseDisabled": "禁用開發模式",
     "CoC7.CharCreationEnabled": "啓用角色新增模式",
@@ -417,14 +417,14 @@
     "CoC7.WarnMacroIncorrectType": "你只能爲武器和技能新增宏",
     "CoC7.WarnNoGlobalSpec": "不能爲未指定的專門化新增宏",
     "CoC7.WarnMacroNoItemFound": "沒有發現可用物品",
-    
+
     "SETTINGS.DefaultDifficulty": "默認檢定難度",
     "SETTINGS.DefaultDifficultyHint": "您可以選擇檢定的默認難度。未知將在玩家不知道檢定難度的情况下進行檢定.",
     "SETTINGS.CheckDifficultyRegular": "默認難度",
     "SETTINGS.CheckDifficultyUnknown": "未知難度",
-    "SETTINGS.UseToken":  "使用token圖像",
+    "SETTINGS.UseToken": "使用token圖像",
     "SETTINGS.UseTokenHint": "在角色卡中使用token圖像而不是肖像",
-    "SETTINGS.DisplayActorOnCard":  "顯示角色 on card",
+    "SETTINGS.DisplayActorOnCard": "顯示角色 on card",
     "SETTINGS.DisplayActorOnCardHint": "在戰鬥對話上顯示演員的圖像/token",
     "SETTINGS.InitiativeRule": "使用先攻檢定規則",
     "SETTINGS.InitiativeRuleHint": "您可以選擇基本初始規則(使用DEX值)或可選規則(使用roll)",
@@ -478,7 +478,4 @@
     "CoC7.MessageWaitForKeeperToClick": "你的守密人正在要求一次檢定。<br>等他要求你時再點擊!<br>",
     "SETTINGS.displayInitAsText": "顯示初始文本",
     "SETTINGS.displayInitAsTextHint": "顯示規則由序號替換爲文本 (僅限可選規則)"
-    }
-    
-    
-    
+}

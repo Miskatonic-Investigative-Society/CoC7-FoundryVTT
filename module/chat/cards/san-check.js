@@ -2,8 +2,26 @@ import { CoC7Check } from '../../check.js';
 import { CoC7Dice } from '../../dice.js';
 import { CoC7Utilities } from '../../utilities.js';
 import { ChatCardActor } from '../card-actor.js';
-import { createInlineRoll, exclude__, chatHelper } from '../helper.js';
+import { createInlineRoll, chatHelper } from '../helper.js';
 
+function replacer(key, value){
+	if ( key.startsWith('__')) {
+		return undefined; // remove from result
+	}
+
+	const exclude = ['_actor', '_creature'];
+	if( exclude.includes(key)){
+		return undefined;
+	}
+
+	const checks = ['sanCheck', 'intCheck'];
+	if( checks.includes(key))
+	{
+		return value.JSONRollData;
+	}
+
+	return value; // return as is
+}
 export class SanCheckCard extends ChatCardActor{
 	constructor( actorKey = null, sanData={}, options={}){
 		super( actorKey, options.fastForward != undefined?Boolean(options.fastForward):false);
@@ -33,7 +51,7 @@ export class SanCheckCard extends ChatCardActor{
 
 	get creature(){ //TODO : check constructor
 		if( this.sanData.creatureKey && (!this.__creature || this.__creature.constructor.name == 'Object')){
-			this.__creature = chatHelper.getActorFromKey( this.sanData.creatureKey);
+			this.__creature = chatHelper.getActorFromKey( this.sanData.creatureKey);//REFACTORING (2)
 		}
 		return this.__creature;
 	}
@@ -393,7 +411,7 @@ export class SanCheckCard extends ChatCardActor{
 		const htmlCardElement = $.parseHTML( html)[0];
 
 		//Attach the sanCheckCard object to the message.
-		htmlCardElement.dataset.object = escape(JSON.stringify(this, exclude__));
+		htmlCardElement.dataset.object = escape(JSON.stringify(this, replacer));
 
 		//Update the message.
 		const chatMessage = game.messages.get( this.messageId);
@@ -440,7 +458,7 @@ export class SanCheckCard extends ChatCardActor{
 		const html = await renderTemplate(SanCheckCard.template, chatCard);
 		const htmlCardElement = $.parseHTML( html)[0];
 		
-		htmlCardElement.dataset.object = escape(JSON.stringify(chatCard, exclude__));
+		htmlCardElement.dataset.object = escape(JSON.stringify(chatCard, replacer));
 		await chatCard.say( htmlCardElement.outerHTML);
 	}
 

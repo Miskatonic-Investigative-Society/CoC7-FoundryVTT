@@ -44,6 +44,10 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
 		});
 	}
 
+	// _onDragStart(event) {
+	// 	super._onDragStart(event);
+	// }
+
 	static renderSheet( sheet){
 		// html.css('--main-sheet-bg',  'url( \'./artwork/backgrounds/character-sheet.png\') 4 repeat');
 		if( game.settings.get('CoC7', 'overrideSheetArtwork')){

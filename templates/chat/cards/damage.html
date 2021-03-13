@@ -1,0 +1,115 @@
+<div class="coc7 chat-card damage">
+
+    <header class="card-header flexcol">
+        <div class="flexrow">
+            {{#if displayActorOnCard}}
+            <img class="open-actor" data-actor-key="{{actorKey}}" style="flex: none;" src="{{actorImg}}" title="{{name}}" width="36" height="36"/>
+            {{/if}}
+            <img class="open-actor" data-actor-key="{{actorKey}}" style="flex: none;" src="{{item.img}}" title="{{item.name}}" width="36" height="36"/>
+            <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{item.name}}</h3>
+            <img class="open-actor" style="flex: none;" data-actor-key="{{targetKey}}" src="{{targetImg}}" title="{{targetName}}" width="36" height="36"/>
+        </div>
+
+        <div class="card-content">
+            {{{weapon.data.data.description.value}}}
+        </div>
+
+            <div class="options gm-select-only">
+                {{#if hardrolled}}
+                    {{#if critical}}
+                        <span class='tag' title="The blow is critical">Critical</span>
+                        {{#if impale}}
+                            <span class='tag' title="The weapon can impale">Impale</span>
+                        {{/if}}
+                    {{/if}}
+                {{else}}
+                    <span class='ic-switch{{#if critical}} switched-on{{/if}}'  data-flag='critical' title="The blow is critical">Critical</span>
+                    {{#if critical}}
+                        <span class='ic-switch{{#if impale}} switched-on{{/if}}'  data-flag='impale' title="The weapon can impale">Impale</span>
+                    {{/if}}
+                {{/if}}
+                {{#if damageInflicted}}
+                    {{#if ignoreArmor}}
+                        <span class='tag gm-visible-only'>Armor Ignored</span>
+                    {{else}}
+                        <span class='tag gm-visible-only'>Armor: {{armor}}</span>
+                        <span class='tag owner-visible-only'>Armor: {{armor}}</span>
+                    {{/if}}
+                {{else}}
+                <div class="armor flexrow">
+                    <div class="flexrow flex-end gm-visible-only">
+                        <a class='ic-switch gm-visible-only{{#unless ignoreArmor}} switched-on{{/unless}}'  data-flag='ignoreArmor'>
+                            {{#if ignoreArmor}}
+                                <i class="game-icon game-icon-armor-downgrade"></i>
+                            {{else}}
+                                <i class="game-icon game-icon-armor-upgrade"></i>
+                            {{/if}}
+                        </a>
+                        {{#unless ignoreArmor}}
+                            <label>Armor:</label>
+                            <form>
+                                <input type='text' name='armor' value='{{armor}}'/>
+                            </form>
+                            {{#if isArmorForula}}
+                            <a class='ic-switch gm-visible-only'  data-action='rollArmor'>
+                                <i class="fas fa-dice"></i>
+                            </a>
+                            {{/if}}
+                        {{/unless}}
+                    </div>
+                    <div class="flexrow flex-end owner-visible-only owner-info" data-actor-key="{{targetKey}}">
+                        {{#unless ignoreArmor}}
+                            <label>Armor:</label>
+                            <span>{{armor}}</span>
+                        {{/unless}}
+                    </div>
+                </div>
+                {{/if}}
+        </div>
+
+    </header>
+
+    {{#if rolled}}
+        {{!-- <div class='card-result'>Damage roll: {{{_htmlInlineRoll}}}</div> --}}
+        {{{_htmlRoll}}}
+        {{#if targetKey}}
+            {{#if noDamage}}
+                {{localize 'CoC7.NoDamage'}}            
+            {{else}}
+                {{#if damageInflicted}}
+                    <div class='card-result'>Damge inflicted : {{totalDamageString}}</div>
+                {{else}}
+                    <div class="card-buttons gm-visible-only">
+                        <button data-action="dealDamage">{{ localize 'CoC7.InflictPain' }} ({{totalDamageString}})</button>
+                    </div>
+                {{/if}}
+            {{/if}}
+        {{else}}
+        <div class='card-result'>Total damage : {{totalDamageString}}</div>
+        {{/if}}
+    {{else}}
+    <div class="card-buttons owner-only">
+        <button data-action="rollDamage">{{ localize 'CoC7.RollDamage' }}: {{damageFormula}}</button>
+    </div>
+    {{/if}}
+
+    <!-- <div class="flexrow gm-select-only ic-radio">
+        <span class="flex1 ic-radio-switch gm-select-only {{#if advantageAttacker}}switched-on{{/if}} "
+        title="{{localize CoC7.AdvantageAttacker}}" 
+        data-flag="advantageAttacker" 
+        data-selected={{advantageAttacker}}>{{localize 'CoC7.AdvantageAttacker'}}</span>
+        <span class="flex1 ic-radio-switch gm-select-only {{#if advantageDefender}}switched-on{{/if}}"
+        title="{{localize CoC7.AdvantageDefender}}" 
+        data-flag="advantageDefender" 
+        data-selected={{advantageDefender}}>{{localize 'CoC7.AdvantageDefender'}}</span>
+    </div>
+
+    <div class="flexrow">
+        <span class="flex1 ic-switch gm-select-only {{#if switchTest}}switched-on{{/if}} "
+        title="{{localize CoC7.switchTest}}" 
+        data-flag="switchTest" 
+        data-selected={{switchTest}}>{{localize 'CoC7.AdvantageAttacker'}}</span>
+    </div> -->
+
+
+</div>
