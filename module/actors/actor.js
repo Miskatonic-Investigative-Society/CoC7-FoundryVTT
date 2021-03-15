@@ -679,8 +679,12 @@ export class CoCActor extends Actor {
 			const othersItems = data.data.items.filter( it => 'skill' != it.type);
 			await this.addUniqueItems( skills);
 			await this.addItems( othersItems);
-			for( const sectionName of data.data.bioSections){
-				if( !this.data.data.biography.find( el => sectionName == el.title) && sectionName) await this.createBioSection( sectionName);
+			if (game.settings.get( 'CoC7', 'oneBlockBackstory')) {
+				await this.update({'data.backstory': data.data.backstory});
+			} else {
+				for( const sectionName of data.data.bioSections){
+					if( !this.data.data.biography.find( el => sectionName == el.title) && sectionName) await this.createBioSection( sectionName);
+				}
 			}
 			break;
 		}
