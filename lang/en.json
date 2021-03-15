@@ -515,6 +515,9 @@
 "CoC7.CharCreationMode": "Character creation mode",
 "CoC7.CharCreationEnabled": "Character creation mode enabled",
 "CoC7.CharCreationDisabled": "Character creation mode disabled",
+"CoC7.toggleXP": "XP gain",
+"CoC7.XPGainEnabled": "Character can gain XP",
+"CoC7.XPGainDisabled": "Character cannot gain XP",
 "CoC7.WarnNoActorAvailable": "You do not have any actor controled nor selected",
 "CoC7.WarnMacroIncorrectType": "You can create macro for weapons and skills only",
 "CoC7.WarnNoGlobalSpec": "You can't create macro for unspecified specializations",
@@ -606,5 +609,7 @@
 "SETTINGS.SelfRollWhisperTargetHint": "As a GM, when doing self check roll, who do you want to send a notification to.",
 "SETTINGS.DoNotAdvise": "Keep it for yourself.",
 "SETTINGS.AdviseOwnersOnly": "Notify actor's owner",
-"SETTINGS.AdviseAllPlayer": "Notify all players"
+"SETTINGS.AdviseAllPlayer": "Notify all players",
+"SETTINGS.OneBlockBackStory": "One block backstory",
+"SETTINGS.OneBlockBackStoryHint": "Turn backstory to one editor block, but you can format/add links."
 }
