@@ -22,6 +22,16 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+version 0.5.4 :
+
+* Bug correction:
+  * Changes from px to rem in some part of the sheet.
+  * #416 Damage bonus is now correctly applied.
+  * GM modified rolls are now properly set when revealed.
+  * when revealed, blind GM roll are shown to the player involved only, unless CTRL is pressed.
+* A toggle allowing character to gain XP is added on the keeper's tools.
+* An option is added to replace backstory entries with one big editor block with formatting and links support.
+
 version 0.5.3 :
 
 * Bug correction:

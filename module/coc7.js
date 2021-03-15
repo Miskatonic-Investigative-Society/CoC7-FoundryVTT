@@ -82,6 +82,14 @@ Hooks.once('init', async function() {
 		default: 0
 	});
 
+	game.settings.register('CoC7', 'xpEnabled', {
+		name: 'Enable XP gain',
+		scope: 'world',
+		config: false,
+		type: Boolean,
+		default: true
+	});
+
 	game.settings.register('CoC7', 'gridSpaces', {
 		name: 'SETTINGS.RestrictGridSpaces',
 		hint: 'SETTINGS.RestrictGridSpacesHint',
@@ -94,6 +102,15 @@ Hooks.once('init', async function() {
 	game.settings.register('CoC7', 'pulpRules', {
 		name: 'SETTINGS.PulpRules',
 		hint: 'SETTINGS.PulpRulesHint',
+		scope: 'world',
+		config: true,
+		default: false,
+		type: Boolean
+	});
+
+	game.settings.register('CoC7', 'oneBlockBackstory', {
+		name: 'SETTINGS.OneBlockBackStory',
+		hint: 'SETTINGS.OneBlockBackStoryHint',
 		scope: 'world',
 		config: true,
 		default: false,
