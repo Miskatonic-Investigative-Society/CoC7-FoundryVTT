@@ -3,7 +3,8 @@
         "types": [
             "character",
             "npc",
-            "creature"
+            "creature",
+            "vehicule"
         ],
         "templates": {
             "characteristics": {
@@ -189,7 +190,8 @@
                 "archetype": null
             },
             "biography": [],
-            "encounteredCreatures": []
+            "encounteredCreatures": [],
+            "backstory": ""
         },
         "npc": {
             "templates": [
@@ -241,6 +243,9 @@
             "flags": {
                 "locked": false
             }
+        },
+        "vehicule":{
+            "template":[ "attribs"]
         }
     },
     "Item": {

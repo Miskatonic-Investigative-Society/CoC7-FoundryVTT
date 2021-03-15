@@ -266,17 +266,21 @@ export class CoC7Item extends Item {
 	}
 
 	async flagForDevelopement(){
-		if( !this.data.data.flags){
-			await this.update( { 'data.flags': {}});
+		if( game.settings.get('CoC7', 'xpEnabled') || game.user.isGM){
+			if( !this.data.data.flags){
+				await this.update( { 'data.flags': {}});
+			}
+			await this.update( {'data.flags.developement' : true});
 		}
-		await this.update( {'data.flags.developement' : true});
 	}
 
 	async unflagForDevelopement(){
-		if( !this.data.data.flags){
-			await this.update( { 'data.flags': {}});
+		if( game.settings.get('CoC7', 'xpEnabled') || game.user.isGM){
+			if( !this.data.data.flags){
+				await this.update( { 'data.flags': {}});
+			}
+			await this.update( {'data.flags.developement' : false});
 		}
-		await this.update( {'data.flags.developement' : false});
 	}
 
 
@@ -291,6 +295,11 @@ export class CoC7Item extends Item {
 			await this.update( { 
 				[`data.adjustments.${flagName}`] : null,
 				[name]: flagValue});
+		} else if( 'developement' == flagName){
+			if( game.settings.get('CoC7', 'xpEnabled') || game.user.isGM)
+				await this.update( { [name]: flagValue});
+			else
+				ui.notifications.info('XP Gain disabled.');
 		} else await this.update( { [name]: flagValue});
 	}
 

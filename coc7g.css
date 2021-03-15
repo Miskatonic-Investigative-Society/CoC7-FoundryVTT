@@ -1124,7 +1124,7 @@
 .coc7.sheet.actor .development.header {
   flex: initial;
   border-bottom: 1px groove;
-  line-height: 20px;
+  line-height: 1.25rem;
 }
 .coc7.sheet.actor .development.header .header-section {
   border-right: 1px groove;
@@ -1136,7 +1136,7 @@
   border-right: none;
 }
 .coc7.sheet.actor .development.header input {
-  width: 30px;
+  width: 1.875rem;
   padding: 0;
   margin: 0;
 }
@@ -1149,12 +1149,12 @@
   color: goldenrod;
 }
 .coc7.sheet.actor .development .item {
-  flex: 0 0 10px;
+  flex: 0 0 0.625rem;
 }
 .coc7.sheet.actor .development .item .skill-name {
   flex: 1;
-  font-size: 12px;
-  height: 16px;
+  font-size: 0.75rem;
+  height: 1rem;
   padding: 0;
   text-align: left;
 }
@@ -1162,9 +1162,9 @@
   cursor: pointer;
 }
 .coc7.sheet.actor .development .item .item-controls {
-  flex: 0 0 30px;
-  line-height: 16px;
-  font-size: 10px;
+  flex: 0 0 1.875rem;
+  line-height: 1rem;
+  font-size: 0.625rem;
   padding: 0 2px;
 }
 .coc7.sheet.actor .development .item .item-controls .item-control:hover {
@@ -1176,16 +1176,16 @@
 .coc7.sheet.actor .development .adjustment-value {
   border-right: groove 1px;
   flex: 0;
-  height: 16px;
-  line-height: 16px;
+  height: 1rem;
+  line-height: 1rem;
 }
 .coc7.sheet.actor .development .adjustment-value.not-available {
   background: white;
 }
 .coc7.sheet.actor .development .adjustment-value input {
-  font-size: 11px;
-  flex: 0 0 15px;
-  height: 16px;
+  font-size: 0.6875rem;
+  flex: 0 0 0.9375rem;
+  height: 1rem;
   padding: 0 1px;
   margin: 0;
   text-align: right;
@@ -1199,11 +1199,11 @@
 }
 .coc7.sheet.actor .sheet-section .editor {
   width: 100%;
-  height: 200px;
+  height: 12.5rem;
   border: 2px groove #eeede0;
   padding: 0;
   line-height: normal;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .coc7.sheet.actor .sheet-section .editor-content {
   overflow-x: hidden;
@@ -1214,7 +1214,7 @@
   background: rgba(0, 0, 0, 0.05);
   border: 2px groove #eeede0;
   font-weight: bold;
-  line-height: 15px;
+  line-height: 0.9375rem;
   height: 100%;
 }
 .coc7.sheet.actor input:read-only:hover,
@@ -1230,8 +1230,8 @@
 .coc7.sheet.actor .info-fields .form-group label {
   width: auto;
   flex: unset;
-  line-height: 18px;
-  height: 18px;
+  line-height: 1.125rem;
+  height: 1.125rem;
   border: 0;
   margin: 0;
   font-weight: bold;
@@ -1681,20 +1681,20 @@ html {
   margin: -1px;
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: 195px 30px auto;
+  grid-template-rows: 12.1875rem 1.875rem auto;
   width: 100%;
   height: 100%;
 }
 .sheetV2.character form .container .sheet-header {
   width: 100%;
-  height: 180px;
+  height: 11.25rem;
   border: 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .sheetV2.character form .container .sheet-header .sheet-portrait {
-  width: 140px;
+  width: 8.75rem;
   height: 100%;
   padding: 0 0.5rem;
 }
@@ -1706,7 +1706,7 @@ html {
 }
 .sheetV2.character form .container .sheet-header .infos {
   display: inline-block;
-  width: 235px;
+  width: 14.6875rem;
   padding: 0 0.5rem;
   border-right: 2px solid;
   border-color: rgba(43, 55, 83, 0.5);
@@ -2152,8 +2152,8 @@ html {
   background-color: var(--main-sheet-front-color);
   border: 1px solid transparent;
   border-radius: 4px;
-  height: 22px;
-  line-height: 22px;
+  height: 1.375rem;
+  line-height: 1.375rem;
   padding: 0 8px;
   margin: 4px;
 }
@@ -2167,7 +2167,7 @@ html {
   color: white;
 }
 .combat-pane .section-header .add-item {
-  flex: 0 0 20px;
+  flex: 0 0 1.25rem;
   color: white;
 }
 .combat-pane .section-header .add-item:hover {
@@ -2180,15 +2180,15 @@ html {
 }
 .combat-pane .item-list .itemV2 {
   margin-right: 3px !important;
-  width: 160px !important;
+  width: 10rem !important;
 }
 .combat-pane .weapon-list .weapon-row {
   width: 100%;
   height: auto;
   display: grid;
   border-bottom: 1px solid;
-  grid-template-columns: 16px 22px 1fr 168px 44px 44px;
-  grid-template-rows: 22px 1fr;
+  grid-template-columns: 1rem 1.375rem 1fr 10.5rem 2.75rem 2.75rem;
+  grid-template-rows: 1.375rem 1fr;
   grid-template-areas: "expand image name range weaponControl itemControl" "details details details details details details";
 }
 .combat-pane .weapon-list .weapon-row .expand-arrow {
@@ -2204,25 +2204,25 @@ html {
   transition: transform 0.2s ease-out;
 }
 .combat-pane .weapon-list .weapon-row.expanded .expand-arrow {
-  transform: rotate(90deg) translate(6px, -4px);
+  transform: rotate(90deg) translate(0.375rem, -0.25rem);
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
 .combat-pane .weapon-list .weapon-row .item-summary {
   background-color: rgba(255, 255, 255, 0.3);
   font-size: 0.75rem;
-  line-height: 14px;
+  line-height: 0.875rem;
   margin: 4px 0;
   border-radius: 4px;
 }
 .combat-pane .weapon-list .weapon-row .weapon-image {
   grid-area: image;
-  background-size: 22px;
+  background-size: 1.375rem;
 }
 .combat-pane .weapon-list .weapon-row .weapon-name {
   grid-area: name;
-  height: 22px;
-  line-height: 22px;
+  height: 1.375rem;
+  line-height: 1.375rem;
   padding: 0 4px;
 }
 .combat-pane .weapon-list .weapon-row .alternativ-skill {
@@ -2230,30 +2230,30 @@ html {
 }
 .combat-pane .weapon-list .weapon-row .weapon-range {
   grid-area: range;
-  height: 22px;
-  line-height: 22px;
+  height: 1.375rem;
+  line-height: 1.375rem;
   display: grid;
-  grid-template-columns: 56px 56px 56px;
-  grid-template-rows: 22px;
+  grid-template-columns: 3.5rem 3.5rem 3.5rem;
+  grid-template-rows: 1.375rem;
 }
 .combat-pane .weapon-list .weapon-row .weapon-range .weapon-damage {
   text-align: center;
 }
 .combat-pane .weapon-list .weapon-row .weapon-control {
   text-align: center;
-  line-height: 22px;
+  line-height: 1.375rem;
   grid-area: weaponControl;
 }
 .combat-pane .weapon-list .weapon-row .weapon-controls {
-  line-height: 22px;
+  line-height: 1.375rem;
   text-align: center;
   display: grid;
-  grid-template-columns: 22px 22px;
-  grid-template-rows: 22px;
+  grid-template-columns: 1.375rem 1.375rem;
+  grid-template-rows: 1.375rem;
   grid-area: weaponControl;
 }
 .combat-pane .weapon-list .weapon-row .item-controls {
-  line-height: 22px;
+  line-height: 1.375rem;
   display: block;
   text-align: end;
   grid-area: itemControl;
@@ -2281,8 +2281,8 @@ html {
   margin: 0 2px 2px 0;
 }
 .combat-pane .weapon-list .weapon-row .item-summary .item-labels .item-label span {
-  height: 16px;
-  line-height: 16px;
+  height: 1rem;
+  line-height: 1rem;
   padding: 0 3px;
 }
 .combat-pane .weapon-list .weapon-row .item-summary .item-properties {
@@ -2690,4 +2690,7 @@ html {
   border: 1px solid green !important;
   border-bottom: 1px solid #008060 !important;
   box-shadow: 0 0 10px #008060 !important;
+}
+#controls .scene-control.custom-control .control-tool.xp_toggle.active {
+  color: goldenrod;
 }

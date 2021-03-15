@@ -113,7 +113,8 @@ export class CoC7Menu {
 				let active = isActive && ((s.activeTool === t.name) || (t.toggle && t.active));
 				t.css = [
 					t.toggle ? 'toggle' : null,
-					active ? 'active' : null
+					active ? 'active' : null,
+					t.class ? t.class : null
 				].filter(t => !!t).join(' ');
 				return t;
 			});
@@ -152,6 +153,15 @@ export class CoC7Menu {
 					active: game.settings.get('CoC7', 'charCreationEnabled'), 
 					title: 'CoC7.CharCreationMode',
 					onClick :async () => await CoC7Utilities.toggleCharCreation()
+				},
+				{
+					toggle: true,
+					icon : 'fas fa-certificate',
+					class: 'xp_toggle',
+					name: 'xptoggle',
+					active: game.settings.get('CoC7', 'xpEnabled'), 
+					title: 'CoC7.toggleXP',
+					onClick :async () => await CoC7Utilities.toggleXPGain()
 				},
 				{
 					button: true,

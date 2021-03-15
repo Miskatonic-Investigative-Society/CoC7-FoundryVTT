@@ -867,6 +867,7 @@ export class CoC7Check {
 		this.dices.tens =[];
 		this.dices.unit.value = unitTotal;
 		this.modifiedResult = total;
+		this.dices.total = total;
 		this.dices.tenResult = total - unitTotal;
 
 		let max = (unitTotal == 0)? 100 : 90;
