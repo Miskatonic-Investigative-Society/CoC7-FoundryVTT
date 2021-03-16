@@ -8,7 +8,7 @@ The system automates most of the regular tasks and rules. This is a _work in pro
 * [Character creation](./character_creation.md)
 * [Sanity](./sanity.md)
 * [Links](./links.md)
-* [Commands cheat sheet](./commands_cheat_sheet)
+* [Commands cheat sheet](./commands_cheat_sheet.md)
 * Combat (TODO)
 * Character development (TODO)
  
