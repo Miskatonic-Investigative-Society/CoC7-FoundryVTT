@@ -604,7 +604,7 @@
 "SETTINGS.AllowFlatThresholdModifier": "Modificateur de seuil de réussite",
 "SETTINGS.AllowFlatThresholdModifierHint": "Permet de modifier la valeur du seuil à atteindre pour le jet",
 "SETTINGS.OpposedRollTieBreaker": "Le briseur d'égalité de Viriato139ac pour les jets en opposition",
-"SETTINGS.OpposedRollTieBreakerHint": "En cas d'égalité durant un jet en opposition, le gagnant est celui dans le résultat est le plus haut, non la compétence.",
+"SETTINGS.OpposedRollTieBreakerHint": "En cas d'égalité durant un jet en opposition, le gagnant est celui dont le résultat est le plus haut, non la compétence.",
 "SETTINGS.SelfRollWhisperTarget": "Notification de jet caché:",
 "SETTINGS.SelfRollWhisperTargetHint": "En tant que gardien, quand vous faites un jet caché, à qui voulez-vous le révéler.",
 "SETTINGS.DoNotAdvise": "Garder pour vous",
