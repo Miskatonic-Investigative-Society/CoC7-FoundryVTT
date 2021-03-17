@@ -108,7 +108,8 @@
 }
 
 .coc7.chat-card .dropdown-content {
-    display: none;
+    display: block;
+    visibility: hidden;
     position: absolute;
     background-color: #f1f1f1;
     min-width: 100px;
@@ -126,7 +127,7 @@
 .coc7.chat-card .dropdown a:hover {background-color: #ddd;    text-shadow: 0 0 8px red;
 }
   
-.coc7.chat-card .show {display: block;}
+.coc7.chat-card .show {visibility: visible;}
 
 .coc7.chat-card label{
     text-align: left;
