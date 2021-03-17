@@ -177,6 +177,8 @@
 "CoC7.AdvantageAttacker": "Advantage: Attacker",
 "CoC7.AdvantageDefender": "Advantage: Defender",
 "CoC7.Tie": "Tie",
+"CoC7.DamageInflicted": "Damage inflicted",
+"CoC7.TotalDamage": "Total damage",
 
 "CoC7.combatCard.dive4cover": "Dive for Cover",
 
