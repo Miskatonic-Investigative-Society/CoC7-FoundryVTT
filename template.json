@@ -4,7 +4,7 @@
             "character",
             "npc",
             "creature",
-            "vehicule"
+            "vehicle"
         ],
         "templates": {
             "characteristics": {
@@ -116,6 +116,8 @@
                     },
                     "armor": {
                         "value": null,
+                        "localized": false,
+                        "shielding": {},
                         "auto": false
                     }
                 }
@@ -244,8 +246,24 @@
                 "locked": false
             }
         },
-        "vehicule":{
-            "template":[ "attribs"]
+        "vehicle":{
+            "template":[ "attribs"],
+            "infos":{
+                "origin": null,
+                "brand": null
+            },
+            "crew": {
+                "max":{
+                    "driver": null,
+                    "gunner": null,
+                    "other": null
+                },
+                "list": []
+            },
+            "skill": {
+                "driving": null,
+                "active": []
+            }
         }
     },
     "Item": {
