@@ -1054,12 +1054,17 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 		}
 
-		let sanMin, sanMax;
+		let sanMin, sanMax, useCustomName, name;
 		if( event.altKey && attrib == 'san'){
 			const sanData = await SanDataDialog.create();
 			if( sanData){
 				sanMin = sanData.get( 'sanMin')||0;
 				sanMax = sanData.get( 'sanMax')||0;
+				useCustomName = sanData.get( 'usecustom')||false;
+				name = sanData.get( 'customname')||null;
+
+				ui.notifications.info( `Custom name: ${useCustomName}: ${name}`);
+				
 				if( !isNaN(Number(sanMin))) sanMin=Number(sanMin);
 				if( !isNaN(Number(sanMax))) sanMax=Number(sanMax);
 			}

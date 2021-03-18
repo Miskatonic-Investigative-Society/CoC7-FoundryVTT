@@ -2,6 +2,13 @@
 <form id="san-data-form">
     <div class="flexcol dialog-form">
         <div class="flexrow form-group">
+            <label>
+                <input type="checkbox" name="usecustom" />custom label</label>
+            
+            <input style="display: none;" type="text" name="customname" placeholder="enter custom name"/>
+        </div>
+
+        <div class="flexrow form-group">
             <label>{{localize 'CoC7.SanMin'}}</label>
             <input type="text" name="sanMin" />
         </div>
