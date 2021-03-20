@@ -281,7 +281,7 @@
 					</div>
 				{{/unless}}
 			</div>
-			<div class="skills flexrow" style="padding-top: 1px;border-bottom: 2px groove;">
+			<div class="skills flexrow pannel expanded" style="padding-top: 1px;border-bottom: 2px groove;">
 				{{> "systems/CoC7/templates/actors/parts/npc-skills.html"}}
 			</div>
 		</section>
@@ -295,7 +295,7 @@
 				</div>
 				{{/unless}}
 			</div>
-			<div class="combat flexcol"  style="padding-top: 1px;border-bottom: 2px groove;">
+			<div class="combat flexcol pannel expanded"  style="padding-top: 1px;border-bottom: 2px groove;">
 				{{> "systems/CoC7/templates/actors/parts/npc-combat.html"}}
 			</div>
 		</section>
@@ -310,7 +310,7 @@
 				</div>
 				{{/unless}}
 			</div>
-			<div class="inventory flexrow">
+			<div class="inventory flexrow pannel expanded">
 				<ol class="inventory-list">
 					{{#if  itemsByType.item}}
 					<div class="inventory-section">
@@ -408,7 +408,7 @@
 			<div class="section-header flexrow" data-pannel="description">
 				<h3 class="flex1">{{localize 'CoC7.Notes'}} </h3>
 			</div>
-			<div class="description" >
+			<div class="description pannel expanded" >
 				{{editor content=data.biography.personalDescription.value target="data.biography.personalDescription.value" style="height:95%" button=true owner=owner editable=editable}}
 			</div>
 		</section>
