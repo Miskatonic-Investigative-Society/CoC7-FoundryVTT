@@ -287,12 +287,12 @@ export class CoCActor extends Actor {
 	}
 
 	async exitBoutOfMadness(){
-		return await this.boutOfMadness?.update( { disabled: true});
+		return await this.boutOfMadness?.delete();
 	}
 
 	
 	async exitInsanity(){
-		return await this.insanity?.update( { disabled: true});
+		return await this.insanity?.delete();
 	}
 
 
@@ -2129,10 +2129,10 @@ export class CoCActor extends Actor {
 		switch (effectName) {
 		case 'boutOfMadness':
 			if( this.boutOfMadness){
-				const boutOfMadness = this.boutOfMadness;
-				if( boutOfMadness){
-					await boutOfMadness.update({ disabled: !boutOfMadness.data.disabled, duration: {seconds: undefined, rounds: undefined, turns: 1}});
-				}
+				await this.boutOfMadness.delete();
+				// if( boutOfMadness){
+				// 	await boutOfMadness.update({ disabled: !boutOfMadness.data.disabled, duration: {seconds: undefined, rounds: undefined, turns: 1}});
+				// }
 			} else {
 				// const effectData = 
 				await ActiveEffect.create({
@@ -2154,10 +2154,10 @@ export class CoCActor extends Actor {
 			break;
 		case 'insanity':
 			if( this.insanity){
-				const insanity = this.insanity;
-				if( insanity){
-					await insanity.update({ disabled: !insanity.data.disabled, duration: {seconds: undefined, rounds: undefined, turns: 1}});
-				}
+				this.insanity.delete();
+				// if( insanity){
+				// 	await insanity.update({ disabled: !insanity.data.disabled, duration: {seconds: undefined, rounds: undefined, turns: 1}});
+				// }
 			} else {
 				// const effectData = 
 				await ActiveEffect.create({
