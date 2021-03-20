@@ -558,7 +558,7 @@ export class CoC7Item extends Item {
 		if( data.description && !data.description.value){
 			const value = data.description;
 			data.description = {
-				value: value
+				value: value.value
 			};
 		}
 		const labels = [];
