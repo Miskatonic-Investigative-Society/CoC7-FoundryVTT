@@ -22,6 +22,19 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+version 0.5.5
+
+* Documentation has started !! Thanks to  @pconcepcion and @jantoniomartin. You can find them :
+  * @pconcepcion system documentation : doc/README.md.
+  * @jantoniomartin user's guide : docs/en/users-guide.md.
+* Bug correction thanks to @jantoniomartin:
+  * #410. Fixed assignment of item description value.
+  * #427. Fixed a visibility issue with dropdown.
+  * Setup sheet now includes a one-block backstory if the corresponding option is activated.
+* French translation updated thanks to @vonv
+* Taiwanese Mandarin translation updated thanks to @Zeteticl.
+* Português (Brasil) translation updated thanks to @castanhocorreia.
+
 version 0.5.4 :
 
 * Bug correction:
