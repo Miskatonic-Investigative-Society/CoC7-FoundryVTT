@@ -127,7 +127,7 @@ export class CoC7SetupSheet extends ItemSheet {
 		return mergeObject(super.defaultOptions, {
 			classes: ['coc7', 'sheet', 'setup'],
 			width: 520,
-			height: 480,
+			height: 530,
 			resizable: false,
 			dragDrop: [{dragSelector: '.item'}],
 			scrollY: ['.tab.description'],
@@ -187,6 +187,9 @@ export class CoC7SetupSheet extends ItemSheet {
 		for (let entry of Object.entries(data.data.eras)) {
 			if( entry[1].selected) data.itemProperties.push( entry[1].name);
 		}
+
+		data.oneBlockBackStory = game.settings.get( 'CoC7', 'oneBlockBackstory');
+
 		return data;
 	}
 
