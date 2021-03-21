@@ -11,6 +11,5 @@ The system automates most of the regular tasks and rules. This is a _work in pro
 * [Commands cheat sheet](./commands_cheat_sheet.md)
 * Combat (TODO)
 * Character development (TODO)
- 
-
+* Items (TODO) 
 
