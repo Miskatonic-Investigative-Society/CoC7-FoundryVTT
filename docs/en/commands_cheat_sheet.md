@@ -17,7 +17,13 @@ As a general rule you can modify those requests:
 
 ## Combined / Opposed rolls
 
-| Command                            | Action                                                 |
+| Command                             | Action                                                |
 | ------------------------------------| ------------------------------------------------------|
 | _Right Click on an element_         | Start/ Include the roll on an **opposed** roll        |
 | `Alt` + _Right Click on an element_ | Start/ Include the roll on an **combined** roll       |
+
+## Other 
+
+| Command                             | Action                                                |
+| ------------------------------------| ------------------------------------------------------|
+| `c`                                 | Show _my own_ character sheet                         |
