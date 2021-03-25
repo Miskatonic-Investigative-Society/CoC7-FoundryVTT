@@ -445,6 +445,11 @@
 "CoC7.OccultBook": "Occult Tome",
 "CoC7.Unidentified": "Unidentified description",
 
+"CoC7.Crew": "Crew",
+"CoC7.Origin": "Origin",
+"CoC7.Model": "Model",
+
+
 "CoC7.PulpTalents": "Pulp Talents",
 "CoC7.TalentType": "Talent Type",
 "CoC7.PhysicalTalent": "Physical",
@@ -456,6 +461,7 @@
 "CoC7.OtherTalent": "Other",
 
 "CoC7.Items": "Items",
+"CoC7.Vehicle": "Vehicle",
 "CoC7.Books": "Books",
 "CoC7.Status": "Status",
 
