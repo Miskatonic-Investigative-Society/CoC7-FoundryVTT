@@ -31,4 +31,8 @@ export class CoC7VehicleSheet extends ActorSheet {
 		// html.find('.spell .spell-name h4').click(event => this._onSpellSummary(event));
 		// html.find('.item-delete').click(this._onSpellDelete.bind(this));
 	}
+
+	onCloseSheet(){
+		//this.actor.locked = true;
+	}
 }
