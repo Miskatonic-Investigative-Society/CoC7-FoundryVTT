@@ -250,13 +250,14 @@
             "template":[ "attribs"],
             "infos":{
                 "origin": null,
-                "brand": null
+                "model": null
             },
             "crew": {
-                "max":{
+                "total": null,
+                "count":{
                     "driver": null,
                     "gunner": null,
-                    "other": null
+                    "pax": null
                 },
                 "list": []
             },
