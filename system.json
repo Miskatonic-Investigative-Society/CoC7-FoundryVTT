@@ -97,6 +97,11 @@
 			"lang": "zh-tw",
 			"name": "正體中文",
 			"path": "lang/zh-tw.json"
+		},
+{
+			"lang": "SV",
+			"name": "Svenska",
+			"path": "lang/sv.json"
 		}
 	  ],
 	"socket": true,
