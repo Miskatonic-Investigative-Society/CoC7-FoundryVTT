@@ -26,6 +26,7 @@ version 0.5.5 :
 
 * Bug correction:
   * Private GM roll are now properly displayed.
+  * #442 CSS correction on creature/NPC sheets.
 * #432 Option added to display a name instead of SAN data when creating a link (GM only).
 * Posting CoC7 link to the chat-log has been slightly modified.
   * If you have any token selected, the check will be triggered for all your selected tokens.
