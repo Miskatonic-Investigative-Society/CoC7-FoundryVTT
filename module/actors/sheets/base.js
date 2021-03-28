@@ -750,15 +750,19 @@ export class CoC7ActorSheet extends ActorSheet {
 
 	_onSectionHeader(event){
 		event.preventDefault();
-		let section = $(event.currentTarget).parents('section'),
-			pannelClass = $(event.currentTarget).data('pannel'),
-			pannel = section.find( `.${pannelClass}`);
-		pannel.toggle();
-		// if( pannel.hasClass('expanded'))
-		// 	pannel.slideUp(200);
-		// else
-		// 	pannel.slideDown(200);
-		// pannel.toggleClass('expanded');		
+		// let section = $(event.currentTarget).parents('section'),
+		// 	pannelClass = $(event.currentTarget).data('pannel'),
+		// 	pannel = section.find( `.${pannelClass}`);
+		// pannel.toggle();
+		let section = event.currentTarget.closest('section'),
+			pannelClass = event.currentTarget.dataset.pannel,
+			pannel = $(section).find( `.pannel.${pannelClass}`);
+		// pannel.toggle();
+		if( pannel.hasClass('expanded'))
+			pannel.slideUp(200);
+		else
+			pannel.slideDown(200);
+		pannel.toggleClass('expanded');		
 	}
 
 	_onInventoryHeader(event){
