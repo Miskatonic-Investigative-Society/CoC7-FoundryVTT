@@ -22,6 +22,17 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+version 0.5.5 :
+
+* Bug correction:
+  * Private GM roll are now properly displayed.
+* #432 Option added to display a name instead of SAN data when creating a link (GM only).
+* Posting CoC7 link to the chat-log has been slightly modified.
+  * If you have any token selected, the check will be triggered for all your selected tokens.
+  * If you don't have any token selected but you have some targets, that CoC7 link will be whispered to your targets.
+  * Holding CTRL when clicking a CoC7 link your selected token will not be checked and the link will be whispered to your targets or publish in the chat-log if you don't have any target.
+* Swedish translation added thanks to Rangertheman.
+
 version 0.5.4 :
 
 * Bug correction:

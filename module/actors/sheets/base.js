@@ -1054,14 +1054,16 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 		}
 
-		let sanMin, sanMax, useCustomName, name;
+		let sanMin, sanMax, useCustomName, displayName;
 		if( event.altKey && attrib == 'san'){
-			const sanData = await SanDataDialog.create();
+			const sanData = await SanDataDialog.create( {
+				promptLabel : (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM
+			});
 			if( sanData){
 				sanMin = sanData.get( 'sanMin')||0;
 				sanMax = sanData.get( 'sanMax')||0;
 				useCustomName = sanData.get( 'usecustom')||false;
-				name = sanData.get( 'customname')||null;
+				displayName = sanData.get( 'customname')||null;
 
 				ui.notifications.info( `Custom name: ${useCustomName}: ${name}`);
 				
@@ -1077,12 +1079,13 @@ export class CoC7ActorSheet extends ActorSheet {
 				{
 					check: 'sanloss',
 					sanMax: sanMax,
-					sanMin: sanMin
+					sanMin: sanMin,
 				}:{
 					check: 'check',
 					type: 'attribute',
 					name: attrib
 				};
+			if( useCustomName && displayName) linkData.displayName = displayName;
 			if( 'blindroll' === game.settings.get('core', 'rollMode')) linkData.blind = true;
 			if( undefined != modifier) linkData.modifier = modifier;
 			if( undefined != difficulty) linkData.difficulty = difficulty;
