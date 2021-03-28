@@ -24,15 +24,25 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 version 0.5.5 :
 
+* Documentation has started !! Thanks to  @pconcepcion and @jantoniomartin. You can find them :
+  * @pconcepcion system documentation : doc/README.md.
+  * @jantoniomartin user's guide : docs/en/users-guide.md.
 * Bug correction:
   * Private GM roll are now properly displayed.
   * #442 CSS correction on creature/NPC sheets.
+* Bug correction thanks to @jantoniomartin:
+  * #410. Fixed assignment of item description value.
+  * #427. Fixed a visibility issue with dropdown.
+  * Setup sheet now includes a one-block backstory if the corresponding option is activated.
 * #432 Option added to display a name instead of SAN data when creating a link (GM only).
 * Posting CoC7 link to the chat-log has been slightly modified.
   * If you have any token selected, the check will be triggered for all your selected tokens.
   * If you don't have any token selected but you have some targets, that CoC7 link will be whispered to your targets.
   * Holding CTRL when clicking a CoC7 link your selected token will not be checked and the link will be whispered to your targets or publish in the chat-log if you don't have any target.
 * Swedish translation added thanks to Rangertheman.
+* French translation updated thanks to @vonv
+* Taiwanese Mandarin translation updated thanks to @Zeteticl.
+* Português (Brasil) translation updated thanks to @castanhocorreia.
 
 version 0.5.4 :
 
