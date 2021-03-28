@@ -1,11 +1,21 @@
-export class SanDataDialog {
+export class SanDataDialog extends Dialog {
+
+	activateListeners(html) {
+		super.activateListeners( html);
+		html.find(':checkbox').click( () => this._toggleInput(html));
+	}
+
+	_toggleInput( html){
+		html.find('*[name="customname"]').toggle();
+	}
+
 	static async create(options = {})
 	{
 		const html = await renderTemplate('systems/CoC7/templates/apps/sandata.html', options);
         
 		return new Promise((resolve) => {
 			let formData = null;
-			const dlg = new Dialog({
+			const dlg = new SanDataDialog({
 				title: options.displayName? game.i18n.format( 'CoC7.SanDataSelectionWindowNamed', {name: options.displayName}):game.i18n.localize('CoC7.SanDataSelectionWindow'),
 				content: html,
 				buttons: {

@@ -83,6 +83,7 @@
 "CoC7.Any": "Any",
 "CoC7.All": "All",
 "CoC7.Success": "Success",
+"CoC7.CustomLabel": "Custom label",
 
 "CoC7.RegularSuccess": "Regular success",
 "CoC7.HardSuccess": "Hard success",
@@ -386,7 +387,7 @@
 "CoC7.SanityLost": "Sanity points lost",
 "CoC7.MemoryRepressed":"Your mind repressed the memory and buried it in your subconscious.",
 "CoC7.RememberEverything": "You remember EVERYTHING.",
-"CoC7.BootOfMadnesslasted": "Your bout of madness lasted",
+"CoC7.BoutOfMadnesslasted": "Your bout of madness lasted",
 "CoC7.EnteringBoutOfMadness": "You experience a bout of madness",
 "CoC7.GrowingAccustomedToAwfulness": "Your getting used to horror. (Your sanity loss is limited).",
 "CoC7.ImmuneToAwfulness": "Your mind is immune to this awfulness. (No sanity loss).",
@@ -406,14 +407,15 @@
 "CoC7.Phobia": "Phobia",
 "CoC7.Mania": "Mania",
 "CoC7.MaxSanloss": "Max loss",
+"CoC7.MinSanloss": "Min loss",
 "CoC7.AlreadyLost": "Already lost",
 "CoC7.CreatureMaxLoss": "Creature max loss",
 "CoC7.MaxLossToCreature": "Max loss to this creature",
 "CoC7.ResetCreatureSan": "Reset creature's history",
 "CoC7.ResetSpecieSan": "Reset specie's history",
 "CoC7.KeepData": "Keep creature's data",
-"CoC7.BootActive": "(Boot) Immune to SAN loss",
-"CoC7.AlreadyInABoot": "You're already suffering a boot of madness and are immune to further loos of sanity.",
+"CoC7.BoutActive": "(Bout) Immune to SAN loss",
+"CoC7.AlreadyInABout": "You're already suffering a bout of madness and are immune to further loos of sanity.",
 "CoC7.PlayerPermanentlyInsane": "Player Permanently Insane",
 "CoC7.MythosFirstEncounter": "Award Mythos Experience (+5% First time)",
 "CoC7.MythosAlreadyEncountered": "Award Mythos Experience (+1%)",
@@ -445,6 +447,11 @@
 "CoC7.OccultBook": "Occult Tome",
 "CoC7.Unidentified": "Unidentified description",
 
+"CoC7.Crew": "Crew",
+"CoC7.Origin": "Origin",
+"CoC7.Model": "Model",
+
+
 "CoC7.PulpTalents": "Pulp Talents",
 "CoC7.TalentType": "Talent Type",
 "CoC7.PhysicalTalent": "Physical",
@@ -456,6 +463,7 @@
 "CoC7.OtherTalent": "Other",
 
 "CoC7.Items": "Items",
+"CoC7.Vehicle": "Vehicle",
 "CoC7.Books": "Books",
 "CoC7.Status": "Status",
 
@@ -538,6 +546,7 @@
 "CoC7.InfoAllSkillsAlreadySelected": "All skills are already selected.",
 
 "CoC7.MessageWaitForKeeperToClick": "Your keeper is requesting a check.<br>Wait before clicking!<br>",
+"CoC7.MessageCheckRequested": "Your keeper is requesting a check.",
 
 "SETTINGS.DefaultDifficulty": "Default check difficulty",
 "SETTINGS.DefaultDifficultyHint": "You can choose the default difficulty for checks. Unknown will roll checks without the player knowing the check difficulty.",
