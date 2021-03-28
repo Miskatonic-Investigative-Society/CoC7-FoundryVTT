@@ -1545,7 +1545,8 @@
 }
 :root {
   --main-sheet-bg: url('./artwork/backgrounds/character-sheet.png') 4 repeat;
-  --main-sheet-image: url(./artwork/tentacules.png);
+  --other-sheet-bg: url('./artwork/backgrounds/sheet.jpg');
+  --main-sheet-image: url('./artwork/tentacules.png');
   --main-sheet-back-color: #670b0b;
   --main-sheet-front-color: #2b3753;
   --main-sheet-interactie-color: #670b0b;
@@ -1561,6 +1562,7 @@ html {
   font-size: 16px;
 }
 .sheetV2 {
+  background-image: var(--other-sheet-bg) repeat;
   font-family: customSheetFont, 'Bradley Hand', cursive;
 }
 .sheetV2 .no-skill-set,
