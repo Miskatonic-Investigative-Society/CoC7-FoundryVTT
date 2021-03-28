@@ -2080,7 +2080,7 @@ export class CoCActor extends Actor {
 		if( !fastForward){
 			message += '</p>';
 			const speaker = { actor: this.actor};
-			await chatHelper.createMessage( title, message, speaker);
+			await chatHelper.createMessage( title, message, {speaker:speaker});
 		}
 		return( {failure : failure, success: success});
 	}
@@ -2106,7 +2106,7 @@ export class CoCActor extends Actor {
 			message = game.i18n.format( 'CoC7.DevFailureDetails', {item : skill.name});
 		}
 		const speaker = { actor: this._id};
-		await chatHelper.createMessage( title, message, speaker);
+		await chatHelper.createMessage( title, message, {speaker:speaker});
 		await skill.unflagForDevelopement();
 	}
 
@@ -2370,6 +2370,12 @@ export class CoCActor extends Actor {
 
 	get owners(){
 		return game.users.filter( u => this.hasPerm( u, 'OWNER')  && !u.isGM);
+	}
+
+	get player(){
+		let player = undefined;
+		this.owners.forEach( u => { if( u.character.id == this.id) player = u;});
+		return player;
 	}
 
 	get characterUser(){

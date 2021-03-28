@@ -83,6 +83,7 @@
 "CoC7.Any": "Any",
 "CoC7.All": "All",
 "CoC7.Success": "Success",
+"CoC7.CustomLabel": "Custom label",
 
 "CoC7.RegularSuccess": "Regular success",
 "CoC7.HardSuccess": "Hard success",
@@ -406,6 +407,7 @@
 "CoC7.Phobia": "Phobia",
 "CoC7.Mania": "Mania",
 "CoC7.MaxSanloss": "Max loss",
+"CoC7.MinSanloss": "Min loss",
 "CoC7.AlreadyLost": "Already lost",
 "CoC7.CreatureMaxLoss": "Creature max loss",
 "CoC7.MaxLossToCreature": "Max loss to this creature",
@@ -544,6 +546,7 @@
 "CoC7.InfoAllSkillsAlreadySelected": "All skills are already selected.",
 
 "CoC7.MessageWaitForKeeperToClick": "Your keeper is requesting a check.<br>Wait before clicking!<br>",
+"CoC7.MessageCheckRequested": "Your keeper is requesting a check.",
 
 "SETTINGS.DefaultDifficulty": "Default check difficulty",
 "SETTINGS.DefaultDifficultyHint": "You can choose the default difficulty for checks. Unknown will roll checks without the player knowing the check difficulty.",
