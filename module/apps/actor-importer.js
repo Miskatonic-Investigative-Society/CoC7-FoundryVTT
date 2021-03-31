@@ -103,7 +103,7 @@ export class CoC7ActorImporter {
     const dodge = dodgeRegExp.exec(text)
     if (dodge !== null) {
       r.skills.push({
-        name: this.this.cleanString(dodge.groups.name),
+        name: this.cleanString(dodge.groups.name),
         value: Number(dodge.groups.percentage)
       })
     }
@@ -239,16 +239,7 @@ export class CoC7ActorImporter {
 
   // TODO: split in several methods
   async createEntity(pc, entityTypeString) {
-    let importedCharactersFolder = game.folders.find(entry => entry.data.name === 'Imported characters' && entry.data.type === 'Actor')
-    if (importedCharactersFolder === null) {
-      // Create the folder
-      importedCharactersFolder = await Folder.create({
-        name: 'Imported characters',
-        type: 'Actor',
-        parent: null
-      })
-      ui.notifications.info('Created Imported Characters folder')
-    }
+    let importedCharactersFolder = await this.createImportCharactersFolderIfNotExists()
 
     // const npcData = setCharacteristics(pc)
     const npc = await Actor.create({
@@ -259,32 +250,58 @@ export class CoC7ActorImporter {
     })
     // debugger
     // Add the skills
-    if (pc.skills !== null) {
-      for (let i = 0; i < pc.skills.length; i++) {
-        const newSkill = await this.createSkill(pc.skills[i])
-        const created = await npc.createOwnedItem(newSkill)
-        console.debug(created)
-      }
-    }
+    await this.addTheSkills(pc, npc)
     // Add the languages
-    if (pc.languages !== null) {
-      for (let i = 0; i < pc.languages.length; i++) {
-        const newSkill = await this.createSkill(pc.languages[i])
-        const created = await npc.createOwnedItem(newSkill)
-        console.debug(created)
-      }
-    }
+    await this.addTheLanguages(pc, npc)
     // Add the spells
-    if (pc.spells !== null) {
-      for (let i = 0; i < pc.spells.length; i++) {
-        const created = await npc.addItems([{
-          name: pc.spells[i],
-          type: 'spell'
-        }])
-        console.debug(created)
-      }
-    };
+    await this.addTheSpells(pc, npc)
     // Handle the attacks
+    await this.handleTheAttacks(pc, npc)
+    await this.updateActorData(pc, npc)
+
+    return npc
+  }
+
+  async createImportCharactersFolderIfNotExists() {
+    let importedCharactersFolder = game.folders.find(entry => entry.data.name === 'Imported characters' && entry.data.type === 'Actor')
+    if (importedCharactersFolder === null) {
+      // Create the folder
+      importedCharactersFolder = await Folder.create({
+        name: 'Imported characters',
+        type: 'Actor',
+        parent: null
+      })
+      ui.notifications.info('Created Imported Characters folder')
+    }
+    return importedCharactersFolder
+  }
+
+  async updateActorData(pc, npc) {
+    let updateData = {};
+    ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu'].forEach(key => {
+      updateData[`data.characteristics.${key}.value`] = Number(pc[key])
+    })
+    await npc.update(updateData)
+    updateData = {};
+    ['hp', 'mp', 'lck', 'san', 'mov', 'db', 'build', 'armor'].forEach(key => {
+      updateData[`data.attribs.${key}.value`] = Number(pc[key])
+    })
+    if (pc.age !== null) {
+      updateData['data.infos.age'] = pc.age
+    }
+    if (pc.sanLoss !== null) {
+      const [passed, failed] = pc.sanLoss.split('/')
+      updateData['data.special.sanLoss.checkPassed'] = passed
+      updateData['data.special.sanLoss.checkFailled'] = failed
+    }
+    if (pc.attacksPerRound !== null) {
+      updateData['data.special.attacksPerRound'] = Number(pc.attacksPerRound)
+    }
+    console.debug('updateData:', updateData)
+    await npc.update(updateData)
+  }
+
+  async handleTheAttacks(pc, npc) {
     if (pc.attacks !== null) {
       let newSkill = null
       for (let i = 0; i < pc.attacks.length; i++) {
@@ -336,30 +353,38 @@ export class CoC7ActorImporter {
         }
       }
     }
-    let updateData = {};
-    ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu'].forEach(key => {
-      updateData[`data.characteristics.${key}.value`] = Number(pc[key])
-    })
-    await npc.update(updateData)
-    updateData = {};
-    ['hp', 'mp', 'lck', 'san', 'mov', 'db', 'build', 'armor'].forEach(key => {
-      updateData[`data.attribs.${key}.value`] = Number(pc[key])
-    })
-    if (pc.age !== null) {
-      updateData['data.infos.age'] = pc.age
-    }
-    if (pc.sanLoss !== null) {
-      const [passed, failed] = pc.sanLoss.split('/')
-      updateData['data.special.sanLoss.checkPassed'] = passed
-      updateData['data.special.sanLoss.checkFailled'] = failed
-    }
-    if (pc.attacksPerRound !== null) {
-      updateData['data.special.attacksPerRound'] = Number(pc.attacksPerRound)
-    }
-    console.debug('updateData:', updateData)
-    await npc.update(updateData)
+  }
 
-    return npc
+  async addTheSpells(pc, npc) {
+    if (pc.spells !== null) {
+      for (let i = 0; i < pc.spells.length; i++) {
+        const created = await npc.addItems([{
+          name: pc.spells[i],
+          type: 'spell'
+        }])
+        console.debug(created)
+      }
+    };
+  }
+
+  async addTheLanguages(pc, npc) {
+    if (pc.languages !== null) {
+      for (let i = 0; i < pc.languages.length; i++) {
+        const newSkill = await this.createSkill(pc.languages[i])
+        const created = await npc.createOwnedItem(newSkill)
+        console.debug(created)
+      }
+    }
+  }
+
+  async addTheSkills(pc, npc) {
+    if (pc.skills !== null) {
+      for (let i = 0; i < pc.skills.length; i++) {
+        const newSkill = await this.createSkill(pc.skills[i])
+        const created = await npc.createOwnedItem(newSkill)
+        console.debug(created)
+      }
+    }
   }
 
   async createSkill(skill) {
