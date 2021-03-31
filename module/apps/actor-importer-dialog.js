@@ -9,6 +9,11 @@ export class CoC7ActorImporterDialog extends Dialog {
     html.on('submit', 'form', this._onSubmit.bind(this));
   }
 
+  /**
+   * 
+   * @returns getInputs extracts the data from the input fields and 
+   * adds a `.` at the end if it's not already there. 
+   */
   static async getInputs() {
     const inputs = {}
     inputs.entity = $('#coc-entity-type').val().trim()
@@ -22,6 +27,11 @@ export class CoC7ActorImporterDialog extends Dialog {
     inputs.text = text
     return inputs 
   }
+
+  /**
+   * importActor imports an Actor using the dialog data 
+   * @param {html} html 
+   */
   static async importActor(html) {
     console.debug('html', html)
     const inputs = await CoC7ActorImporterDialog.getInputs()
@@ -38,6 +48,10 @@ export class CoC7ActorImporterDialog extends Dialog {
     event.preventDefault();
   }
 
+  /**
+   * create it's the default web to crate the CoC7ActorImporterDialog
+   * @param {} data can include a `title` for the dialog.
+   */
   static async create(data) {
     const html = await renderTemplate('systems/CoC7/templates/apps/actor-importer.html', data);
     return new Promise(resolve => {

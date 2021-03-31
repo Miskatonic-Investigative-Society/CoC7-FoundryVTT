@@ -115,6 +115,11 @@ export class CoC7ActorImporter {
     return r
   }
 
+  /**
+   * processName extracts the Character name from the first line of the `text` 
+   * @param {string} text 
+   * @returns the character name or 'Imported unnamed character' if the name was not found 
+   */
   processName(text) {
     const nameFound = nameRegExp.exec(text)
     if (nameFound !== null) {
@@ -162,7 +167,12 @@ export class CoC7ActorImporter {
     console.debug('spells', results)
     return results
   }
-  
+
+  /**
+   * basicWeaponData creates a basic object with the default basic data for a weapon
+   * @param {boolean} firearms true if the weapon uses firearms, false if it's a melee one.
+   * @returns 
+   */
   basicWeaponData(firearms) {
     return {
       specialization: game.i18n.localize(firearms ? 'CoC7.FirearmSpecializationName' : 'CoC7.FightingSpecializationName'),
@@ -227,6 +237,7 @@ export class CoC7ActorImporter {
     return 'npc'
   }
 
+  // TODO: split in several methods
   async createEntity(pc, entityTypeString) {
     let importedCharactersFolder = game.folders.find(entry => entry.data.name === 'Imported characters' && entry.data.type === 'Actor')
     if (importedCharactersFolder === null) {
