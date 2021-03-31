@@ -160,7 +160,9 @@ export class CoC7Menu {
 					icon: 'fas fa-user-plus',
 					name: 'actor-import',
 					title: 'CoC7.ActorImporter',
-					onClick : CoC7ActorImporterDialog.create
+					onClick : CoC7ActorImporterDialog.create({
+						title: game.i18n.localize('CoC7.ActorImporter')
+					})
 				},
 				{
 					toggle: true,

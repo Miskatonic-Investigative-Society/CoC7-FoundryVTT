@@ -42,7 +42,7 @@ export class CoC7ActorImporterDialog extends Dialog {
     const html = await renderTemplate('systems/CoC7/templates/apps/actor-importer.html', data);
     return new Promise(resolve => {
       const dlg = new CoC7ActorImporterDialog({
-        title: data.title || 'Paste the character data from the PDF (v0.1.6)',
+        title: data.title,
         content: html,
         data: data,
         buttons: {

@@ -549,7 +549,8 @@
 "CoC7.MessageCheckRequested": "Your keeper is requesting a check.",
 
 "CoC7.ActorImporter": "Actor Importer",
-"CoC7.PasteTheDataBelow": "Paste the data below",
+"CoC7.ActorImporterSummary": "Import an NPC or Creature from description and stats. Just paste the corresponding plain text",
+"CoC7.PasteTheDataBelow": "Paste the raw text data below",
 "CoC7.SelectActorType": "Select actor type",
 "CoC7.NonPlayingCharacter": "Non Playing Character (NPC)",
 "CoC7.Creature": "Creature",
