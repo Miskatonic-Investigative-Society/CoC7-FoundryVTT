@@ -1,0 +1,22 @@
+<form autocomplete="off" onsubmit="event.preventDefault();">
+    <h2>{{localize 'CoC7.PasteTheDataBelow'}}</h2>
+    <div class="form-group">
+        <p>{{localize 'CoC7.SelectActorType'}}:</p>
+        <select id="coc-entity-type" name="coc-entity-type">
+            <option value="coc-npc">{{localize 'NonPlayingCharacter'}}</option>
+            <option value="coc-creature">{{localize 'Creature'}}</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <p>{{localize 'ConvertFrom6Edition'}}</p>
+        <select id="coc-convert-6E" name="coc-convert-6E">
+            <option value="coc-guess">{{localize 'Guess'}}</option>
+            <option value="coc-convert">{{localize 'Convert'}}</option>
+            <option value="coc-no-convert">{{localize 'NoConvert'}}</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <textarea id="coc-pasted-character-data" name="coc-pasted-character-data" rows="30"
+            style="min-height:300px"></textarea>
+    </div>
+</form>
