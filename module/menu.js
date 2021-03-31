@@ -1,5 +1,6 @@
 import { CoC7Chat } from './chat.js';
 import { CoC7Utilities } from './utilities.js';
+import { CoC7ActorImporterDialog } from './apps/actor-importer-dialog.js';
 
 export class CoC7Menu {
 	constructor( options){
@@ -148,11 +149,18 @@ export class CoC7Menu {
 				},
 				{
 					toggle: true,
-					icon : 'fas fas fa-user-edit',
+					icon : 'fas fa-user-edit',
 					name: 'charcreate',
 					active: game.settings.get('CoC7', 'charCreationEnabled'), 
 					title: 'CoC7.CharCreationMode',
 					onClick :async () => await CoC7Utilities.toggleCharCreation()
+				},
+				{
+					button: true,
+					icon: 'fas fa-user-plus',
+					name: 'actor-import',
+					title: 'CoC7.ActorImporter',
+					onClick : CoC7ActorImporterDialog.create
 				},
 				{
 					toggle: true,
