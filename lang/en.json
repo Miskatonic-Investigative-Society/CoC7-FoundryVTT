@@ -489,7 +489,7 @@
 "CoC7.EmptyItemList": "Add an item by dropping it here.",
 "CoC7.PersonalSpeciality": "Number of personal or era specialty",
 "CoC7.AdditionalSkills": "Additional Skills",
-"CoC7.SkillSelectionWindow": "Select opional skills",
+"CoC7.SkillSelectionWindow": "Select optional skills",
 "CoC7.SelectPersonalSkills": "Select {number} skill(s) as personal interest skills",
 "CoC7.ResetOccupation": "Reset Occupation",
 "CoC7.ResetOccupationHint": "Actor {name} already have an occupation. Do you want to reset it?",
@@ -528,7 +528,7 @@
 "CoC7.toggleXP": "XP gain",
 "CoC7.XPGainEnabled": "Character can gain XP",
 "CoC7.XPGainDisabled": "Character cannot gain XP",
-"CoC7.WarnNoActorAvailable": "You do not have any actor controled nor selected",
+"CoC7.WarnNoActorAvailable": "You do not have any actor controlled nor selected",
 "CoC7.WarnMacroIncorrectType": "You can create macro for weapons and skills only",
 "CoC7.WarnNoGlobalSpec": "You can't create macro for unspecified specializations",
 "CoC7.WarnMacroNoItemFound": "No usable item found",
@@ -538,7 +538,7 @@
 
 "CoC7.ErrorNoDodgeSkill": "Actor doesn't have a dodge skill",
 "CoC7.ErrorNotEnoughLuck": "{actor} didn't have enough luck to pass the check",
-"CoC7.ErrorManeuverNotPossible": "Your opponant is too strong for you to perform a maneuver",
+"CoC7.ErrorManeuverNotPossible": "Your opponent is too strong for you to perform a maneuver",
 "CoC7.ErrorNotFound": "{missing} not found!",
 "CoC7.ErrorNotFoundForActor": "{missing} not found for actor {actor}!",
 
@@ -547,6 +547,17 @@
 
 "CoC7.MessageWaitForKeeperToClick": "Your keeper is requesting a check.<br>Wait before clicking!<br>",
 "CoC7.MessageCheckRequested": "Your keeper is requesting a check.",
+
+"CoC7.ActorImporter": "Actor Importer",
+"CoC7.ActorImporterSummary": "Import an NPC or Creature from description and stats. Just paste the corresponding plain text",
+"CoC7.PasteTheDataBelow": "Paste the raw text data below",
+"CoC7.SelectActorType": "Select actor type",
+"CoC7.NonPlayingCharacter": "Non Playing Character (NPC)",
+"CoC7.Creature": "Creature",
+"CoC7.ConvertFrom6Edition": "Convert from 6 edition",
+"CoC7.Convert": "Convert",
+"CoC7.NoConvert": "No Convert",
+"CoC7.Guess": "Guess",
 
 "SETTINGS.DefaultDifficulty": "Default check difficulty",
 "SETTINGS.DefaultDifficultyHint": "You can choose the default difficulty for checks. Unknown will roll checks without the player knowing the check difficulty.",

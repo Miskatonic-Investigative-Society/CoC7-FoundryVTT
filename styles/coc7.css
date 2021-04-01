@@ -171,6 +171,7 @@
 }
 
 .coc7.sheet.npc,
+.coc7.dialoge.actor-importer,
 .coc7.sheet.creature{
     min-width: 580px;
 }
