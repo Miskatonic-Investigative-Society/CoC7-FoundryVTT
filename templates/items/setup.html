@@ -62,17 +62,25 @@
                 {{/each}}
 			</div>
 
-			<h3 class="form-header">
-				{{ localize "CoC7.BioSections" }}
-				<a class="item-control add-bio"><i class="fas fa-plus"></i></a>
-			</h3>
-
+			{{#if oneBlockBackStory}}
+				<h3 class="form-header">
+				{{ localize "CoC7.Background" }}
+				</h3>
+				<div class="backstory-editor">
+				{{editor content=data.backstory target="data.backstory" button=true owner=owner editable=editable}}
+				</div>
+			{{else}}
+				<h3 class="form-header">
+					{{ localize "CoC7.BioSections" }}
+					<a class="item-control add-bio"><i class="fas fa-plus"></i></a>
+				</h3>
 			{{#each data.bioSections as |value index|}}
-			<div class="form-group item" data-index="{{index}}">
-				<input type="text" name="data.bioSections.{{index}}" value="{{value}}" placeholder="{{ localize 'CoC7.BioSectionName' }}"/>
-				<a class="item-control remove-section"><i class="fas fa-minus" style="line-height: 20px;"></i></a>
-			</div>
+				<div class="form-group item" data-index="{{index}}">
+					<input type="text" name="data.bioSections.{{index}}" value="{{value}}" placeholder="{{ localize 'CoC7.BioSectionName' }}"/>
+					<a class="item-control remove-section"><i class="fas fa-minus" style="line-height: 20px;"></i></a>
+				</div>
 			{{/each}}
+			{{/if}}
 
 			<div class='droppable main-skills'>
 				<h3 class="form-header">{{ localize "CoC7.Items" }}</h3>

@@ -120,6 +120,9 @@
     "CoC7.check.FlagForDevelopment": "Dar Experiência",
     "CoC7.IncreaseSuccessLevel": "Aumentar Sucesso",
     "CoC7.check.DecreaseSuccessLevel": "Diminuir Sucesso",
+    "CoC7.RollSecretDice": "O Guardião realizou um teste privado.",
+    "CoC7.KeeperSentDecoy": "Rolagem falsa enviada aos jogadores.",
+    "CoC7.FakeRoll": "Fingir Rolagem",
     
     "CoC7.ConstitutionCheck": "Teste de Constituição",
     
@@ -177,6 +180,8 @@
     "CoC7.AdvantageAttacker": "Vantagem: Atacante",
     "CoC7.AdvantageDefender": "Vantagem: Defensor",
     "CoC7.Tie": "Empate",
+    "CoC7.DamageInflicted": "Dano Infringido",
+    "CoC7.TotalDamage": "Dano Total",
     
     "CoC7.combatCard.dive4cover": "Buscar Cobertura",
     
@@ -384,7 +389,7 @@
     "CoC7.SanityLost": "Pontos de SAN perdidos",
     "CoC7.MemoryRepressed":"Sua mente repreende a memória, e a enterra em seu subconsciente.",
     "CoC7.RememberEverything": "Você se recorda DE TUDO.",
-    "CoC7.BootOfMadnesslasted": "Seu Acesso de Loucura terminou.",
+    "CoC7.BoutOfMadnesslasted": "Seu Acesso de Loucura terminou.",
     "CoC7.EnteringBoutOfMadness": "Você experimenta um Acesso de Loucura.",
     "CoC7.GrowingAccustomedToAwfulness": "Você está acostumando-se com o horror (perda de SAN limitada).",
     "CoC7.ImmuneToAwfulness": "Sua mente está imune a este horror (sem perda de SAN).",
@@ -410,8 +415,8 @@
     "CoC7.ResetCreatureSan": "Reiniciar Histórico da Criatura",
     "CoC7.ResetSpecieSan": "Reiniciar Histórico da Espécie",
     "CoC7.KeepData": "Manter Dados da Criatura",
-    "CoC7.BootActive": "Imune à Perda de SAN",
-    "CoC7.AlreadyInABoot": "Você já está sofrendo de loucura e está imune a futuras perdas de Sanidade.",
+    "CoC7.BoutActive": "Imune à Perda de SAN",
+    "CoC7.AlreadyInABout": "Você já está sofrendo de loucura e está imune a futuras perdas de Sanidade.",
     "CoC7.PlayerPermanentlyInsane": "Personagem Permanentemente Insano(a)",
     "CoC7.MythosFirstEncounter": "Conceder Ganho de Mythos (+5%)",
     "CoC7.MythosAlreadyEncountered": "Conceder Ganho de Mythos (+1%)",
@@ -515,6 +520,9 @@
     "CoC7.CharCreationMode": "Modo de Criação de Personagem",
     "CoC7.CharCreationEnabled": "Modo de Criação de Personagem Habilitado",
     "CoC7.CharCreationDisabled": "Modo de Criação de Personagem Desabilitado",
+    "CoC7.toggleXP": "Ganho de EXP",
+    "CoC7.XPGainEnabled": "Personagens podem receber EXP.",
+    "CoC7.XPGainDisabled": "Personagens não podem receber EXP.",
     "CoC7.WarnNoActorAvailable": "Você não tem nenhum ator selecionado.",
     "CoC7.WarnMacroIncorrectType": "Você só pode criar macros para perícias e armas.",
     "CoC7.WarnNoGlobalSpec": "Você não pode criar uma macro para uma especialização não-especificada.",
@@ -601,6 +609,13 @@
     "SETTINGS.AllowFlatThresholdModifier": "Modificador Flutuante em Valores",
     "SETTINGS.AllowFlatThresholdModifierHint":"Permite o grau de sucesso dos testes serem modificados por um valor flutuante." ,
     "SETTINGS.OpposedRollTieBreaker": "Desempatador de Testes Resistidos (Viriato139ac)",
-    "SETTINGS.OpposedRollTieBreakerHint": "Em caso de empate em um teste resistido, o vencedor é determinado pelo valor rolado mais baixo, não pela perícia mais alta."
+    "SETTINGS.OpposedRollTieBreakerHint": "Em caso de empate em um teste resistido, o vencedor é determinado pelo valor rolado mais alto, não pela perícia mais alta.",
+    "SETTINGS.SelfRollWhisperTarget": "Notificação de Testes:",
+    "SETTINGS.SelfRollWhisperTargetHint": "Como Guardião, ao realizar algum teste, para quem este será notificado.",
+    "SETTINGS.DoNotAdvise": "Não Notificar",
+    "SETTINGS.AdviseOwnersOnly": "Notificar Dono(a) do Personagem",
+    "SETTINGS.AdviseAllPlayer": "Notificar Todos",
+    "SETTINGS.OneBlockBackStory": "Sessão de Antecedentes em um Bloco",
+    "SETTINGS.OneBlockBackStoryHint": "Transforma a parte de Antecedentes da ficha em único bloco."
     }
     

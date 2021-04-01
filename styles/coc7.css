@@ -108,7 +108,8 @@
 }
 
 .coc7.chat-card .dropdown-content {
-    display: none;
+    display: block;
+    visibility: hidden;
     position: absolute;
     background-color: #f1f1f1;
     min-width: 100px;
@@ -126,7 +127,7 @@
 .coc7.chat-card .dropdown a:hover {background-color: #ddd;    text-shadow: 0 0 8px red;
 }
   
-.coc7.chat-card .show {display: block;}
+.coc7.chat-card .show {visibility: visible;}
 
 .coc7.chat-card label{
     text-align: left;
@@ -145,12 +146,14 @@
     padding-left: 4px;
     line-height: 22px;
     color: green;
+    flex: 0;
 }
 
 .coc7 .auto-off{
     padding-left: 4px;
     line-height: 22px;
     color: grey;
+    flex: 0;
 }
 
 .coc7.sheet .status-monitor{
@@ -165,6 +168,12 @@
 }
 .coc7.sheet .status-monitor.status-on{
     color: darkred;
+}
+
+.coc7.sheet.npc,
+.coc7.dialoge.actor-importer,
+.coc7.sheet.creature{
+    min-width: 580px;
 }
 
 .coc7.sheet.npc select {
@@ -541,13 +550,21 @@
 }
 
 .coc7.sheet .sheet-header .attribute-value {
-    flex: 0 0 35px;
+    /* flex: 0 0 25px; */
+    flex: 1;
     text-align: right;
+    padding: 0;
+}
+
+.coc7.sheet .sheet-header .attribute-value.single {
+    padding-left: 4px;
+    text-align: left;
 }
 
 .coc7.sheet .sheet-header .attribute-max {
-    flex: 0 0 20px;
-    text-align: right;
+    /* flex: 0 0 25px; */
+    flex: 1;
+    text-align: left;
     padding: 0;
 }
 

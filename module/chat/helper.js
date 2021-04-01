@@ -65,10 +65,14 @@ export class chatHelper{
 		});
 	}
 
-	static async createMessage( title, message, speaker = null){
+	static async createMessage( title, message, options = {}){
 		const messageData = {};
 		messageData.flavor = title;
-		messageData.speaker = speaker || ChatMessage.getSpeaker();
+		messageData.speaker = options.speaker || ChatMessage.getSpeaker();
+		if( options.whisper){
+			messageData.type = CHAT_MESSAGE_TYPES.WHISPER;
+			messageData.whisper = options.whisper;
+		}
 		messageData.user = game.user._id;
 		messageData.content = message;
 
