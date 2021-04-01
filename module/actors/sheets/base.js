@@ -750,15 +750,19 @@ export class CoC7ActorSheet extends ActorSheet {
 
 	_onSectionHeader(event){
 		event.preventDefault();
-		let section = $(event.currentTarget).parents('section'),
-			pannelClass = $(event.currentTarget).data('pannel'),
-			pannel = section.find( `.${pannelClass}`);
-		pannel.toggle();
-		// if( pannel.hasClass('expanded'))
-		// 	pannel.slideUp(200);
-		// else
-		// 	pannel.slideDown(200);
-		// pannel.toggleClass('expanded');		
+		// let section = $(event.currentTarget).parents('section'),
+		// 	pannelClass = $(event.currentTarget).data('pannel'),
+		// 	pannel = section.find( `.${pannelClass}`);
+		// pannel.toggle();
+		let section = event.currentTarget.closest('section'),
+			pannelClass = event.currentTarget.dataset.pannel,
+			pannel = $(section).find( `.pannel.${pannelClass}`);
+		// pannel.toggle();
+		if( pannel.hasClass('expanded'))
+			pannel.slideUp(200);
+		else
+			pannel.slideDown(200);
+		pannel.toggleClass('expanded');		
 	}
 
 	_onInventoryHeader(event){
@@ -1054,12 +1058,19 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 		}
 
-		let sanMin, sanMax;
+		let sanMin, sanMax, useCustomName, displayName;
 		if( event.altKey && attrib == 'san'){
-			const sanData = await SanDataDialog.create();
+			const sanData = await SanDataDialog.create( {
+				promptLabel : (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM
+			});
 			if( sanData){
 				sanMin = sanData.get( 'sanMin')||0;
 				sanMax = sanData.get( 'sanMax')||0;
+				useCustomName = sanData.get( 'usecustom')||false;
+				displayName = sanData.get( 'customname')||null;
+
+				ui.notifications.info( `Custom name: ${useCustomName}: ${name}`);
+				
 				if( !isNaN(Number(sanMin))) sanMin=Number(sanMin);
 				if( !isNaN(Number(sanMax))) sanMax=Number(sanMax);
 			}
@@ -1072,12 +1083,13 @@ export class CoC7ActorSheet extends ActorSheet {
 				{
 					check: 'sanloss',
 					sanMax: sanMax,
-					sanMin: sanMin
+					sanMin: sanMin,
 				}:{
 					check: 'check',
 					type: 'attribute',
 					name: attrib
 				};
+			if( useCustomName && displayName) linkData.displayName = displayName;
 			if( 'blindroll' === game.settings.get('core', 'rollMode')) linkData.blind = true;
 			if( undefined != modifier) linkData.modifier = modifier;
 			if( undefined != difficulty) linkData.difficulty = difficulty;

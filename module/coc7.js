@@ -27,6 +27,7 @@ import { CoC7Menu } from './menu.js';
 import { OpposedCheckCard } from './chat/cards/opposed-roll.js';
 import { CombinedCheckCard } from './chat/cards/combined-roll.js';
 import { DamageCard } from './chat/cards/damage.js';
+import { CoC7VehicleSheet } from './actors/sheets/vehicle.js';
 
 Hooks.once('init', async function() {
 
@@ -474,6 +475,7 @@ Hooks.once('init', async function() {
 	// Register sheet application classes
 	Actors.unregisterSheet('core', ActorSheet);
 	Actors.registerSheet('CoC7', CoC7NPCSheet, { types: ['npc'], makeDefault: true});
+	Actors.registerSheet('CoC7', CoC7VehicleSheet, { types: ['vehicle'], makeDefault: true});
 	Actors.registerSheet('CoC7', CoC7CreatureSheet, { types: ['creature'], makeDefault: true});
 	Actors.registerSheet('CoC7', CoC7CharacterSheet, { types: ['character']});
 	Actors.registerSheet('CoC7', CoC7CharacterSheetV2, { types: ['character'], makeDefault: true});

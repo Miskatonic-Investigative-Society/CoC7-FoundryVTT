@@ -83,6 +83,7 @@
 "CoC7.Any": "Any",
 "CoC7.All": "All",
 "CoC7.Success": "Success",
+"CoC7.CustomLabel": "Custom label",
 
 "CoC7.RegularSuccess": "Regular success",
 "CoC7.HardSuccess": "Hard success",
@@ -177,6 +178,8 @@
 "CoC7.AdvantageAttacker": "Advantage: Attacker",
 "CoC7.AdvantageDefender": "Advantage: Defender",
 "CoC7.Tie": "Tie",
+"CoC7.DamageInflicted": "Damage inflicted",
+"CoC7.TotalDamage": "Total damage",
 
 "CoC7.combatCard.dive4cover": "Dive for Cover",
 
@@ -384,7 +387,7 @@
 "CoC7.SanityLost": "Sanity points lost",
 "CoC7.MemoryRepressed":"Your mind repressed the memory and buried it in your subconscious.",
 "CoC7.RememberEverything": "You remember EVERYTHING.",
-"CoC7.BootOfMadnesslasted": "Your bout of madness lasted",
+"CoC7.BoutOfMadnesslasted": "Your bout of madness lasted",
 "CoC7.EnteringBoutOfMadness": "You experience a bout of madness",
 "CoC7.GrowingAccustomedToAwfulness": "Your getting used to horror. (Your sanity loss is limited).",
 "CoC7.ImmuneToAwfulness": "Your mind is immune to this awfulness. (No sanity loss).",
@@ -404,14 +407,15 @@
 "CoC7.Phobia": "Phobia",
 "CoC7.Mania": "Mania",
 "CoC7.MaxSanloss": "Max loss",
+"CoC7.MinSanloss": "Min loss",
 "CoC7.AlreadyLost": "Already lost",
 "CoC7.CreatureMaxLoss": "Creature max loss",
 "CoC7.MaxLossToCreature": "Max loss to this creature",
 "CoC7.ResetCreatureSan": "Reset creature's history",
 "CoC7.ResetSpecieSan": "Reset specie's history",
 "CoC7.KeepData": "Keep creature's data",
-"CoC7.BootActive": "(Boot) Immune to SAN loss",
-"CoC7.AlreadyInABoot": "You're already suffering a boot of madness and are immune to further loos of sanity.",
+"CoC7.BoutActive": "(Bout) Immune to SAN loss",
+"CoC7.AlreadyInABout": "You're already suffering a bout of madness and are immune to further loos of sanity.",
 "CoC7.PlayerPermanentlyInsane": "Player Permanently Insane",
 "CoC7.MythosFirstEncounter": "Award Mythos Experience (+5% First time)",
 "CoC7.MythosAlreadyEncountered": "Award Mythos Experience (+1%)",
@@ -443,6 +447,11 @@
 "CoC7.OccultBook": "Occult Tome",
 "CoC7.Unidentified": "Unidentified description",
 
+"CoC7.Crew": "Crew",
+"CoC7.Origin": "Origin",
+"CoC7.Model": "Model",
+
+
 "CoC7.PulpTalents": "Pulp Talents",
 "CoC7.TalentType": "Talent Type",
 "CoC7.PhysicalTalent": "Physical",
@@ -454,6 +463,7 @@
 "CoC7.OtherTalent": "Other",
 
 "CoC7.Items": "Items",
+"CoC7.Vehicle": "Vehicle",
 "CoC7.Books": "Books",
 "CoC7.Status": "Status",
 
@@ -479,7 +489,7 @@
 "CoC7.EmptyItemList": "Add an item by dropping it here.",
 "CoC7.PersonalSpeciality": "Number of personal or era specialty",
 "CoC7.AdditionalSkills": "Additional Skills",
-"CoC7.SkillSelectionWindow": "Select opional skills",
+"CoC7.SkillSelectionWindow": "Select optional skills",
 "CoC7.SelectPersonalSkills": "Select {number} skill(s) as personal interest skills",
 "CoC7.ResetOccupation": "Reset Occupation",
 "CoC7.ResetOccupationHint": "Actor {name} already have an occupation. Do you want to reset it?",
@@ -518,7 +528,7 @@
 "CoC7.toggleXP": "XP gain",
 "CoC7.XPGainEnabled": "Character can gain XP",
 "CoC7.XPGainDisabled": "Character cannot gain XP",
-"CoC7.WarnNoActorAvailable": "You do not have any actor controled nor selected",
+"CoC7.WarnNoActorAvailable": "You do not have any actor controlled nor selected",
 "CoC7.WarnMacroIncorrectType": "You can create macro for weapons and skills only",
 "CoC7.WarnNoGlobalSpec": "You can't create macro for unspecified specializations",
 "CoC7.WarnMacroNoItemFound": "No usable item found",
@@ -528,7 +538,7 @@
 
 "CoC7.ErrorNoDodgeSkill": "Actor doesn't have a dodge skill",
 "CoC7.ErrorNotEnoughLuck": "{actor} didn't have enough luck to pass the check",
-"CoC7.ErrorManeuverNotPossible": "Your opponant is too strong for you to perform a maneuver",
+"CoC7.ErrorManeuverNotPossible": "Your opponent is too strong for you to perform a maneuver",
 "CoC7.ErrorNotFound": "{missing} not found!",
 "CoC7.ErrorNotFoundForActor": "{missing} not found for actor {actor}!",
 
@@ -536,6 +546,18 @@
 "CoC7.InfoAllSkillsAlreadySelected": "All skills are already selected.",
 
 "CoC7.MessageWaitForKeeperToClick": "Your keeper is requesting a check.<br>Wait before clicking!<br>",
+"CoC7.MessageCheckRequested": "Your keeper is requesting a check.",
+
+"CoC7.ActorImporter": "Actor Importer",
+"CoC7.ActorImporterSummary": "Import an NPC or Creature from description and stats. Just paste the corresponding plain text",
+"CoC7.PasteTheDataBelow": "Paste the raw text data below",
+"CoC7.SelectActorType": "Select actor type",
+"CoC7.NonPlayingCharacter": "Non Playing Character (NPC)",
+"CoC7.Creature": "Creature",
+"CoC7.ConvertFrom6Edition": "Convert from 6 edition",
+"CoC7.Convert": "Convert",
+"CoC7.NoConvert": "No Convert",
+"CoC7.Guess": "Guess",
 
 "SETTINGS.DefaultDifficulty": "Default check difficulty",
 "SETTINGS.DefaultDifficultyHint": "You can choose the default difficulty for checks. Unknown will roll checks without the player knowing the check difficulty.",

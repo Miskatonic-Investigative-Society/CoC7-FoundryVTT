@@ -287,12 +287,12 @@ export class CoCActor extends Actor {
 	}
 
 	async exitBoutOfMadness(){
-		return await this.boutOfMadness?.update( { disabled: true});
+		return await this.boutOfMadness?.delete();
 	}
 
 	
 	async exitInsanity(){
-		return await this.insanity?.update( { disabled: true});
+		return await this.insanity?.delete();
 	}
 
 
@@ -679,8 +679,12 @@ export class CoCActor extends Actor {
 			const othersItems = data.data.items.filter( it => 'skill' != it.type);
 			await this.addUniqueItems( skills);
 			await this.addItems( othersItems);
-			for( const sectionName of data.data.bioSections){
-				if( !this.data.data.biography.find( el => sectionName == el.title) && sectionName) await this.createBioSection( sectionName);
+			if (game.settings.get( 'CoC7', 'oneBlockBackstory')) {
+				await this.update({'data.backstory': data.data.backstory});
+			} else {
+				for( const sectionName of data.data.bioSections){
+					if( !this.data.data.biography.find( el => sectionName == el.title) && sectionName) await this.createBioSection( sectionName);
+				}
 			}
 			break;
 		}
@@ -2080,7 +2084,7 @@ export class CoCActor extends Actor {
 		if( !fastForward){
 			message += '</p>';
 			const speaker = { actor: this.actor};
-			await chatHelper.createMessage( title, message, speaker);
+			await chatHelper.createMessage( title, message, {speaker:speaker});
 		}
 		return( {failure : failure, success: success});
 	}
@@ -2106,7 +2110,7 @@ export class CoCActor extends Actor {
 			message = game.i18n.format( 'CoC7.DevFailureDetails', {item : skill.name});
 		}
 		const speaker = { actor: this._id};
-		await chatHelper.createMessage( title, message, speaker);
+		await chatHelper.createMessage( title, message, {speaker:speaker});
 		await skill.unflagForDevelopement();
 	}
 
@@ -2129,10 +2133,10 @@ export class CoCActor extends Actor {
 		switch (effectName) {
 		case 'boutOfMadness':
 			if( this.boutOfMadness){
-				const boutOfMadness = this.boutOfMadness;
-				if( boutOfMadness){
-					await boutOfMadness.update({ disabled: !boutOfMadness.data.disabled, duration: {seconds: undefined, rounds: undefined, turns: 1}});
-				}
+				await this.boutOfMadness.delete();
+				// if( boutOfMadness){
+				// 	await boutOfMadness.update({ disabled: !boutOfMadness.data.disabled, duration: {seconds: undefined, rounds: undefined, turns: 1}});
+				// }
 			} else {
 				// const effectData = 
 				await ActiveEffect.create({
@@ -2154,10 +2158,10 @@ export class CoCActor extends Actor {
 			break;
 		case 'insanity':
 			if( this.insanity){
-				const insanity = this.insanity;
-				if( insanity){
-					await insanity.update({ disabled: !insanity.data.disabled, duration: {seconds: undefined, rounds: undefined, turns: 1}});
-				}
+				this.insanity.delete();
+				// if( insanity){
+				// 	await insanity.update({ disabled: !insanity.data.disabled, duration: {seconds: undefined, rounds: undefined, turns: 1}});
+				// }
 			} else {
 				// const effectData = 
 				await ActiveEffect.create({
@@ -2370,6 +2374,12 @@ export class CoCActor extends Actor {
 
 	get owners(){
 		return game.users.filter( u => this.hasPerm( u, 'OWNER')  && !u.isGM);
+	}
+
+	get player(){
+		let player = undefined;
+		this.owners.forEach( u => { if( u.character.id == this.id) player = u;});
+		return player;
 	}
 
 	get characterUser(){

@@ -58,7 +58,7 @@
 				<div class="flexrow flex1 attribute" style="display: flex;" data-attrib="hp">
 					<label class="attribute-label">{{localize 'CoC7.HP'}} :</label>
 					<input class="attribute-value" type="text" name="data.attribs.hp.value" value="{{data.attribs.hp.value}}" data-dtype="Number"/>
-					<span style="flex: none;font-size: large;">/</span>
+					<span style="flex: none;font-size: 14px;line-height:20px;">/</span>
 					{{#if data.attribs.hp.auto}}
 					<input class="attribute-max" type="text" name="data.attribs.hp.max" value="{{data.attribs.hp.max}}" data-dtype="Number" readonly/>
 					<!-- <span class="attribute-max" type="text" style="line-height: 22px;"> {{data.attribs.hp.max}} </span> -->
@@ -69,21 +69,21 @@
 					{{#unless data.flags.locked}}
 					<div class="auto-toggle {{#if data.attribs.hp.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
 					{{/unless}}
-					<div class="flex1"></div>
+					<!-- <div class="flex1"></div> -->
 				</div>
 				{{#if data.flags.locked}}
 					<div class="flexrow flex1 attribute" data-attrib="mp">
 						{{#if hasMp}}
 						<label class="attribute-label">{{localize 'CoC7.MP'}} :</label>
 						<input class="attribute-value" type="text" name="data.attribs.mp.value" value="{{data.attribs.mp.value}}" data-dtype="Number"/>
-						<span style="flex: none;font-size: large;">/</span>
+						<span style="flex: none;font-size: 14px;line-height:20px;">/</span>
 						{{#if data.attribs.mp.auto}}
 						<input class="attribute-max" type="text" name="data.attribs.mp.max" value="{{data.attribs.mp.max}}" data-dtype="Number" readonly/>
 						<!-- <span class="attribute-max" type="text" style="line-height: 22px;"> {{data.attribs.mp.max}} </span> -->
 						{{else}}
 						<input class="attribute-max {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.mp.max" value="{{data.attribs.mp.max}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
 						{{/if}}
-						<div class="flex1"></div>
+						<!-- <div class="flex1"></div> -->
 						{{/if}}
 					</div>
 
@@ -91,24 +91,24 @@
 						{{#if hasSan}}
 						<label class="attribute-label rollable" draggable="true">{{localize 'CoC7.SAN'}} :</label>
 						<input class="attribute-value" type="text" name="data.attribs.san.value" value="{{data.attribs.san.value}}" data-dtype="Number"/>
-						<span style="flex: none;font-size: large;">/</span>
+						<span style="flex: none;font-size: 14px;line-height:20px;">/</span>
 						<input class="attribute-max {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.san.max" value="{{data.attribs.san.max}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
-						<div class="flex1"></div>
+						<!-- <div class="flex1"></div> -->
 						{{/if}}
 					</div>
 
 					<div class="flexrow flex1 attribute"  data-attrib="lck">
 						{{#if hasLuck}}
 						<label class="attribute-label rollable" draggable="true">{{localize 'CoC7.Luck'}} :</label>
-						<input class="attribute-value read-only" type="text" name="data.attribs.lck.value" value="{{data.attribs.lck.value}}" data-dtype="Number" readonly>
-						<div class="flex1"></div>
+						<input class="attribute-value single read-only" type="text" name="data.attribs.lck.value" value="{{data.attribs.lck.value}}" data-dtype="Number" readonly>
+						<!-- <div class="flex1"></div> -->
 						{{/if}}
 					</div>
 				{{else}}
 					<div class="flexrow flex1 attribute" data-attrib="mp">
 						<label class="attribute-label">{{localize 'CoC7.MP'}} :</label>
 						<input class="attribute-value" type="text" name="data.attribs.mp.value" value="{{data.attribs.mp.value}}" data-dtype="Number"/>
-						<span style="flex: none;font-size: large;">/</span>
+						<span style="flex: none;font-size: 14px;line-height:20px;">/</span>
 						{{#if data.attribs.mp.auto}}
 						<input class="attribute-max" type="text" name="data.attribs.mp.max" value="{{data.attribs.mp.max}}" data-dtype="Number" readonly/>
 						<!-- <span class="attribute-max" type="text" style="line-height: 22px;"> {{data.attribs.mp.max}} </span> -->
@@ -116,26 +116,26 @@
 						<input class="attribute-max {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.mp.max" value="{{data.attribs.mp.max}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
 						{{/if}}
 						<div class="auto-toggle {{#if data.attribs.mp.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
-						<div class="flex1"></div>
+						<!-- <div class="flex1"></div> -->
 					</div>
 
 					<div class="flexrow flex1 attribute"  data-attrib="san">
 						<label class="attribute-label rollable">{{localize 'CoC7.SAN'}} :</label>
 						<input class="attribute-value" type="text" name="data.attribs.san.value" value="{{data.attribs.san.value}}" data-dtype="Number"/>
-						<span style="flex: none;font-size: large;">/</span>
+						<span style="flex: none;font-size: 14px;line-height:20px;">/</span>
 						{{#if data.attribs.san.auto}}
 						<input class="attribute-max" type="text" name="data.attribs.san.max" value="{{data.attribs.san.max}}" data-dtype="Number" readonly/>
 						{{else}}
 						<input class="attribute-max {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.san.max" value="{{data.attribs.san.max}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
 						{{/if}}
 						<div class="auto-toggle {{#if data.attribs.san.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
-						<div class="flex1"></div>
+						<!-- <div class="flex1"></div> -->
 					</div>
 
 					<div class="flexrow flex1 attribute"  data-attrib="lck">
 						<label class="attribute-label rollable">{{localize 'CoC7.Luck'}} :</label>
-						<input class="attribute-value read-only" type="text" name="data.attribs.lck.value" value="{{data.attribs.lck.value}}" data-dtype="Number">
-						<div class="flex1"></div>
+						<input class="attribute-value single read-only" type="text" name="data.attribs.lck.value" value="{{data.attribs.lck.value}}" data-dtype="Number">
+						<!-- <div class="flex1"></div> -->
 					</div>
 				{{/if}}
 			</div>
@@ -145,9 +145,9 @@
 					<label>{{localize 'CoC7.Mov'}} :</label>
 					
 					{{#if data.attribs.mov.auto}}
-						<span class="attribute-value" type="text" style="line-height: 22px;"> {{data.attribs.mov.value}} </span>
+						<span class="attribute-value single" type="text" style="line-height: 22px;"> {{data.attribs.mov.value}} </span>
 					{{else}}
-						<input class="attribute-value {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.mov.value" value="{{data.attribs.mov.value}}" {{#if data.flags.locked}}readonly{{/if}}>
+						<input class="attribute-value single {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.mov.value" value="{{data.attribs.mov.value}}" {{#if data.flags.locked}}readonly{{/if}}>
 					{{/if}}
 
 					{{#unless data.flags.locked}}
@@ -159,9 +159,9 @@
 					<label class="attribute-label rollable">{{localize 'CoC7.DB'}} :</label>
 					
 					{{#if data.attribs.db.auto}}
-						<span class="attribute-value" type="text" style="line-height: 22px;"> {{data.attribs.db.value}} </span>
+						<span class="attribute-value single" type="text" style="line-height: 22px;"> {{data.attribs.db.value}} </span>
 					{{else}}
-						<input class="attribute-value {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.db.value" value="{{data.attribs.db.value}}" data-dtype="String" {{#if data.flags.locked}}readonly{{/if}}>
+						<input class="attribute-value single {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.db.value" value="{{data.attribs.db.value}}" data-dtype="String" {{#if data.flags.locked}}readonly{{/if}}>
 					{{/if}}
 
 					<!-- {{#if hasDBFormula}}
@@ -176,9 +176,9 @@
 				<div class="flexrow flex1 attribute" data-attrib="build">
 					<label>{{localize 'CoC7.Build'}} :</label>
 					{{#if data.attribs.build.auto}}
-						<span class="attribute-value" type="text" style="line-height: 22px;"> {{data.attribs.build.value}} </span>
+						<span class="attribute-value single" type="text" style="line-height: 22px;"> {{data.attribs.build.value}} </span>
 					{{else}}
-						<input class="attribute-value {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.build.value" value="{{data.attribs.build.value}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
+						<input class="attribute-value single {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.build.value" value="{{data.attribs.build.value}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
 					{{/if}}
 
 					{{#unless data.flags.locked}}
@@ -190,7 +190,7 @@
 					<!-- {{#if data.attribs.armor.auto}}
 						<span class="attribute-value" type="text" style="line-height: 22px;"> {{data.attribs.build.value}} </span>
 					{{else}} -->
-					<input class="attribute-value {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.armor.value" value="{{data.attribs.armor.value}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
+					<input class="attribute-value single {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.armor.value" value="{{data.attribs.armor.value}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
 					<!-- {{/if}}
 
 					{{#unless data.flags.locked}}
@@ -285,7 +285,7 @@
 					</div>
 				{{/unless}}
 			</div>
-			<div class="skills flexrow" style="padding-top: 1px;border-bottom: 2px groove;">
+			<div class="skills flexrow pannel expanded" style="padding-top: 1px;border-bottom: 2px groove;">
 				{{> "systems/CoC7/templates/actors/parts/npc-skills.html"}}
 			</div>
 		</section>
@@ -299,7 +299,7 @@
 				</div>
 				{{/unless}}
 			</div>
-			<div class="combat flexcol"  style="padding-top: 1px;border-bottom: 2px groove;">
+			<div class="combat flexcol pannel expanded"  style="padding-top: 1px;border-bottom: 2px groove;">
 				{{> "systems/CoC7/templates/actors/parts/npc-combat.html"}}
 			</div>
 		</section>
@@ -314,7 +314,7 @@
 				</div>
 				{{/unless}}
 			</div>
-			<div class="inventory flexrow">
+			<div class="inventory flexrow pannel expanded">
 				<ol class="inventory-list">
 					{{#if  itemsByType.item}}
 					<div class="inventory-section">
@@ -389,7 +389,7 @@
 			<div class="section-header flexrow" data-pannel="description">
 				<h3 class="flex1">{{localize 'CoC7.Notes'}} </h3>
 			</div>
-			<div class="description" >
+			<div class="description pannel expanded" >
 				{{editor content=data.biography.personalDescription.value target="data.biography.personalDescription.value" style="height:95%" button=true owner=owner editable=editable}}
 			</div>
 		</section>

@@ -1059,7 +1059,7 @@ export class CoC7Check {
 			} else ChatMessage.applyRollMode( chatData, this.rollMode);
 		}
 
-		// if ( ['gmroll', 'blindroll'].includes(this.rollMode) ) chatData['whisper'] = ChatMessage.getWhisperRecipients('GM');
+		if ( ['gmroll', 'blindroll'].includes(this.rollMode) ) chatData['whisper'] = ChatMessage.getWhisperRecipients('GM');
 		if ( this.rollMode === 'blindroll' ) chatData.blind = true;
 
 		// ChatMessage.applyRollMode( chatData, this.rollMode);
