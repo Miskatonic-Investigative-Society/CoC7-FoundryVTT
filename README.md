@@ -24,17 +24,17 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 version 0.5.5 :
 
-* New feature thanks to @pconcepcion!
+* New feature thanks to [@pconcepcion](https://github.com/pconcepcion)!
   * You can now import your actors in the system using GM Tools.
   * This is a first version, but it's already fully functional!
   * Details here : <https://github.com/HavlockV/CoC7-FoundryVTT/pull/444>.
-* Documentation has started !! Thanks to  @pconcepcion and @jantoniomartin. You can find them :
-  * @pconcepcion system documentation : doc/README.md.
-  * @jantoniomartin user's guide : docs/en/users-guide.md.
+* Documentation has started !! Thanks to  [@pconcepcion](https://github.com/pconcepcion) and [@jantoniomartin](https://github.com/jantoniomartin). You can find them :
+  * [@pconcepcion](https://github.com/pconcepcion) system documentation : doc/README.md.
+  * [@jantoniomartin](https://github.com/jantoniomartin) user's guide : docs/en/users-guide.md.
 * Bug correction:
   * Private GM roll are now properly displayed.
   * #442 CSS correction on creature/NPC sheets.
-* Bug correction thanks to @jantoniomartin:
+* Bug correction thanks to [@jantoniomartin](https://github.com/jantoniomartin):
   * #410. Fixed assignment of item description value.
   * #427. Fixed a visibility issue with drop-down.
   * Setup sheet now includes a one-block backstory if the corresponding option is activated.
