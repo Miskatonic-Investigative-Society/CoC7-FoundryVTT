@@ -50,12 +50,6 @@
 			"name": "sanity-tables-examples",
 			"path": "./packs/sanity-tables-examples.db",
 			"system": "CoC7"
-		},{
-			"label": "Färdigheter",
-			"entity": "Item",
-			"name": "skills_sv",
-			"path": "./packs/skills_sv.db",
-			"system": "CoC7"
 		}
 	],
 	"languages": [
@@ -105,7 +99,7 @@
 			"path": "lang/zh-tw.json"
 		},
 {
-			"lang": "SV",
+			"lang": "sv",
 			"name": "Svenska",
 			"path": "lang/sv.json"
 		}
