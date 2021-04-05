@@ -126,6 +126,8 @@ const spanishRegExp = {
  */
 export class CoC7ActorImporterRegExp {
 
+    static optionLangRegExp = /coc-(?<langcode>\w\w)/
+
     constructor() {
         this.RE = CoC7ActorImporterRegExp.getRegularExpressions(game.i18n.lang);
     }

@@ -412,6 +412,8 @@ export class CoC7ActorImporter {
   }
 
   async createActor(inputs) {
+    const lang = this.extractValue(inputs.lang, CoC7ActorImporterRegExp.optionLangRegExp) || "en"
+    this.RE = CoC7ActorImporterRegExp.getRegularExpressions(lang)
     let character = await this.parseCharacter(inputs.text)
     console.debug(character)
     if ((inputs.convertFrom6E === "coc-guess" && this.needsConversion(character)) || (inputs.convertFrom6E === "coc-convert")) {
