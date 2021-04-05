@@ -7,6 +7,7 @@ export class CoC7ActorImporterDialog extends Dialog {
   activateListeners(html) {
     super.activateListeners(html);
     html.on('submit', 'form', this._onSubmit.bind(this));
+    html.find('option[value=coc-'+game.i18n.lang+']').attr('selected','selected');
   }
 
   /**
@@ -19,6 +20,7 @@ export class CoC7ActorImporterDialog extends Dialog {
     inputs.entity = $('#coc-entity-type').val().trim()
     inputs.convertFrom6E = $('#coc-convert-6E').val().trim()
     console.debug('entity type:', inputs.entity)
+    inputs.lang = $('#coc-entity-lang').val().trim()
     let text = $('#coc-pasted-character-data').val().trim()
     console.debug('received text', '##' + text + '##')
     if (text[text.length] !== '.') {
