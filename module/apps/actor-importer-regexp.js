@@ -43,6 +43,44 @@ const englishRegExp = {
     launchedWeapons: /(Molotov|Grenade|Dynamite)/i
 }
 
+// Regular expressions to parse actors from a french source
+const frenchRegExp = {
+    nameRegExp: new RegExp('^[\\s\\n\\r]*(?<name>[\\w\\s\\.\\/\\(\\)\\-' + accentedCharacters + ']+),'),
+    ageRegExp: /(\d+) ans/i,
+    strRegExp: /(?:FOR):?\s+(\d+)/,
+    conRegExp: /CON:?\s+(\d+)/,
+    sizRegExp: /(?:TAI):?\s+(\d+)/,
+    intRegExp: /INT:?\s+(\d+)/,
+    powRegExp: /(?:POU):?\s+(\d+)/,
+    dexRegExp: /(?:DEX):?\s+(\d+)/,
+    appRegExp: /(?:APP):?\s+(\d+)/,
+    eduRegExp: /ÉDU:? +(\d+)/,
+    sanRegExp: /(?:SAN|Santé Mentale):?\s+(\d+)/,
+    hpRegExp: /(?:PV|Points de vie):?\s+(\d+)/,
+    mpRegExp: /(?:PM|Points de magie):?\s+(\d+)/,
+    dbRegExp: /(?:BD|Bonus aux dommages|Impact|Imp):?\s+([\+-]?\d+(?:d\d+|D\d+)?)/i,
+    attacksRegExp: /(?:Attaques|Armes|Combat):?\s+(.*)\.[\n|\r]?$/sim,
+    buildRegExp: /(?:Carrure):?\s+([\+-]?\d+)/i,
+    armorRegExp: /(?:Armure):?\s+(Acune|\d+)/i,
+    moveRegExp: /(?:Mvt|Mouvement|Déplacement):?\s+(\d+)/i,
+    luckRegExp: /(?:Chance):?\s+(\d+)/i,
+    spellsRegExp: /(?:Sortilèges|Sorts):?\s+(.*)\.[\n|\r]?$/sim,
+    skillsRegExp: /(?:Compétences):?\s+(.*)\.[\n|\r]?$/sim,
+    dodgeRegExp: /(?<name>Esquiver):?\s+\(?(?<percentage>\d+)\)?\s*%/i,
+    languagesRegExp: /(?:Langue):?\s+(.*)\.[\n|\r]?$/sim,
+    skillRegExp: new RegExp('(?<skill>[\\w\\s\\(\\).\\/' + accentedCharacters + ']+) (?<percentage>\\d+)%'),
+    attacksPerRoundRegExp: /(?:Attaques par round):?\s+(Acune|\d+)/i,
+    sanLossRegExp: /(?:Perte de [Santé mentale|SAN]):?\s+(no|\d[dD]?[\d\+]*\/\d[dD][\d\+]+)/i,
+    weaponRegExp: new RegExp('^(?<weapon>[\\w\\s\\n\\(\\).\\/' + accentedCharacters + ']+):?[\\n\\r\\s]+(?<percentage>\\d+)%,?\\s*(?:\\(\\d+\\/\\d+\\))?\\s*,?\\s*(?:dommage|dégâts)\\s+(?<damage>[\\d+\\+dD\\- ]+\\s*(Impact|Imp)?)', 'img'),
+    stopWords: '(Langue|Armure|Carrure|Perte de Santé mentale|Compétences|Combat|Armes|Attaques)',
+    // Weapons regular expressions,
+    handgunRegExp: /(Revolver|Pistolet|Derringer|Beretta|Luger|Desert Eagle| .38)/i,
+    rifleRegExp: /(Carabine|Lee-Enfield|Fusil)/i,
+    smbRegExp: /(SMG|Thompson)/i,
+    machineGunRegExp: /(Browning|Vickers|Mitrailleuse)/i,
+    launchedWeapons: /(Molotov|Grenade|Dynamite)/i,
+}
+
 
 // Regular expressions to parse actors from a spanish source
 const spanishRegExp = {
@@ -101,6 +139,8 @@ export class CoC7ActorImporterRegExp {
         switch (lang) {
             case "es":
                 return spanishRegExp;
+            case "fr":
+                return frenchRegExp;
             // By default use english regular expressions.
             default:
                 return englishRegExp;
