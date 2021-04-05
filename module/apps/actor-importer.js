@@ -28,27 +28,24 @@ export class CoC7ActorImporter {
     const r = {}
     r.name = this.processName(text)
     r.age = this.extractValue(text, this.RE.ageRegExp)
-    if (r.age === undefined || r.age === null) {
-      r.age = this.extractValue(text, this.RE.edadRegExp)
-    }
     console.debug('age', r.age)
-    r.str = this.extractValue(text, this.RE.strRegExp)
-    r.con = this.extractValue(text, this.RE.conRegExp)
-    r.siz = this.extractValue(text, this.RE.sizRegExp)
-    r.int = this.extractValue(text, this.RE.intRegExp)
-    r.pow = this.extractValue(text, this.RE.powRegExp)
-    r.dex = this.extractValue(text, this.RE.dexRegExp)
-    r.app = this.extractValue(text, this.RE.appRegExp)
-    r.edu = this.extractValue(text, this.RE.eduRegExp)
-    r.san = this.extractValue(text, this.RE.sanRegExp)
-    r.hp = this.extractValue(text, this.RE.hpRegExp)
-    r.mp = this.extractValue(text, this.RE.mpRegExp)
+    r.str = Number(this.extractValue(text, this.RE.strRegExp))
+    r.con = Number(this.extractValue(text, this.RE.conRegExp))
+    r.siz = Number(this.extractValue(text, this.RE.sizRegExp))
+    r.int = Number(this.extractValue(text, this.RE.intRegExp))
+    r.pow = Number(this.extractValue(text, this.RE.powRegExp))
+    r.dex = Number(this.extractValue(text, this.RE.dexRegExp))
+    r.app = Number(this.extractValue(text, this.RE.appRegExp))
+    r.edu = Number(this.extractValue(text, this.RE.eduRegExp))
+    r.san = Number(this.extractValue(text, this.RE.sanRegExp))
+    r.hp = Number(this.extractValue(text, this.RE.hpRegExp))
+    r.mp = Number(this.extractValue(text, this.RE.mpRegExp))
     r.db = this.extractValue(text, this.RE.dbRegExp)
     r.build = this.extractValue(text, this.RE.buildRegExp)
     r.armor = this.extractValue(text, this.RE.armorRegExp)
     console.debug('armor', r.armor)
-    r.mov = this.extractValue(text, this.RE.moveRegExp)
-    r.lck = this.extractValue(text, this.RE.luckRegExp)
+    r.mov = Number(this.extractValue(text, this.RE.moveRegExp))
+    r.lck = Number(this.extractValue(text, this.RE.luckRegExp))
     r.sanLoss = this.extractValue(text, this.RE.sanLossRegExp)
     r.attacksPerRound = this.extractValue(text, this.RE.attacksPerRoundRegExp)
 
@@ -161,7 +158,7 @@ export class CoC7ActorImporter {
           const skillName = this.cleanString(parsedSkill.groups.skill)
           results.push({
             name: skillName,
-            value: parsedSkill.groups.percentage
+            value: Number(parsedSkill.groups.percentage)
           })
         }
       })
@@ -172,8 +169,8 @@ export class CoC7ActorImporter {
 
   /**
    * extractValue expects to receive a regular expression `re` that
-   * includes one parenthesis group, and returns the value matching the
-   * parenthesis group or the
+   * includes one parenthesis group, and returns the value matching the first
+   * parenthesis group or `null`
    */
   extractValue(text, re) {
     const results = re.exec(text)
