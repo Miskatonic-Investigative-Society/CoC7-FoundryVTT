@@ -92,12 +92,20 @@ export class CoC7ActorImporter {
       // results = attacks.split(',')
       let weapon = this.RE.weaponRegExp.exec(attacks)
       while (weapon !== null) {
+        // Attempt to guess some of the weapon properties
         const cleanWeapon = this.cleanString(weapon.groups.weapon)
+        const doesDamageBonus = this.RE.dbRegExp.test(weapon.groups.damage)
+        const isRanged = this.RE.handgunRegExp.test(cleanWeapon) || this.RE.rifleRegExp.test(cleanWeapon) ||
+          this.RE.smbRegExp.test(cleanWeapon) || this.RE.machineGunRegExp.test(cleanWeapon)
         const data = {
           name: cleanWeapon,
           type: 'weapon',
           data: {
-            properties: {},
+            properties: {
+              "rngd": isRanged,
+              "melee": doesDamageBonus, // if a weapon doesDamageBonus usually means it's a melee weapon
+              "addb": doesDamageBonus
+            },
             range: {
               normal: {
                 value: Number(weapon.groups.percentage),
