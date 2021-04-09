@@ -34,6 +34,8 @@
 "CoC7.SanityPoints": "Sanity Points",
 "CoC7.Sanity": "Sanity",
 "CoC7.SAN": "SAN",
+"CoC7.DailySan":"Daily San",
+"CoC7.Madness":"Madness",
 "CoC7.DailySanLoss": "Daily San loss",
 "CoC7.DailyLoss": "Daily loss",
 "CoC7.Luck": "Luck",

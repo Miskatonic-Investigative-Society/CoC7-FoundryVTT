@@ -33,6 +33,8 @@
     "CoC7.SanityPoints": "理智值",
     "CoC7.Sanity": "理智",
     "CoC7.SAN": "SAN",
+    "CoC7.DailySan":"當日SAN",
+    "CoC7.Madness":"到達瘋狂",
     "CoC7.DailySanLoss": "當日損失San值 :",
     "CoC7.Luck": "幸運",
     "CoC7.Movement": "移動速率",

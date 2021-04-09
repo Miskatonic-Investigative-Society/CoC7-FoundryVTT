@@ -53,6 +53,15 @@
                 {{/if}}
             </div>
         </div>
+        <div class="monitor san-value">
+            <label>{{localize 'CoC7.DailySan'}}:</label>
+            <div class="current-value">
+                <input class="attribute-value" type="text" name="data.attribs.san.dailyvalue" value="{{data.attribs.san.dailyvalue}}"  data-dtype="Number"/>
+            </div>
+        </div>
+        <div>
+            <label>{{localize 'CoC7.Madness'}}: {{data.attribs.san.dailyMadnessvalue}}</label>
+        </div>
         <div>
             <label>{{localize 'CoC7.DailyLoss'}}: {{data.attribs.san.dailyLoss}}</label>
         </div>
@@ -70,7 +79,7 @@
 
     </div>
 </div>
-
+<br>
 <div class="magic-group attribute" data-attrib="mp">
     <label class="{{#unless data.flags.locked}} auto-toggle{{#unless data.attribs.mp.auto}} manual-override{{/unless}}{{/unless}}">{{localize 'CoC7.MagicPoints'}}</label>
     <div class="monitor mp-value">
