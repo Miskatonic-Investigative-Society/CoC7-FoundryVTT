@@ -670,7 +670,7 @@
 .coc7.sheet.item .details .editor,
 .coc7.sheet.occupation .details .editor,
 .coc7.sheet.setup .details .editor {
-  height: 100px;
+  height: 200px;
 }
 .coc7.sheet.skill .details .editor button,
 .coc7.sheet.item .details .editor button,
@@ -1124,7 +1124,7 @@
 .coc7.sheet.actor .development.header {
   flex: initial;
   border-bottom: 1px groove;
-  line-height: 20px;
+  line-height: 1.25rem;
 }
 .coc7.sheet.actor .development.header .header-section {
   border-right: 1px groove;
@@ -1136,7 +1136,7 @@
   border-right: none;
 }
 .coc7.sheet.actor .development.header input {
-  width: 30px;
+  width: 1.875rem;
   padding: 0;
   margin: 0;
 }
@@ -1149,12 +1149,12 @@
   color: goldenrod;
 }
 .coc7.sheet.actor .development .item {
-  flex: 0 0 10px;
+  flex: 0 0 0.625rem;
 }
 .coc7.sheet.actor .development .item .skill-name {
   flex: 1;
-  font-size: 12px;
-  height: 16px;
+  font-size: 0.75rem;
+  height: 1rem;
   padding: 0;
   text-align: left;
 }
@@ -1162,9 +1162,9 @@
   cursor: pointer;
 }
 .coc7.sheet.actor .development .item .item-controls {
-  flex: 0 0 30px;
-  line-height: 16px;
-  font-size: 10px;
+  flex: 0 0 1.875rem;
+  line-height: 1rem;
+  font-size: 0.625rem;
   padding: 0 2px;
 }
 .coc7.sheet.actor .development .item .item-controls .item-control:hover {
@@ -1176,16 +1176,16 @@
 .coc7.sheet.actor .development .adjustment-value {
   border-right: groove 1px;
   flex: 0;
-  height: 16px;
-  line-height: 16px;
+  height: 1rem;
+  line-height: 1rem;
 }
 .coc7.sheet.actor .development .adjustment-value.not-available {
   background: white;
 }
 .coc7.sheet.actor .development .adjustment-value input {
-  font-size: 11px;
-  flex: 0 0 15px;
-  height: 16px;
+  font-size: 0.6875rem;
+  flex: 0 0 0.9375rem;
+  height: 1rem;
   padding: 0 1px;
   margin: 0;
   text-align: right;
@@ -1199,11 +1199,11 @@
 }
 .coc7.sheet.actor .sheet-section .editor {
   width: 100%;
-  height: 200px;
+  height: 12.5rem;
   border: 2px groove #eeede0;
   padding: 0;
   line-height: normal;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .coc7.sheet.actor .sheet-section .editor-content {
   overflow-x: hidden;
@@ -1214,7 +1214,7 @@
   background: rgba(0, 0, 0, 0.05);
   border: 2px groove #eeede0;
   font-weight: bold;
-  line-height: 15px;
+  line-height: 0.9375rem;
   height: 100%;
 }
 .coc7.sheet.actor input:read-only:hover,
@@ -1230,8 +1230,8 @@
 .coc7.sheet.actor .info-fields .form-group label {
   width: auto;
   flex: unset;
-  line-height: 18px;
-  height: 18px;
+  line-height: 1.125rem;
+  height: 1.125rem;
   border: 0;
   margin: 0;
   font-weight: bold;
@@ -1351,6 +1351,18 @@
 .coc7.dialogue.skill-select a.roll-characteristic {
   flex: 0;
   padding-left: 5px;
+}
+.coc7.dialogue.char-select a.increase-characteristic,
+.coc7.dialogue.skill-select a.increase-characteristic {
+  flex: 0;
+  padding-left: 9px;
+}
+.coc7.dialogue.char-select a.decrease-characteristic,
+.coc7.dialogue.skill-select a.decrease-characteristic,
+.coc7.dialogue.char-select a.reset-characteristic,
+.coc7.dialogue.skill-select a.reset-characteristic {
+  flex: 0;
+  padding-right: 9px;
 }
 .coc7.dialogue.char-select .item-controls,
 .coc7.dialogue.skill-select .item-controls {
@@ -1533,7 +1545,8 @@
 }
 :root {
   --main-sheet-bg: url('./artwork/backgrounds/character-sheet.png') 4 repeat;
-  --main-sheet-image: url(./artwork/tentacules.png);
+  --other-sheet-bg: url('./artwork/backgrounds/sheet.jpg');
+  --main-sheet-image: url('./artwork/tentacules.png');
   --main-sheet-back-color: #670b0b;
   --main-sheet-front-color: #2b3753;
   --main-sheet-interactie-color: #670b0b;
@@ -1549,12 +1562,13 @@ html {
   font-size: 16px;
 }
 .sheetV2 {
+  background-image: var(--other-sheet-bg) repeat;
   font-family: customSheetFont, 'Bradley Hand', cursive;
 }
 .sheetV2 .no-skill-set,
 .sheetV2 .error {
   background-color: red;
-  border-radius: 4px;
+  border-radius: 0.25rem;
 }
 .sheetV2 .coc7.sheet.actor.temp-retro-compat {
   overflow: auto;
@@ -1564,11 +1578,11 @@ html {
 }
 .sheetV2 .window-header {
   background: var(--main-sheet-front-color);
-  margin: 4px 4px 0 4px;
+  margin: 0.25rem 0.25rem 0 0.25rem;
   width: auto;
 }
 .sheetV2 .window-content {
-  margin: 0 8px 8px 8px;
+  margin: 0 0.5rem 0.5rem 0.5rem;
   padding: 0;
   color: var(--main-sheet-front-color);
   font-size: 0.8rem;
@@ -1580,8 +1594,8 @@ html {
 }
 .sheetV2 .window-content span {
   color: #000;
-  height: 22px;
-  line-height: 22px;
+  height: 1.375rem;
+  line-height: 1.375rem;
   padding: 1px 3px;
   overflow: hidden;
   white-space: nowrap;
@@ -1589,9 +1603,19 @@ html {
   max-width: 100%;
   display: block;
 }
+.sheetV2 .window-content p {
+  white-space: normal;
+}
+.sheetV2 .window-content p span {
+  display: inline-block;
+  width: auto;
+  height: auto;
+  max-width: none;
+  white-space: normal;
+}
 .sheetV2 .window-content label {
-  height: 22px;
-  line-height: 22px;
+  height: 1.375rem;
+  line-height: 1.375rem;
   display: block;
   margin: 0;
   padding: 0;
@@ -1615,11 +1639,11 @@ html {
 }
 .sheetV2 .window-content input[type='text'] {
   flex: 1;
-  height: 22px;
+  height: 1.375rem;
   border: 0;
   margin: 0;
   width: 100%;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   background: transparent;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1627,12 +1651,12 @@ html {
 }
 .sheetV2 .window-content input[type='text']:hover,
 .sheetV2 .window-content input[type='text']:focus {
-  box-shadow: 0 0 8px var(--main-sheet-interactie-color);
+  box-shadow: 0 0 0.5rem var(--main-sheet-interactie-color);
   background: rgba(0, 0, 0, 0.1);
 }
 .sheetV2.character {
-  min-width: 687px;
-  min-height: 629px;
+  min-width: 688px;
+  min-height: 640px;
 }
 .sheetV2.character .floating-left {
   position: absolute;
@@ -1659,22 +1683,22 @@ html {
   margin: -1px;
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: 195px 30px auto;
+  grid-template-rows: 12.1875rem 1.875rem auto;
   width: 100%;
   height: 100%;
 }
 .sheetV2.character form .container .sheet-header {
   width: 100%;
-  height: 180px;
+  height: 11.25rem;
   border: 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .sheetV2.character form .container .sheet-header .sheet-portrait {
-  width: 140px;
+  width: 8.75rem;
   height: 100%;
-  padding: 0 8px;
+  padding: 0 0.5rem;
 }
 .sheetV2.character form .container .sheet-header .sheet-portrait .photo {
   object-fit: contain;
@@ -1684,8 +1708,8 @@ html {
 }
 .sheetV2.character form .container .sheet-header .infos {
   display: inline-block;
-  width: 235px;
-  padding: 0 8px;
+  width: 14.6875rem;
+  padding: 0 0.5rem;
   border-right: 2px solid;
   border-color: rgba(43, 55, 83, 0.5);
 }
@@ -1724,7 +1748,7 @@ html {
 .sheetV2.character form .container .sheet-header .characteristics .footer .attribute {
   flex: 0 0 25%;
   display: grid;
-  grid-template-columns: auto 32px;
+  grid-template-columns: auto 2rem;
   align-items: center;
   justify-content: center;
 }
@@ -1735,7 +1759,7 @@ html {
   border: 0;
   padding: 0;
   margin: 0;
-  line-height: 22px;
+  line-height: 1.375rem;
   font-size: 0.75rem;
   color: var(--main-sheet-front-color);
   font-weight: normal;
@@ -1758,16 +1782,16 @@ html {
   font-weight: normal;
 }
 .sheetV2.character form .container .sheet-header .characteristics .char-boxes {
-  flex: 0 0 96px;
+  flex: 0 0 6rem;
   justify-content: center;
   display: grid;
-  grid-template-columns: repeat(4, 60px);
-  grid-template-rows: repeat(2, 48px);
+  grid-template-columns: repeat(4, 3.75rem);
+  grid-template-rows: repeat(2, 3rem);
 }
 .sheetV2.character form .container .sheet-header .characteristics .char-box {
   display: grid;
-  grid-template-columns: 16px 44px;
-  grid-template-rows: 16px 32px;
+  grid-template-columns: 1rem 2.75rem;
+  grid-template-rows: 1rem 2rem;
   grid-template-areas: "rollIcon characName" "characScore characScore";
   align-items: baseline;
 }
@@ -1783,14 +1807,14 @@ html {
 }
 .sheetV2.character form .container .sheet-header .characteristics .char-box .charac-score {
   grid-area: characScore;
-  margin-top: 4px;
-  margin-right: 8px;
-  border-radius: 4px;
+  margin-top: 0.25rem;
+  margin-right: 0.5rem;
+  border-radius: 0.25rem;
   color: var(--main-sheet-back-color);
   background: rgba(255, 255, 255, 0.5);
   display: grid;
-  grid-template-columns: 38px 14px;
-  grid-template-rows: 14px 14px;
+  grid-template-columns: 2.375rem 0.875rem;
+  grid-template-rows: 0.875rem 0.875rem;
   grid-template-areas: "mainScore halfScore" "mainScore fithScore";
 }
 .sheetV2.character form .container .sheet-header .characteristics .char-box .charac-score .main-score {
@@ -1832,7 +1856,7 @@ html {
   color: var(--main-sheet-front-color);
   font-weight: bold;
   font-size: 1rem;
-  margin: 0 8px;
+  margin: 0 0.5rem;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -1857,28 +1881,28 @@ html {
   width: fit-content;
   color: var(--main-sheet-front-color);
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   height: auto;
   line-height: 1.1rem;
-  padding: 0 8px;
+  padding: 0 0.5rem;
   margin: 0;
 }
 .sheetV2.character form .container .sheet-nav .tab-name span:hover {
   border: 1px solid var(--main-sheet-front-color);
 }
 .sheetV2.character form .container .sheet-nav .unlock-control {
-  flex: 0 0 24px;
+  flex: 0 0 1.5rem;
   margin-top: 2px;
 }
 .sheetV2.character form .container .sheet-nav .unlock-control-disabbled {
-  flex: 0 0 24px;
+  flex: 0 0 1.5rem;
   margin-top: 2px;
   color: darkred;
   cursor: not-allowed;
 }
 .sheetV2.character form .container .sheet-body {
   border: 1px solid var(--main-sheet-front-color);
-  margin: 0 16px 8px 16px;
+  margin: 0 1rem 0.5rem 1rem;
   overflow: hidden;
 }
 .sheetV2.character form .container .sheet-body ul,
@@ -1896,9 +1920,9 @@ html {
   height: 100%;
 }
 .sheetV2.character form .container .sheet-body .two-panes-content .left-panel {
-  flex: 0 0 130px;
+  flex: 0 0 8.125rem;
   height: auto;
-  margin: 8px 0;
+  margin: 0.5rem 0;
   padding: 0;
   border-right: 1px solid;
   text-align: center;
@@ -1909,7 +1933,7 @@ html {
 .sheetV2.character form .container .sheet-body .two-panes-content .right-panel {
   flex: 1;
   height: auto;
-  padding: 4px;
+  padding: 0.25rem;
   overflow-y: hidden;
   overflow-x: auto;
 }
@@ -1922,37 +1946,37 @@ html {
 }
 .sheetV2.character form .container .sheet-body .specialization-header {
   width: var(--skill-length);
-  margin-right: 8px;
+  margin-right: 0.5rem;
   font-weight: bold;
 }
 .sheetV2.character form .container .sheet-body .itemV2 {
-  max-height: 20px;
+  max-height: 1.25rem;
   width: var(--skill-length);
-  margin-right: 8px;
+  margin-right: 0.5rem;
   display: grid;
   font-size: 0.75rem;
-  grid-template-columns: 16px auto 24px 24px;
+  grid-template-columns: 1rem auto 1.5rem 1.5rem;
   border-bottom: 1px solid;
 }
 .sheetV2.character form .container .sheet-body .itemV2.specialization {
-  margin-left: 8px;
+  margin-left: 0.5rem;
   width: var(--skill-specialization-length);
   border-left: 1px solid;
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-image {
-  height: 14px;
+  height: 0.875rem;
   background-size: contain;
-  margin: 1px 0;
+  margin: 1px 0 0 0;
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-name {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   padding-left: 3px;
-  line-height: 16px;
+  line-height: 1rem;
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-name input {
-  height: 16px;
+  height: 1rem;
   padding: 0;
   overflow: visible;
   background-color: rgba(0, 0, 0, 0.1);
@@ -1962,10 +1986,10 @@ html {
   color: var(--main-sheet-back-color);
   text-align: end;
   margin-right: 2px;
-  line-height: 16px;
+  line-height: 1rem;
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-score input {
-  height: 16px;
+  height: 1rem;
   padding: 0;
   margin-right: 2px;
   background-color: rgba(0, 0, 0, 0.1);
@@ -1974,9 +1998,9 @@ html {
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-controls {
   font-family: system-ui;
-  font-size: 10px;
-  line-height: 16px;
-  flex: 0 0 20px;
+  font-size: 0.625rem;
+  line-height: 1rem;
+  flex: 0 0 1.25rem;
   display: block;
   text-align: end;
 }
@@ -1998,14 +2022,14 @@ html {
 .sheetV2.character form .container .sheet-body .monitor {
   height: auto;
   display: grid;
-  grid-template-columns: auto 45px 5px 45px auto;
+  grid-template-columns: auto 2.875rem 5px 2.875rem auto;
   grid-template-areas: ". currentValue separator maxValue .";
   align-items: center;
 }
 .sheetV2.character form .container .sheet-body .monitor .current-value {
   grid-area: currentValue;
   text-align: right;
-  padding-right: 4px;
+  padding-right: 0.25rem;
 }
 .sheetV2.character form .container .sheet-body .monitor .separator {
   grid-area: separator;
@@ -2013,14 +2037,14 @@ html {
 .sheetV2.character form .container .sheet-body .monitor .max-value {
   grid-area: maxValue;
   text-align: left;
-  padding-left: 4px;
+  padding-left: 0.25rem;
 }
 .sheetV2.character form .container .sheet-body .monitor .max-value input {
   background-color: rgba(0, 0, 0, 0.1);
 }
 .sheetV2.character form .container .sheet-body .monitor span {
-  height: 16px;
-  line-height: 16px;
+  height: 1rem;
+  line-height: 1rem;
 }
 .sheetV2.character form .container .sheet-body .monitor input {
   height: auto;
@@ -2035,14 +2059,14 @@ html {
 }
 .sheetV2.character form .container .sheet-body .luck-group input {
   height: auto;
-  width: 35px;
-  margin-bottom: 6px;
+  width: 2.25rem;
+  margin-bottom: 0.75rem;
   color: var(--main-sheet-front-color);
   font-weight: bold;
 }
 .sheetV2.character form .container .sheet-body .hp-group {
   background-image: url('./artwork/backgrounds/hp-background.svg');
-  height: 110px;
+  height: 6.875rem;
   width: auto;
   background-size: contain;
   background-repeat: no-repeat;
@@ -2054,17 +2078,17 @@ html {
   text-shadow: 0 0 10px red;
 }
 .sheetV2.character form .container .sheet-body .hp-group a:hover {
-  text-shadow: 0 0 8px red !important;
+  text-shadow: 0 0 0.5rem red !important;
 }
 .sheetV2.character form .container .sheet-body .hp-group input {
   color: #670b0b;
 }
 .sheetV2.character form .container .sheet-body .hp-group .hp-text {
-  padding-top: 15px;
+  padding-top: 1rem;
 }
 .sheetV2.character form .container .sheet-body .san-group {
   background-image: url('./artwork/backgrounds/san-background.svg');
-  height: 125px;
+  height: 7.875rem;
   width: auto;
   background-size: contain;
   background-repeat: no-repeat;
@@ -2077,32 +2101,32 @@ html {
   text-shadow: 0 0 10px green;
 }
 .sheetV2.character form .container .sheet-body .san-group a {
-  padding: 0 8px;
+  padding: 0 0.5rem;
 }
 .sheetV2.character form .container .sheet-body .san-group a:hover {
-  text-shadow: 0 0 8px green !important;
+  text-shadow: 0 0 0.5rem green !important;
 }
 .sheetV2.character form .container .sheet-body .san-group .monitor {
-  height: 14px;
+  height: 0.875rem;
 }
 .sheetV2.character form .container .sheet-body .san-group input {
   color: #234337;
 }
 .sheetV2.character form .container .sheet-body .san-group .san-text {
-  padding-top: 16px;
+  padding-top: 1rem;
 }
 .sheetV2.character form .container .sheet-body .san-group .san-text .control {
-  margin-top: -4px;
-  font-size: 12px;
+  margin-top: -0.25rem;
+  font-size: 0.75rem;
 }
 .sheetV2.character form .container .sheet-body .san-group .rollable:hover {
   text-shadow: 0 0 10px green;
 }
 .sheetV2.character form .container .sheet-body .status {
   font-family: system-ui;
-  font-size: 20px;
+  font-size: 1.25rem;
   color: grey;
-  height: 22px;
+  height: 1.375rem;
   text-align: center;
 }
 .sheetV2.character form .container .sheet-body .status a.inative-status:hover {
@@ -2130,8 +2154,8 @@ html {
   background-color: var(--main-sheet-front-color);
   border: 1px solid transparent;
   border-radius: 4px;
-  height: 22px;
-  line-height: 22px;
+  height: 1.375rem;
+  line-height: 1.375rem;
   padding: 0 8px;
   margin: 4px;
 }
@@ -2145,7 +2169,7 @@ html {
   color: white;
 }
 .combat-pane .section-header .add-item {
-  flex: 0 0 20px;
+  flex: 0 0 1.25rem;
   color: white;
 }
 .combat-pane .section-header .add-item:hover {
@@ -2158,15 +2182,15 @@ html {
 }
 .combat-pane .item-list .itemV2 {
   margin-right: 3px !important;
-  width: 160px !important;
+  width: 10rem !important;
 }
 .combat-pane .weapon-list .weapon-row {
   width: 100%;
   height: auto;
   display: grid;
   border-bottom: 1px solid;
-  grid-template-columns: 16px 22px 1fr 168px 44px 36px;
-  grid-template-rows: 22px 1fr;
+  grid-template-columns: 1rem 1.375rem 1fr 10.5rem 2.75rem 2.75rem;
+  grid-template-rows: 1.375rem 1fr;
   grid-template-areas: "expand image name range weaponControl itemControl" "details details details details details details";
 }
 .combat-pane .weapon-list .weapon-row .expand-arrow {
@@ -2182,53 +2206,56 @@ html {
   transition: transform 0.2s ease-out;
 }
 .combat-pane .weapon-list .weapon-row.expanded .expand-arrow {
-  transform: rotate(90deg) translate(6px, -4px);
+  transform: rotate(90deg) translate(0.375rem, -0.25rem);
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
 .combat-pane .weapon-list .weapon-row .item-summary {
   background-color: rgba(255, 255, 255, 0.3);
   font-size: 0.75rem;
-  line-height: 14px;
+  line-height: 0.875rem;
   margin: 4px 0;
   border-radius: 4px;
 }
 .combat-pane .weapon-list .weapon-row .weapon-image {
   grid-area: image;
-  background-size: 22px;
+  background-size: 1.375rem;
 }
 .combat-pane .weapon-list .weapon-row .weapon-name {
   grid-area: name;
-  height: 22px;
-  line-height: 22px;
+  height: 1.375rem;
+  line-height: 1.375rem;
   padding: 0 4px;
+}
+.combat-pane .weapon-list .weapon-row .alternativ-skill {
+  flex: 0 0 24px;
 }
 .combat-pane .weapon-list .weapon-row .weapon-range {
   grid-area: range;
-  height: 22px;
-  line-height: 22px;
+  height: 1.375rem;
+  line-height: 1.375rem;
   display: grid;
-  grid-template-columns: 56px 56px 56px;
-  grid-template-rows: 22px;
+  grid-template-columns: 3.5rem 3.5rem 3.5rem;
+  grid-template-rows: 1.375rem;
 }
 .combat-pane .weapon-list .weapon-row .weapon-range .weapon-damage {
   text-align: center;
 }
 .combat-pane .weapon-list .weapon-row .weapon-control {
   text-align: center;
-  line-height: 22px;
+  line-height: 1.375rem;
   grid-area: weaponControl;
 }
 .combat-pane .weapon-list .weapon-row .weapon-controls {
-  line-height: 22px;
+  line-height: 1.375rem;
   text-align: center;
   display: grid;
-  grid-template-columns: 22px 22px;
-  grid-template-rows: 22px;
+  grid-template-columns: 1.375rem 1.375rem;
+  grid-template-rows: 1.375rem;
   grid-area: weaponControl;
 }
 .combat-pane .weapon-list .weapon-row .item-controls {
-  line-height: 22px;
+  line-height: 1.375rem;
   display: block;
   text-align: end;
   grid-area: itemControl;
@@ -2256,8 +2283,8 @@ html {
   margin: 0 2px 2px 0;
 }
 .combat-pane .weapon-list .weapon-row .item-summary .item-labels .item-label span {
-  height: 16px;
-  line-height: 16px;
+  height: 1rem;
+  line-height: 1rem;
   padding: 0 3px;
 }
 .combat-pane .weapon-list .weapon-row .item-summary .item-properties {
@@ -2302,37 +2329,41 @@ html {
 .sheetV2 .development .skills-list .item {
   color: var(--main-sheet-front-color);
   display: grid;
-  grid-template-columns: 15px auto 23px 23px 23px 23px 23px;
+  grid-template-columns: 1rem auto 1.3rem 1.3rem 1.3rem 1.3rem 1.3rem;
   align-items: center;
-  grid-template-rows: 16px;
+  grid-template-rows: 1rem;
   border-bottom: 1px solid var(--main-sheet-front-color);
-  margin-right: 8px;
+  margin-right: 0.5rem;
 }
 .sheetV2 .development .skills-list .item .item-controls {
   font-family: system-ui;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .sheetV2 .development .skills-list .item.pulpCharacter {
-  grid-template-columns: 30px auto 23px 23px 23px 23px 23px 23px;
+  grid-template-columns: 1.875rem auto 1.3rem 1.3rem 1.3rem 1.3rem 1.3rem 1.3rem;
 }
 .sheetV2 .development .skills-list .item .flagged4dev {
   color: goldenrod;
 }
 .sheetV2 .development .skills-list .item span {
-  height: 16px;
-  line-height: 16px;
+  height: 1rem;
+  line-height: 1rem;
+  padding: 0 1px;
+  margin: 0;
   font-size: 0.8rem;
+  text-align: left;
   color: var(--main-sheet-front-color);
 }
 .sheetV2 .development .skills-list .item input {
-  height: 16px;
-  line-height: 16px;
+  height: 1rem;
+  line-height: 1rem;
   font-size: 0.8rem;
   color: var(--main-sheet-front-color);
   background-color: rgba(0, 0, 0, 0.1);
   padding: 0 1px;
   margin: 0;
   text-align: right;
+  min-width: 0;
 }
 .sheetV2 .development .skills-list .item .adjustment-value {
   border-right: 1px solid var(--main-sheet-front-color);
@@ -2431,6 +2462,228 @@ html {
 .chat-card-v2 .status-list {
   display: none;
 }
+.chat-card-v2.roll-card .dice-roll {
+  padding: 0;
+}
+.chat-card-v2.roll-card .card-result {
+  position: relative;
+  margin: 0;
+  line-height: 24px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid #999;
+  border-radius: 3px;
+  box-shadow: 0 0 2px #fff inset;
+  word-break: break-all;
+  margin-top: 5px;
+}
+.chat-card-v2.roll-card.opposed.combat .attacker img {
+  border: 1px solid red;
+}
+.chat-card-v2.roll-card .opposed-card-flag {
+  flex: none;
+  color: white;
+}
+.chat-card-v2.roll-card .opposed-card-flag.active {
+  color: red;
+}
+.chat-card-v2.roll-card h4.card-result {
+  flex: 0;
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  position: relative;
+  margin: 4px 0 0 0;
+  padding: 0;
+  line-height: 24px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid #999;
+  border-radius: 3px;
+  box-shadow: 0 0 2px #fff inset;
+  word-break: break-all;
+}
+.chat-card-v2.roll-card h4.card-result.success {
+  color: darkgreen;
+}
+.chat-card-v2.roll-card h4.card-result.failure {
+  color: darkred;
+}
+.chat-card-v2.roll-card ol {
+  padding: 0;
+  list-style: none;
+  background: none;
+  box-shadow: none;
+  border: none;
+}
+.chat-card-v2.roll-card ol li.actor-roll {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.chat-card-v2.roll-card ol li.actor-roll .roll-details {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.chat-card-v2.roll-card ol li.actor-roll .roll-details .header {
+  height: 16px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.chat-card-v2.roll-card ol li.actor-roll .roll-details .header .name {
+  flex: 1;
+}
+.chat-card-v2.roll-card ol li.actor-roll .roll-details .header a {
+  height: 16px;
+  line-height: 16px;
+}
+.chat-card-v2.roll-card ol li.actor-roll span.pending {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid #b5b3a4;
+  border-radius: 3px;
+  font-size: 12px;
+  height: 24px;
+  line-height: 20px;
+  margin: 2px 0;
+  display: inline-block;
+  text-align: center;
+}
+.chat-card-v2.roll-card ol li.actor-roll.won {
+  border: 2px groove goldenrod;
+}
+.chat-card-v2.roll-card ol li.actor-roll.won.tie {
+  border-color: red;
+}
+.chat-card-v2.roll-card ol li.actor-roll a {
+  line-height: 36px;
+  height: 36px;
+  flex: none;
+}
+.chat-card-v2.roll-card ol li.actor-roll img {
+  width: 36px;
+  height: 36px;
+  flex: none;
+  margin: 0;
+  object-fit: contain;
+  border: none;
+  margin-right: 2px;
+}
+.chat-card-v2.roll-card ol li.actor-roll .actor-card-buttons {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: 36px;
+  margin: 0;
+  align-self: center;
+}
+.chat-card-v2.roll-card ol li.actor-roll .roll-result {
+  width: 100%;
+}
+.interactive-card span.ic-radio-switch,
+.interactive-card span.ic-switch {
+  display: inline-block;
+  margin: 2px 2px 0 0;
+  padding: 0 3px;
+  font-size: 10px;
+  line-height: 16px;
+  border: 1px solid whitesmoke;
+  border-radius: 3px;
+  background: transparent;
+  font-style: italic;
+  color: grey;
+}
+.interactive-card span.ic-radio-switch:hover,
+.interactive-card span.ic-switch:hover {
+  background-color: lightgray;
+}
+.interactive-card span.ic-radio-switch.switched-on,
+.interactive-card span.ic-switch.switched-on {
+  border: 1px solid red;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 4px red;
+  color: black;
+  font-style: normal;
+}
+.interactive-card a.ic-radio-switch,
+.interactive-card a.ic-switch {
+  display: inline-block;
+  flex: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  line-height: 20px;
+  background: transparent;
+  font-weight: normal;
+  color: grey;
+}
+.interactive-card a.ic-radio-switch:hover,
+.interactive-card a.ic-switch:hover {
+  background-color: lightgray;
+}
+.interactive-card a.ic-radio-switch.switched-on,
+.interactive-card a.ic-switch.switched-on {
+  color: black;
+  border: none;
+  box-shadow: none;
+  font-weight: bold;
+}
+.interactive-card .card-result {
+  position: relative;
+  margin: 0;
+  line-height: 24px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid #999;
+  border-radius: 3px;
+  box-shadow: 0 0 2px #fff inset;
+  word-break: break-all;
+  margin-top: 5px;
+}
+.chat-card.damage .flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+.chat-card.damage .options {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+.chat-card.damage .armor {
+  justify-content: flex-end;
+  align-items: center;
+}
+.chat-card.damage .ic-switch {
+  height: 16px;
+  line-height: 16px;
+  flex: 0;
+}
+.chat-card.damage label {
+  height: 16px;
+  line-height: 16px;
+}
+.chat-card.damage form {
+  flex: 0 0 40px;
+}
+.chat-card.damage form input {
+  text-align: end;
+  height: 16px;
+  line-height: 16px;
+}
+.chat-card.damage .owner-info {
+  flex: 0 0 content;
+  line-height: 22px;
+  height: 22px;
+}
 #controls .scene-control.custom-control {
   background: rgba(30, 80, 80, 0.5) !important;
 }
@@ -2439,4 +2692,7 @@ html {
   border: 1px solid green !important;
   border-bottom: 1px solid #008060 !important;
   box-shadow: 0 0 10px #008060 !important;
+}
+#controls .scene-control.custom-control .control-tool.xp_toggle.active {
+  color: goldenrod;
 }

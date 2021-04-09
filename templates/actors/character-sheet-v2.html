@@ -182,7 +182,11 @@
 					</div>
 		
 					<div class="tab coc7 sheet actor temp-retro-compat" data-group="primary" data-tab="background">
-						{{> "systems/CoC7/templates/actors/parts/actor-background.html"}}
+						{{#if oneBlockBackStory}}
+							{{editor content=data.backstory target="data.backstory" button=true owner=owner editable=editable}}
+						{{else}}
+							{{> "systems/CoC7/templates/actors/parts/actor-background.html"}}
+						{{/if}}
 					</div>
 				</div>
 			</div>

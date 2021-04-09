@@ -23,33 +23,13 @@
  */
 
 import { SanCheckCard } from '../chat/cards/san-check.js';
-import { chatHelper } from '../chat/helper.js';
+// import { chatHelper } from '../chat/helper.js';
 // import { CoC7SanCheck } from '../chat/sancheck.js';
 import { CoC7Check } from '../check.js';
 import { CoC7Utilities } from '../utilities.js';
 import { RollDialog } from './roll-dialog.js';
 
 export class CoC7Parser{
-
-	// static async onDropSomething( canvas, item){
-	// 	let grid_size = canvas.scene.data.grid;
-	// 	const number_marked = canvas.tokens.targetObjects({
-	// 		x: item.x-grid_size/2,
-	// 		y: item.y-grid_size/2,
-	// 		height: grid_size,
-	// 		width: grid_size
-	// 	});
-	// 	if (number_marked) {
-	// 		// Change item type to avoid that Foundry processes it
-	// 		item.type = 'Custom';
-	// 		if (item.hasOwnProperty('id')) {
-	// 			game.macros.get(item.id).execute();
-	// 		} else {
-	// 			eval(item.data.command);
-	// 		}
-	// 	}
-	// }
-
 	static async onEditorDrop( event, editor){ //TODO: MANAGE FLAT MODIFIER THERE
 		event.preventDefault();
 
@@ -292,7 +272,7 @@ export class CoC7Parser{
 		} else data.dataset.displayName = true;
 
 		const a = document.createElement('a');
-		a.title = title;
+		a.title = game.user.isGM?data.name:title;
 		a.classList.add(...data.cls);
 		for (let [k, v] of Object.entries(data.dataset)) {
 			a.dataset[k] = v;
@@ -318,8 +298,30 @@ export class CoC7Parser{
 
 		if( game.user.isGM){
 			//If GM and from sheet and CTRL clicked publish a message asking for the click.
-			if( fromSheet && (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)){
-				chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), event.currentTarget.outerHTML);
+			if( (fromSheet && (!canvas.tokens.controlled.length && !game.user.targets.size)) ||
+				(fromSheet && (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)) ||
+				(!canvas.tokens.controlled.length && game.user.targets.size)){
+				const whisperTargets = [];
+				[...game.user.targets].map( t => {
+					if( t.actor.isPC && t.actor.player) whisperTargets.push(t.actor.player);
+				});
+				const whisper = !!whisperTargets.length;
+				
+				const chatData = {
+					user: game.user._id,
+					flavor: whisper?game.i18n.localize('CoC7.MessageCheckRequested'):game.i18n.localize('CoC7.MessageWaitForKeeperToClick'),
+					content: event.currentTarget.outerHTML
+				};
+
+				if( whisper){
+					chatData.whisper = whisperTargets;
+					chatData.type = CHAT_MESSAGE_TYPES.WHISPER;
+				}
+		
+				ChatMessage.create(chatData);
+
+
+				// chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), event.currentTarget.outerHTML, {whisper : playersId});
 			} else if( canvas.tokens.controlled.length){
 				canvas.tokens.controlled.forEach( token =>{
 					switch (options.check) {
@@ -351,8 +353,7 @@ export class CoC7Parser{
 				});
 			} else {
 				//Don't have any token selected and the link is from a sheet, publish the message
-				if( fromSheet) chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), event.currentTarget.outerHTML);
-				else ui.notifications.warn(game.i18n.localize('CoC7.WarnNoControlledActor'));
+				ui.notifications.warn(game.i18n.localize('CoC7.WarnNoControlledActor'));
 			}
 		} else {
 			const speaker = ChatMessage.getSpeaker();

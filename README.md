@@ -22,15 +22,100 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+version 0.5.5 :
+
+* New feature thanks to [@pconcepcion](https://github.com/pconcepcion)!
+  * You can now import your actors in the system using GM Tools.
+  * This is a first version, but it's already fully functional!
+  * Details here : <https://github.com/HavlockV/CoC7-FoundryVTT/pull/444>.
+* Documentation has started !! Thanks to  [@pconcepcion](https://github.com/pconcepcion) and [@jantoniomartin](https://github.com/jantoniomartin). You can find them :
+  * [@pconcepcion](https://github.com/pconcepcion) system documentation : doc/README.md.
+  * [@jantoniomartin](https://github.com/jantoniomartin) user's guide : docs/en/users-guide.md.
+* Bug correction:
+  * Private GM roll are now properly displayed.
+  * #442 CSS correction on creature/NPC sheets.
+* Bug correction thanks to [@jantoniomartin](https://github.com/jantoniomartin):
+  * #410. Fixed assignment of item description value.
+  * #427. Fixed a visibility issue with drop-down.
+  * Setup sheet now includes a one-block backstory if the corresponding option is activated.
+* #432 Option added to display a name instead of SAN data when creating a link (GM only).
+* Posting CoC7 link to the chat-log has been slightly modified.
+  * If you have any token selected, the check will be triggered for all your selected tokens.
+  * If you don't have any token selected but you have some targets, that CoC7 link will be whispered to your targets.
+  * Holding CTRL when clicking a CoC7 link your selected token will not be checked and the link will be whispered to your targets or publish in the chat-log if you don't have any target.
+* Swedish translation and skills added thanks to @Rangertheman.
+* French translation updated thanks to @vonv
+* Taiwanese Mandarin translation updated thanks to @Zeteticl.
+* Português (Brasil) translation updated thanks to @castanhocorreia.
+
+version 0.5.4 :
+
+* Bug correction:
+  * Changes from px to rem in some part of the sheet.
+  * #416 Damage bonus is now correctly applied.
+  * GM modified rolls are now properly set when revealed.
+  * when revealed, blind GM roll are shown to the player involved only, unless CTRL is pressed.
+* A toggle allowing character to gain XP is added on the keeper's tools.
+* An option is added to replace backstory entries with one big editor block with formatting and links support.
+
 version 0.5.3 :
 
-* Implementation of systel soecific controls.
+* Bug correction:
+  * Corrected a bug where editor in archetype sheet did not display correctly.
+  * #390 Character sheet elements changed from px to rem.
+* Check can use selfRoll mode.
+  * An option is added to specify who will receive a notification in case of a GM self roll.
+  * Defaulted to all players (Foundry default behaviour).
+* #401 addressed thanks to @jantoniomartin !
+  * During character setup, using points, you can now roll luck.
+  * Luck is not part of the point budget
+  * Buttons added to increase/deacrease characteristic.
+* #359-1 Armor can now be defined as a roll string (1D6).
+* Changes in damage cards.
+  * Damage cards have been reworked.
+  * A switch added to ignore armor.
+  * An armor field added to change armor.
+  * Armor can be defined as a roll formula.
+  * 2 switches added to toggle critical/impale.
+* Changed in range cards.
+  * Damage mitigated will be displayed on the damage roll.
+* Implementation of system specific controls.
   * Keeper's tools for GM will allow to enable/disable creation and development modes.
+  * Keeper's tools has a button to simulate a fake GM self roll.
   * Dice will allow to roll a generic check.
-* new macro check( [Threshold, [event]]) allow to roll a generic check.
+* Implementation of opposed rolls.
+  * Right click on any element to include it in an opposed roll.
+  * As long as the card is opened all rolls will be added to that card.
+  * Luck can be spend on checks.
+  * Roll winner will be highlighted in gold.
+  * Tie will be highlighted in red.
+  * Rolls are sorted by success/check value.
+  * Optional rule from José Lozano/Viriato139ac. In a tie, the highest roll wins.
+* Opposed roll cards can be used for combat.
+  * A switch is added to toggle from regular opposed roll to (range) combat.
+  * If needed, a toggle switch allows to change the tie breaker (from attacker to defender win).
+  * Opposed rolls triggered from combat panel will automatically switch the card in combat.
+  * Opposed combat roll cards can only have 2 opponents.
+  * As long as the card is not closed, the check of the opponent will not be revealed.
+* Implementation of combined rolls.
+  * Alt + right click on any element to include it in a combined roll.
+  * As long as the card is opened all rolls will be added to that card.
+  * Click the roll button to trigger the roll.
+  * Only keeper and first character added to the card will see the button.
+* Implementation of /r 1d% command.
+  * This will trigger a D%.
+  * You can add options :
+    * (xx) for a threshold value.
+    * +x/-x for x bonus/penalty dice.
+    * [xx] for  a difficulty : ?, +, ++, +++ = unknown, hard, extreme, critical
+    * ? to force a bonus selection windows [bug] works once only....
+* new macro check( [Threshold, [event]]) allow to roll a generic check. `game.CoC7.macros.check(75, event)`
 * #385 Optional flat dice and threshold modifier added.
   * Disabled by default, can be enabled in options.
-* [bug] Actor san loss refers to actor, not synthetic actor.
+* Actors of type 'character' are now created with vision and linked actor data by default.
+* German translation updated thanks to acd-jake.
+* Português (Brasil) translation updated thanks to Castanho.
+* Taiwanese Mandarin and Chinese translations updated thanks to Zeteticl.
 
 verison 0.5.2 :
 
@@ -614,6 +699,6 @@ Version 0.1.3 :
 * [x] Automatic skill assignment when adding a weapon.  
 * [x] Combat automation (calculation of difficulty, assignement of damage, opposed check...).  
 * [x] Implement pushed rolls.  
-* [ ] Implement advanced rolls (opposed, combined etc…).  
-* [ ] Implement car chases.  
+* [x] Implement advanced rolls (opposed, combined etc…).  
+* [ ] Implement car chases.
 * [x] Automation of character creation.

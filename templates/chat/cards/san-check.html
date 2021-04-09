@@ -86,7 +86,7 @@
 							{{/if}}
 						{{else}}
 							{{#if state.immuneAlreadyInBout}}
-								<div class='info'>{{ localize 'CoC7.AlreadyInABoot' }}</div>
+								<div class='info'>{{ localize 'CoC7.AlreadyInABout' }}</div>
 							{{/if}}
 							{{#if state.immuneToCreature}}
 								<div class='info'>{{ localize 'CoC7.ImmuneToAwfulness' }}</div>
@@ -116,7 +116,7 @@
 									{{/if}}
 
 									{{#if state.boutOfMadnessOver}}
-										<div class='info'>{{ localize 'CoC7.BootOfMadnesslasted' }} {{boutDuration}} {{#if boutRealTime}}{{ localize 'CoC7.rounds'}}{{/if}}{{#if boutSummary}}{{ localize 'CoC7.hours'}}{{/if}}</div>
+										<div class='info'>{{ localize 'CoC7.BoutOfMadnesslasted' }} {{boutDuration}} {{#if boutRealTime}}{{ localize 'CoC7.rounds'}}{{/if}}{{#if boutSummary}}{{ localize 'CoC7.hours'}}{{/if}}</div>
 
 										{{#if state.indefinitelyInsane}}
 											<div class='info'>{{ localize 'CoC7.IndefinitelyInsane' }}</div>
@@ -207,7 +207,7 @@
 		{{/if}}
 
 		{{#if actor.isInABoutOfMadness}}
-			<div class="status">{{ localize 'CoC7.BootActive'}}</div>
+			<div class="status">{{ localize 'CoC7.BoutActive'}}</div>
 		{{/if}}
 
 		{{#if creature}}

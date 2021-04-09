@@ -34,7 +34,7 @@ export class CoC7SanCheck {
 	}
 
 	get actor(){
-		if( this.actorId) return chatHelper.getActorFromKey( this.actorId);
+		if( this.actorId) return chatHelper.getActorFromKey( this.actorId);//REFACTORING (2) [bug 0.5.3]
 		return null;
 	}
 
@@ -102,7 +102,7 @@ export class CoC7SanCheck {
 			if( tokenKey){
 				const speaker = chatHelper.getSpeakerFromKey( tokenKey);
 				const title = game.i18n.format('CoC7.SANCheckTitle', {name: speaker.alias, sanMin: sanMin, sanMax: sanMax});
-				chatHelper.createMessage(null, `@coc7.sanloss[sanMax:${sanMax},sanMin:${sanMin}]{${title}}`, speaker);
+				chatHelper.createMessage(null, `@coc7.sanloss[sanMax:${sanMax},sanMin:${sanMin}]{${title}}`, {speaker: speaker});
 			} else ui.notifications.error('No target selected');
 		}
 	}

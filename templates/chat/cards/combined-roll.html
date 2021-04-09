@@ -1,0 +1,59 @@
+<div class="coc7 chat-card chat-card-v2 roll-card combined">
+    {{#unless closed}}
+    <div class='flexrow toggle gm-visible-only'>
+        <span class="flex1 toggle-switch gm-select-only {{#if any}}switched-on{{/if}} "
+        title="{{localize CoC7.CombinedAnyHint}}" 
+        data-flag="any" 
+        data-selected={{any}}>{{localize 'CoC7.Any'}}</span>
+        <span class="flex1 toggle-switch gm-select-only {{#if all}}switched-on{{/if}}"
+        title="{{localize CoC7.CombinedAllHint}}" 
+        data-flag="all" 
+        data-selected={{all}}>{{localize 'CoC7.All'}}</span>
+    </div>
+    {{/unless}}
+    <ol>
+        {{#each rolls as |r id| }}
+            <li class='actor-roll' data-rank='{{id}}' data-actor-key="{{r.actor.actorKey}}">
+                <img class="open-actor" data-actor-key="{{r.actor.actorKey}}" src="{{r.actor.portrait}}" title="{{r.actor.name}}"/>
+                <div class="roll-details">
+                    <div class="header">
+                        <div class='name'>
+                            {{#if r.item}}
+                                <span class="tag">{{r.item.name}}</span>
+                            {{/if}}
+                            <span class="tag">{{r.skill.name}}</span>
+                        </div>
+                        <a class="gm-visible-only" data-action="remove-roll" title="{{localize 'CoC7.remove'}}"><i class="far fa-times-circle"></i></a>
+                    </div>
+                    {{#if r.rolled}}
+                        {{{r._htmlRoll}}}
+                    {{else}}
+                        <span class='pending'>{{ r.fullName }}: ({{r.rawValue}}%)</span>
+                    {{/if}}
+                </div>
+            </li>
+        {{/each}}
+    </ol>
+
+    {{#if rolled}}
+        {{{_htmlRoll}}}
+    {{else}}
+    <div class='card-buttons owner-only' data-actor-key="{{mainActorKey}}">
+        <button data-action='roll-card'>{{localize 'CoC7.RollDice'}}</button>
+    </div>
+    {{/if}}
+
+    {{#if success}}
+    <h4 class="card-result success">{{localize 'CoC7.Success'}}</h4>
+    {{/if}}
+    
+    {{#if failure}}
+    <h4 class="card-result failure">{{localize 'CoC7.Failure'}}</h4>
+    {{/if}}
+
+    {{#unless closed}}
+    <div class='card-buttons gm-visible-only'>
+        <button data-action='close-card'>Close card</button>
+    </div>
+    {{/unless}}
+</div>

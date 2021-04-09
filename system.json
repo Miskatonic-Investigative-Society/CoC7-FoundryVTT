@@ -2,7 +2,7 @@
 	"name": "CoC7",
 	"title": "Call of Cthulhu 7th edition (Unofficial)",
 	"description": "Call of Cthulhu 7th edition (Unofficial) for FoundryVTT",
-	"version": "0.5.2",
+	"version": "0.5.5",
 	"author": "HavelockV",
 	"minimumCoreVersion": "0.7.0",
 	"compatibleCoreVersion": "0.7.9",
@@ -49,6 +49,12 @@
 			"entity": "RollTable",
 			"name": "sanity-tables-examples",
 			"path": "./packs/sanity-tables-examples.db",
+			"system": "CoC7"
+		},{
+			"label": "Färdigheter",
+			"entity": "Item",
+			"name": "skills_sv",
+			"path": "./packs/skills_sv.db",
 			"system": "CoC7"
 		}
 	],
@@ -97,6 +103,11 @@
 			"lang": "zh-tw",
 			"name": "正體中文",
 			"path": "lang/zh-tw.json"
+		},
+{
+			"lang": "SV",
+			"name": "Svenska",
+			"path": "lang/sv.json"
 		}
 	  ],
 	"socket": true,
@@ -106,6 +117,6 @@
 	"secondaryTokenAttribute": "power",
 	"url": "https://github.com/HavlockV/CoC7-FoundryVTT/",
 	"manifest": "https://github.com/HavlockV/CoC7-FoundryVTT/raw/master/system.json",
-	"download": "https://github.com/HavlockV/CoC7-FoundryVTT/archive/0.5.2.zip"
+	"download": "https://github.com/HavlockV/CoC7-FoundryVTT/archive/0.5.5.zip"
 }
   

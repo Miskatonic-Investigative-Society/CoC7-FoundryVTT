@@ -24,6 +24,10 @@ import {CoC7Parser} from './apps/parser.js';
 import { CoC7StatusSheet } from './items/sheets/status.js';
 import { CoC7Check } from './check.js';
 import { CoC7Menu } from './menu.js';
+import { OpposedCheckCard } from './chat/cards/opposed-roll.js';
+import { CombinedCheckCard } from './chat/cards/combined-roll.js';
+import { DamageCard } from './chat/cards/damage.js';
+import { CoC7VehicleSheet } from './actors/sheets/vehicle.js';
 
 Hooks.once('init', async function() {
 
@@ -33,7 +37,11 @@ Hooks.once('init', async function() {
 			weaponCheck: CoC7Utilities.weaponCheckMacro,
 			check: CoC7Utilities.checkMacro
 		},
+		cards:{
+			DamageCard: DamageCard
+		}
 	};
+
 
 
 	/**
@@ -47,7 +55,6 @@ Hooks.once('init', async function() {
 
 	//TODO : remove debug hooks
 	CONFIG.debug.hooks = true;
-	// CONFIG.Combat.entityClass = CoC7Combat;
 	CONFIG.Actor.entityClass = CoCActor;
 	CONFIG.Item.entityClass = CoC7Item;
 	Combat.prototype.rollInitiative = rollInitiative;
@@ -76,6 +83,14 @@ Hooks.once('init', async function() {
 		default: 0
 	});
 
+	game.settings.register('CoC7', 'xpEnabled', {
+		name: 'Enable XP gain',
+		scope: 'world',
+		config: false,
+		type: Boolean,
+		default: true
+	});
+
 	game.settings.register('CoC7', 'gridSpaces', {
 		name: 'SETTINGS.RestrictGridSpaces',
 		hint: 'SETTINGS.RestrictGridSpacesHint',
@@ -94,6 +109,15 @@ Hooks.once('init', async function() {
 		type: Boolean
 	});
 
+	game.settings.register('CoC7', 'oneBlockBackstory', {
+		name: 'SETTINGS.OneBlockBackStory',
+		hint: 'SETTINGS.OneBlockBackStoryHint',
+		scope: 'world',
+		config: true,
+		default: false,
+		type: Boolean
+	});
+
 	// Set default check difficulty.
 	game.settings.register('CoC7', 'defaultCheckDifficulty', {
 		name: 'SETTINGS.DefaultDifficulty',
@@ -106,6 +130,31 @@ Hooks.once('init', async function() {
 			'regular': 'SETTINGS.CheckDifficultyRegular',
 			'unknown': 'SETTINGS.CheckDifficultyUnknown'
 		}
+	});
+
+	// Allow player to unlock the sheet outside of creation mode.
+	game.settings.register( 'CoC7', 'selfRollWhisperTarget',{
+		name: 'SETTINGS.SelfRollWhisperTarget',
+		hint: 'SETTINGS.SelfRollWhisperTargetHint',
+		scope: 'world',
+		config: true,
+		default: 'everyone',
+		type: String,
+		choices: {
+			'nobody': 'SETTINGS.DoNotAdvise',
+			'owners': 'SETTINGS.AdviseOwnersOnly',
+			'everyone': 'SETTINGS.AdviseAllPlayer'
+		}
+	});
+
+	// Opposed rolls tie breaker.
+	game.settings.register('CoC7', 'opposedRollTieBreaker', {
+		name: 'SETTINGS.OpposedRollTieBreaker',
+		hint: 'SETTINGS.OpposedRollTieBreakerHint',
+		scope: 'wolrd',
+		config: true,
+		default: false,
+		type: Boolean
 	});
 
 	// Display result type.
@@ -426,6 +475,7 @@ Hooks.once('init', async function() {
 	// Register sheet application classes
 	Actors.unregisterSheet('core', ActorSheet);
 	Actors.registerSheet('CoC7', CoC7NPCSheet, { types: ['npc'], makeDefault: true});
+	Actors.registerSheet('CoC7', CoC7VehicleSheet, { types: ['vehicle'], makeDefault: true});
 	Actors.registerSheet('CoC7', CoC7CreatureSheet, { types: ['creature'], makeDefault: true});
 	Actors.registerSheet('CoC7', CoC7CharacterSheet, { types: ['character']});
 	Actors.registerSheet('CoC7', CoC7CharacterSheetV2, { types: ['character'], makeDefault: true});
@@ -480,6 +530,15 @@ Hooks.on('ready', async () =>{
 	game.socket.on('system.CoC7', data => {
 		if (data.type == 'updateChar')
 			CoC7Utilities.updateCharSheets();
+
+		if( game.user.isGM){
+			if( OpposedCheckCard.defaultConfig.type == data.type){
+				OpposedCheckCard.dispatch( data);
+			}
+			if( CombinedCheckCard.defaultConfig.type == data.type){
+				CombinedCheckCard.dispatch( data);
+			}
+		}
 	});
 
 	// "SETTINGS.BoutOfMadnessPhobiasIndex": "Phobias index",
@@ -582,7 +641,7 @@ Hooks.on('renderCoC7NPCSheet', (app, html, data) => CoC7NPCSheet.forceAuto(app, 
 // Hooks.on('updateActor', (actor, dataUpdate) => CoCActor.updateActor( actor, dataUpdate));
 // Hooks.on('updateToken', (scene, token, dataUpdate) => CoCActor.updateToken( scene, token, dataUpdate));
 
-// Hooks.on('chatMessage', (chatLog, message, chatData) => { console.log('chatMessage : '  + message);});
+Hooks.on('chatMessage', CoC7Utilities.ParseChatEntry);
 // Hooks.on('preCreateToken', ( scene, actor, options, id) => CoCActor.preCreateToken( scene, actor, options, id))
 // Hooks.on('createToken', ( scene, actor, options, id) => CoCActor.preCreateToken( scene, actor, options, id))
 // Hooks.on("renderChatLog", (app, html, data) => CoC7Item.chatListeners(html));
@@ -616,6 +675,8 @@ Hooks.on('renderJournalSheet', CoC7Parser.ParseSheetContent);
 Hooks.on('renderActorSheet', CoC7Parser.ParseSheetContent);
 // Chat command processing
 Hooks.on('preCreateChatMessage', CoC7Parser.ParseMessage);
+// Hooks.on('createChatMessage', CoC7Chat.createChatMessageHook);
+Hooks.on('renderChatMessage', CoC7Chat.renderChatMessageHook);
 // Sheet V2 css options
 Hooks.on('renderCoC7CharacterSheetV2', CoC7CharacterSheetV2.renderSheet);
 // Hooks.on('dropCanvasData', CoC7Parser.onDropSomething);

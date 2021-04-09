@@ -3,7 +3,8 @@
         "types": [
             "character",
             "npc",
-            "creature"
+            "creature",
+            "vehicle"
         ],
         "templates": {
             "characteristics": {
@@ -115,6 +116,8 @@
                     },
                     "armor": {
                         "value": null,
+                        "localized": false,
+                        "shielding": {},
                         "auto": false
                     }
                 }
@@ -189,7 +192,8 @@
                 "archetype": null
             },
             "biography": [],
-            "encounteredCreatures": []
+            "encounteredCreatures": [],
+            "backstory": ""
         },
         "npc": {
             "templates": [
@@ -240,6 +244,26 @@
             },
             "flags": {
                 "locked": false
+            }
+        },
+        "vehicle":{
+            "template":[ "attribs"],
+            "infos":{
+                "origin": null,
+                "model": null
+            },
+            "crew": {
+                "total": null,
+                "count":{
+                    "driver": null,
+                    "gunner": null,
+                    "pax": null
+                },
+                "list": []
+            },
+            "skill": {
+                "driving": null,
+                "active": []
             }
         }
     },
@@ -423,6 +447,7 @@
             "enableCharacterisitics": true,
             "items": [],
             "bioSections": [],
+            "backstory": "",
             "attributes": {},
             "properties": {},
             "eras": {},

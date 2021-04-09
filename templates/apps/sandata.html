@@ -2,13 +2,20 @@
 <form id="san-data-form">
     <div class="flexcol dialog-form">
         <div class="flexrow form-group">
-            <label>{{localize 'CoC7.SanMin'}}</label>
+            <label>{{localize 'CoC7.MinSanloss'}}</label>
             <input type="text" name="sanMin" />
         </div>
 
         <div class="flexrow form-group">
-            <label>{{localize 'CoC7.SanMax'}}</label>
+            <label>{{localize 'CoC7.MaxSanloss'}}</label>
             <input type="text" name="sanMax" />
         </div>
+
+        {{#if promptLabel}}
+        <div class="flexrow form-group">
+            <label><input type="checkbox" name="usecustom" />{{ localize 'CoC7.CustomLabel' }}</label>
+            <input style="display: none;" type="text" name="customname" value="{{ localize 'CoC7.SanityCheck' }}"/>
+        </div>
+        {{/if}}
     </div>
 </form>

@@ -61,6 +61,8 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 			data.credit.assets = `${this.actor.assets*factor}${moneySymbol}`;
 			data.credit.cash = `${this.actor.cash*factor}${moneySymbol}`;
 		}
+		
+		data.oneBlockBackStory = game.settings.get( 'CoC7', 'oneBlockBackstory');
 
 		return data;
 	}
