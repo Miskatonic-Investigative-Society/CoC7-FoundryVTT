@@ -22,6 +22,12 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+version 0.5.6 :
+
+* PT-BR : castanhocorreia
+* #451: timpatim
+* 1/5 SAN: zeteticl
+
 version 0.5.5 :
 
 * New feature thanks to [@pconcepcion](https://github.com/pconcepcion)!

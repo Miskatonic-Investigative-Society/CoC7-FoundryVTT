@@ -1034,6 +1034,7 @@ export class CoCActor extends Actor {
 	}
 
 	get hpMax(){
+		if( ['vehicle'].includes(this.data.type)) return this.hp;
 		if( this.data.data.attribs.hp.auto){
 			if(this.data.data.characteristics.siz.value != null &&  this.data.data.characteristics.con.value !=null){
 				const maxHP = Math.floor( (this.data.data.characteristics.siz.value + this.data.data.characteristics.con.value)/10);
@@ -1400,7 +1401,8 @@ export class CoCActor extends Actor {
 	}
 
 	get sanMax(){
-		if( this.data.data.attribs.san.auto){
+		if( !this.data.data.attribs) return undefined;
+		if( this.data.data.attribs?.san?.auto){
 			if( this.cthulhuMythos) return 99 - this.cthulhuMythos;
 			return 99;
 		} 
@@ -1566,6 +1568,7 @@ export class CoCActor extends Actor {
 	}
 
 	get build() {
+		if( ['vehicle'].includes(this.data.type)) return this.data.data.attribs.build.value;
 		if( !this.data.data.attribs) return null;
 		if( !this.data.data.attribs.build) return null;
 		if( this.data.data.attribs.build.value == 'auto') this.data.data.attribs.build.auto = true;
@@ -1583,6 +1586,7 @@ export class CoCActor extends Actor {
 	}
 
 	get db() {
+		if( ['vehicle'].includes(this.data.type)) return 0;
 		if( !this.data.data.attribs) return null;
 		if( !this.data.data.attribs.db) return null;
 		if( this.data.data.attribs.db.value == 'auto') this.data.data.attribs.db.auto = true;
@@ -1599,6 +1603,7 @@ export class CoCActor extends Actor {
 	}
 
 	get mov() {
+		if( ['vehicle'].includes(this.data.type)) return this.data.data.attribs.mov.value;
 		if( !this.data.data.attribs) return null;
 		if( !this.data.data.attribs.mov) return null;
 		if( this.data.data.attribs.mov.value == 'auto') this.data.data.attribs.mov.auto = true;
