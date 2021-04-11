@@ -1,4 +1,6 @@
-export class CoC7VehicleSheet extends ActorSheet {
+import { CoC7ActorSheet } from './base.js';
+
+export class CoC7VehicleSheet extends CoC7ActorSheet {
 
 	static get defaultOptions() {
 		return mergeObject(super.defaultOptions, {
