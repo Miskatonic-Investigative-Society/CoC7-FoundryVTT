@@ -5,12 +5,12 @@ The system automates most of the regular tasks and rules. This is a _work in pro
 
 ## Sections
 
+* [Users guide](./users-guide.md)
 * [Character creation](./character_creation.md)
 * [Sanity](./sanity.md)
 * [Links](./links.md)
 * [Commands cheat sheet](./commands_cheat_sheet.md)
-* Combat (TODO)
+* [Combat](./combat.md) (TODO)
+* [Items](./items.md) (TODO) 
 * Character development (TODO)
- 
-
 
