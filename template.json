@@ -247,7 +247,7 @@
             }
         },
         "vehicle":{
-            "template":[ "attribs"],
+            "templates":[ "attribs"],
             "infos":{
                 "origin": null,
                 "model": null
