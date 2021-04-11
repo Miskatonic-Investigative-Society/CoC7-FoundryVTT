@@ -713,25 +713,32 @@ export class CoCActor extends Actor {
 						coreCharac.push( char);
 					}
 				});
+
+				let charac;
+
 				if( coreCharac.length > 1){
 					const charDialogData = {};
 					charDialogData.characteristics = coreCharac;
 					charDialogData.title = game.i18n.localize( 'CoC7.SelectCoreCharac');
-					const charac = await CharacSelectDialog.create( charDialogData);
-					if( !charac) return;
-					data.data.coreCharacteristics[charac]=true;
-					if( data.data.coreCharacteristicsFormula.enabled){
-						let value = Number(data.data.coreCharacteristicsFormula.value);
-						if( isNaN(value)){
-							const char = this.getCharacteristic( charac);
-							const roll = new Roll( data.data.coreCharacteristicsFormula.value);
-							roll.roll();
-							roll.toMessage({flavor: `Rolling characterisitic ${char.label}: ${data.data.coreCharacteristicsFormula.value}`});
-							value = (char.value < roll.total)? roll.total: char.value;
-						}
-						await this.update({ [`data.characteristics.${charac}.value`]: value});
-					}
+					charac = await CharacSelectDialog.create( charDialogData);
+				} else if( coreCharac.length == 1){
+					charac = coreCharac[0].key;
 				}
+
+				if( !charac) return;
+				data.data.coreCharacteristics[charac]=true;
+				if( data.data.coreCharacteristicsFormula.enabled){
+					let value = Number(data.data.coreCharacteristicsFormula.value);
+					if( isNaN(value)){
+						const char = this.getCharacteristic( charac);
+						const roll = new Roll( data.data.coreCharacteristicsFormula.value);
+						roll.roll();
+						roll.toMessage({flavor: `Rolling characterisitic ${char.label}: ${data.data.coreCharacteristicsFormula.value}`});
+						value = (char.value < roll.total)? roll.total: char.value;
+					}
+					await this.update({ [`data.characteristics.${charac}.value`]: value});
+				}
+
 				//Add all skills
 				await this.addUniqueItems( data.data.skills, 'archetype');
 
