@@ -35,7 +35,10 @@
             height: 100%;
 
             &.expanded{
-                grid-template-rows: 6.5rem 1.875rem 16rem;
+                grid-template-rows: 6.5rem 1.875rem auto;
+                &.nonav{
+                    grid-template-rows: 6.5rem auto;
+                }
             }
 
             &.collapsed{
