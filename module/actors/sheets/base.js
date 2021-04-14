@@ -713,6 +713,9 @@ export class CoC7ActorSheet extends ActorSheet {
 		case 'data.attribs.lck.value':
 			this.actor.setLuck( value);
 			break;
+		case 'data.attribs.build.current':
+			this.actor.setHp( value);
+			break;
 		}
 	}
 
