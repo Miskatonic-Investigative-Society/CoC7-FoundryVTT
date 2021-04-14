@@ -2410,7 +2410,10 @@ html {
   height: 100%;
 }
 .sheetV2.item form .container.expanded {
-  grid-template-rows: 6.5rem 1.875rem 16rem;
+  grid-template-rows: 6.5rem 1.875rem auto;
+}
+.sheetV2.item form .container.expanded.nonav {
+  grid-template-rows: 6.5rem auto;
 }
 .sheetV2.item form .container.collapsed {
   grid-template-rows: 6.5rem;

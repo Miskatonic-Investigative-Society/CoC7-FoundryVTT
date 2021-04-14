@@ -6,7 +6,7 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
 		return mergeObject(super.defaultOptions, {
 			classes: ['coc7', 'sheetV2', 'actor', 'item', 'vehicle'],
 			width: 520,
-			height: 'auto',
+			height: 420,
 			resizable: true,
 			template: 'systems/CoC7/templates/actors/vehicle.html',
 			dragDrop: [{dragSelector: '.actor', dropSelector: '.dropZone'}],
@@ -24,13 +24,16 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
 		const expanded = this.actor.getFlag( 'CoC7', 'expanded');
 		if( undefined === expanded) data.expanded = true;
 		else data.expanded = expanded;
+		if( data.expanded){
+			data.options.height = 420;
+		} else data.options.height = 'auto';
 		
 		// for (let [key, value] of Object.entries(data.data.type)) {
 		// 	if( value) data.itemProperties.push( COC7.bookType[key]?COC7.bookType[key]:null);
 		// }
 		return data;
 	}
-    
+
 	activateListeners(html) {
 		super.activateListeners(html);
 		html.find( '.add-armor').click( async () => await this._onAddArmor());
@@ -44,6 +47,7 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
 	}
 
 	async _onToggleExpand(){
+		this.position.height = 'auto'; //Reset the stored position to force to recalculate window size TODO: Store previous position to restore it instead of auto
 		const expanded = this.actor.getFlag( 'CoC7', 'expanded');
 		await this.actor.setFlag( 'CoC7', 'expanded', !expanded);
 	}

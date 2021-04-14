@@ -1082,7 +1082,7 @@ export class CoC7ActorSheet extends ActorSheet {
 				useCustomName = sanData.get( 'usecustom')||false;
 				displayName = sanData.get( 'customname')||null;
 
-				ui.notifications.info( `Custom name: ${useCustomName}: ${name}`);
+				// ui.notifications.info( `Custom name: ${useCustomName}: ${name}`);
 				
 				if( !isNaN(Number(sanMin))) sanMin=Number(sanMin);
 				if( !isNaN(Number(sanMax))) sanMax=Number(sanMax);

@@ -3,7 +3,7 @@ import  { COC7 } from '../../config.js';
 /**
  * Extend the basic ItemSheet with some very simple modifications
  */
-export class CoCItemSheet extends ItemSheet {
+export class CoC7ItemSheetV2 extends ItemSheet {
 	constructor(...args) {
 		super(...args);
 		this._sheetTab = 'items';
@@ -17,8 +17,8 @@ export class CoCItemSheet extends ItemSheet {
 	static get defaultOptions() {
 		return mergeObject(super.defaultOptions, {
 			classes: ['coc7', 'sheetV2', 'item'],
-			width: 520,
-			height: 480,
+			width: 290,
+			height: 300,
 			tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills'}]
 		});
 	}
@@ -33,9 +33,6 @@ export class CoCItemSheet extends ItemSheet {
 		return `${path}/${this.item.data.type}-sheet.html`;
 	}
 
-	get width(){
-		return 520;
-	}
 
 	/* -------------------------------------------- */
   
@@ -45,9 +42,9 @@ export class CoCItemSheet extends ItemSheet {
    * Prepare data for rendering the Item sheet
    * The prepared data object contains both the actor data as well as additional sheet options
    */
-	getData() {
+	getData(options={}) {
 		// this.item.checkSkillProperties();
-		const data = super.getData();
+		const data = super.getData(options);
 		data.hasOwner = this.item.actor != null;
 		
 		if( this.item.data.type == 'skill'){

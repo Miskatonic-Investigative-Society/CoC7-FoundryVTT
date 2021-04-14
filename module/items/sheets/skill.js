@@ -3,7 +3,7 @@ import  { COC7 } from '../../config.js';
 /**
  * Extend the basic ItemSheet with some very simple modifications
  */
-export class CoCItemSheet extends ItemSheet {
+export class CoC7SkillSheet extends ItemSheet {
 	constructor(...args) {
 		super(...args);
 		this._sheetTab = 'items';
@@ -16,7 +16,7 @@ export class CoCItemSheet extends ItemSheet {
    */
 	static get defaultOptions() {
 		return mergeObject(super.defaultOptions, {
-			classes: ['coc7', 'sheetV2', 'item'],
+			classes: ['coc7', 'sheet', 'item'],
 			width: 520,
 			height: 480,
 			tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills'}]
@@ -31,10 +31,6 @@ export class CoCItemSheet extends ItemSheet {
 		if( 'item' == this.item.data.type) return 'systems/CoC7/templates/items/item-sheetV2.html';
 		const path = 'systems/CoC7/templates/items';
 		return `${path}/${this.item.data.type}-sheet.html`;
-	}
-
-	get width(){
-		return 520;
 	}
 
 	/* -------------------------------------------- */

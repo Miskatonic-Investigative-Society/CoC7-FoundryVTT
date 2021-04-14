@@ -611,6 +611,8 @@
 "SETTINGS.OverrideSheetArtworkHint": "!!RESTART REQUIRED!! gives access to advance sheet config, leave blank for default",
 "SETTINGS.ArtWorkSheetBackground": "Character sheet background",
 "SETTINGS.ArtWorkSheetBackgroundHint": "type 'null' to remove background",
+"SETTINGS.ArtWorkOtherSheetBackground": "Other sheet background",
+"SETTINGS.ArtWorkOtherSheetBackgroundHint": "type 'null' to remove background. Only for items and vehicle for now",
 "SETTINGS.ArtworkSheetImage": "Character sheet image",
 "SETTINGS.ArtworkSheetImageHint": "type 'null' to remove image",
 "SETTINGS.ArtworkFrontColor": "Main color",
