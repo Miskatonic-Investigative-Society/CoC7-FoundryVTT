@@ -1,7 +1,7 @@
 Documentation du Système
 ------------------------
 
-Des éons qu'_ils_ dorment mais Vétérini les a réveillé !\
+Des éons qu'_ils_ dorment mais Vétérini les a réveillés !\
 Avec ce système ultime, à vous l'Appel de Cthulhu v7 en version totale: création, progession, SAN, combat,...\
 Le MUST have !
 
