@@ -2,6 +2,6 @@
 
 ### Quelques modules pour commencer
 
-* FR
+* fr-FR - Core Game
 * Dice so nice
 * 
