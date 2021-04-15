@@ -1,7 +1,9 @@
 ## Guide de l'Utilisateur
 
-### Quelques modules pour commencer
+Vous avez installé Foundry VTT (la version stable, les versions en test sont... en test :)
 
-* fr-FR - Core Game
-* Dice so nice
-* 
+* Quelques modules pour commencer *
+
+* fr-FR - Core Game: pour avoir la traduction française de Foundry
+* Dice so nice!: pour les jets de dés
+
