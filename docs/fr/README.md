@@ -8,7 +8,7 @@ Le MUST have !
 ## Sections
 
 * [Guide de l'utilisateur](./users-guide.md) (à faire)
-* [Tableau des Commandes](./commands_cheat_sheet.md) (à faire)
+* [Table des Commandes](./commands_cheat_sheet.md) (à faire)
 * [Création de personnage](./character_creation.md) (à faire)
 * [Character development](./chardev.md) (à faire)
 * [Santé Mentale](./sanity.md) (à faire)
