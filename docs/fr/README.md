@@ -4,7 +4,7 @@ Des éons qu'_ils_ dorment mais Vétérini les a réveillés !\
 Avec ce système ultime, à vous l'Appel de Cthulhu v7 en version totale: création, progession, SAN, combat,...\
 Le MUST have !
 
-* [Guide de l'utilisateur](./users-guide.md) (à faire)
+* [Guide de l'utilisateur](./users-guide.md) (en cours)
 * [Table des Commandes](./commands_cheat_sheet.md) (à faire)
 * [Création de personnage](./character_creation.md) (à faire)
 * [Character development](./chardev.md) (à faire)
