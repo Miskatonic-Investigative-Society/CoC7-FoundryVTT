@@ -5,7 +5,7 @@ Avec ce système ultime, à vous l'Appel de Cthulhu v7 en version totale: créat
 Le MUST have !
 
 * [Guide de l'utilisateur](./users-guide.md) (en cours)
-* [Table des Commandes](./commands_cheat_sheet.md) (à faire)
+* [Table des Commandes](./commands_cheat_sheet.md)
 * [Création de personnage](./character_creation.md) (à faire)
 * [Character development](./chardev.md) (à faire)
 * [Santé Mentale](./sanity.md) (à faire)
