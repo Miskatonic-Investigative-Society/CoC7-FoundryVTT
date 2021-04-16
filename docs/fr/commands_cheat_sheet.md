@@ -19,7 +19,7 @@ Sur XXX, XXX pouvant être carac, compétence,...
 | `Ctrl` + `clic` XXX | Demande un jet de XXX après paramétrage du Gardien |
 | `Ctrl+Shift` + `clic` XXX | Demande un jet de XXX |
 | **Investigateur** | |
-| `clic` XXX | ~~Lance un jet de XXX après paramétrage du jet~~ |
+| `clic` XXX | Lance un jet de XXX après paramétrage du jet |
 | `Ctrl+Shift` ou `Shift` + `clic` XXX | Lance un jet de XXX (difficulté ordinaire pas de bonus/malus) |
 | `Ctrl` + `clic` XXX | Lance un jet de XXX après paramétrage du jet |
 
@@ -34,7 +34,7 @@ Sur XXX, XXX pouvant être carac, compétence,...
 | `Ctrl+Shift` + `clic` XXX | Demande un jet de XXX |
 | `Ctr+Shift+Alt` + `clic` SAN | Demande un jet de SAN en définissant les pertes de SAN |
 | **Investigateur** | |
-| `clic` XXX | ~~Lance un jet de XXX après paramétrage du jet~~ |
+| `clic` XXX | Lance un jet de XXX après paramétrage du jet |
 | `Ctrl+Shift` ou `Shift` + `clic` XXX | Lance un jet de XXX (difficulté ordinaire pas de bonus/malus) |
 | `Ctrl` + `clic` XXX | Lance un jet de XXX après paramétrage du jet |
 
@@ -42,10 +42,10 @@ Sur XXX, XXX pouvant être carac, compétence,...
 
 | Commande | Action |
 | -| -|
-| `clic-droit` XXX | ~~Lance un jet de XXX après paramétrage du jet~~ |
+| `clic-droit` XXX | Commence/ Ajoute le jet à un jet **opposé* après paramétrage du jet |
 | `Ctrl+Shift` ou `Shift` + `clic-droit` XXX | Commence/ Ajoute le jet à un jet **opposé** (difficulté ordinaire pas de bonus/malus) |
 | `Ctrl` + `clic-droit` XXX | Commence/ Ajoute le jet à un jet **opposé** après paramétrage du jet |
-| `Alt` + `clic-droit` XXX | ~~Lance un jet de XXX après paramétrage du jet~~ |
+| `Alt` + `clic-droit` XXX | Commence/ Ajoute le jet à un jet **combiné** après paramétrage du jet |
 | `Ctrl+Shift+Alt` ou `Shift+Alt` + `clic-droit` XXX | Commence/ Ajoute le jet à un jet **combiné** (difficulté ordinaire pas de bonus/malus) |
 | `Ctrl+Alt` + `clic-droit` XXX | Commence/ Ajoute le jet à un jet **combiné** après paramétrage du jet |
 
