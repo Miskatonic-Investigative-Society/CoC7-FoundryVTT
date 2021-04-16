@@ -6,6 +6,9 @@ As a general rule you can modify those requests:
 * `Shift` will fast forward the request [Partial implem. (characteristics/attributes/skills only)].
 * `Ctrl` [GM only] will create a link in the chat with that request a roll to the players. 
 
+`click`
+`click-droit`
+
 ## Santé Mentale
 
 | Commande                            | Action                                                |
