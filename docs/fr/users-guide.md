@@ -14,3 +14,5 @@ Et vous le lancez.
 ### Premiers paramétrages
 
 Une fois dans le monde, dans le menu `Paramètres`, vous sélectionnez `Gestion des modules`.
+
+![](https://avatars.githubusercontent.com/u/44206935?s=96&v=4)
