@@ -43,13 +43,17 @@ Sur XXX, XXX pouvant être carac, compétence,...
 
 | Commande | Action |
 | -| -|
-| `clic-droit` XXX | Commence/ Ajoute le jet à un jet **opposé* après paramétrage du jet |
-| `Ctrl+Shift` ou `Shift` + `clic-droit` XXX | Commence/ Ajoute le jet à un jet **opposé** (difficulté ordinaire pas de bonus/malus) |
-| `Ctrl` + `clic-droit` XXX | Commence/ Ajoute le jet à un jet **opposé** après paramétrage du jet (dont seuil et difficulté) |
-| `Alt` + `clic-droit` XXX | Commence/ Ajoute le jet à un jet **combiné** après paramétrage du jet |
-| `Ctrl+Shift+Alt` ou `Shift+Alt` + `clic-droit` XXX | Commence/ Ajoute le jet à un jet **combiné** (difficulté ordinaire pas de bonus/malus) |
-| `Ctrl+Alt` + `clic-droit` XXX | Commence/ Ajoute le jet à un jet **combiné** après paramétrage du jet (dont seuil et difficulté) |
+| `clic-droit` XXX | Débute/ Ajoute le jet à un jet **opposé* après paramétrage du jet |
+| `Ctrl+Shift` ou `Shift` + `clic-droit` XXX | Débute/ Ajoute le jet à un jet **opposé** (difficulté ordinaire pas de bonus/malus) |
+| `Ctrl` + `clic-droit` XXX | Débute/ Ajoute le jet à un jet **opposé** après paramétrage du jet (dont seuil et difficulté) |
+| `Alt` + `clic-droit` XXX | Débute/ Ajoute le jet à un jet **combiné** après paramétrage du jet |
+| `Ctrl+Shift+Alt` ou `Shift+Alt` + `clic-droit` XXX | Débute/ Ajoute le jet à un jet **combiné** (difficulté ordinaire pas de bonus/malus) |
+| `Ctrl+Alt` + `clic-droit` XXX | Débute/ Ajoute le jet à un jet **combiné** après paramétrage du jet (dont seuil et difficulté) |
 
+## Jets et Artciles
+
+Toutes ces commandes peuvent être glissées/déposées dans un Article en mode modification _sauf les modificateurs de seuil_ !
+Ce qui peut donner: `@coc7.check[type:attribute,name:san,difficulty:1,modifier:-2]`
 
 ## Autres
 
