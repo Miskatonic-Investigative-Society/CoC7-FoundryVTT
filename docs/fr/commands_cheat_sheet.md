@@ -11,38 +11,42 @@ Et en plus:
 
 Sur XXX, XXX pouvant être carac, compétence,...
 
-| Commande                            | Action                                                 |
-| ------------------------------------| -------------------------------------------------------|
-| **Gardien**                         |                                                        |
-| `clic` XXX                          | Lance un jet de XXX après paramétrage du jet           |
-| `Shift` + `clic` XXX                | Lance un jet de XXX                                    |
-| `Ctrl` + `clic` XXX                 | Demande un jet de XXX après paramétrage du Gardien     |
-| `Ctrl+Shift` + `clic` XXX           | Demande un jet de XXX                                  |
-| **Investigateur**                   |                                                        |
-| `clic` XXX                          | Lance un jet de XXX après paramétrage du jet           |
-| `Shift` + `clic` XXX                | Lance un jet de XXX                                    |
-| `Ctrl` + `clic` XXX                 | Demande un jet de XXX après paramétrage du Gardien     |
-| `Ctrl+Shift` + `clic` XXX           | Demande un jet de XXX                                  |
+| Commande | Action |
+| -| -|
+| **Gardien** | |
+| `clic` XXX | Lance un jet de XXX après paramétrage du jet |
+| `Shift` + `clic` XXX | Lance un jet de XXX (difficulté ordinaire pas de bonus/malus) |
+| `Ctrl` + `clic` XXX | Demande un jet de XXX après paramétrage du Gardien |
+| `Ctrl+Shift` + `clic` XXX | Demande un jet de XXX |
+| **Investigateur** | |
+| `clic` XXX | ~~Lance un jet de XXX après paramétrage du jet~~ |
+| `Ctrl+Shift` ou `Shift` + `clic` XXX | Lance un jet de XXX (difficulté ordinaire pas de bonus/malus) |
+| `Ctrl` + `clic` XXX | Lance un jet de XXX après paramétrage du jet |
 
 ## Santé Mentale
 
-| Commande                            | Action                                                 |
-| ------------------------------------| -------------------------------------------------------|
-| `clic` SAN                          | Lance un jet de SAN après paramétrage du Gardien       |
-| `Shift` + `clic` SAN                | Lance un jet de SAN                                    |
-| `Ctrl` + `clic` SAN                 | Demande un jet de SAN après paramétrage du Gardien     |
-| `Ctrl+Shift` + `clic` SAN           | Demande un jet de SAN                                  |
-| `Ctr+Shift+Alt` + `clic` SAN        | Demande un jet de SAN en définissant les pertes de SAN |
+| Commande | Action |
+| -| -|
+| **Gardien** | |
+| `clic` XXX | Lance un jet de XXX après paramétrage du jet |
+| `Shift` + `clic` XXX | Lance un jet de XXX (difficulté ordinaire pas de bonus/malus) |
+| `Ctrl` + `clic` XXX | Demande un jet de XXX après paramétrage du Gardien |
+| `Ctrl+Shift` + `clic` XXX | Demande un jet de XXX |
+| `Ctr+Shift+Alt` + `clic` SAN | Demande un jet de SAN en définissant les pertes de SAN |
+| **Investigateur** | |
+| `clic` XXX | ~~Lance un jet de XXX après paramétrage du jet~~ |
+| `Ctrl+Shift` ou `Shift` + `clic` XXX | Lance un jet de XXX (difficulté ordinaire pas de bonus/malus) |
+| `Ctrl` + `clic` XXX | Lance un jet de XXX après paramétrage du jet |
 
 ## Jets Combinés / Opposés
 
-| Commande                            | Action                                                |
-| ------------------------------------| ------------------------------------------------------|
-| `clic-droit` sur un élément         | Commence/ Ajoute le jet à un jet **opposé**           |
-| `Alt` + `clic-droit` sur un élément | Commence/ Ajoute le jet à un jet **combiné**          |
+| Commande | Action |
+| -| -|
+| `clic-droit` sur un élément | Commence/ Ajoute le jet à un jet **opposé** |
+| `Alt` + `clic-droit` sur un élément | Commence/ Ajoute le jet à un jet **combiné** |
 
 ## Autres
 
-| Commande                            | Action                                                |
-| ------------------------------------| ------------------------------------------------------|
-|                                     |                                                       |
+| Commande | Action |
+| -| -|
+| | |
