@@ -36,7 +36,7 @@ Là ça devient ouf:
 * item: un objet
 * weapon: une arme
 * skill: une compétence
-* setup: 
+* setup: une module de création de perso à glisser/déposer sur votre fiche à la création (embarque les jets de création de caracs, les compétences,...)
 * occupation: une occupation (avec ses compétences, son époque, ses points d'occupation, son crédit)
 * archetype: un archétype (Pulp)
 * book: un livre occulte
