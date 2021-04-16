@@ -24,12 +24,12 @@ Tous les paramètres sont dignes d'intérêt mais:
 
 Ils sont dans votre barre d'outils:
 
-![01](https://avatars.githubusercontent.com/u/44206935?s=96&v=4)
+![01](https://tentacules.net/toc/toc_/virtuel/foundryvtt-cocv7vetrini-docgithub-001.jpg)
 
 * L'icône de dé permet de lancer des dés n'importe quand (en les modificant si besoin: difficulté, seuil, niveau de compétence).
 * L'icône de poulpe donne accès aux outils du Gardien:
 
-![02](https://avatars.githubusercontent.com/u/44206935?s=96&v=4)
+![02](https://tentacules.net/toc/toc_/virtuel/foundryvtt-cocv7vetrini-docgithub-002.jpg)
 
 De haut en bas:
 
