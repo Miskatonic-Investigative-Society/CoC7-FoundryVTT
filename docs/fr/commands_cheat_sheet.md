@@ -13,7 +13,13 @@ Sur XXX, XXX pouvant être carac, compétence,...
 
 | Commande                            | Action                                                 |
 | ------------------------------------| -------------------------------------------------------|
-| `clic` XXX                          | Lance un jet de XXX après paramétrage du Gardien       |
+| **Gardien**                         |                                                        |
+| `clic` XXX                          | Lance un jet de XXX après paramétrage du jet           |
+| `Shift` + `clic` XXX                | Lance un jet de XXX                                    |
+| `Ctrl` + `clic` XXX                 | Demande un jet de XXX après paramétrage du Gardien     |
+| `Ctrl+Shift` + `clic` XXX           | Demande un jet de XXX                                  |
+| **Investigateur**                   |                                                        |
+| `clic` XXX                          | Lance un jet de XXX après paramétrage du jet           |
 | `Shift` + `clic` XXX                | Lance un jet de XXX                                    |
 | `Ctrl` + `clic` XXX                 | Demande un jet de XXX après paramétrage du Gardien     |
 | `Ctrl+Shift` + `clic` XXX           | Demande un jet de XXX                                  |
