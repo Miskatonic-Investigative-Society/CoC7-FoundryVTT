@@ -1,4 +1,4 @@
-## Guide de l'Utilisateur
+# Guide de l'Utilisateur
 
 Vous avez installé Foundry VTT (la version stable, les versions en test sont... en test :)
 
@@ -12,7 +12,7 @@ Vous créez votre monde, avec le Call of Cthulhu 7th edition (Unofficial) de Vé
 Et vous le lancez.\
 Vous activez vos modules et hop !
 
-### Premiers paramétrages
+## Premiers paramétrages
 
 Une fois dans le monde, dans le menu `Paramètres`, vous sélectionnez `Gestion des modules`, puis `Système de jeu`.\
 Tous les paramètres sont dignes d'intérêt mais:
@@ -20,16 +20,16 @@ Tous les paramètres sont dignes d'intérêt mais:
 * les `Modificateur de jet` et `Modificateur de seuil de réussite` le sont particulèrement.
 * et `Changer l'apparence de la fiche`
 
-### Ce que l'on peut créer
+## Ce que l'on peut créer
 
-#### Icône Personnages
+### Icône Personnages
 
 * character: personnage PJ
 * npc: PNJ
 * creature: monstre
 * vehicle: véhicule
 
-#### Icône Objets
+### Icône Objets
 
 Là ça devient ouf:
 
@@ -44,9 +44,9 @@ Là ça devient ouf:
 * talent: 
 * status: 
 
-#### Icône Personnages
+### Icône Personnages
 
-### Outils du gardien (menus spécifiques au système)
+## Outils du gardien (menus spécifiques au système)
 
 Ils sont dans votre barre d'outils:
 
@@ -64,4 +64,3 @@ De haut en bas:
 * Importer un personnage depuis un simple texte
 * Activer la possibilité des gains d'expérience (en partie)
 * Balancer un jet factice aux joueurs dans le chat: un peu d'pression :)
-
