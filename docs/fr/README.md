@@ -1,4 +1,4 @@
-## Documentation du Système
+## Documentation du Système :squid:
 
 Des éons qu'_ils_ dorment mais Vétérini les a réveillés !\
 Avec ce système ultime, à vous l'Appel de Cthulhu v7 en version totale: création, progession, SAN, combat,...\
@@ -13,4 +13,4 @@ Le MUST have !
 * [Objets](./items.md) (à faire)
 * [Liens](./links.md) (à faire)
 
-_Documentation partagée avec amour et horreur par Toc https://tentacules.net_
+_Documentation partagée avec amour et horreur par Toc :squid: https://tentacules.net_
