@@ -65,8 +65,8 @@ Voici le fonctionnement: `@coc7.TYPE_OF_REQUEST[OPTIONS]{TEXT_TO_DISPLAY}`
     * sanMax: perte de SAN max
     * sanMin: perte de SAN min
   * check:
-    * type: type de jet (charactéristique, compétence, attribut).
-    * name: nom de charactéristique, compétence, attribut.
+    * type: type de jet (caractéristique, compétence, attribut).
+    * name: nom de caractéristique, compétence, attribut.
     * [blind]: jet aveugle, sinon le jet sera du type sélectionné dans le chat.
   * Tous:
     * [difficulty]: ? (aveugle), 0 (normal), + (difficile), ++ (extrême), +++ (critique).
@@ -81,4 +81,3 @@ Par exemple:
 * `@coc7.check[type:attrib,name:lck,difficulty:+,modifier:-1]{Hard luck check(-1)}`
 * `@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,difficulty:+,modifier:-1]{Hard Anthropology check(-1)}`
 * `@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,modifier:+1]`
-
