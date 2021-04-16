@@ -20,6 +20,32 @@ Tous les paramètres sont dignes d'intérêt mais:
 * les `Modificateur de jet` et `Modificateur de seuil de réussite` le sont particulèrement.
 * et `Changer l'apparence de la fiche`
 
+### Ce que l'on peut créer
+
+#### Icône Personnages
+
+* character: personnage PJ
+* npc: PNJ
+* creature: monstre
+* vehicle: véhicule
+
+#### Icône Objets
+
+Là ça devient ouf:
+
+* item: 
+* weapon: 
+* skill: 
+* setup: 
+* occupation: 
+* archetype: 
+* book: 
+* spell: 
+* talent: 
+* status: 
+
+#### Icône Personnages
+
 ### Outils du gardien (menus spécifiques au système)
 
 Ils sont dans votre barre d'outils:
