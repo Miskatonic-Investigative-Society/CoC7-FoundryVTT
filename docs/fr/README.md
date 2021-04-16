@@ -6,7 +6,7 @@ Le MUST have !
 
 * [Guide de l'utilisateur](./users-guide.md) (en cours)
 * [Table des Commandes](./commands_cheat_sheet.md) (en cours)
-* ~~[Création de personnage](./character_creation.md)~~ (à faire)
+* [Création de personnage](./character_creation.md) (à faire)
 * ~~[Phase de progression](./chardev.md)~~ (à faire)
 * ~~[Santé Mentale](./sanity.md)~~ (à faire)
 * ~~[Combat](./combat.md)~~ (à faire)
