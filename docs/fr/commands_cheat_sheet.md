@@ -1,30 +1,31 @@
 Tableau des Commandes
 ---------------------
 
-Most sheet component can be `clicked` on the trigger a check/roll.
-As a general rule you can modify those requests:
-* `Shift` will fast forward the request [Partial implem. (characteristics/attributes/skills only)].
-* `Ctrl` [GM only] will create a link in the chat with that request a roll to the players. 
-
-`click`
-`click-droit`
+Quasiment tout est cliquable: les caractéristiques, les compétences, les armes, les dégâts, la SAN, la Chance...
+Et en plus:
+* combiné avec la touche `Shift` enfoncée, ça envoie directement le jet dans le chat.
+* combiné avec la touche `Ctrl` [pour le Gardien] enfoncée, ça envoie une demande dans le chat au personnage concerné pour réaliser le jet, après paramétrage du jet par le gardien. 
+* les 2 combinés, `Ctrl+Shift`: ça envoie une demande dans le chat au personnage concerné pour réaliser le jet directement.
 
 ## Santé Mentale
 
-| Commande                            | Action                                                |
-| ------------------------------------| ------------------------------------------------------|
-| `Ctrl+Shift` + _left click SAN_     | Request a Sanity Check for the character              |
-| `Ctr+Shift+Alt` + _left click SAN_  | Request a Sanity Check and define the sanity loss     |
+| Commande                            | Action                                                 |
+| ------------------------------------| -------------------------------------------------------|
+| `clic` SAN                          | Lance un jet de SAN après paramétrage du Gardien       |
+| `Shift` + `clic` SAN                | Lance un jet de SAN                                    |
+| `Ctrl` + `clic` SAN                 | Demande un jet de SAN après paramétrage du Gardien     |
+| `Ctrl+Shift` + `clic` SAN           | Demande un jet de SAN                                  |
+| `Ctr+Shift+Alt` + `clic` SAN        | Demande un jet de SAN en définissant les pertes de SAN |
 
 ## Jets Combinés / Opposés
 
 | Commande                            | Action                                                |
 | ------------------------------------| ------------------------------------------------------|
-| _Right Click on an element_         | Start/ Include the roll on an **opposed** roll        |
-| `Alt` + _Right Click on an element_ | Start/ Include the roll on an **combined** roll       |
+| `clic-droit` sur un élément         | Commence/ Ajoute le jet à un jet **opposé**           |
+| `Alt` + `clic-droit` sur un élément | Commence/ Ajoute le jet à un jet **combiné**          |
 
 ## Autres
 
 | Commande                            | Action                                                |
 | ------------------------------------| ------------------------------------------------------|
-| `c`                                 | Show _my own_ character sheet                         |
+|                                     |                                                       |
