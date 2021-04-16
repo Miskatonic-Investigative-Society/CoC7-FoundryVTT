@@ -42,7 +42,7 @@ Là ça devient ouf:
 * book: un livre occulte
 * spell: un sort
 * talent: un talent (Pulp)
-* status: 
+* status: un état... de folie
 
 ### Icône Personnages
 
