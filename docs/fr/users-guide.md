@@ -33,15 +33,15 @@ Tous les paramètres sont dignes d'intérêt mais:
 
 Là ça devient ouf:
 
-* item: 
-* weapon: 
-* skill: 
+* item: un objet
+* weapon: une arme
+* skill: une compétence
 * setup: 
-* occupation: 
-* archetype: 
-* book: 
-* spell: 
-* talent: 
+* occupation: une occupation (avec ses compétences, son époque, ses points d'occupation, son crédit)
+* archetype: un archétype (Pulp)
+* book: un livre occulte
+* spell: un sort
+* talent: un talent (Pulp)
 * status: 
 
 ### Icône Personnages
