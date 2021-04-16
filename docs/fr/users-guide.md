@@ -17,7 +17,7 @@ Vous activez vos modules et hop !
 Une fois dans le monde, dans le menu `Paramètres`, vous sélectionnez `Gestion des modules`, puis `Système de jeu`.\
 Tous les paramètres sont dignes d'intérêt mais:
 
-* les `Modificateur de jet` et `Modificateur de seuil de réussite` le sont particulèrement.
+* les `Modificateur de jet` et `Modificateur de seuil de réussite` le sont particulièrement.
 * et `Changer l'apparence de la fiche`
 
 ## Ce que l'on peut créer
@@ -52,7 +52,7 @@ Ils sont dans votre barre d'outils:
 
 ![01](https://tentacules.net/toc/toc_/virtuel/foundryvtt-cocv7vetrini-docgithub-001.jpg)
 
-* L'icône de dé permet de lancer des dés n'importe quand (en les modificant si besoin: difficulté, seuil, niveau de compétence).
+* L'icône de dé permet de lancer des dés n'importe quand (en les modifiant si besoin: difficulté, seuil, niveau de compétence).
 * L'icône de poulpe donne accès aux outils du Gardien:
 
 ![02](https://tentacules.net/toc/toc_/virtuel/foundryvtt-cocv7vetrini-docgithub-002.jpg)
