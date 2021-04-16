@@ -57,22 +57,22 @@ Ce qui peut donner: `@coc7.check[type:attribute,name:san,difficulty:1,modifier:-
 
 Voici le fonctionnement: `@coc7.TYPE_OF_REQUEST[OPTIONS]{TEXT_TO_DISPLAY}`
 * TYPE_OF_REQUEST :
-  * 'sanloss': trigger a san check, upon failure will propose to deduct the corresponding SAN.
-  * 'check': trigger a check depending on the options.
-  * 'item': trigger use of a weapon. Only items of type weapon can be triggered.
-* OPTIONS: [] = optional, default
+  * 'sanloss': test de SAN, si échoué, propose de réduire la SAN.
+  * 'check': test défini en fonction des options.
+  * 'item': test d'objet. Seulement pour les objets de type arme.
+* OPTIONS: [] = optionnel
   * sanloss:
-    * sanMax: max SAN loss
-    * sanMin: min SAN loss
+    * sanMax: perte de SAN max
+    * sanMin: perte de SAN min
   * check:
-    * type: type of check (characteristic, skill, attrib).
-    * name: name of the skill/characteristic/attrib.
-    * [blind]: will force a blind check, if not present the check will depend on your selected roll mode.
-  * all:
-    * [difficulty]: ? (blind), 0 (regular), + (hard), ++ (extreme), +++ (critical).
-    * [modifier]: -x (x penalty dice), +x (x bonus dice), 0 (no modifier).
-    * [icon]: icon tu use (font awesome, fas fa-dice).
-* TEXT_TO_DISPLAY: Name to display, this is optional.
+    * type: type de jet (charactéristique, compétence, attribut).
+    * name: nom de charactéristique, compétence, attribut.
+    * [blind]: jet aveugle, sinon le jet sera du type sélectionné dans le chat.
+  * Tous:
+    * [difficulty]: ? (aveugle), 0 (normal), + (difficile), ++ (extrême), +++ (critique).
+    * [modifier]: -x (x dé malus), +x (x dé bonus), 0 (pas de modificateur).
+    * [icon]: icône à utiliser (font awesome, fas fa-dice).
+* TEXT_TO_DISPLAY: Texte à afficher, optionnel.
 
 ## Autres
 
