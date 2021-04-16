@@ -1,5 +1,4 @@
-Tableau des Commandes
----------------------
+# Tableau des Commandes
 
 Quasiment tout est cliquable: les caractéristiques, les compétences, les armes, les dégâts, la SAN, la Chance...
 Et en plus:
