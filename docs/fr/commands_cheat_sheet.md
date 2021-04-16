@@ -74,6 +74,14 @@ Voici le fonctionnement: `@coc7.TYPE_OF_REQUEST[OPTIONS]{TEXT_TO_DISPLAY}`
     * [icon]: icône à utiliser (font awesome, fas fa-dice).
 * TEXT_TO_DISPLAY: Texte à afficher, optionnel.
 
+Par exemple:
+
+* `@coc7.sanloss[sanMax:1D6,sanMin:1,difficulty:++,modifier:-1]{Hard San Loss (-1) 1/1D6}`
+* `@coc7.check[type:charac,name:STR,difficulty:+,modifier:-1]{Hard STR check(-1)}`
+* `@coc7.check[type:attrib,name:lck,difficulty:+,modifier:-1]{Hard luck check(-1)}`
+* `@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,difficulty:+,modifier:-1]{Hard Anthropology check(-1)}`
+* `@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,modifier:+1]`
+
 ## Autres
 
 | Commande | Action |
