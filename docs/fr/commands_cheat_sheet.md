@@ -6,6 +6,7 @@ Et en plus:
 * combiné avec la touche `Shift` enfoncée, ça envoie directement le jet dans le chat.
 * combiné avec la touche `Ctrl` [pour le Gardien] enfoncée, ça envoie une demande dans le chat au personnage concerné pour réaliser le jet, après paramétrage du jet par le gardien. 
 * les 2 combinés, `Ctrl+Shift`: ça envoie une demande dans le chat au personnage concerné pour réaliser le jet directement.
+* et le `clic-droit` vous emmène vers les jets opposés ou combinés.
 
 ## Commun
 
