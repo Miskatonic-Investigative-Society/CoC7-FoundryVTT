@@ -13,4 +13,4 @@ Et vous le lancez.
 
 ### Premiers paramétrages
 
-Une fois dans le monde, dans le menu Paramètres, vous sélectionnez Gestion des modules.
+Une fois dans le monde, dans le menu `Paramètres`, vous sélectionnez `Gestion des modules`.
