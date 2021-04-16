@@ -82,8 +82,3 @@ Par exemple:
 * `@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,difficulty:+,modifier:-1]{Hard Anthropology check(-1)}`
 * `@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,modifier:+1]`
 
-## Autres
-
-| Commande | Action |
-| -| -|
-| | |
