@@ -22,6 +22,27 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+version 0.5.6 :
+
+* Implementation of vehicle sheet.
+  * No automation so far on the sheets.
+  * Sheet support 'platting' which allows for multiple armor location. This is just an information for the time being.
+  * New button on the sheet allowing to collapse or expand the sheet. This is mainly a test and will propagated to the other sheet in due time.
+* Modification of Item sheet. Its now move to 'V2 style'.
+* New option added in Artwork override to allow specific background for 'other' V2 sheet (Anything but character sheet).
+* Character import now supports localization thanks to @pconcepcion.
+  * __*English*__, French and Spanish are supported.
+  * See `module/apps/actor-importer-regexp.js` for details.
+* Documentation refactor and re-organization thanks to @pconcepcion. (All Praise to Him!!)
+* Bug correction:
+  * #451, pulp specific. A bug preventing core characteristic roll in some cases corrected thanks to  @timpatim.
+  * #460, A bug displaying undefined in item description.
+* Modification thanks to @zeteticl
+  * Sanity monitor now display the dayli threshold.
+* Português (Brasil) translation updated thanks to @castanhocorreia.
+* German translation updated thanks to @nilsriesenberg.
+* French doc and translation updated thanks to @vonv.
+
 version 0.5.5 :
 
 * New feature thanks to [@pconcepcion](https://github.com/pconcepcion)!

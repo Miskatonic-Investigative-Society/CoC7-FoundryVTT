@@ -1,6 +1,23 @@
-.sheetV2{
-    &.vehicle{
-        form {
+.sheetV2.vehicle{
+    .expand-button{
+        position: absolute;
+        left: 1rem;
+        top: 7.5rem;
+        color: var(--main-sheet-front-color);
+    }
+
+    .armor-infos{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+
+        .armor-location{
+            flex: 1;
+            display: block;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
 }

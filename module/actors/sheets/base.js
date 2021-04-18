@@ -40,77 +40,77 @@ export class CoC7ActorSheet extends ActorSheet {
 		if( game.settings.get( 'CoC7', 'playerUnlockSheetMode') == 'creation' && game.settings.get( 'CoC7', 'charCreationEnabled')) data['data.flags.locked'] = false;
 
 
-		if( !data.data.characteristics) {
-			data.data.characteristics =  {
-				str: { value: null, short: 'CHARAC.STR', label: 'CHARAC.Strength', formula: null},
-				con: { value: null,	short: 'CHARAC.CON', label: 'CHARAC.Constitution', formula: null },
-				siz: { value: null, short: 'CHARAC.SIZ', label: 'CHARAC.Size', formula: null },
-				dex: { value: null, short: 'CHARAC.DEX', label: 'CHARAC.Dexterity', formula: null },
-				app: { value: null, short: 'CHARAC.APP', label: 'CHARAC.Appearance', formula: null },
-				int: { value: null, short: 'CHARAC.INT', label: 'CHARAC.Intelligence', formula: null },
-				pow: { value: null, short: 'CHARAC.POW', label: 'CHARAC.Power', formula: null },
-				edu: { value: null, short: 'CHARAC.EDU', label: 'CHARAC.Education', formula: null }
-			};
+		if( !['vehicle'].includes(this.actor.data.type)){
+			if( !data.data.characteristics) {
+				data.data.characteristics =  {
+					str: { value: null, short: 'CHARAC.STR', label: 'CHARAC.Strength', formula: null},
+					con: { value: null,	short: 'CHARAC.CON', label: 'CHARAC.Constitution', formula: null },
+					siz: { value: null, short: 'CHARAC.SIZ', label: 'CHARAC.Size', formula: null },
+					dex: { value: null, short: 'CHARAC.DEX', label: 'CHARAC.Dexterity', formula: null },
+					app: { value: null, short: 'CHARAC.APP', label: 'CHARAC.Appearance', formula: null },
+					int: { value: null, short: 'CHARAC.INT', label: 'CHARAC.Intelligence', formula: null },
+					pow: { value: null, short: 'CHARAC.POW', label: 'CHARAC.Power', formula: null },
+					edu: { value: null, short: 'CHARAC.EDU', label: 'CHARAC.Education', formula: null }
+				};
+			}
+
+			if( !data.data.attribs) {
+				data.data.attribs = {
+					hp: {value: null,max: null,short: 'HP',label: 'Hit points',auto: true},
+					mp: {value: null,max: null,short: 'HP',label: 'Magic points',auto: true},
+					lck: {value: null,short: 'LCK',label: 'Luck'},
+					san: {value: null,max: 99,short: 'SAN',label: 'Sanity',auto: true},
+					mov: {value: null,short: 'MOV',label: 'Movement rate',auto: true},
+					db: {value: null,short: 'DB',label: 'Damage bonus',auto: true},
+					build: {value: null,short: 'BLD',label: 'Build',auto: true},
+					armor: {value: null,auto: false}
+				};
+			}
+
+			if( !data.data.status){
+				data.data.status = {
+					criticalWounds: {type: 'Boolean',value: false},
+					unconscious: {type: 'Boolean',value: false},
+					dying: {type: 'Boolean',value: false},
+					dead: {type: 'Boolean',value: false},
+					prone: {type: 'Boolean',value: false},
+					tempoInsane: {type: 'boolean',value: false},
+					indefInsane: {type: 'boolean',value: false}
+				};
+			}
+
+			if( !data.data.biography){
+				data.data.biography = { personalDescription: { type: 'string', value: '' }};
+			}
+
+			if( !data.data.infos){
+				data.data.infos = { occupation: '', age: '', sex: '', residence: '', birthplace: '', archetype: '', organization: '' };
+			}
+
+			if( !data.data.flags){
+				data.data.flags = { locked: true, manualCredit: false };
+			}
+
+			if( !data.data.credit){
+				data.data.credit = { monetarySymbol: null, multiplier: null, spent: null, assetsDetails: null};
+			}
+
+			if( !data.data.development){
+				data.data.development = { personal: null, occupation: null, archetype: null};
+			}
+
+			if( !data.data.biography) data.data.biography = [];
+			if( !data.data.encounteredCreatures) data.data.encounteredCreatures = [];
+
+			data.isInABoutOfMadness = this.actor.isInABoutOfMadness;
+			data.isInsane = this.actor.isInsane;
+			data.boutOfMadness = this.actor.boutOfMadness;
+			data.sanity = this.actor.sanity;
+			data.pulpCharacter = game.settings.get('CoC7', 'pulpRules');
 		}
-
-		if( !data.data.attribs) {
-			data.data.attribs = {
-				hp: {value: null,max: null,short: 'HP',label: 'Hit points',auto: true},
-				mp: {value: null,max: null,short: 'HP',label: 'Magic points',auto: true},
-				lck: {value: null,short: 'LCK',label: 'Luck'},
-				san: {value: null,max: 99,short: 'SAN',label: 'Sanity',auto: true},
-				mov: {value: null,short: 'MOV',label: 'Movement rate',auto: true},
-				db: {value: null,short: 'DB',label: 'Damage bonus',auto: true},
-				build: {value: null,short: 'BLD',label: 'Build',auto: true},
-				armor: {value: null,auto: false}
-			};
-		}
-
-		if( !data.data.status){
-			data.data.status = {
-				criticalWounds: {type: 'Boolean',value: false},
-				unconscious: {type: 'Boolean',value: false},
-				dying: {type: 'Boolean',value: false},
-				dead: {type: 'Boolean',value: false},
-				prone: {type: 'Boolean',value: false},
-				tempoInsane: {type: 'boolean',value: false},
-				indefInsane: {type: 'boolean',value: false}
-			};
-		}
-
-		if( !data.data.biography){
-			data.data.biography = { personalDescription: { type: 'string', value: '' }};
-		}
-
-		if( !data.data.infos){
-			data.data.infos = { occupation: '', age: '', sex: '', residence: '', birthplace: '', archetype: '', organization: '' };
-		}
-
-		if( !data.data.flags){
-			data.data.flags = { locked: true, manualCredit: false };
-		}
-
-		if( !data.data.credit){
-			data.data.credit = { monetarySymbol: null, multiplier: null, spent: null, assetsDetails: null};
-		}
-
-		if( !data.data.development){
-			data.data.development = { personal: null, occupation: null, archetype: null};
-		}
-
-		if( !data.data.biography) data.data.biography = [];
-		if( !data.data.encounteredCreatures) data.data.encounteredCreatures = [];
-
 
 		data.isDead = this.actor.dead;
 		data.isDying = this.actor.dying;
-		data.isInABoutOfMadness = this.actor.isInABoutOfMadness;
-		data.isInsane = this.actor.isInsane;
-		data.boutOfMadness = this.actor.boutOfMadness;
-		data.sanity = this.actor.sanity;
-
-
-		data.pulpCharacter = game.settings.get('CoC7', 'pulpRules');
 
 		if( data.items){
 			for (const item of data.items) {
@@ -324,8 +324,17 @@ export class CoC7ActorSheet extends ActorSheet {
 		}
 
 		//For compat with previous characters test if auto is definied, if not we define it
-		let auto = this.actor.checkUndefinedAuto();
-		data.data = mergeObject( data.data, auto);
+		if( !['vehicle'].includes(this.actor.data.type)){
+			let auto = this.actor.checkUndefinedAuto();
+			data.data = mergeObject( data.data, auto);
+		} else{
+			data.data.attribs.hp.auto = false;
+			data.data.attribs.mp.auto = false;
+			data.data.attribs.san.auto = false;
+			data.data.attribs.mov.auto = false;
+			data.data.attribs.db.auto = false;
+			data.data.attribs.build.auto = false;
+		}
 
 		
 		data.data.attribs.mov.value = this.actor.mov; //return computed values or fixed values if not auto.
@@ -336,7 +345,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		if( data.data.attribs.hp.value < 0) data.data.attribs.hp.value = null;
 		if( data.data.attribs.mp.value < 0) data.data.attribs.mp.value = null;
 		if( data.data.attribs.san.value < 0) data.data.attribs.san.value = null;
-
+		data.data.attribs.san.fiftyOfCurrent = data.data.attribs.san.value >= 0 ? ' / '+Math.floor(data.data.attribs.san.value/5):'';
 		if( data.data.attribs.hp.auto ){
 			//TODO if any is null set max back to null.
 			if ( data.data.characteristics.siz.value != null && data.data.characteristics.con.value != null)
@@ -358,18 +367,19 @@ export class CoC7ActorSheet extends ActorSheet {
 		if( data.data.attribs.hp.value == null && data.data.attribs.hp.max != null) data.data.attribs.hp.value = data.data.attribs.hp.max;
 		if( data.data.attribs.mp.value == null && data.data.attribs.mp.max != null) data.data.attribs.mp.value = data.data.attribs.mp.max;
 
-		if( data.data.attribs.san.value == null && data.data.characteristics.pow.value != null) data.data.attribs.san.value = data.data.characteristics.pow.value;
-		if( data.data.attribs.san.value > data.data.attribs.san.max) data.data.attribs.san.value = data.data.attribs.san.max;
+		if( !['vehicle'].includes(this.actor.data.type)){
+			if( data.data.attribs.san.value == null && data.data.characteristics.pow.value != null) data.data.attribs.san.value = data.data.characteristics.pow.value;
+			if( data.data.attribs.san.value > data.data.attribs.san.max) data.data.attribs.san.value = data.data.attribs.san.max;
 
-		if( data.data.biography instanceof Array && data.data.biography.length){
-			data.data.biography[0].isFirst = true;
-			data.data.biography[data.data.biography.length - 1].isLast = true;
+			if( data.data.biography instanceof Array && data.data.biography.length){
+				data.data.biography[0].isFirst = true;
+				data.data.biography[data.data.biography.length - 1].isLast = true;
+			}
+
+			data.data.indefiniteInsanityLevel = {};
+			data.data.indefiniteInsanityLevel.value = data.data.attribs.san.dailyLoss ? data.data.attribs.san.dailyLoss:0;
+			data.data.indefiniteInsanityLevel.max = Math.floor( data.data.attribs.san.value/5);
 		}
-
-		data.data.indefiniteInsanityLevel = {};
-		data.data.indefiniteInsanityLevel.value = data.data.attribs.san.dailyLoss ? data.data.attribs.san.dailyLoss:0;
-		data.data.indefiniteInsanityLevel.max = Math.floor( data.data.attribs.san.value/5);
-
 		data.hasInventory = Object.prototype.hasOwnProperty.call( data.itemsByType, 'item') || Object.prototype.hasOwnProperty.call( data.itemsByType, 'book') || Object.prototype.hasOwnProperty.call( data.itemsByType, 'spell');
 
 		// const first = data.data.biography[0];
@@ -702,6 +712,9 @@ export class CoC7ActorSheet extends ActorSheet {
 			break;
 		case 'data.attribs.lck.value':
 			this.actor.setLuck( value);
+			break;
+		case 'data.attribs.build.current':
+			this.actor.setHp( value);
 			break;
 		}
 	}
@@ -1069,7 +1082,7 @@ export class CoC7ActorSheet extends ActorSheet {
 				useCustomName = sanData.get( 'usecustom')||false;
 				displayName = sanData.get( 'customname')||null;
 
-				ui.notifications.info( `Custom name: ${useCustomName}: ${name}`);
+				// ui.notifications.info( `Custom name: ${useCustomName}: ${name}`);
 				
 				if( !isNaN(Number(sanMin))) sanMin=Number(sanMin);
 				if( !isNaN(Number(sanMax))) sanMax=Number(sanMax);

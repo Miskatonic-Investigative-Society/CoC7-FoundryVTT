@@ -713,25 +713,32 @@ export class CoCActor extends Actor {
 						coreCharac.push( char);
 					}
 				});
+
+				let charac;
+
 				if( coreCharac.length > 1){
 					const charDialogData = {};
 					charDialogData.characteristics = coreCharac;
 					charDialogData.title = game.i18n.localize( 'CoC7.SelectCoreCharac');
-					const charac = await CharacSelectDialog.create( charDialogData);
-					if( !charac) return;
-					data.data.coreCharacteristics[charac]=true;
-					if( data.data.coreCharacteristicsFormula.enabled){
-						let value = Number(data.data.coreCharacteristicsFormula.value);
-						if( isNaN(value)){
-							const char = this.getCharacteristic( charac);
-							const roll = new Roll( data.data.coreCharacteristicsFormula.value);
-							roll.roll();
-							roll.toMessage({flavor: `Rolling characterisitic ${char.label}: ${data.data.coreCharacteristicsFormula.value}`});
-							value = (char.value < roll.total)? roll.total: char.value;
-						}
-						await this.update({ [`data.characteristics.${charac}.value`]: value});
-					}
+					charac = await CharacSelectDialog.create( charDialogData);
+				} else if( coreCharac.length == 1){
+					charac = coreCharac[0].key;
 				}
+
+				if( !charac) return;
+				data.data.coreCharacteristics[charac]=true;
+				if( data.data.coreCharacteristicsFormula.enabled){
+					let value = Number(data.data.coreCharacteristicsFormula.value);
+					if( isNaN(value)){
+						const char = this.getCharacteristic( charac);
+						const roll = new Roll( data.data.coreCharacteristicsFormula.value);
+						roll.roll();
+						roll.toMessage({flavor: `Rolling characterisitic ${char.label}: ${data.data.coreCharacteristicsFormula.value}`});
+						value = (char.value < roll.total)? roll.total: char.value;
+					}
+					await this.update({ [`data.characteristics.${charac}.value`]: value});
+				}
+
 				//Add all skills
 				await this.addUniqueItems( data.data.skills, 'archetype');
 
@@ -1030,10 +1037,17 @@ export class CoCActor extends Actor {
 	}
 
 	get hp(){
+		if( ['vehicle'].includes(this.data.type)){
+			if( null === this.data.data.attribs.build.current || undefined === this.data.data.attribs.build.current || '' === this.data.data.attribs.build.current ) return this.build;
+			if( this.data.data.attribs.build.current > this.data.data.attribs.build.value) return this.build;
+			const hp = parseInt( this.data.data.attribs.build.current);
+			return isNaN(hp)?null:hp;
+		}
 		return parseInt(this.data.data.attribs.hp.value);
 	}
 
 	get hpMax(){
+		if( ['vehicle'].includes(this.data.type)) return this.build;
 		if( this.data.data.attribs.hp.auto){
 			if(this.data.data.characteristics.siz.value != null &&  this.data.data.characteristics.con.value !=null){
 				const maxHP = Math.floor( (this.data.data.characteristics.siz.value + this.data.data.characteristics.con.value)/10);
@@ -1047,6 +1061,10 @@ export class CoCActor extends Actor {
 
 	async setHp( value){
 		if( value < 0) value = 0;
+		if( ['vehicle'].includes(this.data.type)){
+			if( value > this.build) value = parseInt( this.build);
+			return await this.update( { 'data.attribs.build.current': value});
+		}
 		if( value > this.hpMax) value = parseInt( this.hpMax);
 		return await this.update( { 'data.attribs.hp.value': value});
 	}
@@ -1400,7 +1418,8 @@ export class CoCActor extends Actor {
 	}
 
 	get sanMax(){
-		if( this.data.data.attribs.san.auto){
+		if( !this.data.data.attribs) return undefined;
+		if( this.data.data.attribs?.san?.auto){
 			if( this.cthulhuMythos) return 99 - this.cthulhuMythos;
 			return 99;
 		} 
@@ -1566,6 +1585,10 @@ export class CoCActor extends Actor {
 	}
 
 	get build() {
+		if( ['vehicle'].includes(this.data.type)){
+			const build = parseInt(this.data.data.attribs.build.value);
+			return isNaN( build)?null:build;
+		} 
 		if( !this.data.data.attribs) return null;
 		if( !this.data.data.attribs.build) return null;
 		if( this.data.data.attribs.build.value == 'auto') this.data.data.attribs.build.auto = true;
@@ -1583,6 +1606,7 @@ export class CoCActor extends Actor {
 	}
 
 	get db() {
+		if( ['vehicle'].includes(this.data.type)) return 0;
 		if( !this.data.data.attribs) return null;
 		if( !this.data.data.attribs.db) return null;
 		if( this.data.data.attribs.db.value == 'auto') this.data.data.attribs.db.auto = true;
@@ -1599,6 +1623,7 @@ export class CoCActor extends Actor {
 	}
 
 	get mov() {
+		if( ['vehicle'].includes(this.data.type)) return this.data.data.attribs.mov.value;
 		if( !this.data.data.attribs) return null;
 		if( !this.data.data.attribs.mov) return null;
 		if( this.data.data.attribs.mov.value == 'auto') this.data.data.attribs.mov.auto = true;

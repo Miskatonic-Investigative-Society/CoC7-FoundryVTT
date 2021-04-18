@@ -1,49 +1,8 @@
 'use strict'
 
-/* Regex */
-// const nameRegExp = /^[\s\n\r]*(?<name>[\w\s\.]+),\s*(?<age>\d\+),\s*(?<occupation>[\w\s\. ]+)$/
-const accentedCharacters = 'áéíóàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ'
-const nameRegExp = new RegExp('^[\\s\\n\\r]*(?<name>[\\w\\s\\.\\/\\(\\)\\-' + accentedCharacters + ']+),')
-const ageRegExp = /[, ]?\s*age:?\s+(\d+)/i
-const edadRegExp = /(\d+) a[ñÑ]os/i
-const strRegExp = /(?:STR|FUE):?\s+(\d+)/
-const conRegExp = /CON:?\s+(\d+)/
-const sizRegExp = /(?:SIZ|TAM):?\s+(\d+)/
-const intRegExp = /INT:?\s+(\d+)/
-const powRegExp = /(?:POW|POD):?\s+(\d+)/
-const dexRegExp = /(?:DEX|DES):?\s+(\d+)/
-const appRegExp = /(?:APP|APA):?\s+(\d+)/
-const eduRegExp = /EDU:? +(\d+)/
-const sanRegExp = /(?:SAN|COR|Sanity|Cordura):?\s+(\d+)/
-const hpRegExp = /(?:HP|PV|Pit points|Puntos de vida|P\. ?V\.):?\s+(\d+)/
-const mpRegExp = /(?:MP|PM|Magic points|Puntos Mágicos|Puntos de Magia):?\s+(\d+)/
-const dbRegExp = /(?:Damage Bonus|DB|BD):?\s+([\+-]?\d+(?:d\d+|D\d+)?)/i
-// const attacksRegExp = /(?:Attacks|Combat):?\s+(.*)Spells/sim
-const attacksRegExp = /(?:Attacks|Fighting|Combat|Combate|Armas):?\s+(.*)\.[\n|\r]?$/sim
-const buildRegExp = /(?:Build|Corpulencia):?\s+([\+-]?\d+)/i
-const armorRegExp = /(?:Armor|Armadura):?\s+(none|ninguna|\d+)/i
-const moveRegExp = /(?:Move|Movimiento):?\s+(\d+)/i
-const luckRegExp = /(?:Luck|Suerte):?\s+(\d+)/i
-// const spellsRegExp = /Spells:?\s+(.*)Skills/sim
-const spellsRegExp = /(?:Spells|Conjuros|Hechizos):?\s+(.*)\.[\n|\r]?$/sim
-// const skillsRegExp = /Skills:?\s+(.*)Languages/sim
-const skillsRegExp = /(?:Skills|Habilidades):?\s+(.*)\.[\n|\r]?$/sim
-const dodgeRegExp = /(?<name>Dodge|Esquivar):?\s+\(?(?<percentage>\d+)\)?\s*%/i
-// const languagesRegExp = /Languages:?\s+(.*)\./sim
-const languagesRegExp = /(?:Languages|Idiomas|Lenguajes|Lenguas):?\s+(.*)\.[\n|\r]?$/sim
-const skillRegExp = new RegExp('(?<skill>[\\w\\s\\(\\).\\/' + accentedCharacters + ']+) (?<percentage>\\d+)%')
-const attacksPerRoundRegExp = /(?:Attacks per round|# Attaks|Número de Ataques):?\s+(none|\d+)/i
-const sanLossRegExp = /(?:Sanity loss|Pérdida de cordura|Pérdida de COR):?\s+(none|\d[dD]?[\d\+]*\/\d[dD][\d\+]+)/i
-const weaponRegExp = new RegExp('^(?<weapon>[\\w\\s\\n\\(\\).\\/' + accentedCharacters + ']+):?[\\n\\r\\s]+(?<percentage>\\d+)%,?\\s*(?:\\(\\d+\\/\\d+\\))?\\s*,?\\s*(?:damage|daño)\\s+(?<damage>[\\d+\\+dD\\- ]+\\s*(BD|bd|DB|db|damage bonus|bonificación de daño)?)', 'img')
-let stopWords = '(Spells|Conjuros|Skills|Habilidades|Sanity loss|Pérdida de cordura|Languages|Idiomas|Lenguajes|Lenguas'
-stopWords += '|Armor|Armadura|Attacks|Combat|Combate|Armas)'
-// Weapons regular expressions
+import { CoC7ActorImporterRegExp } from './actor-importer-regexp.js';
 
-const handgunRegExp = /( Gun|Revolver|Pistol|Handgun|Derringer|Beretta|Luger|Desert Eagle| .38)/i
-const rifleRegExp = /(Rifle|Shotgun|Carbine|Gauge |Lee-Enfield|Elephant|Fusil|Escopeta|Galga|Recortada)/i
-const smbRegExp = /(Submachine Gun|Thompson)/i
-const machineGunRegExp = /(Browning|Vickers|Ametralladora)/i
-const launchedWeapons = /(Molotov|Grenade|Dynamite|Granada|Dinamita)/i
+
 
 // Default values
 
@@ -63,51 +22,50 @@ const defaultWeaponSkillAdjustments = {
 
 export class CoC7ActorImporter {
 
+  RE = new CoC7ActorImporterRegExp().RE
+
   async parseCharacter(text) {
     const r = {}
     r.name = this.processName(text)
-    r.age = this.extractValue(text, ageRegExp)
-    if (r.age === undefined || r.age === null) {
-      r.age = this.extractValue(text, edadRegExp)
-    }
+    r.age = this.extractValue(text, this.RE.ageRegExp)
     console.debug('age', r.age)
-    r.str = this.extractValue(text, strRegExp)
-    r.con = this.extractValue(text, conRegExp)
-    r.siz = this.extractValue(text, sizRegExp)
-    r.int = this.extractValue(text, intRegExp)
-    r.pow = this.extractValue(text, powRegExp)
-    r.dex = this.extractValue(text, dexRegExp)
-    r.app = this.extractValue(text, appRegExp)
-    r.edu = this.extractValue(text, eduRegExp)
-    r.san = this.extractValue(text, sanRegExp)
-    r.hp = this.extractValue(text, hpRegExp)
-    r.mp = this.extractValue(text, mpRegExp)
-    r.db = this.extractValue(text, dbRegExp)
-    r.build = this.extractValue(text, buildRegExp)
-    r.armor = this.extractValue(text, armorRegExp)
+    r.str = Number(this.extractValue(text, this.RE.strRegExp))
+    r.con = Number(this.extractValue(text, this.RE.conRegExp))
+    r.siz = Number(this.extractValue(text, this.RE.sizRegExp))
+    r.int = Number(this.extractValue(text, this.RE.intRegExp))
+    r.pow = Number(this.extractValue(text, this.RE.powRegExp))
+    r.dex = Number(this.extractValue(text, this.RE.dexRegExp))
+    r.app = Number(this.extractValue(text, this.RE.appRegExp))
+    r.edu = Number(this.extractValue(text, this.RE.eduRegExp))
+    r.san = Number(this.extractValue(text, this.RE.sanRegExp))
+    r.hp = Number(this.extractValue(text, this.RE.hpRegExp))
+    r.mp = Number(this.extractValue(text, this.RE.mpRegExp))
+    r.db = this.extractValue(text, this.RE.dbRegExp)
+    r.build = this.extractValue(text, this.RE.buildRegExp)
+    r.armor = this.extractValue(text, this.RE.armorRegExp)
     console.debug('armor', r.armor)
-    r.mov = this.extractValue(text, moveRegExp)
-    r.lck = this.extractValue(text, luckRegExp)
-    r.sanLoss = this.extractValue(text, sanLossRegExp)
-    r.attacksPerRound = this.extractValue(text, attacksPerRoundRegExp)
+    r.mov = Number(this.extractValue(text, this.RE.moveRegExp))
+    r.lck = Number(this.extractValue(text, this.RE.luckRegExp))
+    r.sanLoss = this.extractValue(text, this.RE.sanLossRegExp)
+    r.attacksPerRound = this.extractValue(text, this.RE.attacksPerRoundRegExp)
 
-    const attacks = this.extractValue(text, attacksRegExp)
+    const attacks = this.extractValue(text, this.RE.attacksRegExp)
     // console.log(attacks)
     r.attacks = await this.processAttacks(attacks)
-    const spells = this.extractValue(text, spellsRegExp)
+    const spells = this.extractValue(text, this.RE.spellsRegExp)
     // console.log(spells)
     r.spells = await this.processSpells(spells)
-    const skills = this.extractValue(text, skillsRegExp)
+    const skills = this.extractValue(text, this.RE.skillsRegExp)
     console.log(skills)
     r.skills = await this.processSkills(skills)
-    const dodge = dodgeRegExp.exec(text)
+    const dodge = this.RE.dodgeRegExp.exec(text)
     if (dodge !== null) {
       r.skills.push({
         name: this.cleanString(dodge.groups.name),
         value: Number(dodge.groups.percentage)
       })
     }
-    const languages = this.extractValue(text, languagesRegExp)
+    const languages = this.extractValue(text, this.RE.languagesRegExp)
     // console.log(languages)
     // r.languages = processLanguages(languages)
     r.languages = await this.processSkills(languages)
@@ -121,7 +79,7 @@ export class CoC7ActorImporter {
    * @returns the character name or 'Imported unnamed character' if the name was not found 
    */
   processName(text) {
-    const nameFound = nameRegExp.exec(text)
+    const nameFound = this.RE.nameRegExp.exec(text)
     if (nameFound !== null) {
       return nameFound.groups.name
     }
@@ -132,14 +90,22 @@ export class CoC7ActorImporter {
     const results = []
     if (attacks != null) {
       // results = attacks.split(',')
-      let weapon = weaponRegExp.exec(attacks)
+      let weapon = this.RE.weaponRegExp.exec(attacks)
       while (weapon !== null) {
+        // Attempt to guess some of the weapon properties
         const cleanWeapon = this.cleanString(weapon.groups.weapon)
+        const doesDamageBonus = this.RE.dbRegExp.test(weapon.groups.damage)
+        const isRanged = this.RE.handgunRegExp.test(cleanWeapon) || this.RE.rifleRegExp.test(cleanWeapon) ||
+          this.RE.smbRegExp.test(cleanWeapon) || this.RE.machineGunRegExp.test(cleanWeapon)
         const data = {
           name: cleanWeapon,
           type: 'weapon',
           data: {
-            properties: {},
+            properties: {
+              "rngd": isRanged,
+              "melee": doesDamageBonus, // if a weapon doesDamageBonus usually means it's a melee weapon
+              "addb": doesDamageBonus
+            },
             range: {
               normal: {
                 value: Number(weapon.groups.percentage),
@@ -149,7 +115,7 @@ export class CoC7ActorImporter {
           }
         }
         results.push(data)
-        weapon = weaponRegExp.exec(attacks)
+        weapon = this.RE.weaponRegExp.exec(attacks)
       }
     }
     console.debug('attacks', results)
@@ -193,14 +159,14 @@ export class CoC7ActorImporter {
       const skillsArr = skills.replace(/(\n|\r)/g, ' ').split(',')
       console.debug('skillsArr', skillsArr)
       skillsArr.forEach(skill => {
-        const parsedSkill = skillRegExp.exec(skill)
+        const parsedSkill = this.RE.skillRegExp.exec(skill)
         console.debug('parsedSkill', parsedSkill)
         if (parsedSkill !== null) {
           // results[parsedSkill.groups]
           const skillName = this.cleanString(parsedSkill.groups.skill)
           results.push({
             name: skillName,
-            value: parsedSkill.groups.percentage
+            value: Number(parsedSkill.groups.percentage)
           })
         }
       })
@@ -211,8 +177,8 @@ export class CoC7ActorImporter {
 
   /**
    * extractValue expects to receive a regular expression `re` that
-   * includes one parenthesis group, and returns the value matching the
-   * parenthesis group or the
+   * includes one parenthesis group, and returns the value matching the first
+   * parenthesis group or `null`
    */
   extractValue(text, re) {
     const results = re.exec(text)
@@ -411,19 +377,19 @@ export class CoC7ActorImporter {
 
   async weaponSkill(weapon) {
     let skill = null
-    if (handgunRegExp.exec(weapon)) {
+    if (this.RE.handgunRegExp.exec(weapon)) {
       skill = await game.items.find(i => i.data.type === 'skill' && i.data.name === 'Handgun')
       console.log(weapon + ' uses Handgun skill: ' + skill)
-    } else if (rifleRegExp.exec(weapon)) {
+    } else if (this.RE.rifleRegExp.exec(weapon)) {
       skill = await game.items.find(i => i.data.type === 'skill' && i.data.name === 'Rifle/Shotgun')
       console.log(weapon + ' uses Rifle skill ' + skill)
-    } else if (smbRegExp.exec(weapon)) {
+    } else if (this.RE.smbRegExp.exec(weapon)) {
       skill = await game.items.find(i => i.data.type === 'skill' && i.data.name === 'Submachine Gun')
       console.log(weapon + ' uses Submachine Gun skill ' + skill)
-    } else if (machineGunRegExp.exec(weapon)) {
+    } else if (this.RE.machineGunRegExp.exec(weapon)) {
       skill = await game.items.find(i => i.data.type === 'skill' && i.data.name === 'Machine Gun')
       console.log(weapon + ' uses Machine Gun skill ' + skill)
-    } else if (launchedWeapons.exec(weapon)) {
+    } else if (this.RE.launchedWeapons.exec(weapon)) {
       skill = await game.items.find(i => i.data.type === 'skill' && i.data.name === 'Launch')
       console.log(weapon + ' uses Launch skill ' + skill)
     }
@@ -446,6 +412,8 @@ export class CoC7ActorImporter {
   }
 
   async createActor(inputs) {
+    const lang = this.extractValue(inputs.lang, CoC7ActorImporterRegExp.optionLangRegExp) || "en"
+    this.RE = CoC7ActorImporterRegExp.getRegularExpressions(lang)
     let character = await this.parseCharacter(inputs.text)
     console.debug(character)
     if ((inputs.convertFrom6E === "coc-guess" && this.needsConversion(character)) || (inputs.convertFrom6E === "coc-convert")) {
