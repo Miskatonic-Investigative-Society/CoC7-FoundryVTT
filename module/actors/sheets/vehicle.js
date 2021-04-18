@@ -47,8 +47,13 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
 	}
 
 	async _onToggleExpand(){
-		this.position.height = 'auto'; //Reset the stored position to force to recalculate window size TODO: Store previous position to restore it instead of auto
 		const expanded = this.actor.getFlag( 'CoC7', 'expanded');
+		if( expanded){
+			this.oldSize = this.position.height;
+			this.position.height = 'auto'; //Reset the stored position to force to recalculate window size TODO: Store previous position to restore it instead of auto
+		} else {
+			this.position.height =  this.oldSize || 420; //Reset the stored position to force to recalculate window size TODO: Store previous position to restore it instead of auto
+		}
 		await this.actor.setFlag( 'CoC7', 'expanded', !expanded);
 	}
 

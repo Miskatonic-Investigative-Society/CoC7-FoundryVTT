@@ -27,7 +27,7 @@ version 0.5.6 :
 * Implementation of vehicle sheet.
   * No automation so far on the sheets.
   * Sheet support 'platting' which allows for multiple armor location. This is just an information for the time being.
-  * New test button on the sheet allowing to collapse or expand the sheet.
+  * New button on the sheet allowing to collapse or expand the sheet. This is mainly a test and will propagated to the other sheet in due time.
 * Modification of Item sheet. Its now move to 'V2 style'.
 * New option added in Artwork override to allow specific background for 'other' V2 sheet (Anything but character sheet).
 * Character import now supports localization thanks to @pconcepcion.
@@ -41,6 +41,7 @@ version 0.5.6 :
   * Sanity monitor now display the dayli threshold.
 * Português (Brasil) translation updated thanks to @castanhocorreia.
 * German translation updated thanks to @nilsriesenberg.
+* French doc and translation updated thanks to @vonv.
 
 version 0.5.5 :
 
