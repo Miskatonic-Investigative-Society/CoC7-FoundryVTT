@@ -34,9 +34,9 @@
 
             <div class="flex1" style="padding: 1px, 3px;"> 
                 <div class="attribute flexrow">
-                    <div class="flex1"><label>Movement :</label></div>
+                    <div class="flex1"><label>{{localize "CoC7.Movement"}} :</label></div>
                     <div class="flex1"><span>{{actor.mov}}</span></div>
-                    <div class="flex1"><label>Build :</label></div>
+                    <div class="flex1"><label>{{localize "CoC7.Build"}} :</label></div>
                     <div class="flex2 flexrow"><input class="attribute-value" type="text" value="{{actor.hp}}" name="data.attribs.build.current"/><span>/{{actor.build}}</span></div>
                 </div>
                 {{#if data.attribs.armor.localized}}
@@ -53,7 +53,7 @@
                 </div>
                 {{else}}
                 <div class="flexrow">
-                    <label>Armor :</label>
+                    <label>{{localize "CoC7.Armor"}} :</label>
                     <span>{{data.attribs.armor.value}}</span>
                 </div>
                 {{/if}}
