@@ -87,6 +87,13 @@
 "CoC7.All": "Todos",
 "CoC7.Success": "Sucesso",
 "CoC7.CustomLabel": "Nome Personalizado",
+"CoC7.SpecificLocations": "Localizações Específicas",
+"CoC7.ArmourPlating": "Blindagem do Veículo",
+"CoC7.Location": "Localização",
+"CoC7.Properties": "Propriedades",
+"CoC7.Attributes": "Atributos",
+"CoC7.Collapse": "Minimizar",
+"CoC7.Expand": "Expandir",
 
 "CoC7.RegularSuccess": "Sucesso Regular",
 "CoC7.HardSuccess": "Sucesso Difícil",
@@ -262,7 +269,7 @@
 "CoC7.SkillPush": "Forçável",
 "CoC7.SkillCombat": "Combate",
 "CoC7.SkillFighting": "Luta",
-"CoC7.SkillFirearm": "Armas de Fogo",
+"CoC7.SkillFirearm": "À Distância",
 
 "CoC7.WeaponRngd": "Alcance",
 "CoC7.WeaponProperyManeuver": "Manobra",
@@ -299,7 +306,7 @@
 "CoC7.CthulhuMythosName": "Mythos de Cthulhu",
 "CoC7.CreditRatingSkillName": "Nível de Crédito",
 "CoC7.FightingSpecializationName": "Luta",
-"CoC7.FirearmSpecializationName": "Armas de Fogo",
+"CoC7.FirearmSpecializationName": "À Distância",
 "CoC7.AnySpecName": "Genérica",
 "CoC7.BoutOfMadnessName": "Acesso de Loucura",
 "CoC7.InsanityName": "Insanidade",
@@ -451,7 +458,7 @@
 "CoC7.Unidentified": "Descrição Desconhecida",
 "CoC7.Crew": "Passageiros",
 "CoC7.Origin": "Origem",
-"CoC7.Model": "Modelo",
+"CoC7.ArmedVehicle": "Veículo Blindado",
 
 "CoC7.PulpTalents": "Talentos Pulp",
 "CoC7.TalentType": "Tipo de Talento",
@@ -520,6 +527,7 @@
 "CoC7.DrawGun": "Sacar Arma",
 
 "CoC7.GmTools": "Recursos do Guardião",
+"CoC7.GmNotes": "Anotações do Guardião",
 "CoC7.DevPhase": "Fase de Desenvolvimento",
 "CoC7.DevPhaseEnabled": "Fase de Desenvolvimento Habilitada",
 "CoC7.DevPhaseDisabled": "Fase de Desenvolvimento Desabilitada",
@@ -547,7 +555,7 @@
 "CoC7.InfoAllSkillsAlreadySelected": "Todas as perícias já estão selecionadas.",
 
 "CoC7.MessageWaitForKeeperToClick": "Seu Guardião requisita um teste.<br>Aguarde antes de clicar!<br>",
-"CoC7.MessageCheckRequested": "Your keeper is requesting a check.",
+"CoC7.MessageCheckRequested": "Seu Guardião está solicitando um teste.",
 
 "CoC7.ActorImporter": "Importar Ator",
 "CoC7.ActorImporterSummary": "Importe um NPC ou Criatura a partir da descrição de informações. Apenas cole o texto correspondente.",
@@ -559,6 +567,10 @@
 "CoC7.Convert": "Converter",
 "CoC7.NoConvert": "Não Converter",
 "CoC7.Guess": "Talvez",
+"CoC7.English": "Inglês",
+"CoC7.Spanish": "Espanhol",
+"CoC7.French": "Francês",
+"CoC7.SelectSourceLanguage": "Selecione o idioma de fonte.",
 
 "SETTINGS.DefaultDifficulty": "Dificuldade de Testes",
 "SETTINGS.DefaultDifficultyHint": "Você pode escolher a dificuldade padrão dos testes. Desconhecido vai fazer o jogador rolar sem saber a dificuldade.",
@@ -600,6 +612,8 @@
 "SETTINGS.OverrideSheetArtworkHint": "!!NECESSÁRIO REINICIAR!! Dá acesso às configurações avançadas da ficha, deixe em branco para manter o padrão.",
 "SETTINGS.ArtWorkSheetBackground": "Plano de Fundo da Ficha",
 "SETTINGS.ArtWorkSheetBackgroundHint": "Escreva 'null' para remover o plano de fundo.",
+"SETTINGS.ArtWorkOtherSheetBackground": "Plano de Fundo de Outras Fichas",
+"SETTINGS.ArtWorkOtherSheetBackgroundHint": "Escrava 'null' para remover o plano de fundo. Apenas para Itens e Veículos por enquanto.",
 "SETTINGS.ArtworkSheetImage": "Imagem da Ficha de Personagem",
 "SETTINGS.ArtworkSheetImageHint": "Escreva 'null' para remover a imagem.",
 "SETTINGS.ArtworkFrontColor": "Cor Principal",
