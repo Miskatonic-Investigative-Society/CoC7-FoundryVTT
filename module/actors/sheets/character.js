@@ -55,6 +55,11 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
 				sheet.element.css('--main-sheet-bg',  game.settings.get('CoC7', 'artWorkSheetBackground'));
 			else if( 'null' == game.settings.get('CoC7', 'artWorkSheetBackground').toLowerCase())
 				sheet.element.css('--main-sheet-bg',  'url( \'./artwork/backgrounds/void.png\')');
+
+			if( game.settings.get('CoC7', 'artWorkOtherSheetBackground'))
+				sheet.element.css('--other-sheet-bg',  game.settings.get('CoC7', 'artWorkOtherSheetBackground'));
+			else if( 'null' == game.settings.get('CoC7', 'artWorkOtherSheetBackground').toLowerCase())
+				sheet.element.css('--other-sheet-bg',  'url( \'./artwork/backgrounds/void.png\')');
 				
 			if(game.settings.get('CoC7', 'artworkSheetImage'))
 				sheet.element.css('--main-sheet-image',  game.settings.get('CoC7', 'artworkSheetImage'));

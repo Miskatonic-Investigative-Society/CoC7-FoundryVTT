@@ -98,6 +98,7 @@
                     },
                     "mov": {
                         "value": null,
+                        "max": null,
                         "short": "MOV",
                         "label": "Movement rate",
                         "auto": true
@@ -109,6 +110,7 @@
                         "auto": true
                     },
                     "build": {
+                        "current": null,
                         "value": null,
                         "short": "BLD",
                         "label": "Build",
@@ -117,7 +119,7 @@
                     "armor": {
                         "value": null,
                         "localized": false,
-                        "shielding": {},
+                        "locations": [],
                         "auto": false
                     }
                 }
@@ -247,10 +249,15 @@
             }
         },
         "vehicle":{
-            "template":[ "attribs"],
+            "templates":[ "attribs"],
+            "description": {
+                "value": "",
+                "chat": "",
+                "notes": ""
+            },
             "infos":{
                 "origin": null,
-                "model": null
+                "type": null
             },
             "crew": {
                 "total": null,
@@ -264,6 +271,9 @@
             "skill": {
                 "driving": null,
                 "active": []
+            },
+            "properties":{
+                "armed": false
             }
         }
     },

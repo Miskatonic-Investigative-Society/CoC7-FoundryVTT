@@ -35,7 +35,7 @@
 "CoC7.Sanity": "Sanity",
 "CoC7.SAN": "SAN",
 "CoC7.DailySanLoss": "Daily San loss",
-"CoC7.DailyLoss": "Daily loss",
+"CoC7.DailyLoss": "Daily",
 "CoC7.Luck": "Luck",
 "CoC7.Movement": "Movement",
 "CoC7.Mov": "Mov",
@@ -84,6 +84,13 @@
 "CoC7.All": "All",
 "CoC7.Success": "Success",
 "CoC7.CustomLabel": "Custom label",
+"CoC7.SpecificLocations": "Specific locations",
+"CoC7.ArmourPlating": "Armour plating",
+"CoC7.Location": "Location",
+"CoC7.Properties": "Properties",
+"CoC7.Attributes": "Attributes",
+"CoC7.Collapse": "Collapse",
+"CoC7.Expand": "Expand",
 
 "CoC7.RegularSuccess": "Regular success",
 "CoC7.HardSuccess": "Hard success",
@@ -449,8 +456,7 @@
 
 "CoC7.Crew": "Crew",
 "CoC7.Origin": "Origin",
-"CoC7.Model": "Model",
-
+"CoC7.ArmedVehicle": "Armed Vehicle",
 
 "CoC7.PulpTalents": "Pulp Talents",
 "CoC7.TalentType": "Talent Type",
@@ -519,6 +525,7 @@
 "CoC7.DrawGun": "Draw your gun",
 
 "CoC7.GmTools": "Keeper's tools",
+"CoC7.GmNotes": "GM's notes",
 "CoC7.DevPhase": "Development phase",
 "CoC7.DevPhaseEnabled": "Development phase enabled",
 "CoC7.DevPhaseDisabled": "Development phase disabled",
@@ -558,6 +565,11 @@
 "CoC7.Convert": "Convert",
 "CoC7.NoConvert": "No Convert",
 "CoC7.Guess": "Guess",
+"CoC7.English": "English",
+"CoC7.Spanish": "Spanish",
+"CoC7.French": "French",
+"CoC7.SelectSourceLanguage": "Select the source text language",
+
 
 "SETTINGS.DefaultDifficulty": "Default check difficulty",
 "SETTINGS.DefaultDifficultyHint": "You can choose the default difficulty for checks. Unknown will roll checks without the player knowing the check difficulty.",
@@ -599,6 +611,8 @@
 "SETTINGS.OverrideSheetArtworkHint": "!!RESTART REQUIRED!! gives access to advance sheet config, leave blank for default",
 "SETTINGS.ArtWorkSheetBackground": "Character sheet background",
 "SETTINGS.ArtWorkSheetBackgroundHint": "type 'null' to remove background",
+"SETTINGS.ArtWorkOtherSheetBackground": "Other sheet background",
+"SETTINGS.ArtWorkOtherSheetBackgroundHint": "type 'null' to remove background. Only for items and vehicle for now",
 "SETTINGS.ArtworkSheetImage": "Character sheet image",
 "SETTINGS.ArtworkSheetImageHint": "type 'null' to remove image",
 "SETTINGS.ArtworkFrontColor": "Main color",
