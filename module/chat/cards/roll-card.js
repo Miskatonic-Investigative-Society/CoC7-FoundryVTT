@@ -65,6 +65,13 @@ export class RollCard{
 				return false;
 			});
 
+			if( messages.length){
+				const timestamp = new Date( messages[0].data.timestamp);
+				const now = new Date();
+				const timeDiffSec = (now - timestamp) / 1000;
+				ui.notifications.info( `Time diff : ${timeDiffSec}`); //If more than xxx close the card and rol a new one
+			}
+
 			let card;
 			if( !messages.length) card = new this( );
 			else card = await this.fromMessage( messages[0]);
