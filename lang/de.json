@@ -84,6 +84,13 @@
 "CoC7.All": "Alle",
 "CoC7.Success": "Erfolg",
 "CoC7.CustomLabel": "Benutzerdefiniertes Label",
+"CoC7.SpecificLocations": "Spezifischer Ort",
+"CoC7.ArmourPlating": "Panzerung",
+"CoC7.Location": "Herkunftsort",
+"CoC7.Properties": "Eigenschaften",
+"CoC7.Attributes": "Merkmale",
+"CoC7.Collapse": "Einklappen",
+"CoC7.Expand": "Ausklappen",
 
 "CoC7.RegularSuccess": "Regulärer Erfolg",
 "CoC7.HardSuccess": "Schwerer Erfolg",
@@ -519,6 +526,7 @@
 "CoC7.DrawGun": "ziehe deine Waffe",
 
 "CoC7.GmTools": "Spielleiter Werkzeuge",
+"CoC7.GmNotes": "Spielleiter Notizen",
 "CoC7.DevPhase": "Charakterentwicklungsphase",
 "CoC7.DevPhaseEnabled": "die Phase der Charakterentwicklung wurde aktiviert",
 "CoC7.DevPhaseDisabled": "die Phase der Charakterentwicklung wurde deaktiviert",
