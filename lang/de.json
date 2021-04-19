@@ -410,7 +410,7 @@
 "CoC7.BoutRealTime": "Anfall von Wahnsinn: im Spielverlauf",
 "CoC7.BoutSummary": "Anfall von Wahnsinn: als Zusammenfassung",
 "CoC7.EndBoutOfMadness": "Anfall von Wahnsinn beenden",
-"CoC7.InsanityType": "Type of insanity",
+"CoC7.InsanityType": "Art des Wahnsinns",
 "CoC7.Phobia": "Phobie",
 "CoC7.Mania": "Zwangsstörung",
 "CoC7.MaxSanloss": "Maximaler STA Verlust",
@@ -457,6 +457,7 @@
 "CoC7.Crew": "Crew",
 "CoC7.Origin": "Herkunftsort",
 "CoC7.Model": "Modell",
+"CoC7.ArmedVehicle": "Bewaffnetes Fahrzeug",
 
 
 "CoC7.PulpTalents": "Pulp Fertigkeiten",
