@@ -96,7 +96,7 @@ export class chatHelper{
 				return game.actors.tokens[tokenId];//REFACTORING (2)
 			}
 			const token = chatHelper.getTokenFromKey(key);
-			return token.actor;
+			return token?.actor;
 		}
 
 		// Case 2 - use Actor ID directory
