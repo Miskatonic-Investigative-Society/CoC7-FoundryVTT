@@ -120,7 +120,7 @@
 "CoC7.check.DecreaseSuccessLevel": "Erfolgslevel verringern",
 "CoC7.RollSecretDice": "Der Spielleiter hat verdeckte Würfel geworfen …",
 "CoC7.KeeperSentDecoy": "Ein Scheinwurf wurde an die Spieler gesendet",
-"CoC7.FakeRoll": "Einen Scheinwurf wurde an die Spieler senden",
+"CoC7.FakeRoll": "Einen Scheinwurf an die Spieler senden",
 
 "CoC7.ConstitutionCheck": "Konstitutions-Probe",
 
@@ -519,7 +519,7 @@
 "CoC7.DrawGun": "ziehe deine Waffe",
 
 "CoC7.GmTools": "Spielleiter Werkzeuge",
-"CoC7.DevPhase": "Charakterentwicklunsphase",
+"CoC7.DevPhase": "Charakterentwicklungsphase",
 "CoC7.DevPhaseEnabled": "die Phase der Charakterentwicklung wurde aktiviert",
 "CoC7.DevPhaseDisabled": "die Phase der Charakterentwicklung wurde deaktiviert",
 "CoC7.CharCreationMode": "Investigatorenerstellung",
