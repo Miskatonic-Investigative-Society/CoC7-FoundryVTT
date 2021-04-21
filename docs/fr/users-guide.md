@@ -64,3 +64,6 @@ De haut en bas:
 * Importer un personnage depuis un simple texte
 * Activer la possibilité des gains d'expérience (en partie)
 * Balancer un jet factice aux joueurs dans le chat: un peu d'pression :)
+
+## Les compendiums
+
