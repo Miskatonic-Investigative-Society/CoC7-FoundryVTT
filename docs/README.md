@@ -3,4 +3,4 @@ Documentation
 
 * [English Documentation](./en) (Work in progress)
 * [Spanish Documentation](./es) (Work in progress)
-* [Documentation Française](./fr) (En cours)
+* [Documentation Française](./fr) :fr: (En cours)
