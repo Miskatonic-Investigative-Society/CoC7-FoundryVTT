@@ -385,6 +385,7 @@
 
 "CoC7.InvoluntaryAction": "Action involontaire",
 "CoC7.InvoluntaryActionPerfomed": "Action involontaire effectuée",
+"CoC7.SanDataSelectionWindow": "Choisissez les pertes de SAN",
 "CoC7.SanityCheck": "Test de SAN",
 "CoC7.IntCheck": "Test d'intelligence",
 "CoC7.NoSanLoss": "Pas de perte de SAN",
