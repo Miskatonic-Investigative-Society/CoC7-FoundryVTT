@@ -10,4 +10,4 @@ Le MUST have !
 **[Création de personnage](./pages/character_creation.md) (à faire)** | **~~[Objets](./pages/items.md)~~ (à faire)**
 . | **~~[Personnages](./pages/actors.md)~~ (à faire)**
 
-_Documentation partagée avec amour et horreur par Toc :squid: https://tentacules.net/?motscles=JdrVirtuel_
+_Documentation partagée avec amour et horreur par Toc :squid: [https://tentacules.net](https://tentacules.net/?motscles=JdrVirtuel)_
