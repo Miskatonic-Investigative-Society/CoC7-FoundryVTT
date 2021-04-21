@@ -48,3 +48,8 @@ Sur XXX, XXX pouvant être carac, compétence,...
 | `Alt` + `clic-droit` XXX | Débute/ Ajoute le jet à un jet **combiné** après paramétrage du jet |
 | `Ctrl+Shift+Alt` ou `Shift+Alt` + `clic-droit` XXX | Débute/ Ajoute le jet à un jet **combiné** (difficulté ordinaire pas de bonus/malus) |
 | `Ctrl+Alt` + `clic-droit` XXX | Débute/ Ajoute le jet à un jet **combiné** après paramétrage du jet (dont seuil et difficulté) |
+
+## Commandes dans le Chat
+
+| Commande | Action |
+| -| -|
