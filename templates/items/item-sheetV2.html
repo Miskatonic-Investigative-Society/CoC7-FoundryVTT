@@ -1,0 +1,30 @@
+    <form class="{{cssClass}} flexcol" autocomplete="off">
+        <div class="container expanded nonav">
+            <header class="sheet-header">
+                <div class="sheet-portrait">
+                    <img class="photo" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+                </div>
+                <div class="infos">
+                    <div class="row flexrow">
+                        <input class="name" name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
+                    </div>
+                    <div class="row flexrow">
+                        <label>{{localize 'CoC7.ItemQuantity'}}</label>
+                        <input type="text" name="data.quantity" value="{{data.quantity}}" data-dtype="Number"/>
+                    </div>
+                    <div class="row flexrow">
+                        <label>{{localize 'CoC7.ItemWeight'}}</label>
+                        <input type="text" name="data.weight" value="{{data.weight}}" data-dtype="Number"/>
+                    </div>
+                </div>
+                <div class="flex1"></div>
+            </header>
+
+            <section class="sheet-body">
+
+                <div class="tab">
+                    {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+                </div>
+            </section>
+        </div>
+    </form>

@@ -1037,11 +1037,17 @@ export class CoCActor extends Actor {
 	}
 
 	get hp(){
+		if( ['vehicle'].includes(this.data.type)){
+			if( null === this.data.data.attribs.build.current || undefined === this.data.data.attribs.build.current || '' === this.data.data.attribs.build.current ) return this.build;
+			if( this.data.data.attribs.build.current > this.data.data.attribs.build.value) return this.build;
+			const hp = parseInt( this.data.data.attribs.build.current);
+			return isNaN(hp)?null:hp;
+		}
 		return parseInt(this.data.data.attribs.hp.value);
 	}
 
 	get hpMax(){
-		if( ['vehicle'].includes(this.data.type)) return this.hp;
+		if( ['vehicle'].includes(this.data.type)) return this.build;
 		if( this.data.data.attribs.hp.auto){
 			if(this.data.data.characteristics.siz.value != null &&  this.data.data.characteristics.con.value !=null){
 				const maxHP = Math.floor( (this.data.data.characteristics.siz.value + this.data.data.characteristics.con.value)/10);
@@ -1055,6 +1061,10 @@ export class CoCActor extends Actor {
 
 	async setHp( value){
 		if( value < 0) value = 0;
+		if( ['vehicle'].includes(this.data.type)){
+			if( value > this.build) value = parseInt( this.build);
+			return await this.update( { 'data.attribs.build.current': value});
+		}
 		if( value > this.hpMax) value = parseInt( this.hpMax);
 		return await this.update( { 'data.attribs.hp.value': value});
 	}
@@ -1575,7 +1585,10 @@ export class CoCActor extends Actor {
 	}
 
 	get build() {
-		if( ['vehicle'].includes(this.data.type)) return this.data.data.attribs.build.value;
+		if( ['vehicle'].includes(this.data.type)){
+			const build = parseInt(this.data.data.attribs.build.value);
+			return isNaN( build)?null:build;
+		} 
 		if( !this.data.data.attribs) return null;
 		if( !this.data.data.attribs.build) return null;
 		if( this.data.data.attribs.build.value == 'auto') this.data.data.attribs.build.auto = true;

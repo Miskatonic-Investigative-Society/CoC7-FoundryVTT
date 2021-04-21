@@ -556,9 +556,8 @@ export class CoC7Item extends Item {
 		const data = duplicate(this.data.data);
 		//Fix : data can have description directly in field, not under value.
 		if( data.description && !data.description.value){
-			const value = data.description;
 			data.description = {
-				value: value.value
+				value: data.description
 			};
 		}
 		const labels = [];
