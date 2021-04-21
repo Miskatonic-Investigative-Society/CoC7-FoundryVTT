@@ -3,6 +3,8 @@
 Toutes ces commandes peuvent être glissées/déposées dans un Article (ou toute zone éditable) en mode modification _sauf les modificateurs de seuil_ !\
 Ce qui peut donner: `@coc7.check[type:attribute,name:san,difficulty:1,modifier:-2]`
 
+![04](https://tentacules.net/toc/toc_/virtuel/foundryvtt-cocv7vetrini-docgithub-004.jpg)
+
 Voici le fonctionnement: `@coc7.TYPE_OF_REQUEST[OPTIONS]{TEXT_TO_DISPLAY}`
 * TYPE_OF_REQUEST :
   * 'sanloss': test de SAN, si échoué, propose de réduire la SAN.
