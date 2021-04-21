@@ -44,7 +44,7 @@ Là ça devient ouf:
 * talent: un talent (Pulp)
 * status: un état... de folie
 
-### Icône Personnages
+### Icône Tables
 
 ## Outils du gardien (menus spécifiques au système)
 
