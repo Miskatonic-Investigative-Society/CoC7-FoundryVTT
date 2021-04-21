@@ -2,7 +2,7 @@
 
 ## A la main
 
-1. Vous créez un nouvel acteur.
+1. Vous créez un nouvel Personnage.
 1. Vous passez en mode Création.
 1. Vous déverrouillez la fiche de personnage (clic sur le petit cadenas).
 1. Vous le nommez et remplissez occupation, sexe, âge,...
@@ -19,15 +19,15 @@ Pour plus de facilité, vous pouvez vous créer un Compendium listant toutes les
 **Copie**
 
 1. Vous vous créez/avez créé un personnage type, avec compétences.
-1. Vous le copiez (clic droit sur le personnage dans la liste des acteurs, copier).
+1. Vous le copiez (clic droit sur le personnage dans la liste des Personnages, copier).
 1. Et voilà !
 
 **Import**
 
 1. Vous vous créez/avez créé un personnage type, avec compétences.
-1. Vous l'exportez (clic droit sur le personnage dans la liste des acteurs, exporter (le fichier arrive sur votre ordinateur, format json)).
+1. Vous l'exportez (clic droit sur le personnage dans la liste des Personnages, exporter (le fichier arrive sur votre ordinateur, format json)).
 1. Vous vous rendez dans votre partie, vous créez juste le nouveau personnage sans rien y mettre (juste le nom).
-1. Vous importez le fichier précédemment exporté (clic droit sur le personnage dans la liste des acteurs, importer).
+1. Vous importez le fichier précédemment exporté (clic droit sur le personnage dans la liste des Personnages, importer).
 1. Et voilà !
 
 Vous pouvez ensuite le modifier à façon en passant en mode Création.
