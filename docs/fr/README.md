@@ -11,3 +11,5 @@ Le MUST have !
 **~~[Phase de progression](./pages/chardev.md)~~ (à faire)** | **~~[Personnages](./pages/actors.md)~~ (à faire)**
 
 _Documentation partagée avec amour et horreur par Toc :squid: [https://tentacules.net](https://tentacules.net/?motscles=JdrVirtuel)_
+
+![03](https://tentacules.net/toc/toc_/virtuel/foundryvtt-cocv7vetrini-docgithub-003.jpg)
