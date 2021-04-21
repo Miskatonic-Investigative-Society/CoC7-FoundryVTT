@@ -11,45 +11,45 @@ Et en plus:
 
 Sur XXX, XXX pouvant être carac, compétence,...
 
-| Commande | Action |
-| -| -|
-| **Gardien** | |
-| `clic` XXX | Lance un jet de XXX après paramétrage du jet |
-| `Shift` + `clic` XXX | Lance un jet de XXX (difficulté ordinaire pas de bonus/malus) |
-| `Ctrl` + `clic` XXX | Demande un jet de XXX après paramétrage du jet (dont seuil et difficulté) |
-| `Ctrl+Shift` + `clic` XXX | Demande un jet de XXX |
-| **Investigateur** | |
-| `clic` XXX | Lance un jet de XXX après paramétrage du jet |
-| `Ctrl+Shift` ou `Shift` + `clic` XXX | Lance un jet de XXX (difficulté ordinaire pas de bonus/malus) |
-| `Ctrl` + `clic` XXX | Lance un jet de XXX après paramétrage du jet |
+Commande | Action
+-|-
+**Gardien** |
+`clic` XXX | Lance un jet de XXX après paramétrage du jet
+`Shift` + `clic` XXX | Lance un jet de XXX (difficulté ordinaire pas de bonus/malus)
+`Ctrl` + `clic` XXX | Demande un jet de XXX après paramétrage du jet (dont seuil et difficulté)
+`Ctrl+Shift` + `clic` XXX | Demande un jet de XXX
+**Investigateur** |
+`clic` XXX | Lance un jet de XXX après paramétrage du jet
+`Ctrl+Shift` ou `Shift` + `clic` XXX | Lance un jet de XXX (difficulté ordinaire pas de bonus/malus)
+`Ctrl` + `clic` XXX | Lance un jet de XXX après paramétrage du jet
 
 ## Santé Mentale
 
-| Commande | Action |
-| -| -|
-| **Gardien** | |
-| `clic` XXX | Lance un jet de XXX après paramétrage du jet |
-| `Shift` + `clic` XXX | Lance un jet de XXX (difficulté ordinaire pas de bonus/malus) |
-| `Ctrl` + `clic` XXX | Demande un jet de XXX après paramétrage du jet (dont seuil et difficulté) |
-| `Ctrl+Shift` + `clic` XXX | Demande un jet de XXX |
-| `Ctr+Shift+Alt` + `clic` SAN | Demande un jet de SAN en définissant les pertes de SAN |
-| **Investigateur** | |
-| `clic` XXX | Lance un jet de XXX après paramétrage du jet |
-| `Ctrl+Shift` ou `Shift` + `clic` XXX | Lance un jet de XXX (difficulté ordinaire pas de bonus/malus) |
-| `Ctrl` + `clic` XXX | Lance un jet de XXX après paramétrage du jet (dont seuil et difficulté) |
+Commande | Action
+-|-
+**Gardien** |
+`clic` XXX | Lance un jet de XXX après paramétrage du jet
+`Shift` + `clic` XXX | Lance un jet de XXX (difficulté ordinaire pas de bonus/malus)
+`Ctrl` + `clic` XXX | Demande un jet de XXX après paramétrage du jet (dont seuil et difficulté)
+`Ctrl+Shift` + `clic` XXX | Demande un jet de XXX
+`Ctr+Shift+Alt` + `clic` SAN | Demande un jet de SAN en définissant les pertes de SAN
+**Investigateur** |
+`clic` XXX | Lance un jet de XXX après paramétrage du jet
+`Ctrl+Shift` ou `Shift` + `clic` XXX | Lance un jet de XXX (difficulté ordinaire pas de bonus/malus)
+`Ctrl` + `clic` XXX | Lance un jet de XXX après paramétrage du jet (dont seuil et difficulté)
 
 ## Jets Combinés / Opposés
 
-| Commande | Action |
-| -| -|
-| `clic-droit` XXX | Débute/ Ajoute le jet à un jet **opposé* après paramétrage du jet |
-| `Ctrl+Shift` ou `Shift` + `clic-droit` XXX | Débute/ Ajoute le jet à un jet **opposé** (difficulté ordinaire pas de bonus/malus) |
-| `Ctrl` + `clic-droit` XXX | Débute/ Ajoute le jet à un jet **opposé** après paramétrage du jet (dont seuil et difficulté) |
-| `Alt` + `clic-droit` XXX | Débute/ Ajoute le jet à un jet **combiné** après paramétrage du jet |
-| `Ctrl+Shift+Alt` ou `Shift+Alt` + `clic-droit` XXX | Débute/ Ajoute le jet à un jet **combiné** (difficulté ordinaire pas de bonus/malus) |
-| `Ctrl+Alt` + `clic-droit` XXX | Débute/ Ajoute le jet à un jet **combiné** après paramétrage du jet (dont seuil et difficulté) |
+Commande | Action
+-|-
+`clic-droit` XXX | Débute/ Ajoute le jet à un jet **opposé* après paramétrage du jet
+`Ctrl+Shift` ou `Shift` + `clic-droit` XXX | Débute/ Ajoute le jet à un jet **opposé** (difficulté ordinaire pas de bonus/malus)
+`Ctrl` + `clic-droit` XXX | Débute/ Ajoute le jet à un jet **opposé** après paramétrage du jet (dont seuil et difficulté)
+`Alt` + `clic-droit` XXX | Débute/ Ajoute le jet à un jet **combiné** après paramétrage du jet
+`Ctrl+Shift+Alt` ou `Shift+Alt` + `clic-droit` XXX | Débute/ Ajoute le jet à un jet **combiné** (difficulté ordinaire pas de bonus/malus)
+`Ctrl+Alt` + `clic-droit` XXX | Débute/ Ajoute le jet à un jet **combiné** après paramétrage du jet (dont seuil et difficulté)
 
 ## Commandes dans le Chat
 
-| Commande | Action |
-| -| -|
+Commande | Action
+-|-
