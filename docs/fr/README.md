@@ -1,6 +1,6 @@
 ## Documentation du Système :squid:
 
-Des éons qu'_ils_ dorment mais [Vétérini](https://github.com/HavlockV) les a réveillés ! Avec ce système ultime, à vous l'Appel de Cthulhu v7 en version totale: création, progression, SAN, combat,... 
+Des éons qu'_ils_ dorment mais [Vétérini](https://github.com/HavlockV) les a réveillés ! Avec ce système ultime, à vous l'Appel de Cthulhu v7 en version totale: création, progression, SAN, combat, poursuites, ... 
 Le MUST have !
 
 [Guide de l'utilisateur](./pages/users-guide.md) (en cours) | ~~[Phase de progression](./pages/chardev.md)~~ (à faire)
