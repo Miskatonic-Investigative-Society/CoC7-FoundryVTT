@@ -3,7 +3,7 @@
 Des éons qu'_ils_ dorment mais [Vétérini](https://github.com/HavlockV) les a réveillés ! Avec ce système ultime, à vous l'Appel de Cthulhu v7 en version totale: création, progression, SAN, combat, poursuites, ... 
 Le MUST have !
 
-[Guide de l'utilisateur](./pages/users-guide.md) (en cours) | ~~[Santé Mentale](./pages/sanity.md)~~ (à faire)
+[Guide de l'utilisateur/trice](./pages/users-guide.md) (en cours) | ~~[Santé Mentale](./pages/sanity.md)~~ (à faire)
 -|-
 **[Table des Commandes](./pages/commands_cheat_sheet.md) (en cours)** | **~~[Combat](./pages/combat.md)~~ (à faire)**
 **[Liens (pour les jets)](./pages/links.md) (en cours)** | **~~[Poursuites](./pages/pursuit.md)~~ (à faire)**
