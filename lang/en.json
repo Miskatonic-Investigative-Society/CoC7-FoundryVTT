@@ -385,6 +385,7 @@
 
 "CoC7.InvoluntaryAction": "Involuntary action",
 "CoC7.InvoluntaryActionPerfomed": "Involuntary action performed",
+"CoC7.SanDataSelectionWindow": "Select SAN losses",
 "CoC7.SanityCheck": "Sanity check",
 "CoC7.IntCheck": "Intelligence check",
 "CoC7.NoSanLoss": "No SAN loss",
