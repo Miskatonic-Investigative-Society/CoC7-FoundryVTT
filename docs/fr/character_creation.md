@@ -2,7 +2,7 @@
 
 ## A la main
 
-1. Vous créez un nouvel Personnage.
+1. Vous créez un nouveau Personnage.
 1. Vous passez en mode Création.
 1. Vous déverrouillez la fiche de personnage (clic sur le petit cadenas).
 1. Vous le nommez et remplissez occupation, sexe, âge,...
