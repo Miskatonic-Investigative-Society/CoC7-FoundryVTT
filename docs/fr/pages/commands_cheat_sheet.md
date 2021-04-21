@@ -53,3 +53,4 @@ Commande | Action
 
 Commande | Action
 -|-
+:recycle: | :recycle:
