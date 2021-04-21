@@ -9,4 +9,4 @@ Le MUST have !
 [Liens (pour les jets)](./pages/links.md) (en cours) | ~~[Combat](./pages/combat.md)~~ (à faire)
 [Création de personnage](./pages/character_creation.md) (à faire) | ~~[Objets](./pages/items.md)~~ (à faire)
 
-_Documentation partagée avec amour et horreur par Toc :squid: https://tentacules.net_
+_Documentation partagée avec amour et horreur par Toc :squid: https://tentacules.net/?motscles=JdrVirtuel_
