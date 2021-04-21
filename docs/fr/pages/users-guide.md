@@ -46,6 +46,8 @@ Là ça devient ouf:
 
 ### Icône Tables
 
+:recycle:
+
 ## Outils du gardien (menus spécifiques au système)
 
 Ils sont dans votre barre d'outils:
@@ -67,3 +69,4 @@ De haut en bas:
 
 ## Les compendiums
 
+:recycle:
