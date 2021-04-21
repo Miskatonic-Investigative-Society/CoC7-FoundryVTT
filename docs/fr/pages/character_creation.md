@@ -12,7 +12,11 @@ Pour plus de facilité, vous pouvez vous créer un Compendium listant toutes les
 
 ## Via une occupation
 
+:recycle:
+
 ## Via un setup
+
+:recycle:
 
 ## Via import / copie
 
