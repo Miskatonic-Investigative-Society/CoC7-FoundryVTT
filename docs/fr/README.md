@@ -11,6 +11,6 @@ Le MUST have !
 * ~~[Santé Mentale](./sanity.md)~~ (à faire)
 * ~~[Combat](./combat.md)~~ (à faire)
 * ~~[Objets](./items.md)~~ (à faire)
-* [Liens](./links.md) (en cours)
+* [Liens (pour les jets)](./links.md) (en cours)
 
 _Documentation partagée avec amour et horreur par Toc :squid: https://tentacules.net_
