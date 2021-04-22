@@ -50,6 +50,90 @@
 			"name": "sanity-tables-examples",
 			"path": "./packs/sanity-tables-examples.db",
 			"system": "CoC7"
+		},{
+			"label": "🇫🇷-Documentation",
+			"entity": "JournalEntry",
+			"name": "fr-documentation",
+			"path": "./packs/fr-documentation.db",
+			"system": "CoC7"
+		},{
+			"label": "🇫🇷-Requêtes de tests",
+			"entity": "JournalEntry",
+			"name": "requetes-de-tests",
+			"path": "./packs/fr-requetes-de-tests.db",
+			"system": "CoC7"
+		},{
+			"label": "🇫🇷-SAN: Santé Mentale",
+			"entity": "RollTable",
+			"name": "santé-mentale",
+			"path": "./packs/fr-sante-mentale.db",
+			"system": "CoC7"
+		},{
+			"label": "🇫🇷-SAN: Manies et Phobies",
+			"entity": "Item",
+			"name": "manies-et-phobies",
+			"path": "./packs/fr-manies-et-phobies.db",
+			"system": "CoC7"
+		},{
+			"label": "🇫🇷-PERSO: Personnages",
+			"entity": "Actor",
+			"name": "./personnages",
+			"path": "./packs/fr-personnages.db",
+			"system": "CoC7"
+		},{
+			"label": "🇫🇷-PERSO: Compétences",
+			"entity": "Item",
+			"name": "competences",
+			"path": "./packs/fr-competences.db",
+			"system": "CoC7"
+		},{
+			"label": "🇫🇷-PERSO: Occupations",
+			"entity": "Item",
+			"name": "occupations",
+			"path": "./packs/fr-occupations.db",
+			"system": "CoC7"
+		},{
+			"label": "🇫🇷-PERSO: Pulp-Archétypes",
+			"entity": "Item",
+			"name": "archetype-pulp",
+			"path": "./packs/fr-archetype-pulp.db",
+			"system": "CoC7"
+		},{
+			"label": "🇫🇷-PERSO: Pulp-Talents",
+			"entity": "Item",
+			"name": "./pulp-talents.db",
+			"path": "./packs/fr-pulp-talents.db",
+			"system": "CoC7"
+		},{
+			"label": "🇫🇷-ARMES: Blanches et de Trait",
+			"entity": "Item",
+			"name": "armes-blanches",
+			"path": "./packs/fr-armes-blanches.db",
+			"system": "CoC7"
+		},{
+			"label": "🇫🇷-ARMES: Lourdes et explosifs",
+			"entity": "Item",
+			"name": "armes-lourdes",
+			"path": "./packs/fr-armes-lourdes.db",
+			"system": "CoC7"
+		},{
+			"label": "🇫🇷-ARMES: de poing",
+			"entity": "Item",
+			"name": "armes-poing",
+			"path": "./packs/fr-armes-poing.db",
+			"system": "CoC7"
+		},{
+			"label": "🇫🇷-ARMES: Fusils",
+			"entity": "Item",
+			"name": "armes-fusils",
+			"path": "./packs/fr-armes-fusils.db",
+			"system": "CoC7"
+		},{
+			"label": "🇫🇷-ARMES: Mitraillettes et Mitrailleuses",
+			"entity": "Item",
+			"name": "armes-mitraillettes",
+			"path": "./packs/fr-armes-mitraillettes.db",
+			"system": "CoC7"
 		}
 	],
 	"languages": [
