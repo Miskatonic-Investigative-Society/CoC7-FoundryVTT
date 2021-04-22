@@ -101,27 +101,6 @@ De haut en bas:
 \
 \
 \
-\
-\
-\
-\
-\
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # Tableau des Commandes
 
@@ -179,3 +158,35 @@ Commande | Action
 Commande | Action
 -|-
 :recycle: | :recycle:
+
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+
