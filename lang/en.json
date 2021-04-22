@@ -570,6 +570,7 @@
 "CoC7.French": "French",
 "CoC7.SelectSourceLanguage": "Select the source text language",
 
+"CoC7.initialvalue": "Daily initial San value",
 
 "SETTINGS.DefaultDifficulty": "Default check difficulty",
 "SETTINGS.DefaultDifficultyHint": "You can choose the default difficulty for checks. Unknown will roll checks without the player knowing the check difficulty.",
