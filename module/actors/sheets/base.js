@@ -335,9 +335,6 @@ export class CoC7ActorSheet extends ActorSheet {
 			data.data.attribs.db.auto = false;
 			data.data.attribs.build.auto = false;
 		}
-
-		if( data.data.attribs.san.dailyvalue > 0) data.data.attribs.san.dailyMadnessvalue = Math.floor(data.data.attribs.san.dailyvalue*0.8) ;
-
 		
 		data.data.attribs.mov.value = this.actor.mov; //return computed values or fixed values if not auto.
 		data.data.attribs.db.value = this.actor.db;
