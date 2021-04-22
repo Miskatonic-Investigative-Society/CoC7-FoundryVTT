@@ -116,7 +116,10 @@ De haut en bas:
 
 ## Les compendiums
 
-:recycle:
+Pour les utiliser au mieux, 2 choses:
+
+* Installer le module Compendium Folders (qui trie automatiquement les compendium)
+* Importer les différents compendium (clic-droit Importer...)
 
 \
 \
