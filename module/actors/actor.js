@@ -2229,6 +2229,7 @@ export class CoCActor extends Actor {
 
 	async resetCounter( counter){
 		await this.update( {[counter]: 0});
+		await this.update( { 'data.attribs.san.initialvalue': this.data.data.attribs.san.value});
 	}
 
 	get fightingSkills(){

@@ -336,6 +336,8 @@ export class CoC7ActorSheet extends ActorSheet {
 			data.data.attribs.build.auto = false;
 		}
 
+		if( data.data.attribs.san.dailyvalue > 0) data.data.attribs.san.dailyMadnessvalue = Math.floor(data.data.attribs.san.dailyvalue*0.8) ;
+
 		
 		data.data.attribs.mov.value = this.actor.mov; //return computed values or fixed values if not auto.
 		data.data.attribs.db.value = this.actor.db;
@@ -345,7 +347,9 @@ export class CoC7ActorSheet extends ActorSheet {
 		if( data.data.attribs.hp.value < 0) data.data.attribs.hp.value = null;
 		if( data.data.attribs.mp.value < 0) data.data.attribs.mp.value = null;
 		if( data.data.attribs.san.value < 0) data.data.attribs.san.value = null;
-		data.data.attribs.san.fiftyOfCurrent = data.data.attribs.san.value >= 0 ? ' / '+Math.floor(data.data.attribs.san.value/5):'';
+		if( data.data.attribs.san.value >0 && !data.data.attribs.san.initialvalue) data.data.attribs.san.initialvalue = data.data.attribs.san.value;
+		if( data.data.attribs.san.value >0 && !data.data.attribs.san.dailyLoss) data.data.attribs.san.dailyLoss = 0;
+		data.data.attribs.san.fiftyOfCurrent = data.data.attribs.san.initialvalue >= 0 ? ' / '+Math.floor(data.data.attribs.san.initialvalue/5):'';
 		if( data.data.attribs.hp.auto ){
 			//TODO if any is null set max back to null.
 			if ( data.data.characteristics.siz.value != null && data.data.characteristics.con.value != null)
@@ -644,6 +648,8 @@ export class CoC7ActorSheet extends ActorSheet {
 	}
 
 	async _onResetCounter( event){
+		//data.data.attribs.san.initialvalue = data.data.attribs.san.value;
+		//data.data.attribs.san.fiftyOfCurrent = Math.floor(data.data.attribs.san.value/5) ;
 		event.preventDefault();
 		const counter = event.currentTarget.dataset.counter;
 		if( counter) this.actor.resetCounter( counter);
