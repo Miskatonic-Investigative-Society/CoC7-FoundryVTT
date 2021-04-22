@@ -45,7 +45,7 @@ _Documentation partagée avec amour et horreur par Toc :squid: [https://tentacul
 \
 \
 
-# Guide de l'Utilisateur/trice
+# Guide de l'Utilisateur-trice
 
 Vous avez installé Foundry VTT (la version stable, les versions en test sont... en test :)
 
