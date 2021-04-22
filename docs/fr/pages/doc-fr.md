@@ -7,8 +7,8 @@ Le MUST have !
 -|-
 **[Tableau des Commandes](#tableau-des-commandes) (en cours)** | **~~[Combat](#combat)~~ (à faire)**
 **[Liens (pour les jets)](#liens-et-jets) (en cours)** | **~~[Poursuites](#poursuites)~~ (à faire)**
-**[Création de personnage](creation-de-personnage) (à faire)** | **~~[Objets](#objets)~~ (à faire)**
-**~~[Phase de progression](phase-de-progression)~~ (à faire)** | **~~[Personnages](#personnages)~~ (à faire)**
+**[Création de personnage](#creation-de-personnage) (à faire)** | **~~[Objets](#objets)~~ (à faire)**
+**~~[Phase de progression](#phase-de-progression)~~ (à faire)** | **~~[Personnages](#personnages)~~ (à faire)**
 
 _Documentation partagée avec amour et horreur par Toc :squid: [https://tentacules.net](https://tentacules.net/?motscles=JdrVirtuel)_
 
