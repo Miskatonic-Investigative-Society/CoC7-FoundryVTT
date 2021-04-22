@@ -204,7 +204,8 @@ Commande | Action
 
 Commande | Action
 -|-
-:recycle: | :recycle:
+ /cc xx | lance un D100 contre une difficulté de xx
+/cbr xx, yy | lance un D100 contre une difficulté de xx et de yy
 
 \
 \
