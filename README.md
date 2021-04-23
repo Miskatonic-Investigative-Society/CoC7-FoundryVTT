@@ -41,6 +41,7 @@ version 0.5.7 :
 * LOCALIZATION WIP (对不起, entschuldigung,lo siento,désolé,すみません,przepraszam,desculpe,förlåt  ).
 * OPPOSED/COMBINED CHECK WIP.
 * DE : nilsriesenberg
+* FR + Doc : @vonv
 
 version 0.5.6 :
 
