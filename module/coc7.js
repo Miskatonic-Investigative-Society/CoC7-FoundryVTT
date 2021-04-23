@@ -30,6 +30,7 @@ import { OpposedCheckCard } from './chat/cards/opposed-roll.js';
 import { CombinedCheckCard } from './chat/cards/combined-roll.js';
 import { DamageCard } from './chat/cards/damage.js';
 import { CoC7VehicleSheet } from './actors/sheets/vehicle.js';
+import { CoC7Canvas } from './apps/canvas.js';
 
 Hooks.once('init', async function() {
 
@@ -697,6 +698,8 @@ Hooks.on('renderItemSheet', CoC7CharacterSheetV2.renderSheet); //TODO : change f
 
 // Hooks.on('dropCanvasData', CoC7Parser.onDropSomething);
 Hooks.on('renderSceneControls', CoC7Menu.renderMenu);
+
+Hooks.on('dropCanvasData', CoC7Canvas.onDropSomething);
 
 
 tinyMCE.PluginManager.add('CoC7_Editor_OnDrop', function (editor) {

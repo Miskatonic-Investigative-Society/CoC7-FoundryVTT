@@ -1,14 +1,17 @@
-import { CoC7LinkCreationDialog } from './link-creation-dialog.js';
+import { chatHelper } from '../chat/helper.js';
 
 export class CoC7Link{
-	constructor( data = {}){
-		this._linkData = {};
-		this.data = data;
+	constructor(){
+		this._linkData = {
+			type: CoC7Link.LINK_TYPE.CHECK,
+			check: CoC7Link.CHECK_TYPE.SKILL
+		};
 	}
 
-
-	static async create( option){
-		return await CoC7LinkCreationDialog.create( option);
+	static async fromData( linkData){
+		const link = new CoC7Link();
+		await link.setData( linkData);
+		return link;
 	}
 
 	static TYPE_KEYWORD = ['check', 'sanloss', 'item'];
@@ -28,6 +31,13 @@ export class CoC7Link{
 		SKILL: 3
 	}
 
+	get actor(){
+		if( this.actorKey){
+			return chatHelper.getActorFromKey( this.actorKey);//REFACTORING (2)
+		}
+		return null;
+	}
+
 	get data(){
 		const data = duplicate( this._linkData);
 		data.isCheck = this.is.check;
@@ -36,54 +46,127 @@ export class CoC7Link{
 		return data;
 	}
 
-	set data(x){
-		// this._linkData = x;
-		this._linkData.forceModifiers = false;
-		if( x.check ) this.type = x.check; else this.type = CoC7Link.LINK_TYPE.CHECK; //check, sanloss, item
-		if( x.type) this.check = x.type;  //attrib, charac, skill
-		else if( this.type) this.check = CoC7Link.CHECK_TYPE.CHARACTERISTIC;
-		
-		if( x.name){
-			this._linkData.itemName = null;
-			this._linkData.skillName = null;
-			this._linkData.characteristicKey = null;
-			this._linkData.attributeKey = null;
-			if( this.is.check){
-				switch (this.check) {
-				case CoC7Link.CHECK_TYPE.SKILL:
-					this._linkData.skillName = x.name;						
-					break;
-				case CoC7Link.CHECK_TYPE.CHARACTERISTIC:
-					this._linkData.characteristicKey = x.name;						
-					break;
-				case CoC7Link.CHECK_TYPE.ATTRIBUTE:
-					this._linkData.attributeKey = x.name;						
-					break;					
-				default:
-					break;
-				}
-			} else if( this.is.item) this._linkData.itemName = x.name;
+	async fetchItem(){
+		this._linkData.validItem = false;
+		if( !this._linkData.fromCompendium && !this._linkData.fromDirectory){
+			this._item = undefined;
+			return false;
 		}
 
+		if (this._linkData.fromCompendium) {
+			const pack = game.packs.get(this._linkData.pack);
+			if( !pack) return false;
+			if (pack.metadata.entity !== 'Item') return undefined;
+			this._item = await pack.getEntity(this._linkData.id);
+		}
+
+		if( this._linkData.fromDirectory){
+			this._item = game.items.get(this._linkData.id);
+		}
+
+		this._linkData.skillName = null;
+		this._linkData.itemName = null;
+
+		if( this._item){
+			if( 'weapon' == this._item.data.type ) {
+				this.type = CoC7Link.LINK_TYPE.ITEM;
+				this._linkData.itemName = this._item.data.name;
+				this._linkData.validItem = true;
+				return true;
+			}
+	
+			if( 'skill' == this._item.data.type){
+				this.type = CoC7Link.LINK_TYPE.CHECK;
+				this.check = CoC7Link.CHECK_TYPE.SKILL;
+				this._linkData.skillName = this._item.data.name;
+				this._linkData.validItem = true;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	async setData(x){
+		// this._linkData = x;
+		// this._linkData.forceModifiers = false;
+		this._linkData.fromCompendium = false;
+		this._linkData.fromDirectory = false;
+		this.hasPlayerOwner = false;
+
+		if( x.hasPlayerOwner){
+			this.hasPlayerOwner = true;
+			this.actorKey = x.actorKey;
+		}
+
+		//Retrieve item
+		if( x.pack && x.id){
+			this._linkData.fromCompendium = true;
+			this._linkData.pack = x.pack;
+			this._linkData.id = x.id;
+		}
+
+		if( x.id && !x.pack){
+			this._linkData.fromDirectory = true;
+			this._linkData.id = x.id;
+		}
+
+		const linkSet = await this.fetchItem();
+
+		if( !linkSet) {
+		//Link definition
+			if( x.check ) this.type = x.check; else this.type = CoC7Link.LINK_TYPE.CHECK; //check, sanloss, item
+			if( x.type) this.check = x.type;  //attrib, charac, skill
+			else if( this.type) this.check = CoC7Link.CHECK_TYPE.CHARACTERISTIC;
+		
+			//Link name
+			if( x.name){
+				this._linkData.itemName = null;
+				this._linkData.skillName = null;
+				this._linkData.characteristicKey = null;
+				this._linkData.attributeKey = null;
+				if( this.is.check){
+					switch (this.check) {
+					case CoC7Link.CHECK_TYPE.SKILL:
+						this._linkData.skillName = x.name;						
+						break;
+					case CoC7Link.CHECK_TYPE.CHARACTERISTIC:
+						this._linkData.characteristicKey = x.name;						
+						break;
+					case CoC7Link.CHECK_TYPE.ATTRIBUTE:
+						this._linkData.attributeKey = x.name;						
+						break;					
+					default:
+						break;
+					}
+				} else if( this.is.item) this._linkData.itemName = x.name;
+			}
+		}
+
+		//Modifiers
 		if( x.difficulty || !isNaN( Number(x.difficulty))) this._linkData.difficulty =  Number(x.difficulty);
 		if( x.modifier || !isNaN( Number(x.modifier))) this._linkData.modifier =  Number(x.modifier);
+		if( undefined != x.difficulty || undefined != x.modifier) this._linkData.forceModifiers = true;
+		if( x.forceModifiers) this._linkData.forceModifiers = true;
+
+		//Force displayed name
 		if( 'true' == x.displayName || true == x.displayName) this._linkData.displayName = true;
 		if( x.label){
 			this._linkData.hasLabel = true;
 			this._linkData.label = x.label;
 		}
+
+		//Icon
 		if( x.icon){
 			this._linkData.hasIcon = true;
 			this._linkData.icon = x.icon;
 		}
-		if( undefined != x.difficulty || undefined != x.modifier) this._linkData.forceModifiers = true;
+
+		//Blind
 		if( 'true' == x.blind || true == x.blind) this._linkData.blind = true;
+
+		//San Data
 		this._linkData.sanMin = x.sanMin;
 		this._linkData.sanMax = x.sanMax;
-		if( x.icon){
-			this._linkData.hasIcon = true;
-			this._linkData.icon = x.icon;
-		}
 	}
 
 	get type(){
@@ -91,7 +174,7 @@ export class CoC7Link{
 	}
 
 	get checkType(){
-		switch (this.type) {
+		switch (this.check) {
 		case CoC7Link.CHECK_TYPE.CHARACTERISTIC:
 			return 'characteristic';
 		case CoC7Link.CHECK_TYPE.ATTRIBUTE:
@@ -155,9 +238,25 @@ export class CoC7Link{
 		return undefined;
 	}
 
-	// set name(x){
-	// 	this._linkData.name = x;
-	// }
+	set name(x){
+		if( this.is.check){
+			switch (this.check) {
+			case CoC7Link.CHECK_TYPE.CHARACTERISTIC:
+				this._linkData.characteristicKey = x;
+				break;
+			case CoC7Link.CHECK_TYPE.ATTRIBUTE:
+				this._linkData.attributeKey = x;
+				break;
+			case CoC7Link.CHECK_TYPE.SKILL:
+				this._linkData.skillName = x;
+				break;
+						
+			default:
+				break;
+			}
+
+		} else if( this.is.item) this._linkData.itemName = x;
+	}
 
 	get is(){
 		const link = this;
@@ -171,8 +270,14 @@ export class CoC7Link{
 		};
 	}
 
-	update( updateData){
+	async update( updateData){
 		this._linkData = mergeObject( this._linkData, updateData);
+		if( this._linkData.fromDirectory || this._linkData.fromCompendium) await this.fetchItem();
+	}
+
+	async updateFromLink(linkData){
+		await this.setData( linkData);
+		if( this._linkData.fromDirectory || this._linkData.fromCompendium) await this.fetchItem();
 	}
 
 	get link(){
@@ -187,8 +292,8 @@ export class CoC7Link{
 			if( this._linkData.icon) options += `,icon:${this._linkData.icon}`;
 
 			//TODO: Check if needed
-			if( this._linkData.pack) options += `,pack:${data.pack}`;
-			if( this._linkData.id) options += `,id:${this._linkData.id}`;
+			if( this._linkData.fromCompendium) options += `,pack:${data.pack}`;
+			if( this._linkData.fromCompendium || this._linkData.fromDirectory) options += `,id:${this._linkData.id}`;
 
 			let link = `@coc7.check[${options}]`;
 			if( this._linkData.hasLabel) link += `{${this._linkData.label}}`;
@@ -214,16 +319,16 @@ export class CoC7Link{
 		//Do we need that ???
 		case CoC7Link.LINK_TYPE.ITEM:{
 			// @coc7.item[type:optional,name:Shotgun,difficulty:+,modifier:-1]{Hard Shitgun check(-1)}
-			if( !data.type || !data.name) return null;
-			let options = `${data.blind?'blind,':''}type:${data.type},name:${data.name}`;
-			if( data.icon) options += `,icon:${data.icon}`;
+			if( !this.type || !this.name) return null;
+			let options = `name:${this.name}`;
+			if( this._linkData.icon) options += `,icon:${this._linkData.icon}`;
 
 			//TODO: Check if needed
-			if( data.pack) options += `,pack:${data.pack}`;
-			if( data.id) options += `,id:${data.id}`;
+			if( this._linkData.fromCompendium) options += `,pack:${data.pack}`;
+			if( this._linkData.fromCompendium || this._linkData.fromDirectory) options += `,id:${this._linkData.id}`;
 
 			let link = `@coc7.item[${options}]`;
-			if( data.displayName) link += `{${data.displayName}}`;
+			if( this._linkData.hasLabel) link += `{${this._linkData.label}}`;
 			return link;
 		}
 
