@@ -4,6 +4,7 @@ Toutes ces commandes peuvent être glissées/déposées dans un Article (ou tout
 Ce qui peut donner: `@coc7.check[type:attribute,name:san,difficulty:1,modifier:-2]`
 
 Voici le fonctionnement: `@coc7.TYPE_OF_REQUEST[OPTIONS]{TEXT_TO_DISPLAY}`
+
 * TYPE_OF_REQUEST :
   * 'sanloss': test de SAN, si échoué, propose de réduire la SAN.
   * 'check': test défini en fonction des options.
