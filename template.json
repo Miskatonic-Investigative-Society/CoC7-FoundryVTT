@@ -176,7 +176,8 @@
                 "residence": "",
                 "birthplace": "",
                 "archetype": "",
-                "organization": ""
+                "organization": "",
+                "playername":""
             },
             "flags": {
                 "locked": true,
