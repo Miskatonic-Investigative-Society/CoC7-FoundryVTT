@@ -422,7 +422,7 @@ export class CoC7Check {
 
 	get skill() { 
 		if( !this._skill && this.skillId){
-			this._skill = this.actor.getOwnedItem( this.skillId);
+			this._skill = this.actor?.getOwnedItem( this.skillId);
 		}
 		if( !this._skill && this.item )
 		{

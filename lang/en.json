@@ -552,8 +552,8 @@
 "CoC7.InfoLessSkillThanOptions": "There's only {skillCount} and {optionsCount} options, adding all of them",
 "CoC7.InfoAllSkillsAlreadySelected": "All skills are already selected.",
 
-"CoC7.MessageWaitForKeeperToClick": "Your keeper is requesting a check.<br>Wait before clicking!<br>",
-"CoC7.MessageCheckRequested": "Your keeper is requesting a check.",
+"CoC7.MessageCheckRequestedWait": "Your keeper is requesting a {check}.<br>Wait before clicking!<br>",
+"CoC7.MessageTargetCheckRequested": "Your keeper is requesting a {check} for {name}.",
 
 "CoC7.ActorImporter": "Actor Importer",
 "CoC7.ActorImporterSummary": "Import an NPC or Creature from description and stats. Just paste the corresponding plain text",

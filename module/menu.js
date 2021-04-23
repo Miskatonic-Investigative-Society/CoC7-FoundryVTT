@@ -1,6 +1,7 @@
 import { CoC7Chat } from './chat.js';
 import { CoC7Utilities } from './utilities.js';
 import { CoC7ActorImporterDialog } from './apps/actor-importer-dialog.js';
+import { CoC7LinkCreationDialog } from './apps/link-creation-dialog.js';
 
 export class CoC7Menu {
 	constructor( options){
@@ -189,6 +190,15 @@ export class CoC7Menu {
 			title: 'CoC7.RollDice',
 			button: true,
 			onClick: (event) => CoC7Utilities.rollDice(event)
+		});
+
+		controls.push({
+			icon: 'fas fa-link',
+			name: 'create-link',
+			title: 'CoC7.RollDice',
+			visible: isGM,
+			button: true,
+			onClick: CoC7LinkCreationDialog.create
 		});
 		return controls;
 	}

@@ -22,6 +22,25 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+version 0.5.7 :
+
+* Bug correction:
+  * CSS reworked on sheetV2 to prevent sliding items no to display correctly.
+* link system reworked:
+  * Clicking on a link will trigger the check.
+  * CTRL+click on a link will open and prefill the link creation popup.
+  * Links created by CTRL+click on any element will no more create the link directly, a link creation windows will popup instead.
+  * You can pop the link creation window by clicking the link icon in the side menu.
+* Link creation popup:
+  * This will propose you with various options to create a link.
+  * You can drop stuff on this window to prefill it.
+* Link created can now be dropped on the canvas (thanks to José Lozano/Viriato139ac and JuanV for tip in issue #461)
+  * If there's a token on the drop, the link will be whispered to that token owner(s).
+  * If there's no token, the link will be whispered to the tokens you controlled (selected).
+  * If there's no token selected and no token below the drop that link will be whispered to all players having a character.
+* LOCALIZATION WIP (对不起, entschuldigung,lo siento,désolé,すみません,przepraszam,desculpe,förlåt  ).
+* OPPOSED/COMBINED CHECK WIP.
+
 version 0.5.6 :
 
 * Implementation of vehicle sheet.
