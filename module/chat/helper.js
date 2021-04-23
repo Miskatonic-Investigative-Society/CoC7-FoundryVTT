@@ -58,6 +58,16 @@ export function exclude__(key, value) {
 	return value; // return as is
 }
 
+/**
+ * Return true is CTRL key is pressed
+ * Used for MAC compat.
+ * @param {S.Event} event 
+ * @returns 
+ */
+export function isCtrlKey(event){
+	return event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224;
+}
+
 export class chatHelper{
 	static hyphenToCamelCase(string) {
 		return string.replace(/-([a-z])/g, function(string) {
