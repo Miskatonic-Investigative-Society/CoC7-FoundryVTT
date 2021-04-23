@@ -131,6 +131,7 @@
 
 "CoC7.ConstitutionCheck": "Constitution check",
 
+"CoC7.SanDataSelectionWindow": "Select SAN losses",
 "CoC7.BonusSelectionWindow": "Bonus selection window",
 "CoC7.BonusSelectionWindowNamed": "Select modifier for {name} check",
 "CoC7.SkillDetailsWindow": "Skill details window",
