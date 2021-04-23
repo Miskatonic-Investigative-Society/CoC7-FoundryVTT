@@ -40,6 +40,7 @@ version 0.5.7 :
   * If there's no token selected and no token below the drop that link will be whispered to all players having a character.
 * LOCALIZATION WIP (对不起, entschuldigung,lo siento,désolé,すみません,przepraszam,desculpe,förlåt  ).
 * OPPOSED/COMBINED CHECK WIP.
+* DE : nilsriesenberg
 
 version 0.5.6 :
 
