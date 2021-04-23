@@ -131,6 +131,7 @@
 
 "CoC7.ConstitutionCheck": "Konstitutions-Probe",
 
+"CoC7.SanDataSelectionWindow": "Wähle den Stabilitätsverlust aus",
 "CoC7.BonusSelectionWindow": "Bonuswürfel Auswahlfeld",
 "CoC7.BonusSelectionWindowNamed": "Wähle einen Modifikator für {name} Probe",
 "CoC7.SkillDetailsWindow": "Fertigkeits Informationen",
@@ -554,8 +555,8 @@
 "CoC7.InfoLessSkillThanOptions": "Es gibt nur {skillCount} und {optionsCount} Optionen, füge alle hinzu.",
 "CoC7.InfoAllSkillsAlreadySelected": "Alle Fertigkeiten sind bereits ausgewählt.",
 
-"CoC7.MessageWaitForKeeperToClick": "Dein Spielleiter verlangt eine Probe.<br>Warte bevor du würfelst!<br>",
-"CoC7.MessageCheckRequested": "Dein Spielleiter verlangt eine Probe.",
+"CoC7.MessageCheckRequestedWait": "Dein Spielleiter verlangt eine Probe für {check}.<br>Warte bevor du würfelst!<br>",
+"CoC7.MessageTargetCheckRequested": "Dein Spielleiter verlangt für {name} eine Probe für {check}.",
 
 "CoC7.ActorImporter": "Investigatoren Import",
 "CoC7.ActorImporterSummary": "Importiere einen NSC oder Kreatur basierende auf ihrer Beschreibung und den Werten. Füge einfach den Text hier ein.",
@@ -613,7 +614,7 @@
 "SETTINGS.OverrideSheetArtworkHint": "BENÖTIGT NEUSTART:<br>Bietet Zugriff auf die erweiterte Konfiguration des Bogens. Frei lassen für die Standardkonfiguration.",
 "SETTINGS.ArtWorkSheetBackground": "Investigatorenbogen Hintergrund",
 "SETTINGS.ArtWorkSheetBackgroundHint": "Tippe 'null' ein um den Hintergrund zu entfernen",
-"SETTINGS.ArtWorkOtherSheetBackground": "Weiterer Bogen Hintergund",
+"SETTINGS.ArtWorkOtherSheetBackground": "Weiterer Bogen Hintergrund",
 "SETTINGS.ArtWorkOtherSheetBackgroundHint": "Tippe 'null' um den Hintergrund zu entfernen. Aktuell nur für Gegenstände und Fahrzeuge.",
 "SETTINGS.ArtworkSheetImage": "Investigatorenbogen Bild",
 "SETTINGS.ArtworkSheetImageHint": "Tippe 'null' ein um das Bild zu entfernen",
