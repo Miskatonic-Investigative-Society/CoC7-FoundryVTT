@@ -950,6 +950,18 @@ export class CoCActor extends Actor {
 		return parsedFormula;
 	}
 
+	static getCharacteristicDefinition(){
+		const characteristics = [];
+		for( let [key, value] of Object.entries(game.system.template.Actor.templates.characteristics.characteristics)){
+			characteristics.push({
+				key: key,
+				shortName: game.i18n.localize(value.short),
+				label: game.i18n.localize( value.label)				
+			});
+		}
+		return characteristics;
+	}
+
 	getCharacteristic( charName){
 		for( let [key, value] of Object.entries(this.data.data.characteristics)){
 			if( 
