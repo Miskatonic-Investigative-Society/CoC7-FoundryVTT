@@ -1,4 +1,5 @@
 import { CoCActor } from '../actors/actor.js';
+import { chatHelper } from '../chat/helper.js';
 import { CoC7Check } from '../check.js';
 import { CoC7Link } from './link.js';
 
@@ -10,6 +11,7 @@ export class CoC7LinkCreationDialog extends FormApplication{
 			id: 'link-creation',
 			classes: ['coc7'],
 			title: 'Link creation',
+			dragDrop: [{dragSelector: null, dropSelector: '.container'}],
 			template: 'systems/CoC7/templates/apps/link-creation.html',
 			closeOnSubmit: false,
 			submitOnClose: true,
@@ -23,12 +25,21 @@ export class CoC7LinkCreationDialog extends FormApplication{
 		});
 	}
 
+	static async fromLinkData( linkData, options={}){
+		const link = await CoC7Link.fromData( linkData);
+		return new CoC7LinkCreationDialog(link, options);
+	}
+
 	/** @override */
 	getData() {
 		const data = super.getData();
 
 		data.link = this.link;
 		data.data = this.link.data;
+		data.fromGame = this.link.is.item || (this.link.is.check && this.link.check == CoC7Link.CHECK_TYPE.SKILL);
+		data.askId = data.fromGame && (this.link.data.fromDirectory || this.link.data.fromCompendium);
+		data.askPack = data.fromGame && this.link.data.fromCompendium;
+		data.isSetFromGame = data.askId || data.askPack;
 
 		//Prepare difficulty select data
 		data.difficultyLevel = CoC7Check.difficultyLevel;
@@ -106,17 +117,115 @@ export class CoC7LinkCreationDialog extends FormApplication{
 
 	activateListeners(html) {
 		html.find('.submit-button').click(this._onClickSubmit.bind(this));
+		
+		// Replaced in options by dragDrop: [{dragSelector: null, dropSelector: '.container'}]
+		// const dragDrop = new DragDrop({
+		// 	dropSelector: '.container',
+		// 	callbacks: { drop: this._onDrop.bind(this) }
+		// });
+		// const test = dragDrop.bind(html[0]);
 
 		super.activateListeners( html);
 	}
 
+	async _onDrop( event){
+		const dataString = event.dataTransfer.getData('text/plain');
+		const data = JSON.parse( dataString);
+		if( data.CoC7Type == 'link'){
+			await this.link.updateFromLink( data);
+			this.render(true);
+		} else {
+			if( data.actorId){
+				const actorKey = data.sceneId&&data.tokenId?`${data.sceneId}.${data.tokenId}`:data.actorId;
+				const actor = chatHelper.getActorFromKey( actorKey);
+				if( actor.hasPlayerOwner){
+					this.link.hasPlayerOwner = true;
+					this.link.actorKey = actor.actorKey;
+				} else this.link.hasPlayerOwner = false;
+			}
+			if( 'Item' == data.type){
+				if( !data.data){
+					if( data.id) {
+						this.link._linkData.id = data.id;
+						this.link._linkData.fromDirectory = true;
+					}
+					if( data.pack){
+						this.link._linkData.pack = data.pack;
+						this.link._linkData.fromDirectory = false;
+						this.link._linkData.fromCompendium = true;
+					}
+					await this.link.fetchItem();
+					this.render( true);
+				} else switch( data.data.type){
+				case 'skill':
+					this.link._linkData.fromDirectory = false;
+					this.link._linkData.fromCompendium = false;
+					this.link.type = CoC7Link.LINK_TYPE.CHECK;
+					this.link.check = CoC7Link.CHECK_TYPE.SKILL;
+					this.link.name = data.data.name;
+					this.render(true);
+					break;
+				case'weapon':
+					this.link._linkData.fromDirectory = false;
+					this.link._linkData.fromCompendium = false;
+					this.link.type = CoC7Link.LINK_TYPE.ITEM;
+					this.link.name = data.data.name;
+					this.render(true);
+
+					break;
+				default:
+					break;
+
+				}
+			}
+		}
+	}
+
 	_onClickSubmit(event){
 		const action = event.currentTarget.dataset.action;
+		if( !this.link.link){
+			ui.notifications.warning( 'Link is invalid !');
+			return;
+		}
 		switch (action) {
 		case 'clipboard':
-			ui.notifications.info(`Submit ${action} clicked`);
-			ui.notifications.info( `Link created :${this.link.link}`);
 			navigator.clipboard.writeText(this.link.link);
+			break;
+
+		case 'chat':{
+			const option = {};
+			option.speaker = {
+				alias: game.user.name
+			};
+			chatHelper.createMessage( null, game.i18n.format('CoC7.MessageCheckRequestedWait', {check: this.link.link}), option);
+		}
+			break;
+
+		case 'whisper-owner':{
+			const option = {};
+			option.speaker = {
+				alias: game.user.name,
+			};
+			option.whisper = this.link.actor.owners;
+			chatHelper.createMessage( null, game.i18n.format('CoC7.MessageTargetCheckRequested', {name: this.link.actor.name, check: this.link.link}), option);
+		}
+			break;
+
+		case 'whisper-selected':{
+			if( !canvas.tokens.controlled.length) {
+				ui.notifications.warn('No tokens selected');
+				return;}
+			const option = {};
+			option.speaker = {
+				alias: game.user.name,
+			};
+			canvas.tokens.controlled.forEach( t =>{
+				if( t.actor.hasPlayerOwner){
+					option.whisper = t.actor.owners;
+					chatHelper.createMessage( null, game.i18n.format('CoC7.MessageTargetCheckRequested', {name: t.actor.name, check: this.link.link}), option);
+				}
+			});
+		}
 			break;
 		
 		default:
@@ -126,21 +235,27 @@ export class CoC7LinkCreationDialog extends FormApplication{
 	}
 
 	/** @override */
-	_updateObject(event, formData) {
+	async _updateObject(event, formData) {
 		const target = event.currentTarget;
 		const group = target?.closest( '.form-group');
 		const groupName = group?.dataset.group;
-		if( 'link-type' == groupName){ // Deprecated
-			if( target.name == 'isCheck') this.link.is.check = true;
-			else if( target.name == 'isSanloss') this.link.is.sanloss = true;
-			else if( target.name == 'isItem') this.link.is.item = true;
+		if( 'origin' == groupName){ // Deprecated
+			if( target.name == 'fromCompendium') {
+				this.link._linkData.fromCompendium = !this.link._linkData.fromCompendium;
+				if( this.link._linkData.fromCompendium) this.link._linkData.fromDirectory = false;
+			}
+			if( target.name == 'fromDirectory') {
+				this.link._linkData.fromDirectory = !this.link._linkData.fromDirectory;
+				if( this.link._linkData.fromDirectory) this.link._linkData.fromCompendium = false;
+			}
+			await this.link.fetchItem();
 		} else {
 			const formDataEx = expandObject( formData);
 			if( formDataEx.check) formDataEx.check = Number(formDataEx.check);
 			if( formDataEx.difficulty) formDataEx.difficulty = Number(formDataEx.difficulty);
 			if( formDataEx.type) formDataEx.type = Number(formDataEx.type);
 			const diffData = diffObject(this.link.data, formDataEx);
-			this.link.update( diffData);
+			await this.link.update( diffData);
 		}
 		this.render(true);
 	}
@@ -168,7 +283,6 @@ export class CoC7LinkCreationDialog extends FormApplication{
 
 	static async create(){
 		const link = new CoC7Link();
-		await new CoC7LinkCreationDialog(link, {}).render(true);
-		ui.notifications.info('Link created');
+		new CoC7LinkCreationDialog(link, {}).render(true);
 	}
 }

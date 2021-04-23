@@ -45,7 +45,7 @@
             {{#if selectedCheckType.skill}}
                 <div class="form-group">
                     <label>Name :</label>
-                    <input type="text" name="skillName" value="{{data.skillName}}"/>
+                    <input type="text" name="skillName" value="{{data.skillName}}" {{#if isSetFromGame}}readonly{{/if}}/>
                 </div>
             {{/if}}
         {{/if}}
@@ -53,7 +53,7 @@
         {{#if link.is.item}}
             <div class="form-group">
                 <label>Name :</label>
-                <input type="text" name="itemName" value="{{data.itemName}}"/>
+                <input type="text" name="itemName" value="{{data.itemName}}" {{#if isSetFromGame}}readonly{{/if}}/>
             </div>
         {{/if}}
 
@@ -68,10 +68,37 @@
             </div>
         {{/if}}
 
+        {{#if fromGame}}
+        <div class="form-group" data-group="origin">
+            <label class="checkbox">
+                <input type="checkbox" name="fromCompendium" {{checked data.fromCompendium}}/> From compendium
+            </label>
+            <label class="checkbox">
+                <input type="checkbox" name="fromDirectory" {{checked data.fromDirectory}}/> From directory
+            </label>
+        </div>
+            <div class="form-group stacked">
+                {{#if askId}}
+                <div class='form-group subgroup'>
+                    <label>Id :</label>
+                    <input type="text" name="id" value="{{data.id}}"/>
+                </div>
+                {{/if}}
+                {{#if askPack}}
+                <div class='form-group subgroup'>
+                    <label>Pack :</label>
+                    <input type="text" name="pack" value="{{data.pack}}"/>
+                </div>
+                {{/if}}
+            </div>
+        {{/if}}
+
         <div class="form-group" data-group="modifiers">
+            {{#unless link.is.item}}
             <label class="checkbox">
                 <input type="checkbox" name="forceModifiers" {{checked data.forceModifiers}}/> Modifiers
             </label>
+            {{/unless}}
             {{#if link.is.check}}
             <label class="checkbox">
                 <input type="checkbox" name="blind" {{checked data.blind}}/> Blind
@@ -135,9 +162,11 @@
     </div>
 
     <button class="submit-button" type="submit" data-action="clipboard"><i class="fas fa-clipboard"></i>Copy to clipboard</button>
-    <button class="submit-button" type="submit" data-action="clipboard"><i class="far fa-object-group"></i>Whisper to selected</button>
-    <button class="submit-button" type="submit" data-action="clipboard"><i class="fas fa-user"></i>Whisper to {@}</button>
-    <button class="submit-button" type="submit" data-action="clipboard"><i class="fas fa-comments"></i>Send to chat</button>
+    <button class="submit-button" type="submit" data-action="whisper-selected"><i class="far fa-object-group"></i>Whisper to selected</button>
+    {{#if link.hasPlayerOwner}}
+        <button class="submit-button" type="submit" data-action="whisper-owner"><i class="fas fa-user"></i>Whisper to {{link.actor.name}}</button>
+    {{/if}}
+    <button class="submit-button" type="submit" data-action="chat"><i class="fas fa-comments"></i>Send to chat</button>
     <!-- <button class="submit-button" type="submit" action="action1"><i class="far fa-save"></i> {{ localize "DND5E.TraitSave"}}</button>
     <button class="submit-button" type="submit" action="action1"><i class="far fa-save"></i> {{ localize "DND5E.TraitSave"}}</button>
     <button class="submit-button" type="submit" action="action1"><i class="far fa-save"></i> {{ localize "DND5E.TraitSave"}}</button>

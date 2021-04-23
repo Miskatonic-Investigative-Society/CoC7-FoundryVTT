@@ -214,6 +214,7 @@ export class CoC7Parser{
 		const i = a.querySelector('i.link-icon');
 		const data = duplicate( a.dataset);
 		data.linkType = 'coc7-link';
+		data.CoC7Type = 'link';
 		data.icon = null;
 		
 		if( i.dataset && i.dataset.linkIcon && 'fas fa-dice' != i.dataset.linkIcon){
@@ -292,7 +293,7 @@ export class CoC7Parser{
 	 * @param {*} event 
 	 * 
 	*/
-	static _onCheck( event){
+	static async _onCheck( event){
 		const options = event.currentTarget.dataset;
 
 		if( options.difficulty) options.difficulty = CoC7Utilities.convertDifficulty(options.difficulty);
@@ -303,37 +304,11 @@ export class CoC7Parser{
 		if( game.user.isGM){
 			if( isCtrlKey(event)){
 				if( options.displayName) options.label = event.currentTarget.innerText;
-				const link = new CoC7Link(options);
+				const link = await CoC7Link.fromData( options);
 				const linkDialog = new CoC7LinkCreationDialog(link);
 				linkDialog.render(true);
 				return;
 			}
-			//If GM and from sheet and CTRL clicked publish a message asking for the click.
-			// if( (fromSheet && (!canvas.tokens.controlled.length && !game.user.targets.size)) ||
-			// 	(fromSheet && isCtrlKey(event)) ||
-			// 	(!canvas.tokens.controlled.length && game.user.targets.size)){
-			// 	const whisperTargets = [];
-			// 	[...game.user.targets].map( t => {
-			// 		if( t.actor.isPC && t.actor.player) whisperTargets.push(t.actor.player);
-			// 	});
-			// 	const whisper = !!whisperTargets.length;
-				
-			// 	const chatData = {
-			// 		user: game.user._id,
-			// 		flavor: whisper?game.i18n.localize('CoC7.MessageCheckRequested'):game.i18n.localize('CoC7.MessageWaitForKeeperToClick'),
-			// 		content: event.currentTarget.outerHTML
-			// 	};
-
-			// 	if( whisper){
-			// 		chatData.whisper = whisperTargets;
-			// 		chatData.type = CHAT_MESSAGE_TYPES.WHISPER;
-			// 	}
-		
-			// 	ChatMessage.create(chatData);
-
-
-			// 	// chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), event.currentTarget.outerHTML, {whisper : playersId});
-			// } else 
 			if( canvas.tokens.controlled.length){
 				canvas.tokens.controlled.forEach( token =>{
 					switch (options.check) {
