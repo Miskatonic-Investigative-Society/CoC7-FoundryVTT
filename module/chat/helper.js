@@ -58,6 +58,16 @@ export function exclude__(key, value) {
 	return value; // return as is
 }
 
+/**
+ * Return true is CTRL key is pressed
+ * Used for MAC compat.
+ * @param {S.Event} event 
+ * @returns 
+ */
+export function isCtrlKey(event){
+	return event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224;
+}
+
 export class chatHelper{
 	static hyphenToCamelCase(string) {
 		return string.replace(/-([a-z])/g, function(string) {
@@ -65,10 +75,14 @@ export class chatHelper{
 		});
 	}
 
-	static async createMessage( title, message, speaker = null){
+	static async createMessage( title, message, options = {}){
 		const messageData = {};
 		messageData.flavor = title;
-		messageData.speaker = speaker || ChatMessage.getSpeaker();
+		messageData.speaker = options.speaker || ChatMessage.getSpeaker();
+		if( options.whisper){
+			messageData.type = CHAT_MESSAGE_TYPES.WHISPER;
+			messageData.whisper = options.whisper;
+		}
 		messageData.user = game.user._id;
 		messageData.content = message;
 
@@ -92,7 +106,7 @@ export class chatHelper{
 				return game.actors.tokens[tokenId];//REFACTORING (2)
 			}
 			const token = chatHelper.getTokenFromKey(key);
-			return token.actor;
+			return token?.actor;
 		}
 
 		// Case 2 - use Actor ID directory

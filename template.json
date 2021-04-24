@@ -3,7 +3,8 @@
         "types": [
             "character",
             "npc",
-            "creature"
+            "creature",
+            "vehicle"
         ],
         "templates": {
             "characteristics": {
@@ -97,6 +98,7 @@
                     },
                     "mov": {
                         "value": null,
+                        "max": null,
                         "short": "MOV",
                         "label": "Movement rate",
                         "auto": true
@@ -108,6 +110,7 @@
                         "auto": true
                     },
                     "build": {
+                        "current": null,
                         "value": null,
                         "short": "BLD",
                         "label": "Build",
@@ -115,6 +118,8 @@
                     },
                     "armor": {
                         "value": null,
+                        "localized": false,
+                        "locations": [],
                         "auto": false
                     }
                 }
@@ -189,7 +194,8 @@
                 "archetype": null
             },
             "biography": [],
-            "encounteredCreatures": []
+            "encounteredCreatures": [],
+            "backstory": ""
         },
         "npc": {
             "templates": [
@@ -240,6 +246,34 @@
             },
             "flags": {
                 "locked": false
+            }
+        },
+        "vehicle":{
+            "templates":[ "attribs"],
+            "description": {
+                "value": "",
+                "chat": "",
+                "notes": ""
+            },
+            "infos":{
+                "origin": null,
+                "type": null
+            },
+            "crew": {
+                "total": null,
+                "count":{
+                    "driver": null,
+                    "gunner": null,
+                    "pax": null
+                },
+                "list": []
+            },
+            "skill": {
+                "driving": null,
+                "active": []
+            },
+            "properties":{
+                "armed": false
             }
         }
     },
@@ -423,6 +457,7 @@
             "enableCharacterisitics": true,
             "items": [],
             "bioSections": [],
+            "backstory": "",
             "attributes": {},
             "properties": {},
             "eras": {},

@@ -339,6 +339,16 @@ export class CoC7Utilities {
 		CoC7Utilities.updateCharSheets();
 	}
 
+	static async toggleXPGain(){
+		const isXPEnabled = game.settings.get('CoC7', 'xpEnabled');
+		await game.settings.set( 'CoC7', 'xpEnabled', !isXPEnabled);
+		let group = game.CoC7.menus.controls.find(b => b.name == 'main-menu');
+		let tool = group.tools.find( t => t.name == 'xptoggle');
+		tool.title = game.settings.get('CoC7', 'xpEnabled')? game.i18n.localize( 'CoC7.XPGainEnabled'): game.i18n.localize( 'CoC7.XPGainDisabled');
+		ui.notifications.info( game.settings.get('CoC7', 'xpEnabled')? game.i18n.localize( 'CoC7.XPGainEnabled'): game.i18n.localize( 'CoC7.XPGainDisabled'));
+		ui.controls.render();
+	}
+
 	static async rollDice( event, options ={}){
 
 		options.askValue = !options.threshold;

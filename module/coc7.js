@@ -10,6 +10,8 @@ import { CoC7CharacterSheetV2 } from './actors/sheets/character.js';
 import { preloadHandlebarsTemplates } from './templates.js';
 import { CoC7Chat } from './chat.js';
 import { CoC7Combat, rollInitiative } from './combat.js';
+import { CoC7ItemSheetV2 } from './items/sheets/item-sheetV2.js';
+import { CoC7SkillSheet} from './items/sheets/skill.js';
 import { CoC7BookSheet } from './items/sheets/book.js';
 import { CoC7SpellSheet } from './items/sheets/spell.js';
 import { CoC7TalentSheet } from './items/sheets/talent.js';
@@ -27,6 +29,8 @@ import { CoC7Menu } from './menu.js';
 import { OpposedCheckCard } from './chat/cards/opposed-roll.js';
 import { CombinedCheckCard } from './chat/cards/combined-roll.js';
 import { DamageCard } from './chat/cards/damage.js';
+import { CoC7VehicleSheet } from './actors/sheets/vehicle.js';
+import { CoC7Canvas } from './apps/canvas.js';
 
 Hooks.once('init', async function() {
 
@@ -82,6 +86,14 @@ Hooks.once('init', async function() {
 		default: 0
 	});
 
+	game.settings.register('CoC7', 'xpEnabled', {
+		name: 'Enable XP gain',
+		scope: 'world',
+		config: false,
+		type: Boolean,
+		default: true
+	});
+
 	game.settings.register('CoC7', 'gridSpaces', {
 		name: 'SETTINGS.RestrictGridSpaces',
 		hint: 'SETTINGS.RestrictGridSpacesHint',
@@ -94,6 +106,15 @@ Hooks.once('init', async function() {
 	game.settings.register('CoC7', 'pulpRules', {
 		name: 'SETTINGS.PulpRules',
 		hint: 'SETTINGS.PulpRulesHint',
+		scope: 'world',
+		config: true,
+		default: false,
+		type: Boolean
+	});
+
+	game.settings.register('CoC7', 'oneBlockBackstory', {
+		name: 'SETTINGS.OneBlockBackStory',
+		hint: 'SETTINGS.OneBlockBackStoryHint',
 		scope: 'world',
 		config: true,
 		default: false,
@@ -357,6 +378,15 @@ Hooks.once('init', async function() {
 			type: String
 		});
 
+		game.settings.register('CoC7', 'artWorkOtherSheetBackground',{
+			name: 'SETTINGS.ArtWorkOtherSheetBackground',
+			hint: 'SETTINGS.ArtWorkOtherSheetBackgroundHint',
+			scope: 'world',
+			config: true,
+			default: 'url( \'./artwork/backgrounds/sheet.jpg\')',
+			type: String
+		});
+
 		game.settings.register('CoC7', 'artworkSheetImage',{
 			name: 'SETTINGS.ArtworkSheetImage',
 			hint: 'SETTINGS.ArtworkSheetImageHint',
@@ -457,11 +487,13 @@ Hooks.once('init', async function() {
 	// Register sheet application classes
 	Actors.unregisterSheet('core', ActorSheet);
 	Actors.registerSheet('CoC7', CoC7NPCSheet, { types: ['npc'], makeDefault: true});
+	Actors.registerSheet('CoC7', CoC7VehicleSheet, { types: ['vehicle'], makeDefault: true});
 	Actors.registerSheet('CoC7', CoC7CreatureSheet, { types: ['creature'], makeDefault: true});
 	Actors.registerSheet('CoC7', CoC7CharacterSheet, { types: ['character']});
 	Actors.registerSheet('CoC7', CoC7CharacterSheetV2, { types: ['character'], makeDefault: true});
 	
 	Items.unregisterSheet('core', ItemSheet);
+	Items.registerSheet('CoC7', CoC7SkillSheet, { types: ['skill'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7WeaponSheet, { types: ['weapon'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7BookSheet, { types: ['book'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7SpellSheet, { types: ['spell'], makeDefault: true});
@@ -471,7 +503,8 @@ Hooks.once('init', async function() {
 	Items.registerSheet('CoC7', CoC7ArchetypeSheet, { types: ['archetype'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7SetupSheet, { types: ['setup'], makeDefault: true});
 	// Items.registerSheet('CoC7', CoC7ManeuverSheet, { types: ['maneuver'], makeDefault: true});
-	Items.registerSheet('CoC7', CoCItemSheet, { makeDefault: true});
+	Items.registerSheet('CoC7', CoCItemSheet, { types: ['item']});
+	Items.registerSheet('CoC7', CoC7ItemSheetV2, { types: ['item'], makeDefault: true});
 	preloadHandlebarsTemplates();
 });
 
@@ -659,9 +692,14 @@ Hooks.on('preCreateChatMessage', CoC7Parser.ParseMessage);
 // Hooks.on('createChatMessage', CoC7Chat.createChatMessageHook);
 Hooks.on('renderChatMessage', CoC7Chat.renderChatMessageHook);
 // Sheet V2 css options
-Hooks.on('renderCoC7CharacterSheetV2', CoC7CharacterSheetV2.renderSheet);
+// Hooks.on('renderCoC7CharacterSheetV2', CoC7CharacterSheetV2.renderSheet);
+Hooks.on('renderActorSheet', CoC7CharacterSheetV2.renderSheet); //TODO : change from CoC7CharacterSheetV2
+Hooks.on('renderItemSheet', CoC7CharacterSheetV2.renderSheet); //TODO : change from CoC7CharacterSheetV2
+
 // Hooks.on('dropCanvasData', CoC7Parser.onDropSomething);
 Hooks.on('renderSceneControls', CoC7Menu.renderMenu);
+
+Hooks.on('dropCanvasData', CoC7Canvas.onDropSomething);
 
 
 tinyMCE.PluginManager.add('CoC7_Editor_OnDrop', function (editor) {

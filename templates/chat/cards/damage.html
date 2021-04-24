@@ -77,7 +77,7 @@
                 {{localize 'CoC7.NoDamage'}}            
             {{else}}
                 {{#if damageInflicted}}
-                    <div class='card-result'>Damge inflicted : {{totalDamageString}}</div>
+                    <div class='card-result'>{{ localize 'CoC7.DamageInflicted'}} : {{totalDamageString}}</div>
                 {{else}}
                     <div class="card-buttons gm-visible-only">
                         <button data-action="dealDamage">{{ localize 'CoC7.InflictPain' }} ({{totalDamageString}})</button>
@@ -85,7 +85,7 @@
                 {{/if}}
             {{/if}}
         {{else}}
-        <div class='card-result'>Total damage : {{totalDamageString}}</div>
+        <div class='card-result'>{{ localize 'CoC7.TotalDamage' }} : {{totalDamageString}}</div>
         {{/if}}
     {{else}}
     <div class="card-buttons owner-only">

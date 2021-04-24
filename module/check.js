@@ -422,7 +422,7 @@ export class CoC7Check {
 
 	get skill() { 
 		if( !this._skill && this.skillId){
-			this._skill = this.actor.getOwnedItem( this.skillId);
+			this._skill = this.actor?.getOwnedItem( this.skillId);
 		}
 		if( !this._skill && this.item )
 		{
@@ -867,6 +867,7 @@ export class CoC7Check {
 		this.dices.tens =[];
 		this.dices.unit.value = unitTotal;
 		this.modifiedResult = total;
+		this.dices.total = total;
 		this.dices.tenResult = total - unitTotal;
 
 		let max = (unitTotal == 0)? 100 : 90;
@@ -1058,7 +1059,7 @@ export class CoC7Check {
 			} else ChatMessage.applyRollMode( chatData, this.rollMode);
 		}
 
-		// if ( ['gmroll', 'blindroll'].includes(this.rollMode) ) chatData['whisper'] = ChatMessage.getWhisperRecipients('GM');
+		if ( ['gmroll', 'blindroll'].includes(this.rollMode) ) chatData['whisper'] = ChatMessage.getWhisperRecipients('GM');
 		if ( this.rollMode === 'blindroll' ) chatData.blind = true;
 
 		// ChatMessage.applyRollMode( chatData, this.rollMode);

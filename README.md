@@ -22,6 +22,84 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+version 0.5.7 :
+
+* Bug correction:
+  * CSS reworked on sheetV2 to prevent sliding items no to display correctly.
+* link system reworked:
+  * Clicking on a link will trigger the check.
+  * CTRL+click on a link will open and prefill the link creation popup.
+  * Links created by CTRL+click on any element will no more create the link directly, a link creation windows will popup instead.
+  * You can pop the link creation window by clicking the link icon in the side menu.
+* Link creation popup:
+  * This will propose you with various options to create a link.
+  * You can drop stuff on this window to prefill it.
+* Link created can now be dropped on the canvas (thanks to José Lozano/Viriato139ac and JuanV for tip in issue #461)
+  * If there's a token on the drop, the link will be whispered to that token owner(s).
+  * If there's no token, the link will be whispered to the tokens you controlled (selected).
+  * If there's no token selected and no token below the drop that link will be whispered to all players having a character.
+* LOCALIZATION WIP (对不起, entschuldigung,lo siento,désolé,すみません,przepraszam,desculpe,förlåt  ).
+* OPPOSED/COMBINED CHECK WIP.
+* DE : nilsriesenberg
+* FR + Doc : @vonv
+
+version 0.5.6 :
+
+* Implementation of vehicle sheet.
+  * No automation so far on the sheets.
+  * Sheet support 'platting' which allows for multiple armor location. This is just an information for the time being.
+  * New button on the sheet allowing to collapse or expand the sheet. This is mainly a test and will propagated to the other sheet in due time.
+* Modification of Item sheet. Its now move to 'V2 style'.
+* New option added in Artwork override to allow specific background for 'other' V2 sheet (Anything but character sheet).
+* Character import now supports localization thanks to @pconcepcion.
+  * __*English*__, French and Spanish are supported.
+  * See `module/apps/actor-importer-regexp.js` for details.
+* Documentation refactor and re-organization thanks to @pconcepcion. (All Praise to Him!!)
+* Bug correction:
+  * #451, pulp specific. A bug preventing core characteristic roll in some cases corrected thanks to  @timpatim.
+  * #460, A bug displaying undefined in item description.
+* Modification thanks to @zeteticl
+  * Sanity monitor now display the dayli threshold.
+* Português (Brasil) translation updated thanks to @castanhocorreia.
+* German translation updated thanks to @nilsriesenberg.
+* French doc and translation updated thanks to @vonv.
+
+version 0.5.5 :
+
+* New feature thanks to [@pconcepcion](https://github.com/pconcepcion)!
+  * You can now import your actors in the system using GM Tools.
+  * This is a first version, but it's already fully functional!
+  * Details here : <https://github.com/HavlockV/CoC7-FoundryVTT/pull/444>.
+* Documentation has started !! Thanks to  [@pconcepcion](https://github.com/pconcepcion) and [@jantoniomartin](https://github.com/jantoniomartin). You can find them :
+  * [@pconcepcion](https://github.com/pconcepcion) system documentation : doc/README.md.
+  * [@jantoniomartin](https://github.com/jantoniomartin) user's guide : docs/en/users-guide.md.
+* Bug correction:
+  * Private GM roll are now properly displayed.
+  * #442 CSS correction on creature/NPC sheets.
+* Bug correction thanks to [@jantoniomartin](https://github.com/jantoniomartin):
+  * #410. Fixed assignment of item description value.
+  * #427. Fixed a visibility issue with drop-down.
+  * Setup sheet now includes a one-block backstory if the corresponding option is activated.
+* #432 Option added to display a name instead of SAN data when creating a link (GM only).
+* Posting CoC7 link to the chat-log has been slightly modified.
+  * If you have any token selected, the check will be triggered for all your selected tokens.
+  * If you don't have any token selected but you have some targets, that CoC7 link will be whispered to your targets.
+  * Holding CTRL when clicking a CoC7 link your selected token will not be checked and the link will be whispered to your targets or publish in the chat-log if you don't have any target.
+* Swedish translation and skills added thanks to @Rangertheman.
+* French translation updated thanks to @vonv
+* Taiwanese Mandarin translation updated thanks to @Zeteticl.
+* Português (Brasil) translation updated thanks to @castanhocorreia.
+
+version 0.5.4 :
+
+* Bug correction:
+  * Changes from px to rem in some part of the sheet.
+  * #416 Damage bonus is now correctly applied.
+  * GM modified rolls are now properly set when revealed.
+  * when revealed, blind GM roll are shown to the player involved only, unless CTRL is pressed.
+* A toggle allowing character to gain XP is added on the keeper's tools.
+* An option is added to replace backstory entries with one big editor block with formatting and links support.
+
 version 0.5.3 :
 
 * Bug correction:

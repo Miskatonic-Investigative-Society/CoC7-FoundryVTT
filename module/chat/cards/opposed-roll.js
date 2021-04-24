@@ -228,8 +228,7 @@ export class OpposedCheckCard extends RollCard{
 		}
 	}
 
-	async compute( rank = undefined)
-	{
+	async compute( rank = undefined){
 		if( !rank){
 			for (let i = 0; i < this.rolls.length; i++) {
 				delete this.rolls[i].maneuver;
@@ -245,6 +244,10 @@ export class OpposedCheckCard extends RollCard{
 		}else {
 			if( this.rolls[rank].rolled) this.rolls[rank]._htmlRoll = await this.rolls[rank].getHtmlRoll( { hideDiceResult: true});
 		}
+		
+		this.rolls = this.rolls.filter( roll => {
+			return !!roll.actor;//Check if there's an actor set and if there's one and it doesnt exist remove him.
+		});
 
 		if( this.combat){
 			//Sort combat rolls by index.
