@@ -147,7 +147,13 @@ export class DamageCard extends InteractiveChatCard{
 
 	get damageFormula(){
 		const range = this.range;
-		const formula = this.weapon?.data?.data?.range[range]?.damage;
+		let formula = this.weapon?.data?.data?.range[range]?.damage;
+		let db = `${this.actor.db}`;
+
+		if( db && !db.startsWith( '-')) db = '+' + db;
+		if( this.weapon.data.data.properties.addb) formula = formula + db;
+		if( this.weapon.data.data.properties.ahdb) formula = formula + db + '/2';
+
 		if( formula){
 			const maxDamage = Roll.maximize( formula)._total;
 			let rollString;
