@@ -339,6 +339,40 @@ export class CoC7Utilities {
 		CoC7Utilities.updateCharSheets();
 	}
 
+	static async startRest() {
+		let actors = game.actors.entities.filter (a => a.data.type === 'character' && a.data.permission.default !== 0)
+    		let chatContent = `<i>${game.i18n.localize('CoC7.dreaming')}...</i><br>`
+    		actors.forEach(actor =>
+			{
+				let isCriticalWounds = actor.data.data.status.criticalWounds.value
+				let dailySanityLoss = actor.data.data.attribs.san.dailyLoss
+				let hpValue = actor.data.data.attribs.hp.value
+				let hpMax = actor.data.data.attribs.hp.max
+				chatContent = chatContent + `<br><b>${actor.name}. </b>`
+				if (isCriticalWounds === false && hpValue < hpMax) {
+					chatContent = chatContent + `<b style="color:green">${game.i18n.localize('CoC7.healthRecovered')}. </b>`
+					actor.update({
+						"data.attribs.hp.value": actor.data.data.attribs.hp.value + 1
+					})
+				} else if (isCriticalWounds === true && hpValue < hpMax) {
+					chatContent = chatContent + `<b style="color:red">${game.i18n.localize('CoC7.hasCriticalWounds')}. </b>`
+				}
+				if (dailySanityLoss > 0) {
+					chatContent = chatContent + `<b style="color:green">${game.i18n.localize('CoC7.dailySanLossRestarted')}.</b>`
+					actor.update({
+						"data.attribs.san.dailyLoss": 0,
+					})
+				}
+			})
+		let chatData = {
+			user: game.user._id,
+			speaker: ChatMessage.getSpeaker(),
+			content: chatContent,
+			type: CONST.CHAT_MESSAGE_TYPES.OTHER
+		}
+		ChatMessage.create(chatData)
+	}
+
 	static async toggleXPGain(){
 		const isXPEnabled = game.settings.get('CoC7', 'xpEnabled');
 		await game.settings.set( 'CoC7', 'xpEnabled', !isXPEnabled);
