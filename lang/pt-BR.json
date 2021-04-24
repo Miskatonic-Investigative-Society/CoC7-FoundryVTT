@@ -561,8 +561,8 @@
 "CoC7.InfoLessSkillThanOptions": "{skillCount} e {optionsCount}, adicionando todas.",
 "CoC7.InfoAllSkillsAlreadySelected": "Todas as perícias já estão selecionadas.",
 
-"CoC7.MessageWaitForKeeperToClick": "Seu Guardião requisita um {check}.<br>Aguarde antes de clicar!<br>",
-"CoC7.MessageCheckRequested": "Seu Guardião está solicitando um {check} para {name}.",
+"CoC7.MessageCheckRequestedWait": "Seu Guardião requisita um {check}.<br>Aguarde antes de clicar!<br>",
+"CoC7.MessageTargetCheckRequested": "Seu Guardião está solicitando um {check} para {name}.",
 
 "CoC7.ActorImporter": "Importar Ator",
 "CoC7.ActorImporterSummary": "Importe um NPC ou Criatura a partir da descrição de informações. Apenas cole o texto correspondente.",
