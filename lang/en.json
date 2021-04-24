@@ -290,7 +290,6 @@
 "CoC7.Weapon.Property.Burn": "Burn",
 "CoC7.Weapon.Property.Shotgun": "Shotgun",
 
-
 "CoC7.ErrorItem": "Couldn't locate item",
 "CoC7.ErrorActor": "Couldn't locate actor",
 "CoC7.ErrorInvalidFormula": "{value} is not a valid formula",
@@ -543,6 +542,12 @@
 "CoC7.WarnNoControlledActor": "You don't have any controlled actor",
 "CoC7.WarnFastTargetWithWrongMOV": "Fast selected on a target with less than 8 MOV. (MOV: {mov})",
 "CoC7.WarnTooManyTarget": "Too many target selected. Keeping only last selected target",
+  
+"CoC7.startRest": "Start Rest",
+"CoC7.dreaming": "The Investigators wait dreaming",
+"CoC7.healthRecovered": "Recover one Hit Point",
+"CoC7.dailySanLossRestarted": "Daily Sanity loss counter restarted",
+"CoC7.hasCriticalWounds": "Unable to recover Hit Points due to Critical Wounds",
 
 "CoC7.ErrorNoDodgeSkill": "Actor doesn't have a dodge skill",
 "CoC7.ErrorNotEnoughLuck": "{actor} didn't have enough luck to pass the check",
@@ -570,7 +575,6 @@
 "CoC7.Spanish": "Spanish",
 "CoC7.French": "French",
 "CoC7.SelectSourceLanguage": "Select the source text language",
-
 
 "SETTINGS.DefaultDifficulty": "Default check difficulty",
 "SETTINGS.DefaultDifficultyHint": "You can choose the default difficulty for checks. Unknown will roll checks without the player knowing the check difficulty.",
