@@ -545,9 +545,11 @@
   
 "CoC7.startRest": "Start Rest",
 "CoC7.dreaming": "The Investigators wait dreaming",
-"CoC7.healthRecovered": "Recover one Hit Point",
+"CoC7.healthRecovered": "Recovered one Hit Point",
+"CoC7.pulpHealthRecovered": "Recovered {number} Hit Points",
 "CoC7.dailySanLossRestarted": "Daily Sanity loss counter restarted",
 "CoC7.hasCriticalWounds": "Unable to recover Hit Points due to Critical Wounds",
+"CoC7.quickHealer": "Quick Healer",
 
 "CoC7.ErrorNoDodgeSkill": "Actor doesn't have a dodge skill",
 "CoC7.ErrorNotEnoughLuck": "{actor} didn't have enough luck to pass the check",
