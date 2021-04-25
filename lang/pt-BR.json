@@ -549,8 +549,10 @@
 "CoC7.startRest": "Iniciar Descanso",
 "CoC7.dreaming": "Os Investigadores aguardam sonhando",
 "CoC7.healthRecovered": "Recuperou um Ponto de Vida",
+"CoC7.pulpHealthRecovered": "Recuperou {number} Pontos de Vida",
 "CoC7.dailySanLossRestarted": "Contador de perda de Sanidade diária reiniciado",
 "CoC7.hasCriticalWounds": "Incapaz de recuperar Pontos de Vida por conta de Feridas Graves",
+"CoC7.quickHealer": "Cura Rápida",
 
 "CoC7.ErrorNoDodgeSkill": "Ator não possui habilidade de Esquivar.",
 "CoC7.ErrorNotEnoughLuck": "{actor} não possui Sorte suficiente para passar o teste.",
