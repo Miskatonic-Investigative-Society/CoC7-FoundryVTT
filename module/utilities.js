@@ -344,21 +344,44 @@ export class CoC7Utilities {
     		let chatContent = `<i>${game.i18n.localize('CoC7.dreaming')}...</i><br>`
     		actors.forEach(actor =>
 			{
+				let quickHealer = false
+				actor.data.items.forEach(item => {
+					if (item.type === 'talent') {
+						if (item.name === `${game.i18n.localize('CoC7.quickHealer')}`) {
+							quickHealer = true
+							return
+						}
+					}
+				})
 				let isCriticalWounds = actor.data.data.status.criticalWounds.value
 				let dailySanityLoss = actor.data.data.attribs.san.dailyLoss
 				let hpValue = actor.data.data.attribs.hp.value
 				let hpMax = actor.data.data.attribs.hp.max
 				chatContent = chatContent + `<br><b>${actor.name}. </b>`
 				if (isCriticalWounds === false && hpValue < hpMax) {
-					chatContent = chatContent + `<b style="color:green">${game.i18n.localize('CoC7.healthRecovered')}. </b>`
-					actor.update({
-						"data.attribs.hp.value": actor.data.data.attribs.hp.value + 1
-					})
+					if (game.settings.get('CoC7', 'pulpRules') && quickHealer === true) {
+						chatContent = chatContent + `<b style="color:darkolivegreen">${game.i18n.format('CoC7.pulpHealthRecovered', {number: 3})}. </b>`
+						actor.update({
+						"data.attribs.hp.value": actor.data.data.attribs.hp.value + 3
+					}) 
+					} 
+					else if (game.settings.get('CoC7', 'pulpRules')) {
+						chatContent = chatContent + `<b style="color:darkolivegreen">${game.i18n.format('CoC7.pulpHealthRecovered', {number: 2})}. </b>`
+						actor.update({
+							"data.attribs.hp.value": actor.data.data.attribs.hp.value + 2
+						})
+					}
+					else {
+						chatContent = chatContent + `<b style="color:darkolivegreen">${game.i18n.localize('CoC7.healthRecovered')}. </b>`
+						actor.update({
+							"data.attribs.hp.value": actor.data.data.attribs.hp.value + 1
+						})
+					}
 				} else if (isCriticalWounds === true && hpValue < hpMax) {
-					chatContent = chatContent + `<b style="color:red">${game.i18n.localize('CoC7.hasCriticalWounds')}. </b>`
+					chatContent = chatContent + `<b style="color:darkred">${game.i18n.localize('CoC7.hasCriticalWounds')}. </b>`
 				}
 				if (dailySanityLoss > 0) {
-					chatContent = chatContent + `<b style="color:green">${game.i18n.localize('CoC7.dailySanLossRestarted')}.</b>`
+					chatContent = chatContent + `<b style="color:darkolivegreen">${game.i18n.localize('CoC7.dailySanLossRestarted')}.</b>`
 					actor.update({
 						"data.attribs.san.dailyLoss": 0,
 					})
