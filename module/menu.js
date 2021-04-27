@@ -180,6 +180,13 @@ export class CoC7Menu {
 					name: 'fakeroll',
 					title: 'CoC7.FakeRoll',
 					onClick : CoC7Chat.fakeRollMessage
+				},
+				{
+					button: true,
+					icon: 'fas fa-moon',
+					name: 'startrest',
+					title: 'CoC7.startRest',
+					onClick :async () => await CoC7Utilities.startRest()
 				}
 			]
 		});
