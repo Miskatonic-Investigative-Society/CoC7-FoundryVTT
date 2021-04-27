@@ -59,17 +59,17 @@ export class CoC7LinkCreationDialog extends FormApplication{
 		data.linkType = [
 			{
 				key: CoC7Link.LINK_TYPE.CHECK,
-				label: 'Check',
+				label: game.i18n.localize( 'CoC7.Check'),
 				selected: this.link.is.check
 
 			},{
 				key: CoC7Link.LINK_TYPE.SANLOSS,
-				label: 'Sanity Loss',
+				label: game.i18n.localize( 'CoC7.SanityCheck'),
 				selected: this.link.is.sanloss
 
 			},{
 				key: CoC7Link.LINK_TYPE.ITEM,
-				label: 'Item (weapon)',
+				label: game.i18n.localize( 'CoC7.ItemWeapon'),
 				selected: this.link.is.item
 	
 			}
