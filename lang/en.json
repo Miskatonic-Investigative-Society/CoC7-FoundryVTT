@@ -165,6 +165,7 @@
 "CoC7.RollDifficultyCritical": "Critical",
 "CoC7.RollResult.LuckSpendText": "{luckAmount} luck spend, {successLevel} success",
 "CoC7.RollDice": "Roll !",
+"CoC7.CreateLink": "Create link",
 "CoC7.SuccesLevelHint": "{value} level(s) of success",
 "CoC7.FailureLevelHint": "Failed by {value} level(s)",
 "CoC7.CombinedRollCard": "Combined roll card",
