@@ -89,9 +89,21 @@
 "CoC7.Location": "Herkunftsort",
 "CoC7.Properties": "Eigenschaften",
 "CoC7.Attributes": "Merkmale",
+"CoC7.Attribute": "Eigenschaft",
 "CoC7.Collapse": "Einklappen",
 "CoC7.Expand": "Ausklappen",
 
+"CoC7.Blind": "Blind",
+"CoC7.Label": "Label",
+"CoC7.Icon": "Icon",
+"CoC7.Check": "Probe",
+"CoC7.ItemWeapon": "Gegenstand (Waffe)",
+
+"CoC7.CopyToClipboard": "In Zwischenablage kopieren",
+"CoC7.WhisperToSelection": "An ausgewählte Tokens flüstern",
+"CoC7.WhisperTo": "Flüstern an",
+"CoC7.SendToChat": "An Chat senden", 
+  
 "CoC7.RegularSuccess": "Regulärer Erfolg",
 "CoC7.HardSuccess": "Schwerer Erfolg",
 "CoC7.ExtremeSuccess": "Extremer Erfolg",
@@ -103,6 +115,7 @@
 "CoC7.Dice": "Würfel",
 "CoC7.DiceModifierBonus": "Bonus",
 "CoC7.DiceModifierPenalty": "Malus",
+"CoC7.Modifiers": "Modifikatoren",
 "CoC7.BonusDice": "Bonus Würfel",
 "CoC7.UnitsDie": "Einerstellen Würfel",
 "CoC7.TensDie": "Zehnerstellen Würfel",
@@ -515,6 +528,7 @@
 "CoC7.SelectSkill": "wähle eine bestehende Fertigkeit",
 "CoC7.CreateNewSkill": "erstelle eine neue Fertigkeit",
 
+"CoC7.Characteristic": "Charaktereigenschaft",
 "CoC7.Characteristics": "Charaktereigenschaften",
 "CoC7.EnableCharacteristics": "Charaktereigenschaften aktivieren",
 "CoC7.UsePoints": "verwende die Punkteverteilung",
@@ -546,6 +560,14 @@
 "CoC7.WarnFastTargetWithWrongMOV": "Es wurde automatisch ein Ziel mit weniger als 8 Bewegungsweite gewählt. (BW: {mov})",
 "CoC7.WarnTooManyTarget": "Zu viele ausgewählte Ziele. Behalte zuletzt ausgewähltes Ziel bei.",
 
+"CoC7.startRest": "Ruhephase starten",
+"CoC7.dreaming": "Die Investigatoren warten träumend",
+"CoC7.healthRecovered": "Ein Trefferpunkt wurde wiederhergestellt",
+"CoC7.pulpHealthRecovered": "{number} Trefferpunkte wurden wiederhergestellt",
+"CoC7.dailySanLossRestarted": "Der tägliche Stabilitätsverlust-Tracker wurde neugestartet",
+"CoC7.hasCriticalWounds": "Eine Wiederherstellung von Lebenspunkten ist durch die schweren Wunden unmöglich.",
+"CoC7.quickHealer": "schneller Heiler",
+  
 "CoC7.ErrorNoDodgeSkill": "Investigator hat keinen Ausweichen Wert",
 "CoC7.ErrorNotEnoughLuck": "{actor} hatte nicht mehr genug Glück um die Probe zu bestehen",
 "CoC7.ErrorManeuverNotPossible": "Dein Gegner ist zu stark um ein Kampfmanöver auszuführen",
