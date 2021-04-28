@@ -202,7 +202,7 @@ export class CoC7Menu {
 		controls.push({
 			icon: 'fas fa-link',
 			name: 'create-link',
-			title: 'CoC7.RollDice',
+			title: 'CoC7.CreateLink',
 			visible: isGM,
 			button: true,
 			onClick: CoC7LinkCreationDialog.create
