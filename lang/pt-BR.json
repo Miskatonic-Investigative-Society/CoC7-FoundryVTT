@@ -156,6 +156,7 @@
 "CoC7.RollDifficultyCritical": "Crítico",
 "CoC7.RollResult.LuckSpendText": "{luckAmount} de Sorte gasta, {successLevel} superado.",
 "CoC7.RollDice": "Rolar!",
+"CoC7.CreateLink": "Criar um Teste",
 "CoC7.SuccesLevelHint": "{value} nível(is) de Sucesso.",
 "CoC7.FailureLevelHint": "Fracasso por {value} nível(is).",
 "CoC7.CombinedRollCard": "Cartão de Teste em Conjunto",
