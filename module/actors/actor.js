@@ -163,7 +163,7 @@ export class CoCActor extends Actor {
 						indefiniteInstanity?
 							game.i18n.localize('CoC7.IndefiniteInsanity'):
 							`${game.i18n.localize('CoC7.TemporaryInsanity')} ${insanityDurationText?insanityDurationText:''}`
-						:''
+						:game.i18n.localize('CoC7.NotInsane')
 			}
 		};
 	}
