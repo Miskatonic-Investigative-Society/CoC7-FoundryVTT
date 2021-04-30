@@ -175,6 +175,11 @@ export class CoC7Item extends Item {
 		return `${this.data.data.specialization} (${this.data.name})`;
 	}
 
+	get sName(){
+		if( 'skill' != this.type || !this.data.data?.properties?.special) return super.name;
+		if( this.data.name.toLowerCase().includes( this.data.data.specialization?.toLowerCase())) return super.name;
+		return `${this.data.name}`;
+	}
 	static getNameWithoutSpec( item){
 		if( item instanceof CoC7Item){
 			if( item.data.data?.properties?.special){
