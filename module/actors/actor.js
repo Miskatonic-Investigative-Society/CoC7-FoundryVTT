@@ -163,7 +163,7 @@ export class CoCActor extends Actor {
 						indefiniteInstanity?
 							game.i18n.localize('CoC7.IndefiniteInsanity'):
 							`${game.i18n.localize('CoC7.TemporaryInsanity')} ${insanityDurationText?insanityDurationText:''}`
-						:''
+						:game.i18n.localize('CoC7.NotInsane')
 			}
 		};
 	}
@@ -948,6 +948,18 @@ export class CoCActor extends Actor {
 			parsedFormula = parsedFormula.replace( key, value);
 		}
 		return parsedFormula;
+	}
+
+	static getCharacteristicDefinition(){
+		const characteristics = [];
+		for( let [key, value] of Object.entries(game.system.template.Actor.templates.characteristics.characteristics)){
+			characteristics.push({
+				key: key,
+				shortName: game.i18n.localize(value.short),
+				label: game.i18n.localize( value.label)				
+			});
+		}
+		return characteristics;
 	}
 
 	getCharacteristic( charName){

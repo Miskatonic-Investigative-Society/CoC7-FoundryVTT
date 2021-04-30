@@ -1180,7 +1180,7 @@ export class CoC7Chat{
 		case 'push': {
 			let newCard = card.cloneNode(true); // TODO not necessary
 			let result = newCard.querySelector('.dice-total');
-			result.innerText = result.innerText + ' pushing skill';
+			result.innerText = result.innerText + (game.i18n.localize('CoC7.PushingSkill'));
 			result.classList.remove('failure');
 			newCard.querySelector('.card-buttons').remove();
 			newCard.dataset.pushedRoll = true;
