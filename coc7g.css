@@ -525,7 +525,7 @@
   border-right: none;
 }
 .coc7 .form-group label {
-  flex: 2;
+  flex: 1;
   color: #4b4a44;
   font-weight: bold;
 }
@@ -567,6 +567,15 @@
 .coc7 .form-group.stacked label.checkbox {
   flex: auto;
   text-align: left;
+}
+.coc7 .form-group.subgroup label {
+  flex: 1;
+}
+.coc7 .form-group.subgroup select {
+  flex: 1;
+}
+.coc7 .form-group.subgroup .penalty-selector {
+  flex: 1;
 }
 .coc7 .form-header {
   margin: 0 0 0.25em 0;
@@ -1616,7 +1625,9 @@ html {
   white-space: normal;
 }
 .sheetV2 .window-content p span {
-  display: inline-block;
+  display: inline;
+  margin: 0;
+  padding: 0;
   width: auto;
   height: auto;
   max-width: none;

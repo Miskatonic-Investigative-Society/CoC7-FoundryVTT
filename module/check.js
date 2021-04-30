@@ -241,6 +241,19 @@ export class CoC7Check {
 		return null;
 	}
 
+	get sName(){
+		if( this.actor){
+			if (this.skill) return this.skill.sName;
+			if (this.item) return this.item.name;
+			if (this.characteristic) return CoC7Utilities.getCharacteristicNames( this.characteristic)?.short;
+			if (this.attribute){
+				if( 'lck'== this.attribute) return game.i18n.localize( 'CoC7.Luck');
+				if( 'san'== this.attribute) return game.i18n.localize( 'CoC7.SAN');
+			}
+		}
+		return null;
+	}
+
 	get fullName(){
 		const difficulty = this._difficulty==CoC7Check.difficultyLevel.regular?false:CoC7Check.difficultyString(this._difficulty);
 		const modifier = this._diceModifier > 0?`+${this._diceModifier}`:this._diceModifier.toString();
@@ -422,7 +435,7 @@ export class CoC7Check {
 
 	get skill() { 
 		if( !this._skill && this.skillId){
-			this._skill = this.actor.getOwnedItem( this.skillId);
+			this._skill = this.actor?.getOwnedItem( this.skillId);
 		}
 		if( !this._skill && this.item )
 		{

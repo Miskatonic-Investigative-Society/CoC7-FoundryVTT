@@ -17,23 +17,23 @@
             <div class="options gm-select-only">
                 {{#if hardrolled}}
                     {{#if critical}}
-                        <span class='tag' title="The blow is critical">Critical</span>
+                        <span class='tag' title="{{localize 'CoC7.CriticalTitle'}}">{{localize 'CoC7.Critical'}}</span>
                         {{#if impale}}
-                            <span class='tag' title="The weapon can impale">Impale</span>
+                            <span class='tag' title="{{localize 'CoC7.ImpaleTitle'}}">{{localize 'CoC7.Impale'}}</span>
                         {{/if}}
                     {{/if}}
                 {{else}}
-                    <span class='ic-switch{{#if critical}} switched-on{{/if}}'  data-flag='critical' title="The blow is critical">Critical</span>
+                    <span class='ic-switch{{#if critical}} switched-on{{/if}}'  data-flag='critical' title="{{localize 'CoC7.CriticalTitle'}}">{{localize 'CoC7.Critical'}}</span>
                     {{#if critical}}
-                        <span class='ic-switch{{#if impale}} switched-on{{/if}}'  data-flag='impale' title="The weapon can impale">Impale</span>
+                        <span class='ic-switch{{#if impale}} switched-on{{/if}}'  data-flag='impale' title="{{localize 'CoC7.ImpaleTitle'}}">{{localize 'CoC7.Impale'}}</span>
                     {{/if}}
                 {{/if}}
                 {{#if damageInflicted}}
                     {{#if ignoreArmor}}
                         <span class='tag gm-visible-only'>Armor Ignored</span>
                     {{else}}
-                        <span class='tag gm-visible-only'>Armor: {{armor}}</span>
-                        <span class='tag owner-visible-only'>Armor: {{armor}}</span>
+                        <span class='tag gm-visible-only'>{{CoC7.Armor}}: {{armor}}</span>
+                        <span class='tag owner-visible-only'>{{CoC7.Armor}}: {{armor}}</span>
                     {{/if}}
                 {{else}}
                 <div class="armor flexrow">
@@ -46,7 +46,7 @@
                             {{/if}}
                         </a>
                         {{#unless ignoreArmor}}
-                            <label>Armor:</label>
+                            <label>{{localize 'CoC7.Armor'}}:</label>
                             <form>
                                 <input type='text' name='armor' value='{{armor}}'/>
                             </form>
@@ -59,7 +59,7 @@
                     </div>
                     <div class="flexrow flex-end owner-visible-only owner-info" data-actor-key="{{targetKey}}">
                         {{#unless ignoreArmor}}
-                            <label>Armor:</label>
+                            <label>{{localize 'CoC7.Armor'}}:</label>
                             <span>{{armor}}</span>
                         {{/unless}}
                     </div>
