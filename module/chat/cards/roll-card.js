@@ -133,6 +133,10 @@ export class RollCard{
 		this.rolls.push(check);
 	}
 
+	addRoll( data){
+		this.rolls.push( data);
+	}
+
 	removeRoll( rank){
 		this.rolls.splice( rank, 1);
 	}
