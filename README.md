@@ -28,21 +28,22 @@ version 0.5.7 :
   * CSS reworked on sheetV2 to prevent sliding items no to display correctly.
 * link system reworked:
   * Clicking on a link will trigger the check.
-  * CTRL+click on a link will open and prefill the link creation popup.
+  * CTRL+click on a link will open and fill the link creation popup.
   * Links created by CTRL+click on any element will no more create the link directly, a link creation windows will popup instead.
   * You can pop the link creation window by clicking the link icon in the side menu.
 * Link creation popup:
   * This will propose you with various options to create a link.
-  * You can drop stuff on this window to prefill it.
+  * You can drop stuff on this window to fill it.
 * Link created can now be dropped on the canvas (thanks to José Lozano/Viriato139ac and JuanV for tip in issue #461)
   * If there's a token on the drop, the link will be whispered to that token owner(s).
   * If there's no token, the link will be whispered to the tokens you controlled (selected).
   * If there's no token selected and no token below the drop that link will be whispered to all players having a character.
-* LOCALIZATION WIP (对不起, entschuldigung,lo siento,désolé,すみません,przepraszam,desculpe,förlåt  ).
+* Rest macro added to GM tools thanks to @castanhocorreia.
+* Missing localization keys added thanks to @castanhocorreia.
 * OPPOSED/COMBINED CHECK WIP.
-* DE : nilsriesenberg
-* FR + Doc : @vonv
-* SV : @rangertheman
+* German translation updated thanks to @nilsriesenberg
+* Swedish translation updated thanks to @rangertheman
+* French doc and translation updated thanks to @vonv
 
 version 0.5.6 :
 
@@ -60,7 +61,7 @@ version 0.5.6 :
   * #451, pulp specific. A bug preventing core characteristic roll in some cases corrected thanks to  @timpatim.
   * #460, A bug displaying undefined in item description.
 * Modification thanks to @zeteticl
-  * Sanity monitor now display the dayli threshold.
+  * Sanity monitor now display the daily threshold.
 * Português (Brasil) translation updated thanks to @castanhocorreia.
 * German translation updated thanks to @nilsriesenberg.
 * French doc and translation updated thanks to @vonv.
