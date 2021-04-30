@@ -61,7 +61,7 @@ version 0.5.6 :
   * #451, pulp specific. A bug preventing core characteristic roll in some cases corrected thanks to  @timpatim.
   * #460, A bug displaying undefined in item description.
 * Modification thanks to @zeteticl
-  * Sanity monitor now display the dayli threshold.
+  * Sanity monitor now display the daily threshold.
 * Português (Brasil) translation updated thanks to @castanhocorreia.
 * German translation updated thanks to @nilsriesenberg.
 * French doc and translation updated thanks to @vonv.
