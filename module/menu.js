@@ -180,6 +180,13 @@ export class CoC7Menu {
 					name: 'fakeroll',
 					title: 'CoC7.FakeRoll',
 					onClick : CoC7Chat.fakeRollMessage
+				},
+				{
+					button: true,
+					icon: 'fas fa-moon',
+					name: 'startrest',
+					title: 'CoC7.startRest',
+					onClick :async () => await CoC7Utilities.startRest()
 				}
 			]
 		});
@@ -195,7 +202,7 @@ export class CoC7Menu {
 		controls.push({
 			icon: 'fas fa-link',
 			name: 'create-link',
-			title: 'CoC7.RollDice',
+			title: 'CoC7.CreateLink',
 			visible: isGM,
 			button: true,
 			onClick: CoC7LinkCreationDialog.create

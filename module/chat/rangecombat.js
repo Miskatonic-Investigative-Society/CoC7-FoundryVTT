@@ -793,15 +793,15 @@ export class CoC7RangeTarget{
 	}
 
 	get sizeText(){
-		if( this.big) return '1 bonus die for big target (Build > +4)';
-		if( this.small) return '1 penalty die for a small target';
-		return 'Target has a normal size, no bonus/penalty';
+		if( this.big) return game.i18n.localize('CoC7.rangeCombatCard.BigTargetTitle');
+		if( this.small) return game.i18n.localize('CoC7.rangeCombatCard.SmallTargetTitle');
+		return game.i18n.localize('CoC7.rangeCombatCard.NormalTargetTitle');;
 	}
 
 	get sizeLabel(){
 		if( this.big) return game.i18n.localize('CoC7.rangeCombatCard.BigTarget');
 		if( this.small) return game.i18n.localize('CoC7.combatCard.SmallTarget');
-		return 'Normal';
+		return game.i18n.localize('CoC7.rangeCombatCard.NormalTarget');;
 
 	}
 

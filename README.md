@@ -42,6 +42,7 @@ version 0.5.7 :
 * OPPOSED/COMBINED CHECK WIP.
 * DE : nilsriesenberg
 * FR + Doc : @vonv
+* SV : @rangertheman
 
 version 0.5.6 :
 
