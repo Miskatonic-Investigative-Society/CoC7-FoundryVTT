@@ -56,8 +56,16 @@ Hooks.once('init', async function() {
 		decimals: 4
 	};
 
-	//TODO : remove debug hooks
-	CONFIG.debug.hooks = true;
+	game.settings.register('CoC7', 'debugmode', {
+		name: 'SETTINGS.DebugMode',
+		hint: "SETTINGS.DebugModeHint",
+		scope: 'world',
+		config: true,
+		type: Boolean,
+		default: false
+	});
+
+	CONFIG.debug.hooks = !!game.settings.get('CoC7', 'debugmode');
 	CONFIG.Actor.entityClass = CoCActor;
 	CONFIG.Item.entityClass = CoC7Item;
 	Combat.prototype.rollInitiative = rollInitiative;
