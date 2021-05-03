@@ -181,7 +181,7 @@
 "CoC7.ArmorAbsorbsDamage": "L'armure absorbe tous les dommages",
 "CoC7.Critical": "Critique",
 "CoC7.Impale": "Empale",
-"CoC7.CriticalTitle": "###",
+"CoC7.CriticalTitle": "C'est un Critique",
 "CoC7.ImpaleTitle": "L'arme peut empaler",
 "CoC7.Target": "Cible",
 "CoC7.TargetOutOfRange": "Cible hors de portée",
@@ -587,7 +587,7 @@
 "CoC7.pulpHealthRecovered": "{number} Points de Vie récupérés",
 "CoC7.dailySanLossRestarted": "Compteur de perte de SAN Journalière relancé",
 "CoC7.hasCriticalWounds": "Impossibilité de récupérer des Points de Vie à cause de Blessures Critiques",
-"CoC7.quickHealer": "Soins rapides",
+"CoC7.quickHealer": "Vite sur pieds",
 
 "CoC7.ErrorNoDodgeSkill": "Le personnage n'a pas de compétence esquive",
 "CoC7.ErrorNotEnoughLuck": "{actor} n'a pas assez de chance",
