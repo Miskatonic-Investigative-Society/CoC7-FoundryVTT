@@ -963,18 +963,20 @@ export class CoCActor extends Actor {
 	}
 
 	getCharacteristic( charName){
-		for( let [key, value] of Object.entries(this.data.data.characteristics)){
-			if( 
-				game.i18n.localize(value.short).toLowerCase() == charName.toLowerCase() || 
+		if( this.data.data.characteristics){
+			for( let [key, value] of Object.entries(this.data.data.characteristics)){
+				if( 
+					game.i18n.localize(value.short).toLowerCase() == charName.toLowerCase() || 
 					game.i18n.localize(value.label).toLowerCase() == charName.toLowerCase() ||
 					key == charName.toLowerCase())
-			{
-				return {
-					key: key,
-					shortName: game.i18n.localize(value.short),
-					label: game.i18n.localize( value.label),
-					value: value.value
-				};
+				{
+					return {
+						key: key,
+						shortName: game.i18n.localize(value.short),
+						label: game.i18n.localize( value.label),
+						value: value.value
+					};
+				}
 			}
 		}
 		return null;
@@ -1958,6 +1960,69 @@ export class CoCActor extends Actor {
 		}
 
 		return skills;
+	}
+
+	/** Try to find a characteristic, attribute or skill that matches the name */
+	find( name){
+		//Try ID
+		const item = this.getOwnedItem( name);
+		if( item){
+			return{
+				type: 'item',
+				value: item
+			};
+		}
+
+		//Try to find a skill with exact name.
+		const skill = this.skills.filter( s => {
+			return(
+				!!s.name && (
+					(s.name.toLocaleLowerCase().replace( /\s/g, '') == name.toLocaleLowerCase().replace( /\s/g, '')) ||
+					(s.sName.toLocaleLowerCase().replace( /\s/g, '') == name.toLocaleLowerCase().replace( /\s/g, '')))
+			);
+		});
+		if( skill.length) return { type: 'item', value: skill[0]};
+
+		//Try to find a characteristic.
+		const charKey = ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu'];
+		for (let i = 0; i < charKey.length; i++) {
+			const char = this.getCharacteristic( charKey[i]);
+			if( char.key.toLocaleLowerCase() == name.toLowerCase()) return { type: 'characteristic', value: char};
+			if( char.shortName.toLocaleLowerCase() == name.toLowerCase()) return { type: 'characteristic', value: char};
+			if( char.label.toLocaleLowerCase() == name.toLowerCase()) return { type: 'characteristic', value: char};			
+		}
+
+
+		//Try to find a attribute.
+		const attribKey = ['lck', 'san'];
+		for (let i = 0; i < attribKey.length; i++) {
+			const attr = this.getAttribute( attribKey[i]);
+			if( attr.key.toLocaleLowerCase() == name.toLowerCase()) return { type: 'attribute', value: attr};
+			if( attr.shortName.toLocaleLowerCase() == name.toLowerCase()) return { type: 'attribute', value: attr};
+			if( attr.label.toLocaleLowerCase() == name.toLowerCase()) return { type: 'attribute', value: attr};
+		}
+
+		//Try with partial ??
+		return undefined;
+
+	}
+
+	get pilotSkills(){
+		return this.skills.filter( s => {
+			return (
+				!!s.data.data.specialization &&
+				s.data.data.specialization.length &&
+				s.data.data.specialization?.toLocaleLowerCase() == game.i18n.localize( 'CoC7.PilotSpecializationName')?.toLocaleLowerCase());
+		});
+	}
+	
+	get driveSkills(){
+		return this.skills.filter( s => {
+			return (
+				!!s.data.data.specialization &&
+				s.data.data.specialization.length &&
+				s.data.data.specialization?.toLocaleLowerCase() == game.i18n.localize( 'CoC7.DriveSpecializationName')?.toLocaleLowerCase());
+		});
 	}
 
 	get tokenKey() //Clarifier ca et tokenid
