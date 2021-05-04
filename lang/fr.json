@@ -220,8 +220,8 @@
 
 "CoC7.rangeCombatCard.SingleShot": "Tir simple",
 "CoC7.rangeCombatCard.MultipleShots": "Tir semi-auto.",
-"CoC7.AutomaticFire": "###",
-"CoC7.rangeCombatCard.Burst": "Rafale",
+"CoC7.AutomaticFire": "Armes automatiques",
+"CoC7.rangeCombatCard.Burst": "Tir en rafale",
 "CoC7.rangeCombatCard.FullAuto": "Tir automatique",
 "CoC7.rangeCombatCard.BaseRange": "Portée de base",
 "CoC7.rangeCombatCard.LongRange": "Longue portée",
