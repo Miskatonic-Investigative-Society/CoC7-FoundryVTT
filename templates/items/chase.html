@@ -32,10 +32,17 @@
                                 <a><i class="fas fa-running"></i></a>
                             {{/if}}
                         </div>
-                        <div class="p-icon open-actor" data-actor-key="{{p.actor.actorKey}}">
-                            <a><img src="{{p.actor.img}}" title="{{p.actor.name}}"/></a>
-                        </div>
-                        <div class="p-name">{{p.actor.name}}</div>
+                        {{#if p.hasVehicle}}
+                            <div class="p-icon open-actor" data-actor-key="{{p.vehicle.actorKey}}">
+                                <a><img src="{{p.vehicle.img}}" title="{{p.vehicle.name}}"/></a>
+                            </div>
+                        {{else}}
+                            <div class="p-icon open-actor" data-actor-key="{{p.actor.actorKey}}">
+                                <a><img src="{{p.actor.img}}" title="{{p.actor.name}}"/></a>
+                            </div>
+                        {{/if}}
+                        <div class="p-expand"></div>
+                        <div class="p-name">{{p.name}}</div>
                         <div class="p-movement">
                             <input type='text' name="data.participants.{{i}}.mov" placeholder="MOV" value="{{p.mov}}"/>
                         </div>
@@ -54,6 +61,18 @@
                             <a class="delete-participant"><i class="fas fa-times"></i></a>
                         </div>
                     </div>
+                    {{#if p.hasDriver}}
+                        <div class="driver" data-index={{i}}>
+                            <div class="d-spacer"><i class="fas fa-level-up-alt fa-rotate-90"></i></div>
+                            <div class="d-icon open-actor" data-actor-key="{{p.driver.actorKey}}">
+                                <a><img src="{{p.driver.img}}" title="{{p.driver.name}}"/></a>
+                            </div>
+                            <div class="d-name">{{p.driver.name}}</div>
+                            <div class="d-control">
+                                <a class="delete-driver"><i class="fas fa-times"></i></a>
+                            </div>
+                        </div>
+                    {{/if}}
                     {{/each}}
                 </div>
                 <div class="new-participant">
