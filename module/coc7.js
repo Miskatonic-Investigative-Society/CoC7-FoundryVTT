@@ -31,6 +31,7 @@ import { CombinedCheckCard } from './chat/cards/combined-roll.js';
 import { DamageCard } from './chat/cards/damage.js';
 import { CoC7VehicleSheet } from './actors/sheets/vehicle.js';
 import { CoC7Canvas } from './apps/canvas.js';
+import { CoC7ChaseSheet } from './items/sheets/chase.js';
 
 Hooks.once('init', async function() {
 
@@ -502,6 +503,7 @@ Hooks.once('init', async function() {
 	Items.registerSheet('CoC7', CoC7OccupationSheet, { types: ['occupation'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7ArchetypeSheet, { types: ['archetype'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7SetupSheet, { types: ['setup'], makeDefault: true});
+	Items.registerSheet('CoC7', CoC7ChaseSheet, { types: ['chase'], makeDefault: true});
 	// Items.registerSheet('CoC7', CoC7ManeuverSheet, { types: ['maneuver'], makeDefault: true});
 	Items.registerSheet('CoC7', CoCItemSheet, { types: ['item']});
 	Items.registerSheet('CoC7', CoC7ItemSheetV2, { types: ['item'], makeDefault: true});

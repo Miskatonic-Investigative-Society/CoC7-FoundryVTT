@@ -234,7 +234,9 @@ export class CoC7LinkCreationDialog extends FormApplication{
 		this.close();
 	}
 
-	/** @override */
+	/** @override
+	 * A subclass of the FormApplication must implement the _updateObject method.
+	 */
 	async _updateObject(event, formData) {
 		const target = event.currentTarget;
 		const group = target?.closest( '.form-group');
