@@ -6,8 +6,8 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
 	// 	super(...args);
 	// }
 
-	getData() {
-		const data = super.getData();
+	async getData() {
+		const data = await super.getData();
 
 		data.skillList=[];
 
