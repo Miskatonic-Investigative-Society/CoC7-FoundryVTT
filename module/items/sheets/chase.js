@@ -15,7 +15,6 @@ export class CoC7ChaseSheet extends ItemSheet {
 			classes: ['coc7', 'sheetV2', 'item', 'chase'],
 			width: 500,
 			height: 500,
-			submitOnChange: true,
 			tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills'}]
 		});
 
@@ -38,7 +37,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 		const data = super.getData(options);
 		data.participants = [];
 		this.participants.forEach( p => {
-			data.participants.push( new participant( p));
+			data.participants.push( new _participant( p));
 		});
 		return data;
 	}
@@ -60,6 +59,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 
 		html.find( '.p-side').click(this._onChangeSide.bind(this));
 		html.find( '.delete-participant').click(this._onDeleteParticipant.bind(this));
+		html.find( '.delete-driver').click(this._onDeleteDriver.bind(this));
 
 		const participantDragDrop = new DragDrop({
 			dropSelector: '.participant',
@@ -87,17 +87,19 @@ export class CoC7ChaseSheet extends ItemSheet {
 		if ( updateData ) data = mergeObject(data, updateData);
 		else data = expandObject(data);
 
-		const participants = duplicate( this.participants);
-		// Handle participants array
-		for ( let [k, v] of Object.entries( data.data.participants) ) {
-			const index = Number( k);
-			const original = participants[Number(index)];
-			const cleaned = clean(v);
-			mergeObject( original, cleaned);
-			participants[index] = original;
-		}
+		if( data.data.participants){
+			const participants = duplicate( this.participants);
+			// Handle participants array
+			for ( let [k, v] of Object.entries( data.data.participants) ) {
+				const index = Number( k);
+				const original = participants[Number(index)];
+				const cleaned = clean(v);
+				mergeObject( original, cleaned);
+				participants[index] = original;
+			}
 		
-		data.data.participants = participants;
+			data.data.participants = participants;
+		}
 		// const participants = data.data?.participants;
 		// if( participants) data.data.participants = Object.values( participants).map( p => clean(p));
 		
@@ -110,7 +112,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 	// 	await super._onSubmit(...args);
 	// }
 
-	async _updateObject(event/*, formData*/) {
+	async _updateObject(event, formData) {
 		const target = event.currentTarget;
 		const override = 'true' == target?.dataset?.override;
 		if( override){
@@ -119,18 +121,25 @@ export class CoC7ChaseSheet extends ItemSheet {
 			if( 'participants' == type && !isNaN(index) && 'check' == subType){
 				if( 'name' == data){
 					const participants = this.item.data.data.participants? duplicate( this.item.data.data.participants):[];
-					delete participants[index].check.id;
-					delete participants[index].check.type;
+					if( participants[index].check){
+						delete participants[index].check.id;
+						delete participants[index].check.type;
+					} else participants[index].check = {};
 					participants[index].check.name = target.value;
 					await this.item.update( { 'data.participants': participants});
 				}
 			}
 		}
+		super._updateObject( event, formData);
 	}
 
 	async _onDropParticipant( event){
+		const target = event.currentTarget;
+		const index = target.dataset?.index;
+		if( !index) return;
 		const dataString = event.dataTransfer.getData('text/plain');
 		const data = JSON.parse( dataString);
+		await this.alterParticipant(data, Number(index));
 		ui.notifications.info( `Dropped ${data.type}`);
 	}
 
@@ -159,6 +168,16 @@ export class CoC7ChaseSheet extends ItemSheet {
 		await this.item.update( { 'data.participants': participants});
 	}
 
+	async _onDeleteDriver( event){
+		const target = event.currentTarget;
+		const driver = target.closest('.driver');
+		const index = driver.dataset.index;
+		const participants = this.item.data.data.participants?duplicate( this.item.data.data.participants):[];		
+		const participant = participants[index];
+		delete participant.actorKey;
+		await this.item.update( { 'data.participants': participants});
+	}
+
 	async _onDeleteParticipant( event){
 		const target = event.currentTarget;
 		const participant = target.closest('.participant');
@@ -168,13 +187,15 @@ export class CoC7ChaseSheet extends ItemSheet {
 		await this.item.update( { 'data.participants': participants});
 	}
 
-	async addParticipant( data){
-		const participant = {
-			actorKey : (data.sceneId && data.tokenId)?`${data.sceneId}.${data.tokenId}`:data.actorId||data.actorKey||data.id
-		};
-		const actor = chatHelper.getActorFromKey( participant.actorKey);
-		if( !actor) delete participant.actorKey;
-		
+	async alterParticipant( data, index){
+		const actorKey = (data.sceneId && data.tokenId)?`${data.sceneId}.${data.tokenId}`:data.actorId||data.actorKey||data.id;
+		const participant = {};
+		const actor = chatHelper.getActorFromKey( actorKey);
+		if( actor){
+			if( 'vehicle' == actor.data.type) participant.vehicleKey = actorKey;
+			else participant.actorKey = actorKey;
+		}
+
 		switch (data.type?.toLowerCase()) {
 		case 'actor':
 			break;
@@ -183,6 +204,61 @@ export class CoC7ChaseSheet extends ItemSheet {
 				id: data.data._id,
 				type:'item'
 			};
+			break;
+		case 'characteristic':
+			participant.check = {
+				id: data.name,
+				type:'characteristic'
+			};
+			break;
+		case 'attribute':
+			participant.check = {
+				id: data.name,
+				type:'attribute'
+			};
+			break;
+							
+		default:
+			break;
+		}
+
+		const participants = this.item.data.data.participants?duplicate( this.item.data.data.participants):[];
+		const oldParticipant = participants[index];
+		if( oldParticipant.mov) delete oldParticipant.mov;
+		mergeObject( oldParticipant, participant);
+		await this.item.update( { 'data.participants': participants});
+	}
+
+	async addParticipant( data){
+
+		const actorKey = (data.sceneId && data.tokenId)?`${data.sceneId}.${data.tokenId}`:data.actorId||data.actorKey||data.id;
+		const participant = {};
+		const actor = chatHelper.getActorFromKey( actorKey);
+		if( actor){
+			if( 'vehicle' == actor.data.type) participant.vehicleKey = actorKey;
+			else participant.actorKey = actorKey;
+		}
+
+		// const participant = {
+		// 	actorKey : (data.sceneId && data.tokenId)?`${data.sceneId}.${data.tokenId}`:data.actorId||data.actorKey||data.id
+		// };
+		// const actor = chatHelper.getActorFromKey( participant.actorKey);
+		// if( !actor) delete participant.actorKey;
+		
+		switch (data.type?.toLowerCase()) {
+		case 'actor':
+			break;
+		case 'item':{
+			if( data.id){
+				const item = game.items.get( data.id);
+				if( 'skill' != item?.data?.type) return;
+			}
+
+			participant.check = {
+				id: data.data?._id||data.id,
+				type:'item'
+			};
+		}
 			break;
 		case 'characteristic':
 			participant.check = {
@@ -227,7 +303,7 @@ export function clean( obj){
 	return obj;
 }
 
-export class participant{
+export class _participant{
 	constructor( data={}){
 		this.data = data;
 	}
@@ -237,18 +313,34 @@ export class participant{
 		return this._actor;
 	}
 
+	get driver(){
+		if( !this._driver) this._driver = chatHelper.getActorFromKey( this.data.actorKey);
+		return this._driver;
+	}
+
+	get vehicle(){
+		if( this.data.vehicleKey) this._vehicle = chatHelper.getActorFromKey( this.data.vehicleKey);
+		return this._vehicle;
+	}
+
 	get hasActor(){
 		return( !!this.actor);
 	}
 
+	get hasVehicle(){
+		return( !!this.vehicle);
+	}
+
 	get name(){
+		if( this.hasVehicle) return this.vehicle.name;
 		if( this.hasActor) return this.actor.name;
 		return this.data.name||undefined;
 	}
 
 	get mov(){
-		if( !this.data.mov && this.actor) {
-			this.data.mov = this.actor.mov;
+		if( !this.data.mov) {
+			if( this.hasVehicle) this.data.mov = this.vehicle.mov;
+			else if( this.hasActor) this.data.mov = this.actor.mov;
 		}
 		if( this.data.mov)
 			if( !isNaN( Number(this.data.mov)))
@@ -261,6 +353,26 @@ export class participant{
 	get chaser(){
 		return !!this.data.chaser;
 	}
+
+	get hasDriver(){
+		return this.hasVehicle && this.hasActor;
+	}
+
+	// get options(){
+	// 	return {
+	// 		exclude: [],
+	// 		excludeStartWith: '_'
+	// 	};
+	// }
+
+	// get dataString(){
+	// 	return JSON.stringify(this, (key,value)=>{
+	// 		if( null === value) return undefined;
+	// 		if( this.options.exclude?.includes(key)) return undefined;
+	// 		if( key.startsWith(this.options.excludeStartWith)) return undefined;
+	// 		return value;
+	// 	});
+	// }
 
 	get check(){
 		const check = {};
@@ -296,7 +408,7 @@ export class participant{
 						check.ref = item.value;
 						check.name = item.value.label;
 						check.type = 'characteristic';
-						check.ischaracteristic = true;
+						check.isCharacteristic = true;
 						check.refSet = true;
 						check.score = item.value.value;
 					}
@@ -304,7 +416,7 @@ export class participant{
 						check.ref = item.value;
 						check.name = item.value.label;
 						check.type = 'attribute';
-						check.ischaracteristic = true;
+						check.isAttribute = true;
 						check.refSet = true;
 						check.score = item.value.value;
 					}
@@ -324,7 +436,7 @@ export class participant{
 						check.ref = item.value;
 						check.name = item.value.label;
 						check.type = 'characteristic';
-						check.ischaracteristic = true;
+						check.isCharacteristic = true;
 						check.refSet = true;
 						check.score = item.value.value;
 					}
@@ -332,10 +444,21 @@ export class participant{
 						check.ref = item.value;
 						check.name = item.value.label;
 						check.type = 'attribute';
-						check.ischaracteristic = true;
+						check.isAttribute = true;
 						check.refSet = true;
 						check.score = item.value.value;
 					}
+				}
+			}
+		} else if( this.data.check?.id){
+			const item = game.items.get( this.data.check.id);
+			if( item){
+				if( 'skill' == item.data?.type ){
+					check.ref = item;
+					check.name = item.name;
+					check.type = 'skill';
+					check.isSkill = true;
+					check.refSet = true;
 				}
 			}
 		}

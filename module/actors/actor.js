@@ -1987,9 +1987,11 @@ export class CoCActor extends Actor {
 		const charKey = ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu'];
 		for (let i = 0; i < charKey.length; i++) {
 			const char = this.getCharacteristic( charKey[i]);
-			if( char.key.toLocaleLowerCase() == name.toLowerCase()) return { type: 'characteristic', value: char};
-			if( char.shortName.toLocaleLowerCase() == name.toLowerCase()) return { type: 'characteristic', value: char};
-			if( char.label.toLocaleLowerCase() == name.toLowerCase()) return { type: 'characteristic', value: char};			
+			if( char){
+				if( char.key?.toLocaleLowerCase() == name.toLowerCase()) return { type: 'characteristic', value: char};
+				if( char.shortName?.toLocaleLowerCase() == name.toLowerCase()) return { type: 'characteristic', value: char};
+				if( char.label?.toLocaleLowerCase() == name.toLowerCase()) return { type: 'characteristic', value: char};			
+			}
 		}
 
 
@@ -1997,9 +1999,11 @@ export class CoCActor extends Actor {
 		const attribKey = ['lck', 'san'];
 		for (let i = 0; i < attribKey.length; i++) {
 			const attr = this.getAttribute( attribKey[i]);
-			if( attr.key.toLocaleLowerCase() == name.toLowerCase()) return { type: 'attribute', value: attr};
-			if( attr.shortName.toLocaleLowerCase() == name.toLowerCase()) return { type: 'attribute', value: attr};
-			if( attr.label.toLocaleLowerCase() == name.toLowerCase()) return { type: 'attribute', value: attr};
+			if( attr){
+				if( attr.key?.toLocaleLowerCase() == name.toLowerCase()) return { type: 'attribute', value: attr};
+				if( attr.shortName?.toLocaleLowerCase() == name.toLowerCase()) return { type: 'attribute', value: attr};
+				if( attr.label?.toLocaleLowerCase() == name.toLowerCase()) return { type: 'attribute', value: attr};
+			}
 		}
 
 		//Try with partial ??
