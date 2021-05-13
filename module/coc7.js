@@ -379,6 +379,20 @@ Hooks.once('init', async function() {
 			type: String
 		});
 
+		game.settings.register('CoC7', 'artWorkSheetBackgroundType',{
+			name: 'SETTINGS.ArtWorkSheetBackgroundType',
+			scope: 'world',
+			config: true,
+			default: 'slice',
+			type: String,
+			choices: {
+				'slice': 'SETTINGS.BackgroundSlice',
+				'auto': 'SETTINGS.BackgroundAuto',
+				'contain': 'SETTINGS.BackgroundContain',
+				'cover': 'SETTINGS.BackgroundCover'
+			}
+		});
+
 		game.settings.register('CoC7', 'artWorkOtherSheetBackground',{
 			name: 'SETTINGS.ArtWorkOtherSheetBackground',
 			hint: 'SETTINGS.ArtWorkOtherSheetBackgroundHint',
