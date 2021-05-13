@@ -203,8 +203,8 @@ export class CoC7ActorSheet extends ActorSheet {
 					let lca;
 					let lcb;
 					if( a.data.properties && b.data.properties) {
-						lca = a.data.properties.special ? a.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-						lcb = b.data.properties.special ? b.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+						lca = a.data.properties.special && typeof a.data.specialization !== 'undefined' ? a.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+						lcb = b.data.properties.special && typeof b.data.specialization !== 'undefined' ? b.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 					}
 					else {
 						lca = a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
