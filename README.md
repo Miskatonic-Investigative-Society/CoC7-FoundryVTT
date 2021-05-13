@@ -22,6 +22,23 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+version 0.5.8 :
+
+* Bug correction :
+  * A bug during actor import that could lead to an uninterupted loop had been resolved. Thanks to @BrotherSharper for his help finding this!
+  * Typo correction in combat chat card.
+* CSS options added to specify the type of backgroung for the sheet.
+  * The background image is by default a border image sliced to 'open' and keep header's proportion.
+  * You can now specify this property as the css property background (including repeat, position and attachement).
+  * To enable this you need to select a background type.
+    * slice : image used as border-image.
+    * auto/contains/cover : similar to the background-size property.
+* Option added to disable debug hooks (thanks to @snap01).
+* Japanese translation updated thanks to @BrotherSharper
+* French doc and translation updated thanks to @vonv
+* German translation updated thanks to @IchbinkeinReh
+* !!Chase items are not operational !!.
+
 version 0.5.7 :
 
 * Bug correction:
