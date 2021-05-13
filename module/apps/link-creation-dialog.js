@@ -31,8 +31,8 @@ export class CoC7LinkCreationDialog extends FormApplication{
 	}
 
 	/** @override */
-	getData() {
-		const data = super.getData();
+	async getData() {
+		const data = await super.getData();
 
 		data.link = this.link;
 		data.data = this.link.data;
