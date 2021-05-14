@@ -22,6 +22,46 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+version 0.5.8 :
+
+* Bug correction :
+  * A bug during actor import that could lead to an uninterupted loop had been resolved. Thanks to @BrotherSharper for his help finding this!
+  * Typo correction in combat chat card.
+* CSS options added to specify the type of backgroung for the sheet.
+  * The background image is by default a border image sliced to 'open' and keep header's proportion.
+  * You can now specify this property as the css property background (including repeat, position and attachement).
+  * To enable this you need to select a background type.
+    * slice : image used as border-image.
+    * auto/contains/cover : similar to the background-size property.
+* Option added to disable debug hooks (thanks to @snap01).
+* Japanese translation updated thanks to @BrotherSharper
+* French doc and translation updated thanks to @vonv
+* German translation updated thanks to @IchbinkeinReh
+* !!Chase items are not operational !!.
+
+version 0.5.7 :
+
+* Bug correction:
+  * CSS reworked on sheetV2 to prevent sliding items no to display correctly.
+* link system reworked:
+  * Clicking on a link will trigger the check.
+  * CTRL+click on a link will open and fill the link creation popup.
+  * Links created by CTRL+click on any element will no more create the link directly, a link creation windows will popup instead.
+  * You can pop the link creation window by clicking the link icon in the side menu.
+* Link creation popup:
+  * This will propose you with various options to create a link.
+  * You can drop stuff on this window to fill it.
+* Link created can now be dropped on the canvas (thanks to José Lozano/Viriato139ac and JuanV for tip in issue #461)
+  * If there's a token on the drop, the link will be whispered to that token owner(s).
+  * If there's no token, the link will be whispered to the tokens you controlled (selected).
+  * If there's no token selected and no token below the drop that link will be whispered to all players having a character.
+* Rest macro added to GM tools thanks to @castanhocorreia.
+* Missing localization keys added thanks to @castanhocorreia.
+* OPPOSED/COMBINED CHECK WIP.
+* German translation updated thanks to @nilsriesenberg
+* Swedish translation updated thanks to @rangertheman
+* French doc and translation updated thanks to @vonv
+
 version 0.5.6 :
 
 * Implementation of vehicle sheet.
@@ -38,7 +78,7 @@ version 0.5.6 :
   * #451, pulp specific. A bug preventing core characteristic roll in some cases corrected thanks to  @timpatim.
   * #460, A bug displaying undefined in item description.
 * Modification thanks to @zeteticl
-  * Sanity monitor now display the dayli threshold.
+  * Sanity monitor now display the daily threshold.
 * Português (Brasil) translation updated thanks to @castanhocorreia.
 * German translation updated thanks to @nilsriesenberg.
 * French doc and translation updated thanks to @vonv.

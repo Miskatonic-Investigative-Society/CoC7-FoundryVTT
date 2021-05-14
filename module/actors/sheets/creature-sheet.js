@@ -13,8 +13,8 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 	 * Prepare data for rendering the Actor sheet
 	 * The prepared data object contains both the actor data as well as additional sheet options
 	*/
-	getData() {
-		const data = super.getData();
+	async getData() {
+		const data = await super.getData();
 		// console.log('*********************CoC7CreatureSheet getdata***************');
 
 		//TODO : do we need that ?
@@ -60,7 +60,7 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 			if( undefined != modifier) linkData.modifier = modifier;
 			if( undefined != difficulty) linkData.difficulty = difficulty;
 			const link = CoC7Parser.createCoC7Link(linkData);
-			if( link) chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), link);
+			if( link) chatHelper.createMessage(null, game.i18n.format('CoC7.MessageCheckRequestedWait', {check: link}));
 		} else {
 			SanCheckCard.checkTargets( this.tokenKey, event.shiftKey);
 			// CoC7SanCheck.checkTargets( this.actor.data.data.special.sanLoss.checkPassed, this.actor.data.data.special.sanLoss.checkFailled, event.shiftKey, this.tokenKey);

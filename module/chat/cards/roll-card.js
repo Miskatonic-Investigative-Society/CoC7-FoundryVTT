@@ -65,6 +65,12 @@ export class RollCard{
 				return false;
 			});
 
+			// if( messages.length){
+			// 	const timestamp = new Date( messages[0].data.timestamp);
+			// 	const now = new Date();
+			// 	const timeDiffSec = (now - timestamp) / 1000;
+			// }
+
 			let card;
 			if( !messages.length) card = new this( );
 			else card = await this.fromMessage( messages[0]);
@@ -125,6 +131,10 @@ export class RollCard{
 	addRollData( data){
 		const check = Object.assign( new CoC7Check(), data.roll);
 		this.rolls.push(check);
+	}
+
+	addRoll( data){
+		this.rolls.push( data);
 	}
 
 	removeRoll( rank){

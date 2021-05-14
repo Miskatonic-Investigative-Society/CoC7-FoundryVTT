@@ -5,21 +5,22 @@ import { CoC7MeleeInitiator } from '../../chat/combat/melee-initiator.js';
 import { CoC7RangeInitiator } from '../../chat/rangecombat.js';
 // import { CoC7DamageRoll } from '../../chat/damagecards.js';
 import { CoC7ConCheck } from '../../chat/concheck.js';
-import { chatHelper } from '../../chat/helper.js';
+import { isCtrlKey } from '../../chat/helper.js';
 import { CoC7Parser } from '../../apps/parser.js';
 import { SanDataDialog } from '../../apps/sandata-dialog.js';
 import { SanCheckCard } from '../../chat/cards/san-check.js';
 import { OpposedCheckCard } from '../../chat/cards/opposed-roll.js';
 import { CombinedCheckCard } from '../../chat/cards/combined-roll.js';
 import { DamageCard } from '../../chat/cards/damage.js';
+import { CoC7LinkCreationDialog } from '../../apps/link-creation-dialog.js';
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
  */
 export class CoC7ActorSheet extends ActorSheet {
 
-	getData() {
-		const data = super.getData();
+	async getData() {
+		const data = await super.getData();
 		// console.log('*********************CoC7ActorSheet getdata***************');
 
 		// game.user.targets.forEach(t => t.setTarget(false, {user: game.user, releaseOthers: false, groupSelection: true}));
@@ -121,7 +122,7 @@ export class CoC7ActorSheet extends ActorSheet {
 						if( item.data.properties.fighting){
 							if( item.data.specialization != game.i18n.localize('CoC7.FightingSpecializationName')){
 								let itemToUpdate = this.actor.getOwnedItem( item._id);
-								itemToUpdate.update( {'data.specialization' : game.i18n.localize('CoC7.FightingSpecializationName')});
+								await itemToUpdate.update( {'data.specialization' : game.i18n.localize('CoC7.FightingSpecializationName')});
 								item.data.specialization =  game.i18n.localize('CoC7.FightingSpecializationName'); // TODO : Client with different language = recursive call when opening the same sheet.
 							}
 						}
@@ -129,7 +130,7 @@ export class CoC7ActorSheet extends ActorSheet {
 						{
 							if( item.data.specialization != game.i18n.localize('CoC7.FirearmSpecializationName')){
 								let itemToUpdate = this.actor.getOwnedItem( item._id);
-								itemToUpdate.update( {'data.specialization' : game.i18n.localize('CoC7.FirearmSpecializationName')});
+								await itemToUpdate.update( {'data.specialization' : game.i18n.localize('CoC7.FirearmSpecializationName')});
 								item.data.specialization =  game.i18n.localize('CoC7.FirearmSpecializationName');
 							}
 						}
@@ -149,7 +150,7 @@ export class CoC7ActorSheet extends ActorSheet {
 							if( value){
 								item.data.value = value;
 								let itemToUpdate = this.actor.getOwnedItem( item._id);
-								itemToUpdate.update( {'data.value' : value});
+								await itemToUpdate.update( {'data.value' : value});
 							}
 						}
 					}
@@ -176,7 +177,7 @@ export class CoC7ActorSheet extends ActorSheet {
 							const exp = item.data.adjustments?.experience ? parseInt(item.data.adjustments.experience) : 0;
 							let updatedExp = exp + parseInt( item.data.value) - skill.value;
 							if( updatedExp <= 0) updatedExp = null;
-							this.actor.updateEmbeddedEntity('OwnedItem', {
+							await this.actor.updateEmbeddedEntity('OwnedItem', {
 								_id: item._id,
 								'data.adjustments.experience': updatedExp,
 								'data.value': null
@@ -202,8 +203,8 @@ export class CoC7ActorSheet extends ActorSheet {
 					let lca;
 					let lcb;
 					if( a.data.properties && b.data.properties) {
-						lca = a.data.properties.special ? a.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-						lcb = b.data.properties.special ? b.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+						lca = a.data.properties.special && typeof a.data.specialization !== 'undefined' ? a.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+						lcb = b.data.properties.special && typeof b.data.specialization !== 'undefined' ? b.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 					}
 					else {
 						lca = a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
@@ -578,9 +579,12 @@ export class CoC7ActorSheet extends ActorSheet {
 	_onDragCharacteristic(event){
 		const box = event.currentTarget.parentElement;
 		const data = {
+			CoC7Type: 'link',
 			linkType: 'coc7-link',
 			check: 'check',
 			type: 'characteristic',
+			hasPlayerOwner: this.actor.hasPlayerOwner,
+			actorKey: this.actor.actorKey,
 			name: box.dataset.characteristic,
 			icon: null
 		};
@@ -591,9 +595,12 @@ export class CoC7ActorSheet extends ActorSheet {
 	_onDragAttribute(event){
 		const box = event.currentTarget.parentElement;
 		const data = {
+			CoC7Type: 'link',
 			linkType: 'coc7-link',
 			check: 'check',
 			type: 'attribute',
+			hasPlayerOwner: this.actor.hasPlayerOwner,
+			actorKey: this.actor.actorKey,
 			name: box.dataset.attrib,
 			icon: null
 		};
@@ -605,8 +612,11 @@ export class CoC7ActorSheet extends ActorSheet {
 		const sanMin = event.currentTarget.querySelector('.san-value.pass');
 		const sanMax = event.currentTarget.querySelector('.san-value.failed');
 		const data = {
+			CoC7Type: 'link',
 			linkType: 'coc7-link',
 			check: 'sanloss',
+			hasPlayerOwner: this.actor.hasPlayerOwner,
+			actorKey: this.actor.actorKey,
 			sanMin: sanMin.innerText,
 			sanMax: sanMax.innerText,
 			icon: null
@@ -836,14 +846,16 @@ export class CoC7ActorSheet extends ActorSheet {
 		const weapon = this.actor.getOwnedItem(itemId);
 		const actorKey = !this.token? this.actor.actorKey : `${this.token.scene?._id?this.token.scene._id:'TOKEN'}.${this.token.data._id}`; //REFACTORING (2)
 
-		if((event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM){
+		if(isCtrlKey(event) && game.user.isGM){
 			const linkData = {
 				check: 'item',
 				type: 'weapon',
-				name: weapon.name
+				name: weapon.name,
+				hasPlayerOwner: this.actor.hasPlayerOwner,
+				actorKey: this.actor.actorKey
 			};
-			const link = CoC7Parser.createCoC7Link(linkData);
-			if( link) chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), link);
+
+			CoC7LinkCreationDialog.fromLinkData(linkData).then( dlg => dlg.render(true));
 		} else{
 			if( !weapon.data.data.properties.rngd){
 				if( game.user.targets.size > 1){
@@ -948,7 +960,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
 			if( !event.shiftKey) {
 				const usage = await RollDialog.create( {
-					disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224),
+					disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224), //TODO: do we need this CTRL? 
 					disableFlatDiceModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
 				if( usage) {
 					roll.diceModifier = Number(usage.get('bonusDice'));
@@ -997,10 +1009,24 @@ export class CoC7ActorSheet extends ActorSheet {
 		let tokenKey = event.currentTarget.closest('form').dataset.tokenId;
 		const characteristic = event.currentTarget.parentElement.dataset.characteristic;
 
+		if(isCtrlKey(event) && game.user.isGM){
+			const linkData = {
+				check: 'check',
+				type: 'characteristic',
+				name: characteristic,
+				hasPlayerOwner: this.actor.hasPlayerOwner,
+				actorKey: this.actor.actorKey,
+				forceModifiers: event.shiftKey
+			};
+			if( 'blindroll' === game.settings.get('core', 'rollMode')) linkData.blind = true;
+			CoC7LinkCreationDialog.fromLinkData(linkData).then( dlg => dlg.render(true));
+			return;
+		}
+
 		let difficulty, modifier, flatDiceModifier, flatThresholdModifier;
 		if( !event.shiftKey) {
 			const usage = await RollDialog.create( {
-				disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224),
+				disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224), //TODO : This can be removed ?
 				disableFlatDiceModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
 			if( usage) {
 				modifier = Number(usage.get('bonusDice'));
@@ -1010,33 +1036,43 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 		}
 
-		if((event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM){
-			const linkData = {
-				check: 'check',
-				type: 'characteristic',
-				name: characteristic
-			};
-			if( 'blindroll' === game.settings.get('core', 'rollMode')) linkData.blind = true;
-			if( undefined != modifier) linkData.modifier = modifier;
-			if( undefined != difficulty) linkData.difficulty = difficulty;
-			const link = CoC7Parser.createCoC7Link(linkData);
-			if( link) chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), link);
-		} else {
-			let check = new CoC7Check();	
-			if( undefined != modifier ) check.diceModifier = modifier;
-			if( undefined != difficulty ) check.difficulty = difficulty;
-			check.actor = !tokenKey ? actorId : tokenKey;
-			check.flatDiceModifier = flatDiceModifier;
-			check.flatThresholdModifier = flatThresholdModifier;
-			check.rollCharacteristic(characteristic );
-			check.toMessage();
-		}
+
+		let check = new CoC7Check();	
+		if( undefined != modifier ) check.diceModifier = modifier;
+		if( undefined != difficulty ) check.difficulty = difficulty;
+		check.actor = !tokenKey ? actorId : tokenKey;
+		check.flatDiceModifier = flatDiceModifier;
+		check.flatThresholdModifier = flatThresholdModifier;
+		check.rollCharacteristic(characteristic );
+		check.toMessage();
+		
 	}
 
 	async _onRollAttribTest( event){ //FLATMODIFIER
 		event.preventDefault();
 
 		const attrib = event.currentTarget.parentElement.dataset.attrib;
+
+		if(isCtrlKey(event) && game.user.isGM && ['lck', 'san'].includes(attrib)){
+			const linkData = event.altKey?
+				{
+					check: 'sanloss',
+					hasPlayerOwner: this.actor.hasPlayerOwner,
+					actorKey: this.actor.actorKey,
+					forceModifiers: event.shiftKey
+				}:{
+					check: 'check',
+					type: 'attribute',
+					name: attrib,
+					hasPlayerOwner: this.actor.hasPlayerOwner,
+					actorKey: this.actor.actorKey,
+					forceModifiers: event.shiftKey
+				};
+			if( 'blindroll' === game.settings.get('core', 'rollMode')) linkData.blind = true;
+			CoC7LinkCreationDialog.fromLinkData(linkData).then( dlg => dlg.render(true));
+			return;
+		}
+
 		if( attrib === 'db'){
 			if( !/^-{0,1}\d+$/.test(event.currentTarget.parentElement.dataset.rollFormula)){
 				const r=new Roll(event.currentTarget.parentElement.dataset.rollFormula);
@@ -1061,8 +1097,8 @@ export class CoC7ActorSheet extends ActorSheet {
 		let difficulty, modifier, flatDiceModifier, flatThresholdModifier;
 		if( !event.shiftKey) {
 			const usage = await RollDialog.create( {
-				disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224),
-				disableFlatDiceModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
+				disableFlatThresholdModifier: false, //TODO: Remove, deprecated.
+				disableFlatDiceModifier: false}); //TODO: Remove, deprecated.
 			if( usage) {
 				modifier = Number(usage.get('bonusDice'));
 				difficulty = Number(usage.get('difficulty'));
@@ -1071,18 +1107,14 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 		}
 
-		let sanMin, sanMax, useCustomName, displayName;
+		let sanMin, sanMax;
 		if( event.altKey && attrib == 'san'){
 			const sanData = await SanDataDialog.create( {
-				promptLabel : (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM
+				promptLabel : false //TODO: Remove, deprecated.
 			});
 			if( sanData){
 				sanMin = sanData.get( 'sanMin')||0;
 				sanMax = sanData.get( 'sanMax')||0;
-				useCustomName = sanData.get( 'usecustom')||false;
-				displayName = sanData.get( 'customname')||null;
-
-				// ui.notifications.info( `Custom name: ${useCustomName}: ${name}`);
 				
 				if( !isNaN(Number(sanMin))) sanMin=Number(sanMin);
 				if( !isNaN(Number(sanMax))) sanMax=Number(sanMax);
@@ -1090,28 +1122,6 @@ export class CoC7ActorSheet extends ActorSheet {
 		}
 
 		const isSanCheck = undefined != sanMin && undefined != sanMax;
-
-		if((event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM && ['lck', 'san'].includes(attrib)){
-			const linkData = isSanCheck?
-				{
-					check: 'sanloss',
-					sanMax: sanMax,
-					sanMin: sanMin,
-				}:{
-					check: 'check',
-					type: 'attribute',
-					name: attrib
-				};
-			if( useCustomName && displayName) linkData.displayName = displayName;
-			if( 'blindroll' === game.settings.get('core', 'rollMode')) linkData.blind = true;
-			if( undefined != modifier) linkData.modifier = modifier;
-			if( undefined != difficulty) linkData.difficulty = difficulty;
-			const link = CoC7Parser.createCoC7Link(linkData);
-			if( link) {
-				chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), link);
-				return;
-			}
-		}
 
 		if( isSanCheck){
 			SanCheckCard.create( this.actor.actorKey, {sanMin: sanMin, sanMax: sanMax}, { sanModifier: modifier,sanDifficulty: difficulty,fastForward:event.shiftKey});
@@ -1139,12 +1149,28 @@ export class CoC7ActorSheet extends ActorSheet {
 		const skillId = event.currentTarget.closest('.item').dataset.skillId;
 		const actorId = event.currentTarget.closest('form').dataset.actorId;
 		const tokenKey = event.currentTarget.closest('form').dataset.tokenId;
+
+		if(isCtrlKey(event) && game.user.isGM){
+			const name = this.actor.items.get(skillId)?.name;
+			if( !name) return;
+			const linkData = {
+				check: 'check',
+				type: 'skill',
+				name: name,
+				hasPlayerOwner: this.actor.hasPlayerOwner,
+				actorKey: this.actor.actorKey,
+				forceModifiers: event.shiftKey
+			};
+			if( 'blindroll' === game.settings.get('core', 'rollMode')) linkData.blind = true;
+			CoC7LinkCreationDialog.fromLinkData(linkData).then( dlg => dlg.render(true));
+			return;
+		}
 		
 		let difficulty, modifier, flatDiceModifier, flatThresholdModifier;
 		if( !event.shiftKey) {
 			const usage = await RollDialog.create( {
-				disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224),
-				disableFlatDiceModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
+				disableFlatThresholdModifier: false,
+				disableFlatDiceModifier: false});
 			if( usage) {
 				modifier = Number(usage.get('bonusDice'));
 				difficulty = Number(usage.get('difficulty'));
@@ -1153,30 +1179,16 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 		}
 
-		if((event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM){
-			const name = this.actor.items.get(skillId)?.name;
-			if( !name) return;
-			const linkData = {
-				check: 'check',
-				type: 'skill',
-				name: name
-			};
-			if( 'blindroll' === game.settings.get('core', 'rollMode')) linkData.blind = true;
-			if( undefined != modifier) linkData.modifier = modifier;
-			if( undefined != difficulty) linkData.difficulty = difficulty;
-			const link = CoC7Parser.createCoC7Link(linkData);
-			if( link) chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), link);
-		} else {
-			let check = new CoC7Check();		
-			if( undefined != modifier ) check.diceModifier = modifier;
-			if( undefined != difficulty ) check.difficulty = difficulty;
-			check.actor = !tokenKey ? actorId : tokenKey;
-			check.skill = skillId;
-			check.flatDiceModifier = flatDiceModifier;
-			check.flatThresholdModifier = flatThresholdModifier;
-			check.roll();
-			check.toMessage();
-		}
+		let check = new CoC7Check();		
+		if( undefined != modifier ) check.diceModifier = modifier;
+		if( undefined != difficulty ) check.difficulty = difficulty;
+		check.actor = !tokenKey ? actorId : tokenKey;
+		check.skill = skillId;
+		check.flatDiceModifier = flatDiceModifier;
+		check.flatThresholdModifier = flatThresholdModifier;
+		check.roll();
+		check.toMessage();
+
 	}
 	
 	/** @override */

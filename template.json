@@ -279,7 +279,7 @@
         }
     },
     "Item": {
-        "types": [ "item", "weapon", "skill", "setup", "occupation", "archetype", "book", "spell", "talent", "status"],
+        "types": [ "item", "weapon", "skill", "setup", "occupation", "archetype", "book", "spell", "talent", "status", "chase"],
         "item": {
             "description": "",
             "quantity": 1,
@@ -552,8 +552,13 @@
                 "mania":false,
                 "phobia":false
             }
+        },
+        "chase":{
+            "locations":{
+                "total": 0,
+                "list":[]
+            },
+            "participants": []
         }
-
-
     }
 }
