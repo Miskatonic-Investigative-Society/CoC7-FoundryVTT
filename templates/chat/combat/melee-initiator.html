@@ -37,7 +37,7 @@
                 {{#if target}}
                 <span class="tag">{{targetName}} :</span>
                 {{#if outnumbered}}<span class="tag" title="Outnumbered">{{localize 'CoC7.OutNumbered'}}</span>{{/if}}
-                {{#if surprised}}<span class="tag" title="Surprised">{{localize 'CoC7.combatCard.surpised'}}</span>{{/if}}
+                {{#if surprised}}<span class="tag" title="Surprised">{{localize 'CoC7.combatCard.surprised'}}</span>{{/if}}
                 {{#if autoSuccess}}<span class="tag" title="Automatic success">{{localize 'CoC7.combatCard.autoSuccess'}}</span>{{/if}}
                 {{/if}}
             </div>
@@ -66,7 +66,7 @@
 
     <div class="target-name">
         {{#if target}}
-        <label>Target : {{targetName}}</label>
+        <label>{{localize 'CoC7.Target'}} : {{targetName}}</label>
         {{/if}}
     </div>
 
@@ -81,7 +81,7 @@
             title="{{localize 'CoC7.TitleSurprised'}}"
             style="text-align:center"
             data-flag="surprised"
-            data-selected={{surprised}}>{{localize 'CoC7.combatCard.surpised'}}</span>
+            data-selected={{surprised}}>{{localize 'CoC7.combatCard.surprised'}}</span>
         <span class="flex1 toggle-switch auto-success {{#unless rolled}}simple-flag{{/unless}} {{#if autoSuccess}}switched-on{{/if}} gm-visible-only"
             title="{{localize 'CoC7.TitleAutoSuccess'}}"
             style="text-align:center"

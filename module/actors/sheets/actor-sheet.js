@@ -9,8 +9,8 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 	 * Prepare data for rendering the Actor sheet
 	 * The prepared data object contains both the actor data as well as additional sheet options
 	*/
-	getData() {
-		const data = super.getData();
+	async getData() {
+		const data = await super.getData();
 
 		if( this.actor.occupation){
 			data.data.infos.occupation = this.actor.occupation.name;

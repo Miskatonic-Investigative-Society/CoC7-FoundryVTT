@@ -54,8 +54,9 @@
                         <div class='name'>
                             {{#if r.item}}
                                 <span class="tag">{{r.item.name}}</span>
+                            {{else}}
+                                <span class="tag">{{r.sName}}</span>
                             {{/if}}
-                            <span class="tag">{{r.skill.name}}</span>
                             {{#if r.maneuver}}
                                 <span class='tag'>{{localize 'CoC7.WeaponProperyManeuver'}} ({{localize 'CoC7.Build'}}: {{r.actor.build}})</span>
                             {{/if}}
@@ -94,11 +95,11 @@
     {{#unless closed}}
         {{#if winnerRollsDamage}}
             <div class='card-buttons gm-visible-only'>
-                <button data-action='roll-damage'>Roll damage</button>
+                <button data-action='roll-damage'>{{localize 'CoC7.RollDamage'}}</button>
             </div>
         {{else}}
             <div class='card-buttons gm-visible-only'>
-                <button data-action='close-card'>Close card</button>
+                <button data-action='close-card'>{{localize 'CoC7.CloseCard'}}</button>
             </div>
         {{/if}}
     {{/unless}}

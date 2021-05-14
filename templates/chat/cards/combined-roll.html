@@ -21,7 +21,7 @@
                             {{#if r.item}}
                                 <span class="tag">{{r.item.name}}</span>
                             {{/if}}
-                            <span class="tag">{{r.skill.name}}</span>
+                            <span class="tag">{{r.sName}}</span>
                         </div>
                         <a class="gm-visible-only" data-action="remove-roll" title="{{localize 'CoC7.remove'}}"><i class="far fa-times-circle"></i></a>
                     </div>
@@ -53,7 +53,7 @@
 
     {{#unless closed}}
     <div class='card-buttons gm-visible-only'>
-        <button data-action='close-card'>Close card</button>
+        <button data-action='close-card'>{{localize 'CoC7.CloseCard'}}</button>
     </div>
     {{/unless}}
 </div>
