@@ -59,7 +59,7 @@ Hooks.once('init', async function() {
 
 	game.settings.register('CoC7', 'debugmode', {
 		name: 'SETTINGS.DebugMode',
-		hint: "SETTINGS.DebugModeHint",
+		hint: 'SETTINGS.DebugModeHint',
 		scope: 'world',
 		config: true,
 		type: Boolean,
@@ -67,8 +67,8 @@ Hooks.once('init', async function() {
 	});
 
 	CONFIG.debug.hooks = !!game.settings.get('CoC7', 'debugmode');
-	CONFIG.Actor.entityClass = CoCActor;
-	CONFIG.Item.entityClass = CoC7Item;
+	CONFIG.Actor.documentClass = CoCActor;
+	CONFIG.Item.documentClass = CoC7Item;
 	Combat.prototype.rollInitiative = rollInitiative;
 
 	game.settings.register('CoC7', 'developmentEnabled', {

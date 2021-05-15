@@ -21,9 +21,10 @@ export class CoC7ActorSheet extends ActorSheet {
 
 	async getData() {
 		const data = await super.getData();
-		// console.log('*********************CoC7ActorSheet getdata***************');
 
-		// game.user.targets.forEach(t => t.setTarget(false, {user: game.user, releaseOthers: false, groupSelection: true}));
+		const actorData = this.actor.data.toObject(false);
+		data.data = actorData.data;
+		
 		data.isToken = this.actor.isToken;
 		data.itemsByType = {};
 		data.skills = {};

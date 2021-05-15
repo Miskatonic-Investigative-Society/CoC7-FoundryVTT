@@ -99,6 +99,33 @@ export class CoCActor extends Actor {
 		return returnData;
 	}
 
+	get characteristics(){
+		let characteristics = {
+			str: { value: null, shortName: 'CHARAC.STR', label: 'CHARAC.Strength', formula: null},
+			con: { value: null,	shortName: 'CHARAC.CON', label: 'CHARAC.Constitution', formula: null },
+			siz: { value: null, shortName: 'CHARAC.SIZ', label: 'CHARAC.Size', formula: null },
+			dex: { value: null, shortName: 'CHARAC.DEX', label: 'CHARAC.Dexterity', formula: null },
+			app: { value: null, shortName: 'CHARAC.APP', label: 'CHARAC.Appearance', formula: null },
+			int: { value: null, shortName: 'CHARAC.INT', label: 'CHARAC.Intelligence', formula: null },
+			pow: { value: null, shortName: 'CHARAC.POW', label: 'CHARAC.Power', formula: null },
+			edu: { value: null, shortName: 'CHARAC.EDU', label: 'CHARAC.Education', formula: null }
+		};
+		if( this.data.data.characteristics){
+			for( let [key, value] of Object.entries(this.data.data.characteristics)){
+				characteristics[key] = {
+					key: key,
+					shortName: game.i18n.localize(value.short),
+					label: game.i18n.localize( value.label),
+					value: value.value,
+					hard: Math.floor( value.value / 2) || null,
+					extreme: Math.floor( value.value / 5) || null,
+					formula: value.formula
+				};
+			}
+		}
+		return characteristics;
+	}
+
 	/**
 	 * Called upon token creation from preCreateActor hook
 	 * @param {*} createData 
