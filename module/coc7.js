@@ -31,6 +31,7 @@ import { CombinedCheckCard } from './chat/cards/combined-roll.js';
 import { DamageCard } from './chat/cards/damage.js';
 import { CoC7VehicleSheet } from './actors/sheets/vehicle.js';
 import { CoC7Canvas } from './apps/canvas.js';
+import { CoC7ChaseSheet } from './items/sheets/chase.js';
 
 Hooks.once('init', async function() {
 
@@ -56,8 +57,16 @@ Hooks.once('init', async function() {
 		decimals: 4
 	};
 
-	//TODO : remove debug hooks
-	CONFIG.debug.hooks = true;
+	game.settings.register('CoC7', 'debugmode', {
+		name: 'SETTINGS.DebugMode',
+		hint: "SETTINGS.DebugModeHint",
+		scope: 'world',
+		config: true,
+		type: Boolean,
+		default: false
+	});
+
+	CONFIG.debug.hooks = !!game.settings.get('CoC7', 'debugmode');
 	CONFIG.Actor.entityClass = CoCActor;
 	CONFIG.Item.entityClass = CoC7Item;
 	Combat.prototype.rollInitiative = rollInitiative;
@@ -378,6 +387,20 @@ Hooks.once('init', async function() {
 			type: String
 		});
 
+		game.settings.register('CoC7', 'artWorkSheetBackgroundType',{
+			name: 'SETTINGS.ArtWorkSheetBackgroundType',
+			scope: 'world',
+			config: true,
+			default: 'slice',
+			type: String,
+			choices: {
+				'slice': 'SETTINGS.BackgroundSlice',
+				'auto': 'SETTINGS.BackgroundAuto',
+				'contain': 'SETTINGS.BackgroundContain',
+				'cover': 'SETTINGS.BackgroundCover'
+			}
+		});
+
 		game.settings.register('CoC7', 'artWorkOtherSheetBackground',{
 			name: 'SETTINGS.ArtWorkOtherSheetBackground',
 			hint: 'SETTINGS.ArtWorkOtherSheetBackgroundHint',
@@ -502,6 +525,7 @@ Hooks.once('init', async function() {
 	Items.registerSheet('CoC7', CoC7OccupationSheet, { types: ['occupation'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7ArchetypeSheet, { types: ['archetype'], makeDefault: true});
 	Items.registerSheet('CoC7', CoC7SetupSheet, { types: ['setup'], makeDefault: true});
+	Items.registerSheet('CoC7', CoC7ChaseSheet, { types: ['chase'], makeDefault: true});
 	// Items.registerSheet('CoC7', CoC7ManeuverSheet, { types: ['maneuver'], makeDefault: true});
 	Items.registerSheet('CoC7', CoCItemSheet, { types: ['item']});
 	Items.registerSheet('CoC7', CoC7ItemSheetV2, { types: ['item'], makeDefault: true});

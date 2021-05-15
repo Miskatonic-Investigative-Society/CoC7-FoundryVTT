@@ -19,8 +19,8 @@ import { CoC7LinkCreationDialog } from '../../apps/link-creation-dialog.js';
  */
 export class CoC7ActorSheet extends ActorSheet {
 
-	getData() {
-		const data = super.getData();
+	async getData() {
+		const data = await super.getData();
 		// console.log('*********************CoC7ActorSheet getdata***************');
 
 		// game.user.targets.forEach(t => t.setTarget(false, {user: game.user, releaseOthers: false, groupSelection: true}));
@@ -122,7 +122,7 @@ export class CoC7ActorSheet extends ActorSheet {
 						if( item.data.properties.fighting){
 							if( item.data.specialization != game.i18n.localize('CoC7.FightingSpecializationName')){
 								let itemToUpdate = this.actor.getOwnedItem( item._id);
-								itemToUpdate.update( {'data.specialization' : game.i18n.localize('CoC7.FightingSpecializationName')});
+								await itemToUpdate.update( {'data.specialization' : game.i18n.localize('CoC7.FightingSpecializationName')});
 								item.data.specialization =  game.i18n.localize('CoC7.FightingSpecializationName'); // TODO : Client with different language = recursive call when opening the same sheet.
 							}
 						}
@@ -130,7 +130,7 @@ export class CoC7ActorSheet extends ActorSheet {
 						{
 							if( item.data.specialization != game.i18n.localize('CoC7.FirearmSpecializationName')){
 								let itemToUpdate = this.actor.getOwnedItem( item._id);
-								itemToUpdate.update( {'data.specialization' : game.i18n.localize('CoC7.FirearmSpecializationName')});
+								await itemToUpdate.update( {'data.specialization' : game.i18n.localize('CoC7.FirearmSpecializationName')});
 								item.data.specialization =  game.i18n.localize('CoC7.FirearmSpecializationName');
 							}
 						}
@@ -150,7 +150,7 @@ export class CoC7ActorSheet extends ActorSheet {
 							if( value){
 								item.data.value = value;
 								let itemToUpdate = this.actor.getOwnedItem( item._id);
-								itemToUpdate.update( {'data.value' : value});
+								await itemToUpdate.update( {'data.value' : value});
 							}
 						}
 					}
@@ -177,7 +177,7 @@ export class CoC7ActorSheet extends ActorSheet {
 							const exp = item.data.adjustments?.experience ? parseInt(item.data.adjustments.experience) : 0;
 							let updatedExp = exp + parseInt( item.data.value) - skill.value;
 							if( updatedExp <= 0) updatedExp = null;
-							this.actor.updateEmbeddedEntity('OwnedItem', {
+							await this.actor.updateEmbeddedEntity('OwnedItem', {
 								_id: item._id,
 								'data.adjustments.experience': updatedExp,
 								'data.value': null
@@ -203,8 +203,8 @@ export class CoC7ActorSheet extends ActorSheet {
 					let lca;
 					let lcb;
 					if( a.data.properties && b.data.properties) {
-						lca = a.data.properties.special ? a.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-						lcb = b.data.properties.special ? b.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+						lca = a.data.properties.special && typeof a.data.specialization !== 'undefined' ? a.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+						lcb = b.data.properties.special && typeof b.data.specialization !== 'undefined' ? b.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 					}
 					else {
 						lca = a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
