@@ -13,8 +13,8 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 	 * Prepare data for rendering the Actor sheet
 	 * The prepared data object contains both the actor data as well as additional sheet options
 	*/
-	getData() {
-		const data = super.getData();
+	async getData() {
+		const data = await super.getData();
 		// console.log('*********************CoC7CreatureSheet getdata***************');
 
 		//TODO : do we need that ?

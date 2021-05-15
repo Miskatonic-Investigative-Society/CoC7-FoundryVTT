@@ -6,8 +6,8 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
 	// 	super(...args);
 	// }
 
-	getData() {
-		const data = super.getData();
+	async getData() {
+		const data = await super.getData();
 
 		data.skillList=[];
 
@@ -51,8 +51,49 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
 	static renderSheet( sheet){
 		// html.css('--main-sheet-bg',  'url( \'./artwork/backgrounds/character-sheet.png\') 4 repeat');
 		if( game.settings.get('CoC7', 'overrideSheetArtwork')){
-			if( game.settings.get('CoC7', 'artWorkSheetBackground'))
+			if( game.settings.get('CoC7', 'artWorkSheetBackground')){
 				sheet.element.css('--main-sheet-bg',  game.settings.get('CoC7', 'artWorkSheetBackground'));
+				// const borderImage = sheet.element.find('form').css('border-image');
+				// sheet.element.find('form').css('border-image', '');
+				if( 'slice' !=  game.settings.get('CoC7', 'artWorkSheetBackgroundType')){
+					let styleSheet, cssRuleIndex;
+					for (let i = 0; i < document.styleSheets.length; i++) {
+						if( document.styleSheets[i].href.endsWith('coc7g.css')){
+							styleSheet = document.styleSheets[i];
+							break;
+						}					
+					}
+
+					if( styleSheet){
+						for (let i = 0; i < styleSheet.rules.length; i++) {
+							if( '.sheetV2.character form' == styleSheet.rules[i].selectorText){
+								cssRuleIndex = i;
+								break;
+							}
+						}
+					}
+					if( cssRuleIndex){
+						const CSSStyle = styleSheet.rules[cssRuleIndex].style;
+						CSSStyle.removeProperty( 'border-image');
+						CSSStyle.setProperty( 'background', game.settings.get('CoC7', 'artWorkSheetBackground'));
+						switch (game.settings.get('CoC7', 'artWorkSheetBackgroundType')) {
+						case 'auto':
+							CSSStyle.setProperty( 'background-size', 'auto');
+							break;
+						case 'contain':
+							CSSStyle.setProperty( 'background-size', 'contain');
+							break;
+						case 'cover':
+							CSSStyle.setProperty( 'background-size', 'cover');
+							break;
+						default:
+							CSSStyle.setProperty( 'background-size', 'auto');
+							break;
+						}
+					}
+				}
+				
+			}
 			else if( 'null' == game.settings.get('CoC7', 'artWorkSheetBackground').toLowerCase())
 				sheet.element.css('--main-sheet-bg',  'url( \'./artwork/backgrounds/void.png\')');
 
