@@ -352,7 +352,7 @@ export class CoCActor extends Actor {
 				}
 			}
 		};
-		const created = await this.createEmbeddedEntity('OwnedItem', data, { renderSheet: showSheet});
+		const created = await this.createEmbeddedDocuments('Item', [data], { renderSheet: showSheet}); //MODIF: 0.8.x 'OwnedItmem' => 'Item
 		return created;
 	}
 
@@ -381,8 +381,8 @@ export class CoCActor extends Actor {
 				}
 			}
 		};
-		await this.createEmbeddedEntity('OwnedItem', data, { renderSheet: !base});
-		//		const created = await this.createEmbeddedEntity('OwnedItem', data, { renderSheet: !base});
+		await this.createEmbeddedDocuments('Item', [data], { renderSheet: !base}); //MODIF: 0.8.x 'OwnedItmem' => 'Item
+		//		const created = await this.createEmbeddedDocuments('OwnedItem', data, { renderSheet: !base});
 		const skill = this.getSkillsByName( name);
 		return skill[0];
 	}
@@ -399,9 +399,9 @@ export class CoCActor extends Actor {
 		if( skills.length == 0){
 			//Creating natural attack skill
 			try{
-				const skill = await this.createEmbeddedEntity(
-					'OwnedItem',
-					{
+				const skill = await this.createEmbeddedDocuments(
+					'Item', //MODIF: 0.8.x 'OwnedItmem' => 'Item
+					[{
 						name: game.i18n.localize(COC7.creatureFightingSkill),
 						type: 'skill',
 						data:{
@@ -415,11 +415,11 @@ export class CoCActor extends Actor {
 							},
 							flags: {}
 						}
-					}, { renderSheet: false});
+					}], { renderSheet: false});
           
-				const attack = await this.createEmbeddedEntity(
-					'OwnedItem',
-					{
+				const attack = await this.createEmbeddedDocuments(
+					'Item', //MODIF: 0.8.x 'OwnedItmem' => 'Item
+					[{
 						name: 'Innate attack',
 						type: 'weapon',
 						data: {
@@ -433,7 +433,7 @@ export class CoCActor extends Actor {
 								'slnt': true
 							}
 						}
-					}, { renderSheet: false});
+					}], { renderSheet: false});
 
 
 				const createdAttack = this.getOwnedItem( attack._id);
@@ -459,7 +459,7 @@ export class CoCActor extends Actor {
 				'quantity': quantity
 			}
 		};
-		const created = await this.createEmbeddedEntity('OwnedItem', data, { renderSheet: showSheet});
+		const created = await this.createEmbeddedDocuments('Item', [data], { renderSheet: showSheet}); //MODIF: 0.8.x 'OwnedItmem' => 'Item
 		return created;
 	}
 
@@ -513,7 +513,7 @@ export class CoCActor extends Actor {
 		{
 			data.data.properties[key] = false;
 		}
-		await this.createEmbeddedEntity('OwnedItem', data, { renderSheet: showSheet});
+		await this.createEmbeddedDocuments('Item', [data], { renderSheet: showSheet}); //MODIF: 0.8.x 'OwnedItmem' => 'Item
 	}
 
 	async createBioSection( title = null){
@@ -574,7 +574,8 @@ export class CoCActor extends Actor {
    * @param {*} data 
    * @param {*} options 
    */
-	async createEmbeddedEntity(embeddedName, data, options){
+	async createEmbeddedDocuments(embeddedName, dataArray, options){
+		const data = dataArray[0];
 		switch( data.type){
 		case 'skill':
 			if( 'character' != this.data.type){ //If not a PC set skill value to base
@@ -635,7 +636,7 @@ export class CoCActor extends Actor {
 				// }
 			}
 
-			return await super.createEmbeddedEntity(embeddedName, data, options);
+			return await super.createEmbeddedDocuments(embeddedName, [data], options);
 		case 'weapon':{
 			const mainSkill = data.data?.skill?.main?.name;
 			if( mainSkill){
@@ -657,7 +658,7 @@ export class CoCActor extends Actor {
 				if( skill) data.data.skill.alternativ.id = skill._id;
 			} //TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
 			
-			return await super.createEmbeddedEntity(embeddedName, duplicate(data), options);
+			return await super.createEmbeddedDocuments(embeddedName, [duplicate(data)], options);
 		}
 		case 'setup':{
 			if( data.data.enableCharacterisitics){
@@ -769,7 +770,7 @@ export class CoCActor extends Actor {
 				//Add all skills
 				await this.addUniqueItems( data.data.skills, 'archetype');
 
-				const newArchetype = await super.createEmbeddedEntity(embeddedName, data, options);
+				const newArchetype = await super.createEmbeddedDocuments(embeddedName, [data], options);
 				//setting points
 				await this.update( {
 					'data.development.archetype': this.archetypePoints,
@@ -910,7 +911,7 @@ export class CoCActor extends Actor {
 				//setting it to min credit rating
 				await this.creditRatingSkill?.update( {'data.adjustments.occupation': Number(data.data.creditRating.min)});
 
-				const newOccupation = await super.createEmbeddedEntity(embeddedName, data, options);
+				const newOccupation = await super.createEmbeddedDocuments(embeddedName, [data], options);
 				//setting points
 				await this.update( {
 					'data.development.occupation': this.occupationPoints,
@@ -922,7 +923,7 @@ export class CoCActor extends Actor {
 			break;
 
 		default:
-			return await super.createEmbeddedEntity(embeddedName, data, options);
+			return await super.createEmbeddedDocuments(embeddedName, [data], options);
 		}
 	}
 
@@ -1904,7 +1905,7 @@ export class CoCActor extends Actor {
 							if( skill) item.data.data.skill.alternativ.id = skill._id;
 						} //TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
 						
-						await this.createEmbeddedEntity('OwnedItem', duplicate(item.data));
+						await this.createEmbeddedDocuments('Item', [duplicate(item.data)]); //MODIF: 0.8.x 'OwnedItmem' => 'Item
 					}
 					else return;
 					weapons = this.getItemsFromName( item.name);

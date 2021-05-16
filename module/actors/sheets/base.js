@@ -23,7 +23,9 @@ export class CoC7ActorSheet extends ActorSheet {
 		const data = await super.getData();
 
 		const actorData = this.actor.data.toObject(false);
-		data.data = actorData.data;
+		data.data = actorData.data; // Modif 0.8.x : data.data
+		data.editable = this.isEditable; //MODIF 0.8.x : editable removed
+
 		
 		data.isToken = this.actor.isToken;
 		data.itemsByType = {};
@@ -424,7 +426,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
 
 		// Owner Only Listeners
-		if ( this.actor.owner ) {
+		if ( this.actor.isOwner ) {
 
 			html.find('.characteristic-label').on( 'dragstart', (event)=> this._onDragCharacteristic(event));
 			html.find('.attribute-label').on( 'dragstart', (event)=> this._onDragAttribute(event));
@@ -739,7 +741,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		event.preventDefault();
 		let li = $(event.currentTarget).parents('.item'),
 			item = this.actor.getOwnedItem(li.data('item-id')),
-			chatData = item.getChatData({secrets: this.actor.owner, owner: this.actor});
+			chatData = item.getChatData({secrets: this.actor.isOwner, owner: this.actor});
 
 
 		// Toggle summary
