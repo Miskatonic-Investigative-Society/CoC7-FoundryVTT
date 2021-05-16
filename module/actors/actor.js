@@ -2121,8 +2121,8 @@ export class CoCActor extends Actor {
 		let characteristics={};
 		for (let [key, value] of Object.entries(this.data.data.characteristics)) {
 			if( value.formula && !value.formula.startsWith('@')){
-				const max = Roll.maximize( value.formula).total;
-				const min = Roll.minimize( value.formula).total;
+				const max = Roll.maximize( value.formula).total; //DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
+				const min = Roll.minimize( value.formula).total; //DEPRECATED in 0.8.x
 				const average = Math.floor((max + min) / 2);
 				const charValue = average % 5 === 0 ? average : Math.round(average / 10) * 10;
 				if( charValue){
