@@ -588,6 +588,7 @@
 "CoC7.healthRecovered": "Recuperou um Ponto de Vida",
 "CoC7.pulpHealthRecovered": "Recuperou {number} Pontos de Vida",
 "CoC7.dailySanLossRestarted": "Contador de perda de Sanidade diária reiniciado",
+"CoC7.magicPointsRecovered": "Pontos de Magia recuperados",
 "CoC7.hasCriticalWounds": "Incapaz de recuperar Pontos de Vida por conta de Feridas Graves",
 "CoC7.quickHealer": "Cura Rápida",
 

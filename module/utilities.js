@@ -384,7 +384,7 @@ export class CoC7Utilities {
 					chatContent = chatContent + `<b style="color:darkred">${game.i18n.localize('CoC7.hasCriticalWounds')}. </b>`
 				}
 				if (dailySanityLoss > 0) {
-					chatContent = chatContent + `<b style="color:darkolivegreen">${game.i18n.localize('CoC7.dailySanLossRestarted')}.</b>`
+					chatContent = chatContent + `<b style="color:darkolivegreen">${game.i18n.localize('CoC7.dailySanLossRestarted')}. </b>`
 					actor.update({
 						"data.attribs.san.dailyLoss": 0,
 						"data.attribs.san.oneFifthSanity": oneFifthSanity
