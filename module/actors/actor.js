@@ -2312,6 +2312,10 @@ export class CoCActor extends Actor {
 		await this.update( {[counter]: 0});
 	}
 
+	async setOneFifthSanity (oneFifthSanity) {
+		await this.update({"data.attribs.san.oneFifthSanity": oneFifthSanity});
+	}
+
 	get fightingSkills(){
 		let skillList = [];
 		this.items.forEach( (value) => {
