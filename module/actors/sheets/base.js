@@ -22,10 +22,11 @@ export class CoC7ActorSheet extends ActorSheet {
 	async getData() {
 		const data = await super.getData();
 
+		/** MODIF: 0.8.x **/
 		const actorData = this.actor.data.toObject(false);
 		data.data = actorData.data; // Modif 0.8.x : data.data
 		data.editable = this.isEditable; //MODIF 0.8.x : editable removed
-
+		/******************/
 		
 		data.isToken = this.actor.isToken;
 		data.itemsByType = {};

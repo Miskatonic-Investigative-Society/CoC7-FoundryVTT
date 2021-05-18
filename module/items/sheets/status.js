@@ -33,6 +33,11 @@ export class CoC7StatusSheet extends ItemSheet {
 		// this.item.checkSkillProperties();
 		const data = super.getData();
 
+		/** MODIF: 0.8.x **/
+		const itemData = data.data;
+		data.data = itemData.data; //MODIF: 0.8.x data.data
+		/*****************/
+
 		data.itemProperties = [];
 		
 		for (let [key, value] of Object.entries(data.data.type)) {

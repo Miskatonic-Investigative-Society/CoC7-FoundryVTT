@@ -116,6 +116,11 @@ export class CoC7BookSheet extends ItemSheet {
 
 	getData(){
 		const data=super.getData();
+		
+		/** MODIF: 0.8.x **/
+		const itemData = data.data;
+		data.data = itemData.data; //MODIF: 0.8.x data.data
+		/*****************/
 
 		data.itemProperties = [];
 		
