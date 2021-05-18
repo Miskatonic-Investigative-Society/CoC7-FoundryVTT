@@ -1,0 +1,83 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+    <div class="container expanded">
+        <header class="sheet-header">
+            <div class="sheet-portrait">
+                <img class="photo" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+            </div>
+            <div class="infos">
+                <div class="row flexrow">
+                    <input class="name" name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
+                </div>
+                <div class="row flexrow">
+                    <label>{{localize 'CoC7.Locations'}}</label>
+                    <input type="text" name="data.locations.total" value="{{data.locations.total}}" data-dtype="Number"/>
+                </div>
+            </div>
+            <div class="flex1"></div>
+
+        </header>
+
+        <nav class="sheet-nav tabs" data-group="primary">
+        </nav>
+
+        <section class="sheet-body">
+            <div class="tab participants">
+                <div class="participants-list">
+                    {{#each participants as |p i|}}
+                    <div class="participant" data-index={{i}}>
+                        <div class="p-side {{#if p.chaser}}chaser{{else}}prey{{/if}}">
+                            {{#if p.chaser}}
+                                <a><i class="game-icon game-icon-moon-claws"></i></a>
+                            {{else}}
+                                <a><i class="fas fa-running"></i></a>
+                            {{/if}}
+                        </div>
+                        {{#if p.hasVehicle}}
+                            <div class="p-icon open-actor" data-actor-key="{{p.vehicle.actorKey}}">
+                                <a><img src="{{p.vehicle.img}}" title="{{p.vehicle.name}}"/></a>
+                            </div>
+                        {{else}}
+                            <div class="p-icon open-actor" data-actor-key="{{p.actor.actorKey}}">
+                                <a><img src="{{p.actor.img}}" title="{{p.actor.name}}"/></a>
+                            </div>
+                        {{/if}}
+                        <div class="p-expand"></div>
+                        <div class="p-name">{{p.name}}</div>
+                        <div class="p-movement">
+                            <input type='text' name="data.participants.{{i}}.mov" placeholder="MOV" value="{{p.mov}}"/>
+                        </div>
+                        <div class="p-check">
+                            <datalist id="check-name-p{{i}}">
+                                {{#each p.check.options as |o|}}
+                                    <option>{{o}}</option>
+                                {{/each}}
+                            </datalist>
+                            <input type='text' name="data.participants.{{i}}.check.name" placeholder="check ref." value="{{p.check.name}}" list='check-name-p{{i}}' data-override='true'/>
+                        </div>
+                        <div class="p-score">{{p.check.score}}</div>
+                        <div class="p-modifier">+1</div>
+                        <div class="p-total">6</div>
+                        <div class="p-control">
+                            <a class="delete-participant"><i class="fas fa-times"></i></a>
+                        </div>
+                    </div>
+                    {{#if p.hasDriver}}
+                        <div class="driver" data-index={{i}}>
+                            <div class="d-spacer"><i class="fas fa-level-up-alt fa-rotate-90"></i></div>
+                            <div class="d-icon open-actor" data-actor-key="{{p.driver.actorKey}}">
+                                <a><img src="{{p.driver.img}}" title="{{p.driver.name}}"/></a>
+                            </div>
+                            <div class="d-name">{{p.driver.name}}</div>
+                            <div class="d-control">
+                                <a class="delete-driver"><i class="fas fa-times"></i></a>
+                            </div>
+                        </div>
+                    {{/if}}
+                    {{/each}}
+                </div>
+                <div class="new-participant">
+                </div>
+            </div>
+        </section>
+    </div>
+</form>

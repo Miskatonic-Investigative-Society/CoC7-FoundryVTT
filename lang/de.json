@@ -109,7 +109,7 @@
 "CoC7.HardSuccess": "Schwerer Erfolg",
 "CoC7.ExtremeSuccess": "Extremer Erfolg",
 "CoC7.CriticalSuccess": "Kritischer Erfolg",
-"CoC7.Fumble": "Fälschen",
+"CoC7.Fumble": "Patzer",
 "CoC7.Failure": "Misserfolg",
 "CoC7.Malfunction": "{itemName} hatte eine Fehlfunktion",
 
@@ -196,7 +196,7 @@
 "CoC7.Dodge": "Ausweichen",
 "CoC7.Maneuver": "Kampfmanöver",
 "CoC7.OutNumbered": "In der Unterzahl",
-"CoC7.combatCard.surpised": "Überrascht",
+"CoC7.combatCard.surprised": "Überrascht",
 "CoC7.combatCard.autoSuccess": "Automatischer Erfolg",
 "CoC7.Advantage": "Vorteil",
 "CoC7.Disadvantage": "Nachteil",

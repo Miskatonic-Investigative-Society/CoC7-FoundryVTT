@@ -1,0 +1,92 @@
+.participants{
+    display: flex;
+    flex-direction: column;
+        
+    .participants-list{
+        display: flex;
+        flex-direction: column;
+
+        .participant{
+            flex: 1;
+            display: grid;
+            grid-template-columns: 2rem 2rem 0.5rem 5fr 2rem 4fr 2rem 2rem 2rem 1rem;
+            grid-template-rows: 2rem;
+            grid-template-areas: "p-side p-icon p-expand p-name p-movement p-check p-score p-modifier p-total p-control";
+            align-items: center;
+
+            &.drag-over{
+                border: 1px solid red;
+            }
+
+            .p-side{
+                height: 2rem;
+                line-height: 2rem;
+                font-size: 2rem;
+                &.chaser{
+                    color: red;
+                }
+
+                &.prey{
+                    color: green;       
+                }
+            }
+
+            .p-icon{
+                height: 2rem;
+                line-height: 2rem;
+
+                img{
+                    border: 0;
+                    margin: auto;
+                    max-width: 100%;
+                    max-height: 100%;
+                }
+            }
+
+            .p-name{
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                min-width: 5rem;
+            }
+        }
+        .driver{
+            flex: 1;
+            display: grid;
+            grid-template-columns: 4rem 2rem auto 1rem;
+            grid-template-rows: 1.5rem;
+            grid-template-areas: "d-spacer d-icon d-name d-control";
+            align-items: center;
+
+            .d-spacer{
+                text-align: right;
+                font-size: 1rem;
+                margin-right: 0.5rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .d-icon{
+                height: 1.5rem;
+                line-height: 1.5rem;
+
+                img{
+                    border: 0;
+                    margin: auto;
+                    max-width: 100%;
+                    max-height: 100%;
+                }
+            }
+
+            .d-name{
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                min-width: 5rem;
+            }
+        }
+    }
+
+    .new-participant{
+        flex: 1;
+    }
+}
