@@ -1,5 +1,8 @@
 export class Updater{
 	static async checkForUpdate() {
+		// if( game.system.data.version >= '0.5' && 0 == game.settings.get('CoC7', 'systemUpdateVersion')){
+		// 	await game.settings.set('CoC7', 'systemUpdateVersion', '0.1');
+		// }
 		const systemUpdateVersion = game.settings.get('CoC7', 'systemUpdateVersion');
 		const updaterequired =  0 == systemUpdateVersion;
 		if( updaterequired){

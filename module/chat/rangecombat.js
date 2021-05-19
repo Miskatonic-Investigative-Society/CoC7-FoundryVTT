@@ -619,7 +619,7 @@ export class CoC7RangeInitiator{
 			
 			const damageFormula = h.shot.damage;
 			const damageDie = CoC7Damage.getMainDie( damageFormula);
-			const maxDamage = Roll.maximize( damageFormula).total;
+			const maxDamage = Roll.maximize( damageFormula).total; //DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
 			const criticalDamageFormula = this.weapon.impale ? `${damageFormula} + ${maxDamage}` : `${maxDamage}`;
 			const criticalDamageDie = CoC7Damage.getMainDie( criticalDamageFormula);
 
@@ -795,13 +795,13 @@ export class CoC7RangeTarget{
 	get sizeText(){
 		if( this.big) return game.i18n.localize('CoC7.rangeCombatCard.BigTargetTitle');
 		if( this.small) return game.i18n.localize('CoC7.rangeCombatCard.SmallTargetTitle');
-		return game.i18n.localize('CoC7.rangeCombatCard.NormalTargetTitle');;
+		return game.i18n.localize('CoC7.rangeCombatCard.NormalTargetTitle');
 	}
 
 	get sizeLabel(){
 		if( this.big) return game.i18n.localize('CoC7.rangeCombatCard.BigTarget');
 		if( this.small) return game.i18n.localize('CoC7.combatCard.SmallTarget');
-		return game.i18n.localize('CoC7.rangeCombatCard.NormalTarget');;
+		return game.i18n.localize('CoC7.rangeCombatCard.NormalTarget');
 
 	}
 

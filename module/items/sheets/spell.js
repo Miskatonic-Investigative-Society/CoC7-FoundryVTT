@@ -32,6 +32,12 @@ export class CoC7SpellSheet extends ItemSheet {
 	getData() {
 		// this.item.checkSkillProperties();
 		const data = super.getData();
+
+		/** MODIF: 0.8.x **/
+		const itemData = data.data;
+		data.data = itemData.data; //MODIF: 0.8.x data.data
+		/*****************/
+				
 		data.castingCost = '';
 
 		if( data.data.cost.mp) data.castingCost += `${data.data.cost.mp} ${game.i18n.localize('CoC7.MP')};`;

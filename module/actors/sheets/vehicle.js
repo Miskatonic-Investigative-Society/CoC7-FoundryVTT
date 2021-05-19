@@ -14,8 +14,8 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
 		});
 	}
 
-	getData(){
-		const data=super.getData();
+	async getData(){
+		const data = await super.getData();
 
 		data.properties = [];
 		if( this.actor.data.data.properties.armed) data.properties.push( game.i18n.localize( 'CoC7.ArmedVehicle'));

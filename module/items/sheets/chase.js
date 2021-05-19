@@ -35,6 +35,12 @@ export class CoC7ChaseSheet extends ItemSheet {
 	/** @override */
 	getData(options={}) {
 		const data = super.getData(options);
+
+		/** MODIF: 0.8.x **/
+		const itemData = data.data;
+		data.data = itemData.data; //MODIF: 0.8.x data.data
+		/*****************/
+		
 		data.participants = [];
 		this.participants.forEach( p => {
 			data.participants.push( new _participant( p));

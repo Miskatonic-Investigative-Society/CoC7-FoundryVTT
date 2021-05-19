@@ -5,6 +5,11 @@ import { COC7 } from '../config.js';
  * Override and extend the basic :class:`Item` implementation
  */
 export class CoC7Item extends Item {
+	constructor(data={}, context={}) {
+		if( !data.img && 'skill' == data.type) data.img = 'systems/CoC7/artwork/icons/skills.svg'; //Change the icon for skills
+		super(data, context);
+	}
+
 	static flags = {
 		malfunction: 'malfc'
 	}

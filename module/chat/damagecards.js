@@ -28,10 +28,11 @@ export class CoC7DamageRoll extends ChatCardActor{
 		if( this.weapon.data.data.properties.addb) this.rollString = this.rollString + '+' + this.actor.db;
 		if( this.weapon.data.data.properties.ahdb) this.rollString = this.rollString + '+' + this.actor.db + '/2';
 		
-		const is7 = Object.prototype.hasOwnProperty.call(Roll, 'cleanTerms');
+		//const is7 = Object.prototype.hasOwnProperty.call(Roll, 'cleanTerms');
+		const is7 = true; // 0.8.x : Drop support for is7, cleanTerms removed
 
 		// 0.7.5 this.maxDamage.result -> this.maxDamage
-		this.maxDamage = is7? Roll.maximize( this.rollString)._total: Roll.maximize( this.rollString);
+		this.maxDamage = is7? Roll.maximize( this.rollString)._total: Roll.maximize( this.rollString); //DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
 		this.roll = null;
 		if( this.critical){
 			if( this.weapon.impale) {

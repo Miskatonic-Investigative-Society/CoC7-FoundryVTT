@@ -5,7 +5,8 @@ export class CoC7Dice {
 		let unitDie;
 		let tenDie;
 		let total;
-		const is7 = Object.prototype.hasOwnProperty.call(Roll, 'cleanTerms');
+		// const is7 = Object.prototype.hasOwnProperty.call(Roll, 'cleanTerms');
+		const is7 = true;
 		if( is7){
 			unitDie = {
 				total: 0,
