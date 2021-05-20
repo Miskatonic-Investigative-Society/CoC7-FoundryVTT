@@ -1,6 +1,6 @@
 <ol class="skills-list">
 	{{#each skills as |skill id|}}
-		<li class="item {{#if ../pulpCharacter}}pulpCharacter{{/if}}" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
+		<li class="item {{#if ../pulpCharacter}}pulpCharacter{{/if}}" data-skill-id="{{skill.id}}" data-item-id="{{skill.id}}">
 			<div class="item-controls flexrow">
 				{{#unless skill.data.properties.noadjustments}}
 					<div class="item-control occupation-skill-flag {{#if../allowCharCreation}}clickable{{/if}}" title="{{localize 'CoC7.OccupationSkill'}}">

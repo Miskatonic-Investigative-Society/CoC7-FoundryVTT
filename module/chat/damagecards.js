@@ -32,7 +32,10 @@ export class CoC7DamageRoll extends ChatCardActor{
 		const is7 = true; // 0.8.x : Drop support for is7, cleanTerms removed
 
 		// 0.7.5 this.maxDamage.result -> this.maxDamage
-		this.maxDamage = is7? Roll.maximize( this.rollString)._total: Roll.maximize( this.rollString); //DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
+		/*** MODIF 0.8.x ***/
+		// this.maxDamage = is7? Roll.maximize( this.rollString)._total: Roll.maximize( this.rollString); //DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
+		this.maxDamage = new Roll( this.rollString).evaluate({maximize: true});//DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
+		/******************/
 		this.roll = null;
 		if( this.critical){
 			if( this.weapon.impale) {

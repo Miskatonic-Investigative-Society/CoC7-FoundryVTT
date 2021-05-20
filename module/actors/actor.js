@@ -2059,14 +2059,22 @@ export class CoCActor extends Actor {
 
 	get tokenKey() //Clarifier ca et tokenid
 	{
-		//Case 1: the actor is a synthetic actor and has a token, return token key.
-		if( this.isToken) return `${this.token.scene?._id?this.token.scene._id:'TOKEN'}.${this.token.id}`;  //REFACTORING (2)
+		/*** MODIF 0.8.x */
+		// if this.sheet.token => was opened from token
+		// if this.token => synthetic actor == this.isToken
+		if( this.sheet.token){
+			return `${this.sheet.token.parent.id}.${this.sheet.token.id}`;
+		} else
+			return this.id;
+		/*****************/
+		// //Case 1: the actor is a synthetic actor and has a token, return token key.
+		// if( this.isToken) return `${this.token.scene?._id?this.token.scene._id:'TOKEN'}.${this.token.id}`;  //REFACTORING (2)
 
-		//Case 2: the actor is not a token (linked actor). If the sheet have an associated token return the token key.
-		if( this.sheet.token) return `${this.sheet.token.scene?.id?this.sheet.token.scene.id:'TOKEN'}.${this.sheet.token.id}`;
+		// //Case 2: the actor is not a token (linked actor). If the sheet have an associated token return the token key.
+		// if( this.sheet.token) return `${this.sheet.token.scene?.id?this.sheet.token.scene.id:'TOKEN'}.${this.sheet.token.id}`;
 
-		//Case 3: Actor has no token return his ID;
-		return this.id;
+		// //Case 3: Actor has no token return his ID;
+		// return this.id;
 	}
 
 	get actorKey(){
@@ -2121,8 +2129,12 @@ export class CoCActor extends Actor {
 		let characteristics={};
 		for (let [key, value] of Object.entries(this.data.data.characteristics)) {
 			if( value.formula && !value.formula.startsWith('@')){
-				const max = Roll.maximize( value.formula).total; //DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
-				const min = Roll.minimize( value.formula).total; //DEPRECATED in 0.8.x
+				/*** MODIF 0.8.x ***/
+				// const max = Roll.maximize( value.formula).total; //DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
+				// const min = Roll.minimize( value.formula).total; //DEPRECATED in 0.8.x
+				const max = new Roll(value.formula).evaluate({maximize: true}).total;
+				const min = new Roll(value.formula).evaluate({minimize: true}).total;
+				/******************/
 				const average = Math.floor((max + min) / 2);
 				const charValue = average % 5 === 0 ? average : Math.round(average / 10) * 10;
 				if( charValue){

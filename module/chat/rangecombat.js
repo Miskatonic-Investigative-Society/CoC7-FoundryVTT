@@ -619,7 +619,10 @@ export class CoC7RangeInitiator{
 			
 			const damageFormula = h.shot.damage;
 			const damageDie = CoC7Damage.getMainDie( damageFormula);
-			const maxDamage = Roll.maximize( damageFormula).total; //DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
+			/*** MODIF 0.8.x ***/
+			// const maxDamage = Roll.maximize( damageFormula).total; //DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
+			const maxDamage = new Roll(damageFormula).evaluate({maximize: true}).total; //DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
+			/*******************/
 			const criticalDamageFormula = this.weapon.impale ? `${damageFormula} + ${maxDamage}` : `${maxDamage}`;
 			const criticalDamageDie = CoC7Damage.getMainDie( criticalDamageFormula);
 

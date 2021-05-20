@@ -155,7 +155,10 @@ export class DamageCard extends InteractiveChatCard{
 		if( this.weapon.data.data.properties.ahdb) formula = formula + db + '/2';
 
 		if( formula){
-			const maxDamage = Roll.maximize( formula)._total; //DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
+			/*** MODIF 0.8.x ***/
+			// const maxDamage = Roll.maximize( formula)._total; //DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
+			const maxDamage = new Roll(formula).evaluate({maximize: true}).total; //DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
+			/******************/
 			let rollString;
 			if( this.critical){
 				if( this.impale) {

@@ -184,37 +184,40 @@ export class chatHelper{
 			}
 		} else {
 			const actor = game.actors.get( key);
-			return chatHelper.getActorToken( actor, false);
+			return chatHelper.getActorToken( actor);
 		}
 	}
 
-	static getActorToken( actor, verbose = true){
+	static getActorToken( actor){
 		if( !actor) return null;
-		// Case 0 - Actor is a token (synthetic actor), return that token.
-		if(actor.isToken) return actor.token;
-		else{
-			// Case 1 - Actor is not a token, find if a token exist for that actor.
-			const actorTokens = actor.getActiveTokens();
-			if( actorTokens.length){
-				// Case 1.1 - If he has only one Token return it.
-				if( 1 === actorTokens.length) return actorTokens[0];
+		/*** MODIF 0.8.x ***/
+		return actor.token||{data: actor.data.token};
+		/*******************/
+		// // Case 0 - Actor is a token (synthetic actor), return that token.
+		// if(actor.isToken) return actor.token;
+		// else{
+		// 	// Case 1 - Actor is not a token, find if a token exist for that actor.
+		// 	const actorTokens = actor.getActiveTokens();
+		// 	if( actorTokens.length){
+		// 		// Case 1.1 - If he has only one Token return it.
+		// 		if( 1 === actorTokens.length) return actorTokens[0];
 
-				// Case 1.2 - Actor has multiple tokens, find if one of them is the controlled token.
-				const controlledTokens = actorTokens.filter( t => t._controlled);
-				if( controlledTokens.length){
-					// Return the 1st controlled token, rise a warning if he has multiple controlled tokens.
-					if( verbose && controlledTokens.length > 1) ui.notifications.warn( `Actor ${actor.name} has ${controlledTokens.length} controlled tokens. Using the first found`);
-					return controlledTokens[0];
-				}
+		// 		// Case 1.2 - Actor has multiple tokens, find if one of them is the controlled token.
+		// 		const controlledTokens = actorTokens.filter( t => t._controlled);
+		// 		if( controlledTokens.length){
+		// 			// Return the 1st controlled token, rise a warning if he has multiple controlled tokens.
+		// 			if( verbose && controlledTokens.length > 1) ui.notifications.warn( `Actor ${actor.name} has ${controlledTokens.length} controlled tokens. Using the first found`);
+		// 			return controlledTokens[0];
+		// 		}
 
-				// Case 1.3 actor doesn't have any active token. Return the first valid token for that actor and raise a warning.
-				if( verbose) ui.notifications.warn( `Actor ${actor.name} doesn't have any controlled token. Using first token found.`);
-				return actorTokens[0];
-			}
+		// 		// Case 1.3 actor doesn't have any active token. Return the first valid token for that actor and raise a warning.
+		// 		if( verbose) ui.notifications.warn( `Actor ${actor.name} doesn't have any controlled token. Using first token found.`);
+		// 		return actorTokens[0];
+		// 	}
 
-			if( verbose) ui.notifications.error( `Could not fin any token for ${actor.name}.`);
-			return null;
-		}
+		// 	if( verbose) ui.notifications.error( `Could not fin any token for ${actor.name}.`);
+		// 	return null;
+		// }
 	}
 
 	static getActorImgFromKey( actorKey){
