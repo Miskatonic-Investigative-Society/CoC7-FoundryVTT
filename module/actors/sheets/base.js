@@ -546,6 +546,12 @@ export class CoC7ActorSheet extends ActorSheet {
 			this.actor.developementPhase( event.shiftKey);
 		});
 
+		html.find('.luck-development').click( event =>{
+			if(!event.detail || event.detail == 1){
+				this.actor.developLuck(event.shiftKey);
+			}
+		});
+
 		html.find('a.coc7-link').on( 'click', (event)=> CoC7Parser._onCheck(event));
 		html.find('a.coc7-link').on( 'dragstart', (event)=> CoC7Parser._onDragCoC7Link(event));
 
