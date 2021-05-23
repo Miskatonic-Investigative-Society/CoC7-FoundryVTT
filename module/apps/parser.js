@@ -115,10 +115,10 @@ export class CoC7Parser{
 		//[TBI]@coc7.damage[formula:1D6]{Damage 1D6}
 		//[TBI]@coc7.roll[threshold:50]{Simple roll}
 
-		if( data.content.toLocaleLowerCase().includes('@coc7')){
-			data.content = CoC7Parser.enrichHTML(data.content);
+		if (typeof data.content !== 'undefined' && data.content.toLocaleLowerCase().includes('@coc7')) {
+			data.content = CoC7Parser.enrichHTML(data.content)
 		}
-		return true; //allow message to be published !
+		return true // allow message to be published !
 	}
 
 	static createCoC7Link( data){
