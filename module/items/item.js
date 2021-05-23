@@ -540,7 +540,7 @@ export class CoC7Item extends Item {
 			} else {
 				const scene = game.scenes.get(sceneId);
 				if (!scene) return null;
-				const tokenData = scene.getEmbeddedEntity('Token', tokenId);
+				const tokenData = scene.getEmbeddedDocument('Token', tokenId);
 				if (!tokenData) return null;
 				const token = new Token(tokenData);
 				return token.actor;
@@ -607,7 +607,7 @@ export class CoC7Item extends Item {
 		let skillName = '';
 		let found = false;
 		if( this.data.data.skill.main.id) {
-			const skill = htmlOptions?.owner.getOwnedItem( this.data.data.skill.main.id);
+			const skill = htmlOptions?.owner.items.get( this.data.data.skill.main.id);
 			if( skill){
 				skillName += CoC7Item.getNameWithoutSpec( skill);
 				found = true;
@@ -616,7 +616,7 @@ export class CoC7Item extends Item {
 
 		if( this.usesAlternativeSkill && this.data.data.skill.alternativ.id) {
 			skillLabel = game.i18n.localize('CoC7.Skills');
-			const skill = htmlOptions?.owner.getOwnedItem( this.data.data.skill.alternativ.id);
+			const skill = htmlOptions?.owner.items.get( this.data.data.skill.alternativ.id);
 			if( skill){
 				skillName += `/${CoC7Item.getNameWithoutSpec( skill)}`;
 				found = true;

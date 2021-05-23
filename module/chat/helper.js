@@ -80,10 +80,10 @@ export class chatHelper{
 		messageData.flavor = title;
 		messageData.speaker = options.speaker || ChatMessage.getSpeaker();
 		if( options.whisper){
-			messageData.type = CHAT_MESSAGE_TYPES.WHISPER;
+			messageData.type = CONST.CHAT_MESSAGE_TYPES.WHISPER;
 			messageData.whisper = options.whisper;
 		}
-		messageData.user = game.user._id;
+		messageData.user = game.user.id;
 		messageData.content = message;
 
 		ChatMessage.create(messageData).then( msg => {return msg;});
@@ -176,7 +176,7 @@ export class chatHelper{
 			} else {
 				const scene = game.scenes.get(sceneId);
 				if (!scene) return null;
-				const tokenData = scene.getEmbeddedEntity('Token', tokenId);
+				const tokenData = scene.getEmbeddedDocument('Token', tokenId);
 				if (!tokenData) return null;
 				const token = new Token(tokenData);
 				if( !token.scene) token.scene = duplicate( scene.data);
@@ -305,12 +305,12 @@ export class CoC7Roll{
 	}
 
 	get item(){
-		if( this.itemId && this.actor) return this.actor.getOwnedItem( this.itemId);
+		if( this.itemId && this.actor) return this.actor.items.get( this.itemId);
 		return null;
 	}
 
 	get skill(){
-		if( this.skillId && this.actor) return this.actor.getOwnedItem( this.skillId);
+		if( this.skillId && this.actor) return this.actor.items.get( this.skillId);
 		return null;
 	}
 

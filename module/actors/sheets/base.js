@@ -306,8 +306,8 @@ export class CoC7ActorSheet extends ActorSheet {
 				}
 			}
 
-			const token = this.actor.token;
-			data.tokenId = token ? `${token.scene?._id?token.scene._id:'TOKEN'}.${token.id}` : null;  //REFACTORING (2)
+			const token = this.token;
+			data.tokenId = token ? `${token.parent?.id?token.parent.id:'TOKEN'}.${token.id}` : null;  //REFACTORING (2)
 
 			data.hasEmptyValueWithFormula = false;
 			if( data.data.characteristics){
@@ -409,8 +409,9 @@ export class CoC7ActorSheet extends ActorSheet {
 
 	get tokenKey(){
 		ui.notifications.error('DEPRECATED SHOULD NOT HAPPEN!');
-		if( this.token) return `${this.token.scene?._id?this.token.scene._id:'TOKEN'}.${this.token.data._id}`;  //REFACTORING (2)
-		return this.actor.id;
+		throw 'base.js get tokenKey(): DEPRECATED SHOULD NOT HAPPEN!';
+		// if( this.token) return `${this.token.scene?._id?this.token.scene._id:'TOKEN'}.${this.token.data._id}`;  //REFACTORING (2)
+		// return this.actor.id;
 	}
 
 	onCloseSheet(){

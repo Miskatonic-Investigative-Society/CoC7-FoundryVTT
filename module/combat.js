@@ -80,7 +80,7 @@ export class CoC7Combat {
 		const btn = event.currentTarget;
 		const li = btn.closest('.combatant');
 		const c = game.combat.getCombatant(li.dataset.combatantId);
-		if( c.actor.owner){
+		if( c.actor.isOwner){
 			if( c.hasGun){
 				await game.combat.updateCombatant({_id: c._id, hasGun: false}, {});
 			}

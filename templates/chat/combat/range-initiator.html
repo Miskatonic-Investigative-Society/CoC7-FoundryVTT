@@ -1,6 +1,6 @@
 <div class="coc7 chat-card range initiator"
 	data-actor-key="{{actorKey}}"
-	data-item-id="{{item._id}}"
+	data-item-id="{{item.id}}"
 	data-fast-forward="{{fastForward}}"
 	data-resolved="{{resolved}}"
 	data-rolled="{{rolled}}"
@@ -310,24 +310,24 @@
 									{{#if ../autoFire}}
 										<button
 											data-action="range-initiator-shoot"
-											data-skill="{{autoWeaponSkill._id}}">{{ localize 'CoC7.Shoot'}} {{trgt.name}} {{../autoWeaponSkill.data.name}} ({{../autoWeaponSkill.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
+											data-skill="{{autoWeaponSkill.id}}">{{ localize 'CoC7.Shoot'}} {{trgt.name}} {{../autoWeaponSkill.data.name}} ({{../autoWeaponSkill.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
 										</button>
 									{{else}}
 										<button
 											data-action="range-initiator-shoot"
-											data-skill="{{mainWeaponSkill._id}}">{{ localize 'CoC7.Shoot' }} {{../mainWeaponSkill.data.name}} ({{../mainWeaponSkill.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
+											data-skill="{{mainWeaponSkill.id}}">{{ localize 'CoC7.Shoot' }} {{../mainWeaponSkill.data.name}} ({{../mainWeaponSkill.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
 										</button>
 									{{/if}}
 								{{else}}
 									{{#if ../autoFire}}
 										<button
 											data-action="range-initiator-roll"
-											data-skill="{{autoWeaponSkill._id}}">{{ localize 'CoC7.Roll' }} {{../autoWeaponSkill.data.name}} ({{../autoWeaponSkill.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
+											data-skill="{{autoWeaponSkill.id}}">{{ localize 'CoC7.Roll' }} {{../autoWeaponSkill.data.name}} ({{../autoWeaponSkill.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
 										</button>
 									{{else}}
 										<button
 											data-action="range-initiator-roll"
-											data-skill="{{mainWeaponSkill._id}}">{{ localize 'CoC7.Roll' }} {{../mainWeaponSkill.data.name}} ({{../mainWeaponSkill.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
+											data-skill="{{mainWeaponSkill.id}}">{{ localize 'CoC7.Roll' }} {{../mainWeaponSkill.data.name}} ({{../mainWeaponSkill.value}}% -- {{trgt.shotDifficulty.name}}/{{trgt.shotDifficulty.modifier}})
 										</button>
 									{{/if}}
 								{{/if}}
@@ -364,7 +364,7 @@
 				<div class="card-buttons owner-only">
 					<button
 					  data-action="range-initiator-roll"
-					  data-skill="{{mainWeaponSkill._id}}">
+					  data-skill="{{mainWeaponSkill.id}}">
 					  {{ localize 'CoC7.Shoot'}} !!!
 					</button>
 				</div>
@@ -384,7 +384,7 @@
 				  data-ref-message-id="{{roll.referenceMessageId}}"
 				  data-success-level="{{roll.successLevel}}"
 				  data-difficulty="{{roll.difficulty}}"
-				  data-actor-id="{{roll.actor._id}}" 
+				  data-actor-id="{{roll.actor.id}}" 
 				  data-skill-id="{{roll.skill.data._id}}" 
 				  data-item-id="{{roll.item.data._id}}" 
 				  data-dice-mod="{{roll.diceModifier}}"
@@ -468,7 +468,7 @@
 								{{/if}}
 								
 								{{#unless ../damageRolled}}
-								<div class="card-buttons owner-only" data-actor-id="{{roll.actor._id}}" style="padding-top: 5px;margin: 0;">
+								<div class="card-buttons owner-only" data-actor-id="{{roll.actor.id}}" style="padding-top: 5px;margin: 0;">
 									{{#unless roll.isSuccess}}
 										{{#if roll.canBePushed}}
 											{{#unless roll.pushing}}

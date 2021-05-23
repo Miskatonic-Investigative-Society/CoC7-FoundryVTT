@@ -84,7 +84,7 @@ export class RollCard{
 		htmlCardElement[0].dataset.object = escape(this.dataString);
 
 		let chatData = {
-			user: game.user._id,
+			user: game.user.id,
 			flavor: game.i18n.localize( this.config.title),
 			content: htmlCardElement[0].outerHTML,
 			flags:{

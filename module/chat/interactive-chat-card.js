@@ -26,7 +26,7 @@ export class InteractiveChatCard{
 		htmlCardElement.classList.add(...this.cssClasses);
 
 		let chatData = mergeObject({
-			user: game.user._id,
+			user: game.user.id,
 			flavor: game.i18n.localize( this.options.title),
 			content: htmlCardElement.outerHTML,
 		}, optionnalChatData);
@@ -283,7 +283,7 @@ export class InteractiveChatCard{
 
 	get item(){
 		if( !this.itemId) return null;
-		return this.actor.getOwnedItem( this.itemId);
+		return this.actor.items.get( this.itemId);
 	}
 
 	get weapon(){
@@ -300,7 +300,7 @@ export class InteractiveChatCard{
 	}
 
 	get isTargetOwner(){
-		return  this.target.owner;
+		return  this.target.isOwner;
 	}
 
 	get isGM(){
@@ -318,7 +318,7 @@ export class InteractiveChatCard{
 				this._targetToken = chatHelper.getTokenFromKey( this._targetKey);
 			} else {
 				this._targetToken = this.targetedTokens.pop();
-				if( this._targetToken) this._targetKey = `${this._targetToken.scene._id}.${this._targetToken.id}`; //REFACTORING (2)
+				if( this._targetToken) this._targetKey = `${this._targetToken.scene.id}.${this._targetToken.id}`; //REFACTORING (2)
 				else {
 					this._targetToken = null;
 				}

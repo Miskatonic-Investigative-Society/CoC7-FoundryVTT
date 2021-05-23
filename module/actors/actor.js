@@ -230,7 +230,11 @@ export class CoCActor extends Actor {
 				result.description = `${item.name}:${TextEditor.enrichHTML( item.data.data.description.value)}`;
 				result.name = item.name;
 				delete item.data._id;
-				await this.createOwnedItem( item.data);
+
+				/** MODIF 0.8.x **/
+				// await this.createOwnedItem( item.data);
+				await this.createEmbeddedDocuments('Item', [item.data]);
+				/*****************/
 			}
 			if( TABLE_RESULT_TYPES.TEXT == result.tableRoll.results[0].type){
 				result.description = TextEditor.enrichHTML(result.tableRoll.results[0].text);
@@ -436,7 +440,7 @@ export class CoCActor extends Actor {
 					}], { renderSheet: false});
 
 
-				const createdAttack = this.getOwnedItem( attack._id);
+				const createdAttack = this.items.get( attack._id);
 				await createdAttack.update( 
 					{ 'data.skill.main.id': skill._id,
 						'data.skill.main.name': skill.name });
@@ -614,7 +618,7 @@ export class CoCActor extends Actor {
 					const skillData = await SkillSpecSelectDialog.create(skillList, data.data.specialization, data.data.base);
 					if( skillData){
 						if( skillData.get('existing-skill')){
-							const existingItem = this.getOwnedItem( skillData.get('existing-skill'));
+							const existingItem = this.items.get( skillData.get('existing-skill'));
 							for( let [key, value] of Object.entries( data.data.flags)){
 								if( value) await existingItem.setItemFlag( key);
 							}
@@ -645,7 +649,7 @@ export class CoCActor extends Actor {
 					const name = mainSkill.match(/\(([^)]+)\)/)? mainSkill.match(/\(([^)]+)\)/)[1]: mainSkill;
 					skill = await this.createWeaponSkill( name, data.data.properties?.rngd ? true: false);
 				}
-				if( skill) data.data.skill.main.id = skill._id;
+				if( skill) data.data.skill.main.id = skill.id;
 			} //TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
 
 			const secondSkill = data.data?.skill?.alternativ?.name;
@@ -655,7 +659,7 @@ export class CoCActor extends Actor {
 					const name = mainSkill.match(/\(([^)]+)\)/)? mainSkill.match(/\(([^)]+)\)/)[1]: mainSkill;
 					skill = await this.createWeaponSkill( name, data.data.properties?.rngd ? true: false);
 				}
-				if( skill) data.data.skill.alternativ.id = skill._id;
+				if( skill) data.data.skill.alternativ.id = skill.id;
 			} //TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
 			
 			return await super.createEmbeddedDocuments(embeddedName, [duplicate(data)], options);
@@ -1116,7 +1120,10 @@ export class CoCActor extends Actor {
 			if( CoC7Item.isAnySpec(skill)){
 				if( ! skill.data.flags) skill.data.flags = {};
 				if( flag) skill.data.flags[flag] = true;
-				await this.createOwnedItem( skill, {renderSheet:false});
+				/** MODIF 0.8.x **/
+				// await this.createOwnedItem( skill, {renderSheet:false});
+				await this.createEmbeddedDocuments('Item', [skill], {renderSheet:false});
+				/*****************/
 			}
 			else {
 				const itemId = this.getItemIdByName(skill.name);
@@ -1125,9 +1132,12 @@ export class CoCActor extends Actor {
 						if( ! skill.data.flags) skill.data.flags = {};
 						skill.data.flags[flag] = true;
 					}
-					await this.createOwnedItem( skill, {renderSheet:false});
+					/** MODIF 0.8.x **/
+					// await this.createOwnedItem( skill, {renderSheet:false});
+					await this.createEmbeddedDocuments('Item', [skill], {renderSheet:false});
+					/*****************/
 				}else if( flag){
-					const item = this.getOwnedItem( itemId);
+					const item = this.items.get( itemId);
 					await item.setItemFlag( flag);
 				}
 			}
@@ -1140,7 +1150,10 @@ export class CoCActor extends Actor {
 				if( ! item.data.flags) item.data.flags = {};
 				item.data.flags[flag] = true;
 			}
-			await this.createOwnedItem( item, {renderSheet:false});
+			/** MODIF 0.8.x **/
+			// await this.createOwnedItem( item, {renderSheet:false});
+			await this.createEmbeddedDocuments('Item', [item], {renderSheet:false});
+			/*****************/
 		}	
 	}
 
@@ -1151,9 +1164,12 @@ export class CoCActor extends Actor {
 				if( ! skill.data.flags) skill.data.flags = {};
 				skill.data.flags[flag] = true;
 			}
-			await this.createOwnedItem( skill, {renderSheet:false});
+			/** MODIF 0.8.x **/
+			// await this.createOwnedItem( skill, {renderSheet:false});
+			await this.createEmbeddedDocuments('Item', [skill], {renderSheet:false});
+			/*****************/
 		}else if( flag){
-			const item = this.getOwnedItem( itemId);
+			const item = this.items.get( itemId);
 			await item.setItemFlag( flag);
 		}
 	}
@@ -1818,7 +1834,12 @@ export class CoCActor extends Actor {
 				yes: () => create = true
 			});
 
-			if(true ==  create){ await this.createOwnedItem( duplicate(item.data));}
+			if(true ==  create){ 
+				/** MODIF 0.8.x **/
+				// await this.createOwnedItem( duplicate(item.data));
+				await this.createEmbeddedDocuments('Item', [duplicate(item.data)]);
+				/*****************/
+			}
 			else return;
 
 			skill = this.getSkillsByName(item.name);
@@ -1860,7 +1881,7 @@ export class CoCActor extends Actor {
 	async weaponCheck( weaponData, fastForward = false){
 		const itemId = weaponData.id;
 		let weapon;
-		weapon = this.getOwnedItem(itemId);
+		weapon = this.items.get(itemId);
 		if( !weapon){
 			let weapons = this.getItemsFromName( weaponData.name);
 			if( 0 == weapons.length){
@@ -1976,15 +1997,15 @@ export class CoCActor extends Actor {
 	}
 
 	getWeaponSkills( itemId){
-		const weapon = this.getOwnedItem( itemId);
+		const weapon = this.items.get( itemId);
 		if( 'weapon' != weapon.data.type) return null;
 		const skills = [];
 		if( weapon.data.data.skill.main.id){
-			skills.push( this.getOwnedItem( weapon.data.data.skill.main.id));
+			skills.push( this.items.get( weapon.data.data.skill.main.id));
 		}
 
 		if( weapon.usesAlternativeSkill && weapon.data.data.skill.alternativ.id){
-			skills.push( this.getOwnedItem( weapon.data.data.skill.alternativ.id));
+			skills.push( this.items.get( weapon.data.data.skill.alternativ.id));
 		}
 
 		return skills;
@@ -1993,7 +2014,7 @@ export class CoCActor extends Actor {
 	/** Try to find a characteristic, attribute or skill that matches the name */
 	find( name){
 		//Try ID
-		const item = this.getOwnedItem( name);
+		const item = this.items.get( name);
 		if( item){
 			return{
 				type: 'item',
@@ -2064,8 +2085,10 @@ export class CoCActor extends Actor {
 		// if this.token => synthetic actor == this.isToken
 		if( this.sheet.token){
 			return `${this.sheet.token.parent.id}.${this.sheet.token.id}`;
-		} else
-			return this.id;
+		} else{
+			return null;
+			// return this.id;
+		}
 		/*****************/
 		// //Case 1: the actor is a synthetic actor and has a token, return token key.
 		// if( this.isToken) return `${this.token.scene?._id?this.token.scene._id:'TOKEN'}.${this.token.id}`;  //REFACTORING (2)
@@ -2078,7 +2101,7 @@ export class CoCActor extends Actor {
 	}
 
 	get actorKey(){
-		if( this.data.token.actorLink) return this._id;
+		if( this.data.token.actorLink) return this.id; //REFACTORING (2)
 		return this.tokenKey;
 	}
 
@@ -2092,7 +2115,7 @@ export class CoCActor extends Actor {
 			} else {
 				const scene = game.scenes.get(sceneId);
 				if (!scene) return null;
-				const tokenData = scene.getEmbeddedEntity('Token', tokenId);
+				const tokenData = scene.getEmbeddedDocument('Token', tokenId);
 				if (!tokenData) return null;
 				const token = new Token(tokenData);
 				return token.actor;
@@ -2236,7 +2259,7 @@ export class CoCActor extends Actor {
 	}
 
 	async developSkill( skillId, fastForward = false){
-		const skill = this.getOwnedItem( skillId);
+		const skill = this.items.get( skillId);
 		if( !skill) return;
 		let title = '';
 		let message = '';
@@ -2375,7 +2398,7 @@ export class CoCActor extends Actor {
 		let weaponList = [];
 		this.items.forEach( (value) => {
 			if( value.type == 'weapon' && !value.data.data.properties.rngd ){
-				const skill = this.getOwnedItem( value.data.data.skill.main.id);
+				const skill = this.items.get( value.data.data.skill.main.id);
 				value.data.data.skill.main.value = skill? skill.value : 0;
 				weaponList.push( value);
 			}

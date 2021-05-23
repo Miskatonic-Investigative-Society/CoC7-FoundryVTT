@@ -143,7 +143,7 @@ export class CoC7WeaponSheet extends ItemSheet {
 		let weapon = null;
 		if( actorKey){
 			const actor = CoCActor.getActorFromKey(actorKey);
-			weapon = actor.getOwnedItem( weaponId);
+			weapon = actor.items.get( weaponId);
 		} else{
 			weapon = game.items.get(weaponId);
 		}
