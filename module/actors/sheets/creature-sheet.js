@@ -62,7 +62,7 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 			const link = CoC7Parser.createCoC7Link(linkData);
 			if( link) chatHelper.createMessage(null, game.i18n.format('CoC7.MessageCheckRequestedWait', {check: link}));
 		} else {
-			SanCheckCard.checkTargets( this.tokenKey, event.shiftKey);
+			SanCheckCard.checkTargets( this.actor.tokenKey, event.shiftKey);
 			// CoC7SanCheck.checkTargets( this.actor.data.data.special.sanLoss.checkPassed, this.actor.data.data.special.sanLoss.checkFailled, event.shiftKey, this.tokenKey);
 		}
 	}

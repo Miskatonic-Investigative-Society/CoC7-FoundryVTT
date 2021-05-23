@@ -540,7 +540,7 @@ export class CoC7Item extends Item {
 			} else {
 				const scene = game.scenes.get(sceneId);
 				if (!scene) return null;
-				const tokenData = scene.getEmbeddedEntity('Token', tokenId);
+				const tokenData = scene.getEmbeddedDocument('Token', tokenId);
 				if (!tokenData) return null;
 				const token = new Token(tokenData);
 				return token.actor;
@@ -562,10 +562,10 @@ export class CoC7Item extends Item {
 	 * @param {Object} htmlOptions    Options used by the TextEditor.enrichHTML function
 	 * @return {Object}               An object of chat data to render
 	 */
-	getChatData(htmlOptions) {
+	getChatData(htmlOptions = {}) {
 		const data = duplicate(this.data.data);
 		//Fix : data can have description directly in field, not under value.
-		if( data.description && !data.description.value){
+		if( data.description && !data.description.value && '' != data.description?.value){
 			data.description = {
 				value: data.description
 			};
@@ -597,7 +597,7 @@ export class CoC7Item extends Item {
 		return data;
 	}
 
-	_weaponChatData(data, labels, props, htmlOptions){
+	_weaponChatData(data, labels, props){
 		for( let [key, value] of Object.entries(COC7['weaponProperties']))
 		{
 			if(this.data.data.properties[key] == true) props.push(value);
@@ -607,7 +607,7 @@ export class CoC7Item extends Item {
 		let skillName = '';
 		let found = false;
 		if( this.data.data.skill.main.id) {
-			const skill = htmlOptions?.owner.getOwnedItem( this.data.data.skill.main.id);
+			const skill = this.actor?.items.get( this.data.data.skill.main.id);
 			if( skill){
 				skillName += CoC7Item.getNameWithoutSpec( skill);
 				found = true;
@@ -616,7 +616,7 @@ export class CoC7Item extends Item {
 
 		if( this.usesAlternativeSkill && this.data.data.skill.alternativ.id) {
 			skillLabel = game.i18n.localize('CoC7.Skills');
-			const skill = htmlOptions?.owner.getOwnedItem( this.data.data.skill.alternativ.id);
+			const skill = this.actor?.items.get( this.data.data.skill.alternativ.id);
 			if( skill){
 				skillName += `/${CoC7Item.getNameWithoutSpec( skill)}`;
 				found = true;

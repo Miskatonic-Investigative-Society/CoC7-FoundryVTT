@@ -1,7 +1,7 @@
 <div class="coc7 chat-card melee initiator"
     data-actor-key="{{actorKey}}"
     data-target-key="{{targetKey}}"
-    data-item-id="{{item._id}}"
+    data-item-id="{{item.id}}"
     data-fast-forward="{{fastForward}}"
     data-resolved="{{resolved}}"
     data-outnumbered="{{outnumbered}}"
@@ -157,7 +157,7 @@
 
                 <h4 class="result-details" style="margin: 0">{{check.resultType}}</h4>
 
-                <div class="card-buttons owner-only" data-actor-id="{{check.actor._id}}" style="padding: 2px 0;margin: 0;">
+                <div class="card-buttons owner-only" data-actor-id="{{check.actor.id}}" style="padding: 2px 0;margin: 0;">
                     {{#unless check.isSuccess}}
                         {{#if check.canBePushed}}
                             {{#unless check.pushing}}
@@ -194,7 +194,7 @@
               data-action="roll-melee-damage"
               data-target="{{targetKey}}"
               data-dealer="{{actorKey}}"
-              data-weapon="{{item._id}}"
+              data-weapon="{{item.id}}"
               data-critical="{{criticalDamage}}">
                 {{ localize 'CoC7.RollDamage' }}
             </button>
@@ -208,7 +208,7 @@
                 data-action="roll-melee-damage"
                 data-target="{{targetKey}}"
                 data-dealer="{{actorKey}}"
-                data-weapon="{{item._id}}"
+                data-weapon="{{item.id}}"
                 data-critical="{{criticalDamage}}">
                 {{ localize 'CoC7.RollDamage' }}
                 </button>
@@ -220,7 +220,7 @@
         {{#each skills as |skill id|}}
             <button
                 data-action="melee-initiator-roll"
-                data-skill="{{skill._id}}">{{skill.data.name}} : ({{skill.value}}%)</button>
+                data-skill="{{skill.id}}">{{skill.data.name}} : ({{skill.value}}%)</button>
         {{/each}}
     </div>
     {{/if}}

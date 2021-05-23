@@ -388,7 +388,7 @@ export class CoC7Utilities {
 			}
 		});
 		let chatData = {
-			user: game.user._id,
+			user: game.user.id,
 			speaker: ChatMessage.getSpeaker(),
 			content: chatContent,
 			type: CONST.CHAT_MESSAGE_TYPES.OTHER

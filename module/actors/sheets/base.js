@@ -125,7 +125,7 @@ export class CoC7ActorSheet extends ActorSheet {
 					if( item.data.properties.special){
 						if( item.data.properties.fighting){
 							if( item.data.specialization != game.i18n.localize('CoC7.FightingSpecializationName')){
-								let itemToUpdate = this.actor.getOwnedItem( item._id);
+								let itemToUpdate = this.actor.items.get( item._id);
 								await itemToUpdate.update( {'data.specialization' : game.i18n.localize('CoC7.FightingSpecializationName')});
 								item.data.specialization =  game.i18n.localize('CoC7.FightingSpecializationName'); // TODO : Client with different language = recursive call when opening the same sheet.
 							}
@@ -133,7 +133,7 @@ export class CoC7ActorSheet extends ActorSheet {
 						if( item.data.properties.firearm)
 						{
 							if( item.data.specialization != game.i18n.localize('CoC7.FirearmSpecializationName')){
-								let itemToUpdate = this.actor.getOwnedItem( item._id);
+								let itemToUpdate = this.actor.items.get( item._id);
 								await itemToUpdate.update( {'data.specialization' : game.i18n.localize('CoC7.FirearmSpecializationName')});
 								item.data.specialization =  game.i18n.localize('CoC7.FirearmSpecializationName');
 							}
@@ -153,13 +153,13 @@ export class CoC7ActorSheet extends ActorSheet {
 
 							if( value){
 								item.data.value = value;
-								let itemToUpdate = this.actor.getOwnedItem( item._id);
+								let itemToUpdate = this.actor.items.get( item._id);
 								await itemToUpdate.update( {'data.value' : value});
 							}
 						}
 					}
 					else {
-						let skill = this.actor.getOwnedItem( item._id);
+						let skill = this.actor.items.get( item._id);
 						item.data.base = skill.base;
 						// if( isNaN(Number(item.data.base))){
 						// 	let value = CoC7ActorSheet.parseFormula( item.data.base);
@@ -272,7 +272,7 @@ export class CoC7ActorSheet extends ActorSheet {
 						//TODO : avant d'assiger le skill vérifier qu'il existe toujours.
 						//si il n'existe plus il faut le retrouver ou passer skillset a false.
 						if( data.combatSkills[weapon.data.skill.main.id]){
-							const skill = this.actor.getOwnedItem( weapon.data.skill.main.id);
+							const skill = this.actor.items.get( weapon.data.skill.main.id);
 							weapon.data.skill.main.name = data.combatSkills[weapon.data.skill.main.id].name;
 							weapon.data.skill.main.value = skill.value;
 						} else {
@@ -282,7 +282,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
 						if( weapon.data.skill.alternativ.id != ''){
 							if( data.combatSkills[weapon.data.skill.alternativ.id]){
-								const skill = this.actor.getOwnedItem( weapon.data.skill.alternativ.id);
+								const skill = this.actor.items.get( weapon.data.skill.alternativ.id);
 								weapon.data.skill.alternativ.name = data.combatSkills[weapon.data.skill.alternativ.id].name;
 								weapon.data.skill.alternativ.value = skill.value;
 							}
@@ -306,8 +306,8 @@ export class CoC7ActorSheet extends ActorSheet {
 				}
 			}
 
-			const token = this.actor.token;
-			data.tokenId = token ? `${token.scene?._id?token.scene._id:'TOKEN'}.${token.id}` : null;  //REFACTORING (2)
+			const token = this.token;
+			data.tokenId = token ? `${token.parent?.id?token.parent.id:'TOKEN'}.${token.id}` : null;  //REFACTORING (2)
 
 			data.hasEmptyValueWithFormula = false;
 			if( data.data.characteristics){
@@ -408,8 +408,10 @@ export class CoC7ActorSheet extends ActorSheet {
 	}
 
 	get tokenKey(){
-		if( this.token) return `${this.token.scene?._id?this.token.scene._id:'TOKEN'}.${this.token.data._id}`;  //REFACTORING (2)
-		return this.actor.id;
+		ui.notifications.error('DEPRECATED SHOULD NOT HAPPEN!');
+		throw 'base.js get tokenKey(): DEPRECATED SHOULD NOT HAPPEN!';
+		// if( this.token) return `${this.token.scene?._id?this.token.scene._id:'TOKEN'}.${this.token.data._id}`;  //REFACTORING (2)
+		// return this.actor.id;
 	}
 
 	onCloseSheet(){
@@ -489,7 +491,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		// Update Inventory Item
 		html.find('.item-edit').click(ev => {
 			const li = $(ev.currentTarget).parents('.item');
-			const item = this.actor.getOwnedItem(li.data('itemId'));
+			const item = this.actor.items.get(li.data('itemId'));
 			item.sheet.render(true);
 		});
 
@@ -532,17 +534,17 @@ export class CoC7ActorSheet extends ActorSheet {
 		});
 
 		html.find('.development-flag').dblclick( ev=> {
-			const item = this.actor.getOwnedItem( ev.currentTarget.closest('.item').dataset.itemId);
+			const item = this.actor.items.get( ev.currentTarget.closest('.item').dataset.itemId);
 			item.toggleItemFlag( 'developement');
 		});
 
 		html.find('.occupation-skill-flag.clickable').click( ev=> {
-			const item = this.actor.getOwnedItem( ev.currentTarget.closest('.item').dataset.itemId);
+			const item = this.actor.items.get( ev.currentTarget.closest('.item').dataset.itemId);
 			item.toggleItemFlag( 'occupation');
 		});
 
 		html.find('.archetype-skill-flag.clickable').click( ev=> {
-			const item = this.actor.getOwnedItem( ev.currentTarget.closest('.item').dataset.itemId);
+			const item = this.actor.items.get( ev.currentTarget.closest('.item').dataset.itemId);
 			item.toggleItemFlag( 'archetype');
 		});
 
@@ -671,7 +673,7 @@ export class CoC7ActorSheet extends ActorSheet {
 	}
 
 	async _onToggle( event){
-		let weapon = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.itemId);
+		let weapon = this.actor.items.get( event.currentTarget.closest('.item').dataset.itemId);
 		if( weapon){
 			weapon.toggleProperty(event.currentTarget.dataset.property, (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224));
 		}
@@ -741,8 +743,8 @@ export class CoC7ActorSheet extends ActorSheet {
 	_onItemSummary(event) {
 		event.preventDefault();
 		let li = $(event.currentTarget).parents('.item'),
-			item = this.actor.getOwnedItem(li.data('item-id')),
-			chatData = item.getChatData({secrets: this.actor.isOwner, owner: this.actor});
+			item = this.actor.items.get(li.data('item-id')),
+			chatData = item.getChatData({secrets: this.actor.isOwner});
 
 
 		// Toggle summary
@@ -802,7 +804,7 @@ export class CoC7ActorSheet extends ActorSheet {
 	async _onItemPopup(event) {
 		event.preventDefault();
 		let li = $(event.currentTarget).parents('.item'),
-			item = this.actor.getOwnedItem(li.data('item-id'));
+			item = this.actor.items.get(li.data('item-id'));
 		
 		CoC7ActorSheet.popupSkill( item);
 	}
@@ -847,8 +849,19 @@ export class CoC7ActorSheet extends ActorSheet {
 		event.preventDefault();
 		const itemId = event.currentTarget.closest('li').dataset.itemId;
 		const fastForward = event.shiftKey;
-		const weapon = this.actor.getOwnedItem(itemId);
-		const actorKey = !this.token? this.actor.actorKey : `${this.token.scene?._id?this.token.scene._id:'TOKEN'}.${this.token.data._id}`; //REFACTORING (2)
+		const weapon = this.actor.items.get(itemId);
+		// const actorKey = !this.token? this.actor.actorKey : `${this.token.scene?._id?this.token.scene._id:'TOKEN'}.${this.token.data._id}`; //REFACTORING (2)
+		/*** MODIF 0.8.x ***/ 
+		let actorKey;
+		if( !this.token) actorKey = this.actor.id; //Sheet was opened from actor directory
+		else { //Opened from token
+			if( this.actor.isToken && game.actors.tokens[this.token.id]){
+				actorKey =  `TOKEN.${this.token.id}`;
+			} else {
+				actorKey =  `${this.token.parent.id}.${this.token.id}`;
+			}
+		}
+
 
 		if(isCtrlKey(event) && game.user.isGM){
 			const linkData = {
@@ -879,7 +892,7 @@ export class CoC7ActorSheet extends ActorSheet {
 	async _onReloadWeapon(event){
 		const itemId = event.currentTarget.closest('.item') ? event.currentTarget.closest('.item').dataset.itemId : null;
 		if( !itemId) return;
-		const weapon = this.actor.getOwnedItem( itemId);
+		const weapon = this.actor.items.get( itemId);
 		if( 0 == event.button){
 			if( event.shiftKey) await weapon.reload();
 			else await weapon.addBullet();
@@ -893,7 +906,7 @@ export class CoC7ActorSheet extends ActorSheet {
 	async _onAddAmo(event){
 		const itemId = event.currentTarget.closest('.item') ? event.currentTarget.closest('.item').dataset.itemId : null;
 		if( !itemId) return;
-		const weapon = this.actor.getOwnedItem( itemId);
+		const weapon = this.actor.items.get( itemId);
 		await weapon.addBullet();
 	}
 
@@ -1228,7 +1241,7 @@ export class CoC7ActorSheet extends ActorSheet {
 			if( event.currentTarget.classList){
 
 				if( event.currentTarget.classList.contains('skill-adjustment')){
-					let item = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.itemId);
+					let item = this.actor.items.get( event.currentTarget.closest('.item').dataset.itemId);
 					if( item){
 						const value = event.currentTarget.value? parseInt(event.currentTarget.value) : null;
 
@@ -1270,14 +1283,14 @@ export class CoC7ActorSheet extends ActorSheet {
 				}
 
 				if( event.currentTarget.classList.contains('npc-skill-score')){
-					let skill = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.skillId);
+					let skill = this.actor.items.get( event.currentTarget.closest('.item').dataset.skillId);
 					if( skill){
 						await skill.updateValue( event.currentTarget.value);
 					}
 				}
 
 				if( event.currentTarget.classList.contains('skill-name') || event.currentTarget.classList.contains('item-name')){
-					let item = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.skillId);
+					let item = this.actor.items.get( event.currentTarget.closest('.item').dataset.skillId);
 					if( item){
 						await item.update( {'name': event.currentTarget.value});
 					}
@@ -1313,8 +1326,8 @@ export class CoC7ActorSheet extends ActorSheet {
 				//TODO : Factorisation du switch
 				//TODO : remplacer les strings par de constantes (item.skill.main ...)
 				if( event.currentTarget.classList.contains('weapon-skill')){
-					let weapon = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.itemId);
-					let skill = this.actor.getOwnedItem( event.currentTarget.options[event.currentTarget.selectedIndex].value);
+					let weapon = this.actor.items.get( event.currentTarget.closest('.item').dataset.itemId);
+					let skill = this.actor.items.get( event.currentTarget.options[event.currentTarget.selectedIndex].value);
 					if( weapon && skill){
 						switch( event.currentTarget.dataset.skill){
 						case 'main':
@@ -1329,7 +1342,7 @@ export class CoC7ActorSheet extends ActorSheet {
 				
 				//Le nom de l'arme a changé
 				if( event.currentTarget.classList.contains('weapon-name')){
-					let weapon = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.itemId);
+					let weapon = this.actor.items.get( event.currentTarget.closest('.item').dataset.itemId);
 					if( weapon){
 						await weapon.update( {'name': event.currentTarget.value});
 					}
@@ -1339,7 +1352,7 @@ export class CoC7ActorSheet extends ActorSheet {
 				//TODO : Factorisation du switch
 				//TODO : remplacer les strings par de constantes (item.range.normal ...)
 				if( event.currentTarget.classList.contains('damage-formula')){
-					let weapon = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.itemId);
+					let weapon = this.actor.items.get( event.currentTarget.closest('.item').dataset.itemId);
 					if( weapon){
 						//teste la validité de la formule.
 						if( event.currentTarget.value.length != 0){
