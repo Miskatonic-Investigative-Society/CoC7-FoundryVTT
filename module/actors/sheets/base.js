@@ -744,7 +744,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		event.preventDefault();
 		let li = $(event.currentTarget).parents('.item'),
 			item = this.actor.items.get(li.data('item-id')),
-			chatData = item.getChatData({secrets: this.actor.isOwner, owner: this.actor});
+			chatData = item.getChatData({secrets: this.actor.isOwner});
 
 
 		// Toggle summary
