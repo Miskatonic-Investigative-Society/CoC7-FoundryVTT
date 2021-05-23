@@ -122,6 +122,15 @@ Hooks.once('init', async function() {
 		type: Boolean
 	});
 
+	game.settings.register('CoC7', 'developmentRollForLuck', {
+		name: 'SETTINGS.developmentRollForLuck',
+		hint: 'SETTINGS.developmentRollForLuckHint',
+		scope: 'world',
+		config: true,
+		default: false,
+		type: Boolean
+	});
+
 	game.settings.register('CoC7', 'oneBlockBackstory', {
 		name: 'SETTINGS.OneBlockBackStory',
 		hint: 'SETTINGS.OneBlockBackStoryHint',

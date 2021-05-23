@@ -22,6 +22,12 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+version 0.5.9 :
+
+* #518 Development improvement thanks to @castanhocorreia.
+* #522 Localization of link creation title window thanks to @castanhocorreia.
+* Swedish translation updated thanks to @rangertheman.
+
 version 0.5.8 :
 
 * ___!! This will probably be the last release in 0.7.x cycle !!___
