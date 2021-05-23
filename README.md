@@ -26,6 +26,10 @@ version 0.5.9 :
 
 * #518 Development improvement thanks to @castanhocorreia.
 * #522 Localization of link creation title window thanks to @castanhocorreia.
+* #530 bug correction from @snap01.
+  * Actors owned but not controlled by a playuer will rise a warnin when targeted.
+  * #410 Weapons without description show [object Object].
+  * #524 Books containing spells were not pre-processed
 * Swedish translation updated thanks to @rangertheman.
 
 version 0.5.8 :
