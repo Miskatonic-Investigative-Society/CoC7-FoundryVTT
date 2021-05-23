@@ -1,5 +1,5 @@
-import { CoC7Parser } from '../../apps/parser.js'
-import { COC7 } from '../../config.js'
+import { CoC7Parser } from '../../apps/parser.js';
+import { COC7 } from '../../config.js';
 // import { CoCActor } from '../../actors/actor.js';
 
 /**
@@ -59,21 +59,21 @@ export class CoC7BookSheet extends ItemSheet {
 	_onSpellSummary(event) {
 		event.preventDefault();
 		let li = $(event.currentTarget).parents('.spell'),
-			spell = this.item.data.data.spells.find(s => { return s._id === li.data('spell-id');})
+			spell = this.item.data.data.spells.find(s => { return s._id === li.data('spell-id');});
 		if (typeof spell.data.description === 'string') {
 			spell.data.description = {
 				value: spell.data.description
-			}
+			};
 		}
-		let chatData = TextEditor.enrichHTML(spell.data.description.value)
-		chatData = CoC7Parser.enrichHTML(chatData)
+		let chatData = TextEditor.enrichHTML(spell.data.description.value);
+		chatData = CoC7Parser.enrichHTML(chatData);
 	
 		// Toggle summary
 		if ( li.hasClass('expanded') ) {
 			let summary = li.children('.item-summary');
 			summary.slideUp(200, () => summary.remove());
 		} else {
-			let div = $(`<div class="item-summary">${chatData}</div>`)
+			let div = $(`<div class="item-summary">${chatData}</div>`);
 			let props = $('<div class="item-properties"></div>');
 			// chatData.properties.forEach(p => props.append(`<span class="tag">${p}</span>`));
 			div.append(props);
