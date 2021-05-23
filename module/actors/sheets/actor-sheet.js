@@ -41,6 +41,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 
 		data.allowDevelopment = game.settings.get('CoC7', 'developmentEnabled');
 		data.allowCharCreation = game.settings.get( 'CoC7', 'charCreationEnabled');
+		data.developmentRollForLuck = game.settings.get('CoC7', 'developmentRollForLuck');
 		data.showDevPannel = data.allowDevelopment || data.allowCharCreation;
 
 		data.manualCredit = this.actor.getActorFlag('manualCredit');

@@ -2195,6 +2195,45 @@ export class CoCActor extends Actor {
 		return( {failure : failure, success: success});
 	}
 
+	async developLuck(fastForward = false) {
+		const luck = this.data.data.attribs.lck;
+		const upgradeRoll = new Roll('1D100');
+		const title = game.i18n.localize('CoC7.RollLuck4Dev');
+		let message = '<p class="chat-card">';
+		upgradeRoll.roll();
+		if(!fastForward) await CoC7Dice.showRollDice3d(upgradeRoll);
+		if(upgradeRoll.total > luck.value) {
+			const augmentRoll = new Roll('1D10');
+			augmentRoll.roll();
+			if(!fastForward) await CoC7Dice.showRollDice3d(augmentRoll);
+				if((luck.value + augmentRoll.total) <= 99) {
+					await this.update({
+						'data.attribs.lck.value': this.data.data.attribs.lck.value + augmentRoll.total
+					})
+					message += `<span class="upgrade-success">${game.i18n.format('CoC7.LuckIncreased', {die: upgradeRoll.total, score: luck.value, augment: augmentRoll.total})}</span>`;
+				} else {
+					let correctedValue;
+					for(let i = 1; i <= 10; i++) {
+						if((luck.value + augmentRoll.total - i) <= 99) {
+							correctedValue = augmentRoll.total - i;
+							break
+						}
+					}
+					await this.update({
+						'data.attribs.lck.value': this.data.data.attribs.lck.value + correctedValue
+					})
+					message += `<span class="upgrade-success">${game.i18n.format('CoC7.LuckIncreased', {die: upgradeRoll.total, score: luck.value, augment: correctedValue})}</span>`;
+				}
+		} else {
+			message += `<span class="upgrade-failed">${game.i18n.format('CoC7.LuckNotIncreased', {die: upgradeRoll.total, score: luck.value})}</span>`;
+		}
+		if(!fastForward){
+			message += '</p>';
+			const speaker = {actor: this.actor};
+			await chatHelper.createMessage(title, message, {speaker:speaker});
+		}
+	}
+
 	async developSkill( skillId, fastForward = false){
 		const skill = this.getOwnedItem( skillId);
 		if( !skill) return;
@@ -2310,6 +2349,10 @@ export class CoCActor extends Actor {
 
 	async resetCounter( counter){
 		await this.update( {[counter]: 0});
+	}
+
+	async setOneFifthSanity (oneFifthSanity) {
+		await this.update({"data.attribs.san.oneFifthSanity": oneFifthSanity});
 	}
 
 	get fightingSkills(){
