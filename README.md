@@ -22,22 +22,33 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+version 0.5.9 :
+
+* #518 Development improvement thanks to @castanhocorreia.
+* #522 Localization of link creation title window thanks to @castanhocorreia.
+* #530 bug correction from @snap01.
+  * Actors owned but not controlled by a playuer will rise a warnin when targeted.
+  * #410 Weapons without description show [object Object].
+  * #524 Books containing spells were not pre-processed
+* Swedish translation updated thanks to @rangertheman.
+
 version 0.5.8 :
 
-* Bug correction :
-  * A bug during actor import that could lead to an uninterupted loop had been resolved. Thanks to @BrotherSharper for his help finding this!
+* ___!! This will probably be the last release in 0.7.x cycle !!___
+* Bug correction:
+  * A bug during actor import that could lead to an uninterrupted loop had been resolved. Thanks to @BrotherSharper for his help finding this!
   * Typo correction in combat chat card.
-* CSS options added to specify the type of backgroung for the sheet.
+* CSS options added to specify the type of background for the sheet.
   * The background image is by default a border image sliced to 'open' and keep header's proportion.
-  * You can now specify this property as the css property background (including repeat, position and attachement).
+  * You can now specify this property as the CSS property background (including repeat, position and attachment).
   * To enable this you need to select a background type.
-    * slice : image used as border-image.
-    * auto/contains/cover : similar to the background-size property.
+    * slice: image used as border-image.
+    * auto/contains/cover: similar to the background-size property.
 * Option added to disable debug hooks (thanks to @snap01).
 * Japanese translation updated thanks to @BrotherSharper
 * French doc and translation updated thanks to @vonv
 * German translation updated thanks to @IchbinkeinReh
-* !!Chase items are not operational !!.
+* Chase items are not operational.
 
 version 0.5.7 :
 

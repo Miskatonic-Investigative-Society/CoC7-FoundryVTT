@@ -345,9 +345,11 @@ export class CoC7ActorSheet extends ActorSheet {
 		if( data.data.attribs.hp.value < 0) data.data.attribs.hp.value = null;
 		if( data.data.attribs.mp.value < 0) data.data.attribs.mp.value = null;
 		if( data.data.attribs.san.value < 0) data.data.attribs.san.value = null;
+
 		if( data.data.attribs.san.value >0 && !data.data.attribs.san.initialvalue) data.data.attribs.san.initialvalue = data.data.attribs.san.value;
 		if( data.data.attribs.san.value >0 && !data.data.attribs.san.dailyLoss) data.data.attribs.san.dailyLoss = 0;
 		data.data.attribs.san.fiftyOfCurrent = data.data.attribs.san.initialvalue >= 0 ? ' / '+Math.max(1, Math.floor(data.data.attribs.san.initialvalue/5)):'';
+
 		if( data.data.attribs.hp.auto ){
 			//TODO if any is null set max back to null.
 			if ( data.data.characteristics.siz.value != null && data.data.characteristics.con.value != null)
@@ -547,6 +549,12 @@ export class CoC7ActorSheet extends ActorSheet {
 			this.actor.developementPhase( event.shiftKey);
 		});
 
+		html.find('.luck-development').click( event =>{
+			if(!event.detail || event.detail == 1){
+				this.actor.developLuck(event.shiftKey);
+			}
+		});
+
 		html.find('a.coc7-link').on( 'click', (event)=> CoC7Parser._onCheck(event));
 		html.find('a.coc7-link').on( 'dragstart', (event)=> CoC7Parser._onDragCoC7Link(event));
 
@@ -659,7 +667,9 @@ export class CoC7ActorSheet extends ActorSheet {
 		//data.data.attribs.san.fiftyOfCurrent = Math.floor(data.data.attribs.san.value/5) ;
 		event.preventDefault();
 		const counter = event.currentTarget.dataset.counter;
-		if( counter) this.actor.resetCounter( counter);
+		let oneFifthSanity = ' / '+Math.floor(this.actor.data.data.attribs.san.value/5);
+		this.actor.setOneFifthSanity( oneFifthSanity );
+		if( counter) this.actor.resetCounter( counter );
 	}
 
 	async _onAutoToggle( event){
