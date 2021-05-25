@@ -605,7 +605,7 @@
 "CoC7.InfoLessSkillThanOptions": "{skillCount} e {optionsCount}, adicionando todas.",
 "CoC7.InfoAllSkillsAlreadySelected": "Todas as perícias já estão selecionadas.",
 
-"CoC7.MessageCheckRequestedWait": "Seu Guardião requisita um {check}.<br>Aguarde antes de clicar!<br>",
+"CoC7.MessageCheckRequestedWait": "{check}<br>",
 "CoC7.MessageTargetCheckRequested": "Seu Guardião está solicitando um {check} para {name}.",
 
 "CoC7.ActorImporter": "Importar Ator",

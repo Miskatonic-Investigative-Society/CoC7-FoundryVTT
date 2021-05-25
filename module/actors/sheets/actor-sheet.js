@@ -78,6 +78,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 			html.find('.reset-occupation').click( async () => await this.actor.resetOccupation());
 			html.find('.reset-archetype').click( async () => await this.actor.resetArchetype());
 			html.find('.open-item').click( event => this._onItemDetails(event));
+			html.find('[name="data.attribs.hp.value"]').change(event => this.actor.setHealthStatusManually(event));
 		}
 	}
 

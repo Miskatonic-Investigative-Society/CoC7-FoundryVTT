@@ -343,7 +343,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		data.data.attribs.build.value = this.actor.build; 
 		
 
-		if( data.data.attribs.hp.value < 0) data.data.attribs.hp.value = null;
+		// if( data.data.attribs.hp.value < 0) data.data.attribs.hp.value = null;
 		if( data.data.attribs.mp.value < 0) data.data.attribs.mp.value = null;
 		if( data.data.attribs.san.value < 0) data.data.attribs.san.value = null;
 		// data.data.attribs.san.fiftyOfCurrent = data.data.attribs.san.value >= 0 ? ' / '+Math.floor(data.data.attribs.san.value/5):'';

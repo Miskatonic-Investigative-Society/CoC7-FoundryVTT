@@ -2535,6 +2535,19 @@ export class CoCActor extends Actor {
 		if( !this.isPC) return null;
 		return game.users.filter( u => u.character.id == this.id)[0];
 	}
+	
+	async setHealthStatusManually(event) {
+        if (event.originalEvent) {
+            const healthBefore = parseInt(event.originalEvent.currentTarget.defaultValue);
+            const healthAfter = parseInt(event.originalEvent.currentTarget.value);
+            let damageTaken;
+            healthAfter >= this.hp ? this.setHp(healthAfter) : false;
+            healthAfter < 0 ? damageTaken = Math.abs(healthAfter)
+							: damageTaken = healthBefore - healthAfter;
+            this.render(true);
+            return await this.dealDamage(damageTaken);
+        }
+    }
 
 	async dealDamage(amount, options={}){
 		let total = parseInt(amount);
