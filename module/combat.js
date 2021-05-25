@@ -12,7 +12,7 @@ export class CoC7Combat {
 			const combId = el.getAttribute('data-combatant-id');
 			const combatantControlsDiv = el.querySelector('.combatant-controls');
 			// const combatant = game.combat.getCombatant(combId);
-			const combatant = currentCombat.data.combatants.find((c) => c._id == combId);
+			const combatant = currentCombat.data.combatants.get(combId);
 
 			if( combatant.hasGun) {
 				$(combatantControlsDiv).prepend(`<a class="combatant-control active add-init" title="${game.i18n.localize('CoC7.PutGunAway')}" data-control="drawGun"><i class="fas fa-bullseye"></i></a>`);
