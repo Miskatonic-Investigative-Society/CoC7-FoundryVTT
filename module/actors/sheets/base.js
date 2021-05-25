@@ -478,7 +478,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
 			const wheelInputs = html.find('.attribute-value');
 			for( let wheelInput of wheelInputs){
-				wheelInput.addEventListener('wheel', event => this._onWheel(event));
+				wheelInput.addEventListener('wheel', event => this._onWheel(event), { passive: true});
 			}
 		}
 
