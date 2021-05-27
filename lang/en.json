@@ -80,6 +80,7 @@
 "CoC7.Other": "Other",
 "CoC7.rounds": "round(s)",
 "CoC7.hours": "hour(s)",
+"CoC7.weeks": "week(s)",
 "CoC7.remove": "Remove",
 "CoC7.Any": "Any",
 "CoC7.All": "All",
@@ -496,6 +497,8 @@
 "CoC7.MythosBook": "Mythos Book",
 "CoC7.OccultBook": "Occult Tome",
 "CoC7.Unidentified": "Unidentified description",
+"CoC7.AttemptInitialReading": "Initial Reading",
+"CoC7.DifficultyLevel": "Difficulty Level",
 
 "CoC7.Crew": "Crew",
 "CoC7.Origin": "Origin",

@@ -22,14 +22,27 @@
 
     </header>
 
-    {{!-- Item Sheet Navigation --}}
-    <nav style="flex: 0 0 24px;margin-bottom: 4px;font-family: 'Modesto Condensed', 'Palatino Linotype', serif;font-size: 16px;font-weight: 700;"
-      class="sheet-navigation tabs" data-group="primary">
-        <a style="line-height: 24px;" class="item active" data-tab="description">{{ localize "CoC7.ItemDescription" }}</a>
-        <a style="line-height: 24px;" class="item" data-tab="details">{{ localize "CoC7.Details" }}</a>
-    </nav>
+    {{#if isOwned}}
+    <section style="max-height: fit-content;">
+        <div class="summary flexrow" style="margin-top: 2px">
+            <span style="font-size: 13px; max-width: fit-content; padding: 0px 5px; line-height: 1.8;">Progress:</span>
+            <progress id="progress" name="data.progress" value="{{data.progress}}" max="{{data.weeksStudyTime}}" data-label="{{data.progress}} / {{data.weeksStudyTime}} {{localize 'CoC7.weeks'}}"></progress>
+            {{#if isGM}}
+                <i class="fas fa-plus increase-progress" style="max-width: fit-content; padding: 0px 5px; line-height: 1.8;"></i>
+            {{/if}}
+        </div>
+    </section>
+    {{/if}}
 
-    
+    {{#or isGM fullStudy}}
+    {{!-- Item Sheet Navigation --}}
+        <nav style="flex: 0 0 24px;margin-bottom: 4px;font-family: 'Modesto Condensed', 'Palatino Linotype', serif;font-size: 16px;font-weight: 700;"
+        class="sheet-navigation tabs" data-group="primary">
+            <a style="line-height: 24px;" class="item active" data-tab="description">{{ localize "CoC7.ItemDescription" }}</a>
+            <a style="line-height: 24px;" class="item" data-tab="details">{{ localize "CoC7.Details" }}</a>
+        </nav>
+    {{/or}}
+
     {{!-- Item Sheet Body --}}
     <section style="overflow: hidden;flex: 1;" class="sheet-body">
 
@@ -37,11 +50,21 @@
         <div class="tab flexrow active" data-group="primary" data-tab="description">
 
             <div class="item-properties">
-                <ol class="properties-list">
-                    {{#each itemProperties}}
-                    <li>{{this}}</li>
-                    {{/each}}
-                </ol>
+                {{#if isOwned}}
+                {{#unless initialReading}}
+                    <ol class="properties-list">
+                        <li class="attempt-initial-reading">{{localize "CoC7.AttemptInitialReading"}}</li>
+                    </ol>
+                {{/unless}}
+                <hr style="height: 1px; padding: 2px 0px 2px 0px; background: groove #eeede0;"></hr>
+                {{/if}}
+                {{#or isGM initialReading}}
+                    <ol class="properties-list">
+                        {{#each itemProperties}}
+                            <li>{{this}}</li>
+                        {{/each}}
+                    </ol>
+                {{/or}}
             </div>
         
             {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
@@ -75,6 +98,18 @@
             <div class="form-group">
                 <label>{{ localize "CoC7.StudyTime" }}</label>
                 <input type="text" name="data.weeksStudyTime" value="{{data.weeksStudyTime}}" data-dtype="Number"/>
+            </div>
+
+            <div class="form-group">
+                <label>{{ localize "CoC7.DifficultyLevel" }}</label>
+                <select name="data.difficultyLevel">
+                    {{#select data.difficultyLevel}}
+                        <option value="" selected>{{localize 'CoC7.RollDifficultyRegular'}}</option>
+                        <option value="+">{{localize 'CoC7.RollDifficultyHard'}}</option>
+                        <option value="++">{{localize 'CoC7.RollDifficultyExtreme'}}</option>
+                        <option value="+++">{{localize 'CoC7.RollDifficultyCritical'}}</option>
+                    {{/select}}
+                </select>
             </div>
 
             <div class="form-group">

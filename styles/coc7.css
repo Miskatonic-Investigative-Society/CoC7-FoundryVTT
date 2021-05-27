@@ -969,3 +969,47 @@
     border-right: none;
     padding-right: 0;
 }
+
+.coc7 progress {
+    width: 100%;
+    height: 1.5em;
+    background: none;
+    position: relative;
+    margin-top: 2px;
+    border: 2px groove #eeede0;
+    border-radius: 10px;
+}
+
+.coc7 progress:before {
+    content: attr(data-label);
+    font-size: 0.8em;
+    position: absolute;
+    text-align: center;
+    left: 0;
+    right: 0;
+}
+.coc7 progress .value {
+    background-color: white;
+    display: inline-block;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.coc7 progress::-webkit-progress-bar {
+    background: none;
+    border-radius: 10px;
+}
+
+.coc7 progress::-webkit-progress-value {
+    background: white;
+    border-radius: 10px;
+}
+  
+.coc7 progress::-moz-progress-bar {
+    background: none;
+    border-radius: 10px;
+}
+
+.coc7 .increase-progress:hover {
+    text-shadow: 0 0 8px red;
+}
