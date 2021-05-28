@@ -11,8 +11,8 @@ export class CoC7Combat {
 
 			const combId = el.getAttribute('data-combatant-id');
 			const combatantControlsDiv = el.querySelector('.combatant-controls');
-			// const combatant = game.combat.getCombatant(combId);
-			const combatant = currentCombat.data.combatants.find((c) => c._id == combId);
+			// const combatant = game.combat.combatants.get(combId);
+			const combatant = currentCombat.data.combatants.find((c) => c.id == combId);
 
 			if( combatant.hasGun) {
 				$(combatantControlsDiv).prepend(`<a class="combatant-control active add-init" title="${game.i18n.localize('CoC7.PutGunAway')}" data-control="drawGun"><i class="fas fa-bullseye"></i></a>`);
@@ -79,21 +79,21 @@ export class CoC7Combat {
 		event.stopPropagation();
 		const btn = event.currentTarget;
 		const li = btn.closest('.combatant');
-		const c = game.combat.getCombatant(li.dataset.combatantId);
+		const c = game.combat.combatants.get(li.dataset.combatantId);
 		if( c.actor.isOwner){
 			if( c.hasGun){
-				await game.combat.updateCombatant({_id: c._id, hasGun: false}, {});
+				await game.combat.updateCombatant({id: c.id, hasGun: false}, {});
 			}
 			else{
-				await game.combat.updateCombatant({_id: c._id, hasGun: true}, {});
+				await game.combat.updateCombatant({id: c.id, hasGun: true}, {});
 			}
 		}
 		
 
 		const newInit = c.actor.rollInitiative(c.hasGun);
 		if( c.hasGun){
-			if( c.initiative < newInit) game.combat.setInitiative( c._id, newInit);		
-		} else game.combat.setInitiative( c._id, newInit);
+			if( c.initiative < newInit) game.combat.setInitiative( c.id, newInit);		
+		} else game.combat.setInitiative( c.id, newInit);
 	}
 
 }
@@ -110,14 +110,14 @@ export async function rollInitiative(ids/*, formula=null, messageOptions={}*/) {
 
 	// Structure input data
 	ids = typeof ids === 'string' ? [ids] : ids;
-	const currentId = this.combatant._id;
+	const currentId = this.combatant.id;
 
 	// Iterate over Combatants, performing an initiative roll for each
 	const [updates] = ids.reduce((results, id) => {
 		let [updates] = results;
 
 		// Get Combatant data
-		const c = this.getCombatant(id);
+		const c = this.combatants.get(id);
 		if ( !c ) return results;
 
 		// Roll initiative
@@ -130,7 +130,7 @@ export async function rollInitiative(ids/*, formula=null, messageOptions={}*/) {
 	if ( !updates.length ) return this;
 
 	// Update multiple combatants
-	await this.updateEmbeddedEntity('Combatant', updates);
+	await this.updateEmbeddedDocuments('Combatant', updates);
 
 	// Ensure the turn order remains with the same combatant
 	await this.update({turn: this.turns.findIndex(t => t._id === currentId)});
