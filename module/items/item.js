@@ -169,14 +169,6 @@ export class CoC7Item extends Item {
 		return this.isIncludedInSet( 'properties', propertyId);
 	}
 
-	async increaseBookProgress() {
-		isNaN(this.data.data.progress) ? await this.update({'data.progress': 0}) : false;
-		this.data.data.progress < this.data.data.weeksStudyTime ? 
-			await this.update({'data.progress': this.data.data.progress + 1})
-			: false;
-		return this.render(true);
-	}
-
 	get name() {
 		if( 'skill' != this.type || !this.data.data?.properties?.special) return super.name;
 		if( this.data.name.toLowerCase().includes( this.data.data.specialization?.toLowerCase())) return super.name;

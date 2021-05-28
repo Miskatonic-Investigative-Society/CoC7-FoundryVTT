@@ -295,27 +295,6 @@ export class CoCActor extends Actor {
 		return await this.insanity?.delete();
 	}
 
-	async attemptInitialReading(language, difficulty) {
-		language == '' || language == null ? language = 'English' : false;
-		difficulty = CoC7Utilities.convertDifficulty(difficulty);
-		let skill = this.getSkillsByName(language);
-		if (skill.length != 0) {
-			skill = skill[0];
-			let check = new CoC7Check();
-			check.actor = this.tokenKey;
-			check.skill = skill;
-			check.difficulty = difficulty;
-			check.roll();
-			check.toMessage();
-			return check.passed;
-		}
-	}
-
-	async gainInitialReading(initialMythos, sanLoss) {
-		let skill = this.getSkillsByName(game.i18n.localize(COC7.CthulhuMythosName));
-		await this.actor.update({})
-	}
-
 
 	/**
 	 * Called upon new actor creation.

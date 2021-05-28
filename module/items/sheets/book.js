@@ -17,8 +17,6 @@ export class CoC7BookSheet extends ItemSheet {
 		html.on('drop', (event) => this._onDrop(event));
 		html.find('.spell .spell-name h4').click(event => this._onSpellSummary(event));
 		html.find('.item-delete').click(this._onSpellDelete.bind(this));
-		html.find('.increase-progress').click(this._increaseProgress.bind(this));
-		html.find('.attempt-initial-reading').click(this._attemptInitialReading.bind(this));
 	}
 
 	async _onDrop(event){
@@ -56,27 +54,6 @@ export class CoC7BookSheet extends ItemSheet {
 		// await this.item.update( update);
 		// this.item.createEmbeddedEntity('OwnedItem', duplicate(item.data));
 		// }
-	}
-
-	async _increaseProgress() {
-		await this.item.increaseBookProgress();
-	}
-
-	async _attemptInitialReading() {
-		const language = this.item.data.data.language;
-		const difficulty = this.item.data.data.difficultyLevel;
-		if (await this.actor.attemptInitialReading(language, difficulty)) {
-			console.log('yes!')
-			await this.item.update({'data.initialReading': true});
-			const initialMythos = this.item.data.data.gain.cthulhuMythos.CMI;
-			const sanLoss = this.item.data.data.sanLoss;
-			await this.actor.gainInitialReading(initialMythos, sanLoss);
-		} else {
-			const title = 'Blá';
-			const message = 'Blá, blá';
-			const speaker = {actor: this.actor};
-			await chatHelper.createMessage(title, message, {speaker: speaker});
-		}
 	}
 
 	_onSpellSummary(event) {
@@ -145,17 +122,7 @@ export class CoC7BookSheet extends ItemSheet {
 	}
 
 	getData(){
-		const data = super.getData();
-
-		data.isGM = game.user.isGM;
-		data.isOwned = this.item.isOwned;
-
-		data.initialReading = this.item.data.data.initialReading;
-		data.fullStudy = this.item.fullStudy;
-
-		Handlebars.registerHelper('or', function (v1, v2, options) {
-			return v1 || v2 ? options.fn(this) : options.inverse(this);
-		});
+		const data=super.getData();
 
 		data.itemProperties = [];
 		
