@@ -24,12 +24,17 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 version 0.5.9 :
 
-* #518 Development improvement thanks to @castanhocorreia.
+* ___!! Last release in 0.7.x cycle !!___
+* Development improvement thanks to @castanhocorreia.
+  * #518 : Development roll for Luck, OneFifthSanity system and MP recover.
+    * The Start Rest function now recovers Magic Points (7). In the future I intend to present a dialog box where Keeper informs how many hours of rest the Investigators had, so that they can recover the corresponding amount.
+    The one-fifth of Sanity points does not change with loss or increase of Sanity points and will only change to one-fifth of total Sanity if the day is reset via the reset button or the Start Rest macro.
+  * #538 : Set Health Status Manually.
 * #522 Localization of link creation title window thanks to @castanhocorreia.
 * #530 bug correction from @snap01.
   * Actors owned but not controlled by a playuer will rise a warnin when targeted.
   * #410 Weapons without description show [object Object].
-  * #524 Books containing spells were not pre-processed
+  * #524 Books containing spells were not pre-processed.
 * Swedish translation updated thanks to @rangertheman.
 
 version 0.5.8 :
