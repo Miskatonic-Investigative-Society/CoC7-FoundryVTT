@@ -460,14 +460,14 @@ export class CoC7Utilities {
 
 	static updateCharSheets(){
 		if( game.user.isGM){
-			game.actors.entities.forEach( a => {
+			game.actors.contents.forEach( a => {
 				if( 'character' == a?.data?.type && a?.sheet && a?.sheet?.rendered){
 					a.update( { ['data.flags.locked']: true});
 					a.render( false);
 				}
 			});
 		} else{
-			game.actors.entities.forEach( a => {
+			game.actors.contents.forEach( a => {
 				if( a.isOwner){
 					a.update( { ['data.flags.locked']: true});
 					a.render( false);

@@ -2237,14 +2237,14 @@ export class CoCActor extends Actor {
 							augmentDie = new Die(10);
 							augmentDie.roll(1);
 						}	
-						success.push(item._id);
+						success.push(item.id);
 
 						augment += augmentDie.total;
 						message += `<span class="upgrade-success">${game.i18n.format( 'CoC7.DevSuccess', {item : item.data.name, die: die.total, score: item.value, augment: augmentDie.total})}</span><br>`;
 						await item.increaseExperience( augment);
 					}else{
 						message += `<span class="upgrade-failed">${game.i18n.format( 'CoC7.DevFailure', {item : item.data.name, die: die.total, score: item.value})}</span><br>`;
-						failure.push(item._id);
+						failure.push(item.id);
 					}
 					await item.unflagForDevelopement();
 				}

@@ -11,10 +11,10 @@ export class CoC7Combat {
 
 			const combId = el.getAttribute('data-combatant-id');
 			const combatantControlsDiv = el.querySelector('.combatant-controls');
-			// const combatant = game.combat.combatants.get(combId);
-			const combatant = currentCombat.data.combatants.find((c) => c.id == combId);
+			// const combatant = game.combat.getCombatant(combId);
+			const combatant = currentCombat.data.combatants.get(combId);
 
-			if( combatant.hasGun) {
+			if(!!combatant.getFlag('CoC7', 'hasGun')) {
 				$(combatantControlsDiv).prepend(`<a class="combatant-control active add-init" title="${game.i18n.localize('CoC7.PutGunAway')}" data-control="drawGun"><i class="fas fa-bullseye"></i></a>`);
 			}
 			else {
@@ -79,19 +79,18 @@ export class CoC7Combat {
 		event.stopPropagation();
 		const btn = event.currentTarget;
 		const li = btn.closest('.combatant');
-		const c = game.combat.combatants.get(li.dataset.combatantId);
+		const c = await game.combat.combatants.get(li.dataset.combatantId);
 		if( c.actor.isOwner){
-			if( c.hasGun){
-				await game.combat.updateCombatant({id: c.id, hasGun: false}, {});
+			if(!!c.getFlag('CoC7', 'hasGun')){
+				await c.setFlag('CoC7', 'hasGun', false);
 			}
 			else{
-				await game.combat.updateCombatant({id: c.id, hasGun: true}, {});
+				await c.setFlag('CoC7', 'hasGun', true);
 			}
 		}
 		
-
-		const newInit = c.actor.rollInitiative(c.hasGun);
-		if( c.hasGun){
+		const newInit = await c.actor.rollInitiative(!!c.getFlag('CoC7', 'hasGun'));
+		if(!!c.getFlag('CoC7', 'hasGun')){
 			if( c.initiative < newInit) game.combat.setInitiative( c.id, newInit);		
 		} else game.combat.setInitiative( c.id, newInit);
 	}
@@ -121,7 +120,7 @@ export async function rollInitiative(ids/*, formula=null, messageOptions={}*/) {
 		if ( !c ) return results;
 
 		// Roll initiative
-		const initiative = c.actor.rollInitiative(c.hasGun);
+		const initiative = c.actor.rollInitiative(!!c.getFlag('CoC7', 'hasGun'));
 		updates.push({_id: id, initiative: initiative});
 
 		// Return the Roll and the chat data
@@ -133,7 +132,7 @@ export async function rollInitiative(ids/*, formula=null, messageOptions={}*/) {
 	await this.updateEmbeddedDocuments('Combatant', updates);
 
 	// Ensure the turn order remains with the same combatant
-	await this.update({turn: this.turns.findIndex(t => t._id === currentId)});
+	await this.update({turn: this.turns.findIndex(t => t.id === currentId)});
 
 	// Create multiple chat messages
 	// await CONFIG.ChatMessage.entityClass.create(messages);
