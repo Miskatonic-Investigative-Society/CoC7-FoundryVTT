@@ -10,7 +10,7 @@ export class CoC7LinkCreationDialog extends FormApplication{
 		return mergeObject(super.defaultOptions, {
 			id: 'link-creation',
 			classes: ['coc7'],
-			title: 'Link creation',
+			title: game.i18n.localize('CoC7.CreateLink'),
 			dragDrop: [{dragSelector: null, dropSelector: '.container'}],
 			template: 'systems/CoC7/templates/apps/link-creation.html',
 			closeOnSubmit: false,
