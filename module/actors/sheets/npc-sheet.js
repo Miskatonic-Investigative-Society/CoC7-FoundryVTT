@@ -25,6 +25,13 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
 		return data;
 	}
 
+	activateListeners(html) {
+		super.activateListeners(html);
+		if (this.actor.owner) {
+			html.find('[name="data.attribs.hp.value"]').change(event => this.actor.setHealthStatusManually(event));
+		}
+	}
+
 	onCloseSheet(){
 		this.actor.unsetActorFlag( 'displayFormula');
 		super.onCloseSheet();
