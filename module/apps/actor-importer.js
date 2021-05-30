@@ -2,8 +2,6 @@
 
 import { CoC7ActorImporterRegExp } from './actor-importer-regexp.js';
 
-
-
 // Default values
 
 /**
@@ -25,7 +23,9 @@ const defaultWeaponSkillAdjustments = {
   archetype: null,
   experience: null
 }
-
+/**
+ * CoC7ActorImporter helper class to import an Actor from the raw text description.
+ */
 export class CoC7ActorImporter {
 
   // CoC7ActorImporterRgExp contains localized regular expressions to extract data from raw text
@@ -252,7 +252,7 @@ export class CoC7ActorImporter {
     const npc = await Actor.create({
       name: pc.name,
       type: this.entityType(entityTypeString),
-      folder: importedCharactersFolder._id,
+      folder: importedCharactersFolder.id,
       data: {}
     })
     // debugger
@@ -322,7 +322,7 @@ export class CoC7ActorImporter {
         if (skill !== null) {
           console.debug('skill', skill)
           const skillClone = duplicate(skill)
-          delete skillClone._id
+          delete skillClone.id
           skillClone.data.value = attack.data.range.normal.value
           console.debug('skillClone', skillClone)
           newSkill = await npc.createEmbeddedDocuments('Item', [skillClone])
@@ -347,13 +347,14 @@ export class CoC7ActorImporter {
           skill.data.value = attack.data?.range?.normal?.value
           console.debug('skill', skill)
           newSkill = await npc.createEmbeddedDocuments('Item', [skill])
-          console.debug('newSkill', newSkill) }
-          const weapon = await npc.createEmbeddedDocuments('Item', [attack])
+          console.debug('newSkill', newSkill)
+        }
+        const weapon = await npc.createEmbeddedDocuments('Item', [attack])
         console.debug('weapon', weapon)
         if (newSkill !== null) {
-          const createdAttack = npc.items.get(weapon._id)
+          const createdAttack = npc.items.get(weapon.id)
           await createdAttack.update({
-            'data.skill.main.id': newSkill._id,
+            'data.skill.main.id': newSkill.id,
             'data.skill.main.name': newSkill.name,
             'data.properties': newSkill.data.properties,
             'data.adjustments': newSkill.data.adjustments,
@@ -366,7 +367,7 @@ export class CoC7ActorImporter {
 
   async addTheSpells(pc, npc) {
     if (pc.spells !== null) {
-      pc.spells.forEach (spell =>  {
+      pc.spells.forEach(spell => {
         const created = npc.addItems([{
           name: spell,
           type: 'spell'
@@ -378,21 +379,21 @@ export class CoC7ActorImporter {
 
   async addTheLanguages(pc, npc) {
     if (pc.languages !== null) {
-      pc.languages.forEach( lang => {
-        const newSkill = this.createSkill(lang)
+      for (const lang of pc.languages) {
+        const newSkill = await this.createSkill(lang)
         const created = npc.createEmbeddedDocuments('Item', [newSkill])
         console.debug(created)
-    })
       }
+    }
   }
 
   async addTheSkills(pc, npc) {
     if (pc.skills !== null) {
-      pc.skills.forEach (skill => {
+      for (const skill of pc.skills) {
         const newSkill = await this.createSkill(skill)
         const created = npc.createEmbeddedDocuments('Item', [newSkill])
         console.debug(created)
-      })
+      }
     }
   }
 
