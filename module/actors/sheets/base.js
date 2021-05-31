@@ -496,9 +496,10 @@ export class CoC7ActorSheet extends ActorSheet {
 		});
 
 		// Delete Inventory Item
-		html.find('.item-delete').click(ev => {
+		html.find('.item-delete').click(async ev => {
 			const li = $(ev.currentTarget).parents('.item');
-			this.actor.deleteOwnedItem(li.data('itemId'));
+			const itemToDelete = this.actor.items.get(li.data('itemId'), {strict: true});
+			await itemToDelete.delete();
 			li.slideUp(200, () => this.render(false));
 		});
 
