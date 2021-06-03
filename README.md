@@ -32,6 +32,7 @@ version 0.6.0 :
 * #538 Upgrade on health monitor thanks to @castanhocorreia.
   * Modifying HP manually will now correctly trigger all status.
   * You can set HP by entering negative value : (HP=25)/Enter -7/(HP=18).
+* #549 bug correction from @zeteticl.
 * Taiwanese Mandarin translations updated thanks to @zeteticl.
 
 version 0.5.9 :
