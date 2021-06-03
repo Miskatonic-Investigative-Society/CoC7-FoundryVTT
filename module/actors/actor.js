@@ -1053,7 +1053,7 @@ export class CoCActor extends Actor {
 				await occupationSkill[index].unsetItemFlag('occupation');
 			}
 		}
-		if( this.occupation) await this.deleteOwnedItem(this.occupation.id);
+		if( this.occupation) await this.occupation.delete();
 		await this.update({ 'data.development.occupation': null});
 	}
 
@@ -1064,7 +1064,7 @@ export class CoCActor extends Actor {
 				await archetypeSkill[index].unsetItemFlag('archetype');
 			}
 		}
-		if( this.archetype) await this.deleteOwnedItem(this.archetype.id);
+		if( this.archetype) await this.archetype.delete();
 		await this.update({ 'data.development.archetype': null});
 	}
 
