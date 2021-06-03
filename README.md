@@ -24,14 +24,15 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 version 0.6.0 :
 
-* Ready for 0.8.x thanks to the help from
+* Ready for 0.8.x thanks to the kind help of
   * @pconcepcion
   * @snap01
-* This version is NOT compatible with version < 0.8
+* This version is NOT compatible with foundry version < 0.8
 * Please report all bugs on github !
 * #538 Upgrade on health monitor thanks to @castanhocorreia.
-  * Modifying HP manually will now correctly trigger all status !
-  * You can set HP by entering negative value : (HP=25)/Enter -7/(HP=18)
+  * Modifying HP manually will now correctly trigger all status.
+  * You can set HP by entering negative value : (HP=25)/Enter -7/(HP=18).
+* Taiwanese Mandarin translations updated thanks to @zeteticl.
 
 version 0.5.9 :
 
