@@ -1887,8 +1887,8 @@ export class CoCActor extends Actor {
 			if( 0 == weapons.length){
 				if( game.user.isGM){
 					let item = null;
-					if( weaponData.pack){
-						const pack = game.packs.get(weaponData.pack);
+					const pack = weaponData.pack?game.packs.get(weaponData.pack):null;
+					if( pack){
 						if (pack.metadata.entity !== 'Item') return;
 						item = await pack.getEntity(weaponData.id);
 					} else if( weaponData.id){
