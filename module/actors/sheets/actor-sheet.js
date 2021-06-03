@@ -73,7 +73,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 	activateListeners(html) {
 		super.activateListeners(html);
 
-		if ( this.actor.owner ) {
+		if ( this.actor.isOwner ) { //MODIF: 0.8.x owner deprecated  => isOwner
 			html.find('.skill-name.rollable.flagged4dev').click( async (event) => this._onSkillDev(event));
 			html.find('.reset-occupation').click( async () => await this.actor.resetOccupation());
 			html.find('.reset-archetype').click( async () => await this.actor.resetArchetype());

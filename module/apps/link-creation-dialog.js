@@ -184,7 +184,7 @@ export class CoC7LinkCreationDialog extends FormApplication{
 	_onClickSubmit(event){
 		const action = event.currentTarget.dataset.action;
 		if( !this.link.link){
-			ui.notifications.warning( 'Link is invalid !');
+			// ui.notifications.warn( 'Link is invalid !');
 			return;
 		}
 		switch (action) {

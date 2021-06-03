@@ -152,6 +152,11 @@ export class CoC7SetupSheet extends ItemSheet {
 
 		data.isOwned = this.item.isOwned;
 
+		/** MODIF: 0.8.x **/
+		const itemData = data.data;
+		data.data = itemData.data; //MODIF: 0.8.x data.data
+		/*****************/
+
 		// data.data.items = duplicate( data.data.skills);
 		// this.item.update( { ['data.items'] : duplicate( data.data.skills)});
 

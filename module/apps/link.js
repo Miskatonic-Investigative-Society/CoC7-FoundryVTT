@@ -296,7 +296,8 @@ export class CoC7Link{
 			if( this._linkData.fromCompendium || this._linkData.fromDirectory) options += `,id:${this._linkData.id}`;
 
 			let link = `@coc7.check[${options}]`;
-			if( this._linkData.hasLabel) link += `{${this._linkData.label}}`;
+			if( this._linkData.hasLabel&&this._linkData.label) link += `{${this._linkData.label}}`;
+			else if(this.name)link += `{${this.name}}`;
 			return link;
 		}
 			

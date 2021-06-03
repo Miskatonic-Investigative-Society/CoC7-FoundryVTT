@@ -105,7 +105,7 @@ export class CoC7Parser{
 		}
 	}
 
-	static ParseMessage(data/*, option, user*/){
+	static ParseMessage(message, html, data /*chatMessage, data/*, option, user*/){
 		//@coc7.sanloss[sanMax:1D6,sanMin:1,difficulty:++,modifier:-1]{Hard San Loss (-1) 1/1D6}
 		//@coc7.check[type:charac,name:STR,difficulty:+,modifier:-1]{Hard STR check(-1)}
 		//@coc7.check[type:attrib,name:lck,difficulty:+,modifier:-1]{Hard luck check(-1)}
@@ -115,10 +115,15 @@ export class CoC7Parser{
 		//[TBI]@coc7.damage[formula:1D6]{Damage 1D6}
 		//[TBI]@coc7.roll[threshold:50]{Simple roll}
 
-		if (typeof data.content !== 'undefined' && data.content.toLocaleLowerCase().includes('@coc7')) {
-			data.content = CoC7Parser.enrichHTML(data.content)
+		if ( !message.isContentVisible ) return;
+
+		if( data.message.content.toLocaleLowerCase().includes('@coc7')){
+			const parsedContent = CoC7Parser.enrichHTML(data.message.content);
+			html.find('.message-content').html(parsedContent);
+			// chatMessage.data.content = parsedContent;
+			data.message.content = parsedContent;
 		}
-		return true // allow message to be published !
+		return true; // allow message to be published !
 	}
 
 	static createCoC7Link( data){
@@ -372,7 +377,7 @@ export class CoC7Parser{
 					return;
 				}
 			}
-			else ui.notifications.warning(game.i18n.localize('CoC7.WarnNoControlledActor'));
+			else ui.notifications.warn(game.i18n.localize('CoC7.WarnNoControlledActor'));
 		}
 		return;
 	}
