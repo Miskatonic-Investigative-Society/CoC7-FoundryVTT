@@ -45,6 +45,12 @@ export class CoC7ItemSheetV2 extends ItemSheet {
 	getData(options={}) {
 		// this.item.checkSkillProperties();
 		const data = super.getData(options);
+
+		/** MODIF: 0.8.x **/
+		const itemData = data.data;
+		data.data = itemData.data; //MODIF: 0.8.x data.data
+		/*****************/
+				
 		data.hasOwner = this.item.actor != null;
 		
 		if( this.item.data.type == 'skill'){

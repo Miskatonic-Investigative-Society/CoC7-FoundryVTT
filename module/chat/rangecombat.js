@@ -39,9 +39,9 @@ export class CoC7RangeInitiator{
 		if( actorKey) {
 			const actor = chatHelper.getActorFromKey( actorKey);//REFACTORING (2)
 			this.token = chatHelper.getTokenFromKey( actorKey);//REFACTORING (2)
-			if( this.token) this.tokenKey = `${game.scenes.active.id}.${this.token._id?this.token._id:this.token.data._id}`;
+			if( this.token) this.tokenKey = actor.tokenKey;
 			if( itemId) {
-				const weapon = actor.getOwnedItem( itemId);
+				const weapon = actor.items.get( itemId);
 				if( weapon){
 					if( this.weapon.singleShot) this.singleShot = true;
 					else if( this.weapon.data.data.properties.auto) this.fullAuto = true;
@@ -103,7 +103,7 @@ export class CoC7RangeInitiator{
 	}
 
 	get item(){
-		return this.actor.getOwnedItem( this.itemId);
+		return this.actor.items.get( this.itemId);
 	}
 
 	get weapon(){
@@ -125,11 +125,11 @@ export class CoC7RangeInitiator{
 	}
 
 	get mainWeaponSkill(){
-		return this.actor.getOwnedItem( this.weapon.data.data.skill.main.id);
+		return this.actor.items.get( this.weapon.data.data.skill.main.id);
 	}
 
 	get autoWeaponSkill(){
-		if( this.weapon.data.data.skill.alternativ.id) return this.actor.getOwnedItem( this.weapon.data.data.skill.alternativ.id);
+		if( this.weapon.data.data.skill.alternativ.id) return this.actor.items.get( this.weapon.data.data.skill.alternativ.id);
 		return this.mainWeaponSkill;
 	}
 
@@ -376,7 +376,7 @@ export class CoC7RangeInitiator{
 		
 		const user = this.actor.user ? this.actor.user : game.user;
 		const chatData = {
-			user: user._id,
+			user: user.id,
 			speaker,
 			content: html
 		};
@@ -603,7 +603,7 @@ export class CoC7RangeInitiator{
 		return rangeInitiator;
 	}
 
-	rollDamage(){
+	async rollDamage(){
 		this.damage = [];
 		const hits=this.successfulHits;
 		
@@ -613,13 +613,17 @@ export class CoC7RangeInitiator{
 		// 	if(volleySize < 3) volleySize = 3;
 		// }
 		// if( this.burst) volleySize = parseInt(this.weapon.data.data.usesPerRound.burst);
-		hits.forEach( h => {
+		for (let i = 0; i < hits.length; i++) {
+			const h = hits[i];
 			const volleySize = parseInt(h.shot.bulletsShot);
 			const damageRolls = [];
 			
 			const damageFormula = h.shot.damage;
 			const damageDie = CoC7Damage.getMainDie( damageFormula);
-			const maxDamage = Roll.maximize( damageFormula).total;
+			/*** MODIF 0.8.x ***/
+			// const maxDamage = Roll.maximize( damageFormula).total; //DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
+			const maxDamage = await new Roll(damageFormula).evaluate({maximize: true, async: true}).total; //DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
+			/*******************/
 			const criticalDamageFormula = this.weapon.impale ? `${damageFormula} + ${maxDamage}` : `${maxDamage}`;
 			const criticalDamageDie = CoC7Damage.getMainDie( criticalDamageFormula);
 
@@ -642,7 +646,9 @@ export class CoC7RangeInitiator{
 			let total = 0;
 			for (let index = 0; index < successfulShots; index++) {
 				const roll = new Roll(damageFormula);
-				roll.roll();
+				/** MODIF 0.8.x **/
+				await roll.evaluate( {async: true});
+				/*****************/
 				damageRolls.push( {
 					formula: damageFormula,
 					total: roll.total,
@@ -653,7 +659,9 @@ export class CoC7RangeInitiator{
 			}
 			for (let index = 0; index < impalingShots; index++) {
 				const roll = new Roll(criticalDamageFormula);
-				roll.roll();
+				/** MODIF 0.8.x **/
+				await roll.evaluate( {async: true});
+				/*****************/
 				damageRolls.push( {
 					formula: criticalDamageFormula,
 					total: roll.total,
@@ -678,7 +686,7 @@ export class CoC7RangeInitiator{
 				dealt:false,
 				resultString: game.i18n.format('CoC7.rangeCombatDamage', {name : targetName, total: total})
 			});
-		});
+		}
 
 		this.damageRolled = 0 != this.damage.length;
 		this.updateChatCard();
@@ -795,13 +803,13 @@ export class CoC7RangeTarget{
 	get sizeText(){
 		if( this.big) return game.i18n.localize('CoC7.rangeCombatCard.BigTargetTitle');
 		if( this.small) return game.i18n.localize('CoC7.rangeCombatCard.SmallTargetTitle');
-		return game.i18n.localize('CoC7.rangeCombatCard.NormalTargetTitle');;
+		return game.i18n.localize('CoC7.rangeCombatCard.NormalTargetTitle');
 	}
 
 	get sizeLabel(){
 		if( this.big) return game.i18n.localize('CoC7.rangeCombatCard.BigTarget');
 		if( this.small) return game.i18n.localize('CoC7.combatCard.SmallTarget');
-		return game.i18n.localize('CoC7.rangeCombatCard.NormalTarget');;
+		return game.i18n.localize('CoC7.rangeCombatCard.NormalTarget');
 
 	}
 

@@ -118,6 +118,11 @@ export class CoC7ArchetypeSheet extends ItemSheet {
 	getData(){
 		const data=super.getData();
 
+		/** MODIF: 0.8.x **/
+		const itemData = data.data;
+		data.data = itemData.data; //MODIF: 0.8.x data.data
+		/*****************/
+
 		data.isOwned = this.item.isOwned;
 
 		const coreCharacteristics = [];

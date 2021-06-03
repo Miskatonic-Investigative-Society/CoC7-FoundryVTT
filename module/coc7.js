@@ -60,7 +60,7 @@ Hooks.once('init', async function() {
 
 	game.settings.register('CoC7', 'debugmode', {
 		name: 'SETTINGS.DebugMode',
-		hint: "SETTINGS.DebugModeHint",
+		hint: 'SETTINGS.DebugModeHint',
 		scope: 'world',
 		config: true,
 		type: Boolean,
@@ -68,8 +68,8 @@ Hooks.once('init', async function() {
 	});
 
 	CONFIG.debug.hooks = !!game.settings.get('CoC7', 'debugmode');
-	CONFIG.Actor.entityClass = CoCActor;
-	CONFIG.Item.entityClass = CoC7Item;
+	CONFIG.Actor.documentClass = CoCActor;
+	CONFIG.Item.documentClass = CoC7Item;
 	Combat.prototype.rollInitiative = rollInitiative;
 
 	game.settings.register('CoC7', 'developmentEnabled', {
@@ -722,9 +722,12 @@ Hooks.on('renderItemSheet', CoC7Parser.ParseSheetContent);
 Hooks.on('renderJournalSheet', CoC7Parser.ParseSheetContent);
 Hooks.on('renderActorSheet', CoC7Parser.ParseSheetContent);
 // Chat command processing
-Hooks.on('preCreateChatMessage', CoC7Parser.ParseMessage);
+// Hooks.on('preCreateChatMessage', CoC7Parser.ParseMessage);
 // Hooks.on('createChatMessage', CoC7Chat.createChatMessageHook);
-Hooks.on('renderChatMessage', CoC7Chat.renderChatMessageHook);
+Hooks.on('renderChatMessage',  (app, html, data) =>{
+	CoC7Chat.renderChatMessageHook(app, html, data);
+	CoC7Parser.ParseMessage( app, html, data);
+});
 // Sheet V2 css options
 // Hooks.on('renderCoC7CharacterSheetV2', CoC7CharacterSheetV2.renderSheet);
 Hooks.on('renderActorSheet', CoC7CharacterSheetV2.renderSheet); //TODO : change from CoC7CharacterSheetV2

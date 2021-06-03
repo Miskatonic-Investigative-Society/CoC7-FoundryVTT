@@ -33,6 +33,10 @@ export class CoC7WeaponSheet extends ItemSheet {
 	getData() {
 		const data = super.getData();
 		data.dtypes = ['String', 'Number', 'Boolean'];
+		/** MODIF 0.8.x */
+		const itemData = data.data;
+		data.data = itemData.data; //MODIF: 0.8.x data.data
+		/** MODIF 0.8.x */
 
 		data.hasOwner = this.item.actor != null;
 		if( data.hasOwner) data.actorKey = this.item.actor.actorKey;
@@ -139,7 +143,7 @@ export class CoC7WeaponSheet extends ItemSheet {
 		let weapon = null;
 		if( actorKey){
 			const actor = CoCActor.getActorFromKey(actorKey);
-			weapon = actor.getOwnedItem( weaponId);
+			weapon = actor.items.get( weaponId);
 		} else{
 			weapon = game.items.get(weaponId);
 		}

@@ -2,7 +2,7 @@
 	data-raw-value="{{rawValue}}" 
 	data-characteristic="{{characteristic}}" 
 	data-attribute="{{attribute}}"
-	data-skill-id="{{skill.data._id}}" 
+	data-skill-id="{{skill.id}}" 
 	data-success-required="{{successRequired}}"
 	data-flagged-for-development="{{flaggedForDevelopment}}"
 	data-forced="{{forced}}"
@@ -26,8 +26,8 @@
 	data-ref-message-id="{{referenceMessageId}}"
 	data-success-level="{{successLevel}}"
 	data-difficulty="{{difficulty}}"
-	data-actor-id="{{actor._id}}" 
-	data-item-id="{{item.data._id}}" 
+	data-actor-id="{{actor.id}}" 
+	data-item-id="{{item.id}}" 
 	data-dice-mod="{{diceModifier}}"
 	data-dice-modifier="{{diceModifier}}"
 	data-flat-dice-modifier="{{flatDiceModifier}}"
@@ -142,7 +142,7 @@
 				<h4 class="result-details">{{resultType}}</h4>
 				{{/if}}
 
-				<div class="card-buttons owner-only" data-actor-id="{{actor._id}}" style="padding-top: 5px;margin: 0;">
+				<div class="card-buttons owner-only" data-actor-id="{{actor.id}}" style="padding-top: 5px;margin: 0;">
 					{{#unless isSuccess}}
 						{{#if canBePushed}}
 							{{#unless pushing}}
