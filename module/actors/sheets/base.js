@@ -556,23 +556,44 @@ export class CoC7ActorSheet extends ActorSheet {
 		html.find('a.coc7-link').on( 'dragstart', (event)=> CoC7Parser._onDragCoC7Link(event));
 
 		html.find('.test-trigger').click( async event =>{
+
+			await OpposedCheckCard.dispatch({
+				type: OpposedCheckCard.defaultConfig.type,
+				combat: false,
+				action: 'new',
+				roll:{
+					characteristic: 'str',
+					// actor: this.actor.actorKey 
+				}
+			});
+
+			await OpposedCheckCard.dispatch({
+				type: OpposedCheckCard.defaultConfig.type,
+				combat: false,
+				action: 'new',
+				roll:{
+					characteristic: 'str',
+					// actor: this.actor.actorKey 
+				}
+
+			});
 			// const val = getProperty( this.actor, 'data.data.attribs.san.value');
 
 			// this.actor.enterBoutOfMadness( true, 10);
 
-			const roll = new CoC7Check();
-			roll.actor = this.actorKey;
-			roll.attribute = 'san';
-			roll.difficulty = this.options.sanDifficulty || CoC7Check.difficultyLevel.regular;
-			roll.diceModifier = this.options.sanModifier || 0;
-			await roll._perform();
+			// const roll = new CoC7Check();
+			// roll.actor = this.actorKey;
+			// roll.attribute = 'san';
+			// roll.difficulty = this.options.sanDifficulty || CoC7Check.difficultyLevel.regular;
+			// roll.diceModifier = this.options.sanModifier || 0;
+			// await roll._perform();
 
 
 
-			for (const effect of this.actor.effects) {
-				await effect.sheet.render(true);				
-				// effect.delete();				
-			}
+			// for (const effect of this.actor.effects) {
+			// 	await effect.sheet.render(true);				
+			// 	// effect.delete();				
+			// }
 			// this.actor.effects.forEach( e => e.delete());
 			// await setProperty( this.actor, 'data.data.encounteredCreatures', []);
 

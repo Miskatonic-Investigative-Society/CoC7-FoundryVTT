@@ -74,7 +74,7 @@ export class RollCard{
 			let card;
 			if( !messages.length) card = new this( );
 			else card = await this.fromMessage( messages[0]);
-			card.process( data);
+			await card.process( data);
 		} else game.socket.emit('system.CoC7', data);
 	}
 
@@ -98,13 +98,14 @@ export class RollCard{
 		if ( ['gmroll', 'blindroll'].includes(this.rollMode) ) chatData['whisper'] = ChatMessage.getWhisperRecipients('GM');
 		if ( this.rollMode === 'blindroll' ) chatData['blind'] = true;
 
-		ChatMessage.create(chatData).then( msg => {return msg;});
+		const msg = await ChatMessage.create(chatData);
+		return msg;
 	}
 
 	async updateChatCard(){
 		await this.compute();
 		if( !this.messageId){
-			this.toMessage();
+			await this.toMessage();
 		} else {
 			const html = await renderTemplate(this.config.template, this);
 			const htmlCardElement = $.parseHTML( html)[0];

@@ -120,7 +120,7 @@ export class OpposedCheckCard extends RollCard{
 		return undefined;
 	}
 
-	process( data){
+	async process( data){
 		switch (data.action) {
 		case 'new':
 			if( ! this.rolls?.length){
@@ -142,7 +142,7 @@ export class OpposedCheckCard extends RollCard{
 			break;
 		}
 
-		if( game.user.isGM) this.updateChatCard();
+		if( game.user.isGM) await this.updateChatCard();
 		else game.socket.emit('system.CoC7', data);
 	}
 
@@ -191,6 +191,11 @@ export class OpposedCheckCard extends RollCard{
 		}
 
 		case 'roll-check':{
+			const speaker = ChatMessage.getSpeaker();
+			if( !card.rolls[rank].actorKey){
+				card.rolls[rank].actorKey = `${speaker.scene}.${speaker.token}`;
+			}
+
 			const data = await card.roll( rank);
 			await card.process( data);
 			break;
@@ -245,9 +250,9 @@ export class OpposedCheckCard extends RollCard{
 			if( this.rolls[rank].rolled) this.rolls[rank]._htmlRoll = await this.rolls[rank].getHtmlRoll( { hideDiceResult: true});
 		}
 		
-		this.rolls = this.rolls.filter( roll => {
-			return !!roll.actor;//Check if there's an actor set and if there's one and it doesnt exist remove him.
-		});
+		// this.rolls = this.rolls.filter( roll => {
+		// 	return !!roll.actor;//Check if there's an actor set and if there's one and it doesnt exist remove him.
+		// });
 
 		if( this.combat){
 			//Sort combat rolls by index.

@@ -71,6 +71,7 @@ export class CoC7Check {
 	}
 
 	get rawValue(){
+		if( !this.actor) return undefined;
 		if( !this._rawValue){
 			if( this.characteristic) this.rawValue = this.actor.data.data.characteristics[this.characteristic].value;
 			if( this.skill) this.rawValue = this.skill.value;
