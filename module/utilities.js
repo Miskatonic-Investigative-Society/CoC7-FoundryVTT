@@ -368,6 +368,9 @@ export class CoC7Utilities {
 			let dailySanityLoss = actor.data.data.attribs.san.dailyLoss;
 			let hpValue = actor.data.data.attribs.hp.value;
 			let hpMax = actor.data.data.attribs.hp.max;
+			let oneFifthSanity = ' / '+Math.floor(actor.data.data.attribs.san.value/5);
+			let mpValue = actor.data.data.attribs.mp.value;
+			let mpMax = actor.data.data.attribs.mp.max;
 			chatContent = chatContent + `<br><b>${actor.name}. </b>`;
 			if (isCriticalWounds === false && hpValue < hpMax) {
 				if (game.settings.get('CoC7', 'pulpRules') && quickHealer === true) {
@@ -395,6 +398,13 @@ export class CoC7Utilities {
 				chatContent = chatContent + `<b style="color:darkolivegreen">${game.i18n.localize('CoC7.dailySanLossRestarted')}.</b>`;
 				actor.update({
 					'data.attribs.san.dailyLoss': 0,
+					'data.attribs.san.oneFifthSanity': oneFifthSanity
+				});
+			}
+			if (mpValue < mpMax) {
+				chatContent = chatContent + `<b style="color:darkolivegreen">${game.i18n.format('CoC7.magicPointsRecovered')}: 7.</b>`;
+				actor.update({
+					'data.attribs.mp.value': actor.data.data.attribs.mp.value + 7
 				});
 			}
 		});
