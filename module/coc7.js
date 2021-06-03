@@ -756,24 +756,24 @@ function _onLeftClick( event){
 }
 
 Hooks.on('targetToken', function (user, token, targeted) {
-  if (targeted) {
-    // Check if the targeted token is a player controlled token but no user controls it
-    let gmonly = true
-    if (token.actor.data.permission.default === CONST.ENTITY_PERMISSIONS.OWNER) {
-      gmonly = false
-    } else {
-      const gms = game.users.filter(a => a.isGM).map(a => a.id)
-      for (const [k, v] of Object.entries(token.actor.data.permission)) {
-        if (k !== 'default' && v === CONST.ENTITY_PERMISSIONS.OWNER && !gms.includes(k)) {
-          gmonly = false
-        }
-      }
-    }
-    if (!gmonly) {
-      const controlled = game.users.filter(a => !a.isGM && a.data.character === token.actor.id)
-      if (controlled.length === 0) {
-        ui.notifications.error(game.i18n.format('CoC7.MessageSelectedTargetIsNotControlled', { name: token.name }))
-      }
-    }
-  }
-})
+	if (targeted) {
+		// Check if the targeted token is a player controlled token but no user controls it
+		let gmonly = true;
+		if (token.actor.data.permission.default === CONST.ENTITY_PERMISSIONS.OWNER) {
+			gmonly = false;
+		} else {
+			const gms = game.users.filter(a => a.isGM).map(a => a.id);
+			for (const [k, v] of Object.entries(token.actor.data.permission)) {
+				if (k !== 'default' && v === CONST.ENTITY_PERMISSIONS.OWNER && !gms.includes(k)) {
+					gmonly = false;
+				}
+			}
+		}
+		if (!gmonly) {
+			const controlled = game.users.filter(a => !a.isGM && a.data.character === token.actor.id);
+			if (controlled.length === 0) {
+				ui.notifications.error(game.i18n.format('CoC7.MessageSelectedTargetIsNotControlled', { name: token.name }));
+			}
+		}
+	}
+});

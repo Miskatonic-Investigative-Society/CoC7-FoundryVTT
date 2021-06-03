@@ -1887,8 +1887,8 @@ export class CoCActor extends Actor {
 			if( 0 == weapons.length){
 				if( game.user.isGM){
 					let item = null;
-					if( weaponData.pack){
-						const pack = game.packs.get(weaponData.pack);
+					const pack = weaponData.pack?game.packs.get(weaponData.pack):null;
+					if( pack){
 						if (pack.metadata.entity !== 'Item') return;
 						item = await pack.getEntity(weaponData.id);
 					} else if( weaponData.id){
@@ -2086,8 +2086,8 @@ export class CoCActor extends Actor {
 		if( this.sheet.token){
 			return `${this.sheet.token.parent.id}.${this.sheet.token.id}`;
 		} else{
-			return null;
-			// return this.id;
+			// return null;
+			return this.id;
 		}
 		/*****************/
 		// //Case 1: the actor is a synthetic actor and has a token, return token key.
@@ -2269,24 +2269,24 @@ export class CoCActor extends Actor {
 			const augmentRoll = new Roll('1D10');
 			augmentRoll.roll();
 			if(!fastForward) await CoC7Dice.showRollDice3d(augmentRoll);
-				if((luck.value + augmentRoll.total) <= 99) {
-					await this.update({
-						'data.attribs.lck.value': this.data.data.attribs.lck.value + augmentRoll.total
-					})
-					message += `<span class="upgrade-success">${game.i18n.format('CoC7.LuckIncreased', {die: upgradeRoll.total, score: luck.value, augment: augmentRoll.total})}</span>`;
-				} else {
-					let correctedValue;
-					for(let i = 1; i <= 10; i++) {
-						if((luck.value + augmentRoll.total - i) <= 99) {
-							correctedValue = augmentRoll.total - i;
-							break
-						}
+			if((luck.value + augmentRoll.total) <= 99) {
+				await this.update({
+					'data.attribs.lck.value': this.data.data.attribs.lck.value + augmentRoll.total
+				});
+				message += `<span class="upgrade-success">${game.i18n.format('CoC7.LuckIncreased', {die: upgradeRoll.total, score: luck.value, augment: augmentRoll.total})}</span>`;
+			} else {
+				let correctedValue;
+				for(let i = 1; i <= 10; i++) {
+					if((luck.value + augmentRoll.total - i) <= 99) {
+						correctedValue = augmentRoll.total - i;
+						break;
 					}
-					await this.update({
-						'data.attribs.lck.value': this.data.data.attribs.lck.value + correctedValue
-					})
-					message += `<span class="upgrade-success">${game.i18n.format('CoC7.LuckIncreased', {die: upgradeRoll.total, score: luck.value, augment: correctedValue})}</span>`;
 				}
+				await this.update({
+					'data.attribs.lck.value': this.data.data.attribs.lck.value + correctedValue
+				});
+				message += `<span class="upgrade-success">${game.i18n.format('CoC7.LuckIncreased', {die: upgradeRoll.total, score: luck.value, augment: correctedValue})}</span>`;
+			}
 		} else {
 			message += `<span class="upgrade-failed">${game.i18n.format('CoC7.LuckNotIncreased', {die: upgradeRoll.total, score: luck.value})}</span>`;
 		}
@@ -2415,7 +2415,7 @@ export class CoCActor extends Actor {
 	}
 
 	async setOneFifthSanity (oneFifthSanity) {
-		await this.update({"data.attribs.san.oneFifthSanity": oneFifthSanity});
+		await this.update({'data.attribs.san.oneFifthSanity': oneFifthSanity});
 	}
 
 	get fightingSkills(){
@@ -2600,17 +2600,17 @@ export class CoCActor extends Actor {
 	}
 	
 	async setHealthStatusManually(event) {
-        if (event.originalEvent) {
-            const healthBefore = parseInt(event.originalEvent.currentTarget.defaultValue);
-            const healthAfter = parseInt(event.originalEvent.currentTarget.value);
-            let damageTaken;
-            healthAfter >= this.hp ? this.setHp(healthAfter) : false;
-            healthAfter < 0 ? damageTaken = Math.abs(healthAfter)
-							: damageTaken = healthBefore - healthAfter;
-            this.render(true);
-            return await this.dealDamage(damageTaken);
-        }
-    }
+		if (event.originalEvent) {
+			const healthBefore = parseInt(event.originalEvent.currentTarget.defaultValue);
+			const healthAfter = parseInt(event.originalEvent.currentTarget.value);
+			let damageTaken;
+			healthAfter >= this.hp ? this.setHp(healthAfter) : false;
+			healthAfter < 0 ? damageTaken = Math.abs(healthAfter)
+				: damageTaken = healthBefore - healthAfter;
+			this.render(true);
+			return await this.dealDamage(damageTaken);
+		}
+	}
 
 	async dealDamage(amount, options={}){
 		let total = parseInt(amount);

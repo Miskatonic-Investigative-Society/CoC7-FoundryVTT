@@ -233,7 +233,7 @@ export class CoC7Utilities {
 		const speaker = ChatMessage.getSpeaker();
 		let actor;
 		if (speaker.token) actor = game.actors.tokens[speaker.token];
-		if (!actor) actor = game.actors.get(speaker.actor);
+		if (!actor) actor = game.actors.get(speaker.actor); //No need to fill actor token
 
 		if( !actor){
 			ui.notifications.warn( game.i18n.localize( 'CoC7.WarnNoActorAvailable'));
@@ -247,8 +247,19 @@ export class CoC7Utilities {
 		event.preventDefault();
 		const speaker = ChatMessage.getSpeaker();
 		let actor;
-		if (speaker.token) actor = game.actors.tokens[speaker.token]; //!! Ca recupere l'acteur pas l'acteur du token !!
-		if (!actor) actor = game.actors.get(speaker.actor);
+		if (speaker.token) actor = game.actors.tokens[speaker.token];
+		if (!actor){
+			if( speaker.scene && speaker.token){
+			//Create a synthetic actor linked with the active token.
+				const baseActor = game.actors.get(speaker.actor);
+				const scene = game.scenes.get( speaker.scene);
+				const token = scene.tokens.get( speaker.token);
+
+				const cls = getDocumentClass('Actor');
+				const tokenActor = new cls(baseActor.toJSON(), {parent: token});
+				actor = tokenActor;}
+			else actor = game.actors.get(speaker.actor);
+		}
 
 		if( !actor){
 			ui.notifications.warn( game.i18n.localize( 'CoC7.WarnNoActorAvailable'));
