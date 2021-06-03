@@ -31,9 +31,10 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 
 	activateListeners(html){
 		super.activateListeners( html);
-
 		html.find('.roll-san').click(this._onSanCheck.bind(this));
-
+		if (this.actor.owner) {
+			html.find('[name="data.attribs.hp.value"]').change(event => this.actor.setHealthStatusManually(event));
+		}
 	}
 
 	async _onSanCheck(event){

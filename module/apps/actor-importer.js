@@ -406,9 +406,10 @@ export class CoC7ActorImporter {
       properties: defaultSkillProperties
     }
     if (existingSkill != null) {
-      icon = existingSkill.data.img
-      newData = existingSkill.data.data
-      newData.base = skill.value // TODO: find a way to keep the base
+      const json = existingSkill.toJSON()
+      icon = json.img
+      newData = json.data
+      newData.base = skill.value
       newData.value = skill.value
     }
     return {

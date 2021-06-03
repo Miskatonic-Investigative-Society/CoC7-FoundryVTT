@@ -567,8 +567,15 @@ export class CoC7Item extends Item {
 		//Fix : data can have description directly in field, not under value.
 		if( data.description && !data.description.value && '' != data.description?.value){
 			data.description = {
-				value: data.description
+				value: data.description,
+				special: ''
 			};
+		}
+		if (typeof data.description.value === 'undefined') {
+			data.description.value = ''
+		}
+		if (typeof data.description.special === 'undefined') {
+			data.description.special = ''
 		}
 		const labels = [];
 

@@ -123,7 +123,7 @@ export class CoC7Parser{
 			// chatMessage.data.content = parsedContent;
 			data.message.content = parsedContent;
 		}
-		return true; //allow message to be published !
+		return true // allow message to be published !
 	}
 
 	static createCoC7Link( data){
