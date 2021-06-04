@@ -2347,7 +2347,7 @@ export class CoCActor extends Actor {
 				// }
 			} else {
 				// const effectData = 
-				await ActiveEffect.create({
+				await super.createEmbeddedDocuments('ActiveEffect', [{
 					label: game.i18n.localize( 'CoC7.BoutOfMadnessName'),
 					icon: 'systems/CoC7/artwork/icons/hanging-spider.svg',
 					origin: this.uuid,
@@ -2360,7 +2360,7 @@ export class CoCActor extends Actor {
 					},
 					// tint: '#ff0000',
 					disabled: false
-				}, this).create();
+				}])
 			}
 				
 			break;
@@ -2372,7 +2372,7 @@ export class CoCActor extends Actor {
 				// }
 			} else {
 				// const effectData = 
-				await ActiveEffect.create({
+				await super.createEmbeddedDocuments('ActiveEffect', [{
 					label: game.i18n.localize( 'CoC7.InsanityName'),
 					icon: 'systems/CoC7/artwork/icons/tentacles-skull.svg',
 					origin: this.uuid,
@@ -2385,7 +2385,7 @@ export class CoCActor extends Actor {
 					},
 					// tint: '#ff0000',
 					disabled: false
-				}, this).create();
+				}]);
 			}
 			break;
 		
