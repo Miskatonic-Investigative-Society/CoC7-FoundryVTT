@@ -608,6 +608,8 @@
 "CoC7.MessageCheckRequestedWait": "Your keeper is requesting a {check}.<br>Wait before clicking!<br>",
 "CoC7.MessageTargetCheckRequested": "Your keeper is requesting a {check} for {name}.",
 "CoC7.MessageSelectedTargetIsNotControlled": "The token for {name} is owned by not controlled by a player so will not be able to react to combat actions.",
+"CoC7.MessageBoutOfMadnessTableNotFound": "The result from the madness table was not found, please check all your roll tables are created",
+"CoC7.MessageBoutOfMadnessItemNotFound": "The result from the madness table was not found, please check all your statuses are created",
 
 "CoC7.ActorImporter": "Actor Importer",
 "CoC7.ActorImporterSummary": "Import an NPC or Creature from description and stats. Just paste the corresponding plain text",
