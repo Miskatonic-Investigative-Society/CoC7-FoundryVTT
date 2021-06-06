@@ -351,6 +351,12 @@ export class CoC7ActorSheet extends ActorSheet {
 		if( data.data.attribs.mp.value < 0) data.data.attribs.mp.value = null;
 		if( data.data.attribs.san.value < 0) data.data.attribs.san.value = null;
 		// data.data.attribs.san.fiftyOfCurrent = data.data.attribs.san.value >= 0 ? ' / '+Math.floor(data.data.attribs.san.value/5):'';
+
+		if( data.data.attribs.san.value >0 && !data.data.attribs.san.initialvalue) data.data.attribs.san.initialvalue = data.data.attribs.san.value;
+		if( data.data.attribs.san.value >0 && !data.data.attribs.san.dailyLoss) data.data.attribs.san.dailyLoss = 0;
+		data.data.attribs.san.fiftyOfCurrent = data.data.attribs.san.initialvalue >= 0 ? ' / '+Math.max(1, Math.floor(data.data.attribs.san.initialvalue/5)):'';
+
+		
 		if( data.data.attribs.hp.auto ){
 			//TODO if any is null set max back to null.
 			if ( data.data.characteristics.siz.value != null && data.data.characteristics.con.value != null)
