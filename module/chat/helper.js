@@ -238,14 +238,21 @@ export class chatHelper{
 	static getDistance( startToken, endToken){
 		// startToken.updateSource();
 		// canvas.sight.initializeTokens();
-		const ray = new Ray( startToken.center, endToken.center);
-		const segment = [{ray}];
-		const distance = {
-			gridUnit: ray.distance/canvas.scene.data.grid,
-			// value: (ray.distance/canvas.scene.data.grid)*canvas.scene.data.gridDistance,
-			value: canvas.grid.measureDistances(segment, {gridSpaces:game.settings.get('CoC7', 'gridSpaces')})[0],
+		let distance = {
+			gridUnit: 0,
+			value: 0,
 			unit: canvas.scene.data.gridUnits
-		};
+		}
+		if (typeof startToken !== 'undefined' && typeof startToken.center !== 'undefined' && typeof endToken !== 'undefined' && typeof endToken.center !== 'undefined') {
+			const ray = new Ray( startToken.center, endToken.center);
+			const segment = [{ray}];
+			distance = {
+				gridUnit: ray.distance/canvas.scene.data.grid,
+				// value: (ray.distance/canvas.scene.data.grid)*canvas.scene.data.gridDistance,
+				value: canvas.grid.measureDistances(segment, {gridSpaces:game.settings.get('CoC7', 'gridSpaces')})[0],
+				unit: canvas.scene.data.gridUnits
+			};
+		}
 		return distance;
 	}
 
