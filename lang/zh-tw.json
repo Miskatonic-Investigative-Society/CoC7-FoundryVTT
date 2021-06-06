@@ -337,6 +337,7 @@
     "CoC7.NewBioSectionName": "新小節",
 
     "CoC7.DodgeSkillName": "閃避",
+
     "CoC7.CthulhuMythosName": "克蘇魯神話",
     "CoC7.CreditRatingSkillName": "信用評級",
     "CoC7.FightingSpecializationName": "戰鬥",
@@ -363,6 +364,7 @@
     "CoC7.DevFailure": "{item}未增長（{die}/{score}%）",
     "CoC7.LuckIncreased": "幸運（{die}/{score}）恢復了 {augment} 點",
     "CoC7.LuckNotIncreased": "幸運並未恢復（{die}/{score}）",
+
     "CoC7.SkillDetail": "詳情",
     "CoC7.EditSkill": "編輯技能",
     "CoC7.DeleteSkill": "删除技能",

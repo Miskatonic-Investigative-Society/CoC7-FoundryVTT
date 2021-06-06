@@ -216,28 +216,35 @@ export class CoCActor extends Actor {
 		let result = null;
 		const boutOfMadnessTableId = realTime? game.settings.get( 'CoC7', 'boutOfMadnessRealTimeTable') :game.settings.get( 'CoC7', 'boutOfMadnessSummaryTable');
 		if( boutOfMadnessTableId != 'none'){
-			result = { 
+			result = {
 				phobia: false,
 				mania: false,
 				description: null
 			};
 			const boutOfMadnessTable = game.tables.get( boutOfMadnessTableId);
-			result.tableRoll = boutOfMadnessTable.roll();
-			if( TABLE_RESULT_TYPES.ENTITY == result.tableRoll.results[0].type){
-				const item = game.items.get(result.tableRoll.results[0].resultId);
-				if( item.data?.data?.type?.phobia) result.phobia = true;
-				if( item.data?.data?.type?.mania) result.mania = true;
-				result.description = `${item.name}:${TextEditor.enrichHTML( item.data.data.description.value)}`;
-				result.name = item.name;
-				delete item.data._id;
-
-				/** MODIF 0.8.x **/
-				// await this.createOwnedItem( item.data);
-				await this.createEmbeddedDocuments('Item', [item.data]);
-				/*****************/
-			}
-			if( TABLE_RESULT_TYPES.TEXT == result.tableRoll.results[0].type){
-				result.description = TextEditor.enrichHTML(result.tableRoll.results[0].text);
+			result.tableRoll = await boutOfMadnessTable.roll();
+			if (typeof result.tableRoll.results[0] !== 'undefined') {
+				if( CONST.TABLE_RESULT_TYPES.ENTITY == result.tableRoll.results[0].data.type){
+					const item = game.items.get(result.tableRoll.results[0].data.resultId);
+					if (typeof item !== 'undefined') {
+						if( item.data?.data?.type?.phobia) result.phobia = true;
+						if( item.data?.data?.type?.mania) result.mania = true;
+						result.description = `${item.name}:${TextEditor.enrichHTML( item.data.data.description.value)}`;
+						result.name = item.name;
+						delete item.data._id;
+						/** MODIF 0.8.x **/
+						// await this.createOwnedItem( item.data);
+						await this.createEmbeddedDocuments('Item', [item.data]);
+						/*****************/
+					} else {
+						ui.notifications.error(game.i18n.localize('CoC7.MessageBoutOfMadnessItemNotFound'));
+					}
+				}
+				if( CONST.TABLE_RESULT_TYPES.TEXT == result.tableRoll.results[0].data.type){
+					result.description = TextEditor.enrichHTML(result.tableRoll.results[0].data.text);
+				}
+			} else {
+				ui.notifications.error(game.i18n.localize('CoC7.MessageBoutOfMadnessTableNotFound'));
 			}
 		}
 
@@ -261,7 +268,7 @@ export class CoCActor extends Actor {
 				});
 		} else {
 			// const effectData = 
-			await ActiveEffect.create({
+			await super.createEmbeddedDocuments('ActiveEffect', [{
 				label: game.i18n.localize( 'CoC7.BoutOfMadnessName'),
 				icon: 'systems/CoC7/artwork/icons/hanging-spider.svg',
 				origin: this.uuid,
@@ -274,7 +281,7 @@ export class CoCActor extends Actor {
 				},
 				// tint: '#ff0000',
 				disabled: false
-			}, this).create();
+			}]);
 			// const effect = this.effects.get( effectData._id);
 			// effect.sheet.render(true);
 		}
@@ -300,7 +307,7 @@ export class CoCActor extends Actor {
 			});
 		} else {
 			// const effectData = 
-			await ActiveEffect.create({
+			await super.createEmbeddedDocuments('ActiveEffect', [{
 				label: game.i18n.localize( 'CoC7.InsanityName'),
 				icon: 'systems/CoC7/artwork/icons/tentacles-skull.svg',
 				origin: this.uuid,
@@ -312,7 +319,7 @@ export class CoCActor extends Actor {
 					}
 				},
 				disabled: false
-			}, this).create();
+			}]);
 		}
 
 	}
@@ -1887,8 +1894,8 @@ export class CoCActor extends Actor {
 			if( 0 == weapons.length){
 				if( game.user.isGM){
 					let item = null;
-					if( weaponData.pack){
-						const pack = game.packs.get(weaponData.pack);
+					const pack = weaponData.pack?game.packs.get(weaponData.pack):null;
+					if( pack){
 						if (pack.metadata.entity !== 'Item') return;
 						item = await pack.getEntity(weaponData.id);
 					} else if( weaponData.id){
@@ -2086,8 +2093,8 @@ export class CoCActor extends Actor {
 		if( this.sheet.token){
 			return `${this.sheet.token.parent.id}.${this.sheet.token.id}`;
 		} else{
-			return null;
-			// return this.id;
+			// return null;
+			return this.id;
 		}
 		/*****************/
 		// //Case 1: the actor is a synthetic actor and has a token, return token key.
@@ -2269,24 +2276,24 @@ export class CoCActor extends Actor {
 			const augmentRoll = new Roll('1D10');
 			augmentRoll.roll();
 			if(!fastForward) await CoC7Dice.showRollDice3d(augmentRoll);
-				if((luck.value + augmentRoll.total) <= 99) {
-					await this.update({
-						'data.attribs.lck.value': this.data.data.attribs.lck.value + augmentRoll.total
-					})
-					message += `<span class="upgrade-success">${game.i18n.format('CoC7.LuckIncreased', {die: upgradeRoll.total, score: luck.value, augment: augmentRoll.total})}</span>`;
-				} else {
-					let correctedValue;
-					for(let i = 1; i <= 10; i++) {
-						if((luck.value + augmentRoll.total - i) <= 99) {
-							correctedValue = augmentRoll.total - i;
-							break
-						}
+			if((luck.value + augmentRoll.total) <= 99) {
+				await this.update({
+					'data.attribs.lck.value': this.data.data.attribs.lck.value + augmentRoll.total
+				});
+				message += `<span class="upgrade-success">${game.i18n.format('CoC7.LuckIncreased', {die: upgradeRoll.total, score: luck.value, augment: augmentRoll.total})}</span>`;
+			} else {
+				let correctedValue;
+				for(let i = 1; i <= 10; i++) {
+					if((luck.value + augmentRoll.total - i) <= 99) {
+						correctedValue = augmentRoll.total - i;
+						break;
 					}
-					await this.update({
-						'data.attribs.lck.value': this.data.data.attribs.lck.value + correctedValue
-					})
-					message += `<span class="upgrade-success">${game.i18n.format('CoC7.LuckIncreased', {die: upgradeRoll.total, score: luck.value, augment: correctedValue})}</span>`;
 				}
+				await this.update({
+					'data.attribs.lck.value': this.data.data.attribs.lck.value + correctedValue
+				});
+				message += `<span class="upgrade-success">${game.i18n.format('CoC7.LuckIncreased', {die: upgradeRoll.total, score: luck.value, augment: correctedValue})}</span>`;
+			}
 		} else {
 			message += `<span class="upgrade-failed">${game.i18n.format('CoC7.LuckNotIncreased', {die: upgradeRoll.total, score: luck.value})}</span>`;
 		}
@@ -2347,7 +2354,7 @@ export class CoCActor extends Actor {
 				// }
 			} else {
 				// const effectData = 
-				await ActiveEffect.create({
+				await super.createEmbeddedDocuments('ActiveEffect', [{
 					label: game.i18n.localize( 'CoC7.BoutOfMadnessName'),
 					icon: 'systems/CoC7/artwork/icons/hanging-spider.svg',
 					origin: this.uuid,
@@ -2360,7 +2367,7 @@ export class CoCActor extends Actor {
 					},
 					// tint: '#ff0000',
 					disabled: false
-				}, this).create();
+				}])
 			}
 				
 			break;
@@ -2372,7 +2379,7 @@ export class CoCActor extends Actor {
 				// }
 			} else {
 				// const effectData = 
-				await ActiveEffect.create({
+				await super.createEmbeddedDocuments('ActiveEffect', [{
 					label: game.i18n.localize( 'CoC7.InsanityName'),
 					icon: 'systems/CoC7/artwork/icons/tentacles-skull.svg',
 					origin: this.uuid,
@@ -2385,7 +2392,7 @@ export class CoCActor extends Actor {
 					},
 					// tint: '#ff0000',
 					disabled: false
-				}, this).create();
+				}]);
 			}
 			break;
 		
@@ -2415,7 +2422,7 @@ export class CoCActor extends Actor {
 	}
 
 	async setOneFifthSanity (oneFifthSanity) {
-		await this.update({"data.attribs.san.oneFifthSanity": oneFifthSanity});
+		await this.update({'data.attribs.san.oneFifthSanity': oneFifthSanity});
 	}
 
 	get fightingSkills(){
@@ -2600,17 +2607,17 @@ export class CoCActor extends Actor {
 	}
 	
 	async setHealthStatusManually(event) {
-        if (event.originalEvent) {
-            const healthBefore = parseInt(event.originalEvent.currentTarget.defaultValue);
-            const healthAfter = parseInt(event.originalEvent.currentTarget.value);
-            let damageTaken;
-            healthAfter >= this.hp ? this.setHp(healthAfter) : false;
-            healthAfter < 0 ? damageTaken = Math.abs(healthAfter)
-							: damageTaken = healthBefore - healthAfter;
-            this.render(true);
-            return await this.dealDamage(damageTaken);
-        }
-    }
+		if (event.originalEvent) {
+			const healthBefore = parseInt(event.originalEvent.currentTarget.defaultValue);
+			const healthAfter = parseInt(event.originalEvent.currentTarget.value);
+			let damageTaken;
+			healthAfter >= this.hp ? this.setHp(healthAfter) : false;
+			healthAfter < 0 ? damageTaken = Math.abs(healthAfter)
+				: damageTaken = healthBefore - healthAfter;
+			this.render(true);
+			return await this.dealDamage(damageTaken);
+		}
+	}
 
 	async dealDamage(amount, options={}){
 		let total = parseInt(amount);

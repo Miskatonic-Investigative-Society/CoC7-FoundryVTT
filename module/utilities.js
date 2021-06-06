@@ -233,7 +233,7 @@ export class CoC7Utilities {
 		const speaker = ChatMessage.getSpeaker();
 		let actor;
 		if (speaker.token) actor = game.actors.tokens[speaker.token];
-		if (!actor) actor = game.actors.get(speaker.actor);
+		if (!actor) actor = game.actors.get(speaker.actor); //No need to fill actor token
 
 		if( !actor){
 			ui.notifications.warn( game.i18n.localize( 'CoC7.WarnNoActorAvailable'));
@@ -247,8 +247,19 @@ export class CoC7Utilities {
 		event.preventDefault();
 		const speaker = ChatMessage.getSpeaker();
 		let actor;
-		if (speaker.token) actor = game.actors.tokens[speaker.token]; //!! Ca recupere l'acteur pas l'acteur du token !!
-		if (!actor) actor = game.actors.get(speaker.actor);
+		if (speaker.token) actor = game.actors.tokens[speaker.token];
+		if (!actor){
+			if( speaker.scene && speaker.token){
+			//Create a synthetic actor linked with the active token.
+				const baseActor = game.actors.get(speaker.actor);
+				const scene = game.scenes.get( speaker.scene);
+				const token = scene.tokens.get( speaker.token);
+
+				const cls = getDocumentClass('Actor');
+				const tokenActor = new cls(baseActor.toJSON(), {parent: token});
+				actor = tokenActor;}
+			else actor = game.actors.get(speaker.actor);
+		}
 
 		if( !actor){
 			ui.notifications.warn( game.i18n.localize( 'CoC7.WarnNoActorAvailable'));
@@ -357,6 +368,9 @@ export class CoC7Utilities {
 			let dailySanityLoss = actor.data.data.attribs.san.dailyLoss;
 			let hpValue = actor.data.data.attribs.hp.value;
 			let hpMax = actor.data.data.attribs.hp.max;
+			let oneFifthSanity = ' / '+Math.floor(actor.data.data.attribs.san.value/5);
+			let mpValue = actor.data.data.attribs.mp.value;
+			let mpMax = actor.data.data.attribs.mp.max;
 			chatContent = chatContent + `<br><b>${actor.name}. </b>`;
 			if (isCriticalWounds === false && hpValue < hpMax) {
 				if (game.settings.get('CoC7', 'pulpRules') && quickHealer === true) {
@@ -384,6 +398,13 @@ export class CoC7Utilities {
 				chatContent = chatContent + `<b style="color:darkolivegreen">${game.i18n.localize('CoC7.dailySanLossRestarted')}.</b>`;
 				actor.update({
 					'data.attribs.san.dailyLoss': 0,
+					'data.attribs.san.oneFifthSanity': oneFifthSanity
+				});
+			}
+			if (mpValue < mpMax) {
+				chatContent = chatContent + `<b style="color:darkolivegreen">${game.i18n.format('CoC7.magicPointsRecovered')}: 7.</b>`;
+				actor.update({
+					'data.attribs.mp.value': actor.data.data.attribs.mp.value + 7
 				});
 			}
 		});
