@@ -319,7 +319,7 @@ export class CoC7ActorImporter {
         const attack = pc.attacks[i]
         console.debug('attack', attack)
         const skill = await this.weaponSkill(attack.name)
-        if (skill !== null) {
+        if (skill !== null && typeof skill !== 'undefined') {
           console.debug('skill', skill)
           const skillClone = duplicate(skill)
           delete skillClone.id
@@ -351,14 +351,14 @@ export class CoC7ActorImporter {
         }
         const weapon = await npc.createEmbeddedDocuments('Item', [attack])
         console.debug('weapon', weapon)
-        if (newSkill !== null) {
-          const createdAttack = npc.items.get(weapon.id)
+        if (newSkill !== null && typeof newSkill !== 'undefined' && weapon !== null && typeof weapon !== 'undefined' && weapon.length == 1 && newSkill.length == 1) {
+          const createdAttack = await npc.items.get(weapon[0].id)
           await createdAttack.update({
-            'data.skill.main.id': newSkill.id,
-            'data.skill.main.name': newSkill.name,
-            'data.properties': newSkill.data.properties,
-            'data.adjustments': newSkill.data.adjustments,
-            'data.specialization': newSkill.data.specialization
+            'data.skill.main.id': newSkill[0].id,
+            'data.skill.main.name': newSkill[0].name,
+            'data.properties': newSkill[0].data.properties,
+            'data.adjustments': newSkill[0].data.adjustments,
+            'data.specialization': newSkill[0].data.specialization
           })
         }
       }
@@ -391,7 +391,7 @@ export class CoC7ActorImporter {
     if (pc.skills !== null) {
       for (const skill of pc.skills) {
         const newSkill = await this.createSkill(skill)
-        const created = npc.createEmbeddedDocuments('Item', [newSkill])
+        const created = await npc.createEmbeddedDocuments('Item', [newSkill])
         console.debug(created)
       }
     }
