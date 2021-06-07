@@ -1,6 +1,6 @@
 {
 "I18N.LANGUAGE": "Português (Brasil)",
-"I18N.MAINTAINERS": "@Castanho#3271", “zorieuq360#6074”
+"I18N.MAINTAINERS": "@Castanho#3271 reviewed by zorieuq360#6074"
 
 "CoC7.title": "Chamado de Cthulhu 7ª Edição (Não-oficial)",
 
@@ -541,7 +541,7 @@
 "CoC7.ResetOccupation": "Mudar Ocupação",
 "CoC7.ResetOccupationHint": "{name} já tem uma ocupação. Você quer muda-la?",
 "CoC7.ResetArchetype": "Mudar Arquétipo",
-"CoC7.ResetArchetypeHint": “{name} já tem um arquétipo. Você quer muda-lo?",
+"CoC7.ResetArchetypeHint": "{name} já tem um arquétipo. Você quer muda-lo?",
 "CoC7.CreditOutOfRange": "Nível de Crédito deve estar entre {min} e {max}",
 "CoC7.BioSections":"Seções de Antecedentes",
 "CoC7.BioSectionName": "Nome da Seção",
@@ -658,7 +658,7 @@
 "SETTINGS.TenDieBonus": "[DsN] Cor de Dado de Bônus de Dezenas",
 "SETTINGS.TenDieBonusHint": "Quando usar DsN, escolha a cor do dado de bônus de dezenas. (deixe vazio para usar o padrão do jogador)",
 "SETTINGS.TenDiePenalty": "[DsN] Cor de Dado de Penalidade de Dezenas",
-"SETTINGS.TenDiePenaltyHint": "Quando usar DsN, escolha a cor do dado de penalidade de dezenas. (deixe vazio para usar o padrão do jogador)"
+"SETTINGS.TenDiePenaltyHint": "Quando usar DsN, escolha a cor do dado de penalidade de dezenas. (deixe vazio para usar o padrão do jogador)",
 "SETTINGS.OverrideSheetArtwork": "Substituir Arte da Ficha",
 "SETTINGS.OverrideSheetArtworkHint": "!!NECESSÁRIO REINICIAR!! Dá acesso às configurações avançadas da ficha. Deixe vazio para padrão",
 "SETTINGS.ArtWorkSheetBackground": "Plano de Fundo da Ficha",
