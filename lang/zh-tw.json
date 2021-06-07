@@ -247,7 +247,7 @@
 
     "CoC7.ErrorItem": "無法找到 道具",
     "CoC7.ErrorActor": "無法找到 角色卡",
-    "CoC7.ErrorInvalidFormula": "{value} 不是一個有效的數式",
+    "CoC7.ErrorInvalidFormula": "{value} 不是一個有效的公式",
     "CoC7.ErrorInvalid": "無效",
     "CoC7.Validate": "驗證",
     "CoC7.Apply": "應用",
