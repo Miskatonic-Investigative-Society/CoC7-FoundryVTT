@@ -51,7 +51,7 @@ export class CoC7RangeInitiator{
 		if( this.tokenKey){
 			this._targets.forEach( t =>{
 				if( t.token && this.token){
-					t.distance = chatHelper.getDistance( t.token, this.token.object);
+					t.distance = chatHelper.getDistance( t.token, this.token);
 					t.roundedDistance = Math.round(t.distance.value * 100)/100;
 					t.distanceUnit = t.distance.unit;
 					const distInYd = Math.round(chatHelper.toYards( t.distance)* 100)/100;
