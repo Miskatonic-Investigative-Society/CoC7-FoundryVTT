@@ -2023,6 +2023,7 @@ html {
   flex: 0 0 1.25rem;
   display: block;
   text-align: end;
+  width:max-content;
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-controls a:hover {
   text-shadow: none;
