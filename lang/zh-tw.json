@@ -298,7 +298,7 @@
     "CoC7.EnterFormula": "輸入公式",
     "CoC7.SanRollHint": "爲目標進行San Check",
     "CoC7.NoSkill": "沒有技能",
-    "CoC7.AddWeapontHint": "<p>{actor} 沒有一個 {weapon}.<br>你想新增一個嗎 ?</p>",
+    "CoC7.AddWeapontHint": "<p>{actor} 沒有一個 {weapon}.<br>你想新增一個嗎?</p>",
 
     "CoC7.ManualCreditValues": "收入與財産[手動輸入模式]",
     "CoC7.MonetarySymbol": "更改貨幣單位 :",
