@@ -172,7 +172,8 @@ export class chatHelper{
 		if (key.includes('.')) {
 			const [sceneId, tokenId] = key.split('.');
 			if( 'TOKEN' == sceneId){
-				return game.actors.tokens[tokenId]?.token;//REFACTORING (2)
+				const tokenDoc = game.actors.tokens[tokenId]?.token;
+				return tokenDoc.object;//REFACTORING (2)
 			} else {
 				const scene = game.scenes.get(sceneId);
 				if (!scene) return null;
