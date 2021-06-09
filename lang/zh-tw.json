@@ -304,7 +304,7 @@
     "CoC7.SkillPush": "已孤注一擲",
     "CoC7.SkillCombat": "戰鬥",
     "CoC7.SkillFighting": "戰鬥",
-    "CoC7.SkillFirearm": "火器",
+    "CoC7.SkillFirearm": "射擊",
 
     "CoC7.WeaponRngd": "射程",
     "CoC7.WeaponProperyManeuver": "戰技",
@@ -340,8 +340,8 @@
 
     "CoC7.CthulhuMythosName": "克蘇魯神話",
     "CoC7.CreditRatingSkillName": "信用評級",
-    "CoC7.FightingSpecializationName": "戰鬥",
-    "CoC7.FirearmSpecializationName": "火器",
+    "CoC7.FightingSpecializationName": "格鬥",
+    "CoC7.FirearmSpecializationName": "射擊",
     "CoC7.DriveSpecializationName": "開車",
     "CoC7.PilotSpecializationName": "駕駛",
     "CoC7.AnySpecName": "任意",
@@ -426,7 +426,7 @@
     "CoC7.BackgroundSectionMoveUp": "上移",
     "CoC7.BackgroundSectionMoveDown": "下移",
 
-    "CoC7.creatureFightingSkill": "近身戰鬥",
+    "CoC7.creatureFightingSkill": "近身格鬥",
 
     "CoC7.InvoluntaryAction": "非自願行動",
     "CoC7.InvoluntaryActionPerfomed": "已進行的非自願行動",
