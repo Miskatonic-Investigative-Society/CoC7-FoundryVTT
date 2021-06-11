@@ -298,8 +298,12 @@ export class CoC7ActorImporter {
       updateData[`data.characteristics.${key}.value`] = Number(pc[key])
     })
     await npc.update(updateData)
+    await npc.setLuck(Number(pc['lck']))
+    await npc.setHp(Number(pc['hp']))
+    await npc.setMp(Number(pc['mp']))
+
     updateData = {};
-    ['hp', 'mp', 'lck', 'san', 'mov', 'db', 'build', 'armor'].forEach(key => {
+    ['san', 'mov', 'db', 'build', 'armor'].forEach(key => {
       updateData[`data.attribs.${key}.value`] = Number(pc[key])
     })
     if (pc.age !== null) {
