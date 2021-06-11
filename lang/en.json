@@ -625,6 +625,8 @@
 "CoC7.Spanish": "Spanish",
 "CoC7.French": "French",
 "CoC7.SelectSourceLanguage": "Select the source text language",
+"CoC7.ImportedUnnamedCharacter": "Imported unnamed character",
+"CoC7.CreatedImportedCharactersFolder": "Created 'Imported Characters' folder'",
 
 "SETTINGS.DebugMode": "System Debug Mode",
 "SETTINGS.DebugModeHint": "!!RESTART REQUIRED!!",

@@ -94,7 +94,7 @@ export class CoC7ActorImporter {
     if (nameFound !== null) {
       return nameFound.groups.name
     }
-    return 'Imported unnamed character'
+    return game.i18n.localize('COC7.ImportedUnnamedCharacter') 
   }
 
   /**
@@ -282,7 +282,7 @@ export class CoC7ActorImporter {
         type: 'Actor',
         parent: null
       })
-      ui.notifications.info('Created Imported Characters folder')
+      ui.notifications.info(game.i18n.localize('COC7.CreatedImportedCharactersFolder'))
     }
     return importedCharactersFolder
   }
