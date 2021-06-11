@@ -1,4 +1,4 @@
-<form class="{{cssClass}} flexcol" autocomplete="off" data-actor-id="{{actor._id}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
+<form class="{{cssClass}} flexcol" autocomplete="off" data-actor-id="{{actor.id}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
 
 	{{!-- Sheet Header --}}
 	<header class="sheet-header flexrow" style="flex: 0 0 auto;padding-bottom: 10px;border-bottom: 2px groove;">
@@ -321,7 +321,7 @@
 						</li>
 						<ol class="item-list">
 						{{#each itemsByType.item as |item id|}}
-							<li class="item flexrow" data-item-id="{{item._id}}">
+							<li class="item flexrow" data-item-id="{{item.id}}">
 								<div class="item-image" style="background-image: url({{item.img}})"></div>
 								<h4 class="item-name show-detail">{{item.name}}</h4>
 								<div class="item-controls">
