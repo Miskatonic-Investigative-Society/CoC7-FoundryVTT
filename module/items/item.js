@@ -178,10 +178,10 @@ export class CoC7Item extends Item {
 		if( 'skill' != this.type || !this.data.data?.properties?.special) return super.name;
 		if (this.data.name.toLowerCase().includes( this.data.data.specialization?.toLowerCase())) {
 			// Restore names that have already been processed
-			if (super.name === this.data.name) {
+			if (this.isOwned && super.name === this.data.name) {
 				let re = new RegExp('^' + this.data.data.specialization.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&") + ' \\((.+)\\)$')
 				let match = re.exec(this.data.name)
-				if (typeof match[1] !== 'undefined') {
+				if (typeof match !== 'undefined' && typeof match[1] !== 'undefined') {
 					return match[1]
 				}
 			}
