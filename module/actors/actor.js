@@ -2372,7 +2372,7 @@ export class CoCActor extends Actor {
 					},
 					// tint: '#ff0000',
 					disabled: false
-				}])
+				}]);
 			}
 				
 			break;
