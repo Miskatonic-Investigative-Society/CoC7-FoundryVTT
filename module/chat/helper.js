@@ -242,7 +242,7 @@ export class chatHelper{
 			gridUnit: 0,
 			value: 0,
 			unit: canvas.scene.data.gridUnits
-		}
+		};
 		if (typeof startToken !== 'undefined' && typeof startToken.center !== 'undefined' && typeof endToken !== 'undefined' && typeof endToken.center !== 'undefined') {
 			const ray = new Ray( startToken.center, endToken.center);
 			const segment = [{ray}];
