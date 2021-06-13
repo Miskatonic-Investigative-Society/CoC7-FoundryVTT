@@ -118,12 +118,12 @@ export class CoC7ActorImporter {
           name: cleanWeapon,
           type: 'weapon',
           data: {
-            properties: {}
-          },
-          range: {
-            normal: {
-              value: Number(weapon.groups.percentage),
-              damage: weapon.groups.damage
+            properties: {},
+            range: {
+              normal: {
+                value: Number(weapon.groups.percentage),
+                damage: weapon.groups.damage
+              }
             }
           }
         };
@@ -327,12 +327,16 @@ export class CoC7ActorImporter {
         const attack = pc.attacks[i]
         console.debug('attack', attack)
         const mainAttackSkill = await this.mainAttackSkill(attack)
-        npc.createEmbeddedDocuments('Item', [mainAttackSkill]).then(
+        await npc.createEmbeddedDocuments('Item', [mainAttackSkill]).then(
           async newSkills => {
+            //const newSkill = newSkills[0].clone()
+            //newSkill.data.data.value = attack.data.range.normal.value
             await npc.createEmbeddedDocuments('Item', [attack]).then(
               async createdAttacks => {
                 if (createdAttacks !== null && typeof createdAttacks !== undefined) {
                   const createdAttack = await this.setMainAttackSkill(createdAttacks[0], newSkills[0])
+                  //createdAttack.data.data.range.normal.value = attack.data.range.normal.value
+                  //createdAttack.data.data.range.normal.damage = attack.data.range.normal.damage
                   console.debug('createdAttack', createdAttack)
                 }
               }
@@ -408,9 +412,10 @@ export class CoC7ActorImporter {
         const existingSkill = await game.items.find(i => i.data.type === 'skill' && i.data.name === skill.name)
         if (existingSkill !== undefined) {
           const clonedSkill = existingSkill.toObject()
-          clonedSkill.data.value = skill.value
+          clonedSkill.data.base = skill.value
           await npc.createEmbeddedDocuments('Item', [clonedSkill]).then(
             created => console.debug(created))
+            //created.data.value = skill.value && console.debug(created))
         } else {
           await npc.createSkill(skill.name, skill.value).then(created => console.debug(created))
         }
