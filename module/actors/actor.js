@@ -1485,7 +1485,7 @@ export class CoCActor extends Actor {
 	get sanMax(){
 		if( !this.data.data.attribs) return undefined;
 		if( this.data.data.attribs?.san?.auto){
-			if( this.cthulhuMythos) return 99 - this.cthulhuMythos;
+			if( this.cthulhuMythos) return Math.max( 99 - this.cthulhuMythos,0);
 			return 99;
 		} 
 		return parseInt( this.data.data.attribs.san.max);
