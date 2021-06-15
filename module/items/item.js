@@ -181,7 +181,7 @@ export class CoC7Item extends Item {
 			if (this.isOwned && super.name === this.data.name) {
 				let re = new RegExp('^' + this.data.data.specialization.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&') + ' \\((.+)\\)$');
 				let match = re.exec(this.data.name);
-				if (typeof match !== 'undefined' && typeof match[1] !== 'undefined') {
+				if (match !== null && typeof match[1] !== 'undefined') {
 					return match[1];
 				}
 			}
