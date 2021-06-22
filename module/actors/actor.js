@@ -645,6 +645,11 @@ export class CoCActor extends Actor {
 					}
 				}
 				// }
+			} else {
+				const specialization = data.data.specialization;
+				if (specialization) {
+					data.name = CoC7Item.getNameWithoutSpec(data);
+				}
 			}
 
 			return await super.createEmbeddedDocuments(embeddedName, [data], options);
