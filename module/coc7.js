@@ -132,6 +132,14 @@ Hooks.once('init', async function() {
 		type: Boolean
 	});
 
+	game.settings.register('CoC7', 'displayPlayerNameOnSheet', {
+		name: 'SETTINGS.displayPlayerNameOnSheet',
+		scope: 'world',
+		config: true,
+		default: false,
+		type: Boolean
+	});
+
 	game.settings.register('CoC7', 'oneBlockBackstory', {
 		name: 'SETTINGS.OneBlockBackStory',
 		hint: 'SETTINGS.OneBlockBackStoryHint',

@@ -2367,7 +2367,7 @@ export class CoCActor extends Actor {
 					},
 					// tint: '#ff0000',
 					disabled: false
-				}])
+				}]);
 			}
 				
 			break;
@@ -2602,8 +2602,7 @@ export class CoCActor extends Actor {
 	}
 
 	get characterUser(){
-		if( !this.isPC) return null;
-		return game.users.filter( u => u.character.id == this.id)[0];
+		return game.users.entities.filter( u => u.character?.id == this.id)[0] || null;
 	}
 	
 	async setHealthStatusManually(event) {

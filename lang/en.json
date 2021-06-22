@@ -655,6 +655,7 @@
 "SETTINGS.PulpRulesHint": "Alow the usage of Pulp Rules (Archetype, Talent, HP), !early implementation!",
 "SETTINGS.developmentRollForLuck": "Recoverable Luck points",
 "SETTINGS.developmentRollForLuckHint": "Each player can make an improvement check for their Luck on Development Phase",
+"SETTINGS.displayPlayerNameOnSheet": "Display player's name on sheet",
 "SETTINGS.DisregardAmmo": "Disregard Ammo count.",
 "SETTINGS.DisregardAmmoHint": "Enabling this will not take in account the number of bullets loaded in the gun.",
 "SETTINGS.DisregardUsePerRound": "Disregard Uses per Rounds.",
