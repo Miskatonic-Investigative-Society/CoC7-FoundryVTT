@@ -626,6 +626,13 @@
 "CoC7.French": "French",
 "CoC7.SelectSourceLanguage": "Select the source text language",
 
+"CoC7.HowToTranslateTitle": "How to translate?",
+"CoC7.HowToTranslateWarning": "Do not install any modules you do not trust.",
+"CoC7.HowToTranslateInstallBabele": "Install/Update Babele module from Foundry's module manager.",
+"CoC7.HowToTranslateInstallTranslation": "Install/Update Translation from Foundry's module manager.",
+"CoC7.HowToTranslateEnableTranslation": "Inside the Game World, under Configuration/Manage Modules activate both Babele and the translations.",
+"CoC7.HowToTranslateNoTranslation": "Instructions for creating new language translations are available on existing translation modules.",
+
 "SETTINGS.DebugMode": "System Debug Mode",
 "SETTINGS.DebugModeHint": "!!RESTART REQUIRED!!",
 "SETTINGS.DefaultDifficulty": "Default check difficulty",

@@ -33,6 +33,7 @@ import { DamageCard } from './chat/cards/damage.js';
 import { CoC7VehicleSheet } from './actors/sheets/vehicle.js';
 import { CoC7Canvas } from './apps/canvas.js';
 import { CoC7ChaseSheet } from './items/sheets/chase.js';
+import { CoC7CompendiumDirectory } from './compendium-directory.js';
 
 Hooks.once('init', async function() {
 
@@ -777,3 +778,5 @@ Hooks.on('targetToken', function (user, token, targeted) {
 		}
 	}
 });
+
+CONFIG.ui.compendium = CoC7CompendiumDirectory;
