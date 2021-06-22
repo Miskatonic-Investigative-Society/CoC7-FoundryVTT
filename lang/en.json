@@ -625,6 +625,8 @@
 "CoC7.Spanish": "Spanish",
 "CoC7.French": "French",
 "CoC7.SelectSourceLanguage": "Select the source text language",
+"CoC7.ImportedUnnamedCharacter": "Imported unnamed character",
+"CoC7.CreatedImportedCharactersFolder": "Created 'Imported Characters' folder'",
 
 "CoC7.HowToTranslateTitle": "How to translate?",
 "CoC7.HowToTranslateWarning": "Do not install any modules you do not trust.",
