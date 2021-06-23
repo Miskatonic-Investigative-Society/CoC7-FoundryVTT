@@ -3116,3 +3116,11 @@ html {
 #controls .scene-control.custom-control .control-tool.xp_toggle.active {
   color: goldenrod;
 }
+a.compendium-translation {
+  border-top: 2px groove #444;
+  padding-top: 4px;
+  font-size: 20px;
+  text-align: center;
+  line-height: 32px;
+  display: block;
+}

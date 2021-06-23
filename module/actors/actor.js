@@ -645,6 +645,11 @@ export class CoCActor extends Actor {
 					}
 				}
 				// }
+			} else {
+				const specialization = data.data.specialization;
+				if (specialization) {
+					data.name = CoC7Item.getNameWithoutSpec(data);
+				}
 			}
 
 			return await super.createEmbeddedDocuments(embeddedName, [data], options);
@@ -1485,7 +1490,7 @@ export class CoCActor extends Actor {
 	get sanMax(){
 		if( !this.data.data.attribs) return undefined;
 		if( this.data.data.attribs?.san?.auto){
-			if( this.cthulhuMythos) return 99 - this.cthulhuMythos;
+			if( this.cthulhuMythos) return Math.max( 99 - this.cthulhuMythos,0);
 			return 99;
 		} 
 		return parseInt( this.data.data.attribs.san.max);
@@ -2367,7 +2372,7 @@ export class CoCActor extends Actor {
 					},
 					// tint: '#ff0000',
 					disabled: false
-				}])
+				}]);
 			}
 				
 			break;
@@ -2602,8 +2607,7 @@ export class CoCActor extends Actor {
 	}
 
 	get characterUser(){
-		if( !this.isPC) return null;
-		return game.users.filter( u => u.character.id == this.id)[0];
+		return game.users.entities.filter( u => u.character?.id == this.id)[0] || null;
 	}
 	
 	async setHealthStatusManually(event) {

@@ -33,6 +33,7 @@ import { DamageCard } from './chat/cards/damage.js';
 import { CoC7VehicleSheet } from './actors/sheets/vehicle.js';
 import { CoC7Canvas } from './apps/canvas.js';
 import { CoC7ChaseSheet } from './items/sheets/chase.js';
+import { CoC7CompendiumDirectory } from './compendium-directory.js';
 
 Hooks.once('init', async function() {
 
@@ -125,6 +126,14 @@ Hooks.once('init', async function() {
 	game.settings.register('CoC7', 'developmentRollForLuck', {
 		name: 'SETTINGS.developmentRollForLuck',
 		hint: 'SETTINGS.developmentRollForLuckHint',
+		scope: 'world',
+		config: true,
+		default: false,
+		type: Boolean
+	});
+
+	game.settings.register('CoC7', 'displayPlayerNameOnSheet', {
+		name: 'SETTINGS.displayPlayerNameOnSheet',
 		scope: 'world',
 		config: true,
 		default: false,
@@ -777,3 +786,5 @@ Hooks.on('targetToken', function (user, token, targeted) {
 		}
 	}
 });
+
+CONFIG.ui.compendium = CoC7CompendiumDirectory;

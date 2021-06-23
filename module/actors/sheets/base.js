@@ -89,7 +89,7 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 
 			if( !data.data.infos){
-				data.data.infos = { occupation: '', age: '', sex: '', residence: '', birthplace: '', archetype: '', organization: '' };
+				data.data.infos = { occupation: '', age: '', sex: '', residence: '', birthplace: '', archetype: '', organization: '', playername:'' };
 			}
 
 			if( !data.data.flags){
