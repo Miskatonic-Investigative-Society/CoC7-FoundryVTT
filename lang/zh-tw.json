@@ -297,7 +297,7 @@
     "CoC7.UseFormula": "使用擲骰值",
     "CoC7.EnterFormula": "輸入公式",
     "CoC7.SanRollHint": "爲目標進行San Check",
-    "CoC7.NoSkill": "沒有技能",
+    "CoC7.NoSkill": "沒有技能，",
     "CoC7.AddWeapontHint": "<p>{actor} 沒有一件 {weapon}.<br>你想新增一件嗎?</p>",
 
     "CoC7.ManualCreditValues": "收入與財産[手動輸入模式]",

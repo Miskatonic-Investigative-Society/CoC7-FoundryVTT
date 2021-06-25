@@ -1840,8 +1840,7 @@ export class CoCActor extends Actor {
 				check.roll();
 				check.toMessage();
 			}
-
-			if( !item) return ui.notifications.warn(`No skill ${skillData.name? skillData.name : skillData} found for actor ${this.name}`);
+			if( !item) return ui.notifications.warn(game.i18n.format('CoC7.NoSkill')+game.i18n.format('CoC7.ErrorNotFoundForActor', {missing: skillData.name? skillData.name : skillData, actor: this.name}));
 
 			let create = false;
 			await Dialog.confirm({
