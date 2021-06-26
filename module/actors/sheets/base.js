@@ -36,7 +36,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		data.rangeWpn = [];
 		data.meleeWpn = [];
 		data.actorFlags = {};
-		data.permissionLimited = this.actor.data.permission[game.user.id] == 1;
+		data.permissionLimited = this.actor.data.permission[game.user.id] == 1 || this.actor.data.permission.default  == 1 && !game.user.isGM;
 		data.isGM = game.user.isGM;
 		data.alowUnlock =
 			game.settings.get( 'CoC7', 'playerUnlockSheetMode') == 'always' ||
