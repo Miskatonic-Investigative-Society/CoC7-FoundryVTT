@@ -1,7 +1,8 @@
-<form class="{{cssClass}} flexcol" autocomplete="off" data-actor-id="{{actor.id}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
+<form class="{{cssClass}} flexcol {{#if permissionLimited}}permission-limited{{/if}}" autocomplete="off" data-actor-id="{{actor.id}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
 
 	{{!-- Sheet Header --}}
 	<header class="sheet-header flexrow" style="flex: 0 0 auto;padding-bottom: 10px;border-bottom: 2px groove;">
+		{{#unless permissionLimited}}
 		<div class="flexcol">
 			<div class="infos flexrow" style="flex: 0 0 auto;display: flex;">
 				<div class="flexrow flex2">
@@ -252,6 +253,8 @@
 				</div>
 			</div>
 		</div>
+		{{/unless}}
+		
 		{{#if isDead}}
 		<div class='is-dead' style="flex: 0 0 100px;margin: 6px;">
 			<i style="font-size: 100px;color: darkred;line-height: 100px;" class="fas fa-skull-crossbones"></i>
@@ -262,13 +265,13 @@
 					<i style="font-size: 100px;color: darkred;line-height: 100px;" class="fas fa-heartbeat"></i>
 				</div>
 			{{else}}
-				<img class="profile-img" src="{{actor.img}}" title="{{actor.name}}" data-edit="img" height="100" width="100"/>
+				<img class="profile-img" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
 			{{/if}}
 		{{/if}}
 	</header>
 
-
 	{{!-- Sheet Body --}}
+	{{#unless permissionLimited}}
 	<section class="sheet-body">
 		<div class="tab">
 		
@@ -414,4 +417,5 @@
 		</section>
 		</div>
 	</section>
+	{{/unless}}
 </form>
