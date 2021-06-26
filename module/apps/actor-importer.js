@@ -1,5 +1,6 @@
 'use strict'
 
+import { COC7 } from '../config.js';
 import { CoC7ActorImporterRegExp } from './actor-importer-regexp.js';
 
 // Default values
@@ -94,7 +95,7 @@ export class CoC7ActorImporter {
     if (nameFound !== null) {
       return nameFound.groups.name
     }
-    return 'Imported unnamed character'
+    return game.i18n.localize('COC7.ImportedUnnamedCharacter') 
   }
 
   /**
@@ -112,15 +113,12 @@ export class CoC7ActorImporter {
         const doesDamageBonus = this.RE.dbRegExp.test(weapon.groups.damage)
         const isRanged = this.RE.handgunRegExp.test(cleanWeapon) || this.RE.rifleRegExp.test(cleanWeapon) ||
           this.RE.smbRegExp.test(cleanWeapon) || this.RE.machineGunRegExp.test(cleanWeapon)
+        // Basic weapon data
         const data = {
           name: cleanWeapon,
           type: 'weapon',
           data: {
-            properties: {
-              "rngd": isRanged,
-              "melee": doesDamageBonus, // if a weapon doesDamageBonus usually means it's a melee weapon
-              "addb": doesDamageBonus
-            },
+            properties: {},
             range: {
               normal: {
                 value: Number(weapon.groups.percentage),
@@ -128,7 +126,14 @@ export class CoC7ActorImporter {
               }
             }
           }
+        };
+        for (let [key] of Object.entries(COC7['weaponProperties'])) {
+          data.data.properties[key] = false;
         }
+        // Set some of the properties
+        data.data.properties.rngd = isRanged;
+        data.data.properties.melee = doesDamageBonus; // if a weapon doesDamageBonus usually means it's a melee weapon
+        data.data.properties.addb = doesDamageBonus;
         results.push(data)
         weapon = this.RE.weaponRegExp.exec(attacks)
       }
@@ -155,11 +160,11 @@ export class CoC7ActorImporter {
   }
 
   /**
-   * basicWeaponData creates a basic object with the default basic data for a weapon
+   * basicWeaponData creates a basic object with the default basic data for a weapon skill
    * @param {boolean} firearms true if the weapon uses firearms, false if it's a melee one.
    * @returns object with default values for the weapon
    */
-  basicWeaponData(firearms) {
+  basicWeaponSkillData(firearms) {
     return {
       specialization: game.i18n.localize(firearms ? 'CoC7.FirearmSpecializationName' : 'CoC7.FightingSpecializationName'),
       adjustments: defaultWeaponSkillAdjustments,
@@ -282,7 +287,7 @@ export class CoC7ActorImporter {
         type: 'Actor',
         parent: null
       })
-      ui.notifications.info('Created Imported Characters folder')
+      ui.notifications.info(game.i18n.localize('COC7.CreatedImportedCharactersFolder'))
     }
     return importedCharactersFolder
   }
@@ -293,8 +298,12 @@ export class CoC7ActorImporter {
       updateData[`data.characteristics.${key}.value`] = Number(pc[key])
     })
     await npc.update(updateData)
+    await npc.setLuck(Number(pc['lck']))
+    await npc.setHp(Number(pc['hp']))
+    await npc.setMp(Number(pc['mp']))
+
     updateData = {};
-    ['hp', 'mp', 'lck', 'san', 'mov', 'db', 'build', 'armor'].forEach(key => {
+    ['san', 'mov', 'db', 'build', 'armor'].forEach(key => {
       updateData[`data.attribs.${key}.value`] = Number(pc[key])
     })
     if (pc.age !== null) {
@@ -314,61 +323,72 @@ export class CoC7ActorImporter {
 
   async handleTheAttacks(pc, npc) {
     if (pc.attacks !== null) {
-      let newSkill = null
       for (let i = 0; i < pc.attacks.length; i++) {
         const attack = pc.attacks[i]
         console.debug('attack', attack)
-        const skill = await this.weaponSkill(attack.name)
-        if (skill !== null) {
-          console.debug('skill', skill)
-          const skillClone = duplicate(skill)
-          delete skillClone.id
-          skillClone.data.value = attack.data.range.normal.value
-          console.debug('skillClone', skillClone)
-          newSkill = await npc.createEmbeddedDocuments('Item', [skillClone])
-          if (newSkill !== null && newSkill !== undefined) {
-            newSkill.data.value = attack.data?.range?.normal?.value
-          } else { // Maybe the skill already exists.
-            const newSkillId = await npc.getItemIdByName(skillClone.name)
-            newSkill = await npc.items.get(newSkillId)
-            if (newSkill !== null && newSkill !== undefined) {
-              newSkill.data.value = attack.data?.range?.normal?.value
-            }
-          }
-          console.debug('newSkill', newSkill)
-        } else {
-          console.debug('Weapon skill not found for ' + attack.name)
-          const skill = {
-            name: attack.name,
-            type: 'skill',
-            data: this.basicWeaponData(false)
-          }
-          skill.data.base = attack.data?.range?.normal?.value
-          skill.data.value = attack.data?.range?.normal?.value
-          console.debug('skill', skill)
-          newSkill = await npc.createEmbeddedDocuments('Item', [skill])
-          console.debug('newSkill', newSkill)
-        }
-        const weapon = await npc.createEmbeddedDocuments('Item', [attack])
-        console.debug('weapon', weapon)
-        if (newSkill !== null) {
-          const createdAttack = npc.items.get(weapon.id)
-          await createdAttack.update({
-            'data.skill.main.id': newSkill.id,
-            'data.skill.main.name': newSkill.name,
-            'data.properties': newSkill.data.properties,
-            'data.adjustments': newSkill.data.adjustments,
-            'data.specialization': newSkill.data.specialization
-          })
-        }
+        const mainAttackSkill = await this.mainAttackSkill(attack)
+        await npc.createEmbeddedDocuments('Item', [mainAttackSkill]).then(
+          async newSkills => {
+            //const newSkill = newSkills[0].clone()
+            //newSkill.data.data.value = attack.data.range.normal.value
+            await npc.createEmbeddedDocuments('Item', [attack]).then(
+              async createdAttacks => {
+                if (createdAttacks !== null && typeof createdAttacks !== undefined) {
+                  const createdAttack = await this.setMainAttackSkill(createdAttacks[0], newSkills[0])
+                  //createdAttack.data.data.range.normal.value = attack.data.range.normal.value
+                  //createdAttack.data.data.range.normal.damage = attack.data.range.normal.damage
+                  console.debug('createdAttack', createdAttack)
+                }
+              }
+            )
+          });
       }
     }
   }
 
+  async mainAttackSkill(attack) {
+    const skill = await this.weaponSkill(attack.name);
+    if (skill !== null && typeof skill !== 'undefined') {
+      console.debug('skill', skill);
+      const skillClone = skill.clone({
+        data: {
+          value: attack.data.range.normal.value
+        }
+      });
+      console.debug('skillClone', skillClone);
+      return skillClone;
+    }
+    console.debug(`Weapon skill not found for ${attack.name}, creating a new one`);
+    const newSkill = {
+      name: attack.name,
+      type: 'skill',
+      data: this.basicWeaponSkillData(false)
+    };
+    newSkill.data.base = attack.data?.range?.normal?.value;
+    newSkill.data.value = attack.data?.range?.normal?.value;
+    console.debug('newSkill', newSkill);
+    return newSkill;
+  }
+
+  /**
+   * setMainWeaponSkill sets the main skill for a weapon
+   * @param {CoC7Item} weapon 
+   * @param {CoC7Item} skill 
+   */
+  async setMainAttackSkill(weapon, skill) {
+    return await weapon.update({
+      'data.skill.main.id': skill.id,
+      'data.skill.main.name': skill.name,
+      'data.properties': skill.data.properties,
+      'data.adjustments': skill.data.adjustments,
+      'data.specialization': skill.data.specialization
+    })
+  }
+
   async addTheSpells(pc, npc) {
     if (pc.spells !== null) {
-      pc.spells.forEach(spell => {
-        const created = npc.addItems([{
+      pc.spells.forEach(async spell => {
+        const created = await npc.addItems([{
           name: spell,
           type: 'spell'
         }])
@@ -380,8 +400,7 @@ export class CoC7ActorImporter {
   async addTheLanguages(pc, npc) {
     if (pc.languages !== null) {
       for (const lang of pc.languages) {
-        const newSkill = await this.createSkill(lang)
-        const created = npc.createEmbeddedDocuments('Item', [newSkill])
+        const created = await npc.createSkill(lang.name, lang.value)
         console.debug(created)
       }
     }
@@ -390,33 +409,17 @@ export class CoC7ActorImporter {
   async addTheSkills(pc, npc) {
     if (pc.skills !== null) {
       for (const skill of pc.skills) {
-        const newSkill = await this.createSkill(skill)
-        const created = npc.createEmbeddedDocuments('Item', [newSkill])
-        console.debug(created)
+        const existingSkill = await game.items.find(i => i.data.type === 'skill' && i.data.name === skill.name)
+        if (existingSkill !== undefined) {
+          const clonedSkill = existingSkill.toObject()
+          clonedSkill.data.base = skill.value
+          await npc.createEmbeddedDocuments('Item', [clonedSkill]).then(
+            created => console.debug(created))
+            //created.data.value = skill.value && console.debug(created))
+        } else {
+          await npc.createSkill(skill.name, skill.value).then(created => console.debug(created))
+        }
       }
-    }
-  }
-
-  async createSkill(skill) {
-    const skillName = skill.name
-    const existingSkill = await game.items.find(i => i.data.type === 'skill' && i.data.name === skillName)
-    let icon = null
-    let newData = {
-      value: skill.value,
-      properties: defaultSkillProperties
-    }
-    if (existingSkill != null) {
-      const json = existingSkill.toJSON()
-      icon = json.img
-      newData = json.data
-      newData.base = skill.value
-      newData.value = skill.value
-    }
-    return {
-      name: skillName,
-      type: 'skill',
-      data: newData,
-      img: icon
     }
   }
 
@@ -427,19 +430,19 @@ export class CoC7ActorImporter {
     let skill = null
     if (this.RE.handgunRegExp.exec(weaponName)) {
       skill = await game.items.find(i => i.data.type === 'skill' && i.data.name === 'Handgun')
-      console.debug(weaponName + ' uses Handgun skill: ' + skill)
+      console.debug(`${weaponName} uses Handgun skill: ${skill}`)
     } else if (this.RE.rifleRegExp.exec(weaponName)) {
       skill = await game.items.find(i => i.data.type === 'skill' && i.data.name === 'Rifle/Shotgun')
-      console.debug(weaponName + ' uses Rifle skill ' + skill)
+      console.debug(`${weaponName} uses Rifle skill: ${skill}`)
     } else if (this.RE.smbRegExp.exec(weaponName)) {
       skill = await game.items.find(i => i.data.type === 'skill' && i.data.name === 'Submachine Gun')
-      console.debug(weaponName + ' uses Submachine Gun skill ' + skill)
+      console.debug(`${weaponName} uses Submachine Gun skill: ${skill}`)
     } else if (this.RE.machineGunRegExp.exec(weaponName)) {
       skill = await game.items.find(i => i.data.type === 'skill' && i.data.name === 'Machine Gun')
-      console.debug(weaponName + ' uses Machine Gun skill ' + skill)
+      console.debug(`${weaponName} uses Machine Gun skill: ${skill}`)
     } else if (this.RE.launchedWeapons.exec(weaponName)) {
       skill = await game.items.find(i => i.data.type === 'skill' && i.data.name === 'Launch')
-      console.debug(weaponName + ' uses Launch skill ' + skill)
+      console.debug(`${weaponName} uses Launch skill: ${skill}`)
     }
     return skill
   }

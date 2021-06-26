@@ -18,7 +18,7 @@
 "CHARAC.Power": "Power",
 "CHARAC.EDU": "EDU",
 "CHARAC.Education": "Education",
-
+"CoC7.PlayerName": "Player",
 "CoC7.Name": "Name",
 "CoC7.Archetype": "Archetype",
 "CoC7.Occupation": "Occupation",
@@ -608,6 +608,8 @@
 "CoC7.MessageCheckRequestedWait": "Your keeper is requesting a {check}.<br>Wait before clicking!<br>",
 "CoC7.MessageTargetCheckRequested": "Your keeper is requesting a {check} for {name}.",
 "CoC7.MessageSelectedTargetIsNotControlled": "The token for {name} is owned by not controlled by a player so will not be able to react to combat actions.",
+"CoC7.MessageBoutOfMadnessTableNotFound": "The result from the madness table was not found, please check all your roll tables are created",
+"CoC7.MessageBoutOfMadnessItemNotFound": "The result from the madness table was not found, please check all your statuses are created",
 
 "CoC7.ActorImporter": "Actor Importer",
 "CoC7.ActorImporterSummary": "Import an NPC or Creature from description and stats. Just paste the corresponding plain text",
@@ -623,6 +625,15 @@
 "CoC7.Spanish": "Spanish",
 "CoC7.French": "French",
 "CoC7.SelectSourceLanguage": "Select the source text language",
+"CoC7.ImportedUnnamedCharacter": "Imported unnamed character",
+"CoC7.CreatedImportedCharactersFolder": "Created 'Imported Characters' folder'",
+
+"CoC7.HowToTranslateTitle": "How to translate?",
+"CoC7.HowToTranslateWarning": "Do not install any modules you do not trust.",
+"CoC7.HowToTranslateInstallBabele": "Install/Update Babele module from Foundry's module manager.",
+"CoC7.HowToTranslateInstallTranslation": "Install/Update Translation from Foundry's module manager.",
+"CoC7.HowToTranslateEnableTranslation": "Inside the Game World, under Configuration/Manage Modules activate both Babele and the translations.",
+"CoC7.HowToTranslateNoTranslation": "Instructions for creating new language translations are available on existing translation modules.",
 
 "SETTINGS.DebugMode": "System Debug Mode",
 "SETTINGS.DebugModeHint": "!!RESTART REQUIRED!!",
@@ -646,6 +657,7 @@
 "SETTINGS.PulpRulesHint": "Alow the usage of Pulp Rules (Archetype, Talent, HP), !early implementation!",
 "SETTINGS.developmentRollForLuck": "Recoverable Luck points",
 "SETTINGS.developmentRollForLuckHint": "Each player can make an improvement check for their Luck on Development Phase",
+"SETTINGS.displayPlayerNameOnSheet": "Display player's name on sheet",
 "SETTINGS.DisregardAmmo": "Disregard Ammo count.",
 "SETTINGS.DisregardAmmoHint": "Enabling this will not take in account the number of bullets loaded in the gun.",
 "SETTINGS.DisregardUsePerRound": "Disregard Uses per Rounds.",

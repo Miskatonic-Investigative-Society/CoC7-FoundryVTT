@@ -216,28 +216,35 @@ export class CoCActor extends Actor {
 		let result = null;
 		const boutOfMadnessTableId = realTime? game.settings.get( 'CoC7', 'boutOfMadnessRealTimeTable') :game.settings.get( 'CoC7', 'boutOfMadnessSummaryTable');
 		if( boutOfMadnessTableId != 'none'){
-			result = { 
+			result = {
 				phobia: false,
 				mania: false,
 				description: null
 			};
 			const boutOfMadnessTable = game.tables.get( boutOfMadnessTableId);
-			result.tableRoll = boutOfMadnessTable.roll();
-			if( TABLE_RESULT_TYPES.ENTITY == result.tableRoll.results[0].type){
-				const item = game.items.get(result.tableRoll.results[0].resultId);
-				if( item.data?.data?.type?.phobia) result.phobia = true;
-				if( item.data?.data?.type?.mania) result.mania = true;
-				result.description = `${item.name}:${TextEditor.enrichHTML( item.data.data.description.value)}`;
-				result.name = item.name;
-				delete item.data._id;
-
-				/** MODIF 0.8.x **/
-				// await this.createOwnedItem( item.data);
-				await this.createEmbeddedDocuments('Item', [item.data]);
-				/*****************/
-			}
-			if( TABLE_RESULT_TYPES.TEXT == result.tableRoll.results[0].type){
-				result.description = TextEditor.enrichHTML(result.tableRoll.results[0].text);
+			result.tableRoll = await boutOfMadnessTable.roll();
+			if (typeof result.tableRoll.results[0] !== 'undefined') {
+				if( CONST.TABLE_RESULT_TYPES.ENTITY == result.tableRoll.results[0].data.type){
+					const item = game.items.get(result.tableRoll.results[0].data.resultId);
+					if (typeof item !== 'undefined') {
+						if( item.data?.data?.type?.phobia) result.phobia = true;
+						if( item.data?.data?.type?.mania) result.mania = true;
+						result.description = `${item.name}:${TextEditor.enrichHTML( item.data.data.description.value)}`;
+						result.name = item.name;
+						delete item.data._id;
+						/** MODIF 0.8.x **/
+						// await this.createOwnedItem( item.data);
+						await this.createEmbeddedDocuments('Item', [item.data]);
+						/*****************/
+					} else {
+						ui.notifications.error(game.i18n.localize('CoC7.MessageBoutOfMadnessItemNotFound'));
+					}
+				}
+				if( CONST.TABLE_RESULT_TYPES.TEXT == result.tableRoll.results[0].data.type){
+					result.description = TextEditor.enrichHTML(result.tableRoll.results[0].data.text);
+				}
+			} else {
+				ui.notifications.error(game.i18n.localize('CoC7.MessageBoutOfMadnessTableNotFound'));
 			}
 		}
 
@@ -261,7 +268,7 @@ export class CoCActor extends Actor {
 				});
 		} else {
 			// const effectData = 
-			await ActiveEffect.create({
+			await super.createEmbeddedDocuments('ActiveEffect', [{
 				label: game.i18n.localize( 'CoC7.BoutOfMadnessName'),
 				icon: 'systems/CoC7/artwork/icons/hanging-spider.svg',
 				origin: this.uuid,
@@ -274,7 +281,7 @@ export class CoCActor extends Actor {
 				},
 				// tint: '#ff0000',
 				disabled: false
-			}, this).create();
+			}]);
 			// const effect = this.effects.get( effectData._id);
 			// effect.sheet.render(true);
 		}
@@ -300,7 +307,7 @@ export class CoCActor extends Actor {
 			});
 		} else {
 			// const effectData = 
-			await ActiveEffect.create({
+			await super.createEmbeddedDocuments('ActiveEffect', [{
 				label: game.i18n.localize( 'CoC7.InsanityName'),
 				icon: 'systems/CoC7/artwork/icons/tentacles-skull.svg',
 				origin: this.uuid,
@@ -312,7 +319,7 @@ export class CoCActor extends Actor {
 					}
 				},
 				disabled: false
-			}, this).create();
+			}]);
 		}
 
 	}
@@ -638,6 +645,11 @@ export class CoCActor extends Actor {
 					}
 				}
 				// }
+			} else {
+				const specialization = data.data.specialization;
+				if (specialization) {
+					data.name = CoC7Item.getNameWithoutSpec(data);
+				}
 			}
 
 			return await super.createEmbeddedDocuments(embeddedName, [data], options);
@@ -1478,7 +1490,7 @@ export class CoCActor extends Actor {
 	get sanMax(){
 		if( !this.data.data.attribs) return undefined;
 		if( this.data.data.attribs?.san?.auto){
-			if( this.cthulhuMythos) return 99 - this.cthulhuMythos;
+			if( this.cthulhuMythos) return Math.max( 99 - this.cthulhuMythos,0);
 			return 99;
 		} 
 		return parseInt( this.data.data.attribs.san.max);
@@ -2347,7 +2359,7 @@ export class CoCActor extends Actor {
 				// }
 			} else {
 				// const effectData = 
-				await ActiveEffect.create({
+				await super.createEmbeddedDocuments('ActiveEffect', [{
 					label: game.i18n.localize( 'CoC7.BoutOfMadnessName'),
 					icon: 'systems/CoC7/artwork/icons/hanging-spider.svg',
 					origin: this.uuid,
@@ -2360,7 +2372,7 @@ export class CoCActor extends Actor {
 					},
 					// tint: '#ff0000',
 					disabled: false
-				}, this).create();
+				}]);
 			}
 				
 			break;
@@ -2372,7 +2384,7 @@ export class CoCActor extends Actor {
 				// }
 			} else {
 				// const effectData = 
-				await ActiveEffect.create({
+				await super.createEmbeddedDocuments('ActiveEffect', [{
 					label: game.i18n.localize( 'CoC7.InsanityName'),
 					icon: 'systems/CoC7/artwork/icons/tentacles-skull.svg',
 					origin: this.uuid,
@@ -2385,7 +2397,7 @@ export class CoCActor extends Actor {
 					},
 					// tint: '#ff0000',
 					disabled: false
-				}, this).create();
+				}]);
 			}
 			break;
 		
@@ -2595,8 +2607,7 @@ export class CoCActor extends Actor {
 	}
 
 	get characterUser(){
-		if( !this.isPC) return null;
-		return game.users.filter( u => u.character.id == this.id)[0];
+		return game.users.entities.filter( u => u.character?.id == this.id)[0] || null;
 	}
 	
 	async setHealthStatusManually(event) {

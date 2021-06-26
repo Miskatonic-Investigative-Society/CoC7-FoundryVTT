@@ -351,7 +351,7 @@ export class CoC7Utilities {
 	}
 
 	static async startRest() {
-		let actors = game.actors.entities.filter (a => a.data.type === 'character' && a.data.permission.default !== 0);
+		let actors = game.actors.entities.filter (a => a.data.type === 'character' && a.player !== undefined);
 		let chatContent = `<i>${game.i18n.localize('CoC7.dreaming')}...</i><br>`;
 		actors.forEach(actor =>
 		{

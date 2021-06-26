@@ -27,7 +27,7 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
 
 	activateListeners(html) {
 		super.activateListeners(html);
-		if (this.actor.owner) {
+		if (this.actor.isOwner) {
 			html.find('[name="data.attribs.hp.value"]').change(event => this.actor.setHealthStatusManually(event));
 		}
 	}

@@ -107,8 +107,8 @@
 	"socket": true,
 	"gridDistance": 5,
 	"gridUnits": "ft",
-	"primaryTokenAttribute": "health",
-	"secondaryTokenAttribute": "power",
+	"primaryTokenAttribute": "attribs.hp",
+	"secondaryTokenAttribute": "attribs.san",
 	"url": "https://github.com/HavlockV/CoC7-FoundryVTT/",
 	"manifest": "https://github.com/HavlockV/CoC7-FoundryVTT/raw/master/system.json",
 	"download": "https://github.com/HavlockV/CoC7-FoundryVTT/archive/0.6.0.zip"
