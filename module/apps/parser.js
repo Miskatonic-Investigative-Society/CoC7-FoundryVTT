@@ -398,7 +398,8 @@ export class CoC7Parser{
 						}
 					})
 				 }
-				//ui.notifications.warn(game.i18n.localize('CoC7.WarnNoControlledActor'));}
+				//ui.notifications.warn(game.i18n.localize('CoC7.WarnNoControlledActor'));
+			}
 		}
 		return;
 	}
