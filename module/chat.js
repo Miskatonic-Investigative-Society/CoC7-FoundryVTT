@@ -125,7 +125,7 @@ export class CoC7Chat{
 		// }
 		if( game.user.isGM){
 			const card = $(chatMessage.data.content)[0];
-			if( card.classList.contains('melee'))
+			if( card?.classList?.contains('melee'))
 			{
 				if( 'true' == card.dataset.resolved){
 					if( card.classList.contains('initiator')){
