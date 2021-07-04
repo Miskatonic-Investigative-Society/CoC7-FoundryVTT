@@ -1,3 +1,4 @@
+// import { CoCActor } from '../../actors/actor.js';
 import { CoC7Check } from '../../check.js';
 
 export class RollCard{
