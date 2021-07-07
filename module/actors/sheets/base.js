@@ -383,9 +383,12 @@ export class CoC7ActorSheet extends ActorSheet {
 
 			data.data.indefiniteInsanityLevel = {};
 			data.data.indefiniteInsanityLevel.value = data.data.attribs.san.dailyLoss ? data.data.attribs.san.dailyLoss:0;
-			data.data.indefiniteInsanityLevel.max = Math.floor( data.data.attribs.san.value/5);
+			data.data.indefiniteInsanityLevel.max = Math.floor(data.data.attribs.san.value/5);
 		}
-		data.hasInventory = Object.prototype.hasOwnProperty.call( data.itemsByType, 'item') || Object.prototype.hasOwnProperty.call( data.itemsByType, 'book') || Object.prototype.hasOwnProperty.call( data.itemsByType, 'spell');
+		data.hasInventory = Object.prototype.hasOwnProperty.call(data.itemsByType, 'item')
+				 || Object.prototype.hasOwnProperty.call(data.itemsByType, 'book')
+				 || Object.prototype.hasOwnProperty.call(data.itemsByType, 'spell')
+				 || Object.prototype.hasOwnProperty.call(data.itemsByType, 'talent');
 
 		// const first = data.data.biography[0];
 		// first.isFirst = true;
