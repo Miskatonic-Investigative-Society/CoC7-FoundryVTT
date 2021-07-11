@@ -85,7 +85,15 @@
                 {{/if}}
             {{/if}}
         {{else}}
-        <div class='card-result'>{{ localize 'CoC7.TotalDamage' }} : {{totalDamageString}}</div>
+        <div class='card-result'>{{ localize 'CoC7.TotalDamage' }} : {{totalDamageString}}
+            <div class="die-result-overlay-br">
+            <span>
+                <button data-action="dealDamageToSelectedTarget" title="Take to apply the Damage to Selected Token(s)">
+                    <i class="fas fa-user-minus noRemove"></i>
+                </button>
+            </span>
+            </div> 
+        </div>
         {{/if}}
     {{else}}
     <div class="card-buttons owner-only">

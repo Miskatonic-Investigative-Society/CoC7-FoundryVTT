@@ -40,4 +40,44 @@
         line-height: 22px;
         height: 22px;
     }
+    .die-result-overlay-br {
+        text-align: right!important;
+        flex-grow: 1;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        padding: 0 2px;
+    
+        display: flex;
+        visibility: visible!important;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1;
+    }
+    
+    .die-result-overlay-br span {
+        display: flex;
+    }
+    
+    .die-result-overlay-br button {
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+        line-height: 1px;
+        background-color: white;
+        border: 1px solid #999;
+        padding: 0;
+        visibility: visible!important;
+    }
+    
+    .die-result-overlay-br button.icon {
+        background-size: 14px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    .die-result-overlay-br button i {
+        margin: 0;
+    }
 }
