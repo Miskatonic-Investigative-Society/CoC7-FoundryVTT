@@ -165,7 +165,11 @@ export class DamageCard extends InteractiveChatCard{
 	async confirmDamage(targets) {
 		for (let index = 0; index < targets.length; index++) {
 			await targets[index].dealDamage(Number(this.totalDamageString), { ignoreArmor: false });
+			ChatMessage.create({
+				content:`Damage ${targets[index].name} ${this.totalDamageString}HP` 
+				});
 		}
+
 	}
 
 	async dealDamage( options={ update: true}){
