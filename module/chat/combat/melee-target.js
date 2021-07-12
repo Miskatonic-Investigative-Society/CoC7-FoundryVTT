@@ -139,6 +139,7 @@ export class CoC7MeleeTarget extends ChatCardActor{
 					}
 				}
 			}
+			let content = '';
 			switch (owners.length) {
 				case 0:
 					// GM
@@ -147,22 +148,22 @@ export class CoC7MeleeTarget extends ChatCardActor{
 					user = game.users.get(owners[0]);
 					break;
 				default:
-					let content = '<p>' + game.i18n.localize('CoC7.MessageSelectSingleUserForTarget');
+					content = '<p>' + game.i18n.localize('CoC7.MessageSelectSingleUserForTarget');
 					content = content + '<form id="selectform"><select name="user">';
 					owners.forEach(function (k) {
 						content = content + '<option value="' + k + '">' + game.users.get(k).name + '</option>';
-					})
+					});
 					content = content + '</select></form></p>';
-					let d = await Dialog.prompt({
+					await Dialog.prompt({
 						title: game.i18n.localize('CoC7.MessageTitleSelectSingleUserForTarget'),
 						content: content,
 						callback:(html) => {
 							const formData = new FormData(html[0].querySelector('#selectform'));
 							formData.forEach(function (value, name) {
 							if (name === 'user') {
-								user = game.users.get(value)
+								user = game.users.get(value);
 							}
-						})
+						});
 					}
 				});
 			}
