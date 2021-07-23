@@ -82,9 +82,9 @@
 
     {{#unless rolled}}
     <div class="flexrow response-selection owner-only">
-		<span class="flex1 toggle-switch dodge {{#if actor.dodgeSkill._id}}{{#unless rolled}}simple-toggle{{/unless}}{{else}}inactive{{/if}} {{#if dodging}}switched-on{{/if}}"
+		<span class="flex1 toggle-switch dodge {{#if actor.dodgeSkill.id}}{{#unless rolled}}simple-toggle{{/unless}}{{else}}inactive{{/if}} {{#if dodging}}switched-on{{/if}}"
 			data-action="dodge"
-			data-skill-id="{{actor.dodgeSkill._id}}">{{localize 'CoC7.Dodge'}}</span>
+			data-skill-id="{{actor.dodgeSkill.id}}">{{localize 'CoC7.Dodge'}}</span>
         <div class="flex1 toggle-switch fight-back {{#unless rolled}}dropdown{{/unless}} {{#if fightingBack}}switched-on{{/if}}">
             <span class="combat-action {{#unless rolled}}dropbtn{{/unless}}">{{localize 'CoC7.FightBack'}}</span>
             <div class="actor-skill dropdown-content">
@@ -102,7 +102,7 @@
                 {{#each actor.fightingSkills as |skill key|}}
 					<a class="dropdown-element"
 						data-action="maneuver"
-						data-skill-id="{{skill.data._id}}">{{skill.data.name}} ({{skill.value}}%)</a>
+						data-skill-id="{{skill.id}}">{{skill.data.name}} ({{skill.value}}%)</a>
                 {{/each}}
             </div>        
         </div>
@@ -166,7 +166,7 @@
 
                 <h4 class="result-details" style="margin: 0">{{check.resultType}}</h4>
 
-                <div class="card-buttons owner-only" data-actor-id="{{check.actor._id}}" style="padding: 2px 0;margin: 0;">
+                <div class="card-buttons owner-only" data-actor-id="{{check.actor.id}}" style="padding: 2px 0;margin: 0;">
                     {{#unless check.isSuccess}}
                         {{#if check.canBePushed}}
                             {{#unless check.pushing}}
@@ -202,13 +202,13 @@
             {{#unless fightingBack}}
                 <button
                     data-action="melee-target-roll"
-                    data-skill="{{skill._id}}"
+                    data-skill="{{skill.id}}"
                     data-action="{{action}}">{{skill.data.name}} ({{skill.value}}%)</button>
             {{/unless}}
             {{#if fightingBack}}
                 <button
                 data-action="melee-target-roll"
-                data-skill="{{skill._id}}"
+                data-skill="{{skill.id}}"
                 data-item-id="{{weapon.id}}"
                 data-action="{{action}}">{{weapon.name}}: {{skill.data.name}} ({{skill.value}}%)</button>
             {{/if}}

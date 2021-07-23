@@ -1,4 +1,4 @@
-<form class="{{cssClass}} flexcol" autocomplete="off" data-actor-id="{{actor._id}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
+<form class="{{cssClass}} flexcol" autocomplete="off" data-actor-id="{{actor.id}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
 	<div class="container">
 		<section class="sheet-header">
 
@@ -11,6 +11,12 @@
 					<label>{{ localize 'CoC7.Name' }} :</label>
 					<input name="name" type="text" value="{{actor.name}}"/>
 				</div>
+				{{#if displayPlayerName}}
+				<div class="row flexrow">
+					<label>{{ localize 'CoC7.PlayerName' }} :</label>
+					<input name="data.infos.playername" type="text" value="{{data.infos.playername}}"/>	
+				</div>
+				{{/if}}
 				{{#if pulpCharacter}}
 				<div class="row flexrow">
 					<label>{{ localize 'CoC7.Archetype' }} :</label>
@@ -58,10 +64,10 @@
 			<div class="characteristics">
 				<div class="header"></div>
 				<div class="char-boxes">
-					{{#each data.characteristics as |characteristic key|}}
+					{{#each actor.characteristics as |characteristic key|}}
 						<div class="char-box"  data-characteristic="{{key}}" draggable="true">
 							<div class="roll-icon"><i class="game-icon game-icon-d10"></i></div>
-							<div class="charac-name characteristic-label rollable"  draggable="true">{{localize characteristic.short}}</div>
+							<div class="charac-name characteristic-label rollable"  draggable="true">{{characteristic.shortName}}</div>
 							<div class="charac-score">
 								<div class="main-score">
 									<input class="characteristic-score" type="text" name="data.characteristics.{{key}}.value" value="{{characteristic.value}}" data-dtype="Number"/>

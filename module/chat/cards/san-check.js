@@ -66,7 +66,7 @@ export class SanCheckCard extends ChatCardActor{
 			if( this.sanData.sanMax && this.sanCheck.failed) return !isNaN(Number(this.sanData.sanMax))?Number(this.sanData.sanMax):this.sanData.sanMax;
 			if( this.sanData.sanMin && this.sanCheck.passed) return !isNaN(Number(this.sanData.sanMin))?Number(this.sanData.sanMin):this.sanData.sanMin;
 
-			const formula = this.creature.sanLoss( this.sanCheck.passed);
+			const formula = this.creature?.sanLoss?( this.sanCheck.passed) : 0;
 			if( formula){
 				if( !isNaN(Number(formula))) return Number(formula);
 				return formula;
@@ -325,9 +325,11 @@ export class SanCheckCard extends ChatCardActor{
 			}
 		} else {
 			this.state.intRolled = false;
-		} 
+		}
 
-		if( this.actor.dailySanLoss >= this.actor.san/5 )
+		let oneFifthSanity = this.actor.data.data.attribs.san.oneFifthSanity;
+		oneFifthSanity = parseInt(oneFifthSanity.replace(/\D/g, ''));
+		if( this.actor.dailySanLoss >= oneFifthSanity) //this.actor.san/5
 		{
 			this.state.insanity = true;
 			this.state.intRolled = true;

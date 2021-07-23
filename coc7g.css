@@ -2713,6 +2713,85 @@ html {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.participants {
+  display: flex;
+  flex-direction: column;
+}
+.participants .participants-list {
+  display: flex;
+  flex-direction: column;
+}
+.participants .participants-list .participant {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 2rem 2rem 0.5rem 5fr 2rem 4fr 2rem 2rem 2rem 1rem;
+  grid-template-rows: 2rem;
+  grid-template-areas: "p-side p-icon p-expand p-name p-movement p-check p-score p-modifier p-total p-control";
+  align-items: center;
+}
+.participants .participants-list .participant.drag-over {
+  border: 1px solid red;
+}
+.participants .participants-list .participant .p-side {
+  height: 2rem;
+  line-height: 2rem;
+  font-size: 2rem;
+}
+.participants .participants-list .participant .p-side.chaser {
+  color: red;
+}
+.participants .participants-list .participant .p-side.prey {
+  color: green;
+}
+.participants .participants-list .participant .p-icon {
+  height: 2rem;
+  line-height: 2rem;
+}
+.participants .participants-list .participant .p-icon img {
+  border: 0;
+  margin: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+.participants .participants-list .participant .p-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 5rem;
+}
+.participants .participants-list .driver {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 4rem 2rem auto 1rem;
+  grid-template-rows: 1.5rem;
+  grid-template-areas: "d-spacer d-icon d-name d-control";
+  align-items: center;
+}
+.participants .participants-list .driver .d-spacer {
+  text-align: right;
+  font-size: 1rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.participants .participants-list .driver .d-icon {
+  height: 1.5rem;
+  line-height: 1.5rem;
+}
+.participants .participants-list .driver .d-icon img {
+  border: 0;
+  margin: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+.participants .participants-list .driver .d-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 5rem;
+}
+.participants .new-participant {
+  flex: 1;
+}
 .chat-card-v2 .card-header {
   display: grid;
   grid-template-columns: 36px auto 36px;
@@ -3036,4 +3115,12 @@ html {
 }
 #controls .scene-control.custom-control .control-tool.xp_toggle.active {
   color: goldenrod;
+}
+a.compendium-translation {
+  border-top: 2px groove #444;
+  padding-top: 4px;
+  font-size: 20px;
+  text-align: center;
+  line-height: 32px;
+  display: block;
 }

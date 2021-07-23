@@ -22,27 +22,85 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+version 0.6.1 :
+
+* #562 from @snap01 : Adding information on compendium translation. Compendium translation can be found here :
+  * [Spanish](https://foundryvtt.com/packages/call-of-cthulhu-7th-babele-es)
+  * [Svenska](https://foundryvtt.com/packages/coc7-babele-sv)
+  * [Deutsch](https://foundryvtt.com/packages/call-of-cthulhu-7th-babele-de)
+  * [Italian](https://foundryvtt.com/packages/call-of-cthulhu-7th-babele-it)
+  * [Brazilian](https://foundryvtt.com/packages/call-of-cthulhu-7th-babele-pt-BR)
+  * [Korean](https://foundryvtt.com/packages/CoC7kr)
+
+version 0.6.0 :
+
+* Ready for 0.8.x thanks to the kind help of
+  * @pconcepcion
+  * @snap01
+* This version is NOT compatible with foundry version < 0.8
+* Please report all bugs on github !
+* #538 Upgrade on health monitor thanks to @castanhocorreia.
+  * Modifying HP manually will now correctly trigger all status.
+  * You can set HP by entering negative value : (HP=25)/Enter -7/(HP=18).
+* #549 bug correction from @zeteticl.
+* #555 regression fixed by @snap01.
+* Taiwanese Mandarin translations updated thanks to @zeteticl.
+
+version 0.5.9 :
+
+* ___!! Last release in 0.7.x cycle !!___
+* Development improvement thanks to @castanhocorreia.
+  * #518 : Development roll for Luck, OneFifthSanity system and MP recover.
+    * The Start Rest function now recovers Magic Points (7). In the future I intend to present a dialog box where Keeper informs how many hours of rest the Investigators had, so that they can recover the corresponding amount.
+    The one-fifth of Sanity points does not change with loss or increase of Sanity points and will only change to one-fifth of total Sanity if the day is reset via the reset button or the Start Rest macro.
+  * #538 : Set Health Status Manually.
+* #522 Localization of link creation title window thanks to @castanhocorreia.
+* #530 bug correction from @snap01.
+  * Actors owned but not controlled by a playuer will rise a warnin when targeted.
+  * #410 Weapons without description show [object Object].
+  * #524 Books containing spells were not pre-processed.
+* Swedish translation updated thanks to @rangertheman.
+
+version 0.5.8 :
+
+* ___!! This will probably be the last release in 0.7.x cycle !!___
+* Bug correction:
+  * A bug during actor import that could lead to an uninterrupted loop had been resolved. Thanks to @BrotherSharper for his help finding this!
+  * Typo correction in combat chat card.
+* CSS options added to specify the type of background for the sheet.
+  * The background image is by default a border image sliced to 'open' and keep header's proportion.
+  * You can now specify this property as the CSS property background (including repeat, position and attachment).
+  * To enable this you need to select a background type.
+    * slice: image used as border-image.
+    * auto/contains/cover: similar to the background-size property.
+* Option added to disable debug hooks (thanks to @snap01).
+* Japanese translation updated thanks to @BrotherSharper
+* French doc and translation updated thanks to @vonv
+* German translation updated thanks to @IchbinkeinReh
+* Chase items are not operational.
+
 version 0.5.7 :
 
 * Bug correction:
   * CSS reworked on sheetV2 to prevent sliding items no to display correctly.
 * link system reworked:
   * Clicking on a link will trigger the check.
-  * CTRL+click on a link will open and prefill the link creation popup.
+  * CTRL+click on a link will open and fill the link creation popup.
   * Links created by CTRL+click on any element will no more create the link directly, a link creation windows will popup instead.
   * You can pop the link creation window by clicking the link icon in the side menu.
 * Link creation popup:
   * This will propose you with various options to create a link.
-  * You can drop stuff on this window to prefill it.
+  * You can drop stuff on this window to fill it.
 * Link created can now be dropped on the canvas (thanks to José Lozano/Viriato139ac and JuanV for tip in issue #461)
   * If there's a token on the drop, the link will be whispered to that token owner(s).
   * If there's no token, the link will be whispered to the tokens you controlled (selected).
   * If there's no token selected and no token below the drop that link will be whispered to all players having a character.
-* LOCALIZATION WIP (对不起, entschuldigung,lo siento,désolé,すみません,przepraszam,desculpe,förlåt  ).
+* Rest macro added to GM tools thanks to @castanhocorreia.
+* Missing localization keys added thanks to @castanhocorreia.
 * OPPOSED/COMBINED CHECK WIP.
-* DE : nilsriesenberg
-* FR + Doc : @vonv
-* SV : @rangertheman
+* German translation updated thanks to @nilsriesenberg
+* Swedish translation updated thanks to @rangertheman
+* French doc and translation updated thanks to @vonv
 
 version 0.5.6 :
 
@@ -60,7 +118,7 @@ version 0.5.6 :
   * #451, pulp specific. A bug preventing core characteristic roll in some cases corrected thanks to  @timpatim.
   * #460, A bug displaying undefined in item description.
 * Modification thanks to @zeteticl
-  * Sanity monitor now display the dayli threshold.
+  * Sanity monitor now display the daily threshold.
 * Português (Brasil) translation updated thanks to @castanhocorreia.
 * German translation updated thanks to @nilsriesenberg.
 * French doc and translation updated thanks to @vonv.

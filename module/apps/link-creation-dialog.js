@@ -10,7 +10,7 @@ export class CoC7LinkCreationDialog extends FormApplication{
 		return mergeObject(super.defaultOptions, {
 			id: 'link-creation',
 			classes: ['coc7'],
-			title: 'Link creation',
+			title: game.i18n.localize('CoC7.CreateLink'),
 			dragDrop: [{dragSelector: null, dropSelector: '.container'}],
 			template: 'systems/CoC7/templates/apps/link-creation.html',
 			closeOnSubmit: false,
@@ -31,8 +31,8 @@ export class CoC7LinkCreationDialog extends FormApplication{
 	}
 
 	/** @override */
-	getData() {
-		const data = super.getData();
+	async getData() {
+		const data = await super.getData();
 
 		data.link = this.link;
 		data.data = this.link.data;
@@ -184,7 +184,7 @@ export class CoC7LinkCreationDialog extends FormApplication{
 	_onClickSubmit(event){
 		const action = event.currentTarget.dataset.action;
 		if( !this.link.link){
-			ui.notifications.warning( 'Link is invalid !');
+			// ui.notifications.warn( 'Link is invalid !');
 			return;
 		}
 		switch (action) {
@@ -234,7 +234,9 @@ export class CoC7LinkCreationDialog extends FormApplication{
 		this.close();
 	}
 
-	/** @override */
+	/** @override
+	 * A subclass of the FormApplication must implement the _updateObject method.
+	 */
 	async _updateObject(event, formData) {
 		const target = event.currentTarget;
 		const group = target?.closest( '.form-group');

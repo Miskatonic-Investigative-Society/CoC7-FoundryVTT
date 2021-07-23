@@ -241,6 +241,19 @@ export class CoC7Check {
 		return null;
 	}
 
+	get sName(){
+		if( this.actor){
+			if (this.skill) return this.skill.sName;
+			if (this.item) return this.item.name;
+			if (this.characteristic) return CoC7Utilities.getCharacteristicNames( this.characteristic)?.short;
+			if (this.attribute){
+				if( 'lck'== this.attribute) return game.i18n.localize( 'CoC7.Luck');
+				if( 'san'== this.attribute) return game.i18n.localize( 'CoC7.SAN');
+			}
+		}
+		return null;
+	}
+
 	get fullName(){
 		const difficulty = this._difficulty==CoC7Check.difficultyLevel.regular?false:CoC7Check.difficultyString(this._difficulty);
 		const modifier = this._diceModifier > 0?`+${this._diceModifier}`:this._diceModifier.toString();
@@ -318,7 +331,7 @@ export class CoC7Check {
 			} else {
 				const scene = game.scenes.get(sceneId);
 				if (!scene) return;
-				const tokenData = scene.getEmbeddedEntity('Token', tokenId);
+				const tokenData = scene.getEmbeddedDocument('Token', tokenId);
 				if (!tokenData) return;
 				const token = new Token(tokenData);
 				this._actor = token.actor;
@@ -405,7 +418,7 @@ export class CoC7Check {
 	{
 		if( x == null) return null;
 		if( x instanceof Item) return x;
-		if( this._actor) return this._actor.getOwnedItem( x);
+		if( this._actor) return this._actor.items.get( x);
 		return game.items.get( x);
 	}
 
@@ -422,7 +435,7 @@ export class CoC7Check {
 
 	get skill() { 
 		if( !this._skill && this.skillId){
-			this._skill = this.actor?.getOwnedItem( this.skillId);
+			this._skill = this.actor?.items.get( this.skillId);
 		}
 		if( !this._skill && this.item )
 		{
@@ -430,9 +443,9 @@ export class CoC7Check {
 			{
 				if( this.item.data.data.skill.main.id && !this.weaponAltSkill)
 				{
-					this._skill = this._actor.getOwnedItem( this.item.data.data.skill.main.id);
+					this._skill = this._actor.items.get( this.item.data.data.skill.main.id);
 				} else if( this.item.data.data.skill.alternativ.id && this.weaponAltSkill){
-					this._skill = this._actor.getOwnedItem( this.item.data.data.skill.alternativ.id);
+					this._skill = this._actor.items.get( this.item.data.data.skill.alternativ.id);
 				}
 			}
 		}
@@ -441,7 +454,7 @@ export class CoC7Check {
 
 	get item() {
 		if( !this._item && this.itemId && this.actor){
-			this._item = this.actor.getOwnedItem( this.itemId);
+			this._item = this.actor.items.get( this.itemId);
 		}
 		return this._item; 
 	}
@@ -1021,7 +1034,7 @@ export class CoC7Check {
 		const user = this.actor?.user ? this.actor.user : game.user;
 
 		const chatData = {
-			user: user._id,
+			user: user.id,
 			speaker: speaker,
 			flavor: this.flavor,
 			content: html
@@ -1029,7 +1042,7 @@ export class CoC7Check {
 
 		if( 'selfroll' == this.rollMode ){
 			if( game.user.isGM){
-				chatData.user = game.user._id;
+				chatData.user = game.user.id;
 				chatData.flavor = `[${this.actor.name}] ${chatData.flavor}`;
 				chatData.flags = {
 					CoC7:{
@@ -1042,13 +1055,13 @@ export class CoC7Check {
 					case 'owners':
 						delete chatData.speaker;
 						chatData.whisper = this.actor.owners;
-						chatData.type = CHAT_MESSAGE_TYPES.WHISPER;
+						chatData.type = CONST.CHAT_MESSAGE_TYPES.WHISPER;
 						break;
 
 					case 'everyone':
 						delete chatData.speaker;
 						chatData.whisper = game.users.players;
-						chatData.type = CHAT_MESSAGE_TYPES.WHISPER;
+						chatData.type = CONST.CHAT_MESSAGE_TYPES.WHISPER;
 						break;
 
 					default:

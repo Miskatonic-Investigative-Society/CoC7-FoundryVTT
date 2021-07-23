@@ -156,7 +156,7 @@ export class CoC7SanCheck {
 		const user = this.actor.user ? this.actor.user : game.user;
 
 		const chatData = {
-			user: user._id,
+			user: user.id,
 			speaker: speaker,
 			flavor: this.flavor,
 			content: htmlElement.outerHTML

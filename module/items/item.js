@@ -5,6 +5,11 @@ import { COC7 } from '../config.js';
  * Override and extend the basic :class:`Item` implementation
  */
 export class CoC7Item extends Item {
+	constructor(data={}, context={}) {
+		if( !data.img && 'skill' == data.type) data.img = 'systems/CoC7/artwork/icons/skills.svg'; //Change the icon for skills
+		super(data, context);
+	}
+
 	static flags = {
 		malfunction: 'malfc'
 	}
@@ -171,10 +176,28 @@ export class CoC7Item extends Item {
 
 	get name() {
 		if( 'skill' != this.type || !this.data.data?.properties?.special) return super.name;
-		if( this.data.name.toLowerCase().includes( this.data.data.specialization?.toLowerCase())) return super.name;
+		if (this.data.name.toLowerCase().includes( this.data.data.specialization?.toLowerCase())) {
+			// Restore names that have already been processed
+			if (this.isOwned && super.name === this.data.name) {
+				let re = new RegExp('^' + this.data.data.specialization.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&') + ' \\((.+)\\)$');
+				let match = re.exec(this.data.name);
+				if (match !== null && typeof match[1] !== 'undefined') {
+					return match[1];
+				}
+			}
+			return super.name;
+		}
+		if (this.isOwned) {
+			return super.name;
+		}
 		return `${this.data.data.specialization} (${this.data.name})`;
 	}
 
+	get sName(){
+		if( 'skill' != this.type || !this.data.data?.properties?.special) return super.name;
+		if( this.data.name.toLowerCase().includes( this.data.data.specialization?.toLowerCase())) return super.name;
+		return `${this.data.name}`;
+	}
 	static getNameWithoutSpec( item){
 		if( item instanceof CoC7Item){
 			if( item.data.data?.properties?.special){
@@ -530,7 +553,7 @@ export class CoC7Item extends Item {
 			} else {
 				const scene = game.scenes.get(sceneId);
 				if (!scene) return null;
-				const tokenData = scene.getEmbeddedEntity('Token', tokenId);
+				const tokenData = scene.getEmbeddedDocument('Token', tokenId);
 				if (!tokenData) return null;
 				const token = new Token(tokenData);
 				return token.actor;
@@ -552,13 +575,20 @@ export class CoC7Item extends Item {
 	 * @param {Object} htmlOptions    Options used by the TextEditor.enrichHTML function
 	 * @return {Object}               An object of chat data to render
 	 */
-	getChatData(htmlOptions) {
+	getChatData(htmlOptions = {}) {
 		const data = duplicate(this.data.data);
 		//Fix : data can have description directly in field, not under value.
-		if( data.description && !data.description.value){
+		if (typeof data.description === 'string') {
 			data.description = {
-				value: data.description
+				value: data.description,
+				special: ''
 			};
+		}
+		if (typeof data.description.value === 'undefined') {
+			data.description.value = '';
+		}
+		if (typeof data.description.special === 'undefined') {
+			data.description.special = '';
 		}
 		const labels = [];
 
@@ -587,7 +617,7 @@ export class CoC7Item extends Item {
 		return data;
 	}
 
-	_weaponChatData(data, labels, props, htmlOptions){
+	_weaponChatData(data, labels, props){
 		for( let [key, value] of Object.entries(COC7['weaponProperties']))
 		{
 			if(this.data.data.properties[key] == true) props.push(value);
@@ -597,7 +627,7 @@ export class CoC7Item extends Item {
 		let skillName = '';
 		let found = false;
 		if( this.data.data.skill.main.id) {
-			const skill = htmlOptions?.owner.getOwnedItem( this.data.data.skill.main.id);
+			const skill = this.actor?.items.get( this.data.data.skill.main.id);
 			if( skill){
 				skillName += CoC7Item.getNameWithoutSpec( skill);
 				found = true;
@@ -606,7 +636,7 @@ export class CoC7Item extends Item {
 
 		if( this.usesAlternativeSkill && this.data.data.skill.alternativ.id) {
 			skillLabel = game.i18n.localize('CoC7.Skills');
-			const skill = htmlOptions?.owner.getOwnedItem( this.data.data.skill.alternativ.id);
+			const skill = this.actor?.items.get( this.data.data.skill.alternativ.id);
 			if( skill){
 				skillName += `/${CoC7Item.getNameWithoutSpec( skill)}`;
 				found = true;

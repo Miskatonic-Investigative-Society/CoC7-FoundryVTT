@@ -13,8 +13,8 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 	 * Prepare data for rendering the Actor sheet
 	 * The prepared data object contains both the actor data as well as additional sheet options
 	*/
-	getData() {
-		const data = super.getData();
+	async getData() {
+		const data = await super.getData();
 		// console.log('*********************CoC7CreatureSheet getdata***************');
 
 		//TODO : do we need that ?
@@ -31,9 +31,10 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 
 	activateListeners(html){
 		super.activateListeners( html);
-
 		html.find('.roll-san').click(this._onSanCheck.bind(this));
-
+		if (this.actor.isOwner) {
+			html.find('[name="data.attribs.hp.value"]').change(event => this.actor.setHealthStatusManually(event));
+		}
 	}
 
 	async _onSanCheck(event){
@@ -62,7 +63,7 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 			const link = CoC7Parser.createCoC7Link(linkData);
 			if( link) chatHelper.createMessage(null, game.i18n.format('CoC7.MessageCheckRequestedWait', {check: link}));
 		} else {
-			SanCheckCard.checkTargets( this.tokenKey, event.shiftKey);
+			SanCheckCard.checkTargets( this.actor.tokenKey, event.shiftKey);
 			// CoC7SanCheck.checkTargets( this.actor.data.data.special.sanLoss.checkPassed, this.actor.data.data.special.sanLoss.checkFailled, event.shiftKey, this.tokenKey);
 		}
 	}

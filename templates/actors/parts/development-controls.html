@@ -76,10 +76,13 @@
         <div class="header-section" title="{{localize 'CoC7.SkillTotalExperience'}}">
             {{#if hasSkillFlaggedForExp}}
                 <div class="skill-developement button" title="{{localize 'CoC7.DevelopemmentPhase'}}">{{localize 'CoC7.DevelopemmentPhase'}}</div>
-            {{else}}
-                <label>{{localize 'CoC7.SkillTotalExperience'}}:</label>
-                <span>{{totalExperience}}</span>
             {{/if}}
+            {{#if developmentRollForLuck}}
+                <div class="luck-development button" title="{{localize 'CoC7.RecoverLuckPoints'}}">{{localize 'CoC7.RecoverLuckPoints'}}</div>
+            {{/if}}
+            <br><br>
+            <label>{{localize 'CoC7.SkillTotalExperience'}}:</label>
+            <span>{{totalExperience}}</span>
         </div>
         {{/if}}
     </div>

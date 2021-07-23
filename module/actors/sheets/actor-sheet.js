@@ -9,8 +9,8 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 	 * Prepare data for rendering the Actor sheet
 	 * The prepared data object contains both the actor data as well as additional sheet options
 	*/
-	getData() {
-		const data = super.getData();
+	async getData() {
+		const data = await super.getData();
 
 		if( this.actor.occupation){
 			data.data.infos.occupation = this.actor.occupation.name;
@@ -41,6 +41,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 
 		data.allowDevelopment = game.settings.get('CoC7', 'developmentEnabled');
 		data.allowCharCreation = game.settings.get( 'CoC7', 'charCreationEnabled');
+		data.developmentRollForLuck = game.settings.get('CoC7', 'developmentRollForLuck');
 		data.showDevPannel = data.allowDevelopment || data.allowCharCreation;
 
 		data.manualCredit = this.actor.getActorFlag('manualCredit');
@@ -72,11 +73,12 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 	activateListeners(html) {
 		super.activateListeners(html);
 
-		if ( this.actor.owner ) {
+		if ( this.actor.isOwner ) { //MODIF: 0.8.x owner deprecated  => isOwner
 			html.find('.skill-name.rollable.flagged4dev').click( async (event) => this._onSkillDev(event));
 			html.find('.reset-occupation').click( async () => await this.actor.resetOccupation());
 			html.find('.reset-archetype').click( async () => await this.actor.resetArchetype());
 			html.find('.open-item').click( event => this._onItemDetails(event));
+			html.find('[name="data.attribs.hp.value"]').change(event => this.actor.setHealthStatusManually(event));
 		}
 	}
 

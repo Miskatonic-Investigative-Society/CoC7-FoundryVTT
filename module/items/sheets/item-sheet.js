@@ -48,6 +48,12 @@ export class CoCItemSheet extends ItemSheet {
 	getData() {
 		// this.item.checkSkillProperties();
 		const data = super.getData();
+
+		/** MODIF: 0.8.x **/
+		const itemData = data.data;
+		data.data = itemData.data; //MODIF: 0.8.x data.data
+		/*****************/
+				
 		data.hasOwner = this.item.actor != null;
 		
 		if( this.item.data.type == 'skill'){
