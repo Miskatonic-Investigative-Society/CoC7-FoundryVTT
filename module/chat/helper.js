@@ -58,6 +58,16 @@ export function exclude__(key, value) {
 	return value; // return as is
 }
 
+/**
+ * Return true is CTRL key is pressed
+ * Used for MAC compat.
+ * @param {S.Event} event 
+ * @returns 
+ */
+export function isCtrlKey(event){
+	return event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224;
+}
+
 export class chatHelper{
 	static hyphenToCamelCase(string) {
 		return string.replace(/-([a-z])/g, function(string) {
@@ -70,10 +80,10 @@ export class chatHelper{
 		messageData.flavor = title;
 		messageData.speaker = options.speaker || ChatMessage.getSpeaker();
 		if( options.whisper){
-			messageData.type = CHAT_MESSAGE_TYPES.WHISPER;
+			messageData.type = CONST.CHAT_MESSAGE_TYPES.WHISPER;
 			messageData.whisper = options.whisper;
 		}
-		messageData.user = game.user._id;
+		messageData.user = game.user.id;
 		messageData.content = message;
 
 		ChatMessage.create(messageData).then( msg => {return msg;});
@@ -96,7 +106,7 @@ export class chatHelper{
 				return game.actors.tokens[tokenId];//REFACTORING (2)
 			}
 			const token = chatHelper.getTokenFromKey(key);
-			return token.actor;
+			return token?.actor;
 		}
 
 		// Case 2 - use Actor ID directory
@@ -166,7 +176,7 @@ export class chatHelper{
 			} else {
 				const scene = game.scenes.get(sceneId);
 				if (!scene) return null;
-				const tokenData = scene.getEmbeddedEntity('Token', tokenId);
+				const tokenData = scene.getEmbeddedDocument('Token', tokenId);
 				if (!tokenData) return null;
 				const token = new Token(tokenData);
 				if( !token.scene) token.scene = duplicate( scene.data);
@@ -174,37 +184,40 @@ export class chatHelper{
 			}
 		} else {
 			const actor = game.actors.get( key);
-			return chatHelper.getActorToken( actor, false);
+			return chatHelper.getActorToken( actor);
 		}
 	}
 
-	static getActorToken( actor, verbose = true){
+	static getActorToken( actor){
 		if( !actor) return null;
-		// Case 0 - Actor is a token (synthetic actor), return that token.
-		if(actor.isToken) return actor.token;
-		else{
-			// Case 1 - Actor is not a token, find if a token exist for that actor.
-			const actorTokens = actor.getActiveTokens();
-			if( actorTokens.length){
-				// Case 1.1 - If he has only one Token return it.
-				if( 1 === actorTokens.length) return actorTokens[0];
+		/*** MODIF 0.8.x ***/
+		return actor.token||{data: actor.data.token};
+		/*******************/
+		// // Case 0 - Actor is a token (synthetic actor), return that token.
+		// if(actor.isToken) return actor.token;
+		// else{
+		// 	// Case 1 - Actor is not a token, find if a token exist for that actor.
+		// 	const actorTokens = actor.getActiveTokens();
+		// 	if( actorTokens.length){
+		// 		// Case 1.1 - If he has only one Token return it.
+		// 		if( 1 === actorTokens.length) return actorTokens[0];
 
-				// Case 1.2 - Actor has multiple tokens, find if one of them is the controlled token.
-				const controlledTokens = actorTokens.filter( t => t._controlled);
-				if( controlledTokens.length){
-					// Return the 1st controlled token, rise a warning if he has multiple controlled tokens.
-					if( verbose && controlledTokens.length > 1) ui.notifications.warn( `Actor ${actor.name} has ${controlledTokens.length} controlled tokens. Using the first found`);
-					return controlledTokens[0];
-				}
+		// 		// Case 1.2 - Actor has multiple tokens, find if one of them is the controlled token.
+		// 		const controlledTokens = actorTokens.filter( t => t._controlled);
+		// 		if( controlledTokens.length){
+		// 			// Return the 1st controlled token, rise a warning if he has multiple controlled tokens.
+		// 			if( verbose && controlledTokens.length > 1) ui.notifications.warn( `Actor ${actor.name} has ${controlledTokens.length} controlled tokens. Using the first found`);
+		// 			return controlledTokens[0];
+		// 		}
 
-				// Case 1.3 actor doesn't have any active token. Return the first valid token for that actor and raise a warning.
-				if( verbose) ui.notifications.warn( `Actor ${actor.name} doesn't have any controlled token. Using first token found.`);
-				return actorTokens[0];
-			}
+		// 		// Case 1.3 actor doesn't have any active token. Return the first valid token for that actor and raise a warning.
+		// 		if( verbose) ui.notifications.warn( `Actor ${actor.name} doesn't have any controlled token. Using first token found.`);
+		// 		return actorTokens[0];
+		// 	}
 
-			if( verbose) ui.notifications.error( `Could not fin any token for ${actor.name}.`);
-			return null;
-		}
+		// 	if( verbose) ui.notifications.error( `Could not fin any token for ${actor.name}.`);
+		// 	return null;
+		// }
 	}
 
 	static getActorImgFromKey( actorKey){
@@ -292,12 +305,12 @@ export class CoC7Roll{
 	}
 
 	get item(){
-		if( this.itemId && this.actor) return this.actor.getOwnedItem( this.itemId);
+		if( this.itemId && this.actor) return this.actor.items.get( this.itemId);
 		return null;
 	}
 
 	get skill(){
-		if( this.skillId && this.actor) return this.actor.getOwnedItem( this.skillId);
+		if( this.skillId && this.actor) return this.actor.items.get( this.skillId);
 		return null;
 	}
 

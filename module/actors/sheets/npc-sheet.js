@@ -10,8 +10,8 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
 	 * Prepare data for rendering the Actor sheet
 	 * The prepared data object contains both the actor data as well as additional sheet options
 	*/
-	getData() {
-		const data = super.getData();
+	async getData() {
+		const data = await super.getData();
 
 		//TODO : do we need that ?
 		data.allowFormula = true;
@@ -23,6 +23,13 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
 		data.hasLuck = (null !== data.data.attribs.lck.value);
 
 		return data;
+	}
+
+	activateListeners(html) {
+		super.activateListeners(html);
+		if (this.actor.owner) {
+			html.find('[name="data.attribs.hp.value"]').change(event => this.actor.setHealthStatusManually(event));
+		}
 	}
 
 	onCloseSheet(){

@@ -16,7 +16,7 @@ export class SanDataDialog extends Dialog {
 		return new Promise((resolve) => {
 			let formData = null;
 			const dlg = new SanDataDialog({
-				title: options.displayName? game.i18n.format( 'CoC7.SanDataSelectionWindowNamed', {name: options.displayName}):game.i18n.localize('CoC7.SanDataSelectionWindow'),
+				title: options.displayName? game.i18n.format( 'CoC7.SanDataSelectionWindowNamed', {name: options.displayName}):game.i18n.localize('CoC7.SanDataSelectionWindow'),//TODO: Remove SanDataSelectionWindowNamed 
 				content: html,
 				buttons: {
 					Validate: {

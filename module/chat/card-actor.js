@@ -41,7 +41,7 @@ export class ChatCardActor{
 
 	get item(){
 		if( !this.itemId) return null;
-		return this.actor.getOwnedItem( this.itemId);
+		return this.actor.items.get( this.itemId);
 	}
 
 	get weapon(){
@@ -68,7 +68,7 @@ export class ChatCardActor{
 				this._targetToken = chatHelper.getTokenFromKey( this._targetKey);
 			} else {
 				this._targetToken = this.targetedTokens.pop();
-				if( this._targetToken) this._targetKey = `${this._targetToken.scene._id}.${this._targetToken.id}`; //REFACTORING (2)
+				if( this._targetToken) this._targetKey = `${this._targetToken.scene.id}.${this._targetToken.id}`; //REFACTORING (2)
 				else {
 					this._targetToken = null;
 				}
@@ -139,7 +139,7 @@ export class ChatCardActor{
 		const user = this.actor.user ? this.actor.user : game.user;
 
 		const chatData = {
-			user: user._id,
+			user: user.id,
 			speaker: speaker,
 			flavor: flavor,
 			content: message

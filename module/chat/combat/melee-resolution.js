@@ -19,7 +19,7 @@ export class CoC7MeleeResoltion{
 		// const user = this.actor.user ? this.actor.user : game.user;
 
 		const chatData = {
-			user: game.user._id,
+			user: game.user.id,
 			content: html
 		};
 
@@ -181,11 +181,11 @@ export class CoC7MeleeResoltion{
 				return;
 			}
 			if( speaker) msg = await message.update({ //TODO: If card isn't found (card was deleted before completion) ?
-				user: user._id,
+				user: user.id,
 				speaker,
 				content: html });
 			else  msg = await message.update({ 
-				user: user._id,
+				user: user.id,
 				content: html });
 			await ui.chat.updateMessage( msg, false);
 			return msg;

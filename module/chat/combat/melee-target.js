@@ -40,11 +40,11 @@ export class CoC7MeleeTarget extends ChatCardActor{
 	}
     
 	get weapon(){
-		return this.actor.getOwnedItem( this.itemId);
+		return this.actor.items.get( this.itemId);
 	}
     
 	get skill(){
-		return this.actor.getOwnedItem( this.skillId);
+		return this.actor.items.get( this.skillId);
 	}
     
 	set initiatorKey(x){
@@ -128,7 +128,7 @@ export class CoC7MeleeTarget extends ChatCardActor{
 		const user = this.actor.user ? this.actor.user : game.user;
 
 		const chatData = {
-			user: user._id,
+			user: user.id,
 			speaker,
 			content: html
 		};

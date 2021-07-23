@@ -5,24 +5,29 @@ import { CoC7MeleeInitiator } from '../../chat/combat/melee-initiator.js';
 import { CoC7RangeInitiator } from '../../chat/rangecombat.js';
 // import { CoC7DamageRoll } from '../../chat/damagecards.js';
 import { CoC7ConCheck } from '../../chat/concheck.js';
-import { chatHelper } from '../../chat/helper.js';
+import { isCtrlKey } from '../../chat/helper.js';
 import { CoC7Parser } from '../../apps/parser.js';
 import { SanDataDialog } from '../../apps/sandata-dialog.js';
 import { SanCheckCard } from '../../chat/cards/san-check.js';
 import { OpposedCheckCard } from '../../chat/cards/opposed-roll.js';
 import { CombinedCheckCard } from '../../chat/cards/combined-roll.js';
 import { DamageCard } from '../../chat/cards/damage.js';
+import { CoC7LinkCreationDialog } from '../../apps/link-creation-dialog.js';
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
  */
 export class CoC7ActorSheet extends ActorSheet {
 
-	getData() {
-		const data = super.getData();
-		// console.log('*********************CoC7ActorSheet getdata***************');
+	async getData() {
+		const data = await super.getData();
 
-		// game.user.targets.forEach(t => t.setTarget(false, {user: game.user, releaseOthers: false, groupSelection: true}));
+		/** MODIF: 0.8.x **/
+		const actorData = this.actor.data.toObject(false);
+		data.data = actorData.data; // Modif 0.8.x : data.data
+		data.editable = this.isEditable; //MODIF 0.8.x : editable removed
+		/******************/
+		
 		data.isToken = this.actor.isToken;
 		data.itemsByType = {};
 		data.skills = {};
@@ -120,16 +125,16 @@ export class CoC7ActorSheet extends ActorSheet {
 					if( item.data.properties.special){
 						if( item.data.properties.fighting){
 							if( item.data.specialization != game.i18n.localize('CoC7.FightingSpecializationName')){
-								let itemToUpdate = this.actor.getOwnedItem( item._id);
-								itemToUpdate.update( {'data.specialization' : game.i18n.localize('CoC7.FightingSpecializationName')});
+								let itemToUpdate = this.actor.items.get( item._id);
+								await itemToUpdate.update( {'data.specialization' : game.i18n.localize('CoC7.FightingSpecializationName')});
 								item.data.specialization =  game.i18n.localize('CoC7.FightingSpecializationName'); // TODO : Client with different language = recursive call when opening the same sheet.
 							}
 						}
 						if( item.data.properties.firearm)
 						{
 							if( item.data.specialization != game.i18n.localize('CoC7.FirearmSpecializationName')){
-								let itemToUpdate = this.actor.getOwnedItem( item._id);
-								itemToUpdate.update( {'data.specialization' : game.i18n.localize('CoC7.FirearmSpecializationName')});
+								let itemToUpdate = this.actor.items.get( item._id);
+								await itemToUpdate.update( {'data.specialization' : game.i18n.localize('CoC7.FirearmSpecializationName')});
 								item.data.specialization =  game.i18n.localize('CoC7.FirearmSpecializationName');
 							}
 						}
@@ -148,13 +153,13 @@ export class CoC7ActorSheet extends ActorSheet {
 
 							if( value){
 								item.data.value = value;
-								let itemToUpdate = this.actor.getOwnedItem( item._id);
-								itemToUpdate.update( {'data.value' : value});
+								let itemToUpdate = this.actor.items.get( item._id);
+								await itemToUpdate.update( {'data.value' : value});
 							}
 						}
 					}
 					else {
-						let skill = this.actor.getOwnedItem( item._id);
+						let skill = this.actor.items.get( item._id);
 						item.data.base = skill.base;
 						// if( isNaN(Number(item.data.base))){
 						// 	let value = CoC7ActorSheet.parseFormula( item.data.base);
@@ -176,7 +181,7 @@ export class CoC7ActorSheet extends ActorSheet {
 							const exp = item.data.adjustments?.experience ? parseInt(item.data.adjustments.experience) : 0;
 							let updatedExp = exp + parseInt( item.data.value) - skill.value;
 							if( updatedExp <= 0) updatedExp = null;
-							this.actor.updateEmbeddedEntity('OwnedItem', {
+							await this.actor.updateEmbeddedEntity('OwnedItem', {
 								_id: item._id,
 								'data.adjustments.experience': updatedExp,
 								'data.value': null
@@ -202,8 +207,8 @@ export class CoC7ActorSheet extends ActorSheet {
 					let lca;
 					let lcb;
 					if( a.data.properties && b.data.properties) {
-						lca = a.data.properties.special ? a.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-						lcb = b.data.properties.special ? b.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+						lca = a.data.properties.special && typeof a.data.specialization !== 'undefined' ? a.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+						lcb = b.data.properties.special && typeof b.data.specialization !== 'undefined' ? b.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 					}
 					else {
 						lca = a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
@@ -267,7 +272,7 @@ export class CoC7ActorSheet extends ActorSheet {
 						//TODO : avant d'assiger le skill vérifier qu'il existe toujours.
 						//si il n'existe plus il faut le retrouver ou passer skillset a false.
 						if( data.combatSkills[weapon.data.skill.main.id]){
-							const skill = this.actor.getOwnedItem( weapon.data.skill.main.id);
+							const skill = this.actor.items.get( weapon.data.skill.main.id);
 							weapon.data.skill.main.name = data.combatSkills[weapon.data.skill.main.id].name;
 							weapon.data.skill.main.value = skill.value;
 						} else {
@@ -277,7 +282,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
 						if( weapon.data.skill.alternativ.id != ''){
 							if( data.combatSkills[weapon.data.skill.alternativ.id]){
-								const skill = this.actor.getOwnedItem( weapon.data.skill.alternativ.id);
+								const skill = this.actor.items.get( weapon.data.skill.alternativ.id);
 								weapon.data.skill.alternativ.name = data.combatSkills[weapon.data.skill.alternativ.id].name;
 								weapon.data.skill.alternativ.value = skill.value;
 							}
@@ -301,8 +306,8 @@ export class CoC7ActorSheet extends ActorSheet {
 				}
 			}
 
-			const token = this.actor.token;
-			data.tokenId = token ? `${token.scene?._id?token.scene._id:'TOKEN'}.${token.id}` : null;  //REFACTORING (2)
+			const token = this.token;
+			data.tokenId = token ? `${token.parent?.id?token.parent.id:'TOKEN'}.${token.id}` : null;  //REFACTORING (2)
 
 			data.hasEmptyValueWithFormula = false;
 			if( data.data.characteristics){
@@ -342,10 +347,10 @@ export class CoC7ActorSheet extends ActorSheet {
 		data.data.attribs.build.value = this.actor.build; 
 		
 
-		if( data.data.attribs.hp.value < 0) data.data.attribs.hp.value = null;
+		// if( data.data.attribs.hp.value < 0) data.data.attribs.hp.value = null;
 		if( data.data.attribs.mp.value < 0) data.data.attribs.mp.value = null;
 		if( data.data.attribs.san.value < 0) data.data.attribs.san.value = null;
-		data.data.attribs.san.fiftyOfCurrent = data.data.attribs.san.value >= 0 ? ' / '+Math.floor(data.data.attribs.san.value/5):'';
+		// data.data.attribs.san.fiftyOfCurrent = data.data.attribs.san.value >= 0 ? ' / '+Math.floor(data.data.attribs.san.value/5):'';
 		if( data.data.attribs.hp.auto ){
 			//TODO if any is null set max back to null.
 			if ( data.data.characteristics.siz.value != null && data.data.characteristics.con.value != null)
@@ -403,8 +408,10 @@ export class CoC7ActorSheet extends ActorSheet {
 	}
 
 	get tokenKey(){
-		if( this.token) return `${this.token.scene?._id?this.token.scene._id:'TOKEN'}.${this.token.data._id}`;  //REFACTORING (2)
-		return this.actor.id;
+		ui.notifications.error('DEPRECATED SHOULD NOT HAPPEN!');
+		throw 'base.js get tokenKey(): DEPRECATED SHOULD NOT HAPPEN!';
+		// if( this.token) return `${this.token.scene?._id?this.token.scene._id:'TOKEN'}.${this.token.data._id}`;  //REFACTORING (2)
+		// return this.actor.id;
 	}
 
 	onCloseSheet(){
@@ -422,7 +429,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
 
 		// Owner Only Listeners
-		if ( this.actor.owner ) {
+		if ( this.actor.isOwner ) {
 
 			html.find('.characteristic-label').on( 'dragstart', (event)=> this._onDragCharacteristic(event));
 			html.find('.attribute-label').on( 'dragstart', (event)=> this._onDragAttribute(event));
@@ -471,7 +478,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
 			const wheelInputs = html.find('.attribute-value');
 			for( let wheelInput of wheelInputs){
-				wheelInput.addEventListener('wheel', event => this._onWheel(event));
+				wheelInput.addEventListener('wheel', event => this._onWheel(event), { passive: true});
 			}
 		}
 
@@ -484,14 +491,15 @@ export class CoC7ActorSheet extends ActorSheet {
 		// Update Inventory Item
 		html.find('.item-edit').click(ev => {
 			const li = $(ev.currentTarget).parents('.item');
-			const item = this.actor.getOwnedItem(li.data('itemId'));
+			const item = this.actor.items.get(li.data('itemId'));
 			item.sheet.render(true);
 		});
 
 		// Delete Inventory Item
-		html.find('.item-delete').click(ev => {
+		html.find('.item-delete').click(async ev => {
 			const li = $(ev.currentTarget).parents('.item');
-			this.actor.deleteOwnedItem(li.data('itemId'));
+			const itemToDelete = this.actor.items.get(li.data('itemId'), {strict: true});
+			await itemToDelete.delete();
 			li.slideUp(200, () => this.render(false));
 		});
 
@@ -527,22 +535,28 @@ export class CoC7ActorSheet extends ActorSheet {
 		});
 
 		html.find('.development-flag').dblclick( ev=> {
-			const item = this.actor.getOwnedItem( ev.currentTarget.closest('.item').dataset.itemId);
+			const item = this.actor.items.get( ev.currentTarget.closest('.item').dataset.itemId);
 			item.toggleItemFlag( 'developement');
 		});
 
 		html.find('.occupation-skill-flag.clickable').click( ev=> {
-			const item = this.actor.getOwnedItem( ev.currentTarget.closest('.item').dataset.itemId);
+			const item = this.actor.items.get( ev.currentTarget.closest('.item').dataset.itemId);
 			item.toggleItemFlag( 'occupation');
 		});
 
 		html.find('.archetype-skill-flag.clickable').click( ev=> {
-			const item = this.actor.getOwnedItem( ev.currentTarget.closest('.item').dataset.itemId);
+			const item = this.actor.items.get( ev.currentTarget.closest('.item').dataset.itemId);
 			item.toggleItemFlag( 'archetype');
 		});
 
 		html.find('.skill-developement').click( event =>{
 			this.actor.developementPhase( event.shiftKey);
+		});
+
+		html.find('.luck-development').click( event =>{
+			if(!event.detail || event.detail == 1){
+				this.actor.developLuck(event.shiftKey);
+			}
 		});
 
 		html.find('a.coc7-link').on( 'click', (event)=> CoC7Parser._onCheck(event));
@@ -578,9 +592,12 @@ export class CoC7ActorSheet extends ActorSheet {
 	_onDragCharacteristic(event){
 		const box = event.currentTarget.parentElement;
 		const data = {
+			CoC7Type: 'link',
 			linkType: 'coc7-link',
 			check: 'check',
 			type: 'characteristic',
+			hasPlayerOwner: this.actor.hasPlayerOwner,
+			actorKey: this.actor.actorKey,
 			name: box.dataset.characteristic,
 			icon: null
 		};
@@ -591,9 +608,12 @@ export class CoC7ActorSheet extends ActorSheet {
 	_onDragAttribute(event){
 		const box = event.currentTarget.parentElement;
 		const data = {
+			CoC7Type: 'link',
 			linkType: 'coc7-link',
 			check: 'check',
 			type: 'attribute',
+			hasPlayerOwner: this.actor.hasPlayerOwner,
+			actorKey: this.actor.actorKey,
 			name: box.dataset.attrib,
 			icon: null
 		};
@@ -605,8 +625,11 @@ export class CoC7ActorSheet extends ActorSheet {
 		const sanMin = event.currentTarget.querySelector('.san-value.pass');
 		const sanMax = event.currentTarget.querySelector('.san-value.failed');
 		const data = {
+			CoC7Type: 'link',
 			linkType: 'coc7-link',
 			check: 'sanloss',
+			hasPlayerOwner: this.actor.hasPlayerOwner,
+			actorKey: this.actor.actorKey,
 			sanMin: sanMin.innerText,
 			sanMax: sanMax.innerText,
 			icon: null
@@ -646,7 +669,9 @@ export class CoC7ActorSheet extends ActorSheet {
 	async _onResetCounter( event){
 		event.preventDefault();
 		const counter = event.currentTarget.dataset.counter;
-		if( counter) this.actor.resetCounter( counter);
+		let oneFifthSanity = ' / '+Math.floor(this.actor.data.data.attribs.san.value/5);
+		this.actor.setOneFifthSanity( oneFifthSanity );
+		if( counter) this.actor.resetCounter( counter );
 	}
 
 	async _onAutoToggle( event){
@@ -657,7 +682,7 @@ export class CoC7ActorSheet extends ActorSheet {
 	}
 
 	async _onToggle( event){
-		let weapon = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.itemId);
+		let weapon = this.actor.items.get( event.currentTarget.closest('.item').dataset.itemId);
 		if( weapon){
 			weapon.toggleProperty(event.currentTarget.dataset.property, (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224));
 		}
@@ -727,8 +752,8 @@ export class CoC7ActorSheet extends ActorSheet {
 	_onItemSummary(event) {
 		event.preventDefault();
 		let li = $(event.currentTarget).parents('.item'),
-			item = this.actor.getOwnedItem(li.data('item-id')),
-			chatData = item.getChatData({secrets: this.actor.owner, owner: this.actor});
+			item = this.actor.items.get(li.data('item-id')),
+			chatData = item.getChatData({secrets: this.actor.isOwner});
 
 
 		// Toggle summary
@@ -788,7 +813,7 @@ export class CoC7ActorSheet extends ActorSheet {
 	async _onItemPopup(event) {
 		event.preventDefault();
 		let li = $(event.currentTarget).parents('.item'),
-			item = this.actor.getOwnedItem(li.data('item-id'));
+			item = this.actor.items.get(li.data('item-id'));
 		
 		CoC7ActorSheet.popupSkill( item);
 	}
@@ -833,17 +858,30 @@ export class CoC7ActorSheet extends ActorSheet {
 		event.preventDefault();
 		const itemId = event.currentTarget.closest('li').dataset.itemId;
 		const fastForward = event.shiftKey;
-		const weapon = this.actor.getOwnedItem(itemId);
-		const actorKey = !this.token? this.actor.actorKey : `${this.token.scene?._id?this.token.scene._id:'TOKEN'}.${this.token.data._id}`; //REFACTORING (2)
+		const weapon = this.actor.items.get(itemId);
+		// const actorKey = !this.token? this.actor.actorKey : `${this.token.scene?._id?this.token.scene._id:'TOKEN'}.${this.token.data._id}`; //REFACTORING (2)
+		/*** MODIF 0.8.x ***/ 
+		let actorKey;
+		if( !this.token) actorKey = this.actor.id; //Sheet was opened from actor directory
+		else { //Opened from token
+			if( this.actor.isToken && game.actors.tokens[this.token.id]){
+				actorKey =  `TOKEN.${this.token.id}`;
+			} else {
+				actorKey =  `${this.token.parent.id}.${this.token.id}`;
+			}
+		}
 
-		if((event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM){
+
+		if(isCtrlKey(event) && game.user.isGM){
 			const linkData = {
 				check: 'item',
 				type: 'weapon',
-				name: weapon.name
+				name: weapon.name,
+				hasPlayerOwner: this.actor.hasPlayerOwner,
+				actorKey: this.actor.actorKey
 			};
-			const link = CoC7Parser.createCoC7Link(linkData);
-			if( link) chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), link);
+
+			CoC7LinkCreationDialog.fromLinkData(linkData).then( dlg => dlg.render(true));
 		} else{
 			if( !weapon.data.data.properties.rngd){
 				if( game.user.targets.size > 1){
@@ -863,7 +901,7 @@ export class CoC7ActorSheet extends ActorSheet {
 	async _onReloadWeapon(event){
 		const itemId = event.currentTarget.closest('.item') ? event.currentTarget.closest('.item').dataset.itemId : null;
 		if( !itemId) return;
-		const weapon = this.actor.getOwnedItem( itemId);
+		const weapon = this.actor.items.get( itemId);
 		if( 0 == event.button){
 			if( event.shiftKey) await weapon.reload();
 			else await weapon.addBullet();
@@ -877,7 +915,7 @@ export class CoC7ActorSheet extends ActorSheet {
 	async _onAddAmo(event){
 		const itemId = event.currentTarget.closest('.item') ? event.currentTarget.closest('.item').dataset.itemId : null;
 		if( !itemId) return;
-		const weapon = this.actor.getOwnedItem( itemId);
+		const weapon = this.actor.items.get( itemId);
 		await weapon.addBullet();
 	}
 
@@ -948,7 +986,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
 			if( !event.shiftKey) {
 				const usage = await RollDialog.create( {
-					disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224),
+					disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224), //TODO: do we need this CTRL? 
 					disableFlatDiceModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
 				if( usage) {
 					roll.diceModifier = Number(usage.get('bonusDice'));
@@ -997,10 +1035,24 @@ export class CoC7ActorSheet extends ActorSheet {
 		let tokenKey = event.currentTarget.closest('form').dataset.tokenId;
 		const characteristic = event.currentTarget.parentElement.dataset.characteristic;
 
+		if(isCtrlKey(event) && game.user.isGM){
+			const linkData = {
+				check: 'check',
+				type: 'characteristic',
+				name: characteristic,
+				hasPlayerOwner: this.actor.hasPlayerOwner,
+				actorKey: this.actor.actorKey,
+				forceModifiers: event.shiftKey
+			};
+			if( 'blindroll' === game.settings.get('core', 'rollMode')) linkData.blind = true;
+			CoC7LinkCreationDialog.fromLinkData(linkData).then( dlg => dlg.render(true));
+			return;
+		}
+
 		let difficulty, modifier, flatDiceModifier, flatThresholdModifier;
 		if( !event.shiftKey) {
 			const usage = await RollDialog.create( {
-				disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224),
+				disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224), //TODO : This can be removed ?
 				disableFlatDiceModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
 			if( usage) {
 				modifier = Number(usage.get('bonusDice'));
@@ -1010,33 +1062,43 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 		}
 
-		if((event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM){
-			const linkData = {
-				check: 'check',
-				type: 'characteristic',
-				name: characteristic
-			};
-			if( 'blindroll' === game.settings.get('core', 'rollMode')) linkData.blind = true;
-			if( undefined != modifier) linkData.modifier = modifier;
-			if( undefined != difficulty) linkData.difficulty = difficulty;
-			const link = CoC7Parser.createCoC7Link(linkData);
-			if( link) chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), link);
-		} else {
-			let check = new CoC7Check();	
-			if( undefined != modifier ) check.diceModifier = modifier;
-			if( undefined != difficulty ) check.difficulty = difficulty;
-			check.actor = !tokenKey ? actorId : tokenKey;
-			check.flatDiceModifier = flatDiceModifier;
-			check.flatThresholdModifier = flatThresholdModifier;
-			check.rollCharacteristic(characteristic );
-			check.toMessage();
-		}
+
+		let check = new CoC7Check();	
+		if( undefined != modifier ) check.diceModifier = modifier;
+		if( undefined != difficulty ) check.difficulty = difficulty;
+		check.actor = !tokenKey ? actorId : tokenKey;
+		check.flatDiceModifier = flatDiceModifier;
+		check.flatThresholdModifier = flatThresholdModifier;
+		check.rollCharacteristic(characteristic );
+		check.toMessage();
+		
 	}
 
 	async _onRollAttribTest( event){ //FLATMODIFIER
 		event.preventDefault();
 
 		const attrib = event.currentTarget.parentElement.dataset.attrib;
+
+		if(isCtrlKey(event) && game.user.isGM && ['lck', 'san'].includes(attrib)){
+			const linkData = event.altKey?
+				{
+					check: 'sanloss',
+					hasPlayerOwner: this.actor.hasPlayerOwner,
+					actorKey: this.actor.actorKey,
+					forceModifiers: event.shiftKey
+				}:{
+					check: 'check',
+					type: 'attribute',
+					name: attrib,
+					hasPlayerOwner: this.actor.hasPlayerOwner,
+					actorKey: this.actor.actorKey,
+					forceModifiers: event.shiftKey
+				};
+			if( 'blindroll' === game.settings.get('core', 'rollMode')) linkData.blind = true;
+			CoC7LinkCreationDialog.fromLinkData(linkData).then( dlg => dlg.render(true));
+			return;
+		}
+
 		if( attrib === 'db'){
 			if( !/^-{0,1}\d+$/.test(event.currentTarget.parentElement.dataset.rollFormula)){
 				const r=new Roll(event.currentTarget.parentElement.dataset.rollFormula);
@@ -1061,8 +1123,8 @@ export class CoC7ActorSheet extends ActorSheet {
 		let difficulty, modifier, flatDiceModifier, flatThresholdModifier;
 		if( !event.shiftKey) {
 			const usage = await RollDialog.create( {
-				disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224),
-				disableFlatDiceModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
+				disableFlatThresholdModifier: false, //TODO: Remove, deprecated.
+				disableFlatDiceModifier: false}); //TODO: Remove, deprecated.
 			if( usage) {
 				modifier = Number(usage.get('bonusDice'));
 				difficulty = Number(usage.get('difficulty'));
@@ -1071,18 +1133,14 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 		}
 
-		let sanMin, sanMax, useCustomName, displayName;
+		let sanMin, sanMax;
 		if( event.altKey && attrib == 'san'){
 			const sanData = await SanDataDialog.create( {
-				promptLabel : (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM
+				promptLabel : false //TODO: Remove, deprecated.
 			});
 			if( sanData){
 				sanMin = sanData.get( 'sanMin')||0;
 				sanMax = sanData.get( 'sanMax')||0;
-				useCustomName = sanData.get( 'usecustom')||false;
-				displayName = sanData.get( 'customname')||null;
-
-				// ui.notifications.info( `Custom name: ${useCustomName}: ${name}`);
 				
 				if( !isNaN(Number(sanMin))) sanMin=Number(sanMin);
 				if( !isNaN(Number(sanMax))) sanMax=Number(sanMax);
@@ -1090,28 +1148,6 @@ export class CoC7ActorSheet extends ActorSheet {
 		}
 
 		const isSanCheck = undefined != sanMin && undefined != sanMax;
-
-		if((event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM && ['lck', 'san'].includes(attrib)){
-			const linkData = isSanCheck?
-				{
-					check: 'sanloss',
-					sanMax: sanMax,
-					sanMin: sanMin,
-				}:{
-					check: 'check',
-					type: 'attribute',
-					name: attrib
-				};
-			if( useCustomName && displayName) linkData.displayName = displayName;
-			if( 'blindroll' === game.settings.get('core', 'rollMode')) linkData.blind = true;
-			if( undefined != modifier) linkData.modifier = modifier;
-			if( undefined != difficulty) linkData.difficulty = difficulty;
-			const link = CoC7Parser.createCoC7Link(linkData);
-			if( link) {
-				chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), link);
-				return;
-			}
-		}
 
 		if( isSanCheck){
 			SanCheckCard.create( this.actor.actorKey, {sanMin: sanMin, sanMax: sanMax}, { sanModifier: modifier,sanDifficulty: difficulty,fastForward:event.shiftKey});
@@ -1139,12 +1175,28 @@ export class CoC7ActorSheet extends ActorSheet {
 		const skillId = event.currentTarget.closest('.item').dataset.skillId;
 		const actorId = event.currentTarget.closest('form').dataset.actorId;
 		const tokenKey = event.currentTarget.closest('form').dataset.tokenId;
+
+		if(isCtrlKey(event) && game.user.isGM){
+			const name = this.actor.items.get(skillId)?.name;
+			if( !name) return;
+			const linkData = {
+				check: 'check',
+				type: 'skill',
+				name: name,
+				hasPlayerOwner: this.actor.hasPlayerOwner,
+				actorKey: this.actor.actorKey,
+				forceModifiers: event.shiftKey
+			};
+			if( 'blindroll' === game.settings.get('core', 'rollMode')) linkData.blind = true;
+			CoC7LinkCreationDialog.fromLinkData(linkData).then( dlg => dlg.render(true));
+			return;
+		}
 		
 		let difficulty, modifier, flatDiceModifier, flatThresholdModifier;
 		if( !event.shiftKey) {
 			const usage = await RollDialog.create( {
-				disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224),
-				disableFlatDiceModifier: (event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224)});
+				disableFlatThresholdModifier: false,
+				disableFlatDiceModifier: false});
 			if( usage) {
 				modifier = Number(usage.get('bonusDice'));
 				difficulty = Number(usage.get('difficulty'));
@@ -1153,30 +1205,16 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 		}
 
-		if((event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) && game.user.isGM){
-			const name = this.actor.items.get(skillId)?.name;
-			if( !name) return;
-			const linkData = {
-				check: 'check',
-				type: 'skill',
-				name: name
-			};
-			if( 'blindroll' === game.settings.get('core', 'rollMode')) linkData.blind = true;
-			if( undefined != modifier) linkData.modifier = modifier;
-			if( undefined != difficulty) linkData.difficulty = difficulty;
-			const link = CoC7Parser.createCoC7Link(linkData);
-			if( link) chatHelper.createMessage(game.i18n.localize('CoC7.MessageWaitForKeeperToClick'), link);
-		} else {
-			let check = new CoC7Check();		
-			if( undefined != modifier ) check.diceModifier = modifier;
-			if( undefined != difficulty ) check.difficulty = difficulty;
-			check.actor = !tokenKey ? actorId : tokenKey;
-			check.skill = skillId;
-			check.flatDiceModifier = flatDiceModifier;
-			check.flatThresholdModifier = flatThresholdModifier;
-			check.roll();
-			check.toMessage();
-		}
+		let check = new CoC7Check();		
+		if( undefined != modifier ) check.diceModifier = modifier;
+		if( undefined != difficulty ) check.difficulty = difficulty;
+		check.actor = !tokenKey ? actorId : tokenKey;
+		check.skill = skillId;
+		check.flatDiceModifier = flatDiceModifier;
+		check.flatThresholdModifier = flatThresholdModifier;
+		check.roll();
+		check.toMessage();
+
 	}
 	
 	/** @override */
@@ -1212,7 +1250,7 @@ export class CoC7ActorSheet extends ActorSheet {
 			if( event.currentTarget.classList){
 
 				if( event.currentTarget.classList.contains('skill-adjustment')){
-					let item = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.itemId);
+					let item = this.actor.items.get( event.currentTarget.closest('.item').dataset.itemId);
 					if( item){
 						const value = event.currentTarget.value? parseInt(event.currentTarget.value) : null;
 
@@ -1254,14 +1292,14 @@ export class CoC7ActorSheet extends ActorSheet {
 				}
 
 				if( event.currentTarget.classList.contains('npc-skill-score')){
-					let skill = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.skillId);
+					let skill = this.actor.items.get( event.currentTarget.closest('.item').dataset.skillId);
 					if( skill){
 						await skill.updateValue( event.currentTarget.value);
 					}
 				}
 
 				if( event.currentTarget.classList.contains('skill-name') || event.currentTarget.classList.contains('item-name')){
-					let item = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.skillId);
+					let item = this.actor.items.get( event.currentTarget.closest('.item').dataset.skillId);
 					if( item){
 						await item.update( {'name': event.currentTarget.value});
 					}
@@ -1297,8 +1335,8 @@ export class CoC7ActorSheet extends ActorSheet {
 				//TODO : Factorisation du switch
 				//TODO : remplacer les strings par de constantes (item.skill.main ...)
 				if( event.currentTarget.classList.contains('weapon-skill')){
-					let weapon = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.itemId);
-					let skill = this.actor.getOwnedItem( event.currentTarget.options[event.currentTarget.selectedIndex].value);
+					let weapon = this.actor.items.get( event.currentTarget.closest('.item').dataset.itemId);
+					let skill = this.actor.items.get( event.currentTarget.options[event.currentTarget.selectedIndex].value);
 					if( weapon && skill){
 						switch( event.currentTarget.dataset.skill){
 						case 'main':
@@ -1313,7 +1351,7 @@ export class CoC7ActorSheet extends ActorSheet {
 				
 				//Le nom de l'arme a changé
 				if( event.currentTarget.classList.contains('weapon-name')){
-					let weapon = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.itemId);
+					let weapon = this.actor.items.get( event.currentTarget.closest('.item').dataset.itemId);
 					if( weapon){
 						await weapon.update( {'name': event.currentTarget.value});
 					}
@@ -1323,7 +1361,7 @@ export class CoC7ActorSheet extends ActorSheet {
 				//TODO : Factorisation du switch
 				//TODO : remplacer les strings par de constantes (item.range.normal ...)
 				if( event.currentTarget.classList.contains('damage-formula')){
-					let weapon = this.actor.getOwnedItem( event.currentTarget.closest('.item').dataset.itemId);
+					let weapon = this.actor.items.get( event.currentTarget.closest('.item').dataset.itemId);
 					if( weapon){
 						//teste la validité de la formule.
 						if( event.currentTarget.value.length != 0){

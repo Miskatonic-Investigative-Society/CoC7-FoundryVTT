@@ -109,7 +109,7 @@ export class DamageCard extends InteractiveChatCard{
 	}
 
 	async rollDamage( options={ update: true}){
-		this.roll = new Roll( this.damageFormula).roll();
+		this.roll = await new Roll( this.damageFormula).evaluate({async: true});
 		await CoC7Dice.showRollDice3d(this.roll);
 		this.hardrolled = true;
 		options.update = undefined == options.update?true:options.update;
@@ -117,7 +117,7 @@ export class DamageCard extends InteractiveChatCard{
 	}
 
 	async rollArmor( options={ update: true}){
-		const roll = new Roll(this.armor).roll();
+		const roll = await new Roll(this.armor).evaluate({async: true});
 		this.armor = roll.total;
 		options.update = undefined == options.update?true:options.update;
 		if( options.update) this.updateChatCard();
@@ -155,7 +155,10 @@ export class DamageCard extends InteractiveChatCard{
 		if( this.weapon.data.data.properties.ahdb) formula = formula + db + '/2';
 
 		if( formula){
-			const maxDamage = Roll.maximize( formula)._total;
+			/*** MODIF 0.8.x ***/
+			// const maxDamage = Roll.maximize( formula)._total; //DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
+			const maxDamage = new Roll(formula).evaluate({maximize: true}).total; //DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
+			/******************/
 			let rollString;
 			if( this.critical){
 				if( this.impale) {

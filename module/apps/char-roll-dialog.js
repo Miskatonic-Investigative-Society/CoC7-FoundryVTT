@@ -56,7 +56,7 @@ export class CharacRollDialog extends Dialog {
 		if( input && formula){
 			if( isNaN(Number(formula))){
 				const roll = new Roll( formula);
-				roll.roll();
+				await roll.evaluate({async:true});
 				roll.toMessage({flavor: `Rolling characterisitic ${this.data.data.characteristics.list[key].label}: ${formula}`});
 				input.value = roll.total;
 			} else input.value = Number(formula);

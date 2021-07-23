@@ -1,0 +1,170 @@
+<form id="link-creation" class="{{cssClass}}" autocomplete="off">
+    <div class='container'>
+
+        <div class="form-group">
+            <label>{{ localize 'CoC7.Type' }} :</label>
+            <select name="type">
+                {{#each linkType as |lt|}}
+                    <option value="{{lt.key}}" {{#if lt.selected}}selected{{/if}}>{{lt.label}}</option>
+                {{/each}}
+            </select>
+        </div>
+
+        {{#if link.is.check}}
+            <div class="form-group">
+                <label>{{ localize 'CoC7.Check' }} : </label>
+                <select name="check">
+                    <option value="{{checkType.CHARACTERISTIC}}" {{#if selectedCheckType.characteristic}}selected{{/if}}>{{ localize 'CoC7.Characteristic' }}</option>
+                    <option value="{{checkType.ATTRIBUTE}}" {{#if selectedCheckType.attribute}}selected{{/if}}>{{ localize 'CoC7.Attribute' }}</option>
+                    <option value="{{checkType.SKILL}}"    {{#if selectedCheckType.skill}}selected{{/if}}>{{ localize 'CoC7.Skill' }}</option>
+                </select>
+            </div>
+
+            {{#if selectedCheckType.characteristic}}
+                <div class="form-group">
+                    <label>{{ localize 'CoC7.Characteristic' }} :</label>
+                    <select name="characteristicKey">
+                        {{#each characteristics as |c|}}
+                            <option value="{{c.key}}" {{#if c.selected}}selected{{/if}}>{{c.label}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+            {{/if}}
+
+            {{#if selectedCheckType.attribute}}
+                <div class="form-group">
+                    <label>{{ localize 'CoC7.Attribute' }} :</label>
+                    <select name="attributeKey">
+                        {{#each attributes as |a|}}
+                            <option value="{{a.key}}" {{#if a.selected}}selected{{/if}}>{{a.label}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+            {{/if}}
+
+            {{#if selectedCheckType.skill}}
+                <div class="form-group">
+                    <label>{{ localize 'CoC7.Name' }} :</label>
+                    <input type="text" name="skillName" value="{{data.skillName}}" {{#if isSetFromGame}}readonly{{/if}}/>
+                </div>
+            {{/if}}
+        {{/if}}
+
+        {{#if link.is.item}}
+            <div class="form-group">
+                <label>{{ localize 'CoC7.Name' }} :</label>
+                <input type="text" name="itemName" value="{{data.itemName}}" {{#if isSetFromGame}}readonly{{/if}}/>
+            </div>
+        {{/if}}
+
+        {{#if link.is.sanloss}}
+            <div class="form-group">
+                <label>{{ localize 'CoC7.MinSanloss' }} :</label>
+                <input type="text" name="sanMin" value="{{data.sanMin}}"/>
+            </div>
+            <div class="form-group">
+                <label>{{ localize 'CoC7.MaxSanloss' }} :</label>
+                <input type="text" name="sanMax" value="{{data.sanMax}}"/>
+            </div>
+        {{/if}}
+
+        {{#if fromGame}}
+        <div class="form-group" data-group="origin">
+            <label class="checkbox">
+                <input type="checkbox" name="fromCompendium" {{checked data.fromCompendium}}/> {{ localize 'SIDEBAR.TabCompendium' }}
+            </label>
+            <label class="checkbox">
+                <input type="checkbox" name="fromDirectory" {{checked data.fromDirectory}}/> {{ localize 'SIDEBAR.TabItems' }}
+            </label>
+        </div>
+            <div class="form-group stacked">
+                {{#if askId}}
+                <div class='form-group subgroup'>
+                    <label>Id :</label>
+                    <input type="text" name="id" value="{{data.id}}"/>
+                </div>
+                {{/if}}
+                {{#if askPack}}
+                <div class='form-group subgroup'>
+                    <label>{{ localize 'SIDEBAR.TabCompendium' }} :</label>
+                    <input type="text" name="pack" value="{{data.pack}}"/>
+                </div>
+                {{/if}}
+            </div>
+        {{/if}}
+
+        <div class="form-group" data-group="modifiers">
+            {{#unless link.is.item}}
+            <label class="checkbox">
+                <input type="checkbox" name="forceModifiers" {{checked data.forceModifiers}}/> {{ localize 'CoC7.Modifiers' }}
+            </label>
+            {{/unless}}
+            {{#if link.is.check}}
+            <label class="checkbox">
+                <input type="checkbox" name="blind" {{checked data.blind}}/> {{ localize 'CoC7.Blind' }}
+            </label>
+            {{/if}}
+            <label class="checkbox">
+                <input type="checkbox" name="hasLabel" {{checked data.hasLabel}}/> {{ localize 'CoC7.Label' }}
+            </label>
+            <label class="checkbox">
+                <input type="checkbox" name="hasIcon" {{checked data.hasIcon}}/> {{ localize 'CoC7.Icon' }}
+            </label>         
+        </div>
+
+
+
+        {{#if data.forceModifiers}}
+        <div class='form-group stacked'>
+            <div class='form-group subgroup'>
+                <label>{{localize 'CoC7.RollDifficulty'}}</label>
+                <select name="difficulty">
+                    <option value="{{difficultyLevel.unknown}}" {{#if selectedDifficulty.unknown}}selected{{/if}}>{{localize 'CoC7.RollDifficultyUnknown'}}</option>
+                    <option value="{{difficultyLevel.regular}}" {{#if selectedDifficulty.regular}}selected{{/if}}>{{localize 'CoC7.RollDifficultyRegular'}}</option>
+                    <option value="{{difficultyLevel.hard}}"    {{#if selectedDifficulty.hard}}selected{{/if}}>{{localize 'CoC7.RollDifficultyHard'}}</option>
+                    <option value="{{difficultyLevel.extreme}}" {{#if selectedDifficulty.extreme}}selected{{/if}}>{{localize 'CoC7.RollDifficultyExtreme'}}</option>
+                    <option value="{{difficultyLevel.critical}}" {{#if selectedDifficulty.critical}}selected{{/if}}>{{localize 'CoC7.RollDifficultyCritical'}}</option>
+                </select>
+            </div>
+            <div class='form-group subgroup'>
+                <label>{{localize 'CoC7.BonusDice'}}</label>
+                <div class="penalty-selector">
+                    <div class="flexrow">
+                        <span style="flex: 1; text-align: left;">-2</span>
+                        <span style="flex: 1; text-align: center;"></span>
+                        <span style="flex: 1; text-align: center;">-1</span>
+                        <span style="flex: 1; text-align: center;"></span>
+                        <span style="flex: 1; text-align: center;">0</span>
+                        <span style="flex: 1; text-align: center;"></span>
+                        <span style="flex: 1; text-align: center;">+1</span>
+                        <span style="flex: 1; text-align: center;"></span>
+                        <span style="flex: 1; text-align: right;">+2</span>
+                    </div>
+                    <input type="range" name="modifier" min="-2" max="2" value="{{data.modifier}}">
+                </div>
+            </div>
+        </div>
+        {{/if}}
+
+        {{#if data.hasLabel}}
+            <div class="form-group">
+                <label>{{ localize 'CoC7.Label' }} :</label>
+                <input type="text" name="label" value="{{data.label}}"/>
+            </div>        
+        {{/if}}
+
+        {{#if data.hasIcon}}
+            <div class="form-group">
+                <label>{{ localize 'CoC7.Icon' }} :</label>
+                <input type="text" name="icon" value="{{data.icon}}"/>
+            </div>        
+        {{/if}}
+    </div>
+
+    <button class="submit-button" type="submit" data-action="clipboard"><i class="fas fa-clipboard"></i>{{ localize 'CoC7.CopyToClipboard' }}</button>
+    <button class="submit-button" type="submit" data-action="whisper-selected"><i class="far fa-object-group"></i>{{ localize 'CoC7.WhisperToSelection' }}</button>
+    {{#if link.hasPlayerOwner}}
+        <button class="submit-button" type="submit" data-action="whisper-owner"><i class="fas fa-user"></i>{{ localize 'CoC7.WhisperTo'}} : {{link.actor.name}}</button>
+    {{/if}}
+    <button class="submit-button" type="submit" data-action="chat"><i class="fas fa-comments"></i>{{ localize 'CoC7.SendToChat' }}</button>
+</form>

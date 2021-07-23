@@ -233,7 +233,7 @@ export class CoC7Utilities {
 		const speaker = ChatMessage.getSpeaker();
 		let actor;
 		if (speaker.token) actor = game.actors.tokens[speaker.token];
-		if (!actor) actor = game.actors.get(speaker.actor);
+		if (!actor) actor = game.actors.get(speaker.actor); //No need to fill actor token
 
 		if( !actor){
 			ui.notifications.warn( game.i18n.localize( 'CoC7.WarnNoActorAvailable'));
@@ -247,8 +247,19 @@ export class CoC7Utilities {
 		event.preventDefault();
 		const speaker = ChatMessage.getSpeaker();
 		let actor;
-		if (speaker.token) actor = game.actors.tokens[speaker.token]; //!! Ca recupere l'acteur pas l'acteur du token !!
-		if (!actor) actor = game.actors.get(speaker.actor);
+		if (speaker.token) actor = game.actors.tokens[speaker.token];
+		if (!actor){
+			if( speaker.scene && speaker.token){
+			//Create a synthetic actor linked with the active token.
+				const baseActor = game.actors.get(speaker.actor);
+				const scene = game.scenes.get( speaker.scene);
+				const token = scene.tokens.get( speaker.token);
+
+				const cls = getDocumentClass('Actor');
+				const tokenActor = new cls(baseActor.toJSON(), {parent: token});
+				actor = tokenActor;}
+			else actor = game.actors.get(speaker.actor);
+		}
 
 		if( !actor){
 			ui.notifications.warn( game.i18n.localize( 'CoC7.WarnNoActorAvailable'));
@@ -339,6 +350,73 @@ export class CoC7Utilities {
 		CoC7Utilities.updateCharSheets();
 	}
 
+	static async startRest() {
+		let actors = game.actors.entities.filter (a => a.data.type === 'character' && a.data.permission.default !== 0);
+		let chatContent = `<i>${game.i18n.localize('CoC7.dreaming')}...</i><br>`;
+		actors.forEach(actor =>
+		{
+			let quickHealer = false;
+			actor.data.items.forEach(item => {
+				if (item.type === 'talent') {
+					if (item.name === `${game.i18n.localize('CoC7.quickHealer')}`) {
+						quickHealer = true;
+						return;
+					}
+				}
+			});
+			let isCriticalWounds = actor.data.data.status.criticalWounds.value;
+			let dailySanityLoss = actor.data.data.attribs.san.dailyLoss;
+			let hpValue = actor.data.data.attribs.hp.value;
+			let hpMax = actor.data.data.attribs.hp.max;
+			let oneFifthSanity = ' / '+Math.floor(actor.data.data.attribs.san.value/5);
+			let mpValue = actor.data.data.attribs.mp.value;
+			let mpMax = actor.data.data.attribs.mp.max;
+			chatContent = chatContent + `<br><b>${actor.name}. </b>`;
+			if (isCriticalWounds === false && hpValue < hpMax) {
+				if (game.settings.get('CoC7', 'pulpRules') && quickHealer === true) {
+					chatContent = chatContent + `<b style="color:darkolivegreen">${game.i18n.format('CoC7.pulpHealthRecovered', {number: 3})}. </b>`;
+					actor.update({
+						'data.attribs.hp.value': actor.data.data.attribs.hp.value + 3
+					}); 
+				} 
+				else if (game.settings.get('CoC7', 'pulpRules')) {
+					chatContent = chatContent + `<b style="color:darkolivegreen">${game.i18n.format('CoC7.pulpHealthRecovered', {number: 2})}. </b>`;
+					actor.update({
+						'data.attribs.hp.value': actor.data.data.attribs.hp.value + 2
+					});
+				}
+				else {
+					chatContent = chatContent + `<b style="color:darkolivegreen">${game.i18n.localize('CoC7.healthRecovered')}. </b>`;
+					actor.update({
+						'data.attribs.hp.value': actor.data.data.attribs.hp.value + 1
+					});
+				}
+			} else if (isCriticalWounds === true && hpValue < hpMax) {
+				chatContent = chatContent + `<b style="color:darkred">${game.i18n.localize('CoC7.hasCriticalWounds')}. </b>`;
+			}
+			if (dailySanityLoss > 0) {
+				chatContent = chatContent + `<b style="color:darkolivegreen">${game.i18n.localize('CoC7.dailySanLossRestarted')}.</b>`;
+				actor.update({
+					'data.attribs.san.dailyLoss': 0,
+					'data.attribs.san.oneFifthSanity': oneFifthSanity
+				});
+			}
+			if (mpValue < mpMax) {
+				chatContent = chatContent + `<b style="color:darkolivegreen">${game.i18n.format('CoC7.magicPointsRecovered')}: 7.</b>`;
+				actor.update({
+					'data.attribs.mp.value': actor.data.data.attribs.mp.value + 7
+				});
+			}
+		});
+		let chatData = {
+			user: game.user.id,
+			speaker: ChatMessage.getSpeaker(),
+			content: chatContent,
+			type: CONST.CHAT_MESSAGE_TYPES.OTHER
+		};
+		ChatMessage.create(chatData);
+	}
+
 	static async toggleXPGain(){
 		const isXPEnabled = game.settings.get('CoC7', 'xpEnabled');
 		await game.settings.set( 'CoC7', 'xpEnabled', !isXPEnabled);
@@ -403,15 +481,15 @@ export class CoC7Utilities {
 
 	static updateCharSheets(){
 		if( game.user.isGM){
-			game.actors.entities.forEach( a => {
+			game.actors.contents.forEach( a => {
 				if( 'character' == a?.data?.type && a?.sheet && a?.sheet?.rendered){
 					a.update( { ['data.flags.locked']: true});
 					a.render( false);
 				}
 			});
 		} else{
-			game.actors.entities.forEach( a => {
-				if( a.owner){
+			game.actors.contents.forEach( a => {
+				if( a.isOwner){
 					a.update( { ['data.flags.locked']: true});
 					a.render( false);
 				}
