@@ -356,7 +356,7 @@
 				  data-bullets-shot="{{shot.bulletsShot}}"
 				  data-transit-bullets="{{shot.transitBullets}}"
 				  data-transit="{{shot.transit}}">
-					({{key}})Shot {{shot.bulletsShot}} {{#if shot.transit}}+ {{shot.transitBullets}}{{/if}} bullets at target {{shot.actorName}}.
+					({{key}}){{ localize 'CoC7.Shot' }} {{shot.bulletsShot}} {{#if shot.transit}}+ {{shot.transitBullets}}{{/if}} {{ localize 'CoC7.ShotBullets' }} {{shot.actorName}}.
 				</div>
 			{{/each}}
 		</div>
