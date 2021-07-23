@@ -253,6 +253,11 @@
 "CoC7.rangeCombatCard.InMeleeTitle": "1 penalty die. Target is engaged in melee combat",
 "CoC7.rangeCombatCard.FastMovingTargetTitle": "1 penalty die. Target is fast (MOV 8+) and moving at full speed",
 
+"CoC7.meleeCombatDamageTakes": "takes",
+"CoC7.meleeCombatDamageFrom": "from",
+"CoC7.meleeCombatDamageDeals": "deals",
+"CoC7.meleeCombatDamageWith": "with",
+
 "CoC7.DropZone": "DropZone",
 
 "CoC7.Value": "Value",

@@ -256,6 +256,11 @@
 "CoC7.rangeCombatCard.InMeleeTitle": "1 dado de penalización. Objetivo trabado en combate cuerpo a cuerpo",
 "CoC7.rangeCombatCard.FastMovingTargetTitle": "1 dado de penalización. Objetivo veloz (MOV 8+) moviéndose rápido",
 
+"CoC7.meleeCombatDamageTakes": "sufre",
+"CoC7.meleeCombatDamageFrom": "con",
+"CoC7.meleeCombatDamageDeals": "inflige",
+"CoC7.meleeCombatDamageWith": "con",
+
 "CoC7.DropZone": "DropZone",
 
 "CoC7.Value": "Valor",
