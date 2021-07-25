@@ -716,6 +716,10 @@ export class CoCActor extends Actor {
 						}
 					});
 					if( data.data.characteristics.values.luck) updateData['data.attribs.lck.value'] = data.data.characteristics.values.luck;
+					if (data.data.characteristics.values.pow) {
+						updateData['data.attribs.san.value'] = data.data.characteristics.values.pow
+						updateData['data.attribs.san.oneFifthSanity'] = ' / ' + Math.floor(data.data.characteristics.values.pow / 5)
+					}
 					await this.update( updateData);
 				} else return;
 			}

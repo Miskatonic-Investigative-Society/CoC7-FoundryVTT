@@ -94,7 +94,7 @@ Hooks.once('init', async function() {
 		scope: 'world',
 		config: false,
 		type: Number,
-		default: 0
+		default: 2
 	});
 
 	game.settings.register('CoC7', 'xpEnabled', {
