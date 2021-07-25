@@ -244,9 +244,8 @@
 "CoC7.BulletsFired": "Balas disparadas",
 "CoC7.Shots": "Disparos",
 "CoC7.Shoot": "Disparo",
-"CoC7.Shot": "Disparar",
-"CoC7.ShotBullets": "tiros al objetivo",
-"CoC7.ShotVoley": "Disparando una ráfaga de",
+"CoC7.ShotBullets": "Disparar {bullets} tiros al objetivo {actor}",
+"CoC7.ShotVoley": "Disparando una ráfaga de {bullets} tiros al objetivo {actor}",
 "CoC7.rangeCombatCard.AimingTitle": "Añade 1 dado de bonificación al primer disparo",
 "CoC7.rangeCombatCard.CoverTitle": "1 dado de penalización. El objetivo tiene cobertura o se ha puesto a cubierto",
 "CoC7.rangeCombatCard.PointBlankRangeTitle": "1 dado de bonificación. Objetivo a distancia de bocajarro",
@@ -257,7 +256,7 @@
 "CoC7.rangeCombatCard.FastMovingTargetTitle": "1 dado de penalización. Objetivo veloz (MOV 8+) moviéndose rápido",
 
 "CoC7.meleeCombatDamageTakes": "sufre",
-"CoC7.meleeCombatDamageFrom": "con",
+"CoC7.meleeCombatDamageFrom": "de",
 "CoC7.meleeCombatDamageDeals": "inflige",
 "CoC7.meleeCombatDamageWith": "con",
 

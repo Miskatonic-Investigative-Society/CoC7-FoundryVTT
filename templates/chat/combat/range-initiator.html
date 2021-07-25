@@ -355,8 +355,13 @@
 				  data-modifier="{{shot.modifier}}"
 				  data-bullets-shot="{{shot.bulletsShot}}"
 				  data-transit-bullets="{{shot.transitBullets}}"
+				  data-bullets-shot-transit="{{shot.bulletsShotTransit}}"
 				  data-transit="{{shot.transit}}">
-					({{key}}){{ localize 'CoC7.Shot' }} {{shot.bulletsShot}} {{#if shot.transit}}+ {{shot.transitBullets}}{{/if}} {{ localize 'CoC7.ShotBullets' }} {{shot.actorName}}.
+					{{#if shot.transit}}
+						({{key}}) {{localize 'CoC7.ShotBullets' actor=shot.actorName bullets=shot.bulletsShotTransit}}
+					{{else}}
+						({{key}}) {{localize 'CoC7.ShotBullets' actor=shot.actorName bullets=shot.bulletsShot}}
+					{{/if}}
 				</div>
 			{{/each}}
 		</div>
