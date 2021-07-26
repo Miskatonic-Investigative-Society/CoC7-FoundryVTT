@@ -492,7 +492,7 @@ export class CoC7RangeInitiator{
 			check.diceModifier = this.activeTarget.shotDifficulty.modifier;
 		}
 
-		check.details = `target : ${target.name}`;
+		check.details = `${game.i18n.localize("CoC7.Target")}: ${target.name}`;
 		check.targetKey = target.actorKey;
 
 		check.roll();
