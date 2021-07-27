@@ -859,7 +859,7 @@ export class CoCActor extends Actor {
 						dialogData.skills.forEach( skill =>{
 							if( skill.data.specialization && !skill.name.includes(skill.data.specialization))
 								skill.displayName = `${skill.data.specialization} (${skill.name})`;
-							else skill.displayName = skill.name;
+							else skill.displayName = skill.name;https://github.com/sutekh849/CoC7-FoundryVTT.git
 						});
 
 						if( dialogData.skills.length <= dialogData.optionsCount){
@@ -1167,7 +1167,7 @@ export class CoCActor extends Actor {
 			await this.createEmbeddedDocuments('Item', [item], {renderSheet:false});
 			/*****************/
 		}	
-	}
+	}https://github.com/sutekh849/CoC7-FoundryVTT.git
 
 	async addUniqueItem( skill, flag = null){
 		const itemId = this.getItemIdByName(skill.name);
@@ -1421,7 +1421,7 @@ export class CoCActor extends Actor {
 				newSanData.totalLoss = newSanData.sanLossMax;
 			}
 
-			// Deduct the exact loss to that specie.
+			// Deduct the exact loss to that specie.https://github.com/sutekh849/CoC7-FoundryVTT.git
 			if( newSanData.specie){ //Wait for exact san LOSS before deduciting it from specie.
 				newSanData.specie.totalLoss = newSanData.specie.totalLoss + exactSanLoss;
 				if( newSanData.specie.totalLoss > newSanData.specie.sanLossMax) newSanData.specie.totalLoss = newSanData.specie.sanLossMax;
@@ -1733,7 +1733,7 @@ export class CoCActor extends Actor {
 	}
 
 
-	set locked( value){
+	set locked( value){https://github.com/sutekh849/CoC7-FoundryVTT.git
 		this.update( { 'data.flags.locked': value});
 	}
 
@@ -2047,7 +2047,7 @@ export class CoCActor extends Actor {
 		//Try to find a characteristic.
 		const charKey = ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu'];
 		for (let i = 0; i < charKey.length; i++) {
-			const char = this.getCharacteristic( charKey[i]);
+			const char = this.getCharacteristic( charKey[i]);https://github.com/sutekh849/CoC7-FoundryVTT.git
 			if( char){
 				if( char.key?.toLocaleLowerCase() == name.toLowerCase()) return { type: 'characteristic', value: char};
 				if( char.shortName?.toLocaleLowerCase() == name.toLowerCase()) return { type: 'characteristic', value: char};
@@ -2610,19 +2610,22 @@ export class CoCActor extends Actor {
 		return game.users.entities.filter( u => u.character?.id == this.id)[0] || null;
 	}
 	
-	async setHealthStatusManually(event) {
+    async setHealthStatusManually(event) {
 		if (event.originalEvent) {
 			const healthBefore = parseInt(event.originalEvent.currentTarget.defaultValue);
 			const healthAfter = parseInt(event.originalEvent.currentTarget.value);
-			let damageTaken;
-			healthAfter >= this.hp ? this.setHp(healthAfter) : false;
-			healthAfter < 0 ? damageTaken = Math.abs(healthAfter)
-				: damageTaken = healthBefore - healthAfter;
-			this.render(true);
-			return await this.dealDamage(damageTaken);
+			if(healthAfter > healthBefore) {
+				//is healing
+				await this.setHp(healthAfter);
+			}
+			else if(healthAfter < 0) {
+				const damageTaken = Math.abs(healthAfter);
+				await this.dealDamage(damageTaken);
+			} else {
+				await this.dealDamage(healthBefore-healthAfter,{ignoreArmor: true});
+			}
 		}
 	}
-
 	async dealDamage(amount, options={}){
 		let total = parseInt(amount);
 		// let initialHp = this.hp;
