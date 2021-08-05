@@ -1,15 +1,7 @@
-export class Updater{
+export class Updater {
 	static async checkForUpdate() {
-		// if( game.system.data.version >= '0.5' && 0 == game.settings.get('CoC7', 'systemUpdateVersion')){
-		//	await game.settings.set('CoC7', 'systemUpdateVersion', '0.1');
-		// }
 		let systemUpdateVersion = game.settings.get('CoC7', 'systemUpdateVersion');
-		if (systemUpdateVersion == '0.1') {
-			systemUpdateVersion = 1;
-		} else {
-			systemUpdateVersion = parseInt(systemUpdateVersion);
-		}
-		if (systemUpdateVersion < 2) {
+		if (isNewerVersion('0.2', systemUpdateVersion)) {
 			if (game.user.isGM) {
 				new Dialog({
 					title: 'Update required',
@@ -41,17 +33,17 @@ export class Updater{
 	}
 
 	static async update(systemUpdateVersion) {
-		for (let actor of game.actors.entities) {
+		for (let actor of game.actors.contents) {
 			await Updater.updateActor(systemUpdateVersion, actor);
 		}
-		game.settings.set('CoC7', 'systemUpdateVersion', '2');
+		game.settings.set('CoC7', 'systemUpdateVersion', '0.2');
 	}
 
 	static async updateActor (systemUpdateVersion, actor) {
 		if ('character' === actor.data.type) {
 			for (let item of actor.items) {
 				switch (systemUpdateVersion) {
-				case 0:
+				case '0.0':
 					if ('skill' === item.data.type && item.data.data.value) {
 						const exp = item.data.data.adjustments?.experience ? parseInt(item.data.data.adjustments.experience) : 0;
 						await actor.updateEmbeddedEntity('OwnedItem', {
@@ -66,7 +58,7 @@ export class Updater{
 			const defaults = {};
 			const oneFifthSanity = Math.ceil(actor.data.data.attribs.san.value / 5);
 			switch (systemUpdateVersion) {
-			case 1:
+			case '0.1':
 				if (typeof actor.data.data.attribs.san.dailyLoss === 'undefined' || actor.data.data.attribs.san.dailyLoss === null) {
 					defaults['data.attribs.san.dailyLoss'] = 0;
 				}
