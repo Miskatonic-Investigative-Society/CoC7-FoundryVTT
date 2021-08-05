@@ -715,12 +715,17 @@ export class CoCActor extends Actor {
 							updateData[`data.characteristics.${key}.formula`] = data.data.characteristics.rolls[key];
 						}
 					});
-					if( data.data.characteristics.values.luck) updateData['data.attribs.lck.value'] = data.data.characteristics.values.luck;
+					if (data.data.characteristics.values.luck) updateData['data.attribs.lck.value'] = data.data.characteristics.values.luck;
 					if (data.data.characteristics.values.pow) {
 						updateData['data.attribs.san.value'] = data.data.characteristics.values.pow;
 						updateData['data.attribs.san.oneFifthSanity'] = ' / ' + Math.floor(data.data.characteristics.values.pow / 5);
+						updateData['data.indefiniteInsanityLevel.max'] = updateData['data.attribs.mp.value'] = updateData['data.attribs.mp.max'] = Math.floor(data.data.characteristics.values.pow / 5);
 					}
-					await this.update( updateData);
+					await this.update(updateData);
+					await this.update({
+						'data.attribs.hp.value': this.hpMax,
+						'data.attribs.hp.max': this.hpMax
+					});
 				} else return;
 			}
 			const skills = data.data.items.filter( it => 'skill' == it.type);
