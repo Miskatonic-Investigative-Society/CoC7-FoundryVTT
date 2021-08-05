@@ -188,8 +188,8 @@
             "credit": {
                 "monetarySymbol": null,
                 "multiplier": null,
-                "spent": null,
-                "assetsDetails": null
+                "spent": "",
+                "assetsDetails": ""
             },
             "development":{
                 "personal": null,
@@ -198,7 +198,12 @@
             },
             "biography": [],
             "encounteredCreatures": [],
-            "backstory": ""
+            "backstory": "",
+            "indefiniteInsanityLevel": {
+                "value": 0,
+                "max": 0
+            },
+            "notes": ""
         },
         "npc": {
             "templates": [
@@ -464,7 +469,7 @@
             "attributes": {},
             "properties": {},
             "eras": {},
-            "flags": {}            
+            "flags": {}
         },
         "spell":{
             "source":null,
