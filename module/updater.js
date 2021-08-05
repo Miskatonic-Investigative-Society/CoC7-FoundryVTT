@@ -63,13 +63,33 @@ export class Updater{
 					break;
 				}
 			}
+			const defaults = {};
+			const oneFifthSanity = Math.ceil(actor.data.data.attribs.san.value / 5);
 			switch (systemUpdateVersion) {
 			case 1:
+				if (typeof actor.data.data.attribs.san.dailyLoss === 'undefined' || actor.data.data.attribs.san.dailyLoss === null) {
+					defaults['data.attribs.san.dailyLoss'] = 0;
+				}
 				if (typeof actor.data.data.attribs.san.oneFifthSanity === 'undefined' || actor.data.data.attribs.san.oneFifthSanity === null) {
-					await actor.update({
-						'data.attribs.san.dailyLoss': 0,
-						'data.attribs.san.oneFifthSanity': ' / ' + Math.ceil(actor.data.data.attribs.san.value / 5)
-					});
+					defaults['data.attribs.san.oneFifthSanity'] = ' / ' + oneFifthSanity;
+				}
+				if (typeof actor.data.data.indefiniteInsanityLevel === 'undefined' || actor.data.data.indefiniteInsanityLevel === null || typeof actor.data.data.indefiniteInsanityLevel.value === 'undefined' || actor.data.data.indefiniteInsanityLevel.value === null) {
+					defaults['data.indefiniteInsanityLevel.value'] = 0;
+				}
+				if (typeof actor.data.data.indefiniteInsanityLevel === 'undefined' || actor.data.data.indefiniteInsanityLevel === null || typeof actor.data.data.indefiniteInsanityLevel.max === 'undefined' || actor.data.data.indefiniteInsanityLevel.max === null) {
+					defaults['data.indefiniteInsanityLevel.max'] = oneFifthSanity;
+				}
+				if (typeof actor.data.data.attribs.mp.value === 'undefined' || actor.data.data.attribs.mp.value === null) {
+					defaults['data.attribs.mp.value'] = oneFifthSanity;
+				}
+				if (typeof actor.data.data.attribs.mp.max === 'undefined' || actor.data.data.attribs.mp.max === null) {
+					defaults['data.attribs.mp.max'] = oneFifthSanity;
+				}
+				if (typeof actor.data.data.notes === 'undefined' || actor.data.data.notes === null) {
+					defaults['data.notes'] = '';
+				}
+				if (Object.keys(defaults).length > 0) {
+					await actor.update(defaults);
 				}
 				break;
 			}
