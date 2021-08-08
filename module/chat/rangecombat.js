@@ -313,6 +313,7 @@ export class CoC7RangeInitiator{
 			damage: this.activeTarget.shotDifficulty.damage,
 			bulletsShot: 1,
 			transitBullets: 0,
+			bulletsShotTransit: 1,
 			transit: false		
 		};
 
@@ -338,6 +339,8 @@ export class CoC7RangeInitiator{
 				shot.bulletsShot = bulletLeft;
 				bulletLeft = 0;
 			}
+			// bulletsShotTransit is for localizing CoC7.ShotBullets using parameters, localize does not accept adding a parameter as a sum of shot.bulletsShot + shot.transitBullets, so I create a new value in advance to use instead
+			shot.bulletsShotTransit = shot.bulletsShot + shot.transitBullets;
 		}
 		if( this.burst){
 			shot.bulletsShot = parseInt( this.weapon.data.data.usesPerRound.burst)? parseInt( this.weapon.data.data.usesPerRound.burst):1;
@@ -489,7 +492,7 @@ export class CoC7RangeInitiator{
 			check.diceModifier = this.activeTarget.shotDifficulty.modifier;
 		}
 
-		check.details = `target : ${target.name}`;
+		check.details = `${game.i18n.localize("CoC7.Target")}: ${target.name}`;
 		check.targetKey = target.actorKey;
 
 		check.roll();

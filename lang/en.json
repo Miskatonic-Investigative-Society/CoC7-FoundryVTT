@@ -241,6 +241,8 @@
 "CoC7.BulletsFired": "Bullets fired",
 "CoC7.Shots": "Shots",
 "CoC7.Shoot": "Shoot",
+"CoC7.ShotBullets": "Shot {bullets} bullets at target {actor}.",
+"CoC7.ShotVoley": "Shooting a voley of {bullets} bullets at target {actor}.",
 "CoC7.rangeCombatCard.AimingTitle": "Add 1 bonus die for the first shot",
 "CoC7.rangeCombatCard.CoverTitle": "1 penalty die. The target is under cover or successfully dived for cover",
 "CoC7.rangeCombatCard.PointBlankRangeTitle": "1 bonus die. Target at point blank range",
@@ -249,6 +251,11 @@
 "CoC7.rangeCombatCard.NormalTargetTitle": "Target has a normal size, no bonus/penalty",
 "CoC7.rangeCombatCard.InMeleeTitle": "1 penalty die. Target is engaged in melee combat",
 "CoC7.rangeCombatCard.FastMovingTargetTitle": "1 penalty die. Target is fast (MOV 8+) and moving at full speed",
+
+"CoC7.meleeCombatDamageTakes": "takes",
+"CoC7.meleeCombatDamageFrom": "from",
+"CoC7.meleeCombatDamageDeals": "deals",
+"CoC7.meleeCombatDamageWith": "with",
 
 "CoC7.DropZone": "DropZone",
 
