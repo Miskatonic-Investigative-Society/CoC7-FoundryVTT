@@ -2613,19 +2613,22 @@ export class CoCActor extends Actor {
 		return game.users.entities.filter( u => u.character?.id == this.id)[0] || null;
 	}
 	
-	async setHealthStatusManually(event) {
+    async setHealthStatusManually(event) {
 		if (event.originalEvent) {
 			const healthBefore = parseInt(event.originalEvent.currentTarget.defaultValue);
 			const healthAfter = parseInt(event.originalEvent.currentTarget.value);
-			let damageTaken;
-			healthAfter >= this.hp ? this.setHp(healthAfter) : false;
-			healthAfter < 0 ? damageTaken = Math.abs(healthAfter)
-				: damageTaken = healthBefore - healthAfter;
-			this.render(true);
-			return await this.dealDamage(damageTaken);
+			if(healthAfter > healthBefore) {
+				//is healing
+				await this.setHp(healthAfter);
+			}
+			else if(healthAfter < 0) {
+				const damageTaken = Math.abs(healthAfter);
+				await this.dealDamage(damageTaken);
+			} else {
+				await this.dealDamage(healthBefore-healthAfter,{ignoreArmor: true});
+			}
 		}
 	}
-
 	async dealDamage(amount, options={}){
 		let total = parseInt(amount);
 		// let initialHp = this.hp;
