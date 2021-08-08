@@ -98,10 +98,15 @@
 			"name": "正體中文",
 			"path": "lang/zh-tw.json"
 		},
-{
+		{
 			"lang": "sv",
 			"name": "Svenska",
 			"path": "lang/sv.json"
+		},
+		{
+			"lang": "cs",
+			"name": "Čeština",
+			"path": "lang/cs.json"
 		}
 	  ],
 	"socket": true,
