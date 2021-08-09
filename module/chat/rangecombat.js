@@ -492,7 +492,7 @@ export class CoC7RangeInitiator{
 			check.diceModifier = this.activeTarget.shotDifficulty.modifier;
 		}
 
-		check.details = `${game.i18n.localize("CoC7.Target")}: ${target.name}`;
+		check.details = `${game.i18n.localize('CoC7.Target')}: ${target.name}`;
 		check.targetKey = target.actorKey;
 
 		check.roll();
@@ -817,7 +817,7 @@ export class CoC7RangeTarget{
 	}
 
 	get difficulty(){
-		if( this.baseRange) return CoC7Check.difficultyLevel.regular;
+		if( this.baseRange || this.pointBlankRange) return CoC7Check.difficultyLevel.regular;
 		if( this.longRange) return CoC7Check.difficultyLevel.hard;
 		if( this.extremeRange) return CoC7Check.difficultyLevel.extreme;
 		return CoC7Check.difficultyLevel.impossible;
@@ -858,7 +858,8 @@ export class CoC7RangeTarget{
 	}
 
 	toggleFlag( flag){
-		if( 'baseRange' === flag || 'longRange' === flag || 'extremeRange' === flag	){
+		if( 'baseRange' === flag || 'longRange' === flag || 'extremeRange' === flag || 'pointBlankRange' === flag){
+			this.pointBlankRange = false;
 			this.baseRange = false;
 			this.longRange = false;
 			this.extremeRange = false;
