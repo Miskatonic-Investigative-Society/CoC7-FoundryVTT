@@ -2017,12 +2017,12 @@ html {
   text-align: end;
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-controls {
-  font-family: system-ui;
   font-size: 0.625rem;
   line-height: 1rem;
   flex: 0 0 1.25rem;
   display: block;
   text-align: end;
+  width: max-content;
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-controls a:hover {
   text-shadow: none;
