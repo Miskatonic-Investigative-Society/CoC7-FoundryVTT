@@ -25,6 +25,14 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
 			data.skillList.push(skill);
 		}
 
+		data.displayPlayerName = game.settings.get( 'CoC7', 'displayPlayerNameOnSheet' );
+		if( data.displayPlayerName  && !data.data.infos.playername) {
+			const user = this.actor.characterUser;
+			if( user){
+				data.data.infos.playername = user.name;
+			}
+		}
+
 		return data;
 	}
 

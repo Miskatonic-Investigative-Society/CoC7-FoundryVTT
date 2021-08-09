@@ -1,4 +1,3 @@
-import { CoC7Dice } from './dice.js';
 import { CoC7Check } from './check.js';
 import { COC7 } from './config.js';
 import { CoC7MeleeInitiator} from './chat/combat/melee-initiator.js';
@@ -124,7 +123,7 @@ export class CoC7Chat{
 
 		// if( chatMessage.getFlag( 'CoC7', 'reveled')){
 		// }
-		if( game.user.isGM){
+		if( game.user.isGM && chatMessage.data.type == 0){
 			const card = $(chatMessage.data.content)[0];
 			if( card.classList.contains('melee'))
 			{
@@ -545,7 +544,8 @@ export class CoC7Chat{
 		if (tokenKey) {
 			const [sceneId, tokenId] = tokenKey.split('.');
 			if( 'TOKEN' == sceneId){
-				return game.actors.tokens[tokenId]?.token;//REFACTORING (2)
+				const tokenDoc = game.actors.tokens[tokenId]?.token;
+				return tokenDoc.object;//REFACTORING (2)
 			} else {
 				const scene = game.scenes.get(sceneId);
 				if (!scene) return null;
@@ -570,46 +570,6 @@ export class CoC7Chat{
 		return msg;
 	}
 
-
-	static parseChatCard( card)  //DEPRECATED !
-	{
-		//TODO control de validité des éléments
-		//TODO implement
-		const rollType = card.children.rolltype.dataset.selected;
-		const backersList = card.getElementsByClassName('backers-list').backers.children;
-		const backersCondition = card.getElementsByClassName('adversaries-condition').adversariescondition.dataset.selected;
-		const adversariesList = card.getElementsByClassName('backers-list').backers.children;
-		const adversariesCondition = card.getElementsByClassName('adversaries-condition').adversariescondition.dataset.selected;
-		const chatMessageId = card.closest('.message').dataset.messageId;
-		const actorId = card.dataset.actorId;
-		const itemId = card.dataset.itemId;
-		const tokenId = card.dataset.tokenId;
-		const value = card.dataset.value;
-
-		let index;
-		let backers = [];
-		let adversaries = [];
-		for (index = 0; index < backersList.length; index++) backers.push(Object.assign({}, backersList[index].dataset));
-		for (index = 0; index < adversariesList.length; index++) adversaries.push(Object.assign({}, backersList[index].dataset));
-
-		let actors = {};
-		actors.main = {};
-		actors.main.itemId = itemId;
-		actors.main.actorId = actorId;
-		actors.main.value = value;
-		actors.main.tokenId = tokenId;
-		actors.backers = backers;
-		actors.adversaries = adversaries;
-
-		let victoryConditions = {};
-		victoryConditions.backers = backersCondition;
-		victoryConditions.adversaries = adversariesCondition;
-
-		CoC7Dice.skillRoll( rollType, actors, victoryConditions, chatMessageId);
-
-		return null;
-	}
-	
 	static async _onChatCardAction(event) {
 
 		// console.log('-->CoC7Chat._onChatCardAction');

@@ -176,7 +176,20 @@ export class CoC7Item extends Item {
 
 	get name() {
 		if( 'skill' != this.type || !this.data.data?.properties?.special) return super.name;
-		if( this.data.name.toLowerCase().includes( this.data.data.specialization?.toLowerCase())) return super.name;
+		if (this.data.name.toLowerCase().includes( this.data.data.specialization?.toLowerCase())) {
+			// Restore names that have already been processed
+			if (this.isOwned && super.name === this.data.name) {
+				let re = new RegExp('^' + this.data.data.specialization.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&') + ' \\((.+)\\)$');
+				let match = re.exec(this.data.name);
+				if (match !== null && typeof match[1] !== 'undefined') {
+					return match[1];
+				}
+			}
+			return super.name;
+		}
+		if (this.isOwned) {
+			return super.name;
+		}
 		return `${this.data.data.specialization} (${this.data.name})`;
 	}
 
@@ -572,10 +585,10 @@ export class CoC7Item extends Item {
 			};
 		}
 		if (typeof data.description.value === 'undefined') {
-			data.description.value = ''
+			data.description.value = '';
 		}
 		if (typeof data.description.special === 'undefined') {
-			data.description.special = ''
+			data.description.special = '';
 		}
 		const labels = [];
 

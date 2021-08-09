@@ -22,6 +22,16 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## What is working
 
+version 0.6.1 :
+
+* #562 from @snap01 : Adding information on compendium translation. Compendium translation can be found here :
+  * [Spanish](https://foundryvtt.com/packages/call-of-cthulhu-7th-babele-es)
+  * [Svenska](https://foundryvtt.com/packages/coc7-babele-sv)
+  * [Deutsch](https://foundryvtt.com/packages/call-of-cthulhu-7th-babele-de)
+  * [Italian](https://foundryvtt.com/packages/call-of-cthulhu-7th-babele-it)
+  * [Brazilian](https://foundryvtt.com/packages/call-of-cthulhu-7th-babele-pt-BR)
+  * [Korean](https://foundryvtt.com/packages/CoC7kr)
+
 version 0.6.0 :
 
 * Ready for 0.8.x thanks to the kind help of
