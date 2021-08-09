@@ -333,10 +333,8 @@ export class CoC7ActorImporter {
             //newSkill.data.data.value = attack.data.range.normal.value
             await npc.createEmbeddedDocuments('Item', [attack]).then(
               async createdAttacks => {
-                if (createdAttacks !== null && typeof createdAttacks !== undefined) {
+                if (Array.isArray(createdAttacks) &&  createdAttacks.length > 0 && Array.isArray(newSkills) && newSkills.length > 0) {
                   const createdAttack = await this.setMainAttackSkill(createdAttacks[0], newSkills[0])
-                  //createdAttack.data.data.range.normal.value = attack.data.range.normal.value
-                  //createdAttack.data.data.range.normal.damage = attack.data.range.normal.damage
                   console.debug('createdAttack', createdAttack)
                 }
               }

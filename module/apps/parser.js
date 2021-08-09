@@ -345,7 +345,17 @@ export class CoC7Parser{
 				});
 			} else {
 				//Don't have any token selected and the link is from a sheet, publish the message
-				ui.notifications.warn(game.i18n.localize('CoC7.WarnNoControlledActor'));
+				//ui.notifications.warn(game.i18n.localize('CoC7.WarnNoControlledActor'));
+				if(game.user.data.document.character.data){
+					game.user.data.document.character.data.items.find(v=>{
+						if(v.name==options.name){
+							let check = new CoC7Check();
+							check._rawValue=v.data.data.base;
+							check.roll();
+							check.toMessage();
+						}
+					})
+				 }
 			}
 		} else {
 			const speaker = ChatMessage.getSpeaker();
@@ -377,7 +387,19 @@ export class CoC7Parser{
 					return;
 				}
 			}
-			else ui.notifications.warn(game.i18n.localize('CoC7.WarnNoControlledActor'));
+			else{ 
+				if(game.user.data.document.character.data){
+					game.user.data.document.character.data.items.find(v=>{
+						if(v.name==options.name){
+							let check = new CoC7Check();
+							check._rawValue=v.data.data.base;
+							check.roll();
+							check.toMessage();
+						}
+					})
+				 }
+				//ui.notifications.warn(game.i18n.localize('CoC7.WarnNoControlledActor'));
+			}
 		}
 		return;
 	}

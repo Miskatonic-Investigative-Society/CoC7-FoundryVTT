@@ -1844,9 +1844,12 @@ export class CoCActor extends Actor {
 			if( !item){
 				//TODO: Implement retrieval of skill from compendium !!
 				// game.settings.get( 'CoC7', 'DefaultCompendium');
+				let check = new CoC7Check();
+				check._rawValue='?';
+				check.roll();
+				check.toMessage();
 			}
-
-			if( !item) return ui.notifications.warn(`No skill ${skillData.name? skillData.name : skillData} found for actor ${this.name}`);
+			if( !item) return ui.notifications.warn(game.i18n.format('CoC7.NoSkill')+game.i18n.format('CoC7.ErrorNotFoundForActor', {missing: skillData.name? skillData.name : skillData, actor: this.name}));
 
 			let create = false;
 			await Dialog.confirm({
@@ -2618,20 +2621,23 @@ export class CoCActor extends Actor {
 	get characterUser(){
 		return game.users.entities.filter( u => u.character?.id == this.id)[0] || null;
 	}
-
-	async setHealthStatusManually(event) {
+  
+  async setHealthStatusManually(event) {
 		if (event.originalEvent) {
 			const healthBefore = parseInt(event.originalEvent.currentTarget.defaultValue);
 			const healthAfter = parseInt(event.originalEvent.currentTarget.value);
-			let damageTaken;
-			healthAfter >= this.hp ? this.setHp(healthAfter) : false;
-			healthAfter < 0 ? damageTaken = Math.abs(healthAfter)
-				: damageTaken = healthBefore - healthAfter;
-			this.render(true);
-			return await this.dealDamage(damageTaken);
+			if(healthAfter > healthBefore) {
+				//is healing
+				await this.setHp(healthAfter);
+			}
+			else if(healthAfter < 0) {
+				const damageTaken = Math.abs(healthAfter);
+				await this.dealDamage(damageTaken);
+			} else {
+				await this.dealDamage(healthBefore-healthAfter,{ignoreArmor: true});
+			}
 		}
 	}
-
 	async dealDamage(amount, options={}){
 		let total = parseInt(amount);
 		// let initialHp = this.hp;
