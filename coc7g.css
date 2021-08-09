@@ -1579,6 +1579,13 @@
 html {
   font-size: 16px;
 }
+.permission-limited img {
+  height: auto !important;
+  width: 580px !important;
+  max-width: none !important;
+  margin: 0 !important;
+  flex: none !important;
+}
 .sheetV2 {
   background-image: var(--other-sheet-bg) repeat;
   font-family: customSheetFont, 'Bradley Hand', cursive;
@@ -2023,6 +2030,7 @@ html {
   flex: 0 0 1.25rem;
   display: block;
   text-align: end;
+  width: max-content;
 }
 .sheetV2.character form .container .sheet-body .itemV2 .item-controls a:hover {
   text-shadow: none;
