@@ -347,11 +347,11 @@ export class CoC7ActorSheet extends ActorSheet {
 		data.data.attribs.db.value = this.actor.db;
 		data.data.attribs.build.value = this.actor.build; 
 
-		this.actor.update({'data.attribs.mov.value': this.actor.mov});
-		this.actor.update({'data.attribs.mov.max': this.actor.mov});
-		this.actor.update({'data.attribs.db.value': this.actor.db});
-		this.actor.update({'data.attribs.build.current': this.actor.build});
-		this.actor.update({'data.attribs.build.value': this.actor.build});
+		this.actor.update({'data.attribs.mov.value': this.actor.mov}, {render:false});
+		this.actor.update({'data.attribs.mov.max': this.actor.mov}, {render:false});
+		this.actor.update({'data.attribs.db.value': this.actor.db}, {render:false});
+		this.actor.update({'data.attribs.build.current': this.actor.build}, {render:false});
+		this.actor.update({'data.attribs.build.value': this.actor.build}, {render:false});
 
 		// if( data.data.attribs.hp.value < 0) data.data.attribs.hp.value = null;
 		if( data.data.attribs.mp.value < 0) data.data.attribs.mp.value = null;
