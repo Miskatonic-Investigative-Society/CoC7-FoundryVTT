@@ -1,6 +1,7 @@
-# Call of Cthulhu 7th Edition (Unofficial) for Foundry VTT.
+# Call of Cthulhu 7th ed. (Unofficial) for Foundry VTT.
 
 For the list of changes, see: [CHANGELOG](.github/CHANGELOG.md).
+
 For contributing guidelines, see: [CONTRIBUTING](./github/CONTRIBUTING.md).
 
 ## Disclaimer.

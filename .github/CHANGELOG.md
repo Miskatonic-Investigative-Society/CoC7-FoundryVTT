@@ -1,3 +1,11 @@
+## Version 0.6.2:
+
+* All these hotfixes were made thanks to the kind help of @snap01:
+  * Improved the roll request message logic for GMs;
+  * Null damage bonus to empty string;
+  * Possible race condition on actor's characteristics fixed;
+  * User selection when there is only one GM user fixed;
+
 ## Version 0.6.1:
 
 * Actor Importer refactored, thanks to @pconcepcion;
