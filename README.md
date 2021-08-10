@@ -31,6 +31,7 @@ version 0.6.1 :
   * [Italian](https://foundryvtt.com/packages/call-of-cthulhu-7th-babele-it)
   * [Brazilian](https://foundryvtt.com/packages/call-of-cthulhu-7th-babele-pt-BR)
   * [Korean](https://foundryvtt.com/packages/CoC7kr)
+  * [Traditional Chinese](https://github.com/hktrpg/call-of-cthulhu-7th-babele-zh-tw)
 
 version 0.6.0 :
 
