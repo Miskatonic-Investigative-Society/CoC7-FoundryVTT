@@ -151,6 +151,8 @@ export class DamageCard extends InteractiveChatCard{
 		let db = this.actor.db;
 		if (db === null) {
 			db = ''
+		} else {
+			db = `${db}`
 		}
 
 		if( db && !db.startsWith( '-')) db = '+' + db;
