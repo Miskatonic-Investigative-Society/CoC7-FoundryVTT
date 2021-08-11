@@ -148,7 +148,12 @@ export class DamageCard extends InteractiveChatCard{
 	get damageFormula(){
 		const range = this.range;
 		let formula = this.weapon?.data?.data?.range[range]?.damage;
-		let db = `${this.actor.db}`;
+		let db = this.actor.db;
+		if (db === null) {
+			db = ''
+		} else {
+			db = `${db}`
+		}
 
 		if( db && !db.startsWith( '-')) db = '+' + db;
 		if( this.weapon.data.data.properties.addb) formula = formula + db;
