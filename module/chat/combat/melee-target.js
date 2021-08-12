@@ -124,8 +124,54 @@ export class CoC7MeleeTarget extends ChatCardActor{
 		
 		const speaker = ChatMessage.getSpeaker(speakerData);
 		if( this.actor.isToken) speaker.alias = this.actor.token.name;
-		
-		const user = this.actor.user ? this.actor.user : game.user;
+
+		let user = game.user;
+		if (typeof this.actor.user === 'undefined') {
+			let owners = [];
+			const gms = game.users.filter(a => a.isGM).map(a => a.id);
+			for (const [k, v] of Object.entries(this.actor.data.permission)) {
+				if (v === CONST.ENTITY_PERMISSIONS.OWNER) {
+					if (k === 'default') {
+						owners = game.users.map(a => a.id);
+						break;
+					} else if (!gms.includes(k)) {
+						owners.push(k);
+					}
+				}
+			}
+			let content = '';
+			switch (owners.length) {
+			case 0:
+				// GM
+				break;
+			case 1:
+				if (typeof game.users.get(owners[0]) !== 'undefined') {
+					user = game.users.get(owners[0]);
+				}
+				break;
+			default:
+				content = '<p>' + game.i18n.localize('CoC7.MessageSelectSingleUserForTarget');
+				content = content + '<form id="selectform"><select name="user">';
+				owners.forEach(function (k) {
+					content = content + '<option value="' + k + '">' + game.users.get(k).name + '</option>';
+				});
+				content = content + '</select></form></p>';
+				await Dialog.prompt({
+					title: game.i18n.localize('CoC7.MessageTitleSelectSingleUserForTarget'),
+					content: content,
+					callback:(html) => {
+						const formData = new FormData(html[0].querySelector('#selectform'));
+						formData.forEach(function (value, name) {
+							if (name === 'user') {
+								user = game.users.get(value);
+							}
+						});
+					}
+				});
+			}
+		} else if (typeof(this.actor.user) !== 'undefined') {
+			user = this.actor.user;
+		}
 
 		const chatData = {
 			user: user.id,
@@ -322,4 +368,3 @@ export class CoC7MeleeTarget extends ChatCardActor{
 		CoC7Chat.updateChatCard( oldCard);  //TODO : Check if this needs to be async
 	}
 }
-

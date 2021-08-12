@@ -37,6 +37,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		data.meleeWpn = [];
 		data.actorFlags = {};
 
+		data.permissionLimited = this.actor.data.permission[game.user.id] == 1 || this.actor.data.permission.default  == 1 && !game.user.isGM;
 		data.isGM = game.user.isGM;
 		data.alowUnlock =
 			game.settings.get( 'CoC7', 'playerUnlockSheetMode') == 'always' ||
@@ -89,7 +90,7 @@ export class CoC7ActorSheet extends ActorSheet {
 			}
 
 			if( !data.data.infos){
-				data.data.infos = { occupation: '', age: '', sex: '', residence: '', birthplace: '', archetype: '', organization: '' };
+				data.data.infos = { occupation: '', age: '', sex: '', residence: '', birthplace: '', archetype: '', organization: '', playername:'' };
 			}
 
 			if( !data.data.flags){
@@ -345,7 +346,12 @@ export class CoC7ActorSheet extends ActorSheet {
 		data.data.attribs.mov.value = this.actor.mov; //return computed values or fixed values if not auto.
 		data.data.attribs.db.value = this.actor.db;
 		data.data.attribs.build.value = this.actor.build; 
-		
+
+		this.actor.update({'data.attribs.mov.value': this.actor.mov}, {render:false});
+		this.actor.update({'data.attribs.mov.max': this.actor.mov}, {render:false});
+		this.actor.update({'data.attribs.db.value': this.actor.db}, {render:false});
+		this.actor.update({'data.attribs.build.current': this.actor.build}, {render:false});
+		this.actor.update({'data.attribs.build.value': this.actor.build}, {render:false});
 
 		// if( data.data.attribs.hp.value < 0) data.data.attribs.hp.value = null;
 		if( data.data.attribs.mp.value < 0) data.data.attribs.mp.value = null;
@@ -383,10 +389,12 @@ export class CoC7ActorSheet extends ActorSheet {
 
 			data.data.indefiniteInsanityLevel = {};
 			data.data.indefiniteInsanityLevel.value = data.data.attribs.san.dailyLoss ? data.data.attribs.san.dailyLoss:0;
-			data.data.indefiniteInsanityLevel.max = Math.floor( data.data.attribs.san.value/5);
+			data.data.indefiniteInsanityLevel.max = Math.floor(data.data.attribs.san.value/5);
 		}
-		data.hasInventory = Object.prototype.hasOwnProperty.call( data.itemsByType, 'item') || Object.prototype.hasOwnProperty.call( data.itemsByType, 'book') || Object.prototype.hasOwnProperty.call( data.itemsByType, 'spell');
-
+		data.hasInventory = Object.prototype.hasOwnProperty.call(data.itemsByType, 'item')
+			|| Object.prototype.hasOwnProperty.call(data.itemsByType, 'book')
+			|| Object.prototype.hasOwnProperty.call(data.itemsByType, 'spell')
+			|| Object.prototype.hasOwnProperty.call(data.itemsByType, 'talent');
 		// const first = data.data.biography[0];
 		// first.isFirst = true;
 		// data.data.biography[0] = first;

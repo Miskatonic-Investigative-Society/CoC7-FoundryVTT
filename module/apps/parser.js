@@ -24,7 +24,7 @@
 
 import { SanCheckCard } from '../chat/cards/san-check.js';
 import { isCtrlKey } from '../chat/helper.js';
-// import { chatHelper } from '../chat/helper.js';
+import { chatHelper } from '../chat/helper.js';
 // import { CoC7SanCheck } from '../chat/sancheck.js';
 import { CoC7Check } from '../check.js';
 import { CoC7Utilities } from '../utilities.js';
@@ -344,8 +344,23 @@ export class CoC7Parser{
 					}
 				});
 			} else {
-				//Don't have any token selected and the link is from a sheet, publish the message
-				ui.notifications.warn(game.i18n.localize('CoC7.WarnNoControlledActor'));
+				if(game.user.data.document.character?.data){
+					game.user.data.document.character.data.items.find(v=>{
+						if(v.name==options.name){
+							let check = new CoC7Check();
+							check._rawValue=v.data.data.base;
+							check.roll();
+							check.toMessage();
+						}
+					});
+				} else if (game.user.isGM) {
+					const option = {
+						speaker: {
+							alias: game.user.name
+						}
+					};
+					chatHelper.createMessage(null, game.i18n.format('CoC7.MessageCheckRequestedWait', { check: (await CoC7Link.fromData(options)).link }), option);
+				}
 			}
 		} else {
 			const speaker = ChatMessage.getSpeaker();
@@ -377,7 +392,20 @@ export class CoC7Parser{
 					return;
 				}
 			}
-			else ui.notifications.warn(game.i18n.localize('CoC7.WarnNoControlledActor'));
+			else{ 
+				if(game.user.data.document.character?.data){
+					game.user.data.document.character.data.items.find(v=>{
+						if(v.name==options.name){
+							let check = new CoC7Check();
+							check._rawValue=v.data.data.base;
+							check.roll();
+							check.toMessage();
+						}
+					});
+				} else {
+					ui.notifications.warn(game.i18n.localize('CoC7.WarnNoControlledActor'));
+				}
+			}
 		}
 		return;
 	}
