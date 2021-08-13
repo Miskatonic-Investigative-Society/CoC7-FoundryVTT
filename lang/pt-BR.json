@@ -4,6 +4,23 @@
 
 "CoC7.title": "Chamado de Cthulhu 7ª Edição (Não-oficial)",
 
+"CoC7.Entities.Character": "Personagem",
+"CoC7.Entities.Creature": "Criatura",
+"CoC7.Entities.Npc": "PNJ",
+"CoC7.Entities.Vehicle": "Veículo",
+
+"CoC7.Entities.Archetype": "Arquétipo",
+"CoC7.Entities.Book": "Livro",
+"CoC7.Entities.Chase": "Perseguição",
+"CoC7.Entities.Item": "Item",
+"CoC7.Entities.Occupation": "Ocupação",
+"CoC7.Entities.Setup": "Configuração",
+"CoC7.Entities.Skill": "Perícia",
+"CoC7.Entities.Spell": "Feitiço",
+"CoC7.Entities.Status": "Condição",
+"CoC7.Entities.Talent": "Talento",
+"CoC7.Entities.Weapon": "Arma",
+
 "CHARAC.STR": "FOR",
 "CHARAC.Strengh": "Força",
 "CHARAC.Strength": "Força",
