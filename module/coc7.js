@@ -550,10 +550,11 @@ Hooks.once('init', async function() {
 	Items.registerSheet('CoC7', CoCItemSheet, { types: ['item']});
 	Items.registerSheet('CoC7', CoC7ItemSheetV2, { types: ['item'], makeDefault: true});
 	preloadHandlebarsTemplates();
-	RenderDialogHook.listen();
 });
 
 Hooks.on('renderCombatTracker', (app, html, data) => CoC7Combat.renderCombatTracker( app, html, data));
+
+RenderDialogHook.listen();
 
 Hooks.once('setup', function() {
 
