@@ -4,6 +4,23 @@
 
 "CoC7.title": "La Llamada de Cthulhu 7a Edición (no oficial)",
 
+"CoC7.Entities.Character": "Personaje",
+"CoC7.Entities.Creature": "Criatura",
+"CoC7.Entities.Npc": "PNJ",
+"CoC7.Entities.Vehicle": "Vehículo",
+
+"CoC7.Entities.Archetype": "Arquetipo",
+"CoC7.Entities.Book": "Tomo",
+"CoC7.Entities.Chase": "Persecución",
+"CoC7.Entities.Item": "Objeto",
+"CoC7.Entities.Occupation": "Ocupación",
+"CoC7.Entities.Setup": "Configuración",
+"CoC7.Entities.Skill": "Habilidad",
+"CoC7.Entities.Spell": "Hechizo",
+"CoC7.Entities.Status": "Estado",
+"CoC7.Entities.Talent": "Talento",
+"CoC7.Entities.Weapon": "Arma",
+
 "CHARAC.STR": "FUE",
 "CHARAC.Strengh": "Fuerza",
 "CHARAC.Strength": "Fuerza",
@@ -21,7 +38,7 @@
 "CHARAC.Power": "Poder",
 "CHARAC.EDU": "EDU",
 "CHARAC.Education": "Educación",
-
+"CoC7.PlayerName": "Jugador",
 "CoC7.Name": "Nombre",
 "CoC7.Archetype": "Arquetipo",							  
 "CoC7.Occupation": "Ocupación",
@@ -617,7 +634,11 @@
 
 "CoC7.MessageCheckRequestedWait": "El guardián ha pedido una tirada de {check}.<br>¡Espere a que se lo confirme antes de tirar!<br>",
 "CoC7.MessageTargetCheckRequested": "El guardián ha pedido a {name} una tirada de {check}",
+"CoC7.MessageTitleSelectSingleUserForTarget": "Qué usuario podrá responder al ataque",
+"CoC7.MessageSelectSingleUserForTarget": "Este icono está controlado por varios usuarios, por favor, seleccione que usuario podrá responder al ataque",
 "CoC7.MessageSelectedTargetIsNotControlled": "El icono {name} no está siendo controlado por nadie, de modo que no podrá realizar ninguna reacción en combate cuando le ataquen",
+"CoC7.MessageBoutOfMadnessTableNotFound": "No se ha encontrado el resultado de la tabla de locura, por favor, compruebe que se han creado las tablas",
+"CoC7.MessageBoutOfMadnessItemNotFound": "No se ha encontrado el resultado de la tabla de locura, por favor, compruebe que se han creado los estatus",
 
 "CoC7.ActorImporter": "Importador de actores",
 "CoC7.ActorImporterSummary": "Importa un PNJ o criatura a partir de sus estadísticas y descripción. Solo deberá copiar sus estadísticas en formato texto plano",
@@ -633,6 +654,15 @@
 "CoC7.Spanish": "Español",
 "CoC7.French": "Francés",
 "CoC7.SelectSourceLanguage": "Seleccione el idioma del texto original",
+"CoC7.ImportedUnnamedCharacter": "Se ha importado personaje 'unnamed'",
+"CoC7.CreatedImportedCharactersFolder": "Creada carpeta 'Imported Characters'",
+
+"CoC7.HowToTranslateTitle": "¿Cómo traducir el sistema?",
+"CoC7.HowToTranslateWarning": "No instale ningún módulo que no sea de su confianza",
+"CoC7.HowToTranslateInstallBabele": "Instale/actualice el módulo Babele desde el panel de administración de modulos de Foundry",
+"CoC7.HowToTranslateInstallTranslation": "Instale/actualice la traducción desde el panel de administración de modulos de Foundry",
+"CoC7.HowToTranslateEnableTranslation": "En el mundo de juego, bajo Configuración/Administrar módulos, active tanto Babele como la traducción",
+"CoC7.HowToTranslateNoTranslation": "Puede consultar las instrucciones de cómo crear una nueva traducción de un sistema en los módulos de traducción ya creados",
 
 "SETTINGS.DebugMode": "Modo de depuración",
 "SETTINGS.DebugModeHint": "!!REQUIERE REINICIAR!!",
@@ -656,6 +686,7 @@
 "SETTINGS.PulpRulesHint": "Permite usar las reglas de Pulp Cthulhu (Arquetipos, Talentos, PV), ¡en fase de desarrollo!",
 "SETTINGS.developmentRollForLuck": "Recuperación de puntos de suerte",
 "SETTINGS.developmentRollForLuckHint": "Cada jugador puede hacer una tirada para recuperar suerte en la fase de desarrollo",
+"SETTINGS.displayPlayerNameOnSheet": "Mostrar nombre del jugador en la hoja de personaje",
 "SETTINGS.DisregardAmmo": "Ignorar la munición",
 "SETTINGS.DisregardAmmoHint": "Al activar esta opción no se tendrán en cuenta la munición cargada en el arma a la hora de disparar",
 "SETTINGS.DisregardUsePerRound": "Ignorar el número de usos por asalto",
