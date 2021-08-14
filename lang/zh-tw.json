@@ -674,7 +674,7 @@
     "CoC7.MessageBoutOfMadnessItemNotFound": "沒有找到瘋狂發作表的結果，請檢查是否已經新增該狀態",
     "CoC7.PlayerName": "玩家",
     "CoC7.ImportedUnnamedCharacter": "已匯入無名的角色",
-    "CoC7.CreatedImportedCharactersFolder": "已新增資料夾 '已匯入角色''",
+    "CoC7.CreatedImportedCharactersFolder": "已新增資料夾「已匯入角色」",
     "CoC7.HowToTranslateTitle": "怎樣進行翻譯?",
     "CoC7.HowToTranslateWarning": "不要安裝任何你不能信任的Mod.",
     "CoC7.HowToTranslateInstallBabele": "在FVTT 的MOD管理器 安裝/更新 Babele.",
@@ -704,5 +704,5 @@
     "CoC7.meleeCombatDamageDeals": "造成",
     "CoC7.meleeCombatDamageWith": "與",
     "CoC7.MessageTitleSelectSingleUserForTarget": "那個用戶可以回應此攻擊",
-    "CoC7.MessageSelectSingleUserForTarget": "此token由多個使用者所控制，請選擇哪個用戶可以回應此攻擊."
+    "CoC7.MessageSelectSingleUserForTarget": "此token由多個玩家所控制，請選擇哪個用戶可以回應此攻擊."
 }
