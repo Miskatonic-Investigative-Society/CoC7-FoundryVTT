@@ -394,7 +394,7 @@
     "SETTINGS.DisplayActorOnCard": "顯示角色於檢定卡",
     "SETTINGS.DisplayActorOnCardHint": "在戰鬥對話上顯示角色的圖片/token",
     "SETTINGS.InitiativeRule": "使用先攻檢定規則",
-    "SETTINGS.InitiativeRuleHint": "您可以選擇基本初始規則(使用DEX值)或可選規則(使用roll)",
+    "SETTINGS.InitiativeRuleHint": "您可以選擇基本核心規則(使用DEX值)或可選規則(使用roll)",
     "SETTINGS.InitiativeRuleBasic": "基礎",
     "SETTINGS.InitiativeRuleOptional": "可選",
     "SETTINGS.displayInitDices": "顯示先攻骰",
