@@ -383,7 +383,7 @@
     "CoC7.CharCreationDisabled": "創作角色模式已關閉",
     "CoC7.WarnNoActorAvailable": "你沒有控制或選擇任何角色",
     "CoC7.WarnMacroIncorrectType": "你只能爲武器和技能新增Macro",
-    "CoC7.WarnNoGlobalSpec": "不能爲未指定的專門化新增Macro",
+    "CoC7.WarnNoGlobalSpec": "不能爲未指定專業技能新增Macro",
     "CoC7.WarnMacroNoItemFound": "沒有發現可用物品",
     "SETTINGS.DefaultDifficulty": "默認檢定難度",
     "SETTINGS.DefaultDifficultyHint": "您可以選擇檢定的默認難度。「未知難度」將在玩家不知道檢定難度的情况下進行檢定.",
