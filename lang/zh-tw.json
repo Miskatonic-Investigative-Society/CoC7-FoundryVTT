@@ -400,7 +400,7 @@
     "SETTINGS.displayInitDices": "顯示先攻骰",
     "SETTINGS.displayInitDicesHint": "在進行先攻骰時顯示骰子(僅限可選規則)",
     "SETTINGS.PulpRules": "通俗克蘇魯 規則",
-    "SETTINGS.PulpRulesHint": "允許使用通俗規則 (原型, 天賦, 兩倍HP), ! 試用!",
+    "SETTINGS.PulpRulesHint": "允許使用通俗規則 (類型, 天賦, 兩倍HP), ! 試用!",
     "SETTINGS.DisregardAmmo": "無視彈藥數量。",
     "SETTINGS.DisregardAmmoHint": "啓用這一功能後，將忽略槍械中子彈的數量。",
     "SETTINGS.DisregardUsePerRound": "忽略每輪的可用次數。",
