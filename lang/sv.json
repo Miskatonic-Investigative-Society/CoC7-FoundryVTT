@@ -3,6 +3,23 @@
    "I18N.LANGUAGE":"Svenska",
    "I18N.MAINTAINERS":"@Rangertheman#4927",
 
+   "CoC7.Entities.Character": "Karaktär",
+   "CoC7.Entities.Creature": "Varelse",
+   "CoC7.Entities.Npc": "SLP",
+   "CoC7.Entities.Vehicle": "Fordon",
+
+   "CoC7.Entities.Archetype": "Arketyp",
+   "CoC7.Entities.Book": "Bok",
+   "CoC7.Entities.Chase": "Jakt",
+   "CoC7.Entities.Item": "Föremål",
+   "CoC7.Entities.Occupation": "Yrke",
+   "CoC7.Entities.Setup": "Setup",
+   "CoC7.Entities.Skill": "Färdighet",
+   "CoC7.Entities.Spell": "Besvärjelse",
+   "CoC7.Entities.Status": "Status",
+   "CoC7.Entities.Talent": "Talang",
+   "CoC7.Entities.Weapon": "Vapen",
+
    "CHARAC.STR":"STY",
    "CHARAC.Strengh":"Styrka",
    "CHARAC.Strength":"Styrka",
