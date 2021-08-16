@@ -329,7 +329,7 @@ export class InteractiveChatCard{
     
 	get targetActor(){
 		if( !this._targetActor){
-			if( this.targetToken) this._targetActor = this.targetToken.actor;
+			if( this.targetToken) this._targetActor = this.targetToken.actor || this.targetToken.data.actor || this.targetToken.data.document;
 			else this._targetActor = chatHelper.getActorFromKey( this._targetKey);//REFACTORING (2)
 		}
 		return this._targetActor;
