@@ -563,7 +563,7 @@ export class CoC7ActorSheet extends ActorSheet {
 				action: 'new',
 				roll:{
 					characteristic: 'str',
-					// actor: this.actor.actorKey 
+					actor: this.actor.actorKey 
 				}
 			});
 
@@ -572,7 +572,7 @@ export class CoC7ActorSheet extends ActorSheet {
 				combat: false,
 				action: 'new',
 				roll:{
-					characteristic: 'str',
+					characteristic: 'con',
 					// actor: this.actor.actorKey 
 				}
 
