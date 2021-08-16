@@ -1,6 +1,23 @@
 {
 "CoC7.title": "L'Appel de Cthulhu 7ème Édition (non officiel)",
 
+"CoC7.Entities.Character": "Personnage",
+"CoC7.Entities.Creature": "Créature",
+"CoC7.Entities.Npc": "PNJ",
+"CoC7.Entities.Vehicle": "Véhicule",
+
+"CoC7.Entities.Archetype": "Archétype",
+"CoC7.Entities.Book": "Ouvrage",
+"CoC7.Entities.Chase": "Poursuite",
+"CoC7.Entities.Item": "Objet",
+"CoC7.Entities.Occupation": "Occupation",
+"CoC7.Entities.Setup": "Setup",
+"CoC7.Entities.Skill": "Compétence",
+"CoC7.Entities.Spell": "Sort",
+"CoC7.Entities.Status": "Status",
+"CoC7.Entities.Talent": "Talent",
+"CoC7.Entities.Weapon": "Arme",
+
 "CHARAC.STR": "FOR",
 "CHARAC.Strengh": "Force",
 "CHARAC.Strength": "Force",
@@ -612,9 +629,9 @@
 "CoC7.InfoLessSkillThanOptions": "Seulement {skillCount} compétences pour {optionsCount} options. Toutes les compétences seront ajoutées",
 "CoC7.InfoAllSkillsAlreadySelected": "Toutes les compétences sont déjà sélectionnées.",
 
-"CoC7.MessageWaitForKeeperToClick": "Votre gardien demande un jet.<br>Attendez ses instructions!<br>",
-"CoC7.MessageCheckRequested": "Votre gardien demande un jet.",
-"CoC7.MessageTitleSelectSingleUserForTarget": "Quel joueur peut répondre à cette attaque",
+"CoC7.MessageCheckRequestedWait": "Votre gardien demande un jet de {check}.<br>Attendez ses instructions!<br>",
+"CoC7.MessageTargetCheckRequested": "Votre gardien demande un jet de {check} pour {name}.",
+"CoC7.MessageTitleSelectSingleUserForTarget": "Quel joueur peut être la cible de cette attaque",
 "CoC7.MessageSelectSingleUserForTarget": "Ce token est contrôlé par plusieurs joueurs, choisissez lequel peut répondre à cette attaque.",
 "CoC7.MessageSelectedTargetIsNotControlled": "Le token de {name} est possédé mais non contrôlé par un joueur, il ne réagira donc pas aux actions de combat.",
 "CoC7.MessageBoutOfMadnessTableNotFound": "Le résultat n'a pas été trouvé sur la table de folies, vérifiez les tables aléatoires créées.",
