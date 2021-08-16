@@ -76,12 +76,14 @@
                             {{{r._htmlRoll}}}
                         {{/if}}
                     {{else}}
-                        <div class='card-buttons actor-card-buttons owner-only'>
+                        <div class='card-buttons actor-card-buttons'>
                             <button data-action='roll-check'>{{ r.fullName }}: ({{r.rawValue}}%)</button>
                         </div>
+                        {{!--
                         {{#unless ../closed}}
                             <a class="gm-visible-only" data-action="remove-roll" title="{{localize 'CoC7.remove'}}"><i class="far fa-times-circle"></i></a>
                         {{/unless}}
+                        --}}
                     {{/if}}
                 </div>
             </li>
