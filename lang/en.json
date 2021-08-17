@@ -637,6 +637,12 @@
 "CoC7.MessageBoutOfMadnessTableNotFound": "The result from the madness table was not found, please check all your roll tables are created",
 "CoC7.MessageBoutOfMadnessItemNotFound": "The result from the madness table was not found, please check all your statuses are created",
 
+"CoC7.DealDamage": "Deal {damage} damage points to {target}?",
+
+"CoC7.Import": "Import",
+"CoC7.Proceed": "Proceed",
+"CoC7.Cancel": "Cancel",
+
 "CoC7.ActorImporter": "Actor Importer",
 "CoC7.ActorImporterSummary": "Import an NPC or Creature from description and stats. Just paste the corresponding plain text",
 "CoC7.PasteTheDataBelow": "Paste the raw text data below",

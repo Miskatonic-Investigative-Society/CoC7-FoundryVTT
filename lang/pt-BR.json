@@ -629,6 +629,13 @@
 "CoC7.MessageSelectedTargetIsNotControlled": "O token de {name} tem dono mas não é controlado por um jogador, então não será capaz de reagir às ações de combate.",
 "CoC7.MessageBoutOfMadnessTableNotFound": "O resultado da tabela de loucura não foi encontrado, por favor verifique se todas as suas tabelas estão criadas",
 "CoC7.MessageBoutOfMadnessItemNotFound": "O resultado da tabela de loucura não foi encontrado, por favor verifique que todos os seus estados estão criados",
+
+"CoC7.DealDamage": "Causar {damage} pontos de dano em {target}?",
+
+"CoC7.Import": "Importar",
+"CoC7.Proceed": "Proceder",
+"CoC7.Cancel": "Cancelar",
+
 "CoC7.ActorImporter": "Importar Ator",
 "CoC7.ActorImporterSummary": "Importe um PNJ ou Criatura a partir da descrição de informações. Apenas cole o texto correspondente.",
 "CoC7.PasteTheDataBelow": "Cole as informações abaixo.",

@@ -141,24 +141,27 @@ export class DamageCard extends InteractiveChatCard{
 			
 		}
 		const data = {
-			title: `Damage`,
-			content: `is Damage ${targetName} by ${this.totalDamageString}?`,
+			title: "",
+			content: game.i18n.format('CoC7.DealDamage', {
+				damage: this.totalDamageString, 
+				target: targetName
+			}),
 			buttons: {
 				one: {
 					icon: '<i class="fas fa-check"></i>',
-					label: 'Yes',
+					label: game.i18n.localize('CoC7.Proceed'),
 					callback: () => {
 						this.confirmDamage(targets);
 					}
 				},
 				two: {
 					icon: '<i class="fas fa-times"></i>',
-					label: 'No',
+					label: game.i18n.localize('CoC7.Cancel'),
 					callback: () => { }
 				}
 			},
 			default: "two"
-		}
+		} 
 		if(targetName.length>0)
 			new Dialog(data).render(true);
 	}
