@@ -18,6 +18,9 @@
         </header>
 
         <nav class="sheet-nav tabs" data-group="primary">
+			<a data-tab="participants"><div class="tab-name" ><span>{{localize 'CoC7.Participans'}}</span></div></a>
+			<a data-tab="setup"><div class="tab-name" ><span>{{localize 'CoC7.Setup'}}</span></div></a>
+
         </nav>
 
         <section class="sheet-body">
@@ -32,19 +35,22 @@
                                 <a><i class="fas fa-running"></i></a>
                             {{/if}}
                         </div>
-                        {{#if p.hasVehicle}}
-                            <div class="p-icon open-actor" data-actor-key="{{p.vehicle.actorKey}}">
-                                <a><img src="{{p.vehicle.img}}" title="{{p.vehicle.name}}"/></a>
-                            </div>
-                        {{else}}
-                            <div class="p-icon open-actor" data-actor-key="{{p.actor.actorKey}}">
-                                <a><img src="{{p.actor.img}}" title="{{p.actor.name}}"/></a>
-                            </div>
-                        {{/if}}
+                        <div
+                            {{#if p.isActor}} class="p-icon open-actor" data-actor-key="{{p.key}}"
+                            {{else}} class="p-icon"{{/if}}
+                            >
+                            <a><img src="{{p.icon}}" title="{{p.name}}"/></a>
+                        </div>
                         <div class="p-expand"></div>
-                        <div class="p-name">{{p.name}}</div>
+                        <div class="p-name">
+                            {{#if p.isActor}}
+                                {{p.name}}
+                            {{else}}
+                                <input type='text' name="data.participants.{{i}}.name" placeholder="Name" value="{{p.name}}"/>
+                            {{/if}}
+                        </div>
                         <div class="p-movement">
-                            <input type='text' name="data.participants.{{i}}.mov" placeholder="MOV" value="{{p.mov}}"/>
+                            <input class='right-aligned' type='text' name="data.participants.{{i}}.mov" placeholder="MOV" value="{{p.mov}}"/>
                         </div>
                         <div class="p-check">
                             <datalist id="check-name-p{{i}}">
@@ -54,9 +60,13 @@
                             </datalist>
                             <input type='text' name="data.participants.{{i}}.check.name" placeholder="check ref." value="{{p.check.name}}" list='check-name-p{{i}}' data-override='true'/>
                         </div>
-                        <div class="p-score">{{p.check.score}}</div>
-                        <div class="p-modifier">+1</div>
-                        <div class="p-total">6</div>
+                        <div class="p-score">
+                            {{#if p.check.refSet}}
+                                {{p.check.score}}
+                            {{else}}
+                                <input class='right-aligned' type='text' name="data.participants.{{i}}.check.score" placeholder="%" value="{{p.check.score}}" />
+                            {{/if}}
+                        </div>
                         <div class="p-control">
                             <a class="delete-participant"><i class="fas fa-times"></i></a>
                         </div>
@@ -76,8 +86,12 @@
                     {{/each}}
                 </div>
                 <div class="new-participant">
+                    <div class="add-sign">
+                        <i class="fas fa-plus"></i>
+                    </div>
                 </div>
             </div>
+            <div class="tab setup"></div>
         </section>
     </div>
 </form>

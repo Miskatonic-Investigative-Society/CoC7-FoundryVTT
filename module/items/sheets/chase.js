@@ -15,7 +15,8 @@ export class CoC7ChaseSheet extends ItemSheet {
 			classes: ['coc7', 'sheetV2', 'item', 'chase'],
 			width: 500,
 			height: 500,
-			tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills'}]
+			resizable: true,
+			tabs: [{navSelector: '.sheet-nav', contentSelector: '.sheet-body', initial: 'participants'}]
 		});
 
 		return options;
@@ -45,6 +46,8 @@ export class CoC7ChaseSheet extends ItemSheet {
 		this.participants.forEach( p => {
 			data.participants.push( new _participant( p));
 		});
+		data.preys = data.participants.filter( p => p.chaser);
+		data.chasers = data.participants.filter( p => !p.chaser);
 		return data;
 	}
 
@@ -66,6 +69,13 @@ export class CoC7ChaseSheet extends ItemSheet {
 		html.find( '.p-side').click(this._onChangeSide.bind(this));
 		html.find( '.delete-participant').click(this._onDeleteParticipant.bind(this));
 		html.find( '.delete-driver').click(this._onDeleteDriver.bind(this));
+
+		html.find( '.new-participant').on('dragenter', (event)=> this._onDragEnterParticipant(event));
+		html.find( '.new-participant').on('dragover', (event)=> this._onDragEnterParticipant(event));
+		html.find( '.new-participant').on('dragleave', (event)=> this._onDragLeaveParticipant(event));
+		html.find( '.new-participant').on('drop', (event)=> this._onDragLeaveParticipant(event));
+
+		html.find( '.add-sign').click( this._onAddParticipant.bind(this));
 
 		const participantDragDrop = new DragDrop({
 			dropSelector: '.participant',
@@ -133,6 +143,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 					} else participants[index].check = {};
 					participants[index].check.name = target.value;
 					await this.item.update( { 'data.participants': participants});
+					return;
 				}
 			}
 		}
@@ -150,8 +161,11 @@ export class CoC7ChaseSheet extends ItemSheet {
 	}
 
 	async _onAddParticipant( event){
-		const dataString = event.dataTransfer.getData('text/plain');
-		const data = JSON.parse( dataString);
+		let data = {};
+		if( event.dataTransfer){
+			const dataString = event.dataTransfer.getData('text/plain');
+			data = JSON.parse( dataString);
+		}
 		await this.addParticipant( data);
 	}
 
@@ -194,7 +208,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 	}
 
 	async alterParticipant( data, index){
-		const actorKey = (data.sceneId && data.tokenId)?`${data.sceneId}.${data.tokenId}`:data.actorId||data.actorKey||data.id;
+		const actorKey = (data.sceneId && data.tokenId)?`${data.sceneId}.${data.tokenId}`:'Actor'==data.type?data.id:data.actorId||data.actorKey;
 		const participant = {};
 		const actor = chatHelper.getActorFromKey( actorKey);
 		if( actor){
@@ -207,7 +221,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 			break;
 		case 'item':
 			participant.check = {
-				id: data.data._id,
+				id: data.data?._id||data.id,
 				type:'item'
 			};
 			break;
@@ -236,7 +250,6 @@ export class CoC7ChaseSheet extends ItemSheet {
 	}
 
 	async addParticipant( data){
-
 		const actorKey = (data.sceneId && data.tokenId)?`${data.sceneId}.${data.tokenId}`:data.actorId||data.actorKey||data.id;
 		const participant = {};
 		const actor = chatHelper.getActorFromKey( actorKey);
@@ -297,11 +310,11 @@ export function clean( obj){
 		}
 
 		if( 'Object' == tp && !Object.entries(obj[propName]).length)
+			obj[propName] = null; //delete obj[propName]
+		else /*if (obj[propName] === null || obj[propName] === undefined) 
 			delete obj[propName];
-		else if (obj[propName] === null || obj[propName] === undefined) 
-			delete obj[propName];
-		else if( 'string' == tp && !obj[propName].length)
-			delete obj[propName];
+		else*/ if( 'string' == tp && !obj[propName].length)
+			obj[propName] = null; //delete obj[propName]
 		else if( 'string' == tp && !isNaN(Number(obj[propName])))
 			obj[propName] = Number(obj[propName]);
 
@@ -317,6 +330,23 @@ export class _participant{
 	get actor(){
 		if( !this._actor) this._actor = chatHelper.getActorFromKey( this.data.actorKey);
 		return this._actor;
+	}
+
+	get isActor(){
+		return this.hasActor || this.hasVehicle;
+	}
+
+	get key(){
+		if( this.hasVehicle) return this.vehicle.actorKey;
+		if( this.hasActor) return this.actor.actorKey;
+		return undefined;
+	}
+
+	get icon(){
+		if( !this.isActor) return 'systems/CoC7/artwork/icons/question-circle-regular.svg';
+		if( this.hasVehicle) return this.vehicle.img;
+		if( this.hasActor) return this.actor.img;
+		return undefined;
 	}
 
 	get driver(){
@@ -383,6 +413,7 @@ export class _participant{
 	get check(){
 		const check = {};
 		if( this.data.check?.name) check.name = this.data.check.name;
+		if( this.data.check?.score) check.score = this.data.check.score;
 		if( this.hasActor){
 			check.options=[];
 			['con'].forEach( c =>{
