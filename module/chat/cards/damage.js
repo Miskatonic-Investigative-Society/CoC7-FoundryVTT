@@ -123,6 +123,55 @@ export class DamageCard extends InteractiveChatCard{
 		if( options.update) this.updateChatCard();
 	}
 
+	async dealDamageToSelectedTarget(options = { update: true }) {
+		if (this.isArmorForula) await this.rollArmor();
+		if (isNaN(Number(this.totalDamageString))) {
+			ui.notifications.error('Error evaluating damage');
+			return;
+		}
+		let targets =[];
+		let targetName =[] 
+		let selectedPlayers = canvas.tokens.controlled.map(token => {
+			return token.actor;
+		});
+		for (let index = 0; index < selectedPlayers.length; index++) {
+			if (this.actor.id == selectedPlayers[index].id) { continue; }
+			targetName.push(selectedPlayers[index].name);
+			targets.push(selectedPlayers[index]);
+			
+		}
+		const data = {
+			title: `Damage`,
+			content: `is Damage ${targetName} by ${this.totalDamageString}?`,
+			buttons: {
+				one: {
+					icon: '<i class="fas fa-check"></i>',
+					label: 'Yes',
+					callback: () => {
+						this.confirmDamage(targets);
+					}
+				},
+				two: {
+					icon: '<i class="fas fa-times"></i>',
+					label: 'No',
+					callback: () => { }
+				}
+			},
+			default: "two"
+		}
+		if(targetName.length>0)
+			new Dialog(data).render(true);
+	}
+	async confirmDamage(targets) {
+		for (let index = 0; index < targets.length; index++) {
+			await targets[index].dealDamage(Number(this.totalDamageString), { ignoreArmor: false });
+			ChatMessage.create({
+				content:`Damage ${targets[index].name} ${this.totalDamageString}HP` 
+				});
+		}
+
+	}
+
 	async dealDamage( options={ update: true}){
 		if( this.isArmorForula) await this.rollArmor();
 		if( isNaN(Number(this.totalDamageString))){

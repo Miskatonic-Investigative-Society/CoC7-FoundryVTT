@@ -96,7 +96,7 @@ export class InteractiveChatCard{
      */
 	_onButton( event){
 		const button = event.currentTarget;
-		button.style.display = 'none'; //Avoid multiple push
+		//button.style.display = 'none'; //Avoid multiple push
 		const action = button.dataset.action;
 		if( this[action]) this[action]({event: event, update:true});        
 	}
