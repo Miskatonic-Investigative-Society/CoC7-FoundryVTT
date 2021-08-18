@@ -2,7 +2,7 @@
 	"name": "CoC7",
 	"title": "Call of Cthulhu 7th edition (Unofficial)",
 	"description": "Call of Cthulhu 7th edition (Unofficial) for FoundryVTT",
-	"version": "0.6.2",
+	"version": "0.6.3",
 	"author": "HavelockV",
 	"minimumCoreVersion": "0.8.6",
 	"compatibleCoreVersion": "0.8.9",
