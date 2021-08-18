@@ -1,456 +1,448 @@
-import {CoC7Check} from '../check.js';
+/* global canvas, ChatMessage, CONST, duplicate, game, Ray, Token */
+
+import { CoC7Check } from '../check.js'
 
 /**
    * Return <a> element of a roll instance. foundry.js ref:TextEditor._createInlineRoll
    * @param {Roll} roll      The roll object
    */
-export function createInlineRoll( roll){
+export function createInlineRoll (roll) {
+  const data = {
+    cls: ['inline-roll'],
+    dataset: {}
+  }
 
-	const data = {
-		cls: ['inline-roll'],
-		dataset: {}
-	};
+  try {
+    data.cls.push('inline-result')
+    data.result = roll.total
+    data.title = roll.formula
+    data.dataset.roll = escape(JSON.stringify(roll))
+  } catch (err) { return null }
 
-	try{
-		data.cls.push('inline-result');
-		data.result = roll.total;
-		data.title = roll.formula;
-		data.dataset.roll = escape(JSON.stringify(roll));
-	}
-	catch(err) { return null; }
-
-	// Construct and return the formed link element
-	const a = document.createElement('a');
-	a.classList.add(...data.cls);
-	a.title = data.title;
-	for (let [k, v] of Object.entries(data.dataset)) {
-		a.dataset[k] = v;
-	}
-	a.innerHTML = `<i class="fas fa-dice-d20"></i> ${data.result}`;
-	return a;
+  // Construct and return the formed link element
+  const a = document.createElement('a')
+  a.classList.add(...data.cls)
+  a.title = data.title
+  for (const [k, v] of Object.entries(data.dataset)) {
+    a.dataset[k] = v
+  }
+  a.innerHTML = `<i class="fas fa-dice-d20"></i> ${data.result}`
+  return a
 }
 
 /**
  * Function used for JSON.stringify replacer.
  * Exclude any key starting with _
- * @param {*} key 		The object's property Key
- * @param {*} value 	The associated value
+ * @param {*} key     The object's property Key
+ * @param {*} value   The associated value
  */
-export function exclude_(key, value) {
-	// convert RegExp to string
-	if ( key.startsWith('_')) {
-		return undefined; // remove from result
-	}
-	return value; // return as is
+export function exclude_ (key, value) {
+  // convert RegExp to string
+  if (key.startsWith('_')) {
+    return undefined // remove from result
+  }
+  return value // return as is
 }
 
 /**
  * Function used for JSON.stringify replacer.
  * Exclude any key starting with __
- * @param {*} key 		The object's property Key
- * @param {*} value 	The associated value
+ * @param {*} key     The object's property Key
+ * @param {*} value   The associated value
  */
-export function exclude__(key, value) {
-	// convert RegExp to string
-	if ( key.startsWith('__')) {
-		return undefined; // remove from result
-	}
-	return value; // return as is
+export function exclude__ (key, value) {
+  // convert RegExp to string
+  if (key.startsWith('__')) {
+    return undefined // remove from result
+  }
+  return value // return as is
 }
 
 /**
  * Return true is CTRL key is pressed
  * Used for MAC compat.
- * @param {S.Event} event 
- * @returns 
+ * @param {S.Event} event
+ * @returns
  */
-export function isCtrlKey(event){
-	return event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224;
+export function isCtrlKey (event) {
+  return event.metaKey || event.ctrlKey || event.keyCode === 91 || event.keyCode === 224
 }
 
-export class chatHelper{
-	static hyphenToCamelCase(string) {
-		return string.replace(/-([a-z])/g, function(string) {
-			return string[1].toUpperCase();
-		});
-	}
+export class chatHelper {
+  static hyphenToCamelCase (string) {
+    return string.replace(/-([a-z])/g, function (string) {
+      return string[1].toUpperCase()
+    })
+  }
 
-	static async createMessage( title, message, options = {}){
-		const messageData = {};
-		messageData.flavor = title;
-		messageData.speaker = options.speaker || ChatMessage.getSpeaker();
-		if( options.whisper){
-			messageData.type = CONST.CHAT_MESSAGE_TYPES.WHISPER;
-			messageData.whisper = options.whisper;
-		}
-		messageData.user = game.user.id;
-		messageData.content = message;
+  static async createMessage (title, message, options = {}) {
+    const messageData = {}
+    messageData.flavor = title
+    messageData.speaker = options.speaker || ChatMessage.getSpeaker()
+    if (options.whisper) {
+      messageData.type = CONST.CHAT_MESSAGE_TYPES.WHISPER
+      messageData.whisper = options.whisper
+    }
+    messageData.user = game.user.id
+    messageData.content = message
 
-		ChatMessage.create(messageData).then( msg => {return msg;});
-	}
-    
+    ChatMessage.create(messageData).then(msg => { return msg })
+  }
 
-	static camelCaseToHyphen(string) {
-		return string.replace(/([A-Z])/g, function(string) {
-			return '-' + string.toLowerCase();
-		});
-	}
+  static camelCaseToHyphen (string) {
+    return string.replace(/([A-Z])/g, function (string) {
+      return '-' + string.toLowerCase()
+    })
+  }
 
-	static getActorFromKey(key) {
+  static getActorFromKey (key) {
+    if (!key) return null
+    // Case 1 - a synthetic actor from a Token
+    if (key.includes('.')) { // REFACTORING (2)
+      const [sceneId, tokenId] = key.split('.')
+      if (sceneId === 'TOKEN') {
+        return game.actors.tokens[tokenId]// REFACTORING (2)
+      }
+      const token = chatHelper.getTokenFromKey(key)
+      return token?.actor
+    }
 
-		if( !key) return null;
-		// Case 1 - a synthetic actor from a Token
-		if (key.includes('.')) {//REFACTORING (2)
-			const [sceneId, tokenId] = key.split('.');
-			if( 'TOKEN' == sceneId){
-				return game.actors.tokens[tokenId];//REFACTORING (2)
-			}
-			const token = chatHelper.getTokenFromKey(key);
-			return token?.actor;
-		}
+    // Case 2 - use Actor ID directory
+    return game.actors.get(key) || null
+  }
 
-		// Case 2 - use Actor ID directory
-		return game.actors.get(key) || null;
-	}
+  static getSpeakerFromKey (actorKey) {
+    const speaker = {}
+    const actor = chatHelper.getActorFromKey(actorKey)// REFACTORING (2)
+    if (actorKey.includes('.')) {
+      const [sceneId, tokenId] = actorKey.split('.') // REFACTORING (2)
+      speaker.token = tokenId
+      speaker.scene = sceneId
+      if (actor.token?.name) speaker.alias = actor.token.name
+      speaker.actor = actor.id
+    } else {
+      speaker.actor = actorKey
+      speaker.alias = actor.name
+    }
+    return speaker
+  }
 
-	static getSpeakerFromKey( actorKey){
-		const speaker = {};
-		const actor = chatHelper.getActorFromKey( actorKey);//REFACTORING (2)
-		if (actorKey.includes('.')) {
-			const [sceneId, tokenId] = actorKey.split('.'); //REFACTORING (2)
-			speaker.token = tokenId;
-			speaker.scene = sceneId;
-			if( actor.token?.name) speaker.alias = actor.token.name;
-			speaker.actor = actor.id;
-		} else {
-			speaker.actor = actorKey;
-			speaker.alias = actor.name;
-		}
-		return speaker;
-	}
+  static attachObjectToElement (object, element, objectName = '') {
+    Object.keys(object).forEach(prop => {
+      if (!prop.startsWith('_')) {
+        if (typeof (object[prop]) === 'object') {
+          chatHelper.attachObjectToElement(object[prop], element, `${objectName}:${prop}:`)
+        } else {
+          element.dataset[`${objectName}${prop}`] = object[prop]
+        }
+      }
+    })
+  }
 
-	static attachObjectToElement( object, element, objectName = ''){
-		Object.keys(object).forEach( prop => {
-			if( !prop.startsWith('_')){
-				if( typeof( object[prop]) == 'object')
-				{
-					chatHelper.attachObjectToElement( object[prop], element, `${objectName}:${prop}:`);
-				}
-				else{
-					element.dataset[`${objectName}${prop}`]= object[prop];
-				}
-			}
-		});    
-	}
+  static getObjectFromElement (object, element) {
+    function deserialize (obj, key, value) {
+      if (key.startsWith(':')) {
+        const s = key.slice(1)
+        const objProp = s.slice(s.indexOf(':') + 1)
+        const objName = s.substring(0, s.indexOf(':'))
+        if (typeof obj[objName] === 'undefined') obj[objName] = {}
+        deserialize(obj[objName], objProp, value)
+      } else {
+        if (value === 'true') obj[key] = true
+        else if (value === 'false') obj[key] = false
+        else if (Number(value).toString() === value) obj[key] = Number(value)
+        else obj[key] = value
+      }
+    }
 
-	static getObjectFromElement( object, element){
-		function deserialize( obj, key, value){
-			if( key.startsWith(':')){
-				const s = key.slice(1);
-				const objProp = s.slice(s.indexOf(':')+1);
-				const objName = s.substring(0, s.indexOf(':'));
-				if( obj[objName] == undefined) obj[objName] = {};
-				deserialize( obj[objName], objProp, value);
-			} else {
-				if( 'true' == value) obj[key] = true;
-				else if ( 'false' == value) obj[key] = false;
-				else if( Number(value).toString() == value ) obj[key] = Number(value);
-				else obj[key] = value;
-			}
-		}
+    if (!element || !object) return
+    Object.keys(element.dataset).forEach(prop => {
+      if (prop === 'template') return
+      deserialize(object, prop, element.dataset[prop])
+    })
+  }
 
-		if( !element || !object) return;
-		Object.keys(element.dataset).forEach( prop => {
-			if( 'template' == prop) return;
-			deserialize( object, prop, element.dataset[prop]);
+  static getTokenFromKey (key) {
+    if (!key) return null
+    if (key.includes('.')) {
+      const [sceneId, tokenId] = key.split('.')
+      if (sceneId === 'TOKEN') {
+        const tokenDoc = game.actors.tokens[tokenId]?.token
+        return tokenDoc.object// REFACTORING (2)
+      } else {
+        const scene = game.scenes.get(sceneId)
+        if (!scene) return null
+        const tokenData = scene.getEmbeddedDocument('Token', tokenId)
+        if (!tokenData) return null
+        const token = new Token(tokenData)
+        if (!token.scene) token.scene = duplicate(scene.data)
+        return token
+      }
+    } else {
+      const actor = game.actors.get(key)
+      return chatHelper.getActorToken(actor)
+    }
+  }
 
-		});    
-	}
+  static getActorToken (actor) {
+    if (!actor) return null
+    /** * MODIF 0.8.x ***/
+    return actor.token || { data: actor.data.token }
+    /*******************/
+    // // Case 0 - Actor is a token (synthetic actor), return that token.
+    // if(actor.isToken) return actor.token;
+    // else{
+    //  // Case 1 - Actor is not a token, find if a token exist for that actor.
+    //  const actorTokens = actor.getActiveTokens();
+    //  if( actorTokens.length){
+    //    // Case 1.1 - If he has only one Token return it.
+    //    if( 1 === actorTokens.length) return actorTokens[0];
 
-	static getTokenFromKey( key){
-		if( !key) return null;
-		if (key.includes('.')) {
-			const [sceneId, tokenId] = key.split('.');
-			if( 'TOKEN' == sceneId){
-				const tokenDoc = game.actors.tokens[tokenId]?.token;
-				return tokenDoc.object;//REFACTORING (2)
-			} else {
-				const scene = game.scenes.get(sceneId);
-				if (!scene) return null;
-				const tokenData = scene.getEmbeddedDocument('Token', tokenId);
-				if (!tokenData) return null;
-				const token = new Token(tokenData);
-				if( !token.scene) token.scene = duplicate( scene.data);
-				return token;
-			}
-		} else {
-			const actor = game.actors.get( key);
-			return chatHelper.getActorToken( actor);
-		}
-	}
+    //    // Case 1.2 - Actor has multiple tokens, find if one of them is the controlled token.
+    //    const controlledTokens = actorTokens.filter( t => t._controlled);
+    //    if( controlledTokens.length){
+    //      // Return the 1st controlled token, rise a warning if he has multiple controlled tokens.
+    //      if( verbose && controlledTokens.length > 1) ui.notifications.warn( `Actor ${actor.name} has ${controlledTokens.length} controlled tokens. Using the first found`);
+    //      return controlledTokens[0];
+    //    }
 
-	static getActorToken( actor){
-		if( !actor) return null;
-		/*** MODIF 0.8.x ***/
-		return actor.token||{data: actor.data.token};
-		/*******************/
-		// // Case 0 - Actor is a token (synthetic actor), return that token.
-		// if(actor.isToken) return actor.token;
-		// else{
-		// 	// Case 1 - Actor is not a token, find if a token exist for that actor.
-		// 	const actorTokens = actor.getActiveTokens();
-		// 	if( actorTokens.length){
-		// 		// Case 1.1 - If he has only one Token return it.
-		// 		if( 1 === actorTokens.length) return actorTokens[0];
+    //    // Case 1.3 actor doesn't have any active token. Return the first valid token for that actor and raise a warning.
+    //    if( verbose) ui.notifications.warn( `Actor ${actor.name} doesn't have any controlled token. Using first token found.`);
+    //    return actorTokens[0];
+    //  }
 
-		// 		// Case 1.2 - Actor has multiple tokens, find if one of them is the controlled token.
-		// 		const controlledTokens = actorTokens.filter( t => t._controlled);
-		// 		if( controlledTokens.length){
-		// 			// Return the 1st controlled token, rise a warning if he has multiple controlled tokens.
-		// 			if( verbose && controlledTokens.length > 1) ui.notifications.warn( `Actor ${actor.name} has ${controlledTokens.length} controlled tokens. Using the first found`);
-		// 			return controlledTokens[0];
-		// 		}
+    //  if( verbose) ui.notifications.error( `Could not fin any token for ${actor.name}.`);
+    //  return null;
+    // }
+  }
 
-		// 		// Case 1.3 actor doesn't have any active token. Return the first valid token for that actor and raise a warning.
-		// 		if( verbose) ui.notifications.warn( `Actor ${actor.name} doesn't have any controlled token. Using first token found.`);
-		// 		return actorTokens[0];
-		// 	}
+  static getActorImgFromKey (actorKey) {
+    if (!actorKey) return null
+    if (game.settings.get('CoC7', 'useToken')) {
+      // Try to find a token.
+      const token = chatHelper.getTokenFromKey(actorKey)
+      if (token) return token.data.img
+    }
+    const actor = chatHelper.getActorFromKey(actorKey)// REFACTORING (2)
+    if (game.settings.get('CoC7', 'useToken')) {
+      // if no token found for that actor return the prototype token image.
+      if (actor.data.token) return actor.data.token.img
+    }
+    return actor.data.img
+  }
 
-		// 	if( verbose) ui.notifications.error( `Could not fin any token for ${actor.name}.`);
-		// 	return null;
-		// }
-	}
+  static getDistance (startToken, endToken) {
+    // startToken.updateSource();
+    // canvas.sight.initializeTokens();
+    let distance = {
+      gridUnit: 0,
+      value: 0,
+      unit: canvas.scene.data.gridUnits
+    }
+    if (typeof startToken !== 'undefined' && typeof startToken.center !== 'undefined' && typeof endToken !== 'undefined' && typeof endToken.center !== 'undefined') {
+      const ray = new Ray(startToken.center, endToken.center)
+      const segment = [{ ray }]
+      distance = {
+        gridUnit: ray.distance / canvas.scene.data.grid,
+        // value: (ray.distance/canvas.scene.data.grid)*canvas.scene.data.gridDistance,
+        value: canvas.grid.measureDistances(segment, { gridSpaces: game.settings.get('CoC7', 'gridSpaces') })[0],
+        unit: canvas.scene.data.gridUnits
+      }
+    }
+    return distance
+  }
 
-	static getActorImgFromKey( actorKey){
-		if( !actorKey) return null;
-		if( game.settings.get('CoC7', 'useToken')){
-			// Try to find a token.
-			const token = chatHelper.getTokenFromKey(actorKey);
-			if( token) return token.data.img;
-		}
-		const actor = chatHelper.getActorFromKey(actorKey);//REFACTORING (2)
-		if( game.settings.get('CoC7', 'useToken')){
-			// if no token found for that actor return the prototype token image.
-			if( actor.data.token) return actor.data.token.img;
-		}
-		return actor.data.img;
-	}
+  static toYards (distance) {
+    switch (distance.unit) {
+      case 'ft':
+        return distance.value / 3
 
-	static getDistance( startToken, endToken){
-		// startToken.updateSource();
-		// canvas.sight.initializeTokens();
-		let distance = {
-			gridUnit: 0,
-			value: 0,
-			unit: canvas.scene.data.gridUnits
-		};
-		if (typeof startToken !== 'undefined' && typeof startToken.center !== 'undefined' && typeof endToken !== 'undefined' && typeof endToken.center !== 'undefined') {
-			const ray = new Ray( startToken.center, endToken.center);
-			const segment = [{ray}];
-			distance = {
-				gridUnit: ray.distance/canvas.scene.data.grid,
-				// value: (ray.distance/canvas.scene.data.grid)*canvas.scene.data.gridDistance,
-				value: canvas.grid.measureDistances(segment, {gridSpaces:game.settings.get('CoC7', 'gridSpaces')})[0],
-				unit: canvas.scene.data.gridUnits
-			};
-		}
-		return distance;
-	}
+      case 'yd':
+        return distance.value
 
-	static toYards( distance){
-		switch (distance.unit) {
-		case 'ft':
-			return distance.value/3;
-		
-		case 'yd':
-			return distance.value;
-		
-		case 'm':
-			return distance.value;
-		
-		default:
-			return distance.value;
-		}
-	}
+      case 'm':
+        return distance.value
+
+      default:
+        return distance.value
+    }
+  }
 }
 
-export class CoC7Roll{
-	static getFromCard( card){
+export class CoC7Roll {
+  static getFromCard (card) {
+    const rollDiv = card.querySelector('div.dice-roll')
+    if (!rollDiv) return null
 
-		const rollDiv = card.querySelector( 'div.dice-roll');
-		if( !rollDiv) return null;
+    const roll = new CoC7Roll()
+    chatHelper.getObjectFromElement(roll, rollDiv)
 
-		const roll = new CoC7Roll();
-		chatHelper.getObjectFromElement( roll, rollDiv);
+    return roll
+  }
 
-		return roll;
-	}
+  get resultType () {
+    this.successLevel = parseInt(this.successLevel)
+    switch (this.successLevel) {
+      case CoC7Check.successLevel.regular:
+        return game.i18n.format('CoC7.RegularSuccess')
+      case CoC7Check.successLevel.hard:
+        return game.i18n.format('CoC7.HardSuccess')
+      case CoC7Check.successLevel.extreme:
+        return game.i18n.format('CoC7.ExtremeSuccess')
+      case CoC7Check.successLevel.critical:
+        return game.i18n.format('CoC7.CriticalSuccess')
+      case CoC7Check.successLevel.fumble:
+        return game.i18n.format('CoC7.Fumble')
+      case CoC7Check.successLevel.failure:
+        return game.i18n.format('CoC7.Failure')
 
-	get resultType(){
-		this.successLevel = parseInt( this.successLevel);
-		switch (this.successLevel) {
-		case CoC7Check.successLevel.regular:
-			return game.i18n.format('CoC7.RegularSuccess');
-		case CoC7Check.successLevel.hard:
-			return game.i18n.format('CoC7.HardSuccess');
-		case CoC7Check.successLevel.extreme:
-			return game.i18n.format('CoC7.ExtremeSuccess');
-		case CoC7Check.successLevel.critical:
-			return game.i18n.format('CoC7.CriticalSuccess');
-		case CoC7Check.successLevel.fumble:
-			return game.i18n.format('CoC7.Fumble');
-		case CoC7Check.successLevel.failure:
-			return game.i18n.format('CoC7.Failure');
-		
-		default:
-			return null;
-		}
-	}
+      default:
+        return null
+    }
+  }
 
-	get actor(){
-		if( this.actorKey) return chatHelper.getActorFromKey( this.actorKey);//REFACTORING (2)
-		return null;
-	}
+  get actor () {
+    if (this.actorKey) return chatHelper.getActorFromKey(this.actorKey)// REFACTORING (2)
+    return null
+  }
 
-	get item(){
-		if( this.itemId && this.actor) return this.actor.items.get( this.itemId);
-		return null;
-	}
+  get item () {
+    if (this.itemId && this.actor) return this.actor.items.get(this.itemId)
+    return null
+  }
 
-	get skill(){
-		if( this.skillId && this.actor) return this.actor.items.get( this.skillId);
-		return null;
-	}
+  get skill () {
+    if (this.skillId && this.actor) return this.actor.items.get(this.skillId)
+    return null
+  }
 
-	showDiceRoll(){
-		if( game.modules.get('dice-so-nice')?.active){
-			const diceResults = [];
-			this.dices.tens.forEach(dieResult => { 
-				diceResults.push( 100 == dieResult.value ?0:dieResult.value/10);
-			});
-			diceResults.push( this.dices.unit.value);
+  showDiceRoll () {
+    if (game.modules.get('dice-so-nice')?.active) {
+      const diceResults = []
+      this.dices.tens.forEach(dieResult => {
+        diceResults.push(dieResult.value === 100 ? 0 : dieResult.value / 10)
+      })
+      diceResults.push(this.dices.unit.value)
 
-			const diceData = {
-				formula: `${this.dices.tens.length}d100+1d10`,
-				results: diceResults,
-				whisper: null,
-				blind: false
-			};
-			game.dice3d.show(diceData);
-		}
-	}
+      const diceData = {
+        formula: `${this.dices.tens.length}d100+1d10`,
+        results: diceResults,
+        whisper: null,
+        blind: false
+      }
+      game.dice3d.show(diceData)
+    }
+  }
 
-	static getFromElement( element, object = null){
-		if( !element) return;
-		const roll = object? object : new CoC7Roll();
-		chatHelper.getObjectFromElement( roll, element);
-		roll.dices = {
-			tens: [],
-			unit : {}
-		};
-		chatHelper.getObjectFromElement( roll.dices, element.querySelector('.dice-result'));
-		roll.dices.hasBonus = roll.diceModifier == 0 ? false : true;
-		roll.dices.bonus =  Math.abs(roll.diceModifier);
-		roll.dices.bonusType = roll.diceModifier < 0 ? game.i18n.format('CoC7.DiceModifierPenalty') : game.i18n.format('CoC7.DiceModifierBonus');
-		const tenDice = element.querySelector('.ten-dice');
-		if( tenDice){
-			tenDice.querySelectorAll('li').forEach( d => {
-				const die = {
-					selected: false,
-					isMax: false,
-					isMin: false,
-					value: -1
-				};
-				chatHelper.getObjectFromElement( die, d);
-				roll.dices.tens.push( die);
-			});
-		}
-		const unitDie = element.querySelector('.unit-die')? element.querySelector('.unit-die').querySelector('li'): null;
-		roll.dices.unit.value = unitDie ? parseInt(unitDie.dataset.value): null;
+  static getFromElement (element, object = null) {
+    if (!element) return
+    const roll = object || new CoC7Roll()
+    chatHelper.getObjectFromElement(roll, element)
+    roll.dices = {
+      tens: [],
+      unit: {}
+    }
+    chatHelper.getObjectFromElement(roll.dices, element.querySelector('.dice-result'))
+    roll.dices.hasBonus = roll.diceModifier !== 0
+    roll.dices.bonus = Math.abs(roll.diceModifier)
+    roll.dices.bonusType = roll.diceModifier < 0 ? game.i18n.format('CoC7.DiceModifierPenalty') : game.i18n.format('CoC7.DiceModifierBonus')
+    const tenDice = element.querySelector('.ten-dice')
+    if (tenDice) {
+      tenDice.querySelectorAll('li').forEach(d => {
+        const die = {
+          selected: false,
+          isMax: false,
+          isMin: false,
+          value: -1
+        }
+        chatHelper.getObjectFromElement(die, d)
+        roll.dices.tens.push(die)
+      })
+    }
+    const unitDie = element.querySelector('.unit-die') ? element.querySelector('.unit-die').querySelector('li') : null
+    roll.dices.unit.value = unitDie ? parseInt(unitDie.dataset.value) : null
 
-		roll.increaseSuccess = [];
-		const increaseSuccess = element.querySelector('.increase-success');
-		if( increaseSuccess && increaseSuccess.querySelectorAll('button')) {
-			increaseSuccess.querySelectorAll('button').forEach( isl =>{
-				const newSuccesLevel = {};
-				chatHelper.getObjectFromElement( newSuccesLevel, isl);
-				roll.increaseSuccess.push( newSuccesLevel);
-			});
-		}
+    roll.increaseSuccess = []
+    const increaseSuccess = element.querySelector('.increase-success')
+    if (increaseSuccess && increaseSuccess.querySelectorAll('button')) {
+      increaseSuccess.querySelectorAll('button').forEach(isl => {
+        const newSuccesLevel = {}
+        chatHelper.getObjectFromElement(newSuccesLevel, isl)
+        roll.increaseSuccess.push(newSuccesLevel)
+      })
+    }
 
-		if( roll.luckNeeded) roll.luckNeededTxt = game.i18n.format('CoC7.SpendLuck', {luckNeededValue : roll.luckNeeded});
-		if( !object) return roll;
-	}
+    if (roll.luckNeeded) roll.luckNeededTxt = game.i18n.format('CoC7.SpendLuck', { luckNeededValue: roll.luckNeeded })
+    if (!object) return roll
+  }
 
-	static getFromCheck( check){
-		const roll = new CoC7Roll();
+  static getFromCheck (check) {
+    const roll = new CoC7Roll()
 
-		roll.rollType = check.rollType;
-		roll.side = check.side;
-		roll.action = check.action;
-		roll.refMessageId = check.refMessageId;
-		roll.referenceMessageId = check.referenceMessageId;
+    roll.rollType = check.rollType
+    roll.side = check.side
+    roll.action = check.action
+    roll.refMessageId = check.refMessageId
+    roll.referenceMessageId = check.referenceMessageId
 
-		roll.successLevel = check.successLevel;
-		roll.difficulty = check.difficulty;
-		roll.skillId = check.skill ? check.skill.id : null;
-		roll.itemId = check.item ? check.item.id: null;
-		roll.diceMod = check.diceModifier;
-		roll.value = parseInt( check.rawValue);
-		roll.fumble = check.isFumble;
-		roll.critical = check.isCritical;
-		roll.characteristic = check.characteristic ? check.characteristic: null;
-		roll.result = check.dice.total;
+    roll.successLevel = check.successLevel
+    roll.difficulty = check.difficulty
+    roll.skillId = check.skill ? check.skill.id : null
+    roll.itemId = check.item ? check.item.id : null
+    roll.diceMod = check.diceModifier
+    roll.value = parseInt(check.rawValue)
+    roll.fumble = check.isFumble
+    roll.critical = check.isCritical
+    roll.characteristic = check.characteristic ? check.characteristic : null
+    roll.result = check.dice.total
 
+    roll.actorKey = check.actor.tokenKey // REFACTORING (2)
 
-		roll.actorKey = check.actor.tokenKey; //REFACTORING (2)
+    if (check.actor.isToken) {
+      roll.tokenId = check.actor.tokenKey // REFACTORING (2)
+      roll.actorId = null
+    } else {
+      roll.tokenKey = null
+      roll.actorId = check.actor.tokenKey // REFACTORING (2)
+    }
 
-		if( check.actor.isToken){
-			roll.tokenId = check.actor.tokenKey;  //REFACTORING (2)
-			roll.actorId = null;
-		} else {
-			roll.tokenKey = null;
-			roll.actorId = check.actor.tokenKey;  //REFACTORING (2)
-		}
+    return roll
+  }
 
-		return roll;
-	}
+  static attachCheckToElement (htmlElement, check) {
+    const roll = CoC7Roll.getFromCheck(check)
+    roll.attachToElement(htmlElement)
 
-	static attachCheckToElement( htmlElement, check){
-		roll = CoC7Roll.getFromCheck( check);
-		roll.attachToElement( htmlElement);
+    return roll
+  }
 
-		return roll;
-	}
-
-	attachToElement( htmlElement){
-		chatHelper.attachObjectToElement(this, htmlElement);
-	}
-
+  attachToElement (htmlElement) {
+    chatHelper.attachObjectToElement(this, htmlElement)
+  }
 }
 
-export class CoC7Damage{
-	static getMainDie( damageString){
-		if( damageString.toLowerCase().includes('d20')) return 'd20';
-		if( damageString.toLowerCase().includes('d12')) return 'd12';
-		if( damageString.toLowerCase().includes('d10')) return 'd10';
-		if( damageString.toLowerCase().includes('d8')) return 'd8';
-		if( damageString.toLowerCase().includes('d4')) return 'd4';
-		return 'd6';
-	}
+export class CoC7Damage {
+  static getMainDie (damageString) {
+    if (damageString.toLowerCase().includes('d20')) return 'd20'
+    if (damageString.toLowerCase().includes('d12')) return 'd12'
+    if (damageString.toLowerCase().includes('d10')) return 'd10'
+    if (damageString.toLowerCase().includes('d8')) return 'd8'
+    if (damageString.toLowerCase().includes('d4')) return 'd4'
+    return 'd6'
+  }
 
-	static getFromElement( element, object = null){
-		if( !element) return;
-		const damage = object? object : {};
-		chatHelper.getObjectFromElement( damage, element);
-		const rolls = element.querySelector('.dice-rolls').querySelectorAll('li');
-		damage.rolls = [];
-		rolls.forEach( r => {
-			const roll = {};
-			chatHelper.getObjectFromElement( roll, r);
-			damage.rolls.push(roll);
-		});
+  static getFromElement (element, object = null) {
+    if (!element) return
+    const damage = object || {}
+    chatHelper.getObjectFromElement(damage, element)
+    const rolls = element.querySelector('.dice-rolls').querySelectorAll('li')
+    damage.rolls = []
+    rolls.forEach(r => {
+      const roll = {}
+      chatHelper.getObjectFromElement(roll, r)
+      damage.rolls.push(roll)
+    })
 
-		if( !object) return damage;
-	}
+    if (!object) return damage
+  }
 }

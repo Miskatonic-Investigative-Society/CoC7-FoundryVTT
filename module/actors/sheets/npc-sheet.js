@@ -1,68 +1,67 @@
-import { CoC7ActorSheet } from './base.js';
+/* global mergeObject */
 
+import { CoC7ActorSheet } from './base.js'
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
  */
 export class CoC7NPCSheet extends CoC7ActorSheet {
+  /**
+   * Prepare data for rendering the Actor sheet
+   * The prepared data object contains both the actor data as well as additional sheet options
+   */
+  async getData () {
+    const data = await super.getData()
 
-	/**
-	 * Prepare data for rendering the Actor sheet
-	 * The prepared data object contains both the actor data as well as additional sheet options
-	*/
-	async getData() {
-		const data = await super.getData();
+    // TODO : do we need that ?
+    data.allowFormula = true
+    data.displayFormula = this.actor.getActorFlag('displayFormula')
+    if (data.displayFormula === undefined) data.displayFormula = false
+    // await this.actor.creatureInit();
+    data.hasSan = (data.data.attribs.san.value !== null)
+    data.hasMp = (data.data.attribs.mp.value !== null)
+    data.hasLuck = (data.data.attribs.lck.value !== null)
 
-		//TODO : do we need that ?
-		data.allowFormula = true;
-		data.displayFormula = this.actor.getActorFlag( 'displayFormula');
-		if( data.displayFormula === undefined) data.displayFormula = false;
-		// await this.actor.creatureInit();
-		data.hasSan = (null !== data.data.attribs.san.value);
-		data.hasMp = (null !== data.data.attribs.mp.value);
-		data.hasLuck = (null !== data.data.attribs.lck.value);
+    return data
+  }
 
-		return data;
-	}
+  activateListeners (html) {
+    super.activateListeners(html)
+    if (this.actor.isOwner) {
+      html.find('[name="data.attribs.hp.value"]').change(event => this.actor.setHealthStatusManually(event))
+    }
+  }
 
-	activateListeners(html) {
-		super.activateListeners(html);
-		if (this.actor.isOwner) {
-			html.find('[name="data.attribs.hp.value"]').change(event => this.actor.setHealthStatusManually(event));
-		}
-	}
+  onCloseSheet () {
+    this.actor.unsetActorFlag('displayFormula')
+    super.onCloseSheet()
+  }
 
-	onCloseSheet(){
-		this.actor.unsetActorFlag( 'displayFormula');
-		super.onCloseSheet();
-	}
+  /* -------------------------------------------- */
 
-	/* -------------------------------------------- */
+  /**
+   * Extend and override the default options used by the 5e Actor Sheet
+   * @returns {Object}
+   */
 
-	/**
-   	 * Extend and override the default options used by the 5e Actor Sheet
-   	 * @returns {Object}
-	*/
+  static get defaultOptions () {
+    return mergeObject(super.defaultOptions, {
+      classes: ['coc7', 'sheet', 'actor', 'npc'],
+      dragDrop: [{ dragSelector: '.item', dropSelector: null }],
+      template: 'systems/CoC7/templates/actors/npc-sheet.html',
+      width: 580,
+      height: 'auto',
+      resizable: true
+    })
+  }
 
-	static get defaultOptions() {
-		return mergeObject(super.defaultOptions, {
-			classes: ['coc7', 'sheet', 'actor', 'npc'],
-			dragDrop: [{dragSelector: '.item', dropSelector: null}],
-			template: 'systems/CoC7/templates/actors/npc-sheet.html',
-			width: 580,
-			height: 'auto',
-			resizable: true
-		});
-	}
+  static forceAuto (app, html) {
+    html[0].style.height = 'auto'
+  }
 
-	
-	static forceAuto( app, html){
-		html[0].style.height = 'auto';
-	}
-
-	setPosition(position={}) {
-		const test = super.setPosition(position);
-		test.height = 'auto';
-		return test; 
-	}
+  setPosition (position = {}) {
+    const test = super.setPosition(position)
+    test.height = 'auto'
+    return test
+  }
 }

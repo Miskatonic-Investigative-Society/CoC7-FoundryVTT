@@ -2,7 +2,7 @@
 
 For the list of changes, see: [CHANGELOG](.github/CHANGELOG.md).
 
-For contributing guidelines, see: [CONTRIBUTING](./github/CONTRIBUTING.md).
+For contributing guidelines, see: [CONTRIBUTING](.github/CONTRIBUTING.md).
 
 ## Disclaimer.
 

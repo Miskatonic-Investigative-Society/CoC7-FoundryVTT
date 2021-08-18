@@ -1,7 +1,7 @@
-export class CoC7SceneControls extends SceneControls{
+/* global SceneControls */
 
-	activateListeners(html){
-		super.activateListeners(html);
-	}
-
+export class CoC7SceneControls extends SceneControls {
+  activateListeners (html) {
+    super.activateListeners(html)
+  }
 }
