@@ -631,6 +631,7 @@
 "CoC7.MessageBoutOfMadnessItemNotFound": "O resultado da tabela de loucura não foi encontrado, por favor verifique que todos os seus estados estão criados",
 
 "CoC7.DealDamage": "Causar {damage} pontos de dano em {target}?",
+"CoC7.NoTargetSelected": "Você não selecionou um alvo para seu teste de {weapon}. Deseja proceder assim mesmo?",
 
 "CoC7.Import": "Importar",
 "CoC7.Proceed": "Proceder",

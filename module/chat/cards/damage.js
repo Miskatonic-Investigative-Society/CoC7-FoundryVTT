@@ -141,7 +141,7 @@ export class DamageCard extends InteractiveChatCard{
 			
 		}
 		const data = {
-			title: "",
+			title: " ",
 			content: game.i18n.format('CoC7.DealDamage', {
 				damage: this.totalDamageString, 
 				target: targetName

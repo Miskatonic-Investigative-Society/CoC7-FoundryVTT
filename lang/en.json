@@ -638,6 +638,7 @@
 "CoC7.MessageBoutOfMadnessItemNotFound": "The result from the madness table was not found, please check all your statuses are created",
 
 "CoC7.DealDamage": "Deal {damage} damage points to {target}?",
+"CoC7.NoTargetSelected": "You have not selected a target for your {weapon} check. Do you want to proceed anyway?",
 
 "CoC7.Import": "Import",
 "CoC7.Proceed": "Proceed",

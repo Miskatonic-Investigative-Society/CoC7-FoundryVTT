@@ -901,7 +901,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		}
 
 
-		if(isCtrlKey(event) && game.user.isGM){
+		if (isCtrlKey(event) && game.user.isGM) {
 			const linkData = {
 				check: 'item',
 				type: 'weapon',
@@ -909,21 +909,52 @@ export class CoC7ActorSheet extends ActorSheet {
 				hasPlayerOwner: this.actor.hasPlayerOwner,
 				actorKey: this.actor.actorKey
 			};
-
-			CoC7LinkCreationDialog.fromLinkData(linkData).then( dlg => dlg.render(true));
-		} else{
-			if( !weapon.data.data.properties.rngd){
-				if( game.user.targets.size > 1){
-					ui.notifications.warn(game.i18n.localize('CoC7.WarnTooManyTarget'));
+			CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg => dlg.render(true));
+		} else {
+			let proceedWithoutTarget;
+			if (game.user.targets.size <= 0) {
+				proceedWithoutTarget = await new Promise((resolve) => {
+					const data = {
+						title: " ",
+						content: game.i18n.format('CoC7.NoTargetSelected', {
+							weapon: weapon.name
+						}),
+						buttons: {
+							cancel: {
+								icon: '<i class="fas fa-times"></i>',
+								label: game.i18n.localize('CoC7.Cancel'),
+								callback: () => { 
+									return resolve(false);
+								}
+							},
+							proceed: {
+								icon: '<i class="fas fa-check"></i>',
+								label: game.i18n.localize('CoC7.Proceed'),
+								callback: () => {
+									return resolve(true);
+								}
+							},
+						},
+						default: 'cancel',
+						classes: ['coc7', 'dialogue']
+					}
+					new Dialog(data).render(true);
+				});
+			}
+			if (game.user.targets.size > 0 || proceedWithoutTarget) {
+				if (!weapon.data.data.properties.rngd) {
+					if (game.user.targets.size > 1) {
+						ui.notifications.warn(game.i18n.localize('CoC7.WarnTooManyTarget'));
+					}
+					const card = new CoC7MeleeInitiator(actorKey, itemId, fastForward);
+					card.createChatCard();
 				}
+				if (weapon.data.data.properties.rngd) {
+					const card = new CoC7RangeInitiator(actorKey, itemId, fastForward);
+					card.createChatCard();
+				}
+			}
 
-				const card = new CoC7MeleeInitiator( actorKey, itemId, fastForward);
-				card.createChatCard();
-			}
-			if( weapon.data.data.properties.rngd){
-				const card = new CoC7RangeInitiator( actorKey, itemId, fastForward);
-				card.createChatCard();
-			}
 		}
 	}
 
