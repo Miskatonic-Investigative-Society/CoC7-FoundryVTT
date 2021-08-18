@@ -7,6 +7,10 @@ import { COC7 } from '../config.js';
 export class CoC7Item extends Item {
 	constructor(data={}, context={}) {
 		if( !data.img && 'skill' == data.type) data.img = 'systems/CoC7/artwork/icons/skills.svg'; //Change the icon for skills
+		if( !data.img && 'chase' == data.type) data.img = 'systems/CoC7/artwork/icons/evasion.svg'; //Change the icon for chase
+		if( !data.img && 'book' == data.type) data.img = 'systems/CoC7/artwork/icons/secret-book.svg'; //Change the icon for book
+		if( !data.img && 'spell' == data.type) data.img = 'systems/CoC7/artwork/icons/pentagram-rose.svg'; //Change the icon for spell
+		if( !data.img && 'vehicle' == data.type) data.img = 'systems/CoC7/artwork/icons/jeep.svg'; //Change the icon for spell
 		super(data, context);
 	}
 

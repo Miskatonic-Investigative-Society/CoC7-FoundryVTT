@@ -35,10 +35,7 @@
                                 <a><i class="fas fa-running"></i></a>
                             {{/if}}
                         </div>
-                        <div
-                            {{#if p.isActor}} class="p-icon open-actor" data-actor-key="{{p.key}}"
-                            {{else}} class="p-icon"{{/if}}
-                            >
+                        <div class="p-icon{{#if p.isActor}} open-actor{{/if}}" data-actor-key="{{p.key}}">
                             <a><img src="{{p.icon}}" title="{{p.name}}"/></a>
                         </div>
                         <div class="p-expand"></div>
