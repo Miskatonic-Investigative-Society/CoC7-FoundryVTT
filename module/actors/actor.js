@@ -455,8 +455,6 @@ export class CoCActor extends Actor {
 			catch(err){
 				console.error('Creature init: ' + err.message);
 			}
-
-			// console.log( 'Skill created');
 			await this.setActorFlag('initialized');
 			//Creating corresponding weapon.
 		}
@@ -2348,17 +2346,49 @@ export class CoCActor extends Actor {
 
 	async toggleStatus(statusName){
 		let statusValue = this.data.data.status[statusName]?.value;
-		if(!(typeof statusValue === 'boolean')) statusValue = statusValue === 'false' ? true : false; //Necessary, incorrect template initialization
-
-		if( COC7.status.criticalWounds == statusName){
-			if( statusValue) this.cureMajorWound(); else this.inflictMajorWound();
+		// Necessary, incorrect template initialization
+		if (!(typeof statusValue === 'boolean')) {
+			statusValue = statusValue === 'false' ? true : false;
+		}			
+		if (COC7.status.criticalWounds == statusName) {
+			if (statusValue) await this.cureMajorWound();
+			else await this.inflictMajorWound();
 			return;
 		}
+		await this.update({[`data.status.${statusName}.value`]: !statusValue});
+		switch (statusName) {
+			case 'dead':
+				const deadEffect = await this.hasActiveEffect('dead');
+				if (!this.dead && deadEffect.length > 0) {
+					deadEffect.forEach((effect) => effect.delete());
+				}
+				break;
+			case 'dying':
+				const dyingEffect = await this.hasActiveEffect('dying');
+				if (!this.dying && dyingEffect.length > 0) {
+					dyingEffect.forEach((effect) => effect.delete());
+				} else this.fallDying();
+				break;
+			case 'prone':
+				const proneEffect = await this.hasActiveEffect('prone');
+				if (!this.prone && proneEffect.length > 0) {
+					proneEffect.forEach((effect) => effect.delete());
+				} else this.fallProne();
+				break;
+			case 'unconscious':
+				const unconsciousEffect = await this.hasActiveEffect('unconscious');
+				if (!this.unconscious && unconsciousEffect.length > 0) {
+					unconsciousEffect.forEach((effect) => effect.delete());
+				} else this.fallUnconscious();
+				break;
+		}
+	}
 
-		await this.update( {[`data.status.${statusName}.value`]: !statusValue});
-		// if( !statusValue) await this.setFlag('CoC7', statusName, true);
-		// else await this.unsetFlag('CoC7', statusName);
-
+	async hasActiveEffect(effectLabel) {
+		const effectList = this.effects.map(effect => {
+			return effect;
+		}).filter((effect) => (effect.data.label === effectLabel));
+		return effectList;
 	}
 
 	async toggleEffect( effectName){
@@ -2670,38 +2700,96 @@ export class CoCActor extends Actor {
 		return total;
 	}
 
-	async inflictMajorWound(){
-		if( !this.majorWound) await this.setStatus(COC7.status.criticalWounds);
+	async inflictMajorWound() {
+		if (!this.majorWound) {
+			await this.setStatus(COC7.status.criticalWounds);
+			const criticalWoundsEffect = await this.hasActiveEffect('criticalWounds');
+				if (criticalWoundsEffect.length == 0) {
+					await super.createEmbeddedDocuments('ActiveEffect', [{
+						label: 'criticalWounds',
+						icon: 'systems/CoC7/artwork/icons/arm-sling.svg',
+						origin: this.uuid,
+						duration: {seconds: undefined, rounds: undefined, turns: 1},
+						disabled: false
+				}]);
+			}
+		}
 		await this.fallProne();
-		if( !this.getStatus(COC7.status.unconscious)){
-			const conCheck = new CoC7ConCheck( this.isToken? this.tokenKey : this._id);
+		if (!this.getStatus(COC7.status.unconscious)) {
+			const conCheck = new CoC7ConCheck(this.isToken ? this.tokenKey : this._id);
 			conCheck.toMessage();
 		}
 	}
 
-	async cureMajorWound(){
+	async cureMajorWound() {
 		await this.unsetStatus(COC7.status.criticalWounds);
+		const criticalWoundsEffect = await this.hasActiveEffect('criticalWounds');
+		if (criticalWoundsEffect.length > 0) {
+			criticalWoundsEffect.forEach((effect) => effect.delete());
+		}
 	}
 
 	async fallProne(){
 		await this.setStatus(COC7.status.prone);
+		const proneEffect = await this.hasActiveEffect('prone');
+		if (proneEffect.length == 0) {
+			await super.createEmbeddedDocuments('ActiveEffect', [{
+				label: 'prone',
+				icon: 'systems/CoC7/artwork/icons/falling.svg',
+				origin: this.uuid,
+				duration: {seconds: undefined, rounds: undefined, turns: 1},
+				disabled: false
+		}]);
+		}
 	}
 
 	async fallUnconscious(){
 		await this.setStatus( COC7.status.unconscious);
+		const unconsciousEffect = await this.hasActiveEffect('unconscious');
+		if (unconsciousEffect.length == 0) {
+			await super.createEmbeddedDocuments('ActiveEffect', [{
+				label: 'unconscious',
+				icon: 'systems/CoC7/artwork/icons/knocked-out-stars.svg',
+				origin: this.uuid,
+				duration: {seconds: undefined, rounds: undefined, turns: 1},
+				disabled: false
+			}]);
+		}
 	}
 
 	async fallDying(){
-		await this.setStatus( COC7.status.dying);
+		await this.setStatus(COC7.status.dying);
+		const dyingEffect = await this.hasActiveEffect('dying');
+		if (dyingEffect.length == 0) {
+			await super.createEmbeddedDocuments('ActiveEffect', [{
+				label: 'dying',
+				icon: 'systems/CoC7/artwork/icons/heart-beats.svg',
+				origin: this.uuid,
+				duration: {seconds: undefined, rounds: undefined, turns: 1},
+				disabled: false
+			}]);
+		}
 	}
 
-	async fallDead(){
-		await this.setStatus(COC7.status.criticalWounds);
-		await this.unsetStatus( COC7.status.dying);
-		await this.fallProne();
+	async fallDead() {
+		await this.inflictMajorWound();
+		await this.unsetStatus(COC7.status.dying);
 		await this.fallUnconscious();
-		await this.setStatus( COC7.status.dead);
-		// await this.setFlag( 'CoC7', 'dead', true);
+		await this.setStatus(COC7.status.dead);
+		const deadEffect = await this.hasActiveEffect('dead');
+		if (deadEffect.length == 0) {
+			await super.createEmbeddedDocuments('ActiveEffect', [{
+				label: 'dead',
+				icon: 'systems/CoC7/artwork/icons/tombstone.svg',
+				origin: this.uuid,
+				duration: {seconds: undefined, rounds: undefined, turns: 1},
+				disabled: false
+			}]);
+		}
+		const dyingEffect = await this.hasActiveEffect('dying');
+		if (!this.dying && dyingEffect.length > 0) {
+			dyingEffect.forEach((effect) => effect.delete());
+		}
 	}
 
 	get majorWound(){
@@ -2718,6 +2806,10 @@ export class CoCActor extends Actor {
 
 	get dead(){
 		return this.getStatus(COC7.status.dead);
+	}
+
+	get prone() {
+		return this.getStatus(COC7.status.prone);
 	}
 
 	// static updateActor( actor, dataUpdate){

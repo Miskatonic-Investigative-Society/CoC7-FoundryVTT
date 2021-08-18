@@ -5,7 +5,7 @@
 	"version": "0.6.2",
 	"author": "HavelockV",
 	"minimumCoreVersion": "0.8.6",
-	"compatibleCoreVersion": "0.8.8",
+	"compatibleCoreVersion": "0.8.9",
 	"esmodules": [
 		"module/coc7.js",
 		"module/dicebot.js"

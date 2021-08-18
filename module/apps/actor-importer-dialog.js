@@ -64,12 +64,12 @@ export class CoC7ActorImporterDialog extends Dialog {
         buttons: {
           import: {
             icon: '<i class="fas fa-file-import"></i>',
-            label: 'Import',
+            label: game.i18n.localize('CoC7.Import'),
             callback: CoC7ActorImporterDialog.importActor,
           },
           no: {
             icon: '<i class="fas fa-times"></i>',
-            label: 'Cancel'
+            label: game.i18n.localize('CoC7.Cancel')
           }
         },
         default: 'import',

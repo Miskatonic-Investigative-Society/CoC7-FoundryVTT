@@ -34,6 +34,7 @@ import { CoC7VehicleSheet } from './actors/sheets/vehicle.js';
 import { CoC7Canvas } from './apps/canvas.js';
 import { CoC7ChaseSheet } from './items/sheets/chase.js';
 import { CoC7CompendiumDirectory } from './compendium-directory.js';
+import * as RenderDialogHook from './hooks/render-dialog.js';
 
 Hooks.once('init', async function() {
 
@@ -552,6 +553,8 @@ Hooks.once('init', async function() {
 });
 
 Hooks.on('renderCombatTracker', (app, html, data) => CoC7Combat.renderCombatTracker( app, html, data));
+
+RenderDialogHook.listen();
 
 Hooks.once('setup', function() {
 

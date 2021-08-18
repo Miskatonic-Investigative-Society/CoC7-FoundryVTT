@@ -71,6 +71,7 @@ export class CoC7Check {
 	}
 
 	get rawValue(){
+		if( !this.actor || !this.actor.id) return undefined;
 		if( !this._rawValue){
 			if( this.characteristic) this.rawValue = this.actor.data.data.characteristics[this.characteristic].value;
 			if( this.skill) this.rawValue = this.skill.value;
@@ -423,9 +424,14 @@ export class CoC7Check {
 	}
 
 	get actor() { 
-		if( !this._actor){
+		if( !this._actor || !this._actor?.id){
 			if( this.actorKey) this._actor = chatHelper.getActorFromKey( this.actorKey);//REFACTORING (2)
 			if( this.actorId) this._actor = chatHelper.getActorFromKey( this.actorId);//REFACTORING (2)
+			if( !this._actor) return {
+				id: undefined,
+				img: 'systems/CoC7/artwork/icons/question-circle-regular.svg',
+				portrait: 'systems/CoC7/artwork/icons/question-circle-regular.svg'
+			};
 		} else if( this._actor.constructor.name == 'Object'){
 			const actor = new CoCActor(this._actor);
 			this._actor = actor;

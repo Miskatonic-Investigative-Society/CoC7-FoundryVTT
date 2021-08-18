@@ -571,23 +571,44 @@ export class CoC7ActorSheet extends ActorSheet {
 		html.find('a.coc7-link').on( 'dragstart', (event)=> CoC7Parser._onDragCoC7Link(event));
 
 		html.find('.test-trigger').click( async event =>{
+
+			await OpposedCheckCard.dispatch({
+				type: OpposedCheckCard.defaultConfig.type,
+				combat: false,
+				action: 'new',
+				roll:{
+					characteristic: 'str',
+					actor: this.actor.actorKey 
+				}
+			});
+
+			await OpposedCheckCard.dispatch({
+				type: OpposedCheckCard.defaultConfig.type,
+				combat: false,
+				action: 'new',
+				roll:{
+					characteristic: 'con',
+					// actor: this.actor.actorKey 
+				}
+
+			});
 			// const val = getProperty( this.actor, 'data.data.attribs.san.value');
 
 			// this.actor.enterBoutOfMadness( true, 10);
 
-			const roll = new CoC7Check();
-			roll.actor = this.actorKey;
-			roll.attribute = 'san';
-			roll.difficulty = this.options.sanDifficulty || CoC7Check.difficultyLevel.regular;
-			roll.diceModifier = this.options.sanModifier || 0;
-			await roll._perform();
+			// const roll = new CoC7Check();
+			// roll.actor = this.actorKey;
+			// roll.attribute = 'san';
+			// roll.difficulty = this.options.sanDifficulty || CoC7Check.difficultyLevel.regular;
+			// roll.diceModifier = this.options.sanModifier || 0;
+			// await roll._perform();
 
 
 
-			for (const effect of this.actor.effects) {
-				await effect.sheet.render(true);				
-				// effect.delete();				
-			}
+			// for (const effect of this.actor.effects) {
+			// 	await effect.sheet.render(true);				
+			// 	// effect.delete();				
+			// }
 			// this.actor.effects.forEach( e => e.delete());
 			// await setProperty( this.actor, 'data.data.encounteredCreatures', []);
 
@@ -880,7 +901,7 @@ export class CoC7ActorSheet extends ActorSheet {
 		}
 
 
-		if(isCtrlKey(event) && game.user.isGM){
+		if (isCtrlKey(event) && game.user.isGM) {
 			const linkData = {
 				check: 'item',
 				type: 'weapon',
@@ -888,21 +909,52 @@ export class CoC7ActorSheet extends ActorSheet {
 				hasPlayerOwner: this.actor.hasPlayerOwner,
 				actorKey: this.actor.actorKey
 			};
-
-			CoC7LinkCreationDialog.fromLinkData(linkData).then( dlg => dlg.render(true));
-		} else{
-			if( !weapon.data.data.properties.rngd){
-				if( game.user.targets.size > 1){
-					ui.notifications.warn(game.i18n.localize('CoC7.WarnTooManyTarget'));
+			CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg => dlg.render(true));
+		} else {
+			let proceedWithoutTarget;
+			if (game.user.targets.size <= 0) {
+				proceedWithoutTarget = await new Promise((resolve) => {
+					const data = {
+						title: " ",
+						content: game.i18n.format('CoC7.NoTargetSelected', {
+							weapon: weapon.name
+						}),
+						buttons: {
+							cancel: {
+								icon: '<i class="fas fa-times"></i>',
+								label: game.i18n.localize('CoC7.Cancel'),
+								callback: () => { 
+									return resolve(false);
+								}
+							},
+							proceed: {
+								icon: '<i class="fas fa-check"></i>',
+								label: game.i18n.localize('CoC7.Proceed'),
+								callback: () => {
+									return resolve(true);
+								}
+							},
+						},
+						default: 'cancel',
+						classes: ['coc7', 'dialogue']
+					}
+					new Dialog(data).render(true);
+				});
+			}
+			if (game.user.targets.size > 0 || proceedWithoutTarget) {
+				if (!weapon.data.data.properties.rngd) {
+					if (game.user.targets.size > 1) {
+						ui.notifications.warn(game.i18n.localize('CoC7.WarnTooManyTarget'));
+					}
+					const card = new CoC7MeleeInitiator(actorKey, itemId, fastForward);
+					card.createChatCard();
 				}
+				if (weapon.data.data.properties.rngd) {
+					const card = new CoC7RangeInitiator(actorKey, itemId, fastForward);
+					card.createChatCard();
+				}
+			}
 
-				const card = new CoC7MeleeInitiator( actorKey, itemId, fastForward);
-				card.createChatCard();
-			}
-			if( weapon.data.data.properties.rngd){
-				const card = new CoC7RangeInitiator( actorKey, itemId, fastForward);
-				card.createChatCard();
-			}
 		}
 	}
 

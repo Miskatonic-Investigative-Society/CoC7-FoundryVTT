@@ -26,7 +26,7 @@ Compendium 'Roll Requests' contains numerous links for all your needs.
 
 ## Credits.
 
-This is system is made possible thanks to all of its contributors!
+This system is made possible thanks to all of its contributors!
 
 <a href="https://github.com/HavlockV/CoC7-FoundryVTT/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=HavlockV/CoC7-FoundryVTT" />
