@@ -5,7 +5,9 @@
 * Fix null damage bonus to empty when rolling, thanks to @snap01;
 * Fix race condition when editing characteristics, thanks to @snap01;
 * Fix user selection when there is only one GM user, thanks to @snap01;
+* Now a confirmation dialog will be rendered whenever a combat check is made without target;
 * Now entity types names are localizable;
+* Now if a damage roll is made on combat card without target, there will be a button to deal the damage to a selected token, thanks to @zeteticl;
 * Now if no tokens are selected the GM is able to create a roll request message, thanks to @snap01;
 * Update to French localization, thanks to @vonv;
 * Update to Portuguese localization;
