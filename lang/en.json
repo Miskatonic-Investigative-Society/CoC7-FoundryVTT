@@ -385,6 +385,7 @@
 "CoC7.DevFailureDetails": "{item} NOT upgraded",
 "CoC7.DevSuccess": "{item} upgraded ({die}/{score}%) by {augment}%",
 "CoC7.DevFailure": "{item} NOT upgraded ({die}/{score}%)",
+"CoC7.SanGained": "<p>Gained 2d6 ({results} = <strong>{sanGained}</strong>) Sanity after mastering <strong>{skill}</strong> with a <strong>{skillValue}%</strong></p>",
 "CoC7.LuckIncreased": "Luck recovered ({die}/{score}) by {augment} points",
 "CoC7.LuckNotIncreased": "Luck NOT recovered ({die}/{score})",
 "CoC7.SkillDetail": "Detail",
