@@ -1,3 +1,7 @@
+## Version 0.6.4:
+
+* Fix bug on folder select tag when creating a new entity.
+
 ## Version 0.6.3:
 
 * Dying, dead, major wounds, prone and unconscious conditions now trigger active effects;
