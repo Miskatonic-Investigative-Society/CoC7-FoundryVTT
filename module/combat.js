@@ -14,11 +14,11 @@ export class CoC7Combat {
 			// const combatant = game.combat.getCombatant(combId);
 			const combatant = currentCombat.data.combatants.get(combId);
 
-			if(!!combatant.getFlag('CoC7', 'hasGun')) {
-				$(combatantControlsDiv).prepend(`<a class="combatant-control active add-init" title="${game.i18n.localize('CoC7.PutGunAway')}" data-control="drawGun"><i class="fas fa-bullseye"></i></a>`);
+			if(combatant.getFlag('CoC7', 'hasGun')) {
+				$(combatantControlsDiv).prepend(`<a class="combatant-control active add-init" title="${game.i18n.localize('CoC7.PutGunAway')}" data-control="drawGun"><i class="game-icon game-icon-revolver"></i></a>`);
 			}
 			else {
-				$(combatantControlsDiv).prepend(`<a class="combatant-control add-init" title="${game.i18n.localize('CoC7.DrawGun')}" data-control="drawGun"><i class="fas fa-bullseye"></i></a>`);
+				$(combatantControlsDiv).prepend(`<a class="combatant-control add-init" title="${game.i18n.localize('CoC7.DrawGun')}" data-control="drawGun"><i class="game-icon game-icon-revolver"></i></a>`);
 			}
 			if( 'optional' == game.settings.get('CoC7', 'initiativeRule') && game.settings.get('CoC7', 'displayInitAsText')){
 				if( combatant.initiative){
@@ -81,7 +81,7 @@ export class CoC7Combat {
 		const li = btn.closest('.combatant');
 		const c = await game.combat.combatants.get(li.dataset.combatantId);
 		if( c.actor.isOwner){
-			if(!!c.getFlag('CoC7', 'hasGun')){
+			if(c.getFlag('CoC7', 'hasGun')){
 				await c.setFlag('CoC7', 'hasGun', false);
 			}
 			else{
@@ -90,7 +90,7 @@ export class CoC7Combat {
 		}
 		
 		const newInit = await c.actor.rollInitiative(!!c.getFlag('CoC7', 'hasGun'));
-		if(!!c.getFlag('CoC7', 'hasGun')){
+		if(c.getFlag('CoC7', 'hasGun')){
 			if( c.initiative < newInit) game.combat.setInitiative( c.id, newInit);		
 		} else game.combat.setInitiative( c.id, newInit);
 	}

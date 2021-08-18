@@ -96,7 +96,7 @@ export class InteractiveChatCard{
      */
 	_onButton( event){
 		const button = event.currentTarget;
-		button.style.display = 'none'; //Avoid multiple push
+		//button.style.display = 'none'; //Avoid multiple push
 		const action = button.dataset.action;
 		if( this[action]) this[action]({event: event, update:true});        
 	}
@@ -329,7 +329,7 @@ export class InteractiveChatCard{
     
 	get targetActor(){
 		if( !this._targetActor){
-			if( this.targetToken) this._targetActor = this.targetToken.actor;
+			if( this.targetToken) this._targetActor = this.targetToken.actor || this.targetToken.data.actor || this.targetToken.data.document;
 			else this._targetActor = chatHelper.getActorFromKey( this._targetKey);//REFACTORING (2)
 		}
 		return this._targetActor;

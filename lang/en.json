@@ -1,6 +1,23 @@
 {
 "CoC7.title": "Call of Cthulhu 7h Edition (Unofficial)",
 
+"CoC7.Entities.Character": "Character",
+"CoC7.Entities.Creature": "Creature",
+"CoC7.Entities.Npc": "NPC",
+"CoC7.Entities.Vehicle": "Vehicle",
+
+"CoC7.Entities.Archetype": "Archetype",
+"CoC7.Entities.Book": "Book",
+"CoC7.Entities.Chase": "Chase",
+"CoC7.Entities.Item": "Item",
+"CoC7.Entities.Occupation": "Occupation",
+"CoC7.Entities.Setup": "Setup",
+"CoC7.Entities.Skill": "Skill",
+"CoC7.Entities.Spell": "Spell",
+"CoC7.Entities.Status": "Status",
+"CoC7.Entities.Talent": "Talent",
+"CoC7.Entities.Weapon": "Weapon",
+
 "CHARAC.STR": "STR",
 "CHARAC.Strengh": "Strength",
 "CHARAC.Strength": "Strength",
@@ -619,6 +636,13 @@
 "CoC7.MessageSelectedTargetIsNotControlled": "The token for {name} is owned by not controlled by a player so will not be able to react to combat actions.",
 "CoC7.MessageBoutOfMadnessTableNotFound": "The result from the madness table was not found, please check all your roll tables are created",
 "CoC7.MessageBoutOfMadnessItemNotFound": "The result from the madness table was not found, please check all your statuses are created",
+
+"CoC7.DealDamage": "Deal {damage} damage points to {target}?",
+"CoC7.NoTargetSelected": "You have not selected a target for your {weapon} check. Do you want to proceed anyway?",
+
+"CoC7.Import": "Import",
+"CoC7.Proceed": "Proceed",
+"CoC7.Cancel": "Cancel",
 
 "CoC7.ActorImporter": "Actor Importer",
 "CoC7.ActorImporterSummary": "Import an NPC or Creature from description and stats. Just paste the corresponding plain text",
