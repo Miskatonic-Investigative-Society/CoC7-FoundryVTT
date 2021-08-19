@@ -3263,22 +3263,19 @@ export class CoCActor extends Actor {
   }
 
   async setHealthStatusManually (event) {
+    event.preventDefault()
     if (event.originalEvent) {
       const healthBefore = parseInt(
         event.originalEvent.currentTarget.defaultValue
       )
       const healthAfter = parseInt(event.originalEvent.currentTarget.value)
-      if (healthAfter > healthBefore) {
-        // is healing
-        await this.setHp(healthAfter)
-      } else if (healthAfter < 0) {
-        const damageTaken = Math.abs(healthAfter)
-        await this.dealDamage(damageTaken)
-      } else {
-        await this.dealDamage(healthBefore - healthAfter, {
-          ignoreArmor: true
-        })
-      }
+      let damageTaken
+      // is healing
+      if (healthAfter > healthBefore) return await this.setHp(healthAfter)
+      else if (healthAfter < 0) damageTaken = Math.abs(healthAfter)
+      else damageTaken = healthBefore - healthAfter
+      this.render(true) // needed, or negative values will not work
+      return await this.dealDamage(damageTaken, { ignoreArmor: true })
     }
   }
 
