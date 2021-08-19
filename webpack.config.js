@@ -1,6 +1,7 @@
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import * as fs from 'fs'
+import * as os from 'os'
 import * as path from 'path'
 import * as process from 'process'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
@@ -55,7 +56,7 @@ const bundleScript = {
   bail: buildMode === 'production',
   context: __dirname,
   entry: './module/coc7.js',
-  devtool: buildMode === 'development' ? undefined : 'inline-source-map',
+  devtool: buildMode === 'production' ? undefined : 'inline-source-map',
   mode: buildMode,
   module: {
     rules: [
@@ -73,12 +74,20 @@ const bundleScript = {
           {
             loader: 'less-loader',
             options: { sourceMap: true }
-          }
+          },
         ]
-      }
+      },
+      {
+        loader: "thread-loader",
+        options: {
+            workers: os.cpus().length + 1,
+            poolRespawn: false,
+            poolTimeout: buildMode === 'production' ? 500 : Infinity,
+        },
+      },
     ]
   },
-  optimization,
+  optimization: optimization,
   output: {
     clean: true,
     path: buildDestination(),
