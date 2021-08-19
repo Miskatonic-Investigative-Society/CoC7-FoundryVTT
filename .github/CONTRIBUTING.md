@@ -26,11 +26,11 @@ There are 2 main ways to install in Foundry:
 
 1. Search for Call of Cthuhlu and select this module
 
-2. Install in foundry VTT from the Game Systems tab using the following manifest: <https://raw.githubusercontent.com/HavlockV/CoC7-FoundryVTT/master/system.json>
+2. Install in foundry VTT from the Game Systems tab using the following manifest: <https://raw.githubusercontent.com/HavlockV/CoC7-FoundryVTT/develop/system.json>
 
 ### Installing for local development
 
-Copy and paste the contents of `CoCFoundry` after pulling from master. This should be placed in a `CoC7` folder inside 
+Copy and paste the contents of `CoCFoundry` after pulling from develop. This should be placed in a `CoC7` folder inside 
 FoundryVTT's `systems` folder. 
 
 Start up FoundryVTT, and the system should be listed as installed. From here, you can create world
@@ -110,3 +110,4 @@ Unsure where to begin contributing? You can start by looking through these `begi
 
 * [Beginner issues][beginner] - issues which should only require a few lines of code, and a test or two.
 * [Help wanted issues][help-wanted] - issues which should be a bit more involved than `beginner` issues.
+* This project uses this coding standard please run your code through this linter to maintain code consistency https://standardjs.com/

@@ -16,8 +16,7 @@
 		"coc7g.css",
 		"artwork/fonts/game-icons.css"
 	],
-	"packs": [
-		{
+	"packs": [{
 			"label": "Skills",
 			"entity": "Item",
 			"name": "skills",
@@ -52,8 +51,7 @@
 			"system": "CoC7"
 		}
 	],
-	"languages": [
-		{
+	"languages": [{
 			"lang": "en",
 			"name": "English",
 			"path": "lang/en.json"
