@@ -9,7 +9,7 @@ import { COC7 } from '../config.js'
 export class CoC7Item extends Item {
   constructor (data = {}, context = {}) {
     if (!data.img && data.type === 'skill')
-      data.img = 'systems/CoC7/artwork/icons/skills.svg' // Change the icon for skills
+      data.img = 'systems/CoC7/assets/icons/skills.svg' // Change the icon for skills
     super(data, context)
   }
 

@@ -505,8 +505,8 @@ export class CoC7Check {
       if (!this._actor) {
         return {
           id: undefined,
-          img: 'systems/CoC7/artwork/icons/question-circle-regular.svg',
-          portrait: 'systems/CoC7/artwork/icons/question-circle-regular.svg'
+          img: 'systems/CoC7/assets/icons/question-circle-regular.svg',
+          portrait: 'systems/CoC7/assets/icons/question-circle-regular.svg'
         }
       }
     } else if (this._actor.constructor.name === 'Object') {

@@ -6,9 +6,9 @@
   "author": "HavelockV",
   "minimumCoreVersion": "0.8.6",
   "compatibleCoreVersion": "0.8.9",
-  "esmodules": ["module/coc7.js", "module/dicebot.js"],
+  "esmodules": ["bundle.js"],
   "templateVersion": 1,
-  "styles": ["styles/coc7.css", "coc7g.css", "artwork/fonts/game-icons.css"],
+  "styles": ["style.css"],
   "packs": [
     {
       "label": "Skills",

@@ -357,7 +357,7 @@ export class CoCActor extends Actor {
       await super.createEmbeddedDocuments('ActiveEffect', [
         {
           label: game.i18n.localize('CoC7.BoutOfMadnessName'),
-          icon: 'systems/CoC7/artwork/icons/hanging-spider.svg',
+          icon: 'systems/CoC7/assets/icons/hanging-spider.svg',
           origin: this.uuid,
           duration: {
             rounds: realTime && duration ? duration : undefined,
@@ -402,7 +402,7 @@ export class CoCActor extends Actor {
       await super.createEmbeddedDocuments('ActiveEffect', [
         {
           label: game.i18n.localize('CoC7.InsanityName'),
-          icon: 'systems/CoC7/artwork/icons/tentacles-skull.svg',
+          icon: 'systems/CoC7/assets/icons/tentacles-skull.svg',
           origin: this.uuid,
           duration: {
             seconds: !indefinite && duration ? duration * 3600 : undefined,
@@ -2989,7 +2989,7 @@ export class CoCActor extends Actor {
           await super.createEmbeddedDocuments('ActiveEffect', [
             {
               label: game.i18n.localize('CoC7.BoutOfMadnessName'),
-              icon: 'systems/CoC7/artwork/icons/hanging-spider.svg',
+              icon: 'systems/CoC7/assets/icons/hanging-spider.svg',
               origin: this.uuid,
               duration: {
                 seconds: undefined,
@@ -3020,7 +3020,7 @@ export class CoCActor extends Actor {
           await super.createEmbeddedDocuments('ActiveEffect', [
             {
               label: game.i18n.localize('CoC7.InsanityName'),
-              icon: 'systems/CoC7/artwork/icons/tentacles-skull.svg',
+              icon: 'systems/CoC7/assets/icons/tentacles-skull.svg',
               origin: this.uuid,
               duration: {
                 seconds: undefined,
@@ -3325,7 +3325,7 @@ export class CoCActor extends Actor {
         await super.createEmbeddedDocuments('ActiveEffect', [
           {
             label: 'criticalWounds',
-            icon: 'systems/CoC7/artwork/icons/arm-sling.svg',
+            icon: 'systems/CoC7/assets/icons/arm-sling.svg',
             origin: this.uuid,
             duration: {
               seconds: undefined,
@@ -3359,7 +3359,7 @@ export class CoCActor extends Actor {
       await super.createEmbeddedDocuments('ActiveEffect', [
         {
           label: 'prone',
-          icon: 'systems/CoC7/artwork/icons/falling.svg',
+          icon: 'systems/CoC7/assets/icons/falling.svg',
           origin: this.uuid,
           duration: {
             seconds: undefined,
@@ -3379,7 +3379,7 @@ export class CoCActor extends Actor {
       await super.createEmbeddedDocuments('ActiveEffect', [
         {
           label: 'unconscious',
-          icon: 'systems/CoC7/artwork/icons/knocked-out-stars.svg',
+          icon: 'systems/CoC7/assets/icons/knocked-out-stars.svg',
           origin: this.uuid,
           duration: {
             seconds: undefined,
@@ -3399,7 +3399,7 @@ export class CoCActor extends Actor {
       await super.createEmbeddedDocuments('ActiveEffect', [
         {
           label: 'dying',
-          icon: 'systems/CoC7/artwork/icons/heart-beats.svg',
+          icon: 'systems/CoC7/assets/icons/heart-beats.svg',
           origin: this.uuid,
           duration: {
             seconds: undefined,
@@ -3422,7 +3422,7 @@ export class CoCActor extends Actor {
       await super.createEmbeddedDocuments('ActiveEffect', [
         {
           label: 'dead',
-          icon: 'systems/CoC7/artwork/icons/tombstone.svg',
+          icon: 'systems/CoC7/assets/icons/tombstone.svg',
           origin: this.uuid,
           duration: {
             seconds: undefined,

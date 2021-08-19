@@ -34,7 +34,9 @@ import { CoC7VehicleSheet } from './actors/sheets/vehicle.js'
 import { CoC7Canvas } from './apps/canvas.js'
 import { CoC7ChaseSheet } from './items/sheets/chase.js'
 import { CoC7CompendiumDirectory } from './compendium-directory.js'
+import * as DiceBot from './dicebot.js'
 import * as RenderDialogHook from './hooks/render-dialog.js'
+import '../styles/index.less'
 
 Hooks.once('init', async function () {
   game.CoC7 = {
@@ -397,7 +399,7 @@ Hooks.once('init', async function () {
       hint: 'SETTINGS.ArtWorkSheetBackgroundHint',
       scope: 'world',
       config: true,
-      default: "url( './artwork/backgrounds/character-sheet.png') 4 repeat",
+      default: "url('./assets/backgrounds/character-sheet.webp') 4 repeat",
       type: String
     })
 
@@ -420,7 +422,7 @@ Hooks.once('init', async function () {
       hint: 'SETTINGS.ArtWorkOtherSheetBackgroundHint',
       scope: 'world',
       config: true,
-      default: "url( './artwork/backgrounds/sheet.jpg')",
+      default: "url( './assets/backgrounds/sheet.webp')",
       type: String
     })
 
@@ -429,7 +431,7 @@ Hooks.once('init', async function () {
       hint: 'SETTINGS.ArtworkSheetImageHint',
       scope: 'world',
       config: true,
-      default: "url('./artwork/tentacules.png')",
+      default: "url('./assets/tentacles.webp')",
       type: String
     })
 
@@ -590,6 +592,7 @@ Hooks.on('renderCombatTracker', (app, html, data) =>
   CoC7Combat.renderCombatTracker(app, html, data)
 )
 
+DiceBot.listen()
 RenderDialogHook.listen()
 
 Hooks.once('setup', function () {
