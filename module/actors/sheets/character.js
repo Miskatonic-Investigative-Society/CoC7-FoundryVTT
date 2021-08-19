@@ -67,7 +67,6 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
   // }
 
   static renderSheet (sheet) {
-    // html.css('--main-sheet-bg',  'url( \'./assets/backgrounds/character-sheet.webp\') 4 repeat');
     if (game.settings.get('CoC7', 'overrideSheetArtwork')) {
       if (game.settings.get('CoC7', 'artWorkSheetBackground')) {
         sheet.element.css(
@@ -126,7 +125,7 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
       ) {
         sheet.element.css(
           '--main-sheet-bg',
-          "url( './assets/backgrounds/void.webp')"
+          "url( './assets/images/void.webp')"
         )
       }
 
@@ -142,7 +141,7 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
       ) {
         sheet.element.css(
           '--other-sheet-bg',
-          "url( './assets/backgrounds/void.webp')"
+          "url( './assets/images/void.webp')"
         )
       }
 
@@ -156,7 +155,7 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
       ) {
         sheet.element.css(
           '--main-sheet-image',
-          "url( './assets/backgrounds/void.webp')"
+          "url( './assets/images/void.webp')"
         )
       }
 

@@ -36,7 +36,7 @@ import { CoC7ChaseSheet } from './items/sheets/chase.js'
 import { CoC7CompendiumDirectory } from './compendium-directory.js'
 import * as DiceBot from './dicebot.js'
 import * as RenderDialogHook from './hooks/render-dialog.js'
-import '../styles/index.less'
+import '../styles/system/index.less'
 
 Hooks.once('init', async function () {
   game.CoC7 = {
@@ -399,7 +399,7 @@ Hooks.once('init', async function () {
       hint: 'SETTINGS.ArtWorkSheetBackgroundHint',
       scope: 'world',
       config: true,
-      default: "url('./assets/backgrounds/character-sheet.webp') 4 repeat",
+      default: "url('./assets/images/background.webp') 4 repeat",
       type: String
     })
 
@@ -422,7 +422,7 @@ Hooks.once('init', async function () {
       hint: 'SETTINGS.ArtWorkOtherSheetBackgroundHint',
       scope: 'world',
       config: true,
-      default: "url( './assets/backgrounds/sheet.webp')",
+      default: "url( './assets/images/background.webp')",
       type: String
     })
 
@@ -431,7 +431,7 @@ Hooks.once('init', async function () {
       hint: 'SETTINGS.ArtworkSheetImageHint',
       scope: 'world',
       config: true,
-      default: "url('./assets/tentacles.webp')",
+      default: "url('./assets/images/tentacles.webp')",
       type: String
     })
 

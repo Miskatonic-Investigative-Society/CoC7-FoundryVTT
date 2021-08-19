@@ -1,30 +1,48 @@
-# Call of Cthulhu 7th ed. (Unofficial) for Foundry VTT.
+<h3 align="center">Call of Cthulhu 7th Edition (Unofficial) for Foundry VTT</h3>
+<p align="center">
+  <img src="https://img.shields.io/github/repo-size/HavlockV/CoC7-FoundryVTT.svg">
+  <a href="https://github.com/HavlockV/CoC7-FoundryVTT/commits/master">
+    <img src="https://img.shields.io/github/last-commit/HavlockV/CoC7-FoundryVTT.svg">
+  </a>
+  <a href="https://github.com/HavlockV/CoC7-FoundryVTT/issues">
+    <img src="https://img.shields.io/github/issues/HavlockV/CoC7-FoundryVTT.svg">
+  </a>
+  <img src="https://img.shields.io/github/license/HavlockV/CoC7-FoundryVTT.svg">
+  <img src="https://img.shields.io/github/downloads/HavlockV/CoC7-FoundryVTT/latest/total">
+</p>
+<p align="center">
+  <a href="#usage">Usage</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#contributing">Contributing</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#licenses">Licenses</a>
+</p>
+
+### Overview.
+
+...
 
 For the list of changes, see: [CHANGELOG](.github/CHANGELOG.md).
 
-For contributing guidelines, see: [CONTRIBUTING](.github/CONTRIBUTING.md).
+#### Disclaimer.
 
-## Disclaimer.
+This project does not include any materials from the official books and you will have to enter manually the weapons, skills, items, etc… to be able to play. We have just provided some basics skills that you can use as example. This system is completely Unofficial.
 
-This system doesn’t include any materials from the books and you’ll have to enter manually, weapons, skills, items etc… to be able to play.
-I’ve just provided some basics skills that you can use as example.
-This system is completely Unofficial.
+### Usage.
 
-I’m testing my dev on Chrome. Not sure how or if it will behave on other browser.
-
-## Usage.
-
-Install in Foundry VTT from the Game Systems tab using the following manifest:  
+Install in Foundry VTT from the Game Systems tab, using the following manifest:
 `https://raw.githubusercontent.com/HavlockV/CoC7-FoundryVTT/master/system.json`
 
 You can also search for "Call of Cthulhu 7th edition (Unofficial)" on the package finder.
 
-Compendium 'Examples' contains a 1920's character sheet, you just need to import it to start a character. Contains also a NPC and a creature example.  
-Compendium 'Skills' contains a set of basic skills that you can use for your PC/NPC.  
-Compendium 'Weapons' contains a single test weapon.
-Compendium 'Roll Requests' contains numerous links for all your needs.
+- Compendium "Examples" contains a 1920's Character Sheet, you just need to import it to start a new Character. It contains also a NPC and a Creature as examples.
+- Compendium "Skills" contains a set of basic Skills that you can use for your Characters.
+- Compendium "Weapons" contains a single test Weapon.
+- Compendium "Roll Requests" contains numerous links for all your needs.
 
-## Credits.
+### Contributing.
+
+Thank you for being interested in making this system better. We encourage everyone to help improve this project with new features, bug fixes, or performance improvements. Please take a little bit of your time to read our guide to make this process faster and easier.
+
+To understand how to submit an issue, commit and create pull requests, check our [Contribution Guidelines](.github/CONTRIBUTING.md). We always expect you to follow our [Code of Conduct](.github/CODE_OF_CONDUCT.md).
 
 This system is made possible thanks to all of its contributors!
 
@@ -32,20 +50,12 @@ This system is made possible thanks to all of its contributors!
   <img src="https://contrib.rocks/image?repo=HavlockV/CoC7-FoundryVTT" />
 </a>
 
-## Future Plans.
+### Licenses.
 
-- [ ] Correcting bugs.
-- [x] Implement luck rolls.
-- [x] Implement Creatures (with automatic and average characteristics/skill calculation).
-- [x] Implement NPC (with automatic and average characteristics/skill calculation).
-- [x] Implement creations of skills directly from the sheets.
-- [x] Implement experience tracking.
-- [x] Implement localization.
-- [ ] Working on CSS/HTML to improve the look.
-- [x] Improving the combat tab, by adding combat skill to the weapon list.
-- [x] Automatic skill assignment when adding a weapon.
-- [x] Combat automation (calculation of difficulty, assignment of damage, opposed check...).
-- [x] Implement pushed rolls.
-- [x] Implement advanced rolls (opposed, combined etc…).
-- [ ] Implement car chases.
-- [x] Automation of character creation.
+All the code on this repository is licensed under the [GNU General Public License v3.0](https://github.com/HavlockV/CoC7-FoundryVTT/blob/develop/LICENSE).
+
+Foundry VTT support is covered by [Limited License Agreement for Module Development](https://foundryvtt.com/article/license/).
+
+This project uses some assets from Game Icons, thanks to its [authors](https://game-icons.net/about.html#authors).
+
+This system uses trademarks and/or copyrights owned by Chaosium Inc/Moon Design Publications LLC, which are used under [Chaosium Inc's Fan Material Policy](https://www.chaosium.com/fan-material-policy/). We are expressly prohibited from charging you to use or access this content. This system is not published, endorsed, or specifically approved by Chaosium Inc. For more information about Chaosium Inc's products, please visit www.chaosium.com.
