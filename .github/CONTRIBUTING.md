@@ -76,9 +76,10 @@ Still in the terminal, install the project dependencies: `npm install`
 To make things easier, edit the `fvtt.config.example.js` file, located at the root of your local repository. The userDataPath attribute is your User Data Directory from Foundry and can be found on the Configuration tab on the Setup screen.
 
 Examples:
+
 - %localappdata%/FoundryVTT
 - ~/Library/Application Support/FoundryVTT
-- /home/$USER/.local/share/FoundryVTT
+- /home/\$USER/.local/share/FoundryVTT
 
 Then, rename this file to `fvtt.config.js`
 
