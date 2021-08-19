@@ -382,6 +382,7 @@
   "CoC7.RollLuck4Dev": "Rolling Luck for development",
   "CoC7.DevRollTitle": "Rolling {item} for development: {die}/{score}%",
   "CoC7.DevSuccessDetails": "{item} upgraded by {augment}%",
+  "CoC7.SanGained": "Gained 2d6 ({results} = <strong>{sanGained}</strong>) Sanity after mastering <strong>{skill}</strong> with a <strong>{skillValue}%</strong>",
   "CoC7.DevFailureDetails": "{item} NOT upgraded",
   "CoC7.DevSuccess": "{item} upgraded ({die}/{score}%) by {augment}%",
   "CoC7.DevFailure": "{item} NOT upgraded ({die}/{score}%)",
