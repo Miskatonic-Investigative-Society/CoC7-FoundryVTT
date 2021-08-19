@@ -29,7 +29,7 @@ The more detail on reproducing, the better! Bugs are hard to fix if we can not r
 
 ...
 
-## Translators Wanted
+## Translators Wanted!
 
 We are always looking for translators, there is a lot to translate, and we can not do it all. If you see any translations missing for you language, Feel free to look in the corresponding `*.json` file in the `lang` folder. Comparing against the `en.json` is a good idea, for a baseline.
 
@@ -41,7 +41,7 @@ We are always looking for translators, there is a lot to translate, and we can n
 
 On Windows, grab an installer from here: https://git-scm.com/download/win and go with the default options (there will be a lot of option screens).
 
-On Mac and Linux, it's pre-installed.
+On Mac and Linux, it is pre-installed.
 
 To check if Git is installed in your environment, open the shell or terminal of your choice and:
 
@@ -73,7 +73,7 @@ Preferably, open the project directory in your Integrated Development Environmen
 
 Still in the terminal, install the project dependencies: `npm install`
 
-To make things easier, edit the `fvtt.config.example.js` file, located at the root of your local repository. The userDataPath attribute is your User Data Directory from Foundry and can be found on the Configuration tab on the Setup screen.
+To make things easier, edit the `fvtt.config.example.js` file, located at the root of your local repository. The userDataPath key is your User Data Directory from Foundry and can be found on the Configuration tab on the Setup screen.
 
 Examples:
 
@@ -97,9 +97,9 @@ The project structure is made as follows:
 
 ...
 
-While testing your changes within Foundry VTT, prefer run: `npm watch`
+While testing your changes within Foundry VTT, prefer run: `npm run watch`
 
-That way, Webpack and other dependencies will know whenever you make any relevant code changes and will run the build process only when necessary.
+This way, Webpack and other dependencies will know whenever you make any relevant code changes and will run the build process only when necessary.
 
 ### Your First Code Contribution.
 
