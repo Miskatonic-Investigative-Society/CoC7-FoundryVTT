@@ -74,17 +74,17 @@ const bundleScript = {
           {
             loader: 'less-loader',
             options: { sourceMap: true }
-          },
+          }
         ]
       },
       {
-        loader: "thread-loader",
+        loader: 'thread-loader',
         options: {
-            workers: os.cpus().length + 1,
-            poolRespawn: false,
-            poolTimeout: buildMode === 'production' ? 500 : Infinity,
-        },
-      },
+          workers: os.cpus().length + 1,
+          poolRespawn: false,
+          poolTimeout: buildMode === 'production' ? 500 : Infinity
+        }
+      }
     ]
   },
   optimization: optimization,
