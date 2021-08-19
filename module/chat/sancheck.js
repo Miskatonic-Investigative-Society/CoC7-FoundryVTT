@@ -7,7 +7,14 @@ import { CoC7Dice } from '../dice.js'
 import { chatHelper, CoC7Roll } from './helper.js'
 
 export class CoC7SanCheck {
-  constructor (actorId = null, sanLoss = null, sanLossFail = null, difficulty = CoC7Check.difficultyLevel.regular, modifier = 0, blind = false) {
+  constructor (
+    actorId = null,
+    sanLoss = null,
+    sanLossFail = null,
+    difficulty = CoC7Check.difficultyLevel.regular,
+    modifier = 0,
+    blind = false
+  ) {
     this.difficulty = difficulty
     this.modifier = modifier
     this.sanLoss = sanLoss
@@ -17,7 +24,8 @@ export class CoC7SanCheck {
   }
 
   get isBlind () {
-    if (undefined === this._isBlind) this._isBlind = this.rollMode === 'blindroll'
+    if (undefined === this._isBlind)
+      this._isBlind = this.rollMode === 'blindroll'
     return this._isBlind
   }
 
@@ -36,7 +44,7 @@ export class CoC7SanCheck {
   }
 
   get actor () {
-    if (this.actorId) return chatHelper.getActorFromKey(this.actorId)// REFACTORING (2) [bug 0.5.3]
+    if (this.actorId) return chatHelper.getActorFromKey(this.actorId) // REFACTORING (2) [bug 0.5.3]
     return null
   }
 
@@ -95,15 +103,24 @@ export class CoC7SanCheck {
     if (targets.length) {
       targets.forEach(t => {
         let check
-        if (t.actor.isToken) check = new CoC7SanCheck(t.actor.tokenKey, sanMin, sanMax)
+        if (t.actor.isToken)
+          check = new CoC7SanCheck(t.actor.tokenKey, sanMin, sanMax)
         else check = new CoC7SanCheck(t.actor.id, sanMin, sanMax)
         check.toMessage(fastForward)
       })
     } else {
       if (tokenKey) {
         const speaker = chatHelper.getSpeakerFromKey(tokenKey)
-        const title = game.i18n.format('CoC7.SANCheckTitle', { name: speaker.alias, sanMin: sanMin, sanMax: sanMax })
-        chatHelper.createMessage(null, `@coc7.sanloss[sanMax:${sanMax},sanMin:${sanMin}]{${title}}`, { speaker: speaker })
+        const title = game.i18n.format('CoC7.SANCheckTitle', {
+          name: speaker.alias,
+          sanMin: sanMin,
+          sanMax: sanMax
+        })
+        chatHelper.createMessage(
+          null,
+          `@coc7.sanloss[sanMax:${sanMax},sanMin:${sanMin}]{${title}}`,
+          { speaker: speaker }
+        )
       } else ui.notifications.error('No target selected')
     }
   }
@@ -163,10 +180,13 @@ export class CoC7SanCheck {
       content: htmlElement.outerHTML
     }
 
-    if (['gmroll', 'blindroll'].includes(game.settings.get('core', 'rollMode'))) chatData.whisper = ChatMessage.getWhisperRecipients('GM')// Change for user
+    if (['gmroll', 'blindroll'].includes(game.settings.get('core', 'rollMode')))
+      chatData.whisper = ChatMessage.getWhisperRecipients('GM') // Change for user
     if (this.rollMode === 'blindroll') chatData.blind = true
 
-    ChatMessage.create(chatData).then(msg => { return msg })
+    ChatMessage.create(chatData).then(msg => {
+      return msg
+    })
   }
 
   async rollSan () {

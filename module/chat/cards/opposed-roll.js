@@ -6,10 +6,22 @@ import { RollCard } from './roll-card.js'
 
 export class OpposedCheckCard extends RollCard {
   static async bindListerners (html) {
-    html.on('click', '.roll-card.opposed .toggle-switch', this._onToggle.bind(this))
+    html.on(
+      'click',
+      '.roll-card.opposed .toggle-switch',
+      this._onToggle.bind(this)
+    )
     // super.bindListerners( html);
-    html.on('click', '.roll-card.opposed a', OpposedCheckCard._onClick.bind(this))
-    html.on('click', '.roll-card.opposed button', OpposedCheckCard._onClick.bind(this))
+    html.on(
+      'click',
+      '.roll-card.opposed a',
+      OpposedCheckCard._onClick.bind(this)
+    )
+    html.on(
+      'click',
+      '.roll-card.opposed button',
+      OpposedCheckCard._onClick.bind(this)
+    )
   }
 
   static get defaultConfig () {
@@ -46,21 +58,37 @@ export class OpposedCheckCard extends RollCard {
   }
 
   get defenderIsDodging () {
-    if (this.defenderRoll?.actor?.dodgeSkill?.name && this.defenderRoll?.skill?.name) {
-      return this.defenderRoll.actor.dodgeSkill.name.toLowerCase() === this.defenderRoll.skill.name.toLowerCase()
+    if (
+      this.defenderRoll?.actor?.dodgeSkill?.name &&
+      this.defenderRoll?.skill?.name
+    ) {
+      return (
+        this.defenderRoll.actor.dodgeSkill.name.toLowerCase() ===
+        this.defenderRoll.skill.name.toLowerCase()
+      )
     }
     return false
   }
 
   get advantageAttacker () {
     if (typeof this._aa === 'undefined') {
-      if (this.defenderRoll) { return !this.defenderIsDodging } else { return false }
+      if (this.defenderRoll) {
+        return !this.defenderIsDodging
+      } else {
+        return false
+      }
     }
     return this._aa
   }
 
   get winnerRollsDamage () {
-    if (this.combat && this.rolls.length >= 2 && this.hasWinner && this.winner?.item?.type === 'weapon') return true
+    if (
+      this.combat &&
+      this.rolls.length >= 2 &&
+      this.hasWinner &&
+      this.winner?.item?.type === 'weapon'
+    )
+      return true
     return false
   }
 
@@ -85,32 +113,59 @@ export class OpposedCheckCard extends RollCard {
 
   get needsTieBreaker () {
     if (!this.combat) return false
-    if (this.attackerRoll && this.defenderRoll && this.attackerRoll.successLevel === this.defenderRoll.successLevel) return true
+    if (
+      this.attackerRoll &&
+      this.defenderRoll &&
+      this.attackerRoll.successLevel === this.defenderRoll.successLevel
+    )
+      return true
     return false
   }
 
   get winnerCount () {
     let count = 0
-    this.rolls.forEach(r => { if (r.winner) count += 1 })
+    this.rolls.forEach(r => {
+      if (r.winner) count += 1
+    })
     return count
   }
 
   get isAttackManeuver () {
-    if (this.combat && this.attackerRoll && (!this.attackerRoll?.item || this.attackerRoll?.item.data.data.properties?.mnvr)) return true
+    if (
+      this.combat &&
+      this.attackerRoll &&
+      (!this.attackerRoll?.item ||
+        this.attackerRoll?.item.data.data.properties?.mnvr)
+    )
+      return true
     return false
   }
 
   get resultText () {
     if (this.combat && this.attackerRoll && this.defenderRoll) {
-      if (!this.attackerRoll.winner && !this.defenderRoll.winner) return game.i18n.localize('CoC7.NoWinner')
+      if (!this.attackerRoll.winner && !this.defenderRoll.winner)
+        return game.i18n.localize('CoC7.NoWinner')
       if (this.attackerRoll.winner) {
-        if (this.attackerRoll.maneuver) return game.i18n.format('CoC7.ManeuverSuccess', { name: this.attackerRoll.actor.name })
-        return game.i18n.format('CoC7.AttackSuccess', { name: this.attackerRoll.actor.name })
+        if (this.attackerRoll.maneuver)
+          return game.i18n.format('CoC7.ManeuverSuccess', {
+            name: this.attackerRoll.actor.name
+          })
+        return game.i18n.format('CoC7.AttackSuccess', {
+          name: this.attackerRoll.actor.name
+        })
       }
       if (this.defenderRoll.winner) {
-        if (this.defenderRoll.maneuver) return game.i18n.format('CoC7.ManeuverSuccess', { name: this.defenderRoll.actor.name })
-        if (this.defenderIsDodging) return game.i18n.format('CoC7.DodgeSuccess', { name: this.defenderRoll.actor.name })
-        return game.i18n.format('CoC7.AttackSuccess', { name: this.defenderRoll.actor.name })
+        if (this.defenderRoll.maneuver)
+          return game.i18n.format('CoC7.ManeuverSuccess', {
+            name: this.defenderRoll.actor.name
+          })
+        if (this.defenderIsDodging)
+          return game.i18n.format('CoC7.DodgeSuccess', {
+            name: this.defenderRoll.actor.name
+          })
+        return game.i18n.format('CoC7.AttackSuccess', {
+          name: this.defenderRoll.actor.name
+        })
       }
     }
     return undefined
@@ -200,7 +255,10 @@ export class OpposedCheckCard extends RollCard {
       case 'roll-damage': {
         card.closeCard()
         await card.updateChatCard()
-        const damageChatCard = new DamageCard({ critical: card.winner.isExtremeSuccess, fastForward: event.shiftKey })
+        const damageChatCard = new DamageCard({
+          critical: card.winner.isExtremeSuccess,
+          fastForward: event.shiftKey
+        })
         damageChatCard.actorKey = card.winner.actor.actorKey
         damageChatCard.targetKey = card.looser.actor.actorKey
         damageChatCard.itemId = card.winner.itemId
@@ -234,17 +292,27 @@ export class OpposedCheckCard extends RollCard {
     if (!rank) {
       for (let i = 0; i < this.rolls.length; i++) {
         delete this.rolls[i].maneuver
-        if (this.combat &&
-          (!this.rolls[i].item || this.rolls[i].item.data.data.properties?.mnvr) &&
-          (
-            (this.rolls[i]?.actor?.dodgeSkill?.name && this.rolls[i]?.skill?.name &&
-              this.rolls[i].actor.dodgeSkill.name.toLowerCase() !== this.rolls[i].skill.name.toLowerCase()) ||
-              !this.rolls[i]?.actor?.dodgeSkill?.name
-          )) this.rolls[i].maneuver = true
-        if (this.rolls[i].rolled) this.rolls[i]._htmlRoll = await this.rolls[i].getHtmlRoll({ hideDiceResult: true })
+        if (
+          this.combat &&
+          (!this.rolls[i].item ||
+            this.rolls[i].item.data.data.properties?.mnvr) &&
+          ((this.rolls[i]?.actor?.dodgeSkill?.name &&
+            this.rolls[i]?.skill?.name &&
+            this.rolls[i].actor.dodgeSkill.name.toLowerCase() !==
+              this.rolls[i].skill.name.toLowerCase()) ||
+            !this.rolls[i]?.actor?.dodgeSkill?.name)
+        )
+          this.rolls[i].maneuver = true
+        if (this.rolls[i].rolled)
+          this.rolls[i]._htmlRoll = await this.rolls[i].getHtmlRoll({
+            hideDiceResult: true
+          })
       }
     } else {
-      if (this.rolls[rank].rolled) this.rolls[rank]._htmlRoll = await this.rolls[rank].getHtmlRoll({ hideDiceResult: true })
+      if (this.rolls[rank].rolled)
+        this.rolls[rank]._htmlRoll = await this.rolls[rank].getHtmlRoll({
+          hideDiceResult: true
+        })
     }
 
     // this.rolls = this.rolls.filter( roll => {
@@ -273,8 +341,10 @@ export class OpposedCheckCard extends RollCard {
 
       if (this.rolls[0]?.rolled && this.rolls[1]?.rolled) {
         if (this.rolls[0].passed || this.rolls[1].passed) {
-          if (this.rolls[0].successLevel > this.rolls[1].successLevel) this.rolls[0].winner = true
-          else if (this.rolls[1].successLevel > this.rolls[0].successLevel) this.rolls[1].winner = true
+          if (this.rolls[0].successLevel > this.rolls[1].successLevel)
+            this.rolls[0].winner = true
+          else if (this.rolls[1].successLevel > this.rolls[0].successLevel)
+            this.rolls[1].winner = true
           else {
             if (this.advantageAttacker) this.rolls[0].winner = true
             else this.rolls[1].winner = true
@@ -286,14 +356,32 @@ export class OpposedCheckCard extends RollCard {
         if (a.rolled && !b.rolled) return -1
         if (!a.rolled && b.rolled) return 1
         if (!a.rolled && !b.rolled) return 0
-        if (a.successLevel > b.successLevel) { this.resolved = true; return -1 }
-        if (a.successLevel < b.successLevel) { this.resolved = true; return 1 }
+        if (a.successLevel > b.successLevel) {
+          this.resolved = true
+          return -1
+        }
+        if (a.successLevel < b.successLevel) {
+          this.resolved = true
+          return 1
+        }
         if (game.settings.get('CoC7', 'opposedRollTieBreaker')) {
-          if (a.modifiedResult > b.modifiedResult) { this.resolved = true; return -1 }
-          if (a.modifiedResult < b.modifiedResult) { this.resolved = true; return 1 }
+          if (a.modifiedResult > b.modifiedResult) {
+            this.resolved = true
+            return -1
+          }
+          if (a.modifiedResult < b.modifiedResult) {
+            this.resolved = true
+            return 1
+          }
         } else {
-          if (a.rawValue > b.rawValue) { this.resolved = true; return -1 }
-          if (a.rawValue < b.rawValue) { this.resolved = true; return 1 }
+          if (a.rawValue > b.rawValue) {
+            this.resolved = true
+            return -1
+          }
+          if (a.rawValue < b.rawValue) {
+            this.resolved = true
+            return 1
+          }
         }
         return 0
       })
@@ -303,15 +391,19 @@ export class OpposedCheckCard extends RollCard {
         this.winCount = 1
         for (let i = 1; i < this.rolls.length; i++) {
           if (
-            this.rolls[i] && this.rolls[i].rolled &&
-              this.rolls[0].successLevel === this.rolls[i].successLevel &&
-              (game.settings.get('CoC7', 'opposedRollTieBreaker') ? this.rolls[0].modifiedResult === this.rolls[i].modifiedResult : this.rolls[0].rawValue === this.rolls[i].rawValue)
-          ) this.winCount = this.winCount + 1
+            this.rolls[i] &&
+            this.rolls[i].rolled &&
+            this.rolls[0].successLevel === this.rolls[i].successLevel &&
+            (game.settings.get('CoC7', 'opposedRollTieBreaker')
+              ? this.rolls[0].modifiedResult === this.rolls[i].modifiedResult
+              : this.rolls[0].rawValue === this.rolls[i].rawValue)
+          )
+            this.winCount = this.winCount + 1
         }
       }
 
       for (let i = 0; i < this.rolls.length; i++) {
-        this.rolls[i].winner = (i < this.winCount)
+        this.rolls[i].winner = i < this.winCount
         this.rolls[i].tie = this.rolls[i].winner && this.winCount > 1
       }
     }

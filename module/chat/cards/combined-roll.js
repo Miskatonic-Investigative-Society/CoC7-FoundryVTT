@@ -7,10 +7,22 @@ import { RollCard } from './roll-card.js'
 
 export class CombinedCheckCard extends RollCard {
   static async bindListerners (html) {
-    html.on('click', '.roll-card.combined .toggle-switch', this._onToggle.bind(this))
+    html.on(
+      'click',
+      '.roll-card.combined .toggle-switch',
+      this._onToggle.bind(this)
+    )
     // html.find('.roll-card a').click(async (event) => CombinedCheckCard._onClick( event));
-    html.on('click', '.roll-card.combined a', CombinedCheckCard._onClick.bind(this))
-    html.on('click', '.roll-card.combined button', CombinedCheckCard._onClick.bind(this))
+    html.on(
+      'click',
+      '.roll-card.combined a',
+      CombinedCheckCard._onClick.bind(this)
+    )
+    html.on(
+      'click',
+      '.roll-card.combined button',
+      CombinedCheckCard._onClick.bind(this)
+    )
   }
 
   static get defaultConfig () {
@@ -28,7 +40,9 @@ export class CombinedCheckCard extends RollCard {
   get successCount () {
     if (this.rolled) {
       let count = 0
-      this.rolls.forEach(r => { if (r.passed) count += 1 })
+      this.rolls.forEach(r => {
+        if (r.passed) count += 1
+      })
       return count
     }
     return undefined
@@ -128,14 +142,24 @@ export class CombinedCheckCard extends RollCard {
 
         if (!event.shiftKey) {
           const usage = await RollDialog.create({
-            disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode === 91 || event.keyCode === 224),
-            disableFlatDiceModifier: (event.metaKey || event.ctrlKey || event.keyCode === 91 || event.keyCode === 224)
+            disableFlatThresholdModifier:
+              event.metaKey ||
+              event.ctrlKey ||
+              event.keyCode === 91 ||
+              event.keyCode === 224,
+            disableFlatDiceModifier:
+              event.metaKey ||
+              event.ctrlKey ||
+              event.keyCode === 91 ||
+              event.keyCode === 224
           })
           if (usage) {
             roll.diceModifier = Number(usage.get('bonusDice'))
             roll.difficulty = Number(usage.get('difficulty'))
             roll.flatDiceModifier = Number(usage.get('flatDiceModifier'))
-            roll.flatThresholdModifier = Number(usage.get('flatThresholdModifier'))
+            roll.flatThresholdModifier = Number(
+              usage.get('flatThresholdModifier')
+            )
           }
         }
 
@@ -177,7 +201,8 @@ export class CombinedCheckCard extends RollCard {
     this.rolls.forEach(async r => {
       if (!r.rolled) {
         r.modifier = this.options.modifier || 0
-        r.difficulty = this.options.difficulty || CoC7Check.difficultyLevel.regular
+        r.difficulty =
+          this.options.difficulty || CoC7Check.difficultyLevel.regular
         r.flatDiceModifier = this.options.flatDiceModifier || 0
         r.flatThresholdModifier = this.options.flatThresholdModifier || 0
         r._perform({ roll: this._roll, silent: true })
@@ -185,7 +210,10 @@ export class CombinedCheckCard extends RollCard {
     })
 
     for (let i = 0; i < this.rolls.length; i++) {
-      if (this.rolls[i].rolled) this.rolls[i]._htmlRoll = await this.rolls[i].getHtmlRoll({ hideDiceResult: true })
+      if (this.rolls[i].rolled)
+        this.rolls[i]._htmlRoll = await this.rolls[i].getHtmlRoll({
+          hideDiceResult: true
+        })
     }
 
     this.rolls = this.rolls.filter(roll => {

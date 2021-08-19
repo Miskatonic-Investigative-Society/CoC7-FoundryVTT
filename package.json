@@ -1,0 +1,24 @@
+{
+  "name": "fvtt-coc7",
+  "version": "0.6.5",
+  "description": "An unofficial implementation of Call of Cthulhu 7th Edition system for Foundry VTT.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "format": "prettier-standard --format",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HavlockV/CoC7-FoundryVTT.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/HavlockV/CoC7-FoundryVTT/issues"
+  },
+  "homepage": "https://github.com/HavlockV/CoC7-FoundryVTT#readme",
+  "devDependencies": {
+    "prettier-standard": "^16.4.1"
+  }
+}

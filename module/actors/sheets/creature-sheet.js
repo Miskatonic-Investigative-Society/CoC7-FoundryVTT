@@ -23,9 +23,9 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
     data.displayFormula = this.actor.getActorFlag('displayFormula')
     if (data.displayFormula === undefined) data.displayFormula = false
     // await this.actor.creatureInit();
-    data.hasSan = (data.data.attribs.san.value !== null)
-    data.hasMp = (data.data.attribs.mp.value !== null)
-    data.hasLuck = (data.data.attribs.lck.value !== null)
+    data.hasSan = data.data.attribs.san.value !== null
+    data.hasMp = data.data.attribs.mp.value !== null
+    data.hasLuck = data.data.attribs.lck.value !== null
 
     return data
   }
@@ -34,20 +34,33 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
     super.activateListeners(html)
     html.find('.roll-san').click(this._onSanCheck.bind(this))
     if (this.actor.isOwner) {
-      html.find('[name="data.attribs.hp.value"]').change(event => this.actor.setHealthStatusManually(event))
+      html
+        .find('[name="data.attribs.hp.value"]')
+        .change(event => this.actor.setHealthStatusManually(event))
     }
   }
 
   async _onSanCheck (event) {
     event.preventDefault()
-    if (!this.actor.data.data.special.sanLoss.checkPassed && !this.actor.data.data.special.sanLoss.checkFailled) {
+    if (
+      !this.actor.data.data.special.sanLoss.checkPassed &&
+      !this.actor.data.data.special.sanLoss.checkFailled
+    ) {
       // ui.notifications.info('No sanity loss value');
       return
     }
-    if ((event.metaKey || event.ctrlKey || event.keyCode === 91 || event.keyCode === 224) && game.user.isGM) {
+    if (
+      (event.metaKey ||
+        event.ctrlKey ||
+        event.keyCode === 91 ||
+        event.keyCode === 224) &&
+      game.user.isGM
+    ) {
       let difficulty, modifier
       if (!event.shiftKey) {
-        const usage = await RollDialog.create({ disableFlatDiceModifier: true })
+        const usage = await RollDialog.create({
+          disableFlatDiceModifier: true
+        })
         if (usage) {
           modifier = Number(usage.get('bonusDice'))
           difficulty = Number(usage.get('difficulty'))
@@ -58,11 +71,18 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
         sanMin: this.actor.data.data.special.sanLoss.checkPassed,
         sanMax: this.actor.data.data.special.sanLoss.checkFailled
       }
-      if (game.settings.get('core', 'rollMode') === 'blindroll') linkData.blind = true
+      if (game.settings.get('core', 'rollMode') === 'blindroll')
+        linkData.blind = true
       if (typeof modifier !== 'undefined') linkData.modifier = modifier
       if (typeof difficulty !== 'undefined') linkData.difficulty = difficulty
       const link = CoC7Parser.createCoC7Link(linkData)
-      if (link) chatHelper.createMessage(null, game.i18n.format('CoC7.MessageCheckRequestedWait', { check: link }))
+      if (link)
+        chatHelper.createMessage(
+          null,
+          game.i18n.format('CoC7.MessageCheckRequestedWait', {
+            check: link
+          })
+        )
     } else {
       SanCheckCard.checkTargets(this.actor.tokenKey, event.shiftKey)
       // CoC7SanCheck.checkTargets( this.actor.data.data.special.sanLoss.checkPassed, this.actor.data.data.special.sanLoss.checkFailled, event.shiftKey, this.tokenKey);
@@ -109,7 +129,10 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
     if (event.currentTarget) {
       if (event.currentTarget.classList) {
         if (event.currentTarget.classList.contains('characteristic-score')) {
-          this.actor.setCharacteristic(event.currentTarget.name, event.currentTarget.value)
+          this.actor.setCharacteristic(
+            event.currentTarget.name,
+            event.currentTarget.value
+          )
           return
         }
       }

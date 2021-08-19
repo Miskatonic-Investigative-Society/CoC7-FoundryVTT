@@ -14,7 +14,8 @@ export class ChatCardActor {
 
   get isBlind () {
     if (!this.rollMode) return null
-    if (undefined === this._isBlind) this._isBlind = this.rollMode === 'blindroll'
+    if (undefined === this._isBlind)
+      this._isBlind = this.rollMode === 'blindroll'
     return this._isBlind
   }
 
@@ -33,7 +34,7 @@ export class ChatCardActor {
 
   get actor () {
     if (!this.actorKey) return null
-    return chatHelper.getActorFromKey(this.actorKey)// REFACTORING (2)
+    return chatHelper.getActorFromKey(this.actorKey) // REFACTORING (2)
   }
 
   get token () {
@@ -60,16 +61,18 @@ export class ChatCardActor {
   }
 
   /**
-     * If a targetKey was provided try to find a token with that key and use it.
-     * If not targetKey provided return the first target.
-     */
+   * If a targetKey was provided try to find a token with that key and use it.
+   * If not targetKey provided return the first target.
+   */
   get targetToken () {
     if (!this._targetToken) {
       if (this._targetKey) {
         this._targetToken = chatHelper.getTokenFromKey(this._targetKey)
       } else {
         this._targetToken = this.targetedTokens.pop()
-        if (this._targetToken) this._targetKey = `${this._targetToken.scene.id}.${this._targetToken.id}` // REFACTORING (2)
+        if (this._targetToken)
+          this._targetKey = `${this._targetToken.scene.id}.${this._targetToken.id}`
+        // REFACTORING (2)
         else {
           this._targetToken = null
         }
@@ -81,7 +84,7 @@ export class ChatCardActor {
   get targetActor () {
     if (!this._targetActor) {
       if (this.targetToken) this._targetActor = this.targetToken.actor
-      else this._targetActor = chatHelper.getActorFromKey(this._targetKey)// REFACTORING (2)
+      else this._targetActor = chatHelper.getActorFromKey(this._targetKey) // REFACTORING (2)
     }
     return this._targetActor
   }
@@ -146,9 +149,12 @@ export class ChatCardActor {
       content: message
     }
 
-    if (['gmroll', 'blindroll'].includes(game.settings.get('core', 'rollMode'))) chatData.whisper = ChatMessage.getWhisperRecipients('GM')// Change for user
+    if (['gmroll', 'blindroll'].includes(game.settings.get('core', 'rollMode')))
+      chatData.whisper = ChatMessage.getWhisperRecipients('GM') // Change for user
     if (this.rollMode === 'blindroll') chatData.blind = true
 
-    ChatMessage.create(chatData).then(msg => { return msg })
+    ChatMessage.create(chatData).then(msg => {
+      return msg
+    })
   }
 }

@@ -26,16 +26,22 @@ export class InteractiveChatCard {
     htmlCardElement.dataset.cardClass = this.constructor.name
     htmlCardElement.classList.add(...this.cssClasses)
 
-    const chatData = mergeObject({
-      user: game.user.id,
-      flavor: game.i18n.localize(this.options.title),
-      content: htmlCardElement.outerHTML
-    }, optionnalChatData)
+    const chatData = mergeObject(
+      {
+        user: game.user.id,
+        flavor: game.i18n.localize(this.options.title),
+        content: htmlCardElement.outerHTML
+      },
+      optionnalChatData
+    )
 
-    if (['gmroll', 'blindroll'].includes(this.rollMode)) chatData.whisper = ChatMessage.getWhisperRecipients('GM')
+    if (['gmroll', 'blindroll'].includes(this.rollMode))
+      chatData.whisper = ChatMessage.getWhisperRecipients('GM')
     if (this.rollMode === 'blindroll') chatData.blind = true
 
-    ChatMessage.create(chatData).then(msg => { return msg })
+    ChatMessage.create(chatData).then(msg => {
+      return msg
+    })
   }
 
   async updateChatCard (options = {}) {
@@ -55,14 +61,20 @@ export class InteractiveChatCard {
       const chatMessage = game.messages.get(this.messageId)
       if (this.closed) await chatMessage.setFlag('CoC7', 'state', 'resolved')
 
-      const msg = await chatMessage.update({ content: htmlCardElement.outerHTML })
+      const msg = await chatMessage.update({
+        content: htmlCardElement.outerHTML
+      })
       await ui.chat.updateMessage(msg, false)
       return msg
     }
   }
 
   activateListeners (html) {
-    html.on('click', '.interactive-card .ic-radio-switch', this._onToggle.bind(this))
+    html.on(
+      'click',
+      '.interactive-card .ic-radio-switch',
+      this._onToggle.bind(this)
+    )
     html.on('click', '.interactive-card .ic-switch', this._onToggle.bind(this))
     html.on('click', '.interactive-card .submit', this._onSubmit.bind(this))
     html.on('focusout', 'input', this._onSubmit.bind(this))
@@ -74,26 +86,32 @@ export class InteractiveChatCard {
     const htmlMessageElement = html[0]
     const htmlCardElement = htmlMessageElement.querySelector('.chat-card')
     if (!htmlCardElement) return
-    if (!Object.getOwnPropertyNames(game.CoC7.cards).includes(htmlCardElement.dataset.cardClass)) return
+    if (
+      !Object.getOwnPropertyNames(game.CoC7.cards).includes(
+        htmlCardElement.dataset.cardClass
+      )
+    )
+      return
     const card = await InteractiveChatCard.fromHTMLCardElement(htmlCardElement)
-    const typedCard = Object.assign(new game.CoC7.cards[htmlCardElement.dataset.cardClass](), card)
+    const typedCard = Object.assign(
+      new game.CoC7.cards[htmlCardElement.dataset.cardClass](),
+      card
+    )
     typedCard.assignObject()
     typedCard.activateListeners(html)
   }
 
   /**
-     * Override to reassign object type
-     * @returns
-     */
-  assignObject () {
-
-  }
+   * Override to reassign object type
+   * @returns
+   */
+  assignObject () {}
 
   /**
-     *
-     * @param {*} event will check for an action (data-action)
-     * if a method with that name exist it will be triggered.
-     */
+   *
+   * @param {*} event will check for an action (data-action)
+   * if a method with that name exist it will be triggered.
+   */
   _onButton (event) {
     const button = event.currentTarget
     // button.style.display = 'none' //Avoid multiple push
@@ -102,10 +120,10 @@ export class InteractiveChatCard {
   }
 
   /**
-     *
-     * @param {*} event
-     * @returns false if key is enter to avoid global submission
-     */
+   *
+   * @param {*} event
+   * @returns false if key is enter to avoid global submission
+   */
   _onKey (event) {
     if (event.key === 'Enter') this._onSubmit(event)
     return event.key !== 'Enter'
@@ -239,7 +257,12 @@ export class InteractiveChatCard {
 
     const target = event.currentTarget
     if ('action' in target.dataset) return this._onButton(event)
-    if (target && target.classList.contains('gm-select-only') && !game.user.isGM) return
+    if (
+      target &&
+      target.classList.contains('gm-select-only') &&
+      !game.user.isGM
+    )
+      return
     const flag = target.dataset.flag
     if (!flag) return
     const toggle = target.closest('.ic-radio')
@@ -263,7 +286,8 @@ export class InteractiveChatCard {
 
   get isBlind () {
     if (!this.rollMode) return null
-    if (undefined === this._isBlind) this._isBlind = this.rollMode === 'blindroll'
+    if (undefined === this._isBlind)
+      this._isBlind = this.rollMode === 'blindroll'
     return this._isBlind
   }
 
@@ -273,7 +297,7 @@ export class InteractiveChatCard {
 
   get actor () {
     if (!this.actorKey) return null
-    return chatHelper.getActorFromKey(this.actorKey)// REFACTORING (2)
+    return chatHelper.getActorFromKey(this.actorKey) // REFACTORING (2)
   }
 
   get token () {
@@ -308,16 +332,18 @@ export class InteractiveChatCard {
   }
 
   /**
-     * If a targetKey was provided try to find a token with that key and use it.
-     * If not targetKey provided return the first target.
-     */
+   * If a targetKey was provided try to find a token with that key and use it.
+   * If not targetKey provided return the first target.
+   */
   get targetToken () {
     if (!this._targetToken) {
       if (this._targetKey) {
         this._targetToken = chatHelper.getTokenFromKey(this._targetKey)
       } else {
         this._targetToken = this.targetedTokens.pop()
-        if (this._targetToken) this._targetKey = `${this._targetToken.scene.id}.${this._targetToken.id}` // REFACTORING (2)
+        if (this._targetToken)
+          this._targetKey = `${this._targetToken.scene.id}.${this._targetToken.id}`
+        // REFACTORING (2)
         else {
           this._targetToken = null
         }
@@ -328,8 +354,12 @@ export class InteractiveChatCard {
 
   get targetActor () {
     if (!this._targetActor) {
-      if (this.targetToken) this._targetActor = this.targetToken.actor || this.targetToken.data.actor || this.targetToken.data.document
-      else this._targetActor = chatHelper.getActorFromKey(this._targetKey)// REFACTORING (2)
+      if (this.targetToken)
+        this._targetActor =
+          this.targetToken.actor ||
+          this.targetToken.data.actor ||
+          this.targetToken.data.document
+      else this._targetActor = chatHelper.getActorFromKey(this._targetKey) // REFACTORING (2)
     }
     return this._targetActor
   }

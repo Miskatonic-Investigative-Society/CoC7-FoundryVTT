@@ -17,17 +17,19 @@ export class CoC7DamageRoll extends ChatCardActor {
   }
 
   /**
-     *
-     * Roll the damage applying the formula provided.
-     * If there's a target Card will propose to apply the damage to it
-     *
-     * @param {String} range
-     */
+   *
+   * Roll the damage applying the formula provided.
+   * If there's a target Card will propose to apply the damage to it
+   *
+   * @param {String} range
+   */
   async rollDamage (range = 'normal') {
     this.rollString = this.weapon.data.data.range[range].damage
 
-    if (this.weapon.data.data.properties.addb) this.rollString = this.rollString + '+' + this.actor.db
-    if (this.weapon.data.data.properties.ahdb) this.rollString = this.rollString + '+' + this.actor.db + '/2'
+    if (this.weapon.data.data.properties.addb)
+      this.rollString = this.rollString + '+' + this.actor.db
+    if (this.weapon.data.data.properties.ahdb)
+      this.rollString = this.rollString + '+' + this.actor.db + '/2'
 
     // const is7 = Object.prototype.hasOwnProperty.call(Roll, 'cleanTerms');
     const is7 = true // 0.8.x : Drop support for is7, cleanTerms removed
@@ -35,7 +37,7 @@ export class CoC7DamageRoll extends ChatCardActor {
     // 0.7.5 this.maxDamage.result -> this.maxDamage
     /** * MODIF 0.8.x ***/
     // this.maxDamage = is7? Roll.maximize( this.rollString)._total: Roll.maximize( this.rollString); //DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
-    this.maxDamage = new Roll(this.rollString).evaluate({ maximize: true })// DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
+    this.maxDamage = new Roll(this.rollString).evaluate({ maximize: true }) // DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
     /******************/
     this.roll = null
     if (this.critical) {
@@ -66,10 +68,17 @@ export class CoC7DamageRoll extends ChatCardActor {
 
     if (is7) this.roll._dice = this.roll.dice
     else {
-      this.roll._dice.forEach(d => d.rolls.forEach(r => { r.result = r.roll }))
+      this.roll._dice.forEach(d =>
+        d.rolls.forEach(r => {
+          r.result = r.roll
+        })
+      )
     }
 
-    const html = await renderTemplate('systems/CoC7/templates/chat/combat/damage-result.html', this)
+    const html = await renderTemplate(
+      'systems/CoC7/templates/chat/combat/damage-result.html',
+      this
+    )
 
     // TODO : replace the card if possible (can the player mod the message ???)
     if (this.messageId) {
@@ -93,7 +102,8 @@ export class CoC7DamageRoll extends ChatCardActor {
       }
 
       const rollMode = game.settings.get('core', 'rollMode')
-      if (['gmroll', 'blindroll'].includes(rollMode)) chatData.whisper = ChatMessage.getWhisperRecipients('GM')
+      if (['gmroll', 'blindroll'].includes(rollMode))
+        chatData.whisper = ChatMessage.getWhisperRecipients('GM')
       // if ( rollMode === 'blindroll' ) chatData['blind'] = true;
       chatData.blind = false
 

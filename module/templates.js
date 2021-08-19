@@ -22,7 +22,6 @@ export const preloadHandlebarsTemplates = async function () {
     'systems/CoC7/templates/actors/parts/development-controls.html',
     'systems/CoC7/templates/actors/parts/vitals.html',
     'systems/CoC7/templates/actors/parts/combat.html'
-
   ]
 
   // Load the template parts

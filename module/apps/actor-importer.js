@@ -20,7 +20,9 @@ const defaultWeaponSkillAdjustments = {
 export class CoC7ActorImporter {
   // CoC7ActorImporterRgExp contains localized regular expressions to extract data from raw text
 
-  static get RE () { return new CoC7ActorImporterRegExp().RE }
+  static get RE () {
+    return new CoC7ActorImporterRegExp().RE
+  }
 
   /**
    * parseCharacter extracts information from the raw text description of an entity (NPC or Creature)
@@ -50,7 +52,10 @@ export class CoC7ActorImporter {
     extractedData.mov = Number(this.extractValue(text, this.RE.moveRegExp))
     extractedData.lck = Number(this.extractValue(text, this.RE.luckRegExp))
     extractedData.sanLoss = this.extractValue(text, this.RE.sanLossRegExp)
-    extractedData.attacksPerRound = this.extractValue(text, this.RE.attacksPerRoundRegExp)
+    extractedData.attacksPerRound = this.extractValue(
+      text,
+      this.RE.attacksPerRoundRegExp
+    )
 
     const attacks = this.extractValue(text, this.RE.attacksRegExp)
     console.debug(attacks)
@@ -101,8 +106,11 @@ export class CoC7ActorImporter {
         // Attempt to guess some of the weapon properties
         const cleanWeapon = this.cleanString(weapon.groups.weapon)
         const doesDamageBonus = this.RE.dbRegExp.test(weapon.groups.damage)
-        const isRanged = this.RE.handgunRegExp.test(cleanWeapon) || this.RE.rifleRegExp.test(cleanWeapon) ||
-          this.RE.smbRegExp.test(cleanWeapon) || this.RE.machineGunRegExp.test(cleanWeapon)
+        const isRanged =
+          this.RE.handgunRegExp.test(cleanWeapon) ||
+          this.RE.rifleRegExp.test(cleanWeapon) ||
+          this.RE.smbRegExp.test(cleanWeapon) ||
+          this.RE.machineGunRegExp.test(cleanWeapon)
         // Basic weapon data
         const data = {
           name: cleanWeapon,
@@ -156,7 +164,11 @@ export class CoC7ActorImporter {
    */
   basicWeaponSkillData (firearms) {
     return {
-      specialization: game.i18n.localize(firearms ? 'CoC7.FirearmSpecializationName' : 'CoC7.FightingSpecializationName'),
+      specialization: game.i18n.localize(
+        firearms
+          ? 'CoC7.FirearmSpecializationName'
+          : 'CoC7.FightingSpecializationName'
+      ),
       adjustments: defaultWeaponSkillAdjustments,
       properties: {
         special: true,
@@ -213,7 +225,10 @@ export class CoC7ActorImporter {
    * @returns {String} the cleaned string
    */
   cleanString (s) {
-    return s.replace(/(\n|\r)/g, ' ').replace(/^\s*/, '').replace(/\s*\.?\s*$/, '')
+    return s
+      .replace(/(\n|\r)/g, ' ')
+      .replace(/^\s*/, '')
+      .replace(/\s*\.?\s*$/, '')
   }
 
   /**
@@ -268,22 +283,30 @@ export class CoC7ActorImporter {
    * @returns {Folder} the importedCharactersFolder
    */
   async createImportCharactersFolderIfNotExists () {
-    let importedCharactersFolder = game.folders.find(entry => entry.data.name === 'Imported characters' && entry.data.type === 'Actor')
-    if (importedCharactersFolder === null || importedCharactersFolder === undefined) {
+    let importedCharactersFolder = game.folders.find(
+      entry =>
+        entry.data.name === 'Imported characters' && entry.data.type === 'Actor'
+    )
+    if (
+      importedCharactersFolder === null ||
+      importedCharactersFolder === undefined
+    ) {
       // Create the folder
       importedCharactersFolder = await Folder.create({
         name: 'Imported characters',
         type: 'Actor',
         parent: null
       })
-      ui.notifications.info(game.i18n.localize('COC7.CreatedImportedCharactersFolder'))
+      ui.notifications.info(
+        game.i18n.localize('COC7.CreatedImportedCharactersFolder')
+      )
     }
     return importedCharactersFolder
   }
 
   async updateActorData (pc, npc) {
-    let updateData = {};
-    ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu'].forEach(key => {
+    let updateData = {}
+    ;['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu'].forEach(key => {
       updateData[`data.characteristics.${key}.value`] = Number(pc[key])
     })
     await npc.update(updateData)
@@ -291,8 +314,8 @@ export class CoC7ActorImporter {
     await npc.setHp(Number(pc.hp))
     await npc.setMp(Number(pc.mp))
 
-    updateData = {};
-    ['san', 'mov', 'db', 'build', 'armor'].forEach(key => {
+    updateData = {}
+    ;['san', 'mov', 'db', 'build', 'armor'].forEach(key => {
       updateData[`data.attribs.${key}.value`] = Number(pc[key])
     })
     if (pc.age !== null) {
@@ -316,18 +339,27 @@ export class CoC7ActorImporter {
         const attack = pc.attacks[i]
         console.debug('attack', attack)
         const mainAttackSkill = await this.mainAttackSkill(attack)
-        await npc.createEmbeddedDocuments('Item', [mainAttackSkill]).then(
-          async newSkills => {
+        await npc
+          .createEmbeddedDocuments('Item', [mainAttackSkill])
+          .then(async newSkills => {
             // const newSkill = newSkills[0].clone()
             // newSkill.data.data.value = attack.data.range.normal.value
-            await npc.createEmbeddedDocuments('Item', [attack]).then(
-              async createdAttacks => {
-                if (Array.isArray(createdAttacks) && createdAttacks.length > 0 && Array.isArray(newSkills) && newSkills.length > 0) {
-                  const createdAttack = await this.setMainAttackSkill(createdAttacks[0], newSkills[0])
+            await npc
+              .createEmbeddedDocuments('Item', [attack])
+              .then(async createdAttacks => {
+                if (
+                  Array.isArray(createdAttacks) &&
+                  createdAttacks.length > 0 &&
+                  Array.isArray(newSkills) &&
+                  newSkills.length > 0
+                ) {
+                  const createdAttack = await this.setMainAttackSkill(
+                    createdAttacks[0],
+                    newSkills[0]
+                  )
                   console.debug('createdAttack', createdAttack)
                 }
-              }
-            )
+              })
           })
       }
     }
@@ -345,7 +377,9 @@ export class CoC7ActorImporter {
       console.debug('skillClone', skillClone)
       return skillClone
     }
-    console.debug(`Weapon skill not found for ${attack.name}, creating a new one`)
+    console.debug(
+      `Weapon skill not found for ${attack.name}, creating a new one`
+    )
     const newSkill = {
       name: attack.name,
       type: 'skill',
@@ -375,13 +409,15 @@ export class CoC7ActorImporter {
   async addTheSpells (pc, npc) {
     if (pc.spells !== null) {
       pc.spells.forEach(async spell => {
-        const created = await npc.addItems([{
-          name: spell,
-          type: 'spell'
-        }])
+        const created = await npc.addItems([
+          {
+            name: spell,
+            type: 'spell'
+          }
+        ])
         console.debug(created)
       })
-    };
+    }
   }
 
   async addTheLanguages (pc, npc) {
@@ -396,15 +432,20 @@ export class CoC7ActorImporter {
   async addTheSkills (pc, npc) {
     if (pc.skills !== null) {
       for (const skill of pc.skills) {
-        const existingSkill = await game.items.find(i => i.data.type === 'skill' && i.data.name === skill.name)
+        const existingSkill = await game.items.find(
+          i => i.data.type === 'skill' && i.data.name === skill.name
+        )
         if (existingSkill !== undefined) {
           const clonedSkill = existingSkill.toObject()
           clonedSkill.data.base = skill.value
-          await npc.createEmbeddedDocuments('Item', [clonedSkill]).then(
-            created => console.debug(created))
+          await npc
+            .createEmbeddedDocuments('Item', [clonedSkill])
+            .then(created => console.debug(created))
           // created.data.value = skill.value && console.debug(created))
         } else {
-          await npc.createSkill(skill.name, skill.value).then(created => console.debug(created))
+          await npc
+            .createSkill(skill.name, skill.value)
+            .then(created => console.debug(created))
         }
       }
     }
@@ -416,19 +457,29 @@ export class CoC7ActorImporter {
   async weaponSkill (weaponName) {
     let skill = null
     if (this.RE.handgunRegExp.exec(weaponName)) {
-      skill = await game.items.find(i => i.data.type === 'skill' && i.data.name === 'Handgun')
+      skill = await game.items.find(
+        i => i.data.type === 'skill' && i.data.name === 'Handgun'
+      )
       console.debug(`${weaponName} uses Handgun skill: ${skill}`)
     } else if (this.RE.rifleRegExp.exec(weaponName)) {
-      skill = await game.items.find(i => i.data.type === 'skill' && i.data.name === 'Rifle/Shotgun')
+      skill = await game.items.find(
+        i => i.data.type === 'skill' && i.data.name === 'Rifle/Shotgun'
+      )
       console.debug(`${weaponName} uses Rifle skill: ${skill}`)
     } else if (this.RE.smbRegExp.exec(weaponName)) {
-      skill = await game.items.find(i => i.data.type === 'skill' && i.data.name === 'Submachine Gun')
+      skill = await game.items.find(
+        i => i.data.type === 'skill' && i.data.name === 'Submachine Gun'
+      )
       console.debug(`${weaponName} uses Submachine Gun skill: ${skill}`)
     } else if (this.RE.machineGunRegExp.exec(weaponName)) {
-      skill = await game.items.find(i => i.data.type === 'skill' && i.data.name === 'Machine Gun')
+      skill = await game.items.find(
+        i => i.data.type === 'skill' && i.data.name === 'Machine Gun'
+      )
       console.debug(`${weaponName} uses Machine Gun skill: ${skill}`)
     } else if (this.RE.launchedWeapons.exec(weaponName)) {
-      skill = await game.items.find(i => i.data.type === 'skill' && i.data.name === 'Launch')
+      skill = await game.items.find(
+        i => i.data.type === 'skill' && i.data.name === 'Launch'
+      )
       console.debug(`${weaponName} uses Launch skill: ${skill}`)
     }
     return skill
@@ -439,8 +490,8 @@ export class CoC7ActorImporter {
    * Returns `false` when any of the Characteristics value it's above 29
    */
   needsConversion (npc) {
-    let needsConversionResult = true;
-    ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu'].forEach(key => {
+    let needsConversionResult = true
+    ;['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu'].forEach(key => {
       if (npc[key] > 30) {
         needsConversionResult = false
       }
@@ -456,11 +507,19 @@ export class CoC7ActorImporter {
    * @returns {Actor} the foundry `Actor` from the given `input` options
    */
   async createActor (inputs) {
-    const lang = this.extractValue(inputs.lang, CoC7ActorImporterRegExp.optionLangRegExp) || 'en'
+    const lang =
+      this.extractValue(
+        inputs.lang,
+        CoC7ActorImporterRegExp.optionLangRegExp
+      ) || 'en'
     this.RE = CoC7ActorImporterRegExp.getRegularExpressions(lang)
     let character = await this.parseCharacter(inputs.text)
     console.debug(character)
-    if ((inputs.convertFrom6E === 'coc-guess' && this.needsConversion(character)) || (inputs.convertFrom6E === 'coc-convert')) {
+    if (
+      (inputs.convertFrom6E === 'coc-guess' &&
+        this.needsConversion(character)) ||
+      inputs.convertFrom6E === 'coc-convert'
+    ) {
       character = await this.convert7E(character)
     }
     const npc = await this.createEntity(character, inputs.entity)
@@ -473,15 +532,16 @@ export class CoC7ActorImporter {
    * @return the same object but with updated characteristics for 7 edition
    */
   async convert7E (creature) {
-    console.debug('Converting creature', creature);
-    ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow'].forEach(key => {
+    console.debug('Converting creature', creature)
+    ;['str', 'con', 'siz', 'dex', 'app', 'int', 'pow'].forEach(key => {
       creature[key] *= 5
     })
     if (creature.edu <= 18) {
       creature.edu *= 5
     } else if (creature.edu <= 26) {
       creature.edu = creature.edu + 90 - 18
-    } else { // creature.edu >=28
+    } else {
+      // creature.edu >=28
       creature.edu = 99
     }
     if (creature.db === '-1d4') {

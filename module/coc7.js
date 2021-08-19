@@ -397,7 +397,7 @@ Hooks.once('init', async function () {
       hint: 'SETTINGS.ArtWorkSheetBackgroundHint',
       scope: 'world',
       config: true,
-      default: 'url( \'./artwork/backgrounds/character-sheet.png\') 4 repeat',
+      default: "url( './artwork/backgrounds/character-sheet.png') 4 repeat",
       type: String
     })
 
@@ -420,7 +420,7 @@ Hooks.once('init', async function () {
       hint: 'SETTINGS.ArtWorkOtherSheetBackgroundHint',
       scope: 'world',
       config: true,
-      default: 'url( \'./artwork/backgrounds/sheet.jpg\')',
+      default: "url( './artwork/backgrounds/sheet.jpg')",
       type: String
     })
 
@@ -429,7 +429,7 @@ Hooks.once('init', async function () {
       hint: 'SETTINGS.ArtworkSheetImageHint',
       scope: 'world',
       config: true,
-      default: 'url(\'./artwork/tentacules.png\')',
+      default: "url('./artwork/tentacules.png')",
       type: String
     })
 
@@ -503,7 +503,6 @@ Hooks.once('init', async function () {
     let decimals = 0
     switch (rule) {
       case 'optional':
-
         decimals = 2
         break
 
@@ -519,36 +518,89 @@ Hooks.once('init', async function () {
 
   // Register sheet application classes
   Actors.unregisterSheet('core', ActorSheet)
-  Actors.registerSheet('CoC7', CoC7NPCSheet, { types: ['npc'], makeDefault: true })
-  Actors.registerSheet('CoC7', CoC7VehicleSheet, { types: ['vehicle'], makeDefault: true })
-  Actors.registerSheet('CoC7', CoC7CreatureSheet, { types: ['creature'], makeDefault: true })
+  Actors.registerSheet('CoC7', CoC7NPCSheet, {
+    types: ['npc'],
+    makeDefault: true
+  })
+  Actors.registerSheet('CoC7', CoC7VehicleSheet, {
+    types: ['vehicle'],
+    makeDefault: true
+  })
+  Actors.registerSheet('CoC7', CoC7CreatureSheet, {
+    types: ['creature'],
+    makeDefault: true
+  })
   Actors.registerSheet('CoC7', CoC7CharacterSheet, { types: ['character'] })
-  Actors.registerSheet('CoC7', CoC7CharacterSheetV2, { types: ['character'], makeDefault: true })
+  Actors.registerSheet('CoC7', CoC7CharacterSheetV2, {
+    types: ['character'],
+    makeDefault: true
+  })
 
   Items.unregisterSheet('core', ItemSheet)
-  Items.registerSheet('CoC7', CoC7SkillSheet, { types: ['skill'], makeDefault: true })
-  Items.registerSheet('CoC7', CoC7WeaponSheet, { types: ['weapon'], makeDefault: true })
-  Items.registerSheet('CoC7', CoC7BookSheet, { types: ['book'], makeDefault: true })
-  Items.registerSheet('CoC7', CoC7SpellSheet, { types: ['spell'], makeDefault: true })
-  Items.registerSheet('CoC7', CoC7TalentSheet, { types: ['talent'], makeDefault: true })
-  Items.registerSheet('CoC7', CoC7StatusSheet, { types: ['status'], makeDefault: true })
-  Items.registerSheet('CoC7', CoC7OccupationSheet, { types: ['occupation'], makeDefault: true })
-  Items.registerSheet('CoC7', CoC7ArchetypeSheet, { types: ['archetype'], makeDefault: true })
-  Items.registerSheet('CoC7', CoC7SetupSheet, { types: ['setup'], makeDefault: true })
-  Items.registerSheet('CoC7', CoC7ChaseSheet, { types: ['chase'], makeDefault: true })
+  Items.registerSheet('CoC7', CoC7SkillSheet, {
+    types: ['skill'],
+    makeDefault: true
+  })
+  Items.registerSheet('CoC7', CoC7WeaponSheet, {
+    types: ['weapon'],
+    makeDefault: true
+  })
+  Items.registerSheet('CoC7', CoC7BookSheet, {
+    types: ['book'],
+    makeDefault: true
+  })
+  Items.registerSheet('CoC7', CoC7SpellSheet, {
+    types: ['spell'],
+    makeDefault: true
+  })
+  Items.registerSheet('CoC7', CoC7TalentSheet, {
+    types: ['talent'],
+    makeDefault: true
+  })
+  Items.registerSheet('CoC7', CoC7StatusSheet, {
+    types: ['status'],
+    makeDefault: true
+  })
+  Items.registerSheet('CoC7', CoC7OccupationSheet, {
+    types: ['occupation'],
+    makeDefault: true
+  })
+  Items.registerSheet('CoC7', CoC7ArchetypeSheet, {
+    types: ['archetype'],
+    makeDefault: true
+  })
+  Items.registerSheet('CoC7', CoC7SetupSheet, {
+    types: ['setup'],
+    makeDefault: true
+  })
+  Items.registerSheet('CoC7', CoC7ChaseSheet, {
+    types: ['chase'],
+    makeDefault: true
+  })
   // Items.registerSheet('CoC7', CoC7ManeuverSheet, { types: ['maneuver'], makeDefault: true});
   Items.registerSheet('CoC7', CoCItemSheet, { types: ['item'] })
-  Items.registerSheet('CoC7', CoC7ItemSheetV2, { types: ['item'], makeDefault: true })
+  Items.registerSheet('CoC7', CoC7ItemSheetV2, {
+    types: ['item'],
+    makeDefault: true
+  })
   preloadHandlebarsTemplates()
 })
 
-Hooks.on('renderCombatTracker', (app, html, data) => CoC7Combat.renderCombatTracker(app, html, data))
+Hooks.on('renderCombatTracker', (app, html, data) =>
+  CoC7Combat.renderCombatTracker(app, html, data)
+)
 
 RenderDialogHook.listen()
 
 Hooks.once('setup', function () {
   // Localize CONFIG objects once up-front
-  const toLocalize = ['spellProperties', 'bookType', 'talentType', 'occupationProperties', 'statusType']
+  const toLocalize = [
+    'spellProperties',
+    'bookType',
+    'talentType',
+    'occupationProperties',
+    'statusType'
+  ]
 
   for (const o of toLocalize) {
     const localized = Object.entries(COC7[o]).map(e => {
@@ -561,11 +613,19 @@ Hooks.once('setup', function () {
   }
 })
 
-Hooks.on('hotbarDrop', async (bar, data, slot) => CoC7Utilities.createMacro(bar, data, slot))
+Hooks.on('hotbarDrop', async (bar, data, slot) =>
+  CoC7Utilities.createMacro(bar, data, slot)
+)
 
-Hooks.on('renderChatLog', (app, html, data) => CoC7Chat.chatListeners(app, html, data))
-Hooks.on('renderChatMessage', (app, html, data) => CoC7Chat.renderMessageHook(app, html, data))
-Hooks.on('updateChatMessage', (chatMessage, chatData, diff, speaker) => CoC7Chat.onUpdateChatMessage(chatMessage, chatData, diff, speaker))
+Hooks.on('renderChatLog', (app, html, data) =>
+  CoC7Chat.chatListeners(app, html, data)
+)
+Hooks.on('renderChatMessage', (app, html, data) =>
+  CoC7Chat.renderMessageHook(app, html, data)
+)
+Hooks.on('updateChatMessage', (chatMessage, chatData, diff, speaker) =>
+  CoC7Chat.onUpdateChatMessage(chatMessage, chatData, diff, speaker)
+)
 
 Hooks.on('ready', async () => {
   await Updater.checkForUpdate()
@@ -575,7 +635,9 @@ Hooks.on('ready', async () => {
   activateGlobalListener()
 
   game.socket.on('system.CoC7', data => {
-    if (data.type === 'updateChar') { CoC7Utilities.updateCharSheets() }
+    if (data.type === 'updateChar') {
+      CoC7Utilities.updateCharSheets()
+    }
 
     if (game.user.isGM) {
       if (OpposedCheckCard.defaultConfig.type === data.type) {
@@ -669,8 +731,18 @@ Hooks.on('ready', async () => {
   // });
 
   game.CoC7.tables = {
-    boutOfMadness_Summary: (game.settings.get('CoC7', 'boutOfMadnessSummaryTable') === 'none') ? null : game.tables.get(game.settings.get('CoC7', 'boutOfMadnessSummaryTable')),
-    boutOfMadness_RealTime: (game.settings.get('CoC7', 'boutOfMadnessRealTimeTable') === 'none') ? null : game.tables.get(game.settings.get('CoC7', 'boutOfMadnessRealTimeTable'))
+    boutOfMadness_Summary:
+      game.settings.get('CoC7', 'boutOfMadnessSummaryTable') === 'none'
+        ? null
+        : game.tables.get(
+            game.settings.get('CoC7', 'boutOfMadnessSummaryTable')
+          ),
+    boutOfMadness_RealTime:
+      game.settings.get('CoC7', 'boutOfMadnessRealTimeTable') === 'none'
+        ? null
+        : game.tables.get(
+            game.settings.get('CoC7', 'boutOfMadnessRealTimeTable')
+          )
     // maniasIndex: ge.settings.get('CoC7', 'boutOfMadnessPhobiasIndex'),
     // phobiasIndex: game.settings.get('CoC7', 'boutOfMadnessManiasIndex'),
     // phobias: ('none' == game.settings.get('CoC7', 'samplePhobiasTable'))?null:game.tables.get(game.settings.get('CoC7', 'samplePhobiasTable')),
@@ -681,9 +753,13 @@ Hooks.on('ready', async () => {
 // Hooks.on('preCreateActor', (createData) => CoCActor.initToken( createData));
 
 // Called on closing a character sheet to lock it on getting it to display values
-Hooks.on('closeActorSheet', (characterSheet) => characterSheet.onCloseSheet())
-Hooks.on('renderCoC7CreatureSheet', (app, html, data) => CoC7CreatureSheet.forceAuto(app, html, data))
-Hooks.on('renderCoC7NPCSheet', (app, html, data) => CoC7NPCSheet.forceAuto(app, html, data))
+Hooks.on('closeActorSheet', characterSheet => characterSheet.onCloseSheet())
+Hooks.on('renderCoC7CreatureSheet', (app, html, data) =>
+  CoC7CreatureSheet.forceAuto(app, html, data)
+)
+Hooks.on('renderCoC7NPCSheet', (app, html, data) =>
+  CoC7NPCSheet.forceAuto(app, html, data)
+)
 // Hooks.on('updateActor', (actor, dataUpdate) => CoCActor.updateActor( actor, dataUpdate));
 // Hooks.on('updateToken', (scene, token, dataUpdate) => CoCActor.updateToken( scene, token, dataUpdate));
 
@@ -737,7 +813,7 @@ Hooks.on('renderSceneControls', CoC7Menu.renderMenu)
 Hooks.on('dropCanvasData', CoC7Canvas.onDropSomething)
 
 tinyMCE.PluginManager.add('CoC7_Editor_OnDrop', function (editor) {
-  editor.on('drop', (event) => CoC7Parser.onEditorDrop(event, editor))
+  editor.on('drop', event => CoC7Parser.onEditorDrop(event, editor))
 })
 
 CONFIG.TinyMCE.plugins = `CoC7_Editor_OnDrop ${CONFIG.TinyMCE.plugins}`
@@ -756,20 +832,32 @@ Hooks.on('targetToken', function (user, token, targeted) {
   if (targeted) {
     // Check if the targeted token is a player controlled token but no user controls it
     let gmonly = true
-    if (token.actor.data.permission.default === CONST.ENTITY_PERMISSIONS.OWNER) {
+    if (
+      token.actor.data.permission.default === CONST.ENTITY_PERMISSIONS.OWNER
+    ) {
       gmonly = false
     } else {
       const gms = game.users.filter(a => a.isGM).map(a => a.id)
       for (const [k, v] of Object.entries(token.actor.data.permission)) {
-        if (k !== 'default' && v === CONST.ENTITY_PERMISSIONS.OWNER && !gms.includes(k)) {
+        if (
+          k !== 'default' &&
+          v === CONST.ENTITY_PERMISSIONS.OWNER &&
+          !gms.includes(k)
+        ) {
           gmonly = false
         }
       }
     }
     if (!gmonly) {
-      const controlled = game.users.filter(a => !a.isGM && a.data.character === token.actor.id)
+      const controlled = game.users.filter(
+        a => !a.isGM && a.data.character === token.actor.id
+      )
       if (controlled.length === 0) {
-        ui.notifications.error(game.i18n.format('CoC7.MessageSelectedTargetIsNotControlled', { name: token.name }))
+        ui.notifications.error(
+          game.i18n.format('CoC7.MessageSelectedTargetIsNotControlled', {
+            name: token.name
+          })
+        )
       }
     }
   }

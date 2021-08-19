@@ -18,15 +18,25 @@ export class CoC7Menu {
       // ui.notifications.info( 'Menu init');
     }
 
-    const menu = await renderTemplate('systems/CoC7/templates/coc7-menu.html', game.CoC7.menus.getData())
+    const menu = await renderTemplate(
+      'systems/CoC7/templates/coc7-menu.html',
+      game.CoC7.menus.getData()
+    )
     const coc7Button = $(menu)
 
-    coc7Button.find('.scene-control').click(game.CoC7.menus._onClickMenu.bind(game.CoC7.menus))
-    coc7Button.find('.control-tool').click(game.CoC7.menus._onClickTool.bind(game.CoC7.menus))
+    coc7Button
+      .find('.scene-control')
+      .click(game.CoC7.menus._onClickMenu.bind(game.CoC7.menus))
+    coc7Button
+      .find('.control-tool')
+      .click(game.CoC7.menus._onClickTool.bind(game.CoC7.menus))
 
-    if (game.CoC7.menus.activeControl) html.find('.scene-control').removeClass('active')
+    if (game.CoC7.menus.activeControl)
+      html.find('.scene-control').removeClass('active')
 
-    html.find('.scene-control').click(game.CoC7.menus._clearActive.bind(game.CoC7.menus))
+    html
+      .find('.scene-control')
+      .click(game.CoC7.menus._clearActive.bind(game.CoC7.menus))
 
     html.append(coc7Button)
     game.CoC7.menus.html = html
@@ -85,7 +95,7 @@ export class CoC7Menu {
       // If control is a menu and is not active.
       // html.find('.scene-control').removeClass('active'); // Deactivate other menu.
       // event.currentTarget.classList.add('active'); //Activate this menu.
-      this.activeControl = controlName// Set curstom active control to that control.
+      this.activeControl = controlName // Set curstom active control to that control.
       ui.controls.render()
     }
   }
@@ -94,38 +104,47 @@ export class CoC7Menu {
     const isActive = !!canvas?.scene
 
     // Filter to control tool sets which can be displayed
-    const controls = this.controls.filter(s => s.visible !== false).map(s => {
-      s = duplicate(s)
+    const controls = this.controls
+      .filter(s => s.visible !== false)
+      .map(s => {
+        s = duplicate(s)
 
-      // Add styling rules
-      s.css = [
-        'custom-control',
-        s.button ? 'button' : null,
-        isActive && (this.activeControl === s.name) ? 'active' : ''
-      ].filter(t => !!t).join(' ')
+        // Add styling rules
+        s.css = [
+          'custom-control',
+          s.button ? 'button' : null,
+          isActive && this.activeControl === s.name ? 'active' : ''
+        ]
+          .filter(t => !!t)
+          .join(' ')
 
-      // if( this.activeControl === s.name) ui.notifications.warn( `Active control: ${this.activeControl}`);
+        // if( this.activeControl === s.name) ui.notifications.warn( `Active control: ${this.activeControl}`);
 
-      if (s.button) return s
+        if (s.button) return s
 
-      // Prepare contained tools
-      s.tools = s.tools.filter(t => t.visible !== false).map(t => {
-        const active = isActive && ((s.activeTool === t.name) || (t.toggle && t.active))
-        t.css = [
-          t.toggle ? 'toggle' : null,
-          active ? 'active' : null,
-          t.class ? t.class : null
-        ].filter(t => !!t).join(' ')
-        return t
+        // Prepare contained tools
+        s.tools = s.tools
+          .filter(t => t.visible !== false)
+          .map(t => {
+            const active =
+              isActive && (s.activeTool === t.name || (t.toggle && t.active))
+            t.css = [
+              t.toggle ? 'toggle' : null,
+              active ? 'active' : null,
+              t.class ? t.class : null
+            ]
+              .filter(t => !!t)
+              .join(' ')
+            return t
+          })
+        return s
       })
-      return s
-    })
 
     // Return data for rendering
     return {
       active: isActive,
       cssClass: isActive ? '' : 'disabled',
-      controls: controls// .filter(s => s.tools.length)
+      controls: controls // .filter(s => s.tools.length)
     }
   }
 
@@ -159,9 +178,10 @@ export class CoC7Menu {
           icon: 'fas fa-user-plus',
           name: 'actor-import',
           title: 'CoC7.ActorImporter',
-          onClick: async () => await CoC7ActorImporterDialog.create({
-            title: game.i18n.localize('CoC7.ActorImporter')
-          })
+          onClick: async () =>
+            await CoC7ActorImporterDialog.create({
+              title: game.i18n.localize('CoC7.ActorImporter')
+            })
         },
         {
           toggle: true,
@@ -194,7 +214,7 @@ export class CoC7Menu {
       name: 'dice-roll',
       title: 'CoC7.RollDice',
       button: true,
-      onClick: (event) => CoC7Utilities.rollDice(event)
+      onClick: event => CoC7Utilities.rollDice(event)
     })
 
     controls.push({

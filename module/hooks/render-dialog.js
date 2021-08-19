@@ -4,7 +4,7 @@ export function listen () {
   Hooks.on('renderDialog', (dialog, html) => {
     const form = html.find('form')
     if (form.is('#entity-create') && form.find('select').length !== 0) {
-      const entityCreateSelectTag = form.find('[name=\'type\']')
+      const entityCreateSelectTag = form.find("[name='type']")
       const entitySortedList = []
       entityCreateSelectTag.children().each((o, entityOption) => {
         const key = entityOption.textContent?.capitalize()

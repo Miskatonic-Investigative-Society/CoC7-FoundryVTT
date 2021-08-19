@@ -4,7 +4,9 @@ export class SkillSelectDialog extends Dialog {
   activateListeners (html) {
     super.activateListeners(html)
 
-    html.find('.select-skill').click(async (event) => this._onSelectSkillClicked(event))
+    html
+      .find('.select-skill')
+      .click(async event => this._onSelectSkillClicked(event))
   }
 
   async _onSelectSkillClicked (event) {
@@ -24,19 +26,25 @@ export class SkillSelectDialog extends Dialog {
   }
 
   static async create (data) {
-    const html = await renderTemplate('systems/CoC7/templates/apps/skill-select.html', data) // Render template bug avec certaines data
+    const html = await renderTemplate(
+      'systems/CoC7/templates/apps/skill-select.html',
+      data
+    ) // Render template bug avec certaines data
     return new Promise(resolve => {
-      const dlg = new SkillSelectDialog({
-        title: data.title,
-        content: html,
-        data: data,
-        buttons: {},
-        close: () => {
-          if (!data.added >= data.optionsCount) return resolve(false)
-          const selected = data.skills.filter(skill => skill.selected)
-          return resolve(selected)
-        }
-      }, { classes: ['coc7', 'dialogue', 'skill-select'] })
+      const dlg = new SkillSelectDialog(
+        {
+          title: data.title,
+          content: html,
+          data: data,
+          buttons: {},
+          close: () => {
+            if (!data.added >= data.optionsCount) return resolve(false)
+            const selected = data.skills.filter(skill => skill.selected)
+            return resolve(selected)
+          }
+        },
+        { classes: ['coc7', 'dialogue', 'skill-select'] }
+      )
       dlg.render(true)
     })
   }

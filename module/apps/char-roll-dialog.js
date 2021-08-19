@@ -5,10 +5,26 @@ export class CharacRollDialog extends Dialog {
     super.activateListeners(html)
     html.on('change', 'input', this._onChangeInput.bind(this))
     html.on('submit', 'form', this._onSubmit.bind(this))
-    html.on('click', '.roll-characteristic', this._onRollCharacteristic.bind(this))
-    html.on('click', '.increase-characteristic', this._onIncreaseCharacteristic.bind(this))
-    html.on('click', '.decrease-characteristic', this._onDecreaseCharacteristic.bind(this))
-    html.on('click', '.reset-characteristic', this._onResetCharacteristic.bind(this))
+    html.on(
+      'click',
+      '.roll-characteristic',
+      this._onRollCharacteristic.bind(this)
+    )
+    html.on(
+      'click',
+      '.increase-characteristic',
+      this._onIncreaseCharacteristic.bind(this)
+    )
+    html.on(
+      'click',
+      '.decrease-characteristic',
+      this._onDecreaseCharacteristic.bind(this)
+    )
+    html.on(
+      'click',
+      '.reset-characteristic',
+      this._onResetCharacteristic.bind(this)
+    )
     html.on('click', 'button', this._onButton.bind(this))
   }
 
@@ -43,11 +59,17 @@ export class CharacRollDialog extends Dialog {
   async _onButton (event) {
     const action = event.currentTarget.dataset.action
     if (action === 'roll') {
-      ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu', 'luck'].forEach(char => {
-        this.rollCharacteristic(char)
-      })
+      ;['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu', 'luck'].forEach(
+        char => {
+          this.rollCharacteristic(char)
+        }
+      )
     }
-    if (action === 'validate' && !event.currentTarget.classList.contains('inactive')) this.close()
+    if (
+      action === 'validate' &&
+      !event.currentTarget.classList.contains('inactive')
+    )
+      this.close()
   }
 
   async rollCharacteristic (key) {
@@ -58,7 +80,9 @@ export class CharacRollDialog extends Dialog {
       if (isNaN(Number(formula))) {
         const roll = new Roll(formula)
         await roll.evaluate({ async: true })
-        roll.toMessage({ flavor: `Rolling characterisitic ${this.data.data.characteristics.list[key].label}: ${formula}` })
+        roll.toMessage({
+          flavor: `Rolling characterisitic ${this.data.data.characteristics.list[key].label}: ${formula}`
+        })
         input.value = roll.total
       } else input.value = Number(formula)
       this.data.data.characteristics.values[key] = Number(input.value)
@@ -111,13 +135,21 @@ export class CharacRollDialog extends Dialog {
 
   checkTotal () {
     this.data.data.characteristics.points.total = 0
-    for (const [key, value] of Object.entries(this.data.data.characteristics.values)) {
-      if (key !== 'luck') { this.data.data.characteristics.points.total += value }
+    for (const [key, value] of Object.entries(
+      this.data.data.characteristics.values
+    )) {
+      if (key !== 'luck') {
+        this.data.data.characteristics.points.total += value
+      }
     }
 
     const validation = this._element[0].querySelector('.points')
     if (this.data.data.characteristics.points.enabled) {
-      if (this.data.data.characteristics.points.total !== this.data.data.characteristics.points.value) validation.classList.add('warning')
+      if (
+        this.data.data.characteristics.points.total !==
+        this.data.data.characteristics.points.value
+      )
+        validation.classList.add('warning')
       else {
         validation.classList.remove('warning')
         const validateButton = this._element[0].querySelector('button.validate')
@@ -133,9 +165,13 @@ export class CharacRollDialog extends Dialog {
 
     if (this.data.data.characteristics.rolls.enabled) {
       if (this.rolled) {
-        this.data.data.validate = !Object.entries(this.rolled).find(el => !el) && Object.entries(this.rolled).length === 9
+        this.data.data.validate =
+          !Object.entries(this.rolled).find(el => !el) &&
+          Object.entries(this.rolled).length === 9
         if (this.data.data.validate) {
-          const validateButton = this._element[0].querySelector('button.validate')
+          const validateButton = this._element[0].querySelector(
+            'button.validate'
+          )
           validateButton.classList.remove('inactive')
         }
       }
@@ -149,23 +185,36 @@ export class CharacRollDialog extends Dialog {
   static async create (data) {
     data.characteristics.points.total = 0
     for (const [key, value] of Object.entries(data.characteristics.values)) {
-      if (key !== 'luck') { data.characteristics.points.total += value || 0 }
+      if (key !== 'luck') {
+        data.characteristics.points.total += value || 0
+      }
     }
 
-    if (data.characteristics.points.enabled) { if (data.characteristics.points.total !== data.characteristics.points.value) data.pointsWarning = true }
+    if (data.characteristics.points.enabled) {
+      if (
+        data.characteristics.points.total !== data.characteristics.points.value
+      )
+        data.pointsWarning = true
+    }
 
-    const html = await renderTemplate('systems/CoC7/templates/apps/char-roll.html', data)
+    const html = await renderTemplate(
+      'systems/CoC7/templates/apps/char-roll.html',
+      data
+    )
     return new Promise(resolve => {
-      const dlg = new CharacRollDialog({
-        title: data.title,
-        content: html,
-        data: data,
-        buttons: {},
-        close: () => {
-          if (data.validate) return resolve(true)
-          else return resolve(false)
-        }
-      }, { classes: ['coc7', 'dialogue', 'char-select'] })
+      const dlg = new CharacRollDialog(
+        {
+          title: data.title,
+          content: html,
+          data: data,
+          buttons: {},
+          close: () => {
+            if (data.validate) return resolve(true)
+            else return resolve(false)
+          }
+        },
+        { classes: ['coc7', 'dialogue', 'char-select'] }
+      )
       dlg.render(true)
     })
   }

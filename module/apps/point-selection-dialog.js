@@ -4,7 +4,9 @@ export class PointSelectDialog extends Dialog {
   activateListeners (html) {
     super.activateListeners(html)
 
-    html.find('.item-name').click(async (event) => this._onSelectCharacteristic(event))
+    html
+      .find('.item-name')
+      .click(async event => this._onSelectCharacteristic(event))
     html.find('button').click(event => this._onButtonClicked(event))
   }
 
@@ -18,9 +20,16 @@ export class PointSelectDialog extends Dialog {
     })
     $(li).toggleClass('selected')
     this.data.data.characteristics[li.dataset.key].selected = true
-    const totalPoints = li.closest('#skill-selection-form').querySelector('.points')
-    totalPoints.innerText = this.data.data.total + this.data.data.characteristics[li.dataset.key].multiplier * this.data.data.characteristics[li.dataset.key].value
-    const button = li.closest('#skill-selection-form').querySelector('button.validate')
+    const totalPoints = li
+      .closest('#skill-selection-form')
+      .querySelector('.points')
+    totalPoints.innerText =
+      this.data.data.total +
+      this.data.data.characteristics[li.dataset.key].multiplier *
+        this.data.data.characteristics[li.dataset.key].value
+    const button = li
+      .closest('#skill-selection-form')
+      .querySelector('button.validate')
     button.classList.remove('inactive')
     this.data.data.resolved = true
     // const actor = game.actors.get( this.data.data.actorId);
@@ -42,18 +51,24 @@ export class PointSelectDialog extends Dialog {
   }
 
   static async create (data) {
-    const html = await renderTemplate('systems/CoC7/templates/apps/point-select.html', data)
+    const html = await renderTemplate(
+      'systems/CoC7/templates/apps/point-select.html',
+      data
+    )
     return new Promise(resolve => {
-      const dlg = new PointSelectDialog({
-        title: data.title,
-        content: html,
-        data: data,
-        buttons: {},
-        close: () => {
-          if (data.resolved) return resolve(data)
-          else return resolve(false)
-        }
-      }, { classes: ['coc7', 'dialogue', 'char-select'] })
+      const dlg = new PointSelectDialog(
+        {
+          title: data.title,
+          content: html,
+          data: data,
+          buttons: {},
+          close: () => {
+            if (data.resolved) return resolve(data)
+            else return resolve(false)
+          }
+        },
+        { classes: ['coc7', 'dialogue', 'char-select'] }
+      )
       dlg.render(true)
     })
   }

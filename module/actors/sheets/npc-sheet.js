@@ -18,9 +18,9 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
     data.displayFormula = this.actor.getActorFlag('displayFormula')
     if (data.displayFormula === undefined) data.displayFormula = false
     // await this.actor.creatureInit();
-    data.hasSan = (data.data.attribs.san.value !== null)
-    data.hasMp = (data.data.attribs.mp.value !== null)
-    data.hasLuck = (data.data.attribs.lck.value !== null)
+    data.hasSan = data.data.attribs.san.value !== null
+    data.hasMp = data.data.attribs.mp.value !== null
+    data.hasLuck = data.data.attribs.lck.value !== null
 
     return data
   }
@@ -28,7 +28,9 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
   activateListeners (html) {
     super.activateListeners(html)
     if (this.actor.isOwner) {
-      html.find('[name="data.attribs.hp.value"]').change(event => this.actor.setHealthStatusManually(event))
+      html
+        .find('[name="data.attribs.hp.value"]')
+        .change(event => this.actor.setHealthStatusManually(event))
     }
   }
 

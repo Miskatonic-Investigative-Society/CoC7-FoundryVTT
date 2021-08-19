@@ -34,18 +34,18 @@ This system is made possible thanks to all of its contributors!
 
 ## Future Plans.
 
-* [ ] Correcting bugs.  
-* [x] Implement luck rolls.
-* [x] Implement Creatures (with automatic and average characteristics/skill calculation).
-* [x] Implement NPC (with automatic and average characteristics/skill calculation).
-* [x] Implement creations of skills directly from the sheets.
-* [x] Implement experience tracking.
-* [x] Implement localization.
-* [ ] Working on CSS/HTML to improve the look.  
-* [x] Improving the combat tab, by adding combat skill to the weapon list.  
-* [x] Automatic skill assignment when adding a weapon.  
-* [x] Combat automation (calculation of difficulty, assignment of damage, opposed check...).  
-* [x] Implement pushed rolls.  
-* [x] Implement advanced rolls (opposed, combined etc…).  
-* [ ] Implement car chases.
-* [x] Automation of character creation.
+- [ ] Correcting bugs.
+- [x] Implement luck rolls.
+- [x] Implement Creatures (with automatic and average characteristics/skill calculation).
+- [x] Implement NPC (with automatic and average characteristics/skill calculation).
+- [x] Implement creations of skills directly from the sheets.
+- [x] Implement experience tracking.
+- [x] Implement localization.
+- [ ] Working on CSS/HTML to improve the look.
+- [x] Improving the combat tab, by adding combat skill to the weapon list.
+- [x] Automatic skill assignment when adding a weapon.
+- [x] Combat automation (calculation of difficulty, assignment of damage, opposed check...).
+- [x] Implement pushed rolls.
+- [x] Implement advanced rolls (opposed, combined etc…).
+- [ ] Implement car chases.
+- [x] Automation of character creation.

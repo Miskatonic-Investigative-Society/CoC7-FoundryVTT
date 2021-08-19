@@ -56,11 +56,16 @@ export class CoC7MeleeTarget extends ChatCardActor {
 
   get initiatorKey () {
     if (!this._initiatorKey) {
-      if (!this._initiator && this.parentMessageId) this._initiator = CoC7MeleeInitiator.getFromMessageId(this.parentMessageId)
+      if (!this._initiator && this.parentMessageId)
+        this._initiator = CoC7MeleeInitiator.getFromMessageId(
+          this.parentMessageId
+        )
       if (this._initiator) this._initiatorKey = this._initiator.actorKey
     }
     if (!this._initiatorKey) {
-      ui.notifications.error(`No initiator found for target : ${this.actor.name}`)
+      ui.notifications.error(
+        `No initiator found for target : ${this.actor.name}`
+      )
       return null
     }
     return this._initiatorKey
@@ -69,15 +74,20 @@ export class CoC7MeleeTarget extends ChatCardActor {
   get initiator () {
     if (!this.initiatorKey) {
       if (this.parentMessageId) {
-        this._initiator = CoC7MeleeInitiator.getFromMessageId(this.parentMessageId)
+        this._initiator = CoC7MeleeInitiator.getFromMessageId(
+          this.parentMessageId
+        )
         this.initiatorKey = this._initiator.actorKey
       } else return null
     }
-    return chatHelper.getActorFromKey(this.initiatorKey)// REFACTORING (2)
+    return chatHelper.getActorFromKey(this.initiatorKey) // REFACTORING (2)
   }
 
   get meleeInitiator () {
-    if (!this._initiator) this._initiator = CoC7MeleeInitiator.getFromMessageId(this.parentMessageId)
+    if (!this._initiator)
+      this._initiator = CoC7MeleeInitiator.getFromMessageId(
+        this.parentMessageId
+      )
     return this._initiator
   }
 
@@ -106,7 +116,8 @@ export class CoC7MeleeTarget extends ChatCardActor {
       card.dataset[camelFlag] = card.dataset[camelFlag] !== 'true'
       event.currentTarget.classList.toggle('switched-on')
       event.currentTarget.dataset.selected = card.dataset[camelFlag]
-    } else { // update card for all player
+    } else {
+      // update card for all player
       const target = CoC7MeleeTarget.getFromCard(card)
       target.toggleFlag(flag)
       target.updateChatCard()
@@ -114,7 +125,9 @@ export class CoC7MeleeTarget extends ChatCardActor {
   }
 
   toggleFlag (flagName) {
-    const flag = flagName.includes('-') ? chatHelper.hyphenToCamelCase(flagName) : flagName
+    const flag = flagName.includes('-')
+      ? chatHelper.hyphenToCamelCase(flagName)
+      : flagName
     this[flag] = !this[flag]
   }
 
@@ -154,17 +167,28 @@ export class CoC7MeleeTarget extends ChatCardActor {
           }
           break
         default:
-          content = '<p>' + game.i18n.localize('CoC7.MessageSelectSingleUserForTarget')
+          content =
+            '<p>' + game.i18n.localize('CoC7.MessageSelectSingleUserForTarget')
           content = content + '<form id="selectform"><select name="user">'
           owners.forEach(function (k) {
-            content = content + '<option value="' + k + '">' + game.users.get(k).name + '</option>'
+            content =
+              content +
+              '<option value="' +
+              k +
+              '">' +
+              game.users.get(k).name +
+              '</option>'
           })
           content = content + '</select></form></p>'
           await Dialog.prompt({
-            title: game.i18n.localize('CoC7.MessageTitleSelectSingleUserForTarget'),
+            title: game.i18n.localize(
+              'CoC7.MessageTitleSelectSingleUserForTarget'
+            ),
             content: content,
-            callback: (html) => {
-              const formData = new FormData(html[0].querySelector('#selectform'))
+            callback: html => {
+              const formData = new FormData(
+                html[0].querySelector('#selectform')
+              )
               formData.forEach(function (value, name) {
                 if (name === 'user') {
                   user = game.users.get(value)
@@ -173,7 +197,7 @@ export class CoC7MeleeTarget extends ChatCardActor {
             }
           })
       }
-    } else if (typeof (this.actor.user) !== 'undefined') {
+    } else if (typeof this.actor.user !== 'undefined') {
       user = this.actor.user
     }
 
@@ -183,7 +207,8 @@ export class CoC7MeleeTarget extends ChatCardActor {
       content: html
     }
 
-    if (['gmroll', 'blindroll'].includes(this.rollMode)) chatData.whisper = ChatMessage.getWhisperRecipients('GM')
+    if (['gmroll', 'blindroll'].includes(this.rollMode))
+      chatData.whisper = ChatMessage.getWhisperRecipients('GM')
     // if ( this.isBlind ) chatData['blind'] = true;
     chatData.blind = false
 
@@ -203,7 +228,9 @@ export class CoC7MeleeTarget extends ChatCardActor {
   }
 
   async getUpdatedChatCard () {
-    renderTemplate(this.template, this).then(html => { return html })
+    renderTemplate(this.template, this).then(html => {
+      return html
+    })
   }
 
   static async updateSelected (card, event) {
@@ -292,9 +319,12 @@ export class CoC7MeleeTarget extends ChatCardActor {
       }
     } else if (this.roll.success) {
       this.roll.rollColor = 'goldenrod'
-      if (CoC7Check.successLevel.regular === this.roll.successLevel) this.roll.rollTitle = game.i18n.localize('CoC7.RegularSuccess')
-      if (CoC7Check.successLevel.hard === this.roll.successLevel) this.roll.rollTitle = game.i18n.localize('CoC7.HardSuccess')
-      if (CoC7Check.successLevel.extreme === this.roll.successLevel) this.roll.rollTitle = game.i18n.localize('CoC7.ExtremeSuccess')
+      if (CoC7Check.successLevel.regular === this.roll.successLevel)
+        this.roll.rollTitle = game.i18n.localize('CoC7.RegularSuccess')
+      if (CoC7Check.successLevel.hard === this.roll.successLevel)
+        this.roll.rollTitle = game.i18n.localize('CoC7.HardSuccess')
+      if (CoC7Check.successLevel.extreme === this.roll.successLevel)
+        this.roll.rollTitle = game.i18n.localize('CoC7.ExtremeSuccess')
       for (let index = 0; index < this.roll.successLevel; index++) {
         this.roll.rollIcons.push('star')
       }
@@ -304,7 +334,10 @@ export class CoC7MeleeTarget extends ChatCardActor {
       this.roll.rollIcons.push('skull')
     }
 
-    const resolutionCard = new CoC7MeleeResoltion(this.parentMessageId, this.messageId)
+    const resolutionCard = new CoC7MeleeResoltion(
+      this.parentMessageId,
+      this.messageId
+    )
     const resolutionMessage = await resolutionCard.preCreateMessage()
 
     this.resolutionCard = resolutionMessage.id
@@ -320,12 +353,18 @@ export class CoC7MeleeTarget extends ChatCardActor {
     target.roll = CoC7Roll.getFromCard(card)
     chatHelper.getObjectFromElement(target, card)
 
-    if (card.closest('.message')) { target.messageId = card.closest('.message').dataset.messageId } else target.messageId = messageId
+    if (card.closest('.message')) {
+      target.messageId = card.closest('.message').dataset.messageId
+    } else target.messageId = messageId
     return target
   }
 
-  upgradeRoll (luckAmount, newSuccessLevel, oldCard) { // TODO : Check if this needs to be async
-    if (!this.actor.spendLuck(luckAmount)) ui.notifications.error(`${this.actor.name} didn't have enough luck to pass the check`)
+  upgradeRoll (luckAmount, newSuccessLevel, oldCard) {
+    // TODO : Check if this needs to be async
+    if (!this.actor.spendLuck(luckAmount))
+      ui.notifications.error(
+        `${this.actor.name} didn't have enough luck to pass the check`
+      )
     this.roll.value = null
     this.roll.successLevel = newSuccessLevel
     this.roll.luckSpent = true
@@ -341,22 +380,46 @@ export class CoC7MeleeTarget extends ChatCardActor {
     switch (newSuccessLevel) {
       case CoC7Check.successLevel.regular:
         diceTotal.innerText = game.i18n.localize('CoC7.RegularSuccess')
-        resulDetails.innerText = game.i18n.format('CoC7.RollResult.LuckSpendText', { luckAmount: luckAmount, successLevel: game.i18n.localize('CoC7.RegularDifficulty') })
+        resulDetails.innerText = game.i18n.format(
+          'CoC7.RollResult.LuckSpendText',
+          {
+            luckAmount: luckAmount,
+            successLevel: game.i18n.localize('CoC7.RegularDifficulty')
+          }
+        )
         break
 
       case CoC7Check.successLevel.hard:
         diceTotal.innerText = game.i18n.localize('CoC7.HardSuccess')
-        resulDetails.innerText = game.i18n.format('CoC7.RollResult.LuckSpendText', { luckAmount: luckAmount, successLevel: game.i18n.localize('CoC7.HardDifficulty') })
+        resulDetails.innerText = game.i18n.format(
+          'CoC7.RollResult.LuckSpendText',
+          {
+            luckAmount: luckAmount,
+            successLevel: game.i18n.localize('CoC7.HardDifficulty')
+          }
+        )
         break
 
       case CoC7Check.successLevel.extreme:
         diceTotal.innerText = game.i18n.localize('CoC7.ExtremeSuccess')
-        resulDetails.innerText = game.i18n.format('CoC7.RollResult.LuckSpendText', { luckAmount: luckAmount, successLevel: game.i18n.localize('CoC7.ExtremeDifficulty') })
+        resulDetails.innerText = game.i18n.format(
+          'CoC7.RollResult.LuckSpendText',
+          {
+            luckAmount: luckAmount,
+            successLevel: game.i18n.localize('CoC7.ExtremeDifficulty')
+          }
+        )
         break
 
       case CoC7Check.successLevel.critical:
         diceTotal.innerText = game.i18n.localize('CoC7.CriticalSuccess')
-        resulDetails.innerText = game.i18n.format('CoC7.RollResult.LuckSpendText', { luckAmount: luckAmount, successLevel: game.i18n.localize('CoC7.CriticalDifficulty') })
+        resulDetails.innerText = game.i18n.format(
+          'CoC7.RollResult.LuckSpendText',
+          {
+            luckAmount: luckAmount,
+            successLevel: game.i18n.localize('CoC7.CriticalDifficulty')
+          }
+        )
         break
 
       default:

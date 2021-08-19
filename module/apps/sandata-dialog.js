@@ -11,12 +11,19 @@ export class SanDataDialog extends Dialog {
   }
 
   static async create (options = {}) {
-    const html = await renderTemplate('systems/CoC7/templates/apps/sandata.html', options)
+    const html = await renderTemplate(
+      'systems/CoC7/templates/apps/sandata.html',
+      options
+    )
 
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       let formData = null
       const dlg = new SanDataDialog({
-        title: options.displayName ? game.i18n.format('CoC7.SanDataSelectionWindowNamed', { name: options.displayName }) : game.i18n.localize('CoC7.SanDataSelectionWindow'), // TODO: Remove SanDataSelectionWindowNamed
+        title: options.displayName
+          ? game.i18n.format('CoC7.SanDataSelectionWindowNamed', {
+              name: options.displayName
+            })
+          : game.i18n.localize('CoC7.SanDataSelectionWindow'), // TODO: Remove SanDataSelectionWindowNamed
         content: html,
         buttons: {
           Validate: {

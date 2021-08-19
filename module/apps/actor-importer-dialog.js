@@ -6,7 +6,9 @@ export class CoC7ActorImporterDialog extends Dialog {
   activateListeners (html) {
     super.activateListeners(html)
     html.on('submit', 'form', this._onSubmit.bind(this))
-    html.find('option[value=coc-' + game.i18n.lang + ']').attr('selected', 'selected')
+    html
+      .find('option[value=coc-' + game.i18n.lang + ']')
+      .attr('selected', 'selected')
   }
 
   /**
@@ -16,11 +18,19 @@ export class CoC7ActorImporterDialog extends Dialog {
    */
   static async getInputs () {
     const inputs = {}
-    inputs.entity = $('#coc-entity-type').val().trim()
-    inputs.convertFrom6E = $('#coc-convert-6E').val().trim()
+    inputs.entity = $('#coc-entity-type')
+      .val()
+      .trim()
+    inputs.convertFrom6E = $('#coc-convert-6E')
+      .val()
+      .trim()
     console.debug('entity type:', inputs.entity)
-    inputs.lang = $('#coc-entity-lang').val().trim()
-    let text = $('#coc-pasted-character-data').val().trim()
+    inputs.lang = $('#coc-entity-lang')
+      .val()
+      .trim()
+    let text = $('#coc-pasted-character-data')
+      .val()
+      .trim()
     console.debug('received text', '##' + text + '##')
     if (text[text.length] !== '.') {
       text += '.' // Add a dot a the end to help the regex find the end
@@ -40,7 +50,12 @@ export class CoC7ActorImporterDialog extends Dialog {
     const createdActor = await actor.createActor(inputs)
     // Actor created, Notify the user and show the sheet.
     console.debug('createdActor:', createdActor)
-    ui.notifications.info('Created ' + createdActor.data?.type?.toUpperCase() + ': ' + createdActor.data?.name)
+    ui.notifications.info(
+      'Created ' +
+        createdActor.data?.type?.toUpperCase() +
+        ': ' +
+        createdActor.data?.name
+    )
     await createdActor.sheet.render(true)
     // const updated = await Updater.updateActor(npc)
     // console.debug('updated:', updated)
@@ -55,29 +70,35 @@ export class CoC7ActorImporterDialog extends Dialog {
    * @param {} data can include a `title` for the dialog.
    */
   static async create (data) {
-    const html = await renderTemplate('systems/CoC7/templates/apps/actor-importer.html', data)
+    const html = await renderTemplate(
+      'systems/CoC7/templates/apps/actor-importer.html',
+      data
+    )
     return new Promise(resolve => {
-      const dlg = new CoC7ActorImporterDialog({
-        title: data.title,
-        content: html,
-        data: data,
-        buttons: {
-          import: {
-            icon: '<i class="fas fa-file-import"></i>',
-            label: game.i18n.localize('CoC7.Import'),
-            callback: CoC7ActorImporterDialog.importActor
+      const dlg = new CoC7ActorImporterDialog(
+        {
+          title: data.title,
+          content: html,
+          data: data,
+          buttons: {
+            import: {
+              icon: '<i class="fas fa-file-import"></i>',
+              label: game.i18n.localize('CoC7.Import'),
+              callback: CoC7ActorImporterDialog.importActor
+            },
+            no: {
+              icon: '<i class="fas fa-times"></i>',
+              label: game.i18n.localize('CoC7.Cancel')
+            }
           },
-          no: {
-            icon: '<i class="fas fa-times"></i>',
-            label: game.i18n.localize('CoC7.Cancel')
-          }
+          default: 'import',
+          close: console.log('Closing:')
         },
-        default: 'import',
-        close: console.log('Closing:')
-      }, {
-        classes: ['coc7', 'dialogue', 'actor-importer'],
-        width: 600
-      })
+        {
+          classes: ['coc7', 'dialogue', 'actor-importer'],
+          width: 600
+        }
+      )
       dlg.render(true)
     })
   }

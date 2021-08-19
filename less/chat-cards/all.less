@@ -1,93 +1,93 @@
-.chat-card-v2{
-    .card-header{
-        display: grid;
-        grid-template-columns: 36px auto 36px;
-        grid-template-areas: "left-portrait card-title right-portrait";
+.chat-card-v2 {
+  .card-header {
+    display: grid;
+    grid-template-columns: 36px auto 36px;
+    grid-template-areas: 'left-portrait card-title right-portrait';
 
-        .left-portrait{
-            height: 36px;
-            grid-area: left-portrait;
-        }
-
-        .card-title{
-            height: 36px;
-            grid-area: card-title;
-        }
-
-        .right-portrait{
-            height: 36px;
-            grid-area: right-portrait;
-        }
+    .left-portrait {
+      height: 36px;
+      grid-area: left-portrait;
     }
 
     .card-title {
-        line-height: 36px;
-        font-size: 20px;
-        text-align: center;
-        font-weight: bolder;
+      height: 36px;
+      grid-area: card-title;
     }
 
-    .portrait{
-        object-fit: contain;
-        border: 0;
+    .right-portrait {
+      height: 36px;
+      grid-area: right-portrait;
+    }
+  }
+
+  .card-title {
+    line-height: 36px;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bolder;
+  }
+
+  .portrait {
+    object-fit: contain;
+    border: 0;
+  }
+
+  .status-list {
+    padding: 3px 0;
+    border-bottom: 2px groove #fff;
+  }
+
+  .player-actions {
+    &:empty {
+      display: none;
     }
 
-    .status-list{
-        padding: 3px 0;
-        border-bottom: 2px groove #FFF;
+    margin: 0 !important;
+    padding: 3px 0;
+    border-bottom: 2px groove #fff;
+  }
+
+  .gm-actions {
+    &:empty {
+      display: none;
     }
 
-    .player-actions{
-        &:empty{
-            display: none;
-        }
+    margin: 0 !important;
+    padding: 3px 0;
+    // border-bottom: 2px groove #FFF;
+    background-color: gainsboro;
+  }
 
-        margin: 0 !important;
-        padding: 3px 0;
-        border-bottom: 2px groove #FFF;        
+  .info {
+    &.important {
+      color: darkred;
+      text-align: center;
+      font-size: large;
+      font-weight: bold;
+    }
+  }
+
+  .status {
+    display: inline;
+    height: auto;
+    line-height: unset;
+    vertical-align: middle;
+    text-align: center;
+    padding: 0 3px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 0.6rem;
+    border: 1px solid #999;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.05);
+
+    &.important {
+      background-color: black;
+      color: red;
     }
 
-    .gm-actions{
-        &:empty{
-            display: none;
-        }
-
-        margin: 0 !important;
-        padding: 3px 0;
-        // border-bottom: 2px groove #FFF;
-        background-color: gainsboro;
+    &.pending {
+      box-shadow: 0 0 4px darkred;
     }
-
-    .info{
-        &.important{
-            color: darkred;
-            text-align: center;
-            font-size: large;
-            font-weight: bold;
-        }
-    }
-
-    .status{
-        display: inline;
-        height: auto;
-        line-height: unset;
-        vertical-align: middle;
-        text-align: center;
-        padding: 0 3px;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        font-size: 0.6rem;
-        border: 1px solid #999;
-        border-radius: 3px;
-        background: rgba(0, 0, 0, 0.05);
-
-        &.important{
-            background-color: black;
-            color: red;
-        }
-
-        &.pending{
-            box-shadow: 0 0 4px darkred;
-        }
-    }
+  }
 }

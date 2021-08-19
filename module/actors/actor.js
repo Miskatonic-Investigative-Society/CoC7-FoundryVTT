@@ -55,26 +55,30 @@ export class CoCActor extends Actor {
   // getProp(key){
   //   return this[key]||0;
   // }
-  // gnitseT **********************
+  //
 
   /** @override */
   static async create (data, options = {}) {
     data.token = data.token || {}
     if (data.type === 'character') {
-      mergeObject(data.token, {
-        vision: true,
-        dimSight: 30,
-        brightSight: 0,
-        actorLink: true,
-        disposition: 1
-      }, { overwrite: false })
+      mergeObject(
+        data.token,
+        {
+          vision: true,
+          dimSight: 30,
+          brightSight: 0,
+          actorLink: true,
+          disposition: 1
+        },
+        { overwrite: false }
+      )
     }
     return super.create(data, options)
   }
 
   /**
    * Early version on templates did not include possibility of auto calc
-   * Just check if auto is indefined, in which case it will be set to true
+   * Just check if auto is undefined, in which case it will be set to true
    */
   checkUndefinedAuto () {
     const returnData = {
@@ -87,29 +91,77 @@ export class CoCActor extends Actor {
         build: {}
       }
     }
-    if (this.data.data.attribs?.hp?.auto === undefined) returnData.attribs.hp.auto = true
-    if (this.data.data.attribs?.mp?.auto === undefined) returnData.attribs.mp.auto = true
-    if (this.data.data.attribs?.san?.auto === undefined) returnData.attribs.san.auto = true
-    if (this.data.data.attribs?.mov?.auto === undefined) returnData.attribs.mov.auto = true
-    if (this.data.data.attribs?.db?.auto === undefined) returnData.attribs.db.auto = true
-    if (this.data.data.attribs?.build?.auto === undefined) returnData.attribs.build.auto = true
+    if (this.data.data.attribs?.hp?.auto === undefined)
+      returnData.attribs.hp.auto = true
+    if (this.data.data.attribs?.mp?.auto === undefined)
+      returnData.attribs.mp.auto = true
+    if (this.data.data.attribs?.san?.auto === undefined)
+      returnData.attribs.san.auto = true
+    if (this.data.data.attribs?.mov?.auto === undefined)
+      returnData.attribs.mov.auto = true
+    if (this.data.data.attribs?.db?.auto === undefined)
+      returnData.attribs.db.auto = true
+    if (this.data.data.attribs?.build?.auto === undefined)
+      returnData.attribs.build.auto = true
 
     return returnData
   }
 
   get characteristics () {
     const characteristics = {
-      str: { value: null, shortName: 'CHARAC.STR', label: 'CHARAC.Strength', formula: null },
-      con: { value: null, shortName: 'CHARAC.CON', label: 'CHARAC.Constitution', formula: null },
-      siz: { value: null, shortName: 'CHARAC.SIZ', label: 'CHARAC.Size', formula: null },
-      dex: { value: null, shortName: 'CHARAC.DEX', label: 'CHARAC.Dexterity', formula: null },
-      app: { value: null, shortName: 'CHARAC.APP', label: 'CHARAC.Appearance', formula: null },
-      int: { value: null, shortName: 'CHARAC.INT', label: 'CHARAC.Intelligence', formula: null },
-      pow: { value: null, shortName: 'CHARAC.POW', label: 'CHARAC.Power', formula: null },
-      edu: { value: null, shortName: 'CHARAC.EDU', label: 'CHARAC.Education', formula: null }
+      str: {
+        value: null,
+        shortName: 'CHARAC.STR',
+        label: 'CHARAC.Strength',
+        formula: null
+      },
+      con: {
+        value: null,
+        shortName: 'CHARAC.CON',
+        label: 'CHARAC.Constitution',
+        formula: null
+      },
+      siz: {
+        value: null,
+        shortName: 'CHARAC.SIZ',
+        label: 'CHARAC.Size',
+        formula: null
+      },
+      dex: {
+        value: null,
+        shortName: 'CHARAC.DEX',
+        label: 'CHARAC.Dexterity',
+        formula: null
+      },
+      app: {
+        value: null,
+        shortName: 'CHARAC.APP',
+        label: 'CHARAC.Appearance',
+        formula: null
+      },
+      int: {
+        value: null,
+        shortName: 'CHARAC.INT',
+        label: 'CHARAC.Intelligence',
+        formula: null
+      },
+      pow: {
+        value: null,
+        shortName: 'CHARAC.POW',
+        label: 'CHARAC.Power',
+        formula: null
+      },
+      edu: {
+        value: null,
+        shortName: 'CHARAC.EDU',
+        label: 'CHARAC.Education',
+        formula: null
+      }
     }
     if (this.data.data.characteristics) {
-      for (const [key, value] of Object.entries(this.data.data.characteristics)) {
+      for (const [key, value] of Object.entries(
+        this.data.data.characteristics
+      )) {
         characteristics[key] = {
           key: key,
           shortName: game.i18n.localize(value.short),
@@ -136,11 +188,15 @@ export class CoCActor extends Actor {
   }
 
   get boutOfMadness () {
-    return this.effects.find(e => e.data.label === game.i18n.localize('CoC7.BoutOfMadnessName'))
+    return this.effects.find(
+      e => e.data.label === game.i18n.localize('CoC7.BoutOfMadnessName')
+    )
   }
 
   get insanity () {
-    return this.effects.find(e => e.data.label === game.i18n.localize('CoC7.InsanityName'))
+    return this.effects.find(
+      e => e.data.label === game.i18n.localize('CoC7.InsanityName')
+    )
   }
 
   get isInABoutOfMadness () {
@@ -155,14 +211,30 @@ export class CoCActor extends Actor {
 
   get sanity () {
     const boutRealTime = !!this.boutOfMadness?.data.flags?.CoC7?.realTime
-    let duration = boutRealTime ? this.boutOfMadness?.data?.duration?.rounds : this.boutOfMadness?.data?.duration.seconds
+    let duration = boutRealTime
+      ? this.boutOfMadness?.data?.duration?.rounds
+      : this.boutOfMadness?.data?.duration.seconds
     if (!boutRealTime && duration) duration = Math.round(duration / 3600)
     let indefiniteInstanity = !!this.insanity?.data.flags?.CoC7.indefinite
-    let insaneDuration = indefiniteInstanity ? null : this.insanity?.data?.duration.seconds
-    if (!indefiniteInstanity && insaneDuration) insaneDuration = insaneDuration / 3600
-    let boutDurationText = this.isInABoutOfMadness ? boutRealTime ? `${duration} ${game.i18n.localize('CoC7.rounds')}` : `${duration} ${game.i18n.localize('CoC7.hours')}` : null
-    const insanityDurationText = insaneDuration ? this.isInsane ? indefiniteInstanity ? null : `${insaneDuration} ${game.i18n.localize('CoC7.hours')}` : null : null
-    if (this.isInsane && !insanityDurationText && !indefiniteInstanity) indefiniteInstanity = true
+    let insaneDuration = indefiniteInstanity
+      ? null
+      : this.insanity?.data?.duration.seconds
+    if (!indefiniteInstanity && insaneDuration)
+      insaneDuration = insaneDuration / 3600
+    let boutDurationText = this.isInABoutOfMadness
+      ? boutRealTime
+        ? `${duration} ${game.i18n.localize('CoC7.rounds')}`
+        : `${duration} ${game.i18n.localize('CoC7.hours')}`
+      : null
+    const insanityDurationText = insaneDuration
+      ? this.isInsane
+        ? indefiniteInstanity
+          ? null
+          : `${insaneDuration} ${game.i18n.localize('CoC7.hours')}`
+        : null
+      : null
+    if (this.isInsane && !insanityDurationText && !indefiniteInstanity)
+      indefiniteInstanity = true
     if (!duration) boutDurationText = ''
 
     return {
@@ -172,22 +244,24 @@ export class CoCActor extends Actor {
         summary: this.isInABoutOfMadness ? !boutRealTime : undefined,
         duration: this.isInABoutOfMadness ? duration : undefined,
         durationText: boutDurationText || '',
-        hint:
-          this.isInABoutOfMadness
-            ? `${game.i18n.localize('CoC7.BoutOfMadness')}${boutDurationText ? ': ' + boutDurationText : ''}`
-            : game.i18n.localize('CoC7.BoutOfMadness')
+        hint: this.isInABoutOfMadness
+          ? `${game.i18n.localize('CoC7.BoutOfMadness')}${
+              boutDurationText ? ': ' + boutDurationText : ''
+            }`
+          : game.i18n.localize('CoC7.BoutOfMadness')
       },
       underlying: {
         active: this.isInsane,
         indefintie: this.isInsane ? indefiniteInstanity : undefined,
         duration: insaneDuration,
         durationText: insanityDurationText || '',
-        hint:
-          this.isInsane
-            ? indefiniteInstanity
-                ? game.i18n.localize('CoC7.IndefiniteInsanity')
-                : `${game.i18n.localize('CoC7.TemporaryInsanity')} ${insanityDurationText || ''}`
-            : game.i18n.localize('CoC7.NotInsane')
+        hint: this.isInsane
+          ? indefiniteInstanity
+            ? game.i18n.localize('CoC7.IndefiniteInsanity')
+            : `${game.i18n.localize(
+                'CoC7.TemporaryInsanity'
+              )} ${insanityDurationText || ''}`
+          : game.i18n.localize('CoC7.NotInsane')
       }
     }
   }
@@ -211,7 +285,9 @@ export class CoCActor extends Actor {
     // await this.boutOfMadness?.setFlag( 'CoC7', 'madness', true);
 
     let result = null
-    const boutOfMadnessTableId = realTime ? game.settings.get('CoC7', 'boutOfMadnessRealTimeTable') : game.settings.get('CoC7', 'boutOfMadnessSummaryTable')
+    const boutOfMadnessTableId = realTime
+      ? game.settings.get('CoC7', 'boutOfMadnessRealTimeTable')
+      : game.settings.get('CoC7', 'boutOfMadnessSummaryTable')
     if (boutOfMadnessTableId !== 'none') {
       result = {
         phobia: false,
@@ -221,12 +297,17 @@ export class CoCActor extends Actor {
       const boutOfMadnessTable = game.tables.get(boutOfMadnessTableId)
       result.tableRoll = await boutOfMadnessTable.roll()
       if (typeof result.tableRoll.results[0] !== 'undefined') {
-        if (CONST.TABLE_RESULT_TYPES.ENTITY === result.tableRoll.results[0].data.type) {
+        if (
+          CONST.TABLE_RESULT_TYPES.ENTITY ===
+          result.tableRoll.results[0].data.type
+        ) {
           const item = game.items.get(result.tableRoll.results[0].data.resultId)
           if (typeof item !== 'undefined') {
             if (item.data?.data?.type?.phobia) result.phobia = true
             if (item.data?.data?.type?.mania) result.mania = true
-            result.description = `${item.name}:${TextEditor.enrichHTML(item.data.data.description.value)}`
+            result.description = `${item.name}:${TextEditor.enrichHTML(
+              item.data.data.description.value
+            )}`
             result.name = item.name
             delete item.data._id
             /** MODIF 0.8.x **/
@@ -234,14 +315,23 @@ export class CoCActor extends Actor {
             await this.createEmbeddedDocuments('Item', [item.data])
             /*****************/
           } else {
-            ui.notifications.error(game.i18n.localize('CoC7.MessageBoutOfMadnessItemNotFound'))
+            ui.notifications.error(
+              game.i18n.localize('CoC7.MessageBoutOfMadnessItemNotFound')
+            )
           }
         }
-        if (CONST.TABLE_RESULT_TYPES.TEXT === result.tableRoll.results[0].data.type) {
-          result.description = TextEditor.enrichHTML(result.tableRoll.results[0].data.text)
+        if (
+          CONST.TABLE_RESULT_TYPES.TEXT ===
+          result.tableRoll.results[0].data.type
+        ) {
+          result.description = TextEditor.enrichHTML(
+            result.tableRoll.results[0].data.text
+          )
         }
       } else {
-        ui.notifications.error(game.i18n.localize('CoC7.MessageBoutOfMadnessTableNotFound'))
+        ui.notifications.error(
+          game.i18n.localize('CoC7.MessageBoutOfMadnessTableNotFound')
+        )
       }
     }
 
@@ -249,9 +339,26 @@ export class CoCActor extends Actor {
     if (!realTime) return result
 
     if (this.boutOfMadness) {
-      await this.boutOfMadness.update(
+      await this.boutOfMadness.update({
+        disabled: false,
+        duration: {
+          rounds: realTime && duration ? duration : undefined,
+          seconds: realTime ? undefined : duration * 3600,
+          turns: 1
+        },
+        flags: {
+          CoC7: {
+            realTime: realTime
+          }
+        }
+      })
+    } else {
+      // const effectData =
+      await super.createEmbeddedDocuments('ActiveEffect', [
         {
-          disabled: false,
+          label: game.i18n.localize('CoC7.BoutOfMadnessName'),
+          icon: 'systems/CoC7/artwork/icons/hanging-spider.svg',
+          origin: this.uuid,
           duration: {
             rounds: realTime && duration ? duration : undefined,
             seconds: realTime ? undefined : duration * 3600,
@@ -259,26 +366,14 @@ export class CoCActor extends Actor {
           },
           flags: {
             CoC7: {
+              madness: true,
               realTime: realTime
             }
-          }
-        })
-    } else {
-      // const effectData =
-      await super.createEmbeddedDocuments('ActiveEffect', [{
-        label: game.i18n.localize('CoC7.BoutOfMadnessName'),
-        icon: 'systems/CoC7/artwork/icons/hanging-spider.svg',
-        origin: this.uuid,
-        duration: { rounds: realTime && duration ? duration : undefined, seconds: realTime ? undefined : duration * 3600, turns: 1 },
-        flags: {
-          CoC7: {
-            madness: true,
-            realTime: realTime
-          }
-        },
-        // tint: '#ff0000',
-        disabled: false
-      }])
+          },
+          // tint: '#ff0000',
+          disabled: false
+        }
+      ])
       // const effect = this.effects.get( effectData._id);
       // effect.sheet.render(true);
     }
@@ -304,19 +399,24 @@ export class CoCActor extends Actor {
       })
     } else {
       // const effectData =
-      await super.createEmbeddedDocuments('ActiveEffect', [{
-        label: game.i18n.localize('CoC7.InsanityName'),
-        icon: 'systems/CoC7/artwork/icons/tentacles-skull.svg',
-        origin: this.uuid,
-        duration: { seconds: !indefinite && duration ? duration * 3600 : undefined, turns: 1 },
-        flags: {
-          CoC7: {
-            madness: true,
-            indefinite: indefinite
-          }
-        },
-        disabled: false
-      }])
+      await super.createEmbeddedDocuments('ActiveEffect', [
+        {
+          label: game.i18n.localize('CoC7.InsanityName'),
+          icon: 'systems/CoC7/artwork/icons/tentacles-skull.svg',
+          origin: this.uuid,
+          duration: {
+            seconds: !indefinite && duration ? duration * 3600 : undefined,
+            turns: 1
+          },
+          flags: {
+            CoC7: {
+              madness: true,
+              indefinite: indefinite
+            }
+          },
+          disabled: false
+        }
+      ])
     }
   }
 
@@ -356,20 +456,35 @@ export class CoCActor extends Actor {
         }
       }
     }
-    const created = await this.createEmbeddedDocuments('Item', [data], { renderSheet: showSheet }) // MODIF: 0.8.x 'OwnedItmem' => 'Item
+    const created = await this.createEmbeddedDocuments('Item', [data], {
+      renderSheet: showSheet
+    }) // MODIF: 0.8.x 'OwnedItmem' => 'Item
     return created
   }
 
   async createWeaponSkill (name, firearms = false, base = null) {
     // TODO : Ask for base value if null
 
-    const skillData = await SkillSpecSelectDialog.create([], game.i18n.localize(firearms ? 'CoC7.FirearmSpecializationName' : 'CoC7.FightingSpecializationName'), 0, name)
+    const skillData = await SkillSpecSelectDialog.create(
+      [],
+      game.i18n.localize(
+        firearms
+          ? 'CoC7.FirearmSpecializationName'
+          : 'CoC7.FightingSpecializationName'
+      ),
+      0,
+      name
+    )
     const value = Number(skillData.get('base-value'))
     const data = {
       name: name,
       type: 'skill',
       data: {
-        specialization: game.i18n.localize(firearms ? 'CoC7.FirearmSpecializationName' : 'CoC7.FightingSpecializationName'),
+        specialization: game.i18n.localize(
+          firearms
+            ? 'CoC7.FirearmSpecializationName'
+            : 'CoC7.FightingSpecializationName'
+        ),
         base: isNaN(value) ? 0 : value,
         adjustments: {
           personal: null,
@@ -385,7 +500,9 @@ export class CoCActor extends Actor {
         }
       }
     }
-    await this.createEmbeddedDocuments('Item', [data], { renderSheet: !base }) // MODIF: 0.8.x 'OwnedItmem' => 'Item
+    await this.createEmbeddedDocuments('Item', [data], {
+      renderSheet: !base
+    }) // MODIF: 0.8.x 'OwnedItmem' => 'Item
     //    const created = await this.createEmbeddedDocuments('OwnedItem', data, { renderSheet: !base});
     const skill = this.getSkillsByName(name)
     return skill[0]
@@ -399,52 +516,63 @@ export class CoCActor extends Actor {
     if (this.getActorFlag('initialized')) return // Change to return skill ?
 
     // Check if fighting skills exists, if not create it and the associated attack.
-    const skills = this.getSkillsByName(game.i18n.localize(COC7.creatureFightingSkill))
+    const skills = this.getSkillsByName(
+      game.i18n.localize(COC7.creatureFightingSkill)
+    )
     if (skills.length === 0) {
       // Creating natural attack skill
       try {
         const skill = await this.createEmbeddedDocuments(
           'Item', // MODIF: 0.8.x 'OwnedItmem' => 'Item
-          [{
-            name: game.i18n.localize(COC7.creatureFightingSkill),
-            type: 'skill',
-            data: {
-              base: 0,
-              value: null,
-              specialization: game.i18n.localize(COC7.fightingSpecializationName),
-              properties: {
-                combat: true,
-                fighting: true,
-                special: true
-              },
-              flags: {}
+          [
+            {
+              name: game.i18n.localize(COC7.creatureFightingSkill),
+              type: 'skill',
+              data: {
+                base: 0,
+                value: null,
+                specialization: game.i18n.localize(
+                  COC7.fightingSpecializationName
+                ),
+                properties: {
+                  combat: true,
+                  fighting: true,
+                  special: true
+                },
+                flags: {}
+              }
             }
-          }], { renderSheet: false })
+          ],
+          { renderSheet: false }
+        )
 
         const attack = await this.createEmbeddedDocuments(
           'Item', // MODIF: 0.8.x 'OwnedItmem' => 'Item
-          [{
-            name: 'Innate attack',
-            type: 'weapon',
-            data: {
-              description: {
-                value: 'Creature\'s natural attack',
-                chat: 'Creature\'s natural attack'
-              },
-              wpnType: 'innate',
-              properties: {
-                addb: true,
-                slnt: true
+          [
+            {
+              name: 'Innate attack',
+              type: 'weapon',
+              data: {
+                description: {
+                  value: "Creature's natural attack",
+                  chat: "Creature's natural attack"
+                },
+                wpnType: 'innate',
+                properties: {
+                  addb: true,
+                  slnt: true
+                }
               }
             }
-          }], { renderSheet: false })
+          ],
+          { renderSheet: false }
+        )
 
         const createdAttack = this.items.get(attack._id)
-        await createdAttack.update(
-          {
-            'data.skill.main.id': skill._id,
-            'data.skill.main.name': skill.name
-          })
+        await createdAttack.update({
+          'data.skill.main.id': skill._id,
+          'data.skill.main.name': skill.name
+        })
       } catch (err) {
         console.error('Creature init: ' + err.message)
       }
@@ -463,13 +591,20 @@ export class CoCActor extends Actor {
         quantity: quantity
       }
     }
-    const created = await this.createEmbeddedDocuments('Item', [data], { renderSheet: showSheet }) // MODIF: 0.8.x 'OwnedItmem' => 'Item
+    const created = await this.createEmbeddedDocuments('Item', [data], {
+      renderSheet: showSheet
+    }) // MODIF: 0.8.x 'OwnedItmem' => 'Item
     return created
   }
 
   async createEmptySkill (event = null) {
     const showSheet = event ? !event.shiftKey : true
-    if (!this.getItemIdByName(game.i18n.localize(COC7.newSkillName))) return this.createSkill(game.i18n.localize(COC7.newSkillName), null, showSheet)
+    if (!this.getItemIdByName(game.i18n.localize(COC7.newSkillName)))
+      return this.createSkill(
+        game.i18n.localize(COC7.newSkillName),
+        null,
+        showSheet
+      )
     let index = 0
     let skillName = game.i18n.localize(COC7.newSkillName) + ' ' + index
     while (this.getItemIdByName(skillName)) {
@@ -482,7 +617,8 @@ export class CoCActor extends Actor {
 
   async createEmptyItem (event = null) {
     const showSheet = event ? !event.shiftKey : true
-    if (!this.getItemIdByName(game.i18n.localize(COC7.newItemName))) return this.createItem(game.i18n.localize(COC7.newItemName), 1, showSheet)
+    if (!this.getItemIdByName(game.i18n.localize(COC7.newItemName)))
+      return this.createItem(game.i18n.localize(COC7.newItemName), 1, showSheet)
     let index = 0
     let itemName = game.i18n.localize(COC7.newItemName) + ' ' + index
     while (this.getItemIdByName(itemName)) {
@@ -516,11 +652,15 @@ export class CoCActor extends Actor {
     for (const [key] of Object.entries(COC7.weaponProperties)) {
       data.data.properties[key] = false
     }
-    await this.createEmbeddedDocuments('Item', [data], { renderSheet: showSheet }) // MODIF: 0.8.x 'OwnedItmem' => 'Item
+    await this.createEmbeddedDocuments('Item', [data], {
+      renderSheet: showSheet
+    }) // MODIF: 0.8.x 'OwnedItmem' => 'Item
   }
 
   async createBioSection (title = null) {
-    const bio = this.data.data.biography ? duplicate(this.data.data.biography) : []
+    const bio = this.data.data.biography
+      ? duplicate(this.data.data.biography)
+      : []
     bio.push({
       title: title,
       value: null
@@ -580,7 +720,8 @@ export class CoCActor extends Actor {
     const data = dataArray[0]
     switch (data.type) {
       case 'skill':
-        if (this.data.type !== 'character') { // If not a PC set skill value to base
+        if (this.data.type !== 'character') {
+          // If not a PC set skill value to base
           if (this.getItemIdByName(data.name)) return // If skill with this name exist return
 
           if (data.data.base) {
@@ -592,7 +733,12 @@ export class CoCActor extends Actor {
           if (isNaN(Number(data.data.value))) {
             let value
             try {
-              value = (await new Roll(data.data.value, this.parseCharacteristics()).evaluate({ maximize: true, async: true })).total
+              value = (
+                await new Roll(
+                  data.data.value,
+                  this.parseCharacteristics()
+                ).evaluate({ maximize: true, async: true })
+              ).total
             } catch (err) {
               value = null
             }
@@ -607,16 +753,33 @@ export class CoCActor extends Actor {
             if (data.data?.flags?.occupation || data.data?.flags?.archetype) {
               skillList = this.skills.filter(el => {
                 if (!el.data.data.specialization) return false
-                if (data.data?.flags?.occupation && el.data.data.flags?.occupation) return false
-                if (data.data?.flags?.archetype && el.data.data.flags?.archetype) return false
-                return specialization.toLowerCase() === el.data.data.specialization?.toLowerCase()
+                if (
+                  data.data?.flags?.occupation &&
+                  el.data.data.flags?.occupation
+                )
+                  return false
+                if (
+                  data.data?.flags?.archetype &&
+                  el.data.data.flags?.archetype
+                )
+                  return false
+                return (
+                  specialization.toLowerCase() ===
+                  el.data.data.specialization?.toLowerCase()
+                )
               })
             }
             // if( 1 <= skillList.length) {
-            const skillData = await SkillSpecSelectDialog.create(skillList, data.data.specialization, data.data.base)
+            const skillData = await SkillSpecSelectDialog.create(
+              skillList,
+              data.data.specialization,
+              data.data.base
+            )
             if (skillData) {
               if (skillData.get('existing-skill')) {
-                const existingItem = this.items.get(skillData.get('existing-skill'))
+                const existingItem = this.items.get(
+                  skillData.get('existing-skill')
+                )
                 for (const [key, value] of Object.entries(data.data.flags)) {
                   if (value) await existingItem.setItemFlag(key)
                 }
@@ -642,14 +805,23 @@ export class CoCActor extends Actor {
           }
         }
 
-        return await super.createEmbeddedDocuments(embeddedName, [data], options)
+        return await super.createEmbeddedDocuments(
+          embeddedName,
+          [data],
+          options
+        )
       case 'weapon': {
         const mainSkill = data.data?.skill?.main?.name
         if (mainSkill) {
           let skill = this.getSkillsByName(mainSkill)[0]
           if (!skill) {
-            const name = mainSkill.match(/\(([^)]+)\)/) ? mainSkill.match(/\(([^)]+)\)/)[1] : mainSkill
-            skill = await this.createWeaponSkill(name, !!data.data.properties?.rngd)
+            const name = mainSkill.match(/\(([^)]+)\)/)
+              ? mainSkill.match(/\(([^)]+)\)/)[1]
+              : mainSkill
+            skill = await this.createWeaponSkill(
+              name,
+              !!data.data.properties?.rngd
+            )
           }
           if (skill) data.data.skill.main.id = skill.id
         } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
@@ -658,13 +830,22 @@ export class CoCActor extends Actor {
         if (secondSkill) {
           let skill = this.getSkillsByName(secondSkill)[0]
           if (!skill) {
-            const name = mainSkill.match(/\(([^)]+)\)/) ? mainSkill.match(/\(([^)]+)\)/)[1] : mainSkill
-            skill = await this.createWeaponSkill(name, !!data.data.properties?.rngd)
+            const name = mainSkill.match(/\(([^)]+)\)/)
+              ? mainSkill.match(/\(([^)]+)\)/)[1]
+              : mainSkill
+            skill = await this.createWeaponSkill(
+              name,
+              !!data.data.properties?.rngd
+            )
           }
           if (skill) data.data.skill.alternativ.id = skill.id
         } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
 
-        return await super.createEmbeddedDocuments(embeddedName, [duplicate(data)], options)
+        return await super.createEmbeddedDocuments(
+          embeddedName,
+          [duplicate(data)],
+          options
+        )
       }
       case 'setup': {
         if (data.data.enableCharacterisitics) {
@@ -679,36 +860,65 @@ export class CoCActor extends Actor {
           data.data.characteristics.list.edu = this.getCharacteristic('edu')
 
           data.data.characteristics.list.luck = {}
-          data.data.characteristics.list.luck.value = isNaN(this.luck) ? null : this.luck
-          data.data.characteristics.list.luck.label = game.i18n.localize('CoC7.Luck')
-          data.data.characteristics.list.luck.shortName = game.i18n.localize('CoC7.Luck')
+          data.data.characteristics.list.luck.value = isNaN(this.luck)
+            ? null
+            : this.luck
+          data.data.characteristics.list.luck.label = game.i18n.localize(
+            'CoC7.Luck'
+          )
+          data.data.characteristics.list.luck.shortName = game.i18n.localize(
+            'CoC7.Luck'
+          )
 
-          if (!data.data.characteristics.values) data.data.characteristics.values = {}
-          data.data.characteristics.values.str = data.data.characteristics.list.str.value
-          data.data.characteristics.values.con = data.data.characteristics.list.con.value
-          data.data.characteristics.values.siz = data.data.characteristics.list.siz.value
-          data.data.characteristics.values.dex = data.data.characteristics.list.dex.value
-          data.data.characteristics.values.app = data.data.characteristics.list.app.value
-          data.data.characteristics.values.int = data.data.characteristics.list.int.value
-          data.data.characteristics.values.pow = data.data.characteristics.list.pow.value
-          data.data.characteristics.values.edu = data.data.characteristics.list.edu.value
-          data.data.characteristics.values.luck = data.data.characteristics.list.luck.value
-          if (data.data.characteristics.points.enabled) data.data.title = game.i18n.localize('CoC7.SpendPoints')
+          if (!data.data.characteristics.values)
+            data.data.characteristics.values = {}
+          data.data.characteristics.values.str =
+            data.data.characteristics.list.str.value
+          data.data.characteristics.values.con =
+            data.data.characteristics.list.con.value
+          data.data.characteristics.values.siz =
+            data.data.characteristics.list.siz.value
+          data.data.characteristics.values.dex =
+            data.data.characteristics.list.dex.value
+          data.data.characteristics.values.app =
+            data.data.characteristics.list.app.value
+          data.data.characteristics.values.int =
+            data.data.characteristics.list.int.value
+          data.data.characteristics.values.pow =
+            data.data.characteristics.list.pow.value
+          data.data.characteristics.values.edu =
+            data.data.characteristics.list.edu.value
+          data.data.characteristics.values.luck =
+            data.data.characteristics.list.luck.value
+          if (data.data.characteristics.points.enabled)
+            data.data.title = game.i18n.localize('CoC7.SpendPoints')
           else data.data.title = game.i18n.localize('CoC7.RollCharac')
           const rolled = await CharacRollDialog.create(data.data)
           if (rolled) {
-            const updateData = {};
-            ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu'].forEach(key => {
-              if (data.data.characteristics.values[key]) {
-                updateData[`data.characteristics.${key}.value`] = data.data.characteristics.values[key]
-                updateData[`data.characteristics.${key}.formula`] = data.data.characteristics.rolls[key]
+            const updateData = {}
+            ;['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu'].forEach(
+              key => {
+                if (data.data.characteristics.values[key]) {
+                  updateData[`data.characteristics.${key}.value`] =
+                    data.data.characteristics.values[key]
+                  updateData[`data.characteristics.${key}.formula`] =
+                    data.data.characteristics.rolls[key]
+                }
               }
-            })
-            if (data.data.characteristics.values.luck) updateData['data.attribs.lck.value'] = data.data.characteristics.values.luck
+            )
+            if (data.data.characteristics.values.luck)
+              updateData['data.attribs.lck.value'] =
+                data.data.characteristics.values.luck
             if (data.data.characteristics.values.pow) {
-              updateData['data.attribs.san.value'] = data.data.characteristics.values.pow
-              updateData['data.attribs.san.oneFifthSanity'] = ' / ' + Math.floor(data.data.characteristics.values.pow / 5)
-              updateData['data.indefiniteInsanityLevel.max'] = updateData['data.attribs.mp.value'] = updateData['data.attribs.mp.max'] = Math.floor(data.data.characteristics.values.pow / 5)
+              updateData['data.attribs.san.value'] =
+                data.data.characteristics.values.pow
+              updateData['data.attribs.san.oneFifthSanity'] =
+                ' / ' + Math.floor(data.data.characteristics.values.pow / 5)
+              updateData['data.indefiniteInsanityLevel.max'] = updateData[
+                'data.attribs.mp.value'
+              ] = updateData['data.attribs.mp.max'] = Math.floor(
+                data.data.characteristics.values.pow / 5
+              )
             }
             await this.update(updateData)
             await this.update({
@@ -725,19 +935,28 @@ export class CoCActor extends Actor {
           await this.update({ 'data.backstory': data.data.backstory })
         } else {
           for (const sectionName of data.data.bioSections) {
-            if (!this.data.data.biography.find(el => sectionName === el.title) && sectionName) await this.createBioSection(sectionName)
+            if (
+              !this.data.data.biography.find(el => sectionName === el.title) &&
+              sectionName
+            )
+              await this.createBioSection(sectionName)
           }
         }
         break
       }
       case 'archetype':
-        if (this.data.type === 'character') { // Archetypre only for PCs
+        if (this.data.type === 'character') {
+          // Archetypre only for PCs
           if (this.archetype) {
             let resetArchetype = false
             await Dialog.confirm({
               title: game.i18n.localize('CoC7.ResetArchetype'),
-              content: `<p>${game.i18n.format('CoC7.ResetArchetypeHint', { name: this.name })}</p>`,
-              yes: () => { resetArchetype = true },
+              content: `<p>${game.i18n.format('CoC7.ResetArchetypeHint', {
+                name: this.name
+              })}</p>`,
+              yes: () => {
+                resetArchetype = true
+              },
               defaultYes: false
             })
             if (resetArchetype) await this.resetArchetype()
@@ -774,16 +993,24 @@ export class CoCActor extends Actor {
               const char = this.getCharacteristic(charac)
               const roll = new Roll(data.data.coreCharacteristicsFormula.value)
               roll.roll()
-              roll.toMessage({ flavor: `Rolling characterisitic ${char.label}: ${data.data.coreCharacteristicsFormula.value}` })
-              value = (char.value < roll.total) ? roll.total : char.value
+              roll.toMessage({
+                flavor: `Rolling characterisitic ${char.label}: ${data.data.coreCharacteristicsFormula.value}`
+              })
+              value = char.value < roll.total ? roll.total : char.value
             }
-            await this.update({ [`data.characteristics.${charac}.value`]: value })
+            await this.update({
+              [`data.characteristics.${charac}.value`]: value
+            })
           }
 
           // Add all skills
           await this.addUniqueItems(data.data.skills, 'archetype')
 
-          const newArchetype = await super.createEmbeddedDocuments(embeddedName, [data], options)
+          const newArchetype = await super.createEmbeddedDocuments(
+            embeddedName,
+            [data],
+            options
+          )
           // setting points
           await this.update({
             'data.development.archetype': this.archetypePoints
@@ -794,13 +1021,18 @@ export class CoCActor extends Actor {
 
         break
       case 'occupation':
-        if (this.data.type === 'character') { // Occupation only for PCs
+        if (this.data.type === 'character') {
+          // Occupation only for PCs
           if (this.occupation) {
             let resetOccupation = false
             await Dialog.confirm({
               title: game.i18n.localize('CoC7.ResetOccupation'),
-              content: `<p>${game.i18n.format('CoC7.ResetOccupationHint', { name: this.name })}</p>`,
-              yes: () => { resetOccupation = true },
+              content: `<p>${game.i18n.format('CoC7.ResetOccupationHint', {
+                name: this.name
+              })}</p>`,
+              yes: () => {
+                resetOccupation = true
+              },
               defaultYes: false
             })
             if (resetOccupation) await this.resetOccupation()
@@ -818,13 +1050,17 @@ export class CoCActor extends Actor {
             pointsDialogData.characteristics[key].name = char.label
             pointsDialogData.characteristics[key].value = char.value
             if (value.selected) {
-              pointsDialogData.characteristics[key].total = char.value * Number(pointsDialogData.characteristics[key].multiplier)
-              if (!value.optional) total += pointsDialogData.characteristics[key].total
+              pointsDialogData.characteristics[key].total =
+                char.value *
+                Number(pointsDialogData.characteristics[key].multiplier)
+              if (!value.optional)
+                total += pointsDialogData.characteristics[key].total
               else optionalChar = true
             }
           })
           pointsDialogData.total = total
-          if (optionalChar) { // Is there any optional char to choose for points calc ?
+          if (optionalChar) {
+            // Is there any optional char to choose for points calc ?
             const result = await PointSelectDialog.create(pointsDialogData)
             if (!result) return // Point not selected => exit.
           }
@@ -840,12 +1076,17 @@ export class CoCActor extends Actor {
 
             // Select only skills that are not present or are not flagged as occupation.
             data.data.groups[index].skills.forEach(value => {
-              if (CoC7Item.isAnySpec(value)) dialogData.skills.push(value) // If it's a generic spec we always add it
+              if (CoC7Item.isAnySpec(value)) dialogData.skills.push(value)
+              // If it's a generic spec we always add it
               else {
-                const skill = this.items.find(item => { return (item.name === value.name && item.type === 'skill') })
+                const skill = this.items.find(item => {
+                  return item.name === value.name && item.type === 'skill'
+                })
                 if (!skill || !skill.data.data.flags?.occupation) {
                   // if skill was added to skill list previously, remove it
-                  const alreadySelectedSkill = data.data.skills.find(item => { return (item.name === value.name) })
+                  const alreadySelectedSkill = data.data.skills.find(item => {
+                    return item.name === value.name
+                  })
                   if (!alreadySelectedSkill) dialogData.skills.push(value)
                 }
               }
@@ -854,23 +1095,42 @@ export class CoCActor extends Actor {
             // if there's none, do nothing.
             if (dialogData.skills.length !== 0) {
               dialogData.skills.forEach(skill => {
-                if (skill.data.specialization && !skill.name.includes(skill.data.specialization)) { skill.displayName = `${skill.data.specialization} (${skill.name})` } else skill.displayName = skill.name
+                if (
+                  skill.data.specialization &&
+                  !skill.name.includes(skill.data.specialization)
+                ) {
+                  skill.displayName = `${skill.data.specialization} (${skill.name})`
+                } else skill.displayName = skill.name
               })
 
               if (dialogData.skills.length <= dialogData.optionsCount) {
                 // If there's is less skill than options, add them all.
-                ui.notifications.info(game.i18n.format('CoC7.InfoLessSkillThanOptions', { skillCount: dialogData.skills.length, optionsCount: dialogData.optionsCount }))
+                ui.notifications.info(
+                  game.i18n.format('CoC7.InfoLessSkillThanOptions', {
+                    skillCount: dialogData.skills.length,
+                    optionsCount: dialogData.optionsCount
+                  })
+                )
                 // await this.addUniqueItems( dialogData.skills, 'occupation');
-                const merged = CoC7Item.mergeOptionalSkills(data.data.skills, dialogData.skills)
+                const merged = CoC7Item.mergeOptionalSkills(
+                  data.data.skills,
+                  dialogData.skills
+                )
                 data.data.skills = merged
               } else {
                 // Wait for skill selection.
                 const selected = await SkillSelectDialog.create(dialogData)
                 if (!selected) return
-                const merged = CoC7Item.mergeOptionalSkills(data.data.skills, selected)
+                const merged = CoC7Item.mergeOptionalSkills(
+                  data.data.skills,
+                  selected
+                )
                 data.data.skills = merged
               }
-            } else ui.notifications.info(game.i18n.localize('CoC7.InfoAllSkillsAlreadySelected'))
+            } else
+              ui.notifications.info(
+                game.i18n.localize('CoC7.InfoAllSkillsAlreadySelected')
+              )
           }
 
           // Add extra skills
@@ -880,14 +1140,22 @@ export class CoCActor extends Actor {
             dialogData.type = 'occupation'
             dialogData.actorId = this.id
             dialogData.optionsCount = Number(data.data.personal)
-            dialogData.title = game.i18n.format('CoC7.SelectPersonalSkills', { number: Number(data.data.personal) })
+            dialogData.title = game.i18n.format('CoC7.SelectPersonalSkills', {
+              number: Number(data.data.personal)
+            })
 
             // Select only skills that are not present or are not flagged as occupation.
             this.skills.forEach(s => {
               // Select all skills that are not already flagged as occupation, can have adjustments and XP.
-              if (!s.data.data.flags.occupation && !s.data.data.properties.noadjustments && !s.data.data.properties.noxpgain) {
+              if (
+                !s.data.data.flags.occupation &&
+                !s.data.data.properties.noadjustments &&
+                !s.data.data.properties.noxpgain
+              ) {
                 // if skill already selected don't add it
-                const alreadySelectedSkill = data.data.skills.find(item => { return (item.name === s.name) })
+                const alreadySelectedSkill = data.data.skills.find(item => {
+                  return item.name === s.name
+                })
                 if (!alreadySelectedSkill) dialogData.skills.push(s.data)
               }
             })
@@ -895,22 +1163,41 @@ export class CoCActor extends Actor {
             // if there's none, do nothing.
             if (dialogData.skills.length !== 0) {
               dialogData.skills.forEach(skill => {
-                if (skill.data.specialization && !skill.name.includes(skill.data.specialization)) { skill.displayName = `${skill.data.specialization} (${skill.name})` } else skill.displayName = skill.name
+                if (
+                  skill.data.specialization &&
+                  !skill.name.includes(skill.data.specialization)
+                ) {
+                  skill.displayName = `${skill.data.specialization} (${skill.name})`
+                } else skill.displayName = skill.name
               })
               if (dialogData.skills.length <= dialogData.optionsCount) {
                 // If there's is less skill than options, add them all.
-                ui.notifications.info(game.i18n.format('CoC7.InfoLessSkillThanOptions', { skillCount: dialogData.skills.length, optionsCount: dialogData.optionsCount }))
+                ui.notifications.info(
+                  game.i18n.format('CoC7.InfoLessSkillThanOptions', {
+                    skillCount: dialogData.skills.length,
+                    optionsCount: dialogData.optionsCount
+                  })
+                )
                 // await this.addUniqueItems( dialogData.skills, 'occupation');
-                const merged = CoC7Item.mergeOptionalSkills(data.data.skills, dialogData.skills)
+                const merged = CoC7Item.mergeOptionalSkills(
+                  data.data.skills,
+                  dialogData.skills
+                )
                 data.data.skills = merged
               } else {
                 // Wait for skill selection.
-                const selected = await SkillSelectDialog.create(dialogData)// Dialog data bug ???
+                const selected = await SkillSelectDialog.create(dialogData) // Dialog data bug ???
                 if (!selected) return
-                const merged = CoC7Item.mergeOptionalSkills(data.data.skills, selected)
+                const merged = CoC7Item.mergeOptionalSkills(
+                  data.data.skills,
+                  selected
+                )
                 data.data.skills = merged
               }
-            } else ui.notifications.info(game.i18n.localize('CoC7.InfoAllSkillsAlreadySelected'))
+            } else
+              ui.notifications.info(
+                game.i18n.localize('CoC7.InfoAllSkillsAlreadySelected')
+              )
           }
 
           // Add all skills
@@ -918,9 +1205,15 @@ export class CoCActor extends Actor {
           // Credit rating is always part of occupation
           await this.creditRatingSkill?.setItemFlag('occupation')
           // setting it to min credit rating
-          await this.creditRatingSkill?.update({ 'data.adjustments.occupation': Number(data.data.creditRating.min) })
+          await this.creditRatingSkill?.update({
+            'data.adjustments.occupation': Number(data.data.creditRating.min)
+          })
 
-          const newOccupation = await super.createEmbeddedDocuments(embeddedName, [data], options)
+          const newOccupation = await super.createEmbeddedDocuments(
+            embeddedName,
+            [data],
+            options
+          )
           // setting points
           await this.update({
             'data.development.occupation': this.occupationPoints,
@@ -932,7 +1225,11 @@ export class CoCActor extends Actor {
         break
 
       default:
-        return await super.createEmbeddedDocuments(embeddedName, [data], options)
+        return await super.createEmbeddedDocuments(
+          embeddedName,
+          [data],
+          options
+        )
     }
   }
 
@@ -947,9 +1244,14 @@ export class CoCActor extends Actor {
 
   getItemIdByName (itemName) {
     let id = null
-    const name = itemName.match(/\(([^)]+)\)/) ? itemName.match(/\(([^)]+)\)/)[1] : itemName
-    this.items.forEach((value) => {
-      if (CoC7Item.getNameWithoutSpec(value).toLowerCase() === name.toLowerCase()) id = value.id
+    const name = itemName.match(/\(([^)]+)\)/)
+      ? itemName.match(/\(([^)]+)\)/)[1]
+      : itemName
+    this.items.forEach(value => {
+      if (
+        CoC7Item.getNameWithoutSpec(value).toLowerCase() === name.toLowerCase()
+      )
+        id = value.id
     })
 
     return id
@@ -957,7 +1259,7 @@ export class CoCActor extends Actor {
 
   getItemsByName (itemName) {
     const itemList = []
-    this.items.forEach((value) => {
+    this.items.forEach(value => {
       if (value.name === itemName) itemList.push(value)
     })
 
@@ -968,12 +1270,20 @@ export class CoCActor extends Actor {
    *
    *
    */
-  getSkillsByName (skillName) { // TODO : more aggressive finding including specs
+  getSkillsByName (skillName) {
+    // TODO : more aggressive finding including specs
     const skillList = []
-    const name = skillName.match(/\(([^)]+)\)/) ? skillName.match(/\(([^)]+)\)/)[1] : skillName
+    const name = skillName.match(/\(([^)]+)\)/)
+      ? skillName.match(/\(([^)]+)\)/)[1]
+      : skillName
 
-    this.items.forEach((value) => {
-      if (CoC7Item.getNameWithoutSpec(value).toLowerCase() === name.toLowerCase() && value.type === 'skill') skillList.push(value)
+    this.items.forEach(value => {
+      if (
+        CoC7Item.getNameWithoutSpec(value).toLowerCase() ===
+          name.toLowerCase() &&
+        value.type === 'skill'
+      )
+        skillList.push(value)
     })
     return skillList
   }
@@ -998,7 +1308,9 @@ export class CoCActor extends Actor {
 
   static getCharacteristicDefinition () {
     const characteristics = []
-    for (const [key, value] of Object.entries(game.system.template.Actor.templates.characteristics.characteristics)) {
+    for (const [key, value] of Object.entries(
+      game.system.template.Actor.templates.characteristics.characteristics
+    )) {
       characteristics.push({
         key: key,
         shortName: game.i18n.localize(value.short),
@@ -1010,11 +1322,16 @@ export class CoCActor extends Actor {
 
   getCharacteristic (charName) {
     if (this.data.data.characteristics) {
-      for (const [key, value] of Object.entries(this.data.data.characteristics)) {
+      for (const [key, value] of Object.entries(
+        this.data.data.characteristics
+      )) {
         if (
-          game.i18n.localize(value.short).toLowerCase() === charName.toLowerCase() ||
-          game.i18n.localize(value.label).toLowerCase() === charName.toLowerCase() ||
-          key === charName.toLowerCase()) {
+          game.i18n.localize(value.short).toLowerCase() ===
+            charName.toLowerCase() ||
+          game.i18n.localize(value.label).toLowerCase() ===
+            charName.toLowerCase() ||
+          key === charName.toLowerCase()
+        ) {
           return {
             key: key,
             shortName: game.i18n.localize(value.short),
@@ -1028,7 +1345,11 @@ export class CoCActor extends Actor {
   }
 
   getAttribute (attribName) {
-    if (['lck', 'luck', game.i18n.localize('CoC7.Luck').toLowerCase()].includes(attribName.toLowerCase())) {
+    if (
+      ['lck', 'luck', game.i18n.localize('CoC7.Luck').toLowerCase()].includes(
+        attribName.toLowerCase()
+      )
+    ) {
       return {
         key: 'lck',
         shortName: 'luck',
@@ -1036,7 +1357,13 @@ export class CoCActor extends Actor {
         value: this.data.data.attribs.lck.value
       }
     }
-    if (['san', game.i18n.localize('CoC7.SAN').toLowerCase(), game.i18n.localize('CoC7.Sanity').toLowerCase()].includes(attribName.toLowerCase())) {
+    if (
+      [
+        'san',
+        game.i18n.localize('CoC7.SAN').toLowerCase(),
+        game.i18n.localize('CoC7.Sanity').toLowerCase()
+      ].includes(attribName.toLowerCase())
+    ) {
       return {
         key: 'san',
         shortName: game.i18n.localize('CoC7.SAN'),
@@ -1059,7 +1386,9 @@ export class CoCActor extends Actor {
 
   async resetOccupation (eraseOld = true) {
     if (eraseOld) {
-      const occupationSkill = this.items.filter(item => item.getItemFlag('occupation'))
+      const occupationSkill = this.items.filter(item =>
+        item.getItemFlag('occupation')
+      )
       for (let index = 0; index < occupationSkill.length; index++) {
         await occupationSkill[index].unsetItemFlag('occupation')
       }
@@ -1070,7 +1399,9 @@ export class CoCActor extends Actor {
 
   async resetArchetype (eraseOld = true) {
     if (eraseOld) {
-      const archetypeSkill = this.items.filter(item => item.getItemFlag('archetype'))
+      const archetypeSkill = this.items.filter(item =>
+        item.getItemFlag('archetype')
+      )
       for (let index = 0; index < archetypeSkill.length; index++) {
         await archetypeSkill[index].unsetItemFlag('archetype')
       }
@@ -1095,8 +1426,17 @@ export class CoCActor extends Actor {
 
   get hp () {
     if (['vehicle'].includes(this.data.type)) {
-      if (this.data.data.attribs.build.current === null || undefined === this.data.data.attribs.build.current || this.data.data.attribs.build.current === '') return this.build
-      if (this.data.data.attribs.build.current > this.data.data.attribs.build.value) return this.build
+      if (
+        this.data.data.attribs.build.current === null ||
+        undefined === this.data.data.attribs.build.current ||
+        this.data.data.attribs.build.current === ''
+      )
+        return this.build
+      if (
+        this.data.data.attribs.build.current >
+        this.data.data.attribs.build.value
+      )
+        return this.build
       const hp = parseInt(this.data.data.attribs.build.current)
       return isNaN(hp) ? null : hp
     }
@@ -1106,11 +1446,22 @@ export class CoCActor extends Actor {
   get hpMax () {
     if (['vehicle'].includes(this.data.type)) return this.build
     if (this.data.data.attribs.hp.auto) {
-      if (this.data.data.characteristics.siz.value != null && this.data.data.characteristics.con.value != null) {
-        const maxHP = Math.floor((this.data.data.characteristics.siz.value + this.data.data.characteristics.con.value) / 10)
-        return game.settings.get('CoC7', 'pulpRules') && this.data.type === 'character' ? maxHP * 2 : maxHP
+      if (
+        this.data.data.characteristics.siz.value != null &&
+        this.data.data.characteristics.con.value != null
+      ) {
+        const maxHP = Math.floor(
+          (this.data.data.characteristics.siz.value +
+            this.data.data.characteristics.con.value) /
+            10
+        )
+        return game.settings.get('CoC7', 'pulpRules') &&
+          this.data.type === 'character'
+          ? maxHP * 2
+          : maxHP
       }
-      if (this.data.data.attribs.hp.max) return parseInt(this.data.data.attribs.hp.max)
+      if (this.data.data.attribs.hp.max)
+        return parseInt(this.data.data.attribs.hp.max)
       return null
     }
     return parseInt(this.data.data.attribs.hp.max)
@@ -1133,7 +1484,9 @@ export class CoCActor extends Actor {
         if (flag) skill.data.flags[flag] = true
         /** MODIF 0.8.x **/
         // await this.createOwnedItem( skill, {renderSheet:false});
-        await this.createEmbeddedDocuments('Item', [skill], { renderSheet: false })
+        await this.createEmbeddedDocuments('Item', [skill], {
+          renderSheet: false
+        })
         /*****************/
       } else {
         const itemId = this.getItemIdByName(skill.name)
@@ -1144,7 +1497,9 @@ export class CoCActor extends Actor {
           }
           /** MODIF 0.8.x **/
           // await this.createOwnedItem( skill, {renderSheet:false});
-          await this.createEmbeddedDocuments('Item', [skill], { renderSheet: false })
+          await this.createEmbeddedDocuments('Item', [skill], {
+            renderSheet: false
+          })
           /*****************/
         } else if (flag) {
           const item = this.items.get(itemId)
@@ -1162,7 +1517,9 @@ export class CoCActor extends Actor {
       }
       /** MODIF 0.8.x **/
       // await this.createOwnedItem( item, {renderSheet:false});
-      await this.createEmbeddedDocuments('Item', [item], { renderSheet: false })
+      await this.createEmbeddedDocuments('Item', [item], {
+        renderSheet: false
+      })
       /*****************/
     }
   }
@@ -1176,7 +1533,9 @@ export class CoCActor extends Actor {
       }
       /** MODIF 0.8.x **/
       // await this.createOwnedItem( skill, {renderSheet:false});
-      await this.createEmbeddedDocuments('Item', [skill], { renderSheet: false })
+      await this.createEmbeddedDocuments('Item', [skill], {
+        renderSheet: false
+      })
       /*****************/
     } else if (flag) {
       const item = this.items.get(itemId)
@@ -1186,7 +1545,9 @@ export class CoCActor extends Actor {
 
   get mpMax () {
     if (this.data.data.attribs.mp.auto) {
-      if (this.data.data.characteristics.pow.value != null) { return Math.floor(this.data.data.characteristics.pow.value / 5) } else return null
+      if (this.data.data.characteristics.pow.value != null) {
+        return Math.floor(this.data.data.characteristics.pow.value / 5)
+      } else return null
     }
     return parseInt(this.data.data.attribs.mp.max)
   }
@@ -1200,7 +1561,10 @@ export class CoCActor extends Actor {
   encounteredCreaturesSanDataIndex (creature) {
     const sanData = CoC7Utilities.getCreatureSanData(creature)
     return this.data.data.encounteredCreatures.findIndex(cd => {
-      return (cd.id === sanData?.id || cd.name.toLowerCase() === sanData.name?.toLocaleLowerCase())
+      return (
+        cd.id === sanData?.id ||
+        cd.name.toLowerCase() === sanData.name?.toLocaleLowerCase()
+      )
     })
   }
 
@@ -1208,16 +1572,21 @@ export class CoCActor extends Actor {
     const sanData = this.encounteredCreaturesSanData(creature)
     if (sanData) {
       // check for if specie already encountered return max of both;
-      if (sanData.specie) { return Math.max(sanData.specie.totalLoss || 0, sanData.totalLoss) }
+      if (sanData.specie) {
+        return Math.max(sanData.specie.totalLoss || 0, sanData.totalLoss)
+      }
 
       return sanData.totalLoss || 0
-    } else { // That creature was never encountered. What about his specie.
+    } else {
+      // That creature was never encountered. What about his specie.
       const creatureSanData = CoC7Utilities.getCreatureSanData(creature)
       if (creatureSanData.specie) {
-        const specieEncountered = this.encounteredCreaturesSanData(creatureSanData.specie)
+        const specieEncountered = this.encounteredCreaturesSanData(
+          creatureSanData.specie
+        )
         if (specieEncountered) return specieEncountered.totalLoss
       }
-      return 0// Never encountered that specie or this creature.
+      return 0 // Never encountered that specie or this creature.
     }
   }
 
@@ -1229,19 +1598,46 @@ export class CoCActor extends Actor {
     if (sanData) {
       // Was there any update to that creature ?
       let changes = false
-      if (creatureSanData.sanLossMax !== sanData.sanLossMax) { sanData.sanLossMax = creatureSanData.sanLossMax; changes = true }
-      if (creatureSanData.specie && !sanData.specie) { sanData.specie = creatureSanData.specie; changes = true }
-      if (creatureSanData.specie && creatureSanData.specie.sanLossMax !== sanData.specie.sanLossMax) { sanData.specie.sanLossMax = creatureSanData.specie.sanLossMax; changes = true }
-      if (sanData.totalLoss > sanData.sanLossMax) { sanData.totalLoss = sanData.sanLossMax; changes = true }
-      if (sanData.specie && sanData.specie.totalLoss > sanData.specie.sanLossMax) { sanData.specie.totalLoss = sanData.specie.sanLossMax; changes = true }
+      if (creatureSanData.sanLossMax !== sanData.sanLossMax) {
+        sanData.sanLossMax = creatureSanData.sanLossMax
+        changes = true
+      }
+      if (creatureSanData.specie && !sanData.specie) {
+        sanData.specie = creatureSanData.specie
+        changes = true
+      }
+      if (
+        creatureSanData.specie &&
+        creatureSanData.specie.sanLossMax !== sanData.specie.sanLossMax
+      ) {
+        sanData.specie.sanLossMax = creatureSanData.specie.sanLossMax
+        changes = true
+      }
+      if (sanData.totalLoss > sanData.sanLossMax) {
+        sanData.totalLoss = sanData.sanLossMax
+        changes = true
+      }
+      if (
+        sanData.specie &&
+        sanData.specie.totalLoss > sanData.specie.sanLossMax
+      ) {
+        sanData.specie.totalLoss = sanData.specie.sanLossMax
+        changes = true
+      }
 
       if (changes) {
-        const encounteredCreaturesList = this.data.data.encounteredCreatures ? duplicate(this.data.data.encounteredCreatures) : []
+        const encounteredCreaturesList = this.data.data.encounteredCreatures
+          ? duplicate(this.data.data.encounteredCreatures)
+          : []
         const sanDataIndex = this.encounteredCreaturesSanDataIndex(creature)
         encounteredCreaturesList[sanDataIndex] = sanData
-        if (sanData.specie) { this._updateAllOfSameSpecie(encounteredCreaturesList, sanData.specie) }
+        if (sanData.specie) {
+          this._updateAllOfSameSpecie(encounteredCreaturesList, sanData.specie)
+        }
 
-        this.update({ 'data.encounteredCreatures': encounteredCreaturesList })
+        this.update({
+          'data.encounteredCreatures': encounteredCreaturesList
+        })
       }
 
       return sanData.sanLossMax - sanData.totalLoss
@@ -1255,27 +1651,39 @@ export class CoCActor extends Actor {
   }
 
   creatureEncountered (creature) {
-    return (!!~this.encounteredCreaturesSanDataIndex(creature))
+    return !!~this.encounteredCreaturesSanDataIndex(creature)
   }
 
   creatureSpecieEncountered (creature) {
     const creatureSanData = CoC7Utilities.getCreatureSanData(creature)
     if (creatureSanData.specie) {
-      return (!!~this.encounteredCreaturesSanDataIndex(creatureSanData.specie))
+      return !!~this.encounteredCreaturesSanDataIndex(creatureSanData.specie)
     }
     return this.creatureEncountered(creature)
   }
 
   _updateAllOfSameSpecie (encounteredCreaturesList, specieSanData) {
     for (let index = 0; index < encounteredCreaturesList.length; index++) {
-      if (encounteredCreaturesList[index].specie?.id === specieSanData.id || encounteredCreaturesList[index].specie?.name.toLowerCase() === specieSanData.name?.toLowerCase()) {
+      if (
+        encounteredCreaturesList[index].specie?.id === specieSanData.id ||
+        encounteredCreaturesList[index].specie?.name.toLowerCase() ===
+          specieSanData.name?.toLowerCase()
+      ) {
         // New encounter with that specie.
-        if (encounteredCreaturesList[index].specie.totalLoss !== specieSanData.totalLoss) {
-          const delta = specieSanData.totalLoss - encounteredCreaturesList[index].specie.totalLoss
+        if (
+          encounteredCreaturesList[index].specie.totalLoss !==
+          specieSanData.totalLoss
+        ) {
+          const delta =
+            specieSanData.totalLoss -
+            encounteredCreaturesList[index].specie.totalLoss
           if (delta > 0) {
             encounteredCreaturesList[index].specie = specieSanData
             encounteredCreaturesList[index].totalLoss += delta
-            encounteredCreaturesList[index].totalLoss = Math.min(encounteredCreaturesList[index].totalLoss, encounteredCreaturesList[index].sanLossMax)
+            encounteredCreaturesList[index].totalLoss = Math.min(
+              encounteredCreaturesList[index].totalLoss,
+              encounteredCreaturesList[index].sanLossMax
+            )
           }
         }
       }
@@ -1284,11 +1692,17 @@ export class CoCActor extends Actor {
 
   _removeSpecie (encounteredCreaturesList, specieSanData) {
     for (let index = 0; index < encounteredCreaturesList.length; index++) {
-      if (encounteredCreaturesList[index].specie?.id === specieSanData.id || encounteredCreaturesList[index].specie?.name.toLowerCase() === specieSanData.name?.toLowerCase()) {
-        const previousSpecieLost = encounteredCreaturesList[index].specie.totalLoss
+      if (
+        encounteredCreaturesList[index].specie?.id === specieSanData.id ||
+        encounteredCreaturesList[index].specie?.name.toLowerCase() ===
+          specieSanData.name?.toLowerCase()
+      ) {
+        const previousSpecieLost =
+          encounteredCreaturesList[index].specie.totalLoss
         delete encounteredCreaturesList[index].specie
 
-        encounteredCreaturesList[index].totalLoss = encounteredCreaturesList[index].totalLoss - previousSpecieLost
+        encounteredCreaturesList[index].totalLoss =
+          encounteredCreaturesList[index].totalLoss - previousSpecieLost
         if (encounteredCreaturesList[index].totalLoss < 0) {
           encounteredCreaturesList[index].totalLoss = 0
         }
@@ -1300,25 +1714,35 @@ export class CoCActor extends Actor {
     const indexSanData = this.encounteredCreaturesSanDataIndex(creature)
     if (~indexSanData) {
       const creatureSanData = CoC7Utilities.getCreatureSanData(creature)
-      const encounteredCreaturesList = this.data.data.encounteredCreatures ? duplicate(this.data.data.encounteredCreatures) : []
+      const encounteredCreaturesList = this.data.data.encounteredCreatures
+        ? duplicate(this.data.data.encounteredCreatures)
+        : []
       encounteredCreaturesList.splice(indexSanData, 1)
       creatureSanData.totalLoss = 0
       if (creatureSanData.specie) delete creatureSanData.specie
       this._updateAllOfSameSpecie(encounteredCreaturesList, creatureSanData)
-      await this.update({ 'data.encounteredCreatures': encounteredCreaturesList })
+      await this.update({
+        'data.encounteredCreatures': encounteredCreaturesList
+      })
     }
   }
 
   async resetSpecie (creature) {
-    const encounteredCreaturesList = this.data.data.encounteredCreatures ? duplicate(this.data.data.encounteredCreatures) : []
+    const encounteredCreaturesList = this.data.data.encounteredCreatures
+      ? duplicate(this.data.data.encounteredCreatures)
+      : []
     const creatureSanData = CoC7Utilities.getCreatureSanData(creature)
     if (!creatureSanData.specie) return
-    const indexSanData = this.encounteredCreaturesSanDataIndex(creatureSanData.specie)
+    const indexSanData = this.encounteredCreaturesSanDataIndex(
+      creatureSanData.specie
+    )
     if (~indexSanData) {
       encounteredCreaturesList.splice(indexSanData, 1)
     }
     this._removeSpecie(encounteredCreaturesList, creatureSanData.specie)
-    await this.update({ 'data.encounteredCreatures': encounteredCreaturesList })
+    await this.update({
+      'data.encounteredCreatures': encounteredCreaturesList
+    })
 
     return false
   }
@@ -1333,11 +1757,19 @@ export class CoCActor extends Actor {
 
     // Check if that creature belongs to a specie and have we already encoutered it.
     let indexSpeciesSanData = -1
-    if (creatureSanData.specie?.id) indexSpeciesSanData = this.encounteredCreaturesSanDataIndex(creatureSanData.specie.id)
-    if (indexSpeciesSanData === -1 && creatureSanData.specie?.name) indexSpeciesSanData = this.encounteredCreaturesSanDataIndex(creatureSanData.specie.name)
+    if (creatureSanData.specie?.id)
+      indexSpeciesSanData = this.encounteredCreaturesSanDataIndex(
+        creatureSanData.specie.id
+      )
+    if (indexSpeciesSanData === -1 && creatureSanData.specie?.name)
+      indexSpeciesSanData = this.encounteredCreaturesSanDataIndex(
+        creatureSanData.specie.name
+      )
 
     // Copy the array for updating.
-    const encounteredCreaturesList = this.data.data.encounteredCreatures ? duplicate(this.data.data.encounteredCreatures) : []
+    const encounteredCreaturesList = this.data.data.encounteredCreatures
+      ? duplicate(this.data.data.encounteredCreatures)
+      : []
 
     // Creature already encountered.
     if (~indexSanData) {
@@ -1348,22 +1780,30 @@ export class CoCActor extends Actor {
         newSanData = creatureSanData
         newSanData.totalLoss = oldSanData.totalLoss || 0
         if (newSanData.specie) {
-          newSanData.specie.totalLoss = oldSanData.specie?.totalLoss ? oldSanData.specie.totalLoss : 0
+          newSanData.specie.totalLoss = oldSanData.specie?.totalLoss
+            ? oldSanData.specie.totalLoss
+            : 0
         } else {
-          if (oldSanData.specie) newSanData.specie = oldSanData.specie// Should never happen
+          if (oldSanData.specie) newSanData.specie = oldSanData.specie // Should never happen
         }
       }
 
-      newSanData.totalLoss = newSanData.totalLoss ? newSanData.totalLoss + sanLoss : sanLoss
+      newSanData.totalLoss = newSanData.totalLoss
+        ? newSanData.totalLoss + sanLoss
+        : sanLoss
       if (newSanData.totalLoss > newSanData.sanLossMax) {
-        exactSanLoss = exactSanLoss - (newSanData.totalLoss - newSanData.sanLossMax)
+        exactSanLoss =
+          exactSanLoss - (newSanData.totalLoss - newSanData.sanLossMax)
         newSanData.totalLoss = newSanData.sanLossMax
       }
 
       // Credit the loss to that creature specie as well if it exists.
       if (newSanData.specie) {
-        newSanData.specie.totalLoss = newSanData.specie.totalLoss ? newSanData.specie.totalLoss + exactSanLoss : exactSanLoss
-        if (newSanData.specie.totalLoss > newSanData.specie.sanLossMax) newSanData.specie.totalLoss = newSanData.specie.sanLossMax
+        newSanData.specie.totalLoss = newSanData.specie.totalLoss
+          ? newSanData.specie.totalLoss + exactSanLoss
+          : exactSanLoss
+        if (newSanData.specie.totalLoss > newSanData.specie.sanLossMax)
+          newSanData.specie.totalLoss = newSanData.specie.sanLossMax
 
         // Update all creture from the same specie.
         this._updateAllOfSameSpecie(encounteredCreaturesList, newSanData.specie)
@@ -1371,7 +1811,9 @@ export class CoCActor extends Actor {
 
       encounteredCreaturesList[indexSanData] = newSanData
       // Update the specie also :
-      if (~indexSpeciesSanData && newSanData.specie) encounteredCreaturesList[indexSpeciesSanData] = newSanData.specie // We already encoutered that specie
+      if (~indexSpeciesSanData && newSanData.specie)
+        encounteredCreaturesList[indexSpeciesSanData] = newSanData.specie
+      // We already encoutered that specie
       else {
         // Should never happen (encountered that creature but never his specie).
         if (newSanData.specie) encounteredCreaturesList.push(newSanData.specie)
@@ -1384,11 +1826,13 @@ export class CoCActor extends Actor {
       if (newSanData.specie) {
         // Specie already encountered.
         if (~indexSpeciesSanData) {
-          newSanData.specie.totalLoss = encounteredCreaturesList[indexSpeciesSanData].totalLoss
+          newSanData.specie.totalLoss =
+            encounteredCreaturesList[indexSpeciesSanData].totalLoss
 
           // We already loss SAN to this specie of creature. The base los for this creature is the specie base loss.
           newSanData.totalLoss = newSanData.specie.totalLoss
-          if (newSanData.totalLoss > newSanData.sanLossMax) newSanData.totalLoss = newSanData.sanLossMax
+          if (newSanData.totalLoss > newSanData.sanLossMax)
+            newSanData.totalLoss = newSanData.sanLossMax
         } else {
           // We never encountered specie or creature.
           newSanData.specie.totalLoss = 0
@@ -1402,17 +1846,21 @@ export class CoCActor extends Actor {
       // If loss is more thant creature Max.
       if (newSanData.totalLoss > newSanData.sanLossMax) {
         // Get the exact san loss = loss - (overflow - max)
-        exactSanLoss = exactSanLoss - (newSanData.totalLoss - newSanData.sanLossMax)
+        exactSanLoss =
+          exactSanLoss - (newSanData.totalLoss - newSanData.sanLossMax)
         newSanData.totalLoss = newSanData.sanLossMax
       }
 
       // Deduct the exact loss to that specie.
-      if (newSanData.specie) { // Wait for exact san LOSS before deduciting it from specie.
+      if (newSanData.specie) {
+        // Wait for exact san LOSS before deduciting it from specie.
         newSanData.specie.totalLoss = newSanData.specie.totalLoss + exactSanLoss
-        if (newSanData.specie.totalLoss > newSanData.specie.sanLossMax) newSanData.specie.totalLoss = newSanData.specie.sanLossMax
+        if (newSanData.specie.totalLoss > newSanData.specie.sanLossMax)
+          newSanData.specie.totalLoss = newSanData.specie.sanLossMax
 
         // If we now that specie update it. If we don't add it.
-        if (~indexSpeciesSanData) encounteredCreaturesList[indexSpeciesSanData] = newSanData.specie
+        if (~indexSpeciesSanData)
+          encounteredCreaturesList[indexSpeciesSanData] = newSanData.specie
         else encounteredCreaturesList.push(newSanData.specie)
 
         // Update all creature from the same specie.
@@ -1423,7 +1871,9 @@ export class CoCActor extends Actor {
     }
 
     await this.setSan(this.san - exactSanLoss)
-    await this.update({ 'data.encounteredCreatures': encounteredCreaturesList })
+    await this.update({
+      'data.encounteredCreatures': encounteredCreaturesList
+    })
     return exactSanLoss
   }
 
@@ -1451,16 +1901,22 @@ export class CoCActor extends Actor {
 
   get sanLossMax () {
     if (this.sanLossCheckFailled) {
-      if (!isNaN(Number(this.sanLossCheckFailled))) return Number(this.sanLossCheckFailled)
-      return new Roll(this.sanLossCheckFailled).evaluate({ maximize: true }).total
+      if (!isNaN(Number(this.sanLossCheckFailled)))
+        return Number(this.sanLossCheckFailled)
+      return new Roll(this.sanLossCheckFailled).evaluate({
+        maximize: true
+      }).total
     }
     return 0
   }
 
   get sanLossMin () {
     if (this.sanLossCheckPassed) {
-      if (!isNaN(Number(this.sanLossCheckPassed))) return Number(this.sanLossCheckPassed)
-      return new Roll(this.sanLossCheckPassed).evaluate({ maximize: true }).total
+      if (!isNaN(Number(this.sanLossCheckPassed)))
+        return Number(this.sanLossCheckPassed)
+      return new Roll(this.sanLossCheckPassed).evaluate({
+        maximize: true
+      }).total
     }
     return 0
   }
@@ -1509,13 +1965,15 @@ export class CoCActor extends Actor {
   get occupationPoints () {
     if (!this.occupation) return 0
     let points = 0
-    Object.entries(this.occupation.data.data.occupationSkillPoints).forEach(entry => {
-      const [key, value] = entry
-      const char = this.getCharacteristic(key)
-      if (value.selected) {
-        points += char.value * Number(value.multiplier)
+    Object.entries(this.occupation.data.data.occupationSkillPoints).forEach(
+      entry => {
+        const [key, value] = entry
+        const char = this.getCharacteristic(key)
+        if (value.selected) {
+          points += char.value * Number(value.multiplier)
+        }
       }
-    })
+    )
     return points
   }
 
@@ -1612,10 +2070,13 @@ export class CoCActor extends Actor {
     // }
 
     if (loss > 0) {
-      let totalLoss = parseInt(this.data.data.attribs.san.dailyLoss) ? parseInt(this.data.data.attribs.san.dailyLoss) : 0
+      let totalLoss = parseInt(this.data.data.attribs.san.dailyLoss)
+        ? parseInt(this.data.data.attribs.san.dailyLoss)
+        : 0
       totalLoss = totalLoss + loss
       if (loss >= 5) this.setStatus(COC7.status.tempoInsane)
-      if (totalLoss >= Math.floor(this.san / 5)) this.setStatus(COC7.status.indefInsane)
+      if (totalLoss >= Math.floor(this.san / 5))
+        this.setStatus(COC7.status.indefInsane)
       return await this.update({
         'data.attribs.san.value': value,
         'data.attribs.san.dailyLoss': totalLoss
@@ -1639,9 +2100,12 @@ export class CoCActor extends Actor {
     }
     if (!this.data.data.attribs) return null
     if (!this.data.data.attribs.build) return null
-    if (this.data.data.attribs.build.value === 'auto') this.data.data.attribs.build.auto = true
+    if (this.data.data.attribs.build.value === 'auto')
+      this.data.data.attribs.build.auto = true
     if (this.data.data.attribs.build.auto) {
-      const sum = this.data.data.characteristics.str.value + this.data.data.characteristics.siz.value
+      const sum =
+        this.data.data.characteristics.str.value +
+        this.data.data.characteristics.siz.value
       if (sum > 164) return Math.floor((sum - 45) / 80) + 1
       if (sum < 65) return -2
       if (sum < 85) return -1
@@ -1656,9 +2120,12 @@ export class CoCActor extends Actor {
     if (['vehicle'].includes(this.data.type)) return 0
     if (!this.data.data.attribs) return null
     if (!this.data.data.attribs.db) return null
-    if (this.data.data.attribs.db.value === 'auto') this.data.data.attribs.db.auto = true
+    if (this.data.data.attribs.db.value === 'auto')
+      this.data.data.attribs.db.auto = true
     if (this.data.data.attribs.db.auto) {
-      const sum = this.data.data.characteristics.str.value + this.data.data.characteristics.siz.value
+      const sum =
+        this.data.data.characteristics.str.value +
+        this.data.data.characteristics.siz.value
       if (sum > 164) return `${Math.floor((sum - 45) / 80)}D6`
       if (sum < 65) return -2
       if (sum < 85) return -1
@@ -1669,24 +2136,49 @@ export class CoCActor extends Actor {
   }
 
   get mov () {
-    if (['vehicle'].includes(this.data.type)) return this.data.data.attribs.mov.value
+    if (['vehicle'].includes(this.data.type))
+      return this.data.data.attribs.mov.value
     if (!this.data.data.attribs) return null
     if (!this.data.data.attribs.mov) return null
-    if (this.data.data.attribs.mov.value === 'auto') this.data.data.attribs.mov.auto = true
+    if (this.data.data.attribs.mov.value === 'auto')
+      this.data.data.attribs.mov.auto = true
     if (this.data.data.attribs.mov.auto) {
       let MOV
-      if (this.data.data.characteristics.dex.value < this.data.data.characteristics.siz.value && this.data.data.characteristics.str.value < this.data.data.characteristics.siz.value) MOV = 7
-      if (this.data.data.characteristics.dex.value >= this.data.data.characteristics.siz.value || this.data.data.characteristics.str.value >= this.data.data.characteristics.siz.value) MOV = 8
-      if (this.data.data.characteristics.dex.value > this.data.data.characteristics.siz.value && this.data.data.characteristics.str.value > this.data.data.characteristics.siz.value) MOV = 9 // Bug correction by AdmiralNyar.
+      if (
+        this.data.data.characteristics.dex.value <
+          this.data.data.characteristics.siz.value &&
+        this.data.data.characteristics.str.value <
+          this.data.data.characteristics.siz.value
+      )
+        MOV = 7
+      if (
+        this.data.data.characteristics.dex.value >=
+          this.data.data.characteristics.siz.value ||
+        this.data.data.characteristics.str.value >=
+          this.data.data.characteristics.siz.value
+      )
+        MOV = 8
+      if (
+        this.data.data.characteristics.dex.value >
+          this.data.data.characteristics.siz.value &&
+        this.data.data.characteristics.str.value >
+          this.data.data.characteristics.siz.value
+      )
+        MOV = 9 // Bug correction by AdmiralNyar.
       if (this.data.data.type !== 'creature') {
-        if (!isNaN(parseInt(this.data.data.infos.age))) MOV = parseInt(this.data.data.infos.age) >= 40 ? MOV - Math.floor(parseInt(this.data.data.infos.age) / 10) + 3 : MOV
+        if (!isNaN(parseInt(this.data.data.infos.age)))
+          MOV =
+            parseInt(this.data.data.infos.age) >= 40
+              ? MOV - Math.floor(parseInt(this.data.data.infos.age) / 10) + 3
+              : MOV
       }
       return MOV
     }
     return this.data.data.attribs.mov.value
   }
 
-  get tokenId () { // TODO clarifier ca et tokenkey
+  get tokenId () {
+    // TODO clarifier ca et tokenkey
     return this.token ? `${this.token.scene._id}.${this.token.id}` : null // REFACTORING (2)
   }
 
@@ -1724,14 +2216,19 @@ export class CoCActor extends Actor {
   async attributeCheck (attributeName, fastForward = false, options = {}) {
     const attrib = this.getAttribute(attributeName.toLowerCase())
     if (!attrib) {
-      ui.notifications.error(game.i18n.format('CoC7.ErrorNotFound', { missing: attributeName }))
+      ui.notifications.error(
+        game.i18n.format('CoC7.ErrorNotFound', {
+          missing: attributeName
+        })
+      )
       return null
     }
 
     const check = new CoC7Check()
 
     if (options.modifier) check.diceModifier = Number(options.modifier)
-    if (options.difficulty) check.difficulty = CoC7Utilities.convertDifficulty(options.difficulty)
+    if (options.difficulty)
+      check.difficulty = CoC7Utilities.convertDifficulty(options.difficulty)
 
     if (!fastForward) {
       if (undefined === options.difficulty || undefined === options.modifier) {
@@ -1740,7 +2237,9 @@ export class CoCActor extends Actor {
           check.diceModifier = Number(usage.get('bonusDice'))
           check.difficulty = Number(usage.get('difficulty'))
           check.flatDiceModifier = Number(usage.get('flatDiceModifier'))
-          check.flatThresholdModifier = Number(usage.get('flatThresholdModifier'))
+          check.flatThresholdModifier = Number(
+            usage.get('flatThresholdModifier')
+          )
         }
       }
     }
@@ -1758,18 +2257,28 @@ export class CoCActor extends Actor {
    * @param {*} fastForward
    * @param {*} options difficulty in CoC7Check.difficultyLevel, modifier (-2 +2), name
    */
-  async characteristicCheck (characteristicName, fastForward = false, options = {}) {
+  async characteristicCheck (
+    characteristicName,
+    fastForward = false,
+    options = {}
+  ) {
     const char = this.getCharacteristic(characteristicName)
 
     if (!char) {
-      ui.notifications.error(game.i18n.format('CoC7.ErrorNotFoundForActor', { missing: characteristicName, actor: this.name }))
+      ui.notifications.error(
+        game.i18n.format('CoC7.ErrorNotFoundForActor', {
+          missing: characteristicName,
+          actor: this.name
+        })
+      )
       return
     }
 
     const check = new CoC7Check()
 
     if (options.modifier) check.diceModifier = Number(options.modifier)
-    if (options.difficulty) check.difficulty = CoC7Utilities.convertDifficulty(options.difficulty)
+    if (options.difficulty)
+      check.difficulty = CoC7Utilities.convertDifficulty(options.difficulty)
 
     if (!fastForward) {
       if (undefined === options.difficulty || undefined === options.modifier) {
@@ -1779,7 +2288,9 @@ export class CoCActor extends Actor {
           check.diceModifier = Number(usage.get('bonusDice'))
           check.difficulty = Number(usage.get('difficulty'))
           check.flatDiceModifier = Number(usage.get('flatDiceModifier'))
-          check.flatThresholdModifier = Number(usage.get('flatThresholdModifier'))
+          check.flatThresholdModifier = Number(
+            usage.get('flatThresholdModifier')
+          )
         }
       }
     }
@@ -1792,7 +2303,9 @@ export class CoCActor extends Actor {
   }
 
   async skillCheck (skillData, fastForward, options = {}) {
-    let skill = this.getSkillsByName(skillData.name ? skillData.name : skillData)
+    let skill = this.getSkillsByName(
+      skillData.name ? skillData.name : skillData
+    )
     if (!skill.length) {
       let item = null
       if (skillData.pack) {
@@ -1812,13 +2325,25 @@ export class CoCActor extends Actor {
         check.roll()
         check.toMessage()
       }
-      if (!item) return ui.notifications.warn(game.i18n.format('CoC7.NoSkill') + game.i18n.format('CoC7.ErrorNotFoundForActor', { missing: skillData.name ? skillData.name : skillData, actor: this.name }))
+      if (!item)
+        return ui.notifications.warn(
+          game.i18n.format('CoC7.NoSkill') +
+            game.i18n.format('CoC7.ErrorNotFoundForActor', {
+              missing: skillData.name ? skillData.name : skillData,
+              actor: this.name
+            })
+        )
 
       let create = false
       await Dialog.confirm({
         title: `${game.i18n.localize('CoC7.AddWeapon')}`,
-        content: `<p>${game.i18n.format('CoC7.AddWeapontHint', { weapon: skillData.name, actor: this.name })}</p>`,
-        yes: () => { create = true }
+        content: `<p>${game.i18n.format('CoC7.AddWeapontHint', {
+          weapon: skillData.name,
+          actor: this.name
+        })}</p>`,
+        yes: () => {
+          create = true
+        }
       })
 
       if (create === true) {
@@ -1833,7 +2358,10 @@ export class CoCActor extends Actor {
       if (!skill.length) return
 
       if (game.user.isGM) {
-        const skillValue = await SkillValueDialog.create(skill[0].name, skill[0].base)
+        const skillValue = await SkillValueDialog.create(
+          skill[0].name,
+          skill[0].base
+        )
         const value = Number(skillValue.get('base-value'))
         await skill[0].updateValue(value)
       }
@@ -1841,8 +2369,10 @@ export class CoCActor extends Actor {
 
     const check = new CoC7Check()
 
-    if (undefined !== options.modifier) check.diceModifier = Number(options.modifier)
-    if (undefined !== options.difficulty) check.difficulty = CoC7Utilities.convertDifficulty(options.difficulty)
+    if (undefined !== options.modifier)
+      check.diceModifier = Number(options.modifier)
+    if (undefined !== options.difficulty)
+      check.difficulty = CoC7Utilities.convertDifficulty(options.difficulty)
 
     if (!fastForward) {
       if (undefined === options.difficulty || undefined === options.modifier) {
@@ -1851,7 +2381,9 @@ export class CoCActor extends Actor {
           check.diceModifier = Number(usage.get('bonusDice'))
           check.difficulty = Number(usage.get('difficulty'))
           check.flatDiceModifier = Number(usage.get('flatDiceModifier'))
-          check.flatThresholdModifier = Number(usage.get('flatThresholdModifier'))
+          check.flatThresholdModifier = Number(
+            usage.get('flatThresholdModifier')
+          )
         }
       }
     }
@@ -1881,13 +2413,21 @@ export class CoCActor extends Actor {
             item = game.items.get(weaponData.id)
           }
 
-          if (!item) return ui.notifications.warn(game.i18n.localize('CoC7.WarnMacroNoItemFound'))
+          if (!item)
+            return ui.notifications.warn(
+              game.i18n.localize('CoC7.WarnMacroNoItemFound')
+            )
 
           let create = false
           await Dialog.confirm({
             title: `${game.i18n.localize('CoC7.AddWeapon')}`,
-            content: `<p>${game.i18n.format('CoC7.AddWeapontHint', { weapon: weaponData.name, actor: this.name })}</p>`,
-            yes: () => { create = true }
+            content: `<p>${game.i18n.format('CoC7.AddWeapontHint', {
+              weapon: weaponData.name,
+              actor: this.name
+            })}</p>`,
+            yes: () => {
+              create = true
+            }
           })
 
           if (create === true) {
@@ -1895,8 +2435,13 @@ export class CoCActor extends Actor {
             if (mainSkill) {
               let skill = this.getSkillsByName(mainSkill)[0]
               if (!skill) {
-                const name = mainSkill.match(/\(([^)]+)\)/) ? mainSkill.match(/\(([^)]+)\)/)[1] : mainSkill
-                skill = await this.createWeaponSkill(name, !!item.data.data.properties?.rngd)
+                const name = mainSkill.match(/\(([^)]+)\)/)
+                  ? mainSkill.match(/\(([^)]+)\)/)[1]
+                  : mainSkill
+                skill = await this.createWeaponSkill(
+                  name,
+                  !!item.data.data.properties?.rngd
+                )
               }
               if (skill) item.data.data.skill.main.id = skill._id
             } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
@@ -1905,8 +2450,13 @@ export class CoCActor extends Actor {
             if (secondSkill) {
               let skill = this.getSkillsByName(secondSkill)[0]
               if (!skill) {
-                const name = mainSkill.match(/\(([^)]+)\)/) ? mainSkill.match(/\(([^)]+)\)/)[1] : mainSkill
-                skill = await this.createWeaponSkill(name, !!item.data.data.properties?.rngd)
+                const name = mainSkill.match(/\(([^)]+)\)/)
+                  ? mainSkill.match(/\(([^)]+)\)/)[1]
+                  : mainSkill
+                skill = await this.createWeaponSkill(
+                  name,
+                  !!item.data.data.properties?.rngd
+                )
               }
               if (skill) item.data.data.skill.alternativ.id = skill._id
             } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
@@ -1917,11 +2467,15 @@ export class CoCActor extends Actor {
           if (!weapons) return
           await weapons[0].reload()
         } else {
-          ui.notifications.warn(`Actor ${this.name} has no weapon named ${weaponData.name}`)
+          ui.notifications.warn(
+            `Actor ${this.name} has no weapon named ${weaponData.name}`
+          )
           return
         }
       } else if (weapons.length > 1) {
-        ui.notifications.warn(`Actor ${this.name} has more than one weapon named ${weaponData.name}. The first found will be used`)
+        ui.notifications.warn(
+          `Actor ${this.name} has more than one weapon named ${weaponData.name}. The first found will be used`
+        )
       }
       weapon = weapons[0]
     }
@@ -1951,10 +2505,15 @@ export class CoCActor extends Actor {
         roll.flavor = 'Initiative roll'
         roll.rollCharacteristic('dex', hasGun ? 1 : 0)
         roll.toMessage()
-        return roll.successLevel + this.data.data.characteristics.dex.value / 100
+        return (
+          roll.successLevel + this.data.data.characteristics.dex.value / 100
+        )
       }
 
-      default: return hasGun ? this.data.data.characteristics.dex.value + 50 : this.data.data.characteristics.dex.value
+      default:
+        return hasGun
+          ? this.data.data.characteristics.dex.value + 50
+          : this.data.data.characteristics.dex.value
     }
   }
 
@@ -2007,9 +2566,11 @@ export class CoCActor extends Actor {
     // Try to find a skill with exact name.
     const skill = this.skills.filter(s => {
       return (
-        !!s.name && (
-          (s.name.toLocaleLowerCase().replace(/\s/g, '') === name.toLocaleLowerCase().replace(/\s/g, '')) ||
-          (s.sName.toLocaleLowerCase().replace(/\s/g, '') === name.toLocaleLowerCase().replace(/\s/g, '')))
+        !!s.name &&
+        (s.name.toLocaleLowerCase().replace(/\s/g, '') ===
+          name.toLocaleLowerCase().replace(/\s/g, '') ||
+          s.sName.toLocaleLowerCase().replace(/\s/g, '') ===
+            name.toLocaleLowerCase().replace(/\s/g, ''))
       )
     })
     if (skill.length) return { type: 'item', value: skill[0] }
@@ -2019,9 +2580,12 @@ export class CoCActor extends Actor {
     for (let i = 0; i < charKey.length; i++) {
       const char = this.getCharacteristic(charKey[i])
       if (char) {
-        if (char.key?.toLocaleLowerCase() === name.toLowerCase()) return { type: 'characteristic', value: char }
-        if (char.shortName?.toLocaleLowerCase() === name.toLowerCase()) return { type: 'characteristic', value: char }
-        if (char.label?.toLocaleLowerCase() === name.toLowerCase()) return { type: 'characteristic', value: char }
+        if (char.key?.toLocaleLowerCase() === name.toLowerCase())
+          return { type: 'characteristic', value: char }
+        if (char.shortName?.toLocaleLowerCase() === name.toLowerCase())
+          return { type: 'characteristic', value: char }
+        if (char.label?.toLocaleLowerCase() === name.toLowerCase())
+          return { type: 'characteristic', value: char }
       }
     }
 
@@ -2030,9 +2594,12 @@ export class CoCActor extends Actor {
     for (let i = 0; i < attribKey.length; i++) {
       const attr = this.getAttribute(attribKey[i])
       if (attr) {
-        if (attr.key?.toLocaleLowerCase() === name.toLowerCase()) return { type: 'attribute', value: attr }
-        if (attr.shortName?.toLocaleLowerCase() === name.toLowerCase()) return { type: 'attribute', value: attr }
-        if (attr.label?.toLocaleLowerCase() === name.toLowerCase()) return { type: 'attribute', value: attr }
+        if (attr.key?.toLocaleLowerCase() === name.toLowerCase())
+          return { type: 'attribute', value: attr }
+        if (attr.shortName?.toLocaleLowerCase() === name.toLowerCase())
+          return { type: 'attribute', value: attr }
+        if (attr.label?.toLocaleLowerCase() === name.toLowerCase())
+          return { type: 'attribute', value: attr }
       }
     }
 
@@ -2045,7 +2612,11 @@ export class CoCActor extends Actor {
       return (
         !!s.data.data.specialization &&
         s.data.data.specialization.length &&
-        s.data.data.specialization?.toLocaleLowerCase() === game.i18n.localize('CoC7.PilotSpecializationName')?.toLocaleLowerCase())
+        s.data.data.specialization?.toLocaleLowerCase() ===
+          game.i18n
+            .localize('CoC7.PilotSpecializationName')
+            ?.toLocaleLowerCase()
+      )
     })
   }
 
@@ -2054,11 +2625,16 @@ export class CoCActor extends Actor {
       return (
         !!s.data.data.specialization &&
         s.data.data.specialization.length &&
-        s.data.data.specialization?.toLocaleLowerCase() === game.i18n.localize('CoC7.DriveSpecializationName')?.toLocaleLowerCase())
+        s.data.data.specialization?.toLocaleLowerCase() ===
+          game.i18n
+            .localize('CoC7.DriveSpecializationName')
+            ?.toLocaleLowerCase()
+      )
     })
   }
 
-  get tokenKey () { // Clarifier ca et tokenid
+  get tokenKey () {
+    // Clarifier ca et tokenid
     /** * MODIF 0.8.x */
     // if this.sheet.token => was opened from token
     // if this.token => synthetic actor == this.isToken
@@ -2086,10 +2662,11 @@ export class CoCActor extends Actor {
 
   static getActorFromKey (key) {
     // Case 1 - a synthetic actor from a Token
-    if (key.includes('.')) { // REFACTORING (2)
+    if (key.includes('.')) {
+      // REFACTORING (2)
       const [sceneId, tokenId] = key.split('.')
       if (sceneId === 'TOKEN') {
-        return game.actors.tokens[tokenId]// REFACTORING (2)
+        return game.actors.tokens[tokenId] // REFACTORING (2)
       } else {
         const scene = game.scenes.get(sceneId)
         if (!scene) return null
@@ -2114,7 +2691,9 @@ export class CoCActor extends Actor {
         const r = new Roll(value.formula)
         r.roll()
         if (r.total) {
-          characteristics[`data.characteristics.${key}.value`] = Math.floor(r.total)
+          characteristics[`data.characteristics.${key}.value`] = Math.floor(
+            r.total
+          )
         }
       }
     }
@@ -2137,7 +2716,8 @@ export class CoCActor extends Actor {
         const min = new Roll(value.formula).evaluate({ minimize: true }).total
         /******************/
         const average = Math.floor((max + min) / 2)
-        const charValue = average % 5 === 0 ? average : Math.round(average / 10) * 10
+        const charValue =
+          average % 5 === 0 ? average : Math.round(average / 10) * 10
         if (charValue) {
           characteristics[`data.characteristics.${key}.value`] = charValue
         }
@@ -2157,7 +2737,10 @@ export class CoCActor extends Actor {
       if (value.formula && value.formula.startsWith('@')) {
         let charValue
         try {
-          charValue = (new Roll(value.formula, this.parseCharacteristics()).evaluate({ maximize: true, async: true })).total
+          charValue = new Roll(
+            value.formula,
+            this.parseCharacteristics()
+          ).evaluate({ maximize: true, async: true }).total
         } catch (err) {
           charValue = null
         }
@@ -2215,10 +2798,25 @@ export class CoCActor extends Actor {
             success.push(item.id)
 
             augment += augmentDie.total
-            message += `<span class="upgrade-success">${game.i18n.format('CoC7.DevSuccess', { item: item.data.name, die: die.total, score: item.value, augment: augmentDie.total })}</span><br>`
+            message += `<span class="upgrade-success">${game.i18n.format(
+              'CoC7.DevSuccess',
+              {
+                item: item.data.name,
+                die: die.total,
+                score: item.value,
+                augment: augmentDie.total
+              }
+            )}</span><br>`
             await item.increaseExperience(augment)
           } else {
-            message += `<span class="upgrade-failed">${game.i18n.format('CoC7.DevFailure', { item: item.data.name, die: die.total, score: item.value })}</span><br>`
+            message += `<span class="upgrade-failed">${game.i18n.format(
+              'CoC7.DevFailure',
+              {
+                item: item.data.name,
+                die: die.total,
+                score: item.value
+              }
+            )}</span><br>`
             failure.push(item.id)
           }
           await item.unflagForDevelopement()
@@ -2230,7 +2828,7 @@ export class CoCActor extends Actor {
       const speaker = { actor: this.actor }
       await chatHelper.createMessage(title, message, { speaker: speaker })
     }
-    return ({ failure: failure, success: success })
+    return { failure: failure, success: success }
   }
 
   async developLuck (fastForward = false) {
@@ -2244,26 +2842,45 @@ export class CoCActor extends Actor {
       const augmentRoll = new Roll('1D10')
       augmentRoll.roll()
       if (!fastForward) await CoC7Dice.showRollDice3d(augmentRoll)
-      if ((luck.value + augmentRoll.total) <= 99) {
+      if (luck.value + augmentRoll.total <= 99) {
         await this.update({
-          'data.attribs.lck.value': this.data.data.attribs.lck.value + augmentRoll.total
+          'data.attribs.lck.value':
+            this.data.data.attribs.lck.value + augmentRoll.total
         })
-        message += `<span class="upgrade-success">${game.i18n.format('CoC7.LuckIncreased', { die: upgradeRoll.total, score: luck.value, augment: augmentRoll.total })}</span>`
+        message += `<span class="upgrade-success">${game.i18n.format(
+          'CoC7.LuckIncreased',
+          {
+            die: upgradeRoll.total,
+            score: luck.value,
+            augment: augmentRoll.total
+          }
+        )}</span>`
       } else {
         let correctedValue
         for (let i = 1; i <= 10; i++) {
-          if ((luck.value + augmentRoll.total - i) <= 99) {
+          if (luck.value + augmentRoll.total - i <= 99) {
             correctedValue = augmentRoll.total - i
             break
           }
         }
         await this.update({
-          'data.attribs.lck.value': this.data.data.attribs.lck.value + correctedValue
+          'data.attribs.lck.value':
+            this.data.data.attribs.lck.value + correctedValue
         })
-        message += `<span class="upgrade-success">${game.i18n.format('CoC7.LuckIncreased', { die: upgradeRoll.total, score: luck.value, augment: correctedValue })}</span>`
+        message += `<span class="upgrade-success">${game.i18n.format(
+          'CoC7.LuckIncreased',
+          {
+            die: upgradeRoll.total,
+            score: luck.value,
+            augment: correctedValue
+          }
+        )}</span>`
       }
     } else {
-      message += `<span class="upgrade-failed">${game.i18n.format('CoC7.LuckNotIncreased', { die: upgradeRoll.total, score: luck.value })}</span>`
+      message += `<span class="upgrade-failed">${game.i18n.format(
+        'CoC7.LuckNotIncreased',
+        { die: upgradeRoll.total, score: luck.value }
+      )}</span>`
     }
     if (!fastForward) {
       message += '</p>'
@@ -2284,12 +2901,25 @@ export class CoCActor extends Actor {
       const augmentRoll = new Roll('1D10')
       augmentRoll.roll()
       if (!fastForward) await CoC7Dice.showRollDice3d(augmentRoll)
-      message = game.i18n.format('CoC7.DevSuccessDetails', { item: skill.name, augment: augmentRoll.total })
-      title = game.i18n.format('CoC7.DevRollTitle', { item: skill.name, die: upgradeRoll.total, score: skill.value })
+      message = game.i18n.format('CoC7.DevSuccessDetails', {
+        item: skill.name,
+        augment: augmentRoll.total
+      })
+      title = game.i18n.format('CoC7.DevRollTitle', {
+        item: skill.name,
+        die: upgradeRoll.total,
+        score: skill.value
+      })
       await skill.increaseExperience(augmentRoll.total)
     } else {
-      title = game.i18n.format('CoC7.DevRollTitle', { item: skill.name, die: upgradeRoll.total, score: skill.value })
-      message = game.i18n.format('CoC7.DevFailureDetails', { item: skill.name })
+      title = game.i18n.format('CoC7.DevRollTitle', {
+        item: skill.name,
+        die: upgradeRoll.total,
+        score: skill.value
+      })
+      message = game.i18n.format('CoC7.DevFailureDetails', {
+        item: skill.name
+      })
     }
     const speaker = { actor: this._id }
     await chatHelper.createMessage(title, message, { speaker: speaker })
@@ -2298,7 +2928,8 @@ export class CoCActor extends Actor {
 
   async toggleStatus (statusName) {
     let statusValue = this.data.data.status[statusName]?.value
-    if (!(typeof statusValue === 'boolean')) statusValue = statusValue === 'false' // Necessary, incorrect template initialization
+    if (!(typeof statusValue === 'boolean'))
+      statusValue = statusValue === 'false' // Necessary, incorrect template initialization
 
     if (COC7.status.criticalWounds === statusName) {
       if (statusValue) await this.cureMajorWound()
@@ -2312,34 +2943,36 @@ export class CoCActor extends Actor {
       case 'dead':
         effectEffect = await this.hasActiveEffect('dead')
         if (!this.dead && effectEffect.length > 0) {
-          effectEffect.forEach((effect) => effect.delete())
+          effectEffect.forEach(effect => effect.delete())
         }
         break
       case 'dying':
         effectEffect = await this.hasActiveEffect('dying')
         if (!this.dying && effectEffect.length > 0) {
-          effectEffect.forEach((effect) => effect.delete())
+          effectEffect.forEach(effect => effect.delete())
         } else this.fallDying()
         break
       case 'prone':
         effectEffect = await this.hasActiveEffect('prone')
         if (!this.prone && effectEffect.length > 0) {
-          effectEffect.forEach((effect) => effect.delete())
+          effectEffect.forEach(effect => effect.delete())
         } else this.fallProne()
         break
       case 'unconscious':
         effectEffect = await this.hasActiveEffect('unconscious')
         if (!this.unconscious && effectEffect.length > 0) {
-          effectEffect.forEach((effect) => effect.delete())
+          effectEffect.forEach(effect => effect.delete())
         } else this.fallUnconscious()
         break
     }
   }
 
   async hasActiveEffect (effectLabel) {
-    const effectList = this.effects.map(effect => {
-      return effect
-    }).filter((effect) => (effect.data.label === effectLabel))
+    const effectList = this.effects
+      .map(effect => {
+        return effect
+      })
+      .filter(effect => effect.data.label === effectLabel)
     return effectList
   }
 
@@ -2353,20 +2986,26 @@ export class CoCActor extends Actor {
           // }
         } else {
           // const effectData =
-          await super.createEmbeddedDocuments('ActiveEffect', [{
-            label: game.i18n.localize('CoC7.BoutOfMadnessName'),
-            icon: 'systems/CoC7/artwork/icons/hanging-spider.svg',
-            origin: this.uuid,
-            duration: { seconds: undefined, rounds: undefined, turns: 1 },
-            flags: {
-              CoC7: {
-                madness: true,
-                realTime: true
-              }
-            },
-            // tint: '#ff0000',
-            disabled: false
-          }])
+          await super.createEmbeddedDocuments('ActiveEffect', [
+            {
+              label: game.i18n.localize('CoC7.BoutOfMadnessName'),
+              icon: 'systems/CoC7/artwork/icons/hanging-spider.svg',
+              origin: this.uuid,
+              duration: {
+                seconds: undefined,
+                rounds: undefined,
+                turns: 1
+              },
+              flags: {
+                CoC7: {
+                  madness: true,
+                  realTime: true
+                }
+              },
+              // tint: '#ff0000',
+              disabled: false
+            }
+          ])
         }
 
         break
@@ -2378,20 +3017,26 @@ export class CoCActor extends Actor {
           // }
         } else {
           // const effectData =
-          await super.createEmbeddedDocuments('ActiveEffect', [{
-            label: game.i18n.localize('CoC7.InsanityName'),
-            icon: 'systems/CoC7/artwork/icons/tentacles-skull.svg',
-            origin: this.uuid,
-            duration: { seconds: undefined, rounds: undefined, turns: 1 },
-            flags: {
-              CoC7: {
-                madness: true,
-                indefinite: true
-              }
-            },
-            // tint: '#ff0000',
-            disabled: false
-          }])
+          await super.createEmbeddedDocuments('ActiveEffect', [
+            {
+              label: game.i18n.localize('CoC7.InsanityName'),
+              icon: 'systems/CoC7/artwork/icons/tentacles-skull.svg',
+              origin: this.uuid,
+              duration: {
+                seconds: undefined,
+                rounds: undefined,
+                turns: 1
+              },
+              flags: {
+                CoC7: {
+                  madness: true,
+                  indefinite: true
+                }
+              },
+              // tint: '#ff0000',
+              disabled: false
+            }
+          ])
         }
         break
 
@@ -2404,7 +3049,8 @@ export class CoCActor extends Actor {
     if (!this.data.data.status) return false
     let statusValue = this.data.data.status[statusName]?.value
     if (undefined === statusValue) return false
-    if (!(typeof statusValue === 'boolean')) statusValue = statusValue === 'false' // Necessary, incorrect template initialization
+    if (!(typeof statusValue === 'boolean'))
+      statusValue = statusValue === 'false' // Necessary, incorrect template initialization
     return statusValue
   }
 
@@ -2426,8 +3072,9 @@ export class CoCActor extends Actor {
 
   get fightingSkills () {
     const skillList = []
-    this.items.forEach((value) => {
-      if (value.type === 'skill' && value.data.data.properties.fighting) skillList.push(value)
+    this.items.forEach(value => {
+      if (value.type === 'skill' && value.data.data.properties.fighting)
+        skillList.push(value)
     })
 
     skillList.sort((a, b) => {
@@ -2445,7 +3092,7 @@ export class CoCActor extends Actor {
 
   get closeCombatWeapons () {
     const weaponList = []
-    this.items.forEach((value) => {
+    this.items.forEach(value => {
       if (value.type === 'weapon' && !value.data.data.properties.rngd) {
         const skill = this.items.get(value.data.data.skill.main.id)
         value.data.data.skill.main.value = skill ? skill.value : 0
@@ -2468,8 +3115,9 @@ export class CoCActor extends Actor {
 
   get firearmSkills () {
     const skillList = []
-    this.items.forEach((value) => {
-      if (value.type === 'skill' && value.data.data.properties.firearm) skillList.push(value)
+    this.items.forEach(value => {
+      if (value.type === 'skill' && value.data.data.properties.firearm)
+        skillList.push(value)
     })
 
     skillList.sort((a, b) => {
@@ -2496,19 +3144,25 @@ export class CoCActor extends Actor {
   }
 
   get dodgeSkill () {
-    const skillList = this.getSkillsByName(game.i18n.localize(COC7.dodgeSkillName))
+    const skillList = this.getSkillsByName(
+      game.i18n.localize(COC7.dodgeSkillName)
+    )
     if (skillList.length !== 0) return skillList[0]
     return null
   }
 
   get creditRatingSkill () {
-    const skillList = this.getSkillsByName(game.i18n.localize(COC7.creditRatingSkillName))
+    const skillList = this.getSkillsByName(
+      game.i18n.localize(COC7.creditRatingSkillName)
+    )
     if (skillList.length !== 0) return skillList[0]
     return null
   }
 
   get cthulhuMythosSkill () {
-    const skillList = this.getSkillsByName(game.i18n.localize(COC7.CthulhuMythosName))
+    const skillList = this.getSkillsByName(
+      game.i18n.localize(COC7.CthulhuMythosName)
+    )
     if (skillList.length !== 0) return skillList[0]
     return null
   }
@@ -2573,7 +3227,7 @@ export class CoCActor extends Actor {
 
   get skills () {
     const skillList = []
-    this.items.forEach((value) => {
+    this.items.forEach(value => {
       if (value.type === 'skill') skillList.push(value)
     })
 
@@ -2596,17 +3250,23 @@ export class CoCActor extends Actor {
 
   get player () {
     let player
-    this.owners.forEach(u => { if (u.character.id === this.id) player = u })
+    this.owners.forEach(u => {
+      if (u.character.id === this.id) player = u
+    })
     return player
   }
 
   get characterUser () {
-    return game.users.entities.filter(u => u.character?.id === this.id)[0] || null
+    return (
+      game.users.entities.filter(u => u.character?.id === this.id)[0] || null
+    )
   }
 
   async setHealthStatusManually (event) {
     if (event.originalEvent) {
-      const healthBefore = parseInt(event.originalEvent.currentTarget.defaultValue)
+      const healthBefore = parseInt(
+        event.originalEvent.currentTarget.defaultValue
+      )
       const healthAfter = parseInt(event.originalEvent.currentTarget.value)
       if (healthAfter > healthBefore) {
         // is healing
@@ -2615,7 +3275,9 @@ export class CoCActor extends Actor {
         const damageTaken = Math.abs(healthAfter)
         await this.dealDamage(damageTaken)
       } else {
-        await this.dealDamage(healthBefore - healthAfter, { ignoreArmor: true })
+        await this.dealDamage(healthBefore - healthAfter, {
+          ignoreArmor: true
+        })
       }
     }
   }
@@ -2628,9 +3290,12 @@ export class CoCActor extends Actor {
       if (CoC7Utilities.isFormula(this.data.data.attribs.armor.value)) {
         const armorRoll = new Roll(this.data.data.attribs.armor.value).roll()
         armorValue = armorRoll.total
-      } else if (!isNaN(Number(this.data.data.attribs.armor.value))) armorValue = Number(this.data.data.attribs.armor.value)
+      } else if (!isNaN(Number(this.data.data.attribs.armor.value)))
+        armorValue = Number(this.data.data.attribs.armor.value)
       else {
-        ui.notifications.warn(`Unable to process armor value :${this.data.data.attribs.armor.value}. Ignoring armor`)
+        ui.notifications.warn(
+          `Unable to process armor value :${this.data.data.attribs.armor.value}. Ignoring armor`
+        )
         armorValue = 0
       }
       total = total - armorValue
@@ -2643,7 +3308,8 @@ export class CoCActor extends Actor {
     } else {
       if (total >= Math.floor(this.hpMax / 2)) this.inflictMajorWound()
       if (this.hp === 0) {
-        if (!this.getStatus(COC7.status.unconscious)) await this.fallUnconscious()
+        if (!this.getStatus(COC7.status.unconscious))
+          await this.fallUnconscious()
         if (this.majorWound) this.fallDying()
       }
     }
@@ -2656,13 +3322,19 @@ export class CoCActor extends Actor {
       await this.setStatus(COC7.status.criticalWounds)
       const criticalWoundsEffect = await this.hasActiveEffect('criticalWounds')
       if (criticalWoundsEffect.length === 0) {
-        await super.createEmbeddedDocuments('ActiveEffect', [{
-          label: 'criticalWounds',
-          icon: 'systems/CoC7/artwork/icons/arm-sling.svg',
-          origin: this.uuid,
-          duration: { seconds: undefined, rounds: undefined, turns: 1 },
-          disabled: false
-        }])
+        await super.createEmbeddedDocuments('ActiveEffect', [
+          {
+            label: 'criticalWounds',
+            icon: 'systems/CoC7/artwork/icons/arm-sling.svg',
+            origin: this.uuid,
+            duration: {
+              seconds: undefined,
+              rounds: undefined,
+              turns: 1
+            },
+            disabled: false
+          }
+        ])
       }
     }
     await this.fallProne()
@@ -2676,7 +3348,7 @@ export class CoCActor extends Actor {
     await this.unsetStatus(COC7.status.criticalWounds)
     const criticalWoundsEffect = await this.hasActiveEffect('criticalWounds')
     if (criticalWoundsEffect.length > 0) {
-      criticalWoundsEffect.forEach((effect) => effect.delete())
+      criticalWoundsEffect.forEach(effect => effect.delete())
     }
   }
 
@@ -2684,13 +3356,19 @@ export class CoCActor extends Actor {
     await this.setStatus(COC7.status.prone)
     const proneEffect = await this.hasActiveEffect('prone')
     if (proneEffect.length === 0) {
-      await super.createEmbeddedDocuments('ActiveEffect', [{
-        label: 'prone',
-        icon: 'systems/CoC7/artwork/icons/falling.svg',
-        origin: this.uuid,
-        duration: { seconds: undefined, rounds: undefined, turns: 1 },
-        disabled: false
-      }])
+      await super.createEmbeddedDocuments('ActiveEffect', [
+        {
+          label: 'prone',
+          icon: 'systems/CoC7/artwork/icons/falling.svg',
+          origin: this.uuid,
+          duration: {
+            seconds: undefined,
+            rounds: undefined,
+            turns: 1
+          },
+          disabled: false
+        }
+      ])
     }
   }
 
@@ -2698,13 +3376,19 @@ export class CoCActor extends Actor {
     await this.setStatus(COC7.status.unconscious)
     const unconsciousEffect = await this.hasActiveEffect('unconscious')
     if (unconsciousEffect.length === 0) {
-      await super.createEmbeddedDocuments('ActiveEffect', [{
-        label: 'unconscious',
-        icon: 'systems/CoC7/artwork/icons/knocked-out-stars.svg',
-        origin: this.uuid,
-        duration: { seconds: undefined, rounds: undefined, turns: 1 },
-        disabled: false
-      }])
+      await super.createEmbeddedDocuments('ActiveEffect', [
+        {
+          label: 'unconscious',
+          icon: 'systems/CoC7/artwork/icons/knocked-out-stars.svg',
+          origin: this.uuid,
+          duration: {
+            seconds: undefined,
+            rounds: undefined,
+            turns: 1
+          },
+          disabled: false
+        }
+      ])
     }
   }
 
@@ -2712,13 +3396,19 @@ export class CoCActor extends Actor {
     await this.setStatus(COC7.status.dying)
     const dyingEffect = await this.hasActiveEffect('dying')
     if (dyingEffect.length === 0) {
-      await super.createEmbeddedDocuments('ActiveEffect', [{
-        label: 'dying',
-        icon: 'systems/CoC7/artwork/icons/heart-beats.svg',
-        origin: this.uuid,
-        duration: { seconds: undefined, rounds: undefined, turns: 1 },
-        disabled: false
-      }])
+      await super.createEmbeddedDocuments('ActiveEffect', [
+        {
+          label: 'dying',
+          icon: 'systems/CoC7/artwork/icons/heart-beats.svg',
+          origin: this.uuid,
+          duration: {
+            seconds: undefined,
+            rounds: undefined,
+            turns: 1
+          },
+          disabled: false
+        }
+      ])
     }
   }
 
@@ -2729,17 +3419,23 @@ export class CoCActor extends Actor {
     await this.setStatus(COC7.status.dead)
     const deadEffect = await this.hasActiveEffect('dead')
     if (deadEffect.length === 0) {
-      await super.createEmbeddedDocuments('ActiveEffect', [{
-        label: 'dead',
-        icon: 'systems/CoC7/artwork/icons/tombstone.svg',
-        origin: this.uuid,
-        duration: { seconds: undefined, rounds: undefined, turns: 1 },
-        disabled: false
-      }])
+      await super.createEmbeddedDocuments('ActiveEffect', [
+        {
+          label: 'dead',
+          icon: 'systems/CoC7/artwork/icons/tombstone.svg',
+          origin: this.uuid,
+          duration: {
+            seconds: undefined,
+            rounds: undefined,
+            turns: 1
+          },
+          disabled: false
+        }
+      ])
     }
     const dyingEffect = await this.hasActiveEffect('dying')
     if (!this.dying && dyingEffect.length > 0) {
-      dyingEffect.forEach((effect) => effect.delete())
+      dyingEffect.forEach(effect => effect.delete())
     }
   }
 

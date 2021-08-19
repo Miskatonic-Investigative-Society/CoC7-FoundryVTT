@@ -25,9 +25,9 @@ export class CoC7RangeInitiator {
     this.tokenKey = null
     this.aimed = false
     this.totalBulletsFired = 0
-    this._targets = [];
-    [...game.user.targets].forEach(t => {
-      const target = new CoC7RangeTarget(`${t.scene.id}.${t.id}`)//
+    this._targets = []
+    ;[...game.user.targets].forEach(t => {
+      const target = new CoC7RangeTarget(`${t.scene.id}.${t.id}`) //
       target.token = t
       this._targets.push(target)
     })
@@ -38,8 +38,8 @@ export class CoC7RangeInitiator {
       this._targets.push(target)
     }
     if (actorKey) {
-      const actor = chatHelper.getActorFromKey(actorKey)// REFACTORING (2)
-      this.token = chatHelper.getTokenFromKey(actorKey)// REFACTORING (2)
+      const actor = chatHelper.getActorFromKey(actorKey) // REFACTORING (2)
+      this.token = chatHelper.getTokenFromKey(actorKey) // REFACTORING (2)
       if (this.token) this.tokenKey = actor.tokenKey
       if (itemId) {
         const weapon = actor.items.get(itemId)
@@ -55,11 +55,13 @@ export class CoC7RangeInitiator {
           t.distance = chatHelper.getDistance(t.token, this.token)
           t.roundedDistance = Math.round(t.distance.value * 100) / 100
           t.distanceUnit = t.distance.unit
-          const distInYd = Math.round(chatHelper.toYards(t.distance) * 100) / 100
+          const distInYd =
+            Math.round(chatHelper.toYards(t.distance) * 100) / 100
           // if( distInYd){
           if (this.actor) {
             t.pointBlankRange = false
-            const pbRangeInYd = this.actor.data.data.characteristics.dex.value / 15
+            const pbRangeInYd =
+              this.actor.data.data.characteristics.dex.value / 15
             if (distInYd <= pbRangeInYd) t.pointBlankRange = true
           }
           if (this.weapon) {
@@ -70,16 +72,35 @@ export class CoC7RangeInitiator {
               t.outOfRange = false
               if (this.weapon.data.data.properties.shotgun) {
                 if (distInYd <= this.weapon.baseRange) t.baseRange = true
-                if (distInYd > this.weapon.baseRange && distInYd <= this.weapon.longRange) t.longRange = true
-                if (distInYd > this.weapon.longRange && distInYd <= this.weapon.extremeRange) t.extremeRange = true
+                if (
+                  distInYd > this.weapon.baseRange &&
+                  distInYd <= this.weapon.longRange
+                )
+                  t.longRange = true
+                if (
+                  distInYd > this.weapon.longRange &&
+                  distInYd <= this.weapon.extremeRange
+                )
+                  t.extremeRange = true
                 if (distInYd > this.weapon.extremeRange) t.outOfRange = true
               } else {
                 if (distInYd <= this.weapon.baseRange) t.baseRange = true
-                if (distInYd > this.weapon.baseRange && distInYd <= (this.weapon.baseRange * 2)) t.longRange = true
-                if (distInYd > (this.weapon.baseRange * 2) && distInYd <= (this.weapon.baseRange * 4)) t.extremeRange = true
-                if (distInYd > (this.weapon.baseRange * 4)) t.outOfRange = true
+                if (
+                  distInYd > this.weapon.baseRange &&
+                  distInYd <= this.weapon.baseRange * 2
+                )
+                  t.longRange = true
+                if (
+                  distInYd > this.weapon.baseRange * 2 &&
+                  distInYd <= this.weapon.baseRange * 4
+                )
+                  t.extremeRange = true
+                if (distInYd > this.weapon.baseRange * 4) t.outOfRange = true
               }
-              if (!(t.baseRange || t.longRange || t.extremeRange || t.outOfRange)) t.baseRange = true
+              if (
+                !(t.baseRange || t.longRange || t.extremeRange || t.outOfRange)
+              )
+                t.baseRange = true
             }
           }
           // }
@@ -99,7 +120,7 @@ export class CoC7RangeInitiator {
   }
 
   get actor () {
-    return chatHelper.getActorFromKey(this.actorKey)// REFACTORING (2)
+    return chatHelper.getActorFromKey(this.actorKey) // REFACTORING (2)
   }
 
   get item () {
@@ -129,7 +150,8 @@ export class CoC7RangeInitiator {
   }
 
   get autoWeaponSkill () {
-    if (this.weapon.data.data.skill.alternativ.id) return this.actor.items.get(this.weapon.data.data.skill.alternativ.id)
+    if (this.weapon.data.data.skill.alternativ.id)
+      return this.actor.items.get(this.weapon.data.data.skill.alternativ.id)
     return this.mainWeaponSkill
   }
 
@@ -142,7 +164,8 @@ export class CoC7RangeInitiator {
   }
 
   get aiming () {
-    if (undefined === this._aiming) this._aiming = this.actor.getActorFlag('aiming')
+    if (undefined === this._aiming)
+      this._aiming = this.actor.getActorFlag('aiming')
     return this._aiming
   }
 
@@ -170,7 +193,9 @@ export class CoC7RangeInitiator {
 
   get didAnyShotHit () {
     let anyHit = false
-    this.rolls.forEach(r => { anyHit = anyHit || r.isSuccess })
+    this.rolls.forEach(r => {
+      anyHit = anyHit || r.isSuccess
+    })
     return anyHit
   }
 
@@ -185,7 +210,8 @@ export class CoC7RangeInitiator {
         hits.push(hit)
       }
     }
-    if (hits.length !== 0) return hits; else return null
+    if (hits.length !== 0) return hits
+    else return null
   }
 
   get shotFired () {
@@ -200,7 +226,9 @@ export class CoC7RangeInitiator {
     if (this.fullAuto) return '∞'
     // return this.weapon.data.data.usesPerRound.max;
 
-    return this.weapon.data.data.usesPerRound.max ? parseInt(this.weapon.data.data.usesPerRound.max) : 1
+    return this.weapon.data.data.usesPerRound.max
+      ? parseInt(this.weapon.data.data.usesPerRound.max)
+      : 1
   }
 
   get ignoreAmmo () {
@@ -227,11 +255,12 @@ export class CoC7RangeInitiator {
     if (!this.weapon.data.data.properties.auto) return 1
     if (this._volleySize) return this._volleySize
     const size = Math.floor(this.autoWeaponSkill.value / 10)
-    return (size < 3) ? 3 : size
+    return size < 3 ? 3 : size
   }
 
   set volleySize (x) {
-    if (x >= Math.floor(this.autoWeaponSkill.value / 10)) this._volleySize = Math.floor(this.autoWeaponSkill.value / 10)
+    if (x >= Math.floor(this.autoWeaponSkill.value / 10))
+      this._volleySize = Math.floor(this.autoWeaponSkill.value / 10)
     else if (x <= 3) this._volleySize = 3
     this._volleySize = parseInt(x)
   }
@@ -242,7 +271,10 @@ export class CoC7RangeInitiator {
   }
 
   get isVolleyMaxSize () {
-    const maxSize = Math.floor(this.autoWeaponSkill.value / 10) < 3 ? 3 : Math.floor(this.autoWeaponSkill.value / 10)
+    const maxSize =
+      Math.floor(this.autoWeaponSkill.value / 10) < 3
+        ? 3
+        : Math.floor(this.autoWeaponSkill.value / 10)
     if (maxSize === this.volleySize) return true
     return false
   }
@@ -272,19 +304,24 @@ export class CoC7RangeInitiator {
     if (this.disadvantage) modifier--
     if (this.reload) modifier--
     if (this.multipleShots && !this.fullAuto) modifier--
-    if (this.fullAuto) modifier -= (this.currentShotRank - 1)
+    if (this.fullAuto) modifier -= this.currentShotRank - 1
     if (modifier < -2) {
       const excess = Math.abs(modifier + 2)
       difficulty += excess
-      if (difficulty > CoC7Check.difficultyLevel.critical) difficulty = CoC7Check.difficultyLevel.impossible
+      if (difficulty > CoC7Check.difficultyLevel.critical)
+        difficulty = CoC7Check.difficultyLevel.impossible
       modifier = -2
     }
 
-    if (CoC7Check.difficultyLevel.regular === difficulty) difficultyName = 'Regular'
+    if (CoC7Check.difficultyLevel.regular === difficulty)
+      difficultyName = 'Regular'
     if (CoC7Check.difficultyLevel.hard === difficulty) difficultyName = 'Hard'
-    if (CoC7Check.difficultyLevel.extreme === difficulty) difficultyName = 'Extreme'
-    if (CoC7Check.difficultyLevel.critical === difficulty) difficultyName = 'Critical'
-    if (CoC7Check.difficultyLevel.impossible === difficulty) difficultyName = 'Impossible'
+    if (CoC7Check.difficultyLevel.extreme === difficulty)
+      difficultyName = 'Extreme'
+    if (CoC7Check.difficultyLevel.critical === difficulty)
+      difficultyName = 'Critical'
+    if (CoC7Check.difficultyLevel.impossible === difficulty)
+      difficultyName = 'Impossible'
 
     return {
       level: difficulty,
@@ -296,9 +333,9 @@ export class CoC7RangeInitiator {
   }
 
   /**
-     * Shoot at the active target. Add it to the list of shots.
-     * TODO : recalculer la difficulté de tous les shots !.
-     */
+   * Shoot at the active target. Add it to the list of shots.
+   * TODO : recalculer la difficulté de tous les shots !.
+   */
   addShotAtCurrentTarget () {
     this.calcTargetsDifficulty()
     const shot = {
@@ -321,13 +358,17 @@ export class CoC7RangeInitiator {
       if (this.currentShotRank > 1) {
         const previousShot = this.shots[this.currentShotRank - 2]
         if (previousShot.actorKey !== this.activeTarget.actorKey) {
-          const distance = chatHelper.getDistance(chatHelper.getTokenFromKey(previousShot.actorKey), chatHelper.getTokenFromKey(this.activeTarget.actorKey))
+          const distance = chatHelper.getDistance(
+            chatHelper.getTokenFromKey(previousShot.actorKey),
+            chatHelper.getTokenFromKey(this.activeTarget.actorKey)
+          )
           shot.transitBullets = Math.floor(chatHelper.toYards(distance))
           if (shot.transitBullets >= bulletLeft && !this.ignoreAmmo) {
             shot.transitBullets = bulletLeft
             bulletLeft = 0
           }
-          this.totalBulletsFired = parseInt(this.totalBulletsFired) + shot.transitBullets
+          this.totalBulletsFired =
+            parseInt(this.totalBulletsFired) + shot.transitBullets
           shot.transit = true
         }
       }
@@ -341,7 +382,9 @@ export class CoC7RangeInitiator {
       shot.bulletsShotTransit = shot.bulletsShot + shot.transitBullets
     }
     if (this.burst) {
-      shot.bulletsShot = parseInt(this.weapon.data.data.usesPerRound.burst) ? parseInt(this.weapon.data.data.usesPerRound.burst) : 1
+      shot.bulletsShot = parseInt(this.weapon.data.data.usesPerRound.burst)
+        ? parseInt(this.weapon.data.data.usesPerRound.burst)
+        : 1
       if (shot.bulletsShot >= bulletLeft && !this.ignoreAmmo) {
         shot.bulletsShot = bulletLeft
         bulletLeft = 0
@@ -385,7 +428,8 @@ export class CoC7RangeInitiator {
     }
 
     const rollMode = game.settings.get('core', 'rollMode')
-    if (['gmroll', 'blindroll'].includes(rollMode)) chatData.whisper = ChatMessage.getWhisperRecipients('GM')
+    if (['gmroll', 'blindroll'].includes(rollMode))
+      chatData.whisper = ChatMessage.getWhisperRecipients('GM')
     // if ( rollMode === 'blindroll' ) chatData['blind'] = true;
     chatData.blind = false
 
@@ -406,8 +450,14 @@ export class CoC7RangeInitiator {
   }
 
   toggleFlag (flagName) {
-    const flag = flagName.includes('-') ? chatHelper.hyphenToCamelCase(flagName) : flagName
-    if (flag === 'singleShot' || flag === 'multipleShots' || flag === 'fullAuto') {
+    const flag = flagName.includes('-')
+      ? chatHelper.hyphenToCamelCase(flagName)
+      : flagName
+    if (
+      flag === 'singleShot' ||
+      flag === 'multipleShots' ||
+      flag === 'fullAuto'
+    ) {
       this.singleShot = false
       this.multipleShots = false
       this.fullAuto = false
@@ -429,7 +479,10 @@ export class CoC7RangeInitiator {
       let index = 0
       while (!weaponMalfunction && this.shots.length > index) {
         const roll = this.shootAtTarget(this.shots[index])
-        await this.weapon.shootBullets(parseInt(this.shots[index].bulletsShot) + parseInt(this.shots[index].transitBullets))
+        await this.weapon.shootBullets(
+          parseInt(this.shots[index].bulletsShot) +
+            parseInt(this.shots[index].transitBullets)
+        )
         if (roll.hasMalfunction) {
           roll.isSuccess = false
           weaponMalfunction = true
@@ -439,7 +492,9 @@ export class CoC7RangeInitiator {
       }
     } else {
       const roll = this.shootAtTarget()
-      let bulletFired = this.burst ? parseInt(this.weapon.data.data.usesPerRound.burst) : 1
+      let bulletFired = this.burst
+        ? parseInt(this.weapon.data.data.usesPerRound.burst)
+        : 1
       if (bulletFired >= this.totalAmmo) bulletFired = this.totalAmmo
       const shot = {
         target: this.activeTarget,
@@ -468,7 +523,9 @@ export class CoC7RangeInitiator {
   }
 
   shootAtTarget (shot = null) {
-    const target = shot ? this.getTargetFromKey(shot.actorKey) : this.activeTarget
+    const target = shot
+      ? this.getTargetFromKey(shot.actorKey)
+      : this.activeTarget
     const check = new CoC7Check()
     check.actorKey = this.actorKey
     check.actor = this.actorKey
@@ -525,7 +582,8 @@ export class CoC7RangeInitiator {
       card.dataset[camelFlag] = card.dataset[camelFlag] !== 'true'
       event.currentTarget.classList.toggle('switched-on')
       event.currentTarget.dataset.selected = card.dataset[camelFlag]
-    } else { // update card for all player
+    } else {
+      // update card for all player
       const initiator = CoC7RangeInitiator.getFromCard(card)
       if (event.currentTarget.classList.contains('target-flag')) {
         const target = event.currentTarget.closest('.target')
@@ -539,18 +597,29 @@ export class CoC7RangeInitiator {
   passRoll (rollIndex) {
     const roll = this.rolls[rollIndex]
     const luckAmount = parseInt(roll.luckNeeded)
-    if (!this.actor.spendLuck(luckAmount)) { ui.notifications.error(`${this.actor.name} does not have enough luck to pass the check`); return }
+    if (!this.actor.spendLuck(luckAmount)) {
+      ui.notifications.error(
+        `${this.actor.name} does not have enough luck to pass the check`
+      )
+      return
+    }
     roll.successLevel = roll.difficulty
     roll.isSuccess = true
     roll.luckSpent = true
     this.updateChatCard()
   }
 
-  upgradeRoll (rollIndex, upgradeindex) { // TODO : Check if this needs to be async
+  upgradeRoll (rollIndex, upgradeindex) {
+    // TODO : Check if this needs to be async
     const roll = this.rolls[rollIndex]
     const increasedSuccess = roll.increaseSuccess[upgradeindex]
     const luckAmount = parseInt(increasedSuccess.luckAmount)
-    if (!this.actor.spendLuck(luckAmount)) { ui.notifications.error(`${this.actor.name} does not have enough luck to pass the check`); return }
+    if (!this.actor.spendLuck(luckAmount)) {
+      ui.notifications.error(
+        `${this.actor.name} does not have enough luck to pass the check`
+      )
+      return
+    }
     const newSuccessLevel = parseInt(increasedSuccess.newSuccessLevel)
     roll.successLevel = newSuccessLevel
     if (roll.difficulty <= newSuccessLevel) roll.isSuccess = true
@@ -562,7 +631,9 @@ export class CoC7RangeInitiator {
     const rangeInitiator = new CoC7RangeInitiator()
     rangeInitiator._targets = []
     if (messageId) rangeInitiator.messageId = messageId
-    else if (card.closest('.message')) { rangeInitiator.messageId = card.closest('.message').dataset.messageId }
+    else if (card.closest('.message')) {
+      rangeInitiator.messageId = card.closest('.message').dataset.messageId
+    }
 
     chatHelper.getObjectFromElement(rangeInitiator, card)
     const cardTargets = card.querySelectorAll('.target')
@@ -623,21 +694,31 @@ export class CoC7RangeInitiator {
       const damageDie = CoC7Damage.getMainDie(damageFormula)
       /** * MODIF 0.8.x ***/
       // const maxDamage = Roll.maximize( damageFormula).total; //DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
-      const maxDamage = await new Roll(damageFormula).evaluate({ maximize: true, async: true }).total // DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
+      const maxDamage = await new Roll(damageFormula).evaluate({
+        maximize: true,
+        async: true
+      }).total // DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
       /*******************/
-      const criticalDamageFormula = this.weapon.impale ? `${damageFormula} + ${maxDamage}` : `${maxDamage}`
+      const criticalDamageFormula = this.weapon.impale
+        ? `${damageFormula} + ${maxDamage}`
+        : `${maxDamage}`
       const criticalDamageDie = CoC7Damage.getMainDie(criticalDamageFormula)
 
       let impalingShots = 0
       let successfulShots = 0
       let critical = false
-      if (this.fullAuto || this.burst) successfulShots = Math.floor(volleySize / 2)
+      if (this.fullAuto || this.burst)
+        successfulShots = Math.floor(volleySize / 2)
       if (successfulShots === 0) successfulShots = 1
       if (h.roll.successLevel >= CoC7Check.difficultyLevel.extreme) {
         impalingShots = successfulShots
         successfulShots = volleySize - impalingShots
         critical = true
-        if (CoC7Check.difficultyLevel.critical !== h.roll.successLevel && ((CoC7Check.difficultyLevel.extreme <= h.roll.difficulty) || h.shot.extremeRange)) {
+        if (
+          CoC7Check.difficultyLevel.critical !== h.roll.successLevel &&
+          (CoC7Check.difficultyLevel.extreme <= h.roll.difficulty ||
+            h.shot.extremeRange)
+        ) {
           successfulShots = volleySize
           impalingShots = 0
           critical = false
@@ -674,7 +755,7 @@ export class CoC7RangeInitiator {
 
       let targetName = 'dummy'
       let target = chatHelper.getTokenFromKey(h.roll.targetKey)
-      if (!target) target = chatHelper.getActorFromKey(h.roll.targetKey)// REFACTORING (2)
+      if (!target) target = chatHelper.getActorFromKey(h.roll.targetKey) // REFACTORING (2)
       if (target) targetName = target.name
 
       this.damage.push({
@@ -684,7 +765,10 @@ export class CoC7RangeInitiator {
         total: total,
         critical: critical,
         dealt: false,
-        resultString: game.i18n.format('CoC7.rangeCombatDamage', { name: targetName, total: total })
+        resultString: game.i18n.format('CoC7.rangeCombatDamage', {
+          name: targetName,
+          total: total
+        })
       })
     }
 
@@ -694,18 +778,33 @@ export class CoC7RangeInitiator {
 
   async dealDamage () {
     for (let dIndex = 0; dIndex < this.damage.length; dIndex++) {
-      const actor = chatHelper.getActorFromKey(this.damage[dIndex].targetKey)// REFACTORING (2)
+      const actor = chatHelper.getActorFromKey(this.damage[dIndex].targetKey) // REFACTORING (2)
       this.damage[dIndex].totalTaken = 0
       this.damage[dIndex].totalAbsorbed = 0
-      for (let rIndex = 0; rIndex < this.damage[dIndex].rolls.length; rIndex++) {
-        const dealtAmount = await actor.dealDamage(this.damage[dIndex].rolls[rIndex].total)
+      for (
+        let rIndex = 0;
+        rIndex < this.damage[dIndex].rolls.length;
+        rIndex++
+      ) {
+        const dealtAmount = await actor.dealDamage(
+          this.damage[dIndex].rolls[rIndex].total
+        )
         this.damage[dIndex].totalTaken += dealtAmount
         this.damage[dIndex].rolls[rIndex].taken = dealtAmount
-        this.damage[dIndex].rolls[rIndex].absorbed = this.damage[dIndex].rolls[rIndex].total - dealtAmount
-        this.damage[dIndex].totalAbsorbed += this.damage[dIndex].rolls[rIndex].total - dealtAmount
+        this.damage[dIndex].rolls[rIndex].absorbed =
+          this.damage[dIndex].rolls[rIndex].total - dealtAmount
+        this.damage[dIndex].totalAbsorbed +=
+          this.damage[dIndex].rolls[rIndex].total - dealtAmount
       }
       this.damage[dIndex].dealt = true
-      this.damage[dIndex].resultString = game.i18n.format('CoC7.rangeCombatDamageArmor', { name: this.damage[dIndex].targetName, total: this.damage[dIndex].totalTaken, armor: this.damage[dIndex].totalAbsorbed })
+      this.damage[dIndex].resultString = game.i18n.format(
+        'CoC7.rangeCombatDamageArmor',
+        {
+          name: this.damage[dIndex].targetName,
+          total: this.damage[dIndex].totalTaken,
+          armor: this.damage[dIndex].totalAbsorbed
+        }
+      )
     }
     this.damageDealt = true
     this.updateChatCard()
@@ -775,7 +874,8 @@ export class CoC7RangeTarget {
   }
 
   get actor () {
-    if (this.actorKey && !this._actor) this._actor = chatHelper.getActorFromKey(this.actorKey)// REFACTORING (2)
+    if (this.actorKey && !this._actor)
+      this._actor = chatHelper.getActorFromKey(this.actorKey) // REFACTORING (2)
     return this._actor
   }
 
@@ -799,8 +899,10 @@ export class CoC7RangeTarget {
   }
 
   get sizeText () {
-    if (this.big) return game.i18n.localize('CoC7.rangeCombatCard.BigTargetTitle')
-    if (this.small) return game.i18n.localize('CoC7.rangeCombatCard.SmallTargetTitle')
+    if (this.big)
+      return game.i18n.localize('CoC7.rangeCombatCard.BigTargetTitle')
+    if (this.small)
+      return game.i18n.localize('CoC7.rangeCombatCard.SmallTargetTitle')
     return game.i18n.localize('CoC7.rangeCombatCard.NormalTargetTitle')
   }
 
@@ -811,7 +913,8 @@ export class CoC7RangeTarget {
   }
 
   get difficulty () {
-    if (this.baseRange || this.pointBlankRange) return CoC7Check.difficultyLevel.regular
+    if (this.baseRange || this.pointBlankRange)
+      return CoC7Check.difficultyLevel.regular
     if (this.longRange) return CoC7Check.difficultyLevel.hard
     if (this.extremeRange) return CoC7Check.difficultyLevel.extreme
     return CoC7Check.difficultyLevel.impossible
@@ -852,7 +955,12 @@ export class CoC7RangeTarget {
   }
 
   toggleFlag (flag) {
-    if (flag === 'baseRange' || flag === 'longRange' || flag === 'extremeRange' || flag === 'pointBlankRange') {
+    if (
+      flag === 'baseRange' ||
+      flag === 'longRange' ||
+      flag === 'extremeRange' ||
+      flag === 'pointBlankRange'
+    ) {
       this.pointBlankRange = false
       this.baseRange = false
       this.longRange = false
@@ -860,8 +968,19 @@ export class CoC7RangeTarget {
       this.outOfRange = false
       this[flag] = true
     } else if (flag === 'size') {
-      if (this.small) { this.small = false; this.big = true } else if (this.big) { this.small = false; this.big = false } else this.small = true
+      if (this.small) {
+        this.small = false
+        this.big = true
+      } else if (this.big) {
+        this.small = false
+        this.big = false
+      } else this.small = true
     } else this[flag] = !this[flag]
-    if (flag === 'fast' && this.fast && !this.isFast) ui.notifications.warn(game.i18n.format('CoC7.WarnFastTargetWithWrongMOV', { mov: this.actor.mov }))
+    if (flag === 'fast' && this.fast && !this.isFast)
+      ui.notifications.warn(
+        game.i18n.format('CoC7.WarnFastTargetWithWrongMOV', {
+          mov: this.actor.mov
+        })
+      )
   }
 }

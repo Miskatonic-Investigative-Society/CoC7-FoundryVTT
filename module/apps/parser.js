@@ -35,7 +35,8 @@ import { CoC7Link } from './link.js'
 import { RollDialog } from './roll-dialog.js'
 
 export class CoC7Parser {
-  static async onEditorDrop (event, editor) { // TODO: MANAGE FLAT MODIFIER THERE
+  static async onEditorDrop (event, editor) {
+    // TODO: MANAGE FLAT MODIFIER THERE
     event.preventDefault()
 
     // check key pressed (CTRL ?)
@@ -46,14 +47,21 @@ export class CoC7Parser {
     const data = JSON.parse(dataString)
     if (data.linkType === 'coc7-link') {
       event.stopPropagation()
-      if (!event.shiftKey && (typeof data.difficulty === 'undefined' || typeof data.modifier === 'undefined')) {
-        const usage = await RollDialog.create({ disableFlatDiceModifier: true })
+      if (
+        !event.shiftKey &&
+        (typeof data.difficulty === 'undefined' ||
+          typeof data.modifier === 'undefined')
+      ) {
+        const usage = await RollDialog.create({
+          disableFlatDiceModifier: true
+        })
         if (usage) {
           data.modifier = usage.get('bonusDice')
           data.difficulty = usage.get('difficulty')
         }
       }
-      if (game.settings.get('core', 'rollMode') === 'blindroll') data.blind = true
+      if (game.settings.get('core', 'rollMode') === 'blindroll')
+        data.blind = true
 
       const link = CoC7Parser.createCoC7Link(data)
 
@@ -86,7 +94,9 @@ export class CoC7Parser {
 
       if (item.type === 'skill') {
         if (!event.shiftKey) {
-          const usage = await RollDialog.create({ disableFlatDiceModifier: true })
+          const usage = await RollDialog.create({
+            disableFlatDiceModifier: true
+          })
           if (usage) {
             linkData.modifier = usage.get('bonusDice')
             linkData.difficulty = usage.get('difficulty')
@@ -94,7 +104,8 @@ export class CoC7Parser {
         }
         linkData.check = 'check'
         linkData.type = 'skill'
-        if (game.settings.get('core', 'rollMode') === 'blindroll') linkData.blind = true
+        if (game.settings.get('core', 'rollMode') === 'blindroll')
+          linkData.blind = true
       } else if (item.type === 'weapon') {
         linkData.check = 'item'
         linkData.type = 'weapon'
@@ -107,7 +118,11 @@ export class CoC7Parser {
     }
   }
 
-  static ParseMessage (message, html, data /* chatMessage, data/*, option, user */) {
+  static ParseMessage (
+    message,
+    html,
+    data /* chatMessage, data/*, option, user */
+  ) {
     // @coc7.sanloss[sanMax:1D6,sanMin:1,difficulty:++,modifier:-1]{Hard San Loss (-1) 1/1D6}
     // @coc7.check[type:charac,name:STR,difficulty:+,modifier:-1]{Hard STR check(-1)}
     // @coc7.check[type:attrib,name:lck,difficulty:+,modifier:-1]{Hard luck check(-1)}
@@ -134,9 +149,13 @@ export class CoC7Parser {
       case 'check': {
         // @coc7.check[type:charac,name:STR,difficulty:+,modifier:-1]{Hard STR check(-1)}
         if (!data.type || !data.name) return
-        let options = `${data.blind ? 'blind,' : ''}type:${data.type},name:${data.name}`
-        if (typeof data.difficulty !== 'undefined') options += `,difficulty:${data.difficulty}`
-        if (typeof data.modifier !== 'undefined') options += `,modifier:${data.modifier}`
+        let options = `${data.blind ? 'blind,' : ''}type:${data.type},name:${
+          data.name
+        }`
+        if (typeof data.difficulty !== 'undefined')
+          options += `,difficulty:${data.difficulty}`
+        if (typeof data.modifier !== 'undefined')
+          options += `,modifier:${data.modifier}`
         if (data.icon) options += `,icon:${data.icon}`
         if (data.pack) options += `,pack:${data.pack}`
         if (data.id) options += `,id:${data.id}`
@@ -148,7 +167,9 @@ export class CoC7Parser {
       case 'sanloss': {
         // @coc7.sanloss[sanMax:1D6,sanMin:1,difficulty:++,modifier:-1]{Hard San Loss (-1) 1/1D6}
         if (!data.sanMax || !data.sanMin) return
-        let options = `${data.blind ? 'blind,' : ''}sanMax:${data.sanMax},sanMin:${data.sanMin}`
+        let options = `${data.blind ? 'blind,' : ''}sanMax:${
+          data.sanMax
+        },sanMin:${data.sanMin}`
         if (data.difficulty) options += `,difficulty:${data.difficulty}`
         if (data.modifier) options += `,modifier:${data.modifier}`
         if (data.icon) options += `,icon:${data.icon}`
@@ -161,7 +182,9 @@ export class CoC7Parser {
       case 'item': {
         // @coc7.item[type:optional,name:Shotgun,difficulty:+,modifier:-1]{Hard Shitgun check(-1)}
         if (!data.type || !data.name) return
-        let options = `${data.blind ? 'blind,' : ''}type:${data.type},name:${data.name}`
+        let options = `${data.blind ? 'blind,' : ''}type:${data.type},name:${
+          data.name
+        }`
         // if( data.difficulty) options += `,difficulty:${data.difficulty}`;
         // if( data.modifier) options += `,modifier:${data.modifier}`;
         if (data.icon) options += `,icon:${data.icon}`
@@ -180,18 +203,27 @@ export class CoC7Parser {
   static ParseSheetContent (app, html) {
     // Check in all editors content for a link.
     for (const element of html.find('div.editor-content > *, p')) {
-      if (element.outerHTML.toLocaleLowerCase().includes('@coc7')) { element.outerHTML = CoC7Parser.enrichHTML(element.outerHTML) }
+      if (element.outerHTML.toLocaleLowerCase().includes('@coc7')) {
+        element.outerHTML = CoC7Parser.enrichHTML(element.outerHTML)
+      }
     }
 
     // Bind the click to execute the check.
     // html.on('click', 'a.coc7-link', CoC7Parser._onCheck.bind(this));
-    html.find('a.coc7-link').on('click', (event) => CoC7Parser._onCheck(event))
-    html.find('a.coc7-link').on('dragstart', (event) => CoC7Parser._onDragCoC7Link(event))
+    html.find('a.coc7-link').on('click', event => CoC7Parser._onCheck(event))
+    html
+      .find('a.coc7-link')
+      .on('dragstart', event => CoC7Parser._onDragCoC7Link(event))
   }
 
   static _getTextNodes (parent) {
     const text = []
-    const walk = document.createTreeWalker(parent, NodeFilter.SHOW_TEXT, null, false)
+    const walk = document.createTreeWalker(
+      parent,
+      NodeFilter.SHOW_TEXT,
+      null,
+      false
+    )
     while (walk.nextNode()) text.push(walk.currentNode)
     return text
   }
@@ -204,14 +236,19 @@ export class CoC7Parser {
 
     text = TextEditor._getTextNodes(html)
     // Alternative regex : '@(coc7).([^\[]+)\[([^\]]+)\](?:{([^}]+)})?'
-    const rgx = new RegExp('@(coc7).(.*?)\\[([^\\]]+)\\]' + '(?:{([^}]+)})?', 'gi')
+    const rgx = new RegExp(
+      '@(coc7).(.*?)\\[([^\\]]+)\\]' + '(?:{([^}]+)})?',
+      'gi'
+    )
     TextEditor._replaceTextContent(text, rgx, CoC7Parser._createLink)
     return html.innerHTML
   }
 
   static bindEventsHandler (html) {
-    html.find('a.coc7-link').on('click', (event) => CoC7Parser._onCheck(event))
-    html.find('a.coc7-link').on('dragstart', (event) => CoC7Parser._onDragCoC7Link(event))
+    html.find('a.coc7-link').on('click', event => CoC7Parser._onCheck(event))
+    html
+      .find('a.coc7-link')
+      .on('dragstart', event => CoC7Parser._onDragCoC7Link(event))
   }
 
   static _onDragCoC7Link (event) {
@@ -222,7 +259,11 @@ export class CoC7Parser {
     data.CoC7Type = 'link'
     data.icon = null
 
-    if (i.dataset && i.dataset.linkIcon && i.dataset.linkIcon !== 'fas fa-dice') {
+    if (
+      i.dataset &&
+      i.dataset.linkIcon &&
+      i.dataset.linkIcon !== 'fas fa-dice'
+    ) {
       data.icon = i.dataset.linkIcon
     }
     data.displayName = a.dataset.displayName ? a.innerText : null
@@ -255,21 +296,60 @@ export class CoC7Parser {
     switch (type.toLowerCase()) {
       case 'check': {
         let humanName = data.dataset.name
-        if (['attributes', 'attribute', 'attrib', 'attribs'].includes(data.dataset.type?.toLowerCase())) {
-          if (data.dataset.name === 'lck') humanName = game.i18n.localize('CoC7.Luck')
-          if (data.dataset.name === 'san') humanName = game.i18n.localize('CoC7.Sanity')
+        if (
+          ['attributes', 'attribute', 'attrib', 'attribs'].includes(
+            data.dataset.type?.toLowerCase()
+          )
+        ) {
+          if (data.dataset.name === 'lck')
+            humanName = game.i18n.localize('CoC7.Luck')
+          if (data.dataset.name === 'san')
+            humanName = game.i18n.localize('CoC7.Sanity')
         }
-        if (['charac', 'char', 'characteristic', 'characteristics'].includes(data.dataset.type?.toLowerCase())) {
-          humanName = CoC7Utilities.getCharacteristicNames(data.dataset.name)?.label
+        if (
+          ['charac', 'char', 'characteristic', 'characteristics'].includes(
+            data.dataset.type?.toLowerCase()
+          )
+        ) {
+          humanName = CoC7Utilities.getCharacteristicNames(data.dataset.name)
+            ?.label
         }
-        title = game.i18n.format(`CoC7.LinkCheck${!data.dataset.difficulty ? '' : 'Diff'}${!data.dataset.modifier ? '' : 'Modif'}`, { difficulty: difficulty, modifier: data.dataset.modifier, name: humanName })
+        title = game.i18n.format(
+          `CoC7.LinkCheck${!data.dataset.difficulty ? '' : 'Diff'}${
+            !data.dataset.modifier ? '' : 'Modif'
+          }`,
+          {
+            difficulty: difficulty,
+            modifier: data.dataset.modifier,
+            name: humanName
+          }
+        )
         break
       }
       case 'sanloss':
-        title = game.i18n.format(`CoC7.LinkSanLoss${!data.dataset.difficulty ? '' : 'Diff'}${!data.dataset.modifier ? '' : 'Modif'}`, { difficulty: difficulty, modifier: data.dataset.modifier, sanMin: data.dataset.sanMin, sanMax: data.dataset.sanMax })
+        title = game.i18n.format(
+          `CoC7.LinkSanLoss${!data.dataset.difficulty ? '' : 'Diff'}${
+            !data.dataset.modifier ? '' : 'Modif'
+          }`,
+          {
+            difficulty: difficulty,
+            modifier: data.dataset.modifier,
+            sanMin: data.dataset.sanMin,
+            sanMax: data.dataset.sanMax
+          }
+        )
         break
       case 'item':
-        title = game.i18n.format(`CoC7.LinkItem${!data.dataset.difficulty ? '' : 'Diff'}${!data.dataset.modifier ? '' : 'Modif'}`, { difficulty: difficulty, modifier: data.dataset.modifier, name: data.dataset.name })
+        title = game.i18n.format(
+          `CoC7.LinkItem${!data.dataset.difficulty ? '' : 'Diff'}${
+            !data.dataset.modifier ? '' : 'Modif'
+          }`,
+          {
+            difficulty: difficulty,
+            modifier: data.dataset.modifier,
+            name: data.dataset.name
+          }
+        )
         break
       default:
         break
@@ -286,7 +366,11 @@ export class CoC7Parser {
       a.dataset[k] = v
     }
     a.draggable = true
-    a.innerHTML = `${data.blind ? '<i class="fas fa-eye-slash"></i>' : ''}<i data-link-icon="${data.icon}" class="link-icon ${data.icon}"></i>${data.name}`
+    a.innerHTML = `${
+      data.blind ? '<i class="fas fa-eye-slash"></i>' : ''
+    }<i data-link-icon="${data.icon}" class="link-icon ${data.icon}"></i>${
+      data.name
+    }`
 
     return a
   }
@@ -300,7 +384,8 @@ export class CoC7Parser {
   static async _onCheck (event) {
     const options = event.currentTarget.dataset
 
-    if (options.difficulty) options.difficulty = CoC7Utilities.convertDifficulty(options.difficulty)
+    if (options.difficulty)
+      options.difficulty = CoC7Utilities.convertDifficulty(options.difficulty)
 
     // Click origin (from message or from sheet)
     // const fromSheet = event.currentTarget.closest('.chat-message')?false:true;
@@ -317,13 +402,37 @@ export class CoC7Parser {
         canvas.tokens.controlled.forEach(token => {
           switch (options.check) {
             case 'check':
-              if (['charac', 'char', 'characteristic', 'characteristics'].includes(options.type.toLowerCase())) return token.actor.characteristicCheck(options.name, event.shiftKey, options)
-              if (['skill'].includes(options.type.toLowerCase())) return token.actor.skillCheck(options, event.shiftKey, options)
-              if (['attributes', 'attribute', 'attrib', 'attribs'].includes(options.type.toLowerCase())) return token.actor.attributeCheck(options.name, event.shiftKey, options)
+              if (
+                [
+                  'charac',
+                  'char',
+                  'characteristic',
+                  'characteristics'
+                ].includes(options.type.toLowerCase())
+              )
+                return token.actor.characteristicCheck(
+                  options.name,
+                  event.shiftKey,
+                  options
+                )
+              if (['skill'].includes(options.type.toLowerCase()))
+                return token.actor.skillCheck(options, event.shiftKey, options)
+              if (
+                ['attributes', 'attribute', 'attrib', 'attribs'].includes(
+                  options.type.toLowerCase()
+                )
+              )
+                return token.actor.attributeCheck(
+                  options.name,
+                  event.shiftKey,
+                  options
+                )
               break
 
             case 'sanloss': {
-              SanCheckCard.create(token.actor.id, options, { fastForward: event.shiftKey })
+              SanCheckCard.create(token.actor.id, options, {
+                fastForward: event.shiftKey
+              })
               // const check = new CoC7SanCheck(
               //   token.actor.id,
               //   options.sanMin,
@@ -358,7 +467,13 @@ export class CoC7Parser {
               alias: game.user.name
             }
           }
-          chatHelper.createMessage(null, game.i18n.format('CoC7.MessageCheckRequestedWait', { check: (await CoC7Link.fromData(options)).link }), option)
+          chatHelper.createMessage(
+            null,
+            game.i18n.format('CoC7.MessageCheckRequestedWait', {
+              check: (await CoC7Link.fromData(options)).link
+            }),
+            option
+          )
         }
       }
     } else {
@@ -367,13 +482,30 @@ export class CoC7Parser {
       if (actor) {
         switch (options.check) {
           case 'check':
-            if (['charac', 'char', 'characteristic', 'characteristics'].includes(options.type.toLowerCase())) return actor.characteristicCheck(options.name, event.shiftKey, options)
-            if (['skill'].includes(options.type.toLowerCase())) return actor.skillCheck(options, event.shiftKey, options)
-            if (['attributes', 'attribute', 'attrib', 'attribs'].includes(options.type.toLowerCase())) return actor.attributeCheck(options.name, event.shiftKey, options)
+            if (
+              ['charac', 'char', 'characteristic', 'characteristics'].includes(
+                options.type.toLowerCase()
+              )
+            )
+              return actor.characteristicCheck(
+                options.name,
+                event.shiftKey,
+                options
+              )
+            if (['skill'].includes(options.type.toLowerCase()))
+              return actor.skillCheck(options, event.shiftKey, options)
+            if (
+              ['attributes', 'attribute', 'attrib', 'attribs'].includes(
+                options.type.toLowerCase()
+              )
+            )
+              return actor.attributeCheck(options.name, event.shiftKey, options)
             break
 
           case 'sanloss': {
-            SanCheckCard.create(actor.id, options, { fastForward: event.shiftKey })
+            SanCheckCard.create(actor.id, options, {
+              fastForward: event.shiftKey
+            })
             // const check = new CoC7SanCheck(
             //   actor.id,
             //   options.sanMin,
@@ -401,7 +533,9 @@ export class CoC7Parser {
             return false
           })
         } else {
-          ui.notifications.warn(game.i18n.localize('CoC7.WarnNoControlledActor'))
+          ui.notifications.warn(
+            game.i18n.localize('CoC7.WarnNoControlledActor')
+          )
         }
       }
     }

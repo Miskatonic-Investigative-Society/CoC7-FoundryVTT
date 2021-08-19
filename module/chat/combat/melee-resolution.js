@@ -5,7 +5,11 @@ import { CoC7MeleeInitiator } from './melee-initiator.js'
 import { CoC7MeleeTarget } from './melee-target.js'
 
 export class CoC7MeleeResoltion {
-  constructor (initiatorMessage = null, targetMessage = null, messageId = null) {
+  constructor (
+    initiatorMessage = null,
+    targetMessage = null,
+    messageId = null
+  ) {
     this.initiatorMessage = initiatorMessage
     this.targetMessage = targetMessage
     this.messageId = messageId
@@ -30,7 +34,8 @@ export class CoC7MeleeResoltion {
     // };
 
     const rollMode = game.settings.get('core', 'rollMode')
-    if (['gmroll', 'blindroll'].includes(rollMode)) chatData.whisper = ChatMessage.getWhisperRecipients('GM')
+    if (['gmroll', 'blindroll'].includes(rollMode))
+      chatData.whisper = ChatMessage.getWhisperRecipients('GM')
     // if ( rollMode === 'blindroll' ) chatData['blind'] = true;
     chatData.blind = false
 
@@ -44,7 +49,8 @@ export class CoC7MeleeResoltion {
   }
 
   get target () {
-    if (this.targetMessage) return CoC7MeleeTarget.getFromMessageId(this.targetMessage)
+    if (this.targetMessage)
+      return CoC7MeleeTarget.getFromMessageId(this.targetMessage)
     return null
   }
 
@@ -54,12 +60,14 @@ export class CoC7MeleeResoltion {
   }
 
   get initiator () {
-    if (this.initiatorMessage) return CoC7MeleeInitiator.getFromMessageId(this.initiatorMessage)
+    if (this.initiatorMessage)
+      return CoC7MeleeInitiator.getFromMessageId(this.initiatorMessage)
     return null
   }
 
   get initiatorToken () {
-    if (this.initiator) return chatHelper.getTokenFromKey(this.initiator.actorKey)
+    if (this.initiator)
+      return chatHelper.getTokenFromKey(this.initiator.actorKey)
     return null
   }
 
@@ -67,20 +75,31 @@ export class CoC7MeleeResoltion {
     if (this.target) {
       switch (this.target.action) {
         case 'dodge':
-          if (this.initiator.roll.successLevel <= 0 && this.target.roll.successLevel <= 0) {
+          if (
+            this.initiator.roll.successLevel <= 0 &&
+            this.target.roll.successLevel <= 0
+          ) {
             this.resultString = game.i18n.localize('CoC7.NoWinner')
             this.winner = null
             this.rollDamage = false
-          } else if (this.initiator.roll.successLevel > this.target.roll.successLevel) {
-            this.resultString = game.i18n.format('CoC7.WinnerRollDamage', { name: this.initiator.name })
+          } else if (
+            this.initiator.roll.successLevel > this.target.roll.successLevel
+          ) {
+            this.resultString = game.i18n.format('CoC7.WinnerRollDamage', {
+              name: this.initiator.name
+            })
             this.winner = this.initiator
             this.winnerImg = this.initiator.weapon.img
             this.winnerTitle = this.initiator.weapon.name
             this.looser = this.target
             this.action = 'roll-melee-damage'
             this.rollDamage = true
-          } else if (this.initiator.roll.successLevel <= this.target.roll.successLevel) {
-            this.resultString = game.i18n.format('CoC7.DodgeSuccess', { name: this.target.name })
+          } else if (
+            this.initiator.roll.successLevel <= this.target.roll.successLevel
+          ) {
+            this.resultString = game.i18n.format('CoC7.DodgeSuccess', {
+              name: this.target.name
+            })
             this.winner = this.target
             this.looser = this.initiator
             this.winnerImg = this.target.skill.data.img
@@ -92,19 +111,31 @@ export class CoC7MeleeResoltion {
           break
 
         case 'fightBack':
-          if (this.initiator.roll.successLevel <= 0 && this.target.roll.successLevel <= 0) {
+          if (
+            this.initiator.roll.successLevel <= 0 &&
+            this.target.roll.successLevel <= 0
+          ) {
             this.resultString = game.i18n.localize('CoC7.NoWinner')
             this.winner = null
             this.rollDamage = false
-          } else if (this.initiator.roll.successLevel >= this.target.roll.successLevel) {
-            this.resultString = game.i18n.format('CoC7.WinnerRollDamage', { name: this.initiator.name })
+          } else if (
+            this.initiator.roll.successLevel >= this.target.roll.successLevel
+          ) {
+            this.resultString = game.i18n.format('CoC7.WinnerRollDamage', {
+              name: this.initiator.name
+            })
             this.winner = this.initiator
             this.winnerImg = this.initiator.weapon.img
             this.winnerTitle = this.initiator.weapon.name
             this.looser = this.target
             this.rollDamage = true
-          } else if (this.initiator.roll.successLevel <= this.target.roll.successLevel) { // TODO verifier la condition <= vs <
-            this.resultString = game.i18n.format('CoC7.WinnerRollDamage', { name: this.target.name })
+          } else if (
+            this.initiator.roll.successLevel <= this.target.roll.successLevel
+          ) {
+            // TODO verifier la condition <= vs <
+            this.resultString = game.i18n.format('CoC7.WinnerRollDamage', {
+              name: this.target.name
+            })
             this.winner = this.target
             this.winnerImg = this.target.weapon.img
             this.winnerTitle = this.target.weapon.name
@@ -115,19 +146,30 @@ export class CoC7MeleeResoltion {
           break
 
         case 'maneuver':
-          if (this.initiator.roll.successLevel <= 0 && this.target.roll.successLevel <= 0) {
+          if (
+            this.initiator.roll.successLevel <= 0 &&
+            this.target.roll.successLevel <= 0
+          ) {
             this.resultString = game.i18n.localize('CoC7.NoWinner')
             this.winner = null
             this.rollDamage = false
-          } else if (this.initiator.roll.successLevel >= this.target.roll.successLevel) {
-            this.resultString = game.i18n.format('CoC7.WinnerRollDamage', { name: this.initiator.name })
+          } else if (
+            this.initiator.roll.successLevel >= this.target.roll.successLevel
+          ) {
+            this.resultString = game.i18n.format('CoC7.WinnerRollDamage', {
+              name: this.initiator.name
+            })
             this.winner = this.initiator
             this.winnerImg = this.initiator.weapon.img
             this.winnerTitle = this.initiator.weapon.name
             this.looser = this.target
             this.rollDamage = true
-          } else if (this.initiator.roll.successLevel <= this.target.roll.successLevel) {
-            this.resultString = game.i18n.format('CoC7.ManeuverSuccess', { name: this.target.name })
+          } else if (
+            this.initiator.roll.successLevel <= this.target.roll.successLevel
+          ) {
+            this.resultString = game.i18n.format('CoC7.ManeuverSuccess', {
+              name: this.target.name
+            })
             this.winner = this.target
             this.winnerImg = this.target.skill.data.img
             this.winnerTitle = this.target.skill.name
@@ -153,7 +195,8 @@ export class CoC7MeleeResoltion {
     }
 
     if (this.winner) {
-      if (this.winner.roll.successLevel >= CoC7Check.successLevel.extreme) this.winner.roll.criticalDamage = true
+      if (this.winner.roll.successLevel >= CoC7Check.successLevel.extreme)
+        this.winner.roll.criticalDamage = true
       else this.winner.roll.criticalDamage = false
     }
 
@@ -167,15 +210,20 @@ export class CoC7MeleeResoltion {
         if (this.winner.actor) speakerData.actor = this.winner.actor
       }
       const speaker = this.winner ? ChatMessage.getSpeaker(speakerData) : null
-      const user = this.winner && this.winner.actor.user ? this.winner.actor.user : game.user
+      const user =
+        this.winner && this.winner.actor.user
+          ? this.winner.actor.user
+          : game.user
 
       let msg
-      if (!message) { // TODO: If card isn't found (card was deleted before completion) ?
+      if (!message) {
+        // TODO: If card isn't found (card was deleted before completion) ?
         ui.notifications.warn('Resolition card missing, was deleted ?')
         return
       }
       if (speaker) {
-        msg = await message.update({ // TODO: If card isn't found (card was deleted before completion) ?
+        msg = await message.update({
+          // TODO: If card isn't found (card was deleted before completion) ?
           user: user.id,
           speaker,
           content: html

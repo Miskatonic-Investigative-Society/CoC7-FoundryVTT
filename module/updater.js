@@ -15,7 +15,7 @@ export class Updater {
             },
             skip: {
               label: 'Skip',
-              callback: () => { }
+              callback: () => {}
             }
           }
         }).render(true)
@@ -26,7 +26,7 @@ export class Updater {
           buttons: {
             OK: {
               label: 'OK',
-              callback: () => { }
+              callback: () => {}
             }
           }
         }).render(true)
@@ -47,10 +47,13 @@ export class Updater {
         switch (systemUpdateVersion) {
           case '0.0':
             if (item.data.type === 'skill' && item.data.data.value) {
-              const exp = item.data.data.adjustments?.experience ? parseInt(item.data.data.adjustments.experience) : 0
+              const exp = item.data.data.adjustments?.experience
+                ? parseInt(item.data.data.adjustments.experience)
+                : 0
               await actor.updateEmbeddedEntity('OwnedItem', {
                 _id: item._id,
-                'data.adjustments.experience': exp + parseInt(item.data.data.value) - item.value,
+                'data.adjustments.experience':
+                  exp + parseInt(item.data.data.value) - item.value,
                 'data.value': null
               })
             }
@@ -61,25 +64,52 @@ export class Updater {
       const oneFifthSanity = Math.ceil(actor.data.data.attribs.san.value / 5)
       switch (systemUpdateVersion) {
         case '0.1':
-          if (typeof actor.data.data.attribs.san.dailyLoss === 'undefined' || actor.data.data.attribs.san.dailyLoss === null) {
+          if (
+            typeof actor.data.data.attribs.san.dailyLoss === 'undefined' ||
+            actor.data.data.attribs.san.dailyLoss === null
+          ) {
             defaults['data.attribs.san.dailyLoss'] = 0
           }
-          if (typeof actor.data.data.attribs.san.oneFifthSanity === 'undefined' || actor.data.data.attribs.san.oneFifthSanity === null) {
+          if (
+            typeof actor.data.data.attribs.san.oneFifthSanity === 'undefined' ||
+            actor.data.data.attribs.san.oneFifthSanity === null
+          ) {
             defaults['data.attribs.san.oneFifthSanity'] = ' / ' + oneFifthSanity
           }
-          if (typeof actor.data.data.indefiniteInsanityLevel === 'undefined' || actor.data.data.indefiniteInsanityLevel === null || typeof actor.data.data.indefiniteInsanityLevel.value === 'undefined' || actor.data.data.indefiniteInsanityLevel.value === null) {
+          if (
+            typeof actor.data.data.indefiniteInsanityLevel === 'undefined' ||
+            actor.data.data.indefiniteInsanityLevel === null ||
+            typeof actor.data.data.indefiniteInsanityLevel.value ===
+              'undefined' ||
+            actor.data.data.indefiniteInsanityLevel.value === null
+          ) {
             defaults['data.indefiniteInsanityLevel.value'] = 0
           }
-          if (typeof actor.data.data.indefiniteInsanityLevel === 'undefined' || actor.data.data.indefiniteInsanityLevel === null || typeof actor.data.data.indefiniteInsanityLevel.max === 'undefined' || actor.data.data.indefiniteInsanityLevel.max === null) {
+          if (
+            typeof actor.data.data.indefiniteInsanityLevel === 'undefined' ||
+            actor.data.data.indefiniteInsanityLevel === null ||
+            typeof actor.data.data.indefiniteInsanityLevel.max ===
+              'undefined' ||
+            actor.data.data.indefiniteInsanityLevel.max === null
+          ) {
             defaults['data.indefiniteInsanityLevel.max'] = oneFifthSanity
           }
-          if (typeof actor.data.data.attribs.mp.value === 'undefined' || actor.data.data.attribs.mp.value === null) {
+          if (
+            typeof actor.data.data.attribs.mp.value === 'undefined' ||
+            actor.data.data.attribs.mp.value === null
+          ) {
             defaults['data.attribs.mp.value'] = oneFifthSanity
           }
-          if (typeof actor.data.data.attribs.mp.max === 'undefined' || actor.data.data.attribs.mp.max === null) {
+          if (
+            typeof actor.data.data.attribs.mp.max === 'undefined' ||
+            actor.data.data.attribs.mp.max === null
+          ) {
             defaults['data.attribs.mp.max'] = oneFifthSanity
           }
-          if (typeof actor.data.data.notes === 'undefined' || actor.data.data.notes === null) {
+          if (
+            typeof actor.data.data.notes === 'undefined' ||
+            actor.data.data.notes === null
+          ) {
             defaults['data.notes'] = ''
           }
           if (Object.keys(defaults).length > 0) {

@@ -3,9 +3,9 @@
 import { CoC7Check } from '../check.js'
 
 /**
-   * Return <a> element of a roll instance. foundry.js ref:TextEditor._createInlineRoll
-   * @param {Roll} roll      The roll object
-   */
+ * Return <a> element of a roll instance. foundry.js ref:TextEditor._createInlineRoll
+ * @param {Roll} roll      The roll object
+ */
 export function createInlineRoll (roll) {
   const data = {
     cls: ['inline-roll'],
@@ -17,7 +17,9 @@ export function createInlineRoll (roll) {
     data.result = roll.total
     data.title = roll.formula
     data.dataset.roll = escape(JSON.stringify(roll))
-  } catch (err) { return null }
+  } catch (err) {
+    return null
+  }
 
   // Construct and return the formed link element
   const a = document.createElement('a')
@@ -65,7 +67,12 @@ export function exclude__ (key, value) {
  * @returns
  */
 export function isCtrlKey (event) {
-  return event.metaKey || event.ctrlKey || event.keyCode === 91 || event.keyCode === 224
+  return (
+    event.metaKey ||
+    event.ctrlKey ||
+    event.keyCode === 91 ||
+    event.keyCode === 224
+  )
 }
 
 export class chatHelper {
@@ -86,7 +93,9 @@ export class chatHelper {
     messageData.user = game.user.id
     messageData.content = message
 
-    ChatMessage.create(messageData).then(msg => { return msg })
+    ChatMessage.create(messageData).then(msg => {
+      return msg
+    })
   }
 
   static camelCaseToHyphen (string) {
@@ -98,10 +107,11 @@ export class chatHelper {
   static getActorFromKey (key) {
     if (!key) return null
     // Case 1 - a synthetic actor from a Token
-    if (key.includes('.')) { // REFACTORING (2)
+    if (key.includes('.')) {
+      // REFACTORING (2)
       const [sceneId, tokenId] = key.split('.')
       if (sceneId === 'TOKEN') {
-        return game.actors.tokens[tokenId]// REFACTORING (2)
+        return game.actors.tokens[tokenId] // REFACTORING (2)
       }
       const token = chatHelper.getTokenFromKey(key)
       return token?.actor
@@ -113,7 +123,7 @@ export class chatHelper {
 
   static getSpeakerFromKey (actorKey) {
     const speaker = {}
-    const actor = chatHelper.getActorFromKey(actorKey)// REFACTORING (2)
+    const actor = chatHelper.getActorFromKey(actorKey) // REFACTORING (2)
     if (actorKey.includes('.')) {
       const [sceneId, tokenId] = actorKey.split('.') // REFACTORING (2)
       speaker.token = tokenId
@@ -130,8 +140,12 @@ export class chatHelper {
   static attachObjectToElement (object, element, objectName = '') {
     Object.keys(object).forEach(prop => {
       if (!prop.startsWith('_')) {
-        if (typeof (object[prop]) === 'object') {
-          chatHelper.attachObjectToElement(object[prop], element, `${objectName}:${prop}:`)
+        if (typeof object[prop] === 'object') {
+          chatHelper.attachObjectToElement(
+            object[prop],
+            element,
+            `${objectName}:${prop}:`
+          )
         } else {
           element.dataset[`${objectName}${prop}`] = object[prop]
         }
@@ -168,7 +182,7 @@ export class chatHelper {
       const [sceneId, tokenId] = key.split('.')
       if (sceneId === 'TOKEN') {
         const tokenDoc = game.actors.tokens[tokenId]?.token
-        return tokenDoc.object// REFACTORING (2)
+        return tokenDoc.object // REFACTORING (2)
       } else {
         const scene = game.scenes.get(sceneId)
         if (!scene) return null
@@ -223,7 +237,7 @@ export class chatHelper {
       const token = chatHelper.getTokenFromKey(actorKey)
       if (token) return token.data.img
     }
-    const actor = chatHelper.getActorFromKey(actorKey)// REFACTORING (2)
+    const actor = chatHelper.getActorFromKey(actorKey) // REFACTORING (2)
     if (game.settings.get('CoC7', 'useToken')) {
       // if no token found for that actor return the prototype token image.
       if (actor.data.token) return actor.data.token.img
@@ -239,13 +253,20 @@ export class chatHelper {
       value: 0,
       unit: canvas.scene.data.gridUnits
     }
-    if (typeof startToken !== 'undefined' && typeof startToken.center !== 'undefined' && typeof endToken !== 'undefined' && typeof endToken.center !== 'undefined') {
+    if (
+      typeof startToken !== 'undefined' &&
+      typeof startToken.center !== 'undefined' &&
+      typeof endToken !== 'undefined' &&
+      typeof endToken.center !== 'undefined'
+    ) {
       const ray = new Ray(startToken.center, endToken.center)
       const segment = [{ ray }]
       distance = {
         gridUnit: ray.distance / canvas.scene.data.grid,
         // value: (ray.distance/canvas.scene.data.grid)*canvas.scene.data.gridDistance,
-        value: canvas.grid.measureDistances(segment, { gridSpaces: game.settings.get('CoC7', 'gridSpaces') })[0],
+        value: canvas.grid.measureDistances(segment, {
+          gridSpaces: game.settings.get('CoC7', 'gridSpaces')
+        })[0],
         unit: canvas.scene.data.gridUnits
       }
     }
@@ -302,7 +323,7 @@ export class CoC7Roll {
   }
 
   get actor () {
-    if (this.actorKey) return chatHelper.getActorFromKey(this.actorKey)// REFACTORING (2)
+    if (this.actorKey) return chatHelper.getActorFromKey(this.actorKey) // REFACTORING (2)
     return null
   }
 
@@ -342,10 +363,16 @@ export class CoC7Roll {
       tens: [],
       unit: {}
     }
-    chatHelper.getObjectFromElement(roll.dices, element.querySelector('.dice-result'))
+    chatHelper.getObjectFromElement(
+      roll.dices,
+      element.querySelector('.dice-result')
+    )
     roll.dices.hasBonus = roll.diceModifier !== 0
     roll.dices.bonus = Math.abs(roll.diceModifier)
-    roll.dices.bonusType = roll.diceModifier < 0 ? game.i18n.format('CoC7.DiceModifierPenalty') : game.i18n.format('CoC7.DiceModifierBonus')
+    roll.dices.bonusType =
+      roll.diceModifier < 0
+        ? game.i18n.format('CoC7.DiceModifierPenalty')
+        : game.i18n.format('CoC7.DiceModifierBonus')
     const tenDice = element.querySelector('.ten-dice')
     if (tenDice) {
       tenDice.querySelectorAll('li').forEach(d => {
@@ -359,7 +386,9 @@ export class CoC7Roll {
         roll.dices.tens.push(die)
       })
     }
-    const unitDie = element.querySelector('.unit-die') ? element.querySelector('.unit-die').querySelector('li') : null
+    const unitDie = element.querySelector('.unit-die')
+      ? element.querySelector('.unit-die').querySelector('li')
+      : null
     roll.dices.unit.value = unitDie ? parseInt(unitDie.dataset.value) : null
 
     roll.increaseSuccess = []
@@ -372,7 +401,10 @@ export class CoC7Roll {
       })
     }
 
-    if (roll.luckNeeded) roll.luckNeededTxt = game.i18n.format('CoC7.SpendLuck', { luckNeededValue: roll.luckNeeded })
+    if (roll.luckNeeded)
+      roll.luckNeededTxt = game.i18n.format('CoC7.SpendLuck', {
+        luckNeededValue: roll.luckNeeded
+      })
     if (!object) return roll
   }
 

@@ -17,44 +17,64 @@ export class CoC7Combat {
       const combatant = currentCombat.data.combatants.get(combId)
 
       if (combatant.getFlag('CoC7', 'hasGun')) {
-        $(combatantControlsDiv).prepend(`<a class="combatant-control active add-init" title="${game.i18n.localize('CoC7.PutGunAway')}" data-control="drawGun"><i class="game-icon game-icon-revolver"></i></a>`)
+        $(combatantControlsDiv).prepend(
+          `<a class="combatant-control active add-init" title="${game.i18n.localize(
+            'CoC7.PutGunAway'
+          )}" data-control="drawGun"><i class="game-icon game-icon-revolver"></i></a>`
+        )
       } else {
-        $(combatantControlsDiv).prepend(`<a class="combatant-control add-init" title="${game.i18n.localize('CoC7.DrawGun')}" data-control="drawGun"><i class="game-icon game-icon-revolver"></i></a>`)
+        $(combatantControlsDiv).prepend(
+          `<a class="combatant-control add-init" title="${game.i18n.localize(
+            'CoC7.DrawGun'
+          )}" data-control="drawGun"><i class="game-icon game-icon-revolver"></i></a>`
+        )
       }
-      if (game.settings.get('CoC7', 'initiativeRule') === 'optional' && game.settings.get('CoC7', 'displayInitAsText')) {
+      if (
+        game.settings.get('CoC7', 'initiativeRule') === 'optional' &&
+        game.settings.get('CoC7', 'displayInitAsText')
+      ) {
         if (combatant.initiative) {
           const tokenInitiative = el.querySelector('.token-initiative')
           const initiativeTest = tokenInitiative.querySelector('.initiative')
-          const roll = 100 * combatant.initiative - 100 * Math.floor(combatant.initiative)
+          const roll =
+            100 * combatant.initiative - 100 * Math.floor(combatant.initiative)
           switch (Math.floor(combatant.initiative)) {
             case CoC7Check.successLevel.fumble:
               tokenInitiative.classList.add('fumble')
               initiativeTest.innerText = game.i18n.localize('CoC7.Fumble')
               initiativeTest.title = roll
               break
-            case CoC7Check.successLevel.failure :
+            case CoC7Check.successLevel.failure:
               tokenInitiative.classList.add('failure')
               initiativeTest.innerText = game.i18n.localize('CoC7.Failure')
               initiativeTest.title = roll
               break
-            case CoC7Check.successLevel.regular :
+            case CoC7Check.successLevel.regular:
               tokenInitiative.classList.add('regular-success')
-              initiativeTest.innerText = game.i18n.localize('CoC7.RollDifficultyRegular')
+              initiativeTest.innerText = game.i18n.localize(
+                'CoC7.RollDifficultyRegular'
+              )
               initiativeTest.title = roll
               break
-            case CoC7Check.successLevel.hard :
+            case CoC7Check.successLevel.hard:
               tokenInitiative.classList.add('hard-success')
-              initiativeTest.innerText = game.i18n.localize('CoC7.RollDifficultyHard')
+              initiativeTest.innerText = game.i18n.localize(
+                'CoC7.RollDifficultyHard'
+              )
               initiativeTest.title = roll
               break
-            case CoC7Check.successLevel.extreme :
+            case CoC7Check.successLevel.extreme:
               tokenInitiative.classList.add('extreme-success')
-              initiativeTest.innerText = game.i18n.localize('CoC7.RollDifficultyExtreme')
+              initiativeTest.innerText = game.i18n.localize(
+                'CoC7.RollDifficultyExtreme'
+              )
               initiativeTest.title = roll
               break
-            case CoC7Check.successLevel.critical :
+            case CoC7Check.successLevel.critical:
               tokenInitiative.classList.add('critical')
-              initiativeTest.innerText = game.i18n.localize('CoC7.RollDifficultyCritical')
+              initiativeTest.innerText = game.i18n.localize(
+                'CoC7.RollDifficultyCritical'
+              )
               initiativeTest.title = roll
               break
           }
@@ -104,26 +124,31 @@ export class CoC7Combat {
  * @param {Object} messageOptions   Additional options with which to customize created Chat Messages
  * @return {Promise.<Combat>}       A promise which resolves to the updated Combat entity once updates are complete.
  */
-export async function rollInitiative (ids/*, formula=null, messageOptions={} */) {
+export async function rollInitiative (
+  ids /*, formula=null, messageOptions={} */
+) {
   // Structure input data
   ids = typeof ids === 'string' ? [ids] : ids
   const currentId = this.combatant.id
 
   // Iterate over Combatants, performing an initiative roll for each
-  const [updates] = ids.reduce((results, id) => {
-    const [updates] = results
+  const [updates] = ids.reduce(
+    (results, id) => {
+      const [updates] = results
 
-    // Get Combatant data
-    const c = this.combatants.get(id)
-    if (!c) return results
+      // Get Combatant data
+      const c = this.combatants.get(id)
+      if (!c) return results
 
-    // Roll initiative
-    const initiative = c.actor.rollInitiative(!!c.getFlag('CoC7', 'hasGun'))
-    updates.push({ _id: id, initiative: initiative })
+      // Roll initiative
+      const initiative = c.actor.rollInitiative(!!c.getFlag('CoC7', 'hasGun'))
+      updates.push({ _id: id, initiative: initiative })
 
-    // Return the Roll and the chat data
-    return results
-  }, [[], []])
+      // Return the Roll and the chat data
+      return results
+    },
+    [[], []]
+  )
   if (!updates.length) return this
 
   // Update multiple combatants

@@ -1,10 +1,13 @@
-# IDE
+.husky/_
 .idea/
 .vs/
-package.json
+.vscode/
+*.log
+*.todo
+build/
+coverage/
+dist/
+node_modules/
 package-lock.json
-node_modules
-*.bak
-._sync*
-.owncloud*
-Desktop.ini
+target/
+yarn.lock

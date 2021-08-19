@@ -38,37 +38,120 @@ export class CoC7ActorSheet extends ActorSheet {
     data.meleeWpn = []
     data.actorFlags = {}
 
-    data.permissionLimited = (this.actor.data.permission[game.user.id] === CONST.ENTITY_PERMISSIONS.LIMITED || this.actor.data.permission.default === CONST.ENTITY_PERMISSIONS.LIMITED) && !game.user.isGM
+    data.permissionLimited =
+      (this.actor.data.permission[game.user.id] ===
+        CONST.ENTITY_PERMISSIONS.LIMITED ||
+        this.actor.data.permission.default ===
+          CONST.ENTITY_PERMISSIONS.LIMITED) &&
+      !game.user.isGM
     data.isGM = game.user.isGM
     data.alowUnlock =
       game.settings.get('CoC7', 'playerUnlockSheetMode') === 'always' ||
       game.user.isGM ||
-      (game.settings.get('CoC7', 'playerUnlockSheetMode') === 'creation' && game.settings.get('CoC7', 'charCreationEnabled'))
-    if (game.settings.get('CoC7', 'playerUnlockSheetMode') === 'creation' && game.settings.get('CoC7', 'charCreationEnabled')) data['data.flags.locked'] = false
+      (game.settings.get('CoC7', 'playerUnlockSheetMode') === 'creation' &&
+        game.settings.get('CoC7', 'charCreationEnabled'))
+    if (
+      game.settings.get('CoC7', 'playerUnlockSheetMode') === 'creation' &&
+      game.settings.get('CoC7', 'charCreationEnabled')
+    )
+      data['data.flags.locked'] = false
 
     if (!['vehicle'].includes(this.actor.data.type)) {
       if (!data.data.characteristics) {
         data.data.characteristics = {
-          str: { value: null, short: 'CHARAC.STR', label: 'CHARAC.Strength', formula: null },
-          con: { value: null, short: 'CHARAC.CON', label: 'CHARAC.Constitution', formula: null },
-          siz: { value: null, short: 'CHARAC.SIZ', label: 'CHARAC.Size', formula: null },
-          dex: { value: null, short: 'CHARAC.DEX', label: 'CHARAC.Dexterity', formula: null },
-          app: { value: null, short: 'CHARAC.APP', label: 'CHARAC.Appearance', formula: null },
-          int: { value: null, short: 'CHARAC.INT', label: 'CHARAC.Intelligence', formula: null },
-          pow: { value: null, short: 'CHARAC.POW', label: 'CHARAC.Power', formula: null },
-          edu: { value: null, short: 'CHARAC.EDU', label: 'CHARAC.Education', formula: null }
+          str: {
+            value: null,
+            short: 'CHARAC.STR',
+            label: 'CHARAC.Strength',
+            formula: null
+          },
+          con: {
+            value: null,
+            short: 'CHARAC.CON',
+            label: 'CHARAC.Constitution',
+            formula: null
+          },
+          siz: {
+            value: null,
+            short: 'CHARAC.SIZ',
+            label: 'CHARAC.Size',
+            formula: null
+          },
+          dex: {
+            value: null,
+            short: 'CHARAC.DEX',
+            label: 'CHARAC.Dexterity',
+            formula: null
+          },
+          app: {
+            value: null,
+            short: 'CHARAC.APP',
+            label: 'CHARAC.Appearance',
+            formula: null
+          },
+          int: {
+            value: null,
+            short: 'CHARAC.INT',
+            label: 'CHARAC.Intelligence',
+            formula: null
+          },
+          pow: {
+            value: null,
+            short: 'CHARAC.POW',
+            label: 'CHARAC.Power',
+            formula: null
+          },
+          edu: {
+            value: null,
+            short: 'CHARAC.EDU',
+            label: 'CHARAC.Education',
+            formula: null
+          }
         }
       }
 
       if (!data.data.attribs) {
         data.data.attribs = {
-          hp: { value: null, max: null, short: 'HP', label: 'Hit points', auto: true },
-          mp: { value: null, max: null, short: 'HP', label: 'Magic points', auto: true },
+          hp: {
+            value: null,
+            max: null,
+            short: 'HP',
+            label: 'Hit points',
+            auto: true
+          },
+          mp: {
+            value: null,
+            max: null,
+            short: 'HP',
+            label: 'Magic points',
+            auto: true
+          },
           lck: { value: null, short: 'LCK', label: 'Luck' },
-          san: { value: null, max: 99, short: 'SAN', label: 'Sanity', auto: true },
-          mov: { value: null, short: 'MOV', label: 'Movement rate', auto: true },
-          db: { value: null, short: 'DB', label: 'Damage bonus', auto: true },
-          build: { value: null, short: 'BLD', label: 'Build', auto: true },
+          san: {
+            value: null,
+            max: 99,
+            short: 'SAN',
+            label: 'Sanity',
+            auto: true
+          },
+          mov: {
+            value: null,
+            short: 'MOV',
+            label: 'Movement rate',
+            auto: true
+          },
+          db: {
+            value: null,
+            short: 'DB',
+            label: 'Damage bonus',
+            auto: true
+          },
+          build: {
+            value: null,
+            short: 'BLD',
+            label: 'Build',
+            auto: true
+          },
           armor: { value: null, auto: false }
         }
       }
@@ -86,11 +169,22 @@ export class CoC7ActorSheet extends ActorSheet {
       }
 
       if (!data.data.biography) {
-        data.data.biography = { personalDescription: { type: 'string', value: '' } }
+        data.data.biography = {
+          personalDescription: { type: 'string', value: '' }
+        }
       }
 
       if (!data.data.infos) {
-        data.data.infos = { occupation: '', age: '', sex: '', residence: '', birthplace: '', archetype: '', organization: '', playername: '' }
+        data.data.infos = {
+          occupation: '',
+          age: '',
+          sex: '',
+          residence: '',
+          birthplace: '',
+          archetype: '',
+          organization: '',
+          playername: ''
+        }
       }
 
       if (!data.data.flags) {
@@ -98,11 +192,20 @@ export class CoC7ActorSheet extends ActorSheet {
       }
 
       if (!data.data.credit) {
-        data.data.credit = { monetarySymbol: null, multiplier: null, spent: null, assetsDetails: null }
+        data.data.credit = {
+          monetarySymbol: null,
+          multiplier: null,
+          spent: null,
+          assetsDetails: null
+        }
       }
 
       if (!data.data.development) {
-        data.data.development = { personal: null, occupation: null, archetype: null }
+        data.data.development = {
+          personal: null,
+          occupation: null,
+          archetype: null
+        }
       }
 
       if (!data.data.biography) data.data.biography = []
@@ -125,17 +228,35 @@ export class CoC7ActorSheet extends ActorSheet {
         if (item.type === 'skill') {
           if (item.data.properties.special) {
             if (item.data.properties.fighting) {
-              if (item.data.specialization !== game.i18n.localize('CoC7.FightingSpecializationName')) {
+              if (
+                item.data.specialization !==
+                game.i18n.localize('CoC7.FightingSpecializationName')
+              ) {
                 const itemToUpdate = this.actor.items.get(item._id)
-                await itemToUpdate.update({ 'data.specialization': game.i18n.localize('CoC7.FightingSpecializationName') })
-                item.data.specialization = game.i18n.localize('CoC7.FightingSpecializationName') // TODO : Client with different language = recursive call when opening the same sheet.
+                await itemToUpdate.update({
+                  'data.specialization': game.i18n.localize(
+                    'CoC7.FightingSpecializationName'
+                  )
+                })
+                item.data.specialization = game.i18n.localize(
+                  'CoC7.FightingSpecializationName'
+                ) // TODO : Client with different language = recursive call when opening the same sheet.
               }
             }
             if (item.data.properties.firearm) {
-              if (item.data.specialization !== game.i18n.localize('CoC7.FirearmSpecializationName')) {
+              if (
+                item.data.specialization !==
+                game.i18n.localize('CoC7.FirearmSpecializationName')
+              ) {
                 const itemToUpdate = this.actor.items.get(item._id)
-                await itemToUpdate.update({ 'data.specialization': game.i18n.localize('CoC7.FirearmSpecializationName') })
-                item.data.specialization = game.i18n.localize('CoC7.FirearmSpecializationName')
+                await itemToUpdate.update({
+                  'data.specialization': game.i18n.localize(
+                    'CoC7.FirearmSpecializationName'
+                  )
+                })
+                item.data.specialization = game.i18n.localize(
+                  'CoC7.FirearmSpecializationName'
+                )
               }
             }
           }
@@ -144,22 +265,35 @@ export class CoC7ActorSheet extends ActorSheet {
             if (isNaN(Number(item.data.value))) {
               let value = null
               const parsed = {}
-              for (const [key, value] of Object.entries(COC7.formula.actorsheet)) {
+              for (const [key, value] of Object.entries(
+                COC7.formula.actorsheet
+              )) {
                 if (key.startsWith('@') && value.startsWith('this.')) {
-                  parsed[key.substring(1)] = getProperty(this, value.substring(5))
+                  parsed[key.substring(1)] = getProperty(
+                    this,
+                    value.substring(5)
+                  )
                 }
               }
               try {
-                value = (await new Roll(item.data.value, parsed).evaluate({ async: true })).total
+                value = (
+                  await new Roll(item.data.value, parsed).evaluate({
+                    async: true
+                  })
+                ).total
               } catch (err) {
-                console.warn(`unable to parse formula :${item.data.value} for skill ${item.name}`)
+                console.warn(
+                  `unable to parse formula :${item.data.value} for skill ${item.name}`
+                )
                 value = null
               }
 
               if (value) {
                 item.data.value = value
                 const itemToUpdate = this.actor.items.get(item._id)
-                await itemToUpdate.update({ 'data.value': value })
+                await itemToUpdate.update({
+                  'data.value': value
+                })
               }
             }
           } else {
@@ -182,7 +316,9 @@ export class CoC7ActorSheet extends ActorSheet {
 
             if (item.data.value) {
               const value = item.data.value
-              const exp = item.data.adjustments?.experience ? parseInt(item.data.adjustments.experience) : 0
+              const exp = item.data.adjustments?.experience
+                ? parseInt(item.data.adjustments.experience)
+                : 0
               let updatedExp = exp + parseInt(item.data.value) - skill.value
               if (updatedExp <= 0) updatedExp = null
               await this.actor.updateEmbeddedEntity('OwnedItem', {
@@ -210,11 +346,45 @@ export class CoC7ActorSheet extends ActorSheet {
           let lca
           let lcb
           if (a.data.properties && b.data.properties) {
-            lca = a.data.properties.special && typeof a.data.specialization !== 'undefined' ? a.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
-            lcb = b.data.properties.special && typeof b.data.specialization !== 'undefined' ? b.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+            lca =
+              a.data.properties.special &&
+              typeof a.data.specialization !== 'undefined'
+                ? a.data.specialization
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase() +
+                  a.name
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase()
+                : a.name
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase()
+            lcb =
+              b.data.properties.special &&
+              typeof b.data.specialization !== 'undefined'
+                ? b.data.specialization
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase() +
+                  b.name
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase()
+                : b.name
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase()
           } else {
-            lca = a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
-            lcb = b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+            lca = a.name
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')
+              .toLowerCase()
+            lcb = b.name
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')
+              .toLowerCase()
           }
           if (lca < lcb) return -1
           if (lca > lcb) return 1
@@ -223,25 +393,67 @@ export class CoC7ActorSheet extends ActorSheet {
       }
 
       // redondant avec matrice itembytype
-      data.skills = data.items.filter(item => item.type === 'skill').sort((a, b) => {
-        let lca
-        let lcb
-        if (a.data.properties && b.data.properties) {
-          lca = a.data.properties.special ? a.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
-          lcb = b.data.properties.special ? b.data.specialization.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() + b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
-        } else {
-          lca = a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
-          lcb = b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
-        }
-        if (lca < lcb) return -1
-        if (lca > lcb) return 1
-        return 0
-      })
+      data.skills = data.items
+        .filter(item => item.type === 'skill')
+        .sort((a, b) => {
+          let lca
+          let lcb
+          if (a.data.properties && b.data.properties) {
+            lca = a.data.properties.special
+              ? a.data.specialization
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase() +
+                a.name
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase()
+              : a.name
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase()
+            lcb = b.data.properties.special
+              ? b.data.specialization
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase() +
+                b.name
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase()
+              : b.name
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase()
+          } else {
+            lca = a.name
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')
+              .toLowerCase()
+            lcb = b.name
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')
+              .toLowerCase()
+          }
+          if (lca < lcb) return -1
+          if (lca > lcb) return 1
+          return 0
+        })
 
-      data.meleeSkills = data.skills.filter(skill => skill.data.properties.combat === true && skill.data.properties.fighting === true)
-      data.rangeSkills = data.skills.filter(skill => skill.data.properties.combat === true && skill.data.properties.firearm === true)
+      data.meleeSkills = data.skills.filter(
+        skill =>
+          skill.data.properties.combat === true &&
+          skill.data.properties.fighting === true
+      )
+      data.rangeSkills = data.skills.filter(
+        skill =>
+          skill.data.properties.combat === true &&
+          skill.data.properties.firearm === true
+      )
 
-      const cbtSkills = data.skills.filter(skill => skill.data.properties.combat === true)
+      const cbtSkills = data.skills.filter(
+        skill => skill.data.properties.combat === true
+      )
       if (cbtSkills) {
         for (const skill of cbtSkills) {
           data.combatSkills[skill._id] = skill
@@ -252,7 +464,9 @@ export class CoC7ActorSheet extends ActorSheet {
 
       if (weapons) {
         for (const weapon of weapons) {
-          weapon.usesAlternateSkill = weapon.data.properties.auto === true || weapon.data.properties.brst === true
+          weapon.usesAlternateSkill =
+            weapon.data.properties.auto === true ||
+            weapon.data.properties.brst === true
           if (!weapon.data.ammo) weapon.data.ammo = 0
 
           weapon.skillSet = true
@@ -268,7 +482,8 @@ export class CoC7ActorSheet extends ActorSheet {
             // si il n'existe plus il faut le retrouver ou passer skillset a false.
             if (data.combatSkills[weapon.data.skill.main.id]) {
               const skill = this.actor.items.get(weapon.data.skill.main.id)
-              weapon.data.skill.main.name = data.combatSkills[weapon.data.skill.main.id].name
+              weapon.data.skill.main.name =
+                data.combatSkills[weapon.data.skill.main.id].name
               weapon.data.skill.main.value = skill.value
             } else {
               weapon.skillSet = false
@@ -276,8 +491,11 @@ export class CoC7ActorSheet extends ActorSheet {
 
             if (weapon.data.skill.alternativ.id !== '') {
               if (data.combatSkills[weapon.data.skill.alternativ.id]) {
-                const skill = this.actor.items.get(weapon.data.skill.alternativ.id)
-                weapon.data.skill.alternativ.name = data.combatSkills[weapon.data.skill.alternativ.id].name
+                const skill = this.actor.items.get(
+                  weapon.data.skill.alternativ.id
+                )
+                weapon.data.skill.alternativ.name =
+                  data.combatSkills[weapon.data.skill.alternativ.id].name
                 weapon.data.skill.alternativ.value = skill.value
               }
             }
@@ -299,7 +517,9 @@ export class CoC7ActorSheet extends ActorSheet {
       }
 
       const token = this.token
-      data.tokenId = token ? `${token.parent?.id ? token.parent.id : 'TOKEN'}.${token.id}` : null // REFACTORING (2)
+      data.tokenId = token
+        ? `${token.parent?.id ? token.parent.id : 'TOKEN'}.${token.id}`
+        : null // REFACTORING (2)
 
       data.hasEmptyValueWithFormula = false
       if (data.data.characteristics) {
@@ -309,13 +529,17 @@ export class CoC7ActorSheet extends ActorSheet {
           characteristic.extreme = Math.floor(characteristic.value / 5)
 
           // If no value && no formula don't display charac.
-          if (!characteristic.value && !characteristic.formula) characteristic.display = false
+          if (!characteristic.value && !characteristic.formula)
+            characteristic.display = false
           else characteristic.display = true
 
           // if any characteristic has no value but has a formula.
-          if (!characteristic.value && characteristic.formula) characteristic.hasEmptyValueWithFormula = true
+          if (!characteristic.value && characteristic.formula)
+            characteristic.hasEmptyValueWithFormula = true
 
-          data.hasEmptyValueWithFormula = data.hasEmptyValueWithFormula || characteristic.hasEmptyValueWithFormula
+          data.hasEmptyValueWithFormula =
+            data.hasEmptyValueWithFormula ||
+            characteristic.hasEmptyValueWithFormula
         }
       }
     }
@@ -337,11 +561,26 @@ export class CoC7ActorSheet extends ActorSheet {
     data.data.attribs.db.value = this.actor.db
     data.data.attribs.build.value = this.actor.build
 
-    this.actor.update({ 'data.attribs.mov.value': this.actor.mov }, { render: false })
-    this.actor.update({ 'data.attribs.mov.max': this.actor.mov }, { render: false })
-    this.actor.update({ 'data.attribs.db.value': this.actor.db }, { render: false })
-    this.actor.update({ 'data.attribs.build.current': this.actor.build }, { render: false })
-    this.actor.update({ 'data.attribs.build.value': this.actor.build }, { render: false })
+    this.actor.update(
+      { 'data.attribs.mov.value': this.actor.mov },
+      { render: false }
+    )
+    this.actor.update(
+      { 'data.attribs.mov.max': this.actor.mov },
+      { render: false }
+    )
+    this.actor.update(
+      { 'data.attribs.db.value': this.actor.db },
+      { render: false }
+    )
+    this.actor.update(
+      { 'data.attribs.build.current': this.actor.build },
+      { render: false }
+    )
+    this.actor.update(
+      { 'data.attribs.build.value': this.actor.build },
+      { render: false }
+    )
 
     // if( data.data.attribs.hp.value < 0) data.data.attribs.hp.value = null;
     if (data.data.attribs.mp.value < 0) data.data.attribs.mp.value = null
@@ -349,27 +588,50 @@ export class CoC7ActorSheet extends ActorSheet {
     // data.data.attribs.san.fiftyOfCurrent = data.data.attribs.san.value >= 0 ? ' / '+Math.floor(data.data.attribs.san.value/5):'';
     if (data.data.attribs.hp.auto) {
       // TODO if any is null set max back to null.
-      if (data.data.characteristics.siz.value != null && data.data.characteristics.con.value != null) { data.data.attribs.hp.max = this.actor.hpMax }
+      if (
+        data.data.characteristics.siz.value != null &&
+        data.data.characteristics.con.value != null
+      ) {
+        data.data.attribs.hp.max = this.actor.hpMax
+      }
     }
 
     if (data.data.attribs.mp.auto) {
       // TODO if any is null set max back to null.
-      if (data.data.characteristics.pow.value != null) data.data.attribs.mp.max = Math.floor(data.data.characteristics.pow.value / 5)
+      if (data.data.characteristics.pow.value != null)
+        data.data.attribs.mp.max = Math.floor(
+          data.data.characteristics.pow.value / 5
+        )
     }
 
     if (data.data.attribs.san.auto) {
       data.data.attribs.san.max = this.actor.sanMax
     }
 
-    if (data.data.attribs.mp.value > data.data.attribs.mp.max || data.data.attribs.mp.max == null) data.data.attribs.mp.value = data.data.attribs.mp.max
-    if (data.data.attribs.hp.value > data.data.attribs.hp.max || data.data.attribs.hp.max == null) data.data.attribs.hp.value = data.data.attribs.hp.max
+    if (
+      data.data.attribs.mp.value > data.data.attribs.mp.max ||
+      data.data.attribs.mp.max == null
+    )
+      data.data.attribs.mp.value = data.data.attribs.mp.max
+    if (
+      data.data.attribs.hp.value > data.data.attribs.hp.max ||
+      data.data.attribs.hp.max == null
+    )
+      data.data.attribs.hp.value = data.data.attribs.hp.max
 
-    if (data.data.attribs.hp.value == null && data.data.attribs.hp.max != null) data.data.attribs.hp.value = data.data.attribs.hp.max
-    if (data.data.attribs.mp.value == null && data.data.attribs.mp.max != null) data.data.attribs.mp.value = data.data.attribs.mp.max
+    if (data.data.attribs.hp.value == null && data.data.attribs.hp.max != null)
+      data.data.attribs.hp.value = data.data.attribs.hp.max
+    if (data.data.attribs.mp.value == null && data.data.attribs.mp.max != null)
+      data.data.attribs.mp.value = data.data.attribs.mp.max
 
     if (!['vehicle'].includes(this.actor.data.type)) {
-      if (data.data.attribs.san.value == null && data.data.characteristics.pow.value != null) data.data.attribs.san.value = data.data.characteristics.pow.value
-      if (data.data.attribs.san.value > data.data.attribs.san.max) data.data.attribs.san.value = data.data.attribs.san.max
+      if (
+        data.data.attribs.san.value == null &&
+        data.data.characteristics.pow.value != null
+      )
+        data.data.attribs.san.value = data.data.characteristics.pow.value
+      if (data.data.attribs.san.value > data.data.attribs.san.max)
+        data.data.attribs.san.value = data.data.attribs.san.max
 
       if (data.data.biography instanceof Array && data.data.biography.length) {
         data.data.biography[0].isFirst = true
@@ -377,10 +639,15 @@ export class CoC7ActorSheet extends ActorSheet {
       }
 
       data.data.indefiniteInsanityLevel = {}
-      data.data.indefiniteInsanityLevel.value = data.data.attribs.san.dailyLoss ? data.data.attribs.san.dailyLoss : 0
-      data.data.indefiniteInsanityLevel.max = Math.floor(data.data.attribs.san.value / 5)
+      data.data.indefiniteInsanityLevel.value = data.data.attribs.san.dailyLoss
+        ? data.data.attribs.san.dailyLoss
+        : 0
+      data.data.indefiniteInsanityLevel.max = Math.floor(
+        data.data.attribs.san.value / 5
+      )
     }
-    data.hasInventory = Object.prototype.hasOwnProperty.call(data.itemsByType, 'item') ||
+    data.hasInventory =
+      Object.prototype.hasOwnProperty.call(data.itemsByType, 'item') ||
       Object.prototype.hasOwnProperty.call(data.itemsByType, 'book') ||
       Object.prototype.hasOwnProperty.call(data.itemsByType, 'spell') ||
       Object.prototype.hasOwnProperty.call(data.itemsByType, 'talent')
@@ -418,30 +685,52 @@ export class CoC7ActorSheet extends ActorSheet {
   /**
    * Activate event listeners using the prepared sheet HTML
    * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
-  */
+   */
   activateListeners (html) {
     super.activateListeners(html)
 
     // Owner Only Listeners
     if (this.actor.isOwner) {
-      html.find('.characteristic-label').on('dragstart', (event) => this._onDragCharacteristic(event))
-      html.find('.attribute-label').on('dragstart', (event) => this._onDragAttribute(event))
-      html.find('.san-check').on('dragstart', (event) => this._onDragSanCheck(event))
+      html
+        .find('.characteristic-label')
+        .on('dragstart', event => this._onDragCharacteristic(event))
+      html
+        .find('.attribute-label')
+        .on('dragstart', event => this._onDragAttribute(event))
+      html
+        .find('.san-check')
+        .on('dragstart', event => this._onDragSanCheck(event))
 
-      html.find('.characteristic-label').contextmenu(this._onOpposedRoll.bind(this))
-      html.find('.skill-name.rollable').contextmenu(this._onOpposedRoll.bind(this))
-      html.find('.attribute-label.rollable').contextmenu(this._onOpposedRoll.bind(this))
-      html.find('.weapon-name.rollable').contextmenu(this._onOpposedRoll.bind(this))
+      html
+        .find('.characteristic-label')
+        .contextmenu(this._onOpposedRoll.bind(this))
+      html
+        .find('.skill-name.rollable')
+        .contextmenu(this._onOpposedRoll.bind(this))
+      html
+        .find('.attribute-label.rollable')
+        .contextmenu(this._onOpposedRoll.bind(this))
+      html
+        .find('.weapon-name.rollable')
+        .contextmenu(this._onOpposedRoll.bind(this))
 
-      html.find('.characteristic-label').click(this._onRollCharacteriticTest.bind(this))
+      html
+        .find('.characteristic-label')
+        .click(this._onRollCharacteriticTest.bind(this))
       html.find('.skill-name.rollable').click(this._onRollSkillTest.bind(this))
       html.find('.skill-image').click(this._onRollSkillTest.bind(this))
-      html.find('.attribute-label.rollable').click(this._onRollAttribTest.bind(this))
+      html
+        .find('.attribute-label.rollable')
+        .click(this._onRollAttribTest.bind(this))
       html.find('.lock').click(this._onLockClicked.bind(this))
       html.find('.flag').click(this._onFlagClicked.bind(this))
       html.find('.formula').click(this._onFormulaClicked.bind(this))
-      html.find('.roll-characteritics').click(this._onRollCharacteriticsValue.bind(this))
-      html.find('.average-characteritics').click(this._onAverageCharacteriticsValue.bind(this))
+      html
+        .find('.roll-characteritics')
+        .click(this._onRollCharacteriticsValue.bind(this))
+      html
+        .find('.average-characteritics')
+        .click(this._onAverageCharacteriticsValue.bind(this))
       html.find('.toggle-switch').click(this._onToggle.bind(this))
       html.find('.auto-toggle').click(this._onAutoToggle.bind(this))
 
@@ -456,10 +745,16 @@ export class CoC7ActorSheet extends ActorSheet {
       html.find('.dying-check').click(this.checkForDeath.bind(this))
 
       html.find('.item .item-image').click(event => this._onItemRoll(event))
-      html.find('.weapon-name.rollable').click(event => this._onWeaponRoll(event))
-      html.find('.weapon-skill.rollable').click(event => this._onWeaponSkillRoll(event))
+      html
+        .find('.weapon-name.rollable')
+        .click(event => this._onWeaponRoll(event))
+      html
+        .find('.weapon-skill.rollable')
+        .click(event => this._onWeaponSkillRoll(event))
       html.find('.reload-weapon').click(event => this._onReloadWeapon(event))
-      html.find('.reload-weapon').on('contextmenu', event => this._onReloadWeapon(event))
+      html
+        .find('.reload-weapon')
+        .on('contextmenu', event => this._onReloadWeapon(event))
       html.find('.add-ammo').click(this._onAddAmo.bind(this))
       html.find('.read-only').dblclick(this._toggleReadOnly.bind(this))
       html.on('click', '.weapon-damage', this._onWeaponDamage.bind(this))
@@ -469,7 +764,9 @@ export class CoC7ActorSheet extends ActorSheet {
 
       const wheelInputs = html.find('.attribute-value')
       for (const wheelInput of wheelInputs) {
-        wheelInput.addEventListener('wheel', event => this._onWheel(event), { passive: true })
+        wheelInput.addEventListener('wheel', event => this._onWheel(event), {
+          passive: true
+        })
       }
     }
 
@@ -489,7 +786,9 @@ export class CoC7ActorSheet extends ActorSheet {
     // Delete Inventory Item
     html.find('.item-delete').click(async ev => {
       const li = $(ev.currentTarget).parents('.item')
-      const itemToDelete = this.actor.items.get(li.data('itemId'), { strict: true })
+      const itemToDelete = this.actor.items.get(li.data('itemId'), {
+        strict: true
+      })
       await itemToDelete.delete()
       li.slideUp(200, () => this.render(false))
     })
@@ -508,35 +807,49 @@ export class CoC7ActorSheet extends ActorSheet {
       }
     })
 
-    html.find('.add-new-section').click(() => { this.actor.createBioSection() })
+    html.find('.add-new-section').click(() => {
+      this.actor.createBioSection()
+    })
 
     html.find('.delete-section').click(ev => {
-      const index = parseInt(ev.currentTarget.closest('.bio-section').dataset.index)
+      const index = parseInt(
+        ev.currentTarget.closest('.bio-section').dataset.index
+      )
       this.actor.deleteBioSection(index)
     })
 
     html.find('.move-section-up').click(ev => {
-      const index = parseInt(ev.currentTarget.closest('.bio-section').dataset.index)
+      const index = parseInt(
+        ev.currentTarget.closest('.bio-section').dataset.index
+      )
       this.actor.moveBioSectionUp(index)
     })
 
     html.find('.move-section-down').click(ev => {
-      const index = parseInt(ev.currentTarget.closest('.bio-section').dataset.index)
+      const index = parseInt(
+        ev.currentTarget.closest('.bio-section').dataset.index
+      )
       this.actor.moveBioSectionDown(index)
     })
 
     html.find('.development-flag').dblclick(ev => {
-      const item = this.actor.items.get(ev.currentTarget.closest('.item').dataset.itemId)
+      const item = this.actor.items.get(
+        ev.currentTarget.closest('.item').dataset.itemId
+      )
       item.toggleItemFlag('developement')
     })
 
     html.find('.occupation-skill-flag.clickable').click(ev => {
-      const item = this.actor.items.get(ev.currentTarget.closest('.item').dataset.itemId)
+      const item = this.actor.items.get(
+        ev.currentTarget.closest('.item').dataset.itemId
+      )
       item.toggleItemFlag('occupation')
     })
 
     html.find('.archetype-skill-flag.clickable').click(ev => {
-      const item = this.actor.items.get(ev.currentTarget.closest('.item').dataset.itemId)
+      const item = this.actor.items.get(
+        ev.currentTarget.closest('.item').dataset.itemId
+      )
       item.toggleItemFlag('archetype')
     })
 
@@ -550,8 +863,10 @@ export class CoC7ActorSheet extends ActorSheet {
       }
     })
 
-    html.find('a.coc7-link').on('click', (event) => CoC7Parser._onCheck(event))
-    html.find('a.coc7-link').on('dragstart', (event) => CoC7Parser._onDragCoC7Link(event))
+    html.find('a.coc7-link').on('click', event => CoC7Parser._onCheck(event))
+    html
+      .find('a.coc7-link')
+      .on('dragstart', event => CoC7Parser._onDragCoC7Link(event))
 
     html.find('.test-trigger').click(async event => {
       await OpposedCheckCard.dispatch({
@@ -572,7 +887,6 @@ export class CoC7ActorSheet extends ActorSheet {
           characteristic: 'con'
           // actor: this.actor.actorKey
         }
-
       })
       // const val = getProperty( this.actor, 'data.data.attribs.san.value');
 
@@ -669,7 +983,9 @@ export class CoC7ActorSheet extends ActorSheet {
   }
 
   async checkForDeath (event) {
-    const conCheck = new CoC7ConCheck(this.actor.isToken ? this.actor.tokenKey : this.actor._id)
+    const conCheck = new CoC7ConCheck(
+      this.actor.isToken ? this.actor.tokenKey : this.actor._id
+    )
     conCheck.stayAlive = true
     conCheck.toMessage(event.shiftKey)
   }
@@ -677,7 +993,8 @@ export class CoC7ActorSheet extends ActorSheet {
   async _onResetCounter (event) {
     event.preventDefault()
     const counter = event.currentTarget.dataset.counter
-    const oneFifthSanity = ' / ' + Math.floor(this.actor.data.data.attribs.san.value / 5)
+    const oneFifthSanity =
+      ' / ' + Math.floor(this.actor.data.data.attribs.san.value / 5)
     this.actor.setOneFifthSanity(oneFifthSanity)
     if (counter) this.actor.resetCounter(counter)
   }
@@ -690,9 +1007,17 @@ export class CoC7ActorSheet extends ActorSheet {
   }
 
   async _onToggle (event) {
-    const weapon = this.actor.items.get(event.currentTarget.closest('.item').dataset.itemId)
+    const weapon = this.actor.items.get(
+      event.currentTarget.closest('.item').dataset.itemId
+    )
     if (weapon) {
-      weapon.toggleProperty(event.currentTarget.dataset.property, (event.metaKey || event.ctrlKey || event.keyCode === 91 || event.keyCode === 224))
+      weapon.toggleProperty(
+        event.currentTarget.dataset.property,
+        event.metaKey ||
+          event.ctrlKey ||
+          event.keyCode === 91 ||
+          event.keyCode === 224
+      )
     }
   }
 
@@ -770,18 +1095,30 @@ export class CoC7ActorSheet extends ActorSheet {
       const div = $('<div class="item-summary"></div>')
 
       const labels = $('<div class="item-labels"></div>')
-      chatData.labels.forEach(p => labels.append(`<div class="item-label"><span class="label-name">${p.name} :</span><span class="label-value">${p.value}</span></div>`))
+      chatData.labels.forEach(p =>
+        labels.append(
+          `<div class="item-label"><span class="label-name">${p.name} :</span><span class="label-value">${p.value}</span></div>`
+        )
+      )
       div.append(labels)
 
-      div.append($(`<div class="item-description">${chatData.description.value}</div>`))
+      div.append(
+        $(`<div class="item-description">${chatData.description.value}</div>`)
+      )
 
       if (item.data.data.properties?.spcl) {
-        const specialDiv = $(`<div class="item-special">${chatData.description.special}</div>`)
+        const specialDiv = $(
+          `<div class="item-special">${chatData.description.special}</div>`
+        )
         div.append(specialDiv)
       }
 
       const props = $('<div class="item-properties"></div>')
-      chatData.properties.forEach(p => props.append(`<div class="tag item-property">${game.i18n.localize(p)}</div>`))
+      chatData.properties.forEach(p =>
+        props.append(
+          `<div class="tag item-property">${game.i18n.localize(p)}</div>`
+        )
+      )
       div.append(props)
 
       li.append(div.hide())
@@ -802,7 +1139,11 @@ export class CoC7ActorSheet extends ActorSheet {
     const pannelClass = event.currentTarget.dataset.pannel
     const pannel = $(section).find(`.pannel.${pannelClass}`)
     // pannel.toggle();
-    if (pannel.hasClass('expanded')) { pannel.slideUp(200) } else { pannel.slideDown(200) }
+    if (pannel.hasClass('expanded')) {
+      pannel.slideUp(200)
+    } else {
+      pannel.slideDown(200)
+    }
     pannel.toggleClass('expanded')
   }
 
@@ -822,27 +1163,32 @@ export class CoC7ActorSheet extends ActorSheet {
   }
 
   static async popupSkill (skill) {
-    skill.data.data.description.enrichedValue = TextEditor.enrichHTML(skill.data.data.description.value)
+    skill.data.data.description.enrichedValue = TextEditor.enrichHTML(
+      skill.data.data.description.value
+    )
     // game.CoC7.enricher( skill.data.data.description.enrichedValue);
-    const dlg = new Dialog({
-      title: game.i18n.localize('CoC7.SkillDetailsWindow'),
-      content: skill,
-      buttons: {},
-      close: () => {}
-    }, {
-      classes: ['coc7', 'sheet', 'skill'],
-      width: 520,
-      height: 480,
-      scrollY: ['.item-description'],
-      template: 'systems/CoC7/templates/apps/skill-details.html'
-    })
+    const dlg = new Dialog(
+      {
+        title: game.i18n.localize('CoC7.SkillDetailsWindow'),
+        content: skill,
+        buttons: {},
+        close: () => {}
+      },
+      {
+        classes: ['coc7', 'sheet', 'skill'],
+        width: 520,
+        height: 480,
+        scrollY: ['.item-description'],
+        template: 'systems/CoC7/templates/apps/skill-details.html'
+      }
+    )
     dlg.render(true)
   }
 
   /**
    * Handle rolling of an item from the Actor sheet, obtaining the Item instance and dispatching to it's roll method
    * @private
-  */
+   */
   async _onItemRoll (event) {
     event.preventDefault()
     // const itemId = event.currentTarget.closest('.item').dataset.itemId;
@@ -864,8 +1210,10 @@ export class CoC7ActorSheet extends ActorSheet {
     // const actorKey = !this.token? this.actor.actorKey : `${this.token.scene?._id?this.token.scene._id:'TOKEN'}.${this.token.data._id}`; //REFACTORING (2)
     /** * MODIF 0.8.x ***/
     let actorKey
-    if (!this.token) actorKey = this.actor.id // Sheet was opened from actor directory
-    else { // Opened from token
+    if (!this.token) actorKey = this.actor.id
+    // Sheet was opened from actor directory
+    else {
+      // Opened from token
       if (this.actor.isToken && game.actors.tokens[this.token.id]) {
         actorKey = `TOKEN.${this.token.id}`
       } else {
@@ -882,11 +1230,13 @@ export class CoC7ActorSheet extends ActorSheet {
         actorKey: this.actor.actorKey
       }
 
-      CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg => dlg.render(true))
+      CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg =>
+        dlg.render(true)
+      )
     } else {
       let proceedWithoutTarget
       if (game.user.targets.size <= 0) {
-        proceedWithoutTarget = await new Promise((resolve) => {
+        proceedWithoutTarget = await new Promise(resolve => {
           const data = {
             title: ' ',
             content: game.i18n.format('CoC7.NoTargetSelected', {
@@ -932,7 +1282,9 @@ export class CoC7ActorSheet extends ActorSheet {
   }
 
   async _onReloadWeapon (event) {
-    const itemId = event.currentTarget.closest('.item') ? event.currentTarget.closest('.item').dataset.itemId : null
+    const itemId = event.currentTarget.closest('.item')
+      ? event.currentTarget.closest('.item').dataset.itemId
+      : null
     if (!itemId) return
     const weapon = this.actor.items.get(itemId)
     if (event.button === 0) {
@@ -945,7 +1297,9 @@ export class CoC7ActorSheet extends ActorSheet {
   }
 
   async _onAddAmo (event) {
-    const itemId = event.currentTarget.closest('.item') ? event.currentTarget.closest('.item').dataset.itemId : null
+    const itemId = event.currentTarget.closest('.item')
+      ? event.currentTarget.closest('.item').dataset.itemId
+      : null
     if (!itemId) return
     const weapon = this.actor.items.get(itemId)
     await weapon.addBullet()
@@ -956,7 +1310,9 @@ export class CoC7ActorSheet extends ActorSheet {
     const skillId = event.currentTarget.dataset.skillId
     const actorId = event.currentTarget.closest('form').dataset.actorId
     const tokenKey = event.currentTarget.closest('form').dataset.tokenId
-    const itemId = event.currentTarget.closest('li') ? event.currentTarget.closest('li').dataset.itemId : null
+    const itemId = event.currentTarget.closest('li')
+      ? event.currentTarget.closest('li').dataset.itemId
+      : null
 
     const check = new CoC7Check()
 
@@ -984,7 +1340,10 @@ export class CoC7ActorSheet extends ActorSheet {
     event.preventDefault()
     const itemId = event.currentTarget.closest('.weapon').dataset.itemId
     const range = event.currentTarget.closest('.weapon-damage').dataset.range
-    const damageChatCard = new DamageCard({ fastForward: event.shiftKey, range: range })
+    const damageChatCard = new DamageCard({
+      fastForward: event.shiftKey,
+      range: range
+    })
     damageChatCard.actorKey = this.actor.tokenKey
     damageChatCard.itemId = itemId
     damageChatCard.updateChatCard()
@@ -1002,11 +1361,16 @@ export class CoC7ActorSheet extends ActorSheet {
         action: 'new'
       }
       const roll = new CoC7Check()
-      roll.actor = event.currentTarget.closest('form').dataset.tokenId || event.currentTarget.closest('form').dataset.actorId
-      roll.characteristic = event.currentTarget.parentElement.dataset.characteristic
+      roll.actor =
+        event.currentTarget.closest('form').dataset.tokenId ||
+        event.currentTarget.closest('form').dataset.actorId
+      roll.characteristic =
+        event.currentTarget.parentElement.dataset.characteristic
       roll.attribute = event.currentTarget.parentElement.dataset.attrib
       roll.item = event.currentTarget.closest('.item')?.dataset.itemId
-      roll.weaponAltSkill = event.currentTarget.classList.contains('alternativ-skill')
+      roll.weaponAltSkill = event.currentTarget.classList.contains(
+        'alternativ-skill'
+      )
       roll.skillId = event.currentTarget.closest('.item')?.dataset.skillId
       roll.rollMode = game.settings.get('core', 'rollMode')
       roll.initiator = game.user.id
@@ -1015,14 +1379,24 @@ export class CoC7ActorSheet extends ActorSheet {
 
       if (!event.shiftKey) {
         const usage = await RollDialog.create({
-          disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode === 91 || event.keyCode === 224), // TODO: do we need this CTRL?
-          disableFlatDiceModifier: (event.metaKey || event.ctrlKey || event.keyCode === 91 || event.keyCode === 224)
+          disableFlatThresholdModifier:
+            event.metaKey ||
+            event.ctrlKey ||
+            event.keyCode === 91 ||
+            event.keyCode === 224, // TODO: do we need this CTRL?
+          disableFlatDiceModifier:
+            event.metaKey ||
+            event.ctrlKey ||
+            event.keyCode === 91 ||
+            event.keyCode === 224
         })
         if (usage) {
           roll.diceModifier = Number(usage.get('bonusDice'))
           roll.difficulty = Number(usage.get('difficulty'))
           roll.flatDiceModifier = Number(usage.get('flatDiceModifier'))
-          roll.flatThresholdModifier = Number(usage.get('flatThresholdModifier'))
+          roll.flatThresholdModifier = Number(
+            usage.get('flatThresholdModifier')
+          )
         }
       }
 
@@ -1039,8 +1413,11 @@ export class CoC7ActorSheet extends ActorSheet {
         action: 'new'
       }
       const roll = new CoC7Check()
-      roll.actor = event.currentTarget.closest('form').dataset.tokenId || event.currentTarget.closest('form').dataset.actorId
-      roll.characteristic = event.currentTarget.parentElement.dataset.characteristic
+      roll.actor =
+        event.currentTarget.closest('form').dataset.tokenId ||
+        event.currentTarget.closest('form').dataset.actorId
+      roll.characteristic =
+        event.currentTarget.parentElement.dataset.characteristic
       roll.attribute = event.currentTarget.parentElement.dataset.attrib
       roll.skillId = event.currentTarget.closest('.item')?.dataset.skillId
       roll.rollMode = game.settings.get('core', 'rollMode')
@@ -1058,13 +1435,15 @@ export class CoC7ActorSheet extends ActorSheet {
    * Handle rolling a Skill check
    * @  param {Event} event   The originating click event
    * @private
-  */
-  async _onRollCharacteriticTest (event) { // FLATMODIF
+   */
+  async _onRollCharacteriticTest (event) {
+    // FLATMODIF
     event.preventDefault()
 
     const actorId = event.currentTarget.closest('form').dataset.actorId
     const tokenKey = event.currentTarget.closest('form').dataset.tokenId
-    const characteristic = event.currentTarget.parentElement.dataset.characteristic
+    const characteristic =
+      event.currentTarget.parentElement.dataset.characteristic
 
     if (isCtrlKey(event) && game.user.isGM) {
       const linkData = {
@@ -1075,16 +1454,27 @@ export class CoC7ActorSheet extends ActorSheet {
         actorKey: this.actor.actorKey,
         forceModifiers: event.shiftKey
       }
-      if (game.settings.get('core', 'rollMode') === 'blindroll') linkData.blind = true
-      CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg => dlg.render(true))
+      if (game.settings.get('core', 'rollMode') === 'blindroll')
+        linkData.blind = true
+      CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg =>
+        dlg.render(true)
+      )
       return
     }
 
     let difficulty, modifier, flatDiceModifier, flatThresholdModifier
     if (!event.shiftKey) {
       const usage = await RollDialog.create({
-        disableFlatThresholdModifier: (event.metaKey || event.ctrlKey || event.keyCode === 91 || event.keyCode === 224), // TODO : This can be removed ?
-        disableFlatDiceModifier: (event.metaKey || event.ctrlKey || event.keyCode === 91 || event.keyCode === 224)
+        disableFlatThresholdModifier:
+          event.metaKey ||
+          event.ctrlKey ||
+          event.keyCode === 91 ||
+          event.keyCode === 224, // TODO : This can be removed ?
+        disableFlatDiceModifier:
+          event.metaKey ||
+          event.ctrlKey ||
+          event.keyCode === 91 ||
+          event.keyCode === 224
       })
       if (usage) {
         modifier = Number(usage.get('bonusDice'))
@@ -1104,7 +1494,8 @@ export class CoC7ActorSheet extends ActorSheet {
     check.toMessage()
   }
 
-  async _onRollAttribTest (event) { // FLATMODIFIER
+  async _onRollAttribTest (event) {
+    // FLATMODIFIER
     event.preventDefault()
 
     const attrib = event.currentTarget.parentElement.dataset.attrib
@@ -1125,14 +1516,23 @@ export class CoC7ActorSheet extends ActorSheet {
             actorKey: this.actor.actorKey,
             forceModifiers: event.shiftKey
           }
-      if (game.settings.get('core', 'rollMode') === 'blindroll') linkData.blind = true
-      CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg => dlg.render(true))
+      if (game.settings.get('core', 'rollMode') === 'blindroll')
+        linkData.blind = true
+      CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg =>
+        dlg.render(true)
+      )
       return
     }
 
     if (attrib === 'db') {
-      if (!/^-{0,1}\d+$/.test(event.currentTarget.parentElement.dataset.rollFormula)) {
-        const r = new Roll(event.currentTarget.parentElement.dataset.rollFormula)
+      if (
+        !/^-{0,1}\d+$/.test(
+          event.currentTarget.parentElement.dataset.rollFormula
+        )
+      ) {
+        const r = new Roll(
+          event.currentTarget.parentElement.dataset.rollFormula
+        )
         r.roll()
         if (!isNaN(r.total) && !(r.total === undefined)) {
           r.toMessage({
@@ -1179,10 +1579,19 @@ export class CoC7ActorSheet extends ActorSheet {
       }
     }
 
-    const isSanCheck = typeof sanMin !== 'undefined' && typeof sanMax !== 'undefined'
+    const isSanCheck =
+      typeof sanMin !== 'undefined' && typeof sanMax !== 'undefined'
 
     if (isSanCheck) {
-      SanCheckCard.create(this.actor.actorKey, { sanMin: sanMin, sanMax: sanMax }, { sanModifier: modifier, sanDifficulty: difficulty, fastForward: event.shiftKey })
+      SanCheckCard.create(
+        this.actor.actorKey,
+        { sanMin: sanMin, sanMax: sanMax },
+        {
+          sanModifier: modifier,
+          sanDifficulty: difficulty,
+          fastForward: event.shiftKey
+        }
+      )
     } else {
       const check = new CoC7Check()
       if (typeof modifier !== 'undefined') check.diceModifier = modifier
@@ -1199,8 +1608,9 @@ export class CoC7ActorSheet extends ActorSheet {
    * Handle rolling a Skill check
    * @param {Event} event   The originating click event
    * @private
-  */
-  async _onRollSkillTest (event) { // FLATMODIF
+   */
+  async _onRollSkillTest (event) {
+    // FLATMODIF
     if (event.currentTarget.classList.contains('flagged4dev')) return
     event.preventDefault()
     const skillId = event.currentTarget.closest('.item').dataset.skillId
@@ -1218,8 +1628,11 @@ export class CoC7ActorSheet extends ActorSheet {
         actorKey: this.actor.actorKey,
         forceModifiers: event.shiftKey
       }
-      if (game.settings.get('core', 'rollMode') === 'blindroll') linkData.blind = true
-      CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg => dlg.render(true))
+      if (game.settings.get('core', 'rollMode') === 'blindroll')
+        linkData.blind = true
+      CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg =>
+        dlg.render(true)
+      )
       return
     }
 
@@ -1271,7 +1684,7 @@ export class CoC7ActorSheet extends ActorSheet {
    * Implement the _updateObject method as required by the parent class spec
    * This defines how to update the subject of the form when the form is submitted
    * @private
-  */
+   */
 
   async _updateObject (event, formData) {
     // ui.notifications.info('_updateObject');
@@ -1279,17 +1692,43 @@ export class CoC7ActorSheet extends ActorSheet {
     if (event.currentTarget) {
       if (event.currentTarget.classList) {
         if (event.currentTarget.classList.contains('skill-adjustment')) {
-          const item = this.actor.items.get(event.currentTarget.closest('.item').dataset.itemId)
+          const item = this.actor.items.get(
+            event.currentTarget.closest('.item').dataset.itemId
+          )
           if (item) {
-            const value = event.currentTarget.value ? parseInt(event.currentTarget.value) : null
+            const value = event.currentTarget.value
+              ? parseInt(event.currentTarget.value)
+              : null
 
-            if (!event.currentTarget.value) await item.update({ [event.currentTarget.name]: null })
+            if (!event.currentTarget.value)
+              await item.update({
+                [event.currentTarget.name]: null
+              })
             else {
-              if (!isNaN(value)) await item.update({ [event.currentTarget.name]: value })
+              if (!isNaN(value))
+                await item.update({
+                  [event.currentTarget.name]: value
+                })
             }
             if (game.i18n.localize(COC7.creditRatingSkillName) === item.name) {
               const creditValue = value || 0
-              if (creditValue > Number(this.actor.occupation.data.data.creditRating.max) || creditValue < Number(this.actor.occupation.data.data.creditRating.min)) { ui.notifications.warn(game.i18n.format('CoC7.CreditOutOfRange', { min: Number(this.actor.occupation.data.data.creditRating.min), max: Number(this.actor.occupation.data.data.creditRating.max) })) }
+              if (
+                creditValue >
+                  Number(this.actor.occupation.data.data.creditRating.max) ||
+                creditValue <
+                  Number(this.actor.occupation.data.data.creditRating.min)
+              ) {
+                ui.notifications.warn(
+                  game.i18n.format('CoC7.CreditOutOfRange', {
+                    min: Number(
+                      this.actor.occupation.data.data.creditRating.min
+                    ),
+                    max: Number(
+                      this.actor.occupation.data.data.creditRating.max
+                    )
+                  })
+                )
+              }
             }
           }
         }
@@ -1308,24 +1747,35 @@ export class CoC7ActorSheet extends ActorSheet {
         }
 
         if (event.currentTarget.classList.contains('bio-section-value')) {
-          const index = parseInt(event.currentTarget.closest('.bio-section').dataset.index)
+          const index = parseInt(
+            event.currentTarget.closest('.bio-section').dataset.index
+          )
           this.actor.updateBioValue(index, event.currentTarget.value)
         }
 
         if (event.currentTarget.classList.contains('bio-section-title')) {
-          const index = parseInt(event.currentTarget.closest('.bio-section').dataset.index)
+          const index = parseInt(
+            event.currentTarget.closest('.bio-section').dataset.index
+          )
           this.actor.updateBioTitle(index, event.currentTarget.value)
         }
 
         if (event.currentTarget.classList.contains('npc-skill-score')) {
-          const skill = this.actor.items.get(event.currentTarget.closest('.item').dataset.skillId)
+          const skill = this.actor.items.get(
+            event.currentTarget.closest('.item').dataset.skillId
+          )
           if (skill) {
             await skill.updateValue(event.currentTarget.value)
           }
         }
 
-        if (event.currentTarget.classList.contains('skill-name') || event.currentTarget.classList.contains('item-name')) {
-          const item = this.actor.items.get(event.currentTarget.closest('.item').dataset.skillId)
+        if (
+          event.currentTarget.classList.contains('skill-name') ||
+          event.currentTarget.classList.contains('item-name')
+        ) {
+          const item = this.actor.items.get(
+            event.currentTarget.closest('.item').dataset.skillId
+          )
           if (item) {
             await item.update({ name: event.currentTarget.value })
           }
@@ -1337,22 +1787,37 @@ export class CoC7ActorSheet extends ActorSheet {
             // On teste si c'est une formule valide !
             const r = new Roll(event.currentTarget.value)
             r.roll()
-            if (isNaN(r.total) || (typeof (r.total) === 'undefined')) {
-              ui.notifications.error(game.i18n.format('CoC7.ErrorInvalidFormula', { value: event.currentTarget.value }))
-              formData[event.currentTarget.name] = game.i18n.format('CoC7.ErrorInvalid')
+            if (isNaN(r.total) || typeof r.total === 'undefined') {
+              ui.notifications.error(
+                game.i18n.format('CoC7.ErrorInvalidFormula', {
+                  value: event.currentTarget.value
+                })
+              )
+              formData[event.currentTarget.name] = game.i18n.format(
+                'CoC7.ErrorInvalid'
+              )
             }
           }
         }
 
         if (event.currentTarget.classList.contains('attribute-value')) {
           // tester si le db retourné est valide.
-          if (event.currentTarget.value.length !== 0 && event.currentTarget.closest('.attribute').dataset.attrib === 'db') {
+          if (
+            event.currentTarget.value.length !== 0 &&
+            event.currentTarget.closest('.attribute').dataset.attrib === 'db'
+          ) {
             // On teste si c'est une formule valide !
             const r = new Roll(event.currentTarget.value)
             r.roll()
-            if (isNaN(r.total) || (r.total === undefined)) {
-              ui.notifications.error(game.i18n.format('CoC7.ErrorInvalidFormula', { value: event.currentTarget.value }))
-              formData[event.currentTarget.name] = game.i18n.format('CoC7.ErrorInvalid')
+            if (isNaN(r.total) || r.total === undefined) {
+              ui.notifications.error(
+                game.i18n.format('CoC7.ErrorInvalidFormula', {
+                  value: event.currentTarget.value
+                })
+              )
+              formData[event.currentTarget.name] = game.i18n.format(
+                'CoC7.ErrorInvalid'
+              )
             }
           }
         }
@@ -1361,15 +1826,25 @@ export class CoC7ActorSheet extends ActorSheet {
         // TODO : Factorisation du switch
         // TODO : remplacer les strings par de constantes (item.skill.main ...)
         if (event.currentTarget.classList.contains('weapon-skill')) {
-          const weapon = this.actor.items.get(event.currentTarget.closest('.item').dataset.itemId)
-          const skill = this.actor.items.get(event.currentTarget.options[event.currentTarget.selectedIndex].value)
+          const weapon = this.actor.items.get(
+            event.currentTarget.closest('.item').dataset.itemId
+          )
+          const skill = this.actor.items.get(
+            event.currentTarget.options[event.currentTarget.selectedIndex].value
+          )
           if (weapon && skill) {
             switch (event.currentTarget.dataset.skill) {
               case 'main':
-                await weapon.update({ 'data.skill.main.id': skill.id, 'data.skill.main.name': skill.name })
+                await weapon.update({
+                  'data.skill.main.id': skill.id,
+                  'data.skill.main.name': skill.name
+                })
                 break
               case 'alternativ':
-                await weapon.update({ 'data.skill.alternativ.id': skill.id, 'data.skill.alternativ.name': skill.name })
+                await weapon.update({
+                  'data.skill.alternativ.id': skill.id,
+                  'data.skill.alternativ.name': skill.name
+                })
                 break
             }
           }
@@ -1377,7 +1852,9 @@ export class CoC7ActorSheet extends ActorSheet {
 
         // Le nom de l'arme a changé
         if (event.currentTarget.classList.contains('weapon-name')) {
-          const weapon = this.actor.items.get(event.currentTarget.closest('.item').dataset.itemId)
+          const weapon = this.actor.items.get(
+            event.currentTarget.closest('.item').dataset.itemId
+          )
           if (weapon) {
             await weapon.update({ name: event.currentTarget.value })
           }
@@ -1387,37 +1864,53 @@ export class CoC7ActorSheet extends ActorSheet {
         // TODO : Factorisation du switch
         // TODO : remplacer les strings par de constantes (item.range.normal ...)
         if (event.currentTarget.classList.contains('damage-formula')) {
-          const weapon = this.actor.items.get(event.currentTarget.closest('.item').dataset.itemId)
+          const weapon = this.actor.items.get(
+            event.currentTarget.closest('.item').dataset.itemId
+          )
           if (weapon) {
             // teste la validité de la formule.
             if (event.currentTarget.value.length !== 0) {
               const r = new Roll(event.currentTarget.value)
               r.roll()
-              if (isNaN(r.total) || (typeof (r.total) === 'undefined')) {
-                ui.notifications.error(event.currentTarget.value + ' is not a valid formula')
+              if (isNaN(r.total) || typeof r.total === 'undefined') {
+                ui.notifications.error(
+                  event.currentTarget.value + ' is not a valid formula'
+                )
               } else {
                 switch (event.currentTarget.dataset.range) {
                   case 'normal':
-                    await weapon.update({ 'data.range.normal.damage': event.currentTarget.value })
+                    await weapon.update({
+                      'data.range.normal.damage': event.currentTarget.value
+                    })
                     break
                   case 'long':
-                    await weapon.update({ 'data.range.long.damage': event.currentTarget.value })
+                    await weapon.update({
+                      'data.range.long.damage': event.currentTarget.value
+                    })
                     break
                   case 'extreme':
-                    await weapon.update({ 'data.range.extreme.damage': event.currentTarget.value })
+                    await weapon.update({
+                      'data.range.extreme.damage': event.currentTarget.value
+                    })
                     break
                 }
               }
             } else {
               switch (event.currentTarget.dataset.range) {
                 case 'normal':
-                  await weapon.update({ 'data.range.normal.damage': null })
+                  await weapon.update({
+                    'data.range.normal.damage': null
+                  })
                   break
                 case 'long':
-                  await weapon.update({ 'data.range.long.damage': null })
+                  await weapon.update({
+                    'data.range.long.damage': null
+                  })
                   break
                 case 'extreme':
-                  await weapon.update({ 'data.range.extreme.damage': null })
+                  await weapon.update({
+                    'data.range.extreme.damage': null
+                  })
                   break
               }
             }

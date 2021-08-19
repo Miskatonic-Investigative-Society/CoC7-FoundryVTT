@@ -17,8 +17,12 @@ export class CoC7OccupationSheet extends ItemSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return
 
-    html.find('.item .item-name h4').click(event => this._onItemSummary(event, 'skills'))
-    html.find('.item-delete').click(event => this._onItemDelete(event, 'skills'))
+    html
+      .find('.item .item-name h4')
+      .click(event => this._onItemSummary(event, 'skills'))
+    html
+      .find('.item-delete')
+      .click(event => this._onItemDelete(event, 'skills'))
 
     html.find('.group-item-delete').click(this._onGroupItemDelete.bind(this))
     html.find('.group-control').click(this._onGroupControl.bind(this))
@@ -34,7 +38,9 @@ export class CoC7OccupationSheet extends ItemSheet {
     event.preventDefault()
     event.stopPropagation()
 
-    const optionalSkill = event?.currentTarget?.classList?.contains('optional-skills')
+    const optionalSkill = event?.currentTarget?.classList?.contains(
+      'optional-skills'
+    )
     const ol = event?.currentTarget?.closest('ol')
     const index = ol?.dataset?.group
 
@@ -61,20 +67,32 @@ export class CoC7OccupationSheet extends ItemSheet {
     if (!item || !(type === item.data.type)) return
 
     if (optionalSkill) {
-      if (!CoC7Item.isAnySpec(item)) { // Generic specialization can be included many times
-        if (this.item.data.data.skills.find(el => el.name === item.data.name)) return // If skill is already in main don't add it
-        if (this.item.data.data.groups[index].skills.find(el => el.name === item.name)) return // If skill is already in group don't add it
+      if (!CoC7Item.isAnySpec(item)) {
+        // Generic specialization can be included many times
+        if (this.item.data.data.skills.find(el => el.name === item.data.name))
+          return // If skill is already in main don't add it
+        if (
+          this.item.data.data.groups[index].skills.find(
+            el => el.name === item.name
+          )
+        )
+          return // If skill is already in group don't add it
       }
 
       const groups = duplicate(this.item.data.data.groups)
       groups[index].skills = groups[index].skills.concat([item.data])
       await this.item.update({ 'data.groups': groups })
     } else {
-      if (!CoC7Item.isAnySpec(item)) { // Generic specialization can be included many times
-        if (this.item.data.data.skills.find(el => el.name === item.data.name)) return
+      if (!CoC7Item.isAnySpec(item)) {
+        // Generic specialization can be included many times
+        if (this.item.data.data.skills.find(el => el.name === item.data.name))
+          return
 
-        for (let i = 0; i < this.item.data.data.groups.length; i++) { // If the same skill is in one of the group remove it from the groups
-          const index = this.item.data.data.groups[i].skills.findIndex(el => el.name === item.data.name)
+        for (let i = 0; i < this.item.data.data.groups.length; i++) {
+          // If the same skill is in one of the group remove it from the groups
+          const index = this.item.data.data.groups[i].skills.findIndex(
+            el => el.name === item.data.name
+          )
           if (index !== -1) {
             const groups = duplicate(this.item.data.data.groups)
             groups[i].skills.splice(index, 1)
@@ -83,7 +101,9 @@ export class CoC7OccupationSheet extends ItemSheet {
         }
       }
 
-      const collection = this.item.data.data[collectionName] ? duplicate(this.item.data.data[collectionName]) : []
+      const collection = this.item.data.data[collectionName]
+        ? duplicate(this.item.data.data[collectionName])
+        : []
       collection.push(duplicate(item.data))
       await this.item.update({ [`data.${collectionName}`]: collection })
     }
@@ -97,7 +117,9 @@ export class CoC7OccupationSheet extends ItemSheet {
     if (a.classList.contains('add-group')) {
       await this._onSubmit(event) // Submit any unsaved changes
       const groups = this.item.data.data.groups
-      await this.item.update({ 'data.groups': groups.concat([{ options: 0, skills: [] }]) })
+      await this.item.update({
+        'data.groups': groups.concat([{ options: 0, skills: [] }])
+      })
     }
 
     if (a.classList.contains('remove-group')) {
@@ -112,7 +134,9 @@ export class CoC7OccupationSheet extends ItemSheet {
   _onItemSummary (event, collectionName = 'items') {
     event.preventDefault()
     const li = $(event.currentTarget).parents('.item')
-    const item = this.item.data.data[collectionName].find(s => { return s._id === li.data('item-id') })
+    const item = this.item.data.data[collectionName].find(s => {
+      return s._id === li.data('item-id')
+    })
     const chatData = item.data.description
 
     // Toggle summary
@@ -131,7 +155,9 @@ export class CoC7OccupationSheet extends ItemSheet {
   }
 
   async _onItemDelete (event, collectionName = 'items') {
-    const itemIndex = $(event.currentTarget).parents('.item').data('item-id')
+    const itemIndex = $(event.currentTarget)
+      .parents('.item')
+      .data('item-id')
     if (itemIndex) await this.removeItem(itemIndex, collectionName)
   }
 
@@ -140,14 +166,21 @@ export class CoC7OccupationSheet extends ItemSheet {
     const li = a.closest('.item')
     const ol = li.closest('.item-list.group')
     const groups = duplicate(this.item.data.data.groups)
-    groups[Number(ol.dataset.group)].skills.splice(Number(li.dataset.itemIndex), 1)
+    groups[Number(ol.dataset.group)].skills.splice(
+      Number(li.dataset.itemIndex),
+      1
+    )
     await this.item.update({ 'data.groups': groups })
   }
 
   async removeItem (itemId, collectionName = 'items') {
-    const itemIndex = this.item.data.data[collectionName].findIndex(s => { return s._id === itemId })
+    const itemIndex = this.item.data.data[collectionName].findIndex(s => {
+      return s._id === itemId
+    })
     if (itemIndex > -1) {
-      const collection = this.item.data.data[collectionName] ? duplicate(this.item.data.data[collectionName]) : []
+      const collection = this.item.data.data[collectionName]
+        ? duplicate(this.item.data.data[collectionName])
+        : []
       collection.splice(itemIndex, 1)
       await this.item.update({ [`data.${collectionName}`]: collection })
     }
@@ -161,7 +194,13 @@ export class CoC7OccupationSheet extends ItemSheet {
       resizable: false,
       dragDrop: [{ dragSelector: '.item' }],
       scrollY: ['.tab.description'],
-      tabs: [{ navSelector: '.sheet-navigation', contentSelector: '.sheet-body', initial: 'description' }]
+      tabs: [
+        {
+          navSelector: '.sheet-navigation',
+          contentSelector: '.sheet-body',
+          initial: 'description'
+        }
+      ]
     })
   }
 
@@ -171,7 +210,9 @@ export class CoC7OccupationSheet extends ItemSheet {
 
   _onDragStart (event) {
     const li = event.currentTarget.closest('.item')
-    const skill = this.item.data.data.skills.find(s => { return s._id === li.dataset.itemId })
+    const skill = this.item.data.data.skills.find(s => {
+      return s._id === li.dataset.itemId
+    })
 
     const dragData = { type: 'Item', data: skill }
     event.dataTransfer.setData('text/plain', JSON.stringify(dragData))
@@ -189,17 +230,27 @@ export class CoC7OccupationSheet extends ItemSheet {
 
     const optionnal = []
     const mandatory = []
-    for (const [key, carac] of Object.entries(data.data.occupationSkillPoints)) {
+    for (const [key, carac] of Object.entries(
+      data.data.occupationSkillPoints
+    )) {
       if (carac.multiplier) {
         const caracName = game.i18n.localize(`CHARAC.${key.toUpperCase()}`)
-        if (carac.selected && carac.optional) optionnal.push(`${caracName}x${carac.multiplier}`)
-        if (carac.selected && !carac.optional) mandatory.push(`${caracName}x${carac.multiplier}`)
+        if (carac.selected && carac.optional)
+          optionnal.push(`${caracName}x${carac.multiplier}`)
+        if (carac.selected && !carac.optional)
+          mandatory.push(`${caracName}x${carac.multiplier}`)
       }
     }
 
-    data.skillListEmpty = (data.data.skills.length === 0)
-    data.data.skills.forEach(skill => { // For each skill if it's a spec and spac name not included in the name add it
-      if (skill.data.specialization && !skill.name.includes(skill.data.specialization)) { skill.displayName = `${skill.data.specialization} (${skill.name})` } else skill.displayName = skill.name
+    data.skillListEmpty = data.data.skills.length === 0
+    data.data.skills.forEach(skill => {
+      // For each skill if it's a spec and spac name not included in the name add it
+      if (
+        skill.data.specialization &&
+        !skill.name.includes(skill.data.specialization)
+      ) {
+        skill.displayName = `${skill.data.specialization} (${skill.name})`
+      } else skill.displayName = skill.name
     })
 
     data.data.skills.sort((a, b) => {
@@ -209,9 +260,16 @@ export class CoC7OccupationSheet extends ItemSheet {
     })
 
     for (let index = 0; index < data.data.groups.length; index++) {
-      data.data.groups[index].isEmpty = (data.data.groups[index].skills.length === 0)
-      data.data.groups[index].skills.forEach(skill => { // For each skill of each sub group if it's a spec and spac name not included in the name add it
-        if (skill.data.specialization && !skill.name.includes(skill.data.specialization)) { skill.displayName = `${skill.data.specialization} (${skill.name})` } else skill.displayName = skill.name
+      data.data.groups[index].isEmpty =
+        data.data.groups[index].skills.length === 0
+      data.data.groups[index].skills.forEach(skill => {
+        // For each skill of each sub group if it's a spec and spac name not included in the name add it
+        if (
+          skill.data.specialization &&
+          !skill.name.includes(skill.data.specialization)
+        ) {
+          skill.displayName = `${skill.data.specialization} (${skill.name})`
+        } else skill.displayName = skill.name
       })
 
       data.data.groups[index].skills.sort((a, b) => {
@@ -224,13 +282,18 @@ export class CoC7OccupationSheet extends ItemSheet {
     data.occupationPointsString = ''
     const orString = ` ${game.i18n.localize('CoC7.Or')} `
     if (mandatory.length) data.occupationPointsString += mandatory.join(' + ')
-    if (optionnal.length && mandatory.length) data.occupationPointsString += ` + (${optionnal.join(orString)})`
-    if (optionnal.length && !mandatory.length) data.occupationPointsString += optionnal.join(orString)
+    if (optionnal.length && mandatory.length)
+      data.occupationPointsString += ` + (${optionnal.join(orString)})`
+    if (optionnal.length && !mandatory.length)
+      data.occupationPointsString += optionnal.join(orString)
 
     data.itemProperties = []
 
     for (const [key, value] of Object.entries(data.data.type)) {
-      if (value) data.itemProperties.push(COC7.occupationProperties[key] ? COC7.occupationProperties[key] : null)
+      if (value)
+        data.itemProperties.push(
+          COC7.occupationProperties[key] ? COC7.occupationProperties[key] : null
+        )
     }
     return data
   }
@@ -242,7 +305,9 @@ export class CoC7OccupationSheet extends ItemSheet {
     if (formData.data.groups) {
       formData.data.groups = Object.values(formData.data?.groups || {})
       for (let index = 0; index < this.item.data.data.groups.length; index++) {
-        formData.data.groups[index].skills = duplicate(this.item.data.data.groups[index].skills)
+        formData.data.groups[index].skills = duplicate(
+          this.item.data.data.groups[index].skills
+        )
       }
     }
 

@@ -5,7 +5,7 @@
 			<div class="sheet-portrait">
 				<img class="photo" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
 			</div>
-			
+
 			<div class="infos">
 				<div class="row flexrow">
 					<label>{{ localize 'CoC7.Name' }} :</label>
@@ -14,7 +14,7 @@
 				{{#if displayPlayerName}}
 				<div class="row flexrow">
 					<label>{{ localize 'CoC7.PlayerName' }} :</label>
-					<input name="data.infos.playername" type="text" value="{{data.infos.playername}}"/>	
+					<input name="data.infos.playername" type="text" value="{{data.infos.playername}}"/>
 				</div>
 				{{/if}}
 				{{#if pulpCharacter}}
@@ -167,26 +167,26 @@
 						{{> "systems/CoC7/templates/actors/parts/vitals.html"}}
 					{{/if}}
 				</div>
-			
+
 				<div class="right-panel">
 					{{#if showDevPannel}}
 					<div class="tab development" data-group="primary" data-tab="development">
 						{{> "systems/CoC7/templates/actors/parts/character-development-v2.html"}}
 					</div>
 					{{/if}}
-		
+
 					<div class="tab" data-group="primary" data-tab="skills">
 						{{> "systems/CoC7/templates/actors/parts/actor-skills-v2.html"}}
 					</div>
-		
+
 					<div class="tab combat" data-group="primary" data-tab="combat">
 						{{> "systems/CoC7/templates/actors/parts/combat.html"}}
 					</div>
-		
+
 					<div class="tab coc7 sheet actor temp-retro-compat" data-group="primary" data-tab="possession">
 						{{> "systems/CoC7/templates/actors/parts/actor-inventory.html"}}
 					</div>
-		
+
 					<div class="tab coc7 sheet actor temp-retro-compat" data-group="primary" data-tab="background">
 						{{#if oneBlockBackStory}}
 							{{editor content=data.backstory target="data.backstory" button=true owner=owner editable=editable}}
@@ -196,7 +196,7 @@
 					</div>
 				</div>
 			</div>
-		
+
 		</section>
 
 

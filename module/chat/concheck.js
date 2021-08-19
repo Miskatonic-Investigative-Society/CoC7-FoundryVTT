@@ -13,7 +13,8 @@ export class CoC7ConCheck {
   }
 
   get isBlind () {
-    if (undefined === this._isBlind) this._isBlind = this.rollMode === 'blindroll'
+    if (undefined === this._isBlind)
+      this._isBlind = this.rollMode === 'blindroll'
     return this._isBlind
   }
 
@@ -32,7 +33,7 @@ export class CoC7ConCheck {
   }
 
   get actor () {
-    if (this.actorId) return chatHelper.getActorFromKey(this.actorId)// REFACTORING (2)
+    if (this.actorId) return chatHelper.getActorFromKey(this.actorId) // REFACTORING (2)
     return null
   }
 
@@ -115,10 +116,13 @@ export class CoC7ConCheck {
       content: htmlElement.outerHTML
     }
 
-    if (['gmroll', 'blindroll'].includes(game.settings.get('core', 'rollMode'))) chatData.whisper = ChatMessage.getWhisperRecipients('GM')// Change for user
+    if (['gmroll', 'blindroll'].includes(game.settings.get('core', 'rollMode')))
+      chatData.whisper = ChatMessage.getWhisperRecipients('GM') // Change for user
     if (this.rollMode === 'blindroll') chatData.blind = true
 
-    ChatMessage.create(chatData).then(msg => { return msg })
+    ChatMessage.create(chatData).then(msg => {
+      return msg
+    })
   }
 
   async rollCon () {

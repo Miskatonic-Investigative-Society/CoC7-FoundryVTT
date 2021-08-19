@@ -50,7 +50,7 @@ export class CoC7Link {
 
   get actor () {
     if (this.actorKey) {
-      return chatHelper.getActorFromKey(this.actorKey)// REFACTORING (2)
+      return chatHelper.getActorFromKey(this.actorKey) // REFACTORING (2)
     }
     return null
   }
@@ -131,8 +131,10 @@ export class CoC7Link {
 
     if (!linkSet) {
       // Link definition
-      if (x.check) this.type = x.check; else this.type = CoC7Link.LINK_TYPE.CHECK // check, sanloss, item
-      if (x.type) this.check = x.type // attrib, charac, skill
+      if (x.check) this.type = x.check
+      else this.type = CoC7Link.LINK_TYPE.CHECK // check, sanloss, item
+      if (x.type) this.check = x.type
+      // attrib, charac, skill
       else if (this.type) this.check = CoC7Link.CHECK_TYPE.CHARACTERISTIC
 
       // Link name
@@ -160,13 +162,20 @@ export class CoC7Link {
     }
 
     // Modifiers
-    if (x.difficulty || !isNaN(Number(x.difficulty))) this._linkData.difficulty = Number(x.difficulty)
-    if (x.modifier || !isNaN(Number(x.modifier))) this._linkData.modifier = Number(x.modifier)
-    if (typeof x.difficulty !== 'undefined' || typeof x.modifier !== 'undefined') this._linkData.forceModifiers = true
+    if (x.difficulty || !isNaN(Number(x.difficulty)))
+      this._linkData.difficulty = Number(x.difficulty)
+    if (x.modifier || !isNaN(Number(x.modifier)))
+      this._linkData.modifier = Number(x.modifier)
+    if (
+      typeof x.difficulty !== 'undefined' ||
+      typeof x.modifier !== 'undefined'
+    )
+      this._linkData.forceModifiers = true
     if (x.forceModifiers) this._linkData.forceModifiers = true
 
     // Force displayed name
-    if (x.displayName === 'true' || x.displayName === true) this._linkData.displayName = true
+    if (x.displayName === 'true' || x.displayName === true)
+      this._linkData.displayName = true
     if (x.label) {
       this._linkData.hasLabel = true
       this._linkData.label = x.label
@@ -224,16 +233,27 @@ export class CoC7Link {
   }
 
   get check () {
-    return !isNaN(Number(this._linkData.check)) ? Number(this._linkData.check) : undefined
+    return !isNaN(Number(this._linkData.check))
+      ? Number(this._linkData.check)
+      : undefined
   }
 
   set check (x) {
     if (!isNaN(Number(x))) this._linkData.check = Number(x)
     else {
       this._linkData.check = undefined
-      if (CoC7Link.CHARAC_KEYWORD.includes(x)) { this.type = CoC7Link.LINK_TYPE.CHECK; this._linkData.check = CoC7Link.CHECK_TYPE.CHARACTERISTIC }
-      if (CoC7Link.ATTRIB_KEYWORD.includes(x)) { this.type = CoC7Link.LINK_TYPE.CHECK; this._linkData.check = CoC7Link.CHECK_TYPE.ATTRIBUTE }
-      if (CoC7Link.SKILL_KEYWORD.includes(x)) { this.type = CoC7Link.LINK_TYPE.CHECK; this._linkData.check = CoC7Link.CHECK_TYPE.SKILL }
+      if (CoC7Link.CHARAC_KEYWORD.includes(x)) {
+        this.type = CoC7Link.LINK_TYPE.CHECK
+        this._linkData.check = CoC7Link.CHECK_TYPE.CHARACTERISTIC
+      }
+      if (CoC7Link.ATTRIB_KEYWORD.includes(x)) {
+        this.type = CoC7Link.LINK_TYPE.CHECK
+        this._linkData.check = CoC7Link.CHECK_TYPE.ATTRIBUTE
+      }
+      if (CoC7Link.SKILL_KEYWORD.includes(x)) {
+        this.type = CoC7Link.LINK_TYPE.CHECK
+        this._linkData.check = CoC7Link.CHECK_TYPE.SKILL
+      }
     }
   }
 
@@ -276,23 +296,37 @@ export class CoC7Link {
   get is () {
     const link = this
     return {
-      get check () { return link.type === CoC7Link.LINK_TYPE.CHECK },
-      set check (x) { if (x === true) link.type = CoC7Link.LINK_TYPE.CHECK },
-      get sanloss () { return link.type === CoC7Link.LINK_TYPE.SANLOSS },
-      set sanloss (x) { if (x === true) link.type = CoC7Link.LINK_TYPE.SANLOSS },
-      get item () { return link.type === CoC7Link.LINK_TYPE.ITEM },
-      set item (x) { if (x === true) link.type = CoC7Link.LINK_TYPE.ITEM }
+      get check () {
+        return link.type === CoC7Link.LINK_TYPE.CHECK
+      },
+      set check (x) {
+        if (x === true) link.type = CoC7Link.LINK_TYPE.CHECK
+      },
+      get sanloss () {
+        return link.type === CoC7Link.LINK_TYPE.SANLOSS
+      },
+      set sanloss (x) {
+        if (x === true) link.type = CoC7Link.LINK_TYPE.SANLOSS
+      },
+      get item () {
+        return link.type === CoC7Link.LINK_TYPE.ITEM
+      },
+      set item (x) {
+        if (x === true) link.type = CoC7Link.LINK_TYPE.ITEM
+      }
     }
   }
 
   async update (updateData) {
     this._linkData = mergeObject(this._linkData, updateData)
-    if (this._linkData.fromDirectory || this._linkData.fromCompendium) await this.fetchItem()
+    if (this._linkData.fromDirectory || this._linkData.fromCompendium)
+      await this.fetchItem()
   }
 
   async updateFromLink (linkData) {
     await this.setData(linkData)
-    if (this._linkData.fromDirectory || this._linkData.fromCompendium) await this.fetchItem()
+    if (this._linkData.fromDirectory || this._linkData.fromCompendium)
+      await this.fetchItem()
   }
 
   get link () {
@@ -301,18 +335,25 @@ export class CoC7Link {
       case CoC7Link.LINK_TYPE.CHECK: {
         // @coc7.check[type:charac,name:STR,difficulty:+,modifier:-1]{Hard STR check(-1)}
         if (!this.type || !this.name) return null
-        let options = `${this._linkData.blind ? 'blind,' : ''}type:${this.checkType},name:${this.name}`
-        if (typeof this._linkData.difficulty !== 'undefined') options += `,difficulty:${this._linkData.difficulty}`
-        if (typeof this._linkData.modifier !== 'undefined') options += `,modifier:${this._linkData.modifier}`
+        let options = `${this._linkData.blind ? 'blind,' : ''}type:${
+          this.checkType
+        },name:${this.name}`
+        if (typeof this._linkData.difficulty !== 'undefined')
+          options += `,difficulty:${this._linkData.difficulty}`
+        if (typeof this._linkData.modifier !== 'undefined')
+          options += `,modifier:${this._linkData.modifier}`
         if (this._linkData.icon) options += `,icon:${this._linkData.icon}`
 
         // TODO: Check if needed
-        if (this._linkData.fromCompendium) options += `,pack:${this._linkData.pack}`
-        if (this._linkData.fromCompendium || this._linkData.fromDirectory) options += `,id:${this._linkData.id}`
+        if (this._linkData.fromCompendium)
+          options += `,pack:${this._linkData.pack}`
+        if (this._linkData.fromCompendium || this._linkData.fromDirectory)
+          options += `,id:${this._linkData.id}`
 
         let link = `@coc7.check[${options}]`
-        if (this._linkData.hasLabel && this._linkData.label) link += `{${this._linkData.label}}`
-        else if (this.name)link += `{${this.name}}`
+        if (this._linkData.hasLabel && this._linkData.label)
+          link += `{${this._linkData.label}}`
+        else if (this.name) link += `{${this.name}}`
         return link
       }
 
@@ -324,8 +365,10 @@ export class CoC7Link {
         // let options = `${this._linkData.blind?'blind,':''}sanMax:${this._linkData.sanMax},sanMin:${this._linkData.sanMin}`;
         let options = `sanMax:${this._linkData.sanMax},sanMin:${this._linkData.sanMin}`
 
-        if (this._linkData.difficulty) options += `,difficulty:${this._linkData.difficulty}`
-        if (this._linkData.modifier) options += `,modifier:${this._linkData.modifier}`
+        if (this._linkData.difficulty)
+          options += `,difficulty:${this._linkData.difficulty}`
+        if (this._linkData.modifier)
+          options += `,modifier:${this._linkData.modifier}`
         if (this._linkData.icon) options += `,icon:${this._linkData.icon}`
         let link = `@coc7.sanloss[${options}]`
         if (this._linkData.hasLabel) link += `{${this._linkData.label}}`
@@ -340,8 +383,10 @@ export class CoC7Link {
         if (this._linkData.icon) options += `,icon:${this._linkData.icon}`
 
         // TODO: Check if needed
-        if (this._linkData.fromCompendium) options += `,pack:${this._linkData.pack}`
-        if (this._linkData.fromCompendium || this._linkData.fromDirectory) options += `,id:${this._linkData.id}`
+        if (this._linkData.fromCompendium)
+          options += `,pack:${this._linkData.pack}`
+        if (this._linkData.fromCompendium || this._linkData.fromDirectory)
+          options += `,id:${this._linkData.id}`
 
         let link = `@coc7.item[${options}]`
         if (this._linkData.hasLabel) link += `{${this._linkData.label}}`

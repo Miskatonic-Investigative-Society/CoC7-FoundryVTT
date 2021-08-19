@@ -11,7 +11,13 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
       resizable: true,
       template: 'systems/CoC7/templates/actors/vehicle.html',
       dragDrop: [{ dragSelector: '.actor', dropSelector: '.dropZone' }],
-      tabs: [{ navSelector: '.sheet-nav', contentSelector: '.sheet-body', initial: 'description' }]
+      tabs: [
+        {
+          navSelector: '.sheet-nav',
+          contentSelector: '.sheet-body',
+          initial: 'description'
+        }
+      ]
     })
   }
 
@@ -19,7 +25,8 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
     const data = await super.getData()
 
     data.properties = []
-    if (this.actor.data.data.properties.armed) data.properties.push(game.i18n.localize('CoC7.ArmedVehicle'))
+    if (this.actor.data.data.properties.armed)
+      data.properties.push(game.i18n.localize('CoC7.ArmedVehicle'))
     data.actor = this.actor
 
     const expanded = this.actor.getFlag('CoC7', 'expanded')
@@ -38,7 +45,9 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
   activateListeners (html) {
     super.activateListeners(html)
     html.find('.add-armor').click(async () => await this._onAddArmor())
-    html.find('.remove-armor').click(async (event) => await this._onRemoveArmor(event))
+    html
+      .find('.remove-armor')
+      .click(async event => await this._onRemoveArmor(event))
     html.find('.expand-button').click(this._onToggleExpand.bind(this))
     // Everything below here is only needed if the sheet is editable
     // if (!this.options.editable) return;
@@ -59,7 +68,9 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
   }
 
   async _onAddArmor () {
-    const locations = duplicate(this.actor.data.data.attribs.armor.locations || [])
+    const locations = duplicate(
+      this.actor.data.data.attribs.armor.locations || []
+    )
     locations.push({ name: null, value: null })
     await this.actor.update({ 'data.attribs.armor.locations': locations })
   }
@@ -68,7 +79,9 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
     const button = event.currentTarget
     const location = button.closest('.armor')
     const index = location.dataset.index
-    const locations = duplicate(this.actor.data.data.attribs.armor.locations || null)
+    const locations = duplicate(
+      this.actor.data.data.attribs.armor.locations || null
+    )
     if (!locations) return
     locations.splice(index, 1)
     await this.actor.update({ 'data.attribs.armor.locations': locations })
@@ -94,7 +107,10 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
     // Handle Armor array
     if (data.data.attribs.armor?.localized) {
       const armor = data.data?.attribs.armor
-      if (armor) armor.locations = Object.values(armor?.locations || this.actor.data.data.attribs.armor.locations || {})
+      if (armor)
+        armor.locations = Object.values(
+          armor?.locations || this.actor.data.data.attribs.armor.locations || {}
+        )
     }
 
     // Return the flattened submission data

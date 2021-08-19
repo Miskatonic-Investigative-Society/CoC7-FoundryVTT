@@ -15,7 +15,13 @@ export class CoC7WeaponSheet extends ItemSheet {
       classes: ['coc7', 'sheet', 'item'],
       width: 520,
       height: 480,
-      tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills' }]
+      tabs: [
+        {
+          navSelector: '.sheet-tabs',
+          contentSelector: '.sheet-body',
+          initial: 'skills'
+        }
+      ]
     })
   }
 
@@ -59,8 +65,12 @@ export class CoC7WeaponSheet extends ItemSheet {
         let lca
         let lcb
         if (a.data.properties && b.data.properties) {
-          lca = a.data.properties.special ? a.data.specialization.toLowerCase() + a.name.toLowerCase() : a.name.toLowerCase()
-          lcb = b.data.properties.special ? b.data.specialization.toLowerCase() + b.name.toLowerCase() : b.name.toLowerCase()
+          lca = a.data.properties.special
+            ? a.data.specialization.toLowerCase() + a.name.toLowerCase()
+            : a.name.toLowerCase()
+          lcb = b.data.properties.special
+            ? b.data.specialization.toLowerCase() + b.name.toLowerCase()
+            : b.name.toLowerCase()
         } else {
           lca = a.name.toLowerCase()
           lcb = b.name.toLowerCase()
@@ -92,7 +102,10 @@ export class CoC7WeaponSheet extends ItemSheet {
       era.isEnabled = this.item.data.data.eras[key] === true
       data._eras.push(era)
     }
-    data.usesAlternateSkill = this.item.data.data.properties.auto === true || this.item.data.data.properties.brst === true || this.item.data.data.properties.thrown === true
+    data.usesAlternateSkill =
+      this.item.data.data.properties.auto === true ||
+      this.item.data.data.properties.brst === true ||
+      this.item.data.data.properties.thrown === true
 
     return data
   }
@@ -118,12 +131,14 @@ export class CoC7WeaponSheet extends ItemSheet {
    */
   async _onClickToggle (event) {
     event.preventDefault()
-    const propertyId = event.currentTarget.closest('.toggle-switch').dataset.property
+    const propertyId = event.currentTarget.closest('.toggle-switch').dataset
+      .property
     const set = event.currentTarget.parentElement.dataset.set
     const elementName = set + '-' + propertyId
     const checkboxControl = this.form.elements.namedItem(elementName)
 
-    if (checkboxControl.checked) checkboxControl.checked = false; else checkboxControl.checked = true
+    if (checkboxControl.checked) checkboxControl.checked = false
+    else checkboxControl.checked = true
 
     event.target.classList.toggle('switched-on')
     await this._onSubmit(event)
@@ -131,7 +146,8 @@ export class CoC7WeaponSheet extends ItemSheet {
 
   async _onPropertyClick (event) {
     event.preventDefault()
-    const property = event.currentTarget.closest('.weapon-property').dataset.property
+    const property = event.currentTarget.closest('.weapon-property').dataset
+      .property
     const weaponId = event.currentTarget.closest('.weapon').dataset.itemId
     const actorKey = event.currentTarget.closest('.weapon').dataset.actorKey
     let weapon = null

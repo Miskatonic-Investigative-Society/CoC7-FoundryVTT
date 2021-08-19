@@ -5,9 +5,9 @@
  *Here, we receive the chat Messages and determine each command.
  *[/CC]Define a command to judge a normal dice.
  *[/CBR] Command to define the decision on combination rolls.
-*/
+ */
 Hooks.on('chatMessage', (html, content) => {
-// Read the command
+  // Read the command
   let rgx
   rgx = /(\S+)/g
   let commands = content.match(rgx)
@@ -38,8 +38,8 @@ Hooks.on('chatMessage', (html, content) => {
     s = r.result
     if (s <= 1) res = game.i18n.localize('CoC7.CriticalSuccess')
     else if (s >= 100) res = game.i18n.localize('CoC7.Fumble')
-    else if (s <= (m / 5)) res = game.i18n.localize('CoC7.ExtremeSuccess')
-    else if (s <= (m / 2)) res = game.i18n.localize('CoC7.HardSuccess')
+    else if (s <= m / 5) res = game.i18n.localize('CoC7.ExtremeSuccess')
+    else if (s <= m / 2) res = game.i18n.localize('CoC7.HardSuccess')
     else if (s <= m) res = game.i18n.localize('CoC7.RegularSuccess')
     else if (s >= 96) {
       if (m < 50) res = game.i18n.localize('CoC7.Fumble')
@@ -47,12 +47,11 @@ Hooks.on('chatMessage', (html, content) => {
     } else res = game.i18n.localize('CoC7.Failure')
 
     // The resulting output.
-    res += (game.i18n.localize('CoC7.Value') + m)
-    r.toMessage(
-      {
-        speaker: ChatMessage.getSpeaker(),
-        flavor: res
-      })
+    res += game.i18n.localize('CoC7.Value') + m
+    r.toMessage({
+      speaker: ChatMessage.getSpeaker(),
+      flavor: res
+    })
     // return to avoid errors in the command.
     return false
   }
@@ -74,33 +73,32 @@ Hooks.on('chatMessage', (html, content) => {
     // Determine the first number.
     if (s <= 1) res = game.i18n.localize('CoC7.CriticalSuccess')
     else if (s >= 100) res = game.i18n.localize('CoC7.Fumble')
-    else if (s <= (m / 5)) res = game.i18n.localize('CoC7.ExtremeSuccess')
-    else if (s <= (m / 2)) res = game.i18n.localize('CoC7.HardSuccess')
+    else if (s <= m / 5) res = game.i18n.localize('CoC7.ExtremeSuccess')
+    else if (s <= m / 2) res = game.i18n.localize('CoC7.HardSuccess')
     else if (s <= m) res = game.i18n.localize('CoC7.RegularSuccess')
     else if (s >= 96) {
       if (m < 50) res = game.i18n.localize('CoC7.Fumble')
       else res = game.i18n.localize('CoC7.Failure')
     } else res = game.i18n.localize('CoC7.Failure')
     // Record the first results.
-    res += (game.i18n.localize('CoC7.Value') + m)
+    res += game.i18n.localize('CoC7.Value') + m
 
     // Determine the second number.
     if (s <= 1) res += game.i18n.localize('CoC7.CriticalSuccess')
     else if (s >= 100) res += game.i18n.localize('CoC7.Fumble')
-    else if (s <= (n / 5)) res += game.i18n.localize('CoC7.ExtremeSuccess')
-    else if (s <= (n / 2)) res += game.i18n.localize('CoC7.HardSuccess')
+    else if (s <= n / 5) res += game.i18n.localize('CoC7.ExtremeSuccess')
+    else if (s <= n / 2) res += game.i18n.localize('CoC7.HardSuccess')
     else if (s <= n) res += game.i18n.localize('CoC7.RegularSuccess')
     else if (s >= 96) {
       if (n < 50) res += game.i18n.localize('CoC7.Fumble')
       else res += game.i18n.localize('CoC7.Failure')
     } else res += game.i18n.localize('CoC7.Failure')
     // The resulting output.
-    res += (game.i18n.localize('CoC7.Value') + n)
-    r.toMessage(
-      {
-        speaker: ChatMessage.getSpeaker(),
-        flavor: res
-      })
+    res += game.i18n.localize('CoC7.Value') + n
+    r.toMessage({
+      speaker: ChatMessage.getSpeaker(),
+      flavor: res
+    })
     // return to avoid errors in the command.
     return false
   }

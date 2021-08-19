@@ -2,230 +2,238 @@
 .coc7.sheet.item,
 .coc7.sheet.occupation,
 .coc7.sheet.setup {
-	input:read-only:hover,
-	input:read-only:focus {
-    	border: 1px solid transparent;
-    	box-shadow: none;
-    	cursor: default;
-	}
+  input:read-only:hover,
+  input:read-only:focus {
+    border: 1px solid transparent;
+    box-shadow: none;
+    cursor: default;
+  }
 
-	.read-only:hover,
-	.read-only:focus {
-		border: 1px solid black;
-	}
-	
-	.sheet-header {
-		img.profile {
-			border: 1px groove;
-			flex: 0 0 64px;max-width: 64px;height: 64px;object-fit: contain;margin-left: 4px;margin-right: 4px;
-		}
+  .read-only:hover,
+  .read-only:focus {
+    border: 1px solid black;
+  }
 
-		.name{
-			input{
-				margin: 0; padding: 0;
-			}
-		}
-	}
+  .sheet-header {
+    img.profile {
+      border: 1px groove;
+      flex: 0 0 64px;
+      max-width: 64px;
+      height: 64px;
+      object-fit: contain;
+      margin-left: 4px;
+      margin-right: 4px;
+    }
 
-	.details {
+    .name {
+      input {
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
 
-		.editor {
-			height: 200px;
+  .details {
+    .editor {
+      height: 200px;
 
-			button {
-				height: 20px;
-			}
-		}
+      button {
+        height: 20px;
+      }
+    }
 
-		// Item Sheet form fields
-		input[type="text"], select {
-			height: 20px;
-			border: 1px solid @colorTan;
-			background: rgba(0, 0, 0, 0.05);
-		}
+    // Item Sheet form fields
+    input[type='text'],
+    select {
+      height: 20px;
+      border: 1px solid @colorTan;
+      background: rgba(0, 0, 0, 0.05);
+    }
 
-		.form-group {
-			border: 0;
-			margin: 0;
-			span {
-				text-align: center;
-				line-height: 20px;
-			}
-		}
+    .form-group {
+      border: 0;
+      margin: 0;
+      span {
+        text-align: center;
+        line-height: 20px;
+      }
+    }
 
-		.form-group.input-select {
-			select {
-				flex: 1.8;
-			}
-		}
+    .form-group.input-select {
+      select {
+        flex: 1.8;
+      }
+    }
 
-		.form-group.input-select-select {
-			select {
-				flex: 1.5;
-			}
-		}
+    .form-group.input-select-select {
+      select {
+        flex: 1.5;
+      }
+    }
 
-		.form-group.uses-per {
-			input {
-				flex: 1;
-			}
-			span {
-				flex: 0 0 16px;
-			}
-			select {
-				flex: 3;
-			}
-		}
+    .form-group.uses-per {
+      input {
+        flex: 1;
+      }
+      span {
+        flex: 0 0 16px;
+      }
+      select {
+        flex: 3;
+      }
+    }
 
-		span.sep {
-			flex: 0 0 8px;
-		}
+    span.sep {
+      flex: 0 0 8px;
+    }
 
-		.prepared {
-			flex: 1.3 !important;
-			text-align: right;
-			padding-right: 10px;
-		}
+    .prepared {
+      flex: 1.3 !important;
+      text-align: right;
+      padding-right: 10px;
+    }
 
-		// Spell Materials
-		.spell-materials {
-			flex: 0 0 100%;
-			margin: 0.25em 0;
-			justify-content: flex-end;
-			label {
-				flex: 0 0 64px;
-				text-align: right;
-				margin-right: 5px;
-				font-size: 12px;
-				line-height: 24px;
-			}
-			input[type="text"] {
-				flex: 0 0 48px;
-				margin-right: 10px;
-			}
-		}
-	}
+    // Spell Materials
+    .spell-materials {
+      flex: 0 0 100%;
+      margin: 0.25em 0;
+      justify-content: flex-end;
+      label {
+        flex: 0 0 64px;
+        text-align: right;
+        margin-right: 5px;
+        font-size: 12px;
+        line-height: 24px;
+      }
+      input[type='text'] {
+        flex: 0 0 48px;
+        margin-right: 10px;
+      }
+    }
+  }
 
-	.sheet-navigation {
-		margin-bottom: 5px;
-		.item {
-			font-size: 18px;
-		}
-	}
+  .sheet-navigation {
+    margin-bottom: 5px;
+    .item {
+      font-size: 18px;
+    }
+  }
 
-	.sheet-body {
-		overflow: hidden;
+  .sheet-body {
+    overflow: hidden;
 
-		.tab {
-			padding: 0 5px;
-			overflow: hidden auto;
-		}
+    .tab {
+      padding: 0 5px;
+      overflow: hidden auto;
+    }
 
-		.item-description {
-			height: 100%;
-    		overflow-y: auto;
-		}
+    .item-description {
+      height: 100%;
+      overflow-y: auto;
+    }
 
-		.item-properties {
-			flex: 0 0 120px;
-			margin: 5px 5px 5px 0;
-			padding-right: 5px;
-			border-right: 2px groove #eeede0;;
+    .item-properties {
+      flex: 0 0 120px;
+      margin: 5px 5px 5px 0;
+      padding-right: 5px;
+      border-right: 2px groove #eeede0;
 
-			.form-group {
-				margin: 0;
-				label {
-					line-height: 20px;
-				}
-				input {
-					text-align: right;
-				}
-			}
+      .form-group {
+        margin: 0;
+        label {
+          line-height: 20px;
+        }
+        input {
+          text-align: right;
+        }
+      }
 
-			.properties-list {
-				list-style: none;
-				margin: 0;
-				padding: 0;
+      .properties-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
 
-				li {
-					margin: 3px 0;
-					padding: 0 2px;
-					background: rgba(0, 0, 0, 0.05);
-					border: 2px groove #eeede0;;
-					text-align: center;
-					font-size: 12px;
-					line-height: 18px;
-				}
-			}
-		}
-		
-		.spell-list {
-			list-style: none;
-			margin: 0;
-			padding: 0 5px;
-			overflow-y: auto;
-			scrollbar-width: thin;
+        li {
+          margin: 3px 0;
+          padding: 0 2px;
+          background: rgba(0, 0, 0, 0.05);
+          border: 2px groove #eeede0;
+          text-align: center;
+          font-size: 12px;
+          line-height: 18px;
+        }
+      }
+    }
 
-			// Inventory Item
-			.spell {
-				line-height: 16px;
-				padding: 0 2px; // to align with the header border
-				border-bottom: 1px solid @colorFaint;
-				&:last-child { border-bottom: none; }
+    .spell-list {
+      list-style: none;
+      margin: 0;
+      padding: 0 5px;
+      overflow-y: auto;
+      scrollbar-width: thin;
 
-				// Item Header Name
-				.spell-name {
-					cursor: pointer;
-					max-height: 24px;
-					overflow: hidden;
+      // Inventory Item
+      .spell {
+        line-height: 16px;
+        padding: 0 2px; // to align with the header border
+        border-bottom: 1px solid @colorFaint;
+        &:last-child {
+          border-bottom: none;
+        }
 
-					.spell-image {
-						flex: 0 0 16px;
-						background-size: 16px;
-						margin-right: 5px;
-					}
+        // Item Header Name
+        .spell-name {
+          cursor: pointer;
+          max-height: 24px;
+          overflow: hidden;
 
-					h4 {
-						margin: 0;
-						white-space: nowrap;
-						overflow-x: hidden;
-					}
+          .spell-image {
+            flex: 0 0 16px;
+            background-size: 16px;
+            margin-right: 5px;
+          }
 
-					&.rollable:hover .item-image {
-						background-image: url("/icons/svg/d20-grey.svg") !important;
-					}
-					&.rollable .item-image:hover {
-						background-image: url("/icons/svg/d20-black.svg") !important;
-					}
+          h4 {
+            margin: 0;
+            white-space: nowrap;
+            overflow-x: hidden;
+          }
 
-					i.attuned {
-						color: @colorTan;
-					}
-				}
-			}
+          &.rollable:hover .item-image {
+            background-image: url('/icons/svg/d20-grey.svg') !important;
+          }
+          &.rollable .item-image:hover {
+            background-image: url('/icons/svg/d20-black.svg') !important;
+          }
 
-			// Item Control Buttons
-			.item-controls {
-				flex: 0 0 32px;
-				.flexrow();
-				justify-content: flex-end;
+          i.attuned {
+            color: @colorTan;
+          }
+        }
+      }
 
-				a {
-					flex: 0 0 16px;
-					font-size: 10px;
-					text-align: center;
-					color: @colorTan;
-				}
-			}
+      // Item Control Buttons
+      .item-controls {
+        flex: 0 0 32px;
+        .flexrow();
+        justify-content: flex-end;
 
-			// Item Dropdown Summary
-			.item-summary {
-				flex: 0 0 100%;
-				font-size: 12px;
-				line-height: 13px;
-				padding: 0.25em 0.5em;
-				border-top: @borderGroove;
-			}
-		}
-	}
+        a {
+          flex: 0 0 16px;
+          font-size: 10px;
+          text-align: center;
+          color: @colorTan;
+        }
+      }
+
+      // Item Dropdown Summary
+      .item-summary {
+        flex: 0 0 100%;
+        font-size: 12px;
+        line-height: 13px;
+        padding: 0.25em 0.5em;
+        border-top: @borderGroove;
+      }
+    }
+  }
 }

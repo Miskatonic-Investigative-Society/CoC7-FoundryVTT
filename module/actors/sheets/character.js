@@ -26,7 +26,10 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
       data.skillList.push(skill)
     }
 
-    data.displayPlayerName = game.settings.get('CoC7', 'displayPlayerNameOnSheet')
+    data.displayPlayerName = game.settings.get(
+      'CoC7',
+      'displayPlayerNameOnSheet'
+    )
     if (data.displayPlayerName && !data.data.infos.playername) {
       const user = this.actor.characterUser
       if (user) {
@@ -49,7 +52,13 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
       height: 623,
       resizable: true,
       dragDrop: [{ dragSelector: '.item', dropSelector: null }],
-      tabs: [{ navSelector: '.sheet-nav', contentSelector: '.sheet-body', initial: 'skills' }]
+      tabs: [
+        {
+          navSelector: '.sheet-nav',
+          contentSelector: '.sheet-body',
+          initial: 'skills'
+        }
+      ]
     })
   }
 
@@ -61,10 +70,15 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
     // html.css('--main-sheet-bg',  'url( \'./artwork/backgrounds/character-sheet.png\') 4 repeat');
     if (game.settings.get('CoC7', 'overrideSheetArtwork')) {
       if (game.settings.get('CoC7', 'artWorkSheetBackground')) {
-        sheet.element.css('--main-sheet-bg', game.settings.get('CoC7', 'artWorkSheetBackground'))
+        sheet.element.css(
+          '--main-sheet-bg',
+          game.settings.get('CoC7', 'artWorkSheetBackground')
+        )
         // const borderImage = sheet.element.find('form').css('border-image');
         // sheet.element.find('form').css('border-image', '');
-        if (game.settings.get('CoC7', 'artWorkSheetBackgroundType') !== 'slice') {
+        if (
+          game.settings.get('CoC7', 'artWorkSheetBackgroundType') !== 'slice'
+        ) {
           let styleSheet, cssRuleIndex
           for (let i = 0; i < document.styleSheets.length; i++) {
             if (document.styleSheets[i].href.endsWith('coc7g.css')) {
@@ -75,7 +89,9 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
 
           if (styleSheet) {
             for (let i = 0; i < styleSheet.rules.length; i++) {
-              if (styleSheet.rules[i].selectorText === '.sheetV2.character form') {
+              if (
+                styleSheet.rules[i].selectorText === '.sheetV2.character form'
+              ) {
                 cssRuleIndex = i
                 break
               }
@@ -84,7 +100,10 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
           if (cssRuleIndex) {
             const CSSStyle = styleSheet.rules[cssRuleIndex].style
             CSSStyle.removeProperty('border-image')
-            CSSStyle.setProperty('background', game.settings.get('CoC7', 'artWorkSheetBackground'))
+            CSSStyle.setProperty(
+              'background',
+              game.settings.get('CoC7', 'artWorkSheetBackground')
+            )
             switch (game.settings.get('CoC7', 'artWorkSheetBackgroundType')) {
               case 'auto':
                 CSSStyle.setProperty('background-size', 'auto')
@@ -101,15 +120,61 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
             }
           }
         }
-      } else if (game.settings.get('CoC7', 'artWorkSheetBackground').toLowerCase() === 'null') { sheet.element.css('--main-sheet-bg', 'url( \'./artwork/backgrounds/void.png\')') }
+      } else if (
+        game.settings.get('CoC7', 'artWorkSheetBackground').toLowerCase() ===
+        'null'
+      ) {
+        sheet.element.css(
+          '--main-sheet-bg',
+          "url( './artwork/backgrounds/void.png')"
+        )
+      }
 
-      if (game.settings.get('CoC7', 'artWorkOtherSheetBackground')) { sheet.element.css('--other-sheet-bg', game.settings.get('CoC7', 'artWorkOtherSheetBackground')) } else if (game.settings.get('CoC7', 'artWorkOtherSheetBackground').toLowerCase() === 'null') { sheet.element.css('--other-sheet-bg', 'url( \'./artwork/backgrounds/void.png\')') }
+      if (game.settings.get('CoC7', 'artWorkOtherSheetBackground')) {
+        sheet.element.css(
+          '--other-sheet-bg',
+          game.settings.get('CoC7', 'artWorkOtherSheetBackground')
+        )
+      } else if (
+        game.settings
+          .get('CoC7', 'artWorkOtherSheetBackground')
+          .toLowerCase() === 'null'
+      ) {
+        sheet.element.css(
+          '--other-sheet-bg',
+          "url( './artwork/backgrounds/void.png')"
+        )
+      }
 
-      if (game.settings.get('CoC7', 'artworkSheetImage')) { sheet.element.css('--main-sheet-image', game.settings.get('CoC7', 'artworkSheetImage')) } else if (game.settings.get('CoC7', 'artworkSheetImage').toLowerCase() === 'null') { sheet.element.css('--main-sheet-image', 'url( \'./artwork/backgrounds/void.png\')') }
+      if (game.settings.get('CoC7', 'artworkSheetImage')) {
+        sheet.element.css(
+          '--main-sheet-image',
+          game.settings.get('CoC7', 'artworkSheetImage')
+        )
+      } else if (
+        game.settings.get('CoC7', 'artworkSheetImage').toLowerCase() === 'null'
+      ) {
+        sheet.element.css(
+          '--main-sheet-image',
+          "url( './artwork/backgrounds/void.png')"
+        )
+      }
 
-      if (game.settings.get('CoC7', 'artworkFrontColor')) sheet.element.css('--main-sheet-front-color', game.settings.get('CoC7', 'artworkFrontColor'))
-      if (game.settings.get('CoC7', 'artworkBackgroundColor')) sheet.element.css('--main-sheet-back-color', game.settings.get('CoC7', 'artworkBackgroundColor'))
-      if (game.settings.get('CoC7', 'artworkInteractiveColor')) sheet.element.css('--main-sheet-interactie-color', game.settings.get('CoC7', 'artworkInteractiveColor'))
+      if (game.settings.get('CoC7', 'artworkFrontColor'))
+        sheet.element.css(
+          '--main-sheet-front-color',
+          game.settings.get('CoC7', 'artworkFrontColor')
+        )
+      if (game.settings.get('CoC7', 'artworkBackgroundColor'))
+        sheet.element.css(
+          '--main-sheet-back-color',
+          game.settings.get('CoC7', 'artworkBackgroundColor')
+        )
+      if (game.settings.get('CoC7', 'artworkInteractiveColor'))
+        sheet.element.css(
+          '--main-sheet-interactie-color',
+          game.settings.get('CoC7', 'artworkInteractiveColor')
+        )
 
       if (!game.settings.get('CoC7', 'artworkFixedSkillLength')) {
         sheet.element.css('--skill-length', 'auto')
@@ -117,26 +182,41 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
       }
 
       if (game.settings.get('CoC7', 'artworkMainFont')) {
-        const customSheetFont = new FontFace('customSheetFont', game.settings.get('CoC7', 'artworkMainFont'))
-        customSheetFont.load().then(function (loadedFace) {
-          document.fonts.add(loadedFace)
-        }).catch(function (error) {
-          ui.notifications.error(error)
-        })
+        const customSheetFont = new FontFace(
+          'customSheetFont',
+          game.settings.get('CoC7', 'artworkMainFont')
+        )
+        customSheetFont
+          .load()
+          .then(function (loadedFace) {
+            document.fonts.add(loadedFace)
+          })
+          .catch(function (error) {
+            ui.notifications.error(error)
+          })
       }
 
       if (game.settings.get('CoC7', 'artworkMainFontBold')) {
-        const customSheetCursiveFont = new FontFace('customSheetFont', game.settings.get('CoC7', 'artworkMainFontBold'), { weight: 'bold' })
-        customSheetCursiveFont.load().then(function (loadedFace) {
-          document.fonts.add(loadedFace)
-        }).catch(function (error) {
-          ui.notifications.error(error)
-        })
+        const customSheetCursiveFont = new FontFace(
+          'customSheetFont',
+          game.settings.get('CoC7', 'artworkMainFontBold'),
+          { weight: 'bold' }
+        )
+        customSheetCursiveFont
+          .load()
+          .then(function (loadedFace) {
+            document.fonts.add(loadedFace)
+          })
+          .catch(function (error) {
+            ui.notifications.error(error)
+          })
       }
 
       if (game.settings.get('CoC7', 'artworkMainFontSize')) {
         const size = `${game.settings.get('CoC7', 'artworkMainFontSize')}px`
-        if (size !== $(':root').css('font-size')) { $(':root').css('font-size', size) }
+        if (size !== $(':root').css('font-size')) {
+          $(':root').css('font-size', size)
+        }
       }
     }
   }

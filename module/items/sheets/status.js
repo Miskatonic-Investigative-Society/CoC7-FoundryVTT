@@ -17,7 +17,13 @@ export class CoC7StatusSheet extends ItemSheet {
       height: 480,
       resizable: false,
       scrollY: ['.tab.description'],
-      tabs: [{ navSelector: '.sheet-navigation', contentSelector: '.sheet-body', initial: 'description' }]
+      tabs: [
+        {
+          navSelector: '.sheet-navigation',
+          contentSelector: '.sheet-body',
+          initial: 'description'
+        }
+      ]
     })
   }
 
@@ -43,7 +49,10 @@ export class CoC7StatusSheet extends ItemSheet {
     data.itemProperties = []
 
     for (const [key, value] of Object.entries(data.data.type)) {
-      if (value) data.itemProperties.push(COC7.statusType[key] ? COC7.statusType[key] : null)
+      if (value)
+        data.itemProperties.push(
+          COC7.statusType[key] ? COC7.statusType[key] : null
+        )
     }
     return data
   }

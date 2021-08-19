@@ -18,7 +18,10 @@ export class CoC7Dice {
       }
       const unit = new DiceTerm({ faces: 10 })
       unit.evaluate()
-      const tens = new DiceTerm({ number: Math.abs(modif) + 1, faces: 10 })
+      const tens = new DiceTerm({
+        number: Math.abs(modif) + 1,
+        faces: 10
+      })
       unit.results.forEach(r => {
         if (r.result === 10) {
           r.result = 0
@@ -68,18 +71,32 @@ export class CoC7Dice {
       }
     }
 
-    const isBlind = (rollMode || game.settings.get('core', 'rollMode')) === 'blindroll'
-    const isPrivateGM = (rollMode || game.settings.get('core', 'rollMode')) === 'gmroll'
+    const isBlind =
+      (rollMode || game.settings.get('core', 'rollMode')) === 'blindroll'
+    const isPrivateGM =
+      (rollMode || game.settings.get('core', 'rollMode')) === 'gmroll'
 
     if (!isBlind && !hideDice) {
       if (game.modules.get('dice-so-nice')?.active) {
-        const [version] = game.modules.get('dice-so-nice')?.data.version.split('.')
-        const DsN3 = Number(version) >= 3 /* && game.settings.get('CoC7', 'overrideDsNStyle') */
+        const [version] = game.modules
+          .get('dice-so-nice')
+          ?.data.version.split('.')
+        const DsN3 =
+          Number(version) >=
+          3 /* && game.settings.get('CoC7', 'overrideDsNStyle') */
         const syncDice = game.settings.get('CoC7', 'syncDice3d')
-        const unitDieColorset = DsN3 ? game.settings.get('CoC7', 'unitDieColorset') : null
-        const tenDieNoMod = DsN3 ? game.settings.get('CoC7', 'tenDieNoMod') : null
-        const tenDieBonus = DsN3 ? game.settings.get('CoC7', 'tenDieBonus') : null
-        const tenDiePenalty = DsN3 ? game.settings.get('CoC7', 'tenDiePenalty') : null
+        const unitDieColorset = DsN3
+          ? game.settings.get('CoC7', 'unitDieColorset')
+          : null
+        const tenDieNoMod = DsN3
+          ? game.settings.get('CoC7', 'tenDieNoMod')
+          : null
+        const tenDieBonus = DsN3
+          ? game.settings.get('CoC7', 'tenDieBonus')
+          : null
+        const tenDiePenalty = DsN3
+          ? game.settings.get('CoC7', 'tenDiePenalty')
+          : null
 
         const diceResults = []
         tenDie.results.forEach(dieResult => {
@@ -90,9 +107,11 @@ export class CoC7Dice {
         const diceData = {
           formula: `${tenDie.results.length}d100+1d10`,
           results: diceResults,
-          throws: [{
-            dice: []
-          }],
+          throws: [
+            {
+              dice: []
+            }
+          ],
           whisper: null,
           blind: false
         }
@@ -104,10 +123,14 @@ export class CoC7Dice {
             type: 'd100',
             vectors: [],
             options: {
-              colorset: !modif ? tenDieNoMod : modif < 0 ? tenDiePenalty : tenDieBonus
+              colorset: !modif
+                ? tenDieNoMod
+                : modif < 0
+                ? tenDiePenalty
+                : tenDieBonus
             }
           })
-        })// acid (vert), necrotic (red), inspired (white), bloodmoon (red), Foundry, toxic (green), bronze, white
+        }) // acid (vert), necrotic (red), inspired (white), bloodmoon (red), Foundry, toxic (green), bronze, white
 
         diceData.throws[0].dice.push({
           result: unitDie.total,
@@ -120,12 +143,13 @@ export class CoC7Dice {
         })
 
         try {
-          const users = isPrivateGM || isBlind
-            ? game.users.filter(u => {
-                if (u.isGM) return true
-                return false
-              })
-            : null
+          const users =
+            isPrivateGM || isBlind
+              ? game.users.filter(u => {
+                  if (u.isGM) return true
+                  return false
+                })
+              : null
           game.dice3d.show(diceData, game.user, syncDice, users, isBlind)
         } catch (err) {
           console.error('Roll: ' + err.message)

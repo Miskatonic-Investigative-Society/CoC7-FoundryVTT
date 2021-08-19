@@ -16,8 +16,10 @@ export class CoC7BookSheet extends ItemSheet {
     super.activateListeners(html)
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return
-    html.on('drop', (event) => this._onDrop(event))
-    html.find('.spell .spell-name h4').click(event => this._onSpellSummary(event))
+    html.on('drop', event => this._onDrop(event))
+    html
+      .find('.spell .spell-name h4')
+      .click(event => this._onSpellSummary(event))
     html.find('.item-delete').click(this._onSpellDelete.bind(this))
   }
 
@@ -46,7 +48,9 @@ export class CoC7BookSheet extends ItemSheet {
     }
 
     if (!item || !(item.data.type === 'spell')) return
-    const spells = this.item.data.data.spells ? duplicate(this.item.data.data.spells) : []
+    const spells = this.item.data.data.spells
+      ? duplicate(this.item.data.data.spells)
+      : []
     spells.push(duplicate(item.data))
     await this.item.update({ 'data.spells': spells })
     // const spells = this.item.data.data.spells;
@@ -61,7 +65,9 @@ export class CoC7BookSheet extends ItemSheet {
   _onSpellSummary (event) {
     event.preventDefault()
     const li = $(event.currentTarget).parents('.spell')
-    const spell = this.item.data.data.spells.find(s => { return s._id === li.data('spell-id') })
+    const spell = this.item.data.data.spells.find(s => {
+      return s._id === li.data('spell-id')
+    })
     if (typeof spell.data.description === 'string') {
       spell.data.description = {
         value: spell.data.description
@@ -86,14 +92,20 @@ export class CoC7BookSheet extends ItemSheet {
   }
 
   async _onSpellDelete (event) {
-    const spellIndex = $(event.currentTarget).parents('.spell').data('spell-id')
+    const spellIndex = $(event.currentTarget)
+      .parents('.spell')
+      .data('spell-id')
     if (spellIndex) await this.removeSpell(spellIndex)
   }
 
   async removeSpell (spellId) {
-    const spellIndex = this.item.data.data.spells.findIndex(s => { return s._id === spellId })
+    const spellIndex = this.item.data.data.spells.findIndex(s => {
+      return s._id === spellId
+    })
     if (spellIndex > -1) {
-      const spells = this.item.data.data.spells ? duplicate(this.item.data.data.spells) : []
+      const spells = this.item.data.data.spells
+        ? duplicate(this.item.data.data.spells)
+        : []
       spells.splice(spellIndex, 1)
       await this.item.update({ 'data.spells': spells })
     }
@@ -107,7 +119,13 @@ export class CoC7BookSheet extends ItemSheet {
       resizable: false,
       dragDrop: [{ dragSelector: '.spell', dropSelector: null }],
       scrollY: ['.tab.description'],
-      tabs: [{ navSelector: '.sheet-navigation', contentSelector: '.sheet-body', initial: 'description' }]
+      tabs: [
+        {
+          navSelector: '.sheet-navigation',
+          contentSelector: '.sheet-body',
+          initial: 'description'
+        }
+      ]
     })
   }
 
@@ -117,7 +135,9 @@ export class CoC7BookSheet extends ItemSheet {
 
   _onDragStart (event) {
     const li = event.currentTarget.closest('.spell')
-    const spell = this.item.data.data.spells.find(s => { return s._id === li.dataset.spellId })
+    const spell = this.item.data.data.spells.find(s => {
+      return s._id === li.dataset.spellId
+    })
 
     const dragData = { type: 'Item', data: spell }
     event.dataTransfer.setData('text/plain', JSON.stringify(dragData))
@@ -134,7 +154,8 @@ export class CoC7BookSheet extends ItemSheet {
     data.itemProperties = []
 
     for (const [key, value] of Object.entries(data.data.type)) {
-      if (value) data.itemProperties.push(COC7.bookType[key] ? COC7.bookType[key] : null)
+      if (value)
+        data.itemProperties.push(COC7.bookType[key] ? COC7.bookType[key] : null)
     }
     return data
   }

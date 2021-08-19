@@ -8,7 +8,8 @@ import { COC7 } from '../config.js'
  */
 export class CoC7Item extends Item {
   constructor (data = {}, context = {}) {
-    if (!data.img && data.type === 'skill') data.img = 'systems/CoC7/artwork/icons/skills.svg' // Change the icon for skills
+    if (!data.img && data.type === 'skill')
+      data.img = 'systems/CoC7/artwork/icons/skills.svg' // Change the icon for skills
     super(data, context)
   }
 
@@ -73,10 +74,14 @@ export class CoC7Item extends Item {
 
       if (propertyId === 'melee' || propertyId === 'rngd') {
         let meleeWeapon
-        if (propertyId === 'melee' && !this.data.data.properties.melee) meleeWeapon = true
-        if (propertyId === 'melee' && this.data.data.properties.melee) meleeWeapon = false
-        if (propertyId === 'rngd' && !this.data.data.properties.rngd) meleeWeapon = false
-        if (propertyId === 'rngd' && this.data.data.properties.rngd) meleeWeapon = true
+        if (propertyId === 'melee' && !this.data.data.properties.melee)
+          meleeWeapon = true
+        if (propertyId === 'melee' && this.data.data.properties.melee)
+          meleeWeapon = false
+        if (propertyId === 'rngd' && !this.data.data.properties.rngd)
+          meleeWeapon = false
+        if (propertyId === 'rngd' && this.data.data.properties.rngd)
+          meleeWeapon = true
         if (meleeWeapon) {
           checkedProps = {
             'data.properties.melee': true,
@@ -145,7 +150,9 @@ export class CoC7Item extends Item {
             'data.properties.firearm': false,
             'data.properties.combat': true,
             'data.properties.special': true,
-            'data.specialization': game.i18n.localize(COC7.fightingSpecializationName)
+            'data.specialization': game.i18n.localize(
+              COC7.fightingSpecializationName
+            )
           }
         }
 
@@ -155,7 +162,9 @@ export class CoC7Item extends Item {
             'data.properties.firearm': true,
             'data.properties.combat': true,
             'data.properties.special': true,
-            'data.specialization': game.i18n.localize(COC7.firearmSpecializationName)
+            'data.specialization': game.i18n.localize(
+              COC7.firearmSpecializationName
+            )
           }
         }
       }
@@ -167,7 +176,9 @@ export class CoC7Item extends Item {
     } else {
       const propName = `data.properties.${propertyId}`
       const propValue = !this.data.data.properties[propertyId]
-      this.update({ [propName]: propValue }).then(item => { return item })
+      this.update({ [propName]: propValue }).then(item => {
+        return item
+      })
     }
   }
 
@@ -176,11 +187,23 @@ export class CoC7Item extends Item {
   }
 
   get name () {
-    if (this.type !== 'skill' || !this.data.data?.properties?.special) return super.name
-    if (this.data.name.toLowerCase().includes(this.data.data.specialization?.toLowerCase())) {
+    if (this.type !== 'skill' || !this.data.data?.properties?.special)
+      return super.name
+    if (
+      this.data.name
+        .toLowerCase()
+        .includes(this.data.data.specialization?.toLowerCase())
+    ) {
       // Restore names that have already been processed
       if (this.isOwned && super.name === this.data.name) {
-        const re = new RegExp('^' + this.data.data.specialization.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&') + ' \\((.+)\\)$')
+        const re = new RegExp(
+          '^' +
+            this.data.data.specialization.replace(
+              /[-[\]/{}()*+?.\\^$|]/g,
+              '\\$&'
+            ) +
+            ' \\((.+)\\)$'
+        )
         const match = re.exec(this.data.name)
         if (match !== null && typeof match[1] !== 'undefined') {
           return match[1]
@@ -195,8 +218,14 @@ export class CoC7Item extends Item {
   }
 
   get sName () {
-    if (this.type !== 'skill' || !this.data.data?.properties?.special) return super.name
-    if (this.data.name.toLowerCase().includes(this.data.data.specialization?.toLowerCase())) return super.name
+    if (this.type !== 'skill' || !this.data.data?.properties?.special)
+      return super.name
+    if (
+      this.data.name
+        .toLowerCase()
+        .includes(this.data.data.specialization?.toLowerCase())
+    )
+      return super.name
     return `${this.data.name}`
   }
 
@@ -204,13 +233,19 @@ export class CoC7Item extends Item {
     if (item instanceof CoC7Item) {
       if (item.data.data?.properties?.special) {
         const specNameRegex = new RegExp(item.data.data.specialization, 'ig')
-        const filteredName = item.name.replace(specNameRegex, '').trim().replace(/^\(+|\)+$/gm, '')
+        const filteredName = item.name
+          .replace(specNameRegex, '')
+          .trim()
+          .replace(/^\(+|\)+$/gm, '')
         return filteredName.length ? filteredName : item.name
       }
     } else {
       if (item.data.properties?.special) {
         const specNameRegex = new RegExp(item.data.specialization, 'ig')
-        const filteredName = item.name.replace(specNameRegex, '').trim().replace(/^\(+|\)+$/gm, '')
+        const filteredName = item.name
+          .replace(specNameRegex, '')
+          .trim()
+          .replace(/^\(+|\)+$/gm, '')
         return filteredName.length ? filteredName : item.name
       }
     }
@@ -219,11 +254,19 @@ export class CoC7Item extends Item {
 
   static isAnySpec (item) {
     if (item instanceof CoC7Item) {
-      if (item.type !== 'skill' || !item.data.data.properties?.special) return false
-      return (CoC7Item.getNameWithoutSpec(item).toLowerCase() === game.i18n.localize('CoC7.AnySpecName').toLowerCase())
-    } else { // Assume it's data only
+      if (item.type !== 'skill' || !item.data.data.properties?.special)
+        return false
+      return (
+        CoC7Item.getNameWithoutSpec(item).toLowerCase() ===
+        game.i18n.localize('CoC7.AnySpecName').toLowerCase()
+      )
+    } else {
+      // Assume it's data only
       if (item.type !== 'skill' || !item.data.properties?.special) return false
-      return (CoC7Item.getNameWithoutSpec(item).toLowerCase() === game.i18n.localize('CoC7.AnySpecName').toLowerCase())
+      return (
+        CoC7Item.getNameWithoutSpec(item).toLowerCase() ===
+        game.i18n.localize('CoC7.AnySpecName').toLowerCase()
+      )
     }
   }
 
@@ -238,21 +281,38 @@ export class CoC7Item extends Item {
       }
 
       // If skill is combat skill and no specialisation set then make it a fighting( closecombat) skill
-      if (!this.data.data.properties.fighting && !this.data.data.properties.firearm) {
+      if (
+        !this.data.data.properties.fighting &&
+        !this.data.data.properties.firearm
+      ) {
         this.data.data.properties.fighting = true
         checkedProps['data.properties.fighting'] = true
       }
 
       // if skill is close combat without specialisation name make set it according to the fightingSpecializationName
-      if (this.data.data.properties.fighting && (!this.data.data.specialization || this.data.data.specialization === '')) {
-        this.data.data.specialization = game.i18n.localize(COC7.fightingSpecializationName)
-        checkedProps['data.specialization'] = game.i18n.localize(COC7.fightingSpecializationName)
+      if (
+        this.data.data.properties.fighting &&
+        (!this.data.data.specialization || this.data.data.specialization === '')
+      ) {
+        this.data.data.specialization = game.i18n.localize(
+          COC7.fightingSpecializationName
+        )
+        checkedProps['data.specialization'] = game.i18n.localize(
+          COC7.fightingSpecializationName
+        )
       }
 
       // if skill is range combat without a specialisation name make set it according to the firearmSpecializationName
-      if (this.data.data.properties.firearm && (!this.data.data.specialization || this.data.data.specialization === '')) {
-        this.data.data.specialization = game.i18n.localize(COC7.firearmSpecializationName)
-        checkedProps['data.specialization'] = game.i18n.localize(COC7.firearmSpecializationName)
+      if (
+        this.data.data.properties.firearm &&
+        (!this.data.data.specialization || this.data.data.specialization === '')
+      ) {
+        this.data.data.specialization = game.i18n.localize(
+          COC7.firearmSpecializationName
+        )
+        checkedProps['data.specialization'] = game.i18n.localize(
+          COC7.firearmSpecializationName
+        )
       }
     } else {
       if (this.data.data.properties.fighting) {
@@ -312,13 +372,21 @@ export class CoC7Item extends Item {
   async toggleItemFlag (flagName, eraseAdjustment = true) {
     const flagValue = !this.getItemFlag(flagName)
     const name = `data.flags.${flagName}`
-    if ((flagName === 'occupation' || flagName === 'archetype') && !flagValue && eraseAdjustment) {
+    if (
+      (flagName === 'occupation' || flagName === 'archetype') &&
+      !flagValue &&
+      eraseAdjustment
+    ) {
       await this.update({
         [`data.adjustments.${flagName}`]: null,
         [name]: flagValue
       })
     } else if (flagName === 'developement') {
-      if (game.settings.get('CoC7', 'xpEnabled') || game.user.isGM) { await this.update({ [name]: flagValue }) } else { ui.notifications.info('XP Gain disabled.') }
+      if (game.settings.get('CoC7', 'xpEnabled') || game.user.isGM) {
+        await this.update({ [name]: flagValue })
+      } else {
+        ui.notifications.info('XP Gain disabled.')
+      }
     } else await this.update({ [name]: flagValue })
   }
 
@@ -328,7 +396,10 @@ export class CoC7Item extends Item {
 
   async unsetItemFlag (flagName, eraseAdjustment = true) {
     const name = `data.flags.${flagName}`
-    if ((flagName === 'occupation' || flagName === 'archetype') && eraseAdjustment) {
+    if (
+      (flagName === 'occupation' || flagName === 'archetype') &&
+      eraseAdjustment
+    ) {
       await this.update({
         [`data.adjustments.${flagName}`]: null,
         [name]: false
@@ -349,7 +420,12 @@ export class CoC7Item extends Item {
   }
 
   get usesAlternativeSkill () {
-    return this.type === 'weapon' && (this.data.data.properties?.auto === true || this.data.data.properties?.brst === true || this.data.data.properties?.thrown === true)
+    return (
+      this.type === 'weapon' &&
+      (this.data.data.properties?.auto === true ||
+        this.data.data.properties?.brst === true ||
+        this.data.data.properties?.thrown === true)
+    )
   }
 
   get maxUsesPerRound () {
@@ -368,13 +444,17 @@ export class CoC7Item extends Item {
 
   get usesPerRoundString () {
     let usesPerRound
-    if (this.data.data.usesPerRound.normal) usesPerRound = this.data.data.usesPerRound.normal
+    if (this.data.data.usesPerRound.normal)
+      usesPerRound = this.data.data.usesPerRound.normal
     else usesPerRound = '1'
-    if (this.data.data.usesPerRound.max) usesPerRound += `(${this.data.data.usesPerRound.max})`
-    if (this.data.data.properties.auto) usesPerRound += ` ${game.i18n.localize('CoC7.WeaponAuto')}`
+    if (this.data.data.usesPerRound.max)
+      usesPerRound += `(${this.data.data.usesPerRound.max})`
+    if (this.data.data.properties.auto)
+      usesPerRound += ` ${game.i18n.localize('CoC7.WeaponAuto')}`
     if (this.data.data.properties.brst) {
       usesPerRound += ` ${game.i18n.localize('CoC7.WeaponBrst')}`
-      if (this.data.data.usesPerRound.burst) usesPerRound += `(${this.data.data.usesPerRound.burst})`
+      if (this.data.data.usesPerRound.burst)
+        usesPerRound += `(${this.data.data.usesPerRound.burst})`
     }
 
     return usesPerRound
@@ -382,13 +462,17 @@ export class CoC7Item extends Item {
 
   get multipleShots () {
     if (this.type !== 'weapon') return null
-    if (this.maxUsesPerRound <= 1) { return false }
+    if (this.maxUsesPerRound <= 1) {
+      return false
+    }
     return true
   }
 
   get singleShot () {
     if (this.type !== 'weapon') return null
-    if (!this.usesPerRound) { return false }
+    if (!this.usesPerRound) {
+      return false
+    }
     return true
   }
 
@@ -409,14 +493,15 @@ export class CoC7Item extends Item {
 
     const skillProperties = []
     for (const [key, value] of Object.entries(COC7.skillProperties)) {
-      if (this.data.data.properties[key] === true) skillProperties.push(game.i18n.localize(value))
+      if (this.data.data.properties[key] === true)
+        skillProperties.push(game.i18n.localize(value))
     }
     return skillProperties
   }
 
   get base () {
     if (this.type !== 'skill') return null
-    if ((typeof this.data.data.base) !== 'string') return this.data.data.base
+    if (typeof this.data.data.base !== 'string') return this.data.data.base
     if (this.data.data.base.includes('@')) {
       const parsed = {}
       for (const [key, value] of Object.entries(COC7.formula.actorsheet)) {
@@ -426,7 +511,12 @@ export class CoC7Item extends Item {
       }
       let value
       try {
-        value = Math.floor((new Roll(this.data.data.base, parsed).evaluate({ maximize: true, async: true })).total)
+        value = Math.floor(
+          new Roll(this.data.data.base, parsed).evaluate({
+            maximize: true,
+            async: true
+          }).total
+        )
       } catch (err) {
         value = 0
       }
@@ -436,7 +526,9 @@ export class CoC7Item extends Item {
       }
       return value
     }
-    return (!isNaN(parseInt(this.data.data.base)) ? parseInt(this.data.data.base) : null)
+    return !isNaN(parseInt(this.data.data.base))
+      ? parseInt(this.data.data.base)
+      : null
   }
 
   get value () {
@@ -444,11 +536,18 @@ export class CoC7Item extends Item {
     let value = 0
     if (this.actor.data.type === 'character') {
       value = this.base
-      value += (this.data.data.adjustments?.personal) ? parseInt(this.data.data.adjustments?.personal) : 0
-      value += (this.data.data.adjustments?.occupation) ? parseInt(this.data.data.adjustments?.occupation) : 0
-      value += (this.data.data.adjustments?.experience) ? parseInt(this.data.data.adjustments?.experience) : 0
+      value += this.data.data.adjustments?.personal
+        ? parseInt(this.data.data.adjustments?.personal)
+        : 0
+      value += this.data.data.adjustments?.occupation
+        ? parseInt(this.data.data.adjustments?.occupation)
+        : 0
+      value += this.data.data.adjustments?.experience
+        ? parseInt(this.data.data.adjustments?.experience)
+        : 0
       if (game.settings.get('CoC7', 'pulpRules')) {
-        if (this.data.data.adjustments?.archetype) value += parseInt(this.data.data.adjustments?.archetype)
+        if (this.data.data.adjustments?.archetype)
+          value += parseInt(this.data.data.adjustments?.archetype)
       }
     } else {
       value = parseInt(this.data.data.value)
@@ -460,16 +559,26 @@ export class CoC7Item extends Item {
     if (this.type !== 'skill') return null
     if (this.actor.data.type === 'character') {
       const delta = parseInt(value) - this.value
-      const exp = (this.data.data.adjustments?.experience ? parseInt(this.data.data.adjustments.experience) : 0) + delta
-      await this.update({ 'data.adjustments.experience': exp > 0 ? exp : 0 })
+      const exp =
+        (this.data.data.adjustments?.experience
+          ? parseInt(this.data.data.adjustments.experience)
+          : 0) + delta
+      await this.update({
+        'data.adjustments.experience': exp > 0 ? exp : 0
+      })
     } else await this.update({ 'data.value': value })
   }
 
   async increaseExperience (x) {
     if (this.type !== 'skill') return null
     if (this.actor.data.type === 'character') {
-      const exp = (this.data.data.adjustments?.experience ? parseInt(this.data.data.adjustments.experience) : 0) + parseInt(x)
-      await this.update({ 'data.adjustments.experience': exp > 0 ? exp : 0 })
+      const exp =
+        (this.data.data.adjustments?.experience
+          ? parseInt(this.data.data.adjustments.experience)
+          : 0) + parseInt(x)
+      await this.update({
+        'data.adjustments.experience': exp > 0 ? exp : 0
+      })
     }
   }
 
@@ -484,7 +593,9 @@ export class CoC7Item extends Item {
 
   async reload () {
     if (this.type !== 'weapon') return null
-    const maxBullet = this.data.data.bullets ? parseInt(this.data.data.bullets) : 1
+    const maxBullet = this.data.data.bullets
+      ? parseInt(this.data.data.bullets)
+      : 1
     await this.setBullets(maxBullet)
   }
 
@@ -496,7 +607,9 @@ export class CoC7Item extends Item {
   async addBullet () {
     if (this.type !== 'weapon') return null
     const bullets = await this.getBulletLeft()
-    const maxBullets = this.data.data.bullets ? parseInt(this.data.data.bullets) : 1
+    const maxBullets = this.data.data.bullets
+      ? parseInt(this.data.data.bullets)
+      : 1
     if (bullets + 1 >= maxBullets) await this.setBullets(maxBullets)
     else await this.setBullets(bullets + 1)
   }
@@ -510,25 +623,35 @@ export class CoC7Item extends Item {
 
   static mergeOptionalSkills (skillList, options) {
     const jointArray = skillList.concat(options)
-    return jointArray.reduce((newArray, item) => {
-      // If skill is not a generic spec and is already included we don't add item
-      if (!CoC7Item.isAnySpec(item) && newArray.find(skill => skill.name === item.name)) return newArray
-      // Else item is added
-      return [...newArray, item]
-    }, []).sort((a, b) => {
-      let lca
-      let lcb
-      if (a.data.properties && b.data.properties) {
-        lca = a.data.properties.special ? a.data.specialization.toLowerCase() + a.name.toLowerCase() : a.name.toLowerCase()
-        lcb = b.data.properties.special ? b.data.specialization.toLowerCase() + b.name.toLowerCase() : b.name.toLowerCase()
-      } else {
-        lca = a.name.toLowerCase()
-        lcb = b.name.toLowerCase()
-      }
-      if (lca < lcb) return -1
-      if (lca > lcb) return 1
-      return 0
-    })
+    return jointArray
+      .reduce((newArray, item) => {
+        // If skill is not a generic spec and is already included we don't add item
+        if (
+          !CoC7Item.isAnySpec(item) &&
+          newArray.find(skill => skill.name === item.name)
+        )
+          return newArray
+        // Else item is added
+        return [...newArray, item]
+      }, [])
+      .sort((a, b) => {
+        let lca
+        let lcb
+        if (a.data.properties && b.data.properties) {
+          lca = a.data.properties.special
+            ? a.data.specialization.toLowerCase() + a.name.toLowerCase()
+            : a.name.toLowerCase()
+          lcb = b.data.properties.special
+            ? b.data.specialization.toLowerCase() + b.name.toLowerCase()
+            : b.name.toLowerCase()
+        } else {
+          lca = a.name.toLowerCase()
+          lcb = b.name.toLowerCase()
+        }
+        if (lca < lcb) return -1
+        if (lca > lcb) return 1
+        return 0
+      })
   }
 
   /** TODO : rien a faire ici !!
@@ -543,7 +666,7 @@ export class CoC7Item extends Item {
     if (tokenKey) {
       const [sceneId, tokenId] = tokenKey.split('.')
       if (sceneId === 'TOKEN') {
-        return game.actors.tokens[tokenId]// REFACTORING (2)
+        return game.actors.tokens[tokenId] // REFACTORING (2)
       } else {
         const scene = game.scenes.get(sceneId)
         if (!scene) return null
@@ -586,9 +709,15 @@ export class CoC7Item extends Item {
     const labels = []
 
     // Rich text description
-    data.description.value = TextEditor.enrichHTML(data.description.value, htmlOptions)
+    data.description.value = TextEditor.enrichHTML(
+      data.description.value,
+      htmlOptions
+    )
     data.description.value = CoC7Parser.enrichHTML(data.description.value)
-    data.description.special = TextEditor.enrichHTML(data.description.special, htmlOptions)
+    data.description.special = TextEditor.enrichHTML(
+      data.description.special,
+      htmlOptions
+    )
     data.description.special = CoC7Parser.enrichHTML(data.description.special)
 
     // Item type specific properties
@@ -635,39 +764,32 @@ export class CoC7Item extends Item {
 
     if (!found) {
       skillName = this.data.data.skill.main.name
-      if (this.usesAlternativeSkill && this.data.data.skill.alternativ.name) skillName += `/${this.data.data.skill.alternativ.name}`
+      if (this.usesAlternativeSkill && this.data.data.skill.alternativ.name)
+        skillName += `/${this.data.data.skill.alternativ.name}`
     }
 
     if (skillName) {
-      labels.push(
-        {
-          name: skillLabel,
-          value: skillName
-        }
-      )
+      labels.push({
+        name: skillLabel,
+        value: skillName
+      })
     }
 
-    labels.push(
-      {
-        name: game.i18n.localize('CoC7.WeaponUsesPerRound'),
-        value: this.usesPerRoundString
-      }
-    )
+    labels.push({
+      name: game.i18n.localize('CoC7.WeaponUsesPerRound'),
+      value: this.usesPerRoundString
+    })
 
-    labels.push(
-      {
-        name: game.i18n.localize('CoC7.WeaponMalfunction'),
-        value: this.data.data.malfunction ? this.data.data.malfunction : '-'
-      }
-    )
+    labels.push({
+      name: game.i18n.localize('CoC7.WeaponMalfunction'),
+      value: this.data.data.malfunction ? this.data.data.malfunction : '-'
+    })
 
     if (this.data.data.bullets) {
-      labels.push(
-        {
-          name: game.i18n.localize('CoC7.WeaponBulletsInMag'),
-          value: this.data.data.bullets
-        }
-      )
+      labels.push({
+        name: game.i18n.localize('CoC7.WeaponBulletsInMag'),
+        value: this.data.data.bullets
+      })
     }
   }
 
@@ -682,6 +804,9 @@ export class CoC7Item extends Item {
 
   get isDodge () {
     if (this.type !== 'skill') return false
-    return this.name.toLowerCase() === game.i18n.localize('CoC7.DodgeSkillName').toLowerCase()
+    return (
+      this.name.toLowerCase() ===
+      game.i18n.localize('CoC7.DodgeSkillName').toLowerCase()
+    )
   }
 }

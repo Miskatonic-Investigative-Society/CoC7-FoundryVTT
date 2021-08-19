@@ -18,8 +18,12 @@ export class CoC7ArchetypeSheet extends ItemSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return
 
-    html.find('.item .item-name h4').click(event => this._onItemSummary(event, 'skills'))
-    html.find('.item-delete').click(event => this._onItemDelete(event, 'skills'))
+    html
+      .find('.item .item-name h4')
+      .click(event => this._onItemSummary(event, 'skills'))
+    html
+      .find('.item-delete')
+      .click(event => this._onItemDelete(event, 'skills'))
   }
 
   async _onDrop (event, type = 'skill', collectionName = 'skills') {
@@ -49,10 +53,13 @@ export class CoC7ArchetypeSheet extends ItemSheet {
     if (!item || !(type === item.data.type)) return
 
     if (!CoC7Item.isAnySpec(item)) {
-      if (this.item.data.data.skills.find(el => el.name === item.data.name)) return
+      if (this.item.data.data.skills.find(el => el.name === item.data.name))
+        return
     }
 
-    const collection = this.item.data.data[collectionName] ? duplicate(this.item.data.data[collectionName]) : []
+    const collection = this.item.data.data[collectionName]
+      ? duplicate(this.item.data.data[collectionName])
+      : []
     collection.push(duplicate(item.data))
     await this.item.update({ [`data.${collectionName}`]: collection })
   }
@@ -60,7 +67,9 @@ export class CoC7ArchetypeSheet extends ItemSheet {
   _onItemSummary (event, collectionName = 'items') {
     event.preventDefault()
     const li = $(event.currentTarget).parents('.item')
-    const item = this.item.data.data[collectionName].find(s => { return s._id === li.data('item-id') })
+    const item = this.item.data.data[collectionName].find(s => {
+      return s._id === li.data('item-id')
+    })
     const chatData = item.data.description
 
     // Toggle summary
@@ -79,14 +88,20 @@ export class CoC7ArchetypeSheet extends ItemSheet {
   }
 
   async _onItemDelete (event, collectionName = 'items') {
-    const itemIndex = $(event.currentTarget).parents('.item').data('item-id')
+    const itemIndex = $(event.currentTarget)
+      .parents('.item')
+      .data('item-id')
     if (itemIndex) await this.removeItem(itemIndex, collectionName)
   }
 
   async removeItem (itemId, collectionName = 'items') {
-    const itemIndex = this.item.data.data[collectionName].findIndex(s => { return s._id === itemId })
+    const itemIndex = this.item.data.data[collectionName].findIndex(s => {
+      return s._id === itemId
+    })
     if (itemIndex > -1) {
-      const collection = this.item.data.data[collectionName] ? duplicate(this.item.data.data[collectionName]) : []
+      const collection = this.item.data.data[collectionName]
+        ? duplicate(this.item.data.data[collectionName])
+        : []
       collection.splice(itemIndex, 1)
       await this.item.update({ [`data.${collectionName}`]: collection })
     }
@@ -100,7 +115,13 @@ export class CoC7ArchetypeSheet extends ItemSheet {
       resizable: false,
       dragDrop: [{ dragSelector: '.item' }],
       scrollY: ['.tab.description'],
-      tabs: [{ navSelector: '.sheet-navigation', contentSelector: '.sheet-body', initial: 'description' }]
+      tabs: [
+        {
+          navSelector: '.sheet-navigation',
+          contentSelector: '.sheet-body',
+          initial: 'description'
+        }
+      ]
     })
   }
 
@@ -110,7 +131,9 @@ export class CoC7ArchetypeSheet extends ItemSheet {
 
   _onDragStart (event) {
     const li = event.currentTarget.closest('.item')
-    const skill = this.item.data.data.skills.find(s => { return s._id === li.dataset.itemId })
+    const skill = this.item.data.data.skills.find(s => {
+      return s._id === li.dataset.itemId
+    })
 
     const dragData = { type: 'Item', data: skill }
     event.dataTransfer.setData('text/plain', JSON.stringify(dragData))
@@ -127,16 +150,24 @@ export class CoC7ArchetypeSheet extends ItemSheet {
     data.isOwned = this.item.isOwned
 
     const coreCharacteristics = []
-    for (const [key, selected] of Object.entries(data.data.coreCharacteristics)) {
+    for (const [key, selected] of Object.entries(
+      data.data.coreCharacteristics
+    )) {
       if (selected) {
         const characName = game.i18n.localize(`CHARAC.${key.toUpperCase()}`)
         coreCharacteristics.push(characName)
       }
     }
 
-    data.skillListEmpty = (data.data.skills.length === 0)
-    data.data.skills.forEach(skill => { // For each skill if it's a spec and spac name not included in the name add it
-      if (skill.data.specialization && !skill.name.includes(skill.data.specialization)) { skill.displayName = `${skill.data.specialization} (${skill.name})` } else skill.displayName = skill.name
+    data.skillListEmpty = data.data.skills.length === 0
+    data.data.skills.forEach(skill => {
+      // For each skill if it's a spec and spac name not included in the name add it
+      if (
+        skill.data.specialization &&
+        !skill.name.includes(skill.data.specialization)
+      ) {
+        skill.displayName = `${skill.data.specialization} (${skill.name})`
+      } else skill.displayName = skill.name
     })
 
     data.data.skills.sort((a, b) => {
@@ -147,12 +178,17 @@ export class CoC7ArchetypeSheet extends ItemSheet {
 
     data.coreCharacteristicsString = ''
     const orString = ` ${game.i18n.localize('CoC7.Or')} `
-    if (coreCharacteristics.length) data.coreCharacteristicsString += coreCharacteristics.join(orString)
+    if (coreCharacteristics.length)
+      data.coreCharacteristicsString += coreCharacteristics.join(orString)
 
     data.itemProperties = []
 
-    data.itemProperties.push(`${game.i18n.localize('CoC7.PulpTalents')}: ${data.data.bonusPoints}`)
-    data.itemProperties.push(`${game.i18n.localize('CoC7.BonusPoints')}: ${data.data.talents}`)
+    data.itemProperties.push(
+      `${game.i18n.localize('CoC7.PulpTalents')}: ${data.data.bonusPoints}`
+    )
+    data.itemProperties.push(
+      `${game.i18n.localize('CoC7.BonusPoints')}: ${data.data.talents}`
+    )
 
     // for (let [key, value] of Object.entries(data.data.type)) {
     //   if( value) data.itemProperties.push( COC7.occupationProperties[key]?COC7.occupationProperties[key]:null);
@@ -167,7 +203,9 @@ export class CoC7ArchetypeSheet extends ItemSheet {
     if (formData.data.groups) {
       formData.data.groups = Object.values(formData.data?.groups || {})
       for (let index = 0; index < this.item.data.data.groups.length; index++) {
-        formData.data.groups[index].skills = duplicate(this.item.data.data.groups[index].skills)
+        formData.data.groups[index].skills = duplicate(
+          this.item.data.data.groups[index].skills
+        )
       }
     }
 

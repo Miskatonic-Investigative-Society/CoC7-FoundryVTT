@@ -14,13 +14,32 @@ export class CoC7CompendiumDirectory extends CompendiumDirectory {
       }
     }
     if (!translated) {
-      html.find('footer.directory-footer').append('<a class="compendium-translation" title="' + game.i18n.localize('CoC7.HowToTranslateTitle') + '">' + game.i18n.localize('CoC7.HowToTranslateTitle') + '</a>')
+      html
+        .find('footer.directory-footer')
+        .append(
+          '<a class="compendium-translation" title="' +
+            game.i18n.localize('CoC7.HowToTranslateTitle') +
+            '">' +
+            game.i18n.localize('CoC7.HowToTranslateTitle') +
+            '</a>'
+        )
       html.find('.compendium-translation').click(() => {
-        const message = '<p>' + game.i18n.localize('CoC7.HowToTranslateWarning') + '</p>' +
-          '<p>' + game.i18n.localize('CoC7.HowToTranslateInstallBabele') + '</p>' +
-          '<p>' + game.i18n.localize('CoC7.HowToTranslateInstallTranslation') + '</p>' +
-          '<p>' + game.i18n.localize('CoC7.HowToTranslateEnableTranslation') + '</p>' +
-          '<p>' + game.i18n.localize('CoC7.HowToTranslateNoTranslation') + '</p>'
+        const message =
+          '<p>' +
+          game.i18n.localize('CoC7.HowToTranslateWarning') +
+          '</p>' +
+          '<p>' +
+          game.i18n.localize('CoC7.HowToTranslateInstallBabele') +
+          '</p>' +
+          '<p>' +
+          game.i18n.localize('CoC7.HowToTranslateInstallTranslation') +
+          '</p>' +
+          '<p>' +
+          game.i18n.localize('CoC7.HowToTranslateEnableTranslation') +
+          '</p>' +
+          '<p>' +
+          game.i18n.localize('CoC7.HowToTranslateNoTranslation') +
+          '</p>'
         new Dialog(
           {
             title: game.i18n.localize('CoC7.HowToTranslateTitle'),

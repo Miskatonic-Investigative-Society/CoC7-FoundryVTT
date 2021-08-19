@@ -20,7 +20,13 @@ export class CoC7ItemSheetV2 extends ItemSheet {
       classes: ['coc7', 'sheetV2', 'item'],
       width: 290,
       height: 300,
-      tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills' }]
+      tabs: [
+        {
+          navSelector: '.sheet-tabs',
+          contentSelector: '.sheet-body',
+          initial: 'skills'
+        }
+      ]
     })
   }
 
@@ -28,7 +34,8 @@ export class CoC7ItemSheetV2 extends ItemSheet {
 
   /** @override */
   get template () {
-    if (this.item.data.type === 'item') return 'systems/CoC7/templates/items/item-sheetV2.html'
+    if (this.item.data.type === 'item')
+      return 'systems/CoC7/templates/items/item-sheetV2.html'
     const path = 'systems/CoC7/templates/items'
     return `${path}/${this.item.data.type}-sheet.html`
   }
@@ -72,7 +79,9 @@ export class CoC7ItemSheetV2 extends ItemSheet {
       }
 
       data.isSpecialized = this.item.data.data.properties.special
-      data.canModifySpec = !this.item.data.data.properties.firearm && !this.item.data.data.properties.fighting
+      data.canModifySpec =
+        !this.item.data.data.properties.firearm &&
+        !this.item.data.data.properties.fighting
     }
     return data
   }
@@ -95,8 +104,15 @@ export class CoC7ItemSheetV2 extends ItemSheet {
 
   async _onClickToggle (event) {
     event.preventDefault()
-    const propertyId = event.currentTarget.closest('.toggle-switch').dataset.property
-    await this.item.toggleProperty(propertyId, (event.metaKey || event.ctrlKey || event.keyCode === 91 || event.keyCode === 224))
+    const propertyId = event.currentTarget.closest('.toggle-switch').dataset
+      .property
+    await this.item.toggleProperty(
+      propertyId,
+      event.metaKey ||
+        event.ctrlKey ||
+        event.keyCode === 91 ||
+        event.keyCode === 224
+    )
   }
 
   // async _onClickAttributeControl(event) {

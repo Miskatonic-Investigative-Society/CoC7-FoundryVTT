@@ -1,621 +1,614 @@
 {
-	"Actor": {
-		"types": [
-			"character",
-			"npc",
-			"creature",
-			"vehicle"
-		],
-		"templates": {
-			"characteristics": {
-				"characteristics": {
-					"str": {
-						"value": null,
-						"tempValue": null,
-						"short": "CHARAC.STR",
-						"label": "CHARAC.Strength",
-						"formula": null
-					},
-					"con": {
-						"value": null,
-						"tempValue": null,
-						"short": "CHARAC.CON",
-						"label": "CHARAC.Constitution",
-						"formula": null
-					},
-					"siz": {
-						"value": null,
-						"tempValue": null,
-						"short": "CHARAC.SIZ",
-						"label": "CHARAC.Size",
-						"formula": null
-					},
-					"dex": {
-						"value": null,
-						"tempValue": null,
-						"short": "CHARAC.DEX",
-						"label": "CHARAC.Dexterity",
-						"formula": null
-					},
-					"app": {
-						"value": null,
-						"tempValue": null,
-						"short": "CHARAC.APP",
-						"label": "CHARAC.Appearance",
-						"formula": null
-					},
-					"int": {
-						"value": null,
-						"tempValue": null,
-						"short": "CHARAC.INT",
-						"label": "CHARAC.Intelligence",
-						"formula": null
-					},
-					"pow": {
-						"value": null,
-						"tempValue": null,
-						"short": "CHARAC.POW",
-						"label": "CHARAC.Power",
-						"formula": null
-					},
-					"edu": {
-						"value": null,
-						"tempValue": null,
-						"short": "CHARAC.EDU",
-						"label": "CHARAC.Education",
-						"formula": null
-					}
-				}
-			},
-			"attribs": {
-				"attribs": {
-					"hp": {
-						"value": null,
-						"max": null,
-						"short": "HP",
-						"label": "Hit points",
-						"auto": true
-					},
-					"mp": {
-						"value": null,
-						"max": null,
-						"short": "HP",
-						"label": "Magic points",
-						"auto": true
-					},
-					"lck": {
-						"value": null,
-						"short": "LCK",
-						"label": "Luck",
-						"max": 99
-					},
-					"san": {
-						"value": null,
-						"max": 99,
-						"short": "SAN",
-						"label": "Sanity",
-						"auto": true,
-						"dailyLoss": 0,
-						"oneFifthSanity": " / 0"
-					},
-					"mov": {
-						"value": null,
-						"max": null,
-						"short": "MOV",
-						"label": "Movement rate",
-						"auto": true
-					},
-					"db": {
-						"value": null,
-						"short": "DB",
-						"label": "Damage bonus",
-						"auto": true
-					},
-					"build": {
-						"current": null,
-						"value": null,
-						"short": "BLD",
-						"label": "Build",
-						"auto": true
-					},
-					"armor": {
-						"value": null,
-						"localized": false,
-						"locations": [],
-						"auto": false
-					}
-				}
-			},
-			"status": {
-				"status": {
-					"criticalWounds": {
-						"type": "Boolean",
-						"value": false
-					},
-					"unconscious": {
-						"type": "Boolean",
-						"value": false
-					},
-					"dying": {
-						"type": "Boolean",
-						"value": false
-					},
-					"dead": {
-						"type": "Boolean",
-						"value": false
-					},
-					"prone": {
-						"type": "Boolean",
-						"value": false
-					},
-					"tempoInsane": {
-						"type": "boolean",
-						"value": false
-					},
-					"indefInsane": {
-						"type": "boolean",
-						"value": false
-					}
-				}
-			},
-			"biography": {
-				"personalDescription": {
-					"type": "string",
-					"value": ""
-				}
-			}
-		},
-		"character": {
-			"templates": [
-				"characteristics",
-				"attribs",
-				"status"
-			],
-			"infos": {
-				"occupation": "",
-				"age": "",
-				"sex": "",
-				"residence": "",
-				"birthplace": "",
-				"archetype": "",
-				"organization": "",
-				"playername": ""
-			},
-			"flags": {
-				"locked": true,
-				"manualCredit": false
-			},
-			"credit": {
-				"monetarySymbol": null,
-				"multiplier": null,
-				"spent": "",
-				"assetsDetails": ""
-			},
-			"development": {
-				"personal": null,
-				"occupation": null,
-				"archetype": null
-			},
-			"biography": [],
-			"encounteredCreatures": [],
-			"backstory": "",
-			"indefiniteInsanityLevel": {
-				"value": 0,
-				"max": 0
-			},
-			"notes": ""
-		},
-		"npc": {
-			"templates": [
-				"characteristics",
-				"attribs",
-				"status",
-				"biography"
-			],
-			"infos": {
-				"occupation": "",
-				"age": "",
-				"sex": ""
-			},
-			"flags": {
-				"locked": false
-			}
-		},
-		"creature": {
-			"templates": [
-				"characteristics",
-				"attribs",
-				"status",
-				"biography"
-			],
-			"special": {
-				"attribs": {
-					"move": {
-						"primary": {
-							"enabled": false,
-							"value": null,
-							"type": null
-						},
-						"secondary": {
-							"enabled": false,
-							"value": null,
-							"type": null
-						}
-					}
-				},
-				"sanLoss": {
-					"checkPassed": null,
-					"checkFailled": null
-				},
-				"attacksPerRound": 1
-			},
-			"infos": {
-				"type": null
-			},
-			"flags": {
-				"locked": false
-			}
-		},
-		"vehicle": {
-			"templates": ["attribs"],
-			"description": {
-				"value": "",
-				"chat": "",
-				"notes": ""
-			},
-			"infos": {
-				"origin": null,
-				"type": null
-			},
-			"crew": {
-				"total": null,
-				"count": {
-					"driver": null,
-					"gunner": null,
-					"pax": null
-				},
-				"list": []
-			},
-			"skill": {
-				"driving": null,
-				"active": []
-			},
-			"properties": {
-				"armed": false
-			}
-		}
-	},
-	"Item": {
-		"types": ["item", "weapon", "skill", "setup", "occupation", "archetype", "book", "spell", "talent", "status", "chase"],
-		"item": {
-			"description": "",
-			"quantity": 1,
-			"weight": 0,
-			"attributes": {}
-		},
-		"weapon": {
-			"description": {
-				"value": "",
-				"chat": "",
-				"special": ""
-			},
-			"wpnType": "",
-			"skill": {
-				"main": {
-					"name": "",
-					"id": ""
-				},
-				"alternativ": {
-					"name": "",
-					"id": ""
-				}
-			},
-			"range": {
-				"normal": {
-					"value": 0,
-					"units": "",
-					"damage": ""
-				},
-				"long": {
-					"value": 0,
-					"units": "",
-					"damage": ""
-				},
-				"extreme": {
-					"value": 0,
-					"units": "",
-					"damage": ""
-				}
-			},
-			"usesPerRound": {
-				"normal": 1,
-				"max": null,
-				"burst": null
-			},
-			"bullets": null,
-			"ammo": 0,
-			"malfunction": null,
-			"blastRadius": null,
-			"properties": {},
-			"eras": {},
-			"price": {}
-		},
-		"skill": {
-			"specialization": "",
-			"description": {
-				"value": "",
-				"opposingDifficulty": "",
-				"pushedFaillureConsequences": "",
-				"chat": ""
-			},
-			"base": 0,
-			"adjustments": {
-				"personal": null,
-				"occupation": null,
-				"archetype": null,
-				"experience": null
-			},
-			"value": -1,
-			"attributes": {},
-			"properties": {},
-			"eras": {},
-			"flags": {}
-		},
-		"occupation": {
-			"description": {
-				"value": ""
-			},
-			"source": null,
-			"type": {
-				"classic": false,
-				"lovecraftian": false,
-				"modern": false,
-				"pulp": false
-			},
-			"related": null,
-			"occupationSkillPoints": {
-				"str": {
-					"multiplier": null,
-					"selected": false,
-					"optional": false,
-					"active": false
-				},
-				"con": {
-					"multiplier": null,
-					"selected": false,
-					"optional": false,
-					"active": false
-				},
-				"siz": {
-					"multiplier": null,
-					"selected": false,
-					"optional": false,
-					"active": false
-				},
-				"dex": {
-					"multiplier": null,
-					"selected": false,
-					"optional": false,
-					"active": false
-				},
-				"app": {
-					"multiplier": null,
-					"selected": false,
-					"optional": false,
-					"active": false
-				},
-				"int": {
-					"multiplier": null,
-					"selected": false,
-					"optional": false,
-					"active": false
-				},
-				"pow": {
-					"multiplier": null,
-					"selected": false,
-					"optional": false,
-					"active": false
-				},
-				"edu": {
-					"multiplier": null,
-					"selected": false,
-					"optional": false,
-					"active": false
-				}
-			},
-			"creditRating": {
-				"min": null,
-				"max": null
-			},
-			"suggestedContacts": "",
-			"skills": [],
-			"groups": [],
-			"personal": null,
-			"attributes": {},
-			"properties": {},
-			"eras": {},
-			"flags": {}
-		},
-		"archetype": {
-			"description": {
-				"value": ""
-			},
-			"source": null,
-			"type": {
-				"classic": false,
-				"lovecraftian": false,
-				"modern": false
-			},
-			"bonusPoints": 100,
-			"coreCharacteristics": {
-				"str": false,
-				"con": false,
-				"siz": false,
-				"dex": false,
-				"app": false,
-				"int": false,
-				"pow": false,
-				"edu": false
-			},
-			"coreCharacteristicsFormula": {
-				"enabled": true,
-				"value": "(1D6+13)*5"
-			},
-			"suggestedOccupations": "",
-			"suggestedTraits": "",
-			"talents": 2,
-			"skills": [],
-			"attributes": {},
-			"properties": {},
-			"eras": {},
-			"flags": {}
-		},
-		"setup": {
-			"description": {
-				"value": ""
-			},
-			"characteristics": {
-				"points": {
-					"enabled": false,
-					"value": 460
-				},
-				"rolls": {
-					"enabled": true,
-					"enableIndividualRolls": true,
-					"str": "(3D6)*5",
-					"con": "(3D6)*5",
-					"siz": "(2D6+6)*5",
-					"dex": "(3D6)*5",
-					"app": "(3D6)*5",
-					"int": "(2D6+6)*5",
-					"pow": "(3D6)*5",
-					"edu": "(2D6+6)*5",
-					"luck": "(3D6)*5"
-				},
-				"values": {
-					"str": null,
-					"con": null,
-					"siz": null,
-					"dex": null,
-					"app": null,
-					"int": null,
-					"pow": null,
-					"edu": null,
-					"luck": null
-				}
-			},
-			"source": null,
-			"enableCharacterisitics": true,
-			"items": [],
-			"bioSections": [],
-			"backstory": "",
-			"attributes": {},
-			"properties": {},
-			"eras": {},
-			"flags": {}
-		},
-		"spell": {
-			"source": null,
-			"castingTime": null,
-			"cost": {
-				"mp": null,
-				"san": null,
-				"pow": null,
-				"hp": null,
-				"other": []
-			},
-			"description": {
-				"value": "",
-				"chat": "",
-				"unidentified": "",
-				"notes": ""
-			},
-			"type": {
-				"call": false,
-				"dismiss": false,
-				"contact": false,
-				"summon": false,
-				"bind": false,
-				"enchantment": false,
-				"gate": false,
-				"combat": false
-			},
-			"alternativeNames": [],
-			"effects": [],
-			"properties": {},
-			"flags": {}
-		},
-		"book": {
-			"language": null,
-			"author": null,
-			"date": null,
-			"description": {
-				"value": "",
-				"chat": "",
-				"unidentified": "",
-				"notes": ""
-			},
-			"type": {
-				"occult": false,
-				"mythos": false,
-				"other": false
-			},
-			"sanLoss": null,
-			"mythosRating": null,
-			"weeksStudyTime": 0,
-			"gain": {
-				"cthulhuMythos": {
-					"CMI": null,
-					"CMF": null
-				},
-				"occult": null
-			},
-			"spells": [],
-			"properties": {},
-			"flags": {}
-		},
-		"talent": {
-			"source": null,
-			"description": {
-				"value": "",
-				"chat": "",
-				"notes": ""
-			},
-			"type": {
-				"physical": false,
-				"mental": false,
-				"combat": false,
-				"miscellaneous": false,
-				"basic": false,
-				"insane": false,
-				"other": false
-			}
-		},
-		"status": {
-			"active": false,
-			"source": null,
-			"description": {
-				"value": "",
-				"chat": "",
-				"notes": ""
-			},
-			"duration": {
-				"permanent": true,
-				"hours": null,
-				"minutes": null,
-				"rounds": null
-			},
-			"type": {
-				"mania": false,
-				"phobia": false
-			}
-		},
-		"chase": {
-			"locations": {
-				"total": 0,
-				"list": []
-			},
-			"participants": []
-		}
-	}
+  "Actor": {
+    "types": ["character", "npc", "creature", "vehicle"],
+    "templates": {
+      "characteristics": {
+        "characteristics": {
+          "str": {
+            "value": null,
+            "tempValue": null,
+            "short": "CHARAC.STR",
+            "label": "CHARAC.Strength",
+            "formula": null
+          },
+          "con": {
+            "value": null,
+            "tempValue": null,
+            "short": "CHARAC.CON",
+            "label": "CHARAC.Constitution",
+            "formula": null
+          },
+          "siz": {
+            "value": null,
+            "tempValue": null,
+            "short": "CHARAC.SIZ",
+            "label": "CHARAC.Size",
+            "formula": null
+          },
+          "dex": {
+            "value": null,
+            "tempValue": null,
+            "short": "CHARAC.DEX",
+            "label": "CHARAC.Dexterity",
+            "formula": null
+          },
+          "app": {
+            "value": null,
+            "tempValue": null,
+            "short": "CHARAC.APP",
+            "label": "CHARAC.Appearance",
+            "formula": null
+          },
+          "int": {
+            "value": null,
+            "tempValue": null,
+            "short": "CHARAC.INT",
+            "label": "CHARAC.Intelligence",
+            "formula": null
+          },
+          "pow": {
+            "value": null,
+            "tempValue": null,
+            "short": "CHARAC.POW",
+            "label": "CHARAC.Power",
+            "formula": null
+          },
+          "edu": {
+            "value": null,
+            "tempValue": null,
+            "short": "CHARAC.EDU",
+            "label": "CHARAC.Education",
+            "formula": null
+          }
+        }
+      },
+      "attribs": {
+        "attribs": {
+          "hp": {
+            "value": null,
+            "max": null,
+            "short": "HP",
+            "label": "Hit points",
+            "auto": true
+          },
+          "mp": {
+            "value": null,
+            "max": null,
+            "short": "HP",
+            "label": "Magic points",
+            "auto": true
+          },
+          "lck": {
+            "value": null,
+            "short": "LCK",
+            "label": "Luck",
+            "max": 99
+          },
+          "san": {
+            "value": null,
+            "max": 99,
+            "short": "SAN",
+            "label": "Sanity",
+            "auto": true,
+            "dailyLoss": 0,
+            "oneFifthSanity": " / 0"
+          },
+          "mov": {
+            "value": null,
+            "max": null,
+            "short": "MOV",
+            "label": "Movement rate",
+            "auto": true
+          },
+          "db": {
+            "value": null,
+            "short": "DB",
+            "label": "Damage bonus",
+            "auto": true
+          },
+          "build": {
+            "current": null,
+            "value": null,
+            "short": "BLD",
+            "label": "Build",
+            "auto": true
+          },
+          "armor": {
+            "value": null,
+            "localized": false,
+            "locations": [],
+            "auto": false
+          }
+        }
+      },
+      "status": {
+        "status": {
+          "criticalWounds": {
+            "type": "Boolean",
+            "value": false
+          },
+          "unconscious": {
+            "type": "Boolean",
+            "value": false
+          },
+          "dying": {
+            "type": "Boolean",
+            "value": false
+          },
+          "dead": {
+            "type": "Boolean",
+            "value": false
+          },
+          "prone": {
+            "type": "Boolean",
+            "value": false
+          },
+          "tempoInsane": {
+            "type": "boolean",
+            "value": false
+          },
+          "indefInsane": {
+            "type": "boolean",
+            "value": false
+          }
+        }
+      },
+      "biography": {
+        "personalDescription": {
+          "type": "string",
+          "value": ""
+        }
+      }
+    },
+    "character": {
+      "templates": ["characteristics", "attribs", "status"],
+      "infos": {
+        "occupation": "",
+        "age": "",
+        "sex": "",
+        "residence": "",
+        "birthplace": "",
+        "archetype": "",
+        "organization": "",
+        "playername": ""
+      },
+      "flags": {
+        "locked": true,
+        "manualCredit": false
+      },
+      "credit": {
+        "monetarySymbol": null,
+        "multiplier": null,
+        "spent": "",
+        "assetsDetails": ""
+      },
+      "development": {
+        "personal": null,
+        "occupation": null,
+        "archetype": null
+      },
+      "biography": [],
+      "encounteredCreatures": [],
+      "backstory": "",
+      "indefiniteInsanityLevel": {
+        "value": 0,
+        "max": 0
+      },
+      "notes": ""
+    },
+    "npc": {
+      "templates": ["characteristics", "attribs", "status", "biography"],
+      "infos": {
+        "occupation": "",
+        "age": "",
+        "sex": ""
+      },
+      "flags": {
+        "locked": false
+      }
+    },
+    "creature": {
+      "templates": ["characteristics", "attribs", "status", "biography"],
+      "special": {
+        "attribs": {
+          "move": {
+            "primary": {
+              "enabled": false,
+              "value": null,
+              "type": null
+            },
+            "secondary": {
+              "enabled": false,
+              "value": null,
+              "type": null
+            }
+          }
+        },
+        "sanLoss": {
+          "checkPassed": null,
+          "checkFailled": null
+        },
+        "attacksPerRound": 1
+      },
+      "infos": {
+        "type": null
+      },
+      "flags": {
+        "locked": false
+      }
+    },
+    "vehicle": {
+      "templates": ["attribs"],
+      "description": {
+        "value": "",
+        "chat": "",
+        "notes": ""
+      },
+      "infos": {
+        "origin": null,
+        "type": null
+      },
+      "crew": {
+        "total": null,
+        "count": {
+          "driver": null,
+          "gunner": null,
+          "pax": null
+        },
+        "list": []
+      },
+      "skill": {
+        "driving": null,
+        "active": []
+      },
+      "properties": {
+        "armed": false
+      }
+    }
+  },
+  "Item": {
+    "types": [
+      "item",
+      "weapon",
+      "skill",
+      "setup",
+      "occupation",
+      "archetype",
+      "book",
+      "spell",
+      "talent",
+      "status",
+      "chase"
+    ],
+    "item": {
+      "description": "",
+      "quantity": 1,
+      "weight": 0,
+      "attributes": {}
+    },
+    "weapon": {
+      "description": {
+        "value": "",
+        "chat": "",
+        "special": ""
+      },
+      "wpnType": "",
+      "skill": {
+        "main": {
+          "name": "",
+          "id": ""
+        },
+        "alternativ": {
+          "name": "",
+          "id": ""
+        }
+      },
+      "range": {
+        "normal": {
+          "value": 0,
+          "units": "",
+          "damage": ""
+        },
+        "long": {
+          "value": 0,
+          "units": "",
+          "damage": ""
+        },
+        "extreme": {
+          "value": 0,
+          "units": "",
+          "damage": ""
+        }
+      },
+      "usesPerRound": {
+        "normal": 1,
+        "max": null,
+        "burst": null
+      },
+      "bullets": null,
+      "ammo": 0,
+      "malfunction": null,
+      "blastRadius": null,
+      "properties": {},
+      "eras": {},
+      "price": {}
+    },
+    "skill": {
+      "specialization": "",
+      "description": {
+        "value": "",
+        "opposingDifficulty": "",
+        "pushedFaillureConsequences": "",
+        "chat": ""
+      },
+      "base": 0,
+      "adjustments": {
+        "personal": null,
+        "occupation": null,
+        "archetype": null,
+        "experience": null
+      },
+      "value": -1,
+      "attributes": {},
+      "properties": {},
+      "eras": {},
+      "flags": {}
+    },
+    "occupation": {
+      "description": {
+        "value": ""
+      },
+      "source": null,
+      "type": {
+        "classic": false,
+        "lovecraftian": false,
+        "modern": false,
+        "pulp": false
+      },
+      "related": null,
+      "occupationSkillPoints": {
+        "str": {
+          "multiplier": null,
+          "selected": false,
+          "optional": false,
+          "active": false
+        },
+        "con": {
+          "multiplier": null,
+          "selected": false,
+          "optional": false,
+          "active": false
+        },
+        "siz": {
+          "multiplier": null,
+          "selected": false,
+          "optional": false,
+          "active": false
+        },
+        "dex": {
+          "multiplier": null,
+          "selected": false,
+          "optional": false,
+          "active": false
+        },
+        "app": {
+          "multiplier": null,
+          "selected": false,
+          "optional": false,
+          "active": false
+        },
+        "int": {
+          "multiplier": null,
+          "selected": false,
+          "optional": false,
+          "active": false
+        },
+        "pow": {
+          "multiplier": null,
+          "selected": false,
+          "optional": false,
+          "active": false
+        },
+        "edu": {
+          "multiplier": null,
+          "selected": false,
+          "optional": false,
+          "active": false
+        }
+      },
+      "creditRating": {
+        "min": null,
+        "max": null
+      },
+      "suggestedContacts": "",
+      "skills": [],
+      "groups": [],
+      "personal": null,
+      "attributes": {},
+      "properties": {},
+      "eras": {},
+      "flags": {}
+    },
+    "archetype": {
+      "description": {
+        "value": ""
+      },
+      "source": null,
+      "type": {
+        "classic": false,
+        "lovecraftian": false,
+        "modern": false
+      },
+      "bonusPoints": 100,
+      "coreCharacteristics": {
+        "str": false,
+        "con": false,
+        "siz": false,
+        "dex": false,
+        "app": false,
+        "int": false,
+        "pow": false,
+        "edu": false
+      },
+      "coreCharacteristicsFormula": {
+        "enabled": true,
+        "value": "(1D6+13)*5"
+      },
+      "suggestedOccupations": "",
+      "suggestedTraits": "",
+      "talents": 2,
+      "skills": [],
+      "attributes": {},
+      "properties": {},
+      "eras": {},
+      "flags": {}
+    },
+    "setup": {
+      "description": {
+        "value": ""
+      },
+      "characteristics": {
+        "points": {
+          "enabled": false,
+          "value": 460
+        },
+        "rolls": {
+          "enabled": true,
+          "enableIndividualRolls": true,
+          "str": "(3D6)*5",
+          "con": "(3D6)*5",
+          "siz": "(2D6+6)*5",
+          "dex": "(3D6)*5",
+          "app": "(3D6)*5",
+          "int": "(2D6+6)*5",
+          "pow": "(3D6)*5",
+          "edu": "(2D6+6)*5",
+          "luck": "(3D6)*5"
+        },
+        "values": {
+          "str": null,
+          "con": null,
+          "siz": null,
+          "dex": null,
+          "app": null,
+          "int": null,
+          "pow": null,
+          "edu": null,
+          "luck": null
+        }
+      },
+      "source": null,
+      "enableCharacterisitics": true,
+      "items": [],
+      "bioSections": [],
+      "backstory": "",
+      "attributes": {},
+      "properties": {},
+      "eras": {},
+      "flags": {}
+    },
+    "spell": {
+      "source": null,
+      "castingTime": null,
+      "cost": {
+        "mp": null,
+        "san": null,
+        "pow": null,
+        "hp": null,
+        "other": []
+      },
+      "description": {
+        "value": "",
+        "chat": "",
+        "unidentified": "",
+        "notes": ""
+      },
+      "type": {
+        "call": false,
+        "dismiss": false,
+        "contact": false,
+        "summon": false,
+        "bind": false,
+        "enchantment": false,
+        "gate": false,
+        "combat": false
+      },
+      "alternativeNames": [],
+      "effects": [],
+      "properties": {},
+      "flags": {}
+    },
+    "book": {
+      "language": null,
+      "author": null,
+      "date": null,
+      "description": {
+        "value": "",
+        "chat": "",
+        "unidentified": "",
+        "notes": ""
+      },
+      "type": {
+        "occult": false,
+        "mythos": false,
+        "other": false
+      },
+      "sanLoss": null,
+      "mythosRating": null,
+      "weeksStudyTime": 0,
+      "gain": {
+        "cthulhuMythos": {
+          "CMI": null,
+          "CMF": null
+        },
+        "occult": null
+      },
+      "spells": [],
+      "properties": {},
+      "flags": {}
+    },
+    "talent": {
+      "source": null,
+      "description": {
+        "value": "",
+        "chat": "",
+        "notes": ""
+      },
+      "type": {
+        "physical": false,
+        "mental": false,
+        "combat": false,
+        "miscellaneous": false,
+        "basic": false,
+        "insane": false,
+        "other": false
+      }
+    },
+    "status": {
+      "active": false,
+      "source": null,
+      "description": {
+        "value": "",
+        "chat": "",
+        "notes": ""
+      },
+      "duration": {
+        "permanent": true,
+        "hours": null,
+        "minutes": null,
+        "rounds": null
+      },
+      "type": {
+        "mania": false,
+        "phobia": false
+      }
+    },
+    "chase": {
+      "locations": {
+        "total": 0,
+        "list": []
+      },
+      "participants": []
+    }
+  }
 }

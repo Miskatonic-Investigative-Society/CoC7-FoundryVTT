@@ -25,23 +25,44 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 
     data.totalExperience = this.actor.experiencePoints
     data.totalOccupation = this.actor.occupationPointsSpent
-    data.invalidOccupationPoints = (Number(this.actor.occupationPointsSpent) !== Number(this.actor.data.data.development?.occupation))
+    data.invalidOccupationPoints =
+      Number(this.actor.occupationPointsSpent) !==
+      Number(this.actor.data.data.development?.occupation)
     data.totalArchetype = this.actor.archetypePointsSpent
-    data.invalidArchetypePoints = (Number(this.actor.archetypePointsSpent) !== Number(this.actor.data.data.development?.archetype))
+    data.invalidArchetypePoints =
+      Number(this.actor.archetypePointsSpent) !==
+      Number(this.actor.data.data.development?.archetype)
     data.totalPersonal = this.actor.personalPointsSpent
-    data.invalidPersonalPoints = (Number(this.actor.personalPointsSpent) !== Number(this.actor.data.data.development?.personal))
-    data.creditRatingMax = Number(this.actor.occupation?.data.data.creditRating.max)
-    data.creditRatingMin = Number(this.actor.occupation?.data.data.creditRating.min)
-    data.invalidCreditRating = (this.actor.creditRatingSkill?.data.data.adjustments?.occupation > data.creditRatingMax || this.actor.creditRatingSkill?.data.data.adjustments?.occupation < data.creditRatingMin)
-    data.pulpTalentCount = data.itemsByType.talent?.length ? data.itemsByType.talent?.length : 0
-    data.minPulpTalents = this.actor.archetype?.data.data.talents ? this.actor.archetype?.data.data.talents : 0
+    data.invalidPersonalPoints =
+      Number(this.actor.personalPointsSpent) !==
+      Number(this.actor.data.data.development?.personal)
+    data.creditRatingMax = Number(
+      this.actor.occupation?.data.data.creditRating.max
+    )
+    data.creditRatingMin = Number(
+      this.actor.occupation?.data.data.creditRating.min
+    )
+    data.invalidCreditRating =
+      this.actor.creditRatingSkill?.data.data.adjustments?.occupation >
+        data.creditRatingMax ||
+      this.actor.creditRatingSkill?.data.data.adjustments?.occupation <
+        data.creditRatingMin
+    data.pulpTalentCount = data.itemsByType.talent?.length
+      ? data.itemsByType.talent?.length
+      : 0
+    data.minPulpTalents = this.actor.archetype?.data.data.talents
+      ? this.actor.archetype?.data.data.talents
+      : 0
     data.invalidPulpTalents = data.pulpTalentCount < data.minPulpTalents
 
     data.hasSkillFlaggedForExp = this.actor.hasSkillFlaggedForExp
 
     data.allowDevelopment = game.settings.get('CoC7', 'developmentEnabled')
     data.allowCharCreation = game.settings.get('CoC7', 'charCreationEnabled')
-    data.developmentRollForLuck = game.settings.get('CoC7', 'developmentRollForLuck')
+    data.developmentRollForLuck = game.settings.get(
+      'CoC7',
+      'developmentRollForLuck'
+    )
     data.showDevPannel = data.allowDevelopment || data.allowCharCreation
 
     data.manualCredit = this.actor.getActorFlag('manualCredit')
@@ -53,11 +74,16 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
         factor = 1
         moneySymbol = '$'
       } else {
-        factor = parseInt(data.data.credit.multiplier) ? parseInt(data.data.credit.multiplier) : 1
-        moneySymbol = data.data.credit.monetarySymbol ? data.data.credit.monetarySymbol : '$'
+        factor = parseInt(data.data.credit.multiplier)
+          ? parseInt(data.data.credit.multiplier)
+          : 1
+        moneySymbol = data.data.credit.monetarySymbol
+          ? data.data.credit.monetarySymbol
+          : '$'
       }
 
-      data.credit.spendingLevel = `${this.actor.spendingLevel * factor}${moneySymbol}`
+      data.credit.spendingLevel = `${this.actor.spendingLevel *
+        factor}${moneySymbol}`
       data.credit.assets = `${this.actor.assets * factor}${moneySymbol}`
       data.credit.cash = `${this.actor.cash * factor}${moneySymbol}`
     }
@@ -72,12 +98,21 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
   activateListeners (html) {
     super.activateListeners(html)
 
-    if (this.actor.isOwner) { // MODIF: 0.8.x owner deprecated  => isOwner
-      html.find('.skill-name.rollable.flagged4dev').click(async (event) => this._onSkillDev(event))
-      html.find('.reset-occupation').click(async () => await this.actor.resetOccupation())
-      html.find('.reset-archetype').click(async () => await this.actor.resetArchetype())
+    if (this.actor.isOwner) {
+      // MODIF: 0.8.x owner deprecated  => isOwner
+      html
+        .find('.skill-name.rollable.flagged4dev')
+        .click(async event => this._onSkillDev(event))
+      html
+        .find('.reset-occupation')
+        .click(async () => await this.actor.resetOccupation())
+      html
+        .find('.reset-archetype')
+        .click(async () => await this.actor.resetArchetype())
       html.find('.open-item').click(event => this._onItemDetails(event))
-      html.find('[name="data.attribs.hp.value"]').change(event => this.actor.setHealthStatusManually(event))
+      html
+        .find('[name="data.attribs.hp.value"]')
+        .change(event => this.actor.setHealthStatusManually(event))
     }
   }
 
@@ -105,7 +140,13 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
       width: 600,
       height: 650,
       dragDrop: [{ dragSelector: '.item', dropSelector: null }],
-      tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills' }]
+      tabs: [
+        {
+          navSelector: '.sheet-tabs',
+          contentSelector: '.sheet-body',
+          initial: 'skills'
+        }
+      ]
     })
   }
 }

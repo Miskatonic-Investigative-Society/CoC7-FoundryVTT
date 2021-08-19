@@ -25,7 +25,12 @@ function replacer (key, value) {
 }
 export class SanCheckCard extends ChatCardActor {
   constructor (actorKey = null, sanData = {}, options = {}) {
-    super(actorKey, typeof options.fastForward !== 'undefined' ? Boolean(options.fastForward) : false)
+    super(
+      actorKey,
+      typeof options.fastForward !== 'undefined'
+        ? Boolean(options.fastForward)
+        : false
+    )
     this.sanData = sanData
     this.options = options
     if (sanData.modifier && !isNaN(Number(sanData.modifier))) {
@@ -39,35 +44,55 @@ export class SanCheckCard extends ChatCardActor {
   }
 
   get isBlind () {
-    return (typeof this.options.isBlind !== 'undefined') ? Boolean(this.options.isBlind) : super.isBlind
+    return typeof this.options.isBlind !== 'undefined'
+      ? Boolean(this.options.isBlind)
+      : super.isBlind
   }
 
   get difficulty () {
-    return (typeof this.options.difficulty !== 'undefined') ? this.options.difficulty : CoC7Check.difficultyLevel.regular
+    return typeof this.options.difficulty !== 'undefined'
+      ? this.options.difficulty
+      : CoC7Check.difficultyLevel.regular
   }
 
   get modifier () {
-    return (typeof this.options.modifier !== 'undefined') ? this.options.modifier : 0
+    return typeof this.options.modifier !== 'undefined'
+      ? this.options.modifier
+      : 0
   }
 
-  get creature () { // TODO : check constructor
-    if (this.sanData.creatureKey && (!this.__creature || this.__creature.constructor.name === 'Object')) {
-      this.__creature = chatHelper.getActorFromKey(this.sanData.creatureKey)// REFACTORING (2)
+  get creature () {
+    // TODO : check constructor
+    if (
+      this.sanData.creatureKey &&
+      (!this.__creature || this.__creature.constructor.name === 'Object')
+    ) {
+      this.__creature = chatHelper.getActorFromKey(this.sanData.creatureKey) // REFACTORING (2)
     }
     return this.__creature
   }
 
   get involuntaryAction () {
-    if (this.state.sanRolled && (this.sanCheck.isFailure || this.sanCheck.isFumble)) return true
+    if (
+      this.state.sanRolled &&
+      (this.sanCheck.isFailure || this.sanCheck.isFumble)
+    )
+      return true
     return false
   }
 
   get sanLossFormula () {
     if (this.state.sanRolled) {
-      if (this.sanData.sanMax && this.sanCheck.failed) return !isNaN(Number(this.sanData.sanMax)) ? Number(this.sanData.sanMax) : this.sanData.sanMax
-      if (this.sanData.sanMin && this.sanCheck.passed) return !isNaN(Number(this.sanData.sanMin)) ? Number(this.sanData.sanMin) : this.sanData.sanMin
+      if (this.sanData.sanMax && this.sanCheck.failed)
+        return !isNaN(Number(this.sanData.sanMax))
+          ? Number(this.sanData.sanMax)
+          : this.sanData.sanMax
+      if (this.sanData.sanMin && this.sanCheck.passed)
+        return !isNaN(Number(this.sanData.sanMin))
+          ? Number(this.sanData.sanMin)
+          : this.sanData.sanMin
 
-      const formula = this.creature?.sanLoss ? (this.sanCheck.passed) : 0
+      const formula = this.creature?.sanLoss ? this.sanCheck.passed : 0
       if (formula) {
         if (!isNaN(Number(formula))) return Number(formula)
         return formula
@@ -83,14 +108,16 @@ export class SanCheckCard extends ChatCardActor {
   }
 
   get maxSanLossToThisCreature () {
-    if (this.creature) return this.actor.maxPossibleSanLossToCreature(this.creature)
+    if (this.creature)
+      return this.actor.maxPossibleSanLossToCreature(this.creature)
     return undefined
   }
 
   get maxSanLoss () {
     if (this.creature) return this.maxSanLossToThisCreature
     if (this.sanData.sanMax) {
-      if (!isNaN(Number(this.sanData.sanMax))) return Number(this.sanData.sanMax)
+      if (!isNaN(Number(this.sanData.sanMax)))
+        return Number(this.sanData.sanMax)
       return new Roll(this.sanData.sanMax).evaluate({ maximize: true }).total
     }
     return null
@@ -102,7 +129,8 @@ export class SanCheckCard extends ChatCardActor {
   }
 
   get creatureSpecieEncountered () {
-    if (this.creature) return this.actor.creatureSpecieEncountered(this.creature)
+    if (this.creature)
+      return this.actor.creatureSpecieEncountered(this.creature)
     return undefined
   }
 
@@ -130,7 +158,9 @@ export class SanCheckCard extends ChatCardActor {
       if (!this.creature.sanLossMax) return false
 
       // Actor already encountered that creature and lost already more or equal than max creature SAN loss.
-      if (this.actor.sanLostToCreature(this.creature) >= this.creature.sanLossMax) {
+      if (
+        this.actor.sanLostToCreature(this.creature) >= this.creature.sanLossMax
+      ) {
         this.state.immuneToCreature = true
         return false
       }
@@ -157,12 +187,18 @@ export class SanCheckCard extends ChatCardActor {
     if (this.actor.sanity.underlying.indefintie) {
       return game.i18n.localize('CoC7.AlreadyUnderlyingInsanity')
     } else {
-      return game.i18n.localize('CoC7.AlreadyUnderlyingInsanity') + ` (${this.actor.sanity.underlying.durationText})`
+      return (
+        game.i18n.localize('CoC7.AlreadyUnderlyingInsanity') +
+        ` (${this.actor.sanity.underlying.durationText})`
+      )
     }
   }
 
   get youGainCthulhuMythosString () {
-    if (this.mythosGain) return game.i18n.format('CoC7.YouGainedCthulhuMythos', { value: this.mythosGain })
+    if (this.mythosGain)
+      return game.i18n.format('CoC7.YouGainedCthulhuMythos', {
+        value: this.mythosGain
+      })
     return null
   }
 
@@ -185,7 +221,10 @@ export class SanCheckCard extends ChatCardActor {
         this.boutDuration = new Roll('1D10').roll().total
         this.boutRealTime = true
         this.boutSummary = false
-        this.boutResult = await this.actor.enterBoutOfMadness(true, this.boutDuration)
+        this.boutResult = await this.actor.enterBoutOfMadness(
+          true,
+          this.boutDuration
+        )
         this.state.boutOfMadnessResolved = true
         this.state.boutOfMadnessOver = false
         break
@@ -194,7 +233,10 @@ export class SanCheckCard extends ChatCardActor {
         this.boutDuration = new Roll('1D10').roll().total
         this.boutRealTime = false
         this.boutSummary = true
-        this.boutResult = await this.actor.enterBoutOfMadness(false, this.boutDuration)
+        this.boutResult = await this.actor.enterBoutOfMadness(
+          false,
+          this.boutDuration
+        )
         this.state.boutOfMadnessResolved = true
         await this.triggerInsanity()
         // if( this.state.indefinitelyInsane) this.actor.
@@ -220,8 +262,12 @@ export class SanCheckCard extends ChatCardActor {
         }
         this.state.cthulhuMythosAwarded = true
         const cthulhuMythosSkill = this.actor.cthulhuMythosSkill
-        const oldValue = cthulhuMythosSkill.data.data.adjustments.experience || 0
-        if (cthulhuMythosSkill) await cthulhuMythosSkill.update({ 'data.adjustments.experience': oldValue + amountGained })
+        const oldValue =
+          cthulhuMythosSkill.data.data.adjustments.experience || 0
+        if (cthulhuMythosSkill)
+          await cthulhuMythosSkill.update({
+            'data.adjustments.experience': oldValue + amountGained
+          })
         this.mythosGain = amountGained
         break
       }
@@ -232,7 +278,8 @@ export class SanCheckCard extends ChatCardActor {
     this.sanCheck = new CoC7Check()
     this.sanCheck.actor = this.actorKey
     this.sanCheck.attribute = 'san'
-    this.sanCheck.difficulty = this.options.sanDifficulty || CoC7Check.difficultyLevel.regular
+    this.sanCheck.difficulty =
+      this.options.sanDifficulty || CoC7Check.difficultyLevel.regular
     this.sanCheck.diceModifier = this.options.sanModifier || 0
     await this.sanCheck._perform()
     this.state.sanRolled = true
@@ -251,14 +298,20 @@ export class SanCheckCard extends ChatCardActor {
     } else if (typeof this.sanLossFormula === 'number') {
       this.state.sanLossRolled = true
       if (this.creature) {
-        this.sanLoss = Math.min(this.sanLossFormula, this.maxSanLossToThisCreature)
-        if (this.sanLossFormula > this.maxSanLossToThisCreature) this.state.limitedLossToCreature = true
+        this.sanLoss = Math.min(
+          this.sanLossFormula,
+          this.maxSanLossToThisCreature
+        )
+        if (this.sanLossFormula > this.maxSanLossToThisCreature)
+          this.state.limitedLossToCreature = true
       } else this.sanLoss = this.sanLossFormula
     } else if (this.sanCheck.isFumble) {
       this.state.sanLossRolled = true
       this.sanLoss = this.maxSanLoss
     } else if (this.creature) {
-      const min = new Roll(this.sanLossFormula).evaluate({ minimize: true }).total
+      const min = new Roll(this.sanLossFormula).evaluate({
+        minimize: true
+      }).total
       if (min >= this.maxSanLossToThisCreature) {
         this.state.sanLossRolled = true
         this.sanLoss = this.maxSanLossToThisCreature
@@ -279,11 +332,15 @@ export class SanCheckCard extends ChatCardActor {
 
     await CoC7Dice.showRollDice3d(this.sanLossRoll)
 
-    if (this.creature) { // Will never happen
-      if (this.sanLossRoll.total > this.maxSanLossToThisCreature) this.state.limitedLossToCreature = true
+    if (this.creature) {
+      // Will never happen
+      if (this.sanLossRoll.total > this.maxSanLossToThisCreature)
+        this.state.limitedLossToCreature = true
     }
 
-    this.sanLoss = this.creature ? Math.min(this.sanLossRoll.total, this.maxSanLossToThisCreature) : this.sanLossRoll.total
+    this.sanLoss = this.creature
+      ? Math.min(this.sanLossRoll.total, this.maxSanLossToThisCreature)
+      : this.sanLossRoll.total
     this.state.sanLossRolled = true
   }
 
@@ -343,7 +400,8 @@ export class SanCheckCard extends ChatCardActor {
     this.intCheck = new CoC7Check()
     this.intCheck.actor = this.actorKey
     this.intCheck.characteristic = 'int'
-    this.intCheck.difficulty = this.options.intDifficulty || CoC7Check.difficultyLevel.regular
+    this.intCheck.difficulty =
+      this.options.intDifficulty || CoC7Check.difficultyLevel.regular
     this.intCheck.diceModifier = this.options.intModifier || 0
     await this.intCheck._perform()
     this.state.intRolled = true
@@ -365,14 +423,18 @@ export class SanCheckCard extends ChatCardActor {
     this.state.boutOfMadnessOver = true
     if (this.state.indefinitelyInsane) await this.actor.enterInsanity(true)
     if (this.state.temporaryInsane) {
-      if (this.actor.sanity.underlying.active && this.actor.sanity.underlying.indefintie) {
+      if (
+        this.actor.sanity.underlying.active &&
+        this.actor.sanity.underlying.indefintie
+      ) {
         // Already indefinite insanity
         this.state.finish = true
         return
       }
       this.insanityDurationRoll = new Roll('1D10').roll()
       this.insanityDuration = this.insanityDurationRoll.total
-      if (this.actor.sanity.underlying.duration) this.insanityDuration += this.actor.sanity.underlying.duration
+      if (this.actor.sanity.underlying.duration)
+        this.insanityDuration += this.actor.sanity.underlying.duration
       await this.actor.enterInsanity(false, this.insanityDuration)
     }
     this.state.finish = true
@@ -380,12 +442,14 @@ export class SanCheckCard extends ChatCardActor {
 
   async resetCreatureSanData () {
     await this.actor.resetCreature(this.creature)
-    if (!this.creatureEncountered && !this.creatureSpecieEncountered) this.state.keepCreatureSanData = true
+    if (!this.creatureEncountered && !this.creatureSpecieEncountered)
+      this.state.keepCreatureSanData = true
   }
 
   async resetSpecieSanData () {
     await this.actor.resetSpecie(this.creature)
-    if (!this.creatureEncountered && !this.creatureSpecieEncountered) this.state.keepCreatureSanData = true
+    if (!this.creatureEncountered && !this.creatureSpecieEncountered)
+      this.state.keepCreatureSanData = true
   }
 
   async updateChatCard () {
@@ -412,7 +476,9 @@ export class SanCheckCard extends ChatCardActor {
     // Update the message.
     const chatMessage = game.messages.get(this.messageId)
 
-    const msg = await chatMessage.update({ content: htmlCardElement.outerHTML })
+    const msg = await chatMessage.update({
+      content: htmlCardElement.outerHTML
+    })
     await ui.chat.updateMessage(msg, false)
     return msg
   }
@@ -424,9 +490,20 @@ export class SanCheckCard extends ChatCardActor {
   static checkTargets (creatureKey, fastForward = false) {
     const targets = [...game.user.targets]
     if (targets.length) {
-      targets.forEach(t => { // TODO : ? Make async call to create ?
-        if (t.actor.isToken) SanCheckCard.create(t.actor.tokenKey, { creatureKey: creatureKey }, { fastForward: fastForward })
-        else SanCheckCard.create(t.actor.id, { creatureKey: creatureKey }, { fastForward: fastForward })
+      targets.forEach(t => {
+        // TODO : ? Make async call to create ?
+        if (t.actor.isToken)
+          SanCheckCard.create(
+            t.actor.tokenKey,
+            { creatureKey: creatureKey },
+            { fastForward: fastForward }
+          )
+        else
+          SanCheckCard.create(
+            t.actor.id,
+            { creatureKey: creatureKey },
+            { fastForward: fastForward }
+          )
       })
     }
   }
@@ -448,7 +525,8 @@ export class SanCheckCard extends ChatCardActor {
       chatCard.state.finish = true
     }
 
-    if (!chatCard.creatureEncountered && !chatCard.creatureSpecieEncountered) chatCard.state.keepCreatureSanData = true
+    if (!chatCard.creatureEncountered && !chatCard.creatureSpecieEncountered)
+      chatCard.state.keepCreatureSanData = true
 
     const html = await renderTemplate(SanCheckCard.template, chatCard)
     const htmlCardElement = $.parseHTML(html)[0]
@@ -471,14 +549,21 @@ export class SanCheckCard extends ChatCardActor {
 
     const sanCheckCard = new SanCheckCard()
     Object.assign(sanCheckCard, sanCheckCardData)
-    if (!sanCheckCard.messageId) sanCheckCard.messageId = card.closest('.message').dataset.messageId
+    if (!sanCheckCard.messageId)
+      sanCheckCard.messageId = card.closest('.message').dataset.messageId
 
     if (sanCheckCard.sanCheck?.constructor?.name === 'Object') {
-      sanCheckCard.sanCheck = Object.assign(new CoC7Check(), sanCheckCard.sanCheck)
+      sanCheckCard.sanCheck = Object.assign(
+        new CoC7Check(),
+        sanCheckCard.sanCheck
+      )
     }
 
     if (sanCheckCard.intCheck?.constructor?.name === 'Object') {
-      sanCheckCard.intCheck = Object.assign(new CoC7Check(), sanCheckCard.intCheck)
+      sanCheckCard.intCheck = Object.assign(
+        new CoC7Check(),
+        sanCheckCard.intCheck
+      )
     }
 
     if (sanCheckCard.sanLossRoll?.constructor?.name === 'Object') {

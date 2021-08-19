@@ -18,7 +18,7 @@ export class CoC7Utilities {
   // }
 
   static isFormula (x) {
-    if (typeof (x) !== 'string') return false
+    if (typeof x !== 'string') return false
     if (!isNaN(Number(x))) return false
     return Roll.validate(x)
   }
@@ -26,15 +26,24 @@ export class CoC7Utilities {
   static ParseChatEntry (html, content) {
     const regX = /(\S+)/g
     const terms = content.match(regX)
-    if (terms[0]?.toLowerCase() === '/r' && terms[1]?.toLowerCase().startsWith('1d%')) {
+    if (
+      terms[0]?.toLowerCase() === '/r' &&
+      terms[1]?.toLowerCase().startsWith('1d%')
+    ) {
       // Delay calling function to prevent chatmessage key down triggering default
-      setTimeout(function () { CoC7Utilities._ExecCommand(content) }, 200)
+      setTimeout(function () {
+        CoC7Utilities._ExecCommand(content)
+      }, 200)
       return false
     }
   }
 
   static async _ExecCommand (content) {
-    const options = content.toLowerCase().split(' ')?.join('')?.replace('/r1d%', '')
+    const options = content
+      .toLowerCase()
+      .split(' ')
+      ?.join('')
+      ?.replace('/r1d%', '')
     const check = new CoC7Check()
     if (options.length) {
       let escaped = options
@@ -47,12 +56,16 @@ export class CoC7Utilities {
       const thresholdStr = escaped.match(/[^(]+(?=\))/)
       if (thresholdStr && thresholdStr.length) {
         threshold = Number(thresholdStr[0])
-        thresholdStr.forEach(match => { escaped = escaped.replace(`(${match})`, '') })
+        thresholdStr.forEach(match => {
+          escaped = escaped.replace(`(${match})`, '')
+        })
       }
       const difficultyStr = escaped.match(/[^[]+(?=\])/)
       if (difficultyStr && difficultyStr.length) {
         difficulty = CoC7Utilities.convertDifficulty(difficultyStr[0])
-        difficultyStr.forEach(match => { escaped = escaped.replace(`[${match}]`, '') })
+        difficultyStr.forEach(match => {
+          escaped = escaped.replace(`[${match}]`, '')
+        })
       }
       if (escaped.includes('?')) {
         ask = true
@@ -86,7 +99,9 @@ export class CoC7Utilities {
     }
     const speaker = ChatMessage.getSpeaker()
     if (speaker.token && speaker.scene) {
-      const actor = chatHelper.getActorFromKey(`${speaker.scene}.${speaker.token}`)// REFACTORING (2) +++ why speaker.scene.
+      const actor = chatHelper.getActorFromKey(
+        `${speaker.scene}.${speaker.token}`
+      ) // REFACTORING (2) +++ why speaker.scene.
       if (actor) check.actor = actor
     } else if (speaker.actor) {
       const actor = game.actors.get(speaker.actor)
@@ -103,9 +118,13 @@ export class CoC7Utilities {
   static getCreatureSanData (creature) {
     let creatureData
     let actor
-    if (creature.constructor.name === 'CoCActor') { actor = creature }
+    if (creature.constructor.name === 'CoCActor') {
+      actor = creature
+    }
 
-    if (typeof (creature) === 'string') { actor = CoC7Utilities.getActorFromString(creature) }
+    if (typeof creature === 'string') {
+      actor = CoC7Utilities.getActorFromString(creature)
+    }
 
     if (actor) {
       if (actor.isToken) {
@@ -186,17 +205,55 @@ export class CoC7Utilities {
     const charKey = char.toLowerCase()
 
     switch (charKey) {
-      case 'str': return { short: game.i18n.localize('CHARAC.STR'), label: game.i18n.localize('CHARAC.Strength') }
-      case 'con': return { short: game.i18n.localize('CHARAC.CON'), label: game.i18n.localize('CHARAC.Constitution') }
-      case 'siz': return { short: game.i18n.localize('CHARAC.SIZ'), label: game.i18n.localize('CHARAC.Size') }
-      case 'dex': return { short: game.i18n.localize('CHARAC.DEX'), label: game.i18n.localize('CHARAC.Dexterity') }
-      case 'app': return { short: game.i18n.localize('CHARAC.APP'), label: game.i18n.localize('CHARAC.Appearance') }
-      case 'int': return { short: game.i18n.localize('CHARAC.INT'), label: game.i18n.localize('CHARAC.Intelligence') }
-      case 'pow': return { short: game.i18n.localize('CHARAC.POW'), label: game.i18n.localize('CHARAC.Power') }
-      case 'edu': return { short: game.i18n.localize('CHARAC.EDU'), label: game.i18n.localize('CHARAC.Education') }
+      case 'str':
+        return {
+          short: game.i18n.localize('CHARAC.STR'),
+          label: game.i18n.localize('CHARAC.Strength')
+        }
+      case 'con':
+        return {
+          short: game.i18n.localize('CHARAC.CON'),
+          label: game.i18n.localize('CHARAC.Constitution')
+        }
+      case 'siz':
+        return {
+          short: game.i18n.localize('CHARAC.SIZ'),
+          label: game.i18n.localize('CHARAC.Size')
+        }
+      case 'dex':
+        return {
+          short: game.i18n.localize('CHARAC.DEX'),
+          label: game.i18n.localize('CHARAC.Dexterity')
+        }
+      case 'app':
+        return {
+          short: game.i18n.localize('CHARAC.APP'),
+          label: game.i18n.localize('CHARAC.Appearance')
+        }
+      case 'int':
+        return {
+          short: game.i18n.localize('CHARAC.INT'),
+          label: game.i18n.localize('CHARAC.Intelligence')
+        }
+      case 'pow':
+        return {
+          short: game.i18n.localize('CHARAC.POW'),
+          label: game.i18n.localize('CHARAC.Power')
+        }
+      case 'edu':
+        return {
+          short: game.i18n.localize('CHARAC.EDU'),
+          label: game.i18n.localize('CHARAC.Education')
+        }
       default: {
-        for (const [, value] of Object.entries(game.system.template.Actor.templates.characteristics.characteristics)) {
-          if (charKey === game.i18n.localize(value.short).toLowerCase()) return { short: game.i18n.localize(value.short), label: game.i18n.localize(value.label) }
+        for (const [, value] of Object.entries(
+          game.system.template.Actor.templates.characteristics.characteristics
+        )) {
+          if (charKey === game.i18n.localize(value.short).toLowerCase())
+            return {
+              short: game.i18n.localize(value.short),
+              label: game.i18n.localize(value.label)
+            }
         }
         return null
       }
@@ -205,7 +262,7 @@ export class CoC7Utilities {
 
   static convertDifficulty (difficulty) {
     if (String(difficulty) === '0') return CoC7Check.difficultyLevel.regular
-    if (typeof (difficulty) !== 'string') return difficulty
+    if (typeof difficulty !== 'string') return difficulty
     if (!isNaN(Number(difficulty))) return Number(difficulty)
 
     switch (difficulty) {
@@ -250,7 +307,9 @@ export class CoC7Utilities {
         const token = scene.tokens.get(speaker.token)
 
         const ActorClass = getDocumentClass('Actor')
-        const tokenActor = new ActorClass(baseActor.toJSON(), { parent: token })
+        const tokenActor = new ActorClass(baseActor.toJSON(), {
+          parent: token
+        })
         actor = tokenActor
       } else actor = game.actors.get(speaker.actor)
     }
@@ -288,8 +347,14 @@ export class CoC7Utilities {
       origin = 'game'
     }
 
-    if (!item) return ui.notifications.warn(game.i18n.localize('CoC7.WarnMacroNoItemFound'))
-    if (!(item.type === 'weapon') && !(item.type === 'skill')) return ui.notifications.warn(game.i18n.localize('CoC7.WarnMacroIncorrectType'))
+    if (!item)
+      return ui.notifications.warn(
+        game.i18n.localize('CoC7.WarnMacroNoItemFound')
+      )
+    if (!(item.type === 'weapon') && !(item.type === 'skill'))
+      return ui.notifications.warn(
+        game.i18n.localize('CoC7.WarnMacroIncorrectType')
+      )
 
     let command
 
@@ -298,12 +363,17 @@ export class CoC7Utilities {
     }
 
     if (item.type === 'skill') {
-      if (CoC7Item.isAnySpec(item)) return ui.notifications.warn(game.i18n.localize('CoC7.WarnNoGlobalSpec'))
+      if (CoC7Item.isAnySpec(item))
+        return ui.notifications.warn(
+          game.i18n.localize('CoC7.WarnNoGlobalSpec')
+        )
       command = `game.CoC7.macros.skillCheck({name:'${item.name}', id:'${item._id}', origin:'${origin}', pack: '${packName}'}, event);`
     }
 
     // Create the macro command
-    let macro = game.macros.entities.find(m => (m.name === item.name) && (m.command === command))
+    let macro = game.macros.entities.find(
+      m => m.name === item.name && m.command === command
+    )
     if (!macro) {
       macro = await Macro.create({
         name: item.name,
@@ -321,8 +391,14 @@ export class CoC7Utilities {
     await game.settings.set('CoC7', 'developmentEnabled', !isDevEnabled)
     const group = game.CoC7.menus.controls.find(b => b.name === 'main-menu')
     const tool = group.tools.find(t => t.name === 'devphase')
-    tool.title = game.settings.get('CoC7', 'developmentEnabled') ? game.i18n.localize('CoC7.DevPhaseEnabled') : game.i18n.localize('CoC7.DevPhaseDisabled')
-    ui.notifications.info(game.settings.get('CoC7', 'developmentEnabled') ? game.i18n.localize('CoC7.DevPhaseEnabled') : game.i18n.localize('CoC7.DevPhaseDisabled'))
+    tool.title = game.settings.get('CoC7', 'developmentEnabled')
+      ? game.i18n.localize('CoC7.DevPhaseEnabled')
+      : game.i18n.localize('CoC7.DevPhaseDisabled')
+    ui.notifications.info(
+      game.settings.get('CoC7', 'developmentEnabled')
+        ? game.i18n.localize('CoC7.DevPhaseEnabled')
+        : game.i18n.localize('CoC7.DevPhaseDisabled')
+    )
     ui.controls.render()
     game.socket.emit('system.CoC7', {
       type: 'updateChar'
@@ -335,8 +411,14 @@ export class CoC7Utilities {
     await game.settings.set('CoC7', 'charCreationEnabled', !isCharCreation)
     const group = game.CoC7.menus.controls.find(b => b.name === 'main-menu')
     const tool = group.tools.find(t => t.name === 'charcreate')
-    tool.title = game.settings.get('CoC7', 'charCreationEnabled') ? game.i18n.localize('CoC7.CharCreationEnabled') : game.i18n.localize('CoC7.CharCreationDisabled')
-    ui.notifications.info(game.settings.get('CoC7', 'charCreationEnabled') ? game.i18n.localize('CoC7.CharCreationEnabled') : game.i18n.localize('CoC7.CharCreationDisabled'))
+    tool.title = game.settings.get('CoC7', 'charCreationEnabled')
+      ? game.i18n.localize('CoC7.CharCreationEnabled')
+      : game.i18n.localize('CoC7.CharCreationDisabled')
+    ui.notifications.info(
+      game.settings.get('CoC7', 'charCreationEnabled')
+        ? game.i18n.localize('CoC7.CharCreationEnabled')
+        : game.i18n.localize('CoC7.CharCreationDisabled')
+    )
     ui.controls.render()
     game.socket.emit('system.CoC7', {
       type: 'updateChar'
@@ -345,7 +427,7 @@ export class CoC7Utilities {
   }
 
   static async startRest () {
-    const actors = game.actors.filter((actor) => actor.hasPlayerOwner)
+    const actors = game.actors.filter(actor => actor.hasPlayerOwner)
     let chatContent = `<i>${game.i18n.localize('CoC7.dreaming')}...</i><br>`
     actors.forEach(actor => {
       let quickHealer = false
@@ -360,39 +442,66 @@ export class CoC7Utilities {
       const dailySanityLoss = actor.data.data.attribs.san.dailyLoss
       const hpValue = actor.data.data.attribs.hp.value
       const hpMax = actor.data.data.attribs.hp.max
-      const oneFifthSanity = ' / ' + Math.floor(actor.data.data.attribs.san.value / 5)
+      const oneFifthSanity =
+        ' / ' + Math.floor(actor.data.data.attribs.san.value / 5)
       const mpValue = actor.data.data.attribs.mp.value
       const mpMax = actor.data.data.attribs.mp.max
       chatContent = chatContent + `<br><b>${actor.name}. </b>`
       if (isCriticalWounds === false && hpValue < hpMax) {
         if (game.settings.get('CoC7', 'pulpRules') && quickHealer === true) {
-          chatContent = chatContent + `<b style="color:darkolivegreen">${game.i18n.format('CoC7.pulpHealthRecovered', { number: 3 })}. </b>`
+          chatContent =
+            chatContent +
+            `<b style="color:darkolivegreen">${game.i18n.format(
+              'CoC7.pulpHealthRecovered',
+              { number: 3 }
+            )}. </b>`
           actor.update({
             'data.attribs.hp.value': actor.data.data.attribs.hp.value + 3
           })
         } else if (game.settings.get('CoC7', 'pulpRules')) {
-          chatContent = chatContent + `<b style="color:darkolivegreen">${game.i18n.format('CoC7.pulpHealthRecovered', { number: 2 })}. </b>`
+          chatContent =
+            chatContent +
+            `<b style="color:darkolivegreen">${game.i18n.format(
+              'CoC7.pulpHealthRecovered',
+              { number: 2 }
+            )}. </b>`
           actor.update({
             'data.attribs.hp.value': actor.data.data.attribs.hp.value + 2
           })
         } else {
-          chatContent = chatContent + `<b style="color:darkolivegreen">${game.i18n.localize('CoC7.healthRecovered')}. </b>`
+          chatContent =
+            chatContent +
+            `<b style="color:darkolivegreen">${game.i18n.localize(
+              'CoC7.healthRecovered'
+            )}. </b>`
           actor.update({
             'data.attribs.hp.value': actor.data.data.attribs.hp.value + 1
           })
         }
       } else if (isCriticalWounds === true && hpValue < hpMax) {
-        chatContent = chatContent + `<b style="color:darkred">${game.i18n.localize('CoC7.hasCriticalWounds')}. </b>`
+        chatContent =
+          chatContent +
+          `<b style="color:darkred">${game.i18n.localize(
+            'CoC7.hasCriticalWounds'
+          )}. </b>`
       }
       if (dailySanityLoss > 0) {
-        chatContent = chatContent + `<b style="color:darkolivegreen">${game.i18n.localize('CoC7.dailySanLossRestarted')}.</b>`
+        chatContent =
+          chatContent +
+          `<b style="color:darkolivegreen">${game.i18n.localize(
+            'CoC7.dailySanLossRestarted'
+          )}.</b>`
         actor.update({
           'data.attribs.san.dailyLoss': 0,
           'data.attribs.san.oneFifthSanity': oneFifthSanity
         })
       }
       if (mpValue < mpMax) {
-        chatContent = chatContent + `<b style="color:darkolivegreen">${game.i18n.format('CoC7.magicPointsRecovered')}: 7.</b>`
+        chatContent =
+          chatContent +
+          `<b style="color:darkolivegreen">${game.i18n.format(
+            'CoC7.magicPointsRecovered'
+          )}: 7.</b>`
         actor.update({
           'data.attribs.mp.value': actor.data.data.attribs.mp.value + 7
         })
@@ -412,8 +521,14 @@ export class CoC7Utilities {
     await game.settings.set('CoC7', 'xpEnabled', !isXPEnabled)
     const group = game.CoC7.menus.controls.find(b => b.name === 'main-menu')
     const tool = group.tools.find(t => t.name === 'xptoggle')
-    tool.title = game.settings.get('CoC7', 'xpEnabled') ? game.i18n.localize('CoC7.XPGainEnabled') : game.i18n.localize('CoC7.XPGainDisabled')
-    ui.notifications.info(game.settings.get('CoC7', 'xpEnabled') ? game.i18n.localize('CoC7.XPGainEnabled') : game.i18n.localize('CoC7.XPGainDisabled'))
+    tool.title = game.settings.get('CoC7', 'xpEnabled')
+      ? game.i18n.localize('CoC7.XPGainEnabled')
+      : game.i18n.localize('CoC7.XPGainDisabled')
+    ui.notifications.info(
+      game.settings.get('CoC7', 'xpEnabled')
+        ? game.i18n.localize('CoC7.XPGainEnabled')
+        : game.i18n.localize('CoC7.XPGainDisabled')
+    )
     ui.controls.render()
   }
 
@@ -423,7 +538,8 @@ export class CoC7Utilities {
     let threshold = options.threshold
 
     if (undefined !== options.modifier) diceModifier = Number(options.modifier)
-    if (undefined !== options.difficulty) difficulty = CoC7Utilities.convertDifficulty(options.difficulty)
+    if (undefined !== options.difficulty)
+      difficulty = CoC7Utilities.convertDifficulty(options.difficulty)
 
     if (!event?.shiftKey && !options.fastForward) {
       const usage = await RollDialog.create(options)
@@ -439,7 +555,9 @@ export class CoC7Utilities {
     const actors = []
 
     if (game.user.isGM && canvas.tokens.controlled.length) {
-      canvas.tokens.controlled.forEach(token => { actors.push(token.actor.tokenKey) })
+      canvas.tokens.controlled.forEach(token => {
+        actors.push(token.actor.tokenKey)
+      })
     } else if (game.user.character) {
       actors.push(game.user.character.tokenKey)
     }

@@ -36,8 +36,12 @@ export class CoC7LinkCreationDialog extends FormApplication {
 
     data.link = this.link
     data.data = this.link.data
-    data.fromGame = this.link.is.item || (this.link.is.check && this.link.check === CoC7Link.CHECK_TYPE.SKILL)
-    data.askId = data.fromGame && (this.link.data.fromDirectory || this.link.data.fromCompendium)
+    data.fromGame =
+      this.link.is.item ||
+      (this.link.is.check && this.link.check === CoC7Link.CHECK_TYPE.SKILL)
+    data.askId =
+      data.fromGame &&
+      (this.link.data.fromDirectory || this.link.data.fromCompendium)
     data.askPack = data.fromGame && this.link.data.fromCompendium
     data.isSetFromGame = data.askId || data.askPack
 
@@ -51,7 +55,8 @@ export class CoC7LinkCreationDialog extends FormApplication {
       critical: CoC7Check.difficultyLevel.critical === this.link.data.difficulty
     }
     if (!this.link.data.difficulty) {
-      if (game.settings.get('CoC7', 'defaultCheckDifficulty') === 'unknown') data.selectedDifficulty.unknown = true
+      if (game.settings.get('CoC7', 'defaultCheckDifficulty') === 'unknown')
+        data.selectedDifficulty.unknown = true
       else data.selectedDifficulty.regular = true
     }
 
@@ -61,17 +66,16 @@ export class CoC7LinkCreationDialog extends FormApplication {
         key: CoC7Link.LINK_TYPE.CHECK,
         label: game.i18n.localize('CoC7.Check'),
         selected: this.link.is.check
-
-      }, {
+      },
+      {
         key: CoC7Link.LINK_TYPE.SANLOSS,
         label: game.i18n.localize('CoC7.SanityCheck'),
         selected: this.link.is.sanloss
-
-      }, {
+      },
+      {
         key: CoC7Link.LINK_TYPE.ITEM,
         label: game.i18n.localize('CoC7.ItemWeapon'),
         selected: this.link.is.item
-
       }
     ]
 
@@ -87,9 +91,12 @@ export class CoC7LinkCreationDialog extends FormApplication {
     // Prepare characteristics
     data.characteristics = CoCActor.getCharacteristicDefinition()
     for (let i = 0; i < data.characteristics.length; i++) {
-      if (data.data.characteristicKey === data.characteristics[i].key ||
+      if (
+        data.data.characteristicKey === data.characteristics[i].key ||
         data.data.characteristicKey === data.characteristics[i].shortName ||
-        data.data.characteristicKey === data.characteristics[i].label) data.characteristics[i].selected = true
+        data.data.characteristicKey === data.characteristics[i].label
+      )
+        data.characteristics[i].selected = true
       else data.characteristics[i].selected = false
     }
 
@@ -135,7 +142,10 @@ export class CoC7LinkCreationDialog extends FormApplication {
       this.render(true)
     } else {
       if (data.actorId) {
-        const actorKey = data.sceneId && data.tokenId ? `${data.sceneId}.${data.tokenId}` : data.actorId
+        const actorKey =
+          data.sceneId && data.tokenId
+            ? `${data.sceneId}.${data.tokenId}`
+            : data.actorId
         const actor = chatHelper.getActorFromKey(actorKey)
         if (actor.hasPlayerOwner) {
           this.link.hasPlayerOwner = true
@@ -192,41 +202,64 @@ export class CoC7LinkCreationDialog extends FormApplication {
         navigator.clipboard.writeText(this.link.link)
         break
 
-      case 'chat': {
-        const option = {}
-        option.speaker = {
-          alias: game.user.name
-        }
-        chatHelper.createMessage(null, game.i18n.format('CoC7.MessageCheckRequestedWait', { check: this.link.link }), option)
-      }
-        break
-
-      case 'whisper-owner': {
-        const option = {}
-        option.speaker = {
-          alias: game.user.name
-        }
-        option.whisper = this.link.actor.owners
-        chatHelper.createMessage(null, game.i18n.format('CoC7.MessageTargetCheckRequested', { name: this.link.actor.name, check: this.link.link }), option)
-      }
-        break
-
-      case 'whisper-selected': {
-        if (!canvas.tokens.controlled.length) {
-          ui.notifications.warn('No tokens selected')
-          return
-        }
-        const option = {}
-        option.speaker = {
-          alias: game.user.name
-        }
-        canvas.tokens.controlled.forEach(t => {
-          if (t.actor.hasPlayerOwner) {
-            option.whisper = t.actor.owners
-            chatHelper.createMessage(null, game.i18n.format('CoC7.MessageTargetCheckRequested', { name: t.actor.name, check: this.link.link }), option)
+      case 'chat':
+        {
+          const option = {}
+          option.speaker = {
+            alias: game.user.name
           }
-        })
-      }
+          chatHelper.createMessage(
+            null,
+            game.i18n.format('CoC7.MessageCheckRequestedWait', {
+              check: this.link.link
+            }),
+            option
+          )
+        }
+        break
+
+      case 'whisper-owner':
+        {
+          const option = {}
+          option.speaker = {
+            alias: game.user.name
+          }
+          option.whisper = this.link.actor.owners
+          chatHelper.createMessage(
+            null,
+            game.i18n.format('CoC7.MessageTargetCheckRequested', {
+              name: this.link.actor.name,
+              check: this.link.link
+            }),
+            option
+          )
+        }
+        break
+
+      case 'whisper-selected':
+        {
+          if (!canvas.tokens.controlled.length) {
+            ui.notifications.warn('No tokens selected')
+            return
+          }
+          const option = {}
+          option.speaker = {
+            alias: game.user.name
+          }
+          canvas.tokens.controlled.forEach(t => {
+            if (t.actor.hasPlayerOwner) {
+              option.whisper = t.actor.owners
+              chatHelper.createMessage(
+                null,
+                game.i18n.format('CoC7.MessageTargetCheckRequested', {
+                  name: t.actor.name,
+                  check: this.link.link
+                }),
+                option
+              )
+            }
+          })
+        }
         break
 
       default:
@@ -242,20 +275,24 @@ export class CoC7LinkCreationDialog extends FormApplication {
     const target = event.currentTarget
     const group = target?.closest('.form-group')
     const groupName = group?.dataset.group
-    if (groupName === 'origin') { // Deprecated
+    if (groupName === 'origin') {
+      // Deprecated
       if (target.name === 'fromCompendium') {
         this.link._linkData.fromCompendium = !this.link._linkData.fromCompendium
-        if (this.link._linkData.fromCompendium) this.link._linkData.fromDirectory = false
+        if (this.link._linkData.fromCompendium)
+          this.link._linkData.fromDirectory = false
       }
       if (target.name === 'fromDirectory') {
         this.link._linkData.fromDirectory = !this.link._linkData.fromDirectory
-        if (this.link._linkData.fromDirectory) this.link._linkData.fromCompendium = false
+        if (this.link._linkData.fromDirectory)
+          this.link._linkData.fromCompendium = false
       }
       await this.link.fetchItem()
     } else {
       const formDataEx = expandObject(formData)
       if (formDataEx.check) formDataEx.check = Number(formDataEx.check)
-      if (formDataEx.difficulty) formDataEx.difficulty = Number(formDataEx.difficulty)
+      if (formDataEx.difficulty)
+        formDataEx.difficulty = Number(formDataEx.difficulty)
       if (formDataEx.type) formDataEx.type = Number(formDataEx.type)
       const diffData = diffObject(this.link.data, formDataEx)
       await this.link.update(diffData)

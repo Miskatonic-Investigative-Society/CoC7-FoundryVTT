@@ -6,12 +6,17 @@ import { createInlineRoll } from '../helper.js'
 
 export class DamageCard extends InteractiveChatCard {
   /**
-     * Extend and override the default options used by the 5e Actor Sheet
-     * @returns {Object}
-    */
+   * Extend and override the default options used by the 5e Actor Sheet
+   * @returns {Object}
+   */
   static get defaultOptions () {
     return mergeObject(super.defaultOptions, {
-      exclude: ['_targetToken', '_targetActor', '_htmlRoll', '_htmlInlineRoll'].concat(super.defaultOptions.exclude),
+      exclude: [
+        '_targetToken',
+        '_targetActor',
+        '_htmlRoll',
+        '_htmlInlineRoll'
+      ].concat(super.defaultOptions.exclude),
       template: 'systems/CoC7/templates/chat/cards/damage.html'
     })
   }
@@ -48,25 +53,28 @@ export class DamageCard extends InteractiveChatCard {
   }
 
   get isDamageFormula () {
-    if (typeof (this.damageFormula) !== 'string') return false
+    if (typeof this.damageFormula !== 'string') return false
     if (!isNaN(Number(this.damageFormula))) return false
     return Roll.validate(this.damageFormula)
   }
 
   get isDamageNumber () {
-    return (!isNaN(Number(this.damageFormula)))
+    return !isNaN(Number(this.damageFormula))
   }
 
   get isArmorForula () {
-    if (typeof (this.armor) !== 'string') return false
+    if (typeof this.armor !== 'string') return false
     if (!isNaN(Number(this.armor))) return false
     return Roll.validate(this.armor)
   }
 
   get totalDamageString () {
-    let damage = Number(this.isDamageNumber ? this.damageFormula : this.roll.total)
+    let damage = Number(
+      this.isDamageNumber ? this.damageFormula : this.roll.total
+    )
     if (!this.ignoreArmor) {
-      if (isNaN(Number(this.armor)) || Number(this.armor) > 0) damage = damage - Number(this.armor)
+      if (isNaN(Number(this.armor)) || Number(this.armor) > 0)
+        damage = damage - Number(this.armor)
       if (!isNaN(Number(this.armor))) {
         if (damage - Number(this.armor) <= 0) {
           return game.i18n.localize('CoC7.ArmorAbsorbsDamage')
@@ -81,22 +89,31 @@ export class DamageCard extends InteractiveChatCard {
       const damage = this.isDamageNumber ? this.damageFormula : this.roll.total
       if (!this.ignoreArmor) {
         if (!isNaN(Number(this.armor))) {
-          return ((damage - Number(this.armor)) <= 0)
-        } return false
+          return damage - Number(this.armor) <= 0
+        }
+        return false
       } else {
-        return (damage <= 0)
+        return damage <= 0
       }
     } else return false
   }
 
   async updateChatCard () {
-    if (this.options.fastForward && !this.roll && !this.isDamageNumber) await this.rollDamage({ update: false })
-    if (this.isDamageNumber || (this.roll && this.roll.total != null) || this.hardrolled) this.rolled = true
+    if (this.options.fastForward && !this.roll && !this.isDamageNumber)
+      await this.rollDamage({ update: false })
+    if (
+      this.isDamageNumber ||
+      (this.roll && this.roll.total != null) ||
+      this.hardrolled
+    )
+      this.rolled = true
     else this.rolled = false
-    if (this.options.fastForward && !this.damageInflicted && !this.noDamage) await this.dealDamage({ update: false })
+    if (this.options.fastForward && !this.damageInflicted && !this.noDamage)
+      await this.dealDamage({ update: false })
 
     if (this.rolled && this.roll) {
-      if (this.roll.constructor.name === 'Object') this.roll = Roll.fromData(this.roll)
+      if (this.roll.constructor.name === 'Object')
+        this.roll = Roll.fromData(this.roll)
       const a = createInlineRoll(this.roll)
       this._htmlInlineRoll = a.outerHTML
       this._htmlRoll = await this.roll.render()
@@ -108,14 +125,16 @@ export class DamageCard extends InteractiveChatCard {
     this.roll = await new Roll(this.damageFormula).evaluate({ async: true })
     await CoC7Dice.showRollDice3d(this.roll)
     this.hardrolled = true
-    options.update = typeof options.update === 'undefined' ? true : options.update
+    options.update =
+      typeof options.update === 'undefined' ? true : options.update
     if (options.update) this.updateChatCard()
   }
 
   async rollArmor (options = { update: true }) {
     const roll = await new Roll(this.armor).evaluate({ async: true })
     this.armor = roll.total
-    options.update = typeof options.update === 'undefined' ? true : options.update
+    options.update =
+      typeof options.update === 'undefined' ? true : options.update
     if (options.update) this.updateChatCard()
   }
 
@@ -131,7 +150,9 @@ export class DamageCard extends InteractiveChatCard {
       return token.actor
     })
     for (let index = 0; index < selectedPlayers.length; index++) {
-      if (this.actor.id === selectedPlayers[index].id) { continue }
+      if (this.actor.id === selectedPlayers[index].id) {
+        continue
+      }
       targetName.push(selectedPlayers[index].name)
       targets.push(selectedPlayers[index])
     }
@@ -152,17 +173,21 @@ export class DamageCard extends InteractiveChatCard {
         two: {
           icon: '<i class="fas fa-times"></i>',
           label: game.i18n.localize('CoC7.Cancel'),
-          callback: () => { }
+          callback: () => {}
         }
       },
       default: 'two'
     }
-    if (targetName.length > 0) { new Dialog(data).render(true) }
+    if (targetName.length > 0) {
+      new Dialog(data).render(true)
+    }
   }
 
   async confirmDamage (targets) {
     for (let index = 0; index < targets.length; index++) {
-      await targets[index].dealDamage(Number(this.totalDamageString), { ignoreArmor: false })
+      await targets[index].dealDamage(Number(this.totalDamageString), {
+        ignoreArmor: false
+      })
       ChatMessage.create({
         content: `Damage ${targets[index].name} ${this.totalDamageString}HP`
       })
@@ -175,9 +200,13 @@ export class DamageCard extends InteractiveChatCard {
       ui.notifications.error('Error evaluating damage')
       return
     }
-    if (this.targetActor) await this.targetActor.dealDamage(Number(this.totalDamageString), { ignoreArmor: true })
+    if (this.targetActor)
+      await this.targetActor.dealDamage(Number(this.totalDamageString), {
+        ignoreArmor: true
+      })
     this.damageInflicted = true
-    options.update = typeof options.update === 'undefined' ? true : options.update
+    options.update =
+      typeof options.update === 'undefined' ? true : options.update
     if (options.update) this.updateChatCard()
   }
 
@@ -228,7 +257,8 @@ export class DamageCard extends InteractiveChatCard {
     if (undefined !== this._armor && this._armor !== '') return this._armor
     if (this.target) {
       return this.targetActor.data.data.attribs.armor.value
-    } return 0
+    }
+    return 0
   }
 
   set armor (x) {

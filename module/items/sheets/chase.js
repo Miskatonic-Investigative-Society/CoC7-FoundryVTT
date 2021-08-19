@@ -9,15 +9,21 @@ export class CoC7ChaseSheet extends ItemSheet {
   // }
 
   /**
-     * Extend and override the default options used by the Simple Item Sheet
-     * @returns {Object}
-     */
+   * Extend and override the default options used by the Simple Item Sheet
+   * @returns {Object}
+   */
   static get defaultOptions () {
     const options = mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheetV2', 'item', 'chase'],
       width: 500,
       height: 500,
-      tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'skills' }]
+      tabs: [
+        {
+          navSelector: '.sheet-tabs',
+          contentSelector: '.sheet-body',
+          initial: 'skills'
+        }
+      ]
     })
 
     return options
@@ -59,10 +65,18 @@ export class CoC7ChaseSheet extends ItemSheet {
 
     html.on('dblclick', '.open-actor', CoC7Chat._onOpenActor.bind(this))
 
-    html.find('.participant').on('dragenter', (event) => this._onDragEnterParticipant(event))
-    html.find('.participant').on('dragover', (event) => this._onDragEnterParticipant(event))
-    html.find('.participant').on('dragleave', (event) => this._onDragLeaveParticipant(event))
-    html.find('.participant').on('drop', (event) => this._onDragLeaveParticipant(event))
+    html
+      .find('.participant')
+      .on('dragenter', event => this._onDragEnterParticipant(event))
+    html
+      .find('.participant')
+      .on('dragover', event => this._onDragEnterParticipant(event))
+    html
+      .find('.participant')
+      .on('dragleave', event => this._onDragLeaveParticipant(event))
+    html
+      .find('.participant')
+      .on('drop', event => this._onDragLeaveParticipant(event))
 
     html.find('.p-side').click(this._onChangeSide.bind(this))
     html.find('.delete-participant').click(this._onDeleteParticipant.bind(this))
@@ -126,13 +140,17 @@ export class CoC7ChaseSheet extends ItemSheet {
       const index = Number(sIndex)
       if (type === 'participants' && !isNaN(index) && subType === 'check') {
         if (data === 'name') {
-          const participants = this.item.data.data.participants ? duplicate(this.item.data.data.participants) : []
+          const participants = this.item.data.data.participants
+            ? duplicate(this.item.data.data.participants)
+            : []
           if (participants[index].check) {
             delete participants[index].check.id
             delete participants[index].check.type
           } else participants[index].check = {}
           participants[index].check.name = target.value
-          await this.item.update({ 'data.participants': participants })
+          await this.item.update({
+            'data.participants': participants
+          })
         }
       }
     }
@@ -169,7 +187,9 @@ export class CoC7ChaseSheet extends ItemSheet {
     const target = event.currentTarget
     const participant = target.closest('.participant')
     const index = participant.dataset.index
-    const participants = this.item.data.data.participants ? duplicate(this.item.data.data.participants) : []
+    const participants = this.item.data.data.participants
+      ? duplicate(this.item.data.data.participants)
+      : []
     participants[index].chaser = !participants[index].chaser
     await this.item.update({ 'data.participants': participants })
   }
@@ -178,7 +198,9 @@ export class CoC7ChaseSheet extends ItemSheet {
     const target = event.currentTarget
     const driver = target.closest('.driver')
     const index = driver.dataset.index
-    const participants = this.item.data.data.participants ? duplicate(this.item.data.data.participants) : []
+    const participants = this.item.data.data.participants
+      ? duplicate(this.item.data.data.participants)
+      : []
     const participant = participants[index]
     delete participant.actorKey
     await this.item.update({ 'data.participants': participants })
@@ -188,13 +210,18 @@ export class CoC7ChaseSheet extends ItemSheet {
     const target = event.currentTarget
     const participant = target.closest('.participant')
     const index = participant.dataset.index
-    const participants = this.item.data.data.participants ? duplicate(this.item.data.data.participants) : []
+    const participants = this.item.data.data.participants
+      ? duplicate(this.item.data.data.participants)
+      : []
     participants.splice(index, 1)
     await this.item.update({ 'data.participants': participants })
   }
 
   async alterParticipant (data, index) {
-    const actorKey = (data.sceneId && data.tokenId) ? `${data.sceneId}.${data.tokenId}` : data.actorId || data.actorKey || data.id
+    const actorKey =
+      data.sceneId && data.tokenId
+        ? `${data.sceneId}.${data.tokenId}`
+        : data.actorId || data.actorKey || data.id
     const participant = {}
     const actor = chatHelper.getActorFromKey(actorKey)
     if (actor) {
@@ -228,7 +255,9 @@ export class CoC7ChaseSheet extends ItemSheet {
         break
     }
 
-    const participants = this.item.data.data.participants ? duplicate(this.item.data.data.participants) : []
+    const participants = this.item.data.data.participants
+      ? duplicate(this.item.data.data.participants)
+      : []
     const oldParticipant = participants[index]
     if (oldParticipant.mov) delete oldParticipant.mov
     mergeObject(oldParticipant, participant)
@@ -236,7 +265,10 @@ export class CoC7ChaseSheet extends ItemSheet {
   }
 
   async addParticipant (data) {
-    const actorKey = (data.sceneId && data.tokenId) ? `${data.sceneId}.${data.tokenId}` : data.actorId || data.actorKey || data.id
+    const actorKey =
+      data.sceneId && data.tokenId
+        ? `${data.sceneId}.${data.tokenId}`
+        : data.actorId || data.actorKey || data.id
     const participant = {}
     const actor = chatHelper.getActorFromKey(actorKey)
     if (actor) {
@@ -281,7 +313,9 @@ export class CoC7ChaseSheet extends ItemSheet {
         break
     }
 
-    const participants = this.item.data.data.participants ? duplicate(this.item.data.data.participants) : []
+    const participants = this.item.data.data.participants
+      ? duplicate(this.item.data.data.participants)
+      : []
     participants.push(participant)
     await this.item.update({ 'data.participants': participants })
   }
@@ -294,7 +328,15 @@ export function clean (obj) {
       obj[propName] = clean(obj[propName])
     }
 
-    if (tp === 'Object' && !Object.entries(obj[propName]).length) { delete obj[propName] } else if (obj[propName] === null || obj[propName] === undefined) { delete obj[propName] } else if (tp === 'string' && !obj[propName].length) { delete obj[propName] } else if (tp === 'string' && !isNaN(Number(obj[propName]))) { obj[propName] = Number(obj[propName]) }
+    if (tp === 'Object' && !Object.entries(obj[propName]).length) {
+      delete obj[propName]
+    } else if (obj[propName] === null || obj[propName] === undefined) {
+      delete obj[propName]
+    } else if (tp === 'string' && !obj[propName].length) {
+      delete obj[propName]
+    } else if (tp === 'string' && !isNaN(Number(obj[propName]))) {
+      obj[propName] = Number(obj[propName])
+    }
   }
   return obj
 }
@@ -305,26 +347,29 @@ export class _participant {
   }
 
   get actor () {
-    if (!this._actor) this._actor = chatHelper.getActorFromKey(this.data.actorKey)
+    if (!this._actor)
+      this._actor = chatHelper.getActorFromKey(this.data.actorKey)
     return this._actor
   }
 
   get driver () {
-    if (!this._driver) this._driver = chatHelper.getActorFromKey(this.data.actorKey)
+    if (!this._driver)
+      this._driver = chatHelper.getActorFromKey(this.data.actorKey)
     return this._driver
   }
 
   get vehicle () {
-    if (this.data.vehicleKey) this._vehicle = chatHelper.getActorFromKey(this.data.vehicleKey)
+    if (this.data.vehicleKey)
+      this._vehicle = chatHelper.getActorFromKey(this.data.vehicleKey)
     return this._vehicle
   }
 
   get hasActor () {
-    return (!!this.actor)
+    return !!this.actor
   }
 
   get hasVehicle () {
-    return (!!this.vehicle)
+    return !!this.vehicle
   }
 
   get name () {
@@ -339,7 +384,11 @@ export class _participant {
       else if (this.hasActor) this.data.mov = this.actor.mov
     }
     if (this.data.mov) {
-      if (!isNaN(Number(this.data.mov))) { this.data.hasValidMov = true } else { this.data.hasValidMov = false }
+      if (!isNaN(Number(this.data.mov))) {
+        this.data.hasValidMov = true
+      } else {
+        this.data.hasValidMov = false
+      }
     }
     return this.data.mov || undefined
   }
@@ -372,8 +421,8 @@ export class _participant {
     const check = {}
     if (this.data.check?.name) check.name = this.data.check.name
     if (this.hasActor) {
-      check.options = [];
-      ['con'].forEach(c => {
+      check.options = []
+      ;['con'].forEach(c => {
         const characterisitc = this.actor.getCharacteristic(c)
         if (characterisitc?.value) check.options.push(characterisitc.label)
       })

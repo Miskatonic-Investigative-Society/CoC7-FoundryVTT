@@ -34,7 +34,8 @@ export class RollCard {
     for (let index = 0; index < card.rolls.length; index++) {
       if (card.rolls[index]?.constructor?.name === 'Object') {
         card.rolls[index] = Object.assign(new CoC7Check(), card.rolls[index])
-        if (card.rolls[index].rolled) card.rolls[index]._htmlRoll = await card.rolls[index].getHtmlRoll()
+        if (card.rolls[index].rolled)
+          card.rolls[index]._htmlRoll = await card.rolls[index].getHtmlRoll()
       }
     }
     return card
@@ -44,7 +45,8 @@ export class RollCard {
     event.preventDefault()
 
     const span = event.currentTarget
-    if (span && span.classList.contains('gm-select-only') && !game.user.isGM) return
+    if (span && span.classList.contains('gm-select-only') && !game.user.isGM)
+      return
     const message = span.closest('.chat-message')
     const card = await this.fromMessageId(message.dataset.messageId)
     if (!card) return
@@ -64,7 +66,11 @@ export class RollCard {
   static async dispatch (data) {
     if (game.user.isGM) {
       const messages = ui.chat.collection.filter(message => {
-        if (this.defaultConfig.type === message.getFlag('CoC7', 'type') && message.getFlag('CoC7', 'state') !== 'resolved') return true
+        if (
+          this.defaultConfig.type === message.getFlag('CoC7', 'type') &&
+          message.getFlag('CoC7', 'state') !== 'resolved'
+        )
+          return true
         return false
       })
 
@@ -98,7 +104,8 @@ export class RollCard {
       }
     }
 
-    if (['gmroll', 'blindroll'].includes(this.rollMode)) chatData.whisper = ChatMessage.getWhisperRecipients('GM')
+    if (['gmroll', 'blindroll'].includes(this.rollMode))
+      chatData.whisper = ChatMessage.getWhisperRecipients('GM')
     if (this.rollMode === 'blindroll') chatData.blind = true
 
     const msg = await ChatMessage.create(chatData)
@@ -120,7 +127,9 @@ export class RollCard {
       const chatMessage = game.messages.get(this.messageId)
       if (this.closed) await chatMessage.setFlag('CoC7', 'state', 'resolved')
 
-      const msg = await chatMessage.update({ content: htmlCardElement.outerHTML })
+      const msg = await chatMessage.update({
+        content: htmlCardElement.outerHTML
+      })
       await ui.chat.updateMessage(msg, false)
       return msg
     }

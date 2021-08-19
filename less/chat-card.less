@@ -1,50 +1,49 @@
-.chat-card{
+.chat-card {
+  .upgrade-success {
+    color: darkolivegreen;
+  }
 
-	.upgrade-success{
-		color: darkolivegreen;
-	}
+  .upgrade-failed {
+    color: darkred;
+  }
 
-	.upgrade-failed{
-		color: darkred;
-	}
+  h4.san-result {
+    flex: 0 0 100%;
+    line-height: 24px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid #999;
+    border-radius: 3px;
+    box-shadow: 0 0 2px #fff inset;
+    font-size: 20px;
+    font-weight: bold;
 
-	h4.san-result {
-		flex: 0 0 100%;
-		line-height: 24px;
-    	text-align: center;
-	    background: rgba(0, 0, 0, 0.1);
-    	border: 1px solid #999;
-	    border-radius: 3px;
-		box-shadow: 0 0 2px #FFF inset;
-		font-size: 20px;
-		font-weight: bold;
+    &.loss {
+      color: darkred;
+    }
 
-		&.loss{
-			color:darkred;
-		}
+    &.resist {
+      color: green;
+    }
+  }
 
-		&.resist{
-			color:green;
-		}
-	}
+  h4.con-result {
+    flex: 0 0 100%;
+    line-height: 24px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid #999;
+    border-radius: 3px;
+    box-shadow: 0 0 2px #fff inset;
+    font-size: 20px;
+    font-weight: bold;
 
-	h4.con-result {
-		flex: 0 0 100%;
-		line-height: 24px;
-    	text-align: center;
-	    background: rgba(0, 0, 0, 0.1);
-    	border: 1px solid #999;
-	    border-radius: 3px;
-		box-shadow: 0 0 2px #FFF inset;
-		font-size: 20px;
-		font-weight: bold;
+    &.loss {
+      color: darkred;
+    }
 
-		&.loss{
-			color:darkred;
-		}
-
-		&.resist{
-			color:green;
-		}
-	}
+    &.resist {
+      color: green;
+    }
+  }
 }
