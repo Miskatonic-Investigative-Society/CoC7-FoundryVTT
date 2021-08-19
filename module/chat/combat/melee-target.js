@@ -91,7 +91,7 @@ export class CoC7MeleeTarget extends ChatCardActor {
     return this._initiator
   }
 
-  static get template () {
+  get template () {
     return 'systems/CoC7/templates/chat/combat/melee-target.html'
   }
 

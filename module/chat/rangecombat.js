@@ -401,7 +401,7 @@ export class CoC7RangeInitiator {
     this.shots.push(shot)
   }
 
-  static get template () {
+  get template () {
     return 'systems/CoC7/templates/chat/combat/range-initiator.html'
   }
 
@@ -414,7 +414,7 @@ export class CoC7RangeInitiator {
     // this.target.attachToElement(targetElement);
     const speakerData = {}
     const token = chatHelper.getTokenFromKey(this.actorKey)
-    if (token) speakerData.token = token
+    if (token) speakerData.token = token.document
     else speakerData.actor = this.actor
 
     const speaker = ChatMessage.getSpeaker(speakerData)

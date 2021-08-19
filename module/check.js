@@ -1330,7 +1330,7 @@ export class CoC7Check {
     const speakerData = {}
     let speaker
     if (this.actor) {
-      if (this.token) speakerData.token = this.token
+      if (this.token) speakerData.token = this.token.document
       else speakerData.actor = this.actor
       speaker = ChatMessage.getSpeaker(speakerData)
     } else {

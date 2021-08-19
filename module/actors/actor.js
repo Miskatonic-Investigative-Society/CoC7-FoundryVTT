@@ -215,7 +215,7 @@ export class CoCActor extends Actor {
       ? this.boutOfMadness?.data?.duration?.rounds
       : this.boutOfMadness?.data?.duration.seconds
     if (!boutRealTime && duration) duration = Math.round(duration / 3600)
-    let indefiniteInstanity = !!this.insanity?.data.flags?.CoC7.indefinite
+    let indefiniteInstanity = !!this.insanity?.data.flags?.CoC7?.indefinite
     let insaneDuration = indefiniteInstanity
       ? null
       : this.insanity?.data?.duration.seconds
@@ -3300,10 +3300,10 @@ export class CoCActor extends Actor {
     if (total <= 0) return 0
     await this.setHp(this.hp - total)
     if (total >= this.hpMax) {
-      this.fallDead()
+      await this.fallDead()
       // return this.hpMax;
     } else {
-      if (total >= Math.floor(this.hpMax / 2)) this.inflictMajorWound()
+      if (total >= Math.floor(this.hpMax / 2)) await this.inflictMajorWound()
       if (this.hp === 0) {
         if (!this.getStatus(COC7.status.unconscious))
           await this.fallUnconscious()
@@ -3336,7 +3336,7 @@ export class CoCActor extends Actor {
     }
     await this.fallProne()
     if (!this.getStatus(COC7.status.unconscious)) {
-      const conCheck = new CoC7ConCheck(this.isToken ? this.tokenKey : this._id)
+      const conCheck = new CoC7ConCheck(this.isToken ? this.tokenKey : this.id)
       conCheck.toMessage()
     }
   }
