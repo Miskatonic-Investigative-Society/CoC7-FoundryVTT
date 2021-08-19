@@ -1,112 +1,106 @@
-# Contributing to CoC7-FoundryVTT
+Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better. We encourage everyone to help improve this project with new features, bug fixes, or performance improvements. Please take a little bit of your time to read this guide and follow the steps bellow to make this process faster and easier.
 
-First off, thanks for taking the time to contribute!
+The goal of this document is to provide easy instructions to setup a development environment and provide clear contribution guidelines to encourage participation from more developers.
 
-The following is a set of guidelines for contributing to CoC7-FoundryVTT and its packages, which are hosted in the [CoC7-FoundryVTT](https://github.com/HavlockV/CoC7-FoundryVTT) on GitHub. These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
+The act of submitting pull requests with your changes involves creating a local branch, publishing it, and submitting a pull request, which will generate a code review. Once the review is approved, the code will automatically be merged.
 
-#### Table of Contents
+These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
 
-[Installation](#installation)
-  * [Installing on Foundry](#installing-on-foundy)
-  * [Installing for local development](#installing-for-local-development)
+## Any Questions?
 
-[How Can I Contribute?](#how-can-i-contribute)
-  * [Reporting Bugs](#reporting-bugs)
-  * [Suggesting Enhancements](#suggesting-enhancements)
-  * [Suggesting Features](#suggesting-features)
-  * [Translators Wanted!](#translators-wanted)
-  * [Creating a Pull Request](#creating-a-pull-request)
-  * [Your First Code Contribution](#your-first-code-contribution)
+If you have any questions about the contribution process or any questions about the system itself, please feel free to contact us on Discord, `#chaosium` in https://discord.gg/foundryvtt
 
-## Installation
+## Found a Bug?
 
-### Installing on Foundry
-
-There are 2 main ways to install in Foundry:
-
-1. Search for Call of Cthuhlu and select this module
-
-2. Install in foundry VTT from the Game Systems tab using the following manifest: <https://raw.githubusercontent.com/HavlockV/CoC7-FoundryVTT/master/system.json>
-
-### Installing for local development
-
-Copy and paste the contents of `CoCFoundry` after pulling from master. This should be placed in a `CoC7` folder inside 
-FoundryVTT's `systems` folder. 
-
-Start up FoundryVTT, and the system should be listed as installed. From here, you can create world
-with this system and test your changes.
-
-
-## How Can I Contribute?
-
-### Reporting Bugs
-
-This section guides you through submitting a bug report.
-
-Bug reports should be labelled [Bug] when an issue is created.
-
-#### Before Submitting A Bug Report
-
-Please do a search through Issues before creating a bug report to ensure we do not have duplicates.
-Please make sure that it's actually a bug, and not intended behavior. An incorrect implementation should not 
-count as intended behavior.
-
-#### How Do I Submit A (Good) Bug Report?
+Please do a search through Issues before creating a bug report to ensure we do not have duplicates. Please make sure that it is actually a bug, and not intended behavior. An incorrect implementation should not count as intended behavior.
 
 A good bug report will list and detail:
 
-- Steps to reproduce
-- Any modules being used
-- Expected behavior
-- Provide screencaps or gifs if possible
+- Steps to reproduce;
+- Any modules being used;
+- Expected behavior;
+- Provide screenshots, if possible and appropriate.
 
-If you use the keyboard while following the steps, **record the GIF with the [Keybinding Resolver](https://github.com/atom/keybinding-resolver) shown**. You can use [this tool](https://www.cockos.com/licecap/) to record GIFs on macOS and Windows, and [this tool](https://github.com/colinkeenan/silentcast) or [this tool](https://github.com/GNOME/byzanz) on Linux.
+If you use the keyboard while following the steps, record the GIF with the [Keybinding Resolver](https://github.com/atom/keybinding-resolver) shown. You can use [this tool](https://www.cockos.com/licecap/) to record a GIF on macOS and Windows, and [this tool](https://github.com/colinkeenan/silentcast) or [this tool](https://github.com/GNOME/byzanz), on Linux.
 
-The more detail on reproducing the better! Bugs are hard to fix if we can't reproduce them.
+The more detail on reproducing, the better! Bugs are hard to fix if we can not reproduce them.
 
-### Suggesting Enhancements
+## Missing a Feature?
 
-Enhancements should be labelled [Enhancement] when an issue is created.
+...
 
-#### How Do I Submit A (Good) Enhancement Suggestion?
+## Translators Wanted!
 
-* **Use a clear and descriptive title** for the issue to identify the suggestion.
-* **Provide a step-by-step description of the suggested enhancement** in as many details as possible.
+We are always looking for translators, there is a lot to translate, and we can not do it all. If you see any translations missing for you language, Feel free to look in the corresponding `*.json` file in the `lang` folder. Comparing against the `en.json` is a good idea, for a baseline.
 
-### Suggesting Features
+## Coding.
 
-Features should be labelled [Feature] when an issue is created.
+### Requisites.
 
-#### How Do I Submit A (Good) Feature Suggestion?
+#### Git.
 
-* **Use a clear and descriptive title** for the issue to identify the suggestion.
-* **Provide a step-by-step description of the suggested feature** in as many details as possible.
-* **Add quotes of the system** if system changes are required (such as Pulp Cthulhu), not all maintainers are familiar with the systems
+On Windows, grab an installer from here: https://git-scm.com/download/win and go with the default options (there will be a lot of option screens).
 
-### Translators Wanted
+On Mac and Linux, it is pre-installed.
 
-We are always looking for translators, there's a lot to translate, and we can't do it all.
-If you see any translations missing for you language, Feel free to look in the corresponding `*.json` file
-in the `lang` folder.
+To check if Git is installed in your environment, open the shell or terminal of your choice and:
 
-Comparing against the `en.json` is a good idea, for a baseline. 
+`git --version`
 
+#### Node.js (14+).
 
-### Creating a Pull Request
+Grab an installer for any operating system from here: https://nodejs.org/en/download/
 
-Before creating a pull request, it is suggested you fork the repository, and work within your own repository. 
-When you have a working branch, you would then create a pull request to merge your branch into the `develop` branch.
+Follow the installation steps and then make sure everything went right with:
 
-#### Writing a good Pull Request
+`node -v` or `node --version`
 
-* **Use a clear and descriptive title** for the issue being solved
-* **Link the issue that the request solves**
-* **Provide testing instructions** in as many details as possible
-* **Describe what changes** have been made, with before and after behavior
+## Setup.
 
-### Your First Code Contribution
+### Cloning the Repository.
 
-Unsure where to begin contributing? You can start by looking through these `beginner` and `help-wanted` issues:
+On the directory where you would like to pull your changes open the terminal or shell of your choice.
 
-* [Beginner issues][beginner] - issues which should only require a few lines of code, and a test or two.
-* [Help wanted issues][help-wanted] - issues which should be a bit more involved than `beginner` issues.
+`git clone https://github.com/HavlockV/CoC7-FoundryVTT.git`
+
+This will create a local clone of the project's repository.
+
+When prompted, enter your Github credentials.
+
+### Initial Setup.
+
+Preferably, open the project directory in your Integrated Development Environment (IDE). We recommend [Visual Studio Code](https://code.visualstudio.com/download).
+
+Still in the terminal, install the project dependencies: `npm install`
+
+To make things easier, edit the `fvtt.config.example.js` file, located at the root of your local repository. The userDataPath key is your User Data Directory from Foundry and can be found on the Configuration tab on the Setup screen.
+
+Examples:
+
+- %localappdata%/FoundryVTT
+- ~/Library/Application Support/FoundryVTT
+- /home/\$USER/.local/share/FoundryVTT
+
+Then, rename this file to `fvtt.config.js`
+
+And with this you can create a system build that will be sent directly to your Foundry folder by `npm run build` or `npm run watch`
+
+If you do not configure this file, all the builds will be built in the build folder, on the root directory.
+
+Run `npm run build` to perform a one off compile/build.
+
+Now everything is ready for you to make any changes or additions you want.
+
+### Contributing.
+
+The project structure is made as follows:
+
+...
+
+While testing your changes within Foundry VTT, prefer run: `npm run watch`
+
+This way, Webpack and other dependencies will know whenever you make any relevant code changes and will run the build process only when necessary.
+
+### Your First Code Contribution.
+
+Unsure where to begin contributing? You can start by looking through these `beginner` and `help-wanted` issues!

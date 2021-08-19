@@ -1,0 +1,151 @@
+.chat-card-v2.roll-card {
+  .dice-roll {
+    padding: 0;
+  }
+
+  .card-result {
+    position: relative;
+    margin: 0;
+    line-height: 24px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid #999;
+    border-radius: 3px;
+    box-shadow: 0 0 2px #fff inset;
+    word-break: break-all;
+    margin-top: 5px;
+  }
+
+  &.opposed {
+    &.combat {
+      .attacker {
+        img {
+          border: 1px solid red;
+        }
+      }
+    }
+  }
+
+  .opposed-card-flag {
+    flex: none;
+    color: white;
+    &.active {
+      color: red;
+    }
+  }
+
+  h4.card-result {
+    flex: 0;
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+    position: relative;
+    margin: 4px 0 0 0;
+    padding: 0;
+    line-height: 24px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid #999;
+    border-radius: 3px;
+    box-shadow: 0 0 2px #fff inset;
+    word-break: break-all;
+
+    &.success {
+      color: darkgreen;
+    }
+
+    &.failure {
+      color: darkred;
+    }
+  }
+
+  ol {
+    padding: 0;
+    list-style: none;
+    background: none;
+    box-shadow: none;
+    border: none;
+
+    li.actor-roll {
+      list-style: none;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      width: 100%;
+      align-items: center;
+      margin-bottom: 4px;
+
+      .roll-details {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .header {
+          height: 16px;
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+
+          .name {
+            flex: 1;
+          }
+
+          a {
+            height: 16px;
+            line-height: 16px;
+          }
+        }
+      }
+
+      span.pending {
+        width: 100%;
+        background: rgba(0, 0, 0, 0.05);
+        border: 1px solid #b5b3a4;
+        border-radius: 3px;
+        font-size: 12px;
+        height: 24px;
+        line-height: 20px;
+        margin: 2px 0;
+        display: inline-block;
+        text-align: center;
+      }
+
+      &.won {
+        border: 2px groove goldenrod;
+        &.tie {
+          border-color: red;
+        }
+      }
+
+      a {
+        line-height: 36px;
+        height: 36px;
+        flex: none;
+      }
+
+      img {
+        width: 36px;
+        height: 36px;
+        flex: none;
+        margin: 0;
+        object-fit: contain;
+        border: none;
+        margin-right: 2px;
+      }
+
+      .actor-card-buttons {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        height: 36px;
+        margin: 0;
+        align-self: center;
+      }
+
+      .roll-result {
+        width: 100%;
+      }
+    }
+  }
+}

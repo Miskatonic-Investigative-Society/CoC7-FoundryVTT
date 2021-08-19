@@ -1,120 +1,114 @@
 {
-	"name": "CoC7",
-	"title": "Call of Cthulhu 7th edition (Unofficial)",
-	"description": "Call of Cthulhu 7th edition (Unofficial) for FoundryVTT",
-	"version": "0.6.4",
-	"author": "HavelockV",
-	"minimumCoreVersion": "0.8.6",
-	"compatibleCoreVersion": "0.8.9",
-	"esmodules": [
-		"module/coc7.js",
-		"module/dicebot.js"
-	],
-	"templateVersion": 1,
-	"styles": [
-		"styles/coc7.css",
-		"coc7g.css",
-		"artwork/fonts/game-icons.css"
-	],
-	"packs": [
-		{
-			"label": "Skills",
-			"entity": "Item",
-			"name": "skills",
-			"path": "./packs/skills.db",
-			"system": "CoC7"
-		},
-		{
-			"label": "Items Examples",
-			"entity": "Item",
-			"name": "items",
-			"path": "./packs/items.db",
-			"system": "CoC7"
-		},
-		{
-			"label": "Examples",
-			"entity": "Actor",
-			"name": "examples",
-			"path": "./packs/examples.db",
-			"system": "CoC7"
-		},
-		{
-			"label": "Roll Requests",
-			"entity": "JournalEntry",
-			"name": "roll-requests",
-			"path": "./packs/roll-requests.db",
-			"system": "CoC7"
-		},{
-			"label": "Sanity Roll Table",
-			"entity": "RollTable",
-			"name": "sanity-tables-examples",
-			"path": "./packs/sanity-tables-examples.db",
-			"system": "CoC7"
-		}
-	],
-	"languages": [
-		{
-			"lang": "en",
-			"name": "English",
-			"path": "lang/en.json"
-		},
-		{
-			"lang": "fr",
-			"name": "Français",
-			"path": "lang/fr.json"
-		},
-		{
-			"lang": "es",
-			"name": "Español",
-			"path": "lang/es.json"
-		},
-		{
-			"lang": "de",
-			"name": "Deutsch",
-			"path": "lang/de.json"
-		},
-		{
-			"lang": "ja",
-			"name": "日本語",
-			"path": "lang/ja.json"
-		},
-		{
-			"lang": "cn",
-			"name": "中文",
-			"path": "lang/cn.json"
-		},
-		{
-			"lang": "PL",
-			"name": "Polski",
-			"path": "lang/pl.json"
-		},
-		{
-			"lang": "pt-BR",
-			"name": "Português (Brasil)",
-			"path": "lang/pt-BR.json"
-		},
-		{
-			"lang": "zh-tw",
-			"name": "正體中文",
-			"path": "lang/zh-tw.json"
-		},
-		{
-			"lang": "sv",
-			"name": "Svenska",
-			"path": "lang/sv.json"
-		},
-		{
-			"lang": "cs",
-			"name": "Čeština",
-			"path": "lang/cs.json"
-		}
-	  ],
-	"socket": true,
-	"gridDistance": 5,
-	"gridUnits": "ft",
-	"primaryTokenAttribute": "attribs.hp",
-	"secondaryTokenAttribute": "attribs.san",
-	"url": "https://github.com/HavlockV/CoC7-FoundryVTT/",
-	"manifest": "https://github.com/HavlockV/CoC7-FoundryVTT/raw/master/system.json",
-	"download": "https://github.com/HavlockV/CoC7-FoundryVTT/releases/latest/download/module.zip"
+  "name": "CoC7",
+  "title": "Call of Cthulhu 7th edition (Unofficial)",
+  "description": "Call of Cthulhu 7th edition (Unofficial) for FoundryVTT",
+  "version": "0.6.4",
+  "author": "HavelockV",
+  "minimumCoreVersion": "0.8.6",
+  "compatibleCoreVersion": "0.8.9",
+  "esmodules": ["bundle.js"],
+  "templateVersion": 1,
+  "styles": ["style.css"],
+  "packs": [
+    {
+      "label": "Skills",
+      "entity": "Item",
+      "name": "skills",
+      "path": "./packs/skills.db",
+      "system": "CoC7"
+    },
+    {
+      "label": "Items Examples",
+      "entity": "Item",
+      "name": "items",
+      "path": "./packs/items.db",
+      "system": "CoC7"
+    },
+    {
+      "label": "Examples",
+      "entity": "Actor",
+      "name": "examples",
+      "path": "./packs/examples.db",
+      "system": "CoC7"
+    },
+    {
+      "label": "Roll Requests",
+      "entity": "JournalEntry",
+      "name": "roll-requests",
+      "path": "./packs/roll-requests.db",
+      "system": "CoC7"
+    },
+    {
+      "label": "Sanity Roll Table",
+      "entity": "RollTable",
+      "name": "sanity-tables-examples",
+      "path": "./packs/sanity-tables-examples.db",
+      "system": "CoC7"
+    }
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    },
+    {
+      "lang": "fr",
+      "name": "Français",
+      "path": "lang/fr.json"
+    },
+    {
+      "lang": "es",
+      "name": "Español",
+      "path": "lang/es.json"
+    },
+    {
+      "lang": "de",
+      "name": "Deutsch",
+      "path": "lang/de.json"
+    },
+    {
+      "lang": "ja",
+      "name": "日本語",
+      "path": "lang/ja.json"
+    },
+    {
+      "lang": "cn",
+      "name": "中文",
+      "path": "lang/cn.json"
+    },
+    {
+      "lang": "PL",
+      "name": "Polski",
+      "path": "lang/pl.json"
+    },
+    {
+      "lang": "pt-BR",
+      "name": "Português (Brasil)",
+      "path": "lang/pt-BR.json"
+    },
+    {
+      "lang": "zh-tw",
+      "name": "正體中文",
+      "path": "lang/zh-tw.json"
+    },
+    {
+      "lang": "sv",
+      "name": "Svenska",
+      "path": "lang/sv.json"
+    },
+    {
+      "lang": "cs",
+      "name": "Čeština",
+      "path": "lang/cs.json"
+    }
+  ],
+  "socket": true,
+  "gridDistance": 5,
+  "gridUnits": "ft",
+  "primaryTokenAttribute": "attribs.hp",
+  "secondaryTokenAttribute": "attribs.san",
+  "url": "https://github.com/HavlockV/CoC7-FoundryVTT/",
+  "manifest": "https://github.com/HavlockV/CoC7-FoundryVTT/raw/master/system.json",
+  "download": "https://github.com/HavlockV/CoC7-FoundryVTT/releases/latest/download/module.zip"
 }
