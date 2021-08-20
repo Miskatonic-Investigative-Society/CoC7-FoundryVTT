@@ -35,88 +35,111 @@ export class Updater {
   }
 
   static async update (systemUpdateVersion) {
-    for (const actor of game.actors.contents) {
-      await Updater.updateActor(systemUpdateVersion, actor)
+    for (const entity of game.actors.contents && game.items.contents) {
+      await Updater.updateEntity(systemUpdateVersion, entity)
     }
     game.settings.set('CoC7', 'systemUpdateVersion', '0.2')
   }
 
-  static async updateActor (systemUpdateVersion, actor) {
-    if (actor.data.type === 'character') {
-      for (const item of actor.items) {
-        switch (systemUpdateVersion) {
-          case '0.0':
+  static async update (systemUpdateVersion, entity) {
+    switch (systemUpdateVersion) {
+      case '0.0':
+        if (entity.type === 'character') {
+          for (const item of entity.items) {
             if (item.data.type === 'skill' && item.data.data.value) {
               const exp = item.data.data.adjustments?.experience
                 ? parseInt(item.data.data.adjustments.experience)
                 : 0
-              await actor.updateEmbeddedEntity('OwnedItem', {
+              await entity.updateEmbeddedEntity('OwnedItem', {
                 _id: item._id,
                 'data.adjustments.experience':
                   exp + parseInt(item.data.data.value) - item.value,
                 'data.value': null
               })
             }
-            break
+          }
         }
-      }
-      const defaults = {}
-      const oneFifthSanity = Math.ceil(actor.data.data.attribs.san.value / 5)
-      switch (systemUpdateVersion) {
-        case '0.1':
+        break
+      case '0.1':
+        if (entity.type === 'character') {
+          const defaults = {}
+          const oneFifthSanity = Math.ceil(
+            entity.data.data.attribs.san.value / 5
+          )
           if (
-            typeof actor.data.data.attribs.san.dailyLoss === 'undefined' ||
-            actor.data.data.attribs.san.dailyLoss === null
+            typeof entity.data.data.attribs.san.dailyLoss === 'undefined' ||
+            entity.data.data.attribs.san.dailyLoss === null
           ) {
             defaults['data.attribs.san.dailyLoss'] = 0
           }
           if (
-            typeof actor.data.data.attribs.san.oneFifthSanity === 'undefined' ||
-            actor.data.data.attribs.san.oneFifthSanity === null
+            typeof entity.data.data.attribs.san.oneFifthSanity ===
+              'undefined' ||
+            entity.data.data.attribs.san.oneFifthSanity === null
           ) {
             defaults['data.attribs.san.oneFifthSanity'] = ' / ' + oneFifthSanity
           }
           if (
-            typeof actor.data.data.indefiniteInsanityLevel === 'undefined' ||
-            actor.data.data.indefiniteInsanityLevel === null ||
-            typeof actor.data.data.indefiniteInsanityLevel.value ===
+            typeof entity.data.data.indefiniteInsanityLevel === 'undefined' ||
+            entity.data.data.indefiniteInsanityLevel === null ||
+            typeof entity.data.data.indefiniteInsanityLevel.value ===
               'undefined' ||
-            actor.data.data.indefiniteInsanityLevel.value === null
+            entity.data.data.indefiniteInsanityLevel.value === null
           ) {
             defaults['data.indefiniteInsanityLevel.value'] = 0
           }
           if (
-            typeof actor.data.data.indefiniteInsanityLevel === 'undefined' ||
-            actor.data.data.indefiniteInsanityLevel === null ||
-            typeof actor.data.data.indefiniteInsanityLevel.max ===
+            typeof entity.data.data.indefiniteInsanityLevel === 'undefined' ||
+            entity.data.data.indefiniteInsanityLevel === null ||
+            typeof entity.data.data.indefiniteInsanityLevel.max ===
               'undefined' ||
-            actor.data.data.indefiniteInsanityLevel.max === null
+            entity.data.data.indefiniteInsanityLevel.max === null
           ) {
             defaults['data.indefiniteInsanityLevel.max'] = oneFifthSanity
           }
           if (
-            typeof actor.data.data.attribs.mp.value === 'undefined' ||
-            actor.data.data.attribs.mp.value === null
+            typeof entity.data.data.attribs.mp.value === 'undefined' ||
+            entity.data.data.attribs.mp.value === null
           ) {
             defaults['data.attribs.mp.value'] = oneFifthSanity
           }
           if (
-            typeof actor.data.data.attribs.mp.max === 'undefined' ||
-            actor.data.data.attribs.mp.max === null
+            typeof entity.data.data.attribs.mp.max === 'undefined' ||
+            entity.data.data.attribs.mp.max === null
           ) {
             defaults['data.attribs.mp.max'] = oneFifthSanity
           }
           if (
-            typeof actor.data.data.notes === 'undefined' ||
-            actor.data.data.notes === null
+            typeof entity.data.data.notes === 'undefined' ||
+            entity.data.data.notes === null
           ) {
             defaults['data.notes'] = ''
           }
           if (Object.keys(defaults).length > 0) {
-            await actor.update(defaults)
+            await entity.update(defaults)
           }
-          break
-      }
+        }
+        break
+      case '0.2':
+        if (
+          entity.type === 'skill' &&
+          entity.img === 'systems/CoC7/artwork/icons/skills.svg'
+        ) {
+          entity.update({ img: 'systems/CoC7/assets/icons/skills.svg' })
+        }
+        if (entity.type === 'book' && entity.img === 'icons/svg/item-bag.svg') {
+          entity.update({ img: 'icons/svg/book.svg' })
+        }
+        if (
+          entity.type === 'status' &&
+          entity.img === 'icons/svg/item-bag.svg'
+        ) {
+          entity.update({ img: 'icons/svg/aura.svg' })
+        }
+        if (entity.type === 'weapon' && entity.img === 'icons/svg/sword.svg') {
+          entity.update({ img: 'icons/svg/sword.svg' })
+        }
+        break
     }
   }
 }
