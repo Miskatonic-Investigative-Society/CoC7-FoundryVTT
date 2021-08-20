@@ -8,7 +8,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin'
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin'
 import developmentOptions from './fvtt.config.js'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
+import TerserPlugin from 'terser-webpack-plugin'
 import WebpackBar from 'webpackbar'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -44,7 +44,23 @@ const optimization =
   buildMode === 'production'
     ? {
         minimize: true,
-        minimizer: [new CssMinimizerPlugin(), new UglifyJsPlugin()]
+        minimizer: [
+          new TerserPlugin({
+            terserOptions: {
+              mangle: false
+            }
+          }),
+          new CssMinimizerPlugin()
+        ],
+        splitChunks: {
+          chunks: 'all',
+          cacheGroups: {
+            default: {
+              name: 'main',
+              test: 'module/coc7.js'
+            }
+          }
+        }
       }
     : undefined
 
@@ -56,7 +72,7 @@ const bundleScript = {
   bail: buildMode === 'production',
   context: __dirname,
   entry: './module/coc7.js',
-  devtool: buildMode === 'production' ? undefined : 'inline-source-map',
+  devtool: 'inline-source-map',
   mode: buildMode,
   module: {
     rules: [
