@@ -206,7 +206,7 @@ export class CoC7MeleeResoltion {
       const message = game.messages.get(this.messageId)
       const speakerData = {}
       if (this.winner) {
-        if (this.winner.token) speakerData.token = this.winner.token
+        if (this.winner.token) speakerData.token = this.winner.token.documment
         if (this.winner.actor) speakerData.actor = this.winner.actor
       }
       const speaker = this.winner ? ChatMessage.getSpeaker(speakerData) : null
