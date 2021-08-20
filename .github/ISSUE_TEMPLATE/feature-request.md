@@ -1,11 +1,12 @@
 ---
-
 name: Feature Request
 about: Suggest a new feature or a improvement for this project.
 title: ''
 labels: enhancement
 assignees: ''
----<!--- Provide a general summary of the issue in the Title above. -->
+---
+
+<!--- Provide a general summary of the issue in the Title above. -->
 
 <!-- Your issue may already be reported! Please search on the issue tracker before creating one. -->
 
