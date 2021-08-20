@@ -76,7 +76,7 @@
 						{{else}}
 						<input class="attribute-max {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.hp.max" value="{{data.attribs.hp.max}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
 						{{/if}}
-						
+
 						{{#unless data.flags.locked}}
 						<div class="auto-toggle {{#if data.attribs.hp.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
 						{{/unless}}
@@ -157,7 +157,7 @@
 				<div class="attribute-list flexrow" style="flex: none;height: 20px;">
 					<div class="flexrow flex1 attribute" data-attrib="mov">
 						<label>{{localize 'CoC7.Mov'}} :</label>
-						
+
 						{{#if data.attribs.mov.auto}}
 							<span class="attribute-value single" type="text" style="line-height: 22px;"> {{data.attribs.mov.value}} </span>
 						{{else}}
@@ -171,7 +171,7 @@
 					</div>
 					<div class="flexrow flex1 attribute" data-attrib="db" data-roll-formula="{{data.attribs.db.value}}">
 						<label class="attribute-label rollable">{{localize 'CoC7.DB'}} :</label>
-						
+
 						{{#if data.attribs.db.auto}}
 							<span class="attribute-value single" type="text" style="line-height: 22px;"> {{data.attribs.db.value}} </span>
 						{{else}}
@@ -255,7 +255,7 @@
 			</div>
 		{{/unless}}
 		{{#if isDead}}
-		<div class='is-dead' style="flex: 0 0 100px;margin: 6px;">
+		<div class='is-dead status-monitor {{#if data.status.dead.value}}status-on{{/if}}' data-status="dead" style="flex: 0 0 100px;margin: 6px;">
 			<i style="font-size: 100px;color: darkred;line-height: 100px;" class="fas fa-skull-crossbones"></i>
 		</div>
 		{{else}}
@@ -274,9 +274,9 @@
 	{{#unless permissionLimited}}
 		<section class="sheet-body">
 			<div class="tab">
-			
+
 			<section class="sheet-section">
-				<div class="section-header flexrow"   data-pannel="skills"> 
+				<div class="section-header flexrow"   data-pannel="skills">
 					<h3 class="flex1" >{{localize 'CoC7.Skills'}}</h3>
 					{{#unless data.flags.locked}}
 						<div style="flex: 0 0 14px;">
@@ -302,10 +302,10 @@
 					{{> "systems/CoC7/templates/actors/parts/npc-combat.html"}}
 				</div>
 			</section>
-			
+
 			{{#if hasInventory}}
 			<section class="sheet-section">
-				<div class="section-header flexrow" data-pannel="inventory"> 
+				<div class="section-header flexrow" data-pannel="inventory">
 					<h3 class="flex1">{{localize 'CoC7.Inventory'}}</h3>
 					{{#unless data.flags.locked}}
 					<div style="flex: 0 0 14px;">
