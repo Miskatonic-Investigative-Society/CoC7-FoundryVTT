@@ -8,7 +8,9 @@ export class Updater {
       if (game.user.isGM) {
         new Dialog({
           title: game.i18n.localize('CoC7.Migrate.Title'),
-          content: game.i18n.format('CoC7.Migrate.Message', { version: game.system.data.version }),
+          content: game.i18n.format('CoC7.Migrate.Message', {
+            version: game.system.data.version
+          }),
           buttons: {
             update: {
               label: game.i18n.localize('CoC7.Migrate.ButtonUpdate'),
@@ -22,7 +24,9 @@ export class Updater {
       } else {
         new Dialog({
           title: game.i18n.localize('CoC7.Migrate.Title'),
-          content: game.i18n.format('CoC7.Migrate.GMRequired', { version: game.system.data.version }),
+          content: game.i18n.format('CoC7.Migrate.GMRequired', {
+            version: game.system.data.version
+          }),
           buttons: {
             OK: {
               label: game.i18n.localize('CoC7.Migrate.ButtonOkay')
@@ -78,10 +82,15 @@ export class Updater {
 
     // Migrate World Compendium Packs
     for (const pack of game.packs) {
-      if (pack.metadata.package !== 'world') continue
-      if (!['Actor', 'Item', 'RollTable'].includes(pack.metadata.entity)) continue
-      await Updater.migrateCompendiumData(pack)
+      if (
+        pack.metadata.package === 'world' &&
+        ['Actor', 'Item', 'RollTable'].includes(pack.metadata.entity)
+      ) {
+        await Updater.migrateCompendiumData(pack)
+      }
     }
+
+    game.settings.set('CoC7', 'systemUpdateVersion', '0.3')
   }
 
   static migrateActorData (actor) {
@@ -94,7 +103,8 @@ export class Updater {
     // Migrate World Actor Items
     if (actor.items) {
       const items = actor.items.reduce((arr, i) => {
-        const itemData = i instanceof CONFIG.Item.documentClass ? i.toObject() : i
+        const itemData =
+          i instanceof CONFIG.Item.documentClass ? i.toObject() : i
         const itemUpdate = Updater.migrateItemData(itemData)
         if (!foundry.utils.isObjectEmpty(itemUpdate)) {
           itemUpdate._id = itemData._id
@@ -138,7 +148,9 @@ export class Updater {
         }
         // Save the entry, if data was changed
         if (!foundry.utils.isObjectEmpty(updateData)) {
-          console.log(`Migrated ${entity} entity ${doc.name} in Compendium ${pack.collection}`)
+          console.log(
+            `Migrated ${entity} entity ${doc.name} in Compendium ${pack.collection}`
+          )
           await doc.update(updateData)
         }
       } catch (err) {
@@ -180,7 +192,9 @@ export class Updater {
   }
 
   static _migrateItemArtwork (item, updateData) {
-    const regEx = new RegExp(/systems\/CoC7\/artwork\/icons\/((hanging-spider|paranoia|skills|tentacles-skull)\.svg)/)
+    const regEx = new RegExp(
+      /systems\/CoC7\/artwork\/icons\/((hanging-spider|paranoia|skills|tentacles-skull)\.svg)/
+    )
     let image = String(item.img).match(regEx)
     if (image !== null) {
       updateData.img = 'systems/CoC7/assets/icons/' + image[1]
@@ -246,7 +260,9 @@ export class Updater {
   }
 
   static _migrateActorArtwork (actor, updateData) {
-    const regEx = new RegExp(/systems\/CoC7\/artwork\/icons\/((hanging-spider|paranoia|skills|tentacles-skull)\.svg)/)
+    const regEx = new RegExp(
+      /systems\/CoC7\/artwork\/icons\/((hanging-spider|paranoia|skills|tentacles-skull)\.svg)/
+    )
     const image = String(actor.img).match(regEx)
     if (image !== null) {
       updateData.img = 'systems/CoC7/assets/icons/' + image[1]
@@ -257,20 +273,28 @@ export class Updater {
   static _migrateActorCharacterSanity (actor, updateData) {
     if (actor.type === 'character') {
       const oneFifthSanity = Math.ceil(actor.data.attribs.san.value / 5)
-      if (typeof actor.data.attribs.san.dailyLoss === 'undefined' || actor.data.attribs.san.dailyLoss === null) {
+      if (
+        typeof actor.data.attribs.san.dailyLoss === 'undefined' ||
+        actor.data.attribs.san.dailyLoss === null
+      ) {
         updateData['data.attribs.san.dailyLoss'] = 0
       }
-      if (typeof actor.data.attribs.san.oneFifthSanity === 'undefined' || actor.data.attribs.san.oneFifthSanity === null) {
+      if (
+        typeof actor.data.attribs.san.oneFifthSanity === 'undefined' ||
+        actor.data.attribs.san.oneFifthSanity === null
+      ) {
         updateData['data.attribs.san.oneFifthSanity'] = ' / ' + oneFifthSanity
       }
-      if (typeof actor.data.attribs.san.dailyLoss === 'undefined' || actor.data.attribs.san.dailyLoss === null) {
+      if (
+        typeof actor.data.attribs.san.dailyLoss === 'undefined' ||
+        actor.data.attribs.san.dailyLoss === null
+      ) {
         updateData['data.attribs.san.dailyLoss'] = 0
       }
       if (
         typeof actor.data.indefiniteInsanityLevel === 'undefined' ||
         actor.data.indefiniteInsanityLevel === null ||
-        typeof actor.data.indefiniteInsanityLevel.value ===
-          'undefined' ||
+        typeof actor.data.indefiniteInsanityLevel.value === 'undefined' ||
         actor.data.indefiniteInsanityLevel.value === null
       ) {
         updateData['data.indefiniteInsanityLevel.value'] = 0
@@ -278,8 +302,7 @@ export class Updater {
       if (
         typeof actor.data.indefiniteInsanityLevel === 'undefined' ||
         actor.data.indefiniteInsanityLevel === null ||
-        typeof actor.data.indefiniteInsanityLevel.max ===
-          'undefined' ||
+        typeof actor.data.indefiniteInsanityLevel.max === 'undefined' ||
         actor.data.indefiniteInsanityLevel.max === null
       ) {
         updateData['data.indefiniteInsanityLevel.max'] = oneFifthSanity
@@ -307,7 +330,9 @@ export class Updater {
   }
 
   static _migrateTableArtwork (table, updateData) {
-    const regEx = new RegExp(/systems\/CoC7\/artwork\/icons\/((hanging-spider|paranoia|skills|tentacles-skull)\.svg)/)
+    const regEx = new RegExp(
+      /systems\/CoC7\/artwork\/icons\/((hanging-spider|paranoia|skills|tentacles-skull)\.svg)/
+    )
     let image = String(table.img).match(regEx)
     if (image !== null) {
       updateData.img = 'systems/CoC7/assets/icons/' + image[1]
@@ -318,53 +343,9 @@ export class Updater {
         if (typeof updateData.results === 'undefined') {
           updateData.results = table.results
         }
-        updateData.results[k].img =
-          'systems/CoC7/assets/icons/' + image[1]
+        updateData.results[k].img = 'systems/CoC7/assets/icons/' + image[1]
       }
     }
     return updateData
   }
 }
-
-/* -----
-  static async updatePack (pack) {
-    const locked = pack.locked
-    if (locked) {
-      await pack.configure({ locked: false })
-    }
-    await pack.migrate()
-    const documents = await pack.getDocuments()
-    for (const doc of documents) {
-      switch (pack.metadata.entity) {
-        case 'Actor':
-          await Updater.updateActor(doc, pack)
-          break
-        case 'Item':
-          await Updater.updateItem(doc, null, pack)
-          break
-        case 'RollTable':
-          await Updater.updateTable(doc, pack)
-          break
-      }
-    }
-    if (locked) {
-      await pack.configure({ locked: true })
-    }
-  }
-
-    for (const pack of game.packs) {
-      if (pack.metadata.package === 'world') {
-        switch (pack.metadata.entity) {
-          case 'Actor':
-          // fall through
-          case 'Item':
-          // fall through
-          case 'RollTable':
-            await Updater.updatePack(pack)
-            break
-        }
-      }
-    }
-
-    game.settings.set('CoC7', 'systemUpdateVersion', '0.2')
- */
