@@ -8,7 +8,9 @@ export function listen () {
       const entitySortedList = []
       entityCreateSelectTag.children().each((o, entityOption) => {
         const key = entityOption.textContent?.capitalize()
-        entityOption.textContent = game.i18n.localize(`CoC7.Entities.${key}`)
+        if (game.i18n.has(`CoC7.Entities.${key}`)) {
+          entityOption.textContent = game.i18n.localize(`CoC7.Entities.${key}`)
+        }
         entitySortedList.push(entityOption)
       })
       entityCreateSelectTag.empty()
@@ -18,7 +20,7 @@ export function listen () {
         )
       )
       if (entityCreateSelectTag.val() === 'actor') {
-        entityCreateSelectTag.val('investigator')
+        entityCreateSelectTag.val('character')
       } else if (entityCreateSelectTag.val() === 'book') {
         entityCreateSelectTag.val('item')
       }
