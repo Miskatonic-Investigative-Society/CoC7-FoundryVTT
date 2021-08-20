@@ -733,12 +733,10 @@ export class CoCActor extends Actor {
           if (isNaN(Number(data.data.value))) {
             let value
             try {
-              value = (
-                await new Roll(
-                  data.data.value,
-                  this.parseCharacteristics()
-                ).evaluate({ maximize: true, async: true })
-              ).total
+              value = (await new Roll(
+                data.data.value,
+                this.parseCharacteristics()
+              ).evaluate({ maximize: true, async: true })).total
             } catch (err) {
               value = null
             }
@@ -994,7 +992,9 @@ export class CoCActor extends Actor {
               const roll = new Roll(data.data.coreCharacteristicsFormula.value)
               roll.roll()
               roll.toMessage({
-                flavor: `Rolling characterisitic ${char.label}: ${data.data.coreCharacteristicsFormula.value}`
+                flavor: `Rolling characterisitic ${char.label}: ${
+                  data.data.coreCharacteristicsFormula.value
+                }`
               })
               value = char.value < roll.total ? roll.total : char.value
             }
@@ -1099,7 +1099,9 @@ export class CoCActor extends Actor {
                   skill.data.specialization &&
                   !skill.name.includes(skill.data.specialization)
                 ) {
-                  skill.displayName = `${skill.data.specialization} (${skill.name})`
+                  skill.displayName = `${skill.data.specialization} (${
+                    skill.name
+                  })`
                 } else skill.displayName = skill.name
               })
 
@@ -1167,7 +1169,9 @@ export class CoCActor extends Actor {
                   skill.data.specialization &&
                   !skill.name.includes(skill.data.specialization)
                 ) {
-                  skill.displayName = `${skill.data.specialization} (${skill.name})`
+                  skill.displayName = `${skill.data.specialization} (${
+                    skill.name
+                  })`
                 } else skill.displayName = skill.name
               })
               if (dialogData.skills.length <= dialogData.optionsCount) {
@@ -2474,7 +2478,9 @@ export class CoCActor extends Actor {
         }
       } else if (weapons.length > 1) {
         ui.notifications.warn(
-          `Actor ${this.name} has more than one weapon named ${weaponData.name}. The first found will be used`
+          `Actor ${this.name} has more than one weapon named ${
+            weaponData.name
+          }. The first found will be used`
         )
       }
       weapon = weapons[0]
@@ -2771,32 +2777,46 @@ export class CoCActor extends Actor {
   async developementPhase (fastForward = false) {
     const failure = []
     const success = []
-    const is07x = isNewerVersion(game.data.version, '0.6.9')
+    const skillMasteringThreshold = 90
+    const alwaysSuccessThreshold = 95
 
     const title = game.i18n.localize('CoC7.RollAll4Dev')
     let message = '<p class="chat-card">'
     for (const item of this.items) {
       if (item.type === 'skill') {
         if (item.developementFlag) {
-          let die
-          if (is07x) {
-            die = new Die({ faces: 100 }).evaluate()
-          } else {
-            die = new Die(100)
-            die.roll(1)
-          }
+          let die = new Die({ faces: 100 }).evaluate()
           const skillValue = item.value
           let augment = null
-          if (die.total > skillValue || die.total >= 95) {
-            let augmentDie
-            if (is07x) {
-              augmentDie = new Die({ faces: 10 }).evaluate()
-            } else {
-              augmentDie = new Die(10)
-              augmentDie.roll(1)
-            }
+          let skillMasteringMessage = null
+          if (die.total > skillValue || die.total >= alwaysSuccessThreshold) {
+            let augmentDie = new Die({ faces: 10 }).evaluate()
             success.push(item.id)
-
+            // Check for SAN augment when the skill goes beyond the skill mastering threshold.
+            if (
+              skillValue < skillMasteringThreshold &&
+              skillValue + augmentDie.total >= skillMasteringThreshold
+            ) {
+              let augmentSANDie = new Die({ faces: 6, number: 2 }).evaluate()
+              const sanGained = augmentSANDie.total
+              const sanGainedMessage = `Gained 2d6 (${
+                augmentSANDie.values[0]
+              } + ${augmentSANDie.values[1]} = ${sanGained}) SAN`
+              console.debug(sanGainedMessage)
+              skillMasteringMessage = `<span class="upgrade-success">${game.i18n.format(
+                'CoC7.SanGained',
+                {
+                  results: `${augmentSANDie.values[0]} + ${
+                    augmentSANDie.values[1]
+                  }`,
+                  sanGained: sanGained,
+                  skill: item.data.name,
+                  skillValue: skillValue + augmentDie.total
+                }
+              )}</span><br>`
+              // Set san controls that it doesn't augment beyond sanMax
+              await this.setSan(this.san + sanGained)
+            }
             augment += augmentDie.total
             message += `<span class="upgrade-success">${game.i18n.format(
               'CoC7.DevSuccess',
@@ -2807,6 +2827,9 @@ export class CoCActor extends Actor {
                 augment: augmentDie.total
               }
             )}</span><br>`
+            if (skillMasteringMessage !== null) {
+              message += skillMasteringMessage
+            }
             await item.increaseExperience(augment)
           } else {
             message += `<span class="upgrade-failed">${game.i18n.format(
@@ -3291,7 +3314,9 @@ export class CoCActor extends Actor {
         armorValue = Number(this.data.data.attribs.armor.value)
       else {
         ui.notifications.warn(
-          `Unable to process armor value :${this.data.data.attribs.armor.value}. Ignoring armor`
+          `Unable to process armor value :${
+            this.data.data.attribs.armor.value
+          }. Ignoring armor`
         )
         armorValue = 0
       }
