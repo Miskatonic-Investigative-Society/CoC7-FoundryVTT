@@ -668,6 +668,14 @@
   "CoC7.HowToTranslateEnableTranslation": "Inside the Game World, under Configuration/Manage Modules activate both Babele and the translations.",
   "CoC7.HowToTranslateNoTranslation": "Instructions for creating new language translations are available on existing translation modules.",
 
+  "CoC7.Migrate.Title": "Update required",
+  "CoC7.Migrate.Message": "<p>Your world requires an update to run version {version}.</p><p>Please backup your world folder before starting the upgrade.</p><p>If you do not update your world the system will not work correctly.</p><p>The world may be restarted when completed.</p>",
+  "CoC7.Migrate.GMRequired": "<p>Your world requires an update to run version {version}.</p><p>Please wait for your GM to update the system then refresh (F5) this page.</p>",
+  "CoC7.Migrate.RestartRequired": "<p>Your world will now restart to enable these changes</p>",
+  "CoC7.Migrate.ButtonUpdate": "Update",
+  "CoC7.Migrate.ButtonSkip": "Skip",
+  "CoC7.Migrate.ButtonOkay": "Okay",
+
   "SETTINGS.DebugMode": "System Debug Mode",
   "SETTINGS.DebugModeHint": "!!RESTART REQUIRED!!",
   "SETTINGS.DefaultDifficulty": "Default check difficulty",
