@@ -615,9 +615,13 @@ Hooks.once('setup', function () {
     }, {})
   }
 
-  const effectIndex = CONFIG.statusEffects.findIndex(t => t.id === 'dead')
+  let effectIndex = CONFIG.statusEffects.findIndex(t => t.id === 'dead')
   if (effectIndex !== -1) {
     CONFIG.statusEffects[effectIndex].icon = 'systems/CoC7/assets/icons/tombstone.svg'
+  }
+  effectIndex = CONFIG.statusEffects.findIndex(t => t.id === 'unconscious')
+  if (effectIndex !== -1) {
+    CONFIG.statusEffects[effectIndex].icon = 'systems/CoC7/assets/icons/knocked-out-stars.svg'
   }
   CONFIG.statusEffects.unshift({
     id: 'boutOfMadness',
