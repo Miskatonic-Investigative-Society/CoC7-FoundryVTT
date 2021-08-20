@@ -260,7 +260,7 @@
 		</div>
 		{{else}}
 			{{#if isDying}}
-				<div class='is-dying' style="flex: 0 0 100px;margin: 6px;">
+				<div class='is-dying status-monitor {{#if data.status.dying.value}}status-on{{/if}}' data-status="dying" style="flex: 0 0 100px;margin: 6px;">
 					<i style="font-size: 100px;color: darkred;line-height: 100px;" class="fas fa-heartbeat"></i>
 				</div>
 			{{else}}
