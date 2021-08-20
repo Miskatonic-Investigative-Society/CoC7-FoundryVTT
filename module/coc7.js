@@ -617,32 +617,36 @@ Hooks.once('setup', function () {
 
   let effectIndex = CONFIG.statusEffects.findIndex(t => t.id === 'dead')
   if (effectIndex !== -1) {
-    CONFIG.statusEffects[effectIndex].icon = 'systems/CoC7/assets/icons/tombstone.svg'
+    CONFIG.statusEffects[effectIndex].icon =
+      'systems/CoC7/assets/icons/tombstone.svg'
   }
   effectIndex = CONFIG.statusEffects.findIndex(t => t.id === 'unconscious')
   if (effectIndex !== -1) {
-    CONFIG.statusEffects[effectIndex].icon = 'systems/CoC7/assets/icons/knocked-out-stars.svg'
+    CONFIG.statusEffects[effectIndex].icon =
+      'systems/CoC7/assets/icons/knocked-out-stars.svg'
   }
-  CONFIG.statusEffects.unshift({
-    id: 'boutOfMadness',
-    label: 'CoC7.BoutOfMadnessName',
-    icon: 'systems/CoC7/assets/icons/hanging-spider.svg'
-  },
-  {
-    id: 'insanity',
-    label: 'CoC7.InsanityName',
-    icon: 'systems/CoC7/assets/icons/tentacles-skull.svg'
-  },
-  {
-    id: 'criticalWounds',
-    label: 'criticalWounds',
-    icon: 'systems/CoC7/assets/icons/arm-sling.svg'
-  },
-  {
-    id: 'dying',
-    label: 'dying',
-    icon: 'systems/CoC7/assets/icons/heart-beats.svg'
-  })
+  CONFIG.statusEffects.unshift(
+    {
+      id: 'boutOfMadness',
+      label: 'CoC7.BoutOfMadnessName',
+      icon: 'systems/CoC7/assets/icons/hanging-spider.svg'
+    },
+    {
+      id: 'insanity',
+      label: 'CoC7.InsanityName',
+      icon: 'systems/CoC7/assets/icons/tentacles-skull.svg'
+    },
+    {
+      id: 'criticalWounds',
+      label: 'criticalWounds',
+      icon: 'systems/CoC7/assets/icons/arm-sling.svg'
+    },
+    {
+      id: 'dying',
+      label: 'dying',
+      icon: 'systems/CoC7/assets/icons/heart-beats.svg'
+    }
+  )
 })
 
 Hooks.on('hotbarDrop', async (bar, data, slot) =>
