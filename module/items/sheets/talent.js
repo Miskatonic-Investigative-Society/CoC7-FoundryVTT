@@ -15,7 +15,6 @@ export class CoC7TalentSheet extends ItemSheet {
       classes: ['coc7', 'sheet', 'talent'],
       width: 520,
       height: 480,
-      resizable: false,
       scrollY: ['.tab.description'],
       tabs: [
         {
@@ -49,10 +48,11 @@ export class CoC7TalentSheet extends ItemSheet {
     data.itemProperties = []
 
     for (const [key, value] of Object.entries(data.data.type)) {
-      if (value)
+      if (value) {
         data.itemProperties.push(
           COC7.talentType[key] ? COC7.talentType[key] : null
         )
+      }
     }
     return data
   }

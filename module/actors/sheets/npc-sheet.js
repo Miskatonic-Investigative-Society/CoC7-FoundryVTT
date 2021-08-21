@@ -52,18 +52,11 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
       dragDrop: [{ dragSelector: '.item', dropSelector: null }],
       template: 'systems/CoC7/templates/actors/npc-sheet.html',
       width: 580,
-      height: 'auto',
       resizable: true
     })
   }
 
   static forceAuto (app, html) {
     html[0].style.height = 'auto'
-  }
-
-  setPosition (position = {}) {
-    const test = super.setPosition(position)
-    test.height = 'auto'
-    return test
   }
 }

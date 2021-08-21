@@ -53,8 +53,9 @@ export class CoC7ArchetypeSheet extends ItemSheet {
     if (!item || !(type === item.data.type)) return
 
     if (!CoC7Item.isAnySpec(item)) {
-      if (this.item.data.data.skills.find(el => el.name === item.data.name))
+      if (this.item.data.data.skills.find(el => el.name === item.data.name)) {
         return
+      }
     }
 
     const collection = this.item.data.data[collectionName]
@@ -112,7 +113,6 @@ export class CoC7ArchetypeSheet extends ItemSheet {
       classes: ['coc7', 'sheet', 'occupation'],
       width: 520,
       height: 480,
-      resizable: false,
       dragDrop: [{ dragSelector: '.item' }],
       scrollY: ['.tab.description'],
       tabs: [
@@ -178,8 +178,9 @@ export class CoC7ArchetypeSheet extends ItemSheet {
 
     data.coreCharacteristicsString = ''
     const orString = ` ${game.i18n.localize('CoC7.Or')} `
-    if (coreCharacteristics.length)
+    if (coreCharacteristics.length) {
       data.coreCharacteristicsString += coreCharacteristics.join(orString)
+    }
 
     data.itemProperties = []
 
