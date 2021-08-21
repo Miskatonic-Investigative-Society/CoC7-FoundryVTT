@@ -80,11 +80,25 @@ export class Updater {
       }
     }
 
+    // Migrate Macros
+    for (const macro of game.macros.contents) {
+      try {
+        const updateData = Updater.migrateMacroData(macro.toObject())
+        if (!foundry.utils.isObjectEmpty(updateData)) {
+          console.log(`Migrating Macro entity ${macro.name}`)
+          await macro.update(updateData, { enforceTypes: false })
+        }
+      } catch (err) {
+        err.message = `Failed dnd5e system migration for Table ${macro.name}: ${err.message}`
+        console.error(err)
+      }
+    }
+
     // Migrate World Compendium Packs
     for (const pack of game.packs) {
       if (
         pack.metadata.package === 'world' &&
-        ['Actor', 'Item', 'RollTable'].includes(pack.metadata.entity)
+        ['Actor', 'Item', 'Macro', 'RollTable'].includes(pack.metadata.entity)
       ) {
         await Updater.migrateCompendiumData(pack)
       }
@@ -122,7 +136,7 @@ export class Updater {
 
   static async migrateCompendiumData (pack) {
     const entity = pack.metadata.entity
-    if (!['Actor', 'Item', 'RollTable'].includes(entity)) return
+    if (!['Actor', 'Item', 'Macro', 'RollTable'].includes(entity)) return
 
     // Unlock the pack for editing
     const wasLocked = pack.locked
@@ -141,6 +155,9 @@ export class Updater {
             break
           case 'Item':
             updateData = Updater.migrateItemData(doc.toObject())
+            break
+          case 'Macro':
+            updateData = Updater.migrateMacroData(doc.toObject())
             break
           case 'RollTable':
             updateData = Updater.migrateTableData(doc.toObject())
@@ -169,6 +186,15 @@ export class Updater {
     // Update World Item
     Updater._migrateItemExperience(item, updateData)
     Updater._migrateItemArtwork(item, updateData)
+
+    return updateData
+  }
+
+  static migrateMacroData (table) {
+    const updateData = {}
+
+    // Update World Actor
+    Updater._migrateMacroArtwork(table, updateData)
 
     return updateData
   }
@@ -325,6 +351,17 @@ export class Updater {
       ) {
         updateData['data.notes'] = ''
       }
+    }
+    return updateData
+  }
+
+  static _migrateMacroArtwork (table, updateData) {
+    const regEx = new RegExp(
+      /systems\/CoC7\/artwork\/icons\/((hanging-spider|paranoia|skills|tentacles-skull)\.svg)/
+    )
+    const image = String(table.img).match(regEx)
+    if (image !== null) {
+      updateData.img = 'systems/CoC7/assets/icons/' + image[1]
     }
     return updateData
   }
