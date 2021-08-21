@@ -61,12 +61,16 @@ export class CoC7SetupSheet extends ItemSheet {
       item = game.items.get(data.id)
     }
     if (!item || !item.data) return
-    if (!['item', 'weapon', 'skill', 'book', 'spell'].includes(item.data.type))
+    if (
+      !['item', 'weapon', 'skill', 'book', 'spell'].includes(item.data.type)
+    ) {
       return
+    }
 
     if (!CoC7Item.isAnySpec(item)) {
-      if (this.item.data.data.items.find(el => el.name === item.data.name))
+      if (this.item.data.data.items.find(el => el.name === item.data.name)) {
         return
+      }
     }
 
     const collection = this.item.data.data[collectionName]
@@ -146,7 +150,6 @@ export class CoC7SetupSheet extends ItemSheet {
       classes: ['coc7', 'sheet', 'setup'],
       width: 520,
       height: 530,
-      resizable: false,
       dragDrop: [{ dragSelector: '.item' }],
       scrollY: ['.tab.description'],
       tabs: [

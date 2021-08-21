@@ -34,10 +34,7 @@ export class CoC7ItemSheetV2 extends ItemSheet {
 
   /** @override */
   get template () {
-    if (this.item.data.type === 'item')
-      return 'systems/CoC7/templates/items/item-sheetV2.html'
-    const path = 'systems/CoC7/templates/items'
-    return `${path}/${this.item.data.type}-sheet.html`
+    return 'systems/CoC7/templates/items/item-sheetV2.html'
   }
 
   /* -------------------------------------------- */

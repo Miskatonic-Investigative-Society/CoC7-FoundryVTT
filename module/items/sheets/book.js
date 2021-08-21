@@ -116,7 +116,6 @@ export class CoC7BookSheet extends ItemSheet {
       classes: ['coc7', 'sheet', 'book'],
       width: 520,
       height: 480,
-      resizable: false,
       dragDrop: [{ dragSelector: '.spell', dropSelector: null }],
       scrollY: ['.tab.description'],
       tabs: [
@@ -154,8 +153,9 @@ export class CoC7BookSheet extends ItemSheet {
     data.itemProperties = []
 
     for (const [key, value] of Object.entries(data.data.type)) {
-      if (value)
+      if (value) {
         data.itemProperties.push(COC7.bookType[key] ? COC7.bookType[key] : null)
+      }
     }
     return data
   }
