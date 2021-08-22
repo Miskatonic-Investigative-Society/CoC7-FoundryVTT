@@ -69,14 +69,16 @@ export class CoC7OccupationSheet extends ItemSheet {
     if (optionalSkill) {
       if (!CoC7Item.isAnySpec(item)) {
         // Generic specialization can be included many times
-        if (this.item.data.data.skills.find(el => el.name === item.data.name))
+        if (this.item.data.data.skills.find(el => el.name === item.data.name)) {
           return // If skill is already in main don't add it
+        }
         if (
           this.item.data.data.groups[index].skills.find(
             el => el.name === item.name
           )
-        )
+        ) {
           return // If skill is already in group don't add it
+        }
       }
 
       const groups = duplicate(this.item.data.data.groups)
@@ -85,8 +87,9 @@ export class CoC7OccupationSheet extends ItemSheet {
     } else {
       if (!CoC7Item.isAnySpec(item)) {
         // Generic specialization can be included many times
-        if (this.item.data.data.skills.find(el => el.name === item.data.name))
+        if (this.item.data.data.skills.find(el => el.name === item.data.name)) {
           return
+        }
 
         for (let i = 0; i < this.item.data.data.groups.length; i++) {
           // If the same skill is in one of the group remove it from the groups
@@ -191,7 +194,6 @@ export class CoC7OccupationSheet extends ItemSheet {
       classes: ['coc7', 'sheet', 'occupation'],
       width: 520,
       height: 480,
-      resizable: false,
       dragDrop: [{ dragSelector: '.item' }],
       scrollY: ['.tab.description'],
       tabs: [
@@ -235,10 +237,12 @@ export class CoC7OccupationSheet extends ItemSheet {
     )) {
       if (carac.multiplier) {
         const caracName = game.i18n.localize(`CHARAC.${key.toUpperCase()}`)
-        if (carac.selected && carac.optional)
+        if (carac.selected && carac.optional) {
           optionnal.push(`${caracName}x${carac.multiplier}`)
-        if (carac.selected && !carac.optional)
+        }
+        if (carac.selected && !carac.optional) {
           mandatory.push(`${caracName}x${carac.multiplier}`)
+        }
       }
     }
 
@@ -282,18 +286,21 @@ export class CoC7OccupationSheet extends ItemSheet {
     data.occupationPointsString = ''
     const orString = ` ${game.i18n.localize('CoC7.Or')} `
     if (mandatory.length) data.occupationPointsString += mandatory.join(' + ')
-    if (optionnal.length && mandatory.length)
+    if (optionnal.length && mandatory.length) {
       data.occupationPointsString += ` + (${optionnal.join(orString)})`
-    if (optionnal.length && !mandatory.length)
+    }
+    if (optionnal.length && !mandatory.length) {
       data.occupationPointsString += optionnal.join(orString)
+    }
 
     data.itemProperties = []
 
     for (const [key, value] of Object.entries(data.data.type)) {
-      if (value)
+      if (value) {
         data.itemProperties.push(
           COC7.occupationProperties[key] ? COC7.occupationProperties[key] : null
         )
+      }
     }
     return data
   }

@@ -347,20 +347,23 @@ export class _participant {
   }
 
   get actor () {
-    if (!this._actor)
+    if (!this._actor) {
       this._actor = chatHelper.getActorFromKey(this.data.actorKey)
+    }
     return this._actor
   }
 
   get driver () {
-    if (!this._driver)
+    if (!this._driver) {
       this._driver = chatHelper.getActorFromKey(this.data.actorKey)
+    }
     return this._driver
   }
 
   get vehicle () {
-    if (this.data.vehicleKey)
+    if (this.data.vehicleKey) {
       this._vehicle = chatHelper.getActorFromKey(this.data.vehicleKey)
+    }
     return this._vehicle
   }
 
