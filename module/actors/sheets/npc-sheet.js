@@ -57,6 +57,12 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
   }
 
   static forceAuto (app, html) {
-    html[0].style.height = 'auto'
+    const cell = html.find('.description.pannel.expanded')
+    cell.height(Math.max(200, (html.height() - cell.position().top - 8)) + 'px')
+  }
+
+  setPosition (a) {
+    super.setPosition(a)
+    CoC7NPCSheet.forceAuto(a, this._element)
   }
 }
