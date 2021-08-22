@@ -289,9 +289,23 @@ export class Updater {
     const regEx = new RegExp(
       /systems\/CoC7\/artwork\/icons\/((hanging-spider|paranoia|skills|tentacles-skull)\.svg)/
     )
-    const image = String(actor.img).match(regEx)
+    let image = String(actor.img).match(regEx)
     if (image !== null) {
       updateData.img = 'systems/CoC7/assets/icons/' + image[1]
+    }
+    image = String(actor.token.img).match(regEx)
+    if (image !== null) {
+      updateData['token.img'] = 'systems/CoC7/assets/icons/' + image[1]
+    }
+    for (const [k, v] of Object.entries(actor.effects)) {
+      image = String(v.icon).match(regEx)
+      if (image !== null) {
+        if (typeof updateData.effects === 'undefined') {
+          updateData.effects = actor.effects
+        }
+        updateData.effects[k].icon =
+          'systems/CoC7/assets/icons/' + image[1]
+      }
     }
     return updateData
   }
