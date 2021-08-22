@@ -35,7 +35,6 @@ We are always looking for translators, there is a lot to translate, and we can n
 
 For the list of missing translations, see: [TRANSLATIONS](https://github.com/HavlockV/CoC7-FoundryVTT/blob/develop/.github/TRANSLATIONS.md).
 
-
 ## Coding.
 
 ### Requisites.
