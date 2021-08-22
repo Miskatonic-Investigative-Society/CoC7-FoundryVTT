@@ -108,8 +108,7 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
       template: 'systems/CoC7/templates/actors/creature-sheet.html',
       width: 580,
       classes: ['coc7', 'sheet', 'actor', 'npc', 'creature'],
-      dragDrop: [{ dragSelector: '.item', dropSelector: null }],
-      resizable: true
+      dragDrop: [{ dragSelector: '.item', dropSelector: null }]
     })
     return options
   }
@@ -136,6 +135,12 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
   }
 
   static forceAuto (app, html) {
-    html[0].style.height = 'auto'
+    const cell = html.find('.description.pannel.expanded')
+    cell.height(Math.max(130, (html.height() - cell.position().top - 8)) + 'px')
+  }
+
+  setPosition (a) {
+    super.setPosition(a)
+    CoC7CreatureSheet.forceAuto(a, this._element)
   }
 }
