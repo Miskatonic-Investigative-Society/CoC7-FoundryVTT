@@ -262,6 +262,8 @@
   "CoC7.BulletsFired": "Tiros disparados",
   "CoC7.Shots": "Tiros",
   "CoC7.Shoot": "Atirar",
+  "CoC7.ShotBullets": "Atirou {bullets} balas ao alvo {actor}.",
+  "CoC7.ShotVoley": "Atirando uma rajada de {bullets} balas ao alvo {actor}.",
   "CoC7.rangeCombatCard.AimingTitle": "1 Dado de Bônus para o primeiro tiro.",
   "CoC7.rangeCombatCard.CoverTitle": "1 Dado de Penalidade. O alvo está protegido por cobertura.",
   "CoC7.rangeCombatCard.PointBlankRangeTitle": "1 Dado de Bônus. O alvo está no alcance de tiros à queima-roupa.",
@@ -270,6 +272,11 @@
   "CoC7.rangeCombatCard.NormalTargetTitle": "O alvo tem um tamanho padrão, sem bônus ou penalidades.",
   "CoC7.rangeCombatCard.InMeleeTitle": "1 Dado de Penalidade. O alvo está engajado em combate corpo-a-corpo.",
   "CoC7.rangeCombatCard.FastMovingTargetTitle": "1 Dado de Penalidade. O alvo é veloz (MOV maior que 8) e está movendo-se rapidamente.",
+
+  "CoC7.meleeCombatDamageTakes": "recebe",
+  "CoC7.meleeCombatDamageFrom": "de",
+  "CoC7.meleeCombatDamageDeals": "causa",
+  "CoC7.meleeCombatDamageWith": "com",
 
   "CoC7.DropZone": "DropZone",
 
@@ -379,6 +386,7 @@
   "CoC7.RollLuck4Dev": "Testando Sorte para desenvolvimento",
   "CoC7.DevRollTitle": "Testando {item} para Desenvolvimento: {die}/{score}%",
   "CoC7.DevSuccessDetails": "{item} melhorado em {augment}%",
+  "CoC7.SanGained": "Recebeu 2d6 ({results} = <strong>{sanGained}</strong>) de Sanidade por masterizar <strong>{skill}</strong> com um valor de <strong>{skillValue}%.</strong>",
   "CoC7.DevFailureDetails": "{item} NÃO foi melhorado",
   "CoC7.DevSuccess": "({die}/{score}%), {item} melhorado em {augment}%",
   "CoC7.DevFailure": "({die}/{score}%), {item} NÃO foi melhorado",
@@ -626,7 +634,9 @@
 
   "CoC7.MessageCheckRequestedWait": "{check}<br>",
   "CoC7.MessageTargetCheckRequested": "O Guardião está solicitando um teste de {check} para {name}.",
-  "CoC7.MessageSelectedTargetIsNotControlled": "O token de {name} tem dono mas não é controlado por um jogador, então não será capaz de reagir às ações de combate.",
+  "CoC7.MessageTitleSelectSingleUserForTarget": "Qual usuário pode responder a este ataque",
+  "CoC7.MessageSelectSingleUserForTarget": "Esse token é controlado por vários usuários, por favor selecione qual deles pode responder a este ataque",
+  "CoC7.MessageSelectedTargetIsNotControlled": "O token de {name} não é possuído por um jogador, ou seja, não será possível que ele reaja em ações de combate.",
   "CoC7.MessageBoutOfMadnessTableNotFound": "O resultado da tabela de loucura não foi encontrado, por favor verifique se todas as suas tabelas estão criadas",
   "CoC7.MessageBoutOfMadnessItemNotFound": "O resultado da tabela de loucura não foi encontrado, por favor verifique que todos os seus estados estão criados",
 
@@ -651,6 +661,14 @@
   "CoC7.Spanish": "Espanhol",
   "CoC7.French": "Francês",
   "CoC7.SelectSourceLanguage": "Selecione o idioma de fonte.",
+
+  "CoC7.Migrate.Title": "Atualização Necessária!",
+  "CoC7.Migrate.Message": "<p>Seu Mundo precisa ser atualizado para a rodar a versão {version}.</p><p>Por favor, faça um backup da pasta de seu Mundo antes de prosseguir.</p><p>Se você não atualizar seu Mundo, o sistema não funcionará devidamente.</p><p>Reinicie o Mundo quando o processo for concluído.</p>",
+  "CoC7.Migrate.GMRequired": "<p>Seu Mundo precisa ser atualizado para rodar a versão {version}.</p><p>Por favor aguarde que o Guardião faça as atualizações necessárias e então atualize a página com F5.</p>",
+  "CoC7.Migrate.RestartRequired": "<p>Seu Mundo será reiniciado para que as atualizações sejam aplicadas</p>",
+  "CoC7.Migrate.ButtonUpdate": "Atualizar",
+  "CoC7.Migrate.ButtonSkip": "Mais Tarde",
+  "CoC7.Migrate.ButtonOkay": "Proceder",
 
   "CoC7.ImportedUnnamedCharacter": "Personagem sem nome importado",
   "CoC7.CreatedImportedCharactersFolder": "Pasta de 'Personagens Importados' criada",
