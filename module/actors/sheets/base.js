@@ -1261,7 +1261,7 @@ export class CoC7ActorSheet extends ActorSheet {
               }
             },
             default: 'cancel',
-            classes: ['coc7', 'dialogue']
+            classes: ['coc7', 'dialog']
           }
           new Dialog(data).render(true)
         })
