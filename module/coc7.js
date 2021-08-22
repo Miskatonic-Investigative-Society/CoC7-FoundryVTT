@@ -34,8 +34,8 @@ import { CoC7VehicleSheet } from './actors/sheets/vehicle.js'
 import { CoC7Canvas } from './apps/canvas.js'
 import { CoC7ChaseSheet } from './items/sheets/chase.js'
 import { CoC7CompendiumDirectory } from './compendium-directory.js'
+import { CoC7Hooks } from './hooks/index.js'
 import * as DiceBot from './dicebot.js'
-import * as RenderDialogHook from './hooks/render-dialog.js'
 import '../styles/system/index.less'
 
 Hooks.once('init', async function () {
@@ -593,7 +593,7 @@ Hooks.on('renderCombatTracker', (app, html, data) =>
 )
 
 DiceBot.listen()
-RenderDialogHook.listen()
+CoC7Hooks.listen()
 
 Hooks.once('setup', function () {
   // Localize CONFIG objects once up-front

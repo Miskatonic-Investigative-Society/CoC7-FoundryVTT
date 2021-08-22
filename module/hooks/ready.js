@@ -1,5 +1,7 @@
 /* global Hooks, ui */
 
-Hooks.on('ready', async () => {
-  ui.notifications.info('Ready !!!')
-})
+export function listen () {
+  Hooks.once('ready', async () => {
+    console.log('Call of Cthulhu 7th Edition | Ready')
+  })
+}
