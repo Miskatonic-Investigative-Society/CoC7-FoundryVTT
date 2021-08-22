@@ -1,3 +1,19 @@
+## Version 0.6.5:
+
+- Addition of new default icons to some entity types;
+- Average system size reduced (from 20MB to 6MB) and its performance increased;
+- Change book, creature, npc, occupation, setup, spell, status, and talent sheets to be resizable;
+- Fix backstory editor not resolving lists;
+- Fix impossibility of delete dead active effects on NPCs/Creatures;
+- Fix inconsistencies when localizing entities names;
+- Fix negative values on setting health manually not working;
+- Fix some Foundry warnings on console for deprecated stuff;
+- Massive code refactoring and data migration;
+- Now, during the development phase, if a skill goes above 90 points, the character gain 2D6 of Sanity, thanks to @pconception;
+- There is now a list of untranslated keys: https://github.com/HavlockV/CoC7-FoundryVTT/blob/develop/.github/TRANSLATIONS.md
+- Update to Portuguese localization;
+- Update to Swedish localization, thanks to @Rangertheman;
+
 ## Version 0.6.4:
 
 - Fix bug on folder select tag when creating a new entity.
