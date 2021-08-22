@@ -1,8 +1,6 @@
-# Translating CoC7-FoundryVTT
+# Translating.
 
-## Installation
-
-Below is a list of translations keys that still need translated
+Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`. Feel free to create a new `*.json` file for a language that is not shown here!
 
 | Key                                        | cn  | cs  | de  | es  | fr  | ja  | pl  | pt-BR | sv  | zh-tw |
 | :----------------------------------------- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :---: | :-: | :---: |
@@ -296,4 +294,4 @@ Below is a list of translations keys that still need translated
 | SETTINGS.developmentRollForLuck            |  X  |     |  X  |     |     |  X  |  X  |       |     |       |
 | SETTINGS.developmentRollForLuckHint        |  X  |     |  X  |     |     |  X  |  X  |       |     |       |
 | SETTINGS.displayPlayerNameOnSheet          |  X  |  X  |  X  |     |     |  X  |  X  |       |     |       |
-| Remaining                                  | 273 | 48  | 66  | 13  | 13  | 68  | 289 |  16   |  7  |  13   |
+| **Remaining**:                             | 273 | 48  | 66  | 13  | 13  | 68  | 289 |  16   |  7  |  13   |
