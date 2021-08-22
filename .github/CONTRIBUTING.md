@@ -33,7 +33,7 @@ The more detail on reproducing, the better! Bugs are hard to fix if we can not r
 
 We are always looking for translators, there is a lot to translate, and we can not do it all. If you see any translations missing for you language, Feel free to look in the corresponding `*.json` file in the `lang` folder. Comparing against the `en.json` is a good idea, for a baseline.
 
-For the list of missing translations, see: [TRANSLATIONS](TRANSLATIONS.md).
+For the list of missing translations, see: [TRANSLATIONS](https://github.com/HavlockV/CoC7-FoundryVTT/blob/develop/.github/TRANSLATIONS.md).
 
 
 ## Coding.
