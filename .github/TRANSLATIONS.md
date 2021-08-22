@@ -142,17 +142,17 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | CoC7.MessageBoutOfMadnessItemNotFound      |  X  |  X  |  X  |     |     |  X  |  X  |       |     |       |
 | CoC7.MessageBoutOfMadnessTableNotFound     |  X  |  X  |  X  |     |     |  X  |  X  |       |     |       |
 | CoC7.MessageCheckRequestedWait             |  X  |     |     |     |     |  X  |  X  |       |     |       |
-| CoC7.MessageSelectSingleUserForTarget      |  X  |  X  |  X  |     |     |  X  |  X  |   X   |     |       |
+| CoC7.MessageSelectSingleUserForTarget      |  X  |  X  |  X  |     |     |  X  |  X  |       |     |       |
 | CoC7.MessageSelectedTargetIsNotControlled  |  X  |     |  X  |     |     |  X  |  X  |       |     |       |
 | CoC7.MessageTargetCheckRequested           |  X  |     |     |     |     |  X  |  X  |       |     |       |
-| CoC7.MessageTitleSelectSingleUserForTarget |  X  |  X  |  X  |     |     |  X  |  X  |   X   |     |       |
-| CoC7.Migrate.ButtonOkay                    |  X  |  X  |  X  |  X  |  X  |  X  |  X  |   X   |  X  |   X   |
-| CoC7.Migrate.ButtonSkip                    |  X  |  X  |  X  |  X  |  X  |  X  |  X  |   X   |  X  |   X   |
-| CoC7.Migrate.ButtonUpdate                  |  X  |  X  |  X  |  X  |  X  |  X  |  X  |   X   |  X  |   X   |
-| CoC7.Migrate.GMRequired                    |  X  |  X  |  X  |  X  |  X  |  X  |  X  |   X   |  X  |   X   |
-| CoC7.Migrate.Message                       |  X  |  X  |  X  |  X  |  X  |  X  |  X  |   X   |  X  |   X   |
-| CoC7.Migrate.RestartRequired               |  X  |  X  |  X  |  X  |  X  |  X  |  X  |   X   |  X  |   X   |
-| CoC7.Migrate.Title                         |  X  |  X  |  X  |  X  |  X  |  X  |  X  |   X   |  X  |   X   |
+| CoC7.MessageTitleSelectSingleUserForTarget |  X  |  X  |  X  |     |     |  X  |  X  |       |     |       |
+| CoC7.Migrate.ButtonOkay                    |  X  |  X  |  X  |  X  |  X  |  X  |  X  |       |  X  |   X   |
+| CoC7.Migrate.ButtonSkip                    |  X  |  X  |  X  |  X  |  X  |  X  |  X  |       |  X  |   X   |
+| CoC7.Migrate.ButtonUpdate                  |  X  |  X  |  X  |  X  |  X  |  X  |  X  |       |  X  |   X   |
+| CoC7.Migrate.GMRequired                    |  X  |  X  |  X  |  X  |  X  |  X  |  X  |       |  X  |   X   |
+| CoC7.Migrate.Message                       |  X  |  X  |  X  |  X  |  X  |  X  |  X  |       |  X  |   X   |
+| CoC7.Migrate.RestartRequired               |  X  |  X  |  X  |  X  |  X  |  X  |  X  |       |  X  |   X   |
+| CoC7.Migrate.Title                         |  X  |  X  |  X  |  X  |  X  |  X  |  X  |       |  X  |   X   |
 | CoC7.MinSanloss                            |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.Modifiers                             |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.MythosAlreadyEncountered              |  X  |     |     |     |     |     |  X  |       |     |       |
@@ -186,15 +186,15 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | CoC7.RollThreshold                         |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.SANCheckTitle                         |     |     |     |     |     |     |  X  |       |     |       |
 | CoC7.SanDataSelectionWindow                |  X  |     |     |     |     |     |  X  |       |     |       |
-| CoC7.SanGained                             |  X  |  X  |  X  |  X  |  X  |  X  |  X  |   X   |     |   X   |
+| CoC7.SanGained                             |  X  |  X  |  X  |  X  |  X  |  X  |  X  |       |     |   X   |
 | CoC7.SanityCheckPerformed                  |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.SanityLost                            |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.SelectActorType                       |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.SelectSourceLanguage                  |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.SendToChat                            |  X  |     |     |     |     |     |  X  |       |     |       |
-| CoC7.ShotBullets                           |  X  |  X  |  X  |     |     |  X  |  X  |   X   |     |       |
+| CoC7.ShotBullets                           |  X  |  X  |  X  |     |     |  X  |  X  |       |     |       |
 | CoC7.ShotIsImpossible                      |  X  |     |     |     |     |     |  X  |       |     |       |
-| CoC7.ShotVoley                             |  X  |  X  |  X  |     |     |  X  |  X  |   X   |     |       |
+| CoC7.ShotVoley                             |  X  |  X  |  X  |     |     |  X  |  X  |       |     |       |
 | CoC7.Skill                                 |     |     |     |     |     |     |  X  |       |     |       |
 | CoC7.Spanish                               |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.SpecificLocations                     |  X  |     |     |     |     |     |  X  |       |     |       |
@@ -223,10 +223,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | CoC7.healthRecovered                       |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.hours                                 |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.magicPointsRecovered                  |  X  |     |  X  |     |     |  X  |  X  |       |     |       |
-| CoC7.meleeCombatDamageDeals                |  X  |  X  |  X  |     |     |  X  |  X  |   X   |     |       |
-| CoC7.meleeCombatDamageFrom                 |  X  |  X  |  X  |     |     |  X  |  X  |   X   |     |       |
-| CoC7.meleeCombatDamageTakes                |  X  |  X  |  X  |     |     |  X  |  X  |   X   |     |       |
-| CoC7.meleeCombatDamageWith                 |  X  |  X  |  X  |     |     |  X  |  X  |   X   |     |       |
+| CoC7.meleeCombatDamageDeals                |  X  |  X  |  X  |     |     |  X  |  X  |       |     |       |
+| CoC7.meleeCombatDamageFrom                 |  X  |  X  |  X  |     |     |  X  |  X  |       |     |       |
+| CoC7.meleeCombatDamageTakes                |  X  |  X  |  X  |     |     |  X  |  X  |       |     |       |
+| CoC7.meleeCombatDamageWith                 |  X  |  X  |  X  |     |     |  X  |  X  |       |     |       |
 | CoC7.pulpHealthRecovered                   |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.quickHealer                           |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.rangeCombatCard.AimingTitle           |  X  |     |     |     |     |     |  X  |       |     |       |
@@ -294,4 +294,4 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | SETTINGS.developmentRollForLuck            |  X  |     |  X  |     |     |  X  |  X  |       |     |       |
 | SETTINGS.developmentRollForLuckHint        |  X  |     |  X  |     |     |  X  |  X  |       |     |       |
 | SETTINGS.displayPlayerNameOnSheet          |  X  |  X  |  X  |     |     |  X  |  X  |       |     |       |
-| **Remaining**:                             | 273 | 48  | 66  | 13  | 13  | 68  | 289 |  16   |  7  |  13   |
+| **Remaining**:                             | 273 | 48  | 66  | 13  | 13  | 68  | 289 |   0   |  7  |  13   |
