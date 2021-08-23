@@ -8,7 +8,8 @@
     "format": "prettier-standard --format --changed",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install",
-    "watch": "webpack --mode development"
+    "watch": "webpack --mode development",
+    "translations": "node generate-translations.js"
   },
   "repository": {
     "type": "git",
