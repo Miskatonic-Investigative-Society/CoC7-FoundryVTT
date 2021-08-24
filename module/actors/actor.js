@@ -2044,12 +2044,18 @@ export class CoCActor extends Actor {
 			};
 		}
 
+		const regExp = /\(([^)]+)\)/;
+		const matches = regExp.exec(name);
+		let shortName = null;
+		if( matches && matches.length) shortName = matches[1];
 		//Try to find a skill with exact name.
 		const skill = this.skills.filter( s => {
 			return(
 				!!s.name && (
 					(s.name.toLocaleLowerCase().replace( /\s/g, '') == name.toLocaleLowerCase().replace( /\s/g, '')) ||
-					(s.sName.toLocaleLowerCase().replace( /\s/g, '') == name.toLocaleLowerCase().replace( /\s/g, '')))
+					(s.sName.toLocaleLowerCase().replace( /\s/g, '') == name.toLocaleLowerCase().replace( /\s/g, '')) ||
+					(s.sName.toLocaleLowerCase().replace( /\s/g, '') == shortName?.toLocaleLowerCase().replace( /\s/g, ''))
+				)
 			);
 		});
 		if( skill.length) return { type: 'item', value: skill[0]};
@@ -2357,30 +2363,38 @@ export class CoCActor extends Actor {
 		}
 		await this.update({[`data.status.${statusName}.value`]: !statusValue});
 		switch (statusName) {
-			case 'dead':
+		case 'dead':
+			{
 				const deadEffect = await this.hasActiveEffect('dead');
 				if (!this.dead && deadEffect.length > 0) {
 					deadEffect.forEach((effect) => effect.delete());
 				}
-				break;
-			case 'dying':
+			}
+			break;
+		case 'dying':
+			{
 				const dyingEffect = await this.hasActiveEffect('dying');
 				if (!this.dying && dyingEffect.length > 0) {
 					dyingEffect.forEach((effect) => effect.delete());
 				} else this.fallDying();
-				break;
-			case 'prone':
+			}
+			break;
+		case 'prone':
+			{
 				const proneEffect = await this.hasActiveEffect('prone');
 				if (!this.prone && proneEffect.length > 0) {
 					proneEffect.forEach((effect) => effect.delete());
 				} else this.fallProne();
-				break;
-			case 'unconscious':
+			}
+			break;
+		case 'unconscious':
+			{
 				const unconsciousEffect = await this.hasActiveEffect('unconscious');
 				if (!this.unconscious && unconsciousEffect.length > 0) {
 					unconsciousEffect.forEach((effect) => effect.delete());
 				} else this.fallUnconscious();
-				break;
+			}
+			break;
 		}
 	}
 
@@ -2652,7 +2666,7 @@ export class CoCActor extends Actor {
 		return game.users.entities.filter( u => u.character?.id == this.id)[0] || null;
 	}
   
-  async setHealthStatusManually(event) {
+	async setHealthStatusManually(event) {
 		if (event.originalEvent) {
 			const healthBefore = parseInt(event.originalEvent.currentTarget.defaultValue);
 			const healthAfter = parseInt(event.originalEvent.currentTarget.value);
@@ -2704,13 +2718,13 @@ export class CoCActor extends Actor {
 		if (!this.majorWound) {
 			await this.setStatus(COC7.status.criticalWounds);
 			const criticalWoundsEffect = await this.hasActiveEffect('criticalWounds');
-				if (criticalWoundsEffect.length == 0) {
-					await super.createEmbeddedDocuments('ActiveEffect', [{
-						label: 'criticalWounds',
-						icon: 'systems/CoC7/artwork/icons/arm-sling.svg',
-						origin: this.uuid,
-						duration: {seconds: undefined, rounds: undefined, turns: 1},
-						disabled: false
+			if (criticalWoundsEffect.length == 0) {
+				await super.createEmbeddedDocuments('ActiveEffect', [{
+					label: 'criticalWounds',
+					icon: 'systems/CoC7/artwork/icons/arm-sling.svg',
+					origin: this.uuid,
+					duration: {seconds: undefined, rounds: undefined, turns: 1},
+					disabled: false
 				}]);
 			}
 		}
@@ -2739,7 +2753,7 @@ export class CoCActor extends Actor {
 				origin: this.uuid,
 				duration: {seconds: undefined, rounds: undefined, turns: 1},
 				disabled: false
-		}]);
+			}]);
 		}
 	}
 

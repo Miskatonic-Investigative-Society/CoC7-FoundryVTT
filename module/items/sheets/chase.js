@@ -1,5 +1,6 @@
 import { CoC7Chat } from '../../chat.js';
 import { chatHelper } from '../../chat/helper.js';
+import { CoC7Check } from '../../check.js';
 
 export class CoC7ChaseSheet extends ItemSheet {
 	// constructor( ...args) {
@@ -46,8 +47,9 @@ export class CoC7ChaseSheet extends ItemSheet {
 		this.participants.forEach( p => {
 			data.participants.push( new _participant( p));
 		});
-		data.preys = data.participants.filter( p => p.chaser);
-		data.chasers = data.participants.filter( p => !p.chaser);
+		data.preys = data.participants.filter( p => p.chaser).sort( (a,b) => a.mov - b.mov);
+		data.chasers = data.participants.filter( p => !p.chaser).sort( (a,b) => a.mov - b.mov);
+
 		return data;
 	}
 
@@ -76,6 +78,8 @@ export class CoC7ChaseSheet extends ItemSheet {
 		html.find( '.new-participant').on('drop', (event)=> this._onDragLeaveParticipant(event));
 
 		html.find( '.add-sign').click( this._onAddParticipant.bind(this));
+
+		html.find( '.roll-participant').click( this._onRollParticipant.bind(this));
 
 		const participantDragDrop = new DragDrop({
 			dropSelector: '.participant',
@@ -169,6 +173,55 @@ export class CoC7ChaseSheet extends ItemSheet {
 		await this.addParticipant( data);
 	}
 
+	async _onRollParticipant( event){
+		const target = event.currentTarget;
+		const participantElement = target.closest('.participant');
+		const index = participantElement.dataset.index;
+		const participants = this.item.data.data.participants?duplicate( this.item.data.data.participants):[];
+		
+		const participant = new _participant( participants[index]);
+		if( participant.check.refSet){
+			
+			const roll = new CoC7Check();
+			roll.parent = this.item.uuid;
+			participant.data.rolled = true;
+			participant.data.rollUuid = roll.uuid;
+			roll.actor = participant.actor.actorKey;
+
+			if( participant.check.isCharacteristic){
+				roll.rollCharacteristic( participant.check.ref.key);
+				await roll.toMessage();
+				participant.data.check.rollData = roll.JSONRollString;
+			} else if( participant.check.isSkill){
+				roll.skill = participant.check.ref;
+				roll.roll();
+				await roll.toMessage();
+				participant.data.check.rollData = roll.JSONRollString;
+			} else if( participant.check.isAttribute){
+				roll.rollAttribute( participant.check.ref.key);
+				await roll.toMessage();
+				participant.data.check.rollData = roll.JSONRollString;
+			}
+		} else if( participant.check.score){
+			const rollData = {
+				rawValue : participant.check.score,
+				displayName : participant.check.name
+			};
+			if( participant.hasActor) rollData.actor = participant.actor.actorKey;
+			const roll = CoC7Check.create(rollData);
+			roll.parent = this.item.uuid;
+			roll.roll();
+			roll.toMessage();
+			participant.data.check.rollData = roll.JSONRollString;
+			participant.data.rolled = true;
+			participant.data.rollUuid = roll.uuid;
+		}
+
+		
+
+		await this.item.update( { 'data.participants': participants});
+	}
+
 	async _onDragEnterParticipant( event) {
 		const target = event.currentTarget;
 		target.classList.add( 'drag-over');
@@ -180,6 +233,9 @@ export class CoC7ChaseSheet extends ItemSheet {
 	}
 
 	async _onChangeSide( event){
+		// const test = await fromUuid( 'Scene.wh7SLuvIOpcQyb8S.Token.nCdoCyoiudtjrNku');
+		// const itemTest = await fromUuid( 'Item.plIEmNRP6O7PveNv.roll.q2sAzsHt4FsqsdfD');
+
 		const target = event.currentTarget;
 		const participant = target.closest('.participant');
 		const index = participant.dataset.index;
@@ -381,17 +437,40 @@ export class _participant{
 		if( this.data.mov)
 			if( !isNaN( Number(this.data.mov)))
 				this.data.hasValidMov = true;
-			else
+			else{
 				this.data.hasValidMov = false;
-		return this.data.mov||undefined;
+				this.data.mov = undefined;
+			}
+		return this.data.mov||0;
 	}
 
-	get chaser(){
+	get isChaser(){
 		return !!this.data.chaser;
 	}
 
 	get hasDriver(){
 		return this.hasVehicle && this.hasActor;
+	}
+
+	get adjustedMov(){
+		if( !this.mov) return undefined;
+		if( !this.data.movAdjustment) this.data.movAdjustment = 0;
+		if( (this.mov + this.data.movAdjustment) < 0) return 0;
+		return this.mov + this.data.movAdjustment; 
+	}
+
+	get hasMovAdjustment(){
+		return this.hasBonusMov || this.hasMalusMov;
+	}
+
+	get hasBonusMov(){
+		if( this.data.movAdjustment > 0) return true;
+		return false;
+	}
+
+	get hasMalusMov(){
+		if( this.data.movAdjustment < 0) return true;
+		return false;
 	}
 
 	// get options(){
@@ -414,6 +493,10 @@ export class _participant{
 		const check = {};
 		if( this.data.check?.name) check.name = this.data.check.name;
 		if( this.data.check?.score) check.score = this.data.check.score;
+		if( this.data.check?.rollData) {
+			check.roll = CoC7Check.fromRollString( this.data.check.rollData);
+			if( check.roll) check.rolled = true;
+		}
 		if( this.hasActor){
 			check.options=[];
 			['con'].forEach( c =>{
@@ -431,7 +514,12 @@ export class _participant{
 			check.hasOptions = !!check.options.length;
 
 			if( this.data.check?.id){
-				const item = this.actor.find( this.data.check.id);
+				let item = this.actor.find( this.data.check.id);
+				if( !item ){
+					const gameItem = game.items.get( this.data.check.id);
+					if( gameItem) item = this.actor.find( gameItem.name);
+				}
+					
 				if( item){
 					if( 'item' == item.type && 'skill' == item.value.data?.type ){
 						check.ref = item.value;
@@ -495,7 +583,8 @@ export class _participant{
 					check.name = item.name;
 					check.type = 'skill';
 					check.isSkill = true;
-					check.refSet = true;
+					check.refSet = false;
+					check.score = item.base;
 				}
 			}
 		}

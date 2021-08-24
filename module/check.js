@@ -71,7 +71,7 @@ export class CoC7Check {
 	}
 
 	get rawValue(){
-		if( !this.actor || !this.actor.id) return undefined;
+		// if( !this.actor || !this.actor.id) return undefined;
 		if( !this._rawValue){
 			if( this.characteristic) this.rawValue = this.actor.data.data.characteristics[this.characteristic].value;
 			if( this.skill) this.rawValue = this.skill.value;
@@ -92,6 +92,7 @@ export class CoC7Check {
 	}
 
 	get rawValueString(){
+		if( !this._rawValue) return undefined;
 		if( this.flatThresholdModifier && game.settings.get( 'CoC7', 'allowFlatThresholdModifier')){
 			if( this.flatThresholdModifier < 0)
 				return this._rawValue.toString() + this.flatThresholdModifier.toString();
@@ -517,6 +518,34 @@ export class CoC7Check {
 		this._perform();
 	}
 
+	static create({
+		difficulty = CoC7Check.difficultyLevel.regular,
+		diceModifier = null,
+		actorKey = null,
+		characteristic = null,
+		attribute = null,
+		rawValue = 0,
+		skill = null,
+		flatDiceModifier = 0,
+		flatThresholdModifier = 0,
+		displayName = null
+	} = {}){
+		const check = new CoC7Check();
+		check.difficulty = difficulty;
+		if( diceModifier) check.diceModifier = diceModifier;
+		if( flatDiceModifier) check.flatDiceModifier = flatDiceModifier;
+		if( flatThresholdModifier) check.flatThresholdModifier = flatThresholdModifier;
+		if( displayName) check.displayName = displayName;
+		if( actorKey) check.actor = actorKey;
+		if( check.actor){ // TODO : Add check for validity of characteristic, attribute, skillId
+			if( skill) check.skill = skill; // TODO : try retrieve skill by name
+			else if( characteristic) check.characteristic = characteristic;
+			else if( attribute) check.attribute = attribute;
+			else check.rawValue = rawValue;
+		}
+		return check;
+	}
+
 
 	rollCharacteristic( char, diceMod = null, difficulty = null)
 	{
@@ -744,6 +773,10 @@ export class CoC7Check {
 
 		if( this.passed && this.diceModifier <= 0 && this.skill && !this.skill.data.data.properties.noxpgain &&!this.luckSpent &&!this.forced &&!this.isBlind &&!this.isUnknown){
 			this.flagForDevelopement();
+		}
+
+		if( this.parent){
+			ui.notifications.info( `Roll ${this.uuid} depends of ${this.parent}`);
 		}
 
 	}
@@ -974,18 +1007,32 @@ export class CoC7Check {
 		this._flavor = x;
 	}
 
+	set parent(x){
+		if( !this.uuid) this.uuid = foundry.utils.randomID(16);
+		this.parentUuid = x;
+	}
+
+	get parent(){
+		if( !this.parentUuid) return undefined;
+		return this.parentUuid;
+	}
+
 	get flavor(){
 		if( this._flavor) return this._flavor;
 		let flavor = '';
 		if( this.actor){
 			if (this.skill) flavor = game.i18n.format('CoC7.CheckResult', {name : this.skill.name, value : this.rawValueString, difficulty : this.difficultyString});
-			if (this.item) flavor = game.i18n.format('CoC7.ItemCheckResult', {item : this.item.name, skill : this.skill.name, value : this.rawValueString, difficulty : this.difficultyString});
-			if (this.characteristic) flavor = game.i18n.format('CoC7.CheckResult', {name : game.i18n.format(this.actor.data.data.characteristics[this.characteristic].label), value : this.rawValueString, difficulty : this.difficultyString});
-			if (this.attribute) flavor = game.i18n.format('CoC7.CheckResult', {name : game.i18n.format(`CoC7.${this.actor.data.data.attribs[this.attribute].label}`), value : this.rawValueString, difficulty : this.difficultyString});
+			else if (this.item) flavor = game.i18n.format('CoC7.ItemCheckResult', {item : this.item.name, skill : this.skill.name, value : this.rawValueString, difficulty : this.difficultyString});
+			else if (this.characteristic) flavor = game.i18n.format('CoC7.CheckResult', {name : game.i18n.format(this.actor.data.data.characteristics[this.characteristic].label), value : this.rawValueString, difficulty : this.difficultyString});
+			else if (this.attribute) flavor = game.i18n.format('CoC7.CheckResult', {name : game.i18n.format(`CoC7.${this.actor.data.data.attribs[this.attribute].label}`), value : this.rawValueString, difficulty : this.difficultyString});
+			else if( this.displayName) flavor = game.i18n.format('CoC7.CheckResult', {name : this.displayName, value : this.rawValueString, difficulty : this.difficultyString});
 		}
 
 		if(!flavor){
-			if( this.rawValue) flavor = game.i18n.format('CoC7.CheckRawValue', {rawvalue : this.rawValue, difficulty : this.difficultyString});
+			if( this.rawValue){
+				flavor = game.i18n.format('CoC7.CheckRawValue', {rawvalue : this.rawValue, difficulty : this.difficultyString});
+				if( this.displayName) flavor = game.i18n.format('CoC7.CheckResult', {name : this.displayName, value : this.rawValueString, difficulty : this.difficultyString});
+			}
 		}
 
 		if( this.pushing) {
@@ -1030,7 +1077,7 @@ export class CoC7Check {
 		let speakerData = {};
 		let speaker;
 		if( this.actor){
-			if( this.token) speakerData.token = this.token;
+			if( this.actor.isToken) speakerData.token = this.token;
 			else speakerData.actor = this.actor;
 			speaker = ChatMessage.getSpeaker(speakerData);
 		} else {
@@ -1137,6 +1184,7 @@ export class CoC7Check {
 		check.updateChatCard();
 	}
 
+	// OBSOLETE !
 	async shortResult( details = false){
 		const template = 'systems/CoC7/templates/chat/roll.html';
 		this.details = details? details : false;

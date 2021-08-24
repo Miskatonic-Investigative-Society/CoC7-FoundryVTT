@@ -1,3 +1,11 @@
+.sheetV2.item.chase{
+    .sheet-body{
+        .tab.active{
+            display: flex;
+        }
+    }
+}
+
 .participants{
     display: flex;
     flex-direction: column;
@@ -13,9 +21,9 @@
         .participant{
             flex: 1;
             display: grid;
-            grid-template-columns: 2rem 2rem 0.5rem 5fr 2.5rem 4fr 2rem 1rem;
+            grid-template-columns: 2rem 2rem 0.5rem 5fr 2.5rem 4fr 2rem 2rem 1rem;
             grid-template-rows: 2rem;
-            grid-template-areas: "p-side p-icon p-expand p-name p-movement p-check p-score p-control";
+            grid-template-areas: "p-side p-icon p-expand p-name p-movement p-check p-score p-roll p-control";
             align-items: center;
 
             &.drag-over{
@@ -51,6 +59,13 @@
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 min-width: 5rem;
+            }
+
+            .p-roll{
+                text-align: center;
+                font-size: 1.5rem;
+                height: 2rem;
+                line-height: 2rem;
             }
         }
         .driver{
