@@ -292,6 +292,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | SETTINGS.DisplayCheckSuccessLevel          |  X  |     |     |     |     |     |  X  |       |     |       |
 | SETTINGS.DisplayResultType                 |  X  |     |     |     |     |     |  X  |       |     |       |
 | SETTINGS.DoNotAdvise                       |  X  |     |     |     |     |     |  X  |       |     |       |
+| SETTINGS.EnableStatusIcons                 |  X  |  X  |  X  |  X  |  X  |  X  |  X  |   X   |  X  |   X   |
+| SETTINGS.EnableStatusIconsHint             |  X  |  X  |  X  |  X  |  X  |  X  |  X  |   X   |  X  |   X   |
 | SETTINGS.LetKeeperDecide                   |  X  |     |     |     |     |     |  X  |       |     |       |
 | SETTINGS.NeverEditable                     |  X  |     |     |     |     |     |  X  |       |     |       |
 | SETTINGS.OneBlockBackStory                 |  X  |     |     |     |     |     |  X  |       |     |       |
@@ -306,4 +308,4 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | SETTINGS.developmentRollForLuck            |  X  |     |  X  |     |     |  X  |  X  |       |     |       |
 | SETTINGS.developmentRollForLuckHint        |  X  |     |  X  |     |     |  X  |  X  |       |     |       |
 | SETTINGS.displayPlayerNameOnSheet          |  X  |  X  |  X  |     |     |  X  |  X  |       |     |       |
-| **Remaining**:                             | 285 | 60  | 78  | 25  | 25  | 80  | 301 |   0   |  0  |  25   |
+| **Remaining**:                             | 287 | 62  | 80  | 27  | 27  | 82  | 303 |   2   |  2  |  27   |
