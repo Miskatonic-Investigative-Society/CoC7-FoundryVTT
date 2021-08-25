@@ -159,22 +159,24 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
         )
       }
 
-      if (game.settings.get('CoC7', 'artworkFrontColor'))
+      if (game.settings.get('CoC7', 'artworkFrontColor')) {
         sheet.element.css(
           '--main-sheet-front-color',
           game.settings.get('CoC7', 'artworkFrontColor')
         )
-      if (game.settings.get('CoC7', 'artworkBackgroundColor'))
+      }
+      if (game.settings.get('CoC7', 'artworkBackgroundColor')) {
         sheet.element.css(
           '--main-sheet-back-color',
           game.settings.get('CoC7', 'artworkBackgroundColor')
         )
-      if (game.settings.get('CoC7', 'artworkInteractiveColor'))
+      }
+      if (game.settings.get('CoC7', 'artworkInteractiveColor')) {
         sheet.element.css(
           '--main-sheet-interactie-color',
           game.settings.get('CoC7', 'artworkInteractiveColor')
         )
-
+      }
       if (!game.settings.get('CoC7', 'artworkFixedSkillLength')) {
         sheet.element.css('--skill-length', 'auto')
         sheet.element.css('--skill-specialization-length', 'auto')
