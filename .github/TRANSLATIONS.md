@@ -56,9 +56,12 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | CoC7.DamageInflicted                       |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.DealDamage                            |  X  |  X  |  X  |  X  |  X  |  X  |  X  |       |     |   X   |
 | CoC7.DevPhase                              |  X  |     |     |     |     |     |  X  |       |     |       |
+| CoC7.Development                           |  X  |  X  |  X  |  X  |  X  |  X  |  X  |   X   |  X  |   X   |
+| CoC7.DifficultyLevel                       |  X  |  X  |  X  |  X  |  X  |  X  |  X  |   X   |  X  |   X   |
 | CoC7.DisregardMythosGain                   |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.DriveSpecializationName               |  X  |     |  X  |     |     |  X  |  X  |       |     |       |
 | CoC7.DyingCheck                            |  X  |     |     |     |     |     |  X  |       |     |       |
+| CoC7.Earned                                |  X  |  X  |  X  |  X  |  X  |  X  |  X  |   X   |  X  |   X   |
 | CoC7.EmptyItemList                         |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.EndBoutOfMadness                      |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.English                               |  X  |     |     |     |     |     |  X  |       |     |       |
@@ -88,6 +91,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | CoC7.FlatDiceModifier                      |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.FlatModifier                          |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.French                                |  X  |     |     |     |     |     |  X  |       |     |       |
+| CoC7.FullStudy                             |  X  |  X  |  X  |  X  |  X  |  X  |  X  |   X   |  X  |   X   |
+| CoC7.Gains                                 |  X  |  X  |  X  |  X  |  X  |  X  |  X  |   X   |  X  |   X   |
 | CoC7.GmNotes                               |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.GmTools                               |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.GoodForAsylum                         |  X  |     |     |     |     |     |  X  |       |     |       |
@@ -108,6 +113,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | CoC7.IndefinitelyInsane                    |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.InfoAllSkillsAlreadySelected          |     |     |     |     |     |     |  X  |       |     |       |
 | CoC7.InfoLessSkillThanOptions              |     |     |     |     |     |     |  X  |       |     |       |
+| CoC7.InitialReading                        |  X  |  X  |  X  |  X  |  X  |  X  |  X  |   X   |  X  |   X   |
 | CoC7.InsanityName                          |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.InsanityType                          |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.IntCheck                              |  X  |     |     |     |     |     |  X  |       |     |       |
@@ -199,6 +205,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | CoC7.ShotVoley                             |  X  |  X  |  X  |     |     |  X  |  X  |       |     |       |
 | CoC7.Skill                                 |     |     |     |     |     |     |  X  |       |     |       |
 | CoC7.Spanish                               |  X  |     |     |     |     |     |  X  |       |     |       |
+| CoC7.Specific                              |  X  |  X  |  X  |  X  |  X  |  X  |  X  |   X   |  X  |   X   |
 | CoC7.SpecificLocations                     |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.Status                                |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.Success                               |  X  |     |     |     |     |     |  X  |       |     |       |
@@ -208,12 +215,12 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | CoC7.Tie                                   |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.TotalDamage                           |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.UnderlyingInsanity                    |  X  |     |     |     |     |     |  X  |       |     |       |
+| CoC7.Unreadable                            |  X  |  X  |  X  |  X  |  X  |  X  |  X  |   X   |  X  |   X   |
 | CoC7.Vehicle                               |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.WarnFastTargetWithWrongMOV            |     |     |     |     |     |     |  X  |       |     |       |
 | CoC7.WarnNoControlledActor                 |     |     |     |     |     |     |  X  |       |     |       |
 | CoC7.WarnTooManyTarget                     |     |     |     |     |     |     |  X  |       |     |       |
 | CoC7.WeaponUsesPerRoundHint                |  X  |     |     |     |     |     |  X  |       |     |       |
-| CoC7.Weeks                                 |  X  |  X  |  X  |  X  |  X  |  X  |  X  |       |  X  |   X   |
 | CoC7.WhisperTo                             |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.WhisperToSelection                    |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.XPGainDisabled                        |  X  |     |     |     |     |     |  X  |       |     |       |
@@ -230,6 +237,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | CoC7.meleeCombatDamageFrom                 |  X  |  X  |  X  |     |     |  X  |  X  |       |     |       |
 | CoC7.meleeCombatDamageTakes                |  X  |  X  |  X  |     |     |  X  |  X  |       |     |       |
 | CoC7.meleeCombatDamageWith                 |  X  |  X  |  X  |     |     |  X  |  X  |       |     |       |
+| CoC7.notKnowLanguage                       |  X  |  X  |  X  |  X  |  X  |  X  |  X  |   X   |  X  |   X   |
 | CoC7.pulpHealthRecovered                   |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.quickHealer                           |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.rangeCombatCard.AimingTitle           |  X  |     |     |     |     |     |  X  |       |     |       |
@@ -246,6 +254,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | CoC7.rounds                                |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.startRest                             |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.toggleXP                              |  X  |     |     |     |     |     |  X  |       |     |       |
+| CoC7.weeks                                 |  X  |  X  |  X  |  X  |  X  |  X  |  X  |   X   |  X  |   X   |
 | SETTINGS.AdviseAllPlayer                   |  X  |     |     |     |     |     |  X  |       |     |       |
 | SETTINGS.AdviseOwnersOnly                  |  X  |     |     |     |     |     |  X  |       |     |       |
 | SETTINGS.AllowFlatDiceModifier             |  X  |     |     |     |     |     |  X  |       |     |       |
@@ -297,4 +306,4 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | SETTINGS.developmentRollForLuck            |  X  |     |  X  |     |     |  X  |  X  |       |     |       |
 | SETTINGS.developmentRollForLuckHint        |  X  |     |  X  |     |     |  X  |  X  |       |     |       |
 | SETTINGS.displayPlayerNameOnSheet          |  X  |  X  |  X  |     |     |  X  |  X  |       |     |       |
-| **Remaining**:                             | 276 | 51  | 69  | 16  | 16  | 71  | 292 |   0   | 10  |  16   |
+| **Remaining**:                             | 285 | 60  | 78  | 25  | 25  | 80  | 301 |  10   | 19  |  25   |
