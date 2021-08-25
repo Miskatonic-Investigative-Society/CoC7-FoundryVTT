@@ -2214,7 +2214,7 @@ export class CoCActor extends Actor {
               : MOV
         }
       }
-      return MOV
+      if (MOV > 0) return MOV
     }
     return this.data.data.attribs.mov.value
   }
