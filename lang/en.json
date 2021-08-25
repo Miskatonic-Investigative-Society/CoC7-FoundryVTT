@@ -295,7 +295,7 @@
   "CoC7.ItemQuantity": "Quantity",
   "CoC7.ItemWeight": "Weight",
   "CoC7.ItemDetails": "Details",
-  "CoC7.ItemDescription": "Description",
+  "CoC7.Description": "Description",
   "CoC7.Reload": "Left/Right click : add/remove 1 bullet\nShift + Left/Right click : Reload/Empty",
   "CoC7.WeaponRange": "Range",
   "CoC7.WeaponDamage": "Damage",
@@ -592,6 +592,10 @@
 
   "CoC7.PutGunAway": "Put your gun away",
   "CoC7.DrawGun": "Draw your gun",
+
+  "CoC7.Content": "Content",
+  "CoC7.Progress": "Progress",
+  "CoC7.Weeks": "Weeks",
 
   "CoC7.GmTools": "Keeper's tools",
   "CoC7.GmNotes": "GM's notes",
