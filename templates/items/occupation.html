@@ -25,12 +25,12 @@
 	{{!-- Item Sheet Navigation --}}
 	<nav style="flex: 0 0 24px;margin-bottom: 4px;font-family: 'Modesto Condensed', 'Palatino Linotype', serif;font-size: 16px;font-weight: 700;"
 	  class="sheet-navigation tabs" data-group="primary">
-		<a style="line-height: 24px;" class="item active" data-tab="description">{{ localize "CoC7.ItemDescription" }}</a>
+		<a style="line-height: 24px;" class="item active" data-tab="description">{{ localize "CoC7.Description" }}</a>
 		{{#unless isOwned}}<a style="line-height: 24px;" class="item" data-tab="details">{{ localize "CoC7.Details" }}</a>{{/unless}}
 		<a style="line-height: 24px;" class="item" data-tab="skills">{{ localize "CoC7.Skills" }}</a>
 	</nav>
 
-	
+
 	{{!-- Item Sheet Body --}}
 	<section style="overflow: hidden;flex: 1;" class="sheet-body">
 
@@ -44,7 +44,7 @@
 					{{/each}}
 				</ol>
 			</div>
-		
+
 			{{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
 		</div>
 
@@ -178,12 +178,12 @@
 				<input type="text" name="data.creditRating.min" value="{{data.creditRating.min}}" placeholder="{{  localize 'CoC7.Minimum' }}"/>
 				<input type="text" name="data.creditRating.max" value="{{data.creditRating.max}}" placeholder="{{  localize 'CoC7.Maximum' }}"/>
 			</div>
-<!-- 
+<!--
 			<h3 class="form-header">{{ localize "CoC7.Notes"}}</h3>
 			{{editor content=data.description.notes target="data.description.notes" button=true owner=owner editable=editable}} -->
 
 		</div>
-		
+
 		{{!-- Spells Tab --}}
 		<div class="tab skills" data-group="primary" data-tab="skills">
 			<div class='{{#unless isOwned}}droppable{{/unless}} main-skills'>
@@ -198,7 +198,7 @@
 					{{#each data.skills as |skill|}}
 					<li class="item flexrow" data-item-id="{{skill._id}}">
 						<div class="item-name flexrow">
-							<h4>{{skill.displayName}} ({{skill.data.base}}%)</h4>    
+							<h4>{{skill.displayName}} ({{skill.data.base}}%)</h4>
 						</div>
 
 						<div class="item-controls">
@@ -231,7 +231,7 @@
 					{{#each group.skills as |skill index|}}
 					<li class="item flexrow" data-item-id="{{skill._id}}" data-item-index="{{index}}">
 						<div class="item-name flexrow">
-							<h4>{{skill.displayName}} ({{skill.data.base}}%)</h4>    
+							<h4>{{skill.displayName}} ({{skill.data.base}}%)</h4>
 						</div>
 						<div class="item-controls">
 							<a class="item-control group-item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
