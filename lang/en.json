@@ -97,6 +97,7 @@
   "CoC7.Other": "Other",
   "CoC7.rounds": "round(s)",
   "CoC7.hours": "hour(s)",
+  "CoC7.weeks": "week(s)",
   "CoC7.remove": "Remove",
   "CoC7.Any": "Any",
   "CoC7.All": "All",
@@ -521,6 +522,18 @@
   "CoC7.MythosBook": "Mythos Book",
   "CoC7.OccultBook": "Occult Tome",
   "CoC7.Unidentified": "Unidentified description",
+  "CoC7.Content": "Content",
+  "CoC7.Progress": "Progress",
+  "CoC7.InitialReading": "Initial Reading",
+  "CoC7.FullStudy": "Full Study",
+  "CoC7.DifficultyLevel": "Difficulty Level",
+  "CoC7.Unreadable": "Unreadable",
+  "CoC7.Unidentified": "Unidentified",
+  "CoC7.Gains": "Gains",
+  "CoC7.Development": "Development",
+  "CoC7.Specific": "Specific",
+  "CoC7.notKnowLanguage": "{actor} does not know the {language} language.",
+  "CoC7.Earned": "Earned",
 
   "CoC7.Crew": "Crew",
   "CoC7.Origin": "Origin",
@@ -592,10 +605,6 @@
 
   "CoC7.PutGunAway": "Put your gun away",
   "CoC7.DrawGun": "Draw your gun",
-
-  "CoC7.Content": "Content",
-  "CoC7.Progress": "Progress",
-  "CoC7.Weeks": "Weeks",
 
   "CoC7.GmTools": "Keeper's tools",
   "CoC7.GmNotes": "GM's notes",
