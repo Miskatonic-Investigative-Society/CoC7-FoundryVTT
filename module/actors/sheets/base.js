@@ -53,8 +53,9 @@ export class CoC7ActorSheet extends ActorSheet {
     if (
       game.settings.get('CoC7', 'playerUnlockSheetMode') === 'creation' &&
       game.settings.get('CoC7', 'charCreationEnabled')
-    )
+    ) {
       data['data.flags.locked'] = false
+    }
 
     if (!['vehicle'].includes(this.actor.data.type)) {
       if (!data.data.characteristics) {
@@ -529,13 +530,16 @@ export class CoC7ActorSheet extends ActorSheet {
           characteristic.extreme = Math.floor(characteristic.value / 5)
 
           // If no value && no formula don't display charac.
-          if (!characteristic.value && !characteristic.formula)
+          if (!characteristic.value && !characteristic.formula) {
             characteristic.display = false
-          else characteristic.display = true
+          } else {
+            characteristic.display = true
+          }
 
           // if any characteristic has no value but has a formula.
-          if (!characteristic.value && characteristic.formula)
+          if (!characteristic.value && characteristic.formula) {
             characteristic.hasEmptyValueWithFormula = true
+          }
 
           data.hasEmptyValueWithFormula =
             data.hasEmptyValueWithFormula ||
@@ -600,10 +604,11 @@ export class CoC7ActorSheet extends ActorSheet {
 
     if (data.data.attribs.mp.auto) {
       // TODO if any is null set max back to null.
-      if (data.data.characteristics.pow.value != null)
+      if (data.data.characteristics.pow.value != null) {
         data.data.attribs.mp.max = Math.floor(
           data.data.characteristics.pow.value / 5
         )
+      }
     }
 
     if (data.data.attribs.san.auto) {
@@ -613,27 +618,39 @@ export class CoC7ActorSheet extends ActorSheet {
     if (
       data.data.attribs.mp.value > data.data.attribs.mp.max ||
       data.data.attribs.mp.max == null
-    )
+    ) {
       data.data.attribs.mp.value = data.data.attribs.mp.max
+    }
     if (
       data.data.attribs.hp.value > data.data.attribs.hp.max ||
       data.data.attribs.hp.max == null
-    )
+    ) {
       data.data.attribs.hp.value = data.data.attribs.hp.max
+    }
 
-    if (data.data.attribs.hp.value == null && data.data.attribs.hp.max != null)
+    if (
+      data.data.attribs.hp.value == null &&
+      data.data.attribs.hp.max != null
+    ) {
       data.data.attribs.hp.value = data.data.attribs.hp.max
-    if (data.data.attribs.mp.value == null && data.data.attribs.mp.max != null)
+    }
+    if (
+      data.data.attribs.mp.value == null &&
+      data.data.attribs.mp.max != null
+    ) {
       data.data.attribs.mp.value = data.data.attribs.mp.max
+    }
 
     if (!['vehicle'].includes(this.actor.data.type)) {
       if (
         data.data.attribs.san.value == null &&
         data.data.characteristics.pow.value != null
-      )
+      ) {
         data.data.attribs.san.value = data.data.characteristics.pow.value
-      if (data.data.attribs.san.value > data.data.attribs.san.max)
+      }
+      if (data.data.attribs.san.value > data.data.attribs.san.max) {
         data.data.attribs.san.value = data.data.attribs.san.max
+      }
 
       if (data.data.biography instanceof Array && data.data.biography.length) {
         data.data.biography[0].isFirst = true
@@ -986,7 +1003,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
   async checkForDeath (event) {
     const conCheck = new CoC7ConCheck(
-      this.actor.isToken ? this.actor.tokenKey : this.actor._id
+      this.actor.isToken ? this.actor.tokenKey : this.actor.id
     )
     conCheck.stayAlive = true
     conCheck.toMessage(event.shiftKey)
@@ -1456,8 +1473,9 @@ export class CoC7ActorSheet extends ActorSheet {
         actorKey: this.actor.actorKey,
         forceModifiers: event.shiftKey
       }
-      if (game.settings.get('core', 'rollMode') === 'blindroll')
+      if (game.settings.get('core', 'rollMode') === 'blindroll') {
         linkData.blind = true
+      }
       CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg =>
         dlg.render(true)
       )
@@ -1518,8 +1536,9 @@ export class CoC7ActorSheet extends ActorSheet {
             actorKey: this.actor.actorKey,
             forceModifiers: event.shiftKey
           }
-      if (game.settings.get('core', 'rollMode') === 'blindroll')
+      if (game.settings.get('core', 'rollMode') === 'blindroll') {
         linkData.blind = true
+      }
       CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg =>
         dlg.render(true)
       )
@@ -1630,8 +1649,9 @@ export class CoC7ActorSheet extends ActorSheet {
         actorKey: this.actor.actorKey,
         forceModifiers: event.shiftKey
       }
-      if (game.settings.get('core', 'rollMode') === 'blindroll')
+      if (game.settings.get('core', 'rollMode') === 'blindroll') {
         linkData.blind = true
+      }
       CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg =>
         dlg.render(true)
       )
@@ -1702,15 +1722,16 @@ export class CoC7ActorSheet extends ActorSheet {
               ? parseInt(event.currentTarget.value)
               : null
 
-            if (!event.currentTarget.value)
+            if (!event.currentTarget.value) {
               await item.update({
                 [event.currentTarget.name]: null
               })
-            else {
-              if (!isNaN(value))
+            } else {
+              if (!isNaN(value)) {
                 await item.update({
                   [event.currentTarget.name]: value
                 })
+              }
             }
             if (game.i18n.localize(COC7.creditRatingSkillName) === item.name) {
               const creditValue = value || 0
