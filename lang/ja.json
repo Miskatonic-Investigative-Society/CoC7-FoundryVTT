@@ -271,7 +271,7 @@
   "CoC7.ItemQuantity": "数量",
   "CoC7.ItemWeight": "重量",
   "CoC7.ItemDetails": "詳細",
-  "CoC7.ItemDescription": "説明",
+  "CoC7.Description": "説明",
   "CoC7.Reload": "左/右クリック：1発装填/1発排出\nShiftキー + 左/右クリック：リロード/空にする",
   "CoC7.WeaponRange": "基本射程",
   "CoC7.WeaponDamage": "ダメージ",

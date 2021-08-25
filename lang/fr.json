@@ -295,7 +295,7 @@
   "CoC7.ItemQuantity": "Quantité",
   "CoC7.ItemWeight": "Poids",
   "CoC7.ItemDetails": "Détails",
-  "CoC7.ItemDescription": "Description",
+  "CoC7.Description": "Description",
   "CoC7.Reload": "Clic gauche/droit : ajouter/retirer 1 munition\nShift + clic gauche/droite : Recharger/Vider le magasin",
   "CoC7.WeaponRange": "Portée",
   "CoC7.WeaponDamage": "Dégâts",
