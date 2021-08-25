@@ -2,7 +2,7 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`. Feel free to create a new `*.json` file for a language that is not shown here!
 
-| Key                                        | cn  | cs  | de  | es  | fr  | ja  | pl  | pt-BR | sv  | zh-tw |
+| Key                                        | cn  | cs  | de  | es  | fr  | ja  | pl  | pt-BR | sv  | zh-TW |
 | :----------------------------------------- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :---: | :-: | :---: |
 | CoC7.ActorImporter                         |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.ActorImporterSummary                  |  X  |     |     |     |     |     |  X  |       |     |       |
@@ -39,6 +39,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | CoC7.CombinedAllHint                       |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.CombinedAnyHint                       |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.CombinedRollCard                      |  X  |     |     |     |     |     |  X  |       |     |       |
+| CoC7.Content                               |  X  |  X  |  X  |  X  |  X  |  X  |  X  |       |  X  |   X   |
 | CoC7.Convert                               |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.ConvertFrom6Edition                   |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.CopyToClipboard                       |  X  |     |     |     |     |     |  X  |       |     |       |
@@ -173,6 +174,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | CoC7.PlayerName                            |  X  |  X  |  X  |     |     |  X  |  X  |       |     |       |
 | CoC7.PlayerPermanentlyInsane               |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.Proceed                               |  X  |  X  |  X  |  X  |  X  |  X  |  X  |       |     |   X   |
+| CoC7.Progress                              |  X  |  X  |  X  |  X  |  X  |  X  |  X  |       |  X  |   X   |
 | CoC7.Properties                            |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.PushingSkill                          |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.RecoverLuckPoints                     |  X  |     |  X  |     |     |  X  |  X  |       |     |       |
@@ -211,6 +213,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | CoC7.WarnNoControlledActor                 |     |     |     |     |     |     |  X  |       |     |       |
 | CoC7.WarnTooManyTarget                     |     |     |     |     |     |     |  X  |       |     |       |
 | CoC7.WeaponUsesPerRoundHint                |  X  |     |     |     |     |     |  X  |       |     |       |
+| CoC7.Weeks                                 |  X  |  X  |  X  |  X  |  X  |  X  |  X  |       |  X  |   X   |
 | CoC7.WhisperTo                             |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.WhisperToSelection                    |  X  |     |     |     |     |     |  X  |       |     |       |
 | CoC7.XPGainDisabled                        |  X  |     |     |     |     |     |  X  |       |     |       |
@@ -294,4 +297,4 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | SETTINGS.developmentRollForLuck            |  X  |     |  X  |     |     |  X  |  X  |       |     |       |
 | SETTINGS.developmentRollForLuckHint        |  X  |     |  X  |     |     |  X  |  X  |       |     |       |
 | SETTINGS.displayPlayerNameOnSheet          |  X  |  X  |  X  |     |     |  X  |  X  |       |     |       |
-| **Remaining**:                             | 273 | 48  | 66  | 13  | 13  | 68  | 289 |   0   |  7  |  13   |
+| **Remaining**:                             | 276 | 51  | 69  | 16  | 16  | 71  | 292 |   0   | 10  |  16   |
