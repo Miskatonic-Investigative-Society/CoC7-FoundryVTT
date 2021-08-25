@@ -777,5 +777,7 @@
   "SETTINGS.AdviseOwnersOnly": "Notificar Dono(a) do Personagem",
   "SETTINGS.AdviseAllPlayer": "Notificar Todos",
   "SETTINGS.OneBlockBackStory": "Antecedentes num Único Bloco",
-  "SETTINGS.OneBlockBackStoryHint": "Transforma a parte de Antecedentes da ficha em único bloco."
+  "SETTINGS.OneBlockBackStoryHint": "Transforma a parte de Antecedentes da ficha em único bloco.",
+  "SETTINGS.EnableStatusIcons": "Habilitar ícones de  status",
+  "SETTINGS.EnableStatusIconsHint": "Define se ícones de status de combate e sanidade são mostrados em tokens."
 }
