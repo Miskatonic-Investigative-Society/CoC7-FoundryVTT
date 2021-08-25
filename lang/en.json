@@ -775,5 +775,7 @@
   "SETTINGS.AdviseOwnersOnly": "Notify actor's owner",
   "SETTINGS.AdviseAllPlayer": "Notify all players",
   "SETTINGS.OneBlockBackStory": "One block backstory",
-  "SETTINGS.OneBlockBackStoryHint": "Turn backstory to one editor block, but you can format/add links."
+  "SETTINGS.OneBlockBackStoryHint": "Turn backstory to one editor block, but you can format/add links.",
+  "SETTINGS.EnableStatusIcons": "Enable status icons",
+  "SETTINGS.EnableStatusIconsHint": "Set if combat and sanity effects icons are shown in tokens."
 }
