@@ -567,7 +567,7 @@
   "CoC7.Phobia": "恐懼症",
   "CoC7.Mania": "狂躁症",
   "CoC7.MaxSanloss": "最大損失",
-  "CoC7.MinSanloss": "最少損失",
+  "CoC7.MinSanloss": "最小損失",
   "CoC7.AlreadyLost": "已經失去控制(LOST)",
   "CoC7.CreatureMaxLoss": "生物最大損失值",
   "CoC7.MaxLossToCreature": "生物扣去最大損失值",
