@@ -1,13 +1,14 @@
 ## Version 0.6.5:
 
+This release features major code refactoring and data migration. It is highly recommended to backup the Worlds directories linked to Call of Cthulhu 7th Edition before updating the system.
+
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
 
-- Addition of Decader/Tens dice type to allow d100 rolls without units in Dice So Nice;
 - Addition of new default icons to some entity types;
 - Addition of roll to chat messages where possible, so Dice So Nice will trigger;
 - Average system size reduced (from 20MB to 6MB) and its performance increased;
 - Change book, creature, npc, occupation, setup, spell, status, and talent sheets to be resizable;
-- Ensures compatibility of system .svg icons when using Firefox browser;
+- Ensure compatibility of system .svg icons when using Firefox browser;
 - Fix backstory editor not resolving lists;
 - Fix extremely old characters getting negative movement;
 - Fix impossibility of delete dead active effects on NPCs/Creatures;
@@ -17,8 +18,10 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Fix some Foundry warnings on console for deprecated stuff;
 - Improve randomness of system dices;
 - Massive code refactoring and data migration;
+- Now blind rolls works properly in integration with Dice So Nice!
 - Now, during the development phase, if a skill goes above 90 points, the character gain 2D6 of Sanity, thanks to @pconception;
-- Now Ranged Combat trigger Dice So Nice on checks and damage, if available;
+- Now Ranged Combat trigger Dice So Nice! on checks and damage, if available;
+- Now the check result on chat will appear only after Dice So Nice! complete the animation;
 - There is now a list of untranslated keys: https://github.com/HavlockV/CoC7-FoundryVTT/blob/develop/.github/TRANSLATIONS.md
 - There is now an option to set if combat and sanity effects icons are shown in tokens or not;
 - Update to Portuguese localization;
