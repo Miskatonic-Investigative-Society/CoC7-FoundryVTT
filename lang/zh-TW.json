@@ -644,7 +644,7 @@
   "SETTINGS.ArtworkInteractiveColor": "互動元素的顏色",
   "SETTINGS.ArtworkInteractiveColorHint": "使用於互動/可檢定的元素",
   "SETTINGS.ArtworkFixedSkillLength": "技能名的長度受限制",
-  "SETTINGS.ArtworkFixedSkillLengthHint": "為了角色卡精簡效率，技能名的長度會被限制。",
+  "SETTINGS.ArtworkFixedSkillLengthHint": "為了精簡角色卡的效率，技能名的長度會被限制。",
   "SETTINGS.ArtworkMainFont": "主要字型",
   "SETTINGS.ArtworkMainFontBold": "主要字型(粗體)",
   "SETTINGS.ArtworkMainFontSize": "主要字型大小 (px)",
