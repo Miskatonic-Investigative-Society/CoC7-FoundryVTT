@@ -59,16 +59,36 @@
                         </div>
                         <div class="p-score">
                             {{#if p.check.refSet}}
-                                {{p.check.score}}
+                                <span>{{p.check.score}}</span>
                             {{else}}
                                 <input class='right-aligned' type='text' name="data.participants.{{i}}.check.score" placeholder="%" value="{{p.check.score}}" />
                             {{/if}}
                         </div>
-                        <div class="p-roll">
-                            <a class="roll-participant"><i class="game-icon game-icon-d10"></i></a>
+                        <div class="p-roll {{p.check.cssClasses}}">
+                            {{#if p.check.rolled}}
+                                {{{check.inlineRoll}}}
+                            {{else}}
+                                <a class="roll-participant"><i class="game-icon game-icon-d10"></i></a>
+                            {{/if}}
+                        </div>
+                        <div class="p-adjust {{p.check.modifierCss}}">
+                            {{#if p.check.rolled}}
+                                {{#if p.check.hasModifier}}
+                                    <i class="game-icon game-icon-upgrade"></i>
+                                {{else}}
+                                    <i class="fas fa-equals"></i>
+                                {{/if}}
+                            {{/if}}
+                        </div>
+                        <div class="p-modified-mov {{p.check.modifierCss}} {{p.check.cssClasses}}">
+                            {{p.adjustedMov}}
                         </div>
                         <div class="p-control">
-                            <a class="delete-participant"><i class="fas fa-times"></i></a>
+                            {{#if p.check.rolled}}
+                                <a class="reset-roll"><i class="fas fa-undo"></i></a>
+                            {{else}}
+                                <a class="delete-participant"><i class="fas fa-times"></i></a>
+                            {{/if}}
                         </div>
                     </div>
                     {{#if p.hasDriver}}

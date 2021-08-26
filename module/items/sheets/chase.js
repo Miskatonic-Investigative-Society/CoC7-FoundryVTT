@@ -14,7 +14,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 	static get defaultOptions() {
 		const options = mergeObject(super.defaultOptions, {
 			classes: ['coc7', 'sheetV2', 'item', 'chase'],
-			width: 500,
+			width: 550,
 			height: 500,
 			resizable: true,
 			tabs: [{navSelector: '.sheet-nav', contentSelector: '.sheet-body', initial: 'participants'}]
@@ -33,6 +33,8 @@ export class CoC7ChaseSheet extends ItemSheet {
 	get template() {
 		return 'systems/CoC7/templates/items/chase.html';
 	}
+
+	static type = 'coc7ChaseSheet';
 
 	/** @override */
 	getData(options={}) {
@@ -70,6 +72,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 
 		html.find( '.p-side').click(this._onChangeSide.bind(this));
 		html.find( '.delete-participant').click(this._onDeleteParticipant.bind(this));
+		html.find( '.reset-roll').click(this._onResetRoll.bind(this));
 		html.find( '.delete-driver').click(this._onDeleteDriver.bind(this));
 
 		html.find( '.new-participant').on('dragenter', (event)=> this._onDragEnterParticipant(event));
@@ -161,7 +164,6 @@ export class CoC7ChaseSheet extends ItemSheet {
 		const dataString = event.dataTransfer.getData('text/plain');
 		const data = JSON.parse( dataString);
 		await this.alterParticipant(data, Number(index));
-		ui.notifications.info( `Dropped ${data.type}`);
 	}
 
 	async _onAddParticipant( event){
@@ -187,20 +189,26 @@ export class CoC7ChaseSheet extends ItemSheet {
 			participant.data.rolled = true;
 			participant.data.rollUuid = roll.uuid;
 			roll.actor = participant.actor.actorKey;
+			if( !event.shiftKey && participant.actor.player){
+				roll.standby = true;
+				roll.standbyText = 'CoC7.Chase';
+				roll.standbyRightIcon = 'systems/CoC7/artwork/icons/running-solid.svg';
+			}
+
 
 			if( participant.check.isCharacteristic){
 				roll.rollCharacteristic( participant.check.ref.key);
 				await roll.toMessage();
-				participant.data.check.rollData = roll.JSONRollString;
+				participant.data.check.rollDataString = roll.JSONRollString;
 			} else if( participant.check.isSkill){
 				roll.skill = participant.check.ref;
 				roll.roll();
 				await roll.toMessage();
-				participant.data.check.rollData = roll.JSONRollString;
+				participant.data.check.rollDataString = roll.JSONRollString;
 			} else if( participant.check.isAttribute){
 				roll.rollAttribute( participant.check.ref.key);
 				await roll.toMessage();
-				participant.data.check.rollData = roll.JSONRollString;
+				participant.data.check.rollDataString = roll.JSONRollString;
 			}
 		} else if( participant.check.score){
 			const rollData = {
@@ -212,7 +220,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 			roll.parent = this.item.uuid;
 			roll.roll();
 			roll.toMessage();
-			participant.data.check.rollData = roll.JSONRollString;
+			participant.data.check.rollDataString = roll.JSONRollString;
 			participant.data.rolled = true;
 			participant.data.rollUuid = roll.uuid;
 		}
@@ -260,6 +268,15 @@ export class CoC7ChaseSheet extends ItemSheet {
 		const index = participant.dataset.index;
 		const participants = this.item.data.data.participants?duplicate( this.item.data.data.participants):[];
 		participants.splice(index, 1);
+		await this.item.update( { 'data.participants': participants});
+	}
+
+	async _onResetRoll( event){
+		const target = event.currentTarget;
+		const participant = target.closest('.participant');
+		const index = participant.dataset.index;
+		const participants = this.item.data.data.participants?duplicate( this.item.data.data.participants):[];
+		delete participants[index].check.rollDataString;
 		await this.item.update( { 'data.participants': participants});
 	}
 
@@ -356,6 +373,26 @@ export class CoC7ChaseSheet extends ItemSheet {
 		participants.push( participant);
 		await this.item.update( { 'data.participants': participants});
 	}
+
+	async updateRoll( rollString){
+		if( game.user.isGM){
+			const roll = CoC7Check.fromRollString( rollString);
+			const participants = this.item.data.data.participants?duplicate( this.item.data.data.participants):[];
+			const index = participants.findIndex( p => p.rollUuid == roll.uuid);
+			if( index >= 0){
+				participants[index].check.rollDataString = roll.JSONRollString;
+				await this.item.update( { 'data.participants': participants});
+			}
+		} else {
+			const data = {
+				data: rollString,
+				type: 'invoke',
+				method: 'updateRoll',
+				item: this.item.uuid
+			};
+			game.socket.emit( 'system.CoC7', data);
+		}
+	}
 }
 
 export function clean( obj){
@@ -434,14 +471,17 @@ export class _participant{
 			if( this.hasVehicle) this.data.mov = this.vehicle.mov;
 			else if( this.hasActor) this.data.mov = this.actor.mov;
 		}
-		if( this.data.mov)
+
+		if( this.data.mov){
 			if( !isNaN( Number(this.data.mov)))
 				this.data.hasValidMov = true;
 			else{
 				this.data.hasValidMov = false;
 				this.data.mov = undefined;
 			}
-		return this.data.mov||0;
+		}
+
+		return this.data.mov;
 	}
 
 	get isChaser(){
@@ -452,11 +492,23 @@ export class _participant{
 		return this.hasVehicle && this.hasActor;
 	}
 
+	get movAdjustment(){
+		if( this.data.check?.rollDataString){
+			const roll = CoC7Check.fromRollString( this.data.check.rollDataString);
+			if( roll){
+				if( !roll.standby){
+					if( roll.successLevel >= CoC7Check.successLevel.extreme) return 1;
+					else if( roll.failed ) return -1;
+				}
+			}
+		}
+		return 0;
+	}
+
 	get adjustedMov(){
-		if( !this.mov) return undefined;
-		if( !this.data.movAdjustment) this.data.movAdjustment = 0;
-		if( (this.mov + this.data.movAdjustment) < 0) return 0;
-		return this.mov + this.data.movAdjustment; 
+		if( undefined == this.mov) return undefined;
+		if( isNaN( Number(this.mov))) return undefined;
+		return Number(this.mov) + this.movAdjustment; 
 	}
 
 	get hasMovAdjustment(){
@@ -493,9 +545,21 @@ export class _participant{
 		const check = {};
 		if( this.data.check?.name) check.name = this.data.check.name;
 		if( this.data.check?.score) check.score = this.data.check.score;
-		if( this.data.check?.rollData) {
-			check.roll = CoC7Check.fromRollString( this.data.check.rollData);
-			if( check.roll) check.rolled = true;
+		check.cssClasses = '';
+		if( this.data.check?.rollDataString) {
+			check.roll = CoC7Check.fromRollString( this.data.check.rollDataString);
+			if( check.roll) {
+				if( !check.roll.standby || check.roll.hasCard){
+					check.rolled = true;
+					check.inlineRoll = check.roll.inlineCheck.outerHTML;
+					check.cssClasses += 'rolled';
+					if( !check.roll.standby){
+						if( check.roll.successLevel >= CoC7Check.successLevel.extreme) check.modifierCss = 'upgrade';
+						else if( check.roll.failed ) check.modifierCss = 'downgrade';
+						if( check.roll.successLevel >= CoC7Check.successLevel.extreme || check.roll.failed) check.hasModifier = true;
+					}
+				}
+			}
 		}
 		if( this.hasActor){
 			check.options=[];
@@ -588,6 +652,9 @@ export class _participant{
 				}
 			}
 		}
+
+		if( !check.rolled && !check.score) check.cssClasses += ' invalid';
+
 		return check;
 	}
 }

@@ -24,6 +24,8 @@ export class CoC7Check {
 		}
 	}
 
+	static cardType = 'rollCard'
+
 	static difficultyLevel = {
 		unknown: -1,
 		regular: 1,
@@ -89,6 +91,22 @@ export class CoC7Check {
 
 	set rawValue(x){
 		this._rawValue = x;
+	}
+
+	set uuid(x){
+		this._uuid = x;
+	}
+
+	get uuid(){
+		if( !this._uuid) this._uuid = foundry.utils.randomID(16);
+		return this._uuid;
+	}
+
+	get hasCard(){
+		const chatCard = ui.chat.collection.filter( message => {
+			return this.uuid == message.getFlag( 'CoC7', 'uuid') && CoC7Check.cardType == message.getFlag( 'CoC7', 'type');});
+		if( chatCard.length > 0) return true;
+		return false;
 	}
 
 	get rawValueString(){
@@ -158,6 +176,7 @@ export class CoC7Check {
 	}
 
 	get modifiedResult(){
+		if( this.standby) return undefined;
 		if( undefined != this._modifiedResult) return this._modifiedResult;
 		if( this.flatDiceModifier){
 			let modified = this.dices.total + this.flatDiceModifier;
@@ -179,11 +198,13 @@ export class CoC7Check {
 	}
 
 	get isFumble(){
+		if( this.standby) return undefined;
 		if( this.isSimpleRoll) return undefined;
 		return this.modifiedResult >= this.fumbleThreshold;
 	}
 
 	get isCritical(){
+		if( this.standby) return undefined;
 		return 1 == this.modifiedResult;
 	}
 
@@ -192,12 +213,14 @@ export class CoC7Check {
 	}
 
 	get passed(){
+		if( this.standby) return undefined;
 		if( this.isSimpleRoll) return undefined;
 		if( this.luckSpent) return this.difficulty <= this.successLevel;
 		return this.succesThreshold >= (this.modifiedResult) || this.isCritical;
 	}
 
 	get failed(){
+		if( this.standby) return undefined;
 		if( this.isSimpleRoll) return undefined;
 		return !this.passed;
 	}
@@ -492,6 +515,10 @@ export class CoC7Check {
 		return this.getLinkElement().outerHTML;
 	}
 
+	get displayActorOnCard(){
+		return game.settings.get('CoC7', 'displayActorOnCard');
+	}
+
 	getLinkElement( classes = null){
 		const data = {
 			cls: ['coc7-link','coc7-roll'].concat( classes),
@@ -515,7 +542,7 @@ export class CoC7Check {
 	roll( diceMod = null, difficulty = null) {
 		if( diceMod ) this.diceModifier = diceMod;
 		if( difficulty ) this.difficulty = difficulty;
-		this._perform();
+		if( !this.standby) this._perform();
 	}
 
 	static create({
@@ -552,7 +579,7 @@ export class CoC7Check {
 		if( diceMod ) this.diceModifier = diceMod;
 		if( difficulty ) this.difficulty = difficulty;
 		this.characteristic = char;
-		this._perform();
+		if( !this.standby) this._perform();
 
 	}
 
@@ -560,14 +587,14 @@ export class CoC7Check {
 		if( diceMod ) this.diceModifier = diceMod;
 		if( difficulty ) this.difficulty = difficulty;
 		this.attribute = attrib;
-		this._perform();
+		if( !this.standby) this._perform();
 	}
 
 	rollValue( val, diceMod = null, difficulty = null){
 		if( diceMod ) this.diceModifier = diceMod;
 		if( difficulty ) this.difficulty = difficulty;
 		this.rawValue = val;
-		this._perform();
+		if( !this.standby) this._perform();
 	}
 
 	async _perform( options = {})
@@ -776,7 +803,11 @@ export class CoC7Check {
 		}
 
 		if( this.parent){
-			ui.notifications.info( `Roll ${this.uuid} depends of ${this.parent}`);
+			const parent = await fromUuid(this.parent);
+			if( parent && 'updateRoll' in parent){
+				await parent.updateRoll( this.JSONRollString);
+				// ui.notifications.info( `Roll ${this.uuid} depends of ${this.parent}`);
+			}
 		}
 
 	}
@@ -1090,8 +1121,15 @@ export class CoC7Check {
 			user: user.id,
 			speaker: speaker,
 			flavor: this.flavor,
-			content: html
+			content: html,
+			flags:{
+				CoC7:{
+					type: CoC7Check.cardType,
+				}
+			}
 		};
+
+		if( this.uuid) chatData.flags.CoC7.uuid = this.uuid;
 
 		if( 'selfroll' == this.rollMode ){
 			if( game.user.isGM){
@@ -1204,11 +1242,12 @@ export class CoC7Check {
 		a.classList.add( ...this.cssClassList);
 		a.title = this.tooltipHeader;
 		a.dataset.roll=escape(this.JSONRollString);//TODO!IMPORTANT!!!
-		a.innerHTML= `<i class="game-icon game-icon-d10"></i> ${this.modifiedResult}`;
+		a.innerHTML= `<i class="game-icon game-icon-d10"></i> ${this.modifiedResult||'??'}`;
 		return a;
 	}
 
 	get rollToolTip(){
+		if( this.standby) return undefined;
 		const parts = [];
 		const tens = this.dices.tens.map( r => {
 			return{
@@ -1357,6 +1396,7 @@ export class CoC7Check {
 	
 		// Create a new tooltip
 		const check = Object.assign( new CoC7Check(), JSON.parse(unescape(a.dataset.roll)));// TODO : find stringify unescape !! 20210205
+		if( check.standby) return;
 		const tip = document.createElement('div');
 		tip.innerHTML = await check.rollToolTip;
 	

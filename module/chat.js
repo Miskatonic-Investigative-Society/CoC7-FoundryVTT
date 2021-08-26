@@ -846,6 +846,14 @@ export class CoC7Chat{
 			break;
 		}
 
+		case 'roll-check-card':{
+			const check = await CoC7Check.getFromCard( card);
+			check.standby = false;
+			check._perform();
+			check.updateChatCard();
+			break;
+		}
+
 		case 'flag-for-development':{
 			const check = await CoC7Check.getFromCard( card);
 			await check.flagForDevelopement();

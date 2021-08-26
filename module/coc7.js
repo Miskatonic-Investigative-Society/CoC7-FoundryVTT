@@ -587,7 +587,7 @@ Hooks.on('ready', async () =>{
 	activateGlobalListener();
 	
 
-	game.socket.on('system.CoC7', data => {
+	game.socket.on('system.CoC7', async data => {
 		if (data.type == 'updateChar')
 			CoC7Utilities.updateCharSheets();
 
@@ -595,8 +595,14 @@ Hooks.on('ready', async () =>{
 			if( OpposedCheckCard.defaultConfig.type == data.type){
 				OpposedCheckCard.dispatch( data);
 			}
+
 			if( CombinedCheckCard.defaultConfig.type == data.type){
 				CombinedCheckCard.dispatch( data);
+			}
+
+			if( 'invoke' == data.type){
+				const item = await fromUuid( data.item);
+				item[data.method]( data.data);
 			}
 		}
 	});

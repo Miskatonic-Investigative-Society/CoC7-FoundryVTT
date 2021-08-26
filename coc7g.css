@@ -1445,6 +1445,11 @@
 .coc7-inline i {
   vertical-align: middle;
 }
+.coc7-inline-check {
+  font-family: customChatFont, 'Signika', sans-serif;
+  font-size: 0.75rem;
+  text-align: left;
+}
 .regular-success-color {
   background-color: #ffcc99;
   color: #cc6600;
@@ -1575,6 +1580,9 @@
 }
 .defaultFont {
   font-family: customSheetFont, 'Bradley Hand', cursive;
+}
+.chatFont {
+  font-family: customChatFont, 'Signika', sans-serif;
 }
 html {
   font-size: 16px;
@@ -2737,9 +2745,9 @@ html {
 .participants .participants-list .participant {
   flex: 1;
   display: grid;
-  grid-template-columns: 2rem 2rem 0.5rem 5fr 2.5rem 4fr 2rem 2rem 1rem;
+  grid-template-columns: 2rem 2rem 0.5rem 5fr 2.5rem 4fr 2rem 3rem 1.25rem 2rem 1rem;
   grid-template-rows: 2rem;
-  grid-template-areas: "p-side p-icon p-expand p-name p-movement p-check p-score p-roll p-control";
+  grid-template-areas: "p-side p-icon p-expand p-name p-movement p-check p-score p-roll p-adjust p-modified-mov p-control";
   align-items: center;
 }
 .participants .participants-list .participant.drag-over {
@@ -2766,16 +2774,60 @@ html {
   max-width: 100%;
   max-height: 100%;
 }
+.participants .participants-list .participant .p-modified-mov {
+  text-align: center;
+  font-size: 2rem;
+  color: grey;
+}
+.participants .participants-list .participant .p-modified-mov.rolled {
+  color: var(--main-sheet-front-color);
+}
+.participants .participants-list .participant .p-modified-mov.rolled.downgrade {
+  color: red;
+}
+.participants .participants-list .participant .p-modified-mov.rolled.upgrade {
+  color: green;
+}
 .participants .participants-list .participant .p-name {
   white-space: nowrap;
   text-overflow: ellipsis;
   min-width: 5rem;
+}
+.participants .participants-list .participant .p-score span {
+  text-align: right;
+  padding: 1px 3px;
 }
 .participants .participants-list .participant .p-roll {
   text-align: center;
   font-size: 1.5rem;
   height: 2rem;
   line-height: 2rem;
+}
+.participants .participants-list .participant .p-roll.rolled {
+  font-size: 0.75rem;
+  font-style: normal;
+}
+.participants .participants-list .participant .p-roll.invalid {
+  color: red;
+}
+.participants .participants-list .participant .p-roll.invalid a {
+  cursor: not-allowed;
+}
+.participants .participants-list .participant .p-roll.invalid a:hover {
+  text-shadow: none;
+}
+.participants .participants-list .participant .p-adjust {
+  line-height: 2rem;
+  text-align: center;
+  height: 2rem;
+  font-size: 1rem;
+}
+.participants .participants-list .participant .p-adjust.upgrade {
+  color: green;
+}
+.participants .participants-list .participant .p-adjust.downgrade {
+  color: red;
+  transform: rotate(180deg);
 }
 .participants .participants-list .driver {
   flex: 1;

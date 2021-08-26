@@ -21,9 +21,9 @@
         .participant{
             flex: 1;
             display: grid;
-            grid-template-columns: 2rem 2rem 0.5rem 5fr 2.5rem 4fr 2rem 2rem 1rem;
+            grid-template-columns: 2rem 2rem  0.5rem 5fr 2.5rem 4fr 2rem 3rem 1.25rem 2rem 1rem;
             grid-template-rows: 2rem;
-            grid-template-areas: "p-side p-icon p-expand p-name p-movement p-check p-score p-roll p-control";
+            grid-template-areas: "p-side p-icon p-expand p-name p-movement p-check p-score p-roll p-adjust p-modified-mov p-control";
             align-items: center;
 
             &.drag-over{
@@ -55,10 +55,30 @@
                 }
             }
 
+            .p-modified-mov{
+                text-align: center;
+                font-size: 2rem;
+                color: grey;
+                &.rolled{
+                    color: var(--main-sheet-front-color);
+
+                    &.downgrade{ color: red}
+                    &.upgrade{ color: green;}
+                }
+
+            }
+
             .p-name{
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 min-width: 5rem;
+            }
+            
+            .p-score{
+                span{
+                    text-align: right;
+                    padding: 1px 3px;
+                }
             }
 
             .p-roll{
@@ -66,6 +86,36 @@
                 font-size: 1.5rem;
                 height: 2rem;
                 line-height: 2rem;
+
+                &.rolled{
+                    font-size: 0.75rem;
+                    font-style: normal;
+                }
+
+                &.invalid{
+                    color: red;
+                    a{
+                        cursor: not-allowed;
+                        &:hover{
+                            text-shadow: none;
+                        }
+                    }
+                }
+            }
+
+            .p-adjust{
+                line-height: 2rem;
+                text-align: center;
+                height: 2rem;
+                font-size: 1rem;
+
+                &.upgrade{
+                    color: green;
+                }
+                &.downgrade{
+                    color: red;
+                    transform: rotate(180deg);
+                }
             }
         }
         .driver{
