@@ -100,6 +100,7 @@
   "CoC7.Other": "Otros",
   "CoC7.rounds": "asalto(s)",
   "CoC7.hours": "hora(s)",
+  "CoC7.weeks": "semana(s)",
   "CoC7.remove": "Quitar",
   "CoC7.Any": "Cualquiera",
   "CoC7.All": "Todos",
@@ -385,6 +386,7 @@
   "CoC7.RollLuck4Dev": "Tirando desarrollo para suerte",
   "CoC7.DevRollTitle": "Tirando desarrollo de {item}: {die}/{score}%",
   "CoC7.DevSuccessDetails": "{item} se ha aumentado un {augment}%",
+  "CoC7.SanGained": "Ha recuperado 2d6 ({results} = <strong>{sanGained}</strong>) de cordura tras dominar la habilidad <strong>{skill}</strong> con un <strong>{skillValue}%</strong>",
   "CoC7.DevFailureDetails": "{item} NO se ha aumentado",
   "CoC7.DevSuccess": "({die}/{score}%), {item} se ha aumentado un {augment}%",
   "CoC7.DevFailure": "({die}/{score}%), {item} NO se ha aumentado",
@@ -522,7 +524,18 @@
   "CoC7.BookType": "Tipo de Libro",
   "CoC7.MythosBook": "Tomo de los Mitos",
   "CoC7.OccultBook": "Libro de Ocultismo",
+  "CoC7.Content": "Contenido",
+  "CoC7.Progress": "Progreso",
+  "CoC7.InitialReading": "Lectura inicial",
+  "CoC7.FullStudy": "Estudio completo",
+  "CoC7.DifficultyLevel": "Nivel de dificultad",
+  "CoC7.Unreadable": "No legible",
   "CoC7.Unidentified": "Sin identificar",
+  "CoC7.Gains": "Ganancia",
+  "CoC7.Development": "Desarrollo",
+  "CoC7.Specific": "Específico",
+  "CoC7.notKnowLanguage": "{actor} no conoce el idioma {language}",
+  "CoC7.Earned": "Ganado",
 
   "CoC7.Crew": "Tripulación",
   "CoC7.Origin": "Origen",
@@ -640,6 +653,13 @@
   "CoC7.MessageBoutOfMadnessTableNotFound": "No se ha encontrado el resultado de la tabla de locura, por favor, compruebe que se han creado las tablas",
   "CoC7.MessageBoutOfMadnessItemNotFound": "No se ha encontrado el resultado de la tabla de locura, por favor, compruebe que se han creado los estatus",
 
+  "CoC7.DealDamage": "¿Causar {damage} puntos de daño a {target}?",
+  "CoC7.NoTargetSelected": "No ha seleccionado ningún objetivo para la tirada de {weapon}. ¿Desea continuar de todos modos?",
+
+  "CoC7.Import": "Importar",
+  "CoC7.Proceed": "Proceder",
+  "CoC7.Cancel": "Cancelar",
+
   "CoC7.ActorImporter": "Importador de actores",
   "CoC7.ActorImporterSummary": "Importa un PNJ o criatura a partir de sus estadísticas y descripción. Solo deberá copiar sus estadísticas en formato texto plano",
   "CoC7.PasteTheDataBelow": "Pegue más abajo el texto sin formato",
@@ -663,6 +683,14 @@
   "CoC7.HowToTranslateInstallTranslation": "Instale/actualice la traducción desde el panel de administración de modulos de Foundry",
   "CoC7.HowToTranslateEnableTranslation": "En el mundo de juego, bajo Configuración/Administrar módulos, active tanto Babele como la traducción",
   "CoC7.HowToTranslateNoTranslation": "Puede consultar las instrucciones de cómo crear una nueva traducción de un sistema en los módulos de traducción ya creados",
+
+  "CoC7.Migrate.Title": "Se requiere actualizar",
+  "CoC7.Migrate.Message": "<p>Su mundo necesita ser actualizado para funcionar con la versión {version}.</p><p>Por favor, haga una copia de seguridad de la carpeta del mundo antes de actualizar.</p><p>Si no actualiza el mundo el sistema no funcionará correctamente.</p><p>Se puede reiniciar el mundo una vez que se complete el proceso</p>",
+  "CoC7.Migrate.GMRequired": "<p>Su mundo necesita ser actualizado para funcionar con la versión {version}.</p><p>Por favor, espere a que su GM realice la actualización del sistema y entonces refresque (F5) la página</p>",
+  "CoC7.Migrate.RestartRequired": "<p>Su mundo se reiniciará para activar los cambios</p>",
+  "CoC7.Migrate.ButtonUpdate": "Actualizar",
+  "CoC7.Migrate.ButtonSkip": "Saltar",
+  "CoC7.Migrate.ButtonOkay": "Ok",
 
   "SETTINGS.DebugMode": "Modo de depuración",
   "SETTINGS.DebugModeHint": "!!REQUIERE REINICIAR!!",
@@ -750,5 +778,7 @@
   "SETTINGS.AdviseOwnersOnly": "Al propietario del actor",
   "SETTINGS.AdviseAllPlayer": "A todos los jugadores",
   "SETTINGS.OneBlockBackStory": "Trasfondo en un solo bloque",
-  "SETTINGS.OneBlockBackStoryHint": "Convertir el transfondo en un solo bloque de edición, se pueden añadir formateo y pegar enlaces"
+  "SETTINGS.OneBlockBackStoryHint": "Convertir el transfondo en un solo bloque de edición, se pueden añadir formateo y pegar enlaces",
+  "SETTINGS.EnableStatusIcons": "Activar iconos de estado",
+  "SETTINGS.EnableStatusIconsHint": "Determina si se deben mostrar de los efectos de combate y cordura en los iconos"
 }
