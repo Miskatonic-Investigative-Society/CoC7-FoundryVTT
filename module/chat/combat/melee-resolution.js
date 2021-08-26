@@ -34,8 +34,9 @@ export class CoC7MeleeResoltion {
     // };
 
     const rollMode = game.settings.get('core', 'rollMode')
-    if (['gmroll', 'blindroll'].includes(rollMode))
+    if (['gmroll', 'blindroll'].includes(rollMode)) {
       chatData.whisper = ChatMessage.getWhisperRecipients('GM')
+    }
     // if ( rollMode === 'blindroll' ) chatData['blind'] = true;
     chatData.blind = false
 
@@ -49,8 +50,9 @@ export class CoC7MeleeResoltion {
   }
 
   get target () {
-    if (this.targetMessage)
+    if (this.targetMessage) {
       return CoC7MeleeTarget.getFromMessageId(this.targetMessage)
+    }
     return null
   }
 
@@ -60,14 +62,16 @@ export class CoC7MeleeResoltion {
   }
 
   get initiator () {
-    if (this.initiatorMessage)
+    if (this.initiatorMessage) {
       return CoC7MeleeInitiator.getFromMessageId(this.initiatorMessage)
+    }
     return null
   }
 
   get initiatorToken () {
-    if (this.initiator)
+    if (this.initiator) {
       return chatHelper.getTokenFromKey(this.initiator.actorKey)
+    }
     return null
   }
 
@@ -195,9 +199,11 @@ export class CoC7MeleeResoltion {
     }
 
     if (this.winner) {
-      if (this.winner.roll.successLevel >= CoC7Check.successLevel.extreme)
+      if (this.winner.roll.successLevel >= CoC7Check.successLevel.extreme) {
         this.winner.roll.criticalDamage = true
-      else this.winner.roll.criticalDamage = false
+      } else {
+        this.winner.roll.criticalDamage = false
+      }
     }
 
     this.resolved = true

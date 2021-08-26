@@ -26,10 +26,12 @@ export class CoC7DamageRoll extends ChatCardActor {
   async rollDamage (range = 'normal') {
     this.rollString = this.weapon.data.data.range[range].damage
 
-    if (this.weapon.data.data.properties.addb)
+    if (this.weapon.data.data.properties.addb) {
       this.rollString = this.rollString + '+' + this.actor.db
-    if (this.weapon.data.data.properties.ahdb)
+    }
+    if (this.weapon.data.data.properties.ahdb) {
       this.rollString = this.rollString + '+' + this.actor.db + '/2'
+    }
 
     // const is7 = Object.prototype.hasOwnProperty.call(Roll, 'cleanTerms');
     const is7 = true // 0.8.x : Drop support for is7, cleanTerms removed
@@ -102,8 +104,9 @@ export class CoC7DamageRoll extends ChatCardActor {
       }
 
       const rollMode = game.settings.get('core', 'rollMode')
-      if (['gmroll', 'blindroll'].includes(rollMode))
+      if (['gmroll', 'blindroll'].includes(rollMode)) {
         chatData.whisper = ChatMessage.getWhisperRecipients('GM')
+      }
       // if ( rollMode === 'blindroll' ) chatData['blind'] = true;
       chatData.blind = false
 

@@ -1,4 +1,4 @@
-/* global game, Hooks */
+/* global Hooks */
 
 import { configureDocuments } from '../scripts/configure-documents.js'
 import { preloadHandlebarsTemplates } from '../scripts/load-templates.js'

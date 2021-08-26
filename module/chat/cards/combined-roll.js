@@ -210,10 +210,11 @@ export class CombinedCheckCard extends RollCard {
     })
 
     for (let i = 0; i < this.rolls.length; i++) {
-      if (this.rolls[i].rolled)
+      if (this.rolls[i].rolled) {
         this.rolls[i]._htmlRoll = await this.rolls[i].getHtmlRoll({
           hideDiceResult: true
         })
+      }
     }
 
     this.rolls = this.rolls.filter(roll => {

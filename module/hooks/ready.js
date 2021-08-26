@@ -1,4 +1,4 @@
-/* global Hooks, ui */
+/* global Hooks */
 
 export function listen () {
   Hooks.once('ready', async () => {

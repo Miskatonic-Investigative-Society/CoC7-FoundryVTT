@@ -73,8 +73,9 @@ export class DamageCard extends InteractiveChatCard {
       this.isDamageNumber ? this.damageFormula : this.roll.total
     )
     if (!this.ignoreArmor) {
-      if (isNaN(Number(this.armor)) || Number(this.armor) > 0)
+      if (isNaN(Number(this.armor)) || Number(this.armor) > 0) {
         damage = damage - Number(this.armor)
+      }
       if (!isNaN(Number(this.armor))) {
         if (damage - Number(this.armor) <= 0) {
           return game.i18n.localize('CoC7.ArmorAbsorbsDamage')
@@ -99,21 +100,26 @@ export class DamageCard extends InteractiveChatCard {
   }
 
   async updateChatCard () {
-    if (this.options.fastForward && !this.roll && !this.isDamageNumber)
+    if (this.options.fastForward && !this.roll && !this.isDamageNumber) {
       await this.rollDamage({ update: false })
+    }
     if (
       this.isDamageNumber ||
       (this.roll && this.roll.total != null) ||
       this.hardrolled
-    )
+    ) {
       this.rolled = true
-    else this.rolled = false
-    if (this.options.fastForward && !this.damageInflicted && !this.noDamage)
+    } else {
+      this.rolled = false
+    }
+    if (this.options.fastForward && !this.damageInflicted && !this.noDamage) {
       await this.dealDamage({ update: false })
+    }
 
     if (this.rolled && this.roll) {
-      if (this.roll.constructor.name === 'Object')
+      if (this.roll.constructor.name === 'Object') {
         this.roll = Roll.fromData(this.roll)
+      }
       const a = createInlineRoll(this.roll)
       this._htmlInlineRoll = a.outerHTML
       this._htmlRoll = await this.roll.render()
@@ -200,10 +206,11 @@ export class DamageCard extends InteractiveChatCard {
       ui.notifications.error('Error evaluating damage')
       return
     }
-    if (this.targetActor)
+    if (this.targetActor) {
       await this.targetActor.dealDamage(Number(this.totalDamageString), {
         ignoreArmor: true
       })
+    }
     this.damageInflicted = true
     options.update =
       typeof options.update === 'undefined' ? true : options.update

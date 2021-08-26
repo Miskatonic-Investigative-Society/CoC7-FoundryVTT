@@ -162,20 +162,24 @@ export class CoC7Link {
     }
 
     // Modifiers
-    if (x.difficulty || !isNaN(Number(x.difficulty)))
+    if (x.difficulty || !isNaN(Number(x.difficulty))) {
       this._linkData.difficulty = Number(x.difficulty)
-    if (x.modifier || !isNaN(Number(x.modifier)))
+    }
+    if (x.modifier || !isNaN(Number(x.modifier))) {
       this._linkData.modifier = Number(x.modifier)
+    }
     if (
       typeof x.difficulty !== 'undefined' ||
       typeof x.modifier !== 'undefined'
-    )
+    ) {
       this._linkData.forceModifiers = true
+    }
     if (x.forceModifiers) this._linkData.forceModifiers = true
 
     // Force displayed name
-    if (x.displayName === 'true' || x.displayName === true)
+    if (x.displayName === 'true' || x.displayName === true) {
       this._linkData.displayName = true
+    }
     if (x.label) {
       this._linkData.hasLabel = true
       this._linkData.label = x.label
@@ -319,14 +323,16 @@ export class CoC7Link {
 
   async update (updateData) {
     this._linkData = mergeObject(this._linkData, updateData)
-    if (this._linkData.fromDirectory || this._linkData.fromCompendium)
+    if (this._linkData.fromDirectory || this._linkData.fromCompendium) {
       await this.fetchItem()
+    }
   }
 
   async updateFromLink (linkData) {
     await this.setData(linkData)
-    if (this._linkData.fromDirectory || this._linkData.fromCompendium)
+    if (this._linkData.fromDirectory || this._linkData.fromCompendium) {
       await this.fetchItem()
+    }
   }
 
   get link () {
@@ -338,22 +344,28 @@ export class CoC7Link {
         let options = `${this._linkData.blind ? 'blind,' : ''}type:${
           this.checkType
         },name:${this.name}`
-        if (typeof this._linkData.difficulty !== 'undefined')
+        if (typeof this._linkData.difficulty !== 'undefined') {
           options += `,difficulty:${this._linkData.difficulty}`
-        if (typeof this._linkData.modifier !== 'undefined')
+        }
+        if (typeof this._linkData.modifier !== 'undefined') {
           options += `,modifier:${this._linkData.modifier}`
+        }
         if (this._linkData.icon) options += `,icon:${this._linkData.icon}`
 
         // TODO: Check if needed
-        if (this._linkData.fromCompendium)
+        if (this._linkData.fromCompendium) {
           options += `,pack:${this._linkData.pack}`
-        if (this._linkData.fromCompendium || this._linkData.fromDirectory)
+        }
+        if (this._linkData.fromCompendium || this._linkData.fromDirectory) {
           options += `,id:${this._linkData.id}`
+        }
 
         let link = `@coc7.check[${options}]`
-        if (this._linkData.hasLabel && this._linkData.label)
+        if (this._linkData.hasLabel && this._linkData.label) {
           link += `{${this._linkData.label}}`
-        else if (this.name) link += `{${this.name}}`
+        } else if (this.name) {
+          link += `{${this.name}}`
+        }
         return link
       }
 
@@ -365,10 +377,12 @@ export class CoC7Link {
         // let options = `${this._linkData.blind?'blind,':''}sanMax:${this._linkData.sanMax},sanMin:${this._linkData.sanMin}`;
         let options = `sanMax:${this._linkData.sanMax},sanMin:${this._linkData.sanMin}`
 
-        if (this._linkData.difficulty)
+        if (this._linkData.difficulty) {
           options += `,difficulty:${this._linkData.difficulty}`
-        if (this._linkData.modifier)
+        }
+        if (this._linkData.modifier) {
           options += `,modifier:${this._linkData.modifier}`
+        }
         if (this._linkData.icon) options += `,icon:${this._linkData.icon}`
         let link = `@coc7.sanloss[${options}]`
         if (this._linkData.hasLabel) link += `{${this._linkData.label}}`
@@ -383,10 +397,12 @@ export class CoC7Link {
         if (this._linkData.icon) options += `,icon:${this._linkData.icon}`
 
         // TODO: Check if needed
-        if (this._linkData.fromCompendium)
+        if (this._linkData.fromCompendium) {
           options += `,pack:${this._linkData.pack}`
-        if (this._linkData.fromCompendium || this._linkData.fromDirectory)
+        }
+        if (this._linkData.fromCompendium || this._linkData.fromDirectory) {
           options += `,id:${this._linkData.id}`
+        }
 
         let link = `@coc7.item[${options}]`
         if (this._linkData.hasLabel) link += `{${this._linkData.label}}`

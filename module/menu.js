@@ -31,8 +31,9 @@ export class CoC7Menu {
       .find('.control-tool')
       .click(game.CoC7.menus._onClickTool.bind(game.CoC7.menus))
 
-    if (game.CoC7.menus.activeControl)
+    if (game.CoC7.menus.activeControl) {
       html.find('.scene-control').removeClass('active')
+    }
 
     html
       .find('.scene-control')

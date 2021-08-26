@@ -1,3 +1,6 @@
+/* global CONFIG, game */
+import { CoC7DecaderDie } from '../apps/decader-die.js'
+
 export function registerSettings () {
   /** Allow usage of a flat dice modifier */
   game.settings.register('CoC7', 'allowFlatDiceModifier', {
@@ -192,28 +195,12 @@ export function registerSettings () {
     })
     const [version] = game.modules.get('dice-so-nice')?.data.version.split('.')
     if (!isNaN(Number(version)) && Number(version) >= 3) {
-      game.settings.register('CoC7', 'unitDieColorset', {
-        name: 'SETTINGS.UnitDieColorset',
-        hint: 'SETTINGS.UnitDieColorsetHint',
-        scope: 'client',
-        config: true,
-        default: 'white',
-        type: String
-      })
       game.settings.register('CoC7', 'tenDieBonus', {
         name: 'SETTINGS.TenDieBonus',
         hint: 'SETTINGS.TenDieBonusHint',
         scope: 'client',
         config: true,
         default: 'bronze',
-        type: String
-      })
-      game.settings.register('CoC7', 'tenDieNoMod', {
-        name: 'SETTINGS.TenDieNoMod',
-        hint: 'SETTINGS.TenDieNoModHint',
-        scope: 'client',
-        config: true,
-        default: 'foundry',
         type: String
       })
       game.settings.register('CoC7', 'tenDiePenalty', {
@@ -388,4 +375,6 @@ export function registerSettings () {
     }
   }
   _setInitiativeOptions(game.settings.get('CoC7', 'initiativeRule'))
+
+  CONFIG.Dice.terms.t = CoC7DecaderDie
 }

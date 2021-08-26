@@ -202,8 +202,9 @@ export class CoC7Chat {
               target.resolutionCard
             )
             await resolutionCard.resolve()
-            if (!target.meleeInitiator.checkRevealed)
+            if (!target.meleeInitiator.checkRevealed) {
               await target.meleeInitiator.revealCheck()
+            }
           }
         }
       }
@@ -250,14 +251,16 @@ export class CoC7Chat {
         ) {
           const roll = CoC7Roll.getFromElement(card)
 
-          if (card.dataset.side === 'target')
+          if (card.dataset.side === 'target') {
             roll.defendantId = card.dataset.tokenId
               ? card.dataset.tokenId
               : card.dataset.actorId
-          if (card.dataset.side === 'initiator')
+          }
+          if (card.dataset.side === 'initiator') {
             roll.initiatorId = card.dataset.tokenId
               ? card.dataset.tokenId
               : card.dataset.actorId
+          }
           card.dataset.processed = 'true'
 
           CoC7Chat.updateCombatCardTarget(roll)
@@ -300,16 +303,19 @@ export class CoC7Chat {
       // Try retrieving actor
       let actor = CoC7Chat._getActorFromKey(zone.dataset?.actorKey) // Try with self.
       if (!actor) actor = CoC7Chat._getChatCardActor(zone.closest('.chat-card')) // Try with closest chat card.
-      if (!actor)
+      if (!actor) {
         actor = CoC7Chat._getActorFromKey(zone.parentElement.dataset.actorKey) // Try with parent element.
-      if (!actor)
+      }
+      if (!actor) {
         actor = CoC7Chat._getActorFromKey(
           zone.closest('[data-actor-key]')?.dataset.actorKey
         ) // Try with closest data-actor-key
-      if (!actor)
+      }
+      if (!actor) {
         actor = CoC7Chat._getActorFromKey(
           zone.closest('[data-token-key]')?.dataset.actorKey
         ) // Try with closest data-token-key
+      }
 
       // const actor = game.actors.get( actorId);
       if ((actor && !actor.isOwner) || game.user.isGM) {
@@ -324,18 +330,22 @@ export class CoC7Chat {
       for (const zone of ownerOnly) {
         // Try retrieving actor
         let actor = CoC7Chat._getActorFromKey(zone.dataset?.actorKey) // Try with self.
-        if (!actor)
+        if (!actor) {
           actor = CoC7Chat._getChatCardActor(zone.closest('.chat-card')) // Try with closest chat card.
-        if (!actor)
+        }
+        if (!actor) {
           actor = CoC7Chat._getActorFromKey(zone.parentElement.dataset.actorKey) // Try with parent element.
-        if (!actor)
+        }
+        if (!actor) {
           actor = CoC7Chat._getActorFromKey(
             zone.closest('[data-actor-key]')?.dataset.actorKey
           ) // Try with closest data-actor-key
-        if (!actor)
+        }
+        if (!actor) {
           actor = CoC7Chat._getActorFromKey(
             zone.closest('[data-token-key]')?.dataset.actorKey
           ) // Try with closest data-token-key
+        }
 
         // const actor = game.actors.get( actorId);
         if ((actor && !actor.isOwner) || (!actor && !game.user.isGM)) {
@@ -530,10 +540,11 @@ export class CoC7Chat {
     if (card.classList.contains('range')) {
       if (card.classList.contains('initiator')) {
         const rangeCard = CoC7RangeInitiator.getFromCard(card)
-        if (event.currentTarget.classList.contains('increase'))
+        if (event.currentTarget.classList.contains('increase')) {
           rangeCard.changeVolleySize(1)
-        else if (event.currentTarget.classList.contains('decrease'))
+        } else if (event.currentTarget.classList.contains('decrease')) {
           rangeCard.changeVolleySize(-1)
+        }
       }
     }
   }
@@ -700,10 +711,12 @@ export class CoC7Chat {
 
         if (card.classList.contains('melee')) {
           let meleeCard
-          if (card.classList.contains('target'))
+          if (card.classList.contains('target')) {
             meleeCard = CoC7MeleeTarget.getFromCard(card)
-          if (card.classList.contains('initiator'))
+          }
+          if (card.classList.contains('initiator')) {
             meleeCard = CoC7MeleeInitiator.getFromCard(card)
+          }
           meleeCard.upgradeRoll(luckAmount, newSuccessLevel, card) // TODO : Check if this needs to be async
         } else if (card.classList.contains('range')) {
           const rangeCard = CoC7RangeInitiator.getFromCard(card)
@@ -865,9 +878,10 @@ export class CoC7Chat {
             check.skill = event.currentTarget.dataset.skillId
             check.difficulty = CoC7Check.difficultyLevel.regular
             if (outnumbered) check.diceModifier = -1
-            if (defender.build < actor.build)
+            if (defender.build < actor.build) {
               check.diceModifier =
                 check.diceModifier - (actor.build - defender.build)
+            }
 
             if (check.diceModifier < -2) {
               check.difficulty =
@@ -905,8 +919,9 @@ export class CoC7Chat {
         damageChatCard.actorKey = button.dataset.dealer
         damageChatCard.targetKey = button.dataset.target
         damageChatCard.itemId = button.dataset.weapon
-        if (originMessage.dataset.messageId)
+        if (originMessage.dataset.messageId) {
           damageChatCard.messageId = originMessage.dataset.messageId
+        }
         damageChatCard.updateChatCard()
 
         // const damageCard = new CoC7DamageRoll(
@@ -1000,9 +1015,11 @@ export class CoC7Chat {
           event.ctrlKey ||
           event.keyCode === 91 ||
           event.keyCode === 224
-        )
+        ) {
           check.updateChatCard(true)
-        else check.updateChatCard()
+        } else {
+          check.updateChatCard()
+        }
         break
       }
 
@@ -1102,10 +1119,12 @@ export class CoC7Chat {
     const card = header.closest('.chat-card')
     const content = card.querySelector('.card-content')
     if (content) {
-      if (!content.style.display) content.style.display = 'block'
-      else
+      if (!content.style.display) {
+        content.style.display = 'block'
+      } else {
         content.style.display =
           content.style.display === 'none' ? 'block' : 'none'
+      }
     }
   }
 }

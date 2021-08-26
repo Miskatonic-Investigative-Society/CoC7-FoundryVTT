@@ -25,8 +25,9 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
     const data = await super.getData()
 
     data.properties = []
-    if (this.actor.data.data.properties.armed)
+    if (this.actor.data.data.properties.armed) {
       data.properties.push(game.i18n.localize('CoC7.ArmedVehicle'))
+    }
     data.actor = this.actor
 
     const expanded = this.actor.getFlag('CoC7', 'expanded')
@@ -107,10 +108,11 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
     // Handle Armor array
     if (data.data.attribs.armor?.localized) {
       const armor = data.data?.attribs.armor
-      if (armor)
+      if (armor) {
         armor.locations = Object.values(
           armor?.locations || this.actor.data.data.attribs.armor.locations || {}
         )
+      }
     }
 
     // Return the flattened submission data
