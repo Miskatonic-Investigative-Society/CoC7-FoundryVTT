@@ -1423,7 +1423,7 @@ export class CoC7Check {
     if (this.dice?.roll) {
       chatData.roll = this.dice.roll
       chatData.type = CONST.CHAT_MESSAGE_TYPES.ROLL
-      chatData.rollMode = this.rollMode
+      chatData.rollMode = this.isBlind ? 'blindroll' : this.rollMode
     }
 
     ChatMessage.create(chatData).then(msg => {
