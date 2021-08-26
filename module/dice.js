@@ -31,9 +31,9 @@ export class CoC7Dice {
     }
     roll.dice.forEach(d => {
       if (d instanceof CONFIG.Dice.terms.t) {
-        result.tens.results.push(d.total === 10 ? 0 : d.total * 10)
+        result.tens.results.push(d.total)
       } else {
-        result.unit.total = d.total
+        result.unit.total = d.total === 10 ? 0 : d.total
         result.unit.results.push(result.unit.total)
       }
     })
@@ -43,6 +43,9 @@ export class CoC7Dice {
       result.tens.total = Math.min(...result.tens.results)
     }
     result.total = result.unit.total + result.tens.total
+    if (result.total === 0) {
+      result.total = 100
+    }
     return result
   }
 
