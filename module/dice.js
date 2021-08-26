@@ -33,7 +33,7 @@ export class CoC7Dice {
       if (d instanceof CONFIG.Dice.terms.t) {
         result.tens.results.push(d.total)
       } else {
-        result.unit.total = (d.total === 10 ? 0 : d.total)
+        result.unit.total = d.total === 10 ? 0 : d.total
         result.unit.results.push(result.unit.total)
       }
     })

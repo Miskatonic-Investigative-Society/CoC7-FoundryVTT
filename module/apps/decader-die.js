@@ -8,7 +8,7 @@ export class CoC7DecaderDie extends DiceTerm {
 
   get total () {
     const total = super.total
-    return (total === 10 ? 0 : total * 10)
+    return total === 10 ? 0 : total * 10
   }
 
   /* -------------------------------------------- */
