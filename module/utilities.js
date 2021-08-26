@@ -27,7 +27,7 @@ export class CoC7Utilities {
     const regX = /(\S+)/g
     const terms = content.match(regX)
     if (
-      terms[0]?.toLowerCase() === '/r' &&
+      terms[0]?.toLowerCase().match(/^\/r(oll)?$/) &&
       terms[1]?.toLowerCase().startsWith('1d%')
     ) {
       // Delay calling function to prevent chatmessage key down triggering default
@@ -43,7 +43,7 @@ export class CoC7Utilities {
       .toLowerCase()
       .split(' ')
       ?.join('')
-      ?.replace('/r1d%', '')
+      ?.replace(/\/r(oll)?1d%/, '')
     const check = new CoC7Check()
     if (options.length) {
       let escaped = options
