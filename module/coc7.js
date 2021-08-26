@@ -20,15 +20,14 @@ import * as DiceBot from './dicebot.js'
 import '../styles/system/index.less'
 
 Hooks.once('diceSoNiceReady', dice3d => {
-  dice3d.addSystem({ id: 'CoC7', name: 'CoC' }, 'preferred')
   dice3d.addDicePreset(
     {
       type: 'dt',
       labels: ['10', '20', '30', '40', '50', '60', '70', '80', '90', '00'],
       fontScale: 0.75,
-      system: 'CoC7'
+      system: 'standard'
     },
-    'd10'
+    'dt'
   )
 })
 
