@@ -1,18 +1,30 @@
 ## Version 0.6.5:
 
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+
+- Addition of Decader/Tens dice type to allow d100 rolls without units in Dice So Nice;
 - Addition of new default icons to some entity types;
+- Addition of roll to chat messages where possible, so Dice So Nice will trigger;
 - Average system size reduced (from 20MB to 6MB) and its performance increased;
 - Change book, creature, npc, occupation, setup, spell, status, and talent sheets to be resizable;
+- Ensures compatibility of system .svg icons when using Firefox browser;
 - Fix backstory editor not resolving lists;
+- Fix extremely old characters getting negative movement;
 - Fix impossibility of delete dead active effects on NPCs/Creatures;
 - Fix inconsistencies when localizing entities names;
 - Fix negative values on setting health manually not working;
+- Fix rolls for skill checks with value of 0%;
 - Fix some Foundry warnings on console for deprecated stuff;
+- Improve randomness of system dices;
 - Massive code refactoring and data migration;
 - Now, during the development phase, if a skill goes above 90 points, the character gain 2D6 of Sanity, thanks to @pconception;
+- Now Ranged Combat trigger Dice So Nice on checks and damage, if available;
 - There is now a list of untranslated keys: https://github.com/HavlockV/CoC7-FoundryVTT/blob/develop/.github/TRANSLATIONS.md
+- There is now an option to set if combat and sanity effects icons are shown in tokens or not;
 - Update to Portuguese localization;
+- Update to Spanish localization, thanks to @lozalojo;
 - Update to Swedish localization, thanks to @Rangertheman;
+- Update to Taiwanese localization, thanks to @zeteticl;
 
 ## Version 0.6.4:
 
