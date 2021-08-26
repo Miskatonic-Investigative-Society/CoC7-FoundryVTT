@@ -93,6 +93,12 @@ Run `npm run build` to perform a one off compile/build.
 
 Now everything is ready for you to make any changes or additions you want.
 
+After rename `fvtt.config.example.js` to `fvtt.config.js` consider run:
+
+`git update-index --assume-unchanged fvtt.config.example.js`
+
+This way Git does not assume the original file has been deleted from the repository.
+
 ### Contributing.
 
 The project structure is made as follows:
