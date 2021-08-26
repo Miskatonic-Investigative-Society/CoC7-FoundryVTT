@@ -5,7 +5,7 @@
  * Pre-loaded templates are compiled and cached for fast access when rendering
  * @return {Promise}
  */
- export const preloadHandlebarsTemplates = async function () {
+export const preloadHandlebarsTemplates = async function () {
   /** Define template paths to load */
   const templatePaths = [
     'systems/CoC7/templates/actors/parts/actor-skills.html',

@@ -18,68 +18,68 @@ import { CoC7WeaponSheet } from '../items/sheets/weapon-sheet.js'
 import { CoCItemSheet } from '../items/sheets/item-sheet.js'
 
 export function registerSheets () {
-    Actors.unregisterSheet('core', CoC7ActorSheet)
-    Actors.registerSheet('CoC7', CoC7NPCSheet, {
-      types: ['npc'],
-      makeDefault: true
-    })
-    Actors.registerSheet('CoC7', CoC7VehicleSheet, {
-      types: ['vehicle'],
-      makeDefault: true
-    })
-    Actors.registerSheet('CoC7', CoC7CreatureSheet, {
-      types: ['creature'],
-      makeDefault: true
-    })
-    Actors.registerSheet('CoC7', CoC7CharacterSheet, { types: ['character'] })
-    Actors.registerSheet('CoC7', CoC7CharacterSheetV2, {
-      types: ['character'],
-      makeDefault: true
-    })
-    Items.unregisterSheet('core', ItemSheet)
-    Items.registerSheet('CoC7', CoC7SkillSheet, {
-      types: ['skill'],
-      makeDefault: true
-    })
-    Items.registerSheet('CoC7', CoC7WeaponSheet, {
-      types: ['weapon'],
-      makeDefault: true
-    })
-    Items.registerSheet('CoC7', CoC7BookSheet, {
-      types: ['book'],
-      makeDefault: true
-    })
-    Items.registerSheet('CoC7', CoC7SpellSheet, {
-      types: ['spell'],
-      makeDefault: true
-    })
-    Items.registerSheet('CoC7', CoC7TalentSheet, {
-      types: ['talent'],
-      makeDefault: true
-    })
-    Items.registerSheet('CoC7', CoC7StatusSheet, {
-      types: ['status'],
-      makeDefault: true
-    })
-    Items.registerSheet('CoC7', CoC7OccupationSheet, {
-      types: ['occupation'],
-      makeDefault: true
-    })
-    Items.registerSheet('CoC7', CoC7ArchetypeSheet, {
-      types: ['archetype'],
-      makeDefault: true
-    })
-    Items.registerSheet('CoC7', CoC7SetupSheet, {
-      types: ['setup'],
-      makeDefault: true
-    })
-    Items.registerSheet('CoC7', CoC7ChaseSheet, {
-      types: ['chase'],
-      makeDefault: true
-    })
-    Items.registerSheet('CoC7', CoCItemSheet, { types: ['item'] })
-    Items.registerSheet('CoC7', CoC7ItemSheetV2, {
-      types: ['item'],
-      makeDefault: true
-    })
+  Actors.unregisterSheet('core', CoC7ActorSheet)
+  Actors.registerSheet('CoC7', CoC7NPCSheet, {
+    types: ['npc'],
+    makeDefault: true
+  })
+  Actors.registerSheet('CoC7', CoC7VehicleSheet, {
+    types: ['vehicle'],
+    makeDefault: true
+  })
+  Actors.registerSheet('CoC7', CoC7CreatureSheet, {
+    types: ['creature'],
+    makeDefault: true
+  })
+  Actors.registerSheet('CoC7', CoC7CharacterSheet, { types: ['character'] })
+  Actors.registerSheet('CoC7', CoC7CharacterSheetV2, {
+    types: ['character'],
+    makeDefault: true
+  })
+  Items.unregisterSheet('core', ItemSheet)
+  Items.registerSheet('CoC7', CoC7SkillSheet, {
+    types: ['skill'],
+    makeDefault: true
+  })
+  Items.registerSheet('CoC7', CoC7WeaponSheet, {
+    types: ['weapon'],
+    makeDefault: true
+  })
+  Items.registerSheet('CoC7', CoC7BookSheet, {
+    types: ['book'],
+    makeDefault: true
+  })
+  Items.registerSheet('CoC7', CoC7SpellSheet, {
+    types: ['spell'],
+    makeDefault: true
+  })
+  Items.registerSheet('CoC7', CoC7TalentSheet, {
+    types: ['talent'],
+    makeDefault: true
+  })
+  Items.registerSheet('CoC7', CoC7StatusSheet, {
+    types: ['status'],
+    makeDefault: true
+  })
+  Items.registerSheet('CoC7', CoC7OccupationSheet, {
+    types: ['occupation'],
+    makeDefault: true
+  })
+  Items.registerSheet('CoC7', CoC7ArchetypeSheet, {
+    types: ['archetype'],
+    makeDefault: true
+  })
+  Items.registerSheet('CoC7', CoC7SetupSheet, {
+    types: ['setup'],
+    makeDefault: true
+  })
+  Items.registerSheet('CoC7', CoC7ChaseSheet, {
+    types: ['chase'],
+    makeDefault: true
+  })
+  Items.registerSheet('CoC7', CoCItemSheet, { types: ['item'] })
+  Items.registerSheet('CoC7', CoC7ItemSheetV2, {
+    types: ['item'],
+    makeDefault: true
+  })
 }
