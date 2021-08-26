@@ -362,28 +362,26 @@ export class CoCActor extends Actor {
       })
     } else {
       // const effectData =
-      if (game.settings.get('CoC7', 'enableStatusIcons')) {
-        await super.createEmbeddedDocuments('ActiveEffect', [
-          {
-            label: game.i18n.localize('CoC7.BoutOfMadnessName'),
-            icon: 'systems/CoC7/assets/icons/hanging-spider.svg',
-            origin: this.uuid,
-            duration: {
-              rounds: realTime && duration ? duration : undefined,
-              seconds: realTime ? undefined : duration * 3600,
-              turns: 1
-            },
-            flags: {
-              CoC7: {
-                madness: true,
-                realTime: realTime
-              }
-            },
-            // tint: '#ff0000',
-            disabled: false
-          }
-        ])
-      }
+      await super.createEmbeddedDocuments('ActiveEffect', [
+        {
+          label: game.i18n.localize('CoC7.BoutOfMadnessName'),
+          icon: 'systems/CoC7/assets/icons/hanging-spider.svg',
+          origin: this.uuid,
+          duration: {
+            rounds: realTime && duration ? duration : undefined,
+            seconds: realTime ? undefined : duration * 3600,
+            turns: 1
+          },
+          flags: {
+            CoC7: {
+              madness: true,
+              realTime: realTime
+            }
+          },
+          // tint: '#ff0000',
+          disabled: false
+        }
+      ])
       // const effect = this.effects.get( effectData._id);
       // effect.sheet.render(true);
     }
@@ -408,26 +406,24 @@ export class CoCActor extends Actor {
         }
       })
     } else {
-      if (game.settings.get('CoC7', 'enableStatusIcons')) {
-        await super.createEmbeddedDocuments('ActiveEffect', [
-          {
-            label: game.i18n.localize('CoC7.InsanityName'),
-            icon: 'systems/CoC7/assets/icons/tentacles-skull.svg',
-            origin: this.uuid,
-            duration: {
-              seconds: !indefinite && duration ? duration * 3600 : undefined,
-              turns: 1
-            },
-            flags: {
-              CoC7: {
-                madness: true,
-                indefinite: indefinite
-              }
-            },
-            disabled: false
-          }
-        ])
-      }
+      await super.createEmbeddedDocuments('ActiveEffect', [
+        {
+          label: game.i18n.localize('CoC7.InsanityName'),
+          icon: 'systems/CoC7/assets/icons/tentacles-skull.svg',
+          origin: this.uuid,
+          duration: {
+            seconds: !indefinite && duration ? duration * 3600 : undefined,
+            turns: 1
+          },
+          flags: {
+            CoC7: {
+              madness: true,
+              indefinite: indefinite
+            }
+          },
+          disabled: false
+        }
+      ])
     }
   }
 
@@ -587,7 +583,6 @@ export class CoCActor extends Actor {
       } catch (err) {
         console.error('Creature init: ' + err.message)
       }
-
       // console.log( 'Skill created');
       await this.setActorFlag('initialized')
       // Creating corresponding weapon.
@@ -3006,32 +3001,43 @@ export class CoCActor extends Actor {
       else await this.inflictMajorWound()
       return
     }
-    console.log(statusName)
-    await this.update({ [`data.status.${statusName}.value`]: !statusValue })
+    // await this.update({ [`data.status.${statusName}.value`]: !statusValue })
     let effectEffect
     switch (statusName) {
       case 'dead':
-        effectEffect = await this.hasActiveEffect('dead')
-        if (!this.dead && effectEffect.length > 0) {
-          effectEffect.forEach(effect => effect.delete())
-        }
+        if (statusValue) {
+          await this.unsetStatus('dead')
+          effectEffect = await this.hasActiveEffect('dead')
+          if (effectEffect.length > 0) {
+            effectEffect.forEach(effect => effect.delete())
+          }
+        } else this.fallDead()
         break
       case 'dying':
-        effectEffect = await this.hasActiveEffect('dying')
-        if (!this.dying && effectEffect.length > 0) {
-          effectEffect.forEach(effect => effect.delete())
+        if (statusValue) {
+          await this.unsetStatus('dying')
+          effectEffect = await this.hasActiveEffect('dying')
+          if (effectEffect.length > 0) {
+            effectEffect.forEach(effect => effect.delete())
+          }
         } else this.fallDying()
         break
       case 'prone':
-        effectEffect = await this.hasActiveEffect('prone')
-        if (!this.prone && effectEffect.length > 0) {
-          effectEffect.forEach(effect => effect.delete())
+        if (statusValue) {
+          await this.unsetStatus('prone')
+          effectEffect = await this.hasActiveEffect('prone')
+          if (effectEffect.length > 0) {
+            effectEffect.forEach(effect => effect.delete())
+          }
         } else this.fallProne()
         break
       case 'unconscious':
-        effectEffect = await this.hasActiveEffect('unconscious')
-        if (!this.unconscious && effectEffect.length > 0) {
-          effectEffect.forEach(effect => effect.delete())
+        if (statusValue) {
+          await this.unsetStatus('unconscious')
+          effectEffect = await this.hasActiveEffect('unconscious')
+          if (effectEffect.length > 0) {
+            effectEffect.forEach(effect => effect.delete())
+          }
         } else this.fallUnconscious()
         break
     }
@@ -3049,33 +3055,34 @@ export class CoCActor extends Actor {
   async toggleEffect (effectName) {
     switch (effectName) {
       case 'boutOfMadness':
+        console.log(this.boutOfMadness)
         if (this.boutOfMadness) {
           await this.boutOfMadness.delete()
           // if( boutOfMadness){
           //   await boutOfMadness.update({ disabled: !boutOfMadness.data.disabled, duration: {seconds: undefined, rounds: undefined, turns: 1}});
           // }
         } else {
-          if (game.settings.get('CoC7', 'enableStatusIcons')) {
-            await super.createEmbeddedDocuments('ActiveEffect', [
-              {
-                label: game.i18n.localize('CoC7.BoutOfMadnessName'),
-                icon: 'systems/CoC7/assets/icons/hanging-spider.svg',
-                origin: this.uuid,
-                duration: {
-                  seconds: undefined,
-                  rounds: undefined,
-                  turns: 1
-                },
-                flags: {
-                  CoC7: {
-                    madness: true,
-                    realTime: true
-                  }
-                },
-                disabled: false
-              }
-            ])
-          }
+          await super.createEmbeddedDocuments('ActiveEffect', [
+            {
+              label: game.i18n.localize('CoC7.BoutOfMadnessName'),
+              icon: game.settings.get('CoC7', 'enableStatusIcons')
+                ? 'systems/CoC7/assets/icons/hanging-spider.svg'
+                : null,
+              origin: this.uuid,
+              duration: {
+                seconds: undefined,
+                rounds: undefined,
+                turns: 1
+              },
+              flags: {
+                CoC7: {
+                  madness: true,
+                  realTime: true
+                }
+              },
+              disabled: false
+            }
+          ])
         }
 
         break
@@ -3086,28 +3093,28 @@ export class CoCActor extends Actor {
           //   await insanity.update({ disabled: !insanity.data.disabled, duration: {seconds: undefined, rounds: undefined, turns: 1}});
           // }
         } else {
-          if (game.settings.get('CoC7', 'enableStatusIcons')) {
-            await super.createEmbeddedDocuments('ActiveEffect', [
-              {
-                label: game.i18n.localize('CoC7.InsanityName'),
-                icon: 'systems/CoC7/assets/icons/tentacles-skull.svg',
-                origin: this.uuid,
-                duration: {
-                  seconds: undefined,
-                  rounds: undefined,
-                  turns: 1
-                },
-                flags: {
-                  CoC7: {
-                    madness: true,
-                    indefinite: true
-                  }
-                },
-                // tint: '#ff0000',
-                disabled: false
-              }
-            ])
-          }
+          await super.createEmbeddedDocuments('ActiveEffect', [
+            {
+              label: game.i18n.localize('CoC7.InsanityName'),
+              icon: game.settings.get('CoC7', 'enableStatusIcons')
+                ? 'systems/CoC7/assets/icons/tentacles-skull.svg'
+                : null,
+              origin: this.uuid,
+              duration: {
+                seconds: undefined,
+                rounds: undefined,
+                turns: 1
+              },
+              flags: {
+                CoC7: {
+                  madness: true,
+                  indefinite: true
+                }
+              },
+              // tint: '#ff0000',
+              disabled: false
+            }
+          ])
         }
         break
 
@@ -3392,25 +3399,23 @@ export class CoCActor extends Actor {
   async inflictMajorWound () {
     if (!this.majorWound) {
       await this.setStatus(COC7.status.criticalWounds)
-      if (game.settings.get('CoC7', 'enableStatusIcons')) {
-        const criticalWoundsEffect = await this.hasActiveEffect(
-          'criticalWounds'
-        )
-        if (criticalWoundsEffect.length === 0) {
-          await super.createEmbeddedDocuments('ActiveEffect', [
-            {
-              label: 'criticalWounds',
-              icon: 'systems/CoC7/assets/icons/arm-sling.svg',
-              origin: this.uuid,
-              duration: {
-                seconds: undefined,
-                rounds: undefined,
-                turns: 1
-              },
-              disabled: false
-            }
-          ])
-        }
+      const criticalWoundsEffect = await this.hasActiveEffect('criticalWounds')
+      if (criticalWoundsEffect.length === 0) {
+        await super.createEmbeddedDocuments('ActiveEffect', [
+          {
+            label: 'criticalWounds',
+            icon: game.settings.get('CoC7', 'enableStatusIcons')
+              ? 'systems/CoC7/assets/icons/arm-sling.svg'
+              : null,
+            origin: this.uuid,
+            duration: {
+              seconds: undefined,
+              rounds: undefined,
+              turns: 1
+            },
+            disabled: false
+          }
+        ])
       }
     }
     await this.fallProne()
@@ -3430,67 +3435,67 @@ export class CoCActor extends Actor {
 
   async fallProne () {
     await this.setStatus(COC7.status.prone)
-    if (game.settings.get('CoC7', 'enableStatusIcons')) {
-      const proneEffect = await this.hasActiveEffect('prone')
-      if (proneEffect.length === 0) {
-        await super.createEmbeddedDocuments('ActiveEffect', [
-          {
-            label: 'prone',
-            icon: 'systems/CoC7/assets/icons/falling.svg',
-            origin: this.uuid,
-            duration: {
-              seconds: undefined,
-              rounds: undefined,
-              turns: 1
-            },
-            disabled: false
-          }
-        ])
-      }
+    const proneEffect = await this.hasActiveEffect('prone')
+    if (proneEffect.length === 0) {
+      await super.createEmbeddedDocuments('ActiveEffect', [
+        {
+          label: 'prone',
+          icon: game.settings.get('CoC7', 'enableStatusIcons')
+            ? 'systems/CoC7/assets/icons/falling.svg'
+            : null,
+          origin: this.uuid,
+          duration: {
+            seconds: undefined,
+            rounds: undefined,
+            turns: 1
+          },
+          disabled: false
+        }
+      ])
     }
   }
 
   async fallUnconscious () {
     await this.setStatus(COC7.status.unconscious)
-    if (game.settings.get('CoC7', 'enableStatusIcons')) {
-      const unconsciousEffect = await this.hasActiveEffect('unconscious')
-      if (unconsciousEffect.length === 0) {
-        await super.createEmbeddedDocuments('ActiveEffect', [
-          {
-            label: 'unconscious',
-            icon: 'systems/CoC7/assets/icons/knocked-out-stars.svg',
-            origin: this.uuid,
-            duration: {
-              seconds: undefined,
-              rounds: undefined,
-              turns: 1
-            },
-            disabled: false
-          }
-        ])
-      }
+    const unconsciousEffect = await this.hasActiveEffect('unconscious')
+    if (unconsciousEffect.length === 0) {
+      await super.createEmbeddedDocuments('ActiveEffect', [
+        {
+          label: 'unconscious',
+          icon: game.settings.get('CoC7', 'enableStatusIcons')
+            ? 'systems/CoC7/assets/icons/knocked-out-stars.svg'
+            : null,
+          origin: this.uuid,
+          duration: {
+            seconds: undefined,
+            rounds: undefined,
+            turns: 1
+          },
+          disabled: false
+        }
+      ])
     }
   }
 
   async fallDying () {
     await this.setStatus(COC7.status.dying)
-    if (game.settings.get('CoC7', 'enableStatusIcons')) {
-      const dyingEffect = await this.hasActiveEffect('dying')
-      if (dyingEffect.length === 0) {
-        await super.createEmbeddedDocuments('ActiveEffect', [
-          {
-            label: 'dying',
-            icon: 'systems/CoC7/assets/icons/heart-beats.svg',
-            origin: this.uuid,
-            duration: {
-              seconds: undefined,
-              rounds: undefined,
-              turns: 1
-            },
-            disabled: false
-          }
-        ])
-      }
+    const dyingEffect = await this.hasActiveEffect('dying')
+    if (dyingEffect.length === 0) {
+      await super.createEmbeddedDocuments('ActiveEffect', [
+        {
+          label: 'dying',
+          icon: game.settings.get('CoC7', 'enableStatusIcons')
+            ? 'systems/CoC7/assets/icons/heart-beats.svg'
+            : null,
+          origin: this.uuid,
+          duration: {
+            seconds: undefined,
+            rounds: undefined,
+            turns: 1
+          },
+          disabled: false
+        }
+      ])
     }
   }
 
@@ -3499,27 +3504,27 @@ export class CoCActor extends Actor {
     await this.unsetStatus(COC7.status.dying)
     await this.fallUnconscious()
     await this.setStatus(COC7.status.dead)
-    if (game.settings.get('CoC7', 'enableStatusIcons')) {
-      const deadEffect = await this.hasActiveEffect('dead')
-      if (deadEffect.length === 0) {
-        await super.createEmbeddedDocuments('ActiveEffect', [
-          {
-            label: 'dead',
-            icon: 'systems/CoC7/assets/icons/tombstone.svg',
-            origin: this.uuid,
-            duration: {
-              seconds: undefined,
-              rounds: undefined,
-              turns: 1
-            },
-            disabled: false
-          }
-        ])
-      }
-      const dyingEffect = await this.hasActiveEffect('dying')
-      if (!this.dying && dyingEffect.length > 0) {
-        dyingEffect.forEach(effect => effect.delete())
-      }
+    const deadEffect = await this.hasActiveEffect('dead')
+    if (deadEffect.length === 0) {
+      await super.createEmbeddedDocuments('ActiveEffect', [
+        {
+          label: 'dead',
+          icon: game.settings.get('CoC7', 'enableStatusIcons')
+            ? 'systems/CoC7/assets/icons/tombstone.svg'
+            : null,
+          origin: this.uuid,
+          duration: {
+            seconds: undefined,
+            rounds: undefined,
+            turns: 1
+          },
+          disabled: false
+        }
+      ])
+    }
+    const dyingEffect = await this.hasActiveEffect('dying')
+    if (!this.dying && dyingEffect.length > 0) {
+      dyingEffect.forEach(effect => effect.delete())
     }
   }
 
