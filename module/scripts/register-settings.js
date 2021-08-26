@@ -49,6 +49,15 @@ export function registerSettings () {
     type: Boolean
   })
   /** Set displaying dices for init roll */
+  game.settings.register('CoC7', 'displayInitAsText', {
+    name: 'SETTINGS.displayInitAsText',
+    hint: 'SETTINGS.displayInitAsTextHint',
+    scope: 'world',
+    config: true,
+    default: true,
+    type: Boolean
+  })
+  /** Set displaying dices for init roll */
   game.settings.register('CoC7', 'displayInitDices', {
     name: 'SETTINGS.displayInitDices',
     hint: 'SETTINGS.displayInitDicesHint',
@@ -174,6 +183,15 @@ export function registerSettings () {
       owners: 'SETTINGS.AdviseOwnersOnly',
       everyone: 'SETTINGS.AdviseAllPlayer'
     }
+  })
+  /** Allow player to modify status */
+  game.settings.register('CoC7', 'statusPlayerEditable', {
+    name: 'SETTINGS.StatusPlayerEditable',
+    hint: 'SETTINGS.StatusPlayerEditableHint',
+    scope: 'world',
+    config: true,
+    default: true,
+    type: Boolean
   })
   /** Set the use of token instead of portraits */
   game.settings.register('CoC7', 'useToken', {
