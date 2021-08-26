@@ -68,8 +68,9 @@ export class CharacRollDialog extends Dialog {
     if (
       action === 'validate' &&
       !event.currentTarget.classList.contains('inactive')
-    )
+    ) {
       this.close()
+    }
   }
 
   async rollCharacteristic (key) {
@@ -148,9 +149,9 @@ export class CharacRollDialog extends Dialog {
       if (
         this.data.data.characteristics.points.total !==
         this.data.data.characteristics.points.value
-      )
+      ) {
         validation.classList.add('warning')
-      else {
+      } else {
         validation.classList.remove('warning')
         const validateButton = this._element[0].querySelector('button.validate')
         validateButton.classList.remove('inactive')
@@ -193,8 +194,9 @@ export class CharacRollDialog extends Dialog {
     if (data.characteristics.points.enabled) {
       if (
         data.characteristics.points.total !== data.characteristics.points.value
-      )
+      ) {
         data.pointsWarning = true
+      }
     }
 
     const html = await renderTemplate(

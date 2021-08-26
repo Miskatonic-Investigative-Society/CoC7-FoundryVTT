@@ -13,8 +13,9 @@ export class CoC7ConCheck {
   }
 
   get isBlind () {
-    if (undefined === this._isBlind)
+    if (undefined === this._isBlind) {
       this._isBlind = this.rollMode === 'blindroll'
+    }
     return this._isBlind
   }
 
@@ -116,8 +117,11 @@ export class CoC7ConCheck {
       content: htmlElement.outerHTML
     }
 
-    if (['gmroll', 'blindroll'].includes(game.settings.get('core', 'rollMode')))
+    if (
+      ['gmroll', 'blindroll'].includes(game.settings.get('core', 'rollMode'))
+    ) {
       chatData.whisper = ChatMessage.getWhisperRecipients('GM') // Change for user
+    }
     if (this.rollMode === 'blindroll') chatData.blind = true
 
     ChatMessage.create(chatData).then(msg => {

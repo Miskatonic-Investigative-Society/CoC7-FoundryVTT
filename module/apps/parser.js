@@ -60,8 +60,9 @@ export class CoC7Parser {
           data.difficulty = usage.get('difficulty')
         }
       }
-      if (game.settings.get('core', 'rollMode') === 'blindroll')
+      if (game.settings.get('core', 'rollMode') === 'blindroll') {
         data.blind = true
+      }
 
       const link = CoC7Parser.createCoC7Link(data)
 
@@ -104,8 +105,9 @@ export class CoC7Parser {
         }
         linkData.check = 'check'
         linkData.type = 'skill'
-        if (game.settings.get('core', 'rollMode') === 'blindroll')
+        if (game.settings.get('core', 'rollMode') === 'blindroll') {
           linkData.blind = true
+        }
       } else if (item.type === 'weapon') {
         linkData.check = 'item'
         linkData.type = 'weapon'
@@ -152,10 +154,12 @@ export class CoC7Parser {
         let options = `${data.blind ? 'blind,' : ''}type:${data.type},name:${
           data.name
         }`
-        if (typeof data.difficulty !== 'undefined')
+        if (typeof data.difficulty !== 'undefined') {
           options += `,difficulty:${data.difficulty}`
-        if (typeof data.modifier !== 'undefined')
+        }
+        if (typeof data.modifier !== 'undefined') {
           options += `,modifier:${data.modifier}`
+        }
         if (data.icon) options += `,icon:${data.icon}`
         if (data.pack) options += `,pack:${data.pack}`
         if (data.id) options += `,id:${data.id}`
@@ -301,10 +305,12 @@ export class CoC7Parser {
             data.dataset.type?.toLowerCase()
           )
         ) {
-          if (data.dataset.name === 'lck')
+          if (data.dataset.name === 'lck') {
             humanName = game.i18n.localize('CoC7.Luck')
-          if (data.dataset.name === 'san')
+          }
+          if (data.dataset.name === 'san') {
             humanName = game.i18n.localize('CoC7.Sanity')
+          }
         }
         if (
           ['charac', 'char', 'characteristic', 'characteristics'].includes(
@@ -384,8 +390,9 @@ export class CoC7Parser {
   static async _onCheck (event) {
     const options = event.currentTarget.dataset
 
-    if (options.difficulty)
+    if (options.difficulty) {
       options.difficulty = CoC7Utilities.convertDifficulty(options.difficulty)
+    }
 
     // Click origin (from message or from sheet)
     // const fromSheet = event.currentTarget.closest('.chat-message')?false:true;
@@ -409,24 +416,27 @@ export class CoC7Parser {
                   'characteristic',
                   'characteristics'
                 ].includes(options.type.toLowerCase())
-              )
+              ) {
                 return token.actor.characteristicCheck(
                   options.name,
                   event.shiftKey,
                   options
                 )
-              if (['skill'].includes(options.type.toLowerCase()))
+              }
+              if (['skill'].includes(options.type.toLowerCase())) {
                 return token.actor.skillCheck(options, event.shiftKey, options)
+              }
               if (
                 ['attributes', 'attribute', 'attrib', 'attribs'].includes(
                   options.type.toLowerCase()
                 )
-              )
+              ) {
                 return token.actor.attributeCheck(
                   options.name,
                   event.shiftKey,
                   options
                 )
+              }
               break
 
             case 'sanloss': {
@@ -486,20 +496,23 @@ export class CoC7Parser {
               ['charac', 'char', 'characteristic', 'characteristics'].includes(
                 options.type.toLowerCase()
               )
-            )
+            ) {
               return actor.characteristicCheck(
                 options.name,
                 event.shiftKey,
                 options
               )
-            if (['skill'].includes(options.type.toLowerCase()))
+            }
+            if (['skill'].includes(options.type.toLowerCase())) {
               return actor.skillCheck(options, event.shiftKey, options)
+            }
             if (
               ['attributes', 'attribute', 'attrib', 'attribs'].includes(
                 options.type.toLowerCase()
               )
-            )
+            ) {
               return actor.attributeCheck(options.name, event.shiftKey, options)
+            }
             break
 
           case 'sanloss': {

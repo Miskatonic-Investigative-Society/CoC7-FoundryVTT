@@ -90,6 +90,11 @@ export class chatHelper {
       messageData.type = CONST.CHAT_MESSAGE_TYPES.WHISPER
       messageData.whisper = options.whisper
     }
+    if (typeof options.roll !== 'undefined') {
+      messageData.roll = options.roll
+      messageData.type = CONST.CHAT_MESSAGE_TYPES.ROLL
+      messageData.rollMode = CONST.DICE_ROLL_MODES.SELF
+    }
     messageData.user = game.user.id
     messageData.content = message
 
@@ -401,10 +406,11 @@ export class CoC7Roll {
       })
     }
 
-    if (roll.luckNeeded)
+    if (roll.luckNeeded) {
       roll.luckNeededTxt = game.i18n.format('CoC7.SpendLuck', {
         luckNeededValue: roll.luckNeeded
       })
+    }
     if (!object) return roll
   }
 

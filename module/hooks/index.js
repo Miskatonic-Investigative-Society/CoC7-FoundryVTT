@@ -1,5 +1,3 @@
-/* global game, Hooks */
-
 import * as Init from './init.js'
 import * as Ready from './ready.js'
 import * as RenderChatMessage from './render-chat-message.js'

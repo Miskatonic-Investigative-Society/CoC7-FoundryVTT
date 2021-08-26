@@ -35,8 +35,9 @@ export class InteractiveChatCard {
       optionnalChatData
     )
 
-    if (['gmroll', 'blindroll'].includes(this.rollMode))
+    if (['gmroll', 'blindroll'].includes(this.rollMode)) {
       chatData.whisper = ChatMessage.getWhisperRecipients('GM')
+    }
     if (this.rollMode === 'blindroll') chatData.blind = true
 
     ChatMessage.create(chatData).then(msg => {
@@ -90,8 +91,9 @@ export class InteractiveChatCard {
       !Object.getOwnPropertyNames(game.CoC7.cards).includes(
         htmlCardElement.dataset.cardClass
       )
-    )
+    ) {
       return
+    }
     const card = await InteractiveChatCard.fromHTMLCardElement(htmlCardElement)
     const typedCard = Object.assign(
       new game.CoC7.cards[htmlCardElement.dataset.cardClass](),
@@ -261,8 +263,9 @@ export class InteractiveChatCard {
       target &&
       target.classList.contains('gm-select-only') &&
       !game.user.isGM
-    )
+    ) {
       return
+    }
     const flag = target.dataset.flag
     if (!flag) return
     const toggle = target.closest('.ic-radio')
@@ -286,8 +289,9 @@ export class InteractiveChatCard {
 
   get isBlind () {
     if (!this.rollMode) return null
-    if (undefined === this._isBlind)
+    if (undefined === this._isBlind) {
       this._isBlind = this.rollMode === 'blindroll'
+    }
     return this._isBlind
   }
 
@@ -341,10 +345,10 @@ export class InteractiveChatCard {
         this._targetToken = chatHelper.getTokenFromKey(this._targetKey)
       } else {
         this._targetToken = this.targetedTokens.pop()
-        if (this._targetToken)
+        if (this._targetToken) {
           this._targetKey = `${this._targetToken.scene.id}.${this._targetToken.id}`
-        // REFACTORING (2)
-        else {
+        } else {
+          // REFACTORING (2)
           this._targetToken = null
         }
       }
@@ -354,12 +358,14 @@ export class InteractiveChatCard {
 
   get targetActor () {
     if (!this._targetActor) {
-      if (this.targetToken)
+      if (this.targetToken) {
         this._targetActor =
           this.targetToken.actor ||
           this.targetToken.data.actor ||
           this.targetToken.data.document
-      else this._targetActor = chatHelper.getActorFromKey(this._targetKey) // REFACTORING (2)
+      } else {
+        this._targetActor = chatHelper.getActorFromKey(this._targetKey) // REFACTORING (2)
+      }
     }
     return this._targetActor
   }

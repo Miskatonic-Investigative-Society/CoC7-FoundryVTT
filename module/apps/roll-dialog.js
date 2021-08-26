@@ -6,14 +6,18 @@ export class RollDialog {
   static async create (options = {}) {
     if (options.difficulty) {
       options.difficultyLevel = {}
-      if (CoC7Check.difficultyLevel.unknown === options.difficulty)
+      if (CoC7Check.difficultyLevel.unknown === options.difficulty) {
         options.difficultyLevel.unknown = true
-      if (CoC7Check.difficultyLevel.regular === options.difficulty)
+      }
+      if (CoC7Check.difficultyLevel.regular === options.difficulty) {
         options.difficultyLevel.regular = true
-      if (CoC7Check.difficultyLevel.hard === options.difficulty)
+      }
+      if (CoC7Check.difficultyLevel.hard === options.difficulty) {
         options.difficultyLevel.hard = true
-      if (CoC7Check.difficultyLevel.extreme === options.difficulty)
+      }
+      if (CoC7Check.difficultyLevel.extreme === options.difficulty) {
         options.difficultyLevel.extreme = true
+      }
     }
 
     // if( undefined == options.askValue) options.askValue = true;

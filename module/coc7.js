@@ -1,4 +1,4 @@
-/* global $, Actors, ActorSheet, Combat, CONFIG, CONST, game, Hooks, Items, ItemSheet, tinyMCE, ui */
+/* global $, Combat, CONFIG, CONST, game, Hooks, tinyMCE, ui */
 import { CoC7NPCSheet } from './actors/sheets/npc-sheet.js'
 import { CoC7CreatureSheet } from './actors/sheets/creature-sheet.js'
 import { CoC7CharacterSheetV2 } from './actors/sheets/character.js'
@@ -18,6 +18,19 @@ import { CoC7CompendiumDirectory } from './compendium-directory.js'
 import { CoC7Hooks } from './hooks/index.js'
 import * as DiceBot from './dicebot.js'
 import '../styles/system/index.less'
+
+Hooks.once('diceSoNiceReady', dice3d => {
+  dice3d.addSystem({ id: 'CoC7', name: 'CoC' }, 'preferred')
+  dice3d.addDicePreset(
+    {
+      type: 'dt',
+      labels: ['10', '20', '30', '40', '50', '60', '70', '80', '90', '00'],
+      fontScale: 0.75,
+      system: 'CoC7'
+    },
+    'd10'
+  )
+})
 
 Hooks.once('init', async function () {
   game.CoC7 = {

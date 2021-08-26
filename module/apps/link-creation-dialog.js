@@ -55,9 +55,11 @@ export class CoC7LinkCreationDialog extends FormApplication {
       critical: CoC7Check.difficultyLevel.critical === this.link.data.difficulty
     }
     if (!this.link.data.difficulty) {
-      if (game.settings.get('CoC7', 'defaultCheckDifficulty') === 'unknown')
+      if (game.settings.get('CoC7', 'defaultCheckDifficulty') === 'unknown') {
         data.selectedDifficulty.unknown = true
-      else data.selectedDifficulty.regular = true
+      } else {
+        data.selectedDifficulty.regular = true
+      }
     }
 
     // Prepare link type
@@ -95,9 +97,11 @@ export class CoC7LinkCreationDialog extends FormApplication {
         data.data.characteristicKey === data.characteristics[i].key ||
         data.data.characteristicKey === data.characteristics[i].shortName ||
         data.data.characteristicKey === data.characteristics[i].label
-      )
+      ) {
         data.characteristics[i].selected = true
-      else data.characteristics[i].selected = false
+      } else {
+        data.characteristics[i].selected = false
+      }
     }
 
     // Prepare characteristics
@@ -279,20 +283,23 @@ export class CoC7LinkCreationDialog extends FormApplication {
       // Deprecated
       if (target.name === 'fromCompendium') {
         this.link._linkData.fromCompendium = !this.link._linkData.fromCompendium
-        if (this.link._linkData.fromCompendium)
+        if (this.link._linkData.fromCompendium) {
           this.link._linkData.fromDirectory = false
+        }
       }
       if (target.name === 'fromDirectory') {
         this.link._linkData.fromDirectory = !this.link._linkData.fromDirectory
-        if (this.link._linkData.fromDirectory)
+        if (this.link._linkData.fromDirectory) {
           this.link._linkData.fromCompendium = false
+        }
       }
       await this.link.fetchItem()
     } else {
       const formDataEx = expandObject(formData)
       if (formDataEx.check) formDataEx.check = Number(formDataEx.check)
-      if (formDataEx.difficulty)
+      if (formDataEx.difficulty) {
         formDataEx.difficulty = Number(formDataEx.difficulty)
+      }
       if (formDataEx.type) formDataEx.type = Number(formDataEx.type)
       const diffData = diffObject(this.link.data, formDataEx)
       await this.link.update(diffData)

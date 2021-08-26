@@ -87,8 +87,9 @@ export class OpposedCheckCard extends RollCard {
       this.rolls.length >= 2 &&
       this.hasWinner &&
       this.winner?.item?.type === 'weapon'
-    )
+    ) {
       return true
+    }
     return false
   }
 
@@ -117,8 +118,9 @@ export class OpposedCheckCard extends RollCard {
       this.attackerRoll &&
       this.defenderRoll &&
       this.attackerRoll.successLevel === this.defenderRoll.successLevel
-    )
+    ) {
       return true
+    }
     return false
   }
 
@@ -136,33 +138,38 @@ export class OpposedCheckCard extends RollCard {
       this.attackerRoll &&
       (!this.attackerRoll?.item ||
         this.attackerRoll?.item.data.data.properties?.mnvr)
-    )
+    ) {
       return true
+    }
     return false
   }
 
   get resultText () {
     if (this.combat && this.attackerRoll && this.defenderRoll) {
-      if (!this.attackerRoll.winner && !this.defenderRoll.winner)
+      if (!this.attackerRoll.winner && !this.defenderRoll.winner) {
         return game.i18n.localize('CoC7.NoWinner')
+      }
       if (this.attackerRoll.winner) {
-        if (this.attackerRoll.maneuver)
+        if (this.attackerRoll.maneuver) {
           return game.i18n.format('CoC7.ManeuverSuccess', {
             name: this.attackerRoll.actor.name
           })
+        }
         return game.i18n.format('CoC7.AttackSuccess', {
           name: this.attackerRoll.actor.name
         })
       }
       if (this.defenderRoll.winner) {
-        if (this.defenderRoll.maneuver)
+        if (this.defenderRoll.maneuver) {
           return game.i18n.format('CoC7.ManeuverSuccess', {
             name: this.defenderRoll.actor.name
           })
-        if (this.defenderIsDodging)
+        }
+        if (this.defenderIsDodging) {
           return game.i18n.format('CoC7.DodgeSuccess', {
             name: this.defenderRoll.actor.name
           })
+        }
         return game.i18n.format('CoC7.AttackSuccess', {
           name: this.defenderRoll.actor.name
         })
@@ -301,18 +308,21 @@ export class OpposedCheckCard extends RollCard {
             this.rolls[i].actor.dodgeSkill.name.toLowerCase() !==
               this.rolls[i].skill.name.toLowerCase()) ||
             !this.rolls[i]?.actor?.dodgeSkill?.name)
-        )
+        ) {
           this.rolls[i].maneuver = true
-        if (this.rolls[i].rolled)
+        }
+        if (this.rolls[i].rolled) {
           this.rolls[i]._htmlRoll = await this.rolls[i].getHtmlRoll({
             hideDiceResult: true
           })
+        }
       }
     } else {
-      if (this.rolls[rank].rolled)
+      if (this.rolls[rank].rolled) {
         this.rolls[rank]._htmlRoll = await this.rolls[rank].getHtmlRoll({
           hideDiceResult: true
         })
+      }
     }
 
     // this.rolls = this.rolls.filter( roll => {
@@ -341,11 +351,11 @@ export class OpposedCheckCard extends RollCard {
 
       if (this.rolls[0]?.rolled && this.rolls[1]?.rolled) {
         if (this.rolls[0].passed || this.rolls[1].passed) {
-          if (this.rolls[0].successLevel > this.rolls[1].successLevel)
+          if (this.rolls[0].successLevel > this.rolls[1].successLevel) {
             this.rolls[0].winner = true
-          else if (this.rolls[1].successLevel > this.rolls[0].successLevel)
+          } else if (this.rolls[1].successLevel > this.rolls[0].successLevel) {
             this.rolls[1].winner = true
-          else {
+          } else {
             if (this.advantageAttacker) this.rolls[0].winner = true
             else this.rolls[1].winner = true
           }
@@ -397,8 +407,9 @@ export class OpposedCheckCard extends RollCard {
             (game.settings.get('CoC7', 'opposedRollTieBreaker')
               ? this.rolls[0].modifiedResult === this.rolls[i].modifiedResult
               : this.rolls[0].rawValue === this.rolls[i].rawValue)
-          )
+          ) {
             this.winCount = this.winCount + 1
+          }
         }
       }
 

@@ -249,11 +249,12 @@ export class CoC7Utilities {
         for (const [, value] of Object.entries(
           game.system.template.Actor.templates.characteristics.characteristics
         )) {
-          if (charKey === game.i18n.localize(value.short).toLowerCase())
+          if (charKey === game.i18n.localize(value.short).toLowerCase()) {
             return {
               short: game.i18n.localize(value.short),
               label: game.i18n.localize(value.label)
             }
+          }
         }
         return null
       }
@@ -347,14 +348,16 @@ export class CoC7Utilities {
       origin = 'game'
     }
 
-    if (!item)
+    if (!item) {
       return ui.notifications.warn(
         game.i18n.localize('CoC7.WarnMacroNoItemFound')
       )
-    if (!(item.type === 'weapon') && !(item.type === 'skill'))
+    }
+    if (!(item.type === 'weapon') && !(item.type === 'skill')) {
       return ui.notifications.warn(
         game.i18n.localize('CoC7.WarnMacroIncorrectType')
       )
+    }
 
     let command
 
@@ -363,10 +366,11 @@ export class CoC7Utilities {
     }
 
     if (item.type === 'skill') {
-      if (CoC7Item.isAnySpec(item))
+      if (CoC7Item.isAnySpec(item)) {
         return ui.notifications.warn(
           game.i18n.localize('CoC7.WarnNoGlobalSpec')
         )
+      }
       command = `game.CoC7.macros.skillCheck({name:'${item.name}', id:'${item._id}', origin:'${origin}', pack: '${packName}'}, event);`
     }
 
@@ -538,8 +542,9 @@ export class CoC7Utilities {
     let threshold = options.threshold
 
     if (undefined !== options.modifier) diceModifier = Number(options.modifier)
-    if (undefined !== options.difficulty)
+    if (undefined !== options.difficulty) {
       difficulty = CoC7Utilities.convertDifficulty(options.difficulty)
+    }
 
     if (!event?.shiftKey && !options.fastForward) {
       const usage = await RollDialog.create(options)
