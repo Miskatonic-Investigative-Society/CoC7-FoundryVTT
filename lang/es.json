@@ -778,5 +778,7 @@
   "SETTINGS.AdviseOwnersOnly": "Al propietario del actor",
   "SETTINGS.AdviseAllPlayer": "A todos los jugadores",
   "SETTINGS.OneBlockBackStory": "Trasfondo en un solo bloque",
-  "SETTINGS.OneBlockBackStoryHint": "Convertir el transfondo en un solo bloque de edición, se pueden añadir formateo y pegar enlaces"
+  "SETTINGS.OneBlockBackStoryHint": "Convertir el transfondo en un solo bloque de edición, se pueden añadir formateo y pegar enlaces",
+  "SETTINGS.EnableStatusIcons": "Activar iconos de estado",
+  "SETTINGS.EnableStatusIconsHint": "Determina si se deben mostrar de los efectos de combate y cordura en los iconos"
 }
