@@ -141,14 +141,14 @@ export class CoC7ChaseSheet extends ItemSheet {
 		if( override){
 			const [,type,sIndex,subType,data] = target.name.split('.');
 			const index = Number( sIndex);
-			if( 'participants' == type && !isNaN(index) && 'check' == subType){
-				if( 'name' == data){
+			if( 'participants' == type && !isNaN(index) && 'speed-check' == subType){
+				if( 'name' == data){ //Changing name will remove all other ref !
 					const participants = this.item.data.data.participants? duplicate( this.item.data.data.participants):[];
-					if( participants[index].check){
-						delete participants[index].check.id;
-						delete participants[index].check.type;
-					} else participants[index].check = {};
-					participants[index].check.name = target.value;
+					if( participants[index].speedCheck){
+						delete participants[index].speedCheck.id;
+						delete participants[index].speedCheck.type;
+					} else participants[index].speedCheck = {};
+					participants[index].speedCheck.name = target.value;
 					await this.item.update( { 'data.participants': participants});
 					return;
 				}
@@ -182,7 +182,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 		const participants = this.item.data.data.participants?duplicate( this.item.data.data.participants):[];
 		
 		const participant = new _participant( participants[index]);
-		if( participant.check.refSet){
+		if( participant.speedCheck.refSet){
 			
 			const roll = new CoC7Check();
 			roll.parent = this.item.uuid;
@@ -196,31 +196,31 @@ export class CoC7ChaseSheet extends ItemSheet {
 			}
 
 
-			if( participant.check.isCharacteristic){
-				roll.rollCharacteristic( participant.check.ref.key);
+			if( participant.speedCheck.isCharacteristic){
+				roll.rollCharacteristic( participant.speedCheck.ref.key);
 				await roll.toMessage();
-				participant.data.check.rollDataString = roll.JSONRollString;
-			} else if( participant.check.isSkill){
-				roll.skill = participant.check.ref;
+				participant.data.speedCheck.rollDataString = roll.JSONRollString;
+			} else if( participant.speedCheck.isSkill){
+				roll.skill = participant.speedCheck.ref;
 				roll.roll();
 				await roll.toMessage();
-				participant.data.check.rollDataString = roll.JSONRollString;
-			} else if( participant.check.isAttribute){
-				roll.rollAttribute( participant.check.ref.key);
+				participant.data.speedCheck.rollDataString = roll.JSONRollString;
+			} else if( participant.speedCheck.isAttribute){
+				roll.rollAttribute( participant.speedCheck.ref.key);
 				await roll.toMessage();
-				participant.data.check.rollDataString = roll.JSONRollString;
+				participant.data.speedCheck.rollDataString = roll.JSONRollString;
 			}
-		} else if( participant.check.score){
+		} else if( participant.speedCheck.score){
 			const rollData = {
-				rawValue : participant.check.score,
-				displayName : participant.check.name
+				rawValue : participant.speedCheck.score,
+				displayName : participant.speedCheck.name
 			};
 			if( participant.hasActor) rollData.actor = participant.actor.actorKey;
 			const roll = CoC7Check.create(rollData);
 			roll.parent = this.item.uuid;
 			roll.roll();
 			roll.toMessage();
-			participant.data.check.rollDataString = roll.JSONRollString;
+			participant.data.speedCheck.rollDataString = roll.JSONRollString;
 			participant.data.rolled = true;
 			participant.data.rollUuid = roll.uuid;
 		}
@@ -276,7 +276,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 		const participant = target.closest('.participant');
 		const index = participant.dataset.index;
 		const participants = this.item.data.data.participants?duplicate( this.item.data.data.participants):[];
-		delete participants[index].check.rollDataString;
+		delete participants[index].speedCheck.rollDataString;
 		await this.item.update( { 'data.participants': participants});
 	}
 
@@ -293,19 +293,19 @@ export class CoC7ChaseSheet extends ItemSheet {
 		case 'actor':
 			break;
 		case 'item':
-			participant.check = {
+			participant.speedCheck = {
 				id: data.data?._id||data.id,
 				type:'item'
 			};
 			break;
 		case 'characteristic':
-			participant.check = {
+			participant.speedCheck = {
 				id: data.name,
 				type:'characteristic'
 			};
 			break;
 		case 'attribute':
-			participant.check = {
+			participant.speedCheck = {
 				id: data.name,
 				type:'attribute'
 			};
@@ -346,20 +346,20 @@ export class CoC7ChaseSheet extends ItemSheet {
 				if( 'skill' != item?.data?.type) return;
 			}
 
-			participant.check = {
+			participant.speedCheck = {
 				id: data.data?._id||data.id,
 				type:'item'
 			};
 		}
 			break;
 		case 'characteristic':
-			participant.check = {
+			participant.speedCheck = {
 				id: data.name,
 				type:'characteristic'
 			};
 			break;
 		case 'attribute':
-			participant.check = {
+			participant.speedCheck = {
 				id: data.name,
 				type:'attribute'
 			};
@@ -380,7 +380,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 			const participants = this.item.data.data.participants?duplicate( this.item.data.data.participants):[];
 			const index = participants.findIndex( p => p.rollUuid == roll.uuid);
 			if( index >= 0){
-				participants[index].check.rollDataString = roll.JSONRollString;
+				participants[index].speedCheck.rollDataString = roll.JSONRollString;
 				await this.item.update( { 'data.participants': participants});
 			}
 		} else {
@@ -493,8 +493,8 @@ export class _participant{
 	}
 
 	get movAdjustment(){
-		if( this.data.check?.rollDataString){
-			const roll = CoC7Check.fromRollString( this.data.check.rollDataString);
+		if( this.data.speedCheck?.rollDataString){
+			const roll = CoC7Check.fromRollString( this.data.speedCheck.rollDataString);
 			if( roll){
 				if( !roll.standby){
 					if( roll.successLevel >= CoC7Check.successLevel.extreme) return 1;
@@ -541,13 +541,13 @@ export class _participant{
 	// 	});
 	// }
 
-	get check(){
+	get speedCheck(){
 		const check = {};
-		if( this.data.check?.name) check.name = this.data.check.name;
-		if( this.data.check?.score) check.score = this.data.check.score;
+		if( this.data.speedCheck?.name) check.name = this.data.speedCheck.name;
+		if( this.data.speedCheck?.score) check.score = this.data.speedCheck.score;
 		check.cssClasses = '';
-		if( this.data.check?.rollDataString) {
-			check.roll = CoC7Check.fromRollString( this.data.check.rollDataString);
+		if( this.data.speedCheck?.rollDataString) {
+			check.roll = CoC7Check.fromRollString( this.data.speedCheck.rollDataString);
 			if( check.roll) {
 				if( !check.roll.standby || check.roll.hasCard){
 					check.rolled = true;
@@ -577,10 +577,10 @@ export class _participant{
 			});
 			check.hasOptions = !!check.options.length;
 
-			if( this.data.check?.id){
-				let item = this.actor.find( this.data.check.id);
+			if( this.data.speedCheck?.id){
+				let item = this.actor.find( this.data.speedCheck.id);
 				if( !item ){
-					const gameItem = game.items.get( this.data.check.id);
+					const gameItem = game.items.get( this.data.speedCheck.id);
 					if( gameItem) item = this.actor.find( gameItem.name);
 				}
 					
@@ -610,8 +610,8 @@ export class _participant{
 						check.score = item.value.value;
 					}
 				}
-			} else if( this.data.check?.name){
-				const item = this.actor.find( this.data.check.name);
+			} else if( this.data.speedCheck?.name){
+				const item = this.actor.find( this.data.speedCheck.name);
 				if( item){
 					if( 'item' == item.type && 'skill' == item.value.data?.type ){
 						check.ref = item.value;
@@ -639,8 +639,8 @@ export class _participant{
 					}
 				}
 			}
-		} else if( this.data.check?.id){
-			const item = game.items.get( this.data.check.id);
+		} else if( this.data.speedCheck?.id){
+			const item = game.items.get( this.data.speedCheck.id);
 			if( item){
 				if( 'skill' == item.data?.type ){
 					check.ref = item;

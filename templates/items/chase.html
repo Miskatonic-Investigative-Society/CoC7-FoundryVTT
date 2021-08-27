@@ -49,42 +49,42 @@
                         <div class="p-movement">
                             <input class='right-aligned' type='text' name="data.participants.{{i}}.mov" placeholder="MOV" value="{{p.mov}}"/>
                         </div>
-                        <div class="p-check">
-                            <datalist id="check-name-p{{i}}">
-                                {{#each p.check.options as |o|}}
+                        <div class="p-speed-check">
+                            <datalist id="check-options-name-p{{i}}">
+                                {{#each p.speedCheck.options as |o|}}
                                     <option>{{o}}</option>
                                 {{/each}}
                             </datalist>
-                            <input type='text' name="data.participants.{{i}}.check.name" placeholder="check ref." value="{{p.check.name}}" list='check-name-p{{i}}' data-override='true'/>
+                            <input type='text' name="data.participants.{{i}}.speed-check.name" placeholder="check name" value="{{p.speedCheck.name}}" list='check-options-name-p{{i}}' data-override='true'/>
                         </div>
                         <div class="p-score">
-                            {{#if p.check.refSet}}
-                                <span>{{p.check.score}}</span>
+                            {{#if p.speedCheck.refSet}}
+                                <span>{{p.speedCheck.score}}</span>
                             {{else}}
-                                <input class='right-aligned' type='text' name="data.participants.{{i}}.check.score" placeholder="%" value="{{p.check.score}}" />
+                                <input class='right-aligned' type='text' name="data.participants.{{i}}.speedCheck.score" placeholder="%" value="{{p.speedCheck.score}}" />
                             {{/if}}
                         </div>
-                        <div class="p-roll {{p.check.cssClasses}}">
-                            {{#if p.check.rolled}}
-                                {{{check.inlineRoll}}}
+                        <div class="p-roll {{p.speedCheck.cssClasses}}">
+                            {{#if p.speedCheck.rolled}}
+                                {{{p.speedCheck.inlineRoll}}}
                             {{else}}
                                 <a class="roll-participant"><i class="game-icon game-icon-d10"></i></a>
                             {{/if}}
                         </div>
-                        <div class="p-adjust {{p.check.modifierCss}}">
-                            {{#if p.check.rolled}}
-                                {{#if p.check.hasModifier}}
+                        <div class="p-adjust {{p.speedCheck.modifierCss}}">
+                            {{#if p.speedCheck.rolled}}
+                                {{#if p.speedCheck.hasModifier}}
                                     <i class="game-icon game-icon-upgrade"></i>
                                 {{else}}
                                     <i class="fas fa-equals"></i>
                                 {{/if}}
                             {{/if}}
                         </div>
-                        <div class="p-modified-mov {{p.check.modifierCss}} {{p.check.cssClasses}}">
+                        <div class="p-modified-mov {{p.speedCheck.modifierCss}} {{p.speedCheck.cssClasses}}">
                             {{p.adjustedMov}}
                         </div>
                         <div class="p-control">
-                            {{#if p.check.rolled}}
+                            {{#if p.speedCheck.rolled}}
                                 <a class="reset-roll"><i class="fas fa-undo"></i></a>
                             {{else}}
                                 <a class="delete-participant"><i class="fas fa-times"></i></a>

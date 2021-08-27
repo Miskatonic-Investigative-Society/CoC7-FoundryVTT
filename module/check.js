@@ -1078,6 +1078,7 @@ export class CoC7Check {
 		if (this.attribute) return game.i18n.format(`CoC7.LinkCheck${this.difficulty==CoC7Check.difficultyLevel.regular?'':'Diff'}${!this.diceModifier?'':'Modif'}`, { difficulty: this.difficultyString, modifier: this.diceModifier, name: game.i18n.format(`CoC7.${this.actor.data.data.attribs[this.attribute].label}`)}) + ` (${this.actor.data.data.attribs[this.attribute].value}%)`;
 		if (this.characteristic) return game.i18n.format(`CoC7.LinkCheck${this.difficulty==CoC7Check.difficultyLevel.regular?'':'Diff'}${!this.diceModifier?'':'Modif'}`, {difficulty: this.difficultyString, modifier: this.diceModifier, name: game.i18n.localize(this.actor.data.data.characteristics[this.characteristic].label)}) + ` (${this.actor.data.data.characteristics[this.characteristic].value}%)`;
 		if (this.skill) return game.i18n.format(`CoC7.LinkCheck${this.difficulty==CoC7Check.difficultyLevel.regular?'':'Diff'}${!this.diceModifier?'':'Modif'}`, {difficulty: this.difficultyString, modifier: this.diceModifier, name: this.skill.name}) + ` (${this.skill.value}%)`;
+		if( this.displayName) return game.i18n.format(`CoC7.LinkCheck${this.difficulty==CoC7Check.difficultyLevel.regular?'':'Diff'}${!this.diceModifier?'':'Modif'}`, {difficulty: this.difficultyString, modifier: this.diceModifier, name: this.displayName}) + ` (${this.rawValueString}%)`;
 		return null;
 	}
 
