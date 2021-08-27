@@ -75,7 +75,7 @@ Preferably, open your brand new local repository in the Integrated Development E
 
 Still in the terminal, install the project dependencies running: `npm install`
 
-If `npm install` throws any erros you can try `npm install --legacy-peer-deps` or `npm install --force`
+If `npm install` throws any errors you can try `npm install --legacy-peer-deps` or `npm install --force`
 
 Don't mind possible warnings. They are part of any Node project.
 
