@@ -16,7 +16,6 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Fix negative values on setting health manually not working;
 - Fix rolls for skill checks with value of 0%;
 - Fix some Foundry warnings on console for deprecated stuff;
-- Improve randomness of system dices;
 - Massive code refactoring and data migration;
 - Now blind rolls works properly in integration with Dice So Nice!
 - Now, during the development phase, if a skill goes above 90 points, the character gain 2D6 of Sanity, thanks to @pconception;
