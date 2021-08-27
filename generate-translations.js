@@ -4,7 +4,8 @@ import write from './node_modules/write/index.js'
 
 const unordered = {}
 let missing = []
-const keys = Object.keys(jsonfile.readFileSync('./lang/en.json'))
+const source = jsonfile.readFileSync('./lang/en.json')
+const keys = Object.keys(source)
 
 glob('./lang/*.json', {}, async function (er, files) {
   await Promise.all(
@@ -28,6 +29,7 @@ glob('./lang/*.json', {}, async function (er, files) {
       return obj
     }, {})
   let output = ''
+  let anchors = ''
   output = output + '# Translating.\n\n'
   output =
     output +
@@ -75,12 +77,28 @@ glob('./lang/*.json', {}, async function (er, files) {
       })
       .sort()
       .forEach(key => {
-        output = output + '|' + key + '|'
+        output =
+          output +
+          '|[' +
+          key +
+          '](#' +
+          key.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '') +
+          ')|'
         Object.entries(langs).forEach(([lang, value]) => {
           output = output + (value.includes(key) ? 'X' : '') + '|'
         })
         output = output + '\n'
+        anchors =
+          anchors +
+          '##### ' +
+          key +
+          '\n```  "' +
+          key +
+          '": "' +
+          source[key].replace(/\n/g, '\\n') +
+          '",```\n'
       })
+    output = output + anchors
   }
   write('./.github/TRANSLATIONS.md', output)
 })
