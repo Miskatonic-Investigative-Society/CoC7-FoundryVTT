@@ -45,9 +45,15 @@ On Windows, grab an installer from here: https://git-scm.com/download/win and go
 
 On Mac and Linux, it is pre-installed.
 
-To check if Git is installed in your environment, open the shell or terminal of your choice and:
+To check if Git is installed in your environment, open the shell or terminal of your choice and run:
 
 `git --version`
+
+If you are a new Git user, probably you will have to set it up with the following commands:
+
+`git config --global user.name "YOUR_NAME"`
+
+`git config --global user.email "YOUR_EMAIL"`
 
 #### Node.js (14+).
 
@@ -61,19 +67,23 @@ Follow the installation steps and then make sure everything went right with:
 
 ### Cloning the Repository.
 
-On the directory where you would like to pull your changes open the terminal or shell of your choice.
+On the directory where you would like to pull your changes open the terminal or shell of your choice, run:
 
 `git clone https://github.com/HavlockV/CoC7-FoundryVTT.git`
 
-This will create a local clone of the project's repository.
+This will create a local clone of the project repository.
 
 When prompted, enter your Github credentials.
 
 ### Initial Setup.
 
-Preferably, open the project directory in your Integrated Development Environment (IDE). We recommend [Visual Studio Code](https://code.visualstudio.com/download).
+Preferably, open your brand new local repository in the Integrated Development Environment (IDE) of your choice. We recommend [Visual Studio Code](https://code.visualstudio.com/download).
 
-Still in the terminal, install the project dependencies: `npm install`
+Still in the terminal, install the project dependencies running: `npm install`
+
+If `npm install` throws any errors you can try `npm install --legacy-peer-deps` or `npm install --force`
+
+Don't mind possible warnings. They are part of any Node project.
 
 To make things easier, edit the `fvtt.config.example.js` file, located at the root of your local repository. The userDataPath key is your User Data Directory from Foundry and can be found on the Configuration tab on the Setup screen.
 
