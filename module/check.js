@@ -539,6 +539,8 @@ export class CoC7Check {
       if (this.actorId) this._actor = chatHelper.getActorFromKey(this.actorId) // REFACTORING (2)
       if (!this._actor) {
         return {
+          isDummy: true,
+          name: this.actorName ? this.actorName : undefined,
           id: undefined,
           img: 'systems/CoC7/assets/icons/question-circle-regular.svg',
           portrait: 'systems/CoC7/assets/icons/question-circle-regular.svg'
@@ -657,7 +659,8 @@ export class CoC7Check {
     skill = null,
     flatDiceModifier = 0,
     flatThresholdModifier = 0,
-    displayName = null
+    displayName = null,
+    actorName = null
   } = {}) {
     const check = new CoC7Check()
     check.difficulty = difficulty
@@ -667,13 +670,14 @@ export class CoC7Check {
       check.flatThresholdModifier = flatThresholdModifier
     if (displayName) check.displayName = displayName
     if (actorKey) check.actor = actorKey
-    if (check.actor) {
+    if (actorName) check.actorName = actorName
+    if (!isNaN(Number(rawValue))) check.rawValue = Number(rawValue)
+    if (check.actor && !check.actor.isDummy) {
       // TODO : Add check for validity of characteristic, attribute, skillId
       if (skill) check.skill = skill
       // TODO : try retrieve skill by name
       else if (characteristic) check.characteristic = characteristic
       else if (attribute) check.attribute = attribute
-      else check.rawValue = rawValue
     }
     return check
   }
@@ -1473,8 +1477,12 @@ export class CoC7Check {
     let speaker
     if (this.actor) {
       if (this.actor.isToken) speakerData.token = this.token.document
-      else speakerData.actor = this.actor
-      speaker = ChatMessage.getSpeaker(speakerData)
+      else if (this.actor.isDummy) {
+        if (this.actor.name) speaker = { alias: this.actor.name }
+      } else {
+        speakerData.actor = this.actor
+        speaker = ChatMessage.getSpeaker(speakerData)
+      }
     } else {
       speaker = ChatMessage.getSpeaker()
     }
