@@ -19,6 +19,90 @@ import { CoC7Hooks } from './hooks/index.js'
 import * as DiceBot from './dicebot.js'
 import '../styles/system/index.less'
 
+Hooks.on('renderSettingsConfig', (app, html, options) => {
+  const systemTab = $(app.form).find('.tab[data-tab=system]')
+  systemTab
+    .find('input[name=CoC7\\.pulpRules]')
+    .closest('div.form-group')
+    .before(
+      '<h2 class="setting-header">' +
+        game.i18n.localize('SETTINGS.TitleRules') +
+        '</h2>'
+    )
+  systemTab
+    .find('select[name=CoC7\\.initiativeRule]')
+    .closest('div.form-group')
+    .before(
+      '<h2 class="setting-header">' +
+        game.i18n.localize('SETTINGS.TitleInitiative') +
+        '</h2>'
+    )
+  systemTab
+    .find('input[name=CoC7\\.allowFlatDiceModifier]')
+    .closest('div.form-group')
+    .before(
+      '<h2 class="setting-header">' +
+        game.i18n.localize('SETTINGS.TitleRoll') +
+        '</h2>'
+    )
+  systemTab
+    .find('input[name=CoC7\\.displayActorOnCard]')
+    .closest('div.form-group')
+    .before(
+      '<h2 class="setting-header">' +
+        game.i18n.localize('SETTINGS.TitleChatCards') +
+        '</h2>'
+    )
+  systemTab
+    .find('input[name=CoC7\\.enableStatusIcons]')
+    .closest('div.form-group')
+    .before(
+      '<h2 class="setting-header">' +
+        game.i18n.localize('SETTINGS.TitleScene') +
+        '</h2>'
+    )
+  systemTab
+    .find('input[name=CoC7\\.displayPlayerNameOnSheet]')
+    .closest('div.form-group')
+    .before(
+      '<h2 class="setting-header">' +
+        game.i18n.localize('SETTINGS.TitleSheet') +
+        '</h2>'
+    )
+  systemTab
+    .find('input[name=CoC7\\.disregardUsePerRound]')
+    .closest('div.form-group')
+    .before(
+      '<h2 class="setting-header">' +
+        game.i18n.localize('SETTINGS.TitleWeapon') +
+        '</h2>'
+    )
+  systemTab
+    .find('input[name=CoC7\\.syncDice3d]')
+    .closest('div.form-group')
+    .before(
+      '<h2 class="setting-header">' +
+        game.i18n.localize('SETTINGS.TitleDiceSoNice') +
+        '</h2>'
+    )
+  systemTab
+    .find('input[name=CoC7\\.debugmode]')
+    .closest('div.form-group')
+    .before(
+      '<h2 class="setting-header">' +
+        game.i18n.localize('SETTINGS.TitleDeveloperDebug') +
+        '</h2>'
+    )
+  systemTab
+    .find('select[name=CoC7\\.boutOfMadnessSummaryTable]')
+    .closest('div.form-group')
+    .before(
+      '<h2 class="setting-header">' +
+        game.i18n.localize('SETTINGS.TitleRollTable') +
+        '</h2>'
+    )
+})
+
 Hooks.once('diceSoNiceReady', dice3d => {
   dice3d.addDicePreset(
     {
