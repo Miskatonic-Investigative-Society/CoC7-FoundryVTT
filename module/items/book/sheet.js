@@ -43,7 +43,7 @@ export class CoC7BookSheet extends ItemSheet {
     html.find('.spell-edit').click(event => this.item._editSpell(event))
     html.find('.spell-name').click(event => this._showSpellSummary(event))
 
-    html.find('[name=\'data.study.necessary\']').change((event) => {
+    html.find("[name='data.study.necessary']").change(event => {
       const value = parseInt(event.currentTarget.value)
       this.item._changeProgress('reset', value)
     })
@@ -74,7 +74,7 @@ export class CoC7BookSheet extends ItemSheet {
    * @param {jQuery} event
    * @returns {jQuery.Event}
    */
-  _setType(event) {
+  _setType (event) {
     event.preventDefault()
     event.stopPropagation()
     const toggleSwitch = $(event.currentTarget)
