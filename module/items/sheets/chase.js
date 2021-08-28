@@ -244,7 +244,8 @@ export class CoC7ChaseSheet extends ItemSheet {
     } else if (participant.speedCheck.score) {
       const rollData = {
         rawValue: participant.speedCheck.score,
-        displayName: participant.speedCheck.name
+        displayName: participant.speedCheck.name,
+        actorName: participant.name ? participant.name : undefined
       }
       if (participant.hasActor) rollData.actor = participant.actor.actorKey
       const roll = CoC7Check.create(rollData)
