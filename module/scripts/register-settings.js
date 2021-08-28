@@ -2,6 +2,73 @@
 import { CoC7DecaderDie } from '../apps/decader-die.js'
 
 export function registerSettings () {
+  /**
+   * Rules
+   */
+  game.settings.register('CoC7', 'pulpRules', {
+    name: 'SETTINGS.PulpRules',
+    hint: 'SETTINGS.PulpRulesHint',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
+  })
+  game.settings.register('CoC7', 'developmentRollForLuck', {
+    name: 'SETTINGS.developmentRollForLuck',
+    hint: 'SETTINGS.developmentRollForLuckHint',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
+  })
+  game.settings.register('CoC7', 'opposedRollTieBreaker', {
+    name: 'SETTINGS.OpposedRollTieBreaker',
+    hint: 'SETTINGS.OpposedRollTieBreakerHint',
+    scope: 'wolrd',
+    config: true,
+    default: false,
+    type: Boolean
+  })
+
+  /**
+   * Initiative
+   */
+  /** Set the initiative rule */
+  game.settings.register('CoC7', 'initiativeRule', {
+    name: 'SETTINGS.InitiativeRule',
+    hint: 'SETTINGS.InitiativeRuleHint',
+    scope: 'world',
+    config: true,
+    default: 'basic',
+    type: String,
+    choices: {
+      basic: 'SETTINGS.InitiativeRuleBasic',
+      optional: 'SETTINGS.InitiativeRuleOptional'
+    },
+    onChange: rule => _setInitiativeOptions(rule)
+  })
+  /** Set displaying dices for init roll */
+  game.settings.register('CoC7', 'displayInitDices', {
+    name: 'SETTINGS.displayInitDices',
+    hint: 'SETTINGS.displayInitDicesHint',
+    scope: 'world',
+    config: true,
+    default: true,
+    type: Boolean
+  })
+  /** Set displaying dices for init roll */
+  game.settings.register('CoC7', 'displayInitAsText', {
+    name: 'SETTINGS.displayInitAsText',
+    hint: 'SETTINGS.displayInitAsTextHint',
+    scope: 'world',
+    config: true,
+    default: true,
+    type: Boolean
+  })
+
+  /**
+   * Roll customisaions
+   */
   /** Allow usage of a flat dice modifier */
   game.settings.register('CoC7', 'allowFlatDiceModifier', {
     name: 'SETTINGS.AllowFlatDiceModifier',
@@ -32,6 +99,23 @@ export function registerSettings () {
       unknown: 'SETTINGS.CheckDifficultyUnknown'
     }
   })
+  game.settings.register('CoC7', 'selfRollWhisperTarget', {
+    name: 'SETTINGS.SelfRollWhisperTarget',
+    hint: 'SETTINGS.SelfRollWhisperTargetHint',
+    scope: 'world',
+    config: true,
+    default: 'everyone',
+    type: String,
+    choices: {
+      nobody: 'SETTINGS.DoNotAdvise',
+      owners: 'SETTINGS.AdviseOwnersOnly',
+      everyone: 'SETTINGS.AdviseAllPlayer'
+    }
+  })
+
+  /**
+   * Chat Cards
+   */
   /** Set the need to display actor image on chat cards */
   game.settings.register('CoC7', 'displayActorOnCard', {
     name: 'SETTINGS.DisplayActorOnCard',
@@ -48,31 +132,6 @@ export function registerSettings () {
     default: true,
     type: Boolean
   })
-  /** Set displaying dices for init roll */
-  game.settings.register('CoC7', 'displayInitAsText', {
-    name: 'SETTINGS.displayInitAsText',
-    hint: 'SETTINGS.displayInitAsTextHint',
-    scope: 'world',
-    config: true,
-    default: true,
-    type: Boolean
-  })
-  /** Set displaying dices for init roll */
-  game.settings.register('CoC7', 'displayInitDices', {
-    name: 'SETTINGS.displayInitDices',
-    hint: 'SETTINGS.displayInitDicesHint',
-    scope: 'world',
-    config: true,
-    default: true,
-    type: Boolean
-  })
-  game.settings.register('CoC7', 'displayPlayerNameOnSheet', {
-    name: 'SETTINGS.displayPlayerNameOnSheet',
-    scope: 'world',
-    config: true,
-    default: false,
-    type: Boolean
-  })
   game.settings.register('CoC7', 'displayResultType', {
     name: 'SETTINGS.DisplayResultType',
     scope: 'client',
@@ -80,22 +139,19 @@ export function registerSettings () {
     default: false,
     type: Boolean
   })
-  game.settings.register('CoC7', 'disregardUsePerRound', {
-    name: 'SETTINGS.DisregardUsePerRound',
-    hint: 'SETTINGS.DisregardUsePerRoundHint',
+  /** Set the use of token instead of portraits */
+  game.settings.register('CoC7', 'useToken', {
+    name: 'SETTINGS.UseToken',
+    hint: 'SETTINGS.UseTokenHint',
     scope: 'world',
     config: true,
     default: false,
     type: Boolean
   })
-  game.settings.register('CoC7', 'disregardAmmo', {
-    name: 'SETTINGS.DisregardAmmo',
-    hint: 'SETTINGS.DisregardAmmoHint',
-    scope: 'world',
-    config: true,
-    default: false,
-    type: Boolean
-  })
+
+  /**
+   * Scene Settings
+   */
   game.settings.register('CoC7', 'enableStatusIcons', {
     name: 'SETTINGS.EnableStatusIcons',
     hint: 'SETTINGS.EnableStatusIconsHint',
@@ -112,40 +168,13 @@ export function registerSettings () {
     default: false,
     type: Boolean
   })
-  /** Set the initiative rule */
-  game.settings.register('CoC7', 'initiativeRule', {
-    name: 'SETTINGS.InitiativeRule',
-    hint: 'SETTINGS.InitiativeRuleHint',
+
+  /**
+   * Sheet settings
+   */
+  game.settings.register('CoC7', 'displayPlayerNameOnSheet', {
+    name: 'SETTINGS.displayPlayerNameOnSheet',
     scope: 'world',
-    config: true,
-    default: 'basic',
-    type: String,
-    choices: {
-      basic: 'SETTINGS.InitiativeRuleBasic',
-      optional: 'SETTINGS.InitiativeRuleOptional'
-    },
-    onChange: rule => _setInitiativeOptions(rule)
-  })
-  game.settings.register('CoC7', 'developmentRollForLuck', {
-    name: 'SETTINGS.developmentRollForLuck',
-    hint: 'SETTINGS.developmentRollForLuckHint',
-    scope: 'world',
-    config: true,
-    default: false,
-    type: Boolean
-  })
-  game.settings.register('CoC7', 'oneBlockBackstory', {
-    name: 'SETTINGS.OneBlockBackStory',
-    hint: 'SETTINGS.OneBlockBackStoryHint',
-    scope: 'world',
-    config: true,
-    default: false,
-    type: Boolean
-  })
-  game.settings.register('CoC7', 'opposedRollTieBreaker', {
-    name: 'SETTINGS.OpposedRollTieBreaker',
-    hint: 'SETTINGS.OpposedRollTieBreakerHint',
-    scope: 'wolrd',
     config: true,
     default: false,
     type: Boolean
@@ -163,27 +192,6 @@ export function registerSettings () {
       never: 'SETTINGS.NeverEditable'
     }
   })
-  game.settings.register('CoC7', 'pulpRules', {
-    name: 'SETTINGS.PulpRules',
-    hint: 'SETTINGS.PulpRulesHint',
-    scope: 'world',
-    config: true,
-    default: false,
-    type: Boolean
-  })
-  game.settings.register('CoC7', 'selfRollWhisperTarget', {
-    name: 'SETTINGS.SelfRollWhisperTarget',
-    hint: 'SETTINGS.SelfRollWhisperTargetHint',
-    scope: 'world',
-    config: true,
-    default: 'everyone',
-    type: String,
-    choices: {
-      nobody: 'SETTINGS.DoNotAdvise',
-      owners: 'SETTINGS.AdviseOwnersOnly',
-      everyone: 'SETTINGS.AdviseAllPlayer'
-    }
-  })
   /** Allow player to modify status */
   game.settings.register('CoC7', 'statusPlayerEditable', {
     name: 'SETTINGS.StatusPlayerEditable',
@@ -193,46 +201,14 @@ export function registerSettings () {
     default: true,
     type: Boolean
   })
-  /** Set the use of token instead of portraits */
-  game.settings.register('CoC7', 'useToken', {
-    name: 'SETTINGS.UseToken',
-    hint: 'SETTINGS.UseTokenHint',
+  game.settings.register('CoC7', 'oneBlockBackstory', {
+    name: 'SETTINGS.OneBlockBackStory',
+    hint: 'SETTINGS.OneBlockBackStoryHint',
     scope: 'world',
     config: true,
     default: false,
     type: Boolean
   })
-  if (game.modules.get('dice-so-nice')?.active) {
-    game.settings.register('CoC7', 'syncDice3d', {
-      name: 'SETTINGS.SyncDice3D',
-      hint: 'SETTINGS.SyncDice3DHint',
-      scope: 'world',
-      config: true,
-      default: true,
-      type: Boolean
-    })
-    const [version] = game.modules.get('dice-so-nice')?.data.version.split('.')
-    if (!isNaN(Number(version)) && Number(version) >= 3) {
-      game.settings.register('CoC7', 'tenDieBonus', {
-        name: 'SETTINGS.TenDieBonus',
-        hint: 'SETTINGS.TenDieBonusHint',
-        scope: 'client',
-        config: true,
-        default: 'bronze',
-        type: String
-      })
-      game.settings.register('CoC7', 'tenDiePenalty', {
-        name: 'SETTINGS.TenDiePenalty',
-        hint: 'SETTINGS.TenDiePenaltyHint',
-        scope: 'client',
-        config: true,
-        default: 'bloodmoon',
-        type: String
-      })
-    }
-  }
-
-  /** System style settings */
   game.settings.register('CoC7', 'overrideSheetArtwork', {
     name: 'SETTINGS.OverrideSheetArtwork',
     hint: 'SETTINGS.OverrideSheetArtworkHint',
@@ -333,7 +309,63 @@ export function registerSettings () {
       type: Number
     })
   }
-  /** Developer and debug settings */
+
+  /**
+   * Weapons
+   */
+  game.settings.register('CoC7', 'disregardUsePerRound', {
+    name: 'SETTINGS.DisregardUsePerRound',
+    hint: 'SETTINGS.DisregardUsePerRoundHint',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
+  })
+  game.settings.register('CoC7', 'disregardAmmo', {
+    name: 'SETTINGS.DisregardAmmo',
+    hint: 'SETTINGS.DisregardAmmoHint',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
+  })
+
+  /**
+   * Dice So Nice
+   */
+  if (game.modules.get('dice-so-nice')?.active) {
+    game.settings.register('CoC7', 'syncDice3d', {
+      name: 'SETTINGS.SyncDice3D',
+      hint: 'SETTINGS.SyncDice3DHint',
+      scope: 'world',
+      config: true,
+      default: true,
+      type: Boolean
+    })
+    const [version] = game.modules.get('dice-so-nice')?.data.version.split('.')
+    if (!isNaN(Number(version)) && Number(version) >= 3) {
+      game.settings.register('CoC7', 'tenDieBonus', {
+        name: 'SETTINGS.TenDieBonus',
+        hint: 'SETTINGS.TenDieBonusHint',
+        scope: 'client',
+        config: true,
+        default: 'bronze',
+        type: String
+      })
+      game.settings.register('CoC7', 'tenDiePenalty', {
+        name: 'SETTINGS.TenDiePenalty',
+        hint: 'SETTINGS.TenDiePenaltyHint',
+        scope: 'client',
+        config: true,
+        default: 'bloodmoon',
+        type: String
+      })
+    }
+  }
+
+  /**
+   * Developer and debug settings
+   */
   game.settings.register('CoC7', 'debugmode', {
     name: 'SETTINGS.DebugMode',
     hint: 'SETTINGS.DebugModeHint',
@@ -342,7 +374,10 @@ export function registerSettings () {
     type: Boolean,
     default: false
   })
-  /** Other settings */
+
+  /**
+   * Other settings
+   */
   game.settings.register('CoC7', 'developmentEnabled', {
     name: 'Dev phased allowed',
     scope: 'world',
