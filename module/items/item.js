@@ -21,8 +21,6 @@ export class CoC7Item extends Item {
         data.img = 'systems/CoC7/assets/icons/running-solid.svg' //Change the icon for chase
       } else if (data.type === 'spell') {
         data.img = 'systems/CoC7/assets/icons/pentagram-rose.svg' //Change the icon for spell
-      } else if (data.type === 'vehicle') {
-        data.img = 'systems/CoC7/assets/icons/jeep.svg' //Change the icon for spell
       }
     }
     super(data, context)

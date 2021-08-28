@@ -72,6 +72,8 @@ export class CoCActor extends Actor {
         },
         { overwrite: false }
       )
+    } else if (data.type === 'vehicle') {
+      data.img = 'systems/CoC7/assets/icons/jeep.svg' // Change the icon for vehicle
     }
     return super.create(data, options)
   }
