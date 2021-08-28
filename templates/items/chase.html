@@ -18,47 +18,77 @@
         </header>
 
         <nav class="sheet-nav tabs" data-group="primary">
+			<a data-tab="participants"><div class="tab-name" ><span>{{localize 'CoC7.Participans'}}</span></div></a>
+			<a data-tab="setup"><div class="tab-name" ><span>{{localize 'CoC7.Setup'}}</span></div></a>
+
         </nav>
 
         <section class="sheet-body">
-            <div class="tab participants">
+            <div class="tab participants" data-group="primary" data-tab="participants">
                 <div class="participants-list">
                     {{#each participants as |p i|}}
                     <div class="participant" data-index={{i}}>
-                        <div class="p-side {{#if p.chaser}}chaser{{else}}prey{{/if}}">
-                            {{#if p.chaser}}
+                        <div class="p-side {{#if p.isChaser}}chaser{{else}}prey{{/if}}">
+                            {{#if p.isChaser}}
                                 <a><i class="game-icon game-icon-moon-claws"></i></a>
                             {{else}}
                                 <a><i class="fas fa-running"></i></a>
                             {{/if}}
                         </div>
-                        {{#if p.hasVehicle}}
-                            <div class="p-icon open-actor" data-actor-key="{{p.vehicle.actorKey}}">
-                                <a><img src="{{p.vehicle.img}}" title="{{p.vehicle.name}}"/></a>
-                            </div>
-                        {{else}}
-                            <div class="p-icon open-actor" data-actor-key="{{p.actor.actorKey}}">
-                                <a><img src="{{p.actor.img}}" title="{{p.actor.name}}"/></a>
-                            </div>
-                        {{/if}}
-                        <div class="p-expand"></div>
-                        <div class="p-name">{{p.name}}</div>
-                        <div class="p-movement">
-                            <input type='text' name="data.participants.{{i}}.mov" placeholder="MOV" value="{{p.mov}}"/>
+                        <div class="p-icon{{#if p.isActor}} open-actor{{/if}}" data-actor-key="{{p.key}}">
+                            <a><img src="{{p.icon}}" title="{{p.name}}"/></a>
                         </div>
-                        <div class="p-check">
-                            <datalist id="check-name-p{{i}}">
-                                {{#each p.check.options as |o|}}
+                        <div class="p-expand"></div>
+                        <div class="p-name">
+                            {{#if p.isActor}}
+                                {{p.name}}
+                            {{else}}
+                                <input type='text' name="data.participants.{{i}}.name" placeholder="Name" value="{{p.name}}"/>
+                            {{/if}}
+                        </div>
+                        <div class="p-movement">
+                            <input class='right-aligned' type='text' name="data.participants.{{i}}.mov" placeholder="MOV" value="{{p.mov}}"/>
+                        </div>
+                        <div class="p-speed-check">
+                            <datalist id="check-options-name-p{{i}}">
+                                {{#each p.speedCheck.options as |o|}}
                                     <option>{{o}}</option>
                                 {{/each}}
                             </datalist>
-                            <input type='text' name="data.participants.{{i}}.check.name" placeholder="check ref." value="{{p.check.name}}" list='check-name-p{{i}}' data-override='true'/>
+                            <input type='text' name="data.participants.{{i}}.speed-check.name" placeholder="check name" value="{{p.speedCheck.name}}" list='check-options-name-p{{i}}' data-override='true'/>
                         </div>
-                        <div class="p-score">{{p.check.score}}</div>
-                        <div class="p-modifier">+1</div>
-                        <div class="p-total">6</div>
+                        <div class="p-score">
+                            {{#if p.speedCheck.refSet}}
+                                <span>{{p.speedCheck.score}}</span>
+                            {{else}}
+                                <input class='right-aligned' type='text' name="data.participants.{{i}}.speedCheck.score" placeholder="%" value="{{p.speedCheck.score}}" />
+                            {{/if}}
+                        </div>
+                        <div class="p-roll {{p.speedCheck.cssClasses}}">
+                            {{#if p.speedCheck.rolled}}
+                                {{{p.speedCheck.inlineRoll}}}
+                            {{else}}
+                                <a class="roll-participant"><i class="game-icon game-icon-d10"></i></a>
+                            {{/if}}
+                        </div>
+                        <div class="p-adjust {{p.speedCheck.modifierCss}}">
+                            {{#if p.speedCheck.rolled}}
+                                {{#if p.speedCheck.hasModifier}}
+                                    <i class="game-icon game-icon-upgrade"></i>
+                                {{else}}
+                                    <i class="fas fa-equals"></i>
+                                {{/if}}
+                            {{/if}}
+                        </div>
+                        <div class="p-modified-mov {{p.speedCheck.modifierCss}} {{p.speedCheck.cssClasses}}">
+                            {{p.adjustedMov}}
+                        </div>
                         <div class="p-control">
-                            <a class="delete-participant"><i class="fas fa-times"></i></a>
+                            {{#if p.speedCheck.rolled}}
+                                <a class="reset-roll"><i class="fas fa-undo"></i></a>
+                            {{else}}
+                                <a class="delete-participant"><i class="fas fa-times"></i></a>
+                            {{/if}}
                         </div>
                     </div>
                     {{#if p.hasDriver}}
@@ -76,7 +106,17 @@
                     {{/each}}
                 </div>
                 <div class="new-participant">
+                    <div class="add-sign">
+                        <i class="fas fa-plus"></i>
+                    </div>
                 </div>
+            </div>
+            <div class="tab setup" data-group="primary" data-tab="setup">
+                <div class="track" style="height: 100px;overflow-x: scroll;background-attachment: local;background-image: linear-gradient(to right, #6fa26f , #ece857);">
+                    azertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbn
+                </div>
+
+
             </div>
         </section>
     </div>

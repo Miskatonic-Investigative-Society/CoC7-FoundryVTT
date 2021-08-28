@@ -606,6 +606,7 @@
     "chase": {
       "locations": {
         "total": 0,
+        "startingRange": 1,
         "list": []
       },
       "participants": []

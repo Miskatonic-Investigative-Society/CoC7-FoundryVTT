@@ -127,17 +127,21 @@ Hooks.on('ready', async () => {
 
   activateGlobalListener()
 
-  game.socket.on('system.CoC7', data => {
-    if (data.type === 'updateChar') {
-      CoC7Utilities.updateCharSheets()
-    }
+  game.socket.on('system.CoC7', async data => {
+    if (data.type == 'updateChar') CoC7Utilities.updateCharSheets()
 
     if (game.user.isGM) {
-      if (OpposedCheckCard.defaultConfig.type === data.type) {
+      if (OpposedCheckCard.defaultConfig.type == data.type) {
         OpposedCheckCard.dispatch(data)
       }
-      if (CombinedCheckCard.defaultConfig.type === data.type) {
+
+      if (CombinedCheckCard.defaultConfig.type == data.type) {
         CombinedCheckCard.dispatch(data)
+      }
+
+      if ('invoke' == data.type) {
+        const item = await fromUuid(data.item)
+        item[data.method](data.data)
       }
     }
   })
