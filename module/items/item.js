@@ -10,13 +10,19 @@ export class CoC7Item extends Item {
   constructor (data = {}, context = {}) {
     if (typeof data.img === 'undefined') {
       if (data.type === 'book') {
-        data.img = 'icons/svg/book.svg' // Change the icon for book
+        data.img = 'systems/CoC7/assets/icons/secret-book.svg' // Change the icon for book
       } else if (data.type === 'skill') {
         data.img = 'systems/CoC7/assets/icons/skills.svg' // Change the icon for skills
       } else if (data.type === 'status') {
         data.img = 'icons/svg/aura.svg' // Change the icon for status
       } else if (data.type === 'weapon') {
         data.img = 'icons/svg/sword.svg' // Change the icon for sword
+      } else if (data.type === 'chase') {
+        data.img = 'systems/CoC7/assets/icons/running-solid.svg' //Change the icon for chase
+      } else if (data.type === 'spell') {
+        data.img = 'systems/CoC7/assets/icons/pentagram-rose.svg' //Change the icon for spell
+      } else if (data.type === 'vehicle') {
+        data.img = 'systems/CoC7/assets/icons/jeep.svg' //Change the icon for spell
       }
     }
     super(data, context)
@@ -243,6 +249,11 @@ export class CoC7Item extends Item {
       return super.name
     }
     return `${this.data.name}`
+  }
+
+  async updateRoll (roll) {
+    if ('updateRoll' in this.sheet) return await this.sheet.updateRoll(roll)
+    return undefined
   }
 
   static getNameWithoutSpec (item) {
