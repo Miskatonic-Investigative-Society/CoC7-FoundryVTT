@@ -85,11 +85,19 @@ export class CoC7Book extends CoC7Item {
   }
 
   async listen (check) {
+
     Hooks.on('renderChatMessage', (data, html) => {
       if (data.id === check.referenceMessageId) {
-        html.find('.pass-check').click(event => {
-          console.log(event)
-        })
+        const rollResult = html.find('.roll-result')
+        if (rollResult.data('isSuccess'))
+        console.log(rollResult)
+        console.log(html)
+        if (rollResult.data('pushedRoll')) {
+          console.log(html.parent().parent().children('.chat-message'))
+
+          // console.log(html.parent().children())
+        }
+        console.log(rollResult)
       }
     })
   }
@@ -114,7 +122,7 @@ export class CoC7Book extends CoC7Item {
       if (check.passed) {
         console.log("!!!")
       } else {
-        this.listen(check.referenceMessageId)
+        await this.listen(check)
       }
     }
 
