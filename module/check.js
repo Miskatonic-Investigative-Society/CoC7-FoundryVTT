@@ -1787,13 +1787,13 @@ export class CoC7Check {
     if (!a.classList.contains('coc7-inline-check')) return
     if (a.classList.contains('expanded')) return
 
-    if (check.standby) return
-
     // Create a new tooltip
     const check = Object.assign(
       new CoC7Check(),
       JSON.parse(unescape(a.dataset.roll))
     ) // TODO : find stringify unescape !! 20210205
+    if (check.standby) return
+
     const tip = document.createElement('div')
     tip.innerHTML = await check.rollToolTip
 
