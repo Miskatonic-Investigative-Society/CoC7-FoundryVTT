@@ -1556,7 +1556,7 @@ export class CoC7Check {
    *
    * @param {*} makePublic  Will change the roll mode to public
    */
-  async updateChatCard (makePublic = false) {
+  async updateChatCard ({ makePublic = false } = {}) {
     if (makePublic) this.rollMode = false // reset roll mode
     const template = 'systems/CoC7/templates/chat/roll-result.html'
     const html = await renderTemplate(template, this)
