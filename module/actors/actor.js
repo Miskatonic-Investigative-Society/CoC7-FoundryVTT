@@ -2623,7 +2623,7 @@ export class CoCActor extends Actor {
           name.toLocaleLowerCase().replace(/\s/g, '') ||
           s.sName.toLocaleLowerCase().replace(/\s/g, '') ===
             name.toLocaleLowerCase().replace(/\s/g, '') ||
-          s.sName.toLocaleLowerCase().replace(/\s/g, '') ==
+          s.sName.toLocaleLowerCase().replace(/\s/g, '') ===
             shortName?.toLocaleLowerCase().replace(/\s/g, ''))
       )
     })

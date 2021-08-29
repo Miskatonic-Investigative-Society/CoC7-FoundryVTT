@@ -1,10 +1,12 @@
+/* global DragDrop, duplicate, expandObject, flattenObject, FormDataExtended, game, getType, ItemSheet, mergeObject */
+
 import { CoC7Chat } from '../../chat.js'
 import { chatHelper } from '../../chat/helper.js'
 import { CoC7Check } from '../../check.js'
 
 export class CoC7ChaseSheet extends ItemSheet {
   // constructor( ...args) {
-  // 	super( ...args);
+  //  super( ...args);
   // }
 
   /**
@@ -39,7 +41,9 @@ export class CoC7ChaseSheet extends ItemSheet {
     return 'systems/CoC7/templates/items/chase.html'
   }
 
-  static type = 'coc7ChaseSheet'
+  static get type () {
+    return 'coc7ChaseSheet'
+  }
 
   /** @override */
   getData (options = {}) {
@@ -47,7 +51,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 
     /** MODIF: 0.8.x **/
     const itemData = data.data
-    data.data = itemData.data //MODIF: 0.8.x data.data
+    data.data = itemData.data // MODIF: 0.8.x data.data
     /*****************/
 
     data.participants = []
@@ -156,22 +160,22 @@ export class CoC7ChaseSheet extends ItemSheet {
 
   /** @override */
   // async _onSubmit(...args) {
-  // 	await super._onSubmit(...args);
+  //  await super._onSubmit(...args);
   // }
 
   async _updateObject (event, formData) {
     const target = event.currentTarget
-    const override = 'true' === target?.dataset?.override
+    const override = target?.dataset?.override === 'true'
     if (override) {
       const [, type, sIndex, subType, data] = target.name.split('.')
       const index = Number(sIndex)
       if (
-        'participants' === type &&
+        type === 'participants' &&
         !isNaN(index) &&
-        'speed-check' === subType
+        subType === 'speed-check'
       ) {
-        if ('name' === data) {
-          //Changing name will remove all other ref !
+        if (data === 'name') {
+          // Changing name will remove all other ref !
           const participants = this.item.data.data.participants
             ? duplicate(this.item.data.data.participants)
             : []
@@ -322,13 +326,13 @@ export class CoC7ChaseSheet extends ItemSheet {
     const actorKey =
       data.sceneId && data.tokenId
         ? `${data.sceneId}.${data.tokenId}`
-        : 'Actor' == data.type
+        : data.type === 'Actor'
         ? data.id
         : data.actorId || data.actorKey
     const participant = {}
     const actor = chatHelper.getActorFromKey(actorKey)
     if (actor) {
-      if ('vehicle' === actor.data.type) participant.vehicleKey = actorKey
+      if (actor.data.type === 'vehicle') participant.vehicleKey = actorKey
       else participant.actorKey = actorKey
     }
 
@@ -375,12 +379,12 @@ export class CoC7ChaseSheet extends ItemSheet {
     const participant = {}
     const actor = chatHelper.getActorFromKey(actorKey)
     if (actor) {
-      if ('vehicle' === actor.data.type) participant.vehicleKey = actorKey
+      if (actor.data.type === 'vehicle') participant.vehicleKey = actorKey
       else participant.actorKey = actorKey
     }
 
     // const participant = {
-    // 	actorKey : (data.sceneId && data.tokenId)?`${data.sceneId}.${data.tokenId}`:data.actorId||data.actorKey||data.id
+    //  actorKey : (data.sceneId && data.tokenId)?`${data.sceneId}.${data.tokenId}`:data.actorId||data.actorKey||data.id
     // };
     // const actor = chatHelper.getActorFromKey( participant.actorKey);
     // if( !actor) delete participant.actorKey;
@@ -389,16 +393,14 @@ export class CoC7ChaseSheet extends ItemSheet {
       case 'actor':
         break
       case 'item':
-        {
-          if (data.id) {
-            const item = game.items.get(data.id)
-            if ('skill' != item?.data?.type) return
-          }
+        if (data.id) {
+          const item = game.items.get(data.id)
+          if (item?.data?.type !== 'skill') return
+        }
 
-          participant.speedCheck = {
-            id: data.data?._id || data.id,
-            type: 'item'
-          }
+        participant.speedCheck = {
+          id: data.data?._id || data.id,
+          type: 'item'
         }
         break
       case 'characteristic':
@@ -431,7 +433,7 @@ export class CoC7ChaseSheet extends ItemSheet {
       const participants = this.item.data.data.participants
         ? duplicate(this.item.data.data.participants)
         : []
-      const index = participants.findIndex(p => p.rollUuid == roll.uuid)
+      const index = participants.findIndex(p => p.rollUuid === roll.uuid)
       if (index >= 0) {
         participants[index].speedCheck.rollDataString = roll.JSONRollString
         await this.item.update({ 'data.participants': participants })
@@ -451,23 +453,17 @@ export class CoC7ChaseSheet extends ItemSheet {
 export function clean (obj) {
   for (const propName in obj) {
     const tp = getType(obj[propName])
-    if ('Object' === tp) {
+    if (tp === 'Object') {
       obj[propName] = clean(obj[propName])
     }
 
-    if ('Object' === tp && !Object.entries(obj[propName]).length)
+    if (tp === 'Object' && !Object.entries(obj[propName]).length) {
       obj[propName] = null
-    //delete obj[propName]
-    /*if (obj[propName] === null || obj[propName] === undefined) 
-			delete obj[propName];
-		else*/ else if (
-      'string' === tp &&
-      !obj[propName].length
-    )
+    } else if (tp === 'string' && !obj[propName].length) {
       obj[propName] = null
-    //delete obj[propName]
-    else if ('string' === tp && !isNaN(Number(obj[propName])))
+    } else if (tp === 'string' && !isNaN(Number(obj[propName]))) {
       obj[propName] = Number(obj[propName])
+    }
   }
   return obj
 }
@@ -478,8 +474,9 @@ export class _participant {
   }
 
   get actor () {
-    if (!this._actor)
+    if (!this._actor) {
       this._actor = chatHelper.getActorFromKey(this.data.actorKey)
+    }
     return this._actor
   }
 
@@ -494,22 +491,25 @@ export class _participant {
   }
 
   get icon () {
-    if (!this.isActor)
+    if (!this.isActor) {
       return 'systems/CoC7/assets/icons/question-circle-regular.svg'
+    }
     if (this.hasVehicle) return this.vehicle.img
     if (this.hasActor) return this.actor.img
     return undefined
   }
 
   get driver () {
-    if (!this._driver)
+    if (!this._driver) {
       this._driver = chatHelper.getActorFromKey(this.data.actorKey)
+    }
     return this._driver
   }
 
   get vehicle () {
-    if (this.data.vehicleKey)
+    if (this.data.vehicleKey) {
       this._vehicle = chatHelper.getActorFromKey(this.data.vehicleKey)
+    }
     return this._vehicle
   }
 
@@ -566,7 +566,7 @@ export class _participant {
   }
 
   get adjustedMov () {
-    if (undefined == this.mov) return undefined
+    if (typeof this.mov === 'undefined') return undefined
     if (isNaN(Number(this.mov))) return undefined
     return Number(this.mov) + this.movAdjustment
   }
@@ -586,19 +586,19 @@ export class _participant {
   }
 
   // get options(){
-  // 	return {
-  // 		exclude: [],
-  // 		excludeStartWith: '_'
-  // 	};
+  //  return {
+  //    exclude: [],
+  //    excludeStartWith: '_'
+  //  };
   // }
 
   // get dataString(){
-  // 	return JSON.stringify(this, (key,value)=>{
-  // 		if( null === value) return undefined;
-  // 		if( this.options.exclude?.includes(key)) return undefined;
-  // 		if( key.startsWith(this.options.excludeStartWith)) return undefined;
-  // 		return value;
-  // 	});
+  //  return JSON.stringify(this, (key,value)=>{
+  //    if( null === value) return undefined;
+  //    if( this.options.exclude?.includes(key)) return undefined;
+  //    if( key.startsWith(this.options.excludeStartWith)) return undefined;
+  //    return value;
+  //  });
   // }
 
   get speedCheck () {
@@ -614,14 +614,15 @@ export class _participant {
           check.inlineRoll = check.roll.inlineCheck.outerHTML
           check.cssClasses += 'rolled'
           if (!check.roll.standby) {
-            if (check.roll.successLevel >= CoC7Check.successLevel.extreme)
+            if (check.roll.successLevel >= CoC7Check.successLevel.extreme) {
               check.modifierCss = 'upgrade'
-            else if (check.roll.failed) check.modifierCss = 'downgrade'
+            } else if (check.roll.failed) check.modifierCss = 'downgrade'
             if (
               check.roll.successLevel >= CoC7Check.successLevel.extreme ||
               check.roll.failed
-            )
+            ) {
               check.hasModifier = true
+            }
           }
         }
       }
@@ -650,7 +651,7 @@ export class _participant {
         }
 
         if (item) {
-          if ('item' == item.type && 'skill' == item.value.data?.type) {
+          if (item.type === 'item' && item.value.data?.type === 'skill') {
             check.ref = item.value
             check.name = item.value.name
             check.type = 'skill'
@@ -658,7 +659,7 @@ export class _participant {
             check.refSet = true
             check.score = item.value.value
           }
-          if ('characteristic' == item.type) {
+          if (item.type === 'characteristic') {
             check.ref = item.value
             check.name = item.value.label
             check.type = 'characteristic'
@@ -666,7 +667,7 @@ export class _participant {
             check.refSet = true
             check.score = item.value.value
           }
-          if ('attribute' == item.type) {
+          if (item.type === 'attribute') {
             check.ref = item.value
             check.name = item.value.label
             check.type = 'attribute'
@@ -678,7 +679,7 @@ export class _participant {
       } else if (this.data.speedCheck?.name) {
         const item = this.actor.find(this.data.speedCheck.name)
         if (item) {
-          if ('item' == item.type && 'skill' == item.value.data?.type) {
+          if (item.type === 'item' && item.value.data?.type === 'skill') {
             check.ref = item.value
             check.name = item.value.name
             check.type = 'skill'
@@ -686,7 +687,7 @@ export class _participant {
             check.refSet = true
             check.score = item.value.value
           }
-          if ('characteristic' == item.type) {
+          if (item.type === 'characteristic') {
             check.ref = item.value
             check.name = item.value.label
             check.type = 'characteristic'
@@ -694,7 +695,7 @@ export class _participant {
             check.refSet = true
             check.score = item.value.value
           }
-          if ('attribute' == item.type) {
+          if (item.type === 'attribute') {
             check.ref = item.value
             check.name = item.value.label
             check.type = 'attribute'
@@ -707,7 +708,7 @@ export class _participant {
     } else if (this.data.speedCheck?.id) {
       const item = game.items.get(this.data.speedCheck.id)
       if (item) {
-        if ('skill' == item.data?.type) {
+        if (item.data?.type === 'skill') {
           check.ref = item
           check.name = item.name
           check.type = 'skill'
