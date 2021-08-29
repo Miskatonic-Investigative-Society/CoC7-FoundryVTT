@@ -6,6 +6,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "format": "prettier-standard --format --changed",
+    "lint": "prettier-standard --lint --changed",
     "prepare": "husky install",
     "watch": "webpack --mode development",
     "translations": "node generate-translations.js"
@@ -32,6 +33,7 @@
     "less-loader": "^10.0.1",
     "mini-css-extract-plugin": "^2.2.0",
     "prettier-standard": "^16.4.1",
+    "standard": "^16.0.3",
     "terser-webpack-plugin": "^5.1.4",
     "thread-loader": "^3.0.4",
     "webpack": "^5.50.0",

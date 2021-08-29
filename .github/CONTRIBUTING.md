@@ -77,7 +77,7 @@ When prompted, enter your Github credentials.
 
 ### Initial Setup.
 
-Preferably, open your brand new local repository in the Integrated Development Environment (IDE) of your choice. We recommend [Visual Studio Code](https://code.visualstudio.com/download).
+Preferably, open your brand new local repository in the Integrated Development Environment (IDE) of your choice. We recommend [Visual Studio Code](#Visual-Studio-Code).
 
 Still in the terminal, install the project dependencies running: `npm install`
 
@@ -122,3 +122,15 @@ This way, Webpack and other dependencies will know whenever you make any relevan
 ### Your First Code Contribution.
 
 Unsure where to begin contributing? You can start by looking through these `beginner` and `help-wanted` issues!
+
+## IDE Configuration
+
+### Visual Studio Code
+
+Install [Visual Studio Code](https://code.visualstudio.com/download).
+
+Install extension [standard.vscode-standard](https://marketplace.visualstudio.com/items?itemName=standard.vscode-standard).
+
+Configure the extension Tick `Standard: Auto Fix On Save`
+
+Before committing your code run `npm run format`
