@@ -1556,7 +1556,7 @@ export class CoC7Check {
    *
    * @param {*} makePublic  Will change the roll mode to public
    */
-  async updateChatCard ({ makePublic = false } = {}) {
+  async updateChatCard ({ makePublic = false, forceRoll = false } = {}) {
     if (makePublic) this.rollMode = false // reset roll mode
     const template = 'systems/CoC7/templates/chat/roll-result.html'
     const html = await renderTemplate(template, this)
@@ -1587,6 +1587,10 @@ export class CoC7Check {
     }
 
     ChatMessage.applyRollMode(chatData)
+
+    if (forceRoll && this.dice?.roll) {
+      await CoC7Dice.showRollDice3d(this.dice.roll)
+    }
 
     const msg = await message.update(chatData)
     await ui.chat.updateMessage(msg, false)

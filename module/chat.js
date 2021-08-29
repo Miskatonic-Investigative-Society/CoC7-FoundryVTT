@@ -1027,7 +1027,7 @@ export class CoC7Chat {
         const check = await CoC7Check.getFromCard(card)
         check.standby = false
         check._perform()
-        check.updateChatCard()
+        check.updateChatCard({ forceRoll: true })
         break
       }
 
