@@ -54,7 +54,8 @@ export class CoC7BookSheet extends ItemSheet {
       this.item._changeProgress('decrease')
     })
 
-    html.find('#attempt-initial-reading').click(() => {
+    html.find('#attempt-initial-reading').click((event) => {
+      event.preventDefault()
       this.item._attemptInitialReading()
     })
 

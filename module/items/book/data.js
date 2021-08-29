@@ -97,19 +97,15 @@ export class CoC7Book extends CoC7Item {
     Hooks.on('renderChatMessage', (data, html) => {
       if (data.id === check.referenceMessageId) {
         const rollResult = html.find('.roll-result')
-        if (rollResult.data('isSuccess')) console.log(rollResult)
-        console.log(html)
-        if (rollResult.data('pushedRoll')) {
-          console.log(
-            html
-              .parent()
-              .parent()
-              .children('.chat-message')
-          )
-
-          // console.log(html.parent().children())
-        }
         console.log(rollResult)
+        if (rollResult.data('isSuccess')) console.log(rollResult)
+        if (rollResult.data('pushedRoll')) {
+          this.listen('pushed')
+        }
+      }
+      if (check === 'pushed') {
+        const pushedResult = html.find('.roll-result')
+
       }
     })
   }
@@ -130,7 +126,7 @@ export class CoC7Book extends CoC7Item {
     } else {
       const check = new CoC7Check()
       check.actor = this.actor
-      check.skill = skill[0]
+      check.skill = skill[0].id
       check.difficulty = difficulty
       check.flavor = `Attempt to read <i>${this.name}</i> (${language}), ${this.data.data.difficultyLevel} difficulty.`
       check.roll()

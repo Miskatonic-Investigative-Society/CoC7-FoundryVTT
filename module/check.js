@@ -1282,7 +1282,8 @@ export class CoC7Check {
     }
 
     if (this.pushing) {
-      flavor = game.i18n.format('CoC7.Pushing') + flavor
+      console.log(flavor)
+      flavor = `${game.i18n.format('CoC7.Pushing')} ${flavor}`
     }
 
     return flavor
