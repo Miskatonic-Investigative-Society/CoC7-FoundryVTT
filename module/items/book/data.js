@@ -105,7 +105,6 @@ export class CoC7Book extends CoC7Item {
       }
       if (check === 'pushed') {
         const pushedResult = html.find('.roll-result')
-
       }
     })
   }
