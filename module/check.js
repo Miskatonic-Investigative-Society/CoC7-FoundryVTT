@@ -1420,7 +1420,7 @@ export class CoC7Check {
     if (this.rollMode === 'blindroll') chatData.blind = true
 
     // ChatMessage.applyRollMode( chatData, this.rollMode);
-    if (this.dice?.roll) {
+    if (this.dice?.roll && !this.dice?.hideDice) {
       chatData.roll = this.dice.roll
       chatData.type = CONST.CHAT_MESSAGE_TYPES.ROLL
       chatData.rollMode = this.isBlind ? 'blindroll' : this.rollMode
@@ -1454,6 +1454,12 @@ export class CoC7Check {
     }
 
     const chatData = { flavor: this.flavor, content: newContent }
+    if (CONST.CHAT_MESSAGE_TYPES.ROLL == message.data.type) {
+      if (message.data.whisper?.length)
+        chatData.type = CONST.CHAT_MESSAGE_TYPES.WHISPER
+      else chatData.type = CONST.CHAT_MESSAGE_TYPES.OTHER
+    }
+
     if (makePublic) {
       chatData.whisper = []
       chatData.blind = false
