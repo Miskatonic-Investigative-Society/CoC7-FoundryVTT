@@ -69,6 +69,15 @@ export function registerSettings () {
   /**
    * Roll customisaions
    */
+  /** Standby rolls made by GM from player sheet */
+  game.settings.register('CoC7', 'stanbyGMRolls', {
+    name: 'SETTINGS.StanbyGMRolls',
+    hint: 'SETTINGS.StanbyGMRollsHint',
+    scope: 'world',
+    config: true,
+    default: true,
+    type: Boolean
+  })
   /** Allow usage of a flat dice modifier */
   game.settings.register('CoC7', 'allowFlatDiceModifier', {
     name: 'SETTINGS.AllowFlatDiceModifier',
