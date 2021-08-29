@@ -1510,6 +1510,10 @@ export class CoC7ActorSheet extends ActorSheet {
     check.actor = !tokenKey ? actorId : tokenKey
     check.flatDiceModifier = flatDiceModifier
     check.flatThresholdModifier = flatThresholdModifier
+    check.standby =
+      game.settings.get('CoC7', 'stanbyGMRolls') &&
+      game.user.isGM &&
+      this.actor.hasPlayerOwner
     check.rollCharacteristic(characteristic)
     check.toMessage()
   }

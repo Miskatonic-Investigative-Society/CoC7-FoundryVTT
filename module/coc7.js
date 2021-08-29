@@ -38,7 +38,7 @@ Hooks.on('renderSettingsConfig', (app, html, options) => {
         '</h2>'
     )
   systemTab
-    .find('input[name=CoC7\\.allowFlatDiceModifier]')
+    .find('input[name=CoC7\\.stanbyGMRolls]')
     .closest('div.form-group')
     .before(
       '<h2 class="setting-header">' +
