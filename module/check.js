@@ -37,6 +37,8 @@ export class CoC7Check {
     }
   }
 
+  static cardType = 'rollCard'
+
   static get difficultyLevel () {
     return {
       unknown: -1,
@@ -91,7 +93,7 @@ export class CoC7Check {
   }
 
   get rawValue () {
-    if (!this.actor || !this.actor.id) return undefined
+    // if (!this.actor || !this.actor.id) return undefined
     if (!this._rawValue) {
       if (this.characteristic) {
         this.rawValue = this.actor.data.data.characteristics[
@@ -120,7 +122,28 @@ export class CoC7Check {
     this._rawValue = x
   }
 
+  set uuid (x) {
+    this._uuid = x
+  }
+
+  get uuid () {
+    if (!this._uuid) this._uuid = foundry.utils.randomID(16)
+    return this._uuid
+  }
+
+  get hasCard () {
+    const chatCard = ui.chat.collection.filter(message => {
+      return (
+        this.uuid == message.getFlag('CoC7', 'uuid') &&
+        CoC7Check.cardType == message.getFlag('CoC7', 'type')
+      )
+    })
+    if (chatCard.length > 0) return true
+    return false
+  }
+
   get rawValueString () {
+    if (!this._rawValue) return undefined
     if (
       this.flatThresholdModifier &&
       game.settings.get('CoC7', 'allowFlatThresholdModifier')
@@ -202,6 +225,7 @@ export class CoC7Check {
   }
 
   get modifiedResult () {
+    if (this.standby) return undefined
     if (typeof this._modifiedResult !== 'undefined') return this._modifiedResult
     if (this.flatDiceModifier) {
       const modified = this.dices.total + this.flatDiceModifier
@@ -223,25 +247,30 @@ export class CoC7Check {
   }
 
   get isFumble () {
+    if (this.standby) return undefined
     if (this.isSimpleRoll) return undefined
     return this.modifiedResult >= this.fumbleThreshold
   }
 
   get isCritical () {
+    if (this.standby) return undefined
     return this.modifiedResult === 1
   }
 
   get isExtremeSuccess () {
+    if (this.standby) return undefined
     return this.successLevel >= CoC7Check.successLevel.extreme
   }
 
   get passed () {
+    if (this.standby) return undefined
     if (this.isSimpleRoll) return undefined
     if (this.luckSpent) return this.difficulty <= this.successLevel
     return this.succesThreshold >= this.modifiedResult || this.isCritical
   }
 
   get failed () {
+    if (this.standby) return undefined
     if (this.isSimpleRoll) return undefined
     return !this.passed
   }
@@ -510,6 +539,8 @@ export class CoC7Check {
       if (this.actorId) this._actor = chatHelper.getActorFromKey(this.actorId) // REFACTORING (2)
       if (!this._actor) {
         return {
+          isDummy: true,
+          name: this.actorName ? this.actorName : undefined,
           id: undefined,
           img: 'systems/CoC7/assets/icons/question-circle-regular.svg',
           portrait: 'systems/CoC7/assets/icons/question-circle-regular.svg'
@@ -576,6 +607,10 @@ export class CoC7Check {
     return this.getLinkElement().outerHTML
   }
 
+  get displayActorOnCard () {
+    return game.settings.get('CoC7', 'displayActorOnCard')
+  }
+
   getLinkElement (classes = null) {
     const data = {
       cls: ['coc7-link', 'coc7-roll'].concat(classes),
@@ -611,28 +646,61 @@ export class CoC7Check {
   roll (diceMod = null, difficulty = null) {
     if (diceMod) this.diceModifier = diceMod
     if (difficulty) this.difficulty = difficulty
-    this._perform()
+    if (!this.standby) this._perform()
+  }
+
+  static create ({
+    difficulty = CoC7Check.difficultyLevel.regular,
+    diceModifier = null,
+    actorKey = null,
+    characteristic = null,
+    attribute = null,
+    rawValue = 0,
+    skill = null,
+    flatDiceModifier = 0,
+    flatThresholdModifier = 0,
+    displayName = null,
+    actorName = null
+  } = {}) {
+    const check = new CoC7Check()
+    check.difficulty = difficulty
+    if (diceModifier) check.diceModifier = diceModifier
+    if (flatDiceModifier) check.flatDiceModifier = flatDiceModifier
+    if (flatThresholdModifier)
+      check.flatThresholdModifier = flatThresholdModifier
+    if (displayName) check.displayName = displayName
+    if (actorKey) check.actor = actorKey
+    if (actorName) check.actorName = actorName
+    if (!isNaN(Number(rawValue))) check.rawValue = Number(rawValue)
+    if (check.actor && !check.actor.isDummy) {
+      // TODO : Add check for validity of characteristic, attribute, skillId
+      if (skill) check.skill = skill
+      // TODO : try retrieve skill by name
+      else if (characteristic) check.characteristic = characteristic
+      else if (attribute) check.attribute = attribute
+    }
+    return check
   }
 
   rollCharacteristic (char, diceMod = null, difficulty = null) {
     if (diceMod) this.diceModifier = diceMod
     if (difficulty) this.difficulty = difficulty
     this.characteristic = char
-    this._perform()
+    if (!this.standby) this._perform()
   }
 
   rollAttribute (attrib, diceMod = null, difficulty = null) {
     if (diceMod) this.diceModifier = diceMod
     if (difficulty) this.difficulty = difficulty
     this.attribute = attrib
-    this._perform()
+    if (!this.standby) this._perform()
   }
 
   rollValue (val, diceMod = null, difficulty = null) {
     if (diceMod) this.diceModifier = diceMod
     if (difficulty) this.difficulty = difficulty
     this.rawValue = val
-    this._perform()
+    if (!this.standby) this._perform()
   }
 
   async _perform (options = {}) {
@@ -910,6 +978,14 @@ export class CoC7Check {
       !this.isUnknown
     ) {
       this.flagForDevelopement()
+    }
+
+    if (this.parent) {
+      const parent = await fromUuid(this.parent)
+      if (parent && 'updateRoll' in parent) {
+        await parent.updateRoll(this.JSONRollString)
+        // ui.notifications.info( `Roll ${this.uuid} depends of ${this.parent}`)
+      }
     }
   }
 
@@ -1233,6 +1309,16 @@ export class CoC7Check {
     this._flavor = x
   }
 
+  set parent (x) {
+    if (!this.uuid) this.uuid = foundry.utils.randomID(16)
+    this.parentUuid = x
+  }
+
+  get parent () {
+    if (!this.parentUuid) return undefined
+    return this.parentUuid
+  }
+
   get flavor () {
     if (this._flavor) return this._flavor
     let flavor = ''
@@ -1243,16 +1329,14 @@ export class CoC7Check {
           value: this.rawValueString,
           difficulty: this.difficultyString
         })
-      }
-      if (this.item) {
+      } else if (this.item) {
         flavor = game.i18n.format('CoC7.ItemCheckResult', {
           item: this.item.name,
           skill: this.skill.name,
           value: this.rawValueString,
           difficulty: this.difficultyString
         })
-      }
-      if (this.characteristic) {
+      } else if (this.characteristic) {
         flavor = game.i18n.format('CoC7.CheckResult', {
           name: game.i18n.format(
             this.actor.data.data.characteristics[this.characteristic].label
@@ -1260,12 +1344,17 @@ export class CoC7Check {
           value: this.rawValueString,
           difficulty: this.difficultyString
         })
-      }
-      if (this.attribute) {
+      } else if (this.attribute) {
         flavor = game.i18n.format('CoC7.CheckResult', {
           name: game.i18n.format(
             `CoC7.${this.actor.data.data.attribs[this.attribute].label}`
           ),
+          value: this.rawValueString,
+          difficulty: this.difficultyString
+        })
+      } else if (this.displayName) {
+        flavor = game.i18n.format('CoC7.CheckResult', {
+          name: this.displayName,
           value: this.rawValueString,
           difficulty: this.difficultyString
         })
@@ -1274,10 +1363,17 @@ export class CoC7Check {
 
     if (!flavor) {
       if (this.rawValue) {
-        flavor = game.i18n.format('CoC7.CheckRawValue', {
-          rawvalue: this.rawValue,
-          difficulty: this.difficultyString
-        })
+        if (this.displayName) {
+          flavor = game.i18n.format('CoC7.CheckResult', {
+            name: this.displayName,
+            value: this.rawValueString,
+            difficulty: this.difficultyString
+          })
+        } else
+          flavor = game.i18n.format('CoC7.CheckRawValue', {
+            rawvalue: this.rawValue,
+            difficulty: this.difficultyString
+          })
       }
     }
 
@@ -1336,6 +1432,20 @@ export class CoC7Check {
         ) + ` (${this.skill.value}%)`
       )
     }
+    if (this.displayName) {
+      return (
+        game.i18n.format(
+          `CoC7.LinkCheck${
+            this.difficulty === CoC7Check.difficultyLevel.regular ? '' : 'Diff'
+          }${!this.diceModifier ? '' : 'Modif'}`,
+          {
+            difficulty: this.difficultyString,
+            modifier: this.diceModifier,
+            name: this.displayName
+          }
+        ) + ` (${this.rawValueString}%)`
+      )
+    }
     return null
   }
 
@@ -1366,9 +1476,13 @@ export class CoC7Check {
     const speakerData = {}
     let speaker
     if (this.actor) {
-      if (this.token) speakerData.token = this.token.document
-      else speakerData.actor = this.actor
-      speaker = ChatMessage.getSpeaker(speakerData)
+      if (this.actor.isToken) speakerData.token = this.token.document
+      else if (this.actor.isDummy) {
+        if (this.actor.name) speaker = { alias: this.actor.name }
+      } else {
+        speakerData.actor = this.actor
+        speaker = ChatMessage.getSpeaker(speakerData)
+      }
     } else {
       speaker = ChatMessage.getSpeaker()
     }
@@ -1379,8 +1493,15 @@ export class CoC7Check {
       user: user.id,
       speaker: speaker,
       flavor: this.flavor,
-      content: html
+      content: html,
+      flags: {
+        CoC7: {
+          type: CoC7Check.cardType
+        }
+      }
     }
+
+    if (this.uuid) chatData.flags.CoC7.uuid = this.uuid
 
     if (this.rollMode === 'selfroll') {
       if (game.user.isGM) {
@@ -1435,7 +1556,7 @@ export class CoC7Check {
    *
    * @param {*} makePublic  Will change the roll mode to public
    */
-  async updateChatCard (makePublic = false) {
+  async updateChatCard ({ makePublic = false, forceRoll = false } = {}) {
     if (makePublic) this.rollMode = false // reset roll mode
     const template = 'systems/CoC7/templates/chat/roll-result.html'
     const html = await renderTemplate(template, this)
@@ -1467,6 +1588,10 @@ export class CoC7Check {
 
     ChatMessage.applyRollMode(chatData)
 
+    if (forceRoll && this.dice?.roll) {
+      await CoC7Dice.showRollDice3d(this.dice.roll)
+    }
+
     const msg = await message.update(chatData)
     await ui.chat.updateMessage(msg, false)
     return msg
@@ -1495,6 +1620,7 @@ export class CoC7Check {
     check.updateChatCard()
   }
 
+  // OBSOLETE !
   async shortResult (details = false) {
     const template = 'systems/CoC7/templates/chat/roll.html'
     this.details = details || false
@@ -1517,11 +1643,13 @@ export class CoC7Check {
     a.classList.add(...this.cssClassList)
     a.title = this.tooltipHeader
     a.dataset.roll = escape(this.JSONRollString) // TODO!IMPORTANT!!!
-    a.innerHTML = `<i class="game-icon game-icon-d10"></i> ${this.modifiedResult}`
+    a.innerHTML = `<i class="game-icon game-icon-d10"></i> ${this
+      .modifiedResult || '??'}`
     return a
   }
 
   get rollToolTip () {
+    if (this.standby) return undefined
     const parts = []
     const tens = this.dices.tens.map(r => {
       return {
@@ -1676,6 +1804,8 @@ export class CoC7Check {
       new CoC7Check(),
       JSON.parse(unescape(a.dataset.roll))
     ) // TODO : find stringify unescape !! 20210205
+    if (check.standby) return
+
     const tip = document.createElement('div')
     tip.innerHTML = await check.rollToolTip
 

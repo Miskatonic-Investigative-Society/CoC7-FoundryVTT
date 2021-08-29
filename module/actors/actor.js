@@ -72,6 +72,8 @@ export class CoCActor extends Actor {
         },
         { overwrite: false }
       )
+    } else if (data.type === 'vehicle') {
+      data.img = 'systems/CoC7/assets/icons/jeep.svg' // Change the icon for vehicle
     }
     return super.create(data, options)
   }
@@ -2609,6 +2611,10 @@ export class CoCActor extends Actor {
       }
     }
 
+    const regExp = /\(([^)]+)\)/
+    const matches = regExp.exec(name)
+    let shortName = null
+    if (matches && matches.length) shortName = matches[1]
     // Try to find a skill with exact name.
     const skill = this.skills.filter(s => {
       return (
@@ -2616,7 +2622,9 @@ export class CoCActor extends Actor {
         (s.name.toLocaleLowerCase().replace(/\s/g, '') ===
           name.toLocaleLowerCase().replace(/\s/g, '') ||
           s.sName.toLocaleLowerCase().replace(/\s/g, '') ===
-            name.toLocaleLowerCase().replace(/\s/g, ''))
+            name.toLocaleLowerCase().replace(/\s/g, '') ||
+          s.sName.toLocaleLowerCase().replace(/\s/g, '') ==
+            shortName?.toLocaleLowerCase().replace(/\s/g, ''))
       )
     })
     if (skill.length) return { type: 'item', value: skill[0] }

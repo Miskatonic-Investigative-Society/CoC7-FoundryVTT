@@ -1016,10 +1016,18 @@ export class CoC7Chat {
           event.keyCode === 91 ||
           event.keyCode === 224
         ) {
-          check.updateChatCard(true)
+          check.updateChatCard({ makePublic: true })
         } else {
           check.updateChatCard()
         }
+        break
+      }
+
+      case 'roll-check-card': {
+        const check = await CoC7Check.getFromCard(card)
+        check.standby = false
+        check._perform()
+        check.updateChatCard({ forceRoll: true })
         break
       }
 
