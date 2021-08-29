@@ -1624,6 +1624,10 @@ export class CoC7ActorSheet extends ActorSheet {
       check.flatDiceModifier = flatDiceModifier
       check.flatThresholdModifier = flatThresholdModifier
       check.actor = !tokenKey ? actorId : tokenKey
+      check.standby =
+        game.settings.get('CoC7', 'stanbyGMRolls') &&
+        game.user.isGM &&
+        this.actor.hasPlayerOwner
       check.rollAttribute(attrib)
       check.toMessage()
     }
@@ -1683,6 +1687,10 @@ export class CoC7ActorSheet extends ActorSheet {
     check.skill = skillId
     check.flatDiceModifier = flatDiceModifier
     check.flatThresholdModifier = flatThresholdModifier
+    check.standby =
+      game.settings.get('CoC7', 'stanbyGMRolls') &&
+      game.user.isGM &&
+      this.actor.hasPlayerOwner
     check.roll()
     check.toMessage()
   }
