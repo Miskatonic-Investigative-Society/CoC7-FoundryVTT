@@ -1,4 +1,4 @@
-/* global $, Combat, CONFIG, CONST, game, Hooks, tinyMCE, ui */
+/* global $, Combat, CONFIG, CONST, fromUuid, game, Hooks, tinyMCE, ui */
 import { CoC7NPCSheet } from './actors/sheets/npc-sheet.js'
 import { CoC7CreatureSheet } from './actors/sheets/creature-sheet.js'
 import { CoC7CharacterSheetV2 } from './actors/sheets/character.js'
@@ -212,18 +212,18 @@ Hooks.on('ready', async () => {
   activateGlobalListener()
 
   game.socket.on('system.CoC7', async data => {
-    if (data.type == 'updateChar') CoC7Utilities.updateCharSheets()
+    if (data.type === 'updateChar') CoC7Utilities.updateCharSheets()
 
     if (game.user.isGM) {
-      if (OpposedCheckCard.defaultConfig.type == data.type) {
+      if (OpposedCheckCard.defaultConfig.type === data.type) {
         OpposedCheckCard.dispatch(data)
       }
 
-      if (CombinedCheckCard.defaultConfig.type == data.type) {
+      if (CombinedCheckCard.defaultConfig.type === data.type) {
         CombinedCheckCard.dispatch(data)
       }
 
-      if ('invoke' == data.type) {
+      if (data.type === 'invoke') {
         const item = await fromUuid(data.item)
         item[data.method](data.data)
       }

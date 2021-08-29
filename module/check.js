@@ -1,4 +1,4 @@
-/* global $, Actor, AudioHelper, ChatMessage, CONFIG, CONST, duplicate, game, getComputedStyle, Item, mergeObject, renderTemplate, Token, ui */
+/* global $, Actor, AudioHelper, ChatMessage, CONFIG, CONST, duplicate, foundry, fromUuid, game, getComputedStyle, Item, mergeObject, renderTemplate, Token, ui */
 
 import { CoC7Dice } from './dice.js'
 import { CoC7Item } from './items/item.js'
@@ -37,7 +37,9 @@ export class CoC7Check {
     }
   }
 
-  static cardType = 'rollCard'
+  static get cardType () {
+    return 'rollCard'
+  }
 
   static get difficultyLevel () {
     return {
@@ -134,8 +136,8 @@ export class CoC7Check {
   get hasCard () {
     const chatCard = ui.chat.collection.filter(message => {
       return (
-        this.uuid == message.getFlag('CoC7', 'uuid') &&
-        CoC7Check.cardType == message.getFlag('CoC7', 'type')
+        this.uuid === message.getFlag('CoC7', 'uuid') &&
+        CoC7Check.cardType === message.getFlag('CoC7', 'type')
       )
     })
     if (chatCard.length > 0) return true
@@ -666,8 +668,9 @@ export class CoC7Check {
     check.difficulty = difficulty
     if (diceModifier) check.diceModifier = diceModifier
     if (flatDiceModifier) check.flatDiceModifier = flatDiceModifier
-    if (flatThresholdModifier)
+    if (flatThresholdModifier) {
       check.flatThresholdModifier = flatThresholdModifier
+    }
     if (displayName) check.displayName = displayName
     if (actorKey) check.actor = actorKey
     if (actorName) check.actorName = actorName
@@ -1369,11 +1372,12 @@ export class CoC7Check {
             value: this.rawValueString,
             difficulty: this.difficultyString
           })
-        } else
+        } else {
           flavor = game.i18n.format('CoC7.CheckRawValue', {
             rawvalue: this.rawValue,
             difficulty: this.difficultyString
           })
+        }
       }
     }
 
@@ -1570,15 +1574,17 @@ export class CoC7Check {
     if (!htmlMessage.classList.contains('roll-result')) {
       const htmlCheck = $.parseHTML(html)[0]
       const rollResultElement = htmlMessage.querySelector('.roll-result')
-      rollResultElement?.replaceWith(htmlCheck)
+      if (rollResultElement !== null) {
+        rollResultElement.replaceWith(htmlCheck)
+      }
       newContent = htmlMessage.outerHTML
     }
 
     const chatData = { flavor: this.flavor, content: newContent }
-    if (CONST.CHAT_MESSAGE_TYPES.ROLL == message.data.type) {
-      if (message.data.whisper?.length)
+    if (CONST.CHAT_MESSAGE_TYPES.ROLL === message.data.type) {
+      if (message.data.whisper?.length) {
         chatData.type = CONST.CHAT_MESSAGE_TYPES.WHISPER
-      else chatData.type = CONST.CHAT_MESSAGE_TYPES.OTHER
+      } else chatData.type = CONST.CHAT_MESSAGE_TYPES.OTHER
     }
 
     if (makePublic) {
