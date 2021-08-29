@@ -4,7 +4,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 | Key                                                                                      |   cn    |   cs   |   de   |   es   |   fr   |   ja   |   pl    | pt-BR  |   sv   | zh-TW  |
 | :--------------------------------------------------------------------------------------- | :-----: | :----: | :----: | :----: | :----: | :----: | :-----: | :----: | :----: | :----: |
-| **Remaining**:                                                                           | **297** | **72** | **90** | **10** | **37** | **92** | **313** | **10** | **12** | **10** |
+| **Remaining**:                                                                           | **299** | **74** | **92** | **12** | **39** | **94** | **315** | **12** | **14** | **12** |
 | [CoC7.ActorImporter](#coc7actorimporter)                                                 |    X    |        |        |        |        |        |    X    |        |        |        |
 | [CoC7.ActorImporterSummary](#coc7actorimportersummary)                                   |    X    |        |        |        |        |        |    X    |        |        |        |
 | [CoC7.AdvantageAttacker](#coc7advantageattacker)                                         |    X    |        |        |        |        |        |    X    |        |        |        |
@@ -306,6 +306,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [SETTINGS.PlayerUnlockSheetMode](#settingsplayerunlocksheetmode)                         |    X    |        |        |        |        |        |    X    |        |        |        |
 | [SETTINGS.SelfRollWhisperTarget](#settingsselfrollwhispertarget)                         |    X    |        |        |        |        |        |    X    |        |        |        |
 | [SETTINGS.SelfRollWhisperTargetHint](#settingsselfrollwhispertargethint)                 |    X    |        |        |        |        |        |    X    |        |        |        |
+| [SETTINGS.StanbyGMRolls](#settingsstanbygmrolls)                                         |    X    |   X    |   X    |   X    |   X    |   X    |    X    |   X    |   X    |   X    |
+| [SETTINGS.StanbyGMRollsHint](#settingsstanbygmrollshint)                                 |    X    |   X    |   X    |   X    |   X    |   X    |    X    |   X    |   X    |   X    |
 | [SETTINGS.TitleChatCards](#settingstitlechatcards)                                       |    X    |   X    |   X    |   X    |   X    |   X    |    X    |   X    |   X    |   X    |
 | [SETTINGS.TitleDeveloperDebug](#settingstitledeveloperdebug)                             |    X    |   X    |   X    |   X    |   X    |   X    |    X    |   X    |   X    |   X    |
 | [SETTINGS.TitleDiceSoNice](#settingstitledicesonice)                                     |    X    |   X    |   X    |   X    |   X    |   X    |    X    |   X    |   X    |   X    |
@@ -1486,7 +1488,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 ##### SETTINGS.NeverEditable
 
-`"SETTINGS.NeverEditable": "never (GM only)",`
+`"SETTINGS.NeverEditable": "never (Keeper only)",`
 
 ##### SETTINGS.OneBlockBackStory
 
@@ -1523,6 +1525,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### SETTINGS.SelfRollWhisperTargetHint
 
 `"SETTINGS.SelfRollWhisperTargetHint": "As a GM, when doing self check roll, who do you want to send a notification to.",`
+
+##### SETTINGS.StanbyGMRolls
+
+`"SETTINGS.StanbyGMRolls": "Standby Keeper rolls",`
+
+##### SETTINGS.StanbyGMRollsHint
+
+`"SETTINGS.StanbyGMRollsHint": "When the Keeper is making a roll from an assigned character sheet, display a roll button instead of rolling",`
 
 ##### SETTINGS.TitleChatCards
 
