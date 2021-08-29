@@ -29,6 +29,8 @@ export class CoC7Dice {
       total: 0,
       roll: roll
     }
+    if (rollMode) result.rollMode = rollMode
+    if (hideDice) result.hideDice = hideDice
     roll.dice.forEach(d => {
       if (d instanceof CONFIG.Dice.terms.t) {
         result.tens.results.push(d.total)
