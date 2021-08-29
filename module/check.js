@@ -362,7 +362,7 @@ export class CoC7Check {
    * @param {HTMLElement} card  The HTMLElement that is a roll-result or a chat card containing a single roll-result.
    * @return {CoC7Check}      A CoC7Check.
    */
-  static async getFromCard (card) {
+  static getFromCard (card) {
     const rollResult = card.classList.contains('roll-result')
       ? card
       : card.querySelector('.roll-result')
@@ -374,6 +374,7 @@ export class CoC7Check {
   }
 
   static push (card, publish = true) {
+    const oldCheck = CoC7Check.getFromCard(card) // TODO: Refactoring
     const actorId = card.dataset.tokenId
       ? card.dataset.tokenId
       : card.dataset.actorId
@@ -393,6 +394,8 @@ export class CoC7Check {
       pushedRoll.actor = actorId
       pushedRoll.characteristic = charac
     } else return
+    if (oldCheck.uuid) pushedRoll.uuid = oldCheck.uuid
+    if (oldCheck.parent) pushedRoll.parent = oldCheck.parent
     pushedRoll.pushing = true
     pushedRoll.roll()
     if (publish) pushedRoll.toMessage(true, card)
