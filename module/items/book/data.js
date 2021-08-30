@@ -159,13 +159,18 @@ export class CoC7Book extends CoC7Item {
     }
     if (this.data.data.type.other) {
       this.data.data.gains.other.forEach(async skill => {
-        /** TODO: sanitize name to handle with specializations */
+        const pattern = skill.name.match(/^(.+) \((.+)\)$/)
+        if (pattern) {
+          skill.name = pattern[1]
+          skill.specialization = pattern[2]
+        }
         if (skill.value !== 'development') {
           skill.value = new Roll(skill.value).roll({ async: false }).total
         }
         developments.push({
           name: skill.name,
-          gain: skill.value
+          gain: skill.value,
+          specialization: skill.specialization
         })
       })
     }
@@ -181,6 +186,7 @@ export class CoC7Book extends CoC7Item {
    */
   async grantSkillDevelopment (developments) {
     for (const development of developments) {
+      console.log(development)
       /** Test if the value is greater than zero */
       if (!development.gain) continue
       let skill = await this.actor.getSkillsByName(development.name)
@@ -192,7 +198,14 @@ export class CoC7Book extends CoC7Item {
         const existingSkill = await game.items.find(item => item.data.type === 'skill' && item.data.name === development.name)
         if (existingSkill) {
           skill = await this.actor.createEmbeddedDocuments('Item', [duplicate(existingSkill)])
-        } else skill = await this.actor.createSkill(development.name, 0)
+        } else {
+          skill = await this.actor.createSkill(development.name, 0)
+          if (development.specialization) {
+            await skill.update({
+              'data.specialization': development.specialization
+            })
+          }
+        }
       }
       skill = skill[0]
       if (development.gain === 'development') {
