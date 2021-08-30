@@ -1,8 +1,6 @@
-/* global $, duplicate, game, Handlebars, mergeObject */
+/* global $, duplicate, game, Handlebars, ItemSheet, mergeObject */
 
-import { CoC7ItemSheet } from '../sheets/item-sheet.js'
-
-export class CoC7BookSheet extends CoC7ItemSheet {
+export class CoC7BookSheet extends ItemSheet {
   static get defaultOptions () {
     return mergeObject(super.defaultOptions, {
       template: 'systems/CoC7/templates/items/book/main.hbs',
