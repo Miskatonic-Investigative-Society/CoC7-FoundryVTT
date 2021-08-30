@@ -539,33 +539,38 @@
       "flags": {}
     },
     "book": {
-      "language": null,
-      "author": null,
-      "date": null,
+      "author": "",
+      "content": "",
+      "date": "",
       "description": {
-        "value": "",
         "chat": "",
-        "unidentified": "",
-        "notes": ""
+        "value": ""
+      },
+      "difficultyLevel": "",
+      "fullStudy": 0,
+      "gains": {
+        "cthulhuMythos": {
+          "final": 0,
+          "initial": 0
+        },
+        "occult": 0,
+        "other": []
+      },
+      "initialReading": false,
+      "keeperNotes": "",
+      "language": "",
+      "mythosRating": 0,
+      "sanityLoss": 0,
+      "spells": [],
+      "study": {
+        "necessary": 0,
+        "progress": 0
       },
       "type": {
-        "occult": false,
         "mythos": false,
+        "occult": false,
         "other": false
-      },
-      "sanLoss": null,
-      "mythosRating": null,
-      "weeksStudyTime": 0,
-      "gain": {
-        "cthulhuMythos": {
-          "CMI": null,
-          "CMF": null
-        },
-        "occult": null
-      },
-      "spells": [],
-      "properties": {},
-      "flags": {}
+      }
     },
     "talent": {
       "source": null,
