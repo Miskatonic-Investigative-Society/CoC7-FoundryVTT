@@ -21,13 +21,29 @@
       </div>
     </div>
     <div class="aside">
-      {{#unless data.initialReading}}
+      <div class="flexrow">
         <span id="attempt-initial-reading">
           <label>
             {{localize "CoC7.InitialReading"}}
           </label>
         </span>
-      {{/unless}}
+        {{#if data.initialReading}}
+          <i class="fas fa-check"></i>
+        {{/if}}
+      </div>
+      {{#if data.initialReading}}
+        <span>
+          <label>
+            {{localize "CoC7.FullStudies"}}:
+          </label>
+        </span>
+        <span>
+          <label>
+            {{data.fullStudies}}
+          </label>
+        </span>
+      {{/if}}
+
     </div>
     <div class="progress">
       <i id="decrease-progress" class="fas fa-minus"></i>
