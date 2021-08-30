@@ -7,8 +7,15 @@ import { COC7 } from '../config.js'
  * Override and extend the basic :class:`Item` implementation
  */
 export class CoC7Item extends Item {
+  /** Create derived document classes for specific Item types */
   constructor (data, context) {
+    /** @see CONFIG.Item.documentClasses in module/scripts/configure-documents */
     if (data.type in CONFIG.Item.documentClasses && !context?.extended) {
+      /**
+       * When the constructor for the new class will call it's super(),
+       * the extended flag will be true, thus bypassing this whole process
+       * and resume default behavior
+       */
       return new CONFIG.Item.documentClasses[data.type](data, {
         ...{ extended: true },
         ...context
@@ -16,19 +23,20 @@ export class CoC7Item extends Item {
     }
     if (typeof data.img === 'undefined') {
       if (data.type === 'book') {
-        data.img = 'systems/CoC7/assets/icons/secret-book.svg' // Change the icon for book
+        data.img = 'systems/CoC7/assets/icons/secret-book.svg'
       } else if (data.type === 'chase') {
-        data.img = 'systems/CoC7/assets/icons/running-solid.svg' // Change the icon for chase
+        data.img = 'systems/CoC7/assets/icons/running-solid.svg'
       } else if (data.type === 'skill') {
-        data.img = 'systems/CoC7/assets/icons/skills.svg' // Change the icon for skills
+        data.img = 'systems/CoC7/assets/icons/skills.svg'
       } else if (data.type === 'spell') {
-        data.img = 'systems/CoC7/assets/icons/pentagram-rose.svg' // Change the icon for spell
+        data.img = 'systems/CoC7/assets/icons/pentagram-rose.svg'
       } else if (data.type === 'status') {
-        data.img = 'icons/svg/aura.svg' // Change the icon for status
+        data.img = 'icons/svg/aura.svg'
       } else if (data.type === 'weapon') {
-        data.img = 'icons/svg/sword.svg' // Change the icon for sword
+        data.img = 'icons/svg/sword.svg'
       }
     }
+    /** Default behavior, just call super() and do all the default Item inits */
     super(data, context)
   }
 
