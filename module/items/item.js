@@ -7,13 +7,7 @@ import { COC7 } from '../config.js'
  * Override and extend the basic :class:`Item` implementation
  */
 export class CoC7Item extends Item {
-  constructor (data, context) {
-    if (data.type in CONFIG.Item.documentClasses && !context?.extended) {
-      return new CONFIG.Item.documentClasses[data.type](data, {
-        ...{ extended: true },
-        ...context
-      })
-    }
+  constructor (data = {}, context = {}) {
     if (typeof data.img === 'undefined') {
       if (data.type === 'book') {
         data.img = 'systems/CoC7/assets/icons/secret-book.svg' // Change the icon for book

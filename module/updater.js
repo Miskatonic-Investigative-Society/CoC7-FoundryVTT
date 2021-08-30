@@ -303,7 +303,8 @@ export class Updater {
         if (typeof updateData.effects === 'undefined') {
           updateData.effects = actor.effects
         }
-        updateData.effects[k].icon = 'systems/CoC7/assets/icons/' + image[1]
+        updateData.effects[k].icon =
+          'systems/CoC7/assets/icons/' + image[1]
       }
     }
     return updateData

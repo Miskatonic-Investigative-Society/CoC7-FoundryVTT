@@ -2,6 +2,7 @@
 
 import { COC7 } from '../../config.js'
 import { CoC7Item } from '../item.js'
+// import { CoCItemSheet } from './item-sheet.js';
 // import { CoC7Item } from '../item.js';
 // import { CoCActor } from '../../actors/actor.js';
 
