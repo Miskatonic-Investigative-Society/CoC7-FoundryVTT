@@ -524,7 +524,7 @@
   "CoC7.Content": "Content",
   "CoC7.Progress": "Progress",
   "CoC7.InitialReading": "Initial Reading",
-  "CoC7.FullStudy": "Full Study",
+  "CoC7.FullStudies": "Full Studies",
   "CoC7.DifficultyLevel": "Difficulty Level",
   "CoC7.Unreadable": "Unreadable",
   "CoC7.Unidentified": "Unidentified",
@@ -536,6 +536,7 @@
   "CoC7.InitialReadingNeeded": "{actor} needs to perform an Initial Reading on <i>{book}</i> to be able to advance through Full Study progress.",
   "CoC7.NotOwned": "This Book needs to be owned by an Actor to perform this action.",
   "CoC7.ReadAttempt": "Attempt to read <i>{book}</i> ({language}), {difficulty} difficulty.",
+  "CoC7.ReadingMythosTome": "Reading <i>{book}</i>.",
   "CoC7.UnknownLanguage": "{actor} does not know the {language} language.",
 
   "CoC7.Crew": "Crew",
