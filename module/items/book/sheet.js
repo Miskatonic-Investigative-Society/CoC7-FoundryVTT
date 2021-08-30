@@ -126,8 +126,8 @@ export class CoC7BookSheet extends CoC7ItemSheet {
       ? duplicate(this.item.data.data.gains.other)
       : []
     switch (mode) {
-      /** User clicked on plus icon to add a new skill on other gains table */
       case 'add':
+        /** User clicked on plus icon to add a new skill on other gains table */
         skills.push({
           /** new skill */
           name: game.i18n.localize('CoC7.NewSkillName'),
@@ -135,15 +135,15 @@ export class CoC7BookSheet extends CoC7ItemSheet {
           value: 'development'
         })
         break
-      /** User changed name (input) or value (select) of a skill on table */
       case 'change':
+        /** User changed name (input) or value (select) of a skill on table */
         skills[index] = {
           name: element.is('input') ? element.val() : skills[index].name,
           value: element.is('select') ? element.val() : skills[index].value
         }
         break
-      /** User clicked on minus icon to remove a skill on other gains table */
       case 'remove':
+        /** User clicked on minus icon to remove a skill on other gains table */
         if (index >= 0) skills.splice(index, 1)
     }
     return await this.item.update({ 'data.gains.other': skills })
