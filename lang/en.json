@@ -533,6 +533,10 @@
   "CoC7.Specific": "Specific",
   "CoC7.notKnowLanguage": "{actor} does not know the {language} language.",
   "CoC7.Earned": "Earned",
+  "CoC7.InitialReadingNeeded": "{actor} needs to perform an Initial Reading on <i>{book}</i> to be able to advance through Full Study progress.",
+  "CoC7.NotOwned": "This Book needs to be owned by an Actor to perform this action.",
+  "CoC7.ReadAttempt": "Attempt to read <i>{book}</i> ({language}), {difficulty} difficulty.",
+  "CoC7.UnknownLanguage": "{actor} does not know the {language} language.",
 
   "CoC7.Crew": "Crew",
   "CoC7.Origin": "Origin",
