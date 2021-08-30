@@ -1553,8 +1553,8 @@ export class CoC7Check {
       chatData.type = CONST.CHAT_MESSAGE_TYPES.ROLL
       chatData.rollMode = this.isBlind ? 'blindroll' : this.rollMode
     }
-
-    ChatMessage.create(chatData).then(msg => {
+    await ChatMessage.create(chatData).then(msg => {
+      this.referenceMessageId = msg.id
       return msg
     })
   }
