@@ -47,7 +47,7 @@ export class Updater {
           await actor.update(updateData, { enforceTypes: false })
         }
       } catch (err) {
-        err.message = `Failed dnd5e system migration for Actor ${actor.name}: ${err.message}`
+        err.message = `Failed CoC7 system migration for Actor ${actor.name}: ${err.message}`
         console.error(err)
       }
     }
@@ -61,7 +61,7 @@ export class Updater {
           await item.update(updateData, { enforceTypes: false })
         }
       } catch (err) {
-        err.message = `Failed dnd5e system migration for Item ${item.name}: ${err.message}`
+        err.message = `Failed CoC7 system migration for Item ${item.name}: ${err.message}`
         console.error(err)
       }
     }
@@ -75,7 +75,7 @@ export class Updater {
           await table.update(updateData, { enforceTypes: false })
         }
       } catch (err) {
-        err.message = `Failed dnd5e system migration for Table ${table.name}: ${err.message}`
+        err.message = `Failed CoC7 system migration for Table ${table.name}: ${err.message}`
         console.error(err)
       }
     }
@@ -89,7 +89,7 @@ export class Updater {
           await macro.update(updateData, { enforceTypes: false })
         }
       } catch (err) {
-        err.message = `Failed dnd5e system migration for Table ${macro.name}: ${err.message}`
+        err.message = `Failed CoC7 system migration for Table ${macro.name}: ${err.message}`
         console.error(err)
       }
     }
@@ -171,7 +171,7 @@ export class Updater {
           await doc.update(updateData)
         }
       } catch (err) {
-        err.message = `Failed dnd5e system migration for entity ${doc.name} in pack ${pack.collection}: ${err.message}`
+        err.message = `Failed CoC7 system migration for entity ${doc.name} in pack ${pack.collection}: ${err.message}`
         console.error(err)
       }
     }
@@ -186,6 +186,7 @@ export class Updater {
     // Update World Item
     Updater._migrateItemExperience(item, updateData)
     Updater._migrateItemArtwork(item, updateData)
+    Updater._migrateItemBookAutomated(item, updateData)
 
     return updateData
   }
@@ -285,6 +286,57 @@ export class Updater {
     return updateData
   }
 
+  /**
+   * Book automation was increased in 0.6.5
+   *
+   * @param {object} item Document data expressed as a plain object
+   * @param {json} updateData Differential update data which modifies the existing values of this document data
+   * @returns {json} Differential update data which modifies the existing values of this document data
+   */
+  static _migrateItemBookAutomated (item, updateData) {
+    if (item.type === 'book') {
+      /** If book still has the data.description.unidentified key then run migrate on it */
+      if (typeof item.data.description.unidentified !== 'undefined') {
+        /** Fields changed from null default to empty string */
+        updateData['data.author'] = item.data.author || ''
+        updateData['data.date'] = item.data.date || ''
+        updateData['data.language'] = item.data.language || ''
+        /** Fields changed from null/string defaults to integer to 0 */
+        updateData['data.sanityLoss'] = item.data.sanLoss || 0
+        updateData['data.mythosRating'] = Number(item.data.mythosRating) || 0
+        /** Renamed/moved fields */
+        updateData['data.content'] = item.data.description.unidentified
+        updateData['data.notes'] = item.data.description.notes
+        /** New fields set default values */
+        updateData['data.difficultyLevel'] = 'regular'
+        updateData['data.fullStudies'] = 0
+        updateData['data.initialReading'] = false
+        updateData['data.keeperNotes'] = ''
+        /** Move and rename gain fields to gains, default NaN values to 0 */
+        updateData['data.gains.cthulhuMythos.initial'] =
+          Number(item.data.gain.cthulhuMythos.CMI) || 0
+        updateData['data.gains.cthulhuMythos.final'] =
+          Number(item.data.gain.cthulhuMythos.CMF) || 0
+        updateData['data.gains.occult'] = Number(item.data.gain.occult) || 0
+        updateData['data.gains.others'] = []
+        /** New study field default necessary to integer of weeksStudyTime or 0 if not set */
+        updateData['data.study'] = {
+          necessary: Number(item.data.weeksStudyTime) || 0,
+          progress: 0
+        }
+        /** Remove old keys */
+        updateData['data.-=sanLoss'] = null
+        updateData['data.-=weeksStudyTime'] = null
+        updateData['data.-=gain'] = null
+        updateData['data.description.-=unidentified'] = null
+        updateData['data.description.-=notes'] = null
+        updateData['data.-=properties'] = null
+        updateData['data.-=flags'] = null
+      }
+    }
+    return updateData
+  }
+
   static _migrateActorArtwork (actor, updateData) {
     const regEx = new RegExp(
       /systems\/CoC7\/artwork\/icons\/((hanging-spider|paranoia|skills|tentacles-skull)\.svg)/
@@ -303,8 +355,7 @@ export class Updater {
         if (typeof updateData.effects === 'undefined') {
           updateData.effects = actor.effects
         }
-        updateData.effects[k].icon =
-          'systems/CoC7/assets/icons/' + image[1]
+        updateData.effects[k].icon = 'systems/CoC7/assets/icons/' + image[1]
       }
     }
     return updateData
