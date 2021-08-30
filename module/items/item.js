@@ -22,9 +22,7 @@ export class CoC7Item extends Item {
       })
     }
     if (typeof data.img === 'undefined') {
-      if (data.type === 'book') {
-        data.img = 'systems/CoC7/assets/icons/secret-book.svg'
-      } else if (data.type === 'chase') {
+      if (data.type === 'chase') {
         data.img = 'systems/CoC7/assets/icons/running-solid.svg'
       } else if (data.type === 'skill') {
         data.img = 'systems/CoC7/assets/icons/skills.svg'

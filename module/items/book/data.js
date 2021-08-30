@@ -5,7 +5,7 @@ import { CoC7Item } from '../item.js'
 
 export class CoC7Book extends CoC7Item {
   constructor (data, context) {
-    if (typeof data.img === 'undefined') data.img = 'icons/svg/book.svg'
+    if (typeof data.img === 'undefined') data.img = 'systems/CoC7/assets/icons/secret-book.svg'
     super(data, context)
   }
 
@@ -55,16 +55,14 @@ export class CoC7Book extends CoC7Item {
       check.actor = this.actor
       check.skill = skill[0].id
       check.difficulty = difficulty
+      check.parent = this.uuid
       check.flavor = game.i18n.format('CoC7.ReadAttempt', {
         book: this.name,
         language,
         difficulty: this.data.data.difficultyLevel
       })
       check.roll()
-      await check.toMessage()
-      if (check.passed) return await this.grantInitialReading()
-      /** Listen for a Luck spent or a pushed roll to see if there will be a later success */
-      else { await this.listen(check) }
+      return await check.toMessage()
     }
   }
 
@@ -147,9 +145,9 @@ export class CoC7Book extends CoC7Item {
     /** If initial reading has already been done there is nothing to do here */
     if (this.data.data.initialReading) return
     const developments = []
-    if (this.data.data.type.cthulhuMythos) {
+    if (this.data.data.type.mythos) {
       developments.push({
-        name: game.i18n.localize('CoC7.CthulhuMythosNames'),
+        name: game.i18n.localize('CoC7.CthulhuMythosName'),
         gain: parseInt(this.data.data.gains.cthulhuMythos.initial)
       })
     }
@@ -186,32 +184,29 @@ export class CoC7Book extends CoC7Item {
       /** Test if the value is greater than zero */
       if (!development.gain) continue
       let skill = await this.actor.getSkillsByName(development.name)
-      /** If the Actor does not own this skill, create a new one */
+      /** The Actor does not own this skill, create a new one
+       * First, check if there is any skill in the game with the same name
+       * In the last alternative just create a new generic skill
+       */
       if (skill.length === 0) {
-        /** Check if there is any skill in the game with the same name */
-        const existingSkill = await game.items.find(async item => {
-          if (item.data.type === 'skill' && item.data.name === item.name) {
-            /** If so, create a new skill based on this one */
-            await this.actor.createEmbeddedDocuments('Item', [duplicate(item)])
-          }
-        })
-        /** In the last alternative just create a new generic skill */
-        if (!existingSkill) await this.actor.createSkill(skill.name, 0)
+        const existingSkill = await game.items.find(item => item.data.type === 'skill' && item.data.name === development.name)
+        if (existingSkill) {
+          skill = await this.actor.createEmbeddedDocuments('Item', [duplicate(existingSkill)])
+        } else skill = await this.actor.createSkill(development.name, 0)
       }
-      skill = await this.actor.getSkillsByName(development.name)[0]
+      skill = skill[0]
       if (development.gain === 'development') {
         /** Simply mark the skill for development */
-        await skill.flagForDevelopment()
-        continue
+        await skill.flagForDevelopement()
       } else {
+        /**
+         * If the received value gained is numeric, ensure that the amount
+         * will not exceed the maximum value of 99
+         */
         if (skill.value + development.gain > 99) {
-          /**
-           * If the received value gained is numeric, ensure that the amount
-           * will not exceed the maximum value of 99
-           */
-          for (let i = 1; i <= development.gain; i++) {
-            if (skill.value + development.gain <= 99) {
-              await skill.increaseExperience(development.gain - i)
+          for (let index = 1; index <= development.gain; index++) {
+            if (skill.value + development.gain - index <= 99) {
+              await skill.increaseExperience(development.gain - index)
               continue
             }
           }
@@ -231,5 +226,10 @@ export class CoC7Book extends CoC7Item {
     return await this.update({
       'data.study.necessary': this.item.data.data.study.necessary * 2
     })
+  }
+
+  async updateRoll (roll) {
+    const check = CoC7Check.fromRollString(roll)
+    if (check.passed) return await this.grantInitialReading()
   }
 }

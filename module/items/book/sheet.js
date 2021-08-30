@@ -35,6 +35,10 @@ export class CoC7BookSheet extends ItemSheet {
 
   activateListeners (html) {
     super.activateListeners(html)
+    html.find('#attempt-initial-reading').click(event => {
+      event.preventDefault()
+      this.item.attemptInitialReading()
+    })
     html.on('drop', event => this.dropSpell(event))
     html.find("[name='data.study.necessary']").change(event => {
       const value = parseInt(event.currentTarget.value)
