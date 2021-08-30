@@ -37,6 +37,7 @@ export class CoC7BookSheet extends CoC7ItemSheet {
 
   activateListeners (html) {
     super.activateListeners(html)
+    html.on('drop', event => this.dropSpell(event))
     html.find("[name='data.study.necessary']").change(event => {
       const value = parseInt(event.currentTarget.value)
       this.item.changeProgress('reset', value)
@@ -56,6 +57,55 @@ export class CoC7BookSheet extends CoC7ItemSheet {
     html.find('.remove-other-gains').click(event => {
       this.modifyOthersGains(event, 'remove')
     })
+    html.find('.option').click(event => this.modifyType(event))
+  }
+
+  /**
+   * It is called every time the user drags an item to the sheet
+   * Filters only 'spell' items and inserts them in a @type {Array}
+   * @param {jQuery} event @see activateListeners
+   * @returns {Promise.<Document>} update to Item document
+   */
+  async dropSpell (event) {
+    event.preventDefault()
+    /** Prevents propagation of the same event from being called */
+    event.stopPropagation()
+    /** Is this really necessary? */
+    if (event.originalEvent) return
+    let data
+    try {
+      data = JSON.parse(event.dataTransfer.getData('text/plain'))
+      if (data.type !== 'Item') return
+    } catch (error) {
+      return false
+    }
+    let item
+    if (data.pack) {
+      const pack = game.packs.get(data.pack)
+      if (pack.metadata.entity !== 'Item') return
+      item = await pack.getEntity(data.id)
+    } else if (data.data) item = data
+    else item = game.items.get(data.id)
+    if (!item || !(item.data.type === 'spell')) return
+    const spells = this.item.data.data.spells
+      ? duplicate(this.item.data.data.spells)
+      : []
+    spells.push(duplicate(item.data))
+    return await this.item.update({ 'data.spells': spells })
+  }
+
+  /**
+   * Toggle the checkboxes for type when user clicks on the corresponding
+   * label, not sure if this works on engines other than V8
+   * @param {jQuery} event @see activateListeners
+   * @returns {jQuery.Event} click
+   */
+  modifyType (event) {
+    event.preventDefault()
+    /** Prevents propagation of the same event from being called */
+    event.stopPropagation()
+    const toggleSwitch = $(event.currentTarget)
+    return toggleSwitch.prev().trigger('click')
   }
 
   /**
