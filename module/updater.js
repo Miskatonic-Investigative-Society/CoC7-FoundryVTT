@@ -306,7 +306,7 @@ export class Updater {
         updateData['data.mythosRating'] = Number(item.data.mythosRating) || 0
         /** Renamed/moved fields */
         updateData['data.content'] = item.data.description.unidentified
-        updateData['data.notes'] = item.data.description.notes
+        updateData['data.keeperNotes'] = item.data.description.notes
         /** New fields set default values */
         updateData['data.difficultyLevel'] = 'regular'
         updateData['data.fullStudies'] = 0
