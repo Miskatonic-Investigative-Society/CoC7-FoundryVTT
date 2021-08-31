@@ -26,11 +26,21 @@ export class CoC7BookSheet extends ItemSheet {
     data.data = itemData.data
     data.isKeeper = game.user.isGM
     data.isOwned = this.item.isOwned
+    data.spellsLearned = this.spellsLearned
     /** Allows using conditional OR under Handlebars templates */
     Handlebars.registerHelper('or', function (v1, v2, options) {
       return v1 || v2 ? options.fn(this) : options.inverse(this)
     })
     return data
+  }
+
+  get spellsLearned () {
+    let amount = 0
+    const spells = this.item.data.data.spells
+    for (const spell of spells) {
+      if (spell.data.learned) amount++
+    }
+    return `${amount} / ${spells.length}`
   }
 
   activateListeners (html) {
@@ -39,7 +49,7 @@ export class CoC7BookSheet extends ItemSheet {
       event.preventDefault()
       this.item.attemptInitialReading()
     })
-    html.on('drop', event => this.dropSpell(event))
+    html.on('drop', event => this._onDrop(event))
     html.find("[name='data.study.necessary']").change(event => {
       const value = parseInt(event.currentTarget.value)
       this.item.changeProgress('reset', value)
@@ -68,7 +78,7 @@ export class CoC7BookSheet extends ItemSheet {
    * @param {jQuery} event @see activateListeners
    * @returns {Promise.<Document>} update to Item document
    */
-  async dropSpell (event) {
+  async _onDrop (event) {
     event.preventDefault()
     /** Prevents propagation of the same event from being called */
     event.stopPropagation()
@@ -79,7 +89,7 @@ export class CoC7BookSheet extends ItemSheet {
       data = JSON.parse(event.dataTransfer.getData('text/plain'))
       if (data.type !== 'Item') return
     } catch (error) {
-      return false
+      return console.error(error)
     }
     let item
     if (data.pack) {

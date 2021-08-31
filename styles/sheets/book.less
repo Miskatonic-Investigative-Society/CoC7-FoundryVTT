@@ -84,7 +84,24 @@
       grid-area: aside;
       text-align: center;
       .flexrow {
-        align-items: center;
+        justify-content: center;
+        margin: 0.065rem 0;
+        span {
+          max-width: fit-content;
+        }
+        #attempt-initial-reading {
+          align-items: center;
+          background: rgba(0, 0, 0, 0.05);
+          border: 0.065rem solid var(--main-sheet-front-color);
+          border-radius: 0.25rem;
+          padding: 0.300rem;
+          &:focus, &:hover {
+            background: var(--main-sheet-front-color);
+            label {
+              color: whitesmoke;
+            }
+          }
+        }
       }
     }
     .progress {

@@ -21,29 +21,48 @@
       </div>
     </div>
     <div class="aside">
-      <div class="flexrow">
-        <span id="attempt-initial-reading">
-          <label>
-            {{localize "CoC7.InitialReading"}}
-          </label>
-        </span>
-        {{#if data.initialReading}}
-          <i class="fas fa-check"></i>
-        {{/if}}
-      </div>
       {{#if data.initialReading}}
-        <span>
-          <label>
-            {{localize "CoC7.FullStudies"}}:
-          </label>
-        </span>
-        <span>
-          <label>
-            {{data.fullStudies}}
-          </label>
-        </span>
+        <div class="flexrow">
+          <span>
+            <label>
+              {{localize "CoC7.InitialReading"}}
+            </label>
+          </span>
+            <i class="fas fa-check"></i>
+        </div>
+        <div class="flexrow">
+          <span>
+            <label>
+              {{localize "CoC7.FullStudies"}}:
+            </label>
+          </span>
+          <span>
+            <label>
+              {{data.fullStudies}}
+            </label>
+          </span>
+        </div>
+        <div class="flexrow">
+          <span>
+            <label>
+              {{localize "CoC7.SpellsLearned"}}
+            </label>
+          </span>
+          <span>
+            <label>
+              {{spellsLearned}}
+            </label>
+          </span>
+        </div>
+      {{else}}
+        <div class="flexrow">
+          <span id="attempt-initial-reading">
+            <label>
+              {{localize "CoC7.InitialReading"}}
+            </label>
+          </span>
+        </div>
       {{/if}}
-
     </div>
     <div class="progress">
       <i id="decrease-progress" class="fas fa-minus"></i>
@@ -52,11 +71,11 @@
         name="data.study.progress"
         value="{{data.study.progress}}"
         max="{{data.study.necessary}}"
-        data-label="{{localize
-          "CoC7.Progress"
-        }}: {{data.study.progress}} / {{data.study.necessary}} {{localize
-          "CoC7.weeks"
-        }}"
+        {{#if data.type.mythos}}
+          data-label="{{localize "CoC7.Progress"}}:
+            {{data.study.progress}} / {{data.study.necessary}}
+            {{localize "CoC7.weeks"}}"
+        {{/if}}
       ></progress>
       <i id="increase-progress" class="fas fa-plus increase-progress"></i>
     </div>

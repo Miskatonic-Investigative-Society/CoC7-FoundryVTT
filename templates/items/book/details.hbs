@@ -25,11 +25,13 @@
         {{/select}}
       </select>
     </div>
-    <div class="flexrow">
-      <label>{{localize "CoC7.StudyTime"}}:</label>
-      <input type="number" name="data.study.necessary" value="{{data.study.necessary}}"/>
-      <label>{{localize "CoC7.weeks"}}</label>
-    </div>
+    {{#if data.type.mythos}}
+      <div class="flexrow">
+        <label>{{localize "CoC7.StudyTime"}}:</label>
+        <input type="number" name="data.study.necessary" value="{{data.study.necessary}}"/>
+        <label>{{localize "CoC7.weeks"}}</label>
+      </div>
+    {{/if}}
     {{#or data.type.mythos data.type.occult}}
     <div class="flexrow">
       <label>{{localize "CoC7.SANLoss"}}:</label>

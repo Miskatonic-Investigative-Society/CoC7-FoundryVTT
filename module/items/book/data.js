@@ -89,6 +89,9 @@ export class CoC7Book extends CoC7Item {
         })
       )
     }
+    if (!this.data.data.type.mythos && mode !== 'reset') {
+      return ui.notifications.error(game.i18n.localize('CoC7.NotMythosTome'))
+    }
     let fullStudy = this.data.data.fullStudy
     let progress = this.data.data.study.progress
     const necessary = this.data.data.study.necessary
