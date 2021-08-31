@@ -264,6 +264,10 @@
       }
       .spells {
         i {
+          max-width: fit-content;
+          padding: 0 0.3rem;
+        }
+        ul {
           padding: 0 0.3rem;
         }
         .spell {
@@ -283,13 +287,12 @@
             grid-area: name;
           }
           .edit {
+            display: inline-flex;
             grid-area: edit;
           }
           .status {
+            display: inline-flex;
             grid-area: status;
-          }
-          ul {
-            padding: 0.3rem;
           }
         }
       }

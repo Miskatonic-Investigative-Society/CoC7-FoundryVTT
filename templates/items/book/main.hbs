@@ -152,21 +152,23 @@
       </div>
       <div class="tab" data-group="primary" data-tab="spells">
         <div class="spells">
-          <i id="add-spell" class="fas fa-plus"></i>
+          <label>Drag spell here to...</label>
           <ul>
             {{#each data.spells as |spell key|}}
-              <li class="spell">
+              <li class="spell" data-index="{{@index}}" data-id="{{spell._id}}">
                 <div class="portrait">
                   <img src="{{spell.img}}" />
                 </div>
                 <div class="name">
-                  <label>
+                  <label class="spell-name">
                     {{spell.name}}
                   </label>
                 </div>
                 <div class="edit">
+                  <i class="fas fa-trash delete-spell"></i>
                 </div>
                 <div class="status">
+                  <i class="fas fa-book-open teach-spell"></i>
                 </div>
               </li>
             {{/each}}
