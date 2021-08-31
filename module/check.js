@@ -1767,6 +1767,13 @@ export class CoC7Check {
         if (options.update) check.updateChatCard()
         break
       }
+      case 'reveal-check-to-all': {
+        check.isBlind = false
+        check.rollMode = false
+        check.computeCheck()
+        if (options.update) check.updateChatCard()
+        break
+      }
 
       case 'flag-for-development': {
         await check.flagForDevelopement()
