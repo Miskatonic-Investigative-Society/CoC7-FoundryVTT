@@ -2,325 +2,331 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`. Feel free to create a new `*.json` file for a language that is not shown here!
 
-| Key                                                                                      |   cn    |   cs   |   de   |   es   |   fr   |   ja   |   pl    | pt-BR  |   sv   | zh-TW  |
-| :--------------------------------------------------------------------------------------- | :-----: | :----: | :----: | :----: | :----: | :----: | :-----: | :----: | :----: | :----: |
-| **Remaining**:                                                                           | **299** | **74** | **92** | **12** | **39** | **94** | **315** | **12** | **14** | **12** |
-| [CoC7.ActorImporter](#coc7actorimporter)                                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.ActorImporterSummary](#coc7actorimportersummary)                                   |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.AdvantageAttacker](#coc7advantageattacker)                                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.AdvantageDefender](#coc7advantagedefender)                                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.All](#coc7all)                                                                     |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.AlreadyInABout](#coc7alreadyinabout)                                               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.AlreadyLost](#coc7alreadylost)                                                     |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.AlreadyUnderlyingInsanity](#coc7alreadyunderlyinginsanity)                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Any](#coc7any)                                                                     |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.ArmedVehicle](#coc7armedvehicle)                                                   |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.ArmorAbsorbsDamage](#coc7armorabsorbsdamage)                                       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.ArmourPlating](#coc7armourplating)                                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.AttackSuccess](#coc7attacksuccess)                                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Attribute](#coc7attribute)                                                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Attributes](#coc7attributes)                                                       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.AutomaticFire](#coc7automaticfire)                                                 |    X    |        |   X    |        |        |        |    X    |        |        |        |
-| [CoC7.Blind](#coc7blind)                                                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.BonusSelectionWindowNamed](#coc7bonusselectionwindownamed)                         |         |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.BoutActive](#coc7boutactive)                                                       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.BoutOfMadness](#coc7boutofmadness)                                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.BoutOfMadnessName](#coc7boutofmadnessname)                                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.BoutOfMadnesslasted](#coc7boutofmadnesslasted)                                     |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.BoutRealTime](#coc7boutrealtime)                                                   |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.BoutSummary](#coc7boutsummary)                                                     |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.BurstSizeHint](#coc7burstsizehint)                                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Cancel](#coc7cancel)                                                               |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.CardResolved](#coc7cardresolved)                                                   |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.CharCreationMode](#coc7charcreationmode)                                           |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Characteristic](#coc7characteristic)                                               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Check](#coc7check)                                                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.CloseCard](#coc7closecard)                                                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Collapse](#coc7collapse)                                                           |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.CombinedAllHint](#coc7combinedallhint)                                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.CombinedAnyHint](#coc7combinedanyhint)                                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.CombinedRollCard](#coc7combinedrollcard)                                           |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Content](#coc7content)                                                             |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.Convert](#coc7convert)                                                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.ConvertFrom6Edition](#coc7convertfrom6edition)                                     |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.CopyToClipboard](#coc7copytoclipboard)                                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.CreateLink](#coc7createlink)                                                       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.CreatedImportedCharactersFolder](#coc7createdimportedcharactersfolder)             |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.Creature](#coc7creature)                                                           |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.CreatureMaxLoss](#coc7creaturemaxloss)                                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Crew](#coc7crew)                                                                   |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Critical](#coc7critical)                                                           |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.CriticalTitle](#coc7criticaltitle)                                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.CthulhuMythosName](#coc7cthulhumythosname)                                         |         |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.CustomLabel](#coc7customlabel)                                                     |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.DailyLoss](#coc7dailyloss)                                                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.DamageInflicted](#coc7damageinflicted)                                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.DealDamage](#coc7dealdamage)                                                       |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.DevPhase](#coc7devphase)                                                           |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Development](#coc7development)                                                     |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.DifficultyLevel](#coc7difficultylevel)                                             |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.DisregardMythosGain](#coc7disregardmythosgain)                                     |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.DriveSpecializationName](#coc7drivespecializationname)                             |    X    |        |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.DyingCheck](#coc7dyingcheck)                                                       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Earned](#coc7earned)                                                               |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.EmptyItemList](#coc7emptyitemlist)                                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.EndBoutOfMadness](#coc7endboutofmadness)                                           |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.English](#coc7english)                                                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.EnteringBoutOfMadness](#coc7enteringboutofmadness)                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Entities.Archetype](#coc7entitiesarchetype)                                        |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.Entities.Book](#coc7entitiesbook)                                                  |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.Entities.Character](#coc7entitiescharacter)                                        |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.Entities.Chase](#coc7entitieschase)                                                |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.Entities.Creature](#coc7entitiescreature)                                          |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.Entities.Item](#coc7entitiesitem)                                                  |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.Entities.Npc](#coc7entitiesnpc)                                                    |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.Entities.Occupation](#coc7entitiesoccupation)                                      |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.Entities.Setup](#coc7entitiessetup)                                                |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.Entities.Skill](#coc7entitiesskill)                                                |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.Entities.Spell](#coc7entitiesspell)                                                |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.Entities.Status](#coc7entitiesstatus)                                              |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.Entities.Talent](#coc7entitiestalent)                                              |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.Entities.Vehicle](#coc7entitiesvehicle)                                            |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.Entities.Weapon](#coc7entitiesweapon)                                              |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.ErrorManeuverNotPossible](#coc7errormaneuvernotpossible)                           |         |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.ErrorNoDodgeSkill](#coc7errornododgeskill)                                         |         |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.ErrorNotEnoughLuck](#coc7errornotenoughluck)                                       |         |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.ErrorNotFound](#coc7errornotfound)                                                 |         |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.ErrorNotFoundForActor](#coc7errornotfoundforactor)                                 |         |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Expand](#coc7expand)                                                               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.FakeRoll](#coc7fakeroll)                                                           |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.FlatDiceModifier](#coc7flatdicemodifier)                                           |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.FlatModifier](#coc7flatmodifier)                                                   |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.French](#coc7french)                                                               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.FullStudy](#coc7fullstudy)                                                         |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.Gains](#coc7gains)                                                                 |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.GmNotes](#coc7gmnotes)                                                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.GmTools](#coc7gmtools)                                                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.GoodForAsylum](#coc7goodforasylum)                                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.GrowingAccustomedToAwfulness](#coc7growingaccustomedtoawfulness)                   |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Guess](#coc7guess)                                                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.HowToTranslateEnableTranslation](#coc7howtotranslateenabletranslation)             |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.HowToTranslateInstallBabele](#coc7howtotranslateinstallbabele)                     |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.HowToTranslateInstallTranslation](#coc7howtotranslateinstalltranslation)           |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.HowToTranslateNoTranslation](#coc7howtotranslatenotranslation)                     |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.HowToTranslateTitle](#coc7howtotranslatetitle)                                     |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.HowToTranslateWarning](#coc7howtotranslatewarning)                                 |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.Icon](#coc7icon)                                                                   |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.ImmuneToAwfulness](#coc7immunetoawfulness)                                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Impale](#coc7impale)                                                               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.ImpaleTitle](#coc7impaletitle)                                                     |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Import](#coc7import)                                                               |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.ImportedUnnamedCharacter](#coc7importedunnamedcharacter)                           |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.IndefinitelyInsane](#coc7indefinitelyinsane)                                       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.InfoAllSkillsAlreadySelected](#coc7infoallskillsalreadyselected)                   |         |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.InfoLessSkillThanOptions](#coc7infolessskillthanoptions)                           |         |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.InitialReading](#coc7initialreading)                                               |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.InsanityName](#coc7insanityname)                                                   |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.InsanityType](#coc7insanitytype)                                                   |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.IntCheck](#coc7intcheck)                                                           |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.InvestigatorManiaGained](#coc7investigatormaniagained)                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.InvestigatorPhobiaGained](#coc7investigatorphobiagained)                           |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.InvoluntaryAction](#coc7involuntaryaction)                                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.InvoluntaryActionPerfomed](#coc7involuntaryactionperfomed)                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.InvoluntaryActionPerformed](#coc7involuntaryactionperformed)                       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.ItemWeapon](#coc7itemweapon)                                                       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.KeepData](#coc7keepdata)                                                           |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.KeeperSentDecoy](#coc7keepersentdecoy)                                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Label](#coc7label)                                                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.LinkCheck](#coc7linkcheck)                                                         |         |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.LinkCheckDiff](#coc7linkcheckdiff)                                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.LinkCheckDiffModif](#coc7linkcheckdiffmodif)                                       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.LinkCheckModif](#coc7linkcheckmodif)                                               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.LinkItem](#coc7linkitem)                                                           |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.LinkItemDiff](#coc7linkitemdiff)                                                   |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.LinkItemDiffModif](#coc7linkitemdiffmodif)                                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.LinkItemModif](#coc7linkitemmodif)                                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.LinkSanLoss](#coc7linksanloss)                                                     |         |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.LinkSanLossDiff](#coc7linksanlossdiff)                                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.LinkSanLossDiffModif](#coc7linksanlossdiffmodif)                                   |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.LinkSanLossModif](#coc7linksanlossmodif)                                           |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Location](#coc7location)                                                           |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.LuckIncreased](#coc7luckincreased)                                                 |    X    |        |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.LuckNotIncreased](#coc7lucknotincreased)                                           |    X    |        |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.Mania](#coc7mania)                                                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.ManiaGained](#coc7maniagained)                                                     |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.MaxLossToCreature](#coc7maxlosstocreature)                                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.MaxSanloss](#coc7maxsanloss)                                                       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.MemoryRepressed](#coc7memoryrepressed)                                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.MessageBoutOfMadnessItemNotFound](#coc7messageboutofmadnessitemnotfound)           |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.MessageBoutOfMadnessTableNotFound](#coc7messageboutofmadnesstablenotfound)         |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.MessageCheckRequestedWait](#coc7messagecheckrequestedwait)                         |    X    |        |        |        |        |   X    |    X    |        |        |        |
-| [CoC7.MessageSelectSingleUserForTarget](#coc7messageselectsingleuserfortarget)           |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.MessageSelectedTargetIsNotControlled](#coc7messageselectedtargetisnotcontrolled)   |    X    |        |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.MessageTargetCheckRequested](#coc7messagetargetcheckrequested)                     |    X    |        |        |        |        |   X    |    X    |        |        |        |
-| [CoC7.MessageTitleSelectSingleUserForTarget](#coc7messagetitleselectsingleuserfortarget) |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.Migrate.ButtonOkay](#coc7migratebuttonokay)                                        |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.Migrate.ButtonSkip](#coc7migratebuttonskip)                                        |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.Migrate.ButtonUpdate](#coc7migratebuttonupdate)                                    |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.Migrate.GMRequired](#coc7migrategmrequired)                                        |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.Migrate.Message](#coc7migratemessage)                                              |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.Migrate.RestartRequired](#coc7migraterestartrequired)                              |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.Migrate.Title](#coc7migratetitle)                                                  |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.MinSanloss](#coc7minsanloss)                                                       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Modifiers](#coc7modifiers)                                                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.MythosAlreadyEncountered](#coc7mythosalreadyencountered)                           |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.MythosFirstEncounter](#coc7mythosfirstencounter)                                   |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.MythosGain](#coc7mythosgain)                                                       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.NoConvert](#coc7noconvert)                                                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.NoTargetSelected](#coc7notargetselected)                                           |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.NonPlayingCharacter](#coc7nonplayingcharacter)                                     |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.NotInsane](#coc7notinsane)                                                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.OpposedRollCard](#coc7opposedrollcard)                                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Origin](#coc7origin)                                                               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.OutOfAmmo](#coc7outofammo)                                                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.OutOfShots](#coc7outofshots)                                                       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.PasteTheDataBelow](#coc7pastethedatabelow)                                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Phobia](#coc7phobia)                                                               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.PhobiaGained](#coc7phobiagained)                                                   |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.PilotSpecializationName](#coc7pilotspecializationname)                             |    X    |        |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.PlayerName](#coc7playername)                                                       |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.PlayerPermanentlyInsane](#coc7playerpermanentlyinsane)                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Proceed](#coc7proceed)                                                             |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.Progress](#coc7progress)                                                           |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.Properties](#coc7properties)                                                       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.PushingSkill](#coc7pushingskill)                                                   |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.RecoverLuckPoints](#coc7recoverluckpoints)                                         |    X    |        |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.Reload](#coc7reload)                                                               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.RememberEverything](#coc7remembereverything)                                       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.ResetCreatureSan](#coc7resetcreaturesan)                                           |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.ResetSpecieSan](#coc7resetspeciesan)                                               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.RevealSanLoss](#coc7revealsanloss)                                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.RollLuck4Dev](#coc7rollluck4dev)                                                   |    X    |        |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.RollSecretDice](#coc7rollsecretdice)                                               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.RollThreshold](#coc7rollthreshold)                                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.SANCheckTitle](#coc7sanchecktitle)                                                 |         |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.SanDataSelectionWindow](#coc7sandataselectionwindow)                               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.SanGained](#coc7sangained)                                                         |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.SanityCheckPerformed](#coc7sanitycheckperformed)                                   |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.SanityLost](#coc7sanitylost)                                                       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.SelectActorType](#coc7selectactortype)                                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.SelectSourceLanguage](#coc7selectsourcelanguage)                                   |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.SendToChat](#coc7sendtochat)                                                       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.ShotBullets](#coc7shotbullets)                                                     |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.ShotIsImpossible](#coc7shotisimpossible)                                           |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.ShotVoley](#coc7shotvoley)                                                         |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.Skill](#coc7skill)                                                                 |         |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Spanish](#coc7spanish)                                                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Specific](#coc7specific)                                                           |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.SpecificLocations](#coc7specificlocations)                                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Status](#coc7status)                                                               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Success](#coc7success)                                                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Target](#coc7target)                                                               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.TargetOutOfRange](#coc7targetoutofrange)                                           |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.TemporaryInsane](#coc7temporaryinsane)                                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Tie](#coc7tie)                                                                     |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.TotalDamage](#coc7totaldamage)                                                     |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.UnderlyingInsanity](#coc7underlyinginsanity)                                       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.Unreadable](#coc7unreadable)                                                       |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.Vehicle](#coc7vehicle)                                                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.WarnFastTargetWithWrongMOV](#coc7warnfasttargetwithwrongmov)                       |         |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.WarnNoControlledActor](#coc7warnnocontrolledactor)                                 |         |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.WarnTooManyTarget](#coc7warntoomanytarget)                                         |         |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.WeaponUsesPerRoundHint](#coc7weaponusesperroundhint)                               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.WhisperTo](#coc7whisperto)                                                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.WhisperToSelection](#coc7whispertoselection)                                       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.XPGainDisabled](#coc7xpgaindisabled)                                               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.XPGainEnabled](#coc7xpgainenabled)                                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.YouGainedCthulhuMythos](#coc7yougainedcthulhumythos)                               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.combatCard.surprised](#coc7combatcardsurprised)                                    |         |        |        |        |        |   X    |         |        |        |        |
-| [CoC7.dailySanLossRestarted](#coc7dailysanlossrestarted)                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.dreaming](#coc7dreaming)                                                           |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.hasCriticalWounds](#coc7hascriticalwounds)                                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.healthRecovered](#coc7healthrecovered)                                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.hours](#coc7hours)                                                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.magicPointsRecovered](#coc7magicpointsrecovered)                                   |    X    |        |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.meleeCombatDamageDeals](#coc7meleecombatdamagedeals)                               |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.meleeCombatDamageFrom](#coc7meleecombatdamagefrom)                                 |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.meleeCombatDamageTakes](#coc7meleecombatdamagetakes)                               |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.meleeCombatDamageWith](#coc7meleecombatdamagewith)                                 |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
-| [CoC7.notKnowLanguage](#coc7notknowlanguage)                                             |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [CoC7.pulpHealthRecovered](#coc7pulphealthrecovered)                                     |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.quickHealer](#coc7quickhealer)                                                     |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.rangeCombatCard.AimingTitle](#coc7rangecombatcardaimingtitle)                      |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.rangeCombatCard.BigTargetTitle](#coc7rangecombatcardbigtargettitle)                |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.rangeCombatCard.CoverTitle](#coc7rangecombatcardcovertitle)                        |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.rangeCombatCard.FastMovingTargetTitle](#coc7rangecombatcardfastmovingtargettitle)  |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.rangeCombatCard.InMeleeTitle](#coc7rangecombatcardinmeleetitle)                    |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.rangeCombatCard.NormalTarget](#coc7rangecombatcardnormaltarget)                    |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.rangeCombatCard.NormalTargetTitle](#coc7rangecombatcardnormaltargettitle)          |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.rangeCombatCard.PointBlankRangeTitle](#coc7rangecombatcardpointblankrangetitle)    |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.rangeCombatCard.SmallTargetTitle](#coc7rangecombatcardsmalltargettitle)            |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.rangeCombatDamageArmor](#coc7rangecombatdamagearmor)                               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.remove](#coc7remove)                                                               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.rounds](#coc7rounds)                                                               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.startRest](#coc7startrest)                                                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.toggleXP](#coc7togglexp)                                                           |    X    |        |        |        |        |        |    X    |        |        |        |
-| [CoC7.weeks](#coc7weeks)                                                                 |    X    |   X    |   X    |        |   X    |   X    |    X    |        |        |        |
-| [SETTINGS.AdviseAllPlayer](#settingsadviseallplayer)                                     |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.AdviseOwnersOnly](#settingsadviseownersonly)                                   |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.AllowFlatDiceModifier](#settingsallowflatdicemodifier)                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.AllowFlatDiceModifierHint](#settingsallowflatdicemodifierhint)                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.AllowFlatThresholdModifier](#settingsallowflatthresholdmodifier)               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.AllowFlatThresholdModifierHint](#settingsallowflatthresholdmodifierhint)       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.AlwaysEditable](#settingsalwayseditable)                                       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.ArtWorkOtherSheetBackground](#settingsartworkothersheetbackground)             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.ArtWorkOtherSheetBackgroundHint](#settingsartworkothersheetbackgroundhint)     |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.ArtWorkSheetBackground](#settingsartworksheetbackground)                       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.ArtWorkSheetBackgroundHint](#settingsartworksheetbackgroundhint)               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.ArtWorkSheetBackgroundType](#settingsartworksheetbackgroundtype)               |    X    |        |   X    |        |        |   X    |    X    |        |        |        |
-| [SETTINGS.ArtworkBackgroundColor](#settingsartworkbackgroundcolor)                       |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.ArtworkBackgroundColorHint](#settingsartworkbackgroundcolorhint)               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.ArtworkFixedSkillLength](#settingsartworkfixedskilllength)                     |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.ArtworkFixedSkillLengthHint](#settingsartworkfixedskilllengthhint)             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.ArtworkFrontColor](#settingsartworkfrontcolor)                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.ArtworkFrontColorHint](#settingsartworkfrontcolorhint)                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.ArtworkInteractiveColor](#settingsartworkinteractivecolor)                     |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.ArtworkInteractiveColorHint](#settingsartworkinteractivecolorhint)             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.ArtworkMainFont](#settingsartworkmainfont)                                     |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.ArtworkMainFontBold](#settingsartworkmainfontbold)                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.ArtworkMainFontSize](#settingsartworkmainfontsize)                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.ArtworkSheetImage](#settingsartworksheetimage)                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.ArtworkSheetImageHint](#settingsartworksheetimagehint)                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.BackgroundAuto](#settingsbackgroundauto)                                       |    X    |        |   X    |        |        |   X    |    X    |        |        |        |
-| [SETTINGS.BackgroundContain](#settingsbackgroundcontain)                                 |    X    |        |   X    |        |        |   X    |    X    |        |        |        |
-| [SETTINGS.BackgroundCover](#settingsbackgroundcover)                                     |    X    |        |   X    |        |        |   X    |    X    |        |        |        |
-| [SETTINGS.BackgroundSlice](#settingsbackgroundslice)                                     |    X    |        |   X    |        |        |   X    |    X    |        |        |        |
-| [SETTINGS.BoutOfMadnessRealTimeTable](#settingsboutofmadnessrealtimetable)               |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.BoutOfMadnessSummaryTable](#settingsboutofmadnesssummarytable)                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.CreationModeOnly](#settingscreationmodeonly)                                   |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.DebugMode](#settingsdebugmode)                                                 |    X    |        |   X    |        |        |   X    |    X    |        |        |        |
-| [SETTINGS.DebugModeHint](#settingsdebugmodehint)                                         |    X    |        |   X    |        |        |   X    |    X    |        |        |        |
-| [SETTINGS.DisplayCheckSuccessLevel](#settingsdisplaychecksuccesslevel)                   |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.DisplayResultType](#settingsdisplayresulttype)                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.DoNotAdvise](#settingsdonotadvise)                                             |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.EnableStatusIcons](#settingsenablestatusicons)                                 |    X    |   X    |   X    |        |   X    |   X    |    X    |        |   X    |        |
-| [SETTINGS.EnableStatusIconsHint](#settingsenablestatusiconshint)                         |    X    |   X    |   X    |        |   X    |   X    |    X    |        |   X    |        |
-| [SETTINGS.LetKeeperDecide](#settingsletkeeperdecide)                                     |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.NeverEditable](#settingsnevereditable)                                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.OneBlockBackStory](#settingsoneblockbackstory)                                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.OneBlockBackStoryHint](#settingsoneblockbackstoryhint)                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.OpposedRollTieBreaker](#settingsopposedrolltiebreaker)                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.OpposedRollTieBreakerHint](#settingsopposedrolltiebreakerhint)                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.OverrideSheetArtwork](#settingsoverridesheetartwork)                           |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.OverrideSheetArtworkHint](#settingsoverridesheetartworkhint)                   |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.PlayerUnlockSheetMode](#settingsplayerunlocksheetmode)                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.SelfRollWhisperTarget](#settingsselfrollwhispertarget)                         |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.SelfRollWhisperTargetHint](#settingsselfrollwhispertargethint)                 |    X    |        |        |        |        |        |    X    |        |        |        |
-| [SETTINGS.StanbyGMRolls](#settingsstanbygmrolls)                                         |    X    |   X    |   X    |   X    |   X    |   X    |    X    |   X    |   X    |   X    |
-| [SETTINGS.StanbyGMRollsHint](#settingsstanbygmrollshint)                                 |    X    |   X    |   X    |   X    |   X    |   X    |    X    |   X    |   X    |   X    |
-| [SETTINGS.TitleChatCards](#settingstitlechatcards)                                       |    X    |   X    |   X    |   X    |   X    |   X    |    X    |   X    |   X    |   X    |
-| [SETTINGS.TitleDeveloperDebug](#settingstitledeveloperdebug)                             |    X    |   X    |   X    |   X    |   X    |   X    |    X    |   X    |   X    |   X    |
-| [SETTINGS.TitleDiceSoNice](#settingstitledicesonice)                                     |    X    |   X    |   X    |   X    |   X    |   X    |    X    |   X    |   X    |   X    |
-| [SETTINGS.TitleInitiative](#settingstitleinitiative)                                     |    X    |   X    |   X    |   X    |   X    |   X    |    X    |   X    |   X    |   X    |
-| [SETTINGS.TitleRoll](#settingstitleroll)                                                 |    X    |   X    |   X    |   X    |   X    |   X    |    X    |   X    |   X    |   X    |
-| [SETTINGS.TitleRollTable](#settingstitlerolltable)                                       |    X    |   X    |   X    |   X    |   X    |   X    |    X    |   X    |   X    |   X    |
-| [SETTINGS.TitleRules](#settingstitlerules)                                               |    X    |   X    |   X    |   X    |   X    |   X    |    X    |   X    |   X    |   X    |
-| [SETTINGS.TitleScene](#settingstitlescene)                                               |    X    |   X    |   X    |   X    |   X    |   X    |    X    |   X    |   X    |   X    |
-| [SETTINGS.TitleSheet](#settingstitlesheet)                                               |    X    |   X    |   X    |   X    |   X    |   X    |    X    |   X    |   X    |   X    |
-| [SETTINGS.TitleWeapon](#settingstitleweapon)                                             |    X    |   X    |   X    |   X    |   X    |   X    |    X    |   X    |   X    |   X    |
-| [SETTINGS.developmentRollForLuck](#settingsdevelopmentrollforluck)                       |    X    |        |   X    |        |        |   X    |    X    |        |        |        |
-| [SETTINGS.developmentRollForLuckHint](#settingsdevelopmentrollforluckhint)               |    X    |        |   X    |        |        |   X    |    X    |        |        |        |
-| [SETTINGS.displayPlayerNameOnSheet](#settingsdisplayplayernameonsheet)                   |    X    |   X    |   X    |        |        |   X    |    X    |        |        |        |
+| Key                                                                                      |   cn    |   cs   |   de   |   es   |   fr   |   ja    |   pl    | pt-BR  |   sv   | zh-TW  |
+| :--------------------------------------------------------------------------------------- | :-----: | :----: | :----: | :----: | :----: | :-----: | :-----: | :----: | :----: | :----: |
+| **Remaining**:                                                                           | **305** | **80** | **98** | **20** | **45** | **100** | **321** | **20** | **22** | **20** |
+| [CoC7.ActorImporter](#coc7actorimporter)                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.ActorImporterSummary](#coc7actorimportersummary)                                   |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.AdvantageAttacker](#coc7advantageattacker)                                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.AdvantageDefender](#coc7advantagedefender)                                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.All](#coc7all)                                                                     |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.AlreadyInABout](#coc7alreadyinabout)                                               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.AlreadyLost](#coc7alreadylost)                                                     |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.AlreadyUnderlyingInsanity](#coc7alreadyunderlyinginsanity)                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Any](#coc7any)                                                                     |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.ArmedVehicle](#coc7armedvehicle)                                                   |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.ArmorAbsorbsDamage](#coc7armorabsorbsdamage)                                       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.ArmourPlating](#coc7armourplating)                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.AttackSuccess](#coc7attacksuccess)                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Attribute](#coc7attribute)                                                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Attributes](#coc7attributes)                                                       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.AutomaticFire](#coc7automaticfire)                                                 |    X    |        |   X    |        |        |         |    X    |        |        |        |
+| [CoC7.Blind](#coc7blind)                                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.BonusSelectionWindowNamed](#coc7bonusselectionwindownamed)                         |         |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.BoutActive](#coc7boutactive)                                                       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.BoutOfMadness](#coc7boutofmadness)                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.BoutOfMadnessName](#coc7boutofmadnessname)                                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.BoutOfMadnesslasted](#coc7boutofmadnesslasted)                                     |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.BoutRealTime](#coc7boutrealtime)                                                   |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.BoutSummary](#coc7boutsummary)                                                     |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.BurstSizeHint](#coc7burstsizehint)                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Cancel](#coc7cancel)                                                               |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.CardResolved](#coc7cardresolved)                                                   |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.CharCreationMode](#coc7charcreationmode)                                           |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Characteristic](#coc7characteristic)                                               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Check](#coc7check)                                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.CloseCard](#coc7closecard)                                                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Collapse](#coc7collapse)                                                           |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.CombinedAllHint](#coc7combinedallhint)                                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.CombinedAnyHint](#coc7combinedanyhint)                                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.CombinedRollCard](#coc7combinedrollcard)                                           |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Content](#coc7content)                                                             |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.Convert](#coc7convert)                                                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.ConvertFrom6Edition](#coc7convertfrom6edition)                                     |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.CopyToClipboard](#coc7copytoclipboard)                                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.CreateLink](#coc7createlink)                                                       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.CreatedImportedCharactersFolder](#coc7createdimportedcharactersfolder)             |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.Creature](#coc7creature)                                                           |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.CreatureMaxLoss](#coc7creaturemaxloss)                                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Crew](#coc7crew)                                                                   |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Critical](#coc7critical)                                                           |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.CriticalTitle](#coc7criticaltitle)                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.CthulhuMythosName](#coc7cthulhumythosname)                                         |         |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.CustomLabel](#coc7customlabel)                                                     |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.DailyLoss](#coc7dailyloss)                                                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.DamageInflicted](#coc7damageinflicted)                                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.DealDamage](#coc7dealdamage)                                                       |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.DevPhase](#coc7devphase)                                                           |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Development](#coc7development)                                                     |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.DifficultyLevel](#coc7difficultylevel)                                             |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.DisregardMythosGain](#coc7disregardmythosgain)                                     |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.DriveSpecializationName](#coc7drivespecializationname)                             |    X    |        |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.DyingCheck](#coc7dyingcheck)                                                       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.EmptyItemList](#coc7emptyitemlist)                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.EndBoutOfMadness](#coc7endboutofmadness)                                           |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.English](#coc7english)                                                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.EnteringBoutOfMadness](#coc7enteringboutofmadness)                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Entities.Archetype](#coc7entitiesarchetype)                                        |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.Entities.Book](#coc7entitiesbook)                                                  |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.Entities.Character](#coc7entitiescharacter)                                        |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.Entities.Chase](#coc7entitieschase)                                                |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.Entities.Creature](#coc7entitiescreature)                                          |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.Entities.Item](#coc7entitiesitem)                                                  |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.Entities.Npc](#coc7entitiesnpc)                                                    |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.Entities.Occupation](#coc7entitiesoccupation)                                      |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.Entities.Setup](#coc7entitiessetup)                                                |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.Entities.Skill](#coc7entitiesskill)                                                |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.Entities.Spell](#coc7entitiesspell)                                                |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.Entities.Status](#coc7entitiesstatus)                                              |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.Entities.Talent](#coc7entitiestalent)                                              |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.Entities.Vehicle](#coc7entitiesvehicle)                                            |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.Entities.Weapon](#coc7entitiesweapon)                                              |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.ErrorManeuverNotPossible](#coc7errormaneuvernotpossible)                           |         |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.ErrorNoDodgeSkill](#coc7errornododgeskill)                                         |         |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.ErrorNotEnoughLuck](#coc7errornotenoughluck)                                       |         |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.ErrorNotFound](#coc7errornotfound)                                                 |         |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.ErrorNotFoundForActor](#coc7errornotfoundforactor)                                 |         |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Expand](#coc7expand)                                                               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.FakeRoll](#coc7fakeroll)                                                           |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.FlatDiceModifier](#coc7flatdicemodifier)                                           |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.FlatModifier](#coc7flatmodifier)                                                   |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.French](#coc7french)                                                               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.FullStudies](#coc7fullstudies)                                                     |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.Gains](#coc7gains)                                                                 |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.GainsForReading](#coc7gainsforreading)                                             |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [CoC7.GmNotes](#coc7gmnotes)                                                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.GmTools](#coc7gmtools)                                                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.GoodForAsylum](#coc7goodforasylum)                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.GrowingAccustomedToAwfulness](#coc7growingaccustomedtoawfulness)                   |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Guess](#coc7guess)                                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.HowToTranslateEnableTranslation](#coc7howtotranslateenabletranslation)             |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.HowToTranslateInstallBabele](#coc7howtotranslateinstallbabele)                     |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.HowToTranslateInstallTranslation](#coc7howtotranslateinstalltranslation)           |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.HowToTranslateNoTranslation](#coc7howtotranslatenotranslation)                     |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.HowToTranslateTitle](#coc7howtotranslatetitle)                                     |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.HowToTranslateWarning](#coc7howtotranslatewarning)                                 |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.Icon](#coc7icon)                                                                   |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.ImmuneToAwfulness](#coc7immunetoawfulness)                                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Impale](#coc7impale)                                                               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.ImpaleTitle](#coc7impaletitle)                                                     |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Import](#coc7import)                                                               |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.ImportedUnnamedCharacter](#coc7importedunnamedcharacter)                           |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.IndefinitelyInsane](#coc7indefinitelyinsane)                                       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.InfoAllSkillsAlreadySelected](#coc7infoallskillsalreadyselected)                   |         |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.InfoLessSkillThanOptions](#coc7infolessskillthanoptions)                           |         |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.InitialReading](#coc7initialreading)                                               |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.InitialReadingNeeded](#coc7initialreadingneeded)                                   |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [CoC7.InsanityName](#coc7insanityname)                                                   |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.InsanityType](#coc7insanitytype)                                                   |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.IntCheck](#coc7intcheck)                                                           |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.InvestigatorManiaGained](#coc7investigatormaniagained)                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.InvestigatorPhobiaGained](#coc7investigatorphobiagained)                           |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.InvoluntaryAction](#coc7involuntaryaction)                                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.InvoluntaryActionPerfomed](#coc7involuntaryactionperfomed)                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.InvoluntaryActionPerformed](#coc7involuntaryactionperformed)                       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.ItemWeapon](#coc7itemweapon)                                                       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.KeepData](#coc7keepdata)                                                           |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.KeeperSentDecoy](#coc7keepersentdecoy)                                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Label](#coc7label)                                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.LinkCheck](#coc7linkcheck)                                                         |         |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.LinkCheckDiff](#coc7linkcheckdiff)                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.LinkCheckDiffModif](#coc7linkcheckdiffmodif)                                       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.LinkCheckModif](#coc7linkcheckmodif)                                               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.LinkItem](#coc7linkitem)                                                           |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.LinkItemDiff](#coc7linkitemdiff)                                                   |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.LinkItemDiffModif](#coc7linkitemdiffmodif)                                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.LinkItemModif](#coc7linkitemmodif)                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.LinkSanLoss](#coc7linksanloss)                                                     |         |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.LinkSanLossDiff](#coc7linksanlossdiff)                                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.LinkSanLossDiffModif](#coc7linksanlossdiffmodif)                                   |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.LinkSanLossModif](#coc7linksanlossmodif)                                           |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Location](#coc7location)                                                           |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.LuckIncreased](#coc7luckincreased)                                                 |    X    |        |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.LuckNotIncreased](#coc7lucknotincreased)                                           |    X    |        |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.Mania](#coc7mania)                                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.ManiaGained](#coc7maniagained)                                                     |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.MarkedForDevelopment](#coc7markedfordevelopment)                                   |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [CoC7.MaxLossToCreature](#coc7maxlosstocreature)                                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.MaxSanloss](#coc7maxsanloss)                                                       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.MemoryRepressed](#coc7memoryrepressed)                                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.MessageBoutOfMadnessItemNotFound](#coc7messageboutofmadnessitemnotfound)           |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.MessageBoutOfMadnessTableNotFound](#coc7messageboutofmadnesstablenotfound)         |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.MessageCheckRequestedWait](#coc7messagecheckrequestedwait)                         |    X    |        |        |        |        |    X    |    X    |        |        |        |
+| [CoC7.MessageSelectSingleUserForTarget](#coc7messageselectsingleuserfortarget)           |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.MessageSelectedTargetIsNotControlled](#coc7messageselectedtargetisnotcontrolled)   |    X    |        |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.MessageTargetCheckRequested](#coc7messagetargetcheckrequested)                     |    X    |        |        |        |        |    X    |    X    |        |        |        |
+| [CoC7.MessageTitleSelectSingleUserForTarget](#coc7messagetitleselectsingleuserfortarget) |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.Migrate.ButtonOkay](#coc7migratebuttonokay)                                        |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.Migrate.ButtonSkip](#coc7migratebuttonskip)                                        |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.Migrate.ButtonUpdate](#coc7migratebuttonupdate)                                    |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.Migrate.GMRequired](#coc7migrategmrequired)                                        |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.Migrate.Message](#coc7migratemessage)                                              |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.Migrate.RestartRequired](#coc7migraterestartrequired)                              |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.Migrate.Title](#coc7migratetitle)                                                  |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.MinSanloss](#coc7minsanloss)                                                       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Modifiers](#coc7modifiers)                                                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.MythosAlreadyEncountered](#coc7mythosalreadyencountered)                           |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.MythosFirstEncounter](#coc7mythosfirstencounter)                                   |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.MythosGain](#coc7mythosgain)                                                       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.NoConvert](#coc7noconvert)                                                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.NoTargetSelected](#coc7notargetselected)                                           |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.NonPlayingCharacter](#coc7nonplayingcharacter)                                     |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.NotInsane](#coc7notinsane)                                                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.NotOwned](#coc7notowned)                                                           |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [CoC7.OpposedRollCard](#coc7opposedrollcard)                                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Origin](#coc7origin)                                                               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.OutOfAmmo](#coc7outofammo)                                                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.OutOfShots](#coc7outofshots)                                                       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.PasteTheDataBelow](#coc7pastethedatabelow)                                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Phobia](#coc7phobia)                                                               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.PhobiaGained](#coc7phobiagained)                                                   |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.PilotSpecializationName](#coc7pilotspecializationname)                             |    X    |        |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.PlayerName](#coc7playername)                                                       |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.PlayerPermanentlyInsane](#coc7playerpermanentlyinsane)                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Points](#coc7points)                                                               |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [CoC7.Proceed](#coc7proceed)                                                             |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.Progress](#coc7progress)                                                           |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.Properties](#coc7properties)                                                       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.PushingSkill](#coc7pushingskill)                                                   |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.ReadAttempt](#coc7readattempt)                                                     |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [CoC7.ReadingMythosTome](#coc7readingmythostome)                                         |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [CoC7.RecoverLuckPoints](#coc7recoverluckpoints)                                         |    X    |        |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.Reload](#coc7reload)                                                               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.RememberEverything](#coc7remembereverything)                                       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.ResetCreatureSan](#coc7resetcreaturesan)                                           |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.ResetSpecieSan](#coc7resetspeciesan)                                               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.RevealSanLoss](#coc7revealsanloss)                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.RollLuck4Dev](#coc7rollluck4dev)                                                   |    X    |        |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.RollSecretDice](#coc7rollsecretdice)                                               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.RollThreshold](#coc7rollthreshold)                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.SANCheckTitle](#coc7sanchecktitle)                                                 |         |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.SanDataSelectionWindow](#coc7sandataselectionwindow)                               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.SanGained](#coc7sangained)                                                         |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.SanityCheckPerformed](#coc7sanitycheckperformed)                                   |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.SanityLost](#coc7sanitylost)                                                       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.SelectActorType](#coc7selectactortype)                                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.SelectSourceLanguage](#coc7selectsourcelanguage)                                   |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.SendToChat](#coc7sendtochat)                                                       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.ShotBullets](#coc7shotbullets)                                                     |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.ShotIsImpossible](#coc7shotisimpossible)                                           |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.ShotVoley](#coc7shotvoley)                                                         |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.Skill](#coc7skill)                                                                 |         |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Spanish](#coc7spanish)                                                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Specific](#coc7specific)                                                           |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.SpecificLocations](#coc7specificlocations)                                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Status](#coc7status)                                                               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Success](#coc7success)                                                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Target](#coc7target)                                                               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.TargetOutOfRange](#coc7targetoutofrange)                                           |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.TemporaryInsane](#coc7temporaryinsane)                                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.Tie](#coc7tie)                                                                     |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.TotalDamage](#coc7totaldamage)                                                     |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.UnderlyingInsanity](#coc7underlyinginsanity)                                       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.UnknownLanguage](#coc7unknownlanguage)                                             |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [CoC7.Unreadable](#coc7unreadable)                                                       |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.Vehicle](#coc7vehicle)                                                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.WarnFastTargetWithWrongMOV](#coc7warnfasttargetwithwrongmov)                       |         |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.WarnNoControlledActor](#coc7warnnocontrolledactor)                                 |         |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.WarnTooManyTarget](#coc7warntoomanytarget)                                         |         |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.WeaponUsesPerRoundHint](#coc7weaponusesperroundhint)                               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.WhisperTo](#coc7whisperto)                                                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.WhisperToSelection](#coc7whispertoselection)                                       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.XPGainDisabled](#coc7xpgaindisabled)                                               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.XPGainEnabled](#coc7xpgainenabled)                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.YouGainedCthulhuMythos](#coc7yougainedcthulhumythos)                               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.combatCard.surprised](#coc7combatcardsurprised)                                    |         |        |        |        |        |    X    |         |        |        |        |
+| [CoC7.dailySanLossRestarted](#coc7dailysanlossrestarted)                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.dreaming](#coc7dreaming)                                                           |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.hasCriticalWounds](#coc7hascriticalwounds)                                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.healthRecovered](#coc7healthrecovered)                                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.hours](#coc7hours)                                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.magicPointsRecovered](#coc7magicpointsrecovered)                                   |    X    |        |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.meleeCombatDamageDeals](#coc7meleecombatdamagedeals)                               |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.meleeCombatDamageFrom](#coc7meleecombatdamagefrom)                                 |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.meleeCombatDamageTakes](#coc7meleecombatdamagetakes)                               |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.meleeCombatDamageWith](#coc7meleecombatdamagewith)                                 |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
+| [CoC7.pulpHealthRecovered](#coc7pulphealthrecovered)                                     |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.quickHealer](#coc7quickhealer)                                                     |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.rangeCombatCard.AimingTitle](#coc7rangecombatcardaimingtitle)                      |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.rangeCombatCard.BigTargetTitle](#coc7rangecombatcardbigtargettitle)                |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.rangeCombatCard.CoverTitle](#coc7rangecombatcardcovertitle)                        |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.rangeCombatCard.FastMovingTargetTitle](#coc7rangecombatcardfastmovingtargettitle)  |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.rangeCombatCard.InMeleeTitle](#coc7rangecombatcardinmeleetitle)                    |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.rangeCombatCard.NormalTarget](#coc7rangecombatcardnormaltarget)                    |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.rangeCombatCard.NormalTargetTitle](#coc7rangecombatcardnormaltargettitle)          |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.rangeCombatCard.PointBlankRangeTitle](#coc7rangecombatcardpointblankrangetitle)    |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.rangeCombatCard.SmallTargetTitle](#coc7rangecombatcardsmalltargettitle)            |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.rangeCombatDamageArmor](#coc7rangecombatdamagearmor)                               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.remove](#coc7remove)                                                               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.rounds](#coc7rounds)                                                               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.startRest](#coc7startrest)                                                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.toggleXP](#coc7togglexp)                                                           |    X    |        |        |        |        |         |    X    |        |        |        |
+| [CoC7.weeks](#coc7weeks)                                                                 |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [SETTINGS.AdviseAllPlayer](#settingsadviseallplayer)                                     |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.AdviseOwnersOnly](#settingsadviseownersonly)                                   |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.AllowFlatDiceModifier](#settingsallowflatdicemodifier)                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.AllowFlatDiceModifierHint](#settingsallowflatdicemodifierhint)                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.AllowFlatThresholdModifier](#settingsallowflatthresholdmodifier)               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.AllowFlatThresholdModifierHint](#settingsallowflatthresholdmodifierhint)       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.AlwaysEditable](#settingsalwayseditable)                                       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.ArtWorkOtherSheetBackground](#settingsartworkothersheetbackground)             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.ArtWorkOtherSheetBackgroundHint](#settingsartworkothersheetbackgroundhint)     |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.ArtWorkSheetBackground](#settingsartworksheetbackground)                       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.ArtWorkSheetBackgroundHint](#settingsartworksheetbackgroundhint)               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.ArtWorkSheetBackgroundType](#settingsartworksheetbackgroundtype)               |    X    |        |   X    |        |        |    X    |    X    |        |        |        |
+| [SETTINGS.ArtworkBackgroundColor](#settingsartworkbackgroundcolor)                       |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.ArtworkBackgroundColorHint](#settingsartworkbackgroundcolorhint)               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.ArtworkFixedSkillLength](#settingsartworkfixedskilllength)                     |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.ArtworkFixedSkillLengthHint](#settingsartworkfixedskilllengthhint)             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.ArtworkFrontColor](#settingsartworkfrontcolor)                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.ArtworkFrontColorHint](#settingsartworkfrontcolorhint)                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.ArtworkInteractiveColor](#settingsartworkinteractivecolor)                     |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.ArtworkInteractiveColorHint](#settingsartworkinteractivecolorhint)             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.ArtworkMainFont](#settingsartworkmainfont)                                     |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.ArtworkMainFontBold](#settingsartworkmainfontbold)                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.ArtworkMainFontSize](#settingsartworkmainfontsize)                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.ArtworkSheetImage](#settingsartworksheetimage)                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.ArtworkSheetImageHint](#settingsartworksheetimagehint)                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.BackgroundAuto](#settingsbackgroundauto)                                       |    X    |        |   X    |        |        |    X    |    X    |        |        |        |
+| [SETTINGS.BackgroundContain](#settingsbackgroundcontain)                                 |    X    |        |   X    |        |        |    X    |    X    |        |        |        |
+| [SETTINGS.BackgroundCover](#settingsbackgroundcover)                                     |    X    |        |   X    |        |        |    X    |    X    |        |        |        |
+| [SETTINGS.BackgroundSlice](#settingsbackgroundslice)                                     |    X    |        |   X    |        |        |    X    |    X    |        |        |        |
+| [SETTINGS.BoutOfMadnessRealTimeTable](#settingsboutofmadnessrealtimetable)               |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.BoutOfMadnessSummaryTable](#settingsboutofmadnesssummarytable)                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.CreationModeOnly](#settingscreationmodeonly)                                   |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.DebugMode](#settingsdebugmode)                                                 |    X    |        |   X    |        |        |    X    |    X    |        |        |        |
+| [SETTINGS.DebugModeHint](#settingsdebugmodehint)                                         |    X    |        |   X    |        |        |    X    |    X    |        |        |        |
+| [SETTINGS.DisplayCheckSuccessLevel](#settingsdisplaychecksuccesslevel)                   |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.DisplayResultType](#settingsdisplayresulttype)                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.DoNotAdvise](#settingsdonotadvise)                                             |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.EnableStatusIcons](#settingsenablestatusicons)                                 |    X    |   X    |   X    |        |   X    |    X    |    X    |        |   X    |        |
+| [SETTINGS.EnableStatusIconsHint](#settingsenablestatusiconshint)                         |    X    |   X    |   X    |        |   X    |    X    |    X    |        |   X    |        |
+| [SETTINGS.LetKeeperDecide](#settingsletkeeperdecide)                                     |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.NeverEditable](#settingsnevereditable)                                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.OneBlockBackStory](#settingsoneblockbackstory)                                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.OneBlockBackStoryHint](#settingsoneblockbackstoryhint)                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.OpposedRollTieBreaker](#settingsopposedrolltiebreaker)                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.OpposedRollTieBreakerHint](#settingsopposedrolltiebreakerhint)                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.OverrideSheetArtwork](#settingsoverridesheetartwork)                           |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.OverrideSheetArtworkHint](#settingsoverridesheetartworkhint)                   |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.PlayerUnlockSheetMode](#settingsplayerunlocksheetmode)                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.SelfRollWhisperTarget](#settingsselfrollwhispertarget)                         |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.SelfRollWhisperTargetHint](#settingsselfrollwhispertargethint)                 |    X    |        |        |        |        |         |    X    |        |        |        |
+| [SETTINGS.StanbyGMRolls](#settingsstanbygmrolls)                                         |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [SETTINGS.StanbyGMRollsHint](#settingsstanbygmrollshint)                                 |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [SETTINGS.TitleChatCards](#settingstitlechatcards)                                       |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [SETTINGS.TitleDeveloperDebug](#settingstitledeveloperdebug)                             |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [SETTINGS.TitleDiceSoNice](#settingstitledicesonice)                                     |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [SETTINGS.TitleInitiative](#settingstitleinitiative)                                     |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [SETTINGS.TitleRoll](#settingstitleroll)                                                 |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [SETTINGS.TitleRollTable](#settingstitlerolltable)                                       |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [SETTINGS.TitleRules](#settingstitlerules)                                               |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [SETTINGS.TitleScene](#settingstitlescene)                                               |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [SETTINGS.TitleSheet](#settingstitlesheet)                                               |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [SETTINGS.TitleWeapon](#settingstitleweapon)                                             |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [SETTINGS.developmentRollForLuck](#settingsdevelopmentrollforluck)                       |    X    |        |   X    |        |        |    X    |    X    |        |        |        |
+| [SETTINGS.developmentRollForLuckHint](#settingsdevelopmentrollforluckhint)               |    X    |        |   X    |        |        |    X    |    X    |        |        |        |
+| [SETTINGS.displayPlayerNameOnSheet](#settingsdisplayplayernameonsheet)                   |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
 
 ##### CoC7.ActorImporter
 
@@ -550,10 +556,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 `"CoC7.DyingCheck": "Check if you'll die immediately",`
 
-##### CoC7.Earned
-
-`"CoC7.Earned": "Earned",`
-
 ##### CoC7.EmptyItemList
 
 `"CoC7.EmptyItemList": "Add an item by dropping it here.",`
@@ -670,13 +672,17 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 `"CoC7.French": "French",`
 
-##### CoC7.FullStudy
+##### CoC7.FullStudies
 
-`"CoC7.FullStudy": "Full Study",`
+`"CoC7.FullStudies": "Full Studies",`
 
 ##### CoC7.Gains
 
 `"CoC7.Gains": "Gains",`
+
+##### CoC7.GainsForReading
+
+`"CoC7.GainsForReading": "Skill gains for reading <i>{book}</i>.",`
 
 ##### CoC7.GmNotes
 
@@ -761,6 +767,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.InitialReading
 
 `"CoC7.InitialReading": "Initial Reading",`
+
+##### CoC7.InitialReadingNeeded
+
+`"CoC7.InitialReadingNeeded": "{actor} needs to perform an Initial Reading on <i>{book}</i> to be able to advance through Full Study progress.",`
 
 ##### CoC7.InsanityName
 
@@ -878,6 +888,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 `"CoC7.ManiaGained": "You gain a mania",`
 
+##### CoC7.MarkedForDevelopment
+
+`"CoC7.MarkedForDevelopment": "Marked for development",`
+
 ##### CoC7.MaxLossToCreature
 
 `"CoC7.MaxLossToCreature": "Max loss to this creature",`
@@ -982,6 +996,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 `"CoC7.NotInsane": "None",`
 
+##### CoC7.NotOwned
+
+`"CoC7.NotOwned": "This Book needs to be owned by an Actor to perform this action.",`
+
 ##### CoC7.OpposedRollCard
 
 `"CoC7.OpposedRollCard": "Opposed roll card",`
@@ -1022,6 +1040,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 `"CoC7.PlayerPermanentlyInsane": "Player Permanently Insane",`
 
+##### CoC7.Points
+
+`"CoC7.Points": "points",`
+
 ##### CoC7.Proceed
 
 `"CoC7.Proceed": "Proceed",`
@@ -1037,6 +1059,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.PushingSkill
 
 `"CoC7.PushingSkill": ": pushing skill!",`
+
+##### CoC7.ReadAttempt
+
+`"CoC7.ReadAttempt": "Attempt to read <i>{book}</i> ({language}), {difficulty} difficulty.",`
+
+##### CoC7.ReadingMythosTome
+
+`"CoC7.ReadingMythosTome": "Reading <i>{book}</i>.",`
 
 ##### CoC7.RecoverLuckPoints
 
@@ -1166,6 +1196,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 `"CoC7.UnderlyingInsanity": "Underlying insanity",`
 
+##### CoC7.UnknownLanguage
+
+`"CoC7.UnknownLanguage": "{actor} does not know the {language} language.",`
+
 ##### CoC7.Unreadable
 
 `"CoC7.Unreadable": "Unreadable",`
@@ -1253,10 +1287,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.meleeCombatDamageWith
 
 `"CoC7.meleeCombatDamageWith": "with",`
-
-##### CoC7.notKnowLanguage
-
-`"CoC7.notKnowLanguage": "{actor} does not know the {language} language.",`
 
 ##### CoC7.pulpHealthRecovered
 
