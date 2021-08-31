@@ -149,22 +149,32 @@ export class CoC7Book extends CoC7Item {
     /** If initial reading has already been done there is nothing to do here */
     if (this.data.data.initialReading) return
     const developments = []
-    if (this.data.data.type.mythos) {
+    const mythos = {
+      gains: this.data.data.gains.cthulhuMythos.initial,
+      type: this.data.data.type.mythos
+    }
+    const occult = {
+      gains: this.data.data.gains.occult,
+      type: this.data.data.type.occult
+    }
+    const other = {
+      gains: this.data.data.gains.other,
+      type: this.data.data.type.other
+    }
+    if (mythos.type && mythos.gains) {
       developments.push({
         name: game.i18n.localize('CoC7.CthulhuMythosName'),
-        gain: parseInt(this.data.data.gains.cthulhuMythos.initial)
+        gain: parseInt(mythos.gains)
       })
-      await this.rollSanityLoss()
     }
-    if (this.data.data.type.occult) {
+    if (occult.type && occult.gains) {
       developments.push({
         name: game.i18n.localize('CoC7.Occult'),
-        gain: parseInt(this.data.data.gains.occult)
+        gain: parseInt(occult.gains)
       })
-      await this.rollSanityLoss()
     }
-    if (this.data.data.type.other) {
-      this.data.data.gains.other.forEach(async skill => {
+    if (other.type) {
+      other.gains.forEach(async skill => {
         const pattern = skill.name.match(/^(.+) \((.+)\)$/)
         /** Sanitization to deal with specializations */
         if (pattern) {
@@ -174,14 +184,19 @@ export class CoC7Book extends CoC7Item {
         if (skill.value !== 'development') {
           skill.value = new Roll(skill.value).roll({ async: false }).total
         }
-        developments.push({
-          name: skill.name,
-          gain: skill.value,
-          specialization: skill.specialization
-        })
+        if (skill.value) {
+          developments.push({
+            name: skill.name,
+            gain: skill.value,
+            specialization: skill.specialization
+          })
+        }
       })
     }
     await this.grantSkillDevelopment(developments)
+    if ((mythos.type || occult.type) && this.data.data.sanityLoss) {
+      await this.rollSanityLoss()
+    }
     /** Mark initial reading as complete */
     return await this.update({ 'data.initialReading': true })
   }
@@ -193,7 +208,6 @@ export class CoC7Book extends CoC7Item {
    */
   async grantSkillDevelopment (developments) {
     for (const development of developments) {
-      console.log(development)
       /** Test if the value is greater than zero */
       if (!development.gain) continue
       let skill = await this.actor.getSkillsByName(development.name)
@@ -231,7 +245,8 @@ export class CoC7Book extends CoC7Item {
         if (skill.value + development.gain > 99) {
           for (let index = 1; index <= development.gain; index++) {
             if (skill.value + development.gain - index <= 99) {
-              await skill.increaseExperience(development.gain - index)
+              development.gain -= index
+              await skill.increaseExperience(development.gain)
               continue
             }
           }
@@ -239,6 +254,7 @@ export class CoC7Book extends CoC7Item {
         await skill.increaseExperience(development.gain)
       }
     }
+    return this.showDevelopmentsTable(developments)
   }
 
   /**
@@ -255,27 +271,12 @@ export class CoC7Book extends CoC7Item {
 
   /** Bypass the Sanity check and just roll the damage */
   async rollSanityLoss () {
-    const type =
-      this.data.data.type === 'mythos' || this.data.data.type === 'occult'
     const value = this.data.data.sanityLoss
-    if (!value || !type) return
-    const speakerData = {}
-    let speaker
     const template = SanCheckCard.template
     let html = await renderTemplate(template, {})
-    if (this.actor) {
-      if (this.token) {
-        speakerData.token = this.token
-      } else {
-        speakerData.actor = this.actor
-      }
-      speaker = ChatMessage.getSpeaker(speakerData)
-    } else {
-      speaker = ChatMessage.getSpeaker()
-    }
     const message = await ChatMessage.create({
       user: game.user.id,
-      speaker: speaker,
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       flavor: game.i18n.format('CoC7.ReadingMythosTome', {
         book: this.name
       }),
@@ -300,6 +301,35 @@ export class CoC7Book extends CoC7Item {
       await sanityCheck.rollSanLoss()
       sanityCheck.updateChatCard()
     }
+  }
+
+  /**
+   * Show a table in the chat with all skill developments obtained
+   * @param {Array<Object>} developments
+   * @returns {Promise<Document>} create ChatMessage
+   */
+  async showDevelopmentsTable (developments) {
+    /** Prepare the Array data to be shown to the end user in chat */
+    for (const development of developments) {
+      if (development.specialization) {
+        development.name = `${development.specialization} (${development.name})`
+      }
+      if (development.gain === 'development') {
+        development.gain = game.i18n.localize('CoC7.MarkedForDevelopment')
+      } else {
+        development.gain = `+${development.gain} ${game.i18n.localize(
+          'CoC7.Points'
+        )}`
+      }
+    }
+    const template = 'systems/CoC7/templates/items/book/development.hbs'
+    const html = await renderTemplate(template, { developments })
+    return await ChatMessage.create({
+      user: game.user.id,
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      flavor: game.i18n.format('CoC7.GainsForReading', { book: this.name }),
+      content: html
+    })
   }
 
   /** Listen to changes on the check card */

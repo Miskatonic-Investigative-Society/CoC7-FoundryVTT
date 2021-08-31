@@ -1,0 +1,20 @@
+<table id="development">
+  <tr>
+    <th>
+      <label>
+        {{localize "CoC7.Skill"}}
+      </label>
+    </th>
+    <th>
+      <label>
+        {{localize "CoC7.Development"}}
+      </label>
+    </th>
+  </tr>
+  {{#each developments as |skill key|}}
+    <tr data-index="{{@index}}">
+      <td><label>{{skill.name}}</label></td>
+      <td><label>{{skill.gain}}</label></td>
+    </tr>
+  {{/each}}
+</table>
