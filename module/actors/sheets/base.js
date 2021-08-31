@@ -705,7 +705,7 @@ export class CoC7ActorSheet extends ActorSheet {
    * Activate event listeners using the prepared sheet HTML
    * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
    */
-  activateListeners (html) {
+  async activateListeners (html) {
     super.activateListeners(html)
 
     // Owner Only Listeners
@@ -736,17 +736,17 @@ export class CoC7ActorSheet extends ActorSheet {
       html
         .find('.characteristic-label')
         .click(this._onRollCharacteriticTest.bind(this))
-      html.find('.skill-name.rollable').click(this._onRollSkillTest.bind(this))
-      html.find('.skill-image').click(this._onRollSkillTest.bind(this))
+      html.find('.skill-name.rollable').click(await this._onRollSkillTest.bind(this))
+      html.find('.skill-image').click(await this._onRollSkillTest.bind(this))
       html
         .find('.attribute-label.rollable')
-        .click(this._onRollAttribTest.bind(this))
+        .click(await this._onRollAttribTest.bind(this))
       html.find('.lock').click(this._onLockClicked.bind(this))
       html.find('.flag').click(this._onFlagClicked.bind(this))
       html.find('.formula').click(this._onFormulaClicked.bind(this))
       html
         .find('.roll-characteritics')
-        .click(this._onRollCharacteriticsValue.bind(this))
+        .click(await this._onRollCharacteriticsValue.bind(this))
       html
         .find('.average-characteritics')
         .click(this._onAverageCharacteriticsValue.bind(this))
@@ -769,7 +769,7 @@ export class CoC7ActorSheet extends ActorSheet {
         .click(event => this._onWeaponRoll(event))
       html
         .find('.weapon-skill.rollable')
-        .click(event => this._onWeaponSkillRoll(event))
+        .click(async event => await this._onWeaponSkillRoll(event))
       html.find('.reload-weapon').click(event => this._onReloadWeapon(event))
       html
         .find('.reload-weapon')
@@ -1042,7 +1042,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
   // roll the actor characteristic from formula when possible.
   async _onRollCharacteriticsValue () {
-    this.actor.rollCharacteristicsValue()
+    await this.actor.rollCharacteristicsValue()
   }
 
   async _onAverageCharacteriticsValue () {
@@ -1348,7 +1348,7 @@ export class CoC7ActorSheet extends ActorSheet {
     check.actor = !tokenKey ? actorId : tokenKey
     check.skill = skillId
     check.item = itemId
-    check.roll()
+    await check.roll()
     check.toMessage()
 
     // HACK: just to pop the advanced roll window
@@ -1421,7 +1421,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
       roll.denyPush = true // Opposed rolled can't be pushed.
 
-      roll._perform()
+      await roll._perform()
 
       data.roll = roll.JSONRollData
 
@@ -1514,7 +1514,7 @@ export class CoC7ActorSheet extends ActorSheet {
       game.settings.get('CoC7', 'stanbyGMRolls') &&
       game.user.isGM &&
       this.actor.hasPlayerOwner
-    check.rollCharacteristic(characteristic)
+    await check.rollCharacteristic(characteristic)
     check.toMessage()
   }
 
@@ -1558,7 +1558,7 @@ export class CoC7ActorSheet extends ActorSheet {
         const r = new Roll(
           event.currentTarget.parentElement.dataset.rollFormula
         )
-        r.roll()
+        await r.roll({ async: true })
         if (!isNaN(r.total) && !(r.total === undefined)) {
           r.toMessage({
             speaker: ChatMessage.getSpeaker(),
@@ -1628,7 +1628,7 @@ export class CoC7ActorSheet extends ActorSheet {
         game.settings.get('CoC7', 'stanbyGMRolls') &&
         game.user.isGM &&
         this.actor.hasPlayerOwner
-      check.rollAttribute(attrib)
+      await check.rollAttribute(attrib)
       check.toMessage()
     }
   }
@@ -1691,7 +1691,7 @@ export class CoC7ActorSheet extends ActorSheet {
       game.settings.get('CoC7', 'stanbyGMRolls') &&
       game.user.isGM &&
       this.actor.hasPlayerOwner
-    check.roll()
+    await check.roll()
     check.toMessage()
   }
 
@@ -1821,7 +1821,7 @@ export class CoC7ActorSheet extends ActorSheet {
           if (event.currentTarget.value.length !== 0) {
             // On teste si c'est une formule valide !
             const r = new Roll(event.currentTarget.value)
-            r.roll()
+            await r.roll({ async: true })
             if (isNaN(r.total) || typeof r.total === 'undefined') {
               ui.notifications.error(
                 game.i18n.format('CoC7.ErrorInvalidFormula', {
@@ -1843,7 +1843,7 @@ export class CoC7ActorSheet extends ActorSheet {
           ) {
             // On teste si c'est une formule valide !
             const r = new Roll(event.currentTarget.value)
-            r.roll()
+            await r.roll({ async: true })
             if (isNaN(r.total) || r.total === undefined) {
               ui.notifications.error(
                 game.i18n.format('CoC7.ErrorInvalidFormula', {
@@ -1906,7 +1906,7 @@ export class CoC7ActorSheet extends ActorSheet {
             // teste la validité de la formule.
             if (event.currentTarget.value.length !== 0) {
               const r = new Roll(event.currentTarget.value)
-              r.roll()
+              await r.roll({ async: true })
               if (isNaN(r.total) || typeof r.total === 'undefined') {
                 ui.notifications.error(
                   event.currentTarget.value + ' is not a valid formula'

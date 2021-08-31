@@ -232,17 +232,17 @@ export class CoC7ChaseSheet extends ItemSheet {
       }
 
       if (participant.speedCheck.isCharacteristic) {
-        roll.rollCharacteristic(participant.speedCheck.ref.key)
-        await roll.toMessage()
+        await roll.rollCharacteristic(participant.speedCheck.ref.key)
+        roll.toMessage()
         participant.data.speedCheck.rollDataString = roll.JSONRollString
       } else if (participant.speedCheck.isSkill) {
         roll.skill = participant.speedCheck.ref
-        roll.roll()
-        await roll.toMessage()
+        await roll.roll()
+        roll.toMessage()
         participant.data.speedCheck.rollDataString = roll.JSONRollString
       } else if (participant.speedCheck.isAttribute) {
-        roll.rollAttribute(participant.speedCheck.ref.key)
-        await roll.toMessage()
+        await roll.rollAttribute(participant.speedCheck.ref.key)
+        roll.toMessage()
         participant.data.speedCheck.rollDataString = roll.JSONRollString
       }
     } else if (participant.speedCheck.score) {
@@ -254,7 +254,7 @@ export class CoC7ChaseSheet extends ItemSheet {
       if (participant.hasActor) rollData.actor = participant.actor.actorKey
       const roll = CoC7Check.create(rollData)
       roll.parent = this.item.uuid
-      roll.roll()
+      await roll.roll()
       roll.toMessage()
       participant.data.speedCheck.rollDataString = roll.JSONRollString
       participant.data.rolled = true

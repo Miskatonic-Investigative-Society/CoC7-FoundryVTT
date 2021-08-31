@@ -136,7 +136,9 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
 
   static forceAuto (app, html) {
     const cell = html.find('.description.pannel.expanded')
-    cell.height(Math.max(130, (html.height() - cell.position().top - 8)) + 'px')
+    if (cell.length) {
+      cell.height(Math.max(130, (html.height() - cell.position().top - 8)) + 'px')
+    }
   }
 
   setPosition (a) {

@@ -203,6 +203,7 @@
   "CoC7.ImpaleTitle": "The weapon can impale",
   "CoC7.Target": "Target",
   "CoC7.TargetOutOfRange": "Target out of range",
+  "CoC7.NoTargetToDamage": "There is no target to apply the damage to",
   "CoC7.ShotIsImpossible": "Shot is impossible",
   "CoC7.OutOfAmmo": "Out of Ammo",
   "CoC7.OutOfShots": "Out of shots",

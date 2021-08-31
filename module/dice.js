@@ -1,7 +1,7 @@
 /* global CONFIG, game, Roll */
 
 export class CoC7Dice {
-  static roll (modif = 0, rollMode = null, hideDice = false) {
+  static async roll (modif = 0, rollMode = null, hideDice = false) {
     let alternativeDice = ''
     if (game.modules.get('dice-so-nice')?.active) {
       if (modif < 0) {
@@ -10,13 +10,13 @@ export class CoC7Dice {
         alternativeDice = game.settings.get('CoC7', 'tenDieBonus')
       }
     }
-    const roll = new Roll(
+    const roll = await new Roll(
       '1dt' +
         (
           '+1dt' + (alternativeDice !== '' ? '[' + alternativeDice + ']' : '')
         ).repeat(Math.abs(modif)) +
         '+1d10'
-    ).roll({ async: false })
+    ).roll({ async: true })
     const result = {
       unit: {
         total: 0,

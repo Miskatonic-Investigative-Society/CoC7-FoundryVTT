@@ -462,15 +462,15 @@ export class CoC7Parser {
         })
       } else {
         if (game.user.data.document.character?.data) {
-          game.user.data.document.character.data.items.map(v => {
+          await Promise.all(game.user.data.document.character.data.items.map(async v => {
             if (v.name === options.name) {
               const check = new CoC7Check()
               check._rawValue = v.data.data.base
-              check.roll()
+              await check.roll()
               check.toMessage()
             }
             return false
-          })
+          }))
         } else if (game.user.isGM) {
           const option = {
             speaker: {
@@ -536,15 +536,15 @@ export class CoC7Parser {
         }
       } else {
         if (game.user.data.document.character?.data) {
-          game.user.data.document.character.data.items.map(v => {
+          await Promise.all(game.user.data.document.character.data.items.map(async v => {
             if (v.name === options.name) {
               const check = new CoC7Check()
               check._rawValue = v.data.data.base
-              check.roll()
+              await check.roll()
               check.toMessage()
             }
             return false
-          })
+          }))
         } else {
           ui.notifications.warn(
             game.i18n.localize('CoC7.WarnNoControlledActor')
