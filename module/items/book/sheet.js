@@ -49,8 +49,12 @@ export class CoC7BookSheet extends ItemSheet {
       event.preventDefault()
       this.item.attemptInitialReading()
     })
-    html.on('drop', event => this._onDrop(event))
-    html.find("[name='data.study.necessary']").change(event => {
+    html.find('.delete-spell').click(event => this._onDelete(event))
+    html.find('.teach-spell').click(event => {
+      const id = $(event.currentTarget).parents('li').data('id')
+      this.item.teachSpell(id)
+    })
+    html.find('[name="data.study.necessary"]').change(event => {
       const value = parseInt(event.currentTarget.value)
       this.item.changeProgress('reset', value)
     })
@@ -73,12 +77,32 @@ export class CoC7BookSheet extends ItemSheet {
   }
 
   /**
+   * It is called every time the user delete a spell on the sheet
+   * @param {jQuery} event @see activateListeners
+   * @returns {Promise.<Document>} update to Item document
+   */
+  async _onDelete (event) {
+    if (!game.user.isGM) return
+    event.preventDefault()
+    const element = $(event.currentTarget)
+    /** @see data-index property on template */
+    const index = element.parents('li').data('index')
+    /** Always has to be @type {Array} */
+    const spells = this.item.data.data.spells
+      ? duplicate(this.item.data.data.spells)
+      : []
+    if (index >= 0) spells.splice(index, 1)
+    console.log(spells)
+    return await this.item.update({ 'data.spells': spells })
+  }
+
+  /**
    * It is called every time the user drags an item to the sheet
    * Filters only 'spell' items and inserts them in a @type {Array}
    * @param {jQuery} event @see activateListeners
    * @returns {Promise.<Document>} update to Item document
    */
-  async _onDrop (event) {
+  async _onDrop (event, type = 'spell') {
     event.preventDefault()
     /** Prevents propagation of the same event from being called */
     event.stopPropagation()
@@ -99,11 +123,8 @@ export class CoC7BookSheet extends ItemSheet {
     } else if (data.data) item = data
     else item = game.items.get(data.id)
     if (!item || !(item.data.type === 'spell')) return
-    const spells = this.item.data.data.spells
-      ? duplicate(this.item.data.data.spells)
-      : []
-    spells.push(duplicate(item.data))
-    return await this.item.update({ 'data.spells': spells })
+    const spell = duplicate(item.data)
+    return await this.item.addSpell(spell)
   }
 
   /**

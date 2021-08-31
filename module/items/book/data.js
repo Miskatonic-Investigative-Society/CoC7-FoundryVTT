@@ -29,6 +29,19 @@ export class CoC7Book extends CoC7Item {
   }
 
   /**
+   * For the future: add advanced rules for learning spells, pg. 176
+   * @param {Document} spell
+   * @returns {Promise<Document>} update to Item document
+   */
+  async addSpell (spell) {
+    const spells = this.data.data.spells
+      ? duplicate(this.data.data.spells)
+      : []
+    spells.push(spell)
+    return await this.update({ 'data.spells': spells })
+  }
+
+  /**
    * Handles all the logic involving the attempt of initial reading
    * @returns {Promise} @see listen @see grantInitialReading
    */
@@ -59,6 +72,7 @@ export class CoC7Book extends CoC7Item {
       check.skill = skill[0].id
       check.difficulty = difficulty
       check.parent = this.uuid
+      check.context = 'INITIAL_READING'
       check.flavor = game.i18n.format('CoC7.ReadAttempt', {
         book: this.name,
         language,
@@ -73,7 +87,7 @@ export class CoC7Book extends CoC7Item {
    * Its is called every time the user interacts in some way with progress bar
    * @param {string} mode 'reset' || 'increase' || 'decrease'
    * @param {number} value just so that progress is not greater than necessary
-   * @returns {Promise.<Document>} update to Item document
+   * @returns {Promise<Document>} update to Item document
    */
   async changeProgress (mode, value) {
     if (!this.isOwned && mode !== 'reset') {
@@ -207,6 +221,7 @@ export class CoC7Book extends CoC7Item {
    * @returns {Promise<Document>} update to Item document
    */
   async grantSkillDevelopment (developments) {
+    if (developments.length === 0) return
     for (const development of developments) {
       /** Test if the value is greater than zero */
       if (!development.gain) continue
@@ -332,10 +347,44 @@ export class CoC7Book extends CoC7Item {
     })
   }
 
+  async teachSpell (id) {
+    if (!this.isOwned) {
+      /** This is not owned by any Actor */
+      return ui.notifications.error(game.i18n.localize('CoC7.NotOwned'))
+    }
+    if (!this.data.data.initialReading) {
+      /** Actor did not performed an initial reading first */
+      return ui.notifications.error(
+        game.i18n.format('CoC7.InitialReadingNeeded', {
+          actor: this.actor.name,
+          book: this.name
+        })
+      )
+    }
+    const spell = this.data.data.spells.find(spell => {
+      return spell._id === id
+    })
+    if (spell) {
+      const check = new CoC7Check()
+      check.actor = this.actor
+      check.difficulty = CoC7Check.difficultyLevel.hard
+      check.parent = this.uuid
+      check.flavor = 'attempt to learn spell'
+      check.context = 'SPELL_LEARNING'
+      check.rollCharacteristic('int')
+      await check.toMessage()
+    }
+  }
+
   /** Listen to changes on the check card */
   async updateRoll (roll) {
     const check = CoC7Check.fromRollString(roll)
     /** Will know if user push the check or spend Luck */
-    if (check.passed) return await this.grantInitialReading()
+    if (check.passed) {
+      switch (check.context) {
+        case 'INITIAL_READING': return await this.grantInitialReading()
+        case 'SPELL_LEARNING': return await this.grantSpellLearning()
+      }
+    }
   }
 }
