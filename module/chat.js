@@ -848,6 +848,7 @@ export class CoC7Chat{
     case 'reveal-check-to-all':{
 			const check = await CoC7Check.getFromCard( card);
 			check.isBlind = false;
+			check.isSelf = false;
 			check._rollMode = 'null';
 			check.toMessage();
 			check.computeCheck();

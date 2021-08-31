@@ -268,5 +268,64 @@
 		</div>
 		{{/unless}}
 		{{/if}}
+
+		{{#if isSelf}}
+	<div class="dice-roll user-visible-only">
+		<div class="dice-result">
+			<div class="dice-formula">???</div>
+			{{#if forced}}
+			<h4 class="dice-total {{playerCssClass}}">
+				{{#if forcedSuccess}}
+					Pass !
+				{{else}}
+					{{#if forcedFailure}}
+						Fail !
+					{{else}}
+						{{#if isSuccess}}
+							Pass !
+						{{else}}
+							{{#if isFailure}}
+								Fail !
+							{{else}}
+								??
+							{{/if}}
+						{{/if}}
+					{{/if}}
+				{{/if}}
+			</h4>
+			{{else}}
+				<h4 class="dice-total">?</h4>
+			{{/if}}
+		</div>
+	</div>
+	{{#unless denyBlindTampering}}
+	<div class="card-buttons gm-visible-only">
+		{{#unless isUnknown}}
+			<button data-action="reveal-check-to-all">{{localize 'CoC7.RevealCheckToAll'}}</button>
+		{{/unless}}
+		{{#unless forced}}
+			<button data-action="force-pass">{{localize 'CoC7.check.ForcePass'}}</button>
+			<button data-action="force-fail">{{localize 'CoC7.check.ForceFail'}}</button>
+			{{#unless isCritical}}
+				<button data-action="increase-success-level">{{localize 'CoC7.IncreaseSuccessLevel'}}</button>
+			{{/unless}}
+			{{#unless isFumble}}
+				<button data-action="decrease-success-level">{{localize 'CoC7.check.DecreaseSuccessLevel'}}</button>
+			{{/unless}}
+		{{/unless}}
+		
+		{{#unless skill.data.data.flags.developement}}
+			{{#if canAwardExperience}}
+				{{#if forcedSuccess}}
+					<button data-action="flag-for-development">{{localize 'CoC7.check.FlagForDevelopment'}}</button>
+				{{else}}
+					{{#if isSuccess}}
+						<button data-action="flag-for-development">{{localize 'CoC7.check.FlagForDevelopment'}}</button>
+					{{/if}}
+				{{/if}}
+			{{/if}}
+		{{/unless}}
+	</div>
+	{{/unless}}
 	{{/if}}
 </div>
