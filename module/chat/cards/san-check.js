@@ -282,6 +282,21 @@ export class SanCheckCard extends ChatCardActor {
     }
   }
 
+  async bypassRollSan () {
+    this.sanCheck = new CoC7Check()
+    this.sanCheck.actor = this.actorKey
+    this.sanCheck.attribute = 'san'
+    this.sanCheck.difficulty =
+      this.options.sanDifficulty || CoC7Check.difficultyLevel.regular
+    this.sanCheck.diceModifier = this.options.sanModifier || 0
+    await this.sanCheck._perform()
+    this.state.sanRolled = true
+    this.state.involuntaryActionPerformed = this.sanCheck.passed
+    this.state.sanLossRolled = true
+    this.state.ignoreSanCheck = true
+    this.sanLoss = this.sanLossFormula
+  }
+
   async rollSan () {
     this.sanCheck = new CoC7Check()
     this.sanCheck.actor = this.actorKey

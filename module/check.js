@@ -1315,6 +1315,14 @@ export class CoC7Check {
     this._flavor = x
   }
 
+  set context (x) {
+    this._context = x
+  }
+
+  get context () {
+    return this._context
+  }
+
   set parent (x) {
     if (!this.uuid) this.uuid = foundry.utils.randomID(16)
     this.parentUuid = x
