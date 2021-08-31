@@ -8,6 +8,13 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Addition of roll to chat messages where possible, so Dice So Nice will trigger;
 - Average system size reduced (from 20MB to 6MB) and its performance increased;
 - Change book, creature, npc, occupation, setup, spell, status, and talent sheets to be resizable;
+- Complete refactor of Book system:
+  - Addition of a interactive progress bar for full study;
+  - Addition of full support for initial reading;
+    - ...
+  - Make book type functional related to automations, gains and layout;
+  - Now there is new tabs: Description, Content and Spells (both after initial reading only), Details and Notes (both Keeper only);
+  - Update sheet for second version, template and styles;
 - Ensure compatibility of system .svg icons when using Firefox browser;
 - Fix backstory editor not resolving lists;
 - Fix extremely old characters getting negative movement;
@@ -21,6 +28,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Now, during the development phase, if a skill goes above 90 points, the character gain 2D6 of Sanity, thanks to @pconception;
 - Now Ranged Combat trigger Dice So Nice! on checks and damage, if available;
 - Now the check result on chat will appear only after Dice So Nice! complete the animation;
+- Reorder system settings into categorical groups;
 - There is now a list of untranslated keys: https://github.com/HavlockV/CoC7-FoundryVTT/blob/develop/.github/TRANSLATIONS.md
 - There is now an option to set if combat and sanity effects icons are shown in tokens or not;
 - Update to Portuguese localization;
