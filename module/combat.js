@@ -117,15 +117,18 @@ export class CoC7Combat {
 }
 
 /**
-   * Roll initiative for one or multiple Combatants within the Combat entity
-   * @param {string|string[]} ids     A Combatant id or Array of ids for which to roll
-   * @param {object} [options={}]     Additional options which modify how initiative rolls are created or presented.
-   * @param {string|null} [options.formula]         A non-default initiative formula to roll. Otherwise the system default is used.
-   * @param {boolean} [options.updateTurn=true]     Update the Combat turn after adding new initiative scores to keep the turn on the same Combatant.
-   * @param {object} [options.messageOptions={}]    Additional options with which to customize created Chat Messages
-   * @return {Promise<Combat>}        A promise which resolves to the updated Combat entity once updates are complete.
-   */
-export async function rollInitiative (ids, { formula = null, updateTurn = true, messageOptions = {} } = {}) {
+ * Roll initiative for one or multiple Combatants within the Combat entity
+ * @param {string|string[]} ids     A Combatant id or Array of ids for which to roll
+ * @param {object} [options={}]     Additional options which modify how initiative rolls are created or presented.
+ * @param {string|null} [options.formula]         A non-default initiative formula to roll. Otherwise the system default is used.
+ * @param {boolean} [options.updateTurn=true]     Update the Combat turn after adding new initiative scores to keep the turn on the same Combatant.
+ * @param {object} [options.messageOptions={}]    Additional options with which to customize created Chat Messages
+ * @return {Promise<Combat>}        A promise which resolves to the updated Combat entity once updates are complete.
+ */
+export async function rollInitiative (
+  ids,
+  { formula = null, updateTurn = true, messageOptions = {} } = {}
+) {
   // Structure input data
   ids = typeof ids === 'string' ? [ids] : ids
   const currentId = this.combatant.id
@@ -138,7 +141,9 @@ export async function rollInitiative (ids, { formula = null, updateTurn = true, 
     if (!combatant?.isOwner) return null
 
     // Produce an initiative roll for the Combatant
-    const roll = await combatant.actor.rollInitiative(!!combatant.getFlag('CoC7', 'hasGun'))
+    const roll = await combatant.actor.rollInitiative(
+      !!combatant.getFlag('CoC7', 'hasGun')
+    )
     updates.push({ _id: id, initiative: roll })
   }
   if (!updates.length) return this

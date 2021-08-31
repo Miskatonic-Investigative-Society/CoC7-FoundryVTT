@@ -59,7 +59,17 @@ export class CharacRollDialog extends Dialog {
   async _onButton (event) {
     const action = event.currentTarget.dataset.action
     if (action === 'roll') {
-      for (const char of ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu', 'luck']) {
+      for (const char of [
+        'str',
+        'con',
+        'siz',
+        'dex',
+        'app',
+        'int',
+        'pow',
+        'edu',
+        'luck'
+      ]) {
         await this.rollCharacteristic(char)
       }
     }

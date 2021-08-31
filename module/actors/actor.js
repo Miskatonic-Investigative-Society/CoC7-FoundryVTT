@@ -2839,14 +2839,19 @@ export class CoCActor extends Actor {
           let augment = null
           let skillMasteringMessage = null
           if (die.total > skillValue || die.total >= alwaysSuccessThreshold) {
-            const augmentDie = await new Die({ faces: 10 }).evaluate({ async: true })
+            const augmentDie = await new Die({ faces: 10 }).evaluate({
+              async: true
+            })
             success.push(item.id)
             // Check for SAN augment when the skill goes beyond the skill mastering threshold.
             if (
               skillValue < skillMasteringThreshold &&
               skillValue + augmentDie.total >= skillMasteringThreshold
             ) {
-              const augmentSANDie = await new Die({ faces: 6, number: 2 }).evaluate({ async: true })
+              const augmentSANDie = await new Die({
+                faces: 6,
+                number: 2
+              }).evaluate({ async: true })
               const sanGained = augmentSANDie.total
               const sanGainedMessage = `Gained 2d6 (${augmentSANDie.values[0]} + ${augmentSANDie.values[1]} = ${sanGained}) SAN`
               console.debug(sanGainedMessage)
@@ -3328,7 +3333,9 @@ export class CoCActor extends Actor {
   }
 
   get owners () {
-    return game.users.filter(u => this.testUserPermission(u, 'OWNER') && !u.isGM)
+    return game.users.filter(
+      u => this.testUserPermission(u, 'OWNER') && !u.isGM
+    )
   }
 
   get player () {
@@ -3364,7 +3371,9 @@ export class CoCActor extends Actor {
     if (this.data.data.attribs.armor.value && !options.ignoreArmor) {
       let armorValue
       if (CoC7Utilities.isFormula(this.data.data.attribs.armor.value)) {
-        const armorRoll = await new Roll(this.data.data.attribs.armor.value).roll({ async: true })
+        const armorRoll = await new Roll(
+          this.data.data.attribs.armor.value
+        ).roll({ async: true })
         armorValue = armorRoll.total
       } else if (!isNaN(Number(this.data.data.attribs.armor.value))) {
         armorValue = Number(this.data.data.attribs.armor.value)

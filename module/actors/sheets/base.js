@@ -736,7 +736,9 @@ export class CoC7ActorSheet extends ActorSheet {
       html
         .find('.characteristic-label')
         .click(this._onRollCharacteriticTest.bind(this))
-      html.find('.skill-name.rollable').click(await this._onRollSkillTest.bind(this))
+      html
+        .find('.skill-name.rollable')
+        .click(await this._onRollSkillTest.bind(this))
       html.find('.skill-image').click(await this._onRollSkillTest.bind(this))
       html
         .find('.attribute-label.rollable')

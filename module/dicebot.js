@@ -15,21 +15,24 @@ export function listen () {
       if (commands) {
         new Roll('1d100').roll({ async: true }).then(r => {
           const s = r.result
-          const res = commands.map(m => {
-            let res = ''
-            if (s <= 1) res = game.i18n.localize('CoC7.CriticalSuccess')
-            else if (s >= 100) res = game.i18n.localize('CoC7.Fumble')
-            else if (s <= m / 5) res = game.i18n.localize('CoC7.ExtremeSuccess')
-            else if (s <= m / 2) res = game.i18n.localize('CoC7.HardSuccess')
-            else if (s <= m) res = game.i18n.localize('CoC7.RegularSuccess')
-            else if (s >= 96) {
-              if (m < 50) res = game.i18n.localize('CoC7.Fumble')
-              else res = game.i18n.localize('CoC7.Failure')
-            } else res = game.i18n.localize('CoC7.Failure')
-            // Record the first results.
-            res += ' ' + game.i18n.localize('CoC7.Value') + ' ' + m
-            return res
-          }).join(' / ')
+          const res = commands
+            .map(m => {
+              let res = ''
+              if (s <= 1) res = game.i18n.localize('CoC7.CriticalSuccess')
+              else if (s >= 100) res = game.i18n.localize('CoC7.Fumble')
+              else if (s <= m / 5)
+                res = game.i18n.localize('CoC7.ExtremeSuccess')
+              else if (s <= m / 2) res = game.i18n.localize('CoC7.HardSuccess')
+              else if (s <= m) res = game.i18n.localize('CoC7.RegularSuccess')
+              else if (s >= 96) {
+                if (m < 50) res = game.i18n.localize('CoC7.Fumble')
+                else res = game.i18n.localize('CoC7.Failure')
+              } else res = game.i18n.localize('CoC7.Failure')
+              // Record the first results.
+              res += ' ' + game.i18n.localize('CoC7.Value') + ' ' + m
+              return res
+            })
+            .join(' / ')
           r.toMessage({
             speaker: ChatMessage.getSpeaker(),
             flavor: res

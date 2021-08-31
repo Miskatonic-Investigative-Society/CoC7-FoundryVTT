@@ -712,7 +712,7 @@ export class CoC7Check {
   async _perform (options = {}) {
     this.dice =
       options.roll ||
-      await CoC7Dice.roll(this.diceModifier, this.rollMode, this.isBlind)
+      (await CoC7Dice.roll(this.diceModifier, this.rollMode, this.isBlind))
     if (!options.silent) AudioHelper.play({ src: CONFIG.sounds.dice })
 
     this.dices = {

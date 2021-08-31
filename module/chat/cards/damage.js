@@ -128,7 +128,9 @@ export class DamageCard extends InteractiveChatCard {
   }
 
   async rollDamage (options = { update: true }) {
-    this.roll = await new Roll(this.damageFormula || '0').evaluate({ async: true })
+    this.roll = await new Roll(this.damageFormula || '0').evaluate({
+      async: true
+    })
     await CoC7Dice.showRollDice3d(this.roll)
     this.hardrolled = true
     options.update =

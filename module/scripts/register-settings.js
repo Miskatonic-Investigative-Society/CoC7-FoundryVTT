@@ -451,7 +451,8 @@ export function registerSettings () {
     console.warn = function (...args) {
       new Dialog({
         title: 'Console Warning',
-        content: '<p>Your recent action triggered a warning. Please check the JavaScript console.</p>',
+        content:
+          '<p>Your recent action triggered a warning. Please check the JavaScript console.</p>',
         buttons: {
           OK: {
             label: 'OK'

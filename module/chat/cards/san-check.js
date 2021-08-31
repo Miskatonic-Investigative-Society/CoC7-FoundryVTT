@@ -225,7 +225,7 @@ export class SanCheckCard extends ChatCardActor {
         break
       }
       case 'enterBoutOfMadnessRealTime': {
-        this.boutDuration = await (new Roll('1D10').roll({ async: true })).total
+        this.boutDuration = (await new Roll('1D10').roll({ async: true })).total
         this.boutRealTime = true
         this.boutSummary = false
         this.boutResult = await this.actor.enterBoutOfMadness(
@@ -237,7 +237,7 @@ export class SanCheckCard extends ChatCardActor {
         break
       }
       case 'enterBoutOfMadnessSummary': {
-        this.boutDuration = await (new Roll('1D10').roll({ async: true })).total
+        this.boutDuration = (await new Roll('1D10').roll({ async: true })).total
         this.boutRealTime = false
         this.boutSummary = true
         this.boutResult = await this.actor.enterBoutOfMadness(
