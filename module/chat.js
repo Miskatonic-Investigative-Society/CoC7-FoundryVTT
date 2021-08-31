@@ -845,7 +845,8 @@ export class CoC7Chat{
 			else  check.updateChatCard();
 			break;
 		}
-    case 'reveal-check-to-all':{
+		
+		case 'reveal-check-to-all':{
 			const check = await CoC7Check.getFromCard( card);
 			check.isBlind = false;
 			check.isSelf = false;
