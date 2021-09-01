@@ -534,6 +534,7 @@
   "CoC7.ReadAttempt": "Attempt to read <i>{book}</i> ({language}), {difficulty} difficulty.",
   "CoC7.ReadingMythosTome": "Reading <i>{book}</i>.",
   "CoC7.Specific": "Specific",
+  "CoC7.SpellsLearned": "Spells Learned",
   "CoC7.StudyTime": "Study Time",
   "CoC7.UnknownLanguage": "{actor} does not know the {language} language.",
   "CoC7.Unreadable": "Unreadable",
