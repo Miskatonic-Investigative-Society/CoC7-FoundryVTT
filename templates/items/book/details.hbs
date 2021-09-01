@@ -32,12 +32,12 @@
         <label>{{localize "CoC7.weeks"}}</label>
       </div>
     {{/if}}
-    {{#or data.type.mythos data.type.occult}}
+    {{#if (or data.type.mythos data.type.occult)}}
     <div class="flexrow">
       <label>{{localize "CoC7.SANLoss"}}:</label>
       <input type="text" name="data.sanityLoss" value="{{data.sanityLoss}}"/>
     </div>
-    {{/or}}
+    {{/if}}
   </div>
   <div class="gains">
     <label>{{localize "CoC7.Gains"}}</label>

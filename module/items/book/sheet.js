@@ -27,10 +27,6 @@ export class CoC7BookSheet extends ItemSheet {
     data.isKeeper = game.user.isGM
     data.isOwned = this.item.isOwned
     data.spellsLearned = this.spellsLearned
-    /** Allows using conditional OR under Handlebars templates */
-    Handlebars.registerHelper('or', function (v1, v2, options) {
-      return v1 || v2 ? options.fn(this) : options.inverse(this)
-    })
     return data
   }
 

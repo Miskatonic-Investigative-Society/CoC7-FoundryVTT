@@ -78,7 +78,7 @@ export class CoC7Book extends CoC7Item {
         language,
         difficulty: this.data.data.difficultyLevel
       })
-      check.roll()
+      await check.roll()
       return await check.toMessage()
     }
   }
@@ -196,7 +196,7 @@ export class CoC7Book extends CoC7Item {
           skill.specialization = pattern[2]
         }
         if (skill.value !== 'development') {
-          skill.value = new Roll(skill.value).roll({ async: false }).total
+          skill.value = (await new Roll(skill.value).roll({ async: true })).total
         }
         if (skill.value) {
           developments.push({
@@ -299,7 +299,7 @@ export class CoC7Book extends CoC7Item {
     })
     const card = await message.getHTML()
     if (typeof card.length !== 'undefined' && card.length === 1) {
-      const sanityLoss = new Roll(value).roll({ async: false }).total
+      const sanityLoss = (await new Roll(value).roll({ async: true })).total
       html = card.find('.chat-card')[0]
       html.dataset.object = escape(
         JSON.stringify({
@@ -371,7 +371,7 @@ export class CoC7Book extends CoC7Item {
       check.parent = this.uuid
       check.flavor = 'attempt to learn spell'
       check.context = 'SPELL_LEARNING'
-      check.rollCharacteristic('int')
+      await check.rollCharacteristic('int')
       await check.toMessage()
     }
   }

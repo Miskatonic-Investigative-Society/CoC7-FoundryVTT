@@ -406,7 +406,7 @@ export function registerSettings () {
     scope: 'world',
     config: false,
     type: Number,
-    default: '0.2'
+    default: '0.3'
   })
   game.settings.register('CoC7', 'xpEnabled', {
     name: 'Enable XP gain',
