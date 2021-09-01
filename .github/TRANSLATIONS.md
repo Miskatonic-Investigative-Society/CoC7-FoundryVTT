@@ -4,7 +4,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 | Key                                                                                      |   cn    |   cs   |   de   |   es   |   fr   |   ja    |   pl    | pt-BR  |   sv   | zh-TW  |
 | :--------------------------------------------------------------------------------------- | :-----: | :----: | :----: | :----: | :----: | :-----: | :-----: | :----: | :----: | :----: |
-| **Remaining**:                                                                           | **306** | **81** | **99** | **21** | **46** | **101** | **322** | **21** | **23** | **21** |
+| **Remaining**:                                                                           | **306** | **81** | **99** | **21** | **46** | **101** | **322** | **13** | **23** | **21** |
 | [CoC7.ActorImporter](#coc7actorimporter)                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.ActorImporterSummary](#coc7actorimportersummary)                                   |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.AdvantageAttacker](#coc7advantageattacker)                                         |    X    |        |        |        |        |         |    X    |        |        |        |
@@ -93,7 +93,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.French](#coc7french)                                                               |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.FullStudies](#coc7fullstudies)                                                     |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
 | [CoC7.Gains](#coc7gains)                                                                 |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
-| [CoC7.GainsForReading](#coc7gainsforreading)                                             |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [CoC7.GainsForReading](#coc7gainsforreading)                                             |    X    |   X    |   X    |   X    |   X    |    X    |    X    |        |   X    |   X    |
 | [CoC7.GmNotes](#coc7gmnotes)                                                             |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.GmTools](#coc7gmtools)                                                             |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.GoodForAsylum](#coc7goodforasylum)                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
@@ -115,7 +115,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.InfoAllSkillsAlreadySelected](#coc7infoallskillsalreadyselected)                   |         |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.InfoLessSkillThanOptions](#coc7infolessskillthanoptions)                           |         |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.InitialReading](#coc7initialreading)                                               |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
-| [CoC7.InitialReadingNeeded](#coc7initialreadingneeded)                                   |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [CoC7.InitialReadingNeeded](#coc7initialreadingneeded)                                   |    X    |   X    |   X    |   X    |   X    |    X    |    X    |        |   X    |   X    |
 | [CoC7.InsanityName](#coc7insanityname)                                                   |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.InsanityType](#coc7insanitytype)                                                   |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.IntCheck](#coc7intcheck)                                                           |    X    |        |        |        |        |         |    X    |        |        |        |
@@ -145,7 +145,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.LuckNotIncreased](#coc7lucknotincreased)                                           |    X    |        |   X    |        |        |    X    |    X    |        |        |        |
 | [CoC7.Mania](#coc7mania)                                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.ManiaGained](#coc7maniagained)                                                     |    X    |        |        |        |        |         |    X    |        |        |        |
-| [CoC7.MarkedForDevelopment](#coc7markedfordevelopment)                                   |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [CoC7.MarkedForDevelopment](#coc7markedfordevelopment)                                   |    X    |   X    |   X    |   X    |   X    |    X    |    X    |        |   X    |   X    |
 | [CoC7.MaxLossToCreature](#coc7maxlosstocreature)                                         |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.MaxSanloss](#coc7maxsanloss)                                                       |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.MemoryRepressed](#coc7memoryrepressed)                                             |    X    |        |        |        |        |         |    X    |        |        |        |
@@ -173,7 +173,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.NoTargetToDamage](#coc7notargettodamage)                                           |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
 | [CoC7.NonPlayingCharacter](#coc7nonplayingcharacter)                                     |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.NotInsane](#coc7notinsane)                                                         |    X    |        |        |        |        |         |    X    |        |        |        |
-| [CoC7.NotOwned](#coc7notowned)                                                           |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [CoC7.NotOwned](#coc7notowned)                                                           |    X    |   X    |   X    |   X    |   X    |    X    |    X    |        |   X    |   X    |
 | [CoC7.OpposedRollCard](#coc7opposedrollcard)                                             |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.Origin](#coc7origin)                                                               |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.OutOfAmmo](#coc7outofammo)                                                         |    X    |        |        |        |        |         |    X    |        |        |        |
@@ -184,13 +184,13 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.PilotSpecializationName](#coc7pilotspecializationname)                             |    X    |        |   X    |        |        |    X    |    X    |        |        |        |
 | [CoC7.PlayerName](#coc7playername)                                                       |    X    |   X    |   X    |        |        |    X    |    X    |        |        |        |
 | [CoC7.PlayerPermanentlyInsane](#coc7playerpermanentlyinsane)                             |    X    |        |        |        |        |         |    X    |        |        |        |
-| [CoC7.Points](#coc7points)                                                               |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [CoC7.Points](#coc7points)                                                               |    X    |   X    |   X    |   X    |   X    |    X    |    X    |        |   X    |   X    |
 | [CoC7.Proceed](#coc7proceed)                                                             |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
 | [CoC7.Progress](#coc7progress)                                                           |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
 | [CoC7.Properties](#coc7properties)                                                       |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.PushingSkill](#coc7pushingskill)                                                   |    X    |        |        |        |        |         |    X    |        |        |        |
-| [CoC7.ReadAttempt](#coc7readattempt)                                                     |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
-| [CoC7.ReadingMythosTome](#coc7readingmythostome)                                         |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [CoC7.ReadAttempt](#coc7readattempt)                                                     |    X    |   X    |   X    |   X    |   X    |    X    |    X    |        |   X    |   X    |
+| [CoC7.ReadingMythosTome](#coc7readingmythostome)                                         |    X    |   X    |   X    |   X    |   X    |    X    |    X    |        |   X    |   X    |
 | [CoC7.RecoverLuckPoints](#coc7recoverluckpoints)                                         |    X    |        |   X    |        |        |    X    |    X    |        |        |        |
 | [CoC7.Reload](#coc7reload)                                                               |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.RememberEverything](#coc7remembereverything)                                       |    X    |        |        |        |        |         |    X    |        |        |        |
@@ -223,7 +223,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.Tie](#coc7tie)                                                                     |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.TotalDamage](#coc7totaldamage)                                                     |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.UnderlyingInsanity](#coc7underlyinginsanity)                                       |    X    |        |        |        |        |         |    X    |        |        |        |
-| [CoC7.UnknownLanguage](#coc7unknownlanguage)                                             |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
+| [CoC7.UnknownLanguage](#coc7unknownlanguage)                                             |    X    |   X    |   X    |   X    |   X    |    X    |    X    |        |   X    |   X    |
 | [CoC7.Unreadable](#coc7unreadable)                                                       |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
 | [CoC7.Vehicle](#coc7vehicle)                                                             |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.WarnFastTargetWithWrongMOV](#coc7warnfasttargetwithwrongmov)                       |         |        |        |        |        |         |    X    |        |        |        |
