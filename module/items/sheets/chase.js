@@ -111,7 +111,9 @@ export class CoC7ChaseSheet extends ItemSheet {
 
     html.find('.add-sign').click(this._onAddParticipant.bind(this))
 
-    html.find('.roll-participant').click(await this._onRollParticipant.bind(this))
+    html
+      .find('.roll-participant')
+      .click(await this._onRollParticipant.bind(this))
 
     const participantDragDrop = new DragDrop({
       dropSelector: '.participant',

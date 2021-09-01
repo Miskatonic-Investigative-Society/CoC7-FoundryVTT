@@ -884,7 +884,9 @@ export class CoC7ActorSheet extends ActorSheet {
       }
     })
 
-    html.find('a.coc7-link').on('click', async event => await CoC7Parser._onCheck(event))
+    html
+      .find('a.coc7-link')
+      .on('click', async event => await CoC7Parser._onCheck(event))
     html
       .find('a.coc7-link')
       .on('dragstart', event => CoC7Parser._onDragCoC7Link(event))
