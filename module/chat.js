@@ -92,7 +92,7 @@ export class CoC7Chat {
    *  Chat Message Helpers                        *
    * -------------------------------------------- */
 
-  static chatListeners (app, html) {
+  static async chatListeners (app, html) {
     html.on(
       'click',
       '.card-buttons button',
@@ -134,7 +134,7 @@ export class CoC7Chat {
 
     html.on('dblclick', '.open-actor', CoC7Chat._onOpenActor.bind(this))
 
-    html.on('click', '.coc7-link', CoC7Parser._onCheck.bind(this))
+    html.on('click', '.coc7-link', await CoC7Parser._onCheck.bind(this))
     html.on('dragstart', 'a.coc7-link', CoC7Parser._onDragCoC7Link.bind(this))
 
     html.on('click', 'coc7-inline-result', CoC7Chat._onInline.bind(this))

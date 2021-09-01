@@ -1009,6 +1009,7 @@ export class CoCActor extends Actor {
             if (isNaN(value)) {
               const char = this.getCharacteristic(charac)
               const roll = new Roll(data.data.coreCharacteristicsFormula.value)
+              await roll.roll({ async: true })
               roll.toMessage({
                 flavor: `Rolling characterisitic ${char.label}: ${data.data.coreCharacteristicsFormula.value}`
               })
