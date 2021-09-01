@@ -383,14 +383,6 @@ export function registerSettings () {
     type: Boolean,
     default: false
   })
-  game.settings.register('CoC7', 'debugcomplainer', {
-    name: 'Temp debug make it clear the moment there is a warning',
-    hint: 'SETTINGS.DebugModeHint',
-    scope: 'world',
-    config: true,
-    type: Boolean,
-    default: false
-  })
 
   /**
    * Other settings
@@ -445,31 +437,6 @@ export function registerSettings () {
     }
   }
   _setInitiativeOptions(game.settings.get('CoC7', 'initiativeRule'))
-
-  if (game.settings.get('CoC7', 'debugcomplainer')) {
-    var _originalWarn = console.warn
-    console.warn = function (...args) {
-      new Dialog({
-        title: 'Console Warning',
-        content:
-          '<p>Your recent action triggered a warning. Please check the JavaScript console.</p>',
-        buttons: {
-          OK: {
-            label: 'OK'
-          }
-        }
-      }).render(true)
-      const err = new Error()
-      const text = String(err.stack).split('\n')
-      const rows = text.length
-      for (let i = 2; i < rows; i++) {
-        if (String(text[i]).match(/CoC7/)) {
-          console.log('WARNING TRIGGERED BY', text[i])
-        }
-      }
-      _originalWarn(...args)
-    }
-  }
 
   CONFIG.Dice.terms.t = CoC7DecaderDie
 }
