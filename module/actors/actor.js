@@ -1009,7 +1009,7 @@ export class CoCActor extends Actor {
             if (isNaN(value)) {
               const char = this.getCharacteristic(charac)
               const roll = new Roll(data.data.coreCharacteristicsFormula.value)
-              roll.roll()
+              await roll.roll({ async: true })
               roll.toMessage({
                 flavor: `Rolling characterisitic ${char.label}: ${data.data.coreCharacteristicsFormula.value}`
               })
@@ -2290,7 +2290,7 @@ export class CoCActor extends Actor {
     check.actor = this.tokenKey
     if (options.blind === 'false') check.isBlind = false
     else check.isBlind = !!options.blind
-    check.rollAttribute(attrib.key)
+    await check.rollAttribute(attrib.key)
     check.toMessage()
   }
 
@@ -2342,7 +2342,7 @@ export class CoCActor extends Actor {
     check.actor = this.tokenKey
     if (options.blind === 'false') check.isBlind = false
     else check.isBlind = !!options.blind
-    check.rollCharacteristic(char.key)
+    await check.rollCharacteristic(char.key)
     check.toMessage()
   }
 
@@ -2366,7 +2366,7 @@ export class CoCActor extends Actor {
         // game.settings.get( 'CoC7', 'DefaultCompendium');
         const check = new CoC7Check()
         check._rawValue = '?'
-        check.roll()
+        await check.roll()
         check.toMessage()
       }
       if (!item) {
@@ -2439,7 +2439,7 @@ export class CoCActor extends Actor {
     check.skill = skill[0].id
     if (options.blind === 'false') check.isBlind = false
     else check.isBlind = !!options.blind
-    check.roll()
+    await check.roll()
     check.toMessage()
   }
 
@@ -2542,7 +2542,7 @@ export class CoCActor extends Actor {
     }
   }
 
-  rollInitiative (hasGun = false) {
+  async rollInitiative (hasGun = false) {
     switch (game.settings.get('CoC7', 'initiativeRule')) {
       case 'optional': {
         const roll = new CoC7Check(this.actorKey)
@@ -2551,7 +2551,7 @@ export class CoCActor extends Actor {
         roll.denyBlindTampering = true
         roll.hideDice = game.settings.get('CoC7', 'displayInitDices') === false
         roll.flavor = 'Initiative roll'
-        roll.rollCharacteristic('dex', hasGun ? 1 : 0)
+        await roll.rollCharacteristic('dex', hasGun ? 1 : 0)
         roll.toMessage()
         return (
           roll.successLevel + this.data.data.characteristics.dex.value / 100
@@ -2749,7 +2749,7 @@ export class CoCActor extends Actor {
     for (const [key, value] of Object.entries(this.data.data.characteristics)) {
       if (value.formula && !value.formula.startsWith('@')) {
         const r = new Roll(value.formula)
-        r.roll()
+        await r.roll({ async: true })
         if (r.total) {
           characteristics[`data.characteristics.${key}.value`] = Math.floor(
             r.total
@@ -2769,12 +2769,8 @@ export class CoCActor extends Actor {
     const characteristics = {}
     for (const [key, value] of Object.entries(this.data.data.characteristics)) {
       if (value.formula && !value.formula.startsWith('@')) {
-        /** * MODIF 0.8.x ***/
-        // const max = Roll.maximize( value.formula).total; //DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
-        // const min = Roll.minimize( value.formula).total; //DEPRECATED in 0.8.x
         const max = new Roll(value.formula).evaluate({ maximize: true }).total
         const min = new Roll(value.formula).evaluate({ minimize: true }).total
-        /******************/
         const average = Math.floor((max + min) / 2)
         const charValue =
           average % 5 === 0 ? average : Math.round(average / 10) * 10
@@ -2800,7 +2796,7 @@ export class CoCActor extends Actor {
           charValue = new Roll(
             value.formula,
             this.parseCharacteristics()
-          ).evaluate({ maximize: true, async: true }).total
+          ).evaluate({ maximize: true }).total
         } catch (err) {
           charValue = null
         }
@@ -2839,19 +2835,24 @@ export class CoCActor extends Actor {
     for (const item of this.items) {
       if (item.type === 'skill') {
         if (item.developementFlag) {
-          const die = new Die({ faces: 100 }).evaluate()
+          const die = await new Die({ faces: 100 }).evaluate({ async: true })
           const skillValue = item.value
           let augment = null
           let skillMasteringMessage = null
           if (die.total > skillValue || die.total >= alwaysSuccessThreshold) {
-            const augmentDie = new Die({ faces: 10 }).evaluate()
+            const augmentDie = await new Die({ faces: 10 }).evaluate({
+              async: true
+            })
             success.push(item.id)
             // Check for SAN augment when the skill goes beyond the skill mastering threshold.
             if (
               skillValue < skillMasteringThreshold &&
               skillValue + augmentDie.total >= skillMasteringThreshold
             ) {
-              const augmentSANDie = new Die({ faces: 6, number: 2 }).evaluate()
+              const augmentSANDie = await new Die({
+                faces: 6,
+                number: 2
+              }).evaluate({ async: true })
               const sanGained = augmentSANDie.total
               const sanGainedMessage = `Gained 2d6 (${augmentSANDie.values[0]} + ${augmentSANDie.values[1]} = ${sanGained}) SAN`
               console.debug(sanGainedMessage)
@@ -2909,11 +2910,11 @@ export class CoCActor extends Actor {
     const upgradeRoll = new Roll('1D100')
     const title = game.i18n.localize('CoC7.RollLuck4Dev')
     let message = '<p class="chat-card">'
-    upgradeRoll.roll()
+    await upgradeRoll.roll({ async: true })
     if (!fastForward) await CoC7Dice.showRollDice3d(upgradeRoll)
     if (upgradeRoll.total > luck.value) {
       const augmentRoll = new Roll('1D10')
-      augmentRoll.roll()
+      await augmentRoll.roll({ async: true })
       if (!fastForward) await CoC7Dice.showRollDice3d(augmentRoll)
       if (luck.value + augmentRoll.total <= 99) {
         await this.update({
@@ -2968,11 +2969,11 @@ export class CoCActor extends Actor {
     let title = ''
     let message = ''
     const upgradeRoll = new Roll('1D100')
-    upgradeRoll.roll()
+    await upgradeRoll.roll({ async: true })
     if (!fastForward) await CoC7Dice.showRollDice3d(upgradeRoll)
     if (upgradeRoll.total > skill.value || upgradeRoll.total >= 95) {
       const augmentRoll = new Roll('1D10')
-      augmentRoll.roll()
+      await augmentRoll.roll({ async: true })
       if (!fastForward) await CoC7Dice.showRollDice3d(augmentRoll)
       message = game.i18n.format('CoC7.DevSuccessDetails', {
         item: skill.name,
@@ -3063,7 +3064,6 @@ export class CoCActor extends Actor {
   async toggleEffect (effectName) {
     switch (effectName) {
       case 'boutOfMadness':
-        console.log(this.boutOfMadness)
         if (this.boutOfMadness) {
           await this.boutOfMadness.delete()
           // if( boutOfMadness){
@@ -3334,15 +3334,13 @@ export class CoCActor extends Actor {
   }
 
   get owners () {
-    return game.users.filter(u => this.hasPerm(u, 'OWNER') && !u.isGM)
+    return game.users.filter(
+      u => this.testUserPermission(u, 'OWNER') && !u.isGM
+    )
   }
 
   get player () {
-    let player
-    this.owners.forEach(u => {
-      if (u.character.id === this.id) player = u
-    })
-    return player
+    return this.owners.filter(u => u.character?.id === this.id)
   }
 
   get characterUser () {
@@ -3374,7 +3372,9 @@ export class CoCActor extends Actor {
     if (this.data.data.attribs.armor.value && !options.ignoreArmor) {
       let armorValue
       if (CoC7Utilities.isFormula(this.data.data.attribs.armor.value)) {
-        const armorRoll = new Roll(this.data.data.attribs.armor.value).roll()
+        const armorRoll = await new Roll(
+          this.data.data.attribs.armor.value
+        ).roll({ async: true })
         armorValue = armorRoll.total
       } else if (!isNaN(Number(this.data.data.attribs.armor.value))) {
         armorValue = Number(this.data.data.attribs.armor.value)

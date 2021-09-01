@@ -4,7 +4,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 | Key                                                                                      |   cn    |   cs   |   de   |   es   |   fr   |   ja    |   pl    | pt-BR  |   sv   | zh-TW  |
 | :--------------------------------------------------------------------------------------- | :-----: | :----: | :----: | :----: | :----: | :-----: | :-----: | :----: | :----: | :----: |
-| **Remaining**:                                                                           | **305** | **80** | **98** | **20** | **45** | **100** | **321** | **20** | **22** | **20** |
+| **Remaining**:                                                                           | **306** | **81** | **99** | **21** | **46** | **101** | **322** | **21** | **23** | **21** |
 | [CoC7.ActorImporter](#coc7actorimporter)                                                 |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.ActorImporterSummary](#coc7actorimportersummary)                                   |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.AdvantageAttacker](#coc7advantageattacker)                                         |    X    |        |        |        |        |         |    X    |        |        |        |
@@ -170,6 +170,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.MythosGain](#coc7mythosgain)                                                       |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.NoConvert](#coc7noconvert)                                                         |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.NoTargetSelected](#coc7notargetselected)                                           |    X    |   X    |   X    |        |   X    |    X    |    X    |        |        |        |
+| [CoC7.NoTargetToDamage](#coc7notargettodamage)                                           |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
 | [CoC7.NonPlayingCharacter](#coc7nonplayingcharacter)                                     |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.NotInsane](#coc7notinsane)                                                         |    X    |        |        |        |        |         |    X    |        |        |        |
 | [CoC7.NotOwned](#coc7notowned)                                                           |    X    |   X    |   X    |   X    |   X    |    X    |    X    |   X    |   X    |   X    |
@@ -350,7 +351,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 ##### CoC7.AlreadyInABout
 
-`"CoC7.AlreadyInABout": "You're already suffering a bout of madness and are immune to further loos of sanity.",`
+`"CoC7.AlreadyInABout": "You're already suffering a bout of madness and are immune to further loss of sanity.",`
 
 ##### CoC7.AlreadyLost
 
@@ -987,6 +988,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.NoTargetSelected
 
 `"CoC7.NoTargetSelected": "You have not selected a target for your {weapon} check. Do you want to proceed anyway?",`
+
+##### CoC7.NoTargetToDamage
+
+`"CoC7.NoTargetToDamage": "There is no target to apply the damage to",`
 
 ##### CoC7.NonPlayingCharacter
 

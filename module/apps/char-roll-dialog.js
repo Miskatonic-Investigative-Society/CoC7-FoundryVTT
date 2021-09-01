@@ -1,14 +1,14 @@
 /* global Dialog, renderTemplate, Roll */
 
 export class CharacRollDialog extends Dialog {
-  activateListeners (html) {
+  async activateListeners (html) {
     super.activateListeners(html)
     html.on('change', 'input', this._onChangeInput.bind(this))
     html.on('submit', 'form', this._onSubmit.bind(this))
     html.on(
       'click',
       '.roll-characteristic',
-      this._onRollCharacteristic.bind(this)
+      await this._onRollCharacteristic.bind(this)
     )
     html.on(
       'click',
@@ -32,7 +32,7 @@ export class CharacRollDialog extends Dialog {
     event.preventDefault()
     const li = event.currentTarget.closest('.item')
     const characKey = li.dataset.key
-    this.rollCharacteristic(characKey)
+    await this.rollCharacteristic(characKey)
   }
 
   async _onIncreaseCharacteristic (event) {
@@ -59,11 +59,19 @@ export class CharacRollDialog extends Dialog {
   async _onButton (event) {
     const action = event.currentTarget.dataset.action
     if (action === 'roll') {
-      ;['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu', 'luck'].forEach(
-        char => {
-          this.rollCharacteristic(char)
-        }
-      )
+      for (const char of [
+        'str',
+        'con',
+        'siz',
+        'dex',
+        'app',
+        'int',
+        'pow',
+        'edu',
+        'luck'
+      ]) {
+        await this.rollCharacteristic(char)
+      }
     }
     if (
       action === 'validate' &&

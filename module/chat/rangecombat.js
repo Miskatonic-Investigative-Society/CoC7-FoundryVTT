@@ -494,7 +494,7 @@ export class CoC7RangeInitiator {
       let weaponMalfunction = false
       let index = 0
       while (!weaponMalfunction && this.shots.length > index) {
-        const roll = this.shootAtTarget(this.shots[index])
+        const roll = await this.shootAtTarget(this.shots[index])
         if (roll.dice?.roll) {
           await CoC7Dice.showRollDice3d(roll.dice.roll)
         }
@@ -510,7 +510,7 @@ export class CoC7RangeInitiator {
         this.rolls.push(roll)
       }
     } else {
-      const roll = this.shootAtTarget()
+      const roll = await this.shootAtTarget()
       if (roll.dice?.roll) {
         await CoC7Dice.showRollDice3d(roll.dice.roll)
       }
@@ -544,7 +544,7 @@ export class CoC7RangeInitiator {
     await this.updateChatCard()
   }
 
-  shootAtTarget (shot = null) {
+  async shootAtTarget (shot = null) {
     const target = shot
       ? this.getTargetFromKey(shot.actorKey)
       : this.activeTarget
@@ -574,7 +574,7 @@ export class CoC7RangeInitiator {
     check.details = `${game.i18n.localize('CoC7.Target')}: ${target.name}`
     check.targetKey = target.actorKey
 
-    check.roll()
+    await check.roll()
     return check
   }
 
@@ -714,13 +714,9 @@ export class CoC7RangeInitiator {
 
       const damageFormula = h.shot.damage
       const damageDie = CoC7Damage.getMainDie(damageFormula)
-      /** * MODIF 0.8.x ***/
-      // const maxDamage = Roll.maximize( damageFormula).total; //DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
-      const maxDamage = await new Roll(damageFormula).evaluate({
-        maximize: true,
-        async: true
-      }).total // DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
-      /*******************/
+      const maxDamage = new Roll(damageFormula).evaluate({
+        maximize: true
+      }).total
       const criticalDamageFormula = this.weapon.impale
         ? `${damageFormula} + ${maxDamage}`
         : `${maxDamage}`
@@ -804,32 +800,36 @@ export class CoC7RangeInitiator {
   async dealDamage () {
     for (let dIndex = 0; dIndex < this.damage.length; dIndex++) {
       const actor = chatHelper.getActorFromKey(this.damage[dIndex].targetKey) // REFACTORING (2)
-      this.damage[dIndex].totalTaken = 0
-      this.damage[dIndex].totalAbsorbed = 0
-      for (
-        let rIndex = 0;
-        rIndex < this.damage[dIndex].rolls.length;
-        rIndex++
-      ) {
-        const dealtAmount = await actor.dealDamage(
-          this.damage[dIndex].rolls[rIndex].total
-        )
-        this.damage[dIndex].totalTaken += dealtAmount
-        this.damage[dIndex].rolls[rIndex].taken = dealtAmount
-        this.damage[dIndex].rolls[rIndex].absorbed =
-          this.damage[dIndex].rolls[rIndex].total - dealtAmount
-        this.damage[dIndex].totalAbsorbed +=
-          this.damage[dIndex].rolls[rIndex].total - dealtAmount
-      }
-      this.damage[dIndex].dealt = true
-      this.damage[dIndex].resultString = game.i18n.format(
-        'CoC7.rangeCombatDamageArmor',
-        {
-          name: this.damage[dIndex].targetName,
-          total: this.damage[dIndex].totalTaken,
-          armor: this.damage[dIndex].totalAbsorbed
+      if (actor === null) {
+        ui.notifications.error(game.i18n.localize('CoC7.NoTargetToDamage'))
+      } else {
+        this.damage[dIndex].totalTaken = 0
+        this.damage[dIndex].totalAbsorbed = 0
+        for (
+          let rIndex = 0;
+          rIndex < this.damage[dIndex].rolls.length;
+          rIndex++
+        ) {
+          const dealtAmount = await actor.dealDamage(
+            this.damage[dIndex].rolls[rIndex].total
+          )
+          this.damage[dIndex].totalTaken += dealtAmount
+          this.damage[dIndex].rolls[rIndex].taken = dealtAmount
+          this.damage[dIndex].rolls[rIndex].absorbed =
+            this.damage[dIndex].rolls[rIndex].total - dealtAmount
+          this.damage[dIndex].totalAbsorbed +=
+            this.damage[dIndex].rolls[rIndex].total - dealtAmount
         }
-      )
+        this.damage[dIndex].dealt = true
+        this.damage[dIndex].resultString = game.i18n.format(
+          'CoC7.rangeCombatDamageArmor',
+          {
+            name: this.damage[dIndex].targetName,
+            total: this.damage[dIndex].totalTaken,
+            armor: this.damage[dIndex].totalAbsorbed
+          }
+        )
+      }
     }
     this.damageDealt = true
     this.updateChatCard()

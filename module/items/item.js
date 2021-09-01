@@ -557,8 +557,7 @@ export class CoC7Item extends Item {
       try {
         value = Math.floor(
           new Roll(this.data.data.base, parsed).evaluate({
-            maximize: true,
-            async: true
+            maximize: true
           }).total
         )
       } catch (err) {

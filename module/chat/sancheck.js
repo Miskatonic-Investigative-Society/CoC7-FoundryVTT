@@ -211,7 +211,7 @@ export class CoC7SanCheck {
   async rollSanLoss () {
     if (this.isSanLossFormula) {
       const r = new Roll(this.sanLossFormula)
-      r.roll()
+      await r.roll({ async: true })
       CoC7Dice.showRollDice3d(r)
 
       this.totalSanLoss = r.total
