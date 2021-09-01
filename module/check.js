@@ -373,7 +373,7 @@ export class CoC7Check {
     return check
   }
 
-  static push (card, publish = true) {
+  static async push (card, publish = true) {
     const oldCheck = CoC7Check.getFromCard(card) // TODO: Refactoring
     const actorId = card.dataset.tokenId
       ? card.dataset.tokenId
@@ -397,7 +397,7 @@ export class CoC7Check {
     if (oldCheck.uuid) pushedRoll.uuid = oldCheck.uuid
     if (oldCheck.parent) pushedRoll.parent = oldCheck.parent
     pushedRoll.pushing = true
-    pushedRoll.roll()
+    await pushedRoll.roll()
     if (publish) pushedRoll.toMessage(true, card)
   }
 
@@ -648,10 +648,10 @@ export class CoC7Check {
     return a
   }
 
-  roll (diceMod = null, difficulty = null) {
+  async roll (diceMod = null, difficulty = null) {
     if (diceMod) this.diceModifier = diceMod
     if (difficulty) this.difficulty = difficulty
-    if (!this.standby) this._perform()
+    if (!this.standby) await this._perform()
   }
 
   static create ({
@@ -688,31 +688,31 @@ export class CoC7Check {
     return check
   }
 
-  rollCharacteristic (char, diceMod = null, difficulty = null) {
+  async rollCharacteristic (char, diceMod = null, difficulty = null) {
     if (diceMod) this.diceModifier = diceMod
     if (difficulty) this.difficulty = difficulty
     this.characteristic = char
-    if (!this.standby) this._perform()
+    if (!this.standby) await this._perform()
   }
 
-  rollAttribute (attrib, diceMod = null, difficulty = null) {
+  async rollAttribute (attrib, diceMod = null, difficulty = null) {
     if (diceMod) this.diceModifier = diceMod
     if (difficulty) this.difficulty = difficulty
     this.attribute = attrib
-    if (!this.standby) this._perform()
+    if (!this.standby) await this._perform()
   }
 
-  rollValue (val, diceMod = null, difficulty = null) {
+  async rollValue (val, diceMod = null, difficulty = null) {
     if (diceMod) this.diceModifier = diceMod
     if (difficulty) this.difficulty = difficulty
     this.rawValue = val
-    if (!this.standby) this._perform()
+    if (!this.standby) await this._perform()
   }
 
   async _perform (options = {}) {
     this.dice =
       options.roll ||
-      CoC7Dice.roll(this.diceModifier, this.rollMode, this.isBlind)
+      (await CoC7Dice.roll(this.diceModifier, this.rollMode, this.isBlind))
     if (!options.silent) AudioHelper.play({ src: CONFIG.sounds.dice })
 
     this.dices = {

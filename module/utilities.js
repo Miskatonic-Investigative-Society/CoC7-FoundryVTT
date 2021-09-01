@@ -107,7 +107,7 @@ export class CoC7Utilities {
       const actor = game.actors.get(speaker.actor)
       if (actor) check.actor = actor
     }
-    check.roll()
+    await check.roll()
     check.toMessage()
   }
 
@@ -567,7 +567,7 @@ export class CoC7Utilities {
       actors.push(game.user.character.tokenKey)
     }
 
-    actors.forEach(tk => {
+    await actors.forEach(async tk => {
       const check = new CoC7Check()
       check.diceModifier = diceModifier || 0
       check.difficulty = difficulty || CoC7Check.difficultyLevel.regular
@@ -575,7 +575,7 @@ export class CoC7Utilities {
       check.flatDiceModifier = flatDiceModifier
       check.flatThresholdModifier = flatThresholdModifier
       check.actor = tk
-      check.roll()
+      await check.roll()
       check.toMessage()
     })
 
@@ -586,7 +586,7 @@ export class CoC7Utilities {
       check.rawValue = threshold
       check.flatDiceModifier = flatDiceModifier
       check.flatThresholdModifier = flatThresholdModifier
-      check.roll()
+      await check.roll()
       check.toMessage()
     }
   }

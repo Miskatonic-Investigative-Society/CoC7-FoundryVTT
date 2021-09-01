@@ -205,7 +205,7 @@ export class OpposedCheckCard extends RollCard {
   }
 
   async roll (rank) {
-    this.rolls[rank]._perform()
+    await this.rolls[rank]._perform()
     const data = {
       type: this.config.type,
       action: 'updateRoll',

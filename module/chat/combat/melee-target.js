@@ -291,7 +291,7 @@ export class CoC7MeleeTarget extends ChatCardActor {
     if (this.disadvantage) check.diceModifier -= 1
     if (this.advantage) check.diceModifier += 1
 
-    check.roll()
+    await check.roll()
     this.check = check
     this.rolled = true
     this.resolved = true

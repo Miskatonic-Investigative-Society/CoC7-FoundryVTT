@@ -92,7 +92,7 @@ export class CoC7Chat {
    *  Chat Message Helpers                        *
    * -------------------------------------------- */
 
-  static chatListeners (app, html) {
+  static async chatListeners (app, html) {
     html.on(
       'click',
       '.card-buttons button',
@@ -134,7 +134,7 @@ export class CoC7Chat {
 
     html.on('dblclick', '.open-actor', CoC7Chat._onOpenActor.bind(this))
 
-    html.on('click', '.coc7-link', CoC7Parser._onCheck.bind(this))
+    html.on('click', '.coc7-link', await CoC7Parser._onCheck.bind(this))
     html.on('dragstart', 'a.coc7-link', CoC7Parser._onDragCoC7Link.bind(this))
 
     html.on('click', 'coc7-inline-result', CoC7Chat._onInline.bind(this))
@@ -824,7 +824,7 @@ export class CoC7Chat {
         newCard.querySelector('.card-buttons').remove()
         newCard.dataset.pushedRoll = true
         await CoC7Chat.updateChatCard(newCard, originMessage.dataset.messageId)
-        CoC7Check.push(card)
+        await CoC7Check.push(card)
         break
       }
       case 'defending': {
@@ -853,7 +853,7 @@ export class CoC7Chat {
             check.difficulty = CoC7Check.difficultyLevel.regular
             if (outnumbered) check.diceModifier = -1
 
-            check.roll()
+            await check.roll()
             check.toMessage()
             break
           case 'fightBack':
@@ -863,7 +863,7 @@ export class CoC7Chat {
             check.item = event.currentTarget.dataset.itemId
             if (outnumbered) check.diceModifier = -1
 
-            check.roll()
+            await check.roll()
             check.toMessage()
             break
           case 'maneuver': {
@@ -889,7 +889,7 @@ export class CoC7Chat {
               check.diceModifier = -2
             }
 
-            check.roll()
+            await check.roll()
             check.toMessage()
             break
           }
@@ -1026,7 +1026,7 @@ export class CoC7Chat {
       case 'roll-check-card': {
         const check = await CoC7Check.getFromCard(card)
         check.standby = false
-        check._perform()
+        await check._perform()
         check.updateChatCard({ forceRoll: true })
         break
       }
