@@ -89,7 +89,7 @@
           </span>
         </div>
       </a>
-      {{#or isKeeper data.data.initialReading}}
+      {{#if (or isKeeper data.data.initialReading)}}
         <a data-tab="content">
           <div class="tab-name">
             <span>
@@ -97,7 +97,7 @@
             </span>
           </div>
         </a>
-      {{/or}}
+      {{/if}}
       {{#if isKeeper}}
         <a data-tab="details">
           <div class="tab-name">
@@ -107,8 +107,8 @@
           </div>
         </a>
       {{/if}}
-      {{#or data.type.mythos data.type.occult}}
-        {{#or isKeeper data.data.initialReading}}
+      {{#if (or data.type.mythos data.type.occult)}}
+        {{#if (or isKeeper data.data.initialReading)}}
           <a data-tab="spells">
             <div class="tab-name">
               <span>
@@ -116,8 +116,8 @@
               </span>
             </div>
           </a>
-        {{/or}}
-      {{/or}}
+        {{/if}}
+      {{/if}}
       {{#if isKeeper}}
         <a data-tab="notes">
           <div class="tab-name">
