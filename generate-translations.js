@@ -85,7 +85,7 @@ glob('./lang/*.json', {}, async function (er, files) {
           key.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '') +
           ')|'
         Object.entries(langs).forEach(([lang, value]) => {
-          output = output + (value.includes(key) ? 'X' : '') + '|'
+          output = output + (value.includes(key) ? '&#x274C;' : '&#9989;') + '|'
         })
         output = output + '\n'
         anchors =
