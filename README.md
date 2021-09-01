@@ -18,7 +18,7 @@
 
 ## Overview.
 
-An unofficial implementation of the Call of Cthulhu 7th Edition game system for [Foundry Virtual Tabletop](http://foundryvtt.com). This provides sheets and  system in addition to some compendiums as examples.
+An unofficial implementation of the Call of Cthulhu 7th Edition game system for [Foundry Virtual Tabletop](http://foundryvtt.com). This provides sheets and system in addition to some compendiums as examples.
 
 If you have any suggestions or feedback, please visit us on Discord in the `#chaosium` channel on the [Foundry Discord Server](discord.gg/foundryvtt), or see: [CONTRIBUTING](https://github.com/HavlockV/CoC7-FoundryVTT/blob/develop/.github/CONTRIBUTING.md)
 
