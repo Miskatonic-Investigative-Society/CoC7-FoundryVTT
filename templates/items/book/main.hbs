@@ -7,18 +7,20 @@
       <div class="flexrow">
         <input class="name" name="name" type="text" value="{{item.name}}" />
       </div>
-      <div class="flexrow">
-        <label>{{localize "CoC7.Author"}}:</label>
-        <input type="text" name="data.author" value="{{data.author}}" />
-      </div>
-      <div class="flexrow">
-        <label>{{localize "CoC7.Date"}}:</label>
-        <input type="text" name="data.date" value="{{data.date}}" />
-      </div>
-      <div class="flexrow">
-        <label>{{localize "CoC7.language"}}:</label>
-        <input type="text" name="data.language" value="{{data.language}}" />
-      </div>
+      {{#if (or isKeeper initialReading)}}
+        <div class="flexrow">
+          <label>{{localize "CoC7.Author"}}:</label>
+          <input type="text" name="data.author" value="{{data.author}}" />
+        </div>
+        <div class="flexrow">
+          <label>{{localize "CoC7.Date"}}:</label>
+          <input type="text" name="data.date" value="{{data.date}}" />
+        </div>
+        <div class="flexrow">
+          <label>{{localize "CoC7.language"}}:</label>
+          <input type="text" name="data.language" value="{{data.language}}" />
+        </div>
+      {{/if}}
     </div>
     <div class="aside">
       {{#if data.initialReading}}
@@ -56,28 +58,36 @@
         </div>
       {{else}}
         <div class="flexrow">
-          <span id="attempt-initial-reading">
-            <label>
-              {{localize "CoC7.InitialReading"}}
-            </label>
-          </span>
+          {{#if (or isKeeper isOwned)}}
+            <span id="attempt-initial-reading">
+              <label>
+                {{localize "CoC7.InitialReading"}}
+              </label>
+            </span>
+          {{/if}}
         </div>
       {{/if}}
     </div>
     <div class="progress">
-      <i id="decrease-progress" class="fas fa-minus"></i>
-      <progress
-        id="progress"
-        name="data.study.progress"
-        value="{{data.study.progress}}"
-        max="{{data.study.necessary}}"
-        {{#if data.type.mythos}}
-          data-label="{{localize "CoC7.Progress"}}:
-            {{data.study.progress}} / {{data.study.necessary}}
-            {{localize "CoC7.weeks"}}"
+      {{#if data.type.mythos}}
+        {{#if (or isKeeper initialReading)}}
+          {{#if isKeeper}}
+            <i id="decrease-progress" class="fas fa-minus"></i>
+          {{/if}}
+          <progress
+            id="progress"
+            name="data.study.progress"
+            value="{{data.study.progress}}"
+            max="{{data.study.necessary}}"
+              data-label="{{localize "CoC7.Progress"}}:
+                {{data.study.progress}} / {{data.study.necessary}}
+                {{localize "CoC7.weeks"}}"
+          ></progress>
+          {{#if isKeeper}}
+            <i id="increase-progress" class="fas fa-plus increase-progress"></i>
+          {{/if}}
         {{/if}}
-      ></progress>
-      <i id="increase-progress" class="fas fa-plus increase-progress"></i>
+      {{/if}}
     </div>
     <nav class="navigation tabs" data-group="primary">
       <a
@@ -89,7 +99,7 @@
           </span>
         </div>
       </a>
-      {{#if (or isKeeper data.data.initialReading)}}
+      {{#if (or isKeeper initialReading)}}
         <a data-tab="content">
           <div class="tab-name">
             <span>
@@ -108,7 +118,7 @@
         </a>
       {{/if}}
       {{#if (or data.type.mythos data.type.occult)}}
-        {{#if (or isKeeper data.data.initialReading)}}
+        {{#if (or isKeeper initialReading)}}
           <a data-tab="spells">
             <div class="tab-name">
               <span>
