@@ -56,9 +56,7 @@ export class CoC7OccupationSheet extends ItemSheet {
 
     dataList.forEach(async item => {
       if (!item || !item.data) return
-      if (
-        ![type].includes(item.data.type)
-      ) {
+      if (![type].includes(item.data.type)) {
         return
       }
 
@@ -68,11 +66,7 @@ export class CoC7OccupationSheet extends ItemSheet {
           if (collection.find(el => el.name === item.data.name)) {
             return // If skill is already in main don't add it
           }
-          if (
-            groups[index].skills.find(
-              el => el.name === item.name
-            )
-          ) {
+          if (groups[index].skills.find(el => el.name === item.name)) {
             return // If skill is already in group don't add it
           }
         }

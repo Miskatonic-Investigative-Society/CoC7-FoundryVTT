@@ -952,7 +952,9 @@ export class CoCActor extends Actor {
           } else {
             for (const sectionName of data.data.bioSections) {
               if (
-                !this.data.data.biography.find(el => sectionName === el.title) &&
+                !this.data.data.biography.find(
+                  el => sectionName === el.title
+                ) &&
                 sectionName
               ) {
                 await this.createBioSection(sectionName)
@@ -1008,7 +1010,9 @@ export class CoCActor extends Actor {
               let value = Number(data.data.coreCharacteristicsFormula.value)
               if (isNaN(value)) {
                 const char = this.getCharacteristic(charac)
-                const roll = new Roll(data.data.coreCharacteristicsFormula.value)
+                const roll = new Roll(
+                  data.data.coreCharacteristicsFormula.value
+                )
                 await roll.roll({ async: true })
                 roll.toMessage({
                   flavor: `Rolling characterisitic ${char.label}: ${data.data.coreCharacteristicsFormula.value}`

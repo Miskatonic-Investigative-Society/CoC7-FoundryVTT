@@ -38,9 +38,7 @@ export class CoC7ArchetypeSheet extends ItemSheet {
       : []
     dataList.forEach(async item => {
       if (!item || !item.data) return
-      if (
-        ![type].includes(item.data.type)
-      ) {
+      if (![type].includes(item.data.type)) {
         return
       }
       if (!CoC7Item.isAnySpec(item)) {

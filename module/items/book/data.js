@@ -198,7 +198,9 @@ export class CoC7Book extends CoC7Item {
           skill.specialization = pattern[2]
         }
         if (skill.value !== 'development') {
-          skill.value = (await new Roll(skill.value).roll({ async: true })).total
+          skill.value = (
+            await new Roll(skill.value).roll({ async: true })
+          ).total
         }
         if (skill.value) {
           developments.push({
@@ -384,8 +386,10 @@ export class CoC7Book extends CoC7Item {
     /** Will know if user push the check or spend Luck */
     if (check.passed) {
       switch (check.context) {
-        case 'INITIAL_READING': return await this.grantInitialReading()
-        case 'SPELL_LEARNING': return await this.grantSpellLearning()
+        case 'INITIAL_READING':
+          return await this.grantInitialReading()
+        case 'SPELL_LEARNING':
+          return await this.grantSpellLearning()
       }
     }
   }

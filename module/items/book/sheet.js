@@ -48,7 +48,9 @@ export class CoC7BookSheet extends ItemSheet {
     })
     html.find('.delete-spell').click(event => this._onDelete(event))
     html.find('.teach-spell').click(event => {
-      const id = $(event.currentTarget).parents('li').data('id')
+      const id = $(event.currentTarget)
+        .parents('li')
+        .data('id')
       this.item.teachSpell(id)
     })
     html.find('[name="data.study.necessary"]').change(event => {
