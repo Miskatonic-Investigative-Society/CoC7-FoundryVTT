@@ -4,7 +4,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 | Key                                                                                      |    cn    |    cs    |    de    |    es    |    fr    |    ja    |    pl    |  pt-BR   |    sv    |  zh-TW   |
 | :--------------------------------------------------------------------------------------- | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-| **Remaining**:                                                                           | **310**  |  **85**  | **103**  |  **25**  |  **4**   | **105**  | **326**  |  **17**  |  **2**   |  **25**  |
+| **Remaining**:                                                                           | **311**  |  **86**  | **104**  |  **26**  |  **5**   | **106**  | **327**  |  **18**  |  **3**   |  **26**  |
 | [CoC7.ActorImporter](#coc7actorimporter)                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.ActorImporterSummary](#coc7actorimportersummary)                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.AdvantageAttacker](#coc7advantageattacker)                                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -58,6 +58,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.DamageInflicted](#coc7damageinflicted)                                             | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.DealDamage](#coc7dealdamage)                                                       | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.DevPhase](#coc7devphase)                                                           | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.DevelopAttribWarn](#coc7developattribwarn)                                         | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.Development](#coc7development)                                                     | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.DifficultyLevel](#coc7difficultylevel)                                             | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.DisregardMythosGain](#coc7disregardmythosgain)                                     | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -544,6 +545,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.DevPhase
 
 `"CoC7.DevPhase": "Development phase",`
+
+##### CoC7.DevelopAttribWarn
+
+`"CoC7.DevelopAttribWarn": "You can not access some attributes in development/creation",`
 
 ##### CoC7.Development
 
