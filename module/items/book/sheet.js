@@ -1,4 +1,5 @@
 /* global $, duplicate, game, Handlebars, ItemSheet, mergeObject */
+import { CoC7Utilities } from '../../utilities.js'
 
 export class CoC7BookSheet extends ItemSheet {
   static get defaultOptions () {
@@ -102,25 +103,15 @@ export class CoC7BookSheet extends ItemSheet {
     event.preventDefault()
     /** Prevents propagation of the same event from being called */
     event.stopPropagation()
-    /** Is this really necessary? */
-    if (event.originalEvent) return
-    let data
-    try {
-      data = JSON.parse(event.dataTransfer.getData('text/plain'))
-      if (data.type !== 'Item') return
-    } catch (error) {
-      return console.error(error)
-    }
-    let item
-    if (data.pack) {
-      const pack = game.packs.get(data.pack)
-      if (pack.metadata.entity !== 'Item') return
-      item = await pack.getEntity(data.id)
-    } else if (data.data) item = data
-    else item = game.items.get(data.id)
-    if (!item || !(item.data.type === 'spell')) return
-    const spell = duplicate(item.data)
-    return await this.item.addSpell(spell)
+
+    const dataList = await CoC7Utilities.getDataFromDropEvent(event, 'Item')
+
+    const spells = []
+    dataList.forEach(async item => {
+      if (!item || !(item.data.type === 'spell')) return
+      spells.push(item.data)
+    })
+    await this.item.addSpells(spells)
   }
 
   /**

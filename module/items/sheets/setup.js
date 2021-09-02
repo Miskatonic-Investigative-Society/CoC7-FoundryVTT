@@ -2,6 +2,7 @@
 
 import { COC7 } from '../../config.js'
 import { CoC7Item } from '../item.js'
+import { CoC7Utilities } from '../../utilities.js'
 // import { CoC7Item } from '../item.js';
 // import { CoCActor } from '../../actors/actor.js';
 
@@ -39,43 +40,27 @@ export class CoC7SetupSheet extends ItemSheet {
     event.preventDefault()
     event.stopPropagation()
 
-    if (event.originalEvent) return
-    let data
-    try {
-      data = JSON.parse(event.dataTransfer.getData('text/plain'))
-      if (data.type !== 'Item') return
-    } catch (err) {
-      return false
-    }
-
-    let item
-
-    if (data.pack) {
-      const pack = game.packs.get(data.pack)
-      if (pack.metadata.entity !== 'Item') return
-      item = await pack.getEntity(data.id)
-    } else if (data.data) {
-      item = data
-    } else {
-      item = game.items.get(data.id)
-    }
-    if (!item || !item.data) return
-    if (
-      !['item', 'weapon', 'skill', 'book', 'spell'].includes(item.data.type)
-    ) {
-      return
-    }
-
-    if (!CoC7Item.isAnySpec(item)) {
-      if (this.item.data.data.items.find(el => el.name === item.data.name)) {
-        return
-      }
-    }
+    const dataList = await CoC7Utilities.getDataFromDropEvent(event, 'Item')
 
     const collection = this.item.data.data[collectionName]
       ? duplicate(this.item.data.data[collectionName])
       : []
-    collection.push(duplicate(item.data))
+    dataList.forEach(async item => {
+      if (!item || !item.data) return
+      if (
+        !['item', 'weapon', 'skill', 'book', 'spell'].includes(item.data.type)
+      ) {
+        return
+      }
+
+      if (!CoC7Item.isAnySpec(item)) {
+        if (collection.find(el => el.name === item.data.name)) {
+          return
+        }
+      }
+
+      collection.push(duplicate(item.data))
+    })
     await this.item.update({ [`data.${collectionName}`]: collection })
   }
 

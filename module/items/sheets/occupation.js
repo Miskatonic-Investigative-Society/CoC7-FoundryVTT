@@ -2,6 +2,7 @@
 
 import { COC7 } from '../../config.js'
 import { CoC7Item } from '../item.js'
+import { CoC7Utilities } from '../../utilities.js'
 // import { CoCActor } from '../../actors/actor.js';
 
 /**
@@ -44,72 +45,61 @@ export class CoC7OccupationSheet extends ItemSheet {
     const ol = event?.currentTarget?.closest('ol')
     const index = ol?.dataset?.group
 
-    if (event.originalEvent) return
-    let data
-    try {
-      data = JSON.parse(event.dataTransfer.getData('text/plain'))
-      if (data.type !== 'Item') return
-    } catch (err) {
-      return false
-    }
+    const dataList = await CoC7Utilities.getDataFromDropEvent(event, 'Item')
 
-    let item
+    const collection = this.item.data.data[collectionName]
+      ? duplicate(this.item.data.data[collectionName])
+      : []
+    const groups = this.item.data.data.groups
+      ? duplicate(this.item.data.data.groups)
+      : []
 
-    if (data.pack) {
-      const pack = game.packs.get(data.pack)
-      if (pack.metadata.entity !== 'Item') return
-      item = await pack.getEntity(data.id)
-    } else if (data.data) {
-      item = data
-    } else {
-      item = game.items.get(data.id)
-    }
-    if (!item || !(type === item.data.type)) return
-
-    if (optionalSkill) {
-      if (!CoC7Item.isAnySpec(item)) {
-        // Generic specialization can be included many times
-        if (this.item.data.data.skills.find(el => el.name === item.data.name)) {
-          return // If skill is already in main don't add it
-        }
-        if (
-          this.item.data.data.groups[index].skills.find(
-            el => el.name === item.name
-          )
-        ) {
-          return // If skill is already in group don't add it
-        }
+    dataList.forEach(async item => {
+      if (!item || !item.data) return
+      if (
+        ![type].includes(item.data.type)
+      ) {
+        return
       }
 
-      const groups = duplicate(this.item.data.data.groups)
-      groups[index].skills = groups[index].skills.concat([item.data])
-      await this.item.update({ 'data.groups': groups })
-    } else {
-      if (!CoC7Item.isAnySpec(item)) {
-        // Generic specialization can be included many times
-        if (this.item.data.data.skills.find(el => el.name === item.data.name)) {
-          return
-        }
-
-        for (let i = 0; i < this.item.data.data.groups.length; i++) {
-          // If the same skill is in one of the group remove it from the groups
-          const index = this.item.data.data.groups[i].skills.findIndex(
-            el => el.name === item.data.name
-          )
-          if (index !== -1) {
-            const groups = duplicate(this.item.data.data.groups)
-            groups[i].skills.splice(index, 1)
-            await this.item.update({ 'data.groups': groups })
+      if (optionalSkill) {
+        if (!CoC7Item.isAnySpec(item)) {
+          // Generic specialization can be included many times
+          if (collection.find(el => el.name === item.data.name)) {
+            return // If skill is already in main don't add it
+          }
+          if (
+            groups[index].skills.find(
+              el => el.name === item.name
+            )
+          ) {
+            return // If skill is already in group don't add it
           }
         }
-      }
 
-      const collection = this.item.data.data[collectionName]
-        ? duplicate(this.item.data.data[collectionName])
-        : []
-      collection.push(duplicate(item.data))
-      await this.item.update({ [`data.${collectionName}`]: collection })
-    }
+        groups[index].skills = groups[index].skills.concat([item.data])
+      } else {
+        if (!CoC7Item.isAnySpec(item)) {
+          // Generic specialization can be included many times
+          if (collection.find(el => el.name === item.data.name)) {
+            return
+          }
+
+          for (let i = 0; i < groups.length; i++) {
+            // If the same skill is in one of the group remove it from the groups
+            const index = groups[i].skills.findIndex(
+              el => el.name === item.data.name
+            )
+            if (index !== -1) {
+              groups[i].skills.splice(index, 1)
+            }
+          }
+        }
+        collection.push(duplicate(item.data))
+      }
+    })
+    await this.item.update({ 'data.groups': groups })
+    await this.item.update({ [`data.${collectionName}`]: collection })
   }
 
   async _onGroupControl (event) {

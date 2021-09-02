@@ -30,15 +30,17 @@ export class CoC7Book extends CoC7Item {
 
   /**
    * For the future: add advanced rules for learning spells, pg. 176
-   * @param {Document} spell
+   * @param [{Document}] spells
    * @returns {Promise<Document>} update to Item document
    */
-  async addSpell (spell) {
-    const spells = this.data.data.spells
+  async addSpells (spells) {
+    const collection = this.data.data.spells
       ? duplicate(this.data.data.spells)
       : []
-    spells.push(spell)
-    return await this.update({ 'data.spells': spells })
+    spells.forEach(async spell => {
+      collection.push(spell)
+    })
+    return await this.update({ 'data.spells': collection })
   }
 
   /**

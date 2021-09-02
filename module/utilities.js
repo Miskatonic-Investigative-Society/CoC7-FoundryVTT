@@ -608,4 +608,35 @@ export class CoC7Utilities {
       })
     }
   }
+
+  /**
+   * Called from _onDrop to get the dropped entityType or entityType from a folder
+   * @param {jQuery} event @see activateListeners
+   * @returns [items] array of items
+   */
+  static async getDataFromDropEvent (event, entityType = 'Item') {
+    if (event.originalEvent) return []
+    try {
+      const dataList = JSON.parse(event.dataTransfer.getData('text/plain'))
+      if (dataList.type === 'Folder' && dataList.documentName === entityType) {
+        const folder = game.folders.get(dataList.id)
+        if (!folder) return []
+        return folder.contents
+      } else if (dataList.type === entityType) {
+        if (dataList.pack) {
+          const pack = game.packs.get(dataList.pack)
+          if (pack.metadata.entity !== entityType) return []
+          return [await pack.getEntity(dataList.id)]
+        } else if (dataList.data) {
+          return [dataList]
+        } else {
+          return [game.items.get(dataList.id)]
+        }
+      } else {
+        return []
+      }
+    } catch (err) {
+      return []
+    }
+  }
 }
