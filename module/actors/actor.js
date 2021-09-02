@@ -727,531 +727,536 @@ export class CoCActor extends Actor {
    * @param {*} options
    */
   async createEmbeddedDocuments (embeddedName, dataArray, options) {
-    const data = dataArray[0]
-    switch (data.type) {
-      case 'skill':
-        if (this.data.type !== 'character') {
-          // If not a PC set skill value to base
-          if (this.getItemIdByName(data.name)) return // If skill with this name exist return
+    dataArray.forEach(async data => {
+      switch (data.type) {
+        case 'skill':
+          if (this.data.type !== 'character') {
+            // If not a PC set skill value to base
+            if (this.getItemIdByName(data.name)) return // If skill with this name exist return
 
-          if (data.data.base) {
-            if (String(data.data.base) !== String(data.data.value)) {
-              data.data.value = data.data.base
+            if (data.data.base) {
+              if (String(data.data.base) !== String(data.data.value)) {
+                data.data.value = data.data.base
+              }
             }
-          }
 
-          if (isNaN(Number(data.data.value))) {
-            let value
-            try {
-              value = (
-                await new Roll(
-                  data.data.value,
-                  this.parseCharacteristics()
-                ).evaluate({ async: true })
-              ).total
-            } catch (err) {
-              value = null
+            if (isNaN(Number(data.data.value))) {
+              let value
+              try {
+                value = (
+                  await new Roll(
+                    data.data.value,
+                    this.parseCharacteristics()
+                  ).evaluate({ async: true })
+                ).total
+              } catch (err) {
+                value = null
+              }
+              if (value) data.data.value = Math.floor(value)
             }
-            if (value) data.data.value = Math.floor(value)
-          }
-        } else data.data.value = null
+          } else data.data.value = null
 
-        if (CoC7Item.isAnySpec(data)) {
-          const specialization = data.data.specialization?.toLowerCase()
-          if (specialization) {
-            let skillList = []
-            if (data.data?.flags?.occupation || data.data?.flags?.archetype) {
-              skillList = this.skills.filter(el => {
-                if (!el.data.data.specialization) return false
-                if (
-                  data.data?.flags?.occupation &&
-                  el.data.data.flags?.occupation
-                ) {
-                  return false
-                }
-                if (
-                  data.data?.flags?.archetype &&
-                  el.data.data.flags?.archetype
-                ) {
-                  return false
-                }
-                return (
-                  specialization.toLowerCase() ===
-                  el.data.data.specialization?.toLowerCase()
-                )
-              })
-            }
-            // if( 1 <= skillList.length) {
-            const skillData = await SkillSpecSelectDialog.create(
-              skillList,
-              data.data.specialization,
-              data.data.base
-            )
-            if (skillData) {
-              if (skillData.get('existing-skill')) {
-                const existingItem = this.items.get(
-                  skillData.get('existing-skill')
-                )
-                for (const [key, value] of Object.entries(data.data.flags)) {
-                  if (value) await existingItem.setItemFlag(key)
-                }
-                data.name = CoC7Item.getNameWithoutSpec(existingItem)
-                return
-              } else {
-                if (skillData.get('new-skill-name')) {
-                  data.name = skillData.get('new-skill-name')
-                } else data.name = CoC7Item.getNameWithoutSpec(data)
+          if (CoC7Item.isAnySpec(data)) {
+            const specialization = data.data.specialization?.toLowerCase()
+            if (specialization) {
+              let skillList = []
+              if (data.data?.flags?.occupation || data.data?.flags?.archetype) {
+                skillList = this.skills.filter(el => {
+                  if (!el.data.data.specialization) return false
+                  if (
+                    data.data?.flags?.occupation &&
+                    el.data.data.flags?.occupation
+                  ) {
+                    return false
+                  }
+                  if (
+                    data.data?.flags?.archetype &&
+                    el.data.data.flags?.archetype
+                  ) {
+                    return false
+                  }
+                  return (
+                    specialization.toLowerCase() ===
+                    el.data.data.specialization?.toLowerCase()
+                  )
+                })
+              }
+              // if( 1 <= skillList.length) {
+              const skillData = await SkillSpecSelectDialog.create(
+                skillList,
+                data.data.specialization,
+                data.data.base
+              )
+              if (skillData) {
+                if (skillData.get('existing-skill')) {
+                  const existingItem = this.items.get(
+                    skillData.get('existing-skill')
+                  )
+                  for (const [key, value] of Object.entries(data.data.flags)) {
+                    if (value) await existingItem.setItemFlag(key)
+                  }
+                  data.name = CoC7Item.getNameWithoutSpec(existingItem)
+                  return
+                } else {
+                  if (skillData.get('new-skill-name')) {
+                    data.name = skillData.get('new-skill-name')
+                  } else data.name = CoC7Item.getNameWithoutSpec(data)
 
-                if (skillData.get('base-value')) {
-                  const value = Number(skillData.get('base-value'))
-                  if (!isNaN(value)) data.data.base = value
+                  if (skillData.get('base-value')) {
+                    const value = Number(skillData.get('base-value'))
+                    if (!isNaN(value)) data.data.base = value
+                  }
                 }
               }
             }
-          }
-          // }
-        } else {
-          const specialization = data.data.specialization
-          if (specialization) {
-            data.name = CoC7Item.getNameWithoutSpec(data)
-          }
-        }
-
-        return await super.createEmbeddedDocuments(
-          embeddedName,
-          [data],
-          options
-        )
-      case 'weapon': {
-        const mainSkill = data.data?.skill?.main?.name
-        if (mainSkill) {
-          let skill = this.getSkillsByName(mainSkill)[0]
-          if (!skill) {
-            const name = mainSkill.match(/\(([^)]+)\)/)
-              ? mainSkill.match(/\(([^)]+)\)/)[1]
-              : mainSkill
-            skill = await this.createWeaponSkill(
-              name,
-              !!data.data.properties?.rngd
-            )
-          }
-          if (skill) data.data.skill.main.id = skill.id
-        } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
-
-        const secondSkill = data.data?.skill?.alternativ?.name
-        if (secondSkill) {
-          let skill = this.getSkillsByName(secondSkill)[0]
-          if (!skill) {
-            const name = mainSkill.match(/\(([^)]+)\)/)
-              ? mainSkill.match(/\(([^)]+)\)/)[1]
-              : mainSkill
-            skill = await this.createWeaponSkill(
-              name,
-              !!data.data.properties?.rngd
-            )
-          }
-          if (skill) data.data.skill.alternativ.id = skill.id
-        } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
-
-        return await super.createEmbeddedDocuments(
-          embeddedName,
-          [duplicate(data)],
-          options
-        )
-      }
-      case 'setup': {
-        if (data.data.enableCharacterisitics) {
-          data.data.characteristics.list = {}
-          data.data.characteristics.list.str = this.getCharacteristic('str')
-          data.data.characteristics.list.con = this.getCharacteristic('con')
-          data.data.characteristics.list.siz = this.getCharacteristic('siz')
-          data.data.characteristics.list.dex = this.getCharacteristic('dex')
-          data.data.characteristics.list.app = this.getCharacteristic('app')
-          data.data.characteristics.list.int = this.getCharacteristic('int')
-          data.data.characteristics.list.pow = this.getCharacteristic('pow')
-          data.data.characteristics.list.edu = this.getCharacteristic('edu')
-
-          data.data.characteristics.list.luck = {}
-          data.data.characteristics.list.luck.value = isNaN(this.luck)
-            ? null
-            : this.luck
-          data.data.characteristics.list.luck.label = game.i18n.localize(
-            'CoC7.Luck'
-          )
-          data.data.characteristics.list.luck.shortName = game.i18n.localize(
-            'CoC7.Luck'
-          )
-
-          if (!data.data.characteristics.values) {
-            data.data.characteristics.values = {}
-          }
-          data.data.characteristics.values.str =
-            data.data.characteristics.list.str.value
-          data.data.characteristics.values.con =
-            data.data.characteristics.list.con.value
-          data.data.characteristics.values.siz =
-            data.data.characteristics.list.siz.value
-          data.data.characteristics.values.dex =
-            data.data.characteristics.list.dex.value
-          data.data.characteristics.values.app =
-            data.data.characteristics.list.app.value
-          data.data.characteristics.values.int =
-            data.data.characteristics.list.int.value
-          data.data.characteristics.values.pow =
-            data.data.characteristics.list.pow.value
-          data.data.characteristics.values.edu =
-            data.data.characteristics.list.edu.value
-          data.data.characteristics.values.luck =
-            data.data.characteristics.list.luck.value
-          if (data.data.characteristics.points.enabled) {
-            data.data.title = game.i18n.localize('CoC7.SpendPoints')
+            // }
           } else {
-            data.data.title = game.i18n.localize('CoC7.RollCharac')
+            const specialization = data.data.specialization
+            if (specialization) {
+              data.name = CoC7Item.getNameWithoutSpec(data)
+            }
           }
-          const rolled = await CharacRollDialog.create(data.data)
-          if (rolled) {
-            const updateData = {}
-            ;['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu'].forEach(
-              key => {
-                if (data.data.characteristics.values[key]) {
-                  updateData[`data.characteristics.${key}.value`] =
-                    data.data.characteristics.values[key]
-                  updateData[`data.characteristics.${key}.formula`] =
-                    data.data.characteristics.rolls[key]
-                }
-              }
+
+          return await super.createEmbeddedDocuments(
+            embeddedName,
+            [data],
+            options
+          )
+        case 'weapon': {
+          const mainSkill = data.data?.skill?.main?.name
+          if (mainSkill) {
+            let skill = this.getSkillsByName(mainSkill)[0]
+            if (!skill) {
+              const name = mainSkill.match(/\(([^)]+)\)/)
+                ? mainSkill.match(/\(([^)]+)\)/)[1]
+                : mainSkill
+              skill = await this.createWeaponSkill(
+                name,
+                !!data.data.properties?.rngd
+              )
+            }
+            if (skill) data.data.skill.main.id = skill.id
+          } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
+
+          const secondSkill = data.data?.skill?.alternativ?.name
+          if (secondSkill) {
+            let skill = this.getSkillsByName(secondSkill)[0]
+            if (!skill) {
+              const name = mainSkill.match(/\(([^)]+)\)/)
+                ? mainSkill.match(/\(([^)]+)\)/)[1]
+                : mainSkill
+              skill = await this.createWeaponSkill(
+                name,
+                !!data.data.properties?.rngd
+              )
+            }
+            if (skill) data.data.skill.alternativ.id = skill.id
+          } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
+
+          return await super.createEmbeddedDocuments(
+            embeddedName,
+            [duplicate(data)],
+            options
+          )
+        }
+        case 'setup': {
+          if (data.data.enableCharacterisitics) {
+            data.data.characteristics.list = {}
+            data.data.characteristics.list.str = this.getCharacteristic('str')
+            data.data.characteristics.list.con = this.getCharacteristic('con')
+            data.data.characteristics.list.siz = this.getCharacteristic('siz')
+            data.data.characteristics.list.dex = this.getCharacteristic('dex')
+            data.data.characteristics.list.app = this.getCharacteristic('app')
+            data.data.characteristics.list.int = this.getCharacteristic('int')
+            data.data.characteristics.list.pow = this.getCharacteristic('pow')
+            data.data.characteristics.list.edu = this.getCharacteristic('edu')
+
+            data.data.characteristics.list.luck = {}
+            data.data.characteristics.list.luck.value = isNaN(this.luck)
+              ? null
+              : this.luck
+            data.data.characteristics.list.luck.label = game.i18n.localize(
+              'CoC7.Luck'
             )
-            if (data.data.characteristics.values.luck) {
-              updateData['data.attribs.lck.value'] =
-                data.data.characteristics.values.luck
+            data.data.characteristics.list.luck.shortName = game.i18n.localize(
+              'CoC7.Luck'
+            )
+
+            if (!data.data.characteristics.values) {
+              data.data.characteristics.values = {}
             }
-            if (data.data.characteristics.values.pow) {
-              updateData['data.attribs.san.value'] =
-                data.data.characteristics.values.pow
-              updateData['data.attribs.san.oneFifthSanity'] =
-                ' / ' + Math.floor(data.data.characteristics.values.pow / 5)
-              updateData['data.indefiniteInsanityLevel.max'] = updateData[
-                'data.attribs.mp.value'
-              ] = updateData['data.attribs.mp.max'] = Math.floor(
-                data.data.characteristics.values.pow / 5
+            data.data.characteristics.values.str =
+              data.data.characteristics.list.str.value
+            data.data.characteristics.values.con =
+              data.data.characteristics.list.con.value
+            data.data.characteristics.values.siz =
+              data.data.characteristics.list.siz.value
+            data.data.characteristics.values.dex =
+              data.data.characteristics.list.dex.value
+            data.data.characteristics.values.app =
+              data.data.characteristics.list.app.value
+            data.data.characteristics.values.int =
+              data.data.characteristics.list.int.value
+            data.data.characteristics.values.pow =
+              data.data.characteristics.list.pow.value
+            data.data.characteristics.values.edu =
+              data.data.characteristics.list.edu.value
+            data.data.characteristics.values.luck =
+              data.data.characteristics.list.luck.value
+            if (data.data.characteristics.points.enabled) {
+              data.data.title = game.i18n.localize('CoC7.SpendPoints')
+            } else {
+              data.data.title = game.i18n.localize('CoC7.RollCharac')
+            }
+            const rolled = await CharacRollDialog.create(data.data)
+            if (rolled) {
+              const updateData = {}
+              ;['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu'].forEach(
+                key => {
+                  if (data.data.characteristics.values[key]) {
+                    updateData[`data.characteristics.${key}.value`] =
+                      data.data.characteristics.values[key]
+                    updateData[`data.characteristics.${key}.formula`] =
+                      data.data.characteristics.rolls[key]
+                  }
+                }
               )
-            }
-            await this.update(updateData)
-            await this.update({
-              'data.attribs.hp.value': this.hpMax,
-              'data.attribs.hp.max': this.hpMax
-            })
-          } else return
-        }
-        const skills = data.data.items.filter(it => it.type === 'skill')
-        const othersItems = data.data.items.filter(it => it.type !== 'skill')
-        await this.addUniqueItems(skills)
-        await this.addItems(othersItems)
-        if (game.settings.get('CoC7', 'oneBlockBackstory')) {
-          await this.update({ 'data.backstory': data.data.backstory })
-        } else {
-          for (const sectionName of data.data.bioSections) {
-            if (
-              !this.data.data.biography.find(el => sectionName === el.title) &&
-              sectionName
-            ) {
-              await this.createBioSection(sectionName)
-            }
-          }
-        }
-        break
-      }
-      case 'archetype':
-        if (this.data.type === 'character') {
-          // Archetypre only for PCs
-          if (this.archetype) {
-            let resetArchetype = false
-            await Dialog.confirm({
-              title: game.i18n.localize('CoC7.ResetArchetype'),
-              content: `<p>${game.i18n.format('CoC7.ResetArchetypeHint', {
-                name: this.name
-              })}</p>`,
-              yes: () => {
-                resetArchetype = true
-              },
-              defaultYes: false
-            })
-            if (resetArchetype) await this.resetArchetype()
-            else return
-          }
-
-          const coreCharac = []
-          Object.entries(data.data.coreCharacteristics).forEach(entry => {
-            const [key, value] = entry
-            data.data.coreCharacteristics[key] = false
-            if (value) {
-              const char = this.getCharacteristic(key)
-              char.key = key
-              coreCharac.push(char)
-            }
-          })
-
-          let charac
-
-          if (coreCharac.length > 1) {
-            const charDialogData = {}
-            charDialogData.characteristics = coreCharac
-            charDialogData.title = game.i18n.localize('CoC7.SelectCoreCharac')
-            charac = await CharacSelectDialog.create(charDialogData)
-          } else if (coreCharac.length === 1) {
-            charac = coreCharac[0].key
-          }
-
-          if (!charac) return
-          data.data.coreCharacteristics[charac] = true
-          if (data.data.coreCharacteristicsFormula.enabled) {
-            let value = Number(data.data.coreCharacteristicsFormula.value)
-            if (isNaN(value)) {
-              const char = this.getCharacteristic(charac)
-              const roll = new Roll(data.data.coreCharacteristicsFormula.value)
-              await roll.roll({ async: true })
-              roll.toMessage({
-                flavor: `Rolling characterisitic ${char.label}: ${data.data.coreCharacteristicsFormula.value}`
+              if (data.data.characteristics.values.luck) {
+                updateData['data.attribs.lck.value'] =
+                  data.data.characteristics.values.luck
+              }
+              if (data.data.characteristics.values.pow) {
+                updateData['data.attribs.san.value'] =
+                  data.data.characteristics.values.pow
+                updateData['data.attribs.san.oneFifthSanity'] =
+                  ' / ' + Math.floor(data.data.characteristics.values.pow / 5)
+                updateData['data.indefiniteInsanityLevel.max'] = updateData[
+                  'data.attribs.mp.value'
+                ] = updateData['data.attribs.mp.max'] = Math.floor(
+                  data.data.characteristics.values.pow / 5
+                )
+              }
+              await this.update(updateData)
+              await this.update({
+                'data.attribs.hp.value': this.hpMax,
+                'data.attribs.hp.max': this.hpMax
               })
-              value = char.value < roll.total ? roll.total : char.value
-            }
-            await this.update({
-              [`data.characteristics.${charac}.value`]: value
-            })
+            } else return
           }
-
-          // Add all skills
-          await this.addUniqueItems(data.data.skills, 'archetype')
-
-          const newArchetype = await super.createEmbeddedDocuments(
-            embeddedName,
-            [data],
-            options
-          )
-          // setting points
-          await this.update({
-            'data.development.archetype': this.archetypePoints
-          })
-
-          return newArchetype
-        }
-
-        break
-      case 'occupation':
-        if (this.data.type === 'character') {
-          // Occupation only for PCs
-          if (this.occupation) {
-            let resetOccupation = false
-            await Dialog.confirm({
-              title: game.i18n.localize('CoC7.ResetOccupation'),
-              content: `<p>${game.i18n.format('CoC7.ResetOccupationHint', {
-                name: this.name
-              })}</p>`,
-              yes: () => {
-                resetOccupation = true
-              },
-              defaultYes: false
-            })
-            if (resetOccupation) await this.resetOccupation()
-            else return
-          }
-
-          // Select characteristic
-          const pointsDialogData = {}
-          pointsDialogData.characteristics = data.data.occupationSkillPoints
-          let total = 0
-          let optionalChar = false
-          Object.entries(data.data.occupationSkillPoints).forEach(entry => {
-            const [key, value] = entry
-            const char = this.getCharacteristic(key)
-            pointsDialogData.characteristics[key].name = char.label
-            pointsDialogData.characteristics[key].value = char.value
-            if (value.selected) {
-              pointsDialogData.characteristics[key].total =
-                char.value *
-                Number(pointsDialogData.characteristics[key].multiplier)
-              if (!value.optional) {
-                total += pointsDialogData.characteristics[key].total
-              } else {
-                optionalChar = true
+          const skills = data.data.items.filter(it => it.type === 'skill')
+          const othersItems = data.data.items.filter(it => it.type !== 'skill')
+          await this.addUniqueItems(skills)
+          await this.addItems(othersItems)
+          if (game.settings.get('CoC7', 'oneBlockBackstory')) {
+            await this.update({ 'data.backstory': data.data.backstory })
+          } else {
+            for (const sectionName of data.data.bioSections) {
+              if (
+                !this.data.data.biography.find(
+                  el => sectionName === el.title
+                ) &&
+                sectionName
+              ) {
+                await this.createBioSection(sectionName)
               }
             }
-          })
-          pointsDialogData.total = total
-          if (optionalChar) {
-            // Is there any optional char to choose for points calc ?
-            const result = await PointSelectDialog.create(pointsDialogData)
-            if (!result) return // Point not selected => exit.
+          }
+          break
+        }
+        case 'archetype':
+          if (this.data.type === 'character') {
+            // Archetypre only for PCs
+            if (this.archetype) {
+              let resetArchetype = false
+              await Dialog.confirm({
+                title: game.i18n.localize('CoC7.ResetArchetype'),
+                content: `<p>${game.i18n.format('CoC7.ResetArchetypeHint', {
+                  name: this.name
+                })}</p>`,
+                yes: () => {
+                  resetArchetype = true
+                },
+                defaultYes: false
+              })
+              if (resetArchetype) await this.resetArchetype()
+              else return
+            }
+
+            const coreCharac = []
+            Object.entries(data.data.coreCharacteristics).forEach(entry => {
+              const [key, value] = entry
+              data.data.coreCharacteristics[key] = false
+              if (value) {
+                const char = this.getCharacteristic(key)
+                char.key = key
+                coreCharac.push(char)
+              }
+            })
+
+            let charac
+
+            if (coreCharac.length > 1) {
+              const charDialogData = {}
+              charDialogData.characteristics = coreCharac
+              charDialogData.title = game.i18n.localize('CoC7.SelectCoreCharac')
+              charac = await CharacSelectDialog.create(charDialogData)
+            } else if (coreCharac.length === 1) {
+              charac = coreCharac[0].key
+            }
+
+            if (!charac) return
+            data.data.coreCharacteristics[charac] = true
+            if (data.data.coreCharacteristicsFormula.enabled) {
+              let value = Number(data.data.coreCharacteristicsFormula.value)
+              if (isNaN(value)) {
+                const char = this.getCharacteristic(charac)
+                const roll = new Roll(
+                  data.data.coreCharacteristicsFormula.value
+                )
+                await roll.roll({ async: true })
+                roll.toMessage({
+                  flavor: `Rolling characterisitic ${char.label}: ${data.data.coreCharacteristicsFormula.value}`
+                })
+                value = char.value < roll.total ? roll.total : char.value
+              }
+              await this.update({
+                [`data.characteristics.${charac}.value`]: value
+              })
+            }
+
+            // Add all skills
+            await this.addUniqueItems(data.data.skills, 'archetype')
+
+            const newArchetype = await super.createEmbeddedDocuments(
+              embeddedName,
+              [data],
+              options
+            )
+            // setting points
+            await this.update({
+              'data.development.archetype': this.archetypePoints
+            })
+
+            return newArchetype
           }
 
-          // Add optional skills
-          for (let index = 0; index < data.data.groups.length; index++) {
-            const dialogData = {}
-            dialogData.skills = []
-            dialogData.type = 'occupation'
-            dialogData.actorId = this.id
-            dialogData.optionsCount = Number(data.data.groups[index].options)
-            dialogData.title = game.i18n.localize('CoC7.SkillSelectionWindow')
+          break
+        case 'occupation':
+          if (this.data.type === 'character') {
+            // Occupation only for PCs
+            if (this.occupation) {
+              let resetOccupation = false
+              await Dialog.confirm({
+                title: game.i18n.localize('CoC7.ResetOccupation'),
+                content: `<p>${game.i18n.format('CoC7.ResetOccupationHint', {
+                  name: this.name
+                })}</p>`,
+                yes: () => {
+                  resetOccupation = true
+                },
+                defaultYes: false
+              })
+              if (resetOccupation) await this.resetOccupation()
+              else return
+            }
 
-            // Select only skills that are not present or are not flagged as occupation.
-            data.data.groups[index].skills.forEach(value => {
-              if (CoC7Item.isAnySpec(value)) dialogData.skills.push(value)
-              // If it's a generic spec we always add it
-              else {
-                const skill = this.items.find(item => {
-                  return item.name === value.name && item.type === 'skill'
-                })
-                if (!skill || !skill.data.data.flags?.occupation) {
-                  // if skill was added to skill list previously, remove it
-                  const alreadySelectedSkill = data.data.skills.find(item => {
-                    return item.name === value.name
-                  })
-                  if (!alreadySelectedSkill) dialogData.skills.push(value)
+            // Select characteristic
+            const pointsDialogData = {}
+            pointsDialogData.characteristics = data.data.occupationSkillPoints
+            let total = 0
+            let optionalChar = false
+            Object.entries(data.data.occupationSkillPoints).forEach(entry => {
+              const [key, value] = entry
+              const char = this.getCharacteristic(key)
+              pointsDialogData.characteristics[key].name = char.label
+              pointsDialogData.characteristics[key].value = char.value
+              if (value.selected) {
+                pointsDialogData.characteristics[key].total =
+                  char.value *
+                  Number(pointsDialogData.characteristics[key].multiplier)
+                if (!value.optional) {
+                  total += pointsDialogData.characteristics[key].total
+                } else {
+                  optionalChar = true
                 }
               }
             })
+            pointsDialogData.total = total
+            if (optionalChar) {
+              // Is there any optional char to choose for points calc ?
+              const result = await PointSelectDialog.create(pointsDialogData)
+              if (!result) return // Point not selected => exit.
+            }
 
-            // if there's none, do nothing.
-            if (dialogData.skills.length !== 0) {
-              dialogData.skills.forEach(skill => {
-                if (
-                  skill.data.specialization &&
-                  !skill.name.includes(skill.data.specialization)
-                ) {
-                  skill.displayName = `${skill.data.specialization} (${skill.name})`
-                } else skill.displayName = skill.name
+            // Add optional skills
+            for (let index = 0; index < data.data.groups.length; index++) {
+              const dialogData = {}
+              dialogData.skills = []
+              dialogData.type = 'occupation'
+              dialogData.actorId = this.id
+              dialogData.optionsCount = Number(data.data.groups[index].options)
+              dialogData.title = game.i18n.localize('CoC7.SkillSelectionWindow')
+
+              // Select only skills that are not present or are not flagged as occupation.
+              data.data.groups[index].skills.forEach(value => {
+                if (CoC7Item.isAnySpec(value)) dialogData.skills.push(value)
+                // If it's a generic spec we always add it
+                else {
+                  const skill = this.items.find(item => {
+                    return item.name === value.name && item.type === 'skill'
+                  })
+                  if (!skill || !skill.data.data.flags?.occupation) {
+                    // if skill was added to skill list previously, remove it
+                    const alreadySelectedSkill = data.data.skills.find(item => {
+                      return item.name === value.name
+                    })
+                    if (!alreadySelectedSkill) dialogData.skills.push(value)
+                  }
+                }
               })
 
-              if (dialogData.skills.length <= dialogData.optionsCount) {
-                // If there's is less skill than options, add them all.
-                ui.notifications.info(
-                  game.i18n.format('CoC7.InfoLessSkillThanOptions', {
-                    skillCount: dialogData.skills.length,
-                    optionsCount: dialogData.optionsCount
-                  })
-                )
-                // await this.addUniqueItems( dialogData.skills, 'occupation');
-                const merged = CoC7Item.mergeOptionalSkills(
-                  data.data.skills,
-                  dialogData.skills
-                )
-                data.data.skills = merged
-              } else {
-                // Wait for skill selection.
-                const selected = await SkillSelectDialog.create(dialogData)
-                if (!selected) return
-                const merged = CoC7Item.mergeOptionalSkills(
-                  data.data.skills,
-                  selected
-                )
-                data.data.skills = merged
-              }
-            } else {
-              ui.notifications.info(
-                game.i18n.localize('CoC7.InfoAllSkillsAlreadySelected')
-              )
-            }
-          }
-
-          // Add extra skills
-          if (Number(data.data.personal)) {
-            const dialogData = {}
-            dialogData.skills = []
-            dialogData.type = 'occupation'
-            dialogData.actorId = this.id
-            dialogData.optionsCount = Number(data.data.personal)
-            dialogData.title = game.i18n.format('CoC7.SelectPersonalSkills', {
-              number: Number(data.data.personal)
-            })
-
-            // Select only skills that are not present or are not flagged as occupation.
-            this.skills.forEach(s => {
-              // Select all skills that are not already flagged as occupation, can have adjustments and XP.
-              if (
-                !s.data.data.flags.occupation &&
-                !s.data.data.properties.noadjustments &&
-                !s.data.data.properties.noxpgain
-              ) {
-                // if skill already selected don't add it
-                const alreadySelectedSkill = data.data.skills.find(item => {
-                  return item.name === s.name
+              // if there's none, do nothing.
+              if (dialogData.skills.length !== 0) {
+                dialogData.skills.forEach(skill => {
+                  if (
+                    skill.data.specialization &&
+                    !skill.name.includes(skill.data.specialization)
+                  ) {
+                    skill.displayName = `${skill.data.specialization} (${skill.name})`
+                  } else skill.displayName = skill.name
                 })
-                if (!alreadySelectedSkill) dialogData.skills.push(s.data)
+
+                if (dialogData.skills.length <= dialogData.optionsCount) {
+                  // If there's is less skill than options, add them all.
+                  ui.notifications.info(
+                    game.i18n.format('CoC7.InfoLessSkillThanOptions', {
+                      skillCount: dialogData.skills.length,
+                      optionsCount: dialogData.optionsCount
+                    })
+                  )
+                  // await this.addUniqueItems( dialogData.skills, 'occupation');
+                  const merged = CoC7Item.mergeOptionalSkills(
+                    data.data.skills,
+                    dialogData.skills
+                  )
+                  data.data.skills = merged
+                } else {
+                  // Wait for skill selection.
+                  const selected = await SkillSelectDialog.create(dialogData)
+                  if (!selected) return
+                  const merged = CoC7Item.mergeOptionalSkills(
+                    data.data.skills,
+                    selected
+                  )
+                  data.data.skills = merged
+                }
+              } else {
+                ui.notifications.info(
+                  game.i18n.localize('CoC7.InfoAllSkillsAlreadySelected')
+                )
               }
+            }
+
+            // Add extra skills
+            if (Number(data.data.personal)) {
+              const dialogData = {}
+              dialogData.skills = []
+              dialogData.type = 'occupation'
+              dialogData.actorId = this.id
+              dialogData.optionsCount = Number(data.data.personal)
+              dialogData.title = game.i18n.format('CoC7.SelectPersonalSkills', {
+                number: Number(data.data.personal)
+              })
+
+              // Select only skills that are not present or are not flagged as occupation.
+              this.skills.forEach(s => {
+                // Select all skills that are not already flagged as occupation, can have adjustments and XP.
+                if (
+                  !s.data.data.flags.occupation &&
+                  !s.data.data.properties.noadjustments &&
+                  !s.data.data.properties.noxpgain
+                ) {
+                  // if skill already selected don't add it
+                  const alreadySelectedSkill = data.data.skills.find(item => {
+                    return item.name === s.name
+                  })
+                  if (!alreadySelectedSkill) dialogData.skills.push(s.data)
+                }
+              })
+
+              // if there's none, do nothing.
+              if (dialogData.skills.length !== 0) {
+                dialogData.skills.forEach(skill => {
+                  if (
+                    skill.data.specialization &&
+                    !skill.name.includes(skill.data.specialization)
+                  ) {
+                    skill.displayName = `${skill.data.specialization} (${skill.name})`
+                  } else skill.displayName = skill.name
+                })
+                if (dialogData.skills.length <= dialogData.optionsCount) {
+                  // If there's is less skill than options, add them all.
+                  ui.notifications.info(
+                    game.i18n.format('CoC7.InfoLessSkillThanOptions', {
+                      skillCount: dialogData.skills.length,
+                      optionsCount: dialogData.optionsCount
+                    })
+                  )
+                  // await this.addUniqueItems( dialogData.skills, 'occupation');
+                  const merged = CoC7Item.mergeOptionalSkills(
+                    data.data.skills,
+                    dialogData.skills
+                  )
+                  data.data.skills = merged
+                } else {
+                  // Wait for skill selection.
+                  const selected = await SkillSelectDialog.create(dialogData) // Dialog data bug ???
+                  if (!selected) return
+                  const merged = CoC7Item.mergeOptionalSkills(
+                    data.data.skills,
+                    selected
+                  )
+                  data.data.skills = merged
+                }
+              } else {
+                ui.notifications.info(
+                  game.i18n.localize('CoC7.InfoAllSkillsAlreadySelected')
+                )
+              }
+            }
+
+            // Add all skills
+            await this.addUniqueItems(data.data.skills, 'occupation')
+            // Credit rating is always part of occupation
+            await this.creditRatingSkill?.setItemFlag('occupation')
+            // setting it to min credit rating
+            await this.creditRatingSkill?.update({
+              'data.adjustments.occupation': Number(data.data.creditRating.min)
             })
 
-            // if there's none, do nothing.
-            if (dialogData.skills.length !== 0) {
-              dialogData.skills.forEach(skill => {
-                if (
-                  skill.data.specialization &&
-                  !skill.name.includes(skill.data.specialization)
-                ) {
-                  skill.displayName = `${skill.data.specialization} (${skill.name})`
-                } else skill.displayName = skill.name
-              })
-              if (dialogData.skills.length <= dialogData.optionsCount) {
-                // If there's is less skill than options, add them all.
-                ui.notifications.info(
-                  game.i18n.format('CoC7.InfoLessSkillThanOptions', {
-                    skillCount: dialogData.skills.length,
-                    optionsCount: dialogData.optionsCount
-                  })
-                )
-                // await this.addUniqueItems( dialogData.skills, 'occupation');
-                const merged = CoC7Item.mergeOptionalSkills(
-                  data.data.skills,
-                  dialogData.skills
-                )
-                data.data.skills = merged
-              } else {
-                // Wait for skill selection.
-                const selected = await SkillSelectDialog.create(dialogData) // Dialog data bug ???
-                if (!selected) return
-                const merged = CoC7Item.mergeOptionalSkills(
-                  data.data.skills,
-                  selected
-                )
-                data.data.skills = merged
-              }
-            } else {
-              ui.notifications.info(
-                game.i18n.localize('CoC7.InfoAllSkillsAlreadySelected')
-              )
-            }
+            const newOccupation = await super.createEmbeddedDocuments(
+              embeddedName,
+              [data],
+              options
+            )
+            // setting points
+            await this.update({
+              'data.development.occupation': this.occupationPoints,
+              'data.development.personal': this.personalPoints
+            })
+
+            return newOccupation
           }
+          break
 
-          // Add all skills
-          await this.addUniqueItems(data.data.skills, 'occupation')
-          // Credit rating is always part of occupation
-          await this.creditRatingSkill?.setItemFlag('occupation')
-          // setting it to min credit rating
-          await this.creditRatingSkill?.update({
-            'data.adjustments.occupation': Number(data.data.creditRating.min)
-          })
-
-          const newOccupation = await super.createEmbeddedDocuments(
+        default:
+          return await super.createEmbeddedDocuments(
             embeddedName,
             [data],
             options
           )
-          // setting points
-          await this.update({
-            'data.development.occupation': this.occupationPoints,
-            'data.development.personal': this.personalPoints
-          })
-
-          return newOccupation
-        }
-        break
-
-      default:
-        return await super.createEmbeddedDocuments(
-          embeddedName,
-          [data],
-          options
-        )
-    }
+      }
+    })
   }
 
   // getSkillIdByName( skillName){
