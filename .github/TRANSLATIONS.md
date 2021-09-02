@@ -4,7 +4,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 | Key                                                                                      |    cn    |    cs    |    de    |    es    |    fr    |    ja    |    pl    |  pt-BR   |    sv    |  zh-TW   |
 | :--------------------------------------------------------------------------------------- | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-| **Remaining**:                                                                           | **308**  |  **83**  | **101**  |  **23**  |  **2**   | **103**  | **324**  |  **15**  |  **25**  |  **23**  |
+| **Remaining**:                                                                           | **310**  |  **85**  | **103**  |  **25**  |  **4**   | **105**  | **326**  |  **17**  |  **2**   |  **25**  |
 | [CoC7.ActorImporter](#coc7actorimporter)                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.ActorImporterSummary](#coc7actorimportersummary)                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.AdvantageAttacker](#coc7advantageattacker)                                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -23,6 +23,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.AutomaticFire](#coc7automaticfire)                                                 | &#x274C; | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Blind](#coc7blind)                                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.BonusSelectionWindowNamed](#coc7bonusselectionwindownamed)                         | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.BookHasNothingMoreToTeach](#coc7bookhasnothingmoretoteach)                         | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.BoutActive](#coc7boutactive)                                                       | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.BoutOfMadness](#coc7boutofmadness)                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.BoutOfMadnessName](#coc7boutofmadnessname)                                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -93,7 +94,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.French](#coc7french)                                                               | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.FullStudies](#coc7fullstudies)                                                     | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Gains](#coc7gains)                                                                 | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.GainsForReading](#coc7gainsforreading)                                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; |
+| [CoC7.GainsForReading](#coc7gainsforreading)                                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
 | [CoC7.GmNotes](#coc7gmnotes)                                                             | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.GmTools](#coc7gmtools)                                                             | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.GoodForAsylum](#coc7goodforasylum)                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -115,7 +116,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.InfoAllSkillsAlreadySelected](#coc7infoallskillsalreadyselected)                   | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.InfoLessSkillThanOptions](#coc7infolessskillthanoptions)                           | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.InitialReading](#coc7initialreading)                                               | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.InitialReadingNeeded](#coc7initialreadingneeded)                                   | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; |
+| [CoC7.InitialReadingNeeded](#coc7initialreadingneeded)                                   | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
 | [CoC7.InsanityName](#coc7insanityname)                                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.InsanityType](#coc7insanitytype)                                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.IntCheck](#coc7intcheck)                                                           | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -128,6 +129,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.KeepData](#coc7keepdata)                                                           | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.KeeperSentDecoy](#coc7keepersentdecoy)                                             | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Label](#coc7label)                                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.LearnSpellAttempt](#coc7learnspellattempt)                                         | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.LinkCheck](#coc7linkcheck)                                                         | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.LinkCheckDiff](#coc7linkcheckdiff)                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.LinkCheckDiffModif](#coc7linkcheckdiffmodif)                                       | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -145,7 +147,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.LuckNotIncreased](#coc7lucknotincreased)                                           | &#x274C; | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Mania](#coc7mania)                                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.ManiaGained](#coc7maniagained)                                                     | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.MarkedForDevelopment](#coc7markedfordevelopment)                                   | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; |
+| [CoC7.MarkedForDevelopment](#coc7markedfordevelopment)                                   | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
 | [CoC7.MaxLossToCreature](#coc7maxlosstocreature)                                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.MaxSanloss](#coc7maxsanloss)                                                       | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.MemoryRepressed](#coc7memoryrepressed)                                             | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -165,16 +167,16 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.Migrate.Title](#coc7migratetitle)                                                  | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.MinSanloss](#coc7minsanloss)                                                       | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Modifiers](#coc7modifiers)                                                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Mythos](#coc7mythos)                                                               | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Mythos](#coc7mythos)                                                               | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
 | [CoC7.MythosAlreadyEncountered](#coc7mythosalreadyencountered)                           | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.MythosFirstEncounter](#coc7mythosfirstencounter)                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.MythosGain](#coc7mythosgain)                                                       | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.NoConvert](#coc7noconvert)                                                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.NoTargetSelected](#coc7notargetselected)                                           | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.NoTargetToDamage](#coc7notargettodamage)                                           | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.NoTargetToDamage](#coc7notargettodamage)                                           | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
 | [CoC7.NonPlayingCharacter](#coc7nonplayingcharacter)                                     | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.NotInsane](#coc7notinsane)                                                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.NotOwned](#coc7notowned)                                                           | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; |
+| [CoC7.NotOwned](#coc7notowned)                                                           | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
 | [CoC7.OpposedRollCard](#coc7opposedrollcard)                                             | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Origin](#coc7origin)                                                               | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.OutOfAmmo](#coc7outofammo)                                                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -185,13 +187,13 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.PilotSpecializationName](#coc7pilotspecializationname)                             | &#x274C; | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.PlayerName](#coc7playername)                                                       | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.PlayerPermanentlyInsane](#coc7playerpermanentlyinsane)                             | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Points](#coc7points)                                                               | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; |
+| [CoC7.Points](#coc7points)                                                               | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
 | [CoC7.Proceed](#coc7proceed)                                                             | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Progress](#coc7progress)                                                           | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Properties](#coc7properties)                                                       | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.PushingSkill](#coc7pushingskill)                                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.ReadAttempt](#coc7readattempt)                                                     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; |
-| [CoC7.ReadingMythosTome](#coc7readingmythostome)                                         | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; |
+| [CoC7.ReadAttempt](#coc7readattempt)                                                     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
+| [CoC7.ReadingMythosTome](#coc7readingmythostome)                                         | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
 | [CoC7.RecoverLuckPoints](#coc7recoverluckpoints)                                         | &#x274C; | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Reload](#coc7reload)                                                               | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.RememberEverything](#coc7remembereverything)                                       | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -216,7 +218,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.Spanish](#coc7spanish)                                                             | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Specific](#coc7specific)                                                           | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.SpecificLocations](#coc7specificlocations)                                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.SpellsLearned](#coc7spellslearned)                                                 | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.SpellsLearned](#coc7spellslearned)                                                 | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
 | [CoC7.Status](#coc7status)                                                               | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Success](#coc7success)                                                             | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Target](#coc7target)                                                               | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -225,7 +227,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.Tie](#coc7tie)                                                                     | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.TotalDamage](#coc7totaldamage)                                                     | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.UnderlyingInsanity](#coc7underlyinginsanity)                                       | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.UnknownLanguage](#coc7unknownlanguage)                                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; |
+| [CoC7.UnknownLanguage](#coc7unknownlanguage)                                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
 | [CoC7.Unreadable](#coc7unreadable)                                                       | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Vehicle](#coc7vehicle)                                                             | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.WarnFastTargetWithWrongMOV](#coc7warnfasttargetwithwrongmov)                       | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -302,8 +304,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [SETTINGS.DisplayCheckSuccessLevel](#settingsdisplaychecksuccesslevel)                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.DisplayResultType](#settingsdisplayresulttype)                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.DoNotAdvise](#settingsdonotadvise)                                             | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [SETTINGS.EnableStatusIcons](#settingsenablestatusicons)                                 | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#9989;  |
-| [SETTINGS.EnableStatusIconsHint](#settingsenablestatusiconshint)                         | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#9989;  |
+| [SETTINGS.EnableStatusIcons](#settingsenablestatusicons)                                 | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
+| [SETTINGS.EnableStatusIconsHint](#settingsenablestatusiconshint)                         | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.LetKeeperDecide](#settingsletkeeperdecide)                                     | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.NeverEditable](#settingsnevereditable)                                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.OneBlockBackStory](#settingsoneblockbackstory)                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -315,18 +317,18 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [SETTINGS.PlayerUnlockSheetMode](#settingsplayerunlocksheetmode)                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.SelfRollWhisperTarget](#settingsselfrollwhispertarget)                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.SelfRollWhisperTargetHint](#settingsselfrollwhispertargethint)                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [SETTINGS.StanbyGMRolls](#settingsstanbygmrolls)                                         | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [SETTINGS.StanbyGMRollsHint](#settingsstanbygmrollshint)                                 | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [SETTINGS.TitleChatCards](#settingstitlechatcards)                                       | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [SETTINGS.TitleDeveloperDebug](#settingstitledeveloperdebug)                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [SETTINGS.TitleDiceSoNice](#settingstitledicesonice)                                     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [SETTINGS.TitleInitiative](#settingstitleinitiative)                                     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [SETTINGS.TitleRoll](#settingstitleroll)                                                 | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [SETTINGS.TitleRollTable](#settingstitlerolltable)                                       | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [SETTINGS.TitleRules](#settingstitlerules)                                               | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [SETTINGS.TitleScene](#settingstitlescene)                                               | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [SETTINGS.TitleSheet](#settingstitlesheet)                                               | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [SETTINGS.TitleWeapon](#settingstitleweapon)                                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [SETTINGS.StanbyGMRolls](#settingsstanbygmrolls)                                         | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
+| [SETTINGS.StanbyGMRollsHint](#settingsstanbygmrollshint)                                 | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
+| [SETTINGS.TitleChatCards](#settingstitlechatcards)                                       | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
+| [SETTINGS.TitleDeveloperDebug](#settingstitledeveloperdebug)                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
+| [SETTINGS.TitleDiceSoNice](#settingstitledicesonice)                                     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
+| [SETTINGS.TitleInitiative](#settingstitleinitiative)                                     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
+| [SETTINGS.TitleRoll](#settingstitleroll)                                                 | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
+| [SETTINGS.TitleRollTable](#settingstitlerolltable)                                       | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
+| [SETTINGS.TitleRules](#settingstitlerules)                                               | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
+| [SETTINGS.TitleScene](#settingstitlescene)                                               | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
+| [SETTINGS.TitleSheet](#settingstitlesheet)                                               | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
+| [SETTINGS.TitleWeapon](#settingstitleweapon)                                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
 | [SETTINGS.developmentRollForLuck](#settingsdevelopmentrollforluck)                       | &#x274C; | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.developmentRollForLuckHint](#settingsdevelopmentrollforluckhint)               | &#x274C; | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.displayPlayerNameOnSheet](#settingsdisplayplayernameonsheet)                   | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -402,6 +404,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.BonusSelectionWindowNamed
 
 `"CoC7.BonusSelectionWindowNamed": "Select modifier for {name} check",`
+
+##### CoC7.BookHasNothingMoreToTeach
+
+`"CoC7.BookHasNothingMoreToTeach": "{book} has nothing more to teach. Cthulhu Mythos skill of {actor} is greater than this Mythos Rating.",`
 
 ##### CoC7.BoutActive
 
@@ -822,6 +828,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.Label
 
 `"CoC7.Label": "Label",`
+
+##### CoC7.LearnSpellAttempt
+
+`"CoC7.LearnSpellAttempt": "Attempt to learn spell {spell}, from <i>{book}</i>.",`
 
 ##### CoC7.LinkCheck
 
