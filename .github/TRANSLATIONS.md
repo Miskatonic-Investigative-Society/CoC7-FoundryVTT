@@ -1213,7 +1213,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 ##### CoC7.UnknownLanguage
 
-`"CoC7.UnknownLanguage": "{actor} does not know the {language} language.",`
+`"CoC7.UnknownLanguage": "{actor} do not know the language in which this book is written.",`
 
 ##### CoC7.Unreadable
 
