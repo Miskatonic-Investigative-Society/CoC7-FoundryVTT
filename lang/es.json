@@ -461,7 +461,7 @@
   "CoC7.IntCheck": "Tirada de INT",
   "CoC7.NoSanLoss": "Sin pérdida de COR",
   "CoC7.SANLoss": "Pérdida de COR",
-  "CoC7.SanityCheckPerformed": "Has experimentado un evento traumático",
+  "CoC7.SanityCheckPerformed": "Has experimentado un evento traumático.",
   "CoC7.InvoluntaryActionPerformed": "Pierdes el autocontrol durante unos instantes",
   "CoC7.SanityLost": "Puntos de COR perdidos",
   "CoC7.MemoryRepressed": "Tu mente ha logrado reprimir tus recuerdos y los ha enterrado en el subconsciente",

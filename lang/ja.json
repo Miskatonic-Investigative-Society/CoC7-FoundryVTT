@@ -426,7 +426,7 @@
   "CoC7.IntCheck": "INTロール",
   "CoC7.NoSanLoss": "正気度ポイントは喪失しない",
   "CoC7.SANLoss": "正気度喪失",
-  "CoC7.SanityCheckPerformed": "君は衝撃的な経験をした",
+  "CoC7.SanityCheckPerformed": "君は衝撃的な経験をした。",
   "CoC7.InvoluntaryActionPerformed": "君はしばらく自制心を失った。",
   "CoC7.SanityLost": "正気度ポイントを喪失",
   "CoC7.MemoryRepressed": "君の精神はその記憶を抑圧し､潜在意識の奥へと葬り去った。",

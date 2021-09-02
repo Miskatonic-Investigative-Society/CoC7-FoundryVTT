@@ -244,7 +244,6 @@ export class CoC7Book extends CoC7Item {
               'data.specialization': development.specialization
             })
           }
-          console.log(skill)
         }
       }
       skill = skill[0]
