@@ -1129,7 +1129,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 ##### CoC7.SanityCheckPerformed
 
-`"CoC7.SanityCheckPerformed": "You were exposed to a traumatic event",`
+`"CoC7.SanityCheckPerformed": "You were exposed to a traumatic event.",`
 
 ##### CoC7.SanityLost
 
@@ -1213,7 +1213,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 ##### CoC7.UnknownLanguage
 
-`"CoC7.UnknownLanguage": "You do not know the language in which this book is written.",`
+`"CoC7.UnknownLanguage": "{actor} do not know the language in which this book is written.",`
 
 ##### CoC7.Unreadable
 
