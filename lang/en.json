@@ -390,6 +390,7 @@
   "CoC7.DevFailure": "{item} NOT upgraded ({die}/{score}%)",
   "CoC7.LuckIncreased": "Luck recovered ({die}/{score}) by {augment} points",
   "CoC7.LuckNotIncreased": "Luck NOT recovered ({die}/{score})",
+  "CoC7.DevelopAttribWarn": "You can not access some attributes in development/creation",
   "CoC7.SkillDetail": "Detail",
   "CoC7.EditSkill": "Edit skill",
   "CoC7.DeleteSkill": "Delete skill",
