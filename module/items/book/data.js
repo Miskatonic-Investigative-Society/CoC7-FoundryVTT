@@ -187,8 +187,8 @@ export class CoC7Book extends CoC7Item {
         const pattern = skill.name.match(/^(.+) \((.+)\)$/)
         /** Sanitization to deal with specializations */
         if (pattern) {
-          skill.name = pattern[1]
-          skill.specialization = pattern[2]
+          skill.specialization = pattern[1]
+          skill.name = pattern[2]
         }
         if (skill.value !== 'development') {
           skill.value = (
@@ -243,6 +243,7 @@ export class CoC7Book extends CoC7Item {
               'data.specialization': development.specialization
             })
           }
+          console.log(skill)
         }
       }
       skill = skill[0]
@@ -376,12 +377,12 @@ export class CoC7Book extends CoC7Item {
   /** Listen to changes on the check card */
   async updateRoll (roll) {
     const check = CoC7Check.fromRollString(roll)
-    console.log(check)
+    console.log(check.context)
     /** Will know if user push the roll or spend Luck */
     if (check.passed) {
-      if (check.rollContext === 'INITIAL_READING') {
+      if (check.context === 'INITIAL_READING') {
         return await this.grantInitialReading()
-      } else if (check.rollContext === 'SPELL_LEARNING') {
+      } else if (check.context === 'SPELL_LEARNING') {
         return await this.grantSpellLearning()
       }
     }
