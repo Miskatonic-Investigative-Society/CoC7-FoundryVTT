@@ -1,4 +1,4 @@
-/* global $, duplicate, game, Handlebars, ItemSheet, mergeObject */
+/* global $, duplicate, game, ItemSheet, mergeObject */
 import { CoC7Utilities } from '../../utilities.js'
 
 export class CoC7BookSheet extends ItemSheet {
