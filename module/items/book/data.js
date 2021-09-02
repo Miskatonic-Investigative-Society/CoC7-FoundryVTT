@@ -101,9 +101,9 @@ export class CoC7Book extends CoC7Item {
     if (!this.data.data.type.mythos && mode !== 'reset') {
       return ui.notifications.error(game.i18n.localize('CoC7.NotMythosTome'))
     }
+    const necessary = this.data.data.study.necessary
     let fullStudy = this.data.data.fullStudy
     let progress = this.data.data.study.progress
-    const necessary = this.data.data.study.necessary
     if (isNaN(progress)) {
       /** It seems a little impossible, but you never know */
       return await this.update({
@@ -123,13 +123,14 @@ export class CoC7Book extends CoC7Item {
     }
     if (mode === 'increase' && progress < necessary) {
       /** User clicked on plus icon to increase progress */
+      if ((await this.checkExhaustion()) !== false) return
       await this.update({
         'data.study.progress': ++progress
       })
       if (progress === necessary) {
         /** Complete full study if progress is equal necessary */
         await this.update({ 'data.fullStudy': ++fullStudy })
-        return await this.completeFullStudy()
+        return await this.grantFullStudy()
       }
     } else if (mode === 'decrease' && progress > 0) {
       /** User clicked on minus icon to decrease progress */
@@ -139,15 +140,55 @@ export class CoC7Book extends CoC7Item {
     }
   }
 
-  async completeFullStudy () {}
+  async checkExhaustion () {
+    const actorMythosValue = this.actor.cthulhuMythos
+    const mythosRating = this.data.data.mythosRating
+    if (actorMythosValue >= mythosRating) {
+      await this.update({
+        'data.study.progress': this.data.data.study.necessary
+      })
+      return ui.notifications.error(
+        game.i18n.format('CoC7.BookHasNothingMoreToTeach', {
+          actor: this.actor.name,
+          book: this.name
+        })
+      )
+    } else return false
+  }
 
   async grantFullStudy () {
-    const language = this.data.data.language
+    if (!this.data.data.type.mythos) return
+    if ((await this.checkExhaustion()) !== false) return
+    const actorMythosValue = this.actor.cthulhuMythos
+    const developments = []
+    const mythosRating = this.data.data.mythosRating
+    let mythosFinal = this.data.data.gains.cthulhuMythos.final
+    if (actorMythosValue + mythosFinal > mythosRating) {
+      for (let index = 1; index <= mythosFinal; index++) {
+        if (actorMythosValue + mythosFinal - index <= mythosRating) {
+          mythosFinal -= index
+        }
+      }
+    }
     /**
      * The reader automatically gains a skill tick for the
      * language in which the book is written
      */
-    await this.grantSkillDevelopment('development', language)
+    developments.push(
+      {
+        name: game.i18n.localize('CoC7.CthulhuMythosName'),
+        gain: parseInt(mythosFinal)
+      },
+      {
+        name: this.data.data.language,
+        gain: 'development'
+      }
+    )
+    await this.grantSkillDevelopment(developments)
+    await this.rollSanityLoss()
+    return await this.update({
+      'data.fullStudies': ++this.data.data.fullStudies
+    })
   }
 
   /**
