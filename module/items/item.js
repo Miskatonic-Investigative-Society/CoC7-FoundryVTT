@@ -263,6 +263,7 @@ export class CoC7Item extends Item {
 
   async updateRoll (roll) {
     if ('updateRoll' in this.sheet) return await this.sheet.updateRoll(roll)
+    else if ('updateRoll' in this) return await this.updateRoll(roll)
     return undefined
   }
 

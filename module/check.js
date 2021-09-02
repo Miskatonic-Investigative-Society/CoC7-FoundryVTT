@@ -1316,11 +1316,12 @@ export class CoC7Check {
   }
 
   set context (x) {
-    this._context = x
+    this.rollContext = x
   }
 
   get context () {
-    return this._context
+    if (!this.rollContext) return undefined
+    return this.rollContext
   }
 
   set parent (x) {

@@ -540,7 +540,7 @@
   "CoC7.NotOwned": "Esse livro precisa ser possuído por um Ator para realizar essa ação.",
   "CoC7.ReadAttempt": "Tentativa de ler <i>{book}</i> ({language}), dificuldade {difficulty}.",
   "CoC7.ReadingMythosTome": "Lendo <i>{book}</i>...",
-  "CoC7.UnknownLanguage": "Você não conhece o idioma qual este livro está escrito.",
+  "CoC7.UnknownLanguage": "{actor} não conhece o idioma qual este livro está escrito.",
   "CoC7.Points": "pontos",
 
   "CoC7.Crew": "Passageiros",

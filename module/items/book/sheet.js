@@ -1,4 +1,4 @@
-/* global $, duplicate, game, Handlebars, ItemSheet, mergeObject */
+/* global $, duplicate, game, ItemSheet, mergeObject */
 
 export class CoC7BookSheet extends ItemSheet {
   static get defaultOptions () {
@@ -24,6 +24,7 @@ export class CoC7BookSheet extends ItemSheet {
     const data = super.getData()
     const itemData = data.data
     data.data = itemData.data
+    data.initialReading = this.item.data.data.initialReading
     data.isKeeper = game.user.isGM
     data.isOwned = this.item.isOwned
     data.spellsLearned = this.spellsLearned
@@ -47,7 +48,9 @@ export class CoC7BookSheet extends ItemSheet {
     })
     html.find('.delete-spell').click(event => this._onDelete(event))
     html.find('.teach-spell').click(event => {
-      const id = $(event.currentTarget).parents('li').data('id')
+      const id = $(event.currentTarget)
+        .parents('li')
+        .data('id')
       this.item.teachSpell(id)
     })
     html.find('[name="data.study.necessary"]').change(event => {

@@ -34,9 +34,7 @@ export class CoC7Book extends CoC7Item {
    * @returns {Promise<Document>} update to Item document
    */
   async addSpell (spell) {
-    const spells = this.data.data.spells
-      ? duplicate(this.data.data.spells)
-      : []
+    const spells = this.data.data.spells ? duplicate(this.data.data.spells) : []
     spells.push(spell)
     return await this.update({ 'data.spells': spells })
   }
@@ -61,10 +59,7 @@ export class CoC7Book extends CoC7Item {
        * the language in which it was written
        */
       return ui.notifications.error(
-        game.i18n.format('CoC7.UnknownLanguage', {
-          actor: this.actor.name,
-          language
-        })
+        game.i18n.format('CoC7.UnknownLanguage', { actor: this.actor.name })
       )
     } else {
       const check = new CoC7Check()
@@ -196,7 +191,9 @@ export class CoC7Book extends CoC7Item {
           skill.specialization = pattern[2]
         }
         if (skill.value !== 'development') {
-          skill.value = (await new Roll(skill.value).roll({ async: true })).total
+          skill.value = (
+            await new Roll(skill.value).roll({ async: true })
+          ).total
         }
         if (skill.value) {
           developments.push({
@@ -379,11 +376,13 @@ export class CoC7Book extends CoC7Item {
   /** Listen to changes on the check card */
   async updateRoll (roll) {
     const check = CoC7Check.fromRollString(roll)
-    /** Will know if user push the check or spend Luck */
+    console.log(check)
+    /** Will know if user push the roll or spend Luck */
     if (check.passed) {
-      switch (check.context) {
-        case 'INITIAL_READING': return await this.grantInitialReading()
-        case 'SPELL_LEARNING': return await this.grantSpellLearning()
+      if (check.rollContext === 'INITIAL_READING') {
+        return await this.grantInitialReading()
+      } else if (check.rollContext === 'SPELL_LEARNING') {
+        return await this.grantSpellLearning()
       }
     }
   }
