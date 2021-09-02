@@ -240,6 +240,7 @@ export class CoC7Book extends CoC7Item {
           skill = await this.actor.createSkill(development.name, 0)
           if (development.specialization) {
             await skill[0].update({
+              'data.properties.special': true,
               'data.specialization': development.specialization
             })
           }
@@ -377,7 +378,6 @@ export class CoC7Book extends CoC7Item {
   /** Listen to changes on the check card */
   async updateRoll (roll) {
     const check = CoC7Check.fromRollString(roll)
-    console.log(check.context)
     /** Will know if user push the roll or spend Luck */
     if (check.passed) {
       if (check.context === 'INITIAL_READING') {
