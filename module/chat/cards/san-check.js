@@ -283,6 +283,7 @@ export class SanCheckCard extends ChatCardActor {
   }
 
   async bypassRollSan () {
+    this.isBypassed = true
     this.sanCheck = new CoC7Check()
     this.sanCheck.actor = this.actorKey
     this.sanCheck.attribute = 'san'

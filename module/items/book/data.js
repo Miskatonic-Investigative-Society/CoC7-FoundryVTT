@@ -63,10 +63,7 @@ export class CoC7Book extends CoC7Item {
        * the language in which it was written
        */
       return ui.notifications.error(
-        game.i18n.format('CoC7.UnknownLanguage', {
-          actor: this.actor.name,
-          language
-        })
+        game.i18n.format('CoC7.UnknownLanguage', { actor: this.actor.name })
       )
     } else {
       const check = new CoC7Check()
@@ -108,9 +105,9 @@ export class CoC7Book extends CoC7Item {
     if (!this.data.data.type.mythos && mode !== 'reset') {
       return ui.notifications.error(game.i18n.localize('CoC7.NotMythosTome'))
     }
+    const necessary = this.data.data.study.necessary
     let fullStudy = this.data.data.fullStudy
     let progress = this.data.data.study.progress
-    const necessary = this.data.data.study.necessary
     if (isNaN(progress)) {
       /** It seems a little impossible, but you never know */
       return await this.update({
@@ -130,13 +127,14 @@ export class CoC7Book extends CoC7Item {
     }
     if (mode === 'increase' && progress < necessary) {
       /** User clicked on plus icon to increase progress */
+      if ((await this.checkExhaustion()) !== false) return
       await this.update({
         'data.study.progress': ++progress
       })
       if (progress === necessary) {
         /** Complete full study if progress is equal necessary */
         await this.update({ 'data.fullStudy': ++fullStudy })
-        return await this.completeFullStudy()
+        return await this.grantFullStudy()
       }
     } else if (mode === 'decrease' && progress > 0) {
       /** User clicked on minus icon to decrease progress */
@@ -146,15 +144,55 @@ export class CoC7Book extends CoC7Item {
     }
   }
 
-  async completeFullStudy () {}
+  async checkExhaustion () {
+    const actorMythosValue = this.actor.cthulhuMythos
+    const mythosRating = this.data.data.mythosRating
+    if (actorMythosValue >= mythosRating) {
+      await this.update({
+        'data.study.progress': this.data.data.study.necessary
+      })
+      return ui.notifications.error(
+        game.i18n.format('CoC7.BookHasNothingMoreToTeach', {
+          actor: this.actor.name,
+          book: this.name
+        })
+      )
+    } else return false
+  }
 
   async grantFullStudy () {
-    const language = this.data.data.language
+    if (!this.data.data.type.mythos) return
+    if ((await this.checkExhaustion()) !== false) return
+    const actorMythosValue = this.actor.cthulhuMythos
+    const developments = []
+    const mythosRating = this.data.data.mythosRating
+    let mythosFinal = this.data.data.gains.cthulhuMythos.final
+    if (actorMythosValue + mythosFinal > mythosRating) {
+      for (let index = 1; index <= mythosFinal; index++) {
+        if (actorMythosValue + mythosFinal - index <= mythosRating) {
+          mythosFinal -= index
+        }
+      }
+    }
     /**
      * The reader automatically gains a skill tick for the
      * language in which the book is written
      */
-    await this.grantSkillDevelopment('development', language)
+    developments.push(
+      {
+        name: game.i18n.localize('CoC7.CthulhuMythosName'),
+        gain: parseInt(mythosFinal)
+      },
+      {
+        name: this.data.data.language,
+        gain: 'development'
+      }
+    )
+    await this.grantSkillDevelopment(developments)
+    await this.rollSanityLoss()
+    return await this.update({
+      'data.fullStudies': ++this.data.data.fullStudies
+    })
   }
 
   /**
@@ -194,8 +232,8 @@ export class CoC7Book extends CoC7Item {
         const pattern = skill.name.match(/^(.+) \((.+)\)$/)
         /** Sanitization to deal with specializations */
         if (pattern) {
-          skill.name = pattern[1]
-          skill.specialization = pattern[2]
+          skill.specialization = pattern[1]
+          skill.name = pattern[2]
         }
         if (skill.value !== 'development') {
           skill.value = (
@@ -217,6 +255,10 @@ export class CoC7Book extends CoC7Item {
     }
     /** Mark initial reading as complete */
     return await this.update({ 'data.initialReading': true })
+  }
+
+  async grantSpellLearning () {
+    return ui.notifications.warn('Automation of learning spells from books is not currently supported and will be added in future updates.')
   }
 
   /**
@@ -247,6 +289,7 @@ export class CoC7Book extends CoC7Item {
           skill = await this.actor.createSkill(development.name, 0)
           if (development.specialization) {
             await skill[0].update({
+              'data.properties.special': true,
               'data.specialization': development.specialization
             })
           }
@@ -351,7 +394,7 @@ export class CoC7Book extends CoC7Item {
     })
   }
 
-  async teachSpell (id) {
+  async attemptSpellLearning (id) {
     if (!this.isOwned) {
       /** This is not owned by any Actor */
       return ui.notifications.error(game.i18n.localize('CoC7.NotOwned'))
@@ -373,7 +416,10 @@ export class CoC7Book extends CoC7Item {
       check.actor = this.actor
       check.difficulty = CoC7Check.difficultyLevel.hard
       check.parent = this.uuid
-      check.flavor = 'attempt to learn spell'
+      check.flavor = game.i18n.format('CoC7.LearnSpellAttempt', {
+        book: this.name,
+        spell: spell.name
+      })
       check.context = 'SPELL_LEARNING'
       await check.rollCharacteristic('int')
       await check.toMessage()
@@ -383,13 +429,12 @@ export class CoC7Book extends CoC7Item {
   /** Listen to changes on the check card */
   async updateRoll (roll) {
     const check = CoC7Check.fromRollString(roll)
-    /** Will know if user push the check or spend Luck */
+    /** Will know if user push the roll or spend Luck */
     if (check.passed) {
-      switch (check.context) {
-        case 'INITIAL_READING':
-          return await this.grantInitialReading()
-        case 'SPELL_LEARNING':
-          return await this.grantSpellLearning()
+      if (check.context === 'INITIAL_READING') {
+        return await this.grantInitialReading()
+      } else if (check.context === 'SPELL_LEARNING') {
+        return await this.grantSpellLearning()
       }
     }
   }

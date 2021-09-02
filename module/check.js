@@ -394,7 +394,10 @@ export class CoC7Check {
       pushedRoll.actor = actorId
       pushedRoll.characteristic = charac
     } else return
-    if (oldCheck.uuid) pushedRoll.uuid = oldCheck.uuid
+    if (oldCheck.uuid) {
+      pushedRoll.context = oldCheck.context
+      pushedRoll.uuid = oldCheck.uuid
+    }
     if (oldCheck.parent) pushedRoll.parent = oldCheck.parent
     pushedRoll.pushing = true
     await pushedRoll.roll()
@@ -1320,6 +1323,7 @@ export class CoC7Check {
   }
 
   get context () {
+    if (!this._context) return undefined
     return this._context
   }
 
@@ -1517,6 +1521,7 @@ export class CoC7Check {
     }
 
     if (this.uuid) chatData.flags.CoC7.uuid = this.uuid
+    if (this.context) chatData.flags.CoC7.context = this.context
 
     if (this.rollMode === 'selfroll') {
       if (game.user.isGM) {

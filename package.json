@@ -8,8 +8,7 @@
     "format": "prettier-standard --format --changed",
     "lint": "prettier-standard --lint --changed",
     "prepare": "husky install",
-    "watch": "webpack --mode development",
-    "translations": "node generate-translations.js"
+    "watch": "webpack --mode development"
   },
   "repository": {
     "type": "git",

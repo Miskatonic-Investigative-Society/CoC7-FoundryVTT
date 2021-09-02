@@ -94,8 +94,9 @@
           background: rgba(0, 0, 0, 0.05);
           border: 0.065rem solid var(--main-sheet-front-color);
           border-radius: 0.25rem;
-          padding: 0.300rem;
-          &:focus, &:hover {
+          padding: 0.3rem;
+          &:focus,
+          &:hover {
             background: var(--main-sheet-front-color);
             label {
               color: whitesmoke;
@@ -211,36 +212,48 @@
       .details {
         display: grid;
         grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 0px 0px;
+        grid-auto-flow: row;
+        grid-template-areas:
+          'traits gains'
+          'other other';
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         grid-template-rows: 0.2fr 1.8fr;
         gap: 0 0.1rem;
         grid-auto-flow: row;
         grid-template-areas:
-          'type gains'
-          'traits gains';
-        .type {
-          grid-area: type;
-          text-align: center;
-          input {
-            display: none;
-          }
-          .flexrow {
+          'traits gains'
+          'other other';
+        .traits {
+          grid-area: traits;
+          .type {
             justify-content: center;
-            label {
-              &:hover {
-                cursor: pointer;
-                background-color: var(--main-sheet-front-color);
-                color: lightgray;
-                opacity: 100%;
+            text-align: center;
+            .flexrow {
+              justify-content: center;
+              margin-top: -0.188rem;
+              input {
+                display: none;
               }
-              background: transparent;
-              border: 0.03rem solid var(--main-sheet-front-color);
-              border-radius: 0.25rem;
-              color: black;
-              font-style: normal;
-              font-weight: bold;
-              margin: 0.1rem;
-              opacity: 50%;
-              text-align: center;
+              label {
+                background: transparent;
+                border: 0.03rem solid var(--main-sheet-front-color);
+                border-radius: 0.25rem;
+                color: black;
+                font-style: normal;
+                font-weight: bold;
+                margin: 0.1rem;
+                opacity: 50%;
+                &:hover {
+                  cursor: pointer;
+                  background-color: var(--main-sheet-front-color);
+                  color: lightgray;
+                  opacity: 100%;
+                  text-align: center;
+                }
+              }
             }
           }
           #mythos:checked ~ label[for='data.type.mythos'],
@@ -258,8 +271,19 @@
             text-align: left;
           }
         }
-        .traits {
-          grid-area: traits;
+        .other {
+          grid-area: other;
+          table {
+            border-bottom: 0.065rem solid var(--main-sheet-front-color);
+            border-top: 0.065rem solid var(--main-sheet-front-color);
+            td:nth-child(3) {
+              max-width: fit-content;
+              text-align: center;
+            }
+            select {
+              width: -webkit-fill-available;
+            }
+          }
         }
       }
       .spells {
