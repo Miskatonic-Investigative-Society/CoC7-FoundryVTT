@@ -4,7 +4,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 | Key                                                                                      |    cn    |    cs    |    de    |    es    |    fr    |    ja    |    pl    |  pt-BR   |    sv    |  zh-TW   |
 | :--------------------------------------------------------------------------------------- | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-| **Remaining**:                                                                           | **311**  |  **86**  | **104**  |  **26**  |  **5**   | **106**  | **327**  |  **18**  |  **3**   |  **26**  |
+| **Remaining**:                                                                           | **313**  |  **88**  | **106**  |  **28**  |  **7**   | **108**  | **329**  |  **20**  |  **5**   |  **28**  |
 | [CoC7.ActorImporter](#coc7actorimporter)                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.ActorImporterSummary](#coc7actorimportersummary)                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.AdvantageAttacker](#coc7advantageattacker)                                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -62,6 +62,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.Development](#coc7development)                                                     | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.DifficultyLevel](#coc7difficultylevel)                                             | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.DisregardMythosGain](#coc7disregardmythosgain)                                     | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.DragSpell](#coc7dragspell)                                                         | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.DriveSpecializationName](#coc7drivespecializationname)                             | &#x274C; | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.DyingCheck](#coc7dyingcheck)                                                       | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.EmptyItemList](#coc7emptyitemlist)                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -196,6 +197,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.ReadAttempt](#coc7readattempt)                                                     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
 | [CoC7.ReadingMythosTome](#coc7readingmythostome)                                         | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
 | [CoC7.RecoverLuckPoints](#coc7recoverluckpoints)                                         | &#x274C; | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.RedoFullStudy](#coc7redofullstudy)                                                 | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.Reload](#coc7reload)                                                               | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.RememberEverything](#coc7remembereverything)                                       | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.ResetCreatureSan](#coc7resetcreaturesan)                                           | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -548,7 +550,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 ##### CoC7.DevelopAttribWarn
 
-`"CoC7.DevelopAttribWarn": "You can not access some attributes in development/creation",`
+`"CoC7.DevelopAttribWarn": "You can not access some attributes in development/creation.",`
 
 ##### CoC7.Development
 
@@ -561,6 +563,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.DisregardMythosGain
 
 `"CoC7.DisregardMythosGain": "No Mythos gain",`
+
+##### CoC7.DragSpell
+
+`"CoC7.DragSpell": "Drag Spells here to insert them into the Book...",`
 
 ##### CoC7.DriveSpecializationName
 
@@ -1097,6 +1103,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.RecoverLuckPoints
 
 `"CoC7.RecoverLuckPoints": "Recover Luck Points",`
+
+##### CoC7.RedoFullStudy
+
+`"CoC7.RedoFullStudy": "Redo Full Study",`
 
 ##### CoC7.Reload
 
