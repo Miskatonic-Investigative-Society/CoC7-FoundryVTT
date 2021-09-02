@@ -253,6 +253,10 @@ export class CoC7Book extends CoC7Item {
     return await this.update({ 'data.initialReading': true })
   }
 
+  async grantSpellLearning () {
+    return ui.notifications.warn('Automation of learning spells from books is not currently supported and will be added in future updates.')
+  }
+
   /**
    * Receives an Array of skills and handles all the logic to develop them
    * @param {Array} developments @see grantInitialReading
@@ -386,7 +390,7 @@ export class CoC7Book extends CoC7Item {
     })
   }
 
-  async teachSpell (id) {
+  async attemptSpellLearning (id) {
     if (!this.isOwned) {
       /** This is not owned by any Actor */
       return ui.notifications.error(game.i18n.localize('CoC7.NotOwned'))
@@ -408,7 +412,10 @@ export class CoC7Book extends CoC7Item {
       check.actor = this.actor
       check.difficulty = CoC7Check.difficultyLevel.hard
       check.parent = this.uuid
-      check.flavor = 'attempt to learn spell'
+      check.flavor = game.i18n.format('CoC7.LearnSpellAttempt', {
+        book: this.name,
+        spell: spell.name
+      })
       check.context = 'SPELL_LEARNING'
       await check.rollCharacteristic('int')
       await check.toMessage()

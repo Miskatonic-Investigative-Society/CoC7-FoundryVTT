@@ -51,7 +51,7 @@ export class CoC7BookSheet extends ItemSheet {
       const id = $(event.currentTarget)
         .parents('li')
         .data('id')
-      this.item.teachSpell(id)
+      this.item.attemptSpellLearning(id)
     })
     html.find('[name="data.study.necessary"]').change(event => {
       const value = parseInt(event.currentTarget.value)
@@ -91,7 +91,6 @@ export class CoC7BookSheet extends ItemSheet {
       ? duplicate(this.item.data.data.spells)
       : []
     if (index >= 0) spells.splice(index, 1)
-    console.log(spells)
     return await this.item.update({ 'data.spells': spells })
   }
 
