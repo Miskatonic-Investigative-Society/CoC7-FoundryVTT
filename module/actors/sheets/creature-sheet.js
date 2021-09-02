@@ -71,18 +71,20 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
         sanMin: this.actor.data.data.special.sanLoss.checkPassed,
         sanMax: this.actor.data.data.special.sanLoss.checkFailled
       }
-      if (game.settings.get('core', 'rollMode') === 'blindroll')
+      if (game.settings.get('core', 'rollMode') === 'blindroll') {
         linkData.blind = true
+      }
       if (typeof modifier !== 'undefined') linkData.modifier = modifier
       if (typeof difficulty !== 'undefined') linkData.difficulty = difficulty
       const link = CoC7Parser.createCoC7Link(linkData)
-      if (link)
+      if (link) {
         chatHelper.createMessage(
           null,
           game.i18n.format('CoC7.MessageCheckRequestedWait', {
             check: link
           })
         )
+      }
     } else {
       SanCheckCard.checkTargets(this.actor.tokenKey, event.shiftKey)
       // CoC7SanCheck.checkTargets( this.actor.data.data.special.sanLoss.checkPassed, this.actor.data.data.special.sanLoss.checkFailled, event.shiftKey, this.tokenKey);
@@ -105,18 +107,10 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
     const options = mergeObject(super.defaultOptions, {
       template: 'systems/CoC7/templates/actors/creature-sheet.html',
       width: 580,
-      height: 'auto',
       classes: ['coc7', 'sheet', 'actor', 'npc', 'creature'],
-      dragDrop: [{ dragSelector: '.item', dropSelector: null }],
-      resizable: true
+      dragDrop: [{ dragSelector: '.item', dropSelector: null }]
     })
     return options
-  }
-
-  setPosition (position = {}) {
-    const test = super.setPosition(position)
-    test.height = 'auto'
-    return test
   }
 
   /**
@@ -141,6 +135,14 @@ export class CoC7CreatureSheet extends CoC7ActorSheet {
   }
 
   static forceAuto (app, html) {
-    html[0].style.height = 'auto'
+    const cell = html.find('.description.pannel.expanded')
+    if (cell.length) {
+      cell.height(Math.max(130, html.height() - cell.position().top - 8) + 'px')
+    }
+  }
+
+  setPosition (a) {
+    super.setPosition(a)
+    CoC7CreatureSheet.forceAuto(a, this._element)
   }
 }

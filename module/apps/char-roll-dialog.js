@@ -1,14 +1,14 @@
 /* global Dialog, renderTemplate, Roll */
 
 export class CharacRollDialog extends Dialog {
-  activateListeners (html) {
+  async activateListeners (html) {
     super.activateListeners(html)
     html.on('change', 'input', this._onChangeInput.bind(this))
     html.on('submit', 'form', this._onSubmit.bind(this))
     html.on(
       'click',
       '.roll-characteristic',
-      this._onRollCharacteristic.bind(this)
+      await this._onRollCharacteristic.bind(this)
     )
     html.on(
       'click',
@@ -32,7 +32,7 @@ export class CharacRollDialog extends Dialog {
     event.preventDefault()
     const li = event.currentTarget.closest('.item')
     const characKey = li.dataset.key
-    this.rollCharacteristic(characKey)
+    await this.rollCharacteristic(characKey)
   }
 
   async _onIncreaseCharacteristic (event) {
@@ -59,17 +59,26 @@ export class CharacRollDialog extends Dialog {
   async _onButton (event) {
     const action = event.currentTarget.dataset.action
     if (action === 'roll') {
-      ;['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu', 'luck'].forEach(
-        char => {
-          this.rollCharacteristic(char)
-        }
-      )
+      for (const char of [
+        'str',
+        'con',
+        'siz',
+        'dex',
+        'app',
+        'int',
+        'pow',
+        'edu',
+        'luck'
+      ]) {
+        await this.rollCharacteristic(char)
+      }
     }
     if (
       action === 'validate' &&
       !event.currentTarget.classList.contains('inactive')
-    )
+    ) {
       this.close()
+    }
   }
 
   async rollCharacteristic (key) {
@@ -148,9 +157,9 @@ export class CharacRollDialog extends Dialog {
       if (
         this.data.data.characteristics.points.total !==
         this.data.data.characteristics.points.value
-      )
+      ) {
         validation.classList.add('warning')
-      else {
+      } else {
         validation.classList.remove('warning')
         const validateButton = this._element[0].querySelector('button.validate')
         validateButton.classList.remove('inactive')
@@ -193,8 +202,9 @@ export class CharacRollDialog extends Dialog {
     if (data.characteristics.points.enabled) {
       if (
         data.characteristics.points.total !== data.characteristics.points.value
-      )
+      ) {
         data.pointsWarning = true
+      }
     }
 
     const html = await renderTemplate(
@@ -213,7 +223,7 @@ export class CharacRollDialog extends Dialog {
             else return resolve(false)
           }
         },
-        { classes: ['coc7', 'dialogue', 'char-select'] }
+        { classes: ['coc7', 'dialog', 'char-select'] }
       )
       dlg.render(true)
     })

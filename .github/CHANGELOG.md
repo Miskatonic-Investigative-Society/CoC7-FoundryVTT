@@ -1,3 +1,41 @@
+## Version 0.6.5:
+
+This release features major code refactoring and data migration. It is highly recommended to backup the Worlds directories linked to Call of Cthulhu 7th Edition before updating the system.
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+
+- Addition of new default icons to some entity types;
+- Addition of roll to chat messages where possible, so Dice So Nice will trigger;
+- Average system size reduced (from 20MB to 6MB) and its performance increased;
+- Change book, creature, npc, occupation, setup, spell, status, and talent sheets to be resizable;
+- Complete refactor of Book system:
+  - Addition of a interactive progress bar for full study;
+  - Addition of full support for initial reading;
+    - ...
+  - Make book type functional related to automations, gains and layout;
+  - Now there is new tabs: Description, Content and Spells (both after initial reading only), Details and Notes (both Keeper only);
+  - Update sheet for second version, template and styles;
+- Ensure compatibility of system .svg icons when using Firefox browser;
+- Fix backstory editor not resolving lists;
+- Fix extremely old characters getting negative movement;
+- Fix impossibility of delete dead active effects on NPCs/Creatures;
+- Fix inconsistencies when localizing entities names;
+- Fix negative values on setting health manually not working;
+- Fix rolls for skill checks with value of 0%;
+- Fix some Foundry warnings on console for deprecated stuff;
+- Massive code refactoring and data migration;
+- Now blind rolls works properly in integration with Dice So Nice!
+- Now, during the development phase, if a skill goes above 90 points, the character gain 2D6 of Sanity, thanks to @pconception;
+- Now Ranged Combat trigger Dice So Nice! on checks and damage, if available;
+- Now the check result on chat will appear only after Dice So Nice! complete the animation;
+- Reorder system settings into categorical groups;
+- There is now a list of untranslated keys: https://github.com/HavlockV/CoC7-FoundryVTT/blob/develop/.github/TRANSLATIONS.md
+- There is now an option to set if combat and sanity effects icons are shown in tokens or not;
+- Update to Portuguese localization;
+- Update to Spanish localization, thanks to @lozalojo;
+- Update to Swedish localization, thanks to @Rangertheman;
+- Update to Taiwanese localization, thanks to @zeteticl;
+
 ## Version 0.6.4:
 
 - Fix bug on folder select tag when creating a new entity.

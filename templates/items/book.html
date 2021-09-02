@@ -1,135 +1,135 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
-    <header class="sheet-header flexrow" style="flex: 0 0 64px;padding-bottom: 2px;">
-        <div class="header-details flexrow">
-            <h1 class="name" style="height: 48px;">
-                <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
-            </h1>
+  <header class="sheet-header flexrow" style="flex: 0 0 64px;padding-bottom: 2px;">
+      <div class="header-details flexrow">
+          <h1 class="name" style="height: 48px;">
+              <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
+          </h1>
 
-            <ul class="summary flexrow">
-                <li class="flex2">
-                    <input type="text" name="data.language" value="{{data.language}}" placeholder="{{ localize 'CoC7.language' }}"/>
-                </li>
-                <li class="flex2">
-                    <input type="text" name="data.date" value="{{data.date}}" placeholder="{{ localize 'CoC7.Date' }}"/>
-                </li>
-                <li class="flex3">
-                    <input type="text" name="data.author" value="{{data.author}}" placeholder="{{ localize 'CoC7.Author' }}"/>
-                </li>
-            </ul>
+          <ul class="summary flexrow">
+              <li class="flex2">
+                  <input type="text" name="data.language" value="{{data.language}}" placeholder="{{ localize 'CoC7.language' }}"/>
+              </li>
+              <li class="flex2">
+                  <input type="text" name="data.date" value="{{data.date}}" placeholder="{{ localize 'CoC7.Date' }}"/>
+              </li>
+              <li class="flex3">
+                  <input type="text" name="data.author" value="{{data.author}}" placeholder="{{ localize 'CoC7.Author' }}"/>
+              </li>
+          </ul>
 
-        </div>
-        <img class="profile" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+      </div>
+      <img class="profile" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
 
-    </header>
+  </header>
 
-    {{!-- Item Sheet Navigation --}}
-    <nav style="flex: 0 0 24px;margin-bottom: 4px;font-family: 'Modesto Condensed', 'Palatino Linotype', serif;font-size: 16px;font-weight: 700;"
-      class="sheet-navigation tabs" data-group="primary">
-        <a style="line-height: 24px;" class="item active" data-tab="description">{{ localize "CoC7.ItemDescription" }}</a>
-        <a style="line-height: 24px;" class="item" data-tab="details">{{ localize "CoC7.Details" }}</a>
-    </nav>
-
-    
-    {{!-- Item Sheet Body --}}
-    <section style="overflow: hidden;flex: 1;" class="sheet-body">
-
-        {{!-- Description Tab --}}
-        <div class="tab flexrow active" data-group="primary" data-tab="description">
-
-            <div class="item-properties">
-                <ol class="properties-list">
-                    {{#each itemProperties}}
-                    <li>{{this}}</li>
-                    {{/each}}
-                </ol>
-            </div>
-        
-            {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
-        </div>
-
-        {{!-- Spells Tab --}}
-        <div class="tab details" data-group="primary" data-tab="details">
-
-            <div class="book-type form-group stacked">
-                <label>{{ localize "CoC7.BookType" }}</label>
-                <div class="flexrow">
-                <label class="checkbox">
-                    <input type="checkbox" name="data.type.mythos" {{checked data.type.mythos}}/> {{ localize "CoC7.MythosBook" }}
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" name="data.type.occult" {{checked data.type.occult}}/> {{ localize "CoC7.OccultBook" }}
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" name="data.type.other" {{checked data.type.other}}/> {{ localize "CoC7.Other" }}
-                </label>
-                </div>
-            </div>
-
-            <h3 class="form-header">{{ localize "CoC7.Details" }}</h3>
-
-            <div class="form-group">
-                <label>{{ localize "CoC7.SANLoss" }}</label>
-                <input type="text" name="data.sanLoss" value="{{data.sanLoss}}"/>
-            </div>
-
-            <div class="form-group">
-                <label>{{ localize "CoC7.StudyTime" }}</label>
-                <input type="text" name="data.weeksStudyTime" value="{{data.weeksStudyTime}}" data-dtype="Number"/>
-            </div>
-
-            <div class="form-group">
-                <label>{{ localize "CoC7.MythosRating" }}</label>
-                <input type="text" name="data.mythosRating" value="{{data.mythosRating}}"/>
-            </div>
-            
-            <h3 class="form-header">Gains</h3>
-            <div class="form-group">
-                <label>{{ localize "CoC7.CthuluMythosInitial" }}</label>
-                <input type="text" name="data.gain.cthulhuMythos.CMI" value="{{data.gain.cthulhuMythos.CMI}}"/>
-            </div>
-
-            <div class="form-group">
-                <label>{{ localize "CoC7.CthuluMythosFinal" }}</label>
-                <input type="text" name="data.gain.cthulhuMythos.CMF" value="{{data.gain.cthulhuMythos.CMF}}"/>
-            </div>
-
-            <div class="form-group">
-                <label>{{ localize "CoC7.Occult" }}</label>
-                <input type="text" name="data.gain.occult" value="{{data.gain.occult}}"/>
-            </div>
+  {{!-- Item Sheet Navigation --}}
+  <nav style="flex: 0 0 24px;margin-bottom: 4px;font-family: 'Modesto Condensed', 'Palatino Linotype', serif;font-size: 16px;font-weight: 700;"
+    class="sheet-navigation tabs" data-group="primary">
+      <a style="line-height: 24px;" class="item active" data-tab="description">{{ localize "CoC7.Description" }}</a>
+      <a style="line-height: 24px;" class="item" data-tab="details">{{ localize "CoC7.Details" }}</a>
+  </nav>
 
 
-            <h3 class="form-header">{{ localize "CoC7.Spells"}}</h3>
-            <ol class="spell-list">
-                {{#each data.spells as |spell|}}
-                <li class="spell flexrow" data-spell-id="{{spell._id}}">
-                    <div class="spell-name flexrow">
-                        {{!--<!-- <div class="spell-image" style="background-image: url({{spell.img}})"></div> -->--}}
-                        <h4>{{spell.name}}</h4>    
-                    </div>
+  {{!-- Item Sheet Body --}}
+  <section style="overflow: hidden;flex: 1;" class="sheet-body">
 
-                    {{!-- 
-                    <!-- <div class="spell-cast-time">{{spell.castTime}}</div>
+      {{!-- Description Tab --}}
+      <div class="tab flexrow active" data-group="primary" data-tab="description">
 
-                    <div class="spell-cost">{{spell.cost}}</div>  -->
-                    --}}
+          <div class="item-properties">
+              <ol class="properties-list">
+                  {{#each itemProperties}}
+                  <li>{{this}}</li>
+                  {{/each}}
+              </ol>
+          </div>
 
-                    <div class="item-controls">
-                        {{!-- <!--<a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>--> --}}
-                        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-                    </div>
-                </li>
-                {{/each}}
-            </ol>
+          {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
+      </div>
 
-            <h3 class="form-header">{{ localize "CoC7.Notes"}}</h3>
-            {{editor content=data.description.notes target="data.description.notes" button=true owner=owner editable=editable}}
-            
-            <h3 class="form-header">{{ localize "CoC7.Unidentified"}}</h3>
-            <div class="unidentified-description">
-                {{editor content=data.description.unidentified target="data.description.unidentified" button=true owner=owner editable=editable}}
-            </div>
-        </div>
-    </section>
+      {{!-- Spells Tab --}}
+      <div class="tab details" data-group="primary" data-tab="details">
+
+          <div class="book-type form-group stacked">
+              <label>{{ localize "CoC7.BookType" }}</label>
+              <div class="flexrow">
+              <label class="checkbox">
+                  <input type="checkbox" name="data.type.mythos" {{checked data.type.mythos}}/> {{ localize "CoC7.MythosBook" }}
+              </label>
+              <label class="checkbox">
+                  <input type="checkbox" name="data.type.occult" {{checked data.type.occult}}/> {{ localize "CoC7.OccultBook" }}
+              </label>
+              <label class="checkbox">
+                  <input type="checkbox" name="data.type.other" {{checked data.type.other}}/> {{ localize "CoC7.Other" }}
+              </label>
+              </div>
+          </div>
+
+          <h3 class="form-header">{{ localize "CoC7.Details" }}</h3>
+
+          <div class="form-group">
+              <label>{{ localize "CoC7.SANLoss" }}</label>
+              <input type="text" name="data.sanLoss" value="{{data.sanLoss}}"/>
+          </div>
+
+          <div class="form-group">
+              <label>{{ localize "CoC7.StudyTime" }}</label>
+              <input type="text" name="data.weeksStudyTime" value="{{data.weeksStudyTime}}" data-dtype="Number"/>
+          </div>
+
+          <div class="form-group">
+              <label>{{ localize "CoC7.MythosRating" }}</label>
+              <input type="text" name="data.mythosRating" value="{{data.mythosRating}}"/>
+          </div>
+
+          <h3 class="form-header">Gains</h3>
+          <div class="form-group">
+              <label>{{ localize "CoC7.CthulhuMythosInitial" }}</label>
+              <input type="text" name="data.gain.cthulhuMythos.CMI" value="{{data.gain.cthulhuMythos.CMI}}"/>
+          </div>
+
+          <div class="form-group">
+              <label>{{ localize "CoC7.CthulhuMythosFinal" }}</label>
+              <input type="text" name="data.gain.cthulhuMythos.CMF" value="{{data.gain.cthulhuMythos.CMF}}"/>
+          </div>
+
+          <div class="form-group">
+              <label>{{ localize "CoC7.Occult" }}</label>
+              <input type="text" name="data.gain.occult" value="{{data.gain.occult}}"/>
+          </div>
+
+
+          <h3 class="form-header">{{ localize "CoC7.Spells"}}</h3>
+          <ol class="spell-list">
+              {{#each data.spells as |spell|}}
+              <li class="spell flexrow" data-spell-id="{{spell._id}}">
+                  <div class="spell-name flexrow">
+                      {{!--<!-- <div class="spell-image" style="background-image: url({{spell.img}})"></div> -->--}}
+                      <h4>{{spell.name}}</h4>
+                  </div>
+
+                  {{!--
+                  <!-- <div class="spell-cast-time">{{spell.castTime}}</div>
+
+                  <div class="spell-cost">{{spell.cost}}</div>  -->
+                  --}}
+
+                  <div class="item-controls">
+                      {{!-- <!--<a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>--> --}}
+                      <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                  </div>
+              </li>
+              {{/each}}
+          </ol>
+
+          <h3 class="form-header">{{ localize "CoC7.Notes"}}</h3>
+          {{editor content=data.description.notes target="data.description.notes" button=true owner=owner editable=editable}}
+
+          <h3 class="form-header">{{ localize "CoC7.Unidentified"}}</h3>
+          <div class="unidentified-description">
+              {{editor content=data.description.unidentified target="data.description.unidentified" button=true owner=owner editable=editable}}
+          </div>
+      </div>
+  </section>
 
 </form>

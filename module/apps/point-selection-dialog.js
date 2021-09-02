@@ -67,7 +67,7 @@ export class PointSelectDialog extends Dialog {
             else return resolve(false)
           }
         },
-        { classes: ['coc7', 'dialogue', 'char-select'] }
+        { classes: ['coc7', 'dialog', 'char-select'] }
       )
       dlg.render(true)
     })

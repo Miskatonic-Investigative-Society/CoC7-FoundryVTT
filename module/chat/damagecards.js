@@ -26,54 +26,36 @@ export class CoC7DamageRoll extends ChatCardActor {
   async rollDamage (range = 'normal') {
     this.rollString = this.weapon.data.data.range[range].damage
 
-    if (this.weapon.data.data.properties.addb)
+    if (this.weapon.data.data.properties.addb) {
       this.rollString = this.rollString + '+' + this.actor.db
-    if (this.weapon.data.data.properties.ahdb)
+    }
+    if (this.weapon.data.data.properties.ahdb) {
       this.rollString = this.rollString + '+' + this.actor.db + '/2'
+    }
 
-    // const is7 = Object.prototype.hasOwnProperty.call(Roll, 'cleanTerms');
-    const is7 = true // 0.8.x : Drop support for is7, cleanTerms removed
-
-    // 0.7.5 this.maxDamage.result -> this.maxDamage
-    /** * MODIF 0.8.x ***/
-    // this.maxDamage = is7? Roll.maximize( this.rollString)._total: Roll.maximize( this.rollString); //DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
-    this.maxDamage = new Roll(this.rollString).evaluate({ maximize: true }) // DEPRECATED in 0.8.x return new Roll(formula).evaluate({maximize: true});
+    this.maxDamage = new Roll(this.rollString).evaluate({ maximize: true })
     /******************/
     this.roll = null
     if (this.critical) {
       if (this.weapon.impale) {
-        if (is7) this.rollString = this.rollString + '+' + this.maxDamage
-        else this.rollString = this.rollString + '+' + this.maxDamage.result
+        this.rollString = this.rollString + '+' + this.maxDamage
         this.roll = new Roll(this.rollString)
-        this.roll.roll()
+        await this.roll.roll({ async: true })
         this.result = Math.floor(this.roll.total)
       } else {
-        if (is7) {
-          this.roll = new Roll(`${this.maxDamage}`)
-          this.roll.roll()
-          this.result = this.maxDamage
-        } else {
-          this.roll = new Roll(this.maxDamage.result)
-          this.roll.roll()
-          this.result = this.maxDamage.result
-        }
+        this.roll = new Roll(`${this.maxDamage}`)
+        await this.roll.roll({ async: true })
+        this.result = this.maxDamage
         this.resultString = `Max(${this.rollString})`
       }
     } else {
       this.roll = new Roll(this.rollString)
-      this.roll.roll()
+      await this.roll.roll({ async: true })
       CoC7Dice.showRollDice3d(this.roll)
       this.result = Math.floor(this.roll.total)
     }
 
-    if (is7) this.roll._dice = this.roll.dice
-    else {
-      this.roll._dice.forEach(d =>
-        d.rolls.forEach(r => {
-          r.result = r.roll
-        })
-      )
-    }
+    this.roll._dice = this.roll.dice
 
     const html = await renderTemplate(
       'systems/CoC7/templates/chat/combat/damage-result.html',
@@ -102,8 +84,9 @@ export class CoC7DamageRoll extends ChatCardActor {
       }
 
       const rollMode = game.settings.get('core', 'rollMode')
-      if (['gmroll', 'blindroll'].includes(rollMode))
+      if (['gmroll', 'blindroll'].includes(rollMode)) {
         chatData.whisper = ChatMessage.getWhisperRecipients('GM')
+      }
       // if ( rollMode === 'blindroll' ) chatData['blind'] = true;
       chatData.blind = false
 

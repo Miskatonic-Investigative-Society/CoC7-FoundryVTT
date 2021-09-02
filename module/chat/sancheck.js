@@ -24,8 +24,9 @@ export class CoC7SanCheck {
   }
 
   get isBlind () {
-    if (undefined === this._isBlind)
+    if (undefined === this._isBlind) {
       this._isBlind = this.rollMode === 'blindroll'
+    }
     return this._isBlind
   }
 
@@ -103,9 +104,11 @@ export class CoC7SanCheck {
     if (targets.length) {
       targets.forEach(t => {
         let check
-        if (t.actor.isToken)
+        if (t.actor.isToken) {
           check = new CoC7SanCheck(t.actor.tokenKey, sanMin, sanMax)
-        else check = new CoC7SanCheck(t.actor.id, sanMin, sanMax)
+        } else {
+          check = new CoC7SanCheck(t.actor.id, sanMin, sanMax)
+        }
         check.toMessage(fastForward)
       })
     } else {
@@ -180,8 +183,11 @@ export class CoC7SanCheck {
       content: htmlElement.outerHTML
     }
 
-    if (['gmroll', 'blindroll'].includes(game.settings.get('core', 'rollMode')))
+    if (
+      ['gmroll', 'blindroll'].includes(game.settings.get('core', 'rollMode'))
+    ) {
       chatData.whisper = ChatMessage.getWhisperRecipients('GM') // Change for user
+    }
     if (this.rollMode === 'blindroll') chatData.blind = true
 
     ChatMessage.create(chatData).then(msg => {
@@ -205,7 +211,7 @@ export class CoC7SanCheck {
   async rollSanLoss () {
     if (this.isSanLossFormula) {
       const r = new Roll(this.sanLossFormula)
-      r.roll()
+      await r.roll({ async: true })
       CoC7Dice.showRollDice3d(r)
 
       this.totalSanLoss = r.total

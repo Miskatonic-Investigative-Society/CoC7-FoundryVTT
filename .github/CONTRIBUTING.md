@@ -33,8 +33,7 @@ The more detail on reproducing, the better! Bugs are hard to fix if we can not r
 
 We are always looking for translators, there is a lot to translate, and we can not do it all. If you see any translations missing for you language, Feel free to look in the corresponding `*.json` file in the `lang` folder. Comparing against the `en.json` is a good idea, for a baseline.
 
-For the list of missing translations, see: [TRANSLATIONS](TRANSLATIONS.md).
-
+For the list of missing translations, see: [TRANSLATIONS](https://github.com/HavlockV/CoC7-FoundryVTT/blob/develop/.github/TRANSLATIONS.md).
 
 ## Coding.
 
@@ -46,9 +45,15 @@ On Windows, grab an installer from here: https://git-scm.com/download/win and go
 
 On Mac and Linux, it is pre-installed.
 
-To check if Git is installed in your environment, open the shell or terminal of your choice and:
+To check if Git is installed in your environment, open the shell or terminal of your choice and run:
 
 `git --version`
+
+If you are a new Git user, probably you will have to set it up with the following commands:
+
+`git config --global user.name "YOUR_NAME"`
+
+`git config --global user.email "YOUR_EMAIL"`
 
 #### Node.js (14+).
 
@@ -62,19 +67,23 @@ Follow the installation steps and then make sure everything went right with:
 
 ### Cloning the Repository.
 
-On the directory where you would like to pull your changes open the terminal or shell of your choice.
+On the directory where you would like to pull your changes open the terminal or shell of your choice, run:
 
 `git clone https://github.com/HavlockV/CoC7-FoundryVTT.git`
 
-This will create a local clone of the project's repository.
+This will create a local clone of the project repository.
 
 When prompted, enter your Github credentials.
 
 ### Initial Setup.
 
-Preferably, open the project directory in your Integrated Development Environment (IDE). We recommend [Visual Studio Code](https://code.visualstudio.com/download).
+Preferably, open your brand new local repository in the Integrated Development Environment (IDE) of your choice. We recommend [Visual Studio Code](#Visual-Studio-Code).
 
-Still in the terminal, install the project dependencies: `npm install`
+Still in the terminal, install the project dependencies running: `npm install`
+
+If `npm install` throws any errors you can try `npm install --legacy-peer-deps` or `npm install --force`
+
+Don't mind possible warnings. They are part of any Node project.
 
 To make things easier, edit the `fvtt.config.example.js` file, located at the root of your local repository. The userDataPath key is your User Data Directory from Foundry and can be found on the Configuration tab on the Setup screen.
 
@@ -94,6 +103,12 @@ Run `npm run build` to perform a one off compile/build.
 
 Now everything is ready for you to make any changes or additions you want.
 
+After rename `fvtt.config.example.js` to `fvtt.config.js` consider run:
+
+`git update-index --assume-unchanged fvtt.config.example.js`
+
+This way Git does not assume the original file has been deleted from the repository.
+
 ### Contributing.
 
 The project structure is made as follows:
@@ -107,3 +122,15 @@ This way, Webpack and other dependencies will know whenever you make any relevan
 ### Your First Code Contribution.
 
 Unsure where to begin contributing? You can start by looking through these `beginner` and `help-wanted` issues!
+
+## IDE Configuration
+
+### Visual Studio Code
+
+Install [Visual Studio Code](https://code.visualstudio.com/download).
+
+Install extension [standard.vscode-standard](https://marketplace.visualstudio.com/items?itemName=standard.vscode-standard).
+
+Configure the extension Tick `Standard: Auto Fix On Save`
+
+Before committing your code run `npm run format`

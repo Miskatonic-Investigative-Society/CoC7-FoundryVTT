@@ -53,8 +53,9 @@ export class CoC7ActorSheet extends ActorSheet {
     if (
       game.settings.get('CoC7', 'playerUnlockSheetMode') === 'creation' &&
       game.settings.get('CoC7', 'charCreationEnabled')
-    )
+    ) {
       data['data.flags.locked'] = false
+    }
 
     if (!['vehicle'].includes(this.actor.data.type)) {
       if (!data.data.characteristics) {
@@ -529,13 +530,16 @@ export class CoC7ActorSheet extends ActorSheet {
           characteristic.extreme = Math.floor(characteristic.value / 5)
 
           // If no value && no formula don't display charac.
-          if (!characteristic.value && !characteristic.formula)
+          if (!characteristic.value && !characteristic.formula) {
             characteristic.display = false
-          else characteristic.display = true
+          } else {
+            characteristic.display = true
+          }
 
           // if any characteristic has no value but has a formula.
-          if (!characteristic.value && characteristic.formula)
+          if (!characteristic.value && characteristic.formula) {
             characteristic.hasEmptyValueWithFormula = true
+          }
 
           data.hasEmptyValueWithFormula =
             data.hasEmptyValueWithFormula ||
@@ -600,10 +604,11 @@ export class CoC7ActorSheet extends ActorSheet {
 
     if (data.data.attribs.mp.auto) {
       // TODO if any is null set max back to null.
-      if (data.data.characteristics.pow.value != null)
+      if (data.data.characteristics.pow.value != null) {
         data.data.attribs.mp.max = Math.floor(
           data.data.characteristics.pow.value / 5
         )
+      }
     }
 
     if (data.data.attribs.san.auto) {
@@ -613,27 +618,39 @@ export class CoC7ActorSheet extends ActorSheet {
     if (
       data.data.attribs.mp.value > data.data.attribs.mp.max ||
       data.data.attribs.mp.max == null
-    )
+    ) {
       data.data.attribs.mp.value = data.data.attribs.mp.max
+    }
     if (
       data.data.attribs.hp.value > data.data.attribs.hp.max ||
       data.data.attribs.hp.max == null
-    )
+    ) {
       data.data.attribs.hp.value = data.data.attribs.hp.max
+    }
 
-    if (data.data.attribs.hp.value == null && data.data.attribs.hp.max != null)
+    if (
+      data.data.attribs.hp.value == null &&
+      data.data.attribs.hp.max != null
+    ) {
       data.data.attribs.hp.value = data.data.attribs.hp.max
-    if (data.data.attribs.mp.value == null && data.data.attribs.mp.max != null)
+    }
+    if (
+      data.data.attribs.mp.value == null &&
+      data.data.attribs.mp.max != null
+    ) {
       data.data.attribs.mp.value = data.data.attribs.mp.max
+    }
 
     if (!['vehicle'].includes(this.actor.data.type)) {
       if (
         data.data.attribs.san.value == null &&
         data.data.characteristics.pow.value != null
-      )
+      ) {
         data.data.attribs.san.value = data.data.characteristics.pow.value
-      if (data.data.attribs.san.value > data.data.attribs.san.max)
+      }
+      if (data.data.attribs.san.value > data.data.attribs.san.max) {
         data.data.attribs.san.value = data.data.attribs.san.max
+      }
 
       if (data.data.biography instanceof Array && data.data.biography.length) {
         data.data.biography[0].isFirst = true
@@ -688,7 +705,7 @@ export class CoC7ActorSheet extends ActorSheet {
    * Activate event listeners using the prepared sheet HTML
    * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
    */
-  activateListeners (html) {
+  async activateListeners (html) {
     super.activateListeners(html)
 
     // Owner Only Listeners
@@ -719,17 +736,19 @@ export class CoC7ActorSheet extends ActorSheet {
       html
         .find('.characteristic-label')
         .click(this._onRollCharacteriticTest.bind(this))
-      html.find('.skill-name.rollable').click(this._onRollSkillTest.bind(this))
-      html.find('.skill-image').click(this._onRollSkillTest.bind(this))
+      html
+        .find('.skill-name.rollable')
+        .click(await this._onRollSkillTest.bind(this))
+      html.find('.skill-image').click(await this._onRollSkillTest.bind(this))
       html
         .find('.attribute-label.rollable')
-        .click(this._onRollAttribTest.bind(this))
+        .click(await this._onRollAttribTest.bind(this))
       html.find('.lock').click(this._onLockClicked.bind(this))
       html.find('.flag').click(this._onFlagClicked.bind(this))
       html.find('.formula').click(this._onFormulaClicked.bind(this))
       html
         .find('.roll-characteritics')
-        .click(this._onRollCharacteriticsValue.bind(this))
+        .click(await this._onRollCharacteriticsValue.bind(this))
       html
         .find('.average-characteritics')
         .click(this._onAverageCharacteriticsValue.bind(this))
@@ -752,7 +771,7 @@ export class CoC7ActorSheet extends ActorSheet {
         .click(event => this._onWeaponRoll(event))
       html
         .find('.weapon-skill.rollable')
-        .click(event => this._onWeaponSkillRoll(event))
+        .click(async event => await this._onWeaponSkillRoll(event))
       html.find('.reload-weapon').click(event => this._onReloadWeapon(event))
       html
         .find('.reload-weapon')
@@ -865,7 +884,9 @@ export class CoC7ActorSheet extends ActorSheet {
       }
     })
 
-    html.find('a.coc7-link').on('click', event => CoC7Parser._onCheck(event))
+    html
+      .find('a.coc7-link')
+      .on('click', async event => await CoC7Parser._onCheck(event))
     html
       .find('a.coc7-link')
       .on('dragstart', event => CoC7Parser._onDragCoC7Link(event))
@@ -986,7 +1007,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
   async checkForDeath (event) {
     const conCheck = new CoC7ConCheck(
-      this.actor.isToken ? this.actor.tokenKey : this.actor._id
+      this.actor.isToken ? this.actor.tokenKey : this.actor.id
     )
     conCheck.stayAlive = true
     conCheck.toMessage(event.shiftKey)
@@ -1025,7 +1046,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
   // roll the actor characteristic from formula when possible.
   async _onRollCharacteriticsValue () {
-    this.actor.rollCharacteristicsValue()
+    await this.actor.rollCharacteristicsValue()
   }
 
   async _onAverageCharacteriticsValue () {
@@ -1261,7 +1282,7 @@ export class CoC7ActorSheet extends ActorSheet {
               }
             },
             default: 'cancel',
-            classes: ['coc7', 'dialogue']
+            classes: ['coc7', 'dialog']
           }
           new Dialog(data).render(true)
         })
@@ -1331,7 +1352,7 @@ export class CoC7ActorSheet extends ActorSheet {
     check.actor = !tokenKey ? actorId : tokenKey
     check.skill = skillId
     check.item = itemId
-    check.roll()
+    await check.roll()
     check.toMessage()
 
     // HACK: just to pop the advanced roll window
@@ -1404,7 +1425,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
       roll.denyPush = true // Opposed rolled can't be pushed.
 
-      roll._perform()
+      await roll._perform()
 
       data.roll = roll.JSONRollData
 
@@ -1456,8 +1477,9 @@ export class CoC7ActorSheet extends ActorSheet {
         actorKey: this.actor.actorKey,
         forceModifiers: event.shiftKey
       }
-      if (game.settings.get('core', 'rollMode') === 'blindroll')
+      if (game.settings.get('core', 'rollMode') === 'blindroll') {
         linkData.blind = true
+      }
       CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg =>
         dlg.render(true)
       )
@@ -1492,7 +1514,11 @@ export class CoC7ActorSheet extends ActorSheet {
     check.actor = !tokenKey ? actorId : tokenKey
     check.flatDiceModifier = flatDiceModifier
     check.flatThresholdModifier = flatThresholdModifier
-    check.rollCharacteristic(characteristic)
+    check.standby =
+      game.settings.get('CoC7', 'stanbyGMRolls') &&
+      game.user.isGM &&
+      this.actor.hasPlayerOwner
+    await check.rollCharacteristic(characteristic)
     check.toMessage()
   }
 
@@ -1518,8 +1544,9 @@ export class CoC7ActorSheet extends ActorSheet {
             actorKey: this.actor.actorKey,
             forceModifiers: event.shiftKey
           }
-      if (game.settings.get('core', 'rollMode') === 'blindroll')
+      if (game.settings.get('core', 'rollMode') === 'blindroll') {
         linkData.blind = true
+      }
       CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg =>
         dlg.render(true)
       )
@@ -1535,7 +1562,7 @@ export class CoC7ActorSheet extends ActorSheet {
         const r = new Roll(
           event.currentTarget.parentElement.dataset.rollFormula
         )
-        r.roll()
+        await r.roll({ async: true })
         if (!isNaN(r.total) && !(r.total === undefined)) {
           r.toMessage({
             speaker: ChatMessage.getSpeaker(),
@@ -1601,7 +1628,11 @@ export class CoC7ActorSheet extends ActorSheet {
       check.flatDiceModifier = flatDiceModifier
       check.flatThresholdModifier = flatThresholdModifier
       check.actor = !tokenKey ? actorId : tokenKey
-      check.rollAttribute(attrib)
+      check.standby =
+        game.settings.get('CoC7', 'stanbyGMRolls') &&
+        game.user.isGM &&
+        this.actor.hasPlayerOwner
+      await check.rollAttribute(attrib)
       check.toMessage()
     }
   }
@@ -1630,8 +1661,9 @@ export class CoC7ActorSheet extends ActorSheet {
         actorKey: this.actor.actorKey,
         forceModifiers: event.shiftKey
       }
-      if (game.settings.get('core', 'rollMode') === 'blindroll')
+      if (game.settings.get('core', 'rollMode') === 'blindroll') {
         linkData.blind = true
+      }
       CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg =>
         dlg.render(true)
       )
@@ -1659,7 +1691,11 @@ export class CoC7ActorSheet extends ActorSheet {
     check.skill = skillId
     check.flatDiceModifier = flatDiceModifier
     check.flatThresholdModifier = flatThresholdModifier
-    check.roll()
+    check.standby =
+      game.settings.get('CoC7', 'stanbyGMRolls') &&
+      game.user.isGM &&
+      this.actor.hasPlayerOwner
+    await check.roll()
     check.toMessage()
   }
 
@@ -1702,15 +1738,16 @@ export class CoC7ActorSheet extends ActorSheet {
               ? parseInt(event.currentTarget.value)
               : null
 
-            if (!event.currentTarget.value)
+            if (!event.currentTarget.value) {
               await item.update({
                 [event.currentTarget.name]: null
               })
-            else {
-              if (!isNaN(value))
+            } else {
+              if (!isNaN(value)) {
                 await item.update({
                   [event.currentTarget.name]: value
                 })
+              }
             }
             if (game.i18n.localize(COC7.creditRatingSkillName) === item.name) {
               const creditValue = value || 0
@@ -1788,7 +1825,7 @@ export class CoC7ActorSheet extends ActorSheet {
           if (event.currentTarget.value.length !== 0) {
             // On teste si c'est une formule valide !
             const r = new Roll(event.currentTarget.value)
-            r.roll()
+            await r.roll({ async: true })
             if (isNaN(r.total) || typeof r.total === 'undefined') {
               ui.notifications.error(
                 game.i18n.format('CoC7.ErrorInvalidFormula', {
@@ -1810,7 +1847,7 @@ export class CoC7ActorSheet extends ActorSheet {
           ) {
             // On teste si c'est une formule valide !
             const r = new Roll(event.currentTarget.value)
-            r.roll()
+            await r.roll({ async: true })
             if (isNaN(r.total) || r.total === undefined) {
               ui.notifications.error(
                 game.i18n.format('CoC7.ErrorInvalidFormula', {
@@ -1873,7 +1910,7 @@ export class CoC7ActorSheet extends ActorSheet {
             // teste la validité de la formule.
             if (event.currentTarget.value.length !== 0) {
               const r = new Roll(event.currentTarget.value)
-              r.roll()
+              await r.roll({ async: true })
               if (isNaN(r.total) || typeof r.total === 'undefined') {
                 ui.notifications.error(
                   event.currentTarget.value + ' is not a valid formula'

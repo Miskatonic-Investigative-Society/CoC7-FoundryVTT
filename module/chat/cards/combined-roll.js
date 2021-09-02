@@ -73,7 +73,7 @@ export class CombinedCheckCard extends RollCard {
   async getHtmlRoll () {
     if (!this.rolled) return undefined
     const check = new CoC7Check()
-    check._perform({ roll: this._roll, silent: true })
+    await check._perform({ roll: this._roll, silent: true })
     return await check.getHtmlRoll({ hideSuccess: true })
   }
 
@@ -169,7 +169,7 @@ export class CombinedCheckCard extends RollCard {
           fromGM: game.user.isGM,
           options: roll
         }
-        data.roll = CoC7Dice.roll(roll.modifier || 0)
+        data.roll = await CoC7Dice.roll(roll.modifier || 0)
         AudioHelper.play({ src: CONFIG.sounds.dice })
         card.process(data)
         break
@@ -205,15 +205,16 @@ export class CombinedCheckCard extends RollCard {
           this.options.difficulty || CoC7Check.difficultyLevel.regular
         r.flatDiceModifier = this.options.flatDiceModifier || 0
         r.flatThresholdModifier = this.options.flatThresholdModifier || 0
-        r._perform({ roll: this._roll, silent: true })
+        await r._perform({ roll: this._roll, silent: true })
       }
     })
 
     for (let i = 0; i < this.rolls.length; i++) {
-      if (this.rolls[i].rolled)
+      if (this.rolls[i].rolled) {
         this.rolls[i]._htmlRoll = await this.rolls[i].getHtmlRoll({
           hideDiceResult: true
         })
+      }
     }
 
     this.rolls = this.rolls.filter(roll => {

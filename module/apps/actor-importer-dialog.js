@@ -95,7 +95,7 @@ export class CoC7ActorImporterDialog extends Dialog {
           close: console.log('Closing:')
         },
         {
-          classes: ['coc7', 'dialogue', 'actor-importer'],
+          classes: ['coc7', 'dialog', 'actor-importer'],
           width: 600
         }
       )

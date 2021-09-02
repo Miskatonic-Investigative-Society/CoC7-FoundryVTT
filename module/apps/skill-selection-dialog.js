@@ -43,7 +43,7 @@ export class SkillSelectDialog extends Dialog {
             return resolve(selected)
           }
         },
-        { classes: ['coc7', 'dialogue', 'skill-select'] }
+        { classes: ['coc7', 'dialog', 'skill-select'] }
       )
       dlg.render(true)
     })

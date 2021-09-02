@@ -56,10 +56,11 @@ export class CoC7MeleeTarget extends ChatCardActor {
 
   get initiatorKey () {
     if (!this._initiatorKey) {
-      if (!this._initiator && this.parentMessageId)
+      if (!this._initiator && this.parentMessageId) {
         this._initiator = CoC7MeleeInitiator.getFromMessageId(
           this.parentMessageId
         )
+      }
       if (this._initiator) this._initiatorKey = this._initiator.actorKey
     }
     if (!this._initiatorKey) {
@@ -84,10 +85,11 @@ export class CoC7MeleeTarget extends ChatCardActor {
   }
 
   get meleeInitiator () {
-    if (!this._initiator)
+    if (!this._initiator) {
       this._initiator = CoC7MeleeInitiator.getFromMessageId(
         this.parentMessageId
       )
+    }
     return this._initiator
   }
 
@@ -207,8 +209,9 @@ export class CoC7MeleeTarget extends ChatCardActor {
       content: html
     }
 
-    if (['gmroll', 'blindroll'].includes(this.rollMode))
+    if (['gmroll', 'blindroll'].includes(this.rollMode)) {
       chatData.whisper = ChatMessage.getWhisperRecipients('GM')
+    }
     // if ( this.isBlind ) chatData['blind'] = true;
     chatData.blind = false
 
@@ -288,7 +291,7 @@ export class CoC7MeleeTarget extends ChatCardActor {
     if (this.disadvantage) check.diceModifier -= 1
     if (this.advantage) check.diceModifier += 1
 
-    check.roll()
+    await check.roll()
     this.check = check
     this.rolled = true
     this.resolved = true
@@ -319,12 +322,15 @@ export class CoC7MeleeTarget extends ChatCardActor {
       }
     } else if (this.roll.success) {
       this.roll.rollColor = 'goldenrod'
-      if (CoC7Check.successLevel.regular === this.roll.successLevel)
+      if (CoC7Check.successLevel.regular === this.roll.successLevel) {
         this.roll.rollTitle = game.i18n.localize('CoC7.RegularSuccess')
-      if (CoC7Check.successLevel.hard === this.roll.successLevel)
+      }
+      if (CoC7Check.successLevel.hard === this.roll.successLevel) {
         this.roll.rollTitle = game.i18n.localize('CoC7.HardSuccess')
-      if (CoC7Check.successLevel.extreme === this.roll.successLevel)
+      }
+      if (CoC7Check.successLevel.extreme === this.roll.successLevel) {
         this.roll.rollTitle = game.i18n.localize('CoC7.ExtremeSuccess')
+      }
       for (let index = 0; index < this.roll.successLevel; index++) {
         this.roll.rollIcons.push('star')
       }
@@ -361,10 +367,11 @@ export class CoC7MeleeTarget extends ChatCardActor {
 
   upgradeRoll (luckAmount, newSuccessLevel, oldCard) {
     // TODO : Check if this needs to be async
-    if (!this.actor.spendLuck(luckAmount))
+    if (!this.actor.spendLuck(luckAmount)) {
       ui.notifications.error(
         `${this.actor.name} didn't have enough luck to pass the check`
       )
+    }
     this.roll.value = null
     this.roll.successLevel = newSuccessLevel
     this.roll.luckSpent = true

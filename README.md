@@ -1,4 +1,4 @@
-<h3 align="center">Call of Cthulhu 7th Edition (Unofficial) for Foundry VTT</h3>
+<h1 align="center">Call of Cthulhu 7th Edition (Unofficial) for Foundry VTT</h1>
 <p align="center">
   <img src="https://img.shields.io/github/repo-size/HavlockV/CoC7-FoundryVTT.svg">
   <a href="https://github.com/HavlockV/CoC7-FoundryVTT/commits/master">
@@ -16,17 +16,19 @@
   <a href="#licenses">Licenses</a>
 </p>
 
-### Overview.
+## Overview.
 
-...
+An unofficial implementation of the Call of Cthulhu 7th Edition game system for [Foundry Virtual Tabletop](http://foundryvtt.com). This provides sheets and system in addition to some compendiums as examples.
 
-For the list of changes, see: [CHANGELOG](.github/CHANGELOG.md).
+If you have any suggestions or feedback, please visit us on Discord in the `#chaosium` channel on the [Foundry Discord Server](discord.gg/foundryvtt), or see: [CONTRIBUTING](https://github.com/HavlockV/CoC7-FoundryVTT/blob/develop/.github/CONTRIBUTING.md)
 
-#### Disclaimer.
+For the list of changes, see: [CHANGELOG](https://github.com/HavlockV/CoC7-FoundryVTT/blob/develop/.github/CHANGELOG.md).
+
+### Disclaimer.
 
 This project does not include any materials from the official books and you will have to enter manually the weapons, skills, items, etc… to be able to play. We have just provided some basics skills that you can use as example. This system is completely Unofficial.
 
-### Usage.
+## Usage.
 
 Install in Foundry VTT from the Game Systems tab, using the following manifest:
 `https://raw.githubusercontent.com/HavlockV/CoC7-FoundryVTT/master/system.json`
@@ -38,11 +40,11 @@ You can also search for "Call of Cthulhu 7th edition (Unofficial)" on the packag
 - Compendium "Weapons" contains a single test Weapon.
 - Compendium "Roll Requests" contains numerous links for all your needs.
 
-### Contributing.
+## Contributing.
 
 Thank you for being interested in making this system better. We encourage everyone to help improve this project with new features, bug fixes, or performance improvements. Please take a little bit of your time to read our guide to make this process faster and easier.
 
-To understand how to submit an issue, commit and create pull requests, check our [Contribution Guidelines](.github/CONTRIBUTING.md). We always expect you to follow our [Code of Conduct](.github/CODE_OF_CONDUCT.md).
+To understand how to submit an issue, commit and create pull requests, check our [Contribution Guidelines](https://github.com/HavlockV/CoC7-FoundryVTT/blob/develop/.github/CONTRIBUTING.md). We always expect you to follow our [Code of Conduct](https://github.com/HavlockV/CoC7-FoundryVTT/blob/develop/.github/CODE_OF_CONDUCT.md).
 
 This system is made possible thanks to all of its contributors!
 
@@ -50,7 +52,7 @@ This system is made possible thanks to all of its contributors!
   <img src="https://contrib.rocks/image?repo=HavlockV/CoC7-FoundryVTT" />
 </a>
 
-### Licenses.
+## Licenses.
 
 All the code on this repository is licensed under the [GNU General Public License v3.0](https://github.com/HavlockV/CoC7-FoundryVTT/blob/develop/LICENSE).
 

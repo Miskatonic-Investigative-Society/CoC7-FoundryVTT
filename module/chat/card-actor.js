@@ -14,8 +14,9 @@ export class ChatCardActor {
 
   get isBlind () {
     if (!this.rollMode) return null
-    if (undefined === this._isBlind)
+    if (undefined === this._isBlind) {
       this._isBlind = this.rollMode === 'blindroll'
+    }
     return this._isBlind
   }
 
@@ -70,10 +71,10 @@ export class ChatCardActor {
         this._targetToken = chatHelper.getTokenFromKey(this._targetKey)
       } else {
         this._targetToken = this.targetedTokens.pop()
-        if (this._targetToken)
+        if (this._targetToken) {
           this._targetKey = `${this._targetToken.scene.id}.${this._targetToken.id}`
-        // REFACTORING (2)
-        else {
+        } else {
+          // REFACTORING (2)
           this._targetToken = null
         }
       }
@@ -149,8 +150,11 @@ export class ChatCardActor {
       content: message
     }
 
-    if (['gmroll', 'blindroll'].includes(game.settings.get('core', 'rollMode')))
+    if (
+      ['gmroll', 'blindroll'].includes(game.settings.get('core', 'rollMode'))
+    ) {
       chatData.whisper = ChatMessage.getWhisperRecipients('GM') // Change for user
+    }
     if (this.rollMode === 'blindroll') chatData.blind = true
 
     ChatMessage.create(chatData).then(msg => {

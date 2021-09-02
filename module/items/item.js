@@ -1,4 +1,4 @@
-/* global duplicate, game, getProperty, Item, Roll, TextEditor, Token, ui */
+/* global CONFIG, duplicate, game, getProperty, Item, Roll, TextEditor, Token, ui */
 
 import { CoC7Parser } from '../apps/parser.js'
 import { COC7 } from '../config.js'
@@ -7,18 +7,34 @@ import { COC7 } from '../config.js'
  * Override and extend the basic :class:`Item` implementation
  */
 export class CoC7Item extends Item {
-  constructor (data = {}, context = {}) {
+  /** Create derived document classes for specific Item types */
+  constructor (data, context) {
+    /** @see CONFIG.Item.documentClasses in module/scripts/configure-documents */
+    if (data.type in CONFIG.Item.documentClasses && !context?.extended) {
+      /**
+       * When the constructor for the new class will call it's super(),
+       * the extended flag will be true, thus bypassing this whole process
+       * and resume default behavior
+       */
+      return new CONFIG.Item.documentClasses[data.type](data, {
+        ...{ extended: true },
+        ...context
+      })
+    }
     if (typeof data.img === 'undefined') {
-      if (data.type === 'book') {
-        data.img = 'icons/svg/book.svg' // Change the icon for book
+      if (data.type === 'chase') {
+        data.img = 'systems/CoC7/assets/icons/running-solid.svg'
       } else if (data.type === 'skill') {
-        data.img = 'systems/CoC7/assets/icons/skills.svg' // Change the icon for skills
+        data.img = 'systems/CoC7/assets/icons/skills.svg'
+      } else if (data.type === 'spell') {
+        data.img = 'systems/CoC7/assets/icons/pentagram-rose.svg'
       } else if (data.type === 'status') {
-        data.img = 'icons/svg/aura.svg' // Change the icon for status
+        data.img = 'icons/svg/aura.svg'
       } else if (data.type === 'weapon') {
-        data.img = 'icons/svg/sword.svg' // Change the icon for sword
+        data.img = 'icons/svg/sword.svg'
       }
     }
+    /** Default behavior, just call super() and do all the default Item inits */
     super(data, context)
   }
 
@@ -83,14 +99,18 @@ export class CoC7Item extends Item {
 
       if (propertyId === 'melee' || propertyId === 'rngd') {
         let meleeWeapon
-        if (propertyId === 'melee' && !this.data.data.properties.melee)
+        if (propertyId === 'melee' && !this.data.data.properties.melee) {
           meleeWeapon = true
-        if (propertyId === 'melee' && this.data.data.properties.melee)
+        }
+        if (propertyId === 'melee' && this.data.data.properties.melee) {
           meleeWeapon = false
-        if (propertyId === 'rngd' && !this.data.data.properties.rngd)
+        }
+        if (propertyId === 'rngd' && !this.data.data.properties.rngd) {
           meleeWeapon = false
-        if (propertyId === 'rngd' && this.data.data.properties.rngd)
+        }
+        if (propertyId === 'rngd' && this.data.data.properties.rngd) {
           meleeWeapon = true
+        }
         if (meleeWeapon) {
           checkedProps = {
             'data.properties.melee': true,
@@ -196,8 +216,9 @@ export class CoC7Item extends Item {
   }
 
   get name () {
-    if (this.type !== 'skill' || !this.data.data?.properties?.special)
+    if (this.type !== 'skill' || !this.data.data?.properties?.special) {
       return super.name
+    }
     if (
       this.data.name
         .toLowerCase()
@@ -227,15 +248,23 @@ export class CoC7Item extends Item {
   }
 
   get sName () {
-    if (this.type !== 'skill' || !this.data.data?.properties?.special)
+    if (this.type !== 'skill' || !this.data.data?.properties?.special) {
       return super.name
+    }
     if (
       this.data.name
         .toLowerCase()
         .includes(this.data.data.specialization?.toLowerCase())
-    )
+    ) {
       return super.name
+    }
     return `${this.data.name}`
+  }
+
+  async updateRoll (roll) {
+    if ('updateRoll' in this.sheet) return await this.sheet.updateRoll(roll)
+    else if ('updateRoll' in this) return await this.updateRoll(roll)
+    return undefined
   }
 
   static getNameWithoutSpec (item) {
@@ -263,8 +292,9 @@ export class CoC7Item extends Item {
 
   static isAnySpec (item) {
     if (item instanceof CoC7Item) {
-      if (item.type !== 'skill' || !item.data.data.properties?.special)
+      if (item.type !== 'skill' || !item.data.data.properties?.special) {
         return false
+      }
       return (
         CoC7Item.getNameWithoutSpec(item).toLowerCase() ===
         game.i18n.localize('CoC7.AnySpecName').toLowerCase()
@@ -453,17 +483,22 @@ export class CoC7Item extends Item {
 
   get usesPerRoundString () {
     let usesPerRound
-    if (this.data.data.usesPerRound.normal)
+    if (this.data.data.usesPerRound.normal) {
       usesPerRound = this.data.data.usesPerRound.normal
-    else usesPerRound = '1'
-    if (this.data.data.usesPerRound.max)
+    } else {
+      usesPerRound = '1'
+    }
+    if (this.data.data.usesPerRound.max) {
       usesPerRound += `(${this.data.data.usesPerRound.max})`
-    if (this.data.data.properties.auto)
+    }
+    if (this.data.data.properties.auto) {
       usesPerRound += ` ${game.i18n.localize('CoC7.WeaponAuto')}`
+    }
     if (this.data.data.properties.brst) {
       usesPerRound += ` ${game.i18n.localize('CoC7.WeaponBrst')}`
-      if (this.data.data.usesPerRound.burst)
+      if (this.data.data.usesPerRound.burst) {
         usesPerRound += `(${this.data.data.usesPerRound.burst})`
+      }
     }
 
     return usesPerRound
@@ -502,8 +537,9 @@ export class CoC7Item extends Item {
 
     const skillProperties = []
     for (const [key, value] of Object.entries(COC7.skillProperties)) {
-      if (this.data.data.properties[key] === true)
+      if (this.data.data.properties[key] === true) {
         skillProperties.push(game.i18n.localize(value))
+      }
     }
     return skillProperties
   }
@@ -522,8 +558,7 @@ export class CoC7Item extends Item {
       try {
         value = Math.floor(
           new Roll(this.data.data.base, parsed).evaluate({
-            maximize: true,
-            async: true
+            maximize: true
           }).total
         )
       } catch (err) {
@@ -555,8 +590,9 @@ export class CoC7Item extends Item {
         ? parseInt(this.data.data.adjustments?.experience)
         : 0
       if (game.settings.get('CoC7', 'pulpRules')) {
-        if (this.data.data.adjustments?.archetype)
+        if (this.data.data.adjustments?.archetype) {
           value += parseInt(this.data.data.adjustments?.archetype)
+        }
       }
     } else {
       value = parseInt(this.data.data.value)
@@ -638,8 +674,9 @@ export class CoC7Item extends Item {
         if (
           !CoC7Item.isAnySpec(item) &&
           newArray.find(skill => skill.name === item.name)
-        )
+        ) {
           return newArray
+        }
         // Else item is added
         return [...newArray, item]
       }, [])
@@ -773,8 +810,9 @@ export class CoC7Item extends Item {
 
     if (!found) {
       skillName = this.data.data.skill.main.name
-      if (this.usesAlternativeSkill && this.data.data.skill.alternativ.name)
+      if (this.usesAlternativeSkill && this.data.data.skill.alternativ.name) {
         skillName += `/${this.data.data.skill.alternativ.name}`
+      }
     }
 
     if (skillName) {
