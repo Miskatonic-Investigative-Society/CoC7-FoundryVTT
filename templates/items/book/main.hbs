@@ -43,17 +43,10 @@
               {{data.fullStudies}}
             </label>
           </span>
-        </div>
-        <div class="flexrow">
           <span>
-            <label>
-              {{localize "CoC7.SpellsLearned"}}
-            </label>
-          </span>
-          <span>
-            <label>
-              {{spellsLearned}}
-            </label>
+            {{#if studyCompleted}}
+              <i id="redo-full-study" class="fas fa-redo" title="{{localize "CoC7.RedoFullStudy"}}"></i>
+            {{/if}}
           </span>
         </div>
       {{else}}
@@ -79,9 +72,11 @@
             name="data.study.progress"
             value="{{data.study.progress}}"
             max="{{data.study.necessary}}"
+            {{#unless exhausted}}
               data-label="{{localize "CoC7.Progress"}}:
                 {{data.study.progress}} / {{data.study.necessary}}
                 {{localize "CoC7.weeks"}}"
+            {{/unless}}
           ></progress>
           {{#if isKeeper}}
             <i id="increase-progress" class="fas fa-plus increase-progress"></i>
@@ -162,7 +157,7 @@
       </div>
       <div class="tab" data-group="primary" data-tab="spells">
         <div class="spells">
-          <label>Drag spell here to...</label>
+          <label>{{localize "CoC7.DragSpell"}}</label>
           <ul>
             {{#each data.spells as |spell key|}}
               <li class="spell" data-index="{{@index}}" data-id="{{spell._id}}">

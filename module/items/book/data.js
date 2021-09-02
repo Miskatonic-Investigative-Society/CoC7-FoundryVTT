@@ -147,17 +147,19 @@ export class CoC7Book extends CoC7Item {
   async checkExhaustion () {
     const actorMythosValue = this.actor.cthulhuMythos
     const mythosRating = this.data.data.mythosRating
-    if (actorMythosValue >= mythosRating) {
-      await this.update({
-        'data.study.progress': this.data.data.study.necessary
-      })
-      return ui.notifications.error(
-        game.i18n.format('CoC7.BookHasNothingMoreToTeach', {
-          actor: this.actor.name,
-          book: this.name
+    if (this.data.data.initialReading) {
+      if (actorMythosValue >= mythosRating) {
+        await this.update({
+          'data.study.progress': this.data.data.study.necessary
         })
-      )
-    } else return false
+        return ui.notifications.warn(
+          game.i18n.format('CoC7.BookHasNothingMoreToTeach', {
+            actor: this.actor.name,
+            book: this.name
+          })
+        )
+      } else return false
+    }
   }
 
   async grantFullStudy () {
@@ -258,7 +260,9 @@ export class CoC7Book extends CoC7Item {
   }
 
   async grantSpellLearning () {
-    return ui.notifications.warn('Automation of learning spells from books is not currently supported and will be added in future updates.')
+    return ui.notifications.warn(
+      'Automation of learning spells from books is not currently supported and will be added in future updates.'
+    )
   }
 
   /**
@@ -334,6 +338,7 @@ export class CoC7Book extends CoC7Item {
   /** Bypass the Sanity check and just roll the damage */
   async rollSanityLoss () {
     const value = this.data.data.sanityLoss
+    if (!value || value === '') return
     const template = SanCheckCard.template
     let html = await renderTemplate(template, {})
     const message = await ChatMessage.create({

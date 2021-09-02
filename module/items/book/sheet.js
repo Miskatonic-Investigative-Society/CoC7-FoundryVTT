@@ -1,4 +1,4 @@
-/* global $, duplicate, game, Handlebars, ItemSheet, mergeObject */
+/* global $, duplicate, game, ItemSheet, mergeObject */
 import { CoC7Utilities } from '../../utilities.js'
 
 export class CoC7BookSheet extends ItemSheet {
@@ -29,6 +29,9 @@ export class CoC7BookSheet extends ItemSheet {
     data.isKeeper = game.user.isGM
     data.isOwned = this.item.isOwned
     data.spellsLearned = this.spellsLearned
+    data.exhausted = this.item.checkExhaustion() !== false
+    data.studyCompleted =
+      this.item.data.data.study.progress === this.item.data.data.study.necessary
     return data
   }
 
@@ -69,6 +72,9 @@ export class CoC7BookSheet extends ItemSheet {
     })
     html.find('.change-other-gains').change(event => {
       this.modifyOthersGains(event, 'change')
+    })
+    html.find('#redo-full-study').click(() => {
+      this.item.redoFullStudy()
     })
     html.find('.remove-other-gains').click(event => {
       this.modifyOthersGains(event, 'remove')
