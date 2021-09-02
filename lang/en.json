@@ -536,7 +536,7 @@
   "CoC7.Specific": "Specific",
   "CoC7.SpellsLearned": "Spells Learned",
   "CoC7.StudyTime": "Study Time",
-  "CoC7.UnknownLanguage": "{actor} does not know the {language} language.",
+  "CoC7.UnknownLanguage": "You do not know the language in which this book is written.",
   "CoC7.Unreadable": "Unreadable",
 
   "CoC7.Crew": "Crew",

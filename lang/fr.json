@@ -534,7 +534,7 @@
   "CoC7.ReadingMythosTome": "Lit <i>{book}</i>.",
   "CoC7.Specific": "Spécifique",
   "CoC7.StudyTime": "Temps d'étude",
-  "CoC7.UnknownLanguage": "{actor} ne connaît pas le/l'{language}.",
+  "CoC7.UnknownLanguage": "Tu ne connaît pas le/l'language.",
   "CoC7.Unreadable": "Illisible",
 
   "CoC7.Crew": "Équipage",
