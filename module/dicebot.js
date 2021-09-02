@@ -20,10 +20,11 @@ export function listen () {
               let res = ''
               if (s <= 1) res = game.i18n.localize('CoC7.CriticalSuccess')
               else if (s >= 100) res = game.i18n.localize('CoC7.Fumble')
-              else if (s <= m / 5)
+              else if (s <= m / 5) {
                 res = game.i18n.localize('CoC7.ExtremeSuccess')
-              else if (s <= m / 2) res = game.i18n.localize('CoC7.HardSuccess')
-              else if (s <= m) res = game.i18n.localize('CoC7.RegularSuccess')
+              } else if (s <= m / 2) {
+                res = game.i18n.localize('CoC7.HardSuccess')
+              } else if (s <= m) res = game.i18n.localize('CoC7.RegularSuccess')
               else if (s >= 96) {
                 if (m < 50) res = game.i18n.localize('CoC7.Fumble')
                 else res = game.i18n.localize('CoC7.Failure')
