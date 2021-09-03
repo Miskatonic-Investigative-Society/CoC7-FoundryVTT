@@ -31,7 +31,7 @@ This project does not include any materials from the official books and you will
 ## Usage.
 
 Install in Foundry VTT from the Game Systems tab, using the following manifest:
-`https://raw.githubusercontent.com/HavlockV/CoC7-FoundryVTT/master/system.json`
+`https://github.com/HavlockV/CoC7-FoundryVTT/raw/master/system.json`
 
 You can also search for "Call of Cthulhu 7th edition (Unofficial)" on the package finder.
 
