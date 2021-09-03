@@ -537,7 +537,7 @@
   "CoC7.InitialReadingNeeded": "{actor} måste göra en inledande läsning av <i>{book}</i> för att kunna gå vidare med en fullständig läsning.",
   "CoC7.LearnSpellAttempt": "Försöker lära sig besvärjelsen {spell}, från <i>{book}</i>.",
   "CoC7.MarkedForDevelopment": "Flaggad för utveckling",
-  "CoC7.Mythos": "Myten",
+  "CoC7.Mythos": "Cthulhumyt",
   "CoC7.FullStudy": "Fullständig läsning",
   "CoC7.DifficultyLevel": "Svårighetsgrad",
   "CoC7.DragSpell": "Drag- och släpp besvärjelser här för att lägga till dem i boken...",
