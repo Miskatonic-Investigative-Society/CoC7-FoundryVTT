@@ -40,6 +40,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Reorder system settings into categorical groups;
 - There is now a list of untranslated keys: https://github.com/HavlockV/CoC7-FoundryVTT/blob/develop/.github/TRANSLATIONS.md
 - There is now an option to set if combat and sanity effects icons are shown in tokens or not;
+- Update to French localization, thanks to @vonv;
 - Update to Portuguese localization;
 - Update to Spanish localization, thanks to @lozalojo;
 - Update to Swedish localization, thanks to @Rangertheman;
