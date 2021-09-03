@@ -1,0 +1,44 @@
+@colorBlue: rgba(43, 55, 83, 1);
+@borderColorBlue: rgba(43, 55, 83, 0.5);
+@colorRed: rgba(103, 11, 11, 1);
+@colorGreen: #234337;
+@whiteBackground: rgba(255, 255, 255, 0.5);
+@greyBackground: rgba(0, 0, 0, 0.1);
+
+:root {
+  --main-sheet-bg: url('./assets/images/header.webp') 4 repeat;
+  --other-sheet-bg: url('./assets/images/background.webp');
+  --main-sheet-image: url('./assets/images/tentacles.webp');
+  --hp-background-image: url('./assets/images/hp-background.svg');
+  --san-background-image: url('./assets/images/san-background.svg');
+  --chat-background: url('../../ui/parchment.jpg') repeat;
+  --main-sheet-back-color: @colorRed;
+  --main-sheet-front-color: @colorBlue;
+  --main-sheet-interactie-color: @colorRed;
+  --main-sheet-font: '';
+  --main-sheet-cursive-font: '';
+  --skill-length: 160px;
+  --skill-specialization-length: 152px;
+}
+
+// @font-face{
+// 	font-family: mainSheetFont;
+// 	src: var(--main-sheet-font);
+// }
+
+// @font-face{
+// 	font-family: mainSheetCursiveFont;
+// 	src: var(--main-sheet-cursive-font);
+// }
+
+.defaultFont {
+  font-family: customSheetFont, 'Bradley Hand', cursive;
+}
+
+.chatFont {
+  font-family: customChatFont, 'Signika', sans-serif;
+}
+
+// .cursive{
+// 	font-family: customSheetCursiveFont, 'Bradley Hand', cursive;
+// }

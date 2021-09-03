@@ -1,17 +1,19 @@
 <div class="coc7 chat-card chat-card-v2 san-loss-card">
-	<header class="card-header">
-		<div class="left-portrait">
-			{{#if displayActorOnCard}}
-			<img class="portrait open-actor" data-actor-key="{{actor.actorKey}}" src="{{actor.img}}" title="{{actor.name}}"/>
-			{{/if}}
-		</div>
-		<div class="card-title">
-			{{ localize 'CoC7.SanityCheck' }}
-		</div>
-		<div class="right-portrait">
-			<img class="portrait open-actor" data-actor-key="{{creature.actorKey}}"  src="{{creature.img}}" title="{{creature.name}}"/>
-		</div>
-	</header>
+  {{#unless isBypassed}}
+    <header class="card-header">
+      <div class="left-portrait">
+        {{#if displayActorOnCard}}
+        <img class="portrait open-actor" data-actor-key="{{actor.actorKey}}" src="{{actor.img}}" title="{{actor.name}}"/>
+        {{/if}}
+      </div>
+      <div class="card-title">
+        {{ localize 'CoC7.SanityCheck' }}
+      </div>
+      <div class="right-portrait">
+        <img class="portrait open-actor" data-actor-key="{{creature.actorKey}}"  src="{{creature.img}}" title="{{creature.name}}"/>
+      </div>
+    </header>
+  {{/unless}}
 
 	<div class="infos">
 		<div class="loss-min"></div>
@@ -67,12 +69,12 @@
 		{{#if state.finish}}
 			<div class="status">--F-I-N-I-S-H--</div>
 		{{/if}}
-		
+
 	</div>
 
 	<div class='player-actions'>
 		{{#if state.sanRolled}}
-			<div class='info'>{{ localize 'CoC7.SanityCheckPerformed' }}: {{{__inlineSanCheck}}}</div>
+			<div class='info'>{{ localize 'CoC7.SanityCheckPerformed' }} {{#unless isBypassed}} {{{__inlineSanCheck}}} {{/unless}}</div>
 			{{#if state.involuntaryActionPerformed}}
 				{{#unless sanCheck.passed}}
 					<div class='info'>{{ localize 'CoC7.InvoluntaryActionPerformed' }}</div>
@@ -221,7 +223,7 @@
 							<button data-action="advance-state" data-state="cthulhuMythosAwarded">{{ localize 'CoC7.MythosAlreadyEncountered' }}</button>
 						{{/if}}
 						<button data-action="advance-state" data-state="noMythosGained">{{ localize 'CoC7.DisregardMythosGain' }}</button>
-					</div>				
+					</div>
 					{{/unless}}
 				{{/if}}
 			{{/if}}
@@ -231,7 +233,7 @@
 			<div class="status">{{ localize 'CoC7.AlreadyLost'}}: {{sanLostToThisCreature}}</div>
 			<div class="status">{{ localize 'CoC7.CreatureMaxLoss'}}: {{creature.sanLossMax}}</div>
 			<div class="status">{{ localize 'CoC7.MaxLossToCreature'}}: {{maxSanLossToThisCreature}}</div>
-			
+
 			{{#unless state.keepCreatureSanData}}
 				<div class='card-buttons'>
 
@@ -246,7 +248,7 @@
 					<button data-action="advance-state" data-state="keepCreatureSanData">{{ localize 'CoC7.KeepData' }}</button>
 				</div>
 			{{/unless}}
-			
+
 		{{else}}
 			<div class="status">{{localize 'CoC7.MaxSanloss'}}: {{maxSanLoss}}</div>
 		{{/if}}
@@ -254,7 +256,7 @@
 		{{#if mythosGain}}
 			<div class="status important">{{localize 'CoC7.MythosGain'}}: {{mythosGain}}%</div>
 		{{/if}}
-		
+
 		{{#if state.finish}}
 			<div class="status">{{localize 'CoC7.CardResolved'}}</div>
 		{{/if}}
