@@ -328,6 +328,7 @@ export class Updater {
         updateData['data.-=gain'] = null
         updateData['data.description.-=unidentified'] = null
         updateData['data.description.-=notes'] = null
+        updateData['data.gains.-=other'] = null
         updateData['data.-=properties'] = null
         updateData['data.-=flags'] = null
       }
