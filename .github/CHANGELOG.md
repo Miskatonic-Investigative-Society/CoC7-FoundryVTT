@@ -1,3 +1,7 @@
+## Version 0.6.6:
+
+- Fix bug on character sheet interactions.
+
 ## Version 0.6.5:
 
 This release features major code refactoring and data migration. It is highly recommended to backup the worlds directories linked to Call of Cthulhu 7th Edition before updating the system.
