@@ -497,6 +497,14 @@ export class CoC7Check {
     this._isBlind = x
   }
 
+  get isSelf(){
+		if( undefined === this._isSelf) this._isSelf = 'selfroll' === this.rollMode;
+		return this._isSelf;
+	}
+
+  set isSelf(x){
+		this._isSelf = x;
+	}
   get unknownDifficulty () {
     if (
       this.gmDifficultyCritical ||
@@ -1527,6 +1535,7 @@ export class CoC7Check {
       if (game.user.isGM) {
         chatData.user = game.user.id
         chatData.flavor = `[${this.actor.name}] ${chatData.flavor}`
+        chatData.self = true;
         chatData.flags = {
           CoC7: {
             GMSelfRoll: true,
@@ -1558,7 +1567,8 @@ export class CoC7Check {
     if (['gmroll', 'blindroll'].includes(this.rollMode)) {
       chatData.whisper = ChatMessage.getWhisperRecipients('GM')
     }
-    if (this.rollMode === 'blindroll') chatData.blind = true
+    if (this.rollMode === 'blindroll') chatData.blind = true;
+    if (this.rollMode === 'selfroll' ) chatData.self = true;
 
     // ChatMessage.applyRollMode( chatData, this.rollMode);
     if (this.dice?.roll && !this.dice?.hideDice) {
@@ -1778,6 +1788,15 @@ export class CoC7Check {
         check.rollMode = false
         check.computeCheck()
         if (options.update) check.updateChatCard()
+        break
+      }
+
+      case 'reveal-check-to-all': {
+        check.isBlind = false;
+        check.isSelf = false;
+        check.rollMode = false;
+        check.computeCheck();
+        if (options.update) check.updateChatCard();
         break
       }
 

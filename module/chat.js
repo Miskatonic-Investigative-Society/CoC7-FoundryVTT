@@ -1023,6 +1023,18 @@ export class CoC7Chat {
         break
       }
 
+      case 'reveal-check-to-all':{
+        const check = await CoC7Check.getFromCard( card);
+        check.isBlind = false;
+        check.isSelf = false;
+        check._rollMode = 'null';
+        check.toMessage();
+        check.computeCheck();
+        if(event.metaKey || event.ctrlKey || event.keyCode == 91 || event.keyCode == 224) check.updateChatCard( true);
+        else  check.updateChatCard();
+        break;
+      }
+
       case 'roll-check-card': {
         const check = await CoC7Check.getFromCard(card)
         check.standby = false
