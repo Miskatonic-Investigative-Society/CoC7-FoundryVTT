@@ -219,9 +219,7 @@ export class Updater {
   }
 
   static _migrateItemArtwork (item, updateData) {
-    const regEx = new RegExp(
-      /systems\/CoC7\/artwork\/icons\/(.+)/
-    )
+    const regEx = new RegExp(/systems\/CoC7\/artwork\/icons\/(.+)/)
     let image = String(item.img).match(regEx)
     if (image !== null) {
       updateData.img = 'systems/CoC7/assets/icons/' + image[1]
@@ -338,9 +336,7 @@ export class Updater {
   }
 
   static _migrateActorArtwork (actor, updateData) {
-    const regEx = new RegExp(
-      /systems\/CoC7\/artwork\/icons\/(.+)/
-    )
+    const regEx = new RegExp(/systems\/CoC7\/artwork\/icons\/(.+)/)
     let image = String(actor.img).match(regEx)
     if (image !== null) {
       updateData.img = 'systems/CoC7/assets/icons/' + image[1]
@@ -421,9 +417,7 @@ export class Updater {
   }
 
   static _migrateMacroArtwork (table, updateData) {
-    const regEx = new RegExp(
-      /systems\/CoC7\/artwork\/icons\/(.+)/
-    )
+    const regEx = new RegExp(/systems\/CoC7\/artwork\/icons\/(.+)/)
     const image = String(table.img).match(regEx)
     if (image !== null) {
       updateData.img = 'systems/CoC7/assets/icons/' + image[1]
@@ -432,9 +426,7 @@ export class Updater {
   }
 
   static _migrateTableArtwork (table, updateData) {
-    const regEx = new RegExp(
-      /systems\/CoC7\/artwork\/icons\/(.+)/
-    )
+    const regEx = new RegExp(/systems\/CoC7\/artwork\/icons\/(.+)/)
     let image = String(table.img).match(regEx)
     if (image !== null) {
       updateData.img = 'systems/CoC7/assets/icons/' + image[1]
