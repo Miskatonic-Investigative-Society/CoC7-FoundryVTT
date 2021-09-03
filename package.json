@@ -1,6 +1,6 @@
 {
   "name": "fvtt-coc7",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "description": "An unofficial implementation of Call of Cthulhu 7th Edition system for Foundry VTT.",
   "main": "gulpfile.js",
   "scripts": {
