@@ -150,8 +150,8 @@ export class CoC7BookSheet extends ItemSheet {
     /** @see data-index property on template */
     const index = element.parents('tr').data('index')
     /** Always has to be @type {Array} */
-    const skills = this.item.data.data.gains.other
-      ? duplicate(this.item.data.data.gains.other)
+    const skills = this.item.data.data.gains.others
+      ? duplicate(this.item.data.data.gains.others)
       : []
     switch (mode) {
       case 'add':
@@ -174,6 +174,6 @@ export class CoC7BookSheet extends ItemSheet {
         /** User clicked on minus icon to remove a skill on other gains table */
         if (index >= 0) skills.splice(index, 1)
     }
-    return await this.item.update({ 'data.gains.other': skills })
+    return await this.item.update({ 'data.gains.others': skills })
   }
 }

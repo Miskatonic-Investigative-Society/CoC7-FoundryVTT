@@ -72,7 +72,7 @@
           <th><label>Gain</label></th>
           <th><i class="fas fa-plus add-other-gains"></i></th>
         </tr>
-        {{#each data.gains.other as |skill key|}}
+        {{#each data.gains.others as |skill key|}}
           <tr data-index="{{@index}}">
             <td><input class="change-other-gains" type="text" value="{{skill.name}}"></td>
             <td>
