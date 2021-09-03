@@ -225,7 +225,7 @@ export class SanCheckCard extends ChatCardActor {
         break
       }
       case 'enterBoutOfMadnessRealTime': {
-        this.boutDuration = new Roll('1D10').roll().total
+        this.boutDuration = (await new Roll('1D10').roll({ async: true })).total
         this.boutRealTime = true
         this.boutSummary = false
         this.boutResult = await this.actor.enterBoutOfMadness(
@@ -237,7 +237,7 @@ export class SanCheckCard extends ChatCardActor {
         break
       }
       case 'enterBoutOfMadnessSummary': {
-        this.boutDuration = new Roll('1D10').roll().total
+        this.boutDuration = (await new Roll('1D10').roll({ async: true })).total
         this.boutRealTime = false
         this.boutSummary = true
         this.boutResult = await this.actor.enterBoutOfMadness(
@@ -280,6 +280,22 @@ export class SanCheckCard extends ChatCardActor {
         break
       }
     }
+  }
+
+  async bypassRollSan () {
+    this.isBypassed = true
+    this.sanCheck = new CoC7Check()
+    this.sanCheck.actor = this.actorKey
+    this.sanCheck.attribute = 'san'
+    this.sanCheck.difficulty =
+      this.options.sanDifficulty || CoC7Check.difficultyLevel.regular
+    this.sanCheck.diceModifier = this.options.sanModifier || 0
+    await this.sanCheck._perform()
+    this.state.sanRolled = true
+    this.state.involuntaryActionPerformed = this.sanCheck.passed
+    this.state.sanLossRolled = true
+    this.state.ignoreSanCheck = true
+    this.sanLoss = this.sanLossFormula
   }
 
   async rollSan () {
@@ -337,7 +353,7 @@ export class SanCheckCard extends ChatCardActor {
       this.sanLossRoll = new Roll(`${this.sanLossFormula}`)
     }
 
-    this.sanLossRoll.roll()
+    await this.sanLossRoll.roll({ async: true })
 
     await CoC7Dice.showRollDice3d(this.sanLossRoll)
 
@@ -441,7 +457,7 @@ export class SanCheckCard extends ChatCardActor {
         this.state.finish = true
         return
       }
-      this.insanityDurationRoll = new Roll('1D10').roll()
+      this.insanityDurationRoll = await new Roll('1D10').roll({ async: true })
       this.insanityDuration = this.insanityDurationRoll.total
       if (this.actor.sanity.underlying.duration) {
         this.insanityDuration += this.actor.sanity.underlying.duration

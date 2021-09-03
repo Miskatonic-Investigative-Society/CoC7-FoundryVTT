@@ -117,49 +117,44 @@ export class CoC7Combat {
 }
 
 /**
- * Overide of rollInititative to prevent messages in chat windows
  * Roll initiative for one or multiple Combatants within the Combat entity
- * @param {Array|string} ids        A Combatant id or Array of ids for which to roll
- * @param {string|null} formula     A non-default initiative formula to roll. Otherwise the system default is used.
- * @param {Object} messageOptions   Additional options with which to customize created Chat Messages
- * @return {Promise.<Combat>}       A promise which resolves to the updated Combat entity once updates are complete.
+ * @param {string|string[]} ids     A Combatant id or Array of ids for which to roll
+ * @param {object} [options={}]     Additional options which modify how initiative rolls are created or presented.
+ * @param {string|null} [options.formula]         A non-default initiative formula to roll. Otherwise the system default is used.
+ * @param {boolean} [options.updateTurn=true]     Update the Combat turn after adding new initiative scores to keep the turn on the same Combatant.
+ * @param {object} [options.messageOptions={}]    Additional options with which to customize created Chat Messages
+ * @return {Promise<Combat>}        A promise which resolves to the updated Combat entity once updates are complete.
  */
 export async function rollInitiative (
-  ids /*, formula=null, messageOptions={} */
+  ids,
+  { formula = null, updateTurn = true, messageOptions = {} } = {}
 ) {
   // Structure input data
   ids = typeof ids === 'string' ? [ids] : ids
   const currentId = this.combatant.id
 
   // Iterate over Combatants, performing an initiative roll for each
-  const [updates] = ids.reduce(
-    (results, id) => {
-      const [updates] = results
+  const updates = []
+  for (const [, id] of ids.entries()) {
+    // Get Combatant data (non-strictly)
+    const combatant = this.combatants.get(id)
+    if (!combatant?.isOwner) return null
 
-      // Get Combatant data
-      const c = this.combatants.get(id)
-      if (!c) return results
-
-      // Roll initiative
-      const initiative = c.actor.rollInitiative(!!c.getFlag('CoC7', 'hasGun'))
-      updates.push({ _id: id, initiative: initiative })
-
-      // Return the Roll and the chat data
-      return results
-    },
-    [[], []]
-  )
+    // Produce an initiative roll for the Combatant
+    const roll = await combatant.actor.rollInitiative(
+      !!combatant.getFlag('CoC7', 'hasGun')
+    )
+    updates.push({ _id: id, initiative: roll })
+  }
   if (!updates.length) return this
 
   // Update multiple combatants
   await this.updateEmbeddedDocuments('Combatant', updates)
 
   // Ensure the turn order remains with the same combatant
-  await this.update({ turn: this.turns.findIndex(t => t.id === currentId) })
+  if (updateTurn) {
+    await this.update({ turn: this.turns.findIndex(t => t.id === currentId) })
+  }
 
-  // Create multiple chat messages
-  // await CONFIG.ChatMessage.entityClass.create(messages);
-
-  // Return the updated Combat
   return this
 }

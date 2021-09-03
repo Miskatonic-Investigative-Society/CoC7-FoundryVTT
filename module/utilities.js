@@ -107,7 +107,7 @@ export class CoC7Utilities {
       const actor = game.actors.get(speaker.actor)
       if (actor) check.actor = actor
     }
-    check.roll()
+    await check.roll()
     check.toMessage()
   }
 
@@ -567,7 +567,7 @@ export class CoC7Utilities {
       actors.push(game.user.character.tokenKey)
     }
 
-    actors.forEach(tk => {
+    await actors.forEach(async tk => {
       const check = new CoC7Check()
       check.diceModifier = diceModifier || 0
       check.difficulty = difficulty || CoC7Check.difficultyLevel.regular
@@ -575,7 +575,7 @@ export class CoC7Utilities {
       check.flatDiceModifier = flatDiceModifier
       check.flatThresholdModifier = flatThresholdModifier
       check.actor = tk
-      check.roll()
+      await check.roll()
       check.toMessage()
     })
 
@@ -586,7 +586,7 @@ export class CoC7Utilities {
       check.rawValue = threshold
       check.flatDiceModifier = flatDiceModifier
       check.flatThresholdModifier = flatThresholdModifier
-      check.roll()
+      await check.roll()
       check.toMessage()
     }
   }
@@ -606,6 +606,37 @@ export class CoC7Utilities {
           a.render(false)
         }
       })
+    }
+  }
+
+  /**
+   * Called from _onDrop to get the dropped entityType or entityType from a folder
+   * @param {jQuery} event @see activateListeners
+   * @returns [items] array of items
+   */
+  static async getDataFromDropEvent (event, entityType = 'Item') {
+    if (event.originalEvent) return []
+    try {
+      const dataList = JSON.parse(event.dataTransfer.getData('text/plain'))
+      if (dataList.type === 'Folder' && dataList.documentName === entityType) {
+        const folder = game.folders.get(dataList.id)
+        if (!folder) return []
+        return folder.contents
+      } else if (dataList.type === entityType) {
+        if (dataList.pack) {
+          const pack = game.packs.get(dataList.pack)
+          if (pack.metadata.entity !== entityType) return []
+          return [await pack.getEntity(dataList.id)]
+        } else if (dataList.data) {
+          return [dataList]
+        } else {
+          return [game.items.get(dataList.id)]
+        }
+      } else {
+        return []
+      }
+    } catch (err) {
+      return []
     }
   }
 }

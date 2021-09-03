@@ -19,7 +19,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: |
           npm install
-          npm run translations
+          node generate-translations.js
           npm run format
       - run: |
           git config user.name 'snap01'

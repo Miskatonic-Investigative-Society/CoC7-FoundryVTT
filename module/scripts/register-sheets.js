@@ -2,11 +2,12 @@
 
 import { CoC7ActorSheet } from '../actors/sheets/base.js'
 import { CoC7ArchetypeSheet } from '../items/sheets/archetype.js'
-import { CoC7BookSheet } from '../items/sheets/book.js'
+import { CoC7BookSheet } from '../items/book/sheet.js'
 import { CoC7CharacterSheet } from '../actors/sheets/actor-sheet.js'
 import { CoC7CharacterSheetV2 } from '../actors/sheets/character.js'
 import { CoC7ChaseSheet } from '../items/sheets/chase.js'
 import { CoC7CreatureSheet } from '../actors/sheets/creature-sheet.js'
+import { CoC7ItemSheet } from '../items/sheets/item-sheet.js'
 import { CoC7ItemSheetV2 } from '../items/sheets/item-sheetV2.js'
 import { CoC7NPCSheet } from '../actors/sheets/npc-sheet.js'
 import { CoC7OccupationSheet } from '../items/sheets/occupation.js'
@@ -17,7 +18,6 @@ import { CoC7StatusSheet } from '../items/sheets/status.js'
 import { CoC7TalentSheet } from '../items/sheets/talent.js'
 import { CoC7VehicleSheet } from '../actors/sheets/vehicle.js'
 import { CoC7WeaponSheet } from '../items/sheets/weapon-sheet.js'
-import { CoCItemSheet } from '../items/sheets/item-sheet.js'
 
 export function registerSheets () {
   Actors.unregisterSheet('core', CoC7ActorSheet)
@@ -79,7 +79,7 @@ export function registerSheets () {
     types: ['chase'],
     makeDefault: true
   })
-  Items.registerSheet('CoC7', CoCItemSheet, { types: ['item'] })
+  Items.registerSheet('CoC7', CoC7ItemSheet, { types: ['item'] })
   Items.registerSheet('CoC7', CoC7ItemSheetV2, {
     types: ['item'],
     makeDefault: true

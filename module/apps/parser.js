@@ -214,7 +214,9 @@ export class CoC7Parser {
 
     // Bind the click to execute the check.
     // html.on('click', 'a.coc7-link', CoC7Parser._onCheck.bind(this));
-    html.find('a.coc7-link').on('click', event => CoC7Parser._onCheck(event))
+    html
+      .find('a.coc7-link')
+      .on('click', async event => await CoC7Parser._onCheck(event))
     html
       .find('a.coc7-link')
       .on('dragstart', event => CoC7Parser._onDragCoC7Link(event))
@@ -249,7 +251,9 @@ export class CoC7Parser {
   }
 
   static bindEventsHandler (html) {
-    html.find('a.coc7-link').on('click', event => CoC7Parser._onCheck(event))
+    html
+      .find('a.coc7-link')
+      .on('click', async event => await CoC7Parser._onCheck(event))
     html
       .find('a.coc7-link')
       .on('dragstart', event => CoC7Parser._onDragCoC7Link(event))
@@ -462,15 +466,17 @@ export class CoC7Parser {
         })
       } else {
         if (game.user.data.document.character?.data) {
-          game.user.data.document.character.data.items.map(v => {
-            if (v.name === options.name) {
-              const check = new CoC7Check()
-              check._rawValue = v.data.data.base
-              check.roll()
-              check.toMessage()
-            }
-            return false
-          })
+          await Promise.all(
+            game.user.data.document.character.data.items.map(async v => {
+              if (v.name === options.name) {
+                const check = new CoC7Check()
+                check._rawValue = v.data.data.base
+                await check.roll()
+                check.toMessage()
+              }
+              return false
+            })
+          )
         } else if (game.user.isGM) {
           const option = {
             speaker: {
@@ -536,15 +542,17 @@ export class CoC7Parser {
         }
       } else {
         if (game.user.data.document.character?.data) {
-          game.user.data.document.character.data.items.map(v => {
-            if (v.name === options.name) {
-              const check = new CoC7Check()
-              check._rawValue = v.data.data.base
-              check.roll()
-              check.toMessage()
-            }
-            return false
-          })
+          await Promise.all(
+            game.user.data.document.character.data.items.map(async v => {
+              if (v.name === options.name) {
+                const check = new CoC7Check()
+                check._rawValue = v.data.data.base
+                await check.roll()
+                check.toMessage()
+              }
+              return false
+            })
+          )
         } else {
           ui.notifications.warn(
             game.i18n.localize('CoC7.WarnNoControlledActor')
