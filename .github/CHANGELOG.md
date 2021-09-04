@@ -1,4 +1,18 @@
+## Version 0.6.7:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+
+- Now, system keeps the difficulty for shotgun at standard regardless of the range;
+- Fix dropping a point buy setup item does not allow validate as types are not the same;
+- Fix errors when override sheet artwork is enable, background type is not slice, and an inline style tag has been added;
+- Fix custom character sheet not working with inserted inline style tags;
+- Update to French localization, thanks to @vonv;
+- Update to Spanish localization, thanks to @lozalojo;
+- Update to Swedish localization, thanks to @Rangertheman;
+
 ## Version 0.6.6:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
 
 - Fix bug on character sheet interactions.
 
