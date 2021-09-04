@@ -155,8 +155,8 @@ export class CharacRollDialog extends Dialog {
     const validation = this._element[0].querySelector('.points')
     if (this.data.data.characteristics.points.enabled) {
       if (
-        this.data.data.characteristics.points.total !==
-        this.data.data.characteristics.points.value
+        Number(this.data.data.characteristics.points.total) !==
+        Number(this.data.data.characteristics.points.value)
       ) {
         validation.classList.add('warning')
       } else {
