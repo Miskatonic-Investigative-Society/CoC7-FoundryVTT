@@ -307,7 +307,10 @@ export class CoC7RangeInitiator {
       if (t.extremeRange) damage = this.weapon.data.data.range.extreme.damage
     }
     let modifier = target.modifier
-    let difficulty = target.difficulty
+    let difficulty
+    this.weapon.data.data.properties.shotgun
+      ? (difficulty = 1)
+      : (difficulty = target.difficulty)
     let difficultyName = ''
     if (this.aiming && this.currentShotRank === 1) modifier++
     if (this.advantage) modifier++
