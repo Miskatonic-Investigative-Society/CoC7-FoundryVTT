@@ -1,0 +1,200 @@
+.sheetV2.item.chase {
+  .sheet-body {
+    .tab.active {
+      display: flex;
+    }
+  }
+}
+
+.participants {
+  display: flex;
+  flex-direction: column;
+
+  .participants-list {
+    display: flex;
+    flex-direction: column;
+
+    input.right-aligned {
+      text-align: right;
+    }
+
+    .participant {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 2rem 2rem 0.5rem 5fr 2.5rem 4fr 2rem 3rem 1.25rem 2rem 1rem;
+      grid-template-rows: 2rem;
+      grid-template-areas: 'p-side p-icon p-expand p-name p-movement p-speed-check p-score p-roll p-adjust p-modified-mov p-control';
+      align-items: center;
+
+      &.drag-over {
+        border: 1px solid red;
+      }
+
+      .p-side {
+        height: 2rem;
+        line-height: 2rem;
+        font-size: 2rem;
+        &.chaser {
+          color: red;
+        }
+
+        &.prey {
+          color: green;
+        }
+      }
+
+      .p-icon {
+        height: 2rem;
+        line-height: 2rem;
+
+        img {
+          border: 0;
+          margin: auto;
+          max-width: 100%;
+          max-height: 100%;
+        }
+      }
+
+      .p-modified-mov {
+        text-align: center;
+        font-size: 2rem;
+        color: grey;
+        &.rolled {
+          color: var(--main-sheet-front-color);
+
+          &.downgrade {
+            color: red;
+          }
+          &.upgrade {
+            color: green;
+          }
+        }
+      }
+
+      .p-name {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        min-width: 5rem;
+      }
+
+      .p-score {
+        span {
+          text-align: right;
+          padding: 1px 3px;
+        }
+      }
+
+      .p-roll {
+        text-align: center;
+        font-size: 1.5rem;
+        height: 2rem;
+        line-height: 2rem;
+
+        &.rolled {
+          font-size: 0.75rem;
+          font-style: normal;
+        }
+
+        &.invalid {
+          color: red;
+
+          a {
+            cursor: not-allowed;
+            &:hover {
+              text-shadow: none;
+            }
+          }
+        }
+      }
+
+      .p-adjust {
+        line-height: 2rem;
+        text-align: center;
+        height: 2rem;
+        font-size: 1rem;
+
+        &.upgrade {
+          color: green;
+        }
+
+        &.downgrade {
+          color: red;
+          transform: rotate(180deg);
+        }
+      }
+    }
+
+    .driver {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 4rem 2rem auto 1rem;
+      grid-template-rows: 1.5rem;
+      grid-template-areas: 'd-spacer d-icon d-name d-control';
+      align-items: center;
+
+      .d-spacer {
+        text-align: right;
+        font-size: 1rem;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .d-icon {
+        height: 1.5rem;
+        line-height: 1.5rem;
+
+        img {
+          border: 0;
+          margin: auto;
+          max-width: 100%;
+          max-height: 100%;
+        }
+      }
+
+      .d-name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 5rem;
+      }
+    }
+  }
+
+  .new-participant {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 2px groove;
+
+    &.drag-over {
+      // box-shadow: 0 0 0.5rem var(--main-sheet-interactie-color);
+      background: rgba(0, 0, 0, 0.1);
+
+      .add-sign {
+        border: none;
+        box-shadow: 0 0 0.5rem var(--main-sheet-interactie-color);
+        // color: var(--main-sheet-interactie-color);
+        background: rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    .add-sign {
+      border: 0.25rem groove;
+      border-radius: 0.5rem;
+      width: 5rem;
+      height: 3rem;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        border: none;
+        box-shadow: 0 0 0.5rem var(--main-sheet-interactie-color);
+        // color: var(--main-sheet-interactie-color);
+        background: rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+}

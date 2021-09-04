@@ -1,2 +1,1 @@
-Creación del personaje
-----------------------
+## Creación del personaje

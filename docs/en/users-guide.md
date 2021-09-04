@@ -32,7 +32,7 @@ As for items, these are the types available:
 Before creating a character you should probably create some items (some of them can be taken from the compendiums):
 
 - A setup. You can choose some default details for all your characters, a list of default skills and a method to
-generate characteristics (distributing points or rolling dice).
+  generate characteristics (distributing points or rolling dice).
 - A bunch of occupations. You can take their skills from the compendiums.
 - You might want to create some items, weapons, talents or archetypes.
 
@@ -55,12 +55,11 @@ You can then drag and drop any items, talents, etc. When you are finished, lock 
 There are some system specific buttons in the toolbar, available only to the GM:
 
 - Keeper's tools
-    - Development phase: when enabled, players can make improvement rolls for their marked skills.
-    - Character creation mode: when enabled, players can distribute points among their skills.
-    - XP gain: when enabled, a skill will be marked for improvement after a successful check.
-    - Send a decoy roll to players: when clicked, players will see a fake GM private roll.
+  - Development phase: when enabled, players can make improvement rolls for their marked skills.
+  - Character creation mode: when enabled, players can distribute points among their skills.
+  - XP gain: when enabled, a skill will be marked for improvement after a successful check.
+  - Send a decoy roll to players: when clicked, players will see a fake GM private roll.
 - Roll dice: used to roll 1d100 with a threshold, difficulty and bonus or penalty dice.
-
 
 # Keyboard and mouse shortcuts
 
@@ -68,7 +67,7 @@ There are many elements in the sheets that trigger a dice roll when clicked. Usu
 user for a difficulty and a possible bonus or penalty. This behavior is modified with the following controls:
 
 - Right click on any rollable element to include it in an opposed roll. As long as the card is open, all rolls made
-with a right click will be added to the opposed roll.
+  with a right click will be added to the opposed roll.
 - Alt + Right click on any rollable element to include it in a combined roll.
 - Shift + Left click on a rollable element will make a roll without asking for difficulty or bonus/penalty.
 - Ctrl + Left click on a rollable element will create a roll request. Only available for the GM.

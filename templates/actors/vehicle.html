@@ -32,7 +32,7 @@
                 </div>
             </div>
 
-            <div class="flex1" style="padding: 1px, 3px;"> 
+            <div class="flex1" style="padding: 1px, 3px;">
                 <div class="attribute flexrow">
                     <div class="flex1"><label>{{localize "CoC7.Movement"}} :</label></div>
                     <div class="flex1"><span>{{actor.mov}}</span></div>
@@ -69,14 +69,14 @@
         {{#if expanded}}
             {{!-- Item Sheet Navigation --}}
             <nav class="sheet-nav tabs" data-group="primary">
-                <a data-tab="description"><div class="tab-name" ><span>{{ localize "CoC7.ItemDescription" }}</span></div></a>
+                <a data-tab="description"><div class="tab-name" ><span>{{ localize "CoC7.Description" }}</span></div></a>
                 {{#if isGM}}
                     <a data-tab="details"><div class="tab-name" ><span>{{ localize "CoC7.Details" }}</span></div></a>
                     <a data-tab="gmNotes"><div class="tab-name" ><span>{{ localize "CoC7.GmNotes" }}</span></div></a>
                 {{/if}}
             </nav>
 
-            
+
             {{!-- Item Sheet Body --}}
             <section class="sheet-body">
 
@@ -90,7 +90,7 @@
                             {{/each}}
                         </ol>
                     </div> -->
-                
+
                     {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
                 </div>
 
@@ -98,7 +98,7 @@
                     {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
                 </div> -->
 
-                
+
 
                 {{!-- Details Tab --}}
                 <div class="tab details scroll-y" data-group="primary" data-tab="details">
