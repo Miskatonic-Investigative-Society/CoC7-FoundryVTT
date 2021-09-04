@@ -1,3 +1,7 @@
+## Version 0.6.6:
+
+- Fix bug on character sheet interactions.
+
 ## Version 0.6.5:
 
 This release features major code refactoring and data migration. It is highly recommended to backup the worlds directories linked to Call of Cthulhu 7th Edition before updating the system.
@@ -40,6 +44,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Reorder system settings into categorical groups;
 - There is now a list of untranslated keys: https://github.com/HavlockV/CoC7-FoundryVTT/blob/develop/.github/TRANSLATIONS.md
 - There is now an option to set if combat and sanity effects icons are shown in tokens or not;
+- Update to French localization, thanks to @vonv;
 - Update to Portuguese localization;
 - Update to Spanish localization, thanks to @lozalojo;
 - Update to Swedish localization, thanks to @Rangertheman;

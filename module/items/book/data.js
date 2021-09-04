@@ -145,7 +145,7 @@ export class CoC7Book extends CoC7Item {
   }
 
   async checkExhaustion () {
-    const actorMythosValue = this.actor.cthulhuMythos
+    const actorMythosValue = this.actor?.cthulhuMythos
     const mythosRating = this.data.data.mythosRating
     if (this.data.data.initialReading) {
       if (actorMythosValue >= mythosRating) {
@@ -214,7 +214,7 @@ export class CoC7Book extends CoC7Item {
       type: this.data.data.type.occult
     }
     const other = {
-      gains: this.data.data.gains.other,
+      gains: this.data.data.gains.others,
       type: this.data.data.type.other
     }
     if (mythos.type && mythos.gains) {

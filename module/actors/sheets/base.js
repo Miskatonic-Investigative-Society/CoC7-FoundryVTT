@@ -709,7 +709,7 @@ export class CoC7ActorSheet extends ActorSheet {
     super.activateListeners(html)
 
     // Owner Only Listeners
-    if (this.actor.isOwner) {
+    if (this.actor.isOwner && typeof this.actor.compendium === 'undefined') {
       html
         .find('.characteristic-label')
         .on('dragstart', event => this._onDragCharacteristic(event))
