@@ -1,14 +1,20 @@
 /* global Dialog, renderTemplate, Roll */
 
 export class CharacRollDialog extends Dialog {
-  async activateListeners (html) {
+  constructor (data, options) {
+    super(data, options)
+
+    this.rolled = data.rolled || {}
+  }
+
+  activateListeners (html) {
     super.activateListeners(html)
     html.on('change', 'input', this._onChangeInput.bind(this))
     html.on('submit', 'form', this._onSubmit.bind(this))
     html.on(
       'click',
       '.roll-characteristic',
-      await this._onRollCharacteristic.bind(this)
+      this._onRollCharacteristic.bind(this)
     )
     html.on(
       'click',
@@ -77,6 +83,7 @@ export class CharacRollDialog extends Dialog {
       action === 'validate' &&
       !event.currentTarget.classList.contains('inactive')
     ) {
+      this.checkTotal()
       this.close()
     }
   }
@@ -192,20 +199,20 @@ export class CharacRollDialog extends Dialog {
   }
 
   static async create (data) {
+    const rolled = {}
     data.characteristics.points.total = 0
     for (const [key, value] of Object.entries(data.characteristics.values)) {
       if (key !== 'luck') {
         data.characteristics.points.total += value || 0
-        if (!isNaN(value) && value > 0) {
-          if (!this.rolled) this.rolled = {}
-          this.rolled[key] = true
-        }
+      }
+      if (!isNaN(value) && value > 0) {
+        rolled[key] = true
       }
     }
 
     if (data.characteristics.points.enabled) {
       if (
-        data.characteristics.points.total !== data.characteristics.points.value
+        Number(data.characteristics.points.total) !== Number(data.characteristics.points.value)
       ) {
         data.pointsWarning = true
       }
@@ -221,6 +228,7 @@ export class CharacRollDialog extends Dialog {
           title: data.title,
           content: html,
           data: data,
+          rolled: rolled,
           buttons: {},
           close: () => {
             if (data.validate) return resolve(true)
