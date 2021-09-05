@@ -3,6 +3,7 @@ import { CoCActor } from '../actors/actor.js'
 import { chatHelper } from '../chat/helper.js'
 import { CoC7Check } from '../check.js'
 import { CoC7Link } from './link.js'
+import { CoC7Utilities } from '../utilities.js'
 
 export class CoC7LinkCreationDialog extends FormApplication {
   /** @override */
@@ -203,7 +204,7 @@ export class CoC7LinkCreationDialog extends FormApplication {
     }
     switch (action) {
       case 'clipboard':
-        navigator.clipboard.writeText(this.link.link)
+        CoC7Utilities.copyToClipboard(this.link.link)
         break
 
       case 'chat':
