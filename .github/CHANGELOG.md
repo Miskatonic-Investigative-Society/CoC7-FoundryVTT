@@ -3,6 +3,7 @@
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
 
 - Now, system keeps the difficulty for shotgun at standard regardless of the range;
+- Fix bug when armor value is more than half the amount of damage;
 - Fix dropping a point buy setup item does not allow validate as types are not the same;
 - Fix errors when override sheet artwork is enable, background type is not slice, and an inline style tag has been added;
 - Fix custom character sheet not working with inserted inline style tags;
