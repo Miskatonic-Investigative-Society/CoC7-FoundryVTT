@@ -73,13 +73,11 @@ export class DamageCard extends InteractiveChatCard {
       this.isDamageNumber ? this.damageFormula : this.roll.total
     )
     if (!this.ignoreArmor) {
+      if (damage - Number(this.armor) <= 0) {
+        return game.i18n.localize('CoC7.ArmorAbsorbsDamage')
+      }
       if (isNaN(Number(this.armor)) || Number(this.armor) > 0) {
         damage = damage - Number(this.armor)
-      }
-      if (!isNaN(Number(this.armor))) {
-        if (damage - Number(this.armor) <= 0) {
-          return game.i18n.localize('CoC7.ArmorAbsorbsDamage')
-        }
       }
     }
     return damage
