@@ -913,6 +913,7 @@ export class CoCActor extends Actor {
             } else {
               data.data.title = game.i18n.localize('CoC7.RollCharac')
             }
+            data.data.pointsWarning = !(data.data.characteristics.values.str !== null && data.data.characteristics.values.con !== null && data.data.characteristics.values.siz !== null && data.data.characteristics.values.dex !== null && data.data.characteristics.values.app !== null && data.data.characteristics.values.int !== null && data.data.characteristics.values.pow !== null && data.data.characteristics.values.edu !== null)
             const rolled = await CharacRollDialog.create(data.data)
             if (rolled) {
               const updateData = {}
