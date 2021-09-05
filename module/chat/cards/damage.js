@@ -73,11 +73,13 @@ export class DamageCard extends InteractiveChatCard {
       this.isDamageNumber ? this.damageFormula : this.roll.total
     )
     if (!this.ignoreArmor) {
-      if (!isNaN(Number(this.armor)) && damage - Number(this.armor) <= 0) {
-        return game.i18n.localize('CoC7.ArmorAbsorbsDamage')
-      }
       if (isNaN(Number(this.armor)) || Number(this.armor) > 0) {
         damage = damage - Number(this.armor)
+      }
+      if (!isNaN(Number(this.armor))) {
+        if (damage <= 0) {
+          return game.i18n.localize('CoC7.ArmorAbsorbsDamage')
+        }
       }
     }
     return damage
@@ -88,11 +90,11 @@ export class DamageCard extends InteractiveChatCard {
       const damage = this.isDamageNumber ? this.damageFormula : this.roll.total
       if (!this.ignoreArmor) {
         if (!isNaN(Number(this.armor))) {
-          return damage - Number(this.armor) <= 0
+          return !!(damage - Number(this.armor) <= 0)
         }
         return false
       } else {
-        return damage <= 0
+        return !!(damage <= 0)
       }
     } else return false
   }
@@ -202,12 +204,17 @@ export class DamageCard extends InteractiveChatCard {
 
   async dealDamage (options = { update: true }) {
     if (this.isArmorForula) await this.rollArmor()
-    if (isNaN(Number(this.totalDamageString))) {
-      ui.notifications.error('Error evaluating damage')
-      return
+    let damage = this.totalDamageString
+    if (isNaN(Number(damage))) {
+      if (game.i18n.localize('CoC7.ArmorAbsorbsDamage') === damage) {
+        damage = 0
+      } else {
+        ui.notifications.error('Error evaluating damage')
+        return
+      }
     }
     if (this.targetActor) {
-      await this.targetActor.dealDamage(Number(this.totalDamageString), {
+      await this.targetActor.dealDamage(Number(damage), {
         ignoreArmor: true
       })
     }
