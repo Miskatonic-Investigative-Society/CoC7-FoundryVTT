@@ -218,7 +218,7 @@ export class CombinedCheckCard extends RollCard {
     }
 
     this.rolls = this.rolls.filter(roll => {
-      return !!roll.actor
+      return (typeof roll.actor.data !== 'undefined') // Check if there's an actor set and if there's one and it doesnt exist remove him.
     })
 
     this._htmlRoll = await this.getHtmlRoll()

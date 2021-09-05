@@ -67,7 +67,7 @@ export class RollCard {
 
   static async dispatch (data) {
     if (game.user.isGM) {
-      const messages = ui.chat.collection.filter(message => {
+      let messages = ui.chat.collection.filter(message => {
         if (
           this.defaultConfig.type === message.getFlag('CoC7', 'type') &&
           message.getFlag('CoC7', 'state') !== 'resolved'
@@ -77,11 +77,16 @@ export class RollCard {
         return false
       })
 
-      // if( messages.length){
-      //   const timestamp = new Date( messages[0].data.timestamp);
-      //   const now = new Date();
-      //   const timeDiffSec = (now - timestamp) / 1000;
-      // }
+      if (messages.length) {
+        // Old messages can't be used if message is more than a day old mark it as resolved
+        const timestamp = new Date(messages[0].data.timestamp)
+        const now = new Date()
+        const timeDiffSec = (now - timestamp) / 1000
+        if (24 * 60 * 60 < timeDiffSec) {
+          await messages[0].setFlag('CoC7', 'state', 'resolved')
+          messages = []
+        }
+      }
 
       let card
       if (!messages.length) card = new this()
