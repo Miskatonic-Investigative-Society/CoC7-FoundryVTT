@@ -581,7 +581,11 @@ export class CoC7Item extends Item {
   }
 
   get base () {
-    return this._base[0]
+    const e = this._base
+    if (e[1]) {
+      this.update({ 'data.base': e[0] })
+    }
+    return e[0]
   }
 
   get value () {
