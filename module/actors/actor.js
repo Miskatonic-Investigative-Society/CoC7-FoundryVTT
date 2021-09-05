@@ -3350,7 +3350,7 @@ export class CoCActor extends Actor {
 
   get characterUser () {
     return (
-      game.users.entities.filter(u => u.character?.id === this.id)[0] || null
+      game.users.contents.filter(u => u.character?.id === this.id)[0] || null
     )
   }
 
