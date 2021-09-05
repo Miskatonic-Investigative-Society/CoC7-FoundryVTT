@@ -299,21 +299,7 @@ export class CoC7ActorSheet extends ActorSheet {
             }
           } else {
             const skill = this.actor.items.get(item._id)
-            item.data.base = skill.base
-            // if( isNaN(Number(item.data.base))){
-            //  let value = CoC7ActorSheet.parseFormula( item.data.base);
-            //  try{
-            //    value = Math.floor(eval(value));
-            //  }
-            //  catch(err){
-            //    console.warn(`unable to parse formula :${item.data.base} for skill ${item.name}`);
-            //    value = null;
-            //  }
-
-            //  if( value){
-            //    item.data.base = value;
-            //  }
-            // }
+            item.data.base = await skill.asyncBase()
 
             if (item.data.value) {
               const value = item.data.value
@@ -985,7 +971,7 @@ export class CoC7ActorSheet extends ActorSheet {
   }
 
   async _onDrop (event) {
-    super._onDrop(event)
+    await super._onDrop(event)
   }
 
   async _onStatusToggle (event) {
