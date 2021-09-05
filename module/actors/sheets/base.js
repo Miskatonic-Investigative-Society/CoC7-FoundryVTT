@@ -691,7 +691,7 @@ export class CoC7ActorSheet extends ActorSheet {
    * Activate event listeners using the prepared sheet HTML
    * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
    */
-  async activateListeners (html) {
+  activateListeners (html) {
     super.activateListeners(html)
 
     // Owner Only Listeners
@@ -724,17 +724,17 @@ export class CoC7ActorSheet extends ActorSheet {
         .click(this._onRollCharacteriticTest.bind(this))
       html
         .find('.skill-name.rollable')
-        .click(await this._onRollSkillTest.bind(this))
-      html.find('.skill-image').click(await this._onRollSkillTest.bind(this))
+        .click(this._onRollSkillTest.bind(this))
+      html.find('.skill-image').click(this._onRollSkillTest.bind(this))
       html
         .find('.attribute-label.rollable')
-        .click(await this._onRollAttribTest.bind(this))
+        .click(this._onRollAttribTest.bind(this))
       html.find('.lock').click(this._onLockClicked.bind(this))
       html.find('.flag').click(this._onFlagClicked.bind(this))
       html.find('.formula').click(this._onFormulaClicked.bind(this))
       html
         .find('.roll-characteritics')
-        .click(await this._onRollCharacteriticsValue.bind(this))
+        .click(this._onRollCharacteriticsValue.bind(this))
       html
         .find('.average-characteritics')
         .click(this._onAverageCharacteriticsValue.bind(this))
@@ -757,7 +757,7 @@ export class CoC7ActorSheet extends ActorSheet {
         .click(event => this._onWeaponRoll(event))
       html
         .find('.weapon-skill.rollable')
-        .click(async event => await this._onWeaponSkillRoll(event))
+        .click(async event => this._onWeaponSkillRoll(event))
       html.find('.reload-weapon').click(event => this._onReloadWeapon(event))
       html
         .find('.reload-weapon')

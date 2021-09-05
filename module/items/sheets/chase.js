@@ -73,7 +73,7 @@ export class CoC7ChaseSheet extends ItemSheet {
   }
 
   /** @override */
-  async activateListeners (html) {
+  activateListeners (html) {
     super.activateListeners(html)
 
     html.on('dblclick', '.open-actor', CoC7Chat._onOpenActor.bind(this))
@@ -113,7 +113,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 
     html
       .find('.roll-participant')
-      .click(await this._onRollParticipant.bind(this))
+      .click(this._onRollParticipant.bind(this))
 
     const participantDragDrop = new DragDrop({
       dropSelector: '.participant',
