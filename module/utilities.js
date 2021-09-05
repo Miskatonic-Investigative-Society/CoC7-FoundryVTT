@@ -639,4 +639,27 @@ export class CoC7Utilities {
       return []
     }
   }
+
+  static async copyToClipboard (text) {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(text)
+      } else {
+        const textArea = document.createElement('textarea')
+        textArea.value = text
+        textArea.style.position = 'fixed'
+        textArea.style.left = '-999px'
+        textArea.style.top = '-999px'
+        document.body.appendChild(textArea)
+        textArea.focus()
+        textArea.select()
+        return new Promise((resolve, reject) => {
+          document.execCommand('copy') ? resolve() : reject(new Error('Unable to copy to clipboard, this is likely due to your browser security settings.'))
+          textArea.remove()
+        }).catch(err => ui.notifications.error(err))
+      }
+    } catch (err) {
+      ui.notifications.error('Unable to copy to clipboard, this is likely due to your browser security settings.')
+    }
+  }
 }
