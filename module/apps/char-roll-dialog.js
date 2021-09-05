@@ -196,6 +196,10 @@ export class CharacRollDialog extends Dialog {
     for (const [key, value] of Object.entries(data.characteristics.values)) {
       if (key !== 'luck') {
         data.characteristics.points.total += value || 0
+        if (!isNaN(value) && value > 0) {
+          if (!this.rolled) this.rolled = {}
+          this.rolled[key] = true
+        }
       }
     }
 
