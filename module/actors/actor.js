@@ -727,7 +727,8 @@ export class CoCActor extends Actor {
    * @param {*} options
    */
   async createEmbeddedDocuments (embeddedName, dataArray, options) {
-    dataArray.forEach(async data => {
+    const output = []
+    for (const data of dataArray) {
       switch (data.type) {
         case 'skill':
           if (this.data.type !== 'character') {
@@ -817,11 +818,13 @@ export class CoCActor extends Actor {
             }
           }
 
-          return await super.createEmbeddedDocuments(
+          output.push(await super.createEmbeddedDocuments(
             embeddedName,
             [data],
             options
-          )
+          ))
+          break
+
         case 'weapon': {
           const mainSkill = data.data?.skill?.main?.name
           if (mainSkill) {
@@ -853,12 +856,14 @@ export class CoCActor extends Actor {
             if (skill) data.data.skill.alternativ.id = skill.id
           } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
 
-          return await super.createEmbeddedDocuments(
+          output.push(await super.createEmbeddedDocuments(
             embeddedName,
             [duplicate(data)],
             options
-          )
+          ))
+          break
         }
+
         case 'setup': {
           if (data.data.enableCharacterisitics) {
             data.data.characteristics.list = {}
@@ -1037,7 +1042,7 @@ export class CoCActor extends Actor {
               'data.development.archetype': this.archetypePoints
             })
 
-            return newArchetype
+            output.push(newArchetype)
           }
 
           break
@@ -1245,18 +1250,19 @@ export class CoCActor extends Actor {
               'data.development.personal': this.personalPoints
             })
 
-            return newOccupation
+            output.push(newOccupation)
           }
           break
 
         default:
-          return await super.createEmbeddedDocuments(
+          output.push(await super.createEmbeddedDocuments(
             embeddedName,
             [data],
             options
-          )
+          ))
       }
-    })
+    }
+    return output
   }
 
   // getSkillIdByName( skillName){
