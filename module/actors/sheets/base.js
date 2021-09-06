@@ -1775,7 +1775,7 @@ export class CoC7ActorSheet extends ActorSheet {
           const index = parseInt(
             event.currentTarget.closest('.bio-section').dataset.index
           )
-          this.actor.updateBioValue(index, event.currentTarget.value)
+          await this.actor.updateBioValue(index, event.currentTarget.value)
         }
 
         if (event.currentTarget.classList.contains('bio-section-title')) {
