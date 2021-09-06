@@ -187,9 +187,7 @@ export class CoC7SetupSheet extends ItemSheet {
     })
 
     data.skills.sort((a, b) => {
-      if (a.displayName.toLowerCase() < b.displayName.toLowerCase()) return -1
-      if (a.displayName.toLowerCase() > b.displayName.toLowerCase()) return 1
-      return 0
+      return a.displayName.localeCompare(b.displayName)
     })
 
     data.eras = {}

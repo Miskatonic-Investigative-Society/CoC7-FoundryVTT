@@ -707,9 +707,7 @@ export class CoC7Item extends Item {
           lca = a.name.toLowerCase()
           lcb = b.name.toLowerCase()
         }
-        if (lca < lcb) return -1
-        if (lca > lcb) return 1
-        return 0
+        return lca.localeCompare(lcb)
       })
   }
 

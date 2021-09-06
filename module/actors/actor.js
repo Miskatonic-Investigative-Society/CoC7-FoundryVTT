@@ -3178,13 +3178,7 @@ export class CoCActor extends Actor {
     })
 
     skillList.sort((a, b) => {
-      if (a.name.toLowerCase() < b.name.toLowerCase()) {
-        return -1
-      }
-      if (a.name.toLowerCase() > b.name.toLowerCase()) {
-        return 1
-      }
-      return 0
+      return a.name.localeCompare(b.name)
     })
 
     return skillList
@@ -3201,13 +3195,7 @@ export class CoCActor extends Actor {
     })
 
     weaponList.sort((a, b) => {
-      if (a.name.toLowerCase() < b.name.toLowerCase()) {
-        return -1
-      }
-      if (a.name.toLowerCase() > b.name.toLowerCase()) {
-        return 1
-      }
-      return 0
+      return a.name.localeCompare(b.name)
     })
 
     return weaponList
@@ -3222,13 +3210,7 @@ export class CoCActor extends Actor {
     })
 
     skillList.sort((a, b) => {
-      if (a.name.toLowerCase() < b.name.toLowerCase()) {
-        return -1
-      }
-      if (a.name.toLowerCase() > b.name.toLowerCase()) {
-        return 1
-      }
-      return 0
+      return a.name.localeCompare(b.name)
     })
 
     return skillList
@@ -3333,13 +3315,7 @@ export class CoCActor extends Actor {
     })
 
     skillList.sort((a, b) => {
-      if (a.name.toLowerCase() < b.name.toLowerCase()) {
-        return -1
-      }
-      if (a.name.toLowerCase() > b.name.toLowerCase()) {
-        return 1
-      }
-      return 0
+      return a.name.localeCompare(b.name)
     })
 
     return skillList
