@@ -1340,7 +1340,7 @@ export class CoC7Check {
   get flavor () {
     if (this._flavor) return this._flavor
     let flavor = ''
-    if (this.actor) {
+    if (this.actor?.data) {
       if (this.skill) {
         flavor = game.i18n.format('CoC7.CheckResult', {
           name: this.skill.name,

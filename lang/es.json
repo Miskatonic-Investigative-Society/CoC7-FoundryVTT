@@ -516,7 +516,7 @@
   "CoC7.GateSpell": "Portal",
   "CoC7.CombatSpell": "Combate",
   "CoC7.SpellType": "Tipo de Hechizo",
-	
+
   "CoC7.BookHasNothingMoreToTeach": "No tiene nada que aprender de {book}. La habilidad de Mitos de Cthulhu de {actor} es mayor que la puntuación de Mitos",
   "CoC7.BookType": "Tipo de Libro",
   "CoC7.Content": "Contenido",
@@ -536,7 +536,7 @@
   "CoC7.MythosRating": "Puntuación de Mitos",
   "CoC7.NotOwned": "Este libro requiere permisos de propietario de un actor para realizar esta acción",
   "CoC7.Occult": "Ciencias ocultas",
-  "CoC7.Points": "punto(s)",	
+  "CoC7.Points": "punto(s)",
   "CoC7.Progress": "Progreso",
   "CoC7.RedoFullStudy": "Volver a realizar estudio completo",
   "CoC7.ReadAttempt": "Intento de leer <i>{book}</i> ({language}), dificultad {difficulty}",

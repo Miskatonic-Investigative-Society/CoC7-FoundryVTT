@@ -73,7 +73,7 @@ export class CoC7ChaseSheet extends ItemSheet {
   }
 
   /** @override */
-  async activateListeners (html) {
+  activateListeners (html) {
     super.activateListeners(html)
 
     html.on('dblclick', '.open-actor', CoC7Chat._onOpenActor.bind(this))
@@ -113,7 +113,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 
     html
       .find('.roll-participant')
-      .click(await this._onRollParticipant.bind(this))
+      .click(this._onRollParticipant.bind(this))
 
     const participantDragDrop = new DragDrop({
       dropSelector: '.participant',
@@ -544,6 +544,25 @@ export class _participant {
     }
 
     return this.data.mov
+  }
+
+  get dex () {
+    if (!this.data.dex) {
+      if (this.hasVehicle && this.hasDriver)
+        this.data.dex = this.driver.characteristics.dex.value
+      else if (this.hasActor)
+        this.data.dex = this.actor.characteristics.dex.value
+    }
+
+    if (this.data.dex) {
+      if (!isNaN(Number(this.data.dex))) this.data.hasValidDex = true
+      else {
+        this.data.hasValidDex = false
+        this.data.dex = undefined
+      }
+    }
+
+    return this.data.dex
   }
 
   get isChaser () {

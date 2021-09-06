@@ -80,7 +80,7 @@ export class CoC7Parser {
       if (data.pack) {
         const pack = game.packs.get(data.pack)
         if (pack.metadata.entity !== 'Item') return
-        item = await pack.getEntity(data.id)
+        item = await pack.getDocument(data.id)
       } else if (data.data) {
         item = data.data
       } else {

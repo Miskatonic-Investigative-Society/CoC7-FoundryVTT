@@ -139,14 +139,14 @@
 		{{/if}}
 
 		{{#if characteristics.rolls.enabled}}
-		<div class='points flexrow {{#if pointsWarning}}warning{{/if}}'>
+		<div class='points flexrow'>
 			<label>{{ localize 'CoC7.CharacteristicsPoints'}} :</label>
 			<span class='total'>{{characteristics.points.total}}</span>
 		</div>
 
 		<div class="card-buttons flexrow">
 			<button data-action="roll">{{ localize "CoC7.RollDice" }}</button>
-			<button class='validate inactive' data-action="validate">{{ localize "CoC7.Validate" }}</button>
+			<button class='validate {{#if pointsWarning}}inactive{{/if}}' data-action="validate">{{ localize "CoC7.Validate" }}</button>
 		</div>
 		{{/if}}
 
