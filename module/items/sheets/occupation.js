@@ -242,9 +242,7 @@ export class CoC7OccupationSheet extends ItemSheet {
     })
 
     data.data.skills.sort((a, b) => {
-      if (a.displayName.toLowerCase() < b.displayName.toLowerCase()) return -1
-      if (a.displayName.toLowerCase() > b.displayName.toLowerCase()) return 1
-      return 0
+      return a.displayName.localeCompare(b.displayName)
     })
 
     for (let index = 0; index < data.data.groups.length; index++) {
@@ -261,9 +259,7 @@ export class CoC7OccupationSheet extends ItemSheet {
       })
 
       data.data.groups[index].skills.sort((a, b) => {
-        if (a.displayName.toLowerCase() < b.displayName.toLowerCase()) return -1
-        if (a.displayName.toLowerCase() > b.displayName.toLowerCase()) return 1
-        return 0
+        return a.displayName.localeCompare(b.displayName)
       })
     }
 
