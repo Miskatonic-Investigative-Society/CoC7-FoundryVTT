@@ -681,7 +681,7 @@ export class CoCActor extends Actor {
   async updateBioValue (index, content) {
     const bio = duplicate(this.data.data.biography)
     bio[index].value = content
-    await this.update({ 'data.biography': bio })
+    await this.update({ 'data.biography': bio }, { render: false })
   }
 
   async updateBioTitle (index, title) {
