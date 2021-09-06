@@ -308,11 +308,11 @@ export class CoC7ActorSheet extends ActorSheet {
                 : 0
               let updatedExp = exp + parseInt(item.data.value) - skill.value
               if (updatedExp <= 0) updatedExp = null
-              await this.actor.updateEmbeddedEntity('OwnedItem', {
+              await this.actor.updateEmbeddedDocuments('Item', [{
                 _id: item._id,
                 'data.adjustments.experience': updatedExp,
                 'data.value': null
-              })
+              }])
               if (!item.data.adjustments) item.data.adjustments = {}
               item.data.adjustments.experience = updatedExp
               item.data.value = value

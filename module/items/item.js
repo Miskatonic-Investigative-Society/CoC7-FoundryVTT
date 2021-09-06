@@ -545,8 +545,8 @@ export class CoC7Item extends Item {
   }
 
   get _base () {
-    if (this.type !== 'skill') return null
-    if (typeof this.data.data.base !== 'string') return this.data.data.base
+    if (this.type !== 'skill') return [null, false]
+    if (typeof this.data.data.base !== 'string') return [this.data.data.base, false]
     if (this.data.data.base.includes('@')) {
       const parsed = {}
       for (const [key, value] of Object.entries(COC7.formula.actorsheet)) {
