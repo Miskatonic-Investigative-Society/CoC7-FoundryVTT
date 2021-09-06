@@ -546,6 +546,25 @@ export class _participant {
     return this.data.mov
   }
 
+  get dex () {
+    if (!this.data.dex) {
+      if (this.hasVehicle && this.hasDriver)
+        this.data.dex = this.driver.characteristics.dex.value
+      else if (this.hasActor)
+        this.data.dex = this.actor.characteristics.dex.value
+    }
+
+    if (this.data.dex) {
+      if (!isNaN(Number(this.data.dex))) this.data.hasValidDex = true
+      else {
+        this.data.hasValidDex = false
+        this.data.dex = undefined
+      }
+    }
+
+    return this.data.dex
+  }
+
   get isChaser () {
     return !!this.data.chaser
   }
