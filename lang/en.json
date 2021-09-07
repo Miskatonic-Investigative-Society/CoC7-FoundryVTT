@@ -798,6 +798,8 @@
   "SETTINGS.AdviseAllPlayer": "Notify all players",
   "SETTINGS.OneBlockBackStory": "One block backstory",
   "SETTINGS.OneBlockBackStoryHint": "Turn backstory to one editor block, but you can format/add links.",
+  "SETTINGS.EnablePlayerSourceCode": "Enable code editing for players.",
+  "SETTINGS.EnablePlayerSourceCodeyHint": "!WARNING! When Enabling this, players will be able to see and edit 'keeper only' blocks.",
   "SETTINGS.EnableStatusIcons": "Enable status icons",
   "SETTINGS.EnableStatusIconsHint": "Set if combat and sanity effects icons are shown in tokens."
 }

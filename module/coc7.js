@@ -212,20 +212,8 @@ Hooks.on('ready', async () => {
   activateGlobalListener()
 
   // setGlobalCssVar()
-  if (game.user.isGM) {
-    CONFIG.TinyMCE.content_css.push('/systems/CoC7/assets/mce.css')
-    CONFIG.TinyMCE.style_formats.push({
-      title: 'CoC7',
-      items: [
-        {
-          title: 'Keeper Only',
-          block: 'section',
-          classes: 'keeper-only',
-          wrapper: true
-        }
-      ]
-    })
-  } else CONFIG.TinyMCE.content_style = '.keeper-only {display: none}'
+
+  configureTinyMCE()
 
   game.socket.on('system.CoC7', async data => {
     if (data.type === 'updateChar') CoC7Utilities.updateCharSheets()
@@ -409,21 +397,51 @@ Hooks.on('renderSceneControls', CoC7Menu.renderMenu)
 
 Hooks.on('dropCanvasData', CoC7Canvas.onDropSomething)
 
-tinyMCE.PluginManager.add('CoC7_Editor_OnDrop', function (editor) {
-  editor.on('drop', event => CoC7Parser.onEditorDrop(event, editor))
-})
-
-// tinyMCE.PluginManager.add('CoC7_Editor_OnInit', function (editor) {
-//   editor.on('init', () => CoC7Parser.onInitEditor( editor))
-// })
-
-// CONFIG.TinyMCE.plugins = `CoC7_Editor_OnInit CoC7_Editor_OnDrop ${CONFIG.TinyMCE.plugins}`
-CONFIG.TinyMCE.plugins = `CoC7_Editor_OnDrop ${CONFIG.TinyMCE.plugins}`
-
 function activateGlobalListener () {
   const body = $('body')
   body.on('click', 'a.coc7-inline-check', CoC7Check._onClickInlineRoll)
   document.addEventListener('mousedown', _onLeftClick)
+}
+
+/**
+ * Configuration of TinyMCE editor
+ */
+function configureTinyMCE () {
+
+  // Add on drop event to tinyMCE to hendle the links drop
+  tinyMCE.PluginManager.add('CoC7_Editor_OnDrop', function (editor) {
+    editor.on('drop', event => CoC7Parser.onEditorDrop(event, editor))
+  })
+
+  // Intercept MCE init
+  // tinyMCE.PluginManager.add('CoC7_Editor_OnInit', function (editor) {
+  //   editor.on('init', () => CoC7Parser.onInitEditor( editor))
+  // })
+
+  // Add custom plugins to list of plugins.
+  // CONFIG.TinyMCE.plugins = `CoC7_Editor_OnInit CoC7_Editor_OnDrop ${CONFIG.TinyMCE.plugins}`
+  CONFIG.TinyMCE.plugins = `CoC7_Editor_OnDrop ${CONFIG.TinyMCE.plugins}`
+
+  if (game.user.isGM) { // Define css and menu for keeper only blocks
+    CONFIG.TinyMCE.content_css.push('/systems/CoC7/assets/mce.css')
+    CONFIG.TinyMCE.style_formats.push({
+      title: 'CoC7',
+      items: [
+        {
+          title: 'Keeper Only',
+          block: 'section',
+          classes: 'keeper-only',
+          wrapper: true
+        }
+      ]
+    })
+  } else {
+    // Prevent player to edit and view source code if settings is disabled
+    if (!game.settings.get('CoC7', 'enablePlayerSourceCode'))
+      CONFIG.TinyMCE.toolbar = CONFIG.TinyMCE.toolbar.replace(' code', '')
+    // Hide keeper only blocks to players
+    CONFIG.TinyMCE.content_style = '.keeper-only {display: none}'
+  }
 }
 
 // function setGlobalCssVar(){
