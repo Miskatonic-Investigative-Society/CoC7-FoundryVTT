@@ -1,6 +1,8 @@
 /* global duplicate, game, mergeObject */
 
 import { chatHelper } from '../chat/helper.js'
+import { CoCActor } from '../actors/actor.js'
+import { CoC7LinkCreationDialog } from './link-creation-dialog.js'
 
 export class CoC7Link {
   constructor () {
@@ -11,6 +13,10 @@ export class CoC7Link {
   }
 
   static async fromData (linkData) {
+    const label = CoC7LinkCreationDialog.attributes.concat(CoCActor.getCharacteristicDefinition()).filter(e => e.key === linkData.name).map(e => e.label)
+    if (label.length > 0) {
+      linkData.label = label[0]
+    }
     const link = new CoC7Link()
     await link.setData(linkData)
     return link
