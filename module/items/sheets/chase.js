@@ -58,13 +58,39 @@ export class CoC7ChaseSheet extends ItemSheet {
     this.participants.forEach(p => {
       data.participants.push(new _participant(p))
     })
-    data.preys = data.participants
-      .filter(p => p.chaser)
-      .sort((a, b) => a.mov - b.mov)
-    data.chasers = data.participants
-      .filter(p => !p.chaser)
-      .sort((a, b) => a.mov - b.mov)
+    data.preys =
+      data.participants
+        .filter(p => !p.isChaser && p.isValid)
+        .sort((a, b) => a.mov - b.mov) || []
+    data.chasers =
+      data.participants
+        .filter(p => p.isChaser && p.isValid)
+        .sort((a, b) => a.mov - b.mov) || []
+    data.byDex = duplicate(data.participants).sort((a, b) => a.dex - b.dex)
 
+    data.preysMinMov = data.preys.length
+      ? data.preys.reduce((prev, current) =>
+          prev.mov < current.mov ? prev : current
+        ).mov
+      : -1
+
+    data.preysMaxMov = data.preys.length
+      ? data.preys.reduce((prev, current) =>
+          prev.mov > current.mov ? prev : current
+        ).mov
+      : -1
+
+    data.chasersMinMov = data.chasers.length
+      ? data.chasers.reduce((prev, current) =>
+          prev.mov < current.mov ? prev : current
+        ).mov
+      : -1
+
+    data.chasersMaxMov = data.chasers.length
+      ? data.chasers.reduce((prev, current) =>
+          prev.mov > current.mov ? prev : current
+        ).mov
+      : -1
     return data
   }
 
@@ -73,7 +99,7 @@ export class CoC7ChaseSheet extends ItemSheet {
   }
 
   /** @override */
-  async activateListeners (html) {
+  activateListeners (html) {
     super.activateListeners(html)
 
     html.on('dblclick', '.open-actor', CoC7Chat._onOpenActor.bind(this))
@@ -111,9 +137,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 
     html.find('.add-sign').click(this._onAddParticipant.bind(this))
 
-    html
-      .find('.roll-participant')
-      .click(await this._onRollParticipant.bind(this))
+    html.find('.roll-participant').click(this._onRollParticipant.bind(this))
 
     const participantDragDrop = new DragDrop({
       dropSelector: '.participant',
@@ -546,8 +570,39 @@ export class _participant {
     return this.data.mov
   }
 
+  get dex () {
+    if (!this.data.dex) {
+      if (this.hasVehicle && this.hasDriver)
+        this.data.dex = this.driver.characteristics.dex.value
+      else if (this.hasActor)
+        this.data.dex = this.actor.characteristics.dex.value
+    }
+
+    if (this.data.dex) {
+      if (!isNaN(Number(this.data.dex))) this.data.hasValidDex = true
+      else {
+        this.data.hasValidDex = false
+        this.data.dex = 0
+      }
+    }
+
+    return this.data.dex
+  }
+
   get isChaser () {
     return !!this.data.chaser
+  }
+
+  get isValid () {
+    return this.hasValidDex && this.hasValidMov
+  }
+
+  get hasValidDex () {
+    return !isNaN(Number(this.data.dex))
+  }
+
+  get hasValidMov () {
+    return !isNaN(Number(this.data.mov))
   }
 
   get hasDriver () {

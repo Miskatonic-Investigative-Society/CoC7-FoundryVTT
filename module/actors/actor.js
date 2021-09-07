@@ -681,7 +681,7 @@ export class CoCActor extends Actor {
   async updateBioValue (index, content) {
     const bio = duplicate(this.data.data.biography)
     bio[index].value = content
-    await this.update({ 'data.biography': bio })
+    await this.update({ 'data.biography': bio }, { render: false })
   }
 
   async updateBioTitle (index, title) {
@@ -727,7 +727,8 @@ export class CoCActor extends Actor {
    * @param {*} options
    */
   async createEmbeddedDocuments (embeddedName, dataArray, options) {
-    dataArray.forEach(async data => {
+    const output = []
+    for (const data of dataArray) {
       switch (data.type) {
         case 'skill':
           if (this.data.type !== 'character') {
@@ -817,11 +818,13 @@ export class CoCActor extends Actor {
             }
           }
 
-          return await super.createEmbeddedDocuments(
+          output.push(await super.createEmbeddedDocuments(
             embeddedName,
             [data],
             options
-          )
+          ))
+          break
+
         case 'weapon': {
           const mainSkill = data.data?.skill?.main?.name
           if (mainSkill) {
@@ -853,12 +856,14 @@ export class CoCActor extends Actor {
             if (skill) data.data.skill.alternativ.id = skill.id
           } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
 
-          return await super.createEmbeddedDocuments(
+          output.push(await super.createEmbeddedDocuments(
             embeddedName,
             [duplicate(data)],
             options
-          )
+          ))
+          break
         }
+
         case 'setup': {
           if (data.data.enableCharacterisitics) {
             data.data.characteristics.list = {}
@@ -908,6 +913,7 @@ export class CoCActor extends Actor {
             } else {
               data.data.title = game.i18n.localize('CoC7.RollCharac')
             }
+            data.data.pointsWarning = !(data.data.characteristics.values.str !== null && data.data.characteristics.values.con !== null && data.data.characteristics.values.siz !== null && data.data.characteristics.values.dex !== null && data.data.characteristics.values.app !== null && data.data.characteristics.values.int !== null && data.data.characteristics.values.pow !== null && data.data.characteristics.values.edu !== null)
             const rolled = await CharacRollDialog.create(data.data)
             if (rolled) {
               const updateData = {}
@@ -1037,7 +1043,7 @@ export class CoCActor extends Actor {
               'data.development.archetype': this.archetypePoints
             })
 
-            return newArchetype
+            output.push(newArchetype)
           }
 
           break
@@ -1245,18 +1251,19 @@ export class CoCActor extends Actor {
               'data.development.personal': this.personalPoints
             })
 
-            return newOccupation
+            output.push(newOccupation)
           }
           break
 
         default:
-          return await super.createEmbeddedDocuments(
+          output.push(await super.createEmbeddedDocuments(
             embeddedName,
             [data],
             options
-          )
+          ))
       }
-    })
+    }
+    return output
   }
 
   // getSkillIdByName( skillName){
@@ -3171,13 +3178,7 @@ export class CoCActor extends Actor {
     })
 
     skillList.sort((a, b) => {
-      if (a.name.toLowerCase() < b.name.toLowerCase()) {
-        return -1
-      }
-      if (a.name.toLowerCase() > b.name.toLowerCase()) {
-        return 1
-      }
-      return 0
+      return a.name.localeCompare(b.name)
     })
 
     return skillList
@@ -3194,13 +3195,7 @@ export class CoCActor extends Actor {
     })
 
     weaponList.sort((a, b) => {
-      if (a.name.toLowerCase() < b.name.toLowerCase()) {
-        return -1
-      }
-      if (a.name.toLowerCase() > b.name.toLowerCase()) {
-        return 1
-      }
-      return 0
+      return a.name.localeCompare(b.name)
     })
 
     return weaponList
@@ -3215,13 +3210,7 @@ export class CoCActor extends Actor {
     })
 
     skillList.sort((a, b) => {
-      if (a.name.toLowerCase() < b.name.toLowerCase()) {
-        return -1
-      }
-      if (a.name.toLowerCase() > b.name.toLowerCase()) {
-        return 1
-      }
-      return 0
+      return a.name.localeCompare(b.name)
     })
 
     return skillList
@@ -3326,13 +3315,7 @@ export class CoCActor extends Actor {
     })
 
     skillList.sort((a, b) => {
-      if (a.name.toLowerCase() < b.name.toLowerCase()) {
-        return -1
-      }
-      if (a.name.toLowerCase() > b.name.toLowerCase()) {
-        return 1
-      }
-      return 0
+      return a.name.localeCompare(b.name)
     })
 
     return skillList
@@ -3350,7 +3333,7 @@ export class CoCActor extends Actor {
 
   get characterUser () {
     return (
-      game.users.entities.filter(u => u.character?.id === this.id)[0] || null
+      game.users.contents.filter(u => u.character?.id === this.id)[0] || null
     )
   }
 

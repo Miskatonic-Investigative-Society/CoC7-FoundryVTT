@@ -338,7 +338,7 @@ export class CoC7Utilities {
       const pack = game.packs.get(data.pack)
       if (pack.metadata.entity !== 'Item') return
       packName = data.pack
-      item = await pack.getEntity(data.id)
+      item = await pack.getDocument(data.id)
       origin = 'pack'
     } else if (data.data) {
       item = data.data
@@ -362,7 +362,7 @@ export class CoC7Utilities {
     let command
 
     if (item.type === 'weapon') {
-      command = `game.CoC7.macros.weaponCheck({name:'${item.name}', id:'${item._id}', origin:'${origin}', pack: '${packName}'}, event);`
+      command = `game.CoC7.macros.weaponCheck({name:'${item.name}', id:'${item.id}', origin:'${origin}', pack: '${packName}'}, event);`
     }
 
     if (item.type === 'skill') {
@@ -371,11 +371,11 @@ export class CoC7Utilities {
           game.i18n.localize('CoC7.WarnNoGlobalSpec')
         )
       }
-      command = `game.CoC7.macros.skillCheck({name:'${item.name}', id:'${item._id}', origin:'${origin}', pack: '${packName}'}, event);`
+      command = `game.CoC7.macros.skillCheck({name:'${item.name}', id:'${item.id}', origin:'${origin}', pack: '${packName}'}, event);`
     }
 
     // Create the macro command
-    let macro = game.macros.entities.find(
+    let macro = game.macros.contents.find(
       m => m.name === item.name && m.command === command
     )
     if (!macro) {
@@ -626,7 +626,7 @@ export class CoC7Utilities {
         if (dataList.pack) {
           const pack = game.packs.get(dataList.pack)
           if (pack.metadata.entity !== entityType) return []
-          return [await pack.getEntity(dataList.id)]
+          return [await pack.getDocument(dataList.id)]
         } else if (dataList.data) {
           return [dataList]
         } else {
@@ -637,6 +637,29 @@ export class CoC7Utilities {
       }
     } catch (err) {
       return []
+    }
+  }
+
+  static async copyToClipboard (text) {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(text)
+      } else {
+        const textArea = document.createElement('textarea')
+        textArea.value = text
+        textArea.style.position = 'fixed'
+        textArea.style.left = '-999px'
+        textArea.style.top = '-999px'
+        document.body.appendChild(textArea)
+        textArea.focus()
+        textArea.select()
+        return new Promise((resolve, reject) => {
+          document.execCommand('copy') ? resolve() : reject(new Error('Unable to copy to clipboard, this is likely due to your browser security settings.'))
+          textArea.remove()
+        }).catch(err => ui.notifications.error(err))
+      }
+    } catch (err) {
+      ui.notifications.error('Unable to copy to clipboard, this is likely due to your browser security settings.')
     }
   }
 }

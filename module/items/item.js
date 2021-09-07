@@ -544,9 +544,9 @@ export class CoC7Item extends Item {
     return skillProperties
   }
 
-  get base () {
-    if (this.type !== 'skill') return null
-    if (typeof this.data.data.base !== 'string') return this.data.data.base
+  get _base () {
+    if (this.type !== 'skill') return [null, false]
+    if (typeof this.data.data.base !== 'string') return [this.data.data.base, false]
     if (this.data.data.base.includes('@')) {
       const parsed = {}
       for (const [key, value] of Object.entries(COC7.formula.actorsheet)) {
@@ -565,14 +565,27 @@ export class CoC7Item extends Item {
         value = 0
       }
 
-      if (value) {
-        this.update({ 'data.base': value })
-      }
-      return value
+      return [value, true]
     }
-    return !isNaN(parseInt(this.data.data.base))
+    return [!isNaN(parseInt(this.data.data.base))
       ? parseInt(this.data.data.base)
-      : null
+      : null, false]
+  }
+
+  async asyncBase () {
+    const e = this._base
+    if (e[1]) {
+      await this.update({ 'data.base': e[0] })
+    }
+    return e[0]
+  }
+
+  get base () {
+    const e = this._base
+    if (e[1]) {
+      this.update({ 'data.base': e[0] })
+    }
+    return e[0]
   }
 
   get value () {
@@ -694,9 +707,7 @@ export class CoC7Item extends Item {
           lca = a.name.toLowerCase()
           lcb = b.name.toLowerCase()
         }
-        if (lca < lcb) return -1
-        if (lca > lcb) return 1
-        return 0
+        return lca.localeCompare(lcb)
       })
   }
 

@@ -2,13 +2,13 @@
   "name": "CoC7",
   "title": "Call of Cthulhu 7th Edition (Unofficial)",
   "description": "An unofficial implementation of the Call of Cthulhu 7th Edition game system for Foundry Virtual Tabletop.",
-  "version": "0.6.6",
+  "version": "0.6.7",
   "author": "Miskatonic Investigative Society",
   "minimumCoreVersion": "0.8.6",
   "compatibleCoreVersion": "0.8.9",
   "esmodules": ["bundle.js"],
   "templateVersion": 1,
-  "styles": ["style.css"],
+  "styles": ["style.css", "assets/mce.css"],
   "packs": [
     {
       "label": "Skills",

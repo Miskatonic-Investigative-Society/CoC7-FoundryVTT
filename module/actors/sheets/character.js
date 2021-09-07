@@ -80,7 +80,7 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
         ) {
           let styleSheet, cssRuleIndex
           for (let i = 0; i < document.styleSheets.length; i++) {
-            if (document.styleSheets[i].href.endsWith('coc7g.css')) {
+            if (document.styleSheets[i].href?.endsWith('coc7g.css')) {
               styleSheet = document.styleSheets[i]
               break
             }
