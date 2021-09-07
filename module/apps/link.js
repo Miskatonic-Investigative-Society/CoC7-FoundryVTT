@@ -74,7 +74,7 @@ export class CoC7Link {
       const pack = game.packs.get(this._linkData.pack)
       if (!pack) return false
       if (pack.metadata.entity !== 'Item') return undefined
-      this._item = await pack.getEntity(this._linkData.id)
+      this._item = await pack.getDocument(this._linkData.id)
     }
 
     if (this._linkData.fromDirectory) {

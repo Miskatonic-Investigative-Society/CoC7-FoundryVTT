@@ -2367,7 +2367,7 @@ export class CoCActor extends Actor {
       if (skillData.pack) {
         const pack = game.packs.get(skillData.pack)
         if (pack.metadata.entity !== 'Item') return
-        item = await pack.getEntity(skillData.id)
+        item = await pack.getDocument(skillData.id)
       } else if (skillData.id) {
         item = game.items.get(skillData.id)
       }
@@ -2404,10 +2404,7 @@ export class CoCActor extends Actor {
       })
 
       if (create === true) {
-        /** MODIF 0.8.x **/
-        // await this.createOwnedItem( duplicate(item.data));
-        await this.createEmbeddedDocuments('Item', [duplicate(item.data)])
-        /*****************/
+        await this.createEmbeddedDocuments('Item', [duplicate(item)])
       } else return
 
       skill = this.getSkillsByName(item.name)
@@ -2467,7 +2464,7 @@ export class CoCActor extends Actor {
           const pack = weaponData.pack ? game.packs.get(weaponData.pack) : null
           if (pack) {
             if (pack.metadata.entity !== 'Item') return
-            item = await pack.getEntity(weaponData.id)
+            item = await pack.getDocument(weaponData.id)
           } else if (weaponData.id) {
             item = game.items.get(weaponData.id)
           }
@@ -2489,42 +2486,13 @@ export class CoCActor extends Actor {
               create = true
             }
           })
+          const actor = (typeof this.parent?.actor !== 'undefined' ? this.parent.actor : this)
 
           if (create === true) {
-            const mainSkill = item.data?.data?.skill?.main?.name
-            if (mainSkill) {
-              let skill = this.getSkillsByName(mainSkill)[0]
-              if (!skill) {
-                const name = mainSkill.match(/\(([^)]+)\)/)
-                  ? mainSkill.match(/\(([^)]+)\)/)[1]
-                  : mainSkill
-                skill = await this.createWeaponSkill(
-                  name,
-                  !!item.data.data.properties?.rngd
-                )
-              }
-              if (skill) item.data.data.skill.main.id = skill._id
-            } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
-
-            const secondSkill = item.data?.data?.skill?.alternativ?.name
-            if (secondSkill) {
-              let skill = this.getSkillsByName(secondSkill)[0]
-              if (!skill) {
-                const name = mainSkill.match(/\(([^)]+)\)/)
-                  ? mainSkill.match(/\(([^)]+)\)/)[1]
-                  : mainSkill
-                skill = await this.createWeaponSkill(
-                  name,
-                  !!item.data.data.properties?.rngd
-                )
-              }
-              if (skill) item.data.data.skill.alternativ.id = skill._id
-            } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
-
-            await this.createEmbeddedDocuments('Item', [duplicate(item.data)]) // MODIF: 0.8.x 'OwnedItmem' => 'Item
+            await actor.createEmbeddedDocuments('Item', [item.toJSON()])
           } else return
-          weapons = this.getItemsFromName(item.name)
-          if (!weapons) return
+          weapons = actor.getItemsFromName(item.name)
+          if (!weapons.length) return
           await weapons[0].reload()
         } else {
           ui.notifications.warn(
