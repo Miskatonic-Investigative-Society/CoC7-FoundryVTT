@@ -31,6 +31,21 @@ export class CoC7LinkCreationDialog extends FormApplication {
     return new CoC7LinkCreationDialog(link, options)
   }
 
+  static get attributes () {
+    return [
+      {
+        key: 'lck',
+        label: game.i18n.localize('CoC7.Luck'),
+        selected: false
+      },
+      {
+        key: 'san',
+        label: game.i18n.localize('CoC7.Sanity'),
+        selected: false
+      }
+    ]
+  }
+
   /** @override */
   async getData () {
     const data = await super.getData()
@@ -106,18 +121,7 @@ export class CoC7LinkCreationDialog extends FormApplication {
     }
 
     // Prepare characteristics
-    data.attributes = [
-      {
-        key: 'lck',
-        label: game.i18n.localize('CoC7.Luck'),
-        selected: data.data.attributeKey === 'lck'
-      },
-      {
-        key: 'san',
-        label: game.i18n.localize('CoC7.Sanity'),
-        selected: data.data.attributeKey === 'san'
-      }
-    ]
+    data.attributes = CoC7LinkCreationDialog.attributes.map(e => { e.selected = data.data.attributeKey === e.key; return e })
 
     return data
   }
