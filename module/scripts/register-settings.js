@@ -218,6 +218,14 @@ export function registerSettings () {
     default: false,
     type: Boolean
   })
+  game.settings.register('CoC7', 'enablePlayerSourceCode', {
+    name: 'SETTINGS.EnablePlayerSourceCode',
+    hint: 'SETTINGS.EnablePlayerSourceCodeyHint',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
+  })
   game.settings.register('CoC7', 'overrideSheetArtwork', {
     name: 'SETTINGS.OverrideSheetArtwork',
     hint: 'SETTINGS.OverrideSheetArtworkHint',
