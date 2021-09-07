@@ -880,7 +880,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 ##### CoC7.MessageCheckRequestedWait
 
-`"CoC7.MessageCheckRequestedWait": "Your keeper is requesting a {check}.<br>Wait before clicking!<br>",`
+`"CoC7.MessageCheckRequestedWait": "{check} roll requested by your Keeper.<br>Wait before clicking!<br>",`
 
 ##### CoC7.MessageSelectSingleUserForTarget
 
@@ -892,7 +892,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 ##### CoC7.MessageTargetCheckRequested
 
-`"CoC7.MessageTargetCheckRequested": "Your keeper is requesting a {check} for {name}.",`
+`"CoC7.MessageTargetCheckRequested": "Your keeper has requested {name} make a {check} roll.",`
 
 ##### CoC7.MessageTitleSelectSingleUserForTarget
 
