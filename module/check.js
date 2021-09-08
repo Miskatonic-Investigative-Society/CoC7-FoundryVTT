@@ -1529,9 +1529,11 @@ export class CoC7Check {
         chatData.flavor = `[${this.actor.name}] ${chatData.flavor}`
         chatData.flags = {
           CoC7: {
-            GMSelfRoll: true,
-            originalSpeaker: duplicate(chatData.speaker)
+            GMSelfRoll: true
           }
+        }
+        if (typeof chatData.speaker !== 'undefined') {
+          chatData.flags.CoC7.originalSpeaker = duplicate(chatData.speaker)
         }
         if (game.user.isGM) {
           switch (game.settings.get('CoC7', 'selfRollWhisperTarget')) {
