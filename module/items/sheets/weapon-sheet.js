@@ -105,6 +105,7 @@ export class CoC7WeaponSheet extends ItemSheet {
       this.item.data.data.properties.brst === true ||
       this.item.data.data.properties.thrown === true
 
+    data.isKeeper = game.user.isGM
     return data
   }
 

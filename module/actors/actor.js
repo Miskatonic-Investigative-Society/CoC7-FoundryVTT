@@ -467,7 +467,7 @@ export class CoCActor extends Actor {
     }
     const created = await this.createEmbeddedDocuments('Item', [data], {
       renderSheet: showSheet
-    }) // MODIF: 0.8.x 'OwnedItmem' => 'Item
+    })
     return created
   }
 
@@ -511,8 +511,7 @@ export class CoCActor extends Actor {
     }
     await this.createEmbeddedDocuments('Item', [data], {
       renderSheet: !base
-    }) // MODIF: 0.8.x 'OwnedItmem' => 'Item
-    //    const created = await this.createEmbeddedDocuments('OwnedItem', data, { renderSheet: !base});
+    })
     const skill = this.getSkillsByName(name)
     return skill[0]
   }
@@ -556,7 +555,7 @@ export class CoCActor extends Actor {
         )
 
         const attack = await this.createEmbeddedDocuments(
-          'Item', // MODIF: 0.8.x 'OwnedItmem' => 'Item
+          'Item',
           [
             {
               name: 'Innate attack',
@@ -576,12 +575,13 @@ export class CoCActor extends Actor {
           ],
           { renderSheet: false }
         )
-
-        const createdAttack = this.items.get(attack._id)
-        await createdAttack.update({
-          'data.skill.main.id': skill._id,
-          'data.skill.main.name': skill.name
-        })
+        if (skill.length > 0 && attack.length > 0) {
+          const createdAttack = this.items.get(attack[0].id)
+          await createdAttack.update({
+            'data.skill.main.id': skill[0].id,
+            'data.skill.main.name': skill[0].name
+          })
+        }
       } catch (err) {
         console.error('Creature init: ' + err.message)
       }
@@ -601,7 +601,7 @@ export class CoCActor extends Actor {
     }
     const created = await this.createEmbeddedDocuments('Item', [data], {
       renderSheet: showSheet
-    }) // MODIF: 0.8.x 'OwnedItmem' => 'Item
+    })
     return created
   }
 
@@ -635,7 +635,6 @@ export class CoCActor extends Actor {
       index++
       itemName = game.i18n.localize(COC7.newItemName) + ' ' + index
     }
-
     return this.createItem(itemName, 1, showSheet)
   }
 
@@ -664,7 +663,7 @@ export class CoCActor extends Actor {
     }
     await this.createEmbeddedDocuments('Item', [data], {
       renderSheet: showSheet
-    }) // MODIF: 0.8.x 'OwnedItmem' => 'Item
+    })
   }
 
   async createBioSection (title = null) {
@@ -728,6 +727,7 @@ export class CoCActor extends Actor {
    */
   async createEmbeddedDocuments (embeddedName, dataArray, options) {
     const output = []
+    let allCreated = []
     for (const data of dataArray) {
       switch (data.type) {
         case 'skill':
@@ -818,11 +818,14 @@ export class CoCActor extends Actor {
             }
           }
 
-          output.push(await super.createEmbeddedDocuments(
+          allCreated = await super.createEmbeddedDocuments(
             embeddedName,
             [data],
             options
-          ))
+          )
+          for (const created of allCreated) {
+            output.push(created)
+          }
           break
 
         case 'weapon': {
@@ -856,11 +859,14 @@ export class CoCActor extends Actor {
             if (skill) data.data.skill.alternativ.id = skill.id
           } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
 
-          output.push(await super.createEmbeddedDocuments(
+          allCreated = await super.createEmbeddedDocuments(
             embeddedName,
             [duplicate(data)],
             options
-          ))
+          )
+          for (const created of allCreated) {
+            output.push(created)
+          }
           break
         }
 
@@ -1033,7 +1039,7 @@ export class CoCActor extends Actor {
             // Add all skills
             await this.addUniqueItems(data.data.skills, 'archetype')
 
-            const newArchetype = await super.createEmbeddedDocuments(
+            const allCreated = await super.createEmbeddedDocuments(
               embeddedName,
               [data],
               options
@@ -1043,7 +1049,9 @@ export class CoCActor extends Actor {
               'data.development.archetype': this.archetypePoints
             })
 
-            output.push(newArchetype)
+            for (const created of allCreated) {
+              output.push(created)
+            }
           }
 
           break
@@ -1240,7 +1248,7 @@ export class CoCActor extends Actor {
               'data.adjustments.occupation': Number(data.data.creditRating.min)
             })
 
-            const newOccupation = await super.createEmbeddedDocuments(
+            allCreated = await super.createEmbeddedDocuments(
               embeddedName,
               [data],
               options
@@ -1251,16 +1259,21 @@ export class CoCActor extends Actor {
               'data.development.personal': this.personalPoints
             })
 
-            output.push(newOccupation)
+            for (const created of allCreated) {
+              output.push(created)
+            }
           }
           break
 
         default:
-          output.push(await super.createEmbeddedDocuments(
+          allCreated = await super.createEmbeddedDocuments(
             embeddedName,
             [data],
             options
-          ))
+          )
+          for (const created of allCreated) {
+            output.push(created)
+          }
       }
     }
     return output

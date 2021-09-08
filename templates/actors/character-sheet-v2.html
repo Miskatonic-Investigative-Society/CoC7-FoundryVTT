@@ -142,6 +142,9 @@
 			<a data-tab="combat"><div class="tab-name" ><span>{{localize 'CoC7.Combat'}}</span></div></a>
 			<a data-tab="possession"><div class="tab-name" ><span>{{localize 'CoC7.Possessions'}}</span></div></a>
 			<a data-tab="background"><div class="tab-name" ><span>{{localize 'CoC7.Background'}}</span></div></a>
+      {{#if isGM}}
+        <a class="keeper-only-tab" data-tab="keeper" title="{{localize 'CoC7.GmNotes'}}"><div class="tab-name" ><span><i class="game-icon game-icon-tentacles-skull"></i></span></div></a>
+      {{/if}}
 			{{#if alowUnlock}}
 				{{#if data.flags.locked}}
 					<a class="unlock-control lock" title="{{localize 'CoC7.UnlockActor'}}"> <i class="fas fa-lock"></i> </a>
@@ -194,11 +197,14 @@
 							{{> "systems/CoC7/templates/actors/parts/actor-background.html"}}
 						{{/if}}
 					</div>
+
+          {{#if isGM}}
+            <div class="tab coc7 sheet actor temp-retro-compat restore-list-styles" data-group="primary" data-tab="keeper">
+              {{editor content=data.description.keeper target="data.description.keeper" button=true owner=owner editable=editable}}
+            </div>
+          {{/if}}
 				</div>
 			</div>
-
 		</section>
-
-
 	</div>
 </form>

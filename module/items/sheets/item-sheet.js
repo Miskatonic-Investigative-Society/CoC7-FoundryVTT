@@ -13,7 +13,7 @@ export class CoC7ItemSheet extends CoC7ItemSheetV2 {
   static get defaultOptions () {
     return mergeObject(super.defaultOptions, {
       width: 520,
-      height: 480
+      height: 506
     })
   }
 }

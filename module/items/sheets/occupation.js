@@ -282,6 +282,8 @@ export class CoC7OccupationSheet extends ItemSheet {
         )
       }
     }
+
+    data.isKeeper = game.user.isGM
     return data
   }
 

@@ -1,4 +1,4 @@
-/* global ItemSheet, mergeObject */
+/* global game, ItemSheet, mergeObject */
 
 import { COC7 } from '../../config.js'
 
@@ -20,11 +20,12 @@ export class CoC7SkillSheet extends ItemSheet {
       classes: ['coc7', 'sheet', 'item'],
       width: 520,
       height: 480,
+      scrollY: ['.tab.description'],
       tabs: [
         {
-          navSelector: '.sheet-tabs',
+          navSelector: '.sheet-navigation',
           contentSelector: '.sheet-body',
-          initial: 'skills'
+          initial: 'description'
         }
       ]
     })
@@ -80,6 +81,8 @@ export class CoC7SkillSheet extends ItemSheet {
         !this.item.data.data.properties.firearm &&
         !this.item.data.data.properties.fighting
     }
+
+    data.isKeeper = game.user.isGM
     return data
   }
 
