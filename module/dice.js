@@ -41,8 +41,27 @@ export class CoC7Dice {
     })
     if (modif < 0) {
       result.tens.total = Math.max(...result.tens.results)
+      // Handle the 00 special case
+      if (result.unit.total === 0 && result.tens.results.includes(0)) {
+        result.tens.total = 0
+      }
     } else {
       result.tens.total = Math.min(...result.tens.results)
+      // Handle the 00 special case
+      if (result.unit.total === 0 && result.tens.results.includes(0)) {
+        let tens_results_non_zero = []
+        result.tens.results.forEach(r => {
+          if (r !== 0) {
+            tens_results_non_zero.push(r)
+          }
+        })
+        if (tens_results_non_zero.length === 0) {
+          // All the tens dices are 0
+          result.tens.total = 0
+        } else {
+          result.tens.total = Math.min(...tens_results_non_zero)
+        }
+      }
     }
     result.total = result.unit.total + result.tens.total
     if (result.total === 0) {
