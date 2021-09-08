@@ -342,9 +342,6 @@ export class CoC7ActorImporter {
         await npc
           .createEmbeddedDocuments('Item', [mainAttackSkill])
           .then(async newSkills => {
-            console.debug('newskills', newSkills)
-            // const newSkill = newSkills[0].clone()
-            // newSkill.data.data.value = attack.data.range.normal.value
             await npc
               .createEmbeddedDocuments('Item', [attack])
               .then(async createdAttacks => {
@@ -398,12 +395,6 @@ export class CoC7ActorImporter {
    * @param {CoC7Item} skill
    */
   async setMainAttackSkill (weapon, skill) {
-    if (Array.isArray(skill) && skill.length >0) {
-      skill = skill[0]
-    }
-    if (Array.isArray(weapon) && weapon.length >0) {
-      weapon = weapon[0]
-    }
     return await weapon.update({
       'data.skill.main.id': skill.id,
       'data.skill.main.name': skill.name,

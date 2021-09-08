@@ -616,7 +616,7 @@
   "CoC7.DrawGun": "Draw your gun",
 
   "CoC7.GmTools": "Keeper's tools",
-  "CoC7.GmNotes": "GM's notes",
+  "CoC7.GmNotes": "Keeper's notes",
   "CoC7.DevPhase": "Development phase",
   "CoC7.DevPhaseEnabled": "Development phase enabled",
   "CoC7.DevPhaseDisabled": "Development phase disabled",
@@ -798,8 +798,6 @@
   "SETTINGS.AdviseAllPlayer": "Notify all players",
   "SETTINGS.OneBlockBackStory": "One block backstory",
   "SETTINGS.OneBlockBackStoryHint": "Turn backstory to one editor block, but you can format/add links.",
-  "SETTINGS.EnablePlayerSourceCode": "Enable code editing for players.",
-  "SETTINGS.EnablePlayerSourceCodeyHint": "!WARNING! When Enabling this, players will be able to see and edit 'keeper only' blocks.",
   "SETTINGS.EnableStatusIcons": "Enable status icons",
   "SETTINGS.EnableStatusIconsHint": "Set if combat and sanity effects icons are shown in tokens."
 }

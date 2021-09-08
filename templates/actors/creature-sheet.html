@@ -384,6 +384,16 @@
 		</section>
 		{{/if}}
 
+    {{#if isGM}}
+      <section class="sheet-section">
+        <div class="section-header flexrow" data-pannel="keeper">
+          <h3 class="flex1 keeper-only-tab">{{localize 'CoC7.GmNotes'}} <i class="game-icon game-icon-tentacles-skull"></i></h3>
+        </div>
+        <div class="description pannel expanded resizededitor">
+          {{editor content=data.description.keeper target="data.description.keeper" button=true owner=owner editable=editable}}
+        </div>
+      </section>
+    {{/if}}
 
 		<section class="sheet-section">
 			<div class="section-header flexrow" data-pannel="description">

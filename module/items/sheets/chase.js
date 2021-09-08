@@ -91,6 +91,8 @@ export class CoC7ChaseSheet extends ItemSheet {
           prev.mov > current.mov ? prev : current
         ).mov
       : -1
+
+    data.isKeeper = game.user.isGM
     return data
   }
 
@@ -572,10 +574,11 @@ export class _participant {
 
   get dex () {
     if (!this.data.dex) {
-      if (this.hasVehicle && this.hasDriver)
+      if (this.hasVehicle && this.hasDriver) {
         this.data.dex = this.driver.characteristics.dex.value
-      else if (this.hasActor)
+      } else if (this.hasActor) {
         this.data.dex = this.actor.characteristics.dex.value
+      }
     }
 
     if (this.data.dex) {

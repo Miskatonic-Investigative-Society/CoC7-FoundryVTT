@@ -4,7 +4,7 @@ export class Updater {
     this.systemUpdateVersion = String(
       game.settings.get('CoC7', 'systemUpdateVersion')
     )
-    if (isNewerVersion('0.3', this.systemUpdateVersion)) {
+    if (isNewerVersion('0.4', this.systemUpdateVersion)) {
       if (game.user.isGM) {
         new Dialog({
           title: game.i18n.localize('CoC7.Migrate.Title'),
@@ -104,7 +104,7 @@ export class Updater {
       }
     }
 
-    game.settings.set('CoC7', 'systemUpdateVersion', '0.3')
+    game.settings.set('CoC7', 'systemUpdateVersion', '0.4')
   }
 
   static migrateActorData (actor) {
@@ -113,6 +113,7 @@ export class Updater {
     // Update World Actor
     Updater._migrateActorCharacterSanity(actor, updateData)
     Updater._migrateActorArtwork(actor, updateData)
+    Updater._migrateActorKeeperNotes(actor, updateData)
 
     // Migrate World Actor Items
     if (actor.items) {
@@ -187,6 +188,7 @@ export class Updater {
     Updater._migrateItemExperience(item, updateData)
     Updater._migrateItemArtwork(item, updateData)
     Updater._migrateItemBookAutomated(item, updateData)
+    Updater._migrateItemKeeperNotes(item, updateData)
 
     return updateData
   }
@@ -206,6 +208,20 @@ export class Updater {
     // Update World Actor
     Updater._migrateTableArtwork(table, updateData)
 
+    return updateData
+  }
+
+  static _migrateItemKeeperNotes (item, updateData) {
+    if (['archetype', 'chase', 'item', 'occupation', 'setup', 'skill', 'spell', 'status', 'talent', 'weapon'].includes(item.type)) {
+      if (typeof item.data.description === 'string') {
+        updateData['data.description'] = {
+          value: item.data.description,
+          keeper: ''
+        }
+      } else if (typeof item.data.description.keeper === 'undefined') {
+        updateData['data.description.keeper'] = ''
+      }
+    }
     return updateData
   }
 
@@ -353,6 +369,17 @@ export class Updater {
           updateData.effects = actor.effects
         }
         updateData.effects[k].icon = 'systems/CoC7/assets/icons/' + image[1]
+      }
+    }
+    return updateData
+  }
+
+  static _migrateActorKeeperNotes (actor, updateData) {
+    if (['character', 'npc', 'creature'].includes(actor.type)) {
+      if (typeof actor.data.description === 'undefined') {
+        updateData['data.description'] = {
+          keeper: ''
+        }
       }
     }
     return updateData
