@@ -95,7 +95,7 @@ export class SanCheckCard extends ChatCardActor {
           : this.sanData.sanMin
       }
 
-      const formula = this.creature?.sanLoss ? this.sanCheck.passed : 0
+      const formula = this.creature?.sanLoss(this.sanCheck.passed) || 0
       if (formula) {
         if (!isNaN(Number(formula))) return Number(formula)
         return formula
