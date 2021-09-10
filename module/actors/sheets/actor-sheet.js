@@ -69,23 +69,23 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
     if (!data.manualCredit) {
       data.credit = {}
       let factor
-      let moneySymbol
+      let monetarySymbol
       if (!data.data.credit) {
         factor = 1
-        moneySymbol = '$'
+        monetarySymbol = '$'
       } else {
         factor = parseInt(data.data.credit.multiplier)
           ? parseInt(data.data.credit.multiplier)
           : 1
-        moneySymbol = data.data.credit.monetarySymbol
+        monetarySymbol = data.data.credit.monetarySymbol
           ? data.data.credit.monetarySymbol
           : '$'
       }
 
-      data.credit.spendingLevel = `${this.actor.spendingLevel *
-        factor}${moneySymbol}`
-      data.credit.assets = `${this.actor.assets * factor}${moneySymbol}`
-      data.credit.cash = `${this.actor.cash * factor}${moneySymbol}`
+      data.credit.spendingLevel = `${monetarySymbol}${this.actor.spendingLevel *
+        factor}`
+      data.credit.assets = `${monetarySymbol}${this.actor.assets * factor}`
+      data.credit.cash = `${monetarySymbol}${this.actor.cash * factor}`
     }
 
     data.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
