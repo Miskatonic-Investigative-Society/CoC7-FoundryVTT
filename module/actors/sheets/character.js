@@ -21,11 +21,25 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
     return buttons
   }
 
+  async toggleSheetMode (event) {
+    console.log(event)
+    this.summarized = !this.summarized
+    await this.close()
+    const options = this.summarized
+      ? {
+          classes: ['coc7', 'actor', 'character', 'summarized'],
+          height: 200,
+          resizable: false,
+          width: 700
+        }
+      : CoC7CharacterSheetV2.defaultOptions
+    await this.render(true, options)
+  }
+
   async getData () {
     const data = await super.getData()
-
+    data.summarized = this.summarized
     data.skillList = []
-
     let previousSpec = ''
     for (const skill of data.skills) {
       if (skill.data.properties.special) {
@@ -50,7 +64,6 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
         data.data.infos.playername = user.name
       }
     }
-
     return data
   }
 
@@ -61,7 +74,7 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
   static get defaultOptions () {
     return mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheetV2', 'actor', 'character'],
-      template: 'systems/CoC7/templates/actors/character-sheet-v2.html',
+      template: 'systems/CoC7/templates/actors/character/index.html',
       width: 687,
       height: 623,
       resizable: true,
