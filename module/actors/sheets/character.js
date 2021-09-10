@@ -3,15 +3,43 @@
 import { CoC7CharacterSheet } from './actor-sheet.js'
 
 export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
-  // constructor(...args) {
-  //   super(...args);
-  // }
+  _getHeaderButtons () {
+    if (!this.summarized) this.summarized = false
+    let buttons = super._getHeaderButtons()
+    buttons = [
+      {
+        label: this.summarized
+          ? game.i18n.localize('CoC7.Maximize')
+          : game.i18n.localize('CoC7.Summarize'),
+        class: 'test-extra-icon',
+        icon: this.summarized
+          ? 'fas fa-window-maximize'
+          : 'fas fa-window-minimize',
+        onclick: event => this.toggleSheetMode(event)
+      }
+    ].concat(buttons)
+    return buttons
+  }
+
+  async toggleSheetMode (event) {
+    console.log(event)
+    this.summarized = !this.summarized
+    await this.close()
+    const options = this.summarized
+      ? {
+          classes: ['coc7', 'actor', 'character', 'summarized'],
+          height: 200,
+          resizable: false,
+          width: 700
+        }
+      : CoC7CharacterSheetV2.defaultOptions
+    await this.render(true, options)
+  }
 
   async getData () {
     const data = await super.getData()
-
+    data.summarized = this.summarized
     data.skillList = []
-
     let previousSpec = ''
     for (const skill of data.skills) {
       if (skill.data.properties.special) {
@@ -25,7 +53,18 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
       }
       data.skillList.push(skill)
     }
-
+    data.topSkills = [...data.skills]
+      .sort((a, b) => {
+        return a.data.value - b.data.value
+      })
+      .reverse()
+      .slice(0, 14)
+    data.topWeapons = [...data.meleeWpn, ...data.rangeWpn]
+      .sort((a, b) => {
+        return a.data.skill.main?.value - b.data.skill.main?.value
+      })
+      .reverse()
+      .slice(0, 3)
     data.displayPlayerName = game.settings.get(
       'CoC7',
       'displayPlayerNameOnSheet'
@@ -36,7 +75,6 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
         data.data.infos.playername = user.name
       }
     }
-
     return data
   }
 
@@ -47,7 +85,7 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
   static get defaultOptions () {
     return mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheetV2', 'actor', 'character'],
-      template: 'systems/CoC7/templates/actors/character-sheet-v2.html',
+      template: 'systems/CoC7/templates/actors/character/index.html',
       width: 687,
       height: 623,
       resizable: true,
