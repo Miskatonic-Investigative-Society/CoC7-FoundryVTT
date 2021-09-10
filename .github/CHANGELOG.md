@@ -1,3 +1,20 @@
+## Version 0.6.8:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+
+- Add keeper notes tab to all sheets.
+- Add button for summarize character sheet, keeping only the essential stuff on minimalistic way.
+- Fix error on actor importer when it receives an array, thanks to @pconception;
+- Fix errors when override sheet artwork is enable, background type is not slice, and an inline style tag has been added;
+- Fix sanity loss from creature not being rolled;
+- Fix some Foundry warnings on console for deprecated stuff;
+- Handle 00 special case for advantage/disadvantage rolls, thanks to @pconception;
+- Now the monetary symbol goes before numeral on cash fields;
+- Now skill sorting to support accented characters;
+- Prevent error on keeper self roll if no token selected;
+- Resolve issue with createEmbeddedDocuments returning array in array;
+- Update character sheet to prevent reloading when editing backstory;
+
 ## Version 0.6.7:
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
