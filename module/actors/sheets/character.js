@@ -53,7 +53,18 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
       }
       data.skillList.push(skill)
     }
-
+    data.topSkills = [...data.skills]
+      .sort((a, b) => {
+        return a.data.value - b.data.value
+      })
+      .reverse()
+      .slice(0, 14)
+    data.topWeapons = [...data.meleeWpn, ...data.rangeWpn]
+      .sort((a, b) => {
+        return a.data.skill.main?.value - b.data.skill.main?.value
+      })
+      .reverse()
+      .slice(0, 3)
     data.displayPlayerName = game.settings.get(
       'CoC7',
       'displayPlayerNameOnSheet'
