@@ -4,7 +4,7 @@ import { CoC7Utilities } from '../../utilities.js'
 export class CoC7BookSheet extends ItemSheet {
   static get defaultOptions () {
     return mergeObject(super.defaultOptions, {
-      template: 'systems/CoC7/templates/items/book/main.hbs',
+      template: 'systems/CoC7/templates/items/book/main.html',
       classes: ['coc7', 'item', 'book'],
       width: 500,
       height: 'auto',

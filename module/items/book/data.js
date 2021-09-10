@@ -389,7 +389,7 @@ export class CoC7Book extends CoC7Item {
         )}`
       }
     }
-    const template = 'systems/CoC7/templates/items/book/development.hbs'
+    const template = 'systems/CoC7/templates/items/book/development.html'
     const html = await renderTemplate(template, { developments })
     return await ChatMessage.create({
       user: game.user.id,
