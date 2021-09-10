@@ -3,9 +3,23 @@
 import { CoC7CharacterSheet } from './actor-sheet.js'
 
 export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
-  // constructor(...args) {
-  //   super(...args);
-  // }
+  _getHeaderButtons () {
+    if (!this.summarized) this.summarized = false
+    let buttons = super._getHeaderButtons()
+    buttons = [
+      {
+        label: this.summarized
+          ? game.i18n.localize('CoC7.Maximize')
+          : game.i18n.localize('CoC7.Summarize'),
+        class: 'test-extra-icon',
+        icon: this.summarized
+          ? 'fas fa-window-maximize'
+          : 'fas fa-window-minimize',
+        onclick: event => this.toggleSheetMode(event)
+      }
+    ].concat(buttons)
+    return buttons
+  }
 
   async getData () {
     const data = await super.getData()

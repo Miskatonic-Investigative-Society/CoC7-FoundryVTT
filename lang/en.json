@@ -699,6 +699,9 @@
   "CoC7.Migrate.ButtonSkip": "Skip",
   "CoC7.Migrate.ButtonOkay": "Okay",
 
+  "CoC7.Maximize": "Maximize",
+  "CoC7.Summarize": "Summarize",
+
   "SETTINGS.TitleRules": "Rules",
   "SETTINGS.TitleInitiative": "Initiative Settings",
   "SETTINGS.TitleRoll": "Roll Settings",
