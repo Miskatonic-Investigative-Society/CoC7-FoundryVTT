@@ -208,6 +208,7 @@ export class CoC7SetupSheet extends ItemSheet {
 
     data.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
 
+    data.isKeeper = game.user.isGM
     return data
   }
 

@@ -179,6 +179,8 @@ export class CoC7ArchetypeSheet extends ItemSheet {
     // for (let [key, value] of Object.entries(data.data.type)) {
     //   if( value) data.itemProperties.push( COC7.occupationProperties[key]?COC7.occupationProperties[key]:null);
     // }
+
+    data.isKeeper = game.user.isGM
     return data
   }
 

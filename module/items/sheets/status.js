@@ -1,4 +1,4 @@
-/* global ItemSheet, mergeObject */
+/* global game, ItemSheet, mergeObject */
 
 import { COC7 } from '../../config.js'
 // import { CoCActor } from '../../actors/actor.js';
@@ -54,6 +54,8 @@ export class CoC7StatusSheet extends ItemSheet {
         )
       }
     }
+
+    data.isKeeper = game.user.isGM
     return data
   }
 }

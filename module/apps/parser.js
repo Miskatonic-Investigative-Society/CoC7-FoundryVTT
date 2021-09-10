@@ -120,11 +120,6 @@ export class CoC7Parser {
     }
   }
 
-  static async onInitEditor (editor) {
-    // editor con
-    ui.notifications.info('EDITOR IS INITIATED')
-  }
-
   static ParseMessage (
     message,
     html,
@@ -217,16 +212,6 @@ export class CoC7Parser {
       }
     }
 
-    for (const element of html.find('.keeper-only')) {
-      if (!game.user.isGM) element.style.display = 'none'
-    }
-
-    // for (const element of html.find('div.editor-content')){
-    //   if (element.outerHTML.toLocaleLowerCase().includes('[gm-only]')){
-    //     element.outerHTML = CoC7Parser.procesGMOnly( element.outerHTML)
-    //   }
-    // }
-
     // Bind the click to execute the check.
     // html.on('click', 'a.coc7-link', CoC7Parser._onCheck.bind(this));
     html
@@ -264,30 +249,6 @@ export class CoC7Parser {
     TextEditor._replaceTextContent(text, rgx, CoC7Parser._createLink)
     return html.innerHTML
   }
-
-  // static procesGMOnly (content){
-  //   // const gmOnlyRgx = new RegExp(
-  //   //   '(?:\[gm-only\])(.|\n)*?(?:\[\/gm-only\])',
-  //   //   'gi'
-  //   // )
-
-  //   let replaced = content
-
-  //   const searchAndReplace = [
-  //     { search: '<p>[gm-only]', replace: '<div class="gm-secret"><p>'},
-  //     { search: '[/gm-only]</p>', replace: '</p></div>'},
-  //     { search: '[gm-only]', replace: '<div class="gm-secret>'},
-  //     { search: '[/gm-only]', replace: '</div'}
-  //   ]
-
-  //   searchAndReplace.forEach( e => {
-  //     const esc = e.search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-  //     const searchRegEx = new RegExp(esc, 'ig')
-  //     replaced = replaced.replaceAll( searchRegEx, e.replace)
-  //   })
-
-  //   return content
-  // }
 
   static bindEventsHandler (html) {
     html

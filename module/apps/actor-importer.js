@@ -342,8 +342,6 @@ export class CoC7ActorImporter {
         await npc
           .createEmbeddedDocuments('Item', [mainAttackSkill])
           .then(async newSkills => {
-            // const newSkill = newSkills[0].clone()
-            // newSkill.data.data.value = attack.data.range.normal.value
             await npc
               .createEmbeddedDocuments('Item', [attack])
               .then(async createdAttacks => {

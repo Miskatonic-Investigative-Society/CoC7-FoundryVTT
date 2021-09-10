@@ -521,7 +521,9 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.GainsForReading
 ```  "CoC7.GainsForReading": "Skill gains for reading <i>{book}</i>.",```
 ##### CoC7.GmNotes
-```  "CoC7.GmNotes": "GM's notes",```
+
+`"CoC7.GmNotes": "Keeper's notes",`
+
 ##### CoC7.GmTools
 ```  "CoC7.GmTools": "Keeper's tools",```
 ##### CoC7.GoodForAsylum
@@ -637,13 +639,16 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.MessageBoutOfMadnessTableNotFound
 ```  "CoC7.MessageBoutOfMadnessTableNotFound": "The result from the madness table was not found, please check all your roll tables are created",```
 ##### CoC7.MessageCheckRequestedWait
-```  "CoC7.MessageCheckRequestedWait": "Your keeper is requesting a {check}.<br>Wait before clicking!<br>",```
+`"CoC7.MessageCheckRequestedWait": "{check} roll requested by your Keeper.<br>Wait before clicking!<br>",`
+
 ##### CoC7.MessageSelectSingleUserForTarget
 ```  "CoC7.MessageSelectSingleUserForTarget": "This token is controlled by multiple users, please select which user can respond to this attack.",```
 ##### CoC7.MessageSelectedTargetIsNotControlled
 ```  "CoC7.MessageSelectedTargetIsNotControlled": "The token for {name} is owned by not controlled by a player so will not be able to react to combat actions.",```
 ##### CoC7.MessageTargetCheckRequested
-```  "CoC7.MessageTargetCheckRequested": "Your keeper is requesting a {check} for {name}.",```
+
+`"CoC7.MessageTargetCheckRequested": "Your keeper has requested {name} make a {check} roll.",`
+
 ##### CoC7.MessageTitleSelectSingleUserForTarget
 ```  "CoC7.MessageTitleSelectSingleUserForTarget": "Which user can respond to this attack",```
 ##### CoC7.Migrate.ButtonOkay

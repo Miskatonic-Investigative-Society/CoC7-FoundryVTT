@@ -83,6 +83,8 @@ export class CoC7SpellSheet extends ItemSheet {
         )
       }
     }
+
+    data.isKeeper = game.user.isGM
     return data
   }
 }

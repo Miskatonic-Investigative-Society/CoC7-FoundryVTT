@@ -337,32 +337,32 @@ export class CoC7ActorSheet extends ActorSheet {
               a.data.properties.special &&
               typeof a.data.specialization !== 'undefined'
                 ? a.data.specialization
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')
-                    .toLowerCase() +
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase() +
                   a.name
                     .normalize('NFD')
                     .replace(/[\u0300-\u036f]/g, '')
                     .toLowerCase()
                 : a.name
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')
-                    .toLowerCase()
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase()
             lcb =
               b.data.properties.special &&
               typeof b.data.specialization !== 'undefined'
                 ? b.data.specialization
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')
-                    .toLowerCase() +
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase() +
                   b.name
                     .normalize('NFD')
                     .replace(/[\u0300-\u036f]/g, '')
                     .toLowerCase()
                 : b.name
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')
-                    .toLowerCase()
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase()
           } else {
             lca = a.name
               .normalize('NFD')
@@ -388,30 +388,30 @@ export class CoC7ActorSheet extends ActorSheet {
           if (a.data.properties && b.data.properties) {
             lca = a.data.properties.special
               ? a.data.specialization
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase() +
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase() +
                 a.name
                   .normalize('NFD')
                   .replace(/[\u0300-\u036f]/g, '')
                   .toLowerCase()
               : a.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase()
             lcb = b.data.properties.special
               ? b.data.specialization
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase() +
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase() +
                 b.name
                   .normalize('NFD')
                   .replace(/[\u0300-\u036f]/g, '')
                   .toLowerCase()
               : b.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase()
           } else {
             lca = a.name
               .normalize('NFD')
@@ -872,7 +872,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
     html
       .find('a.coc7-link')
-      .on('click', async event => await CoC7Parser._onCheck(event))
+      .on('click', event => CoC7Parser._onCheck(event))
     html
       .find('a.coc7-link')
       .on('dragstart', event => CoC7Parser._onDragCoC7Link(event))
@@ -1517,19 +1517,19 @@ export class CoC7ActorSheet extends ActorSheet {
     if (isCtrlKey(event) && game.user.isGM && ['lck', 'san'].includes(attrib)) {
       const linkData = event.altKey
         ? {
-            check: 'sanloss',
-            hasPlayerOwner: this.actor.hasPlayerOwner,
-            actorKey: this.actor.actorKey,
-            forceModifiers: event.shiftKey
-          }
+          check: 'sanloss',
+          hasPlayerOwner: this.actor.hasPlayerOwner,
+          actorKey: this.actor.actorKey,
+          forceModifiers: event.shiftKey
+        }
         : {
-            check: 'check',
-            type: 'attribute',
-            name: attrib,
-            hasPlayerOwner: this.actor.hasPlayerOwner,
-            actorKey: this.actor.actorKey,
-            forceModifiers: event.shiftKey
-          }
+          check: 'check',
+          type: 'attribute',
+          name: attrib,
+          hasPlayerOwner: this.actor.hasPlayerOwner,
+          actorKey: this.actor.actorKey,
+          forceModifiers: event.shiftKey
+        }
       if (game.settings.get('core', 'rollMode') === 'blindroll') {
         linkData.blind = true
       }

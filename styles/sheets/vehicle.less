@@ -6,6 +6,24 @@
     color: var(--main-sheet-front-color);
   }
 
+  .sheet-nav {
+    a {
+      &.active {
+        &.keeper-only-tab span {
+          background-color: @colorGreen;
+          color: white;
+        }
+      }
+      &.keeper-only-tab span {
+        color: @colorGreen;
+
+        &:hover {
+          border: 1px solid @colorGreen;
+        }
+      }
+    }
+  }
+
   .armor-infos {
     display: flex;
     flex-direction: row;

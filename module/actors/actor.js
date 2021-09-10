@@ -467,7 +467,7 @@ export class CoCActor extends Actor {
     }
     const created = await this.createEmbeddedDocuments('Item', [data], {
       renderSheet: showSheet
-    }) // MODIF: 0.8.x 'OwnedItmem' => 'Item
+    })
     return created
   }
 
@@ -511,8 +511,7 @@ export class CoCActor extends Actor {
     }
     await this.createEmbeddedDocuments('Item', [data], {
       renderSheet: !base
-    }) // MODIF: 0.8.x 'OwnedItmem' => 'Item
-    //    const created = await this.createEmbeddedDocuments('OwnedItem', data, { renderSheet: !base});
+    })
     const skill = this.getSkillsByName(name)
     return skill[0]
   }
@@ -556,7 +555,7 @@ export class CoCActor extends Actor {
         )
 
         const attack = await this.createEmbeddedDocuments(
-          'Item', // MODIF: 0.8.x 'OwnedItmem' => 'Item
+          'Item',
           [
             {
               name: 'Innate attack',
@@ -576,12 +575,13 @@ export class CoCActor extends Actor {
           ],
           { renderSheet: false }
         )
-
-        const createdAttack = this.items.get(attack._id)
-        await createdAttack.update({
-          'data.skill.main.id': skill._id,
-          'data.skill.main.name': skill.name
-        })
+        if (skill.length > 0 && attack.length > 0) {
+          const createdAttack = this.items.get(attack[0].id)
+          await createdAttack.update({
+            'data.skill.main.id': skill[0].id,
+            'data.skill.main.name': skill[0].name
+          })
+        }
       } catch (err) {
         console.error('Creature init: ' + err.message)
       }
@@ -601,7 +601,7 @@ export class CoCActor extends Actor {
     }
     const created = await this.createEmbeddedDocuments('Item', [data], {
       renderSheet: showSheet
-    }) // MODIF: 0.8.x 'OwnedItmem' => 'Item
+    })
     return created
   }
 
@@ -635,7 +635,6 @@ export class CoCActor extends Actor {
       index++
       itemName = game.i18n.localize(COC7.newItemName) + ' ' + index
     }
-
     return this.createItem(itemName, 1, showSheet)
   }
 
@@ -664,7 +663,7 @@ export class CoCActor extends Actor {
     }
     await this.createEmbeddedDocuments('Item', [data], {
       renderSheet: showSheet
-    }) // MODIF: 0.8.x 'OwnedItmem' => 'Item
+    })
   }
 
   async createBioSection (title = null) {
@@ -728,6 +727,7 @@ export class CoCActor extends Actor {
    */
   async createEmbeddedDocuments (embeddedName, dataArray, options) {
     const output = []
+    let allCreated = []
     for (const data of dataArray) {
       switch (data.type) {
         case 'skill':
@@ -818,11 +818,14 @@ export class CoCActor extends Actor {
             }
           }
 
-          output.push(await super.createEmbeddedDocuments(
+          allCreated = await super.createEmbeddedDocuments(
             embeddedName,
             [data],
             options
-          ))
+          )
+          for (const created of allCreated) {
+            output.push(created)
+          }
           break
 
         case 'weapon': {
@@ -856,11 +859,14 @@ export class CoCActor extends Actor {
             if (skill) data.data.skill.alternativ.id = skill.id
           } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
 
-          output.push(await super.createEmbeddedDocuments(
+          allCreated = await super.createEmbeddedDocuments(
             embeddedName,
             [duplicate(data)],
             options
-          ))
+          )
+          for (const created of allCreated) {
+            output.push(created)
+          }
           break
         }
 
@@ -1033,7 +1039,7 @@ export class CoCActor extends Actor {
             // Add all skills
             await this.addUniqueItems(data.data.skills, 'archetype')
 
-            const newArchetype = await super.createEmbeddedDocuments(
+            const allCreated = await super.createEmbeddedDocuments(
               embeddedName,
               [data],
               options
@@ -1043,7 +1049,9 @@ export class CoCActor extends Actor {
               'data.development.archetype': this.archetypePoints
             })
 
-            output.push(newArchetype)
+            for (const created of allCreated) {
+              output.push(created)
+            }
           }
 
           break
@@ -1240,7 +1248,7 @@ export class CoCActor extends Actor {
               'data.adjustments.occupation': Number(data.data.creditRating.min)
             })
 
-            const newOccupation = await super.createEmbeddedDocuments(
+            allCreated = await super.createEmbeddedDocuments(
               embeddedName,
               [data],
               options
@@ -1251,16 +1259,21 @@ export class CoCActor extends Actor {
               'data.development.personal': this.personalPoints
             })
 
-            output.push(newOccupation)
+            for (const created of allCreated) {
+              output.push(created)
+            }
           }
           break
 
         default:
-          output.push(await super.createEmbeddedDocuments(
+          allCreated = await super.createEmbeddedDocuments(
             embeddedName,
             [data],
             options
-          ))
+          )
+          for (const created of allCreated) {
+            output.push(created)
+          }
       }
     }
     return output
@@ -2367,7 +2380,7 @@ export class CoCActor extends Actor {
       if (skillData.pack) {
         const pack = game.packs.get(skillData.pack)
         if (pack.metadata.entity !== 'Item') return
-        item = await pack.getEntity(skillData.id)
+        item = await pack.getDocument(skillData.id)
       } else if (skillData.id) {
         item = game.items.get(skillData.id)
       }
@@ -2404,10 +2417,7 @@ export class CoCActor extends Actor {
       })
 
       if (create === true) {
-        /** MODIF 0.8.x **/
-        // await this.createOwnedItem( duplicate(item.data));
-        await this.createEmbeddedDocuments('Item', [duplicate(item.data)])
-        /*****************/
+        await this.createEmbeddedDocuments('Item', [duplicate(item)])
       } else return
 
       skill = this.getSkillsByName(item.name)
@@ -2467,7 +2477,7 @@ export class CoCActor extends Actor {
           const pack = weaponData.pack ? game.packs.get(weaponData.pack) : null
           if (pack) {
             if (pack.metadata.entity !== 'Item') return
-            item = await pack.getEntity(weaponData.id)
+            item = await pack.getDocument(weaponData.id)
           } else if (weaponData.id) {
             item = game.items.get(weaponData.id)
           }
@@ -2489,42 +2499,13 @@ export class CoCActor extends Actor {
               create = true
             }
           })
+          const actor = (typeof this.parent?.actor !== 'undefined' ? this.parent.actor : this)
 
           if (create === true) {
-            const mainSkill = item.data?.data?.skill?.main?.name
-            if (mainSkill) {
-              let skill = this.getSkillsByName(mainSkill)[0]
-              if (!skill) {
-                const name = mainSkill.match(/\(([^)]+)\)/)
-                  ? mainSkill.match(/\(([^)]+)\)/)[1]
-                  : mainSkill
-                skill = await this.createWeaponSkill(
-                  name,
-                  !!item.data.data.properties?.rngd
-                )
-              }
-              if (skill) item.data.data.skill.main.id = skill._id
-            } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
-
-            const secondSkill = item.data?.data?.skill?.alternativ?.name
-            if (secondSkill) {
-              let skill = this.getSkillsByName(secondSkill)[0]
-              if (!skill) {
-                const name = mainSkill.match(/\(([^)]+)\)/)
-                  ? mainSkill.match(/\(([^)]+)\)/)[1]
-                  : mainSkill
-                skill = await this.createWeaponSkill(
-                  name,
-                  !!item.data.data.properties?.rngd
-                )
-              }
-              if (skill) item.data.data.skill.alternativ.id = skill._id
-            } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
-
-            await this.createEmbeddedDocuments('Item', [duplicate(item.data)]) // MODIF: 0.8.x 'OwnedItmem' => 'Item
+            await actor.createEmbeddedDocuments('Item', [item.toJSON()])
           } else return
-          weapons = this.getItemsFromName(item.name)
-          if (!weapons) return
+          weapons = actor.getItemsFromName(item.name)
+          if (!weapons.length) return
           await weapons[0].reload()
         } else {
           ui.notifications.warn(

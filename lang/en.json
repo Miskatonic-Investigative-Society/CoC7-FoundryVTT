@@ -617,7 +617,7 @@
   "CoC7.DrawGun": "Draw your gun",
 
   "CoC7.GmTools": "Keeper's tools",
-  "CoC7.GmNotes": "GM's notes",
+  "CoC7.GmNotes": "Keeper's notes",
   "CoC7.DevPhase": "Development phase",
   "CoC7.DevPhaseEnabled": "Development phase enabled",
   "CoC7.DevPhaseDisabled": "Development phase disabled",
@@ -653,8 +653,8 @@
   "CoC7.InfoLessSkillThanOptions": "There's only {skillCount} and {optionsCount} options, adding all of them",
   "CoC7.InfoAllSkillsAlreadySelected": "All skills are already selected.",
 
-  "CoC7.MessageCheckRequestedWait": "Your keeper is requesting a {check}.<br>Wait before clicking!<br>",
-  "CoC7.MessageTargetCheckRequested": "Your keeper is requesting a {check} for {name}.",
+  "CoC7.MessageCheckRequestedWait": "{check} roll requested by your Keeper.<br>Wait before clicking!<br>",
+  "CoC7.MessageTargetCheckRequested": "Your keeper has requested {name} make a {check} roll.",
   "CoC7.MessageTitleSelectSingleUserForTarget": "Which user can respond to this attack",
   "CoC7.MessageSelectSingleUserForTarget": "This token is controlled by multiple users, please select which user can respond to this attack.",
   "CoC7.MessageSelectedTargetIsNotControlled": "The token for {name} is owned by not controlled by a player so will not be able to react to combat actions.",

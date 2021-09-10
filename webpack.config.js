@@ -123,7 +123,7 @@ const bundleScript = {
       ]
     }),
     new MiniCssExtractPlugin({
-      filename: 'style.css',
+      filename: 'coc7g.css',
       insert: 'head'
     }),
     new WebpackBar({})

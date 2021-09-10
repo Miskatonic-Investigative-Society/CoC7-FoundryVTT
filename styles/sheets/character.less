@@ -252,9 +252,20 @@
             }
 
             &.active {
+              &.keeper-only-tab span {
+                background-color: @colorGreen;
+                color: white;
+              }
               span {
                 color: white;
                 background-color: var(--main-sheet-front-color);
+              }
+            }
+            &.keeper-only-tab span {
+              color: @colorGreen;
+
+              &:hover {
+                border: 1px solid @colorGreen;
               }
             }
           }

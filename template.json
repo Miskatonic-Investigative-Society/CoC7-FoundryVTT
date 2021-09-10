@@ -194,10 +194,16 @@
         "value": 0,
         "max": 0
       },
+      "description": {
+        "keeper": ""
+      },
       "notes": ""
     },
     "npc": {
       "templates": ["characteristics", "attribs", "status", "biography"],
+      "description": {
+        "keeper": ""
+      },
       "infos": {
         "occupation": "",
         "age": "",
@@ -209,6 +215,9 @@
     },
     "creature": {
       "templates": ["characteristics", "attribs", "status", "biography"],
+      "description": {
+        "keeper": ""
+      },
       "special": {
         "attribs": {
           "move": {
@@ -281,7 +290,10 @@
       "chase"
     ],
     "item": {
-      "description": "",
+      "description": {
+        "value": "",
+        "keeper": ""
+      },
       "quantity": 1,
       "weight": 0,
       "attributes": {}
@@ -290,7 +302,8 @@
       "description": {
         "value": "",
         "chat": "",
-        "special": ""
+        "special": "",
+        "keeper": ""
       },
       "wpnType": "",
       "skill": {
@@ -339,7 +352,8 @@
         "value": "",
         "opposingDifficulty": "",
         "pushedFaillureConsequences": "",
-        "chat": ""
+        "chat": "",
+        "keeper": ""
       },
       "base": 0,
       "adjustments": {
@@ -356,7 +370,8 @@
     },
     "occupation": {
       "description": {
-        "value": ""
+        "value": "",
+        "keeper": ""
       },
       "source": null,
       "type": {
@@ -431,7 +446,8 @@
     },
     "archetype": {
       "description": {
-        "value": ""
+        "value": "",
+        "keeper": ""
       },
       "source": null,
       "type": {
@@ -465,7 +481,8 @@
     },
     "setup": {
       "description": {
-        "value": ""
+        "value": "",
+        "keeper": ""
       },
       "characteristics": {
         "points": {
@@ -521,7 +538,8 @@
         "value": "",
         "chat": "",
         "unidentified": "",
-        "notes": ""
+        "notes": "",
+        "keeper": ""
       },
       "type": {
         "call": false,
@@ -577,7 +595,8 @@
       "description": {
         "value": "",
         "chat": "",
-        "notes": ""
+        "notes": "",
+        "keeper": ""
       },
       "type": {
         "physical": false,
@@ -595,7 +614,8 @@
       "description": {
         "value": "",
         "chat": "",
-        "notes": ""
+        "notes": "",
+        "keeper": ""
       },
       "duration": {
         "permanent": true,
@@ -609,6 +629,9 @@
       }
     },
     "chase": {
+      "description": {
+        "keeper": ""
+      },
       "locations": {
         "total": 0,
         "startingRange": 1,
