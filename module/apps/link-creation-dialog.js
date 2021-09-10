@@ -121,7 +121,10 @@ export class CoC7LinkCreationDialog extends FormApplication {
     }
 
     // Prepare characteristics
-    data.attributes = CoC7LinkCreationDialog.attributes.map(e => { e.selected = data.data.attributeKey === e.key; return e })
+    data.attributes = CoC7LinkCreationDialog.attributes.map(e => {
+      e.selected = data.data.attributeKey === e.key
+      return e
+    })
 
     return data
   }

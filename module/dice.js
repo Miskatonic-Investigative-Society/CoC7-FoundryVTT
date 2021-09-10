@@ -40,7 +40,10 @@ export class CoC7Dice {
       }
     })
     if (modif < 0) {
-      result.tens.total = result.unit.total === 0 && result.tens.results.includes(0) ? 100 : Math.max(...result.tens.results)
+      result.tens.total =
+        result.unit.total === 0 && result.tens.results.includes(0)
+          ? 100
+          : Math.max(...result.tens.results)
     } else if (result.unit.total === 0) {
       const dice = result.tens.results.filter(t => t > 0)
       result.tens.total = dice.length === 0 ? 100 : Math.min(...dice)

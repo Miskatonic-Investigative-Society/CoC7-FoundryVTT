@@ -546,7 +546,9 @@ export class CoC7Item extends Item {
 
   get _base () {
     if (this.type !== 'skill') return [null, false]
-    if (typeof this.data.data.base !== 'string') return [this.data.data.base, false]
+    if (typeof this.data.data.base !== 'string') {
+      return [this.data.data.base, false]
+    }
     if (this.data.data.base.includes('@')) {
       const parsed = {}
       for (const [key, value] of Object.entries(COC7.formula.actorsheet)) {
@@ -567,9 +569,12 @@ export class CoC7Item extends Item {
 
       return [value, true]
     }
-    return [!isNaN(parseInt(this.data.data.base))
-      ? parseInt(this.data.data.base)
-      : null, false]
+    return [
+      !isNaN(parseInt(this.data.data.base))
+        ? parseInt(this.data.data.base)
+        : null,
+      false
+    ]
   }
 
   async asyncBase () {

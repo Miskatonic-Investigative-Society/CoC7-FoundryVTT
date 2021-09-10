@@ -654,12 +654,20 @@ export class CoC7Utilities {
         textArea.focus()
         textArea.select()
         return new Promise((resolve, reject) => {
-          document.execCommand('copy') ? resolve() : reject(new Error('Unable to copy to clipboard, this is likely due to your browser security settings.'))
+          document.execCommand('copy')
+            ? resolve()
+            : reject(
+              new Error(
+                'Unable to copy to clipboard, this is likely due to your browser security settings.'
+              )
+            )
           textArea.remove()
         }).catch(err => ui.notifications.error(err))
       }
     } catch (err) {
-      ui.notifications.error('Unable to copy to clipboard, this is likely due to your browser security settings.')
+      ui.notifications.error(
+        'Unable to copy to clipboard, this is likely due to your browser security settings.'
+      )
     }
   }
 }

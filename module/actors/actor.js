@@ -232,15 +232,15 @@ export class CoCActor extends Actor {
     }
     let boutDurationText = this.isInABoutOfMadness
       ? boutRealTime
-        ? `${duration} ${game.i18n.localize('CoC7.rounds')}`
-        : `${duration} ${game.i18n.localize('CoC7.hours')}`
+          ? `${duration} ${game.i18n.localize('CoC7.rounds')}`
+          : `${duration} ${game.i18n.localize('CoC7.hours')}`
       : null
     const insanityDurationText = insaneDuration
       ? this.isInsane
-        ? indefiniteInstanity
-          ? null
-          : `${insaneDuration} ${game.i18n.localize('CoC7.hours')}`
-        : null
+          ? indefiniteInstanity
+              ? null
+              : `${insaneDuration} ${game.i18n.localize('CoC7.hours')}`
+          : null
       : null
     if (this.isInsane && !insanityDurationText && !indefiniteInstanity) {
       indefiniteInstanity = true
@@ -267,8 +267,8 @@ export class CoCActor extends Actor {
         durationText: insanityDurationText || '',
         hint: this.isInsane
           ? indefiniteInstanity
-            ? game.i18n.localize('CoC7.IndefiniteInsanity')
-            : `${game.i18n.localize(
+              ? game.i18n.localize('CoC7.IndefiniteInsanity')
+              : `${game.i18n.localize(
                 'CoC7.TemporaryInsanity'
               )} ${insanityDurationText || ''}`
           : game.i18n.localize('CoC7.NotInsane')
@@ -919,7 +919,16 @@ export class CoCActor extends Actor {
             } else {
               data.data.title = game.i18n.localize('CoC7.RollCharac')
             }
-            data.data.pointsWarning = !(data.data.characteristics.values.str !== null && data.data.characteristics.values.con !== null && data.data.characteristics.values.siz !== null && data.data.characteristics.values.dex !== null && data.data.characteristics.values.app !== null && data.data.characteristics.values.int !== null && data.data.characteristics.values.pow !== null && data.data.characteristics.values.edu !== null)
+            data.data.pointsWarning = !(
+              data.data.characteristics.values.str !== null &&
+              data.data.characteristics.values.con !== null &&
+              data.data.characteristics.values.siz !== null &&
+              data.data.characteristics.values.dex !== null &&
+              data.data.characteristics.values.app !== null &&
+              data.data.characteristics.values.int !== null &&
+              data.data.characteristics.values.pow !== null &&
+              data.data.characteristics.values.edu !== null
+            )
             const rolled = await CharacRollDialog.create(data.data)
             if (rolled) {
               const updateData = {}
@@ -2499,7 +2508,8 @@ export class CoCActor extends Actor {
               create = true
             }
           })
-          const actor = (typeof this.parent?.actor !== 'undefined' ? this.parent.actor : this)
+          const actor =
+            typeof this.parent?.actor !== 'undefined' ? this.parent.actor : this
 
           if (create === true) {
             await actor.createEmbeddedDocuments('Item', [item.toJSON()])

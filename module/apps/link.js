@@ -13,7 +13,10 @@ export class CoC7Link {
   }
 
   static async fromData (linkData) {
-    const label = CoC7LinkCreationDialog.attributes.concat(CoCActor.getCharacteristicDefinition()).filter(e => e.key === linkData.name).map(e => e.label)
+    const label = CoC7LinkCreationDialog.attributes
+      .concat(CoCActor.getCharacteristicDefinition())
+      .filter(e => e.key === linkData.name)
+      .map(e => e.label)
     if (label.length > 0) {
       linkData.label = label[0]
     }

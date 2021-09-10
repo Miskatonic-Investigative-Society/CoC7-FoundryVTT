@@ -308,11 +308,13 @@ export class CoC7ActorSheet extends ActorSheet {
                 : 0
               let updatedExp = exp + parseInt(item.data.value) - skill.value
               if (updatedExp <= 0) updatedExp = null
-              await this.actor.updateEmbeddedDocuments('Item', [{
-                _id: item._id,
-                'data.adjustments.experience': updatedExp,
-                'data.value': null
-              }])
+              await this.actor.updateEmbeddedDocuments('Item', [
+                {
+                  _id: item._id,
+                  'data.adjustments.experience': updatedExp,
+                  'data.value': null
+                }
+              ])
               if (!item.data.adjustments) item.data.adjustments = {}
               item.data.adjustments.experience = updatedExp
               item.data.value = value
@@ -337,9 +339,9 @@ export class CoC7ActorSheet extends ActorSheet {
               a.data.properties.special &&
               typeof a.data.specialization !== 'undefined'
                 ? a.data.specialization
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase() +
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase() +
                   a.name
                     .normalize('NFD')
                     .replace(/[\u0300-\u036f]/g, '')
@@ -352,9 +354,9 @@ export class CoC7ActorSheet extends ActorSheet {
               b.data.properties.special &&
               typeof b.data.specialization !== 'undefined'
                 ? b.data.specialization
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase() +
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase() +
                   b.name
                     .normalize('NFD')
                     .replace(/[\u0300-\u036f]/g, '')
@@ -388,9 +390,9 @@ export class CoC7ActorSheet extends ActorSheet {
           if (a.data.properties && b.data.properties) {
             lca = a.data.properties.special
               ? a.data.specialization
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLowerCase() +
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase() +
                 a.name
                   .normalize('NFD')
                   .replace(/[\u0300-\u036f]/g, '')
@@ -401,9 +403,9 @@ export class CoC7ActorSheet extends ActorSheet {
                 .toLowerCase()
             lcb = b.data.properties.special
               ? b.data.specialization
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLowerCase() +
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase() +
                 b.name
                   .normalize('NFD')
                   .replace(/[\u0300-\u036f]/g, '')
@@ -722,9 +724,7 @@ export class CoC7ActorSheet extends ActorSheet {
       html
         .find('.characteristic-label')
         .click(this._onRollCharacteriticTest.bind(this))
-      html
-        .find('.skill-name.rollable')
-        .click(this._onRollSkillTest.bind(this))
+      html.find('.skill-name.rollable').click(this._onRollSkillTest.bind(this))
       html.find('.skill-image').click(this._onRollSkillTest.bind(this))
       html
         .find('.attribute-label.rollable')
@@ -870,9 +870,7 @@ export class CoC7ActorSheet extends ActorSheet {
       }
     })
 
-    html
-      .find('a.coc7-link')
-      .on('click', event => CoC7Parser._onCheck(event))
+    html.find('a.coc7-link').on('click', event => CoC7Parser._onCheck(event))
     html
       .find('a.coc7-link')
       .on('dragstart', event => CoC7Parser._onDragCoC7Link(event))
@@ -1517,19 +1515,19 @@ export class CoC7ActorSheet extends ActorSheet {
     if (isCtrlKey(event) && game.user.isGM && ['lck', 'san'].includes(attrib)) {
       const linkData = event.altKey
         ? {
-          check: 'sanloss',
-          hasPlayerOwner: this.actor.hasPlayerOwner,
-          actorKey: this.actor.actorKey,
-          forceModifiers: event.shiftKey
-        }
+            check: 'sanloss',
+            hasPlayerOwner: this.actor.hasPlayerOwner,
+            actorKey: this.actor.actorKey,
+            forceModifiers: event.shiftKey
+          }
         : {
-          check: 'check',
-          type: 'attribute',
-          name: attrib,
-          hasPlayerOwner: this.actor.hasPlayerOwner,
-          actorKey: this.actor.actorKey,
-          forceModifiers: event.shiftKey
-        }
+            check: 'check',
+            type: 'attribute',
+            name: attrib,
+            hasPlayerOwner: this.actor.hasPlayerOwner,
+            actorKey: this.actor.actorKey,
+            forceModifiers: event.shiftKey
+          }
       if (game.settings.get('core', 'rollMode') === 'blindroll') {
         linkData.blind = true
       }

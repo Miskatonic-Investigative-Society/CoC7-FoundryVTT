@@ -29,7 +29,7 @@ export class CoC7BookSheet extends ItemSheet {
     data.isKeeper = game.user.isGM
     data.isOwned = this.item.isOwned
     data.spellsLearned = this.spellsLearned
-    data.exhausted = await this.item.checkExhaustion() !== false
+    data.exhausted = (await this.item.checkExhaustion()) !== false
     data.studyCompleted =
       this.item.data.data.study.progress === this.item.data.data.study.necessary
     return data

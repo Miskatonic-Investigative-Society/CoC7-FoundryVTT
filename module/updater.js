@@ -212,7 +212,20 @@ export class Updater {
   }
 
   static _migrateItemKeeperNotes (item, updateData) {
-    if (['archetype', 'chase', 'item', 'occupation', 'setup', 'skill', 'spell', 'status', 'talent', 'weapon'].includes(item.type)) {
+    if (
+      [
+        'archetype',
+        'chase',
+        'item',
+        'occupation',
+        'setup',
+        'skill',
+        'spell',
+        'status',
+        'talent',
+        'weapon'
+      ].includes(item.type)
+    ) {
       if (typeof item.data.description === 'string') {
         updateData['data.description'] = {
           value: item.data.description,

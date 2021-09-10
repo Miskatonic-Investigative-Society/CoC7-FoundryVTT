@@ -22,7 +22,6 @@ export class CoC7CharacterSheetV2 extends CoC7CharacterSheet {
   }
 
   async toggleSheetMode (event) {
-    console.log(event)
     this.summarized = !this.summarized
     await this.close()
     const options = this.summarized
