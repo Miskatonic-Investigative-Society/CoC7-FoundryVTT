@@ -39,6 +39,18 @@
       .status-monitor.status-on {
         color: darkred;
       }
+      .status {
+        color: grey;
+        text-align: center;
+        a {
+          &.inative-status {
+            &:hover {
+              text-shadow: none !important;
+              cursor: default;
+            }
+          }
+        }
+      }
       .fas {
         font-size: 12px;
       }
