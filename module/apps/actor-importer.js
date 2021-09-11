@@ -406,7 +406,7 @@ export class CoC7ActorImporter {
 
   async addTheSpells (pc, npc) {
     if (pc.spells !== null) {
-      pc.spells.forEach(async spell => {
+      for (const spell of pc.spells) {
         const created = await npc.addItems([
           {
             name: spell,
@@ -414,7 +414,7 @@ export class CoC7ActorImporter {
           }
         ])
         console.debug(created)
-      })
+      }
     }
   }
 
