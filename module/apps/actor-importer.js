@@ -489,13 +489,11 @@ export class CoC7ActorImporter {
             })
           // created.data.value = skill.value && console.debug(created))
         } else {
-          await npc
-            .createSkill(skill.name, skill.value)
-            .then(created => {
-              if (CONFIG.debug.CoC7Importer) {
-                console.debug(created)
-              }
-            })
+          await npc.createSkill(skill.name, skill.value).then(created => {
+            if (CONFIG.debug.CoC7Importer) {
+              console.debug(created)
+            }
+          })
         }
       }
     }
