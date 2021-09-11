@@ -1570,6 +1570,7 @@ export class CoCActor extends Actor {
   }
 
   async addItems (itemList, flag = null) {
+    const output = []
     for (const item of itemList) {
       if (flag) {
         if (!item.data.flags) item.data.flags = {}
@@ -1577,11 +1578,12 @@ export class CoCActor extends Actor {
       }
       /** MODIF 0.8.x **/
       // await this.createOwnedItem( item, {renderSheet:false});
-      await this.createEmbeddedDocuments('Item', [item], {
+      output.push(await this.createEmbeddedDocuments('Item', [item], {
         renderSheet: false
-      })
+      }))
       /*****************/
     }
+    return output
   }
 
   async addUniqueItem (skill, flag = null) {
