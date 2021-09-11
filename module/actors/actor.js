@@ -973,7 +973,7 @@ export class CoCActor extends Actor {
           } else {
             for (const sectionName of data.data.bioSections) {
               if (
-                !this.data.data.biography.find(
+                !this.data.data.biography?.find(
                   el => sectionName === el.title
                 ) &&
                 sectionName

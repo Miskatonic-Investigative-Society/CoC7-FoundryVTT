@@ -1,4 +1,4 @@
-/* global $, Combat, CONFIG, CONST, fromUuid, game, Hooks, tinyMCE, ui */
+/* global $, Combat, CONFIG, fromUuid, game, Hooks, tinyMCE */
 import { CoC7NPCSheet } from './actors/sheets/npc-sheet.js'
 import { CoC7CreatureSheet } from './actors/sheets/creature-sheet.js'
 import { CoC7CharacterSheetV2 } from './actors/sheets/character.js'
@@ -420,40 +420,5 @@ function configureTinyMCE () {
 function _onLeftClick (event) {
   return event.shiftKey
 }
-
-Hooks.on('targetToken', function (user, token, targeted) {
-  if (targeted) {
-    // Check if the targeted token is a player controlled token but no user controls it
-    let gmonly = true
-    if (
-      token.actor.data.permission.default === CONST.ENTITY_PERMISSIONS.OWNER
-    ) {
-      gmonly = false
-    } else {
-      const gms = game.users.filter(a => a.isGM).map(a => a.id)
-      for (const [k, v] of Object.entries(token.actor.data.permission)) {
-        if (
-          k !== 'default' &&
-          v === CONST.ENTITY_PERMISSIONS.OWNER &&
-          !gms.includes(k)
-        ) {
-          gmonly = false
-        }
-      }
-    }
-    if (!gmonly) {
-      const controlled = game.users.filter(
-        a => !a.isGM && a.data.character === token.actor.id
-      )
-      if (controlled.length === 0) {
-        ui.notifications.error(
-          game.i18n.format('CoC7.MessageSelectedTargetIsNotControlled', {
-            name: token.name
-          })
-        )
-      }
-    }
-  }
-})
 
 CONFIG.ui.compendium = CoC7CompendiumDirectory

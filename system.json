@@ -8,7 +8,7 @@
   "compatibleCoreVersion": "0.8.9",
   "esmodules": ["bundle.js"],
   "templateVersion": 1,
-  "styles": ["coc7g.css", "assets/mce.css"],
+  "styles": ["coc7g.css"],
   "packs": [
     {
       "label": "Skills",

@@ -656,7 +656,6 @@
   "CoC7.MessageTargetCheckRequested": "Your keeper has requested {name} make a {check} roll.",
   "CoC7.MessageTitleSelectSingleUserForTarget": "Which user can respond to this attack",
   "CoC7.MessageSelectSingleUserForTarget": "This token is controlled by multiple users, please select which user can respond to this attack.",
-  "CoC7.MessageSelectedTargetIsNotControlled": "The token for {name} is owned by not controlled by a player so will not be able to react to combat actions.",
   "CoC7.MessageBoutOfMadnessTableNotFound": "The result from the madness table was not found, please check all your roll tables are created",
   "CoC7.MessageBoutOfMadnessItemNotFound": "The result from the madness table was not found, please check all your statuses are created",
 

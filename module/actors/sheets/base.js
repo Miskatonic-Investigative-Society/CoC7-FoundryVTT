@@ -553,7 +553,7 @@ export class CoC7ActorSheet extends ActorSheet {
     data.data.attribs.db.value = this.actor.db
     data.data.attribs.build.value = this.actor.build
 
-    if (typeof this.actor.compendium === 'undefined') {
+    if (typeof this.actor.compendium === 'undefined' && this.actor.isOwner) {
       this.actor.update(
         { 'data.attribs.mov.value': this.actor.mov },
         { render: false }
