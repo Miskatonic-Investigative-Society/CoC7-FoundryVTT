@@ -657,17 +657,13 @@ export class CoC7Utilities {
           document.execCommand('copy')
             ? resolve()
             : reject(
-              new Error(
-                'Unable to copy to clipboard, this is likely due to your browser security settings.'
+                new Error(game.i18n.localize('CoC7.UnableToCopyToClipboard'))
               )
-            )
           textArea.remove()
         }).catch(err => ui.notifications.error(err))
       }
     } catch (err) {
-      ui.notifications.error(
-        'Unable to copy to clipboard, this is likely due to your browser security settings.'
-      )
+      ui.notifications.error(game.i18n.localize('CoC7.UnableToCopyToClipboard'))
     }
   }
 }

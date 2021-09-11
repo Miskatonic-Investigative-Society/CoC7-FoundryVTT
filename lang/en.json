@@ -701,6 +701,8 @@
   "CoC7.Maximize": "Maximize",
   "CoC7.Summarize": "Summarize",
 
+  "CoC7.UnableToCopyToClipboard": "Unable to copy to clipboard, this is likely due to your browser security settings.",
+
   "SETTINGS.TitleRules": "Rules",
   "SETTINGS.TitleInitiative": "Initiative Settings",
   "SETTINGS.TitleRoll": "Roll Settings",
