@@ -1,4 +1,4 @@
-/* global $, Combat, CONFIG, fromUuid, game, Hooks, tinyMCE */
+/* global $, Combat, CONFIG, fromUuid, game, Hooks, tinyMCE, ui */
 import { CoC7NPCSheet } from './actors/sheets/npc-sheet.js'
 import { CoC7CreatureSheet } from './actors/sheets/creature-sheet.js'
 import { CoC7CharacterSheetV2 } from './actors/sheets/character.js'
@@ -19,6 +19,7 @@ import { CoC7ActorDirectory } from './actor-directory.js'
 import { CoC7Hooks } from './hooks/index.js'
 import * as DiceBot from './dicebot.js'
 import '../styles/system/index.less'
+import { CoC7Socket } from './hooks/socket.js'
 
 Hooks.on('renderSettingsConfig', (app, html, options) => {
   const systemTab = $(app.form).find('.tab[data-tab=system]')
@@ -137,6 +138,8 @@ Hooks.on('renderCombatTracker', (app, html, data) =>
 DiceBot.listen()
 CoC7Hooks.listen()
 
+Hooks.once('socketlib.ready', CoC7Socket)
+
 Hooks.once('setup', function () {
   // Localize CONFIG objects once up-front
   const toLocalize = [
@@ -215,6 +218,11 @@ Hooks.on('ready', async () => {
   // setGlobalCssVar()
 
   configureTinyMCE()
+
+  if (!game.modules.get('socketlib')?.active) {
+    ui.notifications.error('socketlib is required', { permanent: true })
+    CoC7Socket(false)
+  }
 
   game.socket.on('system.CoC7', async data => {
     if (data.type === 'updateChar') CoC7Utilities.updateCharSheets()
