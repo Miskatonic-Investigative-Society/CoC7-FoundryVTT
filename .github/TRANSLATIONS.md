@@ -6,7 +6,7 @@ The **sv** translation is currently up to date
 
 | Key                                                                                      |    cn    |    cs    |    de    |    es    |    fr    |    ja    |    pl    |  pt-BR   |  zh-TW   |
 | :--------------------------------------------------------------------------------------- | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-| **Remaining**:                                                                           | **315**  |  **90**  | **108**  |  **2**   |  **2**   | **110**  |  **2**   |  **2**   |  **30**  |
+| **Remaining**:                                                                           | **314**  |  **90**  | **107**  |  **2**   |  **2**   | **109**  |  **2**   |  **2**   |  **30**  |
 | [CoC7.ActorImporter](#coc7actorimporter)                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.ActorImporterSummary](#coc7actorimportersummary)                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.AdvantageAttacker](#coc7advantageattacker)                                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
@@ -149,7 +149,6 @@ The **sv** translation is currently up to date
 | [CoC7.MessageBoutOfMadnessTableNotFound](#coc7messageboutofmadnesstablenotfound)         | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.MessageCheckRequestedWait](#coc7messagecheckrequestedwait)                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.MessageSelectSingleUserForTarget](#coc7messageselectsingleuserfortarget)           | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.MessageSelectedTargetIsNotControlled](#coc7messageselectedtargetisnotcontrolled)   | &#x274C; | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.MessageTargetCheckRequested](#coc7messagetargetcheckrequested)                     | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.MessageTitleSelectSingleUserForTarget](#coc7messagetitleselectsingleuserfortarget) | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Migrate.ButtonOkay](#coc7migratebuttonokay)                                        | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -891,10 +890,6 @@ The **sv** translation is currently up to date
 ##### CoC7.MessageSelectSingleUserForTarget
 
 `"CoC7.MessageSelectSingleUserForTarget": "This token is controlled by multiple users, please select which user can respond to this attack.",`
-
-##### CoC7.MessageSelectedTargetIsNotControlled
-
-`"CoC7.MessageSelectedTargetIsNotControlled": "The token for {name} is owned by not controlled by a player so will not be able to react to combat actions.",`
 
 ##### CoC7.MessageTargetCheckRequested
 
