@@ -903,6 +903,7 @@ export class CoC7Chat {
       case 'melee-initiator-roll': {
         const initiator = CoC7MeleeInitiator.getFromCard(card)
         const check = await initiator.performSkillCheck(event.currentTarget.dataset.skill)
+        $(button).prop('disabled', true)
         await CoC7Dice.showRollDice3d(check.dice.roll)
         await initiator.publishCheckResult()
         break
@@ -910,6 +911,7 @@ export class CoC7Chat {
       case 'melee-target-roll': {
         const target = CoC7MeleeTarget.getFromCard(card)
         const check = await target.performSkillCheck(event.currentTarget.dataset.skill)
+        $(button).prop('disabled', true)
         await CoC7Dice.showRollDice3d(check.dice.roll)
         await target.publishCheckResult()
         break
