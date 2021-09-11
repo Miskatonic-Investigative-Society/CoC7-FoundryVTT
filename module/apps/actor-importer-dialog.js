@@ -1,4 +1,4 @@
-/* global $, Dialog, game, renderTemplate, ui */
+/* global $, CONFIG, Dialog, game, renderTemplate, ui */
 
 import { CoC7ActorImporter } from './actor-importer.js'
 import { CoC7ActorImporterRegExp } from './actor-importer-regexp.js'
@@ -9,9 +9,15 @@ export class CoC7ActorImporterDialog extends Dialog {
     html
       .find('option[value=coc-' + game.i18n.lang + ']')
       .attr('selected', 'selected')
-    html.find('#coc-entity-lang').on('change', function (e) {
-      $('#coc-pasted-character-data').prop('placeholder', CoC7ActorImporterRegExp.getExampleText($(this).val()))
-    }).trigger('change')
+    html
+      .find('#coc-entity-lang')
+      .on('change', function (e) {
+        $('#coc-pasted-character-data').prop(
+          'placeholder',
+          CoC7ActorImporterRegExp.getExampleText($(this).val())
+        )
+      })
+      .trigger('change')
   }
 
   /**
@@ -73,7 +79,12 @@ export class CoC7ActorImporterDialog extends Dialog {
   }
 
   submit (button) {
-    if ($('#coc-pasted-character-data').val().trim() !== '' || !button.callback) {
+    if (
+      $('#coc-pasted-character-data')
+        .val()
+        .trim() !== '' ||
+      !button.callback
+    ) {
       super.submit(button)
     }
   }
