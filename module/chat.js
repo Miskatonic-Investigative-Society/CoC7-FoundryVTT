@@ -15,6 +15,7 @@ import { OpposedCheckCard } from './chat/cards/opposed-roll.js'
 import { CombinedCheckCard } from './chat/cards/combined-roll.js'
 import { InteractiveChatCard } from './chat/interactive-chat-card.js'
 import { DamageCard } from './chat/cards/damage.js'
+import { CoC7Dice } from './dice.js'
 
 const CHAT_COC7_MESSAGE = {
   FAKEROLL:
@@ -901,13 +902,15 @@ export class CoC7Chat {
 
       case 'melee-initiator-roll': {
         const initiator = CoC7MeleeInitiator.getFromCard(card)
-        await initiator.performSkillCheck(event.currentTarget.dataset.skill)
+        const check = await initiator.performSkillCheck(event.currentTarget.dataset.skill)
+        await CoC7Dice.showRollDice3d(check.dice.roll)
         await initiator.publishCheckResult()
         break
       }
       case 'melee-target-roll': {
         const target = CoC7MeleeTarget.getFromCard(card)
-        await target.performSkillCheck(event.currentTarget.dataset.skill)
+        const check = await target.performSkillCheck(event.currentTarget.dataset.skill)
+        await CoC7Dice.showRollDice3d(check.dice.roll)
         await target.publishCheckResult()
         break
       }
