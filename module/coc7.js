@@ -219,11 +219,6 @@ Hooks.on('ready', async () => {
 
   configureTinyMCE()
 
-  if (!game.modules.get('socketlib')?.active) {
-    ui.notifications.error('socketlib is required', { permanent: true })
-    CoC7Socket(false)
-  }
-
   game.socket.on('system.CoC7', async data => {
     if (data.type === 'updateChar') CoC7Utilities.updateCharSheets()
 

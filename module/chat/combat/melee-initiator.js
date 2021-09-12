@@ -118,7 +118,7 @@ export class CoC7MeleeInitiator extends ChatCardActor {
         fastForward: this.fastForward,
         actorKey: this.actorKey
       })
-      this.targetCard = message.id
+      this.targetCard = message.id || message._id
     }
 
     if (this.autoSuccess && !this.check.isFumble) {

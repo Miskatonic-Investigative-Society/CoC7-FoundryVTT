@@ -1,26 +1,9 @@
-/* global game, socketlib, ui */
+/* global game, socketlib */
 import { CoC7MeleeTarget } from '../chat/combat/melee-target.js'
 
-export function CoC7Socket (hasSocket = true) {
-  if (hasSocket) {
-    game.CoC7socket = socketlib.registerSystem('CoC7')
-    game.CoC7socket.register('gmcreatemessageas', gmcreatemessageas)
-  } else {
-    game.CoC7socket = {
-      executeAsGM: function (func, data) {
-        ui.notifications.error('socketlib is required', { permanent: true })
-        switch (func) {
-          case 'gmcreatemessageas':
-            if (!game.user.isGM) {
-              data.forceCurrentGameUser = true
-            }
-            return gmcreatemessageas(data)
-        }
-        ui.notifications.error(game.i18n.format('socketlib fallback function {function} not registered', { function: func }))
-        return ''
-      }
-    }
-  }
+export function CoC7Socket () {
+  game.CoC7socket = socketlib.registerSystem('CoC7')
+  game.CoC7socket.register('gmcreatemessageas', gmcreatemessageas)
 }
 
 async function gmcreatemessageas (data) {
@@ -30,6 +13,6 @@ async function gmcreatemessageas (data) {
     data.fastForward
   )
   meleeTarget.initiatorKey = data.actorKey
-  const message = await meleeTarget.createChatCard({ forceCurrentGameUser: data.forceCurrentGameUser || false })
+  const message = await meleeTarget.createChatCard()
   return message
 }

@@ -6,7 +6,11 @@
   "author": "Miskatonic Investigative Society",
   "minimumCoreVersion": "0.8.6",
   "compatibleCoreVersion": "0.8.9",
-  "esmodules": ["bundle.js"],
+  "esmodules": [
+    "assets/socketlib/src/libwrapper_shim.js",
+    "assets/socketlib/src/socketlib.js",
+    "bundle.js"
+  ],
   "templateVersion": 1,
   "styles": ["coc7g.css"],
   "packs": [

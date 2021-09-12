@@ -133,7 +133,7 @@ export class CoC7MeleeTarget extends ChatCardActor {
     this[flag] = !this[flag]
   }
 
-  async createChatCard ({ forceCurrentGameUser = false } = {}) {
+  async createChatCard () {
     const html = await renderTemplate(this.template, this)
 
     const speakerData = {}
@@ -201,10 +201,6 @@ export class CoC7MeleeTarget extends ChatCardActor {
       }
     } else if (typeof this.actor.user !== 'undefined') {
       user = this.actor.user
-    }
-
-    if (forceCurrentGameUser) {
-      user = game.user
     }
 
     const chatData = {

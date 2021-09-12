@@ -1,8 +1,7 @@
-import { dirname } from 'path'
+import * as path from 'path'
 import { fileURLToPath } from 'url'
 import * as fs from 'fs'
 import * as os from 'os'
-import * as path from 'path'
 import * as process from 'process'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin'
@@ -11,7 +10,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import TerserPlugin from 'terser-webpack-plugin'
 import WebpackBar from 'webpackbar'
 
-const __dirname = dirname(fileURLToPath(import.meta.url))
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 /** Set the run mode for @constant bundleScript */
 const buildMode =
