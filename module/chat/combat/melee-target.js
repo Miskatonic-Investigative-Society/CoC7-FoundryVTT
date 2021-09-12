@@ -133,7 +133,7 @@ export class CoC7MeleeTarget extends ChatCardActor {
     this[flag] = !this[flag]
   }
 
-  async createChatCard () {
+  async createChatCard ({ forceCurrentGameUser = false } = {}) {
     const html = await renderTemplate(this.template, this)
 
     const speakerData = {}
@@ -203,6 +203,10 @@ export class CoC7MeleeTarget extends ChatCardActor {
       user = this.actor.user
     }
 
+    if (forceCurrentGameUser) {
+      user = game.user
+    }
+
     const chatData = {
       user: user.id,
       speaker,
@@ -222,8 +226,12 @@ export class CoC7MeleeTarget extends ChatCardActor {
   }
 
   async updateChatCard () {
-    const html = await renderTemplate(this.template, this)
     const message = game.messages.get(this.messageId)
+    if (!game.user.isGM && message.user.id !== game.user.id) {
+      ui.notifications.info('You are not able to interact with this message please ask your Keeper to select the options for you')
+      return
+    }
+    const html = await renderTemplate(this.template, this)
 
     const msg = await message.update({ content: html })
     await ui.chat.updateMessage(msg, false)

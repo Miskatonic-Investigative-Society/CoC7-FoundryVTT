@@ -11,6 +11,9 @@ export function CoC7Socket (hasSocket = true) {
         ui.notifications.error('socketlib is required', { permanent: true })
         switch (func) {
           case 'gmcreatemessageas':
+            if (!game.user.isGM) {
+              data.forceCurrentGameUser = true
+            }
             return gmcreatemessageas(data)
         }
         ui.notifications.error(game.i18n.format('socketlib fallback function {function} not registered', { function: func }))
@@ -27,6 +30,6 @@ async function gmcreatemessageas (data) {
     data.fastForward
   )
   meleeTarget.initiatorKey = data.actorKey
-  const message = await meleeTarget.createChatCard()
+  const message = await meleeTarget.createChatCard({ forceCurrentGameUser: data.forceCurrentGameUser || false })
   return message
 }
