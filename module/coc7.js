@@ -15,6 +15,7 @@ import { CombinedCheckCard } from './chat/cards/combined-roll.js'
 import { DamageCard } from './chat/cards/damage.js'
 import { CoC7Canvas } from './apps/canvas.js'
 import { CoC7CompendiumDirectory } from './compendium-directory.js'
+import { CoC7ActorDirectory } from './actor-directory.js'
 import { CoC7Hooks } from './hooks/index.js'
 import * as DiceBot from './dicebot.js'
 import '../styles/system/index.less'
@@ -422,3 +423,4 @@ function _onLeftClick (event) {
 }
 
 CONFIG.ui.compendium = CoC7CompendiumDirectory
+CONFIG.ui.actors = CoC7ActorDirectory

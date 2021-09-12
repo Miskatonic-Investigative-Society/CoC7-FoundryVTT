@@ -1,4 +1,4 @@
-/* global game */
+/* global CONFIG, game */
 
 const accentedCharacters = regexquote(
   'áéíóàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ'
@@ -107,7 +107,9 @@ const englishRegExp = {
   rifleRegExp: /(Rifle|Shotgun|Carbine|Gauge |Lee-Enfield|Elephant)/i,
   smbRegExp: /(Submachine Gun|Thompson)/i,
   machineGunRegExp: /(Browning|Vickers)/i,
-  launchedWeapons: /(Molotov|Grenade|Dynamite)/i
+  launchedWeapons: /(Molotov|Grenade|Dynamite)/i,
+  example:
+    'Example Character, age 27\nSTR 75 CON 60 SIZ 80 DEX 70 APP 60 INT 80\nPOW 50 EDU 85 SAN 55 HP 14 DB: 1D4\nBuild: 1 Move: 7 MP: 10 Luck: 40 Armor: 1\nSAN loss: 1d4/1d8 # Attacks: 3\nCombat\nBite 50% (25/10), damage 1D6\nBrawl 30% (15/6), damage 1D3\nDerringer 40% (20/8), damage 1D8+1\nDodge 50% (25/10)\nSkills\nAnimal Handling 55%, Charm 30%, First Aid 25%, Disguise 20%,\nListen 50%, Medicine 45%, Persuade 25%, Psychology 75%,\nScience (Astronomy) 90%, Science (Botany) 35%, Science (Zoology) 10%,\nSpot Hidden 35%, Stealth 10%\nLanguages: English 80%, Eklo 5%.\nSpells: Summon NPC, Dispel NPC.'
 }
 
 // Regular expressions to parse actors from a french source
@@ -157,7 +159,9 @@ const frenchRegExp = {
   rifleRegExp: /(Carabine|Lee-Enfield|Fusil)/i,
   smbRegExp: /(SMG|Thompson)/i,
   machineGunRegExp: /(Browning|Vickers|Mitrailleuse)/i,
-  launchedWeapons: /(Molotov|Grenade|Dynamite)/i
+  launchedWeapons: /(Molotov|Grenade|Dynamite)/i,
+  example:
+    'Example Character, ans 27\nFOR 75 CON 60 TAI 80 DEX 70 APP 60 INT 80\nPOU 50 ÉDU 85 SAN 55 PV 14 BD: 1D4\nCarrure: 1 Mvt: 7 PM: 10 Chance: 40 Armure: 1\nPerte de Santé mentale: 1d4/1d8\nAttaques\nAttaques par round: 3\nBite 50% (25/10), dommage 1D6\nBrawl 30% (15/6), dommage 1D3\nDerringer 40% (20/8), dommage 1D8+1\nEsquiver 50% (25/10)\nCompétences\nAnimal Handling 55%, Charm 30%, First Aid 25%, Disguise 20%,\nListen 50%, Medicine 45%, Persuade 25%, Psychology 75%,\nScience (Astronomy) 90%, Science (Botany) 35%, Science (Zoology) 10%,\nSpot Hidden 35%, Stealth 10%\nLangue: English 80%, Eklo 5%.\nSortilèges: Summon NPC, Dispel NPC.'
 }
 
 // Regular expressions to parse actors from a spanish source
@@ -207,7 +211,9 @@ const spanishRegExp = {
   rifleRegExp: /(Rifle|Carabina|Lee-Enfield|Caza Elefantes|Fusil|Escopeta|Galga|Recortada)/i,
   smbRegExp: /(Subfusil|Thompson)/i,
   machineGunRegExp: /(Browning|Vickers|Ametralladora)/i,
-  launchedWeapons: /(Molotov||Granada|Dinamita)/i
+  launchedWeapons: /(Molotov||Granada|Dinamita)/i,
+  example:
+    'Example Character, 27 años\nFUE 75 CON 60 TAM 80 DES 70 APA 60 INT 80\nPOD 50 EDU 85 COR 55 PV 14 BD: 1D4\nCorpulencia: 1 Movimiento: 7 PM: 10 Suerte: 40 Armadura: 1\nPérdida de cordura: 1d4/1d8\nCombate\nNúmero de Ataques 3\nBite 50% (25/10), damage 1D6\nBrawl 30% (15/6), damage 1D3\nDerringer 40% (20/8), damage 1D8+1\nEsquivar 50% (25/10)\nHabilidades\nAnimal Handling 55%, Charm 30%, First Aid 25%, Disguise 20%,\nListen 50%, Medicine 45%, Persuade 25%, Psychology 75%,\nScience (Astronomy) 90%, Science (Botany) 35%, Science (Zoology) 10%,\nSpot Hidden 35%, Stealth 10%\nIdiomas: English 80%, Eklo 5%.\nConjuros: Summon NPC, Dispel NPC.'
 }
 
 /**
@@ -228,7 +234,9 @@ export class CoC7ActorImporterRegExp {
    * @returns an object with the set of regular expressions
    */
   static getRegularExpressions (lang) {
-    console.debug('Set RegExp Lang: ', lang)
+    if (CONFIG.debug.CoC7Importer) {
+      console.debug('Set RegExp Lang: ', lang)
+    }
     switch (lang) {
       case 'es':
         return spanishRegExp
@@ -237,5 +245,15 @@ export class CoC7ActorImporterRegExp {
     }
     // By default use english regular expressions.
     return englishRegExp
+  }
+
+  static getExampleText (lang) {
+    switch (lang) {
+      case 'coc-es':
+        return spanishRegExp.example
+      case 'coc-fr':
+        return frenchRegExp.example
+    }
+    return englishRegExp.example
   }
 }
