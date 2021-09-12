@@ -1,4 +1,4 @@
-/* global $, Combat, CONFIG, fromUuid, game, Hooks, tinyMCE, ui */
+/* global $, Combat, CONFIG, fromUuid, game, Hooks, tinyMCE */
 import { CoC7NPCSheet } from './actors/sheets/npc-sheet.js'
 import { CoC7CreatureSheet } from './actors/sheets/creature-sheet.js'
 import { CoC7CharacterSheetV2 } from './actors/sheets/character.js'
