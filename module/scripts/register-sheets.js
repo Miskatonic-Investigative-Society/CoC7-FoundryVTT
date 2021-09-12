@@ -2,7 +2,7 @@
 
 import { CoC7ArchetypeSheet } from '../items/sheets/archetype.js'
 import { CoC7BookSheet } from '../items/book/sheet.js'
-import { CoC7CharacterSheet } from '../actors/sheets/actor-sheet.js'
+import { CoC7CharacterSheet } from '../actors/sheets/character-v1.js'
 import { CoC7CharacterSheetV2 } from '../actors/sheets/character.js'
 import { CoC7ChaseSheet } from '../items/sheets/chase.js'
 import { CoC7CreatureSheet } from '../actors/sheets/creature-sheet.js'

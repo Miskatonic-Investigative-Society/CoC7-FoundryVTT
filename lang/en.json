@@ -702,6 +702,7 @@
   "CoC7.Summarize": "Summarize",
 
   "CoC7.UnableToCopyToClipboard": "Unable to copy to clipboard, this is likely due to your browser security settings.",
+  "CoC7.WarningCharacterSheetV1Depreciated": "This character sheet will be removed with FoundryVTT v9 please change the Sheet to CoC7.CoC7CharacterSheetV2",
 
   "SETTINGS.TitleRules": "Rules",
   "SETTINGS.TitleInitiative": "Initiative Settings",
