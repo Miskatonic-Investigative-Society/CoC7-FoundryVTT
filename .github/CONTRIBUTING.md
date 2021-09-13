@@ -33,13 +33,13 @@ The more detail on reproducing, the better! Bugs are hard to fix if we can not r
 
 We are always looking for translators, there is a lot to translate, and we can not do it all. If you see any translations missing for you language, Feel free to look in the corresponding `*.json` file in the `lang` folder. Comparing against the `en.json` is a good idea, for a baseline.
 
-For the list of missing translations, see: [TRANSLATIONS](https://github.com/HavlockV/CoC7-FoundryVTT/blob/develop/.github/TRANSLATIONS.md).
+For the list of missing translations, see: [TRANSLATIONS](https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/blob/develop/.github/TRANSLATIONS.md).
 
-## Coding.
+## Coding
 
-### Requisites.
+### Requisites
 
-#### Git.
+#### Git
 
 On Windows, grab an installer from here: https://git-scm.com/download/win and go with the default options (there will be a lot of option screens).
 
@@ -55,7 +55,7 @@ If you are a new Git user, probably you will have to set it up with the followin
 
 `git config --global user.email "YOUR_EMAIL"`
 
-#### Node.js (14+).
+#### Node.js (14+)
 
 Grab an installer for any operating system from here: https://nodejs.org/en/download/
 
@@ -63,9 +63,9 @@ Follow the installation steps and then make sure everything went right with:
 
 `node -v` or `node --version`
 
-## Setup.
+## Setup
 
-### Cloning the Repository.
+### Cloning the Repository
 
 On the directory where you would like to pull your changes open the terminal or shell of your choice, run:
 
@@ -75,7 +75,7 @@ This will create a local clone of the project repository.
 
 When prompted, enter your Github credentials.
 
-### Initial Setup.
+### Initial Setup
 
 Preferably, open your brand new local repository in the Integrated Development Environment (IDE) of your choice. We recommend [Visual Studio Code](#Visual-Studio-Code).
 
@@ -109,7 +109,7 @@ After rename `fvtt.config.example.js` to `fvtt.config.js` consider run:
 
 This way Git does not assume the original file has been deleted from the repository.
 
-### Contributing.
+### Contributing
 
 The project structure is made as follows:
 
@@ -119,7 +119,7 @@ While testing your changes within Foundry VTT, prefer run: `npm run watch`
 
 This way, Webpack and other dependencies will know whenever you make any relevant code changes and will run the build process only when necessary.
 
-### Your First Code Contribution.
+### Your First Code Contribution
 
 Unsure where to begin contributing? You can start by looking through these `beginner` and `help-wanted` issues!
 
