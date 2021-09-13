@@ -1,8 +1,7 @@
 {
   "name": "fvtt-coc7",
-  "version": "0.6.6",
+  "version": "0.6.7",
   "description": "An unofficial implementation of Call of Cthulhu 7th Edition system for Foundry VTT.",
-  "main": "gulpfile.js",
   "scripts": {
     "build": "webpack --mode production",
     "format": "prettier-standard --format --changed",
@@ -14,7 +13,7 @@
     "url": "git+https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Miskatonic Investigative Society",
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/issues"
