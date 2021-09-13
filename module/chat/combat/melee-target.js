@@ -222,8 +222,12 @@ export class CoC7MeleeTarget extends ChatCardActor {
   }
 
   async updateChatCard () {
-    const html = await renderTemplate(this.template, this)
     const message = game.messages.get(this.messageId)
+    if (!game.user.isGM && message.user.id !== game.user.id) {
+      ui.notifications.info(game.i18n.localize('CoC7.UnableToInteractWithChatCard'))
+      return
+    }
+    const html = await renderTemplate(this.template, this)
 
     const msg = await message.update({ content: html })
     await ui.chat.updateMessage(msg, false)

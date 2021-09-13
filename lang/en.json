@@ -701,6 +701,7 @@
   "CoC7.Maximize": "Maximize",
   "CoC7.Summarize": "Summarize",
 
+  "CoC7.UnableToInteractWithChatCard": "You are not able to interact with this message, if you need to make a change please ask your Keeper to select the options for you",
   "CoC7.UnableToCopyToClipboard": "Unable to copy to clipboard, this is likely due to your browser security settings.",
 
   "SETTINGS.TitleRules": "Rules",

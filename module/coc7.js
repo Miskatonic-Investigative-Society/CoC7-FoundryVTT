@@ -19,6 +19,7 @@ import { CoC7ActorDirectory } from './actor-directory.js'
 import { CoC7Hooks } from './hooks/index.js'
 import * as DiceBot from './dicebot.js'
 import '../styles/system/index.less'
+import { CoC7Socket } from './hooks/socket.js'
 
 Hooks.on('renderSettingsConfig', (app, html, options) => {
   const systemTab = $(app.form).find('.tab[data-tab=system]')
@@ -136,6 +137,8 @@ Hooks.on('renderCombatTracker', (app, html, data) =>
 
 DiceBot.listen()
 CoC7Hooks.listen()
+
+Hooks.once('socketlib.ready', CoC7Socket)
 
 Hooks.once('setup', function () {
   // Localize CONFIG objects once up-front

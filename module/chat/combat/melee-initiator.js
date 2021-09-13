@@ -3,7 +3,6 @@
 import { CoC7Check } from '../../check.js'
 import { chatHelper, CoC7Roll } from '../helper.js'
 import { CoC7Chat } from '../../chat.js'
-import { CoC7MeleeTarget } from './melee-target.js'
 import { CoC7MeleeResoltion } from './melee-resolution.js'
 import { ChatCardActor } from '../card-actor.js'
 
@@ -113,14 +112,13 @@ export class CoC7MeleeInitiator extends ChatCardActor {
       check.successLevel === CoC7Check.successLevel.extreme ||
       check.successLevel === CoC7Check.successLevel.critical
     if (this.hasTarget && !this.autoSuccess) {
-      const meleeTarget = new CoC7MeleeTarget(
-        this.targetKey,
-        this.messageId,
-        this.fastForward
-      )
-      meleeTarget.initiatorKey = this.actorKey
-      const message = await meleeTarget.createChatCard()
-      this.targetCard = message.id
+      const message = await game.CoC7socket.executeAsGM('gmcreatemessageas', {
+        targetKey: this.targetKey,
+        messageId: this.messageId,
+        fastForward: this.fastForward,
+        actorKey: this.actorKey
+      })
+      this.targetCard = message.id || message._id
     }
 
     if (this.autoSuccess && !this.check.isFumble) {
