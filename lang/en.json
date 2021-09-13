@@ -705,6 +705,10 @@
   "CoC7.UnableToCopyToClipboard": "Unable to copy to clipboard, this is likely due to your browser security settings.",
   "CoC7.WarningCharacterSheetV1Depreciated": "This layout is obsolete and may not work correctly. It will be removed with the FoundryVTT v9 release, please get your Keeper to change the sheet type to CoC7.CoC7CharacterSheetV2",
 
+  "SETTINGS.ShowExperimentalFeatures": "Show Experimental Features",
+  "SETTINGS.ShowExperimentalFeaturesHint": "Your world may become unusable in a future release if you use these features. For testing only DO NOT use these in your game worlds",
+  "CoC7.ExperimentalFeaturesWarning": "This feature is a work in progress and is not recommended for use in your game world.",
+
   "SETTINGS.TitleRules": "Rules",
   "SETTINGS.TitleInitiative": "Initiative Settings",
   "SETTINGS.TitleRoll": "Roll Settings",

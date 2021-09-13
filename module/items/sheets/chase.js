@@ -1,4 +1,4 @@
-/* global DragDrop, duplicate, expandObject, flattenObject, FormDataExtended, game, getType, ItemSheet, mergeObject */
+/* global DragDrop, duplicate, expandObject, flattenObject, FormDataExtended, game, getType, ItemSheet, mergeObject, ui */
 
 import { CoC7Chat } from '../../chat.js'
 import { chatHelper } from '../../chat/helper.js'
@@ -47,6 +47,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 
   /** @override */
   getData (options = {}) {
+    ui.notifications.error(game.i18n.localize('CoC7.ExperimentalFeaturesWarning'))
     const data = super.getData(options)
 
     /** MODIF: 0.8.x **/
