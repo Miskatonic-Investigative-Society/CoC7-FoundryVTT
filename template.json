@@ -614,6 +614,7 @@
         "startingRange": 1,
         "list": []
       },
+      "includeEscapees": false,
       "participants": []
     }
   }

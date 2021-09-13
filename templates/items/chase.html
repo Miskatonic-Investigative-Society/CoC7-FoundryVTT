@@ -8,26 +8,38 @@
                 <div class="row flexrow">
                     <input class="name" name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
                 </div>
-                <div class="row flexrow">
-                    <label>{{localize 'CoC7.Locations'}}</label>
-                    <input type="text" name="data.locations.total" value="{{data.locations.total}}" data-dtype="Number"/>
-                </div>
             </div>
             <div class="flex1"></div>
 
         </header>
 
         <nav class="sheet-nav tabs" data-group="primary">
+			<a data-tab="setup"><div class="tab-name" ><span>{{localize 'CoC7.Setup'}}</span></div></a>
 			<a data-tab="participants"><div class="tab-name" ><span>{{localize 'CoC7.Participans'}}</span></div></a>
 			<a data-tab="cut2chase"><div class="tab-name" ><span>{{localize 'CoC7.Cut2Chase'}}</span></div></a>
-			<a data-tab="setup"><div class="tab-name" ><span>{{localize 'CoC7.Setup'}}</span></div></a>
         </nav>
 
         <section class="sheet-body">
+            <div class="tab setup" data-group="primary" data-tab="setup">
+                <div class="track" style="height: 100px;overflow-x: scroll;background-attachment: local;background-image: linear-gradient(to right, #6fa26f , #ece857);">
+                    {{#each locations as |location i|}}
+                        <div class="participants" data-index="{{i}}"></div>
+                    {{/each}}
+                </div>
+                <div class="row flexrow">
+                    <label>{{localize 'CoC7.Locations'}}</label>
+                    <input type="text" name="data.locations.total" value="{{data.locations.total}}" data-dtype="Number"/>
+                </div>
+                <div class="row flexrow">
+                    <label class="checkbox">
+                        <input type="checkbox" name="data.includeEscaped" {{checked data.includeEscaped}}/> {{ localize "CoC7.IncludeEscapees" }}
+                    </label>
+                </div>
+            </div>
             <div class="tab participants" data-group="primary" data-tab="participants">
                 <div class="participants-list">
                     {{#each participants as |p i|}}
-                    <div class="participant" data-index={{i}}>
+                    <div class="participant {{p.cssClass}}" data-index={{i}}>
                         <div class="p-side {{#if p.isChaser}}chaser{{else}}prey{{/if}}">
                             {{#if p.isChaser}}
                                 <a><i class="game-icon game-icon-moon-claws"></i></a>
@@ -114,12 +126,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab setup" data-group="primary" data-tab="setup">
-                
-                <div class="track" style="height: 100px;overflow-x: scroll;background-attachment: local;background-image: linear-gradient(to right, #6fa26f , #ece857);">
-                    azertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbnazertyuiopqsdfghjklmwxcvbn
-                </div>
-            </div>
+
             <div class="tab cut2chase" data-group="primary" data-tab="cut2chase">
                 <div>Preys Min : {{preysMinMov}}</div>
                 <div>Preys Max : {{preysMaxMov}}</div>

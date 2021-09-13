@@ -25,6 +25,25 @@
       grid-template-rows: 2rem;
       grid-template-areas: 'p-side p-icon p-expand p-name p-init p-movement p-speed-check p-score p-roll p-adjust p-modified-mov p-control';
       align-items: center;
+      margin-bottom: 2px;
+
+      &.excluded {
+        background: rgba(255, 0, 0, 0.05);
+      }
+
+      &.escaped {
+        background: rgba(0, 0, 255, 0.05);
+      }
+
+      &.chaser.fastest {
+        border-top: green 1px solid;
+        border-bottom: green 1px solid;
+      }
+
+      &.prey.slowest {
+        border-top: red 1px solid;
+        border-bottom: red 1px solid;
+      }
 
       &.drag-over {
         border: 1px solid red;

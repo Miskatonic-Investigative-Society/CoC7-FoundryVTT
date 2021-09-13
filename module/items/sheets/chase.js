@@ -57,40 +57,76 @@ export class CoC7ChaseSheet extends ItemSheet {
     data.participants = []
     this.participants.forEach(p => {
       data.participants.push(new _participant(p))
+      p.index = data.participants.length - 1
     })
+
+    // data.participants.sort( (a, b) => a.adjustedMov - b.adjustedMov)
+
     data.preys =
       data.participants
         .filter(p => !p.isChaser && p.isValid)
-        .sort((a, b) => a.mov - b.mov) || []
+        .sort((a, b) => a.adjustedMov - b.adjustedMov) || []
     data.chasers =
       data.participants
         .filter(p => p.isChaser && p.isValid)
-        .sort((a, b) => a.mov - b.mov) || []
+        .sort((a, b) => a.adjustedMov - b.adjustedMov) || []
     data.byDex = duplicate(data.participants).sort((a, b) => a.dex - b.dex)
 
     data.preysMinMov = data.preys.length
       ? data.preys.reduce((prev, current) =>
-          prev.mov < current.mov ? prev : current
-        ).mov
+          prev.adjustedMov < current.adjustedMov ? prev : current
+        ).adjustedMov
       : -1
 
     data.preysMaxMov = data.preys.length
       ? data.preys.reduce((prev, current) =>
-          prev.mov > current.mov ? prev : current
-        ).mov
+          prev.adjustedMov > current.adjustedMov ? prev : current
+        ).adjustedMov
       : -1
 
     data.chasersMinMov = data.chasers.length
       ? data.chasers.reduce((prev, current) =>
-          prev.mov < current.mov ? prev : current
-        ).mov
+          prev.adjustedMov < current.adjustedMov ? prev : current
+        ).adjustedMov
       : -1
 
     data.chasersMaxMov = data.chasers.length
       ? data.chasers.reduce((prev, current) =>
-          prev.mov > current.mov ? prev : current
-        ).mov
+          prev.adjustedMov > current.adjustedMov ? prev : current
+        ).adjustedMov
       : -1
+
+    data.chasers.forEach(p => {
+      if (p.adjustedMov < data.preysMinMov) p.tooSlow()
+      else p.includeInChase()
+      p.fastest = p.adjustedMov == data.chasersMaxMov
+      p.slowest = p.adjustedMov == data.chasersMinMov
+    })
+
+    data.preys.forEach(p => {
+      if (p.adjustedMov > data.chasersMaxMov) p.escaped()
+      else p.includeInChase()
+      p.fastest = p.adjustedMov == data.preysMaxMov
+      p.slowest = p.adjustedMov == data.preysMinMov
+    })
+
+    data.locations = [
+      {
+        participant: null,
+        barrier:{
+          skill: 'STR',
+          canBeBroken: true,
+          hp: 15
+        }
+      },
+      {
+        participant: [ this.participants[2]],
+      },
+      {
+        participants: [ this.participants[0], this.participants[1]]
+      }
+    ]
+
     return data
   }
 
@@ -657,6 +693,38 @@ export class _participant {
   //    return value;
   //  });
   // }
+
+  tooSlow () {
+    this.data.excluded = true
+  }
+
+  includeInChase () {
+    this.data.excluded = false
+    this.data.escaped = false
+  }
+
+  escaped () {
+    this.data.escaped = true
+  }
+
+  set slowest (x) {
+    this.data.slowest = x
+  }
+
+  set fastest (x) {
+    this.data.fastest = x
+  }
+
+  get cssClass () {
+    const cssClasses = []
+    if (this.isChaser) cssClasses.push('chaser')
+    else cssClasses.push('prey')
+    if (this.data.excluded) cssClasses.push('excluded', 'too_slow')
+    if (this.data.escaped) cssClasses.push('escaped')
+    if (this.data.fastest) cssClasses.push('fastest')
+    if (this.data.slowest) cssClasses.push('slowest')
+    return cssClasses.join(' ')
+  }
 
   get speedCheck () {
     const check = {}
