@@ -7,8 +7,8 @@
   "minimumCoreVersion": "0.8.6",
   "compatibleCoreVersion": "0.8.9",
   "esmodules": [
-    "assets/socketlib/src/libwrapper_shim.js",
-    "assets/socketlib/src/socketlib.js",
+    "lib/socketlib/src/libwrapper_shim.js",
+    "lib/socketlib/src/socketlib.js",
     "bundle.js"
   ],
   "templateVersion": 1,
@@ -108,12 +108,6 @@
     }
   ],
   "socket": true,
-  "dependencies": [
-    {
-      "name": "socketlib",
-      "manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/master/module.json"
-    }
-  ],
   "gridDistance": 5,
   "gridUnits": "ft",
   "primaryTokenAttribute": "attribs.hp",

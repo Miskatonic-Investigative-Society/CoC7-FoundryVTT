@@ -1,7 +1,7 @@
-import * as path from 'path'
 import { fileURLToPath } from 'url'
 import * as fs from 'fs'
 import * as os from 'os'
+import * as path from 'path'
 import * as process from 'process'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin'
@@ -113,6 +113,7 @@ const bundleScript = {
       patterns: [
         { from: 'assets/', to: 'assets/' },
         { from: 'lang/', to: 'lang/' },
+        { from: 'lib/', to: 'lib/' },
         { from: 'LICENSE' },
         { from: 'packs/', to: 'packs/' },
         { from: 'README.md' },
