@@ -1,31 +1,24 @@
 @headerHeight: 100px;
 @borderGroove: 2px groove #eeede0;
 @detailsHeight: 16px;
-
 .coc7 {
   nav {
-    font-family: customSheetFont, 'Palatino Linotype', serif !important;
+    font-family: customSheetFont, "Palatino Linotype", serif !important;
   }
-
-  // Item Sheet form fields
-  input[type='text'],
+  input[type="text"],
   select {
     height: calc(100% - 2px);
     border: 1px solid @colorTan;
     background: rgba(0, 0, 0, 0.05);
     color: @colorDark;
   }
-
-  // Hovered Fields
-  input[type='text'] {
+  input[type="text"] {
     &:hover,
     &:focus {
       border: 1px solid #111;
       box-shadow: 0 0 8px red;
     }
   }
-
-  // Disabled Fields
   input:disabled,
   select:disabled,
   textarea:disabled {
@@ -36,7 +29,6 @@
       outline: none !important;
     }
   }
-
   label.checkbox {
     flex: auto;
     padding: 0;
@@ -45,22 +37,20 @@
     line-height: 22px;
     font-size: 11px;
     width: auto;
-    > input[type='checkbox'] {
+    > input[type="checkbox"] {
       width: 16px;
       height: 16px;
       margin: 0 2px 0 0;
       position: relative;
       top: 4px;
     }
-    &.right > input[type='checkbox'] {
+    &.right > input[type="checkbox"] {
       margin: 0 0 0 2px;
     }
   }
-
   .sheet-header {
     flex: 0 0 @headerHeight;
     border-bottom: @borderGroove;
-
     .summary {
       flex: 0 0 100%;
       height: @detailsHeight;
@@ -69,11 +59,9 @@
       list-style: none;
       border-top: 1px groove;
       border-bottom: 1px;
-
       input {
         height: 16px;
       }
-
       li {
         height: @detailsHeight;
         float: left;
@@ -84,14 +72,12 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-
         &:last-child {
           border-right: none;
         }
       }
     }
   }
-
   .form-group {
     label {
       flex: 1;
@@ -111,8 +97,6 @@
       flex: 0;
     }
   }
-
-  // Stacked Groups
   .form-group.stacked {
     label {
       flex: 0 0 100%;
@@ -123,32 +107,27 @@
       text-align: left;
     }
   }
-
   .form-group.subgroup {
     label {
       flex: 1;
     }
-
     select {
       flex: 1;
     }
-
     .penalty-selector {
       flex: 1;
     }
   }
-
   .form-header {
     margin: 0 0 0.25em 0;
     padding: 2px 0;
     border-top: @borderGroove;
     border-bottom: @borderGroove;
-    font-family: customSheetFont, 'Palatino Linotype', serif;
+    font-family: customSheetFont, "Palatino Linotype", serif;
     .item-control {
       float: right;
     }
   }
-
   .editor {
     height: 100%;
     .tox-toolbar-overlord,

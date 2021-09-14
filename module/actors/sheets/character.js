@@ -320,7 +320,7 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
       }
       if (game.settings.get('CoC7', 'artworkInteractiveColor')) {
         sheet.element.css(
-          '--main-sheet-interactie-color',
+          '--main-sheet-interactive-color',
           game.settings.get('CoC7', 'artworkInteractiveColor')
         )
       }

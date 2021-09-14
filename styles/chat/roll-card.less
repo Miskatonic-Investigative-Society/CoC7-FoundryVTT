@@ -2,7 +2,6 @@
   .dice-roll {
     padding: 0;
   }
-
   .card-result {
     position: relative;
     margin: 0;
@@ -15,7 +14,6 @@
     word-break: break-all;
     margin-top: 5px;
   }
-
   &.opposed {
     &.combat {
       .attacker {
@@ -25,7 +23,6 @@
       }
     }
   }
-
   .opposed-card-flag {
     flex: none;
     color: white;
@@ -33,7 +30,6 @@
       color: red;
     }
   }
-
   h4.card-result {
     flex: 0;
     display: block;
@@ -49,23 +45,19 @@
     border-radius: 3px;
     box-shadow: 0 0 2px #fff inset;
     word-break: break-all;
-
     &.success {
       color: darkgreen;
     }
-
     &.failure {
       color: darkred;
     }
   }
-
   ol {
     padding: 0;
     list-style: none;
     background: none;
     box-shadow: none;
     border: none;
-
     li.actor-roll {
       list-style: none;
       display: flex;
@@ -75,29 +67,24 @@
       width: 100%;
       align-items: center;
       margin-bottom: 4px;
-
       .roll-details {
         width: 100%;
         display: flex;
         flex-direction: column;
-
         .header {
           height: 16px;
           width: 100%;
           display: flex;
           flex-direction: row;
-
           .name {
             flex: 1;
           }
-
           a {
             height: 16px;
             line-height: 16px;
           }
         }
       }
-
       span.pending {
         width: 100%;
         background: rgba(0, 0, 0, 0.05);
@@ -110,20 +97,17 @@
         display: inline-block;
         text-align: center;
       }
-
       &.won {
         border: 2px groove goldenrod;
         &.tie {
           border-color: red;
         }
       }
-
       a {
         line-height: 36px;
         height: 36px;
         flex: none;
       }
-
       img {
         width: 36px;
         height: 36px;
@@ -133,7 +117,6 @@
         border: none;
         margin-right: 2px;
       }
-
       .actor-card-buttons {
         flex: 1;
         display: flex;
@@ -142,7 +125,6 @@
         margin: 0;
         align-self: center;
       }
-
       .roll-result {
         width: 100%;
       }

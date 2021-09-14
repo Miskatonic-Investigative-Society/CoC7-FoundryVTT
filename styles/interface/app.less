@@ -1,21 +1,18 @@
 .coc7.dialog {
   .selectable:hover {
-    text-shadow: 0 0 8px var(--main-sheet-interactie-color);
+    text-shadow: 0 0 8px var(--main-sheet-interactive-color);
   }
-
   .selected {
-    text-shadow: 0 0 4px var(--main-sheet-interactie-color);
+    text-shadow: 0 0 4px var(--main-sheet-interactive-color);
     h4 {
       font-weight: bold;
     }
   }
-
   button {
     &.inactive:hover {
       box-shadow: 0 0 5px grey;
     }
   }
-
   &.char-select {
     .item-list {
       .item {
@@ -23,38 +20,31 @@
       }
     }
   }
-
   &.char-select,
   &.skill-select {
     a.roll-characteristic {
       flex: 0;
       padding-left: 5px;
     }
-
     a.increase-characteristic {
       flex: 0;
       padding-left: 9px;
     }
-
     a.decrease-characteristic,
     a.reset-characteristic {
       flex: 0;
       padding-right: 9px;
     }
-
     .item-controls {
       flex: 0;
       padding-right: 20px;
     }
-
     .points,
     .counter {
       justify-content: center;
-
       &.warning {
         color: red;
       }
-
       span {
         height: 22px;
         line-height: 22px;

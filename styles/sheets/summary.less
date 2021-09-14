@@ -7,15 +7,15 @@
     background: var(--other-sheet-bg);
     background-repeat: repeat;
   }
-  font-family: customSheetFont, 'Palatino Linotype', serif;
+  font-family: customSheetFont, "Palatino Linotype", serif;
   .container {
     display: grid;
     grid-template-columns: 1fr 1.35fr 1fr;
     grid-template-rows: 0.05fr 1fr;
     gap: 1px;
     grid-template-areas:
-      'header header header'
-      'characteristics skills other';
+      "header header header"
+      "characteristics skills other";
     .rollable {
       &:hover {
         color: #000;
@@ -165,8 +165,8 @@
         grid-template-columns: 1rem 2.75rem;
         grid-template-rows: 1rem 2rem;
         grid-template-areas:
-          'rollIcon characName'
-          'characScore characScore';
+          "rollIcon characName"
+          "characScore characScore";
         align-items: baseline;
         .roll-icon {
           color: var(--main-sheet-front-color);
@@ -189,8 +189,8 @@
           grid-template-columns: 2.375rem 0.875rem;
           grid-template-rows: 0.875rem 0.875rem;
           grid-template-areas:
-            'mainScore halfScore'
-            'mainScore fithScore';
+            "mainScore halfScore"
+            "mainScore fithScore";
           .main-score {
             grid-area: mainScore;
             justify-self: center;
@@ -253,27 +253,22 @@
           font-size: 0.75rem;
           grid-template-columns: 1rem auto 1.5rem 0.7rem;
           border-bottom: 1px solid;
-
           &.specialization {
             margin-left: 0.5rem;
             width: var(--skill-specialization-length);
             border-left: 1px solid;
           }
-
           .item-image {
             height: 0.875rem;
             background-size: contain;
             margin: 1px 0 0 0;
           }
-
           .item-name {
-            // .cursive();
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             padding-left: 3px;
             line-height: 1rem;
-
             input {
               height: 1rem;
               padding: 0;
@@ -282,14 +277,11 @@
               color: var(--main-sheet-front-color);
             }
           }
-
           .item-score {
-            // .cursive();
             color: var(--main-sheet-back-color);
             text-align: end;
             margin-right: 2px;
             line-height: 1rem;
-
             input {
               height: 1rem;
               padding: 0;
@@ -299,9 +291,7 @@
               text-align: end;
             }
           }
-
           .item-controls {
-            // font-family: system-ui;
             font-size: 0.625rem;
             line-height: 1rem;
             flex: 0 0 1.25rem;
@@ -312,7 +302,6 @@
               text-shadow: none;
               color: var(--main-sheet-back-color);
             }
-
             .item-control {
               &.active {
                 color: goldenrod;
@@ -356,7 +345,7 @@
         border-bottom: 1px solid;
         grid-template-columns: 1rem 5.5rem 2.5rem 2rem;
         grid-template-rows: 1rem;
-        grid-template-areas: 'image name damage weaponControl';
+        grid-template-areas: "image name damage weaponControl";
         .weapon-damage {
           grid-area: damage;
           color: var(--main-sheet-back-color);

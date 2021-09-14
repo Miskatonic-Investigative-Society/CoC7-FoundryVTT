@@ -1,37 +1,5 @@
-/* Deprecated vars */
 @borderLight: #ccc;
 @borderDark: #666;
-
-/* ----------------------------------------- */
-/*  Fonts                                    */
-/* ----------------------------------------- */
-
-// @font-face {
-//   font-family: 'Modesto Condensed';
-//   font-style: normal;
-//   font-weight: 400;
-//   src: url('../../assets/fonts/modesto-condensed/modesto-condensed.woff2')
-//     format('woff2');
-// }
-
-// @font-face {
-//   font-family: 'Modesto Condensed';
-//   font-style: normal;
-//   font-weight: 700;
-//   src: url('../../assets/fonts/modesto-condensed/modesto-condensed-bold.woff2')
-//     format('woff2');
-// }
-
-// .modesto {
-//   font-family: customSheetFont, 'Modesto Condensed', 'Palatino Linotype', serif;
-//   font-size: 20px;
-//   font-weight: 700;
-// }
-
-/* ----------------------------------------- */
-/*  Sheet Styles                             */
-/* ----------------------------------------- */
-
 @colorDark: #191813;
 @colorFaint: #c9c7b8;
 @colorBeige: #b5b3a4;
@@ -40,22 +8,15 @@
 @colorCrimson: #44191a;
 @borderGroove: 2px groove #eeede0;
 @sheetBackground: url("../assets/images/background.webp") repeat;
-
-/* ----------------------------------------- */
-/*  Flexbox                                  */
-/* ----------------------------------------- */
-
 .flexrow {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
   width: 100%;
-
   > * {
     flex: 1;
   }
-
   .flex1 {
     flex: 1;
   }
@@ -69,16 +30,13 @@
     flex: 4;
   }
 }
-
 .flexcol {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-
   > * {
     flex: 1;
   }
-
   .flex1 {
     flex: 1;
   }
@@ -92,11 +50,3 @@
     flex: 4;
   }
 }
-
-// .chat-message{
-//   background: url(./assets/background.webp) repeat;;
-// }
-
-// .window-app .window-content{
-//   background: url(./assets/background.webp) repeat;;
-// }
