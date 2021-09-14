@@ -1,4 +1,4 @@
-/* global CONFIG, game, Roll */
+/* global ChatMessage, CONFIG, game, Roll */
 
 export class CoC7Dice {
   static async roll (modif = 0, rollMode = null, hideDice = false) {
@@ -58,7 +58,13 @@ export class CoC7Dice {
     if (game.modules.get('dice-so-nice')?.active) {
       const syncDice = game.settings.get('CoC7', 'syncDice3d')
 
-      await game.dice3d.showForRoll(roll, game.user, syncDice)
+      const chatData = {
+        whisper: null,
+        blind: false
+      }
+      ChatMessage.applyRollMode(chatData, game.settings.get('core', 'rollMode'))
+
+      await game.dice3d.showForRoll(roll, game.user, syncDice, chatData.whisper, chatData.blind)
     }
   }
 }

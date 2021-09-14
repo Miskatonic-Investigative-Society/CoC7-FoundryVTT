@@ -1580,6 +1580,23 @@ export class CoC7Check {
    */
   async updateChatCard ({ makePublic = false, forceRoll = false } = {}) {
     if (makePublic) this.rollMode = false // reset roll mode
+
+    const chatData = { flavor: this.flavor }
+
+    if (makePublic) {
+      chatData.whisper = []
+      chatData.blind = false
+      ChatMessage.applyRollMode(chatData)
+    } else {
+      chatData.whisper = []
+      chatData.blind = false
+      ChatMessage.applyRollMode(chatData, game.settings.get('core', 'rollMode'))
+    }
+
+    if (chatData.blind) {
+      this.isBlind = true
+    }
+
     const template = 'systems/CoC7/templates/chat/roll-result.html'
     const html = await renderTemplate(template, this)
     let newContent = html
@@ -1598,19 +1615,13 @@ export class CoC7Check {
       newContent = htmlMessage.outerHTML
     }
 
-    const chatData = { flavor: this.flavor, content: newContent }
+    chatData.content = newContent
+
     if (CONST.CHAT_MESSAGE_TYPES.ROLL === message.data.type) {
       if (message.data.whisper?.length) {
         chatData.type = CONST.CHAT_MESSAGE_TYPES.WHISPER
       } else chatData.type = CONST.CHAT_MESSAGE_TYPES.OTHER
     }
-
-    if (makePublic) {
-      chatData.whisper = []
-      chatData.blind = false
-    }
-
-    ChatMessage.applyRollMode(chatData)
 
     if (forceRoll && this.dice?.roll) {
       await CoC7Dice.showRollDice3d(this.dice.roll)
