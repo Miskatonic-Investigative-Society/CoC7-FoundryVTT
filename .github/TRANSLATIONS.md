@@ -4,7 +4,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 | Key                                                                                      |    cn    |    cs    |    de    |    es    |    fr    |    ja    |    pl    |  pt-BR   |    sv    |  zh-TW   |
 | :--------------------------------------------------------------------------------------- | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-| **Remaining**:                                                                           | **326**  | **102**  | **119**  |  **14**  |  **14**  | **121**  |  **14**  |  **14**  |  **12**  |  **42**  |
+| **Remaining**:                                                                           | **329**  | **105**  | **122**  |  **17**  |  **17**  | **124**  |  **17**  |  **17**  |  **15**  |  **45**  |
 | [CoC7.ActorImporter](#coc7actorimporter)                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.ActorImporterSummary](#coc7actorimportersummary)                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.AddBook](#coc7addbook)                                                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
@@ -86,6 +86,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.Entities.Vehicle](#coc7entitiesvehicle)                                            | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Entities.Weapon](#coc7entitiesweapon)                                              | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Expand](#coc7expand)                                                               | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.ExperimentalFeaturesWarning](#coc7experimentalfeatureswarning)                     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.FakeRoll](#coc7fakeroll)                                                           | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.FlatDiceModifier](#coc7flatdicemodifier)                                           | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.FlatModifier](#coc7flatmodifier)                                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
@@ -317,6 +318,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [SETTINGS.PlayerUnlockSheetMode](#settingsplayerunlocksheetmode)                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.SelfRollWhisperTarget](#settingsselfrollwhispertarget)                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.SelfRollWhisperTargetHint](#settingsselfrollwhispertargethint)                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [SETTINGS.ShowExperimentalFeatures](#settingsshowexperimentalfeatures)                   | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [SETTINGS.ShowExperimentalFeaturesHint](#settingsshowexperimentalfeatureshint)           | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [SETTINGS.StanbyGMRolls](#settingsstanbygmrolls)                                         | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; |
 | [SETTINGS.StanbyGMRollsHint](#settingsstanbygmrollshint)                                 | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; |
 | [SETTINGS.TitleChatCards](#settingstitlechatcards)                                       | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; |
@@ -656,6 +659,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.Expand
 
 `"CoC7.Expand": "Expand",`
+
+##### CoC7.ExperimentalFeaturesWarning
+
+`"CoC7.ExperimentalFeaturesWarning": "This feature is a work in progress and is not recommended for use in your game world.",`
 
 ##### CoC7.FakeRoll
 
@@ -1580,6 +1587,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### SETTINGS.SelfRollWhisperTargetHint
 
 `"SETTINGS.SelfRollWhisperTargetHint": "As a GM, when doing self check roll, who do you want to send a notification to.",`
+
+##### SETTINGS.ShowExperimentalFeatures
+
+`"SETTINGS.ShowExperimentalFeatures": "Show Experimental Features",`
+
+##### SETTINGS.ShowExperimentalFeaturesHint
+
+`"SETTINGS.ShowExperimentalFeaturesHint": "Your world may become unusable in a future release if you use these features. For testing only DO NOT use these in your game worlds",`
 
 ##### SETTINGS.StanbyGMRolls
 
