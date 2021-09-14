@@ -4,9 +4,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 | Key                                                                                      |    cn    |    cs    |    de    |    es    |    fr    |    ja    |    pl    |  pt-BR   |    sv    |  zh-TW   |
 | :--------------------------------------------------------------------------------------- | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-| **Remaining**:                                                                           | **317**  |  **93**  | **110**  |  **5**   |  **5**   | **112**  |  **5**   |  **5**   |  **3**   |  **33**  |
+| **Remaining**:                                                                           | **326**  | **102**  | **119**  |  **14**  |  **14**  | **121**  |  **14**  |  **14**  |  **12**  |  **42**  |
 | [CoC7.ActorImporter](#coc7actorimporter)                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.ActorImporterSummary](#coc7actorimportersummary)                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.AddBook](#coc7addbook)                                                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.AddSpell](#coc7addspell)                                                           | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.AdvantageAttacker](#coc7advantageattacker)                                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.AdvantageDefender](#coc7advantagedefender)                                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.All](#coc7all)                                                                     | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
@@ -71,6 +73,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.Entities.Book](#coc7entitiesbook)                                                  | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Entities.Character](#coc7entitiescharacter)                                        | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Entities.Chase](#coc7entitieschase)                                                | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Entities.Container](#coc7entitiescontainer)                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.Entities.Creature](#coc7entitiescreature)                                          | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Entities.Item](#coc7entitiesitem)                                                  | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Entities.Npc](#coc7entitiesnpc)                                                    | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
@@ -147,8 +150,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.MessageBoutOfMadnessTableNotFound](#coc7messageboutofmadnesstablenotfound)         | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.MessageCheckRequestedWait](#coc7messagecheckrequestedwait)                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.MessageSelectSingleUserForTarget](#coc7messageselectsingleuserfortarget)           | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.MessageSelectUserToGiveTo](#coc7messageselectusertogiveto)                         | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.MessageTargetCheckRequested](#coc7messagetargetcheckrequested)                     | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.MessageTitleSelectSingleUserForTarget](#coc7messagetitleselectsingleuserfortarget) | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.MessageTitleSelectUserToGiveTo](#coc7messagetitleselectusertogiveto)               | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.Migrate.ButtonOkay](#coc7migratebuttonokay)                                        | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Migrate.ButtonSkip](#coc7migratebuttonskip)                                        | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Migrate.ButtonUpdate](#coc7migratebuttonupdate)                                    | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
@@ -162,6 +167,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.MythosAlreadyEncountered](#coc7mythosalreadyencountered)                           | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.MythosFirstEncounter](#coc7mythosfirstencounter)                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.MythosGain](#coc7mythosgain)                                                       | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.NewBookName](#coc7newbookname)                                                     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.NewSpellName](#coc7newspellname)                                                   | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.NoConvert](#coc7noconvert)                                                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.NoTargetSelected](#coc7notargetselected)                                           | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.NoTargetToDamage](#coc7notargettodamage)                                           | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; |
@@ -217,6 +224,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.TemporaryInsane](#coc7temporaryinsane)                                             | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Tie](#coc7tie)                                                                     | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.TotalDamage](#coc7totaldamage)                                                     | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.TradeItem](#coc7tradeitem)                                                         | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.UnableToCopyToClipboard](#coc7unabletocopytoclipboard)                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.UnableToInteractWithChatCard](#coc7unabletointeractwithchatcard)                   | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.UnderlyingInsanity](#coc7underlyinginsanity)                                       | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
@@ -225,6 +233,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.Vehicle](#coc7vehicle)                                                             | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.WarningCharacterSheetV1Depreciated](#coc7warningcharactersheetv1depreciated)       | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.WeaponUsesPerRoundHint](#coc7weaponusesperroundhint)                               | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Weapons](#coc7weapons)                                                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.WhisperTo](#coc7whisperto)                                                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.WhisperToSelection](#coc7whispertoselection)                                       | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.XPGainDisabled](#coc7xpgaindisabled)                                               | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
@@ -331,6 +340,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.ActorImporterSummary
 
 `"CoC7.ActorImporterSummary": "Import an NPC or Creature from description and stats. Just paste the corresponding plain text",`
+
+##### CoC7.AddBook
+
+`"CoC7.AddBook": "Add book",`
+
+##### CoC7.AddSpell
+
+`"CoC7.AddSpell": "Add spell",`
 
 ##### CoC7.AdvantageAttacker
 
@@ -587,6 +604,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.Entities.Chase
 
 `"CoC7.Entities.Chase": "Chase",`
+
+##### CoC7.Entities.Container
+
+`"CoC7.Entities.Container": "Container",`
 
 ##### CoC7.Entities.Creature
 
@@ -892,6 +913,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 `"CoC7.MessageSelectSingleUserForTarget": "This token is controlled by multiple users, please select which user can respond to this attack.",`
 
+##### CoC7.MessageSelectUserToGiveTo
+
+`"CoC7.MessageSelectUserToGiveTo": "Which character would you like to give this item to?",`
+
 ##### CoC7.MessageTargetCheckRequested
 
 `"CoC7.MessageTargetCheckRequested": "Your keeper has requested {name} make a {check} roll.",`
@@ -899,6 +924,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.MessageTitleSelectSingleUserForTarget
 
 `"CoC7.MessageTitleSelectSingleUserForTarget": "Which user can respond to this attack",`
+
+##### CoC7.MessageTitleSelectUserToGiveTo
+
+`"CoC7.MessageTitleSelectUserToGiveTo": "Give item to another character",`
 
 ##### CoC7.Migrate.ButtonOkay
 
@@ -951,6 +980,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.MythosGain
 
 `"CoC7.MythosGain": "Mythos gain",`
+
+##### CoC7.NewBookName
+
+`"CoC7.NewBookName": "new book",`
+
+##### CoC7.NewSpellName
+
+`"CoC7.NewSpellName": "new spell",`
 
 ##### CoC7.NoConvert
 
@@ -1172,6 +1209,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 `"CoC7.TotalDamage": "Total damage",`
 
+##### CoC7.TradeItem
+
+`"CoC7.TradeItem": "Trade / Store Item",`
+
 ##### CoC7.UnableToCopyToClipboard
 
 `"CoC7.UnableToCopyToClipboard": "Unable to copy to clipboard, this is likely due to your browser security settings.",`
@@ -1203,6 +1244,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.WeaponUsesPerRoundHint
 
 `"CoC7.WeaponUsesPerRoundHint": "Attacks per round (1/3 : 1 attack every 3 rounds)",`
+
+##### CoC7.Weapons
+
+`"CoC7.Weapons": "Weapons",`
 
 ##### CoC7.WhisperTo
 
