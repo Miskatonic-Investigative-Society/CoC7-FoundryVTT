@@ -138,7 +138,9 @@ COC7.status = {
   dead: 'dead'
 }
 
+COC7.newBookName = 'CoC7.NewBookName'
 COC7.newSkillName = 'CoC7.NewSkillName'
+COC7.newSpellName = 'CoC7.NewSpellName'
 COC7.newItemName = 'CoC7.NewItemName'
 COC7.newWeaponName = 'CoC7.NewWeaponName'
 

@@ -1,6 +1,6 @@
 {
   "Actor": {
-    "types": ["character", "npc", "creature", "vehicle"],
+    "types": ["character", "npc", "creature", "vehicle", "container"],
     "templates": {
       "characteristics": {
         "characteristics": {
@@ -272,6 +272,15 @@
       },
       "properties": {
         "armed": false
+      }
+    },
+    "container": {
+      "description": {
+        "value": "",
+        "keeper": ""
+      },
+      "flags": {
+        "locked": false
       }
     }
   },
