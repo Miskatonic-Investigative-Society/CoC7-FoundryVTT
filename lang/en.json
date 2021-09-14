@@ -717,10 +717,6 @@
   "CoC7.MessageTitleSelectUserToGiveTo": "Give item to another character",
   "CoC7.MessageSelectUserToGiveTo": "Which character would you like to give this item to?",
 
-  "SETTINGS.ShowExperimentalFeatures": "Show Experimental Features",
-  "SETTINGS.ShowExperimentalFeaturesHint": "Your world may become unusable in a future release if you use these features. For testing only DO NOT use these in your game worlds",
-  "CoC7.ExperimentalFeaturesWarning": "This feature is a work in progress and is not recommended for use in your game world.",
-
   "SETTINGS.TitleRules": "Rules",
   "SETTINGS.TitleInitiative": "Initiative Settings",
   "SETTINGS.TitleRoll": "Roll Settings",
@@ -821,5 +817,8 @@
   "SETTINGS.OneBlockBackStory": "One block backstory",
   "SETTINGS.OneBlockBackStoryHint": "Turn backstory to one editor block, but you can format/add links.",
   "SETTINGS.EnableStatusIcons": "Enable status icons",
-  "SETTINGS.EnableStatusIconsHint": "Set if combat and sanity effects icons are shown in tokens."
+  "SETTINGS.EnableStatusIconsHint": "Set if combat and sanity effects icons are shown in tokens.",
+  "SETTINGS.ShowExperimentalFeatures": "Show Experimental Features",
+  "SETTINGS.ShowExperimentalFeaturesHint": "Your world may become unusable in a future release if you use these features. For testing only DO NOT use these in your game worlds",
+  "CoC7.ExperimentalFeaturesWarning": "This feature is a work in progress and is not recommended for use in your game world."
 }
