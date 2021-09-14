@@ -73,7 +73,12 @@ export class CoCActor extends Actor {
         { overwrite: false }
       )
     } else if (data.type === 'vehicle') {
-      data.img = 'systems/CoC7/assets/icons/jeep.svg' // Change the icon for vehicle
+      data.img = 'systems/CoC7/assets/icons/jeep.svg'
+    } else if (data.type === 'container') {
+      data.img = 'icons/svg/chest.svg'
+      mergeObject(data.token, {
+        actorLink: true
+      })
     }
     return super.create(data, options)
   }
@@ -232,15 +237,15 @@ export class CoCActor extends Actor {
     }
     let boutDurationText = this.isInABoutOfMadness
       ? boutRealTime
-          ? `${duration} ${game.i18n.localize('CoC7.rounds')}`
-          : `${duration} ${game.i18n.localize('CoC7.hours')}`
+        ? `${duration} ${game.i18n.localize('CoC7.rounds')}`
+        : `${duration} ${game.i18n.localize('CoC7.hours')}`
       : null
     const insanityDurationText = insaneDuration
       ? this.isInsane
-          ? indefiniteInstanity
-              ? null
-              : `${insaneDuration} ${game.i18n.localize('CoC7.hours')}`
-          : null
+        ? indefiniteInstanity
+          ? null
+          : `${insaneDuration} ${game.i18n.localize('CoC7.hours')}`
+        : null
       : null
     if (this.isInsane && !insanityDurationText && !indefiniteInstanity) {
       indefiniteInstanity = true
@@ -267,8 +272,8 @@ export class CoCActor extends Actor {
         durationText: insanityDurationText || '',
         hint: this.isInsane
           ? indefiniteInstanity
-              ? game.i18n.localize('CoC7.IndefiniteInsanity')
-              : `${game.i18n.localize(
+            ? game.i18n.localize('CoC7.IndefiniteInsanity')
+            : `${game.i18n.localize(
                 'CoC7.TemporaryInsanity'
               )} ${insanityDurationText || ''}`
           : game.i18n.localize('CoC7.NotInsane')
@@ -598,6 +603,58 @@ export class CoCActor extends Actor {
       data: {
         quantity: quantity
       }
+    }
+    const created = await this.createEmbeddedDocuments('Item', [data], {
+      renderSheet: showSheet
+    })
+    return created
+  }
+
+  async createEmptyBook (event = null) {
+    const showSheet = event ? !event.shiftKey : true
+    if (!this.getItemIdByName(game.i18n.localize(COC7.newBookName))) {
+      return this.createBook(game.i18n.localize(COC7.newBookName), showSheet)
+    }
+    let index = 0
+    let itemName = game.i18n.localize(COC7.newBookName) + ' ' + index
+    while (this.getItemIdByName(itemName)) {
+      index++
+      itemName = game.i18n.localize(COC7.newBookName) + ' ' + index
+    }
+    return this.createBook(itemName, showSheet)
+  }
+
+  async createBook (itemName, showSheet = false) {
+    const data = {
+      name: itemName,
+      type: 'book',
+      data: {}
+    }
+    const created = await this.createEmbeddedDocuments('Item', [data], {
+      renderSheet: showSheet
+    })
+    return created
+  }
+
+  async createEmptySpell (event = null) {
+    const showSheet = event ? !event.shiftKey : true
+    if (!this.getItemIdByName(game.i18n.localize(COC7.newSpellName))) {
+      return this.createSpell(game.i18n.localize(COC7.newSpellName), showSheet)
+    }
+    let index = 0
+    let itemName = game.i18n.localize(COC7.newSpellName) + ' ' + index
+    while (this.getItemIdByName(itemName)) {
+      index++
+      itemName = game.i18n.localize(COC7.newSpellName) + ' ' + index
+    }
+    return this.createSpell(itemName, showSheet)
+  }
+
+  async createSpell (itemName, showSheet = false) {
+    const data = {
+      name: itemName,
+      type: 'spell',
+      data: {}
     }
     const created = await this.createEmbeddedDocuments('Item', [data], {
       renderSheet: showSheet
@@ -1578,9 +1635,11 @@ export class CoCActor extends Actor {
       }
       /** MODIF 0.8.x **/
       // await this.createOwnedItem( item, {renderSheet:false});
-      output.push(await this.createEmbeddedDocuments('Item', [item], {
-        renderSheet: false
-      }))
+      output.push(
+        await this.createEmbeddedDocuments('Item', [item], {
+          renderSheet: false
+        })
+      )
       /*****************/
     }
     return output

@@ -20,6 +20,7 @@ import { CoC7Hooks } from './hooks/index.js'
 import * as DiceBot from './dicebot.js'
 import '../styles/system/index.less'
 import { CoC7Socket } from './hooks/socket.js'
+import { DropActorSheetData } from './hooks/drop-actor-sheet-data.js'
 
 Hooks.on('renderSettingsConfig', (app, html, options) => {
   const systemTab = $(app.form).find('.tab[data-tab=system]')
@@ -400,6 +401,8 @@ Hooks.on('renderItemSheet', CoC7CharacterSheetV2.renderSheet) // TODO : change f
 Hooks.on('renderSceneControls', CoC7Menu.renderMenu)
 
 Hooks.on('dropCanvasData', CoC7Canvas.onDropSomething)
+
+Hooks.on('dropActorSheetData', DropActorSheetData)
 
 function activateGlobalListener () {
   const body = $('body')

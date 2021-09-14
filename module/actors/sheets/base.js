@@ -347,9 +347,9 @@ export class CoC7ActorSheet extends ActorSheet {
                     .replace(/[\u0300-\u036f]/g, '')
                     .toLowerCase()
                 : a.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase()
             lcb =
               b.data.properties.special &&
               typeof b.data.specialization !== 'undefined'
@@ -362,9 +362,9 @@ export class CoC7ActorSheet extends ActorSheet {
                     .replace(/[\u0300-\u036f]/g, '')
                     .toLowerCase()
                 : b.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase()
           } else {
             lca = a.name
               .normalize('NFD')
@@ -375,9 +375,7 @@ export class CoC7ActorSheet extends ActorSheet {
               .replace(/[\u0300-\u036f]/g, '')
               .toLowerCase()
           }
-          if (lca < lcb) return -1
-          if (lca > lcb) return 1
-          return 0
+          return lca.localeCompare(lcb)
         })
       }
 
@@ -398,9 +396,9 @@ export class CoC7ActorSheet extends ActorSheet {
                   .replace(/[\u0300-\u036f]/g, '')
                   .toLowerCase()
               : a.name
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLowerCase()
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase()
             lcb = b.data.properties.special
               ? b.data.specialization
                   .normalize('NFD')
@@ -411,9 +409,9 @@ export class CoC7ActorSheet extends ActorSheet {
                   .replace(/[\u0300-\u036f]/g, '')
                   .toLowerCase()
               : b.name
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLowerCase()
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase()
           } else {
             lca = a.name
               .normalize('NFD')
@@ -537,7 +535,7 @@ export class CoC7ActorSheet extends ActorSheet {
     }
 
     // For compat with previous characters test if auto is definied, if not we define it
-    if (!['vehicle'].includes(this.actor.data.type)) {
+    if (!['vehicle', 'container'].includes(this.actor.data.type)) {
       const auto = this.actor.checkUndefinedAuto()
       data.data = mergeObject(data.data, auto)
     } else {
@@ -802,17 +800,25 @@ export class CoC7ActorSheet extends ActorSheet {
 
     html.find('.add-item').click(ev => {
       switch (ev.currentTarget.dataset.type) {
-        case 'skill':
-          this.actor.createEmptySkill(ev)
+        case 'book':
+          this.actor.createEmptyBook(ev)
           break
         case 'item':
           this.actor.createEmptyItem(ev)
+          break
+        case 'skill':
+          this.actor.createEmptySkill(ev)
+          break
+        case 'spell':
+          this.actor.createEmptySpell(ev)
           break
         case 'weapon':
           this.actor.createEmptyWeapon(ev)
           break
       }
     })
+
+    html.find('.item-trade').click(this._onTradeItem.bind(this))
 
     html.find('.add-new-section').click(() => {
       this.actor.createBioSection()
@@ -919,6 +925,55 @@ export class CoC7ActorSheet extends ActorSheet {
     })
   }
 
+  async _onTradeItem (event) {
+    const li = $(event.currentTarget).parents('.item')
+    const item = this.actor.items.get(li.data('itemId'))
+    let content = '<p>' + game.i18n.localize('CoC7.MessageSelectUserToGiveTo')
+    const message = {
+      actorFrom: this.actor.id,
+      scene: null,
+      actorTo: this.actor.id,
+      item: item.id
+    }
+    if (this.token?.actor) {
+      message.actorFrom = this.token.id
+      message.scene = this.token.parent.id
+    }
+    const actors = game.actors.filter(e => {
+      if (!['character', 'npc', 'creature', 'container'].includes(e.type)) {
+        return false
+      }
+      if (this.actor.id === e.id) {
+        return false
+      }
+      let visible = false
+      for (const [k, v] of Object.entries(e.data.permission)) {
+        if (k === 'default' || k === game.user.id) {
+          visible = visible || v !== CONST.ENTITY_PERMISSIONS.NONE
+        }
+      }
+      return visible
+    })
+    content = content + '<form id="selectform"><select name="user">'
+    for (const actor of actors) {
+      content =
+        content + '<option value="' + actor.id + '">' + actor.name + '</option>'
+    }
+    content = content + '</select></form></p>'
+    await Dialog.prompt({
+      title: game.i18n.localize('CoC7.MessageTitleSelectUserToGiveTo'),
+      content: content,
+      callback: html => {
+        const formData = new FormData(html[0].querySelector('#selectform'))
+        formData.forEach(function (value, name) {
+          if (name === 'user') {
+            message.actorTo = value
+          }
+        })
+      }
+    })
+    await game.CoC7socket.executeAsGM('gmtradeitemto', message)
+  }
   _onDragCharacteristic (event) {
     const box = event.currentTarget.parentElement
     const data = {
@@ -1156,9 +1211,9 @@ export class CoC7ActorSheet extends ActorSheet {
 
   _onInventoryHeader (event) {
     event.preventDefault()
-    const li = $(event.currentTarget).parents('.inventory-section')
-    const details = li.find('ol')
-    details.toggle()
+    $(event.currentTarget)
+      .siblings('li')
+      .toggle()
   }
 
   async _onItemPopup (event) {

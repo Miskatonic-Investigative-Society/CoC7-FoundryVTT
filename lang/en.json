@@ -2,6 +2,7 @@
   "CoC7.title": "Call of Cthulhu 7h Edition (Unofficial)",
 
   "CoC7.Entities.Character": "Character",
+  "CoC7.Entities.Container": "Container",
   "CoC7.Entities.Creature": "Creature",
   "CoC7.Entities.Npc": "NPC",
   "CoC7.Entities.Vehicle": "Vehicle",
@@ -89,6 +90,7 @@
   "CoC7.Spells": "Spells",
   "CoC7.Spell": "Spell",
   "CoC7.Spells&Notes": "Spells & Notes",
+  "CoC7.Weapons": "Weapons",
   "CoC7.Effects": "Effects",
   "CoC7.Cost": "Cost",
   "CoC7.Source": "Source",
@@ -400,7 +402,14 @@
   "CoC7.AddItem": "Add item",
   "CoC7.EditItem": "Edit item",
   "CoC7.DeleteItem": "Delete Item",
-  "CoC7.AddWeapon": "Add Weapon",
+  "CoC7.TradeItem": "Trade / Store Item",
+
+  "CoC7.NewBookName": "new book",
+  "CoC7.AddBook": "Add book",
+  "CoC7.NewSpellName": "new spell",
+  "CoC7.AddSpell": "Add spell",
+
+  "CoC7.AddWeapon": "Add weapon",
   "CoC7.NewWeaponName": "new weapon",
   "CoC7.EditWeapon": "Edit Weapon",
   "CoC7.DeleteWeapon": "Delete Weapon",
@@ -704,6 +713,9 @@
   "CoC7.UnableToInteractWithChatCard": "You are not able to interact with this message, if you need to make a change please ask your Keeper to select the options for you",
   "CoC7.UnableToCopyToClipboard": "Unable to copy to clipboard, this is likely due to your browser security settings.",
   "CoC7.WarningCharacterSheetV1Depreciated": "This layout is obsolete and may not work correctly. It will be removed with the FoundryVTT v9 release, please get your Keeper to change the sheet type to CoC7.CoC7CharacterSheetV2",
+
+  "CoC7.MessageTitleSelectUserToGiveTo": "Give item to another character",
+  "CoC7.MessageSelectUserToGiveTo": "Which character would you like to give this item to?",
 
   "SETTINGS.TitleRules": "Rules",
   "SETTINGS.TitleInitiative": "Initiative Settings",
