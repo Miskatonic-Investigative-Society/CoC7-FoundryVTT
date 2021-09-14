@@ -1,4 +1,4 @@
-/* global duplicate, expandObject, flattenObject, FormDataExtended, game, mergeObject */
+/* global duplicate, expandObject, flattenObject, FormDataExtended, game, mergeObject, ui */
 
 import { CoC7ActorSheet } from './base.js'
 
@@ -22,6 +22,7 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
   }
 
   async getData () {
+    ui.notifications.error(game.i18n.localize('CoC7.ExperimentalFeaturesWarning'))
     const data = await super.getData()
 
     data.properties = []

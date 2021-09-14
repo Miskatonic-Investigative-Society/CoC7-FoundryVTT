@@ -383,7 +383,14 @@ export function registerSettings () {
     type: Boolean,
     default: false
   })
-
+  game.settings.register('CoC7', 'experimentalFeatures', {
+    name: 'SETTINGS.ShowExperimentalFeatures',
+    hint: 'SETTINGS.ShowExperimentalFeaturesHint',
+    scope: 'world',
+    config: true,
+    type: Boolean,
+    default: false
+  })
   /**
    * Other settings
    */
