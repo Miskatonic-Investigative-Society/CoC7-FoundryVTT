@@ -40,6 +40,8 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
   async getData () {
     const data = await super.getData()
 
+    if (!this.skillListMode) this.skillListMode = 'alphabetical'
+
     if (this.actor.occupation) {
       data.data.infos.occupation = this.actor.occupation.name
       data.data.infos.occupationSet = true
@@ -118,6 +120,7 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
     data.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
 
     data.summarized = this.summarized
+    data.skillListModeValue = this.skillListMode === 'value'
     data.skillList = []
     let previousSpec = ''
     for (const skill of data.skills) {
@@ -132,12 +135,10 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
       }
       data.skillList.push(skill)
     }
-    data.topSkills = [...data.skills]
-      .sort((a, b) => {
-        return a.data.value - b.data.value
-      })
-      .reverse()
-      .slice(0, 14)
+    data.skillsByValue = [...data.skills].sort((a, b) => {
+      return a.data.value - b.data.value
+    }).reverse()
+    data.topSkills = [...data.skillsByValue].slice(0, 14)
     data.topWeapons = [...data.meleeWpn, ...data.rangeWpn]
       .sort((a, b) => {
         return a.data.skill.main?.value - b.data.skill.main?.value
@@ -197,7 +198,15 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
       html
         .find('[name="data.attribs.hp.value"]')
         .change(event => this.actor.setHealthStatusManually(event))
+      html.find('.toggle-list-mode').click(event => {
+        this.toggleSkillListMode(event)
+      })
     }
+  }
+
+  async toggleSkillListMode (event) {
+    this.skillListMode === 'alphabetical' ? this.skillListMode = 'value' : this.skillListMode = 'alphabetical'
+    return await this.render(true)
   }
 
   async _onSkillDev (event) {
