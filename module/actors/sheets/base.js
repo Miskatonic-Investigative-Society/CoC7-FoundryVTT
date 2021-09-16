@@ -974,6 +974,7 @@ export class CoC7ActorSheet extends ActorSheet {
     })
     await game.CoC7socket.executeAsGM('gmtradeitemto', message)
   }
+
   _onDragCharacteristic (event) {
     const box = event.currentTarget.parentElement
     const data = {

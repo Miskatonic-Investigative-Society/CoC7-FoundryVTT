@@ -567,7 +567,7 @@ export class CoC7Utilities {
       actors.push(game.user.character.tokenKey)
     }
 
-    await actors.forEach(async tk => {
+    for (const tk of actors) {
       const check = new CoC7Check()
       check.diceModifier = diceModifier || 0
       check.difficulty = difficulty || CoC7Check.difficultyLevel.regular
@@ -577,7 +577,7 @@ export class CoC7Utilities {
       check.actor = tk
       await check.roll()
       check.toMessage()
-    })
+    }
 
     if (!actors.length) {
       const check = new CoC7Check()
