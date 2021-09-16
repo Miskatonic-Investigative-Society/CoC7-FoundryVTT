@@ -198,7 +198,7 @@ export class CombinedCheckCard extends RollCard {
 
   async compute () {
     if (!this._roll) return
-    this.rolls.forEach(async r => {
+    for (const r of this.rolls) {
       if (!r.rolled) {
         r.modifier = this.options.modifier || 0
         r.difficulty =
@@ -207,7 +207,7 @@ export class CombinedCheckCard extends RollCard {
         r.flatThresholdModifier = this.options.flatThresholdModifier || 0
         await r._perform({ roll: this._roll, silent: true })
       }
-    })
+    }
 
     for (let i = 0; i < this.rolls.length; i++) {
       if (this.rolls[i].rolled) {

@@ -54,20 +54,20 @@ export class CoC7OccupationSheet extends ItemSheet {
       ? duplicate(this.item.data.data.groups)
       : []
 
-    dataList.forEach(async item => {
-      if (!item || !item.data) return
+    for (const item of dataList) {
+      if (!item || !item.data) continue
       if (![type].includes(item.data.type)) {
-        return
+        continue
       }
 
       if (optionalSkill) {
         if (!CoC7Item.isAnySpec(item)) {
           // Generic specialization can be included many times
           if (collection.find(el => el.name === item.data.name)) {
-            return // If skill is already in main don't add it
+            continue // If skill is already in main don't add it
           }
           if (groups[index].skills.find(el => el.name === item.name)) {
-            return // If skill is already in group don't add it
+            continue // If skill is already in group don't add it
           }
         }
 
@@ -76,7 +76,7 @@ export class CoC7OccupationSheet extends ItemSheet {
         if (!CoC7Item.isAnySpec(item)) {
           // Generic specialization can be included many times
           if (collection.find(el => el.name === item.data.name)) {
-            return
+            continue
           }
 
           for (let i = 0; i < groups.length; i++) {
@@ -91,7 +91,7 @@ export class CoC7OccupationSheet extends ItemSheet {
         }
         collection.push(duplicate(item.data))
       }
-    })
+    }
     await this.item.update({ 'data.groups': groups })
     await this.item.update({ [`data.${collectionName}`]: collection })
   }

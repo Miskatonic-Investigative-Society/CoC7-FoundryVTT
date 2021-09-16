@@ -1525,7 +1525,7 @@ export class CoCActor extends Actor {
   }
 
   get luck () {
-    return parseInt(this.data.data.attribs.lck.value)
+    return parseInt(this.data.data.attribs?.lck?.value)
   }
 
   async setLuck (value) {

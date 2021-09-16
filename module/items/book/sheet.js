@@ -115,10 +115,10 @@ export class CoC7BookSheet extends ItemSheet {
     const dataList = await CoC7Utilities.getDataFromDropEvent(event, 'Item')
 
     const spells = []
-    dataList.forEach(async item => {
-      if (!item || !(item.data.type === 'spell')) return
+    for (const item of dataList) {
+      if (!item || !(item.data.type === 'spell')) continue
       spells.push(item.data)
-    })
+    }
     await this.item.addSpells(spells)
   }
 

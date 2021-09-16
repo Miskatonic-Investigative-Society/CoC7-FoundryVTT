@@ -37,7 +37,7 @@ export class CoC7Book extends CoC7Item {
     const collection = this.data.data.spells
       ? duplicate(this.data.data.spells)
       : []
-    spells.forEach(async spell => {
+    spells.forEach(spell => {
       collection.push(spell)
     })
     return await this.update({ 'data.spells': collection })
@@ -230,7 +230,7 @@ export class CoC7Book extends CoC7Item {
       })
     }
     if (other.type) {
-      other.gains.forEach(async skill => {
+      for (const skill of other.gains) {
         const pattern = skill.name.match(/^(.+) \((.+)\)$/)
         /** Sanitization to deal with specializations */
         if (pattern) {
@@ -249,7 +249,7 @@ export class CoC7Book extends CoC7Item {
             specialization: skill.specialization
           })
         }
-      })
+      }
     }
     await this.grantSkillDevelopment(developments)
     if ((mythos.type || occult.type) && this.data.data.sanityLoss) {

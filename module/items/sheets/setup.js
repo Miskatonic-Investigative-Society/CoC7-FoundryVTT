@@ -45,22 +45,22 @@ export class CoC7SetupSheet extends ItemSheet {
     const collection = this.item.data.data[collectionName]
       ? duplicate(this.item.data.data[collectionName])
       : []
-    dataList.forEach(async item => {
-      if (!item || !item.data) return
+    for (const item of dataList) {
+      if (!item || !item.data) continue
       if (
         !['item', 'weapon', 'skill', 'book', 'spell'].includes(item.data.type)
       ) {
-        return
+        continue
       }
 
       if (!CoC7Item.isAnySpec(item)) {
         if (collection.find(el => el.name === item.data.name)) {
-          return
+          continue
         }
       }
 
       collection.push(duplicate(item.data))
-    })
+    }
     await this.item.update({ [`data.${collectionName}`]: collection })
   }
 
