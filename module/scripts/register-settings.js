@@ -408,6 +408,15 @@ export function registerSettings () {
     type: Boolean,
     default: false
   })
+  /** Feat: welcome message */
+  game.settings.register('CoC7', 'showWelcomeMessage', {
+    name: 'SETTINGS.showWelcomeMessage',
+    hint: 'SETTINGS.showWelcomeMessage',
+    scope: 'world',
+    config: false,
+    default: true,
+    type: Boolean
+  })
   game.settings.register('CoC7', 'charCreationEnabled', {
     name: 'Char creation allowed',
     scope: 'world',
