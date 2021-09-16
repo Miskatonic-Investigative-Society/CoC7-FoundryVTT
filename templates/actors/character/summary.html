@@ -115,6 +115,15 @@
       </div>
     </div>
     <div class="skills">
+      {{#if showIconsOnly}}
+      <ol class="item-list icons">
+        {{#each skillsByValue as |skill|}}
+        <li class="item" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
+          <div class="item-image skill-name item-name rollable" title="{{skill.name}}" style="background-image: url('{{skill.img}}')"></div>
+        </li>
+        {{/each}}
+      </ol>
+      {{else}}
       <ol class="item-list">
         {{#each topSkills as |skill|}}
           <li class="item itemV2" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
@@ -133,6 +142,7 @@
           </li>
         {{/each}}
       </ol>
+      {{/if}}
     </div>
     <div class="other">
       <ol>

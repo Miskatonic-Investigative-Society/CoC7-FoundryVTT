@@ -733,6 +733,7 @@
   "SETTINGS.DefaultDifficultyHint": "You can choose the default difficulty for checks. Unknown will roll checks without the player knowing the check difficulty.",
   "SETTINGS.CheckDifficultyRegular": "Default difficulty",
   "SETTINGS.CheckDifficultyUnknown": "Unknown difficulty",
+  "SETTINGS.showIconsOnly": "On summarized sheet, show only icons on skills list.",
   "SETTINGS.UseToken": "Use token image",
   "SETTINGS.UseTokenHint": "Use token image instead of portraits in chat-cards",
   "SETTINGS.DisplayActorOnCard": "Display actor on card",

@@ -41,6 +41,7 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
     const data = await super.getData()
 
     if (!this.skillListMode) this.skillListMode = 'alphabetical'
+    data.showIconsOnly = game.settings.get('CoC7', 'showIconsOnly')
 
     if (this.actor.occupation) {
       data.data.infos.occupation = this.actor.occupation.name

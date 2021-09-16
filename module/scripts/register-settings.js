@@ -188,6 +188,13 @@ export function registerSettings () {
     default: false,
     type: Boolean
   })
+  game.settings.register('CoC7', 'showIconsOnly', {
+    name: 'SETTINGS.showIconsOnly',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
+  })
   /** Allow player to unlock the sheet outside of creation mode */
   game.settings.register('CoC7', 'playerUnlockSheetMode', {
     name: 'SETTINGS.PlayerUnlockSheetMode',
