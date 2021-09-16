@@ -2280,12 +2280,12 @@ export class CoCActor extends Actor {
     if (this.data.data.attribs.mov.auto) {
       let MOV
       if (
-        this.data.data.characteristics.dex.value <
+        this.data.data.characteristics.dex.value >
           this.data.data.characteristics.siz.value &&
-        this.data.data.characteristics.str.value <
+        this.data.data.characteristics.str.value >
           this.data.data.characteristics.siz.value
       ) {
-        MOV = 7
+        MOV = 9 // Bug correction by AdmiralNyar.
       } else if (
         this.data.data.characteristics.dex.value >=
           this.data.data.characteristics.siz.value ||
@@ -2293,13 +2293,8 @@ export class CoCActor extends Actor {
           this.data.data.characteristics.siz.value
       ) {
         MOV = 8
-      } else if (
-        this.data.data.characteristics.dex.value >
-          this.data.data.characteristics.siz.value &&
-        this.data.data.characteristics.str.value >
-          this.data.data.characteristics.siz.value
-      ) {
-        MOV = 9 // Bug correction by AdmiralNyar.
+      } else {
+        MOV = 7
       }
       if (this.data.data.type !== 'creature') {
         if (!isNaN(parseInt(this.data.data.infos.age))) {
