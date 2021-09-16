@@ -69,7 +69,7 @@ Follow the installation steps and then make sure everything went right with:
 
 On the directory where you would like to pull your changes open the terminal or shell of your choice, run:
 
-`git clone https://github.com/HavlockV/CoC7-FoundryVTT.git`
+`git clone https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT.git`
 
 This will create a local clone of the project repository.
 
