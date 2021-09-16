@@ -1790,7 +1790,7 @@ export class CoC7ActorSheet extends ActorSheet {
               }
             }
             if (game.i18n.localize(COC7.creditRatingSkillName) === item.name) {
-              const creditValue = value || 0
+              const creditValue = (item.value || 0) - (item.data.data.adjustments?.experience || 0)
               if (
                 creditValue >
                   Number(this.actor.occupation.data.data.creditRating.max) ||
