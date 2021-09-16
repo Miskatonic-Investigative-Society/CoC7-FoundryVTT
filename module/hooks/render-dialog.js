@@ -11,7 +11,7 @@ export function listen () {
         if (game.i18n.has(`CoC7.Entities.${key}`)) {
           entityOption.textContent = game.i18n.localize(`CoC7.Entities.${key}`)
         }
-        if (!showExperimental && !['chase', 'vehicle'].includes(entityOption.value)) {
+        if (showExperimental || !['chase', 'vehicle'].includes(entityOption.value)) {
           entitySortedList.push(entityOption)
         }
       })
