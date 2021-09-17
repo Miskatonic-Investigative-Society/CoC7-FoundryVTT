@@ -118,6 +118,7 @@
   "CoC7.Icon": "Icon",
   "CoC7.Check": "Check",
   "CoC7.ItemWeapon": "Item (Weapon)",
+  "CoC7.AttacksPerRound": "Attacks per round",
 
   "CoC7.CopyToClipboard": "Copy to clipboard",
   "CoC7.WhisperToSelection": "Whisper to selected tokens",

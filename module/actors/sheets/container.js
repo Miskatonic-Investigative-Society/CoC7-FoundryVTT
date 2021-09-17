@@ -61,7 +61,11 @@ export class CoC7ContainerSheet extends ActorSheet {
       game.settings.get('CoC7', 'playerUnlockSheetMode') === 'always' ||
       game.user.isGM
 
-    sheetData.showWeaponsInsteadOfStatus = true
+    sheetData.showInventoryItems = Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'item') || !sheetData.data.flags.locked
+    sheetData.showInventoryBooks = Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'book') || !sheetData.data.flags.locked
+    sheetData.showInventorySpells = Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'spell') || !sheetData.data.flags.locked
+    sheetData.showInventoryTalents = Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'talent') || !sheetData.data.flags.locked
+    sheetData.showInventoryWeapons = Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'weapon') || !sheetData.data.flags.locked
 
     return sheetData
   }

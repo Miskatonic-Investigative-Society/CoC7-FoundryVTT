@@ -156,6 +156,12 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
         data.data.infos.playername = user.name
       }
     }
+
+    data.showInventoryItems = Object.prototype.hasOwnProperty.call(data.itemsByType, 'item') || !data.data.flags.locked
+    data.showInventoryBooks = Object.prototype.hasOwnProperty.call(data.itemsByType, 'book') || !data.data.flags.locked
+    data.showInventorySpells = Object.prototype.hasOwnProperty.call(data.itemsByType, 'spell') || !data.data.flags.locked
+    data.showInventoryTalents = Object.prototype.hasOwnProperty.call(data.itemsByType, 'talent') || !data.data.flags.locked
+    data.showInventoryStatuses = Object.prototype.hasOwnProperty.call(data.itemsByType, 'status') || !data.data.flags.locked
     return data
   }
 

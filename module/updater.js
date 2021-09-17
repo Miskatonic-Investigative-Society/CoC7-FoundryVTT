@@ -114,6 +114,7 @@ export class Updater {
     Updater._migrateActorCharacterSanity(actor, updateData)
     Updater._migrateActorArtwork(actor, updateData)
     Updater._migrateActorKeeperNotes(actor, updateData)
+    Updater._migrateActorNpcCreature(actor, updateData)
 
     // Migrate World Actor Items
     if (actor.items) {
@@ -393,6 +394,21 @@ export class Updater {
         updateData['data.description'] = {
           keeper: ''
         }
+      }
+    }
+    return updateData
+  }
+
+  static _migrateActorNpcCreature (actor, updateData) {
+    if (['npc'].includes(actor.type)) {
+      if (typeof actor.data.special === 'undefined') {
+        updateData['data.special'] = {
+          checkPassed: null,
+          checkFailled: null
+        }
+      }
+      if (typeof actor.data.attacksPerRound === 'undefined') {
+        updateData['data.attacksPerRound'] = 1
       }
     }
     return updateData
