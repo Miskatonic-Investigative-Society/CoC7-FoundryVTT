@@ -1,4 +1,4 @@
-/* global Actor, CONST, Dialog, Die, duplicate, game, getProperty, mergeObject, Roll, TextEditor, Token, ui */
+/* global Actor, CONST, Dialog, Die, duplicate, game, getProperty, Hooks, mergeObject, Roll, TextEditor, Token, ui */
 
 import { COC7 } from '../config.js'
 import { CoC7Check } from '../check.js'
@@ -1039,6 +1039,7 @@ export class CoCActor extends Actor {
               }
             }
           }
+          Hooks.call('setupFinishedCoC7')
           break
         }
         case 'archetype':
