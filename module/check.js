@@ -1001,9 +1001,9 @@ export class CoC7Check {
   showDiceRoll () {
     if (game.modules.get('dice-so-nice')?.active) {
       const diceResults = []
-      this.dices.tens.forEach(dieResult => {
+      for (const dieResult of this.dices.tens) {
         diceResults.push(dieResult.value === 100 ? 0 : dieResult.value / 10)
-      })
+      }
       diceResults.push(this.dices.unit.value)
 
       const diceData = {
@@ -1088,9 +1088,9 @@ export class CoC7Check {
     for (let index = 0; index < upgradeindex + 1; index++) {
       this.increaseSuccess.shift()
     }
-    this.increaseSuccess.forEach(s => {
+    for (const s of this.increaseSuccess) {
       s.luckToSpend = s.luckToSpend - luckAmount
-    })
+    }
     this.luckSpent = true
     this.computeCheck()
     if (update) return await this.updateChatCard()
@@ -1108,9 +1108,9 @@ export class CoC7Check {
     if (luckAmount) {
       this.actor.spendLuck(luckAmount)
       this.successLevel = this.difficulty
-      this.increaseSuccess.forEach(s => {
+      for (const s of this.increaseSuccess) {
         s.luckToSpend = s.luckToSpend - luckAmount
-      })
+      }
       this.luckSpent = true
       this.isSuccess = true
       this.totalLuckSpent = !parseInt(this.totalLuckSpent)

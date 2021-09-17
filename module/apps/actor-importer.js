@@ -163,9 +163,9 @@ export class CoC7ActorImporter {
     const results = []
     if (spells !== null) {
       const spellsArr = spells.replace(/(\n|\r)/g, ' ').split(',')
-      spellsArr.forEach(s => {
+      for (const s of spellsArr) {
         results.push(this.cleanString(s))
-      })
+      }
     }
     if (CONFIG.debug.CoC7Importer) {
       console.debug('spells', results)
@@ -210,7 +210,7 @@ export class CoC7ActorImporter {
       if (CONFIG.debug.CoC7Importer) {
         console.debug('skillsArr', skillsArr)
       }
-      skillsArr.forEach(skill => {
+      for (const skill of skillsArr) {
         const parsedSkill = this.RE.skillRegExp.exec(skill)
         if (CONFIG.debug.CoC7Importer) {
           console.debug('parsedSkill', parsedSkill)
@@ -222,7 +222,7 @@ export class CoC7ActorImporter {
             value: Number(parsedSkill.groups.percentage)
           })
         }
-      })
+      }
     }
     if (CONFIG.debug.CoC7Importer) {
       console.debug('skills', results)
@@ -332,18 +332,18 @@ export class CoC7ActorImporter {
 
   async updateActorData (pc, npc) {
     let updateData = {}
-    ;['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu'].forEach(key => {
+    for (const key of ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu']) {
       updateData[`data.characteristics.${key}.value`] = Number(pc[key])
-    })
+    }
     await npc.update(updateData)
     await npc.setLuck(Number(pc.lck))
     await npc.setHp(Number(pc.hp))
     await npc.setMp(Number(pc.mp))
 
     updateData = {}
-    ;['san', 'mov', 'db', 'build', 'armor'].forEach(key => {
+    for (const key of ['san', 'mov', 'db', 'build', 'armor']) {
       updateData[`data.attribs.${key}.value`] = Number(pc[key])
-    })
+    }
     if (pc.age !== null) {
       updateData['data.infos.age'] = pc.age
     }
@@ -549,11 +549,11 @@ export class CoC7ActorImporter {
    */
   needsConversion (npc) {
     let needsConversionResult = true
-    ;['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu'].forEach(key => {
+    for (const key of ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu']) {
       if (npc[key] > 30) {
         needsConversionResult = false
       }
-    })
+    }
     if (CONFIG.debug.CoC7Importer) {
       console.debug('needsConversion:', needsConversionResult)
     }
@@ -597,9 +597,9 @@ export class CoC7ActorImporter {
     if (CONFIG.debug.CoC7Importer) {
       console.debug('Converting creature', creature)
     }
-    ;['str', 'con', 'siz', 'dex', 'app', 'int', 'pow'].forEach(key => {
+    for (const key of ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow']) {
       creature[key] *= 5
-    })
+    }
     if (creature.edu <= 18) {
       creature.edu *= 5
     } else if (creature.edu <= 26) {

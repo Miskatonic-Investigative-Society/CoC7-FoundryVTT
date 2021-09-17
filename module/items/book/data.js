@@ -37,9 +37,9 @@ export class CoC7Book extends CoC7Item {
     const collection = this.data.data.spells
       ? duplicate(this.data.data.spells)
       : []
-    spells.forEach(spell => {
+    for (const spell of spells) {
       collection.push(spell)
-    })
+    }
     return await this.update({ 'data.spells': collection })
   }
 

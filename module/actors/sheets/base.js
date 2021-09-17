@@ -918,7 +918,7 @@ export class CoC7ActorSheet extends ActorSheet {
       //  await effect.sheet.render(true);
       //  // effect.delete();
       // }
-      // this.actor.effects.forEach( e => e.delete());
+      // for (const e of this.actor.effects) { e.delete() }
       // await setProperty( this.actor, 'data.data.encounteredCreatures', []);
 
       // await this.actor.update( {['data.encounteredCreatures'] : []});
@@ -967,11 +967,11 @@ export class CoC7ActorSheet extends ActorSheet {
       content: content,
       callback: html => {
         const formData = new FormData(html[0].querySelector('#selectform'))
-        formData.forEach(function (value, name) {
+        for (const [name, value] of formData) {
           if (name === 'user') {
             message.actorTo = value
           }
-        })
+        }
       }
     })
     await game.CoC7socket.executeAsGM('gmtradeitemto', message)
@@ -1160,11 +1160,11 @@ export class CoC7ActorSheet extends ActorSheet {
       const div = $('<div class="item-summary"></div>')
 
       const labels = $('<div class="item-labels"></div>')
-      chatData.labels.forEach(p =>
+      for (const p of chatData.labels) {
         labels.append(
           `<div class="item-label"><span class="label-name">${p.name} :</span><span class="label-value">${p.value}</span></div>`
         )
-      )
+      }
       div.append(labels)
 
       div.append(
@@ -1179,11 +1179,11 @@ export class CoC7ActorSheet extends ActorSheet {
       }
 
       const props = $('<div class="item-properties"></div>')
-      chatData.properties.forEach(p =>
+      for (const p of chatData.properties) {
         props.append(
           `<div class="tag item-property">${game.i18n.localize(p)}</div>`
         )
-      )
+      }
       div.append(props)
 
       li.append(div.hide())

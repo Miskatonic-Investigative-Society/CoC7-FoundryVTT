@@ -67,7 +67,7 @@ export class CoC7ArchetypeSheet extends ItemSheet {
     } else {
       const div = $(`<div class="item-summary">${chatData.value}</div>`)
       const props = $('<div class="item-properties"></div>')
-      // chatData.properties.forEach(p => props.append(`<span class="tag">${p}</span>`));
+      // for (const p of chatData.properties) { props.append(`<span class="tag">${p}</span>`) }
       div.append(props)
       li.append(div.hide())
       div.slideDown(200)
@@ -147,7 +147,7 @@ export class CoC7ArchetypeSheet extends ItemSheet {
     }
 
     data.skillListEmpty = data.data.skills.length === 0
-    data.data.skills.forEach(skill => {
+    for (const skill of data.data.skills) {
       // For each skill if it's a spec and spac name not included in the name add it
       if (
         skill.data.specialization &&
@@ -155,7 +155,7 @@ export class CoC7ArchetypeSheet extends ItemSheet {
       ) {
         skill.displayName = `${skill.data.specialization} (${skill.name})`
       } else skill.displayName = skill.name
-    })
+    }
 
     data.data.skills.sort((a, b) => {
       return a.displayName.localeCompare(b.displayName)

@@ -544,6 +544,30 @@ export class CoC7Item extends Item {
     return skillProperties
   }
 
+  static async calculateBase (actor, data) {
+    if (data.type !== 'skill') return null
+    if (String(data.data.base).includes('@')) {
+      const parsed = {}
+      for (const [key, value] of Object.entries(COC7.formula.actorsheet)) {
+        if (key.startsWith('@') && value.startsWith('this.actor.')) {
+          parsed[key.substring(1)] = getProperty(actor, value.substring(11))
+        }
+      }
+      let value
+      try {
+        value = Math.floor(
+          new Roll(data.data.base, parsed).evaluate({
+            maximize: true
+          }).total
+        )
+      } catch (err) {
+        value = 0
+      }
+      return value
+    }
+    return (!isNaN(parseInt(data.data.base)) ? parseInt(data.data.base) : null)
+  }
+
   get _base () {
     if (this.type !== 'skill') return [null, false]
     if (typeof this.data.data.base !== 'string') {

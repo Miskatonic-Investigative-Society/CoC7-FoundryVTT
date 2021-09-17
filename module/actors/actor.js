@@ -785,16 +785,20 @@ export class CoCActor extends Actor {
   async createEmbeddedDocuments (embeddedName, dataArray, options) {
     const output = []
     let allCreated = []
+    let baseValue = 0
+    let baseCalculated = 0
     for (const data of dataArray) {
       switch (data.type) {
         case 'skill':
+          baseValue = data.data.base
+          baseCalculated = await CoC7Item.calculateBase(this, data)
           if (this.data.type !== 'character') {
             // If not a PC set skill value to base
             if (this.getItemIdByName(data.name)) return // If skill with this name exist return
 
-            if (data.data.base) {
-              if (String(data.data.base) !== String(data.data.value)) {
-                data.data.value = data.data.base
+            if (baseValue) {
+              if (String(baseValue) !== String(data.data.value)) {
+                data.data.value = baseCalculated
               }
             }
 
@@ -843,7 +847,7 @@ export class CoCActor extends Actor {
               const skillData = await SkillSpecSelectDialog.create(
                 skillList,
                 data.data.specialization,
-                data.data.base
+                baseCalculated
               )
               if (skillData) {
                 if (skillData.get('existing-skill')) {
@@ -859,11 +863,6 @@ export class CoCActor extends Actor {
                   if (skillData.get('new-skill-name')) {
                     data.name = skillData.get('new-skill-name')
                   } else data.name = CoC7Item.getNameWithoutSpec(data)
-
-                  if (skillData.get('base-value')) {
-                    const value = Number(skillData.get('base-value'))
-                    if (!isNaN(value)) data.data.base = value
-                  }
                 }
               }
             }
@@ -875,6 +874,9 @@ export class CoCActor extends Actor {
             }
           }
 
+          if (String(baseValue) !== String(baseCalculated)) {
+            data.data.base = baseCalculated
+          }
           allCreated = await super.createEmbeddedDocuments(
             embeddedName,
             [data],
@@ -989,16 +991,14 @@ export class CoCActor extends Actor {
             const rolled = await CharacRollDialog.create(data.data)
             if (rolled) {
               const updateData = {}
-              ;['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu'].forEach(
-                key => {
-                  if (data.data.characteristics.values[key]) {
-                    updateData[`data.characteristics.${key}.value`] =
-                      data.data.characteristics.values[key]
-                    updateData[`data.characteristics.${key}.formula`] =
-                      data.data.characteristics.rolls[key]
-                  }
+              for (const key of ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu']) {
+                if (data.data.characteristics.values[key]) {
+                  updateData[`data.characteristics.${key}.value`] =
+                    data.data.characteristics.values[key]
+                  updateData[`data.characteristics.${key}.formula`] =
+                    data.data.characteristics.rolls[key]
                 }
-              )
+              }
               if (data.data.characteristics.values.luck) {
                 updateData['data.attribs.lck.value'] =
                   data.data.characteristics.values.luck
@@ -1062,7 +1062,7 @@ export class CoCActor extends Actor {
             }
 
             const coreCharac = []
-            Object.entries(data.data.coreCharacteristics).forEach(entry => {
+            for (const entry of Object.entries(data.data.coreCharacteristics)) {
               const [key, value] = entry
               data.data.coreCharacteristics[key] = false
               if (value) {
@@ -1070,7 +1070,7 @@ export class CoCActor extends Actor {
                 char.key = key
                 coreCharac.push(char)
               }
-            })
+            }
 
             let charac
 
@@ -1146,7 +1146,7 @@ export class CoCActor extends Actor {
             pointsDialogData.characteristics = data.data.occupationSkillPoints
             let total = 0
             let optionalChar = false
-            Object.entries(data.data.occupationSkillPoints).forEach(entry => {
+            for (const entry of Object.entries(data.data.occupationSkillPoints)) {
               const [key, value] = entry
               const char = this.getCharacteristic(key)
               pointsDialogData.characteristics[key].name = char.label
@@ -1161,7 +1161,7 @@ export class CoCActor extends Actor {
                   optionalChar = true
                 }
               }
-            })
+            }
             pointsDialogData.total = total
             if (optionalChar) {
               // Is there any optional char to choose for points calc ?
@@ -1179,7 +1179,7 @@ export class CoCActor extends Actor {
               dialogData.title = game.i18n.localize('CoC7.SkillSelectionWindow')
 
               // Select only skills that are not present or are not flagged as occupation.
-              data.data.groups[index].skills.forEach(value => {
+              for (const value of data.data.groups[index].skills) {
                 if (CoC7Item.isAnySpec(value)) dialogData.skills.push(value)
                 // If it's a generic spec we always add it
                 else {
@@ -1194,18 +1194,18 @@ export class CoCActor extends Actor {
                     if (!alreadySelectedSkill) dialogData.skills.push(value)
                   }
                 }
-              })
+              }
 
               // if there's none, do nothing.
               if (dialogData.skills.length !== 0) {
-                dialogData.skills.forEach(skill => {
+                for (const skill of dialogData.skills) {
                   if (
                     skill.data.specialization &&
                     !skill.name.includes(skill.data.specialization)
                   ) {
                     skill.displayName = `${skill.data.specialization} (${skill.name})`
                   } else skill.displayName = skill.name
-                })
+                }
 
                 if (dialogData.skills.length <= dialogData.optionsCount) {
                   // If there's is less skill than options, add them all.
@@ -1250,7 +1250,7 @@ export class CoCActor extends Actor {
               })
 
               // Select only skills that are not present or are not flagged as occupation.
-              this.skills.forEach(s => {
+              for (const s of this.skills) {
                 // Select all skills that are not already flagged as occupation, can have adjustments and XP.
                 if (
                   !s.data.data.flags.occupation &&
@@ -1263,18 +1263,18 @@ export class CoCActor extends Actor {
                   })
                   if (!alreadySelectedSkill) dialogData.skills.push(s.data)
                 }
-              })
+              }
 
               // if there's none, do nothing.
               if (dialogData.skills.length !== 0) {
-                dialogData.skills.forEach(skill => {
+                for (const skill of dialogData.skills) {
                   if (
                     skill.data.specialization &&
                     !skill.name.includes(skill.data.specialization)
                   ) {
                     skill.displayName = `${skill.data.specialization} (${skill.name})`
                   } else skill.displayName = skill.name
-                })
+                }
                 if (dialogData.skills.length <= dialogData.optionsCount) {
                   // If there's is less skill than options, add them all.
                   ui.notifications.info(
@@ -1330,6 +1330,7 @@ export class CoCActor extends Actor {
               output.push(created)
             }
           }
+          Hooks.call('occupationFinishedCoC7')
           break
 
         default:
@@ -1348,9 +1349,9 @@ export class CoCActor extends Actor {
 
   // getSkillIdByName( skillName){
   //   let id = null;
-  //    this.items.forEach( (value, key, map) => {
+  //    for (const [map, key, value] of this.items) {
   //     if( value.name == skillName) id = value.id;
-  //   });
+  //   };
 
   //   return id;
   // }
@@ -1360,22 +1361,22 @@ export class CoCActor extends Actor {
     const name = itemName.match(/\(([^)]+)\)/)
       ? itemName.match(/\(([^)]+)\)/)[1]
       : itemName
-    this.items.forEach(value => {
+    for (const value of this.items) {
       if (
         CoC7Item.getNameWithoutSpec(value).toLowerCase() === name.toLowerCase()
       ) {
         id = value.id
       }
-    })
+    }
 
     return id
   }
 
   getItemsByName (itemName) {
     const itemList = []
-    this.items.forEach(value => {
+    for (const value of this.items) {
       if (value.name === itemName) itemList.push(value)
-    })
+    }
 
     return itemList
   }
@@ -1391,7 +1392,7 @@ export class CoCActor extends Actor {
       ? skillName.match(/\(([^)]+)\)/)[1]
       : skillName
 
-    this.items.forEach(value => {
+    for (const value of this.items) {
       if (
         CoC7Item.getNameWithoutSpec(value).toLowerCase() ===
           name.toLowerCase() &&
@@ -1399,7 +1400,7 @@ export class CoCActor extends Actor {
       ) {
         skillList.push(value)
       }
-    })
+    }
     return skillList
   }
 
@@ -1600,12 +1601,9 @@ export class CoCActor extends Actor {
       if (CoC7Item.isAnySpec(skill)) {
         if (!skill.data.flags) skill.data.flags = {}
         if (flag) skill.data.flags[flag] = true
-        /** MODIF 0.8.x **/
-        // await this.createOwnedItem( skill, {renderSheet:false});
         await this.createEmbeddedDocuments('Item', [skill], {
           renderSheet: false
         })
-        /*****************/
       } else {
         const itemId = this.getItemIdByName(skill.name)
         if (!itemId) {
@@ -1613,12 +1611,9 @@ export class CoCActor extends Actor {
             if (!skill.data.flags) skill.data.flags = {}
             skill.data.flags[flag] = true
           }
-          /** MODIF 0.8.x **/
-          // await this.createOwnedItem( skill, {renderSheet:false});
           await this.createEmbeddedDocuments('Item', [skill], {
             renderSheet: false
           })
-          /*****************/
         } else if (flag) {
           const item = this.items.get(itemId)
           await item.setItemFlag(flag)
@@ -2096,15 +2091,13 @@ export class CoCActor extends Actor {
   get occupationPoints () {
     if (!this.occupation) return 0
     let points = 0
-    Object.entries(this.occupation.data.data.occupationSkillPoints).forEach(
-      entry => {
-        const [key, value] = entry
-        const char = this.getCharacteristic(key)
-        if (value.selected) {
-          points += char.value * Number(value.multiplier)
-        }
+    for (const entry of Object.entries(this.occupation.data.data.occupationSkillPoints)) {
+      const [key, value] = entry
+      const char = this.getCharacteristic(key)
+      if (value.selected) {
+        points += char.value * Number(value.multiplier)
       }
-    )
+    }
     return points
   }
 
@@ -3078,7 +3071,9 @@ export class CoCActor extends Actor {
           await this.unsetStatus('dead')
           effectEffect = await this.hasActiveEffect('dead')
           if (effectEffect.length > 0) {
-            effectEffect.forEach(effect => effect.delete())
+            for (const effect of effectEffect) {
+              effect.delete()
+            }
           }
         } else this.fallDead()
         break
@@ -3087,7 +3082,9 @@ export class CoCActor extends Actor {
           await this.unsetStatus('dying')
           effectEffect = await this.hasActiveEffect('dying')
           if (effectEffect.length > 0) {
-            effectEffect.forEach(effect => effect.delete())
+            for (const effect of effectEffect) {
+              effect.delete()
+            }
           }
         } else this.fallDying()
         break
@@ -3096,7 +3093,9 @@ export class CoCActor extends Actor {
           await this.unsetStatus('prone')
           effectEffect = await this.hasActiveEffect('prone')
           if (effectEffect.length > 0) {
-            effectEffect.forEach(effect => effect.delete())
+            for (const effect of effectEffect) {
+              effect.delete()
+            }
           }
         } else this.fallProne()
         break
@@ -3105,7 +3104,9 @@ export class CoCActor extends Actor {
           await this.unsetStatus('unconscious')
           effectEffect = await this.hasActiveEffect('unconscious')
           if (effectEffect.length > 0) {
-            effectEffect.forEach(effect => effect.delete())
+            for (const effect of effectEffect) {
+              effect.delete()
+            }
           }
         } else this.fallUnconscious()
         break
@@ -3219,11 +3220,11 @@ export class CoCActor extends Actor {
 
   get fightingSkills () {
     const skillList = []
-    this.items.forEach(value => {
+    for (const value of this.items) {
       if (value.type === 'skill' && value.data.data.properties.fighting) {
         skillList.push(value)
       }
-    })
+    }
 
     skillList.sort((a, b) => {
       return a.name.localeCompare(b.name)
@@ -3234,13 +3235,13 @@ export class CoCActor extends Actor {
 
   get closeCombatWeapons () {
     const weaponList = []
-    this.items.forEach(value => {
+    for (const value of this.items) {
       if (value.type === 'weapon' && !value.data.data.properties.rngd) {
         const skill = this.items.get(value.data.data.skill.main.id)
         value.data.data.skill.main.value = skill ? skill.value : 0
         weaponList.push(value)
       }
-    })
+    }
 
     weaponList.sort((a, b) => {
       return a.name.localeCompare(b.name)
@@ -3251,11 +3252,11 @@ export class CoCActor extends Actor {
 
   get firearmSkills () {
     const skillList = []
-    this.items.forEach(value => {
+    for (const value of this.items) {
       if (value.type === 'skill' && value.data.data.properties.firearm) {
         skillList.push(value)
       }
-    })
+    }
 
     skillList.sort((a, b) => {
       return a.name.localeCompare(b.name)
@@ -3358,9 +3359,9 @@ export class CoCActor extends Actor {
 
   get skills () {
     const skillList = []
-    this.items.forEach(value => {
+    for (const value of this.items) {
       if (value.type === 'skill') skillList.push(value)
-    })
+    }
 
     skillList.sort((a, b) => {
       return a.name.localeCompare(b.name)
@@ -3473,7 +3474,9 @@ export class CoCActor extends Actor {
     await this.unsetStatus(COC7.status.criticalWounds)
     const criticalWoundsEffect = await this.hasActiveEffect('criticalWounds')
     if (criticalWoundsEffect.length > 0) {
-      criticalWoundsEffect.forEach(effect => effect.delete())
+      for (const effect of criticalWoundsEffect) {
+        effect.delete()
+      }
     }
   }
 
@@ -3568,7 +3571,9 @@ export class CoCActor extends Actor {
     }
     const dyingEffect = await this.hasActiveEffect('dying')
     if (!this.dying && dyingEffect.length > 0) {
-      dyingEffect.forEach(effect => effect.delete())
+      for (const effect of dyingEffect) {
+        effect.delete()
+      }
     }
   }
 

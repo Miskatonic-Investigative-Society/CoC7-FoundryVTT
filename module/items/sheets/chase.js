@@ -56,9 +56,9 @@ export class CoC7ChaseSheet extends ItemSheet {
     /*****************/
 
     data.participants = []
-    this.participants.forEach(p => {
+    for (const p of this.participants) {
       data.participants.push(new _participant(p))
-    })
+    }
     data.preys =
       data.participants
         .filter(p => !p.isChaser && p.isValid)
@@ -690,18 +690,18 @@ export class _participant {
     }
     if (this.hasActor) {
       check.options = []
-      ;['con'].forEach(c => {
+      for (const c of ['con']) {
         const characterisitc = this.actor.getCharacteristic(c)
         if (characterisitc?.value) check.options.push(characterisitc.label)
-      })
+      }
 
-      this.actor.driveSkills.forEach(s => {
+      for (const s of this.actor.driveSkills) {
         check.options.push(s.name)
-      })
+      }
 
-      this.actor.pilotSkills.forEach(s => {
+      for (const s of this.actor.pilotSkills) {
         check.options.push(s.name)
-      })
+      }
       check.hasOptions = !!check.options.length
 
       if (this.data.speedCheck?.id) {

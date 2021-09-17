@@ -519,7 +519,7 @@ export class SanCheckCard extends ChatCardActor {
   static checkTargets (creatureKey, fastForward = false) {
     const targets = [...game.user.targets]
     if (targets.length) {
-      targets.forEach(t => {
+      for (const t of targets) {
         // TODO : ? Make async call to create ?
         if (t.actor.isToken) {
           SanCheckCard.create(
@@ -534,7 +534,7 @@ export class SanCheckCard extends ChatCardActor {
             { fastForward: fastForward }
           )
         }
-      })
+      }
     }
   }
 
