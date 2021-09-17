@@ -40,9 +40,9 @@ export class CombinedCheckCard extends RollCard {
   get successCount () {
     if (this.rolled) {
       let count = 0
-      this.rolls.forEach(r => {
+      for (const r of this.rolls) {
         if (r.passed) count += 1
-      })
+      }
       return count
     }
     return undefined

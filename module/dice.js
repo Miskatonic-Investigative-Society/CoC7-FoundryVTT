@@ -31,14 +31,14 @@ export class CoC7Dice {
     }
     if (rollMode) result.rollMode = rollMode
     if (hideDice) result.hideDice = hideDice
-    roll.dice.forEach(d => {
+    for (const d of roll.dice) {
       if (d instanceof CONFIG.Dice.terms.t) {
         result.tens.results.push(d.total)
       } else {
         result.unit.total = d.total === 10 ? 0 : d.total
         result.unit.results.push(result.unit.total)
       }
-    })
+    }
     if (modif < 0) {
       result.tens.total =
         result.unit.total === 0 && result.tens.results.includes(0)

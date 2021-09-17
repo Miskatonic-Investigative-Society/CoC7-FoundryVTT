@@ -143,7 +143,7 @@ export class chatHelper {
   }
 
   static attachObjectToElement (object, element, objectName = '') {
-    Object.keys(object).forEach(prop => {
+    for (const prop of Object.keys(object)) {
       if (!prop.startsWith('_')) {
         if (typeof object[prop] === 'object') {
           chatHelper.attachObjectToElement(
@@ -155,7 +155,7 @@ export class chatHelper {
           element.dataset[`${objectName}${prop}`] = object[prop]
         }
       }
-    })
+    }
   }
 
   static getObjectFromElement (object, element) {
@@ -175,10 +175,10 @@ export class chatHelper {
     }
 
     if (!element || !object) return
-    Object.keys(element.dataset).forEach(prop => {
+    for (const prop of Object.keys(element.dataset)) {
       if (prop === 'template') return
       deserialize(object, prop, element.dataset[prop])
-    })
+    }
   }
 
   static getTokenFromKey (key) {
@@ -345,9 +345,9 @@ export class CoC7Roll {
   showDiceRoll () {
     if (game.modules.get('dice-so-nice')?.active) {
       const diceResults = []
-      this.dices.tens.forEach(dieResult => {
+      for (const dieResult of this.dices.tens) {
         diceResults.push(dieResult.value === 100 ? 0 : dieResult.value / 10)
-      })
+      }
       diceResults.push(this.dices.unit.value)
 
       const diceData = {
@@ -380,7 +380,7 @@ export class CoC7Roll {
         : game.i18n.format('CoC7.DiceModifierBonus')
     const tenDice = element.querySelector('.ten-dice')
     if (tenDice) {
-      tenDice.querySelectorAll('li').forEach(d => {
+      for (const d of tenDice.querySelectorAll('li')) {
         const die = {
           selected: false,
           isMax: false,
@@ -389,7 +389,7 @@ export class CoC7Roll {
         }
         chatHelper.getObjectFromElement(die, d)
         roll.dices.tens.push(die)
-      })
+      }
     }
     const unitDie = element.querySelector('.unit-die')
       ? element.querySelector('.unit-die').querySelector('li')
@@ -399,11 +399,11 @@ export class CoC7Roll {
     roll.increaseSuccess = []
     const increaseSuccess = element.querySelector('.increase-success')
     if (increaseSuccess && increaseSuccess.querySelectorAll('button')) {
-      increaseSuccess.querySelectorAll('button').forEach(isl => {
+      for (const isl of increaseSuccess.querySelectorAll('button')) {
         const newSuccesLevel = {}
         chatHelper.getObjectFromElement(newSuccesLevel, isl)
         roll.increaseSuccess.push(newSuccesLevel)
-      })
+      }
     }
 
     if (roll.luckNeeded) {
@@ -475,11 +475,11 @@ export class CoC7Damage {
     chatHelper.getObjectFromElement(damage, element)
     const rolls = element.querySelector('.dice-rolls').querySelectorAll('li')
     damage.rolls = []
-    rolls.forEach(r => {
+    for (const r of rolls) {
       const roll = {}
       chatHelper.getObjectFromElement(roll, r)
       damage.rolls.push(roll)
-    })
+    }
 
     if (!object) return damage
   }

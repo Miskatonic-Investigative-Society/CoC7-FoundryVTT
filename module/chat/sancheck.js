@@ -102,7 +102,7 @@ export class CoC7SanCheck {
   static checkTargets (sanMin, sanMax, fastForward = false, tokenKey = null) {
     const targets = [...game.user.targets]
     if (targets.length) {
-      targets.forEach(t => {
+      for (const t of targets) {
         let check
         if (t.actor.isToken) {
           check = new CoC7SanCheck(t.actor.tokenKey, sanMin, sanMax)
@@ -110,7 +110,7 @@ export class CoC7SanCheck {
           check = new CoC7SanCheck(t.actor.id, sanMin, sanMax)
         }
         check.toMessage(fastForward)
-      })
+      }
     } else {
       if (tokenKey) {
         const speaker = chatHelper.getSpeakerFromKey(tokenKey)

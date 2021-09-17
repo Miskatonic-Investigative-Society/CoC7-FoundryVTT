@@ -410,7 +410,7 @@ export class CoC7Parser {
         return
       }
       if (canvas.tokens.controlled.length) {
-        canvas.tokens.controlled.forEach(token => {
+        for (const token of canvas.tokens.controlled) {
           switch (options.check) {
             case 'check':
               if (
@@ -463,7 +463,7 @@ export class CoC7Parser {
 
             default:
           }
-        })
+        }
       } else {
         if (game.user.data.document.character?.data) {
           await Promise.all(

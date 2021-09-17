@@ -13,11 +13,11 @@ export class PointSelectDialog extends Dialog {
   async _onSelectCharacteristic (event) {
     const li = event.currentTarget.closest('.item')
     const itemList = li.closest('.item-list')
-    itemList.querySelectorAll('.selectable').forEach(item => {
+    for (const item of itemList.querySelectorAll('.selectable')) {
       item.classList.remove('selected')
       this.data.data.characteristics[item.dataset.key].selected = false
       this.data.data.characteristics[item.dataset.key].optional = false
-    })
+    }
     $(li).toggleClass('selected')
     this.data.data.characteristics[li.dataset.key].selected = true
     const totalPoints = li

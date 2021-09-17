@@ -374,17 +374,17 @@ export class CoC7Chat {
   static _onTargetSelect (event) {
     const index = parseInt(event.currentTarget.dataset.key)
     const targetsSelector = event.currentTarget.closest('.targets-selector')
-    targetsSelector.querySelectorAll('img').forEach(i => {
+    for (const i of targetsSelector.querySelectorAll('img')) {
       i.style.border = 'none'
-    })
+    }
     targetsSelector
       .querySelector(`[data-key="${index}"]`)
       .querySelector('img').style.border = '1px solid #000'
     const targets = event.currentTarget.closest('.targets')
-    targets.querySelectorAll('.target').forEach(t => {
+    for (const t of targets.querySelectorAll('.target')) {
       t.style.display = 'none'
       t.dataset.active = 'false'
-    })
+    }
     const targetToDisplay = targets.querySelector(
       `[data-target-key="${index}"]`
     )
@@ -407,9 +407,9 @@ export class CoC7Chat {
     const dropDownBoxes = event.currentTarget
       .closest('.response-selection')
       .querySelectorAll('.toggle-switch')
-    ;[].forEach.call(dropDownBoxes, dpdnBox =>
+    for (const dpdnBox of dropDownBoxes) {
       dpdnBox.classList.remove('switched-on')
-    )
+    }
     event.currentTarget.closest('.toggle-switch').classList.add('switched-on')
 
     // close dropdown
@@ -490,9 +490,9 @@ export class CoC7Chat {
     const dropDownBoxes = event.currentTarget
       .closest('.response-selection')
       .querySelectorAll('.toggle-switch')
-    ;[].forEach.call(dropDownBoxes, dpdnBox =>
+    for (const dpdnBox of dropDownBoxes) {
       dpdnBox.classList.remove('switched-on')
-    )
+    }
     event.currentTarget.classList.add('switched-on') // Need to test if it's really a dodge !!!
 
     // Save action for the roll
@@ -940,7 +940,7 @@ export class CoC7Chat {
         // if( originMessage.dataset.messageId) damageCard.messageId = originMessage.dataset.messageId;
         // damageCard.rollDamage();
         // if( originMessage.dataset.messageId) {
-        //  card.querySelectorAll('.card-buttons').forEach( b => b.remove());
+        //  for (const b of card.querySelectorAll('.card-buttons')) { b.remove() }
         //  await CoC7Chat.updateChatCard( card);
         // }
         break

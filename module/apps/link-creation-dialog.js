@@ -258,7 +258,7 @@ export class CoC7LinkCreationDialog extends FormApplication {
           option.speaker = {
             alias: game.user.name
           }
-          canvas.tokens.controlled.forEach(t => {
+          for (const t of canvas.tokens.controlled) {
             if (t.actor.hasPlayerOwner) {
               option.whisper = t.actor.owners
               chatHelper.createMessage(
@@ -270,7 +270,7 @@ export class CoC7LinkCreationDialog extends FormApplication {
                 option
               )
             }
-          })
+          }
         }
         break
 

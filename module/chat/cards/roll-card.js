@@ -59,7 +59,9 @@ export class RollCard {
       card.toggleFlag(flag)
     } else {
       const buttons = toggle.querySelectorAll('.toggle-switch')
-      buttons.forEach(b => card.unsetFlag(b.dataset.flag))
+      for (const b of buttons) {
+        card.unsetFlag(b.dataset.flag)
+      }
       card.setFlag(flag)
     }
     card.updateChatCard()

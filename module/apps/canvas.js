@@ -43,7 +43,7 @@ export class CoC7Canvas {
               const whisperTargets = game.users.players.filter(
                 u => !!u.character
               ) // User with at least a character
-              whisperTargets.forEach(u => {
+              for (const u of whisperTargets) {
                 option.whisper = [u]
                 chatHelper.createMessage(
                   null,
@@ -53,9 +53,9 @@ export class CoC7Canvas {
                   }),
                   option
                 )
-              })
+              }
             } else {
-              dropTargetTokens.forEach(t => {
+              for (const t of dropTargetTokens) {
                 if (t.actor.hasPlayerOwner) {
                   option.whisper = t.actor.owners
                   chatHelper.createMessage(
@@ -67,7 +67,7 @@ export class CoC7Canvas {
                     option
                   )
                 }
-              })
+              }
             }
           }
           break

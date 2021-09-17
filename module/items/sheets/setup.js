@@ -95,7 +95,7 @@ export class CoC7SetupSheet extends ItemSheet {
     } else {
       const div = $(`<div class="item-summary">${chatData.value}</div>`)
       const props = $('<div class="item-properties"></div>')
-      // chatData.properties.forEach(p => props.append(`<span class="tag">${p}</span>`));
+      // for (const p of chatData.properties) { props.append(`<span class="tag">${p}</span>`) }
       div.append(props)
       li.append(div.hide())
       div.slideDown(200)
@@ -177,14 +177,14 @@ export class CoC7SetupSheet extends ItemSheet {
     data.otherItems = data.data.items.filter(it => it.type !== 'skill')
 
     data.skillListEmpty = data.skills.length === 0
-    data.skills.forEach(skill => {
+    for (const skill of data.skills) {
       if (
         skill.data.specialization &&
         !skill.name.includes(skill.data.specialization)
       ) {
         skill.displayName = `${skill.data.specialization} (${skill.name})`
       } else skill.displayName = skill.name
-    })
+    }
 
     data.skills.sort((a, b) => {
       return a.displayName.localeCompare(b.displayName)
