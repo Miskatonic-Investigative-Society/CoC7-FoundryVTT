@@ -4,7 +4,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 | Key                                                                                      |    cn    |    cs    |    de    |    es    |    fr    |    ja    |    pl    |  pt-BR   |    sv    |  zh-TW   |
 | :--------------------------------------------------------------------------------------- | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-| **Remaining**:                                                                           | **330**  | **106**  | **123**  |  **18**  |  **18**  | **125**  |  **18**  |  **18**  |  **16**  |  **1**   |
+| **Remaining**:                                                                           | **331**  | **107**  | **124**  |  **19**  |  **19**  | **126**  |  **19**  |  **19**  |  **17**  |  **2**   |
 | [CoC7.ActorImporter](#coc7actorimporter)                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.ActorImporterSummary](#coc7actorimportersummary)                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.AddBook](#coc7addbook)                                                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  |
@@ -20,6 +20,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.ArmorAbsorbsDamage](#coc7armorabsorbsdamage)                                       | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.ArmourPlating](#coc7armourplating)                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.AttackSuccess](#coc7attacksuccess)                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.AttacksPerRound](#coc7attacksperround)                                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.Attribute](#coc7attribute)                                                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Attributes](#coc7attributes)                                                       | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.AutomaticFire](#coc7automaticfire)                                                 | &#x274C; | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
@@ -396,6 +397,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.AttackSuccess
 
 `"CoC7.AttackSuccess": "{name} landed a blow.",`
+
+##### CoC7.AttacksPerRound
+
+`"CoC7.AttacksPerRound": "Attacks per round",`
 
 ##### CoC7.Attribute
 
