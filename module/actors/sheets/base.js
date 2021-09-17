@@ -651,11 +651,13 @@ export class CoC7ActorSheet extends ActorSheet {
         data.data.attribs.san.value / 5
       )
     }
-    data.hasInventory =
-      Object.prototype.hasOwnProperty.call(data.itemsByType, 'item') ||
-      Object.prototype.hasOwnProperty.call(data.itemsByType, 'book') ||
-      Object.prototype.hasOwnProperty.call(data.itemsByType, 'spell') ||
-      Object.prototype.hasOwnProperty.call(data.itemsByType, 'talent')
+    data.showInventoryItems = false
+    data.showInventoryBooks = false
+    data.showInventorySpells = false
+    data.showInventoryTalents = false
+    data.showInventoryStatuses = false
+    data.showInventoryWeapons = false
+
     // const first = data.data.biography[0];
     // first.isFirst = true;
     // data.data.biography[0] = first;

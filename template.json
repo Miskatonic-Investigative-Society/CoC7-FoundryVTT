@@ -204,6 +204,13 @@
       "description": {
         "keeper": ""
       },
+      "special": {
+        "sanLoss": {
+          "checkPassed": null,
+          "checkFailled": null
+        },
+        "attacksPerRound": 1
+      },
       "infos": {
         "occupation": "",
         "age": "",

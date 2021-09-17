@@ -1,5 +1,7 @@
 <div class="flexrow" style="height: 100%">
+  <div class="flexcol flex3 inventory">
     {{> "systems/CoC7/templates/actors/parts/actor-inventory-items.html"}}
+  </div>
     <div class="flexcol flex2 cash" style="border: 1px groove;">
         {{#unless data.flags.locked}}
         <div class="flexrow cash-row">
