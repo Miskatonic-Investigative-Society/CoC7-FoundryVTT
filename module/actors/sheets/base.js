@@ -1,4 +1,4 @@
-/* global $, ActorSheet, ChatMessage, CONST, Dialog, game, getProperty, mergeObject, Roll, TextEditor, ui */
+/* global $, ActorSheet, ChatMessage, CONST, Dialog, game, getProperty, Hooks, mergeObject, Roll, TextEditor, ui */
 
 import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7Check } from '../../check.js'
@@ -1099,6 +1099,7 @@ export class CoC7ActorSheet extends ActorSheet {
     event.preventDefault()
     const isLocked = this.actor.locked
     this.actor.locked = !isLocked
+    Hooks.call('actorLockClickedCoC7', [!isLocked])
   }
 
   async _onFlagClicked (event) {

@@ -324,7 +324,7 @@ export class CoC7ActorImporter {
         parent: null
       })
       ui.notifications.info(
-        game.i18n.localize('COC7.CreatedImportedCharactersFolder')
+        game.i18n.localize('CoC7.CreatedImportedCharactersFolder')
       )
     }
     return importedCharactersFolder
