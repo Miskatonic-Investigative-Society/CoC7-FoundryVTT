@@ -1,4 +1,4 @@
-/* global canvas, ChatMessage, CONST, game, getDocumentClass, Macro, Roll, ui */
+/* global canvas, ChatMessage, CONST, game, getDocumentClass, Hooks, Macro, Roll, ui */
 
 import { CoC7Check } from './check.js'
 import { CoC7Item } from './items/item.js'
@@ -428,6 +428,7 @@ export class CoC7Utilities {
       type: 'updateChar'
     })
     CoC7Utilities.updateCharSheets()
+    Hooks.call('toggleCharCreation', !isCharCreation)
   }
 
   static async startRest () {

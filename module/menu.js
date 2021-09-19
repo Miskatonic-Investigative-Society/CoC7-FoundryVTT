@@ -1,4 +1,4 @@
-/* global $, canvas, duplicate, game, renderTemplate, ui */
+/* global $, canvas, duplicate, game, Hooks, renderTemplate, ui */
 
 import { CoC7Chat } from './chat.js'
 import { CoC7Utilities } from './utilities.js'
@@ -140,6 +140,8 @@ export class CoC7Menu {
           })
         return s
       })
+
+    Hooks.call('renderCoC7SceneMenu', controls[0].css.indexOf('active') !== -1)
 
     // Return data for rendering
     return {
