@@ -177,6 +177,7 @@ export class CoC7SetupSheet extends ItemSheet {
     data.otherItems = data.data.items.filter(it => it.type !== 'skill')
 
     data.skillListEmpty = data.skills.length === 0
+    data.itemsListEmpty = data.otherItems.length === 0
     for (const skill of data.skills) {
       if (
         skill.data.specialization &&
