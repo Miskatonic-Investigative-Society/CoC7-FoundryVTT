@@ -4,6 +4,7 @@
   "I18N.MAINTAINERS": "@Rangertheman#4927",
 
   "CoC7.Entities.Character": "Utredare",
+  "CoC7.Entities.Container": "Behållare",
   "CoC7.Entities.Creature": "Varelse",
   "CoC7.Entities.Npc": "Spelledarperson",
   "CoC7.Entities.Vehicle": "Fordon",
@@ -91,6 +92,7 @@
   "CoC7.Spells": "Besvärjelser",
   "CoC7.Spell": "Besvärjelse",
   "CoC7.Spells&Notes": "Besvärjelser & anteckningar",
+  "CoC7.Weapons": "Vapen",
   "CoC7.Effects": "Effekter",
   "CoC7.Cost": "Kostnad",
   "CoC7.Source": "Källa",
@@ -118,6 +120,7 @@
   "CoC7.Icon": "Ikon",
   "CoC7.Check": "Kontrollera",
   "CoC7.ItemWeapon": "Föremål (Weapon)",
+  "CoC7.AttacksPerRound": "Anfall per runda",
 
   "CoC7.CopyToClipboard": "Kopiera till urklipp",
   "CoC7.WhisperToSelection": "Viska till den valda markören",
@@ -401,6 +404,13 @@
   "CoC7.AddItem": "Lägg till föremål",
   "CoC7.EditItem": "Redigera föremål",
   "CoC7.DeleteItem": "Ta bort föremål",
+  "CoC7.TradeItem": "Överför/lagra föremål",
+
+  "CoC7.NewBookName": "ny bok",
+  "CoC7.AddBook": "Lägg till bok",
+  "CoC7.NewSpellName": "ny besvärjelse",
+  "CoC7.AddSpell": "Lägg till besvärjelse",
+
   "CoC7.AddWeapon": "Lägg till vapen",
   "CoC7.NewWeaponName": "nytt vapen",
   "CoC7.EditWeapon": "Redigera vapen",
@@ -709,6 +719,13 @@
   "CoC7.Maximize": "Maximera",
   "CoC7.Summarize": "Summera",
 
+  "CoC7.UnableToInteractWithChatCard": "Du kan inte interagera med det här medelandet. Om du behöver ändra något, vänligen be din Väktare välja det alternativet åt dig",
+  "CoC7.UnableToCopyToClipboard": "Kan inte kopiera till Urklippshanteraren, förmodligen på grund av säkerhetsinställningarna i din webbläsare.",
+  "CoC7.WarningCharacterSheetV1Depreciated": "Den här layouten är inte längre i bruk och fungerar kanske inte som den ska. Den kommer att tas bort i samband med updateringen till FoundryVTT v9. Vänligen be din Väktare att ändra karaktärsbladtypen till CoC7.CoC7CharacterSheetV2",
+
+  "CoC7.MessageTitleSelectUserToGiveTo": "Ge föremål till en annan karaktär",
+  "CoC7.MessageSelectUserToGiveTo": "Vilken karaktär vill du ge det här föremålet till?",
+
   "SETTINGS.TitleRules": "Regler",
   "SETTINGS.TitleInitiative": "Initiativinställningar",
   "SETTINGS.TitleRoll": "Tärningsslagsinställningar",
@@ -725,6 +742,7 @@
   "SETTINGS.DefaultDifficultyHint": "Du kan välja svårighetsgrad för slagen. Väljer du 'okänd' vet spelarna inte om vilken svårighetsgraden är innan de slår.",
   "SETTINGS.CheckDifficultyRegular": "Förvald svårighetsgrad",
   "SETTINGS.CheckDifficultyUnknown": "Okänd svårighetsgrad",
+  "SETTINGS.showIconsOnly": "Visa enbart ikoner i färdighetslistan, när det sammanfattade rollformuläret används.",
   "SETTINGS.UseToken": "Använd markörbilden",
   "SETTINGS.UseTokenHint": "Använd markörbild istället för porträtt på chattkortet",
   "SETTINGS.DisplayActorOnCard": "Visa karaktären på kortet",
@@ -809,5 +827,8 @@
   "SETTINGS.OneBlockBackStory": "Bakgrundshistoria i ett block",
   "SETTINGS.OneBlockBackStoryHint": "Ändrar så att bakgrundshistorian är ett block, men du kan fortfarande formatera/lägga till länkar.",
   "SETTINGS.EnableStatusIcons": "Aktivera statusikoner",
-  "SETTINGS.EnableStatusIconsHint": "Ange om statusikoner för strid och vansinne ska visas på markören."
+  "SETTINGS.EnableStatusIconsHint": "Ange om statusikoner för strid och vansinne ska visas på markören.",
+  "SETTINGS.ShowExperimentalFeatures": "Visa experimentella funktioner",
+  "SETTINGS.ShowExperimentalFeaturesHint": "Om du använder de här funktionerna kan din spelvärld komma att bli oanvändbar vid framtida versionsuppdateringar. De är endast för testning och ska INTE användas i dina spelvärldar",
+  "CoC7.ExperimentalFeaturesWarning": "Den här funktionen är under utveckling och rekommenderas inte för användning i dina spelvärldar."
 }
