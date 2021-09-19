@@ -1,3 +1,6 @@
+{{#unless hasInventory}}
+  <h3 class="warning">{{localize 'CoC7.InventoryIsCurrentlyEmpty'}}</h3>
+{{/unless}}
 <ol class="inventory-list">
   <li>
     {{#if showInventoryItems}}

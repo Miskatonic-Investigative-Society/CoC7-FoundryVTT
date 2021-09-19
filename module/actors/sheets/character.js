@@ -136,9 +136,11 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
       }
       data.skillList.push(skill)
     }
-    data.skillsByValue = [...data.skills].sort((a, b) => {
-      return a.data.value - b.data.value
-    }).reverse()
+    data.skillsByValue = [...data.skills]
+      .sort((a, b) => {
+        return a.data.value - b.data.value
+      })
+      .reverse()
     data.topSkills = [...data.skillsByValue].slice(0, 14)
     data.topWeapons = [...data.meleeWpn, ...data.rangeWpn]
       .sort((a, b) => {
@@ -157,11 +159,32 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
       }
     }
 
-    data.showInventoryItems = Object.prototype.hasOwnProperty.call(data.itemsByType, 'item') || !data.data.flags.locked
-    data.showInventoryBooks = Object.prototype.hasOwnProperty.call(data.itemsByType, 'book') || !data.data.flags.locked
-    data.showInventorySpells = Object.prototype.hasOwnProperty.call(data.itemsByType, 'spell') || !data.data.flags.locked
-    data.showInventoryTalents = Object.prototype.hasOwnProperty.call(data.itemsByType, 'talent') || !data.data.flags.locked
-    data.showInventoryStatuses = Object.prototype.hasOwnProperty.call(data.itemsByType, 'status') || !data.data.flags.locked
+    data.skillListEmpty = data.skills.length === 0
+
+    data.showInventoryItems =
+      Object.prototype.hasOwnProperty.call(data.itemsByType, 'item') ||
+      !data.data.flags.locked
+    data.showInventoryBooks =
+      Object.prototype.hasOwnProperty.call(data.itemsByType, 'book') ||
+      !data.data.flags.locked
+    data.showInventorySpells =
+      Object.prototype.hasOwnProperty.call(data.itemsByType, 'spell') ||
+      !data.data.flags.locked
+    data.showInventoryTalents =
+      Object.prototype.hasOwnProperty.call(data.itemsByType, 'talent') ||
+      !data.data.flags.locked
+    data.showInventoryStatuses =
+      Object.prototype.hasOwnProperty.call(data.itemsByType, 'status') ||
+      !data.data.flags.locked
+
+    data.hasInventory =
+      data.showInventoryItems ||
+      data.showInventoryBooks ||
+      data.showInventorySpells ||
+      data.showInventoryTalents ||
+      data.showInventoryStatuses ||
+      data.showInventoryWeapons
+
     return data
   }
 
@@ -212,7 +235,9 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
   }
 
   async toggleSkillListMode (event) {
-    this.skillListMode === 'alphabetical' ? this.skillListMode = 'value' : this.skillListMode = 'alphabetical'
+    this.skillListMode === 'alphabetical'
+      ? (this.skillListMode = 'value')
+      : (this.skillListMode = 'alphabetical')
     return await this.render(true)
   }
 

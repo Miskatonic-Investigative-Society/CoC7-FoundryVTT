@@ -27,14 +27,15 @@ export class CoC7ContainerSheet extends ActorSheet {
     if (data.documentName !== 'Item') return []
     const folder = game.folders.get(data.id)
     if (!folder) return []
-    const items = folder.contents.filter(item => ['book', 'item', 'spell', 'weapon'].includes(item.type)).map(item => item.toJSON())
+    const items = folder.contents
+      .filter(item => ['book', 'item', 'spell', 'weapon'].includes(item.type))
+      .map(item => item.toJSON())
     if (items.length > 0) {
       await this.actor.createEmbeddedDocuments('Item', items)
     }
   }
 
-  onCloseSheet () {
-  }
+  onCloseSheet () {}
 
   async getData () {
     const data = await super.getData()
@@ -45,7 +46,12 @@ export class CoC7ContainerSheet extends ActorSheet {
     sheetData.itemsByType = {}
     if (data.items) {
       for (const item of data.items) {
-        if (!Object.prototype.hasOwnProperty.call(sheetData.itemsByType, item.type)) {
+        if (
+          !Object.prototype.hasOwnProperty.call(
+            sheetData.itemsByType,
+            item.type
+          )
+        ) {
           sheetData.itemsByType[item.type] = []
         }
         sheetData.itemsByType[item.type].push(item)
@@ -61,11 +67,29 @@ export class CoC7ContainerSheet extends ActorSheet {
       game.settings.get('CoC7', 'playerUnlockSheetMode') === 'always' ||
       game.user.isGM
 
-    sheetData.showInventoryItems = Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'item') || !sheetData.data.flags.locked
-    sheetData.showInventoryBooks = Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'book') || !sheetData.data.flags.locked
-    sheetData.showInventorySpells = Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'spell') || !sheetData.data.flags.locked
-    sheetData.showInventoryTalents = Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'talent') || !sheetData.data.flags.locked
-    sheetData.showInventoryWeapons = Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'weapon') || !sheetData.data.flags.locked
+    sheetData.showInventoryItems =
+      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'item') ||
+      !sheetData.data.flags.locked
+    sheetData.showInventoryBooks =
+      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'book') ||
+      !sheetData.data.flags.locked
+    sheetData.showInventorySpells =
+      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'spell') ||
+      !sheetData.data.flags.locked
+    sheetData.showInventoryTalents =
+      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'talent') ||
+      !sheetData.data.flags.locked
+    sheetData.showInventoryWeapons =
+      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'weapon') ||
+      !sheetData.data.flags.locked
+
+    sheetData.hasInventory =
+      sheetData.showInventoryItems ||
+      sheetData.showInventoryBooks ||
+      sheetData.showInventorySpells ||
+      sheetData.showInventoryTalents ||
+      sheetData.showInventoryStatuses ||
+      sheetData.showInventoryWeapons
 
     return sheetData
   }
@@ -153,7 +177,8 @@ export class CoC7ContainerSheet extends ActorSheet {
     })
     content = content + '<form id="selectform"><select name="user">'
     for (const actor of actors) {
-      content = content + '<option value="' + actor.id + '">' + actor.name + '</option>'
+      content =
+        content + '<option value="' + actor.id + '">' + actor.name + '</option>'
     }
     content = content + '</select></form></p>'
     await Dialog.prompt({
@@ -221,6 +246,8 @@ export class CoC7ContainerSheet extends ActorSheet {
 
   _onInventoryHeader (event) {
     event.preventDefault()
-    $(event.currentTarget).siblings('li').slideToggle(200)
+    $(event.currentTarget)
+      .siblings('li')
+      .slideToggle(200)
   }
 }
