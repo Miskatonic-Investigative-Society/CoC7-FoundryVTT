@@ -717,6 +717,7 @@
 
   "CoC7.MessageTitleSelectUserToGiveTo": "Give item to another character",
   "CoC7.MessageSelectUserToGiveTo": "Which character would you like to give this item to?",
+  "CoC7.MessageDistanceCalculationFailure": "Unable to calculate distance between tokens, please use the token character sheet.",
 
   "SETTINGS.TitleRules": "Rules",
   "SETTINGS.TitleInitiative": "Initiative Settings",
@@ -822,5 +823,7 @@
   "SETTINGS.EnableStatusIconsHint": "Set if combat and sanity effects icons are shown in tokens.",
   "SETTINGS.ShowExperimentalFeatures": "Show Experimental Features",
   "SETTINGS.ShowExperimentalFeaturesHint": "Your world may become unusable in a future release if you use these features. For testing only DO NOT use these in your game worlds",
-  "CoC7.ExperimentalFeaturesWarning": "This feature is a work in progress and is not recommended for use in your game world."
+  "CoC7.ExperimentalFeaturesWarning": "This feature is a work in progress and is not recommended for use in your game world.",
+  "SETTINGS.CheckElevation": "Include elevation in distance",
+  "SETTINGS.CheckElevationHint": "Use elevation in range combat distance calculations"
 }
