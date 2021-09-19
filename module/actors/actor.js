@@ -888,35 +888,37 @@ export class CoCActor extends Actor {
           break
 
         case 'weapon': {
-          const mainSkill = data.data?.skill?.main?.name
-          if (mainSkill) {
-            let skill = this.getSkillsByName(mainSkill)[0]
-            if (!skill) {
-              const name = mainSkill.match(/\(([^)]+)\)/)
-                ? mainSkill.match(/\(([^)]+)\)/)[1]
-                : mainSkill
-              skill = await this.createWeaponSkill(
-                name,
-                !!data.data.properties?.rngd
-              )
-            }
-            if (skill) data.data.skill.main.id = skill.id
-          } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
+          if (this.data.type !== 'container') {
+            const mainSkill = data.data?.skill?.main?.name
+            if (mainSkill) {
+              let skill = this.getSkillsByName(mainSkill)[0]
+              if (!skill) {
+                const name = mainSkill.match(/\(([^)]+)\)/)
+                  ? mainSkill.match(/\(([^)]+)\)/)[1]
+                  : mainSkill
+                skill = await this.createWeaponSkill(
+                  name,
+                  !!data.data.properties?.rngd
+                )
+              }
+              if (skill) data.data.skill.main.id = skill.id
+            } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
 
-          const secondSkill = data.data?.skill?.alternativ?.name
-          if (secondSkill) {
-            let skill = this.getSkillsByName(secondSkill)[0]
-            if (!skill) {
-              const name = mainSkill.match(/\(([^)]+)\)/)
-                ? mainSkill.match(/\(([^)]+)\)/)[1]
-                : mainSkill
-              skill = await this.createWeaponSkill(
-                name,
-                !!data.data.properties?.rngd
-              )
-            }
-            if (skill) data.data.skill.alternativ.id = skill.id
-          } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
+            const secondSkill = data.data?.skill?.alternativ?.name
+            if (secondSkill) {
+              let skill = this.getSkillsByName(secondSkill)[0]
+              if (!skill) {
+                const name = mainSkill.match(/\(([^)]+)\)/)
+                  ? mainSkill.match(/\(([^)]+)\)/)[1]
+                  : mainSkill
+                skill = await this.createWeaponSkill(
+                  name,
+                  !!data.data.properties?.rngd
+                )
+              }
+              if (skill) data.data.skill.alternativ.id = skill.id
+            } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
+          }
 
           allCreated = await super.createEmbeddedDocuments(
             embeddedName,

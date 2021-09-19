@@ -1,4 +1,7 @@
-<ol class="skills-list" >
+{{#if skillListEmpty}}
+  <h3 class="warning">{{localize 'CoC7.EmptyCharacterSkillList'}}</h3>
+{{/if}}
+<ol class="skills-list">
     {{#each skills as |skill id|}}
         <li class="item flexcol" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
             <div class="flexrow">
@@ -15,7 +18,7 @@
                     <input class="skill-name flex1" style="font-size: 12px;height: 16px;padding: 0;text-align: left;" type="text" value="{{skill.name}}">
                     <input class="npc-skill-score" style="font-size: 11px;flex: 0 0 30px;height: 16px;padding: 0 6px 0 0;margin: 0;text-align: right;" type="text" value="{{skill.data.value}}" data-dtype="Number">
                 {{/if}}
-    
+
                 <div class="item-controls">
                     {{#if ../data.flags.locked}}
                         {{#if skill.data.properties.noxpgain}}

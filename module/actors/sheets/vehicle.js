@@ -22,7 +22,9 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
   }
 
   async getData () {
-    ui.notifications.error(game.i18n.localize('CoC7.ExperimentalFeaturesWarning'))
+    ui.notifications.warn(
+      game.i18n.localize('CoC7.ExperimentalFeaturesWarning')
+    )
     const data = await super.getData()
 
     data.properties = []

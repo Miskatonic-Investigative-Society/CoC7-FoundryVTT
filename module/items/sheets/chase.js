@@ -47,7 +47,9 @@ export class CoC7ChaseSheet extends ItemSheet {
 
   /** @override */
   getData (options = {}) {
-    ui.notifications.error(game.i18n.localize('CoC7.ExperimentalFeaturesWarning'))
+    ui.notifications.warn(
+      game.i18n.localize('CoC7.ExperimentalFeaturesWarning')
+    )
     const data = super.getData(options)
 
     /** MODIF: 0.8.x **/
