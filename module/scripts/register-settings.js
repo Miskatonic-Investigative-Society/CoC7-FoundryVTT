@@ -177,6 +177,14 @@ export function registerSettings () {
     default: false,
     type: Boolean
   })
+  game.settings.register('CoC7', 'distanceElevation', {
+    name: 'SETTINGS.CheckElevation',
+    hint: 'SETTINGS.CheckElevationHint',
+    scope: 'world',
+    config: true,
+    default: true,
+    type: Boolean
+  })
 
   /**
    * Sheet settings
