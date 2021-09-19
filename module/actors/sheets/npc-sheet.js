@@ -28,13 +28,29 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
 
     data.isCreature = false
 
-    data.showInventoryItems = Object.prototype.hasOwnProperty.call(data.itemsByType, 'item') || !data.data.flags.locked
-    data.showInventoryBooks = Object.prototype.hasOwnProperty.call(data.itemsByType, 'book') || !data.data.flags.locked
-    data.showInventorySpells = Object.prototype.hasOwnProperty.call(data.itemsByType, 'spell') || !data.data.flags.locked
-    data.showInventoryTalents = Object.prototype.hasOwnProperty.call(data.itemsByType, 'talent') || !data.data.flags.locked
-    data.showInventoryStatuses = Object.prototype.hasOwnProperty.call(data.itemsByType, 'status') || !data.data.flags.locked
+    data.showInventoryItems =
+      Object.prototype.hasOwnProperty.call(data.itemsByType, 'item') ||
+      !data.data.flags.locked
+    data.showInventoryBooks =
+      Object.prototype.hasOwnProperty.call(data.itemsByType, 'book') ||
+      !data.data.flags.locked
+    data.showInventorySpells =
+      Object.prototype.hasOwnProperty.call(data.itemsByType, 'spell') ||
+      !data.data.flags.locked
+    data.showInventoryTalents =
+      Object.prototype.hasOwnProperty.call(data.itemsByType, 'talent') ||
+      !data.data.flags.locked
+    data.showInventoryStatuses =
+      Object.prototype.hasOwnProperty.call(data.itemsByType, 'status') ||
+      !data.data.flags.locked
     data.showInventoryWeapons = false
-    data.hasInventory = data.showInventoryItems || data.showInventoryBooks || data.showInventorySpells || data.showInventoryTalents || data.showInventoryStatuses || data.showInventoryWeapons
+    data.hasInventory =
+      data.showInventoryItems ||
+      data.showInventoryBooks ||
+      data.showInventorySpells ||
+      data.showInventoryTalents ||
+      data.showInventoryStatuses ||
+      data.showInventoryWeapons
 
     return data
   }
@@ -143,7 +159,7 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
   }
 
   static forceAuto (app, html) {
-    const cell = html.find('.description.pannel.expanded')
+    const cell = html.find('.pannel.expanded.resizededitor')
     if (cell.length) {
       cell.height(
         Math.max(200, (html.height() - cell.position().top - 8) / cell.length) +
