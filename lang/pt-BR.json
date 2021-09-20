@@ -93,6 +93,7 @@
   "CoC7.Spells": "Feitiços",
   "CoC7.Spell": "Feitiço",
   "CoC7.Spells&Notes": "Feitiços e Anotações",
+  "CoC7.Weapons": "Armas",
   "CoC7.Effects": "Efeitos",
   "CoC7.Cost": "Custo",
   "CoC7.Source": "Origem",
@@ -120,6 +121,7 @@
   "CoC7.Icon": "Ícone",
   "CoC7.Check": "Teste",
   "CoC7.ItemWeapon": "Item (Arma)",
+  "CoC7.AttacksPerRound": "Ataques por Turno",
 
   "CoC7.CopyToClipboard": "Copiar para Área de Transferência",
   "CoC7.WhisperToSelection": "Sussurrar aos Tokens Selecionados",
@@ -404,6 +406,13 @@
   "CoC7.AddItem": "Adicionar Item",
   "CoC7.EditItem": "Editar Item",
   "CoC7.DeleteItem": "Deletar Item",
+  "CoC7.TradeItem": "Repassar Item",
+
+  "CoC7.NewBookName": "novo livro",
+  "CoC7.AddBook": "Adicionar Livro",
+  "CoC7.NewSpellName": "novo feitiço",
+  "CoC7.AddSpell": "Adicionar Feitiço",
+
   "CoC7.AddWeapon": "Adicionar Arma",
   "CoC7.NewWeaponName": "Nova Arma",
   "CoC7.EditWeapon": "Editar Arma",
@@ -414,6 +423,7 @@
   "CoC7.WeaponSkill": "Perícia",
   "CoC7.WeaponSkillAlt": "Perícia Alternativa",
   "CoC7.Inventory": "Inventário",
+  "CoC7.InventoryIsCurrentlyEmpty": "O inventário está vazio.",
   "CoC7.CharacterDevelopment": "Desenvolvimento",
   "CoC7.OccupationSkill": "Perícia de Ocupação",
   "CoC7.ArchetypeSkill": "Perícia de Arquétipo",
@@ -505,9 +515,7 @@
   "CoC7.YouGainedCthulhuMythos": "Sua mente vacila diante da manifestação sobrenatural, (+{value}% Mythos de Cthulhu).",
   "CoC7.CardResolved": "Cartão Resolvido",
 
-  "CoC7.CMI": "MCI",
   "CoC7.CthulhuMythosInitial": "Leitura Inicial",
-  "CoC7.CMF": "MCC",
   "CoC7.CthulhuMythosFinal": "Estudo Completo",
   "CoC7.Occult": "Ocultismo",
   "CoC7.MythosRating": "Nível de Mythos",
@@ -526,8 +534,6 @@
 
   "CoC7.BookHasNothingMoreToTeach": "{book} não tem mais nada a ensinar. Perícia de Mythos de Cthulhu de {actor} é maior que seu Nível de Mythos.",
   "CoC7.BookType": "Tipo de Livro",
-  "CoC7.MythosBook": "Mythos",
-  "CoC7.OccultBook": "Ocultismo",
   "CoC7.Content": "Conteúdo",
   "CoC7.DragSpell": "Arraste Feitiços aqui para inseri-los no Livro...",
   "CoC7.Progress": "Progresso",
@@ -590,6 +596,7 @@
   "CoC7.Chosen": "Escolhidas",
   "CoC7.EmptySkillList": "Adicione uma perícia arrastando-a aqui.",
   "CoC7.EmptyItemList": "Adicione um item arrastando-o aqui.",
+  "CoC7.EmptyCharacterSkillList": "Adicione uma ocupação ou perícia arrastando-a aqui.",
   "CoC7.PersonalSpeciality": "Número de especialidades pessoais ou de era",
   "CoC7.AdditionalSkills": "Perícias Adicionais",
   "CoC7.SkillSelectionWindow": "Selecionar Perícias opcionais",
@@ -663,7 +670,6 @@
   "CoC7.MessageTargetCheckRequested": "O Guardião está solicitando um teste de {check} para {name}.",
   "CoC7.MessageTitleSelectSingleUserForTarget": "Qual usuário pode responder a este ataque",
   "CoC7.MessageSelectSingleUserForTarget": "Esse token é controlado por vários usuários, por favor selecione qual deles pode responder a este ataque",
-  "CoC7.MessageSelectedTargetIsNotControlled": "O token de {name} não é possuído por um jogador, ou seja, não será possível que ele reaja em ações de combate.",
   "CoC7.MessageBoutOfMadnessTableNotFound": "O resultado da tabela de loucura não foi encontrado, por favor verifique se todas as suas tabelas estão criadas",
   "CoC7.MessageBoutOfMadnessItemNotFound": "O resultado da tabela de loucura não foi encontrado, por favor verifique que todos os seus estados estão criados",
 
@@ -697,6 +703,13 @@
   "CoC7.Migrate.ButtonSkip": "Mais Tarde",
   "CoC7.Migrate.ButtonOkay": "Proceder",
 
+  "CoC7.Maximize": "Maximizar",
+  "CoC7.Summarize": "Resumir",
+
+  "CoC7.UnableToInteractWithChatCard": "Não é possível interagir com essa mensagem, por favor peça ao Guardião para alterá-la para você.",
+  "CoC7.UnableToCopyToClipboard": "Impossível copiar para a área de transferência, provavelmente por causa das configurações de segurança de seu navegador.",
+  "CoC7.WarningCharacterSheetV1Depreciated": "Essa versão da ficha está obsoleta e pode não funcionar corretamente. Será removida na versão 0.9 do Foundry VTT, por favor, mude o tipo da ficha para CoC7.CoC7CharacterSheetV2",
+
   "CoC7.ImportedUnnamedCharacter": "Personagem sem nome importado",
   "CoC7.CreatedImportedCharactersFolder": "Pasta de 'Personagens Importados' criada",
   "CoC7.HowToTranslateTitle": "Como traduzir?",
@@ -705,6 +718,10 @@
   "CoC7.HowToTranslateInstallTranslation": "Instale/Atualize a Tradução no gerenciador de módulos do Foundry.",
   "CoC7.HowToTranslateEnableTranslation": "Dentro do Mundo de Jogo, em Configuração/Gerenciar Módulos ative tanto o Babele quanto as traduções.",
   "CoC7.HowToTranslateNoTranslation": "instruções para criar traduções em novas línguas estão disponíveis nos módulos de tradução existentes.",
+
+  "CoC7.MessageTitleSelectUserToGiveTo": "Entregar este item para outro personagem",
+  "CoC7.MessageSelectUserToGiveTo": "Qual personagem gostaria de repassar este item?",
+  "CoC7.MessageDistanceCalculationFailure": "Não é possível calcular distância entre tokens, por favor, use a ficha de personagem.",
 
   "SETTINGS.TitleRules": "Regras",
   "SETTINGS.TitleInitiative": "Iniciativa",
@@ -806,5 +823,11 @@
   "SETTINGS.EnableStatusIcons": "Habilitar ícones de  status",
   "SETTINGS.EnableStatusIconsHint": "Define se ícones de status de combate e sanidade são mostrados em tokens.",
   "SETTINGS.StanbyGMRolls": "Aguardar rolagens do Guardião",
-  "SETTINGS.StanbyGMRollsHint": "Quando o Guardião está fazendo uma rolagem por uma ficha de personagem, mostra um botão de rolagem em vez de rolar."
+  "SETTINGS.StanbyGMRollsHint": "Quando o Guardião está fazendo uma rolagem por uma ficha de personagem, mostra um botão de rolagem em vez de rolar.",
+  "SETTINGS.ShowExperimentalFeatures": "Mostrar Recursos Experimentais",
+  "SETTINGS.ShowExperimentalFeaturesHint": "Seu mundo pode ficar instável em próximas atualizações. É apenas para testes, não utilize em seus mundos de jogo.",
+  "CoC7.ExperimentalFeaturesWarning": "Esse recurso está em desenvolvimento. Seu uso não é recomendado.",
+  "SETTINGS.CheckElevation": "Incluir elevação em distância.",
+  "SETTINGS.CheckElevationHint": "Usar cálculos de elevação em combates à distância.",
+  "SETTINGS.showIconsOnly": "Na versão resumida da ficha, mostra apenas os ícones das perícias."
 }
