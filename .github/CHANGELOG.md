@@ -2,18 +2,35 @@
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
 
-- Add keeper notes tab to all sheets.
+- Add actor importer button on bottom of actor directory.
 - Add button for summarize character sheet, keeping only the essential stuff on minimalistic way.
-- Fix error on actor importer when it receives an array, thanks to @pconception;
-- Fix errors when override sheet artwork is enable, background type is not slice, and an inline style tag has been added;
-- Fix sanity loss from creature not being rolled;
-- Fix some Foundry warnings on console for deprecated stuff;
-- Handle 00 special case for advantage/disadvantage rolls, thanks to @pconception;
-- Now the monetary symbol goes before numeral on cash fields;
-- Now skill sorting to support accented characters;
-- Prevent error on keeper self roll if no token selected;
-- Resolve issue with createEmbeddedDocuments returning array in array;
-- Update character sheet to prevent reloading when editing backstory;
+- Add keeper notes tab to all sheets.
+- Add option to show only icons on the summarized sheet skills list.
+- Add option to sort skills by value on default sheet.
+- Add socketlib as a project library.
+- Disable melee buttons after clicked to prevent multiple clicks while waiting for dice so nice.
+- Fix character importer spells import.
+- Fix character movement calculation.
+- Fix error on actor importer when it receives an array, thanks to @pconception.
+- Fix errors when override sheet artwork is enable, background type is not slice, and an inline style tag has been added.
+- Fix sanity loss from creature not being rolled.
+- Fix some Foundry warnings on console for deprecated stuff.
+- Handle 00 special case for advantage/disadvantage rolls, thanks to @pconception.
+- Now it is possible to create new spells and books directly on actors.
+- Now it is possible to trade items between actors.
+- Now skill sorting to support accented characters.
+- Now the monetary symbol goes before numeral on cash fields.
+- Now there is an setting to enable experimental features.
+  - This is for testing only. DO NOT enable this in your game worlds.
+- Now there is default icons for skills on compendium.
+- Prevent error on keeper self roll if no token selected.
+- Prevent importing Actor if textarea is empty.
+- Resolve issue with returning array in array.
+- The system now supports elevation on distance calculation on ranged combat.
+- Update character sheet to prevent reloading when editing backstory.
+- Update message card triggered from chat card update to use current roll mode.
+- Update to swedish localization, thanks to @Rangertheman.
+- Update to taiwanese localization, thanks to @zeteticl.
 
 ## Version 0.6.7:
 
