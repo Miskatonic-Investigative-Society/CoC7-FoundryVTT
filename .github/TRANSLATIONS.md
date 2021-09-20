@@ -4,7 +4,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 | Key                                                                                      |    cn    |    cs    |    de    |    es    |    fr    |    ja    |    pl    |  pt-BR   |    sv    |  zh-TW   |
 | :--------------------------------------------------------------------------------------- | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-| **Remaining**:                                                                           | **334**  | **110**  | **127**  |  **22**  |  **22**  | **129**  |  **22**  |  **22**  |  **3**   |  **5**   |
+| **Remaining**:                                                                           | **336**  | **112**  | **129**  |  **24**  |  **24**  | **131**  |  **24**  |  **24**  |  **5**   |  **7**   |
 | [CoC7.ActorImporter](#coc7actorimporter)                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.ActorImporterSummary](#coc7actorimportersummary)                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.AddBook](#coc7addbook)                                                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  |
@@ -66,6 +66,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.DragSpell](#coc7dragspell)                                                         | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.DriveSpecializationName](#coc7drivespecializationname)                             | &#x274C; | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.DyingCheck](#coc7dyingcheck)                                                       | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.EmptyCharacterSkillList](#coc7emptycharacterskilllist)                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.EmptyItemList](#coc7emptyitemlist)                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.EndBoutOfMadness](#coc7endboutofmadness)                                           | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.English](#coc7english)                                                             | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
@@ -118,6 +119,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.InsanityName](#coc7insanityname)                                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.InsanityType](#coc7insanitytype)                                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.IntCheck](#coc7intcheck)                                                           | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.InventoryIsCurrentlyEmpty](#coc7inventoryiscurrentlyempty)                         | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.InvestigatorManiaGained](#coc7investigatormaniagained)                             | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.InvestigatorPhobiaGained](#coc7investigatorphobiagained)                           | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.InvoluntaryAction](#coc7involuntaryaction)                                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
@@ -585,6 +587,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 `"CoC7.DyingCheck": "Check if you'll die immediately",`
 
+##### CoC7.EmptyCharacterSkillList
+
+`"CoC7.EmptyCharacterSkillList": "Add a setup, occupation, or skill by dropping it here.",`
+
 ##### CoC7.EmptyItemList
 
 `"CoC7.EmptyItemList": "Add an item by dropping it here.",`
@@ -792,6 +798,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.IntCheck
 
 `"CoC7.IntCheck": "Intelligence check",`
+
+##### CoC7.InventoryIsCurrentlyEmpty
+
+`"CoC7.InventoryIsCurrentlyEmpty": "Inventory is currently empty",`
 
 ##### CoC7.InvestigatorManiaGained
 
