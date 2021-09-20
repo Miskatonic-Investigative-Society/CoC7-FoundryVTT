@@ -1,4 +1,4 @@
-/* global $, ActorSheet, ChatMessage, CONST, Dialog, game, getProperty, Hooks, mergeObject, Roll, TextEditor, ui */
+/* global $, ActorSheet, ChatMessage, CONST, Dialog, FormData, game, getProperty, Hooks, mergeObject, Roll, TextEditor, ui */
 
 import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7Check } from '../../check.js'
@@ -962,17 +962,29 @@ export class CoC7ActorSheet extends ActorSheet {
         content + '<option value="' + actor.id + '">' + actor.name + '</option>'
     }
     content = content + '</select></form></p>'
-    await Dialog.prompt({
-      title: game.i18n.localize('CoC7.MessageTitleSelectUserToGiveTo'),
-      content: content,
-      callback: html => {
-        const formData = new FormData(html[0].querySelector('#selectform'))
-        for (const [name, value] of formData) {
-          if (name === 'user') {
-            message.actorTo = value
+    message.actorTo = await new Promise(resolve => {
+      const dlg = new Dialog({
+        title: game.i18n.localize('CoC7.MessageTitleSelectUserToGiveTo'),
+        content: content,
+        buttons: {
+          confirm: {
+            label: game.i18n.localize('CoC7.Validate'),
+            callback: html => {
+              const formData = new FormData(
+                html[0].querySelector('#selectform')
+              )
+              for (const [name, value] of formData) {
+                if (name === 'user') {
+                  return resolve(value)
+                }
+              }
+            }
           }
-        }
-      }
+        },
+        default: 'confirm',
+        close: () => {}
+      })
+      dlg.render(true)
     })
     await game.CoC7socket.executeAsGM('gmtradeitemto', message)
   }
@@ -1793,7 +1805,9 @@ export class CoC7ActorSheet extends ActorSheet {
               }
             }
             if (game.i18n.localize(COC7.creditRatingSkillName) === item.name) {
-              const creditValue = (item.value || 0) - (item.data.data.adjustments?.experience || 0)
+              const creditValue =
+                (item.value || 0) -
+                (item.data.data.adjustments?.experience || 0)
               if (
                 creditValue >
                   Number(this.actor.occupation.data.data.creditRating.max) ||
