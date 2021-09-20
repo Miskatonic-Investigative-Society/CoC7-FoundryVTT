@@ -1121,6 +1121,7 @@ export class CoCActor extends Actor {
             for (const created of allCreated) {
               output.push(created)
             }
+            Hooks.call('archetypeFinishedCoC7')
           }
 
           break
