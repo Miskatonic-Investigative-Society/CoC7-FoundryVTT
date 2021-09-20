@@ -155,7 +155,9 @@
       </div>
       <div class="tab" data-group="primary" data-tab="spells">
         <div class="spells">
-          <label>{{localize "CoC7.DragSpell"}}</label>
+          {{#if spellListEmpty}}
+            <label>{{localize "CoC7.DragSpell"}}</label>
+          {{/if}}
           <ul>
             {{#each data.spells as |spell key|}}
               <li class="spell" data-index="{{@index}}" data-id="{{spell._id}}">
