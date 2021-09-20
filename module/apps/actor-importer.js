@@ -332,7 +332,16 @@ export class CoC7ActorImporter {
 
   async updateActorData (pc, npc) {
     let updateData = {}
-    for (const key of ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu']) {
+    for (const key of [
+      'str',
+      'con',
+      'siz',
+      'dex',
+      'app',
+      'int',
+      'pow',
+      'edu'
+    ]) {
       updateData[`data.characteristics.${key}.value`] = Number(pc[key])
     }
     await npc.update(updateData)
@@ -549,7 +558,16 @@ export class CoC7ActorImporter {
    */
   needsConversion (npc) {
     let needsConversionResult = true
-    for (const key of ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu']) {
+    for (const key of [
+      'str',
+      'con',
+      'siz',
+      'dex',
+      'app',
+      'int',
+      'pow',
+      'edu'
+    ]) {
       if (npc[key] > 30) {
         needsConversionResult = false
       }

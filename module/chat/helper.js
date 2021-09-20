@@ -253,11 +253,16 @@ export class chatHelper {
   static getDistance (startToken, endToken) {
     // startToken.updateSource();
     // canvas.sight.initializeTokens();
-    if (typeof endToken.center === 'undefined' && typeof endToken.data.document?.id !== 'undefined') {
+    if (
+      typeof endToken.center === 'undefined' &&
+      typeof endToken.data.document?.id !== 'undefined'
+    ) {
       if (startToken.scene?.id || false) {
         const scene = game.scenes.get(startToken.scene.id)
         if (typeof scene?.tokens !== 'undefined') {
-          const tokens = scene?.tokens.filter(token => token.actor.id === endToken.data.document.id).map(token => token.object)
+          const tokens = scene?.tokens
+            .filter(token => token.actor.id === endToken.data.document.id)
+            .map(token => token.object)
           if (tokens.length === 1) {
             endToken = tokens[0]
           }
@@ -286,11 +291,17 @@ export class chatHelper {
         unit: canvas.scene.data.gridUnits
       }
       if (game.settings.get('CoC7', 'distanceElevation')) {
-        const elevation = Math.abs((startToken.data.elevation || 0) - (endToken.data.elevation || 0))
-        distance.value = Math.sqrt(distance.value * distance.value + elevation * elevation)
+        const elevation = Math.abs(
+          (startToken.data.elevation || 0) - (endToken.data.elevation || 0)
+        )
+        distance.value = Math.sqrt(
+          distance.value * distance.value + elevation * elevation
+        )
       }
     } else {
-      ui.notifications.warn(game.i18n.localize('CoC7.MessageDistanceCalculationFailure'))
+      ui.notifications.warn(
+        game.i18n.localize('CoC7.MessageDistanceCalculationFailure')
+      )
     }
     return distance
   }

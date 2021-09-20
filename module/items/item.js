@@ -565,7 +565,7 @@ export class CoC7Item extends Item {
       }
       return value
     }
-    return (!isNaN(parseInt(data.data.base)) ? parseInt(data.data.base) : null)
+    return !isNaN(parseInt(data.data.base)) ? parseInt(data.data.base) : null
   }
 
   get _base () {

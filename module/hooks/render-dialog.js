@@ -5,13 +5,19 @@ export function listen () {
     if (form.is('#entity-create') && form.find('select').length !== 0) {
       const entityCreateSelectTag = form.find("[name='type']")
       const entitySortedList = []
-      const showExperimental = !!game.settings.get('CoC7', 'experimentalFeatures')
+      const showExperimental = !!game.settings.get(
+        'CoC7',
+        'experimentalFeatures'
+      )
       entityCreateSelectTag.children().each((o, entityOption) => {
         const key = entityOption.textContent?.capitalize()
         if (game.i18n.has(`CoC7.Entities.${key}`)) {
           entityOption.textContent = game.i18n.localize(`CoC7.Entities.${key}`)
         }
-        if (showExperimental || !['chase', 'container', 'vehicle'].includes(entityOption.value)) {
+        if (
+          showExperimental ||
+          !['chase', 'container', 'vehicle'].includes(entityOption.value)
+        ) {
           entitySortedList.push(entityOption)
         }
       })

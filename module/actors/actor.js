@@ -237,15 +237,15 @@ export class CoCActor extends Actor {
     }
     let boutDurationText = this.isInABoutOfMadness
       ? boutRealTime
-        ? `${duration} ${game.i18n.localize('CoC7.rounds')}`
-        : `${duration} ${game.i18n.localize('CoC7.hours')}`
+          ? `${duration} ${game.i18n.localize('CoC7.rounds')}`
+          : `${duration} ${game.i18n.localize('CoC7.hours')}`
       : null
     const insanityDurationText = insaneDuration
       ? this.isInsane
-        ? indefiniteInstanity
-          ? null
-          : `${insaneDuration} ${game.i18n.localize('CoC7.hours')}`
-        : null
+          ? indefiniteInstanity
+              ? null
+              : `${insaneDuration} ${game.i18n.localize('CoC7.hours')}`
+          : null
       : null
     if (this.isInsane && !insanityDurationText && !indefiniteInstanity) {
       indefiniteInstanity = true
@@ -272,8 +272,8 @@ export class CoCActor extends Actor {
         durationText: insanityDurationText || '',
         hint: this.isInsane
           ? indefiniteInstanity
-            ? game.i18n.localize('CoC7.IndefiniteInsanity')
-            : `${game.i18n.localize(
+              ? game.i18n.localize('CoC7.IndefiniteInsanity')
+              : `${game.i18n.localize(
                 'CoC7.TemporaryInsanity'
               )} ${insanityDurationText || ''}`
           : game.i18n.localize('CoC7.NotInsane')
@@ -993,7 +993,16 @@ export class CoCActor extends Actor {
             const rolled = await CharacRollDialog.create(data.data)
             if (rolled) {
               const updateData = {}
-              for (const key of ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow', 'edu']) {
+              for (const key of [
+                'str',
+                'con',
+                'siz',
+                'dex',
+                'app',
+                'int',
+                'pow',
+                'edu'
+              ]) {
                 if (data.data.characteristics.values[key]) {
                   updateData[`data.characteristics.${key}.value`] =
                     data.data.characteristics.values[key]
@@ -1149,7 +1158,9 @@ export class CoCActor extends Actor {
             pointsDialogData.characteristics = data.data.occupationSkillPoints
             let total = 0
             let optionalChar = false
-            for (const entry of Object.entries(data.data.occupationSkillPoints)) {
+            for (const entry of Object.entries(
+              data.data.occupationSkillPoints
+            )) {
               const [key, value] = entry
               const char = this.getCharacteristic(key)
               pointsDialogData.characteristics[key].name = char.label
@@ -2094,7 +2105,9 @@ export class CoCActor extends Actor {
   get occupationPoints () {
     if (!this.occupation) return 0
     let points = 0
-    for (const entry of Object.entries(this.occupation.data.data.occupationSkillPoints)) {
+    for (const entry of Object.entries(
+      this.occupation.data.data.occupationSkillPoints
+    )) {
       const [key, value] = entry
       const char = this.getCharacteristic(key)
       if (value.selected) {

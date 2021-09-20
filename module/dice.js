@@ -64,7 +64,13 @@ export class CoC7Dice {
       }
       ChatMessage.applyRollMode(chatData, game.settings.get('core', 'rollMode'))
 
-      await game.dice3d.showForRoll(roll, game.user, syncDice, chatData.whisper, chatData.blind)
+      await game.dice3d.showForRoll(
+        roll,
+        game.user,
+        syncDice,
+        chatData.whisper,
+        chatData.blind
+      )
     }
   }
 }
