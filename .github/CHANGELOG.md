@@ -12,7 +12,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
   - Science (Engineering) - add skill.
   - Science (Mathematics) - set base skill to 10%.
 - Update to french localization, thanks to @vonv.
-- Update to japanese localization, thanks to @Asami#8627.
+- Update to japanese localization, thanks to `@Asami#8627`.
 
 ## Version 0.6.8:
 
