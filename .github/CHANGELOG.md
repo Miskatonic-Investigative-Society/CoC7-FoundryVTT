@@ -3,6 +3,7 @@
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
 
 - Fix JavaScript Error "Call of Cthulhu 7th Edition (Unofficial): Error detected in system. (See JS Console)" if libWrapper module is active
+- Update updater to check module compendiums for Actors and Items
 - Fixes to compendium packs
   - Demolitions - set base skill to 1%
   - Diving - replace icon and mark as uncommon
