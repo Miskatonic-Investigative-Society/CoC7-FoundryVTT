@@ -1,8 +1,8 @@
-## Known Issues in 0.6.8
+## Known Issues in 0.6.8:
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
 
-- Fix JavaScript Error "Call of Cthhulhu 7th Edition (Unofficial): Error detected in system. (See JS Console)" if libWrapper module is active
+- Fix JavaScript Error "Call of Cthulhu 7th Edition (Unofficial): Error detected in system. (See JS Console)" if libWrapper module is active
 - Fixes to compendium packs
   - Demolitions - set base skill to 1%
   - Diving - replace icon and mark as uncommon
