@@ -404,12 +404,12 @@
   "CoC7.EditItem": "Éditer objet",
   "CoC7.DeleteItem": "Supprimer objet",
   "CoC7.TradeItem": "Vendre / ranger Objet",
-  
+
   "CoC7.NewBookName": "nouvel ouvrage",
   "CoC7.AddBook": "Ajouter un ouvrage",
   "CoC7.NewSpellName": "nouveau sort",
   "CoC7.AddSpell": "Ajouter un sort",
-  
+
   "CoC7.AddWeapon": "Ajouter une arme",
   "CoC7.NewWeaponName": "Nouvelle arme",
   "CoC7.EditWeapon": "Éditer l'arme",
@@ -720,7 +720,7 @@
   "CoC7.MessageTitleSelectUserToGiveTo": "Donner un objet à un autre personnage",
   "CoC7.MessageSelectUserToGiveTo": "A qui voulez-vous donner cet objet ?",
   "CoC7.MessageDistanceCalculationFailure": "Impossible de calculer la distance séparant les tokens, utiliser la fiche du token du personnage SVP.",
-  
+
   "SETTINGS.TitleRules": "Règles",
   "SETTINGS.TitleInitiative": "Paramètres d'initiative",
   "SETTINGS.TitleRoll": "Paramètres de jets de dés",
@@ -822,7 +822,7 @@
   "SETTINGS.OneBlockBackStory": "Historique en un bloc",
   "SETTINGS.OneBlockBackStoryHint": "Transformer l'historique en un bloc éditable unique, mais vous pouvez y formater/ajouter des liens",
   "SETTINGS.EnableStatusIcons": "Active les icônes d'état",
-  "SETTINGS.EnableStatusIconsHint": "Définit si les icônes d'état de combat et de santé mentale sont affichées dans les tokens."
+  "SETTINGS.EnableStatusIconsHint": "Définit si les icônes d'état de combat et de santé mentale sont affichées dans les tokens.",
   "SETTINGS.ShowExperimentalFeatures": "Montrer les Fonctionnalités Expérimentales",
   "SETTINGS.ShowExperimentalFeaturesHint": "Votre monde ne sera plus utilisable dans le futur si vous utilisez ces fonctionnalités. Seulement pour le test, N'utilisez PAS ceci pour vos parties",
   "CoC7.ExperimentalFeaturesWarning": "Cette fonctionnalité est en développement, il n'est pas conseillé de l'utiliser pour vos parties.",
