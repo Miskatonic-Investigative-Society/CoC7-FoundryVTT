@@ -1,16 +1,16 @@
-## Known Issues in 0.6.8:
+## Version 0.6.9:
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
 
-- Fix JavaScript Error "Call of Cthulhu 7th Edition (Unofficial): Error detected in system. (See JS Console)" if libWrapper module is active
-- Update updater to check module compendiums for Actors and Items
-- Fixes to compendium packs
-  - Demolitions - set base skill to 1%
-  - Diving - replace icon and mark as uncommon
-  - Language (Other) - remove skill use Language (Any) instead
-  - Lore (Any) - add skill
-  - Science (Engineering) - add skill
-  - Science (Mathematics) - set base skill to 10%
+- Fix JavaScript Error "Call of Cthulhu 7th Edition (Unofficial): Error detected in system. (See JS Console)" if libWrapper module is active.
+- Update updater to check module compendiums for Actors and Items.
+- Fixes to compendium packs.
+  - Demolitions - set base skill to 1%.
+  - Diving - replace icon and mark as uncommon.
+  - Language (Other) - remove skill use Language (Any) instead.
+  - Lore (Any) - add skill.
+  - Science (Engineering) - add skill.
+  - Science (Mathematics) - set base skill to 10%.
 
 ## Version 0.6.8:
 
