@@ -1,3 +1,9 @@
+## Changes coming in a future release:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+
+- Update updater to check module compendiums for actors and items when modules version module numbers are new or changed
+
 ## Version 0.6.9:
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.

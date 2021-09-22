@@ -436,8 +436,13 @@ export function registerSettings () {
     name: 'System update version',
     scope: 'world',
     config: false,
-    type: Number,
-    default: '0.2'
+    type: String,
+    default: game.system.data.version
+  })
+  game.settings.register('CoC7', 'systemUpdatedModuleVersion', {
+    scope: 'world',
+    config: false,
+    default: {}
   })
   game.settings.register('CoC7', 'xpEnabled', {
     name: 'Enable XP gain',
