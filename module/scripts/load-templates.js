@@ -26,7 +26,8 @@ export const preloadHandlebarsTemplates = async function () {
     'systems/CoC7/templates/actors/character-sheet-v2.html',
     'systems/CoC7/templates/actors/character/summary.html',
 
-    'systems/CoC7/templates/items/book/details.html'
+    'systems/CoC7/templates/items/book/details.html',
+    'systems/CoC7/templates/items/spell/details.html'
   ]
 
   /** Load the template parts */

@@ -26,8 +26,6 @@ export class CoC7Item extends Item {
         data.img = 'systems/CoC7/assets/icons/running-solid.svg'
       } else if (data.type === 'skill') {
         data.img = 'systems/CoC7/assets/icons/skills.svg'
-      } else if (data.type === 'spell') {
-        data.img = 'systems/CoC7/assets/icons/pentagram-rose.svg'
       } else if (data.type === 'status') {
         data.img = 'icons/svg/aura.svg'
       } else if (data.type === 'weapon') {
