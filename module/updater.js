@@ -10,7 +10,7 @@ export class Updater {
     for (const pack of game.packs) {
       if (
         !['CoC7', 'world'].includes(pack.metadata.package) &&
-        ['Actor', 'Item', 'Macro', 'RollTable'].includes(pack.metadata.entity)
+        ['Actor', 'Item'].includes(pack.metadata.entity)
       ) {
         if (!Object.prototype.hasOwnProperty.call(this.currentModules, pack.metadata.package)) {
           // Only check each package once
