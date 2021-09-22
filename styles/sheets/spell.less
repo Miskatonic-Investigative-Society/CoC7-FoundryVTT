@@ -1,4 +1,4 @@
-.coc7.item.book {
+.coc7.item.spell {
   form {
     background: var(--other-sheet-bg);
     background-repeat: repeat;
@@ -18,12 +18,11 @@
   .container {
     display: grid;
     grid-template-columns: 0.7fr 1.5fr 0.8fr;
-    grid-template-rows: 1fr 0.2fr 0.2fr 2.6fr;
+    grid-template-rows: 1fr 0.2fr 2.8fr;
     gap: 0.3rem;
     grid-auto-flow: row;
     grid-template-areas:
       "portrait information aside"
-      "progress progress progress"
       "navigation navigation navigation"
       "body body body";
     padding: 0.15rem;
@@ -94,78 +93,6 @@
         span {
           max-width: fit-content;
         }
-        #attempt-initial-reading {
-          align-items: center;
-          background: rgba(0, 0, 0, 0.05);
-          border: 0.065rem solid var(--main-sheet-front-color);
-          border-radius: 0.25rem;
-          padding: 0.3rem;
-          &:focus,
-          &:hover {
-            background: var(--main-sheet-front-color);
-            label {
-              color: whitesmoke;
-            }
-          }
-        }
-      }
-    }
-    .progress {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: 0.3rem;
-      grid-area: progress;
-      i {
-        line-height: 1.8;
-      }
-      label {
-        flex: 1;
-        line-height: 1.8;
-        max-width: fit-content;
-        padding: 0 0.03rem;
-      }
-      progress {
-        background: none;
-        border-radius: 0.25rem;
-        border: 0.065rem solid var(--main-sheet-front-color);
-        flex: 1;
-        height: 1.5em;
-        margin-top: 0.125rem;
-        position: relative;
-        width: 100%;
-        &:before {
-          color: var(--main-sheet-front-color);
-          content: attr(data-label);
-          font-weight: bold;
-          left: 0;
-          padding: 0.125rem;
-          position: absolute;
-          right: 0;
-          text-align: center;
-        }
-      }
-      progress .value {
-        background-color: goldenrod;
-        border-radius: 0.25rem;
-        display: inline-block;
-        height: 100%;
-      }
-      progress::-webkit-progress-bar {
-        background: none;
-        border-radius: 10px;
-      }
-      progress::-webkit-progress-value {
-        background: goldenrod;
-        border-radius: 0.25rem;
-      }
-      progress::-moz-progress-bar {
-        background: none;
-        border-radius: 0.25rem;
-      }
-      progress::-moz-progress-value {
-        background: goldenrod;
-        border-radius: 0.25rem;
       }
     }
     nav {

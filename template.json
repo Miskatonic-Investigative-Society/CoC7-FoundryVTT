@@ -541,36 +541,33 @@
       "flags": {}
     },
     "spell": {
-      "source": null,
-      "castingTime": null,
-      "cost": {
-        "mp": null,
-        "san": null,
-        "pow": null,
-        "hp": null,
-        "other": []
+      "alternativeNames": [],
+      "castingTime": 0,
+      "costs": {
+        "hitPoints": 0,
+        "magicPoints": 0,
+        "others": [],
+        "sanity": 0,
+        "power": 0
       },
       "description": {
-        "value": "",
         "chat": "",
-        "unidentified": "",
-        "notes": "",
-        "keeper": ""
+        "value": ""
       },
+      "effects": [],
+      "keeperNotes": "",
+      "learned": false,
+      "source": "",
       "type": {
-        "call": false,
-        "dismiss": false,
-        "contact": false,
-        "summon": false,
         "bind": false,
+        "call": false,
+        "combat": false,
+        "contact": false,
+        "dismiss": false,
         "enchantment": false,
         "gate": false,
-        "combat": false
-      },
-      "alternativeNames": [],
-      "effects": [],
-      "properties": {},
-      "flags": {}
+        "summon": false
+      }
     },
     "book": {
       "author": "",

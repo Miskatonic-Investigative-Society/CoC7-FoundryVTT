@@ -347,9 +347,9 @@ export class CoC7ActorSheet extends ActorSheet {
                     .replace(/[\u0300-\u036f]/g, '')
                     .toLowerCase()
                 : a.name
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')
-                    .toLowerCase()
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase()
             lcb =
               b.data.properties.special &&
               typeof b.data.specialization !== 'undefined'
@@ -362,9 +362,9 @@ export class CoC7ActorSheet extends ActorSheet {
                     .replace(/[\u0300-\u036f]/g, '')
                     .toLowerCase()
                 : b.name
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')
-                    .toLowerCase()
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase()
           } else {
             lca = a.name
               .normalize('NFD')
@@ -396,9 +396,9 @@ export class CoC7ActorSheet extends ActorSheet {
                   .replace(/[\u0300-\u036f]/g, '')
                   .toLowerCase()
               : a.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase()
             lcb = b.data.properties.special
               ? b.data.specialization
                   .normalize('NFD')
@@ -409,9 +409,9 @@ export class CoC7ActorSheet extends ActorSheet {
                   .replace(/[\u0300-\u036f]/g, '')
                   .toLowerCase()
               : b.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase()
           } else {
             lca = a.name
               .normalize('NFD')
@@ -784,11 +784,8 @@ export class CoC7ActorSheet extends ActorSheet {
     html.find('.item-popup').click(this._onItemPopup.bind(this))
 
     // Update Inventory Item
-    html.find('.item-edit').click(ev => {
-      const li = $(ev.currentTarget).parents('.item')
-      const item = this.actor.items.get(li.data('itemId'))
-      item.sheet.render(true)
-    })
+    html.find('.show-detail').dblclick(event => this._onRenderItemSheet(event))
+    html.find('.item-edit').click(event => this._onRenderItemSheet(event))
 
     // Delete Inventory Item
     html.find('.item-delete').click(async ev => {
@@ -925,6 +922,12 @@ export class CoC7ActorSheet extends ActorSheet {
       if (event.shiftKey) ui.notifications.info('Shift cliecked')
       // SanCheckCard.create( this.actor.actorKey, {min:'1D10',max:'1D12'}, {fastForward:event.shiftKey});
     })
+  }
+
+  _onRenderItemSheet (event) {
+    const li = $(event.currentTarget).parents('.item')
+    const item = this.actor.items.get(li.data('itemId'))
+    item.sheet.render(true)
   }
 
   async _onTradeItem (event) {
