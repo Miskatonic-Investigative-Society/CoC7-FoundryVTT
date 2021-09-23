@@ -704,6 +704,7 @@
 
   "CoC7.Migrate.Title": "Update required",
   "CoC7.Migrate.Message": "<p>Your world requires an update to run version {version}.</p><p>Please backup your world folder before starting the upgrade.</p><p>If you do not update your world the system will not work correctly.</p><p>The world may be restarted when completed.</p>",
+  "CoC7.Migrate.WithModulesMessage": "<p>Your world or modules may require an update to run version {version}.</p><p>Please backup your world and module folders listed below before starting the upgrade.</p><p>If you do not update your world the system will not work correctly.</p><p>The following modules contain actors or items so will also be checked.</p>{modules}<p>The world may be restarted when completed.</p>",
   "CoC7.Migrate.GMRequired": "<p>Your world requires an update to run version {version}.</p><p>Please wait for your GM to update the system then refresh (F5) this page.</p>",
   "CoC7.Migrate.RestartRequired": "<p>Your world will now restart to enable these changes</p>",
   "CoC7.Migrate.ButtonUpdate": "Update",
