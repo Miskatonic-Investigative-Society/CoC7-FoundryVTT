@@ -1,5 +1,5 @@
 /* global ActorDirectory, game */
-import { CoC7ActorImporterDialog } from './apps/actor-importer-dialog.js'
+import { CoC7ActorImporterDialog } from '../apps/actor-importer-dialog.js'
 
 export class CoC7ActorDirectory extends ActorDirectory {
   activateListeners (html) {

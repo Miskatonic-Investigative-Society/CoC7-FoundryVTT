@@ -1,0 +1,74 @@
+#tutorial-message {
+  position: fixed;
+  width: 60%;
+  top: 60px;
+  left: 20%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 160;
+  div {
+    display: inline-block;
+  }
+  i.close {
+    cursor: pointer;
+  }
+}
+#tutorial-pointer {
+  font-size: 40px;
+  color: #f33;
+  position: fixed;
+  left: -100px;
+  top: -100px;
+  z-index: 160;
+  animation: bounce-up 1s infinite alternate;
+  -webkit-animation: bounce-up 1s ease infinite alternate;
+  display: none;
+  &.fa-arrow-down {
+    animation: bounce-down 1s infinite alternate;
+    -webkit-animation: bounce-down 1s ease infinite alternate;
+  }
+  &.fa-arrow-right {
+    animation: bounce-right 1s infinite alternate;
+    -webkit-animation: bounce-right 1s ease infinite alternate;
+  }
+  &.fa-arrow-left {
+    animation: bounce-left 1s infinite alternate;
+    -webkit-animation: bounce-left 1s ease infinite alternate;
+  }
+}
+.tutorial-outline {
+  border: 3px solid #f33 !important;
+}
+@keyframes bounce-up {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(10px);
+  }
+}
+@keyframes bounce-right {
+  from {
+    transform: translateX(0px);
+  }
+  to {
+    transform: translateX(-10px);
+  }
+}
+@keyframes bounce-down {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-10px);
+  }
+}
+@keyframes bounce-left {
+  from {
+    transform: translateX(0px);
+  }
+  to {
+    transform: translateX(10px);
+  }
+}

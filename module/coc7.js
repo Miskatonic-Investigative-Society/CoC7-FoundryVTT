@@ -14,8 +14,9 @@ import { OpposedCheckCard } from './chat/cards/opposed-roll.js'
 import { CombinedCheckCard } from './chat/cards/combined-roll.js'
 import { DamageCard } from './chat/cards/damage.js'
 import { CoC7Canvas } from './apps/canvas.js'
-import { CoC7CompendiumDirectory } from './compendium-directory.js'
-import { CoC7ActorDirectory } from './actor-directory.js'
+import { CoC7ActorDirectory } from './directories/actor-directory.js'
+import { CoC7CompendiumDirectory } from './directories/compendium-directory.js'
+import { CoC7SettingsDirectory } from './directories/setting-directory.js'
 import { CoC7Hooks } from './hooks/index.js'
 import * as DiceBot from './dicebot.js'
 import '../styles/system/index.less'
@@ -428,5 +429,6 @@ function _onLeftClick (event) {
   return event.shiftKey
 }
 
-CONFIG.ui.compendium = CoC7CompendiumDirectory
 CONFIG.ui.actors = CoC7ActorDirectory
+CONFIG.ui.compendium = CoC7CompendiumDirectory
+CONFIG.ui.settings = CoC7SettingsDirectory
