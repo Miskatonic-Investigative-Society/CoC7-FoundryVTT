@@ -1,7 +1,7 @@
 /* global CONFIG, duplicate, game, getProperty, Item, Roll, TextEditor, Token, ui */
-
 import { CoC7Parser } from '../apps/parser.js'
 import { COC7 } from '../config.js'
+import { CoC7Utilities } from '../utilities.js'
 
 /**
  * Override and extend the basic :class:`Item` implementation
@@ -203,7 +203,7 @@ export class CoC7Item extends Item {
     } else {
       const propName = `data.properties.${propertyId}`
       const propValue = !this.data.data.properties[propertyId]
-      this.update({ [propName]: propValue }).then(item => {
+      await this.update({ [propName]: propValue }).then(item => {
         return item
       })
     }
@@ -226,10 +226,7 @@ export class CoC7Item extends Item {
       if (this.isOwned && super.name === this.data.name) {
         const re = new RegExp(
           '^' +
-            this.data.data.specialization.replace(
-              /[-[\]/{}()*+?.\\^$|]/g,
-              '\\$&'
-            ) +
+            CoC7Utilities.quoteRegExp(this.data.data.specialization) +
             ' \\((.+)\\)$'
         )
         const match = re.exec(this.data.name)
@@ -268,7 +265,7 @@ export class CoC7Item extends Item {
   static getNameWithoutSpec (item) {
     if (item instanceof CoC7Item) {
       if (item.data.data?.properties?.special) {
-        const specNameRegex = new RegExp(item.data.data.specialization, 'ig')
+        const specNameRegex = new RegExp(CoC7Utilities.quoteRegExp(item.data.data.specialization), 'ig')
         const filteredName = item.name
           .replace(specNameRegex, '')
           .trim()
@@ -277,7 +274,7 @@ export class CoC7Item extends Item {
       }
     } else {
       if (item.data.properties?.special) {
-        const specNameRegex = new RegExp(item.data.specialization, 'ig')
+        const specNameRegex = new RegExp(CoC7Utilities.quoteRegExp(item.data.specialization), 'ig')
         const filteredName = item.name
           .replace(specNameRegex, '')
           .trim()
@@ -293,17 +290,11 @@ export class CoC7Item extends Item {
       if (item.type !== 'skill' || !item.data.data.properties?.special) {
         return false
       }
-      return (
-        CoC7Item.getNameWithoutSpec(item).toLowerCase() ===
-        game.i18n.localize('CoC7.AnySpecName').toLowerCase()
-      )
+      return [game.i18n.localize('CoC7.AnySpecName').toLowerCase(), 'any'].includes(CoC7Item.getNameWithoutSpec(item).toLowerCase())
     } else {
       // Assume it's data only
       if (item.type !== 'skill' || !item.data.properties?.special) return false
-      return (
-        CoC7Item.getNameWithoutSpec(item).toLowerCase() ===
-        game.i18n.localize('CoC7.AnySpecName').toLowerCase()
-      )
+      return [game.i18n.localize('CoC7.AnySpecName').toLowerCase(), 'any'].includes(CoC7Item.getNameWithoutSpec(item).toLowerCase())
     }
   }
 

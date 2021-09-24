@@ -1,4 +1,4 @@
-/* global Actor, CONFIG, Folder, game, ui */
+/* global Actor, CONFIG, duplicate, Folder, game, ui */
 
 import { COC7 } from '../config.js'
 import { CoC7ActorImporterRegExp } from './actor-importer-regexp.js'
@@ -482,6 +482,7 @@ export class CoC7ActorImporter {
 
   async addTheSkills (pc, npc) {
     if (pc.skills !== null) {
+      const processed = []
       for (const skill of pc.skills) {
         const existingSkill = await game.items.find(
           i => i.data.type === 'skill' && i.data.name === skill.name
@@ -489,14 +490,7 @@ export class CoC7ActorImporter {
         if (existingSkill !== undefined) {
           const clonedSkill = existingSkill.toObject()
           clonedSkill.data.base = skill.value
-          await npc
-            .createEmbeddedDocuments('Item', [clonedSkill])
-            .then(created => {
-              if (CONFIG.debug.CoC7Importer) {
-                console.debug(created)
-              }
-            })
-          // created.data.value = skill.value && console.debug(created))
+          processed.push(duplicate(clonedSkill))
         } else {
           await npc.createSkill(skill.name, skill.value).then(created => {
             if (CONFIG.debug.CoC7Importer) {
@@ -504,6 +498,15 @@ export class CoC7ActorImporter {
             }
           })
         }
+      }
+      if (processed.length > 0) {
+        await npc
+          .createEmbeddedDocuments('Item', processed)
+          .then(created => {
+            if (CONFIG.debug.CoC7Importer) {
+              console.debug(created)
+            }
+          })
       }
     }
   }
