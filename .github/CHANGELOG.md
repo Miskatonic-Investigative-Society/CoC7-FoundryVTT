@@ -2,6 +2,7 @@
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
 
+- Fix "The key ? does not exist in the EmbeddedCollection Collection" dragging an English setup onto a translated Actor
 - Update updater to check module compendiums for actors and items when modules version module numbers are new or changed
 
 ## Version 0.6.9:
