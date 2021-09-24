@@ -45,7 +45,7 @@ export class CoC7Tutorial {
     }
     if (tutorial !== '' && typeof this.tutorials[tutorial] !== 'undefined') {
       if (typeof this.tutorials[tutorial]?.requirements !== 'undefined') {
-        if (await !this.tutorials[tutorial]?.requirements()) {
+        if (!(await this.tutorials[tutorial].requirements())) {
           return false
         }
       }
