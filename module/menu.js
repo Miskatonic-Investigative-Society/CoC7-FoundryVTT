@@ -141,7 +141,7 @@ export class CoC7Menu {
         return s
       })
 
-    Hooks.call('renderCoC7SceneMenu', controls[0].css.indexOf('active') !== -1)
+    Hooks.call('renderSceneMenuCoC7', controls[0].css.indexOf('active') !== -1)
 
     // Return data for rendering
     return {
