@@ -347,9 +347,9 @@ export class CoC7ActorSheet extends ActorSheet {
                     .replace(/[\u0300-\u036f]/g, '')
                     .toLowerCase()
                 : a.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase()
             lcb =
               b.data.properties.special &&
               typeof b.data.specialization !== 'undefined'
@@ -362,9 +362,9 @@ export class CoC7ActorSheet extends ActorSheet {
                     .replace(/[\u0300-\u036f]/g, '')
                     .toLowerCase()
                 : b.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase()
           } else {
             lca = a.name
               .normalize('NFD')
@@ -396,9 +396,9 @@ export class CoC7ActorSheet extends ActorSheet {
                   .replace(/[\u0300-\u036f]/g, '')
                   .toLowerCase()
               : a.name
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLowerCase()
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase()
             lcb = b.data.properties.special
               ? b.data.specialization
                   .normalize('NFD')
@@ -409,9 +409,9 @@ export class CoC7ActorSheet extends ActorSheet {
                   .replace(/[\u0300-\u036f]/g, '')
                   .toLowerCase()
               : b.name
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLowerCase()
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase()
           } else {
             lca = a.name
               .normalize('NFD')
