@@ -669,4 +669,57 @@ export class CoC7Utilities {
       ui.notifications.error(game.i18n.localize('CoC7.UnableToCopyToClipboard'))
     }
   }
+
+  static quoteRegExp (string) {
+    // https://bitbucket.org/cggaertner/js-hacks/raw/master/quote.js
+    const len = string.length
+    let qString = ''
+
+    for (let current, i = 0; i < len; ++i) {
+      current = string.charAt(i)
+
+      if (current >= ' ' && current <= '~') {
+        if (current === '\\' || current === "'") {
+          qString += '\\'
+        }
+
+        qString += current
+      } else {
+        switch (current) {
+          case '\b':
+            qString += '\\b'
+            break
+
+          case '\f':
+            qString += '\\f'
+            break
+
+          case '\n':
+            qString += '\\n'
+            break
+
+          case '\r':
+            qString += '\\r'
+            break
+
+          case '\t':
+            qString += '\\t'
+            break
+
+          case '\v':
+            qString += '\\v'
+            break
+
+          default:
+            qString += '\\u'
+            current = current.charCodeAt(0).toString(16)
+            for (let j = 4; --j >= current.length; qString += '0');
+            qString += current
+        }
+      }
+    }
+
+    qString = qString.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&')
+    return qString
+  }
 }

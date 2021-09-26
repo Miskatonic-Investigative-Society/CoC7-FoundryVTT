@@ -325,10 +325,7 @@ export class CoCActor extends Actor {
             )}`
             result.name = item.name
             delete item.data._id
-            /** MODIF 0.8.x **/
-            // await this.createOwnedItem( item.data);
             await this.createEmbeddedDocuments('Item', [item.data])
-            /*****************/
           } else {
             ui.notifications.error(
               game.i18n.localize('CoC7.MessageBoutOfMadnessItemNotFound')
@@ -783,10 +780,11 @@ export class CoCActor extends Actor {
    * @param {*} options
    */
   async createEmbeddedDocuments (embeddedName, dataArray, options) {
-    const output = []
-    let allCreated = []
+    const processedDataArray = []
     let baseValue = 0
     let baseCalculated = 0
+    let archetype = false
+    let occupation = false
     for (const data of dataArray) {
       switch (data.type) {
         case 'skill':
@@ -877,14 +875,8 @@ export class CoCActor extends Actor {
           if (String(baseValue) !== String(baseCalculated)) {
             data.data.base = baseCalculated
           }
-          allCreated = await super.createEmbeddedDocuments(
-            embeddedName,
-            [data],
-            options
-          )
-          for (const created of allCreated) {
-            output.push(created)
-          }
+
+          processedDataArray.push(duplicate(data))
           break
 
         case 'weapon': {
@@ -920,14 +912,7 @@ export class CoCActor extends Actor {
             } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
           }
 
-          allCreated = await super.createEmbeddedDocuments(
-            embeddedName,
-            [duplicate(data)],
-            options
-          )
-          for (const created of allCreated) {
-            output.push(created)
-          }
+          processedDataArray.push(duplicate(data))
           break
         }
 
@@ -1117,20 +1102,8 @@ export class CoCActor extends Actor {
             // Add all skills
             await this.addUniqueItems(data.data.skills, 'archetype')
 
-            const allCreated = await super.createEmbeddedDocuments(
-              embeddedName,
-              [data],
-              options
-            )
-            // setting points
-            await this.update({
-              'data.development.archetype': this.archetypePoints
-            })
-
-            for (const created of allCreated) {
-              output.push(created)
-            }
-            Hooks.call('archetypeFinishedCoC7')
+            processedDataArray.push(duplicate(data))
+            archetype = true
           }
 
           break
@@ -1329,36 +1302,41 @@ export class CoCActor extends Actor {
               'data.adjustments.occupation': Number(data.data.creditRating.min)
             })
 
-            allCreated = await super.createEmbeddedDocuments(
-              embeddedName,
-              [data],
-              options
-            )
-            // setting points
-            await this.update({
-              'data.development.occupation': this.occupationPoints,
-              'data.development.personal': this.personalPoints
-            })
-
-            for (const created of allCreated) {
-              output.push(created)
-            }
+            processedDataArray.push(duplicate(data))
+            occupation = true
           }
-          Hooks.call('occupationFinishedCoC7')
           break
 
         default:
-          allCreated = await super.createEmbeddedDocuments(
-            embeddedName,
-            [data],
-            options
-          )
-          for (const created of allCreated) {
-            output.push(created)
-          }
+          processedDataArray.push(duplicate(data))
       }
     }
-    return output
+    if (processedDataArray.length === 0) {
+      return []
+    }
+    const processed = await super.createEmbeddedDocuments(
+      embeddedName,
+      processedDataArray,
+      options
+    )
+
+    if (archetype) {
+      // setting points
+      await this.update({
+        'data.development.archetype': this.archetypePoints
+      })
+      Hooks.call('archetypeFinishedCoC7')
+    }
+    if (occupation) {
+      // setting points
+      await this.update({
+        'data.development.occupation': this.occupationPoints,
+        'data.development.personal': this.personalPoints
+      })
+      Hooks.call('occupationFinishedCoC7')
+    }
+
+    return processed
   }
 
   // getSkillIdByName( skillName){
@@ -1611,13 +1589,12 @@ export class CoCActor extends Actor {
   }
 
   async addUniqueItems (skillList, flag = null) {
+    const processed = []
     for (const skill of skillList) {
       if (CoC7Item.isAnySpec(skill)) {
         if (!skill.data.flags) skill.data.flags = {}
         if (flag) skill.data.flags[flag] = true
-        await this.createEmbeddedDocuments('Item', [skill], {
-          renderSheet: false
-        })
+        processed.push(duplicate(skill))
       } else {
         const itemId = this.getItemIdByName(skill.name)
         if (!itemId) {
@@ -1625,34 +1602,34 @@ export class CoCActor extends Actor {
             if (!skill.data.flags) skill.data.flags = {}
             skill.data.flags[flag] = true
           }
-          await this.createEmbeddedDocuments('Item', [skill], {
-            renderSheet: false
-          })
+          processed.push(duplicate(skill))
         } else if (flag) {
           const item = this.items.get(itemId)
           await item.setItemFlag(flag)
         }
       }
     }
+    if (processed.length === 0) {
+      return
+    }
+    await this.createEmbeddedDocuments('Item', processed, {
+      renderSheet: false
+    })
   }
 
   async addItems (itemList, flag = null) {
-    const output = []
+    const processed = []
     for (const item of itemList) {
       if (flag) {
         if (!item.data.flags) item.data.flags = {}
         item.data.flags[flag] = true
       }
-      /** MODIF 0.8.x **/
-      // await this.createOwnedItem( item, {renderSheet:false});
-      output.push(
-        await this.createEmbeddedDocuments('Item', [item], {
-          renderSheet: false
-        })
-      )
-      /*****************/
+      processed.push(duplicate(item))
     }
-    return output
+    if (processed.length === 0) {
+      return
+    }
+    return await this.createEmbeddedDocuments('Item', processed, { renderSheet: false })
   }
 
   async addUniqueItem (skill, flag = null) {
@@ -1662,12 +1639,9 @@ export class CoCActor extends Actor {
         if (!skill.data.flags) skill.data.flags = {}
         skill.data.flags[flag] = true
       }
-      /** MODIF 0.8.x **/
-      // await this.createOwnedItem( skill, {renderSheet:false});
       await this.createEmbeddedDocuments('Item', [skill], {
         renderSheet: false
       })
-      /*****************/
     } else if (flag) {
       const item = this.items.get(itemId)
       await item.setItemFlag(flag)
