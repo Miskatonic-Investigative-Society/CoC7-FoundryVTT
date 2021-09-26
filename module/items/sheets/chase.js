@@ -111,7 +111,10 @@ export class CoC7ChaseSheet extends ItemSheet {
     })
 
     data.locations = [
-      {
+      { 
+        id: foundry.utils.randomID(16),
+        first: true,
+        name: "Start",
         participant: null,
         barrier:{
           skill: 'STR',
@@ -120,9 +123,14 @@ export class CoC7ChaseSheet extends ItemSheet {
         }
       },
       {
+        id: foundry.utils.randomID(16),
+        name: "Intermediate",
         participant: [ this.participants[2]],
       },
       {
+        id: foundry.utils.randomID(16),
+        name: "End",
+        last: true,
         participants: [ this.participants[0], this.participants[1]]
       }
     ]

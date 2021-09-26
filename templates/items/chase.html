@@ -21,10 +21,23 @@
 
         <section class="sheet-body">
             <div class="tab setup" data-group="primary" data-tab="setup">
-                <div class="track" style="height: 100px;overflow-x: scroll;background-attachment: local;background-image: linear-gradient(to right, #6fa26f , #ece857);">
+                <div class="track" style="white-space: nowrap;align-items:stretch;height: 100px;overflow-x: scroll;background-attachment: local;background-image: linear-gradient(to right, #6fa26f , #ece857);">
                     {{#each locations as |location i|}}
-                        <div class="participants" data-index="{{i}}"></div>
+                        <div class="location-container" style="display: inline-block;width: 200px;height: 100%;" data-id="{{location.id}}">
+                            <div class="location">
+
+                            </div>
+                            {{location.name}}
+                        </div>
                     {{/each}}
+                </div>
+                <div class="circles" style="white-space: nowrap;align-items:stretch;height: 100px;overflow-x: scroll; overflow-y: hidden;background-attachment: local;background-image: linear-gradient(to right, #6fa26f , #ece857);">
+                    {{#each locations as |location i|}}
+
+                    <div data-num="{{i}}" style="display: inline-block;width: 200px;height: 100%;">
+                    </div>
+                    {{/each}}
+
                 </div>
                 <div class="row flexrow">
                     <label>{{localize 'CoC7.Locations'}}</label>
