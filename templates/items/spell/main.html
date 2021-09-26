@@ -7,7 +7,7 @@
       <div class="flexrow">
         <input class="name" name="name" type="text" value="{{item.name}}" />
       </div>
-      {{#if (or isKeeper learned)}}
+      {{#if isKeeper}}
         <div class="flexrow">
           <label>{{localize "CoC7.Source"}}:</label>
           <input type="text" name="data.source" value="{{data.source}}" />
@@ -27,7 +27,7 @@
           </span>
         </div>
       </a>
-      {{#if (or isKeeper learned)}}
+      {{#if isKeeper}}
         <a data-tab="content">
           <div class="tab-name">
             <span>

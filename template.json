@@ -556,7 +556,6 @@
       },
       "effects": [],
       "keeperNotes": "",
-      "learned": false,
       "source": "",
       "type": {
         "bind": false,
@@ -570,6 +569,7 @@
       }
     },
     "book": {
+      "alternativeNames": [],
       "author": "",
       "content": "",
       "date": "",

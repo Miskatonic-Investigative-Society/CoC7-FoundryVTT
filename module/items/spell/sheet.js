@@ -22,7 +22,6 @@ export class CoC7SpellSheet extends ItemSheet {
   async getData () {
     const data = super.getData()
     data.isKeeper = game.user.isGM
-    data.learned = true
     return data
   }
 }
