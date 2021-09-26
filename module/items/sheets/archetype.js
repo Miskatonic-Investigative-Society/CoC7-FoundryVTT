@@ -170,10 +170,10 @@ export class CoC7ArchetypeSheet extends ItemSheet {
     data.itemProperties = []
 
     data.itemProperties.push(
-      `${game.i18n.localize('CoC7.PulpTalents')}: ${data.data.bonusPoints}`
+      `${game.i18n.localize('CoC7.PulpTalents')}: ${data.data.talents}`
     )
     data.itemProperties.push(
-      `${game.i18n.localize('CoC7.BonusPoints')}: ${data.data.talents}`
+      `${game.i18n.localize('CoC7.BonusPoints')}: ${data.data.bonusPoints}`
     )
 
     // for (let [key, value] of Object.entries(data.data.type)) {
