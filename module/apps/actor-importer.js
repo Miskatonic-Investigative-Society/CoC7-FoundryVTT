@@ -500,13 +500,11 @@ export class CoC7ActorImporter {
         }
       }
       if (processed.length > 0) {
-        await npc
-          .createEmbeddedDocuments('Item', processed)
-          .then(created => {
-            if (CONFIG.debug.CoC7Importer) {
-              console.debug(created)
-            }
-          })
+        await npc.createEmbeddedDocuments('Item', processed).then(created => {
+          if (CONFIG.debug.CoC7Importer) {
+            console.debug(created)
+          }
+        })
       }
     }
   }

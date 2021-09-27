@@ -93,7 +93,7 @@
   "CoC7.Spells": "Hechizos",
   "CoC7.Spell": "Hechizo",
   "CoC7.Spells&Notes": "Hechizos y Notas",
-	"CoC7.Weapons": "Armas",
+  "CoC7.Weapons": "Armas",
   "CoC7.Effects": "Efectos",
   "CoC7.Cost": "Coste",
   "CoC7.Source": "Fuente",
@@ -121,7 +121,7 @@
   "CoC7.Icon": "Icono",
   "CoC7.Check": "Prueba",
   "CoC7.ItemWeapon": "Objeto (arma)",
-	"CoC7.AttacksPerRound": "Ataques por asalto",
+  "CoC7.AttacksPerRound": "Ataques por asalto",
 
   "CoC7.CopyToClipboard": "Copiar al portapapeles",
   "CoC7.WhisperToSelection": "Susurrar a iconos seleccionados",
@@ -406,13 +406,13 @@
   "CoC7.AddItem": "Añadir objeto",
   "CoC7.EditItem": "Editar objeto",
   "CoC7.DeleteItem": "Eliminar objeto",
-	"CoC7.TradeItem": "Cambiar/almacenar objeto",
-	
+  "CoC7.TradeItem": "Cambiar/almacenar objeto",
+
   "CoC7.NewBookName": "nuevo tomo",
   "CoC7.AddBook": "Añadir tomo",
   "CoC7.NewSpellName": "nuevo hechizo",
   "CoC7.AddSpell": "Añadir hechizo",
-	
+
   "CoC7.AddWeapon": "Añadir arma",
   "CoC7.NewWeaponName": "nueva arma",
   "CoC7.EditWeapon": "Editar arma",
@@ -527,7 +527,7 @@
   "CoC7.GateSpell": "Portal",
   "CoC7.CombatSpell": "Combate",
   "CoC7.SpellType": "Tipo de Hechizo",
-	
+
   "CoC7.BookHasNothingMoreToTeach": "No tiene nada que aprender de {book}. La habilidad de Mitos de Cthulhu de {actor} es mayor que la puntuación de Mitos",
   "CoC7.BookType": "Tipo de Libro",
   "CoC7.Content": "Contenido",
@@ -547,7 +547,7 @@
   "CoC7.MythosRating": "Puntuación de Mitos",
   "CoC7.NotOwned": "Este libro requiere permisos de propietario de un actor para realizar esta acción",
   "CoC7.Occult": "Ciencias ocultas",
-  "CoC7.Points": "punto(s)",	
+  "CoC7.Points": "punto(s)",
   "CoC7.Progress": "Progreso",
   "CoC7.RedoFullStudy": "Volver a realizar estudio completo",
   "CoC7.ReadAttempt": "Intento de leer <i>{book}</i> ({language}), dificultad {difficulty}",
@@ -597,7 +597,7 @@
   "CoC7.Chosen": "Escogido",
   "CoC7.EmptySkillList": "Añada una habilidad soltándola aquí",
   "CoC7.EmptyItemList": "Añada un objeto soltándolo aquí",
-	"CoC7.EmptyCharacterSkillList": "Añada una configuración, ocupación o habilidad soltándolas aquí",
+  "CoC7.EmptyCharacterSkillList": "Añada una configuración, ocupación o habilidad soltándolas aquí",
   "CoC7.PersonalSpeciality": "Número de especialidades personales o de la época",
   "CoC7.AdditionalSkills": "Habilidades Adicionales",
   "CoC7.SkillSelectionWindow": "Seleccione habilidades opcionales",
@@ -713,10 +713,10 @@
   "CoC7.Migrate.ButtonUpdate": "Actualizar",
   "CoC7.Migrate.ButtonSkip": "Saltar",
   "CoC7.Migrate.ButtonOkay": "Ok",
-	
+
   "CoC7.Maximize": "Maximizar",
   "CoC7.Summarize": "Resumen",
-	
+
   "CoC7.UnableToInteractWithChatCard": "No es posible interactuar con este mensaje, si necesita hacer algún cambio pídaselo al Guardián",
   "CoC7.UnableToCopyToClipboard": "No es posible copiar al portapapeles, probablemente debido al nivel de seguridad de su navegador",
   "CoC7.WarningCharacterSheetV1Depreciated": "Esta disposición está obsoleta y no funcionará correctamente. Se eliminará cuando salga la versión v9 de FoundryVTT, por favor dígale a su Guardián que cambie la hoja a CoC7.CoC7CharacterSheetV2",

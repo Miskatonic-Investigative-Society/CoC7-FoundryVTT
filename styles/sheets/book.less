@@ -3,7 +3,7 @@
     background: var(--other-sheet-bg);
     background-repeat: repeat;
   }
-  font-family: customSheetFont, "Palatino Linotype", serif;
+  font-family: customSheetFont, 'Palatino Linotype', serif;
   .window-resizable-handle {
     background: var(--main-sheet-front-color);
   }
@@ -22,10 +22,10 @@
     gap: 0.3rem;
     grid-auto-flow: row;
     grid-template-areas:
-      "portrait information aside"
-      "progress progress progress"
-      "navigation navigation navigation"
-      "body body body";
+      'portrait information aside'
+      'progress progress progress'
+      'navigation navigation navigation'
+      'body body body';
     padding: 0.15rem;
     .flexrow {
       padding: 0.15rem 0;
@@ -39,7 +39,7 @@
     select {
       border: 0.375rem transparent;
       flex: 0;
-      font-family: customSheetFont, "Palatino Linotype", serif;
+      font-family: customSheetFont, 'Palatino Linotype', serif;
       &:focus {
         box-shadow: none;
       }
@@ -230,8 +230,8 @@
         gap: 0 0.1rem;
         grid-auto-flow: row;
         grid-template-areas:
-          "traits gains"
-          "other other";
+          'traits gains'
+          'other other';
         .traits {
           grid-area: traits;
           .type {
@@ -262,9 +262,9 @@
               }
             }
           }
-          #mythos:checked ~ label[for="data.type.mythos"],
-          #occult:checked ~ label[for="data.type.occult"],
-          #other:checked ~ label[for="data.type.other"] {
+          #mythos:checked ~ label[for='data.type.mythos'],
+          #occult:checked ~ label[for='data.type.occult'],
+          #other:checked ~ label[for='data.type.other'] {
             background-color: var(--main-sheet-front-color);
             color: lightgray;
             opacity: 100%;
@@ -308,7 +308,7 @@
           grid-template-rows: 1fr;
           gap: 0.625rem;
           grid-auto-flow: row;
-          grid-template-areas: "portrait name edit status";
+          grid-template-areas: 'portrait name edit status';
           .portrait {
             border: none;
             grid-area: portrait;

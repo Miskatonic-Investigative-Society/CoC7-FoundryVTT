@@ -265,7 +265,10 @@ export class CoC7Item extends Item {
   static getNameWithoutSpec (item) {
     if (item instanceof CoC7Item) {
       if (item.data.data?.properties?.special) {
-        const specNameRegex = new RegExp(CoC7Utilities.quoteRegExp(item.data.data.specialization), 'ig')
+        const specNameRegex = new RegExp(
+          CoC7Utilities.quoteRegExp(item.data.data.specialization),
+          'ig'
+        )
         const filteredName = item.name
           .replace(specNameRegex, '')
           .trim()
@@ -274,7 +277,10 @@ export class CoC7Item extends Item {
       }
     } else {
       if (item.data.properties?.special) {
-        const specNameRegex = new RegExp(CoC7Utilities.quoteRegExp(item.data.specialization), 'ig')
+        const specNameRegex = new RegExp(
+          CoC7Utilities.quoteRegExp(item.data.specialization),
+          'ig'
+        )
         const filteredName = item.name
           .replace(specNameRegex, '')
           .trim()
@@ -290,11 +296,17 @@ export class CoC7Item extends Item {
       if (item.type !== 'skill' || !item.data.data.properties?.special) {
         return false
       }
-      return [game.i18n.localize('CoC7.AnySpecName').toLowerCase(), 'any'].includes(CoC7Item.getNameWithoutSpec(item).toLowerCase())
+      return [
+        game.i18n.localize('CoC7.AnySpecName').toLowerCase(),
+        'any'
+      ].includes(CoC7Item.getNameWithoutSpec(item).toLowerCase())
     } else {
       // Assume it's data only
       if (item.type !== 'skill' || !item.data.properties?.special) return false
-      return [game.i18n.localize('CoC7.AnySpecName').toLowerCase(), 'any'].includes(CoC7Item.getNameWithoutSpec(item).toLowerCase())
+      return [
+        game.i18n.localize('CoC7.AnySpecName').toLowerCase(),
+        'any'
+      ].includes(CoC7Item.getNameWithoutSpec(item).toLowerCase())
     }
   }
 
