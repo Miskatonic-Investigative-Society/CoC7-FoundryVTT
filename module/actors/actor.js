@@ -1629,7 +1629,9 @@ export class CoCActor extends Actor {
     if (processed.length === 0) {
       return
     }
-    return await this.createEmbeddedDocuments('Item', processed, { renderSheet: false })
+    return await this.createEmbeddedDocuments('Item', processed, {
+      renderSheet: false
+    })
   }
 
   async addUniqueItem (skill, flag = null) {
@@ -3394,32 +3396,29 @@ export class CoCActor extends Actor {
   }
 
   async dealDamage (amount, options = {}) {
-    let total = parseInt(amount)
-    // let initialHp = this.hp;
-    if (this.data.data.attribs.armor.value && !options.ignoreArmor) {
-      let armorValue
-      if (CoC7Utilities.isFormula(this.data.data.attribs.armor.value)) {
-        const armorRoll = await new Roll(
-          this.data.data.attribs.armor.value
-        ).roll({ async: true })
-        armorValue = armorRoll.total
-      } else if (!isNaN(Number(this.data.data.attribs.armor.value))) {
-        armorValue = Number(this.data.data.attribs.armor.value)
+    const armorData = this.data.data.attribs.armor.value
+    const grossDamage = parseInt(amount)
+    let armorValue
+    if (!options.ignoreArmor) {
+      if (CoC7Utilities.isFormula(armorData)) {
+        armorValue = (await new Roll(armorData).roll({ async: true })).total
+      } else if (!isNaN(Number(armorData))) {
+        armorValue = Number(armorData)
       } else {
         ui.notifications.warn(
-          `Unable to process armor value :${this.data.data.attribs.armor.value}. Ignoring armor`
+          `Unable to process armor value: ${armorData}. Ignoring armor.`
         )
         armorValue = 0
       }
-      total = total - armorValue
     }
-    if (total <= 0) return 0
-    await this.setHp(this.hp - total)
-    if (total >= this.hpMax) {
+    const netDamage = grossDamage - armorValue
+    if (netDamage <= 0) return 0
+    await this.setHp(this.hp - netDamage)
+    if (netDamage >= this.hpMax) {
       await this.fallDead()
-      // return this.hpMax;
     } else {
-      if (total >= Math.floor(this.hpMax / 2)) await this.inflictMajorWound()
+      if (netDamage >= Math.floor(this.hpMax / 2))
+        await this.inflictMajorWound()
       if (this.hp === 0) {
         if (!this.getStatus(COC7.status.unconscious)) {
           await this.fallUnconscious()
@@ -3427,8 +3426,7 @@ export class CoCActor extends Actor {
         if (this.majorWound) this.fallDying()
       }
     }
-    // if( total>initialHp) return initialHp;
-    return total
+    return netDamage
   }
 
   async inflictMajorWound () {
@@ -3454,7 +3452,10 @@ export class CoCActor extends Actor {
       }
     }
     await this.fallProne()
-    if (!this.getStatus(COC7.status.unconscious)) {
+    if (
+      !this.getStatus(COC7.status.unconscious) &&
+      !this.getStatus(COC7.status.dead)
+    ) {
       const conCheck = new CoC7ConCheck(this.isToken ? this.tokenKey : this.id)
       conCheck.toMessage()
     }
@@ -3537,9 +3538,9 @@ export class CoCActor extends Actor {
   }
 
   async fallDead () {
-    await this.inflictMajorWound()
+    await this.unsetStatus(COC7.status.criticalWounds)
     await this.unsetStatus(COC7.status.dying)
-    await this.fallUnconscious()
+    await this.unsetStatus(COC7.status.unconscious)
     await this.setStatus(COC7.status.dead)
     const deadEffect = await this.hasActiveEffect('dead')
     if (deadEffect.length === 0) {
