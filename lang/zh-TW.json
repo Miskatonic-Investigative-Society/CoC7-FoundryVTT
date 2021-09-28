@@ -619,6 +619,7 @@
   "CoC7.English": "英語",
   "CoC7.Spanish": "西班牙語",
   "CoC7.French": "法語",
+  "CoC7.TraditionalChinese": "正體中文",
   "CoC7.SelectSourceLanguage": "選擇資源的來源語言",
   "SETTINGS.DebugMode": "系統使用Debug模式",
   "SETTINGS.DebugModeHint": "!!需要重啟!!",
