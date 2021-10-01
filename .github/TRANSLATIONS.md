@@ -4,7 +4,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 | Key                                                                                      |    cn    |    cs    |    de    |    es    |    fr    |    ja    |    pl    |  pt-BR   |    sv    |  zh-TW   |
 | :--------------------------------------------------------------------------------------- | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-| **Remaining**:                                                                           | **338**  | **114**  | **131**  |  **2**   |  **2**   |  **2**   |  **26**  |  **2**   |  **7**   |  **8**   |
+| **Remaining**:                                                                           | **342**  | **118**  | **135**  |  **6**   |  **6**   |  **6**   |  **30**  |  **6**   |  **11**  |  **12**  |
 | [CoC7.ActorImporter](#coc7actorimporter)                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.ActorImporterSummary](#coc7actorimportersummary)                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.AddBook](#coc7addbook)                                                             | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -101,6 +101,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.GoodForAsylum](#coc7goodforasylum)                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.GrowingAccustomedToAwfulness](#coc7growingaccustomedtoawfulness)                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Guess](#coc7guess)                                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.HitPointsCost](#coc7hitpointscost)                                                 | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.HowToTranslateEnableTranslation](#coc7howtotranslateenabletranslation)             | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.HowToTranslateInstallBabele](#coc7howtotranslateinstallbabele)                     | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.HowToTranslateInstallTranslation](#coc7howtotranslateinstalltranslation)           | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
@@ -143,6 +144,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.Location](#coc7location)                                                           | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.LuckIncreased](#coc7luckincreased)                                                 | &#x274C; | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.LuckNotIncreased](#coc7lucknotincreased)                                           | &#x274C; | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.MagicPointsCost](#coc7magicpointscost)                                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.Mania](#coc7mania)                                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.ManiaGained](#coc7maniagained)                                                     | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.MarkedForDevelopment](#coc7markedfordevelopment)                                   | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
@@ -192,6 +194,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.PlayerName](#coc7playername)                                                       | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.PlayerPermanentlyInsane](#coc7playerpermanentlyinsane)                             | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Points](#coc7points)                                                               | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.PowerCost](#coc7powercost)                                                         | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.Proceed](#coc7proceed)                                                             | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Progress](#coc7progress)                                                           | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Properties](#coc7properties)                                                       | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
@@ -211,6 +214,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.SanDataSelectionWindow](#coc7sandataselectionwindow)                               | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.SanGained](#coc7sangained)                                                         | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.SanityCheckPerformed](#coc7sanitycheckperformed)                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.SanityCost](#coc7sanitycost)                                                       | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.SanityLost](#coc7sanitylost)                                                       | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.SelectActorType](#coc7selectactortype)                                             | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.SelectSourceLanguage](#coc7selectsourcelanguage)                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
@@ -728,6 +732,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 `"CoC7.Guess": "Guess",`
 
+##### CoC7.HitPointsCost
+
+`"CoC7.HitPointsCost": "Hit Points Cost",`
+
 ##### CoC7.HowToTranslateEnableTranslation
 
 `"CoC7.HowToTranslateEnableTranslation": "Inside the Game World, under Configuration/Manage Modules activate both Babele and the translations.",`
@@ -895,6 +903,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.LuckNotIncreased
 
 `"CoC7.LuckNotIncreased": "Luck NOT recovered ({die}/{score})",`
+
+##### CoC7.MagicPointsCost
+
+`"CoC7.MagicPointsCost": "Magic Points Cost",`
 
 ##### CoC7.Mania
 
@@ -1092,6 +1104,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 `"CoC7.Points": "point(s)",`
 
+##### CoC7.PowerCost
+
+`"CoC7.PowerCost": "Power Cost",`
+
 ##### CoC7.Proceed
 
 `"CoC7.Proceed": "Proceed",`
@@ -1167,6 +1183,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.SanityCheckPerformed
 
 `"CoC7.SanityCheckPerformed": "You were exposed to a traumatic event.",`
+
+##### CoC7.SanityCost
+
+`"CoC7.SanityCost": "Sanity Cost",`
 
 ##### CoC7.SanityLost
 
