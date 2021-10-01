@@ -120,6 +120,11 @@
   "CoC7.ItemWeapon": "Item (Weapon)",
   "CoC7.AttacksPerRound": "Attacks per round",
 
+  "CoC7.SanityCost": "Sanity Cost",
+  "CoC7.PowerCost": "Power Cost",
+  "CoC7.HitPointsCost": "Hit Points Cost",
+  "CoC7.MagicPointsCost": "Magic Points Cost",
+
   "CoC7.CopyToClipboard": "Copy to clipboard",
   "CoC7.WhisperToSelection": "Whisper to selected tokens",
   "CoC7.WhisperTo": "Whisper to",
