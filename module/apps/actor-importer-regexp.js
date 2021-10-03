@@ -112,7 +112,7 @@ const translations = {
     lck: '(?<![a-z])' + 'Luck' + ':?\\s+(?<lck>\\d+|-)[,\\s\n]*',
     attacksPerRound: '(?<![a-z])(?:' + 'Attacks per round|# Attacks' + '):?\\s+(?<attacksPerRound>' + keys.en.attacksPerRoundNone + '|\\d+(?!d))[,\\s\n]*',
     sanLoss: '(?<![a-z])(?:' + 'Sanity loss|SAN loss' + '):?\\s+(?<sanLoss>' + keys.en.sanLossNone + '|\\dD?[+\\d]*\\/\\dD?[+\\d]*)[,\\s\n]*',
-    weapon: '(^|\\n)(?<name>[.\\t ' + nameCharacters + ']+)(\\*?,?\\s+|\\*)(?:\\(|(?<percentage>\\d+)%,?(?:\\s*\\(\\d+\\/\\d+\\)\\s*,?)?)?(\\s*' + 'damage' + ')?\\s+(?<damage>(:?(:?\\d+d)?\\d+(\\s*/\\s*|\\s*[+-]\\s*(?:' + keys.en.fulldb + '|' + keys.en.halfdb + ')\\s*|\\s*[+-]\\s*(:?\\d+d)?\\d+)*)+)\\)?',
+    weapon: '(^|\\n)(?<name>[.\\t ' + nameCharacters + ']+)(\\**,?\\s+|\\*)(?:\\(|(?<percentage>\\d+)%,?(?:\\s*\\(\\d+\\/\\d+\\)\\s*,?)?)?(\\s*' + 'damage' + ')?\\s+(?<damage>(:?(:?\\d+d)?\\d+(\\s*/\\s*|\\s*[+-]\\s*(?:' + keys.en.fulldb + '|' + keys.en.halfdb + ')\\s*|\\s*[+-]\\s*(:?\\d+d)?\\d+)*)+)\\)?',
     weaponDodge: '(?<name>' + 'Dodge' + '):?\\s+\\(?(?<percentage>\\d+)\\)?\\s*%(?:\\s*\\(\\d+\\/\\d+\\))?',
     handgun: '(?<type>' + ' Gun|Revolver|Pistol|Handgun|Derringer|Beretta|Luger|Desert Eagle| \\.38' + ')',
     rifle: '(?<type>' + 'Rifle|Shotgun|Carbine|Gauge |Lee-Enfield|Elephant' + ')',
@@ -122,7 +122,7 @@ const translations = {
     // Language dependant a skill should not be "The player has" / "but they regenerate" required for "A Cold Fire Within"
     skill: '^(?<name>[:\\*.\\s' + nameCharacters + ']+(?<!' + 'The player has|but they regenerate' + '))\\s+\\(?(?<percentage>\\d+)[^d]%?\\)?(\\s*\\(\\d+/\\d+\\))?[\\.,]?\\s*',
     // Language dependant likely first words for a combat section if there is no heading
-    guessStartCombat: '(^|(?<!,)\n)(' + 'Fighting|Firearms|Brawl' + ')',
+    guessStartCombat: '(^|(?<!,)\n)(' + 'Fighting|Firearms|Brawl|Bite' + ')',
     // These shouldn't need edited
     name: '^(?<name>[\\.\\s' + nameCharacters + ']+)[,\\s\n]+',
     sections: '(' + keys.en.sectionCombats + '|' + keys.en.sectionSkills + '|' + keys.en.sectionLangauges + '|' + keys.en.sectionSpells + ')'
@@ -148,7 +148,7 @@ const translations = {
     lck: '(?<![a-z])' + 'Chance' + ':?\\s+(?<lck>\\d+|-)[,\\s\n]*',
     attacksPerRound: '(?<![a-z])(?:' + 'Attaques par round' + '):?\\s+(?<attacksPerRound>' + keys.fr.attacksPerRoundNone + '|\\d+(?!d))[,\\s\n]*',
     sanLoss: '(?<![a-z])(?:' + 'Perte de Santé mentale|Perte de SAN' + '):?\\s+(?<sanLoss>' + keys.fr.sanLossNone + '|\\dD?[+\\d]*\\/\\dD?[+\\d]*)[,\\s\n]*',
-    weapon: '(^|\\n)(?<name>[.\\t ' + nameCharacters + ']+)(\\*?,?\\s+|\\*)(?:\\(|(?<percentage>\\d+)%,?(?:\\s*\\(\\d+\\/\\d+\\)\\s*,?)?)?(\\s*(?:' + 'dommage|dégâts' + '))?\\s+(?<damage>(:?(:?\\d+d)?\\d+(\\s*/\\s*|\\s*[+-]\\s*(?:' + keys.fr.fulldb + '|half' + ')\\s*|\\s*[+-]\\s*(:?\\d+d)?\\d+)*)+)\\)?',
+    weapon: '(^|\\n)(?<name>[.\\t ' + nameCharacters + ']+)(\\**,?\\s+|\\*)(?:\\(|(?<percentage>\\d+)%,?(?:\\s*\\(\\d+\\/\\d+\\)\\s*,?)?)?(\\s*(?:' + 'dommage|dégâts' + '))?\\s+(?<damage>(:?(:?\\d+d)?\\d+(\\s*/\\s*|\\s*[+-]\\s*(?:' + keys.fr.fulldb + '|half' + ')\\s*|\\s*[+-]\\s*(:?\\d+d)?\\d+)*)+)\\)?',
     weaponDodge: '(?<name>' + 'Esquiver' + '):?\\s+\\(?(?<percentage>\\d+)\\)?\\s*%(?:\\s*\\(\\d+\\/\\d+\\))?',
     handgun: '(?<type>' + 'Revolver|Pistolet|Derringer|Beretta|Luger|Desert Eagle| \\.38' + ')',
     rifle: '(?<type>' + 'Carabine|Lee-Enfield|Fusil' + ')',
@@ -156,7 +156,7 @@ const translations = {
     machineGun: '(?<type>' + 'Browning|Vickers|Mitrailleuse' + ')',
     launched: '(?<type>' + 'Molotov|Grenade|Dynamite' + ')',
     skill: '^(?<name>[:\\*.\\s' + nameCharacters + ']+(?<!' + 'The player has|but they regenerate' + '))\\s+\\(?(?<percentage>\\d+)[^d]%?\\)?(\\s*\\(\\d+/\\d+\\))?[\\.,]?\\s*',
-    guessStartCombat: '(^|(?<!,)\n)(' + 'Au contact|À distance|Brawl' + ')',
+    guessStartCombat: '(^|(?<!,)\n)(' + 'Au contact|À distance|Brawl|Bite' + ')',
     name: '^(?<name>[\\.\\s' + nameCharacters + ']+)[,\\s\n]+',
     sections: '(' + keys.fr.sectionCombats + '|' + keys.fr.sectionSkills + '|' + keys.fr.sectionLangauges + '|' + keys.fr.sectionSpells + ')'
   },
@@ -181,7 +181,7 @@ const translations = {
     lck: '(?<![a-z])' + 'Suerte' + ':?\\s+(?<lck>\\d+|-)[,\\s\n]*',
     attacksPerRound: '(?<![a-z])(?:' + 'Número de Ataques' + '):?\\s+(?<attacksPerRound>' + keys.es.attacksPerRoundNone + '|\\d+(?!d))[,\\s\n]*',
     sanLoss: '(?<![a-z])(?:' + 'Pérdida de cordura|Pérdida de COR' + '):?\\s+(?<sanLoss>' + keys.es.sanLossNone + '|\\dD?[+\\d]*\\/\\dD?[+\\d]*)[,\\s\n]*',
-    weapon: '(^|\\n)(?<name>[.\\t ' + nameCharacters + ']+)(\\*?,?\\s+|\\*)(?:\\(|(?<percentage>\\d+)%,?(?:\\s*\\(\\d+\\/\\d+\\)\\s*,?)?)?(\\s*' + 'daño' + ')?\\s+(?<damage>(:?(:?\\d+d)?\\d+(\\s*/\\s*|\\s*[+-]\\s*(?:' + keys.es.fulldb + ')\\s*|\\s*[+-]\\s*(:?\\d+d)?\\d+)*)+)\\)?',
+    weapon: '(^|\\n)(?<name>[.\\t ' + nameCharacters + ']+)(\\**,?\\s+|\\*)(?:\\(|(?<percentage>\\d+)%,?(?:\\s*\\(\\d+\\/\\d+\\)\\s*,?)?)?(\\s*' + 'daño' + ')?\\s+(?<damage>(:?(:?\\d+d)?\\d+(\\s*/\\s*|\\s*[+-]\\s*(?:' + keys.es.fulldb + ')\\s*|\\s*[+-]\\s*(:?\\d+d)?\\d+)*)+)\\)?',
     weaponDodge: '(?<name>' + 'Esquivar' + '):?\\s+\\(?(?<percentage>\\d+)\\)?\\s*%(?:\\s*\\(\\d+\\/\\d+\\))?',
     handgun: '(?<type>' + 'Revolver|Pistola|Derringer|Beretta|Luger|Desert Eagle| \\.38' + ')',
     rifle: '(?<type>' + 'Rifle|Carabina|Lee-Enfield|Caza Elefantes|Fusil|Escopeta|Galga|Recortada' + ')',
@@ -189,7 +189,7 @@ const translations = {
     machineGun: '(?<type>' + 'Browning|Vickers|Ametralladora' + ')',
     launched: '(?<type>' + 'Molotov|Granada|Dinamita' + ')',
     skill: '^(?<name>[:\\*.\\s' + nameCharacters + ']+(?<!' + 'The player has|but they regenerate' + '))\\s+\\(?(?<percentage>\\d+)[^d]%?\\)?(\\s*\\(\\d+/\\d+\\))?[\\.,]?\\s*',
-    guessStartCombat: '(^|(?<!,)\n)(' + 'Combatir|Armas de fuego|Brawl' + ')',
+    guessStartCombat: '(^|(?<!,)\n)(' + 'Combatir|Armas de fuego|Brawl|Bite' + ')',
     name: '^(?<name>[\\.\\s' + nameCharacters + ']+)[,\\s\n]+',
     sections: '(' + keys.es.sectionCombats + '|' + keys.es.sectionSkills + '|' + keys.es.sectionLangauges + '|' + keys.es.sectionSpells + ')'
   },
@@ -215,7 +215,7 @@ const translations = {
     lck: '(?<![a-z])' + 'Luck' + ':?\\s*(?<lck>\\d+|-)[,\\s\n]*',
     attacksPerRound: '(?<![a-z])(?:' + 'Attacks per round|# Attacks|次數|# 攻擊' + '):?\\s*(?<attacksPerRound>' + keys['zh-TW'].attacksPerRoundNone + '|\\d+(?!d))[,\\s\n]*',
     sanLoss: '(?<![a-z])(?:' + 'Sanity loss|SAN loss|理智喪失|SAN值損失|SAN值喪失|扣SAN' + '):?\\s*(?<sanLoss>' + keys['zh-TW'].sanLossNone + '|\\dD?[+\\d]*\\/\\dD?[+\\d]*)[,\\s\n]*',
-    weapon: '(^|\\n)(?<name>[.\\t ' + nameCharacters + ']+)(\\*?,?\\s+|\\*)(?:\\(|(?<percentage>\\d+)%,?(?:\\s*\\(\\d+\\/\\d+\\)\\s*,?)?)?(\\s*' + 'damage|傷害' + ')?\\s+(?<damage>(:?(:?\\d+d)?\\d+(\\s*/\\s*|\\s*[+-]\\s*(?:' + keys['zh-TW'].fulldb + ')\\s*|\\s*[+-]\\s*(:?\\d+d)?\\d+)*)+)\\)?',
+    weapon: '(^|\\n)(?<name>[.\\t ' + nameCharacters + ']+)(\\**,?\\s+|\\*)(?:\\(|(?<percentage>\\d+)%,?(?:\\s*\\(\\d+\\/\\d+\\)\\s*,?)?)?(\\s*' + 'damage|傷害' + ')?\\s+(?<damage>(:?(:?\\d+d)?\\d+(\\s*/\\s*|\\s*[+-]\\s*(?:' + keys['zh-TW'].fulldb + ')\\s*|\\s*[+-]\\s*(:?\\d+d)?\\d+)*)+)\\)?',
     weaponDodge: '(?<name>' + 'Dodge|閃避|閃躲' + '):?\\s+\\(?(?<percentage>\\d+)\\)?\\s*%?(?:\\s*\\(\\d+\\/\\d+\\))?',
     handgun: '(?<type>' + ' 遂發槍|\\.22短口自動手槍|\\.25短口手槍(單管)|\\.32或7\\.65mm左輪手槍|\\.32或7\\.65mm自動手槍|\\.357 Magnum左輪手槍|\\.38或9mm左輪手槍|\\.38自動手槍|貝雷塔M9|格洛克17|9mm自動手槍|魯格P08|\\.41左輪手槍|\\.44馬格南左輪手槍|\\.45左輪手槍|\\.45自動手槍|沙漠之鷹|Gun|Revolver|Pistol|Handgun|Derringer|Beretta|Luger|Desert Eagle| \\.38' + ')',
     rifle: '(?<type>' + '步槍|卡賓槍|半自動步槍|獵象槍|Rifle|Shotgun|Carbine|Gauge |Lee\\-Enfield|Elephant' + ')',
@@ -225,7 +225,7 @@ const translations = {
     // Language dependant a skill should not be "The player has" / "but they regenerate" required for "A Cold Fire Within"
     skill: '^(?<name>[:\\*.\\s' + nameCharacters + ']+(?<!' + 'The player has|but they regenerate' + '))\\s+\\(?(?<percentage>\\d+)[^d]%?\\)?(\\s*\\(\\d+/\\d+\\))?[\\.,]?\\s*',
     // Language dependant likely first words for a combat section if there is no heading
-    guessStartCombat: '(^|(?<!,)\n)(' + '近戰技能|射擊技能|Brawl' + ')',
+    guessStartCombat: '(^|(?<!,)\n)(' + '近戰技能|射擊技能|Brawl|Bite' + ')',
     // These shouldn't need edited
     name: '^(?<name>[\\.\\s' + nameCharacters + ']+)[,\\s\n]+',
     sections: '(' + keys['zh-TW'].sectionCombats + '|' + keys['zh-TW'].sectionSkills + '|' + keys['zh-TW'].sectionLangauges + '|' + keys['zh-TW'].sectionSpells + ')'
