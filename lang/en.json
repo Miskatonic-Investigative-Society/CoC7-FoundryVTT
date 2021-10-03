@@ -409,6 +409,10 @@
   "CoC7.EditItem": "Edit item",
   "CoC7.DeleteItem": "Delete Item",
   "CoC7.TradeItem": "Trade / Store Item",
+  "CoC7.SortBySkillName": "Sort by skill name",
+  "CoC7.SortBySkillValue": "Sort by skill percent",
+  "CoC7.UncommonSkillsShow": "Show uncommon skills",
+  "CoC7.UncommonSkillsHide": "Hide uncommon skills",
 
   "CoC7.NewBookName": "new book",
   "CoC7.AddBook": "Add book",
