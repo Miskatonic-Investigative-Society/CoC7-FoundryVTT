@@ -452,8 +452,7 @@ export class CoCActor extends Actor {
   //  return super.create(data, options);
   // }
 
-  /** @override */
-  async createSkill (skillName, value, showSheet = false) {
+  static emptySkill (skillName, value, { rarity = false, push = true, combat = false, img = false, specialization = false } = {}) {
     const data = {
       name: skillName,
       type: 'skill',
@@ -461,12 +460,25 @@ export class CoCActor extends Actor {
         value: value,
         properties: {
           special: false,
-          rarity: false,
-          push: true,
-          combat: false
+          rarity: rarity,
+          push: push,
+          combat: combat
         }
       }
     }
+    if (img !== false) {
+      data.img = img
+    }
+    if (specialization !== false) {
+      data.data.specialization = specialization
+      data.data.properties.special = true
+    }
+    return data
+  }
+
+  /** @override */
+  async createSkill (skillName, value, showSheet = false) {
+    const data = CoCActor.emptySkill(skillName, value)
     const created = await this.createEmbeddedDocuments('Item', [data], {
       renderSheet: showSheet
     })
@@ -647,12 +659,17 @@ export class CoCActor extends Actor {
     return this.createSpell(itemName, showSheet)
   }
 
-  async createSpell (itemName, showSheet = false) {
+  static emptySpell (itemName) {
     const data = {
       name: itemName,
       type: 'spell',
       data: {}
     }
+    return data
+  }
+
+  async createSpell (itemName, showSheet = false) {
+    const data = CoCActor.emptySpell(itemName)
     const created = await this.createEmbeddedDocuments('Item', [data], {
       renderSheet: showSheet
     })

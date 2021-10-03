@@ -683,7 +683,7 @@ export class CoC7Utilities {
           qString += '\\'
         }
 
-        qString += current
+        qString += current.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&')
       } else {
         switch (current) {
           case '\b':
@@ -719,7 +719,6 @@ export class CoC7Utilities {
       }
     }
 
-    qString = qString.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&')
     return qString
   }
 }

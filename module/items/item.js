@@ -36,6 +36,10 @@ export class CoC7Item extends Item {
     super(data, context)
   }
 
+  static get iconLanguage () {
+    return 'systems/CoC7/assets/icons/skills/language.svg'
+  }
+
   static get flags () {
     return {
       malfunction: 'malfc'

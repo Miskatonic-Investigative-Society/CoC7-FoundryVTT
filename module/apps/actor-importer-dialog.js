@@ -1,4 +1,4 @@
-/* global $, CONFIG, Dialog, game, renderTemplate, ui */
+/* global $, CONFIG, Dialog, game, Hooks, renderTemplate, ui */
 
 import { CoC7ActorImporter } from './actor-importer.js'
 import { CoC7ActorImporterRegExp } from './actor-importer-regexp.js'
@@ -7,7 +7,7 @@ export class CoC7ActorImporterDialog extends Dialog {
   activateListeners (html) {
     super.activateListeners(html)
     html
-      .find('option[value=coc-' + game.i18n.lang + ']')
+      .find('option[value=' + game.i18n.lang + ']')
       .attr('selected', 'selected')
     html
       .find('#coc-entity-lang')
@@ -37,6 +37,9 @@ export class CoC7ActorImporterDialog extends Dialog {
       console.debug('entity type:', inputs.entity)
     }
     inputs.lang = $('#coc-entity-lang')
+      .val()
+      .trim()
+    inputs.source = $('#source')
       .val()
       .trim()
     let text = $('#coc-pasted-character-data')
@@ -93,7 +96,9 @@ export class CoC7ActorImporterDialog extends Dialog {
    * create it's the default web to crate the CoC7ActorImporterDialog
    * @param {} data can include a `title` for the dialog.
    */
-  static async create (data) {
+  static async create (data = {}) {
+    data.languages = CoC7ActorImporterRegExp.getTranslations()
+    data.language = CoC7ActorImporterRegExp.getLanguage()
     const html = await renderTemplate(
       'systems/CoC7/templates/apps/actor-importer.html',
       data
@@ -125,3 +130,9 @@ export class CoC7ActorImporterDialog extends Dialog {
     })
   }
 }
+
+Hooks.once('ready', () => {
+  if (game.modules.get('CoC7-importer-tests')?.active) {
+    window.CoC7ActorImporter = CoC7ActorImporter
+  }
+})
