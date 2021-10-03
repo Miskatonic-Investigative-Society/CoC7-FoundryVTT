@@ -282,14 +282,10 @@ export class CoC7Item extends Item {
     } else {
       if (item.data.properties?.special) {
         const specNameRegex = new RegExp(
-          CoC7Utilities.quoteRegExp(item.data.specialization),
-          'ig'
+          '^' + CoC7Utilities.quoteRegExp(item.data.specialization) + '\\s*\\((.+)\\)$',
+          'i'
         )
-        const filteredName = item.name
-          .replace(specNameRegex, '')
-          .trim()
-          .replace(/^\(+|\)+$/gm, '')
-        return filteredName.length ? filteredName : item.name
+        return item.name.replace(specNameRegex, '$1')
       }
     }
     return item.name
