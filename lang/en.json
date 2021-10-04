@@ -732,6 +732,16 @@
   "CoC7.MessageSelectUserToGiveTo": "Which character would you like to give this item to?",
   "CoC7.MessageDistanceCalculationFailure": "Unable to calculate distance between tokens, please use the token character sheet.",
 
+  "CoC7.ToolTipSkill": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Left click</strong> roll check with options</li><li><strong>Shift + Left click</strong> Immediate regular difficult check roll</li></ol><label>Opposed checks</label><ol><li><strong>Right click</strong> Opposed check with options</li><li><strong>Shift + Right click</strong> Immediate opposed check</li></ol><label>Combined checks</label><ol><li><strong>Alt/Option + Right click</strong> Opposed check with options</li></ol>",
+  "CoC7.ToolTipKeeperSkill": "<label>Keeper checks</label><ol><li><strong>CTRL + Left click</strong> Create roll link</li>{other}</ol>",
+  "CoC7.ToolTipKeeperStandbySkill": "<li><strong>Left click</strong> Request a roll from {name}</li>",
+  "CoC7.ToolTipDB": "<label>Damage Bonus</label><ol><li><strong>Left click</strong> Immediate regular difficult check roll</li></ol>",
+  "CoC7.ToolTipKeeperSanity": "<li><strong>CTRL + Alt/Option</strong> Create sanity check roll link</li>",
+  "CoC7.ToolTipAutoToggle": "<label>Automatic calculation toggle</label><ol><li><strong>Left click</strong> Toggle automatic calculation / manual entry</li>",
+  "CoC7.ToolTipSkillFlagToggle": "<label>{status}</label><ol><li><strong>Double Click</strong> Toggle flag status</li>",
+  "CoC7.ToolTipSkillFlagged": "Flagged for development",
+  "CoC7.ToolTipSkillUnflagged": "Not flagged for development",
+
   "SETTINGS.TitleRules": "Rules",
   "SETTINGS.TitleInitiative": "Initiative Settings",
   "SETTINGS.TitleRoll": "Roll Settings",
@@ -838,5 +848,6 @@
   "SETTINGS.ShowExperimentalFeaturesHint": "Your world may become unusable in a future release if you use these features. For testing only DO NOT use these in your game worlds",
   "CoC7.ExperimentalFeaturesWarning": "This feature is a work in progress and is not recommended for use in your game world.",
   "SETTINGS.CheckElevation": "Include elevation in distance",
-  "SETTINGS.CheckElevationHint": "Use elevation in range combat distance calculations"
+  "SETTINGS.CheckElevationHint": "Use elevation in range combat distance calculations",
+  "CoC7.toolTipDelay": "Millisecond delay before tooltip should show, 0 for never"
 }
