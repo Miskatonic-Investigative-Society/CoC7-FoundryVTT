@@ -43,6 +43,14 @@
     </div>
   </div>
   <div class="other">
-
+    <div class="flexrow">
+      <label>{{localize "CoC7.OtherCosts"}}:</label>
+      <input type="text" name="data.costs.others" value="{{data.costs.others}}"/>
+    </div>
+  </div>
+  <div class="combat">
+    {{#if data.type.combat}}
+      <label>Combat</label>
+    {{/if}}
   </div>
 </div>

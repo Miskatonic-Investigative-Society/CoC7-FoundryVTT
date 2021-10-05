@@ -93,6 +93,20 @@
         span {
           max-width: fit-content;
         }
+        #cast-spell {
+          align-items: center;
+          background: rgba(0, 0, 0, 0.05);
+          border: 0.065rem solid var(--main-sheet-front-color);
+          border-radius: 0.25rem;
+          padding: 0.3rem;
+          &:focus,
+          &:hover {
+            background: var(--main-sheet-front-color);
+            label {
+              color: whitesmoke;
+            }
+          }
+        }
       }
     }
     nav {
@@ -218,16 +232,8 @@
         }
         .other {
           grid-area: other;
-          table {
-            border-bottom: 0.065rem solid var(--main-sheet-front-color);
-            border-top: 0.065rem solid var(--main-sheet-front-color);
-            td:nth-child(3) {
-              max-width: fit-content;
-              text-align: center;
-            }
-            select {
-              width: -webkit-fill-available;
-            }
+          input {
+            flex: 1;
           }
         }
       }
