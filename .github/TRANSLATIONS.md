@@ -1298,7 +1298,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 ##### CoC7.ToolTipDB
 
-`"CoC7.ToolTipDB": "<label>Damage Bonus</label><ol><li><strong>Left click</strong> Immediate regular difficult check roll</li></ol>",`
+`"CoC7.ToolTipDB": "<label>Damage Bonus</label><ol><li><strong>Left click</strong> Immediate regular difficulty roll</li></ol>",`
 
 ##### CoC7.ToolTipKeeperSanity
 
@@ -1314,7 +1314,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 ##### CoC7.ToolTipSkill
 
-`"CoC7.ToolTipSkill": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Left click</strong> roll check with options</li><li><strong>Shift + Left click</strong> Immediate regular difficult check roll</li></ol><label>Opposed checks</label><ol><li><strong>Right click</strong> Opposed check with options</li><li><strong>Shift + Right click</strong> Immediate opposed check</li></ol><label>Combined checks</label><ol><li><strong>Alt/Option + Right click</strong> Opposed check with options</li></ol>",`
+`"CoC7.ToolTipSkill": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Left click</strong> roll check with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li></ol><label>Opposed checks</label><ol><li><strong>Right click</strong> Opposed check with options</li><li><strong>Shift + Right click</strong> Immediate opposed check</li></ol><label>Combined checks</label><ol><li><strong>Alt/Option + Right click</strong> Combined check with options</li></ol>",`
 
 ##### CoC7.ToolTipSkillFlagToggle
 
