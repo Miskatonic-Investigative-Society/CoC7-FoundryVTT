@@ -7,11 +7,13 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Fix "The key ? does not exist in the EmbeddedCollection Collection" dragging an English setup onto a translated Actor.
 - Fix background integrity on Book sheet.
 - Fix bug on Archetype Item properties.
+- Fix summarized sheet colors;
 - Fix rounding for max Hit Points on Pulp;
 - Now Actor die instantly when damage is equal or higher than its max hp.
 - Now Actor Importer support Traditional Chinese, thanks to @zeteticl.
 - Now double click on Item in inventory list open its sheet.
 - Now there is an option to show or not show uncommon skills on Character sheet.
+- Several improvements on the Actor Importer app;
 - Update updater to check module compendiums for Actor and Item when modules version module numbers are new or changed.
 - Update to French localization, thanks to @vonv.
 - Update to Japanese localization, thanks to `@Asami#8627`.
