@@ -2,17 +2,23 @@
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
 
+- Add several tooltips to the character sheet (Skill, DB, Sanity, etc).
 - Complete refactor of Spell system.
+- Fix "The key ? does not exist in the EmbeddedCollection Collection" dragging an English setup onto a translated Actor.
 - Fix background integrity on Book sheet.
 - Fix bug on Archetype Item properties.
-- Fix "The key ? does not exist in the EmbeddedCollection Collection" dragging an English setup onto a translated Actor.
+- Fix rounding for max Hit Points on Pulp;
 - Now Actor die instantly when damage is equal or higher than its max hp.
-- Now double click on Item in inventory list open its sheet;
+- Now Actor Importer support Traditional Chinese, thanks to @zeteticl.
+- Now double click on Item in inventory list open its sheet.
+- Now there is an option to show or not show uncommon skills on Character sheet.
 - Update updater to check module compendiums for Actor and Item when modules version module numbers are new or changed.
 - Update to French localization, thanks to @vonv.
 - Update to Japanese localization, thanks to `@Asami#8627`.
 - Update to Portuguese localization;
 - Update to Spanish localization, thanks to @lozalojo;
+- Update to Swedish localization, thanks to @Rangertheman.
+- Update to Taiwanese localization, thanks to @zeteticl.
 
 ## Version 0.6.9:
 
