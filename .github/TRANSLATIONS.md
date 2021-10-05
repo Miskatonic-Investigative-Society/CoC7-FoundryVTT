@@ -4,7 +4,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 | Key                                                                                      |    cn    |    cs    |    de    |    es    |    fr    |    ja    |    pl    |  pt-BR   |    sv    |  zh-TW   |
 | :--------------------------------------------------------------------------------------- | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-| **Remaining**:                                                                           | **346**  | **122**  | **139**  |  **10**  |  **10**  |  **10**  |  **34**  |  **10**  |  **4**   |  **16**  |
+| **Remaining**:                                                                           | **356**  | **132**  | **149**  |  **20**  |  **20**  |  **20**  |  **44**  |  **20**  |  **14**  |  **26**  |
 | [CoC7.ActorImporter](#coc7actorimporter)                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.ActorImporterSummary](#coc7actorimportersummary)                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.AddBook](#coc7addbook)                                                             | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -235,6 +235,15 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.TargetOutOfRange](#coc7targetoutofrange)                                           | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.TemporaryInsane](#coc7temporaryinsane)                                             | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Tie](#coc7tie)                                                                     | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.ToolTipAutoToggle](#coc7tooltipautotoggle)                                         | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ToolTipDB](#coc7tooltipdb)                                                         | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ToolTipKeeperSanity](#coc7tooltipkeepersanity)                                     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ToolTipKeeperSkill](#coc7tooltipkeeperskill)                                       | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ToolTipKeeperStandbySkill](#coc7tooltipkeeperstandbyskill)                         | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ToolTipSkill](#coc7tooltipskill)                                                   | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ToolTipSkillFlagToggle](#coc7tooltipskillflagtoggle)                               | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ToolTipSkillFlagged](#coc7tooltipskillflagged)                                     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ToolTipSkillUnflagged](#coc7tooltipskillunflagged)                                 | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.TotalDamage](#coc7totaldamage)                                                     | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.TradeItem](#coc7tradeitem)                                                         | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.TraditionalChinese](#coc7traditionalchinese)                                       | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  |
@@ -280,6 +289,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.rounds](#coc7rounds)                                                               | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.startRest](#coc7startrest)                                                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.toggleXP](#coc7togglexp)                                                           | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.toolTipDelay](#coc7tooltipdelay)                                                   | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.weeks](#coc7weeks)                                                                 | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.AdviseAllPlayer](#settingsadviseallplayer)                                     | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.AdviseOwnersOnly](#settingsadviseownersonly)                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
@@ -1272,6 +1282,42 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 `"CoC7.Tie": "Tie",`
 
+##### CoC7.ToolTipAutoToggle
+
+`"CoC7.ToolTipAutoToggle": "<label>Automatic calculation toggle</label><ol><li><strong>Left click</strong> Toggle automatic calculation / manual entry</li>",`
+
+##### CoC7.ToolTipDB
+
+`"CoC7.ToolTipDB": "<label>Damage Bonus</label><ol><li><strong>Left click</strong> Immediate regular difficult check roll</li></ol>",`
+
+##### CoC7.ToolTipKeeperSanity
+
+`"CoC7.ToolTipKeeperSanity": "<li><strong>CTRL + Alt/Option</strong> Create sanity check roll link</li>",`
+
+##### CoC7.ToolTipKeeperSkill
+
+`"CoC7.ToolTipKeeperSkill": "<label>Keeper checks</label><ol><li><strong>CTRL + Left click</strong> Create roll link</li>{other}</ol>",`
+
+##### CoC7.ToolTipKeeperStandbySkill
+
+`"CoC7.ToolTipKeeperStandbySkill": "<li><strong>Left click</strong> Request a roll from {name}</li>",`
+
+##### CoC7.ToolTipSkill
+
+`"CoC7.ToolTipSkill": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Left click</strong> roll check with options</li><li><strong>Shift + Left click</strong> Immediate regular difficult check roll</li></ol><label>Opposed checks</label><ol><li><strong>Right click</strong> Opposed check with options</li><li><strong>Shift + Right click</strong> Immediate opposed check</li></ol><label>Combined checks</label><ol><li><strong>Alt/Option + Right click</strong> Opposed check with options</li></ol>",`
+
+##### CoC7.ToolTipSkillFlagToggle
+
+`"CoC7.ToolTipSkillFlagToggle": "<label>{status}</label><ol><li><strong>Double Click</strong> Toggle flag status</li>",`
+
+##### CoC7.ToolTipSkillFlagged
+
+`"CoC7.ToolTipSkillFlagged": "Flagged for development",`
+
+##### CoC7.ToolTipSkillUnflagged
+
+`"CoC7.ToolTipSkillUnflagged": "Not flagged for development",`
+
 ##### CoC7.TotalDamage
 
 `"CoC7.TotalDamage": "Total damage",`
@@ -1451,6 +1497,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.toggleXP
 
 `"CoC7.toggleXP": "XP gain",`
+
+##### CoC7.toolTipDelay
+
+`"CoC7.toolTipDelay": "Millisecond delay before tooltip should show, 0 for never",`
 
 ##### CoC7.weeks
 
