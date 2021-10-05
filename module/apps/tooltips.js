@@ -16,12 +16,12 @@ export class CoC7Tooltips {
         const tip = $('#help-tooltip')
         const heightTip = tip.outerHeight()
         const widthTip = tip.outerWidth()
-        if (window.innerHeight < (heightText * 1.5 + heightTip + top)) {
+        if (window.innerHeight < heightText * 1.5 + heightTip + top) {
           top = top - heightTip
         } else {
           top = top + heightText * 1.5
         }
-        if (window.innerWidth < (widthTip + left)) {
+        if (window.innerWidth < widthTip + left) {
           left = window.innerWidth - widthTip
         }
         tip.css({

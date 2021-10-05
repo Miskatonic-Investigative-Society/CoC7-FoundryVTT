@@ -922,11 +922,26 @@ export class CoC7ActorSheet extends ActorSheet {
       if (event.shiftKey) ui.notifications.info('Shift cliecked')
       // SanCheckCard.create( this.actor.actorKey, {min:'1D10',max:'1D12'}, {fastForward:event.shiftKey});
     })
-    html.find('.skill-name.rollable').mouseenter(this.toolTipSkillEnter.bind(this)).mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
-    html.find('.characteristic-label').mouseenter(this.toolTipCharacteristicEnter.bind(this)).mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
-    html.find('.attribute-label.rollable').mouseenter(this.toolTipAttributeEnter.bind(this)).mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
-    html.find('.auto-toggle').mouseenter(this.toolTipAutoEnter.bind(this)).mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
-    html.find('.item-control.development-flag').mouseenter(this.toolTipFlagForDevelopment.bind(this)).mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
+    html
+      .find('.skill-name.rollable')
+      .mouseenter(this.toolTipSkillEnter.bind(this))
+      .mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
+    html
+      .find('.characteristic-label')
+      .mouseenter(this.toolTipCharacteristicEnter.bind(this))
+      .mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
+    html
+      .find('.attribute-label.rollable')
+      .mouseenter(this.toolTipAttributeEnter.bind(this))
+      .mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
+    html
+      .find('.auto-toggle')
+      .mouseenter(this.toolTipAutoEnter.bind(this))
+      .mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
+    html
+      .find('.item-control.development-flag')
+      .mouseenter(this.toolTipFlagForDevelopment.bind(this))
+      .mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
   }
 
   toolTipSkillEnter (event) {
@@ -940,9 +955,24 @@ export class CoC7ActorSheet extends ActorSheet {
           if (typeof item !== 'undefined') {
             const skillId = item.dataset.skillId
             const skill = sheet.actor.items.get(skillId)
-            let toolTip = game.i18n.format('CoC7.ToolTipSkill', { skill: skill.sName, regular: skill.value, hard: Math.floor(skill.value / 2), extreme: Math.floor(skill.value / 5) })
+            let toolTip = game.i18n.format('CoC7.ToolTipSkill', {
+              skill: skill.sName,
+              regular: skill.value,
+              hard: Math.floor(skill.value / 2),
+              extreme: Math.floor(skill.value / 5)
+            })
             if (game.user.isGM) {
-              toolTip = toolTip + game.i18n.format('CoC7.ToolTipKeeperSkill', { other: (game.settings.get('CoC7', 'stanbyGMRolls') && sheet.actor.hasPlayerOwner ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', { name: sheet.actor.name }) : '') })
+              toolTip =
+                toolTip +
+                game.i18n.format('CoC7.ToolTipKeeperSkill', {
+                  other:
+                    game.settings.get('CoC7', 'stanbyGMRolls') &&
+                    sheet.actor.hasPlayerOwner
+                      ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
+                          name: sheet.actor.name
+                        })
+                      : ''
+                })
             }
             game.CoC7Tooltips.displayToolTip(toolTip)
           }
@@ -962,9 +992,24 @@ export class CoC7ActorSheet extends ActorSheet {
           if (typeof char !== 'undefined') {
             const charId = char.dataset.characteristic
             const characteristic = sheet.actor.characteristics[charId]
-            let toolTip = game.i18n.format('CoC7.ToolTipSkill', { skill: characteristic.label, regular: characteristic.value, hard: characteristic.hard, extreme: characteristic.extreme })
+            let toolTip = game.i18n.format('CoC7.ToolTipSkill', {
+              skill: characteristic.label,
+              regular: characteristic.value,
+              hard: characteristic.hard,
+              extreme: characteristic.extreme
+            })
             if (game.user.isGM) {
-              toolTip = toolTip + game.i18n.format('CoC7.ToolTipKeeperSkill', { other: (game.settings.get('CoC7', 'stanbyGMRolls') && sheet.actor.hasPlayerOwner ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', { name: sheet.actor.name }) : '') })
+              toolTip =
+                toolTip +
+                game.i18n.format('CoC7.ToolTipKeeperSkill', {
+                  other:
+                    game.settings.get('CoC7', 'stanbyGMRolls') &&
+                    sheet.actor.hasPlayerOwner
+                      ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
+                          name: sheet.actor.name
+                        })
+                      : ''
+                })
             }
             game.CoC7Tooltips.displayToolTip(toolTip)
           }
@@ -987,9 +1032,24 @@ export class CoC7ActorSheet extends ActorSheet {
             const attributes = sheet.actor.data.data.attribs[attributeId]
             switch (attributeId) {
               case 'lck':
-                toolTip = game.i18n.format('CoC7.ToolTipSkill', { skill: attributes.label, regular: attributes.value, hard: Math.floor(attributes.value / 2), extreme: Math.floor(attributes.value / 5) })
+                toolTip = game.i18n.format('CoC7.ToolTipSkill', {
+                  skill: attributes.label,
+                  regular: attributes.value,
+                  hard: Math.floor(attributes.value / 2),
+                  extreme: Math.floor(attributes.value / 5)
+                })
                 if (game.user.isGM) {
-                  toolTip = toolTip + game.i18n.format('CoC7.ToolTipKeeperSkill', { other: (game.settings.get('CoC7', 'stanbyGMRolls') && sheet.actor.hasPlayerOwner ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', { name: sheet.actor.name }) : '') })
+                  toolTip =
+                    toolTip +
+                    game.i18n.format('CoC7.ToolTipKeeperSkill', {
+                      other:
+                        game.settings.get('CoC7', 'stanbyGMRolls') &&
+                        sheet.actor.hasPlayerOwner
+                          ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
+                              name: sheet.actor.name
+                            })
+                          : ''
+                    })
                 }
                 game.CoC7Tooltips.displayToolTip(toolTip)
                 break
@@ -998,9 +1058,25 @@ export class CoC7ActorSheet extends ActorSheet {
                 game.CoC7Tooltips.displayToolTip(toolTip)
                 break
               case 'san':
-                toolTip = game.i18n.format('CoC7.ToolTipSkill', { skill: 'Sanity', regular: attributes.value, hard: Math.floor(attributes.value / 2), extreme: Math.floor(attributes.value / 5) })
+                toolTip = game.i18n.format('CoC7.ToolTipSkill', {
+                  skill: 'Sanity',
+                  regular: attributes.value,
+                  hard: Math.floor(attributes.value / 2),
+                  extreme: Math.floor(attributes.value / 5)
+                })
                 if (game.user.isGM) {
-                  toolTip = toolTip + game.i18n.format('CoC7.ToolTipKeeperSkill', { other: game.i18n.localize('CoC7.ToolTipKeeperSanity') + (game.settings.get('CoC7', 'stanbyGMRolls') && sheet.actor.hasPlayerOwner ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', { name: sheet.actor.name }) : '') })
+                  toolTip =
+                    toolTip +
+                    game.i18n.format('CoC7.ToolTipKeeperSkill', {
+                      other:
+                        game.i18n.localize('CoC7.ToolTipKeeperSanity') +
+                        (game.settings.get('CoC7', 'stanbyGMRolls') &&
+                        sheet.actor.hasPlayerOwner
+                          ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
+                              name: sheet.actor.name
+                            })
+                          : '')
+                    })
                 }
                 game.CoC7Tooltips.displayToolTip(toolTip)
                 break
@@ -1035,7 +1111,13 @@ export class CoC7ActorSheet extends ActorSheet {
           if (typeof item !== 'undefined') {
             const skillId = item.dataset.skillId
             const skill = sheet.actor.items.get(skillId)
-            const toolTip = game.i18n.format('CoC7.ToolTipSkillFlagToggle', { status: game.i18n.localize((skill.data.data.flags.developement ? 'CoC7.ToolTipSkillFlagged' : 'CoC7.ToolTipSkillUnflagged')) })
+            const toolTip = game.i18n.format('CoC7.ToolTipSkillFlagToggle', {
+              status: game.i18n.localize(
+                skill.data.data.flags.developement
+                  ? 'CoC7.ToolTipSkillFlagged'
+                  : 'CoC7.ToolTipSkillUnflagged'
+              )
+            })
             game.CoC7Tooltips.displayToolTip(toolTip)
           }
         }

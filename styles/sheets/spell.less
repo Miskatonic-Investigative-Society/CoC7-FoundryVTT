@@ -3,7 +3,7 @@
     background: var(--other-sheet-bg);
     background-repeat: repeat;
   }
-  font-family: customSheetFont, "Palatino Linotype", serif;
+  font-family: customSheetFont, 'Palatino Linotype', serif;
   .window-resizable-handle {
     background: var(--main-sheet-front-color);
   }
@@ -22,9 +22,9 @@
     gap: 0.3rem;
     grid-auto-flow: row;
     grid-template-areas:
-      "portrait information aside"
-      "navigation navigation navigation"
-      "body body body";
+      'portrait information aside'
+      'navigation navigation navigation'
+      'body body body';
     padding: 0.15rem;
     .flexrow {
       padding: 0.15rem 0;
@@ -38,7 +38,7 @@
     select {
       border: 0.375rem transparent;
       flex: 0;
-      font-family: customSheetFont, "Palatino Linotype", serif;
+      font-family: customSheetFont, 'Palatino Linotype', serif;
       &:focus {
         box-shadow: none;
       }
@@ -171,9 +171,9 @@
         gap: 0 0.1rem;
         grid-auto-flow: row;
         grid-template-areas:
-          "type"
-          "cost"
-          "other";
+          'type'
+          'cost'
+          'other';
         .type {
           justify-content: center;
           grid-area: type;
@@ -202,14 +202,14 @@
               }
             }
           }
-          #call:checked ~ label[for="data.type.call"],
-          #dismiss:checked ~ label[for="data.type.dismiss"],
-          #contact:checked ~ label[for="data.type.contact"],
-          #summon:checked ~ label[for="data.type.summon"],
-          #bind:checked ~ label[for="data.type.bind"],
-          #enchantment:checked ~ label[for="data.type.enchantment"],
-          #gate:checked ~ label[for="data.type.gate"],
-          #combat:checked ~ label[for="data.type.combat"] {
+          #call:checked ~ label[for='data.type.call'],
+          #dismiss:checked ~ label[for='data.type.dismiss'],
+          #contact:checked ~ label[for='data.type.contact'],
+          #summon:checked ~ label[for='data.type.summon'],
+          #bind:checked ~ label[for='data.type.bind'],
+          #enchantment:checked ~ label[for='data.type.enchantment'],
+          #gate:checked ~ label[for='data.type.gate'],
+          #combat:checked ~ label[for='data.type.combat'] {
             background-color: var(--main-sheet-front-color);
             color: lightgray;
             opacity: 100%;
@@ -227,8 +227,8 @@
           gap: 0 0.1rem;
           grid-auto-flow: row;
           grid-template-areas:
-            "left"
-            "right";
+            'left'
+            'right';
         }
         .other {
           grid-area: other;

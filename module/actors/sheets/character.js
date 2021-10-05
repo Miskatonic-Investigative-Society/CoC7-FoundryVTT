@@ -44,7 +44,9 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
       await this.actor.setFlag('CoC7', 'skillListMode', false)
     }
     data.skillListModeValue = this.actor.getFlag('CoC7', 'skillListMode')
-    if (typeof this.actor.getFlag('CoC7', 'skillShowUncommon') === 'undefined') {
+    if (
+      typeof this.actor.getFlag('CoC7', 'skillShowUncommon') === 'undefined'
+    ) {
       await this.actor.setFlag('CoC7', 'skillShowUncommon', true)
     }
     data.skillShowUncommon = this.actor.getFlag('CoC7', 'skillShowUncommon')
@@ -144,12 +146,13 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
         data.skillList.push(skill)
       }
     }
-    data.skillsByValue = [...data.skills]
-      .sort((a, b) => {
-        return b.data.value - a.data.value
-      })
+    data.skillsByValue = [...data.skills].sort((a, b) => {
+      return b.data.value - a.data.value
+    })
     data.topSkills = [...data.skillsByValue].slice(0, 14)
-    data.skillsByValue = data.skillsByValue.filter(skill => data.skillShowUncommon || !skill.data.properties.rarity)
+    data.skillsByValue = data.skillsByValue.filter(
+      skill => data.skillShowUncommon || !skill.data.properties.rarity
+    )
     data.topWeapons = [...data.meleeWpn, ...data.rangeWpn]
       .sort((a, b) => {
         return a.data.skill.main?.value - b.data.skill.main?.value
@@ -246,12 +249,20 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
   }
 
   async toggleSkillListMode (event) {
-    await this.actor.setFlag('CoC7', 'skillListMode', !this.actor.getFlag('CoC7', 'skillListMode'))
+    await this.actor.setFlag(
+      'CoC7',
+      'skillListMode',
+      !this.actor.getFlag('CoC7', 'skillListMode')
+    )
     return await this.render(true)
   }
 
   async toggleSkillUncommonMode (event) {
-    await this.actor.setFlag('CoC7', 'skillShowUncommon', !this.actor.getFlag('CoC7', 'skillShowUncommon'))
+    await this.actor.setFlag(
+      'CoC7',
+      'skillShowUncommon',
+      !this.actor.getFlag('CoC7', 'skillShowUncommon')
+    )
     return await this.render(true)
   }
 

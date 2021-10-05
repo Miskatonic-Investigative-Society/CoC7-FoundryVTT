@@ -7,7 +7,7 @@
     background: var(--other-sheet-bg);
     background-repeat: repeat;
   }
-  font-family: customSheetFont, "Palatino Linotype", serif;
+  font-family: customSheetFont, 'Palatino Linotype', serif;
   .container {
     color: var(--main-sheet-front-color);
     display: grid;
@@ -15,8 +15,8 @@
     grid-template-rows: 0.05fr 1fr;
     gap: 1px;
     grid-template-areas:
-      "header header header"
-      "characteristics skills other";
+      'header header header'
+      'characteristics skills other';
     .rollable {
       &:hover {
         color: #000;
@@ -167,8 +167,8 @@
         grid-template-columns: 1rem 2.75rem;
         grid-template-rows: 1rem 2rem;
         grid-template-areas:
-          "rollIcon characName"
-          "characScore characScore";
+          'rollIcon characName'
+          'characScore characScore';
         align-items: baseline;
         .roll-icon {
           color: var(--main-sheet-front-color);
@@ -191,8 +191,8 @@
           grid-template-columns: 2.375rem 0.875rem;
           grid-template-rows: 0.875rem 0.875rem;
           grid-template-areas:
-            "mainScore halfScore"
-            "mainScore fithScore";
+            'mainScore halfScore'
+            'mainScore fithScore';
           .main-score {
             grid-area: mainScore;
             justify-self: center;
@@ -350,7 +350,7 @@
         border-bottom: 1px solid;
         grid-template-columns: 1rem 5.5rem 2.5rem 2rem;
         grid-template-rows: 1rem;
-        grid-template-areas: "image name damage weaponControl";
+        grid-template-areas: 'image name damage weaponControl';
         .weapon-damage {
           grid-area: damage;
           color: var(--main-sheet-back-color);

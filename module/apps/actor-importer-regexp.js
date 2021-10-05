@@ -167,7 +167,9 @@ const spanishRegExp = {
 // Regular expressions to parse actors from an Traditional Chinese source
 const traditionalChineseRegExp = {
   nameRegExp: new RegExp(
-    '^[\\s\\n\\r]*(?<name>[\\u3000\\u3400-\\u4DBF\\u4E00-\\u9FFF\\w\\s\\.\\/\\(\\)\\-' + accentedCharacters + ']+),'
+    '^[\\s\\n\\r]*(?<name>[\\u3000\\u3400-\\u4DBF\\u4E00-\\u9FFF\\w\\s\\.\\/\\(\\)\\-' +
+      accentedCharacters +
+      ']+),'
   ),
   ageRegExp: /(?:age|年齡):?：?\s*(\d+)/i,
   strRegExp: /(?:STR|力量):?：?\s*(\d+)/i,
@@ -208,7 +210,8 @@ const traditionalChineseRegExp = {
       ']+):?：?[\\n\\r\\s]+(?<percentage>\\d+)%?,?\\s*(?:\\(\\d+\\/\\d+\\))?\\s*,?\\s*(?:damage|傷害)\\s*(?<damage>[\\d+\\+dD\\- ]+\\s*(DB|db|damage bonus)?)',
     'img'
   ),
-  stopWords: '(Spells|Skills|Sanity loss|Languages|Armor|Attacks|Combat|咒文列表|技能列表|SAN值損失|SAN值喪失|語言|護甲|戰鬥技能|戰鬥列表|武器)',
+  stopWords:
+    '(Spells|Skills|Sanity loss|Languages|Armor|Attacks|Combat|咒文列表|技能列表|SAN值損失|SAN值喪失|語言|護甲|戰鬥技能|戰鬥列表|武器)',
   // Weapons regular expressions,
   handgunRegExp: /( 遂發槍|.22短口自動手槍|.25短口手槍(單管)|.32或7.65mm左輪手槍|.32或7.65mm自動手槍|.357 Magnum左輪手槍|.38或9mm左輪手槍|.38自動手槍|貝雷塔M9|格洛克17|9mm自動手槍|魯格P08|.41左輪手槍|.44馬格南左輪手槍|.45左輪手槍|.45自動手槍|沙漠之鷹|Gun|Revolver|Pistol|Handgun|Derringer|Beretta|Luger|Desert Eagle| .38)/i,
   rifleRegExp: /(步槍|卡賓槍|半自動步槍|獵象槍|Rifle|Shotgun|Carbine|Gauge |Lee-Enfield|Elephant)/i,
