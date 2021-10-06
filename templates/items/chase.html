@@ -3,13 +3,34 @@
         <header class="sheet-header">
             <div class="sheet-portrait">
                 <img class="photo" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+                <input class="name" name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
             </div>
-            <div class="infos">
-                <div class="row flexrow">
-                    <input class="name" name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
+
+            <div class="active-location flexcol flex2">
+
+                {{#if activeLocation}}
+                <div class="location-name">
+                    <input name="locations.{{activeLocation.uuid}}.name" type="text" value="{{activeLocation.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
                 </div>
+                <div class="details flexrow">
+                    <div class="barrier-before flexcol flex3">
+                        {{#unless activeLocation.first}}
+                        <label class="checkbox">
+                            <input type="checkbox" name="locations.{{activeLocation.uuid}}.obstacle" {{checked activeLocation.obstacle}}/> {{ localize "CoC7.Obstacle" }}
+                        </label>
+                        {{/unless}}
+                    </div>
+                    <div class="active-participant flexcol flex2"></div>
+                    <div class="barrier-after flexcol flex3">
+                        {{#unless activeLocation.last}}
+                        <label class="checkbox">
+                            <input type="checkbox" name="locations.{{nextLocation.uuid}}.obstacle" {{checked nextLocation.obstacle}}/> {{ localize "CoC7.Obstacle" }}
+                        </label>
+                        {{/unless}}
+                    </div>
+                </div>
+                {{/if}}
             </div>
-            <div class="flex1"></div>
 
         </header>
 
@@ -21,38 +42,78 @@
 
         <section class="sheet-body">
             <div class="tab setup" data-group="primary" data-tab="setup">
-                <div class="track" style="white-space: nowrap;align-items:stretch;height: 100px;overflow-x: scroll;background-attachment: local;background-image: linear-gradient(to right, #6fa26f , #ece857);">
+                {{#if locations}}
+
+                <div class="track">
                     {{#each locations as |location i|}}
-                        <div class="location-container" style="display: inline-block;width: 200px;height: 100%;" data-id="{{location.id}}">
-                            <div class="location">
+                        <div class="location" data-uuid="{{location.uuid}}">
+                            <div class="flexrow">
+                                {{#unless location.first}}
+                                    {{#if location.obstacle}}
+                                    <div class="flexrow obstalce">
+                                        <div class="warning"><i class="game-icon game-icon-barrier"></i></div>
+                                    </div>
+                                    {{/if}}
+                                {{/unless}}
+
+
+                                
+                                <div class="flexrow name">
+                                    {{#if location.first}}
+                                    <div class="spacer"></div>
+                                    {{else}}
+                                    <div class="line"></div>
+                                    {{/if}}
+
+                                    <div class="name-container {{location.cssClasses}}">{{location.name}}</div>
+
+
+                                    {{#if location.last}}
+                                    <div class="spacer"></div>
+                                    {{else}}
+                                    <div class="line"></div>
+                                    {{/if}}
+                                </div>
+
 
                             </div>
-                            {{location.name}}
                         </div>
                     {{/each}}
                 </div>
-                <div class="circles" style="white-space: nowrap;align-items:stretch;height: 100px;overflow-x: scroll; overflow-y: hidden;background-attachment: local;background-image: linear-gradient(to right, #6fa26f , #ece857);">
+                {{else}}
+                <div class="init">
+                    <div class="form-group">
+                        <label>{{localize 'CoC7.Locations'}}</label>
+                        <input type="text" name="data.locations.total" value="{{data.locations.total}}" data-dtype="Number"/>
+                        <div class="button" data-action="init">{{localize 'CoC7.Initialize'}}</div>
+                    </div>
+                </div>
+                {{/if}}
+                <!-- <div class="circles" style="white-space: nowrap;align-items:stretch;height: 100px;overflow-x: scroll; overflow-y: hidden;background-attachment: local;background-image: linear-gradient(to right, #6fa26f , #ece857);">
                     {{#each locations as |location i|}}
 
-                    <div data-num="{{i}}" style="display: inline-block;width: 200px;height: 100%;">
+                     <div data-num="{{i}}" style="display: inline-block;width: 200px;height: 100%;">
                     </div>
                     {{/each}}
 
-                </div>
-                <div class="row flexrow">
-                    <label>{{localize 'CoC7.Locations'}}</label>
-                    <input type="text" name="data.locations.total" value="{{data.locations.total}}" data-dtype="Number"/>
-                </div>
-                <div class="row flexrow">
+                </div> -->
+
+                <div class="row">
                     <label class="checkbox">
                         <input type="checkbox" name="data.includeEscaped" {{checked data.includeEscaped}}/> {{ localize "CoC7.IncludeEscapees" }}
                     </label>
+                    <label class="checkbox">
+                        <input type="checkbox" name="data.includeLatecomers" {{checked data.includeLatecomers}}/> {{ localize "CoC7.IncludeLatecomers" }}
+                    </label>
+                    {{#if locations}}
+                    <div class="button" data-action="reset">{{localize 'CoC7.Reset'}}</div>
+                    {{/if}}
                 </div>
             </div>
             <div class="tab participants" data-group="primary" data-tab="participants">
                 <div class="participants-list">
                     {{#each participants as |p i|}}
-                    <div class="participant {{p.cssClass}}" data-index={{i}}>
+                    <div class="participant {{p.cssClass}}" data-index={{i}} data-uuid={{p.uuid}}>
                         <div class="p-side {{#if p.isChaser}}chaser{{else}}prey{{/if}}">
                             {{#if p.isChaser}}
                                 <a><i class="game-icon game-icon-moon-claws"></i></a>
@@ -68,28 +129,28 @@
                             {{#if p.isActor}}
                                 {{p.name}}
                             {{else}}
-                                <input type='text' name="data.participants.{{i}}.name" placeholder="Name" value="{{p.name}}"/>
+                                <input type='text' name="data.participants.{{p.uuid}}.name" placeholder="Name" value="{{p.name}}"/>
                             {{/if}}
                         </div>
                         <div class="p-init">
-                            <input class='right-aligned' type='text' name="data.participants.{{i}}.dex" placeholder="DEX" value="{{p.dex}}"/>
+                            <input class='right-aligned' type='text' name="data.participants.{{p.uuid}}.dex" placeholder="DEX" value="{{p.dex}}"/>
                         </div>
                         <div class="p-movement">
-                            <input class='right-aligned' type='text' name="data.participants.{{i}}.mov" placeholder="MOV" value="{{p.mov}}"/>
+                            <input class='right-aligned' type='text' name="data.participants.{{p.uuid}}.mov" placeholder="MOV" value="{{p.mov}}"/>
                         </div>
                         <div class="p-speed-check">
-                            <datalist id="check-options-name-p{{i}}">
+                            <datalist id="check-options-name-p{{p.uuid}}">
                                 {{#each p.speedCheck.options as |o|}}
                                     <option>{{o}}</option>
                                 {{/each}}
                             </datalist>
-                            <input type='text' name="data.participants.{{i}}.speed-check.name" placeholder="check name" value="{{p.speedCheck.name}}" list='check-options-name-p{{i}}' data-override='true'/>
+                            <input type='text' name="data.participants.{{p.uuid}}.speed-check.name" placeholder="check name" value="{{p.speedCheck.name}}" list='check-options-name-p{{p.uuid}}' data-override='true'/>
                         </div>
                         <div class="p-score">
                             {{#if p.speedCheck.refSet}}
                                 <span>{{p.speedCheck.score}}</span>
                             {{else}}
-                                <input class='right-aligned' type='text' name="data.participants.{{i}}.speedCheck.score" placeholder="%" value="{{p.speedCheck.score}}" />
+                                <input class='right-aligned' type='text' name="data.participants.{{p.uuid}}.speedCheck.score" placeholder="%" value="{{p.speedCheck.score}}" />
                             {{/if}}
                         </div>
                         <div class="p-roll {{p.speedCheck.cssClasses}}">
@@ -120,7 +181,7 @@
                         </div>
                     </div>
                     {{#if p.hasDriver}}
-                        <div class="driver" data-index={{i}}>
+                        <div class="driver" data-index={{i}} data-uuid="{{p.uuid}}">
                             <div class="d-spacer"><i class="fas fa-level-up-alt fa-rotate-90"></i></div>
                             <div class="d-icon open-actor" data-actor-key="{{p.driver.actorKey}}">
                                 <a><img src="{{p.driver.img}}" title="{{p.driver.name}}"/></a>
@@ -144,7 +205,7 @@
                 <div>Preys Min : {{preysMinMov}}</div>
                 <div>Preys Max : {{preysMaxMov}}</div>
                 <div>Chasers Min : {{chasersMinMov}}</div>
-                <div>Chasers Min : {{chasersMaxMov}}</div>
+                <div>Chasers Max : {{chasersMaxMov}}</div>
             </div>
         </section>
     </div>

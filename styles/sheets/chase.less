@@ -1,7 +1,145 @@
 .sheetV2.item.chase {
-  .sheet-body {
-    .tab.active {
+  form{
+    .container{
+      &.expanded {
+        // display: flex;
+        // flex-direction: column;
+        // flex-wrap: nowrap;
+        grid-template-rows: 10rem 1.875rem auto;
+      }
+
+      .sheet-header {
+        flex: 0 0 12rem;
+        height: 100%;
+        .sheet-portrait{
+          height: auto;
+        }
+
+        .active-location{
+          height: 100%;
+          padding-top: 0.5rem;
+          .location-name{
+            flex: 0 0 auto;
+            text-align: center;
+          }
+
+        }
+      }
+
+      .sheet-body {
+        flex:auto;
+
+        .tab.active {
+          display: block;
+        }
+
+        .tab.setup {
+          flex-direction: column;
+          .init {
+            .form-group {
+              justify-content: center;
+              label {
+                flex: 0 0 auto;
+              }
+
+              .button {
+                flex: 0 0 auto;
+              }
+
+              input[type='text'] {
+                flex: 0 0 3rem;
+                text-align: center;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.track {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  padding: 0.25rem;
+  // background-attachment: local;
+  // background-image: linear-gradient(to right, red , blue);
+
+  .location {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    .flexrow {
+      flex-wrap: nowrap;
+      flex: 0 0 content;
+    }
+
+    .people {
+      flex: 1;
+      min-height: 2rem;
+    }
+
+    // &:first-child{
+    //   min-width: fit-content;
+    // }
+
+    .name {
+      min-width: 2rem;
+    }
+
+    .line {
+      display: block;
+      height: 0.125rem;
+      background: black;
+      position: relative;
+      top: 1rem;
+      min-width: 1rem;
+    }
+
+    .spacer {
+      min-width: 1rem;
+    }
+
+    .fixed-line {
+      display: block;
+      height: 0.125rem;
+      background: black;
+      position: relative;
+      top: 1rem;
+      width: 1rem;
+    }
+
+    .warning{
+      font-size: 1.5rem;
+      flex: 0 0 content;
       display: flex;
+      align-items: center;
+      color: red;
+    }
+
+    .name-container {
+      font-size: 1rem;
+      line-height: 2rem;
+      &:hover {
+        cursor: pointer;
+      }
+      border: 0.125rem solid black;
+      border-radius: 1rem;
+      color: black;
+      flex: 0 0 auto;
+      padding: 0 0.3rem;
+      min-height: 2rem;
+      &.empty {
+        padding: 0;
+        width: 2rem;
+        background-color: slategray;
+      }
+      &.active {
+        border: 0.125rem solid red;
+      }
     }
   }
 }
