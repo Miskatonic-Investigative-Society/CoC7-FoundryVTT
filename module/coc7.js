@@ -65,6 +65,14 @@ Hooks.on('renderSettingsConfig', (app, html, options) => {
         '</h2>'
     )
   systemTab
+    .find('input[name=CoC7\\.overrideGameArtwrok]')
+    .closest('div.form-group')
+    .before(
+      '<h2 class="setting-header">' +
+        game.i18n.localize('SETTINGS.TitleGameArtwork') +
+        '</h2>'
+    )
+  systemTab
     .find('input[name=CoC7\\.displayPlayerNameOnSheet]')
     .closest('div.form-group')
     .before(
