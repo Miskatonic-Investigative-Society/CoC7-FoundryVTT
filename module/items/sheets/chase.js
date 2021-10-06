@@ -246,6 +246,8 @@ export class CoC7ChaseSheet extends ItemSheet {
 
     html.find('.name-container').click(this._onLocationClick.bind(this))
 
+    html.find( '.obstacle_type').click(this._onObstacleTypeClick.bind(this))
+
     const participantDragDrop = new DragDrop({
       dropSelector: '.participant',
       callbacks: { drop: this._onDropParticipant.bind(this) }
@@ -369,6 +371,23 @@ export class CoC7ChaseSheet extends ItemSheet {
       delete l.last
     })
     await this.item.update({ 'data.locations.list': updatedList })
+  }
+
+  async _onObstacleTypeClick( event) {
+    const target = event.currentTarget
+    const locationElement = target.closest('.location')
+    const uuid = locationElement.dataset.uuid
+    const locations = duplicate(this.item.data.data.locations.list)
+    const locationIndex = this.findIndex(locations, uuid)
+    if( !locations[ locationIndex].obstacleDetails) locations[ locationIndex].obstacleDetails = {}
+    if( target.classList.contains( 'barrier')){
+      locations[ locationIndex].obstacleDetails.barrier = !locations[ locationIndex].obstacleDetails.barrier
+      locations[ locationIndex].obstacleDetails.hazard = !locations[ locationIndex].obstacleDetails.barrier
+    } else if( target.classList.contains( 'hazard')){
+      locations[ locationIndex].obstacleDetails.hazard = !locations[ locationIndex].obstacleDetails.hazard
+      locations[ locationIndex].obstacleDetails.barrier = !locations[ locationIndex].obstacleDetails.hazard
+    }
+    await this.updateLocationsList(locations)  
   }
 
   async _onLocationClick (event) {

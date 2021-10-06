@@ -10,23 +10,36 @@
 
                 {{#if activeLocation}}
                 <div class="location-name">
-                    <input name="locations.{{activeLocation.uuid}}.name" type="text" value="{{activeLocation.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
+                    <input type="text" name="locations.{{activeLocation.uuid}}.name" value="{{activeLocation.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
                 </div>
                 <div class="details flexrow">
-                    <div class="barrier-before flexcol flex3">
+                    <div class="location obstalce before flexcol flex3" data-uuid="{{activeLocation.uuid}}">
                         {{#unless activeLocation.first}}
-                        <label class="checkbox">
+                        <label class="checkbox flex-content">
                             <input type="checkbox" name="locations.{{activeLocation.uuid}}.obstacle" {{checked activeLocation.obstacle}}/> {{ localize "CoC7.Obstacle" }}
                         </label>
                         {{/unless}}
+                        {{#if activeLocation.obstacle}}
+                            <div class="flexrow flex-content">
+                                <div class="tag obstacle_type barrier {{#if activeLocation.obstacleDetails.barrier}}switched-on{{/if}}">barrier</div>
+                                <div class="tag obstacle_type hazard {{#if activeLocation.obstacleDetails.hazard}}switched-on{{/if}}">hazard</div>
+                            </div>
+                            <input type="text" class="flex-content" name="locations.{{activeLocation.uuid}}.obstacleDetails.name" value="{{activeLocation.obstacleDetails.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
+                        {{/if}}
                     </div>
                     <div class="active-participant flexcol flex2"></div>
-                    <div class="barrier-after flexcol flex3">
+                    <div class="location obstacle after flexcol flex3" data-uuid="{{nextLocation.uuid}}">
                         {{#unless activeLocation.last}}
-                        <label class="checkbox">
+                        <label class="checkbox flex-content">
                             <input type="checkbox" name="locations.{{nextLocation.uuid}}.obstacle" {{checked nextLocation.obstacle}}/> {{ localize "CoC7.Obstacle" }}
                         </label>
                         {{/unless}}
+                        {{#if nextLocation.obstacle}}
+                        <div class="flexrow flex-content">
+                            <div class="tag obstacle_type barrier {{#if nextLocation.obstacleDetails.barrier}}switched-on{{/if}}">barrier</div>
+                            <div class="tag obstacle_type hazard {{#if nextLocation.obstacleDetails.hazard}}switched-on{{/if}}">hazard</div>
+                        </div>
+                        {{/if}}
                     </div>
                 </div>
                 {{/if}}
@@ -50,8 +63,14 @@
                             <div class="flexrow">
                                 {{#unless location.first}}
                                     {{#if location.obstacle}}
-                                    <div class="flexrow obstalce">
-                                        <div class="warning"><i class="game-icon game-icon-barrier"></i></div>
+                                    <div class="flexrow obstalce" title="{{location.obstacleDetails.name}}">
+                                        <div class="warning flex-content">
+                                            {{#if location.obstacleDetails.barrier}}
+                                            <i class="game-icon game-icon-barrier"></i>
+                                            {{else}}
+                                            <i class="game-icon game-icon-hazard-sign"></i>
+                                            {{/if}}
+                                        </div>
                                     </div>
                                     {{/if}}
                                 {{/unless}}
@@ -99,10 +118,10 @@
                 </div> -->
 
                 <div class="row">
-                    <label class="checkbox">
+                    <label class="checkbox flex-content">
                         <input type="checkbox" name="data.includeEscaped" {{checked data.includeEscaped}}/> {{ localize "CoC7.IncludeEscapees" }}
                     </label>
-                    <label class="checkbox">
+                    <label class="checkbox flex-content">
                         <input type="checkbox" name="data.includeLatecomers" {{checked data.includeLatecomers}}/> {{ localize "CoC7.IncludeLatecomers" }}
                     </label>
                     {{#if locations}}
