@@ -126,6 +126,7 @@
   "CoC7.HitPointsCost": "Hit Points Cost",
   "CoC7.MagicPointsCost": "Magic Points Cost",
   "CoC7.OtherCosts": "Other Costs",
+  "CoC7.CastingSpell": "Casting <i>{spell}</i>.",
 
   "CoC7.CopyToClipboard": "Copy to clipboard",
   "CoC7.WhisperToSelection": "Whisper to selected tokens",
