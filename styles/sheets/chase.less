@@ -1,10 +1,14 @@
 .sheetV2.item.chase {
-  .flex-content{
+  .flex-content {
     flex: 0 0 content;
   }
 
-  form{
-    .container{
+  .flex-auto {
+    flex: 0 0 auto;
+  }
+
+  form {
+    .container {
       &.expanded {
         // display: flex;
         // flex-direction: column;
@@ -15,14 +19,14 @@
       .sheet-header {
         flex: 0 0 12rem;
         height: 100%;
-        .sheet-portrait{
+        .sheet-portrait {
           height: auto;
         }
 
-        .active-location{
+        .active-location {
           height: 100%;
           padding-top: 0.5rem;
-          .location-name{
+          .location-name {
             flex: 0 0 auto;
             text-align: center;
           }
@@ -30,10 +34,18 @@
       }
 
       .sheet-body {
-        flex:auto;
+        flex: auto;
 
-        .tab.active {
-          display: block;
+        // .tab.active {
+        //   display: block;
+        // }
+
+        .tab {
+          .tab-pannel {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+          }
         }
 
         .tab.setup {
@@ -70,19 +82,31 @@
   // background-attachment: local;
   // background-image: linear-gradient(to right, red , blue);
 
+  .flexrow {
+    flex-wrap: nowrap;
+    flex: 0 0 auto;
+  }
+
   .location {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-
-    .flexrow {
-      flex-wrap: nowrap;
-      flex: 0 0 content;
-    }
+    flex: 0 0 auto;
 
     .people {
       flex: 1;
       min-height: 2rem;
+      .spacer {
+        flex: 0 0 1.5rem;
+      }
+      .list {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        .participant {
+          width: 2rem;
+        }
+      }
     }
 
     // &:first-child{
@@ -115,7 +139,9 @@
       width: 1rem;
     }
 
-    .warning{
+    .warning {
+      flex: 0 0 content;
+      height: 2rem;
       font-size: 1.5rem;
       display: flex;
       align-items: center;
@@ -124,7 +150,8 @@
 
     .name-container {
       font-size: 1rem;
-      line-height: 2rem;
+      line-height: 1.75rem;
+      white-space: nowrap;
       &:hover {
         cursor: pointer;
       }
@@ -133,14 +160,28 @@
       color: black;
       flex: 0 0 auto;
       padding: 0 0.3rem;
-      min-height: 2rem;
+      height: 2rem;
       &.empty {
         padding: 0;
         width: 2rem;
         background-color: slategray;
+        &.init {
+          border: 0.125rem solid slategrey;
+          background-color: white;
+          &:hover {
+            cursor: auto;
+          }
+        }
       }
       &.active {
         border: 0.125rem solid red;
+      }
+      &.init {
+        border: 0.125rem solid slategrey;
+        color: rgba(0, 0, 0, 0);
+        &:hover {
+          cursor: auto;
+        }
       }
     }
   }
@@ -161,9 +202,9 @@
     .participant {
       flex: 1;
       display: grid;
-      grid-template-columns: 2rem 2rem 0.5rem 5fr 2.5rem 2.5rem 4fr 2rem 3rem 1.25rem 2rem 1rem;
+      grid-template-columns: 2rem 2rem 0.5rem 5fr 2.5rem 2.5rem 4fr 2rem 3rem 1.25rem 2rem 1rem 1rem;
       grid-template-rows: 2rem;
-      grid-template-areas: 'p-side p-icon p-expand p-name p-init p-movement p-speed-check p-score p-roll p-adjust p-modified-mov p-control';
+      grid-template-areas: 'p-side p-icon p-expand p-name p-init p-movement p-speed-check p-score p-roll p-adjust p-modified-mov p-control p-movement-action';
       align-items: center;
       margin-bottom: 2px;
 
