@@ -4,7 +4,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 | Key                                                                                      |    cn    |    cs    |    de    |    es    |    fr    |    ja    |    pl    |  pt-BR   |    sv    |  zh-TW   |
 | :--------------------------------------------------------------------------------------- | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-| **Remaining**:                                                                           | **359**  | **135**  | **152**  |  **23**  |  **23**  |  **23**  |  **47**  |  **23**  |  **17**  |  **29**  |
+| **Remaining**:                                                                           | **366**  | **142**  | **159**  |  **30**  |  **30**  |  **30**  |  **54**  |  **30**  |  **24**  |  **36**  |
 | [CoC7.ActorImporter](#coc7actorimporter)                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.ActorImporterSummary](#coc7actorimportersummary)                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.AddBook](#coc7addbook)                                                             | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -301,6 +301,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [SETTINGS.AllowFlatThresholdModifier](#settingsallowflatthresholdmodifier)               | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.AllowFlatThresholdModifierHint](#settingsallowflatthresholdmodifierhint)       | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.AlwaysEditable](#settingsalwayseditable)                                       | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [SETTINGS.ArtPauseImage](#settingsartpauseimage)                                         | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [SETTINGS.ArtPauseImageHint](#settingsartpauseimagehint)                                 | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [SETTINGS.ArtPauseText](#settingsartpausetext)                                           | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [SETTINGS.ArtPauseTextHint](#settingsartpausetexthint)                                   | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [SETTINGS.ArtWorkOtherSheetBackground](#settingsartworkothersheetbackground)             | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.ArtWorkOtherSheetBackgroundHint](#settingsartworkothersheetbackgroundhint)     | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.ArtWorkSheetBackground](#settingsartworksheetbackground)                       | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
@@ -341,6 +345,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [SETTINGS.OneBlockBackStoryHint](#settingsoneblockbackstoryhint)                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.OpposedRollTieBreaker](#settingsopposedrolltiebreaker)                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.OpposedRollTieBreakerHint](#settingsopposedrolltiebreakerhint)                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [SETTINGS.OverrideGameArtwrok](#settingsoverridegameartwrok)                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [SETTINGS.OverrideGameArtwrokHint](#settingsoverridegameartwrokhint)                     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [SETTINGS.OverrideSheetArtwork](#settingsoverridesheetartwork)                           | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.OverrideSheetArtworkHint](#settingsoverridesheetartworkhint)                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.PlayerUnlockSheetMode](#settingsplayerunlocksheetmode)                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
@@ -353,6 +359,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [SETTINGS.TitleChatCards](#settingstitlechatcards)                                       | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.TitleDeveloperDebug](#settingstitledeveloperdebug)                             | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.TitleDiceSoNice](#settingstitledicesonice)                                     | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [SETTINGS.TitleGameArtwork](#settingstitlegameartwork)                                   | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [SETTINGS.TitleInitiative](#settingstitleinitiative)                                     | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.TitleRoll](#settingstitleroll)                                                 | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.TitleRollTable](#settingstitlerolltable)                                       | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
@@ -1549,6 +1556,22 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 `"SETTINGS.AlwaysEditable": "always",`
 
+##### SETTINGS.ArtPauseImage
+
+`"SETTINGS.ArtPauseImage": "Pause image",`
+
+##### SETTINGS.ArtPauseImageHint
+
+`"SETTINGS.ArtPauseImageHint": "<img scr='xxx'>. Type 'null' to remove image",`
+
+##### SETTINGS.ArtPauseText
+
+`"SETTINGS.ArtPauseText": "Pause text",`
+
+##### SETTINGS.ArtPauseTextHint
+
+`"SETTINGS.ArtPauseTextHint": "Leave blank for default",`
+
 ##### SETTINGS.ArtWorkOtherSheetBackground
 
 `"SETTINGS.ArtWorkOtherSheetBackground": "Other sheet background",`
@@ -1563,7 +1586,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 ##### SETTINGS.ArtWorkSheetBackgroundHint
 
-`"SETTINGS.ArtWorkSheetBackgroundHint": "type 'null' to remove background",`
+`"SETTINGS.ArtWorkSheetBackgroundHint": "type 'null' to remove background, blank for default",`
 
 ##### SETTINGS.ArtWorkSheetBackgroundType
 
@@ -1709,6 +1732,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 `"SETTINGS.OpposedRollTieBreakerHint": "In case of a tie during opposed roll, winner is determined by highest rolled value, not higher skill.",`
 
+##### SETTINGS.OverrideGameArtwrok
+
+`"SETTINGS.OverrideGameArtwrok": "Override game artwrok",`
+
+##### SETTINGS.OverrideGameArtwrokHint
+
+`"SETTINGS.OverrideGameArtwrokHint": "!!RESTART REQUIRED!! gives access to advance game config, leave blank for default",`
+
 ##### SETTINGS.OverrideSheetArtwork
 
 `"SETTINGS.OverrideSheetArtwork": "Override Sheet Artwork",`
@@ -1756,6 +1787,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### SETTINGS.TitleDiceSoNice
 
 `"SETTINGS.TitleDiceSoNice": "Dice So Nice Settings",`
+
+##### SETTINGS.TitleGameArtwork
+
+`"SETTINGS.TitleGameArtwork": "Game Artwrok Settings",`
 
 ##### SETTINGS.TitleInitiative
 
