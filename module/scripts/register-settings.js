@@ -189,15 +189,15 @@ export function registerSettings () {
   /**
    * Game Artwork Settings
    */
-  game.settings.register('CoC7', 'overrideGameArtwrok', {
-    name: 'SETTINGS.OverrideGameArtwrok',
-    hint: 'SETTINGS.OverrideGameArtwrokHint',
+  game.settings.register('CoC7', 'overrideGameArtwork', {
+    name: 'SETTINGS.OverrideGameArtwork',
+    hint: 'SETTINGS.OverrideGameArtworkHint',
     scope: 'world',
     config: true,
     default: false,
     type: Boolean
   })
-  if (game.settings.get('CoC7', 'overrideGameArtwrok')) {
+  if (game.settings.get('CoC7', 'overrideGameArtwork')) {
     game.settings.register('CoC7', 'artPauseImage', {
       name: 'SETTINGS.ArtPauseImage',
       hint: 'SETTINGS.ArtPauseImageHint',
@@ -208,7 +208,7 @@ export function registerSettings () {
     })
     game.settings.register('CoC7', 'artPauseText', {
       name: 'SETTINGS.ArtPauseText',
-      name: 'SETTINGS.ArtPauseTextHint',
+      hint: 'SETTINGS.ArtPauseTextHint',
       scope: 'world',
       config: true,
       default: 'The Blind Idiot God is dreaming...',
