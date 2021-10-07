@@ -19,6 +19,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Update updater to check module compendiums for Actor and Item when modules version module numbers are new or changed.
 - Update to French localization, thanks to @vonv.
 - Update to Japanese localization, thanks to `@Asami#8627`.
+- Update to Polish localization, thanks to @everyonecancode;
 - Update to Portuguese localization.
 - Update to Spanish localization, thanks to @lozalojo.
 - Update to Swedish localization, thanks to @Rangertheman.
