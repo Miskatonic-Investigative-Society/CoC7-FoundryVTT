@@ -345,8 +345,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [SETTINGS.OneBlockBackStoryHint](#settingsoneblockbackstoryhint)                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.OpposedRollTieBreaker](#settingsopposedrolltiebreaker)                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.OpposedRollTieBreakerHint](#settingsopposedrolltiebreakerhint)                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
-| [SETTINGS.OverrideGameArtwrok](#settingsoverridegameartwrok)                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [SETTINGS.OverrideGameArtwrokHint](#settingsoverridegameartwrokhint)                     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [SETTINGS.OverrideGameArtwork](#settingsoverridegameartwork)                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [SETTINGS.OverrideGameArtworkHint](#settingsoverridegameartworkhint)                     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [SETTINGS.OverrideSheetArtwork](#settingsoverridesheetartwork)                           | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.OverrideSheetArtworkHint](#settingsoverridesheetartworkhint)                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [SETTINGS.PlayerUnlockSheetMode](#settingsplayerunlocksheetmode)                         | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
@@ -1732,13 +1732,13 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 `"SETTINGS.OpposedRollTieBreakerHint": "In case of a tie during opposed roll, winner is determined by highest rolled value, not higher skill.",`
 
-##### SETTINGS.OverrideGameArtwrok
+##### SETTINGS.OverrideGameArtwork
 
-`"SETTINGS.OverrideGameArtwrok": "Override game artwrok",`
+`"SETTINGS.OverrideGameArtwork": "Override game Artwork",`
 
-##### SETTINGS.OverrideGameArtwrokHint
+##### SETTINGS.OverrideGameArtworkHint
 
-`"SETTINGS.OverrideGameArtwrokHint": "!!RESTART REQUIRED!! gives access to advance game config, leave blank for default",`
+`"SETTINGS.OverrideGameArtworkHint": "!!RESTART REQUIRED!! gives access to advance game config, leave blank for default",`
 
 ##### SETTINGS.OverrideSheetArtwork
 
@@ -1790,7 +1790,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 ##### SETTINGS.TitleGameArtwork
 
-`"SETTINGS.TitleGameArtwork": "Game Artwrok Settings",`
+`"SETTINGS.TitleGameArtwork": "Game Artwork Settings",`
 
 ##### SETTINGS.TitleInitiative
 
