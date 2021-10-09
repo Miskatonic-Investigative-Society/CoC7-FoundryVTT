@@ -240,12 +240,13 @@ export class chatHelper {
     if (game.settings.get('CoC7', 'useToken')) {
       // Try to find a token.
       const token = chatHelper.getTokenFromKey(actorKey)
-      if (token) return token.data.img
+      if (token && token.data.img.indexOf('*') === -1) return token.data.img
     }
     const actor = chatHelper.getActorFromKey(actorKey) // REFACTORING (2)
     if (game.settings.get('CoC7', 'useToken')) {
       // if no token found for that actor return the prototype token image.
-      if (actor.data.token) return actor.data.token.img
+      if (actor.data.token && actor.data.token.img.indexOf('*') === -1)
+        return actor.data.token.img
     }
     return actor.data.img
   }
