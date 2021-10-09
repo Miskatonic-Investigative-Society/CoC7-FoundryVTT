@@ -30,6 +30,10 @@ export class CoC7SpellSheet extends ItemSheet {
   activateListeners (html) {
     super.activateListeners(html)
     html.find('.option').click(event => this.modifyType(event))
+    html.find('#cast-spell').click(event => {
+      event.preventDefault()
+      this.item.cast()
+    })
   }
 
   /**

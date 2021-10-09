@@ -1577,15 +1577,14 @@ export class CoCActor extends Actor {
         this.data.data.characteristics.siz.value != null &&
         this.data.data.characteristics.con.value != null
       ) {
-        const maxHP = Math.floor(
+        return Math.floor(
           (this.data.data.characteristics.siz.value +
             this.data.data.characteristics.con.value) /
-            10
+            (game.settings.get('CoC7', 'pulpRules') &&
+            this.data.type === 'character'
+              ? 5
+              : 10)
         )
-        return game.settings.get('CoC7', 'pulpRules') &&
-          this.data.type === 'character'
-          ? maxHP * 2
-          : maxHP
       }
       if (this.data.data.attribs.hp.max) {
         return parseInt(this.data.data.attribs.hp.max)

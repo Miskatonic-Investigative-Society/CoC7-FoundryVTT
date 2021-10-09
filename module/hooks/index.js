@@ -4,6 +4,7 @@ import * as RenderActorSheet from './render-actor-sheet.js'
 import * as RenderChatMessage from './render-chat-message.js'
 import * as RenderDialog from './render-dialog.js'
 import * as RenderItemSheet from './render-item-sheet.js'
+import * as RenderPause from './render-pause.js'
 
 export const CoC7Hooks = {
   listen () {
@@ -13,5 +14,6 @@ export const CoC7Hooks = {
     RenderChatMessage.listen()
     RenderDialog.listen()
     RenderItemSheet.listen()
+    RenderPause.listen()
   }
 }

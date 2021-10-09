@@ -187,6 +187,36 @@ export function registerSettings () {
   })
 
   /**
+   * Game Artwork Settings
+   */
+  game.settings.register('CoC7', 'overrideGameArtwork', {
+    name: 'SETTINGS.OverrideGameArtwork',
+    hint: 'SETTINGS.OverrideGameArtworkHint',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
+  })
+  if (game.settings.get('CoC7', 'overrideGameArtwork')) {
+    game.settings.register('CoC7', 'artPauseImage', {
+      name: 'SETTINGS.ArtPauseImage',
+      hint: 'SETTINGS.ArtPauseImageHint',
+      scope: 'world',
+      config: true,
+      default: 'systems/CoC7/assets/icons/time-trap.svg',
+      type: String
+    })
+    game.settings.register('CoC7', 'artPauseText', {
+      name: 'SETTINGS.ArtPauseText',
+      hint: 'SETTINGS.ArtPauseTextHint',
+      scope: 'world',
+      config: true,
+      default: 'The Blind Idiot God is dreaming...',
+      type: String
+    })
+  }
+
+  /**
    * Sheet settings
    */
   game.settings.register('CoC7', 'displayPlayerNameOnSheet', {
@@ -195,6 +225,13 @@ export function registerSettings () {
     config: true,
     default: false,
     type: Boolean
+  })
+  game.settings.register('CoC7', 'toolTipDelay', {
+    name: 'CoC7.toolTipDelay',
+    scope: 'world',
+    config: true,
+    default: 2000,
+    type: Number
   })
   game.settings.register('CoC7', 'showIconsOnly', {
     name: 'SETTINGS.showIconsOnly',

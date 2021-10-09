@@ -40,7 +40,16 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
   async getData () {
     const data = await super.getData()
 
-    if (!this.skillListMode) this.skillListMode = 'alphabetical'
+    if (typeof this.actor.getFlag('CoC7', 'skillListMode') === 'undefined') {
+      await this.actor.setFlag('CoC7', 'skillListMode', false)
+    }
+    data.skillListModeValue = this.actor.getFlag('CoC7', 'skillListMode')
+    if (
+      typeof this.actor.getFlag('CoC7', 'skillShowUncommon') === 'undefined'
+    ) {
+      await this.actor.setFlag('CoC7', 'skillShowUncommon', true)
+    }
+    data.skillShowUncommon = this.actor.getFlag('CoC7', 'skillShowUncommon')
     data.showIconsOnly = game.settings.get('CoC7', 'showIconsOnly')
 
     if (this.actor.occupation) {
@@ -121,27 +130,29 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
     data.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
 
     data.summarized = this.summarized
-    data.skillListModeValue = this.skillListMode === 'value'
     data.skillList = []
     let previousSpec = ''
     for (const skill of data.skills) {
-      if (skill.data.properties.special) {
-        if (previousSpec !== skill.data.specialization) {
-          previousSpec = skill.data.specialization
-          data.skillList.push({
-            isSpecialization: true,
-            name: skill.data.specialization
-          })
+      if (data.skillShowUncommon || !skill.data.properties.rarity) {
+        if (skill.data.properties.special) {
+          if (previousSpec !== skill.data.specialization) {
+            previousSpec = skill.data.specialization
+            data.skillList.push({
+              isSpecialization: true,
+              name: skill.data.specialization
+            })
+          }
         }
+        data.skillList.push(skill)
       }
-      data.skillList.push(skill)
     }
-    data.skillsByValue = [...data.skills]
-      .sort((a, b) => {
-        return a.data.value - b.data.value
-      })
-      .reverse()
+    data.skillsByValue = [...data.skills].sort((a, b) => {
+      return b.data.value - a.data.value
+    })
     data.topSkills = [...data.skillsByValue].slice(0, 14)
+    data.skillsByValue = data.skillsByValue.filter(
+      skill => data.skillShowUncommon || !skill.data.properties.rarity
+    )
     data.topWeapons = [...data.meleeWpn, ...data.rangeWpn]
       .sort((a, b) => {
         return a.data.skill.main?.value - b.data.skill.main?.value
@@ -231,13 +242,27 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
       html.find('.toggle-list-mode').click(event => {
         this.toggleSkillListMode(event)
       })
+      html.find('.toggle-uncommon-mode').click(event => {
+        this.toggleSkillUncommonMode(event)
+      })
     }
   }
 
   async toggleSkillListMode (event) {
-    this.skillListMode === 'alphabetical'
-      ? (this.skillListMode = 'value')
-      : (this.skillListMode = 'alphabetical')
+    await this.actor.setFlag(
+      'CoC7',
+      'skillListMode',
+      !this.actor.getFlag('CoC7', 'skillListMode')
+    )
+    return await this.render(true)
+  }
+
+  async toggleSkillUncommonMode (event) {
+    await this.actor.setFlag(
+      'CoC7',
+      'skillShowUncommon',
+      !this.actor.getFlag('CoC7', 'skillShowUncommon')
+    )
     return await this.render(true)
   }
 

@@ -122,6 +122,11 @@
   "CoC7.ItemWeapon": "Föremål (Weapon)",
   "CoC7.AttacksPerRound": "Anfall per runda",
 
+  "CoC7.SanityCost": "Kostnad Sinneshälsa",
+  "CoC7.PowerCost": "Kostnad Kraft",
+  "CoC7.HitPointsCost": "Kostnad Kroppspoäng",
+  "CoC7.MagicPointsCost": "Kostnad Magipoäng",
+
   "CoC7.CopyToClipboard": "Kopiera till urklipp",
   "CoC7.WhisperToSelection": "Viska till den valda markören",
   "CoC7.WhisperTo": "Viska till",
@@ -421,6 +426,7 @@
   "CoC7.WeaponSkill": "Färdighet",
   "CoC7.WeaponSkillAlt": "Alt. färdighet",
   "CoC7.Inventory": "Utrustning",
+  "CoC7.InventoryIsCurrentlyEmpty": "Utrustningslistan är för närvarande tom.",
   "CoC7.CharacterDevelopment": "Utveckling",
   "CoC7.OccupationSkill": "Yrkesfärdighet",
   "CoC7.ArchetypeSkill": "Arketypfärdighet",
@@ -602,6 +608,7 @@
   "CoC7.Chosen": "Vald",
   "CoC7.EmptySkillList": "Lägg till en färdighet genom att släppa den här.",
   "CoC7.EmptyItemList": "Lägg till ett föremål genom att släppa det här.",
+  "CoC7.EmptyCharacterSkillList": "Lägg till en uppsättning, ett yrke eller en färdighet genom att släppa den här.",
   "CoC7.PersonalSpeciality": "Antal personliga- eller era-specialiteer",
   "CoC7.AdditionalSkills": "Ytterligare fördigheter",
   "CoC7.SkillSelectionWindow": "Välj valfria färdigheter",
@@ -698,6 +705,7 @@
   "CoC7.English": "Engelska",
   "CoC7.Spanish": "Spanska",
   "CoC7.French": "Franska",
+  "CoC7.TraditionalChinese": "Traditionell kinesiska",
   "CoC7.SelectSourceLanguage": "Välj ursprungstextens språk",
   "CoC7.ImportedUnnamedCharacter": "Importerad icke namngiven karaktär",
   "CoC7.CreatedImportedCharactersFolder": "Skapade 'Imported Characters'-mapp'",
@@ -710,6 +718,7 @@
 
   "CoC7.Migrate.Title": "Uppdatering krävs",
   "CoC7.Migrate.Message": "<p>Din värld kräver en uppdatering för att köra version {version}.</p><p>Vänligen gör en backup av din världsmapp innan du påbörjar uppgraderingen.</p><p>Om du inte uppdaterar din värld kommer inte systemet att fungera korrekt.</p><p>Världen kan komma att startas om när uppgraderingen är färdig.</p>",
+  "CoC7.Migrate.WithModulesMessage": "<p>Din spelvärld eller modul kan behöva en uppdatering för att köra version {version}.</p><p>Vänligen gör en backup av din spelvärld och de modulmappar som listas nedan innan du startar uppgraderingen.</p><p>Om du inte uppdaterar din spelvärld kommer systemet inte att fungera korrekt.</p><p>Följande moduler, som innehåller karaktärer eller föremål, kommer också att kontrolleras</p>{modules}<p>TVärlden kan komma att startas om när uppgraderingen är färdig.</p>",
   "CoC7.Migrate.GMRequired": "<p>Din värld kräver en uppdatering för att köra version {version}.</p><p>Vänligen vänta till din Väktare har uppdaterat systemet, sedan tryck (F5) för att ladda om sidan.</p>",
   "CoC7.Migrate.RestartRequired": "<p>Din värld kommer nu att startas om för att ändringarna ska träda i kraft.</p>",
   "CoC7.Migrate.ButtonUpdate": "Uppdatera",
@@ -725,6 +734,7 @@
 
   "CoC7.MessageTitleSelectUserToGiveTo": "Ge föremål till en annan karaktär",
   "CoC7.MessageSelectUserToGiveTo": "Vilken karaktär vill du ge det här föremålet till?",
+  "CoC7.MessageDistanceCalculationFailure": "Kan inte beräkna avståndet mellan markörerna. Vänligen använd markörens rollformulär.",
 
   "SETTINGS.TitleRules": "Regler",
   "SETTINGS.TitleInitiative": "Initiativinställningar",
@@ -830,5 +840,7 @@
   "SETTINGS.EnableStatusIconsHint": "Ange om statusikoner för strid och vansinne ska visas på markören.",
   "SETTINGS.ShowExperimentalFeatures": "Visa experimentella funktioner",
   "SETTINGS.ShowExperimentalFeaturesHint": "Om du använder de här funktionerna kan din spelvärld komma att bli oanvändbar vid framtida versionsuppdateringar. De är endast för testning och ska INTE användas i dina spelvärldar",
-  "CoC7.ExperimentalFeaturesWarning": "Den här funktionen är under utveckling och rekommenderas inte för användning i dina spelvärldar."
+  "CoC7.ExperimentalFeaturesWarning": "Den här funktionen är under utveckling och rekommenderas inte för användning i dina spelvärldar.",
+  "SETTINGS.CheckElevation": "Räkna in höjdskillnad i avstånd",
+  "SETTINGS.CheckElevationHint": "Använder höjdskillnad vid beräkningar för avståndsstrid"
 }

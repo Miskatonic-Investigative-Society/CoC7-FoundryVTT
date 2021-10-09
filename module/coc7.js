@@ -65,6 +65,14 @@ Hooks.on('renderSettingsConfig', (app, html, options) => {
         '</h2>'
     )
   systemTab
+    .find('input[name=CoC7\\.overrideGameArtwork]')
+    .closest('div.form-group')
+    .before(
+      '<h2 class="setting-header">' +
+        game.i18n.localize('SETTINGS.TitleGameArtwork') +
+        '</h2>'
+    )
+  systemTab
     .find('input[name=CoC7\\.displayPlayerNameOnSheet]')
     .closest('div.form-group')
     .before(
@@ -325,14 +333,14 @@ Hooks.on('ready', async () => {
       game.settings.get('CoC7', 'boutOfMadnessSummaryTable') === 'none'
         ? null
         : game.tables.get(
-            game.settings.get('CoC7', 'boutOfMadnessSummaryTable')
-          ),
+          game.settings.get('CoC7', 'boutOfMadnessSummaryTable')
+        ),
     boutOfMadness_RealTime:
       game.settings.get('CoC7', 'boutOfMadnessRealTimeTable') === 'none'
         ? null
         : game.tables.get(
-            game.settings.get('CoC7', 'boutOfMadnessRealTimeTable')
-          )
+          game.settings.get('CoC7', 'boutOfMadnessRealTimeTable')
+        )
     // maniasIndex: ge.settings.get('CoC7', 'boutOfMadnessPhobiasIndex'),
     // phobiasIndex: game.settings.get('CoC7', 'boutOfMadnessManiasIndex'),
     // phobias: ('none' == game.settings.get('CoC7', 'samplePhobiasTable'))?null:game.tables.get(game.settings.get('CoC7', 'samplePhobiasTable')),

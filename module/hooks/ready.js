@@ -1,4 +1,5 @@
 /* global game, Hooks */
+import { CoC7Tooltips } from '../apps/tooltips.js'
 
 // import { CoC7WelcomeMessage } from '../apps/welcome-message.js'
 
@@ -9,5 +10,6 @@ export function listen () {
       /** This will prompt the welcome message when it is  finished */
       // await CoC7WelcomeMessage.create()
     }
+    game.CoC7Tooltips = new CoC7Tooltips()
   })
 }

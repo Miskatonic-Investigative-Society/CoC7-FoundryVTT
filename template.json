@@ -542,11 +542,11 @@
     },
     "spell": {
       "alternativeNames": [],
-      "castingTime": 0,
+      "castingTime": "",
       "costs": {
         "hitPoints": 0,
         "magicPoints": 0,
-        "others": [],
+        "others": "",
         "sanity": 0,
         "power": 0
       },
