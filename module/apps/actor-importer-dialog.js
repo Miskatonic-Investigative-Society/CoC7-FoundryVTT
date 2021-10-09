@@ -36,9 +36,11 @@ export class CoC7ActorImporterDialog extends Dialog {
     if (CONFIG.debug.CoC7Importer) {
       console.debug('entity type:', inputs.entity)
     }
-    inputs.lang = $('#coc-entity-lang')
-      .val()
-      .trim()
+    inputs.lang = CoC7ActorImporterRegExp.checkLanguage(
+      $('#coc-entity-lang')
+        .val()
+        .trim()
+    )
     inputs.source = $('#source')
       .val()
       .trim()
@@ -98,7 +100,7 @@ export class CoC7ActorImporterDialog extends Dialog {
    */
   static async create (data = {}) {
     data.languages = CoC7ActorImporterRegExp.getTranslations()
-    data.language = CoC7ActorImporterRegExp.getLanguage()
+    data.language = CoC7ActorImporterRegExp.checkLanguage(null)
     const html = await renderTemplate(
       'systems/CoC7/templates/apps/actor-importer.html',
       data

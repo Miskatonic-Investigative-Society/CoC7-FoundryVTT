@@ -54,7 +54,12 @@ export class CoC7ActorImporter {
     if (s.trim().length === 0) {
       return ''
     }
-    s = s.trim().split('\n').map(text => text.trim().replace(/^[,.\s]+$/, '')).filter(text => text).join('</p><p>')
+    s = s
+      .trim()
+      .split('\n')
+      .map(text => text.trim().replace(/^[,.\s]+$/, ''))
+      .filter(text => text)
+      .join('</p><p>')
     if (s.length === 0) {
       return ''
     }
@@ -72,7 +77,16 @@ export class CoC7ActorImporter {
    * - requiredGroup If not false require specified key in RegExp groups
    * @returns {False}/{JSON groups '' is matched string}
    */
-  check (regExKey, { removeFromText = true, saveKeys = true, type = CoC7ActorImporter.asString, text = false, requiredGroup = false } = {}) {
+  check (
+    regExKey,
+    {
+      removeFromText = true,
+      saveKeys = true,
+      type = CoC7ActorImporter.asString,
+      text = false,
+      requiredGroup = false
+    } = {}
+  ) {
     let output = false
     let regExp = false
     if (typeof this.regEx[regExKey] !== 'undefined') {
@@ -86,7 +100,11 @@ export class CoC7ActorImporter {
       }
       const check = regExp.exec(text)
       let value = null
-      if (check !== null && (requiredGroup === false || typeof (check.groups || {})[requiredGroup] !== 'undefined')) {
+      if (
+        check !== null &&
+        (requiredGroup === false ||
+          typeof (check.groups || {})[requiredGroup] !== 'undefined')
+      ) {
         output = check.groups || {}
         if (removeFromText) {
           this.text = this.text.replace(check[0].trim(), '\n').trim()
@@ -130,7 +148,9 @@ export class CoC7ActorImporter {
     do {
       maxLoops--
       text = text.trim()
-      if ((dodge = this.check('weaponDodge', { saveKeys: false, text: text }))) {
+      if (
+        (dodge = this.check('weaponDodge', { saveKeys: false, text: text }))
+      ) {
         text = text.replace(dodge['-source'], '\n')
         if (typeof this.parsed.skills === 'undefined') {
           this.parsed.skills = []
@@ -140,12 +160,47 @@ export class CoC7ActorImporter {
           value: Number(dodge.percentage),
           push: false
         })
-      } else if ((weapon = this.check('weapon', { saveKeys: false, text: text, requiredGroup: (lastPercent === false ? 'percentage' : false) }))) {
+      } else if (
+        (weapon = this.check('weapon', {
+          saveKeys: false,
+          text: text,
+          requiredGroup: lastPercent === false ? 'percentage' : false
+        }))
+      ) {
         text = text.replace(weapon['-source'], '\n')
         const name = this.cleanString(weapon.name || '')
         const damage = this.cleanString(weapon.damage || '')
-        const isRanged = !!(this.check('handgun', { text: name, removeFromText: false, saveKeys: false }) || this.check('rifle', { text: name, removeFromText: false, saveKeys: false }) || this.check('smb', { text: name, removeFromText: false, saveKeys: false }) || this.check('machineGun', { text: name, removeFromText: false, saveKeys: false }) || this.check('launched', { text: name, removeFromText: false, saveKeys: false }))
-        if (weapon.percentage !== null && typeof weapon.percentage !== 'undefined') {
+        const isRanged = !!(
+          this.check('handgun', {
+            text: name,
+            removeFromText: false,
+            saveKeys: false
+          }) ||
+          this.check('rifle', {
+            text: name,
+            removeFromText: false,
+            saveKeys: false
+          }) ||
+          this.check('smb', {
+            text: name,
+            removeFromText: false,
+            saveKeys: false
+          }) ||
+          this.check('machineGun', {
+            text: name,
+            removeFromText: false,
+            saveKeys: false
+          }) ||
+          this.check('launched', {
+            text: name,
+            removeFromText: false,
+            saveKeys: false
+          })
+        )
+        if (
+          weapon.percentage !== null &&
+          typeof weapon.percentage !== 'undefined'
+        ) {
           lastPercent = Number(weapon.percentage)
         } else {
           lastPercent = true
@@ -155,8 +210,22 @@ export class CoC7ActorImporter {
         let ahdb = false
         let addb = false
         for (let i = 0, im = damages.length; i < im; i++) {
-          const fullDB = this.getRegEx('\\s*[+-]?\\s*(' + this.keys.fulldb + ')\\s*[-+]?\\s*(' + this.parsed.db.replace(/^[-+]/, '') + ')?').exec(damages[i])
-          const halfDB = this.getRegEx('\\s*[+-]?\\s*(' + this.keys.halfdb + ')\\s*(' + this.keys.fulldb + ')?[-+]?\\s*(' + this.parsed.db.replace(/^[-+]/, '') + ')?').exec(damages[i])
+          const fullDB = this.getRegEx(
+            '\\s*[+-]?\\s*(' +
+              this.keys.fulldb +
+              ')\\s*[-+]?\\s*(' +
+              this.parsed.db.replace(/^[-+]/, '') +
+              ')?'
+          ).exec(damages[i])
+          const halfDB = this.getRegEx(
+            '\\s*[+-]?\\s*(' +
+              this.keys.halfdb +
+              ')\\s*(' +
+              this.keys.fulldb +
+              ')?[-+]?\\s*(' +
+              this.parsed.db.replace(/^[-+]/, '') +
+              ')?'
+          ).exec(damages[i])
           if (fullDB) {
             damages[i] = damages[i].replace(fullDB[0], '')
             addb = true
@@ -175,23 +244,23 @@ export class CoC7ActorImporter {
             properties: {},
             range: {
               normal: {
-                value: (isShotgun ? 10 : 0),
+                value: isShotgun ? 10 : 0,
                 damage: damages[0]
               },
               long: {
-                value: (isShotgun ? 20 : 0),
-                damage: (isShotgun ? damages[1] : '')
+                value: isShotgun ? 20 : 0,
+                damage: isShotgun ? damages[1] : ''
               },
               extreme: {
-                value: (isShotgun ? 50 : 0),
-                damage: (isShotgun ? damages[2] : '')
+                value: isShotgun ? 50 : 0,
+                damage: isShotgun ? damages[2] : ''
               }
             }
           }
         }
         // Set some of the properties
         data.data.properties.shotgun = isShotgun
-        data.data.properties.rngd = (isRanged || isShotgun)
+        data.data.properties.rngd = isRanged || isShotgun
         data.data.properties.melee = !data.data.properties.rngd
         data.data.properties.ahdb = ahdb
         data.data.properties.addb = addb
@@ -206,7 +275,9 @@ export class CoC7ActorImporter {
       }
     } while (maxLoops > 0 && (!!weapon || !!dodge || !!text))
     if (maxLoops === 0) {
-      ui.notifications.warn('Unexpected weapons text, please raise a bug report with the text you are attempting to import')
+      ui.notifications.warn(
+        'Unexpected weapons text, please raise a bug report with the text you are attempting to import'
+      )
       console.debug('Unexpected weapons:', text)
     }
   }
@@ -242,7 +313,9 @@ export class CoC7ActorImporter {
       }
     } while (maxLoops > 0 && skill)
     if (maxLoops === 0) {
-      ui.notifications.warn('Unexpected skills text, please raise a bug report with the text you are attempting to import')
+      ui.notifications.warn(
+        'Unexpected skills text, please raise a bug report with the text you are attempting to import'
+      )
       console.debug('Unexpected skills:', text)
     }
   }
@@ -277,11 +350,16 @@ export class CoC7ActorImporter {
    */
   async parseCharacter (text) {
     // Replace "En Dash" and "Em Dash" dashes with - and "Right Single Quotation Mark" with '
-    this.text = String(text).trim().replace(/\u2013|\u2014/g, '-').replace(/\u2019/g, "'")
+    this.text = String(text)
+      .trim()
+      .replace(/\u2013|\u2014/g, '-')
+      .replace(/\u2019/g, "'")
     // Earliest character that has been used, to work out the header
     let min = this.text.length
     // STR, if berfore than previous min update it
-    let check = this.check('str', { type: CoC7ActorImporter.asNumber })['-index']
+    let check = this.check('str', { type: CoC7ActorImporter.asNumber })[
+      '-index'
+    ]
     if (!isNaN(check)) {
       min = Math.min(min, check)
     }
@@ -355,9 +433,12 @@ export class CoC7ActorImporter {
         header = header.replace(check['-source'], '\n')
       }
       // Get occupation from header
-      if (!(this.check('occupation', { text: header })) && header.trim() !== '') {
+      if (!this.check('occupation', { text: header }) && header.trim() !== '') {
         // If occupation is not found but there is a header set the occupation to the remaining header
-        this.parsed.occupation = header.replace(/([\n\r]+)/g, ' ').trim().replace(/,$/, '')
+        this.parsed.occupation = header
+          .replace(/([\n\r]+)/g, ' ')
+          .trim()
+          .replace(/,$/, '')
         this.text = this.text.replace(header.trim(), '\n')
       }
     } else {
@@ -365,21 +446,32 @@ export class CoC7ActorImporter {
       this.parsed.name = game.i18n.localize('CoC7.ImportedUnnamedCharacter')
     }
     // If there is an occupation but no age check if the occupation starts number split age and occupation
-    if (typeof this.parsed.occupation !== 'undefined' && typeof this.parsed.age === 'undefined') {
-      const occupationAge = this.parsed.occupation.match(/^(?<age>\d+),(?<occupation>.+)$/)
+    if (
+      typeof this.parsed.occupation !== 'undefined' &&
+      typeof this.parsed.age === 'undefined'
+    ) {
+      const occupationAge = this.parsed.occupation.match(
+        /^(?<age>\d+),(?<occupation>.+)$/
+      )
       if (occupationAge) {
         this.parsed.age = occupationAge.groups.age
         this.parsed.occupation = occupationAge.groups.occupation.trim()
       }
     }
     // Get damage bonus, if not found or none set to 0
-    if (!this.check('db') || this.parsed.db.toLowerCase() === this.keys.dbNone.toLowerCase()) {
+    if (
+      !this.check('db') ||
+      this.parsed.db.toLowerCase() === this.keys.dbNone.toLowerCase()
+    ) {
       this.parsed.db = '0'
     }
     // Get build
     this.check('build')
     // Get armor, if not found or none set to 0
-    if (!this.check('armor') || this.parsed.armor.toLowerCase() === this.keys.armorNone.toLowerCase()) {
+    if (
+      !this.check('armor') ||
+      this.parsed.armor.toLowerCase() === this.keys.armorNone.toLowerCase()
+    ) {
       this.parsed.armor = '0'
     }
     // Get movement
@@ -389,7 +481,11 @@ export class CoC7ActorImporter {
     // Get sanity loss
     this.check('sanLoss')
     // Get attacks per round, if not found or none set to 0
-    if (this.check('attacksPerRound') && this.parsed.attacksPerRound.toLowerCase() === this.keys.attacksPerRoundNone.toLowerCase()) {
+    if (
+      this.check('attacksPerRound') &&
+      this.parsed.attacksPerRound.toLowerCase() ===
+        this.keys.attacksPerRoundNone.toLowerCase()
+    ) {
       this.parsed.attacksPerRound = '0'
     }
     // Check if there is a combat section
@@ -397,10 +493,17 @@ export class CoC7ActorImporter {
     let sections = this.getRegEx('(' + this.keys.sectionCombats + ')', 'i')
     if (this.text.match(sections) === null) {
       // If there is no combat section guess where it starts
-      sections = this.check('guessStartCombat', { saveKeys: false, removeFromText: false })
+      sections = this.check('guessStartCombat', {
+        saveKeys: false,
+        removeFromText: false
+      })
       if (sections) {
         // Add a header to the start of the combat section
-        this.text = [this.text.slice(0, sections['-index']), this.keys.newCombatHeader, this.text.slice(sections['-index'])].join('')
+        this.text = [
+          this.text.slice(0, sections['-index']),
+          this.keys.newCombatHeader,
+          this.text.slice(sections['-index'])
+        ].join('')
       }
     }
     // Split the sections Combat, Skills, Languages, and Spells
@@ -408,24 +511,52 @@ export class CoC7ActorImporter {
     sections = this.text.split(regExpSections)
     if (sections !== null) {
       for (let i = 0, im = sections.length; i < im; i++) {
-        if (sections[i].match(this.getRegEx('(' + this.keys.sectionCombats + ')', 'i')) !== null && typeof sections[i + 1] !== 'undefined') {
+        if (
+          sections[i].match(
+            this.getRegEx('(' + this.keys.sectionCombats + ')', 'i')
+          ) !== null &&
+          typeof sections[i + 1] !== 'undefined'
+        ) {
           // If section is combat
-          this.text = ('\n' + this.text + '\n').replace(sections[i], '\n').trim()
+          this.text = ('\n' + this.text + '\n')
+            .replace(sections[i], '\n')
+            .trim()
           this.processCombat(sections[i + 1])
           i++
-        } else if (sections[i].match(this.getRegEx('(' + this.keys.sectionSkills + ')', 'i')) !== null && typeof sections[i + 1] !== 'undefined') {
+        } else if (
+          sections[i].match(
+            this.getRegEx('(' + this.keys.sectionSkills + ')', 'i')
+          ) !== null &&
+          typeof sections[i + 1] !== 'undefined'
+        ) {
           // If section is skills
-          this.text = ('\n' + this.text + '\n').replace(sections[i], '\n').trim()
+          this.text = ('\n' + this.text + '\n')
+            .replace(sections[i], '\n')
+            .trim()
           this.processSkills(sections[i + 1])
           i++
-        } else if (sections[i].match(this.getRegEx('(' + this.keys.sectionLangauges + ')', 'i')) !== null && typeof sections[i + 1] !== 'undefined') {
+        } else if (
+          sections[i].match(
+            this.getRegEx('(' + this.keys.sectionLangauges + ')', 'i')
+          ) !== null &&
+          typeof sections[i + 1] !== 'undefined'
+        ) {
           // If section is languages
-          this.text = ('\n' + this.text + '\n').replace(sections[i], '\n').trim()
+          this.text = ('\n' + this.text + '\n')
+            .replace(sections[i], '\n')
+            .trim()
           this.processSkills(sections[i + 1], 'languages')
           i++
-        } else if (sections[i].match(this.getRegEx('(' + this.keys.sectionSpells + ')', 'i')) !== null && typeof sections[i + 1] !== 'undefined') {
+        } else if (
+          sections[i].match(
+            this.getRegEx('(' + this.keys.sectionSpells + ')', 'i')
+          ) !== null &&
+          typeof sections[i + 1] !== 'undefined'
+        ) {
           // If section is spells
-          this.text = ('\n' + this.text + '\n').replace(sections[i], '\n').trim()
+          this.text = ('\n' + this.text + '\n')
+            .replace(sections[i], '\n')
+            .trim()
           this.processSpells(sections[i + 1])
           i++
         }
@@ -434,6 +565,20 @@ export class CoC7ActorImporter {
     // Any remaining text add to GM notes so you can easily see if there are any obvious issue or just general notes
     this.parsed.gmnotes = this.toHTML(this.text)
     return this.parsed
+  }
+
+  disableAttribAuto (key, attribValue, check, updateData) {
+    const value = Math.max(0, Number(attribValue))
+    if (value !== Number(check)) {
+      updateData[`data.attribs.${key}.auto`] = false
+      updateData[`data.attribs.${key}.value`] = value
+      if (key === 'build') {
+        updateData[`data.attribs.${key}.current`] = value
+      } else {
+        updateData[`data.attribs.${key}.max`] = value
+      }
+    }
+    return updateData
   }
 
   /**
@@ -454,46 +599,48 @@ export class CoC7ActorImporter {
       data: characterData.actor
     }
     const npc = await Actor.create(actorData)
-    await npc.createEmbeddedDocuments('Item', characterData.items, { renderSheet: false })
+    await npc.createEmbeddedDocuments('Item', characterData.items, {
+      renderSheet: false
+    })
     const updateData = {}
     let value = 0
     if (typeof characterData.actor.attribs.hp?.value !== 'undefined') {
-      value = Math.max(0, Number(characterData.actor.attribs.hp.value))
-      if (value !== Number(npc.hpMax)) {
-        updateData['data.attribs.hp.auto'] = false
-        updateData['data.attribs.hp.value'] = value
-        updateData['data.attribs.hp.max'] = value
-      }
+      this.disableAttribAuto(
+        'hp',
+        characterData.actor.attribs.hp.value,
+        npc.hpMax,
+        updateData
+      )
     }
     if (typeof characterData.actor.attribs.mp?.value !== 'undefined') {
-      value = Math.max(0, Number(characterData.actor.attribs.mp.value))
-      if (value !== Number(npc.mpMax)) {
-        updateData['data.attribs.mp.auto'] = false
-        updateData['data.attribs.mp.value'] = value
-        updateData['data.attribs.mp.max'] = value
-      }
+      this.disableAttribAuto(
+        'mp',
+        characterData.actor.attribs.mp.value,
+        npc.mpMax,
+        updateData
+      )
     }
     if (typeof characterData.actor.attribs.mov?.value !== 'undefined') {
-      value = Math.max(0, Number(characterData.actor.attribs.mov.value))
-      if (value !== Number(npc.mov)) {
-        updateData['data.attribs.mov.auto'] = false
-        updateData['data.attribs.mov.value'] = value
-        updateData['data.attribs.mov.max'] = value
-      }
+      this.disableAttribAuto(
+        'mov',
+        characterData.actor.attribs.mov.value,
+        npc.mov,
+        updateData
+      )
+    }
+    if (typeof characterData.actor.attribs.build?.value !== 'undefined') {
+      this.disableAttribAuto(
+        'build',
+        characterData.actor.attribs.build.value,
+        npc.build,
+        updateData
+      )
     }
     if (typeof characterData.actor.attribs.db?.value !== 'undefined') {
       value = String(characterData.actor.attribs.db.value).replace(/^\+\s*/, '')
       if (value !== String(npc.db)) {
         updateData['data.attribs.db.auto'] = false
         updateData['data.attribs.db.value'] = value
-      }
-    }
-    if (typeof characterData.actor.attribs.build?.value !== 'undefined') {
-      value = Number(characterData.actor.attribs.build.value)
-      if (value !== Number(npc.build)) {
-        updateData['data.attribs.build.auto'] = false
-        updateData['data.attribs.build.current'] = value
-        updateData['data.attribs.build.value'] = value
       }
     }
     if (Object.keys(updateData).length > 0) {
@@ -506,9 +653,19 @@ export class CoC7ActorImporter {
     let lastWeaponSkill = null
     for (const pair of this.weaponSkills) {
       if (pair[0] !== false) {
-        lastWeaponSkill = npc.items.filter(i => i.name === pair[0].name && i.type === 'skill' && Number(i.data.data.value) === Number(pair[0].data.value))
+        lastWeaponSkill = npc.items.filter(
+          i =>
+            i.name === pair[0].name &&
+            i.type === 'skill' &&
+            Number(i.data.data.value) === Number(pair[0].data.value)
+        )
       }
-      const weapon = npc.items.filter(i => i.name === pair[1].name && i.type === 'weapon' && i.data.data.range.normal.damage === pair[1].data.range.normal.damage)
+      const weapon = npc.items.filter(
+        i =>
+          i.name === pair[1].name &&
+          i.type === 'weapon' &&
+          i.data.data.range.normal.damage === pair[1].data.range.normal.damage
+      )
       if (lastWeaponSkill[0] && weapon[0]) {
         updateItemData.push({
           _id: weapon[0].id,
@@ -536,11 +693,11 @@ export class CoC7ActorImporter {
       folderName = 'Imported characters'
     }
     let importedCharactersFolder = game.folders.find(
-      entry =>
-        entry.data.name === folderName && entry.data.type === 'Actor'
+      entry => entry.data.name === folderName && entry.data.type === 'Actor'
     )
     if (
-      importedCharactersFolder === null || typeof importedCharactersFolder === 'undefined'
+      importedCharactersFolder === null ||
+      typeof importedCharactersFolder === 'undefined'
     ) {
       // Create the folder
       importedCharactersFolder = await Folder.create({
@@ -638,7 +795,10 @@ export class CoC7ActorImporter {
       switch (this.itemLocations.substr(o, 1)) {
         case 'i':
           existing = game.items.find(
-            item => item.data.type === type && item.data.name.toLowerCase() === name && (combat === null || item.data.properties.combat === combat)
+            item =>
+              item.data.type === type &&
+              item.data.name.toLowerCase() === name &&
+              (combat === null || item.data.properties.combat === combat)
           )
           if (existing) {
             return existing
@@ -648,10 +808,21 @@ export class CoC7ActorImporter {
         case 'm':
         case 's':
           for (const pack of game.packs) {
-            if (pack.metadata.entity === 'Item' && ((this.itemLocations[o] === 'w' && pack.metadata.package === 'world') || (this.itemLocations[o] === 'S' && pack.metadata.package === 'CoC7') || (this.itemLocations[o] === 's' && !['world', 'CoC7'].includes(pack.metadata.package)))) {
+            if (
+              pack.metadata.entity === 'Item' &&
+              ((this.itemLocations[o] === 'w' &&
+                pack.metadata.package === 'world') ||
+                (this.itemLocations[o] === 'S' &&
+                  pack.metadata.package === 'CoC7') ||
+                (this.itemLocations[o] === 's' &&
+                  !['world', 'CoC7'].includes(pack.metadata.package)))
+            ) {
               const documents = await pack.getDocuments()
               existing = documents.find(
-                item => item.data.type === type && item.data.name.toLowerCase() === name && (combat === null || item.data.properties.combat === combat)
+                item =>
+                  item.data.type === type &&
+                  item.data.name.toLowerCase() === name &&
+                  (combat === null || item.data.properties.combat === combat)
               )
               if (existing) {
                 return existing
@@ -681,10 +852,7 @@ export class CoC7ActorImporter {
         }
         attack.data.skill.id = null
         items.push(attack)
-        this.weaponSkills.push([
-          skill,
-          attack
-        ])
+        this.weaponSkills.push([skill, attack])
       }
     }
     // Skills
@@ -716,7 +884,12 @@ export class CoC7ActorImporter {
           cloned.data.base = skill.value
           items.push(duplicate(cloned))
         } else {
-          items.push(CoCActor.emptySkill(skill.name, skill.value, { img: CoC7Item.iconLanguage, specialization: 'Language' }))
+          items.push(
+            CoCActor.emptySkill(skill.name, skill.value, {
+              img: CoC7Item.iconLanguage,
+              specialization: 'Language'
+            })
+          )
         }
       }
     }
@@ -809,7 +982,10 @@ export class CoC7ActorImporter {
     newSkill.data.base = weapon.data?.skill?.id
     newSkill.data.value = weapon.data?.skill?.id
     if (CONFIG.debug.CoC7Importer) {
-      console.debug(`Weapon skill not found for ${weapon.name}, creating a new one`, newSkill)
+      console.debug(
+        `Weapon skill not found for ${weapon.name}, creating a new one`,
+        newSkill
+      )
     }
     return newSkill
   }
@@ -850,7 +1026,7 @@ export class CoC7ActorImporter {
     if (CONFIG.debug.CoC7Importer) {
       console.debug('createActor:', inputs)
     }
-    const lang = CoC7ActorImporterRegExp.getLanguage(inputs.lang)
+    const lang = CoC7ActorImporterRegExp.checkLanguage(inputs.lang)
     this.keys = CoC7ActorImporterRegExp.getKeys(lang)
     this.regEx = CoC7ActorImporterRegExp.getRegularExpressions(lang)
     this.itemLocations = inputs.source
@@ -886,35 +1062,35 @@ export class CoC7ActorImporter {
    * @param {Object} the entity object as obtained from `parseCharacter`
    * @return the same object but with updated characteristics for 7 edition
    */
-  async convert7E (npc) {
+  async convert7E (creature) {
     if (CONFIG.debug.CoC7Importer) {
-      console.debug('Converting npc', npc)
+      console.debug('Converting npc', creature)
     }
     for (const key of ['str', 'con', 'siz', 'dex', 'app', 'int', 'pow']) {
-      if (typeof npc[key] !== 'undefined') {
-        npc[key] *= 5
+      if (typeof creature[key] !== 'undefined') {
+        creature[key] *= 5
       }
     }
-    if (typeof npc.edu !== 'undefined') {
-      if (npc.edu <= 18) {
-        npc.edu *= 5
-      } else if (npc.edu <= 26) {
-        npc.edu = npc.edu + 90 - 18
+    if (typeof creature.edu !== 'undefined') {
+      if (creature.edu <= 18) {
+        creature.edu *= 5
+      } else if (creature.edu <= 26) {
+        creature.edu = creature.edu + 90 - 18
       } else {
-        // npc.edu >=28
-        npc.edu = 99
+        // creature.edu >=28
+        creature.edu = 99
       }
     }
-    if (typeof npc.db !== 'undefined') {
-      if (npc.db === '-1d4') {
-        npc.db = -1
-      } else if (npc.db === '-1d6') {
-        npc.db = -2
+    if (typeof creature.db !== 'undefined') {
+      if (creature.db === '-1d4') {
+        creature.db = -1
+      } else if (creature.db === '-1d6') {
+        creature.db = -2
       }
     }
     if (CONFIG.debug.CoC7Importer) {
-      console.debug('convert7E: ', npc)
+      console.debug('convert7E: ', creature)
     }
-    return npc
+    return creature
   }
 }
