@@ -8,6 +8,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Fix "The key ? does not exist in the EmbeddedCollection Collection" dragging an English setup onto a translated Actor.
 - Fix background integrity on Book sheet.
 - Fix bug on Archetype Item properties.
+- Fix Combined / Opposed Roll using the incorrect image path for wildcard tokens.
 - Fix DsN 3D dices not rolling sometimes.
 - Fix summarized sheet colors.
 - Fix rounding for max Hit Points on Pulp.
