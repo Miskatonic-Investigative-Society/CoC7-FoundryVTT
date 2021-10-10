@@ -9,49 +9,48 @@
     data-looser-key="{{looser.actorKey}}"
     data-resolved="{{resolved}}"
     data-is-blind="false"
->
+    >
 
-<header class="card-header flexcol">
+  <header class="card-header flexcol">
     {{#if winner}}
-        <div class="flexrow">
-            {{#if displayActorOnCard}}
-            <img class="open-actor" data-actor-key="{{winner.actorKey}}" style="flex: none;" src="{{winner.actorImg}}" title="{{winner.name}}" width="36" height="36"/>
-            {{/if}}
-            <img class="open-actor" data-actor-key="{{winner.actorKey}}" style="flex: none;" src="{{winnerImg}}" title="{{winnerTitle}}" width="36" height="36"/>
-            <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{winnerTitle}}</h3>
-            {{#if looser}}
-            <img class="open-actor" style="flex: none;" data-actor-key="{{looser.actorKey}}" src="{{looser.actorImg}}" title="{{looser.name}}" width="36" height="36"/>
-            {{/if}}
-        </div>
+      <div class="flexrow">
+        {{#if displayActorOnCard}}
+          <img class="open-actor" data-actor-key="{{winner.actorKey}}" style="flex: none;" src="{{winner.actorImg}}" title="{{winner.name}}" width="36" height="36"/>
+        {{/if}}
+        <img class="open-actor" data-actor-key="{{winner.actorKey}}" style="flex: none;" src="{{winnerImg}}" title="{{winnerTitle}}" width="36" height="36"/>
+        <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{winnerTitle}}</h3>
+        {{#if looser}}
+          <img class="open-actor" style="flex: none;" data-actor-key="{{looser.actorKey}}" src="{{looser.actorImg}}" title="{{looser.name}}" width="36" height="36"/>
+        {{/if}}
+      </div>
     {{else}}
-        <div class="flexrow">
-            <h3 style="text-align: center;font-weight: bolder;" class="card-title">{{resultString}}</h3>
-        </div>
+      <div class="flexrow">
+        <h3 style="text-align: center;font-weight: bolder;" class="card-title">{{resultString}}</h3>
+      </div>
     {{/if}}
-</header>
+  </header>
 
-{{#if rollDamage}}
-<div class="card details">
-    {{#if looser}}
+  {{#if rollDamage}}
+    <div class="card details">
+      {{#if looser}}
         <h4 style="font-weight: bolder;">{{looser.name}} {{ localize 'CoC7.meleeCombatDamageTakes' }} {{winner.weapon.data.data.range.normal.damage}}{{#if winner.weapon.data.data.properties.addb}}+DB{{/if}}{{#if winner.weapon.data.data.properties.ahdb}}+DB/2{{/if}} {{ localize 'CoC7.meleeCombatDamageFrom' }} {{winner.weapon.name}}</h4>
-    {{else}}
+      {{else}}
         <h4 style="font-weight: bolder;">{{winner.name}} {{ localize 'CoC7.meleeCombatDamageDeals' }} {{winner.weapon.data.data.range.normal.damage}}{{#if winner.weapon.data.data.properties.addb}}+DB{{/if}}{{#if winner.weapon.data.data.properties.ahdb}}+DB/2{{/if}} {{ localize 'CoC7.meleeCombatDamageWith' }} {{winner.weapon.name}}</h4>
-    {{/if}}
-</div>
-<div class="card-buttons owner-only" data-actor-id="{{winner.actorKey}}" style="padding: 2px 0;margin: 0;">
-    <button 
-      data-action="roll-melee-damage"
-      data-target="{{looser.actorKey}}"
-      data-dealer="{{winner.actorKey}}"
-      data-weapon="{{winner.weapon.id}}"
-      data-critical="{{winner.roll.criticalDamage}}">
-      {{ localize 'CoC7.RollDamage' }}
-    </button>
-</div>
-{{else}}
-<div class="flexrow">
-    <h4 style="font-weight: bolder;">{{resultString}}</h4>
-</div>
-{{/if}}
-
+      {{/if}}
+    </div>
+    <div class="card-buttons owner-only" data-actor-id="{{winner.actorKey}}" style="padding: 2px 0;margin: 0;">
+      <button
+          data-action="roll-melee-damage"
+          data-target="{{looser.actorKey}}"
+          data-dealer="{{winner.actorKey}}"
+          data-weapon="{{winner.weapon.id}}"
+          data-critical="{{winner.roll.criticalDamage}}">
+        {{ localize 'CoC7.RollDamage' }}
+      </button>
+    </div>
+  {{else}}
+    <div class="flexrow">
+      <h4 style="font-weight: bolder;">{{resultString}}</h4>
+    </div>
+  {{/if}}
 </div>

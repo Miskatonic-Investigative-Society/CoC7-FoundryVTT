@@ -910,6 +910,13 @@ export class CoC7Chat {
         await initiator.publishCheckResult()
         break
       }
+
+      case 'melee-target-no-response': {
+        const target = CoC7MeleeTarget.getFromCard(card)
+        await target.publishNoReponseResult()
+        break
+      }
+
       case 'melee-target-roll': {
         const target = CoC7MeleeTarget.getFromCard(card)
         const check = await target.performSkillCheck(

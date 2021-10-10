@@ -26,16 +26,23 @@ export class CoC7MeleeTarget extends ChatCardActor {
     this.skillId = null
     this.itemId = null
     this.dodging = false
+    this.notResponding = false
     this.fightingBack = false
     this.maneuvering = false
   }
 
   get actionSelected () {
-    return this.dodging || this.fightingBack || this.maneuvering
+    return (
+      this.dodging ||
+      this.notResponding ||
+      this.fightingBack ||
+      this.maneuvering
+    )
   }
 
   get action () {
     if (this.dodging) return 'dodge'
+    if (this.notResponding) return 'noResponse'
     if (this.fightingBack) return 'fightBack'
     if (this.maneuvering) return 'maneuver'
     return null
@@ -248,14 +255,25 @@ export class CoC7MeleeTarget extends ChatCardActor {
     switch (event.currentTarget.dataset.action) {
       case 'dodge':
         target.dodging = true
+        target.notResponding = false
         target.fightingBack = false
         target.maneuvering = false
         target.skillId = event.currentTarget.dataset.skillId
         target.itemId = null
         break
 
+      case 'noResponse':
+        target.dodging = false
+        target.notResponding = true
+        target.fightingBack = false
+        target.maneuvering = false
+        target.skillId = null
+        target.itemId = null
+        break
+
       case 'fightBack':
         target.dodging = false
+        target.notResponding = false
         target.fightingBack = true
         target.maneuvering = false
         target.skillId = event.currentTarget.dataset.skillId
@@ -264,6 +282,7 @@ export class CoC7MeleeTarget extends ChatCardActor {
 
       case 'maneuver':
         target.dodging = false
+        target.notResponding = false
         target.fightingBack = false
         target.maneuvering = true
         target.skillId = event.currentTarget.dataset.skillId
@@ -304,6 +323,21 @@ export class CoC7MeleeTarget extends ChatCardActor {
     if (publish) check.toMessage()
 
     return check
+  }
+
+  async publishNoReponseResult () {
+    this.rolled = true
+    this.resolved = true
+    this.notResponding = true
+    const resolutionCard = new CoC7MeleeResoltion(
+      this.parentMessageId,
+      this.messageId
+    )
+
+    const resolutionMessage = await resolutionCard.preCreateMessage()
+
+    this.resolutionCard = resolutionMessage.id
+    await this.updateChatCard()
   }
 
   async publishCheckResult (check = null) {
