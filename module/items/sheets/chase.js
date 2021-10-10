@@ -9,6 +9,12 @@ export class CoC7ChaseSheet extends ItemSheet {
   //  super( ...args);
   // }
 
+  static get flags () {
+    return {
+      started: 'started'
+    }
+  }
+
   /**
    * Extend and override the default options used by the Simple Item Sheet
    * @returns {Object}
@@ -103,6 +109,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     data.activeLocation = this.activeLocation
     data.previousLocation = this.previousLocation
     data.nextLocation = this.nextLocation
+    data.started = this.started
 
     return data
   }
@@ -154,71 +161,76 @@ export class CoC7ChaseSheet extends ItemSheet {
       0 === this.item.data.data.locations.list.length
     )
       return undefined
-    const init = this.getInitTrack()
-    let locationsIndexStart, initIndexStart, locationsLength
-    if (0 >= init.length) locationsIndexStart = 0
-    else if (this.item.data.data.startingIndex >= init.length)
-      locationsIndexStart = 0
-    else locationsIndexStart = init.length - this.item.data.data.startingIndex
 
-    if (this.item.data.data.startingIndex <= 0) initIndexStart = 0
-    else if (this.item.data.data.startingIndex <= init.length)
-      initIndexStart = 0
-    else initIndexStart = this.item.data.data.startingIndex - init.length
+    const locations = [] // !!!!!!! locations vs init locations !!!
+    
 
-    if (0 == locationsIndexStart)
-      locationsLength = this.item.data.data.locations.list.length
-    else
-      locationsLength =
-        this.item.data.data.locations.list.length + locationsIndexStart
+    if (!this.started) {
+      const init = this.getInitTrack()
+      let locationsIndexStart, initIndexStart, locationsLength
+      if (0 >= init.length) locationsIndexStart = 0
+      else if (this.item.data.data.startingIndex >= init.length)
+        locationsIndexStart = 0
+      else locationsIndexStart = init.length - this.item.data.data.startingIndex
 
-    if (0 != init.length) {
-      if (this.item.data.data.startingIndex < 0) {
-        for (
-          let index = 0;
-          index < Math.abs(this.item.data.data.startingIndex);
-          index++
-        ) {
-          init.push({
-            uuid: this.generateNewUuid(),
-            init: true,
-            participants: []
-          })
+      if (this.item.data.data.startingIndex <= 0) initIndexStart = 0
+      else if (this.item.data.data.startingIndex <= init.length)
+        initIndexStart = 0
+      else initIndexStart = this.item.data.data.startingIndex - init.length
+
+      if (0 == locationsIndexStart)
+        locationsLength = this.item.data.data.locations.list.length
+      else
+        locationsLength =
+          this.item.data.data.locations.list.length + locationsIndexStart
+
+      if (0 != init.length) {
+        if (this.item.data.data.startingIndex < 0) {
+          for (
+            let index = 0;
+            index < Math.abs(this.item.data.data.startingIndex);
+            index++
+          ) {
+            init.push({
+              uuid: this.generateNewUuid(),
+              init: true,
+              participants: []
+            })
+          }
         }
       }
-    }
 
-    const locations = []
+      for (let index = 0; index < locationsLength; index++) {
+        let location = {}
+        const participants = []
+        if (
+          index >= locationsIndexStart &&
+          index - locationsIndexStart <
+            this.item.data.data.locations.list.length
+        ) {
+          location = this.item.data.data.locations.list[
+            index - locationsIndexStart
+          ]
+          location.init = false
+          location.participants?.forEach(p => {
+            if (null != p) participants.push(p)
+          })
+        }
+        if (index >= initIndexStart && index - initIndexStart < init.length) {
+          mergeObject(location, init[index - initIndexStart], {
+            overwrite: false
+          })
 
-    for (let index = 0; index < locationsLength; index++) {
-      let location = {}
-      const participants = []
-      if (
-        index >= locationsIndexStart &&
-        index - locationsIndexStart < this.item.data.data.locations.list.length
-      ) {
-        location = this.item.data.data.locations.list[
-          index - locationsIndexStart
-        ]
-        location.init = false
-        location.participants?.forEach(p => {
-          if (null != p) participants.push(p)
-        })
+          init[index - initIndexStart].participants?.forEach(p => {
+            if (null != p) participants.push(p)
+          })
+
+          location.participants = participants
+        }
+        location.first = false
+        location.end = false
+        locations.push(location)
       }
-      if (index >= initIndexStart && index - initIndexStart < init.length) {
-        mergeObject(location, init[index - initIndexStart], {
-          overwrite: false
-        })
-
-        init[index - initIndexStart].participants?.forEach(p => {
-          if (null != p) participants.push(p)
-        })
-
-        location.participants = participants
-      }
-      location.first = false
-      location.end = false
-      locations.push(location)
     }
 
     locations[0].first = true
@@ -228,7 +240,7 @@ export class CoC7ChaseSheet extends ItemSheet {
       const location = locations[index]
       if (!location.name) classes.push('empty')
       if (location.active) classes.push('active')
-      if (location.init) classes.push('init')
+      if (location.init && !this.started) classes.push('init')
       location.cssClasses = classes.join(' ')
     }
 
@@ -276,7 +288,19 @@ export class CoC7ChaseSheet extends ItemSheet {
     return this.participants.every(e => e.hasValidMov)
   }
 
+  get allHaveSpeedRoll () {
+    return this.participants.every(p => p.speedCheck?.rolled)
+  }
+
+  get started () {
+    return this.item.getFlag('CoC7', CoC7ChaseSheet.flags.started)
+  }
+
   async cutToTheChase () {
+    if (!this.allHaveSpeedRoll) {
+      ui.notifications.warn('Speed roll missing')
+      return
+    }
     if (this.allHaveValidMov) {
       //TODO : Check for speed roll ??
 
@@ -287,6 +311,8 @@ export class CoC7ChaseSheet extends ItemSheet {
         p.data.movementAction = 1 + (p.adjustedMov - minMov)
       })
       await this.updateParticipants(participants)
+      await this.updateLocationsList(this.locations)
+      await this.item.setFlag('CoC7', CoC7ChaseSheet.flags.started, true)
     }
   }
 
@@ -439,6 +465,25 @@ export class CoC7ChaseSheet extends ItemSheet {
       callbacks: { drop: this._onAddParticipant.bind(this) }
     })
     newParticipantDragDrop.bind(html[0])
+
+    const chaseParticipantDragpDrop = new DragDrop({
+      dragSelector: '.chase-participant',
+      dropSelector: '.chase-location',
+      permissions: {
+        dragstart: this._canChaseParticipantDragStart.bind(this),
+        drop: this._canChaseParticipantDragDrop.bind(this)
+      },
+      callbacks: {
+        dragstart: this._onChaseParticipantDragStart.bind(this),
+        drop: this._onChaseParticipantDragDrop.bind(this),
+        dragover: this._onDragEnter.bind(this)
+      }
+    })
+    chaseParticipantDragpDrop.bind(html[0])
+
+    html
+      .find('.chase-location')
+      .on('dragleave', event => this._onDragLeave(event))
   }
 
   /* -------------------------------------------- */
@@ -637,16 +682,77 @@ export class CoC7ChaseSheet extends ItemSheet {
 
         break
       case 'reset':
-        await this.updateLocationsList([])
+        Dialog.confirm({
+          title: `${game.i18n.localize('CoC7.ConfirmResetChase')}`,
+          content: `<p>${game.i18n.localize('CoC7.ConfirmResetChaseHint')}</p>`,
+          yes: async () => {
+            await this.updateLocationsList([])
+            await this.item.unsetFlag('CoC7', CoC7ChaseSheet.flags.started)
+          }
+        })
         break
 
       case 'cut2chase':
-        await this.cutToTheChase()
+        Dialog.confirm({
+          title: `${game.i18n.localize('CoC7.ConfirmCut2Chase')}`,
+          content: `<p>${game.i18n.localize('CoC7.ConfirmCut2ChaseHint')}</p>`,
+          yes: () => this.cutToTheChase()
+        })
+        break
+
+      case 'restart':
+        Dialog.confirm({
+          title: `${game.i18n.localize('CoC7.ConfirmRestartChase')}`,
+          content: `<p>${game.i18n.localize(
+            'CoC7.ConfirmRestartChaseHint'
+          )}</p>`,
+          yes: async () => {
+            const locations = this.locations.filter(l => !l.init)
+            for (let i = 0; i < locations.length; i++) {
+              if (locations[i].participants) locations[i].participants = []
+            }
+            await this.updateLocationsList(locations)
+            await this.item.unsetFlag('CoC7', CoC7ChaseSheet.flags.started)
+          }
+        })
         break
 
       default:
         break
     }
+  }
+
+  _canChaseParticipantDragStart (selector) {
+    if (game.user.isGM) return true
+    return false
+  }
+
+  _canChaseParticipantDragDrop (selector) {
+    if (game.user.isGM) return true
+    return false
+  }
+
+  async _onChaseParticipantDragStart (dragEvent) {
+    ui.notifications.info('DragStart')
+  }
+
+  async _onChaseParticipantDragDrop (dragEvent) {
+    ui.notifications.info('Dropped')
+    this._onDragLeave(dragEvent)
+  }
+
+  _onDragOver (dragEvent) {
+    this._onDragEnter(dragEvent)
+  }
+
+  _onDragEnter (dragEvent) {
+    const target = dragEvent.currentTarget
+    target.classList.add('drag-over')
+  }
+
+  _onDragLeave (dragEvent) {
+    const target = dragEvent.currentTarget
+    target.classList.remove('drag-over')
   }
 
   async _onDropParticipant (event) {
@@ -722,12 +828,12 @@ export class CoC7ChaseSheet extends ItemSheet {
     await this.item.update({ 'data.participants': participants })
   }
 
-  async _onDragEnterParticipant (event) {
+  _onDragEnterParticipant (event) {
     const target = event.currentTarget
     target.classList.add('drag-over')
   }
 
-  async _onDragLeaveParticipant (event) {
+  _onDragLeaveParticipant (event) {
     const target = event.currentTarget
     target.classList.remove('drag-over')
   }

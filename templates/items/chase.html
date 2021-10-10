@@ -59,7 +59,7 @@
 
                 <div class="track">
                     {{#each locations as |location i|}}
-                        <div class="location" data-uuid="{{location.uuid}}">
+                        <div class="chase-location" data-uuid="{{location.uuid}}">
                             <div class="flexrow people">
                                 {{#unless location.first}}
                                     {{#if location.obstacle}}
@@ -69,7 +69,7 @@
                                 <div class="list">
                                     {{#each location.participants as |p|}}
                                         {{#if p}}
-                                        <div class="participant" data-uuid="{{p.uuid}}">
+                                        <div class="chase-participant" data-uuid="{{p.uuid}}">
                                             <a><img src="{{p.icon}}" title="{{p.name}}"/></a>
                                         </div>
                                         {{/if}}
@@ -138,6 +138,9 @@
                     <label class="checkbox flex-content">
                         <input type="checkbox" name="data.includeLatecomers" {{checked data.includeLatecomers}}/> {{ localize "CoC7.IncludeLatecomers" }}
                     </label>
+                    <label class="checkbox flex-content">
+                        <input type="checkbox" name="data.vehicule" {{checked data.vehicule}}/> {{ localize "CoC7.VehiculeChase" }}
+                    </label>
                     <div class="form-group">
                         <label>{{localize 'CoC7.StartingRange'}}</label>
                         <input type="text" name="data.startingRange" value="{{data.startingRange}}" data-dtype="Number"/>
@@ -148,8 +151,12 @@
                     </div>
 
                     {{#if locations}}
-                    <div class="button" data-action="reset">{{localize 'CoC7.Reset'}}</div>
-                    <div class="button" data-action="cut2chase">{{localize 'CoC7.cut2chase'}}</div>
+                    {{#if started}}
+                        <div class="button" data-action="restart">{{localize 'CoC7.Restart'}}</div>
+                    {{else}}
+                        <div class="button" data-action="reset">{{localize 'CoC7.Reset'}}</div>
+                        <div class="button" data-action="cut2chase">{{localize 'CoC7.cut2chase'}}</div>
+                    {{/if}}
                     {{/if}}
                 </div>
             </div>

@@ -619,6 +619,7 @@
       "startingRange": 2,
       "startingIndex": 0,
       "started": false,
+      "vehicule": false,
       "participants": []
     }
   }

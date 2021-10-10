@@ -87,11 +87,15 @@
     flex: 0 0 auto;
   }
 
-  .location {
+  .chase-location {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     flex: 0 0 auto;
+
+    &.drag-over {
+      background: rgba(0, 0, 0, 0.1);
+    }
 
     .people {
       flex: 1;
@@ -103,7 +107,7 @@
         flex: 1;
         display: flex;
         justify-content: center;
-        .participant {
+        .chase-participant {
           width: 2rem;
         }
       }
