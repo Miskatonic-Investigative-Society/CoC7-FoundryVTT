@@ -186,16 +186,18 @@ export class CoC7MeleeResoltion {
         default:
           break
       }
+    } else if (this.initiator.roll.successLevel > 0) {
+      this.resultString = game.i18n.format('CoC7.WinnerRollDamage', {
+        name: this.initiator.name
+      })
+      this.winner = this.initiator
+      this.rollDamage = true
     } else {
-      if (this.initiator.roll.successLevel > 0) {
-        this.resultString = `${this.initiator.name} won. Roll damage`
-        this.winner = this.initiator
-        this.rollDamage = true
-      } else {
-        this.resultString = `${this.initiator.name} missed.`
-        this.winner = this.initiator
-        this.rollDamage = false
-      }
+      this.resultString = game.i18n.format('CoC7.InitiatorMissed', {
+        name: this.initiator.name
+      })
+      this.winner = this.initiator
+      this.rollDamage = false
     }
 
     if (this.winner) {

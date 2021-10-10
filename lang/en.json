@@ -235,6 +235,7 @@
   "CoC7.TitleSurprised": "Add 1 bonus dice for surprised target",
   "CoC7.TitleAutoSuccess": "Attack automatically hit",
   "CoC7.WinnerRollDamage": "{name} won. Roll damage.",
+  "CoC7.InitiatorMissed": "{name} missed.",
   "CoC7.NoWinner": "Both side failed.",
   "CoC7.DodgeSuccess": "{name} dodged!",
   "CoC7.ManeuverSuccess": "{name} maneuver was successful.",
