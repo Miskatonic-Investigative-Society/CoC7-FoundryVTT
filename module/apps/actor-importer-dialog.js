@@ -134,7 +134,7 @@ export class CoC7ActorImporterDialog extends Dialog {
 }
 
 Hooks.once('ready', () => {
-  if (game.modules.get('CoC7-importer-tests')?.active) {
+  if (game.modules.get('CoC7-Importer-Tests')?.active) {
     window.CoC7ActorImporter = CoC7ActorImporter
   }
 })
