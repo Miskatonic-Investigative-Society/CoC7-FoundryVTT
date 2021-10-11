@@ -237,15 +237,15 @@ export class CoCActor extends Actor {
     }
     let boutDurationText = this.isInABoutOfMadness
       ? boutRealTime
-        ? `${duration} ${game.i18n.localize('CoC7.rounds')}`
-        : `${duration} ${game.i18n.localize('CoC7.hours')}`
+          ? `${duration} ${game.i18n.localize('CoC7.rounds')}`
+          : `${duration} ${game.i18n.localize('CoC7.hours')}`
       : null
     const insanityDurationText = insaneDuration
       ? this.isInsane
-        ? indefiniteInstanity
-          ? null
-          : `${insaneDuration} ${game.i18n.localize('CoC7.hours')}`
-        : null
+          ? indefiniteInstanity
+              ? null
+              : `${insaneDuration} ${game.i18n.localize('CoC7.hours')}`
+          : null
       : null
     if (this.isInsane && !insanityDurationText && !indefiniteInstanity) {
       indefiniteInstanity = true
@@ -272,8 +272,8 @@ export class CoCActor extends Actor {
         durationText: insanityDurationText || '',
         hint: this.isInsane
           ? indefiniteInstanity
-            ? game.i18n.localize('CoC7.IndefiniteInsanity')
-            : `${game.i18n.localize(
+              ? game.i18n.localize('CoC7.IndefiniteInsanity')
+              : `${game.i18n.localize(
                 'CoC7.TemporaryInsanity'
               )} ${insanityDurationText || ''}`
           : game.i18n.localize('CoC7.NotInsane')
@@ -2950,59 +2950,41 @@ export class CoCActor extends Actor {
   }
 
   async developLuck (fastForward = false) {
-    const luck = this.data.data.attribs.lck
-    const upgradeRoll = new Roll('1D100')
+    const currentLuck = this.data.data.attribs.lck.value
+    if (!currentLuck) await this.update({ 'data.attribs.lck.value': 0 })
+    const pulpRulesActivated = game.settings.get('CoC7', 'pulpRules')
+    const upgradeRoll = (await new Roll('1D100').roll({ async: true })).total
+    const equalOrLessCurrentLuck = upgradeRoll <= currentLuck
+    let augmentRoll = '0'
+    if (pulpRulesActivated) {
+      equalOrLessCurrentLuck ? augmentRoll = '2D10+5' : augmentRoll = '1D10+5'
+    } else if (equalOrLessCurrentLuck) {
+      augmentRoll = '1D10'
+    }
+    const augmentValue = (await new Roll(augmentRoll).roll({ async: true })).total
+    await this.update({
+      'data.attribs.lck.value': this.data.data.attribs.lck.value + augmentValue
+    })
     const title = game.i18n.localize('CoC7.RollLuck4Dev')
     let message = '<p class="chat-card">'
-    await upgradeRoll.roll({ async: true })
-    if (!fastForward) await CoC7Dice.showRollDice3d(upgradeRoll)
-    if (upgradeRoll.total > luck.value) {
-      const augmentRoll = new Roll('1D10')
-      await augmentRoll.roll({ async: true })
-      if (!fastForward) await CoC7Dice.showRollDice3d(augmentRoll)
-      if (luck.value + augmentRoll.total <= 99) {
-        await this.update({
-          'data.attribs.lck.value':
-            this.data.data.attribs.lck.value + augmentRoll.total
-        })
-        message += `<span class="upgrade-success">${game.i18n.format(
-          'CoC7.LuckIncreased',
-          {
-            die: upgradeRoll.total,
-            score: luck.value,
-            augment: augmentRoll.total
-          }
-        )}</span>`
-      } else {
-        let correctedValue
-        for (let i = 1; i <= 10; i++) {
-          if (luck.value + augmentRoll.total - i <= 99) {
-            correctedValue = augmentRoll.total - i
-            break
-          }
+    if (pulpRulesActivated || equalOrLessCurrentLuck) {
+      message += `<span class="upgrade-success">${game.i18n.format(
+        'CoC7.LuckIncreased',
+        {
+          die: upgradeRoll,
+          score: currentLuck,
+          augment: augmentValue
         }
-        await this.update({
-          'data.attribs.lck.value':
-            this.data.data.attribs.lck.value + correctedValue
-        })
-        message += `<span class="upgrade-success">${game.i18n.format(
-          'CoC7.LuckIncreased',
-          {
-            die: upgradeRoll.total,
-            score: luck.value,
-            augment: correctedValue
-          }
-        )}</span>`
-      }
+      )}</span>`
     } else {
       message += `<span class="upgrade-failed">${game.i18n.format(
         'CoC7.LuckNotIncreased',
-        { die: upgradeRoll.total, score: luck.value }
+        { die: upgradeRoll, score: currentLuck }
       )}</span>`
     }
     if (!fastForward) {
       message += '</p>'
-      const speaker = { actor: this.actor }
+      const speaker = { actor: this }
       await chatHelper.createMessage(title, message, { speaker: speaker })
     }
   }
