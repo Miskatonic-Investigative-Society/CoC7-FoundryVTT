@@ -46,7 +46,8 @@ export class CoC7Spell extends CoC7Item {
         break
       case 'power':
         this.actor.update({
-          'data.characteristics.pow.value': actorData.characteristics.pow.value - loss
+          'data.characteristics.pow.value':
+            actorData.characteristics.pow.value - loss
         })
     }
   }

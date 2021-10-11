@@ -3,6 +3,7 @@
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
 
 - Add options to change pause icon and text on settings.
+- Add Pulp Luck recovery rules.
 - Add several tooltips to the character sheet (Skill, DB, Sanity, etc).
 - Complete refactor of Spell system.
 - Fix "The key ? does not exist in the EmbeddedCollection Collection" dragging an English setup onto a translated Actor.

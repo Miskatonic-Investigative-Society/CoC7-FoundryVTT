@@ -290,7 +290,7 @@ export class SanCheckCard extends ChatCardActor {
     this.sanCheck.difficulty =
       this.options.sanDifficulty || CoC7Check.difficultyLevel.regular
     this.sanCheck.diceModifier = this.options.sanModifier || 0
-    await this.sanCheck._perform( {forceDSN: true})
+    await this.sanCheck._perform({ forceDSN: true })
     this.state.sanRolled = true
     this.state.involuntaryActionPerformed = this.sanCheck.passed
     this.state.sanLossRolled = true
@@ -305,7 +305,7 @@ export class SanCheckCard extends ChatCardActor {
     this.sanCheck.difficulty =
       this.options.sanDifficulty || CoC7Check.difficultyLevel.regular
     this.sanCheck.diceModifier = this.options.sanModifier || 0
-    await this.sanCheck._perform( {forceDSN: true})
+    await this.sanCheck._perform({ forceDSN: true })
     this.state.sanRolled = true
     this.state.involuntaryActionPerformed = this.sanCheck.passed
     if (!this.isActorLoosingSan) {
@@ -429,7 +429,7 @@ export class SanCheckCard extends ChatCardActor {
     this.intCheck.difficulty =
       this.options.intDifficulty || CoC7Check.difficultyLevel.regular
     this.intCheck.diceModifier = this.options.intModifier || 0
-    await this.intCheck._perform( {forceDSN: true})
+    await this.intCheck._perform({ forceDSN: true })
     this.state.intRolled = true
     if (this.intCheck.passed || this.state.alreadyInsane) {
       this.state.insanity = true
