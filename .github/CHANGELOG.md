@@ -15,6 +15,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Now Actor die instantly when damage is equal or higher than its max hp.
 - Now Actor Importer support Traditional Chinese, thanks to @zeteticl.
 - Now double click on Item in inventory list open its sheet.
+- Now the defender has an option to do nothing in combat flow.
 - Now there is an option to show or not show uncommon skills on Character sheet.
 - Several improvements on the Actor Importer app;
 - Update updater to check module compendiums for Actor and Item when modules version module numbers are new or changed.
