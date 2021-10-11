@@ -155,7 +155,8 @@ COC7.firearmSpecializationName = 'CoC7.FirearmSpecializationName'
 COC7.combatCards = {
   fightBack: 'CoC7.FightBack',
   dodge: 'CoC7.Dodge',
-  maneuver: 'CoC7.Maneuver'
+  maneuver: 'CoC7.Maneuver',
+  noResponse: 'CoC7.NoResponse'
 }
 
 // COC7.dodge = {

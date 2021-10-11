@@ -78,6 +78,26 @@ export class CoC7MeleeResoltion {
   async resolve () {
     if (this.target) {
       switch (this.target.action) {
+        case 'noResponse':
+          if (this.initiator.roll.successLevel > 0) {
+            this.resultString = game.i18n.format('CoC7.WinnerRollDamage', {
+              name: this.initiator.name
+            })
+            this.action = 'roll-melee-damage'
+            this.rollDamage = true
+          } else {
+            this.resultString = game.i18n.format('CoC7.InitiatorMissed', {
+              name: this.initiator.name
+            })
+            this.winner = this.initiator
+            this.rollDamage = false
+          }
+          this.winner = this.initiator
+          this.winnerImg = this.initiator.weapon.img
+          this.winnerTitle = this.initiator.weapon.name
+          this.looser = this.target
+          break
+
         case 'dodge':
           if (
             this.initiator.roll.successLevel <= 0 &&
@@ -186,16 +206,18 @@ export class CoC7MeleeResoltion {
         default:
           break
       }
+    } else if (this.initiator.roll.successLevel > 0) {
+      this.resultString = game.i18n.format('CoC7.WinnerRollDamage', {
+        name: this.initiator.name
+      })
+      this.winner = this.initiator
+      this.rollDamage = true
     } else {
-      if (this.initiator.roll.successLevel > 0) {
-        this.resultString = `${this.initiator.name} won. Roll damage`
-        this.winner = this.initiator
-        this.rollDamage = true
-      } else {
-        this.resultString = `${this.initiator.name} missed.`
-        this.winner = this.initiator
-        this.rollDamage = false
-      }
+      this.resultString = game.i18n.format('CoC7.InitiatorMissed', {
+        name: this.initiator.name
+      })
+      this.winner = this.initiator
+      this.rollDamage = false
     }
 
     if (this.winner) {

@@ -3397,9 +3397,10 @@ export class CoCActor extends Actor {
   async dealDamage (amount, options = {}) {
     const armorData = this.data.data.attribs.armor.value
     const grossDamage = parseInt(amount)
-    let armorValue
+    let armorValue = 0
     if (!options.ignoreArmor) {
-      if (CoC7Utilities.isFormula(armorData)) {
+      if (armorData === null) {
+      } else if (CoC7Utilities.isFormula(armorData)) {
         armorValue = (await new Roll(armorData).roll({ async: true })).total
       } else if (!isNaN(Number(armorData))) {
         armorValue = Number(armorData)
@@ -3407,7 +3408,6 @@ export class CoCActor extends Actor {
         ui.notifications.warn(
           `Unable to process armor value: ${armorData}. Ignoring armor.`
         )
-        armorValue = 0
       }
     }
     const netDamage = grossDamage - armorValue
@@ -3416,8 +3416,9 @@ export class CoCActor extends Actor {
     if (netDamage >= this.hpMax) {
       await this.fallDead()
     } else {
-      if (netDamage >= Math.floor(this.hpMax / 2))
+      if (netDamage >= Math.floor(this.hpMax / 2)) {
         await this.inflictMajorWound()
+      }
       if (this.hp === 0) {
         if (!this.getStatus(COC7.status.unconscious)) {
           await this.fallUnconscious()
