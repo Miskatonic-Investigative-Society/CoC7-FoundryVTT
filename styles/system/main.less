@@ -480,18 +480,29 @@
       cursor: default;
     }
   }
-  .sheet-tabs {
+  .sheet-nav {
     flex: 0 0 20px;
-    margin-bottom: 5px;
+    margin: 4px 0 5px;
+    line-height: 20px;
     font-family: customSheetFont, 'Palatino Linotype', serif;
     font-size: 20px;
     border: 0;
-    .item {
+    .tab-name {
       line-height: 15px;
       margin: 0 10px;
       border-bottom: 3px solid #b5b3a4;
+      text-align: center;
+      &.keeper-only-tab {
+        flex: 0 0 30px;
+        span {
+          vertical-align: bottom;
+          i {
+            color: @colorGreen;
+          }
+        }
+      }
     }
-    .item.active {
+    .tab-name.active {
       border-bottom: 3px solid #44191a;
     }
   }
@@ -574,7 +585,7 @@
     visibility: hidden;
     position: absolute;
     background-color: #f1f1f1;
-    min-width: 100px;
+    min-width: 126px;
     overflow: auto;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;

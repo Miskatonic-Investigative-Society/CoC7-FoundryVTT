@@ -1,4 +1,4 @@
-/* global $, Combat, CONFIG, CONST, fromUuid, game, Hooks, tinyMCE, ui */
+/* global $, Combat, CONFIG, fromUuid, game, Hooks, tinyMCE */
 import { CoC7NPCSheet } from './actors/sheets/npc-sheet.js'
 import { CoC7CreatureSheet } from './actors/sheets/creature-sheet.js'
 import { CoC7CharacterSheetV2 } from './actors/sheets/character.js'
@@ -15,10 +15,13 @@ import { CombinedCheckCard } from './chat/cards/combined-roll.js'
 import { DamageCard } from './chat/cards/damage.js'
 import { CoC7Canvas } from './apps/canvas.js'
 import { CoC7CompendiumDirectory } from './compendium-directory.js'
+import { CoC7ActorDirectory } from './actor-directory.js'
 import { CoC7Hooks } from './hooks/index.js'
 import * as DiceBot from './dicebot.js'
 import '../styles/system/index.less'
 import { CoC7ChaseSheet } from './items/sheets/chase.js'
+import { CoC7Socket } from './hooks/socket.js'
+import { DropActorSheetData } from './hooks/drop-actor-sheet-data.js'
 
 Hooks.on('renderSettingsConfig', (app, html, options) => {
   const systemTab = $(app.form).find('.tab[data-tab=system]')
@@ -60,6 +63,14 @@ Hooks.on('renderSettingsConfig', (app, html, options) => {
     .before(
       '<h2 class="setting-header">' +
         game.i18n.localize('SETTINGS.TitleScene') +
+        '</h2>'
+    )
+  systemTab
+    .find('input[name=CoC7\\.overrideGameArtwork]')
+    .closest('div.form-group')
+    .before(
+      '<h2 class="setting-header">' +
+        game.i18n.localize('SETTINGS.TitleGameArtwork') +
         '</h2>'
     )
   systemTab
@@ -136,6 +147,8 @@ Hooks.on('renderCombatTracker', (app, html, data) =>
 
 DiceBot.listen()
 CoC7Hooks.listen()
+
+Hooks.once('socketlib.ready', CoC7Socket)
 
 Hooks.once('setup', function () {
   // Localize CONFIG objects once up-front
@@ -254,9 +267,9 @@ Hooks.on('ready', async () => {
   // }
 
   const tableChoice = { none: 'SETTINGS.LetKeeperDecide' }
-  game.tables.forEach(t => {
+  for (const t of game.tables) {
     tableChoice[t.data._id] = t.data.name
-  })
+  }
 
   game.settings.register('CoC7', 'boutOfMadnessSummaryTable', {
     name: 'SETTINGS.BoutOfMadnessSummaryTable',
@@ -410,6 +423,8 @@ Hooks.on('renderSceneControls', CoC7Menu.renderMenu)
 
 Hooks.on('dropCanvasData', CoC7Canvas.onDropSomething)
 
+Hooks.on('dropActorSheetData', DropActorSheetData)
+
 function activateGlobalListener () {
   const body = $('body')
   body.on('click', 'a.coc7-inline-check', CoC7Check._onClickInlineRoll)
@@ -425,80 +440,36 @@ function configureTinyMCE () {
     editor.on('drop', event => CoC7Parser.onEditorDrop(event, editor))
   })
 
-  // Intercept MCE init
-  // tinyMCE.PluginManager.add('CoC7_Editor_OnInit', function (editor) {
-  //   editor.on('init', () => CoC7Parser.onInitEditor( editor))
-  // })
-
   // Add custom plugins to list of plugins.
   // CONFIG.TinyMCE.plugins = `CoC7_Editor_OnInit CoC7_Editor_OnDrop ${CONFIG.TinyMCE.plugins}`
   CONFIG.TinyMCE.plugins = `CoC7_Editor_OnDrop ${CONFIG.TinyMCE.plugins}`
-
-  if (game.user.isGM) {
-    // Define css and menu for keeper only blocks
-    CONFIG.TinyMCE.content_css.push('/systems/CoC7/assets/mce.css')
-    CONFIG.TinyMCE.style_formats.push({
-      title: 'CoC7',
-      items: [
-        {
-          title: 'Keeper Only',
-          block: 'section',
-          classes: 'keeper-only',
-          wrapper: true
-        }
-      ]
-    })
-  } else {
-    // Prevent player to edit and view source code if settings is disabled
-    if (!game.settings.get('CoC7', 'enablePlayerSourceCode'))
-      CONFIG.TinyMCE.toolbar = CONFIG.TinyMCE.toolbar.replace(' code', '')
-    // Hide keeper only blocks to players
-    CONFIG.TinyMCE.content_style = '.keeper-only {display: none}'
-  }
+//
+//  if (game.user.isGM) {
+//    // Define css and menu for keeper only blocks
+//    CONFIG.TinyMCE.content_css.push('/systems/CoC7/assets/mce.css')
+//    CONFIG.TinyMCE.style_formats.push({
+//      title: 'CoC7',
+//      items: [
+//        {
+//          title: 'Keeper Only',
+//          block: 'section',
+//          classes: 'keeper-only',
+//          wrapper: true
+//        }
+//      ]
+//    })
+//  } else {
+//    // Prevent player to edit and view source code if settings is disabled
+//    if (!game.settings.get('CoC7', 'enablePlayerSourceCode'))
+//      CONFIG.TinyMCE.toolbar = CONFIG.TinyMCE.toolbar.replace(' code', '')
+//    // Hide keeper only blocks to players
+//    CONFIG.TinyMCE.content_style = '.keeper-only {display: none}'
+//  }
 }
-
-// function setGlobalCssVar(){
-//   const body = $('body')
-//   body.css('--keeper-display', game.user.isGM ? '' : 'none')
-// }
 
 function _onLeftClick (event) {
   return event.shiftKey
 }
 
-Hooks.on('targetToken', function (user, token, targeted) {
-  if (targeted) {
-    // Check if the targeted token is a player controlled token but no user controls it
-    let gmonly = true
-    if (
-      token.actor.data.permission.default === CONST.ENTITY_PERMISSIONS.OWNER
-    ) {
-      gmonly = false
-    } else {
-      const gms = game.users.filter(a => a.isGM).map(a => a.id)
-      for (const [k, v] of Object.entries(token.actor.data.permission)) {
-        if (
-          k !== 'default' &&
-          v === CONST.ENTITY_PERMISSIONS.OWNER &&
-          !gms.includes(k)
-        ) {
-          gmonly = false
-        }
-      }
-    }
-    if (!gmonly) {
-      const controlled = game.users.filter(
-        a => !a.isGM && a.data.character === token.actor.id
-      )
-      if (controlled.length === 0) {
-        ui.notifications.error(
-          game.i18n.format('CoC7.MessageSelectedTargetIsNotControlled', {
-            name: token.name
-          })
-        )
-      }
-    }
-  }
-})
-
 CONFIG.ui.compendium = CoC7CompendiumDirectory
+CONFIG.ui.actors = CoC7ActorDirectory

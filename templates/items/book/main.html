@@ -124,11 +124,9 @@
         {{/if}}
       {{/if}}
       {{#if isKeeper}}
-        <a data-tab="notes">
+        <a data-tab="notes" class="keeper-only-tab" title="{{localize 'CoC7.GmNotes'}}">
           <div class="tab-name">
-            <span>
-              {{localize "CoC7.Notes"}}
-            </span>
+            <span><i class="game-icon game-icon-tentacles-skull"></i></span>
           </div>
         </a>
       {{/if}}
@@ -153,11 +151,13 @@
         }}
       </div>
       <div class="tab" data-group="primary" data-tab="details">
-        {{> "systems/CoC7/templates/items/book/details.hbs"}}
+        {{> "systems/CoC7/templates/items/book/details.html"}}
       </div>
       <div class="tab" data-group="primary" data-tab="spells">
         <div class="spells">
-          <label>{{localize "CoC7.DragSpell"}}</label>
+          {{#if spellListEmpty}}
+            <label>{{localize "CoC7.DragSpell"}}</label>
+          {{/if}}
           <ul>
             {{#each data.spells as |spell key|}}
               <li class="spell" data-index="{{@index}}" data-id="{{spell._id}}">

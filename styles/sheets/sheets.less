@@ -2,6 +2,15 @@ html {
   font-size: 16px;
 }
 
+a.keeper-only-tab {
+  flex: 0 0 30px;
+  color: @colorGreen;
+}
+
+h3.keeper-only-tab i {
+  color: @colorGreen;
+}
+
 .permission-limited img {
   height: auto !important;
   width: 580px !important;
@@ -47,7 +56,7 @@ html {
 
     .rollable:hover {
       color: #000;
-      text-shadow: 0 0 10px var(--main-sheet-interactie-color);
+      text-shadow: 0 0 10px var(--main-sheet-interactive-color);
       cursor: pointer;
     }
 
@@ -116,7 +125,7 @@ html {
 
       &:hover,
       &:focus {
-        box-shadow: 0 0 0.5rem var(--main-sheet-interactie-color);
+        box-shadow: 0 0 0.5rem var(--main-sheet-interactive-color);
         background: @greyBackground;
       }
     }

@@ -1,14 +1,23 @@
-/* global $, Dialog, game, renderTemplate, ui */
+/* global $, CONFIG, Dialog, game, renderTemplate, ui */
 
 import { CoC7ActorImporter } from './actor-importer.js'
+import { CoC7ActorImporterRegExp } from './actor-importer-regexp.js'
 
 export class CoC7ActorImporterDialog extends Dialog {
   activateListeners (html) {
     super.activateListeners(html)
-    html.on('submit', 'form', this._onSubmit.bind(this))
     html
       .find('option[value=coc-' + game.i18n.lang + ']')
       .attr('selected', 'selected')
+    html
+      .find('#coc-entity-lang')
+      .on('change', function (e) {
+        $('#coc-pasted-character-data').prop(
+          'placeholder',
+          CoC7ActorImporterRegExp.getExampleText($(this).val())
+        )
+      })
+      .trigger('change')
   }
 
   /**
@@ -24,14 +33,18 @@ export class CoC7ActorImporterDialog extends Dialog {
     inputs.convertFrom6E = $('#coc-convert-6E')
       .val()
       .trim()
-    console.debug('entity type:', inputs.entity)
+    if (CONFIG.debug.CoC7Importer) {
+      console.debug('entity type:', inputs.entity)
+    }
     inputs.lang = $('#coc-entity-lang')
       .val()
       .trim()
     let text = $('#coc-pasted-character-data')
       .val()
       .trim()
-    console.debug('received text', '##' + text + '##')
+    if (CONFIG.debug.CoC7Importer) {
+      console.debug('received text', '##' + text + '##')
+    }
     if (text[text.length] !== '.') {
       text += '.' // Add a dot a the end to help the regex find the end
     }
@@ -44,12 +57,16 @@ export class CoC7ActorImporterDialog extends Dialog {
    * @param {html} html
    */
   static async importActor (html) {
-    console.debug('html', html)
+    if (CONFIG.debug.CoC7Importer) {
+      console.debug('html', html)
+    }
     const inputs = await CoC7ActorImporterDialog.getInputs()
     const actor = new CoC7ActorImporter()
     const createdActor = await actor.createActor(inputs)
     // Actor created, Notify the user and show the sheet.
-    console.debug('createdActor:', createdActor)
+    if (CONFIG.debug.CoC7Importer) {
+      console.debug('createdActor:', createdActor)
+    }
     ui.notifications.info(
       'Created ' +
         createdActor.data?.type?.toUpperCase() +
@@ -61,8 +78,15 @@ export class CoC7ActorImporterDialog extends Dialog {
     // console.debug('updated:', updated)
   }
 
-  async _onSubmit (event) {
-    event.preventDefault()
+  submit (button) {
+    if (
+      $('#coc-pasted-character-data')
+        .val()
+        .trim() !== '' ||
+      !button.callback
+    ) {
+      super.submit(button)
+    }
   }
 
   /**
@@ -90,9 +114,7 @@ export class CoC7ActorImporterDialog extends Dialog {
               icon: '<i class="fas fa-times"></i>',
               label: game.i18n.localize('CoC7.Cancel')
             }
-          },
-          default: 'import',
-          close: console.log('Closing:')
+          }
         },
         {
           classes: ['coc7', 'dialog', 'actor-importer'],

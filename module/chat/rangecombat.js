@@ -27,11 +27,11 @@ export class CoC7RangeInitiator {
     this.aimed = false
     this.totalBulletsFired = 0
     this._targets = []
-    ;[...game.user.targets].forEach(t => {
+    for (const t of [...game.user.targets]) {
       const target = new CoC7RangeTarget(`${t.scene.id}.${t.id}`) //
       target.token = t
       this._targets.push(target)
-    })
+    }
     if (this._targets.length) this._targets[0].active = true
     else {
       const target = new CoC7RangeTarget()
@@ -51,7 +51,7 @@ export class CoC7RangeInitiator {
       }
     }
     if (this.tokenKey) {
-      this._targets.forEach(t => {
+      for (const t of this._targets) {
         if (t.token && this.token) {
           t.distance = chatHelper.getDistance(t.token, this.token)
           t.roundedDistance = Math.round(t.distance.value * 100) / 100
@@ -111,7 +111,7 @@ export class CoC7RangeInitiator {
           }
           // }
         } else t.baseRange = true
-      })
+      }
     }
   }
 
@@ -201,9 +201,9 @@ export class CoC7RangeInitiator {
 
   get didAnyShotHit () {
     let anyHit = false
-    this.rolls.forEach(r => {
+    for (const r of this.rolls) {
       anyHit = anyHit || r.isSuccess
-    })
+    }
     return anyHit
   }
 
@@ -294,9 +294,9 @@ export class CoC7RangeInitiator {
   }
 
   calcTargetsDifficulty () {
-    this.targets.forEach(t => {
+    for (const t of this.targets) {
       t.shotDifficulty = this.shotDifficulty(t)
-    })
+    }
   }
 
   shotDifficulty (t = null) {
@@ -662,18 +662,18 @@ export class CoC7RangeInitiator {
 
     chatHelper.getObjectFromElement(rangeInitiator, card)
     const cardTargets = card.querySelectorAll('.target')
-    cardTargets.forEach(t => {
+    for (const t of cardTargets) {
       const target = CoC7RangeTarget.getFromElement(t)
       rangeInitiator.targets.push(target)
-    })
+    }
 
     const cardShots = card.querySelectorAll('.shot')
     if (cardShots) {
-      cardShots.forEach(s => {
+      for (const s of cardShots) {
         const shot = {}
         chatHelper.getObjectFromElement(shot, s)
         rangeInitiator.shots.push(shot)
-      })
+      }
     }
     // else {
     //  const shot = {
@@ -685,17 +685,17 @@ export class CoC7RangeInitiator {
 
     rangeInitiator.rolls = []
     const rolls = card.querySelectorAll('.roll-result')
-    rolls.forEach(r => {
+    for (const r of rolls) {
       const roll = CoC7Roll.getFromElement(r)
       rangeInitiator.rolls.push(roll)
-    })
+    }
 
     rangeInitiator.damage = []
     const damageRolls = card.querySelectorAll('.damage-results')
-    damageRolls.forEach(dr => {
+    for (const dr of damageRolls) {
       const damageRoll = CoC7Damage.getFromElement(dr)
       rangeInitiator.damage.push(damageRoll)
-    })
+    }
 
     return rangeInitiator
   }

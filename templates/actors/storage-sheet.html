@@ -1,0 +1,43 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+    <header class="sheet-header flexrow" style="flex: 0 0 80px;padding-bottom: 2px;">
+        <div class="header-details flexrow">
+            <h1 class="name">
+                <input name="name" type="text" value="{{name}}" placeholder="{{ localize 'CoC7.Name' }}" style="margin:0; padding:0;" />
+            </h1>
+        </div>
+        <img class="profile" src="{{img}}" data-edit="img" title="{{name}}" height="64" width="64" style="flex: 0 0 64px; height: 64px;"/>
+    </header>
+    <nav class="sheet-nav tabs" data-group="primary" style="border-bottom: 2px groove #eeede0;padding-bottom: 10px;">
+        <a class="item active" data-tab="items">{{ localize "CoC7.Items" }}</a>
+        <a class="item" data-tab="description">{{ localize "CoC7.Description" }}</a>
+        {{#if isKeeper}}
+          <a class="item keeper-only-tab" data-tab="keeper" title="{{localize 'CoC7.GmNotes'}}"><i class="game-icon game-icon-tentacles-skull"></i></a>
+        {{/if}}
+        {{#if allowUnlock}}
+            {{#if data.flags.locked}}
+                <a class="unlock-control lock" title="{{localize 'CoC7.UnlockActor'}}"> <i class="fas fa-lock"></i> </a>
+            {{else}}
+                <a class="unlock-control lock" title="{{localize 'CoC7.LockActor'}}"> <i class="fas fa-lock-open"></i></a>
+            {{/if}}
+        {{else}}
+            {{#if data.flags.locked}}
+                <a class="unlock-control-disabled" title="{{localize 'CoC7.UnlockActor'}}"> <i class="fas fa-lock"></i> </a>
+            {{else}}
+                <a class="unlock-control-disabled" title="{{localize 'CoC7.LockActor'}}"> <i class="fas fa-lock-open"></i></a>
+            {{/if}}
+        {{/if}}
+    </nav>
+    <section class="sheet-body">
+        <div class="tab active" data-group="primary" data-tab="items">
+            {{> "systems/CoC7/templates/actors/parts/actor-inventory-items.html"}}
+        </div>
+        <div class="tab flexrow" data-group="primary" data-tab="description">
+            {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
+        </div>
+        {{#if isKeeper}}
+            <div class="tab flexcol" data-group="primary" data-tab="keeper">
+                {{editor content=data.description.keeper target="data.description.keeper" button=true owner=owner editable=editable}}
+            </div>
+        {{/if}}
+    </section>
+</form>

@@ -45,22 +45,22 @@ export class CoC7SetupSheet extends ItemSheet {
     const collection = this.item.data.data[collectionName]
       ? duplicate(this.item.data.data[collectionName])
       : []
-    dataList.forEach(async item => {
-      if (!item || !item.data) return
+    for (const item of dataList) {
+      if (!item || !item.data) continue
       if (
         !['item', 'weapon', 'skill', 'book', 'spell'].includes(item.data.type)
       ) {
-        return
+        continue
       }
 
       if (!CoC7Item.isAnySpec(item)) {
         if (collection.find(el => el.name === item.data.name)) {
-          return
+          continue
         }
       }
 
       collection.push(duplicate(item.data))
-    })
+    }
     await this.item.update({ [`data.${collectionName}`]: collection })
   }
 
@@ -95,7 +95,7 @@ export class CoC7SetupSheet extends ItemSheet {
     } else {
       const div = $(`<div class="item-summary">${chatData.value}</div>`)
       const props = $('<div class="item-properties"></div>')
-      // chatData.properties.forEach(p => props.append(`<span class="tag">${p}</span>`));
+      // for (const p of chatData.properties) { props.append(`<span class="tag">${p}</span>`) }
       div.append(props)
       li.append(div.hide())
       div.slideDown(200)
@@ -177,14 +177,15 @@ export class CoC7SetupSheet extends ItemSheet {
     data.otherItems = data.data.items.filter(it => it.type !== 'skill')
 
     data.skillListEmpty = data.skills.length === 0
-    data.skills.forEach(skill => {
+    data.itemsListEmpty = data.otherItems.length === 0
+    for (const skill of data.skills) {
       if (
         skill.data.specialization &&
         !skill.name.includes(skill.data.specialization)
       ) {
         skill.displayName = `${skill.data.specialization} (${skill.name})`
       } else skill.displayName = skill.name
-    })
+    }
 
     data.skills.sort((a, b) => {
       return a.displayName.localeCompare(b.displayName)
@@ -208,6 +209,7 @@ export class CoC7SetupSheet extends ItemSheet {
 
     data.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
 
+    data.isKeeper = game.user.isGM
     return data
   }
 

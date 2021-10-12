@@ -1,4 +1,4 @@
-/* global DragDrop, duplicate, expandObject, flattenObject, FormDataExtended, game, getType, ItemSheet, mergeObject */
+/* global DragDrop, duplicate, expandObject, flattenObject, FormDataExtended, game, getType, ItemSheet, mergeObject, ui */
 
 import { CoCActor } from '../../actors/actor.js'
 import { CoC7Chat } from '../../chat.js'
@@ -58,7 +58,11 @@ export class CoC7ChaseSheet extends ItemSheet {
   // }
 
   /** @override */
-  getData (options) {
+
+  getData (options = {}) {
+    ui.notifications.warn(
+      game.i18n.localize('CoC7.ExperimentalFeaturesWarning')
+    )
     const data = super.getData(options)
     // if( this.started) options.tabs[0].initial = 'setup'
     if (this.started) this._tabs[0].active = 'setup'
@@ -120,6 +124,8 @@ export class CoC7ChaseSheet extends ItemSheet {
     data.started = this.started
     data.dataListCheckOptions = this.allSkillsAndCharacteristics
 
+
+    data.isKeeper = game.user.isGM
     return data
   }
 
@@ -1408,10 +1414,11 @@ export class _participant {
 
   get dex () {
     if (!this.data.dex) {
-      if (this.hasVehicle && this.hasDriver)
+      if (this.hasVehicle && this.hasDriver) {
         this.data.dex = this.driver.characteristics.dex.value
-      else if (this.hasActor)
+      } else if (this.hasActor) {
         this.data.dex = this.actor.characteristics.dex.value
+      }
     }
 
     if (this.data.dex) {
@@ -1558,18 +1565,18 @@ export class _participant {
     }
     if (this.hasActor) {
       check.options = []
-      ;['con'].forEach(c => {
+      for (const c of ['con']) {
         const characterisitc = this.actor.getCharacteristic(c)
         if (characterisitc?.value) check.options.push(characterisitc.label)
-      })
+      }
 
-      this.actor.driveSkills.forEach(s => {
+      for (const s of this.actor.driveSkills) {
         check.options.push(s.name)
-      })
+      }
 
-      this.actor.pilotSkills.forEach(s => {
+      for (const s of this.actor.pilotSkills) {
         check.options.push(s.name)
-      })
+      }
       check.hasOptions = !!check.options.length
 
       if (this.data.speedCheck?.id) {

@@ -212,7 +212,8 @@ export class CharacRollDialog extends Dialog {
 
     if (data.characteristics.points.enabled) {
       if (
-        Number(data.characteristics.points.total) !== Number(data.characteristics.points.value)
+        Number(data.characteristics.points.total) !==
+        Number(data.characteristics.points.value)
       ) {
         data.pointsWarning = true
       }

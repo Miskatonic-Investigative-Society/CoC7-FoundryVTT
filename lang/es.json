@@ -5,6 +5,7 @@
   "CoC7.title": "La Llamada de Cthulhu 7a Edición (no oficial)",
 
   "CoC7.Entities.Character": "Personaje",
+  "CoC7.Entities.Container": "Contenedor",
   "CoC7.Entities.Creature": "Criatura",
   "CoC7.Entities.Npc": "PNJ",
   "CoC7.Entities.Vehicle": "Vehículo",
@@ -92,6 +93,7 @@
   "CoC7.Spells": "Hechizos",
   "CoC7.Spell": "Hechizo",
   "CoC7.Spells&Notes": "Hechizos y Notas",
+  "CoC7.Weapons": "Armas",
   "CoC7.Effects": "Efectos",
   "CoC7.Cost": "Coste",
   "CoC7.Source": "Fuente",
@@ -119,6 +121,7 @@
   "CoC7.Icon": "Icono",
   "CoC7.Check": "Prueba",
   "CoC7.ItemWeapon": "Objeto (arma)",
+  "CoC7.AttacksPerRound": "Ataques por asalto",
 
   "CoC7.CopyToClipboard": "Copiar al portapapeles",
   "CoC7.WhisperToSelection": "Susurrar a iconos seleccionados",
@@ -399,10 +402,17 @@
   "CoC7.DeleteSkill": "Eliminar habilidad",
   "CoC7.RangeSkills": "Habilidades de combate a distancia",
   "CoC7.MeleeSkills": "Habilidades de combate cuerpo a cuerpo",
-  "CoC7.NewItemName": "nuevo ítem",
-  "CoC7.AddItem": "Añadir ítem",
-  "CoC7.EditItem": "Editar ítem",
-  "CoC7.DeleteItem": "Eliminar ítem",
+  "CoC7.NewItemName": "nuevo objeto",
+  "CoC7.AddItem": "Añadir objeto",
+  "CoC7.EditItem": "Editar objeto",
+  "CoC7.DeleteItem": "Eliminar objeto",
+  "CoC7.TradeItem": "Cambiar/almacenar objeto",
+
+  "CoC7.NewBookName": "nuevo tomo",
+  "CoC7.AddBook": "Añadir tomo",
+  "CoC7.NewSpellName": "nuevo hechizo",
+  "CoC7.AddSpell": "Añadir hechizo",
+
   "CoC7.AddWeapon": "Añadir arma",
   "CoC7.NewWeaponName": "nueva arma",
   "CoC7.EditWeapon": "Editar arma",
@@ -413,6 +423,7 @@
   "CoC7.WeaponSkill": "Habilidad",
   "CoC7.WeaponSkillAlt": "Hab. alternativa",
   "CoC7.Inventory": "Inventario",
+  "CoC7.InventoryIsCurrentlyEmpty": "Inventario actualmente vacío",
   "CoC7.CharacterDevelopment": "Desarrollo",
   "CoC7.OccupationSkill": "Habilidad de ocupación",
   "CoC7.ArchetypeSkill": "Habilidad de arquetipo",
@@ -586,6 +597,7 @@
   "CoC7.Chosen": "Escogido",
   "CoC7.EmptySkillList": "Añada una habilidad soltándola aquí",
   "CoC7.EmptyItemList": "Añada un objeto soltándolo aquí",
+  "CoC7.EmptyCharacterSkillList": "Añada una configuración, ocupación o habilidad soltándolas aquí",
   "CoC7.PersonalSpeciality": "Número de especialidades personales o de la época",
   "CoC7.AdditionalSkills": "Habilidades Adicionales",
   "CoC7.SkillSelectionWindow": "Seleccione habilidades opcionales",
@@ -702,6 +714,17 @@
   "CoC7.Migrate.ButtonSkip": "Saltar",
   "CoC7.Migrate.ButtonOkay": "Ok",
 
+  "CoC7.Maximize": "Maximizar",
+  "CoC7.Summarize": "Resumen",
+
+  "CoC7.UnableToInteractWithChatCard": "No es posible interactuar con este mensaje, si necesita hacer algún cambio pídaselo al Guardián",
+  "CoC7.UnableToCopyToClipboard": "No es posible copiar al portapapeles, probablemente debido al nivel de seguridad de su navegador",
+  "CoC7.WarningCharacterSheetV1Depreciated": "Esta disposición está obsoleta y no funcionará correctamente. Se eliminará cuando salga la versión v9 de FoundryVTT, por favor dígale a su Guardián que cambie la hoja a CoC7.CoC7CharacterSheetV2",
+
+  "CoC7.MessageTitleSelectUserToGiveTo": "Dar objeto a otro personaje",
+  "CoC7.MessageSelectUserToGiveTo": "¿A qué personaje quiere darle el objeto?",
+  "CoC7.MessageDistanceCalculationFailure": "No es posible calcular la distancia entre los iconos, por favor, use la hoja de personaje del icono",
+
   "SETTINGS.TitleRules": "Reglas",
   "SETTINGS.TitleInitiative": "Ajustes de iniciativa",
   "SETTINGS.TitleRoll": "Ajustes de tiradas",
@@ -718,6 +741,7 @@
   "SETTINGS.DefaultDifficultyHint": "Puedes indicar la dificultad por defecto de las tiradas. Desconocida lanzará tiradas sin que el jugador conozca la dificultad",
   "SETTINGS.CheckDifficultyRegular": "Dificultad por defecto",
   "SETTINGS.CheckDifficultyUnknown": "Dificultad desconocida",
+  "SETTINGS.showIconsOnly": "En la hoja resumen, mostrar solo los iconos en la lista de habilidades",
   "SETTINGS.UseToken": "Usar imagen del icono",
   "SETTINGS.UseTokenHint": "Usar la imagen del icono en lugar de los retratos en las cartas del chat",
   "SETTINGS.DisplayActorOnCard": "Mostrar actor en carta",
@@ -802,5 +826,10 @@
   "SETTINGS.OneBlockBackStory": "Trasfondo en un solo bloque",
   "SETTINGS.OneBlockBackStoryHint": "Convertir el transfondo en un solo bloque de edición, se pueden añadir formateo y pegar enlaces",
   "SETTINGS.EnableStatusIcons": "Activar iconos de estado",
-  "SETTINGS.EnableStatusIconsHint": "Determina si se deben mostrar de los efectos de combate y cordura en los iconos"
+  "SETTINGS.EnableStatusIconsHint": "Determina si se deben mostrar de los efectos de combate y cordura en los iconos",
+  "SETTINGS.ShowExperimentalFeatures": "Mostrar características experimentales",
+  "SETTINGS.ShowExperimentalFeaturesHint": "Su mundo puede corromperse en próximas versiones si usa estas características. Solo para pruebas, no las use en sus mundos de juego",
+  "CoC7.ExperimentalFeaturesWarning": "Esta característica está en desarrollo y no se recomienda su uso en sus mundos de juego",
+  "SETTINGS.CheckElevation": "Incluir elevación en la distancia",
+  "SETTINGS.CheckElevationHint": "Usa la elevación en el combate a distancia para medir alcances"
 }

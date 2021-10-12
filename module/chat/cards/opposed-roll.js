@@ -126,9 +126,9 @@ export class OpposedCheckCard extends RollCard {
 
   get winnerCount () {
     let count = 0
-    this.rolls.forEach(r => {
+    for (const r of this.rolls) {
       if (r.winner) count += 1
-    })
+    }
     return count
   }
 
@@ -326,7 +326,7 @@ export class OpposedCheckCard extends RollCard {
     }
 
     this.rolls = this.rolls.filter(roll => {
-      return (typeof roll.actor.data !== 'undefined') // Check if there's an actor set and if there's one and it doesnt exist remove him.
+      return typeof roll.actor.data !== 'undefined' // Check if there's an actor set and if there's one and it doesnt exist remove him.
     })
 
     if (this.combat) {
@@ -340,10 +340,10 @@ export class OpposedCheckCard extends RollCard {
       // Combat roll includes only 2 persons, remove the rest.
       if (this.rolls.length > 1) {
         this.rolls = [this.rolls[0], this.rolls[1]]
-        this.rolls.forEach(r => {
+        for (const r of this.rolls) {
           delete r.winner
           delete r.tie
-        })
+        }
       }
 
       // First person added is the attacker.

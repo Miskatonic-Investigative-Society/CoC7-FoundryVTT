@@ -4,12 +4,10 @@
       color: darkred;
       font-weight: bolder;
     }
-
     &.header {
       flex: initial;
       border-bottom: 1px groove;
       line-height: 1.25rem;
-
       .header-section {
         border-right: 1px groove;
         display: flex;
@@ -19,69 +17,57 @@
           border-right: none;
         }
       }
-
       input {
         width: 1.875rem;
         padding: 0;
         margin: 0;
       }
     }
-
     .button {
       flex: 0 0 auto;
       margin: 1px;
       color: black;
     }
-
     .flagged4dev {
       color: goldenrod;
     }
-
     .item {
       flex: 0 0 0.625rem;
-
       .skill-name {
         flex: 1;
         font-size: 0.75rem;
         height: 1rem;
         padding: 0;
         text-align: left;
-
         &.flagged4dev {
           &.rollable:hover {
             cursor: pointer;
           }
         }
       }
-
       .item-controls {
         flex: 0 0 1.875rem;
         line-height: 1rem;
         font-size: 0.625rem;
         padding: 0 2px;
-
         .item-control {
           &:hover {
             cursor: default;
           }
-
           &.clickable:hover {
             cursor: pointer;
           }
         }
       }
     }
-
     .adjustment-value {
       &.not-available {
         background: white;
       }
-
       border-right: groove 1px;
       flex: 0;
       height: 1rem;
       line-height: 1rem;
-
       input {
         font-size: 0.6875rem;
         flex: 0 0 0.9375rem;
@@ -92,7 +78,6 @@
       }
     }
   }
-
   .sheet-section {
     h3 {
       margin: 0 -5px 0 0;
@@ -101,7 +86,6 @@
       font-weight: bold;
       font-size: 13px;
     }
-
     .editor {
       width: 100%;
       height: 12.5rem;
@@ -110,17 +94,14 @@
       line-height: normal;
       font-size: 0.75rem;
     }
-
     .resizededitor {
       .editor {
         height: 100%;
       }
     }
-
     .editor-content {
       overflow-x: hidden;
     }
-
     .section-header {
       margin: 2px 0 0 0;
       padding: 0;
@@ -131,19 +112,16 @@
       height: 100%;
     }
   }
-
   input:read-only:hover,
   input:read-only:focus {
     border: 1px solid transparent;
     box-shadow: none;
     cursor: default;
   }
-
   .read-only:hover,
   .read-only:focus {
     border: 1px solid black;
   }
-
   .info-fields {
     .form-group {
       label {
@@ -156,5 +134,15 @@
         font-weight: bold;
       }
     }
+  }
+  .unlock-control {
+    flex: 0 0 30px;
+    margin-top: 2px;
+  }
+  .unlock-control-disabled {
+    flex: 0 0 30px;
+    margin-top: 2px;
+    color: darkred;
+    cursor: not-allowed;
   }
 }

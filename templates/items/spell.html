@@ -26,6 +26,9 @@
       class="sheet-navigation tabs" data-group="primary">
         <a style="line-height: 24px;" class="item active" data-tab="description">{{ localize "CoC7.Description" }}</a>
         <a style="line-height: 24px;" class="item" data-tab="details">{{ localize "CoC7.Details" }}</a>
+        {{#if isKeeper}}
+          <a style="line-height: 24px;" class="item keeper-only-tab" data-tab="keeper" title="{{localize 'CoC7.GmNotes'}}"><i class="game-icon game-icon-tentacles-skull"></i></a>
+        {{/if}}
     </nav>
 
 
@@ -106,6 +109,11 @@
             <h3 class="form-header">{{ localize "CoC7.Notes"}}</h3>
             {{editor content=data.description.notes target="data.description.notes" button=true owner=owner editable=editable}}
         </div>
+      {{#if isKeeper}}
+        <div class="tab keeper flexcol" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="keeper">
+          {{editor content=data.description.keeper target="data.description.keeper" button=true owner=owner editable=editable}}
+        </div>
+      {{/if}}
     </section>
 
 </form>

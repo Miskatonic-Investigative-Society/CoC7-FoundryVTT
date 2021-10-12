@@ -273,7 +273,9 @@ export class InteractiveChatCard {
       this.toggleFlag(flag)
     } else {
       const buttons = toggle.querySelectorAll('.ic-radio-switch')
-      buttons.forEach(b => this.unsetFlag(b.dataset.flag))
+      for (const b of buttons) {
+        this.unsetFlag(b.dataset.flag)
+      }
       this.setFlag(flag)
     }
     const card = target.closest('.interactive-card')

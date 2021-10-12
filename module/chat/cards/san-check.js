@@ -95,7 +95,7 @@ export class SanCheckCard extends ChatCardActor {
           : this.sanData.sanMin
       }
 
-      const formula = this.creature?.sanLoss ? this.sanCheck.passed : 0
+      const formula = this.creature?.sanLoss(this.sanCheck.passed) || 0
       if (formula) {
         if (!isNaN(Number(formula))) return Number(formula)
         return formula
@@ -290,7 +290,7 @@ export class SanCheckCard extends ChatCardActor {
     this.sanCheck.difficulty =
       this.options.sanDifficulty || CoC7Check.difficultyLevel.regular
     this.sanCheck.diceModifier = this.options.sanModifier || 0
-    await this.sanCheck._perform()
+    await this.sanCheck._perform({ forceDSN: true })
     this.state.sanRolled = true
     this.state.involuntaryActionPerformed = this.sanCheck.passed
     this.state.sanLossRolled = true
@@ -305,7 +305,7 @@ export class SanCheckCard extends ChatCardActor {
     this.sanCheck.difficulty =
       this.options.sanDifficulty || CoC7Check.difficultyLevel.regular
     this.sanCheck.diceModifier = this.options.sanModifier || 0
-    await this.sanCheck._perform()
+    await this.sanCheck._perform({ forceDSN: true })
     this.state.sanRolled = true
     this.state.involuntaryActionPerformed = this.sanCheck.passed
     if (!this.isActorLoosingSan) {
@@ -429,7 +429,7 @@ export class SanCheckCard extends ChatCardActor {
     this.intCheck.difficulty =
       this.options.intDifficulty || CoC7Check.difficultyLevel.regular
     this.intCheck.diceModifier = this.options.intModifier || 0
-    await this.intCheck._perform()
+    await this.intCheck._perform({ forceDSN: true })
     this.state.intRolled = true
     if (this.intCheck.passed || this.state.alreadyInsane) {
       this.state.insanity = true
@@ -519,7 +519,7 @@ export class SanCheckCard extends ChatCardActor {
   static checkTargets (creatureKey, fastForward = false) {
     const targets = [...game.user.targets]
     if (targets.length) {
-      targets.forEach(t => {
+      for (const t of targets) {
         // TODO : ? Make async call to create ?
         if (t.actor.isToken) {
           SanCheckCard.create(
@@ -534,7 +534,7 @@ export class SanCheckCard extends ChatCardActor {
             { fastForward: fastForward }
           )
         }
-      })
+      }
     }
   }
 

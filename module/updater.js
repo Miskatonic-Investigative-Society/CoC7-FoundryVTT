@@ -1,16 +1,62 @@
-/* global CONFIG, Dialog, expandObject, foundry, game, isNewerVersion */
+/* global CONFIG, Dialog, expandObject, foundry, game, isNewerVersion, mergeObject */
 export class Updater {
   static async checkForUpdate () {
     this.systemUpdateVersion = String(
       game.settings.get('CoC7', 'systemUpdateVersion')
     )
-    if (isNewerVersion('0.3', this.systemUpdateVersion)) {
+    const runMigrate = isNewerVersion(
+      game.system.data.version,
+      this.systemUpdateVersion
+    )
+    this.updatedModules =
+      game.settings.get('CoC7', 'systemUpdatedModuleVersion') || {}
+    this.currentModules = {}
+    for (const pack of game.packs) {
+      if (
+        !['CoC7', 'world'].includes(pack.metadata.package) &&
+        ['Actor', 'Item'].includes(pack.metadata.entity)
+      ) {
+        if (
+          !Object.prototype.hasOwnProperty.call(
+            this.currentModules,
+            pack.metadata.package
+          )
+        ) {
+          // Only check each package once
+          if (
+            !Object.prototype.hasOwnProperty.call(
+              this.updatedModules,
+              pack.metadata.package
+            ) ||
+            String(this.updatedModules[pack.metadata.package]) !==
+              String(game.modules.get(pack.metadata.package).data.version)
+          ) {
+            // Package has not been updated before or the version number has changed
+            this.currentModules[pack.metadata.package] = game.modules.get(
+              pack.metadata.package
+            ).data.version
+          }
+        }
+      }
+    }
+    if (runMigrate || Object.keys(this.currentModules).length > 0) {
       if (game.user.isGM) {
         new Dialog({
           title: game.i18n.localize('CoC7.Migrate.Title'),
-          content: game.i18n.format('CoC7.Migrate.Message', {
-            version: game.system.data.version
-          }),
+          content: game.i18n.format(
+            Object.keys(this.currentModules).length === 0
+              ? 'CoC7.Migrate.Message'
+              : 'CoC7.Migrate.WithModulesMessage',
+            {
+              version: game.system.data.version,
+              modules:
+                '<ul><li>' +
+                Object.keys(this.currentModules)
+                  .map(mod => game.modules.get(mod).data.name)
+                  .join('</li><li>') +
+                '</li></ul>'
+            }
+          ),
           buttons: {
             update: {
               label: game.i18n.localize('CoC7.Migrate.ButtonUpdate'),
@@ -97,14 +143,16 @@ export class Updater {
     // Migrate World Compendium Packs
     for (const pack of game.packs) {
       if (
-        pack.metadata.package === 'world' &&
+        pack.metadata.package !== 'CoC7' &&
         ['Actor', 'Item', 'Macro', 'RollTable'].includes(pack.metadata.entity)
       ) {
         await Updater.migrateCompendiumData(pack)
       }
     }
 
-    game.settings.set('CoC7', 'systemUpdateVersion', '0.3')
+    const settings = mergeObject(this.updatedModules || {}, this.currentModules)
+    game.settings.set('CoC7', 'systemUpdatedModuleVersion', settings)
+    game.settings.set('CoC7', 'systemUpdateVersion', game.system.data.version)
   }
 
   static migrateActorData (actor) {
@@ -113,6 +161,8 @@ export class Updater {
     // Update World Actor
     Updater._migrateActorCharacterSanity(actor, updateData)
     Updater._migrateActorArtwork(actor, updateData)
+    Updater._migrateActorKeeperNotes(actor, updateData)
+    Updater._migrateActorNpcCreature(actor, updateData)
 
     // Migrate World Actor Items
     if (actor.items) {
@@ -187,6 +237,7 @@ export class Updater {
     Updater._migrateItemExperience(item, updateData)
     Updater._migrateItemArtwork(item, updateData)
     Updater._migrateItemBookAutomated(item, updateData)
+    Updater._migrateItemKeeperNotes(item, updateData)
 
     return updateData
   }
@@ -206,6 +257,33 @@ export class Updater {
     // Update World Actor
     Updater._migrateTableArtwork(table, updateData)
 
+    return updateData
+  }
+
+  static _migrateItemKeeperNotes (item, updateData) {
+    if (
+      [
+        'archetype',
+        'chase',
+        'item',
+        'occupation',
+        'setup',
+        'skill',
+        'spell',
+        'status',
+        'talent',
+        'weapon'
+      ].includes(item.type)
+    ) {
+      if (typeof item.data.description === 'string') {
+        updateData['data.description'] = {
+          value: item.data.description,
+          keeper: ''
+        }
+      } else if (typeof item.data.description.keeper === 'undefined') {
+        updateData['data.description.keeper'] = ''
+      }
+    }
     return updateData
   }
 
@@ -353,6 +431,32 @@ export class Updater {
           updateData.effects = actor.effects
         }
         updateData.effects[k].icon = 'systems/CoC7/assets/icons/' + image[1]
+      }
+    }
+    return updateData
+  }
+
+  static _migrateActorKeeperNotes (actor, updateData) {
+    if (['character', 'npc', 'creature'].includes(actor.type)) {
+      if (typeof actor.data.description === 'undefined') {
+        updateData['data.description'] = {
+          keeper: ''
+        }
+      }
+    }
+    return updateData
+  }
+
+  static _migrateActorNpcCreature (actor, updateData) {
+    if (['npc'].includes(actor.type)) {
+      if (typeof actor.data.special === 'undefined') {
+        updateData['data.special'] = {
+          checkPassed: null,
+          checkFailled: null
+        }
+      }
+      if (typeof actor.data.attacksPerRound === 'undefined') {
+        updateData['data.attacksPerRound'] = 1
       }
     }
     return updateData

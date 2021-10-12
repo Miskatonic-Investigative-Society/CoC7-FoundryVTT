@@ -26,16 +26,23 @@ export class CoC7MeleeTarget extends ChatCardActor {
     this.skillId = null
     this.itemId = null
     this.dodging = false
+    this.notResponding = false
     this.fightingBack = false
     this.maneuvering = false
   }
 
   get actionSelected () {
-    return this.dodging || this.fightingBack || this.maneuvering
+    return (
+      this.dodging ||
+      this.notResponding ||
+      this.fightingBack ||
+      this.maneuvering
+    )
   }
 
   get action () {
     if (this.dodging) return 'dodge'
+    if (this.notResponding) return 'noResponse'
     if (this.fightingBack) return 'fightBack'
     if (this.maneuvering) return 'maneuver'
     return null
@@ -172,7 +179,7 @@ export class CoC7MeleeTarget extends ChatCardActor {
           content =
             '<p>' + game.i18n.localize('CoC7.MessageSelectSingleUserForTarget')
           content = content + '<form id="selectform"><select name="user">'
-          owners.forEach(function (k) {
+          for (const k of owners) {
             content =
               content +
               '<option value="' +
@@ -180,7 +187,7 @@ export class CoC7MeleeTarget extends ChatCardActor {
               '">' +
               game.users.get(k).name +
               '</option>'
-          })
+          }
           content = content + '</select></form></p>'
           await Dialog.prompt({
             title: game.i18n.localize(
@@ -191,11 +198,11 @@ export class CoC7MeleeTarget extends ChatCardActor {
               const formData = new FormData(
                 html[0].querySelector('#selectform')
               )
-              formData.forEach(function (value, name) {
+              for (const [name, value] of formData) {
                 if (name === 'user') {
                   user = game.users.get(value)
                 }
-              })
+              }
             }
           })
       }
@@ -222,8 +229,14 @@ export class CoC7MeleeTarget extends ChatCardActor {
   }
 
   async updateChatCard () {
-    const html = await renderTemplate(this.template, this)
     const message = game.messages.get(this.messageId)
+    if (!game.user.isGM && message.user.id !== game.user.id) {
+      ui.notifications.info(
+        game.i18n.localize('CoC7.UnableToInteractWithChatCard')
+      )
+      return
+    }
+    const html = await renderTemplate(this.template, this)
 
     const msg = await message.update({ content: html })
     await ui.chat.updateMessage(msg, false)
@@ -242,14 +255,25 @@ export class CoC7MeleeTarget extends ChatCardActor {
     switch (event.currentTarget.dataset.action) {
       case 'dodge':
         target.dodging = true
+        target.notResponding = false
         target.fightingBack = false
         target.maneuvering = false
         target.skillId = event.currentTarget.dataset.skillId
         target.itemId = null
         break
 
+      case 'noResponse':
+        target.dodging = false
+        target.notResponding = true
+        target.fightingBack = false
+        target.maneuvering = false
+        target.skillId = null
+        target.itemId = null
+        break
+
       case 'fightBack':
         target.dodging = false
+        target.notResponding = false
         target.fightingBack = true
         target.maneuvering = false
         target.skillId = event.currentTarget.dataset.skillId
@@ -258,6 +282,7 @@ export class CoC7MeleeTarget extends ChatCardActor {
 
       case 'maneuver':
         target.dodging = false
+        target.notResponding = false
         target.fightingBack = false
         target.maneuvering = true
         target.skillId = event.currentTarget.dataset.skillId
@@ -298,6 +323,21 @@ export class CoC7MeleeTarget extends ChatCardActor {
     if (publish) check.toMessage()
 
     return check
+  }
+
+  async publishNoReponseResult () {
+    this.rolled = true
+    this.resolved = true
+    this.notResponding = true
+    const resolutionCard = new CoC7MeleeResoltion(
+      this.parentMessageId,
+      this.messageId
+    )
+
+    const resolutionMessage = await resolutionCard.preCreateMessage()
+
+    this.resolutionCard = resolutionMessage.id
+    await this.updateChatCard()
   }
 
   async publishCheckResult (check = null) {

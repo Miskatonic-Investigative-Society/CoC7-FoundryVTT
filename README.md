@@ -60,4 +60,6 @@ Foundry VTT support is covered by [Limited License Agreement for Module Developm
 
 This project uses some assets from Game Icons, thanks to its [authors](https://game-icons.net/about.html#authors).
 
+This project uses [socketlib](https://github.com/manuelVo/foundryvtt-socketlib) by Manuel Vögele which is licensed under [MIT](lib/socketlib/LICENSE).
+
 This system uses trademarks and/or copyrights owned by Chaosium Inc/Moon Design Publications LLC, which are used under [Chaosium Inc's Fan Material Policy](https://www.chaosium.com/fan-material-policy/). We are expressly prohibited from charging you to use or access this content. This system is not published, endorsed, or specifically approved by Chaosium Inc. For more information about Chaosium Inc's products, please visit www.chaosium.com.

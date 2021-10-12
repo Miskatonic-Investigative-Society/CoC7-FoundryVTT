@@ -1,6 +1,6 @@
 {
   "Actor": {
-    "types": ["character", "npc", "creature", "vehicle"],
+    "types": ["character", "npc", "creature", "vehicle", "container"],
     "templates": {
       "characteristics": {
         "characteristics": {
@@ -194,10 +194,23 @@
         "value": 0,
         "max": 0
       },
+      "description": {
+        "keeper": ""
+      },
       "notes": ""
     },
     "npc": {
       "templates": ["characteristics", "attribs", "status", "biography"],
+      "description": {
+        "keeper": ""
+      },
+      "special": {
+        "sanLoss": {
+          "checkPassed": null,
+          "checkFailled": null
+        },
+        "attacksPerRound": 1
+      },
       "infos": {
         "occupation": "",
         "age": "",
@@ -209,6 +222,9 @@
     },
     "creature": {
       "templates": ["characteristics", "attribs", "status", "biography"],
+      "description": {
+        "keeper": ""
+      },
       "special": {
         "attribs": {
           "move": {
@@ -264,6 +280,15 @@
       "properties": {
         "armed": false
       }
+    },
+    "container": {
+      "description": {
+        "value": "",
+        "keeper": ""
+      },
+      "flags": {
+        "locked": false
+      }
     }
   },
   "Item": {
@@ -281,7 +306,10 @@
       "chase"
     ],
     "item": {
-      "description": "",
+      "description": {
+        "value": "",
+        "keeper": ""
+      },
       "quantity": 1,
       "weight": 0,
       "attributes": {}
@@ -290,7 +318,8 @@
       "description": {
         "value": "",
         "chat": "",
-        "special": ""
+        "special": "",
+        "keeper": ""
       },
       "wpnType": "",
       "skill": {
@@ -339,7 +368,8 @@
         "value": "",
         "opposingDifficulty": "",
         "pushedFaillureConsequences": "",
-        "chat": ""
+        "chat": "",
+        "keeper": ""
       },
       "base": 0,
       "adjustments": {
@@ -356,7 +386,8 @@
     },
     "occupation": {
       "description": {
-        "value": ""
+        "value": "",
+        "keeper": ""
       },
       "source": null,
       "type": {
@@ -431,7 +462,8 @@
     },
     "archetype": {
       "description": {
-        "value": ""
+        "value": "",
+        "keeper": ""
       },
       "source": null,
       "type": {
@@ -465,7 +497,8 @@
     },
     "setup": {
       "description": {
-        "value": ""
+        "value": "",
+        "keeper": ""
       },
       "characteristics": {
         "points": {
@@ -508,37 +541,35 @@
       "flags": {}
     },
     "spell": {
-      "source": null,
-      "castingTime": null,
-      "cost": {
-        "mp": null,
-        "san": null,
-        "pow": null,
-        "hp": null,
-        "other": []
+      "alternativeNames": [],
+      "castingTime": "",
+      "costs": {
+        "hitPoints": 0,
+        "magicPoints": 0,
+        "others": "",
+        "sanity": 0,
+        "power": 0
       },
       "description": {
-        "value": "",
         "chat": "",
-        "unidentified": "",
-        "notes": ""
+        "value": ""
       },
+      "effects": [],
+      "keeperNotes": "",
+      "source": "",
       "type": {
-        "call": false,
-        "dismiss": false,
-        "contact": false,
-        "summon": false,
         "bind": false,
+        "call": false,
+        "combat": false,
+        "contact": false,
+        "dismiss": false,
         "enchantment": false,
         "gate": false,
-        "combat": false
-      },
-      "alternativeNames": [],
-      "effects": [],
-      "properties": {},
-      "flags": {}
+        "summon": false
+      }
     },
     "book": {
+      "alternativeNames": [],
       "author": "",
       "content": "",
       "date": "",
@@ -577,7 +608,8 @@
       "description": {
         "value": "",
         "chat": "",
-        "notes": ""
+        "notes": "",
+        "keeper": ""
       },
       "type": {
         "physical": false,
@@ -595,7 +627,8 @@
       "description": {
         "value": "",
         "chat": "",
-        "notes": ""
+        "notes": "",
+        "keeper": ""
       },
       "duration": {
         "permanent": true,
@@ -609,6 +642,9 @@
       }
     },
     "chase": {
+      "description": {
+        "keeper": ""
+      },
       "locations": {
         "total": 0,
         "startingRange": 1,

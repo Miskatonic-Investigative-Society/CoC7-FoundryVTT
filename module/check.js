@@ -718,6 +718,10 @@ export class CoC7Check {
       (await CoC7Dice.roll(this.diceModifier, this.rollMode, this.isBlind))
     if (!options.silent) AudioHelper.play({ src: CONFIG.sounds.dice })
 
+    if (options.forceDSN) {
+      await CoC7Dice.showRollDice3d(this.dice.roll)
+    }
+
     this.dices = {
       tens: [],
       unit: {
@@ -1001,9 +1005,9 @@ export class CoC7Check {
   showDiceRoll () {
     if (game.modules.get('dice-so-nice')?.active) {
       const diceResults = []
-      this.dices.tens.forEach(dieResult => {
+      for (const dieResult of this.dices.tens) {
         diceResults.push(dieResult.value === 100 ? 0 : dieResult.value / 10)
-      })
+      }
       diceResults.push(this.dices.unit.value)
 
       const diceData = {
@@ -1088,9 +1092,9 @@ export class CoC7Check {
     for (let index = 0; index < upgradeindex + 1; index++) {
       this.increaseSuccess.shift()
     }
-    this.increaseSuccess.forEach(s => {
+    for (const s of this.increaseSuccess) {
       s.luckToSpend = s.luckToSpend - luckAmount
-    })
+    }
     this.luckSpent = true
     this.computeCheck()
     if (update) return await this.updateChatCard()
@@ -1108,9 +1112,9 @@ export class CoC7Check {
     if (luckAmount) {
       this.actor.spendLuck(luckAmount)
       this.successLevel = this.difficulty
-      this.increaseSuccess.forEach(s => {
+      for (const s of this.increaseSuccess) {
         s.luckToSpend = s.luckToSpend - luckAmount
-      })
+      }
       this.luckSpent = true
       this.isSuccess = true
       this.totalLuckSpent = !parseInt(this.totalLuckSpent)
@@ -1529,9 +1533,11 @@ export class CoC7Check {
         chatData.flavor = `[${this.actor.name}] ${chatData.flavor}`
         chatData.flags = {
           CoC7: {
-            GMSelfRoll: true,
-            originalSpeaker: duplicate(chatData.speaker)
+            GMSelfRoll: true
           }
+        }
+        if (typeof chatData.speaker !== 'undefined') {
+          chatData.flags.CoC7.originalSpeaker = duplicate(chatData.speaker)
         }
         if (game.user.isGM) {
           switch (game.settings.get('CoC7', 'selfRollWhisperTarget')) {
@@ -1578,6 +1584,23 @@ export class CoC7Check {
    */
   async updateChatCard ({ makePublic = false, forceRoll = false } = {}) {
     if (makePublic) this.rollMode = false // reset roll mode
+
+    const chatData = { flavor: this.flavor }
+
+    if (makePublic) {
+      chatData.whisper = []
+      chatData.blind = false
+      ChatMessage.applyRollMode(chatData)
+    } else {
+      chatData.whisper = []
+      chatData.blind = false
+      ChatMessage.applyRollMode(chatData, game.settings.get('core', 'rollMode'))
+    }
+
+    if (chatData.blind) {
+      this.isBlind = true
+    }
+
     const template = 'systems/CoC7/templates/chat/roll-result.html'
     const html = await renderTemplate(template, this)
     let newContent = html
@@ -1596,19 +1619,13 @@ export class CoC7Check {
       newContent = htmlMessage.outerHTML
     }
 
-    const chatData = { flavor: this.flavor, content: newContent }
+    chatData.content = newContent
+
     if (CONST.CHAT_MESSAGE_TYPES.ROLL === message.data.type) {
       if (message.data.whisper?.length) {
         chatData.type = CONST.CHAT_MESSAGE_TYPES.WHISPER
       } else chatData.type = CONST.CHAT_MESSAGE_TYPES.OTHER
     }
-
-    if (makePublic) {
-      chatData.whisper = []
-      chatData.blind = false
-    }
-
-    ChatMessage.applyRollMode(chatData)
 
     if (forceRoll && this.dice?.roll) {
       await CoC7Dice.showRollDice3d(this.dice.roll)

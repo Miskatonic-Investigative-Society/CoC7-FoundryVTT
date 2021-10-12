@@ -177,12 +177,64 @@ export function registerSettings () {
     default: false,
     type: Boolean
   })
+  game.settings.register('CoC7', 'distanceElevation', {
+    name: 'SETTINGS.CheckElevation',
+    hint: 'SETTINGS.CheckElevationHint',
+    scope: 'world',
+    config: true,
+    default: true,
+    type: Boolean
+  })
+
+  /**
+   * Game Artwork Settings
+   */
+  game.settings.register('CoC7', 'overrideGameArtwork', {
+    name: 'SETTINGS.OverrideGameArtwork',
+    hint: 'SETTINGS.OverrideGameArtworkHint',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
+  })
+  if (game.settings.get('CoC7', 'overrideGameArtwork')) {
+    game.settings.register('CoC7', 'artPauseImage', {
+      name: 'SETTINGS.ArtPauseImage',
+      hint: 'SETTINGS.ArtPauseImageHint',
+      scope: 'world',
+      config: true,
+      default: 'systems/CoC7/assets/icons/time-trap.svg',
+      type: String
+    })
+    game.settings.register('CoC7', 'artPauseText', {
+      name: 'SETTINGS.ArtPauseText',
+      hint: 'SETTINGS.ArtPauseTextHint',
+      scope: 'world',
+      config: true,
+      default: 'The Blind Idiot God is dreaming...',
+      type: String
+    })
+  }
 
   /**
    * Sheet settings
    */
   game.settings.register('CoC7', 'displayPlayerNameOnSheet', {
     name: 'SETTINGS.displayPlayerNameOnSheet',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
+  })
+  game.settings.register('CoC7', 'toolTipDelay', {
+    name: 'CoC7.toolTipDelay',
+    scope: 'world',
+    config: true,
+    default: 2000,
+    type: Number
+  })
+  game.settings.register('CoC7', 'showIconsOnly', {
+    name: 'SETTINGS.showIconsOnly',
     scope: 'world',
     config: true,
     default: false,
@@ -213,14 +265,6 @@ export function registerSettings () {
   game.settings.register('CoC7', 'oneBlockBackstory', {
     name: 'SETTINGS.OneBlockBackStory',
     hint: 'SETTINGS.OneBlockBackStoryHint',
-    scope: 'world',
-    config: true,
-    default: false,
-    type: Boolean
-  })
-  game.settings.register('CoC7', 'enablePlayerSourceCode', {
-    name: 'SETTINGS.EnablePlayerSourceCode',
-    hint: 'SETTINGS.EnablePlayerSourceCodeyHint',
     scope: 'world',
     config: true,
     default: false,
@@ -391,7 +435,14 @@ export function registerSettings () {
     type: Boolean,
     default: false
   })
-
+  game.settings.register('CoC7', 'experimentalFeatures', {
+    name: 'SETTINGS.ShowExperimentalFeatures',
+    hint: 'SETTINGS.ShowExperimentalFeaturesHint',
+    scope: 'world',
+    config: true,
+    type: Boolean,
+    default: false
+  })
   /**
    * Other settings
    */
@@ -401,6 +452,15 @@ export function registerSettings () {
     config: false,
     type: Boolean,
     default: false
+  })
+  /** Feat: welcome message */
+  game.settings.register('CoC7', 'showWelcomeMessage', {
+    name: 'SETTINGS.showWelcomeMessage',
+    hint: 'SETTINGS.showWelcomeMessage',
+    scope: 'world',
+    config: false,
+    default: true,
+    type: Boolean
   })
   game.settings.register('CoC7', 'charCreationEnabled', {
     name: 'Char creation allowed',
@@ -413,8 +473,13 @@ export function registerSettings () {
     name: 'System update version',
     scope: 'world',
     config: false,
-    type: Number,
-    default: '0.2'
+    type: String,
+    default: game.system.data.version
+  })
+  game.settings.register('CoC7', 'systemUpdatedModuleVersion', {
+    scope: 'world',
+    config: false,
+    default: {}
   })
   game.settings.register('CoC7', 'xpEnabled', {
     name: 'Enable XP gain',

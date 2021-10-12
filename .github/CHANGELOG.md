@@ -1,3 +1,83 @@
+## Changes coming in a future release:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+
+- Add options to change pause icon and text on settings.
+- Add Pulp Luck recovery rules.
+- Add several tooltips to the character sheet (Skill, DB, Sanity, etc).
+- Complete refactor of Spell system.
+- Fix "The key ? does not exist in the EmbeddedCollection Collection" dragging an English setup onto a translated Actor.
+- Fix background integrity on Book sheet.
+- Fix bug on Archetype Item properties.
+- Fix Combined / Opposed Roll using the incorrect image path for wildcard tokens.
+- Fix DsN 3D dices not rolling sometimes.
+- Fix summarized sheet colors.
+- Fix rounding for max Hit Points on Pulp.
+- Now Actor die instantly when damage is equal or higher than its max hp.
+- Now Actor Importer support Traditional Chinese, thanks to @zeteticl.
+- Now double click on Item in inventory list open its sheet.
+- Now the defender has an option to do nothing in combat flow.
+- Now there is an option to show or not show uncommon skills on Character sheet.
+- Several improvements on the Actor Importer app;
+- Update updater to check module compendiums for Actor and Item when modules version module numbers are new or changed.
+- Update to French localization, thanks to @vonv.
+- Update to Japanese localization, thanks to `@Asami#8627`.
+- Update to Polish localization, thanks to @everyonecancode;
+- Update to Portuguese localization.
+- Update to Spanish localization, thanks to @lozalojo.
+- Update to Swedish localization, thanks to @Rangertheman.
+- Update to Taiwanese localization, thanks to @zeteticl.
+
+## Version 0.6.9:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+
+- Fix JavaScript Error "Call of Cthulhu 7th Edition (Unofficial): Error detected in system. (See JS Console)" if libWrapper module is active.
+- Update updater to check module compendiums for Actors and Items.
+- Fixes to compendium packs.
+  - Demolitions - set base skill to 1%.
+  - Diving - replace icon and mark as uncommon.
+  - Language (Other) - remove skill use Language (Any) instead.
+  - Lore (Any) - add skill.
+  - Science (Engineering) - add skill.
+  - Science (Mathematics) - set base skill to 10%.
+- Update to french localization, thanks to @vonv.
+- Update to japanese localization, thanks to `@Asami#8627`.
+
+## Version 0.6.8:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+
+- Add actor importer button on bottom of actor directory.
+- Add button for summarize character sheet, keeping only the essential stuff on minimalistic way.
+- Add keeper notes tab to all sheets.
+- Add option to show only icons on the summarized sheet skills list.
+- Add option to sort skills by value on default sheet.
+- Add socketlib as a project library.
+- Disable melee buttons after clicked to prevent multiple clicks while waiting for dice so nice.
+- Fix character importer spells import.
+- Fix character movement calculation.
+- Fix error on actor importer when it receives an array, thanks to @pconception.
+- Fix errors when override sheet artwork is enable, background type is not slice, and an inline style tag has been added.
+- Fix sanity loss from creature not being rolled.
+- Fix some Foundry warnings on console for deprecated stuff.
+- Handle 00 special case for advantage/disadvantage rolls, thanks to @pconception.
+- Now it is possible to create new spells and books directly on actors.
+- Now it is possible to trade items between actors.
+- Now skill sorting to support accented characters.
+- Now the monetary symbol goes before numeral on cash fields.
+- Now there is an setting to enable experimental features.
+  - This is for testing only. DO NOT enable this in your game worlds.
+- Now there is default icons for skills on compendium.
+- Prevent error on keeper self roll if no token selected.
+- Prevent importing Actor if textarea is empty.
+- Resolve issue with returning array in array.
+- The system now supports elevation on distance calculation on ranged combat.
+- Update character sheet to prevent reloading when editing backstory.
+- Update message card triggered from chat card update to use current roll mode.
+- Update to swedish localization, thanks to @Rangertheman.
+- Update to taiwanese localization, thanks to @zeteticl.
+
 ## Version 0.6.7:
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
