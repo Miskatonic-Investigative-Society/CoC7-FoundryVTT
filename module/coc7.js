@@ -19,6 +19,7 @@ import { CoC7ActorDirectory } from './actor-directory.js'
 import { CoC7Hooks } from './hooks/index.js'
 import * as DiceBot from './dicebot.js'
 import '../styles/system/index.less'
+import { CoC7ChaseSheet } from './items/sheets/chase.js'
 import { CoC7Socket } from './hooks/socket.js'
 import { DropActorSheetData } from './hooks/drop-actor-sheet-data.js'
 
@@ -228,6 +229,8 @@ Hooks.on('ready', async () => {
 
   configureTinyMCE()
 
+  game.CoC7.skillList = await game.packs.get('CoC7.skills')?.getContent()
+
   game.socket.on('system.CoC7', async data => {
     if (data.type === 'updateChar') CoC7Utilities.updateCharSheets()
 
@@ -350,6 +353,16 @@ Hooks.on('ready', async () => {
 
 // Hooks.on('preCreateActor', (createData) => CoCActor.initToken( createData));
 
+Hooks.on(
+  'renderCoC7ChaseSheet',
+  /**async*/ (app, html, data) =>
+    /**await*/ CoC7ChaseSheet.setScroll(app, html, data)
+)
+
+Hooks.on('closeCoC7ChaseSheet', (app, html) =>
+  CoC7ChaseSheet.onClose(app, html)
+)
+
 // Called on closing a character sheet to lock it on getting it to display values
 Hooks.on('closeActorSheet', characterSheet => characterSheet.onCloseSheet())
 Hooks.on('renderCoC7CreatureSheet', (app, html, data) =>
@@ -430,6 +443,28 @@ function configureTinyMCE () {
   // Add custom plugins to list of plugins.
   // CONFIG.TinyMCE.plugins = `CoC7_Editor_OnInit CoC7_Editor_OnDrop ${CONFIG.TinyMCE.plugins}`
   CONFIG.TinyMCE.plugins = `CoC7_Editor_OnDrop ${CONFIG.TinyMCE.plugins}`
+//
+//  if (game.user.isGM) {
+//    // Define css and menu for keeper only blocks
+//    CONFIG.TinyMCE.content_css.push('/systems/CoC7/assets/mce.css')
+//    CONFIG.TinyMCE.style_formats.push({
+//      title: 'CoC7',
+//      items: [
+//        {
+//          title: 'Keeper Only',
+//          block: 'section',
+//          classes: 'keeper-only',
+//          wrapper: true
+//        }
+//      ]
+//    })
+//  } else {
+//    // Prevent player to edit and view source code if settings is disabled
+//    if (!game.settings.get('CoC7', 'enablePlayerSourceCode'))
+//      CONFIG.TinyMCE.toolbar = CONFIG.TinyMCE.toolbar.replace(' code', '')
+//    // Hide keeper only blocks to players
+//    CONFIG.TinyMCE.content_style = '.keeper-only {display: none}'
+//  }
 }
 
 function _onLeftClick (event) {

@@ -650,6 +650,12 @@
         "startingRange": 1,
         "list": []
       },
+      "includeEscapees": false,
+      "includeLatecomers": false,
+      "startingRange": 2,
+      "startingIndex": 0,
+      "started": false,
+      "vehicule": false,
       "participants": []
     }
   }

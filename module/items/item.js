@@ -242,6 +242,12 @@ export class CoC7Item extends Item {
     return `${this.data.data.specialization} (${this.data.name})`
   }
 
+  get fullName () {
+    if (this.data.data.properties.special)
+      return `${this.data.data.specialization} (${this.data.name})`
+    return this.name
+  }
+
   get sName () {
     if (this.type !== 'skill' || !this.data.data?.properties?.special) {
       return super.name
@@ -571,9 +577,9 @@ export class CoC7Item extends Item {
 
   get _base () {
     if (this.type !== 'skill') return [null, false]
-    if (typeof this.data.data.base !== 'string') {
+    if (typeof this.data.data.base !== 'string')
       return [this.data.data.base, false]
-    }
+
     if (this.data.data.base.includes('@')) {
       const parsed = {}
       for (const [key, value] of Object.entries(COC7.formula.actorsheet)) {
