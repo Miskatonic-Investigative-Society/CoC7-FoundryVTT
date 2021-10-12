@@ -1,6 +1,11 @@
 .sheetV2.item.chase {
   .flex-content {
-    flex: 0 0 content;
+    flex: 0;
+  }
+
+  .form-group {
+    flex-wrap: nowrap;
+    height: 19.5px;
   }
 
   .flex-auto {
@@ -17,7 +22,7 @@
       }
 
       .sheet-header {
-        flex: 0 0 12rem;
+        flex: 0 0 14rem;
         height: 100%;
         .sheet-portrait {
           height: auto;
@@ -25,7 +30,7 @@
 
         .active-location {
           height: 100%;
-          padding-top: 0.5rem;
+          padding: 0.5rem;
           .location-name {
             flex: 0 0 auto;
             text-align: center;
@@ -144,7 +149,7 @@
     }
 
     .warning {
-      flex: 0 0 content;
+      flex: 0;
       height: 2rem;
       font-size: 1.5rem;
       display: flex;
@@ -178,6 +183,7 @@
         }
       }
       &.active {
+        // scroll-snap-stop: always;
         border: 0.125rem solid red;
       }
       &.init {

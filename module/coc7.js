@@ -18,6 +18,7 @@ import { CoC7CompendiumDirectory } from './compendium-directory.js'
 import { CoC7Hooks } from './hooks/index.js'
 import * as DiceBot from './dicebot.js'
 import '../styles/system/index.less'
+import { CoC7ChaseSheet } from './items/sheets/chase.js'
 
 Hooks.on('renderSettingsConfig', (app, html, options) => {
   const systemTab = $(app.form).find('.tab[data-tab=system]')
@@ -215,6 +216,8 @@ Hooks.on('ready', async () => {
 
   configureTinyMCE()
 
+  game.CoC7.skillList = await game.packs.get('CoC7.skills')?.getContent()
+
   game.socket.on('system.CoC7', async data => {
     if (data.type === 'updateChar') CoC7Utilities.updateCharSheets()
 
@@ -337,6 +340,16 @@ Hooks.on('ready', async () => {
 
 // Hooks.on('preCreateActor', (createData) => CoCActor.initToken( createData));
 
+Hooks.on(
+  'renderCoC7ChaseSheet',
+  /**async*/ (app, html, data) =>
+    /**await*/ CoC7ChaseSheet.setScroll(app, html, data)
+)
+
+Hooks.on('closeCoC7ChaseSheet', (app, html) =>
+  CoC7ChaseSheet.onClose(app, html)
+)
+
 // Called on closing a character sheet to lock it on getting it to display values
 Hooks.on('closeActorSheet', characterSheet => characterSheet.onCloseSheet())
 Hooks.on('renderCoC7CreatureSheet', (app, html, data) =>
@@ -407,7 +420,6 @@ function activateGlobalListener () {
  * Configuration of TinyMCE editor
  */
 function configureTinyMCE () {
-
   // Add on drop event to tinyMCE to hendle the links drop
   tinyMCE.PluginManager.add('CoC7_Editor_OnDrop', function (editor) {
     editor.on('drop', event => CoC7Parser.onEditorDrop(event, editor))
@@ -422,7 +434,8 @@ function configureTinyMCE () {
   // CONFIG.TinyMCE.plugins = `CoC7_Editor_OnInit CoC7_Editor_OnDrop ${CONFIG.TinyMCE.plugins}`
   CONFIG.TinyMCE.plugins = `CoC7_Editor_OnDrop ${CONFIG.TinyMCE.plugins}`
 
-  if (game.user.isGM) { // Define css and menu for keeper only blocks
+  if (game.user.isGM) {
+    // Define css and menu for keeper only blocks
     CONFIG.TinyMCE.content_css.push('/systems/CoC7/assets/mce.css')
     CONFIG.TinyMCE.style_formats.push({
       title: 'CoC7',

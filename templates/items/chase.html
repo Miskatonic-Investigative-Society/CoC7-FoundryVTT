@@ -1,44 +1,63 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
     <div class="container expanded">
         <header class="sheet-header">
+            {{#unless started}}
             <div class="sheet-portrait">
                 <img class="photo" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
                 <input class="name" name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
             </div>
+            {{/unless}}
 
             <div class="active-location flexcol flex2">
 
                 {{#if activeLocation}}
+                <datalist id="check-all-options">
+                    {{#each dataListCheckOptions as |o|}}
+                        <option>{{o}}</option>
+                    {{/each}}
+                </datalist>
                 <div class="location-name">
                     <input type="text" name="locations.{{activeLocation.uuid}}.name" value="{{activeLocation.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
                 </div>
                 <div class="details flexrow">
-                    <div class="location obstalce before flexcol flex3" data-uuid="{{activeLocation.uuid}}">
+                    <div class="location obstacle before flexcol flex3" data-uuid="{{activeLocation.uuid}}">
                         {{#unless activeLocation.first}}
-                        <label class="checkbox flex-content">
-                            <input type="checkbox" name="locations.{{activeLocation.uuid}}.obstacle" {{checked activeLocation.obstacle}}/> {{ localize "CoC7.Obstacle" }}
-                        </label>
+                        <div class="tag flex-content obstacle-toggle {{#if activeLocation.obstacle}}switched-on{{/if}}">{{ localize "CoC7.Obstacle"}}</div>
                         {{/unless}}
                         {{#if activeLocation.obstacle}}
-                            <div class="flexrow flex-content">
-                                <div class="tag obstacle_type barrier {{#if activeLocation.obstacleDetails.barrier}}switched-on{{/if}}">barrier</div>
-                                <div class="tag obstacle_type hazard {{#if activeLocation.obstacleDetails.hazard}}switched-on{{/if}}">hazard</div>
+                            <div class="form-group flex-content">
+                                <div class="tag obstacle-type barrier {{#if activeLocation.obstacleDetails.barrier}}switched-on{{/if}}">barrier</div>
+                                <div class="tag obstacle-type hazard {{#if activeLocation.obstacleDetails.hazard}}switched-on{{/if}}">hazard</div>
                             </div>
-                            <input type="text" class="flex-content" name="locations.{{activeLocation.uuid}}.obstacleDetails.name" value="{{activeLocation.obstacleDetails.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
+                            <input type="text" class="flex-auto" name="locations.{{activeLocation.uuid}}.obstacleDetails.name" value="{{activeLocation.obstacleDetails.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
+                            <input type="text" class="flex-auto" name="locations.{{activeLocation.uuid}}.obstacleDetails.checkName" value="{{activeLocation.obstacleDetails.checkName}}" placeholder="{{ localize 'CoC7.CheckName' }}" list='check-all-options' data-override='true'/>
+                            <!-- <input type="text" class="flex-auto" name="locations.{{activeLocation.uuid}}.obstacleDetails.failedCheckDamage" value="{{activeLocation.obstacleDetails.failedCheckDamage}}" placeholder="{{ localize 'CoC7.Damage' }}"/>
+                            <input type="text" class="flex-auto" name="locations.{{activeLocation.uuid}}.obstacleDetails.failedActionCost" value="{{activeLocation.obstacleDetails.failedActionCost}}" placeholder="{{ localize 'CoC7.ActionCost' }}"/> -->
+                            <div class="form-group flex-auto">
+                                <div toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasDamage" class="tag flex-auto toggle {{#if activeLocation.obstacleDetails.hasDamage}}switched-on{{/if}}">{{ localize "CoC7.Damage"}}</div>
+                                {{#if activeLocation.obstacleDetails.hasDamage}}
+                                <input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.failedCheckDamage" value="{{activeLocation.obstacleDetails.failedCheckDamage}}" placeholder="{{ localize 'CoC7.Damage' }}"/>
+                                {{/if}}
+                            </div>
+                            <div class="form-group flex-auto">
+                                <div toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasActionCost" class="tag flex-auto toggle {{#if activeLocation.obstacleDetails.hasActionCost}}switched-on{{/if}}">{{ localize "CoC7.ActionCost"}}</div>
+                                {{#if activeLocation.obstacleDetails.hasActionCost}}
+                                <input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.failedActionCost" value="{{activeLocation.obstacleDetails.failedActionCost}}" placeholder="{{ localize 'CoC7.ActionCost' }}"/>
+                                {{/if}}
+                            </div>
                         {{/if}}
                     </div>
                     <div class="active-participant flexcol flex2"></div>
                     <div class="location obstacle after flexcol flex3" data-uuid="{{nextLocation.uuid}}">
                         {{#unless activeLocation.last}}
-                        <label class="checkbox flex-content">
-                            <input type="checkbox" name="locations.{{nextLocation.uuid}}.obstacle" {{checked nextLocation.obstacle}}/> {{ localize "CoC7.Obstacle" }}
-                        </label>
+                        <div class="tag flex-content obstacle-toggle {{#if nextLocation.obstacle}}switched-on{{/if}}">{{ localize "CoC7.Obstacle"}}</div>
                         {{/unless}}
                         {{#if nextLocation.obstacle}}
-                        <div class="flexrow flex-content">
-                            <div class="tag obstacle_type barrier {{#if nextLocation.obstacleDetails.barrier}}switched-on{{/if}}">barrier</div>
-                            <div class="tag obstacle_type hazard {{#if nextLocation.obstacleDetails.hazard}}switched-on{{/if}}">hazard</div>
+                        <div class="flexrow flex-auto">
+                            <div class="tag obstacle-type barrier {{#if nextLocation.obstacleDetails.barrier}}switched-on{{/if}}">barrier</div>
+                            <div class="tag obstacle-type hazard {{#if nextLocation.obstacleDetails.hazard}}switched-on{{/if}}">hazard</div>
                         </div>
+                        <input type="text" class="flex-auto" name="locations.{{nextLocation.uuid}}.obstacleDetails.name" value="{{nextLocation.obstacleDetails.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
                         {{/if}}
                     </div>
                 </div>
@@ -80,7 +99,7 @@
                                 {{#unless location.first}}
                                     {{#if location.obstacle}}
                                     <div class="flexrow obstalce flex-content" title="{{location.obstacleDetails.name}}">
-                                        <div class="warning flex-content">
+                                        <div class="warning">
                                             {{#if location.obstacleDetails.barrier}}
                                             <i class="game-icon game-icon-barrier"></i>
                                             {{else}}
@@ -132,6 +151,7 @@
                 </div> -->
 
                 <div class="row">
+                    {{#unless started}}
                     <label class="checkbox flex-content">
                         <input type="checkbox" name="data.includeEscaped" {{checked data.includeEscaped}}/> {{ localize "CoC7.IncludeEscapees" }}
                     </label>
@@ -149,6 +169,7 @@
                         <label>{{localize 'CoC7.StartingIndex'}}</label>
                         <input type="text" name="data.startingIndex" value="{{data.startingIndex}}" data-dtype="Number"/>
                     </div>
+                    {{/unless}}
 
                     {{#if locations}}
                     {{#if started}}
