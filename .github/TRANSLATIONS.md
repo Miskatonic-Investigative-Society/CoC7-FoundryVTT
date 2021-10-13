@@ -4,7 +4,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 | Key                                                                                      |    cn    |    cs    |    de    |    es    |    fr    |    ja    |    pl    |  pt-BR   |    sv    |  zh-TW   |
 | :--------------------------------------------------------------------------------------- | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-| **Remaining**:                                                                           | **369**  | **145**  | **162**  |  **33**  |  **33**  |  **33**  |  **10**  |  **3**   |  **27**  |  **39**  |
+| **Remaining**:                                                                           | **375**  | **151**  | **168**  |  **39**  |  **39**  |  **39**  |  **16**  |  **9**   |  **33**  |  **45**  |
 | [CoC7.ActorImporter](#coc7actorimporter)                                                 | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.ActorImporterSummary](#coc7actorimportersummary)                                   | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.AddBook](#coc7addbook)                                                             | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
@@ -116,6 +116,12 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 | [CoC7.Impale](#coc7impale)                                                               | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.ImpaleTitle](#coc7impaletitle)                                                     | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.Import](#coc7import)                                                               | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.ImportActorItemsItem](#coc7importactoritemsitem)                                   | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ImportActorItemsItemWorldModuleSystem](#coc7importactoritemsitemworldmodulesystem) | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ImportActorItemsNone](#coc7importactoritemsnone)                                   | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ImportActorItemsWorldModuleItemSystem](#coc7importactoritemsworldmoduleitemsystem) | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ImportSkillItemLocations](#coc7importskillitemlocations)                           | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ImportedCharactersFolder](#coc7importedcharactersfolder)                           | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.ImportedUnnamedCharacter](#coc7importedunnamedcharacter)                           | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.IndefinitelyInsane](#coc7indefinitelyinsane)                                       | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.InitialReading](#coc7initialreading)                                               | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
@@ -557,7 +563,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 ##### CoC7.CreatedImportedCharactersFolder
 
-`"CoC7.CreatedImportedCharactersFolder": "Created 'Imported Characters' folder'",`
+`"CoC7.CreatedImportedCharactersFolder": "Created 'Imported Characters' folder",`
 
 ##### CoC7.Creature
 
@@ -818,6 +824,30 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ##### CoC7.Import
 
 `"CoC7.Import": "Import",`
+
+##### CoC7.ImportActorItemsItem
+
+`"CoC7.ImportActorItemsItem": "Items",`
+
+##### CoC7.ImportActorItemsItemWorldModuleSystem
+
+`"CoC7.ImportActorItemsItemWorldModuleSystem": "Items / World / Modules / System",`
+
+##### CoC7.ImportActorItemsNone
+
+`"CoC7.ImportActorItemsNone": "None",`
+
+##### CoC7.ImportActorItemsWorldModuleItemSystem
+
+`"CoC7.ImportActorItemsWorldModuleItemSystem": "World / Modules / Items / System",`
+
+##### CoC7.ImportSkillItemLocations
+
+`"CoC7.ImportSkillItemLocations": "Look for skills/spells/weapons in",`
+
+##### CoC7.ImportedCharactersFolder
+
+`"CoC7.ImportedCharactersFolder": "Imported characters",`
 
 ##### CoC7.ImportedUnnamedCharacter
 
