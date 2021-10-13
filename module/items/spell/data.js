@@ -18,13 +18,24 @@ export class CoC7Spell extends CoC7Item {
       return ui.notifications.error(game.i18n.localize('CoC7.NotOwned'))
     }
     const costs = this.data.data.costs
+    const losses = []
     for (const [key, value] of Object.entries(costs)) {
       if (!value || Number(value) === 0) continue
-      await this.resolveLosses(key, value)
+      losses.push(await this.resolveLosses(key, value))
     }
+    const template = 'systems/CoC7/templates/items/spell/chat.html'
+    const description = this.data.data.description.value
+    const html = await renderTemplate(template, { description, losses })
+    return await ChatMessage.create({
+      user: game.user.id,
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      flavor: this.name,
+      content: html
+    })
   }
 
   async resolveLosses (characteristic, value) {
+    let characteristicName
     let loss
     if (CoC7Utilities.isFormula(value)) {
       loss = (await new Roll(value).roll({ async: true })).total
@@ -34,22 +45,27 @@ export class CoC7Spell extends CoC7Item {
     const actorData = this.actor.data.data
     switch (characteristic) {
       case 'hitPoints':
+        characteristicName = game.i18n.localize('CoC7.HitPoints')
         this.actor.dealDamage(loss)
         break
       case 'sanity':
+        characteristicName = game.i18n.localize('CoC7.SanityPoints')
         this.grantSanityLoss(loss)
         break
       case 'magicPoints':
+        characteristicName = game.i18n.localize('CoC7.MagicPoints')
         this.actor.update({
           'data.attribs.mp.value': actorData.attribs.mp.value - loss
         })
         break
       case 'power':
+        characteristicName = game.i18n.localize('CHARAC.Power')
         this.actor.update({
           'data.characteristics.pow.value':
             actorData.characteristics.pow.value - loss
         })
     }
+    return { characteristicName, loss }
   }
 
   /** Bypass the Sanity check and just roll the damage */
