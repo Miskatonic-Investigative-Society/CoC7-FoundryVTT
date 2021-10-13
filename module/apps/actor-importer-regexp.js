@@ -117,13 +117,12 @@ const keys = {
     attacksPerRoundNone: 'ninguno',
     sanLossNone: 'no',
     fulldb: '(' + 'BD|bd|bonificación de daño' + ')',
-    /* NEW KEY BELOW - TRANSLATION REQUIRED */
-    halfdb: '(' + '½|half' + ')',
+    halfdb: '(' + '½|medio daño|mitad|daño a la mitad' + ')',
     sectionCombats: '\n(?:' + 'Combate|Armas' + ')[:\n]',
     newCombatHeader: '\n' + 'Combate' + '\n',
     sectionSkills: '\n(?:' + 'Habilidades' + '(?:\\s*\\([^\\)]+\\))?)[:\n]',
     sectionLangauges: '\n(?:' + 'Idiomas|Lenguajes|Lenguas' + ')[:\n]',
-    sectionSpells: '\n(?:' + 'Conjuros' + ')[:\n]',
+    sectionSpells: '\n(?:' + 'Conjuros|Hechizos' + ')[:\n]',
     handgun:
       '(?<type>' +
       'Revolver|Pistola|Derringer|Beretta|Luger|Desert Eagle| \\.38' +

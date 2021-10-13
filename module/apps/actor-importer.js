@@ -435,11 +435,16 @@ export class CoC7ActorImporter {
       // Get occupation from header
       if (!this.check('occupation', { text: header }) && header.trim() !== '') {
         // If occupation is not found but there is a header set the occupation to the remaining header
-        this.parsed.occupation = header
+        let occupation = header
+        if (header.indexOf('.') > -1) {
+          // If there is a full stop just use the first part of the header as the occupation
+          occupation = header.substr(0, header.indexOf('.') + 1)
+        }
+        this.parsed.occupation = occupation
           .replace(/([\n\r]+)/g, ' ')
           .trim()
           .replace(/,$/, '')
-        this.text = this.text.replace(header.trim(), '\n')
+        this.text = this.text.replace(occupation.trim(), '\n')
       }
     } else {
       // There is no header set default NPC name
