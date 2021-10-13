@@ -1,11 +1,11 @@
-<form autocomplete="off" onsubmit="event.preventDefault();">
+<form autocomplete="off">
     <h2>{{localize 'CoC7.ActorImporter'}}</h2>
     <p>{{localize 'CoC7.ActorImporterSummary'}}</p>
     <div class="form-group">
         <label for="coc-entity-type">{{localize 'CoC7.SelectActorType'}}:</label>
         <select id="coc-entity-type" name="coc-entity-type">
-            <option value="coc-npc">{{localize 'CoC7.NonPlayingCharacter'}}</option>
-            <option value="coc-creature">{{localize 'CoC7.Creature'}}</option>
+            <option value="npc">{{localize 'CoC7.NonPlayingCharacter'}}</option>
+            <option value="creature">{{localize 'CoC7.Creature'}}</option>
         </select>
     </div>
     <div class="form-group">
@@ -19,10 +19,18 @@
      <div class="form-group">
         <label for="coc-entity-lang">{{localize 'CoC7.SelectSourceLanguage'}}:</label>
         <select id="coc-entity-lang" name="coc-entity-lang">
-            <option value="coc-en">{{localize 'CoC7.English'}}</option>
-            <option value="coc-es">{{localize 'CoC7.Spanish'}}</option>
-            <option value="coc-fr">{{localize 'CoC7.French'}}</option>
-            <option value="coc-cht">{{localize 'CoC7.TraditionalChinese'}}</option>
+        {{#each languages as |key id|}}
+            <option value="{{id}}"{{#if (eq ../language id)}} selected="selected"{{/if}}>{{localize key}}</option>
+        {{/each}}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="source">{{localize 'CoC7.ImportSkillItemLocations'}}:</label>
+        <select id="source" name="source">
+            <option value="">{{localize 'CoC7.ImportActorItemsNone'}}</option>
+            <option value="i">{{localize 'CoC7.ImportActorItemsItem'}}</option>
+            <option value="iwms" selected="selected">{{localize 'CoC7.ImportActorItemsItemWorldModuleSystem'}}</option>
+            <option value="wmis">{{localize 'CoC7.ImportActorItemsWorldModuleItemSystem'}}</option>
         </select>
     </div>
     <div>{{localize 'CoC7.PasteTheDataBelow'}}</div>
