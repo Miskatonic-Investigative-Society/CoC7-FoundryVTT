@@ -51,7 +51,7 @@ import { CoC7Utilities } from '../utilities.js'
  * "translations.<language>.name" Regular expression to match NPC name, named capturing group <name>.
  * "translations.<language>.sections" Regular expression to split text into combat, skill, language, and spells section
  *
- * If there is new functionality check for in the translations "NEW KEY - TRANSLATION REQUIRED"
+ * If there is new functionality check for this string in the translations / keys for your language "NEW KEY BELOW - TRANSLATION REQUIRED"
  */
 const nameCharacters =
   '\\u3000\\u3400-\\u4DBF\\u4E00-\\u9FFF\\w\\(\\)\\-\\/&"\'' +
@@ -92,7 +92,7 @@ const keys = {
     attacksPerRoundNone: 'Acune',
     sanLossNone: 'Acune',
     fulldb: '(' + 'BD|Bonus aux dommages|Impact|Imp' + ')',
-    /* NEW KEY - TRANSLATION REQUIRED */
+    /* NEW KEY BELOW - TRANSLATION REQUIRED */
     halfdb: '(' + '½|half' + ')',
     sectionCombats: '\n(?:' + 'Combat|Armes|Attaques' + ')[:\n]',
     newCombatHeader: '\n' + 'Combat' + '\n',
@@ -117,7 +117,7 @@ const keys = {
     attacksPerRoundNone: 'ninguno',
     sanLossNone: 'no',
     fulldb: '(' + 'BD|bd|bonificación de daño' + ')',
-    /* NEW KEY - TRANSLATION REQUIRED */
+    /* NEW KEY BELOW - TRANSLATION REQUIRED */
     halfdb: '(' + '½|half' + ')',
     sectionCombats: '\n(?:' + 'Combate|Armas' + ')[:\n]',
     newCombatHeader: '\n' + 'Combate' + '\n',
@@ -145,7 +145,7 @@ const keys = {
     attacksPerRoundNone: 'none',
     sanLossNone: 'none',
     fulldb: '(' + 'Damage Bonus|DB|傷害加值' + ')',
-    /* NEW KEY - TRANSLATION REQUIRED */
+    /* NEW KEY BELOW - TRANSLATION REQUIRED */
     halfdb: '(' + '½|half' + ')',
     sectionCombats:
       '\n(?:' + 'combat|fighting attacks|戰鬥技能|戰鬥列表|武器' + ')[:\n]',
@@ -248,7 +248,7 @@ const translations = {
   },
   fr: {
     age: '(?<age>\\d+)\\s*' + 'ans' + '(?![a-z])[,\\s]*',
-    /* NEW KEY - TRANSLATION REQUIRED */
+    /* NEW KEY BELOW - TRANSLATION REQUIRED */
     occupation: '[,\\s]*' + 'Occupation' + ':?\\s+(?<occupation>.+)[,\\s\n]*',
     str: '(?<![a-z])' + 'FOR' + ':?\\s+(?<str>\\d+|-)[,\\s\n]*',
     con: '(?<![a-z])' + 'CON' + ':?\\s+(?<con>\\d+|-)[,\\s\n]*',
@@ -407,7 +407,7 @@ const translations = {
   },
   'zh-TW': {
     age: '(?<![a-z])' + 'age|年齡' + ':?\\s*(?<age>\\d+)[,\\s]*',
-    /* NEW KEY - TRANSLATION REQUIRED */
+    /* NEW KEY BELOW - TRANSLATION REQUIRED */
     occupation: '[,\\s]*' + 'Occupation' + ':?\\s+(?<occupation>.+)[,\\s\n]*',
     str: '(?<![a-z])' + 'STR|力量' + ':?\\s*(?<str>\\d+|-)[,\\s\n]*',
     con: '(?<![a-z])' + 'CON|體質' + ':?\\s*(?<con>\\d+|-)[,\\s\n]*',
