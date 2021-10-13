@@ -1,6 +1,58 @@
 /* global game */
 import { CoC7Utilities } from '../utilities.js'
-
+/**
+ * nameCharacters list of characters that can be part of a [] for character, skill, or weapon names used in bracket expression.
+ *
+ * "keys.<language>.description" lang key to show in the language selection dialog box.
+ * "keys.<language>.dbNone" Regular expression to indicate no Damage Bonus e.g. DB: "dbNone".
+ * "keys.<language>.armorNone" Regular expression to indicate no Armour Bonus e.g. Armor: "armorNone".
+ * "keys.<language>.attacksPerRoundNone" Regular expression to indicate no attacks e.g. Attacks Per Round: "attacksPerRoundNone".
+ * "keys.<language>.sanLossNone" Regular expression to indicate no sanity loss e.g. SAN loss: "sanLossNone".
+ * "keys.<language>.fulldb" Regular expression to indicate damage bonus in attributes and weapon damage e.g. DB: "fulldb" / Weapon 50% (25/10), damage 1D6 + "fulldb".
+ * "keys.<language>.halfdb" Regular expression to indicate half damage bonus in weapon damage e.g. Weapon 50% (25/10), damage 1D6 + "halfdb".
+ * "keys.<language>.sectionCombats" Regular expression to indicate the start of the combat / weapon section of text.
+ * "keys.<language>.newCombatHeader" If there is no combat / weapon section, add this section were it probably is, this needs to matched by "keys.<language>.sectionCombats".
+ * "keys.<language>.sectionSkills" Regular expression to indicate the start of the skills section of text.
+ * "keys.<language>.sectionLangauges" Regular expression to indicate the start of the languages section of text.
+ * "keys.<language>.sectionSpells" Regular expression to indicate the start of the spells section of text.
+ * "keys.<language>.handgun" Regular expression to match NPC combat section weapon name is a handgun type.
+ * "keys.<language>.rifle" Regular expression to match NPC combat section weapon name is a rifle type.
+ * "keys.<language>.smb" Regular expression to match NPC combat section weapon name is a submachine gun type.
+ * "keys.<language>.machineGun" Regular expression to match NPC combat section weapon name is a machine gun type.
+ * "keys.<language>.launched" Regular expression to match NPC combat section weapon name is a launched type.
+ * "keys.<language>.example" String that should show as a placeholder example.
+ *
+ * "translations.<language>.age" Regular expression to match NPC age, named capturing group <age>.
+ * "translations.<language>.occupation" Regular expression to match NPC occupation, named capturing group <occupation>.
+ * "translations.<language>.str" Regular expression to match NPC strength characteristic, named capturing group <str>.
+ * "translations.<language>.con" Regular expression to match NPC constitution characteristic, named capturing group <con>.
+ * "translations.<language>.siz" Regular expression to match NPC size characteristic, named capturing group <siz>.
+ * "translations.<language>.int" Regular expression to match NPC intelligence characteristic, named capturing group <int>.
+ * "translations.<language>.pow" Regular expression to match NPC power characteristic, named capturing group <pow>.
+ * "translations.<language>.dex" Regular expression to match NPC dexterity characteristic, named capturing group <dex>.
+ * "translations.<language>.app" Regular expression to match NPC appearance characteristic, named capturing group <app>.
+ * "translations.<language>.edu" Regular expression to match NPC education characteristic, named capturing group <edu>.
+ * "translations.<language>.san" Regular expression to match NPC sanity points attribute, named capturing group <san>.
+ * "translations.<language>.hp" Regular expression to match NPC hit points attribute, named capturing group <hp>.
+ * "translations.<language>.mp" Regular expression to match NPC magic points attribute, named capturing group <mp>.
+ * "translations.<language>.db" Regular expression to match NPC damage bonus attribute, named capturing group <db> if matching "keys.<language>.dbNone" then 0.
+ * "translations.<language>.build" Regular expression to match NPC build attribute, named capturing group <build>.
+ * "translations.<language>.armor" Regular expression to match NPC damage bonus attribute, named capturing group <db> if matching "keys.<language>.armorNone" then 0.
+ * "translations.<language>.mov" Regular expression to match NPC movement rate attribute, named capturing group <mov>.
+ * "translations.<language>.lck" Regular expression to match NPC luck attribute, named capturing group <lck>.
+ * "translations.<language>.attacksPerRound" Regular expression to match NPC attacks per round, named capturing group <attacksPerRound> if matching "keys.<language>.attacksPerRoundNone" then 0.
+ * "translations.<language>.sanLoss" Regular expression to match NPC san loss min/max, named capturing group <sanLoss> if matching "keys.<language>.sanLossNone" then none.
+ * "translations.<language>.weapon" Regular expression to match NPC combat section, named capturing group weapon <name>, optional <percentage>, and <damage>. Damage can contain "keys.<language>.fulldb" and "keys.<language>.halfdb".
+ * "translations.<language>.weaponDodge" Regular expression to match NPC combat section dodge skill, named capturing group <name> and <percentage>.
+ * "translations.<language>.skill" Regular expression to match NPC skill section skill name, named capturing group <name> and <percentage>.
+ * "translations.<language>.guessStartCombat" Regular expression if there is no combat section find these are likely to be the first weapon name, "keys.<language>.newCombatHeader" is then added before it to get the groups
+ *
+ * These should not be edited as they should work as is
+ * "translations.<language>.name" Regular expression to match NPC name, named capturing group <name>.
+ * "translations.<language>.sections" Regular expression to split text into combat, skill, language, and spells section
+ *
+ * If there is new functionality check for in the translations "NEW KEY - TRANSLATION REQUIRED"
+ */
 const nameCharacters =
   '\\u3000\\u3400-\\u4DBF\\u4E00-\\u9FFF\\w\\(\\)\\-\\/&"\'' +
   CoC7Utilities.quoteRegExp(
@@ -9,31 +61,27 @@ const nameCharacters =
 
 const keys = {
   en: {
-    // Language Key for this language
     description: 'CoC7.English',
-    // Language dependant word for 0 damage bonus
     dbNone: 'none',
-    // Language dependant word for 0 armour
     armorNone: 'none',
-    // Language dependant word for 0 attacks per round
     attacksPerRoundNone: 'none',
-    // Language dependant word for 0 sanity loss
     sanLossNone: 'none',
-    // Language dependant damage bonus words
     fulldb: '(' + 'Damage Bonus|DB' + ')',
-    // Language dependant half damage bonus words
     halfdb: '(' + '½|half' + ')',
-    // Language dependant combat section starts with
     sectionCombats: '\n(?:' + 'combat|fighting attacks' + ')[:\n]',
-    // If we have to add a combat header what will trigger sectionCombats
     newCombatHeader: '\n' + 'Combat' + '\n',
-    // Language dependant skills section starts with
     sectionSkills: '\n(?:' + 'skills' + '(?:\\s*\\([^\\)]+\\))?)[:\n]',
-    // Language dependant languages section starts with
     sectionLangauges: '\n(?:' + 'languages' + ')[:\n]',
-    // Language dependant spells section starts with
     sectionSpells: '\n(?:' + 'spells' + ')[:\n]',
-    // Language dependant example character
+    handgun:
+      '(?<type>' +
+      ' Gun|Revolver|Pistol|Handgun|Derringer|Beretta|Luger|Desert Eagle| \\.38' +
+      ')',
+    rifle:
+      '(?<type>' + 'Rifle|Shotgun|Carbine|Gauge |Lee-Enfield|Elephant' + ')',
+    smb: '(?<type>' + 'Submachine Gun|Thompson' + ')',
+    machineGun: '(?<type>' + 'Browning|Vickers' + ')',
+    launched: '(?<type>' + 'Molotov|Grenade|Dynamite' + ')',
     example:
       'Example Character, age 27\nSTR 75 CON 60 SIZ 80 DEX 70 APP 60 INT 80\nPOW 50 EDU 85 SAN 55 HP 14 DB: 1D4\nBuild: 1 Move: 7 MP: 10 Luck: 40 Armor: 1\nAttacks per round: 3 SAN loss: 1d4/1d8\nCombat\nBite 50% (25/10), damage 1D6\nBrawl 30% (15/6), damage 1D3\nDerringer 40% (20/8), damage 1D8+1\nDodge 50% (25/10)\nSkills\nAnimal Handling 55%, Charm 30%, First Aid 25%, Disguise 20%,\nListen 50%, Medicine 45%, Persuade 25%, Psychology 75%,\nScience (Astronomy) 90%, Science (Botany) 35%, Science (Zoology) 10%,\nSpot Hidden 35%, Stealth 10%\nLanguages: English 80%, Eklo 5%.\nSpells: Summon NPC, Dispel NPC.'
   },
@@ -44,12 +92,21 @@ const keys = {
     attacksPerRoundNone: 'Acune',
     sanLossNone: 'Acune',
     fulldb: '(' + 'BD|Bonus aux dommages|Impact|Imp' + ')',
+    /* NEW KEY - TRANSLATION REQUIRED */
     halfdb: '(' + '½|half' + ')',
     sectionCombats: '\n(?:' + 'Combat|Armes|Attaques' + ')[:\n]',
     newCombatHeader: '\n' + 'Combat' + '\n',
     sectionSkills: '\n(?:' + 'Compétences' + '(?:\\s*\\([^\\)]+\\))?)[:\n]',
     sectionLangauges: '\n(?:' + 'Langue' + ')[:\n]',
     sectionSpells: '\n(?:' + 'Sortilèges|Sorts' + ')[:\n]',
+    handgun:
+      '(?<type>' +
+      'Revolver|Pistolet|Derringer|Beretta|Luger|Desert Eagle| \\.38' +
+      ')',
+    rifle: '(?<type>' + 'Carabine|Lee-Enfield|Fusil' + ')',
+    smb: '(?<type>' + 'SMG|Thompson' + ')',
+    machineGun: '(?<type>' + 'Browning|Vickers|Mitrailleuse' + ')',
+    launched: '(?<type>' + 'Molotov|Grenade|Dynamite' + ')',
     example:
       'Example Character, 27 ans\nFOR 75 CON 60 TAI 80 DEX 70 APP 60 INT 80\nPOU 50 ÉDU 85 SAN 55 PV 14 BD: 1D4\nCarrure: 1 Mvt: 7 PM: 10 Chance: 40 Armure: 1\nAttaques par round 3 Perte de SAN: 1d4/1d8\nAttaques\nBite 50% (25/10), dommage 1D6\nBrawl 30% (15/6), dommage 1D3\nDerringer 40% (20/8), dommage 1D8+1\nEsquiver 50% (25/10)\nCompétences\nAnimal Handling 55%, Charm 30%, First Aid 25%, Disguise 20%,\nListen 50%, Medicine 45%, Persuade 25%, Psychology 75%,\nScience (Astronomy) 90%, Science (Botany) 35%, Science (Zoology) 10%,\nSpot Hidden 35%, Stealth 10%\nLangue: English 80%, Eklo 5%.\nSortilèges: Summon NPC, Dispel NPC.'
   },
@@ -60,40 +117,54 @@ const keys = {
     attacksPerRoundNone: 'ninguno',
     sanLossNone: 'no',
     fulldb: '(' + 'BD|bd|bonificación de daño' + ')',
+    /* NEW KEY - TRANSLATION REQUIRED */
     halfdb: '(' + '½|half' + ')',
     sectionCombats: '\n(?:' + 'Combate|Armas' + ')[:\n]',
     newCombatHeader: '\n' + 'Combate' + '\n',
     sectionSkills: '\n(?:' + 'Habilidades' + '(?:\\s*\\([^\\)]+\\))?)[:\n]',
     sectionLangauges: '\n(?:' + 'Idiomas|Lenguajes|Lenguas' + ')[:\n]',
     sectionSpells: '\n(?:' + 'Conjuros' + ')[:\n]',
+    handgun:
+      '(?<type>' +
+      'Revolver|Pistola|Derringer|Beretta|Luger|Desert Eagle| \\.38' +
+      ')',
+    rifle:
+      '(?<type>' +
+      'Rifle|Carabina|Lee-Enfield|Caza Elefantes|Fusil|Escopeta|Galga|Recortada' +
+      ')',
+    smb: '(?<type>' + 'Subfusil|Thompson' + ')',
+    machineGun: '(?<type>' + 'Browning|Vickers|Ametralladora' + ')',
+    launched: '(?<type>' + 'Molotov|Granada|Dinamita' + ')',
     example:
       'Example Character, 27 años\nFUE 75 CON 60 TAM 80 DES 70 APA 60 INT 80\nPOD 50 EDU 85 COR 55 PV 14 BD: 1D4\nCorpulencia: 1 Movimiento: 7 PM: 10 Suerte: 40 Armadura: 1\nNúmero de Ataques 3 Pérdida de cordura: 1d4/1d8\nCombate\nBite 50% (25/10), daño 1D6\nBrawl 30% (15/6), daño 1D3\nDerringer 40% (20/8), daño 1D8+1\nEsquivar 50% (25/10)\nHabilidades\nAnimal Handling 55%, Charm 30%, First Aid 25%, Disguise 20%,\nListen 50%, Medicine 45%, Persuade 25%, Psychology 75%,\nScience (Astronomy) 90%, Science (Botany) 35%, Science (Zoology) 10%,\nSpot Hidden 35%, Stealth 10%\nIdiomas: English 80%, Eklo 5%.\nConjuros: Summon NPC, Dispel NPC.'
   },
   'zh-TW': {
     description: 'CoC7.TraditionalChinese',
     dbNone: 'none',
-    // Language dependant word for 0 armour
     armorNone: 'none',
-    // Language dependant word for 0 attacks per round
     attacksPerRoundNone: 'none',
-    // Language dependant word for 0 sanity loss
     sanLossNone: 'none',
-    // Language dependant damage bonus words
     fulldb: '(' + 'Damage Bonus|DB|傷害加值' + ')',
+    /* NEW KEY - TRANSLATION REQUIRED */
     halfdb: '(' + '½|half' + ')',
-    // Language dependant combat section starts with
     sectionCombats:
       '\n(?:' + 'combat|fighting attacks|戰鬥技能|戰鬥列表|武器' + ')[:\n]',
-    // If we have to add a combat header what will trigger sectionCombats
     newCombatHeader: '\n' + 'Combat' + '\n',
-    // Language dependant skills section starts with
     sectionSkills:
       '\n(?:' + '(?:Skills|技能列表)' + '(?:\\s*\\([^\\)]+\\))?)[:\n]',
-    // Language dependant languages section starts with
     sectionLangauges: '\n(?:' + 'Languages|語言' + ')[:\n]',
-    // Language dependant spells section starts with
     sectionSpells: '\n(?:' + 'spells|咒文列表|咒文' + ')[:\n]',
-    // Language dependant example character
+    handgun:
+      '(?<type>' +
+      ' 遂發槍|\\.22短口自動手槍|\\.25短口手槍(單管)|\\.32或7\\.65mm左輪手槍|\\.32或7\\.65mm自動手槍|\\.357 Magnum左輪手槍|\\.38或9mm左輪手槍|\\.38自動手槍|貝雷塔M9|格洛克17|9mm自動手槍|魯格P08|\\.41左輪手槍|\\.44馬格南左輪手槍|\\.45左輪手槍|\\.45自動手槍|沙漠之鷹|Gun|Revolver|Pistol|Handgun|Derringer|Beretta|Luger|Desert Eagle| \\.38' +
+      ')',
+    rifle:
+      '(?<type>' +
+      '步槍|卡賓槍|半自動步槍|獵象槍|Rifle|Shotgun|Carbine|Gauge |Lee-Enfield|Elephant' +
+      ')',
+    smb: '(?<type>' + 'Submachine Gun|Thompson|衝鋒槍' + ')',
+    machineGun: '(?<type>' + 'Browning|Vickers|機槍' + ')',
+    launched: '(?<type>' + 'Molotov|Grenade|Dynamite爆炸物|手榴彈|重武器' + ')',
     example:
       '示範角色, 年齡 27\n力量 75 體質 60 體型 80 敏捷 70 外貎 60 智力 80\n意志 50 教育 85 SAN 55 HP 14 DB: 1D4\n體格: 1 Move: 7 MP: 10 幸運: 40 護甲: 1\n攻擊次數: 3 理智喪失: 1d4/1d8\n戰鬥列表\n咬 50% (25/10), 傷害 1D6\n空手 30% (15/6), 傷害 1D3\n手槍 40% (20/8), 傷害 1D8+1\n閃避 50% (25/10)\n技能列表\n動物馴養 55%, 取悅 30%, 急救 25%, 潛行 20%,\n聆聽 50%, 藥學 45%, 精神分析 25%, 心理學 75%,\n科學 (司法科學) 90%, 科學 (密碼學) 35%, \n偵查 35%, 喬裝 10%\n語言: 粵語 80%, 讀唇 5%.\n咒文: 召喚 NPC, 指揮 NPC.'
   }
@@ -101,7 +172,6 @@ const keys = {
 
 const translations = {
   en: {
-    // Language dependant RegExs
     age: '(?<![a-z])' + 'age' + ':?\\s+(?<age>\\d+)[,\\s]*',
     occupation: '[,\\s]*' + 'Occupation' + ':?\\s+(?<occupation>.+)[,\\s\n]*',
     str: '(?<![a-z])' + 'STR' + ':?\\s+(?<str>\\d+|-)[,\\s\n]*',
@@ -156,25 +226,14 @@ const translations = {
       '(?<name>' +
       'Dodge' +
       '):?\\s+\\(?(?<percentage>\\d+)\\)?\\s*%(?:\\s*\\(\\d+\\/\\d+\\))?',
-    handgun:
-      '(?<type>' +
-      ' Gun|Revolver|Pistol|Handgun|Derringer|Beretta|Luger|Desert Eagle| \\.38' +
-      ')',
-    rifle:
-      '(?<type>' + 'Rifle|Shotgun|Carbine|Gauge |Lee-Enfield|Elephant' + ')',
-    smb: '(?<type>' + 'Submachine Gun|Thompson' + ')',
-    machineGun: '(?<type>' + 'Browning|Vickers' + ')',
-    launched: '(?<type>' + 'Molotov|Grenade|Dynamite' + ')',
-    // Language dependant a skill should not be "The player has" / "but they regenerate" required for "A Cold Fire Within"
+    // Skill should not be named "The player has" / "but they regenerate" required for "A Cold Fire Within"
     skill:
       '^(?<name>[:\\*.\\s' +
       nameCharacters +
       ']+(?<!' +
       'The player has|but they regenerate' +
       '))\\s+\\(?(?<percentage>\\d+)[^d]%?\\)?(\\s*\\(\\d+/\\d+\\))?[\\.,]?\\s*',
-    // Language dependant likely first words for a combat section if there is no heading
     guessStartCombat: '(^|(?<!,)\n)(' + 'Fighting|Firearms|Brawl|Bite' + ')',
-    // These shouldn't need edited
     name: '^(?<name>[\\.\\s' + nameCharacters + ']+)[,\\s\n]+',
     sections:
       '(' +
@@ -189,6 +248,7 @@ const translations = {
   },
   fr: {
     age: '(?<age>\\d+)\\s*' + 'ans' + '(?![a-z])[,\\s]*',
+    /* NEW KEY - TRANSLATION REQUIRED */
     occupation: '[,\\s]*' + 'Occupation' + ':?\\s+(?<occupation>.+)[,\\s\n]*',
     str: '(?<![a-z])' + 'FOR' + ':?\\s+(?<str>\\d+|-)[,\\s\n]*',
     con: '(?<![a-z])' + 'CON' + ':?\\s+(?<con>\\d+|-)[,\\s\n]*',
@@ -246,14 +306,6 @@ const translations = {
       '(?<name>' +
       'Esquiver' +
       '):?\\s+\\(?(?<percentage>\\d+)\\)?\\s*%(?:\\s*\\(\\d+\\/\\d+\\))?',
-    handgun:
-      '(?<type>' +
-      'Revolver|Pistolet|Derringer|Beretta|Luger|Desert Eagle| \\.38' +
-      ')',
-    rifle: '(?<type>' + 'Carabine|Lee-Enfield|Fusil' + ')',
-    smb: '(?<type>' + 'SMG|Thompson' + ')',
-    machineGun: '(?<type>' + 'Browning|Vickers|Mitrailleuse' + ')',
-    launched: '(?<type>' + 'Molotov|Grenade|Dynamite' + ')',
     skill:
       '^(?<name>[:\\*.\\s' +
       nameCharacters +
@@ -276,7 +328,7 @@ const translations = {
   },
   es: {
     age: '(?<age>\\d+)\\s*' + 'a[ñÑ]os' + '(?![a-z])[,\\s]*',
-    occupation: '[,\\s]*' + 'Occupation' + ':?\\s+(?<occupation>.+)[,\\s\n]*',
+    occupation: '[,\\s]*' + 'Ocupación' + ':?\\s+(?<occupation>.+)[,\\s\n]*',
     str: '(?<![a-z])' + 'FUE' + ':?\\s+(?<str>\\d+|-)[,\\s\n]*',
     con: '(?<![a-z])' + 'CON' + ':?\\s+(?<con>\\d+|-)[,\\s\n]*',
     siz: '(?<![a-z])' + 'TAM' + ':?\\s+(?<siz>\\d+|-)[,\\s\n]*',
@@ -333,17 +385,6 @@ const translations = {
       '(?<name>' +
       'Esquivar' +
       '):?\\s+\\(?(?<percentage>\\d+)\\)?\\s*%(?:\\s*\\(\\d+\\/\\d+\\))?',
-    handgun:
-      '(?<type>' +
-      'Revolver|Pistola|Derringer|Beretta|Luger|Desert Eagle| \\.38' +
-      ')',
-    rifle:
-      '(?<type>' +
-      'Rifle|Carabina|Lee-Enfield|Caza Elefantes|Fusil|Escopeta|Galga|Recortada' +
-      ')',
-    smb: '(?<type>' + 'Subfusil|Thompson' + ')',
-    machineGun: '(?<type>' + 'Browning|Vickers|Ametralladora' + ')',
-    launched: '(?<type>' + 'Molotov|Granada|Dinamita' + ')',
     skill:
       '^(?<name>[:\\*.\\s' +
       nameCharacters +
@@ -365,8 +406,8 @@ const translations = {
       ')'
   },
   'zh-TW': {
-    // Language dependant RegExs
     age: '(?<![a-z])' + 'age|年齡' + ':?\\s*(?<age>\\d+)[,\\s]*',
+    /* NEW KEY - TRANSLATION REQUIRED */
     occupation: '[,\\s]*' + 'Occupation' + ':?\\s+(?<occupation>.+)[,\\s\n]*',
     str: '(?<![a-z])' + 'STR|力量' + ':?\\s*(?<str>\\d+|-)[,\\s\n]*',
     con: '(?<![a-z])' + 'CON|體質' + ':?\\s*(?<con>\\d+|-)[,\\s\n]*',
@@ -419,27 +460,13 @@ const translations = {
       '(?<name>' +
       'Dodge|閃避|閃躲' +
       '):?\\s+\\(?(?<percentage>\\d+)\\)?\\s*%?(?:\\s*\\(\\d+\\/\\d+\\))?',
-    handgun:
-      '(?<type>' +
-      ' 遂發槍|\\.22短口自動手槍|\\.25短口手槍(單管)|\\.32或7\\.65mm左輪手槍|\\.32或7\\.65mm自動手槍|\\.357 Magnum左輪手槍|\\.38或9mm左輪手槍|\\.38自動手槍|貝雷塔M9|格洛克17|9mm自動手槍|魯格P08|\\.41左輪手槍|\\.44馬格南左輪手槍|\\.45左輪手槍|\\.45自動手槍|沙漠之鷹|Gun|Revolver|Pistol|Handgun|Derringer|Beretta|Luger|Desert Eagle| \\.38' +
-      ')',
-    rifle:
-      '(?<type>' +
-      '步槍|卡賓槍|半自動步槍|獵象槍|Rifle|Shotgun|Carbine|Gauge |Lee-Enfield|Elephant' +
-      ')',
-    smb: '(?<type>' + 'Submachine Gun|Thompson|衝鋒槍' + ')',
-    machineGun: '(?<type>' + 'Browning|Vickers|機槍' + ')',
-    launched: '(?<type>' + 'Molotov|Grenade|Dynamite爆炸物|手榴彈|重武器' + ')',
-    // Language dependant a skill should not be "The player has" / "but they regenerate" required for "A Cold Fire Within"
     skill:
       '^(?<name>[:\\*.\\s' +
       nameCharacters +
       ']+(?<!' +
       'The player has|but they regenerate' +
       '))\\s+\\(?(?<percentage>\\d+)[^d]%?\\)?(\\s*\\(\\d+/\\d+\\))?[\\.,]?\\s*',
-    // Language dependant likely first words for a combat section if there is no heading
     guessStartCombat: '(^|(?<!,)\n)(' + '近戰技能|射擊技能|Brawl|Bite' + ')',
-    // These shouldn't need edited
     name: '^(?<name>[\\.\\s' + nameCharacters + ']+)[,\\s\n]+',
     sections:
       '(' +
