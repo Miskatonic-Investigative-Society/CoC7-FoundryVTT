@@ -229,7 +229,7 @@ Hooks.on('ready', async () => {
 
   configureTinyMCE()
 
-  game.CoC7.skillList = await game.packs.get('CoC7.skills')?.getContent()
+  game.CoC7.skillList = await game.packs.get('CoC7.skills')?.getDocuments()
 
   game.socket.on('system.CoC7', async data => {
     if (data.type === 'updateChar') CoC7Utilities.updateCharSheets()
