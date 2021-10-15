@@ -87,6 +87,7 @@ export class InteractiveChatCard {
     const htmlMessageElement = html[0]
     const htmlCardElement = htmlMessageElement.querySelector('.chat-card')
     if (!htmlCardElement) return
+    if (!htmlCardElement.dataset.cardClass) return
     if (
       !Object.getOwnPropertyNames(game.CoC7.cards).includes(
         htmlCardElement.dataset.cardClass

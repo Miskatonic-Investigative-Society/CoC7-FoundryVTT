@@ -20,8 +20,9 @@ import { CoC7Hooks } from './hooks/index.js'
 import * as DiceBot from './dicebot.js'
 import '../styles/system/index.less'
 import { CoC7ChaseSheet } from './items/sheets/chase.js'
-import { CoC7Socket } from './hooks/socket.js'
+import { CoC7Socket, CoC7ChatCards } from './hooks/socket.js'
 import { DropActorSheetData } from './hooks/drop-actor-sheet-data.js'
+import { testCard } from './chat/cards/test.js'
 
 Hooks.on('renderSettingsConfig', (app, html, options) => {
   const systemTab = $(app.form).find('.tab[data-tab=system]')
@@ -139,6 +140,12 @@ Hooks.once('init', async function () {
     }
   }
   Combat.prototype.rollInitiative = rollInitiative
+
+  // EnhancedChatCard.register( testCard)
+})
+
+Hooks.once('eec.ready', () => {
+  game.enhancedChatCardsLib.register( testCard)
 })
 
 Hooks.on('renderCombatTracker', (app, html, data) =>
@@ -151,6 +158,7 @@ CoC7Hooks.listen()
 Hooks.once('socketlib.ready', CoC7Socket)
 
 Hooks.once('setup', function () {
+
   // Localize CONFIG objects once up-front
   const toLocalize = [
     'spellProperties',
