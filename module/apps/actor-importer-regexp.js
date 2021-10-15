@@ -93,12 +93,12 @@ const keys = {
     sanLossNone: 'Acune',
     fulldb: '(' + 'BD|Bonus aux dommages|Impact|Imp' + ')',
     /* NEW KEY BELOW - TRANSLATION REQUIRED */
-    halfdb: '(' + '½|half' + ')',
+    halfdb: '(' + '½|Imp/2' + ')',
     sectionCombats: '\n(?:' + 'Combat|Armes|Attaques' + ')[:\n]',
     newCombatHeader: '\n' + 'Combat' + '\n',
     sectionSkills: '\n(?:' + 'Compétences' + '(?:\\s*\\([^\\)]+\\))?)[:\n]',
-    sectionLangauges: '\n(?:' + 'Langue' + ')[:\n]',
-    sectionSpells: '\n(?:' + 'Sortilèges|Sorts' + ')[:\n]',
+    sectionLangauges: '\n(?:' + 'Langue|Langues' + ')[:\n]',
+    sectionSpells: '\n(?:' + 'Sortilèges|Sortilèges |Sorts' + ')[:\n]',
     handgun:
       '(?<type>' +
       'Revolver|Pistolet|Derringer|Beretta|Luger|Desert Eagle| \\.38' +
@@ -106,7 +106,7 @@ const keys = {
     rifle: '(?<type>' + 'Carabine|Lee-Enfield|Fusil' + ')',
     smb: '(?<type>' + 'SMG|Thompson' + ')',
     machineGun: '(?<type>' + 'Browning|Vickers|Mitrailleuse' + ')',
-    launched: '(?<type>' + 'Molotov|Grenade|Dynamite' + ')',
+    launched: '(?<type>' + 'Boomerang de guerre|Javeline|Pierre|Shuriken|Bâton de dynamite|Cocktail Molotov|Grenade à main|Molotov|Grenade|Dynamite' + ')',
     example:
       'Example Character, 27 ans\nFOR 75 CON 60 TAI 80 DEX 70 APP 60 INT 80\nPOU 50 ÉDU 85 SAN 55 PV 14 BD: 1D4\nCarrure: 1 Mvt: 7 PM: 10 Chance: 40 Armure: 1\nAttaques par round 3 Perte de SAN: 1d4/1d8\nAttaques\nBite 50% (25/10), dommage 1D6\nBrawl 30% (15/6), dommage 1D3\nDerringer 40% (20/8), dommage 1D8+1\nEsquiver 50% (25/10)\nCompétences\nAnimal Handling 55%, Charm 30%, First Aid 25%, Disguise 20%,\nListen 50%, Medicine 45%, Persuade 25%, Psychology 75%,\nScience (Astronomy) 90%, Science (Botany) 35%, Science (Zoology) 10%,\nSpot Hidden 35%, Stealth 10%\nLangue: English 80%, Eklo 5%.\nSortilèges: Summon NPC, Dispel NPC.'
   },
@@ -271,7 +271,7 @@ const translations = {
     build: '(?<![a-z])' + 'Carrure' + ':?\\s+(?<build>[+-]?\\d+)[,\\s\n]*',
     armor:
       '(?<![a-z])' +
-      'Armure' +
+      'Armure|Protection' +
       ':?\\s+(?<armor>' +
       keys.fr.armorNone +
       '|\\d+)[,\\s\n]*',
