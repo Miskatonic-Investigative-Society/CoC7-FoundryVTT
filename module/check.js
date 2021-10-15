@@ -1499,13 +1499,14 @@ export class CoC7Check {
     const speakerData = {}
     let speaker
     if (this.actor) {
-      if (this.actor.isToken) speakerData.token = this.token.document
-      else if (this.actor.isDummy) {
+      if (this.actor.isToken) {
+        speakerData.token = this.token.document
+      } else if (this.actor.isDummy) {
         if (this.actor.name) speaker = { alias: this.actor.name }
       } else {
         speakerData.actor = this.actor
-        speaker = ChatMessage.getSpeaker(speakerData)
       }
+      speaker = ChatMessage.getSpeaker(speakerData)
     } else {
       speaker = ChatMessage.getSpeaker()
     }
