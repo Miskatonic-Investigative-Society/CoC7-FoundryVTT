@@ -238,6 +238,7 @@ export class Updater {
     Updater._migrateItemArtwork(item, updateData)
     Updater._migrateItemBookAutomated(item, updateData)
     Updater._migrateItemKeeperNotes(item, updateData)
+    Updater._migrateItemSpellAutomated(item, updateData)
 
     return updateData
   }
@@ -360,6 +361,21 @@ export class Updater {
       }
     }
     return updateData
+  }
+
+  static _migrateItemSpellAutomated (item, updateData) {
+    if (item.type === 'spell') {
+      updateData['data.castingTime'] = item.data.castingTime || ''
+      updateData['data.costs.hitPoints'] = item.data.cost.hp || 0
+      updateData['data.costs.magicPoints'] = item.data.cost.mp || 0
+      updateData['data.costs.sanity'] = item.data.cost.san || 0
+      updateData['data.costs.power'] = item.data.cost.pow || 0
+      updateData['data.costs.others'] = ''
+
+      updateData['data.-=cost'] = null
+      updateData['data.description.-=unidentified'] = null
+      updateData['data.description.-=notes'] = null
+    }
   }
 
   /**
