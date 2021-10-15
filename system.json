@@ -7,10 +7,10 @@
   "minimumCoreVersion": "0.8.6",
   "compatibleCoreVersion": "0.8.9",
   "esmodules": [
+    "lib/chatcardlib/src/chatcardlib.js",
     "lib/socketlib/src/libwrapper_shim.js",
     "lib/socketlib/src/socketlib.js",
-    "bundle.js",
-    "lib/chatcardlib/src/chatcardlib.js"
+    "bundle.js"
   ],
   "templateVersion": 1,
   "styles": ["lib/game-icons/game-icons.css", "coc7g.css"],

@@ -1,6 +1,4 @@
-import { EnhancedChatCard } from "../../../lib/chatcardlib/src/chatcardlib.js";
-
-export class testCard extends EnhancedChatCard{
+export class testCard extends xxxx{
       /**
    * Extend and override the default options
    * @returns {Object}
@@ -9,5 +7,9 @@ export class testCard extends EnhancedChatCard{
     return mergeObject(super.defaultOptions, {
       template: 'systems/CoC7/templates/chat/cards/test.html'
     })
+  }
+
+  activateListeners (html){
+      super.activateListeners(html)
   }
 }
