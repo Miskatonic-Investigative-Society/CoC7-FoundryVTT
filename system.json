@@ -9,7 +9,8 @@
   "esmodules": [
     "lib/socketlib/src/libwrapper_shim.js",
     "lib/socketlib/src/socketlib.js",
-    "bundle.js"
+    "bundle.js",
+    "lib/chatcardlib/src/chatcardlib.js"
   ],
   "templateVersion": 1,
   "styles": ["lib/game-icons/game-icons.css", "coc7g.css"],
