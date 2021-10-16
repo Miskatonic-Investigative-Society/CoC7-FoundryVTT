@@ -160,7 +160,7 @@ export class InteractiveChatCard {
 
   get message () {
     if (this._message) return this._message
-    if (this._messageId) return game.message.get(this._messageId)
+    if (this._messageId) return game.messages.get(this._messageId)
     return undefined
   }
 

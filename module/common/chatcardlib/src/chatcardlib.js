@@ -1,4 +1,19 @@
+
 const ECC_CLASS = 'enhanced-chat-card'
+
+const PERMISSION_TYPE = {
+	GM: 'gm',
+	OWNERS: 'owners',
+  SPEAKER: 'speaker',
+  USER: 'user',
+	EVERYONE: ''
+}
+
+const STATE = {
+  ON: 'switched-on',
+  OFF: 'switched-off'
+}
+
 
 export function initEEC (...cardclass) {
   // Hooks.once('init', function () {
@@ -7,6 +22,8 @@ export function initEEC (...cardclass) {
   Hooks.once('socketlib.ready', function () {
     EnhancedChatCardLib.register( cardclass)
     EnhancedChatCardLib.socket = socketlib.registerSystem(game.system.id) //Socket is attached to current system
+    EnhancedChatCardLib.socket.register('gm_onToggle', EnhancedChatCardLib.gm_onToggle)
+    // EnhancedChatCardLib.socket.register('gmtradeitemto', gmtradeitemto)
   })
 
   Hooks.on('renderChatMessage', (app, html, data) =>
@@ -14,7 +31,7 @@ export function initEEC (...cardclass) {
   )
 }
 
-export class EnhancedChatCardLib {
+class EnhancedChatCardLib {
   constructor () {
     this.types = new Map()
     this.socket = null
@@ -25,6 +42,18 @@ export class EnhancedChatCardLib {
     if (!game.enhancedChatCardsLib)
       game.enhancedChatCardsLib = new EnhancedChatCardLib()
     game.enhancedChatCardsLib.socket = x
+  }
+
+  static get socket () {
+    if( !game.enhancedChatCardsLib) {
+      ui.notifications.error( 'EEC not Initialized')
+      return undefined
+    }
+    if( !game.enhancedChatCardsLib.socket){
+      ui.notifications.error( 'EEC no socket')
+      return undefined
+    }
+    return game.enhancedChatCardsLib.socket
   }
 
   static get types () {
@@ -40,12 +69,16 @@ export class EnhancedChatCardLib {
       }
     });
   }
+
+  static gm_onToggle (data){
+    ui.notifications.info( 'gm_onToggle')
+  }
 }
 
 export class EnhancedChatCard {
-  static register (cardConstructor) {
-    EnhancedChatCardLib.register(cardConstructor)
-  }
+  // static register (cardConstructor) {
+  //   EnhancedChatCardLib.register(cardConstructor)
+  // }
 
   constructor (options = {}) {
     this._options = options
@@ -110,25 +143,44 @@ export class EnhancedChatCard {
       // Update the message.
       const chatMessage = game.messages.get(this.messageId)
 
-      const msg = await chatMessage.update({
-        content: htmlCardElement.outerHTML
-      })
-      await ui.chat.updateMessage(msg, false)
-      return msg
+      const msg = await chatMessage.update({ //Dispatch request by socket
+        content: htmlCardElement.outerHTML //Dispatch request by socket
+      }) //Dispatch request by socket
+      await ui.chat.updateMessage(msg, false) //Dispatch request by socket
+      return msg //Dispatch request by socket
     }
   }
 
   activateListeners (html) {
+    const card = this
     html.on(
       'click',
-      `.${ECC_CLASS} .ic-radio-switch`,
+      `.${ECC_CLASS} .ecc-radio-switch`,
       this._onToggle.bind(this)
     )
-    html.on('click', `.${ECC_CLASS} .ic-switch`, this._onToggle.bind(this))
+    html.on('click', `.${ECC_CLASS} .ecc-switch`, this._onToggle.bind(this))
     html.on('click', `.${ECC_CLASS} .submit`, this._onSubmit.bind(this))
-    html.on('focusout', 'input', this._onSubmit.bind(this))
+    html.on('focusout', `.${ECC_CLASS} input`, this._onSubmit.bind(this))
     html.on('click', `.${ECC_CLASS} button`, this._onButton.bind(this))
-    html.on('keydown', 'form', this._onKey.bind(this))
+    html.on('keydown', `.${ECC_CLASS} form`, this._onKey.bind(this))
+
+    html.find(`.${ECC_CLASS} .ecc-switch`).each( function() {
+      card.setState(this)
+      card.setVisibility(this)})
+  }
+
+  setState( element){
+    if( !element.dataset.flag) return
+    element.classList.add( this[element.dataset.flag]?STATE.ON:STATE.OFF)
+  }
+
+  setVisibility( element){
+    if( !element.dataset.eecVisibility) return
+
+  }
+
+  hasPerm( restrictedTo){
+    if( !restrictedTo.length) return true
   }
 
   static async bindListeners (html) {
@@ -208,7 +260,7 @@ export class EnhancedChatCard {
 
   get message () {
     if (this._message) return this._message
-    if (this._messageId) return game.message.get(this._messageId)
+    if (this._messageId) return game.messages.get(this._messageId)
     return undefined
   }
 
@@ -288,6 +340,7 @@ export class EnhancedChatCard {
     await card.assignObject()
     return card
   }
+
   setFlag (flagName) {
     if (!flagName && !($.type(flagName) === 'string')) return
     this[flagName] = true
@@ -303,6 +356,10 @@ export class EnhancedChatCard {
   }
 
   async _onToggle (event) {
+    const answer = await EnhancedChatCardLib.socket.executeAsGM('gm_onToggle', {
+      event: event,
+      card: this
+    })
     event.preventDefault()
 
     const target = event.currentTarget
