@@ -1,5 +1,6 @@
-export class testCard extends xxxx{
-      /**
+import { EnhancedChatCard } from '../../common/chatcardlib/src/chatcardlib.js'
+export class testCard extends EnhancedChatCard {
+  /**
    * Extend and override the default options
    * @returns {Object}
    */
@@ -9,7 +10,7 @@ export class testCard extends xxxx{
     })
   }
 
-  activateListeners (html){
-      super.activateListeners(html)
-  }
+  // activateListeners (html) {
+  //   super.activateListeners(html)
+  // }
 }

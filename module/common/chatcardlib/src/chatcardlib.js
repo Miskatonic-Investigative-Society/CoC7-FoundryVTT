@@ -1,48 +1,50 @@
 const ECC_CLASS = 'enhanced-chat-card'
 
-Hooks.once('socketlib.ready', initECCSocket)
+export function initEEC (...cardclass) {
+  // Hooks.once('init', function () {
+  // })
 
-Hooks.on('renderChatMessage' , (app, html, data) => EnhancedChatCard.bindListeners(html))
+  Hooks.once('socketlib.ready', function () {
+    EnhancedChatCardLib.register( cardclass)
+    EnhancedChatCardLib.socket = socketlib.registerSystem(game.system.id) //Socket is attached to current system
+  })
 
-function initECCSocket(){
-  EnhancedChatCardLib.socket = socketlib.registerSystem(game.system.id)  //Socket is attached to current system
-  Hooks.callAll("eec.ready");
+  Hooks.on('renderChatMessage', (app, html, data) =>
+    EnhancedChatCard.bindListeners(html)
+  )
 }
 
-class EnhancedChatCardLib {
-  constructor(){
+export class EnhancedChatCardLib {
+  constructor () {
     this.types = new Map()
     this.socket = null
-    this.enhancedChatCardClass = EnhancedChatCard
+    // this.enhancedChatCardClass = EnhancedChatCard
   }
 
-  static set socket(x){
-    if(!game.enhancedChatCardsLib) game.enhancedChatCardsLib = new EnhancedChatCardLib()
+  static set socket (x) {
+    if (!game.enhancedChatCardsLib)
+      game.enhancedChatCardsLib = new EnhancedChatCardLib()
     game.enhancedChatCardsLib.socket = x
   }
 
-  static get types(){
-    if(!game.enhancedChatCardsLib) game.enhancedChatCardsLib = new EnhancedChatCardLib()
-    return game.enhancedChatCardsLib.types    
+  static get types () {
+    if (!game.enhancedChatCardsLib)
+      game.enhancedChatCardsLib = new EnhancedChatCardLib()
+    return game.enhancedChatCardsLib.types
   }
 
-  register (cardConstructor){
-    if ( !this.types.get( cardConstructor.name)){
-      this.types.set( cardConstructor.name, cardConstructor)
-    }
+  static register (cardConstructors) {
+    cardConstructors.forEach(cardConstructor => {
+      if (!EnhancedChatCardLib.types.get(cardConstructor.name)) {
+        EnhancedChatCardLib.types.set(cardConstructor.name, cardConstructor)
+      }
+    });
   }
-
-  // registerCard( cardClass){
-  //   const cardClassName = cardClass.name
-  //   if( !this.types.get( cardClassName)){
-  //     this.types.set( cardClassName, cardClass)
-  //   }
-  // }
 }
 
 export class EnhancedChatCard {
-  static register( cardConstructor){
-    EnhancedChatCardLib.register( cardConstructor)
+  static register (cardConstructor) {
+    EnhancedChatCardLib.register(cardConstructor)
   }
 
   constructor (options = {}) {
@@ -68,7 +70,8 @@ export class EnhancedChatCard {
     //Publish by current user by default unless options.GMchatCard
     const html = await renderTemplate(this.template, this)
     const htmlCardElement = $(html)[0]
-    if(this.options.attachObject) htmlCardElement.dataset.object = escape(this.objectDataString)
+    if (this.options.attachObject)
+      htmlCardElement.dataset.object = escape(this.objectDataString)
     htmlCardElement.dataset.eccClass = this.constructor.name
     htmlCardElement.classList.add(...this.cssClasses)
 
@@ -81,9 +84,10 @@ export class EnhancedChatCard {
       optionnalChatData
     )
 
-    if ( ["gmroll", "blindroll"].includes(this.rollMode) ) chatData.whisper = ChatMessage.getWhisperRecipients("GM");
-    if ( this.rollMode === "selfroll" ) chatData.whisper = [game.user.id];
-    if ( this.rollMode === "blindroll" ) chatData.blind = true;
+    if (['gmroll', 'blindroll'].includes(this.rollMode))
+      chatData.whisper = ChatMessage.getWhisperRecipients('GM')
+    if (this.rollMode === 'selfroll') chatData.whisper = [game.user.id]
+    if (this.rollMode === 'blindroll') chatData.blind = true
 
     ChatMessage.create(chatData).then(msg => {
       return msg
@@ -100,7 +104,7 @@ export class EnhancedChatCard {
 
       // Attach the sanCheckCard object to the message.
       htmlCardElement.dataset.object = escape(this.objectDataString)
-      htmlCardElement.dataset.cardClass = this.constructor.name
+      htmlCardElement.dataset.eccClass = this.constructor.name
       htmlCardElement.classList.add(...this.cssClasses)
 
       // Update the message.
@@ -132,34 +136,34 @@ export class EnhancedChatCard {
     const htmlCardElement = htmlMessageElement.querySelector(`.${ECC_CLASS}`)
     if (!htmlCardElement) return
     if (!htmlCardElement.dataset.eccClass) return
-    const cardClass = EnhancedChatCardLib.types.get( htmlCardElement.dataset.eccClass)
-    if ( !cardClass) {
-      console.error(`Unknown chat card type: ${htmlCardElement.dataset.eccClass}`)
+    const cardClass = game.enhancedChatCardsLib.types.get(
+      htmlCardElement.dataset.eccClass
+    )
+    if (!cardClass) {
+      console.error(
+        `Unknown chat card type: ${htmlCardElement.dataset.eccClass}`
+      )
       return
     }
 
     const card = await EnhancedChatCard.fromHTMLCardElement(htmlCardElement)
-    const typedCard = Object.assign(
-      new cardClass(),
-      card
-    )
+    const typedCard = Object.assign(new cardClass(), card)
     typedCard.assignObject()
     typedCard.activateListeners(html)
   }
 
-  
   /**
    * Override to reassign object type
    * @returns
    */
-   assignObject () {}
+  assignObject () {}
 
   /**
    *
    * @param {*} event will check for an action (data-action)
    * if a method with that name exist it will be triggered.
    */
-   _onButton (event) {
+  _onButton (event) {
     const button = event.currentTarget
     // button.style.display = 'none' //Avoid multiple push
     const action = button.dataset.action
@@ -221,7 +225,7 @@ export class EnhancedChatCard {
   set messageId (x) {
     this._messageId = x
   }
-  
+
   static get defaultOptions () {
     return {
       attachObject: true,
@@ -234,7 +238,7 @@ export class EnhancedChatCard {
   get objectData () {
     return JSON.parse(this.objectDataString)
   }
-  
+
   get objectDataString () {
     return JSON.stringify(this, (key, value) => {
       if (value === null) return undefined

@@ -23,6 +23,7 @@ import { CoC7ChaseSheet } from './items/sheets/chase.js'
 import { CoC7Socket, CoC7ChatCards } from './hooks/socket.js'
 import { DropActorSheetData } from './hooks/drop-actor-sheet-data.js'
 import { testCard } from './chat/cards/test.js'
+import { initEEC } from './common/chatcardlib/src/chatcardlib.js'
 
 Hooks.on('renderSettingsConfig', (app, html, options) => {
   const systemTab = $(app.form).find('.tab[data-tab=system]')
@@ -141,12 +142,9 @@ Hooks.once('init', async function () {
   }
   Combat.prototype.rollInitiative = rollInitiative
 
-  // EnhancedChatCard.register( testCard)
 })
 
-Hooks.once('eec.ready', () => {
-  game.enhancedChatCardsLib.register( testCard)
-})
+initEEC(testCard, testCard, testCard)
 
 Hooks.on('renderCombatTracker', (app, html, data) =>
   CoC7Combat.renderCombatTracker(app, html, data)

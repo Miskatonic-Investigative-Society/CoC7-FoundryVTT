@@ -7,7 +7,6 @@
   "minimumCoreVersion": "0.8.6",
   "compatibleCoreVersion": "0.8.9",
   "esmodules": [
-    "lib/chatcardlib/src/chatcardlib.js",
     "lib/socketlib/src/libwrapper_shim.js",
     "lib/socketlib/src/socketlib.js",
     "bundle.js"
