@@ -5,10 +5,14 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Add options to change pause icon and text on settings.
 - Add Pulp Luck recovery rules.
 - Add several tooltips to the character sheet (Skill, DB, Sanity, etc).
-- Complete refactor of Spell system.
+- Initial refactor of Spell system.
+  - Cast Spell prompts its description and costs results on chat;
+  - Now Spell costs are discounted when casting;
+  - Update sheet layout to V2.
 - Fix "The key ? does not exist in the EmbeddedCollection Collection" dragging an English setup onto a translated Actor.
 - Fix background integrity on Book sheet.
 - Fix bug on Archetype Item properties.
+- Fix bug where GM is speaking instead of NPC on checks
 - Fix Combined / Opposed Roll using the incorrect image path for wildcard tokens.
 - Fix DsN 3D dices not rolling sometimes.
 - Fix summarized sheet colors.
@@ -22,7 +26,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Update updater to check module compendiums for Actor and Item when modules version module numbers are new or changed.
 - Update to French localization, thanks to @vonv.
 - Update to Japanese localization, thanks to `@Asami#8627`.
-- Update to Polish localization, thanks to @everyonecancode;
+- Update to Polish localization, thanks to @everyonecancode and @zakonfeniksa.
 - Update to Portuguese localization.
 - Update to Spanish localization, thanks to @lozalojo.
 - Update to Swedish localization, thanks to @Rangertheman.

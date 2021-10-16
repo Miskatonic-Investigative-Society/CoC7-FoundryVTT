@@ -140,6 +140,9 @@ export class CoC7ActorImporter {
     if (text.trim().length === 0) {
       return
     }
+    if (CONFIG.debug.CoC7Importer) {
+      console.log('combat text', text)
+    }
     let weapon
     let dodge
     let newline
@@ -169,7 +172,7 @@ export class CoC7ActorImporter {
       ) {
         text = text.replace(weapon['-source'], '\n')
         const name = this.cleanString(weapon.name || '')
-        const damage = this.cleanString(weapon.damage || '')
+        let damage = this.cleanString(weapon.damage || '')
         const isRanged = !!(
           this.check('handgun', {
             text: name,
@@ -205,35 +208,38 @@ export class CoC7ActorImporter {
         } else {
           lastPercent = true
         }
-        const damages = damage.split('/')
-        const isShotgun = damages.length === 3
+        let found
         let ahdb = false
         let addb = false
-        for (let i = 0, im = damages.length; i < im; i++) {
-          const fullDB = this.getRegEx(
+        do {
+          found = this.getRegEx(
             '\\s*[+-]?\\s*(' +
-              this.keys.fulldb +
-              ')\\s*[-+]?\\s*(' +
-              this.parsed.db.replace(/^[-+]/, '') +
-              ')?'
-          ).exec(damages[i])
-          const halfDB = this.getRegEx(
-            '\\s*[+-]?\\s*(' +
-              this.keys.halfdb +
-              ')\\s*(' +
-              this.keys.fulldb +
-              ')?[-+]?\\s*(' +
-              this.parsed.db.replace(/^[-+]/, '') +
-              ')?'
-          ).exec(damages[i])
-          if (fullDB) {
-            damages[i] = damages[i].replace(fullDB[0], '')
-            addb = true
-          } else if (halfDB) {
-            damages[i] = damages[i].replace(halfDB[0], '')
+                this.keys.halfdb +
+                ')\\s*(' +
+                this.keys.fulldb +
+                ')?[-+]?\\s*(' +
+                this.parsed.db.replace(/^[-+]/, '') +
+                ')?'
+          ).exec(damage)
+          if (found) {
             ahdb = true
+            damage = damage.replace(found[0], '')
+          } else {
+            found = this.getRegEx(
+              '\\s*[+-]?\\s*(' +
+                this.keys.fulldb +
+                ')\\s*[-+]?\\s*(' +
+                this.parsed.db.replace(/^[-+]/, '') +
+                ')?'
+            ).exec(damage)
+            if (found) {
+              addb = true
+              damage = damage.replace(found[0], '')
+            }
           }
-        }
+        } while (found)
+        const damages = damage.split('/')
+        const isShotgun = damages.length === 3
         const data = {
           name: name,
           type: 'weapon',
@@ -352,8 +358,9 @@ export class CoC7ActorImporter {
     // Replace "En Dash" and "Em Dash" dashes with - and "Right Single Quotation Mark" with '
     this.text = String(text)
       .trim()
-      .replace(/\u2013|\u2014/g, '-')
+      .replace(/\u2013|\u2014|\u2212/g, '-')
       .replace(/\u2019/g, "'")
+      .replace(/[\udbc0-\udbfe][\udc00-\udfff]/g, '')
     // Earliest character that has been used, to work out the header
     let min = this.text.length
     // STR, if berfore than previous min update it
@@ -465,8 +472,7 @@ export class CoC7ActorImporter {
     }
     // Get damage bonus, if not found or none set to 0
     if (
-      !this.check('db') ||
-      this.parsed.db.toLowerCase() === this.keys.dbNone.toLowerCase()
+      !this.check('db') || this.check('dbNone', { removeFromText: false, saveKeys: false, text: this.parsed.db })
     ) {
       this.parsed.db = '0'
     }
@@ -474,8 +480,7 @@ export class CoC7ActorImporter {
     this.check('build')
     // Get armor, if not found or none set to 0
     if (
-      !this.check('armor') ||
-      this.parsed.armor.toLowerCase() === this.keys.armorNone.toLowerCase()
+      !this.check('armor') || this.check('armorNone', { removeFromText: false, saveKeys: false, text: this.parsed.armor })
     ) {
       this.parsed.armor = '0'
     }
@@ -487,9 +492,7 @@ export class CoC7ActorImporter {
     this.check('sanLoss')
     // Get attacks per round, if not found or none set to 0
     if (
-      this.check('attacksPerRound') &&
-      this.parsed.attacksPerRound.toLowerCase() ===
-        this.keys.attacksPerRoundNone.toLowerCase()
+      this.check('attacksPerRound') && this.check('attacksPerRoundNone', { removeFromText: false, saveKeys: false, text: this.parsed.attacksPerRound })
     ) {
       this.parsed.attacksPerRound = '0'
     }
