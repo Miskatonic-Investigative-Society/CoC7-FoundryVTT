@@ -364,7 +364,7 @@ export class Updater {
   }
 
   static _migrateItemSpellAutomated (item, updateData) {
-    if (item.type === 'spell') {
+    if (item.type === 'spell' && typeof item.data.cost !== 'undefined') {
       updateData['data.castingTime'] = item.data.castingTime || ''
       updateData['data.costs.hitPoints'] = item.data.cost.hp || 0
       updateData['data.costs.magicPoints'] = item.data.cost.mp || 0
