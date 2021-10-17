@@ -95,9 +95,9 @@ export class CoC7Menu {
     const keeperMenu = html.find('.game-icon-tentacle-strike').parent()
     keeperMenu.addClass('coc7-menu')
     if (isGM) {
-      keeperMenu.after('<li class="scene-control coc7-menu coc7-dice-roll" title="' + game.i18n.localize('CoC7.CreateLink') + '"><i class="fas fa-link"></i></li>')
+      keeperMenu.after('<li class="scene-control coc7-menu coc7-create-link" title="' + game.i18n.localize('CoC7.CreateLink') + '"><i class="fas fa-link"></i></li>')
     }
-    keeperMenu.after('<li class="scene-control coc7-menu coc7-create-link" title="' + game.i18n.localize('CoC7.RollDice') + '"><i class="game-icon game-icon-d10"></i></li>')
+    keeperMenu.after('<li class="scene-control coc7-menu coc7-dice-roll" title="' + game.i18n.localize('CoC7.RollDice') + '"><i class="game-icon game-icon-d10"></i></li>')
     html.find('.coc7-menu.coc7-dice-roll').click((event) => CoC7Utilities.rollDice(event))
     html.find('.coc7-menu.coc7-create-link').click((event) => CoC7LinkCreationDialog.create(event))
   }
