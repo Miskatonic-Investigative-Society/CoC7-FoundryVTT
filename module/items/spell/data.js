@@ -12,6 +12,15 @@ export class CoC7Spell extends CoC7Item {
     super(data, context)
   }
 
+  _onUpdate (changed, options, usedId) {
+    super._onUpdate(changed, options, usedId)
+    const book = this.data.data.flags?.book
+    const index = this.data.data.flags?.index
+    if (book) {
+      return game.items.get(book).updateSpell(index, this.data)
+    }
+  }
+
   async cast () {
     if (!this.isOwned) {
       /** This is not owned by any Actor */

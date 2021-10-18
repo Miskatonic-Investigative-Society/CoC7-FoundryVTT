@@ -87,7 +87,6 @@ export class CoC7BookSheet extends ItemSheet {
   }
 
   async _onSpellDetail (event) {
-    if (!game.user.isGM) return
     event.preventDefault()
     const element = $(event.currentTarget)
     /** @see data-index property on template */

@@ -1,4 +1,4 @@
-/* global ChatMessage, duplicate, game, renderTemplate, Roll, ui */
+/* global ChatMessage, duplicate, foundry, game, renderTemplate, Roll, ui */
 
 import { SanCheckCard } from '../../chat/cards/san-check.js'
 import { CoC7Check } from '../../check.js'
@@ -35,11 +35,14 @@ export class CoC7Book extends CoC7Item {
    * @returns {Promise<Document>} update to Item document
    */
   async addSpells (spells) {
+    console.log(spells)
     const collection = this.data.data.spells
       ? duplicate(this.data.data.spells)
       : []
     for (const spell of spells) {
-      collection.push(spell)
+      const { _source, _id, ...data } = spell
+      data._id = foundry.utils.randomID(16)
+      collection.push(data)
     }
     return await this.update({ 'data.spells': collection })
   }
@@ -48,8 +51,18 @@ export class CoC7Book extends CoC7Item {
     const data = this.data.data.spells[index]
     const parent = this.actor ? this.actor : null
     const spell = new CoC7Spell(data, { parent })
-    console.log(spell)
+    await spell.update({ 'data.flags.book': this.id, 'data.flags.index': index })
     return await spell.sheet.render(true)
+  }
+
+  async updateSpell (index, data) {
+    console.log(data)
+    const collection = this.data.data.spells
+      ? duplicate(this.data.data.spells)
+      : []
+    collection[index] = data
+    await this.update({ 'data.spells': collection })
+    return this.sheet.render(true)
   }
 
   /**
