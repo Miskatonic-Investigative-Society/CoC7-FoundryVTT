@@ -3,7 +3,6 @@
 import { CoC7Dice } from '../dice.js'
 import { CoC7Check } from '../check.js'
 import { chatHelper, CoC7Roll, CoC7Damage } from './helper.js'
-// import { CoC7Chat } from '../chat.js';
 
 export class CoC7RangeInitiator {
   constructor (actorKey = null, itemId = null, fastForward = false) {
@@ -715,7 +714,8 @@ export class CoC7RangeInitiator {
       const volleySize = parseInt(h.shot.bulletsShot)
       const damageRolls = []
 
-      const damageFormula = h.shot.damage
+      let damageFormula = String(h.shot.damage)
+      if (!damageFormula || damageFormula === '') damageFormula = '0'
       const damageDie = CoC7Damage.getMainDie(damageFormula)
       const maxDamage = new Roll(damageFormula).evaluate({
         maximize: true
