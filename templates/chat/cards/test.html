@@ -1,7 +1,23 @@
 <div class="test">
-    <span>Pouet pouet</span>
-    <span class='ecc-switch'  pouet="eee" data-flag='critical' data-eec-visibility="gm|speaker" title="{{localize 'CoC7.CriticalTitle'}}">{{localize 'CoC7.Critical'}}</span>
-    {{#if critical}}
+    <form class="flexcol">
+        <input type="text" name="data.armor" value="{{data.armor}}"/>
+        <input type="range" name="bonusDice" min="-2" max="2" value="{{bonusDice}}" class="slider">
+        <select name="mySelect">
+            {{selectOptions mySelectOptions selected=mySelect}}
+        </select>
+        <select name="mySelect2">
+            {{#select mySelect2}}
+            <option value="0">option 0</option>
+            <option value="1">option 1</option>
+            <option value="2">option 2</option>
+            {{/select}}
+        </select>
+
+        <span>Pouet pouet</span>
+        <span class="ecc-switch" data-flag="critical" data-eec-visibility="-gm" title="{{localize 'CoC7.CriticalTitle'}}">{{localize "CoC7.Critical"}}</span>
+        {{#if critical}}
         <span> CRITICAL IS ON</span>
-    {{/if}}
+        {{/if}}
+    </form>
 </div>
+{{!-- {{selectOptions sizes selected=swarm blank="" localize=true}} --}}

@@ -3,9 +3,11 @@ const ECC_CLASS = 'enhanced-chat-card'
 
 const PERMISSION_TYPE = {
 	GM: 'gm',
-	OWNERS: 'owners',
+  XGM: '-gm',
   SPEAKER: 'speaker',
+  XSPEAKER: '-speaker',
   USER: 'user',
+  USER: '-user',
 	EVERYONE: ''
 }
 
@@ -22,13 +24,26 @@ export function initEEC (...cardclass) {
   Hooks.once('socketlib.ready', function () {
     EnhancedChatCardLib.register( cardclass)
     EnhancedChatCardLib.socket = socketlib.registerSystem(game.system.id) //Socket is attached to current system
-    EnhancedChatCardLib.socket.register('gm_onToggle', EnhancedChatCardLib.gm_onToggle)
+    EnhancedChatCardLib.socket.register('updateMessage', updateMessage)
+    EnhancedChatCardLib.socket.register('advise',advise)
     // EnhancedChatCardLib.socket.register('gmtradeitemto', gmtradeitemto)
   })
 
   Hooks.on('renderChatMessage', (app, html, data) =>
     EnhancedChatCard.bindListeners(html)
   )
+}
+
+async function updateMessage( messageId, newContent){
+  const chatMessage = game.messages.get(messageId)
+
+  const msg = await chatMessage.update({ 
+    content: newContent
+  })
+}
+
+async function advise( ){
+  return
 }
 
 class EnhancedChatCardLib {
@@ -70,9 +85,9 @@ class EnhancedChatCardLib {
     });
   }
 
-  static gm_onToggle (data){
-    ui.notifications.info( 'gm_onToggle')
-  }
+  // static gm_onToggle (data){
+  //   ui.notifications.info( 'gm_onToggle')
+  // }
 }
 
 export class EnhancedChatCard {
@@ -97,6 +112,11 @@ export class EnhancedChatCard {
   }
 
   async toMessage (optionnalChatData = {}) {
+    this.mySelectOptions = {
+      0: 'option 1',
+      1: 'option 2'
+    }
+
     //Map eec card type if not registered already
     // this.registerEECClass()
 
@@ -141,32 +161,32 @@ export class EnhancedChatCard {
       htmlCardElement.classList.add(...this.cssClasses)
 
       // Update the message.
-      const chatMessage = game.messages.get(this.messageId)
+      game.enhancedChatCardsLib.socket.executeAsGM( 'updateMessage', this.messageId, htmlCardElement.outerHTML)
+      // const chatMessage = game.messages.get(this.messageId)
 
-      const msg = await chatMessage.update({ //Dispatch request by socket
-        content: htmlCardElement.outerHTML //Dispatch request by socket
-      }) //Dispatch request by socket
-      await ui.chat.updateMessage(msg, false) //Dispatch request by socket
-      return msg //Dispatch request by socket
+      // const msg = await chatMessage.update({ //Dispatch request by socket
+        // content: htmlCardElement.outerHTML //Dispatch request by socket
+      // }) //Dispatch request by socket
+      // await ui.chat.updateMessage(msg, false) //Dispatch request by socket
+      // return msg //Dispatch request by socket
     }
   }
 
   activateListeners (html) {
-    const card = this
     html.on(
       'click',
       `.${ECC_CLASS} .ecc-radio-switch`,
       this._onToggle.bind(this)
     )
+    html.on("change", "input,select,textarea", this._onSubmit.bind(this));
     html.on('click', `.${ECC_CLASS} .ecc-switch`, this._onToggle.bind(this))
     html.on('click', `.${ECC_CLASS} .submit`, this._onSubmit.bind(this))
     html.on('focusout', `.${ECC_CLASS} input`, this._onSubmit.bind(this))
     html.on('click', `.${ECC_CLASS} button`, this._onButton.bind(this))
     html.on('keydown', `.${ECC_CLASS} form`, this._onKey.bind(this))
 
-    html.find(`.${ECC_CLASS} .ecc-switch`).each( function() {
-      card.setState(this)
-      card.setVisibility(this)})
+    html.find('[data-eec-visibility]').each(( i ,el) => this.setVisibility(el))
+    html.find(`.${ECC_CLASS} .ecc-switch`).each( (i, el) => this.setState(el))
   }
 
   setState( element){
@@ -176,11 +196,15 @@ export class EnhancedChatCard {
 
   setVisibility( element){
     if( !element.dataset.eecVisibility) return
-
+    if( !this.hasPerm(element.dataset.eecVisibility)) element.style.display = 'none'
   }
 
   hasPerm( restrictedTo){
     if( !restrictedTo.length) return true
+    if( game.user.isGM){
+      if(restrictedTo.includes(PERMISSION_TYPE.XGM)) return false
+      return true
+    }
   }
 
   static async bindListeners (html) {
@@ -236,7 +260,7 @@ export class EnhancedChatCard {
     event.preventDefault()
 
     const target = event.currentTarget
-    const card = target.closest('.interactive-card')
+    const card = target.closest(`.${ECC_CLASS}`)
     if (!card) return
     const updates = this._update(card)
     if (updates) this.updateChatCard()
@@ -283,7 +307,8 @@ export class EnhancedChatCard {
       attachObject: true,
       classes: [ECC_CLASS],
       exclude: [],
-      excludeStartWith: '_'
+      excludeStartWith: '_',
+      submitOnChange: true
     }
   }
 
@@ -356,10 +381,10 @@ export class EnhancedChatCard {
   }
 
   async _onToggle (event) {
-    const answer = await EnhancedChatCardLib.socket.executeAsGM('gm_onToggle', {
-      event: event,
-      card: this
-    })
+    // const answer = await EnhancedChatCardLib.socket.executeAsGM('gm_onToggle', {
+    //   event: event,
+    //   card: this
+    // })
     event.preventDefault()
 
     const target = event.currentTarget
@@ -383,7 +408,7 @@ export class EnhancedChatCard {
       }
       this.setFlag(flag)
     }
-    const card = target.closest('.interactive-card')
+    const card = target.closest(`.${ECC_CLASS}`)
     if (card) this._update(card)
     this.updateChatCard()
   }
