@@ -3,6 +3,7 @@
 import { SanCheckCard } from '../../chat/cards/san-check.js'
 import { CoC7Check } from '../../check.js'
 import { CoC7Item } from '../item.js'
+import { CoC7Spell } from '../spell/data.js'
 
 export class CoC7Book extends CoC7Item {
   constructor (data, context) {
@@ -41,6 +42,14 @@ export class CoC7Book extends CoC7Item {
       collection.push(spell)
     }
     return await this.update({ 'data.spells': collection })
+  }
+
+  async spellDetail (index) {
+    const data = this.data.data.spells[index]
+    const parent = this.actor ? this.actor : null
+    const spell = new CoC7Spell(data, { parent })
+    console.log(spell)
+    return await spell.sheet.render(true)
   }
 
   /**

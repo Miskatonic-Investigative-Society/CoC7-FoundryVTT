@@ -54,6 +54,7 @@ export class CoC7BookSheet extends ItemSheet {
       this.item.attemptInitialReading()
     })
     html.find('.delete-spell').click(event => this._onDelete(event))
+    html.find('.spell-name').click(event => this._onSpellDetail(event))
     html.find('.teach-spell').click(event => {
       const id = $(event.currentTarget)
         .parents('li')
@@ -83,6 +84,15 @@ export class CoC7BookSheet extends ItemSheet {
       this.modifyOthersGains(event, 'remove')
     })
     html.find('.option').click(event => this.modifyType(event))
+  }
+
+  async _onSpellDetail (event) {
+    if (!game.user.isGM) return
+    event.preventDefault()
+    const element = $(event.currentTarget)
+    /** @see data-index property on template */
+    const index = element.parents('li').data('index')
+    return await this.item.spellDetail(index)
   }
 
   /**
