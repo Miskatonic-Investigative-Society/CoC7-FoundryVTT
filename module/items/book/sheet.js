@@ -54,6 +54,7 @@ export class CoC7BookSheet extends ItemSheet {
       this.item.attemptInitialReading()
     })
     html.find('.delete-spell').click(event => this._onDelete(event))
+    html.find('.edit-spell').click(event => this._onSpellDetail(event))
     html.find('.spell-name').click(event => this._onSpellDetail(event))
     html.find('.teach-spell').click(event => {
       const id = $(event.currentTarget)
