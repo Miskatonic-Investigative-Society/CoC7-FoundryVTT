@@ -6,7 +6,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Add Pulp Luck recovery rules.
 - Add several tooltips to the Character sheet (Skill, DB, Sanity, etc).
 - Initial refactor of Spell system.
-  - Cast spell prompts its description and costs results on chat;
+  - Cast Spell prompts its description and costs results on chat;
   - Now Spell costs are discounted when casting;
   - Now you can open Spell sheet from Book Spell list and edit the Spell information within the Book without affecting the original one.
   - Update sheet layout to V2.
