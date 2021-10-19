@@ -107,15 +107,28 @@ export class CoC7Spell extends CoC7Item {
       typeof this.context.parent !== 'undefined' &&
       typeof this.context.bookId !== 'undefined'
     ) {
-      const book = this.context.parent.items
-        .get(this.context.bookId)
-        .toObject()
+      let item
+      let book
+      if (this.context.parent === null) {
+        item = game.items.get(this.context.bookId)
+        book = item.toObject()
+      } else {
+        book = this.context.parent.items
+          .get(this.context.bookId)
+          .toObject()
+      }
       for (let i = 0, im = book.data.spells.length; i < im; i++) {
         if (book.data.spells[i]._id === this.id) {
           book.data.spells[i] = mergeObject(book.data.spells[i], data)
         }
       }
-      this.context.parent.updateEmbeddedDocuments('Item', [book])
+      if (this.context.parent === null) {
+        item.update({
+          'data.spells': book.data.spells
+        })
+      } else {
+        this.context.parent.updateEmbeddedDocuments('Item', [book])
+      }
     } else {
       super.update(data, context)
     }
