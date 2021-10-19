@@ -3,12 +3,8 @@ const ECC_CLASS = 'enhanced-chat-card'
 
 const PERMISSION_TYPE = {
 	GM: 'gm',
-  XGM: '-gm',
   SPEAKER: 'speaker',
-  XSPEAKER: '-speaker',
-  USER: 'user',
-  USER: '-user',
-	EVERYONE: ''
+	EVERYONE: 'all'
 }
 
 const STATE = {
@@ -95,8 +91,14 @@ export class EnhancedChatCard {
   //   EnhancedChatCardLib.register(cardConstructor)
   // }
 
-  constructor (options = {}) {
+  constructor (data={},options = {}) {
+    this.initialize( data)
     this._options = options
+  }
+
+  initialize( data){
+    this._data = data
+    if( !this._data.flags) this._data.flags = {}
   }
 
   get options () {
@@ -108,25 +110,48 @@ export class EnhancedChatCard {
   }
 
   get cssClasses () {
-    return this.options.classes
+    return this.options.classes?.join( ' ')
+  }
+
+  getData(){
+    return{
+      card: this,
+      flags: this.flags,
+      data: this.toObject(),
+      options: this.options,
+      css: this.cssClasses,
+      mySelectOptions: {
+        0: 'option 1',
+        1: 'option 2'
+      }
+    }
+  }
+
+  toObject() {
+    if( !this._data) return
+    const data = {};
+    for ( let k of Object.keys(this._data) ) {
+      const v = this._data[k]
+      if ( v instanceof Object ) {
+        data[k] = v.toObject ? v.toObject() : deepClone(v);
+      }
+      else data[k] = v;
+    }
+    return data;
   }
 
   async toMessage (optionnalChatData = {}) {
-    this.mySelectOptions = {
-      0: 'option 1',
-      1: 'option 2'
-    }
 
     //Map eec card type if not registered already
     // this.registerEECClass()
 
     //Publish by current user by default unless options.GMchatCard
-    const html = await renderTemplate(this.template, this)
+    const html = await renderTemplate(this.template, this.getData())
     const htmlCardElement = $(html)[0]
     if (this.options.attachObject)
       htmlCardElement.dataset.object = escape(this.objectDataString)
     htmlCardElement.dataset.eccClass = this.constructor.name
-    htmlCardElement.classList.add(...this.cssClasses)
+    htmlCardElement.classList.add(...this.options.classes)
 
     const chatData = foundry.utils.mergeObject(
       {
@@ -152,13 +177,13 @@ export class EnhancedChatCard {
     if (!this.messageId) {
       this.toMessage()
     } else {
-      const html = await renderTemplate(this.template, this)
+      const html = await renderTemplate(this.template, this.getData())
       const htmlCardElement = $.parseHTML(html)[0]
 
       // Attach the sanCheckCard object to the message.
       htmlCardElement.dataset.object = escape(this.objectDataString)
       htmlCardElement.dataset.eccClass = this.constructor.name
-      htmlCardElement.classList.add(...this.cssClasses)
+      htmlCardElement.classList.add(...this.options.classes)
 
       // Update the message.
       game.enhancedChatCardsLib.socket.executeAsGM( 'updateMessage', this.messageId, htmlCardElement.outerHTML)
@@ -173,11 +198,11 @@ export class EnhancedChatCard {
   }
 
   activateListeners (html) {
-    html.on(
-      'click',
-      `.${ECC_CLASS} .ecc-radio-switch`,
-      this._onToggle.bind(this)
-    )
+    // html.on(
+    //   'click',
+    //   `.${ECC_CLASS} .ecc-radio-switch`,
+    //   this._onToggle.bind(this)
+    // )
     html.on("change", "input,select,textarea", this._onSubmit.bind(this));
     html.on('click', `.${ECC_CLASS} .ecc-switch`, this._onToggle.bind(this))
     html.on('click', `.${ECC_CLASS} .submit`, this._onSubmit.bind(this))
@@ -187,15 +212,31 @@ export class EnhancedChatCard {
 
     html.find('[data-eec-visibility]').each(( i ,el) => this.setVisibility(el))
     html.find(`.${ECC_CLASS} .ecc-switch`).each( (i, el) => this.setState(el))
+    html.find(`.${ECC_CLASS} input[type="radio"]`).each( (i, el) => this.setRadioState(el))
+    // html.find(`.${ECC_CLASS} .ecc-radio-switch`).each( (i, el) => this.setState(el))
+
   }
 
   setState( element){
-    if( !element.dataset.flag) return
-    element.classList.add( this[element.dataset.flag]?STATE.ON:STATE.OFF)
+    if( !element || !element.dataset.flag) return
+    element.classList.add( this.flags[element.dataset.flag]?STATE.ON:STATE.OFF)
+  }
+
+  setRadioState( element){
+    if( !element || !element.name) return
+    const splited = element.name.split('.')
+    if( 'data' != splited[0].toLowerCase() ) return
+    if( this._data && undefined != this._data[splited[1]]){
+    if( this._data[splited[1]] == element.value){
+      element.checked = true
+    }
+  }
+
   }
 
   setVisibility( element){
     if( !element.dataset.eecVisibility) return
+    const perm = element.dataset.eecVisibility.split('|')
     if( !this.hasPerm(element.dataset.eecVisibility)) element.style.display = 'none'
   }
 
@@ -211,25 +252,18 @@ export class EnhancedChatCard {
     const htmlMessageElement = html[0]
     const htmlCardElement = htmlMessageElement.querySelector(`.${ECC_CLASS}`)
     if (!htmlCardElement) return
-    if (!htmlCardElement.dataset.eccClass) return
-    const cardClass = game.enhancedChatCardsLib.types.get(
-      htmlCardElement.dataset.eccClass
-    )
-    if (!cardClass) {
-      console.error(
-        `Unknown chat card type: ${htmlCardElement.dataset.eccClass}`
-      )
-      return
-    }
 
     const card = await EnhancedChatCard.fromHTMLCardElement(htmlCardElement)
-    const typedCard = Object.assign(new cardClass(), card)
-    typedCard.assignObject()
-    typedCard.activateListeners(html)
+    card.assignObject()
+    card.activateListeners(html)
+  }
+
+  get flags(){
+    return this._data.flags
   }
 
   /**
-   * Override to reassign object type
+   * Override to reassign object from the data structure.
    * @returns
    */
   assignObject () {}
@@ -273,9 +307,9 @@ export class EnhancedChatCard {
       const form = forms[i]
       const fd = new FormDataExtended(form)
       let data = fd.toObject()
-      data = diffObject(this, expandObject(data))
-      for (const [key, value] of Object.entries(data)) {
-        this[key] = value
+      data = foundry.utils.diffObject(this._data, foundry.utils.expandObject(data))
+      for (const [key, value] of Object.entries(data.data)) {
+        this._data[key] = value
         updates = true
       }
     }
@@ -312,12 +346,12 @@ export class EnhancedChatCard {
     }
   }
 
-  get objectData () {
-    return JSON.parse(this.objectDataString)
-  }
+  // get objectData () {
+  //   return JSON.parse(this.objectDataString)
+  // }
 
   get objectDataString () {
-    return JSON.stringify(this, (key, value) => {
+    return JSON.stringify(this._data, (key, value) => {
       if (value === null) return undefined
       if (this.options.exclude?.includes(key)) return undefined
       if (key.startsWith(this.options.excludeStartWith)) return undefined
@@ -351,33 +385,45 @@ export class EnhancedChatCard {
     return card
   }
 
-  static async fromHTMLCardElement (card) {
-    const cardData = JSON.parse(unescape(card.dataset.object))
-    if (!cardData.messageId) {
-      const message = card.closest('.message')
-      cardData.messageId = message?.dataset?.messageId
-    }
-    return await this.fromData(cardData)
+  static async fromHTMLCardElement (htmmlCard) {
+    if (!htmmlCard) return
+    if (!htmmlCard.dataset.eccClass) return
+    const cardData = JSON.parse(unescape(htmmlCard.dataset.object))
+    const message = htmmlCard.closest('.message')
+    const messageId = message?.dataset?.messageId
+
+    return await this.fromData(cardData, htmmlCard.dataset.eccClass, messageId)
+   
   }
 
-  static async fromData (data) {
-    const card = Object.assign(new this(), data)
-    await card.assignObject()
+  static async fromData (data, cardClassName, messageId = null) {
+    const cardClass = game.enhancedChatCardsLib.types.get( cardClassName)
+
+    if (!cardClass) {
+      console.error(
+        `Unknown chat card type: ${htmlCardElement.dataset.eccClass}`
+      )
+      return
+    }
+
+   const card = new cardClass(data)
+   if( messageId) card.messageId = messageId
+   await card.assignObject()
     return card
   }
 
   setFlag (flagName) {
     if (!flagName && !($.type(flagName) === 'string')) return
-    this[flagName] = true
+    this._data.flags[flagName] = true
   }
 
   unsetFlag (flagName) {
     if (!flagName && !($.type(flagName) === 'string')) return
-    this[flagName] = false
+    this._data.flags[flagName] = false
   }
 
   toggleFlag (flagName) {
-    this[flagName] = !this[flagName]
+    this.flags[flagName] = !this.flags[flagName]
   }
 
   async _onToggle (event) {
@@ -398,11 +444,11 @@ export class EnhancedChatCard {
     }
     const flag = target.dataset.flag
     if (!flag) return
-    const toggle = target.closest('.ic-radio')
+    const toggle = target.closest('.ecc-radio')
     if (!toggle) {
       this.toggleFlag(flag)
     } else {
-      const buttons = toggle.querySelectorAll('.ic-radio-switch')
+      const buttons = toggle.querySelectorAll('.ecc-switch')
       for (const b of buttons) {
         this.unsetFlag(b.dataset.flag)
       }
