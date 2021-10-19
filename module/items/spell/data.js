@@ -1,4 +1,4 @@
-/* global ChatMessage, game, Roll, renderTemplate, ui */
+/* global ChatMessage, game, mergeObject, Roll, renderTemplate, ui */
 
 import { CoC7Utilities } from '../../utilities.js'
 import { CoC7Item } from '../item.js'
