@@ -33,10 +33,13 @@
         </div>
 
         <span>Pouet pouet</span>
-        <span class="ecc-switch" data-flag="critical" data-eec-visibility="gm|owner|players" title="{{localize 'CoC7.CriticalTitle'}}">{{localize "CoC7.Critical"}}</span>
+        <span class="ecc-switch" data-flag="critical" data-eec-visibility="gm speaker" title="{{localize 'CoC7.CriticalTitle'}}">{{localize "CoC7.Critical"}}</span>
         {{#if flags.critical}}
         <span> CRITICAL IS ON</span>
         {{/if}}
+        <div class='card-buttons' data-eec-visibility="blacklist gm">
+            <button class='.submit' data-action='trouloulou'>Submit</button>
+        </div>
     </form>
 </div>
 {{!-- {{selectOptions sizes selected=swarm blank="" localize=true}} --}}

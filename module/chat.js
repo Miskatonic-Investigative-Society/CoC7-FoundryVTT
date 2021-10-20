@@ -697,6 +697,7 @@ export class CoC7Chat {
 
     const button = event.currentTarget
     const card = button.closest('.chat-card')
+    if (!card) return
     const originMessage = button.closest('.message')
     // const messageId = originMessage.dataset.messageId;
     const action = button.dataset.action

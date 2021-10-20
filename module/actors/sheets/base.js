@@ -882,7 +882,7 @@ export class CoC7ActorSheet extends ActorSheet {
       .on('dragstart', event => CoC7Parser._onDragCoC7Link(event))
 
     html.find('.test-trigger').click(async event => {
-      const test = new testCard()
+      const test = new testCard({}, { speaker: ChatMessage.getSpeaker() })
       test.toMessage()
       // await OpposedCheckCard.dispatch({
       //   type: OpposedCheckCard.defaultConfig.type,
@@ -900,7 +900,7 @@ export class CoC7ActorSheet extends ActorSheet {
       //   action: 'new',
       //   roll: {
       //     characteristic: 'con'
-          // actor: this.actor.actorKey
+      // actor: this.actor.actorKey
       //   }
       // })
       // const val = getProperty( this.actor, 'data.data.attribs.san.value');

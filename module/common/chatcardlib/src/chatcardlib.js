@@ -1,10 +1,11 @@
-
 const ECC_CLASS = 'enhanced-chat-card'
 
 const PERMISSION_TYPE = {
-	GM: 'gm',
+  GM: 'gm',
   SPEAKER: 'speaker',
-	EVERYONE: 'all'
+  USER: 'user',
+  EVERYONE: 'all',
+  BLACKLIST: 'blacklist'
 }
 
 const STATE = {
@@ -12,16 +13,15 @@ const STATE = {
   OFF: 'switched-off'
 }
 
-
 export function initEEC (...cardclass) {
   // Hooks.once('init', function () {
   // })
 
   Hooks.once('socketlib.ready', function () {
-    EnhancedChatCardLib.register( cardclass)
+    EnhancedChatCardLib.register(cardclass)
     EnhancedChatCardLib.socket = socketlib.registerSystem(game.system.id) //Socket is attached to current system
     EnhancedChatCardLib.socket.register('updateMessage', updateMessage)
-    EnhancedChatCardLib.socket.register('advise',advise)
+    EnhancedChatCardLib.socket.register('advise', advise)
     // EnhancedChatCardLib.socket.register('gmtradeitemto', gmtradeitemto)
   })
 
@@ -30,15 +30,15 @@ export function initEEC (...cardclass) {
   )
 }
 
-async function updateMessage( messageId, newContent){
+async function updateMessage (messageId, newContent) {
   const chatMessage = game.messages.get(messageId)
 
-  const msg = await chatMessage.update({ 
+  const msg = await chatMessage.update({
     content: newContent
   })
 }
 
-async function advise( ){
+async function advise () {
   return
 }
 
@@ -56,12 +56,12 @@ class EnhancedChatCardLib {
   }
 
   static get socket () {
-    if( !game.enhancedChatCardsLib) {
-      ui.notifications.error( 'EEC not Initialized')
+    if (!game.enhancedChatCardsLib) {
+      ui.notifications.error('EEC not Initialized')
       return undefined
     }
-    if( !game.enhancedChatCardsLib.socket){
-      ui.notifications.error( 'EEC no socket')
+    if (!game.enhancedChatCardsLib.socket) {
+      ui.notifications.error('EEC no socket')
       return undefined
     }
     return game.enhancedChatCardsLib.socket
@@ -78,7 +78,7 @@ class EnhancedChatCardLib {
       if (!EnhancedChatCardLib.types.get(cardConstructor.name)) {
         EnhancedChatCardLib.types.set(cardConstructor.name, cardConstructor)
       }
-    });
+    })
   }
 
   // static gm_onToggle (data){
@@ -91,14 +91,14 @@ export class EnhancedChatCard {
   //   EnhancedChatCardLib.register(cardConstructor)
   // }
 
-  constructor (data={},options = {}) {
-    this.initialize( data)
+  constructor (data = {}, options = {}) {
+    this.initialize(data)
     this._options = options
   }
 
-  initialize( data){
+  initialize (data) {
     this._data = data
-    if( !this._data.flags) this._data.flags = {}
+    if (!this._data.flags) this._data.flags = {}
   }
 
   get options () {
@@ -110,11 +110,11 @@ export class EnhancedChatCard {
   }
 
   get cssClasses () {
-    return this.options.classes?.join( ' ')
+    return this.options.classes?.join(' ')
   }
 
-  getData(){
-    return{
+  getData () {
+    return {
       card: this,
       flags: this.flags,
       data: this.toObject(),
@@ -127,21 +127,19 @@ export class EnhancedChatCard {
     }
   }
 
-  toObject() {
-    if( !this._data) return
-    const data = {};
-    for ( let k of Object.keys(this._data) ) {
+  toObject () {
+    if (!this._data) return
+    const data = {}
+    for (let k of Object.keys(this._data)) {
       const v = this._data[k]
-      if ( v instanceof Object ) {
-        data[k] = v.toObject ? v.toObject() : deepClone(v);
-      }
-      else data[k] = v;
+      if (v instanceof Object) {
+        data[k] = v.toObject ? v.toObject() : deepClone(v)
+      } else data[k] = v
     }
-    return data;
+    return data
   }
 
   async toMessage (optionnalChatData = {}) {
-
     //Map eec card type if not registered already
     // this.registerEECClass()
 
@@ -153,9 +151,14 @@ export class EnhancedChatCard {
     htmlCardElement.dataset.eccClass = this.constructor.name
     htmlCardElement.classList.add(...this.options.classes)
 
+    const speaker = this.options.speaker
+      ? ChatMessage.getSpeaker(this.options.speaker)
+      : {}
+
     const chatData = foundry.utils.mergeObject(
       {
         user: game.user.id,
+        speaker: speaker,
         flavor: game.i18n.localize(this.options.title),
         content: htmlCardElement.outerHTML
       },
@@ -186,66 +189,121 @@ export class EnhancedChatCard {
       htmlCardElement.classList.add(...this.options.classes)
 
       // Update the message.
-      game.enhancedChatCardsLib.socket.executeAsGM( 'updateMessage', this.messageId, htmlCardElement.outerHTML)
+      game.enhancedChatCardsLib.socket.executeAsGM(
+        'updateMessage',
+        this.messageId,
+        htmlCardElement.outerHTML
+      )
       // const chatMessage = game.messages.get(this.messageId)
 
       // const msg = await chatMessage.update({ //Dispatch request by socket
-        // content: htmlCardElement.outerHTML //Dispatch request by socket
+      // content: htmlCardElement.outerHTML //Dispatch request by socket
       // }) //Dispatch request by socket
       // await ui.chat.updateMessage(msg, false) //Dispatch request by socket
       // return msg //Dispatch request by socket
     }
   }
 
-  activateListeners (html) {
+  async activateListeners (html) {
     // html.on(
     //   'click',
     //   `.${ECC_CLASS} .ecc-radio-switch`,
     //   this._onToggle.bind(this)
     // )
-    html.on("change", "input,select,textarea", this._onSubmit.bind(this));
+    html.on('change', 'input,select,textarea', this._onChange.bind(this))
     html.on('click', `.${ECC_CLASS} .ecc-switch`, this._onToggle.bind(this))
     html.on('click', `.${ECC_CLASS} .submit`, this._onSubmit.bind(this))
-    html.on('focusout', `.${ECC_CLASS} input`, this._onSubmit.bind(this))
+    html.on('focusout', `.${ECC_CLASS} input`, this._onChange.bind(this))
     html.on('click', `.${ECC_CLASS} button`, this._onButton.bind(this))
     html.on('keydown', `.${ECC_CLASS} form`, this._onKey.bind(this))
 
-    html.find('[data-eec-visibility]').each(( i ,el) => this.setVisibility(el))
-    html.find(`.${ECC_CLASS} .ecc-switch`).each( (i, el) => this.setState(el))
-    html.find(`.${ECC_CLASS} input[type="radio"]`).each( (i, el) => this.setRadioState(el))
+    // const visi = html.find('[data-eec-visibility]')
+    // for (let i = 0; i < visi.length; i++) {
+    //   const el = visi[i];
+    //   await this.setVisibility(el)
+      
+    // }
+
+    html
+      .find('[data-eec-visibility]')
+      .each(async (i, el) => await this.setVisibility(el))
+    html.find(`.${ECC_CLASS} .ecc-switch`).each((i, el) => this.setState(el))
+    html
+      .find(`.${ECC_CLASS} input[type="radio"]`)
+      .each((i, el) => this.setRadioState(el))
     // html.find(`.${ECC_CLASS} .ecc-radio-switch`).each( (i, el) => this.setState(el))
-
   }
 
-  setState( element){
-    if( !element || !element.dataset.flag) return
-    element.classList.add( this.flags[element.dataset.flag]?STATE.ON:STATE.OFF)
+  setState (element) {
+    if (!element || !element.dataset.flag) return
+    element.classList.add(
+      this.flags[element.dataset.flag] ? STATE.ON : STATE.OFF
+    )
   }
 
-  setRadioState( element){
-    if( !element || !element.name) return
+  setRadioState (element) {
+    if (!element || !element.name) return
     const splited = element.name.split('.')
-    if( 'data' != splited[0].toLowerCase() ) return
-    if( this._data && undefined != this._data[splited[1]]){
-    if( this._data[splited[1]] == element.value){
-      element.checked = true
+    if ('data' != splited[0].toLowerCase()) return
+    if (this._data && undefined != this._data[splited[1]]) {
+      if (this._data[splited[1]] == element.value) {
+        element.checked = true
+      }
     }
   }
 
-  }
-
-  setVisibility( element){
-    if( !element.dataset.eecVisibility) return
+  async setVisibility (element) {
+    if (!element.dataset.eecVisibility) return
     const perm = element.dataset.eecVisibility.split('|')
-    if( !this.hasPerm(element.dataset.eecVisibility)) element.style.display = 'none'
+    const canYouSee = await this.hasPerm(element.dataset.eecVisibility, true)
+    if (!canYouSee)
+      element.style.display = 'none'
   }
 
-  hasPerm( restrictedTo){
-    if( !restrictedTo.length) return true
-    if( game.user.isGM){
-      if(restrictedTo.includes(PERMISSION_TYPE.XGM)) return false
-      return true
+  /**
+   * Check if the current user as permission against a string of allowed persons.
+   * If the string is empty permission are all granted
+   * @param {string} restrictedTo   A string containing the set of player allowed. Value can be owner, gm, players, uuid separated by space
+   * @param {boolean} vision        if true gm will be considered for permissions. false = gm has always right. true GM permission will be checked
+   * @returns
+   */
+  async hasPerm (restrictedTo, vision = false) {
+    if (!restrictedTo.length) return true
+    let permissionsArray = restrictedTo.split(' ')
+    const whiteList = !permissionsArray.includes(PERMISSION_TYPE.BLACKLIST)
+    if( !whiteList) permissionsArray = permissionsArray.filter(e => e != PERMISSION_TYPE.BLACKLIST)
+    if (game.user.isGM) {
+      if (!vision) return true //GM can always modify everything ! Nah 
+      if (permissionsArray.includes(PERMISSION_TYPE.GM))
+        return true && whiteList
+      return false || !whiteList //If pass the filter return false unless it's a blacklist
+    } else {
+      permissionsArray = permissionsArray.filter(e => e != PERMISSION_TYPE.GM)
     }
+
+    if (permissionsArray.includes(PERMISSION_TYPE.USER)) {
+      if (this.message.isAuthor) return true && whiteList //isAuthor vs user.isOwner ?
+      permissionsArray = permissionsArray.filter(e => e != PERMISSION_TYPE.USER)
+    }
+
+    if (permissionsArray.includes(PERMISSION_TYPE.SPEAKER)) {
+      const speaker = this.message.data.speaker
+      if (speaker.token && speaker.scene) {
+        const actor = await fromUuid(`Scene.${speaker.scene}.Token.${speaker.token}`)
+        if (actor) {
+          if (actor.isOwner) return true && whiteList
+        }
+      } else if (speaker.actor) {
+        const actor = game.actors.get(speaker.actor)
+        if (actor) {
+          if (actor.isOwner) return true && whiteList
+        }
+      } else if (speaker.user) {
+        if (game.user.id == speaker.user) return true && whiteList
+      }
+      permissionsArray = permissionsArray.filter(e => e != PERMISSION_TYPE.SPEAKER)
+    }
+    return false || !whiteList //If pass the filter return false unless it's a blacklist
   }
 
   static async bindListeners (html) {
@@ -258,7 +316,7 @@ export class EnhancedChatCard {
     card.activateListeners(html)
   }
 
-  get flags(){
+  get flags () {
     return this._data.flags
   }
 
@@ -277,6 +335,14 @@ export class EnhancedChatCard {
     const button = event.currentTarget
     // button.style.display = 'none' //Avoid multiple push
     const action = button.dataset.action
+    if (!action) {
+      console.warn(`no action associated with this button`)
+      return
+    }
+    if (!this[action]) {
+      console.warn(`no ${action} action found for this card`)
+      return
+    }
     if (this[action]) this[action]({ event: event, update: true })
   }
 
@@ -288,6 +354,12 @@ export class EnhancedChatCard {
   _onKey (event) {
     if (event.key === 'Enter') this._onSubmit(event)
     return event.key !== 'Enter'
+  }
+
+  _onChange (event) {
+    if (this.options.submitOnChange) {
+      return this._onSubmit(event)
+    }
   }
 
   _onSubmit (event) {
@@ -307,7 +379,10 @@ export class EnhancedChatCard {
       const form = forms[i]
       const fd = new FormDataExtended(form)
       let data = fd.toObject()
-      data = foundry.utils.diffObject(this._data, foundry.utils.expandObject(data))
+      data = foundry.utils.diffObject(
+        this._data,
+        foundry.utils.expandObject(data)
+      )
       for (const [key, value] of Object.entries(data.data)) {
         this._data[key] = value
         updates = true
@@ -393,11 +468,10 @@ export class EnhancedChatCard {
     const messageId = message?.dataset?.messageId
 
     return await this.fromData(cardData, htmmlCard.dataset.eccClass, messageId)
-   
   }
 
   static async fromData (data, cardClassName, messageId = null) {
-    const cardClass = game.enhancedChatCardsLib.types.get( cardClassName)
+    const cardClass = game.enhancedChatCardsLib.types.get(cardClassName)
 
     if (!cardClass) {
       console.error(
@@ -406,9 +480,9 @@ export class EnhancedChatCard {
       return
     }
 
-   const card = new cardClass(data)
-   if( messageId) card.messageId = messageId
-   await card.assignObject()
+    const card = new cardClass(data)
+    if (messageId) card.messageId = messageId
+    await card.assignObject()
     return card
   }
 
@@ -455,7 +529,9 @@ export class EnhancedChatCard {
       this.setFlag(flag)
     }
     const card = target.closest(`.${ECC_CLASS}`)
-    if (card) this._update(card)
-    this.updateChatCard()
+    if (this.options.submitOnChange) {
+      if (card) this._update(card)
+      this.updateChatCard()
+    }
   }
 }
