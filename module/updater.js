@@ -281,6 +281,11 @@ export class Updater {
           value: item.data.description,
           keeper: ''
         }
+      } else if (typeof item.data.description === 'undefined') {
+        updateData['data.description'] = {
+          value: '',
+          keeper: ''
+        }
       } else if (typeof item.data.description.keeper === 'undefined') {
         updateData['data.description.keeper'] = ''
       }
