@@ -440,7 +440,8 @@ export class Updater {
     if (item.type === 'spell') {
       if (typeof item.data.notes !== 'undefined') {
         if (typeof item.data.description.keeper !== 'undefined') {
-          updateData['data.description.keeper'] = item.data.description.keeper + item.data.notes
+          updateData['data.description.keeper'] =
+            item.data.description.keeper + item.data.notes
         } else {
           updateData['data.description.keeper'] = item.data.notes
         }

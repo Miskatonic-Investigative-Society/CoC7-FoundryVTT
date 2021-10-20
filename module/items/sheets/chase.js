@@ -124,7 +124,6 @@ export class CoC7ChaseSheet extends ItemSheet {
     data.started = this.started
     data.dataListCheckOptions = this.allSkillsAndCharacteristics
 
-
     data.isKeeper = game.user.isGM
     return data
   }

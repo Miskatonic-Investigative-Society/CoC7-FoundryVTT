@@ -452,7 +452,17 @@ export class CoCActor extends Actor {
   //  return super.create(data, options);
   // }
 
-  static emptySkill (skillName, value, { rarity = false, push = true, combat = false, img = false, specialization = false } = {}) {
+  static emptySkill (
+    skillName,
+    value,
+    {
+      rarity = false,
+      push = true,
+      combat = false,
+      img = false,
+      specialization = false
+    } = {}
+  ) {
     const data = {
       name: skillName,
       type: 'skill',

@@ -8,8 +8,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 [de.json](#dejson)
 
-
 ## cn.json
+
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -388,7 +388,9 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.CheckElevationHint": "Use elevation in range combat distance calculations",
 "CoC7.toolTipDelay": "Millisecond delay before tooltip should show, 0 for never"
 ```
+
 ## cs.json
+
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -543,7 +545,9 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.CheckElevationHint": "Use elevation in range combat distance calculations",
 "CoC7.toolTipDelay": "Millisecond delay before tooltip should show, 0 for never"
 ```
+
 ## de.json
+
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",

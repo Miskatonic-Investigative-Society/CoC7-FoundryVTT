@@ -19,12 +19,18 @@ export class CoC7ActorImporterDialog extends Dialog {
       })
       .trigger('change')
     html.find('#coc-pasted-character-data').on('keyup', function (e) {
-      const charactersTooExtended = $(this).val().match(/[\udbc0-\udbfe][\udc00-\udfff]/)
+      const charactersTooExtended = $(this)
+        .val()
+        .match(/[\udbc0-\udbfe][\udc00-\udfff]/)
       const prompt = $('#coc-prompt')
       if (charactersTooExtended) {
-        prompt.html(game.i18n.localize('CoC7.TextFieldInvalidCharacters')).addClass('error')
+        prompt
+          .html(game.i18n.localize('CoC7.TextFieldInvalidCharacters'))
+          .addClass('error')
       } else {
-        prompt.html(game.i18n.localize('CoC7.PasteTheDataBelow')).removeClass('error')
+        prompt
+          .html(game.i18n.localize('CoC7.PasteTheDataBelow'))
+          .removeClass('error')
       }
     })
   }

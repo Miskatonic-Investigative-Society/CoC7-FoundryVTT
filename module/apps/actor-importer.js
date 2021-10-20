@@ -214,12 +214,12 @@ export class CoC7ActorImporter {
         do {
           found = this.getRegEx(
             '\\s*[+-]?\\s*(' +
-                this.keys.halfdb +
-                ')\\s*(' +
-                this.keys.fulldb +
-                ')?[-+]?\\s*(' +
-                this.parsed.db.replace(/^[-+]/, '') +
-                ')?'
+              this.keys.halfdb +
+              ')\\s*(' +
+              this.keys.fulldb +
+              ')?[-+]?\\s*(' +
+              this.parsed.db.replace(/^[-+]/, '') +
+              ')?'
           ).exec(damage)
           if (found) {
             ahdb = true
@@ -472,7 +472,12 @@ export class CoC7ActorImporter {
     }
     // Get damage bonus, if not found or none set to 0
     if (
-      !this.check('db') || this.check('dbNone', { removeFromText: false, saveKeys: false, text: this.parsed.db })
+      !this.check('db') ||
+      this.check('dbNone', {
+        removeFromText: false,
+        saveKeys: false,
+        text: this.parsed.db
+      })
     ) {
       this.parsed.db = '0'
     }
@@ -480,7 +485,12 @@ export class CoC7ActorImporter {
     this.check('build')
     // Get armor, if not found or none set to 0
     if (
-      !this.check('armor') || this.check('armorNone', { removeFromText: false, saveKeys: false, text: this.parsed.armor })
+      !this.check('armor') ||
+      this.check('armorNone', {
+        removeFromText: false,
+        saveKeys: false,
+        text: this.parsed.armor
+      })
     ) {
       this.parsed.armor = '0'
     }
@@ -492,7 +502,12 @@ export class CoC7ActorImporter {
     this.check('sanLoss')
     // Get attacks per round, if not found or none set to 0
     if (
-      this.check('attacksPerRound') && this.check('attacksPerRoundNone', { removeFromText: false, saveKeys: false, text: this.parsed.attacksPerRound })
+      this.check('attacksPerRound') &&
+      this.check('attacksPerRoundNone', {
+        removeFromText: false,
+        saveKeys: false,
+        text: this.parsed.attacksPerRound
+      })
     ) {
       this.parsed.attacksPerRound = '0'
     }

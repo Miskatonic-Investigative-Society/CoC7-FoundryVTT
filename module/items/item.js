@@ -288,7 +288,9 @@ export class CoC7Item extends Item {
     } else {
       if (item.data.properties?.special) {
         const specNameRegex = new RegExp(
-          '^' + CoC7Utilities.quoteRegExp(item.data.specialization) + '\\s*\\((.+)\\)$',
+          '^' +
+            CoC7Utilities.quoteRegExp(item.data.specialization) +
+            '\\s*\\((.+)\\)$',
           'i'
         )
         return item.name.replace(specNameRegex, '$1')
