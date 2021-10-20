@@ -1,17 +1,19 @@
-## Changes coming in a future release:
+## Version 0.7.0:
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
 
 - Add options to change pause icon and text on settings.
 - Add Pulp Luck recovery rules.
-- Add several tooltips to the character sheet (Skill, DB, Sanity, etc).
+- Add several tooltips to the Character sheet (Skill, DB, Sanity, etc).
 - Initial refactor of Spell system.
   - Cast Spell prompts its description and costs results on chat;
   - Now Spell costs are discounted when casting;
+  - Now you can open Spell sheet from Book Spell list and edit the Spell information within the Book without affecting the original one.
   - Update sheet layout to V2.
 - Fix "The key ? does not exist in the EmbeddedCollection Collection" dragging an English setup onto a translated Actor.
 - Fix background integrity on Book sheet.
 - Fix bug on Archetype Item properties.
+- Fix bug on Ranged Combat damage not being rolled when value is number.
 - Fix bug where GM is speaking instead of NPC on checks
 - Fix Combined / Opposed Roll using the incorrect image path for wildcard tokens.
 - Fix DsN 3D dices not rolling sometimes.
@@ -23,6 +25,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Now the defender has an option to do nothing in combat flow.
 - Now there is an option to show or not show uncommon skills on Character sheet.
 - Several improvements on the Actor Importer app;
+- Update menu system compatibility for 0.8 and V9 Foundry VTT.
 - Update updater to check module compendiums for Actor and Item when modules version module numbers are new or changed.
 - Update to French localization, thanks to @vonv.
 - Update to Japanese localization, thanks to `@Asami#8627`.

@@ -1,5 +1,5 @@
 #controls {
-  .scene-control.custom-control {
+  .coc7-menu {
     background: rgba(30, 80, 80, 0.5) !important;
     &.active,
     &:hover {
@@ -7,12 +7,10 @@
       border-bottom: 1px solid #008060 !important;
       box-shadow: 0 0 10px #008060 !important;
     }
-    .control-tool {
-      &.xp_toggle {
-        &.active {
-          color: goldenrod;
-        }
-      }
+  }
+  li.control-tool.active {
+    i.fa-certificate {
+      color: goldenrod;
     }
   }
 }

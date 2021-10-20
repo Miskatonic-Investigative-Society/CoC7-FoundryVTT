@@ -390,45 +390,31 @@ export class CoC7Utilities {
     return false
   }
 
-  static async toggleDevPhase () {
-    const isDevEnabled = game.settings.get('CoC7', 'developmentEnabled')
-    await game.settings.set('CoC7', 'developmentEnabled', !isDevEnabled)
-    const group = game.CoC7.menus.controls.find(b => b.name === 'main-menu')
-    const tool = group.tools.find(t => t.name === 'devphase')
-    tool.title = game.settings.get('CoC7', 'developmentEnabled')
-      ? game.i18n.localize('CoC7.DevPhaseEnabled')
-      : game.i18n.localize('CoC7.DevPhaseDisabled')
+  static async toggleDevPhase (toggle) {
+    await game.settings.set('CoC7', 'developmentEnabled', toggle)
     ui.notifications.info(
-      game.settings.get('CoC7', 'developmentEnabled')
+      toggle
         ? game.i18n.localize('CoC7.DevPhaseEnabled')
         : game.i18n.localize('CoC7.DevPhaseDisabled')
     )
-    ui.controls.render()
     game.socket.emit('system.CoC7', {
       type: 'updateChar'
     })
     CoC7Utilities.updateCharSheets()
   }
 
-  static async toggleCharCreation () {
-    const isCharCreation = game.settings.get('CoC7', 'charCreationEnabled')
-    await game.settings.set('CoC7', 'charCreationEnabled', !isCharCreation)
-    const group = game.CoC7.menus.controls.find(b => b.name === 'main-menu')
-    const tool = group.tools.find(t => t.name === 'charcreate')
-    tool.title = game.settings.get('CoC7', 'charCreationEnabled')
-      ? game.i18n.localize('CoC7.CharCreationEnabled')
-      : game.i18n.localize('CoC7.CharCreationDisabled')
+  static async toggleCharCreation (toggle) {
+    await game.settings.set('CoC7', 'charCreationEnabled', toggle)
     ui.notifications.info(
-      game.settings.get('CoC7', 'charCreationEnabled')
+      toggle
         ? game.i18n.localize('CoC7.CharCreationEnabled')
         : game.i18n.localize('CoC7.CharCreationDisabled')
     )
-    ui.controls.render()
     game.socket.emit('system.CoC7', {
       type: 'updateChar'
     })
     CoC7Utilities.updateCharSheets()
-    Hooks.call('toggleCharCreation', !isCharCreation)
+    Hooks.call('toggleCharCreation', toggle)
   }
 
   static async startRest () {
@@ -523,20 +509,13 @@ export class CoC7Utilities {
     ChatMessage.create(chatData)
   }
 
-  static async toggleXPGain () {
-    const isXPEnabled = game.settings.get('CoC7', 'xpEnabled')
-    await game.settings.set('CoC7', 'xpEnabled', !isXPEnabled)
-    const group = game.CoC7.menus.controls.find(b => b.name === 'main-menu')
-    const tool = group.tools.find(t => t.name === 'xptoggle')
-    tool.title = game.settings.get('CoC7', 'xpEnabled')
-      ? game.i18n.localize('CoC7.XPGainEnabled')
-      : game.i18n.localize('CoC7.XPGainDisabled')
+  static async toggleXPGain (toggle) {
+    await game.settings.set('CoC7', 'xpEnabled', toggle)
     ui.notifications.info(
-      game.settings.get('CoC7', 'xpEnabled')
+      toggle
         ? game.i18n.localize('CoC7.XPGainEnabled')
         : game.i18n.localize('CoC7.XPGainDisabled')
     )
-    ui.controls.render()
   }
 
   static async rollDice (event, options = {}) {

@@ -1,4 +1,4 @@
-/* global ChatMessage, game, Roll, renderTemplate, ui */
+/* global ChatMessage, game, mergeObject, Roll, renderTemplate, ui */
 
 import { CoC7Utilities } from '../../utilities.js'
 import { CoC7Item } from '../item.js'
@@ -10,6 +10,7 @@ export class CoC7Spell extends CoC7Item {
       data.img = 'systems/CoC7/assets/icons/pentagram-rose.svg'
     }
     super(data, context)
+    this.context = context
   }
 
   async cast () {
@@ -98,6 +99,38 @@ export class CoC7Spell extends CoC7Item {
       await sanityCheck.bypassRollSan()
       await sanityCheck.rollSanLoss()
       sanityCheck.updateChatCard()
+    }
+  }
+
+  update (data, context) {
+    if (
+      typeof this.context.parent !== 'undefined' &&
+      typeof this.context.bookId !== 'undefined'
+    ) {
+      let item
+      let book
+      if (this.context.parent === null) {
+        item = game.items.get(this.context.bookId)
+        book = item.toObject()
+      } else {
+        book = this.context.parent.items
+          .get(this.context.bookId)
+          .toObject()
+      }
+      for (let i = 0, im = book.data.spells.length; i < im; i++) {
+        if (book.data.spells[i]._id === this.id) {
+          book.data.spells[i] = mergeObject(book.data.spells[i], data)
+        }
+      }
+      if (this.context.parent === null) {
+        item.update({
+          'data.spells': book.data.spells
+        })
+      } else {
+        this.context.parent.updateEmbeddedDocuments('Item', [book])
+      }
+    } else {
+      super.update(data, context)
     }
   }
 }

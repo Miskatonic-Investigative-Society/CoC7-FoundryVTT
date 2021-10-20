@@ -1,9 +1,11 @@
+import del from './node_modules/del/index.js'
 import glob from './node_modules/glob/glob.js'
 import jsonfile from './node_modules/jsonfile/index.js'
 import write from './node_modules/write/index.js'
 
 const unordered = {}
 let missing = []
+const abandoned = {}
 const source = jsonfile.readFileSync('./lang/en.json')
 const keys = Object.keys(source)
 
@@ -13,8 +15,13 @@ glob('./lang/*.json', {}, async function (er, files) {
       const lang = filename.replace(/^(.+\/)([a-zA-Z0-9-]+)(\.json)$/, '$2')
       if (lang !== 'en') {
         const json = jsonfile.readFileSync(filename)
-        unordered[lang] = keys.filter(x => !Object.keys(json).includes(x))
-        missing = missing.concat(unordered[lang])
+        const missingKeys = keys.filter(x => !Object.keys(json).includes(x))
+        if (missingKeys.length < 100) {
+          unordered[lang] = missingKeys
+          missing = missing.concat(unordered[lang])
+        } else {
+          abandoned[lang] = missingKeys
+        }
       }
     })
   )
@@ -54,6 +61,11 @@ glob('./lang/*.json', {}, async function (er, files) {
       'The **' +
       complete.join() +
       '** translation is currently up to date\n\n'
+  }
+  if (Object.keys(abandoned).length > 0) {
+    output = output + 'The following translations have been abandoned **' +
+      Object.keys(abandoned).join('**, **') +
+      '**, [are you able to help?](./ABANDONED.md)\n\n'
   }
   if (missing.length > 0) {
     output = output + '|Key|'
@@ -101,4 +113,28 @@ glob('./lang/*.json', {}, async function (er, files) {
     output = output + anchors
   }
   write('./.github/TRANSLATIONS.md', output)
+  if (Object.keys(abandoned).length > 0) {
+    output = ''
+    output = output + '# Abandoned Translations.\n\n'
+    output = output + 'Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better!'
+    output = output + ' Below is a list of translations keys on existing files that still need translated, based on `en.json`.\n\n'
+    Object.entries(abandoned).forEach(([key, values]) => {
+      output = output + '[' + key + '.json](#' + (key + '.json').toLowerCase().replace(/[^a-zA-Z0-9]+/g, '') + ')\n\n'
+    })
+    output = output + '\n'
+    Object.entries(abandoned).forEach(([key, values]) => {
+      output = output + '## ' + key + '.json\n```\n'
+      values.forEach(sourceKey => {
+        output = output + '"' +
+          sourceKey +
+          '": "' +
+          source[sourceKey].replace(/\n/g, '\\n') +
+          '",\n'
+      })
+      output = output.substr(0, output.length - 2) + '\n```\n'
+    })
+    write('./.github/ABANDONED.md', output)
+  } else {
+    del('./.github/ABANDONED.md')
+  }
 })

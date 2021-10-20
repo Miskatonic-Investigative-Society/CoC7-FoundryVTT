@@ -425,7 +425,8 @@ Hooks.on('renderActorSheet', CoC7CharacterSheetV2.renderSheet) // TODO : change 
 Hooks.on('renderItemSheet', CoC7CharacterSheetV2.renderSheet) // TODO : change from CoC7CharacterSheetV2
 
 // Hooks.on('dropCanvasData', CoC7Parser.onDropSomething);
-Hooks.on('renderSceneControls', CoC7Menu.renderMenu)
+Hooks.on('getSceneControlButtons', CoC7Menu.getButtons)
+Hooks.on('renderSceneControls', CoC7Menu.renderControls)
 
 Hooks.on('dropCanvasData', CoC7Canvas.onDropSomething)
 
