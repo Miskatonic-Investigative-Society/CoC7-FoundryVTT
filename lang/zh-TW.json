@@ -749,7 +749,7 @@
   "CoC7.LearnSpellAttempt": "嘗試從<i>{book}</i>學習咒語{spell}。",
   "CoC7.MarkedForDevelopment": "被標記為可成長",
   "CoC7.Mythos": "神話",
-  "CoC7.NotOwned": "這本書需要被一個角色擁有才能執行這個動作。",
+  "CoC7.NotOwned": "這本物品需要被一個角色擁有才能執行這個動作。",
   "CoC7.Points": "點數",
   "CoC7.RedoFullStudy": "重新精讀。",
   "CoC7.ReadAttempt": "嘗試閱讀<i>{book}</i>（{language}），{difficulty}難度。",

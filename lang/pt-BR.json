@@ -563,7 +563,7 @@
   "CoC7.Development": "Desenvolvimento",
   "CoC7.Specific": "Específico",
   "CoC7.InitialReadingNeeded": "{actor} precisa realizar uma Leitura Inicial em <i>{book}</i> para poder avançar através do progresso de Estudo Completo.",
-  "CoC7.NotOwned": "Esse livro precisa ser possuído por um Ator para realizar essa ação.",
+  "CoC7.NotOwned": "Esse Item precisa ser possuído por um Ator para realizar essa ação.",
   "CoC7.ReadAttempt": "Tentativa de ler <i>{book}</i> ({language}), dificuldade {difficulty}.",
   "CoC7.ReadingMythosTome": "Lendo <i>{book}</i>...",
   "CoC7.UnknownLanguage": "{actor} não conhece o idioma qual este livro está escrito.",

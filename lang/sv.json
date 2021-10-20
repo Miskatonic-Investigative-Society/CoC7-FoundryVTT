@@ -536,7 +536,7 @@
   "CoC7.Occult": "Ockultism",
   "CoC7.Points": "poäng",
   "CoC7.MythosRating": "Mythosnivå",
-  "CoC7.NotOwned": "Den här boken måste ägas av en karaktär för att du ska kunna utföra handlingen.",
+  "CoC7.NotOwned": "Den här föremål måste ägas av en karaktär för att du ska kunna utföra handlingen.",
   "CoC7.StudyTime": "Studium",
   "CoC7.SpellCastingTime": "Tid",
   "CoC7.SpellCastingCost": "Kostnad",
@@ -726,7 +726,7 @@
   "CoC7.ImportActorItemsItem": "Föremål",
   "CoC7.ImportActorItemsItemWorldModuleSystem": "Föremål / Spelvärldar / Moduler / System",
   "CoC7.ImportActorItemsWorldModuleItemSystem": "Spelvärldar / Moduler / Föremål / System",
-  
+
   "CoC7.HowToTranslateTitle": "Så här översätter du?",
   "CoC7.HowToTranslateWarning": "Installera inga moduler du inte litar på.",
   "CoC7.HowToTranslateInstallBabele": "Installera/uppdatera Babele-modulen från Foundrys tilläggsmodulhanterare.",
