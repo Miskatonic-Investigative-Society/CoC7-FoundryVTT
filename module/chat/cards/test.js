@@ -10,6 +10,16 @@ export class testCard extends EnhancedChatCard {
     })
   }
 
+  getData(){
+    const data = super.getData()
+    data.mySelectOptions = {
+      0: 'option 1',
+      1: 'option 2'
+    }
+
+    return data
+  }
+
   // activateListeners (html) {
   //   super.activateListeners(html)
   // }

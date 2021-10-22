@@ -1,11 +1,11 @@
 const ECC_CLASS = 'enhanced-chat-card'
 
 const PERMISSION_TYPE = {
-  GM: 'gm',
-  SPEAKER: 'speaker',
-  USER: 'user',
-  EVERYONE: 'all',
-  BLACKLIST: 'blacklist'
+  GM: 'gm', // user is GM
+  SPEAKER: 'speaker', // the speaker is an actor controled/owned by the user
+  USER: 'user', // the user is the message's author
+  EVERYONE: 'all', // equivalent to empty string
+  BLACKLIST: 'blacklist' // invert the logic
 }
 
 const STATE = {
@@ -120,10 +120,7 @@ export class EnhancedChatCard {
       data: this.toObject(),
       options: this.options,
       css: this.cssClasses,
-      mySelectOptions: {
-        0: 'option 1',
-        1: 'option 2'
-      }
+      user: game.user,
     }
   }
 
@@ -298,10 +295,15 @@ export class EnhancedChatCard {
         if (actor) {
           if (actor.isOwner) return true && whiteList
         }
-      } else if (speaker.user) {
-        if (game.user.id == speaker.user) return true && whiteList
-      }
+      } 
+      // else if (speaker.user) {
+      //   if (game.user.id == speaker.user) return true && whiteList
+      // }
       permissionsArray = permissionsArray.filter(e => e != PERMISSION_TYPE.SPEAKER)
+    }
+    // All filter passed, array should contains only uuids or actor/token ids
+    if( permissionsArray.length){
+      ui.notifications.info( 'Array permission is not empty !')
     }
     return false || !whiteList //If pass the filter return false unless it's a blacklist
   }
