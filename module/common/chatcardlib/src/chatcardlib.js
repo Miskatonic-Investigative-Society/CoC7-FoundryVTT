@@ -148,7 +148,7 @@ export class EnhancedChatCard {
     htmlCardElement.dataset.eccClass = this.constructor.name
     htmlCardElement.classList.add(...this.options.classes)
 
-    const speaker = this.options.speaker
+    const speaker = this.options.speaker && ! this.options.ooc
       ? ChatMessage.getSpeaker(this.options.speaker)
       : {}
 
@@ -419,7 +419,9 @@ export class EnhancedChatCard {
       classes: [ECC_CLASS],
       exclude: [],
       excludeStartWith: '_',
-      submitOnChange: true
+      submitOnChange: true,
+      speaker: ChatMessage.getSpeaker(),
+      ooc: false //  * @param {boolean} [options.ooc=false]  Use the speaker/getspeaker. if true use the user instead
     }
   }
 
