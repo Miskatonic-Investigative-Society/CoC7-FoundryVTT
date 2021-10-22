@@ -127,7 +127,7 @@
   "CoC7.MagicPointsCost": "Coût en Points de Magie",
   "CoC7.OtherCosts": "Autres coûts",
   "CoC7.CastingSpell": "Jette <i>{spell}</i>.",
-  
+
   "CoC7.CopyToClipboard": "Copier vers le presse-papier",
   "CoC7.WhisperToSelection": "Murmurer aux tokens sélectionnés",
   "CoC7.WhisperTo": "Murmurer à",
@@ -557,7 +557,7 @@
   "CoC7.MarkedForDevelopment": "Marqué pour développement",
   "CoC7.Mythos": "Mythe",
   "CoC7.MythosRating": "Évaluation du mythe",
-  "CoC7.NotOwned": "Cet ouvrage doit être possédé par un Personnage pour réaliser cette action.",
+  "CoC7.NotOwned": "Cet objet doit être possédé par un Personnage pour réaliser cette action.",
   "CoC7.Occult": "Occulte",
   "CoC7.Points": "point(s)",
   "CoC7.Progress": "En cours",
@@ -717,7 +717,7 @@
   "CoC7.ImportActorItemsItem": "Objets",
   "CoC7.ImportActorItemsItemWorldModuleSystem": "Objets / Monde / Modules / Système",
   "CoC7.ImportActorItemsWorldModuleItemSystem": "Monde / Modules / Objets / Système",
-  
+
   "CoC7.HowToTranslateTitle": "Comment traduire?",
   "CoC7.HowToTranslateWarning": "N'installez que des modules dignes de confiance.",
   "CoC7.HowToTranslateInstallBabele": "Installez/Mettez à jour le module Babele depuis le gestionnaire de modules de Foundry.",
@@ -744,7 +744,7 @@
   "CoC7.MessageTitleSelectUserToGiveTo": "Donner un objet à un autre personnage",
   "CoC7.MessageSelectUserToGiveTo": "A qui voulez-vous donner cet objet ?",
   "CoC7.MessageDistanceCalculationFailure": "Impossible de calculer la distance séparant les tokens, utiliser la fiche du token du personnage SVP.",
-  
+
   "CoC7.ToolTipSkill": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Clic gauche</strong> Jet avec options</li><li><strong>Shift + Clic gauche</strong> Jet immédiat à difficulté normale</li></ol><label>Jets opposés</label><ol><li><strong>Clic droit</strong> Jet opposé avec options</li><li><strong>Shift + Clic droit</strong> Jet opposé immédiat</li></ol><label>Jets combinés</label><ol><li><strong>Alt/Option + Clic droit</strong> Jet combiné avec options</li></ol>",
   "CoC7.ToolTipKeeperSkill": "<label>Jet du Gardien</label><ol><li><strong>CTRL + Clic gauche</strong> Crée un lien pour un jet</li>{other}</ol>",
   "CoC7.ToolTipKeeperStandbySkill": "<li><strong>Clic gauche</strong> Demande un jet à {name}</li>",
@@ -754,7 +754,7 @@
   "CoC7.ToolTipSkillFlagToggle": "<label>{status}</label><ol><li><strong>Clic Double</strong> Bascule le statut de coche</li>",
   "CoC7.ToolTipSkillFlagged": "Coché pour développement",
   "CoC7.ToolTipSkillUnflagged": "Pas coché pour développement",
-  
+
   "SETTINGS.TitleRules": "Règles",
   "SETTINGS.TitleInitiative": "Paramètres d'initiative",
   "SETTINGS.TitleRoll": "Paramètres de jets de dés",

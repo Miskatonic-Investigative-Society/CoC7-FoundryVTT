@@ -239,6 +239,7 @@ export class Updater {
     Updater._migrateItemBookAutomated(item, updateData)
     Updater._migrateItemKeeperNotes(item, updateData)
     Updater._migrateItemSpellAutomated(item, updateData)
+    Updater._migrateItemKeeperNotesMerge(item, updateData)
 
     return updateData
   }
@@ -279,6 +280,11 @@ export class Updater {
       if (typeof item.data.description === 'string') {
         updateData['data.description'] = {
           value: item.data.description,
+          keeper: ''
+        }
+      } else if (typeof item.data.description === 'undefined') {
+        updateData['data.description'] = {
+          value: '',
           keeper: ''
         }
       } else if (typeof item.data.description.keeper === 'undefined') {
@@ -428,6 +434,20 @@ export class Updater {
       }
     }
     return updateData
+  }
+
+  static _migrateItemKeeperNotesMerge (item, updateData) {
+    if (item.type === 'spell') {
+      if (typeof item.data.notes !== 'undefined') {
+        if (typeof item.data.description.keeper !== 'undefined') {
+          updateData['data.description.keeper'] =
+            item.data.description.keeper + item.data.notes
+        } else {
+          updateData['data.description.keeper'] = item.data.notes
+        }
+        updateData['data.-=notes'] = null
+      }
+    }
   }
 
   static _migrateActorArtwork (actor, updateData) {

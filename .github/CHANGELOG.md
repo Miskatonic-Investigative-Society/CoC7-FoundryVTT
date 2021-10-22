@@ -1,3 +1,11 @@
+## Version 0.7.1:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+
+- Fix wrong attribute in Keeper Notes on Spell sheet.
+- Merge any notes accidentally stored in data.notes on Spell sheet.
+- Prevent error when updating related compendiums/modules.
+
 ## Version 0.7.0:
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.

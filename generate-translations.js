@@ -63,7 +63,9 @@ glob('./lang/*.json', {}, async function (er, files) {
       '** translation is currently up to date\n\n'
   }
   if (Object.keys(abandoned).length > 0) {
-    output = output + 'The following translations have been abandoned **' +
+    output =
+      output +
+      'The following translations have been abandoned **' +
       Object.keys(abandoned).join('**, **') +
       '**, [are you able to help?](./ABANDONED.md)\n\n'
   }
@@ -116,16 +118,28 @@ glob('./lang/*.json', {}, async function (er, files) {
   if (Object.keys(abandoned).length > 0) {
     output = ''
     output = output + '# Abandoned Translations.\n\n'
-    output = output + 'Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better!'
-    output = output + ' Below is a list of translations keys on existing files that still need translated, based on `en.json`.\n\n'
+    output =
+      output +
+      'Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better!'
+    output =
+      output +
+      ' Below is a list of translations keys on existing files that still need translated, based on `en.json`.\n\n'
     Object.entries(abandoned).forEach(([key, values]) => {
-      output = output + '[' + key + '.json](#' + (key + '.json').toLowerCase().replace(/[^a-zA-Z0-9]+/g, '') + ')\n\n'
+      output =
+        output +
+        '[' +
+        key +
+        '.json](#' +
+        (key + '.json').toLowerCase().replace(/[^a-zA-Z0-9]+/g, '') +
+        ')\n\n'
     })
     output = output + '\n'
     Object.entries(abandoned).forEach(([key, values]) => {
       output = output + '## ' + key + '.json\n```\n'
       values.forEach(sourceKey => {
-        output = output + '"' +
+        output =
+          output +
+          '"' +
           sourceKey +
           '": "' +
           source[sourceKey].replace(/\n/g, '\\n') +

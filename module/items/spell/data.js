@@ -113,9 +113,7 @@ export class CoC7Spell extends CoC7Item {
         item = game.items.get(this.context.bookId)
         book = item.toObject()
       } else {
-        book = this.context.parent.items
-          .get(this.context.bookId)
-          .toObject()
+        book = this.context.parent.items.get(this.context.bookId).toObject()
       }
       for (let i = 0, im = book.data.spells.length; i < im; i++) {
         if (book.data.spells[i]._id === this.id) {

@@ -450,28 +450,28 @@ function configureTinyMCE () {
   // Add custom plugins to list of plugins.
   // CONFIG.TinyMCE.plugins = `CoC7_Editor_OnInit CoC7_Editor_OnDrop ${CONFIG.TinyMCE.plugins}`
   CONFIG.TinyMCE.plugins = `CoC7_Editor_OnDrop ${CONFIG.TinyMCE.plugins}`
-//
-//  if (game.user.isGM) {
-//    // Define css and menu for keeper only blocks
-//    CONFIG.TinyMCE.content_css.push('/systems/CoC7/assets/mce.css')
-//    CONFIG.TinyMCE.style_formats.push({
-//      title: 'CoC7',
-//      items: [
-//        {
-//          title: 'Keeper Only',
-//          block: 'section',
-//          classes: 'keeper-only',
-//          wrapper: true
-//        }
-//      ]
-//    })
-//  } else {
-//    // Prevent player to edit and view source code if settings is disabled
-//    if (!game.settings.get('CoC7', 'enablePlayerSourceCode'))
-//      CONFIG.TinyMCE.toolbar = CONFIG.TinyMCE.toolbar.replace(' code', '')
-//    // Hide keeper only blocks to players
-//    CONFIG.TinyMCE.content_style = '.keeper-only {display: none}'
-//  }
+  //
+  //  if (game.user.isGM) {
+  //    // Define css and menu for keeper only blocks
+  //    CONFIG.TinyMCE.content_css.push('/systems/CoC7/assets/mce.css')
+  //    CONFIG.TinyMCE.style_formats.push({
+  //      title: 'CoC7',
+  //      items: [
+  //        {
+  //          title: 'Keeper Only',
+  //          block: 'section',
+  //          classes: 'keeper-only',
+  //          wrapper: true
+  //        }
+  //      ]
+  //    })
+  //  } else {
+  //    // Prevent player to edit and view source code if settings is disabled
+  //    if (!game.settings.get('CoC7', 'enablePlayerSourceCode'))
+  //      CONFIG.TinyMCE.toolbar = CONFIG.TinyMCE.toolbar.replace(' code', '')
+  //    // Hide keeper only blocks to players
+  //    CONFIG.TinyMCE.content_style = '.keeper-only {display: none}'
+  //  }
 }
 
 function _onLeftClick (event) {

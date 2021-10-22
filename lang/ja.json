@@ -557,7 +557,7 @@
   "CoC7.MarkedForDevelopment": "経験チェック",
   "CoC7.Mythos": "クトゥルフ神話",
   "CoC7.MythosRating": "神話レーティング",
-  "CoC7.NotOwned": "このアクションを実行するには､この本をアクターが所有している必要がある。",
+  "CoC7.NotOwned": "このアクションを実行するには､このアイテムをアクターが所有している必要がある。",
   "CoC7.Occult": "オカルト",
   "CoC7.Points": "点",
   "CoC7.Progress": "進捗",

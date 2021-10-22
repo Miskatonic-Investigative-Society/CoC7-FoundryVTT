@@ -105,7 +105,10 @@ const keys = {
     rifle: '(?<type>' + 'Carabine|Lee-Enfield|Fusil' + ')',
     smb: '(?<type>' + 'SMG|Thompson' + ')',
     machineGun: '(?<type>' + 'Browning|Vickers|Mitrailleuse' + ')',
-    launched: '(?<type>' + 'Boomerang de guerre|Javeline|Pierre|Shuriken|Bâton de dynamite|Cocktail Molotov|Grenade à main|Molotov|Grenade|Dynamite' + ')',
+    launched:
+      '(?<type>' +
+      'Boomerang de guerre|Javeline|Pierre|Shuriken|Bâton de dynamite|Cocktail Molotov|Grenade à main|Molotov|Grenade|Dynamite' +
+      ')',
     example:
       'Example Character, 27 ans\nFOR 75 CON 60 TAI 80 DEX 70 APP 60 INT 80\nPOU 50 ÉDU 85 SAN 55 PV 14 BD: 1D4\nCarrure: 1 Mvt: 7 PM: 10 Chance: 40 Armure: 1\nAttaques par round 3 Perte de SAN: 1d4/1d8\nAttaques\nBite 50% (25/10), dommage 1D6\nBrawl 30% (15/6), dommage 1D3\nDerringer 40% (20/8), dommage 1D8+1\nEsquiver 50% (25/10)\nCompétences\nAnimal Handling 55%, Charm 30%, First Aid 25%, Disguise 20%,\nListen 50%, Medicine 45%, Persuade 25%, Psychology 75%,\nScience (Astronomy) 90%, Science (Botany) 35%, Science (Zoology) 10%,\nSpot Hidden 35%, Stealth 10%\nLangue: English 80%, Eklo 5%.\nSortilèges: Summon NPC, Dispel NPC.'
   },
@@ -171,7 +174,8 @@ const keys = {
 const translations = {
   en: {
     age: '(?<![a-z])' + 'age' + '(\\s*:)?\\s+(?<age>\\d+)[,\\s]*',
-    occupation: '[,\\s]*' + 'Occupation' + '(\\s*:)?\\s+(?<occupation>.+)[,\\s\n]*',
+    occupation:
+      '[,\\s]*' + 'Occupation' + '(\\s*:)?\\s+(?<occupation>.+)[,\\s\n]*',
     str: '(?<![a-z])' + 'STR' + '(\\s*:)?\\s*(?<str>\\d+|-)[,\\s\n]*',
     con: '(?<![a-z])' + 'CON' + '(\\s*:)?\\s*(?<con>\\d+|-)[,\\s\n]*',
     siz: '(?<![a-z])' + 'SIZ' + '(\\s*:)?\\s*(?<siz>\\d+|-)[,\\s\n]*',
@@ -180,9 +184,14 @@ const translations = {
     dex: '(?<![a-z])' + 'DEX' + '(\\s*:)?\\s*(?<dex>\\d+|-)[,\\s\n]*',
     app: '(?<![a-z])' + 'APP' + '(\\s*:)?\\s*(?<app>\\d+|-)[,\\s\n]*',
     edu: '(?<![a-z])' + 'EDU' + '(\\s*:)?\\s*(?<edu>\\d+|-)[,\\s\n]*',
-    san: '(?<![a-z])(?:' + 'SAN|Sanity' + ')(\\s*:)?\\s*(?<san>\\d+|-)[,\\s\n]*',
-    hp: '(?<![a-z])(?:' + 'HP|Hit points' + ')(\\s*:)?\\s*(?<hp>\\d+|-)[,\\s\n]*',
-    mp: '(?<![a-z])(?:' + 'MP|Magic points' + ')(\\s*:)?\\s*(?<mp>\\d+|-)[,\\s\n]*',
+    san:
+      '(?<![a-z])(?:' + 'SAN|Sanity' + ')(\\s*:)?\\s*(?<san>\\d+|-)[,\\s\n]*',
+    hp:
+      '(?<![a-z])(?:' + 'HP|Hit points' + ')(\\s*:)?\\s*(?<hp>\\d+|-)[,\\s\n]*',
+    mp:
+      '(?<![a-z])(?:' +
+      'MP|Magic points' +
+      ')(\\s*:)?\\s*(?<mp>\\d+|-)[,\\s\n]*',
     db:
       '(?<![a-z])(?:' +
       keys.en.fulldb +
@@ -246,7 +255,8 @@ const translations = {
   },
   fr: {
     age: '(?<age>\\d+)\\s*' + 'ans' + '(?![a-z])[,\\s]*',
-    occupation: '[,\\s]*' + 'Occupation' + '(\\s*:)?\\s+(?<occupation>.+)[,\\s\n]*',
+    occupation:
+      '[,\\s]*' + 'Occupation' + '(\\s*:)?\\s+(?<occupation>.+)[,\\s\n]*',
     str: '(?<![a-z])' + 'FOR' + '(\\s*:)?\\s*(?<str>\\d+|-)[,\\s\n]*',
     con: '(?<![a-z])' + 'CON' + '(\\s*:)?\\s*(?<con>\\d+|-)[,\\s\n]*',
     siz: '(?<![a-z])' + 'TAI' + '(\\s*:)?\\s*(?<siz>\\d+|-)[,\\s\n]*',
@@ -256,17 +266,25 @@ const translations = {
     app: '(?<![a-z])' + 'APP' + '(\\s*:)?\\s*(?<app>\\d+|-)[,\\s\n]*',
     edu: '(?<![a-z])' + 'ÉDU' + '(\\s*:)?\\s*(?<edu>\\d+|-)[,\\s\n]*',
     san:
-      '(?<![a-z])(?:' + 'SAN|Santé Mentale' + ')(\\s*:)?\\s*(?<san>\\d+|-)[,\\s\n]*',
-    hp: '(?<![a-z])(?:' + 'PV|Points de vie' + ')(\\s*:)?\\s*(?<hp>\\d+|-)[,\\s\n]*',
+      '(?<![a-z])(?:' +
+      'SAN|Santé Mentale' +
+      ')(\\s*:)?\\s*(?<san>\\d+|-)[,\\s\n]*',
+    hp:
+      '(?<![a-z])(?:' +
+      'PV|Points de vie' +
+      ')(\\s*:)?\\s*(?<hp>\\d+|-)[,\\s\n]*',
     mp:
-      '(?<![a-z])(?:' + 'PM|Points de magie' + ')(\\s*:)?\\s*(?<mp>\\d+|-)[,\\s\n]*',
+      '(?<![a-z])(?:' +
+      'PM|Points de magie' +
+      ')(\\s*:)?\\s*(?<mp>\\d+|-)[,\\s\n]*',
     db:
       '(?<![a-z])(?:' +
       keys.fr.fulldb +
       ')(\\s*:)?\\s+(?<db>[+-]?\\d+(?:d\\d+|D\\d+)?|' +
       keys.fr.dbNone +
       ')[,\\s\n]*',
-    build: '(?<![a-z])' + 'Carrure' + '(\\s*:)?\\s+(?<build>[+-]?\\d+)[,\\s\n]*',
+    build:
+      '(?<![a-z])' + 'Carrure' + '(\\s*:)?\\s+(?<build>[+-]?\\d+)[,\\s\n]*',
     armor:
       '(?<![a-z])' +
       'Armure|Protection' +
@@ -326,7 +344,8 @@ const translations = {
   },
   es: {
     age: '(?<age>\\d+)\\s*' + 'a[ñÑ]os' + '(?![a-z])[,\\s]*',
-    occupation: '[,\\s]*' + 'Ocupación' + '(\\s*:)?\\s+(?<occupation>.+)[,\\s\n]*',
+    occupation:
+      '[,\\s]*' + 'Ocupación' + '(\\s*:)?\\s+(?<occupation>.+)[,\\s\n]*',
     str: '(?<![a-z])' + 'FUE' + '(\\s*:)?\\s*(?<str>\\d+|-)[,\\s\n]*',
     con: '(?<![a-z])' + 'CON' + '(\\s*:)?\\s*(?<con>\\d+|-)[,\\s\n]*',
     siz: '(?<![a-z])' + 'TAM' + '(\\s*:)?\\s*(?<siz>\\d+|-)[,\\s\n]*',
@@ -335,7 +354,8 @@ const translations = {
     dex: '(?<![a-z])' + 'DES' + '(\\s*:)?\\s*(?<dex>\\d+|-)[,\\s\n]*',
     app: '(?<![a-z])' + 'APA' + '(\\s*:)?\\s*(?<app>\\d+|-)[,\\s\n]*',
     edu: '(?<![a-z])' + 'EDU' + '(\\s*:)?\\s*(?<edu>\\d+|-)[,\\s\n]*',
-    san: '(?<![a-z])(?:' + 'COR|Cordura' + ')(\\s*:)?\\s*(?<san>\\d+|-)[,\\s\n]*',
+    san:
+      '(?<![a-z])(?:' + 'COR|Cordura' + ')(\\s*:)?\\s*(?<san>\\d+|-)[,\\s\n]*',
     hp:
       '(?<![a-z])(?:' +
       'PV|Puntos de vida|P\\. ?V\\.' +
@@ -350,7 +370,8 @@ const translations = {
       ')(\\s*:)?\\s+(?<db>[+-]?\\d+(?:d\\d+|D\\d+)?|' +
       keys.es.dbNone +
       ')[,\\s\n]*',
-    build: '(?<![a-z])' + 'Corpulencia' + '(\\s*:)?\\s+(?<build>[+-]?\\d+)[,\\s\n]*',
+    build:
+      '(?<![a-z])' + 'Corpulencia' + '(\\s*:)?\\s+(?<build>[+-]?\\d+)[,\\s\n]*',
     armor:
       '(?<![a-z])' +
       'Armadura' +
@@ -408,7 +429,8 @@ const translations = {
   'zh-TW': {
     age: '(?<![a-z])' + 'age|年齡' + '(\\s*:)?\\s*(?<age>\\d+)[,\\s]*',
     /* NEW KEY BELOW - TRANSLATION REQUIRED */
-    occupation: '[,\\s]*' + 'Occupation' + '(\\s*:)?\\s+(?<occupation>.+)[,\\s\n]*',
+    occupation:
+      '[,\\s]*' + 'Occupation' + '(\\s*:)?\\s+(?<occupation>.+)[,\\s\n]*',
     str: '(?<![a-z])' + 'STR|力量' + '(\\s*:)?\\s*(?<str>\\d+|-)[,\\s\n]*',
     con: '(?<![a-z])' + 'CON|體質' + '(\\s*:)?\\s*(?<con>\\d+|-)[,\\s\n]*',
     siz: '(?<![a-z])' + 'SIZ|體型' + '(\\s*:)?\\s*(?<siz>\\d+|-)[,\\s\n]*',
@@ -417,17 +439,26 @@ const translations = {
     dex: '(?<![a-z])' + 'DEX|敏捷' + '(\\s*:)?\\s*(?<dex>\\d+|-)[,\\s\n]*',
     app: '(?<![a-z])' + 'APP|外貎' + '(\\s*:)?\\s*(?<app>\\d+|-)[,\\s\n]*',
     edu: '(?<![a-z])' + 'EDU|教育' + '(\\s*:)?\\s*(?<edu>\\d+|-)[,\\s\n]*',
-    san: '(?<![a-z])(?:' + 'SAN|Sanity|理智' + ')(\\s*:)?\\s*(?<san>\\d+|-)[,\\s\n]*',
+    san:
+      '(?<![a-z])(?:' +
+      'SAN|Sanity|理智' +
+      ')(\\s*:)?\\s*(?<san>\\d+|-)[,\\s\n]*',
     hp:
-      '(?<![a-z])(?:' + 'HP|Hit points|生命' + ')(\\s*:)?\\s*(?<hp>\\d+|-)[,\\s\n]*',
-    mp: '(?<![a-z])(?:' + 'MP|Magic points' + ')(\\s*:)?\\s*(?<mp>\\d+|-)[,\\s\n]*',
+      '(?<![a-z])(?:' +
+      'HP|Hit points|生命' +
+      ')(\\s*:)?\\s*(?<hp>\\d+|-)[,\\s\n]*',
+    mp:
+      '(?<![a-z])(?:' +
+      'MP|Magic points' +
+      ')(\\s*:)?\\s*(?<mp>\\d+|-)[,\\s\n]*',
     db:
       '(?<![a-z])(?:' +
       keys['zh-TW'].fulldb +
       ')(\\s*:)?\\s*(?<db>[+-]?\\d+(?:d\\d+|D\\d+)?|' +
       keys['zh-TW'].dbNone +
       ')[,\\s\n]*',
-    build: '(?<![a-z])' + 'Build|體格' + '(\\s*:)?\\s*(?<build>[+-]?\\d+)[,\\s\n]*',
+    build:
+      '(?<![a-z])' + 'Build|體格' + '(\\s*:)?\\s*(?<build>[+-]?\\d+)[,\\s\n]*',
     armor:
       '(?<![a-z])' +
       'Armor|護甲' +
