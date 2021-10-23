@@ -1,11 +1,11 @@
 <div class="test">
     <form class="flexcol">
         <input type="text" name="data.armor" value="{{data.armor}}"/>
-        <input type="range" name="data.bonusDice" min="-2" max="2" value="{{data.bonusDice}}" class="slider">
+        <input type="range" data-ecc-permissions="gm" name="data.bonusDice" min="-2" max="2" value="{{data.bonusDice}}" class="slider">
         <select name="data.mySelect">
             {{selectOptions mySelectOptions selected=data.mySelect}}
         </select>
-        <select name="data.mySelect2">
+        <select name="data.mySelect2" data-ecc-permissions="gm">
             {{#select data.mySelect2}}
             <option value="0">option 0</option>
             <option value="1">option 1</option>
@@ -25,10 +25,10 @@
             <label for="contactChoice3">Mail</label>
         </div>
 
-        <div class="flexrow ecc-radio" data-ecc-permissions="gm-select-only">
-            <span class="flex1 ecc-switch {{#if advantageAttacker}}switched-on{{/if}} "
+        <div class="flexrow ecc-radio">
+            <span class="flex1 ecc-switch"
                 data-flag="advantageAttacker">{{localize 'CoC7.AdvantageAttacker'}}</span>
-            <span class="flex1 ecc-switch {{#if advantageDefender}}switched-on{{/if}}"
+            <span class="flex1 ecc-switch"
                 data-flag="advantageDefender">{{localize 'CoC7.AdvantageDefender'}}</span>
         </div>
 

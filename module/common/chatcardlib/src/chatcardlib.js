@@ -17,6 +17,10 @@ export function initEEC (...cardclass) {
   // Hooks.once('init', function () {
   // })
 
+  Hooks.on('renderChatLog', (app, html, data) =>
+    EnhancedChatCardLib.injectCSS(app, html, data)
+  )
+
   Hooks.once('socketlib.ready', function () {
     EnhancedChatCardLib.register(cardclass)
     EnhancedChatCardLib.socket = socketlib.registerSystem(game.system.id) //Socket is attached to current system
@@ -47,6 +51,10 @@ class EnhancedChatCardLib {
     this.types = new Map()
     this.socket = null
     // this.enhancedChatCardClass = EnhancedChatCard
+  }
+
+  static injectCSS (app, html, data) {
+    return
   }
 
   static set socket (x) {
@@ -236,6 +244,9 @@ export class EnhancedChatCard {
     html
       .find('[data-eec-visibility]')
       .each(async (i, el) => await this.setVisibility(el))
+    html
+      .find('[data-eec-permissions]')
+      .each(async (i, el) => await this.setPermission(el))
     html.find(`.${ECC_CLASS} .ecc-switch`).each((i, el) => this.setState(el))
     html
       .find(`.${ECC_CLASS} input[type="radio"]`)
@@ -263,9 +274,14 @@ export class EnhancedChatCard {
 
   async setVisibility (element) {
     if (!element.dataset.eecVisibility) return
-    const perm = element.dataset.eecVisibility.split('|')
     const canYouSee = await this.hasPerm(element.dataset.eecVisibility, true)
     if (!canYouSee) element.style.display = 'none'
+  }
+
+  async setPermission (element) {
+    if (!element.dataset.eecPermissions) return
+    const canYouMod = await this.hasPerm(element.dataset.eecModify)
+    if (!canYouMod) element.classList.add('eec-restricted')
   }
 
   /**
