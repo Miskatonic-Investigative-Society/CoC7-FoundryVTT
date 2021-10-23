@@ -882,7 +882,7 @@ export class CoC7ActorSheet extends ActorSheet {
       .on('dragstart', event => CoC7Parser._onDragCoC7Link(event))
 
     html.find('.test-trigger').click(async event => {
-      const test = new testCard({}, {ooc: true})
+      const test = new testCard({})
       test.toMessage()
       // await OpposedCheckCard.dispatch({
       //   type: OpposedCheckCard.defaultConfig.type,

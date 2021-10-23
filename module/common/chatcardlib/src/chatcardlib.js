@@ -113,6 +113,16 @@ export class EnhancedChatCard {
     return this.options.classes?.join(' ')
   }
 
+  get speaker () {
+    if (this.options.ooc) return game.user
+    if (
+      this.options.speaker &&
+      ChatMessage.getSpeakerActor(this.options.speaker)
+    )
+      return ChatMessage.getSpeakerActor(this.options.speaker)
+    return game.user
+  }
+
   getData () {
     return {
       card: this,
@@ -121,6 +131,7 @@ export class EnhancedChatCard {
       options: this.options,
       css: this.cssClasses,
       user: game.user,
+      speaker: this.speaker
     }
   }
 
@@ -148,9 +159,10 @@ export class EnhancedChatCard {
     htmlCardElement.dataset.eccClass = this.constructor.name
     htmlCardElement.classList.add(...this.options.classes)
 
-    const speaker = this.options.speaker && ! this.options.ooc
-      ? ChatMessage.getSpeaker(this.options.speaker)
-      : {}
+    const speaker =
+      this.options.speaker && !this.options.ooc
+        ? ChatMessage.getSpeaker(this.options.speaker)
+        : {}
 
     const chatData = foundry.utils.mergeObject(
       {
@@ -218,7 +230,7 @@ export class EnhancedChatCard {
     // for (let i = 0; i < visi.length; i++) {
     //   const el = visi[i];
     //   await this.setVisibility(el)
-      
+
     // }
 
     html
@@ -253,8 +265,7 @@ export class EnhancedChatCard {
     if (!element.dataset.eecVisibility) return
     const perm = element.dataset.eecVisibility.split('|')
     const canYouSee = await this.hasPerm(element.dataset.eecVisibility, true)
-    if (!canYouSee)
-      element.style.display = 'none'
+    if (!canYouSee) element.style.display = 'none'
   }
 
   /**
@@ -268,9 +279,12 @@ export class EnhancedChatCard {
     if (!restrictedTo.length) return true
     let permissionsArray = restrictedTo.split(' ')
     const whiteList = !permissionsArray.includes(PERMISSION_TYPE.BLACKLIST)
-    if( !whiteList) permissionsArray = permissionsArray.filter(e => e != PERMISSION_TYPE.BLACKLIST)
+    if (!whiteList)
+      permissionsArray = permissionsArray.filter(
+        e => e != PERMISSION_TYPE.BLACKLIST
+      )
     if (game.user.isGM) {
-      if (!vision) return true //GM can always modify everything ! Nah 
+      if (!vision) return true //GM can always modify everything ! Nah
       if (permissionsArray.includes(PERMISSION_TYPE.GM))
         return true && whiteList
       return false || !whiteList //If pass the filter return false unless it's a blacklist
@@ -286,7 +300,9 @@ export class EnhancedChatCard {
     if (permissionsArray.includes(PERMISSION_TYPE.SPEAKER)) {
       const speaker = this.message.data.speaker
       if (speaker.token && speaker.scene) {
-        const actor = await fromUuid(`Scene.${speaker.scene}.Token.${speaker.token}`)
+        const actor = await fromUuid(
+          `Scene.${speaker.scene}.Token.${speaker.token}`
+        )
         if (actor) {
           if (actor.isOwner) return true && whiteList
         }
@@ -295,15 +311,17 @@ export class EnhancedChatCard {
         if (actor) {
           if (actor.isOwner) return true && whiteList
         }
-      } 
+      }
       // else if (speaker.user) {
       //   if (game.user.id == speaker.user) return true && whiteList
       // }
-      permissionsArray = permissionsArray.filter(e => e != PERMISSION_TYPE.SPEAKER)
+      permissionsArray = permissionsArray.filter(
+        e => e != PERMISSION_TYPE.SPEAKER
+      )
     }
     // All filter passed, array should contains only uuids or actor/token ids
-    if( permissionsArray.length){
-      ui.notifications.info( 'Array permission is not empty !')
+    if (permissionsArray.length) {
+      ui.notifications.info('Array permission is not empty !')
     }
     return false || !whiteList //If pass the filter return false unless it's a blacklist
   }
