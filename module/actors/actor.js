@@ -2981,18 +2981,18 @@ export class CoCActor extends Actor {
     if (!currentLuck) await this.update({ 'data.attribs.lck.value': 0 })
     const pulpRulesActivated = game.settings.get('CoC7', 'pulpRules')
     const upgradeRoll = (await new Roll('1D100').roll({ async: true })).total
-    const equalOrLessCurrentLuck = upgradeRoll <= currentLuck
+    const equalOrGreaterCurrentLuck = upgradeRoll >= currentLuck
     let augmentRoll
     if (pulpRulesActivated) {
-      equalOrLessCurrentLuck
+      equalOrGreaterCurrentLuck
         ? (augmentRoll = '2D10+10')
         : (augmentRoll = '1D10+5')
-    } else if (equalOrLessCurrentLuck) {
+    } else if (equalOrGreaterCurrentLuck) {
       augmentRoll = '1D10'
     }
     const title = game.i18n.localize('CoC7.RollLuck4Dev')
     let message = '<p class="chat-card">'
-    if (pulpRulesActivated || equalOrLessCurrentLuck) {
+    if (pulpRulesActivated || equalOrGreaterCurrentLuck) {
       const augmentValue = (await new Roll(augmentRoll).roll({ async: true }))
         .total
       await this.update({
