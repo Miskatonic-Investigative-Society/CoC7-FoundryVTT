@@ -237,15 +237,15 @@ export class CoCActor extends Actor {
     }
     let boutDurationText = this.isInABoutOfMadness
       ? boutRealTime
-        ? `${duration} ${game.i18n.localize('CoC7.rounds')}`
-        : `${duration} ${game.i18n.localize('CoC7.hours')}`
+          ? `${duration} ${game.i18n.localize('CoC7.rounds')}`
+          : `${duration} ${game.i18n.localize('CoC7.hours')}`
       : null
     const insanityDurationText = insaneDuration
       ? this.isInsane
-        ? indefiniteInstanity
-          ? null
-          : `${insaneDuration} ${game.i18n.localize('CoC7.hours')}`
-        : null
+          ? indefiniteInstanity
+              ? null
+              : `${insaneDuration} ${game.i18n.localize('CoC7.hours')}`
+          : null
       : null
     if (this.isInsane && !insanityDurationText && !indefiniteInstanity) {
       indefiniteInstanity = true
@@ -272,8 +272,8 @@ export class CoCActor extends Actor {
         durationText: insanityDurationText || '',
         hint: this.isInsane
           ? indefiniteInstanity
-            ? game.i18n.localize('CoC7.IndefiniteInsanity')
-            : `${game.i18n.localize(
+              ? game.i18n.localize('CoC7.IndefiniteInsanity')
+              : `${game.i18n.localize(
                 'CoC7.TemporaryInsanity'
               )} ${insanityDurationText || ''}`
           : game.i18n.localize('CoC7.NotInsane')
@@ -2981,18 +2981,18 @@ export class CoCActor extends Actor {
     if (!currentLuck) await this.update({ 'data.attribs.lck.value': 0 })
     const pulpRulesActivated = game.settings.get('CoC7', 'pulpRules')
     const upgradeRoll = (await new Roll('1D100').roll({ async: true })).total
-    const equalOrGreaterCurrentLuck = upgradeRoll >= currentLuck
+    const higherThanCurrentLuck = upgradeRoll > currentLuck
     let augmentRoll
     if (pulpRulesActivated) {
-      equalOrGreaterCurrentLuck
+      higherThanCurrentLuck
         ? (augmentRoll = '2D10+10')
         : (augmentRoll = '1D10+5')
-    } else if (equalOrGreaterCurrentLuck) {
+    } else if (higherThanCurrentLuck) {
       augmentRoll = '1D10'
     }
     const title = game.i18n.localize('CoC7.RollLuck4Dev')
     let message = '<p class="chat-card">'
-    if (pulpRulesActivated || equalOrGreaterCurrentLuck) {
+    if (pulpRulesActivated || higherThanCurrentLuck) {
       const augmentValue = (await new Roll(augmentRoll).roll({ async: true }))
         .total
       await this.update({
