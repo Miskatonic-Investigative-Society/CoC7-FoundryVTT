@@ -24,8 +24,9 @@
                    name="data.contact" value="mail">
             <label for="contactChoice3">Mail</label>
         </div>
+        
 
-        <div class="flexrow ecc-radio">
+        <div class="flexrow ecc-radio" data-ecc-permissions="gm">
             <span class="flex1 ecc-switch"
                 data-flag="advantageAttacker">{{localize 'CoC7.AdvantageAttacker'}}</span>
             <span class="flex1 ecc-switch"
@@ -33,11 +34,11 @@
         </div>
 
         <span>Pouet pouet</span>
-        <span class="ecc-switch" data-flag="critical" data-eec-visibility="gm speaker" title="{{localize 'CoC7.CriticalTitle'}}">{{localize "CoC7.Critical"}}</span>
+        <span class="ecc-switch" data-flag="critical" data-ecc-visibility="gm speaker" title="{{localize 'CoC7.CriticalTitle'}}">{{localize "CoC7.Critical"}}</span>
         {{#if flags.critical}}
         <span> CRITICAL IS ON</span>
         {{/if}}
-        <div class='card-buttons' data-eec-visibility="blacklist gm">
+        <div class='card-buttons' data-ecc-visibility="blacklist gm">
             <button class='.submit' data-action='trouloulou'>Submit</button>
         </div>
     </form>

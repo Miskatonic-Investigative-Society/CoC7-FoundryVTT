@@ -13,7 +13,7 @@ const STATE = {
   OFF: 'switched-off'
 }
 
-export function initEEC (...cardclass) {
+export function initECC (...cardclass) {
   // Hooks.once('init', function () {
   // })
 
@@ -53,7 +53,14 @@ class EnhancedChatCardLib {
     // this.enhancedChatCardClass = EnhancedChatCard
   }
 
-  static injectCSS (app, html, data) {
+  static injectCSS () {
+    let style = $('head').find('style')
+    if( !style?.length){
+      $('head').append( $('<style  type="text/css"></style>'))
+      style = $('head').find('style')
+    }
+    style.append('.ecc-restricted {color: red}')
+
     return
   }
 
@@ -65,11 +72,11 @@ class EnhancedChatCardLib {
 
   static get socket () {
     if (!game.enhancedChatCardsLib) {
-      ui.notifications.error('EEC not Initialized')
+      ui.notifications.error('ECC not Initialized')
       return undefined
     }
     if (!game.enhancedChatCardsLib.socket) {
-      ui.notifications.error('EEC no socket')
+      ui.notifications.error('ECC no socket')
       return undefined
     }
     return game.enhancedChatCardsLib.socket
@@ -156,8 +163,8 @@ export class EnhancedChatCard {
   }
 
   async toMessage (optionnalChatData = {}) {
-    //Map eec card type if not registered already
-    // this.registerEECClass()
+    //Map ecc card type if not registered already
+    // this.registerECCClass()
 
     //Publish by current user by default unless options.GMchatCard
     const html = await renderTemplate(this.template, this.getData())
@@ -234,7 +241,7 @@ export class EnhancedChatCard {
     html.on('click', `.${ECC_CLASS} button`, this._onButton.bind(this))
     html.on('keydown', `.${ECC_CLASS} form`, this._onKey.bind(this))
 
-    // const visi = html.find('[data-eec-visibility]')
+    // const visi = html.find('[data-ecc-visibility]')
     // for (let i = 0; i < visi.length; i++) {
     //   const el = visi[i];
     //   await this.setVisibility(el)
@@ -242,10 +249,10 @@ export class EnhancedChatCard {
     // }
 
     html
-      .find('[data-eec-visibility]')
+      .find('[data-ecc-visibility]')
       .each(async (i, el) => await this.setVisibility(el))
     html
-      .find('[data-eec-permissions]')
+      .find('[data-ecc-permissions]')
       .each(async (i, el) => await this.setPermission(el))
     html.find(`.${ECC_CLASS} .ecc-switch`).each((i, el) => this.setState(el))
     html
@@ -273,15 +280,20 @@ export class EnhancedChatCard {
   }
 
   async setVisibility (element) {
-    if (!element.dataset.eecVisibility) return
-    const canYouSee = await this.hasPerm(element.dataset.eecVisibility, true)
+    if (!element.dataset.eccVisibility) return
+    const canYouSee = await this.hasPerm(element.dataset.eccVisibility, true)
     if (!canYouSee) element.style.display = 'none'
   }
 
   async setPermission (element) {
-    if (!element.dataset.eecPermissions) return
-    const canYouMod = await this.hasPerm(element.dataset.eecModify)
-    if (!canYouMod) element.classList.add('eec-restricted')
+    if (!element.dataset.eccPermissions) return
+    const canYouMod = await this.hasPerm(element.dataset.eccPermissions)
+    if (!canYouMod) element.classList.add('ecc-restricted')
+    if( $(element).is('input')){
+      if( 'range' == element.type) $(element).attr('disabled', true)
+      else $(element).attr('readonly', true)
+    }
+    if( $(element).is('select')) $(element).attr('disabled', true)
   }
 
   /**
@@ -408,6 +420,11 @@ export class EnhancedChatCard {
     if (updates) this.updateChatCard()
   }
 
+  /**
+   * Retrieve the form from the card and update the data structure
+   * @param {HTMLElement} card 
+   * @returns 
+   */
   _update (card) {
     const forms = card.querySelectorAll('form')
     let updates = false
