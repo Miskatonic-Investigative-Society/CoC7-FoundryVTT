@@ -1,0 +1,47 @@
+{{!-- TO BE REMOVED FOR PROD --}}
+<div class="test">
+    <form class="flexcol">
+        <input type="text" name="data.armor" value="{{data.armor}}"/>
+        <input type="range" data-ecc-permissions="gm" name="data.bonusDice" min="-2" max="2" value="{{data.bonusDice}}" class="slider">
+        <select name="data.mySelect">
+            {{selectOptions mySelectOptions selected=data.mySelect}}
+        </select>
+        <select name="data.mySelect2" data-ecc-permissions="gm">
+            {{#select data.mySelect2}}
+            <option value="0">option 0</option>
+            <option value="1">option 1</option>
+            <option value="2">option 2</option>
+            {{/select}}
+        </select>
+
+        <div>
+            <input type="radio" id="contactChoice1"
+                   name="data.contact" value="email">
+            <label for="contactChoice1">Email</label>
+            <input type="radio" id="contactChoice2"
+                   name="data.contact" value="phone">
+            <label for="contactChoice2">Phone</label>
+            <input type="radio" id="contactChoice3"
+                   name="data.contact" value="mail">
+            <label for="contactChoice3">Mail</label>
+        </div>
+        
+
+        <div class="flexrow ecc-radio" data-ecc-permissions="gm">
+            <span class="flex1 ecc-switch"
+                data-flag="advantageAttacker">{{localize 'CoC7.AdvantageAttacker'}}</span>
+            <span class="flex1 ecc-switch"
+                data-flag="advantageDefender">{{localize 'CoC7.AdvantageDefender'}}</span>
+        </div>
+
+        <span>Pouet pouet</span>
+        <span class="ecc-switch" data-flag="critical" data-ecc-visibility="gm speaker" title="{{localize 'CoC7.CriticalTitle'}}">{{localize "CoC7.Critical"}}</span>
+        {{#if flags.critical}}
+        <span> CRITICAL IS ON</span>
+        {{/if}}
+        <div class='card-buttons' data-ecc-visibility="blacklist gm">
+            <button class='.submit' data-action='trouloulou'>Submit</button>
+        </div>
+    </form>
+</div>
+{{!-- {{selectOptions sizes selected=swarm blank="" localize=true}} --}}

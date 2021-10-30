@@ -15,6 +15,7 @@ import { OpposedCheckCard } from '../../chat/cards/opposed-roll.js'
 import { CombinedCheckCard } from '../../chat/cards/combined-roll.js'
 import { DamageCard } from '../../chat/cards/damage.js'
 import { CoC7LinkCreationDialog } from '../../apps/link-creation-dialog.js'
+import { testCard } from '../../chat/cards/test.js'
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -881,25 +882,27 @@ export class CoC7ActorSheet extends ActorSheet {
       .on('dragstart', event => CoC7Parser._onDragCoC7Link(event))
 
     html.find('.test-trigger').click(async event => {
-      await OpposedCheckCard.dispatch({
-        type: OpposedCheckCard.defaultConfig.type,
-        combat: false,
-        action: 'new',
-        roll: {
-          characteristic: 'str',
-          actor: this.actor.actorKey
-        }
-      })
+      const test = new testCard({})
+      test.toMessage()
+      // await OpposedCheckCard.dispatch({
+      //   type: OpposedCheckCard.defaultConfig.type,
+      //   combat: false,
+      //   action: 'new',
+      //   roll: {
+      //     characteristic: 'str',
+      //     actor: this.actor.actorKey
+      //   }
+      // })
 
-      await OpposedCheckCard.dispatch({
-        type: OpposedCheckCard.defaultConfig.type,
-        combat: false,
-        action: 'new',
-        roll: {
-          characteristic: 'con'
-          // actor: this.actor.actorKey
-        }
-      })
+      // await OpposedCheckCard.dispatch({
+      //   type: OpposedCheckCard.defaultConfig.type,
+      //   combat: false,
+      //   action: 'new',
+      //   roll: {
+      //     characteristic: 'con'
+      // actor: this.actor.actorKey
+      //   }
+      // })
       // const val = getProperty( this.actor, 'data.data.attribs.san.value');
 
       // this.actor.enterBoutOfMadness( true, 10);
@@ -919,7 +922,7 @@ export class CoC7ActorSheet extends ActorSheet {
       // await setProperty( this.actor, 'data.data.encounteredCreatures', []);
 
       // await this.actor.update( {['data.encounteredCreatures'] : []});
-      if (event.shiftKey) ui.notifications.info('Shift cliecked')
+      // if (event.shiftKey) ui.notifications.info('Shift cliecked')
       // SanCheckCard.create( this.actor.actorKey, {min:'1D10',max:'1D12'}, {fastForward:event.shiftKey});
     })
     html

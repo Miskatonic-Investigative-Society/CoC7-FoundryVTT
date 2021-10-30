@@ -21,9 +21,9 @@ export class DamageCard extends InteractiveChatCard {
     })
   }
 
-  activateListeners (html) {
-    super.activateListeners(html)
-  }
+  // activateListeners (html) {
+  //   super.activateListeners(html)
+  // }
 
   async assignObject () {
     if (this.damageRoll && this.damageRoll.constructor.name === 'Object') {
