@@ -1,3 +1,4 @@
+//TO BE REMOVED FOR PROD
 import { EnhancedChatCard } from '../../common/chatcardlib/src/chatcardlib.js'
 export class testCard extends EnhancedChatCard {
   /**

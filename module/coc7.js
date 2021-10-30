@@ -144,7 +144,7 @@ Hooks.once('init', async function () {
 
 })
 
-initECC(testCard, testCard, testCard)
+initECC(testCard) //TO BE REMOVED FOR PROD
 
 Hooks.on('renderCombatTracker', (app, html, data) =>
   CoC7Combat.renderCombatTracker(app, html, data)
