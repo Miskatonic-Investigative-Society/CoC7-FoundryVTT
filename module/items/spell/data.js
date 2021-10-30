@@ -102,13 +102,14 @@ export class CoC7Spell extends CoC7Item {
     }
   }
 
-  update (data, context) {
+  async update (data, context) {
     if (
       typeof this.context.parent !== 'undefined' &&
       typeof this.context.bookId !== 'undefined'
     ) {
       let item
       let book
+      // let spellData
       if (this.context.parent === null) {
         item = game.items.get(this.context.bookId)
         book = item.toObject()
@@ -118,6 +119,7 @@ export class CoC7Spell extends CoC7Item {
       for (let i = 0, im = book.data.spells.length; i < im; i++) {
         if (book.data.spells[i]._id === this.id) {
           book.data.spells[i] = mergeObject(book.data.spells[i], data)
+          // spellData = book.data.spells[i]
         }
       }
       if (this.context.parent === null) {
@@ -127,6 +129,10 @@ export class CoC7Spell extends CoC7Item {
       } else {
         this.context.parent.updateEmbeddedDocuments('Item', [book])
       }
+      // const parent = book.actor ? book.actor : null
+      // const spell = new CoC7Spell(spellData, { parent, bookId: book.id })
+      // await this.sheet.close(true)
+      // await spell.sheet.render(true)
     } else {
       super.update(data, context)
     }
