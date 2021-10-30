@@ -59,7 +59,9 @@ class EnhancedChatCardLib {
       $('head').append( $('<style  type="text/css"></style>'))
       style = $('head').find('style')
     }
-    style.append('.ecc-restricted {color: red}')
+    style.append(
+      `.ecc-restricted {color: red}
+    .ecc-restricted:hover {cursor: not-allowed}`)
 
     return
   }
@@ -288,12 +290,14 @@ export class EnhancedChatCard {
   async setPermission (element) {
     if (!element.dataset.eccPermissions) return
     const canYouMod = await this.hasPerm(element.dataset.eccPermissions)
-    if (!canYouMod) element.classList.add('ecc-restricted')
+    if (!canYouMod){
+      element.classList.add('ecc-restricted')
     if( $(element).is('input')){
       if( 'range' == element.type) $(element).attr('disabled', true)
       else $(element).attr('readonly', true)
     }
     if( $(element).is('select')) $(element).attr('disabled', true)
+  }
   }
 
   /**
