@@ -105,6 +105,11 @@
       "lang": "cs",
       "name": "Čeština",
       "path": "lang/cs.json"
+    },
+    {
+      "lang": "ko",
+      "name": "한국어",
+      "path": "lang/ko.json"
     }
   ],
   "socket": true,
