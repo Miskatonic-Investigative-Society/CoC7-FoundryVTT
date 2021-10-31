@@ -1035,7 +1035,7 @@ export class CoC7Chat {
         ) {
           check.updateChatCard({ makePublic: true })
         } else {
-          check.updateChatCard()
+          check.updateChatCard({ makePublic: true })
         }
         break
       }
