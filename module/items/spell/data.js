@@ -123,16 +123,15 @@ export class CoC7Spell extends CoC7Item {
         }
       }
       if (this.context.parent === null) {
-        item.update({
+        await item.update({
           'data.spells': book.data.spells
         })
+        this.sheet.object = new CoC7Spell(book.data.spells.find(spell => spell._id === this.id), this.context)
       } else {
-        this.context.parent.updateEmbeddedDocuments('Item', [book])
+        await this.context.parent.updateEmbeddedDocuments('Item', [book])
+        this.sheet.object = new CoC7Spell(book.data.spells.find(spell => spell._id === this.id), this.context)
       }
-      // const parent = book.actor ? book.actor : null
-      // const spell = new CoC7Spell(spellData, { parent, bookId: book.id })
-      // await this.sheet.close(true)
-      // await spell.sheet.render(true)
+      this.sheet.render(true)
     } else {
       super.update(data, context)
     }
