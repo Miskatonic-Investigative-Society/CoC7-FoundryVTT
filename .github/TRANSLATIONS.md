@@ -11,4 +11,4 @@ The following translations have been abandoned **cn**, **cs**, [are you able to 
 
 ##### CoC7.NotEnoughMagicPoints
 
-`"CoC7.NotEnoughMagicPoints": "{spell} costs {originalMagicPoints} Magic Points, but you only have {actorMagicPoints}. Would like to convert the remaining Magic Points into Hit Points? If yes, you will take {convertedHitPoints} damage.",`
+`"CoC7.NotEnoughMagicPoints": "{spell} costs {originalMagicPoints} Magic Points, but you only have {actorMagicPoints}. Would you like to take the remaining {convertedHitPoints} from your Hit Points? You will take {convertedHitPoints} damage if you proceed.",`
