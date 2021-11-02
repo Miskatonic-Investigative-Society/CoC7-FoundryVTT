@@ -127,6 +127,7 @@
   "CoC7.MagicPointsCost": "Magic Points Cost",
   "CoC7.OtherCosts": "Other Costs",
   "CoC7.CastingSpell": "Casting <i>{spell}</i>.",
+  "CoC7.NotEnoughMagicPoints": "{spell} costs {originalMagicPoints} Magic Points, but you only have {actorMagicPoints}. Would like to convert the remaining Magic Points into Hit Points? If yes, you will take {convertedHitPoints} damage.",
 
   "CoC7.CopyToClipboard": "Copy to clipboard",
   "CoC7.WhisperToSelection": "Whisper to selected tokens",
