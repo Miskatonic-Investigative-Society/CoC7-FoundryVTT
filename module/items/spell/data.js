@@ -1,4 +1,4 @@
-/* global ChatMessage, game, mergeObject, Roll, renderTemplate, ui */
+/* global ChatMessage, Dialog, game, mergeObject, Roll, renderTemplate, ui */
 
 import { CoC7Utilities } from '../../utilities.js'
 import { CoC7Item } from '../item.js'
@@ -20,6 +20,53 @@ export class CoC7Spell extends CoC7Item {
     }
     const costs = this.data.data.costs
     const losses = []
+    let convertSurplusIntoHitPoints
+    costs.magicPoints = CoC7Utilities.isFormula(costs.magicPoints)
+      ? (await new Roll(costs.magicPoints).roll({ async: true })).total
+      : parseInt(costs.magicPoints)
+    if (
+      costs.magicPoints &&
+      costs.magicPoints > this.actor.data.data.attribs.mp.value
+    ) {
+      convertSurplusIntoHitPoints = await new Promise(resolve => {
+        const convertedHitPoints =
+          costs.magicPoints - this.actor.data.data.attribs.mp.value
+        const convertedMagicPoints = costs.magicPoints - convertedHitPoints
+        const data = {
+          title: ' ',
+          content: game.i18n.format('CoC7.NotEnoughMagicPoints', {
+            actorMagicPoints: this.actor.data.data.attribs.mp.value,
+            convertedHitPoints,
+            convertedMagicPoints,
+            originalMagicPoints: costs.magicPoints,
+            spell: this.name
+          }),
+          buttons: {
+            cancel: {
+              icon: '<i class="fas fa-times"></i>',
+              label: game.i18n.localize('CoC7.Cancel'),
+              callback: () => {
+                return resolve(false)
+              }
+            },
+            proceed: {
+              icon: '<i class="fas fa-check"></i>',
+              label: game.i18n.localize('CoC7.Proceed'),
+              callback: () => {
+                costs.hitPoints = convertedHitPoints
+                costs.magicPoints = convertedMagicPoints
+                return resolve(true)
+              }
+            }
+          },
+          default: 'cancel',
+          classes: ['coc7', 'dialog']
+        }
+        new Dialog(data).render(true)
+      })
+      if (!convertSurplusIntoHitPoints) return
+    }
+    console.log(costs)
     for (const [key, value] of Object.entries(costs)) {
       if (!value || Number(value) === 0) continue
       losses.push(await this.resolveLosses(key, value))
@@ -47,7 +94,7 @@ export class CoC7Spell extends CoC7Item {
     switch (characteristic) {
       case 'hitPoints':
         characteristicName = game.i18n.localize('CoC7.HitPoints')
-        this.actor.dealDamage(loss)
+        this.actor.dealDamage(loss, { ignoreArmor: true })
         break
       case 'sanity':
         characteristicName = game.i18n.localize('CoC7.SanityPoints')
@@ -55,9 +102,7 @@ export class CoC7Spell extends CoC7Item {
         break
       case 'magicPoints':
         characteristicName = game.i18n.localize('CoC7.MagicPoints')
-        this.actor.update({
-          'data.attribs.mp.value': actorData.attribs.mp.value - loss
-        })
+        this.actor.setMp(actorData.attribs.mp.value - loss)
         break
       case 'power':
         characteristicName = game.i18n.localize('CHARAC.Power')
@@ -126,10 +171,16 @@ export class CoC7Spell extends CoC7Item {
         await item.update({
           'data.spells': book.data.spells
         })
-        this.sheet.object = new CoC7Spell(book.data.spells.find(spell => spell._id === this.id), this.context)
+        this.sheet.object = new CoC7Spell(
+          book.data.spells.find(spell => spell._id === this.id),
+          this.context
+        )
       } else {
         await this.context.parent.updateEmbeddedDocuments('Item', [book])
-        this.sheet.object = new CoC7Spell(book.data.spells.find(spell => spell._id === this.id), this.context)
+        this.sheet.object = new CoC7Spell(
+          book.data.spells.find(spell => spell._id === this.id),
+          this.context
+        )
       }
       this.sheet.render(true)
     } else {
