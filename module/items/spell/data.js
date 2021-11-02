@@ -66,7 +66,6 @@ export class CoC7Spell extends CoC7Item {
       })
       if (!convertSurplusIntoHitPoints) return
     }
-    console.log(costs)
     for (const [key, value] of Object.entries(costs)) {
       if (!value || Number(value) === 0) continue
       losses.push(await this.resolveLosses(key, value))
