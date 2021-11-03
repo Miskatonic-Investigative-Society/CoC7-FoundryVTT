@@ -85,6 +85,32 @@ const keys = {
     example:
       'Example Character, age 27\nSTR 75 CON 60 SIZ 80 DEX 70 APP 60 INT 80\nPOW 50 EDU 85 SAN 55 HP 14 DB: 1D4\nBuild: 1 Move: 7 MP: 10 Luck: 40 Armor: 1\nAttacks per round: 3 SAN loss: 1d4/1d8\nCombat\nBite 50% (25/10), damage 1D6\nBrawl 30% (15/6), damage 1D3\nDerringer 40% (20/8), damage 1D8+1\nDodge 50% (25/10)\nSkills\nAnimal Handling 55%, Charm 30%, First Aid 25%, Disguise 20%,\nListen 50%, Medicine 45%, Persuade 25%, Psychology 75%,\nScience (Astronomy) 90%, Science (Botany) 35%, Science (Zoology) 10%,\nSpot Hidden 35%, Stealth 10%\nLanguages: English 80%, Eklo 5%.\nSpells: Summon NPC, Dispel NPC.'
   },
+  de: {
+    description: 'CoC7.German',
+    dbNone: 'none',
+    armorNone: 'none',
+    attacksPerRoundNone: 'none',
+    sanLossNone: 'none',
+    diceShort: 'w|d',
+    fulldb: '(' + 'Schadensbonus|Sb' + ')',
+    halfdb: '(' + '½|half' + ')',
+    sectionCombats: '\n(?:' + 'Kampf|Angriff:|ANGRIFFE' + ')[:\n]',
+    newCombatHeader: '\n' + 'Kampf' + '\n',
+    sectionSkills: '\n(?:' + 'Fertigkeiten' + '(?:\\s*\\([^\\)]+\\))?)[:\n]',
+    sectionLangauges: '\n(?:' + 'Sprachen' + ')[:\n]',
+    sectionSpells: '\n(?:' + 'Zauber' + ')[:\n]',
+    handgun:
+      '(?<type>' +
+      ' Gun|Revolver|Pistole|Handgun|Derringer|Beretta|Luger|Desert Eagle| \\.38' +
+      ')',
+    rifle:
+      '(?<type>' + 'Gewehr|Schrotflinte|Carabiner|Karabiner|Gauge |Lee-Enfield|Elefanten' + ')',
+    smb: '(?<type>' + 'Submachine Gun|Thompson' + ')',
+    machineGun: '(?<type>' + 'Browning|Vickers' + ')',
+    launched: '(?<type>' + 'Molotov|Granate|Dynamit' + ')',
+    example:
+      'Vorname Nachname\nAlter: 29\nBeruf: Ein Beruf\nST 50\nMA 60\nKO 60\nGE 60\nGR 55\nER 65\nIN 80\nBI 85\nTrefferpunkte: 11\nGeistige Stabilität: 60\nSchadensbonus: 0\nStatur: 0\nMagiepunkte: 12\nBewegungsweite: 8\n\nKampf\nAngriffe: 1\nHandgemenge 30% (15/6), Schaden 1D3\nMesser 30% (15/6), Schaden 1D4\nAusweichen 30% (15/6)\n\nFertigkeiten: Anthropologie 70% (35/14), Archäologie 30% (15/6), Bibliotheksnutzung 50% (25/10), Erste Hilfe 50% (25/10), Finanzkraft 40% (20/8), Geschichte 60% (30/12), Klettern 50% (25/10)\n\nSprachen: Englisch 85% (42/17); Deutsch 45% (22/9), Latein 45% (22/9)'
+  },
   fr: {
     description: 'CoC7.French',
     dbNone: 'Acune',
@@ -251,6 +277,87 @@ const translations = {
       keys.en.sectionLangauges +
       '|' +
       keys.en.sectionSpells +
+      ')'
+  },
+  de: {
+    age: '(?<![a-z])' + 'Alter' + '(\\s*:)?\\s+(?<age>\\d+)[,\\s]*',
+    occupation:
+      '[,\\s]*' + 'Beruf' + '(\\s*:)?\\s+(?<occupation>.+)[,\\s\n]*',
+    str: '(?<![a-z])' + 'ST' + '(\\s*:)?\\s*(?<str>\\d+|-)[,\\s\n]*',
+    con: '(?<![a-z])' + 'KO' + '(\\s*:)?\\s*(?<con>\\d+|-)[,\\s\n]*',
+    siz: '(?<![a-z])' + 'GR' + '(\\s*:)?\\s*(?<siz>\\d+|-)[,\\s\n]*',
+    int: '(?<![a-z])' + 'IN' + '(\\s*:)?\\s*(?<int>\\d+|-)[,\\s\n]*',
+    pow: '(?<![a-z])' + 'MA' + '(\\s*:)?\\s*(?<pow>\\d+|-)[,\\s\n]*',
+    dex: '(?<![a-z])' + 'GE' + '(\\s*:)?\\s*(?<dex>\\d+|-)[,\\s\n]*',
+    app: '(?<![a-z])' + 'ER' + '(\\s*:)?\\s*(?<app>\\d+|-)[,\\s\n]*',
+    edu: '(?<![a-z])' + 'BI' + '(\\s*:)?\\s*(?<edu>\\d+|-)[,\\s\n]*',
+    san:
+      '(?<![a-z])(?:' + 'gS|STA|Geistige Stabilität' + ')(\\s*:)?\\s*(?<san>\\d+|-)[,\\s\n]*',
+    hp:
+      '(?<![a-z])(?:' + 'TP|Trefferpunkte' + ')(\\s*:)?\\s*(?<hp>\\d+|-)[,\\s\n]*',
+    mp:
+      '(?<![a-z])(?:' +
+      'MP|Magiepunkte' +
+      ')(\\s*:)?\\s*(?<mp>\\d+|-)[,\\s\n]*',
+    db:
+      '(?<![a-z])(?:' +
+      keys.de.fulldb +
+      ')(\\s*:)?\\s+(?<db>[+-]?\\d+(?:d\\d+|D|W\\d+)?|' +
+      keys.de.dbNone +
+      ')[,\\s\n]*',
+    build: '(?<![a-z])' + 'Statur' + '(\\s*:)?\\s+(?<build>[+-]?\\d+)[,\\s\n]*',
+    armor:
+      '(?<![a-z])' +
+      'Panzerung' +
+      '(\\s*:)?\\s+(?<armor>' +
+      keys.de.armorNone +
+      '|\\d+)[,\\s\n]*',
+    mov: '(?<![a-z])' + 'Bewegungsweite' + '(\\s*:)?\\s*(?<mov>\\d+)[,\\s\n]*',
+    lck: '(?<![a-z])' + 'Glück' + '(\\s*:)?\\s+(?<lck>\\d+|-)[,\\s\n]*',
+    attacksPerRound:
+      '(?<![a-z])(?:' +
+      'Angriffe pro Runde|Angriffe|Pro Runde' +
+      ')(\\s*:)?\\s+(?<attacksPerRound>' +
+      keys.de.attacksPerRoundNone +
+      '|\\d+(?!d))[,\\s\n]*',
+    sanLoss:
+      '(?<![a-z])(?:' +
+      'Stabilitätsverlust' +
+      ')(\\s*:)?\\s+(?<sanLoss>' +
+      keys.de.sanLossNone +
+      '|\\d[DW]?[+\\d]*\\/\\d[DW]?[+\\d]*)[,\\s\n]*',
+    weapon:
+      '(^|\\n)(?<name>[.\\t ' +
+      nameCharacters +
+      ']+)(\\**,?\\s+|\\*)(?:\\(|(?<percentage>\\d+)%,?(?:\\s*\\(\\d+\\/\\d+\\)\\s*,?)?)?(\\s*' +
+      'Schaden' +
+      ')?\\s+(?<damage>(:?(:?\\d+w|d)?\\d+(\\s*/\\s*|\\s*[+-]\\s*(?:' +
+      keys.de.fulldb +
+      '|' +
+      keys.de.halfdb +
+      ')\\s*|\\s*[+-]\\s*(:?\\d+d|w)?\\d+)*)+)\\)?',
+    weaponDodge:
+      '(?<name>' +
+      'Ausweichen' +
+      ')(\\s*:)?\\s+\\(?(?<percentage>\\d+)\\)?\\s*%(?:\\s*\\(\\d+\\/\\d+\\))?',
+    // Skill should not be named "The player has" / "but they regenerate" required for "A Cold Fire Within"
+    skill:
+      '^(?<name>[:\\*.\\s' +
+      nameCharacters +
+      ']+(?<!' +
+      'The player has|but they regenerate' +
+      '))\\s+\\(?(?<percentage>\\d+)[^d]%?\\)?(\\s*\\(\\d+/\\d+\\))?[\\.,;]?\\s*',
+    guessStartCombat: '(^|(?<!,)\n)(' + 'Angriffe|Handgemenge|Nahkampf|Firearms|Brawl|Bite' + ')',
+    name: '^(?<name>[\\.\\s' + nameCharacters + ']+)[,\\s\n]+',
+    sections:
+      '(' +
+      keys.de.sectionCombats +
+      '|' +
+      keys.de.sectionSkills +
+      '|' +
+      keys.de.sectionLangauges +
+      '|' +
+      keys.de.sectionSpells +
       ')'
   },
   fr: {
