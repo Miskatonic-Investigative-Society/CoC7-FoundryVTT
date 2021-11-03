@@ -552,10 +552,10 @@
       },
       "description": {
         "chat": "",
-        "value": ""
+        "value": "",
+        "keeper": ""
       },
       "effects": [],
-      "keeperNotes": "",
       "source": "",
       "type": {
         "bind": false,
@@ -575,7 +575,8 @@
       "date": "",
       "description": {
         "chat": "",
-        "value": ""
+        "value": "",
+        "keeper": ""
       },
       "difficultyLevel": "",
       "fullStudies": 0,
@@ -588,7 +589,6 @@
         "others": []
       },
       "initialReading": false,
-      "keeperNotes": "",
       "language": "",
       "mythosRating": 0,
       "sanityLoss": 0,

@@ -51,7 +51,7 @@
         </div>
       {{else}}
         <div class="flexrow">
-          {{#if (or isKeeper isOwned)}}
+          {{#if (or isKeeper isOwner)}}
             <span id="attempt-initial-reading">
               <label>
                 {{localize "CoC7.InitialReading"}}
@@ -183,10 +183,9 @@
       </div>
       <div class="tab" data-group="primary" data-tab="notes">
         {{editor
-          content=data.notes
-          target="data.notes"
-          button=true
-          owner=owner
+          content=data.description.keeper
+          target="data.description.keeper"
+          button=true owner=owner
           editable=editable
         }}
       </div>
