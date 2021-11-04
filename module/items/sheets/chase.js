@@ -60,9 +60,9 @@ export class CoC7ChaseSheet extends ItemSheet {
   /** @override */
 
   getData (options = {}) {
-    ui.notifications.warn(
-      game.i18n.localize('CoC7.ExperimentalFeaturesWarning')
-    )
+    // ui.notifications.warn(
+    //   game.i18n.localize('CoC7.ExperimentalFeaturesWarning')
+    // )
     const data = super.getData(options)
     // if( this.started) options.tabs[0].initial = 'setup'
     if (this.started) this._tabs[0].active = 'setup'
@@ -668,7 +668,8 @@ export class CoC7ChaseSheet extends ItemSheet {
     const element = $(track).find('.active')
     if (!element.length) return
 
-    const originalPosition = data.data.trackScrollPosition
+    const originalPosition = html[0].classList.contains('window-app')?-1:data.data.trackScrollPosition //If first opening always scroll to 
+    // const originalPosition = data.data.trackScrollPosition //If first opening always scroll to 
 
     const elementleft = element[0].offsetLeft
     const divWidth = track[0].clientWidth
@@ -734,6 +735,10 @@ export class CoC7ChaseSheet extends ItemSheet {
 
   findLocationIndex (uuid) {
     return this.item.data.data.locations.list.findIndex(p => p.uuid == uuid)
+  }
+
+  findLocation( uuid){
+    return this.item.data.data.locations.list.find(p => p.uuid == uuid)
   }
 
   findIndex (list, uuid) {
@@ -948,12 +953,19 @@ export class CoC7ChaseSheet extends ItemSheet {
     this._onDragLeave(dragEvent)
 
     const target = dragEvent.currentTarget
+    const track = target.closest('.track')
     const locationUuid = target.dataset.uuid
     const dataString = dragEvent.dataTransfer.getData('text/plain')
     const data = JSON.parse(dataString)
+    const oldLocation = this.findLocation( locationUuid)
+    if( oldLocation){
+      if( oldLocation.participants?.includes( data.uuid)) return
+    }
     ui.notifications.info(
       `dragged particpant ${data.uuid} onto location ${locationUuid}`
     )
+    await this.item.update({ 'data.trackScrollPosition': track.scrollLeft })
+
     await this.moveParticipant(data.uuid, locationUuid)
   }
 
