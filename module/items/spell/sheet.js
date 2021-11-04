@@ -24,6 +24,7 @@ export class CoC7SpellSheet extends ItemSheet {
     const itemData = data.data
     data.data = itemData.data
     data.isKeeper = game.user.isGM
+    data.isOwner = this.item.isOwner
     return data
   }
 

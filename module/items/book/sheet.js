@@ -27,7 +27,7 @@ export class CoC7BookSheet extends ItemSheet {
     data.data = itemData.data
     data.initialReading = this.item.data.data.initialReading
     data.isKeeper = game.user.isGM
-    data.isOwned = this.item.isOwned
+    data.isOwner = this.item.isOwner
     data.spellsLearned = this.spellsLearned
     data.exhausted = (await this.item.checkExhaustion()) !== false
     data.studyCompleted =
