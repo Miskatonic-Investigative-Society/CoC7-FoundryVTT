@@ -6,8 +6,13 @@ The following translations have been abandoned **cn**, **cs**, [are you able to 
 
 | Key                                                    |    de    |    es    |    fr    |    ja    |    pl    |  pt-BR   |    sv    |  zh-TW   |
 | :----------------------------------------------------- | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-| **Remaining**:                                         |  **1**   |  **1**   |  **1**   |  **1**   |  **1**   |  **1**   |  **1**   |  **1**   |
+| **Remaining**:                                         |  **1**   |  **2**   |  **2**   |  **2**   |  **2**   |  **2**   |  **2**   |  **2**   |
+| [CoC7.German](#coc7german)                             | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.NotEnoughMagicPoints](#coc7notenoughmagicpoints) | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+
+##### CoC7.German
+
+`"CoC7.German": "German",`
 
 ##### CoC7.NotEnoughMagicPoints
 
