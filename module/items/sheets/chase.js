@@ -550,6 +550,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     html.find('.obstacle-type').click(this._onObstacleTypeClick.bind(this))
     html.find('.obstacle-toggle').click(this._onObstacleToggleClick.bind(this))
     html.find('.toggle').click(this._onToggle.bind(this))
+    html.find('.participant-control').click(this._onParticipantControlClicked.bind(this))
 
     const participantDragDrop = new DragDrop({
       dropSelector: '.participant',
@@ -907,6 +908,18 @@ export class CoC7ChaseSheet extends ItemSheet {
     })
     await this.updateParticipants( participants)
     ui.notifications.info('participant clicked')
+  }
+
+  async _onParticipantControlClicked(event){
+    event.preventDefault();
+    event.stopPropagation();
+    const target = event.currentTarget;
+    const participantUuid = target.closest('.initiative-block')?.dataset?.uuid
+    if( !participantUuid) return
+    switch (target.dataset.control) {
+      case 'drawGun':
+        return await this.toggleParticipantGun( participantUuid)
+    }
   }
 
   async _onButtonClick (event) {
@@ -1355,6 +1368,16 @@ export class CoC7ChaseSheet extends ItemSheet {
 
     await this.updateLocationsList(locations)
   }
+
+  async toggleParticipantGun(participantUuid ){
+    const participants = this.item.data.data.participants
+    ? duplicate(this.item.data.data.participants)
+    : []
+    const participant = participants.find( p => participantUuid == p.uuid)
+    if( !participant) return
+    participant.hasAGunReady = !participant.hasAGunReady
+    await this.updateParticipants( participants)
+  }
 }
 
 export function sortByRoleAndDex (a, b) {
@@ -1485,6 +1508,10 @@ export class _participant {
     }
 
     return this.data.dex
+  }
+
+  get hasAGunReady (){
+    return this.data.hasAGunReady || false
   }
 
   get initiative () {

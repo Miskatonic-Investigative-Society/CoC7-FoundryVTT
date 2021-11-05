@@ -92,7 +92,16 @@
                                 <div>SCORE: {{p.initiative}}</div>
                             </div>
                         </div>
-                        <div class="controls"></div>
+                        <div class="participant-controls flexrow">
+                            <a class="participant-control {{#if p.hasAGunReady}}active{{/if}}" title="Draw your gun" data-control="drawGun">
+                                <i class="game-icon game-icon-revolver"></i></a>
+                            <a class="participant-control " title="Toggle Visibility" data-control="toggleHidden">
+                                <i class="fas fa-eye-slash"></i></a>
+                            <a class="participant-control " title="Mark Defeated" data-control="toggleDefeated">
+                                <i class="fas fa-skull"></i></a>
+                            <div class="token-effects">
+                            </div>
+                        </div>
                     </div>
                     {{/each}}
                 </div>

@@ -78,6 +78,38 @@
   }
 }
 
+.initiative-track{
+  .initiative-block{
+    border: 2px solid lightgray;
+    margin: 0 1rem 0 0.2rem;
+    border-radius: 0.5rem;
+    &.prey{
+      background-color: rgba(60,128,60,0.1);
+    }
+    &.chaser{
+      background-color: rgba(128,60,60,0.1);
+    }
+    &.active{
+      border-color: #ff6400;
+    }
+    
+    .participant-control{
+      color:#666;
+      &.active{
+        color: #EEE;
+      }
+    }
+
+    .participant{
+      .portrait{
+        img{
+          border: none;
+        }
+      }
+    }
+  }
+}
+
 .track {
   display: flex;
   flex-direction: row;
@@ -117,7 +149,7 @@
 
           &.active{
             img{
-              border: 1px solid red
+              border: 1px solid #ff6400
             }
           }
         }
@@ -190,7 +222,7 @@
       }
       &.active {
         // scroll-snap-stop: always;
-        border: 0.125rem solid red;
+        border: 0.125rem solid #ff6400;
       }
       &.init {
         border: 0.125rem solid slategrey;
