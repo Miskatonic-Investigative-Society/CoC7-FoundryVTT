@@ -73,6 +73,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     /*****************/
 
     data.participants = this.participants
+    data.participantsByInitiative = this.participantsByInitiative
     data.preys = this.preys
     data.chasers = this.chasers
 
@@ -137,6 +138,16 @@ export class CoC7ChaseSheet extends ItemSheet {
     pList.sort((a, b) => a.adjustedMov - b.adjustedMov)
     return pList
     // return this.item.data.data.participants
+  }
+
+  get participantsByInitiative () {
+    const pList = []
+    this.item.data.data.participants.forEach(p => {
+      pList.push(new _participant(p))
+      p.index = pList.length - 1
+    })
+    pList.sort((a, b) => b.initiative - a.initiative)
+    return pList
   }
 
   get allSkillsAndCharacteristics () {
@@ -342,6 +353,13 @@ export class CoC7ChaseSheet extends ItemSheet {
     return this.locations.find(l => l.active)
   }
 
+  get activeParticipant () {
+    if (!this.item.data.data.participants) return undefined
+    const participant = this.item.data.data.participants.find( p => p.active)
+    if( !participant) return undefined
+    return new _participant( participant)
+  }
+
   get previousLocation () {
     if (!this.locations) return undefined
     const activeIndex = this.locations.findIndex(l => l.active)
@@ -527,6 +545,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     html.find('.button').click(this._onButtonClick.bind(this))
 
     html.find('.name-container').click(this._onLocationClick.bind(this))
+    html.find('.chase-location .chase-participant').click(this._onChaseParticipantClick.bind(this))
 
     html.find('.obstacle-type').click(this._onObstacleTypeClick.bind(this))
     html.find('.obstacle-toggle').click(this._onObstacleToggleClick.bind(this))
@@ -867,6 +886,27 @@ export class CoC7ChaseSheet extends ItemSheet {
       if (!active) locations[locationIndex].active = true
       await this.updateLocationsList(locations)
     }
+  }
+
+  async _onChaseParticipantClick (event){
+    const target = event.currentTarget
+    if( !target.closest('.chase-location')?.classList?.contains('active')){
+      await this._onLocationClick( event)
+    }
+    const pUuid = event.currentTarget.dataset?.uuid
+    if(!pUuid){
+      ui.notifications.error('No participant ID found')
+      return
+    }
+    const participants = this.item.data.data.participants
+    ? duplicate(this.item.data.data.participants)
+    : []
+    participants.forEach( p => {
+      delete p.active
+      if( pUuid == p.uuid) p.active = true
+    })
+    await this.updateParticipants( participants)
+    ui.notifications.info('participant clicked')
   }
 
   async _onButtonClick (event) {
@@ -1359,6 +1399,10 @@ export class _participant {
     return this.hasActor || this.hasVehicle
   }
 
+  get isActive() {
+    return this.data.active || false
+  }
+
   get key () {
     if (this.hasVehicle) return this.vehicle.actorKey
     if (this.hasActor) return this.actor.actorKey
@@ -1441,6 +1485,18 @@ export class _participant {
     }
 
     return this.data.dex
+  }
+
+  get initiative () {
+    let init = this.dex;
+    if( this.hasAGunReady){
+      init += 50
+    }
+    if( this.speedCheck){
+      if(this.speedCheck.score) init += this.speedCheck.score/100
+    }
+
+    return init
   }
 
   get isChaser () {
@@ -1545,6 +1601,7 @@ export class _participant {
     if (this.data.escaped) cssClasses.push('escaped')
     if (this.data.fastest) cssClasses.push('fastest')
     if (this.data.slowest) cssClasses.push('slowest')
+    if (this.data.active) cssClasses.push('active')
     return cssClasses.join(' ')
   }
 

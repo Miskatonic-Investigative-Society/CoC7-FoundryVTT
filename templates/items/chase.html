@@ -79,6 +79,25 @@
             <div class="tab setup" data-group="primary" data-tab="setup">
                 {{#if locations}}
 
+                {{#if started}}
+                <div class="initiative-track flexrow">
+                    {{#each participantsByInitiative as |p i|}}
+                    <div class="initiative-block flexcol {{p.cssClass}}" data-uuid="{{p.uuid}}">
+                        <div class="participant flexrow">
+                            <div class="portrait" >
+                                <a><img src="{{p.icon}}" title="{{p.name}}"/></a>
+                            </div>
+                            <div class="infos flexcol">
+                                <div>DEX: {{p.dex}}</div>
+                                <div>SCORE: {{p.initiative}}</div>
+                            </div>
+                        </div>
+                        <div class="controls"></div>
+                    </div>
+                    {{/each}}
+                </div>
+                {{/if}}
+
                 <div class="track">
                     {{#each locations as |location i|}}
                         <div class="chase-location" data-uuid="{{location.uuid}}">
@@ -91,7 +110,7 @@
                                 <div class="list">
                                     {{#each location.participants as |p|}}
                                         {{#if p}}
-                                        <div class="chase-participant" data-uuid="{{p.uuid}}">
+                                        <div class="chase-participant {{p.cssClass}}" data-uuid="{{p.uuid}}">
                                             <a><img src="{{p.icon}}" title="{{p.name}}"/></a>
                                         </div>
                                         {{/if}}
