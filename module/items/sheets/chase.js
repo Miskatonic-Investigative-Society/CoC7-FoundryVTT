@@ -551,6 +551,8 @@ export class CoC7ChaseSheet extends ItemSheet {
     html.find('.obstacle-toggle').click(this._onObstacleToggleClick.bind(this))
     html.find('.toggle').click(this._onToggle.bind(this))
     html.find('.participant-control').click(this._onParticipantControlClicked.bind(this))
+    html.find('.movement-action .decrease').click(this._onChangeMovementActions.bind( this, -1))
+    html.find('.movement-action .increase').click(this._onChangeMovementActions.bind( this, 1))
 
     const participantDragDrop = new DragDrop({
       dropSelector: '.participant',
@@ -920,6 +922,23 @@ export class CoC7ChaseSheet extends ItemSheet {
       case 'drawGun':
         return await this.toggleParticipantGun( participantUuid)
     }
+  }
+
+  async _onChangeMovementActions( count, event){
+    event.preventDefault();
+    event.stopPropagation();
+    const target = event.currentTarget;
+    const participantUuid = target.closest('.initiative-block')?.dataset?.uuid
+    if( !participantUuid) return
+    const participants = this.participants
+    const participant = participants.find( p => participantUuid == p.uuid)
+    participant.alterMovementActions( count)
+
+    const sheet = target.closest('.coc7.item.chase')
+    const track = sheet.querySelector('.track')
+    if( track) await this.item.update({ 'data.trackScrollPosition': track.scrollLeft })
+
+    await this.updateParticipants(participants)
   }
 
   async _onButtonClick (event) {
@@ -1519,9 +1538,9 @@ export class _participant {
     if( this.hasAGunReady){
       init += 50
     }
-    if( this.speedCheck){
-      if(this.speedCheck.score) init += this.speedCheck.score/100
-    }
+    // if( this.speedCheck){
+    //   if(this.speedCheck.score) init += this.speedCheck.score/100
+    // }
 
     return init
   }
@@ -1618,6 +1637,48 @@ export class _participant {
 
   set movementAction (x) {
     this.data.movementAction = x
+  }
+
+  get movementAction () {
+    return 2
+    // return this.data.movementAction
+  }
+
+  set currentMovementActions (x) {
+    this.data.currentMovementActions = x
+  }
+
+  get currentMovementActions () {
+    return this.data.currentMovementActions || 0
+  }
+
+  addMovementActions (x=1) {
+    this.currentMovementActions += x
+    if( this.currentMovementActions > this.movementAction) this.currentMovementActions = this.movementAction
+  }
+
+  addMovementActions (x=1) {
+    this.currentMovementActions -= x
+  }
+
+  alterMovementActions (x){
+    this.currentMovementActions += x
+    if( this.currentMovementActions > this.movementAction) this.currentMovementActions = this.movementAction
+  }
+
+  get movementActionArray () {
+    const array = Array( Math.max( this.movementAction, Math.abs(this.currentMovementActions)))
+    for (let i = 0; i < array.length; i++) {
+      if( i < this.movementAction){
+        array[i] = 'base'
+      }
+
+      if( i < Math.abs(this.currentMovementActions)){
+        array[i] = ((undefined == array[i])?'':`${array[i]} `) + (this.currentMovementActions > 0?'available':'deficit')
+      }
+    }
+
+    return this.currentMovementActions>0?array:array.reverse()
   }
 
   get cssClass () {

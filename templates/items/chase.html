@@ -88,8 +88,16 @@
                                 <a><img src="{{p.icon}}" title="{{p.name}}"/></a>
                             </div>
                             <div class="infos flexcol">
-                                <div>DEX: {{p.dex}}</div>
-                                <div>SCORE: {{p.initiative}}</div>
+                                <div>INIT: {{p.initiative}}</div>
+                                <div>ADJ. MOV: {{p.adjustedMov}}</div>
+                                <div>Mov Actions: {{p.movementAction}}</div>
+                                <div class="movement-action">
+                                    <a class="decrease"><i class="far fa-minus-square"></i></a>
+                                    {{#each movementActionArray as |actionClass|}}
+                                    <i class="fas fa-bahai {{actionClass}}"></i>
+                                    {{/each}}
+                                    <a class="increase"><i class="far fa-plus-square"></i></a>
+                                </div>
                             </div>
                         </div>
                         <div class="participant-controls flexrow">

@@ -106,6 +106,25 @@
           border: none;
         }
       }
+
+      .movement-action{
+        .deficit{
+          color:red;
+          text-shadow: 0 0 8px red;
+        }
+        .base{
+          color: gray;
+
+          &.deficit{
+            text-shadow: 0 0 8px red;
+          }
+
+          &.available{
+            color: goldenrod;
+          }
+        }
+
+      }
     }
   }
 }
