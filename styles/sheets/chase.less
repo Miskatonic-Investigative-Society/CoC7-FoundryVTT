@@ -78,52 +78,58 @@
   }
 }
 
-.initiative-track{
-  .initiative-block{
+.initiative-track {
+  .initiative-block {
     border: 2px solid lightgray;
     margin: 0 1rem 0 0.2rem;
     border-radius: 0.5rem;
-    &.prey{
-      background-color: rgba(60,128,60,0.1);
+    &.prey {
+      background-color: rgba(60, 128, 60, 0.1);
     }
-    &.chaser{
-      background-color: rgba(128,60,60,0.1);
+    &.chaser {
+      background-color: rgba(128, 60, 60, 0.1);
     }
-    &.active{
+    &.active {
       border-color: #ff6400;
     }
-    
-    .participant-control{
-      color:#666;
-      &.active{
-        color: #EEE;
+
+    .participant-control {
+      color: #666;
+      flex: 0;
+      margin-right: 0.5rem;
+      &.active {
+        color: #eee;
+      }
+      &.inactive {
+        color: red;
+        &:hover{
+          text-shadow: none;
+          cursor: default;
+        }
       }
     }
 
-    .participant{
-      .portrait{
-        img{
+    .participant {
+      .portrait {
+        img {
           border: none;
         }
       }
+    }
 
-      .movement-action{
-        .deficit{
-          color:red;
+    .movement-action {
+      .deficit {
+        color: red;
+        text-shadow: 0 0 8px red;
+      }
+      .base {
+        color: gray;
+        &.deficit {
           text-shadow: 0 0 8px red;
         }
-        .base{
-          color: gray;
-
-          &.deficit{
-            text-shadow: 0 0 8px red;
-          }
-
-          &.available{
-            color: goldenrod;
-          }
+        &.available {
+          color: goldenrod;
         }
-
       }
     }
   }
@@ -166,9 +172,9 @@
         .chase-participant {
           width: 2rem;
 
-          &.active{
-            img{
-              border: 1px solid #ff6400
+          &.active {
+            img {
+              border: 1px solid #ff6400;
             }
           }
         }

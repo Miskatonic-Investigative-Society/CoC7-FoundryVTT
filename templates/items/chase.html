@@ -90,25 +90,20 @@
                             <div class="infos flexcol">
                                 <div>INIT: {{p.initiative}}</div>
                                 <div>ADJ. MOV: {{p.adjustedMov}}</div>
-                                <div>Mov Actions: {{p.movementAction}}</div>
                                 <div class="movement-action">
-                                    <a class="decrease"><i class="far fa-minus-square"></i></a>
                                     {{#each movementActionArray as |actionClass|}}
                                     <i class="fas fa-bahai {{actionClass}}"></i>
                                     {{/each}}
-                                    <a class="increase"><i class="far fa-plus-square"></i></a>
                                 </div>
                             </div>
                         </div>
                         <div class="participant-controls flexrow">
                             <a class="participant-control {{#if p.hasAGunReady}}active{{/if}}" title="Draw your gun" data-control="drawGun">
                                 <i class="game-icon game-icon-revolver"></i></a>
-                            <a class="participant-control " title="Toggle Visibility" data-control="toggleHidden">
-                                <i class="fas fa-eye-slash"></i></a>
-                            <a class="participant-control " title="Mark Defeated" data-control="toggleDefeated">
-                                <i class="fas fa-skull"></i></a>
-                            <div class="token-effects">
-                            </div>
+                            <a class="participant-control" title="{{localize 'CoC7.IncreasMVTAction'}}" data-control="decreaseActions">
+                                <i class="far fa-minus-square"></i></a>
+                            <a class="participant-control {{#if p.hasMaxMvtActions}}inactive{{/if}}" title="{{localize 'CoC7.IncreasMVTAction'}}" data-control="increaseActions">
+                                <i class="far fa-plus-square"></i></a>
                         </div>
                     </div>
                     {{/each}}

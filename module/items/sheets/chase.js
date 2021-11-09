@@ -355,9 +355,9 @@ export class CoC7ChaseSheet extends ItemSheet {
 
   get activeParticipant () {
     if (!this.item.data.data.participants) return undefined
-    const participant = this.item.data.data.participants.find( p => p.active)
-    if( !participant) return undefined
-    return new _participant( participant)
+    const participant = this.item.data.data.participants.find(p => p.active)
+    if (!participant) return undefined
+    return new _participant(participant)
   }
 
   get previousLocation () {
@@ -545,14 +545,22 @@ export class CoC7ChaseSheet extends ItemSheet {
     html.find('.button').click(this._onButtonClick.bind(this))
 
     html.find('.name-container').click(this._onLocationClick.bind(this))
-    html.find('.chase-location .chase-participant').click(this._onChaseParticipantClick.bind(this))
+    html
+      .find('.chase-location .chase-participant')
+      .click(this._onChaseParticipantClick.bind(this))
 
     html.find('.obstacle-type').click(this._onObstacleTypeClick.bind(this))
     html.find('.obstacle-toggle').click(this._onObstacleToggleClick.bind(this))
     html.find('.toggle').click(this._onToggle.bind(this))
-    html.find('.participant-control').click(this._onParticipantControlClicked.bind(this))
-    html.find('.movement-action .decrease').click(this._onChangeMovementActions.bind( this, -1))
-    html.find('.movement-action .increase').click(this._onChangeMovementActions.bind( this, 1))
+    html
+      .find('.participant-control')
+      .click(this._onParticipantControlClicked.bind(this))
+    // html
+    //   .find('.movement-action .decrease')
+    //   .click(this._onChangeMovementActions.bind(this, -1))
+    // html
+    //   .find('.movement-action .increase')
+    //   .click(this._onChangeMovementActions.bind(this, 1))
 
     const participantDragDrop = new DragDrop({
       dropSelector: '.participant',
@@ -690,8 +698,10 @@ export class CoC7ChaseSheet extends ItemSheet {
     const element = $(track).find('.active')
     if (!element.length) return
 
-    const originalPosition = html[0].classList.contains('window-app')?-1:data.data.trackScrollPosition //If first opening always scroll to 
-    // const originalPosition = data.data.trackScrollPosition //If first opening always scroll to 
+    const originalPosition = html[0].classList.contains('window-app')
+      ? -1
+      : data.data.trackScrollPosition //If first opening always scroll to
+    // const originalPosition = data.data.trackScrollPosition //If first opening always scroll to
 
     const elementleft = element[0].offsetLeft
     const divWidth = track[0].clientWidth
@@ -759,7 +769,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     return this.item.data.data.locations.list.findIndex(p => p.uuid == uuid)
   }
 
-  findLocation( uuid){
+  findLocation (uuid) {
     return this.item.data.data.locations.list.find(p => p.uuid == uuid)
   }
 
@@ -891,52 +901,58 @@ export class CoC7ChaseSheet extends ItemSheet {
     }
   }
 
-  async _onChaseParticipantClick (event){
+  async _onChaseParticipantClick (event) {
     const target = event.currentTarget
-    if( !target.closest('.chase-location')?.classList?.contains('active')){
-      await this._onLocationClick( event)
+    if (!target.closest('.chase-location')?.classList?.contains('active')) {
+      await this._onLocationClick(event)
     }
     const pUuid = event.currentTarget.dataset?.uuid
-    if(!pUuid){
+    if (!pUuid) {
       ui.notifications.error('No participant ID found')
       return
     }
     const participants = this.item.data.data.participants
-    ? duplicate(this.item.data.data.participants)
-    : []
-    participants.forEach( p => {
+      ? duplicate(this.item.data.data.participants)
+      : []
+    participants.forEach(p => {
       delete p.active
-      if( pUuid == p.uuid) p.active = true
+      if (pUuid == p.uuid) p.active = true
     })
-    await this.updateParticipants( participants)
+    await this.updateParticipants(participants)
     ui.notifications.info('participant clicked')
   }
 
-  async _onParticipantControlClicked(event){
-    event.preventDefault();
-    event.stopPropagation();
-    const target = event.currentTarget;
+  async _onParticipantControlClicked (event) {
+    event.preventDefault()
+    event.stopPropagation()
+    const target = event.currentTarget
     const participantUuid = target.closest('.initiative-block')?.dataset?.uuid
-    if( !participantUuid) return
+    if (!participantUuid) return
     switch (target.dataset.control) {
       case 'drawGun':
-        return await this.toggleParticipantGun( participantUuid)
+        return await this.toggleParticipantGun(participantUuid)
+      case 'decreaseActions':
+        return await this._onChangeMovementActions(-1, event)
+      case 'increaseActions':
+        return await this._onChangeMovementActions(1, event)
     }
   }
 
-  async _onChangeMovementActions( count, event){
-    event.preventDefault();
-    event.stopPropagation();
-    const target = event.currentTarget;
+  async _onChangeMovementActions (count, event) {
+    event.preventDefault()
+    event.stopPropagation()
+    const target = event.currentTarget
     const participantUuid = target.closest('.initiative-block')?.dataset?.uuid
-    if( !participantUuid) return
+    if (!participantUuid) return
     const participants = this.participants
-    const participant = participants.find( p => participantUuid == p.uuid)
-    participant.alterMovementActions( count)
+    const participant = participants.find(p => participantUuid == p.uuid)
+    if(participant.hasMaxMvtActions && count>0) return
+    participant.alterMovementActions(count)
 
     const sheet = target.closest('.coc7.item.chase')
     const track = sheet.querySelector('.track')
-    if( track) await this.item.update({ 'data.trackScrollPosition': track.scrollLeft })
+    if (track)
+      await this.item.update({ 'data.trackScrollPosition': track.scrollLeft })
 
     await this.updateParticipants(participants)
   }
@@ -1029,9 +1045,9 @@ export class CoC7ChaseSheet extends ItemSheet {
     const locationUuid = target.dataset.uuid
     const dataString = dragEvent.dataTransfer.getData('text/plain')
     const data = JSON.parse(dataString)
-    const oldLocation = this.findLocation( locationUuid)
-    if( oldLocation){
-      if( oldLocation.participants?.includes( data.uuid)) return
+    const oldLocation = this.findLocation(locationUuid)
+    if (oldLocation) {
+      if (oldLocation.participants?.includes(data.uuid)) return
     }
     ui.notifications.info(
       `dragged particpant ${data.uuid} onto location ${locationUuid}`
@@ -1388,14 +1404,14 @@ export class CoC7ChaseSheet extends ItemSheet {
     await this.updateLocationsList(locations)
   }
 
-  async toggleParticipantGun(participantUuid ){
+  async toggleParticipantGun (participantUuid) {
     const participants = this.item.data.data.participants
-    ? duplicate(this.item.data.data.participants)
-    : []
-    const participant = participants.find( p => participantUuid == p.uuid)
-    if( !participant) return
+      ? duplicate(this.item.data.data.participants)
+      : []
+    const participant = participants.find(p => participantUuid == p.uuid)
+    if (!participant) return
     participant.hasAGunReady = !participant.hasAGunReady
-    await this.updateParticipants( participants)
+    await this.updateParticipants(participants)
   }
 }
 
@@ -1441,7 +1457,7 @@ export class _participant {
     return this.hasActor || this.hasVehicle
   }
 
-  get isActive() {
+  get isActive () {
     return this.data.active || false
   }
 
@@ -1529,13 +1545,13 @@ export class _participant {
     return this.data.dex
   }
 
-  get hasAGunReady (){
+  get hasAGunReady () {
     return this.data.hasAGunReady || false
   }
 
   get initiative () {
-    let init = this.dex;
-    if( this.hasAGunReady){
+    let init = this.dex
+    if (this.hasAGunReady) {
       init += 50
     }
     // if( this.speedCheck){
@@ -1652,33 +1668,41 @@ export class _participant {
     return this.data.currentMovementActions || 0
   }
 
-  addMovementActions (x=1) {
-    this.currentMovementActions += x
-    if( this.currentMovementActions > this.movementAction) this.currentMovementActions = this.movementAction
+  get hasMaxMvtActions () {
+    return this.currentMovementActions >= this.movementAction
   }
 
-  addMovementActions (x=1) {
+  addMovementActions (x = 1) {
+    this.currentMovementActions += x
+    if (this.currentMovementActions > this.movementAction)
+      this.currentMovementActions = this.movementAction
+  }
+
+  addMovementActions (x = 1) {
     this.currentMovementActions -= x
   }
 
-  alterMovementActions (x){
+  alterMovementActions (x) {
     this.currentMovementActions += x
-    if( this.currentMovementActions > this.movementAction) this.currentMovementActions = this.movementAction
+    if (this.currentMovementActions > this.movementAction)
+      this.currentMovementActions = this.movementAction
   }
 
   get movementActionArray () {
-    const array = Array( Math.max( this.movementAction, Math.abs(this.currentMovementActions)))
-    for (let i = 0; i < array.length; i++) {
-      if( i < this.movementAction){
-        array[i] = 'base'
+    const baseArray = Array(this.movementAction).fill('base')
+    if (this.currentMovementActions >= 0) {
+      for (let i = 0; i < this.currentMovementActions; i++) {
+        baseArray[i] = 'base available'
       }
-
-      if( i < Math.abs(this.currentMovementActions)){
-        array[i] = ((undefined == array[i])?'':`${array[i]} `) + (this.currentMovementActions > 0?'available':'deficit')
-      }
+      return baseArray
     }
 
-    return this.currentMovementActions>0?array:array.reverse()
+    if (this.currentMovementActions < 0) {
+      const deficitArray = Array(Math.abs(this.currentMovementActions)).fill(
+        'deficit'
+      )
+      return deficitArray.concat(baseArray)
+    }
   }
 
   get cssClass () {
