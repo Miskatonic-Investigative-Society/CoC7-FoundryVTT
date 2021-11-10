@@ -129,7 +129,7 @@
   "CoC7.MagicPointsCost": "Kostnad Magipoäng",
   "CoC7.OtherCosts": "Annan kostnad",
   "CoC7.CastingSpell": "Kastar <i>{spell}</i>.",
-
+  "CoC7.NotEnoughMagicPoints": "{spell} kostar {originalMagicPoints} Magipoäng, men du har bara {actorMagicPoints}. Vill du att resten {convertedHitPoints} ska dras från din kroppspoäng? Du kommer att ta {convertedHitPoints} i skada om du fortsätter.",
   "CoC7.CopyToClipboard": "Kopiera till urklipp",
   "CoC7.WhisperToSelection": "Viska till den valda markören",
   "CoC7.WhisperTo": "Viska till",
@@ -716,6 +716,7 @@
   "CoC7.English": "Engelska",
   "CoC7.Spanish": "Spanska",
   "CoC7.French": "Franska",
+   "CoC7.German": "Tyska",
   "CoC7.TraditionalChinese": "Traditionell kinesiska",
   "CoC7.SelectSourceLanguage": "Välj ursprungstextens språk",
   "CoC7.ImportedUnnamedCharacter": "Importerad icke namngiven karaktär",
