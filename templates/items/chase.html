@@ -100,6 +100,10 @@
                         <div class="participant-controls flexrow">
                             <a class="participant-control {{#if p.hasAGunReady}}active{{/if}}" title="Draw your gun" data-control="drawGun">
                                 <i class="game-icon game-icon-revolver"></i></a>
+                            {{#unless p.isActive}}    
+                            <a class="participant-control" title="{{localize 'CoC7.MakeActive'}}" data-control="activateParticipant">
+                                <i class="fas fa-eye"></i></a>
+                            {{/unless}}
                             <a class="participant-control" title="{{localize 'CoC7.IncreasMVTAction'}}" data-control="decreaseActions">
                                 <i class="far fa-minus-square"></i></a>
                             <a class="participant-control {{#if p.hasMaxMvtActions}}inactive{{/if}}" title="{{localize 'CoC7.IncreasMVTAction'}}" data-control="increaseActions">
@@ -110,7 +114,7 @@
                 </div>
                 {{/if}}
 
-                <div class="track">
+                <div class="chase-track">
                     {{#each locations as |location i|}}
                         <div class="chase-location" data-uuid="{{location.uuid}}">
                             <div class="flexrow people">

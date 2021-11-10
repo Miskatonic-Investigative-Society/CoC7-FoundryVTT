@@ -360,6 +360,12 @@ export class CoC7ChaseSheet extends ItemSheet {
     return new _participant(participant)
   }
 
+  get activeParticipantLocation () {
+    if (!this.item.data.data.participants) return undefined
+    const participant = this.item.data.data.participants.find(p => p.active)
+    
+  }
+
   get previousLocation () {
     if (!this.locations) return undefined
     const activeIndex = this.locations.findIndex(l => l.active)
@@ -427,7 +433,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     // }
 
     //Build starting track
-    const track = []
+    const chaseTrack = []
 
     const chasersMinMov = this.findMinMov(chasers)
     const chasersMaxMov = this.findMaxMov(chasers)
@@ -449,12 +455,12 @@ export class CoC7ChaseSheet extends ItemSheet {
         locationParticipantsList.forEach(p =>
           location.participants.push(p.uuid)
         )
-        track.push(location)
+        chaseTrack.push(location)
       }
 
       // Add space between chasers and preys.
       for (let index = 0; index < this.item.data.data.startingRange; index++) {
-        track.push({
+        chaseTrack.push({
           uuid: this.generateNewUuid(),
           init: true,
           participants: []
@@ -477,11 +483,11 @@ export class CoC7ChaseSheet extends ItemSheet {
         locationParticipantsList.forEach(p =>
           location.participants.push(p.uuid)
         )
-        track.push(location)
+        chaseTrack.push(location)
       }
     }
 
-    return track
+    return chaseTrack
   }
 
   generateNewUuid () {
@@ -503,7 +509,7 @@ export class CoC7ChaseSheet extends ItemSheet {
   activateListeners (html) {
     super.activateListeners(html)
 
-    // html.find('.track').ready(async html => await this._onSheetReady(html))
+    // html.find('.chase-track').ready(async html => await this._onSheetReady(html))
 
     html.on('dblclick', '.open-actor', CoC7Chat._onOpenActor.bind(this))
 
@@ -693,9 +699,9 @@ export class CoC7ChaseSheet extends ItemSheet {
   }
 
   static /**async */ setScroll (app, html, data) {
-    const track = html.find('.track')
-    if (!track.length) return
-    const element = $(track).find('.active')
+    const chaseTrack = html.find('.chase-track')
+    if (!chaseTrack.length) return
+    const element = $(chaseTrack).find('.active')
     if (!element.length) return
 
     const originalPosition = html[0].classList.contains('window-app')
@@ -704,11 +710,11 @@ export class CoC7ChaseSheet extends ItemSheet {
     // const originalPosition = data.data.trackScrollPosition //If first opening always scroll to
 
     const elementleft = element[0].offsetLeft
-    const divWidth = track[0].clientWidth
+    const divWidth = chaseTrack[0].clientWidth
     let elementCenterRelativeLeft = elementleft - divWidth / 2
     if (elementCenterRelativeLeft < 0) elementCenterRelativeLeft = 0
 
-    const trackElement = track[0]
+    const trackElement = chaseTrack[0]
 
     if (-1 != originalPosition) {
       trackElement.scrollTo({
@@ -732,7 +738,7 @@ export class CoC7ChaseSheet extends ItemSheet {
   }
 
   // async _onSheetReady (html) {
-  //   const track = html.find('.track')
+  //   const track = html.find('.chase-track')
   //   const element = $(track).find('.active')
 
   //   const elementleft = element[0].offsetLeft
@@ -817,6 +823,11 @@ export class CoC7ChaseSheet extends ItemSheet {
     return
   }
 
+  async saveScrollLocation () {
+    if( !this._element) return
+    const chaseTrack = this._element.find('.chase-track')
+  }
+
   async _onToggle (event) {
     const target = event.currentTarget
     // const locationElement = target.closest('.location.obstacle')
@@ -887,8 +898,8 @@ export class CoC7ChaseSheet extends ItemSheet {
 
   async _onLocationClick (event) {
     const target = event.currentTarget
-    const track = target.closest('.track')
-    await this.item.update({ 'data.trackScrollPosition': track.scrollLeft })
+    const chaseTrack = target.closest('.chase-track')
+    await this.item.update({ 'data.trackScrollPosition': chaseTrack.scrollLeft })
     const active = target.classList.contains('active')
     const locations = duplicate(this.item.data.data.locations.list)
     locations.forEach(l => (l.active = false))
@@ -899,6 +910,29 @@ export class CoC7ChaseSheet extends ItemSheet {
       if (!active) locations[locationIndex].active = true
       await this.updateLocationsList(locations)
     }
+  }
+
+  async activateLocation (locationUuid, scrollToLocation = true) {
+    const locations = duplicate(this.item.data.data.locations.list)
+    locations.forEach(l => (l.active = false))
+    const locationIndex = this.findIndex(locations, uuid)
+    if (-1 != locationIndex) {
+      locations[locationIndex].active = true
+      await this.updateLocationsList(locations)
+      if( scrollToLocation) await this.item.update({ 'data.trackScrollPosition': -1 })
+
+    }
+  }
+
+  async activateParticipant (participantUuid, scrollToLocation = true){
+    const participants = this.item.data.data.participants
+    ? duplicate(this.item.data.data.participants)
+    : []
+    participants.forEach(p => {
+      delete p.active
+      if (participantUuid == p.uuid) p.active = true
+    })
+    await this.updateParticipants(participants)
   }
 
   async _onChaseParticipantClick (event) {
@@ -935,6 +969,8 @@ export class CoC7ChaseSheet extends ItemSheet {
         return await this._onChangeMovementActions(-1, event)
       case 'increaseActions':
         return await this._onChangeMovementActions(1, event)
+      case 'activateParticipant':
+
     }
   }
 
@@ -950,9 +986,9 @@ export class CoC7ChaseSheet extends ItemSheet {
     participant.alterMovementActions(count)
 
     const sheet = target.closest('.coc7.item.chase')
-    const track = sheet.querySelector('.track')
-    if (track)
-      await this.item.update({ 'data.trackScrollPosition': track.scrollLeft })
+    const chaseTrack = sheet.querySelector('.chase-track')
+    if (chaseTrack)
+      await this.item.update({ 'data.trackScrollPosition': chaseTrack.scrollLeft })
 
     await this.updateParticipants(participants)
   }
@@ -1041,7 +1077,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     this._onDragLeave(dragEvent)
 
     const target = dragEvent.currentTarget
-    const track = target.closest('.track')
+    const chaseTrack = target.closest('.chase-track')
     const locationUuid = target.dataset.uuid
     const dataString = dragEvent.dataTransfer.getData('text/plain')
     const data = JSON.parse(dataString)
@@ -1052,7 +1088,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     ui.notifications.info(
       `dragged particpant ${data.uuid} onto location ${locationUuid}`
     )
-    await this.item.update({ 'data.trackScrollPosition': track.scrollLeft })
+    await this.item.update({ 'data.trackScrollPosition': chaseTrack.scrollLeft })
 
     await this.moveParticipant(data.uuid, locationUuid)
   }
@@ -1670,6 +1706,10 @@ export class _participant {
 
   get hasMaxMvtActions () {
     return this.currentMovementActions >= this.movementAction
+  }
+
+  get isActive () {
+    return this.data.active || false
   }
 
   addMovementActions (x = 1) {
