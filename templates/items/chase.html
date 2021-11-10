@@ -81,7 +81,7 @@
 
                 {{#if started}}
                 <div class="initiative-track flexrow">
-                    {{#each participantsByInitiative as |p i|}}
+                    {{#each item.participantsByInitiative as |p i|}}
                     <div class="initiative-block flexcol {{p.cssClass}}" data-uuid="{{p.uuid}}">
                         <div class="participant flexrow">
                             <div class="portrait" >
