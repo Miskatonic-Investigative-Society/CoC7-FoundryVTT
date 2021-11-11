@@ -93,7 +93,7 @@ const keys = {
     sanLossNone: 'none',
     diceShort: 'w|d',
     fulldb: '(' + 'Schadensbonus|Sb' + ')',
-    halfdb: '(' + '½|half' + ')',
+    halfdb: '(' + '½|1/2 Schadensbonus|Sb/2' + ')',
     sectionCombats: '\n(?:' + 'Kampf|Angriff:|ANGRIFFE' + ')[:\n]',
     newCombatHeader: '\n' + 'Kampf' + '\n',
     sectionSkills: '\n(?:' + 'Fertigkeiten' + '(?:\\s*\\([^\\)]+\\))?)[:\n]',
@@ -347,7 +347,7 @@ const translations = {
       ']+(?<!' +
       'The player has|but they regenerate' +
       '))\\s+\\(?(?<percentage>\\d+)[^d]%?\\)?(\\s*\\(\\d+/\\d+\\))?[\\.,;]?\\s*',
-    guessStartCombat: '(^|(?<!,)\n)(' + 'Angriffe|Handgemenge|Nahkampf|Firearms|Brawl|Bite' + ')',
+    guessStartCombat: '(^|(?<!,)\n)(' + 'Angriffe|Handgemenge|Nahkampf|Faustfeuerwaffe|Beißen' + ')',
     name: '^(?<name>[\\.\\s' + nameCharacters + ']+)[,\\s\n]+',
     sections:
       '(' +
