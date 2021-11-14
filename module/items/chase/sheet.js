@@ -7,14 +7,8 @@ import { CoC7Check } from '../../check.js'
 import { _participant } from './participant.js'
 
 export class CoC7ChaseSheet extends ItemSheet {
-  // constructor( ...args) {
-  //  super( ...args);
-  // }
-
-  static get flags () {
-    return {
-      started: 'started'
-    }
+  constructor (...args) {
+    super(...args)
   }
 
   /**
@@ -65,8 +59,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     //   game.i18n.localize('CoC7.ExperimentalFeaturesWarning')
     // )
     const data = super.getData(options)
-    // if( this.started) options.tabs[0].initial = 'setup'
-    if (this.started) this._tabs[0].active = 'setup'
+    // if (this.item.started) this._tabs[0].active = 'setup'
 
     /** MODIF: 0.8.x **/
     const itemData = data.data
@@ -118,12 +111,12 @@ export class CoC7ChaseSheet extends ItemSheet {
       p.slowest = p.adjustedMov == data.preysMinMov
     })
 
-    data.locations = this.locations
+    data.locations = this.item.locations
     data.allHaveValidMov = this.allHaveValidMov
-    data.activeLocation = this.activeLocation
-    data.previousLocation = this.previousLocation
-    data.nextLocation = this.nextLocation
-    data.started = this.started
+    data.activeLocation = this.item.activeLocation
+    data.previousLocation = this.item.previousLocation
+    data.nextLocation = this.item.nextLocation
+    data.started = this.item.started
     data.dataListCheckOptions = this.allSkillsAndCharacteristics
 
     data.isKeeper = game.user.isGM
@@ -167,307 +160,17 @@ export class CoC7ChaseSheet extends ItemSheet {
     return list.sort(Intl.Collator().compare)
   }
 
-  findMinMov (list) {
-    if (!list?.length) return -1
-    return list.reduce((prev, current) =>
-      prev.adjustedMov < current.adjustedMov ? prev : current
-    ).adjustedMov
-  }
+  // get activeParticipant () {
+  //   if (!this.item.data.data.participants) return undefined
+  //   const participant = this.item.data.data.participants.find(p => p.active)
+  //   if (!participant) return undefined
+  //   return new _participant(participant)
+  // }
 
-  findMaxMov (list) {
-    if (!list?.length) return -1
-    return list.reduce((prev, current) =>
-      prev.adjustedMov > current.adjustedMov ? prev : current
-    ).adjustedMov
-  }
-
-  processLocations (locations) {
-    if (!locations?.length) return
-    locations[0].first = true
-
-    for (let index = 0; index < locations.length; index++) {
-      const classes = []
-      const location = locations[index]
-      if (!location.name) classes.push('empty')
-      if (location.active) classes.push('active')
-      if (location.init && !this.started) classes.push('init')
-      location.cssClasses = classes.join(' ')
-    }
-
-    if (locations.length > 1) locations[locations.length - 1].last = true
-
-    locations.forEach(l => {
-      if (l.participants && l.participants.length) {
-        // ui.notifications.error(`Length : ${l.participants.length}`)
-
-        for (let i = 0; i < l.participants.length; i++) {
-          const elem = l.participants[i] // Init track = only uuid, update location list change for uuid
-
-          // ui.notifications.error(`Type : ${typeof elem}`)
-          let p
-          if (typeof elem === 'string' || elem instanceof String) {
-            p = this.item.data.data.participants.find(p => elem == p.uuid) //Retrieve participant data from list.
-          } else if (elem.constructor.name == '_participant') {
-            p = undefined // participant is already processed.
-            ui.notifications.warn('Participant was already processed.')
-          } else p = undefined
-
-          if (undefined != p) {
-            l.participants[i] = new _participant(p) // replace uuid with _participant
-          } else {
-            // participants.push( null)
-            console.error(
-              'Undefined paticipant while processing participants array'
-            )
-          }
-        }
-        l.participants.sort(sortByRoleAndDex) // TODO : test if sorting works
-      }
-    })
-  }
-
-  get locations () {
-    const locations = this.started
-      ? this.item.data.data.locations.list
-        ? duplicate(this.item.data.data.locations.list)
-        : []
-      : this.initTrack
-    this.processLocations(locations)
-    return locations
-  }
-
-  get initTrack () {
-    if (
-      !this.item.data.data.locations.list ||
-      0 === this.item.data.data.locations.list.length
-    )
-      return undefined
-
-    const locations = [] // !!!!!!! locations vs init locations !!!
-
-    const init = this.startingLine
-    let locationsIndexStart, initIndexStart, locationsLength
-    if (0 >= init.length) locationsIndexStart = 0
-    else if (this.item.data.data.startingIndex >= init.length)
-      locationsIndexStart = 0
-    else locationsIndexStart = init.length - this.item.data.data.startingIndex
-
-    if (this.item.data.data.startingIndex <= 0) initIndexStart = 0
-    else if (this.item.data.data.startingIndex <= init.length)
-      initIndexStart = 0
-    else initIndexStart = this.item.data.data.startingIndex - init.length
-
-    if (0 == locationsIndexStart)
-      locationsLength = this.item.data.data.locations.list.length
-    else
-      locationsLength =
-        this.item.data.data.locations.list.length + locationsIndexStart
-
-    if (0 != init.length) {
-      if (this.item.data.data.startingIndex < 0) {
-        for (
-          let index = 0;
-          index < Math.abs(this.item.data.data.startingIndex);
-          index++
-        ) {
-          init.push({
-            uuid: this.generateNewUuid(),
-            init: true,
-            participants: []
-          })
-        }
-      }
-    }
-
-    const chaseLocations = duplicate(this.item.data.data.locations)
-    for (let index = 0; index < locationsLength; index++) {
-      let location = {}
-      const participants = []
-      if (
-        index >= locationsIndexStart &&
-        index - locationsIndexStart < chaseLocations.list.length
-      ) {
-        location = duplicate(chaseLocations.list[index - locationsIndexStart])
-        location.init = false
-        location.participants?.forEach(p => {
-          if (null != p) participants.push(p)
-        })
-      }
-      if (index >= initIndexStart && index - initIndexStart < init.length) {
-        mergeObject(location, init[index - initIndexStart], {
-          overwrite: false
-        })
-
-        init[index - initIndexStart].participants?.forEach(p => {
-          if (null != p) participants.push(p)
-        })
-
-        location.participants = participants
-      }
-      location.first = false
-      location.end = false
-      locations.push(location)
-    }
-
-    return locations
-  }
-
-  get activeLocation () {
-    if (!this.locations) return undefined
-    return this.locations.find(l => l.active)
-  }
-
-  get activeParticipant () {
-    if (!this.item.data.data.participants) return undefined
-    const participant = this.item.data.data.participants.find(p => p.active)
-    if (!participant) return undefined
-    return new _participant(participant)
-  }
-
-  get activeParticipantLocation () {
-    if (!this.item.data.data.participants) return undefined
-    const participant = this.item.data.data.participants.find(p => p.active)
-    
-  }
-
-  get previousLocation () {
-    if (!this.locations) return undefined
-    const activeIndex = this.locations.findIndex(l => l.active)
-    if (-1 == activeIndex) return undefined
-    if (0 == activeIndex) return undefined
-    return this.locations[activeIndex - 1]
-  }
-
-  get nextLocation () {
-    if (!this.locations) return undefined
-    const activeIndex = this.locations.findIndex(l => l.active)
-    if (-1 == activeIndex) return undefined
-    if (activeIndex == this.locations.length - 1) return undefined
-    return this.locations[activeIndex + 1]
-  }
-
-  get allHaveValidMov () {
-    return this.item.participants.every(e => e.hasValidMov)
-  }
-
-  get allHaveSpeedRoll () {
-    return this.item.participants.every(p => p.speedCheck?.rolled)
-  }
-
-  get started () {
-    return this.item.getFlag('CoC7', CoC7ChaseSheet.flags.started)
-  }
-
-  async cutToTheChase () {
-    if (!this.allHaveSpeedRoll) {
-      ui.notifications.warn('Speed roll missing')
-      return
-    }
-    if (this.allHaveValidMov) {
-      //TODO : Check for speed roll ??
-
-      //Calculate movement actions
-      const participants = this.item.participants
-      const minMov = this.findMinMov(participants)
-      participants.forEach(p => {
-        p.data.movementAction = 1 + (p.adjustedMov - minMov)
-      })
-      await this.updateParticipants(participants)
-      await this.updateLocationsList(this.locations)
-      await this.item.setFlag('CoC7', CoC7ChaseSheet.flags.started, true)
-    }
-  }
-
-  get startingLine () {
-    //Get preys and check for escaped
-    const preys = this.item.data.data.includeEscaped
-      ? this.item.preys
-      : this.item.preys?.filter(p => !p.data.escaped)
-    //Get chasers
-    const chasers = this.item.chasers
-
-    //If no prey or no chasser
-    // if (0 == chasers.length) {
-    //   ui.notifications.warn('No chasers')
-    //   return undefined
-    // }
-    // if (0 == preys.length) {
-    //   ui.notifications.warn('No preys')
-    //   return undefined
-    // }
-
-    //Build starting track
-    const chaseTrack = []
-
-    const chasersMinMov = this.findMinMov(chasers)
-    const chasersMaxMov = this.findMaxMov(chasers)
-    const preysMinMov = this.findMinMov(preys)
-    const preysMaxMov = this.findMaxMov(preys)
-
-    if (-1 != chasersMinMov && -1 != chasersMaxMov) {
-      // Add chasers to the track.
-      for (let mov = chasersMinMov; mov <= chasersMaxMov; mov++) {
-        //Find all with that mov
-        const location = {
-          uuid: this.generateNewUuid(),
-          init: true,
-          participants: []
-        }
-        const locationParticipantsList = chasers
-          .filter(p => mov == p.adjustedMov)
-          .sort((a, b) => a.dex - b.dex)
-        locationParticipantsList.forEach(p =>
-          location.participants.push(p.uuid)
-        )
-        chaseTrack.push(location)
-      }
-
-      // Add space between chasers and preys.
-      for (let index = 0; index < this.item.data.data.startingRange; index++) {
-        chaseTrack.push({
-          uuid: this.generateNewUuid(),
-          init: true,
-          participants: []
-        })
-      }
-    }
-
-    if (-1 != preysMinMov && -1 != preysMaxMov) {
-      // Add preys to the track.
-      for (let mov = preysMinMov; mov <= preysMaxMov; mov++) {
-        //Find all with that mov
-        const location = {
-          uuid: this.generateNewUuid(),
-          init: true,
-          participants: []
-        }
-        const locationParticipantsList = preys
-          .filter(p => mov == p.adjustedMov)
-          .sort((a, b) => a.dex - b.dex)
-        locationParticipantsList.forEach(p =>
-          location.participants.push(p.uuid)
-        )
-        chaseTrack.push(location)
-      }
-    }
-
-    return chaseTrack
-  }
-
-  generateNewUuid () {
-    let unique = false
-    let uuid
-    while (!unique) {
-      uuid = foundry.utils.randomID(16)
-      unique =
-        0 ===
-          this.item.data.data.participants.filter(p => p.uuid == uuid).length &&
-        0 ===
-          this.item.data.data.locations.list.filter(p => p.uuid == uuid).length
-    }
-
-    return uuid
-  }
+  // get activeParticipantLocation () {
+  //   if (!this.item.data.data.participants) return undefined
+  //   const participant = this.item.data.data.participants.find(p => p.active)
+  // }
 
   /** @override */
   activateListeners (html) {
@@ -544,7 +247,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     })
     newParticipantDragDrop.bind(html[0])
 
-    if (this.started) {
+    if (this.item.started) {
       const chaseParticipantDragpDrop = new DragDrop({
         dragSelector: '.chase-participant',
         dropSelector: '.chase-location',
@@ -663,34 +366,32 @@ export class CoC7ChaseSheet extends ItemSheet {
   }
 
   static /**async */ setScroll (app, html, data) {
-    const chaseTrack = html.find('.chase-track')
-    if (!chaseTrack.length) return
-    const element = $(chaseTrack).find('.active')
-    if (!element.length) return
+    const initialOpening = html[0].classList.contains('window-app')
+    const chaseTrack = html[0].querySelector('.chase-track')
+    if (!chaseTrack) return
 
-    const originalPosition = html[0].classList.contains('window-app')
-      ? -1
-      : data.data.trackScrollPosition //If first opening always scroll to
-    // const originalPosition = data.data.trackScrollPosition //If first opening always scroll to
+    let start = data.data.scroll.chaseTrack.from
+    let end = data.data.scroll.chaseTrack.to
+    if (initialOpening) {
+      if (end > 0) {
+        start = 0
+      } else if (start > 0) {
+        end = start
+        start = 0
+      }
+    }
 
-    const elementleft = element[0].offsetLeft
-    const divWidth = chaseTrack[0].clientWidth
-    let elementCenterRelativeLeft = elementleft - divWidth / 2
-    if (elementCenterRelativeLeft < 0) elementCenterRelativeLeft = 0
-
-    const trackElement = chaseTrack[0]
-
-    if (-1 != originalPosition) {
-      trackElement.scrollTo({
+    if (start) {
+      chaseTrack.scrollTo({
         top: 0,
-        left: originalPosition,
+        left: start,
         behavior: 'instant'
       })
     }
 
-    trackElement.scrollTo({
+    chaseTrack.scrollTo({
       top: 0,
-      left: elementCenterRelativeLeft,
+      left: end,
       behavior: 'smooth'
     })
 
@@ -747,48 +448,8 @@ export class CoC7ChaseSheet extends ItemSheet {
     return list.findIndex(p => p.uuid == uuid)
   }
 
-  async updateLocationsList (list) {
-    //Remove all unnecessary items (cssClass, )
-    const updatedList = duplicate(list)
-    updatedList.forEach(l => {
-      // delete l.active
-      delete l.cssClasses
-      delete l.first
-      delete l.last
-      delete l.end
-      if (l.participants && l.participants.length) {
-        for (let i = 0; i < l.participants.length; i++) {
-          if (l.participants[i].data?.uuid)
-            l.participants[i] = l.participants[i].data.uuid
-        }
-      }
-    })
-    await this.item.update({ 'data.locations.list': updatedList })
-  }
-
-  async updateParticipants (list) {
-    const participantsData = this.item.data.data.participants
-      ? duplicate(this.item.data.data.participants)
-      : []
-    list.forEach(p => {
-      let data
-      if (p.constructor.name == '_participant') {
-        data = p.data
-      } else data = p
-      const index = this.findIndex(participantsData, data.uuid)
-      if (-1 === index) {
-        participantsData.push(data)
-        ui.notifications.warn('Participant data missing')
-      } else {
-        participantsData[index] = data
-      }
-    })
-    await this.item.update({ 'data.participants': participantsData })
-    return
-  }
-
   async saveScrollLocation () {
-    if( !this._element) return
+    if (!this._element) return
     const chaseTrack = this._element.find('.chase-track')
   }
 
@@ -815,7 +476,7 @@ export class CoC7ChaseSheet extends ItemSheet {
           locations[locationIndex] = originalLocation
         }
       }
-      await this.updateLocationsList(locations)
+      await this.item.updateLocationsList(locations)
     }
   }
 
@@ -831,7 +492,7 @@ export class CoC7ChaseSheet extends ItemSheet {
         barrier: true
       }
     }
-    await this.updateLocationsList(locations)
+    await this.item.updateLocationsList(locations)
   }
 
   async _onObstacleTypeClick (event) {
@@ -857,67 +518,20 @@ export class CoC7ChaseSheet extends ItemSheet {
         locationIndex
       ].obstacleDetails.hazard
     }
-    await this.updateLocationsList(locations)
+    await this.item.updateLocationsList(locations)
   }
 
   async _onLocationClick (event) {
     const target = event.currentTarget
-    const chaseTrack = target.closest('.chase-track')
-    await this.item.update({ 'data.trackScrollPosition': chaseTrack.scrollLeft })
-    const active = target.classList.contains('active')
-    const locations = duplicate(this.item.data.data.locations.list)
-    locations.forEach(l => (l.active = false))
     const locationElement = target.closest('.chase-location')
-    const uuid = locationElement.dataset.uuid
-    const locationIndex = this.findIndex(locations, uuid)
-    if (-1 != locationIndex) {
-      if (!active) locations[locationIndex].active = true
-      await this.updateLocationsList(locations)
-    }
-  }
-
-  async activateLocation (locationUuid, scrollToLocation = true) {
-    const locations = duplicate(this.item.data.data.locations.list)
-    locations.forEach(l => (l.active = false))
-    const locationIndex = this.findIndex(locations, uuid)
-    if (-1 != locationIndex) {
-      locations[locationIndex].active = true
-      await this.updateLocationsList(locations)
-      if( scrollToLocation) await this.item.update({ 'data.trackScrollPosition': -1 })
-
-    }
-  }
-
-  async activateParticipant (participantUuid, scrollToLocation = true){
-    const participants = this.item.data.data.participants
-    ? duplicate(this.item.data.data.participants)
-    : []
-    participants.forEach(p => {
-      delete p.active
-      if (participantUuid == p.uuid) p.active = true
-    })
-    await this.updateParticipants(participants)
+    const lUuid = locationElement.dataset.uuid
+    await this.item.activateLocation(lUuid)
   }
 
   async _onChaseParticipantClick (event) {
     const target = event.currentTarget
-    if (!target.closest('.chase-location')?.classList?.contains('active')) {
-      await this._onLocationClick(event)
-    }
     const pUuid = event.currentTarget.dataset?.uuid
-    if (!pUuid) {
-      ui.notifications.error('No participant ID found')
-      return
-    }
-    const participants = this.item.data.data.participants
-      ? duplicate(this.item.data.data.participants)
-      : []
-    participants.forEach(p => {
-      delete p.active
-      if (pUuid == p.uuid) p.active = true
-    })
-    await this.updateParticipants(participants)
-    ui.notifications.info('participant clicked')
+    await this.item.activateParticipant(pUuid)
   }
 
   async _onParticipantControlClicked (event) {
@@ -933,8 +547,10 @@ export class CoC7ChaseSheet extends ItemSheet {
         return await this._onChangeMovementActions(-1, event)
       case 'increaseActions':
         return await this._onChangeMovementActions(1, event)
-      case 'activateParticipant':
-
+      case 'moveBackward':
+        return await this.item.moveParticipant(participantUuid, -1)
+      case 'moveForward':
+        return await this.item.moveParticipant(participantUuid, 1)
     }
   }
 
@@ -946,15 +562,17 @@ export class CoC7ChaseSheet extends ItemSheet {
     if (!participantUuid) return
     const participants = this.item.participants
     const participant = participants.find(p => participantUuid == p.uuid)
-    if(participant.hasMaxMvtActions && count>0) return
+    if (participant.hasMaxMvtActions && count > 0) return
     participant.alterMovementActions(count)
 
-    const sheet = target.closest('.coc7.item.chase')
-    const chaseTrack = sheet.querySelector('.chase-track')
-    if (chaseTrack)
-      await this.item.update({ 'data.trackScrollPosition': chaseTrack.scrollLeft })
+    // const sheet = target.closest('.coc7.item.chase')
+    // const chaseTrack = sheet.querySelector('.chase-track')
+    // if (chaseTrack)
+    //   await this.item.update({
+    //     'data.trackScrollPosition': chaseTrack.scrollLeft
+    //   })
 
-    await this.updateParticipants(participants)
+    await this.item.updateParticipants(participants)
   }
 
   async _onButtonClick (event) {
@@ -975,7 +593,7 @@ export class CoC7ChaseSheet extends ItemSheet {
           })
           locations[0].name = 'Start'
           if (locations.length > 1) locations[locations.length - 1].name = 'End'
-          await this.updateLocationsList(locations)
+          await this.item.updateLocationsList(locations)
         }
 
         break
@@ -984,8 +602,8 @@ export class CoC7ChaseSheet extends ItemSheet {
           title: `${game.i18n.localize('CoC7.ConfirmResetChase')}`,
           content: `<p>${game.i18n.localize('CoC7.ConfirmResetChaseHint')}</p>`,
           yes: async () => {
-            await this.updateLocationsList([])
-            await this.item.unsetFlag('CoC7', CoC7ChaseSheet.flags.started)
+            await this.item.updateLocationsList([])
+            await this.item.stop()
           }
         })
         break
@@ -994,7 +612,7 @@ export class CoC7ChaseSheet extends ItemSheet {
         Dialog.confirm({
           title: `${game.i18n.localize('CoC7.ConfirmCut2Chase')}`,
           content: `<p>${game.i18n.localize('CoC7.ConfirmCut2ChaseHint')}</p>`,
-          yes: () => this.cutToTheChase()
+          yes: () => this.item.cutToTheChase()
         })
         break
 
@@ -1004,14 +622,7 @@ export class CoC7ChaseSheet extends ItemSheet {
           content: `<p>${game.i18n.localize(
             'CoC7.ConfirmRestartChaseHint'
           )}</p>`,
-          yes: async () => {
-            const locations = this.locations.filter(l => !l.init)
-            for (let i = 0; i < locations.length; i++) {
-              if (locations[i].participants) locations[i].participants = []
-            }
-            await this.updateLocationsList(locations)
-            await this.item.unsetFlag('CoC7', CoC7ChaseSheet.flags.started)
-          }
+          yes: () => this.item.restart()
         })
         break
 
@@ -1052,9 +663,12 @@ export class CoC7ChaseSheet extends ItemSheet {
     ui.notifications.info(
       `dragged particpant ${data.uuid} onto location ${locationUuid}`
     )
-    await this.item.update({ 'data.trackScrollPosition': chaseTrack.scrollLeft })
 
-    await this.moveParticipant(data.uuid, locationUuid)
+    // await this.item.update({
+    //   'data.trackScrollPosition': chaseTrack.scrollLeft
+    // })
+    await this.item.moveParticipantToLocation(data.uuid, locationUuid)
+    await this.item.setScroll()
   }
 
   _onDragOver (dragEvent) {
@@ -1343,67 +957,6 @@ export class CoC7ChaseSheet extends ItemSheet {
     await this.item.update({ 'data.participants': participants })
   }
 
-  async updateRoll (rollString) {
-    if (game.user.isGM) {
-      const roll = CoC7Check.fromRollString(rollString)
-      const participants = this.item.data.data.participants
-        ? duplicate(this.item.data.data.participants)
-        : []
-      const index = participants.findIndex(p => p.rollUuid === roll.uuid)
-      if (index >= 0) {
-        participants[index].speedCheck.rollDataString = roll.JSONRollString
-        await this.item.update({ 'data.participants': participants })
-      }
-    } else {
-      const data = {
-        data: rollString,
-        type: 'invoke',
-        method: 'updateRoll',
-        item: this.item.uuid
-      }
-      game.socket.emit('system.CoC7', data)
-    }
-  }
-
-  async moveParticipant (participantUuid, locationUuid) {
-    const locations = duplicate(this.item.data.data.locations.list)
-
-    //Find destination location.
-    const destination = locations.find(l => locationUuid == l.uuid)
-    if (!destination) {
-      console.error(
-        `Failed to move ${participantUuid}. Location ${locationUuid} unknown`
-      )
-      return
-    }
-
-    //Find origin location
-    const origin = locations.find(l =>
-      l.participants?.includes(participantUuid)
-    )
-    // if (l.participants) {
-    //   if (-1 != l.participants.findIndex(p => participantUuid == p.uuid || p == participantUuid))
-    //     return true
-    // }
-    // return false
-    // })
-    if (!origin) {
-      console.error(`Failed to find ${participantUuid} in locations`)
-      return
-    }
-
-    if (!destination.participants) destination.participants = []
-    destination.participants.push(participantUuid)
-    // destination.participants.sort(sortByRoleAndDex)
-
-    const oldParticipantsList = origin.participants.filter(
-      p => participantUuid != p
-    )
-    origin.participants = oldParticipantsList
-
-    await this.updateLocationsList(locations)
-  }
-
   async toggleParticipantGun (participantUuid) {
     const participants = this.item.data.data.participants
       ? duplicate(this.item.data.data.participants)
@@ -1411,16 +964,8 @@ export class CoC7ChaseSheet extends ItemSheet {
     const participant = participants.find(p => participantUuid == p.uuid)
     if (!participant) return
     participant.hasAGunReady = !participant.hasAGunReady
-    await this.updateParticipants(participants)
+    await this.item.updateParticipants(participants)
   }
-}
-
-export function sortByRoleAndDex (a, b) {
-  //Put chasers first
-  if (b.chaser && !a.chaser) return 1
-  if (a.chaser && !b.chaser) return -1
-  //If sametype sort by dex
-  return a.dex - b.dex
 }
 
 export function clean (obj) {

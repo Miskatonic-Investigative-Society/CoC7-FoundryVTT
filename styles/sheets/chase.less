@@ -85,12 +85,24 @@
     border-radius: 0.5rem;
     &.prey {
       background-color: rgba(60, 128, 60, 0.1);
+      &.no-actions {
+        background-color: rgba(60, 60, 60, 0.1);
+      }
     }
     &.chaser {
       background-color: rgba(128, 60, 60, 0.1);
+      &.no-actions {
+        background-color: rgba(60, 60, 60, 0.1);
+      }
     }
     &.active {
       border-color: #ff6400;
+    }
+
+    .header {
+      .participant-controls {
+        flex: 0 0 auto;
+      }
     }
 
     .participant-control {
@@ -98,11 +110,14 @@
       flex: 0;
       margin-right: 0.5rem;
       &.active {
+        color: #666;
+      }
+      &.disabled {
         color: #eee;
       }
       &.inactive {
-        color: red;
-        &:hover{
+        color: #eee;
+        &:hover {
           text-shadow: none;
           cursor: default;
         }
@@ -118,6 +133,8 @@
     }
 
     .movement-action {
+      display: flex;
+      justify-content: center;
       .deficit {
         color: red;
         text-shadow: 0 0 8px red;
