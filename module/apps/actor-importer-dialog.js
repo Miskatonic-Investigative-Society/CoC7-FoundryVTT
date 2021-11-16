@@ -100,7 +100,7 @@ export class CoC7ActorImporterDialog extends Dialog {
 
   submit (button) {
     if(button.cssClass=="getExampleNow"){
-      var content = CoC7ActorImporterRegExp.getExampleText(game.i18n.lang);
+      var content = CoC7ActorImporterRegExp.getExampleText($("#coc-entity-lang :selected").val());
       navigator.clipboard.writeText(content)
           .then(() => {
             return ui.notifications.warn(
