@@ -826,5 +826,7 @@
   "SETTINGS.CheckElevationHint": "在範圍戰鬥距離計算中使用高度",
   "CoC7.toolTipDelay": "顯示提示前的毫秒延遲，0表示從不顯示",
   "CoC7.getTheExample": "複製示範文字",
-  "CoC7.Copied": "已複製示範文字"
+  "CoC7.Copied": "已複製示範文字",
+  "CoC7.NotEnoughMagicPoints": "{spell}需要消耗{originalMagicPoints}點MP，但你只有{actorMagicPoints}點。你希望轉換你{convertedHitPoints}點的HP嗎？這樣的話，你將會受到{convertedHitPoints}點的HP傷害。",
+  "CoC7.German": "德文"
 }
