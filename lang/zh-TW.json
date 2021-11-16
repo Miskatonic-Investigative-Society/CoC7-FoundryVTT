@@ -824,5 +824,7 @@
   "SETTINGS.ArtPauseTextHint": "留空為默認",
   "SETTINGS.CheckElevation": "在距離中包括高度",
   "SETTINGS.CheckElevationHint": "在範圍戰鬥距離計算中使用高度",
-  "CoC7.toolTipDelay": "顯示提示前的毫秒延遲，0表示從不顯示"
+  "CoC7.toolTipDelay": "顯示提示前的毫秒延遲，0表示從不顯示",
+  "CoC7.getTheExample": "複製示範文字",
+  "CoC7.Copied": "已複製示範文字"
 }
