@@ -99,9 +99,9 @@ export class CoC7ActorImporterDialog extends Dialog {
   }
 
   submit (button) {
-    if(button.cssClass=="getExampleNow"){
+    if(button.cssClass === "getExampleNow"){
       var content = CoC7ActorImporterRegExp.getExampleText($("#coc-entity-lang :selected").val());
-      navigator.clipboard.writeText(content)
+      CoC7Utilities.copyToClipboard(content)
           .then(() => {
             return ui.notifications.warn(
               game.i18n.localize('CoC7.Copied')
