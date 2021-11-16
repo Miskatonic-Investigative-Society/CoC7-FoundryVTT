@@ -2,15 +2,15 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`. Feel free to create a new `*.json` file for a language that is not shown here!
 
-The following translations are currently up to date **de**, **sv**
+The following translations are currently up to date **de**, **sv**, **zh-TW**
 
 The following translations have been abandoned **cn**, **cs**, [are you able to help?](./ABANDONED.md)
 
-| Key                                                    |    es    |    fr    |    ja    |    pl    |  pt-BR   |  zh-TW   |
-| :----------------------------------------------------- | :------: | :------: | :------: | :------: | :------: | :------: |
-| **Remaining**:                                         |  **2**   |  **2**   |  **2**   |  **2**   |  **2**   |  **2**   |
-| [CoC7.German](#coc7german)                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.NotEnoughMagicPoints](#coc7notenoughmagicpoints) | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| Key                                                    |    es    |    fr    |    ja    |    pl    |  pt-BR   |
+| :----------------------------------------------------- | :------: | :------: | :------: | :------: | :------: |
+| **Remaining**:                                         |  **2**   |  **2**   |  **2**   |  **2**   |  **2**   |
+| [CoC7.German](#coc7german)                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.NotEnoughMagicPoints](#coc7notenoughmagicpoints) | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 
 ##### CoC7.German
 
