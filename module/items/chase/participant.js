@@ -85,6 +85,18 @@ export class _participant {
     return this.data.uuid
   }
 
+  get hasAssit () {
+    return this.data.hasAssit || false
+  }
+
+  get canAssist () {
+    return this.assist?.length > 0
+  }
+
+  get assist () {
+    return this.data.assist || []
+  }
+
   get dex () {
     if (!this.data.dex) {
       if (this.hasVehicle && this.hasDriver) {

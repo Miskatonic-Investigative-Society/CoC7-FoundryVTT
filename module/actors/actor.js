@@ -237,15 +237,15 @@ export class CoCActor extends Actor {
     }
     let boutDurationText = this.isInABoutOfMadness
       ? boutRealTime
-          ? `${duration} ${game.i18n.localize('CoC7.rounds')}`
-          : `${duration} ${game.i18n.localize('CoC7.hours')}`
+        ? `${duration} ${game.i18n.localize('CoC7.rounds')}`
+        : `${duration} ${game.i18n.localize('CoC7.hours')}`
       : null
     const insanityDurationText = insaneDuration
       ? this.isInsane
-          ? indefiniteInstanity
-              ? null
-              : `${insaneDuration} ${game.i18n.localize('CoC7.hours')}`
-          : null
+        ? indefiniteInstanity
+          ? null
+          : `${insaneDuration} ${game.i18n.localize('CoC7.hours')}`
+        : null
       : null
     if (this.isInsane && !insanityDurationText && !indefiniteInstanity) {
       indefiniteInstanity = true
@@ -272,8 +272,8 @@ export class CoCActor extends Actor {
         durationText: insanityDurationText || '',
         hint: this.isInsane
           ? indefiniteInstanity
-              ? game.i18n.localize('CoC7.IndefiniteInsanity')
-              : `${game.i18n.localize(
+            ? game.i18n.localize('CoC7.IndefiniteInsanity')
+            : `${game.i18n.localize(
                 'CoC7.TemporaryInsanity'
               )} ${insanityDurationText || ''}`
           : game.i18n.localize('CoC7.NotInsane')
@@ -2673,6 +2673,7 @@ export class CoCActor extends Actor {
 
   /** Try to find a characteristic, attribute or skill that matches the name */
   find (name) {
+    if (!name) return undefined
     // Try ID
     const item = this.items.get(name)
     if (item) {
@@ -2705,13 +2706,22 @@ export class CoCActor extends Actor {
     for (let i = 0; i < charKey.length; i++) {
       const char = this.getCharacteristic(charKey[i])
       if (char) {
-        if (char.key?.toLocaleLowerCase() === name.toLowerCase()) {
+        if (
+          char.key?.toLocaleLowerCase() === name.toLowerCase() ||
+          char.key?.toLocaleLowerCase() === shortName?.toLowerCase()
+        ) {
           return { type: 'characteristic', value: char }
         }
-        if (char.shortName?.toLocaleLowerCase() === name.toLowerCase()) {
+        if (
+          char.shortName?.toLocaleLowerCase() === name.toLowerCase() ||
+          char.shortName?.toLocaleLowerCase() === shortName?.toLowerCase()
+        ) {
           return { type: 'characteristic', value: char }
         }
-        if (char.label?.toLocaleLowerCase() === name.toLowerCase()) {
+        if (
+          char.label?.toLocaleLowerCase() === name.toLowerCase() ||
+          char.label?.toLocaleLowerCase() === shortName?.toLowerCase()
+        ) {
           return { type: 'characteristic', value: char }
         }
       }
@@ -2722,13 +2732,22 @@ export class CoCActor extends Actor {
     for (let i = 0; i < attribKey.length; i++) {
       const attr = this.getAttribute(attribKey[i])
       if (attr) {
-        if (attr.key?.toLocaleLowerCase() === name.toLowerCase()) {
+        if (
+          attr.key?.toLocaleLowerCase() === name.toLowerCase() ||
+          attr.key?.toLocaleLowerCase() === shortName?.toLowerCase()
+        ) {
           return { type: 'attribute', value: attr }
         }
-        if (attr.shortName?.toLocaleLowerCase() === name.toLowerCase()) {
+        if (
+          attr.shortName?.toLocaleLowerCase() === name.toLowerCase() ||
+          attr.shortName?.toLocaleLowerCase() === shortName?.toLowerCase()
+        ) {
           return { type: 'attribute', value: attr }
         }
-        if (attr.label?.toLocaleLowerCase() === name.toLowerCase()) {
+        if (
+          attr.label?.toLocaleLowerCase() === name.toLowerCase() ||
+          attr.label?.toLocaleLowerCase() === shortName?.toLowerCase()
+        ) {
           return { type: 'attribute', value: attr }
         }
       }

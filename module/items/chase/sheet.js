@@ -178,6 +178,25 @@ export class CoC7ChaseSheet extends ItemSheet {
 
     // html.find('.chase-track').ready(async html => await this._onSheetReady(html))
 
+    //Handle Droprown
+    html
+      .find('.dropdown-element')
+      .on('click', event => this._onDropDownElementSelected(event))
+
+    html.find('.dropbtn').click(event => {
+      const target = event.currentTarget
+      const dropdown = target.closest('.dropdown')
+      const dropdownContent = dropdown.querySelector('.dropdown-content')
+      dropdownContent.classList.toggle('show')
+    })
+    html
+      .find('.dropdown')
+      .mouseleave(event =>
+        event.currentTarget
+          .querySelector('.dropdown-content')
+          .classList.remove('show')
+      )
+
     html.on('dblclick', '.open-actor', CoC7Chat._onOpenActor.bind(this))
 
     html
@@ -218,9 +237,6 @@ export class CoC7ChaseSheet extends ItemSheet {
     html.find('.button').click(this._onButtonClick.bind(this))
 
     html.find('.name-container').click(this._onLocationClick.bind(this))
-    html
-      .find('.chase-location .chase-participant')
-      .click(this._onChaseParticipantClick.bind(this))
 
     html.find('.obstacle-type').click(this._onObstacleTypeClick.bind(this))
     html.find('.obstacle-toggle').click(this._onObstacleToggleClick.bind(this))
@@ -248,6 +264,10 @@ export class CoC7ChaseSheet extends ItemSheet {
     newParticipantDragDrop.bind(html[0])
 
     if (this.item.started) {
+      html
+        .find('.chase-location .chase-participant')
+        .click(this._onChaseParticipantClick.bind(this))
+
       const chaseParticipantDragpDrop = new DragDrop({
         dragSelector: '.chase-participant',
         dropSelector: '.chase-location',
@@ -372,6 +392,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 
     let start = data.data.scroll.chaseTrack.from
     let end = data.data.scroll.chaseTrack.to
+
     if (initialOpening) {
       if (end > 0) {
         start = 0
@@ -381,7 +402,7 @@ export class CoC7ChaseSheet extends ItemSheet {
       }
     }
 
-    if (start) {
+    if (start && -1 != start) {
       chaseTrack.scrollTo({
         top: 0,
         left: start,
@@ -389,11 +410,13 @@ export class CoC7ChaseSheet extends ItemSheet {
       })
     }
 
-    chaseTrack.scrollTo({
-      top: 0,
-      left: end,
-      behavior: 'smooth'
-    })
+    if (-1 != end) {
+      chaseTrack.scrollTo({
+        top: 0,
+        left: end,
+        behavior: 'smooth'
+      })
+    }
 
     // await app.item.update({ 'data.trackScrollPosition': elementCenterRelativeLeft })
   }
@@ -451,6 +474,13 @@ export class CoC7ChaseSheet extends ItemSheet {
   async saveScrollLocation () {
     if (!this._element) return
     const chaseTrack = this._element.find('.chase-track')
+  }
+
+  async _onDropDownElementSelected (event) {
+    event.preventDefault()
+    event.stopPropagation()
+    event.currentTarget.closest('.dropdown-content').classList.toggle('show')
+    ui.notifications.info('Drop down clicked')
   }
 
   async _onToggle (event) {
@@ -536,8 +566,10 @@ export class CoC7ChaseSheet extends ItemSheet {
 
   async _onParticipantControlClicked (event) {
     event.preventDefault()
-    event.stopPropagation()
     const target = event.currentTarget
+    if (target.classList.contains('.dropdown')) return
+    event.stopPropagation()
+
     const participantUuid = target.closest('.initiative-block')?.dataset?.uuid
     if (!participantUuid) return
     switch (target.dataset.control) {
@@ -548,9 +580,13 @@ export class CoC7ChaseSheet extends ItemSheet {
       case 'increaseActions':
         return await this._onChangeMovementActions(1, event)
       case 'moveBackward':
+        // ui.notifications.info( `SHEET : Jquery root: ${$(':root').find('#item-VNhtqxA2wJJnWStT .chase-track').scrollLeft()}`)
         return await this.item.moveParticipant(participantUuid, -1)
       case 'moveForward':
+        // ui.notifications.info( `SHEET : Jquery root: ${$(':root').find('#item-VNhtqxA2wJJnWStT .chase-track').scrollLeft()}`)
         return await this.item.moveParticipant(participantUuid, 1)
+      case 'activateParticipant':
+        return await this.item.activateParticipant(participantUuid)
     }
   }
 
@@ -571,7 +607,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     //   await this.item.update({
     //     'data.trackScrollPosition': chaseTrack.scrollLeft
     //   })
-
+    await this.item.setchaseTrackScroll({ render: false })
     await this.item.updateParticipants(participants)
   }
 
@@ -648,7 +684,7 @@ export class CoC7ChaseSheet extends ItemSheet {
   }
 
   async _onChaseParticipantDragDrop (dragEvent) {
-    ui.notifications.info('Dropped')
+    // ui.notifications.info('Dropped')
     this._onDragLeave(dragEvent)
 
     const target = dragEvent.currentTarget
@@ -660,15 +696,15 @@ export class CoC7ChaseSheet extends ItemSheet {
     if (oldLocation) {
       if (oldLocation.participants?.includes(data.uuid)) return
     }
-    ui.notifications.info(
-      `dragged particpant ${data.uuid} onto location ${locationUuid}`
-    )
+    // ui.notifications.info(
+    //   `dragged particpant ${data.uuid} onto location ${locationUuid}`
+    // )
 
     // await this.item.update({
     //   'data.trackScrollPosition': chaseTrack.scrollLeft
     // })
+    await this.item.setchaseTrackScroll({ render: false })
     await this.item.moveParticipantToLocation(data.uuid, locationUuid)
-    await this.item.setScroll()
   }
 
   _onDragOver (dragEvent) {
@@ -964,6 +1000,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     const participant = participants.find(p => participantUuid == p.uuid)
     if (!participant) return
     participant.hasAGunReady = !participant.hasAGunReady
+    await this.item.setchaseTrackScroll({ render: false })
     await this.item.updateParticipants(participants)
   }
 }
