@@ -874,6 +874,6 @@
   "CoC7.toolTipDelay": "Millisecond delay before tooltip should show, 0 for never",
 
   "CoC7.getTheExample": "Copy Example",
-  "CoC7.Copied": "Copied the Example Text"
+  "CoC7.Copied": "Copied the Example Text to Clipboard"
 
 }
