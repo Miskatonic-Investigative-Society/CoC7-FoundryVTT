@@ -386,7 +386,9 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ExperimentalFeaturesWarning": "This feature is a work in progress and is not recommended for use in your game world.",
 "SETTINGS.CheckElevation": "Include elevation in distance",
 "SETTINGS.CheckElevationHint": "Use elevation in range combat distance calculations",
-"CoC7.toolTipDelay": "Millisecond delay before tooltip should show, 0 for never"
+"CoC7.toolTipDelay": "Millisecond delay before tooltip should show, 0 for never",
+"CoC7.getTheExample": "Copy Example",
+"CoC7.Copied": "Copied the Example Text to Clipboard"
 ```
 
 ## cs.json
@@ -545,5 +547,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ExperimentalFeaturesWarning": "This feature is a work in progress and is not recommended for use in your game world.",
 "SETTINGS.CheckElevation": "Include elevation in distance",
 "SETTINGS.CheckElevationHint": "Use elevation in range combat distance calculations",
-"CoC7.toolTipDelay": "Millisecond delay before tooltip should show, 0 for never"
+"CoC7.toolTipDelay": "Millisecond delay before tooltip should show, 0 for never",
+"CoC7.getTheExample": "Copy Example",
+"CoC7.Copied": "Copied the Example Text to Clipboard"
 ```
