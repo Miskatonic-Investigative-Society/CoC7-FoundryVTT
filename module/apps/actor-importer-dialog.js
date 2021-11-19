@@ -99,6 +99,19 @@ export class CoC7ActorImporterDialog extends Dialog {
   }
 
   submit (button) {
+    if(button.cssClass === "getExampleNow"){
+      var content = CoC7ActorImporterRegExp.getExampleText($("#coc-entity-lang :selected").val());
+      CoC7Utilities.copyToClipboard(content)
+          .then(() => {
+            return ui.notifications.warn(
+              game.i18n.localize('CoC7.Copied')
+            )
+      })
+          .catch(err => {
+          console.log('Something went wrong', err);
+      })
+      return
+    }
     if (
       $('#coc-pasted-character-data')
         .val()
@@ -135,6 +148,10 @@ export class CoC7ActorImporterDialog extends Dialog {
             no: {
               icon: '<i class="fas fa-times"></i>',
               label: game.i18n.localize('CoC7.Cancel')
+            },
+            getExampleNow: {
+              icon: '<i class="fas fa-info-circle"></i>',
+              label: game.i18n.localize('CoC7.getTheExample')
             }
           }
         },
