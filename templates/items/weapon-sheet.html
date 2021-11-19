@@ -96,12 +96,9 @@
 	<section class="sheet-body">
 		<div class="tab skills flexcol active" data-group="primary" data-tab="details">
 			<label>Availability :</label>
-			<div class="skill-attributes" style="flex: 0 0 25px;" data-set="eras">
+			<div class="skill-attributes" data-set="eras">
 				{{#each _eras as |era key|}}
 					<span class="toggle-switch {{#if era.isEnabled}} switched-on {{/if}}" data-property="{{era.id}}">{{localize era.name}}</span>
-					<div style="display: none;">
-						<input id="eras-{{era.id}}" type="checkbox" name="data.eras.{{era.id}}" {{checked era.isEnabled}}/>
-					</div>
 				{{/each}}
 			</div>
 
