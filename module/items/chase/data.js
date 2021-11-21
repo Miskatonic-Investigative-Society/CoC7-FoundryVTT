@@ -31,13 +31,13 @@ export class CoC7Chase extends CoC7Item {
       p.assist = []
       if (p.chaser) {
         p.assist = chasers
-          .filter(c => c.uuid != p.uuid && !c.hasAssit)
+          .filter(c => c.uuid != p.uuid && !c.hasMaxBonusDice)
           .map(c => {
             return { uuid: c.uuid, name: c.name }
           })
       } else {
         p.assist = preys
-          .filter(c => c.uuid != p.uuid && !c.hasAssit)
+          .filter(c => c.uuid != p.uuid && !c.hasMaxBonusDice)
           .map(c => {
             return { uuid: c.uuid, name: c.name }
           })
@@ -133,6 +133,106 @@ export class CoC7Chase extends CoC7Item {
       }
     })
     return participantsData
+  }
+
+  async assistParticipant (
+    assistantUuid,
+    beneficiaryUuid,
+    { useMovementActions = true, render = true } = {}
+  ) {
+    const assistant = this.getParticipant(assistantUuid)
+    const beneficiary = this.getParticipant(beneficiaryUuid)
+    const participantsData = duplicate(this.data.data.participants)
+    const assistantIndex = participantsData.findIndex(
+      p => assistantUuid == p.uuid
+    )
+    const beneficiaryIndex = participantsData.findIndex(
+      p => beneficiaryUuid == p.uuid
+    )
+
+    if (!assistant || !beneficiary) {
+      ui.notifications.error(`Cannot find participant`)
+      return undefined
+    }
+
+    if (beneficiary.hasMaxBonusDice) {
+      ui.notifications.error(
+        `Beneficiary ${beneficiary.name} already has max bonus dice`
+      )
+      return undefined
+    }
+
+    if (useMovementActions) {
+      if (assistant.currentMovementActions < 1) {
+        ui.notifications.error(
+          `Particpant ${assistantUuid} only have ${assistant.currentMovementActions} movement actions`
+        )
+        return undefined
+      }
+      assistant.alterMovementActions(-1)
+      participantsData[assistantIndex] = duplicate(assistant.data)
+    }
+
+    beneficiary.addBonusDice()
+    participantsData[beneficiaryIndex] = duplicate(beneficiary.data)
+    await this.update(
+      { 'data.participants': participantsData },
+      { render: render }
+    )
+  }
+
+  async toggleBonusDice (participantUuid, diceNumber, { render = true } = {}) {
+    const participant = this.getParticipant(participantUuid)
+
+    if (!participant) {
+      ui.notifications.error(`Cannot find participant ${participantUuid}`)
+      return undefined
+    }
+
+    const participantsData = duplicate(this.data.data.participants)
+    const participantIndex = participantsData.findIndex(
+      p => participantUuid == p.uuid
+    )
+    if( participant.bonusDice >= diceNumber) participant.removeBonusDice()
+    else participant.addBonusDice()
+    participantsData[participantIndex] = duplicate(participant.data)
+    await this.update(
+      { 'data.participants': participantsData },
+      { render: render }
+    )
+  }
+
+  async cautiousApproach ( participantUuid, { useMovementActions = true, render = true } = {}){
+    const participant = this.getParticipant(participantUuid)
+
+    if (!participant) {
+      ui.notifications.error(`Cannot find participant ${participantUuid}`)
+      return undefined
+    }
+
+    const participantsData = duplicate(this.data.data.participants)
+    const participantIndex = participantsData.findIndex(
+      p => participantUuid == p.uuid
+    )
+    if( participant.hasMaxBonusDice){
+      ui.notifications.error(`${participantUuid} already has max bonus dice`)
+      return
+    }
+    if (useMovementActions) {
+      if (participant.currentMovementActions < 1) {
+        ui.notifications.error(
+          `Particpant ${participantUuid} only have ${participant.currentMovementActions} movement actions`
+        )
+        return undefined
+      }
+      participant.alterMovementActions(-1)
+    }
+    participant.addBonusDice()
+    participantsData[participantIndex] = duplicate(participant.data)
+    await this.update(
+      { 'data.participants': participantsData },
+      { render: render }
+    )
   }
 
   async activateParticipant (
@@ -561,10 +661,13 @@ export class CoC7Chase extends CoC7Item {
       const participants = this.participants
       const minMov = this.findMinMov(participants)
       participants.forEach(p => {
-        p.data.movementAction = 1 + (p.adjustedMov - minMov)
+        // p.data.movementAction = 1 + (p.adjustedMov - minMov)
+        p.calculateMovementActions( minMov)
+        p.currentMovementActions = p.movementAction
+        p.bonusDice = 0
       })
-      await this.updateParticipants(participants)
-      await this.updateLocationsList(this.locations)
+      await this.updateParticipants(participants, {render: false})
+      await this.updateLocationsList(this.locations, {render: false})
       await this.start()
     }
   }

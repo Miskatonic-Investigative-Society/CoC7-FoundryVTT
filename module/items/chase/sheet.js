@@ -184,6 +184,8 @@ export class CoC7ChaseSheet extends ItemSheet {
       .on('click', event => this._onDropDownElementSelected(event))
 
     html.find('.dropbtn').click(event => {
+      event.preventDefault()
+      event.stopPropagation()
       const target = event.currentTarget
       const dropdown = target.closest('.dropdown')
       const dropdownContent = dropdown.querySelector('.dropdown-content')
@@ -390,8 +392,10 @@ export class CoC7ChaseSheet extends ItemSheet {
     const chaseTrack = html[0].querySelector('.chase-track')
     if (!chaseTrack) return
 
-    let start = data.data.scroll.chaseTrack.from
-    let end = data.data.scroll.chaseTrack.to
+    let start = data.data.scroll?.chaseTrack.from
+    let end = data.data.scroll?.chaseTrack.to
+    if (undefined == start) start = 0
+    if (undefined == end) end = -1
 
     if (initialOpening) {
       if (end > 0) {
@@ -479,8 +483,11 @@ export class CoC7ChaseSheet extends ItemSheet {
   async _onDropDownElementSelected (event) {
     event.preventDefault()
     event.stopPropagation()
-    event.currentTarget.closest('.dropdown-content').classList.toggle('show')
-    ui.notifications.info('Drop down clicked')
+    const target = event.currentTarget
+    target.closest('.dropdown-content')?.classList.toggle('show')
+    const assistantUuid = target.closest('.initiative-block')?.dataset?.uuid
+    const beneficiaryUuid = target.dataset.beneficiaryUuid
+    await this.item.assistParticipant(assistantUuid, beneficiaryUuid)
   }
 
   async _onToggle (event) {
@@ -512,7 +519,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 
   async _onObstacleToggleClick (event) {
     const target = event.currentTarget
-    const locationElement = target.closest('.location.obstacle')
+    const locationElement = target.closest('.obstacle')
     const uuid = locationElement.dataset.uuid
     const locations = duplicate(this.item.data.data.locations.list)
     const locationIndex = this.findIndex(locations, uuid)
@@ -527,7 +534,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 
   async _onObstacleTypeClick (event) {
     const target = event.currentTarget
-    const locationElement = target.closest('.location.obstacle')
+    const locationElement = target.closest('.obstacle')
     const uuid = locationElement.dataset.uuid
     const locations = duplicate(this.item.data.data.locations.list)
     const locationIndex = this.findIndex(locations, uuid)
@@ -567,7 +574,7 @@ export class CoC7ChaseSheet extends ItemSheet {
   async _onParticipantControlClicked (event) {
     event.preventDefault()
     const target = event.currentTarget
-    if (target.classList.contains('.dropdown')) return
+    if (target.classList.contains('dropdown')) return
     event.stopPropagation()
 
     const participantUuid = target.closest('.initiative-block')?.dataset?.uuid
@@ -587,6 +594,11 @@ export class CoC7ChaseSheet extends ItemSheet {
         return await this.item.moveParticipant(participantUuid, 1)
       case 'activateParticipant':
         return await this.item.activateParticipant(participantUuid)
+      case 'bonusDice':
+        const diceNumber = target.dataset.count
+        return await this.item.toggleBonusDice(participantUuid, diceNumber)
+      case 'cautiousApproach':
+        return await this.item.cautiousApproach(participantUuid)
     }
   }
 

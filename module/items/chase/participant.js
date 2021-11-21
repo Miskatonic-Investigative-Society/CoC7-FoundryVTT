@@ -85,12 +85,65 @@ export class _participant {
     return this.data.uuid
   }
 
-  get hasAssit () {
-    return this.data.hasAssit || false
+  get hasMaxBonusDice () {
+    return this.bonusDice >= 2
+  }
+
+  get bonusDice () {
+    if( isNaN(this.data.bonusDice) || this.data.bonusDice < 0 || this.data.bonusDice > 2) return 0
+    return this.data.bonusDice
+  }
+
+  set bonusDice (x) {
+    if( isNaN(x)){
+      ui.notifications.error( 'Bonus dice can Only be a number')
+      return
+    }
+    if( x > 2){
+      ui.notifications.error( 'Max 2 bonus dice')
+      return
+    }
+    if( x < 0){
+      ui.notifications.error( 'No negativ bonus dice')
+      return
+    }
+    this.data.bonusDice = x
+  }
+
+  addBonusDice () {
+    if( this.data.bonusDice >= 2){
+      ui.notifications.error( 'Already have max bonus dice')
+      return
+    }
+    this.data.bonusDice += 1
+  }
+
+  removeBonusDice () {
+    if( this.data.bonusDice <= 0){
+      ui.notifications.error( 'Already have 0 bonus dice')
+      return
+    }
+    this.data.bonusDice -= 1
+  }
+
+  resetBonusDice () {
+    this.data.bonusDice = 0
+  }
+
+  get hasOneBonusDice () {
+    return this.bonusDice >= 1
+  }
+
+  get hasTwoBonusDice () {
+    return this.bonusDice >= 2
   }
 
   get canAssist () {
     return this.assist?.length > 0
+  }
+
+  get canBeCautious () {
+    return !this.hasMaxBonusDice
   }
 
   get assist () {
@@ -221,6 +274,10 @@ export class _participant {
 
   set fastest (x) {
     this.data.fastest = x
+  }
+
+  calculateMovementActions( minMov){
+    this.movementAction = 1 + (this.adjustedMov - minMov)
   }
 
   set movementAction (x) {

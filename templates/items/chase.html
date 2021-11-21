@@ -8,7 +8,7 @@
             </div>
             {{/unless}}
 
-            <div class="active-location flexcol flex2">
+            <div class="active-location flexcol">
 
                 {{#if activeLocation}}
                 <datalist id="check-all-options">
@@ -21,30 +21,37 @@
                         <option>{{o}}</option>
                     {{/each}}                    
                 </datalist>
-                <div class="location-name">
-                    <input type="text" name="locations.{{activeLocation.uuid}}.name" value="{{activeLocation.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
+                <div class="form-group">
+                    <input class="location-name" type="text" name="locations.{{activeLocation.uuid}}.name" value="{{activeLocation.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
                 </div>
                 <div class="details flexrow">
-                    <div class="location obstacle before flexcol flex3" data-uuid="{{activeLocation.uuid}}">
+                    <div class="obstacle flexcol" data-uuid="{{activeLocation.uuid}}">
                         {{#unless activeLocation.first}}
-                        <div class="tag flex-content obstacle-toggle {{#if activeLocation.obstacle}}switched-on{{/if}}">{{ localize "CoC7.Obstacle"}}</div>
+                        <div class="form-group">
+                            <div class="tag obstacle-toggle {{#if activeLocation.obstacle}}switched-on{{/if}}">{{ localize "CoC7.Obstacle"}}</div>
+                        </div>
                         {{/unless}}
                         {{#if activeLocation.obstacle}}
-                            <div class="form-group flex-content">
+                            <div class="form-group">
                                 <div class="tag obstacle-type barrier {{#if activeLocation.obstacleDetails.barrier}}switched-on{{/if}}">barrier</div>
                                 <div class="tag obstacle-type hazard {{#if activeLocation.obstacleDetails.hazard}}switched-on{{/if}}">hazard</div>
                             </div>
-                            <input type="text" class="flex-auto" name="locations.{{activeLocation.uuid}}.obstacleDetails.name" value="{{activeLocation.obstacleDetails.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
-                            <input type="text" class="flex-auto {{#unless activeLocation.activeActorHasSkill}}no-skill{{/unless}}" name="locations.{{activeLocation.uuid}}.obstacleDetails.checkName" value="{{activeLocation.obstacleDetails.checkName}}" placeholder="{{ localize 'CoC7.CheckName' }}" list='check-all-options' data-override='true'/>
-                            <!-- <input type="text" class="flex-auto" name="locations.{{activeLocation.uuid}}.obstacleDetails.failedCheckDamage" value="{{activeLocation.obstacleDetails.failedCheckDamage}}" placeholder="{{ localize 'CoC7.Damage' }}"/>
-                            <input type="text" class="flex-auto" name="locations.{{activeLocation.uuid}}.obstacleDetails.failedActionCost" value="{{activeLocation.obstacleDetails.failedActionCost}}" placeholder="{{ localize 'CoC7.ActionCost' }}"/> -->
-                            <div class="form-group flex-auto">
+                            <div  class="form-group">
+                                <input type="text" name="locations.{{activeLocation.uuid}}.obstacleDetails.name" value="{{activeLocation.obstacleDetails.name}}" title="{{ localize 'CoC7.Name' }}" placeholder="{{ localize 'CoC7.Name' }}"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="{{#unless activeLocation.activeActorHasSkill}}no-skill{{/unless}}" name="locations.{{activeLocation.uuid}}.obstacleDetails.checkName" value="{{activeLocation.obstacleDetails.checkName}}" placeholder="{{ localize 'CoC7.CheckName' }}" list='check-all-options' data-override='true'/>
+                                <a class="chase-control" data-control="chase-roll">
+                                    <i class="game-icon game-icon-d10"></i>
+                                </a>
+                            </div>
+                            <div class="form-group">
                                 <div toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasDamage" class="tag flex-auto toggle {{#if activeLocation.obstacleDetails.hasDamage}}switched-on{{/if}}">{{ localize "CoC7.Damage"}}</div>
                                 {{#if activeLocation.obstacleDetails.hasDamage}}
                                 <input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.failedCheckDamage" value="{{activeLocation.obstacleDetails.failedCheckDamage}}" placeholder="{{ localize 'CoC7.Damage' }}"/>
                                 {{/if}}
                             </div>
-                            <div class="form-group flex-auto">
+                            <div class="form-group">
                                 <div toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasActionCost" class="tag flex-auto toggle {{#if activeLocation.obstacleDetails.hasActionCost}}switched-on{{/if}}">{{ localize "CoC7.ActionCost"}}</div>
                                 {{#if activeLocation.obstacleDetails.hasActionCost}}
                                 <input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.failedActionCost" value="{{activeLocation.obstacleDetails.failedActionCost}}" placeholder="{{ localize 'CoC7.ActionCost' }}"/>
@@ -52,8 +59,7 @@
                             </div>
                         {{/if}}
                     </div>
-                    <div class="active-participant flexcol flex2"></div>
-                    <div class="location obstacle after flexcol flex3" data-uuid="{{nextLocation.uuid}}">
+                    <div class="obstacle flexcol" data-uuid="{{nextLocation.uuid}}">
                         {{#unless activeLocation.last}}
                         <div class="tag flex-content obstacle-toggle {{#if nextLocation.obstacle}}switched-on{{/if}}">{{ localize "CoC7.Obstacle"}}</div>
                         {{/unless}}
@@ -85,9 +91,9 @@
                 {{#if locations}}
 
                 {{#if started}}
-                <div class="initiative-track flexrow">
+                <div class="initiative-track">
                     {{#each item.participantsByInitiative as |p i|}}
-                    <div class="initiative-block flexcol {{p.cssClass}}" data-uuid="{{p.uuid}}">
+                    <div class="initiative-block {{p.cssClass}}" data-uuid="{{p.uuid}}">
                         <div class="header flexrow">
                             <div class="name">{{p.name}}</div>
                             <div class="participant-controls">
@@ -98,7 +104,7 @@
                         </div>
                         <div class="participant flexrow">
                             <div class="portrait" >
-                                <a><img src="{{p.icon}}" title="{{p.name}}"/></a>
+                                <img src="{{p.icon}}" title="{{p.name}}"/>
                             </div>
                             <div class="infos flexcol">
                                 <div>INIT: {{p.initiative}}</div>
@@ -111,12 +117,19 @@
                             {{/each}}
                         </div>
                         <div class="participant-controls">
-                            <a class="participant-control {{#unless p.hasAGunReady}}disabled{{/unless}}" title="{{#if p.hasAGunReady}}{{localize 'CoC7.PutGunAway'}}{{else}}{{localize 'CoC7.DrawGun'}}{{/if}}" data-control="drawGun">
+                            <a class="participant-control toggle {{#unless p.hasAGunReady}}disabled{{/unless}}" title="{{#if p.hasAGunReady}}{{localize 'CoC7.PutGunAway'}}{{else}}{{localize 'CoC7.DrawGun'}}{{/if}}" data-control="drawGun">
                                 <i class="game-icon game-icon-revolver"></i></a>
+                            <a class="participant-control toggle {{#unless p.hasOneBonusDice}}disabled{{/unless}}" title="{{#if p.hasOneBonusDice}}{{localize 'CoC7.RemoveBonusDice'}}{{else}}{{localize 'CoC7.AddBonusDice'}}{{/if}}" data-control="bonusDice" data-count="1">
+                                <i class="game-icon game-icon-d10"></i></a>
+                            <a class="participant-control toggle {{#unless p.hasTwoBonusDice}}disabled{{/unless}}" title="{{#if p.hasTwoBonusDice}}{{localize 'CoC7.RemoveBonusDice'}}{{else}}{{localize 'CoC7.AddBonusDice'}}{{/if}}" data-control="bonusDice" data-count="2">
+                                <i class="game-icon game-icon-d10"></i></a>
+                            <div class="separator"></div>
                             <a class="participant-control" title="{{localize 'CoC7.IncreasMVTAction'}}" data-control="decreaseActions">
                                 <i class="far fa-minus-square"></i></a>
                             <a class="participant-control {{#if p.hasMaxMvtActions}}inactive{{/if}}" title="{{localize 'CoC7.IncreasMVTAction'}}" data-control="increaseActions">
                                 <i class="far fa-plus-square"></i></a>
+                            {{#unless p.hasNoMvtActions}}
+                            <div class="separator"></div>
                             <a class="participant-control" title="{{localize 'CoC7.MoveBackward'}}" data-control="moveBackward">
                                 <i class="fas fa-running fa-flip-horizontal"></i></a>
                             <a class="participant-control" title="{{localize 'CoC7.MoveForward'}}" data-control="moveForward">
@@ -125,12 +138,17 @@
                             <div class="participant-control dropdown" title="{{localize 'CoC7.Assist'}}" data-control="assist">
                                 <i class="fas fa-hands-helping dropbtn"></i>
                                 <div class="dropdown-content">
-                                    {{#each p.assist as |a|}}
-                                    <a class="dropdown-element" data-action="assist" data-assisted-uuid="{{a.uuid}}">{{a.name}}</a>
+                                    {{#each p.assist as |b|}}
+                                    <a class="dropdown-element" data-action="assist" data-beneficiary-uuid="{{b.uuid}}">{{b.name}}</a>
                                     {{/each}}
                                 </div>
                             </div>
                             {{/if}}
+                            {{#if p.canBeCautious}}
+                            <a class="participant-control" title="{{localize 'CoC7.CautiousApproach'}}" data-control="cautiousApproach">
+                                <i class="fas fa-hourglass-half"></i></a>
+                            {{/if}}
+                            {{/unless}}
                         </div>
                     </div>
                     {{/each}}
