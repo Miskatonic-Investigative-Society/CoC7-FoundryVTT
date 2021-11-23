@@ -879,5 +879,9 @@
   "CoC7.ExperimentalFeaturesWarning": "Den här funktionen är under utveckling och rekommenderas inte för användning i dina spelvärldar.",
   "SETTINGS.CheckElevation": "Räkna in höjdskillnad i avstånd",
   "SETTINGS.CheckElevationHint": "Använder höjdskillnad vid beräkningar för avståndsstrid",
-  "CoC7.toolTipDelay": "Fördröjning i millisekunder innan tips visas, ange 0 om du aldrig vill att de ska visas"
+  "CoC7.toolTipDelay": "Fördröjning i millisekunder innan tips visas, ange 0 om du aldrig vill att de ska visas",
+
+  "CoC7.getTheExample": "Kopiera exempel",
+  "CoC7.Copied": "Kopierade exempeltexten till Urklipp"
+
 }
