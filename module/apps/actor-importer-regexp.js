@@ -305,14 +305,14 @@ const translations = {
       ')(\\s*:)?\\s+(?<db>[+-]?\\d+(?:d\\d+|D|W\\d+)?|' +
       keys.de.dbNone +
       ')[,\\s\n]*',
-    build: '(?<![a-z])' + 'Statur' + '(\\s*:)?\\s+(?<build>[+-]?\\d+)[,\\s\n]*',
+    build: '(?<![a-z])(?:' + 'Statur|Stat.' + ')(\\s*:)?\\s+(?<build>[+-]?\\d+)[,\\s\n]*',
     armor:
       '(?<![a-z])' +
       'Panzerung' +
       '(\\s*:)?\\s+(?<armor>' +
       keys.de.armorNone +
       '|\\d+)[,\\s\n]*',
-    mov: '(?<![a-z])' + 'Bewegungsweite' + '(\\s*:)?\\s*(?<mov>\\d+)[,\\s\n]*',
+    mov: '(?<![a-z])(?:' + 'BW|Bewegungsweite' + ')(\\s*:)?\\s*(?<mov>\\d+)[,\\s\n]*',
     lck: '(?<![a-z])' + 'Glück' + '(\\s*:)?\\s+(?<lck>\\d+|-)[,\\s\n]*',
     attacksPerRound:
       '(?<![a-z])(?:' +
