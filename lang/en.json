@@ -662,6 +662,8 @@
   "CoC7.WarnFastTargetWithWrongMOV": "Fast selected on a target with less than 8 MOV. (MOV: {mov})",
   "CoC7.WarnTooManyTarget": "Too many target selected. Keeping only last selected target",
 
+  "CoC7.allActor": "All Actor",
+  "CoC7.whoGoToDream": "Rest Target: ",
   "CoC7.startRest": "Start Rest",
   "CoC7.dreaming": "The Investigators wait dreaming",
   "CoC7.healthRecovered": "Recovered one Hit Point",
