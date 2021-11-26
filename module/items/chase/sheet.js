@@ -66,7 +66,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     data.data = itemData.data // MODIF: 0.8.x data.data
     /*****************/
 
-    data.participants = this.item.participants
+    data.participants = this.item.participantsObject
     data.participantsByInitiative = this.item.participantsByInitiative
     data.preys = this.item.preys
     data.chasers = this.item.chasers
@@ -387,7 +387,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     super._updateObject(event, formData)
   }
 
-  static /**async */ setScroll (app, html, data) {
+  static async setScroll (app, html, data) {
     const initialOpening = html[0].classList.contains('window-app')
     const chaseTrack = html[0].querySelector('.chase-track')
     if (!chaseTrack) return
@@ -398,12 +398,22 @@ export class CoC7ChaseSheet extends ItemSheet {
     if (undefined == end) end = -1
 
     if (initialOpening) {
-      if (end > 0) {
-        start = 0
-      } else if (start > 0) {
-        end = start
-        start = 0
+      if( app.item.started){
+        const remString = $(':root').css('font-size')
+        const remSize = Number(remString.replace('px', ''))
+        const pCount = data.participants.length
+        const width = (pCount * 11.2 + 3) * remSize
+        app._tabs[0].active = 'setup'
+        app.position.width = width
+        // html.css('width', `${width}px`)
       }
+      return await app.item.activateNexParticpantTurn({html: html}) //html is not rendered, element haze size = 0
+      // if (end > 0) {
+      //   start = 0
+      // } else if (start > 0) {
+      //   end = start
+      //   start = 0
+      // }
     }
 
     if (start && -1 != start) {
@@ -574,6 +584,7 @@ export class CoC7ChaseSheet extends ItemSheet {
   async _onParticipantControlClicked (event) {
     event.preventDefault()
     const target = event.currentTarget
+    if( target.classList.contains('inactive')) return
     if (target.classList.contains('dropdown')) return
     event.stopPropagation()
 
@@ -587,10 +598,8 @@ export class CoC7ChaseSheet extends ItemSheet {
       case 'increaseActions':
         return await this._onChangeMovementActions(1, event)
       case 'moveBackward':
-        // ui.notifications.info( `SHEET : Jquery root: ${$(':root').find('#item-VNhtqxA2wJJnWStT .chase-track').scrollLeft()}`)
         return await this.item.moveParticipant(participantUuid, -1)
       case 'moveForward':
-        // ui.notifications.info( `SHEET : Jquery root: ${$(':root').find('#item-VNhtqxA2wJJnWStT .chase-track').scrollLeft()}`)
         return await this.item.moveParticipant(participantUuid, 1)
       case 'activateParticipant':
         return await this.item.activateParticipant(participantUuid)

@@ -130,9 +130,9 @@
                                 <i class="far fa-plus-square"></i></a>
                             {{#unless p.hasNoMvtActions}}
                             <div class="separator"></div>
-                            <a class="participant-control" title="{{localize 'CoC7.MoveBackward'}}" data-control="moveBackward">
+                            <a class="participant-control {{#if p.location.first}}inactive{{/if}}" title="{{localize 'CoC7.MoveBackward'}}" data-control="moveBackward">
                                 <i class="fas fa-running fa-flip-horizontal"></i></a>
-                            <a class="participant-control" title="{{localize 'CoC7.MoveForward'}}" data-control="moveForward">
+                            <a class="participant-control {{#if p.location.last}}inactive{{/if}}" title="{{localize 'CoC7.MoveForward'}}" data-control="moveForward">
                                 <i class="fas fa-running"></i></a>
                             {{#if p.canAssist}}
                             <div class="participant-control dropdown" title="{{localize 'CoC7.Assist'}}" data-control="assist">

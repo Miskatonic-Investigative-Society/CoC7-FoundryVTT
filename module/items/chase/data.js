@@ -43,9 +43,18 @@ export class CoC7Chase extends CoC7Item {
           })
       }
       const particpant = new _participant(p)
+      // particpant.location = this.getParticipantLocation( particpant.uuid) // Recursivity
       pList.push(particpant)
     })
     return pList
+  }
+
+  get participantsObject (){
+    const participants = this.participants
+    participants.forEach( p => {
+      p.location = this.getParticipantLocation( p.uuid)
+    })
+    return participants
   }
 
   get activeParticipant () {
@@ -86,10 +95,20 @@ export class CoC7Chase extends CoC7Item {
   }
 
   getParticipantLocation (participantUuid) {
-    const location = this.data.data.locations?.list?.find(l =>
-      l.participants?.includes(participantUuid)
+    if( !this.data.data.locations?.list?.length){
+      return undefined
+    }
+    if( !this.started) return undefined
+    const locations = this.locations
+    
+    const location = locations.find(l =>{
+      const lp = l.participants?.find(p => participantUuid == p.uuid)
+      return !!lp
+    }
     )
-    if (location) return location
+    if (location) {
+      return location
+    }
     return undefined
   }
 
@@ -105,6 +124,10 @@ export class CoC7Chase extends CoC7Item {
     const participantData = this.getParticipantData(participantUuid)
     if (participantData) return new _participant(participantData)
     return undefined
+  }
+  
+  get nextActiveParticipant (){
+    return this.participantsByInitiative.find( p => p.data.currentMovementActions > 0)
   }
 
   async updateParticipants (list, { render = true } = {}) {
@@ -235,38 +258,49 @@ export class CoC7Chase extends CoC7Item {
     )
   }
 
+  async activateNexParticpantTurn (
+    { scrollToLocation = true, activateLocation = true, render = true, html = null } = {}
+  ) {
+    const activeParticipant = this.nextActiveParticipant
+    const options = { scrollToLocation: scrollToLocation, activateLocation: activateLocation, render: render, html: html}
+    if( !activeParticipant) return this.activateParticipant( null, options)
+    return( this.activateParticipant( activeParticipant.uuid, options))
+  }
+
   async activateParticipant (
     participantUuid,
-    { scrollToLocation = true, activateLocation = true, render = true } = {}
+    { scrollToLocation = true, activateLocation = true, render = true, html = null } = {}
   ) {
     const dataUpdate = this.getActivateParticipantUpdateData(participantUuid, {
       scrollToLocation: scrollToLocation,
-      activeLocation: activateLocation
+      activeLocation: activateLocation,
+      html: html
     })
     await this.update(dataUpdate, { render: render })
   }
 
   getActivateParticipantUpdateData (
     participantUuid,
-    { scrollToLocation = true, activateLocation = true } = {}
+    { scrollToLocation = true, activateLocation = true, html = null } = {}
   ) {
+    const pUuid = participantUuid?participantUuid:this.participantsByInitiative[0].uuid
     const participantsDataUpdate = {}
     const participants = this.data.data.participants
       ? duplicate(this.data.data.participants)
       : []
     participants.forEach(p => {
       delete p.active
-      if (participantUuid == p.uuid) p.active = true
+      if (pUuid == p.uuid) p.active = true
     })
     participantsDataUpdate['data.participants'] = participants
 
-    const participantLocation = this.getParticipantLocation(participantUuid)
+    const participantLocation = this.getParticipantLocation(pUuid)
     let locationsDataUpdate = null
     if (participantLocation) {
       if (activateLocation) {
         locationsDataUpdate = this.getActivateLocationUpdateData(
           participantLocation.uuid,
-          { scrollToLocation: scrollToLocation }
+          { scrollToLocation: scrollToLocation, html: html }
         )
       } else if (scrollToLocation) {
         if (scrollToLocation) {
@@ -276,7 +310,7 @@ export class CoC7Chase extends CoC7Item {
           ] = this.chaseTrackCurrentScrollPosition
           locationsDataUpdate[
             'data.scroll.chaseTrack.to'
-          ] = this.getChaseTrackLocationScrollPosition(participantLocation.uuid)
+          ] = this.getChaseTrackLocationScrollPosition(participantLocation.uuid, {html:html})
         }
       }
     }
@@ -447,7 +481,7 @@ export class CoC7Chase extends CoC7Item {
       ? this.preys
       : this.preys?.filter(p => !p.data.escaped)
     //Get chasers
-    const chasers = this.chasers
+    const chasers = this.chasers // Recursivity !! with getParticipantLocation and get participants
 
     //If no prey or no chasser
     // if (0 == chasers.length) {
@@ -565,7 +599,7 @@ export class CoC7Chase extends CoC7Item {
 
   getActivateLocationUpdateData (
     locationUuid,
-    { scrollToLocation = true } = {}
+    { scrollToLocation = true, html = null } = {}
   ) {
     const updateData = {}
     const locations = this.data.data.locations.list
@@ -583,7 +617,7 @@ export class CoC7Chase extends CoC7Item {
       ] = this.chaseTrackCurrentScrollPosition
       updateData[
         'data.scroll.chaseTrack.to'
-      ] = this.getChaseTrackLocationScrollPosition(locationUuid)
+      ] = this.getChaseTrackLocationScrollPosition(locationUuid, { html: html})
       // await this.setchaseTrackScroll({
       //   from: this.chaseTrackCurrentScrollPosition,
       //   to: this.chaseTrackActiveLocationScrollPosition
@@ -855,10 +889,10 @@ export class CoC7Chase extends CoC7Item {
     return this.getChaseTrackLocationScrollPosition(this.activeLocation.uuid)
   }
 
-  getChaseTrackLocationScrollPosition (locationUuid) {
-    const html = this.sheet?.element
-    if (!html) return -1
-    const chaseTrack = html[0].querySelector('.chase-track')
+  getChaseTrackLocationScrollPosition (locationUuid, {html = null}) {
+    const htmlElement = html?html:this.sheet?.element
+    if (!htmlElement) return -1
+    const chaseTrack = htmlElement[0].querySelector('.chase-track')
     if (!chaseTrack) return -1
     const activeLocationElement = chaseTrack.querySelector(
       `.chase-location[data-uuid="${locationUuid}"]`
@@ -896,6 +930,12 @@ export class CoC7Chase extends CoC7Item {
   }
 
   async start () {
+    const remString = $(':root').css('font-size')
+    const remSize = Number(remString.replace('px', ''))
+    const pCount = this.data.data.participants.length
+    const width = (pCount * 11.2 + 3) * remSize
+    this.sheet._tabs[0].active = 'setup'
+    this.sheet.position.width = width
     return this.setFlag('CoC7', 'started', true)
   }
 
