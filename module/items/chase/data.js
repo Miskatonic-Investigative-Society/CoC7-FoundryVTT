@@ -1,4 +1,5 @@
 import { CoCActor } from '../../actors/actor.js'
+import { ChaseObstacleCard } from '../../chat/cards/chase-obstacle.js'
 import { chatHelper } from '../../chat/helper.js'
 import { CoC7Check } from '../../check.js'
 import { CoC7Item } from '../item.js'
@@ -348,7 +349,10 @@ export class CoC7Chase extends CoC7Item {
   async activeParticipantObstacleCheck (
     locationUuid,
     { moveParticipant = true } = {}
-  ) {}
+  ) {
+    const card = new ChaseObstacleCard()
+    card.toMessage()
+  }
 
   /** @override */
   async updateRoll (rollString) {

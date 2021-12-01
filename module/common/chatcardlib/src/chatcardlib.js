@@ -55,13 +55,14 @@ class EnhancedChatCardLib {
 
   static injectCSS () {
     let style = $('head').find('style')
-    if( !style?.length){
-      $('head').append( $('<style  type="text/css"></style>'))
+    if (!style?.length) {
+      $('head').append($('<style  type="text/css"></style>'))
       style = $('head').find('style')
     }
     style.append(
       `.ecc-restricted {color: red}
-    .ecc-restricted:hover {cursor: not-allowed}`)
+    .ecc-restricted:hover {cursor: not-allowed}`
+    )
 
     return
   }
@@ -122,6 +123,10 @@ export class EnhancedChatCard {
     return mergeObject(this.constructor.defaultOptions, this._options)
   }
 
+  set options (x) {
+    this._options = x
+  }
+
   get template () {
     return this.options.template
   }
@@ -140,7 +145,7 @@ export class EnhancedChatCard {
     return game.user
   }
 
-  getData () {
+  async getData () {
     return {
       card: this,
       flags: this.flags,
@@ -169,7 +174,8 @@ export class EnhancedChatCard {
     // this.registerECCClass()
 
     //Publish by current user by default unless options.GMchatCard
-    const html = await renderTemplate(this.template, this.getData())
+    const data = await this.getData()
+    const html = await renderTemplate(this.template, data)
     const htmlCardElement = $(html)[0]
     if (this.options.attachObject)
       htmlCardElement.dataset.object = escape(this.objectDataString)
@@ -206,7 +212,8 @@ export class EnhancedChatCard {
     if (!this.messageId) {
       this.toMessage()
     } else {
-      const html = await renderTemplate(this.template, this.getData())
+      const data = await this.getData()
+      const html = await renderTemplate(this.template, data)
       const htmlCardElement = $.parseHTML(html)[0]
 
       // Attach the sanCheckCard object to the message.
@@ -290,14 +297,14 @@ export class EnhancedChatCard {
   async setPermission (element) {
     if (!element.dataset.eccPermissions) return
     const canYouMod = await this.hasPerm(element.dataset.eccPermissions)
-    if (!canYouMod){
+    if (!canYouMod) {
       element.classList.add('ecc-restricted')
-    if( $(element).is('input')){
-      if( 'range' == element.type) $(element).attr('disabled', true)
-      else $(element).attr('readonly', true)
+      if ($(element).is('input')) {
+        if ('range' == element.type) $(element).attr('disabled', true)
+        else $(element).attr('readonly', true)
+      }
+      if ($(element).is('select')) $(element).attr('disabled', true)
     }
-    if( $(element).is('select')) $(element).attr('disabled', true)
-  }
   }
 
   /**
@@ -426,8 +433,8 @@ export class EnhancedChatCard {
 
   /**
    * Retrieve the form from the card and update the data structure
-   * @param {HTMLElement} card 
-   * @returns 
+   * @param {HTMLElement} card
+   * @returns
    */
   _update (card) {
     const forms = card.querySelectorAll('form')
