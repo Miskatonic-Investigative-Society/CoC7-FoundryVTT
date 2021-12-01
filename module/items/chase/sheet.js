@@ -246,6 +246,8 @@ export class CoC7ChaseSheet extends ItemSheet {
     html
       .find('.participant-control')
       .click(this._onParticipantControlClicked.bind(this))
+
+    html.find('.chase-control').click(this._onChaseControlClicked.bind(this))
     // html
     //   .find('.movement-action .decrease')
     //   .click(this._onChangeMovementActions.bind(this, -1))
@@ -398,7 +400,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     if (undefined == end) end = -1
 
     if (initialOpening) {
-      if( app.item.started){
+      if (app.item.started) {
         const remString = $(':root').css('font-size')
         const remSize = Number(remString.replace('px', ''))
         const pCount = data.participants.length
@@ -407,7 +409,7 @@ export class CoC7ChaseSheet extends ItemSheet {
         app.position.width = width
         // html.css('width', `${width}px`)
       }
-      return await app.item.activateNexParticpantTurn({html: html}) //html is not rendered, element haze size = 0
+      return await app.item.activateNexParticpantTurn({ html: html }) //html is not rendered, element have size = 0
       // if (end > 0) {
       //   start = 0
       // } else if (start > 0) {
@@ -584,7 +586,7 @@ export class CoC7ChaseSheet extends ItemSheet {
   async _onParticipantControlClicked (event) {
     event.preventDefault()
     const target = event.currentTarget
-    if( target.classList.contains('inactive')) return
+    if (target.classList.contains('inactive')) return
     if (target.classList.contains('dropdown')) return
     event.stopPropagation()
 
@@ -608,6 +610,19 @@ export class CoC7ChaseSheet extends ItemSheet {
         return await this.item.toggleBonusDice(participantUuid, diceNumber)
       case 'cautiousApproach':
         return await this.item.cautiousApproach(participantUuid)
+    }
+  }
+
+  async _onChaseControlClicked (event) {
+    event.preventDefault()
+    const target = event.currentTarget
+    event.stopPropagation()
+
+    const locationUuid = target.closest('.obstacle')?.dataset?.uuid
+    if (!locationUuid) return
+    switch (target.dataset.control) {
+      case 'obstacle-skill-check':
+        return await this.item.activeParticipantObstacleCheck(locationUuid)
     }
   }
 

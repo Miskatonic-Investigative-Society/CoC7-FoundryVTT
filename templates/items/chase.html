@@ -41,7 +41,7 @@
                             </div>
                             <div class="form-group">
                                 <input type="text" class="{{#unless activeLocation.activeActorHasSkill}}no-skill{{/unless}}" name="locations.{{activeLocation.uuid}}.obstacleDetails.checkName" value="{{activeLocation.obstacleDetails.checkName}}" placeholder="{{ localize 'CoC7.CheckName' }}" list='check-all-options' data-override='true'/>
-                                <a class="chase-control" data-control="chase-roll">
+                                <a class="chase-control" data-control="obstacle-skill-check">
                                     <i class="game-icon game-icon-d10"></i>
                                 </a>
                             </div>
