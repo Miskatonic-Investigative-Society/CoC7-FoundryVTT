@@ -116,7 +116,7 @@ export class CoC7Chase extends CoC7Item {
     const participant = this.data.data.participants.find(
       p => participantUuid == p.uuid
     )
-    if (participant) return duplicate(participant) //TODO : check if we need to duplicate
+    if (participant) return foundry.utils.duplicate(participant) //TODO : check if we need to duplicate
     return undefined
   }
 
@@ -142,7 +142,7 @@ export class CoC7Chase extends CoC7Item {
 
   cleanParticipantList (list) {
     const participantsData = this.data.data.participants
-      ? duplicate(this.data.data.participants)
+      ? foundry.utils.duplicate(this.data.data.participants)
       : []
     list.forEach(p => {
       let data
@@ -167,7 +167,9 @@ export class CoC7Chase extends CoC7Item {
   ) {
     const assistant = this.getParticipant(assistantUuid)
     const beneficiary = this.getParticipant(beneficiaryUuid)
-    const participantsData = duplicate(this.data.data.participants)
+    const participantsData = foundry.utils.duplicate(
+      this.data.data.participants
+    )
     const assistantIndex = participantsData.findIndex(
       p => assistantUuid == p.uuid
     )
@@ -195,11 +197,13 @@ export class CoC7Chase extends CoC7Item {
         return undefined
       }
       assistant.alterMovementActions(-1)
-      participantsData[assistantIndex] = duplicate(assistant.data)
+      participantsData[assistantIndex] = foundry.utils.duplicate(assistant.data)
     }
 
     beneficiary.addBonusDice()
-    participantsData[beneficiaryIndex] = duplicate(beneficiary.data)
+    participantsData[beneficiaryIndex] = foundry.utils.duplicate(
+      beneficiary.data
+    )
     await this.update(
       { 'data.participants': participantsData },
       { render: render }
@@ -214,13 +218,17 @@ export class CoC7Chase extends CoC7Item {
       return undefined
     }
 
-    const participantsData = duplicate(this.data.data.participants)
+    const participantsData = foundry.utils.duplicate(
+      this.data.data.participants
+    )
     const participantIndex = participantsData.findIndex(
       p => participantUuid == p.uuid
     )
     if (participant.bonusDice >= diceNumber) participant.removeBonusDice()
     else participant.addBonusDice()
-    participantsData[participantIndex] = duplicate(participant.data)
+    participantsData[participantIndex] = foundry.utils.duplicate(
+      participant.data
+    )
     await this.update(
       { 'data.participants': participantsData },
       { render: render }
@@ -238,7 +246,9 @@ export class CoC7Chase extends CoC7Item {
       return undefined
     }
 
-    const participantsData = duplicate(this.data.data.participants)
+    const participantsData = foundry.utils.duplicate(
+      this.data.data.participants
+    )
     const participantIndex = participantsData.findIndex(
       p => participantUuid == p.uuid
     )
@@ -256,7 +266,9 @@ export class CoC7Chase extends CoC7Item {
       participant.alterMovementActions(-1)
     }
     participant.addBonusDice()
-    participantsData[participantIndex] = duplicate(participant.data)
+    participantsData[participantIndex] = foundry.utils.duplicate(
+      participant.data
+    )
     await this.update(
       { 'data.participants': participantsData },
       { render: render }
@@ -306,7 +318,7 @@ export class CoC7Chase extends CoC7Item {
       : this.participantsByInitiative[0].uuid
     const participantsDataUpdate = {}
     const participants = this.data.data.participants
-      ? duplicate(this.data.data.participants)
+      ? foundry.utils.duplicate(this.data.data.participants)
       : []
     participants.forEach(p => {
       delete p.active
@@ -350,7 +362,11 @@ export class CoC7Chase extends CoC7Item {
     locationUuid,
     { moveParticipant = true } = {}
   ) {
+    const location = this.getLocationData(locationUuid)
     const card = new ChaseObstacleCard()
+
+    // card.initialize( location?.obstacleDetails)
+    card.initialize({ chaseUuid: this.uuid })
     card.toMessage()
   }
 
@@ -359,7 +375,7 @@ export class CoC7Chase extends CoC7Item {
     if (game.user.isGM) {
       const roll = CoC7Check.fromRollString(rollString)
       const participants = this.data.data.participants
-        ? duplicate(this.data.data.participants)
+        ? foundry.utils.duplicate(this.data.data.participants)
         : []
       const index = participants.findIndex(p => p.rollUuid === roll.uuid)
       if (index >= 0) {
@@ -381,11 +397,18 @@ export class CoC7Chase extends CoC7Item {
   get locations () {
     const locations = this.started
       ? this.data.data.locations.list
-        ? duplicate(this.data.data.locations.list)
+        ? foundry.utils.duplicate(this.data.data.locations.list)
         : []
       : this.initTrack
     this.processLocations(locations)
     return locations
+  }
+
+  getLocationData (locationUuid, { duplicateData = true } = {}) {
+    const locations = duplicate
+      ? foundry.utils.duplicate(this.locations)
+      : this.locations
+    return locations.find(l => locationUuid == l.uuid)
   }
 
   processLocations (locations) {
@@ -473,7 +496,7 @@ export class CoC7Chase extends CoC7Item {
       }
     }
 
-    const chaseLocations = duplicate(this.data.data.locations)
+    const chaseLocations = foundry.utils.duplicate(this.data.data.locations)
     for (let index = 0; index < locationsLength; index++) {
       let location = {}
       const participants = []
@@ -481,7 +504,9 @@ export class CoC7Chase extends CoC7Item {
         index >= locationsIndexStart &&
         index - locationsIndexStart < chaseLocations.list.length
       ) {
-        location = duplicate(chaseLocations.list[index - locationsIndexStart])
+        location = foundry.utils.duplicate(
+          chaseLocations.list[index - locationsIndexStart]
+        )
         location.init = false
         location.participants?.forEach(p => {
           if (null != p) participants.push(p)
@@ -592,7 +617,7 @@ export class CoC7Chase extends CoC7Item {
   }
 
   cleanLocationsList (list) {
-    const updatedList = duplicate(list)
+    const updatedList = foundry.utils.duplicate(list)
     const partipantsUuidArray = this.data.data.participants.map(p => p.uuid)
 
     updatedList.forEach(l => {
@@ -634,7 +659,7 @@ export class CoC7Chase extends CoC7Item {
   ) {
     const updateData = {}
     const locations = this.data.data.locations.list
-      ? duplicate(this.data.data.locations.list)
+      ? foundry.utils.duplicate(this.data.data.locations.list)
       : []
     locations.forEach(l => {
       delete l.active
@@ -745,7 +770,7 @@ export class CoC7Chase extends CoC7Item {
       if (locations[i].active) delete locations[i].active
     }
     const participantsData = this.data.data.participants
-      ? duplicate(this.data.data.participants)
+      ? foundry.utils.duplicate(this.data.data.participants)
       : []
     for (let i = 0; i < participantsData.length; i++) {
       if (participantsData[i].active) delete participantsData[i].active
@@ -770,7 +795,7 @@ export class CoC7Chase extends CoC7Item {
     // const selector = `#item-${this.id} .chase-track`
     // ui.notifications.info( `moveParticipant : Jquery root: ${$(':root').find(selector).scrollLeft()}`)
     let modified = false
-    const locations = duplicate(this.data.data.locations.list)
+    const locations = foundry.utils.duplicate(this.data.data.locations.list)
     const originIndex = locations.findIndex(l =>
       l.participants?.includes(participantUuid)
     )
@@ -785,7 +810,9 @@ export class CoC7Chase extends CoC7Item {
 
     const totalMove = destinationIndex - originIndex
     const participant = this.getParticipant(participantUuid)
-    const participantsData = duplicate(this.data.data.participants)
+    const participantsData = foundry.utils.duplicate(
+      this.data.data.participants
+    )
     const participantIndex = participantsData.findIndex(
       p => participantUuid == p.uuid
     )
@@ -804,7 +831,9 @@ export class CoC7Chase extends CoC7Item {
         return undefined
       }
       participant.alterMovementActions(0 - Math.abs(totalMove))
-      participantsData[participantIndex] = duplicate(participant.data)
+      participantsData[participantIndex] = foundry.utils.duplicate(
+        participant.data
+      )
       await this.update(
         { 'data.participants': participantsData },
         { render: false }
@@ -847,7 +876,7 @@ export class CoC7Chase extends CoC7Item {
     locationUuid,
     { scrollToLocation = true, activateLocation = true, render = true } = {}
   ) {
-    const locations = duplicate(this.data.data.locations.list)
+    const locations = foundry.utils.duplicate(this.data.data.locations.list)
 
     //Find destination location.
     const destination = locations.find(l => locationUuid == l.uuid)
@@ -898,7 +927,7 @@ export class CoC7Chase extends CoC7Item {
   }
 
   get chaseTrackCurrentScrollPosition () {
-    const html = this.sheet?.element
+    const html = this.sheet?._element
     if (!html) return -1
     const chaseTrack = html[0].querySelector('.chase-track')
     if (!chaseTrack) return -1
@@ -921,8 +950,8 @@ export class CoC7Chase extends CoC7Item {
   }
 
   getChaseTrackLocationScrollPosition (locationUuid, { html = null }) {
-    const htmlElement = html ? html : this.sheet?.element
-    if (!htmlElement) return -1
+    const htmlElement = html ? html : this.sheet?._element
+    if (!htmlElement || !htmlElement[0]) return -1
     const chaseTrack = htmlElement[0].querySelector('.chase-track')
     if (!chaseTrack) return -1
     const activeLocationElement = chaseTrack.querySelector(

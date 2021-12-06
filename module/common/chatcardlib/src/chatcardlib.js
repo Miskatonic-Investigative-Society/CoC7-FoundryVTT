@@ -146,6 +146,7 @@ export class EnhancedChatCard {
   }
 
   async getData () {
+    await this.assignObject()
     return {
       card: this,
       flags: this.flags,
@@ -187,8 +188,11 @@ export class EnhancedChatCard {
         ? ChatMessage.getSpeaker(this.options.speaker)
         : {}
 
+    // const userId = this.options.userId ? this.options.userId : game.user.id
+
     const chatData = foundry.utils.mergeObject(
       {
+        // user: userId,
         user: game.user.id,
         speaker: speaker,
         flavor: game.i18n.localize(this.options.title),
@@ -208,7 +212,8 @@ export class EnhancedChatCard {
   }
 
   async updateChatCard (options = {}) {
-    if (options.compute) this.compute()
+    //TODO the whole function has to be executed by GM if options.GMchatCard
+    if (options.compute) await this.compute()
     if (!this.messageId) {
       this.toMessage()
     } else {
@@ -371,7 +376,6 @@ export class EnhancedChatCard {
     if (!htmlCardElement) return
 
     const card = await EnhancedChatCard.fromHTMLCardElement(htmlCardElement)
-    card.assignObject()
     card.activateListeners(html)
   }
 
@@ -383,7 +387,13 @@ export class EnhancedChatCard {
    * Override to reassign object from the data structure.
    * @returns
    */
-  assignObject () {}
+  async assignObject () {}
+
+  /**
+   * Override to update object after data change.
+   * @returns
+   */
+  async compute () {}
 
   /**
    *
@@ -548,7 +558,7 @@ export class EnhancedChatCard {
 
     const card = new cardClass(data)
     if (messageId) card.messageId = messageId
-    await card.assignObject()
+    // await card.assignObject()
     return card
   }
 

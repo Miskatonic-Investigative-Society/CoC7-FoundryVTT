@@ -15,6 +15,8 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       0: 'option 1',
       1: 'option 2'
     }
+    const chaseItem = await fromUuid(this._data.chaseUuid)
+    await chaseItem.activateLocation('szb0qfp1oehux6be')
 
     return data
   }
