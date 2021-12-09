@@ -416,17 +416,17 @@ export class CoC7Utilities {
     CoC7Utilities.updateCharSheets()
     Hooks.call('toggleCharCreation', toggle)
   }
-  
+
   static async getTarget() {
     let users = game.users.filter(user => user.active);
     let actors = game.actors;
     let checkOptions = `<input type="checkbox" name="COCCheckAllPC">\n
-    <label for="All">${game.i18n.localize('CoC7.allActor')}</label>`
+    <label for="All">${game.i18n.localize('CoC7.allActors')}</label>`
     let playerTokenIds = users.map(u => u.character?.id).filter(id => id !== undefined);
     let selectedPlayerIds = canvas.tokens.controlled.map(token => {
         return token.actor.id;
     });
-    
+
     // Build checkbox list for all active players
     actors.forEach(actor => {
         let checked = (selectedPlayerIds.includes(actor.id) || playerTokenIds.includes(actor.id)) && 'checked';
@@ -436,10 +436,10 @@ export class CoC7Utilities {
      <label for="${actor.id}">${actor.name}</label>
        `
     });
-    
+
     new Dialog({
         title: `${game.i18n.localize('CoC7.dreaming')}`,
-        content: `${game.i18n.localize('CoC7.whoGoToDream')}: ${checkOptions} <br>`,
+        content: `${game.i18n.localize('CoC7.restTargets')}: ${checkOptions} <br>`,
         buttons: {
             whisper: {
                 label: `${game.i18n.localize('CoC7.startRest')}`,
