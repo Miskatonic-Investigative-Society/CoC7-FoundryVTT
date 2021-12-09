@@ -130,6 +130,7 @@
   "CoC7.MagicPointsCost": "Coste PMs",
   "CoC7.OtherCosts": "Otro coste",
   "CoC7.CastingSpell": "Lanzando <i>{spell}</i>.",
+  "CoC7.NotEnoughMagicPoints": "El hechizo {spell} cuesta {originalMagicPoints} PMs, pero solo dispone de {actorMagicPoints}. ¿Desea tomar los restantes {convertedHitPoints} de sus PVs? Se le causará un daño de {convertedHitPoints} PVs si continúa",
 
   "CoC7.CopyToClipboard": "Copiar al portapapeles",
   "CoC7.WhisperToSelection": "Susurrar a iconos seleccionados",
@@ -560,7 +561,7 @@
   "CoC7.MarkedForDevelopment": "Marcado para desarrollo",
   "CoC7.Mythos": "Mitos",
   "CoC7.MythosRating": "Puntuación de Mitos",
-  "CoC7.NotOwned": "Este objeto requiere permisos de propietario de un actor para realizar esta acción",
+  "CoC7.NotOwned": "Este libro requiere permisos de propietario de un actor para realizar esta acción",
   "CoC7.Occult": "Ciencias ocultas",
   "CoC7.Points": "punto(s)",
   "CoC7.Progress": "Progreso",
@@ -664,6 +665,8 @@
   "CoC7.WarnFastTargetWithWrongMOV": "Se ha seleccionado Rápido cuando el objetivo tiene un MOV inferior a 8. (MOV: {mov})",
   "CoC7.WarnTooManyTarget": "Seleccionados demasiados objetivos. Solo se guardará el último objetivo seleccionado",
 
+  "CoC7.allActors": "Todos los actores",
+  "CoC7.restTargets": "Descansar objetivos",
   "CoC7.startRest": "Comenzando descanso",
   "CoC7.dreaming": "Los investigadores esperan... soñando",
   "CoC7.healthRecovered": "Un PV recuperado",
@@ -686,7 +689,6 @@
   "CoC7.MessageTargetCheckRequested": "El guardián ha pedido a {name} una tirada de {check}",
   "CoC7.MessageTitleSelectSingleUserForTarget": "Qué usuario podrá responder al ataque",
   "CoC7.MessageSelectSingleUserForTarget": "Este icono está controlado por varios usuarios, por favor, seleccione que usuario podrá responder al ataque",
-  "CoC7.MessageSelectedTargetIsNotControlled": "El icono {name} no está siendo controlado por nadie, de modo que no podrá realizar ninguna reacción en combate cuando le ataquen",
   "CoC7.MessageBoutOfMadnessTableNotFound": "No se ha encontrado el resultado de la tabla de locura, por favor, compruebe que se han creado las tablas",
   "CoC7.MessageBoutOfMadnessItemNotFound": "No se ha encontrado el resultado de la tabla de locura, por favor, compruebe que se han creado los estatus",
 
@@ -711,6 +713,7 @@
   "CoC7.English": "Inglés",
   "CoC7.Spanish": "Español",
   "CoC7.French": "Francés",
+  "CoC7.German": "Alemán",
   "CoC7.TraditionalChinese": "Chino tradicional",
   "CoC7.SelectSourceLanguage": "Seleccione el idioma del texto original",
   "CoC7.ImportedUnnamedCharacter": "Se ha importado personaje 'unnamed'",
@@ -873,5 +876,8 @@
   "CoC7.ExperimentalFeaturesWarning": "Esta característica está en desarrollo y no se recomienda su uso en sus mundos de juego",
   "SETTINGS.CheckElevation": "Incluir elevación en la distancia",
   "SETTINGS.CheckElevationHint": "Usa la elevación en el combate a distancia para medir alcances",
-  "CoC7.toolTipDelay": "Retraso en milisegundos que tarda en aparecer los mensajes emergentes, ajustar a 0 para no mostrarlos nunca"
+  "CoC7.toolTipDelay": "Retraso en milisegundos que tarda en aparecer los mensajes emergentes, ajustar a 0 para no mostrarlos nunca",
+
+  "CoC7.getTheExample": "Copiar ejemplo",
+  "CoC7.Copied": "Ejemplo copiado al portapapeles"
 }
