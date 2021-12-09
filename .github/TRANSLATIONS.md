@@ -12,9 +12,9 @@ The following translations have been abandoned **cn**, **cs**, [are you able to 
 | [CoC7.Copied](#coc7copied)                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  |
 | [CoC7.German](#coc7german)                             | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  |
 | [CoC7.NotEnoughMagicPoints](#coc7notenoughmagicpoints) | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  |
-| [CoC7.allActor](#coc7allactor)                         | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.allActors](#coc7allactors)                       | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.getTheExample](#coc7gettheexample)               | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  |
-| [CoC7.whoGoToDream](#coc7whogotodream)                 | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.restTargets](#coc7resttargets)                   | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 
 ##### CoC7.Copied
 
@@ -28,14 +28,14 @@ The following translations have been abandoned **cn**, **cs**, [are you able to 
 
 `"CoC7.NotEnoughMagicPoints": "{spell} costs {originalMagicPoints} Magic Points, but you only have {actorMagicPoints}. Would you like to take the remaining {convertedHitPoints} from your Hit Points? You will take {convertedHitPoints} damage if you proceed.",`
 
-##### CoC7.allActor
+##### CoC7.allActors
 
-`"CoC7.allActor": "All Actor",`
+`"CoC7.allActors": "All Actors",`
 
 ##### CoC7.getTheExample
 
 `"CoC7.getTheExample": "Copy Example",`
 
-##### CoC7.whoGoToDream
+##### CoC7.restTargets
 
-`"CoC7.whoGoToDream": "Rest Target: ",`
+`"CoC7.restTargets": "Rest Targets",`
