@@ -1,3 +1,20 @@
+## Version 0.7.2:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+
+- Add filters to Item compendiums
+- Fix Keeper notes incongruency and Spell inside Book rendering
+- Fix luck recovery rules for 1920 and Pulp
+- Fix negative MP bug
+- Now Actor Importer support German, thanks to @brockhaus
+- Now it is possible to convert remaining MP into HP (KR, pg. 176)
+- Now it is possible to copy Actor Importer example, thanks to @zeteticl
+- Now it is possible to select specific Actors for Rest feature, thanks to @zeteticl
+- Update to German localization, thanks to @brockhaus
+- Update to Portuguese localization
+- Update to Swedish localization, thanks to @Rangertheman
+- Update to Taiwanese localization, thanks to @zeteticl
+
 ## Version 0.7.1:
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
