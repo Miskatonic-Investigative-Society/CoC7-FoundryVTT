@@ -416,9 +416,52 @@ export class CoC7Utilities {
     CoC7Utilities.updateCharSheets()
     Hooks.call('toggleCharCreation', toggle)
   }
+  
+  static async getTarget() {
+    let users = game.users.filter(user => user.active);
+    let actors = game.actors;
+    let checkOptions = `<input type="checkbox" name="COCCheckAllPC">\n
+    <label for="All">${game.i18n.localize('CoC7.allActor')}</label>`
+    let playerTokenIds = users.map(u => u.character?.id).filter(id => id !== undefined);
+    let selectedPlayerIds = canvas.tokens.controlled.map(token => {
+        return token.actor.id;
+    });
+    
+    // Build checkbox list for all active players
+    actors.forEach(actor => {
+        let checked = (selectedPlayerIds.includes(actor.id) || playerTokenIds.includes(actor.id)) && 'checked';
+        checkOptions += `
+     <br>
+     <input type="checkbox" name="${actor.id}" id="${actor.id}" value="${actor.name}" ${checked}>\n
+     <label for="${actor.id}">${actor.name}</label>
+       `
+    });
+    
+    new Dialog({
+        title: `${game.i18n.localize('CoC7.dreaming')}`,
+        content: `${game.i18n.localize('CoC7.whoGoToDream')}: ${checkOptions} <br>`,
+        buttons: {
+            whisper: {
+                label: `${game.i18n.localize('CoC7.startRest')}`,
+                callback: async (html) => {
+                    let targets = [];
+                    let all = false;
+                    let users = html.find('[type="checkbox"]')
+                    for (let user of users) {
+                      if (user.name === "COCCheckAllPC" && user.checked) all = true;
+                        if (user.checked || all)
+                            targets.push(user.id);
+                    }
+                    await CoC7Utilities.startRest(targets)}
+            }
+        }
+    }).render(true);
 
-  static async startRest () {
-    const actors = game.actors.filter(actor => actor.hasPlayerOwner)
+}
+
+  static async startRest (targets) {
+    if(!targets.length)return;
+    const actors = game.actors.filter(actor => targets.includes(actor.id))
     let chatContent = `<i>${game.i18n.localize('CoC7.dreaming')}...</i><br>`
     for (const actor of actors) {
       if (['character', 'npc', 'creature'].includes(actor.type)) {

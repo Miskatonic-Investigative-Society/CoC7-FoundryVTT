@@ -85,7 +85,7 @@ export class CoC7Menu {
           icon: 'fas fa-moon',
           name: 'startrest',
           title: 'CoC7.startRest',
-          onClick: async () => await CoC7Utilities.startRest()
+          onClick: async () => await CoC7Utilities.getTarget()
         }
       ]
     })
