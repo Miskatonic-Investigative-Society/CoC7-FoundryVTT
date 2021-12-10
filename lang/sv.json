@@ -670,6 +670,8 @@
   "CoC7.WarnFastTargetWithWrongMOV": "'Snabb' har valts för ett mål med lägre än 8 FÖR. (FÖR: {mov})",
   "CoC7.WarnTooManyTarget": "För många mål valda. Behåller bara det senast valda målet",
 
+  "CoC7.allActors": "Alla karaktärer",
+  "CoC7.restTargets": "Vila valda mål",  
   "CoC7.startRest": "Påbörja vila",
   "CoC7.dreaming": "Utredaren väntar i drömmen",
   "CoC7.healthRecovered": "Återfick en kroppspoäng",
