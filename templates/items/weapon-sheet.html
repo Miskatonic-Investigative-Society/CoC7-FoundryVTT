@@ -95,14 +95,14 @@
 	{{!-- Sheet Body --}}
 	<section class="sheet-body">
 		<div class="tab skills flexcol active" data-group="primary" data-tab="details">
-			<label>Availability :</label>
-			<div class="skill-attributes" data-set="eras">
+      <h3 class="form-header" style="flex:0;">{{ localize "CoC7.EraAvailability" }}</h3>
+			<div class="skill-attributes" style="margin-bottom: 6px;flex:0;" data-set="eras">
 				{{#each _eras as |era key|}}
 					<span class="toggle-switch {{#if era.isEnabled}} switched-on {{/if}}" data-property="{{era.id}}">{{localize era.name}}</span>
 				{{/each}}
 			</div>
 
-			<div class="flexrow" style="flex: 0 0 auto;">
+			<div class="flexrow" style="flex: 0 0 auto; border-top: 2px groove #eeede0;">
 				<div class="flexrow" style="flex: 0 0 32%">
 					<label>{{localize 'CoC7.WeaponMalfunction'}} :</label>
 					<input class="weapon-detail" style="flex: 0 0 40px;" type="text" name="data.malfunction" value="{{data.malfunction}}" placeholder="-"/>
