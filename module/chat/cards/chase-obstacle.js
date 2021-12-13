@@ -1,25 +1,38 @@
 import { EnhancedChatCard } from '../../common/chatcardlib/src/chatcardlib.js'
+import { _participant } from '../../items/chase/participant.js'
 
 export class ChaseObstacleCard extends EnhancedChatCard {
   /** @override */
   static get defaultOptions () {
     return mergeObject(super.defaultOptions, {
-      template: 'systems/CoC7/templates/chat/cards/test.html'
+      template: 'systems/CoC7/templates/chat/cards/chase-obstacle.html',
+      GMUpdate: true
     })
   }
 
   /** @override */
   async getData () {
     const data = await super.getData()
-    data.mySelectOptions = {
-      0: 'option 1',
-      1: 'option 2'
+
+    data.chase = await fromUuid(this._data.chaseUuid)
+    data.location = data.chase.getLocationData( this._data.locationUuid)
+
+    if( !data.data.checkName){
+      data.data.checkName = data.location.obstacleDetails.checkName
     }
-    const chaseItem = await fromUuid(this._data.chaseUuid)
-    await chaseItem.activateLocation('szb0qfp1oehux6be')
+
+    data.displayActorOnCard = game.settings.get('CoC7', 'displayActorOnCard')
+    data.activeParticipant = new _participant( data.chase.activeParticipant)
+
+    if( data.chase.activeActor){
+      data.skill = data.chase.activeActor.find( data.data.checkName)
+    }
 
     return data
   }
+
+  /** @override */
+  async GMUpdate () {}
 
   // activateListeners (html) {
   //   super.activateListeners(html)

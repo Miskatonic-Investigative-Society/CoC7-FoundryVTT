@@ -1,5 +1,6 @@
 import { CoCActor } from '../../actors/actor.js'
 import { ChaseObstacleCard } from '../../chat/cards/chase-obstacle.js'
+import { testCard } from '../../chat/cards/test.js'
 import { chatHelper } from '../../chat/helper.js'
 import { CoC7Check } from '../../check.js'
 import { CoC7Item } from '../item.js'
@@ -364,10 +365,16 @@ export class CoC7Chase extends CoC7Item {
   ) {
     const location = this.getLocationData(locationUuid)
     const card = new ChaseObstacleCard()
-
-    // card.initialize( location?.obstacleDetails)
-    card.initialize({ chaseUuid: this.uuid })
+    card.initialize({ 
+      chaseUuid: this.uuid,
+      locationUuid: locationUuid,
+      moveParticipant: moveParticipant,
+      forward: locationUuid != this.activeLocation.uuid })
     card.toMessage()
+
+    // const test = new testCard()
+    // test.initialize({})
+    // test.toMessage()
   }
 
   /** @override */
@@ -1037,6 +1044,43 @@ export class CoC7Chase extends CoC7Item {
     )
     actor.skills.forEach(s => list.push(s.fullName))
     return list
+  }
+
+  get allSkillsAndCharacteristics () {
+    const list = []
+    CoCActor.getCharacteristicDefinition().forEach(c =>
+      list.push(
+        `${game.i18n.localize('CoC7.Characteristics')} (${c.shortName})`
+      )
+    )
+    list.push(
+      `${game.i18n.localize('CoC7.Attribute')} (${game.i18n.localize(
+        'CoC7.Luck'
+      )})`
+    )
+    list.push(
+      `${game.i18n.localize('CoC7.Attribute')} (${game.i18n.localize(
+        'CoC7.SAN'
+      )})`
+    )
+
+    game.CoC7.skillList?.forEach(s => {
+      if (
+        !list.includes(s.fullName) &&
+        !s.fullName
+          .toLowerCase()
+          .includes(`(${game.i18n.localize('CoC7.AnySpecName')})`.toLowerCase())
+      )
+        list.push(s.fullName)
+    }) // TODO: Remove ??
+    this.participants.forEach(p => {
+      if (p.actor) {
+        p.actor.skills.forEach(s => {
+          if (!list.includes(s.fullName)) list.push(s.fullName)
+        })
+      }
+    })
+    return list.sort(Intl.Collator().compare)
   }
 
   /**

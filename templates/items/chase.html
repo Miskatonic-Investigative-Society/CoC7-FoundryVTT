@@ -12,11 +12,11 @@
 
                 {{#if activeLocation}}
                 <datalist id="check-all-options">
-                    {{#each dataListCheckOptions as |o|}}
+                    {{#each item.allSkillsAndCharacteristics as |o|}}
                         <option>{{o}}</option>
                     {{/each}}
                 </datalist>
-                <datalist if="check-active-actor">
+                <datalist id="check-active-actor">
                     {{#each item.activeActorSkillsAndCharacteristics as |o|}}
                         <option>{{o}}</option>
                     {{/each}}                    
@@ -52,9 +52,16 @@
                                 {{/if}}
                             </div>
                             <div class="form-group">
-                                <div toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasActionCost" class="tag flex-auto toggle {{#if activeLocation.obstacleDetails.hasActionCost}}switched-on{{/if}}">{{ localize "CoC7.ActionCost"}}</div>
-                                {{#if activeLocation.obstacleDetails.hasActionCost}}
-                                <input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.failedActionCost" value="{{activeLocation.obstacleDetails.failedActionCost}}" placeholder="{{ localize 'CoC7.ActionCost' }}"/>
+                                {{#if activeLocation.obstacleDetails.barrier}}
+                                    <div toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasHitPoints" class="tag flex-auto toggle {{#if activeLocation.obstacleDetails.hasHitPoints}}switched-on{{/if}}">{{ localize "CoC7.HitPoints"}}</div>
+                                    {{#if activeLocation.obstacleDetails.hasHitPoints}}
+                                    <input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.HitPoints" value="{{activeLocation.obstacleDetails.HitPoints}}" placeholder="{{ localize 'CoC7.HitPoints' }}"/>
+                                    {{/if}}
+                                {{else}}
+                                    <div toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasActionCost" class="tag flex-auto toggle {{#if activeLocation.obstacleDetails.hasActionCost}}switched-on{{/if}}">{{ localize "CoC7.ActionCost"}}</div>
+                                    {{#if activeLocation.obstacleDetails.hasActionCost}}
+                                    <input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.failedActionCost" value="{{activeLocation.obstacleDetails.failedActionCost}}" placeholder="{{ localize 'CoC7.ActionCost' }}"/>
+                                    {{/if}}
                                 {{/if}}
                             </div>
                         {{/if}}

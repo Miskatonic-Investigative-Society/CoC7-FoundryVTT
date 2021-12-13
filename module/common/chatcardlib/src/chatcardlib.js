@@ -25,6 +25,7 @@ export function initECC (...cardclass) {
     EnhancedChatCardLib.register(cardclass)
     EnhancedChatCardLib.socket = socketlib.registerSystem(game.system.id) //Socket is attached to current system
     EnhancedChatCardLib.socket.register('updateMessage', updateMessage)
+    EnhancedChatCardLib.socket.register('GMUpdate', GMUpdate)
     EnhancedChatCardLib.socket.register('advise', advise)
     // EnhancedChatCardLib.socket.register('gmtradeitemto', gmtradeitemto)
   })
@@ -40,6 +41,13 @@ async function updateMessage (messageId, newContent) {
   const msg = await chatMessage.update({
     content: newContent
   })
+}
+
+async function GMUpdate (data, cardClassName, messageId = undefined) {
+  const card = await EnhancedChatCard.fromData(data, cardClassName, messageId)
+  await card.GMUpdate()
+  // const diff = foundry.utils.diffObject( data, card.toObject())
+  return card.toObject()
 }
 
 async function advise () {
@@ -146,7 +154,7 @@ export class EnhancedChatCard {
   }
 
   async getData () {
-    await this.assignObject()
+    // await this.assignObjects()
     return {
       card: this,
       flags: this.flags,
@@ -211,9 +219,10 @@ export class EnhancedChatCard {
     })
   }
 
-  async updateChatCard (options = {}) {
+  async updateChatCard () {
     //TODO the whole function has to be executed by GM if options.GMchatCard
-    if (options.compute) await this.compute()
+    if (this.options.compute) await this.localCompute()
+    if (this.options.GMUpdate) await this.ExecuteGMUpdate()
     if (!this.messageId) {
       this.toMessage()
     } else {
@@ -387,13 +396,33 @@ export class EnhancedChatCard {
    * Override to reassign object from the data structure.
    * @returns
    */
-  async assignObject () {}
+  async assignObjects () {}
 
   /**
    * Override to update object after data change.
+   * This is called by the local client
    * @returns
    */
-  async compute () {}
+  async localCompute () {}
+
+  /**
+   * Override to update object after data change.
+   * This is called by one of the GM clients.
+   * @returns
+   */
+  async GMUpdate () {}
+
+  async ExecuteGMUpdate () {
+    const newData = await game.enhancedChatCardsLib.socket.executeAsGM(
+      'GMUpdate',
+      this.toObject(),
+      this.constructor.name,
+      this.messageId
+    )
+
+    this._data = newData
+    await this.assignObjects()
+  }
 
   /**
    *
@@ -493,13 +522,11 @@ export class EnhancedChatCard {
       excludeStartWith: '_',
       submitOnChange: true,
       speaker: ChatMessage.getSpeaker(),
-      ooc: false //  * @param {boolean} [options.ooc=false]  Use the speaker/getspeaker. if true use the user instead
+      ooc: false, //  * @param {boolean} [options.ooc=false]  Use the speaker/getspeaker. if true use the user instead
+      compute: true, // * @param {boolean} [options.compute.local=true] invoque the compute method as local user => need to override localCompute
+      GMUpdate: false // * @param {boolean} [options.compute.GM=false] invoque the GMUpdate method as GM => need to override GMUpdate
     }
   }
-
-  // get objectData () {
-  //   return JSON.parse(this.objectDataString)
-  // }
 
   get objectDataString () {
     return JSON.stringify(this._data, (key, value) => {
@@ -546,7 +573,7 @@ export class EnhancedChatCard {
     return await this.fromData(cardData, htmmlCard.dataset.eccClass, messageId)
   }
 
-  static async fromData (data, cardClassName, messageId = null) {
+  static async fromData (data, cardClassName, messageId = undefined) {
     const cardClass = game.enhancedChatCardsLib.types.get(cardClassName)
 
     if (!cardClass) {
@@ -558,7 +585,7 @@ export class EnhancedChatCard {
 
     const card = new cardClass(data)
     if (messageId) card.messageId = messageId
-    // await card.assignObject()
+    await card.assignObjects()
     return card
   }
 
@@ -607,7 +634,7 @@ export class EnhancedChatCard {
     const card = target.closest(`.${ECC_CLASS}`)
     if (this.options.submitOnChange) {
       if (card) this._update(card)
-      this.updateChatCard()
+      this.updateChatCard() //Submit on change ?
     }
   }
 }

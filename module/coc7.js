@@ -26,6 +26,7 @@ import { DropActorSheetData } from './hooks/drop-actor-sheet-data.js'
 // Card init
 import { initECC } from './common/chatcardlib/src/chatcardlib.js'
 import { ChaseObstacleCard } from './chat/cards/chase-obstacle.js'
+import { testCard } from './chat/cards/test.js'
 // import { testCard } from './chat/cards/test.js'
 
 Hooks.on('renderSettingsConfig', (app, html, options) => {
@@ -146,7 +147,7 @@ Hooks.once('init', async function () {
   Combat.prototype.rollInitiative = rollInitiative
 })
 
-initECC(ChaseObstacleCard)
+initECC(ChaseObstacleCard, testCard)
 
 Hooks.on('renderCombatTracker', (app, html, data) =>
   CoC7Combat.renderCombatTracker(app, html, data)

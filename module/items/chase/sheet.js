@@ -117,47 +117,9 @@ export class CoC7ChaseSheet extends ItemSheet {
     data.previousLocation = this.item.previousLocation
     data.nextLocation = this.item.nextLocation
     data.started = this.item.started
-    data.dataListCheckOptions = this.allSkillsAndCharacteristics
 
     data.isKeeper = game.user.isGM
     return data
-  }
-
-  get allSkillsAndCharacteristics () {
-    const list = []
-    CoCActor.getCharacteristicDefinition().forEach(c =>
-      list.push(
-        `${game.i18n.localize('CoC7.Characteristics')} (${c.shortName})`
-      )
-    )
-    list.push(
-      `${game.i18n.localize('CoC7.Attribute')} (${game.i18n.localize(
-        'CoC7.Luck'
-      )})`
-    )
-    list.push(
-      `${game.i18n.localize('CoC7.Attribute')} (${game.i18n.localize(
-        'CoC7.SAN'
-      )})`
-    )
-
-    game.CoC7.skillList?.forEach(s => {
-      if (
-        !list.includes(s.fullName) &&
-        !s.fullName
-          .toLowerCase()
-          .includes(`(${game.i18n.localize('CoC7.AnySpecName')})`.toLowerCase())
-      )
-        list.push(s.fullName)
-    }) // TODO: Remove ??
-    this.item.participants.forEach(p => {
-      if (p.actor) {
-        p.actor.skills.forEach(s => {
-          if (!list.includes(s.fullName)) list.push(s.fullName)
-        })
-      }
-    })
-    return list.sort(Intl.Collator().compare)
   }
 
   // get activeParticipant () {
