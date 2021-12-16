@@ -1,3 +1,5 @@
+import { CoC7Utilities } from "../../../utilities.js"
+
 const ECC_CLASS = 'enhanced-chat-card'
 
 const PERMISSION_TYPE = {
@@ -118,14 +120,16 @@ export class EnhancedChatCard {
   // }
 
   constructor (data = {}, options = {}) {
-    this.initialize(data)
+    this.data = data
+    if (!this.data.flags) this.data.flags = {}
     this._options = options
   }
 
-  initialize (data) {
-    this._data = data
-    if (!this._data.flags) this._data.flags = {}
-  }
+  /**
+   * Called only once before sending message to chat.
+   * @override
+   */
+  async initialize () {}
 
   get options () {
     return mergeObject(this.constructor.defaultOptions, this._options)
@@ -167,10 +171,10 @@ export class EnhancedChatCard {
   }
 
   toObject () {
-    if (!this._data) return
+    if (!this.data) return
     const data = {}
-    for (let k of Object.keys(this._data)) {
-      const v = this._data[k]
+    for (let k of Object.keys(this.data)) {
+      const v = this.data[k]
       if (v instanceof Object) {
         data[k] = v.toObject ? v.toObject() : deepClone(v)
       } else data[k] = v
@@ -181,6 +185,8 @@ export class EnhancedChatCard {
   async toMessage (optionnalChatData = {}) {
     //Map ecc card type if not registered already
     // this.registerECCClass()
+
+    await this.initialize()
 
     //Publish by current user by default unless options.GMchatCard
     const data = await this.getData()
@@ -285,18 +291,26 @@ export class EnhancedChatCard {
   }
 
   setState (element) {
-    if (!element || !element.dataset.flag) return
-    element.classList.add(
-      this.flags[element.dataset.flag] ? STATE.ON : STATE.OFF
-    )
+    if (!element) return
+    if( element.dataset.flag){
+      element.classList.add(
+        this.flags[element.dataset.flag] ? STATE.ON : STATE.OFF
+      )
+    } 
+    if (element.dataset.name) {
+      const value = CoC7Utilities.getByPath( this, element.dataset.name)
+      element.classList.add(
+        value ? STATE.ON : STATE.OFF
+      )
+    }
   }
 
   setRadioState (element) {
     if (!element || !element.name) return
     const splited = element.name.split('.')
     if ('data' != splited[0].toLowerCase()) return
-    if (this._data && undefined != this._data[splited[1]]) {
-      if (this._data[splited[1]] == element.value) {
+    if (this.data && undefined != this.data[splited[1]]) {
+      if (this.data[splited[1]] == element.value) {
         element.checked = true
       }
     }
@@ -389,7 +403,7 @@ export class EnhancedChatCard {
   }
 
   get flags () {
-    return this._data.flags
+    return this.data.flags
   }
 
   /**
@@ -420,7 +434,7 @@ export class EnhancedChatCard {
       this.messageId
     )
 
-    this._data = newData
+    this.data = newData
     await this.assignObjects()
   }
 
@@ -482,13 +496,16 @@ export class EnhancedChatCard {
       const form = forms[i]
       const fd = new FormDataExtended(form)
       let data = fd.toObject()
-      data = foundry.utils.diffObject(
-        this._data,
-        foundry.utils.expandObject(data)
-      )
-      for (const [key, value] of Object.entries(data.data)) {
-        this._data[key] = value
-        updates = true
+      // data = foundry.utils.diffObject(
+      //   this.data,
+      //   foundry.utils.expandObject(data)
+      // )
+      for (const [key, value] of Object.entries(data)) {
+        const oldValue = CoC7Utilities.getByPath( this, key)
+        if( !(oldValue === value)){
+          CoC7Utilities.setByPath( this, key, value)
+          updates = true
+        }
       }
     }
     return updates
@@ -529,7 +546,7 @@ export class EnhancedChatCard {
   }
 
   get objectDataString () {
-    return JSON.stringify(this._data, (key, value) => {
+    return JSON.stringify(this.data, (key, value) => {
       if (value === null) return undefined
       if (this.options.exclude?.includes(key)) return undefined
       if (key.startsWith(this.options.excludeStartWith)) return undefined
@@ -589,18 +606,20 @@ export class EnhancedChatCard {
     return card
   }
 
-  setFlag (flagName) {
-    if (!flagName && !($.type(flagName) === 'string')) return
-    this._data.flags[flagName] = true
+  setData (name) {
+    if (!name && !($.type(name) === 'string')) return
+    CoC7Utilities.setByPath( this, name, true)
   }
 
-  unsetFlag (flagName) {
-    if (!flagName && !($.type(flagName) === 'string')) return
-    this._data.flags[flagName] = false
+  unsetData (name) {
+    if (!name && !($.type(name) === 'string')) return
+    CoC7Utilities.setByPath( this, name, false)
   }
 
-  toggleFlag (flagName) {
-    this.flags[flagName] = !this.flags[flagName]
+  toggleData (name) {
+    if (!name && !($.type(name) === 'string')) return
+    const value = CoC7Utilities.getByPath( this, name)
+    CoC7Utilities.setByPath( this, name, !value)
   }
 
   async _onToggle (event) {
@@ -619,22 +638,23 @@ export class EnhancedChatCard {
     ) {
       return
     }
-    const flag = target.dataset.flag
-    if (!flag) return
+    let name = target.dataset.flag?`data.flags.${target.dataset.flag}`:target.dataset.name
+    if (!name) return
     const toggle = target.closest('.ecc-radio')
     if (!toggle) {
-      this.toggleFlag(flag)
+      this.toggleData(name)
     } else {
       const buttons = toggle.querySelectorAll('.ecc-switch')
       for (const b of buttons) {
-        this.unsetFlag(b.dataset.flag)
+        const bName = b.dataset.flag?`data.flags.${b.dataset.flag}`:b.dataset.name
+        this.unsetData(bName)
       }
-      this.setFlag(flag)
+      this.setData(name)
     }
     const card = target.closest(`.${ECC_CLASS}`)
     if (this.options.submitOnChange) {
       if (card) this._update(card)
-      this.updateChatCard() //Submit on change ?
     }
+    this.updateChatCard() //Submit on change ?
   }
 }

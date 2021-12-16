@@ -110,6 +110,24 @@ export class _participant {
     this.data.bonusDice = x
   }
 
+  get hp () {
+    if( !this.data.hp){
+        this.data.hp = 0
+    }
+    if( this.actor){
+      this.data.hp = this.actor.hp
+    }
+
+    return this.data.hp
+  }
+
+  set hp (x) {
+    this.data.hp = x
+    if( this.actor){
+      this.actor.setHp(x)
+    } 
+  }
+
   addBonusDice () {
     if( this.data.bonusDice >= 2){
       ui.notifications.error( 'Already have max bonus dice')

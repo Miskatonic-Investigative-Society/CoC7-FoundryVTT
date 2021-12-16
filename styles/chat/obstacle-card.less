@@ -1,0 +1,32 @@
+.coc7.chat-card.obstacle-card{
+
+	.card-header{
+		img{
+			height: 2.25rem;
+    	width: 2.25rem;
+		}
+	}
+
+  .switched-off{
+    display: block;
+  }
+
+  .movement-action{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+		.deficit {
+			color: red;
+			text-shadow: 0 0 8px red;
+		}
+		.base {
+			color: gray;
+			&.deficit {
+				text-shadow: 0 0 8px red;
+			}
+			&.available {
+				color: goldenrod;
+			}
+		}
+  }
+}

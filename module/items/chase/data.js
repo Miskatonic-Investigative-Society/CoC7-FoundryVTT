@@ -59,12 +59,12 @@ export class CoC7Chase extends CoC7Item {
     return participants
   }
 
-  get activeParticipant () {
+  get activeParticipantData () {
     return this.data.data.participants.find(p => p.active)
   }
 
   get activeActor () {
-    const p = this.activeParticipant
+    const p = this.activeParticipantData
     if (!p) return undefined
     if (p.actorKey) {
       return chatHelper.getActorFromKey(p.actorKey)
@@ -364,12 +364,12 @@ export class CoC7Chase extends CoC7Item {
     { moveParticipant = true } = {}
   ) {
     const location = this.getLocationData(locationUuid)
-    const card = new ChaseObstacleCard()
-    card.initialize({ 
+    const card = new ChaseObstacleCard({
       chaseUuid: this.uuid,
       locationUuid: locationUuid,
       moveParticipant: moveParticipant,
-      forward: locationUuid != this.activeLocation.uuid })
+      forward: locationUuid != this.activeLocation.uuid
+    })
     card.toMessage()
 
     // const test = new testCard()

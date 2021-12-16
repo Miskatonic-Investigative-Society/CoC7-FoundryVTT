@@ -3,28 +3,39 @@
     <header class="card-header flexcol">
       <div class="flexrow">
         {{#if displayActorOnCard}}
-					<img class="open-actor {{activeParticipant.cssClass}}" data-actor-key="{{activeParticipant.actorKey}}" src="{{activeParticipant.icon}}" title="{{activeParticipant.name}}" width="36" height="36"/>
+					<img class="open-actor {{participant.cssClass}}" data-actor-key="{{participant.key}}" src="{{participant.icon}}" title="{{participant.name}}" width="36" height="36"/>
         {{/if}}
-        <h3 style="text-align: center;font-weight: bolder;" class="item-name card-title">{{item.name}}</h3>
+        <div class="movement-action">
+          {{#each participant.movementActionArray as |actionClass|}}
+          <i class="fas fa-bahai {{actionClass}}"></i>
+          {{/each}}
+        </div>
+          {{#if data.obstacle.barrier}}
+            <img src="systems/CoC7/assets/icons/barrier.svg">
+          {{else}}
+            <img src="systems/CoC7/assets/icons/hazard-sign.svg">
+          {{/if}}
       </div>
     </header>
 
-		<datalist id="check-all-options">
-      {{#each chase.allSkillsAndCharacteristics as |o|}}
+		<datalist id="check-options">
+      {{#each checkOptions as |o|}}
         <option>{{o}}</option>
       {{/each}}
     </datalist>
-    <datalist id="check-actor">
-      {{#each chase.activeActorSkillsAndCharacteristics as |o|}}
-        <option>{{o}}</option>
-      {{/each}}                    
-    </datalist>
+    <div class="form-group">
+
+    </div>
+    <div class="form-group ecc-radio">
+      <div data-name="data.obstacle.barrier" class="tag ecc-switch">barrier</div>
+      <div data-name="data.obstacle.hazard" class="tag ecc-switch">hazard</div>
+    </div>
     <div class="form-group">
       <input type="range" data-ecc-permissions="gm" name="data.bonusDice" min="-2" max="2" value="{{data.bonusDice}}" class="slider">
     </div>
     <div class="form-group">
-      <input type="text" data-ecc-permissions="gm" name="data.checkName" value="{{data.checkName}}"
-          list='check-all-options'/>
+      <input type="text" data-ecc-permissions="gm" name="data.obstacle.checkName" value="{{data.obstacle.checkName}}"
+          list='check-options'/>
     </div>
   </form>
 </div>

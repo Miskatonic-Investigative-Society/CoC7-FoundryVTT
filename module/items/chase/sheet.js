@@ -325,6 +325,13 @@ export class CoC7ChaseSheet extends ItemSheet {
   async _updateObject (event, formData) {
     const target = event.currentTarget
     const override = target?.dataset?.override === 'true'
+    if( target?.name?.includes('.hp')){
+      const [, , uuid, data] = target.name.split('.')
+      const participant = this.item.getParticipant(uuid)
+      if( participant && participant.actor){
+        if( !isNaN(Number( target.value))) await participant.actor.setHp( Number( target.value))
+      }
+    }
     if (override) {
       const [, type, uuid, subType, data] = target.name.split('.')
       const index = this.findParticipantIndex(uuid)
