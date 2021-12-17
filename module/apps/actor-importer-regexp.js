@@ -56,7 +56,7 @@ import { CoC7Utilities } from '../utilities.js'
 const nameCharacters =
   '\\u3000\\u3400-\\u4DBF\\u4E00-\\u9FFF\\w\\(\\)\\-\\/&"\'' +
   CoC7Utilities.quoteRegExp(
-    'áéíóàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃĀÑÕäëïöüÿÄËÏÖÜŸàèçÇßØøÅåÆæœ“”«»'
+    'áéíóàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃĀÑÕäëïöüÿÄËÏÖÜŸàèçÇßØøÅåÆæœ“”«»ąćęłńóśźżĄĆĘŁŃÓŚŹŻ'
   )
 
 const keys = {
@@ -110,6 +110,32 @@ const keys = {
     launched: '(?<type>' + 'Molotov|Granate|Dynamit' + ')',
     example:
       'Vorname Nachname\nAlter: 29\nBeruf: Ein Beruf\nST 50\nMA 60\nKO 60\nGE 60\nGR 55\nER 65\nIN 80\nBI 85\nTrefferpunkte: 11\nGeistige Stabilität: 60\nSchadensbonus: 0\nStatur: 0\nMagiepunkte: 12\nBewegungsweite: 8\n\nKampf\nAngriffe: 1\nHandgemenge 30% (15/6), Schaden 1D3\nMesser 30% (15/6), Schaden 1D4\nAusweichen 30% (15/6)\n\nFertigkeiten: Anthropologie 70% (35/14), Archäologie 30% (15/6), Bibliotheksnutzung 50% (25/10), Erste Hilfe 50% (25/10), Finanzkraft 40% (20/8), Geschichte 60% (30/12), Klettern 50% (25/10)\n\nSprachen: Englisch 85% (42/17); Deutsch 45% (22/9), Latein 45% (22/9)'
+  },
+  pl: {
+    description: 'CoC7.Polish',
+    dbNone: 'brak',
+    armorNone: 'brak',
+    attacksPerRoundNone: 'brak',
+    sanLossNone: 'brak',
+    diceShort: 'k|d',
+    fulldb: '(' + 'Modyfikator Obrażeń|MO' + ')',
+    halfdb: '(' + '½|1/2 MO|MO/2' + ')',
+    sectionCombats: '\n(?:' + 'Walka|Ataki' + ')[:\n]',
+    newCombatHeader: '\n' + 'Walka' + '\n',
+    sectionSkills: '\n(?:' + 'Umiejętności' + '(?:\\s*\\([^\\)]+\\))?)[:\n]',
+    sectionLangauges: '\n(?:' + 'Języki' + ')[:\n]',
+    sectionSpells: '\n(?:' + 'Zaklęcia' + ')[:\n]',
+    handgun:
+      '(?<type>' +
+      ' Pistolet|Rewolwer|Derringer|Beretta|Luger|Desert Eagle| \\.38' +
+      ')',
+    rifle:
+      '(?<type>' + 'Karabin|Strzelba|Wiatrówka|Garand|Gauge |Lee-Enfield|Strzelba na słonie' + ')',
+    smb: '(?<type>' + 'Pistolet maszynowy|Thompson' + ')',
+    machineGun: '(?<type>' + 'Browning|Vickers' + ')',
+    launched: '(?<type>' + 'Mołotowa|Granat|Laska dynamitu|Dynamit' + ')',
+    example:
+      'Przykładowa postać, 27 lat\nBibliotekarz\nS 75 KON 60 BC 80 ZR 70 WYG 60 INT 80\nMOC 50 WYK 85 P 55 PW 14 MO: 1D4\nKrzepa: 1 Ruch: 7 PM: 10 Szczęście: 40 Pancerz: 1\nAtaki w rundzie: 3 Utrata Poczytalności: 1K4/1K8\nWalka\nUgryzienie 50% (25/10), obrażenia 1K6\nWalka 30% (15/6), obrażenia 1K3\nDerringer 40% (20/8), obrażenia 1K8+1\nUnik 50% (25/10)\nUmiejętności\nTresura Zwierząt 55%, Urok Osobisty 30%, Pierwsza Pomoc 25%, Ukrywanie 20%,\nNasłuchiwanie 50%, Medycyna 45%, Przekonywanie 25%, Psychologia 75%,\nNauka (Astronomia) 90%, Nauka (Botanika) 35%, Nauka (Zoologia) 10%,\nSpostrzegawczość 35%, Ukrywanie 10%\nJęzyki: Angielski 80%, Eklo 5%.\nZaklęcia: Przyzwanie NPC, Odesłanie NPC.'
   },
   fr: {
     description: 'CoC7.French',
@@ -358,6 +384,87 @@ const translations = {
       keys.de.sectionLangauges +
       '|' +
       keys.de.sectionSpells +
+      ')'
+  },
+  pl: {
+    age: '(?<age>\\d+)' + '\\s+(?:' + 'lata|lat|rok' + ')[,\\s]*',
+    occupation:
+      '[,\\s]*' + 'Zawód' + '(\\s*:)?\\s+(?<occupation>.+)[,\\s\n]*',
+    str: '(?<![a-z])' + 'S' + '(\\s*:)?\\s*(?<str>\\d+|-)[,\\s\n]*',
+    con: '(?<![a-z])' + 'KON' + '(\\s*:)?\\s*(?<con>\\d+|-)[,\\s\n]*',
+    siz: '(?<![a-z])' + 'BC' + '(\\s*:)?\\s*(?<siz>\\d+|-)[,\\s\n]*',
+    int: '(?<![a-z])' + 'INT' + '(\\s*:)?\\s*(?<int>\\d+|-)[,\\s\n]*',
+    pow: '(?<![a-z])' + 'MOC' + '(\\s*:)?\\s*(?<pow>\\d+|-)[,\\s\n]*',
+    dex: '(?<![a-z])' + 'ZR' + '(\\s*:)?\\s*(?<dex>\\d+|-)[,\\s\n]*',
+    app: '(?<![a-z])' + 'WYG' + '(\\s*:)?\\s*(?<app>\\d+|-)[,\\s\n]*',
+    edu: '(?<![a-z])' + 'WYK' + '(\\s*:)?\\s*(?<edu>\\d+|-)[,\\s\n]*',
+    san:
+      '(?<![a-z])(?:' + 'P|Poczytalność' + ')(\\s*:)?\\s*(?<san>\\d+|-)[,\\s\n]*',
+    hp:
+      '(?<![a-z])(?:' + 'PW|Punkty Wytrzymałości' + ')(\\s*:)?\\s*(?<hp>\\d+|-)[,\\s\n]*',
+    mp:
+      '(?<![a-z])(?:' +
+      'PM|Punkty Magii' +
+      ')(\\s*:)?\\s*(?<mp>\\d+|-)[,\\s\n]*',
+    db:
+      '(?<![a-z])(?:' +
+      keys.pl.fulldb +
+      ')(\\s*:)?\\s+(?<db>[+-]?\\d+(?:d\\d+|D|K\\d+)?|' +
+      keys.pl.dbNone +
+      ')[,\\s\n]*',
+    build: '(?<![a-z])' + 'Krzepa' + '(\\s*:)?\\s+(?<build>[+-]?\\d+)[,\\s\n]*',
+    armor:
+      '(?<![a-z])' +
+      'Pancerz' +
+      '(\\s*:)?\\s+(?<armor>' +
+      keys.pl.armorNone +
+      '|\\d+)[,\\s\n]*',
+    mov: '(?<![a-z])' + 'Ruch' + '(\\s*:)?\\s*(?<mov>\\d+)[,\\s\n]*',
+    lck: '(?<![a-z])' + 'Szczęście' + '(\\s*:)?\\s+(?<lck>\\d+|-)[,\\s\n]*',
+    attacksPerRound:
+      '(?<![a-z])(?:' +
+      'Ataki w rundzie|# Ataki' +
+      ')(\\s*:)?\\s+(?<attacksPerRound>' +
+      keys.pl.attacksPerRoundNone +
+      '|\\d+(?!d))[,\\s\n]*',
+    sanLoss:
+      '(?<![a-z])(?:' +
+      'Utrata Poczytalności|utrata P' +
+      ')(\\s*:)?\\s+(?<sanLoss>' +
+      keys.pl.sanLossNone +
+      '|\\d[DK]?[+\\d]*\\/\\d[DK]?[+\\d]*)[,\\s\n]*',
+    weapon:
+      '(^|\\n)(?<name>[.\\t ' +
+      nameCharacters +
+      ']+)(\\**,?\\s+|\\*)(?:\\(|(?<percentage>\\d+)%,?(?:\\s*\\(\\d+\\/\\d+\\)\\s*,?)?)?(\\s*' +
+      'obrażenia' +
+      ')?\\s+(?<damage>(:?(:?\\d+k|d)?\\d+(\\s*/\\s*|\\s*[+-]\\s*(?:' +
+      keys.pl.fulldb +
+      '|' +
+      keys.pl.halfdb +
+      ')\\s*|\\s*[+-]\\s*(:?\\d+d)?\\d+)*)+)\\)?',
+    weaponDodge:
+      '(?<name>' +
+      'Unik' +
+      ')(\\s*:)?\\s+\\(?(?<percentage>\\d+)\\)?\\s*%(?:\\s*\\(\\d+\\/\\d+\\))?',
+    // Skill should not be named "The player has" / "but they regenerate" required for "A Cold Fire Within"
+    skill:
+      '^(?<name>[:\\*.\\s' +
+      nameCharacters +
+      ']+(?<!' +
+      'The player has|but they regenerate' +
+      '))\\s+\\(?(?<percentage>\\d+)[^d]%?\\)?(\\s*\\(\\d+/\\d+\\))?[\\.,]?\\s*',
+    guessStartCombat: '(^|(?<!,)\n)(' + 'Walka|Broń Palna|Bijatyka|Ugryzienie' + ')',
+    name: '^(?<name>[\\.\\s' + nameCharacters + ']+)[,\\s\n]+',
+    sections:
+      '(' +
+      keys.pl.sectionCombats +
+      '|' +
+      keys.pl.sectionSkills +
+      '|' +
+      keys.pl.sectionLangauges +
+      '|' +
+      keys.pl.sectionSpells +
       ')'
   },
   fr: {
