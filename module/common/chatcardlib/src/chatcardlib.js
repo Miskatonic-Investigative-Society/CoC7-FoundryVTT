@@ -1,4 +1,4 @@
-import { CoC7Utilities } from "../../../utilities.js"
+import { CoC7Utilities } from '../../../utilities.js'
 
 const ECC_CLASS = 'enhanced-chat-card'
 
@@ -292,16 +292,14 @@ export class EnhancedChatCard {
 
   setState (element) {
     if (!element) return
-    if( element.dataset.flag){
+    if (element.dataset.flag) {
       element.classList.add(
         this.flags[element.dataset.flag] ? STATE.ON : STATE.OFF
       )
-    } 
+    }
     if (element.dataset.name) {
-      const value = CoC7Utilities.getByPath( this, element.dataset.name)
-      element.classList.add(
-        value ? STATE.ON : STATE.OFF
-      )
+      const value = CoC7Utilities.getByPath(this, element.dataset.name)
+      element.classList.add(value ? STATE.ON : STATE.OFF)
     }
   }
 
@@ -443,10 +441,10 @@ export class EnhancedChatCard {
    * @param {*} event will check for an action (data-action)
    * if a method with that name exist it will be triggered.
    */
-  _onButton (event) {
-    const button = event.currentTarget
+  async _onButton (event) {
+    const target = event.currentTarget
     // button.style.display = 'none' //Avoid multiple push
-    const action = button.dataset.action
+    const action = target.dataset.action
     if (!action) {
       console.warn(`no action associated with this button`)
       return
@@ -455,7 +453,13 @@ export class EnhancedChatCard {
       console.warn(`no ${action} action found for this card`)
       return
     }
-    if (this[action]) this[action]({ event: event, update: true })
+    var update = false
+    if (this[action])
+      update = await this[action]({ event: event, updateCard: update })
+    const card = target.closest(`.${ECC_CLASS}`)
+    if (!card) return
+    const formUpdate = this._update(card)
+    if (formUpdate || update) this.updateChatCard()
   }
 
   /**
@@ -501,9 +505,9 @@ export class EnhancedChatCard {
       //   foundry.utils.expandObject(data)
       // )
       for (const [key, value] of Object.entries(data)) {
-        const oldValue = CoC7Utilities.getByPath( this, key)
-        if( !(oldValue === value)){
-          CoC7Utilities.setByPath( this, key, value)
+        const oldValue = CoC7Utilities.getByPath(this, key)
+        if (!(oldValue === value)) {
+          CoC7Utilities.setByPath(this, key, value)
           updates = true
         }
       }
@@ -608,18 +612,18 @@ export class EnhancedChatCard {
 
   setData (name) {
     if (!name && !($.type(name) === 'string')) return
-    CoC7Utilities.setByPath( this, name, true)
+    CoC7Utilities.setByPath(this, name, true)
   }
 
   unsetData (name) {
     if (!name && !($.type(name) === 'string')) return
-    CoC7Utilities.setByPath( this, name, false)
+    CoC7Utilities.setByPath(this, name, false)
   }
 
   toggleData (name) {
     if (!name && !($.type(name) === 'string')) return
-    const value = CoC7Utilities.getByPath( this, name)
-    CoC7Utilities.setByPath( this, name, !value)
+    const value = CoC7Utilities.getByPath(this, name)
+    CoC7Utilities.setByPath(this, name, !value)
   }
 
   async _onToggle (event) {
@@ -638,7 +642,9 @@ export class EnhancedChatCard {
     ) {
       return
     }
-    let name = target.dataset.flag?`data.flags.${target.dataset.flag}`:target.dataset.name
+    let name = target.dataset.flag
+      ? `data.flags.${target.dataset.flag}`
+      : target.dataset.name
     if (!name) return
     const toggle = target.closest('.ecc-radio')
     if (!toggle) {
@@ -646,7 +652,9 @@ export class EnhancedChatCard {
     } else {
       const buttons = toggle.querySelectorAll('.ecc-switch')
       for (const b of buttons) {
-        const bName = b.dataset.flag?`data.flags.${b.dataset.flag}`:b.dataset.name
+        const bName = b.dataset.flag
+          ? `data.flags.${b.dataset.flag}`
+          : b.dataset.name
         this.unsetData(bName)
       }
       this.setData(name)

@@ -210,7 +210,7 @@ export class CoC7Check {
     if (typeof this.difficulty !== 'undefined') {
       switch (this.difficulty) {
         case CoC7Check.difficultyLevel.extreme:
-          return game.i18n.format('CoC7.ExtremeDifficulty')
+          return game.mat('CoC7.ExtremeDifficulty')
         case CoC7Check.difficultyLevel.hard:
           return game.i18n.format('CoC7.HardDifficulty')
         case CoC7Check.difficultyLevel.regular:

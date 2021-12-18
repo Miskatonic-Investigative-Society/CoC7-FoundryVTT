@@ -1,32 +1,58 @@
-.coc7.chat-card.obstacle-card{
+.coc7.chat-card.obstacle-card {
+  .gm-actions {
+    .status-list {
+      display: block;
+      padding: 3px 0;
+      border-bottom: none;
+      border-top: 2px groove #fff;
 
-	.card-header{
-		img{
-			height: 2.25rem;
-    	width: 2.25rem;
-		}
-	}
+      .movement-action {
+        display: inline;
+      }
+    }
+  }
+  .card-header {
+    .card-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 
-  .switched-off{
+  .card-buttons {
+    button {
+      font-size: 12px;
+      height: 24px;
+      line-height: 20px;
+      margin: 2px 0;
+      background: rgba(255, 255, 240, 0.8);
+      border: 1px solid #b5b3a4;
+      border-radius: 3px;
+      width: 100%;
+      font-family: 'Signika', sans-serif;
+    }
+  }
+
+  .switched-off {
     display: block;
   }
 
-  .movement-action{
+  .movement-action {
     display: flex;
     justify-content: center;
     align-items: center;
-		.deficit {
-			color: red;
-			text-shadow: 0 0 8px red;
-		}
-		.base {
-			color: gray;
-			&.deficit {
-				text-shadow: 0 0 8px red;
-			}
-			&.available {
-				color: goldenrod;
-			}
-		}
+    .deficit {
+      color: red;
+      text-shadow: 0 0 8px red;
+    }
+    .base {
+      color: gray;
+      &.deficit {
+        text-shadow: 0 0 8px red;
+      }
+      &.available {
+        color: goldenrod;
+      }
+    }
   }
 }

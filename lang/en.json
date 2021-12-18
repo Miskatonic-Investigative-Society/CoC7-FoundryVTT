@@ -529,6 +529,13 @@
   "CoC7.YouGainedCthulhuMythos": "Your mind quail before the unearthly manifestation (+{value}% Cthulhu Mythos)",
   "CoC7.CardResolved": "Card resolved",
 
+  "CoC7.FacingObstacle": "You are facing {type}.",
+  "CoC7.ABarrier": "a barrier",
+  "CoC7.Barrier": "Barrier",
+  "CoC7.AHazard": "a hazard",
+  "CoC7.Hazard": "Hazard",
+  "CoC7.Breakable": "Breakable",
+
   "CoC7.SpellCastingTime": "Casting Time",
   "CoC7.SpellCastingCost": "Casting Cost",
   "CoC7.CallSpell": "Call",

@@ -1,15 +1,13 @@
-<div class="coc7 chat-card">
+<div class="coc7 chat-card chat-card-v2">
   <form class="flexcol">
-    <header class="card-header flexcol">
-      <div class="flexrow">
+    <header class="card-header">
+      <div class="left-portrait">
         {{#if displayActorOnCard}}
 					<img class="open-actor {{participant.cssClass}}" data-actor-key="{{participant.key}}" src="{{participant.icon}}" title="{{participant.name}}" width="36" height="36"/>
         {{/if}}
-        <div class="movement-action">
-          {{#each participant.movementActionArray as |actionClass|}}
-          <i class="fas fa-bahai {{actionClass}}"></i>
-          {{/each}}
-        </div>
+      </div>
+      <div class="card-title">{{#if data.obstacle.name}}{{data.obstacle.name}}{{else}}{{ localize 'CoC7.Obstacle'}}{{/if}}</div>
+      <div class="right-portrait">
           {{#if data.obstacle.barrier}}
             <img src="systems/CoC7/assets/icons/barrier.svg">
           {{else}}
@@ -19,23 +17,68 @@
     </header>
 
 		<datalist id="check-options">
+      
       {{#each checkOptions as |o|}}
         <option>{{o}}</option>
       {{/each}}
     </datalist>
-    <div class="form-group">
 
+    <div class="player-actions">
+      <div class='info'>
+        {{#if data.states.obstacleDefined}}
+          <div>{{ strings.obstacleDefined}}</div>
+        {{/if}}
+      </div>
+      {{#if playerActions.showActionChoice}}
+      {{/if}}
     </div>
-    <div class="form-group ecc-radio">
-      <div data-name="data.obstacle.barrier" class="tag ecc-switch">barrier</div>
-      <div data-name="data.obstacle.hazard" class="tag ecc-switch">hazard</div>
-    </div>
-    <div class="form-group">
-      <input type="range" data-ecc-permissions="gm" name="data.bonusDice" min="-2" max="2" value="{{data.bonusDice}}" class="slider">
-    </div>
-    <div class="form-group">
-      <input type="text" data-ecc-permissions="gm" name="data.obstacle.checkName" value="{{data.obstacle.checkName}}"
-          list='check-options'/>
+
+    <div data-ecc-visibility="gm" class="gm-actions">
+      {{#if data.states.obstacleDefined}}
+        {{#if data.states.checkTypeDefined}}
+        {{else}}
+        {{/if}}
+      {{else}}
+      <div class="form-group ecc-radio">
+        <div data-name="data.obstacle.barrier" class="toggle-switch ecc-switch">barrier</div>
+        <div data-name="data.obstacle.hazard" class="toggle-switch ecc-switch">hazard</div>
+      </div>
+      <div class="form-group">
+        <label>Obstacle name:</label>
+        <input type="text" data-ecc-permissions="gm" name="data.obstacle.name" value="{{data.obstacle.name}}"/>
+      </div>
+      <div class="form-group">
+        <div data-flag="consumeBonusDice" class="toggle-switch ecc-switch">Use Dice</div>
+        <div data-name="data.obstacle.hasDamage" class="toggle-switch ecc-switch">Damage</div>
+        {{#if data.obstacle.barrier}}
+          <div data-name="data.obstacle.hasHitPoints" class="toggle-switch ecc-switch">Hit Points</div>
+        {{else}}
+          <div data-name="data.obstacle.hasActionCost" class="toggle-switch ecc-switch">Actions</div>
+        {{/if}}
+      </div>
+      <div class="form-group">
+        <input type="range" data-ecc-permissions="gm" name="data.bonusDice" min="-2" max="2" value="{{data.bonusDice}}" class="slider">
+      </div>
+      <div class="form-group">
+        <input type="text" data-ecc-permissions="gm" name="data.obstacle.checkName" value="{{data.obstacle.checkName}}"
+            list='check-options'/>
+      </div>
+      <div class="card-buttons">
+        <button class='submit' data-action='onValidateObstacle'>Validate</button>
+      </div>
+      {{/if}}
+
+      <div class="status-list">
+        <div class="status movement-action">
+            actions :
+            {{#each participant.movementActionArray as |actionClass|}}
+            <i class="fas fa-bahai {{actionClass}}"></i>
+            {{/each}}
+        </div>
+        {{#each status as |s|}}
+        <div class="status">{{s}}</div>
+        {{/each}}
+      </div>
     </div>
   </form>
 </div>
