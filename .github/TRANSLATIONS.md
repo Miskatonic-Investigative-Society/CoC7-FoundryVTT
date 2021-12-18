@@ -6,11 +6,12 @@ The following translations have been abandoned **cn**, **cs**, [are you able to 
 
 | Key                                                    |    de    |    es    |    fr    |    ja    |    pl    |  pt-BR   |    sv    |  zh-TW   |
 | :----------------------------------------------------- | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-| **Remaining**:                                         |  **5**   |  **1**   |  **1**   |  **7**   |  **7**   |  **1**   |  **1**   |  **1**   |
+| **Remaining**:                                         |  **6**   |  **2**   |  **2**   |  **8**   |  **8**   |  **2**   |  **2**   |  **2**   |
 | [CoC7.Copied](#coc7copied)                             | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.EraAvailability](#coc7eraavailability)           | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.German](#coc7german)                             | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.NotEnoughMagicPoints](#coc7notenoughmagicpoints) | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Polish](#coc7polish)                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.allActors](#coc7allactors)                       | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.getTheExample](#coc7gettheexample)               | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.restTargets](#coc7resttargets)                   | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -30,6 +31,10 @@ The following translations have been abandoned **cn**, **cs**, [are you able to 
 ##### CoC7.NotEnoughMagicPoints
 
 `"CoC7.NotEnoughMagicPoints": "{spell} costs {originalMagicPoints} Magic Points, but you only have {actorMagicPoints}. Would you like to take the remaining {convertedHitPoints} from your Hit Points? You will take {convertedHitPoints} damage if you proceed.",`
+
+##### CoC7.Polish
+
+`"CoC7.Polish": "Polish",`
 
 ##### CoC7.allActors
 
