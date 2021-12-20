@@ -6,6 +6,7 @@
 					<img class="open-actor {{participant.cssClass}}" data-actor-key="{{participant.key}}" src="{{participant.icon}}" title="{{participant.name}}" width="36" height="36"/>
         {{/if}}
       </div>
+      {{#if data.states.obstacleDefined}}
       <div class="card-title">{{#if data.obstacle.name}}{{data.obstacle.name}}{{else}}{{ localize 'CoC7.Obstacle'}}{{/if}}</div>
       <div class="right-portrait">
           {{#if data.obstacle.barrier}}
@@ -14,6 +15,7 @@
             <img src="systems/CoC7/assets/icons/hazard-sign.svg">
           {{/if}}
       </div>
+      {{/if}}
     </header>
 
 		<datalist id="check-options">
@@ -26,45 +28,73 @@
     <div class="player-actions">
       <div class='info'>
         {{#if data.states.obstacleDefined}}
-          <div>{{ strings.obstacleDefined}}</div>
+          <div>{{strings.obstacleDefined}}</div>
+        {{else}}
+          <div>{{strings.somethinInTheWay}}</div>
+        {{/if}}
+        {{#if data.states.actionDefined}}
+          <div></div>
+        {{else}}
+          <div>{{ localize 'CoC7.WhatToDo' }}</div>
         {{/if}}
       </div>
-      {{#if playerActions.showActionChoice}}
+
+      {{#if data.states.obstacleDefined}}
       {{/if}}
+
     </div>
 
     <div data-ecc-visibility="gm" class="gm-actions">
       {{#if data.states.obstacleDefined}}
-        {{#if data.states.checkTypeDefined}}
+        {{#if data.states.actionDefined}}
+          {{#if data.states.tryToPass}}
+            <div class="form-group">
+              {{#if participant.hasBonusDice}}
+              <div data-flag="consumeBonusDice" class="toggle-switch ecc-switch">Consume bonus dice</div>
+              {{/if}}
+            </div>
+            <div class="form-group">
+              <input type="range" data-ecc-permissions="gm" name="data.card.bonusDice" min="-2" max="2" value="{{data.card.bonusDice}}" class="slider">
+            </div>
+            <div class="form-group">
+              <input type="text" class="flex4" data-ecc-permissions="gm" name="data.obstacle.checkName" value="{{data.obstacle.checkName}}"
+                list='check-options'/>
+              {{#if card.validCheck}}
+                : {{skill.value.value}}%
+              {{else}}
+                : <input type="text" data-ecc-permissions="gm" name="data.card.checkThreshold" value="{{data.card.checkThreshold}}"
+                  placeholder="{{strings.EnterValuePlaceHolder}}"/>
+              {{/if}}
+            </div>
+          {{else}}
+            <div class="form-group">
+              <label>{{ localize 'CoC7.HitPoints' }}: </label>
+              <input type="text" data-ecc-permissions="gm" name="data.obstacle.HitPoints" value="{{data.obstacle.HitPoints}}">
+            </div>
+          {{/if}}
         {{else}}
+          <div>{{ localize 'CoC7.AskPlayerAction' }}</div>
+          <div class="card-buttons">
+            <button class='submit' data-action='tryToPassObstacle'>Attempt to pass that obstacle</button>
+            <button class='submit' data-action='tryToreakThroughObstacle'>Attempt to break through !!</button>
+          </div>
         {{/if}}
       {{else}}
       <div class="form-group ecc-radio">
         <div data-name="data.obstacle.barrier" class="toggle-switch ecc-switch">barrier</div>
         <div data-name="data.obstacle.hazard" class="toggle-switch ecc-switch">hazard</div>
       </div>
+      {{#if data.obstacle.barrier}}
+      <div class="form-group">
+        <div data-name="data.obstacle.hasHitPoints" class="toggle-switch ecc-switch">Can be broken</div>
+      </div>
+      {{/if}}
       <div class="form-group">
         <label>Obstacle name:</label>
         <input type="text" data-ecc-permissions="gm" name="data.obstacle.name" value="{{data.obstacle.name}}"/>
       </div>
-      <div class="form-group">
-        <div data-flag="consumeBonusDice" class="toggle-switch ecc-switch">Use Dice</div>
-        <div data-name="data.obstacle.hasDamage" class="toggle-switch ecc-switch">Damage</div>
-        {{#if data.obstacle.barrier}}
-          <div data-name="data.obstacle.hasHitPoints" class="toggle-switch ecc-switch">Hit Points</div>
-        {{else}}
-          <div data-name="data.obstacle.hasActionCost" class="toggle-switch ecc-switch">Actions</div>
-        {{/if}}
-      </div>
-      <div class="form-group">
-        <input type="range" data-ecc-permissions="gm" name="data.bonusDice" min="-2" max="2" value="{{data.bonusDice}}" class="slider">
-      </div>
-      <div class="form-group">
-        <input type="text" data-ecc-permissions="gm" name="data.obstacle.checkName" value="{{data.obstacle.checkName}}"
-            list='check-options'/>
-      </div>
       <div class="card-buttons">
-        <button class='submit' data-action='onValidateObstacle'>Validate</button>
+        <button class='submit' data-action='defineObstacle'>Validate</button>
       </div>
       {{/if}}
 
@@ -76,7 +106,7 @@
             {{/each}}
         </div>
         {{#each status as |s|}}
-        <div class="status">{{s}}</div>
+        <div class="status {{s.css}}">{{s.name}}</div>
         {{/each}}
       </div>
     </div>
