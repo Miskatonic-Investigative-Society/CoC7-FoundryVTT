@@ -20,7 +20,7 @@ import { CoC7Hooks } from './hooks/index.js'
 import * as DiceBot from './dicebot.js'
 import '../styles/system/index.less'
 import { CoC7ChaseSheet } from './items/chase/sheet.js'
-import { CoC7Socket, CoC7ChatCards } from './hooks/socket.js'
+import { CoC7Socket } from './hooks/socket.js'
 import { DropActorSheetData } from './hooks/drop-actor-sheet-data.js'
 
 // Card init
