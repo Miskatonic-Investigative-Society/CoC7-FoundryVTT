@@ -50,8 +50,7 @@ async function performFilter (e) {
 
 export function compendiumFilter () {
   Hooks.on('renderCompendium', async (app, html, data) => {
-    if (app.metadata.entity === 'Item') {
-      console.log(app, html, data)
+    if (app.collection.documentName === 'Item') {
       const types = [...new Set(data.index.map(item => item.type))]
       const select = []
       select.push('<option value="">' + game.i18n.localize('CoC7.All') + '</option>')
