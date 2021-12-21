@@ -52,7 +52,11 @@ export class CoC7Item extends Item {
     let checkedProps = {}
     let fighting
     let firearms
-    if (this.type === 'weapon' && !override) {
+    if (typeof COC7.eras[propertyId] !== 'undefined') {
+      checkedProps = {
+        ['data.eras.' + propertyId]: !(this.data.data.eras[propertyId] ?? false)
+      }
+    } else if (this.type === 'weapon' && !override) {
       if (propertyId === 'ahdb') {
         if (!this.data.data.properties.ahdb) {
           checkedProps = {
@@ -127,9 +131,7 @@ export class CoC7Item extends Item {
           }
         }
       }
-    }
-
-    if (this.type === 'skill' && !override) {
+    } else if (this.type === 'skill' && !override) {
       let modif = false
       if (propertyId === 'combat') {
         if (!this.data.data.properties.combat) {

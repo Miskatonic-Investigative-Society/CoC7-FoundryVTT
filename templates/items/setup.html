@@ -57,13 +57,11 @@
 			</div>
 
 			<h3 class="form-header">{{ localize "CoC7.Eras" }}</h3>
-			<div class="form-group stacked">
-                {{#each data.eras as |era key|}}
-				<label class="checkbox">
-					<input type="checkbox" name="data.eras.{{key}}.selected" {{checked this.selected}}/> {{ era.name }}
-                </label>
-                {{/each}}
-			</div>
+      <div class="skill-attributes" style="margin-bottom: 6px;" data-set="eras">
+        {{#each _eras as |era key|}}
+          <span class="toggle-switch {{#if era.isEnabled}} switched-on {{/if}}" data-property="{{era.id}}">{{localize era.name}}</span>
+        {{/each}}
+      </div>
 
 			{{#if oneBlockBackStory}}
 				<h3 class="form-header">

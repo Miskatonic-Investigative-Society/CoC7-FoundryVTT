@@ -46,6 +46,24 @@ export class CoC7ActorImporter {
   }
 
   /**
+   * translateRoll, translates language specific shortform of dice (D) in rolls
+   * Example for German rolls: 1W4 => 1D4.
+   * Dice shortform is configured using keys.diceShort
+   * @param {String} s the roll to be translated
+   * @returns {String} the translated roll
+   */
+  translateRoll(s) {
+    if (typeof s == 'undefined') return s;
+    if (typeof this.keys.diceShort !== 'undefined') {
+      let regEx = new RegExp('(?<n1>\\d+)' + this.keys.diceShort + '(?<n2>\\d+)', 'iug');
+      let result = s.replace(regEx, '$<n1>D$<n2>');
+      return s.replace(regEx, '$<n1>D$<n2>');
+    }
+    else {
+      return s;
+    }
+  }
+  /**
    * toHTML, converts a string to HTML striping out empty lines or lines that contain just , or .
    * @param {String} s the string to convert
    * @returns {String} the HTML or an empty string
@@ -172,7 +190,7 @@ export class CoC7ActorImporter {
       ) {
         text = text.replace(weapon['-source'], '\n')
         const name = this.cleanString(weapon.name || '')
-        let damage = this.cleanString(weapon.damage || '')
+        let damage = this.translateRoll(this.cleanString(weapon.damage || ''))
         const isRanged = !!(
           this.check('handgun', {
             text: name,
@@ -481,6 +499,7 @@ export class CoC7ActorImporter {
     ) {
       this.parsed.db = '0'
     }
+    this.parsed.db = this.translateRoll(this.parsed.db);
     // Get build
     this.check('build')
     // Get armor, if not found or none set to 0
@@ -500,6 +519,7 @@ export class CoC7ActorImporter {
     this.check('lck', { type: CoC7ActorImporter.asNumber })
     // Get sanity loss
     this.check('sanLoss')
+    this.parsed.sanLoss = this.translateRoll(this.parsed.sanLoss);
     // Get attacks per round, if not found or none set to 0
     if (
       this.check('attacksPerRound') &&

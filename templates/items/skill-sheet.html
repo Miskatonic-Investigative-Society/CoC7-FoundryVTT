@@ -21,15 +21,22 @@
                 <input type="text" name="data.base" value="{{data.base}}"/>
                 {{/if}}
             </div>
-            <div class="skill-value" style="display: flex; flex-direction: row;">
-
-            </div>
-
             <div class="skill-attributes" style="display: block;" data-set="properties">
                 {{#each _properties as |property key|}}
                     <span class="toggle-switch {{#if property.isEnabled}} switched-on {{/if}}" data-property="{{property.id}}">{{localize property.name}} </span>
                 {{/each}}
             </div>
+
+            {{#unless hasOwner}}
+                <div class="flexrow" style="margin: 4px 0;">
+                    <label style="margin-right: 10px;">{{ localize "CoC7.Eras" }}</label>
+                    <div class="skill-attributes" data-set="eras">
+                        {{#each _eras as |era key|}}
+                            <span class="toggle-switch {{#if era.isEnabled}} switched-on {{/if}}" data-property="{{era.id}}">{{localize era.name}}</span>
+                        {{/each}}
+                    </div>
+                </div>
+            {{/unless}}
         </div>
         <img class="profile-img" style="flex: 0 0 100px;" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="100" width="100"/>
     </div>
@@ -41,18 +48,6 @@
           <a style="line-height: 24px;" class="item keeper-only-tab" data-tab="keeper" title="{{localize 'CoC7.GmNotes'}}"><i class="game-icon game-icon-tentacles-skull"></i></a>
         {{/if}}
     </nav>
-
-    {{!--
-    <div class="skill-attributes" style="flex: 0 0 25px;" data-set="eras">
-        {{#each _eras as |era key|}}
-            <span class="toggle-switch {{#if era.isEnabled}} switched-on {{/if}}" data-property="{{era.id}}">{{era.name}}</span>
-            <div style="display: none;">
-                <input id="eras-{{era.id}}" type="checkbox" name="data.eras.{{era.id}}" {{checked era.isEnabled}}/>
-            </div>
-        {{/each}}
-    </div>
-    --}}
-
 
     <section class="sheet-body">
       <div class="tab description flexrow active" style="border-top: 2px groove #eeede0;padding: 0 0 0 5px;overflow: auto;" data-group="primary" data-tab="description">

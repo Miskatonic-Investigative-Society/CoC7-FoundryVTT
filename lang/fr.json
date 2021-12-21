@@ -127,7 +127,8 @@
   "CoC7.MagicPointsCost": "Coût en Points de Magie",
   "CoC7.OtherCosts": "Autres coûts",
   "CoC7.CastingSpell": "Jette <i>{spell}</i>.",
-
+  "CoC7.NotEnoughMagicPoints": "{spell} coûte {originalMagicPoints} Points de Magie, vous n'en avez que {actorMagicPoints}. Vouslez-vous utiliser vos {convertedHitPoints} Points de Vie restants? Vous subirez {convertedHitPoints} points de dommage en le faisant.",
+  
   "CoC7.CopyToClipboard": "Copier vers le presse-papier",
   "CoC7.WhisperToSelection": "Murmurer aux tokens sélectionnés",
   "CoC7.WhisperTo": "Murmurer à",
@@ -661,6 +662,8 @@
   "CoC7.WarnFastTargetWithWrongMOV": "'Rapide' sélectionné sur une cible avec un Mvt de moins de 8. (Mvt: {mov})",
   "CoC7.WarnTooManyTarget": "Trop de cibles sélectionnées. Seule la première est prise en compte",
 
+  "CoC7.allActors": "Tous les Personnages",
+  "CoC7.restTargets": "Candidats au repos",
   "CoC7.startRest": "Se reposer",
   "CoC7.dreaming": "Les Investigateurs attendent en rêvant",
   "CoC7.healthRecovered": "Un Point de Vie récupéré",
@@ -707,6 +710,7 @@
   "CoC7.English": "Anglais",
   "CoC7.Spanish": "Espagnol",
   "CoC7.French": "Français",
+  "CoC7.German": "Allemand",
   "CoC7.TraditionalChinese": "Chinois Traditionnel",
   "CoC7.SelectSourceLanguage": "Sélectionnez la langue du texte copié",
   "CoC7.ImportedUnnamedCharacter": "Personnage importé sans nom",
@@ -869,5 +873,8 @@
   "CoC7.ExperimentalFeaturesWarning": "Cette fonctionnalité est en développement, il n'est pas conseillé de l'utiliser pour vos parties.",
   "SETTINGS.CheckElevation": "Inclut l'altitude",
   "SETTINGS.CheckElevationHint": "Utiliser l'altitude dans le calcul des distances en combat",
-  "CoC7.toolTipDelay": "Délai en millisecondes avant qu'une info-bulle apparaisse, 0 pour jamais"
+  "CoC7.toolTipDelay": "Délai en millisecondes avant qu'une info-bulle apparaisse, 0 pour jamais",
+  
+  "CoC7.getTheExample": "Copier l'Exemple",
+  "CoC7.Copied": "Texte de l'Exemple copié dans le presse-papier"
 }
