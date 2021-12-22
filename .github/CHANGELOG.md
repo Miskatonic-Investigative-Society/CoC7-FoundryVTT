@@ -1,3 +1,21 @@
+## Version 0.7.3:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+
+- Compatible with Foundry VTT v9
+- Fix compendium render in v8/v9
+- Fix multiple chat messages for tokens to the correct users
+- Now Actor Importer support Polish, thanks to @frondeus
+- Prevent character sheets editing themselves if not editable
+- Update layout for weapon sheet tab navigation
+- Update to French localization, thanks to @vonv
+- Update to Japanese localization, thanks to `@Asami#8627`
+- Update to Polish localization, thanks to @frondeus
+- Update to Portuguese localization
+- Update to Spanish localization, thanks to @lozalojo
+- Update to Swedish localization, thanks to @Rangertheman
+- Update to Taiwanese localization, thanks to @zeteticl
+
 ## Version 0.7.2:
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
