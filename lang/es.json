@@ -339,6 +339,7 @@
   "CoC7.EraPulp": "Pulp Cthulhu",
   "CoC7.EraMdrn": "Época Actual",
   "CoC7.Eras": "Épocas Cthulhu",
+  "CoC7.EraAvailability": "Disponibilidad",
 
   "CoC7.SkillNoAdjustments": "Sin ajustes",
   "CoC7.SkillNoXpGain": "Sin ganancia de EXP",
@@ -714,6 +715,7 @@
   "CoC7.Spanish": "Español",
   "CoC7.French": "Francés",
   "CoC7.German": "Alemán",
+  "CoC7.Polish": "Polaco",
   "CoC7.TraditionalChinese": "Chino tradicional",
   "CoC7.SelectSourceLanguage": "Seleccione el idioma del texto original",
   "CoC7.ImportedUnnamedCharacter": "Se ha importado personaje 'unnamed'",
