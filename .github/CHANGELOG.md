@@ -1,3 +1,9 @@
+## Changes coming in a future release:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+
+- Update to Spanish localization, thanks to @lozalojo
+
 ## Version 0.7.3:
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
