@@ -17,7 +17,9 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     const data = await super.getData()
 
     data.chase = await fromUuid(this.data.chaseUuid)
-
+    data.status = []
+    data.strings = {}
+    
     data.displayActorOnCard = game.settings.get('CoC7', 'displayActorOnCard')
     data.participant = new _participant(data.data.participantData)
 
@@ -26,18 +28,23 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     data.card.validCheck = false
 
     if (
-      data.data.obstacle.hazard ||
-      (data.data.obstacle.barrier && !data.data.obstacle.hasHitPoints)
+      data.data.states.obstacleDefined &&
+      (data.data.obstacle.hazard ||
+        (data.data.obstacle.barrier && !data.data.obstacle.hasHitPoints))
     ) {
-      data.data.states.actionDefined = true
       data.data.states.tryToPass = true
       data.data.states.tryToBreak = false
+      data.data.states.actionDefined = true
     }
 
     if (data.participant.actor) {
       data.skill = data.participant.actor.find(data.data.obstacle.checkName)
       data.checkOptions = data.chase.activeActorSkillsAndCharacteristics
-      if (data.skill) data.card.validCheck = true
+      if (data.skill) {
+        data.validCheck = true
+        data.validSkill = true
+      } else if (data.data.obstacle.checkName && data.data.card.checkThreshold)
+        data.validCheck = true
       data.weaponsOptions = []
       if (data.card.breakableObstacle && data.data.states.breakThrougObstacle) {
         data.participant.actor?.itemTypes?.weapon?.forEach(w => {
@@ -60,14 +67,30 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       }
     } else {
       data.checkOptions = data.chase.allSkillsAndCharacteristics
+      data.dummyActor = true
+      if (data.data.obstacle.checkName && data.data.card.checkThreshold)
+        data.validCheck = true
+    }
+
+    if( data.validCheck){
+      let checkName,value
+      if( data.skill){
+        checkName = data.skill.value.name
+        value = data.skill.value.value
+      } else {
+        checkName = data.data.obstacle.checkName
+        value = data.data.card.checkThreshold
+      }
+      data.strings.rollRequest = game.i18n.format( 'CoC7.AskRoll', {name: checkName, value: value})
+      if( data.data.card.bonusDice != 0){
+        data.strings.rollRequest += ` (${data.data.card.bonusDice})`
+      }
     }
 
     data.actions = {
       player: {},
       gm: {}
     }
-    data.status = []
-    data.strings = {}
     data.strings.somethinInTheWay = game.i18n.localize('CoC7.SomethingInTheWay')
     if (data.data.states?.obstacleDefined) {
       data.strings.obstacleDefined = game.i18n.format('CoC7.FacingObstacle', {
@@ -90,16 +113,21 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       if (data.data.obstacle.hazard)
         data.status.push({ name: game.i18n.localize('CoC7.Hazard') })
 
-      if (!data.card.validCheck) {
+      if (!data.validCheck) {
         data.status.push({
           name: game.i18n.localize('CoC7.NoValidCheck'),
-          css: 'warning'
+          css: 'error'
         })
-        data.strings.EnterValuePlaceHolder = game.i18n.format(
-          'CoC7.EnterXXXBaseValue',
+        data.strings.EnterValueTitle = game.i18n.format(
+          'CoC7.SkillSelectBase',
           { name: data.data.obstacle.checkName }
         )
         if (!data.data.card.checkThreshold) data.data.states.canAskRoll = false
+      } else if (!data.validSkill) {
+        data.status.push({
+          name: game.i18n.localize('CoC7.NoValidSkill'),
+          css: 'warning'
+        })
       }
     }
     return data
@@ -143,6 +171,12 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     this.data.states.actionDefined = true
     this.data.states.tryToPass = false
     this.data.states.tryToBreak = true
+    return true
+  }
+
+  async requestRoll (options) {
+    this.data.states.waitForRoll = true
+    this.data.states.checkDefined = true
     return true
   }
 

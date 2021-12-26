@@ -2706,6 +2706,7 @@ export class CoCActor extends Actor {
     for (let i = 0; i < charKey.length; i++) {
       const char = this.getCharacteristic(charKey[i])
       if (char) {
+        char.name = char.label
         if (
           char.key?.toLocaleLowerCase() === name.toLowerCase() ||
           char.key?.toLocaleLowerCase() === shortName?.toLowerCase()
@@ -2732,6 +2733,7 @@ export class CoCActor extends Actor {
     for (let i = 0; i < attribKey.length; i++) {
       const attr = this.getAttribute(attribKey[i])
       if (attr) {
+        attr.name = attr.label
         if (
           attr.key?.toLocaleLowerCase() === name.toLowerCase() ||
           attr.key?.toLocaleLowerCase() === shortName?.toLowerCase()

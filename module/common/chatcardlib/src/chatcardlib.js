@@ -4,6 +4,7 @@ const ECC_CLASS = 'enhanced-chat-card'
 
 const PERMISSION_TYPE = {
   GM: 'gm', // user is GM
+  NOT_GM: '!gm', // user is NOT gm (hide to GM in case of visibility)
   SPEAKER: 'speaker', // the speaker is an actor controled/owned by the user
   USER: 'user', // the user is the message's author
   EVERYONE: 'all', // equivalent to empty string
@@ -352,10 +353,18 @@ export class EnhancedChatCard {
       if (!vision) return true //GM can always modify everything ! Nah
       if (permissionsArray.includes(PERMISSION_TYPE.GM))
         return true && whiteList
-      return false || !whiteList //If pass the filter return false unless it's a blacklist
-    } else {
+      if (permissionsArray.includes(PERMISSION_TYPE.NOT_GM))
+        return false || !whiteList
       permissionsArray = permissionsArray.filter(e => e != PERMISSION_TYPE.GM)
+      permissionsArray = permissionsArray.filter(
+        e => e != PERMISSION_TYPE.NOT_GM
+      )
     }
+
+    //   return false || !whiteList //If pass the filter return false unless it's a blacklist
+    // } else {
+    //   permissionsArray = permissionsArray.filter(e => e != PERMISSION_TYPE.GM)
+    // }
 
     if (permissionsArray.includes(PERMISSION_TYPE.USER)) {
       if (this.message.isAuthor) return true && whiteList //isAuthor vs user.isOwner ?
@@ -386,7 +395,16 @@ export class EnhancedChatCard {
     }
     // All filter passed, array should contains only uuids or actor/token ids
     if (permissionsArray.length) {
-      ui.notifications.info('Array permission is not empty !')
+      for (let i = 0; i < permissionsArray.length; i++) {
+        const uuid = permissionsArray[i]
+        let actor = await fromUuid(uuid)
+        if (!actor) actor = game.actors.get(uuid)
+        if (actor) {
+          return actor.isOwner
+        } else {
+          ui.notifications.error(`Unable to find actor ${uuid}`)
+        }
+      }
     }
     return false || !whiteList //If pass the filter return false unless it's a blacklist
   }

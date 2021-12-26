@@ -29,13 +29,18 @@
       <div class='info'>
         {{#if data.states.obstacleDefined}}
           <div>{{strings.obstacleDefined}}</div>
+          {{#if data.states.checkDefined}}
+            <div>I know what to do</div>
+            <div class="card-buttons">
+              {{#unless dummyActor}}
+                <button class='submit' data-ecc-visibility="{{participant.actor.uuid}}" data-action='rollSkillCheck'>{{ strings.rollRequest }}</button>
+              {{/unless}}
+            </div>
+          {{else}}
+            <div>{{ localize 'CoC7.AskIntentions' }}</div>
+          {{/if}}
         {{else}}
           <div>{{strings.somethinInTheWay}}</div>
-        {{/if}}
-        {{#if data.states.actionDefined}}
-          <div></div>
-        {{else}}
-          <div>{{ localize 'CoC7.WhatToDo' }}</div>
         {{/if}}
       </div>
 
@@ -48,24 +53,36 @@
       {{#if data.states.obstacleDefined}}
         {{#if data.states.actionDefined}}
           {{#if data.states.tryToPass}}
-            <div class="form-group">
-              {{#if participant.hasBonusDice}}
-              <div data-flag="consumeBonusDice" class="toggle-switch ecc-switch">Consume bonus dice</div>
-              {{/if}}
-            </div>
-            <div class="form-group">
-              <input type="range" data-ecc-permissions="gm" name="data.card.bonusDice" min="-2" max="2" value="{{data.card.bonusDice}}" class="slider">
-            </div>
-            <div class="form-group">
-              <input type="text" class="flex4" data-ecc-permissions="gm" name="data.obstacle.checkName" value="{{data.obstacle.checkName}}"
-                list='check-options'/>
-              {{#if card.validCheck}}
-                : {{skill.value.value}}%
+            {{#if data.states.rolled}}
+            {{else}}
+              {{#if data.states.waitForRoll}}
+                <span>Waiting for roll</span>
               {{else}}
-                : <input type="text" data-ecc-permissions="gm" name="data.card.checkThreshold" value="{{data.card.checkThreshold}}"
-                  placeholder="{{strings.EnterValuePlaceHolder}}"/>
+                <div class="form-group">
+                  {{#if participant.hasBonusDice}}
+                  <div data-flag="consumeBonusDice" class="toggle-switch ecc-switch">Consume bonus dice</div>
+                  {{/if}}
+                </div>
+                <div class="form-group">
+                  <input type="range" data-ecc-permissions="gm" name="data.card.bonusDice" min="-2" max="2" value="{{data.card.bonusDice}}" class="slider">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="flex4" data-ecc-permissions="gm" name="data.obstacle.checkName" value="{{data.obstacle.checkName}}"
+                    list='check-options' placeholder="{{ localize 'CoC7.Skill' }}"/>
+                  {{#if validSkill}}
+                    : {{skill.value.value}}%
+                  {{else}}
+                    : <input type="text" data-ecc-permissions="gm" name="data.card.checkThreshold" value="{{data.card.checkThreshold}}"
+                      placeholder="{{ localize 'CoC7.Value'}}" title="{{strings.EnterValueTitle}}"/>
+                  {{/if}}
+                </div>
+                <div class="card-buttons">
+                  {{#if validCheck}}
+                  <button class='submit' data-action='requestRoll'>Request roll</button>
+                  {{/if}}
+                </div>
               {{/if}}
-            </div>
+            {{/if}}
           {{else}}
             <div class="form-group">
               <label>{{ localize 'CoC7.HitPoints' }}: </label>
