@@ -127,6 +127,7 @@
   "CoC7.MagicPointsCost": "Magiepunkte Kosten",
   "CoC7.OtherCosts": "Andere Kosten",
   "CoC7.CastingSpell": "Führt <i>{spell}</i> aus.",
+  "CoC7.NotEnoughMagicPoints": "{spell} kostet {originalMagicPoints} Magiepunte, Du hast aber nur {actorMagicPoints}. Möchtest Du die fehlenden {convertedHitPoints} Punkte von Deinen Trefferpunkten nehmen? Du wirst {convertedHitPoints} Schaden nehmen, wenn Du das tust.",
 
   "CoC7.CopyToClipboard": "In Zwischenablage kopieren",
   "CoC7.WhisperToSelection": "An ausgewählte Tokens flüstern",
@@ -703,6 +704,7 @@
   "CoC7.English": "Englisch",
   "CoC7.Spanish": "Spanisch",
   "CoC7.French": "Französisch",
+  "CoC7.German": "Deutsch",
   "CoC7.TraditionalChinese": "Traditionelles Chinesisch",
   "CoC7.SelectSourceLanguage": "Wähle die Originalsprache aus",
   "CoC7.ImportedUnnamedCharacter": "Importiere unbenannten Charakter",

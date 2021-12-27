@@ -120,6 +120,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Reload": "Left/Right click : add/remove 1 bullet\nShift + Left/Right click : Reload/Empty",
 "CoC7.WeaponUsesPerRoundHint": "Attacks per round (1/3 : 1 attack every 3 rounds)",
 "CoC7.BurstSizeHint": "How many bullets per burst",
+"CoC7.EraAvailability": "Availability",
 "CoC7.DriveAutoSkillName": "Drive Auto",
 "CoC7.DriveSpecializationName": "Drive",
 "CoC7.PilotSpecializationName": "Pilot",
@@ -233,6 +234,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.toggleXP": "XP gain",
 "CoC7.XPGainEnabled": "Character can gain XP",
 "CoC7.XPGainDisabled": "Character cannot gain XP",
+"CoC7.allActors": "All Actors",
+"CoC7.restTargets": "Rest Targets",
 "CoC7.startRest": "Start Rest",
 "CoC7.dreaming": "The Investigators wait dreaming",
 "CoC7.healthRecovered": "Recovered one Hit Point",
@@ -266,6 +269,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.English": "English",
 "CoC7.Spanish": "Spanish",
 "CoC7.French": "French",
+"CoC7.German": "German",
+"CoC7.Polish": "Polish",
 "CoC7.TraditionalChinese": "Traditional Chinese",
 "CoC7.SelectSourceLanguage": "Select the source text language",
 "CoC7.ImportedUnnamedCharacter": "Imported unnamed character",
@@ -385,7 +390,9 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ExperimentalFeaturesWarning": "This feature is a work in progress and is not recommended for use in your game world.",
 "SETTINGS.CheckElevation": "Include elevation in distance",
 "SETTINGS.CheckElevationHint": "Use elevation in range combat distance calculations",
-"CoC7.toolTipDelay": "Millisecond delay before tooltip should show, 0 for never"
+"CoC7.toolTipDelay": "Millisecond delay before tooltip should show, 0 for never",
+"CoC7.getTheExample": "Copy Example",
+"CoC7.Copied": "Copied the Example Text to Clipboard"
 ```
 
 ## cs.json
@@ -428,6 +435,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.meleeCombatDamageFrom": "from",
 "CoC7.meleeCombatDamageDeals": "deals",
 "CoC7.meleeCombatDamageWith": "with",
+"CoC7.EraAvailability": "Availability",
 "CoC7.DriveAutoSkillName": "Drive Auto",
 "CoC7.SanGained": "Gained 2d6 ({results} = <strong>{sanGained}</strong>) Sanity after mastering <strong>{skill}</strong> with a <strong>{skillValue}%</strong>",
 "CoC7.DevelopAttribWarn": "You can not access some attributes in development/creation.",
@@ -465,6 +473,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.UnknownLanguage": "{actor} do not know the language in which this book is written.",
 "CoC7.Unreadable": "Unreadable",
 "CoC7.EmptyCharacterSkillList": "Add a setup, occupation, or skill by dropping it here.",
+"CoC7.allActors": "All Actors",
+"CoC7.restTargets": "Rest Targets",
 "CoC7.MessageTitleSelectSingleUserForTarget": "Which user can respond to this attack",
 "CoC7.MessageSelectSingleUserForTarget": "This token is controlled by multiple users, please select which user can respond to this attack.",
 "CoC7.MessageBoutOfMadnessTableNotFound": "The result from the madness table was not found, please check all your roll tables are created",
@@ -475,6 +485,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Proceed": "Proceed",
 "CoC7.Cancel": "Cancel",
 "CoC7.TextFieldInvalidCharacters": "There are invalid characters in the text, please fix them or they will be removed",
+"CoC7.German": "German",
+"CoC7.Polish": "Polish",
 "CoC7.TraditionalChinese": "Traditional Chinese",
 "CoC7.ImportedUnnamedCharacter": "Imported unnamed character",
 "CoC7.CreatedImportedCharactersFolder": "Created 'Imported Characters' folder",
@@ -543,5 +555,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ExperimentalFeaturesWarning": "This feature is a work in progress and is not recommended for use in your game world.",
 "SETTINGS.CheckElevation": "Include elevation in distance",
 "SETTINGS.CheckElevationHint": "Use elevation in range combat distance calculations",
-"CoC7.toolTipDelay": "Millisecond delay before tooltip should show, 0 for never"
+"CoC7.toolTipDelay": "Millisecond delay before tooltip should show, 0 for never",
+"CoC7.getTheExample": "Copy Example",
+"CoC7.Copied": "Copied the Example Text to Clipboard"
 ```

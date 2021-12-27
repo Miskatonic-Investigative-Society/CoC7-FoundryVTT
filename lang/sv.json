@@ -129,7 +129,7 @@
   "CoC7.MagicPointsCost": "Kostnad Magipoäng",
   "CoC7.OtherCosts": "Annan kostnad",
   "CoC7.CastingSpell": "Kastar <i>{spell}</i>.",
-
+  "CoC7.NotEnoughMagicPoints": "{spell} kostar {originalMagicPoints} Magipoäng, men du har bara {actorMagicPoints}. Vill du att resten {convertedHitPoints} ska dras från din kroppspoäng? Du kommer att ta {convertedHitPoints} i skada om du fortsätter.",
   "CoC7.CopyToClipboard": "Kopiera till urklipp",
   "CoC7.WhisperToSelection": "Viska till den valda markören",
   "CoC7.WhisperTo": "Viska till",
@@ -670,6 +670,8 @@
   "CoC7.WarnFastTargetWithWrongMOV": "'Snabb' har valts för ett mål med lägre än 8 FÖR. (FÖR: {mov})",
   "CoC7.WarnTooManyTarget": "För många mål valda. Behåller bara det senast valda målet",
 
+  "CoC7.allActors": "Alla karaktärer",
+  "CoC7.restTargets": "Vila valda mål",  
   "CoC7.startRest": "Påbörja vila",
   "CoC7.dreaming": "Utredaren väntar i drömmen",
   "CoC7.healthRecovered": "Återfick en kroppspoäng",
@@ -716,6 +718,7 @@
   "CoC7.English": "Engelska",
   "CoC7.Spanish": "Spanska",
   "CoC7.French": "Franska",
+   "CoC7.German": "Tyska",
   "CoC7.TraditionalChinese": "Traditionell kinesiska",
   "CoC7.SelectSourceLanguage": "Välj ursprungstextens språk",
   "CoC7.ImportedUnnamedCharacter": "Importerad icke namngiven karaktär",
@@ -878,5 +881,9 @@
   "CoC7.ExperimentalFeaturesWarning": "Den här funktionen är under utveckling och rekommenderas inte för användning i dina spelvärldar.",
   "SETTINGS.CheckElevation": "Räkna in höjdskillnad i avstånd",
   "SETTINGS.CheckElevationHint": "Använder höjdskillnad vid beräkningar för avståndsstrid",
-  "CoC7.toolTipDelay": "Fördröjning i millisekunder innan tips visas, ange 0 om du aldrig vill att de ska visas"
+  "CoC7.toolTipDelay": "Fördröjning i millisekunder innan tips visas, ange 0 om du aldrig vill att de ska visas",
+
+  "CoC7.getTheExample": "Kopiera exempel",
+  "CoC7.Copied": "Kopierade exempeltexten till Urklipp"
+
 }

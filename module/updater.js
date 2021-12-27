@@ -240,6 +240,7 @@ export class Updater {
     Updater._migrateItemKeeperNotes(item, updateData)
     Updater._migrateItemSpellAutomated(item, updateData)
     Updater._migrateItemKeeperNotesMerge(item, updateData)
+    Updater._migrateItemSetupEras(item, updateData)
 
     return updateData
   }
@@ -454,6 +455,16 @@ export class Updater {
           updateData['data.description.keeper'] = item.data.keeperNotes
         }
         updateData['data.-=keeperNotes'] = null
+      }
+    }
+  }
+
+  static _migrateItemSetupEras (item, updateData) {
+    if (item.type === 'setup') {
+      for (const [key, value] of Object.entries(item.data.eras)) {
+        if (typeof value.selected !== 'undefined') {
+          updateData['data.eras.' + key] = value.selected
+        }
       }
     }
   }

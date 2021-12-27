@@ -131,6 +131,7 @@
   "CoC7.MagicPointsCost": "Custo em Magia",
   "CoC7.OtherCosts": "Outros Custos",
   "CoC7.CastingSpell": "Conjurando <i>{spell}</i>.",
+  "CoC7.NotEnoughMagicPoints": "{spell} custa {originalMagicPoints} Pontos de Magia, mas você tem apenas {actorMagicPoints}. Gostaria de retirar os restantes {convertedHitPoints} dos seus Pontos de Vida? Você irá levar {convertedHitPoints} de dano se proceder.",
 
   "CoC7.CopyToClipboard": "Copiar para Área de Transferência",
   "CoC7.WhisperToSelection": "Sussurrar aos Tokens Selecionados",
@@ -672,6 +673,8 @@
   "CoC7.magicPointsRecovered": "Pontos de Magia recuperados",
   "CoC7.hasCriticalWounds": "Incapaz de recuperar Pontos de Vida por conta de Ferimentos Graves",
   "CoC7.quickHealer": "Cura Rápida",
+  "CoC7.allActors": "Todos Atores",
+  "CoC7.restTargets": "Alvos do Descanso",
 
   "CoC7.ErrorNoDodgeSkill": "Ator não tem a Perícia Esquivar",
   "CoC7.ErrorNotEnoughLuck": "{actor} não teve sorte suficiente para obter sucesso no teste",
@@ -710,6 +713,7 @@
   "CoC7.English": "Inglês",
   "CoC7.Spanish": "Espanhol",
   "CoC7.French": "Francês",
+  "CoC7.German": "Alemão",
   "CoC7.TraditionalChinese": "Chinês Tradicional",
   "CoC7.SelectSourceLanguage": "Selecione o idioma de fonte.",
   "CoC7.ImportedCharactersFolder": "Personagens importados",
@@ -872,5 +876,7 @@
   "SETTINGS.CheckElevation": "Incluir elevação em distância.",
   "SETTINGS.CheckElevationHint": "Usar cálculos de elevação em combates à distância.",
   "SETTINGS.showIconsOnly": "Na versão resumida da ficha, mostra apenas os ícones das perícias.",
-  "CoC7.toolTipDelay": "Atraso em milissegundos antes das dicas aparecerem, 0 para nunca."
+  "CoC7.toolTipDelay": "Atraso em milissegundos antes das dicas aparecerem, 0 para nunca.",
+  "CoC7.Copied": "Texto de exemplo copiado para a área de transferência.",
+  "CoC7.getTheExample": "Copy Example"
 }
