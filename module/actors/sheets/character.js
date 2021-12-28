@@ -39,17 +39,14 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
 
   async getData () {
     const data = await super.getData()
-
-    if (typeof this.actor.getFlag('CoC7', 'skillListMode') === 'undefined') {
+    if (this.isEditable && typeof this.actor.getFlag('CoC7', 'skillListMode') === 'undefined') {
       await this.actor.setFlag('CoC7', 'skillListMode', false)
     }
-    data.skillListModeValue = this.actor.getFlag('CoC7', 'skillListMode')
-    if (
-      typeof this.actor.getFlag('CoC7', 'skillShowUncommon') === 'undefined'
-    ) {
+    if (this.isEditable && typeof this.actor.getFlag('CoC7', 'skillShowUncommon') === 'undefined') {
       await this.actor.setFlag('CoC7', 'skillShowUncommon', true)
     }
-    data.skillShowUncommon = this.actor.getFlag('CoC7', 'skillShowUncommon')
+    data.skillListModeValue = (this.actor.getFlag('CoC7', 'skillListMode') ?? false)
+    data.skillShowUncommon = (this.actor.getFlag('CoC7', 'skillShowUncommon') ?? true)
     data.showIconsOnly = game.settings.get('CoC7', 'showIconsOnly')
 
     if (this.actor.occupation) {

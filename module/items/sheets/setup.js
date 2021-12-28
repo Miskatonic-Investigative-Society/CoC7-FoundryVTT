@@ -25,6 +25,7 @@ export class CoC7SetupSheet extends ItemSheet {
     html.find('.item-delete').click(event => this._onItemDelete(event, 'items'))
     html.find('.add-bio').click(async () => await this._onAddBio())
     html.find('.remove-section').click(this._onRemoveSection.bind(this))
+    html.find('.toggle-switch').click(this._onClickToggle.bind(this))
 
     // html.find('.item-edit').click(async ev => {
     //   const li = $(ev.currentTarget).parents('.item');
@@ -34,6 +35,19 @@ export class CoC7SetupSheet extends ItemSheet {
     //   const item = new CoC7Item(itemData);
     //   await item.sheet.render(true); //marche pas !!
     // });
+  }
+
+  async _onClickToggle (event) {
+    event.preventDefault()
+    const propertyId = event.currentTarget.closest('.toggle-switch').dataset
+      .property
+    await this.item.toggleProperty(
+      propertyId,
+      event.metaKey ||
+        event.ctrlKey ||
+        event.keyCode === 91 ||
+        event.keyCode === 224
+    )
   }
 
   async _onDrop (event, collectionName = 'items') {
@@ -194,17 +208,13 @@ export class CoC7SetupSheet extends ItemSheet {
     data.eras = {}
     data.itemProperties = []
 
+    data._eras = []
     for (const [key, value] of Object.entries(COC7.eras)) {
-      if (!data.data.eras[key]) {
-        data.data.eras[key] = {}
-        data.data.eras[key].selected = false
-      }
-      data.data.eras[key].name = game.i18n.localize(value)
-      data.data.eras[key].internalName = value
-    }
-
-    for (const entry of Object.entries(data.data.eras)) {
-      if (entry[1].selected) data.itemProperties.push(entry[1].name)
+      const era = {}
+      era.id = key
+      era.name = value
+      era.isEnabled = this.item.data.data.eras[key] === true
+      data._eras.push(era)
     }
 
     data.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')

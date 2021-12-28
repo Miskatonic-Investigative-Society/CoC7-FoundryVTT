@@ -132,15 +132,13 @@ export class CoC7WeaponSheet extends ItemSheet {
     event.preventDefault()
     const propertyId = event.currentTarget.closest('.toggle-switch').dataset
       .property
-    const set = event.currentTarget.parentElement.dataset.set
-    const elementName = set + '-' + propertyId
-    const checkboxControl = this.form.elements.namedItem(elementName)
-
-    if (checkboxControl.checked) checkboxControl.checked = false
-    else checkboxControl.checked = true
-
-    event.target.classList.toggle('switched-on')
-    await this._onSubmit(event)
+    await this.item.toggleProperty(
+      propertyId,
+      event.metaKey ||
+        event.ctrlKey ||
+        event.keyCode === 91 ||
+        event.keyCode === 224
+    )
   }
 
   async _onPropertyClick (event) {

@@ -127,6 +127,7 @@
   "CoC7.MagicPointsCost": "Magic Points Cost",
   "CoC7.OtherCosts": "Other Costs",
   "CoC7.CastingSpell": "Casting <i>{spell}</i>.",
+  "CoC7.NotEnoughMagicPoints": "{spell} costs {originalMagicPoints} Magic Points, but you only have {actorMagicPoints}. Would you like to take the remaining {convertedHitPoints} from your Hit Points? You will take {convertedHitPoints} damage if you proceed.",
 
   "CoC7.CopyToClipboard": "Copy to clipboard",
   "CoC7.WhisperToSelection": "Whisper to selected tokens",
@@ -335,6 +336,7 @@
   "CoC7.EraPulp": "Pulp Cthulhu",
   "CoC7.EraMdrn": "Modern",
   "CoC7.Eras": "Cthulhu Flavors",
+  "CoC7.EraAvailability": "Availability",
 
   "CoC7.SkillNoAdjustments": "No adjustment",
   "CoC7.SkillNoXpGain": "No XP gain",
@@ -661,6 +663,8 @@
   "CoC7.WarnFastTargetWithWrongMOV": "Fast selected on a target with less than 8 MOV. (MOV: {mov})",
   "CoC7.WarnTooManyTarget": "Too many target selected. Keeping only last selected target",
 
+  "CoC7.allActors": "All Actors",
+  "CoC7.restTargets": "Rest Targets",
   "CoC7.startRest": "Start Rest",
   "CoC7.dreaming": "The Investigators wait dreaming",
   "CoC7.healthRecovered": "Recovered one Hit Point",
@@ -707,6 +711,8 @@
   "CoC7.English": "English",
   "CoC7.Spanish": "Spanish",
   "CoC7.French": "French",
+  "CoC7.German": "German",
+  "CoC7.Polish": "Polish",
   "CoC7.TraditionalChinese": "Traditional Chinese",
   "CoC7.SelectSourceLanguage": "Select the source text language",
   "CoC7.ImportedUnnamedCharacter": "Imported unnamed character",
@@ -869,5 +875,9 @@
   "CoC7.ExperimentalFeaturesWarning": "This feature is a work in progress and is not recommended for use in your game world.",
   "SETTINGS.CheckElevation": "Include elevation in distance",
   "SETTINGS.CheckElevationHint": "Use elevation in range combat distance calculations",
-  "CoC7.toolTipDelay": "Millisecond delay before tooltip should show, 0 for never"
+  "CoC7.toolTipDelay": "Millisecond delay before tooltip should show, 0 for never",
+
+  "CoC7.getTheExample": "Copy Example",
+  "CoC7.Copied": "Copied the Example Text to Clipboard"
+
 }

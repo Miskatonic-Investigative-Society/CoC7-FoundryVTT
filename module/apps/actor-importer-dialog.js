@@ -2,6 +2,7 @@
 
 import { CoC7ActorImporter } from './actor-importer.js'
 import { CoC7ActorImporterRegExp } from './actor-importer-regexp.js'
+import { CoC7Utilities } from '../utilities.js'
 
 export class CoC7ActorImporterDialog extends Dialog {
   activateListeners (html) {
@@ -99,6 +100,16 @@ export class CoC7ActorImporterDialog extends Dialog {
   }
 
   submit (button) {
+    if (button.cssClass === 'getExampleNow') {
+      var content = CoC7ActorImporterRegExp.getExampleText($('#coc-entity-lang :selected').val())
+      CoC7Utilities.copyToClipboard(content)
+        .then(() => {
+          return ui.notifications.info(
+            game.i18n.localize('CoC7.Copied')
+          )
+        })
+      return
+    }
     if (
       $('#coc-pasted-character-data')
         .val()
@@ -131,6 +142,10 @@ export class CoC7ActorImporterDialog extends Dialog {
               icon: '<i class="fas fa-file-import"></i>',
               label: game.i18n.localize('CoC7.Import'),
               callback: CoC7ActorImporterDialog.importActor
+            },
+            getExampleNow: {
+              icon: '<i class="fas fa-info-circle"></i>',
+              label: game.i18n.localize('CoC7.getTheExample')
             },
             no: {
               icon: '<i class="fas fa-times"></i>',

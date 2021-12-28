@@ -127,6 +127,7 @@
   "CoC7.MagicPointsCost": "MPコスト",
   "CoC7.OtherCosts": "その他のコスト",
   "CoC7.CastingSpell": "<i>{spell}</i> 呪文を詠唱。",
+  "CoC7.NotEnoughMagicPoints": "{spell} 呪文のコストとして {originalMagicPoints} MPを消費する必要がある。君には {actorMagicPoints} MPしかないため、不足分である {convertedHitPoints} 点のコストを、君の耐久力から支払うことが可能だ。そうした場合、{convertedHitPoints} ダメージを受ける。",
 
   "CoC7.CopyToClipboard": "クリップボードにコピー",
   "CoC7.WhisperToSelection": "選択したトークンにウィスパー",
@@ -334,7 +335,7 @@
   "CoC7.Era1920": "1920年代",
   "CoC7.EraPulp": "パルプ･クトゥルフ",
   "CoC7.EraMdrn": "現代",
-  "CoC7.Eras": "クトゥルフ･フレーバー",
+  "CoC7.Eras": "対応サプリメント",
 
   "CoC7.SkillNoAdjustments": "修正不可",
   "CoC7.SkillNoXpGain": "成長しない技能",
@@ -352,7 +353,7 @@
   "CoC7.WeaponRare": "まれ",
   "CoC7.WeaponAhdb": "+1/2 DB",
   "CoC7.WeaponAddb": "+DB",
-  "CoC7.WeaponSlnt": "消音性能",
+  "CoC7.WeaponSlnt": "消音",
   "CoC7.WeaponXplv": "範囲攻撃",
   "CoC7.WeaponBrst": "バースト",
   "CoC7.WeaponAuto": "フルオート",
@@ -378,7 +379,7 @@
   "CoC7.DodgeSkillName": "回避",
   "CoC7.CthulhuMythosName": "クトゥルフ神話",
   "CoC7.CreditRatingSkillName": "信用",
-  "CoC7.DriveAutoSkillName": "Drive Auto",
+  "CoC7.DriveAutoSkillName": "運転（自動車）",
   "CoC7.FightingSpecializationName": "近接格闘",
   "CoC7.FirearmSpecializationName": "射撃",
   "CoC7.DriveSpecializationName": "運転",
@@ -661,6 +662,8 @@
   "CoC7.WarnFastTargetWithWrongMOV": "MOV 7以下の対象に「疾走する対象」の選択がされている (MOV: {mov})",
   "CoC7.WarnTooManyTarget": "対象の選択数が多すぎる。最後に選択した対象のみを有効にする",
 
+  "CoC7.allActors": "全アクター",
+  "CoC7.restTargets": "休息の対象者",
   "CoC7.startRest": "休息を取る",
   "CoC7.dreaming": "探索者たちは､眠りに落ちて夢を見る",
   "CoC7.healthRecovered": "HP 1点を回復",
@@ -679,8 +682,8 @@
   "CoC7.InfoLessSkillThanOptions": "現在の技能の選択数は {skillCount} で､任意の技能数は {optionsCount} だ。選択数が足りない。",
   "CoC7.InfoAllSkillsAlreadySelected": "すでに選択可能な技能数まで選択済みだ。",
 
-  "CoC7.MessageCheckRequestedWait": "キーパーが {check} 判定を要望。<br>それを待ってクリックしよう！<br>",
-  "CoC7.MessageTargetCheckRequested": "キーパーが {name} に {check} 判定を要望。",
+  "CoC7.MessageCheckRequestedWait": "キーパーが {check} 判定を指示。<br>クリックしよう！<br>",
+  "CoC7.MessageTargetCheckRequested": "キーパーが {name} に {check} 判定を指示。",
   "CoC7.MessageTitleSelectSingleUserForTarget": "この攻撃に対応できるユーザー",
   "CoC7.MessageSelectSingleUserForTarget": "このトークンは複数のユーザーによって管理されている。どのユーザーがこの攻撃に対応するかを選択すること。",
   "CoC7.MessageBoutOfMadnessTableNotFound": "狂気テーブルの結果が見つからない。すべてのロールテーブルが作成されているか確認すること",
@@ -707,6 +710,7 @@
   "CoC7.English": "英語",
   "CoC7.Spanish": "スペイン語",
   "CoC7.French": "フランス語",
+  "CoC7.German": "ドイツ語",
   "CoC7.TraditionalChinese": "繁体字中国語",
   "CoC7.SelectSourceLanguage": "言語を選択",
   "CoC7.ImportedUnnamedCharacter": "インポートされた無名のキャラクター",
@@ -869,5 +873,8 @@
   "CoC7.ExperimentalFeaturesWarning": "この機能は開発中のものであり､あなたのワールドでの使用は推奨されません。",
   "SETTINGS.CheckElevation": "距離に高さを含める",
   "SETTINGS.CheckElevationHint": "射撃戦闘の距離計算に高さも含める",
-  "CoC7.toolTipDelay": "ツールチップが表示されるまでの時間 (ミリ秒)。0は非表示。"
+  "CoC7.toolTipDelay": "ツールチップが表示されるまでの時間 (ミリ秒)。0は非表示。",
+
+  "CoC7.getTheExample": "例のコピー",
+  "CoC7.Copied": "例をクリップボードにコピー"
 }

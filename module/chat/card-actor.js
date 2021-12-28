@@ -134,8 +134,10 @@ export class ChatCardActor {
     const speakerData = {}
     let speaker
     if (this.actor) {
-      if (this.token) speakerData.token = this.token
-      else speakerData.actor = this.actor
+      speakerData.actor = this.actor
+      if (this.token) {
+        speakerData.token = this.token
+      }
       speaker = ChatMessage.getSpeaker(speakerData)
     } else {
       speaker = ChatMessage.getSpeaker()

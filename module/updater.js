@@ -240,6 +240,7 @@ export class Updater {
     Updater._migrateItemKeeperNotes(item, updateData)
     Updater._migrateItemSpellAutomated(item, updateData)
     Updater._migrateItemKeeperNotesMerge(item, updateData)
+    Updater._migrateItemSetupEras(item, updateData)
 
     return updateData
   }
@@ -404,7 +405,7 @@ export class Updater {
         updateData['data.mythosRating'] = Number(item.data.mythosRating) || 0
         /** Renamed/moved fields */
         updateData['data.content'] = item.data.description.unidentified
-        updateData['data.keeperNotes'] = item.data.description.notes
+        updateData['data.description.keeper'] = item.data.description.notes
         /** New fields set default values */
         updateData['data.difficultyLevel'] = 'regular'
         updateData['data.fullStudies'] = 0
@@ -437,7 +438,7 @@ export class Updater {
   }
 
   static _migrateItemKeeperNotesMerge (item, updateData) {
-    if (item.type === 'spell') {
+    if (item.type === 'spell' || item.type === 'book') {
       if (typeof item.data.notes !== 'undefined') {
         if (typeof item.data.description.keeper !== 'undefined') {
           updateData['data.description.keeper'] =
@@ -446,6 +447,24 @@ export class Updater {
           updateData['data.description.keeper'] = item.data.notes
         }
         updateData['data.-=notes'] = null
+      }
+      if (typeof item.data.keeperNotes !== 'undefined') {
+        if (typeof updateData['data.description.keeper'] !== 'undefined') {
+          updateData['data.description.keeper'] = item.data.keeperNotes + updateData['data.description.keeper']
+        } else {
+          updateData['data.description.keeper'] = item.data.keeperNotes
+        }
+        updateData['data.-=keeperNotes'] = null
+      }
+    }
+  }
+
+  static _migrateItemSetupEras (item, updateData) {
+    if (item.type === 'setup') {
+      for (const [key, value] of Object.entries(item.data.eras)) {
+        if (typeof value.selected !== 'undefined') {
+          updateData['data.eras.' + key] = value.selected
+        }
       }
     }
   }

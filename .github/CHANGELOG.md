@@ -1,3 +1,44 @@
+## Changes coming in a future release:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+
+- Update to Spanish localization, thanks to @lozalojo
+
+## Version 0.7.3:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+
+- Compatible with Foundry VTT v9
+- Fix compendium render in v8/v9
+- Fix multiple chat messages for tokens to the correct users
+- Now Actor Importer support Polish, thanks to @frondeus
+- Prevent character sheets editing themselves if not editable
+- Update layout for weapon sheet tab navigation
+- Update to French localization, thanks to @vonv
+- Update to Japanese localization, thanks to `@Asami#8627`
+- Update to Polish localization, thanks to @frondeus
+- Update to Portuguese localization
+- Update to Spanish localization, thanks to @lozalojo
+- Update to Swedish localization, thanks to @Rangertheman
+- Update to Taiwanese localization, thanks to @zeteticl
+
+## Version 0.7.2:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+
+- Add filters to Item compendiums
+- Fix Keeper notes incongruency and Spell inside Book rendering
+- Fix luck recovery rules for 1920 and Pulp
+- Fix negative MP bug
+- Now Actor Importer support German, thanks to @brockhaus
+- Now it is possible to convert remaining MP into HP (KR, pg. 176)
+- Now it is possible to copy Actor Importer example, thanks to @zeteticl
+- Now it is possible to select specific Actors for Rest feature, thanks to @zeteticl
+- Update to German localization, thanks to @brockhaus
+- Update to Portuguese localization
+- Update to Swedish localization, thanks to @Rangertheman
+- Update to Taiwanese localization, thanks to @zeteticl
+
 ## Version 0.7.1:
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
