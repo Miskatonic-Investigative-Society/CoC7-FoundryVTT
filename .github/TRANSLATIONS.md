@@ -2,21 +2,21 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`. Feel free to create a new `*.json` file for a language that is not shown here!
 
-The **es** translation is currently up to date
+The following translations are currently up to date **es**, **sv**
 
 The following translations have been abandoned **cn**, **cs**, [are you able to help?](./ABANDONED.md)
 
-| Key                                                    |    de    |    fr    |    ja    |    pl    |  pt-BR   |    sv    |  zh-TW   |
-| :----------------------------------------------------- | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-| **Remaining**:                                         |  **6**   |  **2**   |  **2**   |  **8**   |  **2**   |  **2**   |  **2**   |
-| [CoC7.Copied](#coc7copied)                             | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.EraAvailability](#coc7eraavailability)           | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.German](#coc7german)                             | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.NotEnoughMagicPoints](#coc7notenoughmagicpoints) | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Polish](#coc7polish)                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.allActors](#coc7allactors)                       | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.getTheExample](#coc7gettheexample)               | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.restTargets](#coc7resttargets)                   | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
+| Key                                                    |    de    |    fr    |    ja    |    pl    |  pt-BR   |  zh-TW   |
+| :----------------------------------------------------- | :------: | :------: | :------: | :------: | :------: | :------: |
+| **Remaining**:                                         |  **6**   |  **2**   |  **2**   |  **8**   |  **2**   |  **2**   |
+| [CoC7.Copied](#coc7copied)                             | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  |
+| [CoC7.EraAvailability](#coc7eraavailability)           | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.German](#coc7german)                             | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  |
+| [CoC7.NotEnoughMagicPoints](#coc7notenoughmagicpoints) | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  |
+| [CoC7.Polish](#coc7polish)                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.allActors](#coc7allactors)                       | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  |
+| [CoC7.getTheExample](#coc7gettheexample)               | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  |
+| [CoC7.restTargets](#coc7resttargets)                   | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  |
 
 ##### CoC7.Copied
 
