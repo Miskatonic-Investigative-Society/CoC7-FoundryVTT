@@ -58,12 +58,19 @@
   }
 
   .form-group.small {
-    .toggle-icon {
+    .toggle-icon,
+    .icon {
       font-size: 1rem;
       line-height: 1.25rem;
       padding: 1px 6px;
       display: inline;
       flex: 0;
+
+      &.bigger {
+        padding: 1px 4px;
+        font-size: 1.4rem;
+      }
+
       &.switched-off {
         display: inline;
       }
@@ -90,6 +97,7 @@
         flex: 0;
         background: none;
         border: none;
+        font-size: 1rem;
         &:hover {
           box-shadow: none;
           text-shadow: 0 0 8px red;
@@ -117,6 +125,15 @@
       }
       &.available {
         color: goldenrod;
+      }
+    }
+  }
+
+  .player-actions {
+    .info {
+      .roll-line {
+        line-height: 1.25rem;
+        min-height: 1.25rem;
       }
     }
   }

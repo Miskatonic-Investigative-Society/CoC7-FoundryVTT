@@ -249,6 +249,7 @@
   "CoC7.Tie": "Tie",
   "CoC7.DamageInflicted": "Damage inflicted",
   "CoC7.TotalDamage": "Total damage",
+  "CoC7.Unarmed": "Unarmed",
 
   "CoC7.combatCard.dive4cover": "Dive for Cover",
 
@@ -537,13 +538,14 @@
   "CoC7.Barrier": "Barrier",
   "CoC7.AHazard": "a hazard",
   "CoC7.Hazard": "Hazard",
+  "CoC7.ConsumeBonusDice": "Consume Bonus Dice",
   "CoC7.Breakable": "Breakable",
   "CoC7.NoValidCheck": "No valid check",
   "CoC7.NoValidSkill": "Fake skill",
   "CoC7.AskIntentions": "What are your intentions ?",
+  "CoC7.WaitForPlayerInput": "Wait for player's input",
   "CoC7.AskRoll": "Roll {name} ({value}%)",
   "CoC7.ActionCost": "Action cost",
-  
 
   "CoC7.SpellCastingTime": "Casting Time",
   "CoC7.SpellCastingCost": "Casting Cost",

@@ -661,10 +661,10 @@ export class CoC7Check {
     return a
   }
 
-  async roll (diceMod = null, difficulty = null) {
+  async roll (diceMod = null, difficulty = null, options = {}) {
     if (diceMod) this.diceModifier = diceMod
     if (difficulty) this.difficulty = difficulty
-    if (!this.standby) await this._perform()
+    if (!this.standby) await this._perform(options)
   }
 
   /**

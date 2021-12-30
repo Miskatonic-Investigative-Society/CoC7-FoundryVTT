@@ -9,7 +9,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   static get defaultOptions () {
     const options = mergeObject(super.defaultOptions, {
       template: 'systems/CoC7/templates/chat/cards/chase-obstacle.html',
-      GMUpdate: false
+      GMUpdate: true
     })
     options.classes.push('obstacle-card')
     return options
@@ -48,26 +48,6 @@ export class ChaseObstacleCard extends EnhancedChatCard {
         data.validSkill = true
       } else if (data.data.obstacle.checkName && data.data.card.checkThreshold)
         data.validCheck = true
-      data.weaponsOptions = []
-      if (data.card.breakableObstacle && data.data.states.breakThrougObstacle) {
-        this.participant.actor?.itemTypes?.weapon?.forEach(w => {
-          let formula = w.data.data.range.normal.damage
-          let db = this.participant.actor.db
-          if (null === db) {
-            db = ''
-          } else {
-            db = `${db}`
-          }
-
-          if (db && !db.startsWith('-')) db = '+' + db
-          if (w.data.data.properties.addb) formula = formula + db
-          if (w.data.data.properties.ahbd) formula = formula + db + '/2'
-          data.weaponsOptions.push = {
-            name: `${w.data.name} (${formula})`,
-            damage: formula
-          }
-        })
-      }
     } else {
       data.checkOptions = this.chase.allSkillsAndCharacteristics
       data.dummyActor = true
@@ -75,7 +55,10 @@ export class ChaseObstacleCard extends EnhancedChatCard {
         data.validCheck = true
     }
 
-    data.validFailledRolls = true
+    data.customWeapon = false
+    if ('0' === this.data.card.weaponChoice) {
+      data.customWeapon = true
+    }
 
     if (data.validCheck) {
       let checkName, value
@@ -167,17 +150,25 @@ export class ChaseObstacleCard extends EnhancedChatCard {
           this.data.objects.failledDamageRoll
         )?.outerHTML
         data.status.push({
-          name: game.i18n.localize('CoC7.TotalDamage') + ` :${this.data.objects.failledDamageRoll.total}`
+          name:
+            game.i18n.localize('CoC7.TotalDamage') +
+            ` :${this.data.objects.failledDamageRoll.total}`
         })
       }
 
-      if( this.data.obstacle.hasActionCost && this.data.obstacle.hazard && this.data.objects?.check?.isFailure){
+      if (
+        this.data.obstacle.hasActionCost &&
+        this.data.obstacle.hazard &&
+        this.data.objects?.check?.isFailure
+      ) {
         data.actionLost = true
         data.inlineActionLostRoll = createInlineRoll(
           this.data.objects.failledActionRoll
         )?.outerHTML
         data.status.push({
-          name: game.i18n.localize('CoC7.ActionCost') + ` :${this.data.objects.failledActionRoll.total}`
+          name:
+            game.i18n.localize('CoC7.ActionCost') +
+            ` :${this.data.objects.failledActionRoll.total}`
         })
       }
     }
@@ -185,7 +176,21 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   }
 
   /** @override */
-  async GMUpdate () {}
+  async GMUpdate () {
+    // ui.notifications.info( `I am ${game.user.id}. Doing GMUpdate`)
+    if (this.data.states.cardResolved) {
+      if (game.user.isGM)
+        ui.notifications.info(
+          `I am the GM ${game.user.id}. I will update the card and chase ${this.data.chaseUuid}`
+        )
+    }
+  }
+
+  /** @override */
+  async localCompute () {
+    if (this.data.states.checkRolled && this.data.objects?.check?.passed)
+      this.data.states.cardResolved = true
+  }
 
   /** @override */
   async assignObjects () {
@@ -272,6 +277,100 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     return rollData || undefined
   }
 
+  get validFailledRolls () {
+    if (!this.data.objects?.check?.isFailure) return false
+    if (
+      this.data.obstacle.hasDamage &&
+      !Roll.validate(this.data.obstacle.failedCheckDamage)
+    )
+      return false
+    if (
+      this.data.obstacle.hazard &&
+      this.data.obstacle.hasActionCost &&
+      !Roll.validate(this.data.obstacle.failedActionCost)
+    )
+      return false
+    return true
+  }
+
+  get weaponsOptions () {
+    const weapons = []
+    this.participant.actor?.itemTypes?.weapon?.forEach(w => {
+      let formula = w.data.data.range.normal.damage
+      let db = this.participant.actor.db
+      if (null === db) {
+        db = ''
+      } else {
+        db = `${db}`
+      }
+
+      if (db && !db.startsWith('-')) db = '+' + db
+      if (w.data.data.properties.addb) formula = formula + db
+      if (w.data.data.properties.ahbd) formula = formula + db + '/2'
+      weapons.push({
+        name: `${w.data.name} (${formula})`,
+        damage: formula,
+        uuid: w.uuid
+      })
+    })
+    weapons.sort((a, b) => {
+      var nameA = a.name.toUpperCase()
+      var nameB = b.name.toUpperCase()
+      if (nameA < nameB) return -1
+      if (nameA > nameB) return 1
+      return 0
+    })
+
+    let db = ''
+    if (this.participant.actor) {
+      db = this.participant.actor.db
+      if (db && !db.startsWith('-')) db = '+' + db
+    }
+
+    weapons.unshift({
+      name: `${game.i18n.localize('CoC7.Unarmed')} (1D3${db})`,
+      damage: `1D3${db}`,
+      uuid: 'unarmed'
+    })
+
+    weapons.push({
+      name: game.i18n.localize('CoC7.Other'),
+      damage: this.data.card?.customWeaponDamage || null,
+      uuid: 0
+    })
+    return weapons
+  }
+
+  get usedWeapon () {
+    if (this.data.card.weaponChoice) {
+      const weapon = this.weaponsOptions.find(
+        e => e.uuid == this.data.card.weaponChoice
+      )
+      if (weapon) return weapon
+    }
+  }
+
+  get inflictedDamageFormula () {
+    if (this.usedWeapon) {
+      const weapon = this.usedWeapon
+      if (weapon && weapon.damage && Roll.validate(weapon.damage))
+        return weapon.damage
+      return undefined
+    }
+    return undefined
+  }
+
+  get validObstacleDamage () {
+    if (
+      this.data.obstacle.hasHitPoints &&
+      !isNaN(Number(this.data.obstacle.HitPoints)) &&
+      Number(this.data.obstacle.HitPoints) > 0 &&
+      this.inflictedDamageFormula
+    )
+      return true
+    return false
+  }
+
   //Actions :
   async defineObstacle (options) {
     if (!this.data.states) this.data.states = {}
@@ -293,6 +392,13 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     return true
   }
 
+  async cancelObstacleDefinition (options) {
+    this.data.states.actionDefined = false
+    this.data.states.tryToPass = false
+    this.data.states.tryToBreak = false
+    return true
+  }
+
   async requestRoll (options) {
     this.data.states.waitForRoll = true
     this.data.states.checkDefined = true
@@ -308,7 +414,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     this.data.objects.check = CoC7Check.createFromActorRollData(this.roll)
     if (!this.data.objects.check) return false
     this.data.objects.check.canBePushed = false //Obstacle check can't be pushed
-    await this.data.objects.check.roll()
+    await this.data.objects.check._perform({ forceDSN: true })
     this.data.states.checkRolled = true
     return true
   }
@@ -345,7 +451,8 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     return true
   }
 
-  // activateListeners (html) {
-  //   super.activateListeners(html)
-  // }
+  async askRollObstacleDamage (options) {
+    this.data.states.waitForDamageRoll = true
+    return false
+  }
 }
