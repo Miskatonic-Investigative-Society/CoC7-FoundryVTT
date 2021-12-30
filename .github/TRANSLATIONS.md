@@ -6,17 +6,18 @@ The following translations are currently up to date **es**, **sv**
 
 The following translations have been abandoned **cn**, **cs**, [are you able to help?](./ABANDONED.md)
 
-| Key                                                    |    de    |    fr    |    ja    |    pl    |  pt-BR   |  zh-TW   |
-| :----------------------------------------------------- | :------: | :------: | :------: | :------: | :------: | :------: |
-| **Remaining**:                                         |  **6**   |  **2**   |  **2**   |  **8**   |  **2**   |  **2**   |
-| [CoC7.Copied](#coc7copied)                             | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  |
-| [CoC7.EraAvailability](#coc7eraavailability)           | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.German](#coc7german)                             | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  |
-| [CoC7.NotEnoughMagicPoints](#coc7notenoughmagicpoints) | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  |
-| [CoC7.Polish](#coc7polish)                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.allActors](#coc7allactors)                       | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  |
-| [CoC7.getTheExample](#coc7gettheexample)               | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  |
-| [CoC7.restTargets](#coc7resttargets)                   | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  |
+| Key                                                      |    de    |    fr    |    ja    |    ko    |    pl    |  pt-BR   |  zh-TW   |
+| :------------------------------------------------------- | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
+| **Remaining**:                                           |  **6**   |  **2**   |  **2**   |  **9**   |  **8**   |  **2**   |  **2**   |
+| [CoC7.Copied](#coc7copied)                               | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  |
+| [CoC7.EraAvailability](#coc7eraavailability)             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.German](#coc7german)                               | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  |
+| [CoC7.NotEnoughMagicPoints](#coc7notenoughmagicpoints)   | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  |
+| [CoC7.Polish](#coc7polish)                               | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.allActors](#coc7allactors)                         | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  |
+| [CoC7.getTheExample](#coc7gettheexample)                 | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  |
+| [CoC7.restTargets](#coc7resttargets)                     | &#x274C; | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  |
+| [SETTINGS.DefaultDifficulty](#settingsdefaultdifficulty) | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
 
 ##### CoC7.Copied
 
@@ -49,3 +50,7 @@ The following translations have been abandoned **cn**, **cs**, [are you able to 
 ##### CoC7.restTargets
 
 `"CoC7.restTargets": "Rest Targets",`
+
+##### SETTINGS.DefaultDifficulty
+
+`"SETTINGS.DefaultDifficulty": "Default check difficulty",`
