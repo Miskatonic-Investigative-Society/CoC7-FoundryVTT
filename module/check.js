@@ -63,6 +63,16 @@ export class CoC7Check {
     }
   }
 
+  static get type () {
+    return {
+      characteristic: 'characteristic',
+      attribute: 'attribute',
+      skill: 'item',
+      item: 'item',
+      value: 'value'
+    }
+  }
+
   static difficultyString (difficultyLevel) {
     switch (
       !isNaN(Number(difficultyLevel))
@@ -657,6 +667,51 @@ export class CoC7Check {
     if (!this.standby) await this._perform()
   }
 
+  /**
+   * Create a check with the provided data
+   * Process roll data to a format that can be fed to create()
+   * @param {*} rollData A roll data structure as returned by actor.find
+   * @returns A check with the roll data provided
+   */
+  static createFromActorRollData (rollData) {
+    const roll = {}
+    // check Modifier
+    if (rollData.difficulty) roll.difficulty = rollData.difficulty
+    if (rollData.diceModifier) roll.diceModifier = rollData.diceModifier
+    if (rollData.flatDiceModifier)
+      roll.flatDiceModifier = rollData.flatDiceModifier
+    if (rollData.flatThresholdModifier)
+      roll.flatThresholdModifier = rollData.flatThresholdModifier
+    // Actor
+    if (rollData.actor?.actorKey) roll.actorKey = rollData.actor.actorKey
+    else if (rollData.actor?.name) roll.actorName = rollData.actor.name
+    // Check type
+    switch (rollData.type) {
+      case CoC7Check.type.characteristic:
+        roll.characteristic = rollData.value?.key
+        break
+      case CoC7Check.type.attribute:
+        roll.attribute = rollData.value?.key
+        break
+      case CoC7Check.type.item:
+        roll.actorKey = rollData.value.actor.actorKey
+        if ('skill' == rollData.value?.type) roll.skill = rollData.value.id
+        else roll.item = rollData.value.id
+        break
+      case CoC7Check.type.skill:
+        roll.actorKey = rollData.value.actor.actorKey
+        roll.skill = rollData.value.id
+        break
+      case CoC7Check.type.value:
+        roll.displayName = rollData.value.name
+        roll.rawValue = rollData.value.threshold
+        break
+      default:
+        break
+    }
+    return CoC7Check.create(roll)
+  }
+
   static create ({
     difficulty = CoC7Check.difficultyLevel.regular,
     diceModifier = null,
@@ -664,6 +719,7 @@ export class CoC7Check {
     characteristic = null,
     attribute = null,
     rawValue = 0,
+    item = null,
     skill = null,
     flatDiceModifier = 0,
     flatThresholdModifier = 0,
@@ -687,6 +743,7 @@ export class CoC7Check {
       // TODO : try retrieve skill by name
       else if (characteristic) check.characteristic = characteristic
       else if (attribute) check.attribute = attribute
+      else if (item) check.item = item
     }
     return check
   }
@@ -891,7 +948,8 @@ export class CoC7Check {
       }
     }
 
-    this.canBePushed = this.skill ? this.skill.canBePushed() : false
+    if (undefined == this.canBePushed)
+      this.canBePushed = this.skill ? this.skill.canBePushed() : false
     if (this.characteristic != null) this.canBePushed = true
     if (this.isFumble) this.canBePushed = false
     if (this.denyPush) this.canBePushed = false

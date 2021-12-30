@@ -542,6 +542,8 @@
   "CoC7.NoValidSkill": "Fake skill",
   "CoC7.AskIntentions": "What are your intentions ?",
   "CoC7.AskRoll": "Roll {name} ({value}%)",
+  "CoC7.ActionCost": "Action cost",
+  
 
   "CoC7.SpellCastingTime": "Casting Time",
   "CoC7.SpellCastingCost": "Casting Cost",

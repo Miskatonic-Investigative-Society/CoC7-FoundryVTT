@@ -3,7 +3,7 @@
     <header class="card-header">
       <div class="left-portrait">
         {{#if displayActorOnCard}}
-					<img class="open-actor {{participant.cssClass}}" data-actor-key="{{participant.key}}" src="{{participant.icon}}" title="{{participant.name}}" width="36" height="36"/>
+					<img class="open-actor {{card.participant.cssClass}}" data-actor-key="{{card.participant.key}}" src="{{card.participant.icon}}" title="{{card.participant.name}}" width="36" height="36"/>
         {{/if}}
       </div>
       {{#if data.states.obstacleDefined}}
@@ -30,23 +30,36 @@
         {{#if data.states.obstacleDefined}}
           <div>{{strings.obstacleDefined}}</div>
           {{#if data.states.checkDefined}}
-            <div>I know what to do</div>
-            <div class="card-buttons">
-              {{#unless dummyActor}}
-                <button class='submit' data-ecc-visibility="{{participant.actor.uuid}}" data-action='rollSkillCheck'>{{ strings.rollRequest }}</button>
-              {{/unless}}
-            </div>
+            <div>**** playerIntentions {{ strings.playerIntentions }} ****</div>
+            {{#unless dummyActor}}
+              {{#if data.states.checkRolled}}
+                <div>**** checkRolled {{ strings.checkRolled}} **** {{data.card.roll.value.value.name}} : {{{ htmlCheck }}}</div>
+                {{#if data.objects.check.passed}}
+                  <div>**** obstaclePassed {{ strings.obstaclePassed }} ****</div>
+                {{else}}
+                  <div>**** checkFailled {{ strings.checkFailled }} ****</div>
+                  {{#if data.states.cardResolved}}
+                    {{#if damageTaken}}
+                      <div>**** damageTaken {{ strings.damageTaken}} **** : {{{inlineDamageTakenRoll}}}</div>
+                    {{/if}}
+                    {{#if actionLost}}
+                      <div>**** actionLost {{ strings.actionLost }} **** : {{{inlineActionLostRoll}}}</div>
+                    {{/if}}
+                  {{/if}}
+                {{/if}}
+              {{else}}
+                <div class="card-buttons">
+                  <button class='submit' data-ecc-visibility="{{card.participant.actor.uuid}}" data-action='rollSkillCheck'>{{ strings.rollRequest }}</button>
+                </div>
+              {{/if}}
+            {{/unless}}
           {{else}}
             <div>{{ localize 'CoC7.AskIntentions' }}</div>
           {{/if}}
         {{else}}
-          <div>{{strings.somethinInTheWay}}</div>
+          <div>{{ localize 'CoC7.SomethingInTheWay' }}</div>
         {{/if}}
       </div>
-
-      {{#if data.states.obstacleDefined}}
-      {{/if}}
-
     </div>
 
     <div data-ecc-visibility="gm" class="gm-actions">
@@ -56,10 +69,70 @@
             {{#if data.states.rolled}}
             {{else}}
               {{#if data.states.waitForRoll}}
+                {{#if data.states.checkRolled}}
+                  {{#if data.objects.check.passed}}
+                    Check passed
+                  {{else}}
+                    Check failled
+                    {{#if data.states.cardResolved}}
+                    {{else}}
+                      {{#if data.obstacle.barrier}}
+                        Barier failled
+                        <div class="form-group small">
+                          <div class="flexrow flex1">
+                          </div>
+                          <div class="flexrow flex1">
+                            <a data-ecc-permissions="gm" data-name="data.obstacle.hasDamage" class="toggle-icon ecc-switch">
+                              <i class="game-icon game-icon-broken-bone"></i>
+                            </a>
+                            {{#if data.obstacle.hasDamage }}
+                              <input type="text" data-ecc-permissions="gm" name="data.obstacle.failedCheckDamage" value="{{data.obstacle.failedCheckDamage}}">
+                            {{/if}}
+                          </div>
+                        </div>
+                        <div class="card-buttons">
+                          {{#if validFailledRolls}}
+                          <button class="submit" data-action="rollFailConsequences">Validate</button>
+                          {{/if}}
+                        </div>
+                      {{/if}}
+                      {{#if data.obstacle.hazard}}
+                        Hazard failled
+                        {{#if data.states.obstacleFailledResolved}}
+                        {{else}}
+                          <div class="form-group small">
+                            <div class="flexrow flex1">
+                              <a data-ecc-permissions="gm" data-name="data.obstacle.hasActionCost" class="toggle-icon ecc-switch">
+                                <i class="fas fa-bahai"></i>
+                              </a>
+                              {{#if data.obstacle.hasActionCost }}
+                                <input type="text" data-ecc-permissions="gm" name="data.obstacle.failedActionCost" value="{{data.obstacle.failedActionCost}}">
+                              {{/if}}
+                            </div>
+                            <div class="flexrow flex1">
+                              <a data-ecc-permissions="gm" data-name="data.obstacle.hasDamage" class="toggle-icon ecc-switch">
+                                <i class="game-icon game-icon-broken-bone"></i>
+                              </a>
+                              {{#if data.obstacle.hasDamage }}
+                                <input type="text" data-ecc-permissions="gm" name="data.obstacle.failedCheckDamage" value="{{data.obstacle.failedCheckDamage}}">
+                              {{/if}}
+                            </div>
+                          </div>
+                          <div class="card-buttons">
+                            {{#if validFailledRolls}}
+                            <button class="submit" data-action="rollFailConsequences">Validate</button>
+                            {{/if}}
+                          </div>
+                        {{/if}}
+                      {{/if}}
+                    {{/if}}
+                  {{/if}}
+                {{else}}
                 <span>Waiting for roll</span>
+                {{/if}}
               {{else}}
                 <div class="form-group">
-                  {{#if participant.hasBonusDice}}
+                  {{#if card.participant.hasBonusDice}}
                   <div data-flag="consumeBonusDice" class="toggle-switch ecc-switch">Consume bonus dice</div>
                   {{/if}}
                 </div>
@@ -78,7 +151,7 @@
                 </div>
                 <div class="card-buttons">
                   {{#if validCheck}}
-                  <button class='submit' data-action='requestRoll'>Request roll</button>
+                  <button class="submit" data-action="requestRoll">Request roll</button>
                   {{/if}}
                 </div>
               {{/if}}
@@ -118,7 +191,7 @@
       <div class="status-list">
         <div class="status movement-action">
             actions :
-            {{#each participant.movementActionArray as |actionClass|}}
+            {{#each card.participant.movementActionArray as |actionClass|}}
             <i class="fas fa-bahai {{actionClass}}"></i>
             {{/each}}
         </div>

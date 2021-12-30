@@ -417,50 +417,56 @@ export class CoC7Utilities {
     Hooks.call('toggleCharCreation', toggle)
   }
 
-  static async getTarget() {
-    let users = game.users.filter(user => user.active);
-    let actors = game.actors;
+  static async getTarget () {
+    let users = game.users.filter(user => user.active)
+    let actors = game.actors
     let checkOptions = `<input type="checkbox" name="COCCheckAllPC">\n
     <label for="All">${game.i18n.localize('CoC7.allActors')}</label>`
-    let playerTokenIds = users.map(u => u.character?.id).filter(id => id !== undefined);
+    let playerTokenIds = users
+      .map(u => u.character?.id)
+      .filter(id => id !== undefined)
     let selectedPlayerIds = canvas.tokens.controlled.map(token => {
-        return token.actor.id;
-    });
+      return token.actor.id
+    })
 
     // Build checkbox list for all active players
     actors.forEach(actor => {
-        let checked = (selectedPlayerIds.includes(actor.id) || playerTokenIds.includes(actor.id)) && 'checked';
-        checkOptions += `
+      let checked =
+        (selectedPlayerIds.includes(actor.id) ||
+          playerTokenIds.includes(actor.id)) &&
+        'checked'
+      checkOptions += `
      <br>
      <input type="checkbox" name="${actor.id}" id="${actor.id}" value="${actor.name}" ${checked}>\n
      <label for="${actor.id}">${actor.name}</label>
        `
-    });
+    })
 
     new Dialog({
-        title: `${game.i18n.localize('CoC7.dreaming')}`,
-        content: `${game.i18n.localize('CoC7.restTargets')}: ${checkOptions} <br>`,
-        buttons: {
-            whisper: {
-                label: `${game.i18n.localize('CoC7.startRest')}`,
-                callback: async (html) => {
-                    let targets = [];
-                    let all = false;
-                    let users = html.find('[type="checkbox"]')
-                    for (let user of users) {
-                      if (user.name === "COCCheckAllPC" && user.checked) all = true;
-                        if (user.checked || all)
-                            targets.push(user.id);
-                    }
-                    await CoC7Utilities.startRest(targets)}
+      title: `${game.i18n.localize('CoC7.dreaming')}`,
+      content: `${game.i18n.localize(
+        'CoC7.restTargets'
+      )}: ${checkOptions} <br>`,
+      buttons: {
+        whisper: {
+          label: `${game.i18n.localize('CoC7.startRest')}`,
+          callback: async html => {
+            let targets = []
+            let all = false
+            let users = html.find('[type="checkbox"]')
+            for (let user of users) {
+              if (user.name === 'COCCheckAllPC' && user.checked) all = true
+              if (user.checked || all) targets.push(user.id)
             }
+            await CoC7Utilities.startRest(targets)
+          }
         }
-    }).render(true);
-
-}
+      }
+    }).render(true)
+  }
 
   static async startRest (targets) {
-    if(!targets.length)return;
+    if (!targets.length) return
     const actors = game.actors.filter(actor => targets.includes(actor.id))
     let chatContent = `<i>${game.i18n.localize('CoC7.dreaming')}...</i><br>`
     for (const actor of actors) {
@@ -744,30 +750,65 @@ export class CoC7Utilities {
     return qString
   }
 
-  static setByPath(obj, path, value) {
-    var parts = path.split('.');
-    var o = obj;
+  static setByPath (obj, path, value) {
+    var parts = path.split('.')
+    var o = obj
     if (parts.length > 1) {
       for (var i = 0; i < parts.length - 1; i++) {
-          if (!o[parts[i]])
-              o[parts[i]] = {};
-          o = o[parts[i]];
+        if (!o[parts[i]]) o[parts[i]] = {}
+        o = o[parts[i]]
       }
     }
 
-    o[parts[parts.length - 1]] = value;
+    o[parts[parts.length - 1]] = value
   }
 
-  static getByPath(obj, path) {
-    var parts = path.split('.');
-    var o = obj;
+  static getByPath (obj, path) {
+    var parts = path.split('.')
+    var o = obj
     if (parts.length > 1) {
       for (var i = 0; i < parts.length - 1; i++) {
-          if (!o[parts[i]]) return undefined
-          o = o[parts[i]];
+        if (!o[parts[i]]) return undefined
+        o = o[parts[i]]
       }
     }
 
-    return o[parts[parts.length - 1]];
+    return o[parts[parts.length - 1]]
+  }
+
+  /**
+   * Retrieve a Document by its Universally Unique Identifier (uuid).
+   * @param {string} uuid   The uuid of the Document to retrieve
+   * @return {Promise<Document|null>}
+   */
+  static fromUuid (uuid) {
+    let parts = uuid.split('.')
+    let doc
+
+    // Compendium Documents
+    if (parts[0] === 'Compendium') {
+      return undefined
+      // parts.shift();
+      // const [scope, packName, id] = parts.slice(0, 3);
+      // parts = parts.slice(3);
+      // const pack = game.packs.get(`${scope}.${packName}`);
+      // return await pack?.getDocument(id);
+    }
+
+    // World Documents
+    else {
+      const [docName, docId] = parts.slice(0, 2)
+      parts = parts.slice(2)
+      const collection = CONFIG[docName].collection.instance
+      doc = collection.get(docId)
+    }
+
+    // Embedded Documents
+    while (doc && parts.length > 1) {
+      const [embeddedName, embeddedId] = parts.slice(0, 2)
+      doc = doc.getEmbeddedDocument(embeddedName, embeddedId)
+      parts = parts.slice(2)
+    }
+    return doc || null
   }
 }

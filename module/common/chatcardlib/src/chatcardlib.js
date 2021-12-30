@@ -355,11 +355,10 @@ export class EnhancedChatCard {
         return true && whiteList
       if (permissionsArray.includes(PERMISSION_TYPE.NOT_GM))
         return false || !whiteList
-      permissionsArray = permissionsArray.filter(e => e != PERMISSION_TYPE.GM)
-      permissionsArray = permissionsArray.filter(
-        e => e != PERMISSION_TYPE.NOT_GM
-      )
     }
+
+    permissionsArray = permissionsArray.filter(e => e != PERMISSION_TYPE.GM)
+    permissionsArray = permissionsArray.filter(e => e != PERMISSION_TYPE.NOT_GM)
 
     //   return false || !whiteList //If pass the filter return false unless it's a blacklist
     // } else {

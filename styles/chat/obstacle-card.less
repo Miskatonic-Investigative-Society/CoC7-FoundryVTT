@@ -17,6 +17,18 @@
       .error {
         background-color: rgba(255, 0, 0, 0.5);
       }
+
+      .success {
+        .success-color();
+      }
+
+      .failure {
+        .failure-color();
+      }
+
+      .fumble {
+        .fumble-color();
+      }
     }
   }
   .card-header {
@@ -28,6 +40,10 @@
   }
 
   .card-buttons {
+    span {
+      line-height: 1.5rem;
+      border: none;
+    }
     button {
       font-size: 12px;
       height: 24px;
@@ -38,6 +54,47 @@
       border-radius: 3px;
       width: 100%;
       font-family: 'Signika', sans-serif;
+    }
+  }
+
+  .form-group.small {
+    .toggle-icon {
+      font-size: 1rem;
+      line-height: 1.25rem;
+      padding: 1px 6px;
+      display: inline;
+      flex: 0;
+      &.switched-off {
+        display: inline;
+      }
+      &.switched-on {
+        color: red;
+        text-shadow: 0 0 8px red;
+        border: none;
+        background: none;
+        box-shadow: none;
+      }
+    }
+
+    input {
+      margin: 0;
+      line-height: 1.25rem;
+      height: calc(100% - 2px);
+    }
+
+    button {
+      &.button-icon {
+        line-height: 1.25rem;
+        padding: 1px 6px;
+        display: inline;
+        flex: 0;
+        background: none;
+        border: none;
+        &:hover {
+          box-shadow: none;
+          text-shadow: 0 0 8px red;
+        }
+      }
     }
   }
 
