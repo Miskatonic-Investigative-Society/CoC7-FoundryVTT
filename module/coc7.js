@@ -22,7 +22,7 @@ import '../styles/system/index.less'
 import { CoC7ChaseSheet } from './items/sheets/chase.js'
 import { CoC7Socket } from './hooks/socket.js'
 import { DropActorSheetData } from './hooks/drop-actor-sheet-data.js'
-import { testCard } from './chat/cards/test.js'
+import { TestCard } from './chat/cards/test.js'
 import { initECC } from './common/chatcardlib/src/chatcardlib.js'
 
 Hooks.on('renderSettingsConfig', (app, html, options) => {
@@ -141,10 +141,9 @@ Hooks.once('init', async function () {
     }
   }
   Combat.prototype.rollInitiative = rollInitiative
-
 })
 
-initECC(testCard) //TO BE REMOVED FOR PROD
+initECC(TestCard) // TO BE REMOVED FOR PROD
 
 Hooks.on('renderCombatTracker', (app, html, data) =>
   CoC7Combat.renderCombatTracker(app, html, data)
@@ -156,7 +155,6 @@ CoC7Hooks.listen()
 Hooks.once('socketlib.ready', CoC7Socket)
 
 Hooks.once('setup', function () {
-
   // Localize CONFIG objects once up-front
   const toLocalize = [
     'spellProperties',
@@ -342,14 +340,14 @@ Hooks.on('ready', async () => {
       game.settings.get('CoC7', 'boutOfMadnessSummaryTable') === 'none'
         ? null
         : game.tables.get(
-            game.settings.get('CoC7', 'boutOfMadnessSummaryTable')
-          ),
+          game.settings.get('CoC7', 'boutOfMadnessSummaryTable')
+        ),
     boutOfMadness_RealTime:
       game.settings.get('CoC7', 'boutOfMadnessRealTimeTable') === 'none'
         ? null
         : game.tables.get(
-            game.settings.get('CoC7', 'boutOfMadnessRealTimeTable')
-          )
+          game.settings.get('CoC7', 'boutOfMadnessRealTimeTable')
+        )
     // maniasIndex: ge.settings.get('CoC7', 'boutOfMadnessPhobiasIndex'),
     // phobiasIndex: game.settings.get('CoC7', 'boutOfMadnessManiasIndex'),
     // phobias: ('none' == game.settings.get('CoC7', 'samplePhobiasTable'))?null:game.tables.get(game.settings.get('CoC7', 'samplePhobiasTable')),
@@ -361,8 +359,8 @@ Hooks.on('ready', async () => {
 
 Hooks.on(
   'renderCoC7ChaseSheet',
-  /**async*/ (app, html, data) =>
-    /**await*/ CoC7ChaseSheet.setScroll(app, html, data)
+  /** async */ (app, html, data) =>
+    /** await */ CoC7ChaseSheet.setScroll(app, html, data)
 )
 
 Hooks.on('closeCoC7ChaseSheet', (app, html) =>

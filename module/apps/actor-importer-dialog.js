@@ -43,26 +43,16 @@ export class CoC7ActorImporterDialog extends Dialog {
    */
   static async getInputs () {
     const inputs = {}
-    inputs.entity = $('#coc-entity-type')
-      .val()
-      .trim()
-    inputs.convertFrom6E = $('#coc-convert-6E')
-      .val()
-      .trim()
+    inputs.entity = $('#coc-entity-type').val().trim()
+    inputs.convertFrom6E = $('#coc-convert-6E').val().trim()
     if (CONFIG.debug.CoC7Importer) {
       console.debug('entity type:', inputs.entity)
     }
     inputs.lang = CoC7ActorImporterRegExp.checkLanguage(
-      $('#coc-entity-lang')
-        .val()
-        .trim()
+      $('#coc-entity-lang').val().trim()
     )
-    inputs.source = $('#source')
-      .val()
-      .trim()
-    let text = $('#coc-pasted-character-data')
-      .val()
-      .trim()
+    inputs.source = $('#source').val().trim()
+    let text = $('#coc-pasted-character-data').val().trim()
     if (CONFIG.debug.CoC7Importer) {
       console.debug('received text', '##' + text + '##')
     }
@@ -101,19 +91,16 @@ export class CoC7ActorImporterDialog extends Dialog {
 
   submit (button) {
     if (button.cssClass === 'getExampleNow') {
-      var content = CoC7ActorImporterRegExp.getExampleText($('#coc-entity-lang :selected').val())
-      CoC7Utilities.copyToClipboard(content)
-        .then(() => {
-          return ui.notifications.info(
-            game.i18n.localize('CoC7.Copied')
-          )
-        })
+      const content = CoC7ActorImporterRegExp.getExampleText(
+        $('#coc-entity-lang :selected').val()
+      )
+      CoC7Utilities.copyToClipboard(content).then(() => {
+        return ui.notifications.info(game.i18n.localize('CoC7.Copied'))
+      })
       return
     }
     if (
-      $('#coc-pasted-character-data')
-        .val()
-        .trim() !== '' ||
+      $('#coc-pasted-character-data').val().trim() !== '' ||
       !button.callback
     ) {
       super.submit(button)

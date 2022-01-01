@@ -1,3 +1,5 @@
+/* global $, ChatMessage, deepClone, FormDataExtended, foundry, fromUuid, game, Hooks, mergeObject, renderTemplate, socketlib, ui */
+
 const ECC_CLASS = 'enhanced-chat-card'
 
 const PERMISSION_TYPE = {
@@ -23,7 +25,7 @@ export function initECC (...cardclass) {
 
   Hooks.once('socketlib.ready', function () {
     EnhancedChatCardLib.register(cardclass)
-    EnhancedChatCardLib.socket = socketlib.registerSystem(game.system.id) //Socket is attached to current system
+    EnhancedChatCardLib.socket = socketlib.registerSystem(game.system.id) // Socket is attached to current system
     EnhancedChatCardLib.socket.register('updateMessage', updateMessage)
     EnhancedChatCardLib.socket.register('advise', advise)
     // EnhancedChatCardLib.socket.register('gmtradeitemto', gmtradeitemto)
@@ -37,14 +39,12 @@ export function initECC (...cardclass) {
 async function updateMessage (messageId, newContent) {
   const chatMessage = game.messages.get(messageId)
 
-  const msg = await chatMessage.update({
+  await chatMessage.update({
     content: newContent
   })
 }
 
-async function advise () {
-  return
-}
+async function advise () {}
 
 class EnhancedChatCardLib {
   constructor () {
@@ -55,20 +55,20 @@ class EnhancedChatCardLib {
 
   static injectCSS () {
     let style = $('head').find('style')
-    if( !style?.length){
-      $('head').append( $('<style  type="text/css"></style>'))
+    if (!style?.length) {
+      $('head').append($('<style  type="text/css"></style>'))
       style = $('head').find('style')
     }
     style.append(
       `.ecc-restricted {color: red}
-    .ecc-restricted:hover {cursor: not-allowed}`)
-
-    return
+    .ecc-restricted:hover {cursor: not-allowed}`
+    )
   }
 
   static set socket (x) {
-    if (!game.enhancedChatCardsLib)
+    if (!game.enhancedChatCardsLib) {
       game.enhancedChatCardsLib = new EnhancedChatCardLib()
+    }
     game.enhancedChatCardsLib.socket = x
   }
 
@@ -85,8 +85,9 @@ class EnhancedChatCardLib {
   }
 
   static get types () {
-    if (!game.enhancedChatCardsLib)
+    if (!game.enhancedChatCardsLib) {
       game.enhancedChatCardsLib = new EnhancedChatCardLib()
+    }
     return game.enhancedChatCardsLib.types
   }
 
@@ -135,8 +136,9 @@ export class EnhancedChatCard {
     if (
       this.options.speaker &&
       ChatMessage.getSpeakerActor(this.options.speaker)
-    )
+    ) {
       return ChatMessage.getSpeakerActor(this.options.speaker)
+    }
     return game.user
   }
 
@@ -155,7 +157,7 @@ export class EnhancedChatCard {
   toObject () {
     if (!this._data) return
     const data = {}
-    for (let k of Object.keys(this._data)) {
+    for (const k of Object.keys(this._data)) {
       const v = this._data[k]
       if (v instanceof Object) {
         data[k] = v.toObject ? v.toObject() : deepClone(v)
@@ -165,14 +167,15 @@ export class EnhancedChatCard {
   }
 
   async toMessage (optionnalChatData = {}) {
-    //Map ecc card type if not registered already
+    // Map ecc card type if not registered already
     // this.registerECCClass()
 
-    //Publish by current user by default unless options.GMchatCard
+    // Publish by current user by default unless options.GMchatCard
     const html = await renderTemplate(this.template, this.getData())
     const htmlCardElement = $(html)[0]
-    if (this.options.attachObject)
+    if (this.options.attachObject) {
       htmlCardElement.dataset.object = escape(this.objectDataString)
+    }
     htmlCardElement.dataset.eccClass = this.constructor.name
     htmlCardElement.classList.add(...this.options.classes)
 
@@ -191,8 +194,9 @@ export class EnhancedChatCard {
       optionnalChatData
     )
 
-    if (['gmroll', 'blindroll'].includes(this.rollMode))
+    if (['gmroll', 'blindroll'].includes(this.rollMode)) {
       chatData.whisper = ChatMessage.getWhisperRecipients('GM')
+    }
     if (this.rollMode === 'selfroll') chatData.whisper = [game.user.id]
     if (this.rollMode === 'blindroll') chatData.blind = true
 
@@ -273,9 +277,9 @@ export class EnhancedChatCard {
   setRadioState (element) {
     if (!element || !element.name) return
     const splited = element.name.split('.')
-    if ('data' != splited[0].toLowerCase()) return
-    if (this._data && undefined != this._data[splited[1]]) {
-      if (this._data[splited[1]] == element.value) {
+    if (splited[0].toLowerCase() !== 'data') return
+    if (this._data && undefined !== this._data[splited[1]]) {
+      if (this._data[splited[1]] === element.value) {
         element.checked = true
       }
     }
@@ -290,14 +294,14 @@ export class EnhancedChatCard {
   async setPermission (element) {
     if (!element.dataset.eccPermissions) return
     const canYouMod = await this.hasPerm(element.dataset.eccPermissions)
-    if (!canYouMod){
+    if (!canYouMod) {
       element.classList.add('ecc-restricted')
-    if( $(element).is('input')){
-      if( 'range' == element.type) $(element).attr('disabled', true)
-      else $(element).attr('readonly', true)
+      if ($(element).is('input')) {
+        if (element.type === 'range') $(element).attr('disabled', true)
+        else $(element).attr('readonly', true)
+      }
+      if ($(element).is('select')) $(element).attr('disabled', true)
     }
-    if( $(element).is('select')) $(element).attr('disabled', true)
-  }
   }
 
   /**
@@ -311,22 +315,26 @@ export class EnhancedChatCard {
     if (!restrictedTo.length) return true
     let permissionsArray = restrictedTo.split(' ')
     const whiteList = !permissionsArray.includes(PERMISSION_TYPE.BLACKLIST)
-    if (!whiteList)
+    if (!whiteList) {
       permissionsArray = permissionsArray.filter(
-        e => e != PERMISSION_TYPE.BLACKLIST
+        e => e !== PERMISSION_TYPE.BLACKLIST
       )
+    }
     if (game.user.isGM) {
-      if (!vision) return true //GM can always modify everything ! Nah
-      if (permissionsArray.includes(PERMISSION_TYPE.GM))
+      if (!vision) return true // GM can always modify everything ! Nah
+      if (permissionsArray.includes(PERMISSION_TYPE.GM)) {
         return true && whiteList
-      return false || !whiteList //If pass the filter return false unless it's a blacklist
+      }
+      return false || !whiteList // If pass the filter return false unless it's a blacklist
     } else {
-      permissionsArray = permissionsArray.filter(e => e != PERMISSION_TYPE.GM)
+      permissionsArray = permissionsArray.filter(e => e !== PERMISSION_TYPE.GM)
     }
 
     if (permissionsArray.includes(PERMISSION_TYPE.USER)) {
-      if (this.message.isAuthor) return true && whiteList //isAuthor vs user.isOwner ?
-      permissionsArray = permissionsArray.filter(e => e != PERMISSION_TYPE.USER)
+      if (this.message.isAuthor) return true && whiteList // isAuthor vs user.isOwner ?
+      permissionsArray = permissionsArray.filter(
+        e => e !== PERMISSION_TYPE.USER
+      )
     }
 
     if (permissionsArray.includes(PERMISSION_TYPE.SPEAKER)) {
@@ -348,14 +356,14 @@ export class EnhancedChatCard {
       //   if (game.user.id == speaker.user) return true && whiteList
       // }
       permissionsArray = permissionsArray.filter(
-        e => e != PERMISSION_TYPE.SPEAKER
+        e => e !== PERMISSION_TYPE.SPEAKER
       )
     }
     // All filter passed, array should contains only uuids or actor/token ids
     if (permissionsArray.length) {
       ui.notifications.info('Array permission is not empty !')
     }
-    return false || !whiteList //If pass the filter return false unless it's a blacklist
+    return false || !whiteList // If pass the filter return false unless it's a blacklist
   }
 
   static async bindListeners (html) {
@@ -388,7 +396,7 @@ export class EnhancedChatCard {
     // button.style.display = 'none' //Avoid multiple push
     const action = button.dataset.action
     if (!action) {
-      console.warn(`no action associated with this button`)
+      console.warn('no action associated with this button')
       return
     }
     if (!this[action]) {
@@ -426,8 +434,8 @@ export class EnhancedChatCard {
 
   /**
    * Retrieve the form from the card and update the data structure
-   * @param {HTMLElement} card 
-   * @returns 
+   * @param {HTMLElement} card
+   * @returns
    */
   _update (card) {
     const forms = card.querySelectorAll('form')
@@ -530,16 +538,14 @@ export class EnhancedChatCard {
   }
 
   static async fromData (data, cardClassName, messageId = null) {
-    const cardClass = game.enhancedChatCardsLib.types.get(cardClassName)
+    const CardClass = game.enhancedChatCardsLib.types.get(cardClassName)
 
-    if (!cardClass) {
-      console.error(
-        `Unknown chat card type: ${htmlCardElement.dataset.eccClass}`
-      )
+    if (!CardClass) {
+      console.error(`Unknown chat card type: ${cardClassName}`)
       return
     }
 
-    const card = new cardClass(data)
+    const card = new CardClass(data)
     if (messageId) card.messageId = messageId
     await card.assignObject()
     return card

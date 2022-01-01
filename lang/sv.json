@@ -338,7 +338,6 @@
   "CoC7.Eras": "Cthulhu-varianter",
   "CoC7.EraAvailability": "Tillgänglighet",
 
-
   "CoC7.SkillNoAdjustments": "Ingen modifiering",
   "CoC7.SkillNoXpGain": "Ingen erfarenhet",
   "CoC7.SkillSpecial": "Specialicering",
@@ -673,7 +672,7 @@
   "CoC7.WarnTooManyTarget": "För många mål valda. Behåller bara det senast valda målet",
 
   "CoC7.allActors": "Alla karaktärer",
-  "CoC7.restTargets": "Vila valda mål",  
+  "CoC7.restTargets": "Vila valda mål",
   "CoC7.startRest": "Påbörja vila",
   "CoC7.dreaming": "Utredaren väntar i drömmen",
   "CoC7.healthRecovered": "Återfick en kroppspoäng",
@@ -720,7 +719,7 @@
   "CoC7.English": "Engelska",
   "CoC7.Spanish": "Spanska",
   "CoC7.French": "Franska",
-   "CoC7.German": "Tyska",
+  "CoC7.German": "Tyska",
   "CoC7.Polish": "Polska",
   "CoC7.TraditionalChinese": "Traditionell kinesiska",
   "CoC7.SelectSourceLanguage": "Välj ursprungstextens språk",
@@ -888,5 +887,4 @@
 
   "CoC7.getTheExample": "Kopiera exempel",
   "CoC7.Copied": "Kopierade exempeltexten till Urklipp"
-
 }

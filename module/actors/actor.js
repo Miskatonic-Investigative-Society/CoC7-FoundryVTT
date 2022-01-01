@@ -237,15 +237,15 @@ export class CoCActor extends Actor {
     }
     let boutDurationText = this.isInABoutOfMadness
       ? boutRealTime
-          ? `${duration} ${game.i18n.localize('CoC7.rounds')}`
-          : `${duration} ${game.i18n.localize('CoC7.hours')}`
+        ? `${duration} ${game.i18n.localize('CoC7.rounds')}`
+        : `${duration} ${game.i18n.localize('CoC7.hours')}`
       : null
     const insanityDurationText = insaneDuration
       ? this.isInsane
-          ? indefiniteInstanity
-              ? null
-              : `${insaneDuration} ${game.i18n.localize('CoC7.hours')}`
-          : null
+        ? indefiniteInstanity
+          ? null
+          : `${insaneDuration} ${game.i18n.localize('CoC7.hours')}`
+        : null
       : null
     if (this.isInsane && !insanityDurationText && !indefiniteInstanity) {
       indefiniteInstanity = true
@@ -261,8 +261,8 @@ export class CoCActor extends Actor {
         durationText: boutDurationText || '',
         hint: this.isInABoutOfMadness
           ? `${game.i18n.localize('CoC7.BoutOfMadness')}${
-              boutDurationText ? ': ' + boutDurationText : ''
-            }`
+            boutDurationText ? ': ' + boutDurationText : ''
+          }`
           : game.i18n.localize('CoC7.BoutOfMadness')
       },
       underlying: {
@@ -272,10 +272,10 @@ export class CoCActor extends Actor {
         durationText: insanityDurationText || '',
         hint: this.isInsane
           ? indefiniteInstanity
-              ? game.i18n.localize('CoC7.IndefiniteInsanity')
-              : `${game.i18n.localize(
-                'CoC7.TemporaryInsanity'
-              )} ${insanityDurationText || ''}`
+            ? game.i18n.localize('CoC7.IndefiniteInsanity')
+            : `${game.i18n.localize('CoC7.TemporaryInsanity')} ${
+              insanityDurationText || ''
+            }`
           : game.i18n.localize('CoC7.NotInsane')
       }
     }
@@ -959,12 +959,10 @@ export class CoCActor extends Actor {
             data.data.characteristics.list.luck.value = isNaN(this.luck)
               ? null
               : this.luck
-            data.data.characteristics.list.luck.label = game.i18n.localize(
-              'CoC7.Luck'
-            )
-            data.data.characteristics.list.luck.shortName = game.i18n.localize(
-              'CoC7.Luck'
-            )
+            data.data.characteristics.list.luck.label =
+              game.i18n.localize('CoC7.Luck')
+            data.data.characteristics.list.luck.shortName =
+              game.i18n.localize('CoC7.Luck')
 
             if (!data.data.characteristics.values) {
               data.data.characteristics.values = {}
@@ -1031,11 +1029,10 @@ export class CoCActor extends Actor {
                   data.data.characteristics.values.pow
                 updateData['data.attribs.san.oneFifthSanity'] =
                   ' / ' + Math.floor(data.data.characteristics.values.pow / 5)
-                updateData['data.indefiniteInsanityLevel.max'] = updateData[
-                  'data.attribs.mp.value'
-                ] = updateData['data.attribs.mp.max'] = Math.floor(
-                  data.data.characteristics.values.pow / 5
-                )
+                updateData['data.indefiniteInsanityLevel.max'] =
+                  updateData['data.attribs.mp.value'] =
+                  updateData['data.attribs.mp.max'] =
+                    Math.floor(data.data.characteristics.values.pow / 5)
               }
               await this.update(updateData)
               await this.update({
@@ -3413,6 +3410,7 @@ export class CoCActor extends Actor {
     let armorValue = 0
     if (!options.ignoreArmor) {
       if (armorData === null) {
+        // nop
       } else if (CoC7Utilities.isFormula(armorData)) {
         armorValue = (await new Roll(armorData).roll({ async: true })).total
       } else if (!isNaN(Number(armorData))) {

@@ -39,8 +39,8 @@ export class CoC7SetupSheet extends ItemSheet {
 
   async _onClickToggle (event) {
     event.preventDefault()
-    const propertyId = event.currentTarget.closest('.toggle-switch').dataset
-      .property
+    const propertyId =
+      event.currentTarget.closest('.toggle-switch').dataset.property
     await this.item.toggleProperty(
       propertyId,
       event.metaKey ||
@@ -118,9 +118,7 @@ export class CoC7SetupSheet extends ItemSheet {
   }
 
   async _onItemDelete (event, collectionName = 'items') {
-    const itemIndex = $(event.currentTarget)
-      .parents('.item')
-      .data('item-id')
+    const itemIndex = $(event.currentTarget).parents('.item').data('item-id')
     if (itemIndex) await this.removeItem(itemIndex, collectionName)
   }
 
@@ -241,8 +239,8 @@ export class CoC7SetupSheet extends ItemSheet {
     }
 
     if (event.currentTarget?.name === 'data.characteristics.rolls.enabled') {
-      formData.data.characteristics.points.enabled = !event.currentTarget
-        .checked
+      formData.data.characteristics.points.enabled =
+        !event.currentTarget.checked
     }
 
     super._updateObject(event, formData)

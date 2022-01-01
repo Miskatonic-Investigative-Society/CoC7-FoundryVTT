@@ -185,9 +185,8 @@ export class CharacRollDialog extends Dialog {
           !Object.entries(this.rolled).find(el => !el) &&
           Object.entries(this.rolled).length === 9
         if (this.data.data.validate) {
-          const validateButton = this._element[0].querySelector(
-            'button.validate'
-          )
+          const validateButton =
+            this._element[0].querySelector('button.validate')
           validateButton.classList.remove('inactive')
         }
       }

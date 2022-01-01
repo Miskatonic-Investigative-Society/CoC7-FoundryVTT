@@ -22,8 +22,8 @@ export class SkillSpecSelectDialog {
         title: name
           ? game.i18n.format('CoC7.SkillSelectBase', { name: name })
           : game.i18n.format('CoC7.SkillSpecSelectTitle', {
-              specialization: specializationName
-            }),
+            specialization: specializationName
+          }),
         content: html,
         buttons: {
           validate: {

@@ -1,4 +1,4 @@
-/* global game */
+/* global $, game */
 export class CoC7Tooltips {
   constructor () {
     this.ToolTipHover = null
