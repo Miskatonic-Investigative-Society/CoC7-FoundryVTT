@@ -249,7 +249,6 @@
   "CoC7.Tie": "Tie",
   "CoC7.DamageInflicted": "Damage inflicted",
   "CoC7.TotalDamage": "Total damage",
-  "CoC7.Unarmed": "Unarmed",
 
   "CoC7.combatCard.dive4cover": "Dive for Cover",
 
@@ -384,6 +383,7 @@
   "CoC7.CreditRatingSkillName": "Credit Rating",
   "CoC7.DriveAutoSkillName": "Drive Auto",
   "CoC7.FightingSpecializationName": "Fighting",
+  "CoC7.UnarmedWeaponName": "Unarmed",
   "CoC7.FirearmSpecializationName": "Firearms",
   "CoC7.DriveSpecializationName": "Drive",
   "CoC7.PilotSpecializationName": "Pilot",

@@ -37,7 +37,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     ) {
       data.data.states.tryToPass = true
       data.data.states.tryToBreak = false
-      data.data.states.actionDefined = true
+      data.data.states.breakOrPassDefined = true
     }
 
     if (this.participant.actor) {
@@ -279,17 +279,22 @@ export class ChaseObstacleCard extends EnhancedChatCard {
 
   get validFailledRolls () {
     if (!this.data.objects?.check?.isFailure) return false
-    if (
-      this.data.obstacle.hasDamage &&
-      !Roll.validate(this.data.obstacle.failedCheckDamage)
-    )
-      return false
-    if (
-      this.data.obstacle.hazard &&
-      this.data.obstacle.hasActionCost &&
-      !Roll.validate(this.data.obstacle.failedActionCost)
-    )
-      return false
+    if (this.data.obstacle.hasDamage) {
+      if (!this.data.obstacle.failedCheckDamage) return false
+      if (
+        this.data.obstacle.failedCheckDamage &&
+        !Roll.validate(this.data.obstacle.failedCheckDamage)
+      )
+        return false
+    }
+    if (this.data.obstacle.hazard && this.data.obstacle.hasActionCost) {
+      if (!this.data.obstacle.failedActionCost) return false
+      if (
+        this.data.obstacle.failedActionCost &&
+        !Roll.validate(this.data.obstacle.failedActionCost)
+      )
+        return false
+    }
     return true
   }
 
@@ -298,7 +303,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     this.participant.actor?.itemTypes?.weapon?.forEach(w => {
       let formula = w.data.data.range.normal.damage
       let db = this.participant.actor.db
-      if (null === db) {
+      if (null === db || 0 === Number(db)) {
         db = ''
       } else {
         db = `${db}`
@@ -321,17 +326,28 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       return 0
     })
 
-    let db = ''
-    if (this.participant.actor) {
-      db = this.participant.actor.db
-      if (db && !db.startsWith('-')) db = '+' + db
-    }
+    if (
+      !weapons.find(w =>
+        w.name
+          .toUpperCase()
+          .startsWith(
+            game.i18n.localize('CoC7.UnarmedWeaponName')?.toUpperCase()
+          )
+      )
+    ) {
+      let db = ''
+      if (this.participant.actor) {
+        db = this.participant.actor.db
+        if (db && !db.startsWith('-')) db = '+' + db
+        if (null === db || 0 === Number(db)) db = ''
+      }
 
-    weapons.unshift({
-      name: `${game.i18n.localize('CoC7.Unarmed')} (1D3${db})`,
-      damage: `1D3${db}`,
-      uuid: 'unarmed'
-    })
+      weapons.unshift({
+        name: `${game.i18n.localize('CoC7.UnarmedWeaponName')} (1D3${db})`,
+        damage: `1D3${db}`,
+        uuid: 'unarmed'
+      })
+    }
 
     weapons.push({
       name: game.i18n.localize('CoC7.Other'),
@@ -379,29 +395,37 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   }
 
   async tryToPassObstacle (options) {
-    this.data.states.actionDefined = true
+    this.data.states.breakOrPassDefined = true
     this.data.states.tryToPass = true
     this.data.states.tryToBreak = false
     return true
   }
 
   async tryToreakThroughObstacle (options) {
-    this.data.states.actionDefined = true
+    this.data.states.breakOrPassDefined = true
     this.data.states.tryToPass = false
     this.data.states.tryToBreak = true
     return true
   }
 
   async cancelObstacleDefinition (options) {
-    this.data.states.actionDefined = false
+    this.data.states.obstacleDefined = false
+    this.data.states.breakOrPassDefined = false
+    this.data.states.tryToPass = false
+    this.data.states.tryToBreak = false
+    return true
+  }
+
+  async cancelBreakOrPassChoice (options) {
+    if (!this.data.obstacle.hasHitPoints) return this.cancelObstacleDefinition()
+    this.data.states.breakOrPassDefined = false
     this.data.states.tryToPass = false
     this.data.states.tryToBreak = false
     return true
   }
 
   async requestRoll (options) {
-    this.data.states.waitForRoll = true
-    this.data.states.checkDefined = true
+    this.data.states.playerActionDefined = true
     return true
   }
 
@@ -452,7 +476,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   }
 
   async askRollObstacleDamage (options) {
-    this.data.states.waitForDamageRoll = true
-    return false
+    this.data.states.playerActionDefined = true
+    return true
   }
 }
