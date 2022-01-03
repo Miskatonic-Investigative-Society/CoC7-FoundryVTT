@@ -503,7 +503,8 @@ export class CoC7Utilities {
                 { number: healAmount }
               )}. </b>`
             actor.update({
-              'data.attribs.hp.value': actor.data.data.attribs.hp.value + healAmount
+              'data.attribs.hp.value':
+                actor.data.data.attribs.hp.value + healAmount
             })
           } else {
             chatContent =
@@ -543,7 +544,8 @@ export class CoC7Utilities {
               'CoC7.magicPointsRecovered'
             )}: ${magicAmount}.</b>`
           actor.update({
-            'data.attribs.mp.value': actor.data.data.attribs.mp.value + magicAmount
+            'data.attribs.mp.value':
+              actor.data.data.attribs.mp.value + magicAmount
           })
         }
       }
