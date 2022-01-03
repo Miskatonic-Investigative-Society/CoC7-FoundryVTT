@@ -420,8 +420,8 @@ export class CoC7Utilities {
   static async getTarget () {
     const users = game.users.filter(user => user.active)
     const actors = game.actors
-    let checkOptions = `<input type="checkbox" name="COCCheckAllPC">\n
-    <label for="All">${game.i18n.localize('CoC7.allActors')}</label>`
+    let checkOptions = `<input type="checkbox" name="COCCheckAllPC" id="COCCheckAllPC">\n
+    <label for="COCCheckAllPC">${game.i18n.localize('CoC7.allActors')}</label>`
     const playerTokenIds = users
       .map(u => u.character?.id)
       .filter(id => id !== undefined)
@@ -487,27 +487,23 @@ export class CoC7Utilities {
           ' / ' + Math.floor(actor.data.data.attribs.san.value / 5)
         const mpValue = actor.data.data.attribs.mp.value
         const mpMax = actor.data.data.attribs.mp.max
+        const pow = actor.data.data.characteristics.pow.value
         chatContent = chatContent + `<br><b>${actor.name}. </b>`
         if (isCriticalWounds === false && hpValue < hpMax) {
-          if (game.settings.get('CoC7', 'pulpRules') && quickHealer === true) {
+          if (game.settings.get('CoC7', 'pulpRules')) {
+            let healAmount = 2
+            if (quickHealer === true) {
+              healAmount = 3
+            }
+            healAmount = Math.min(healAmount, hpMax - hpValue)
             chatContent =
               chatContent +
               `<b style="color:darkolivegreen">${game.i18n.format(
                 'CoC7.pulpHealthRecovered',
-                { number: 3 }
+                { number: healAmount }
               )}. </b>`
             actor.update({
-              'data.attribs.hp.value': actor.data.data.attribs.hp.value + 3
-            })
-          } else if (game.settings.get('CoC7', 'pulpRules')) {
-            chatContent =
-              chatContent +
-              `<b style="color:darkolivegreen">${game.i18n.format(
-                'CoC7.pulpHealthRecovered',
-                { number: 2 }
-              )}. </b>`
-            actor.update({
-              'data.attribs.hp.value': actor.data.data.attribs.hp.value + 2
+              'data.attribs.hp.value': actor.data.data.attribs.hp.value + healAmount
             })
           } else {
             chatContent =
@@ -537,14 +533,17 @@ export class CoC7Utilities {
             'data.attribs.san.oneFifthSanity': oneFifthSanity
           })
         }
-        if (mpValue < mpMax) {
+        const hours = 7
+        if (hours > 0 && mpValue < mpMax) {
+          let magicAmount = hours * Math.ceil(pow / 100)
+          magicAmount = Math.min(magicAmount, mpMax - mpValue)
           chatContent =
             chatContent +
             `<b style="color:darkolivegreen">${game.i18n.format(
               'CoC7.magicPointsRecovered'
-            )}: 7.</b>`
+            )}: ${magicAmount}.</b>`
           actor.update({
-            'data.attribs.mp.value': actor.data.data.attribs.mp.value + 7
+            'data.attribs.mp.value': actor.data.data.attribs.mp.value + magicAmount
           })
         }
       }
