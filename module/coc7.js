@@ -197,12 +197,12 @@ Hooks.once('setup', function () {
     },
     {
       id: 'criticalWounds',
-      label: 'criticalWounds',
+      label: 'CoC7.CriticalWounds',
       icon: 'systems/CoC7/assets/icons/arm-sling.svg'
     },
     {
       id: 'dying',
-      label: 'dying',
+      label: 'CoC7.Dying',
       icon: 'systems/CoC7/assets/icons/heart-beats.svg'
     }
   )
