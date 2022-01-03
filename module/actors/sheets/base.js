@@ -953,7 +953,7 @@ export class CoC7ActorSheet extends ActorSheet {
       const sheet = this
       game.CoC7Tooltips.ToolTipHover = event.currentTarget
       game.CoC7Tooltips.toolTipTimer = setTimeout(function () {
-        if (typeof game.CoC7Tooltips.ToolTipHover !== 'undefined') {
+        if (typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' && game.CoC7Tooltips.ToolTipHover !== null) {
           const item = game.CoC7Tooltips.ToolTipHover.closest('.item')
           if (typeof item !== 'undefined') {
             const skillId = item.dataset.skillId
@@ -990,7 +990,7 @@ export class CoC7ActorSheet extends ActorSheet {
       const sheet = this
       game.CoC7Tooltips.ToolTipHover = event.currentTarget
       game.CoC7Tooltips.toolTipTimer = setTimeout(function () {
-        if (typeof game.CoC7Tooltips.ToolTipHover !== 'undefined') {
+        if (typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' && game.CoC7Tooltips.ToolTipHover !== null) {
           const char = game.CoC7Tooltips.ToolTipHover.closest('.char-box')
           if (typeof char !== 'undefined') {
             const charId = char.dataset.characteristic
@@ -1027,7 +1027,7 @@ export class CoC7ActorSheet extends ActorSheet {
       const sheet = this
       game.CoC7Tooltips.ToolTipHover = event.currentTarget
       game.CoC7Tooltips.toolTipTimer = setTimeout(function () {
-        if (typeof game.CoC7Tooltips.ToolTipHover !== 'undefined') {
+        if (typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' && game.CoC7Tooltips.ToolTipHover !== null) {
           const attrib = game.CoC7Tooltips.ToolTipHover.closest('.attribute')
           if (typeof attrib !== 'undefined') {
             const attributeId = attrib.dataset.attrib
@@ -1095,7 +1095,7 @@ export class CoC7ActorSheet extends ActorSheet {
     if (delay > 0) {
       game.CoC7Tooltips.ToolTipHover = event.currentTarget
       game.CoC7Tooltips.toolTipTimer = setTimeout(function () {
-        if (typeof game.CoC7Tooltips.ToolTipHover !== 'undefined') {
+        if (typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' && game.CoC7Tooltips.ToolTipHover !== null) {
           const toolTip = game.i18n.localize('CoC7.ToolTipAutoToggle')
           game.CoC7Tooltips.displayToolTip(toolTip)
         }
@@ -1109,7 +1109,7 @@ export class CoC7ActorSheet extends ActorSheet {
       const sheet = this
       game.CoC7Tooltips.ToolTipHover = event.currentTarget
       game.CoC7Tooltips.toolTipTimer = setTimeout(function () {
-        if (typeof game.CoC7Tooltips.ToolTipHover !== 'undefined') {
+        if (typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' && game.CoC7Tooltips.ToolTipHover !== null) {
           const item = game.CoC7Tooltips.ToolTipHover.closest('.item')
           if (typeof item !== 'undefined') {
             const skillId = item.dataset.skillId

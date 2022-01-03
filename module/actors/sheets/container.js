@@ -88,7 +88,6 @@ export class CoC7ContainerSheet extends ActorSheet {
       sheetData.showInventoryBooks ||
       sheetData.showInventorySpells ||
       sheetData.showInventoryTalents ||
-      sheetData.showInventoryStatuses ||
       sheetData.showInventoryWeapons
 
     return sheetData
