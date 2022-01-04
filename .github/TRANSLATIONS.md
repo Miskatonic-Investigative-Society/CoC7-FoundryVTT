@@ -21,36 +21,36 @@ The following translations have been abandoned **cn**, **cs**, [are you able to 
 
 ##### CoC7.Copied
 
-`"CoC7.Copied": "Copied the Example Text to Clipboard",`
+` "CoC7.Copied": "Copied the Example Text to Clipboard",`
 
 ##### CoC7.EraAvailability
 
-`"CoC7.EraAvailability": "Availability",`
+` "CoC7.EraAvailability": "Availability",`
 
 ##### CoC7.German
 
-`"CoC7.German": "German",`
+` "CoC7.German": "German",`
 
 ##### CoC7.NotEnoughMagicPoints
 
-`"CoC7.NotEnoughMagicPoints": "{spell} costs {originalMagicPoints} Magic Points, but you only have {actorMagicPoints}. Would you like to take the remaining {convertedHitPoints} from your Hit Points? You will take {convertedHitPoints} damage if you proceed.",`
+` "CoC7.NotEnoughMagicPoints": "{spell} costs {originalMagicPoints} Magic Points, but you only have {actorMagicPoints}. Would you like to take the remaining {convertedHitPoints} from your Hit Points? You will take {convertedHitPoints} damage if you proceed.",`
 
 ##### CoC7.Polish
 
-`"CoC7.Polish": "Polish",`
+` "CoC7.Polish": "Polish",`
 
 ##### CoC7.allActors
 
-`"CoC7.allActors": "All Actors",`
+` "CoC7.allActors": "All Actors",`
 
 ##### CoC7.getTheExample
 
-`"CoC7.getTheExample": "Copy Example",`
+` "CoC7.getTheExample": "Copy Example",`
 
 ##### CoC7.restTargets
 
-`"CoC7.restTargets": "Rest Targets",`
+` "CoC7.restTargets": "Rest Targets",`
 
 ##### SETTINGS.DefaultDifficulty
 
-`"SETTINGS.DefaultDifficulty": "Default check difficulty",`
+` "SETTINGS.DefaultDifficulty": "Default check difficulty",`
