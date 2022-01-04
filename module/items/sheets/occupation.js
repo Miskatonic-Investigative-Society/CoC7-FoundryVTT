@@ -39,9 +39,8 @@ export class CoC7OccupationSheet extends ItemSheet {
     event.preventDefault()
     event.stopPropagation()
 
-    const optionalSkill = event?.currentTarget?.classList?.contains(
-      'optional-skills'
-    )
+    const optionalSkill =
+      event?.currentTarget?.classList?.contains('optional-skills')
     const ol = event?.currentTarget?.closest('ol')
     const index = ol?.dataset?.group
 
@@ -142,9 +141,7 @@ export class CoC7OccupationSheet extends ItemSheet {
   }
 
   async _onItemDelete (event, collectionName = 'items') {
-    const itemIndex = $(event.currentTarget)
-      .parents('.item')
-      .data('item-id')
+    const itemIndex = $(event.currentTarget).parents('.item').data('item-id')
     if (itemIndex) await this.removeItem(itemIndex, collectionName)
   }
 

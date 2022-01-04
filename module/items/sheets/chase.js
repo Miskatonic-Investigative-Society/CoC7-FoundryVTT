@@ -1,4 +1,4 @@
-/* global DragDrop, duplicate, expandObject, flattenObject, FormDataExtended, game, getType, ItemSheet, mergeObject, ui */
+/* global $, Dialog, DragDrop, duplicate, expandObject, flattenObject, FormDataExtended, foundry, game, getType, ItemSheet, mergeObject, ui */
 
 import { CoCActor } from '../../actors/actor.js'
 import { CoC7Chat } from '../../chat.js'
@@ -80,40 +80,40 @@ export class CoC7ChaseSheet extends ItemSheet {
 
     data.preysMinMov = data.preys.length
       ? data.preys.reduce((prev, current) =>
-          prev.adjustedMov < current.adjustedMov ? prev : current
-        ).adjustedMov
+        prev.adjustedMov < current.adjustedMov ? prev : current
+      ).adjustedMov
       : -1
 
     data.preysMaxMov = data.preys.length
       ? data.preys.reduce((prev, current) =>
-          prev.adjustedMov > current.adjustedMov ? prev : current
-        ).adjustedMov
+        prev.adjustedMov > current.adjustedMov ? prev : current
+      ).adjustedMov
       : -1
 
     data.chasersMinMov = data.chasers.length
       ? data.chasers.reduce((prev, current) =>
-          prev.adjustedMov < current.adjustedMov ? prev : current
-        ).adjustedMov
+        prev.adjustedMov < current.adjustedMov ? prev : current
+      ).adjustedMov
       : -1
 
     data.chasersMaxMov = data.chasers.length
       ? data.chasers.reduce((prev, current) =>
-          prev.adjustedMov > current.adjustedMov ? prev : current
-        ).adjustedMov
+        prev.adjustedMov > current.adjustedMov ? prev : current
+      ).adjustedMov
       : -1
 
     data.chasers.forEach(p => {
       if (p.adjustedMov < data.preysMinMov) p.tooSlow()
       else p.includeInChase()
-      p.fastest = p.adjustedMov == data.chasersMaxMov
-      p.slowest = p.adjustedMov == data.chasersMinMov
+      p.fastest = p.adjustedMov === data.chasersMaxMov
+      p.slowest = p.adjustedMov === data.chasersMinMov
     })
 
     data.preys.forEach(p => {
       if (p.adjustedMov > data.chasersMaxMov) p.escaped()
       else p.includeInChase()
-      p.fastest = p.adjustedMov == data.preysMaxMov
-      p.slowest = p.adjustedMov == data.preysMinMov
+      p.fastest = p.adjustedMov === data.preysMaxMov
+      p.slowest = p.adjustedMov === data.preysMinMov
     })
 
     data.locations = this.locations
@@ -157,15 +157,20 @@ export class CoC7ChaseSheet extends ItemSheet {
       )})`
     )
 
-    game.CoC7.skillList?.forEach(s => {
-      if (
-        !list.includes(s.fullName) &&
-        !s.fullName
-          .toLowerCase()
-          .includes(`(${game.i18n.localize('CoC7.AnySpecName')})`.toLowerCase())
-      )
-        list.push(s.fullName)
-    }) // TODO: Remove ??
+    if (typeof game.CoC7.skillList !== 'undefined') {
+      game.CoC7.skillList.forEach(s => {
+        if (
+          !list.includes(s.fullName) &&
+          !s.fullName
+            .toLowerCase()
+            .includes(
+              `(${game.i18n.localize('CoC7.AnySpecName')})`.toLowerCase()
+            )
+        ) {
+          list.push(s.fullName)
+        }
+      }) // TODO: Remove ??
+    }
     this.participants.forEach(p => {
       if (p.actor) {
         p.actor.skills.forEach(s => {
@@ -231,13 +236,13 @@ export class CoC7ChaseSheet extends ItemSheet {
           // ui.notifications.error(`Type : ${typeof elem}`)
           let p
           if (typeof elem === 'string' || elem instanceof String) {
-            p = this.item.data.data.participants.find(p => elem == p.uuid) //Retrieve participant data from list.
-          } else if (elem.constructor.name == '_participant') {
+            p = this.item.data.data.participants.find(p => elem === p.uuid) // Retrieve participant data from list.
+          } else if (elem.constructor.name === '_participant') {
             p = undefined // participant is already processed.
             ui.notifications.warn('Participant was already processed.')
           } else p = undefined
 
-          if (undefined != p) {
+          if (undefined !== p) {
             l.participants[i] = new _participant(p) // replace uuid with _participant
           } else {
             // participants.push( null)
@@ -264,31 +269,34 @@ export class CoC7ChaseSheet extends ItemSheet {
   get initTrack () {
     if (
       !this.item.data.data.locations.list ||
-      0 === this.item.data.data.locations.list.length
-    )
+      this.item.data.data.locations.list.length === 0
+    ) {
       return undefined
+    }
 
     const locations = [] // !!!!!!! locations vs init locations !!!
 
     const init = this.startingLine
     let locationsIndexStart, initIndexStart, locationsLength
-    if (0 >= init.length) locationsIndexStart = 0
-    else if (this.item.data.data.startingIndex >= init.length)
+    if (init.length <= 0) {
       locationsIndexStart = 0
-    else locationsIndexStart = init.length - this.item.data.data.startingIndex
+    } else if (this.item.data.data.startingIndex >= init.length) {
+      locationsIndexStart = 0
+    } else locationsIndexStart = init.length - this.item.data.data.startingIndex
 
     if (this.item.data.data.startingIndex <= 0) initIndexStart = 0
-    else if (this.item.data.data.startingIndex <= init.length)
+    else if (this.item.data.data.startingIndex <= init.length) {
       initIndexStart = 0
-    else initIndexStart = this.item.data.data.startingIndex - init.length
+    } else initIndexStart = this.item.data.data.startingIndex - init.length
 
-    if (0 == locationsIndexStart)
+    if (locationsIndexStart === 0) {
       locationsLength = this.item.data.data.locations.list.length
-    else
+    } else {
       locationsLength =
         this.item.data.data.locations.list.length + locationsIndexStart
+    }
 
-    if (0 != init.length) {
+    if (init.length !== 0) {
       if (this.item.data.data.startingIndex < 0) {
         for (
           let index = 0;
@@ -314,18 +322,22 @@ export class CoC7ChaseSheet extends ItemSheet {
       ) {
         location = duplicate(chaseLocations.list[index - locationsIndexStart])
         location.init = false
-        location.participants?.forEach(p => {
-          if (null != p) participants.push(p)
-        })
+        if (typeof location.participants !== 'undefined') {
+          location.participants.forEach(p => {
+            if (p !== null) participants.push(p)
+          })
+        }
       }
       if (index >= initIndexStart && index - initIndexStart < init.length) {
         mergeObject(location, init[index - initIndexStart], {
           overwrite: false
         })
 
-        init[index - initIndexStart].participants?.forEach(p => {
-          if (null != p) participants.push(p)
-        })
+        if (typeof init[index - initIndexStart].participants !== 'undefined') {
+          init[index - initIndexStart].participants.forEach(p => {
+            if (p !== null) participants.push(p)
+          })
+        }
 
         location.participants = participants
       }
@@ -345,16 +357,16 @@ export class CoC7ChaseSheet extends ItemSheet {
   get previousLocation () {
     if (!this.locations) return undefined
     const activeIndex = this.locations.findIndex(l => l.active)
-    if (-1 == activeIndex) return undefined
-    if (0 == activeIndex) return undefined
+    if (activeIndex === -1) return undefined
+    if (activeIndex === 0) return undefined
     return this.locations[activeIndex - 1]
   }
 
   get nextLocation () {
     if (!this.locations) return undefined
     const activeIndex = this.locations.findIndex(l => l.active)
-    if (-1 == activeIndex) return undefined
-    if (activeIndex == this.locations.length - 1) return undefined
+    if (activeIndex === -1) return undefined
+    if (activeIndex === this.locations.length - 1) return undefined
     return this.locations[activeIndex + 1]
   }
 
@@ -376,9 +388,9 @@ export class CoC7ChaseSheet extends ItemSheet {
       return
     }
     if (this.allHaveValidMov) {
-      //TODO : Check for speed roll ??
+      // TODO : Check for speed roll ??
 
-      //Calculate movement actions
+      // Calculate movement actions
       const participants = this.participants
       const minMov = this.findMinMov(participants)
       participants.forEach(p => {
@@ -391,14 +403,14 @@ export class CoC7ChaseSheet extends ItemSheet {
   }
 
   get startingLine () {
-    //Get preys and check for escaped
+    // Get preys and check for escaped
     const preys = this.item.data.data.includeEscaped
       ? this.preys
       : this.preys?.filter(p => !p.data.escaped)
-    //Get chasers
+    // Get chasers
     const chasers = this.chasers
 
-    //If no prey or no chasser
+    // If no prey or no chasser
     // if (0 == chasers.length) {
     //   ui.notifications.warn('No chasers')
     //   return undefined
@@ -408,7 +420,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     //   return undefined
     // }
 
-    //Build starting track
+    // Build starting track
     const track = []
 
     const chasersMinMov = this.findMinMov(chasers)
@@ -416,17 +428,17 @@ export class CoC7ChaseSheet extends ItemSheet {
     const preysMinMov = this.findMinMov(preys)
     const preysMaxMov = this.findMaxMov(preys)
 
-    if (-1 != chasersMinMov && -1 != chasersMaxMov) {
+    if (chasersMinMov !== -1 && chasersMaxMov !== -1) {
       // Add chasers to the track.
       for (let mov = chasersMinMov; mov <= chasersMaxMov; mov++) {
-        //Find all with that mov
+        // Find all with that mov
         const location = {
           uuid: this.generateNewUuid(),
           init: true,
           participants: []
         }
         const locationParticipantsList = chasers
-          .filter(p => mov == p.adjustedMov)
+          .filter(p => mov === p.adjustedMov)
           .sort((a, b) => a.dex - b.dex)
         locationParticipantsList.forEach(p =>
           location.participants.push(p.uuid)
@@ -444,17 +456,17 @@ export class CoC7ChaseSheet extends ItemSheet {
       }
     }
 
-    if (-1 != preysMinMov && -1 != preysMaxMov) {
+    if (preysMinMov !== -1 && preysMaxMov !== -1) {
       // Add preys to the track.
       for (let mov = preysMinMov; mov <= preysMaxMov; mov++) {
-        //Find all with that mov
+        // Find all with that mov
         const location = {
           uuid: this.generateNewUuid(),
           init: true,
           participants: []
         }
         const locationParticipantsList = preys
-          .filter(p => mov == p.adjustedMov)
+          .filter(p => mov === p.adjustedMov)
           .sort((a, b) => a.dex - b.dex)
         locationParticipantsList.forEach(p =>
           location.participants.push(p.uuid)
@@ -472,10 +484,10 @@ export class CoC7ChaseSheet extends ItemSheet {
     while (!unique) {
       uuid = foundry.utils.randomID(16)
       unique =
-        0 ===
-          this.item.data.data.participants.filter(p => p.uuid == uuid).length &&
-        0 ===
-          this.item.data.data.locations.list.filter(p => p.uuid == uuid).length
+        this.item.data.data.participants.filter(p => p.uuid === uuid).length ===
+          0 &&
+        this.item.data.data.locations.list.filter(p => p.uuid === uuid)
+          .length === 0
     }
 
     return uuid
@@ -578,7 +590,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     if (updateData) data = mergeObject(data, updateData)
     else data = expandObject(data)
 
-    //Check that starting position is not outside of chase range.
+    // Check that starting position is not outside of chase range.
     if (
       this.item.data.data.locations?.list?.length &&
       data.data.startingIndex > this.item.data.data.locations.list.length
@@ -590,8 +602,8 @@ export class CoC7ChaseSheet extends ItemSheet {
       const participants = duplicate(this.item.data.data.participants)
       // Handle participants array
       for (const [k, v] of Object.entries(data.data.participants)) {
-        const index = participants.findIndex(p => p.uuid == k)
-        if (-1 == index) ui.notifications.error('Participant table corrupted')
+        const index = participants.findIndex(p => p.uuid === k)
+        if (index === -1) ui.notifications.error('Participant table corrupted')
         else {
           const original = participants[index]
           const cleaned = clean(v)
@@ -605,12 +617,12 @@ export class CoC7ChaseSheet extends ItemSheet {
 
     if (data.locations) {
       const locations = duplicate(this.item.data.data.locations.list)
-      //Handle locations list
+      // Handle locations list
       for (const [key, value] of Object.entries(data.locations)) {
-        const locationIndex = locations.findIndex(l => l.uuid == key)
-        if (-1 == locationIndex)
+        const locationIndex = locations.findIndex(l => l.uuid === key)
+        if (locationIndex === -1) {
           ui.notifications.error('Locations table corrupted')
-        else {
+        } else {
           const originalLocation = locations[locationIndex]
           const cleaned = clean(value)
           mergeObject(originalLocation, cleaned)
@@ -662,7 +674,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     super._updateObject(event, formData)
   }
 
-  static /**async */ setScroll (app, html, data) {
+  static /** async */ setScroll (app, html, data) {
     const track = html.find('.track')
     if (!track.length) return
     const element = $(track).find('.active')
@@ -677,7 +689,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 
     const trackElement = track[0]
 
-    if (-1 != originalPosition) {
+    if (originalPosition !== -1) {
       trackElement.scrollTo({
         top: 0,
         left: originalPosition,
@@ -729,19 +741,19 @@ export class CoC7ChaseSheet extends ItemSheet {
   // }
 
   findParticipantIndex (uuid) {
-    return this.item.data.data.participants.findIndex(p => p.uuid == uuid)
+    return this.item.data.data.participants.findIndex(p => p.uuid === uuid)
   }
 
   findLocationIndex (uuid) {
-    return this.item.data.data.locations.list.findIndex(p => p.uuid == uuid)
+    return this.item.data.data.locations.list.findIndex(p => p.uuid === uuid)
   }
 
   findIndex (list, uuid) {
-    return list.findIndex(p => p.uuid == uuid)
+    return list.findIndex(p => p.uuid === uuid)
   }
 
   async updateLocationsList (list) {
-    //Remove all unnecessary items (cssClass, )
+    // Remove all unnecessary items (cssClass, )
     const updatedList = duplicate(list)
     updatedList.forEach(l => {
       // delete l.active
@@ -751,8 +763,9 @@ export class CoC7ChaseSheet extends ItemSheet {
       delete l.end
       if (l.participants && l.participants.length) {
         for (let i = 0; i < l.participants.length; i++) {
-          if (l.participants[i].data?.uuid)
+          if (l.participants[i].data?.uuid) {
             l.participants[i] = l.participants[i].data.uuid
+          }
         }
       }
     })
@@ -765,11 +778,11 @@ export class CoC7ChaseSheet extends ItemSheet {
       : []
     list.forEach(p => {
       let data
-      if (p.constructor.name == '_participant') {
+      if (p.constructor.name === '_participant') {
         data = p.data
       } else data = p
       const index = this.findIndex(participantsData, data.uuid)
-      if (-1 === index) {
+      if (index === -1) {
         participantsData.push(data)
         ui.notifications.warn('Participant data missing')
       } else {
@@ -777,7 +790,6 @@ export class CoC7ChaseSheet extends ItemSheet {
       }
     })
     await this.item.update({ 'data.participants': participantsData })
-    return
   }
 
   async _onToggle (event) {
@@ -793,10 +805,10 @@ export class CoC7ChaseSheet extends ItemSheet {
     if (data.locations) {
       const locations = duplicate(this.item.data.data.locations.list)
       for (const [key, value] of Object.entries(data.locations)) {
-        const locationIndex = locations.findIndex(l => l.uuid == key)
-        if (-1 == locationIndex)
+        const locationIndex = locations.findIndex(l => l.uuid === key)
+        if (locationIndex === -1) {
           ui.notifications.error('Locations table corrupted')
-        else {
+        } else {
           const originalLocation = locations[locationIndex]
           const cleaned = clean(value)
           mergeObject(originalLocation, cleaned)
@@ -828,22 +840,19 @@ export class CoC7ChaseSheet extends ItemSheet {
     const uuid = locationElement.dataset.uuid
     const locations = duplicate(this.item.data.data.locations.list)
     const locationIndex = this.findIndex(locations, uuid)
-    if (!locations[locationIndex].obstacleDetails)
+    if (!locations[locationIndex].obstacleDetails) {
       locations[locationIndex].obstacleDetails = {}
+    }
     if (target.classList.contains('barrier')) {
-      locations[locationIndex].obstacleDetails.barrier = !locations[
-        locationIndex
-      ].obstacleDetails.barrier
-      locations[locationIndex].obstacleDetails.hazard = !locations[
-        locationIndex
-      ].obstacleDetails.barrier
+      locations[locationIndex].obstacleDetails.barrier =
+        !locations[locationIndex].obstacleDetails.barrier
+      locations[locationIndex].obstacleDetails.hazard =
+        !locations[locationIndex].obstacleDetails.barrier
     } else if (target.classList.contains('hazard')) {
-      locations[locationIndex].obstacleDetails.hazard = !locations[
-        locationIndex
-      ].obstacleDetails.hazard
-      locations[locationIndex].obstacleDetails.barrier = !locations[
-        locationIndex
-      ].obstacleDetails.hazard
+      locations[locationIndex].obstacleDetails.hazard =
+        !locations[locationIndex].obstacleDetails.hazard
+      locations[locationIndex].obstacleDetails.barrier =
+        !locations[locationIndex].obstacleDetails.hazard
     }
     await this.updateLocationsList(locations)
   }
@@ -858,7 +867,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     const locationElement = target.closest('.chase-location')
     const uuid = locationElement.dataset.uuid
     const locationIndex = this.findIndex(locations, uuid)
-    if (-1 != locationIndex) {
+    if (locationIndex !== -1) {
       if (!active) locations[locationIndex].active = true
       await this.updateLocationsList(locations)
     }
@@ -968,7 +977,9 @@ export class CoC7ChaseSheet extends ItemSheet {
 
   _onDragLeave (dragEvent) {
     const target = dragEvent.currentTarget
-    target.classList?.remove('drag-over')
+    if (typeof target.classList !== 'undefined') {
+      target.classList.remove('drag-over')
+    }
   }
 
   async _onDropParticipant (event) {
@@ -1110,8 +1121,8 @@ export class CoC7ChaseSheet extends ItemSheet {
       data.sceneId && data.tokenId
         ? `${data.sceneId}.${data.tokenId}`
         : data.type === 'Actor'
-        ? data.id
-        : data.actorId || data.actorKey
+          ? data.id
+          : data.actorId || data.actorKey
     const participant = {}
     const actor = chatHelper.getActorFromKey(actorKey)
     if (actor) {
@@ -1145,8 +1156,8 @@ export class CoC7ChaseSheet extends ItemSheet {
         break
     }
 
-    //TODO:Check for speed check, if none add speedcheck
-    //speedCheck = {
+    // TODO:Check for speed check, if none add speedcheck
+    // speedCheck = {
     //   id: 'str'
     //   type: 'characteristic'
     // }
@@ -1209,8 +1220,8 @@ export class CoC7ChaseSheet extends ItemSheet {
         break
     }
 
-    //TODO:Check for speed check, if none add speedcheck con non vehicule, drive auto for vehicule
-    //speedCheck = {
+    // TODO:Check for speed check, if none add speedcheck con non vehicule, drive auto for vehicule
+    // speedCheck = {
     //   id: 'con'
     //   type: 'characteristic'
     // }
@@ -1236,7 +1247,8 @@ export class CoC7ChaseSheet extends ItemSheet {
     let unique = false
     while (!unique) {
       participant.uuid = foundry.utils.randomID(16)
-      unique = 0 === participants.filter(p => p.uuid == participant.uuid).length
+      unique =
+        participants.filter(p => p.uuid === participant.uuid).length === 0
     }
 
     participants.push(participant)
@@ -1268,8 +1280,8 @@ export class CoC7ChaseSheet extends ItemSheet {
   async moveParticipant (participantUuid, locationUuid) {
     const locations = duplicate(this.item.data.data.locations.list)
 
-    //Find destination location.
-    const destination = locations.find(l => locationUuid == l.uuid)
+    // Find destination location.
+    const destination = locations.find(l => locationUuid === l.uuid)
     if (!destination) {
       console.error(
         `Failed to move ${participantUuid}. Location ${locationUuid} unknown`
@@ -1277,7 +1289,7 @@ export class CoC7ChaseSheet extends ItemSheet {
       return
     }
 
-    //Find origin location
+    // Find origin location
     const origin = locations.find(l =>
       l.participants?.includes(participantUuid)
     )
@@ -1297,7 +1309,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     // destination.participants.sort(sortByRoleAndDex)
 
     const oldParticipantsList = origin.participants.filter(
-      p => participantUuid != p
+      p => participantUuid !== p
     )
     origin.participants = oldParticipantsList
 
@@ -1306,10 +1318,10 @@ export class CoC7ChaseSheet extends ItemSheet {
 }
 
 export function sortByRoleAndDex (a, b) {
-  //Put chasers first
+  // Put chasers first
   if (b.chaser && !a.chaser) return 1
   if (a.chaser && !b.chaser) return -1
-  //If sametype sort by dex
+  // If sametype sort by dex
   return a.dex - b.dex
 }
 
@@ -1517,12 +1529,24 @@ export class _participant {
     this.data.slowest = x
   }
 
+  get slowest () {
+    return this.data.slowest
+  }
+
   set fastest (x) {
     this.data.fastest = x
   }
 
+  get fastest () {
+    return this.data.fastest
+  }
+
   set movementAction (x) {
     this.data.movementAction = x
+  }
+
+  get movementAction () {
+    return this.data.movementAction
   }
 
   get cssClass () {

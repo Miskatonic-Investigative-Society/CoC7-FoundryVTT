@@ -43,8 +43,8 @@ export class RollDialog {
       const dlg = new Dialog({
         title: options.displayName
           ? game.i18n.format('CoC7.BonusSelectionWindowNamed', {
-              name: options.displayName
-            })
+            name: options.displayName
+          })
           : game.i18n.localize('CoC7.BonusSelectionWindow'),
         content: html,
         buttons: {

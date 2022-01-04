@@ -1,4 +1,4 @@
-/* global canvas, ChatMessage, CONST, game, getDocumentClass, Hooks, Macro, Roll, ui */
+/* global canvas, ChatMessage, CONST, Dialog, game, getDocumentClass, Hooks, Macro, Roll, ui */
 
 import { CoC7Check } from './check.js'
 import { CoC7Item } from './items/item.js'
@@ -417,50 +417,56 @@ export class CoC7Utilities {
     Hooks.call('toggleCharCreation', toggle)
   }
 
-  static async getTarget() {
-    let users = game.users.filter(user => user.active);
-    let actors = game.actors;
-    let checkOptions = `<input type="checkbox" name="COCCheckAllPC">\n
-    <label for="All">${game.i18n.localize('CoC7.allActors')}</label>`
-    let playerTokenIds = users.map(u => u.character?.id).filter(id => id !== undefined);
-    let selectedPlayerIds = canvas.tokens.controlled.map(token => {
-        return token.actor.id;
-    });
+  static async getTarget () {
+    const users = game.users.filter(user => user.active)
+    const actors = game.actors
+    let checkOptions = `<input type="checkbox" name="COCCheckAllPC" id="COCCheckAllPC">\n
+    <label for="COCCheckAllPC">${game.i18n.localize('CoC7.allActors')}</label>`
+    const playerTokenIds = users
+      .map(u => u.character?.id)
+      .filter(id => id !== undefined)
+    const selectedPlayerIds = canvas.tokens.controlled.map(token => {
+      return token.actor.id
+    })
 
     // Build checkbox list for all active players
     actors.forEach(actor => {
-        let checked = (selectedPlayerIds.includes(actor.id) || playerTokenIds.includes(actor.id)) && 'checked';
-        checkOptions += `
+      const checked =
+        (selectedPlayerIds.includes(actor.id) ||
+          playerTokenIds.includes(actor.id)) &&
+        'checked'
+      checkOptions += `
      <br>
      <input type="checkbox" name="${actor.id}" id="${actor.id}" value="${actor.name}" ${checked}>\n
      <label for="${actor.id}">${actor.name}</label>
        `
-    });
+    })
 
     new Dialog({
-        title: `${game.i18n.localize('CoC7.dreaming')}`,
-        content: `${game.i18n.localize('CoC7.restTargets')}: ${checkOptions} <br>`,
-        buttons: {
-            whisper: {
-                label: `${game.i18n.localize('CoC7.startRest')}`,
-                callback: async (html) => {
-                    let targets = [];
-                    let all = false;
-                    let users = html.find('[type="checkbox"]')
-                    for (let user of users) {
-                      if (user.name === "COCCheckAllPC" && user.checked) all = true;
-                        if (user.checked || all)
-                            targets.push(user.id);
-                    }
-                    await CoC7Utilities.startRest(targets)}
+      title: `${game.i18n.localize('CoC7.dreaming')}`,
+      content: `${game.i18n.localize(
+        'CoC7.restTargets'
+      )}: ${checkOptions} <br>`,
+      buttons: {
+        whisper: {
+          label: `${game.i18n.localize('CoC7.startRest')}`,
+          callback: async html => {
+            const targets = []
+            let all = false
+            const users = html.find('[type="checkbox"]')
+            for (const user of users) {
+              if (user.name === 'COCCheckAllPC' && user.checked) all = true
+              if (user.checked || all) targets.push(user.id)
             }
+            await CoC7Utilities.startRest(targets)
+          }
         }
-    }).render(true);
-
-}
+      }
+    }).render(true)
+  }
 
   static async startRest (targets) {
-    if(!targets.length)return;
+    if (!targets.length) return
     const actors = game.actors.filter(actor => targets.includes(actor.id))
     let chatContent = `<i>${game.i18n.localize('CoC7.dreaming')}...</i><br>`
     for (const actor of actors) {
@@ -481,27 +487,24 @@ export class CoC7Utilities {
           ' / ' + Math.floor(actor.data.data.attribs.san.value / 5)
         const mpValue = actor.data.data.attribs.mp.value
         const mpMax = actor.data.data.attribs.mp.max
+        const pow = actor.data.data.characteristics.pow.value
         chatContent = chatContent + `<br><b>${actor.name}. </b>`
         if (isCriticalWounds === false && hpValue < hpMax) {
-          if (game.settings.get('CoC7', 'pulpRules') && quickHealer === true) {
+          if (game.settings.get('CoC7', 'pulpRules')) {
+            let healAmount = 2
+            if (quickHealer === true) {
+              healAmount = 3
+            }
+            healAmount = Math.min(healAmount, hpMax - hpValue)
             chatContent =
               chatContent +
               `<b style="color:darkolivegreen">${game.i18n.format(
                 'CoC7.pulpHealthRecovered',
-                { number: 3 }
+                { number: healAmount }
               )}. </b>`
             actor.update({
-              'data.attribs.hp.value': actor.data.data.attribs.hp.value + 3
-            })
-          } else if (game.settings.get('CoC7', 'pulpRules')) {
-            chatContent =
-              chatContent +
-              `<b style="color:darkolivegreen">${game.i18n.format(
-                'CoC7.pulpHealthRecovered',
-                { number: 2 }
-              )}. </b>`
-            actor.update({
-              'data.attribs.hp.value': actor.data.data.attribs.hp.value + 2
+              'data.attribs.hp.value':
+                actor.data.data.attribs.hp.value + healAmount
             })
           } else {
             chatContent =
@@ -531,14 +534,18 @@ export class CoC7Utilities {
             'data.attribs.san.oneFifthSanity': oneFifthSanity
           })
         }
-        if (mpValue < mpMax) {
+        const hours = 7
+        if (hours > 0 && mpValue < mpMax) {
+          let magicAmount = hours * Math.ceil(pow / 100)
+          magicAmount = Math.min(magicAmount, mpMax - mpValue)
           chatContent =
             chatContent +
             `<b style="color:darkolivegreen">${game.i18n.format(
               'CoC7.magicPointsRecovered'
-            )}: 7.</b>`
+            )}: ${magicAmount}.</b>`
           actor.update({
-            'data.attribs.mp.value': actor.data.data.attribs.mp.value + 7
+            'data.attribs.mp.value':
+              actor.data.data.attribs.mp.value + magicAmount
           })
         }
       }
@@ -682,8 +689,8 @@ export class CoC7Utilities {
           document.execCommand('copy')
             ? resolve()
             : reject(
-                new Error(game.i18n.localize('CoC7.UnableToCopyToClipboard'))
-              )
+              new Error(game.i18n.localize('CoC7.UnableToCopyToClipboard'))
+            )
           textArea.remove()
         }).catch(err => ui.notifications.error(err))
       }

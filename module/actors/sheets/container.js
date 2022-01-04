@@ -1,4 +1,4 @@
-/* global ActorSheet, CONST, Dialog, game, mergeObject */
+/* global $, ActorSheet, CONST, Dialog, FormData, game, mergeObject */
 import { CoC7Parser } from '../../apps/parser.js'
 export class CoC7ContainerSheet extends ActorSheet {
   /**
@@ -88,7 +88,6 @@ export class CoC7ContainerSheet extends ActorSheet {
       sheetData.showInventoryBooks ||
       sheetData.showInventorySpells ||
       sheetData.showInventoryTalents ||
-      sheetData.showInventoryStatuses ||
       sheetData.showInventoryWeapons
 
     return sheetData
@@ -246,8 +245,6 @@ export class CoC7ContainerSheet extends ActorSheet {
 
   _onInventoryHeader (event) {
     event.preventDefault()
-    $(event.currentTarget)
-      .siblings('li')
-      .slideToggle(200)
+    $(event.currentTarget).siblings('li').slideToggle(200)
   }
 }

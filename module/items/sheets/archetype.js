@@ -76,9 +76,7 @@ export class CoC7ArchetypeSheet extends ItemSheet {
   }
 
   async _onItemDelete (event, collectionName = 'items') {
-    const itemIndex = $(event.currentTarget)
-      .parents('.item')
-      .data('item-id')
+    const itemIndex = $(event.currentTarget).parents('.item').data('item-id')
     if (itemIndex) await this.removeItem(itemIndex, collectionName)
   }
 

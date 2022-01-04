@@ -321,8 +321,9 @@ export class CoC7Parser {
             data.dataset.type?.toLowerCase()
           )
         ) {
-          humanName = CoC7Utilities.getCharacteristicNames(data.dataset.name)
-            ?.label
+          humanName = CoC7Utilities.getCharacteristicNames(
+            data.dataset.name
+          )?.label
         }
         title = game.i18n.format(
           `CoC7.LinkCheck${!data.dataset.difficulty ? '' : 'Diff'}${

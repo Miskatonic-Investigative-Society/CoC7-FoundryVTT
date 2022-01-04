@@ -305,14 +305,13 @@ export class Updater {
   }
 
   static _migrateItemArtwork (item, updateData) {
-    const regEx = new RegExp(/systems\/CoC7\/artwork\/icons\/(.+)/)
-    let image = String(item.img).match(regEx)
+    let image = String(item.img).match(/systems\/CoC7\/artwork\/icons\/(.+)/)
     if (image !== null) {
       updateData.img = 'systems/CoC7/assets/icons/' + image[1]
     }
     if (item.type === 'setup') {
       for (const [k, v] of Object.entries(item.data.items)) {
-        image = String(v.img).match(regEx)
+        image = String(v.img).match(/systems\/CoC7\/artwork\/icons\/(.+)/)
         if (image !== null) {
           if (typeof updateData['data.items'] === 'undefined') {
             updateData['data.items'] = item.data.items
@@ -323,7 +322,7 @@ export class Updater {
       }
     } else if (item.type === 'occupation') {
       for (const [k, v] of Object.entries(item.data.skills)) {
-        image = String(v.img).match(regEx)
+        image = String(v.img).match(/systems\/CoC7\/artwork\/icons\/(.+)/)
         if (image !== null) {
           if (typeof updateData['data.skills'] === 'undefined') {
             updateData['data.skills'] = item.data.skills
@@ -334,7 +333,7 @@ export class Updater {
       }
       for (const [o, g] of Object.entries(item.data.groups)) {
         for (const [k, v] of Object.entries(g.skills)) {
-          image = String(v.img).match(regEx)
+          image = String(v.img).match(/systems\/CoC7\/artwork\/icons\/(.+)/)
           if (image !== null) {
             if (typeof updateData['data.groups'] === 'undefined') {
               updateData['data.groups'] = item.data.groups
@@ -346,7 +345,7 @@ export class Updater {
       }
     } else if (item.type === 'book') {
       for (const [k, v] of Object.entries(item.data.spells)) {
-        image = String(v.img).match(regEx)
+        image = String(v.img).match(/systems\/CoC7\/artwork\/icons\/(.+)/)
         if (image !== null) {
           if (typeof updateData['data.spells'] === 'undefined') {
             updateData['data.spells'] = item.data.spells
@@ -357,7 +356,7 @@ export class Updater {
       }
     } else if (item.type === 'archetype') {
       for (const [k, v] of Object.entries(item.data.skills)) {
-        image = String(v.img).match(regEx)
+        image = String(v.img).match(/systems\/CoC7\/artwork\/icons\/(.+)/)
         if (image !== null) {
           if (typeof updateData['data.skills'] === 'undefined') {
             updateData['data.skills'] = item.data.skills
@@ -450,7 +449,8 @@ export class Updater {
       }
       if (typeof item.data.keeperNotes !== 'undefined') {
         if (typeof updateData['data.description.keeper'] !== 'undefined') {
-          updateData['data.description.keeper'] = item.data.keeperNotes + updateData['data.description.keeper']
+          updateData['data.description.keeper'] =
+            item.data.keeperNotes + updateData['data.description.keeper']
         } else {
           updateData['data.description.keeper'] = item.data.keeperNotes
         }
@@ -470,17 +470,16 @@ export class Updater {
   }
 
   static _migrateActorArtwork (actor, updateData) {
-    const regEx = new RegExp(/systems\/CoC7\/artwork\/icons\/(.+)/)
-    let image = String(actor.img).match(regEx)
+    let image = String(actor.img).match(/systems\/CoC7\/artwork\/icons\/(.+)/)
     if (image !== null) {
       updateData.img = 'systems/CoC7/assets/icons/' + image[1]
     }
-    image = String(actor.token.img).match(regEx)
+    image = String(actor.token.img).match(/systems\/CoC7\/artwork\/icons\/(.+)/)
     if (image !== null) {
       updateData['token.img'] = 'systems/CoC7/assets/icons/' + image[1]
     }
     for (const [k, v] of Object.entries(actor.effects)) {
-      image = String(v.icon).match(regEx)
+      image = String(v.icon).match(/systems\/CoC7\/artwork\/icons\/(.+)/)
       if (image !== null) {
         if (typeof updateData.effects === 'undefined') {
           updateData.effects = actor.effects
@@ -577,8 +576,7 @@ export class Updater {
   }
 
   static _migrateMacroArtwork (table, updateData) {
-    const regEx = new RegExp(/systems\/CoC7\/artwork\/icons\/(.+)/)
-    const image = String(table.img).match(regEx)
+    const image = String(table.img).match(/systems\/CoC7\/artwork\/icons\/(.+)/)
     if (image !== null) {
       updateData.img = 'systems/CoC7/assets/icons/' + image[1]
     }
@@ -586,13 +584,12 @@ export class Updater {
   }
 
   static _migrateTableArtwork (table, updateData) {
-    const regEx = new RegExp(/systems\/CoC7\/artwork\/icons\/(.+)/)
-    let image = String(table.img).match(regEx)
+    let image = String(table.img).match(/systems\/CoC7\/artwork\/icons\/(.+)/)
     if (image !== null) {
       updateData.img = 'systems/CoC7/assets/icons/' + image[1]
     }
     for (const [k, v] of Object.entries(table.results)) {
-      image = String(v.img).match(regEx)
+      image = String(v.img).match(/systems\/CoC7\/artwork\/icons\/(.+)/)
       if (image !== null) {
         if (typeof updateData.results === 'undefined') {
           updateData.results = table.results

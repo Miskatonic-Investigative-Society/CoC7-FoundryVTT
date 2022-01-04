@@ -98,9 +98,8 @@ export class CoC7Check {
     // if (!this.actor || !this.actor.id) return undefined
     if (!this._rawValue) {
       if (this.characteristic) {
-        this.rawValue = this.actor.data.data.characteristics[
-          this.characteristic
-        ].value
+        this.rawValue =
+          this.actor.data.data.characteristics[this.characteristic].value
       }
       if (this.skill) this.rawValue = this.skill.value
       if (this.attribute) {
@@ -796,9 +795,8 @@ export class CoC7Check {
     } else {
       if (this.characteristic) {
         this.isCharactiristic = true
-        this.rawValue = this.actor.data.data.characteristics[
-          this.characteristic
-        ].value
+        this.rawValue =
+          this.actor.data.data.characteristics[this.characteristic].value
       }
 
       if (this.skill) {
@@ -1683,8 +1681,9 @@ export class CoC7Check {
     a.classList.add(...this.cssClassList)
     a.title = this.tooltipHeader
     a.dataset.roll = escape(this.JSONRollString) // TODO!IMPORTANT!!!
-    a.innerHTML = `<i class="game-icon game-icon-d10"></i> ${this
-      .modifiedResult || '??'}`
+    a.innerHTML = `<i class="game-icon game-icon-d10"></i> ${
+      this.modifiedResult || '??'
+    }`
     return a
   }
 
