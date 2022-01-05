@@ -276,6 +276,36 @@ export class CoC7Chase extends CoC7Item {
     )
   }
 
+  async alterParticipantMovementAction (
+    participantUuid,
+    count,
+    { render = true } = {}
+  ) {
+    const participant = this.getParticipant(participantUuid)
+
+    if (!participant) {
+      ui.notifications.error(`Cannot find participant ${participantUuid}`)
+      return undefined
+    }
+
+    const participantsData = foundry.utils.duplicate(
+      this.data.data.participants
+    )
+    const participantIndex = participantsData.findIndex(
+      p => participantUuid == p.uuid
+    )
+
+    participant.alterMovementActions(count)
+
+    participantsData[participantIndex] = foundry.utils.duplicate(
+      participant.data
+    )
+    await this.update(
+      { 'data.participants': participantsData },
+      { render: render }
+    )
+  }
+
   async activateNexParticpantTurn ({
     scrollToLocation = true,
     activateLocation = true,

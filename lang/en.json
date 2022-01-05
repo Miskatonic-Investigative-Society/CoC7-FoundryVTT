@@ -546,6 +546,9 @@
   "CoC7.WaitForPlayerInput": "Wait for player's input",
   "CoC7.AskRoll": "Roll {name} ({value}%)",
   "CoC7.ActionCost": "Action cost",
+  "CoC7.PlayerTryToBreakObstacle": "You try to break through that obstacle",
+  "CoC7.Negotiate": "Negotiate",
+  "CoC7.BreakDown": "Break Down",
 
   "CoC7.SpellCastingTime": "Casting Time",
   "CoC7.SpellCastingCost": "Casting Cost",

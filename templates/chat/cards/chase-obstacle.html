@@ -37,7 +37,7 @@
                 {{#if data.objects.check.passed}}
                   <div>**** obstaclePassed {{ strings.obstaclePassed }} ****</div>
                 {{else}}
-                  <div>**** checkFailled {{ strings.checkFailled }} ****</div>
+                  <div>**** checkFailed {{ strings.checkFailed }} ****</div>
                   {{#if data.states.cardResolved}}
                     {{#if damageTaken}}
                       <div class="roll-line">**** damageTaken {{ strings.damageTaken}} **** : {{{inlineDamageTakenRoll}}}</div>
@@ -49,9 +49,13 @@
                 {{/if}}
               {{else}}
                 {{#if data.states.tryToBreak}}
+                  <div> {{ localize 'CoC7.PlayerTryToBreakObstacle' }}</div>
+                  <div class="card-buttons">
+                    <button class='submit' data-ecc-visibility="{{card.participant.actor.uuid}}" data-action='rollObstacleDamage'>{{ card.strings.damageRollRequest }}</button>
+                  </div>
                 {{else}}
                   <div class="card-buttons">
-                    <button class='submit' data-ecc-visibility="{{card.participant.actor.uuid}}" data-action='rollSkillCheck'>{{ strings.rollRequest }}</button>
+                    <button class='submit' data-ecc-visibility="{{card.participant.actor.uuid}}" data-action='rollSkillCheck'>{{ strings.checkRollRequest }}</button>
                   </div>
                 {{/if}}
               {{/if}}
@@ -68,17 +72,17 @@
     <div data-ecc-visibility="gm" class="gm-actions">
       {{#if data.states.obstacleDefined}}
         {{#if data.states.breakOrPassDefined}}
-          {{#if data.states.tryToPass}}
+          {{#if data.states.tryToNegotiate}}
             {{#if data.states.playerActionDefined}}
               {{#if data.states.checkRolled}}
                 {{#if data.objects.check.passed}}
                   Check passed
                 {{else}}
-                  Check failled
+                  Check failed
                   {{#if data.states.cardResolved}}
                   {{else}}
                     {{#if data.obstacle.barrier}}
-                      Barier failled
+                      Barier failed
                       <div class="form-group small">
                         <div class="flexrow flex1">
                         </div>
@@ -92,14 +96,35 @@
                         </div>
                       </div>
                       <div class="card-buttons">
-                        {{#if validFailledRolls}}
+                        {{#if cardvalidFailedRolls}}
                         <button class="submit" data-action="rollFailConsequences">Validate</button>
                         {{/if}}
                       </div>
                     {{/if}}
                     {{#if data.obstacle.hazard}}
-                      Hazard failled
-                      {{#if data.states.obstacleFailledResolved}}
+                      Hazard failed
+                      {{#if data.states.failedConsequencesRolled}}
+                        {{#if data.obstacle.hasDamage}}
+                          {{#if data.states.failedCheckDamageApplied}}
+                          {{else}}
+                            <div class="form-group armor">
+                              <div class="flexrow flex-end">
+                                <a data-ecc-permissions="gm" data-flag="ignoreArmor" class="ecc-switch" title="{{ localize 'CoC7.IgnoreArmor' }}">
+                                  {{#if data.flags.ignoreArmor}}
+                                    <i class="game-icon game-icon-armor-downgrade"></i>
+                                  {{else}}
+                                    <i class="game-icon game-icon-armor-upgrade"></i>
+                                  {{/if}}
+                                </a>
+                                {{#unless data.flags.ignoreArmor}}
+                                  <label>{{ localize 'CoC7.Armor'}}:</label>
+                                  <input type="text" data-ecc-permissions="gm" name="data.card.armor" value="{{data.card.armor}}">
+                                {{/unless}}
+
+                              </div>
+                            </div>
+                          {{/if}}
+                        {{/if}}
                       {{else}}
                         <div class="form-group small">
                           <div class="flexrow flex1">
@@ -120,7 +145,7 @@
                           </div>
                         </div>
                         <div class="card-buttons">
-                          {{#if card.validFailledRolls}}
+                          {{#if card.validFailedRolls}}
                           <button class="submit" data-action="rollFailConsequences">Validate</button>
                           {{/if}}
                         </div>
@@ -196,8 +221,8 @@
             <button class="submit button-icon" data-action="cancelObstacleDefinition" title="{{ localize 'CoC7.Cancel' }}"><i class="fas fa-undo"></i></button>
           </div>
           <div class="card-buttons">
-            <button class='submit' data-action='tryToPassObstacle'>Attempt to pass that obstacle</button>
-            <button class='submit' data-action='tryToreakThroughObstacle'>Attempt to break through !!</button>
+            <button class='submit' data-action='tryToNegotiateObstacle'>Attempt to negotiate that obstacle</button>
+            <button class='submit' data-action='tryToBreakDownObstacle'>Attempt to break down !!</button>
           </div>
         {{/if}}
       {{else}}
@@ -212,7 +237,7 @@
       {{/if}}
       <div class="form-group">
         <label>Obstacle name:</label>
-        <input type="text" data-ecc-permissions="gm" name="data.obstacle.name" value="{{data.obstacle.name}}"/>
+        <input type="text" data-ecc-permissions="gm" name="data.obstacle.name" value="{{data.obstacle.name}}" data-dtype="Number"/>
       </div>
       <div class="card-buttons">
         <button class='submit' data-action='defineObstacle'>Validate</button>

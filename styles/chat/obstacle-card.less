@@ -57,51 +57,85 @@
     }
   }
 
-  .form-group.small {
-    .toggle-icon,
-    .icon {
-      font-size: 1rem;
-      line-height: 1.25rem;
-      padding: 1px 6px;
-      display: inline;
-      flex: 0;
-
-      &.bigger {
-        padding: 1px 4px;
-        font-size: 1.4rem;
-      }
-
-      &.switched-off {
-        display: inline;
-      }
-      &.switched-on {
-        color: red;
-        text-shadow: 0 0 8px red;
-        border: none;
-        background: none;
-        box-shadow: none;
-      }
-    }
-
-    input {
-      margin: 0;
-      line-height: 1.25rem;
-      height: calc(100% - 2px);
-    }
-
-    button {
-      &.button-icon {
+  .form-group {
+    &.small {
+      .toggle-icon,
+      .icon {
+        font-size: 1rem;
         line-height: 1.25rem;
         padding: 1px 6px;
         display: inline;
         flex: 0;
-        background: none;
-        border: none;
-        font-size: 1rem;
-        &:hover {
-          box-shadow: none;
-          text-shadow: 0 0 8px red;
+
+        &.bigger {
+          padding: 1px 4px;
+          font-size: 1.4rem;
         }
+
+        &.switched-off {
+          display: inline;
+        }
+        &.switched-on {
+          color: red;
+          text-shadow: 0 0 8px red;
+          border: none;
+          background: none;
+          box-shadow: none;
+        }
+      }
+
+      input {
+        margin: 0;
+        line-height: 1.25rem;
+        height: calc(100% - 2px);
+      }
+
+      button {
+        &.button-icon {
+          line-height: 1.25rem;
+          padding: 1px 6px;
+          display: inline;
+          flex: 0;
+          background: none;
+          border: none;
+          font-size: 1rem;
+          &:hover {
+            box-shadow: none;
+            text-shadow: 0 0 8px red;
+          }
+        }
+      }
+    }
+
+    &.armor {
+      height: 16px;
+      line-height: 16px;
+      .ecc-switch {
+        color: grey;
+        border: none;
+        box-shadow: none;
+        font-weight: bold;
+
+        font-size: 20px;
+        flex: 0;
+
+        &.switched-off {
+          color: black;
+        }
+      }
+
+      label {
+        height: 16px;
+        line-height: 16px;
+        color: black;
+        font-weight: bold;
+        flex: 0 0 content;
+      }
+
+      input {
+        height: 16px;
+        flex: 0 0 40px;
+        text-align: end;
       }
     }
   }

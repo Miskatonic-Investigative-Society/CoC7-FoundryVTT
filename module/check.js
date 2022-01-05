@@ -1175,6 +1175,7 @@ export class CoC7Check {
       }
       this.luckSpent = true
       this.isSuccess = true
+      this.isFailure = false
       this.totalLuckSpent = !parseInt(this.totalLuckSpent)
         ? 0
         : parseInt(this.totalLuckSpent)

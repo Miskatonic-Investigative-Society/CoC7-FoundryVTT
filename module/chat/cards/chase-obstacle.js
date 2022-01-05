@@ -1,5 +1,6 @@
 import { CoC7Check } from '../../check.js'
 import { EnhancedChatCard } from '../../common/chatcardlib/src/chatcardlib.js'
+import { CoC7Dice } from '../../dice.js'
 import { _participant } from '../../items/chase/participant.js'
 import { CoC7Utilities } from '../../utilities.js'
 import { createInlineRoll } from '../helper.js'
@@ -35,7 +36,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       (data.data.obstacle.hazard ||
         (data.data.obstacle.barrier && !data.data.obstacle.hasHitPoints))
     ) {
-      data.data.states.tryToPass = true
+      data.data.states.tryToNegotiate = true
       data.data.states.tryToBreak = false
       data.data.states.breakOrPassDefined = true
     }
@@ -69,14 +70,14 @@ export class ChaseObstacleCard extends EnhancedChatCard {
         checkName = data.data.obstacle.checkName
         value = data.data.card.checkThreshold
       }
-      data.strings.rollRequest = game.i18n.format('CoC7.AskRoll', {
+      data.strings.checkRollRequest = game.i18n.format('CoC7.AskRoll', {
         name: checkName,
         value: value
       })
       if (data.data.card.bonusDice != 0) {
         if (data.data.card.bonusDice > 0)
-          data.strings.rollRequest += ` (+${data.data.card.bonusDice})`
-        else data.strings.rollRequest += ` (${data.data.card.bonusDice})`
+          data.strings.checkRollRequest += ` (+${data.data.card.bonusDice})`
+        else data.strings.checkRollRequest += ` (${data.data.card.bonusDice})`
       }
     }
 
@@ -118,6 +119,19 @@ export class ChaseObstacleCard extends EnhancedChatCard {
         })
       }
 
+      if (this.data.states.tryToBreak) {
+        let damageStatus = game.i18n.localize('CoC7.BreakDown')
+        if (this.data.objects?.obstacleDamageRoll?.total)
+          damageStatus += ` :${this.data.objects.obstacleDamageRoll.total}`
+        data.status.push({
+          name: damageStatus
+        })
+      }
+
+      if (this.data.states.tryToNegotiate) {
+        data.status.push({ name: game.i18n.localize('CoC7.Negotiate') })
+      }
+
       if (this.data.objects?.check) {
         if (this.data.objects.check.passed)
           data.status.push({
@@ -143,16 +157,25 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       else data.htmlCheck = await this.data.objects.check.getHtmlRoll()
     }
 
+    if( this.data.objects?.failedDamageRoll){
+      if( !data.data.card.armor){
+        if( this.participant.actor) data.data.card.armor = this.participant.actor.data.data.attribs.armor.value || 0
+      }
+      if( data.data.card.armor){
+        if( isNaN(Number(data.data.card.armor))) data.data.card.armor = null
+      }
+    }
+
     if (this.data.states.cardResolved) {
       if (this.data.obstacle.hasDamage && this.data.objects?.check?.isFailure) {
         data.damageTaken = true
         data.inlineDamageTakenRoll = createInlineRoll(
-          this.data.objects.failledDamageRoll
+          this.data.objects.failedDamageRoll
         )?.outerHTML
         data.status.push({
           name:
             game.i18n.localize('CoC7.TotalDamage') +
-            ` :${this.data.objects.failledDamageRoll.total}`
+            ` :${this.data.objects.failedDamageRoll.total}`
         })
       }
 
@@ -163,12 +186,12 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       ) {
         data.actionLost = true
         data.inlineActionLostRoll = createInlineRoll(
-          this.data.objects.failledActionRoll
+          this.data.objects.failedActionRoll
         )?.outerHTML
         data.status.push({
           name:
             game.i18n.localize('CoC7.ActionCost') +
-            ` :${this.data.objects.failledActionRoll.total}`
+            ` :${this.data.objects.failedActionRoll.total}`
         })
       }
     }
@@ -177,12 +200,17 @@ export class ChaseObstacleCard extends EnhancedChatCard {
 
   /** @override */
   async GMUpdate () {
-    // ui.notifications.info( `I am ${game.user.id}. Doing GMUpdate`)
+    if (!game.user.isGM) {
+      console.error('CoC7: GMUpdate called from non GM user')
+      return
+    }
     if (this.data.states.cardResolved) {
-      if (game.user.isGM)
-        ui.notifications.info(
-          `I am the GM ${game.user.id}. I will update the card and chase ${this.data.chaseUuid}`
-        )
+      if( this.data.states.failedConsequencesRolled){
+        if( this.data.objects?.failedActionRoll?.total) await this.chase.alterParticipantMovementAction( 0 - this.data.objects.failedActionRoll.total)
+        if( this.data.objects?.failedDamageRoll?.total) {
+          if( this.participant.actor) await this.participant.actor.dealDamage(this.data.objects.failedDamageRoll.total, { ignoreArmor: false })
+        }
+      }
     }
   }
 
@@ -194,15 +222,36 @@ export class ChaseObstacleCard extends EnhancedChatCard {
 
   /** @override */
   async assignObjects () {
-    if (this.data.states.checkRolled) {
-      if (this.data.objects.check) {
-        if (this.data.objects.check?.constructor?.name === 'Object') {
-          this.data.objects.check = Object.assign(
-            new CoC7Check(),
-            this.data.objects.check
-          )
-        }
-      }
+    if (
+      this.data.objects?.check &&
+      this.data.objects.check?.constructor?.name === 'Object'
+    ) {
+      this.data.objects.check = CoC7Check.fromData(this.data.objects.check)
+    }
+
+    if (
+      this.data.objects?.obstacleDamageRoll &&
+      this.data.objects.obstacleDamageRoll?.constructor?.name === 'Object'
+    ) {
+      this.data.objects.obstacleDamageRoll = Roll.fromData(
+        this.data.objects.obstacleDamageRoll
+      )
+    }
+    if (
+      this.data.objects?.failedDamageRoll &&
+      this.data.objects.failedDamageRoll?.constructor?.name === 'Object'
+    ) {
+      this.data.objects.failedDamageRoll = Roll.fromData(
+        this.data.objects.failedDamageRoll
+      )
+    }
+    if (
+      this.data.objects?.failedActionRoll &&
+      this.data.objects.failedActionRoll?.constructor?.name === 'Object'
+    ) {
+      this.data.objects.failedActionRoll = Roll.fromData(
+        this.data.objects.failedActionRoll
+      )
     }
   }
 
@@ -277,7 +326,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     return rollData || undefined
   }
 
-  get validFailledRolls () {
+  get validFailedRolls () {
     if (!this.data.objects?.check?.isFailure) return false
     if (this.data.obstacle.hasDamage) {
       if (!this.data.obstacle.failedCheckDamage) return false
@@ -358,6 +407,12 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   }
 
   get usedWeapon () {
+    if (!this.data.card?.weaponChoice) {
+      if (!this.weaponsOptions) return undefined
+      if (!this.data.card) this.data.card = {}
+      this.data.card.weaponChoice = this.weaponsOptions[0].uuid
+    }
+
     if (this.data.card.weaponChoice) {
       const weapon = this.weaponsOptions.find(
         e => e.uuid == this.data.card.weaponChoice
@@ -387,6 +442,13 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     return false
   }
 
+  get strings () {
+    const strings = {}
+    strings.damageRollRequest = this.usedWeapon.name
+
+    return strings
+  }
+
   //Actions :
   async defineObstacle (options) {
     if (!this.data.states) this.data.states = {}
@@ -394,16 +456,16 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     return true
   }
 
-  async tryToPassObstacle (options) {
+  async tryToNegotiateObstacle (options) {
     this.data.states.breakOrPassDefined = true
-    this.data.states.tryToPass = true
+    this.data.states.tryToNegotiate = true
     this.data.states.tryToBreak = false
     return true
   }
 
-  async tryToreakThroughObstacle (options) {
+  async tryToBreakDownObstacle (options) {
     this.data.states.breakOrPassDefined = true
-    this.data.states.tryToPass = false
+    this.data.states.tryToNegotiate = false
     this.data.states.tryToBreak = true
     return true
   }
@@ -411,7 +473,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   async cancelObstacleDefinition (options) {
     this.data.states.obstacleDefined = false
     this.data.states.breakOrPassDefined = false
-    this.data.states.tryToPass = false
+    this.data.states.tryToNegotiate = false
     this.data.states.tryToBreak = false
     return true
   }
@@ -419,7 +481,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   async cancelBreakOrPassChoice (options) {
     if (!this.data.obstacle.hasHitPoints) return this.cancelObstacleDefinition()
     this.data.states.breakOrPassDefined = false
-    this.data.states.tryToPass = false
+    this.data.states.tryToNegotiate = false
     this.data.states.tryToBreak = false
     return true
   }
@@ -454,29 +516,39 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   async rollFailConsequences (options) {
     if (!this.data.objects) this.data.objects = {}
     if (this.data.obstacle.hasDamage && this.data.objects.check?.isFailure) {
-      this.data.objects.failledDamageRoll = new Roll(
+      this.data.objects.failedDamageRoll = new Roll(
         this.data.obstacle.failedCheckDamage
       )
-      await this.data.objects.failledDamageRoll.evaluate({ async: true })
+      await this.data.objects.failedDamageRoll.evaluate({ async: true })
     }
     if (this.data.obstacle.hazard) {
       if (
         this.data.obstacle.hasActionCost &&
         this.data.objects.check?.isFailure
       ) {
-        this.data.objects.failledActionRoll = new Roll(
+        this.data.objects.failedActionRoll = new Roll(
           this.data.obstacle.failedActionCost
         )
-        await this.data.objects.failledActionRoll.evaluate({ async: true })
+        await this.data.objects.failedActionRoll.evaluate({ async: true })
       }
     }
 
-    this.data.states.cardResolved = true
+    this.data.states.failedConsequencesRolled = true
+    if( !this.data.objects?.failedDamageRoll?.total) this.data.states.cardResolved = true
     return true
   }
 
   async askRollObstacleDamage (options) {
     this.data.states.playerActionDefined = true
+    return true
+  }
+
+  async rollObstacleDamage (options) {
+    if (!this.data.objects) this.data.objects = {}
+    this.data.objects.obstacleDamageRoll = new Roll(this.usedWeapon?.damage)
+    await this.data.objects.obstacleDamageRoll.evaluate({ async: true })
+    await CoC7Dice.showRollDice3d(this.data.objects.obstacleDamageRoll)
+    this.data.states.obstacleDamageRolled = true
     return true
   }
 }
