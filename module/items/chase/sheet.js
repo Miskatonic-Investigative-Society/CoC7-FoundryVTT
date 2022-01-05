@@ -521,21 +521,28 @@ export class CoC7ChaseSheet extends ItemSheet {
     const locationIndex = this.findIndex(locations, uuid)
     if (!locations[locationIndex].obstacleDetails)
       locations[locationIndex].obstacleDetails = {}
-    if (target.classList.contains('barrier')) {
-      locations[locationIndex].obstacleDetails.barrier = !locations[
-        locationIndex
-      ].obstacleDetails.barrier
-      locations[locationIndex].obstacleDetails.hazard = !locations[
-        locationIndex
-      ].obstacleDetails.barrier
-    } else if (target.classList.contains('hazard')) {
-      locations[locationIndex].obstacleDetails.hazard = !locations[
-        locationIndex
-      ].obstacleDetails.hazard
-      locations[locationIndex].obstacleDetails.barrier = !locations[
-        locationIndex
-      ].obstacleDetails.hazard
-    }
+    const obstacle = locations[locationIndex].obstacleDetails
+    const type = target.classList.contains('barrier')?'barrier':'hazard' 
+    const active = obstacle[type]
+    obstacle.barrier = false
+    obstacle.hazard = false
+    obstacle[type] = !active
+    locations[locationIndex].obstacle = !active
+    // if (target.classList.contains('barrier')) {
+    //   locations[locationIndex].obstacleDetails.barrier = !locations[
+    //     locationIndex
+    //   ].obstacleDetails.barrier
+    //   locations[locationIndex].obstacleDetails.hazard = !locations[
+    //     locationIndex
+    //   ].obstacleDetails.barrier
+    // } else if (target.classList.contains('hazard')) {
+    //   locations[locationIndex].obstacleDetails.hazard = !locations[
+    //     locationIndex
+    //   ].obstacleDetails.hazard
+    //   locations[locationIndex].obstacleDetails.barrier = !locations[
+    //     locationIndex
+    //   ].obstacleDetails.hazard
+    // }
     await this.item.updateLocationsList(locations)
   }
 
@@ -591,7 +598,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     if (!locationUuid) return
     switch (target.dataset.control) {
       case 'obstacle-skill-check':
-        return await this.item.activeParticipantObstacleCheck(locationUuid)
+        return this.item.activeParticipantObstacleCheck(locationUuid)
     }
   }
 

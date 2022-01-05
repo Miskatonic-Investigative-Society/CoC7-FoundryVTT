@@ -492,6 +492,9 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   }
 
   async rollSkillCheck (options) {
+    const target = options.event.currentTarget
+    if( target.classList.contains('disabled')) return
+    target.classList.toggle('disabled')
     if (!this.roll) {
       ui.notifications.error('Nothing to roll !!')
       return
@@ -502,6 +505,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     this.data.objects.check.canBePushed = false //Obstacle check can't be pushed
     await this.data.objects.check._perform({ forceDSN: true })
     this.data.states.checkRolled = true
+    target.classList.toggle('disabled')
     return true
   }
 

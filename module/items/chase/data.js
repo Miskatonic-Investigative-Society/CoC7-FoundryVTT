@@ -389,7 +389,7 @@ export class CoC7Chase extends CoC7Item {
     } else return participantsDataUpdate
   }
 
-  async activeParticipantObstacleCheck (
+  activeParticipantObstacleCheck (
     locationUuid,
     { moveParticipant = true } = {}
   ) {
