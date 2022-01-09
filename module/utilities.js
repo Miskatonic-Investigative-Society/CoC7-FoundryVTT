@@ -1,5 +1,6 @@
 /* global canvas, ChatMessage, CONST, Dialog, game, getDocumentClass, Hooks, Macro, Roll, ui */
 
+import { COC7 } from './config.js'
 import { CoC7Check } from './check.js'
 import { CoC7Item } from './items/item.js'
 import { RollDialog } from './apps/roll-dialog.js'
@@ -14,7 +15,7 @@ export class CoC7Utilities {
   //   if (speaker.token) actor = game.actors.tokens[speaker.token];
   //   if (!actor) actor = game.actors.get(speaker.actor);
 
-  //  actor.inflictMajorWound();
+  //  actor.setCondition(COC7.status.criticalWounds);
   // }
 
   static isFormula (x) {
@@ -479,7 +480,7 @@ export class CoC7Utilities {
             }
           }
         }
-        const isCriticalWounds = actor.data.data.status.criticalWounds.value
+        const isCriticalWounds = actor.hasCondition(COC7.status.criticalWounds)
         const dailySanityLoss = actor.data.data.attribs.san.dailyLoss
         const hpValue = actor.data.data.attribs.hp.value
         const hpMax = actor.data.data.attribs.hp.max

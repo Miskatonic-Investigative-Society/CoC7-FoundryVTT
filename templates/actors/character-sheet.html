@@ -145,7 +145,7 @@
         <input class="attribute-value {{#if data.flags.locked}}read-only{{/if}}" type="text" name="data.attribs.armor.value" value="{{data.attribs.armor.value}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}>
       </div>
     </div>
-    <div class="status-monitors flexrow" style="line-height: 22px;">
+    <div class="condition-monitors flexrow" style="line-height: 22px;">
       <div style="display: none;">
         <input class="locked" type="text" name="data.indefiniteInsanityLevel.value" value="{{data.indefiniteInsanityLevel.value}}" data-dtype="Number" readonly/>
         <input class="locked" type="text" name="data.indefiniteInsanityLevel.max" value="{{data.indefiniteInsanityLevel.max}}" data-dtype="Number" readonly/>
@@ -154,21 +154,21 @@
         <span style="max-width: 20px;font-size: 14px;height: 22px;padding: 1px 3px;border: 1px solid transparent;">{{data.attribs.san.dailyLoss}}</span>
         <a class="reset-counter" style="flex: 0 0 25px;color: darkgrey;padding: 1px 6px;text-align: center;" data-counter="data.attribs.san.dailyLoss" title="{{localize 'CoC7.DailySanIconOver'}}"><i class="fas fa-undo"></i></a>
         <div style="flex: 0 0 20px;"></div>
-        <a class="status-monitor {{#if data.status.prone.value}}status-on{{/if}}" title="{{localize 'CoC7.Prone'}}" data-status='prone'> <i class="game-icon game-icon-falling"></i></a>
-        <a class="status-monitor {{#if data.status.unconscious.value}}status-on{{/if}}" title="{{localize 'CoC7.Unconsious'}}" data-status="unconscious"> <i class="game-icon game-icon-knocked-out-stars"></i></a>
-        <a class="status-monitor {{#if data.status.criticalWounds.value}}status-on{{/if}}" title="{{localize 'CoC7.CriticalWounds'}}" data-status="criticalWounds"> <i class="game-icon game-icon-arm-sling"></i></a>
-        <a class="status-monitor {{#if data.status.dying.value}}status-on{{/if}}" title="{{localize 'CoC7.Dying'}}" data-status="dying"> <i class="game-icon game-icon-heart-beats"></i></a>
-        <a class='status-monitor {{#if data.status.dead.value}}status-on{{/if}} is-dead' title="{{localize 'CoC7.Dead'}}" data-status="dead"><i class="game-icon game-icon-tombstone"></i></a>
+        <a class="condition-monitor {{#if data.conditions.prone.value}}status-on{{/if}}" title="{{localize 'CoC7.Prone'}}" data-condition='prone'> <i class="game-icon game-icon-falling"></i></a>
+        <a class="condition-monitor {{#if data.conditions.unconscious.value}}status-on{{/if}}" title="{{localize 'CoC7.Unconsious'}}" data-condition="unconscious"> <i class="game-icon game-icon-knocked-out-stars"></i></a>
+        <a class="condition-monitor {{#if data.conditions.criticalWounds.value}}status-on{{/if}}" title="{{localize 'CoC7.CriticalWounds'}}" data-condition="criticalWounds"> <i class="game-icon game-icon-arm-sling"></i></a>
+        <a class="condition-monitor {{#if data.conditions.dying.value}}status-on{{/if}}" title="{{localize 'CoC7.Dying'}}" data-condition="dying"> <i class="game-icon game-icon-heart-beats"></i></a>
+        <a class="condition-monitor {{#if data.conditions.dead.value}}status-on{{/if}}" title="{{localize 'CoC7.Dead'}}" data-condition="dead"><i class="game-icon game-icon-tombstone"></i></a>
 
         <div style="flex: 0 0 25px;"></div>
         {{#if isDying}}
-          <a class='status-monitor dying-check' title="Check if you'll die immediately"><i class="fas fa-dice-d20"></i></a>
+          <a class='condition-monitor dying-check' title="Check if you'll die immediately"><i class="fas fa-dice-d20"></i></a>
         {{else}}
           <div style="flex: 0 0 25px;"></div>
         {{/if}}
         <div style="flex: 0 0 40px;"></div>
-        <a class="status-monitor {{#if isInABoutOfMadness}}status-on{{/if}}" title="{{localize 'CoC7.TemporaryInsanity'}}" data-effect="boutOfMadness"> <i class="game-icon game-icon-hanging-spider"></i></a>
-        <a class="status-monitor {{#if isInsane}}status-on{{/if}}" title="{{localize 'CoC7.IndefiniteInsanity'}}" data-effect="insanity"> <i class="game-icon game-icon-tentacles-skull"></i></a>
+        <a class="condition-monitor {{#if data.conditions.tempoInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.BoutOfMadness'}}{{#if actor.getTempoInsaneDurationText}}: {{actor.getTempoInsaneDurationText}}{{/if}}" data-condition="tempoInsane"><i class="game-icon game-icon-hanging-spider"></i></a>
+        <a class="condition-monitor {{#if data.conditions.indefInsane.value}}status-on{{/if}}" title="{{#if data.conditions.indefInsane.value}}{{localize 'CoC7.UnderlyingInsanity'}}{{else}}{{localize 'CoC7.IndefiniteInsanity'}}{{/if}}" data-condition="indefInsane"><i class="game-icon game-icon-tentacles-skull"></i></a>
 
         <div class="flex1"></div>
         {{#if data.flags.locked}}

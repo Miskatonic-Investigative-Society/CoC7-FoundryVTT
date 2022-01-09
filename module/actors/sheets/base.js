@@ -158,18 +158,6 @@ export class CoC7ActorSheet extends ActorSheet {
         }
       }
 
-      if (!data.data.status) {
-        data.data.status = {
-          criticalWounds: { type: 'Boolean', value: false },
-          unconscious: { type: 'Boolean', value: false },
-          dying: { type: 'Boolean', value: false },
-          dead: { type: 'Boolean', value: false },
-          prone: { type: 'Boolean', value: false },
-          tempoInsane: { type: 'boolean', value: false },
-          indefInsane: { type: 'boolean', value: false }
-        }
-      }
-
       if (!data.data.biography) {
         data.data.biography = {
           personalDescription: { type: 'string', value: '' }
@@ -213,10 +201,6 @@ export class CoC7ActorSheet extends ActorSheet {
       if (!data.data.biography) data.data.biography = []
       if (!data.data.encounteredCreatures) data.data.encounteredCreatures = []
 
-      data.isInABoutOfMadness = this.actor.isInABoutOfMadness
-      data.isInsane = this.actor.isInsane
-      data.boutOfMadness = this.actor.boutOfMadness
-      data.sanity = this.actor.sanity
       data.pulpCharacter = game.settings.get('CoC7', 'pulpRules')
     }
 
@@ -745,7 +729,7 @@ export class CoC7ActorSheet extends ActorSheet {
       // Status monitor
       if (game.user.isGM || game.settings.get('CoC7', 'statusPlayerEditable')) {
         html.find('.reset-counter').click(this._onResetCounter.bind(this))
-        html.find('.status-monitor').click(this._onStatusToggle.bind(this))
+        html.find('.condition-monitor').click(this._onConditionToggle.bind(this))
         html.find('.is-dying').click(this.heal.bind(this))
         html.find('.is-dead').click(this.revive.bind(this))
       }
@@ -873,6 +857,24 @@ export class CoC7ActorSheet extends ActorSheet {
     html.find('.luck-development').click(event => {
       if (!event.detail || event.detail === 1) {
         this.actor.developLuck(event.shiftKey)
+      }
+    })
+
+    html.find('.clear_conditions').click(event => {
+      if (typeof this.actor.data.data.conditions !== 'undefined') {
+        const disable = {}
+        for (const condition in this.actor.data.data.conditions) {
+          if (typeof this.actor.data.data.conditions[condition].value !== 'undefined' && this.actor.data.data.conditions[condition].value === true) {
+            disable[`data.conditions.${condition}.value`] = false
+          }
+        }
+        if (Object.keys(disable).length > 0) {
+          this.actor.update(disable)
+        }
+      }
+      const effects = this.actor.effects.map(effect => effect.id)
+      if (effects.length > 0) {
+        this.actor.deleteEmbeddedDocuments('ActiveEffect', effects)
       }
     })
 
@@ -1264,21 +1266,19 @@ export class CoC7ActorSheet extends ActorSheet {
     await super._onDrop(event)
   }
 
-  async _onStatusToggle (event) {
+  async _onConditionToggle (event) {
     event.preventDefault()
-    if (event.currentTarget.dataset.status) {
-      await this.actor.toggleStatus(event.currentTarget.dataset.status)
-    } else if (event.currentTarget.dataset.effect) {
-      await this.actor.toggleEffect(event.currentTarget.dataset.effect)
+    if (event.currentTarget.dataset.condition) {
+      await this.actor.toggleCondition(event.currentTarget.dataset.condition)
     }
   }
 
   async revive () {
-    if (game.user.isGM) this.actor.unsetStatus(COC7.status.dead)
+    if (game.user.isGM) this.actor.unsetCondition(COC7.status.dead)
   }
 
   async heal () {
-    if (game.user.isGM) this.actor.unsetStatus(COC7.status.dying)
+    if (game.user.isGM) this.actor.unsetCondition(COC7.status.dying)
   }
 
   async checkForDeath (event) {

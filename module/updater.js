@@ -163,6 +163,7 @@ export class Updater {
     Updater._migrateActorArtwork(actor, updateData)
     Updater._migrateActorKeeperNotes(actor, updateData)
     Updater._migrateActorNpcCreature(actor, updateData)
+    Updater._migrateActorStatusEffectActive(actor, updateData)
 
     // Migrate World Actor Items
     if (actor.items) {
@@ -497,6 +498,94 @@ export class Updater {
           keeper: ''
         }
       }
+    }
+    return updateData
+  }
+
+  static _migrateActorStatusEffectActive (actor, updateData) {
+    if (typeof actor.data.status !== 'undefined' || typeof actor.data.conditions === 'undefined') {
+      updateData['data.conditions.criticalWounds.value'] = false
+      updateData['data.conditions.unconscious.value'] = false
+      updateData['data.conditions.dying.value'] = false
+      updateData['data.conditions.dead.value'] = false
+      updateData['data.conditions.prone.value'] = false
+      updateData['data.conditions.tempoInsane.value'] = false
+      updateData['data.conditions.indefInsane.value'] = false
+      if (typeof actor.data.status.criticalWounds.value !== 'undefined' && actor.data.status.criticalWounds.value) {
+        updateData['data.conditions.criticalWounds.value'] = true
+      }
+      if (typeof actor.data.status.unconscious.value !== 'undefined' && actor.data.status.unconscious.value) {
+        updateData['data.conditions.unconscious.value'] = true
+      }
+      if (typeof actor.data.status.dying.value !== 'undefined' && actor.data.status.dying.value) {
+        updateData['data.conditions.dying.value'] = true
+      }
+      if (typeof actor.data.status.dead.value !== 'undefined' && actor.data.status.dead.value) {
+        updateData['data.conditions.dead.value'] = true
+      }
+      if (typeof actor.data.status.prone.value !== 'undefined' && actor.data.status.prone.value) {
+        updateData['data.conditions.prone.value'] = true
+      }
+      if (typeof actor.data.status.tempoInsane.value !== 'undefined' && actor.data.status.tempoInsane.value) {
+        updateData['data.conditions.tempoInsane.value'] = true
+      }
+      if (typeof actor.data.status.indefInsane.value !== 'undefined' && actor.data.status.indefInsane.value) {
+        updateData['data.conditions.indefInsane.value'] = true
+      }
+      const effects = actor.effects
+      let changed = false
+      for (let i = 0, im = effects.length; i < im; i++) {
+        const effect = effects[i]
+        const match = effect.icon.match(/\/(hanging-spider|tentacles-skull|arm-sling|heart-beats|tombstone|knocked-out-stars|falling|skull|unconscious)\./)
+        if (match !== null) {
+          let statusId = ''
+          switch (match[1]) {
+            case 'hanging-spider':
+              statusId = 'tempoInsane'
+              break
+            case 'tentacles-skull':
+              statusId = 'indefInsane'
+              break
+            case 'arm-sling':
+              statusId = 'criticalWounds'
+              break
+            case 'heart-beats':
+              statusId = 'dying'
+              break
+            case 'tombstone':
+            case 'skull':
+              statusId = 'dead'
+              break
+            case 'knocked-out-stars':
+            case 'unconscious':
+              statusId = 'unconscious'
+              break
+            case 'falling':
+              statusId = 'prone'
+              break
+          }
+          if (statusId !== '') {
+            if (!updateData[`data.conditions.${statusId}.value`]) {
+              updateData[`data.conditions.${statusId}.value`] = true
+              changed = true
+            }
+            if (effect.flags.core?.statusId !== statusId) {
+              effects[i] = mergeObject(effect, {
+                flags: {
+                  core: {
+                    statusId: statusId
+                  }
+                }
+              })
+              changed = true
+            }
+          }
+        }
+      }
+      if (changed) {
+        updateData.effects = effects
+      }
+      updateData['data.-=status'] = null
     }
     return updateData
   }
