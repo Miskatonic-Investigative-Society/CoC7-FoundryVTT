@@ -740,6 +740,11 @@
   "CoC7.Migrate.ButtonSkip": "Skip",
   "CoC7.Migrate.ButtonOkay": "Okay",
 
+  "CoC7.Migrate.TriggerButton": "Trigger Data Migration",
+  "CoC7.Migrate.TriggerTitle": "Trigger Data Migration",
+  "CoC7.Migrate.TriggerContents": "<p>Turn on data migration and restart</p>",
+  "CoC7.Migrate.TriggerRestart": "Save and restart",
+
   "CoC7.Maximize": "Maximize",
   "CoC7.Summarize": "Summarize",
 

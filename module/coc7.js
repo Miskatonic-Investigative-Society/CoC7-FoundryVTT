@@ -14,6 +14,7 @@ import { OpposedCheckCard } from './chat/cards/opposed-roll.js'
 import { CombinedCheckCard } from './chat/cards/combined-roll.js'
 import { DamageCard } from './chat/cards/damage.js'
 import { CoC7Canvas } from './apps/canvas.js'
+import { CoC7SettingsDirectory } from './settings-directory.js'
 import { CoC7CompendiumDirectory } from './compendium-directory.js'
 import { CoC7ActorDirectory } from './actor-directory.js'
 import { CoC7Hooks } from './hooks/index.js'
@@ -174,38 +175,83 @@ Hooks.once('setup', function () {
     }, {})
   }
 
-  let effectIndex = CONFIG.statusEffects.findIndex(t => t.id === 'dead')
+  let effectIndex = CONFIG.statusEffects.findIndex(t => t.id === COC7.status.dead)
   if (effectIndex !== -1) {
     CONFIG.statusEffects[effectIndex].icon =
       'systems/CoC7/assets/icons/tombstone.svg'
   }
-  effectIndex = CONFIG.statusEffects.findIndex(t => t.id === 'unconscious')
+  effectIndex = CONFIG.statusEffects.findIndex(t => t.id === COC7.status.unconscious)
   if (effectIndex !== -1) {
     CONFIG.statusEffects[effectIndex].icon =
       'systems/CoC7/assets/icons/knocked-out-stars.svg'
   }
   CONFIG.statusEffects.unshift(
     {
-      id: 'boutOfMadness',
+      id: COC7.status.tempoInsane,
       label: 'CoC7.BoutOfMadnessName',
       icon: 'systems/CoC7/assets/icons/hanging-spider.svg'
     },
     {
-      id: 'insanity',
+      id: COC7.status.indefInsane,
       label: 'CoC7.InsanityName',
       icon: 'systems/CoC7/assets/icons/tentacles-skull.svg'
     },
     {
-      id: 'criticalWounds',
+      id: COC7.status.criticalWounds,
       label: 'CoC7.CriticalWounds',
       icon: 'systems/CoC7/assets/icons/arm-sling.svg'
     },
     {
-      id: 'dying',
+      id: COC7.status.dying,
       label: 'CoC7.Dying',
       icon: 'systems/CoC7/assets/icons/heart-beats.svg'
     }
   )
+})
+
+Hooks.on('createActiveEffect', (data, options, userId) => {
+  if (typeof data.data.flags.core !== 'undefined' && typeof data.data.flags.core.statusId !== 'undefined') {
+    switch (data.data.flags.core.statusId) {
+      case COC7.status.indefInsane:
+      case COC7.status.unconscious:
+      case COC7.status.criticalWounds:
+      case COC7.status.dying:
+      case COC7.status.prone:
+      case COC7.status.dead:
+        data.parent.setCondition(data.data.flags.core.statusId, { forceValue: true })
+        break
+      case COC7.status.tempoInsane:
+        {
+          const realTime = data.data.flags.CoC7?.realTime
+          let duration = null
+          if (realTime === true) {
+            duration = data.data.duration?.rounds
+          } else if (realTime === false) {
+            duration = data.data.duration?.seconds
+            if (!isNaN(duration)) {
+              duration = Math.floor(duration / 3600)
+            }
+          }
+          data.parent.setCondition(COC7.status.tempoInsane, { forceValue: true, realTime: realTime, duration: duration })
+        }
+        break
+    }
+  }
+})
+
+Hooks.on('deleteActiveEffect', (data, options, userId) => {
+  if (typeof data.data.flags.core !== 'undefined' && typeof data.data.flags.core.statusId !== 'undefined') {
+    switch (data.data.flags.core.statusId) {
+      case COC7.status.tempoInsane:
+      case COC7.status.indefInsane:
+      case COC7.status.unconscious:
+      case COC7.status.criticalWounds:
+      case COC7.status.dying:
+      case COC7.status.prone:
+      case COC7.status.dead:
+        data.parent.unsetCondition(data.data.flags.core.statusId, { forceValue: true })
+    }
+  }
 })
 
 Hooks.on('hotbarDrop', async (bar, data, slot) =>
@@ -476,5 +522,6 @@ function _onLeftClick (event) {
   return event.shiftKey
 }
 
+CONFIG.ui.settings = CoC7SettingsDirectory
 CONFIG.ui.compendium = CoC7CompendiumDirectory
 CONFIG.ui.actors = CoC7ActorDirectory

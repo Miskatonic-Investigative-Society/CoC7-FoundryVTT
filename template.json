@@ -122,33 +122,26 @@
         }
       },
       "status": {
-        "status": {
+        "conditions": {
           "criticalWounds": {
-            "type": "Boolean",
             "value": false
           },
           "unconscious": {
-            "type": "Boolean",
             "value": false
           },
           "dying": {
-            "type": "Boolean",
             "value": false
           },
           "dead": {
-            "type": "Boolean",
             "value": false
           },
           "prone": {
-            "type": "Boolean",
             "value": false
           },
           "tempoInsane": {
-            "type": "boolean",
             "value": false
           },
           "indefInsane": {
-            "type": "boolean",
             "value": false
           }
         }
