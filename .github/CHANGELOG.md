@@ -2,7 +2,12 @@
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
 
+- Updated system for supporting conditions and allow activating conditions from FoundryVTT combat tracker and effects menu
+- Update to rest function to prevent adding more than max hp and mp for chat message
+- Update to NPC sheet to use same icons for dead, indefInsane, prone, tempoInsane, and unconscious as PCs
+- New Korean localization, thanks to @Mero-Pe
 - Update to Spanish localization, thanks to @lozalojo
+- Update to Swedish localization, thanks to @Rangertheman
 
 ## Version 0.7.3:
 
