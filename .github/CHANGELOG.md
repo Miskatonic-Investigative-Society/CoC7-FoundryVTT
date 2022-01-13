@@ -6,6 +6,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Update to rest function to prevent adding more than max hp and mp for chat message
 - Update to NPC sheet to use same icons for dead, indefInsane, prone, tempoInsane, and unconscious as PCs
 - New Korean localization, thanks to @Mero-Pe
+- Update to German localization, thanks to @brockhaus 
 - Update to Spanish localization, thanks to @lozalojo
 - Update to Swedish localization, thanks to @Rangertheman
 
