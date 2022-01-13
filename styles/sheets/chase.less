@@ -6,6 +6,30 @@
   .form-group {
     flex-wrap: nowrap;
     height: 19.5px;
+
+    .icon { //duplicate of chase-card
+      font-size: 1rem;
+      line-height: 1.25rem;
+      padding: 1px 6px;
+      display: inline;
+      flex: 0;
+
+      &.bigger {
+        padding: 1px 4px;
+        font-size: 1.4rem;
+      }
+
+      &.switched-off {
+        display: inline;
+      }
+      &.switched-on {
+        color: red;
+        text-shadow: 0 0 8px red;
+        border: none;
+        background: none;
+        box-shadow: none;
+      }
+    }
   }
 
   .flex-auto {
@@ -40,6 +64,9 @@
             input{
               height: auto;
               font-size: 0.8rem;
+            }
+            .icon{
+              font-size: 1.25rem;
             }
           }
           .location-name {

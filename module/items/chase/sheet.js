@@ -203,7 +203,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     html.find('.name-container').click(this._onLocationClick.bind(this))
 
     html.find('.obstacle-type').click(this._onObstacleTypeClick.bind(this))
-    html.find('.obstacle-toggle').click(this._onObstacleToggleClick.bind(this))
+    // html.find('.obstacle-toggle').click(this._onObstacleToggleClick.bind(this))
     html.find('.toggle').click(this._onToggle.bind(this))
     html
       .find('.participant-control')
@@ -498,20 +498,20 @@ export class CoC7ChaseSheet extends ItemSheet {
     }
   }
 
-  async _onObstacleToggleClick (event) {
-    const target = event.currentTarget
-    const locationElement = target.closest('.obstacle')
-    const uuid = locationElement.dataset.uuid
-    const locations = duplicate(this.item.data.data.locations.list)
-    const locationIndex = this.findIndex(locations, uuid)
-    locations[locationIndex].obstacle = !locations[locationIndex].obstacle
-    if (!locations[locationIndex].obstacleDetails) {
-      locations[locationIndex].obstacleDetails = {
-        barrier: true
-      }
-    }
-    await this.item.updateLocationsList(locations)
-  }
+  // async _onObstacleToggleClick (event) {
+  //   const target = event.currentTarget
+  //   const locationElement = target.closest('.obstacle')
+  //   const uuid = locationElement.dataset.uuid
+  //   const locations = duplicate(this.item.data.data.locations.list)
+  //   const locationIndex = this.findIndex(locations, uuid)
+  //   locations[locationIndex].obstacle = !locations[locationIndex].obstacle
+  //   if (!locations[locationIndex].obstacleDetails) {
+  //     locations[locationIndex].obstacleDetails = {
+  //       barrier: true
+  //     }
+  //   }
+  //   await this.item.updateLocationsList(locations)
+  // }
 
   async _onObstacleTypeClick (event) {
     const target = event.currentTarget
