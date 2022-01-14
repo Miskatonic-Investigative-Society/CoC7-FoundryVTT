@@ -540,6 +540,8 @@
   "CoC7.GateSpell": "Reise- und Transportzauber",
   "CoC7.CombatSpell": "Kampfzauber",
   "CoC7.SpellType": "Zaubertyp",
+  "CoC7.SpellSuccessfullyLearned": "Zauber wurde erfolgreich gelernt!",
+  "CoC7.SpellAlreadyLearned": "Zauber mit diesem Namen wurde bereits gelernt.",
 
   "CoC7.BookHasNothingMoreToTeach": "{book} kann nichts mehr lehren. Cthulhu Mythos Fertigkeit von {actor} ist größer als der Mythoswert.",
   "CoC7.BookType": "Buch Typ",

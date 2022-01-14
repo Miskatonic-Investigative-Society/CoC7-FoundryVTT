@@ -550,6 +550,7 @@
       },
       "effects": [],
       "source": "",
+      "learned": false,
       "type": {
         "bind": false,
         "call": false,
