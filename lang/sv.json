@@ -749,6 +749,11 @@
   "CoC7.Migrate.ButtonSkip": "Hoppa över",
   "CoC7.Migrate.ButtonOkay": "Ok",
 
+  "CoC7.Migrate.TriggerButton": "Starta datamigrering",
+  "CoC7.Migrate.TriggerTitle": "Starta datamigrering",
+  "CoC7.Migrate.TriggerContents": "<p>Slå igång datamigrering och starta om</p>",
+  "CoC7.Migrate.TriggerRestart": "Spara och starta om",
+
   "CoC7.Maximize": "Maximera",
   "CoC7.Summarize": "Begränsad vy",
 
