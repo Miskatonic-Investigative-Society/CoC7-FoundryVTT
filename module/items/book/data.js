@@ -287,7 +287,11 @@ export class CoC7Book extends CoC7Item {
           spelllearned.data.learned = true
         }
         else {
-          ui.notifications.warn(game.i18n.localize('CoC7.SpellAlreadyLearned'))
+          ui.notifications.warn(
+            game.i18n.format('CoC7.SpellAlreadyLearned', {
+              spell: spelllearned.name,
+              book: this.name
+            })            )
         }
         break
       }
@@ -296,7 +300,12 @@ export class CoC7Book extends CoC7Item {
     await this.update({ 'data.spells': this.data.data.spells })
     // Add learned spell to actor
     if (spelllearned.data.learned) {
-      ui.notifications.info(game.i18n.localize('CoC7.SpellSuccessfullyLearned'))
+      ui.notifications.info(
+        game.i18n.format('CoC7.SpellSuccessfullyLearned', {
+          spell: spelllearned.name,
+          book: this.name
+        })
+      )
       const actorSpell = await this.actor.createEmbeddedDocuments('Item', [
         duplicate(spelllearned)
       ])

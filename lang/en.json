@@ -541,8 +541,8 @@
   "CoC7.GateSpell": "Gate",
   "CoC7.CombatSpell": "Combat",
   "CoC7.SpellType": "Spell Type",
-  "CoC7.SpellSuccessfullyLearned": "Spell was learned successfully!",
-  "CoC7.SpellAlreadyLearned": "Spell of that name was already learned.",
+  "CoC7.SpellSuccessfullyLearned": "Spell '{spell}' was learned successfully!",
+  "CoC7.SpellAlreadyLearned": "Spell named ('{spell}') was already learned.",
 
   "CoC7.BookHasNothingMoreToTeach": "{book} has nothing more to teach. Cthulhu Mythos skill of {actor} is greater than this Mythos Rating.",
   "CoC7.BookType": "Book Type",
