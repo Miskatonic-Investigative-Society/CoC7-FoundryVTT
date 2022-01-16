@@ -745,6 +745,16 @@
   "CoC7.Migrate.TriggerContents": "<p>Turn on data migration and restart</p>",
   "CoC7.Migrate.TriggerRestart": "Save and restart",
 
+  "CoC7.Settings.CoreRules.Title": "Core Rule Book Optional Rules",
+  "CoC7.Settings.Rules.Name": "Variant Rules",
+  "CoC7.Settings.Rules.Label": "Configure Variant Rules",
+  "CoC7.Settings.Rules.Hint": "Configure variant rules like Pulp Cthulhu.",
+  "CoC7.Settings.HouseRules.Title": "Common House Rules",
+  "CoC7.Settings.PulpRules.DoubleMaxHealth.Name": "Double maximum health",
+  "CoC7.Settings.PulpRules.DoubleMaxHealth.Hint": "Maximum health is (CON + SIZ) / 5",
+  "CoC7.Settings.PulpRules.DevelopmentRollLuck.Name": "Increase Development Rolls For Luck",
+  "CoC7.Settings.PulpRules.DevelopmentRollLuck.Hint": "Increase luck for failed and successful luck development roll",
+
   "CoC7.Maximize": "Maximize",
   "CoC7.Summarize": "Summarize",
 

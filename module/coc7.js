@@ -29,15 +29,7 @@ import { initECC } from './common/chatcardlib/src/chatcardlib.js'
 Hooks.on('renderSettingsConfig', (app, html, options) => {
   const systemTab = $(app.form).find('.tab[data-tab=system]')
   systemTab
-    .find('input[name=CoC7\\.pulpRules]')
-    .closest('div.form-group')
-    .before(
-      '<h2 class="setting-header">' +
-        game.i18n.localize('SETTINGS.TitleRules') +
-        '</h2>'
-    )
-  systemTab
-    .find('select[name=CoC7\\.initiativeRule]')
+    .find('select[name=CoC7\\.displayInitDices]')
     .closest('div.form-group')
     .before(
       '<h2 class="setting-header">' +

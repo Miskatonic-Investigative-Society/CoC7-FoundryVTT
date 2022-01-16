@@ -1,52 +1,24 @@
 /* global CONFIG, game */
 import { CoC7DecaderDie } from '../apps/decader-die.js'
+import { CoC7GameRuleSettings } from './game-rules.js'
 
 export function registerSettings () {
   /**
    * Rules
    */
-  game.settings.register('CoC7', 'pulpRules', {
-    name: 'SETTINGS.PulpRules',
-    hint: 'SETTINGS.PulpRulesHint',
-    scope: 'world',
-    config: true,
-    default: false,
-    type: Boolean
+  game.settings.registerMenu('CoC7', 'gameRules', {
+    name: 'CoC7.Settings.Rules.Name',
+    label: 'CoC7.Settings.Rules.Label',
+    hint: 'CoC7.Settings.Rules.Hint',
+    icon: 'fas fa-book',
+    type: CoC7GameRuleSettings,
+    restricted: true
   })
-  game.settings.register('CoC7', 'developmentRollForLuck', {
-    name: 'SETTINGS.developmentRollForLuck',
-    hint: 'SETTINGS.developmentRollForLuckHint',
-    scope: 'world',
-    config: true,
-    default: false,
-    type: Boolean
-  })
-  game.settings.register('CoC7', 'opposedRollTieBreaker', {
-    name: 'SETTINGS.OpposedRollTieBreaker',
-    hint: 'SETTINGS.OpposedRollTieBreakerHint',
-    scope: 'wolrd',
-    config: true,
-    default: false,
-    type: Boolean
-  })
+  CoC7GameRuleSettings.registerSettings()
 
   /**
    * Initiative
    */
-  /** Set the initiative rule */
-  game.settings.register('CoC7', 'initiativeRule', {
-    name: 'SETTINGS.InitiativeRule',
-    hint: 'SETTINGS.InitiativeRuleHint',
-    scope: 'world',
-    config: true,
-    default: 'basic',
-    type: String,
-    choices: {
-      basic: 'SETTINGS.InitiativeRuleBasic',
-      optional: 'SETTINGS.InitiativeRuleOptional'
-    },
-    onChange: rule => _setInitiativeOptions(rule)
-  })
   /** Set displaying dices for init roll */
   game.settings.register('CoC7', 'displayInitDices', {
     name: 'SETTINGS.displayInitDices',
@@ -494,22 +466,5 @@ export function registerSettings () {
     decimals: 4
   }
   CONFIG.debug.hooks = !!game.settings.get('CoC7', 'debugmode')
-  function _setInitiativeOptions (rule) {
-    let decimals = 0
-    switch (rule) {
-      case 'optional':
-        decimals = 2
-        break
-      case 'basic':
-        decimals = 0
-        break
-    }
-    CONFIG.Combat.initiative = {
-      formula: null,
-      decimals: decimals
-    }
-  }
-  _setInitiativeOptions(game.settings.get('CoC7', 'initiativeRule'))
-
   CONFIG.Dice.terms.t = CoC7DecaderDie
 }
