@@ -111,6 +111,11 @@
       "name": "한국어",
       "path": "lang/ko.json"
     }
+    {
+      "lang": "it",
+      "name": "Italiano",
+      "path": "lang/it.json"
+    }
   ],
   "socket": true,
   "gridDistance": 5,
