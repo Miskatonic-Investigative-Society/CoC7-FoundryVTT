@@ -281,7 +281,10 @@ export class CoCActor extends Actor {
     // If it's not a real time no need to activate the bout
     if (!realTime) return result
 
-    this.setCondition(COC7.status.tempoInsane, { realTime: realTime, duration: duration })
+    this.setCondition(COC7.status.tempoInsane, {
+      realTime: realTime,
+      duration: duration
+    })
 
     // const effect = this.effects.get( effectData._id);
     // effect.sheet.render(true);
@@ -1437,7 +1440,7 @@ export class CoCActor extends Actor {
         return Math.floor(
           (this.data.data.characteristics.siz.value +
             this.data.data.characteristics.con.value) /
-            (game.settings.get('CoC7', 'pulpRules') &&
+            (game.settings.get('CoC7', 'pulpRuleDoubleMaxHealth') &&
             this.data.type === 'character'
               ? 5
               : 10)
@@ -2826,11 +2829,14 @@ export class CoCActor extends Actor {
   async developLuck (fastForward = false) {
     const currentLuck = this.data.data.attribs.lck.value
     if (!currentLuck) await this.update({ 'data.attribs.lck.value': 0 })
-    const pulpRulesActivated = game.settings.get('CoC7', 'pulpRules')
+    const pulpRuleDevelopmentRollLuck = game.settings.get(
+      'CoC7',
+      'pulpRuleDevelopmentRollLuck'
+    )
     const upgradeRoll = (await new Roll('1D100').roll({ async: true })).total
     const higherThanCurrentLuck = upgradeRoll > currentLuck
     let augmentRoll
-    if (pulpRulesActivated) {
+    if (pulpRuleDevelopmentRollLuck) {
       higherThanCurrentLuck
         ? (augmentRoll = '2D10+10')
         : (augmentRoll = '1D10+5')
@@ -2839,7 +2845,7 @@ export class CoCActor extends Actor {
     }
     const title = game.i18n.localize('CoC7.RollLuck4Dev')
     let message = '<p class="chat-card">'
-    if (pulpRulesActivated || higherThanCurrentLuck) {
+    if (pulpRuleDevelopmentRollLuck || higherThanCurrentLuck) {
       const augmentValue = (await new Roll(augmentRoll).roll({ async: true }))
         .total
       await this.update({
@@ -2940,9 +2946,19 @@ export class CoCActor extends Actor {
     }
   }
 
-  async setCondition (conditionName, { forceValue = false, justThis = false, realTime = null, duration = null } = {}) {
+  async setCondition (
+    conditionName,
+    {
+      forceValue = false,
+      justThis = false,
+      realTime = null,
+      duration = null
+    } = {}
+  ) {
     if (!forceValue && game.settings.get('CoC7', 'enableStatusIcons')) {
-      const effects = this.effects.filter(effect => effect.data.flags.core?.statusId === conditionName).map(effect => effect.id)
+      const effects = this.effects
+        .filter(effect => effect.data.flags.core?.statusId === conditionName)
+        .map(effect => effect.id)
       const custom = {}
       switch (conditionName) {
         case COC7.status.dead:
@@ -2980,18 +2996,23 @@ export class CoCActor extends Actor {
           break
       }
       if (effects.length === 0) {
-        const effect = CONFIG.statusEffects.filter(effect => effect.id === conditionName)
+        const effect = CONFIG.statusEffects.filter(
+          effect => effect.id === conditionName
+        )
         if (effect.length === 1) {
-          const effectData = mergeObject({
-            label: game.i18n.localize(effect[0].label),
-            icon: effect[0].icon,
-            flags: {
-              core: {
-                statusId: effect[0].id
-              }
+          const effectData = mergeObject(
+            {
+              label: game.i18n.localize(effect[0].label),
+              icon: effect[0].icon,
+              flags: {
+                core: {
+                  statusId: effect[0].id
+                }
+              },
+              disabled: false
             },
-            disabled: false
-          }, custom)
+            custom
+          )
           await super.createEmbeddedDocuments('ActiveEffect', [effectData])
         } else {
           // This doesn't exist in FoundryVTT ActiveEffects?
@@ -3011,7 +3032,9 @@ export class CoCActor extends Actor {
         case COC7.status.dying:
         case COC7.status.prone:
         case COC7.status.dead:
-          await this.update({ [`data.conditions.${conditionName}.value`]: true })
+          await this.update({
+            [`data.conditions.${conditionName}.value`]: true
+          })
           break
         case COC7.status.tempoInsane:
           {
@@ -3023,10 +3046,20 @@ export class CoCActor extends Actor {
                 fields[`data.conditions.${conditionName}.duration`] = duration
               }
             }
-            if (!Object.prototype.hasOwnProperty.call(fields, `data.conditions.${conditionName}.realTime`)) {
+            if (
+              !Object.prototype.hasOwnProperty.call(
+                fields,
+                `data.conditions.${conditionName}.realTime`
+              )
+            ) {
               fields[`data.conditions.${conditionName}.-=realTime`] = null
             }
-            if (!Object.prototype.hasOwnProperty.call(fields, `data.conditions.${conditionName}.duration`)) {
+            if (
+              !Object.prototype.hasOwnProperty.call(
+                fields,
+                `data.conditions.${conditionName}.duration`
+              )
+            ) {
               fields[`data.conditions.${conditionName}.-=duration`] = null
             }
             await this.update(fields)
@@ -3043,7 +3076,9 @@ export class CoCActor extends Actor {
               !this.hasConditionStatus(COC7.status.unconscious) &&
               !this.hasConditionStatus(COC7.status.dead)
             ) {
-              const conCheck = new CoC7ConCheck(this.isToken ? this.tokenKey : this.id)
+              const conCheck = new CoC7ConCheck(
+                this.isToken ? this.tokenKey : this.id
+              )
               conCheck.toMessage()
             }
             break
@@ -3059,7 +3094,9 @@ export class CoCActor extends Actor {
 
   async unsetCondition (conditionName, { forceValue = false } = {}) {
     if (!forceValue && game.settings.get('CoC7', 'enableStatusIcons')) {
-      const effects = this.effects.filter(effect => effect.data.flags.core?.statusId === conditionName).map(effect => effect.id)
+      const effects = this.effects
+        .filter(effect => effect.data.flags.core?.statusId === conditionName)
+        .map(effect => effect.id)
       if (effects.length > 0) {
         await super.deleteEmbeddedDocuments('ActiveEffect', effects)
       } else {
@@ -3075,7 +3112,9 @@ export class CoCActor extends Actor {
         case COC7.status.dying:
         case COC7.status.prone:
         case COC7.status.dead:
-          await this.update({ [`data.conditions.${conditionName}.value`]: false })
+          await this.update({
+            [`data.conditions.${conditionName}.value`]: false
+          })
           break
       }
     }

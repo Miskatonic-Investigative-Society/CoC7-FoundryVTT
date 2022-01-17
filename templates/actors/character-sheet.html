@@ -8,7 +8,7 @@
           <label style="width: fit-content; flex: unset; line-height: 18px;">{{ localize 'CoC7.Name' }} :</label>
           <input name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
         </div>
-        {{#if pulpCharacter}}
+        {{#if pulpRuleArchetype}}
         <div class="form-group">
           <label>{{ localize 'CoC7.Archetype' }} :</label>
           {{#if data.infos.archetypeSet}}
@@ -20,6 +20,8 @@
             <input name="data.infos.archetype" type="text" value="{{data.infos.archetype}}"/>
           {{/if}}
         </div>
+        {{/if}}
+        {{#if pulpRuleOrganization}}
         <div class="form-group">
           <label>{{ localize 'CoC7.Organization' }} :</label>
           <input name="data.infos.organization" type="text" value="{{data.infos.organization}}"/>

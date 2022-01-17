@@ -150,6 +150,17 @@ export class Updater {
       }
     }
 
+    // Migrate Settings
+    if (game.settings.get('CoC7', 'pulpRules')) {
+      game.settings.set('CoC7', 'pulpRules', false)
+      game.settings.set('CoC7', 'pulpRuleDoubleMaxHealth', true)
+      game.settings.set('CoC7', 'pulpRuleDevelopmentRollLuck', true)
+      game.settings.set('CoC7', 'pulpRuleArchetype', true)
+      game.settings.set('CoC7', 'pulpRuleOrganization', true)
+      game.settings.set('CoC7', 'pulpRuleTalents', true)
+      game.settings.set('CoC7', 'pulpRuleFasterRecovery', true)
+    }
+
     const settings = mergeObject(this.updatedModules || {}, this.currentModules)
     game.settings.set('CoC7', 'systemUpdatedModuleVersion', settings)
     game.settings.set('CoC7', 'systemUpdateVersion', game.system.data.version)
@@ -503,7 +514,10 @@ export class Updater {
   }
 
   static _migrateActorStatusEffectActive (actor, updateData) {
-    if (typeof actor.data.status !== 'undefined' || typeof actor.data.conditions === 'undefined') {
+    if (
+      typeof actor.data.status !== 'undefined' ||
+      typeof actor.data.conditions === 'undefined'
+    ) {
       updateData['data.conditions.criticalWounds.value'] = false
       updateData['data.conditions.unconscious.value'] = false
       updateData['data.conditions.dying.value'] = false
@@ -511,32 +525,55 @@ export class Updater {
       updateData['data.conditions.prone.value'] = false
       updateData['data.conditions.tempoInsane.value'] = false
       updateData['data.conditions.indefInsane.value'] = false
-      if (typeof actor.data.status.criticalWounds.value !== 'undefined' && actor.data.status.criticalWounds.value) {
+      if (
+        typeof actor.data.status.criticalWounds.value !== 'undefined' &&
+        actor.data.status.criticalWounds.value
+      ) {
         updateData['data.conditions.criticalWounds.value'] = true
       }
-      if (typeof actor.data.status.unconscious.value !== 'undefined' && actor.data.status.unconscious.value) {
+      if (
+        typeof actor.data.status.unconscious.value !== 'undefined' &&
+        actor.data.status.unconscious.value
+      ) {
         updateData['data.conditions.unconscious.value'] = true
       }
-      if (typeof actor.data.status.dying.value !== 'undefined' && actor.data.status.dying.value) {
+      if (
+        typeof actor.data.status.dying.value !== 'undefined' &&
+        actor.data.status.dying.value
+      ) {
         updateData['data.conditions.dying.value'] = true
       }
-      if (typeof actor.data.status.dead.value !== 'undefined' && actor.data.status.dead.value) {
+      if (
+        typeof actor.data.status.dead.value !== 'undefined' &&
+        actor.data.status.dead.value
+      ) {
         updateData['data.conditions.dead.value'] = true
       }
-      if (typeof actor.data.status.prone.value !== 'undefined' && actor.data.status.prone.value) {
+      if (
+        typeof actor.data.status.prone.value !== 'undefined' &&
+        actor.data.status.prone.value
+      ) {
         updateData['data.conditions.prone.value'] = true
       }
-      if (typeof actor.data.status.tempoInsane.value !== 'undefined' && actor.data.status.tempoInsane.value) {
+      if (
+        typeof actor.data.status.tempoInsane.value !== 'undefined' &&
+        actor.data.status.tempoInsane.value
+      ) {
         updateData['data.conditions.tempoInsane.value'] = true
       }
-      if (typeof actor.data.status.indefInsane.value !== 'undefined' && actor.data.status.indefInsane.value) {
+      if (
+        typeof actor.data.status.indefInsane.value !== 'undefined' &&
+        actor.data.status.indefInsane.value
+      ) {
         updateData['data.conditions.indefInsane.value'] = true
       }
       const effects = actor.effects
       let changed = false
       for (let i = 0, im = effects.length; i < im; i++) {
         const effect = effects[i]
-        const match = effect.icon.match(/\/(hanging-spider|tentacles-skull|arm-sling|heart-beats|tombstone|knocked-out-stars|falling|skull|unconscious)\./)
+        const match = effect.icon.match(
+          /\/(hanging-spider|tentacles-skull|arm-sling|heart-beats|tombstone|knocked-out-stars|falling|skull|unconscious)\./
+        )
         if (match !== null) {
           let statusId = ''
           switch (match[1]) {

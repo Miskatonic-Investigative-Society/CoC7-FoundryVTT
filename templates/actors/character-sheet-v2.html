@@ -17,7 +17,7 @@
 					<input name="data.infos.playername" type="text" value="{{data.infos.playername}}"/>
 				</div>
 				{{/if}}
-				{{#if pulpCharacter}}
+				{{#if pulpRuleArchetype}}
 				<div class="row flexrow">
 					<label>{{ localize 'CoC7.Archetype' }} :</label>
 					{{#if data.infos.archetypeSet}}
@@ -29,6 +29,8 @@
 						<input name="data.infos.archetype" type="text" value="{{data.infos.archetype}}"/>
 					{{/if}}
 				</div>
+        {{/if}}
+        {{#if pulpRuleOrganization}}
 				<div class="row flexrow">
 					<label>{{ localize 'CoC7.Organization' }} :</label>
 					<input name="data.infos.organization" type="text" value="{{data.infos.organization}}"/>

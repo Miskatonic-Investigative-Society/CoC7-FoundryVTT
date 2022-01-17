@@ -189,7 +189,7 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
       !data.data.flags.locked
     data.showInventoryTalents =
       Object.prototype.hasOwnProperty.call(data.itemsByType, 'talent') ||
-      !data.data.flags.locked
+      (!data.data.flags.locked && game.settings.get('CoC7', 'pulpRuleTalents'))
     data.showInventoryStatuses =
       Object.prototype.hasOwnProperty.call(data.itemsByType, 'status') ||
       !data.data.flags.locked

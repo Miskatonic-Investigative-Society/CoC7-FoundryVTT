@@ -29,7 +29,7 @@ import { initECC } from './common/chatcardlib/src/chatcardlib.js'
 Hooks.on('renderSettingsConfig', (app, html, options) => {
   const systemTab = $(app.form).find('.tab[data-tab=system]')
   systemTab
-    .find('select[name=CoC7\\.displayInitDices]')
+    .find('input[name=CoC7\\.displayInitDices]')
     .closest('div.form-group')
     .before(
       '<h2 class="setting-header">' +
@@ -167,12 +167,16 @@ Hooks.once('setup', function () {
     }, {})
   }
 
-  let effectIndex = CONFIG.statusEffects.findIndex(t => t.id === COC7.status.dead)
+  let effectIndex = CONFIG.statusEffects.findIndex(
+    t => t.id === COC7.status.dead
+  )
   if (effectIndex !== -1) {
     CONFIG.statusEffects[effectIndex].icon =
       'systems/CoC7/assets/icons/tombstone.svg'
   }
-  effectIndex = CONFIG.statusEffects.findIndex(t => t.id === COC7.status.unconscious)
+  effectIndex = CONFIG.statusEffects.findIndex(
+    t => t.id === COC7.status.unconscious
+  )
   if (effectIndex !== -1) {
     CONFIG.statusEffects[effectIndex].icon =
       'systems/CoC7/assets/icons/knocked-out-stars.svg'
@@ -202,7 +206,10 @@ Hooks.once('setup', function () {
 })
 
 Hooks.on('createActiveEffect', (data, options, userId) => {
-  if (typeof data.data.flags.core !== 'undefined' && typeof data.data.flags.core.statusId !== 'undefined') {
+  if (
+    typeof data.data.flags.core !== 'undefined' &&
+    typeof data.data.flags.core.statusId !== 'undefined'
+  ) {
     switch (data.data.flags.core.statusId) {
       case COC7.status.indefInsane:
       case COC7.status.unconscious:
@@ -210,7 +217,9 @@ Hooks.on('createActiveEffect', (data, options, userId) => {
       case COC7.status.dying:
       case COC7.status.prone:
       case COC7.status.dead:
-        data.parent.setCondition(data.data.flags.core.statusId, { forceValue: true })
+        data.parent.setCondition(data.data.flags.core.statusId, {
+          forceValue: true
+        })
         break
       case COC7.status.tempoInsane:
         {
@@ -224,7 +233,11 @@ Hooks.on('createActiveEffect', (data, options, userId) => {
               duration = Math.floor(duration / 3600)
             }
           }
-          data.parent.setCondition(COC7.status.tempoInsane, { forceValue: true, realTime: realTime, duration: duration })
+          data.parent.setCondition(COC7.status.tempoInsane, {
+            forceValue: true,
+            realTime: realTime,
+            duration: duration
+          })
         }
         break
     }
@@ -232,7 +245,10 @@ Hooks.on('createActiveEffect', (data, options, userId) => {
 })
 
 Hooks.on('deleteActiveEffect', (data, options, userId) => {
-  if (typeof data.data.flags.core !== 'undefined' && typeof data.data.flags.core.statusId !== 'undefined') {
+  if (
+    typeof data.data.flags.core !== 'undefined' &&
+    typeof data.data.flags.core.statusId !== 'undefined'
+  ) {
     switch (data.data.flags.core.statusId) {
       case COC7.status.tempoInsane:
       case COC7.status.indefInsane:
@@ -241,7 +257,9 @@ Hooks.on('deleteActiveEffect', (data, options, userId) => {
       case COC7.status.dying:
       case COC7.status.prone:
       case COC7.status.dead:
-        data.parent.unsetCondition(data.data.flags.core.statusId, { forceValue: true })
+        data.parent.unsetCondition(data.data.flags.core.statusId, {
+          forceValue: true
+        })
     }
   }
 })
