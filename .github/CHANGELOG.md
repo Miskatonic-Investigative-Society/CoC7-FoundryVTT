@@ -1,9 +1,9 @@
 ## Changes coming in a future release:
 
-When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
-- Updated system for supporting conditions and allow activating conditions from FoundryVTT combat tracker and effects menu
-- Update to rest function to prevent adding more than max hp and mp for chat message
+- Replace effect and status with conditions. Allow activating conditions from FoundryVTT combat tracker and effects menu as well as the character sheets
+- Update rest function to prevent showing more than max hp or mp was added to the chat summary message
 - Update to NPC sheet to use same icons for dead, indefInsane, prone, tempoInsane, and unconscious as PCs
 - New Italian localization, thanks to @Stefano1975t
 - New Korean localization, thanks to @Mero-Pe
