@@ -2,6 +2,7 @@
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix showing Actor / Item create dialog box dropdown translations
 - Replace effect and status with conditions. Allow activating conditions from FoundryVTT combat tracker and effects menu as well as the character sheets
 - Update rest function to prevent showing more than max hp or mp was added to the chat summary message
 - Update to NPC sheet to use same icons for dead, indefInsane, prone, tempoInsane, and unconscious as PCs
