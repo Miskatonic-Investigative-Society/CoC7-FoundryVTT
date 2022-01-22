@@ -7,6 +7,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Update to NPC sheet to use same icons for dead, indefInsane, prone, tempoInsane, and unconscious as PCs
 - New Italian localization, thanks to @Stefano1975t
 - New Korean localization, thanks to @Mero-Pe
+- Update to French localization, thanks to @vonv
 - Update to German localization, thanks to @brockhaus
 - Update to Spanish localization, thanks to @lozalojo
 - Update to Swedish localization, thanks to @Rangertheman
