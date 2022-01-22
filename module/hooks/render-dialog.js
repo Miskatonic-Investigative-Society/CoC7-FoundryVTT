@@ -2,7 +2,7 @@
 export function listen () {
   Hooks.on('renderDialog', (dialog, html) => {
     const form = html.find('form')
-    if (form.is('#entity-create') && form.find('select').length !== 0) {
+    if (form.is('#document-create') && form.find('select').length !== 0) {
       const entityCreateSelectTag = form.find("[name='type']")
       const entitySortedList = []
       const showExperimental = !!game.settings.get(
