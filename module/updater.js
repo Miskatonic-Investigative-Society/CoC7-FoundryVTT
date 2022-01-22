@@ -150,15 +150,15 @@ export class Updater {
       }
     }
 
-    // Migrate Settings
+    // Migrate Settings if Pulp Rules is enabled turn on all rules
     if (game.settings.get('CoC7', 'pulpRules')) {
-      game.settings.set('CoC7', 'pulpRules', false)
       game.settings.set('CoC7', 'pulpRuleDoubleMaxHealth', true)
       game.settings.set('CoC7', 'pulpRuleDevelopmentRollLuck', true)
       game.settings.set('CoC7', 'pulpRuleArchetype', true)
       game.settings.set('CoC7', 'pulpRuleOrganization', true)
       game.settings.set('CoC7', 'pulpRuleTalents', true)
       game.settings.set('CoC7', 'pulpRuleFasterRecovery', true)
+      game.settings.set('CoC7', 'pulpRuleIgnoreMajorWounds', true)
     }
 
     const settings = mergeObject(this.updatedModules || {}, this.currentModules)

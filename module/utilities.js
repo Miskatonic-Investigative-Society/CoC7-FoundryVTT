@@ -480,7 +480,7 @@ export class CoC7Utilities {
             }
           }
         }
-        const isCriticalWounds = actor.hasCondition(COC7.status.criticalWounds)
+        const isCriticalWounds = (!game.settings.get('CoC7', 'pulpRuleIgnoreMajorWounds') && actor.hasCondition(COC7.status.criticalWounds))
         const dailySanityLoss = actor.data.data.attribs.san.dailyLoss
         const hpValue = actor.data.data.attribs.hp.value
         const hpMax = actor.data.data.attribs.hp.max

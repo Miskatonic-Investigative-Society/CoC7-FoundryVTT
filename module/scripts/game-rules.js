@@ -77,6 +77,14 @@ const SETTINGS = {
     default: false,
     type: Boolean
   },
+  pulpRuleIgnoreMajorWounds: {
+    name: 'CoC7.Settings.PulpRules.IgnoreMajorWounds.Name',
+    hint: 'CoC7.Settings.PulpRules.IgnoreMajorWounds.Hint',
+    scope: 'world',
+    config: false,
+    default: false,
+    type: Boolean
+  },
   opposedRollTieBreaker: {
     name: 'SETTINGS.OpposedRollTieBreaker',
     hint: 'SETTINGS.OpposedRollTieBreakerHint',
@@ -203,8 +211,16 @@ export class CoC7GameRuleSettings extends FormApplication {
   }
 
   async _updateObject (event, data) {
+    const pulpRules = {
+      true: false,
+      false: false
+    }
     for await (const key of Object.keys(SETTINGS)) {
       game.settings.set('CoC7', key, data[key])
+      if (key.match(/^pulpRule.{2,}$/)) {
+        pulpRules[data[key]] = true
+      }
     }
+    game.settings.set('CoC7', 'pulpRules', pulpRules.true && !pulpRules.false)
   }
 }

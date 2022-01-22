@@ -762,6 +762,8 @@
   "CoC7.Settings.PulpRules.Talents.Hint": "",
   "CoC7.Settings.PulpRules.FasterRecovery.Name": "Faster Recovery",
   "CoC7.Settings.PulpRules.FasterRecovery.Hint": "Natural healing is increased to two hit points per day",
+  "CoC7.Settings.PulpRules.IgnoreMajorWounds.Name": "Ignore Major Wounds",
+  "CoC7.Settings.PulpRules.IgnoreMajorWounds.Hint": "",
 
   "CoC7.Maximize": "Maximize",
   "CoC7.Summarize": "Summarize",
