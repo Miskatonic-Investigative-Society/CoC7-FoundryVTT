@@ -2,7 +2,9 @@
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Add ignore major wounds rule for Pulp rules
 - Fix showing Actor / Item create dialog box dropdown translations
+- Split Pulp rules into individual options
 - Replace effect and status with conditions. Allow activating conditions from FoundryVTT combat tracker and effects menu as well as the character sheets
 - Update rest function to prevent showing more than max hp or mp was added to the chat summary message
 - Update to NPC sheet to use same icons for dead, indefInsane, prone, tempoInsane, and unconscious as PCs
@@ -10,6 +12,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - New Korean localization, thanks to @Mero-Pe
 - Update to French localization, thanks to @vonv
 - Update to German localization, thanks to @brockhaus
+- Update to Polish localization, thanks to @everyonecancode
 - Update to Spanish localization, thanks to @lozalojo
 - Update to Swedish localization, thanks to @Rangertheman
 
