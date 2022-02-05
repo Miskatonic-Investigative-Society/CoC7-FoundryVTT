@@ -10,6 +10,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Update to NPC sheet to use same icons for dead, indefInsane, prone, tempoInsane, and unconscious as PCs
 - New Italian localization, thanks to @Stefano1975t
 - New Korean localization, thanks to @Mero-Pe
+- Now it is possible to learn spell directly from books, thanks to @brockhaus
 - Update to French localization, thanks to @vonv
 - Update to German localization, thanks to @brockhaus
 - Update to Polish localization, thanks to @everyonecancode
