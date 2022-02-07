@@ -551,6 +551,9 @@
   "CoC7.CombatSpell": "Strid",
   "CoC7.SpellType": "Besvärjelsetyp",
 
+  "CoC7.SpellSuccessfullyLearned": "Besvärjelsen '{spell}' har lärts in!",
+  "CoC7.SpellAlreadyLearned": "Besvärjelsen med namnet ('{spell}') hade redan lärts in.",
+
   "CoC7.BookHasNothingMoreToTeach": "Det går inte att lära sig mer av {book}. {actor} har ett högre färdighetsvärde i Cthulhumyten än bokens mythosvärde.",
   "CoC7.BookType": "Boktyp",
   "CoC7.MythosBook": "Mythosbok",
