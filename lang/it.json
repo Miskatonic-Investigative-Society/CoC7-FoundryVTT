@@ -541,6 +541,8 @@
   "CoC7.GateSpell": "Portale",
   "CoC7.CombatSpell": "Combattere",
   "CoC7.SpellType": "Tipo di Incantesimo",
+  "CoC7.SpellSuccessfullyLearned": "L'incantesimo '{spell}' è stato imparato con successo!",
+  "CoC7.SpellAlreadyLearned": "L'incantesimo chiamato ('{spell}') era già stato imparato.",
 
   "CoC7.BookHasNothingMoreToTeach": "{book} non ha più niente da insegnare. L'abilità Miti di Cthulhu di {actor} è maggiore del Valore di questo Mito.",
   "CoC7.BookType": "Tipo di libro",
