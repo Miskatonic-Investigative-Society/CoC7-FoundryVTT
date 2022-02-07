@@ -6,7 +6,7 @@ The following translations have been abandoned **cn**, **cs**, [are you able to 
 
 | Key                                                                                               |    de    |    es    |    fr    |    it    |    ja    |    ko    |    pl    |  pt-BR   |    sv    |  zh-TW   |
 | :------------------------------------------------------------------------------------------------ | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-| **Remaining**:                                                                                    |  **29**  |  **25**  |  **21**  |  **25**  |  **27**  |  **34**  |  **24**  |  **27**  |  **2**   |  **27**  |
+| **Remaining**:                                                                                    |  **29**  |  **25**  |  **21**  |  **23**  |  **27**  |  **34**  |  **24**  |  **27**  |  **2**   |  **27**  |
 | [CoC7.Copied](#coc7copied)                                                                        | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.EraAvailability](#coc7eraavailability)                                                      | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
 | [CoC7.German](#coc7german)                                                                        | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
@@ -35,8 +35,8 @@ The following translations have been abandoned **cn**, **cs**, [are you able to 
 | [CoC7.Settings.Rules.Hint](#coc7settingsruleshint)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
 | [CoC7.Settings.Rules.Label](#coc7settingsruleslabel)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
 | [CoC7.Settings.Rules.Name](#coc7settingsrulesname)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
-| [CoC7.SpellAlreadyLearned](#coc7spellalreadylearned)                                              | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.SpellSuccessfullyLearned](#coc7spellsuccessfullylearned)                                    | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.SpellAlreadyLearned](#coc7spellalreadylearned)                                              | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.SpellSuccessfullyLearned](#coc7spellsuccessfullylearned)                                    | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 | [CoC7.allActors](#coc7allactors)                                                                  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.getTheExample](#coc7gettheexample)                                                          | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 | [CoC7.restTargets](#coc7resttargets)                                                              | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
