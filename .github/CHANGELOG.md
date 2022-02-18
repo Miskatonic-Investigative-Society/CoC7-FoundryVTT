@@ -1,4 +1,4 @@
-## Changes coming in a future release:
+## Version 0.7.4:
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
@@ -14,6 +14,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Update to French localization, thanks to @vonv
 - Update to German localization, thanks to @brockhaus
 - Update to Polish localization, thanks to @everyonecancode
+- Update to Portuguese localization
 - Update to Spanish localization, thanks to @lozalojo
 - Update to Swedish localization, thanks to @Rangertheman
 
