@@ -3103,7 +3103,7 @@ export class CoCActor extends Actor {
         forceValue = true
       }
     }
-    if (forceValue) {
+    if (forceValue || !game.settings.get('CoC7', 'enableStatusIcons')) {
       switch (conditionName) {
         case COC7.status.tempoInsane:
         case COC7.status.indefInsane:
