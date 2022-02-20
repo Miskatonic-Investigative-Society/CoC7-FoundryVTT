@@ -1,8 +1,10 @@
-## Changes coming in a future release:
+## Version 0.7.5:
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Fix unable to remove conditions (prone, unconscious, insanity, etc) when the setting "Scene Settings / Enable status icons" is disabled
+- Now rest is available again
+- Remove myterious button that produces mysterious messages
 
 ## Version 0.7.4:
 
