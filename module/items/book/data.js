@@ -45,10 +45,11 @@ export class CoC7Book extends CoC7Item {
   }
 
   async spellDetail (index) {
+    const isKeeper = game.user.isGM
     const data = this.data.data.spells[index]
     const parent = this.actor ? this.actor : null
     const spell = new CoC7Spell(data, { parent, bookId: this.id })
-    if (spell.data.data.learned) {
+    if (isKeeper || spell.data.data.learned) {
       return await spell.sheet.render(true)
     }
   }
