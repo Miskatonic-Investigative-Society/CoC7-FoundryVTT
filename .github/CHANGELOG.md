@@ -1,12 +1,28 @@
-## Changes coming in a future release:
+## Version 0.7.5:
 
-When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
-- Updated system for supporting conditions and allow activating conditions from FoundryVTT combat tracker and effects menu
-- Update to rest function to prevent adding more than max hp and mp for chat message
+- Fix unable to remove conditions (prone, unconscious, insanity, etc) when the setting "Scene Settings / Enable status icons" is disabled
+- Now rest is available again
+- Remove myterious button that produces mysterious messages
+
+## Version 0.7.4:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Add ignore major wounds rule for Pulp rules
+- Fix showing Actor / Item create dialog box dropdown translations
+- Split Pulp rules into individual options
+- Replace effect and status with conditions. Allow activating conditions from FoundryVTT combat tracker and effects menu as well as the character sheets
+- Update rest function to prevent showing more than max hp or mp was added to the chat summary message
 - Update to NPC sheet to use same icons for dead, indefInsane, prone, tempoInsane, and unconscious as PCs
+- New Italian localization, thanks to @Stefano1975t
 - New Korean localization, thanks to @Mero-Pe
-- Update to German localization, thanks to @brockhaus 
+- Now it is possible to learn spell directly from books, thanks to @brockhaus
+- Update to French localization, thanks to @vonv
+- Update to German localization, thanks to @brockhaus
+- Update to Polish localization, thanks to @everyonecancode
+- Update to Portuguese localization
 - Update to Spanish localization, thanks to @lozalojo
 - Update to Swedish localization, thanks to @Rangertheman
 

@@ -23,7 +23,7 @@
               <label>{{localize 'CoC7.Occupation'}}</label>
               <input name="data.infos.occupation" type="text" value="{{data.infos.occupation}}"/>
             </div>
-            {{#if pulpCharacter}}
+            {{#if pulpRuleOrganization}}
             <div class="flexrow flex2">
               <label>{{localize 'CoC7.Organization'}}</label>
               <input name="data.infos.organization" type="text" value="{{data.infos.organization}}"/>
@@ -369,7 +369,7 @@
           </div>
           <div class="keeper pannel expanded resizededitor">
             {{editor content=data.description.keeper target="data.description.keeper" button=true owner=owner editable=editable}}
-            <div><a class="clear_conditions">Clear All Conditions</a></div>
+            <div><a class="clear_conditions button">Clear All Conditions</a></div>
           </div>
         </section>
       {{/if}}

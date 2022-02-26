@@ -480,7 +480,7 @@ export class CoC7Utilities {
             }
           }
         }
-        const isCriticalWounds = actor.hasCondition(COC7.status.criticalWounds)
+        const isCriticalWounds = (!game.settings.get('CoC7', 'pulpRuleIgnoreMajorWounds') && actor.hasConditionStatus(COC7.status.criticalWounds))
         const dailySanityLoss = actor.data.data.attribs.san.dailyLoss
         const hpValue = actor.data.data.attribs.hp.value
         const hpMax = actor.data.data.attribs.hp.max
@@ -490,39 +490,41 @@ export class CoC7Utilities {
         const mpMax = actor.data.data.attribs.mp.max
         const pow = actor.data.data.characteristics.pow.value
         chatContent = chatContent + `<br><b>${actor.name}. </b>`
-        if (isCriticalWounds === false && hpValue < hpMax) {
-          if (game.settings.get('CoC7', 'pulpRules')) {
-            let healAmount = 2
-            if (quickHealer === true) {
-              healAmount = 3
-            }
-            healAmount = Math.min(healAmount, hpMax - hpValue)
+        if (hpValue < hpMax) {
+          if (isCriticalWounds === true) {
             chatContent =
               chatContent +
-              `<b style="color:darkolivegreen">${game.i18n.format(
-                'CoC7.pulpHealthRecovered',
-                { number: healAmount }
+              `<b style="color:darkred">${game.i18n.localize(
+                'CoC7.hasCriticalWounds'
               )}. </b>`
+          } else {
+            let healAmount = 1
+            if (game.settings.get('CoC7', 'pulpRuleFasterRecovery')) {
+              healAmount = 2
+            }
+            if (quickHealer === true) {
+              healAmount++
+            }
+            healAmount = Math.min(healAmount, hpMax - hpValue)
+            if (healAmount === 1) {
+              chatContent =
+                chatContent +
+                `<b style="color:darkolivegreen">${game.i18n.localize(
+                  'CoC7.healthRecovered'
+                )}. </b>`
+            } else {
+              chatContent =
+                chatContent +
+                `<b style="color:darkolivegreen">${game.i18n.format(
+                  'CoC7.pulpHealthRecovered',
+                  { number: healAmount }
+                )}. </b>`
+            }
             actor.update({
               'data.attribs.hp.value':
                 actor.data.data.attribs.hp.value + healAmount
             })
-          } else {
-            chatContent =
-              chatContent +
-              `<b style="color:darkolivegreen">${game.i18n.localize(
-                'CoC7.healthRecovered'
-              )}. </b>`
-            actor.update({
-              'data.attribs.hp.value': actor.data.data.attribs.hp.value + 1
-            })
           }
-        } else if (isCriticalWounds === true && hpValue < hpMax) {
-          chatContent =
-            chatContent +
-            `<b style="color:darkred">${game.i18n.localize(
-              'CoC7.hasCriticalWounds'
-            )}. </b>`
         }
         if (dailySanityLoss > 0) {
           chatContent =

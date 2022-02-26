@@ -201,7 +201,11 @@ export class CoC7ActorSheet extends ActorSheet {
       if (!data.data.biography) data.data.biography = []
       if (!data.data.encounteredCreatures) data.data.encounteredCreatures = []
 
-      data.pulpCharacter = game.settings.get('CoC7', 'pulpRules')
+      data.pulpRuleArchetype = game.settings.get('CoC7', 'pulpRuleArchetype')
+      data.pulpRuleOrganization = game.settings.get(
+        'CoC7',
+        'pulpRuleOrganization'
+      )
     }
 
     data.isDead = this.actor.dead
@@ -729,7 +733,9 @@ export class CoC7ActorSheet extends ActorSheet {
       // Status monitor
       if (game.user.isGM || game.settings.get('CoC7', 'statusPlayerEditable')) {
         html.find('.reset-counter').click(this._onResetCounter.bind(this))
-        html.find('.condition-monitor').click(this._onConditionToggle.bind(this))
+        html
+          .find('.condition-monitor')
+          .click(this._onConditionToggle.bind(this))
         html.find('.is-dying').click(this.heal.bind(this))
         html.find('.is-dead').click(this.revive.bind(this))
       }
@@ -864,7 +870,11 @@ export class CoC7ActorSheet extends ActorSheet {
       if (typeof this.actor.data.data.conditions !== 'undefined') {
         const disable = {}
         for (const condition in this.actor.data.data.conditions) {
-          if (typeof this.actor.data.data.conditions[condition].value !== 'undefined' && this.actor.data.data.conditions[condition].value === true) {
+          if (
+            typeof this.actor.data.data.conditions[condition].value !==
+              'undefined' &&
+            this.actor.data.data.conditions[condition].value === true
+          ) {
             disable[`data.conditions.${condition}.value`] = false
           }
         }

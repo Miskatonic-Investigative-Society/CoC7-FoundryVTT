@@ -17,7 +17,7 @@
 					<input name="data.infos.playername" type="text" value="{{data.infos.playername}}"/>
 				</div>
 				{{/if}}
-				{{#if pulpCharacter}}
+				{{#if pulpRuleArchetype}}
 				<div class="row flexrow">
 					<label>{{ localize 'CoC7.Archetype' }} :</label>
 					{{#if data.infos.archetypeSet}}
@@ -29,6 +29,8 @@
 						<input name="data.infos.archetype" type="text" value="{{data.infos.archetype}}"/>
 					{{/if}}
 				</div>
+        {{/if}}
+        {{#if pulpRuleOrganization}}
 				<div class="row flexrow">
 					<label>{{ localize 'CoC7.Organization' }} :</label>
 					<input name="data.infos.organization" type="text" value="{{data.infos.organization}}"/>
@@ -163,7 +165,6 @@
 		<section class="sheet-body">
 			<div class="two-panes-content">
 				<div class="left-panel">
-					<a class="test-trigger"><i class="fas fa-vials"></i></a>
 					{{#if showDevPannel}}
 						{{> "systems/CoC7/templates/actors/parts/development-controls.html"}}
 					{{else}}
@@ -203,7 +204,7 @@
               <div style="height: calc(100% - 20px);">
                 {{editor content=data.description.keeper target="data.description.keeper" button=true owner=owner editable=editable}}
               </div>
-              <div><a class="clear_conditions">Clear All Conditions</a></div>
+              <div><a class="clear_conditions button">Clear All Conditions</a></div>
             </div>
           {{/if}}
 				</div>

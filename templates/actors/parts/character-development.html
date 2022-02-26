@@ -10,7 +10,7 @@
 		<span>{{totalOccupation}}/</span>
 		<input class="{{#if invalidOccupationPoints}}warning{{/if}}" type="text" name="data.development.occupation"  value="{{data.development.occupation}}" data-dtype="Number" {{#unless allowCharCreation}}readonly{{/unless}}/>
 	</div>
-		{{#if pulpCharacter}}
+		{{#if pulpRuleArchetype}}
 			<div class="header-section {{#if invalidArchetypePoints}}warning{{/if}}" title="{{localize 'CoC7.SkillTotalArchetype'}}">
 				<label>{{localize 'CoC7.SkillTotalArchetype'}}:</label>
 				<span>{{totalArchetype}}/</span>
@@ -67,7 +67,7 @@
 							<i class="far fa-circle"></i>
 						{{/if}}
 					</div>
-					{{#if ../pulpCharacter}}
+					{{#if ../pulpRuleArchetype}}
 					<div class="item-control archetype-skill-flag {{#if../allowCharCreation}}clickable{{/if}}" title="{{localize 'CoC7.ArchetypeSkill'}}">
 						{{#if skill.data.flags.archetype}}
 							<i class="fas fa-circle"></i>
@@ -78,7 +78,7 @@
 					{{/if}}
 				{{/unless}}
 			</div>
-			
+
 			<span class="skill-name {{#if skill.data.flags.developement}}{{#if ../allowDevelopment}}rollable{{/if}} flagged4dev{{/if}}">{{#if skill.data.properties.special}}{{skill.data.specialization}} :{{/if}}{{skill.name}}</span>
 			<div class="adjustment-value not-available" title="{{localize 'CoC7.SkillBase'}}">
 				<input type="text" value="{{skill.data.base}}" data-dtype="Number" readonly>
@@ -97,7 +97,7 @@
 				<input type="text" value="" data-dtype="Number" readonly>
 				{{/if}}
 			</div>
-			{{#if ../pulpCharacter}}
+			{{#if ../pulpRuleArchetype}}
 			<div class="adjustment-value {{#unless skill.data.flags.archetype}}not-available{{/unless}}" title="{{localize 'CoC7.SkillArchetype'}}">
 				{{#if skill.data.flags.archetype}}
 				<input type="text" class="skill-adjustment" name="data.adjustments.archetype" value="{{skill.data.adjustments.archetype}}" data-dtype="Number" {{#unless ../allowCharCreation}}readonly{{/unless}}>
