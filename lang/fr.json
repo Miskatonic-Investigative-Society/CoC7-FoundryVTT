@@ -808,7 +808,7 @@
   "SETTINGS.showIconsOnly": "Sur la fiche compacte, n'afficher que les icônes dans la liste des compétences.",
   "SETTINGS.UseToken": "Utiliser le portrait des tokens",
   "SETTINGS.UseTokenHint": "Utiliser le portrait du token au lieu du portrait du personnage dans les cartes de dialogue",
-  "SETTINGS.DisplayActorOnCard": "Afficher le portrait sur les carte de dialogue",
+  "SETTINGS.DisplayActorOnCard": "Afficher le portrait sur les cartes de dialogue",
   "SETTINGS.DisplayActorOnCardHint": "Afficher le portrait sur les cartes de combat",
   "SETTINGS.InitiativeRule": "Règle d'initiative",
   "SETTINGS.InitiativeRuleHint": "Vous pouvez sélectionner la règle d'initiative [Basique] (en utilisant la valeur DEX) ou [Optionnelle] (en utilisant les degrés de réussite)",
