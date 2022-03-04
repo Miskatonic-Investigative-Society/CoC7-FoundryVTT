@@ -170,10 +170,10 @@
                   </label>
                 </div>
                 <div class="edit">
-                  {{#if (or isKeeper spell.data.learned)}}
+                  {{#if (or ../isKeeper spell.data.learned)}}
                   <i class="fas fa-edit edit-spell"></i>
                   {{/if}}
-                  {{#if (isKeeper)}}
+                  {{#if ../isKeeper}}
                   <i class="fas fa-trash delete-spell"></i>
                   {{/if}}
                 </div>
