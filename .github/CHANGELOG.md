@@ -1,3 +1,10 @@
+## On Future Release:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix possibility to edit or delete spells from books for keepers
+- Update to French localization, thanks to @vonv
+
 ## Version 0.7.5:
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
