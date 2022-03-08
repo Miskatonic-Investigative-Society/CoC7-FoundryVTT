@@ -2,9 +2,13 @@
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix font size on NPC sheet for sanity loss
 - Fix Invalid BaseTexture in FireFox for active effects
+- Fix major wounds round up/down issue
 - Fix player lacks permission to update Token when adding/removing active effects if there are more than two players
 - Fix possibility to edit or delete spells from books for keepers
+- Fix weapon navigation incorrect flex layout
+- If clicking NPC sanity loss with no targets selected show warning message
 - Update to French localization, thanks to @vonv
 
 ## Version 0.7.5:
