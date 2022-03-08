@@ -207,6 +207,7 @@ Hooks.once('setup', function () {
 
 Hooks.on('createActiveEffect', (data, options, userId) => {
   if (
+    game.userId === userId &&
     typeof data.data.flags.core !== 'undefined' &&
     typeof data.data.flags.core.statusId !== 'undefined'
   ) {
@@ -246,6 +247,7 @@ Hooks.on('createActiveEffect', (data, options, userId) => {
 
 Hooks.on('deleteActiveEffect', (data, options, userId) => {
   if (
+    game.userId === userId &&
     typeof data.data.flags.core !== 'undefined' &&
     typeof data.data.flags.core.statusId !== 'undefined'
   ) {
