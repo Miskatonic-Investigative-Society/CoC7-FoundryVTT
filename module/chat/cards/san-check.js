@@ -509,6 +509,8 @@ export class SanCheckCard extends ChatCardActor {
           )
         }
       }
+    } else {
+      ui.notifications.warn(game.i18n.localize('CoC7.WarnNoTargetsSanCheck'))
     }
   }
 

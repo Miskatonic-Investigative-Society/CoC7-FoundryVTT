@@ -3338,12 +3338,12 @@ export class CoCActor extends Actor {
     } else {
       if (game.settings.get('CoC7', 'pulpRuleIgnoreMajorWounds')) {
         if (this.hp === 0) {
-          if (netDamage >= Math.floor(this.hpMax / 2)) {
+          if (netDamage >= Math.ceil(this.hpMax / 2)) {
             this.setCondition(COC7.status.dying)
           } else {
             this.setCondition(COC7.status.unconscious)
           }
-        } else if (netDamage >= Math.floor(this.hpMax / 2)) {
+        } else if (netDamage >= Math.ceil(this.hpMax / 2)) {
           const conCheck = new CoC7ConCheck(
             this.isToken ? this.tokenKey : this.id
           )
@@ -3351,7 +3351,7 @@ export class CoCActor extends Actor {
         }
       } else {
         let hasMajorWound = false
-        if (netDamage >= Math.floor(this.hpMax / 2)) {
+        if (netDamage >= Math.ceil(this.hpMax / 2)) {
           await this.setCondition(COC7.status.criticalWounds)
           hasMajorWound = true
         } else {
