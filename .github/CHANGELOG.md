@@ -2,6 +2,8 @@
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix Invalid BaseTexture in FireFox for active effects
+- Fix player lacks permission to update Token when adding/removing active effects if there are more than two players
 - Fix possibility to edit or delete spells from books for keepers
 - Update to French localization, thanks to @vonv
 
