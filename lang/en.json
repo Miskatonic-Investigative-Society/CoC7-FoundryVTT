@@ -664,6 +664,7 @@
   "CoC7.WarnNoControlledActor": "You don't have any controlled actor",
   "CoC7.WarnFastTargetWithWrongMOV": "Fast selected on a target with less than 8 MOV. (MOV: {mov})",
   "CoC7.WarnTooManyTarget": "Too many target selected. Keeping only last selected target",
+  "CoC7.WarnNoTargetsSanCheck": "You have no targets selected. Either select targets or create a link.",
 
   "CoC7.allActors": "All Actors",
   "CoC7.restTargets": "Rest Targets",
