@@ -543,7 +543,7 @@
   "CoC7.SpellType": "Type de sort",
   "CoC7.SpellSuccessfullyLearned": "Sort '{spell}' appris !",
   "CoC7.SpellAlreadyLearned": "Le sort ('{spell}') est déjà connu.",
-  
+
   "CoC7.BookHasNothingMoreToTeach": "{book} n'a plus rien à vous apprendre. La compétence en Mythe de Cthulhu de {actor} est supérieure au Mythe contenu dans celui-ci.",
   "CoC7.BookType": "Type d'ouvrage",
   "CoC7.Content": "Contenu",
@@ -766,7 +766,7 @@
   "CoC7.Settings.PulpRules.FasterRecovery.Hint": "La récupération naturelle est augmentée de 2 PV par jour",
   "CoC7.Settings.PulpRules.IgnoreMajorWounds.Name": "Ignorer les blessures graves",
   "CoC7.Settings.PulpRules.IgnoreMajorWounds.Hint": "",
-  
+
   "CoC7.Maximize": "Développer",
   "CoC7.Summarize": "Compacter",
 

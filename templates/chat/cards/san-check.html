@@ -147,7 +147,7 @@
       {{#if state.permanentlyInsane}}
         <div class='info important'>{{ localize 'CoC7.PlayerPermanentlyInsane' }}</div>
       {{else}}
-        <div class='card-buttons'>
+        <div class='card-buttons owner-only'>
           <button data-action="roll-san-check">{{ localize 'CoC7.SanityCheck' }}: ({{actor.san}}%)</button>
         </div>
       {{/if}}

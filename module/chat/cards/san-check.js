@@ -437,7 +437,8 @@ export class SanCheckCard extends ChatCardActor {
 
   async triggerInsanity () {
     this.state.boutOfMadnessOver = true
-    if (this.state.indefinitelyInsane) await this.actor.setCondition(COC7.status.indefInsane)
+    if (this.state.indefinitelyInsane)
+      await this.actor.setCondition(COC7.status.indefInsane)
     this.state.finish = true
   }
 

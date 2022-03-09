@@ -3,7 +3,13 @@
 export class CoC7SettingsDirectory extends Settings {
   activateListeners (html) {
     super.activateListeners(html)
-    html.find('#settings-game').append('<button class="trigger-data-migration"><i class="fas fa-wrench"></i> ' + game.i18n.localize('CoC7.Migrate.TriggerButton') + '</button>')
+    html
+      .find('#settings-game')
+      .append(
+        '<button class="trigger-data-migration"><i class="fas fa-wrench"></i> ' +
+          game.i18n.localize('CoC7.Migrate.TriggerButton') +
+          '</button>'
+      )
     html.find('.trigger-data-migration').click(() => {
       new Dialog(
         {
