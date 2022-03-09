@@ -647,7 +647,12 @@ export class CoC7ActorSheet extends ActorSheet {
     data.showInventoryStatuses = false
     data.showInventoryWeapons = false
 
-    data.hasConditions = this.actor.effects.size > 0 || (typeof this.actor.data.data.conditions !== 'undefined' && Object.keys(this.actor.data.data.conditions).filter(condition => this.actor.data.data.conditions[condition].value).length > 0)
+    data.hasConditions =
+      this.actor.effects.size > 0 ||
+      (typeof this.actor.data.data.conditions !== 'undefined' &&
+        Object.keys(this.actor.data.data.conditions).filter(
+          condition => this.actor.data.data.conditions[condition].value
+        ).length > 0)
     // const first = data.data.biography[0];
     // first.isFirst = true;
     // data.data.biography[0] = first;

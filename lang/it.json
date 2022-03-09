@@ -741,12 +741,12 @@
   "CoC7.Migrate.ButtonUpdate": "Aggiorna",
   "CoC7.Migrate.ButtonSkip": "Ignora",
   "CoC7.Migrate.ButtonOkay": "Okay",
-  
+
   "CoC7.Migrate.TriggerButton": "Attivare lo spostamento dei dati",
   "CoC7.Migrate.TriggerTitle": "Attivare lo spostamento dei dati",
   "CoC7.Migrate.TriggerContents": "<p>Attiva lo spostamento dei dati e riavvia</p>",
   "CoC7.Migrate.TriggerRestart": "Salva e riavvia",
-  
+
   "CoC7.Settings.CoreRules.Title": "Regole opzionali del regolamento base",
   "CoC7.Settings.Rules.Name": "Regole opzionali/variazioni",
   "CoC7.Settings.Rules.Label": "Configurazione delle regole opzionali/variazioni",
@@ -766,7 +766,7 @@
   "CoC7.Settings.PulpRules.FasterRecovery.Hint": "La guarigione naturale è aumentata di due punti ferita al giorno",
   "CoC7.Settings.PulpRules.IgnoreMajorWounds.Name": "Ignorare Ferite Gravi",
   "CoC7.Settings.PulpRules.IgnoreMajorWounds.Hint": "",
-  
+
   "CoC7.Maximize": "Massimizza",
   "CoC7.Summarize": "Riassumi",
 
@@ -906,5 +906,4 @@
 
   "CoC7.getTheExample": "Copia Esempio",
   "CoC7.Copied": "Copiato il testo di esempio negli Appunti"
-
 }

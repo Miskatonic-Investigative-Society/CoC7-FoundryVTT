@@ -271,14 +271,14 @@ export class CoC7Book extends CoC7Item {
   }
 
   /**
-   * 
+   *
    * @param {Item} spelllearned The spell that was learned successfully from book
-   * @returns 
+   * @returns
    */
   async grantSpellLearning (spelllearned) {
     for (const spell of this.data.data.spells) {
       if (spell._id === spelllearned._id) {
-        spell.data.learned = true;
+        spell.data.learned = true
         // Does the actor already has a spell of that name? Then do not add the spell
         const existingSpell = await this.actor.items.find(
           item =>
@@ -286,13 +286,13 @@ export class CoC7Book extends CoC7Item {
         )
         if (!existingSpell) {
           spelllearned.data.learned = true
-        }
-        else {
+        } else {
           ui.notifications.warn(
             game.i18n.format('CoC7.SpellAlreadyLearned', {
               spell: spelllearned.name,
               book: this.name
-            })            )
+            })
+          )
         }
         break
       }
@@ -307,11 +307,10 @@ export class CoC7Book extends CoC7Item {
           book: this.name
         })
       )
-      const actorSpell = await this.actor.createEmbeddedDocuments('Item', [
+      await this.actor.createEmbeddedDocuments('Item', [
         duplicate(spelllearned)
       ])
     }
-    return;
   }
 
   /**

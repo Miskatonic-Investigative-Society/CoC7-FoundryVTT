@@ -129,7 +129,6 @@
   "CoC7.CastingSpell": "Rzucam <i>{spell}</i>.",
   "CoC7.NotEnoughMagicPoints": "{spell} wymaga {originalMagicPoints} Punktów Magii, ale posiadasz jedynie {actorMagicPoints}. Czy chcesz poświęcić {convertedHitPoints} Punktów Wytrzymałości? Otrzymasz {convertedHitPoints} punktów obrażeń.",
 
-
   "CoC7.CopyToClipboard": "Kopiuj do schowka",
   "CoC7.WhisperToSelection": "Szepnij do wybranych tokenów",
   "CoC7.WhisperTo": "Szepnij do",
