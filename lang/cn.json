@@ -292,7 +292,7 @@
 
   "CoC7.DropZone": "DropZone",
 
-  "CoC7.Value": "Value",
+  "CoC7.Value": "价格",
   "CoC7.SkillValue": "技能 值",
   "CoC7.SkillBase": "基础成功率",
   "CoC7.BaseSkillValue": "基础 技能 值",
@@ -348,7 +348,7 @@
   "CoC7.SkillFirearm": "射击",
 
   "CoC7.WeaponRngd": "基本射程",
-  "CoC7.WeaponProperyManeuver": "Maneuver",
+  "CoC7.WeaponProperyManeuver": "战技",
   "CoC7.WeaponTouch": "接触",
   "CoC7.WeaponImpl": "贯通",
   "CoC7.WeaponRare": "稀有",
@@ -378,7 +378,7 @@
   "CoC7.NewBioSectionName": "New Section",
 
   "CoC7.DodgeSkillName": "闪避",
-  "CoC7.CthulhuMythosName": "Cthulhu Mythos",
+  "CoC7.CthulhuMythosName": "克苏鲁神话",
   "CoC7.CreditRatingSkillName": "信用",
   "CoC7.DriveAutoSkillName": "Drive Auto",
   "CoC7.FightingSpecializationName": "近身战斗",
@@ -444,7 +444,7 @@
   "CoC7.UseFormula": "滚动骰子",
   "CoC7.EnterFormula": "输入公式",
   "CoC7.SanRollHint": "为目标进行SAN Check",
-  "CoC7.SANCheckTitle": "SAN loss : {name} ({sanMin}/{sanMax})",
+  "CoC7.SANCheckTitle": "损失SAN值 : {name} ({sanMin}/{sanMax})",
   "CoC7.NoSkill": "No skill",
   "CoC7.AddWeapontHint": "<p>{actor} 没有一个 {weapon}.<br>你想创建一个吗 ?</p>",
 
@@ -711,12 +711,12 @@
   "CoC7.Convert": "Convert",
   "CoC7.NoConvert": "No Convert",
   "CoC7.Guess": "Guess",
-  "CoC7.English": "English",
-  "CoC7.Spanish": "Spanish",
-  "CoC7.French": "French",
-  "CoC7.German": "German",
-  "CoC7.Polish": "Polish",
-  "CoC7.TraditionalChinese": "Traditional Chinese",
+  "CoC7.English": "英文",
+  "CoC7.Spanish": "西班牙语",
+  "CoC7.French": "法语",
+  "CoC7.German": "德语",
+  "CoC7.Polish": "波兰语",
+  "CoC7.TraditionalChinese": "繁体中文",
   "CoC7.SelectSourceLanguage": "Select the source text language",
   "CoC7.ImportedUnnamedCharacter": "Imported unnamed character",
   "CoC7.CreatedImportedCharactersFolder": "Created 'Imported Characters' folder",
@@ -817,8 +817,8 @@
   "SETTINGS.InitiativeRuleOptional": "可选",
   "SETTINGS.displayInitDices": "显示初始化骰子",
   "SETTINGS.displayInitDicesHint": "在启动时显示dices(仅限可选规则)",
-  "SETTINGS.displayInitAsText": "Display init text",
-  "SETTINGS.displayInitAsTextHint": "Display initiative as text instead of number (Optional rules only)",
+  "SETTINGS.displayInitAsText": "显示初始文本",
+  "SETTINGS.displayInitAsTextHint": "显示规则由序号替换为文本 (仅限可选规则)",
   "SETTINGS.PulpRules": "低俗克苏鲁 规则",
   "SETTINGS.PulpRulesHint": "Alow the usage of Pulp Rules (Archetype, Talent, HP), !early implementation!",
   "SETTINGS.developmentRollForLuck": "Recoverable Luck points",
@@ -911,10 +911,8 @@
 
 
   "CoC7.RevealCheck": "显示检定",
-  "CoC7.Value": "价格",
-  "CoC7.WeaponProperyManeuver": "战技",
-  "CoC7.CthulhuMythosName": "克苏鲁神话",
-  "CoC7.SANCheckTitle": "损失SAN值: {name} ({sanMin}/{sanMax})",
+
+
   "CoC7.LinkCheck": "{type} 检定: {name} [{difficulty}/{modifier}]",
   "CoC7.LinkSanLoss": "损失SAN值 : ({sanMin}/{sanMax}) [{difficulty}/{modifier}]",
   "CoC7.NoSanLoss": "无SAN值损失",
@@ -929,6 +927,5 @@
   "CoC7.InfoLessSkillThanOptions": "只有 {skillCount} 与 {optionsCount} 项, 添加其全部",
   "CoC7.InfoAllSkillsAlreadySelected": "已选定所有技能.",
   "CoC7.MessageWaitForKeeperToClick": "你的守密人正在要求一次检定。<br>等他要求你时再点击!<br>",
-  "SETTINGS.displayInitAsText": "显示初始文本",
-  "SETTINGS.displayInitAsTextHint": "显示规则由序号替换为文本 (仅限可选规则)"
+
 }
