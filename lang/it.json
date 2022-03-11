@@ -347,7 +347,7 @@
   "CoC7.SkillFighting": "Combattere",
   "CoC7.SkillFirearm": "Armi da fuoco",
 
-  "CoC7.WeaponRngd": "Gittata",
+  "CoC7.WeaponRngd": "A distanza",
   "CoC7.WeaponProperyManeuver": "Manovra",
   "CoC7.WeaponTouch": "Contatto",
   "CoC7.WeaponImpl": "Trafiggere",
@@ -664,6 +664,7 @@
   "CoC7.WarnNoControlledActor": "Non controlli nessun personaggio",
   "CoC7.WarnFastTargetWithWrongMOV": "Selezionato Veloce per un bersaglio con meno di 8 MOV. (MOV: {mov})",
   "CoC7.WarnTooManyTarget": "Selezionati troppi bersagli. Si mantiene solo l'ultimo bersaglio selezionato",
+  "CoC7.WarnNoTargetsSanCheck": "Non hai selezionato nessun bersaglio. Seleziona dei bersagli oppure crea un collegamento.",
 
   "CoC7.allActors": "Tutti i personaggi",
   "CoC7.restTargets": "Fai riposare i bersagli",
