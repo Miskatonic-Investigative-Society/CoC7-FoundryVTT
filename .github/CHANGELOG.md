@@ -10,6 +10,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Fix weapon navigation incorrect flex layout
 - If clicking NPC sanity loss with no targets selected show warning message
 - Update to French localization, thanks to @vonv
+- Update to Italian localization, thanks to @Stefano1975t
 
 ## Version 0.7.5:
 
