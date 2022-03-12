@@ -1,7 +1,8 @@
-## On Future Release:
+## Version 0.7.6:
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Add skill specialization to NPC sheet
 - Fix font size on NPC sheet for sanity loss
 - Fix Invalid BaseTexture in FireFox for active effects
 - Fix major wounds round up/down issue
