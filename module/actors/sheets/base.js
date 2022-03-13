@@ -809,7 +809,15 @@ export class CoC7ActorSheet extends ActorSheet {
           this.actor.createEmptySpell(ev)
           break
         case 'weapon':
-          this.actor.createEmptyWeapon(ev)
+          {
+            const properties = {}
+            if (ev.currentTarget.dataset.melee) {
+              properties.melee = true
+            } else if (ev.currentTarget.dataset.rngd) {
+              properties.rngd = true
+            }
+            this.actor.createEmptyWeapon(ev, properties)
+          }
           break
       }
     })
