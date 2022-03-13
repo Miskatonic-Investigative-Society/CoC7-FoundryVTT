@@ -5,6 +5,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Default weapons added via character/NPC sheet to either melee or ranged
 - Fix critical and impale buttons on combat card not formatting correctly
 - Update to Japanese localization, thanks to Asami
+- Update to Swedish localization, thanks to @Rangertheman
 
 ## Version 0.7.6:
 
