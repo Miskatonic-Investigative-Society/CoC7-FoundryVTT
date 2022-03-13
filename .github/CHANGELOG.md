@@ -1,3 +1,9 @@
+## Changes coming in a future release:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix critical and impale buttons on combat card not formatting correctly
+
 ## Version 0.7.6:
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
