@@ -3,6 +3,7 @@
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Fix critical and impale buttons on combat card not formatting correctly
+- Update to Japanese localization, thanks to Asami
 
 ## Version 0.7.6:
 

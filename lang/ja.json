@@ -336,6 +336,7 @@
   "CoC7.EraPulp": "パルプ･クトゥルフ",
   "CoC7.EraMdrn": "現代",
   "CoC7.Eras": "対応サプリメント",
+  "CoC7.EraAvailability": "出典",
 
   "CoC7.SkillNoAdjustments": "修正不可",
   "CoC7.SkillNoXpGain": "成長しない技能",
@@ -540,6 +541,8 @@
   "CoC7.GateSpell": "門",
   "CoC7.CombatSpell": "戦闘",
   "CoC7.SpellType": "呪文の種類",
+  "CoC7.SpellSuccessfullyLearned": "呪文 '{spell}' の習得に成功しました！",
+  "CoC7.SpellAlreadyLearned": "呪文 ('{spell}') は、すでに習得済みです。",
 
   "CoC7.BookHasNothingMoreToTeach": "{book} から､これ以上学ぶことはできない。{actor}のクトゥルフ神話技能は､{book}の神話レーティングよりも高い。",
   "CoC7.BookType": "本の種類",
@@ -661,6 +664,7 @@
   "CoC7.WarnNoControlledActor": "コントロールしているアクターが存在しない",
   "CoC7.WarnFastTargetWithWrongMOV": "MOV 7以下の対象に「疾走する対象」の選択がされている (MOV: {mov})",
   "CoC7.WarnTooManyTarget": "対象の選択数が多すぎる。最後に選択した対象のみを有効にする",
+  "CoC7.WarnNoTargetsSanCheck": "対象が選択されていません。対象を選択するか、リンクを作成してください。",
 
   "CoC7.allActors": "全アクター",
   "CoC7.restTargets": "休息の対象者",
@@ -711,6 +715,7 @@
   "CoC7.Spanish": "スペイン語",
   "CoC7.French": "フランス語",
   "CoC7.German": "ドイツ語",
+  "CoC7.Polish": "ポーランド語",
   "CoC7.TraditionalChinese": "繁体字中国語",
   "CoC7.SelectSourceLanguage": "言語を選択",
   "CoC7.ImportedUnnamedCharacter": "インポートされた無名のキャラクター",
@@ -737,6 +742,31 @@
   "CoC7.Migrate.ButtonUpdate": "アップデート",
   "CoC7.Migrate.ButtonSkip": "無視",
   "CoC7.Migrate.ButtonOkay": "OK",
+
+  "CoC7.Migrate.TriggerButton": "データ移行のトリガー",
+  "CoC7.Migrate.TriggerTitle": "データ移行のトリガー",
+  "CoC7.Migrate.TriggerContents": "<p>データ移行をオンにして再起動</p>",
+  "CoC7.Migrate.TriggerRestart": "保存して再起動",
+
+  "CoC7.Settings.CoreRules.Title": "コア・ルールブックの選択ルール",
+  "CoC7.Settings.Rules.Name": "選択ルール",
+  "CoC7.Settings.Rules.Label": "選択ルールの設定",
+  "CoC7.Settings.Rules.Hint": "パルプ・クトゥルフのような、選択ルールを設定します。",
+  "CoC7.Settings.HouseRules.Title": "共通ハウスルール",
+  "CoC7.Settings.PulpRules.DoubleMaxHealth.Name": "最大耐久力が2倍になる",
+  "CoC7.Settings.PulpRules.DoubleMaxHealth.Hint": "最大耐久力を(CON＋SIZ)÷5にします。",
+  "CoC7.Settings.PulpRules.DevelopmentRollLuck.Name": "幸運の上達チェックによって回復",
+  "CoC7.Settings.PulpRules.DevelopmentRollLuck.Hint": "幸運の上達チェックで幸運が回復する。",
+  "CoC7.Settings.PulpRules.Archetype.Name": "パルプ・アーキタイプ",
+  "CoC7.Settings.PulpRules.Archetype.Hint": "",
+  "CoC7.Settings.PulpRules.Organization.Name": "ヒーロー・オーガナイザー",
+  "CoC7.Settings.PulpRules.Organization.Hint": "",
+  "CoC7.Settings.PulpRules.Talents.Name": "パルプの才能",
+  "CoC7.Settings.PulpRules.Talents.Hint": "",
+  "CoC7.Settings.PulpRules.FasterRecovery.Name": "回復速度上昇",
+  "CoC7.Settings.PulpRules.FasterRecovery.Hint": "自然治癒力が1日当たり2ポイントに増加する",
+  "CoC7.Settings.PulpRules.IgnoreMajorWounds.Name": "重傷は無視する",
+  "CoC7.Settings.PulpRules.IgnoreMajorWounds.Hint": "",
 
   "CoC7.Maximize": "最大化",
   "CoC7.Summarize": "サマリー化",
@@ -875,6 +905,6 @@
   "SETTINGS.CheckElevationHint": "射撃戦闘の距離計算に高さも含める",
   "CoC7.toolTipDelay": "ツールチップが表示されるまでの時間 (ミリ秒)。0は非表示。",
 
-  "CoC7.getTheExample": "例のコピー",
+  "CoC7.getTheExample": "例をコピー",
   "CoC7.Copied": "例をクリップボードにコピー"
 }
