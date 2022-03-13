@@ -673,6 +673,7 @@
   "CoC7.WarnNoControlledActor": "Du kontrollerar ingen karaktär",
   "CoC7.WarnFastTargetWithWrongMOV": "'Snabb' har valts för ett mål med lägre än 8 FÖR. (FÖR: {mov})",
   "CoC7.WarnTooManyTarget": "För många mål valda. Behåller bara det senast valda målet",
+  "CoC7.WarnNoTargetsSanCheck": "Du har inga mål valda. Välj mål eller skapa en länk.",
 
   "CoC7.allActors": "Alla karaktärer",
   "CoC7.restTargets": "Vila valda mål",
