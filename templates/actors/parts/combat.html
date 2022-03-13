@@ -4,7 +4,7 @@
         <div class="section-header">
             <span>{{localize 'CoC7.MeleeWeapons'}}</span>
             {{#unless data.flags.locked}}
-            <div class="add-item" title="Add Weapon" data-type="weapon">
+            <div class="add-item" title="{{localize 'CoC7.AddWeapon'}}" data-type="weapon" data-melee="true">
                 <i class="fas fa-plus"></i>
             </div>
             {{/unless}}
@@ -49,7 +49,7 @@
         <div class="section-header">
             <span>{{localize 'CoC7.RangeWeapons'}}</span>
             {{#unless data.flags.locked}}
-            <div class="add-item" title="Add Weapon" data-type="weapon">
+            <div class="add-item" title="{{localize 'CoC7.AddWeapon'}}" data-type="weapon" data-rngd="true">
                 <i class="fas fa-plus"></i>
             </div>
             {{/unless}}

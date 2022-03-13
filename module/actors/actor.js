@@ -572,7 +572,7 @@ export class CoCActor extends Actor {
     return this.createItem(itemName, 1, showSheet)
   }
 
-  async createEmptyWeapon (event = null) {
+  async createEmptyWeapon (event = null, properties = {}) {
     const showSheet = event ? !event.shiftKey : true
     let weaponName = game.i18n.localize(COC7.newWeaponName)
     if (this.getItemIdByName(game.i18n.localize(COC7.newWeaponName))) {
@@ -593,8 +593,10 @@ export class CoCActor extends Actor {
     }
 
     for (const [key] of Object.entries(COC7.weaponProperties)) {
-      data.data.properties[key] = false
+      data.data.properties[key] =
+        Object.prototype.hasOwnProperty.call(properties, key) ?? false
     }
+
     await this.createEmbeddedDocuments('Item', [data], {
       renderSheet: showSheet
     })
