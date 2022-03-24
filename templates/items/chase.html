@@ -39,23 +39,23 @@
                     <i class="game-icon game-icon-d10"></i>
                   </a>
                 </div>
-                <div class="form-group">
+                <!--<div class="form-group">
                   <div toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasDamage" class="tag flex-auto toggle {{#if activeLocation.obstacleDetails.hasDamage}}switched-on{{/if}}">{{ localize "CoC7.Damage"}}</div>
                   {{#if activeLocation.obstacleDetails.hasDamage}}
                   <input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.failedCheckDamage" value="{{activeLocation.obstacleDetails.failedCheckDamage}}" placeholder="{{ localize 'CoC7.Damage' }}"/>
                   {{/if}}
-                </div>
+                </div>-->
                 <div class="form-group">
                   {{#if activeLocation.obstacleDetails.barrier}}
-                    <div toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasHitPoints" class="tag flex-auto toggle {{#if activeLocation.obstacleDetails.hasHitPoints}}switched-on{{/if}}">{{ localize "CoC7.HitPoints"}}</div>
+                  <!--  <div toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasHitPoints" class="tag flex-auto toggle {{#if activeLocation.obstacleDetails.hasHitPoints}}switched-on{{/if}}">{{ localize "CoC7.HitPoints"}}</div>
                     {{#if activeLocation.obstacleDetails.hasHitPoints}}
                     <input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.HitPoints" value="{{activeLocation.obstacleDetails.HitPoints}}" placeholder="{{ localize 'CoC7.HitPoints' }}"/>
-                    {{/if}}
+                    {{/if}}-->
                   {{else}}
-                    <div toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasActionCost" class="tag flex-auto toggle {{#if activeLocation.obstacleDetails.hasActionCost}}switched-on{{/if}}">{{ localize "CoC7.ActionCost"}}</div>
+                  <!--  <div toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasActionCost" class="tag flex-auto toggle {{#if activeLocation.obstacleDetails.hasActionCost}}switched-on{{/if}}">{{ localize "CoC7.ActionCost"}}</div>
                     {{#if activeLocation.obstacleDetails.hasActionCost}}
                     <input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.failedActionCost" value="{{activeLocation.obstacleDetails.failedActionCost}}" placeholder="{{ localize 'CoC7.ActionCost' }}"/>
-                    {{/if}}
+                    {{/if}}-->
                   {{/if}}
                 </div>
                 <div class="form-group">
@@ -76,7 +76,16 @@
 												<input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.HitPoints" value="{{activeLocation.obstacleDetails.HitPoints}}" placeholder="{{ localize 'CoC7.HitPoints' }}"/>
 											{{/if}}
 										</div>
-									{{/if}}
+                  {{else}}
+                    <div class="flexrow flex1">
+                      <a toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasActionCost" class="flex0 icon toggle {{#if activeLocation.obstacleDetails.hasActionCost}}switched-on{{/if}}">
+                        <i class="fas fa-bahai"></i>
+                      </a>
+                      {{#if activeLocation.obstacleDetails.hasActionCost}}
+                        <input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.failedActionCost" value="{{activeLocation.obstacleDetails.failedActionCost}}" placeholder="{{ localize 'CoC7.ActionCost' }}"/>
+                      {{/if}}
+                    </div>
+                  {{/if}}
                 </div>
               {{/if}}
             {{/unless}}
