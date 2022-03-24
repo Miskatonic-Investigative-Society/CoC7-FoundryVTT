@@ -818,6 +818,17 @@ export class CoC7Chase extends CoC7Item {
     await this.stop()
   }
 
+  getLocationShift (locationUuid, { skip = 1 } = {}) {
+    const locations = foundry.utils.duplicate(this.data.data.locations.list)
+    const originIndex = locations.findIndex(l => locationUuid == l.uuid)
+    let destinationIndex = originIndex + skip
+    if (locations.length == 0) return null
+    if (destinationIndex >= locations.length)
+      return locations[locations.length - 1]
+    if (destinationIndex < 0) return locations[0]
+    return locations[destinationIndex] //ERROR MOVE 2 FOR SKIP +1
+  }
+
   async moveParticipant (
     participantUuid,
     locationMoved,

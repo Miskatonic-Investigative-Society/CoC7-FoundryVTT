@@ -20,6 +20,8 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   async getData () {
     const data = await super.getData()
 
+    const ppp = this.participant
+
     // data.chase = CoC7Utilities.fromUuid(this.data.chaseUuid)
     data.status = []
     data.strings = {}
@@ -157,12 +159,14 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       else data.htmlCheck = await this.data.objects.check.getHtmlRoll()
     }
 
-    if( this.data.objects?.failedDamageRoll){
-      if( !data.data.card.armor){
-        if( this.participant.actor) data.data.card.armor = this.participant.actor.data.data.attribs.armor.value || 0
+    if (this.data.objects?.failedDamageRoll) {
+      if (!data.data.card.armor) {
+        if (this.participant.actor)
+          data.data.card.armor =
+            this.participant.actor.data.data.attribs.armor.value || 0
       }
-      if( data.data.card.armor){
-        if( isNaN(Number(data.data.card.armor))) data.data.card.armor = null
+      if (data.data.card.armor) {
+        if (isNaN(Number(data.data.card.armor))) data.data.card.armor = null
       }
     }
 
@@ -205,11 +209,35 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       return
     }
     if (this.data.states.cardResolved) {
-      if( this.data.states.failedConsequencesRolled){
-        if( this.data.objects?.failedActionRoll?.total) await this.chase.alterParticipantMovementAction( 0 - this.data.objects.failedActionRoll.total)
-        if( this.data.objects?.failedDamageRoll?.total) {
-          if( this.participant.actor) await this.participant.actor.dealDamage(this.data.objects.failedDamageRoll.total, { ignoreArmor: false })
+      if (this.data.states.failedConsequencesRolled) {
+        if (this.data.objects?.failedActionRoll?.total)
+          await this.chase.alterParticipantMovementAction(
+            this.participant.uuid,
+            0 - this.data.objects.failedActionRoll.total
+          )
+        if (this.data.objects?.failedDamageRoll?.total) {
+          if (this.participant.actor)
+            await this.participant.actor.dealDamage(
+              this.data.objects.failedDamageRoll.total,
+              { ignoreArmor: false }
+            )
         }
+      } else {
+        const move = this.data.forward ? 1 : -1
+        const targetLocation = this.chase.getLocationShift(this.location.uuid, { skip: move})
+        if (!targetLocation || !targetLocation.uuid) return
+        await this.chase.alterParticipantMovementAction(
+          this.participant.uuid,
+          0 - Math.abs(move)
+        )
+        await this.chase.moveParticipantToLocation(
+          this.participant.uuid,
+          targetLocation.uuid,
+          { render: true }
+        )
+
+        this._chase = null
+        this._participant = null
       }
     }
   }
@@ -266,7 +294,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     // const location = chase.getLocationData(this.data.locationUuid)
     this.data.obstacle = this.location?.obstacleDetails
     // this.data.participantData = chase.activeParticipantData
-    if (this.participantData.bonusDice > 0) {
+    if (this.participantData?.bonusDice > 0) {
       this.data.card.bonusDice = this.participantData.bonusDice
       this.data.flags.consumeBonusDice = true
     }
@@ -274,9 +302,10 @@ export class ChaseObstacleCard extends EnhancedChatCard {
 
   get participant () {
     if (!this.participantData) return undefined
-    if (!this._participant)
-      this._participant = new _participant(this.participantData)
-    return this._participant
+    // if (!this._participant)
+    //   this._participant = new _participant(this.participantData)
+    // return this._participant
+    return new _participant( this.participantData) //TO RESET 
   }
 
   get participantData () {
@@ -493,7 +522,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
 
   async rollSkillCheck (options) {
     const target = options.event.currentTarget
-    if( target.classList.contains('disabled')) return
+    if (target.classList.contains('disabled')) return
     target.classList.toggle('disabled')
     if (!this.roll) {
       ui.notifications.error('Nothing to roll !!')
@@ -538,7 +567,8 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     }
 
     this.data.states.failedConsequencesRolled = true
-    if( !this.data.objects?.failedDamageRoll?.total) this.data.states.cardResolved = true
+    if (!this.data.objects?.failedDamageRoll?.total)
+      this.data.states.cardResolved = true
     return true
   }
 
