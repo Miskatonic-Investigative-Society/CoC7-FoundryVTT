@@ -1,3 +1,73 @@
+## Changes coming in a future release:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Default weapons added via character/NPC sheet to either melee or ranged
+- Fix critical and impale buttons on combat card not formatting correctly
+- Update to Japanese localization, thanks to Asami
+- Update to Swedish localization, thanks to @Rangertheman
+
+## Version 0.7.6:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Add skill specialization to NPC sheet
+- Fix font size on NPC sheet for sanity loss
+- Fix Invalid BaseTexture in FireFox for active effects
+- Fix major wounds round up/down issue
+- Fix player lacks permission to update Token when adding/removing active effects if there are more than two players
+- Fix possibility to edit or delete spells from books for keepers
+- Fix weapon navigation incorrect flex layout
+- If clicking NPC sanity loss with no targets selected show warning message
+- Update to French localization, thanks to @vonv
+- Update to Italian localization, thanks to @Stefano1975t
+
+## Version 0.7.5:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix unable to remove conditions (prone, unconscious, insanity, etc) when the setting "Scene Settings / Enable status icons" is disabled
+- Now rest is available again
+- Remove myterious button that produces mysterious messages
+
+## Version 0.7.4:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Add ignore major wounds rule for Pulp rules
+- Fix showing Actor / Item create dialog box dropdown translations
+- Split Pulp rules into individual options
+- Replace effect and status with conditions. Allow activating conditions from FoundryVTT combat tracker and effects menu as well as the character sheets
+- Update rest function to prevent showing more than max hp or mp was added to the chat summary message
+- Update to NPC sheet to use same icons for dead, indefInsane, prone, tempoInsane, and unconscious as PCs
+- New Italian localization, thanks to @Stefano1975t
+- New Korean localization, thanks to @Mero-Pe
+- Now it is possible to learn spell directly from books, thanks to @brockhaus
+- Update to French localization, thanks to @vonv
+- Update to German localization, thanks to @brockhaus
+- Update to Polish localization, thanks to @everyonecancode
+- Update to Portuguese localization
+- Update to Spanish localization, thanks to @lozalojo
+- Update to Swedish localization, thanks to @Rangertheman
+
+## Version 0.7.3:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+
+- Compatible with Foundry VTT v9
+- Fix compendium render in v8/v9
+- Fix multiple chat messages for tokens to the correct users
+- Now Actor Importer support Polish, thanks to @frondeus
+- Prevent character sheets editing themselves if not editable
+- Update layout for weapon sheet tab navigation
+- Update to French localization, thanks to @vonv
+- Update to Japanese localization, thanks to `@Asami#8627`
+- Update to Polish localization, thanks to @frondeus
+- Update to Portuguese localization
+- Update to Spanish localization, thanks to @lozalojo
+- Update to Swedish localization, thanks to @Rangertheman
+- Update to Taiwanese localization, thanks to @zeteticl
+
 ## Version 0.7.2:
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.

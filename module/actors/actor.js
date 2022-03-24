@@ -1,4 +1,4 @@
-/* global Actor, CONST, Dialog, Die, duplicate, game, getProperty, Hooks, mergeObject, Roll, TextEditor, Token, ui */
+/* global Actor, CONFIG, CONST, Dialog, Die, duplicate, game, getProperty, Hooks, mergeObject, Roll, TextEditor, Token, ui */
 
 import { COC7 } from '../config.js'
 import { CoC7Check } from '../check.js'
@@ -200,85 +200,16 @@ export class CoCActor extends Actor {
     }
   }
 
-  get boutOfMadness () {
-    return this.effects.find(
-      e => e.data.label === game.i18n.localize('CoC7.BoutOfMadnessName')
-    )
+  get hasTempoInsane () {
+    return this.hasConditionStatus(COC7.status.tempoInsane)
   }
 
-  get insanity () {
-    return this.effects.find(
-      e => e.data.label === game.i18n.localize('CoC7.InsanityName')
-    )
+  get getTempoInsaneDurationText () {
+    return this.hasConditionValue(COC7.status.tempoInsane, 'durationText')
   }
 
-  get isInABoutOfMadness () {
-    if (!this.boutOfMadness) return false
-    return !this.boutOfMadness.data.disabled
-  }
-
-  get isInsane () {
-    if (!this.insanity) return false
-    return !this.insanity.data.disabled
-  }
-
-  get sanity () {
-    const boutRealTime = !!this.boutOfMadness?.data.flags?.CoC7?.realTime
-    let duration = boutRealTime
-      ? this.boutOfMadness?.data?.duration?.rounds
-      : this.boutOfMadness?.data?.duration.seconds
-    if (!boutRealTime && duration) duration = Math.round(duration / 3600)
-    let indefiniteInstanity = !!this.insanity?.data.flags?.CoC7?.indefinite
-    let insaneDuration = indefiniteInstanity
-      ? null
-      : this.insanity?.data?.duration.seconds
-    if (!indefiniteInstanity && insaneDuration) {
-      insaneDuration = insaneDuration / 3600
-    }
-    let boutDurationText = this.isInABoutOfMadness
-      ? boutRealTime
-        ? `${duration} ${game.i18n.localize('CoC7.rounds')}`
-        : `${duration} ${game.i18n.localize('CoC7.hours')}`
-      : null
-    const insanityDurationText = insaneDuration
-      ? this.isInsane
-        ? indefiniteInstanity
-          ? null
-          : `${insaneDuration} ${game.i18n.localize('CoC7.hours')}`
-        : null
-      : null
-    if (this.isInsane && !insanityDurationText && !indefiniteInstanity) {
-      indefiniteInstanity = true
-    }
-    if (!duration) boutDurationText = ''
-
-    return {
-      boutOfMadness: {
-        active: this.isInABoutOfMadness,
-        realTime: this.isInABoutOfMadness ? boutRealTime : undefined,
-        summary: this.isInABoutOfMadness ? !boutRealTime : undefined,
-        duration: this.isInABoutOfMadness ? duration : undefined,
-        durationText: boutDurationText || '',
-        hint: this.isInABoutOfMadness
-          ? `${game.i18n.localize('CoC7.BoutOfMadness')}${
-              boutDurationText ? ': ' + boutDurationText : ''
-            }`
-          : game.i18n.localize('CoC7.BoutOfMadness')
-      },
-      underlying: {
-        active: this.isInsane,
-        indefintie: this.isInsane ? indefiniteInstanity : undefined,
-        duration: insaneDuration,
-        durationText: insanityDurationText || '',
-        hint: this.isInsane
-          ? indefiniteInstanity
-            ? game.i18n.localize('CoC7.IndefiniteInsanity')
-            : `${game.i18n.localize(
-                'CoC7.TemporaryInsanity'
-              )} ${insanityDurationText || ''}`
-          : game.i18n.localize('CoC7.NotInsane')
-      }
-    }
+  get hasIndefInsane () {
+    return this.hasConditionStatus(COC7.status.indefInsane)
   }
 
   get portrait () {
@@ -350,93 +281,15 @@ export class CoCActor extends Actor {
     // If it's not a real time no need to activate the bout
     if (!realTime) return result
 
-    if (this.boutOfMadness) {
-      await this.boutOfMadness.update({
-        disabled: false,
-        duration: {
-          rounds: realTime && duration ? duration : undefined,
-          seconds: realTime ? undefined : duration * 3600,
-          turns: 1
-        },
-        flags: {
-          CoC7: {
-            realTime: realTime
-          }
-        }
-      })
-    } else {
-      // const effectData =
-      await super.createEmbeddedDocuments('ActiveEffect', [
-        {
-          label: game.i18n.localize('CoC7.BoutOfMadnessName'),
-          icon: 'systems/CoC7/assets/icons/hanging-spider.svg',
-          origin: this.uuid,
-          duration: {
-            rounds: realTime && duration ? duration : undefined,
-            seconds: realTime ? undefined : duration * 3600,
-            turns: 1
-          },
-          flags: {
-            CoC7: {
-              madness: true,
-              realTime: realTime
-            }
-          },
-          // tint: '#ff0000',
-          disabled: false
-        }
-      ])
-      // const effect = this.effects.get( effectData._id);
-      // effect.sheet.render(true);
-    }
+    this.setCondition(COC7.status.tempoInsane, {
+      realTime: realTime,
+      duration: duration
+    })
+
     // const effect = this.effects.get( effectData._id);
     // effect.sheet.render(true);
 
     return result
-  }
-
-  async enterInsanity (indefinite = true, duration = undefined) {
-    if (this.insanity) {
-      await this.insanity.update({
-        disabled: false,
-        duration: {
-          seconds: !indefinite && duration ? duration * 3600 : undefined,
-          turns: 1
-        },
-        flags: {
-          CoC7: {
-            indefinite: indefinite
-          }
-        }
-      })
-    } else {
-      await super.createEmbeddedDocuments('ActiveEffect', [
-        {
-          label: game.i18n.localize('CoC7.InsanityName'),
-          icon: 'systems/CoC7/assets/icons/tentacles-skull.svg',
-          origin: this.uuid,
-          duration: {
-            seconds: !indefinite && duration ? duration * 3600 : undefined,
-            turns: 1
-          },
-          flags: {
-            CoC7: {
-              madness: true,
-              indefinite: indefinite
-            }
-          },
-          disabled: false
-        }
-      ])
-    }
-  }
-
-  async exitBoutOfMadness () {
-    return await this.boutOfMadness?.delete()
-  }
-
-  async exitInsanity () {
-    return await this.insanity?.delete()
   }
 
   /**
@@ -719,7 +572,7 @@ export class CoCActor extends Actor {
     return this.createItem(itemName, 1, showSheet)
   }
 
-  async createEmptyWeapon (event = null) {
+  async createEmptyWeapon (event = null, properties = {}) {
     const showSheet = event ? !event.shiftKey : true
     let weaponName = game.i18n.localize(COC7.newWeaponName)
     if (this.getItemIdByName(game.i18n.localize(COC7.newWeaponName))) {
@@ -740,8 +593,10 @@ export class CoCActor extends Actor {
     }
 
     for (const [key] of Object.entries(COC7.weaponProperties)) {
-      data.data.properties[key] = false
+      data.data.properties[key] =
+        Object.prototype.hasOwnProperty.call(properties, key) ?? false
     }
+
     await this.createEmbeddedDocuments('Item', [data], {
       renderSheet: showSheet
     })
@@ -959,12 +814,10 @@ export class CoCActor extends Actor {
             data.data.characteristics.list.luck.value = isNaN(this.luck)
               ? null
               : this.luck
-            data.data.characteristics.list.luck.label = game.i18n.localize(
-              'CoC7.Luck'
-            )
-            data.data.characteristics.list.luck.shortName = game.i18n.localize(
-              'CoC7.Luck'
-            )
+            data.data.characteristics.list.luck.label =
+              game.i18n.localize('CoC7.Luck')
+            data.data.characteristics.list.luck.shortName =
+              game.i18n.localize('CoC7.Luck')
 
             if (!data.data.characteristics.values) {
               data.data.characteristics.values = {}
@@ -1031,11 +884,10 @@ export class CoCActor extends Actor {
                   data.data.characteristics.values.pow
                 updateData['data.attribs.san.oneFifthSanity'] =
                   ' / ' + Math.floor(data.data.characteristics.values.pow / 5)
-                updateData['data.indefiniteInsanityLevel.max'] = updateData[
-                  'data.attribs.mp.value'
-                ] = updateData['data.attribs.mp.max'] = Math.floor(
-                  data.data.characteristics.values.pow / 5
-                )
+                updateData['data.indefiniteInsanityLevel.max'] =
+                  updateData['data.attribs.mp.value'] =
+                  updateData['data.attribs.mp.max'] =
+                    Math.floor(data.data.characteristics.values.pow / 5)
               }
               await this.update(updateData)
               await this.update({
@@ -1590,7 +1442,7 @@ export class CoCActor extends Actor {
         return Math.floor(
           (this.data.data.characteristics.siz.value +
             this.data.data.characteristics.con.value) /
-            (game.settings.get('CoC7', 'pulpRules') &&
+            (game.settings.get('CoC7', 'pulpRuleDoubleMaxHealth') &&
             this.data.type === 'character'
               ? 5
               : 10)
@@ -2216,9 +2068,9 @@ export class CoCActor extends Actor {
         ? parseInt(this.data.data.attribs.san.dailyLoss)
         : 0
       totalLoss = totalLoss + loss
-      if (loss >= 5) this.setStatus(COC7.status.tempoInsane)
+      if (loss >= 5) this.setCondition(COC7.status.tempoInsane)
       if (totalLoss >= Math.floor(this.san / 5)) {
-        this.setStatus(COC7.status.indefInsane)
+        this.setCondition(COC7.status.indefInsane)
       }
       return await this.update({
         'data.attribs.san.value': value,
@@ -3000,11 +2852,14 @@ export class CoCActor extends Actor {
   async developLuck (fastForward = false) {
     const currentLuck = this.data.data.attribs.lck.value
     if (!currentLuck) await this.update({ 'data.attribs.lck.value': 0 })
-    const pulpRulesActivated = game.settings.get('CoC7', 'pulpRules')
+    const pulpRuleDevelopmentRollLuck = game.settings.get(
+      'CoC7',
+      'pulpRuleDevelopmentRollLuck'
+    )
     const upgradeRoll = (await new Roll('1D100').roll({ async: true })).total
     const higherThanCurrentLuck = upgradeRoll > currentLuck
     let augmentRoll
-    if (pulpRulesActivated) {
+    if (pulpRuleDevelopmentRollLuck) {
       higherThanCurrentLuck
         ? (augmentRoll = '2D10+10')
         : (augmentRoll = '1D10+5')
@@ -3013,7 +2868,7 @@ export class CoCActor extends Actor {
     }
     const title = game.i18n.localize('CoC7.RollLuck4Dev')
     let message = '<p class="chat-card">'
-    if (pulpRulesActivated || higherThanCurrentLuck) {
+    if (pulpRuleDevelopmentRollLuck || higherThanCurrentLuck) {
       const augmentValue = (await new Roll(augmentRoll).roll({ async: true }))
         .total
       await this.update({
@@ -3078,161 +2933,214 @@ export class CoCActor extends Actor {
     await skill.unflagForDevelopement()
   }
 
-  async toggleStatus (statusName) {
-    let statusValue = this.data.data.status[statusName]?.value
-    if (!(typeof statusValue === 'boolean')) {
-      statusValue = statusValue === 'false' // Necessary, incorrect template initialization
+  hasConditionStatus (conditionName) {
+    const conditionValue = this.data.data.conditions?.[conditionName]?.value
+    if (typeof conditionValue !== 'boolean') {
+      return false // Necessary, incorrect template initialization
     }
-    if (COC7.status.criticalWounds === statusName) {
-      if (statusValue) await this.cureMajorWound()
-      else await this.inflictMajorWound()
-      return
+    return conditionValue
+  }
+
+  hasConditionValue (conditionName, field) {
+    if (!this.hasConditionStatus(conditionName)) {
+      return undefined
     }
-    // await this.update({ [`data.status.${statusName}.value`]: !statusValue })
-    let effectEffect
-    switch (statusName) {
-      case 'dead':
-        if (statusValue) {
-          await this.unsetStatus('dead')
-          effectEffect = await this.hasActiveEffect('dead')
-          if (effectEffect.length > 0) {
-            for (const effect of effectEffect) {
-              effect.delete()
-            }
-          }
-        } else this.fallDead()
-        break
-      case 'dying':
-        if (statusValue) {
-          await this.unsetStatus('dying')
-          effectEffect = await this.hasActiveEffect('dying')
-          if (effectEffect.length > 0) {
-            for (const effect of effectEffect) {
-              effect.delete()
-            }
-          }
-        } else this.fallDying()
-        break
-      case 'prone':
-        if (statusValue) {
-          await this.unsetStatus('prone')
-          effectEffect = await this.hasActiveEffect('prone')
-          if (effectEffect.length > 0) {
-            for (const effect of effectEffect) {
-              effect.delete()
-            }
-          }
-        } else this.fallProne()
-        break
-      case 'unconscious':
-        if (statusValue) {
-          await this.unsetStatus('unconscious')
-          effectEffect = await this.hasActiveEffect('unconscious')
-          if (effectEffect.length > 0) {
-            for (const effect of effectEffect) {
-              effect.delete()
-            }
-          }
-        } else this.fallUnconscious()
-        break
+    if (conditionName === COC7.status.tempoInsane && field === 'durationText') {
+      const realTime = this.hasConditionValue(conditionName, 'realTime')
+      const duration = this.hasConditionValue(conditionName, 'duration')
+      if (typeof duration !== 'undefined') {
+        if (realTime === true) {
+          return duration + ' ' + game.i18n.localize('CoC7.rounds')
+        } else if (realTime === false) {
+          return duration + ' ' + game.i18n.localize('CoC7.hours')
+        }
+      }
+      return ''
+    }
+    return this.data.data.conditions?.[conditionName]?.[field]
+  }
+
+  async toggleCondition (conditionName) {
+    const conditionValue = this.hasConditionStatus(conditionName)
+    if (!conditionValue) {
+      await this.setCondition(conditionName)
+    } else {
+      await this.unsetCondition(conditionName)
     }
   }
 
-  async hasActiveEffect (effectLabel) {
-    const effectList = this.effects
-      .map(effect => {
-        return effect
-      })
-      .filter(effect => effect.data.label === effectLabel)
-    return effectList
-  }
-
-  async toggleEffect (effectName) {
-    switch (effectName) {
-      case 'boutOfMadness':
-        if (this.boutOfMadness) {
-          await this.boutOfMadness.delete()
-          // if( boutOfMadness){
-          //   await boutOfMadness.update({ disabled: !boutOfMadness.data.disabled, duration: {seconds: undefined, rounds: undefined, turns: 1}});
-          // }
-        } else {
-          await super.createEmbeddedDocuments('ActiveEffect', [
+  async setCondition (
+    conditionName,
+    {
+      forceValue = false,
+      justThis = false,
+      realTime = null,
+      duration = null
+    } = {}
+  ) {
+    if (!forceValue && game.settings.get('CoC7', 'enableStatusIcons')) {
+      const effects = this.effects
+        .filter(effect => effect.data.flags.core?.statusId === conditionName)
+        .map(effect => effect.id)
+      const custom = {}
+      switch (conditionName) {
+        case COC7.status.dead:
+          custom.flags = {
+            core: {
+              overlay: true
+            }
+          }
+          break
+        case COC7.status.tempoInsane:
+          custom.flags = {
+            CoC7: {
+              realTime: undefined
+            }
+          }
+          custom.duration = {
+            rounds: undefined,
+            seconds: undefined
+          }
+          if (realTime === true || realTime === false) {
+            custom.flags.CoC7.realTime = realTime
+            custom.flags = {
+              CoC7: {
+                realTime: realTime
+              }
+            }
+            if (duration !== null && typeof duration !== 'undefined') {
+              if (realTime) {
+                custom.duration.rounds = duration
+              } else {
+                custom.duration.seconds = duration * 3600
+              }
+            }
+          }
+          break
+      }
+      if (effects.length === 0) {
+        const effect = CONFIG.statusEffects.filter(
+          effect => effect.id === conditionName
+        )
+        if (effect.length === 1) {
+          const effectData = mergeObject(
             {
-              label: game.i18n.localize('CoC7.BoutOfMadnessName'),
-              icon: game.settings.get('CoC7', 'enableStatusIcons')
-                ? 'systems/CoC7/assets/icons/hanging-spider.svg'
-                : null,
-              origin: this.uuid,
-              duration: {
-                seconds: undefined,
-                rounds: undefined,
-                turns: 1
-              },
+              label: game.i18n.localize(effect[0].label),
+              icon: effect[0].icon,
               flags: {
-                CoC7: {
-                  madness: true,
-                  realTime: true
+                core: {
+                  statusId: effect[0].id
                 }
               },
               disabled: false
-            }
-          ])
-        }
-
-        break
-      case 'insanity':
-        if (this.insanity) {
-          this.insanity.delete()
-          // if( insanity){
-          //   await insanity.update({ disabled: !insanity.data.disabled, duration: {seconds: undefined, rounds: undefined, turns: 1}});
-          // }
+            },
+            custom
+          )
+          await super.createEmbeddedDocuments('ActiveEffect', [effectData])
         } else {
-          await super.createEmbeddedDocuments('ActiveEffect', [
-            {
-              label: game.i18n.localize('CoC7.InsanityName'),
-              icon: game.settings.get('CoC7', 'enableStatusIcons')
-                ? 'systems/CoC7/assets/icons/tentacles-skull.svg'
-                : null,
-              origin: this.uuid,
-              duration: {
-                seconds: undefined,
-                rounds: undefined,
-                turns: 1
-              },
-              flags: {
-                CoC7: {
-                  madness: true,
-                  indefinite: true
-                }
-              },
-              // tint: '#ff0000',
-              disabled: false
-            }
-          ])
+          // This doesn't exist in FoundryVTT ActiveEffects?
+          forceValue = true
         }
-        break
-
-      default:
-        break
+      } else {
+        custom._id = effects[0]
+        await super.updateEmbeddedDocuments('ActiveEffect', [custom])
+        forceValue = true
+      }
+    }
+    if (forceValue || !game.settings.get('CoC7', 'enableStatusIcons')) {
+      switch (conditionName) {
+        case COC7.status.indefInsane:
+        case COC7.status.unconscious:
+        case COC7.status.criticalWounds:
+        case COC7.status.dying:
+        case COC7.status.prone:
+        case COC7.status.dead:
+          await this.update({
+            [`data.conditions.${conditionName}.value`]: true
+          })
+          break
+        case COC7.status.tempoInsane:
+          {
+            const fields = {}
+            fields[`data.conditions.${conditionName}.value`] = true
+            if (realTime === true || realTime === false) {
+              fields[`data.conditions.${conditionName}.realTime`] = realTime
+              if (duration !== null && typeof duration !== 'undefined') {
+                fields[`data.conditions.${conditionName}.duration`] = duration
+              }
+            }
+            if (
+              !Object.prototype.hasOwnProperty.call(
+                fields,
+                `data.conditions.${conditionName}.realTime`
+              )
+            ) {
+              fields[`data.conditions.${conditionName}.-=realTime`] = null
+            }
+            if (
+              !Object.prototype.hasOwnProperty.call(
+                fields,
+                `data.conditions.${conditionName}.duration`
+              )
+            ) {
+              fields[`data.conditions.${conditionName}.-=duration`] = null
+            }
+            await this.update(fields)
+          }
+          break
+      }
+      if (!justThis) {
+        // Does setting the condition also trigger other actions?
+        // - If ActiveEffects are added hasConditionStatus for recently added conditions may return incorrectly
+        switch (conditionName) {
+          case COC7.status.criticalWounds:
+            await this.setCondition(COC7.status.prone)
+            if (
+              !this.hasConditionStatus(COC7.status.unconscious) &&
+              !this.hasConditionStatus(COC7.status.dead)
+            ) {
+              const conCheck = new CoC7ConCheck(
+                this.isToken ? this.tokenKey : this.id
+              )
+              conCheck.toMessage()
+            }
+            break
+          case COC7.status.dead:
+            await this.unsetCondition(COC7.status.criticalWounds)
+            await this.unsetCondition(COC7.status.dying)
+            await this.unsetCondition(COC7.status.unconscious)
+            break
+        }
+      }
     }
   }
 
-  getStatus (statusName) {
-    if (!this.data.data.status) return false
-    let statusValue = this.data.data.status[statusName]?.value
-    if (undefined === statusValue) return false
-    if (!(typeof statusValue === 'boolean')) {
-      statusValue = statusValue === 'false' // Necessary, incorrect template initialization
+  async unsetCondition (conditionName, { forceValue = false } = {}) {
+    if (!forceValue && game.settings.get('CoC7', 'enableStatusIcons')) {
+      const effects = this.effects
+        .filter(effect => effect.data.flags.core?.statusId === conditionName)
+        .map(effect => effect.id)
+      if (effects.length > 0) {
+        await super.deleteEmbeddedDocuments('ActiveEffect', effects)
+      } else {
+        forceValue = true
+      }
     }
-    return statusValue
-  }
-
-  async setStatus (statusName) {
-    await this.update({ [`data.status.${statusName}.value`]: true })
-  }
-
-  async unsetStatus (statusName) {
-    await this.update({ [`data.status.${statusName}.value`]: false })
+    if (forceValue || !game.settings.get('CoC7', 'enableStatusIcons')) {
+      switch (conditionName) {
+        case COC7.status.tempoInsane:
+        case COC7.status.indefInsane:
+        case COC7.status.unconscious:
+        case COC7.status.criticalWounds:
+        case COC7.status.dying:
+        case COC7.status.prone:
+        case COC7.status.dead:
+          await this.update({
+            [`data.conditions.${conditionName}.value`]: false
+          })
+          break
+      }
+    }
   }
 
   async resetCounter (counter) {
@@ -3434,6 +3342,7 @@ export class CoCActor extends Actor {
     let armorValue = 0
     if (!options.ignoreArmor) {
       if (armorData === null) {
+        // nop
       } else if (CoC7Utilities.isFormula(armorData)) {
         armorValue = (await new Roll(armorData).roll({ async: true })).total
       } else if (!isNaN(Number(armorData))) {
@@ -3448,178 +3357,58 @@ export class CoCActor extends Actor {
     if (netDamage <= 0) return 0
     await this.setHp(this.hp - netDamage)
     if (netDamage >= this.hpMax) {
-      await this.fallDead()
+      await this.setCondition(COC7.status.dead)
     } else {
-      if (netDamage >= Math.floor(this.hpMax / 2)) {
-        await this.inflictMajorWound()
-      }
-      if (this.hp === 0) {
-        if (!this.getStatus(COC7.status.unconscious)) {
-          await this.fallUnconscious()
+      if (game.settings.get('CoC7', 'pulpRuleIgnoreMajorWounds')) {
+        if (this.hp === 0) {
+          if (netDamage >= Math.ceil(this.hpMax / 2)) {
+            this.setCondition(COC7.status.dying)
+          } else {
+            this.setCondition(COC7.status.unconscious)
+          }
+        } else if (netDamage >= Math.ceil(this.hpMax / 2)) {
+          const conCheck = new CoC7ConCheck(
+            this.isToken ? this.tokenKey : this.id
+          )
+          conCheck.toMessage()
         }
-        if (this.majorWound) this.fallDying()
+      } else {
+        let hasMajorWound = false
+        if (netDamage >= Math.ceil(this.hpMax / 2)) {
+          await this.setCondition(COC7.status.criticalWounds)
+          hasMajorWound = true
+        } else {
+          hasMajorWound = this.hasConditionStatus(COC7.status.criticalWounds)
+        }
+        if (this.hp === 0) {
+          await this.setCondition(COC7.status.unconscious)
+          if (hasMajorWound) {
+            this.setCondition(COC7.status.dying)
+          }
+        }
       }
     }
     return netDamage
   }
 
-  async inflictMajorWound () {
-    if (!this.majorWound) {
-      await this.setStatus(COC7.status.criticalWounds)
-      const criticalWoundsEffect = await this.hasActiveEffect('criticalWounds')
-      if (criticalWoundsEffect.length === 0) {
-        await super.createEmbeddedDocuments('ActiveEffect', [
-          {
-            label: 'criticalWounds',
-            icon: game.settings.get('CoC7', 'enableStatusIcons')
-              ? 'systems/CoC7/assets/icons/arm-sling.svg'
-              : null,
-            origin: this.uuid,
-            duration: {
-              seconds: undefined,
-              rounds: undefined,
-              turns: 1
-            },
-            disabled: false
-          }
-        ])
-      }
-    }
-    await this.fallProne()
-    if (
-      !this.getStatus(COC7.status.unconscious) &&
-      !this.getStatus(COC7.status.dead)
-    ) {
-      const conCheck = new CoC7ConCheck(this.isToken ? this.tokenKey : this.id)
-      conCheck.toMessage()
-    }
-  }
-
-  async cureMajorWound () {
-    await this.unsetStatus(COC7.status.criticalWounds)
-    const criticalWoundsEffect = await this.hasActiveEffect('criticalWounds')
-    if (criticalWoundsEffect.length > 0) {
-      for (const effect of criticalWoundsEffect) {
-        effect.delete()
-      }
-    }
-  }
-
-  async fallProne () {
-    await this.setStatus(COC7.status.prone)
-    const proneEffect = await this.hasActiveEffect('prone')
-    if (proneEffect.length === 0) {
-      await super.createEmbeddedDocuments('ActiveEffect', [
-        {
-          label: 'prone',
-          icon: game.settings.get('CoC7', 'enableStatusIcons')
-            ? 'systems/CoC7/assets/icons/falling.svg'
-            : null,
-          origin: this.uuid,
-          duration: {
-            seconds: undefined,
-            rounds: undefined,
-            turns: 1
-          },
-          disabled: false
-        }
-      ])
-    }
-  }
-
-  async fallUnconscious () {
-    await this.setStatus(COC7.status.unconscious)
-    const unconsciousEffect = await this.hasActiveEffect('unconscious')
-    if (unconsciousEffect.length === 0) {
-      await super.createEmbeddedDocuments('ActiveEffect', [
-        {
-          label: 'unconscious',
-          icon: game.settings.get('CoC7', 'enableStatusIcons')
-            ? 'systems/CoC7/assets/icons/knocked-out-stars.svg'
-            : null,
-          origin: this.uuid,
-          duration: {
-            seconds: undefined,
-            rounds: undefined,
-            turns: 1
-          },
-          disabled: false
-        }
-      ])
-    }
-  }
-
-  async fallDying () {
-    await this.setStatus(COC7.status.dying)
-    const dyingEffect = await this.hasActiveEffect('dying')
-    if (dyingEffect.length === 0) {
-      await super.createEmbeddedDocuments('ActiveEffect', [
-        {
-          label: 'dying',
-          icon: game.settings.get('CoC7', 'enableStatusIcons')
-            ? 'systems/CoC7/assets/icons/heart-beats.svg'
-            : null,
-          origin: this.uuid,
-          duration: {
-            seconds: undefined,
-            rounds: undefined,
-            turns: 1
-          },
-          disabled: false
-        }
-      ])
-    }
-  }
-
-  async fallDead () {
-    await this.unsetStatus(COC7.status.criticalWounds)
-    await this.unsetStatus(COC7.status.dying)
-    await this.unsetStatus(COC7.status.unconscious)
-    await this.setStatus(COC7.status.dead)
-    const deadEffect = await this.hasActiveEffect('dead')
-    if (deadEffect.length === 0) {
-      await super.createEmbeddedDocuments('ActiveEffect', [
-        {
-          label: 'dead',
-          icon: game.settings.get('CoC7', 'enableStatusIcons')
-            ? 'systems/CoC7/assets/icons/tombstone.svg'
-            : null,
-          origin: this.uuid,
-          duration: {
-            seconds: undefined,
-            rounds: undefined,
-            turns: 1
-          },
-          disabled: false
-        }
-      ])
-    }
-    const dyingEffect = await this.hasActiveEffect('dying')
-    if (!this.dying && dyingEffect.length > 0) {
-      for (const effect of dyingEffect) {
-        effect.delete()
-      }
-    }
-  }
-
   get majorWound () {
-    return this.getStatus(COC7.status.criticalWounds)
+    return this.hasConditionStatus(COC7.status.criticalWounds)
   }
 
   get dying () {
-    return this.getStatus(COC7.status.dying)
+    return this.hasConditionStatus(COC7.status.dying)
   }
 
   get unconscious () {
-    return this.getStatus(COC7.status.unconscious)
+    return this.hasConditionStatus(COC7.status.unconscious)
   }
 
   get dead () {
-    return this.getStatus(COC7.status.dead)
+    return this.hasConditionStatus(COC7.status.dead)
   }
 
   get prone () {
-    return this.getStatus(COC7.status.prone)
+    return this.hasConditionStatus(COC7.status.prone)
   }
 
   // static updateActor( actor, dataUpdate){

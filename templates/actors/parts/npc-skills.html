@@ -1,5 +1,8 @@
 {{#each skills as |skill id|}}
 	<div class="item flexrow {{#if skill.data.properties.combat}}combat-skill{{/if}}" style="flex: 0 0 33%;flex-wrap: wrap;border-right: 1px groove;" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
+		{{#if skill.data.properties.special}}
+			<div class="npc-specialization">{{skill.data.specialization}}</div>
+		{{/if}}
 		{{#if ../data.flags.locked}}
 			<h4 class="skill-name combat rollable" style="height:18px;padding: 1px 0 1px 2px;margin: 0;overflow: hidden;">{{skill.name}}</h4>
 			<input class="npc-skill-score read-only" style="flex: 0 0 25px;height: fit-content;padding: 0 2px;text-align: right;" type="text" value="{{skill.data.value}}" data-dtype="Number" readonly>

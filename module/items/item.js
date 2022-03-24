@@ -640,10 +640,11 @@ export class CoC7Item extends Item {
       value += this.data.data.adjustments?.experience
         ? parseInt(this.data.data.adjustments?.experience)
         : 0
-      if (game.settings.get('CoC7', 'pulpRules')) {
-        if (this.data.data.adjustments?.archetype) {
-          value += parseInt(this.data.data.adjustments?.archetype)
-        }
+      if (
+        game.settings.get('CoC7', 'pulpRuleArchetype') &&
+        this.data.data.adjustments?.archetype
+      ) {
+        value += parseInt(this.data.data.adjustments?.archetype)
       }
     } else {
       value = parseInt(this.data.data.value)

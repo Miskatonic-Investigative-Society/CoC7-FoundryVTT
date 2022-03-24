@@ -28,28 +28,33 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
     await this.close()
     const options = this.summarized
       ? {
-          classes: ['coc7', 'actor', 'character', 'summarized'],
-          height: 200,
-          resizable: false,
-          width: 700
-        }
+        classes: ['coc7', 'actor', 'character', 'summarized'],
+        height: 200,
+        resizable: false,
+        width: 700
+      }
       : CoC7CharacterSheetV2.defaultOptions
     await this.render(true, options)
   }
 
   async getData () {
     const data = await super.getData()
-
-    if (typeof this.actor.getFlag('CoC7', 'skillListMode') === 'undefined') {
+    if (
+      this.isEditable &&
+      typeof this.actor.getFlag('CoC7', 'skillListMode') === 'undefined'
+    ) {
       await this.actor.setFlag('CoC7', 'skillListMode', false)
     }
-    data.skillListModeValue = this.actor.getFlag('CoC7', 'skillListMode')
     if (
+      this.isEditable &&
       typeof this.actor.getFlag('CoC7', 'skillShowUncommon') === 'undefined'
     ) {
       await this.actor.setFlag('CoC7', 'skillShowUncommon', true)
     }
-    data.skillShowUncommon = this.actor.getFlag('CoC7', 'skillShowUncommon')
+    data.skillListModeValue =
+      this.actor.getFlag('CoC7', 'skillListMode') ?? false
+    data.skillShowUncommon =
+      this.actor.getFlag('CoC7', 'skillShowUncommon') ?? true
     data.showIconsOnly = game.settings.get('CoC7', 'showIconsOnly')
 
     if (this.actor.occupation) {
@@ -121,8 +126,9 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
           : '$'
       }
 
-      data.credit.spendingLevel = `${monetarySymbol}${this.actor.spendingLevel *
-        factor}`
+      data.credit.spendingLevel = `${monetarySymbol}${
+        this.actor.spendingLevel * factor
+      }`
       data.credit.assets = `${monetarySymbol}${this.actor.assets * factor}`
       data.credit.cash = `${monetarySymbol}${this.actor.cash * factor}`
     }
@@ -183,7 +189,7 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
       !data.data.flags.locked
     data.showInventoryTalents =
       Object.prototype.hasOwnProperty.call(data.itemsByType, 'talent') ||
-      !data.data.flags.locked
+      (!data.data.flags.locked && game.settings.get('CoC7', 'pulpRuleTalents'))
     data.showInventoryStatuses =
       Object.prototype.hasOwnProperty.call(data.itemsByType, 'status') ||
       !data.data.flags.locked

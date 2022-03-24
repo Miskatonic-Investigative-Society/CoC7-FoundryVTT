@@ -1,5 +1,6 @@
 /* global $, game, renderTemplate, Roll, ui */
 
+import { COC7 } from '../../config.js'
 import { CoC7Check } from '../../check.js'
 import { CoC7Dice } from '../../dice.js'
 import { CoC7Utilities } from '../../utilities.js'
@@ -152,7 +153,7 @@ export class SanCheckCard extends ChatCardActor {
 
   get isActorLoosingSan () {
     // No san loss during bout of mad.
-    if (this.actor.isInABoutOfMadness) {
+    if (this.actor.hasTempoInsane) {
       return false
     }
 
@@ -187,17 +188,6 @@ export class SanCheckCard extends ChatCardActor {
       if (this.boutSummary) return `${this.boutDuration} hours`
     }
     return null
-  }
-
-  get alreadyInsaneText () {
-    if (this.actor.sanity.underlying.indefintie) {
-      return game.i18n.localize('CoC7.AlreadyUnderlyingInsanity')
-    } else {
-      return (
-        game.i18n.localize('CoC7.AlreadyUnderlyingInsanity') +
-        ` (${this.actor.sanity.underlying.durationText})`
-      )
-    }
   }
 
   get youGainCthulhuMythosString () {
@@ -250,7 +240,7 @@ export class SanCheckCard extends ChatCardActor {
         break
       }
       case 'boutOfMadnessOver': {
-        await this.actor.exitBoutOfMadness()
+        await this.actor.unsetCondition(COC7.status.tempoInsane)
         await this.triggerInsanity()
         break
       }
@@ -310,7 +300,7 @@ export class SanCheckCard extends ChatCardActor {
     this.state.involuntaryActionPerformed = this.sanCheck.passed
     if (!this.isActorLoosingSan) {
       this.state.finish = true
-      if (this.actor.isInABoutOfMadness) {
+      if (this.actor.hasTempoInsane) {
         this.state.immuneAlreadyInBout = true
         if (!this.sanCheck.passed) this.state.finish = false
       }
@@ -392,7 +382,7 @@ export class SanCheckCard extends ChatCardActor {
 
     if (this.sanLoss < 5) {
       this.state.intRolled = true
-      if (this.actor.isInsane) {
+      if (this.actor.isIndefInsane) {
         this.state.insanity = true
         this.state.shaken = true
         this.state.insanityTableRolled = false
@@ -447,23 +437,8 @@ export class SanCheckCard extends ChatCardActor {
 
   async triggerInsanity () {
     this.state.boutOfMadnessOver = true
-    if (this.state.indefinitelyInsane) await this.actor.enterInsanity(true)
-    if (this.state.temporaryInsane) {
-      if (
-        this.actor.sanity.underlying.active &&
-        this.actor.sanity.underlying.indefintie
-      ) {
-        // Already indefinite insanity
-        this.state.finish = true
-        return
-      }
-      this.insanityDurationRoll = await new Roll('1D10').roll({ async: true })
-      this.insanityDuration = this.insanityDurationRoll.total
-      if (this.actor.sanity.underlying.duration) {
-        this.insanityDuration += this.actor.sanity.underlying.duration
-      }
-      await this.actor.enterInsanity(false, this.insanityDuration)
-    }
+    if (this.state.indefinitelyInsane)
+      await this.actor.setCondition(COC7.status.indefInsane)
     this.state.finish = true
   }
 
@@ -535,13 +510,15 @@ export class SanCheckCard extends ChatCardActor {
           )
         }
       }
+    } else {
+      ui.notifications.warn(game.i18n.localize('CoC7.WarnNoTargetsSanCheck'))
     }
   }
 
   static async create (...args) {
     const chatCard = new SanCheckCard(...args)
 
-    if (chatCard.actor.isInsane) {
+    if (chatCard.actor.isIndefInsane) {
       chatCard.state.alreadyInsane = true
     }
 

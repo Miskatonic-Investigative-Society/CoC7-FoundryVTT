@@ -2,6 +2,45 @@ html {
   font-size: 16px;
 }
 
+.tabs {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.tabs > * {
+  flex: 1;
+}
+.tabs > .flex0 {
+  display: block;
+  flex: 0;
+}
+.tabs > .flex1 {
+  flex: 1;
+}
+.tabs > .flex2 {
+  flex: 2;
+}
+.tabs > .flex3 {
+  flex: 3;
+}
+.tabs .item {
+  text-align: center;
+}
+.tabs .item.active {
+  text-shadow: 0 0 10px red;
+}
+.tab[data-tab] {
+  display: none;
+}
+.tab[data-tab].active {
+  display: block;
+}
+.tab[data-tab].active.flexrow,
+.tab[data-tab].active.flexcol {
+  display: flex;
+}
+
 a.keeper-only-tab {
   flex: 0 0 30px;
   color: @colorGreen;

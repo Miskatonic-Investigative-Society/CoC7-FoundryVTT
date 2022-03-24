@@ -170,12 +170,18 @@
                   </label>
                 </div>
                 <div class="edit">
+                  {{#if (or ../isKeeper spell.data.learned)}}
                   <i class="fas fa-edit edit-spell"></i>
+                  {{/if}}
+                  {{#if ../isKeeper}}
                   <i class="fas fa-trash delete-spell"></i>
+                  {{/if}}
                 </div>
+                {{#if (not spell.data.learned)}}
                 <div class="status">
                   <i class="fas fa-book-open teach-spell"></i>
                 </div>
+                {{/if}}
               </li>
             {{/each}}
           </ul>

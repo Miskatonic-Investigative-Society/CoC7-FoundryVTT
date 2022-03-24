@@ -52,17 +52,19 @@ export class CoC7ActorImporter {
    * @param {String} s the roll to be translated
    * @returns {String} the translated roll
    */
-  translateRoll(s) {
-    if (typeof s == 'undefined') return s;
+  translateRoll (s) {
+    if (typeof s === 'undefined') return s
     if (typeof this.keys.diceShort !== 'undefined') {
-      let regEx = new RegExp('(?<n1>\\d+)' + this.keys.diceShort + '(?<n2>\\d+)', 'iug');
-      let result = s.replace(regEx, '$<n1>D$<n2>');
-      return s.replace(regEx, '$<n1>D$<n2>');
-    }
-    else {
-      return s;
+      const regEx = new RegExp(
+        '(?<n1>\\d+)' + this.keys.diceShort + '(?<n2>\\d+)',
+        'iug'
+      )
+      return s.replace(regEx, '$<n1>D$<n2>')
+    } else {
+      return s
     }
   }
+
   /**
    * toHTML, converts a string to HTML striping out empty lines or lines that contain just , or .
    * @param {String} s the string to convert
@@ -499,7 +501,7 @@ export class CoC7ActorImporter {
     ) {
       this.parsed.db = '0'
     }
-    this.parsed.db = this.translateRoll(this.parsed.db);
+    this.parsed.db = this.translateRoll(this.parsed.db)
     // Get build
     this.check('build')
     // Get armor, if not found or none set to 0
@@ -519,7 +521,7 @@ export class CoC7ActorImporter {
     this.check('lck', { type: CoC7ActorImporter.asNumber })
     // Get sanity loss
     this.check('sanLoss')
-    this.parsed.sanLoss = this.translateRoll(this.parsed.sanLoss);
+    this.parsed.sanLoss = this.translateRoll(this.parsed.sanLoss)
     // Get attacks per round, if not found or none set to 0
     if (
       this.check('attacksPerRound') &&
@@ -631,7 +633,8 @@ export class CoC7ActorImporter {
    * @returns {Actor} the created foundry `Actor`
    */
   async createEntity (characterData, entityType) {
-    const importedCharactersFolder = await this.createImportCharactersFolderIfNotExists()
+    const importedCharactersFolder =
+      await this.createImportCharactersFolderIfNotExists()
     if (entityType !== 'npc') {
       entityType = 'creature'
     }

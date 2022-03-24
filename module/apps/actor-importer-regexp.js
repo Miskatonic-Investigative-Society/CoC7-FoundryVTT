@@ -104,7 +104,9 @@ const keys = {
       ' Gun|Revolver|Pistole|Handgun|Derringer|Beretta|Luger|Desert Eagle| \\.38' +
       ')',
     rifle:
-      '(?<type>' + 'Gewehr|Schrotflinte|Carabiner|Karabiner|Gauge |Lee-Enfield|Elefanten' + ')',
+      '(?<type>' +
+      'Gewehr|Schrotflinte|Carabiner|Karabiner|Gauge |Lee-Enfield|Elefanten' +
+      ')',
     smb: '(?<type>' + 'Submachine Gun|Thompson' + ')',
     machineGun: '(?<type>' + 'Browning|Vickers' + ')',
     launched: '(?<type>' + 'Molotov|Granate|Dynamit' + ')',
@@ -130,7 +132,9 @@ const keys = {
       ' Pistolet|Rewolwer|Derringer|Beretta|Luger|Desert Eagle| \\.38' +
       ')',
     rifle:
-      '(?<type>' + 'Karabin|Strzelba|Wiatrówka|Garand|Gauge |Lee-Enfield|Strzelba na słonie' + ')',
+      '(?<type>' +
+      'Karabin|Strzelba|Wiatrówka|Garand|Gauge |Lee-Enfield|Strzelba na słonie' +
+      ')',
     smb: '(?<type>' + 'Pistolet maszynowy|Thompson' + ')',
     machineGun: '(?<type>' + 'Browning|Vickers' + ')',
     launched: '(?<type>' + 'Mołotowa|Granat|Laska dynamitu|Dynamit' + ')',
@@ -307,8 +311,7 @@ const translations = {
   },
   de: {
     age: '(?<![a-z])' + 'Alter' + '(\\s*:)?\\s+(?<age>\\d+)[,\\s]*',
-    occupation:
-      '[,\\s]*' + 'Beruf' + '(\\s*:)?\\s+(?<occupation>.+)[,\\s\n]*',
+    occupation: '[,\\s]*' + 'Beruf' + '(\\s*:)?\\s+(?<occupation>.+)[,\\s\n]*',
     str: '(?<![a-z])' + 'ST' + '(\\s*:)?\\s*(?<str>\\d+|-)[,\\s\n]*',
     con: '(?<![a-z])' + 'KO' + '(\\s*:)?\\s*(?<con>\\d+|-)[,\\s\n]*',
     siz: '(?<![a-z])' + 'GR' + '(\\s*:)?\\s*(?<siz>\\d+|-)[,\\s\n]*',
@@ -318,9 +321,13 @@ const translations = {
     app: '(?<![a-z])' + 'ER' + '(\\s*:)?\\s*(?<app>\\d+|-)[,\\s\n]*',
     edu: '(?<![a-z])' + 'BI' + '(\\s*:)?\\s*(?<edu>\\d+|-)[,\\s\n]*',
     san:
-      '(?<![a-z])(?:' + 'gS|STA|Geistige Stabilität' + ')(\\s*:)?\\s*(?<san>\\d+|-)[,\\s\n]*',
+      '(?<![a-z])(?:' +
+      'gS|STA|Geistige Stabilität' +
+      ')(\\s*:)?\\s*(?<san>\\d+|-)[,\\s\n]*',
     hp:
-      '(?<![a-z])(?:' + 'TP|Trefferpunkte' + ')(\\s*:)?\\s*(?<hp>\\d+|-)[,\\s\n]*',
+      '(?<![a-z])(?:' +
+      'TP|Trefferpunkte' +
+      ')(\\s*:)?\\s*(?<hp>\\d+|-)[,\\s\n]*',
     mp:
       '(?<![a-z])(?:' +
       'MP|Magiepunkte' +
@@ -331,14 +338,20 @@ const translations = {
       ')(\\s*:)?\\s+(?<db>[+-]?\\d+(?:d\\d+|D|W\\d+)?|' +
       keys.de.dbNone +
       ')[,\\s\n]*',
-    build: '(?<![a-z])(?:' + 'Statur|Stat.' + ')(\\s*:)?\\s+(?<build>[+-]?\\d+)[,\\s\n]*',
+    build:
+      '(?<![a-z])(?:' +
+      'Statur|Stat.' +
+      ')(\\s*:)?\\s+(?<build>[+-]?\\d+)[,\\s\n]*',
     armor:
       '(?<![a-z])' +
       'Panzerung' +
       '(\\s*:)?\\s+(?<armor>' +
       keys.de.armorNone +
       '|\\d+)[,\\s\n]*',
-    mov: '(?<![a-z])(?:' + 'BW|Bewegungsweite' + ')(\\s*:)?\\s*(?<mov>\\d+)[,\\s\n]*',
+    mov:
+      '(?<![a-z])(?:' +
+      'BW|Bewegungsweite' +
+      ')(\\s*:)?\\s*(?<mov>\\d+)[,\\s\n]*',
     lck: '(?<![a-z])' + 'Glück' + '(\\s*:)?\\s+(?<lck>\\d+|-)[,\\s\n]*',
     attacksPerRound:
       '(?<![a-z])(?:' +
@@ -373,7 +386,10 @@ const translations = {
       ']+(?<!' +
       'The player has|but they regenerate' +
       '))\\s+\\(?(?<percentage>\\d+)[^d]%?\\)?(\\s*\\(\\d+/\\d+\\))?[\\.,;]?\\s*',
-    guessStartCombat: '(^|(?<!,)\n)(' + 'Angriffe|Handgemenge|Nahkampf|Faustfeuerwaffe|Beißen' + ')',
+    guessStartCombat:
+      '(^|(?<!,)\n)(' +
+      'Angriffe|Handgemenge|Nahkampf|Faustfeuerwaffe|Beißen' +
+      ')',
     name: '^(?<name>[\\.\\s' + nameCharacters + ']+)[,\\s\n]+',
     sections:
       '(' +
@@ -388,8 +404,7 @@ const translations = {
   },
   pl: {
     age: '(?<age>\\d+)' + '\\s+(?:' + 'lata|lat|rok' + ')[,\\s]*',
-    occupation:
-      '[,\\s]*' + 'Zawód' + '(\\s*:)?\\s+(?<occupation>.+)[,\\s\n]*',
+    occupation: '[,\\s]*' + 'Zawód' + '(\\s*:)?\\s+(?<occupation>.+)[,\\s\n]*',
     str: '(?<![a-z])' + 'S' + '(\\s*:)?\\s*(?<str>\\d+|-)[,\\s\n]*',
     con: '(?<![a-z])' + 'KON' + '(\\s*:)?\\s*(?<con>\\d+|-)[,\\s\n]*',
     siz: '(?<![a-z])' + 'BC' + '(\\s*:)?\\s*(?<siz>\\d+|-)[,\\s\n]*',
@@ -399,9 +414,13 @@ const translations = {
     app: '(?<![a-z])' + 'WYG' + '(\\s*:)?\\s*(?<app>\\d+|-)[,\\s\n]*',
     edu: '(?<![a-z])' + 'WYK' + '(\\s*:)?\\s*(?<edu>\\d+|-)[,\\s\n]*',
     san:
-      '(?<![a-z])(?:' + 'P|Poczytalność' + ')(\\s*:)?\\s*(?<san>\\d+|-)[,\\s\n]*',
+      '(?<![a-z])(?:' +
+      'P|Poczytalność' +
+      ')(\\s*:)?\\s*(?<san>\\d+|-)[,\\s\n]*',
     hp:
-      '(?<![a-z])(?:' + 'PW|Punkty Wytrzymałości' + ')(\\s*:)?\\s*(?<hp>\\d+|-)[,\\s\n]*',
+      '(?<![a-z])(?:' +
+      'PW|Punkty Wytrzymałości' +
+      ')(\\s*:)?\\s*(?<hp>\\d+|-)[,\\s\n]*',
     mp:
       '(?<![a-z])(?:' +
       'PM|Punkty Magii' +
@@ -454,7 +473,8 @@ const translations = {
       ']+(?<!' +
       'The player has|but they regenerate' +
       '))\\s+\\(?(?<percentage>\\d+)[^d]%?\\)?(\\s*\\(\\d+/\\d+\\))?[\\.,]?\\s*',
-    guessStartCombat: '(^|(?<!,)\n)(' + 'Walka|Broń Palna|Bijatyka|Ugryzienie' + ')',
+    guessStartCombat:
+      '(^|(?<!,)\n)(' + 'Walka|Broń Palna|Bijatyka|Ugryzienie' + ')',
     name: '^(?<name>[\\.\\s' + nameCharacters + ']+)[,\\s\n]+',
     sections:
       '(' +

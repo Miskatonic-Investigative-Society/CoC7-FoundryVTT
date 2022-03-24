@@ -1,6 +1,7 @@
-//TO BE REMOVED FOR PROD
+/* global mergeObject */
+// TO BE REMOVED FOR PROD
 import { EnhancedChatCard } from '../../common/chatcardlib/src/chatcardlib.js'
-export class testCard extends EnhancedChatCard {
+export class TestCard extends EnhancedChatCard {
   /**
    * Extend and override the default options
    * @returns {Object}

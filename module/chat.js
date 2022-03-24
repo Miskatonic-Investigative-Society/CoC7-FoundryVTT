@@ -223,12 +223,14 @@ export class CoC7Chat {
     }
 
     // Handle showing dropdown selection
-    html.find('.dropbtn').click(event =>
-      event.currentTarget
-        .closest('.dropdown')
-        .querySelector('.dropdown-content')
-        .classList.toggle('show')
-    )
+    html
+      .find('.dropbtn')
+      .click(event =>
+        event.currentTarget
+          .closest('.dropdown')
+          .querySelector('.dropdown-content')
+          .classList.toggle('show')
+      )
     html
       .find('.dropdown')
       .mouseleave(event =>
@@ -521,9 +523,8 @@ export class CoC7Chat {
   static _onChatCardRadioSwitch (event) {
     // console.log('-->CoC7Chat._onChatCardRadioSwitch');
     event.preventDefault()
-    const optionList = event.currentTarget.parentElement.getElementsByClassName(
-      'radio-switch'
-    )
+    const optionList =
+      event.currentTarget.parentElement.getElementsByClassName('radio-switch')
     let index
     for (index = 0; index < optionList.length; index++) {
       const element = optionList[index]
@@ -748,9 +749,8 @@ export class CoC7Chat {
           }
         } else {
           const actor = CoC7Chat._getChatCardActor(card)
-          const detailedResultPlaceHolder = card.querySelector(
-            '.result-details'
-          )
+          const detailedResultPlaceHolder =
+            card.querySelector('.result-details')
 
           if (actor.spendLuck(luckAmount)) {
             const result = card.querySelector('.dice-total')

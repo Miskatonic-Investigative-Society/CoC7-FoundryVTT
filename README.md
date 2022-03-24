@@ -9,6 +9,7 @@
   </a>
   <img src="https://img.shields.io/github/license/Miskatonic-Investigative-Society/CoC7-FoundryVTT.svg">
   <img src="https://img.shields.io/github/downloads/Miskatonic-Investigative-Society/CoC7-FoundryVTT/latest/total">
+  <img src="https://img.shields.io/github/downloads/Miskatonic-Investigative-Society/CoC7-FoundryVTT/total">
 </p>
 <p align="center">
   <a href="#usage">Usage</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;

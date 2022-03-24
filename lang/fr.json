@@ -128,7 +128,7 @@
   "CoC7.OtherCosts": "Autres coûts",
   "CoC7.CastingSpell": "Jette <i>{spell}</i>.",
   "CoC7.NotEnoughMagicPoints": "{spell} coûte {originalMagicPoints} Points de Magie, vous n'en avez que {actorMagicPoints}. Vouslez-vous utiliser vos {convertedHitPoints} Points de Vie restants? Vous subirez {convertedHitPoints} points de dommage en le faisant.",
-  
+
   "CoC7.CopyToClipboard": "Copier vers le presse-papier",
   "CoC7.WhisperToSelection": "Murmurer aux tokens sélectionnés",
   "CoC7.WhisperTo": "Murmurer à",
@@ -336,6 +336,7 @@
   "CoC7.EraPulp": "Cthulhu Pulp",
   "CoC7.EraMdrn": "Moderne",
   "CoC7.Eras": "Époques Cthulhiennes",
+  "CoC7.EraAvailability": "Disponiblité",
 
   "CoC7.SkillNoAdjustments": "Pas d'ajustement",
   "CoC7.SkillNoXpGain": "Pas de gain d'XP",
@@ -540,6 +541,8 @@
   "CoC7.GateSpell": "Portail",
   "CoC7.CombatSpell": "Combat",
   "CoC7.SpellType": "Type de sort",
+  "CoC7.SpellSuccessfullyLearned": "Sort '{spell}' appris !",
+  "CoC7.SpellAlreadyLearned": "Le sort ('{spell}') est déjà connu.",
 
   "CoC7.BookHasNothingMoreToTeach": "{book} n'a plus rien à vous apprendre. La compétence en Mythe de Cthulhu de {actor} est supérieure au Mythe contenu dans celui-ci.",
   "CoC7.BookType": "Type d'ouvrage",
@@ -711,6 +714,7 @@
   "CoC7.Spanish": "Espagnol",
   "CoC7.French": "Français",
   "CoC7.German": "Allemand",
+  "CoC7.Polish": "Polonais",
   "CoC7.TraditionalChinese": "Chinois Traditionnel",
   "CoC7.SelectSourceLanguage": "Sélectionnez la langue du texte copié",
   "CoC7.ImportedUnnamedCharacter": "Personnage importé sans nom",
@@ -737,6 +741,31 @@
   "CoC7.Migrate.ButtonUpdate": "Mise à jour",
   "CoC7.Migrate.ButtonSkip": "Passer",
   "CoC7.Migrate.ButtonOkay": "OK",
+
+  "CoC7.Migrate.TriggerButton": "Déclencher la Migration de Données",
+  "CoC7.Migrate.TriggerTitle": "Déclencher la Migration de Données",
+  "CoC7.Migrate.TriggerContents": "<p>Lance la migration de données puis redémarre</p>",
+  "CoC7.Migrate.TriggerRestart": "Sauvegarde et redémarrage",
+
+  "CoC7.Settings.CoreRules.Title": "Règles Optionnelles du Livre de Base",
+  "CoC7.Settings.Rules.Name": "Variantes/Règles optionnelles",
+  "CoC7.Settings.Rules.Label": "Configurer les variantes/règles optionnelles",
+  "CoC7.Settings.Rules.Hint": "Configurer les variantes/règles optionnelles comme Cthulhu Pulp.",
+  "CoC7.Settings.HouseRules.Title": "Règles maison ordinaires",
+  "CoC7.Settings.PulpRules.DoubleMaxHealth.Name": "Doubler le maximum de PV",
+  "CoC7.Settings.PulpRules.DoubleMaxHealth.Hint": "Le maximum de PV est de (CON + SIZ) / 5",
+  "CoC7.Settings.PulpRules.DevelopmentRollLuck.Name": "Augmenter les jets de développement pour la Chance",
+  "CoC7.Settings.PulpRules.DevelopmentRollLuck.Hint": "Augmenter la chance pour les jets de développement de Chance ratés ou réussis",
+  "CoC7.Settings.PulpRules.Archetype.Name": "Archétpes Pulp",
+  "CoC7.Settings.PulpRules.Archetype.Hint": "",
+  "CoC7.Settings.PulpRules.Organization.Name": "Organisation",
+  "CoC7.Settings.PulpRules.Organization.Hint": "",
+  "CoC7.Settings.PulpRules.Talents.Name": "Talents Pulp",
+  "CoC7.Settings.PulpRules.Talents.Hint": "",
+  "CoC7.Settings.PulpRules.FasterRecovery.Name": "Récupération accélérée",
+  "CoC7.Settings.PulpRules.FasterRecovery.Hint": "La récupération naturelle est augmentée de 2 PV par jour",
+  "CoC7.Settings.PulpRules.IgnoreMajorWounds.Name": "Ignorer les blessures graves",
+  "CoC7.Settings.PulpRules.IgnoreMajorWounds.Hint": "",
 
   "CoC7.Maximize": "Développer",
   "CoC7.Summarize": "Compacter",
@@ -779,7 +808,7 @@
   "SETTINGS.showIconsOnly": "Sur la fiche compacte, n'afficher que les icônes dans la liste des compétences.",
   "SETTINGS.UseToken": "Utiliser le portrait des tokens",
   "SETTINGS.UseTokenHint": "Utiliser le portrait du token au lieu du portrait du personnage dans les cartes de dialogue",
-  "SETTINGS.DisplayActorOnCard": "Afficher le portrait sur les carte de dialogue",
+  "SETTINGS.DisplayActorOnCard": "Afficher le portrait sur les cartes de dialogue",
   "SETTINGS.DisplayActorOnCardHint": "Afficher le portrait sur les cartes de combat",
   "SETTINGS.InitiativeRule": "Règle d'initiative",
   "SETTINGS.InitiativeRuleHint": "Vous pouvez sélectionner la règle d'initiative [Basique] (en utilisant la valeur DEX) ou [Optionnelle] (en utilisant les degrés de réussite)",
@@ -874,7 +903,7 @@
   "SETTINGS.CheckElevation": "Inclut l'altitude",
   "SETTINGS.CheckElevationHint": "Utiliser l'altitude dans le calcul des distances en combat",
   "CoC7.toolTipDelay": "Délai en millisecondes avant qu'une info-bulle apparaisse, 0 pour jamais",
-  
+
   "CoC7.getTheExample": "Copier l'Exemple",
   "CoC7.Copied": "Texte de l'Exemple copié dans le presse-papier"
 }

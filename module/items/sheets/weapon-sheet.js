@@ -130,8 +130,8 @@ export class CoC7WeaponSheet extends ItemSheet {
    */
   async _onClickToggle (event) {
     event.preventDefault()
-    const propertyId = event.currentTarget.closest('.toggle-switch').dataset
-      .property
+    const propertyId =
+      event.currentTarget.closest('.toggle-switch').dataset.property
     await this.item.toggleProperty(
       propertyId,
       event.metaKey ||
@@ -143,8 +143,8 @@ export class CoC7WeaponSheet extends ItemSheet {
 
   async _onPropertyClick (event) {
     event.preventDefault()
-    const property = event.currentTarget.closest('.weapon-property').dataset
-      .property
+    const property =
+      event.currentTarget.closest('.weapon-property').dataset.property
     const weaponId = event.currentTarget.closest('.weapon').dataset.itemId
     const actorKey = event.currentTarget.closest('.weapon').dataset.actorKey
     let weapon = null

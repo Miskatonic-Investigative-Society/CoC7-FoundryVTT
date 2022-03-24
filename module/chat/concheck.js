@@ -1,5 +1,6 @@
 /* global $, ChatMessage, game, renderTemplate, ui */
 
+import { COC7 } from '../config.js'
 import { CoC7Check } from '../check.js'
 import { chatHelper, CoC7Roll } from './helper.js'
 
@@ -132,9 +133,12 @@ export class CoC7ConCheck {
   async rollCon () {
     this.check.hideDiceResult = true
     await this.check._perform()
-    if (!this.isSuccess && !this.isBlind) {
-      if (this.stayAlive) await this.actor.fallDead()
-      else await this.actor.fallUnconscious()
+    if (!this.isBlind && !this.isRolled && !this.isSuccess) {
+      if (this.stayAlive) {
+        await this.actor.setCondition(COC7.status.dead)
+      } else {
+        await this.actor.setCondition(COC7.status.unconscious)
+      }
     }
     this.applied = true
   }
@@ -149,8 +153,11 @@ export class CoC7ConCheck {
     check.replaceWith(await this.getCheckElement())
 
     if (!this.isBlind && this.isRolled && !this.isSuccess) {
-      if (this.stayAlive) await this.actor.fallDead()
-      else await this.actor.fallUnconscious()
+      if (this.stayAlive) {
+        await this.actor.setCondition(COC7.status.dead)
+      } else {
+        await this.actor.setCondition(COC7.status.unconscious)
+      }
     }
 
     if (!this.messageId) return

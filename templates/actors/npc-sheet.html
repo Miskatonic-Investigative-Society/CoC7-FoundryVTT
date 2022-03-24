@@ -23,7 +23,7 @@
               <label>{{localize 'CoC7.Occupation'}}</label>
               <input name="data.infos.occupation" type="text" value="{{data.infos.occupation}}"/>
             </div>
-            {{#if pulpCharacter}}
+            {{#if pulpRuleOrganization}}
             <div class="flexrow flex2">
               <label>{{localize 'CoC7.Organization'}}</label>
               <input name="data.infos.organization" type="text" value="{{data.infos.organization}}"/>
@@ -224,34 +224,34 @@
           </div>
         </div>
 
-        <div class="status-monitors flexrow">
+        <div class="condition-monitors flexrow">
         {{#if isDying}}
           <a class='dying-check' style="text-align: center;font-size: 20px;" title="Check if you'll die immediately"><i class="fas fa-dice-d20"></i></a>
         {{else}}
-          <a class="status-monitor {{#if data.status.prone.value}}status-on{{/if}}" title="{{localize 'CoC7.Prone'}}" data-status='prone'> <i class="fas fa-angle-double-down"></i></a>
-          <a class="status-monitor {{#if data.status.unconscious.value}}status-on{{/if}}" title="{{localize 'CoC7.Unconsious'}}" data-status="unconscious"> <i class="fas fa-dizzy"></i></a>
-          <a class="status-monitor {{#if data.status.criticalWounds.value}}status-on{{/if}}" title="{{localize 'CoC7.CriticalWounds'}}" data-status="criticalWounds"> <i class="fas fa-user-injured"></i></a>
-          <a class="status-monitor {{#if data.status.dying.value}}status-on{{/if}}" title="{{localize 'CoC7.Dying'}}" data-status="dying"> <i class="fas fa-heartbeat"></i></a>
+          <a class="condition-monitor {{#if data.conditions.prone.value}}status-on{{/if}}" title="{{localize 'CoC7.Prone'}}" data-condition='prone'> <i class="game-icon game-icon-falling"></i></a>
+          <a class="condition-monitor {{#if data.conditions.unconscious.value}}status-on{{/if}}" title="{{localize 'CoC7.Unconsious'}}" data-condition="unconscious"> <i class="game-icon game-icon-knocked-out-stars"></i></a>
+          <a class="condition-monitor {{#if data.conditions.criticalWounds.value}}status-on{{/if}}" title="{{localize 'CoC7.CriticalWounds'}}" data-condition="criticalWounds"> <i class="fas fa-user-injured"></i></a>
+          <a class="condition-monitor {{#if data.conditions.dying.value}}status-on{{/if}}" title="{{localize 'CoC7.Dying'}}" data-condition="dying"> <i class="fas fa-heartbeat"></i></a>
 
-          <a class="status-monitor {{#if data.status.tempoInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.TemporaryInsanity'}}" data-status="tempoInsane"> <i class="fas fa-filter"></i></a>
-          <a class="status-monitor {{#if data.status.indefInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.IndefiniteInsanity'}}" data-status="indefInsane"> <i class="far fa-hospital"></i></a>
+          <a class="condition-monitor {{#if data.conditions.tempoInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.BoutOfMadness'}}{{#if actor.getTempoInsaneDurationText}}: {{actor.getTempoInsaneDurationText}}{{/if}}" data-condition="tempoInsane"><i class="game-icon game-icon-hanging-spider"></i></a>
+          <a class="condition-monitor {{#if data.conditions.indefInsane.value}}status-on{{/if}}" title="{{#if data.conditions.indefInsane.value}}{{localize 'CoC7.UnderlyingInsanity'}}{{else}}{{localize 'CoC7.IndefiniteInsanity'}}{{/if}}" data-condition="indefInsane"><i class="game-icon game-icon-tentacles-skull"></i></a>
           <div class="flex1"></div>
 
-          <div class="san-check flexrow flex3" draggable="true">
+          <div class="san-check flexrow" style="flex: 8; font-size: 12px;" draggable="true">
             <label class="roll-san rollable" style="text-align: right;" title="{{ localize 'CoC7.SanRollHint'}}">{{ localize "CoC7.SANLoss" }} :</label>
             {{#if data.flags.locked}}
-            <span class="san-value pass flex1" style="line-height: 22px;padding-left: 2px;" placeholder="pass">{{data.special.sanLoss.checkPassed}}</span>
+            <span class="san-value pass flex1" style="line-height: 22px;padding-left: 2px; text-align: right;" placeholder="pass">{{data.special.sanLoss.checkPassed}}</span>
             <span class="flex0" style="line-height: 22px;">/</span>
             <span class="san-value failed flex1" style="line-height: 22px;padding-left: 2px;" placeholder="fail">{{data.special.sanLoss.checkFailled}}</span>
             {{else}}
-            <input class="san-value flex1" type="text" name="data.special.sanLoss.checkPassed" value="{{data.special.sanLoss.checkPassed}}" data-dtype="String" placeholder="pass">
+            <input class="san-value flex1" style="text-align: right;" type="text" name="data.special.sanLoss.checkPassed" value="{{data.special.sanLoss.checkPassed}}" data-dtype="String" placeholder="pass">
             <span class="flex0" style="line-height: 22px;">/</span>
             <input class="san-value flex1" type="text" name="data.special.sanLoss.checkFailled" value="{{data.special.sanLoss.checkFailled}}" data-dtype="String" placeholder="fail">
             {{/if}}
           </div>
           <div class="flex1"></div>
 
-          <div class="flexrow sheet-controls" style="flex: 0 0 70px;align-content: flex-start;">
+          <div class="flexrow sheet-controls" style="flex: 0 0 80px;align-content: flex-start;">
             {{#if allowFormula}}
               {{#if data.flags.locked}}
                 <div style="flex: 0 0 32px;"></div>
@@ -284,12 +284,12 @@
       </div>
     {{/unless}}
     {{#if isDead}}
-    <div class='is-dead status-monitor {{#if data.status.dead.value}}status-on{{/if}}' data-status="dead" style="flex: 0 0 100px;margin: 6px;">
-      <i style="font-size: 100px;color: darkred;line-height: 100px;" class="fas fa-skull-crossbones"></i>
+    <div class="condition-monitor {{#if data.status.dead.value}}status-on{{/if}}" data-condition="dead" style="flex: 0 0 100px;margin: 6px;">
+      <i style="font-size: 100px;color: darkred;line-height: 100px;" class="game-icon game-icon-tombstone"></i>
     </div>
     {{else}}
       {{#if isDying}}
-        <div class='is-dying status-monitor {{#if data.status.dying.value}}status-on{{/if}}' data-status="dying" style="flex: 0 0 100px;margin: 6px;">
+        <div class="condition-monitor {{#if data.status.dying.value}}status-on{{/if}}" data-condition="dying" style="flex: 0 0 100px;margin: 6px;">
           <i style="font-size: 100px;color: darkred;line-height: 100px;" class="fas fa-heartbeat"></i>
         </div>
       {{else}}
@@ -322,7 +322,7 @@
           <h3 class="flex1">{{localize 'CoC7.Combat'}}</h3>
           {{#unless data.flags.locked}}
           <div style="flex: 0 0 14px;">
-            <a class="add-item" title="{{localize 'CoC7.AddWeapon'}}" data-type="weapon"><i class="fas fa-plus-circle"></i></a>
+            <a class="add-item" title="{{localize 'CoC7.AddWeapon'}}" data-type="weapon" data-melee="true"><i class="fas fa-plus-circle"></i></a>
           </div>
           {{/unless}}
         </div>
@@ -369,7 +369,10 @@
           </div>
           <div class="keeper pannel expanded resizededitor">
             {{editor content=data.description.keeper target="data.description.keeper" button=true owner=owner editable=editable}}
-          </div>
+            {{#if hasConditions}}
+              <div><a class="clear_conditions button">Clear All Conditions</a></div>
+            {{/if}}
+        </div>
         </section>
       {{/if}}
       </div>

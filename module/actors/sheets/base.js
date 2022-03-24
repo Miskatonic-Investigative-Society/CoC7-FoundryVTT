@@ -157,18 +157,6 @@ export class CoC7ActorSheet extends ActorSheet {
         }
       }
 
-      if (!data.data.status) {
-        data.data.status = {
-          criticalWounds: { type: 'Boolean', value: false },
-          unconscious: { type: 'Boolean', value: false },
-          dying: { type: 'Boolean', value: false },
-          dead: { type: 'Boolean', value: false },
-          prone: { type: 'Boolean', value: false },
-          tempoInsane: { type: 'boolean', value: false },
-          indefInsane: { type: 'boolean', value: false }
-        }
-      }
-
       if (!data.data.biography) {
         data.data.biography = {
           personalDescription: { type: 'string', value: '' }
@@ -212,11 +200,11 @@ export class CoC7ActorSheet extends ActorSheet {
       if (!data.data.biography) data.data.biography = []
       if (!data.data.encounteredCreatures) data.data.encounteredCreatures = []
 
-      data.isInABoutOfMadness = this.actor.isInABoutOfMadness
-      data.isInsane = this.actor.isInsane
-      data.boutOfMadness = this.actor.boutOfMadness
-      data.sanity = this.actor.sanity
-      data.pulpCharacter = game.settings.get('CoC7', 'pulpRules')
+      data.pulpRuleArchetype = game.settings.get('CoC7', 'pulpRuleArchetype')
+      data.pulpRuleOrganization = game.settings.get(
+        'CoC7',
+        'pulpRuleOrganization'
+      )
     }
 
     data.isDead = this.actor.dead
@@ -339,32 +327,32 @@ export class CoC7ActorSheet extends ActorSheet {
               a.data.properties.special &&
               typeof a.data.specialization !== 'undefined'
                 ? a.data.specialization
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')
-                    .toLowerCase() +
-                  a.name
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')
-                    .toLowerCase()
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase() +
+                a.name
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase()
                 : a.name
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')
-                    .toLowerCase()
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase()
             lcb =
               b.data.properties.special &&
               typeof b.data.specialization !== 'undefined'
                 ? b.data.specialization
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')
-                    .toLowerCase() +
-                  b.name
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')
-                    .toLowerCase()
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase() +
+                b.name
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase()
                 : b.name
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')
-                    .toLowerCase()
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase()
           } else {
             lca = a.name
               .normalize('NFD')
@@ -388,30 +376,30 @@ export class CoC7ActorSheet extends ActorSheet {
           if (a.data.properties && b.data.properties) {
             lca = a.data.properties.special
               ? a.data.specialization
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase() +
-                a.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase() +
+              a.name
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase()
               : a.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase()
             lcb = b.data.properties.special
               ? b.data.specialization
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase() +
-                b.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase() +
+              b.name
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase()
               : b.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase()
           } else {
             lca = a.name
               .normalize('NFD')
@@ -658,6 +646,12 @@ export class CoC7ActorSheet extends ActorSheet {
     data.showInventoryStatuses = false
     data.showInventoryWeapons = false
 
+    data.hasConditions =
+      this.actor.effects.size > 0 ||
+      (typeof this.actor.data.data.conditions !== 'undefined' &&
+        Object.keys(this.actor.data.data.conditions).filter(
+          condition => this.actor.data.data.conditions[condition].value
+        ).length > 0)
     // const first = data.data.biography[0];
     // first.isFirst = true;
     // data.data.biography[0] = first;
@@ -744,7 +738,9 @@ export class CoC7ActorSheet extends ActorSheet {
       // Status monitor
       if (game.user.isGM || game.settings.get('CoC7', 'statusPlayerEditable')) {
         html.find('.reset-counter').click(this._onResetCounter.bind(this))
-        html.find('.status-monitor').click(this._onStatusToggle.bind(this))
+        html
+          .find('.condition-monitor')
+          .click(this._onConditionToggle.bind(this))
         html.find('.is-dying').click(this.heal.bind(this))
         html.find('.is-dead').click(this.revive.bind(this))
       }
@@ -812,7 +808,15 @@ export class CoC7ActorSheet extends ActorSheet {
           this.actor.createEmptySpell(ev)
           break
         case 'weapon':
-          this.actor.createEmptyWeapon(ev)
+          {
+            const properties = {}
+            if (ev.currentTarget.dataset.melee) {
+              properties.melee = true
+            } else if (ev.currentTarget.dataset.rngd) {
+              properties.rngd = true
+            }
+            this.actor.createEmptyWeapon(ev, properties)
+          }
           break
       }
     })
@@ -872,6 +876,28 @@ export class CoC7ActorSheet extends ActorSheet {
     html.find('.luck-development').click(event => {
       if (!event.detail || event.detail === 1) {
         this.actor.developLuck(event.shiftKey)
+      }
+    })
+
+    html.find('.clear_conditions').click(event => {
+      if (typeof this.actor.data.data.conditions !== 'undefined') {
+        const disable = {}
+        for (const condition in this.actor.data.data.conditions) {
+          if (
+            typeof this.actor.data.data.conditions[condition].value !==
+              'undefined' &&
+            this.actor.data.data.conditions[condition].value === true
+          ) {
+            disable[`data.conditions.${condition}.value`] = false
+          }
+        }
+        if (Object.keys(disable).length > 0) {
+          this.actor.update(disable)
+        }
+      }
+      const effects = this.actor.effects.map(effect => effect.id)
+      if (effects.length > 0) {
+        this.actor.deleteEmbeddedDocuments('ActiveEffect', effects)
       }
     })
 
@@ -945,7 +971,10 @@ export class CoC7ActorSheet extends ActorSheet {
       const sheet = this
       game.CoC7Tooltips.ToolTipHover = event.currentTarget
       game.CoC7Tooltips.toolTipTimer = setTimeout(function () {
-        if (typeof game.CoC7Tooltips.ToolTipHover !== 'undefined') {
+        if (
+          typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' &&
+          game.CoC7Tooltips.ToolTipHover !== null
+        ) {
           const item = game.CoC7Tooltips.ToolTipHover.closest('.item')
           if (typeof item !== 'undefined') {
             const skillId = item.dataset.skillId
@@ -964,8 +993,8 @@ export class CoC7ActorSheet extends ActorSheet {
                     game.settings.get('CoC7', 'stanbyGMRolls') &&
                     sheet.actor.hasPlayerOwner
                       ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                          name: sheet.actor.name
-                        })
+                        name: sheet.actor.name
+                      })
                       : ''
                 })
             }
@@ -982,7 +1011,10 @@ export class CoC7ActorSheet extends ActorSheet {
       const sheet = this
       game.CoC7Tooltips.ToolTipHover = event.currentTarget
       game.CoC7Tooltips.toolTipTimer = setTimeout(function () {
-        if (typeof game.CoC7Tooltips.ToolTipHover !== 'undefined') {
+        if (
+          typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' &&
+          game.CoC7Tooltips.ToolTipHover !== null
+        ) {
           const char = game.CoC7Tooltips.ToolTipHover.closest('.char-box')
           if (typeof char !== 'undefined') {
             const charId = char.dataset.characteristic
@@ -1001,8 +1033,8 @@ export class CoC7ActorSheet extends ActorSheet {
                     game.settings.get('CoC7', 'stanbyGMRolls') &&
                     sheet.actor.hasPlayerOwner
                       ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                          name: sheet.actor.name
-                        })
+                        name: sheet.actor.name
+                      })
                       : ''
                 })
             }
@@ -1019,7 +1051,10 @@ export class CoC7ActorSheet extends ActorSheet {
       const sheet = this
       game.CoC7Tooltips.ToolTipHover = event.currentTarget
       game.CoC7Tooltips.toolTipTimer = setTimeout(function () {
-        if (typeof game.CoC7Tooltips.ToolTipHover !== 'undefined') {
+        if (
+          typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' &&
+          game.CoC7Tooltips.ToolTipHover !== null
+        ) {
           const attrib = game.CoC7Tooltips.ToolTipHover.closest('.attribute')
           if (typeof attrib !== 'undefined') {
             const attributeId = attrib.dataset.attrib
@@ -1041,8 +1076,8 @@ export class CoC7ActorSheet extends ActorSheet {
                         game.settings.get('CoC7', 'stanbyGMRolls') &&
                         sheet.actor.hasPlayerOwner
                           ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                              name: sheet.actor.name
-                            })
+                            name: sheet.actor.name
+                          })
                           : ''
                     })
                 }
@@ -1068,8 +1103,8 @@ export class CoC7ActorSheet extends ActorSheet {
                         (game.settings.get('CoC7', 'stanbyGMRolls') &&
                         sheet.actor.hasPlayerOwner
                           ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                              name: sheet.actor.name
-                            })
+                            name: sheet.actor.name
+                          })
                           : '')
                     })
                 }
@@ -1087,7 +1122,10 @@ export class CoC7ActorSheet extends ActorSheet {
     if (delay > 0) {
       game.CoC7Tooltips.ToolTipHover = event.currentTarget
       game.CoC7Tooltips.toolTipTimer = setTimeout(function () {
-        if (typeof game.CoC7Tooltips.ToolTipHover !== 'undefined') {
+        if (
+          typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' &&
+          game.CoC7Tooltips.ToolTipHover !== null
+        ) {
           const toolTip = game.i18n.localize('CoC7.ToolTipAutoToggle')
           game.CoC7Tooltips.displayToolTip(toolTip)
         }
@@ -1101,7 +1139,10 @@ export class CoC7ActorSheet extends ActorSheet {
       const sheet = this
       game.CoC7Tooltips.ToolTipHover = event.currentTarget
       game.CoC7Tooltips.toolTipTimer = setTimeout(function () {
-        if (typeof game.CoC7Tooltips.ToolTipHover !== 'undefined') {
+        if (
+          typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' &&
+          game.CoC7Tooltips.ToolTipHover !== null
+        ) {
           const item = game.CoC7Tooltips.ToolTipHover.closest('.item')
           if (typeof item !== 'undefined') {
             const skillId = item.dataset.skillId
@@ -1241,21 +1282,19 @@ export class CoC7ActorSheet extends ActorSheet {
     await super._onDrop(event)
   }
 
-  async _onStatusToggle (event) {
+  async _onConditionToggle (event) {
     event.preventDefault()
-    if (event.currentTarget.dataset.status) {
-      await this.actor.toggleStatus(event.currentTarget.dataset.status)
-    } else if (event.currentTarget.dataset.effect) {
-      await this.actor.toggleEffect(event.currentTarget.dataset.effect)
+    if (event.currentTarget.dataset.condition) {
+      await this.actor.toggleCondition(event.currentTarget.dataset.condition)
     }
   }
 
   async revive () {
-    if (game.user.isGM) this.actor.unsetStatus(COC7.status.dead)
+    if (game.user.isGM) this.actor.unsetCondition(COC7.status.dead)
   }
 
   async heal () {
-    if (game.user.isGM) this.actor.unsetStatus(COC7.status.dying)
+    if (game.user.isGM) this.actor.unsetCondition(COC7.status.dying)
   }
 
   async checkForDeath (event) {
@@ -1426,9 +1465,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
   _onInventoryHeader (event) {
     event.preventDefault()
-    $(event.currentTarget)
-      .siblings('li')
-      .toggle()
+    $(event.currentTarget).siblings('li').toggle()
   }
 
   async _onItemPopup (event) {
@@ -1645,9 +1682,8 @@ export class CoC7ActorSheet extends ActorSheet {
         event.currentTarget.parentElement.dataset.characteristic
       roll.attribute = event.currentTarget.parentElement.dataset.attrib
       roll.item = event.currentTarget.closest('.item')?.dataset.itemId
-      roll.weaponAltSkill = event.currentTarget.classList.contains(
-        'alternativ-skill'
-      )
+      roll.weaponAltSkill =
+        event.currentTarget.classList.contains('alternativ-skill')
       roll.skillId = event.currentTarget.closest('.item')?.dataset.skillId
       roll.rollMode = game.settings.get('core', 'rollMode')
       roll.initiator = game.user.id
@@ -1785,19 +1821,19 @@ export class CoC7ActorSheet extends ActorSheet {
     if (isCtrlKey(event) && game.user.isGM && ['lck', 'san'].includes(attrib)) {
       const linkData = event.altKey
         ? {
-            check: 'sanloss',
-            hasPlayerOwner: this.actor.hasPlayerOwner,
-            actorKey: this.actor.actorKey,
-            forceModifiers: event.shiftKey
-          }
+          check: 'sanloss',
+          hasPlayerOwner: this.actor.hasPlayerOwner,
+          actorKey: this.actor.actorKey,
+          forceModifiers: event.shiftKey
+        }
         : {
-            check: 'check',
-            type: 'attribute',
-            name: attrib,
-            hasPlayerOwner: this.actor.hasPlayerOwner,
-            actorKey: this.actor.actorKey,
-            forceModifiers: event.shiftKey
-          }
+          check: 'check',
+          type: 'attribute',
+          name: attrib,
+          hasPlayerOwner: this.actor.hasPlayerOwner,
+          actorKey: this.actor.actorKey,
+          forceModifiers: event.shiftKey
+        }
       if (game.settings.get('core', 'rollMode') === 'blindroll') {
         linkData.blind = true
       }
@@ -2088,9 +2124,8 @@ export class CoC7ActorSheet extends ActorSheet {
                   value: event.currentTarget.value
                 })
               )
-              formData[event.currentTarget.name] = game.i18n.format(
-                'CoC7.ErrorInvalid'
-              )
+              formData[event.currentTarget.name] =
+                game.i18n.format('CoC7.ErrorInvalid')
             }
           }
         }
@@ -2110,9 +2145,8 @@ export class CoC7ActorSheet extends ActorSheet {
                   value: event.currentTarget.value
                 })
               )
-              formData[event.currentTarget.name] = game.i18n.format(
-                'CoC7.ErrorInvalid'
-              )
+              formData[event.currentTarget.name] =
+                game.i18n.format('CoC7.ErrorInvalid')
             }
           }
         }
