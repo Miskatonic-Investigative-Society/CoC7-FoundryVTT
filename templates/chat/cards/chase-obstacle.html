@@ -33,7 +33,7 @@
             <div>**** playerIntentions {{ strings.playerIntentions }} ****</div>
             {{#unless dummyActor}}
               {{#if data.states.checkRolled}}
-                <div class="roll-line">**** checkRolled {{ strings.checkRolled}} **** {{data.card.roll.value.value.name}} : {{{ htmlCheck }}}</div>
+                <div class="roll-line">**** checkRolled {{ strings.checkRolled}} **** {{data.roll.value.value.name}} : {{{ htmlCheck }}}</div>
                 {{#if data.objects.check.passed}}
                   <div>**** obstaclePassed {{ strings.obstaclePassed }} ****</div>
                 {{else}}
@@ -118,7 +118,7 @@
                                 </a>
                                 {{#unless data.flags.ignoreArmor}}
                                   <label>{{ localize 'CoC7.Armor'}}:</label>
-                                  <input type="text" data-ecc-permissions="gm" name="data.card.armor" value="{{data.card.armor}}">
+                                  <input type="text" data-ecc-permissions="gm" name="data.armor" value="{{data.armor}}">
                                 {{/unless}}
 
                               </div>
@@ -161,7 +161,7 @@
                 {{#if card.participant.hasBonusDice}}
                 <a data-ecc-permissions="gm" data-flag="consumeBonusDice" class="icon bigger ecc-switch" title="{{ localize 'CoC7.ConsumeBonusDice' }}"><i class="game-icon game-icon-dice-fire"></i></a>
                 {{/if}}
-                <input type="range" data-ecc-permissions="gm" name="data.card.bonusDice" min="-2" max="2" value="{{data.card.bonusDice}}" class="slider">
+                <input type="range" data-ecc-permissions="gm" name="data.bonusDice" min="-2" max="2" value="{{data.bonusDice}}" class="slider">
                 {{#if data.obstacle.barrier}}
                   <button class="submit button-icon" data-action="cancelBreakOrPassChoice" title="{{ localize 'CoC7.Cancel' }}"><i class="fas fa-undo"></i></button>
                 {{else}}
@@ -174,7 +174,7 @@
                 {{#if validSkill}}
                   : {{skill.value.value}}%
                 {{else}}
-                  : <input type="text" data-ecc-permissions="gm" name="data.card.checkThreshold" value="{{data.card.checkThreshold}}"
+                  : <input type="text" data-ecc-permissions="gm" name="data.checkThreshold" value="{{data.checkThreshold}}"
                     placeholder="{{ localize 'CoC7.Value'}}" title="{{strings.EnterValueTitle}}"/>
                 {{/if}}
               </div>
@@ -195,8 +195,8 @@
               </div>
               <div class="form-group small">
                 <span class="icon bigger" title="{{ localize 'CoC7.ChooseWeapon' }}"><i class="game-icon game-icon-gooey-impact"></i></span>
-                <select name="data.card.weaponChoice">
-                  {{selectOptions card.weaponsOptions nameAttr="uuid" labelAttr="name" selected=data.card.weaponChoice}}
+                <select name="data.weaponChoice">
+                  {{selectOptions card.weaponsOptions nameAttr="uuid" labelAttr="name" selected=data.weaponChoice}}
                 </select>
               </div>
               {{#if customWeapon}}
@@ -204,7 +204,7 @@
                   <div class="flex1"></div>
                   <div class="flex1 flexrow">
                     <span class="icon bigger" title="{{ localize 'CoC7.DamageInflicted' }}"><i class="game-icon game-icon-rolling-dices"></i></span>
-                    <input type="text" data-ecc-permissions="gm" name="data.card.customWeaponDamage" value="{{data.card.customWeaponDamage}}">
+                    <input type="text" data-ecc-permissions="gm" name="data.customWeaponDamage" value="{{data.customWeaponDamage}}">
                   </div>
                 </div>
               {{/if}}
