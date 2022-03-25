@@ -47,8 +47,8 @@ async function updateMessage (messageId, newContent) {
   })
 }
 
-async function GMUpdate (data, cardClassName, messageId = undefined) {
-  const card = await EnhancedChatCard.fromData(data, cardClassName, messageId)
+async function GMUpdate (data, options, cardClassName, messageId = undefined) {
+  const card = await EnhancedChatCard.fromData(data, options, cardClassName, messageId)
   await card.GMUpdate()
   // const diff = foundry.utils.diffObject( data, card.toObject())
   return card.toObject()
@@ -454,6 +454,7 @@ export class EnhancedChatCard {
     const newData = await game.enhancedChatCardsLib.socket.executeAsGM(
       'GMUpdate',
       this.toObject(),
+      this._options,
       this.constructor.name,
       this.messageId
     )
@@ -576,7 +577,11 @@ export class EnhancedChatCard {
   }
 
   get objectDataString () {
-    return JSON.stringify(this.data, (key, value) => {
+    const saveData = {
+      data: this.data,
+      options: this._options
+    }
+    return JSON.stringify(saveData, (key, value) => {
       if (value === null) return undefined
       if (this.options.exclude?.includes(key)) return undefined
       if (key.startsWith(this.options.excludeStartWith)) return undefined
@@ -617,10 +622,10 @@ export class EnhancedChatCard {
     const message = htmmlCard.closest('.message')
     const messageId = message?.dataset?.messageId
 
-    return await this.fromData(cardData, htmmlCard.dataset.eccClass, messageId)
+    return await this.fromData(cardData.data, cardData.options, htmmlCard.dataset.eccClass, messageId)
   }
 
-  static async fromData (data, cardClassName, messageId = undefined) {
+  static async fromData (data, options, cardClassName, messageId = undefined) {
     const cardClass = game.enhancedChatCardsLib.types.get(cardClassName)
 
     if (!cardClass) {
@@ -628,7 +633,7 @@ export class EnhancedChatCard {
       return
     }
 
-    const card = new cardClass(data)
+    const card = new cardClass(data, options)
     if (messageId) card.messageId = messageId
     await card.assignObjects()
     return card
