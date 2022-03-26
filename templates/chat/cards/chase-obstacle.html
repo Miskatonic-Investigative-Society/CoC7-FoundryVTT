@@ -96,7 +96,7 @@
                         </div>
                       </div>
                       <div class="card-buttons">
-                        {{#if cardvalidFailedRolls}}
+                        {{#if card.validFailedRolls}}
                         <button class="submit" data-action="rollFailConsequences">Validate</button>
                         {{/if}}
                       </div>
@@ -247,7 +247,7 @@
       <div class="status-list">
         <div class="status movement-action">
             <span>actions :</span>
-            {{#each card.participant.movementActionArray as |actionClass|}}
+            {{#each data.movementActionArray as |actionClass|}}
             <i class="fas fa-bahai {{actionClass}}"></i>
             {{/each}}
         </div>

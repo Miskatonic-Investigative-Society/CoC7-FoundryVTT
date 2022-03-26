@@ -236,8 +236,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
           { render: true }
         )
 
-        this._chase = null
-        this._participant = null
+        this.data.movementActionArray = this.participant.movementActionArray
       }
     }
   }
@@ -298,6 +297,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       this.data.bonusDice = this.participantData.bonusDice
       this.data.flags.consumeBonusDice = true
     }
+    this.data.movementActionArray = duplicate(this.participant.movementActionArray)
   }
 
   get participant () {
