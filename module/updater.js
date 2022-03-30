@@ -1,4 +1,6 @@
 /* global CONFIG, Dialog, expandObject, foundry, game, isNewerVersion, mergeObject */
+import { CoC7Item } from './items/item.js'
+
 export class Updater {
   static async checkForUpdate () {
     this.systemUpdateVersion = String(
@@ -13,27 +15,39 @@ export class Updater {
     this.currentModules = {}
     for (const pack of game.packs) {
       if (
-        !['CoC7', 'world'].includes(pack.metadata.package) &&
-        ['Actor', 'Item'].includes(pack.metadata.entity)
+        !['CoC7', 'world'].includes(
+          pack.metadata.package || pack.metadata.packageName
+        ) &&
+        ['Actor', 'Item'].includes(pack.metadata.type)
       ) {
         if (
           !Object.prototype.hasOwnProperty.call(
             this.currentModules,
-            pack.metadata.package
+            pack.metadata.package || pack.metadata.packageName
           )
         ) {
           // Only check each package once
           if (
             !Object.prototype.hasOwnProperty.call(
               this.updatedModules,
-              pack.metadata.package
+              pack.metadata.package || pack.metadata.packageName
             ) ||
-            String(this.updatedModules[pack.metadata.package]) !==
-              String(game.modules.get(pack.metadata.package).data.version)
+            String(
+              this.updatedModules[
+                pack.metadata.package || pack.metadata.packageName
+              ]
+            ) !==
+              String(
+                game.modules.get(
+                  pack.metadata.package || pack.metadata.packageName
+                ).data.version
+              )
           ) {
             // Package has not been updated before or the version number has changed
-            this.currentModules[pack.metadata.package] = game.modules.get(
-              pack.metadata.package
+            this.currentModules[
+              pack.metadata.package || pack.metadata.packageName
+            ] = game.modules.get(
+              pack.metadata.package || pack.metadata.packageName
             ).data.version
           }
         }
@@ -143,8 +157,8 @@ export class Updater {
     // Migrate World Compendium Packs
     for (const pack of game.packs) {
       if (
-        pack.metadata.package !== 'CoC7' &&
-        ['Actor', 'Item', 'Macro', 'RollTable'].includes(pack.metadata.entity)
+        (pack.metadata.package || pack.metadata.packageName) !== 'CoC7' &&
+        ['Actor', 'Item', 'Macro', 'RollTable'].includes(pack.metadata.type)
       ) {
         await Updater.migrateCompendiumData(pack)
       }
@@ -197,14 +211,18 @@ export class Updater {
   }
 
   static async migrateCompendiumData (pack) {
-    const entity = pack.metadata.entity
+    const entity = pack.metadata.type
     if (!['Actor', 'Item', 'Macro', 'RollTable'].includes(entity)) return
 
     // Unlock the pack for editing
     const wasLocked = pack.locked
     await pack.configure({ locked: false })
 
-    await pack.migrate()
+    try {
+      await pack.migrate()
+    } catch (err) {
+      // This errors on v10
+    }
     const documents = await pack.getDocuments()
 
     // Iterate over compendium entries - applying fine-tuned migration functions
@@ -253,6 +271,7 @@ export class Updater {
     Updater._migrateItemSpellAutomated(item, updateData)
     Updater._migrateItemKeeperNotesMerge(item, updateData)
     Updater._migrateItemSetupEras(item, updateData)
+    Updater._migrateItemv10(item, updateData)
 
     return updateData
   }
@@ -471,6 +490,110 @@ export class Updater {
     }
   }
 
+  static _migrateItemv10 (item, updateData) {
+    if (item.type === 'skill' && typeof item.data.specialization === 'string') {
+      updateData.name = item.name
+      // Update Polish dodge translation from Uniki to Unik to match update to lang/pl.json
+      if (updateData.name === 'Uniki') {
+        updateData.name = 'Unik'
+      }
+      const parts = CoC7Item.getNamePartsSpec(
+        updateData.name,
+        item.data.specialization
+      )
+      updateData.name = parts.name
+      updateData['data.specialization'] = {
+        group: parts.group,
+        type: parts.type
+      }
+    } else if (item.type === 'setup') {
+      for (const [k, v] of Object.entries(item.data.items)) {
+        if (v.type === 'skill' && typeof v.data.specialization === 'string') {
+          if (typeof updateData['data.items'] === 'undefined') {
+            updateData['data.items'] = item.data.items
+          }
+          updateData['data.items'][k].name = v.name
+          if (updateData['data.items'][k].name === 'Uniki') {
+            updateData['data.items'][k].name = 'Unik'
+          }
+          const parts = CoC7Item.getNamePartsSpec(
+            updateData['data.items'][k].name,
+            v.data.specialization
+          )
+          updateData['data.items'][k].name = parts.name
+          updateData['data.items'][k].data.specialization = {
+            group: parts.group,
+            type: parts.type
+          }
+        }
+      }
+    } else if (item.type === 'occupation') {
+      for (const [k, v] of Object.entries(item.data.skills)) {
+        if (v.type === 'skill' && typeof v.data.specialization === 'string') {
+          if (typeof updateData['data.skills'] === 'undefined') {
+            updateData['data.skills'] = item.data.skills
+          }
+          updateData['data.skills'][k].name = v.name
+          if (updateData['data.skills'][k].name === 'Uniki') {
+            updateData['data.skills'][k].name = 'Unik'
+          }
+          const parts = CoC7Item.getNamePartsSpec(
+            updateData['data.skills'][k].name,
+            v.data.specialization
+          )
+          updateData['data.skills'][k].name = parts.name
+          updateData['data.skills'][k].data.specialization = {
+            group: parts.group,
+            type: parts.type
+          }
+        }
+      }
+      for (const [o, g] of Object.entries(item.data.groups)) {
+        for (const [k, v] of Object.entries(g.skills)) {
+          if (v.type === 'skill' && typeof v.data.specialization === 'string') {
+            if (typeof updateData['data.groups'] === 'undefined') {
+              updateData['data.groups'] = item.data.groups
+            }
+            updateData['data.groups'][o].skills[k].name = v.name
+            if (updateData['data.groups'][o].skills[k].name === 'Uniki') {
+              updateData['data.groups'][o].skills[k].name = 'Unik'
+            }
+            const parts = CoC7Item.getNamePartsSpec(
+              updateData['data.groups'][o].skills[k].name,
+              v.data.specialization
+            )
+            updateData['data.groups'][o].skills[k].name = parts.name
+            updateData['data.groups'][o].skills[k].data.specialization = {
+              group: parts.group,
+              type: parts.type
+            }
+          }
+        }
+      }
+    } else if (item.type === 'archetype') {
+      for (const [k, v] of Object.entries(item.data.skills)) {
+        if (v.type === 'skill' && typeof v.data.specialization === 'string') {
+          if (typeof updateData['data.skills'] === 'undefined') {
+            updateData['data.skills'] = item.data.skills
+          }
+          updateData['data.skills'][k].name = v.name
+          if (updateData['data.skills'][k].name === 'Uniki') {
+            updateData['data.skills'][k].name = 'Unik'
+          }
+          const parts = CoC7Item.getNamePartsSpec(
+            updateData['data.skills'][k].name,
+            v.data.specialization
+          )
+          updateData['data.skills'][k].name = parts.name
+          updateData['data.skills'][k].data.specialization = {
+            group: parts.group,
+            type: parts.type
+          }
+        }
+      }
+    }
+  }
+
   static _migrateItemSetupEras (item, updateData) {
     if (item.type === 'setup') {
       for (const [key, value] of Object.entries(item.data.eras)) {
@@ -514,115 +637,117 @@ export class Updater {
   }
 
   static _migrateActorStatusEffectActive (actor, updateData) {
-    if (
-      typeof actor.data.status !== 'undefined' ||
-      typeof actor.data.conditions === 'undefined'
-    ) {
-      updateData['data.conditions.criticalWounds.value'] = false
-      updateData['data.conditions.unconscious.value'] = false
-      updateData['data.conditions.dying.value'] = false
-      updateData['data.conditions.dead.value'] = false
-      updateData['data.conditions.prone.value'] = false
-      updateData['data.conditions.tempoInsane.value'] = false
-      updateData['data.conditions.indefInsane.value'] = false
+    if (['character', 'npc', 'creature'].includes(actor.type)) {
       if (
-        typeof actor.data.status.criticalWounds.value !== 'undefined' &&
-        actor.data.status.criticalWounds.value
+        typeof actor.data.status !== 'undefined' ||
+        typeof actor.data.conditions === 'undefined'
       ) {
-        updateData['data.conditions.criticalWounds.value'] = true
-      }
-      if (
-        typeof actor.data.status.unconscious.value !== 'undefined' &&
-        actor.data.status.unconscious.value
-      ) {
-        updateData['data.conditions.unconscious.value'] = true
-      }
-      if (
-        typeof actor.data.status.dying.value !== 'undefined' &&
-        actor.data.status.dying.value
-      ) {
-        updateData['data.conditions.dying.value'] = true
-      }
-      if (
-        typeof actor.data.status.dead.value !== 'undefined' &&
-        actor.data.status.dead.value
-      ) {
-        updateData['data.conditions.dead.value'] = true
-      }
-      if (
-        typeof actor.data.status.prone.value !== 'undefined' &&
-        actor.data.status.prone.value
-      ) {
-        updateData['data.conditions.prone.value'] = true
-      }
-      if (
-        typeof actor.data.status.tempoInsane.value !== 'undefined' &&
-        actor.data.status.tempoInsane.value
-      ) {
-        updateData['data.conditions.tempoInsane.value'] = true
-      }
-      if (
-        typeof actor.data.status.indefInsane.value !== 'undefined' &&
-        actor.data.status.indefInsane.value
-      ) {
-        updateData['data.conditions.indefInsane.value'] = true
-      }
-      const effects = actor.effects
-      let changed = false
-      for (let i = 0, im = effects.length; i < im; i++) {
-        const effect = effects[i]
-        const match = effect.icon.match(
-          /\/(hanging-spider|tentacles-skull|arm-sling|heart-beats|tombstone|knocked-out-stars|falling|skull|unconscious)\./
-        )
-        if (match !== null) {
-          let statusId = ''
-          switch (match[1]) {
-            case 'hanging-spider':
-              statusId = 'tempoInsane'
-              break
-            case 'tentacles-skull':
-              statusId = 'indefInsane'
-              break
-            case 'arm-sling':
-              statusId = 'criticalWounds'
-              break
-            case 'heart-beats':
-              statusId = 'dying'
-              break
-            case 'tombstone':
-            case 'skull':
-              statusId = 'dead'
-              break
-            case 'knocked-out-stars':
-            case 'unconscious':
-              statusId = 'unconscious'
-              break
-            case 'falling':
-              statusId = 'prone'
-              break
-          }
-          if (statusId !== '') {
-            if (!updateData[`data.conditions.${statusId}.value`]) {
-              updateData[`data.conditions.${statusId}.value`] = true
-              changed = true
+        updateData['data.conditions.criticalWounds.value'] = false
+        updateData['data.conditions.unconscious.value'] = false
+        updateData['data.conditions.dying.value'] = false
+        updateData['data.conditions.dead.value'] = false
+        updateData['data.conditions.prone.value'] = false
+        updateData['data.conditions.tempoInsane.value'] = false
+        updateData['data.conditions.indefInsane.value'] = false
+        if (
+          typeof actor.data.status.criticalWounds.value !== 'undefined' &&
+          actor.data.status.criticalWounds.value
+        ) {
+          updateData['data.conditions.criticalWounds.value'] = true
+        }
+        if (
+          typeof actor.data.status.unconscious.value !== 'undefined' &&
+          actor.data.status.unconscious.value
+        ) {
+          updateData['data.conditions.unconscious.value'] = true
+        }
+        if (
+          typeof actor.data.status.dying.value !== 'undefined' &&
+          actor.data.status.dying.value
+        ) {
+          updateData['data.conditions.dying.value'] = true
+        }
+        if (
+          typeof actor.data.status.dead.value !== 'undefined' &&
+          actor.data.status.dead.value
+        ) {
+          updateData['data.conditions.dead.value'] = true
+        }
+        if (
+          typeof actor.data.status.prone.value !== 'undefined' &&
+          actor.data.status.prone.value
+        ) {
+          updateData['data.conditions.prone.value'] = true
+        }
+        if (
+          typeof actor.data.status.tempoInsane.value !== 'undefined' &&
+          actor.data.status.tempoInsane.value
+        ) {
+          updateData['data.conditions.tempoInsane.value'] = true
+        }
+        if (
+          typeof actor.data.status.indefInsane.value !== 'undefined' &&
+          actor.data.status.indefInsane.value
+        ) {
+          updateData['data.conditions.indefInsane.value'] = true
+        }
+        const effects = actor.effects
+        let changed = false
+        for (let i = 0, im = effects.length; i < im; i++) {
+          const effect = effects[i]
+          const match = effect.icon.match(
+            /\/(hanging-spider|tentacles-skull|arm-sling|heart-beats|tombstone|knocked-out-stars|falling|skull|unconscious)\./
+          )
+          if (match !== null) {
+            let statusId = ''
+            switch (match[1]) {
+              case 'hanging-spider':
+                statusId = 'tempoInsane'
+                break
+              case 'tentacles-skull':
+                statusId = 'indefInsane'
+                break
+              case 'arm-sling':
+                statusId = 'criticalWounds'
+                break
+              case 'heart-beats':
+                statusId = 'dying'
+                break
+              case 'tombstone':
+              case 'skull':
+                statusId = 'dead'
+                break
+              case 'knocked-out-stars':
+              case 'unconscious':
+                statusId = 'unconscious'
+                break
+              case 'falling':
+                statusId = 'prone'
+                break
             }
-            if (effect.flags.core?.statusId !== statusId) {
-              effects[i] = mergeObject(effect, {
-                flags: {
-                  core: {
-                    statusId: statusId
+            if (statusId !== '') {
+              if (!updateData[`data.conditions.${statusId}.value`]) {
+                updateData[`data.conditions.${statusId}.value`] = true
+                changed = true
+              }
+              if (effect.flags.core?.statusId !== statusId) {
+                effects[i] = mergeObject(effect, {
+                  flags: {
+                    core: {
+                      statusId: statusId
+                    }
                   }
-                }
-              })
-              changed = true
+                })
+                changed = true
+              }
             }
           }
         }
+        if (changed) {
+          updateData.effects = effects
+        }
+        updateData['data.-=status'] = null
       }
-      if (changed) {
-        updateData.effects = effects
-      }
-      updateData['data.-=status'] = null
     }
     return updateData
   }

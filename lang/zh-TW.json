@@ -762,7 +762,6 @@
   "CoC7.Summarize": "總結",
   "CoC7.UnableToInteractWithChatCard": "你無法與這條信息互動，如果你需要進行此行動，請讓你的KP去幫你進行選擇。",
   "CoC7.UnableToCopyToClipboard": "無法複製到剪貼板，這可能是由於你的瀏覽器安全設定造成的。",
-  "CoC7.WarningCharacterSheetV1Depreciated": "這個佈局已經過時了，可能無法正常工作。它將隨著FoundryVTT v9的發布而被移除，請讓你的KP將紙張類型改為CoC7.CoC7CharacterSheetV2。",
   "CoC7.MessageTitleSelectUserToGiveTo": "將物品交給另一個角色。",
   "CoC7.MessageSelectUserToGiveTo": "你想把這個物品給哪個角色？。",
   "SETTINGS.TitleRules": "規則",

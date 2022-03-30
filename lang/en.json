@@ -773,7 +773,6 @@
 
   "CoC7.UnableToInteractWithChatCard": "You are not able to interact with this message, if you need to make a change please ask your Keeper to select the options for you",
   "CoC7.UnableToCopyToClipboard": "Unable to copy to clipboard, this is likely due to your browser security settings.",
-  "CoC7.WarningCharacterSheetV1Depreciated": "This layout is obsolete and may not work correctly. It will be removed with the FoundryVTT v9 release, please get your Keeper to change the sheet type to CoC7.CoC7CharacterSheetV2",
 
   "CoC7.MessageTitleSelectUserToGiveTo": "Give item to another character",
   "CoC7.MessageSelectUserToGiveTo": "Which character would you like to give this item to?",

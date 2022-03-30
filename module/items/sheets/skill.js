@@ -173,4 +173,17 @@ export class CoC7SkillSheet extends ItemSheet {
   //   // Update the Item
   //   return this.object.update(formData);
   // }
+
+  async _updateObject (event, formData) {
+    if (this.item.data.data.properties?.special) {
+      const group =
+        formData['data.specialization.group'] ||
+        this.item.data.data.specialization.group
+      const type =
+        formData['data.specialization.type'] ||
+        this.item.data.data.specialization.type
+      formData.name = group + ' (' + type + ')'
+    }
+    return super._updateObject(event, formData)
+  }
 }

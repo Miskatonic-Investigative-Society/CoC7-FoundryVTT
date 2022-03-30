@@ -62,20 +62,9 @@ export class CoC7WeaponSheet extends ItemSheet {
       })
 
       data.combatSkill.sort((a, b) => {
-        let lca
-        let lcb
-        if (a.data.properties && b.data.properties) {
-          lca = a.data.properties.special
-            ? a.data.specialization.toLowerCase() + a.name.toLowerCase()
-            : a.name.toLowerCase()
-          lcb = b.data.properties.special
-            ? b.data.specialization.toLowerCase() + b.name.toLowerCase()
-            : b.name.toLowerCase()
-        } else {
-          lca = a.name.toLowerCase()
-          lcb = b.name.toLowerCase()
-        }
-        return lca.localeCompare(lcb)
+        return a.name
+          .toLocaleLowerCase()
+          .localeCompare(b.name.toLocaleLowerCase())
       })
     }
 

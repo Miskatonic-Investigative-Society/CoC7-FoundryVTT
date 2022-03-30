@@ -342,7 +342,7 @@ export class CoC7Book extends CoC7Item {
           if (development.specialization) {
             await skill[0].update({
               'data.properties.special': true,
-              'data.specialization': development.specialization
+              'data.specialization.group': development.specialization.group
             })
           }
         }

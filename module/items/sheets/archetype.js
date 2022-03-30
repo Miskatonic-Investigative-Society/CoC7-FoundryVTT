@@ -145,18 +145,11 @@ export class CoC7ArchetypeSheet extends ItemSheet {
     }
 
     data.skillListEmpty = data.data.skills.length === 0
-    for (const skill of data.data.skills) {
-      // For each skill if it's a spec and spac name not included in the name add it
-      if (
-        skill.data.specialization &&
-        !skill.name.includes(skill.data.specialization)
-      ) {
-        skill.displayName = `${skill.data.specialization} (${skill.name})`
-      } else skill.displayName = skill.name
-    }
 
     data.data.skills.sort((a, b) => {
-      return a.displayName.localeCompare(b.displayName)
+      return a.name
+        .toLocaleLowerCase()
+        .localeCompare(b.name.toLocaleLowerCase())
     })
 
     data.coreCharacteristicsString = ''

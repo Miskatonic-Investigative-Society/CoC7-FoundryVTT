@@ -321,6 +321,10 @@ export class CoCActor extends Actor {
       type: 'skill',
       data: {
         value: value,
+        specialization: {
+          group: '',
+          type: ''
+        },
         properties: {
           special: false,
           rarity: rarity,
@@ -333,7 +337,10 @@ export class CoCActor extends Actor {
       data.img = img
     }
     if (specialization !== false) {
-      data.data.specialization = specialization
+      const parts = CoC7Item.getNamePartsSpec(skillName, specialization)
+      data.data.specialization.group = parts.group
+      data.data.specialization.type = parts.type
+      data.name = parts.name
       data.data.properties.special = true
     }
     return data
@@ -362,21 +369,28 @@ export class CoCActor extends Actor {
       name
     )
     const value = Number(skillData.get('base-value'))
+    const parts = CoC7Item.getNamePartsSpec(
+      name,
+      game.i18n.localize(
+        firearms
+          ? 'CoC7.FirearmSpecializationName'
+          : 'CoC7.FightingSpecializationName'
+      )
+    )
     const data = {
-      name: name,
+      name: parts.name,
       type: 'skill',
       data: {
-        specialization: game.i18n.localize(
-          firearms
-            ? 'CoC7.FirearmSpecializationName'
-            : 'CoC7.FightingSpecializationName'
-        ),
         base: isNaN(value) ? 0 : value,
         adjustments: {
           personal: null,
           occupation: null,
           archetype: null,
           experience: null
+        },
+        specialization: {
+          group: parts.group,
+          type: parts.type
         },
         properties: {
           special: true,
@@ -407,29 +421,33 @@ export class CoCActor extends Actor {
     if (skills.length === 0) {
       // Creating natural attack skill
       try {
-        const skill = await this.createEmbeddedDocuments(
-          'Item', // MODIF: 0.8.x 'OwnedItmem' => 'Item
-          [
-            {
-              name: game.i18n.localize(COC7.creatureFightingSkill),
-              type: 'skill',
-              data: {
-                base: 0,
-                value: null,
-                specialization: game.i18n.localize(
-                  COC7.fightingSpecializationName
-                ),
-                properties: {
-                  combat: true,
-                  fighting: true,
-                  special: true
-                },
-                flags: {}
-              }
-            }
-          ],
-          { renderSheet: false }
+        const parts = CoC7Item.getNamePartsSpec(
+          game.i18n.localize(COC7.creatureFightingSkill),
+          game.i18n.localize(COC7.fightingSpecializationName)
         )
+        const data = {
+          type: 'skill',
+          data: {
+            base: 0,
+            value: null,
+            specialization: {
+              group: '',
+              type: ''
+            },
+            properties: {
+              combat: true,
+              fighting: true,
+              special: true
+            },
+            flags: {}
+          }
+        }
+        data.data.specialization.group = parts.group
+        data.data.specialization.type = parts.type
+        data.name = parts.name
+        const skill = await this.createEmbeddedDocuments('Item', [data], {
+          renderSheet: false
+        })
 
         const attack = await this.createEmbeddedDocuments(
           'Item',
@@ -699,58 +717,53 @@ export class CoCActor extends Actor {
           } else data.data.value = null
 
           if (CoC7Item.isAnySpec(data)) {
-            const specialization = data.data.specialization?.toLowerCase()
-            if (specialization) {
-              let skillList = []
-              if (data.data?.flags?.occupation || data.data?.flags?.archetype) {
-                skillList = this.skills.filter(el => {
-                  if (!el.data.data.specialization) return false
-                  if (
-                    data.data?.flags?.occupation &&
-                    el.data.data.flags?.occupation
-                  ) {
-                    return false
-                  }
-                  if (
-                    data.data?.flags?.archetype &&
-                    el.data.data.flags?.archetype
-                  ) {
-                    return false
-                  }
-                  return (
-                    specialization.toLowerCase() ===
-                    el.data.data.specialization?.toLowerCase()
-                  )
-                })
-              }
-              // if( 1 <= skillList.length) {
-              const skillData = await SkillSpecSelectDialog.create(
-                skillList,
-                data.data.specialization,
-                baseCalculated
-              )
-              if (skillData) {
-                if (skillData.get('existing-skill')) {
-                  const existingItem = this.items.get(
-                    skillData.get('existing-skill')
-                  )
-                  for (const [key, value] of Object.entries(data.data.flags)) {
-                    if (value) await existingItem.setItemFlag(key)
-                  }
-                  data.name = CoC7Item.getNameWithoutSpec(existingItem)
-                  return
-                } else {
-                  if (skillData.get('new-skill-name')) {
-                    data.name = skillData.get('new-skill-name')
-                  } else data.name = CoC7Item.getNameWithoutSpec(data)
+            let skillList = []
+            if (data.data?.flags?.occupation || data.data?.flags?.archetype) {
+              skillList = this.skills.filter(el => {
+                if (!el.data.data.specialization) return false
+                if (
+                  data.data?.flags?.occupation &&
+                  el.data.data.flags?.occupation
+                ) {
+                  return false
                 }
-              }
+                if (
+                  data.data?.flags?.archetype &&
+                  el.data.data.flags?.archetype
+                ) {
+                  return false
+                }
+                return (
+                  data.data.specialization.group.toLocaleLowerCase() ===
+                  el.data.data.specialization?.group.toLocaleLowerCase()
+                )
+              })
             }
-            // }
-          } else {
-            const specialization = data.data.specialization
-            if (specialization) {
-              data.name = CoC7Item.getNameWithoutSpec(data)
+            const skillData = await SkillSpecSelectDialog.create(
+              skillList,
+              data.data.specialization.group,
+              baseCalculated
+            )
+            if (skillData) {
+              baseCalculated = skillData.get('base-value')
+              data.data.value = baseCalculated
+              if (skillData.get('existing-skill')) {
+                const existingItem = this.items.get(
+                  skillData.get('existing-skill')
+                )
+                for (const [key, value] of Object.entries(data.data.flags)) {
+                  if (value) await existingItem.setItemFlag(key)
+                }
+                data.name = CoC7Item.getNameWithoutSpec(existingItem)
+                return
+              } else {
+                const parts = CoC7Item.getNamePartsSpec(
+                  skillData.get('new-skill-name'),
+                  data.data.specialization.group
+                )
+                data.data.specialization.type = parts.type
+                data.name = parts.name
+              }
             }
           }
 
@@ -1064,15 +1077,6 @@ export class CoCActor extends Actor {
 
               // if there's none, do nothing.
               if (dialogData.skills.length !== 0) {
-                for (const skill of dialogData.skills) {
-                  if (
-                    skill.data.specialization &&
-                    !skill.name.includes(skill.data.specialization)
-                  ) {
-                    skill.displayName = `${skill.data.specialization} (${skill.name})`
-                  } else skill.displayName = skill.name
-                }
-
                 if (dialogData.skills.length <= dialogData.optionsCount) {
                   // If there's is less skill than options, add them all.
                   ui.notifications.info(
@@ -1133,14 +1137,6 @@ export class CoCActor extends Actor {
 
               // if there's none, do nothing.
               if (dialogData.skills.length !== 0) {
-                for (const skill of dialogData.skills) {
-                  if (
-                    skill.data.specialization &&
-                    !skill.name.includes(skill.data.specialization)
-                  ) {
-                    skill.displayName = `${skill.data.specialization} (${skill.name})`
-                  } else skill.displayName = skill.name
-                }
                 if (dialogData.skills.length <= dialogData.optionsCount) {
                   // If there's is less skill than options, add them all.
                   ui.notifications.info(
@@ -2544,9 +2540,9 @@ export class CoCActor extends Actor {
         !!s.name &&
         (s.name.toLocaleLowerCase().replace(/\s/g, '') ===
           name.toLocaleLowerCase().replace(/\s/g, '') ||
-          s.sName.toLocaleLowerCase().replace(/\s/g, '') ===
+          s.name.toLocaleLowerCase().replace(/\s/g, '') ===
             name.toLocaleLowerCase().replace(/\s/g, '') ||
-          s.sName.toLocaleLowerCase().replace(/\s/g, '') ===
+          s.name.toLocaleLowerCase().replace(/\s/g, '') ===
             shortName?.toLocaleLowerCase().replace(/\s/g, ''))
       )
     })
@@ -2593,9 +2589,8 @@ export class CoCActor extends Actor {
   get pilotSkills () {
     return this.skills.filter(s => {
       return (
-        !!s.data.data.specialization &&
-        s.data.data.specialization.length &&
-        s.data.data.specialization?.toLocaleLowerCase() ===
+        s.data.data.properties?.special &&
+        s.data.data.specialization?.group?.toLocaleLowerCase() ===
           game.i18n
             .localize('CoC7.PilotSpecializationName')
             ?.toLocaleLowerCase()
@@ -2606,9 +2601,8 @@ export class CoCActor extends Actor {
   get driveSkills () {
     return this.skills.filter(s => {
       return (
-        !!s.data.data.specialization &&
-        s.data.data.specialization.length &&
-        s.data.data.specialization?.toLocaleLowerCase() ===
+        s.data.data.properties?.special &&
+        s.data.data.specialization?.group?.toLocaleLowerCase() ===
           game.i18n
             .localize('CoC7.DriveSpecializationName')
             ?.toLocaleLowerCase()

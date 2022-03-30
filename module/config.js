@@ -158,26 +158,3 @@ COC7.combatCards = {
   maneuver: 'CoC7.Maneuver',
   noResponse: 'CoC7.NoResponse'
 }
-
-// COC7.dodge = {
-//  'name': COC7.dodgeSkillName,
-//  'type': 'skill',
-//  'base': '1/2*@DEX',
-//  'value': -1,
-//  'data': {
-//    'specialization': COC7.fightingSpecializationName },
-//  'properties': {
-//    'special': true,
-//    'rarity': false,
-//    'push': false,
-//    'combat': true,
-//    'fighting': true,
-//    'firearm': false
-//  },
-//  'flags': { 'wpnexcl': true}
-// };
-
-// COC7.PcSkills = {
-//  'dodge' : COC7.dodge,
-//  'throw' : {}
-// };

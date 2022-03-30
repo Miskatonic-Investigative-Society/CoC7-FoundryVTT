@@ -773,7 +773,6 @@
 
   "CoC7.UnableToInteractWithChatCard": "変更が必要なとき､キーパーにオプション選択を要望すること。",
   "CoC7.UnableToCopyToClipboard": "クリップボードにコピーできない。この問題はブラウザのセキュリティ設定が原因と思われる。",
-  "CoC7.WarningCharacterSheetV1Depreciated": "このレイアウトは廃止されており､正常に動作しない可能性がある。キーパーにシート･タイプをCoC7.CoC7CharacterSheetV2に変更するよう要望すること。",
 
   "CoC7.MessageTitleSelectUserToGiveTo": "他のキャラクターにアイテムを渡す",
   "CoC7.MessageSelectUserToGiveTo": "このアイテムをどのキャラクターに渡したいですか？",

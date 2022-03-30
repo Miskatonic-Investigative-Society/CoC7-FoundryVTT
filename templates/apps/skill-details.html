@@ -1,36 +1,36 @@
 <form class="flexcol">
-    <header class="sheet-header flexrow" style="flex: 0 0 64px;padding-bottom: 2px;">
-        <div class="header-details flexrow">
-            <h1 class="name" style="height: 48px;">
-                <input name="name" type="text" value="{{content.name}}" readonly/>
-            </h1>
+  <header class="sheet-header flexrow" style="flex: 0 0 64px;padding-bottom: 2px;">
+    <div class="header-details flexrow">
+      <h1 class="name" style="height: 48px;">
+        <input name="name" type="text" value="{{content.name}}" readonly />
+      </h1>
 
-            <ul class="summary flexrow">
-                <li class="flex2">
-                    <input type="text" name="data.data.specialization" value="{{content.data.data.specialization}}" readonly/>
-                </li>
-                <li class="flex1">
-                    <input type="text" name="data.data.value" value="{{content.value}}%" readonly/>
-                </li>
-            </ul>
+      <ul class="summary flexrow">
+        <li class="flex2">
+          <input type="text" name="data.data.specialization.group" value="{{content.data.data.specialization.group}}" readonly />
+        </li>
+        <li class="flex1">
+          <input type="text" name="data.data.value" value="{{content.value}}%" readonly />
+        </li>
+      </ul>
 
-        </div>
-        <img class="profile" src="{{content.img}}" data-edit="img" title="{{content.name}}" height="64" width="64"/>
+    </div>
+    <img class="profile" src="{{content.img}}" data-edit="img" title="{{content.name}}" height="64" width="64" />
 
-    </header>
-    <section class="sheet-body">
-        <div class="flexrow"  style='height: 100%;'>
-            <div class="item-properties">
-                <ol class="properties-list">
-                    {{#each content.skillProperties}}
-                    <li>{{this}}</li>
-                    {{/each}}
-                </ol>
-            </div>
-            
-            <div class='item-description'>
-                {{{content.data.data.description.enrichedValue}}}
-            </div>
-        </div>
-    </section>
+  </header>
+  <section class="sheet-body">
+    <div class="flexrow" style='height: 100%;'>
+      <div class="item-properties">
+        <ol class="properties-list">
+          {{#each content.skillProperties}}
+            <li>{{this}}</li>
+          {{/each}}
+        </ol>
+      </div>
+
+      <div class='item-description'>
+        {{{content.data.data.description.enrichedValue}}}
+      </div>
+    </div>
+  </section>
 </form>

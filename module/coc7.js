@@ -1,7 +1,7 @@
-/* global $, Combat, CONFIG, fromUuid, game, Hooks, tinyMCE */
+/* global $, Combat, CONFIG, CONST, fromUuid, game, Hooks, isNewerVersion, tinyMCE */
 import { CoC7NPCSheet } from './actors/sheets/npc-sheet.js'
 import { CoC7CreatureSheet } from './actors/sheets/creature-sheet.js'
-import { CoC7CharacterSheetV2 } from './actors/sheets/character.js'
+import { CoC7CharacterSheet } from './actors/sheets/character.js'
 import { CoC7Chat } from './chat.js'
 import { CoC7Combat, rollInitiative } from './combat.js'
 import { COC7 } from './config.js'
@@ -25,6 +25,11 @@ import { CoC7Socket } from './hooks/socket.js'
 import { DropActorSheetData } from './hooks/drop-actor-sheet-data.js'
 import { TestCard } from './chat/cards/test.js'
 import { initECC } from './common/chatcardlib/src/chatcardlib.js'
+
+if (CONST.COMPATIBILITY_MODES && !isNewerVersion(game.version, '10.261')) {
+  // hide compatibility warnings while still in testing
+  CONFIG.debug.compatibility = CONST.COMPATIBILITY_MODES.SILENT
+}
 
 Hooks.on('renderSettingsConfig', (app, html, options) => {
   const systemTab = $(app.form).find('.tab[data-tab=system]')
@@ -475,10 +480,10 @@ Hooks.on('renderChatMessage', (app, html, data) => {
   CoC7Chat.renderChatMessageHook(app, html, data)
   CoC7Parser.ParseMessage(app, html, data)
 })
-// Sheet V2 css options
-// Hooks.on('renderCoC7CharacterSheetV2', CoC7CharacterSheetV2.renderSheet);
-Hooks.on('renderActorSheet', CoC7CharacterSheetV2.renderSheet) // TODO : change from CoC7CharacterSheetV2
-Hooks.on('renderItemSheet', CoC7CharacterSheetV2.renderSheet) // TODO : change from CoC7CharacterSheetV2
+// Sheet css options
+// Hooks.on('renderCoC7CharacterSheet', CoC7CharacterSheet.renderSheet);
+Hooks.on('renderActorSheet', CoC7CharacterSheet.renderSheet)
+Hooks.on('renderItemSheet', CoC7CharacterSheet.renderSheet)
 
 // Hooks.on('dropCanvasData', CoC7Parser.onDropSomething);
 Hooks.on('getSceneControlButtons', CoC7Menu.getButtons)

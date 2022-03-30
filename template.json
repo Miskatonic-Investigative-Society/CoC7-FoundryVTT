@@ -356,7 +356,10 @@
       "price": {}
     },
     "skill": {
-      "specialization": "",
+      "specialization": {
+        "group": "",
+        "type": ""
+      },
       "description": {
         "value": "",
         "opposingDifficulty": "",

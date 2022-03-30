@@ -744,7 +744,6 @@
 
   "CoC7.UnableToInteractWithChatCard": "Não é possível interagir com essa mensagem, por favor peça ao Guardião para alterá-la para você.",
   "CoC7.UnableToCopyToClipboard": "Impossível copiar para a área de transferência, provavelmente por causa das configurações de segurança de seu navegador.",
-  "CoC7.WarningCharacterSheetV1Depreciated": "Essa versão da ficha está obsoleta e pode não funcionar corretamente. Será removida na versão 0.9 do Foundry VTT, por favor, mude o tipo da ficha para CoC7.CoC7CharacterSheetV2",
 
   "CoC7.ImportedUnnamedCharacter": "Personagem sem nome importado",
   "CoC7.CreatedImportedCharactersFolder": "Pasta de 'Personagens Importados' criada",
