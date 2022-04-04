@@ -1058,14 +1058,7 @@ export class CoC7Chat {
 
       case 'reset-creature-san-data': {
         const sanCheck = SanCheckCard.getFromCard(card)
-        await sanCheck.resetCreatureSanData()
-        await sanCheck.updateChatCard()
-        break
-      }
-
-      case 'reset-specie-san-data': {
-        const sanCheck = SanCheckCard.getFromCard(card)
-        await sanCheck.resetSpecieSanData()
+        await sanCheck.clearSanLossReason()
         await sanCheck.updateChatCard()
         break
       }

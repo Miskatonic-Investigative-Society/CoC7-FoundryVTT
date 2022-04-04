@@ -136,7 +136,7 @@ export class ChatCardActor {
     if (this.actor) {
       speakerData.actor = this.actor
       if (this.token) {
-        speakerData.token = this.token
+        speakerData.token = this.token.document
       }
       speaker = ChatMessage.getSpeaker(speakerData)
     } else {

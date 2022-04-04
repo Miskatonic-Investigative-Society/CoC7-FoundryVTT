@@ -1,0 +1,34 @@
+<form>
+  <div class="form-group" style="margin: 0 0 10px;">
+    {{ localize 'CoC7.SanityLossTypeDialogBody' }}
+  </div>
+  <div class="form-group">
+    <label>{{ localize 'CoC7.AddSanityLossEncounter' }}</label>
+    <select class="field_type">
+      {{#select object.type}}
+        <option value="encounter">{{ localize 'CoC7.SanityLossEncounter' }}</option>
+        <option value="immunity">{{ localize 'CoC7.SanityLossImmunity' }}</option>
+      {{/select}}
+    </select>
+  </div>
+  <div class="form-group">
+    <label>{{ localize 'CoC7.SanityLossTypeReason' }}</label>
+    <input type="text" class="field_name" value="{{object.name}}" />
+  </div>
+  {{#unless isImmunity}}
+    <div class="form-group">
+      <label>{{ localize 'CoC7.SanityLossTypeValue' }}</label>
+      <input type="text" class="field_value" value="{{object.value}}" data-dtype="Number">
+    </div>
+  {{/unless}}
+  <div class="flexrow" style="margin: 10px 0 0;">
+    <button class="dialog-button add" type="button" data-button="add">
+      <i class="fas fa-check"></i>
+      {{ localize 'Activate' }}
+    </button>
+    <button class="dialog-button close" type="button" data-button="close">
+      <i class="fas fa-ban"></i>
+      {{ localize 'Cancel' }}
+    </button>
+  </div>
+</form>

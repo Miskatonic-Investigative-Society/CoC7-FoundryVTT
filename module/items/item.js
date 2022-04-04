@@ -262,7 +262,6 @@ export class CoC7Item extends Item {
   }
 
   get shortName () {
-    console.log(this.data)
     if (
       this.data.data.properties.special &&
       this.data.data.specialization.type.length
