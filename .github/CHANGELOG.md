@@ -2,10 +2,17 @@
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Change skill names system to begin support for FoundryVTT v10 changes
 - Default weapons added via character/NPC sheet to either melee or ranged
 - Fix critical and impale buttons on combat card not formatting correctly
+- Fix French documentation path, thanks to @vonv
+- Remove character sheet v1 as it is no longer supported
 - Update to Japanese localization, thanks to Asami
+- Update to Polish localization, thanks to @everyonecancode
+- Update to Simplified Chinese Translation, thanks to kwh3884858
 - Update to Swedish localization, thanks to @Rangertheman
+- Update to Taiwanese localization, thanks to @zeteticl
+
 
 ## Version 0.7.6:
 
