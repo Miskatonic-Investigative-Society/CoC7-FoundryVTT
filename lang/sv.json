@@ -782,7 +782,6 @@
 
   "CoC7.UnableToInteractWithChatCard": "Du kan inte interagera med det här medelandet. Om du behöver ändra något, vänligen be din Väktare välja det alternativet åt dig",
   "CoC7.UnableToCopyToClipboard": "Kan inte kopiera till Urklippshanteraren, förmodligen på grund av säkerhetsinställningarna i din webbläsare.",
-  "CoC7.WarningCharacterSheetV1Depreciated": "Den här layouten är inte längre i bruk och fungerar kanske inte som den ska. Den kommer att tas bort i samband med updateringen till FoundryVTT v9. Vänligen be din Väktare att ändra karaktärsbladtypen till CoC7.CoC7CharacterSheetV2",
 
   "CoC7.MessageTitleSelectUserToGiveTo": "Ge föremål till en annan karaktär",
   "CoC7.MessageSelectUserToGiveTo": "Vilken karaktär vill du ge det här föremålet till?",

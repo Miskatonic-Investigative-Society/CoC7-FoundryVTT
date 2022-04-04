@@ -772,7 +772,6 @@
 
   "CoC7.UnableToInteractWithChatCard": "Vous ne pouvez interagir avec ce message, si vous devez faire une modification, demandez à votre Gardien de sélectionner les options pour vous",
   "CoC7.UnableToCopyToClipboard": "Impossible de copier le presse-papier, il y a des chances que cela proviennent de paramètres de sécurité de votre navigateur.",
-  "CoC7.WarningCharacterSheetV1Depreciated": "Cet affichage est obsolète et risque de dysfonctionner. Il sera supprimé de FoundryVTT v9, demandez à votre Gardien de changer le style de fiche pour CoC7.CoC7CharacterSheetV2",
 
   "CoC7.MessageTitleSelectUserToGiveTo": "Donner un objet à un autre personnage",
   "CoC7.MessageSelectUserToGiveTo": "A qui voulez-vous donner cet objet ?",

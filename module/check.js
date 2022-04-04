@@ -306,7 +306,7 @@ export class CoC7Check {
 
   get name () {
     if (this.actor) {
-      if (this.skill) return this.skill.name
+      if (this.skill) return this.skill.shortName
       if (this.item) return this.item.name
       if (this.characteristic) {
         return CoC7Utilities.getCharacteristicNames(this.characteristic)?.label
@@ -1345,7 +1345,7 @@ export class CoC7Check {
     if (this.actor?.data) {
       if (this.skill) {
         flavor = game.i18n.format('CoC7.CheckResult', {
-          name: this.skill.name,
+          name: this.skill.shortName,
           value: this.rawValueString,
           difficulty: this.difficultyString
         })

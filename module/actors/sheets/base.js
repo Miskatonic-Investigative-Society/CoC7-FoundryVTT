@@ -3,6 +3,7 @@
 import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7Check } from '../../check.js'
 import { COC7 } from '../../config.js'
+import { CoC7Item } from '../../items/item.js'
 import { CoC7MeleeInitiator } from '../../chat/combat/melee-initiator.js'
 import { CoC7RangeInitiator } from '../../chat/rangecombat.js'
 // import { CoC7DamageRoll } from '../../chat/damagecards.js';
@@ -41,9 +42,10 @@ export class CoC7ActorSheet extends ActorSheet {
 
     data.permissionLimited =
       (this.actor.data.permission[game.user.id] ===
-        CONST.ENTITY_PERMISSIONS.LIMITED ||
+        (CONST.DOCUMENT_OWNERSHIP_LEVELS || CONST.ENTITY_PERMISSIONS).LIMITED ||
         this.actor.data.permission.default ===
-          CONST.ENTITY_PERMISSIONS.LIMITED) &&
+          (CONST.DOCUMENT_OWNERSHIP_LEVELS || CONST.ENTITY_PERMISSIONS)
+            .LIMITED) &&
       !game.user.isGM
     data.isGM = game.user.isGM
     data.alowUnlock =
@@ -219,32 +221,32 @@ export class CoC7ActorSheet extends ActorSheet {
           if (item.data.properties.special) {
             if (item.data.properties.fighting) {
               if (
-                item.data.specialization !==
+                item.data.specialization.group !==
                 game.i18n.localize('CoC7.FightingSpecializationName')
               ) {
                 const itemToUpdate = this.actor.items.get(item._id)
                 await itemToUpdate.update({
-                  'data.specialization': game.i18n.localize(
+                  'data.specialization.group': game.i18n.localize(
                     'CoC7.FightingSpecializationName'
                   )
                 })
-                item.data.specialization = game.i18n.localize(
+                item.data.specialization.group = game.i18n.localize(
                   'CoC7.FightingSpecializationName'
                 ) // TODO : Client with different language = recursive call when opening the same sheet.
               }
             }
             if (item.data.properties.firearm) {
               if (
-                item.data.specialization !==
+                item.data.specialization.group !==
                 game.i18n.localize('CoC7.FirearmSpecializationName')
               ) {
                 const itemToUpdate = this.actor.items.get(item._id)
                 await itemToUpdate.update({
-                  'data.specialization': game.i18n.localize(
+                  'data.specialization.group': game.i18n.localize(
                     'CoC7.FirearmSpecializationName'
                   )
                 })
-                item.data.specialization = game.i18n.localize(
+                item.data.specialization.group = game.i18n.localize(
                   'CoC7.FirearmSpecializationName'
                 )
               }
@@ -321,50 +323,16 @@ export class CoC7ActorSheet extends ActorSheet {
 
       for (const itemType in data.itemsByType) {
         data.itemsByType[itemType].sort((a, b) => {
-          let lca
-          let lcb
-          if (a.data.properties && b.data.properties) {
-            lca =
-              a.data.properties.special &&
-              typeof a.data.specialization !== 'undefined'
-                ? a.data.specialization
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase() +
-                a.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
-                : a.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
-            lcb =
-              b.data.properties.special &&
-              typeof b.data.specialization !== 'undefined'
-                ? b.data.specialization
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase() +
-                b.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
-                : b.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
-          } else {
-            lca = a.name
-              .normalize('NFD')
-              .replace(/[\u0300-\u036f]/g, '')
-              .toLowerCase()
-            lcb = b.name
-              .normalize('NFD')
-              .replace(/[\u0300-\u036f]/g, '')
-              .toLowerCase()
-          }
-          return lca.localeCompare(lcb)
+          return a.name
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLocaleLowerCase()
+            .localeCompare(
+              b.name
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLocaleLowerCase()
+            )
         })
       }
 
@@ -372,48 +340,16 @@ export class CoC7ActorSheet extends ActorSheet {
       data.skills = data.items
         .filter(item => item.type === 'skill')
         .sort((a, b) => {
-          let lca
-          let lcb
-          if (a.data.properties && b.data.properties) {
-            lca = a.data.properties.special
-              ? a.data.specialization
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLowerCase() +
-              a.name
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLowerCase()
-              : a.name
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLowerCase()
-            lcb = b.data.properties.special
-              ? b.data.specialization
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLowerCase() +
+          return a.name
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLocaleLowerCase()
+            .localeCompare(
               b.name
                 .normalize('NFD')
                 .replace(/[\u0300-\u036f]/g, '')
-                .toLowerCase()
-              : b.name
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLowerCase()
-          } else {
-            lca = a.name
-              .normalize('NFD')
-              .replace(/[\u0300-\u036f]/g, '')
-              .toLowerCase()
-            lcb = b.name
-              .normalize('NFD')
-              .replace(/[\u0300-\u036f]/g, '')
-              .toLowerCase()
-          }
-          if (lca < lcb) return -1
-          if (lca > lcb) return 1
-          return 0
+                .toLocaleLowerCase()
+            )
         })
 
       data.meleeSkills = data.skills.filter(
@@ -988,7 +924,7 @@ export class CoC7ActorSheet extends ActorSheet {
             const skillId = item.dataset.skillId
             const skill = sheet.actor.items.get(skillId)
             let toolTip = game.i18n.format('CoC7.ToolTipSkill', {
-              skill: skill.sName,
+              skill: skill.name,
               regular: skill.value,
               hard: Math.floor(skill.value / 2),
               extreme: Math.floor(skill.value / 5)
@@ -1199,7 +1135,10 @@ export class CoC7ActorSheet extends ActorSheet {
       let visible = false
       for (const [k, v] of Object.entries(e.data.permission)) {
         if (k === 'default' || k === game.user.id) {
-          visible = visible || v !== CONST.ENTITY_PERMISSIONS.NONE
+          visible =
+            visible ||
+            v !==
+              (CONST.DOCUMENT_OWNERSHIP_LEVELS || CONST.ENTITY_PERMISSIONS).NONE
         }
       }
       return visible
@@ -1949,7 +1888,7 @@ export class CoC7ActorSheet extends ActorSheet {
     const tokenKey = event.currentTarget.closest('form').dataset.tokenId
 
     if (isCtrlKey(event) && game.user.isGM) {
-      const name = this.actor.items.get(skillId)?.name
+      const name = this.actor.items.get(skillId)?.shortName
       if (!name) return
       const linkData = {
         check: 'check',
@@ -2116,7 +2055,22 @@ export class CoC7ActorSheet extends ActorSheet {
             event.currentTarget.closest('.item').dataset.skillId
           )
           if (item) {
-            await item.update({ name: event.currentTarget.value })
+            const data = {}
+            if (item.data.data.properties.special) {
+              const parts = CoC7Item.getNamePartsSpec(
+                event.currentTarget.value,
+                item.data.data.specialization.group
+              )
+              data.name = parts.name
+              data.data = {
+                specialization: {
+                  type: parts.type
+                }
+              }
+            } else {
+              data.name = event.currentTarget.value
+            }
+            await item.update(data)
           }
         }
 

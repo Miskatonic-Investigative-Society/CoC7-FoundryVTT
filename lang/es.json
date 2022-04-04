@@ -748,7 +748,6 @@
 
   "CoC7.UnableToInteractWithChatCard": "No es posible interactuar con este mensaje, si necesita hacer algún cambio pídaselo al Guardián",
   "CoC7.UnableToCopyToClipboard": "No es posible copiar al portapapeles, probablemente debido al nivel de seguridad de su navegador",
-  "CoC7.WarningCharacterSheetV1Depreciated": "Esta disposición está obsoleta y no funcionará correctamente. Se eliminará cuando salga la versión v9 de FoundryVTT, por favor dígale a su Guardián que cambie la hoja a CoC7.CoC7CharacterSheetV2",
 
   "CoC7.MessageTitleSelectUserToGiveTo": "Dar objeto a otro personaje",
   "CoC7.MessageSelectUserToGiveTo": "¿A qué personaje quiere darle el objeto?",

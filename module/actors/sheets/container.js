@@ -169,7 +169,10 @@ export class CoC7ContainerSheet extends ActorSheet {
       let visible = false
       for (const [k, v] of Object.entries(e.data.permission)) {
         if (k === 'default' || k === game.user.id) {
-          visible = visible || v !== CONST.ENTITY_PERMISSIONS.NONE
+          visible =
+            visible ||
+            v !==
+              (CONST.DOCUMENT_OWNERSHIP_LEVELS || CONST.ENTITY_PERMISSIONS).NONE
         }
       }
       return visible

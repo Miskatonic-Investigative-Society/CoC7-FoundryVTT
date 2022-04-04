@@ -773,7 +773,6 @@
 
   "CoC7.UnableToInteractWithChatCard": "Nie możesz zmienić tego elementu. Jeśli chcesz wprowadzić zmiany, poproś Strażnika, żeby ustawił za Ciebie opcje",
   "CoC7.UnableToCopyToClipboard": "Nie udało się skopiować do schowka. Najprawdopodobniej jest to wina ustawień bezpieczeństwa przeglądarki.",
-  "CoC7.WarningCharacterSheetV1Depreciated": "Ten układ jest przestarzały i może nie działać prawidłowo. Zostanie usunięty w FoundryVTT v9, poproś Strażnika o zmianę ustawień karty na CoC7.CoC7CharacterSheetV2",
 
   "CoC7.MessageTitleSelectUserToGiveTo": "Przekaż przedmiot innej postaci",
   "CoC7.MessageSelectUserToGiveTo": "Komu chciałbyś przekazać przedmiot?",

@@ -5,7 +5,7 @@
   "version": "0.7.6",
   "author": "Miskatonic Investigative Society",
   "minimumCoreVersion": "9",
-  "compatibleCoreVersion": "9",
+  "compatibleCoreVersion": "10.260",
   "esmodules": [
     "lib/socketlib/src/libwrapper_shim.js",
     "lib/socketlib/src/socketlib.js",

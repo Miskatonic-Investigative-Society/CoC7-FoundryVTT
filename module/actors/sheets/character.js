@@ -1,9 +1,9 @@
 /* global $, FontFace, game, mergeObject, ui */
 import { CoC7ActorSheet } from './base.js'
 
-export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
+export class CoC7CharacterSheet extends CoC7ActorSheet {
   _getHeaderButtons () {
-    if (this.constructor.name === 'CoC7CharacterSheetV2') {
+    if (this.constructor.name === 'CoC7CharacterSheet') {
       if (!this.summarized) this.summarized = false
       let buttons = super._getHeaderButtons()
       buttons = [
@@ -33,7 +33,7 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
         resizable: false,
         width: 700
       }
-      : CoC7CharacterSheetV2.defaultOptions
+      : CoC7CharacterSheet.defaultOptions
     await this.render(true, options)
   }
 
@@ -141,11 +141,11 @@ export class CoC7CharacterSheetV2 extends CoC7ActorSheet {
     for (const skill of data.skills) {
       if (data.skillShowUncommon || !skill.data.properties.rarity) {
         if (skill.data.properties.special) {
-          if (previousSpec !== skill.data.specialization) {
-            previousSpec = skill.data.specialization
+          if (previousSpec !== skill.data.specialization.group) {
+            previousSpec = skill.data.specialization.group
             data.skillList.push({
               isSpecialization: true,
-              name: skill.data.specialization
+              name: skill.data.specialization.group
             })
           }
         }
