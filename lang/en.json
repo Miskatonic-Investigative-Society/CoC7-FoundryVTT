@@ -402,6 +402,7 @@
   "CoC7.DevSuccessDetails": "{item} upgraded by {augment}%",
   "CoC7.SanGained": "Gained 2d6 ({results} = <strong>{sanGained}</strong>) Sanity after mastering <strong>{skill}</strong> with a <strong>{skillValue}%</strong>",
   "CoC7.DevFailureDetails": "{item} NOT upgraded",
+  "CoC7.ReduceSanityLimits": "Reduced all sanity limits by one",
   "CoC7.DevSuccess": "{item} upgraded ({die}/{score}%) by {augment}%",
   "CoC7.DevFailure": "{item} NOT upgraded ({die}/{score}%)",
   "CoC7.LuckIncreased": "Luck recovered ({die}/{score}) by {augment} points",
@@ -479,6 +480,24 @@
   "CoC7.BackgroundDeleteSection": "Delete section",
   "CoC7.BackgroundSectionMoveUp": "Move Up",
   "CoC7.BackgroundSectionMoveDown": "Move Down",
+  "CoC7.BackgroundEncounters": "Losses from Strange Entities",
+  "CoC7.BackgroundFlags": "Flags",
+  "CoC7.BackgroundFlagsMythosExperienced": "5% Insanity Mythos Awarded",
+  "CoC7.BackgroundFlagsMythosHardened": "Mythos Hardened",
+
+  "CoC7.SanityLossEncounters": "Sanity Loss Encounters",
+  "CoC7.SanityLossImmunities": "Sanity Loss Immunities",
+  "CoC7.AddSanityLossEncounter": "Add Sanity Loss Encounter",
+  "CoC7.AddSanityLossImmunity": "Add Sanity Loss Immunity",
+  "CoC7.DeleteSanityLossEncounter": "Delete Sanity Loss Encounter",
+  "CoC7.DeleteSanityLossImmunity": "Delete Sanity Loss Immunity",
+
+  "CoC7.SanityLossTypeDialogTitle": "New sanity loss or immunity",
+  "CoC7.SanityLossTypeDialogBody": "Add a new Mythos Encounter, Sanity Loss, or Sanity Immunity to the character.",
+  "CoC7.SanityLossTypeReason": "Reason",
+  "CoC7.SanityLossTypeValue": "Sanity points lost",
+  "CoC7.SanityLossEncounter": "Sanity loss encounter",
+  "CoC7.SanityLossImmunity": "Sanity loss immunity",
 
   "CoC7.creatureFightingSkill": "Fighting",
 

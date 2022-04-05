@@ -189,6 +189,7 @@ export class Updater {
     Updater._migrateActorKeeperNotes(actor, updateData)
     Updater._migrateActorNpcCreature(actor, updateData)
     Updater._migrateActorStatusEffectActive(actor, updateData)
+    Updater._migrateActorSanLossReasons(actor, updateData)
 
     // Migrate World Actor Items
     if (actor.items) {
@@ -634,6 +635,33 @@ export class Updater {
       }
     }
     return updateData
+  }
+
+  static _migrateActorSanLossReasons (actor, updateData) {
+    if (
+      actor.type === 'character' &&
+      typeof actor.data.encounteredCreatures !== 'undefined'
+    ) {
+      const groups = {}
+      for (const sanityLossEvent of actor.data.encounteredCreatures) {
+        if (sanityLossEvent.totalLoss > 0) {
+          groups[sanityLossEvent.name] = Math.max(
+            groups[sanityLossEvent.name] ?? 0,
+            sanityLossEvent.totalLoss
+          )
+        }
+      }
+      const sanityLossEvents = []
+      for (const name in groups) {
+        sanityLossEvents.push({
+          type: name,
+          totalLoss: groups[name],
+          immunity: false
+        })
+      }
+      updateData['data.sanityLossEvents'] = sanityLossEvents
+      updateData['data.-=encounteredCreatures'] = null
+    }
   }
 
   static _migrateActorStatusEffectActive (actor, updateData) {

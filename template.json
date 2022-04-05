@@ -181,7 +181,7 @@
         "archetype": null
       },
       "biography": [],
-      "encounteredCreatures": [],
+      "sanityLossEvents": [],
       "backstory": "",
       "indefiniteInsanityLevel": {
         "value": 0,

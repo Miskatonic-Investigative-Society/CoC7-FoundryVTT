@@ -94,7 +94,11 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
       const linkData = {
         check: 'sanloss',
         sanMin: this.actor.data.data.special.sanLoss.checkPassed,
-        sanMax: this.actor.data.data.special.sanLoss.checkFailled
+        sanMax: this.actor.data.data.special.sanLoss.checkFailled,
+        sanReason: this.actor.data.data.infos.type?.length
+          ? this.actor.data.data.infos.type
+          : this.actor.name,
+        tokenKey: this.actor.actorKey
       }
       if (game.settings.get('core', 'rollMode') === 'blindroll') {
         linkData.blind = true
@@ -111,7 +115,15 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
         )
       }
     } else {
-      SanCheckCard.checkTargets(this.actor.tokenKey, event.shiftKey)
+      const sanData = {
+        sanMax: this.actor.sanLossCheckFailled,
+        sanMin: this.actor.sanLossCheckPassed,
+        sanReason: this.actor.data.data.infos.type?.length
+          ? this.actor.data.data.infos.type
+          : this.actor.name,
+        tokenKey: this.actor.actorKey
+      }
+      SanCheckCard.checkTargets(sanData, event.shiftKey)
     }
   }
 

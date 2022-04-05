@@ -1,5 +1,6 @@
 /* global $, FontFace, game, mergeObject, ui */
 import { CoC7ActorSheet } from './base.js'
+import { CoC7CreateMythosEncounter } from '../../apps/create-mythos-encounters.js'
 
 export class CoC7CharacterSheet extends CoC7ActorSheet {
   _getHeaderButtons () {
@@ -99,7 +100,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
       : 0
     data.invalidPulpTalents = data.pulpTalentCount < data.minPulpTalents
 
-    data.hasSkillFlaggedForExp = this.actor.hasSkillFlaggedForExp
+    data.hasDevelopmentPhase = this.actor.hasDevelopmentPhase
 
     data.allowDevelopment = game.settings.get('CoC7', 'developmentEnabled')
     data.allowCharCreation = game.settings.get('CoC7', 'charCreationEnabled')
@@ -217,6 +218,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
       height: 623,
       resizable: true,
       dragDrop: [{ dragSelector: '.item', dropSelector: null }],
+      scrollY: ['.right-panel .tab'],
       tabs: [
         {
           navSelector: '.sheet-nav',
@@ -251,7 +253,56 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
       html.find('.toggle-uncommon-mode').click(event => {
         this.toggleSkillUncommonMode(event)
       })
+      if (game.user.isGM) {
+        html
+          .find('.sanity-loss-type-add')
+          .click(this._onAddSanityLossReason.bind(this))
+        html
+          .find('.sanity-loss-type-delete')
+          .click(this._onDeleteSanityLossReason.bind(this))
+        html
+          .find('.toggle-keeper-flags')
+          .click(this._onToggleKeeperFlags.bind(this))
+      }
     }
+  }
+
+  _onToggleKeeperFlags (event) {
+    event.preventDefault()
+    switch (event.currentTarget.dataset.flag) {
+      case 'mythosInsanityExperienced':
+        this.actor.setFlag(
+          'CoC7',
+          'mythosInsanityExperienced',
+          !this.actor.mythosInsanityExperienced
+        )
+        break
+      case 'mythosHardened':
+        this.actor.setFlag('CoC7', 'mythosHardened', !this.actor.mythosHardened)
+        break
+    }
+  }
+
+  async _onAddSanityLossReason (event) {
+    event.preventDefault()
+    new CoC7CreateMythosEncounter(
+      {
+        actor: this.actor,
+        type: event.currentTarget.dataset.type
+      },
+      {}
+    ).render(true)
+  }
+
+  _onDeleteSanityLossReason (event) {
+    event.preventDefault()
+    const offset = $(event.currentTarget).closest('.flexrow').data('offset')
+    const sanityLossEvents = this.actor.data.data.sanityLossEvents ?? []
+    sanityLossEvents.splice(offset, 1)
+    sanityLossEvents.sort(function (left, right) {
+      return left.type.localeCompare(right.type)
+    })
+    this.actor.update({ 'data.sanityLossEvents': sanityLossEvents })
   }
 
   async toggleSkillListMode (event) {

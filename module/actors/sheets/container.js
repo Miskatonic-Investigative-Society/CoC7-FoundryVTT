@@ -78,7 +78,8 @@ export class CoC7ContainerSheet extends ActorSheet {
       !sheetData.data.flags.locked
     sheetData.showInventoryTalents =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'talent') ||
-      (!data.data.flags.locked && game.settings.get('CoC7', 'pulpRuleTalents'))
+      (!sheetData.data.flags.locked &&
+        game.settings.get('CoC7', 'pulpRuleTalents'))
     sheetData.showInventoryWeapons =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'weapon') ||
       !sheetData.data.flags.locked

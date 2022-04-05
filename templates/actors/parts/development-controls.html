@@ -62,7 +62,7 @@
       {{/if}}
 
       {{#unless allowDevelopment}}
-        <div class="header-section  {{#if hasSkillFlaggedForExp}}flagged4dev{{/if}}" title="{{localize 'CoC7.SkillTotalExperience'}}">
+        <div class="header-section  {{#if hasDevelopmentPhase}}flagged4dev{{/if}}" title="{{localize 'CoC7.SkillTotalExperience'}}">
           <label>{{localize 'CoC7.SkillTotalExperience'}}:</label>
           <span>{{totalExperience}}</span>
         </div>
@@ -74,7 +74,7 @@
   <div class="experience">
     {{#if allowDevelopment}}
       <div class="header-section" title="{{localize 'CoC7.SkillTotalExperience'}}">
-        {{#if hasSkillFlaggedForExp}}
+        {{#if hasDevelopmentPhase}}
           <div class="skill-developement button" title="{{localize 'CoC7.DevelopemmentPhase'}}">{{localize 'CoC7.DevelopemmentPhase'}}</div>
         {{/if}}
         {{#if developmentRollForLuck}}

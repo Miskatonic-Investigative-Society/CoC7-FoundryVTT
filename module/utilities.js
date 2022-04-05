@@ -116,56 +116,6 @@ export class CoC7Utilities {
     ui.notifications.infos('Do some stuff')
   }
 
-  static getCreatureSanData (creature) {
-    let creatureData
-    let actor
-    if (creature.constructor.name === 'CoCActor') {
-      actor = creature
-    }
-
-    if (typeof creature === 'string') {
-      actor = CoC7Utilities.getActorFromString(creature)
-    }
-
-    if (actor) {
-      if (actor.isToken) {
-        const specie = game.actors.get(actor.id)
-        // The token has a different maximum san loss.
-        // We assume it's a special represantant of his specie.
-        // The san loss for encoutered creature will counted for that token in particular
-        // and for the all specie
-        if (specie && specie.sanLossMax !== actor.sanLossMax) {
-          creatureData = {
-            id: actor.token.id,
-            name: actor.name,
-            sanLossMax: actor.sanLossMax,
-            specie: {
-              id: specie.id,
-              name: specie.name,
-              sanLossMax: specie.sanLossMax
-            }
-          }
-        } else {
-          // If they induce the same SAN loos credit everything to the specie.
-          // If the actor doen't exist in actor directory use the token data instead.
-          creatureData = {
-            id: specie ? specie.id : actor.id,
-            name: specie ? specie.name : actor.name,
-            sanLossMax: specie ? specie.sanLossMax : actor.sanLossMax
-          }
-        }
-      } else {
-        creatureData = {
-          id: actor.id,
-          name: actor.name,
-          sanLossMax: actor.sanLossMax
-        }
-      }
-      return creatureData
-    } else if (typeof creature === 'object') return creature
-    return null
-  }
-
   static getActorFromString (actorString) {
     let actor
 

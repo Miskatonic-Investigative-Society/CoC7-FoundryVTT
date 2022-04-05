@@ -201,7 +201,6 @@ export class CoC7ActorSheet extends ActorSheet {
       }
 
       if (!data.data.biography) data.data.biography = []
-      if (!data.data.encounteredCreatures) data.data.encounteredCreatures = []
 
       data.pulpRuleArchetype = game.settings.get('CoC7', 'pulpRuleArchetype')
       data.pulpRuleOrganization = game.settings.get(
@@ -219,6 +218,26 @@ export class CoC7ActorSheet extends ActorSheet {
         // ce bloc devrait etre déplacé dans le bloc _updateFormData
         if (item.type === 'skill') {
           if (item.data.properties.special) {
+            if (typeof item.data.specialization === 'string') {
+              // updater.js didn't catch this
+              const parts = CoC7Item.getNamePartsSpec(
+                item.name,
+                item.data.specialization
+              )
+              const itemToUpdate = this.actor.items.get(item._id)
+              item.name = parts.name
+              item.data.specialization = {
+                group: parts.group,
+                type: parts.type
+              }
+              await itemToUpdate.update({
+                name: item.name,
+                'data.specialization': {
+                  group: item.data.specialization.group,
+                  type: item.data.specialization.type
+                }
+              })
+            }
             if (item.data.properties.fighting) {
               if (
                 item.data.specialization.group !==
@@ -960,7 +979,7 @@ export class CoC7ActorSheet extends ActorSheet {
           game.CoC7Tooltips.ToolTipHover !== null
         ) {
           const char = game.CoC7Tooltips.ToolTipHover.closest('.char-box')
-          if (typeof char !== 'undefined') {
+          if (typeof char !== 'undefined' && !!char) {
             const charId = char.dataset.characteristic
             const characteristic = sheet.actor.characteristics[charId]
             let toolTip = game.i18n.format('CoC7.ToolTipSkill', {

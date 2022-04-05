@@ -389,6 +389,9 @@ export class CoC7Link {
         if (this._linkData.difficulty) {
           options += `,difficulty:${this._linkData.difficulty}`
         }
+        if (this._linkData.sanReason) {
+          options += `,sanReason:${this._linkData.sanReason}`
+        }
         if (this._linkData.modifier) {
           options += `,modifier:${this._linkData.modifier}`
         }
