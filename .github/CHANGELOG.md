@@ -8,6 +8,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Fix critical and impale buttons on combat card not formatting correctly
 - Fix French documentation path, thanks to @vonv
 - Remove character sheet v1 as it is no longer supported
+- Update to Italian localization, thanks to @Stefano1975t
 - Update to Japanese localization, thanks to Asami
 - Update to Polish localization, thanks to @everyonecancode
 - Update to Simplified Chinese Translation, thanks to kwh3884858
