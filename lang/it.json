@@ -218,7 +218,7 @@
   "CoC7.NoTargetToDamage": "Non c'è alcun bersaglio a cui applicare il danno",
   "CoC7.ShotIsImpossible": "È impossibile sparare",
   "CoC7.OutOfAmmo": "Munizioni esaurite",
-  "CoC7.OutOfShots": "Spari finiti",
+  "CoC7.OutOfShots": "Colpi finiti",
 
   "CoC7.BonusDamageRoll": "Sto tirando il Bonus al Danno",
   "CoC7.Type": "Tipo",
@@ -402,6 +402,7 @@
   "CoC7.DevSuccessDetails": "{item} migliorato di {augment}%",
   "CoC7.SanGained": "Guadagnati 2d6 ({results} = <strong>{sanGained}</strong>) Sanità dopo aver padroneggiato <strong>{skill}</strong> con un <strong>{skillValue}%</strong>",
   "CoC7.DevFailureDetails": "{item} NON migliorato",
+  "CoC7.ReduceSanityLimits": "Tutti i limiti della Sanità sono ridotti di uno",
   "CoC7.DevSuccess": "{item} migliorato ({die}/{score}%) di {augment}%",
   "CoC7.DevFailure": "{item} NON migliorato ({die}/{score}%)",
   "CoC7.LuckIncreased": "Fortuna recuperata ({die}/{score}): {augment} punti",
@@ -479,7 +480,25 @@
   "CoC7.BackgroundDeleteSection": "Cancellare sezione",
   "CoC7.BackgroundSectionMoveUp": "Muovi Su",
   "CoC7.BackgroundSectionMoveDown": "Muovi Giù",
+  "CoC7.BackgroundEncounters": "Perdite per Strane Entità",
+  "CoC7.BackgroundFlags": "Contrassegni",
+  "CoC7.BackgroundFlagsMythosExperienced": "Assegnato il 5% di follia per i Miti",
+  "CoC7.BackgroundFlagsMythosHardened": "Temprato ai Miti",
 
+  "CoC7.SanityLossEncounters": "Perdita di Sanità per gli incontri",
+  "CoC7.SanityLossImmunities": "Immunità per la perdita di Sanità",
+  "CoC7.AddSanityLossEncounter": "Aggiungi la perdita di Sanità per l'incontro",
+  "CoC7.AddSanityLossImmunity": "Aggiungi l'immunità alla perdita di Sanità",
+  "CoC7.DeleteSanityLossEncounter": "Elimina la perdita di Sanità per l'incontro",
+  "CoC7.DeleteSanityLossImmunity": "Elimina l'immunità alla perdita di Sanità",
+  
+  "CoC7.SanityLossTypeDialogTitle": "Nuova perdita o immunità di Sanità",
+  "CoC7.SanityLossTypeDialogBody": "Aggiungi al personaggio un nuovo incontro dei Miti, una perdita di Sanità, o un'immunità alla Sanità.",
+  "CoC7.SanityLossTypeReason": "Causa",
+  "CoC7.SanityLossTypeValue": "Punti Sanità perduti",
+  "CoC7.SanityLossEncounter": "Perdita di Sanità per l'incontro",
+  "CoC7.SanityLossImmunity": "Immunità per la perdita di Sanità",
+  
   "CoC7.creatureFightingSkill": "Combattere",
 
   "CoC7.InvoluntaryAction": "Azione involontaria",
