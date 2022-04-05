@@ -402,6 +402,7 @@
   "CoC7.DevSuccessDetails": "{item} ökade med {augment}%",
   "CoC7.SanGained": "Återfick 2t6 ({results} = <strong>{sanGained}</strong>) Sinneshälsa efter att ha bemästrat <strong>{skill}</strong> med <strong>{skillValue}%</strong>",
   "CoC7.DevFailureDetails": "{item} ökade INTE",
+
   "CoC7.DevSuccess": "{item} ökade med {augment}% ({die}/{score}%)",
   "CoC7.DevFailure": "{item} ökade INTE ({die}/{score}%)",
   "CoC7.LuckIncreased": "Du återfår Tur och ökar den med {augment} poäng ({die}/{score})",
@@ -421,7 +422,7 @@
   "CoC7.SortBySkillValue": "Sortera efter färdighetsvärde",
   "CoC7.UncommonSkillsShow": "Visa ovanliga färdigheter",
   "CoC7.UncommonSkillsHide": "Dölj ovanliga färdigheter",
-
+  "CoC7.ReduceSanityLimits": "Minska alla gränser för Sinneshälsa med ett",
   "CoC7.NewBookName": "ny bok",
   "CoC7.AddBook": "Lägg till bok",
   "CoC7.NewSpellName": "ny besvärjelse",
@@ -479,6 +480,24 @@
   "CoC7.BackgroundDeleteSection": "Ta bort avsnitt",
   "CoC7.BackgroundSectionMoveUp": "Flytta upp",
   "CoC7.BackgroundSectionMoveDown": "Flytta ner",
+  "CoC7.BackgroundEncounters": "Förluster från märkliga företeelser",
+  "CoC7.BackgroundFlags": "Flaggor",
+  "CoC7.BackgroundFlagsMythosExperienced": "Du har fått +5% Cthulhumyten via galenskap",
+  "CoC7.BackgroundFlagsMythosHardened": "Härdad inför mythosen",
+
+  "CoC7.SanityLossEncounters": "Sinnesbelastning från möten",
+  "CoC7.SanityLossImmunities": "Immunitet mot sinnesbelastning",
+  "CoC7.AddSanityLossEncounter": "Lägg till sinnesbelastning från möten",
+  "CoC7.AddSanityLossImmunity": "Lägg till immunitet mot sinnesbelastning",
+  "CoC7.DeleteSanityLossEncounter": "Ta bort sinnesbelastning från möten",
+  "CoC7.DeleteSanityLossImmunity": "Ta bort immunitet mot sinnesbelastning",
+
+  "CoC7.SanityLossTypeDialogTitle": "Ny sinnesbelastning eller immunitet",
+  "CoC7.SanityLossTypeDialogBody": "Lägg till ett mythosmöte, sinnesbelastning, eller en immunitet mot sinnebelastning, till utredaren.",
+  "CoC7.SanityLossTypeReason": "Anledning",
+  "CoC7.SanityLossTypeValue": "Förlorad sinneshälsa",
+  "CoC7.SanityLossEncounter": "Sinnesbelastning från ett möte",
+  "CoC7.SanityLossImmunity": "Immunitet mot sinnesbelastning",
 
   "CoC7.creatureFightingSkill": "Stridsförmåga",
 
