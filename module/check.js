@@ -108,8 +108,9 @@ export class CoC7Check {
     // if (!this.actor || !this.actor.id) return undefined
     if (!this._rawValue) {
       if (this.characteristic) {
-        this.rawValue =
-          this.actor.data.data.characteristics[this.characteristic].value
+        this.rawValue = this.actor.data.data.characteristics[
+          this.characteristic
+        ].value
       }
       if (this.skill) this.rawValue = this.skill.value
       if (this.attribute) {
@@ -677,6 +678,7 @@ export class CoC7Check {
     // check Modifier
     if (rollData.difficulty) roll.difficulty = rollData.difficulty
     if (rollData.diceModifier) roll.diceModifier = rollData.diceModifier
+    roll.canBePushed = rollData.canBePushed
     if (rollData.flatDiceModifier)
       roll.flatDiceModifier = rollData.flatDiceModifier
     if (rollData.flatThresholdModifier)
@@ -723,10 +725,12 @@ export class CoC7Check {
     flatDiceModifier = 0,
     flatThresholdModifier = 0,
     displayName = null,
-    actorName = null
+    actorName = null,
+    canBePushed = undefined
   } = {}) {
     const check = new CoC7Check()
     check.difficulty = difficulty
+    check.canBePushed = canBePushed
     if (diceModifier) check.diceModifier = diceModifier
     if (flatDiceModifier) check.flatDiceModifier = flatDiceModifier
     if (flatThresholdModifier) {
@@ -852,8 +856,9 @@ export class CoC7Check {
     } else {
       if (this.characteristic) {
         this.isCharactiristic = true
-        this.rawValue =
-          this.actor.data.data.characteristics[this.characteristic].value
+        this.rawValue = this.actor.data.data.characteristics[
+          this.characteristic
+        ].value
       }
 
       if (this.skill) {
@@ -1740,9 +1745,8 @@ export class CoC7Check {
     a.classList.add(...this.cssClassList)
     a.title = this.tooltipHeader
     a.dataset.roll = escape(this.JSONRollString) // TODO!IMPORTANT!!!
-    a.innerHTML = `<i class="game-icon game-icon-d10"></i> ${
-      this.modifiedResult || '??'
-    }`
+    a.innerHTML = `<i class="game-icon game-icon-d10"></i> ${this
+      .modifiedResult || '??'}`
     return a
   }
 

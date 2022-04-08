@@ -223,12 +223,18 @@ export class ChaseObstacleCard extends EnhancedChatCard {
             )
         }
       } else {
-        const move = this.data.forward ? 1 : -1
-        const targetLocation = this.chase.getLocationShift(this.location.uuid, { skip: move})
+        let targetLocation
+        if (this.data.forward) {
+          targetLocation = this.location
+        } else {
+          targetLocation = this.chase.getLocationShift(this.location.uuid, {
+            skip: 1
+          })
+        }
         if (!targetLocation || !targetLocation.uuid) return
         await this.chase.alterParticipantMovementAction(
           this.participant.uuid,
-          0 - Math.abs(move)
+          -1
         )
         await this.chase.moveParticipantToLocation(
           this.participant.uuid,
@@ -238,6 +244,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
 
         this.data.movementActionArray = this.participant.movementActionArray
       }
+      await this.chase.activateNexParticpantTurn()
     }
   }
 
@@ -297,7 +304,9 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       this.data.bonusDice = this.participantData.bonusDice
       this.data.flags.consumeBonusDice = true
     }
-    this.data.movementActionArray = duplicate(this.participant.movementActionArray)
+    this.data.movementActionArray = duplicate(
+      this.participant.movementActionArray
+    )
   }
 
   get participant () {
@@ -305,7 +314,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     // if (!this._participant)
     //   this._participant = new _participant(this.participantData)
     // return this._participant
-    return new _participant( this.participantData) //TO RESET 
+    return new _participant(this.participantData) //TO RESET
   }
 
   get participantData () {
@@ -332,8 +341,10 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   get roll () {
     let rollData
     if (this.participant.actor && this.data.obstacle.checkName) {
-      const actorSkill = this.participant.actor.find(this.data.obstacle.checkName)
-      if( undefined != actorSkill){
+      const actorSkill = this.participant.actor.find(
+        this.data.obstacle.checkName
+      )
+      if (undefined != actorSkill) {
         rollData = actorSkill
       } else {
         rollData = {
@@ -362,6 +373,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     if (rollData) {
       rollData.diceModifier = this.data?.bonusDice || 0
       rollData.difficulty = CoC7Check.difficultyLevel.regular
+      rollData.canBePushed = false
     }
     return rollData || undefined
   }
@@ -449,7 +461,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   get usedWeapon () {
     if (!this.data?.weaponChoice) {
       if (!this.weaponsOptions) return undefined
-      if (!this.data) this.data = {}//useless !!!
+      if (!this.data) this.data = {} //useless !!!
       this.data.weaponChoice = this.weaponsOptions[0].uuid
     }
 
