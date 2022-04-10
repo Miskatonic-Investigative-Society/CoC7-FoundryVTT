@@ -48,7 +48,12 @@ async function updateMessage (messageId, newContent) {
 }
 
 async function GMUpdate (data, options, cardClassName, messageId = undefined) {
-  const card = await EnhancedChatCard.fromData(data, options, cardClassName, messageId)
+  const card = await EnhancedChatCard.fromData(
+    data,
+    options,
+    cardClassName,
+    messageId
+  )
   await card.GMUpdate()
   // const diff = foundry.utils.diffObject( data, card.toObject())
   return card.toObject()
@@ -469,24 +474,43 @@ export class EnhancedChatCard {
    * if a method with that name exist it will be triggered.
    */
   async _onButton (event) {
+    console.log('**************EnhancedChatCard _onButton**************')
+
     const target = event.currentTarget
-    // button.style.display = 'none' //Avoid multiple push
+
+    target.style.display = 'none' //Avoid multiple push
     const action = target.dataset.action
+
+    var formUpdate,
+      actionUpdate = false
+
+    if ('submit' == target.type) {
+      console.warn('Button is also a submit')
+    }
+
+    //Perform card update first
+    const card = target.closest(`.${ECC_CLASS}`)
+    if (card) formUpdate = this._update(card)
+    else
+      console.error(
+        `Could not find a EEC class for this card: ${this.constructor.name}`
+      )
+
+    const originalDisplayStyle = target.style.display
+
     if (!action) {
       console.warn('no action associated with this button')
-      return
+      if (!formUpdate) return //If the form was updated we still update the card
     }
     if (!this[action]) {
       console.warn(`no ${action} action found for this card`)
-      return
+      if (!formUpdate) return //If the form was updated we still update the card
     }
-    var update = false
     if (this[action])
-      update = await this[action]({ event: event, updateCard: update })
-    const card = target.closest(`.${ECC_CLASS}`)
-    if (!card) return
-    const formUpdate = this._update(card)
-    if (formUpdate || update) this.updateChatCard()
+      actionUpdate = await this[action]({ event: event, updateCard: false })
+
+    if (formUpdate || actionUpdate) await this.updateChatCard()
+    else target.style.display = originalDisplayStyle
   }
 
   /**
@@ -495,20 +519,26 @@ export class EnhancedChatCard {
    * @returns false if key is enter to avoid global submission
    */
   _onKey (event) {
+    console.log('**************EnhancedChatCard _onKey**************')
+
     if (event.key === 'Enter') this._onSubmit(event)
     return event.key !== 'Enter'
   }
 
   _onChange (event) {
+    console.log('**************EnhancedChatCard _onChange**************')
     if (this.options.submitOnChange) {
       return this._onSubmit(event)
     }
   }
 
   _onSubmit (event) {
+    const target = event.currentTarget
+    const tagName = target.tagName
+    if (tagName == 'BUTTON' && 'action' in target.dataset) return //
+    console.log('**************EnhancedChatCard _onSubmit**************')
     event.preventDefault()
 
-    const target = event.currentTarget
     const card = target.closest(`.${ECC_CLASS}`)
     if (!card) return
     const updates = this._update(card)
@@ -622,7 +652,12 @@ export class EnhancedChatCard {
     const message = htmmlCard.closest('.message')
     const messageId = message?.dataset?.messageId
 
-    return await this.fromData(cardData.data, cardData.options, htmmlCard.dataset.eccClass, messageId)
+    return await this.fromData(
+      cardData.data,
+      cardData.options,
+      htmmlCard.dataset.eccClass,
+      messageId
+    )
   }
 
   static async fromData (data, options, cardClassName, messageId = undefined) {
@@ -656,6 +691,8 @@ export class EnhancedChatCard {
   }
 
   async _onToggle (event) {
+    console.log('**************EnhancedChatCard _onToggle**************')
+
     // const answer = await EnhancedChatCardLib.socket.executeAsGM('gm_onToggle', {
     //   event: event,
     //   card: this
@@ -692,6 +729,6 @@ export class EnhancedChatCard {
     if (this.options.submitOnChange) {
       if (card) this._update(card)
     }
-    this.updateChatCard() //Submit on change ?
+    await this.updateChatCard() //Submit on change ?
   }
 }

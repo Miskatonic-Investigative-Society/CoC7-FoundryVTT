@@ -373,7 +373,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     if (rollData) {
       rollData.diceModifier = this.data?.bonusDice || 0
       rollData.difficulty = CoC7Check.difficultyLevel.regular
-      rollData.canBePushed = false
+      rollData.denyPush = true
     }
     return rollData || undefined
   }
@@ -381,19 +381,24 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   get validFailedRolls () {
     if (!this.data.objects?.check?.isFailure) return false
     if (this.data.obstacle.hasDamage) {
+      const damage =
+        'number' == typeof this.data.obstacle.failedCheckDamage
+          ? `${this.data.obstacle.failedCheckDamage}`
+          : this.data.obstacle.failedCheckDamage
       if (!this.data.obstacle.failedCheckDamage) return false
       if (
         this.data.obstacle.failedCheckDamage &&
-        !Roll.validate(this.data.obstacle.failedCheckDamage)
+        !Roll.validate(damage) //Validate only take a string, if damage is a number convert to a string
       )
         return false
     }
     if (this.data.obstacle.hazard && this.data.obstacle.hasActionCost) {
+      const actionCost =
+        'number' == typeof this.data.obstacle.failedActionCost
+          ? `${this.data.obstacle.failedActionCost}`
+          : this.data.obstacle.failedActionCost
       if (!this.data.obstacle.failedActionCost) return false
-      if (
-        this.data.obstacle.failedActionCost &&
-        !Roll.validate(this.data.obstacle.failedActionCost)
-      )
+      if (this.data.obstacle.failedActionCost && !Roll.validate(actionCost))
         return false
     }
     return true
@@ -554,7 +559,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     if (!this.data.objects) this.data.objects = {}
     this.data.objects.check = CoC7Check.createFromActorRollData(this.roll)
     if (!this.data.objects.check) return false
-    this.data.objects.check.canBePushed = false //Obstacle check can't be pushed
+    this.data.objects.check.denyPush = true //Obstacle check can't be pushed
     await this.data.objects.check._perform({ forceDSN: true })
     this.data.states.checkRolled = true
     target.classList.toggle('disabled')
@@ -572,9 +577,11 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   async rollFailConsequences (options) {
     if (!this.data.objects) this.data.objects = {}
     if (this.data.obstacle.hasDamage && this.data.objects.check?.isFailure) {
-      this.data.objects.failedDamageRoll = new Roll(
-        this.data.obstacle.failedCheckDamage
-      )
+      const damage =
+        'number' == typeof this.data.obstacle.failedCheckDamage
+          ? `${this.data.obstacle.failedCheckDamage}`
+          : this.data.obstacle.failedCheckDamage
+      this.data.objects.failedDamageRoll = new Roll(damage)
       await this.data.objects.failedDamageRoll.evaluate({ async: true })
     }
     if (this.data.obstacle.hazard) {
@@ -582,16 +589,22 @@ export class ChaseObstacleCard extends EnhancedChatCard {
         this.data.obstacle.hasActionCost &&
         this.data.objects.check?.isFailure
       ) {
-        this.data.objects.failedActionRoll = new Roll(
-          this.data.obstacle.failedActionCost
-        )
+        const actionCost =
+          'number' == typeof this.data.obstacle.failedActionCost
+            ? `${this.data.obstacle.failedActionCost}`
+            : this.data.obstacle.failedActionCost
+        this.data.objects.failedActionRoll = new Roll(actionCost)
         await this.data.objects.failedActionRoll.evaluate({ async: true })
       }
     }
 
     this.data.states.failedConsequencesRolled = true
-    if (!this.data.objects?.failedDamageRoll?.total)
+    if (
+      !this.data.objects?.failedDamageRoll?.total &&
+      !this.data.objects?.failedActionRoll?.total
+    ) {
       this.data.states.cardResolved = true
+    }
     return true
   }
 

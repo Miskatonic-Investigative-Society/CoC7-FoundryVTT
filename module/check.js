@@ -678,7 +678,7 @@ export class CoC7Check {
     // check Modifier
     if (rollData.difficulty) roll.difficulty = rollData.difficulty
     if (rollData.diceModifier) roll.diceModifier = rollData.diceModifier
-    roll.canBePushed = rollData.canBePushed
+    if (true == rollData.denyPush) roll.denyPush = true
     if (rollData.flatDiceModifier)
       roll.flatDiceModifier = rollData.flatDiceModifier
     if (rollData.flatThresholdModifier)
@@ -726,11 +726,11 @@ export class CoC7Check {
     flatThresholdModifier = 0,
     displayName = null,
     actorName = null,
-    canBePushed = undefined
+    denyPush = undefined
   } = {}) {
     const check = new CoC7Check()
     check.difficulty = difficulty
-    check.canBePushed = canBePushed
+    if (true === denyPush) check.denyPush = true
     if (diceModifier) check.diceModifier = diceModifier
     if (flatDiceModifier) check.flatDiceModifier = flatDiceModifier
     if (flatThresholdModifier) {
@@ -951,11 +951,12 @@ export class CoC7Check {
       }
     }
 
-    if (undefined == this.canBePushed)
+    if (undefined == this.canBePushed) {
       this.canBePushed = this.skill ? this.skill.canBePushed() : false
-    if (this.characteristic != null) this.canBePushed = true
-    if (this.isFumble) this.canBePushed = false
-    if (this.denyPush) this.canBePushed = false
+      if (this.characteristic != null) this.canBePushed = true
+      if (this.isFumble) this.canBePushed = false
+      if (this.denyPush) this.canBePushed = false
+    }
 
     if (!this.denyLuck && this.actor) {
       if (
