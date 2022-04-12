@@ -216,11 +216,22 @@ export class ChaseObstacleCard extends EnhancedChatCard {
             0 - this.data.objects.failedActionRoll.total
           )
         if (this.data.objects?.failedDamageRoll?.total) {
-          if (this.participant.actor)
-            await this.participant.actor.dealDamage(
+          let totalDamage, armorValue, armorData
+          totalDamage = this.data.objects.failedDamageRoll.total
+          armorValue = this.data.flags.ignoreArmor?0:this.data.data.armor
+          if (CoC7Utilities.isFormula(armorData)) {
+            armorValue = (await new Roll(armorData).roll({ async: true })).total
+          } else if (!isNaN(Number(armorData))) {
+            armorValue = Number(armorData)
+          }
+          if (this.participant.actor) {
+            totalDamage = await this.participant.actor.dealDamage(
               this.data.objects.failedDamageRoll.total,
-              { ignoreArmor: false }
+              { ignoreArmor: false, armor: 3 }
             )
+          } else {
+
+          }
         }
       } else {
         let targetLocation
@@ -228,7 +239,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
           targetLocation = this.location
         } else {
           targetLocation = this.chase.getLocationShift(this.location.uuid, {
-            skip: 1
+            skip: -1
           })
         }
         if (!targetLocation || !targetLocation.uuid) return

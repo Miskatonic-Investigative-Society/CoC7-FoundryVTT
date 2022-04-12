@@ -814,10 +814,12 @@ export class CoCActor extends Actor {
             data.data.characteristics.list.luck.value = isNaN(this.luck)
               ? null
               : this.luck
-            data.data.characteristics.list.luck.label =
-              game.i18n.localize('CoC7.Luck')
-            data.data.characteristics.list.luck.shortName =
-              game.i18n.localize('CoC7.Luck')
+            data.data.characteristics.list.luck.label = game.i18n.localize(
+              'CoC7.Luck'
+            )
+            data.data.characteristics.list.luck.shortName = game.i18n.localize(
+              'CoC7.Luck'
+            )
 
             if (!data.data.characteristics.values) {
               data.data.characteristics.values = {}
@@ -884,10 +886,11 @@ export class CoCActor extends Actor {
                   data.data.characteristics.values.pow
                 updateData['data.attribs.san.oneFifthSanity'] =
                   ' / ' + Math.floor(data.data.characteristics.values.pow / 5)
-                updateData['data.indefiniteInsanityLevel.max'] =
-                  updateData['data.attribs.mp.value'] =
-                  updateData['data.attribs.mp.max'] =
-                    Math.floor(data.data.characteristics.values.pow / 5)
+                updateData['data.indefiniteInsanityLevel.max'] = updateData[
+                  'data.attribs.mp.value'
+                ] = updateData['data.attribs.mp.max'] = Math.floor(
+                  data.data.characteristics.values.pow / 5
+                )
               }
               await this.update(updateData)
               await this.update({
@@ -3337,7 +3340,9 @@ export class CoCActor extends Actor {
   }
 
   async dealDamage (amount, options = {}) {
-    const armorData = this.data.data.attribs.armor.value
+    const armorData = options.armor
+      ? options.armor
+      : this.data.data.attribs.armor //if there armor value passed we use it
     const grossDamage = parseInt(amount)
     let armorValue = 0
     if (!options.ignoreArmor) {
