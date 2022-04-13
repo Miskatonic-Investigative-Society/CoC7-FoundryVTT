@@ -20,12 +20,9 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   async getData () {
     const data = await super.getData()
 
-    const ppp = this.participant
-
     // data.chase = CoC7Utilities.fromUuid(this.data.chaseUuid)
     data.status = []
     data.strings = {}
-
     data.displayActorOnCard = game.settings.get('CoC7', 'displayActorOnCard')
     // data.participant = new _participant(this.participantData)
 
@@ -209,53 +206,61 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       return
     }
     if (this.data.states.cardResolved) {
-      if (this.data.states.failedConsequencesRolled) {
-        if (this.data.objects?.failedActionRoll?.total)
-          await this.chase.alterParticipantMovementAction(
-            this.participant.uuid,
-            0 - this.data.objects.failedActionRoll.total
-          )
-        if (this.data.objects?.failedDamageRoll?.total) {
-          let totalDamage, armorValue, armorData
-          totalDamage = this.data.objects.failedDamageRoll.total
-          armorValue = this.data.flags.ignoreArmor?0:this.data.data.armor
-          if (CoC7Utilities.isFormula(armorData)) {
-            armorValue = (await new Roll(armorData).roll({ async: true })).total
-          } else if (!isNaN(Number(armorData))) {
-            armorValue = Number(armorData)
-          }
-          if (this.participant.actor) {
-            totalDamage = await this.participant.actor.dealDamage(
-              this.data.objects.failedDamageRoll.total,
-              { ignoreArmor: false, armor: 3 }
-            )
-          } else {
-
-          }
+      //Card is resolved, list changes and ask for validation.
+      if (!this.data.states.cardValidated) {
+        if (!this.data.states.changesListed) {
+          const diff = this.listChanges(true)
+          this.data.states.changesListed = true
         }
       } else {
-        let targetLocation
-        if (this.data.forward) {
-          targetLocation = this.location
+        if (this.data.states.failedConsequencesRolled) {
+          if (this.data.objects?.failedActionRoll?.total)
+            await this.chase.alterParticipantMovementAction(
+              this.participant.uuid,
+              0 - this.data.objects.failedActionRoll.total
+            )
+          if (this.data.objects?.failedDamageRoll?.total) {
+            let totalDamage, armorValue, armorData
+            totalDamage = this.data.objects.failedDamageRoll.total
+            armorValue = this.data.flags.ignoreArmor ? 0 : this.data.data.armor
+            if (CoC7Utilities.isFormula(armorData)) {
+              armorValue = (await new Roll(armorData).roll({ async: true }))
+                .total
+            } else if (!isNaN(Number(armorData))) {
+              armorValue = Number(armorData)
+            }
+            if (this.participant.actor) {
+              totalDamage = await this.participant.actor.dealDamage(
+                this.data.objects.failedDamageRoll.total,
+                { ignoreArmor: false, armor: 3 }
+              )
+            } else {
+            }
+          }
         } else {
-          targetLocation = this.chase.getLocationShift(this.location.uuid, {
-            skip: -1
-          })
-        }
-        if (!targetLocation || !targetLocation.uuid) return
-        await this.chase.alterParticipantMovementAction(
-          this.participant.uuid,
-          -1
-        )
-        await this.chase.moveParticipantToLocation(
-          this.participant.uuid,
-          targetLocation.uuid,
-          { render: true }
-        )
+          let targetLocation
+          if (this.data.forward) {
+            targetLocation = this.location
+          } else {
+            targetLocation = this.chase.getLocationShift(this.location.uuid, {
+              skip: -1
+            })
+          }
+          if (!targetLocation || !targetLocation.uuid) return
+          await this.chase.alterParticipantMovementAction(
+            this.participant.uuid,
+            -1
+          )
+          await this.chase.moveParticipantToLocation(
+            this.participant.uuid,
+            targetLocation.uuid,
+            { render: true }
+          )
 
-        this.data.movementActionArray = this.participant.movementActionArray
+          this.data.movementActionArray = this.participant.movementActionArray
+        }
+        await this.chase.activateNexParticpantTurn()
       }
-      await this.chase.activateNexParticpantTurn()
     }
   }
 
@@ -309,7 +314,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     if (undefined == this.data.states) this.data.states = {}
 
     // const location = chase.getLocationData(this.data.locationUuid)
-    this.data.obstacle = this.location?.obstacleDetails
+    this.data.obstacle = this.location?.obstacleDetails //Feed the obstacle definition
     // this.data.participantData = chase.activeParticipantData
     if (this.participantData?.bonusDice > 0) {
       this.data.bonusDice = this.participantData.bonusDice
@@ -610,12 +615,14 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     }
 
     this.data.states.failedConsequencesRolled = true
-    if (
-      !this.data.objects?.failedDamageRoll?.total &&
-      !this.data.objects?.failedActionRoll?.total
-    ) {
-      this.data.states.cardResolved = true
-    }
+    this.data.states.cardResolved = true
+
+    // if (
+    //   !this.data.objects?.failedDamageRoll?.total &&
+    //   !this.data.objects?.failedActionRoll?.total
+    // ) {
+    //   this.data.states.cardResolved = true
+    // }
     return true
   }
 
@@ -631,5 +638,64 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     await CoC7Dice.showRollDice3d(this.data.objects.obstacleDamageRoll)
     this.data.states.obstacleDamageRolled = true
     return true
+  }
+
+  //List all changes
+  listChanges (validate = false) {
+    const diff = {
+      obstacle: {},
+      player: {}
+    }
+    const names = {
+      barrier: game.i18n.localize('CoC7.Type'),
+      hazard: game.i18n.localize('CoC7.Type'),
+      hasHitPoints: game.i18n.localize('CoC7.Breakable'),
+      HitPoints: game.i18n.localize('CoC7.HitPoints'),
+      hasActionCost: game.i18n.localize('CoC7.ActionCost'),
+      failedActionCost: game.i18n.localize('CoC7.ActionCost'),
+      hasDamage: game.i18n.localize('CoC7.FightBack'),
+      failedCheckDamage: game.i18n.localize('CoC7.WeaponDamage'),
+      checkName: game.i18n.localize('CoC7.Check'),
+      name: game.i18n.localize('CoC7.Name')
+    }
+
+    if (validate && !this.data.validation) {
+      this.data.validation = {}
+    }
+
+    const newObstacle = foundry.utils.diffObject(
+      this.obstacle,
+      this.data.obstacle
+    )
+    // const oldObstacle = foundry.utils.diffObject(this.data.obstacle, this.obstacle)
+
+    for (const [key] of Object.entries(newObstacle)) {
+      if ('barrier' == key || 'hazard' == key) {
+        diff.obstacle.type = {
+          old: game.i18n.localize(
+            this.obstacle.barrier ? 'CoC7.Barrier' : 'CoC7.Hazard'
+          ),
+          new: game.i18n.localize(
+            this.data.obstacle.barrier ? 'CoC7.Barrier' : 'CoC7.Hazard'
+          ),
+          key: 'type',
+          name: game.i18n.localize('CoC7.Type')
+        }
+        if (validate) {
+          this.data.validation[key] = true
+          this.data.validation.type = true
+        }
+      } else {
+        diff.obstacle[key] = {
+          old: this.obstacle[key],
+          new: newObstacle[key],
+          name: names[key],
+          key: key
+        }
+        if (validate) this.data.validation[key] = true
+      }
+    }
+
+    return diff
   }
 }

@@ -3340,6 +3340,7 @@ export class CoCActor extends Actor {
   }
 
   async dealDamage (amount, options = {}) {
+    //TODO: Change options to list of values
     const armorData = options.armor
       ? options.armor
       : this.data.data.attribs.armor //if there armor value passed we use it
