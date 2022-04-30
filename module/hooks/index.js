@@ -1,4 +1,6 @@
 import * as Init from './init.js'
+import * as DiceSoNiceReady from './dice-so-nice-ready.js'
+import * as DiceSoNiceRollStart from './dice-so-nice-roll-start.js'
 import * as Ready from './ready.js'
 import * as RenderActorSheet from './render-actor-sheet.js'
 import * as RenderChatMessage from './render-chat-message.js'
@@ -15,5 +17,7 @@ export const CoC7Hooks = {
     RenderDialog.listen()
     RenderItemSheet.listen()
     RenderPause.listen()
+    DiceSoNiceReady.listen()
+    DiceSoNiceRollStart.listen()
   }
 }

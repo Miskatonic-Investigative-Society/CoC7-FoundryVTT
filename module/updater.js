@@ -3,9 +3,10 @@ import { CoC7Item } from './items/item.js'
 
 export class Updater {
   static async checkForUpdate () {
-    this.systemUpdateVersion = String(
-      game.settings.get('CoC7', 'systemUpdateVersion')
-    )
+    this.systemUpdateVersion = game.settings.get('CoC7', 'systemUpdateVersion')
+      ? String(game.settings.get('CoC7', 'systemUpdateVersion'))
+      : '0'
+
     const runMigrate = isNewerVersion(
       game.system.data.version,
       this.systemUpdateVersion
