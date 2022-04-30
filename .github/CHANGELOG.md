@@ -6,6 +6,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Change skill names system to begin support for FoundryVTT v10 changes
 - Default weapons added via character/NPC sheet to either melee or ranged
 - Fix critical and impale buttons on combat card not formatting correctly
+- Fix Dice So Nice appearing to roll d10s instead of d10 and decaders if using image faces
 - Fix French documentation path, thanks to @vonv
 - Remove character sheet v1 as it is no longer supported
 - Update link creation UI to make required fields and blur events clearer
