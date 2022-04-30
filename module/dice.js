@@ -12,8 +12,9 @@ export class CoC7Dice {
     }
     const roll = await new Roll(
       '1dt' +
-        (
-          '+1dt' + (alternativeDice !== '' ? '[' + alternativeDice + ']' : '')
+        (alternativeDice !== ''
+          ? '+1do[' + alternativeDice + ']'
+          : '1dt'
         ).repeat(Math.abs(modif)) +
         '+1d10'
     ).roll({ async: true })

@@ -1,5 +1,6 @@
 /* global CONFIG, game */
 import { CoC7DecaderDie } from '../apps/decader-die.js'
+import { CoC7DecaderDieOther } from '../apps/decader-die-other.js'
 import { CoC7GameRuleSettings } from './game-rules.js'
 
 export function registerSettings () {
@@ -467,4 +468,5 @@ export function registerSettings () {
   }
   CONFIG.debug.hooks = !!game.settings.get('CoC7', 'debugmode')
   CONFIG.Dice.terms.t = CoC7DecaderDie
+  CONFIG.Dice.terms.o = CoC7DecaderDieOther
 }

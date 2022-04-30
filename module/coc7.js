@@ -115,18 +115,6 @@ Hooks.on('renderSettingsConfig', (app, html, options) => {
     )
 })
 
-Hooks.once('diceSoNiceReady', dice3d => {
-  dice3d.addDicePreset(
-    {
-      type: 'dt',
-      labels: ['10', '20', '30', '40', '50', '60', '70', '80', '90', '00'],
-      fontScale: 0.75,
-      system: 'standard'
-    },
-    'dt'
-  )
-})
-
 Hooks.once('init', async function () {
   game.CoC7 = {
     macros: {
