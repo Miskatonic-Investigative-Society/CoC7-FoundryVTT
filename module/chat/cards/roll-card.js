@@ -6,6 +6,7 @@ import { CoC7Check } from '../../check.js'
 export class RollCard {
   constructor () {
     this.rolls = []
+    this.initiator = null
   }
 
   static async fromMessageId (messageId) {
@@ -70,9 +71,12 @@ export class RollCard {
   static async dispatch (data) {
     if (game.user.isGM) {
       let messages = ui.chat.collection.filter(message => {
+        const notDiffernetInitiator = message.getFlag('CoC7', 'initiator')
         if (
           this.defaultConfig.type === message.getFlag('CoC7', 'type') &&
-          message.getFlag('CoC7', 'state') !== 'resolved'
+          message.getFlag('CoC7', 'state') !== 'resolved' &&
+          (typeof notDiffernetInitiator === 'undefined' ||
+            notDiffernetInitiator === data.roll.initiator)
         ) {
           return true
         }
@@ -109,7 +113,8 @@ export class RollCard {
       flags: {
         CoC7: {
           type: this.config.type,
-          state: 'initiated'
+          state: 'initiated',
+          initiator: this.initiator
         }
       }
     }
@@ -155,6 +160,9 @@ export class RollCard {
   addRollData (data) {
     const check = Object.assign(new CoC7Check(), data.roll)
     this.rolls.push(check)
+    if (this.config.type === 'combinedCard') {
+      this.initiator = data.roll.initiator
+    }
   }
 
   addRoll (data) {
