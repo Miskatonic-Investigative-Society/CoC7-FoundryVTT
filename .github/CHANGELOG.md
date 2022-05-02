@@ -9,6 +9,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Fix Dice So Nice appearing to roll d10s instead of d10 and decaders if using image faces
 - Fix French documentation path, thanks to @vonv
 - Remove character sheet v1 as it is no longer supported
+- Update combined roll messages to be per user and allow separate difficulties and number of bonus/penalty dice
 - Update link creation UI to make required fields and blur events clearer
 - Update to Italian localization, thanks to @Stefano1975t
 - Update to Japanese localization, thanks to Asami
