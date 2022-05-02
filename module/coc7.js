@@ -26,9 +26,9 @@ import { DropActorSheetData } from './hooks/drop-actor-sheet-data.js'
 import { TestCard } from './chat/cards/test.js'
 import { initECC } from './common/chatcardlib/src/chatcardlib.js'
 
-if (CONST.COMPATIBILITY_MODES && !isNewerVersion(game.version, '10.261')) {
-  // hide compatibility warnings while still in testing
-  CONFIG.debug.compatibility = CONST.COMPATIBILITY_MODES.SILENT
+if (CONST.COMPATIBILITY_MODES && !isNewerVersion(game.version, '10.262')) {
+  // hide compatibility warnings while still in testing v10 and supporting v9
+  CONFIG.compatibility.mode = CONST.COMPATIBILITY_MODES.SILENT
 }
 
 Hooks.on('renderSettingsConfig', (app, html, options) => {

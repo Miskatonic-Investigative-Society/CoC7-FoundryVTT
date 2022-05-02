@@ -1702,6 +1702,29 @@ export class CoC7ActorSheet extends ActorSheet {
       roll.rollMode = game.settings.get('core', 'rollMode')
       roll.initiator = game.user.id
 
+      if (!event.shiftKey) {
+        const usage = await RollDialog.create({
+          disableFlatThresholdModifier:
+            event.metaKey ||
+            event.ctrlKey ||
+            event.keyCode === 91 ||
+            event.keyCode === 224, // TODO: do we need this CTRL?
+          disableFlatDiceModifier:
+            event.metaKey ||
+            event.ctrlKey ||
+            event.keyCode === 91 ||
+            event.keyCode === 224
+        })
+        if (usage) {
+          roll.diceModifier = Number(usage.get('bonusDice'))
+          roll.difficulty = Number(usage.get('difficulty'))
+          roll.flatDiceModifier = Number(usage.get('flatDiceModifier'))
+          roll.flatThresholdModifier = Number(
+            usage.get('flatThresholdModifier')
+          )
+        }
+      }
+
       if (roll.attrib === 'db') return
 
       data.roll = roll.JSONRollData
