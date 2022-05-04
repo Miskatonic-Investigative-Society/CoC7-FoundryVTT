@@ -125,7 +125,6 @@ export class CoC7Dice {
           result.groups.bonusDice.push(d.total)
           bonusDice--
         }
-        console.log('O: ', d.total)
       } else {
         result.unit = d.total === 10 ? 0 : d.total
       }
