@@ -143,7 +143,7 @@ export class CombinedCheckCard extends RollCard {
             pool[diceModifier] = false
           }
         }
-        // loop then mod min and mod max roll all up to five dice
+
         const roll = await CoC7Dice.combinedRoll({ pool: pool })
         roll.initiator = game.user.id
 
@@ -190,7 +190,7 @@ export class CombinedCheckCard extends RollCard {
         r.difficulty = r.difficulty || CoC7Check.difficultyLevel.regular
         r.flatDiceModifier = r.flatDiceModifier || 0
         r.flatThresholdModifier = r.flatThresholdModifier || 0
-        await r._perform({ roll: this._roll[r.modifier] })
+        await r._perform({ roll: this._roll[r.modifier], silent: true })
       }
     }
     for (let i = 0; i < this.rolls.length; i++) {

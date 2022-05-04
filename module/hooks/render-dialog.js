@@ -16,7 +16,7 @@ export function listen () {
         }
         if (
           showExperimental ||
-          !['chase', 'container', 'vehicle'].includes(entityOption.value)
+          !['chase', 'vehicle'].includes(entityOption.value)
         ) {
           entitySortedList.push(entityOption)
         }
