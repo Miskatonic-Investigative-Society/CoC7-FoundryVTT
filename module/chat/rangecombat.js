@@ -915,7 +915,16 @@ export class CoC7RangeTarget {
   }
 
   get img () {
-    if (this.token) return this.token.data.img
+    if (this.token) {
+      // Foundry VTT v9
+      if (this.token.data.img) {
+        return this.token.data.img
+      }
+      // Foundry VTT v10
+      if (this.token.document?.texture.src) {
+        return this.token.document?.texture.src
+      }
+    }
     if (this.actor) return this.actor.data.img
     return '../icons/svg/mystery-man-black.svg'
   }

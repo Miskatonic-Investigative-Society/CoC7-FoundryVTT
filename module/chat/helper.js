@@ -240,13 +240,38 @@ export class chatHelper {
     if (game.settings.get('CoC7', 'useToken')) {
       // Try to find a token.
       const token = chatHelper.getTokenFromKey(actorKey)
-      if (token && token.data.img.indexOf('*') === -1) return token.data.img
+      if (token) {
+        // Foundry VTT v9
+        if (token.data.img) {
+          if (token.data.img.indexOf('*') === -1) {
+            return token.data.img
+          }
+        }
+        // Foundry VTT v10
+        if (token.data.texture.src) {
+          if (token.data.texture.src.indexOf('*') === -1) {
+            return token.data.texture.src
+          }
+        }
+      }
     }
     const actor = chatHelper.getActorFromKey(actorKey) // REFACTORING (2)
     if (game.settings.get('CoC7', 'useToken')) {
       // if no token found for that actor return the prototype token image.
-      if (actor.data.token && actor.data.token.img.indexOf('*') === -1)
-        return actor.data.token.img
+      if (actor.data.token) {
+        // Foundry VTT v9
+        if (actor.data.token.img) {
+          if (actor.data.token.img.indexOf('*') === -1) {
+            return actor.data.token.img
+          }
+        }
+        // Foundry VTT v10
+        if (actor.data.token.texture.src) {
+          if (actor.data.token.texture.src?.indexOf('*') === -1) {
+            return actor.data.token.texture.src
+          }
+        }
+      }
     }
     return actor.data.img
   }
