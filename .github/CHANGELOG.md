@@ -3,7 +3,7 @@
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Change creature encounters based on tokens/actors to sanity loss events based on type/name
-- Change skill names system to begin support for FoundryVTT v10 changes
+- Change skill names system and token image location to begin support for FoundryVTT v10 changes
 - Default weapons added via character/NPC sheet to either melee or ranged
 - Fix critical and impale buttons on combat card not formatting correctly
 - Fix Dice So Nice appearing to roll d10s instead of d10 and decaders if using image faces
