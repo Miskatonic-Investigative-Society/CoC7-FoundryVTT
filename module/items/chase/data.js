@@ -141,6 +141,20 @@ export class CoC7Chase extends CoC7Item {
     )
   }
 
+  async updateParticipant (particiantUuid, updateData, { render = true } = {}) {
+    const participants = foundry.utils.duplicate(this.data.data.participants)
+    const update = foundry.utils.duplicate(updateData)
+    const participantIndex = participants.findIndex(
+      p => particiantUuid == p.uuid
+    )
+    if (-1 == participantIndex) return undefined
+    if (update.uuid) delete update.uuid
+    foundry.utils.mergeObject(participants[participantIndex], update, {
+      overwrite: true
+    })
+    await this.updateParticipants(participants, { render: render })
+  }
+
   cleanParticipantList (list) {
     const participantsData = this.data.data.participants
       ? foundry.utils.duplicate(this.data.data.participants)
@@ -653,6 +667,18 @@ export class CoC7Chase extends CoC7Item {
     )
   }
 
+  async updateLocation (locationUuid, updateData, { render = true } = {}) {
+    const locations = foundry.utils.duplicate(this.data.data.locations.list)
+    const update = foundry.utils.duplicate(updateData)
+    const locationIndex = locations.findIndex(l => locationUuid == l.uuid)
+    if (-1 == locationIndex) return undefined
+    if (update.uuid) delete update.uuid
+    foundry.utils.mergeObject(locations[locationIndex], update, {
+      overwrite: true
+    })
+    await this.updateLocationsList(locations, { render: render })
+  }
+
   cleanLocationsList (list) {
     const updatedList = foundry.utils.duplicate(list)
     const partipantsUuidArray = this.data.data.participants.map(p => p.uuid)
@@ -724,6 +750,7 @@ export class CoC7Chase extends CoC7Item {
     if (!this.locations) return undefined
     const location = this.locations.find(l => l.active)
     if (!location) return undefined
+    if (location.participants?.length) location.hasParticipant = true
     const actor = this.activeActor
     if (actor) {
       const test = actor.find(location.obstacleDetails?.checkName)
@@ -945,6 +972,8 @@ export class CoC7Chase extends CoC7Item {
       return
     }
 
+    if (destination.participants.includes(participantUuid)) return //moving particpant to a location he already occupies
+
     if (!destination.participants) destination.participants = []
     destination.participants.push(participantUuid)
     // destination.participants.sort(sortByRoleAndDex)
@@ -1064,9 +1093,9 @@ export class CoC7Chase extends CoC7Item {
     return uuid
   }
 
-  get activeActorSkillsAndCharacteristics () {
-    const actor = this.activeActor
-    if (!actor) return undefined
+  getActorSkillsAndCharacteristics (participantUuid) {
+    const participant = this.getParticipant(participantUuid)
+    if (!participant.actor) return undefined
     const list = []
     CoCActor.getCharacteristicDefinition().forEach(c =>
       list.push(
@@ -1083,8 +1112,13 @@ export class CoC7Chase extends CoC7Item {
         'CoC7.SAN'
       )})`
     )
-    actor.skills.forEach(s => list.push(s.fullName))
+    participant.actor.skills.forEach(s => list.push(s.fullName))
     return list
+  }
+
+  get activeActorSkillsAndCharacteristics () {
+    const particicpantData = this.activeParticipantData
+    return this.getActorSkillsAndCharacteristics(particicpantData.uuid)
   }
 
   get allSkillsAndCharacteristics () {

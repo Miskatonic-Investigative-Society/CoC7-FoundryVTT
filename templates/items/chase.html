@@ -7,129 +7,150 @@
         <input class="name" name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
       </div>
       {{/unless}}
-      <div class="active-location flexcol">
-        {{#if activeLocation}}
-        <datalist id="check-all-options">
-          {{#each item.allSkillsAndCharacteristics as |o|}}
-            <option>{{o}}</option>
-          {{/each}}
-        </datalist>
-        <datalist id="check-active-actor">
-          {{#each item.activeActorSkillsAndCharacteristics as |o|}}
-            <option>{{o}}</option>
-          {{/each}}
-        </datalist>
-        <div class="form-group">
-          <input class="location-name" type="text" name="locations.{{activeLocation.uuid}}.name" value="{{activeLocation.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
-        </div>
-        <div class="details flexrow">
-          <div class="obstacle flexcol" data-uuid="{{activeLocation.uuid}}">
-            {{#unless activeLocation.first}}
-              <div class="form-group">
-                <div class="tag obstacle-type barrier {{#if activeLocation.obstacleDetails.barrier}}switched-on{{/if}}">barrier</div>
-                <div class="tag obstacle-type hazard {{#if activeLocation.obstacleDetails.hazard}}switched-on{{/if}}">hazard</div>
-              </div>
-              {{#if activeLocation.obstacle}}
-                <div  class="form-group">
-                  <input type="text" name="locations.{{activeLocation.uuid}}.obstacleDetails.name" value="{{activeLocation.obstacleDetails.name}}" title="{{ localize 'CoC7.Name' }}" placeholder="{{ localize 'CoC7.Name' }}"/>
-                </div>
+      <div class="flexrow chase-location" data-uuid="{{activeLocation.uuid}}">
+        {{#unless activeLocation.init}}
+        <div class="location-controls"><a class="location-control" data-action="add-before" title="{{localize 'CoC7.InsertLocation'}}"><i class="icon fas fa-plus-circle"></i></a></div>
+        {{/unless}}
+        <div class="active-location flexcol">
+          {{#if activeLocation}}
+          <datalist id="check-all-options">
+            {{#each item.allSkillsAndCharacteristics as |o|}}
+              <option>{{o}}</option>
+            {{/each}}
+          </datalist>
+          <datalist id="check-active-actor">
+            {{#each item.activeActorSkillsAndCharacteristics as |o|}}
+              <option>{{o}}</option>
+            {{/each}}
+          </datalist>
+          <div class="form-group">
+            <input class="location-name" type="text" name="locations.{{activeLocation.uuid}}.name" value="{{activeLocation.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
+            {{#if activeLocation.hasParticipant}}
+              <a class="flex0 location-control inactive" title="{{ localize 'CoC7.LocationNotEmpty'}}"><i class="icon fas fa-minus-circle"></i></a>
+            {{else}}
+              {{#if activeLocation.init}}
+                <a class="flex0 location-control inactive" title="{{ localize 'CoC7.LocationInit'}}"><i class="icon fas fa-minus-circle"></i></a>
+              {{else}}
+                <a class="flex0 location-control" data-action="remove" title="{{ localize 'CoC7.RemoveLocation'}}"><i class="icon fas fa-minus-circle"></i></a>
+              {{/if}}
+            {{/if}}
+            <a class="flex0 pin-location" draggable="true">
+              <img class="pin-image" src="systems/CoC7/assets/icons/red-pin.svg"/>
+              <i class="icon game-icon game-icon-pin"></i>
+            </a>
+          </div>
+          <div class="details flexrow">
+            <div class="obstacle flexcol" data-uuid="{{activeLocation.uuid}}">
+              {{#unless activeLocation.first}}
                 <div class="form-group">
-                  <input type="text" class="{{#unless activeLocation.activeActorHasSkill}}no-skill{{/unless}}" name="locations.{{activeLocation.uuid}}.obstacleDetails.checkName" value="{{activeLocation.obstacleDetails.checkName}}" placeholder="{{ localize 'CoC7.CheckName' }}" list='check-all-options' data-override='true'/>
-                  <a class="chase-control" data-control="obstacle-skill-check">
-                    <i class="game-icon game-icon-d10"></i>
-                  </a>
+                  <div class="tag obstacle-type barrier {{#if activeLocation.obstacleDetails.barrier}}switched-on{{/if}}">barrier</div>
+                  <div class="tag obstacle-type hazard {{#if activeLocation.obstacleDetails.hazard}}switched-on{{/if}}">hazard</div>
                 </div>
-                <!--<div class="form-group">
-                  <div toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasDamage" class="tag flex-auto toggle {{#if activeLocation.obstacleDetails.hasDamage}}switched-on{{/if}}">{{ localize "CoC7.Damage"}}</div>
-                  {{#if activeLocation.obstacleDetails.hasDamage}}
-                  <input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.failedCheckDamage" value="{{activeLocation.obstacleDetails.failedCheckDamage}}" placeholder="{{ localize 'CoC7.Damage' }}"/>
-                  {{/if}}
-                </div>-->
-                <div class="form-group">
-                  {{#if activeLocation.obstacleDetails.barrier}}
-                  <!--  <div toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasHitPoints" class="tag flex-auto toggle {{#if activeLocation.obstacleDetails.hasHitPoints}}switched-on{{/if}}">{{ localize "CoC7.HitPoints"}}</div>
-                    {{#if activeLocation.obstacleDetails.hasHitPoints}}
-                    <input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.HitPoints" value="{{activeLocation.obstacleDetails.HitPoints}}" placeholder="{{ localize 'CoC7.HitPoints' }}"/>
-                    {{/if}}-->
-                  {{else}}
-                  <!--  <div toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasActionCost" class="tag flex-auto toggle {{#if activeLocation.obstacleDetails.hasActionCost}}switched-on{{/if}}">{{ localize "CoC7.ActionCost"}}</div>
-                    {{#if activeLocation.obstacleDetails.hasActionCost}}
-                    <input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.failedActionCost" value="{{activeLocation.obstacleDetails.failedActionCost}}" placeholder="{{ localize 'CoC7.ActionCost' }}"/>
-                    {{/if}}-->
-                  {{/if}}
-                </div>
-                <div class="form-group">
-                  <div class="flexrow flex1">
-                    <a toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasDamage" class="flex0 icon toggle {{#if activeLocation.obstacleDetails.hasDamage}}switched-on{{/if}}">
-                      <i class="game-icon game-icon-broken-bone"></i>
-                    </a>
-										{{#if activeLocation.obstacleDetails.hasDamage}}
-											<input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.failedCheckDamage" value="{{activeLocation.obstacleDetails.failedCheckDamage}}" placeholder="{{ localize 'CoC7.Damage' }}"/>
-										{{/if}}
+                {{#if activeLocation.obstacle}}
+                  <div  class="form-group">
+                    <input type="text" name="locations.{{activeLocation.uuid}}.obstacleDetails.name" value="{{activeLocation.obstacleDetails.name}}" title="{{ localize 'CoC7.Name' }}" placeholder="{{ localize 'CoC7.Name' }}"/>
                   </div>
-									{{#if activeLocation.obstacleDetails.barrier}}
-										<div class="flexrow flex1">
-											<a toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasHitPoints" class="flex0 icon toggle {{#if activeLocation.obstacleDetails.hasHitPoints}}switched-on{{/if}}">
-												<i class="game-icon game-icon-life-bar"></i>
-											</a>
-											{{#if activeLocation.obstacleDetails.hasHitPoints}}
-												<input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.HitPoints" value="{{activeLocation.obstacleDetails.HitPoints}}" placeholder="{{ localize 'CoC7.HitPoints' }}"/>
-											{{/if}}
-										</div>
-                  {{else}}
-                    <div class="flexrow flex1">
-                      <a toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasActionCost" class="flex0 icon toggle {{#if activeLocation.obstacleDetails.hasActionCost}}switched-on{{/if}}">
-                        <i class="fas fa-bahai"></i>
-                      </a>
+                  <div class="form-group">
+                    <input type="text" class="{{#unless activeLocation.activeActorHasSkill}}no-skill{{/unless}}" name="locations.{{activeLocation.uuid}}.obstacleDetails.checkName" value="{{activeLocation.obstacleDetails.checkName}}" placeholder="{{ localize 'CoC7.CheckName' }}" list='check-all-options' data-override='true'/>
+                    <a class="chase-control" data-action="obstacle-skill-check">
+                      <i class="icon game-icon game-icon-d10"></i>
+                    </a>
+                  </div>
+                  <!--<div class="form-group">
+                    <div toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasDamage" class="tag flex-auto toggle {{#if activeLocation.obstacleDetails.hasDamage}}switched-on{{/if}}">{{ localize "CoC7.Damage"}}</div>
+                    {{#if activeLocation.obstacleDetails.hasDamage}}
+                    <input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.failedCheckDamage" value="{{activeLocation.obstacleDetails.failedCheckDamage}}" placeholder="{{ localize 'CoC7.Damage' }}"/>
+                    {{/if}}
+                  </div>-->
+                  <div class="form-group">
+                    {{#if activeLocation.obstacleDetails.barrier}}
+                    <!--  <div toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasHitPoints" class="tag flex-auto toggle {{#if activeLocation.obstacleDetails.hasHitPoints}}switched-on{{/if}}">{{ localize "CoC7.HitPoints"}}</div>
+                      {{#if activeLocation.obstacleDetails.hasHitPoints}}
+                      <input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.HitPoints" value="{{activeLocation.obstacleDetails.HitPoints}}" placeholder="{{ localize 'CoC7.HitPoints' }}"/>
+                      {{/if}}-->
+                    {{else}}
+                    <!--  <div toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasActionCost" class="tag flex-auto toggle {{#if activeLocation.obstacleDetails.hasActionCost}}switched-on{{/if}}">{{ localize "CoC7.ActionCost"}}</div>
                       {{#if activeLocation.obstacleDetails.hasActionCost}}
-                        <input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.failedActionCost" value="{{activeLocation.obstacleDetails.failedActionCost}}" placeholder="{{ localize 'CoC7.ActionCost' }}"/>
+                      <input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.failedActionCost" value="{{activeLocation.obstacleDetails.failedActionCost}}" placeholder="{{ localize 'CoC7.ActionCost' }}"/>
+                      {{/if}}-->
+                    {{/if}}
+                  </div>
+                  <div class="form-group">
+                    <div class="flexrow flex1">
+                      <a toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasDamage" class="flex0 icon toggle {{#if activeLocation.obstacleDetails.hasDamage}}switched-on{{/if}}">
+                        <i class="game-icon game-icon-broken-bone"></i>
+                      </a>
+                      {{#if activeLocation.obstacleDetails.hasDamage}}
+                        <input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.failedCheckDamage" value="{{activeLocation.obstacleDetails.failedCheckDamage}}" placeholder="{{ localize 'CoC7.Damage' }}"/>
                       {{/if}}
                     </div>
-                  {{/if}}
-                </div>
-              {{/if}}
-            {{/unless}}
-          </div>
-          <div class="obstacle flexcol" data-uuid="{{nextLocation.uuid}}">
-            {{#unless activeLocation.last}}
-              <div class="form-group">
-                <div class="tag obstacle-type barrier {{#if nextLocation.obstacleDetails.barrier}}switched-on{{/if}}">barrier</div>
-                <div class="tag obstacle-type hazard {{#if nextLocation.obstacleDetails.hazard}}switched-on{{/if}}">hazard</div>
-              </div>
-              {{#if nextLocation.obstacle}}
-                <div  class="form-group">
-                  <input type="text" name="locations.{{nextLocation.uuid}}.obstacleDetails.name" value="{{nextLocation.obstacleDetails.name}}" title="{{ localize 'CoC7.Name' }}" placeholder="{{ localize 'CoC7.Name' }}"/>
-                </div>
-                <div class="form-group">
-                  <input type="text" class="{{#unless nextLocation.activeActorHasSkill}}no-skill{{/unless}}" name="locations.{{nextLocation.uuid}}.obstacleDetails.checkName" value="{{nextLocation.obstacleDetails.checkName}}" placeholder="{{ localize 'CoC7.CheckName' }}" list='check-all-options' data-override='true'/>
-                  <a class="chase-control" data-control="obstacle-skill-check">
-                    <i class="game-icon game-icon-d10"></i>
-                  </a>
-                </div>
-                <div class="form-group">
-                  <div toggle="locations.{{nextLocation.uuid}}.obstacleDetails.hasDamage" class="tag flex-auto toggle {{#if nextLocation.obstacleDetails.hasDamage}}switched-on{{/if}}">{{ localize "CoC7.Damage"}}</div>
-                  {{#if nextLocation.obstacleDetails.hasDamage}}
-                  <input type="text" class="flex1" name="locations.{{nextLocation.uuid}}.obstacleDetails.failedCheckDamage" value="{{nextLocation.obstacleDetails.failedCheckDamage}}" placeholder="{{ localize 'CoC7.Damage' }}"/>
-                  {{/if}}
-                </div>
-                <div class="form-group">
-                  {{#if nextLocation.obstacleDetails.barrier}}
-                    <div toggle="locations.{{nextLocation.uuid}}.obstacleDetails.hasHitPoints" class="tag flex-auto toggle {{#if nextLocation.obstacleDetails.hasHitPoints}}switched-on{{/if}}">{{ localize "CoC7.HitPoints"}}</div>
-                    {{#if nextLocation.obstacleDetails.hasHitPoints}}
-                    <input type="text" class="flex1" name="locations.{{nextLocation.uuid}}.obstacleDetails.HitPoints" value="{{nextLocation.obstacleDetails.HitPoints}}" placeholder="{{ localize 'CoC7.HitPoints' }}"/>
+                    {{#if activeLocation.obstacleDetails.barrier}}
+                      <div class="flexrow flex1">
+                        <a toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasHitPoints" class="flex0 icon toggle {{#if activeLocation.obstacleDetails.hasHitPoints}}switched-on{{/if}}">
+                          <i class="game-icon game-icon-life-bar"></i>
+                        </a>
+                        {{#if activeLocation.obstacleDetails.hasHitPoints}}
+                          <input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.HitPoints" value="{{activeLocation.obstacleDetails.HitPoints}}" placeholder="{{ localize 'CoC7.HitPoints' }}"/>
+                        {{/if}}
+                      </div>
+                    {{else}}
+                      <div class="flexrow flex1">
+                        <a toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasActionCost" class="flex0 icon toggle {{#if activeLocation.obstacleDetails.hasActionCost}}switched-on{{/if}}">
+                          <i class="fas fa-bahai"></i>
+                        </a>
+                        {{#if activeLocation.obstacleDetails.hasActionCost}}
+                          <input type="text" class="flex1" name="locations.{{activeLocation.uuid}}.obstacleDetails.failedActionCost" value="{{activeLocation.obstacleDetails.failedActionCost}}" placeholder="{{ localize 'CoC7.ActionCost' }}"/>
+                        {{/if}}
+                      </div>
                     {{/if}}
-                  {{else}}
-                    <div toggle="locations.{{nextLocation.uuid}}.obstacleDetails.hasActionCost" class="tag flex-auto toggle {{#if nextLocation.obstacleDetails.hasActionCost}}switched-on{{/if}}">{{ localize "CoC7.ActionCost"}}</div>
-                    {{#if nextLocation.obstacleDetails.hasActionCost}}
-                    <input type="text" class="flex1" name="locations.{{nextLocation.uuid}}.obstacleDetails.failedActionCost" value="{{nextLocation.obstacleDetails.failedActionCost}}" placeholder="{{ localize 'CoC7.ActionCost' }}"/>
-                    {{/if}}
-                  {{/if}}
+                  </div>
+                {{/if}}
+              {{/unless}}
+            </div>
+            <div class="obstacle flexcol" data-uuid="{{nextLocation.uuid}}">
+              {{#unless activeLocation.last}}
+                <div class="form-group">
+                  <div class="tag obstacle-type barrier {{#if nextLocation.obstacleDetails.barrier}}switched-on{{/if}}">barrier</div>
+                  <div class="tag obstacle-type hazard {{#if nextLocation.obstacleDetails.hazard}}switched-on{{/if}}">hazard</div>
                 </div>
-              {{/if}}
-            {{/unless}}
+                {{#if nextLocation.obstacle}}
+                  <div  class="form-group">
+                    <input type="text" name="locations.{{nextLocation.uuid}}.obstacleDetails.name" value="{{nextLocation.obstacleDetails.name}}" title="{{ localize 'CoC7.Name' }}" placeholder="{{ localize 'CoC7.Name' }}"/>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="{{#unless nextLocation.activeActorHasSkill}}no-skill{{/unless}}" name="locations.{{nextLocation.uuid}}.obstacleDetails.checkName" value="{{nextLocation.obstacleDetails.checkName}}" placeholder="{{ localize 'CoC7.CheckName' }}" list='check-all-options' data-override='true'/>
+                    <a class="chase-control" data-action="obstacle-skill-check">
+                      <i class="icon game-icon game-icon-d10"></i>
+                    </a>
+                  </div>
+                  <div class="form-group">
+                    <div toggle="locations.{{nextLocation.uuid}}.obstacleDetails.hasDamage" class="tag flex-auto toggle {{#if nextLocation.obstacleDetails.hasDamage}}switched-on{{/if}}">{{ localize "CoC7.Damage"}}</div>
+                    {{#if nextLocation.obstacleDetails.hasDamage}}
+                    <input type="text" class="flex1" name="locations.{{nextLocation.uuid}}.obstacleDetails.failedCheckDamage" value="{{nextLocation.obstacleDetails.failedCheckDamage}}" placeholder="{{ localize 'CoC7.Damage' }}"/>
+                    {{/if}}
+                  </div>
+                  <div class="form-group">
+                    {{#if nextLocation.obstacleDetails.barrier}}
+                      <div toggle="locations.{{nextLocation.uuid}}.obstacleDetails.hasHitPoints" class="tag flex-auto toggle {{#if nextLocation.obstacleDetails.hasHitPoints}}switched-on{{/if}}">{{ localize "CoC7.HitPoints"}}</div>
+                      {{#if nextLocation.obstacleDetails.hasHitPoints}}
+                      <input type="text" class="flex1" name="locations.{{nextLocation.uuid}}.obstacleDetails.HitPoints" value="{{nextLocation.obstacleDetails.HitPoints}}" placeholder="{{ localize 'CoC7.HitPoints' }}"/>
+                      {{/if}}
+                    {{else}}
+                      <div toggle="locations.{{nextLocation.uuid}}.obstacleDetails.hasActionCost" class="tag flex-auto toggle {{#if nextLocation.obstacleDetails.hasActionCost}}switched-on{{/if}}">{{ localize "CoC7.ActionCost"}}</div>
+                      {{#if nextLocation.obstacleDetails.hasActionCost}}
+                      <input type="text" class="flex1" name="locations.{{nextLocation.uuid}}.obstacleDetails.failedActionCost" value="{{nextLocation.obstacleDetails.failedActionCost}}" placeholder="{{ localize 'CoC7.ActionCost' }}"/>
+                      {{/if}}
+                    {{/if}}
+                  </div>
+                {{/if}}
+              {{/unless}}
+            </div>
           </div>
+          {{/if}}
         </div>
-        {{/if}}
+        {{#unless nextLocation.init}}
+        <div class="location-controls"><a class="location-control" data-action="add-after" title="{{localize 'CoC7.InsertLocation'}}"><i class="icon fas fa-plus-circle"></i></a></div>
+        {{/unless}}
       </div>
 
     </header>
@@ -154,7 +175,7 @@
             <div class="header flexrow">
               <div class="name">{{p.name}}</div>
               <div class="participant-controls">
-                <a class="participant-control" title="{{localize 'CoC7.MakeActive'}}" data-control="activateParticipant">
+                <a class="participant-control" title="{{localize 'CoC7.MakeActive'}}" data-action="activateParticipant">
                   <i class="fas fa-map-marker-alt"></i>
                 </a>
               </div>
@@ -176,25 +197,25 @@
               {{/each}}
             </div>
             <div class="participant-controls">
-              <a class="participant-control toggle {{#unless p.hasAGunReady}}disabled{{/unless}}" title="{{#if p.hasAGunReady}}{{localize 'CoC7.PutGunAway'}}{{else}}{{localize 'CoC7.DrawGun'}}{{/if}}" data-control="drawGun">
+              <a class="participant-control toggle {{#unless p.hasAGunReady}}disabled{{/unless}}" title="{{#if p.hasAGunReady}}{{localize 'CoC7.PutGunAway'}}{{else}}{{localize 'CoC7.DrawGun'}}{{/if}}" data-action="drawGun">
                 <i class="game-icon game-icon-revolver"></i></a>
-              <a class="participant-control toggle {{#unless p.hasOneBonusDice}}disabled{{/unless}}" title="{{#if p.hasOneBonusDice}}{{localize 'CoC7.RemoveBonusDice'}}{{else}}{{localize 'CoC7.AddBonusDice'}}{{/if}}" data-control="bonusDice" data-count="1">
+              <a class="participant-control toggle {{#unless p.hasOneBonusDice}}disabled{{/unless}}" title="{{#if p.hasOneBonusDice}}{{localize 'CoC7.RemoveBonusDice'}}{{else}}{{localize 'CoC7.AddBonusDice'}}{{/if}}" data-action="bonusDice" data-count="1">
                 <i class="game-icon game-icon-d10"></i></a>
-              <a class="participant-control toggle {{#unless p.hasTwoBonusDice}}disabled{{/unless}}" title="{{#if p.hasTwoBonusDice}}{{localize 'CoC7.RemoveBonusDice'}}{{else}}{{localize 'CoC7.AddBonusDice'}}{{/if}}" data-control="bonusDice" data-count="2">
+              <a class="participant-control toggle {{#unless p.hasTwoBonusDice}}disabled{{/unless}}" title="{{#if p.hasTwoBonusDice}}{{localize 'CoC7.RemoveBonusDice'}}{{else}}{{localize 'CoC7.AddBonusDice'}}{{/if}}" data-action="bonusDice" data-count="2">
                 <i class="game-icon game-icon-d10"></i></a>
               <div class="separator"></div>
-              <a class="participant-control" title="{{localize 'CoC7.IncreasMVTAction'}}" data-control="decreaseActions">
+              <a class="participant-control" title="{{localize 'CoC7.IncreasMVTAction'}}" data-action="decreaseActions">
                 <i class="far fa-minus-square"></i></a>
-              <a class="participant-control {{#if p.hasMaxMvtActions}}inactive{{/if}}" title="{{localize 'CoC7.IncreasMVTAction'}}" data-control="increaseActions">
+              <a class="participant-control {{#if p.hasMaxMvtActions}}inactive{{/if}}" title="{{localize 'CoC7.IncreasMVTAction'}}" data-action="increaseActions">
                 <i class="far fa-plus-square"></i></a>
               {{#unless p.hasNoMvtActions}}
               <div class="separator"></div>
-              <a class="participant-control {{#if p.location.first}}inactive{{/if}}" title="{{localize 'CoC7.MoveBackward'}}" data-control="moveBackward">
+              <a class="participant-control {{#if p.location.first}}inactive{{/if}}" title="{{localize 'CoC7.MoveBackward'}}" data-action="moveBackward">
                 <i class="fas fa-running fa-flip-horizontal"></i></a>
-              <a class="participant-control {{#if p.location.last}}inactive{{/if}}" title="{{localize 'CoC7.MoveForward'}}" data-control="moveForward">
+              <a class="participant-control {{#if p.location.last}}inactive{{/if}}" title="{{localize 'CoC7.MoveForward'}}" data-action="moveForward">
                 <i class="fas fa-running"></i></a>
               {{#if p.canAssist}}
-              <div class="participant-control dropdown" title="{{localize 'CoC7.Assist'}}" data-control="assist">
+              <div class="participant-control dropdown" title="{{localize 'CoC7.Assist'}}" data-action="assist">
                 <i class="fas fa-hands-helping dropbtn"></i>
                 <div class="dropdown-content">
                   {{#each p.assist as |b|}}
@@ -204,7 +225,7 @@
               </div>
               {{/if}}
               {{#if p.canBeCautious}}
-              <a class="participant-control" title="{{localize 'CoC7.CautiousApproach'}}" data-control="cautiousApproach">
+              <a class="participant-control" title="{{localize 'CoC7.CautiousApproach'}}" data-action="cautiousApproach">
                 <i class="fas fa-hourglass-half"></i></a>
               {{/if}}
               {{/unless}}

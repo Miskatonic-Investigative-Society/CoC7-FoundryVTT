@@ -27,7 +27,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     // data.participant = new _participant(this.participantData)
 
     data.card.breakableObstacle =
-      data.data.obstacle.barrier && data.data.obstacle.hasHitPoints
+      data.data.obstacle.barrier && data.data.obstacle.hasHitPoints //TODO: Check if usefull
     data.card.validCheck = false
 
     if (
@@ -37,12 +37,14 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     ) {
       data.data.states.tryToNegotiate = true
       data.data.states.tryToBreak = false
-      data.data.states.breakOrPassDefined = true
+      data.data.states.breakOrNegotiateDefined = true
     }
-
+    
     if (this.participant.actor) {
       data.skill = this.participant.actor.find(data.data.obstacle.checkName)
-      data.checkOptions = this.chase.activeActorSkillsAndCharacteristics
+      data.checkOptions = this.chase.getActorSkillsAndCharacteristics(
+        this.data.participantUuid
+      )
       if (data.skill) {
         data.validCheck = true
         data.validSkill = true
@@ -90,41 +92,54 @@ export class ChaseObstacleCard extends EnhancedChatCard {
         data.strings.obstacleDefined += ` (${data.data.obstacle.name})`
 
       data.data.states.canAskRoll = true
-      data.data.states.obstacleCanBeBroken = false
+      // data.data.states.obstacleCanBeBroken = false
       if (data.data.obstacle.barrier) {
         data.status.push({ name: game.i18n.localize('CoC7.Barrier') })
         if (data.data.obstacle.hasHitPoints) {
           data.status.push({ name: game.i18n.localize('CoC7.Breakable') })
-          data.data.states.obstacleCanBeBroken = true
+          // data.data.states.obstacleCanBeBroken = true
         }
       }
       if (data.data.obstacle.hazard)
         data.status.push({ name: game.i18n.localize('CoC7.Hazard') })
 
-      if (!data.validCheck) {
-        data.status.push({
-          name: game.i18n.localize('CoC7.NoValidCheck'),
-          css: 'error'
-        })
-        data.strings.EnterValueTitle = game.i18n.format(
-          'CoC7.SkillSelectBase',
-          { name: data.data.obstacle.checkName }
-        )
-        if (!data.data.checkThreshold) data.data.states.canAskRoll = false
-      } else if (!data.validSkill) {
-        data.status.push({
-          name: game.i18n.localize('CoC7.NoValidSkill'),
-          css: 'warning'
-        })
+      if (this.data.states.tryToNegotiate) {
+        if (!data.validCheck) {
+          data.status.push({
+            name: game.i18n.localize('CoC7.NoValidCheck'),
+            css: 'error'
+          })
+          data.strings.EnterValueTitle = game.i18n.format(
+            'CoC7.SkillSelectBase',
+            { name: data.data.obstacle.checkName }
+          )
+          if (!data.data.checkThreshold) data.data.states.canAskRoll = false
+        } else if (!data.validSkill) {
+          data.status.push({
+            name: game.i18n.localize('CoC7.NoValidSkill'),
+            css: 'warning'
+          })
+        }
       }
 
       if (this.data.states.tryToBreak) {
         let damageStatus = game.i18n.localize('CoC7.BreakDown')
         if (this.data.objects?.obstacleDamageRoll?.total)
-          damageStatus += ` :${this.data.objects.obstacleDamageRoll.total}`
+          damageStatus += ` : ${this.data.objects.obstacleDamageRoll.total}`
         data.status.push({
           name: damageStatus
         })
+
+        if (this.data.states.obstacleDamageRolled) {
+          if (0 >= this.data.objects?.obstacleDamageRoll?.total)
+            data.strings.obstacleDamage = 'No damage dealt'
+          else {
+            data.inlineDamageRoll = createInlineRoll(
+              this.data.objects.obstacleDamageRoll
+            )?.outerHTML
+            data.strings.obstacleDamage = `You deal ${data.inlineDamageRoll} damage.`
+          }
+        }
       }
 
       if (this.data.states.tryToNegotiate) {
@@ -150,33 +165,61 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       }
     }
 
+    if( this.data.states.playerActionDefined){
+      if( this.data.obstacle.hazard){
+        data.strings.playerIntentions = game.i18n.localize('CoC7.TryToNegotiateHazard')
+      } else if (this.data.obstacle.barrier){
+        if( this.data.states.tryToNegotiate) data.strings.playerIntentions = game.i18n.localize('CoC7.TryToGetPastBarriers')
+        else if (this.data.states.tryToBreak) data.strings.playerIntentions = game.i18n.localize('CoC7.TryToBreak')
+      }
+    }
+
     if (this.data.states.checkRolled) {
       if (this.data.states.cardResolved)
+        //If the card is resolved the check is frozen
         data.htmlCheck = await this.data.objects.check.inlineCheck?.outerHTML
       else data.htmlCheck = await this.data.objects.check.getHtmlRoll()
     }
 
-    if (this.data.objects?.failedDamageRoll) {
-      if (!data.data.armor) {
-        if (this.participant.actor)
-          data.data.armor =
-            this.participant.actor.data.data.attribs.armor.value || 0
-      }
-      if (data.data.armor) {
-        if (isNaN(Number(data.data.armor))) data.data.armor = null
-      }
-    }
+    // if (this.data.objects?.failedDamageRoll) {
+    //   if (!data.data.armor) {
+    //     if (this.participant.actor)
+    //       data.data.armor =
+    //         this.participant.actor.data.data.attribs.armor.value || 0
+    //   }
+    //   if (data.data.armor) {
+    //     if (isNaN(Number(data.data.armor))) data.data.armor = null
+    //   }
+    // }
 
     if (this.data.states.cardResolved) {
+      data.playerDamageTaken = false
+      data.obstalceDefinitionChanged = false
+
+      //Has the obstacle changed ?
+      const diff = this.listChanges()
+      if (diff.changes) {
+        data.obstalceDefinitionChanged = true
+      }
+
+      //Is player taking damage
       if (this.data.obstacle.hasDamage && this.data.objects?.check?.isFailure) {
-        data.damageTaken = true
+        data.playerDamageTaken = true
         data.inlineDamageTakenRoll = createInlineRoll(
           this.data.objects.failedDamageRoll
         )?.outerHTML
+        // if (data.data.totalPlayerDamageTaken < 0)
+        //   data.data.totalPlayerDamageTaken = 0
+
+        if (0 == data.data.totalPlayerDamageTaken) {
+          data.strings.damageTaken = game.i18n.localize( 'CoC7.YouTakeNoDamage')
+        } else {
+          data.strings.damageTaken = game.i18n.format( 'CoC7.YouTakeSomeDamage', {amount: data.data.totalPlayerDamageTaken})
+        }
         data.status.push({
           name:
             game.i18n.localize('CoC7.TotalDamage') +
-            ` :${this.data.objects.failedDamageRoll.total}`
+            ` :${data.data.totalPlayerDamageTaken}`
         })
       }
 
@@ -189,12 +232,17 @@ export class ChaseObstacleCard extends EnhancedChatCard {
         data.inlineActionLostRoll = createInlineRoll(
           this.data.objects.failedActionRoll
         )?.outerHTML
-        data.status.push({
-          name:
-            game.i18n.localize('CoC7.ActionCost') +
-            ` :${this.data.objects.failedActionRoll.total}`
-        })
       }
+
+      data.status.push({
+        name:
+          game.i18n.localize('CoC7.ActionCost') +
+          ` :${this.data.totalActionCost}`
+      })
+
+      data.status.push({
+        name: game.i18n.localize('CoC7.CardResolved')
+      })
     }
     return data
   }
@@ -206,69 +254,95 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       return
     }
     if (this.data.states.cardResolved) {
-      //Card is resolved, list changes and ask for validation.
-      if (!this.data.states.cardValidated) {
-        if (!this.data.states.changesListed) {
-          const diff = this.listChanges(true)
-          this.data.states.changesListed = true
+      //Card is resolved, compute all formulas and damage.
+      if (this.data.objects?.failedDamageRoll?.total) {
+        const totalDamage = this.data.objects.failedDamageRoll.total
+        const armorValue = this.data.flags.ignoreArmor ? 0 : this.data.armor
+        if (CoC7Utilities.isFormula(armorValue)) {
+          this.data.armor = (
+            await new Roll(armorValue).roll({ async: true })
+          ).total
+        } else if (!isNaN(Number(armorValue))) {
+          this.data.armor = Number(armorValue)
         }
-      } else {
-        if (this.data.states.failedConsequencesRolled) {
-          if (this.data.objects?.failedActionRoll?.total)
-            await this.chase.alterParticipantMovementAction(
-              this.participant.uuid,
-              0 - this.data.objects.failedActionRoll.total
-            )
-          if (this.data.objects?.failedDamageRoll?.total) {
-            let totalDamage, armorValue, armorData
-            totalDamage = this.data.objects.failedDamageRoll.total
-            armorValue = this.data.flags.ignoreArmor ? 0 : this.data.data.armor
-            if (CoC7Utilities.isFormula(armorData)) {
-              armorValue = (await new Roll(armorData).roll({ async: true }))
-                .total
-            } else if (!isNaN(Number(armorData))) {
-              armorValue = Number(armorData)
-            }
-            if (this.participant.actor) {
-              totalDamage = await this.participant.actor.dealDamage(
-                this.data.objects.failedDamageRoll.total,
-                { ignoreArmor: false, armor: 3 }
-              )
-            } else {
-            }
-          }
-        } else {
-          let targetLocation
-          if (this.data.forward) {
-            targetLocation = this.location
-          } else {
-            targetLocation = this.chase.getLocationShift(this.location.uuid, {
-              skip: -1
-            })
-          }
-          if (!targetLocation || !targetLocation.uuid) return
-          await this.chase.alterParticipantMovementAction(
-            this.participant.uuid,
-            -1
-          )
-          await this.chase.moveParticipantToLocation(
-            this.participant.uuid,
-            targetLocation.uuid,
-            { render: true }
-          )
 
-          this.data.movementActionArray = this.participant.movementActionArray
+        if (undefined == this.data.totalPlayerDamageTaken) {
+          this.data.totalPlayerDamageTaken = totalDamage - this.data.armor
+          if (this.data.totalPlayerDamageTaken < 0)
+            this.data.totalPlayerDamageTaken = 0
         }
-        await this.chase.activateNexParticpantTurn()
+      }
+
+      if (undefined === this.data.reflectObstaleChanges) {
+        this.data.reflectObstaleChanges = true //By default reflect changes
+      }
+
+      if (undefined === this.data.movePlayer) {
+        this.data.movePlayer =
+          (this.data.states.tryToNegotiate || this.data.obstacle.hazard) &&
+          !this.data.states.failedConsequencesRolled
+      }
+
+      if (undefined === this.data.totalActionCost) {
+        this.data.totalActionCost = 1
+        if (this.data.obstacle.hazard && this.data.obstacle.hasActionCost)
+          this.data.totalActionCost = this.data.objects.failedActionRoll.total
+      }
+
+      if (
+        this.data.obstacle.barrier &&
+        this.data.obstacle.hasHitPoints &&
+        this.data.objects.obstacleDamageRoll?.total
+      ) {
+        if (undefined === this.data.totalObstacleDamage) {
+          this.data.totalObstacleDamage = this.data.objects.obstacleDamageRoll.total
+        }
+        if (undefined === this.data.flags.obstacleDestoyed) {
+          this.data.flags.obstacleDestoyed =
+            0 >= this.data.obstacle.HitPoints - this.data.totalObstacleDamage
+        }
+      }
+
+      if (!this.data.states.cardValidated) {
+        //   if (!this.data.states.changesListed) {
+        //     const diff = this.listChanges(true)
+        //     this.data.states.changesListed = true
+        //   }
+        // } else {
+        //   if (this.data.states.failedConsequencesRolled) {
+        //     if (this.data.objects?.failedActionRoll?.total)
+        //       await this.chase.alterParticipantMovementAction(
+        //         this.participant.uuid,
+        //         0 - this.data.objects.failedActionRoll.total
+        //       )
+        //   } else {
+        //     let targetLocation
+        //     if (this.data.forward) {
+        //       targetLocation = this.location
+        //     } else {
+        //       targetLocation = this.chase.getLocationShift(this.location.uuid, {
+        //         skip: -1
+        //       })
+        //     }
+        //     if (!targetLocation || !targetLocation.uuid) return
+        //     await this.chase.alterParticipantMovementAction(
+        //       this.participant.uuid,
+        //       -1
+        //     )
+        //     await this.chase.moveParticipantToLocation(
+        //       this.participant.uuid,
+        //       targetLocation.uuid,
+        //       { render: true }
+        //     )
+        //     this.data.movementActionArray = this.participant.movementActionArray
+        //   }
+        //   await this.chase.activateNexParticpantTurn()
       }
     }
   }
 
   /** @override */
-  async localCompute () {
-    if (this.data.states.checkRolled && this.data.objects?.check?.passed)
-      this.data.states.cardResolved = true
-  }
+  async localCompute () {}
 
   /** @override */
   async assignObjects () {
@@ -316,6 +390,8 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     // const location = chase.getLocationData(this.data.locationUuid)
     this.data.obstacle = this.location?.obstacleDetails //Feed the obstacle definition
     // this.data.participantData = chase.activeParticipantData
+    this.data.participantUuid = this.chase.activeParticipantData.uuid
+
     if (this.participantData?.bonusDice > 0) {
       this.data.bonusDice = this.participantData.bonusDice
       this.data.flags.consumeBonusDice = true
@@ -335,7 +411,8 @@ export class ChaseObstacleCard extends EnhancedChatCard {
 
   get participantData () {
     if (!this.chase) return undefined
-    return this.chase.activeParticipantData
+    if (!this.data.participantUuid) return undefined
+    return this.chase.getParticipantData(this.data.participantUuid)
   }
 
   get location () {
@@ -523,6 +600,96 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   }
 
   //Actions :
+  async validateCard (options) {
+    let loactionChanged,
+      participantChaged = false
+    const obstacleUpdate = {}
+    obstacleUpdate.obstacleDetails = {}
+    const participantUpdate = {}
+    if (this.data.flags.obstacleDestoyed) {
+      loactionChanged = true
+      obstacleUpdate.obstacle = false
+      obstacleUpdate.obstacleDetails.hazard = false
+      obstacleUpdate.obstacleDetails.barrier = false
+    }
+
+    const diff = this.listChanges()
+    if (diff.changes) {
+      if (this.data.reflectObstaleChanges) {
+        for (const [key, value] of Object.entries(diff.obstacle)) {
+          if (key != 'type') {
+            obstacleUpdate.obstacleDetails[value.key] = value.new
+            loactionChanged = true
+          }
+        }
+      }
+    }
+
+    if (this.data.totalObstacleDamage > 0 && this.data.obstacle.hasHitPoints) {
+      let remainingHp = this.data.obstacle.HitPoints
+      remainingHp -= this.data.totalObstacleDamage
+      if (remainingHp < 0) remainingHp = 0
+      if (this.obstacle.HitPoints != remainingHp) {
+        obstacleUpdate.obstacleDetails.HitPoints = remainingHp
+        this.data.obstacle.HitPoints = remainingHp
+        loactionChanged = true
+      }
+    }
+
+    if (this.data.totalPlayerDamageTaken > 0) {
+      participantChaged = true
+      if (this.participant.actor) {
+        await this.participant.actor.dealDamage(
+          this.data.totalPlayerDamageTaken,
+          { ignoreArmor: true }
+        )
+      } else {
+        participantUpdate.hp = this.participantData.hp
+        participantUpdate.hp -= this.data.totalPlayerDamageTaken
+        if (participantUpdate.hp < 0) participantUpdate.hp = 0
+      }
+    }
+
+    if (this.data.totalActionCost > 0) {
+      participantChaged = true
+      participantUpdate.currentMovementActions = this.participantData.currentMovementActions
+      participantUpdate.currentMovementActions -= this.data.totalActionCost
+    }
+
+    if (this.data.movePlayer) {
+      let targetLocation
+      if (this.data.forward) {
+        targetLocation = this.location
+      } else {
+        targetLocation = this.chase.getLocationShift(this.location.uuid, {
+          skip: -1
+        })
+      }
+
+      if (targetLocation.uuid) {
+        await this.chase.moveParticipantToLocation(
+          this.participantData.uuid,
+          targetLocation.uuid,
+          {
+            scrollToLocation: true,
+            activateLocation: false,
+            render: !(loactionChanged || participantChaged)
+          }
+        )
+      }
+    }
+
+    if (loactionChanged)
+      await this.chase.updateLocation(this.location.uuid, obstacleUpdate)
+    if (participantChaged)
+      await this.chase.updateParticipant(
+        this.participantData.uuid,
+        participantUpdate
+      )
+    this.data.states.closed = true
+    return true
+  }
+
   async defineObstacle (options) {
     if (!this.data.states) this.data.states = {}
     this.data.states.obstacleDefined = true
@@ -530,14 +697,14 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   }
 
   async tryToNegotiateObstacle (options) {
-    this.data.states.breakOrPassDefined = true
+    this.data.states.breakOrNegotiateDefined = true
     this.data.states.tryToNegotiate = true
     this.data.states.tryToBreak = false
     return true
   }
 
   async tryToBreakDownObstacle (options) {
-    this.data.states.breakOrPassDefined = true
+    this.data.states.breakOrNegotiateDefined = true
     this.data.states.tryToNegotiate = false
     this.data.states.tryToBreak = true
     return true
@@ -545,7 +712,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
 
   async cancelObstacleDefinition (options) {
     this.data.states.obstacleDefined = false
-    this.data.states.breakOrPassDefined = false
+    this.data.states.breakOrNegotiateDefined = false
     this.data.states.tryToNegotiate = false
     this.data.states.tryToBreak = false
     return true
@@ -553,7 +720,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
 
   async cancelBreakOrPassChoice (options) {
     if (!this.data.obstacle.hasHitPoints) return this.cancelObstacleDefinition()
-    this.data.states.breakOrPassDefined = false
+    this.data.states.breakOrNegotiateDefined = false
     this.data.states.tryToNegotiate = false
     this.data.states.tryToBreak = false
     return true
@@ -579,6 +746,13 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     await this.data.objects.check._perform({ forceDSN: true })
     this.data.states.checkRolled = true
     target.classList.toggle('disabled')
+    if (this.data.objects.check.passed) this.data.states.cardResolved = true
+    else {
+      if (undefined == this.data.armor && this.participant.actor) {
+        this.data.armor =
+          this.participant.actor.data.data.attribs.armor.value || 0
+      }
+    }
     return true
   }
 
@@ -587,6 +761,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       target: options.event.currentTarget,
       update: false
     })
+    if (this.data.objects.check.passed) this.data.states.cardResolved = true
     return true
   }
 
@@ -616,13 +791,6 @@ export class ChaseObstacleCard extends EnhancedChatCard {
 
     this.data.states.failedConsequencesRolled = true
     this.data.states.cardResolved = true
-
-    // if (
-    //   !this.data.objects?.failedDamageRoll?.total &&
-    //   !this.data.objects?.failedActionRoll?.total
-    // ) {
-    //   this.data.states.cardResolved = true
-    // }
     return true
   }
 
@@ -637,6 +805,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     await this.data.objects.obstacleDamageRoll.evaluate({ async: true })
     await CoC7Dice.showRollDice3d(this.data.objects.obstacleDamageRoll)
     this.data.states.obstacleDamageRolled = true
+    this.data.states.cardResolved = true
     return true
   }
 
@@ -644,7 +813,8 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   listChanges (validate = false) {
     const diff = {
       obstacle: {},
-      player: {}
+      player: {},
+      changes: false
     }
     const names = {
       barrier: game.i18n.localize('CoC7.Type'),
@@ -670,22 +840,35 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     // const oldObstacle = foundry.utils.diffObject(this.data.obstacle, this.obstacle)
 
     for (const [key] of Object.entries(newObstacle)) {
-      if ('barrier' == key || 'hazard' == key) {
-        diff.obstacle.type = {
-          old: game.i18n.localize(
-            this.obstacle.barrier ? 'CoC7.Barrier' : 'CoC7.Hazard'
-          ),
-          new: game.i18n.localize(
-            this.data.obstacle.barrier ? 'CoC7.Barrier' : 'CoC7.Hazard'
-          ),
-          key: 'type',
-          name: game.i18n.localize('CoC7.Type')
-        }
-        if (validate) {
-          this.data.validation[key] = true
-          this.data.validation.type = true
-        }
-      } else {
+      // if ('barrier' == key || 'hazard' == key)
+      // {
+      //   diff.changes = true
+      //   diff.obstacle.type = {
+      //     old: game.i18n.localize(
+      //       this.obstacle.barrier ? 'CoC7.Barrier' : 'CoC7.Hazard'
+      //     ),
+      //     new: game.i18n.localize(
+      //       this.data.obstacle.barrier ? 'CoC7.Barrier' : 'CoC7.Hazard'
+      //     ),
+      //     key: 'type',
+      //     name: game.i18n.localize('CoC7.Type')
+      //   }
+      //   if (validate) {
+      //     this.data.validation[key] = true
+      //     this.data.validation.type = true
+      //   }
+      // }
+      // else
+      // {
+      if (
+        !(
+          (newObstacle[key] === '' && this.obstacle[key] === null) ||
+          (!isNaN(Number(newObstacle[key])) &&
+            Number(newObstacle[key]) === this.obstacle[key])
+        )
+      ) {
+        diff.changes = true
+
         diff.obstacle[key] = {
           old: this.obstacle[key],
           new: newObstacle[key],
@@ -694,6 +877,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
         }
         if (validate) this.data.validation[key] = true
       }
+      // }
     }
 
     return diff

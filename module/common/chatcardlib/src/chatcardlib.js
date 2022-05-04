@@ -237,7 +237,7 @@ export class EnhancedChatCard {
     })
   }
 
-  async updateChatCard () {
+  async updateChatCard ({ attachObject = true } = {}) {
     //TODO the whole function has to be executed by GM if options.GMchatCard
     if (this.options.compute) await this.localCompute()
     if (this.options.GMUpdate) await this.ExecuteGMUpdate()
@@ -248,8 +248,9 @@ export class EnhancedChatCard {
       const html = await renderTemplate(this.template, data)
       const htmlCardElement = $.parseHTML(html)[0]
 
-      // Attach the sanCheckCard object to the message.
-      htmlCardElement.dataset.object = escape(this.objectDataString)
+      // Attach the object to the message.
+      if (attachObject)
+        htmlCardElement.dataset.object = escape(this.objectDataString)
       htmlCardElement.dataset.eccClass = this.constructor.name
       htmlCardElement.classList.add(...this.options.classes)
 
@@ -474,7 +475,7 @@ export class EnhancedChatCard {
    * if a method with that name exist it will be triggered.
    */
   async _onButton (event) {
-    console.log('**************EnhancedChatCard _onButton**************')
+    event.preventDefault()
 
     const target = event.currentTarget
 
@@ -484,9 +485,9 @@ export class EnhancedChatCard {
     var formUpdate,
       actionUpdate = false
 
-    if ('submit' == target.type) {
-      console.warn('Button is also a submit')
-    }
+    // if ('submit' == target.type) {
+    //   console.warn('Button is also a submit')
+    // }
 
     //Perform card update first
     const card = target.closest(`.${ECC_CLASS}`)
@@ -519,14 +520,11 @@ export class EnhancedChatCard {
    * @returns false if key is enter to avoid global submission
    */
   _onKey (event) {
-    console.log('**************EnhancedChatCard _onKey**************')
-
     if (event.key === 'Enter') this._onSubmit(event)
     return event.key !== 'Enter'
   }
 
   _onChange (event) {
-    console.log('**************EnhancedChatCard _onChange**************')
     if (this.options.submitOnChange) {
       return this._onSubmit(event)
     }
@@ -536,7 +534,6 @@ export class EnhancedChatCard {
     const target = event.currentTarget
     const tagName = target.tagName
     if (tagName == 'BUTTON' && 'action' in target.dataset) return //
-    console.log('**************EnhancedChatCard _onSubmit**************')
     event.preventDefault()
 
     const card = target.closest(`.${ECC_CLASS}`)
@@ -691,8 +688,6 @@ export class EnhancedChatCard {
   }
 
   async _onToggle (event) {
-    console.log('**************EnhancedChatCard _onToggle**************')
-
     // const answer = await EnhancedChatCardLib.socket.executeAsGM('gm_onToggle', {
     //   event: event,
     //   card: this

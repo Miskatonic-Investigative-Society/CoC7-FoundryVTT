@@ -210,12 +210,31 @@ export class CoC7ChaseSheet extends ItemSheet {
       .click(this._onParticipantControlClicked.bind(this))
 
     html.find('.chase-control').click(this._onChaseControlClicked.bind(this))
+
+    html
+      .find('.location-control')
+      .click(this._onLocationControlClick.bind(this))
     // html
     //   .find('.movement-action .decrease')
     //   .click(this._onChangeMovementActions.bind(this, -1))
     // html
     //   .find('.movement-action .increase')
     //   .click(this._onChangeMovementActions.bind(this, 1))
+
+    // html
+    // .find('.pin-location')
+    // .on('dragstart', event => this._onPinLocationDragStart(event))
+
+    const pinLocationSelectorDragDrop = new DragDrop({
+      dragSelector: '.pin-location',
+      permissions: {
+        dragstart: this._canPinLocationDragStart.bind(this)
+      },
+      callbacks: {
+        dragstart: this._onPinLocationDragStart.bind(this)
+      }
+    })
+    pinLocationSelectorDragDrop.bind(html[0])
 
     const participantDragDrop = new DragDrop({
       dropSelector: '.participant',
@@ -325,11 +344,12 @@ export class CoC7ChaseSheet extends ItemSheet {
   async _updateObject (event, formData) {
     const target = event.currentTarget
     const override = target?.dataset?.override === 'true'
-    if( target?.name?.includes('.hp')){
+    if (target?.name?.includes('.hp')) {
       const [, , uuid, data] = target.name.split('.')
       const participant = this.item.getParticipant(uuid)
-      if( participant && participant.actor){
-        if( !isNaN(Number( target.value))) await participant.actor.setHp( Number( target.value))
+      if (participant && participant.actor) {
+        if (!isNaN(Number(target.value)))
+          await participant.actor.setHp(Number(target.value))
       }
     }
     if (override) {
@@ -522,7 +542,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     if (!locations[locationIndex].obstacleDetails)
       locations[locationIndex].obstacleDetails = {}
     const obstacle = locations[locationIndex].obstacleDetails
-    const type = target.classList.contains('barrier')?'barrier':'hazard' 
+    const type = target.classList.contains('barrier') ? 'barrier' : 'hazard'
     const active = obstacle[type]
     obstacle.barrier = false
     obstacle.hazard = false
@@ -553,6 +573,16 @@ export class CoC7ChaseSheet extends ItemSheet {
     await this.item.activateLocation(lUuid)
   }
 
+  async _onLocationControlClick (event) {
+    event.preventDefault()
+    const target = event.currentTarget
+    if (target.classList.contains('inactive')) return
+    const action = target.dataset.action
+    const locationElement = target.closest('.chase-location')
+    const lUuid = locationElement.dataset.uuid
+    ui.notifications.info(`Location ${lUuid} Clicked. Action: ${action}`)
+  }
+
   async _onChaseParticipantClick (event) {
     const target = event.currentTarget
     const pUuid = event.currentTarget.dataset?.uuid
@@ -568,7 +598,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 
     const participantUuid = target.closest('.initiative-block')?.dataset?.uuid
     if (!participantUuid) return
-    switch (target.dataset.control) {
+    switch (target.dataset.action) {
       case 'drawGun':
         return await this.toggleParticipantGun(participantUuid)
       case 'decreaseActions':
@@ -596,7 +626,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 
     const locationUuid = target.closest('.obstacle')?.dataset?.uuid
     if (!locationUuid) return
-    switch (target.dataset.control) {
+    switch (target.dataset.action) {
       case 'obstacle-skill-check':
         return this.item.activeParticipantObstacleCheck(locationUuid)
     }
@@ -679,6 +709,31 @@ export class CoC7ChaseSheet extends ItemSheet {
     }
   }
 
+  _canPinLocationDragStart (selector) {
+    if (game.user.isGM) return true
+    return false
+  }
+
+  async _onPinLocationDragStart (event) {
+    const a = event.currentTarget
+    const i = a.querySelector('i.icon')
+    const dragIcon = a.querySelector('.pin-image')
+
+    event.dataTransfer.setDragImage(dragIcon, 16, 16)
+
+    const locationElement = a.closest('.chase-location')
+    const data = {}
+
+    data.type = 'locator'
+    data.icon = i.dataset.linkIcon
+    data.uuid = locationElement.dataset.uuid
+    data.chaseUuid = this.item.uuid
+    event.dataTransfer.setData('text/plain', JSON.stringify(data))
+
+    // const dragData = { uuid: locationElement.dataset.uuid, chaseUuid: this.item.uuid }
+    // dragEvent.dataTransfer.setData('text/plain', JSON.stringify(dragData))
+  }
+
   _canChaseParticipantDragStart (selector) {
     if (game.user.isGM) return true
     return false
@@ -691,19 +746,22 @@ export class CoC7ChaseSheet extends ItemSheet {
 
   async _onChaseParticipantDragStart (dragEvent) {
     const target = dragEvent.currentTarget
-    const dragData = { uuid: target.dataset.uuid }
+    const dragData = { uuid: target.dataset.uuid, type: 'participant' }
     dragEvent.dataTransfer.setData('text/plain', JSON.stringify(dragData))
   }
 
   async _onChaseParticipantDragDrop (dragEvent) {
+    const dataString = dragEvent.dataTransfer.getData('text/plain')
+    const data = JSON.parse(dataString)
+    if (data.type != 'participant') return
+
     // ui.notifications.info('Dropped')
     this._onDragLeave(dragEvent)
 
     const target = dragEvent.currentTarget
     const chaseTrack = target.closest('.chase-track')
     const locationUuid = target.dataset.uuid
-    const dataString = dragEvent.dataTransfer.getData('text/plain')
-    const data = JSON.parse(dataString)
+
     const oldLocation = this.findLocation(locationUuid)
     if (oldLocation) {
       if (oldLocation.participants?.includes(data.uuid)) return

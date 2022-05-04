@@ -1,4 +1,14 @@
 .sheetV2.item.chase {
+  .pin-image {
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    background: none;
+    position: fixed;
+    left: -3rem;
+    top: -3rem;
+  }
+
   .flex-content {
     flex: 0;
   }
@@ -7,7 +17,8 @@
     flex-wrap: nowrap;
     height: 19.5px;
 
-    .icon { //duplicate of chase-card
+    .icon {
+      //duplicate of chase-card
       font-size: 1rem;
       line-height: 1.25rem;
       padding: 1px 6px;
@@ -36,6 +47,10 @@
     flex: 0 0 auto;
   }
 
+  .flex0 {
+    flex: 0;
+  }
+
   form {
     .container {
       &.expanded {
@@ -45,6 +60,16 @@
         grid-template-rows: 10.5rem 1.875rem auto;
       }
 
+      .location-control {
+        &.inactive {
+          color: grey;
+          cursor: not-allowed;
+          &:hover {
+            text-shadow: none;
+          }
+        }
+      }
+
       .sheet-header {
         flex: 0 0 14rem;
         height: 100%;
@@ -52,29 +77,44 @@
           height: auto;
         }
 
+        .chase-location {
+          justify-content: center;
+          align-items: center;
+          flex-wrap: nowrap;
+        }
+
+        .location-controls {
+          padding: 0.25rem;
+          justify-content: center;
+          flex: 0 0 1rem;
+          .icon {
+            font-size: 1.25rem;
+          }
+        }
+
         .active-location {
           height: 100%;
           padding: 0.25rem;
           flex: 0 0 30rem;
           display: flex;
-          .form-group{
+          .form-group {
             flex: 0 0 1.4rem;
             margin: 0;
             padding: 0.25rem;
-            input{
+            input {
               height: auto;
               font-size: 0.8rem;
             }
-            .icon{
+            .icon {
               font-size: 1.25rem;
             }
           }
           .location-name {
-            flex: 0 0 auto;
+            flex: 1;
             text-align: center;
           }
 
-          .chase-control{
+          .chase-control {
             flex: 0;
             margin: 0 0.25rem;
           }
@@ -205,12 +245,12 @@
 
       .infos {
         flex: 0 0 6rem;
-        div{
+        div {
           display: flex;
           justify-content: center;
           align-items: center;
         }
-        input{
+        input {
           flex: 0 0 3rem;
           height: 1.1rem;
         }
