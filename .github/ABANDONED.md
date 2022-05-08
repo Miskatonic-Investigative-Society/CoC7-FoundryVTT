@@ -143,6 +143,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Migrate.TriggerTitle": "Trigger Data Migration",
 "CoC7.Migrate.TriggerContents": "<p>Turn on data migration and restart</p>",
 "CoC7.Migrate.TriggerRestart": "Save and restart",
+"CoC7.Migrate.Complete": "Finished migrating your data",
 "CoC7.Settings.CoreRules.Title": "Core Rule Book Optional Rules",
 "CoC7.Settings.Rules.Name": "Variant/Optional Rules",
 "CoC7.Settings.Rules.Label": "Configure Variant/Optional Rules",
