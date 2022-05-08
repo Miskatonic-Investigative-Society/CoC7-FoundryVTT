@@ -218,54 +218,34 @@ export class CoC7ActorSheet extends ActorSheet {
         // ce bloc devrait etre déplacé dans le bloc _updateFormData
         if (item.type === 'skill') {
           if (item.data.properties.special) {
-            if (typeof item.data.specialization === 'string') {
-              // updater.js didn't catch this
-              const parts = CoC7Item.getNamePartsSpec(
-                item.name,
-                item.data.specialization
-              )
-              const itemToUpdate = this.actor.items.get(item._id)
-              item.name = parts.name
-              item.data.specialization = {
-                group: parts.group,
-                type: parts.type
-              }
-              await itemToUpdate.update({
-                name: item.name,
-                'data.specialization': {
-                  group: item.data.specialization.group,
-                  type: item.data.specialization.type
-                }
-              })
-            }
             if (item.data.properties.fighting) {
               if (
-                item.data.specialization.group !==
+                item.data.specialization !==
                 game.i18n.localize('CoC7.FightingSpecializationName')
               ) {
                 const itemToUpdate = this.actor.items.get(item._id)
                 await itemToUpdate.update({
-                  'data.specialization.group': game.i18n.localize(
+                  'data.specialization': game.i18n.localize(
                     'CoC7.FightingSpecializationName'
                   )
                 })
-                item.data.specialization.group = game.i18n.localize(
+                item.data.specialization = game.i18n.localize(
                   'CoC7.FightingSpecializationName'
                 ) // TODO : Client with different language = recursive call when opening the same sheet.
               }
             }
             if (item.data.properties.firearm) {
               if (
-                item.data.specialization.group !==
+                item.data.specialization !==
                 game.i18n.localize('CoC7.FirearmSpecializationName')
               ) {
                 const itemToUpdate = this.actor.items.get(item._id)
                 await itemToUpdate.update({
-                  'data.specialization.group': game.i18n.localize(
+                  'data.specialization': game.i18n.localize(
                     'CoC7.FirearmSpecializationName'
                   )
                 })
-                item.data.specialization.group = game.i18n.localize(
+                item.data.specialization = game.i18n.localize(
                   'CoC7.FirearmSpecializationName'
                 )
               }
@@ -956,8 +936,8 @@ export class CoC7ActorSheet extends ActorSheet {
                     game.settings.get('CoC7', 'stanbyGMRolls') &&
                     sheet.actor.hasPlayerOwner
                       ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                        name: sheet.actor.name
-                      })
+                          name: sheet.actor.name
+                        })
                       : ''
                 })
             }
@@ -996,8 +976,8 @@ export class CoC7ActorSheet extends ActorSheet {
                     game.settings.get('CoC7', 'stanbyGMRolls') &&
                     sheet.actor.hasPlayerOwner
                       ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                        name: sheet.actor.name
-                      })
+                          name: sheet.actor.name
+                        })
                       : ''
                 })
             }
@@ -1039,8 +1019,8 @@ export class CoC7ActorSheet extends ActorSheet {
                         game.settings.get('CoC7', 'stanbyGMRolls') &&
                         sheet.actor.hasPlayerOwner
                           ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                            name: sheet.actor.name
-                          })
+                              name: sheet.actor.name
+                            })
                           : ''
                     })
                 }
@@ -1066,8 +1046,8 @@ export class CoC7ActorSheet extends ActorSheet {
                         (game.settings.get('CoC7', 'stanbyGMRolls') &&
                         sheet.actor.hasPlayerOwner
                           ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                            name: sheet.actor.name
-                          })
+                              name: sheet.actor.name
+                            })
                           : '')
                     })
                 }
@@ -1810,19 +1790,19 @@ export class CoC7ActorSheet extends ActorSheet {
     if (isCtrlKey(event) && game.user.isGM && ['lck', 'san'].includes(attrib)) {
       const linkData = event.altKey
         ? {
-          check: 'sanloss',
-          hasPlayerOwner: this.actor.hasPlayerOwner,
-          actorKey: this.actor.actorKey,
-          forceModifiers: event.shiftKey
-        }
+            check: 'sanloss',
+            hasPlayerOwner: this.actor.hasPlayerOwner,
+            actorKey: this.actor.actorKey,
+            forceModifiers: event.shiftKey
+          }
         : {
-          check: 'check',
-          type: 'attribute',
-          name: attrib,
-          hasPlayerOwner: this.actor.hasPlayerOwner,
-          actorKey: this.actor.actorKey,
-          forceModifiers: event.shiftKey
-        }
+            check: 'check',
+            type: 'attribute',
+            name: attrib,
+            hasPlayerOwner: this.actor.hasPlayerOwner,
+            actorKey: this.actor.actorKey,
+            forceModifiers: event.shiftKey
+          }
       if (game.settings.get('core', 'rollMode') === 'blindroll') {
         linkData.blind = true
       }
@@ -2101,14 +2081,11 @@ export class CoC7ActorSheet extends ActorSheet {
             if (item.data.data.properties.special) {
               const parts = CoC7Item.getNamePartsSpec(
                 event.currentTarget.value,
-                item.data.data.specialization.group
+                item.data.data.specialization
               )
               data.name = parts.name
-              data.data = {
-                specialization: {
-                  type: parts.type
-                }
-              }
+              data.data.skillName = parts.skillName
+              data.data.specialization = parts.specialization
             } else {
               data.name = event.currentTarget.value
             }

@@ -22,7 +22,7 @@
         {{/unless}}
       </div>
 
-      <span class="skill-name {{#if skill.data.flags.developement}}{{#if ../allowDevelopment}}rollable{{/if}} flagged4dev{{/if}}">{{#if skill.data.properties.special}}{{skill.data.specialization.group}} :{{/if}}{{skill.name}}</span>
+      <span class="skill-name {{#if skill.data.flags.developement}}{{#if ../allowDevelopment}}rollable{{/if}} flagged4dev{{/if}}">{{#if skill.data.properties.special}}{{skill.data.specialization}} :{{/if}}{{skill.name}}</span>
       <div class="adjustment-value locked" title="{{localize 'CoC7.SkillBase'}}">
         <span>{{skill.data.base}}</span>
       </div>

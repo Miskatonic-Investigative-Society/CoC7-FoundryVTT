@@ -321,10 +321,8 @@ export class CoCActor extends Actor {
       type: 'skill',
       data: {
         value: value,
-        specialization: {
-          group: '',
-          type: ''
-        },
+        skillName: skillName,
+        specialization: '',
         properties: {
           special: false,
           rarity: rarity,
@@ -338,8 +336,8 @@ export class CoCActor extends Actor {
     }
     if (specialization !== false) {
       const parts = CoC7Item.getNamePartsSpec(skillName, specialization)
-      data.data.specialization.group = parts.group
-      data.data.specialization.type = parts.type
+      data.data.specialization = parts.specialization
+      data.data.skillName = parts.skillName
       data.name = parts.name
       data.data.properties.special = true
     }
@@ -388,10 +386,8 @@ export class CoCActor extends Actor {
           archetype: null,
           experience: null
         },
-        specialization: {
-          group: parts.group,
-          type: parts.type
-        },
+        skillName: parts.skillName,
+        specialization: parts.specialization,
         properties: {
           special: true,
           fighting: !firearms,
@@ -427,13 +423,12 @@ export class CoCActor extends Actor {
         )
         const data = {
           type: 'skill',
+          name: parts.name,
           data: {
             base: 0,
             value: null,
-            specialization: {
-              group: '',
-              type: ''
-            },
+            skillName: parts.skillName,
+            specialization: parts.specialization,
             properties: {
               combat: true,
               fighting: true,
@@ -442,9 +437,6 @@ export class CoCActor extends Actor {
             flags: {}
           }
         }
-        data.data.specialization.group = parts.group
-        data.data.specialization.type = parts.type
-        data.name = parts.name
         const skill = await this.createEmbeddedDocuments('Item', [data], {
           renderSheet: false
         })
@@ -734,14 +726,14 @@ export class CoCActor extends Actor {
                   return false
                 }
                 return (
-                  data.data.specialization.group.toLocaleLowerCase() ===
-                  el.data.data.specialization?.group.toLocaleLowerCase()
+                  data.data.specialization.toLocaleLowerCase() ===
+                  el.data.data.specialization.toLocaleLowerCase()
                 )
               })
             }
             const skillData = await SkillSpecSelectDialog.create(
               skillList,
-              data.data.specialization.group,
+              data.data.specialization,
               baseCalculated
             )
             if (skillData) {
@@ -759,9 +751,9 @@ export class CoCActor extends Actor {
               } else {
                 const parts = CoC7Item.getNamePartsSpec(
                   skillData.get('new-skill-name'),
-                  data.data.specialization.group
+                  data.data.specialization
                 )
-                data.data.specialization.type = parts.type
+                data.data.skillName = parts.skillName
                 data.name = parts.name
               }
             }
@@ -2305,7 +2297,7 @@ export class CoCActor extends Actor {
     return this.skills.filter(s => {
       return (
         s.data.data.properties?.special &&
-        s.data.data.specialization?.group?.toLocaleLowerCase() ===
+        s.data.data.specialization?.toLocaleLowerCase() ===
           game.i18n
             .localize('CoC7.PilotSpecializationName')
             ?.toLocaleLowerCase()
@@ -2317,7 +2309,7 @@ export class CoCActor extends Actor {
     return this.skills.filter(s => {
       return (
         s.data.data.properties?.special &&
-        s.data.data.specialization?.group?.toLocaleLowerCase() ===
+        s.data.data.specialization?.toLocaleLowerCase() ===
           game.i18n
             .localize('CoC7.DriveSpecializationName')
             ?.toLocaleLowerCase()

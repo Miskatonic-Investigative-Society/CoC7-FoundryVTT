@@ -1010,25 +1010,20 @@ export class CoC7ActorImporter {
     )
     const newSkill = {
       type: 'skill',
+      name: parts.name,
       data: {
-        specialization: {
-          group: '',
-          type: ''
-        },
+        skillName: parts.skillName,
+        specialization: parts.specialization,
         properties: {
           special: true,
           fighting: !firearms,
           firearm: firearms,
           combat: true
-        }
+        },
+        base: weapon.data?.skill?.id,
+        value: weapon.data?.skill?.id
       }
     }
-    newSkill.data.specialization.group = parts.group
-    newSkill.data.specialization.type = parts.type
-    newSkill.name = parts.name
-
-    newSkill.data.base = weapon.data?.skill?.id
-    newSkill.data.value = weapon.data?.skill?.id
     if (CONFIG.debug.CoC7Importer) {
       console.debug(
         `Weapon skill not found for ${weapon.name}, creating a new one`,
