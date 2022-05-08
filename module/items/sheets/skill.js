@@ -177,11 +177,9 @@ export class CoC7SkillSheet extends ItemSheet {
   async _updateObject (event, formData) {
     if (this.item.data.data.properties?.special) {
       const specialization =
-        formData['data.specialization'] ||
-        this.item.data.data.specialization
+        formData['data.specialization'] || this.item.data.data.specialization
       const skillName =
-        formData['data.skillName'] ||
-        this.item.data.data.skillName
+        formData['data.skillName'] || this.item.data.data.skillName
       formData.name = specialization + ' (' + skillName + ')'
     }
     return super._updateObject(event, formData)
