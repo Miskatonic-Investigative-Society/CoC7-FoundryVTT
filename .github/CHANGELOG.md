@@ -18,7 +18,6 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Update to Swedish localization, thanks to @Rangertheman
 - Update to Taiwanese localization, thanks to @zeteticl
 
-
 ## Version 0.7.6:
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.

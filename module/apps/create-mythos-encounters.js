@@ -27,11 +27,12 @@ export class CoC7CreateMythosEncounter extends FormApplication {
       const type = html.find('.field_type').val()
       const name = html.find('.field_name').val()
       const value = parseInt(html.find('.field_value').val())
-      const sanityLossEvents = (this.object.actor.data.data.sanityLossEvents ?? [])
+      const sanityLossEvents =
+        this.object.actor.data.data.sanityLossEvents ?? []
       sanityLossEvents.push({
         type: name,
         totalLoss: value,
-        immunity: (type === 'immunity')
+        immunity: type === 'immunity'
       })
       sanityLossEvents.sort(function (left, right) {
         return left.type.localeCompare(right.type)
@@ -48,6 +49,5 @@ export class CoC7CreateMythosEncounter extends FormApplication {
     this.render(true)
   }
 
-  async _updateObject (event, formData) {
-  }
+  async _updateObject (event, formData) {}
 }

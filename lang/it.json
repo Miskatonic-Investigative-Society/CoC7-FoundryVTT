@@ -491,14 +491,14 @@
   "CoC7.AddSanityLossImmunity": "Aggiungi l'immunità alla perdita di Sanità",
   "CoC7.DeleteSanityLossEncounter": "Elimina la perdita di Sanità per l'incontro",
   "CoC7.DeleteSanityLossImmunity": "Elimina l'immunità alla perdita di Sanità",
-  
+
   "CoC7.SanityLossTypeDialogTitle": "Nuova perdita o immunità di Sanità",
   "CoC7.SanityLossTypeDialogBody": "Aggiungi al personaggio un nuovo incontro dei Miti, una perdita di Sanità, o un'immunità alla Sanità.",
   "CoC7.SanityLossTypeReason": "Causa",
   "CoC7.SanityLossTypeValue": "Punti Sanità perduti",
   "CoC7.SanityLossEncounter": "Perdita di Sanità per l'incontro",
   "CoC7.SanityLossImmunity": "Immunità per la perdita di Sanità",
-  
+
   "CoC7.creatureFightingSkill": "Combattere",
 
   "CoC7.InvoluntaryAction": "Azione involontaria",

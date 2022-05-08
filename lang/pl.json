@@ -544,7 +544,6 @@
   "CoC7.SpellSuccessfullyLearned": "Udało się nauczyć nowego zaklęcia: '{spell}'!",
   "CoC7.SpellAlreadyLearned": "Zaklęcie ('{spell}') zostało już poznane wcześniej.",
 
-
   "CoC7.BookHasNothingMoreToTeach": "{book} już niczego Cię nie nauczy. Poziom Mitów Cthulhu {actor} jest większy niż Wskaźnik Mitów księgi.",
   "CoC7.BookType": "Typ Ksiąki",
   "CoC7.Content": "Zawartość",

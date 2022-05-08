@@ -936,8 +936,8 @@ export class CoC7ActorSheet extends ActorSheet {
                     game.settings.get('CoC7', 'stanbyGMRolls') &&
                     sheet.actor.hasPlayerOwner
                       ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                          name: sheet.actor.name
-                        })
+                        name: sheet.actor.name
+                      })
                       : ''
                 })
             }
@@ -976,8 +976,8 @@ export class CoC7ActorSheet extends ActorSheet {
                     game.settings.get('CoC7', 'stanbyGMRolls') &&
                     sheet.actor.hasPlayerOwner
                       ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                          name: sheet.actor.name
-                        })
+                        name: sheet.actor.name
+                      })
                       : ''
                 })
             }
@@ -1019,8 +1019,8 @@ export class CoC7ActorSheet extends ActorSheet {
                         game.settings.get('CoC7', 'stanbyGMRolls') &&
                         sheet.actor.hasPlayerOwner
                           ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                              name: sheet.actor.name
-                            })
+                            name: sheet.actor.name
+                          })
                           : ''
                     })
                 }
@@ -1046,8 +1046,8 @@ export class CoC7ActorSheet extends ActorSheet {
                         (game.settings.get('CoC7', 'stanbyGMRolls') &&
                         sheet.actor.hasPlayerOwner
                           ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                              name: sheet.actor.name
-                            })
+                            name: sheet.actor.name
+                          })
                           : '')
                     })
                 }
@@ -1790,19 +1790,19 @@ export class CoC7ActorSheet extends ActorSheet {
     if (isCtrlKey(event) && game.user.isGM && ['lck', 'san'].includes(attrib)) {
       const linkData = event.altKey
         ? {
-            check: 'sanloss',
-            hasPlayerOwner: this.actor.hasPlayerOwner,
-            actorKey: this.actor.actorKey,
-            forceModifiers: event.shiftKey
-          }
+          check: 'sanloss',
+          hasPlayerOwner: this.actor.hasPlayerOwner,
+          actorKey: this.actor.actorKey,
+          forceModifiers: event.shiftKey
+        }
         : {
-            check: 'check',
-            type: 'attribute',
-            name: attrib,
-            hasPlayerOwner: this.actor.hasPlayerOwner,
-            actorKey: this.actor.actorKey,
-            forceModifiers: event.shiftKey
-          }
+          check: 'check',
+          type: 'attribute',
+          name: attrib,
+          hasPlayerOwner: this.actor.hasPlayerOwner,
+          actorKey: this.actor.actorKey,
+          forceModifiers: event.shiftKey
+        }
       if (game.settings.get('core', 'rollMode') === 'blindroll') {
         linkData.blind = true
       }
