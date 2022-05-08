@@ -767,6 +767,8 @@
   "CoC7.Migrate.TriggerContents": "<p>Attiva lo spostamento dei dati e riavvia</p>",
   "CoC7.Migrate.TriggerRestart": "Salva e riavvia",
 
+  "CoC7.Migrate.Complete": "Terminata la migrazione dei tuoi dati",
+  
   "CoC7.Settings.CoreRules.Title": "Regole opzionali del regolamento base",
   "CoC7.Settings.Rules.Name": "Regole opzionali/variazioni",
   "CoC7.Settings.Rules.Label": "Configurazione delle regole opzionali/variazioni",
