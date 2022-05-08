@@ -29,11 +29,11 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
     await this.close()
     const options = this.summarized
       ? {
-        classes: ['coc7', 'actor', 'character', 'summarized'],
-        height: 200,
-        resizable: false,
-        width: 700
-      }
+          classes: ['coc7', 'actor', 'character', 'summarized'],
+          height: 200,
+          resizable: false,
+          width: 700
+        }
       : CoC7CharacterSheet.defaultOptions
     await this.render(true, options)
   }
@@ -142,11 +142,11 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
     for (const skill of data.skills) {
       if (data.skillShowUncommon || !skill.data.properties.rarity) {
         if (skill.data.properties.special) {
-          if (previousSpec !== skill.data.specialization.group) {
-            previousSpec = skill.data.specialization.group
+          if (previousSpec !== skill.data.specialization) {
+            previousSpec = skill.data.specialization
             data.skillList.push({
               isSpecialization: true,
-              name: skill.data.specialization.group
+              name: skill.data.specialization
             })
           }
         }

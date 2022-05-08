@@ -147,11 +147,8 @@ export class CoC7Item extends Item {
             'data.properties.special': false,
             'data.properties.fighting': false,
             'data.properties.firearm': false,
-            'data.specialization': {
-              group: '',
-              type: ''
-            },
-            name: this.data.data.specialization.type
+            'data.specialization': '',
+            name: this.data.data.skillName
           }
         }
         modif = true
@@ -186,42 +183,34 @@ export class CoC7Item extends Item {
             'data.properties.fighting': true,
             'data.properties.firearm': false,
             'data.properties.combat': true,
-            'data.properties.special': true,
-            'data.specialization.group': game.i18n.localize(
-              COC7.fightingSpecializationName
-            )
-          }
-          let type = this.data.data.specialization.type
-          if (!this.data.data.properties?.special) {
-            checkedProps['data.specialization.type'] = this.data.name
-            type = checkedProps['data.specialization.type']
+            'data.properties.special': true
           }
           const parts = CoC7Item.getNamePartsSpec(
-            type,
-            checkedProps['data.specialization.group']
+            this.data.data.skillName,
+            game.i18n.localize(
+              COC7.fightingSpecializationName
+            )
           )
           checkedProps.name = parts.name
+          checkedProps.skillName = parts.skillName
+          checkedProps['data.specialization'] = parts.specialization
         }
         if (firearms) {
           checkedProps = {
             'data.properties.fighting': false,
             'data.properties.firearm': true,
             'data.properties.combat': true,
-            'data.properties.special': true,
-            'data.specialization.group': game.i18n.localize(
-              COC7.firearmSpecializationName
-            )
-          }
-          let type = this.data.data.specialization.type
-          if (!this.data.data.properties?.special) {
-            checkedProps['data.specialization.type'] = this.data.name
-            type = checkedProps['data.specialization.type']
+            'data.properties.special': true
           }
           const parts = CoC7Item.getNamePartsSpec(
-            type,
-            checkedProps['data.specialization.group']
+            this.data.data.skillName,
+            game.i18n.localize(
+              COC7.firearmSpecializationName
+            )
           )
           checkedProps.name = parts.name
+          checkedProps.skillName = parts.skillName
+          checkedProps['data.specialization'] = parts.specialization
         }
       }
     }
@@ -233,14 +222,14 @@ export class CoC7Item extends Item {
           'data.properties.fighting': false,
           'data.properties.firearm': false,
           'data.properties.combat': false,
-          name: this.data.data.specialization.type
+          'data.specialization': '',
+          name: this.data.data.skillName
         }
       } else {
         checkedProps = {
           'data.properties.special': true,
-          'data.specialization.type': this.data.name,
           name:
-            this.data.data.specialization.group + ' (' + this.data.name + ')'
+            this.data.data.specialization + ' (' + this.data.data.skillName + ')'
         }
       }
     }
@@ -263,10 +252,9 @@ export class CoC7Item extends Item {
 
   get shortName () {
     if (
-      this.data.data.properties.special &&
-      this.data.data.specialization.type.length
+      this.data.data.properties.special
     ) {
-      return this.data.data.specialization.type
+      return this.data.data.skillName
     }
     return this.name
   }
@@ -277,47 +265,45 @@ export class CoC7Item extends Item {
     return undefined
   }
 
-  static getNamePartsSpec (name, group) {
-    if (group === '') {
+  static getNamePartsSpec (skillName, specialization) {
+    if (specialization === '') {
       return {
-        name: name,
-        group: '',
-        type: ''
+        name: skillName,
+        specialization: '',
+        skillName: skillName
       }
     }
     const specNameRegex = new RegExp(
-      '^(' + CoC7Utilities.quoteRegExp(group) + ')\\s*\\((.+)\\)$',
+      '^(' + CoC7Utilities.quoteRegExp(specialization) + ')\\s*\\((.+)\\)$',
       'i'
     )
-    const match = name.match(specNameRegex)
+    const match = skillName.match(specNameRegex)
     if (match) {
       return {
         name: match[0],
-        group: match[1],
-        type: match[2]
+        specialization: match[1],
+        skillName: match[2]
       }
     }
     return {
-      name: group + ' (' + name + ')',
-      group: group,
-      type: name
+      name: specialization + ' (' + skillName + ')',
+      specialization: specialization,
+      skillName: skillName
     }
   }
 
   static getNameWithoutSpec (item) {
     if (item instanceof CoC7Item) {
       if (
-        item.data.data?.properties?.special &&
-        item.data.data.specialization.type.length
+        item.data.data?.properties?.special
       ) {
-        return item.data.data.specialization.type
+        return item.data.data.skillName
       }
     } else {
       if (
-        item.data.properties?.special &&
-        item.data.specialization.type.length
+        item.data.properties?.special
       ) {
-        return item.data.specialization.type
+        return item.data.data.skillName
       }
     }
     return item.name
@@ -364,13 +350,13 @@ export class CoC7Item extends Item {
       // if skill is close combat without specialisation name make set it according to the fightingSpecializationName
       if (
         this.data.data.properties.fighting &&
-        (!this.data.data.specialization.group ||
-          this.data.data.specialization.group === '')
+        (!this.data.data.specialization ||
+          this.data.data.specialization === '')
       ) {
-        this.data.data.specialization.group = game.i18n.localize(
+        this.data.data.specialization = game.i18n.localize(
           COC7.fightingSpecializationName
         )
-        checkedProps['data.specialization.group'] = game.i18n.localize(
+        checkedProps['data.specialization'] = game.i18n.localize(
           COC7.fightingSpecializationName
         )
       }
@@ -378,13 +364,13 @@ export class CoC7Item extends Item {
       // if skill is range combat without a specialisation name make set it according to the firearmSpecializationName
       if (
         this.data.data.properties.firearm &&
-        (!this.data.data.specialization.group ||
-          this.data.data.specialization.group === '')
+        (!this.data.data.specialization ||
+          this.data.data.specialization === '')
       ) {
-        this.data.data.specialization.group = game.i18n.localize(
+        this.data.data.specialization = game.i18n.localize(
           COC7.firearmSpecializationName
         )
-        checkedProps['data.specialization.group'] = game.i18n.localize(
+        checkedProps['data.specialization'] = game.i18n.localize(
           COC7.firearmSpecializationName
         )
       }

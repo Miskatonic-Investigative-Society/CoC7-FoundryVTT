@@ -48,7 +48,7 @@
         <li class="item itemV2 {{#if skill.data.properties.special}}specialization{{/if}}" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
           <div class="item-image" style="background-image: url('{{skill.img}}')"></div>
           {{#if ../data.flags.locked}}
-            <div class="item-name skill-name rollable">{{#if data.properties.special}}{{skill.data.specialization.type}}{{else}}{{skill.name}}{{/if}}</div>
+            <div class="item-name skill-name rollable">{{skill.data.skillName}}</div>
             <div class="item-score">{{skill.data.value}}</div>
             <div class="item-controls">
               {{#unless skill.data.properties.noxpgain}}
@@ -63,7 +63,7 @@
             </div>
           {{else}}
             <div class="item-name">
-              <input class="skill-name" type="text" value="{{#if data.properties.special}}{{skill.data.specialization.type}}{{else}}{{skill.name}}{{/if}}" data-dtype="String">
+              <input class="skill-name" type="text" value="{{skill.data.skillName}}" data-dtype="String">
             </div>
             <div class="item-score">
               <input class="npc-skill-score" type="text" value="{{skill.data.value}}" data-dtype="Number">

@@ -4,12 +4,12 @@
       <div class="item-name" style="display: flex; flex-direction: row; height: 24px;">
         {{#if isSpecialized}}
           <input type="hidden" name="name" value="{{item.name}}" />
-          <input class="item-class" style="flex: 1;" type="text" name="data.specialization.type" value="{{data.specialization.type}}" />
+          <input class="item-class" style="flex: 1;" type="text" name="data.skillName" value="{{data.skillName}}" />
           <span style="line-height: 22px;padding-right: 3px;">/</span>
           {{#if canModifySpec}}
-            <input class="item-subclass" style="flex: 1;" type="text" name="data.specialization.group" value="{{data.specialization.group}}" placeholder="specialization" />
+            <input class="item-subclass" style="flex: 1;" type="text" name="data.specialization" value="{{data.specialization}}" placeholder="specialization" />
           {{else}}
-            <div class="item-subclass" style="flex: 1;line-height: 22px;">{{data.specialization.group}}</div>
+            <div class="item-subclass" style="flex: 1;line-height: 22px;">{{data.specialization}}</div>
           {{/if}}
         {{else}}
           <input class="item-class" style="flex: 1;" type="text" name="name" value="{{item.name}}" placeholder="name" />
