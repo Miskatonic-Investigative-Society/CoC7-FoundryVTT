@@ -127,7 +127,7 @@
   "CoC7.MagicPointsCost": "Coût en Points de Magie",
   "CoC7.OtherCosts": "Autres coûts",
   "CoC7.CastingSpell": "Jette <i>{spell}</i>.",
-  "CoC7.NotEnoughMagicPoints": "{spell} coûte {originalMagicPoints} Points de Magie, vous n'en avez que {actorMagicPoints}. Vouslez-vous utiliser vos {convertedHitPoints} Points de Vie restants? Vous subirez {convertedHitPoints} points de dommage en le faisant.",
+  "CoC7.NotEnoughMagicPoints": "{spell} coûte {originalMagicPoints} Points de Magie, vous n'en avez que {actorMagicPoints}. Voulez-vous utiliser vos {convertedHitPoints} Points de Vie restants? Vous subirez {convertedHitPoints} points de dommage en le faisant.",
 
   "CoC7.CopyToClipboard": "Copier vers le presse-papier",
   "CoC7.WhisperToSelection": "Murmurer aux tokens sélectionnés",
@@ -336,7 +336,7 @@
   "CoC7.EraPulp": "Cthulhu Pulp",
   "CoC7.EraMdrn": "Moderne",
   "CoC7.Eras": "Époques Cthulhiennes",
-  "CoC7.EraAvailability": "Disponiblité",
+  "CoC7.EraAvailability": "Disponibilité",
 
   "CoC7.SkillNoAdjustments": "Pas d'ajustement",
   "CoC7.SkillNoXpGain": "Pas de gain d'XP",
@@ -402,6 +402,7 @@
   "CoC7.DevSuccessDetails": "{item} augmenté de {augment}%",
   "CoC7.SanGained": "Gagne 2d6 ({results} = <strong>{sanGained}</strong>) Points de SAN grâce à sa maîtrise de <strong>{skill}</strong> avec un pourcentage de <strong>{skillValue}%</strong>",
   "CoC7.DevFailureDetails": "{item} NON augmenté ",
+  "CoC7.ReduceSanityLimits": "Limites de SAN réduites",
   "CoC7.DevSuccess": "{item} augmenté ({die}/{score}%) par {augment}%",
   "CoC7.DevFailure": "{item} NON augmenté ({die}/{score}%)",
   "CoC7.LuckIncreased": "Chance récupérée ({die}/{score}) de {augment} points",
@@ -479,7 +480,25 @@
   "CoC7.BackgroundDeleteSection": "Supprimer la section",
   "CoC7.BackgroundSectionMoveUp": "Monter",
   "CoC7.BackgroundSectionMoveDown": "Descendre",
+  "CoC7.BackgroundEncounters": "Pertes liées à des entités étranges",
+  "CoC7.BackgroundFlags": "Marqueurs",
+  "CoC7.BackgroundFlagsMythosExperienced": "Perte de SAN de 5% liée à la connaissance du Mythe",
+  "CoC7.BackgroundFlagsMythosHardened": "Résistant au Mythe",
 
+  "CoC7.SanityLossEncounters": "Pertes de SAN liées à des Rencontres",
+  "CoC7.SanityLossImmunities": "Immunités aux pertes de SAN",
+  "CoC7.AddSanityLossEncounter": "Ajouter une perte de SAN liée à une Rencontre",
+  "CoC7.AddSanityLossImmunity": "Ajouter une immunité aux pertes de SAN",
+  "CoC7.DeleteSanityLossEncounter": "Supprimer une perte de SAN liée à une Rencontre",
+  "CoC7.DeleteSanityLossImmunity": "Supprimer une immunité aux pertes de SAN",
+
+  "CoC7.SanityLossTypeDialogTitle": "Nouvelle immunité ou perte de SAN liée à une Rencontre",
+  "CoC7.SanityLossTypeDialogBody": "Ajouter une Confrontation au Mythe, Perte de SAN, ou Immunité à ce personnage.",
+  "CoC7.SanityLossTypeReason": "Raison",
+  "CoC7.SanityLossTypeValue": "Perte de points de SAN",
+  "CoC7.SanityLossEncounter": "Perte de SAN liée à la Rencontre",
+  "CoC7.SanityLossImmunity": "Immunité à la perte de SAN",
+  
   "CoC7.creatureFightingSkill": "Combat rapproché",
 
   "CoC7.InvoluntaryAction": "Action involontaire",
@@ -664,7 +683,8 @@
   "CoC7.WarnNoControlledActor": "Vous ne contrôlez aucun personnage",
   "CoC7.WarnFastTargetWithWrongMOV": "'Rapide' sélectionné sur une cible avec un Mvt de moins de 8. (Mvt: {mov})",
   "CoC7.WarnTooManyTarget": "Trop de cibles sélectionnées. Seule la première est prise en compte",
-
+  "CoC7.WarnNoTargetsSanCheck": "Pas de cible sélectionnée. Choisissez une cible ou créez un lien.",
+  
   "CoC7.allActors": "Tous les Personnages",
   "CoC7.restTargets": "Candidats au repos",
   "CoC7.startRest": "Se reposer",
@@ -747,6 +767,8 @@
   "CoC7.Migrate.TriggerContents": "<p>Lance la migration de données puis redémarre</p>",
   "CoC7.Migrate.TriggerRestart": "Sauvegarde et redémarrage",
 
+  "CoC7.Migrate.Complete": "Migration des données terminée",
+  
   "CoC7.Settings.CoreRules.Title": "Règles Optionnelles du Livre de Base",
   "CoC7.Settings.Rules.Name": "Variantes/Règles optionnelles",
   "CoC7.Settings.Rules.Label": "Configurer les variantes/règles optionnelles",
@@ -756,7 +778,7 @@
   "CoC7.Settings.PulpRules.DoubleMaxHealth.Hint": "Le maximum de PV est de (CON + SIZ) / 5",
   "CoC7.Settings.PulpRules.DevelopmentRollLuck.Name": "Augmenter les jets de développement pour la Chance",
   "CoC7.Settings.PulpRules.DevelopmentRollLuck.Hint": "Augmenter la chance pour les jets de développement de Chance ratés ou réussis",
-  "CoC7.Settings.PulpRules.Archetype.Name": "Archétpes Pulp",
+  "CoC7.Settings.PulpRules.Archetype.Name": "Archétypes Pulp",
   "CoC7.Settings.PulpRules.Archetype.Hint": "",
   "CoC7.Settings.PulpRules.Organization.Name": "Organisation",
   "CoC7.Settings.PulpRules.Organization.Hint": "",
