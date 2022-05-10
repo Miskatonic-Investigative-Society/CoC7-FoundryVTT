@@ -1,6 +1,6 @@
 ## Changes coming in a future release:
 
-When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+## Version 0.7.7:
 
 - Change creature encounters based on tokens/actors to sanity loss events based on type/name
 - Change skill names system and token image location to begin support for FoundryVTT v10 changes
