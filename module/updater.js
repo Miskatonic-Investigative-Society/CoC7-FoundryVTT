@@ -237,8 +237,7 @@ export class Updater {
     const documentType = pack.metadata.type
     if (
       !['Actor', 'Item', 'Macro', 'RollTable', 'Scene'].includes(documentType)
-    )
-      {return}
+    ) { return }
 
     // Unlock the pack for editing
     const wasLocked = pack.locked
@@ -566,7 +565,7 @@ export class Updater {
       }
       const parts = CoC7Item.getNamePartsSpec(
         updateData.name,
-        item.data.specialization.group ?? item.data.specialization
+        (typeof item.data.specialization?.group === 'string' ? item.data.specialization.group : item.data.specialization)
       )
       updateData.name = parts.name
       updateData['data.skillName'] = parts.skillName
@@ -586,7 +585,7 @@ export class Updater {
           }
           const parts = CoC7Item.getNamePartsSpec(
             updateData['data.items'][k].name,
-            v.data.specialization.group ?? v.data.specialization
+            (typeof v.data.specialization?.group === 'string' ? v.data.specialization.group : v.data.specialization)
           )
           updateData['data.items'][k].name = parts.name
           updateData['data.items'][k].data.skillName = parts.skillName
@@ -608,7 +607,7 @@ export class Updater {
           }
           const parts = CoC7Item.getNamePartsSpec(
             updateData['data.skills'][k].name,
-            v.data.specialization.group ?? v.data.specialization
+            (typeof v.data.specialization?.group === 'string' ? v.data.specialization.group : v.data.specialization)
           )
           updateData['data.skills'][k].name = parts.name
           updateData['data.skills'][k].data.skillName = parts.skillName
@@ -631,7 +630,7 @@ export class Updater {
             }
             const parts = CoC7Item.getNamePartsSpec(
               updateData['data.groups'][o].skills[k].name,
-              v.data.specialization.group ?? v.data.specialization
+              (typeof v.data.specialization?.group === 'string' ? v.data.specialization.group : v.data.specialization)
             )
             updateData['data.groups'][o].skills[k].name = parts.name
             updateData['data.groups'][o].skills[k].data.skillName =
@@ -656,7 +655,7 @@ export class Updater {
           }
           const parts = CoC7Item.getNamePartsSpec(
             updateData['data.skills'][k].name,
-            v.data.specialization.group ?? v.data.specialization
+            (typeof v.data.specialization?.group === 'string' ? v.data.specialization.group : v.data.specialization)
           )
           updateData['data.skills'][k].name = parts.name
           updateData['data.skills'][k].data.skillName = parts.skillName

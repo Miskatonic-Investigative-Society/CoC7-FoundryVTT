@@ -263,7 +263,7 @@ export class CoC7Item extends Item {
   }
 
   static getNamePartsSpec (skillName, specialization) {
-    if (specialization === '') {
+    if (!specialization) {
       return {
         name: skillName,
         specialization: '',
