@@ -1,5 +1,9 @@
 ## Changes coming in a future release:
 
+## Version 0.7.8
+- Fix skill name migration issue with 0.7.7
+- Update to French localization, thanks to @vonv
+
 ## Version 0.7.7:
 
 - Change creature encounters based on tokens/actors to sanity loss events based on type/name
