@@ -776,6 +776,8 @@
   "CoC7.Migrate.TriggerContents": "<p>Slå igång datamigrering och starta om</p>",
   "CoC7.Migrate.TriggerRestart": "Spara och starta om",
 
+  "CoC7.Migrate.Complete": "Migreringen av din data är klar",
+
   "CoC7.Settings.CoreRules.Title": "Valfria regler från grundregelboken",
   "CoC7.Settings.Rules.Name": "Alternativa/frivilliga regler",
   "CoC7.Settings.Rules.Label": "Konfigurera Alternativa/frivilliga regler",
