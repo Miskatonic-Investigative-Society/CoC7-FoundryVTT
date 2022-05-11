@@ -1,4 +1,6 @@
 ## Changes coming in a future release:
+- Fix skill name editing on skills created/edited via an Actor sheet
+- Update to Swedish localization, thanks to @Rangertheman
 
 ## Version 0.7.8
 - Fix skill name migration issue with 0.7.7
