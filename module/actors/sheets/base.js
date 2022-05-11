@@ -2084,9 +2084,10 @@ export class CoC7ActorSheet extends ActorSheet {
                 item.data.data.specialization
               )
               data.name = parts.name
-              data.data.skillName = parts.skillName
-              data.data.specialization = parts.specialization
+              data['data.skillName'] = parts.skillName
+              data['data.specialization'] = parts.specialization
             } else {
+              data['data.skillName'] = event.currentTarget.value
               data.name = event.currentTarget.value
             }
             await item.update(data)
