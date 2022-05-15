@@ -1,4 +1,9 @@
 ## Changes coming in a future release:
+
+## Version 0.7.9
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+- Fix bonus/penalty dice rolling without DsN or empty alternative colours
 - Fix skill name editing on skills created/edited via an Actor sheet
 - Update to Swedish localization, thanks to @Rangertheman
 
