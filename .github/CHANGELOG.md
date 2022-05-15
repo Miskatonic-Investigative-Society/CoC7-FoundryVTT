@@ -1,17 +1,28 @@
 ## Changes coming in a future release:
 
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Update to Japanese localization, thanks to Asami
+- Update to Portuguese localization
+
 ## Version 0.7.9
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
 - Fix bonus/penalty dice rolling without DsN or empty alternative colours
 - Fix skill name editing on skills created/edited via an Actor sheet
 - Update to Swedish localization, thanks to @Rangertheman
 
 ## Version 0.7.8
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
 - Fix skill name migration issue with 0.7.7
 - Update to French localization, thanks to @vonv
 
 ## Version 0.7.7:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Change creature encounters based on tokens/actors to sanity loss events based on type/name
 - Change skill names system and token image location to begin support for FoundryVTT v10 changes
