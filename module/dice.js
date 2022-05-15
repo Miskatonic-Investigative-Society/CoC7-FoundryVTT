@@ -14,7 +14,7 @@ export class CoC7Dice {
       '1dt' +
         (alternativeDice !== ''
           ? '+1do[' + alternativeDice + ']'
-          : '1dt'
+          : '+1dt'
         ).repeat(Math.abs(modif)) +
         '+1d10'
     ).roll({ async: true })
