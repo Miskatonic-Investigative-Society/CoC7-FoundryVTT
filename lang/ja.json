@@ -1,12 +1,10 @@
 {
   "CoC7.title": "新クトゥルフ神話TRPG (非公式)",
-
   "CoC7.Entities.Character": "キャラクター",
   "CoC7.Entities.Container": "荷物",
   "CoC7.Entities.Creature": "クリーチャー",
   "CoC7.Entities.Npc": "NPC",
   "CoC7.Entities.Vehicle": "乗り物",
-
   "CoC7.Entities.Archetype": "アーキタイプ",
   "CoC7.Entities.Book": "本",
   "CoC7.Entities.Chase": "チェイス",
@@ -18,7 +16,6 @@
   "CoC7.Entities.Status": "状態",
   "CoC7.Entities.Talent": "特徴",
   "CoC7.Entities.Weapon": "武器",
-
   "CHARAC.STR": "STR",
   "CHARAC.Strengh": "STR [筋力]",
   "CHARAC.Strength": "STR [筋力]",
@@ -119,7 +116,6 @@
   "CoC7.Check": "判定",
   "CoC7.ItemWeapon": "アイテム (武器)",
   "CoC7.AttacksPerRound": "1ラウンドの攻撃回数",
-
   "CoC7.Cast": "詠唱",
   "CoC7.SanityCost": "正気度コスト",
   "CoC7.PowerCost": "POWコスト",
@@ -128,12 +124,10 @@
   "CoC7.OtherCosts": "その他のコスト",
   "CoC7.CastingSpell": "<i>{spell}</i> 呪文を詠唱。",
   "CoC7.NotEnoughMagicPoints": "{spell} 呪文のコストとして {originalMagicPoints} MPを消費する必要がある。君には {actorMagicPoints} MPしかないため、不足分である {convertedHitPoints} 点のコストを、君の耐久力から支払うことが可能だ。そうした場合、{convertedHitPoints} ダメージを受ける。",
-
   "CoC7.CopyToClipboard": "クリップボードにコピー",
   "CoC7.WhisperToSelection": "選択したトークンにウィスパー",
   "CoC7.WhisperTo": "ウィスパー：",
   "CoC7.SendToChat": "チャットに送信",
-
   "CoC7.RegularSuccess": "レギュラー成功",
   "CoC7.HardSuccess": "ハード成功",
   "CoC7.ExtremeSuccess": "イクストリーム成功",
@@ -141,7 +135,6 @@
   "CoC7.Fumble": "ファンブル",
   "CoC7.Failure": "失敗",
   "CoC7.Malfunction": "{itemName} は故障した！",
-
   "CoC7.Dice": "ダイス",
   "CoC7.DiceModifierBonus": "ボーナス",
   "CoC7.DiceModifierPenalty": "ペナルティ",
@@ -168,13 +161,11 @@
   "CoC7.check.ForceFail": "強制失敗",
   "CoC7.check.FlagForDevelopment": "経験チェックを与える",
   "CoC7.IncreaseSuccessLevel": "成功レベルを増加する",
-  "CoC7.check.DecreaseSuccessLevel": "成功レベルを減少する",
+  "CoC7.check.DecreaseSuccessLevel": "成功レベルが減少する",
   "CoC7.RollSecretDice": "ゲームマスターは個人的にいくつかのダイスをロールした",
   "CoC7.KeeperSentDecoy": "プレイヤーに送られる見せかけロール",
   "CoC7.FakeRoll": "見せかけロールをプレイヤーに送る",
-
   "CoC7.ConstitutionCheck": "CON判定",
-
   "CoC7.SanDataSelectionWindow": "正気度の喪失を選択",
   "CoC7.BonusSelectionWindow": "ボーナス選択ウィンドウ",
   "CoC7.BonusSelectionWindowNamed": "{name} の判定難易度の修正を選択すること",
@@ -203,11 +194,9 @@
   "CoC7.CombinedAnyHint": "任意のロールに成功する必要がある",
   "CoC7.CombinedAllHint": "すべてのロールに成功する必要がある",
   "CoC7.CloseCard": "カードを閉じる",
-
   "CoC7.CheckResult": "{name}判定 ({value}%) - {difficulty}の難易度",
   "CoC7.ItemCheckResult": "{item} - {skill}判定 ({value}%) - {difficulty}の難易度",
   "CoC7.CheckRawValue": "({rawvalue}%) - {difficulty}の難易度",
-
   "CoC7.ArmorAbsorbsDamage": "装甲のダメージ吸収値",
   "CoC7.Critical": "クリティカル",
   "CoC7.Impale": "貫通",
@@ -219,7 +208,6 @@
   "CoC7.ShotIsImpossible": "射撃不可",
   "CoC7.OutOfAmmo": "弾切れ",
   "CoC7.OutOfShots": "射程外",
-
   "CoC7.BonusDamageRoll": "ダメージ･ボーナス･ロール",
   "CoC7.Type": "種類",
   "CoC7.FightBack": "応戦",
@@ -248,9 +236,7 @@
   "CoC7.Tie": "同点",
   "CoC7.DamageInflicted": "ダメージを与えた",
   "CoC7.TotalDamage": "ダメージ合計",
-
   "CoC7.combatCard.dive4cover": "掩蔽に飛び込む",
-
   "CoC7.rangeCombatCard.SingleShot": "単発",
   "CoC7.rangeCombatCard.MultipleShots": "複数回射撃",
   "CoC7.AutomaticFire": "自動火器の射撃",
@@ -284,14 +270,11 @@
   "CoC7.rangeCombatCard.NormalTargetTitle": "対象は通常サイズ。ボーナス/ペナルティなし",
   "CoC7.rangeCombatCard.InMeleeTitle": "ペナルティー･ダイス1個。対象が近接戦を行なっている",
   "CoC7.rangeCombatCard.FastMovingTargetTitle": "ペナルティー･ダイス1個。対象がフルスピード (MOV 8+) で移動中",
-
   "CoC7.meleeCombatDamageTakes": "与えた",
   "CoC7.meleeCombatDamageFrom": "〜",
   "CoC7.meleeCombatDamageDeals": "与える",
   "CoC7.meleeCombatDamageWith": "＆",
-
   "CoC7.DropZone": "ドロップ箇所",
-
   "CoC7.Value": "合計値",
   "CoC7.SkillValue": "値",
   "CoC7.SkillBase": "基本成功率",
@@ -300,14 +283,12 @@
   "CoC7.SkillArchetype": "アーキタイプ",
   "CoC7.SkillOccupation": "職業",
   "CoC7.SkillPersonal": "個人的",
-
   "CoC7.SkillTotalExperience": "成長技能ポイント",
   "CoC7.SkillTotalArchetype": "アーキタイプ技能ポイント",
   "CoC7.SkillTotalOccupation": "職業技能ポイント",
   "CoC7.SkillTotalPersonal": "個人的な興味技能ポイント",
   "CoC7.CharacteristicsPoints": "能力値割り振りポイント",
   "CoC7.TotalPoints": "職業技能ポイント",
-
   "CoC7.ItemQuantity": "数量",
   "CoC7.ItemWeight": "重量",
   "CoC7.ItemDetails": "詳細",
@@ -327,7 +308,6 @@
   "CoC7.WeaponSpecial": "特殊効果",
   "CoC7.ItemPrice": "価格",
   "CoC7.Armor": "装甲",
-
   "CoC7.EraNvct": "インヴィクタス",
   "CoC7.EraDrka": "ダークエイジ",
   "CoC7.EraDdts": "西部開拓",
@@ -337,7 +317,6 @@
   "CoC7.EraMdrn": "現代",
   "CoC7.Eras": "対応サプリメント",
   "CoC7.EraAvailability": "出典",
-
   "CoC7.SkillNoAdjustments": "修正不可",
   "CoC7.SkillNoXpGain": "成長しない技能",
   "CoC7.SkillSpecial": "専門分野を選ぶ",
@@ -346,7 +325,6 @@
   "CoC7.SkillCombat": "戦闘",
   "CoC7.SkillFighting": "近接格闘",
   "CoC7.SkillFirearm": "射撃",
-
   "CoC7.WeaponRngd": "基本射程",
   "CoC7.WeaponProperyManeuver": "マヌーバー",
   "CoC7.WeaponTouch": "タッチ",
@@ -367,16 +345,13 @@
   "CoC7.Weapon.Property.Thrown": "投擲武器",
   "CoC7.Weapon.Property.Burn": "炎上",
   "CoC7.Weapon.Property.Shotgun": "ショットガン",
-
   "CoC7.ErrorItem": "アイテムが見つからない",
   "CoC7.ErrorActor": "アクターが見つからない",
   "CoC7.ErrorInvalidFormula": "{value} は有効な数式ではない",
   "CoC7.ErrorInvalid": "無効",
   "CoC7.Validate": "有効にする",
   "CoC7.Apply": "適用する",
-
   "CoC7.NewBioSectionName": "新規セクション",
-
   "CoC7.DodgeSkillName": "回避",
   "CoC7.CthulhuMythosName": "クトゥルフ神話",
   "CoC7.CreditRatingSkillName": "信用",
@@ -388,7 +363,6 @@
   "CoC7.AnySpecName": "任意",
   "CoC7.BoutOfMadnessName": "狂気の発作",
   "CoC7.InsanityName": "狂気",
-
   "CoC7.NewSkillName": "新しい技能",
   "CoC7.AddSkill": "技能追加",
   "CoC7.DevelopemmentPhase": "探索者成長フェイズの自動技能成長",
@@ -402,6 +376,7 @@
   "CoC7.DevSuccessDetails": "{item} は{augment}% 成長した",
   "CoC7.SanGained": "2d6獲得 ({results} = <strong>{sanGained}</strong>) <strong>{skillValue}%</strong> により <strong>{skill}</strong> を習得した後の正気度。 ",
   "CoC7.DevFailureDetails": "{item} は成長しなかった",
+  "CoC7.ReduceSanityLimits": "最大正気度 1減少",
   "CoC7.DevSuccess": "{item} は{augment}% 成長した ({die}/{score}%)",
   "CoC7.DevFailure": "{item} は成長しなかった ({die}/{score}%)",
   "CoC7.LuckIncreased": "幸運が {augment} ポイント回復した。({die}/{score})",
@@ -421,12 +396,10 @@
   "CoC7.SortBySkillValue": "技能％で並び替え",
   "CoC7.UncommonSkillsShow": "まれな技能を表示",
   "CoC7.UncommonSkillsHide": "まれな技能を非表示",
-
   "CoC7.NewBookName": "新しい本",
   "CoC7.AddBook": "本追加",
   "CoC7.NewSpellName": "新しい呪文",
   "CoC7.AddSpell": "呪文追加",
-
   "CoC7.AddWeapon": "武器追加",
   "CoC7.NewWeaponName": "新しい武器",
   "CoC7.EditWeapon": "編集",
@@ -447,7 +420,6 @@
   "CoC7.SANCheckTitle": "正気度喪失：{name} ({sanMin}/{sanMax})",
   "CoC7.NoSkill": "技能なし",
   "CoC7.AddWeapontHint": "<p>{actor} は {weapon} を持っていない。<br>武器を作成するか？</p>",
-
   "CoC7.LinkCheck": " {name} の確認",
   "CoC7.LinkCheckDiff": "[{difficulty}] {name} の確認",
   "CoC7.LinkCheckModif": " {name} の確認({modifier})",
@@ -460,7 +432,6 @@
   "CoC7.LinkItemDiff": "[{difficulty}] {name}",
   "CoC7.LinkItemModif": " {name} ({modifier})",
   "CoC7.LinkItemDiffModif": "[{difficulty}] {name} ({modifier})",
-
   "CoC7.ManualCreditValues": "収入と財産 (手入力モード)",
   "CoC7.MonetarySymbol": "単位の変更 :",
   "CoC7.MonetaryFactor": "倍率 :",
@@ -470,18 +441,30 @@
   "CoC7.MonetarySpent": "資産 :",
   "CoC7.MonetaryAssets": "消費 :",
   "CoC7.MonetaryAssetsDetails": "資産の詳細",
-
   "CoC7.PossessionsNotes": "メモ :",
   "CoC7.PossessionsNotesHolder": "メモ",
-
   "CoC7.BackgroundNewSection": "項目を追加する",
   "CoC7.BackgroundSectionNameHolder": "ここにタイトルを入力する",
   "CoC7.BackgroundDeleteSection": "削除",
   "CoC7.BackgroundSectionMoveUp": "上へ移動",
   "CoC7.BackgroundSectionMoveDown": "下へ移動",
-
+  "CoC7.BackgroundEncounters": "奇妙な存在からの喪失",
+  "CoC7.BackgroundFlags": "フラグ",
+  "CoC7.BackgroundFlagsMythosExperienced": "狂気によりクトゥルフ神話+5%獲得",
+  "CoC7.BackgroundFlagsMythosHardened": "クトゥルフ神話不感症",
+  "CoC7.SanityLossEncounters": "遭遇による正気度喪失",
+  "CoC7.SanityLossImmunities": "正気度喪失の耐性",
+  "CoC7.AddSanityLossEncounter": "遭遇による正気度喪失を追加",
+  "CoC7.AddSanityLossImmunity": "正気度喪失の耐性を追加",
+  "CoC7.DeleteSanityLossEncounter": "遭遇による正気度喪失を削除",
+  "CoC7.DeleteSanityLossImmunity": "正気度喪失の耐性を削除",
+  "CoC7.SanityLossTypeDialogTitle": "新規正気度喪失/耐性",
+  "CoC7.SanityLossTypeDialogBody": "キャラクターに、新たなクトゥルフ神話的遭遇時の正気度喪失/正気度喪失の耐性を追加する。",
+  "CoC7.SanityLossTypeReason": "原因",
+  "CoC7.SanityLossTypeValue": "正気度の喪失",
+  "CoC7.SanityLossEncounter": "遭遇による正気度喪失",
+  "CoC7.SanityLossImmunity": "正気度喪失の耐性",
   "CoC7.creatureFightingSkill": "近接戦闘",
-
   "CoC7.InvoluntaryAction": "無意識の行動",
   "CoC7.InvoluntaryActionPerfomed": "無意識の行動が行なわれる",
   "CoC7.SanityCheck": "〈正気度〉ロール",
@@ -529,7 +512,6 @@
   "CoC7.MythosGain": "クトゥルフ神話技能を獲得",
   "CoC7.YouGainedCthulhuMythos": "君の精神は超常現象を目撃したことで怖じ気づいた (クトゥルフ神話技能に +{value}％) 。",
   "CoC7.CardResolved": "処理済",
-
   "CoC7.SpellCastingTime": "必要時間",
   "CoC7.SpellCastingCost": "コスト",
   "CoC7.CallSpell": "招来",
@@ -543,7 +525,6 @@
   "CoC7.SpellType": "呪文の種類",
   "CoC7.SpellSuccessfullyLearned": "呪文 '{spell}' の習得に成功しました！",
   "CoC7.SpellAlreadyLearned": "呪文 ('{spell}') は、すでに習得済みです。",
-
   "CoC7.BookHasNothingMoreToTeach": "{book} から､これ以上学ぶことはできない。{actor}のクトゥルフ神話技能は､{book}の神話レーティングよりも高い。",
   "CoC7.BookType": "本の種類",
   "CoC7.Content": "内容",
@@ -573,11 +554,9 @@
   "CoC7.StudyTime": "研究期間",
   "CoC7.UnknownLanguage": "{actor} は､この本に書かれている言語を知らない。",
   "CoC7.Unreadable": "読むことができない",
-
   "CoC7.Crew": "乗員",
   "CoC7.Origin": "起源",
   "CoC7.ArmedVehicle": "武装車両",
-
   "CoC7.PulpTalents": "パルプ･タレント",
   "CoC7.TalentType": "タレント･タイプ",
   "CoC7.PhysicalTalent": "肉体的",
@@ -587,12 +566,10 @@
   "CoC7.BasicTalent": "通常",
   "CoC7.InsaneTalent": "狂気",
   "CoC7.OtherTalent": "その他",
-
   "CoC7.Items": "アイテム",
   "CoC7.Vehicle": "乗物",
   "CoC7.Books": "魔導書",
   "CoC7.Status": "状態",
-
   "CoC7.Classic": "クラシック",
   "CoC7.Lovecraftian": "ラヴクラフト",
   "CoC7.Pulp": "パルプ",
@@ -632,7 +609,6 @@
   "CoC7.SkillSelectBase": "{name} 技能の基本成功率を決定する",
   "CoC7.SelectSkill": "既存の技能を選択する",
   "CoC7.CreateNewSkill": "新しい技能を作成",
-
   "CoC7.Characteristics": "能力値",
   "CoC7.Characteristic": "能力値",
   "CoC7.EnableCharacteristics": "能力値を設定する",
@@ -642,10 +618,8 @@
   "CoC7.BonusPoints": "ボーナス･ポイント",
   "CoC7.SuggestedOccupations": "推奨職業",
   "CoC7.SuggestedTraits": "推奨特徴",
-
   "CoC7.PutGunAway": "銃をしまう",
   "CoC7.DrawGun": "銃を抜く",
-
   "CoC7.GmTools": "キーパーツール",
   "CoC7.GmNotes": "キーパーメモ",
   "CoC7.DevPhase": "成長フェイズ",
@@ -665,7 +639,6 @@
   "CoC7.WarnFastTargetWithWrongMOV": "MOV 7以下の対象に「疾走する対象」の選択がされている (MOV: {mov})",
   "CoC7.WarnTooManyTarget": "対象の選択数が多すぎる。最後に選択した対象のみを有効にする",
   "CoC7.WarnNoTargetsSanCheck": "対象が選択されていません。対象を選択するか、リンクを作成してください。",
-
   "CoC7.allActors": "全アクター",
   "CoC7.restTargets": "休息の対象者",
   "CoC7.startRest": "休息を取る",
@@ -676,30 +649,24 @@
   "CoC7.magicPointsRecovered": "MPを回復",
   "CoC7.hasCriticalWounds": "重傷のため､HPは回復できない",
   "CoC7.quickHealer": "クイック･ヒーラー",
-
   "CoC7.ErrorNoDodgeSkill": "アクターは回避技能を持っていない",
   "CoC7.ErrorNotEnoughLuck": "{actor} には判定を成功させるために必要な幸運が無い",
   "CoC7.ErrorManeuverNotPossible": "対象とのビルド差のためマヌーバーを試みることができない",
   "CoC7.ErrorNotFound": "{missing} が見つからない！",
   "CoC7.ErrorNotFoundForActor": "アクター {actor} の {missing} が見つからない！",
-
   "CoC7.InfoLessSkillThanOptions": "現在の技能の選択数は {skillCount} で､任意の技能数は {optionsCount} だ。選択数が足りない。",
   "CoC7.InfoAllSkillsAlreadySelected": "すでに選択可能な技能数まで選択済みだ。",
-
   "CoC7.MessageCheckRequestedWait": "キーパーが {check} 判定を指示。<br>クリックしよう！<br>",
   "CoC7.MessageTargetCheckRequested": "キーパーが {name} に {check} 判定を指示。",
   "CoC7.MessageTitleSelectSingleUserForTarget": "この攻撃に対応できるユーザー",
   "CoC7.MessageSelectSingleUserForTarget": "このトークンは複数のユーザーによって管理されている。どのユーザーがこの攻撃に対応するかを選択すること。",
   "CoC7.MessageBoutOfMadnessTableNotFound": "狂気テーブルの結果が見つからない。すべてのロールテーブルが作成されているか確認すること",
   "CoC7.MessageBoutOfMadnessItemNotFound": "狂気テーブルの結果が見つからない。すべてのステータスが作成されているか確認すること",
-
   "CoC7.DealDamage": "{target} に {damage}のダメージを与えるか？",
   "CoC7.NoTargetSelected": "{weapon} 判定の対象となる目標が選択されていない。続行するか？",
-
   "CoC7.Import": "インポート",
   "CoC7.Proceed": "続行",
   "CoC7.Cancel": "キャンセル",
-
   "CoC7.ActorImporter": "アクター･インポーター",
   "CoC7.ActorImporterSummary": "説明とステータスから､NPCまたはクリーチャーをインポートする。対応するテキストを貼り付けるだけだ",
   "CoC7.PasteTheDataBelow": "以下にテキストデータを貼り付ける",
@@ -726,14 +693,12 @@
   "CoC7.ImportActorItemsItem": "アイテム",
   "CoC7.ImportActorItemsItemWorldModuleSystem": "アイテム / ワールド / MOD / システム",
   "CoC7.ImportActorItemsWorldModuleItemSystem": "ワールド / MOD / アイテム / システム",
-
   "CoC7.HowToTranslateTitle": "どうやって翻訳するの？",
   "CoC7.HowToTranslateWarning": "信頼できないモジュールはインストールしないように。",
   "CoC7.HowToTranslateInstallBabele": "Foundryのモジュール･マネージャーからBabeleモジュールをインストール/アップデートすること。",
   "CoC7.HowToTranslateInstallTranslation": "Foundryのモジュール･マネージャーからTranslationをインストール／アップデートすること。",
   "CoC7.HowToTranslateEnableTranslation": "ゲームワールド内のコンフィグ設定/モジュールの管理で、BabeleとTranslationの両方を有効にすること。",
   "CoC7.HowToTranslateNoTranslation": "新しい言語の翻訳を作成する手順は､既存の翻訳モジュールにある。",
-
   "CoC7.Migrate.Title": "要更新",
   "CoC7.Migrate.Message": "<p>このワールドでは､バージョン {version} を実行するためのアップデートが必要だ。</p><p>アップデートを始める前に､ワールド･フォルダをバックアップすること。</p><p>アップデートしなければ､システムが正しく動作しないことに注意。</p><p>アップデートが完了したら､ワールドを再起動すること。</p>",
   "CoC7.Migrate.WithModulesMessage": "<p>使用中のワールドやモジュールは､バージョン {version} を実行するためのアップデートが必要となる場合がある。</p><p>そのため､アップデートを始める前に､ワールドやモジュールのフォルダをバックアップしておくことをお勧めする。</p><p>ワールドをアップデートしない限り､システムが正しく動作しないことに注意すること。</p><p>以下のモジュールにはアクターやアイテムが含まれているため､これらもチェックされる。</p>{modules}<p>アップデートが完了したら､ワールドの再起動をすること。</p>",
@@ -742,12 +707,11 @@
   "CoC7.Migrate.ButtonUpdate": "アップデート",
   "CoC7.Migrate.ButtonSkip": "無視",
   "CoC7.Migrate.ButtonOkay": "OK",
-
   "CoC7.Migrate.TriggerButton": "データ移行のトリガー",
   "CoC7.Migrate.TriggerTitle": "データ移行のトリガー",
   "CoC7.Migrate.TriggerContents": "<p>データ移行をオンにして再起動</p>",
   "CoC7.Migrate.TriggerRestart": "保存して再起動",
-
+  "CoC7.Migrate.Complete": "データ移行完了",
   "CoC7.Settings.CoreRules.Title": "コア・ルールブックの選択ルール",
   "CoC7.Settings.Rules.Name": "選択ルール",
   "CoC7.Settings.Rules.Label": "選択ルールの設定",
@@ -767,17 +731,13 @@
   "CoC7.Settings.PulpRules.FasterRecovery.Hint": "自然治癒力が1日当たり2ポイントに増加する",
   "CoC7.Settings.PulpRules.IgnoreMajorWounds.Name": "重傷は無視する",
   "CoC7.Settings.PulpRules.IgnoreMajorWounds.Hint": "",
-
   "CoC7.Maximize": "最大化",
   "CoC7.Summarize": "サマリー化",
-
   "CoC7.UnableToInteractWithChatCard": "変更が必要なとき､キーパーにオプション選択を要望すること。",
   "CoC7.UnableToCopyToClipboard": "クリップボードにコピーできない。この問題はブラウザのセキュリティ設定が原因と思われる。",
-
   "CoC7.MessageTitleSelectUserToGiveTo": "他のキャラクターにアイテムを渡す",
   "CoC7.MessageSelectUserToGiveTo": "このアイテムをどのキャラクターに渡したいですか？",
   "CoC7.MessageDistanceCalculationFailure": "トークン間の距離を計算することができないため､トークン側のキャラクターシートを利用してください。",
-
   "CoC7.ToolTipSkill": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>左クリック</strong> ロール判定 (選択)</li><li><strong>Shift + 左クリック</strong> 即時の通常難易度ロール</li></ol><label>対抗判定</label><ol><li><strong>右クリック</strong> 対抗判定 (選択)</li><li><strong>Shift + 右クリック</strong> 即時の対抗判定</li></ol><label>組み合わせ判定</label><ol><li><strong>Alt/Option + 右クリック</strong> 組み合わせ判定 (選択)</li></ol>",
   "CoC7.ToolTipKeeperSkill": "<label>キーパー判定</label><ol><li><strong>CTRL + 左クリック</strong> ロールリンク作成</li>{other}</ol>",
   "CoC7.ToolTipKeeperStandbySkill": "<li><strong>左クリック</strong> Request a roll from {name} にロールを要望</li>",
@@ -787,7 +747,6 @@
   "CoC7.ToolTipSkillFlagToggle": "<label>{status}</label><ol><li><strong>ダブルクリック</strong> フラグ状態の切替</li>",
   "CoC7.ToolTipSkillFlagged": "開発者フラグ 有効",
   "CoC7.ToolTipSkillUnflagged": "開発者フラグ 無効",
-
   "SETTINGS.TitleRules": "ルール",
   "SETTINGS.TitleInitiative": "イニシアチブ設定",
   "SETTINGS.TitleRoll": "ロール設定",
@@ -903,7 +862,6 @@
   "SETTINGS.CheckElevation": "距離に高さを含める",
   "SETTINGS.CheckElevationHint": "射撃戦闘の距離計算に高さも含める",
   "CoC7.toolTipDelay": "ツールチップが表示されるまでの時間 (ミリ秒)。0は非表示。",
-
   "CoC7.getTheExample": "例をコピー",
   "CoC7.Copied": "例をクリップボードにコピー"
 }
