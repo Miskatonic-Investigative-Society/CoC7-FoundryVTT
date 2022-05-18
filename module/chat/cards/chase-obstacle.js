@@ -26,6 +26,11 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     data.displayActorOnCard = game.settings.get('CoC7', 'displayActorOnCard')
     // data.participant = new _participant(this.participantData)
 
+    data.status.push({
+      name:
+        game.i18n.localize('CoC7.ActionCost') + ` :${this.data.totalActionCost}`
+    })
+
     data.card.breakableObstacle =
       data.data.obstacle.barrier && data.data.obstacle.hasHitPoints //TODO: Check if usefull
     data.card.validCheck = false
@@ -39,7 +44,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       data.data.states.tryToBreak = false
       data.data.states.breakOrNegotiateDefined = true
     }
-    
+
     if (this.participant.actor) {
       data.skill = this.participant.actor.find(data.data.obstacle.checkName)
       data.checkOptions = this.chase.getActorSkillsAndCharacteristics(
@@ -55,6 +60,15 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       data.dummyActor = true
       if (data.data.obstacle.checkName && data.data.checkThreshold)
         data.validCheck = true
+    }
+
+    if( !data.data.bonusDice) data.data.bonusDice = 0
+
+    if (
+      data.data.bonusDice < 2 &&
+      data.data.totalActionCost < data.data.movementAction
+    ) {
+      data.canTakeCautiousApproach = true
     }
 
     data.customWeapon = false
@@ -165,12 +179,18 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       }
     }
 
-    if( this.data.states.playerActionDefined){
-      if( this.data.obstacle.hazard){
-        data.strings.playerIntentions = game.i18n.localize('CoC7.TryToNegotiateHazard')
-      } else if (this.data.obstacle.barrier){
-        if( this.data.states.tryToNegotiate) data.strings.playerIntentions = game.i18n.localize('CoC7.TryToGetPastBarriers')
-        else if (this.data.states.tryToBreak) data.strings.playerIntentions = game.i18n.localize('CoC7.TryToBreak')
+    if (this.data.states.playerActionDefined) {
+      if (this.data.obstacle.hazard) {
+        data.strings.playerIntentions = game.i18n.localize(
+          'CoC7.TryToNegotiateHazard'
+        )
+      } else if (this.data.obstacle.barrier) {
+        if (this.data.states.tryToNegotiate)
+          data.strings.playerIntentions = game.i18n.localize(
+            'CoC7.TryToGetPastBarriers'
+          )
+        else if (this.data.states.tryToBreak)
+          data.strings.playerIntentions = game.i18n.localize('CoC7.TryToBreak')
       }
     }
 
@@ -212,9 +232,12 @@ export class ChaseObstacleCard extends EnhancedChatCard {
         //   data.data.totalPlayerDamageTaken = 0
 
         if (0 == data.data.totalPlayerDamageTaken) {
-          data.strings.damageTaken = game.i18n.localize( 'CoC7.YouTakeNoDamage')
+          data.strings.damageTaken = game.i18n.localize('CoC7.YouTakeNoDamage')
         } else {
-          data.strings.damageTaken = game.i18n.format( 'CoC7.YouTakeSomeDamage', {amount: data.data.totalPlayerDamageTaken})
+          data.strings.damageTaken = game.i18n.format(
+            'CoC7.YouTakeSomeDamage',
+            { amount: data.data.totalPlayerDamageTaken }
+          )
         }
         data.status.push({
           name:
@@ -233,12 +256,6 @@ export class ChaseObstacleCard extends EnhancedChatCard {
           this.data.objects.failedActionRoll
         )?.outerHTML
       }
-
-      data.status.push({
-        name:
-          game.i18n.localize('CoC7.ActionCost') +
-          ` :${this.data.totalActionCost}`
-      })
 
       data.status.push({
         name: game.i18n.localize('CoC7.CardResolved')
@@ -283,12 +300,6 @@ export class ChaseObstacleCard extends EnhancedChatCard {
           !this.data.states.failedConsequencesRolled
       }
 
-      if (undefined === this.data.totalActionCost) {
-        this.data.totalActionCost = 1
-        if (this.data.obstacle.hazard && this.data.obstacle.hasActionCost)
-          this.data.totalActionCost = this.data.objects.failedActionRoll.total
-      }
-
       if (
         this.data.obstacle.barrier &&
         this.data.obstacle.hasHitPoints &&
@@ -302,42 +313,14 @@ export class ChaseObstacleCard extends EnhancedChatCard {
             0 >= this.data.obstacle.HitPoints - this.data.totalObstacleDamage
         }
       }
+    }
 
-      if (!this.data.states.cardValidated) {
-        //   if (!this.data.states.changesListed) {
-        //     const diff = this.listChanges(true)
-        //     this.data.states.changesListed = true
-        //   }
-        // } else {
-        //   if (this.data.states.failedConsequencesRolled) {
-        //     if (this.data.objects?.failedActionRoll?.total)
-        //       await this.chase.alterParticipantMovementAction(
-        //         this.participant.uuid,
-        //         0 - this.data.objects.failedActionRoll.total
-        //       )
-        //   } else {
-        //     let targetLocation
-        //     if (this.data.forward) {
-        //       targetLocation = this.location
-        //     } else {
-        //       targetLocation = this.chase.getLocationShift(this.location.uuid, {
-        //         skip: -1
-        //       })
-        //     }
-        //     if (!targetLocation || !targetLocation.uuid) return
-        //     await this.chase.alterParticipantMovementAction(
-        //       this.participant.uuid,
-        //       -1
-        //     )
-        //     await this.chase.moveParticipantToLocation(
-        //       this.participant.uuid,
-        //       targetLocation.uuid,
-        //       { render: true }
-        //     )
-        //     this.data.movementActionArray = this.participant.movementActionArray
-        //   }
-        //   await this.chase.activateNexParticpantTurn()
-      }
+    if (this.data.states.closed) {
+      this.data.movementActionArray = duplicate(
+        this.participant.movementActionArray
+      )
+
+      this.data.EEC_ACTION = { detachData: true }
     }
   }
 
@@ -395,10 +378,14 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     if (this.participantData?.bonusDice > 0) {
       this.data.bonusDice = this.participantData.bonusDice
       this.data.flags.consumeBonusDice = true
+      this.data.flags.hasBonusDice = this.participantData.hasBonusDice
     }
+
     this.data.movementActionArray = duplicate(
       this.participant.movementActionArray
     )
+    this.data.movementAction = this.participant.currentMovementActions
+    this.data.totalActionCost = 0
   }
 
   get participant () {
@@ -656,6 +643,14 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       participantUpdate.currentMovementActions -= this.data.totalActionCost
     }
 
+    if (this.data.flags.consumeBonusDice) {
+      participantChaged = true
+      participantUpdate.bonusDice = 0
+    } else {
+      if( !isNaN(this.data.bonusDice) && this.data.bonusDice != this.participant.bonusDice)
+      participantUpdate.bonusDice = this.data.bonusDice
+    }
+
     if (this.data.movePlayer) {
       let targetLocation
       if (this.data.forward) {
@@ -731,6 +726,18 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     return true
   }
 
+  async takeCautiousApproach (options) {
+    this.data.bonusDice += 1
+    this.data.totalActionCost += 1
+    if (!this.data.flags.consumeBonusDice){
+      this.data.flags.consumeBonusDice = true
+    }
+    if( !this.data.flags.hasBonusDice){
+      this.data.flags.hasBonusDice = true
+    }
+    return true
+  }
+
   async rollSkillCheck (options) {
     const target = options.event.currentTarget
     if (target.classList.contains('disabled')) return
@@ -746,13 +753,16 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     await this.data.objects.check._perform({ forceDSN: true })
     this.data.states.checkRolled = true
     target.classList.toggle('disabled')
-    if (this.data.objects.check.passed) this.data.states.cardResolved = true
-    else {
+    if (this.data.objects.check.passed) {
+      this.data.states.cardResolved = true
+      this.data.totalActionCost += 1
+    } else {
       if (undefined == this.data.armor && this.participant.actor) {
         this.data.armor =
           this.participant.actor.data.data.attribs.armor.value || 0
       }
     }
+
     return true
   }
 
@@ -761,7 +771,10 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       target: options.event.currentTarget,
       update: false
     })
-    if (this.data.objects.check.passed) this.data.states.cardResolved = true
+    if (this.data.objects.check.passed) {
+      this.data.states.cardResolved = true
+      this.data.totalActionCost += 1
+    }
     return true
   }
 
@@ -786,6 +799,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
             : this.data.obstacle.failedActionCost
         this.data.objects.failedActionRoll = new Roll(actionCost)
         await this.data.objects.failedActionRoll.evaluate({ async: true })
+        this.data.totalActionCost += this.data.objects.failedActionRoll.total
       }
     }
 

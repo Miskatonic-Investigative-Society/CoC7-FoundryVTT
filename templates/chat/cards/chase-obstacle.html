@@ -32,7 +32,7 @@
           {{#if data.states.playerActionDefined}}
             <div>{{ strings.playerIntentions }}</div>
             {{#if data.states.checkRolled}}
-              <div class="roll-line">**** checkRolled {{ strings.checkRolled}} **** {{data.roll.value.value.name}} : {{{ htmlCheck }}}</div>
+              <div class="roll-line"> {{data.objects.check.name}} : {{{ htmlCheck }}}</div>
               {{#if data.objects.check.passed}}
                 <div>**** obstaclePassed {{ strings.obstaclePassed }} ****</div>
               {{else}}
@@ -72,7 +72,7 @@
 
     <div data-ecc-visibility="gm" class="gm-actions">
       {{#if data.states.cardResolved}}
-        {{#unless data.states.cardClosed}}
+        {{#unless data.states.closed}}
           <div class="cardResolution">
             {{#if obstalceDefinitionChanged}}
             <div class="form-group">
@@ -178,7 +178,7 @@
             {{else}}
               <div class="defineSkillCheck">
                 <div class="form-group small">
-                  {{#if card.participant.hasBonusDice}}
+                  {{#if data.flags.hasBonusDice}}
                   <a data-ecc-permissions="gm" data-flag="consumeBonusDice" class="icon bigger ecc-switch" title="{{ localize 'CoC7.ConsumeBonusDice' }}"><i class="game-icon game-icon-dice-fire"></i></a>
                   {{/if}}
                   <input type="range" data-ecc-permissions="gm" name="data.bonusDice" min="-2" max="2" value="{{data.bonusDice}}" class="slider">
@@ -199,6 +199,9 @@
                   {{/if}}
                 </div>
                 <div class="card-buttons">
+                  {{#if canTakeCautiousApproach}}
+                  <button class="" data-action="takeCautiousApproach">Cautious Approach</button>
+                  {{/if}}
                   {{#if validCheck}}
                   <button class="" data-action="requestRoll">Request roll</button>
                   {{/if}}

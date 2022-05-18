@@ -249,7 +249,7 @@ export class EnhancedChatCard {
       const htmlCardElement = $.parseHTML(html)[0]
 
       // Attach the object to the message.
-      if (attachObject)
+      if (attachObject && !this.data.EEC_ACTION?.detachData)
         htmlCardElement.dataset.object = escape(this.objectDataString)
       htmlCardElement.dataset.eccClass = this.constructor.name
       htmlCardElement.classList.add(...this.options.classes)
@@ -429,6 +429,7 @@ export class EnhancedChatCard {
     if (!htmlCardElement) return
 
     const card = await EnhancedChatCard.fromHTMLCardElement(htmlCardElement)
+    if (!card) return
     card.activateListeners(html)
   }
 
@@ -645,6 +646,7 @@ export class EnhancedChatCard {
   static async fromHTMLCardElement (htmmlCard) {
     if (!htmmlCard) return
     if (!htmmlCard.dataset.eccClass) return
+    if (!htmmlCard.dataset.object) return
     const cardData = JSON.parse(unescape(htmmlCard.dataset.object))
     const message = htmmlCard.closest('.message')
     const messageId = message?.dataset?.messageId
