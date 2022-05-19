@@ -479,6 +479,7 @@ export class CoC7Chase extends CoC7Item {
 
     locations.forEach(l => {
       if (l.participants && l.participants.length) {
+        l.participants = l.participants.filter( p => !(null === p))
         for (let i = 0; i < l.participants.length; i++) {
           const elem = l.participants[i] // Init track = only uuid, update location list change for uuid
 
@@ -486,7 +487,7 @@ export class CoC7Chase extends CoC7Item {
           let p
           if (typeof elem === 'string' || elem instanceof String) {
             p = this.data.data.participants.find(p => elem == p.uuid) //Retrieve participant data from list.
-          } else if (elem.constructor.name == '_participant') {
+          } else if (elem?.constructor?.name == '_participant') {
             p = undefined // participant is already processed.
             ui.notifications.warn('Participant was already processed.')
           } else p = undefined
@@ -691,6 +692,7 @@ export class CoC7Chase extends CoC7Item {
       delete l.end
       if (l.participants && l.participants.length) {
         for (let i = 0; i < l.participants.length; i++) {
+          l.participants = l.participants.filter( p => !(null === p)) //Remove null elements
           //Replace _Participants by uuid
           if (l.participants[i].data?.uuid)
             l.participants[i] = l.participants[i].data.uuid

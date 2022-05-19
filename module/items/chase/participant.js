@@ -507,6 +507,9 @@ export class _participant {
 }
 
 export function sortByRoleAndDex (a, b) {
+  if( !a && b) return 1
+  if( !b && a) return -1
+  if( !a && !b) return 0
   //Put chasers first
   if (b.chaser && !a.chaser) return 1
   if (a.chaser && !b.chaser) return -1
