@@ -580,6 +580,21 @@ export class CoC7ChaseSheet extends ItemSheet {
     const action = target.dataset.action
     const locationElement = target.closest('.chase-location')
     const lUuid = locationElement.dataset.uuid
+    switch (action) {
+      case 'remove':
+        await this.item.removeLocation( lUuid)
+        break
+      case 'add-after':
+        await this.item.insertLocation(lUuid, { shift: 1 })
+        break
+
+      case 'add-before':
+        await this.item.insertLocation(lUuid, { shift: 0 })
+        break
+
+      default:
+        break
+    }
     ui.notifications.info(`Location ${lUuid} Clicked. Action: ${action}`)
   }
 

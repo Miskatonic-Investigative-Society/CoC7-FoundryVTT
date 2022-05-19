@@ -706,6 +706,43 @@ export class CoC7Chase extends CoC7Item {
     return updatedList
   }
 
+  async insertLocation (
+    insertAtUuid,
+    { shift = 0, locData = {}, render = true } = {}
+  ) {
+    const locations = foundry.utils.duplicate(this.data.data.locations.list)
+    locations.forEach(l => {
+      delete l.active
+    })
+    const locationIndex = locations.findIndex(l => insertAtUuid == l.uuid)
+    const newLocationIndex = locationIndex  + shift
+    if (newLocationIndex > locations.length) return false
+    const newLocation = foundry.utils.duplicate(locData)
+    newLocation.uuid = this.generateNewUuid()
+    newLocation.init = locations[locationIndex].init
+    newLocation.active = true
+    locations.splice(newLocationIndex, 0, newLocation)
+    return await this.updateLocationsList(locations, { render: render })
+  }
+
+  async removeLocation(
+    uuid,
+    { render = true} = {}
+  ){
+    const locations = foundry.utils.duplicate(this.data.data.locations.list)
+    let locationIndex = locations.findIndex(l => uuid == l.uuid)
+    locations.splice( locationIndex, 1)
+    locations.forEach(l => {
+      delete l.active
+    })
+    if(locations.length > 0){
+      let index = locationIndex - 1
+      if( 0 > index) index = 0
+      locations[index].active = true
+    }
+    return await this.updateLocationsList(locations, { render: render })
+  }
+
   async activateLocation (
     locationUuid,
     { scrollToLocation = true, render = true } = {}
@@ -1118,6 +1155,7 @@ export class CoC7Chase extends CoC7Item {
 
   get activeActorSkillsAndCharacteristics () {
     const particicpantData = this.activeParticipantData
+    if (!particicpantData) return undefined
     return this.getActorSkillsAndCharacteristics(particicpantData.uuid)
   }
 
