@@ -740,9 +740,11 @@ export class CoC7ChaseSheet extends ItemSheet {
     const data = {}
 
     data.type = 'locator'
+    data.CoC7Type = 'chase'
     data.icon = i.dataset.linkIcon
     data.uuid = locationElement.dataset.uuid
-    data.chaseUuid = this.item.uuid
+    data.itemUuid = this.item.uuid
+    data.callBack = 'locatorDropped'
     event.dataTransfer.setData('text/plain', JSON.stringify(data))
 
     // const dragData = { uuid: locationElement.dataset.uuid, chaseUuid: this.item.uuid }

@@ -835,6 +835,10 @@ export class CoC7Chase extends CoC7Item {
     return location
   }
 
+  locatorDropped( data){
+    ui.notifications.info( 'data received')
+  }
+
   // get activeParticipantHaveActiveLocationSkill (){
   //   if( !this.activeActor) return false
   //   if( this.activeActor.find( this.activeLocation.obstacleDetails?.checkName)) return true

@@ -1,21 +1,24 @@
 /* global game, ui */
 
 import { chatHelper } from '../chat/helper.js'
+import { CoC7Chase } from '../items/chase/data.js'
+import { CoC7Utilities } from '../utilities.js'
 import { CoC7Link } from './link.js'
 
 export class CoC7Canvas {
   static get COC7_TYPES_SUPPORTED () {
-    return ['link']
+    return ['link', 'chase']
   }
 
-  static async onDropSomething (canvas, item) {
+  static async onDropSomething (canvas, data) {
+    ui.notifications.info( 'dropped')
     if (
-      item.CoC7Type &&
-      CoC7Canvas.COC7_TYPES_SUPPORTED.includes(item.CoC7Type)
+      data.CoC7Type &&
+      CoC7Canvas.COC7_TYPES_SUPPORTED.includes(data.CoC7Type)
     ) {
       const gridSize = canvas.scene.data.grid
-      const x = item.x - gridSize / 2
-      const y = item.y - gridSize / 2
+      const x = data.x - gridSize / 2
+      const y = data.y - gridSize / 2
       const height = gridSize
       const width = gridSize
       let dropTargetTokens = canvas.tokens.placeables.filter(obj => {
@@ -26,10 +29,10 @@ export class CoC7Canvas {
         )
       }) // Find drop target.
       if (!dropTargetTokens.length) dropTargetTokens = canvas.tokens.controlled // If no target whisper to selected token
-      switch (item.CoC7Type) {
+      switch (data.CoC7Type) {
         case 'link':
           {
-            const link = await CoC7Link.fromData(item)
+            const link = await CoC7Link.fromData(data)
             if (!link.link) {
               ui.notifications.error('Invalid link')
             }
@@ -72,7 +75,13 @@ export class CoC7Canvas {
           }
           break
 
-        default:
+        default:{
+          if( data.itemUuid && data.callBack){
+          const doc = CoC7Utilities.fromUuid( data.itemUuid)
+          doc[data.callBack](data)
+          ui.notifications.info( 'Document created')
+          }
+        }
           break
       }
     }
