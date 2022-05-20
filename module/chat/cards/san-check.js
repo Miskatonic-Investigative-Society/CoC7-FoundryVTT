@@ -105,7 +105,7 @@ export class SanCheckCard extends ChatCardActor {
   }
 
   get maxSanLoss () {
-    return new Roll(this.sanData.sanMax).evaluate({
+    return new Roll(this.sanData.sanMax.toString()).evaluate({
       maximize: true
     }).total
   }

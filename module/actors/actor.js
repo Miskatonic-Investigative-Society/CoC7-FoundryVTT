@@ -1526,11 +1526,14 @@ export class CoCActor extends Actor {
   }
 
   getReasonSanLoss (sanReason) {
-    return (
-      this.data.data.sanityLossEvents.filter(
-        r => r.type.toLocaleLowerCase() === sanReason.toLocaleLowerCase()
-      )[0] ?? { type: '', totalLoss: 0, immunity: false }
-    )
+    if (typeof sanReason === 'string') {
+      return (
+        this.data.data.sanityLossEvents.filter(
+          r => r.type.toLocaleLowerCase() === sanReason.toLocaleLowerCase()
+        )[0] ?? { type: '', totalLoss: 0, immunity: false }
+      )
+    }
+    return { type: '', totalLoss: 0, immunity: false }
   }
 
   sanLostToReason (sanReason) {
@@ -1550,7 +1553,7 @@ export class CoCActor extends Actor {
   }
 
   setReasonSanLoss (sanReason, sanLoss) {
-    if (sanReason !== '') {
+    if (typeof sanReason === 'string' && sanReason !== '') {
       const sanityLossEvents = duplicate(this.data.data.sanityLossEvents)
       const index = sanityLossEvents.findIndex(
         r => r.type.toLocaleLowerCase() === sanReason.toLocaleLowerCase()

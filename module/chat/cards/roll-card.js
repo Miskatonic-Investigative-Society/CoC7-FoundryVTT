@@ -71,13 +71,13 @@ export class RollCard {
   static async dispatch (data) {
     if (game.user.isGM) {
       let messages = ui.chat.collection.filter(message => {
-        const notDiffernetInitiator = message.getFlag('CoC7', 'initiator')
         if (
           this.defaultConfig.type === message.getFlag('CoC7', 'type') &&
-          message.getFlag('CoC7', 'state') !== 'resolved' &&
-          (typeof notDiffernetInitiator === 'undefined' ||
-            notDiffernetInitiator === data.roll.initiator)
+          message.getFlag('CoC7', 'state') !== 'resolved'
         ) {
+          if (['combinedCard'].includes(this.defaultConfig.type)) {
+            return message.getFlag('CoC7', 'initiator') === data.roll.initiator
+          }
           return true
         }
         return false
@@ -97,6 +97,9 @@ export class RollCard {
       let card
       if (!messages.length) card = new this()
       else card = await this.fromMessage(messages[0])
+      if (typeof data._rollMode !== 'undefined') {
+        card._rollMode = data._rollMode
+      }
       await card.process(data)
     } else game.socket.emit('system.CoC7', data)
   }
