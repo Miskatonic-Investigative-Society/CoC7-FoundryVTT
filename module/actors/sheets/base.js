@@ -1665,6 +1665,8 @@ export class CoC7ActorSheet extends ActorSheet {
 
       data.roll = roll.JSONRollData
 
+      data._rollMode = game.settings.get('core', 'rollMode')
+
       OpposedCheckCard.dispatch(data)
     } else {
       const data = {
@@ -1708,6 +1710,8 @@ export class CoC7ActorSheet extends ActorSheet {
       if (roll.attrib === 'db') return
 
       data.roll = roll.JSONRollData
+
+      data._rollMode = game.settings.get('core', 'rollMode')
 
       CombinedCheckCard.dispatch(data)
     }
