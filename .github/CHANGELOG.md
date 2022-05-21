@@ -2,8 +2,11 @@
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Add limited view to character sheets
+- Allow setting duration units for books
 - Fix sanity loss from books
 - Fix opposedCard/combinedCard message selection rules
+- Fix updater only outputting errors to the console
 - Update to Japanese localization, thanks to Asami
 - Update to Portuguese localization
 
