@@ -590,7 +590,8 @@
       "spells": [],
       "study": {
         "necessary": 0,
-        "progress": 0
+        "progress": 0,
+        "units": "CoC7.weeks"
       },
       "type": {
         "mythos": false,
