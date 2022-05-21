@@ -2,6 +2,8 @@
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix sanity loss from books
+- Fix opposedCard/combinedCard message selection rules
 - Update to Japanese localization, thanks to Asami
 - Update to Portuguese localization
 
