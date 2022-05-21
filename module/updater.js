@@ -100,8 +100,6 @@ export class Updater {
 
   static async update () {
     this.updateDocuments()
-    // Now the documents are updated, recheck the results
-    this.updateDocuments()
 
     // Migrate Settings if Pulp Rules is enabled turn on all rules
     if (game.settings.get('CoC7', 'pulpRules')) {
