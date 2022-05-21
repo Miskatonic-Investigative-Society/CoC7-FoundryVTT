@@ -1,4 +1,5 @@
-<form class="{{cssClass}} flexcol" autocomplete="off" data-actor-id="{{actor.id}}" {{#if tokenId}}data-token-id="{{tokenId}}" {{/if}}>
+<form class="{{cssClass}} flexcol {{#if permissionLimited}}permission-limited{{/if}}" autocomplete="off" data-actor-id="{{actor.id}}" {{#if tokenId}}data-token-id="{{tokenId}}" {{/if}}>
+  {{#unless permissionLimited}}
   <div class="container">
     <section class="sheet-header">
 
@@ -274,4 +275,9 @@
       </div>
     </section>
   </div>
+  {{else}}
+  <div class="sheet-portrait flexrow">
+    <img class="photo" src="{{actor.img}}" title="{{actor.name}}" data-edit="img" />
+  </div>
+{{/unless}}
 </form>
