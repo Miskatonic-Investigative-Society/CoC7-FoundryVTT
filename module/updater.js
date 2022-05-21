@@ -99,88 +99,9 @@ export class Updater {
   }
 
   static async update () {
-    // Migrate World Actors
-    for (const actor of game.actors.contents) {
-      try {
-        const updateData = this.migrateActorData(actor.toObject())
-        if (!foundry.utils.isObjectEmpty(updateData)) {
-          console.log(`Migrating Actor document ${actor.name}`)
-          await actor.update(updateData, { enforceTypes: false })
-        }
-      } catch (err) {
-        err.message = `Failed CoC7 system migration for Actor ${actor.name}: ${err.message}`
-        console.error(err)
-      }
-    }
-
-    // Migrate World Items
-    for (const item of game.items.contents) {
-      try {
-        const updateData = Updater.migrateItemData(item.toObject())
-        if (!foundry.utils.isObjectEmpty(updateData)) {
-          console.log(`Migrating Item document ${item.name}`)
-          await item.update(updateData, { enforceTypes: false })
-        }
-      } catch (err) {
-        err.message = `Failed CoC7 system migration for Item ${item.name}: ${err.message}`
-        console.error(err)
-      }
-    }
-
-    // Migrate World Tables
-    for (const table of game.tables.contents) {
-      try {
-        const updateData = Updater.migrateTableData(table.toObject())
-        if (!foundry.utils.isObjectEmpty(updateData)) {
-          console.log(`Migrating Table document ${table.name}`)
-          await table.update(updateData, { enforceTypes: false })
-        }
-      } catch (err) {
-        err.message = `Failed CoC7 system migration for Table ${table.name}: ${err.message}`
-        console.error(err)
-      }
-    }
-
-    // Migrate Macros
-    for (const macro of game.macros.contents) {
-      try {
-        const updateData = Updater.migrateMacroData(macro.toObject())
-        if (!foundry.utils.isObjectEmpty(updateData)) {
-          console.log(`Migrating Macro document ${macro.name}`)
-          await macro.update(updateData, { enforceTypes: false })
-        }
-      } catch (err) {
-        err.message = `Failed CoC7 system migration for Table ${macro.name}: ${err.message}`
-        console.error(err)
-      }
-    }
-
-    // Migrate Scenes [Token] Actors
-    for (const scene of game.scenes) {
-      try {
-        const updateData = Updater.migrateSceneData(scene.data)
-        if (!foundry.utils.isObjectEmpty(updateData)) {
-          console.log(`Migrating Scene document ${scene.name}`)
-          await scene.update(updateData, { enforceTypes: false })
-        }
-        scene.tokens.forEach(t => (t._actor = null))
-      } catch (err) {
-        err.message = `Failed CoC7 system migration for Scene ${scene.name}: ${err.message}`
-        console.error(err)
-      }
-    }
-
-    // Migrate World Compendium Packs
-    for (const pack of game.packs) {
-      if (
-        (pack.metadata.package || pack.metadata.packageName) !== 'CoC7' &&
-        ['Actor', 'Item', 'Macro', 'RollTable', 'Scene'].includes(
-          pack.metadata.type
-        )
-      ) {
-        await Updater.migrateCompendiumData(pack)
-      }
-    }
+    this.updateDocuments()
+    // Now the documents are updated, recheck the results
+    this.updateDocuments()
 
     // Migrate Settings if Pulp Rules is enabled turn on all rules
     if (game.settings.get('CoC7', 'pulpRules')) {
@@ -200,6 +121,96 @@ export class Updater {
     ui.notifications.info(game.i18n.format('CoC7.Migrate.Complete'), {
       permanent: true
     })
+  }
+
+  static async updateDocuments () {
+    // Migrate World Actors
+    for (const actor of game.actors.contents) {
+      try {
+        const updateData = this.migrateActorData(actor.toObject())
+        if (!foundry.utils.isObjectEmpty(updateData)) {
+          console.log(`Migrating Actor document ${actor.name}`)
+          await actor.update(updateData, { enforceTypes: false })
+        }
+      } catch (err) {
+        err.message = `Failed CoC7 system migration for Actor ${actor.name}: ${err.message}`
+        ui.notifications.error(err.message, { permanent: true })
+        console.error(err)
+      }
+    }
+
+    // Migrate World Items
+    for (const item of game.items.contents) {
+      try {
+        const updateData = Updater.migrateItemData(item.toObject())
+        if (!foundry.utils.isObjectEmpty(updateData)) {
+          console.log(`Migrating Item document ${item.name}`)
+          await item.update(updateData, { enforceTypes: false })
+        }
+      } catch (err) {
+        err.message = `Failed CoC7 system migration for Item ${item.name}: ${err.message}`
+        ui.notifications.error(err.message, { permanent: true })
+        console.error(err)
+      }
+    }
+
+    // Migrate World Tables
+    for (const table of game.tables.contents) {
+      try {
+        const updateData = Updater.migrateTableData(table.toObject())
+        if (!foundry.utils.isObjectEmpty(updateData)) {
+          console.log(`Migrating Table document ${table.name}`)
+          await table.update(updateData, { enforceTypes: false })
+        }
+      } catch (err) {
+        err.message = `Failed CoC7 system migration for Table ${table.name}: ${err.message}`
+        ui.notifications.error(err.message, { permanent: true })
+        console.error(err)
+      }
+    }
+
+    // Migrate Macros
+    for (const macro of game.macros.contents) {
+      try {
+        const updateData = Updater.migrateMacroData(macro.toObject())
+        if (!foundry.utils.isObjectEmpty(updateData)) {
+          console.log(`Migrating Macro document ${macro.name}`)
+          await macro.update(updateData, { enforceTypes: false })
+        }
+      } catch (err) {
+        err.message = `Failed CoC7 system migration for Table ${macro.name}: ${err.message}`
+        ui.notifications.error(err.message, { permanent: true })
+        console.error(err)
+      }
+    }
+
+    // Migrate Scenes [Token] Actors
+    for (const scene of game.scenes) {
+      try {
+        const updateData = Updater.migrateSceneData(scene.data)
+        if (!foundry.utils.isObjectEmpty(updateData)) {
+          console.log(`Migrating Scene document ${scene.name}`)
+          await scene.update(updateData, { enforceTypes: false })
+        }
+        scene.tokens.forEach(t => (t._actor = null))
+      } catch (err) {
+        err.message = `Failed CoC7 system migration for Scene ${scene.name}: ${err.message}`
+        ui.notifications.error(err.message, { permanent: true })
+        console.error(err)
+      }
+    }
+
+    // Migrate World Compendium Packs
+    for (const pack of game.packs) {
+      if (
+        (pack.metadata.package || pack.metadata.packageName) !== 'CoC7' &&
+        ['Actor', 'Item', 'Macro', 'RollTable', 'Scene'].includes(
+          pack.metadata.type
+        )
+      ) {
+        await Updater.migrateCompendiumData(pack)
+      }
+    }
   }
 
   static migrateActorData (actor) {
@@ -280,6 +291,7 @@ export class Updater {
         }
       } catch (err) {
         err.message = `Failed CoC7 system migration for document ${doc.name} in pack ${pack.collection}: ${err.message}`
+        ui.notifications.error(err.message, { permanent: true })
         console.error(err)
       }
     }
@@ -300,6 +312,7 @@ export class Updater {
     Updater._migrateItemKeeperNotesMerge(item, updateData)
     Updater._migrateItemSetupEras(item, updateData)
     Updater._migrateItemv10(item, updateData)
+    Updater._migrateItemBookUnits(item, updateData)
 
     return updateData
   }
@@ -514,7 +527,8 @@ export class Updater {
         /** New study field default necessary to integer of weeksStudyTime or 0 if not set */
         updateData['data.study'] = {
           necessary: Number(item.data.weeksStudyTime) || 0,
-          progress: 0
+          progress: 0,
+          units: 'CoC7.weeks'
         }
         /** Remove old keys */
         updateData['data.-=sanLoss'] = null
@@ -528,6 +542,14 @@ export class Updater {
       }
     }
     return updateData
+  }
+
+  static _migrateItemBookUnits (item, updateData) {
+    if (item.type === 'book') {
+      if (typeof item.data.study.necessary !== 'undefined' && typeof item.data.study.units === 'undefined') {
+        updateData['data.study.units'] = 'CoC7.weeks'
+      }
+    }
   }
 
   static _migrateItemKeeperNotesMerge (item, updateData) {
