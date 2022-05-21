@@ -29,7 +29,14 @@
       <div class="flexrow">
         <label>{{localize "CoC7.StudyTime"}}:</label>
         <input type="number" name="data.study.necessary" value="{{data.study.necessary}}"/>
-        <label>{{localize "CoC7.weeks"}}</label>
+        <select name="data.study.units">
+          {{#select data.study.units}}
+              <option value="CoC7.months">{{localize "CoC7.months"}}</option>
+              <option value="CoC7.weeks">{{localize "CoC7.weeks"}}</option>
+              <option value="CoC7.days">{{localize "CoC7.days"}}</option>
+              <option value="CoC7.hours">{{localize "CoC7.hours"}}</option>
+          {{/select}}
+        </select>
       </div>
     {{/if}}
     {{#if (or data.type.mythos data.type.occult)}}
