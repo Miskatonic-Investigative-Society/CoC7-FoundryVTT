@@ -2,13 +2,19 @@
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 0.7.10
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
 - Add limited view to character sheets
 - Allow setting duration units for books
+- When creating opposedCard/combinedCard messages use the roll mode of the user creating the message
 - Fix sanity loss from books
 - Fix opposedCard/combinedCard message selection rules
 - Fix updater only outputting errors to the console
 - Update to Japanese localization, thanks to Asami
 - Update to Portuguese localization
+- Update to Spanish localization, thanks to @lozanoje
 
 ## Version 0.7.9
 
