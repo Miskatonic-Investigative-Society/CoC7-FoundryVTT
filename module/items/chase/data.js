@@ -835,9 +835,18 @@ export class CoC7Chase extends CoC7Item {
     return location
   }
 
-  locatorDropped( data){
-    ui.notifications.info( 'data received')
+  async locatorDropped( data){
+    ui.notifications.info( `Pin dropped: ${data.x}/${data.y}`)
+    await this.setLocationCoordinates( data.locationUuid, data.x, data.y)
   }
+
+  async setLocationCoordinates(locationUuid, x, y, {render = false} = {}){
+  const locations = foundry.utils.duplicate(this.data.data.locations.list)
+  let locationIndex = locations.findIndex(l => locationUuid == l.uuid)
+  locations[locationIndex].coordinates = { x: x, y: y}
+
+  return await this.updateLocationsList(locations, { render: render })
+}
 
   // get activeParticipantHaveActiveLocationSkill (){
   //   if( !this.activeActor) return false

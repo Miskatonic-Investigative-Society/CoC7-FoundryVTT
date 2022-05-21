@@ -11,7 +11,6 @@ export class CoC7Canvas {
   }
 
   static async onDropSomething (canvas, data) {
-    ui.notifications.info( 'dropped')
     if (
       data.CoC7Type &&
       CoC7Canvas.COC7_TYPES_SUPPORTED.includes(data.CoC7Type)
@@ -75,13 +74,22 @@ export class CoC7Canvas {
           }
           break
 
-        default:{
-          if( data.itemUuid && data.callBack){
-          const doc = CoC7Utilities.fromUuid( data.itemUuid)
-          doc[data.callBack](data)
-          ui.notifications.info( 'Document created')
+        default:
+          {
+            if (data.docUuid && data.callBack) {
+              const doc = CoC7Utilities.fromUuid(data.docUuid)
+              if (
+                doc[data.callBack] &&
+                typeof doc[data.callBack] === 'function'
+              ) {
+                try {
+                  doc[data.callBack](data)
+                } catch (error) {
+                  console.warn(error.message)
+                }
+              }
+            }
           }
-        }
           break
       }
     }

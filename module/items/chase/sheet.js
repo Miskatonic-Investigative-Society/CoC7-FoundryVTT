@@ -582,7 +582,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     const lUuid = locationElement.dataset.uuid
     switch (action) {
       case 'remove':
-        await this.item.removeLocation( lUuid)
+        await this.item.removeLocation(lUuid)
         break
       case 'add-after':
         await this.item.insertLocation(lUuid, { shift: 1 })
@@ -734,7 +734,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     const i = a.querySelector('i.icon')
     const dragIcon = a.querySelector('.pin-image')
 
-    event.dataTransfer.setDragImage(dragIcon, 16, 16)
+    event.dataTransfer.setDragImage(dragIcon, 0, dragIcon.height)
 
     const locationElement = a.closest('.chase-location')
     const data = {}
@@ -742,8 +742,8 @@ export class CoC7ChaseSheet extends ItemSheet {
     data.type = 'locator'
     data.CoC7Type = 'chase'
     data.icon = i.dataset.linkIcon
-    data.uuid = locationElement.dataset.uuid
-    data.itemUuid = this.item.uuid
+    data.locationUuid = locationElement.dataset.uuid
+    data.docUuid = this.item.uuid
     data.callBack = 'locatorDropped'
     event.dataTransfer.setData('text/plain', JSON.stringify(data))
 
