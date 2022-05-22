@@ -72,7 +72,7 @@ export class CombinedCheckCard extends RollCard {
   async getHtmlRoll () {
     if (!this.rolled) return undefined
     const check = new CoC7Check()
-    await check._perform({ roll: this._roll[check.diceModifier], silent: true })
+    await check._perform({ roll: this._roll[check.diceModifier || 0], silent: true })
     return await check.getHtmlRoll({ hideSuccess: true })
   }
 
