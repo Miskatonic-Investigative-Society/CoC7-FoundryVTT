@@ -319,9 +319,9 @@ export class CoC7Check {
     return null
   }
 
-  get sName () {
+  get shortName () {
     if (this.actor) {
-      if (this.skill) return this.skill.sName
+      if (this.skill) return this.skill.shortName
       if (this.item) return this.item.name
       if (this.characteristic) {
         return CoC7Utilities.getCharacteristicNames(this.characteristic)?.short
