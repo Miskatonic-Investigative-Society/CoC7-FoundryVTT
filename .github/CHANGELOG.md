@@ -4,6 +4,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 - Fix combined and opposed roll skill names tags not showing
 - Fix combined roll success/failure message and roll value showing correct values
+- Update to Italian localization, thanks to @Stefano1975t
 
 ## Version 0.7.10
 
