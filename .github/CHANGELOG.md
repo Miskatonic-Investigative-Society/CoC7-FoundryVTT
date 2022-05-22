@@ -2,6 +2,9 @@
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix combined and opposed roll skill names tags not showing
+- Fix combined roll success/failure message and roll value showing correct values
+
 ## Version 0.7.10
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
