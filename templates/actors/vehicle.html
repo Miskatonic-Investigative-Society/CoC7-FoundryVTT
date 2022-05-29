@@ -1,4 +1,7 @@
 <form class="{{cssClass}} sheetV2 flexcol" autocomplete="off">
+    {{#if canDragToken}}
+	<div draggable="true" class="token-drag-handle"><i class="fas fa-user-circle"></i></div>
+	{{/if}}
     <div class="container {{#if expanded}}expanded{{else}}collapsed{{/if}}">
         <div class="expand-button" title='{{#if expanded}}{{localize "CoC7.Collapse"}}{{else}}{{localize "CoC7.Expand"}}{{/if}}'>
             <a class="toggle-expand">

@@ -631,6 +631,10 @@ export class CoC7ChaseSheet extends ItemSheet {
         return await this.item.toggleBonusDice(participantUuid, diceNumber)
       case 'cautiousApproach':
         return await this.item.cautiousApproach(participantUuid)
+      case 'editParticipant':
+        return await this.item.editParticipant(participantUuid)
+      case 'deleteParticipant':
+        return await this.item.deleteParticipant(participantUuid)
     }
   }
 
@@ -770,7 +774,6 @@ export class CoC7ChaseSheet extends ItemSheet {
   async _onChaseParticipantDragDrop (dragEvent) {
     const dataString = dragEvent.dataTransfer.getData('text/plain')
     const data = JSON.parse(dataString)
-    if (data.type != 'participant') return
 
     // ui.notifications.info('Dropped')
     this._onDragLeave(dragEvent)
@@ -779,19 +782,24 @@ export class CoC7ChaseSheet extends ItemSheet {
     const chaseTrack = target.closest('.chase-track')
     const locationUuid = target.dataset.uuid
 
-    const oldLocation = this.findLocation(locationUuid)
-    if (oldLocation) {
-      if (oldLocation.participants?.includes(data.uuid)) return
-    }
-    // ui.notifications.info(
-    //   `dragged particpant ${data.uuid} onto location ${locationUuid}`
-    // )
+    switch (data.type) {
+      case 'participant':
+        const oldLocation = this.findLocation(locationUuid)
+        if (oldLocation) {
+          if (oldLocation.participants?.includes(data.uuid)) return
+        }
+        await this.item.setchaseTrackScroll({ render: false })
+        await this.item.moveParticipantToLocation(data.uuid, locationUuid)
 
-    // await this.item.update({
-    //   'data.trackScrollPosition': chaseTrack.scrollLeft
-    // })
-    await this.item.setchaseTrackScroll({ render: false })
-    await this.item.moveParticipantToLocation(data.uuid, locationUuid)
+        break
+      case 'token':
+        const tokenDoc = await fromUuid( data.tokenUuid)
+        ui.notifications.info('token dropped')
+        break
+
+      default:
+        break
+    }
   }
 
   _onDragOver (dragEvent) {

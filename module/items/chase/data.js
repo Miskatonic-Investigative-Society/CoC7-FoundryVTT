@@ -479,7 +479,7 @@ export class CoC7Chase extends CoC7Item {
 
     locations.forEach(l => {
       if (l.participants && l.participants.length) {
-        l.participants = l.participants.filter( p => !(null === p))
+        l.participants = l.participants.filter(p => !(null === p))
         for (let i = 0; i < l.participants.length; i++) {
           const elem = l.participants[i] // Init track = only uuid, update location list change for uuid
 
@@ -692,7 +692,7 @@ export class CoC7Chase extends CoC7Item {
       delete l.end
       if (l.participants && l.participants.length) {
         for (let i = 0; i < l.participants.length; i++) {
-          l.participants = l.participants.filter( p => !(null === p)) //Remove null elements
+          l.participants = l.participants.filter(p => !(null === p)) //Remove null elements
           //Replace _Participants by uuid
           if (l.participants[i].data?.uuid)
             l.participants[i] = l.participants[i].data.uuid
@@ -717,7 +717,7 @@ export class CoC7Chase extends CoC7Item {
       delete l.active
     })
     const locationIndex = locations.findIndex(l => insertAtUuid == l.uuid)
-    const newLocationIndex = locationIndex  + shift
+    const newLocationIndex = locationIndex + shift
     if (newLocationIndex > locations.length) return false
     const newLocation = foundry.utils.duplicate(locData)
     newLocation.uuid = this.generateNewUuid()
@@ -727,19 +727,16 @@ export class CoC7Chase extends CoC7Item {
     return await this.updateLocationsList(locations, { render: render })
   }
 
-  async removeLocation(
-    uuid,
-    { render = true} = {}
-  ){
+  async removeLocation (uuid, { render = true } = {}) {
     const locations = foundry.utils.duplicate(this.data.data.locations.list)
     let locationIndex = locations.findIndex(l => uuid == l.uuid)
-    locations.splice( locationIndex, 1)
+    locations.splice(locationIndex, 1)
     locations.forEach(l => {
       delete l.active
     })
-    if(locations.length > 0){
+    if (locations.length > 0) {
       let index = locationIndex - 1
-      if( 0 > index) index = 0
+      if (0 > index) index = 0
       locations[index].active = true
     }
     return await this.updateLocationsList(locations, { render: render })
@@ -835,18 +832,18 @@ export class CoC7Chase extends CoC7Item {
     return location
   }
 
-  async locatorDropped( data){
-    ui.notifications.info( `Pin dropped: ${data.x}/${data.y}`)
-    await this.setLocationCoordinates( data.locationUuid, data.x, data.y)
+  async locatorDropped (data) {
+    ui.notifications.info(`Pin dropped: ${data.x}/${data.y}`)
+    await this.setLocationCoordinates(data.locationUuid, data.x, data.y)
   }
 
-  async setLocationCoordinates(locationUuid, x, y, {render = false} = {}){
-  const locations = foundry.utils.duplicate(this.data.data.locations.list)
-  let locationIndex = locations.findIndex(l => locationUuid == l.uuid)
-  locations[locationIndex].coordinates = { x: x, y: y}
+  async setLocationCoordinates (locationUuid, x, y, { render = false } = {}) {
+    const locations = foundry.utils.duplicate(this.data.data.locations.list)
+    let locationIndex = locations.findIndex(l => locationUuid == l.uuid)
+    locations[locationIndex].coordinates = { x: x, y: y }
 
-  return await this.updateLocationsList(locations, { render: render })
-}
+    return await this.updateLocationsList(locations, { render: render })
+  }
 
   // get activeParticipantHaveActiveLocationSkill (){
   //   if( !this.activeActor) return false
@@ -907,6 +904,28 @@ export class CoC7Chase extends CoC7Item {
     if (destinationIndex < 0) return locations[0]
     return locations[destinationIndex] //ERROR MOVE 2 FOR SKIP +1
   }
+
+  async removeParticipant (
+    participantUuid,
+    {
+      useMovementActions = true,
+      scrollToLocation = true,
+      activateLocation = true,
+      activateParticipant = true,
+      render = true
+    } = {}
+  ) {}
+
+  async editParticipant (
+    participantUuid,
+    {
+      useMovementActions = true,
+      scrollToLocation = true,
+      activateLocation = true,
+      activateParticipant = true,
+      render = true
+    } = {}
+  ) {}
 
   async moveParticipant (
     participantUuid,

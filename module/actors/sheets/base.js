@@ -29,6 +29,8 @@ export class CoC7ActorSheet extends ActorSheet {
     data.editable = this.isEditable // MODIF 0.8.x : editable removed
     /******************/
 
+    data.hasToken = !!this.token
+    data.canDragToken = data.hasToken && game.user.isGM
     data.isToken = this.actor.isToken
     data.itemsByType = {}
     data.skills = {}
@@ -690,6 +692,8 @@ export class CoC7ActorSheet extends ActorSheet {
   activateListeners (html) {
     super.activateListeners(html)
 
+    html.find('.token-drag-handle').on('dragstart', this._onDragTokenStart.bind(this))
+
     // Owner Only Listeners
     if (this.actor.isOwner && typeof this.actor.compendium === 'undefined') {
       html
@@ -737,6 +741,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
       // Status monitor
       if (game.user.isGM || game.settings.get('CoC7', 'statusPlayerEditable')) {
+
         html.find('.reset-counter').click(this._onResetCounter.bind(this))
         html
           .find('.condition-monitor')
@@ -1239,7 +1244,11 @@ export class CoC7ActorSheet extends ActorSheet {
       hasPlayerOwner: this.actor.hasPlayerOwner,
       actorKey: this.actor.actorKey,
       name: box.dataset.characteristic,
-      icon: null
+      icon: null,
+      document: {
+        type: this.document.type,
+        uuid: this.document.uuid
+      }
     }
 
     event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
@@ -1255,7 +1264,11 @@ export class CoC7ActorSheet extends ActorSheet {
       hasPlayerOwner: this.actor.hasPlayerOwner,
       actorKey: this.actor.actorKey,
       name: box.dataset.attrib,
-      icon: null
+      icon: null,
+      document: {
+        type: this.document.type,
+        uuid: this.document.uuid
+      }
     }
 
     event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
@@ -1272,7 +1285,11 @@ export class CoC7ActorSheet extends ActorSheet {
       actorKey: this.actor.actorKey,
       sanMin: sanMin.innerText,
       sanMax: sanMax.innerText,
-      icon: null
+      icon: null,
+      document: {
+        type: this.document.type,
+        uuid: this.document.uuid
+      }
     }
 
     event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
@@ -1303,6 +1320,17 @@ export class CoC7ActorSheet extends ActorSheet {
     )
     conCheck.stayAlive = true
     conCheck.toMessage(event.shiftKey)
+  }
+
+  async _onDragTokenStart( event) {
+    const data = {
+      type: 'token',
+      tokenUuid: this.token.uuid
+    }
+
+    const test = await fromUuid("Scene.Ow0gawVcTFxiQz5X.Token.hqUr4OgO4dTWuDrU")
+
+    event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
   }
 
   async _onResetCounter (event) {
