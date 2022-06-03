@@ -1324,8 +1324,8 @@ export class CoC7ActorSheet extends ActorSheet {
 
   async _onDragTokenStart( event) {
     const data = {
-      type: 'token',
-      tokenUuid: this.token.uuid
+      type: 'Token',
+      uuid: this.token.uuid
     }
 
     const test = await fromUuid("Scene.Ow0gawVcTFxiQz5X.Token.hqUr4OgO4dTWuDrU")

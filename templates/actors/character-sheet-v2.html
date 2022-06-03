@@ -1,6 +1,8 @@
 <form class="{{cssClass}} flexcol" autocomplete="off" data-actor-id="{{actor.id}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
 	{{#if canDragToken}}
-	<div draggable="true" class="token-drag-handle"><i class="fas fa-user-circle"></i></div>
+	<div class="token-extras">
+		<div draggable="true" class="token-drag-handle"><i class="fas fa-user-circle"></i></div>
+	</div>
 	{{/if}}
 	<div class="container">
 		<section class="sheet-header">

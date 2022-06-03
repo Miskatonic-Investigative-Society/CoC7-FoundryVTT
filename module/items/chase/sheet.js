@@ -4,6 +4,7 @@ import { CoCActor } from '../../actors/actor.js'
 import { CoC7Chat } from '../../chat.js'
 import { chatHelper } from '../../chat/helper.js'
 import { CoC7Check } from '../../check.js'
+import { CoC7Utilities } from '../../utilities.js'
 import { _participant } from './participant.js'
 
 export class CoC7ChaseSheet extends ItemSheet {
@@ -1006,15 +1007,32 @@ export class CoC7ChaseSheet extends ItemSheet {
   }
 
   async addParticipant (data) {
-    const actorKey =
-      data.sceneId && data.tokenId
-        ? `${data.sceneId}.${data.tokenId}`
-        : data.actorId || data.actorKey || data.id
+    //try to find a valid actor
+    let actor
+    let actorKey =
+    data.sceneId && data.tokenId
+      ? `${data.sceneId}.${data.tokenId}`
+      : data.actorId || data.actorKey || data.id
+
+    if( 'Token' === data.type){
+        const token = await fromUuid( data.uuid)
+        actor = token.actor
+    } else if( actorKey){
+      actor = chatHelper.getActorFromKey(actorKey)
+    }
+
+    if( !actorKey && actor){
+      actorKey = actor.actorKey
+    }
+
+
     const participant = {}
-    const actor = chatHelper.getActorFromKey(actorKey)
     if (actor) {
-      if (actor.data.type === 'vehicle') participant.vehicleKey = actorKey
-      else participant.actorKey = actorKey
+      participant.uuid = actor.uuid
+      if (actor.data.type === 'vehicle') {
+        participant.vehicleKey = actorKey
+      }
+      else participant.actorKey = actor.actorKey
     }
 
     // const participant = {
