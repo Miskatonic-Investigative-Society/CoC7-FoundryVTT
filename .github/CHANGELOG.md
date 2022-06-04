@@ -2,8 +2,12 @@
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Add roll configuration dialog box option to allow changing roll card type after starting, options are Regular, Combined, Opposed, and Sanity Loss Encounter
+- Add sanity loss reason to sanity rolls triggered from character sheets
 - Fix combined and opposed roll skill names tags not showing
 - Fix combined roll success/failure message and roll value showing correct values
+- Prevent players from click roll on Keeper combined cards
+- Remove Trigger Data Migration button from non keepers
 - Update to Italian localization, thanks to @Stefano1975t
 - Update to Swedish localization, thanks to @Rangertheman
 

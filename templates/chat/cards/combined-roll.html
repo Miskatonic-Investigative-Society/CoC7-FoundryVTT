@@ -38,7 +38,7 @@
     {{#if rolled}}
         {{{_htmlRoll}}}
     {{else}}
-    <div class='card-buttons owner-only' data-actor-key="{{mainActorKey}}">
+    <div class='card-buttons {{#if checkGMInitiator}}gm-only{{else}}owner-only{{/if}}' data-actor-key="{{mainActorKey}}">
         <button data-action='roll-card'>{{localize 'CoC7.RollDice'}}</button>
     </div>
     {{/if}}
