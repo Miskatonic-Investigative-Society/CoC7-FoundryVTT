@@ -31,6 +31,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
     data.hasToken = !!this.token
     data.canDragToken = data.hasToken && game.user.isGM
+    data.linkedActor = this.actor.data?.token?.actorLink
     data.isToken = this.actor.isToken
     data.itemsByType = {}
     data.skills = {}
