@@ -156,8 +156,8 @@ export class CoC7ChatMessage {
         }
         if (
           typeof config.options.actorId === 'undefined' ||
-          typeof config.options.tokenKey === 'undefined' ||
-          typeof config.options.actor === 'undefined'
+          (typeof config.options.tokenKey === 'undefined' &&
+            typeof config.options.actor === 'undefined')
         ) {
           ui.notifications.error(
             game.i18n.format('CoC7.ErrorInvalidFormula', {
