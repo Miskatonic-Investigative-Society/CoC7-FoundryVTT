@@ -11,11 +11,9 @@
             <input type="text" name="sanMax" />
         </div>
 
-        {{#if promptLabel}}
-        <div class="flexrow form-group">
-            <label><input type="checkbox" name="usecustom" />{{ localize 'CoC7.CustomLabel' }}</label>
-            <input style="display: none;" type="text" name="customname" value="{{ localize 'CoC7.SanityCheck' }}"/>
+        <div class="form-group">
+          <label>{{ localize 'CoC7.SanityLossTypeReason' }} :</label>
+          <input type="text" name="sanReason" value=""/>
         </div>
-        {{/if}}
     </div>
 </form>

@@ -181,7 +181,16 @@ export class CoC7Check {
   }
 
   get fumbleThreshold () {
-    if (this.rawValue) return this.rawValue < 50 ? 96 : 100
+    if (this.rawValue) {
+      if (this.difficulty) {
+        if (this.difficulty >= CoC7Check.difficultyLevel.extreme) {
+          return this.extremeThreshold < 50 ? 96 : 100
+        } else if (this.difficulty >= CoC7Check.difficultyLevel.hard) {
+          return this.hardThreshold < 50 ? 96 : 100
+        }
+      }
+      return this.rawValue < 50 ? 96 : 100
+    }
     return null
   }
 

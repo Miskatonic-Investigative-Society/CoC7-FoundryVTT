@@ -174,6 +174,7 @@
   "CoC7.RollSecretDice": "Keeper privately rolled some dice",
   "CoC7.KeeperSentDecoy": "Decoy roll sent to players",
   "CoC7.FakeRoll": "Send a decoy roll to players",
+  "CoC7.ErrorMissingKeeperUser": "Your keeper needs to be connected to perform this action",
 
   "CoC7.ConstitutionCheck": "Constitution check",
 
@@ -200,11 +201,15 @@
   "CoC7.CreateLink": "Create link",
   "CoC7.SuccesLevelHint": "{value} level(s) of success",
   "CoC7.FailureLevelHint": "Failed by {value} level(s)",
+  "CoC7.CardType": "Roll type",
   "CoC7.CombinedRollCard": "Combined roll card",
   "CoC7.OpposedRollCard": "Opposed roll card",
+  "CoC7.GroupRollCard": "Group roll card",
+  "CoC7.RegularRollCard": "Regular roll card",
   "CoC7.CombinedAnyHint": "Any roll must succeed",
   "CoC7.CombinedAllHint": "All rolls must succeed",
   "CoC7.CloseCard": "Close card",
+  "CoC7.AttackManeuver": "Attack Maneuver",
 
   "CoC7.CheckResult": "{name} check ({value}%) - {difficulty} difficulty",
   "CoC7.ItemCheckResult": "{item} - {skill} check ({value}%) - {difficulty} difficulty",
@@ -374,6 +379,8 @@
   "CoC7.ErrorActor": "Couldn't locate actor",
   "CoC7.ErrorInvalidFormula": "{value} is not a valid formula",
   "CoC7.ErrorInvalid": "invalid",
+  "CoC7.ErrorInvalidCardType": "Card Type",
+  "CoC7.ErrorInvalidRollType": "Roll Type",
   "CoC7.Validate": "Validate",
   "CoC7.Apply": "Apply",
 
@@ -769,6 +776,7 @@
   "CoC7.Migrate.TriggerContents": "<p>Turn on data migration and restart</p>",
   "CoC7.Migrate.TriggerRestart": "Save and restart",
 
+  "CoC7.Migrate.UpdateCurrentScene": "Migrating your current scene",
   "CoC7.Migrate.Complete": "Finished migrating your data",
 
   "CoC7.Settings.CoreRules.Title": "Core Rule Book Optional Rules",
@@ -801,11 +809,13 @@
   "CoC7.MessageSelectUserToGiveTo": "Which character would you like to give this item to?",
   "CoC7.MessageDistanceCalculationFailure": "Unable to calculate distance between tokens, please use the token character sheet.",
 
-  "CoC7.ToolTipSkill": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Left click</strong> roll check with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li></ol><label>Opposed checks</label><ol><li><strong>Right click</strong> Opposed check with options</li><li><strong>Shift + Right click</strong> Immediate opposed check</li></ol><label>Combined checks</label><ol><li><strong>Alt/Option + Right click</strong> Combined check with options</li></ol>",
-  "CoC7.ToolTipKeeperSkill": "<label>Keeper checks</label><ol><li><strong>CTRL + Left click</strong> Create roll link</li>{other}</ol>",
+  "CoC7.ToolTipSkill": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Left click</strong> roll check with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li></ol><label>Opposed checks</label><ol><li><strong>Right click</strong> Opposed check with options</li><li><strong>Shift + Right click</strong> Immediate opposed check</li></ol><label>Combined checks</label><ol><li><strong>Alt/Option + Right click</strong> Combined check with options</li><li><strong>Shift + Alt/Option + Right click</strong> Immediate combined check</li></ol>",
+  "CoC7.ToolTipKeeperSkill": "<label>Keeper checks</label><ol><li><strong>Ctrl + Left click</strong> Create roll link</li><li><strong>Shift + Ctrl + Left click</strong> Create roll link with modifiers</li>{other}</ol>",
   "CoC7.ToolTipKeeperStandbySkill": "<li><strong>Left click</strong> Request a roll from {name}</li>",
-  "CoC7.ToolTipDB": "<label>Damage Bonus</label><ol><li><strong>Left click</strong> Immediate regular difficulty roll</li></ol>",
-  "CoC7.ToolTipKeeperSanity": "<li><strong>CTRL + Alt/Option</strong> Create sanity check roll link</li>",
+  "CoC7.ToolTipDB": "<label>Damage Bonus</label><ol><li><strong>Left click</strong> Immediate roll</li></ol>",
+  "CoC7.ToolTipSanity": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Left click</strong> roll check with options</li><li><strong>Alt/Option + Left click</strong> roll sanity loss with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li><li><strong>Shift + Alt/Option + Left click</strong> roll sanity loss without dice pool options</li></ol><label>Opposed checks</label><ol><li><strong>Right click</strong> Opposed check with options</li><li><strong>Shift + Right click</strong> Immediate opposed check</li></ol><label>Combined checks</label><ol><li><strong>Alt/Option + Right click</strong> Combined check with options</li><li><strong>Shift + Alt/Option + Right click</strong> Immediate combined check</li></ol>",
+  "CoC7.ToolTipCombat": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Left click</strong> roll check with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li></ol><label>Combat opposed maneuver</label><ol><li><strong>Right click</strong> Combat opposed maneuver with options</li><li><strong>Shift + Right click</strong> Immediate combat opposed maneuver</li></ol>",
+  "CoC7.ToolTipKeeperSanity": "<li><strong>Ctrl + Alt/Option</strong> Create sanity check roll link</li>",
   "CoC7.ToolTipAutoToggle": "<label>Automatic calculation toggle</label><ol><li><strong>Left click</strong> Toggle automatic calculation / manual entry</li>",
   "CoC7.ToolTipSkillFlagToggle": "<label>{status}</label><ol><li><strong>Double Click</strong> Toggle flag status</li>",
   "CoC7.ToolTipSkillFlagged": "Flagged for development",

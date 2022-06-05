@@ -136,7 +136,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 
     data.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
 
-    data.summarized = this.summarized
+    data.summarized = this.summarized && !data.permissionLimited
     data.skillList = []
     let previousSpec = ''
     for (const skill of data.skills) {

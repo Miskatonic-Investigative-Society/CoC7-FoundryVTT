@@ -1,6 +1,7 @@
 /* global $, ActorSheet, ChatMessage, CONST, Dialog, FormData, game, getProperty, Hooks, mergeObject, Roll, TextEditor, ui */
 
 import { RollDialog } from '../../apps/roll-dialog.js'
+import { CoC7ChatMessage } from '../../apps/coc7-chat-message.js'
 import { CoC7Check } from '../../check.js'
 import { COC7 } from '../../config.js'
 import { CoC7Item } from '../../items/item.js'
@@ -10,10 +11,6 @@ import { CoC7RangeInitiator } from '../../chat/rangecombat.js'
 import { CoC7ConCheck } from '../../chat/concheck.js'
 import { isCtrlKey } from '../../chat/helper.js'
 import { CoC7Parser } from '../../apps/parser.js'
-import { SanDataDialog } from '../../apps/sandata-dialog.js'
-import { SanCheckCard } from '../../chat/cards/san-check.js'
-import { OpposedCheckCard } from '../../chat/cards/opposed-roll.js'
-import { CombinedCheckCard } from '../../chat/cards/combined-roll.js'
 import { DamageCard } from '../../chat/cards/damage.js'
 import { CoC7LinkCreationDialog } from '../../apps/link-creation-dialog.js'
 import { TestCard } from '../../chat/cards/test.js'
@@ -41,12 +38,11 @@ export class CoC7ActorSheet extends ActorSheet {
     data.actorFlags = {}
 
     data.permissionLimited =
-      (this.actor.data.permission[game.user.id] ===
-        (CONST.DOCUMENT_OWNERSHIP_LEVELS || CONST.ENTITY_PERMISSIONS).LIMITED ||
-        this.actor.data.permission.default ===
-          (CONST.DOCUMENT_OWNERSHIP_LEVELS || CONST.ENTITY_PERMISSIONS)
-            .LIMITED) &&
-      !game.user.isGM
+      !game.user.isGM &&
+      (this.actor.data.permission[game.user.id] ??
+        this.actor.data.permission.default) ===
+        (CONST.DOCUMENT_OWNERSHIP_LEVELS || CONST.ENTITY_PERMISSIONS).LIMITED
+
     data.isGM = game.user.isGM
     data.alowUnlock =
       game.settings.get('CoC7', 'playerUnlockSheetMode') === 'always' ||
@@ -918,16 +914,21 @@ export class CoC7ActorSheet extends ActorSheet {
           typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' &&
           game.CoC7Tooltips.ToolTipHover !== null
         ) {
+          const isCombat =
+            game.CoC7Tooltips.ToolTipHover.classList?.contains('combat')
           const item = game.CoC7Tooltips.ToolTipHover.closest('.item')
           if (typeof item !== 'undefined') {
             const skillId = item.dataset.skillId
             const skill = sheet.actor.items.get(skillId)
-            let toolTip = game.i18n.format('CoC7.ToolTipSkill', {
-              skill: skill.name,
-              regular: skill.value,
-              hard: Math.floor(skill.value / 2),
-              extreme: Math.floor(skill.value / 5)
-            })
+            let toolTip = game.i18n.format(
+              isCombat ? 'CoC7.ToolTipCombat' : 'CoC7.ToolTipSkill',
+              {
+                skill: skill.name,
+                regular: skill.value,
+                hard: Math.floor(skill.value / 2),
+                extreme: Math.floor(skill.value / 5)
+              }
+            )
             if (game.user.isGM) {
               toolTip =
                 toolTip +
@@ -964,9 +965,9 @@ export class CoC7ActorSheet extends ActorSheet {
             const characteristic = sheet.actor.characteristics[charId]
             let toolTip = game.i18n.format('CoC7.ToolTipSkill', {
               skill: characteristic.label,
-              regular: characteristic.value,
-              hard: characteristic.hard,
-              extreme: characteristic.extreme
+              regular: characteristic.value ?? 0,
+              hard: characteristic.hard ?? 0,
+              extreme: characteristic.extreme ?? 0
             })
             if (game.user.isGM) {
               toolTip =
@@ -1007,9 +1008,9 @@ export class CoC7ActorSheet extends ActorSheet {
               case 'lck':
                 toolTip = game.i18n.format('CoC7.ToolTipSkill', {
                   skill: attributes.label,
-                  regular: attributes.value,
-                  hard: Math.floor(attributes.value / 2),
-                  extreme: Math.floor(attributes.value / 5)
+                  regular: attributes.value ?? 0,
+                  hard: Math.floor((attributes.value ?? 0) / 2),
+                  extreme: Math.floor((attributes.value ?? 0) / 5)
                 })
                 if (game.user.isGM) {
                   toolTip =
@@ -1031,11 +1032,11 @@ export class CoC7ActorSheet extends ActorSheet {
                 game.CoC7Tooltips.displayToolTip(toolTip)
                 break
               case 'san':
-                toolTip = game.i18n.format('CoC7.ToolTipSkill', {
+                toolTip = game.i18n.format('CoC7.ToolTipSanity', {
                   skill: 'Sanity',
-                  regular: attributes.value,
-                  hard: Math.floor(attributes.value / 2),
-                  extreme: Math.floor(attributes.value / 5)
+                  regular: attributes.value ?? 0,
+                  hard: Math.floor((attributes.value ?? 0) / 2),
+                  extreme: Math.floor((attributes.value ?? 0) / 5)
                 })
                 if (game.user.isGM) {
                   toolTip =
@@ -1613,108 +1614,25 @@ export class CoC7ActorSheet extends ActorSheet {
   async _onOpposedRoll (event) {
     event.preventDefault()
 
-    if (!event.altKey) {
-      // if( event.ctrlKey) ui.notifications.info('CTRL pressed!');
-      const data = {
-        type: OpposedCheckCard.defaultConfig.type,
-        combat: event.currentTarget.classList?.contains('combat'),
-        action: 'new'
-      }
-      const roll = new CoC7Check()
-      roll.actor =
-        event.currentTarget.closest('form').dataset.tokenId ||
-        event.currentTarget.closest('form').dataset.actorId
-      roll.characteristic =
-        event.currentTarget.parentElement.dataset.characteristic
-      roll.attribute = event.currentTarget.parentElement.dataset.attrib
-      roll.item = event.currentTarget.closest('.item')?.dataset.itemId
-      roll.weaponAltSkill =
-        event.currentTarget.classList.contains('alternativ-skill')
-      roll.skillId = event.currentTarget.closest('.item')?.dataset.skillId
-      roll.rollMode = game.settings.get('core', 'rollMode')
-      roll.initiator = game.user.id
+    if (event.currentTarget.parentElement.dataset.attrib === 'db') return
 
-      if (roll.attrib === 'db') return
-
-      if (!event.shiftKey) {
-        const usage = await RollDialog.create({
-          disableFlatThresholdModifier:
-            event.metaKey ||
-            event.ctrlKey ||
-            event.keyCode === 91 ||
-            event.keyCode === 224, // TODO: do we need this CTRL?
-          disableFlatDiceModifier:
-            event.metaKey ||
-            event.ctrlKey ||
-            event.keyCode === 91 ||
-            event.keyCode === 224
-        })
-        if (usage) {
-          roll.diceModifier = Number(usage.get('bonusDice'))
-          roll.difficulty = Number(usage.get('difficulty'))
-          roll.flatDiceModifier = Number(usage.get('flatDiceModifier'))
-          roll.flatThresholdModifier = Number(
-            usage.get('flatThresholdModifier')
-          )
-        }
-      }
-
-      roll.denyPush = true // Opposed rolled can't be pushed.
-
-      await roll._perform()
-
-      data.roll = roll.JSONRollData
-
-      data._rollMode = game.settings.get('core', 'rollMode')
-
-      OpposedCheckCard.dispatch(data)
-    } else {
-      const data = {
-        type: CombinedCheckCard.defaultConfig.type,
-        action: 'new'
-      }
-      const roll = new CoC7Check()
-      roll.actor =
-        event.currentTarget.closest('form').dataset.tokenId ||
-        event.currentTarget.closest('form').dataset.actorId
-      roll.characteristic =
-        event.currentTarget.parentElement.dataset.characteristic
-      roll.attribute = event.currentTarget.parentElement.dataset.attrib
-      roll.skillId = event.currentTarget.closest('.item')?.dataset.skillId
-      roll.rollMode = game.settings.get('core', 'rollMode')
-      roll.initiator = game.user.id
-
-      if (!event.shiftKey) {
-        const usage = await RollDialog.create({
-          disableFlatThresholdModifier:
-            event.metaKey ||
-            event.ctrlKey ||
-            event.keyCode === 91 ||
-            event.keyCode === 224, // TODO: do we need this CTRL?
-          disableFlatDiceModifier:
-            event.metaKey ||
-            event.ctrlKey ||
-            event.keyCode === 91 ||
-            event.keyCode === 224
-        })
-        if (usage) {
-          roll.diceModifier = Number(usage.get('bonusDice'))
-          roll.difficulty = Number(usage.get('difficulty'))
-          roll.flatDiceModifier = Number(usage.get('flatDiceModifier'))
-          roll.flatThresholdModifier = Number(
-            usage.get('flatThresholdModifier')
-          )
-        }
-      }
-
-      if (roll.attrib === 'db') return
-
-      data.roll = roll.JSONRollData
-
-      data._rollMode = game.settings.get('core', 'rollMode')
-
-      CombinedCheckCard.dispatch(data)
+    const data = {
+      rollType: CoC7ChatMessage.ROLL_TYPE_SKILL,
+      cardType: CoC7ChatMessage.CARD_TYPE_OPPOSED,
+      event: event,
+      actor: this.actor
     }
+    if (event.currentTarget.classList.contains('characteristic-label')) {
+      data.rollType = CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC
+    } else if (event.currentTarget.classList.contains('attribute-label')) {
+      data.rollType = CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
+    }
+
+    if (event.altKey) {
+      data.cardType = CoC7ChatMessage.CARD_TYPE_COMBINED
+    }
+
+    CoC7ChatMessage.trigger(data)
   }
 
   /**
@@ -1723,99 +1641,20 @@ export class CoC7ActorSheet extends ActorSheet {
    * @private
    */
   async _onRollCharacteriticTest (event) {
-    // FLATMODIF
     event.preventDefault()
-
-    const actorId = event.currentTarget.closest('form').dataset.actorId
-    const tokenKey = event.currentTarget.closest('form').dataset.tokenId
-    const characteristic =
-      event.currentTarget.parentElement.dataset.characteristic
-
-    if (isCtrlKey(event) && game.user.isGM) {
-      const linkData = {
-        check: 'check',
-        type: 'characteristic',
-        name: characteristic,
-        hasPlayerOwner: this.actor.hasPlayerOwner,
-        actorKey: this.actor.actorKey,
-        forceModifiers: event.shiftKey
-      }
-      if (game.settings.get('core', 'rollMode') === 'blindroll') {
-        linkData.blind = true
-      }
-      CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg =>
-        dlg.render(true)
-      )
-      return
-    }
-
-    let difficulty, modifier, flatDiceModifier, flatThresholdModifier
-    if (!event.shiftKey) {
-      const usage = await RollDialog.create({
-        disableFlatThresholdModifier:
-          event.metaKey ||
-          event.ctrlKey ||
-          event.keyCode === 91 ||
-          event.keyCode === 224, // TODO : This can be removed ?
-        disableFlatDiceModifier:
-          event.metaKey ||
-          event.ctrlKey ||
-          event.keyCode === 91 ||
-          event.keyCode === 224
-      })
-      if (usage) {
-        modifier = Number(usage.get('bonusDice'))
-        difficulty = Number(usage.get('difficulty'))
-        flatDiceModifier = Number(usage.get('flatDiceModifier'))
-        flatThresholdModifier = Number(usage.get('flatThresholdModifier'))
-      }
-    }
-
-    const check = new CoC7Check()
-    if (modifier !== 'undefined') check.diceModifier = modifier
-    if (typeof difficulty !== 'undefined') check.difficulty = difficulty
-    check.actor = !tokenKey ? actorId : tokenKey
-    check.flatDiceModifier = flatDiceModifier
-    check.flatThresholdModifier = flatThresholdModifier
-    check.standby =
-      game.settings.get('CoC7', 'stanbyGMRolls') &&
-      game.user.isGM &&
-      this.actor.hasPlayerOwner
-    await check.rollCharacteristic(characteristic)
-    check.toMessage()
+    if (event.currentTarget.classList.contains('flagged4dev')) return
+    CoC7ChatMessage.trigger({
+      rollType: CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC,
+      cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
+      event: event,
+      actor: this.actor
+    })
   }
 
   async _onRollAttribTest (event) {
     // FLATMODIFIER
     event.preventDefault()
-
     const attrib = event.currentTarget.parentElement.dataset.attrib
-
-    if (isCtrlKey(event) && game.user.isGM && ['lck', 'san'].includes(attrib)) {
-      const linkData = event.altKey
-        ? {
-          check: 'sanloss',
-          hasPlayerOwner: this.actor.hasPlayerOwner,
-          actorKey: this.actor.actorKey,
-          forceModifiers: event.shiftKey
-        }
-        : {
-          check: 'check',
-          type: 'attribute',
-          name: attrib,
-          hasPlayerOwner: this.actor.hasPlayerOwner,
-          actorKey: this.actor.actorKey,
-          forceModifiers: event.shiftKey
-        }
-      if (game.settings.get('core', 'rollMode') === 'blindroll') {
-        linkData.blind = true
-      }
-      CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg =>
-        dlg.render(true)
-      )
-      return
-    }
-
     if (attrib === 'db') {
       if (
         !/^-{0,1}\d+$/.test(
@@ -1836,68 +1675,15 @@ export class CoC7ActorSheet extends ActorSheet {
       return
     }
 
-    if (attrib === 'lck') {
-      if (!this.actor.data.data.attribs.lck.value) return // If luck is null, 0 or non defined stop there.
-    }
-
-    const actorId = event.currentTarget.closest('form').dataset.actorId
-    const tokenKey = event.currentTarget.closest('form').dataset.tokenId
-
-    let difficulty, modifier, flatDiceModifier, flatThresholdModifier
-    if (!event.shiftKey) {
-      const usage = await RollDialog.create({
-        disableFlatThresholdModifier: false, // TODO: Remove, deprecated.
-        disableFlatDiceModifier: false
-      }) // TODO: Remove, deprecated.
-      if (usage) {
-        modifier = Number(usage.get('bonusDice'))
-        difficulty = Number(usage.get('difficulty'))
-        flatDiceModifier = Number(usage.get('flatDiceModifier'))
-        flatThresholdModifier = Number(usage.get('flatThresholdModifier'))
-      }
-    }
-
-    let sanMin, sanMax
-    if (event.altKey && attrib === 'san') {
-      const sanData = await SanDataDialog.create({
-        promptLabel: false // TODO: Remove, deprecated.
-      })
-      if (sanData) {
-        sanMin = sanData.get('sanMin') || 0
-        sanMax = sanData.get('sanMax') || 0
-
-        if (!isNaN(Number(sanMin))) sanMin = Number(sanMin)
-        if (!isNaN(Number(sanMax))) sanMax = Number(sanMax)
-      }
-    }
-
-    const isSanCheck =
-      typeof sanMin !== 'undefined' && typeof sanMax !== 'undefined'
-
-    if (isSanCheck) {
-      SanCheckCard.create(
-        this.actor.actorKey,
-        { sanMin: sanMin, sanMax: sanMax },
-        {
-          sanModifier: modifier,
-          sanDifficulty: difficulty,
-          fastForward: event.shiftKey
-        }
-      )
-    } else {
-      const check = new CoC7Check()
-      if (typeof modifier !== 'undefined') check.diceModifier = modifier
-      if (typeof difficulty !== 'undefined') check.difficulty = difficulty
-      check.flatDiceModifier = flatDiceModifier
-      check.flatThresholdModifier = flatThresholdModifier
-      check.actor = !tokenKey ? actorId : tokenKey
-      check.standby =
-        game.settings.get('CoC7', 'stanbyGMRolls') &&
-        game.user.isGM &&
-        this.actor.hasPlayerOwner
-      await check.rollAttribute(attrib)
-      check.toMessage()
-    }
+    CoC7ChatMessage.trigger({
+      rollType: CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE,
+      cardType:
+        event.altKey && attrib === 'san'
+          ? CoC7ChatMessage.CARD_TYPE_SAN_CHECK
+          : CoC7ChatMessage.CARD_TYPE_NORMAL,
+      event: event,
+      actor: this.actor
+    })
   }
 
   /**
@@ -1905,61 +1691,15 @@ export class CoC7ActorSheet extends ActorSheet {
    * @param {Event} event   The originating click event
    * @private
    */
-  async _onRollSkillTest (event) {
-    // FLATMODIF
-    if (event.currentTarget.classList.contains('flagged4dev')) return
+  _onRollSkillTest (event) {
     event.preventDefault()
-    const skillId = event.currentTarget.closest('.item').dataset.skillId
-    const actorId = event.currentTarget.closest('form').dataset.actorId
-    const tokenKey = event.currentTarget.closest('form').dataset.tokenId
-
-    if (isCtrlKey(event) && game.user.isGM) {
-      const name = this.actor.items.get(skillId)?.shortName
-      if (!name) return
-      const linkData = {
-        check: 'check',
-        type: 'skill',
-        name: name,
-        hasPlayerOwner: this.actor.hasPlayerOwner,
-        actorKey: this.actor.actorKey,
-        forceModifiers: event.shiftKey
-      }
-      if (game.settings.get('core', 'rollMode') === 'blindroll') {
-        linkData.blind = true
-      }
-      CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg =>
-        dlg.render(true)
-      )
-      return
-    }
-
-    let difficulty, modifier, flatDiceModifier, flatThresholdModifier
-    if (!event.shiftKey) {
-      const usage = await RollDialog.create({
-        disableFlatThresholdModifier: false,
-        disableFlatDiceModifier: false
-      })
-      if (usage) {
-        modifier = Number(usage.get('bonusDice'))
-        difficulty = Number(usage.get('difficulty'))
-        flatDiceModifier = Number(usage.get('flatDiceModifier'))
-        flatThresholdModifier = Number(usage.get('flatThresholdModifier'))
-      }
-    }
-
-    const check = new CoC7Check()
-    if (typeof modifier !== 'undefined') check.diceModifier = modifier
-    if (typeof difficulty !== 'undefined') check.difficulty = difficulty
-    check.actor = !tokenKey ? actorId : tokenKey
-    check.skill = skillId
-    check.flatDiceModifier = flatDiceModifier
-    check.flatThresholdModifier = flatThresholdModifier
-    check.standby =
-      game.settings.get('CoC7', 'stanbyGMRolls') &&
-      game.user.isGM &&
-      this.actor.hasPlayerOwner
-    await check.roll()
-    check.toMessage()
+    if (event.currentTarget.classList.contains('flagged4dev')) return
+    CoC7ChatMessage.trigger({
+      rollType: CoC7ChatMessage.ROLL_TYPE_SKILL,
+      cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
+      event: event,
+      actor: this.actor
+    })
   }
 
   /** @override */
