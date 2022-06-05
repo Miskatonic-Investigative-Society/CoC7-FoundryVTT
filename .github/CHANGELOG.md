@@ -6,6 +6,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Add sanity loss reason to sanity rolls triggered from character sheets
 - Fix combined and opposed roll skill names tags not showing
 - Fix combined roll success/failure message and roll value showing correct values
+- Fix fumble threshold for hard and extreme rolls
 - Prevent players from click roll on Keeper combined cards
 - Remove Trigger Data Migration button from non keepers
 - Update to Italian localization, thanks to @Stefano1975t

@@ -191,6 +191,11 @@ export class CombinedCheckCard extends RollCard {
 
   async compute () {
     if (!this._roll) return
+
+    this.rolls = this.rolls.filter(roll => {
+      return typeof roll.actor.data !== 'undefined' // remove any actors that no longer exist
+    })
+
     for (const r of this.rolls) {
       if (!r.rolled) {
         r.modifier = r.diceModifier || 0
@@ -207,10 +212,6 @@ export class CombinedCheckCard extends RollCard {
         })
       }
     }
-
-    this.rolls = this.rolls.filter(roll => {
-      return typeof roll.actor.data !== 'undefined' // Check if there's an actor set and if there's one and it doesnt exist remove him.
-    })
 
     this._htmlRoll = await this.getHtmlRoll()
   }
