@@ -2,68 +2,76 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`. Feel free to create a new `*.json` file for a language that is not shown here!
 
-The following translations are currently up to date **it**, **sv**
-
 The following translations have been abandoned **cs**, [are you able to help?](./ABANDONED.md)
 
-| Key                                                                                               |    cn    |    de    |    es    |    fr    |    ja    |    ko    |    pl    |  pt-BR   |  zh-TW   |
-| :------------------------------------------------------------------------------------------------ | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-| **Remaining**:                                                                                    |  **20**  |  **50**  |  **2**   |  **2**   |  **2**   |  **55**  |  **23**  |  **2**   |  **20**  |
-| [CoC7.AddSanityLossEncounter](#coc7addsanitylossencounter)                                        | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
-| [CoC7.AddSanityLossImmunity](#coc7addsanitylossimmunity)                                          | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
-| [CoC7.BackgroundEncounters](#coc7backgroundencounters)                                            | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
-| [CoC7.BackgroundFlags](#coc7backgroundflags)                                                      | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
-| [CoC7.BackgroundFlagsMythosExperienced](#coc7backgroundflagsmythosexperienced)                    | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
-| [CoC7.BackgroundFlagsMythosHardened](#coc7backgroundflagsmythoshardened)                          | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
-| [CoC7.Copied](#coc7copied)                                                                        | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.DeleteSanityLossEncounter](#coc7deletesanitylossencounter)                                  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
-| [CoC7.DeleteSanityLossImmunity](#coc7deletesanitylossimmunity)                                    | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
-| [CoC7.EraAvailability](#coc7eraavailability)                                                      | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.German](#coc7german)                                                                        | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  |
-| [CoC7.Migrate.Complete](#coc7migratecomplete)                                                     | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
-| [CoC7.Migrate.TriggerButton](#coc7migratetriggerbutton)                                           | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Migrate.TriggerContents](#coc7migratetriggercontents)                                       | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Migrate.TriggerRestart](#coc7migratetriggerrestart)                                         | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Migrate.TriggerTitle](#coc7migratetriggertitle)                                             | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.NotEnoughMagicPoints](#coc7notenoughmagicpoints)                                            | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Polish](#coc7polish)                                                                        | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  |
-| [CoC7.ReduceSanityLimits](#coc7reducesanitylimits)                                                | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
-| [CoC7.SanityLossEncounter](#coc7sanitylossencounter)                                              | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
-| [CoC7.SanityLossEncounters](#coc7sanitylossencounters)                                            | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
-| [CoC7.SanityLossImmunities](#coc7sanitylossimmunities)                                            | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
-| [CoC7.SanityLossImmunity](#coc7sanitylossimmunity)                                                | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
-| [CoC7.SanityLossTypeDialogBody](#coc7sanitylosstypedialogbody)                                    | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
-| [CoC7.SanityLossTypeDialogTitle](#coc7sanitylosstypedialogtitle)                                  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
-| [CoC7.SanityLossTypeReason](#coc7sanitylosstypereason)                                            | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
-| [CoC7.SanityLossTypeValue](#coc7sanitylosstypevalue)                                              | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
-| [CoC7.Settings.CoreRules.Title](#coc7settingscorerulestitle)                                      | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Settings.HouseRules.Title](#coc7settingshouserulestitle)                                    | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Settings.PulpRules.Archetype.Hint](#coc7settingspulprulesarchetypehint)                     | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Settings.PulpRules.Archetype.Name](#coc7settingspulprulesarchetypename)                     | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Settings.PulpRules.DevelopmentRollLuck.Hint](#coc7settingspulprulesdevelopmentrollluckhint) | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Settings.PulpRules.DevelopmentRollLuck.Name](#coc7settingspulprulesdevelopmentrollluckname) | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Settings.PulpRules.DoubleMaxHealth.Hint](#coc7settingspulprulesdoublemaxhealthhint)         | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Settings.PulpRules.DoubleMaxHealth.Name](#coc7settingspulprulesdoublemaxhealthname)         | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Settings.PulpRules.FasterRecovery.Hint](#coc7settingspulprulesfasterrecoveryhint)           | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Settings.PulpRules.FasterRecovery.Name](#coc7settingspulprulesfasterrecoveryname)           | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Settings.PulpRules.IgnoreMajorWounds.Hint](#coc7settingspulprulesignoremajorwoundshint)     | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Settings.PulpRules.IgnoreMajorWounds.Name](#coc7settingspulprulesignoremajorwoundsname)     | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Settings.PulpRules.Organization.Hint](#coc7settingspulprulesorganizationhint)               | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Settings.PulpRules.Organization.Name](#coc7settingspulprulesorganizationname)               | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Settings.PulpRules.Talents.Hint](#coc7settingspulprulestalentshint)                         | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Settings.PulpRules.Talents.Name](#coc7settingspulprulestalentsname)                         | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Settings.Rules.Hint](#coc7settingsruleshint)                                                | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Settings.Rules.Label](#coc7settingsruleslabel)                                              | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Settings.Rules.Name](#coc7settingsrulesname)                                                | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.SpellAlreadyLearned](#coc7spellalreadylearned)                                              | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.SpellSuccessfullyLearned](#coc7spellsuccessfullylearned)                                    | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.WarnNoTargetsSanCheck](#coc7warnnotargetssancheck)                                          | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  |
-| [CoC7.allActors](#coc7allactors)                                                                  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.days](#coc7days)                                                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.getTheExample](#coc7gettheexample)                                                          | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.months](#coc7months)                                                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.restTargets](#coc7resttargets)                                                              | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [SETTINGS.DefaultDifficulty](#settingsdefaultdifficulty)                                          | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
+| Key                                                                                               |    cn    |    de    |    es    |    fr    |    it    |    ja    |    ko    |    pl    |  pt-BR   |    sv    |  zh-TW   |
+| :------------------------------------------------------------------------------------------------ | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
+| **Remaining**:                                                                                    |  **30**  |  **60**  |  **12**  |  **12**  |  **10**  |  **12**  |  **65**  |  **33**  |  **12**  |  **10**  |  **30**  |
+| [CoC7.AddSanityLossEncounter](#coc7addsanitylossencounter)                                        | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
+| [CoC7.AddSanityLossImmunity](#coc7addsanitylossimmunity)                                          | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
+| [CoC7.AttackManeuver](#coc7attackmaneuver)                                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.BackgroundEncounters](#coc7backgroundencounters)                                            | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
+| [CoC7.BackgroundFlags](#coc7backgroundflags)                                                      | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
+| [CoC7.BackgroundFlagsMythosExperienced](#coc7backgroundflagsmythosexperienced)                    | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
+| [CoC7.BackgroundFlagsMythosHardened](#coc7backgroundflagsmythoshardened)                          | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
+| [CoC7.CardType](#coc7cardtype)                                                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Copied](#coc7copied)                                                                        | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.DeleteSanityLossEncounter](#coc7deletesanitylossencounter)                                  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
+| [CoC7.DeleteSanityLossImmunity](#coc7deletesanitylossimmunity)                                    | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
+| [CoC7.EraAvailability](#coc7eraavailability)                                                      | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.ErrorInvalidCardType](#coc7errorinvalidcardtype)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ErrorInvalidRollType](#coc7errorinvalidrolltype)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ErrorMissingKeeperUser](#coc7errormissingkeeperuser)                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.German](#coc7german)                                                                        | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.GroupRollCard](#coc7grouprollcard)                                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Migrate.Complete](#coc7migratecomplete)                                                     | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
+| [CoC7.Migrate.TriggerButton](#coc7migratetriggerbutton)                                           | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Migrate.TriggerContents](#coc7migratetriggercontents)                                       | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Migrate.TriggerRestart](#coc7migratetriggerrestart)                                         | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Migrate.TriggerTitle](#coc7migratetriggertitle)                                             | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Migrate.UpdateCurrentScene](#coc7migrateupdatecurrentscene)                                 | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.NotEnoughMagicPoints](#coc7notenoughmagicpoints)                                            | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Polish](#coc7polish)                                                                        | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.ReduceSanityLimits](#coc7reducesanitylimits)                                                | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
+| [CoC7.RegularRollCard](#coc7regularrollcard)                                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.SanityLossEncounter](#coc7sanitylossencounter)                                              | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
+| [CoC7.SanityLossEncounters](#coc7sanitylossencounters)                                            | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
+| [CoC7.SanityLossImmunities](#coc7sanitylossimmunities)                                            | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
+| [CoC7.SanityLossImmunity](#coc7sanitylossimmunity)                                                | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
+| [CoC7.SanityLossTypeDialogBody](#coc7sanitylosstypedialogbody)                                    | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
+| [CoC7.SanityLossTypeDialogTitle](#coc7sanitylosstypedialogtitle)                                  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
+| [CoC7.SanityLossTypeReason](#coc7sanitylosstypereason)                                            | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
+| [CoC7.SanityLossTypeValue](#coc7sanitylosstypevalue)                                              | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#x274C; |
+| [CoC7.Settings.CoreRules.Title](#coc7settingscorerulestitle)                                      | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Settings.HouseRules.Title](#coc7settingshouserulestitle)                                    | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Settings.PulpRules.Archetype.Hint](#coc7settingspulprulesarchetypehint)                     | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Settings.PulpRules.Archetype.Name](#coc7settingspulprulesarchetypename)                     | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Settings.PulpRules.DevelopmentRollLuck.Hint](#coc7settingspulprulesdevelopmentrollluckhint) | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Settings.PulpRules.DevelopmentRollLuck.Name](#coc7settingspulprulesdevelopmentrollluckname) | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Settings.PulpRules.DoubleMaxHealth.Hint](#coc7settingspulprulesdoublemaxhealthhint)         | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Settings.PulpRules.DoubleMaxHealth.Name](#coc7settingspulprulesdoublemaxhealthname)         | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Settings.PulpRules.FasterRecovery.Hint](#coc7settingspulprulesfasterrecoveryhint)           | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Settings.PulpRules.FasterRecovery.Name](#coc7settingspulprulesfasterrecoveryname)           | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Settings.PulpRules.IgnoreMajorWounds.Hint](#coc7settingspulprulesignoremajorwoundshint)     | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Settings.PulpRules.IgnoreMajorWounds.Name](#coc7settingspulprulesignoremajorwoundsname)     | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Settings.PulpRules.Organization.Hint](#coc7settingspulprulesorganizationhint)               | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Settings.PulpRules.Organization.Name](#coc7settingspulprulesorganizationname)               | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Settings.PulpRules.Talents.Hint](#coc7settingspulprulestalentshint)                         | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Settings.PulpRules.Talents.Name](#coc7settingspulprulestalentsname)                         | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Settings.Rules.Hint](#coc7settingsruleshint)                                                | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Settings.Rules.Label](#coc7settingsruleslabel)                                              | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.Settings.Rules.Name](#coc7settingsrulesname)                                                | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.SpellAlreadyLearned](#coc7spellalreadylearned)                                              | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.SpellSuccessfullyLearned](#coc7spellsuccessfullylearned)                                    | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.ToolTipCombat](#coc7tooltipcombat)                                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ToolTipSanity](#coc7tooltipsanity)                                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.WarnNoTargetsSanCheck](#coc7warnnotargetssancheck)                                          | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.allActors](#coc7allactors)                                                                  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.days](#coc7days)                                                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
+| [CoC7.getTheExample](#coc7gettheexample)                                                          | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.months](#coc7months)                                                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#9989;  | &#x274C; |
+| [CoC7.restTargets](#coc7resttargets)                                                              | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [SETTINGS.DefaultDifficulty](#settingsdefaultdifficulty)                                          | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
 
 ##### CoC7.AddSanityLossEncounter
 
@@ -72,6 +80,10 @@ The following translations have been abandoned **cs**, [are you able to help?](.
 ##### CoC7.AddSanityLossImmunity
 
 ` "CoC7.AddSanityLossImmunity": "Add Sanity Loss Immunity",`
+
+##### CoC7.AttackManeuver
+
+` "CoC7.AttackManeuver": "Attack Maneuver",`
 
 ##### CoC7.BackgroundEncounters
 
@@ -89,6 +101,10 @@ The following translations have been abandoned **cs**, [are you able to help?](.
 
 ` "CoC7.BackgroundFlagsMythosHardened": "Mythos Hardened",`
 
+##### CoC7.CardType
+
+` "CoC7.CardType": "Roll type",`
+
 ##### CoC7.Copied
 
 ` "CoC7.Copied": "Copied the Example Text to Clipboard",`
@@ -105,9 +121,25 @@ The following translations have been abandoned **cs**, [are you able to help?](.
 
 ` "CoC7.EraAvailability": "Availability",`
 
+##### CoC7.ErrorInvalidCardType
+
+` "CoC7.ErrorInvalidCardType": "Card Type",`
+
+##### CoC7.ErrorInvalidRollType
+
+` "CoC7.ErrorInvalidRollType": "Roll Type",`
+
+##### CoC7.ErrorMissingKeeperUser
+
+` "CoC7.ErrorMissingKeeperUser": "Your keeper needs to be connected to perform this action",`
+
 ##### CoC7.German
 
 ` "CoC7.German": "German",`
+
+##### CoC7.GroupRollCard
+
+` "CoC7.GroupRollCard": "Group roll card",`
 
 ##### CoC7.Migrate.Complete
 
@@ -129,6 +161,10 @@ The following translations have been abandoned **cs**, [are you able to help?](.
 
 ` "CoC7.Migrate.TriggerTitle": "Trigger Data Migration",`
 
+##### CoC7.Migrate.UpdateCurrentScene
+
+` "CoC7.Migrate.UpdateCurrentScene": "Migrating your current scene",`
+
 ##### CoC7.NotEnoughMagicPoints
 
 ` "CoC7.NotEnoughMagicPoints": "{spell} costs {originalMagicPoints} Magic Points, but you only have {actorMagicPoints}. Would you like to take the remaining {convertedHitPoints} from your Hit Points? You will take {convertedHitPoints} damage if you proceed.",`
@@ -140,6 +176,10 @@ The following translations have been abandoned **cs**, [are you able to help?](.
 ##### CoC7.ReduceSanityLimits
 
 ` "CoC7.ReduceSanityLimits": "Reduced all sanity limits by one",`
+
+##### CoC7.RegularRollCard
+
+` "CoC7.RegularRollCard": "Regular roll card",`
 
 ##### CoC7.SanityLossEncounter
 
@@ -256,6 +296,14 @@ The following translations have been abandoned **cs**, [are you able to help?](.
 ##### CoC7.SpellSuccessfullyLearned
 
 ` "CoC7.SpellSuccessfullyLearned": "Spell '{spell}' was learned successfully!",`
+
+##### CoC7.ToolTipCombat
+
+` "CoC7.ToolTipCombat": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Left click</strong> roll check with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li></ol><label>Combat opposed maneuver</label><ol><li><strong>Right click</strong> Combat opposed maneuver with options</li><li><strong>Shift + Right click</strong> Immediate combat opposed maneuver</li></ol>",`
+
+##### CoC7.ToolTipSanity
+
+` "CoC7.ToolTipSanity": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Left click</strong> roll check with options</li><li><strong>Alt/Option + Left click</strong> roll sanity loss with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li><li><strong>Shift + Alt/Option + Left click</strong> roll sanity loss without dice pool options</li></ol><label>Opposed checks</label><ol><li><strong>Right click</strong> Opposed check with options</li><li><strong>Shift + Right click</strong> Immediate opposed check</li></ol><label>Combined checks</label><ol><li><strong>Alt/Option + Right click</strong> Combined check with options</li><li><strong>Shift + Alt/Option + Right click</strong> Immediate combined check</li></ol>",`
 
 ##### CoC7.WarnNoTargetsSanCheck
 
