@@ -1,7 +1,7 @@
 <form class="summarized" autocomplete="off" data-actor-id="{{actor.id}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
   <div class="container">
     <div class="header flexrow">
-      <div class="flexrow" data-attrib="lck">
+      <div class="flexrow attribute" data-attrib="lck">
         <label class="attribute-label rollable">{{localize 'CoC7.Luck'}}</label>
         <div class="current-value">
           <input class="attribute-value" type="text" name="data.attribs.lck.value" value="{{data.attribs.lck.value}}" data-dtype="Number"/>
@@ -40,7 +40,7 @@
           {{/if}}
         </div>
       </div>
-      <div class="flexrow" data-attrib="san">
+      <div class="flexrow attribute" data-attrib="san">
         <label class="attribute-label rollable">{{localize 'CoC7.Sanity'}}</label>
         <div class="current-value">
           <input class="attribute-value" type="text" name="data.attribs.san.value" value="{{data.attribs.san.value}}"  data-dtype="Number"/>
@@ -128,7 +128,7 @@
         {{#each topSkills as |skill|}}
           <li class="item itemV2" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
             <div class="item-image" style="background-image: url('{{skill.img}}')"></div>
-            <div class="item-name skill-name rollable"  title="{{skill.name}}">{{skill.name}}</div>
+            <div class="item-name skill-name rollable">{{skill.name}}</div>
             <div class="item-score">{{skill.data.value}}</div>
             <div class="item-controls">
               {{#unless skill.data.properties.noxpgain}}
