@@ -112,11 +112,10 @@
             <li class="skill-tag item itemV2" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
                 <div class="item-image" style="background-image: url('{{skill.img}}')"></div>
 				{{#if ../data.flags.locked}}
-					<div class="item-name skill-name combat rollable"  title="{{skill.name}}">{{skill.name}}</div>
+					<div class="item-name skill-name combat rollable">{{skill.name}}</div>
 					<div class="item-score">{{skill.data.value}}</div>
 					<div class="item-controls">
 						{{#unless skill.data.properties.noxpgain}}
-							<!-- <a class="item-control inactive" title="{{localize 'CoC7.SkillCantGainXp'}}"><i class="fas fa-certificate"></i></a> -->
 							{{#if skill.data.flags.developement}}
 								<a class="item-control development-flag active" title="{{localize 'CoC7.SkillUnflagForDevelopement'}}"><i class="fas fa-certificate"></i></a>
 							{{else}}
@@ -156,11 +155,10 @@
             <li class="skill-tag item itemV2" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
                 <div class="item-image" style="background-image: url('{{skill.img}}')"></div>
 				{{#if ../data.flags.locked}}
-					<div class="item-name skill-name combat rollable"  title="{{skill.name}}">{{skill.name}}</div>
+					<div class="item-name skill-name combat rollable">{{skill.name}}</div>
 					<div class="item-score">{{skill.data.value}}</div>
 					<div class="item-controls">
 						{{#unless skill.data.properties.noxpgain}}
-							<!-- <a class="item-control inactive" title="{{localize 'CoC7.SkillCantGainXp'}}"><i class="fas fa-certificate"></i></a> -->
 							{{#if skill.data.flags.developement}}
 								<a class="item-control development-flag active" title="{{localize 'CoC7.SkillUnflagForDevelopement'}}"><i class="fas fa-certificate"></i></a>
 							{{else}}

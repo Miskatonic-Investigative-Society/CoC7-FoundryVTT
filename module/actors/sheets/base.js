@@ -38,12 +38,11 @@ export class CoC7ActorSheet extends ActorSheet {
     data.actorFlags = {}
 
     data.permissionLimited =
-      (this.actor.data.permission[game.user.id] ===
-        (CONST.DOCUMENT_OWNERSHIP_LEVELS || CONST.ENTITY_PERMISSIONS).LIMITED ||
-        this.actor.data.permission.default ===
-          (CONST.DOCUMENT_OWNERSHIP_LEVELS || CONST.ENTITY_PERMISSIONS)
-            .LIMITED) &&
-      !game.user.isGM
+      !game.user.isGM &&
+      (this.actor.data.permission[game.user.id] ??
+        this.actor.data.permission.default) ===
+        (CONST.DOCUMENT_OWNERSHIP_LEVELS || CONST.ENTITY_PERMISSIONS).LIMITED
+
     data.isGM = game.user.isGM
     data.alowUnlock =
       game.settings.get('CoC7', 'playerUnlockSheetMode') === 'always' ||
@@ -915,16 +914,21 @@ export class CoC7ActorSheet extends ActorSheet {
           typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' &&
           game.CoC7Tooltips.ToolTipHover !== null
         ) {
+          const isCombat =
+            game.CoC7Tooltips.ToolTipHover.classList?.contains('combat')
           const item = game.CoC7Tooltips.ToolTipHover.closest('.item')
           if (typeof item !== 'undefined') {
             const skillId = item.dataset.skillId
             const skill = sheet.actor.items.get(skillId)
-            let toolTip = game.i18n.format('CoC7.ToolTipSkill', {
-              skill: skill.name,
-              regular: skill.value,
-              hard: Math.floor(skill.value / 2),
-              extreme: Math.floor(skill.value / 5)
-            })
+            let toolTip = game.i18n.format(
+              isCombat ? 'CoC7.ToolTipCombat' : 'CoC7.ToolTipSkill',
+              {
+                skill: skill.name,
+                regular: skill.value,
+                hard: Math.floor(skill.value / 2),
+                extreme: Math.floor(skill.value / 5)
+              }
+            )
             if (game.user.isGM) {
               toolTip =
                 toolTip +
@@ -961,9 +965,9 @@ export class CoC7ActorSheet extends ActorSheet {
             const characteristic = sheet.actor.characteristics[charId]
             let toolTip = game.i18n.format('CoC7.ToolTipSkill', {
               skill: characteristic.label,
-              regular: characteristic.value,
-              hard: characteristic.hard,
-              extreme: characteristic.extreme
+              regular: characteristic.value ?? 0,
+              hard: characteristic.hard ?? 0,
+              extreme: characteristic.extreme ?? 0
             })
             if (game.user.isGM) {
               toolTip =
@@ -1004,9 +1008,9 @@ export class CoC7ActorSheet extends ActorSheet {
               case 'lck':
                 toolTip = game.i18n.format('CoC7.ToolTipSkill', {
                   skill: attributes.label,
-                  regular: attributes.value,
-                  hard: Math.floor(attributes.value / 2),
-                  extreme: Math.floor(attributes.value / 5)
+                  regular: attributes.value ?? 0,
+                  hard: Math.floor((attributes.value ?? 0) / 2),
+                  extreme: Math.floor((attributes.value ?? 0) / 5)
                 })
                 if (game.user.isGM) {
                   toolTip =
@@ -1028,11 +1032,11 @@ export class CoC7ActorSheet extends ActorSheet {
                 game.CoC7Tooltips.displayToolTip(toolTip)
                 break
               case 'san':
-                toolTip = game.i18n.format('CoC7.ToolTipSkill', {
+                toolTip = game.i18n.format('CoC7.ToolTipSanity', {
                   skill: 'Sanity',
-                  regular: attributes.value,
-                  hard: Math.floor(attributes.value / 2),
-                  extreme: Math.floor(attributes.value / 5)
+                  regular: attributes.value ?? 0,
+                  hard: Math.floor((attributes.value ?? 0) / 2),
+                  extreme: Math.floor((attributes.value ?? 0) / 5)
                 })
                 if (game.user.isGM) {
                   toolTip =
