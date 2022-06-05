@@ -776,7 +776,7 @@
   "CoC7.Migrate.TriggerContents": "<p>Turn on data migration and restart</p>",
   "CoC7.Migrate.TriggerRestart": "Save and restart",
 
-  "CoC7.Migrate.UpdateCurrentScene": "Updating your current scene",
+  "CoC7.Migrate.UpdateCurrentScene": "Migrating your current scene",
   "CoC7.Migrate.Complete": "Finished migrating your data",
 
   "CoC7.Settings.CoreRules.Title": "Core Rule Book Optional Rules",

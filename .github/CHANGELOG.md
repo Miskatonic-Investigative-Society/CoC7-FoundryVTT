@@ -9,7 +9,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Fix fumble threshold for hard and extreme rolls
 - Fix viewing character sheet if default permission is limited but user permissions are different
 - Prevent players from viewing minimised character sheets if permissions are set to limited
-- Prevent players from click roll on Keeper combined cards
+- Prevent players from clicking roll on Keeper combined cards
 - Remove Trigger Data Migration button from non keepers
 - Update tooltips for roll options
 - Update to Italian localization, thanks to @Stefano1975t
