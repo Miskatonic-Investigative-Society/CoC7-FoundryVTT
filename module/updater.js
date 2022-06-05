@@ -99,7 +99,7 @@ export class Updater {
   }
 
   static async update () {
-    this.updateDocuments()
+    await this.updateDocuments()
 
     // Migrate Settings if Pulp Rules is enabled turn on all rules
     if (game.settings.get('CoC7', 'pulpRules')) {
@@ -246,7 +246,9 @@ export class Updater {
     const documentType = pack.metadata.type
     if (
       !['Actor', 'Item', 'Macro', 'RollTable', 'Scene'].includes(documentType)
-    ) { return }
+    ) {
+      return
+    }
 
     // Unlock the pack for editing
     const wasLocked = pack.locked
@@ -544,7 +546,10 @@ export class Updater {
 
   static _migrateItemBookUnits (item, updateData) {
     if (item.type === 'book') {
-      if (typeof item.data.study.necessary !== 'undefined' && typeof item.data.study.units === 'undefined') {
+      if (
+        typeof item.data.study.necessary !== 'undefined' &&
+        typeof item.data.study.units === 'undefined'
+      ) {
         updateData['data.study.units'] = 'CoC7.weeks'
       }
     }
@@ -585,7 +590,9 @@ export class Updater {
       }
       const parts = CoC7Item.getNamePartsSpec(
         updateData.name,
-        (typeof item.data.specialization?.group === 'string' ? item.data.specialization.group : item.data.specialization)
+        typeof item.data.specialization?.group === 'string'
+          ? item.data.specialization.group
+          : item.data.specialization
       )
       updateData.name = parts.name
       updateData['data.skillName'] = parts.skillName
@@ -605,7 +612,9 @@ export class Updater {
           }
           const parts = CoC7Item.getNamePartsSpec(
             updateData['data.items'][k].name,
-            (typeof v.data.specialization?.group === 'string' ? v.data.specialization.group : v.data.specialization)
+            typeof v.data.specialization?.group === 'string'
+              ? v.data.specialization.group
+              : v.data.specialization
           )
           updateData['data.items'][k].name = parts.name
           updateData['data.items'][k].data.skillName = parts.skillName
@@ -627,7 +636,9 @@ export class Updater {
           }
           const parts = CoC7Item.getNamePartsSpec(
             updateData['data.skills'][k].name,
-            (typeof v.data.specialization?.group === 'string' ? v.data.specialization.group : v.data.specialization)
+            typeof v.data.specialization?.group === 'string'
+              ? v.data.specialization.group
+              : v.data.specialization
           )
           updateData['data.skills'][k].name = parts.name
           updateData['data.skills'][k].data.skillName = parts.skillName
@@ -650,7 +661,9 @@ export class Updater {
             }
             const parts = CoC7Item.getNamePartsSpec(
               updateData['data.groups'][o].skills[k].name,
-              (typeof v.data.specialization?.group === 'string' ? v.data.specialization.group : v.data.specialization)
+              typeof v.data.specialization?.group === 'string'
+                ? v.data.specialization.group
+                : v.data.specialization
             )
             updateData['data.groups'][o].skills[k].name = parts.name
             updateData['data.groups'][o].skills[k].data.skillName =
@@ -675,7 +688,9 @@ export class Updater {
           }
           const parts = CoC7Item.getNamePartsSpec(
             updateData['data.skills'][k].name,
-            (typeof v.data.specialization?.group === 'string' ? v.data.specialization.group : v.data.specialization)
+            typeof v.data.specialization?.group === 'string'
+              ? v.data.specialization.group
+              : v.data.specialization
           )
           updateData['data.skills'][k].name = parts.name
           updateData['data.skills'][k].data.skillName = parts.skillName
