@@ -2,6 +2,9 @@
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix tooltip for character summary sheet
+- Update to French localization, thanks to @vonv
+
 ## Version 0.7.11
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
