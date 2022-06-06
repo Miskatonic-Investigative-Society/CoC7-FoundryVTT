@@ -634,8 +634,8 @@ export class CoC7ChaseSheet extends ItemSheet {
         return await this.item.cautiousApproach(participantUuid)
       case 'editParticipant':
         return await this.item.editParticipant(participantUuid)
-      case 'deleteParticipant':
-        return await this.item.deleteParticipant(participantUuid)
+      case 'removeParticipant':
+        return await this.item.removeParticipant(participantUuid)
     }
   }
 
@@ -952,14 +952,25 @@ export class CoC7ChaseSheet extends ItemSheet {
   }
 
   async alterParticipant (data, uuid) {
-    const actorKey =
-      data.sceneId && data.tokenId
-        ? `${data.sceneId}.${data.tokenId}`
-        : data.type === 'Actor'
-        ? data.id
-        : data.actorId || data.actorKey
+    let actor
+    let actorKey =
+    data.sceneId && data.tokenId
+      ? `${data.sceneId}.${data.tokenId}`
+      : data.actorId || data.actorKey || data.id
+
+    if( 'Token' === data.type){
+        const token = await fromUuid( data.uuid)
+        actor = token.actor
+    } else if( actorKey){
+      actor = chatHelper.getActorFromKey(actorKey)
+    }
+
+    if( !actorKey && actor){
+      actorKey = actor.actorKey
+    }
+
     const participant = {}
-    const actor = chatHelper.getActorFromKey(actorKey)
+
     if (actor) {
       if (actor.data.type === 'vehicle') participant.vehicleKey = actorKey
       else participant.actorKey = actorKey

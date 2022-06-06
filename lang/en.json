@@ -6,6 +6,10 @@
   "CoC7.Entities.Creature": "Creature",
   "CoC7.Entities.Npc": "NPC",
   "CoC7.Entities.Vehicle": "Vehicle",
+  "CoC7.ActorIsTokenHint": "Actor is a token",
+  "CoC7.ActorDataLinked": "Actor data are linked",
+  "CoC7.ActorDataNotLinked": "Actor data are NOT linked",
+  "CoC7.ActorIsSyntheticActor": "Actor is a synthetic actor (instance of an actor)",
 
   "CoC7.Entities.Archetype": "Archetype",
   "CoC7.Entities.Book": "Book",

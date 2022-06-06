@@ -156,9 +156,9 @@ export class CoC7Chase extends CoC7Item {
   }
 
   cleanParticipantList (list) {
-    const participantsData = this.data.data.participants
-      ? foundry.utils.duplicate(this.data.data.participants)
-      : []
+    const participantsData = list
+      ? list
+      : foundry.utils.duplicate(this.data.data.participants)
     list.forEach(p => {
       let data
       if (p.constructor.name == '_participant') {
@@ -908,13 +908,29 @@ export class CoC7Chase extends CoC7Item {
   async removeParticipant (
     participantUuid,
     {
-      useMovementActions = true,
-      scrollToLocation = true,
-      activateLocation = true,
-      activateParticipant = true,
       render = true
     } = {}
-  ) {}
+  ) {
+    const p = this.getParticipant( participantUuid)
+    await Dialog.confirm({
+      title: game.i18n.localize('CoC7.RemoveParticipant'),
+      content: `<p>${game.i18n.format('CoC7.RemoveParticipantHint', {
+        name: p.name
+      })}</p>`,
+      yes: async () => {
+        const participantsData = foundry.utils.duplicate(this.data.data.participants)
+        const newParticipantsData = participantsData.filter( p => participantUuid != p.uuid )
+        const locationsData = foundry.utils.duplicate( this.data.data.locations.list)
+        locationsData.forEach(l => {
+          if (l.participants && l.participants.length) {
+            l.participants = l.participants.filter(uuid => participantUuid != uuid)
+          }
+        })
+        await this.updateParticipants( newParticipantsData, {render: false})
+        await this.updateLocationsList( locationsData, {render: render})
+      }
+    })
+  }
 
   async editParticipant (
     participantUuid,
