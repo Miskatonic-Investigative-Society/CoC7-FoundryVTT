@@ -4,6 +4,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 - Fix tooltip for character summary sheet
 - Update to French localization, thanks to @vonv
+- Update to Italian localization, thanks to @Stefano1975t
 - Update to Taiwanese localization, thanks to @zeteticl
 
 ## Version 0.7.11
