@@ -174,6 +174,7 @@
   "CoC7.RollSecretDice": "Il Custode ha tirato in privato alcuni dadi",
   "CoC7.KeeperSentDecoy": "Tiro diversivo inviato ai giocatori",
   "CoC7.FakeRoll": "Invia un tiro diversivo ai giocatori",
+  "CoC7.ErrorMissingKeeperUser": "Il Custode deve essere connesso per poter eseguire questa azione",
 
   "CoC7.ConstitutionCheck": "Tiro Costituzione",
 
@@ -200,11 +201,15 @@
   "CoC7.CreateLink": "Crea collegamento",
   "CoC7.SuccesLevelHint": "{value} livello(i) di successo",
   "CoC7.FailureLevelHint": "Fallito per {value} livello(i)",
+  "CoC7.CardType": "Tipo di Tiro",
   "CoC7.CombinedRollCard": "Scheda Tiri combinati",
   "CoC7.OpposedRollCard": "Scheda Tiri contrapposti",
+  "CoC7.GroupRollCard": "Scheda Tiro di gruppo",
+  "CoC7.RegularRollCard": "Scheda Tiro Normale",
   "CoC7.CombinedAnyHint": "Un Tiro deve avere successo",
   "CoC7.CombinedAllHint": "Tutti i Tiri devono avere successo",
   "CoC7.CloseCard": "Chiudi scheda",
+  "CoC7.AttackManeuver": "Manovra di attacco",
 
   "CoC7.CheckResult": "Tiro {name} ({value}%) - {difficulty} difficoltà",
   "CoC7.ItemCheckResult": "{item} - tiro {skill} ({value}%) - {difficulty} difficoltà",
@@ -374,6 +379,8 @@
   "CoC7.ErrorActor": "Impossibile individuare il personaggio",
   "CoC7.ErrorInvalidFormula": "{value} non è una formula valida",
   "CoC7.ErrorInvalid": "invalido",
+  "CoC7.ErrorInvalidCardType": "Tipo di Scheda",
+  "CoC7.ErrorInvalidRollType": "Tipo di Tiro",
   "CoC7.Validate": "Convalida",
   "CoC7.Apply": "Applica",
 
@@ -769,6 +776,7 @@
   "CoC7.Migrate.TriggerContents": "<p>Attiva lo spostamento dei dati e riavvia</p>",
   "CoC7.Migrate.TriggerRestart": "Salva e riavvia",
 
+  "CoC7.Migrate.UpdateCurrentScene": "Migrazione della tua scena attuale",
   "CoC7.Migrate.Complete": "Terminata la migrazione dei tuoi dati",
   
   "CoC7.Settings.CoreRules.Title": "Regole opzionali del regolamento base",
@@ -805,6 +813,8 @@
   "CoC7.ToolTipKeeperSkill": "<label>Tiri del Custode</label><ol><li><strong>CTRL + Cliccare col sinistro</strong> Crea collegamento al tiro</li>{other}</ol>",
   "CoC7.ToolTipKeeperStandbySkill": "<li><strong>Cliccare col sinistro</strong> Richiedi un tiro a {name}</li>",
   "CoC7.ToolTipDB": "<label>Bonus ad Danno</label><ol><li><strong>Cliccare col sinistro</strong> Tiro immediato con difficoltà Normale</li></ol>",
+  "CoC7.ToolTipSanity": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Cliccare col sinistro</strong> tiro con opzioni</li><li><strong>Alt/Opzione + Cliccare col sinistro</strong> tiro di perdità di sanità con opzioni</li><li><strong>Shift + Cliccare col sinistro</strong> Tiro immediato a difficoltà Normale</li><li><strong>Shift + Alt/Opzione + Cliccare col sinistro</strong> tiro di perdità di sanità senza opzioni di riserva di dadi</li></ol><label>Tiri contrapposti</label><ol><li><strong>Cliccare col destro</strong> Tiro contrapposto con opzioni</li><li><strong>Shift + Cliccare col destro</strong> Tiro contrapposto immediato</li></ol><label>Tiri combinati</label><ol><li><strong>Alt/Opzione + Cliccare col destro</strong> Tiro combinato con opzioni</li><li><strong>Shift + Alt/Opzione + Cliccare col destro</strong> Tiro combinato immediato</li></ol>",
+  "CoC7.ToolTipCombat": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Cliccare col sinistro</strong> tiro con opzioni</li><li><strong>Shift + Cliccare col sinistro</strong> Tiro immediato a difficoltà Normale</li></ol><label>Manovra di combattimento contrapposta</label><ol><li><strong>Cliccare col destro</strong> Manovra di combattimento contrapposta con opzioni</li><li><strong>Shift + Cliccare col destro</strong> Manovra di combattimento contrapposta immediata</li></ol>",
   "CoC7.ToolTipKeeperSanity": "<li><strong>CTRL + Alt/Optione</strong> Crea collegamento al Tiro Sanità</li>",
   "CoC7.ToolTipAutoToggle": "<label>Attiva/disattiva calcolo automatico</label><ol><li><strong>Cliccare col sinistro</strong> Attiva/disattiva calcolo automatico o inserimento manuale</li>",
   "CoC7.ToolTipSkillFlagToggle": "<label>{status}</label><ol><li><strong>Cliccare due volte </strong> Attiva/disattiva il contrassegnare la condizione</li>",
