@@ -568,6 +568,8 @@
   "CoC7.Mania": "狂躁症",
   "CoC7.MaxSanloss": "最大損失",
   "CoC7.MinSanloss": "最小損失",
+  "CoC7.MaxPossibleSanLoss": "還可能扣除",
+  "CoC7.AlreadyEncountered": "已經遭遇", 
   "CoC7.AlreadyLost": "已經失去",
   "CoC7.CreatureMaxLoss": "該生物的最大損失值",
   "CoC7.MaxLossToCreature": "因該生物的SAN損失",

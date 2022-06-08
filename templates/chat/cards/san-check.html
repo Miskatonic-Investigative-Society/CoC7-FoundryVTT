@@ -26,8 +26,8 @@
   <div class="status-list">
     <div class="status">{{localize 'CoC7.DailyLoss'}}: {{actor.dailySanLoss}}</div>
     <div class="status">{{localize 'CoC7.Sanity'}}: {{actor.san}}/{{actor.sanMax}}</div>
-    {{#if sanLossReasonEncountered}}<div class="status">Already encountered "{{sanData.sanReason}}" lost {{sanLostToReason}}/{{maxSanLoss}}</div>{{/if}}
-    <div class="status">Max loss: {{maxPossibleSanLoss}}</div>
+    {{#if sanLossReasonEncountered}}<div class="status">{{localize 'CoC7.AlreadyEncountered'}} :{{sanData.sanReason}} lost {{sanLostToReason}}/{{maxSanLoss}}</div>{{/if}}
+    <div class="status">{{localize 'CoC7.MaxPossibleSanLoss'}}: {{maxPossibleSanLoss}}</div>
     {{#if state.sanRolled}}
       {{#if sanCheck.failed}}
         <div class="status">Check failed</div>
