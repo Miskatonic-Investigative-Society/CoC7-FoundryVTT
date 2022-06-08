@@ -570,6 +570,8 @@
   "CoC7.MinSanloss": "最小損失",
   "CoC7.AlreadyLost": "已經失去控制(LOST)",
   "CoC7.CreatureMaxLoss": "生物最大損失值",
+  "CoC7.MaxPossibleSanLoss": "還可能扣除",
+  "CoC7.AlreadyEncountered": "已經遭遇", 
   "CoC7.MaxLossToCreature": "生物扣去最大損失值",
   "CoC7.ResetCreatureSan": "重設生物的經歷",
   "CoC7.ResetSpecieSan": "重設種族的經歷",
