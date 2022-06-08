@@ -84,6 +84,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SanityLossTypeValue": "Sanity points lost",
 "CoC7.SanityLossEncounter": "Sanity loss encounter",
 "CoC7.SanityLossImmunity": "Sanity loss immunity",
+"CoC7.AlreadyEncountered": "Already encountered",
+"CoC7.MaxPossibleSanLoss": "Max Possible loss",
 "CoC7.SpellSuccessfullyLearned": "Spell '{spell}' was learned successfully!",
 "CoC7.SpellAlreadyLearned": "Spell named ('{spell}') was already learned.",
 "CoC7.BookHasNothingMoreToTeach": "{book} has nothing more to teach. Cthulhu Mythos skill of {actor} is greater than this Mythos Rating.",
