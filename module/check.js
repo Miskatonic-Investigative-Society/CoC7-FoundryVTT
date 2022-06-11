@@ -724,7 +724,9 @@ export class CoC7Check {
     this.dice =
       options.roll ||
       (await CoC7Dice.roll(this.diceModifier, this.rollMode, this.isBlind))
-    if (!options.silent) AudioHelper.play({ src: CONFIG.sounds.dice })
+    if (!options.silent) {
+      AudioHelper.play({ src: CONFIG.sounds.dice }, true)
+    }
 
     if (options.forceDSN) {
       await CoC7Dice.showRollDice3d(this.dice.roll)
