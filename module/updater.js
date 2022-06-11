@@ -797,43 +797,43 @@ export class Updater {
         updateData['data.conditions.tempoInsane.value'] = false
         updateData['data.conditions.indefInsane.value'] = false
         if (
-          typeof actor.data.status?.criticalWounds.value !== 'undefined' &&
+          typeof actor.data.status?.criticalWounds?.value !== 'undefined' &&
           actor.data.status?.criticalWounds.value
         ) {
           updateData['data.conditions.criticalWounds.value'] = true
         }
         if (
-          typeof actor.data.status?.unconscious.value !== 'undefined' &&
+          typeof actor.data.status?.unconscious?.value !== 'undefined' &&
           actor.data.status?.unconscious.value
         ) {
           updateData['data.conditions.unconscious.value'] = true
         }
         if (
-          typeof actor.data.status?.dying.value !== 'undefined' &&
+          typeof actor.data.status?.dying?.value !== 'undefined' &&
           actor.data.status?.dying.value
         ) {
           updateData['data.conditions.dying.value'] = true
         }
         if (
-          typeof actor.data.status?.dead.value !== 'undefined' &&
+          typeof actor.data.status?.dead?.value !== 'undefined' &&
           actor.data.status?.dead.value
         ) {
           updateData['data.conditions.dead.value'] = true
         }
         if (
-          typeof actor.data.status?.prone.value !== 'undefined' &&
+          typeof actor.data.status?.prone?.value !== 'undefined' &&
           actor.data.status?.prone.value
         ) {
           updateData['data.conditions.prone.value'] = true
         }
         if (
-          typeof actor.data.status?.tempoInsane.value !== 'undefined' &&
+          typeof actor.data.status?.tempoInsane?.value !== 'undefined' &&
           actor.data.status?.tempoInsane.value
         ) {
           updateData['data.conditions.tempoInsane.value'] = true
         }
         if (
-          typeof actor.data.status?.indefInsane.value !== 'undefined' &&
+          typeof actor.data.status?.indefInsane?.value !== 'undefined' &&
           actor.data.status?.indefInsane.value
         ) {
           updateData['data.conditions.indefInsane.value'] = true
