@@ -160,7 +160,7 @@ export class CombinedCheckCard extends RollCard {
           fromGM: game.user.isGM,
           roll: roll
         }
-        AudioHelper.play({ src: CONFIG.sounds.dice })
+        AudioHelper.play({ src: CONFIG.sounds.dice }, true)
         card.process(data)
         break
       }
