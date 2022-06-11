@@ -2,7 +2,9 @@
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix dice sounds not being pushed to other clients
 - Fix tooltip for character summary sheet
+- Update untranslated text in sanity debug information, thanks to @zeteticl
 - Update to French localization, thanks to @vonv
 - Update to Italian localization, thanks to @Stefano1975t
 - Update to Taiwanese localization, thanks to @zeteticl
