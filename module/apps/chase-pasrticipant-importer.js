@@ -8,7 +8,7 @@ export class CoC7ChaseParticipantImporter extends Dialog{
     static async create (data) {
         let actor = null
         if( data.actorUuid){
-            actor = await foundry.utils.fromUuid( data.actorUuid)
+            actor = await fromUuid( data.actorUuid)
         }
     }
 }

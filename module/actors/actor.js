@@ -2640,6 +2640,13 @@ export class CoCActor extends Actor {
     })
   }
 
+  get tokenUuid () {
+    if( this.sheet.token){
+      return this.sheet.token.uuid
+    }
+    return null
+  }
+
   get tokenKey () {
     // Clarifier ca et tokenid
     /** * MODIF 0.8.x */

@@ -20,7 +20,6 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   async getData () {
     const data = await super.getData()
 
-    // data.chase = CoC7Utilities.fromUuid(this.data.chaseUuid)
     data.status = []
     data.strings = {}
     data.displayActorOnCard = game.settings.get('CoC7', 'displayActorOnCard')
@@ -414,7 +413,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
 
   get chase () {
     if (!this.data.chaseUuid) return undefined
-    if (!this._chase) this._chase = CoC7Utilities.fromUuid(this.data.chaseUuid)
+    if (!this._chase) this._chase = CoC7Utilities.SfromUuid(this.data.chaseUuid)
     return this._chase
   }
 

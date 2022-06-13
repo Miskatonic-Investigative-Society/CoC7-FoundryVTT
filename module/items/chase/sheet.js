@@ -1018,6 +1018,7 @@ export class CoC7ChaseSheet extends ItemSheet {
   }
 
   async addParticipant (data) {
+    let prout = await fromUuid( "Scene.wh7SLuvIOpcQyb8S.Token.QyFTiiEZiX9vTfiC")
     //try to find a valid actor
     let actor
     let actorKey =

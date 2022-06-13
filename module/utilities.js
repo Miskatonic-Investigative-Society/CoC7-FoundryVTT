@@ -787,13 +787,14 @@ export class CoC7Utilities {
    * @param {string} uuid   The uuid of the Document to retrieve
    * @return {Promise<Document|null>}
    */
-  static fromUuid (uuid) {
+  static SfromUuid (uuid) {
     let parts = uuid.split('.')
     let doc
 
     // Compendium Documents
     if (parts[0] === 'Compendium') {
-      return undefined
+      return null
+      // return fromUuid(uuid) // Return Promise
       // parts.shift();
       // const [scope, packName, id] = parts.slice(0, 3);
       // parts = parts.slice(3);
@@ -816,5 +817,18 @@ export class CoC7Utilities {
       parts = parts.slice(2)
     }
     return doc || null
+  }
+
+  static isDocumentUuidPack(uuid) {
+    if( uuid.includes('Compendium')) return true
+    else return false
+  }
+
+  static isDocumentUuid(uuid) {
+    const identifiers = ["Actor", "Scene", "Token", "Item", 'Compendium']
+    for (let i = 0; i < identifiers.length; i++) {
+      if( uuid.includes(array[i])) return true
+    }
+    return false
   }
 }

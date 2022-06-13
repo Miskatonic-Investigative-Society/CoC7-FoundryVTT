@@ -77,7 +77,7 @@ export class CoC7Canvas {
         default:
           {
             if (data.docUuid && data.callBack) {
-              const doc = CoC7Utilities.fromUuid(data.docUuid)
+              const doc = CoC7Utilities.SfromUuid(data.docUuid)
               if (
                 doc[data.callBack] &&
                 typeof doc[data.callBack] === 'function'
