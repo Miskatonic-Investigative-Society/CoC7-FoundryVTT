@@ -175,6 +175,7 @@
   "CoC7.RollSecretDice": "Väktaren slog några tärningar dolt",
   "CoC7.KeeperSentDecoy": "Bluffslag skickat till spelarna",
   "CoC7.FakeRoll": "Skicka bluffslag till spelarna",
+  "CoC7.ErrorMissingKeeperUser": "Väktaren måste vara ansluten för att du ska kunna göra detta",
 
   "CoC7.ConstitutionCheck": "Fysik-slag",
 
@@ -201,11 +202,15 @@
   "CoC7.CreateLink": "Skapa länk",
   "CoC7.SuccesLevelHint": "Lyckades med {value} grader",
   "CoC7.FailureLevelHint": "Misslyckades med {value} grader",
+  "CoC7.CardType": "Typ av slag",
   "CoC7.CombinedRollCard": "Kombinerade tärningsslag",
   "CoC7.OpposedRollCard": "Motståndsslag",
+  "CoC7.GroupRollCard": "Gruppslag",
+  "CoC7.RegularRollCard": "Standardkort för slag",
   "CoC7.CombinedAnyHint": "Något slag måste lyckas",
   "CoC7.CombinedAllHint": "Alla slag måste lyckas",
   "CoC7.CloseCard": "Stäng kortet",
+  "CoC7.AttackManeuver": "Attackmanöver",
 
   "CoC7.CheckResult": "{name}-slag ({value}%) - {difficulty} svårighet",
   "CoC7.ItemCheckResult": "{item} - {skill}-slag ({value}%) - {difficulty} svårighet",
@@ -374,6 +379,8 @@
   "CoC7.ErrorActor": "Kunde inte hitta karaktären",
   "CoC7.ErrorInvalidFormula": "{value} är ingen giltig formel",
   "CoC7.ErrorInvalid": "ogiltig",
+  "CoC7.ErrorInvalidCardType": "Korttyp",
+  "CoC7.ErrorInvalidRollType": "Typ av slag",
   "CoC7.Validate": "Kontrollera",
   "CoC7.Apply": "Applicera",
 
@@ -536,8 +543,10 @@
   "CoC7.MaxSanloss": "Maximal förlust",
   "CoC7.MinSanloss": "Minsta förlust",
   "CoC7.AlreadyLost": "Redan förlorat",
+  "CoC7.AlreadyEncountered": "Redan stött på", 
   "CoC7.CreatureMaxLoss": "Maximal förlust",
   "CoC7.MaxLossToCreature": "Maximal förlust vid möten med den här varelsen",
+  "CoC7.MaxPossibleSanLoss": "Högsta möjliga förlust",
   "CoC7.ResetCreatureSan": "Återställ varelsens historik",
   "CoC7.ResetSpecieSan": "Återställ släktets historik",
   "CoC7.KeepData": "Behåll varelsens data",
@@ -778,8 +787,9 @@
   "CoC7.Migrate.TriggerContents": "<p>Slå igång datamigrering och starta om</p>",
   "CoC7.Migrate.TriggerRestart": "Spara och starta om",
 
+  "CoC7.Migrate.UpdateCurrentScene": "Migrerar din nuvarande scen",
   "CoC7.Migrate.Complete": "Migreringen av din data är klar",
-
+  
   "CoC7.Settings.CoreRules.Title": "Valfria regler från grundregelboken",
   "CoC7.Settings.Rules.Name": "Alternativa/frivilliga regler",
   "CoC7.Settings.Rules.Label": "Konfigurera Alternativa/frivilliga regler",
@@ -815,8 +825,10 @@
   "CoC7.ToolTipKeeperSkill": "<label>Väktarens slag</label><ol><li><strong>CTRL + vänsterklick</strong> Skapa länk för att slå</li>{other}</ol>",
   "CoC7.ToolTipKeeperStandbySkill": "<li><strong>Vänsterklick</strong> Be {name} om ett slag</li>",
   "CoC7.ToolTipDB": "<label>Skadebonus</label><ol><li><strong>Vänsterklick</strong> Direkt slag med normal svårighetsgrad</li></ol>",
+  "CoC7.ToolTipSanity": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Left click</strong> slå slag med valmöjligheter</li><li><strong>Alt/Option + vänsterklick</strong> slå sinnesprövning med valmöjligheter</li><li><strong>Shift + vänsterklick</strong> Slå slag direkt med normal svårighet</li><li><strong>Shift + Alt/Option + vänsterklick</strong> slå sinnesprövning med val av tärningspölar</li></ol><label>Motståndsslag</label><ol><li><strong>högerklick</strong> motståndsslag med valmöjligheter</li><li><strong>Shift + högerklick</strong> slå motståndsslag direkt</li></ol><label>Kombinerat slag</label><ol><li><strong>Alt/Option + högerklick</strong> Kombinerat slag med valmöjligheter</li><li><strong>Shift + Alt/Option + högerklick</strong> slå kombinerat slag direkt</li></ol>",
+  "CoC7.ToolTipCombat": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>vänsterklick</strong> slå slag med valmöjligheter</li><li><strong>Shift + vänsterklick</strong> Slå ett slag med normal svårighetsgrad direkt</li></ol><label>motståendskrav i strid</label><ol><li><strong>högerklick</strong> Motståndsslag i strid med valmöjligheter</li><li><strong>Shift + högerklick</strong> Direkt motståndsmanöver i strid</li></ol>",
   "CoC7.ToolTipKeeperSanity": "<li><strong>CTRL + Alt/Option</strong> Skapa länk för att slå en sinnesprövning</li>",
-  "CoC7.ToolTipAutoToggle": "<label>Automatisk/manuell beräkning</label><ol><li><strong>Left click</strong> Växla mellan automatisk- och manuell beräkning</li>",
+  "CoC7.ToolTipAutoToggle": "<label>Automatisk/manuell beräkning</label><ol><li><strong>vänsterklick</strong> Växla mellan automatisk- och manuell beräkning</li>",
   "CoC7.ToolTipSkillFlagToggle": "<label>{status}</label><ol><li><strong>Dubbelklick</strong> Växla statusflagga</li>",
   "CoC7.ToolTipSkillFlagged": "Flaggad för utveckling",
   "CoC7.ToolTipSkillUnflagged": "Inte flaggad för utveckling",
