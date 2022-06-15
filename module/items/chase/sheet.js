@@ -1,6 +1,7 @@
 /* global DragDrop, duplicate, expandObject, flattenObject, FormDataExtended, game, getType, ItemSheet, mergeObject, ui */
 
 import { CoCActor } from '../../actors/actor.js'
+import { CoC7ChaseParticipantImporter } from '../../apps/chase-participant-importer.js'
 import { CoC7Chat } from '../../chat.js'
 import { chatHelper } from '../../chat/helper.js'
 import { CoC7Check } from '../../check.js'
@@ -794,7 +795,7 @@ export class CoC7ChaseSheet extends ItemSheet {
 
         break
       case 'token':
-        const tokenDoc = await fromUuid( data.tokenUuid)
+        const tokenDoc = await fromUuid(data.tokenUuid)
         ui.notifications.info('token dropped')
         break
 
@@ -826,11 +827,13 @@ export class CoC7ChaseSheet extends ItemSheet {
   }
 
   async _onAddParticipant (event) {
+    event.preventDefault()
     let data = {}
     if (event.dataTransfer) {
       const dataString = event.dataTransfer.getData('text/plain')
       data = JSON.parse(dataString)
     }
+    const prout = await CoC7ChaseParticipantImporter.create(data)
     await this.addParticipant(data)
   }
 
@@ -923,7 +926,7 @@ export class CoC7ChaseSheet extends ItemSheet {
       ? duplicate(this.item.data.data.participants)
       : []
     const participant = participants[index]
-    delete participant.actorKey
+    delete participant.docUuid
     await this.item.update({ 'data.participants': participants })
   }
 
@@ -952,29 +955,27 @@ export class CoC7ChaseSheet extends ItemSheet {
   }
 
   async alterParticipant (data, uuid) {
-    let actor
-    let actorKey =
-    data.sceneId && data.tokenId
-      ? `${data.sceneId}.${data.tokenId}`
-      : data.actorId || data.actorKey || data.id
+    let docUuid, actor
+    if (data.tokenUuid) docUuid = data.tokenUuid
+    else
+      docUuid =
+        data.sceneId && data.tokenId
+          ? `Scene.${data.sceneId}.Token.${data.tokenId}`
+          : data.actorId || data.actorKey || data.id
 
-    if( 'Token' === data.type){
-        const token = await fromUuid( data.uuid)
-        actor = token.actor
-    } else if( actorKey){
-      actor = chatHelper.getActorFromKey(actorKey)
+    if ('Token' === data.type) {
+      docUuid = data.uuid
+    } else if (docUuid) {
+      actor = chatHelper.getActorFromKey(docUuid)
+      if (!actor && 'Item' === data.type) docUuid = null
     }
 
-    if( !actorKey && actor){
-      actorKey = actor.actorKey
+    if (actor && docUuid != actor.uuid) {
+      docUuid = actor.uuid
     }
 
     const participant = {}
-
-    if (actor) {
-      if (actor.data.type === 'vehicle') participant.vehicleKey = actorKey
-      else participant.actorKey = actorKey
-    }
+    if (docUuid) participant.docUuid = docUuid
 
     switch (data.type?.toLowerCase()) {
       case 'actor':
@@ -1018,40 +1019,39 @@ export class CoC7ChaseSheet extends ItemSheet {
   }
 
   async addParticipant (data) {
-    let prout = await fromUuid( "Scene.wh7SLuvIOpcQyb8S.Token.QyFTiiEZiX9vTfiC")
-    //try to find a valid actor
-    let actor
-    let actorKey =
-    data.sceneId && data.tokenId
-      ? `${data.sceneId}.${data.tokenId}`
-      : data.actorId || data.actorKey || data.id
+    // let prout = chatHelper.getActorFromKey(
+    //   'Scene.wh7SLuvIOpcQyb8S.Token.QyFTiiEZiX9vTfiC'
+    // )
+    // prout = chatHelper.getActorFromKey(
+    //   'Scene.wh7SLuvIOpcQyb8S.Token.ubLzhe57JOTHMIr9'
+    // )
+    // prout = chatHelper.getActorFromKey('Actor.uiY3capSUeLLvSLi')
+    // prout = CoC7Utilities.getDocumentFromKey( 'Scene.wh7SLuvIOpcQyb8S.Token.QyFTiiEZiX9vTfiC.Item.GrOHeLXfeEphsRMZ')
+    // prout = CoC7Utilities.getDocumentFromKey( "Scene.wh7SLuvIOpcQyb8S.Token.YqsNQPDhFCPlSRqJ")
+    // prout = CoC7Utilities.getDocumentFromKey( "Scene.wh7SLuvIOpcQyb8S.Token.YqsNQPDhFCPlSRqJ.Item.8JEnTjJOGFXml4wk")
 
-    if( 'Token' === data.type){
-        const token = await fromUuid( data.uuid)
-        actor = token.actor
-    } else if( actorKey){
-      actor = chatHelper.getActorFromKey(actorKey)
+    //try to find a valid document
+    let docUuid, actor
+    if (data.tokenUuid) docUuid = data.tokenUuid
+    else
+      docUuid =
+        data.sceneId && data.tokenId
+          ? `Scene.${data.sceneId}.Token.${data.tokenId}`
+          : data.actorId || data.actorKey || data.id
+
+    if ('Token' === data.type) {
+      docUuid = data.uuid
+    } else if (docUuid) {
+      actor = chatHelper.getActorFromKey(docUuid)
+      if (!actor && 'Item' === data.type) docUuid = null
     }
 
-    if( !actorKey && actor){
-      actorKey = actor.actorKey
+    if (actor && docUuid != actor.uuid) {
+      docUuid = actor.uuid
     }
-
 
     const participant = {}
-    if (actor) {
-      participant.uuid = actor.uuid
-      if (actor.data.type === 'vehicle') {
-        participant.vehicleKey = actorKey
-      }
-      else participant.actorKey = actor.actorKey
-    }
-
-    // const participant = {
-    //  actorKey : (data.sceneId && data.tokenId)?`${data.sceneId}.${data.tokenId}`:data.actorId||data.actorKey||data.id
-    // };
-    // const actor = chatHelper.getActorFromKey( participant.actorKey);
-    // if( !actor) delete participant.actorKey;
+    if (docUuid) participant.docUuid = docUuid
 
     switch (data.type?.toLowerCase()) {
       case 'actor':

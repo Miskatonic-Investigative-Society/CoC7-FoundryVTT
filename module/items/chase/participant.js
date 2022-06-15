@@ -1,15 +1,36 @@
 import { chatHelper } from '../../chat/helper.js'
 import { CoC7Check } from '../../check.js'
+import { CoC7Utilities } from '../../utilities.js'
 
 export class _participant {
   constructor (data = {}) {
     this.data = data
   }
 
-  get actor () {
-    if (!this._actor) {
-      this._actor = chatHelper.getActorFromKey(this.data.actorKey)
+  _fetch () {
+    if (!this._doc && this.data.docUuid) {
+      this._doc = CoC7Utilities.getDocumentFromKey(this.data.docUuid)
     }
+
+    if (!this._actor) {
+      if (this._doc) {
+        switch (this._doc.constructor?.name) {
+          case 'TokenDocument':
+            this._actor = this._doc.actor
+            break
+
+          case 'CoCActor':
+            this._actor = this._doc
+            break
+          default:
+            break
+        }
+      } else this._actor = CoC7Utilities.getActorFromKey(this.data.docUuid)
+    }
+  }
+
+  get actor () {
+    this._fetch()
     return this._actor
   }
 
@@ -38,7 +59,7 @@ export class _participant {
 
   get driver () {
     if (!this._driver) {
-      this._driver = chatHelper.getActorFromKey(this.data.actorKey)
+      this._driver = CoC7Utilities.getActorFromKey(this.data.docUuid)
     }
     return this._driver
   }
@@ -507,9 +528,9 @@ export class _participant {
 }
 
 export function sortByRoleAndDex (a, b) {
-  if( !a && b) return 1
-  if( !b && a) return -1
-  if( !a && !b) return 0
+  if (!a && b) return 1
+  if (!b && a) return -1
+  if (!a && !b) return 0
   //Put chasers first
   if (b.chaser && !a.chaser) return 1
   if (a.chaser && !b.chaser) return -1

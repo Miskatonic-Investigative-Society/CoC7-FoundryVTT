@@ -330,32 +330,32 @@ export class CoC7ActorSheet extends ActorSheet {
               a.data.properties.special &&
               typeof a.data.specialization !== 'undefined'
                 ? a.data.specialization
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase() +
-                a.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase() +
+                  a.name
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase()
                 : a.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase()
             lcb =
               b.data.properties.special &&
               typeof b.data.specialization !== 'undefined'
                 ? b.data.specialization
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase() +
-                b.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase() +
+                  b.name
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase()
                 : b.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase()
           } else {
             lca = a.name
               .normalize('NFD')
@@ -379,30 +379,30 @@ export class CoC7ActorSheet extends ActorSheet {
           if (a.data.properties && b.data.properties) {
             lca = a.data.properties.special
               ? a.data.specialization
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLowerCase() +
-              a.name
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLowerCase()
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase() +
+                a.name
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase()
               : a.name
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLowerCase()
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase()
             lcb = b.data.properties.special
               ? b.data.specialization
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLowerCase() +
-              b.name
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLowerCase()
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase() +
+                b.name
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase()
               : b.name
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLowerCase()
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, '')
+                  .toLowerCase()
           } else {
             lca = a.name
               .normalize('NFD')
@@ -693,7 +693,9 @@ export class CoC7ActorSheet extends ActorSheet {
   activateListeners (html) {
     super.activateListeners(html)
 
-    html.find('.token-drag-handle').on('dragstart', this._onDragTokenStart.bind(this))
+    html
+      .find('.token-drag-handle')
+      .on('dragstart', this._onDragTokenStart.bind(this))
 
     // Owner Only Listeners
     if (this.actor.isOwner && typeof this.actor.compendium === 'undefined') {
@@ -742,7 +744,6 @@ export class CoC7ActorSheet extends ActorSheet {
 
       // Status monitor
       if (game.user.isGM || game.settings.get('CoC7', 'statusPlayerEditable')) {
-
         html.find('.reset-counter').click(this._onResetCounter.bind(this))
         html
           .find('.condition-monitor')
@@ -999,8 +1000,8 @@ export class CoC7ActorSheet extends ActorSheet {
                     game.settings.get('CoC7', 'stanbyGMRolls') &&
                     sheet.actor.hasPlayerOwner
                       ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                        name: sheet.actor.name
-                      })
+                          name: sheet.actor.name
+                        })
                       : ''
                 })
             }
@@ -1039,8 +1040,8 @@ export class CoC7ActorSheet extends ActorSheet {
                     game.settings.get('CoC7', 'stanbyGMRolls') &&
                     sheet.actor.hasPlayerOwner
                       ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                        name: sheet.actor.name
-                      })
+                          name: sheet.actor.name
+                        })
                       : ''
                 })
             }
@@ -1082,8 +1083,8 @@ export class CoC7ActorSheet extends ActorSheet {
                         game.settings.get('CoC7', 'stanbyGMRolls') &&
                         sheet.actor.hasPlayerOwner
                           ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                            name: sheet.actor.name
-                          })
+                              name: sheet.actor.name
+                            })
                           : ''
                     })
                 }
@@ -1109,8 +1110,8 @@ export class CoC7ActorSheet extends ActorSheet {
                         (game.settings.get('CoC7', 'stanbyGMRolls') &&
                         sheet.actor.hasPlayerOwner
                           ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                            name: sheet.actor.name
-                          })
+                              name: sheet.actor.name
+                            })
                           : '')
                     })
                 }
@@ -1235,6 +1236,17 @@ export class CoC7ActorSheet extends ActorSheet {
     await game.CoC7socket.executeAsGM('gmtradeitemto', message)
   }
 
+  _onDragStart (event) {
+    super._onDragStart(event)
+    if (this.token) {
+      const dragData = JSON.parse(event.dataTransfer.getData('text/plain'))
+      dragData.tokenUuid = this.token.uuid
+      dragData.tokenId = this.token.id
+      dragData.sceneId = this.token.parent.id
+      event.dataTransfer.setData('text/plain', JSON.stringify(dragData))
+    }
+  }
+
   _onDragCharacteristic (event) {
     const box = event.currentTarget.parentElement
     const data = {
@@ -1323,13 +1335,13 @@ export class CoC7ActorSheet extends ActorSheet {
     conCheck.toMessage(event.shiftKey)
   }
 
-  async _onDragTokenStart( event) {
+  async _onDragTokenStart (event) {
     const data = {
       type: 'Token',
       uuid: this.token.uuid
     }
 
-    const test = await fromUuid("Scene.Ow0gawVcTFxiQz5X.Token.hqUr4OgO4dTWuDrU")
+    const test = await fromUuid('Scene.Ow0gawVcTFxiQz5X.Token.hqUr4OgO4dTWuDrU')
 
     event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
   }
@@ -1494,7 +1506,9 @@ export class CoC7ActorSheet extends ActorSheet {
 
   _onInventoryHeader (event) {
     event.preventDefault()
-    $(event.currentTarget).siblings('li').toggle()
+    $(event.currentTarget)
+      .siblings('li')
+      .toggle()
   }
 
   async _onItemPopup (event) {
@@ -1711,8 +1725,9 @@ export class CoC7ActorSheet extends ActorSheet {
         event.currentTarget.parentElement.dataset.characteristic
       roll.attribute = event.currentTarget.parentElement.dataset.attrib
       roll.item = event.currentTarget.closest('.item')?.dataset.itemId
-      roll.weaponAltSkill =
-        event.currentTarget.classList.contains('alternativ-skill')
+      roll.weaponAltSkill = event.currentTarget.classList.contains(
+        'alternativ-skill'
+      )
       roll.skillId = event.currentTarget.closest('.item')?.dataset.skillId
       roll.rollMode = game.settings.get('core', 'rollMode')
       roll.initiator = game.user.id
@@ -1850,19 +1865,19 @@ export class CoC7ActorSheet extends ActorSheet {
     if (isCtrlKey(event) && game.user.isGM && ['lck', 'san'].includes(attrib)) {
       const linkData = event.altKey
         ? {
-          check: 'sanloss',
-          hasPlayerOwner: this.actor.hasPlayerOwner,
-          actorKey: this.actor.actorKey,
-          forceModifiers: event.shiftKey
-        }
+            check: 'sanloss',
+            hasPlayerOwner: this.actor.hasPlayerOwner,
+            actorKey: this.actor.actorKey,
+            forceModifiers: event.shiftKey
+          }
         : {
-          check: 'check',
-          type: 'attribute',
-          name: attrib,
-          hasPlayerOwner: this.actor.hasPlayerOwner,
-          actorKey: this.actor.actorKey,
-          forceModifiers: event.shiftKey
-        }
+            check: 'check',
+            type: 'attribute',
+            name: attrib,
+            hasPlayerOwner: this.actor.hasPlayerOwner,
+            actorKey: this.actor.actorKey,
+            forceModifiers: event.shiftKey
+          }
       if (game.settings.get('core', 'rollMode') === 'blindroll') {
         linkData.blind = true
       }
@@ -2153,8 +2168,9 @@ export class CoC7ActorSheet extends ActorSheet {
                   value: event.currentTarget.value
                 })
               )
-              formData[event.currentTarget.name] =
-                game.i18n.format('CoC7.ErrorInvalid')
+              formData[event.currentTarget.name] = game.i18n.format(
+                'CoC7.ErrorInvalid'
+              )
             }
           }
         }
@@ -2174,8 +2190,9 @@ export class CoC7ActorSheet extends ActorSheet {
                   value: event.currentTarget.value
                 })
               )
-              formData[event.currentTarget.name] =
-                game.i18n.format('CoC7.ErrorInvalid')
+              formData[event.currentTarget.name] = game.i18n.format(
+                'CoC7.ErrorInvalid'
+              )
             }
           }
         }

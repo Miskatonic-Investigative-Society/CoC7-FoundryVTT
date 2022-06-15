@@ -694,8 +694,8 @@ export class CoC7Utilities {
           document.execCommand('copy')
             ? resolve()
             : reject(
-              new Error(game.i18n.localize('CoC7.UnableToCopyToClipboard'))
-            )
+                new Error(game.i18n.localize('CoC7.UnableToCopyToClipboard'))
+              )
           textArea.remove()
         }).catch(err => ui.notifications.error(err))
       }
@@ -819,16 +819,51 @@ export class CoC7Utilities {
     return doc || null
   }
 
-  static isDocumentUuidPack(uuid) {
-    if( uuid.includes('Compendium')) return true
+  static isDocumentUuidPack (uuid) {
+    if (uuid.includes('Compendium')) return true
     else return false
   }
 
-  static isDocumentUuid(uuid) {
-    const identifiers = ["Actor", "Scene", "Token", "Item", 'Compendium']
+  static isDocumentUuid (uuid) {
+    const identifiers = ['Actor', 'Scene', 'Token', 'Item', 'Compendium']
     for (let i = 0; i < identifiers.length; i++) {
-      if( uuid.includes(array[i])) return true
+      if (uuid.includes(identifiers[i])) return true
     }
     return false
+  }
+
+  static getDocumentFromKey (key) {
+    if (!key) return null
+    // Case 0 - a document Uuid
+    if (CoC7Utilities.isDocumentUuid(key)) {
+      if (CoC7Utilities.isDocumentUuidPack(key)) return fromUuid(key) //TODO Check we can do that
+      return CoC7Utilities.SfromUuid(key)
+    }
+
+    // Case 1 - a synthetic actor from a Token
+    if (key.includes('.')) {
+      // REFACTORING (2)
+      const [sceneId, tokenId] = key.split('.')
+      if (sceneId === 'TOKEN') {
+        return game.actors.tokens[tokenId] // REFACTORING (2)
+      }
+      const scene = game.scenes.get(sceneId)
+      if (!scene) return null
+      const tokenData = scene.getEmbeddedDocument('Token', tokenId)
+      if (!tokenData) return null
+      const token = new Token(tokenData)
+      if (!token.scene) token.scene = duplicate(scene.data)
+      return token
+    }
+    // Case 2 - use Actor ID directory
+    return game.actors.get(key) || null
+  }
+
+  static getActorFromKey (key) {
+    const doc = CoC7Utilities.getDocumentFromKey(key)
+    if (!doc) return null
+    if (doc.actor) return doc.actor
+    if (typeof doc == 'CoCActor') return doc
+    return null
   }
 }

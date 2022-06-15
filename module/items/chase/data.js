@@ -3,6 +3,7 @@ import { ChaseObstacleCard } from '../../chat/cards/chase-obstacle.js'
 import { testCard } from '../../chat/cards/test.js'
 import { chatHelper } from '../../chat/helper.js'
 import { CoC7Check } from '../../check.js'
+import { CoC7Utilities } from '../../utilities.js'
 import { CoC7Item } from '../item.js'
 import { _participant, sortByRoleAndDex } from './participant.js'
 
@@ -66,8 +67,8 @@ export class CoC7Chase extends CoC7Item {
   get activeActor () {
     const p = this.activeParticipantData
     if (!p) return undefined
-    if (p.actorKey) {
-      return chatHelper.getActorFromKey(p.actorKey)
+    if (p.docUuid) {
+      return CoC7Utilities.getActorFromKey(p.docUuid)
     }
     return undefined
   }
@@ -360,7 +361,7 @@ export class CoC7Chase extends CoC7Item {
   ) {
     const pUuid = participantUuid
       ? participantUuid
-      : this.participantsByInitiative[0].uuid
+      : this.participantsByInitiative[0]?.uuid
     const participantsDataUpdate = {}
     const participants = this.data.data.participants
       ? foundry.utils.duplicate(this.data.data.participants)
@@ -905,29 +906,32 @@ export class CoC7Chase extends CoC7Item {
     return locations[destinationIndex] //ERROR MOVE 2 FOR SKIP +1
   }
 
-  async removeParticipant (
-    participantUuid,
-    {
-      render = true
-    } = {}
-  ) {
-    const p = this.getParticipant( participantUuid)
+  async removeParticipant (participantUuid, { render = true } = {}) {
+    const p = this.getParticipant(participantUuid)
     await Dialog.confirm({
       title: game.i18n.localize('CoC7.RemoveParticipant'),
       content: `<p>${game.i18n.format('CoC7.RemoveParticipantHint', {
         name: p.name
       })}</p>`,
       yes: async () => {
-        const participantsData = foundry.utils.duplicate(this.data.data.participants)
-        const newParticipantsData = participantsData.filter( p => participantUuid != p.uuid )
-        const locationsData = foundry.utils.duplicate( this.data.data.locations.list)
+        const participantsData = foundry.utils.duplicate(
+          this.data.data.participants
+        )
+        const newParticipantsData = participantsData.filter(
+          p => participantUuid != p.uuid
+        )
+        const locationsData = foundry.utils.duplicate(
+          this.data.data.locations.list
+        )
         locationsData.forEach(l => {
           if (l.participants && l.participants.length) {
-            l.participants = l.participants.filter(uuid => participantUuid != uuid)
+            l.participants = l.participants.filter(
+              uuid => participantUuid != uuid
+            )
           }
         })
-        await this.updateParticipants( newParticipantsData, {render: false})
-        await this.updateLocationsList( locationsData, {render: render})
+        await this.updateParticipants(newParticipantsData, { render: false })
+        await this.updateLocationsList(locationsData, { render: render })
       }
     })
   }
