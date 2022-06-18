@@ -865,5 +865,19 @@
   "CoC7.Settings.Rules.Name": "Regras Variantes/Opcionais",
   "CoC7.SpellAlreadyLearned": "Feitiço ('{spell}') já foi aprendido.",
   "CoC7.SpellSuccessfullyLearned": "Feitiço '{spell}' foi aprendido com sucesso!",
-  "CoC7.WarnNoTargetsSanCheck": "Não há alvos selecionados. Selecione um alvo ou crie um link"
+  "CoC7.WarnNoTargetsSanCheck": "Não há alvos selecionados. Selecione um alvo ou crie um link",
+  "CoC7.AlreadyEncountered": "Já encontrado",
+  "CoC7.AttackManeuver": "Manobra de Ataque",
+  "CoC7.CardType": "Tipo de cartão",
+  "CoC7.ErrorInvalidCardType": "Tipo de Cartão",
+  "CoC7.ErrorInvalidRollType": "Tipo de Rolagem",
+  "CoC7.ErrorMissingKeeperUser": "O Guardião precisa estar conectado para realizar essa ação",
+  "CoC7.GroupRollCard": "Cartão de rolagem de grupo",
+  "CoC7.MaxPossibleSanLoss": "Perda Máxima Possível",
+  "CoC7.Migrate.UpdateCurrentScene": "Atualizar cena atual",
+  "CoC7.RegularRollCard": "Cartão de rolagem regular",
+  "CoC7.ToolTipCombat": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Clique esquerdo</strong> rolar teste com opções</li><li><strong>Shift + Clique esquerdo</strong> Teste com dificuldade regular</li></ol><label>Manobra oposta de combate</label><ol><li><strong>Clique direito</strong> Manobra oposta de combate com opções</li><li><strong>Shift + Clique direito</strong> Manobra oposta de combate com dificuldade regular</li></ol>",
+  "CoC7.ToolTipSanity": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Clique esquerdo</strong> rolar teste com opções</li><li><strong>Alt/Option + Clique esquerdo</strong> rolar perda de Sanidade com opções</li><li><strong>Shift + Clique esquerdo</strong> Teste imediato na dificuldade regular</li><li><strong>Shift + Alt/Option + Clique esquerdo</strong> rolar perda de Sanidade sem opções adicionais</li></ol><label>Testes opostos</label><ol><li><strong>Clique direito</strong> Teste oposto com opções</li><li><strong>Shift + Clique direito</strong> Teste oposto imediato</li></ol><label>Testes combinados</label><ol><li><strong>Alt/Option + Clique direito</strong> Teste combinado com opções</li><li><strong>Shift + Alt/Option + Clique direito</strong> Teste combinado imediato</li></ol>",
+  "CoC7.days": "dia(s)",
+  "CoC7.months": "mês(es)"
 }
