@@ -7,6 +7,8 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Update untranslated text in sanity debug information, thanks to @zeteticl
 - Update to French localization, thanks to @vonv
 - Update to Italian localization, thanks to @Stefano1975t
+- Update to Japanese localization, thanks to Asami
+- Update to Portuguese localization
 - Update to Taiwanese localization, thanks to @zeteticl
 
 ## Version 0.7.11
