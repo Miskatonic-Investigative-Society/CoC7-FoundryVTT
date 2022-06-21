@@ -99,7 +99,9 @@
   "CoC7.Other": "Inne",
   "CoC7.rounds": "runda/rundy",
   "CoC7.hours": "godzina/godziny",
+  "CoC7.days": "dzień/dni",
   "CoC7.weeks": "tydzień/tygodnie",
+  "CoC7.months": "miesiąc/miesiące",
   "CoC7.remove": "Usuń",
   "CoC7.Any": "Dowolny",
   "CoC7.All": "Wszyscy",
@@ -172,6 +174,7 @@
   "CoC7.RollSecretDice": "Strażnik nieoficjalnie rzucił kilka kostek",
   "CoC7.KeeperSentDecoy": "Fałszywy rzut wysłany do graczy",
   "CoC7.FakeRoll": "Wyślij fałszywy rzut do graczy",
+  "CoC7.ErrorMissingKeeperUser": "Strażnik Tajemnic musi być obecny, żebyś mógł wykonać tę akcję",
 
   "CoC7.ConstitutionCheck": "Test Kondycji",
 
@@ -198,11 +201,15 @@
   "CoC7.CreateLink": "Stwórz odnośnik",
   "CoC7.SuccesLevelHint": "{value} poziom sukcesu",
   "CoC7.FailureLevelHint": "Poziom {value} niepowodzenia",
+  "CoC7.CardType": "Typ rzutu",
   "CoC7.CombinedRollCard": "Karta rzutu łączonego",
   "CoC7.OpposedRollCard": "Karta rzutu przeciwstawnego",
+  "CoC7.GroupRollCard": "Karta rzutu grupowego",
+  "CoC7.RegularRollCard": "Karta rzutu zwykłego",
   "CoC7.CombinedAnyHint": "Dowolny rzut musi się udać",
   "CoC7.CombinedAllHint": "Wszystkie rzuty muszą się udać",
   "CoC7.CloseCard": "Zamknij kartę",
+  "CoC7.AttackManeuver": "Manewr",
 
   "CoC7.CheckResult": "Sprawdź {name}. ({value}%) - {difficulty}",
   "CoC7.ItemCheckResult": "{item} - {skill} Sprawdź ({value}%) - {difficulty} trudnosć",
@@ -249,7 +256,7 @@
   "CoC7.DamageInflicted": "Zadano obrażenia",
   "CoC7.TotalDamage": "Całkowie obrażenia",
 
-  "CoC7.combatCard.dive4cover": "Skryj się za zasłoną",
+  "CoC7.combatCard.dive4cover": "Skryj się za osłoną",
 
   "CoC7.rangeCombatCard.SingleShot": "Pojedynczy Strzał",
   "CoC7.rangeCombatCard.MultipleShots": "Wielo. Strzał",
@@ -369,9 +376,11 @@
   "CoC7.Weapon.Property.Shotgun": "Strzelba",
 
   "CoC7.ErrorItem": "Nie udało się odnaleźć przedmiotu",
-  "CoC7.ErrorActor": "Nie udało się znaleźć postaci",
+  "CoC7.ErrorActor": "Nie udało się odnaleźć postaci",
   "CoC7.ErrorInvalidFormula": "{value} nie jest prawidłową formułą",
   "CoC7.ErrorInvalid": "Nieprawidłowy",
+  "CoC7.ErrorInvalidCardType": "Typ karty",
+  "CoC7.ErrorInvalidRollType": "Typ rzutu",
   "CoC7.Validate": "Prawidłowy",
   "CoC7.Apply": "Zatwierdź",
 
@@ -402,6 +411,7 @@
   "CoC7.DevSuccessDetails": "{item} został ulepszony o {augment}%",
   "CoC7.SanGained": "Odzyskałeś 2d6 ({results} = <strong>{sanGained}</strong>) Poczytalności po zwiększeniu <strong>{skill}</strong> do <strong>{skillValue}%</strong>",
   "CoC7.DevFailureDetails": "NIE ulepszono {item}",
+  "CoC7.ReduceSanityLimits": "Zmniejsz wszystkie limity poczytalności o 1",
   "CoC7.DevSuccess": "{item} ulepszony ({die}/{score}%) o {augment}%",
   "CoC7.DevFailure": "{item} NIE ulepszony ({die}/{score}%)",
   "CoC7.LuckIncreased": "Zwiększono Szczęście ({die}/{score}) o {augment} punktów",
@@ -479,6 +489,24 @@
   "CoC7.BackgroundDeleteSection": "Skasuj rubrykę",
   "CoC7.BackgroundSectionMoveUp": "Przenieś do góry",
   "CoC7.BackgroundSectionMoveDown": "Przenieś na dół",
+  "CoC7.BackgroundEncounters": "Spotaknia z dziwnymi istotami",
+  "CoC7.BackgroundFlags": "Flagi",
+  "CoC7.BackgroundFlagsMythosExperienced": "Przyznano 5% Grozy Mitów",
+  "CoC7.BackgroundFlagsMythosHardened": "Weteran Mitów",
+
+  "CoC7.SanityLossEncounters": "Utrata Poczytalności ze Spotkań",
+  "CoC7.SanityLossImmunities": "Odporności na Utratę Poczytalności",
+  "CoC7.AddSanityLossEncounter": "Dodaj Utratę Poczytalności ze Spotkania",
+  "CoC7.AddSanityLossImmunity": "Dodaj Odporność na Utratę Poczytalności",
+  "CoC7.DeleteSanityLossEncounter": "Usuń Utratę Poczytalności ze Spotkania",
+  "CoC7.DeleteSanityLossImmunity": "Usuń Odporność na Utratę Poczytalności",
+
+  "CoC7.SanityLossTypeDialogTitle": "Nowa Utrata Poczytalności lub Odporność",
+  "CoC7.SanityLossTypeDialogBody": "Dodaj nowe Spotkanie z Istotą z Mitów, Utratę Poczytalności, lub Odporność na Utratę Poczytalności do karty Badacza.",
+  "CoC7.SanityLossTypeReason": "Powód",
+  "CoC7.SanityLossTypeValue": "Stracone Punkty Poczytalności",
+  "CoC7.SanityLossEncounter": "Spotkania z dziwnymi istotami",
+  "CoC7.SanityLossImmunity": "Odporność na Utratę Poczytalności",
 
   "CoC7.creatureFightingSkill": "Walka Wręcz",
 
@@ -515,8 +543,10 @@
   "CoC7.MaxSanloss": "Max utrata",
   "CoC7.MinSanloss": "Min utrata",
   "CoC7.AlreadyLost": "Już stracono",
+  "CoC7.AlreadyEncountered": "Już spotkano",
   "CoC7.CreatureMaxLoss": "Max utrata potwora",
   "CoC7.MaxLossToCreature": "Max utrata przez potwora",
+  "CoC7.MaxPossibleSanLoss": "Maksymalna możliwa utrata PP",
   "CoC7.ResetCreatureSan": "Resetuj historię potwora",
   "CoC7.ResetSpecieSan": "Resetuj historię gatunku",
   "CoC7.KeepData": "Zapisz dane potwora",
@@ -664,6 +694,7 @@
   "CoC7.WarnNoControlledActor": "Nie kontrolujesz żadnych postaci",
   "CoC7.WarnFastTargetWithWrongMOV": "Postać jest szybka, ale jej Ruch jest mniejszy niż 8. (MOV: {mov})",
   "CoC7.WarnTooManyTarget": "Zaznaczono za dużo celów. Zachowano zaznaczenie ostatniego celu",
+  "CoC7.WarnNoTargetsSanCheck": "Nie zaznaczyłeś żadnego celu. Albo zaznacz cel albo stwórz link.",
 
   "CoC7.allActors": "Wszystkie postacie",
   "CoC7.restTargets": "Cele odpoczynku",
@@ -747,6 +778,9 @@
   "CoC7.Migrate.TriggerContents": "<p>Włącz migrację danych i uruchom ponownie</p>",
   "CoC7.Migrate.TriggerRestart": "Zapisz i uruchom ponownie",
 
+  "CoC7.Migrate.UpdateCurrentScene": "Migracja aktywnej sceny",
+  "CoC7.Migrate.Complete": "Ukończono migrację danych",
+
   "CoC7.Settings.CoreRules.Title": "Opcjonalne zasady z Podręcznika Pdstawowego",
   "CoC7.Settings.Rules.Name": "Alternatywne/opcjonalne Zasady",
   "CoC7.Settings.Rules.Label": "Skonfiguruj alternatywne/opcjonalne Zasady",
@@ -781,6 +815,8 @@
   "CoC7.ToolTipKeeperSkill": "<label>Testy Strażnika</label><ol><li><strong>CTRL + Lewy PM</strong> Stwórz odnośnik do testu</li>{other}</ol>",
   "CoC7.ToolTipKeeperStandbySkill": "<li><strong>Lewy PM</strong> Zażądaj testu od {name}</li>",
   "CoC7.ToolTipDB": "<label>Bonus do obrażeń</label><ol><li><strong>Lewy PM</strong> Natychmiastowy test z normalną trudnością</li></ol>",
+  "CoC7.ToolTipSanity": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Lewy PM</strong> rzut z opcjami</li><li><strong>Alt/Option + Lewy PM</strong> rzut na poczytalność z opcjami</li><li><strong>Shift + Lewy PM</strong> Natychmiastowy rzut z normalną trudnością</li><li><strong>Shift + Alt/Option + Lewy PM</strong> rzut na poczytalność bez dodatkowych kości</li></ol><label>Testy przeciwstawne</label><ol><li><strong>Prawy PM</strong> Rzut przeciwstawny z opcjami</li><li><strong>Shift + Prawy PM</strong> Natychmiastowy rzut przeciwstawny</li></ol><label>Testy łączone</label><ol><li><strong>Alt/Option + Prawy PM</strong> Test łączony z opcjami</li><li><strong>Shift + Alt/Option + Prawy PM</strong> Natychmiastowy test łączony</li></ol>",
+  "CoC7.ToolTipCombat": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Lewy PM</strong> rzut z opcjami</li><li><strong>Shift + Lewy PM</strong> Natychmiastowy rzut z normalną trudnością</li></ol><label>Przeciwstawny Manewr</label><ol><li><strong>Prawy PM</strong> Przeciwstawny Manewr z opcjami</li><li><strong>Shift + Right click</strong> Natychmiastowy Przeciwstawny Manewr</li></ol>",
   "CoC7.ToolTipKeeperSanity": "<li><strong>CTRL + Alt/Option</strong> Stwórz odnośnik do testu poczytalności</li>",
   "CoC7.ToolTipAutoToggle": "<label>Przełącz automatyczne obliczanie</label><ol><li><strong>Lewy PM</strong> Przełącz automatyczne obliczenia / ręczne wpisy</li>",
   "CoC7.ToolTipSkillFlagToggle": "<label>{status}</label><ol><li><strong>Dwukrotne kliknięcie</strong> Przełącz flagę</li>",
