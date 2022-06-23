@@ -1,4 +1,4 @@
-/* global $, Combat, CONFIG, CONST, fromUuid, game, Hooks, isNewerVersion, tinyMCE */
+/* global $, Combat, CONFIG, CONST, game, Hooks, isNewerVersion, tinyMCE */
 import { CoC7NPCSheet } from './actors/sheets/npc-sheet.js'
 import { CoC7CreatureSheet } from './actors/sheets/creature-sheet.js'
 import { CoC7CharacterSheet } from './actors/sheets/character.js'
@@ -10,8 +10,6 @@ import { CoC7Utilities } from './utilities.js'
 import { CoC7Parser } from './apps/parser.js'
 import { CoC7Check } from './check.js'
 import { CoC7Menu } from './menu.js'
-import { OpposedCheckCard } from './chat/cards/opposed-roll.js'
-import { CombinedCheckCard } from './chat/cards/combined-roll.js'
 import { DamageCard } from './chat/cards/damage.js'
 import { CoC7Canvas } from './apps/canvas.js'
 import { CoC7SettingsDirectory } from './settings-directory.js'
@@ -22,6 +20,7 @@ import * as DiceBot from './dicebot.js'
 import '../styles/system/index.less'
 import { CoC7ChaseSheet } from './items/sheets/chase.js'
 import { CoC7Socket } from './hooks/socket.js'
+import { CoC7SystemSocket } from './apps/coc7-system-socket.js'
 import { DropActorSheetData } from './hooks/drop-actor-sheet-data.js'
 import { TestCard } from './chat/cards/test.js'
 import { initECC } from './common/chatcardlib/src/chatcardlib.js'
@@ -287,22 +286,7 @@ Hooks.on('ready', async () => {
   game.CoC7.skillList = await game.packs.get('CoC7.skills')?.getDocuments()
 
   game.socket.on('system.CoC7', async data => {
-    if (data.type === 'updateChar') CoC7Utilities.updateCharSheets()
-
-    if (game.user.isGM) {
-      if (OpposedCheckCard.defaultConfig.type === data.type) {
-        OpposedCheckCard.dispatch(data)
-      }
-
-      if (CombinedCheckCard.defaultConfig.type === data.type) {
-        CombinedCheckCard.dispatch(data)
-      }
-
-      if (data.type === 'invoke') {
-        const item = await fromUuid(data.item)
-        item[data.method](data.data)
-      }
-    }
+    CoC7SystemSocket.callSocket(data)
   })
 
   // "SETTINGS.BoutOfMadnessPhobiasIndex": "Phobias index",
