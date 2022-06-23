@@ -4,10 +4,12 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 - Fix dice sounds not being pushed to other clients
 - Fix tooltip for character summary sheet
+- Fix updater not always running automatically
 - Update untranslated text in sanity debug information, thanks to @zeteticl
 - Update to French localization, thanks to @vonv
 - Update to Italian localization, thanks to @Stefano1975t
 - Update to Japanese localization, thanks to Asami
+- Update to Polish localization, thanks to @everyonecancode
 - Update to Portuguese localization
 - Update to Taiwanese localization, thanks to @zeteticl
 
