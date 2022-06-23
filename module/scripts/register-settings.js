@@ -447,7 +447,7 @@ export function registerSettings () {
     scope: 'world',
     config: false,
     type: String,
-    default: game.system.data.version
+    default: '0'
   })
   game.settings.register('CoC7', 'systemUpdatedModuleVersion', {
     scope: 'world',

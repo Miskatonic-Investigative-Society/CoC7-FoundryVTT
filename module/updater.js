@@ -3,13 +3,11 @@ import { CoC7Item } from './items/item.js'
 
 export class Updater {
   static async checkForUpdate () {
-    this.systemUpdateVersion = game.settings.get('CoC7', 'systemUpdateVersion')
-      ? String(game.settings.get('CoC7', 'systemUpdateVersion'))
-      : '0'
+    const systemUpdateVersion = game.settings.get('CoC7', 'systemUpdateVersion')
 
     const runMigrate = isNewerVersion(
       game.system.data.version,
-      this.systemUpdateVersion
+      systemUpdateVersion ?? '0'
     )
     this.updatedModules =
       game.settings.get('CoC7', 'systemUpdatedModuleVersion') || {}
@@ -101,6 +99,16 @@ export class Updater {
   static async update () {
     await this.updateDocuments()
 
+    // // If we put up a temporary scene return the user and remove it
+    // if (
+    //   typeof this.temporaryScene !== 'undefined' &&
+    //   typeof this.originalScene !== 'undefined'
+    // ) {
+    //   await this.originalScene.view()
+    //   await new Promise(resolve => setTimeout(resolve, 1000))
+    //   await this.temporaryScene.delete()
+    // }
+
     // Migrate Settings if Pulp Rules is enabled turn on all rules
     if (game.settings.get('CoC7', 'pulpRules')) {
       game.settings.set('CoC7', 'pulpRuleDoubleMaxHealth', true)
@@ -188,6 +196,43 @@ export class Updater {
         const updateData = Updater.migrateSceneData(scene.data)
         if (!foundry.utils.isObjectEmpty(updateData)) {
           console.log(`Migrating Scene document ${scene.name}`)
+          // if (
+          //   scene.id === game.scenes.current.id &&
+          //   typeof this.temporaryScene === 'undefined' &&
+          //   typeof this.originalScene === 'undefined'
+          // ) {
+          //   this.temporaryScene = await Scene.create({
+          //     name: game.i18n.format('CoC7.Migrate.UpdateCurrentScene'),
+          //     backgroundColor: '#000000'
+          //   })
+          //   this.originalScene = scene
+          //   await DrawingDocument.create(
+          //     {
+          //       author: game.user.id,
+          //       shape: {
+          //         type: 'r',
+          //         width: 1600,
+          //         height: 200
+          //       },
+          //       x: 2200,
+          //       y: 2200,
+          //       z: 0,
+          //       strokeWidth: 0,
+          //       text: game.i18n.format('CoC7.Migrate.UpdateCurrentScene'),
+          //       fontFamily: 'Signika',
+          //       fontSize: 128,
+          //       textColor: '#FFFFFF',
+          //       textAlpha: 1,
+          //       hidden: false,
+          //       locked: true
+          //     },
+          //     {
+          //       parent: this.temporaryScene
+          //     }
+          //   )
+          //   await this.temporaryScene.view()
+          //   await new Promise(resolve => setTimeout(resolve, 1000))
+          // }
           await scene.update(updateData, { enforceTypes: false })
         }
         scene.tokens.forEach(t => (t._actor = null))
