@@ -828,13 +828,13 @@ export class CoC7ChaseSheet extends ItemSheet {
 
   async _onAddParticipant (event) {
     event.preventDefault()
-    let data = {}
+    const data = { chaseUuid: this.item.uuid }
     if (event.dataTransfer) {
       const dataString = event.dataTransfer.getData('text/plain')
-      data = JSON.parse(dataString)
+      data.dropData = JSON.parse(dataString)
     }
-    const prout = await CoC7ChaseParticipantImporter.create(data)
-    await this.addParticipant(data)
+
+    CoC7ChaseParticipantImporter.create(data)
   }
 
   async _onRollParticipant (event) {

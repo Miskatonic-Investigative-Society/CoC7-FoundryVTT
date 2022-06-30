@@ -1,5 +1,46 @@
-<form id="chase-participant-importer" autocomplete="off">
-    <h2>{{localize 'CoC7.ActorImporter'}}</h2>
+<form id="chase-participant-importer" autocomplete="off" data-doc-uuid="{{docUuid}}">
+  <div class="form-container">
+
+		<h2>{{localize 'CoC7.ActorImporter'}}</h2>
     <p>{{localize 'CoC7.ParticipantDropHint'}}</p>
-    <div class="form-group"></div>
+
+		{{#if actor}}
+		<datalist id="check-options">
+			{{#each optionsList.actorSkillsAndCharacteristics as |o|}}
+				<option>{{o}}</option>
+			{{/each}}
+		</datalist>
+		<div class="actor-header">
+			<img class="photo" src="{{actor.img}}" title="{{actor.name}}"/>
+			<div class="actor-name">{{actor.name}}</div>
+			<a class="reset-participant"><i class="fas fa-times"></i></a>
+		</div>
+		{{else}}
+		<div class="form-group">
+			<label>Name</label>
+			<input type="text" name="object.name" value="{{object.name}}">
+		</div>
+		<datalist id="check-options">
+			{{#each optionsList.allSkillsAndCharacteristics as |o|}}
+				<option>{{o}}</option>
+			{{/each}}
+		</datalist>
+		{{/if}}
+
+		<div class="form-group triple">
+			<label>Init</label>
+			<input class="name" type="text" name="object.initiative" value="{{object.initiative}}" list="check-options"/>
+			<input class="value" type="text" name="object.dex" value="{{object.dex}}" data-dtype="Number" {{#if initReadOnly}}readonly{{/if}}/>
+		</div>
+		<div class="form-group triple">
+			<label>Speed check</label>
+			<input class="name" type="text" name="object.speedCheck.name" value="{{object.speedCheck.name}}" list="check-options"/>
+			<input class="value" type="text" name="object.speedCheck.score" value="{{object.speedCheck.score}}" data-dtype="Number" {{#if speedCheckReadOnly}}readonly{{/if}}/>
+		</div>
+
+		<div class="form-group">
+			<label>Move Adjustement</label>
+			<input type="text" name="object.movAdjustment" value="{{object.movAdjustment}}">
+		</div>
+  </div>
 </form>

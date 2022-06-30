@@ -832,6 +832,28 @@ export class CoC7Utilities {
     return false
   }
 
+  static getActorDocumentFromDropData (dropData) {
+    let docUuid, actor
+    if (dropData.tokenUuid) docUuid = dropData.tokenUuid
+    else
+      docUuid =
+        dropData.sceneId && dropData.tokenId
+          ? `Scene.${dropData.sceneId}.Token.${dropData.tokenId}`
+          : dropData.actorId || dropData.actorKey || dropData.id
+
+    if ('Token' === dropData.type) {
+      docUuid = dropData.uuid
+    } else if (docUuid) {
+      actor = CoC7Utilities.getActorFromKey(docUuid)
+      if (!actor && 'Item' === dropData.type) docUuid = null
+    }
+
+    if (actor && docUuid != actor.uuid) {
+      docUuid = actor.uuid
+    }
+    return docUuid
+  }
+
   static getDocumentFromKey (key) {
     if (!key) return null
     // Case 0 - a document Uuid

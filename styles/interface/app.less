@@ -1,4 +1,34 @@
 .coc7.dialog {
+  &.chase-participant-importer{
+    input:read-only,
+    input:read-only:hover,
+    input:read-only:focus {
+      border: 1px solid transparent;
+      box-shadow: none;
+      cursor: default;
+    }
+
+    .actor-header{
+      display: flex;
+      line-height: 2rem;
+      img{
+        border: none;
+        width: 2rem;
+        height: 2rem;
+      }
+      .actor-name{ 
+        flex:1;
+        text-align: center;
+        font-weight: bolder;
+      }
+    }
+    .form-group.triple{
+      label{ flex:3}
+      .name{ flex:6}
+      .value{flex:1}
+    }
+  }
+  
   .selectable:hover {
     text-shadow: 0 0 8px var(--main-sheet-interactive-color);
   }
