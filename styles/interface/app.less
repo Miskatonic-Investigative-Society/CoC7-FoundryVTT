@@ -1,5 +1,5 @@
 .coc7.dialog {
-  &.chase-participant-importer{
+  &.chase-participant-importer {
     input:read-only,
     input:read-only:hover,
     input:read-only:focus {
@@ -8,27 +8,42 @@
       cursor: default;
     }
 
-    .actor-header{
+    .actor-header {
+      a.food-chain {
+        font-size: 1.5rem;
+        &.chaser {
+          color: red;
+        }
+        &.prey {
+          color: green;
+        }
+      }
       display: flex;
       line-height: 2rem;
-      img{
+      img {
         border: none;
         width: 2rem;
         height: 2rem;
       }
-      .actor-name{ 
-        flex:1;
+      .actor-name {
+        flex: 1;
         text-align: center;
         font-weight: bolder;
       }
     }
-    .form-group.triple{
-      label{ flex:3}
-      .name{ flex:6}
-      .value{flex:1}
+    .form-group.triple {
+      label {
+        flex: 3;
+      }
+      .name {
+        flex: 6;
+      }
+      .value {
+        flex: 1;
+      }
     }
   }
-  
+
   .selectable:hover {
     text-shadow: 0 0 8px var(--main-sheet-interactive-color);
   }

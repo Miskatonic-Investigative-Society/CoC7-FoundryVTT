@@ -2,45 +2,55 @@
   <div class="form-container">
 
 		<h2>{{localize 'CoC7.ActorImporter'}}</h2>
-    <p>{{localize 'CoC7.ParticipantDropHint'}}</p>
+    	<p>{{localize 'CoC7.ParticipantDropHint'}}</p>
 
-		{{#if actor}}
 		<datalist id="check-options">
-			{{#each optionsList.actorSkillsAndCharacteristics as |o|}}
+			{{#each skillsAndCharacteristicsList as |o|}}
 				<option>{{o}}</option>
 			{{/each}}
 		</datalist>
+
 		<div class="actor-header">
-			<img class="photo" src="{{actor.img}}" title="{{actor.name}}"/>
-			<div class="actor-name">{{actor.name}}</div>
+			<img class="photo" src="{{participant.icon}}" title="{{participant.name}}"/>
+			{{#if participant.isChaser}}
+				<a class="food-chain chaser"><i class="game-icon game-icon-moon-claws"></i></a>
+		  	{{else}}
+				<a class="food-chain prey"><i class="fas fa-running"></i></a>
+		  	{{/if}}
+			{{#if actor}}
+			<div class="actor-name">{{participant.name}}</div>
+			{{else}}
+			<div class="actor-name"><input type="text" name="object.name" value="{{participant.name}}" placeholder="name"></div>
+			{{/if}}
 			<a class="reset-participant"><i class="fas fa-times"></i></a>
 		</div>
-		{{else}}
-		<div class="form-group">
-			<label>Name</label>
-			<input type="text" name="object.name" value="{{object.name}}">
-		</div>
-		<datalist id="check-options">
-			{{#each optionsList.allSkillsAndCharacteristics as |o|}}
-				<option>{{o}}</option>
-			{{/each}}
-		</datalist>
-		{{/if}}
 
 		<div class="form-group triple">
 			<label>Init</label>
 			<input class="name" type="text" name="object.initiative" value="{{object.initiative}}" list="check-options"/>
-			<input class="value" type="text" name="object.dex" value="{{object.dex}}" data-dtype="Number" {{#if initReadOnly}}readonly{{/if}}/>
+			<input class="value" type="text" name="object.dex" value="{{participant.initiative}}" data-dtype="Number" {{#if initReadOnly}}readonly{{/if}}/>
 		</div>
 		<div class="form-group triple">
 			<label>Speed check</label>
 			<input class="name" type="text" name="object.speedCheck.name" value="{{object.speedCheck.name}}" list="check-options"/>
-			<input class="value" type="text" name="object.speedCheck.score" value="{{object.speedCheck.score}}" data-dtype="Number" {{#if speedCheckReadOnly}}readonly{{/if}}/>
+			<input class="value" type="text" name="object.speedCheck.score" value="{{participant.speedCheck.score}}" data-dtype="Number" {{#if speedCheckReadOnly}}readonly{{/if}}/>
 		</div>
 
+		{{#if chase.started}}
 		<div class="form-group">
-			<label>Move Adjustement</label>
-			<input type="text" name="object.movAdjustment" value="{{object.movAdjustment}}">
+			<label>Movement actions</label>
+			<input type="text" name="object.movementAction" value="{{participant.movementAction}}" data-dtype="Number"/>
 		</div>
+		{{/if}}
   </div>
+  <div class="dialog-buttons">
+    <button class="dialog-button" data-action="add">
+        <i class="fas fa-plus"></i>
+        Add
+    </button>
+    <button class="dialog-button " data-action="cancel">
+        <i class="fas fa-times"></i>
+        Cancel
+    </button>
+	</div>
 </form>

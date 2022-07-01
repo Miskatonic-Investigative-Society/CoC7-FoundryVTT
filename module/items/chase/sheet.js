@@ -784,23 +784,19 @@ export class CoC7ChaseSheet extends ItemSheet {
     const chaseTrack = target.closest('.chase-track')
     const locationUuid = target.dataset.uuid
 
-    switch (data.type) {
-      case 'participant':
-        const oldLocation = this.findLocation(locationUuid)
-        if (oldLocation) {
-          if (oldLocation.participants?.includes(data.uuid)) return
-        }
-        await this.item.setchaseTrackScroll({ render: false })
-        await this.item.moveParticipantToLocation(data.uuid, locationUuid)
-
-        break
-      case 'token':
-        const tokenDoc = await fromUuid(data.tokenUuid)
-        ui.notifications.info('token dropped')
-        break
-
-      default:
-        break
+    if (data.type == 'participant') {
+      const oldLocation = this.findLocation(locationUuid)
+      if (oldLocation) {
+        if (oldLocation.participants?.includes(data.uuid)) return
+      }
+      await this.item.setchaseTrackScroll({ render: false })
+      await this.item.moveParticipantToLocation(data.uuid, locationUuid)
+    } else {
+      CoC7ChaseParticipantImporter.create({
+        chaseUuid: this.item.uuid,
+        locationUuid: locationUuid,
+        dropData: data
+      })
     }
   }
 

@@ -431,16 +431,16 @@ export class _participant {
     if (this.hasActor) {
       check.options = []
       for (const c of ['con']) {
-        const characterisitc = this.actor.getCharacteristic(c)
-        if (characterisitc?.value) check.options.push(characterisitc.label)
+        const characteristic = this.actor.getCharacteristic(c)
+        if (characteristic?.value) check.options.push(characteristic.label)
       }
 
       for (const s of this.actor.driveSkills) {
-        check.options.push(s.name)
+        check.options.push(s.fullName)
       }
 
       for (const s of this.actor.pilotSkills) {
-        check.options.push(s.name)
+        check.options.push(s.fullName)
       }
       check.hasOptions = !!check.options.length
 

@@ -936,6 +936,46 @@ export class CoC7Chase extends CoC7Item {
     })
   }
 
+  async addParticipant (participant, { render = true, locationUuid = null } = {}) {
+    const participantsData = this.data.data.participants
+      ? foundry.utils.duplicate(this.data.data.participants)
+      : []
+
+    if (participant.data.chaseUuid) delete participant.data.chaseUuid
+    if (participant.data.locationUuid) delete participant.data.locationUuid
+
+    if (!participant.uuid) {
+      let unique = false
+      while (!unique) {
+        participant.data.uuid = foundry.utils.randomID(16)
+        unique =
+          0 === participantsData.filter(p => p.uuid == participant.uuid).length
+      }
+    }
+
+    participantsData.push(participant.data)
+
+    await this.updateParticipants(participantsData, {
+      render: render && !this.started
+    })
+
+    if (this.started) {
+      const locationsData = this.data.data.locations.list
+        ? foundry.utils.duplicate(this.data.data.locations.list)
+        : []
+      
+      if( 0 == locationsData.length) {
+        ui.notifications.error('Empty locations list !')
+      }
+
+      let locationIndex = locationsData.findIndex(l => locationUuid == l.uuid)
+      if( -1 === locationIndex) locationIndex = 0
+      if( !locationsData[locationIndex].participants) locationsData[locationIndex].participants = []
+      locationsData[locationIndex].participants.push( participant.uuid)
+      await this.updateLocationsList(locationsData, { render: render })
+    }
+  }
+
   async editParticipant (
     participantUuid,
     {

@@ -885,7 +885,7 @@ export class CoC7Utilities {
     const doc = CoC7Utilities.getDocumentFromKey(key)
     if (!doc) return null
     if (doc.actor) return doc.actor
-    if (typeof doc == 'CoCActor') return doc
+    if (doc.constructor?.name == 'CoCActor') return doc
     return null
   }
 }
