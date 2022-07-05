@@ -1,6 +1,7 @@
 /* global Actor, CONFIG, CONST, Dialog, Die, duplicate, game, getProperty, Hooks, mergeObject, Roll, TextEditor, Token, ui */
 
 import { COC7 } from '../config.js'
+import { CoC7ChatMessage } from '../apps/coc7-chat-message.js'
 import { CoC7Check } from '../check.js'
 import { CoC7ConCheck } from '../chat/concheck.js'
 import { RollDialog } from '../apps/roll-dialog.js'
@@ -1347,6 +1348,53 @@ export class CoCActor extends Actor {
       }
     }
     return null
+  }
+
+  async runRoll (options = {}) {
+    const config = {
+      options: {
+        tokenKey: this.actorKey,
+        hasPlayerOwner: false
+      },
+      dialogOptions: {
+        cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
+        modifier: options.modifier ?? 0,
+        difficulty: options.difficulty ?? 1,
+        toMessage: options.toMessage ?? false
+      }
+    }
+    if (typeof options.skillId !== 'undefined') {
+      if (this.items.get(options.skillId)) {
+        config.options.skillId = options.skillId
+        config.dialogOptions.rollType = CoC7ChatMessage.ROLL_TYPE_SKILL
+      } else {
+        return null
+      }
+    } else if (typeof options.skillName !== 'undefined') {
+      config.options.skillId = this.getSkillsByName(options.skillName)
+      if (config.options.skillId.length === 0) {
+        return null
+      }
+      config.options.skillId = config.options.skillId[0].id
+      config.dialogOptions.rollType = CoC7ChatMessage.ROLL_TYPE_SKILL
+    } else if (
+      typeof options.attribute !== 'undefined' &&
+      ['lck', 'san'].includes(options.attribute)
+    ) {
+      config.options.attribute = options.attribute
+      config.dialogOptions.rollType = CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
+    } else if (
+      typeof options.characteristic !== 'undefined' &&
+      typeof this.data.data.characteristics[options.characteristic] !==
+        'undefined'
+    ) {
+      config.options.characteristic = options.characteristic
+      config.dialogOptions.rollType = CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC
+    } else {
+      return null
+    }
+    const results = await CoC7ChatMessage.runRoll(config)
+    return results
   }
 
   get occupation () {
