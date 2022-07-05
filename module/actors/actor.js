@@ -1364,12 +1364,23 @@ export class CoCActor extends Actor {
       }
     }
     if (typeof options.skillId !== 'undefined') {
-      config.options.skillId = options.skillId
+      if (this.items.get(options.skillId)) {
+        config.options.skillId = options.skillId
+        config.dialogOptions.rollType = CoC7ChatMessage.ROLL_TYPE_SKILL
+      } else {
+        return null
+      }
+    } else if (typeof options.skillName !== 'undefined') {
+      config.options.skillId = this.getSkillsByName(options.skillName)
+      if (config.options.skillId.length === 0) {
+        return null
+      }
+      config.options.skillId = config.options.skillId[0]['id']
       config.dialogOptions.rollType = CoC7ChatMessage.ROLL_TYPE_SKILL
-    } else if (typeof options.attribute !== 'undefined') {
+    } else if (typeof options.attribute !== 'undefined' && ['lck', 'san'].includes(options.attribute)) {
       config.options.attribute = options.attribute
       config.dialogOptions.rollType = CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
-    } else if (typeof options.characteristic !== 'undefined') {
+    } else if (typeof options.characteristic !== 'undefined' && typeof this.data.data.characteristics[options.characteristic] !== 'undefined') {
       config.options.characteristic = options.characteristic
       config.dialogOptions.rollType = CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC
     } else {
