@@ -720,6 +720,10 @@ export class CoC7Check {
     if (!this.standby) await this._perform()
   }
 
+  get rolledSuccessLevel () {
+    return this.successLevel
+  }
+
   async _perform (options = {}) {
     this.dice =
       options.roll ||

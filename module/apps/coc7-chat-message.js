@@ -118,7 +118,8 @@ export class CoC7ChatMessage {
       dialogOptions: {
         rollType: options.rollType,
         cardType: options.cardType,
-        attribute: ''
+        attribute: '',
+        toMessage: (options.toMessage ?? true)
       }
     }
     switch (config.dialogOptions.rollType) {
@@ -378,37 +379,38 @@ export class CoC7ChatMessage {
           }
         }
         break
-      case CoC7ChatMessage.CARD_TYPE_NORMAL:
-        {
-          const check = new CoC7Check()
-          check.diceModifier = config.dialogOptions.modifier
-          check.difficulty = config.dialogOptions.difficulty
-          check.actor = !config.options.tokenKey
-            ? config.options.actorId
-            : config.options.tokenKey
-          check.flatDiceModifier = config.dialogOptions.flatDiceModifier
-          check.flatThresholdModifier =
-            config.dialogOptions.flatThresholdModifier
-          check.standby =
-            game.settings.get('CoC7', 'stanbyGMRolls') &&
-            game.user.isGM &&
-            config.options.hasPlayerOwner
-          if (
-            config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_SKILL
-          ) {
-            check.skill = config.options.skillId
-            await check.roll()
-          } else if (
-            config.dialogOptions.rollType ===
-            CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
-          ) {
-            await check.rollAttribute(config.options.attribute)
-          } else {
-            await check.rollCharacteristic(config.options.characteristic)
-          }
+      case CoC7ChatMessage.CARD_TYPE_NORMAL: {
+        const check = new CoC7Check()
+        check.diceModifier = config.dialogOptions.modifier
+        check.difficulty = config.dialogOptions.difficulty
+        check.actor = !config.options.tokenKey
+          ? config.options.actorId
+          : config.options.tokenKey
+        check.flatDiceModifier = config.dialogOptions.flatDiceModifier
+        check.flatThresholdModifier = config.dialogOptions.flatThresholdModifier
+        check.standby =
+          game.settings.get('CoC7', 'stanbyGMRolls') &&
+          game.user.isGM &&
+          config.options.hasPlayerOwner
+        if (config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_SKILL) {
+          check.skill = config.options.skillId
+          await check.roll()
+        } else if (
+          config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
+        ) {
+          await check.rollAttribute(config.options.attribute)
+        } else {
+          await check.rollCharacteristic(config.options.characteristic)
+        }
+        if (config.dialogOptions.toMessage) {
           check.toMessage()
         }
-        break
+        return {
+          result: check.modifiedResult,
+          successLevel: check.rolledSuccessLevel,
+          success: check.passed
+        }
+      }
       case CoC7ChatMessage.CARD_TYPE_OPPOSED:
       case CoC7ChatMessage.CARD_TYPE_COMBINED:
         {
