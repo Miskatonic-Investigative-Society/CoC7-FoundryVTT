@@ -1360,7 +1360,7 @@ export class CoCActor extends Actor {
         cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
         modifier: options.modifier ?? 0,
         difficulty: options.difficulty ?? 1,
-        toMessage: false
+        toMessage: options.toMessage ?? false
       }
     }
     if (typeof options.skillId !== 'undefined') {
@@ -1375,12 +1375,19 @@ export class CoCActor extends Actor {
       if (config.options.skillId.length === 0) {
         return null
       }
-      config.options.skillId = config.options.skillId[0]['id']
+      config.options.skillId = config.options.skillId[0].id
       config.dialogOptions.rollType = CoC7ChatMessage.ROLL_TYPE_SKILL
-    } else if (typeof options.attribute !== 'undefined' && ['lck', 'san'].includes(options.attribute)) {
+    } else if (
+      typeof options.attribute !== 'undefined' &&
+      ['lck', 'san'].includes(options.attribute)
+    ) {
       config.options.attribute = options.attribute
       config.dialogOptions.rollType = CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
-    } else if (typeof options.characteristic !== 'undefined' && typeof this.data.data.characteristics[options.characteristic] !== 'undefined') {
+    } else if (
+      typeof options.characteristic !== 'undefined' &&
+      typeof this.data.data.characteristics[options.characteristic] !==
+        'undefined'
+    ) {
       config.options.characteristic = options.characteristic
       config.dialogOptions.rollType = CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC
     } else {
