@@ -33,9 +33,13 @@ export class RollDialog {
         !options.disableFlatThresholdModifier,
       difficulty: CoC7Check.difficultyLevel,
       unknownDifficultyDefault: unknownDifficultyDefault,
+      hideDifficulty: options.hideDifficulty ?? false,
       options
     }
-    if (typeof options.cardType !== 'undefined') {
+    if (
+      typeof options.cardType !== 'undefined' &&
+      (!options.forcedCardType ?? true)
+    ) {
       data.cardTypes = CoC7ChatMessage.cardTypes(options)
     }
     const html = await renderTemplate(

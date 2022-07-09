@@ -67,6 +67,9 @@ export function exclude__ (key, value) {
  * @returns
  */
 export function isCtrlKey (event) {
+  if (event === false) {
+    return false
+  }
   return (
     event.metaKey ||
     event.ctrlKey ||
