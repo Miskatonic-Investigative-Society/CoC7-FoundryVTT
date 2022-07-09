@@ -18,22 +18,24 @@
       </div>
     {{/if}}
 
-    <div class="flexrow">
-      <label>{{localize 'CoC7.RollDifficulty'}}</label>
-      <select name="difficulty">
-        {{#if options.difficulty}}
-          <option value="{{difficulty.unknown}}" {{#if options.difficultyLevel.unknown}}selected{{/if}}>{{localize 'CoC7.RollDifficultyUnknown'}}</option>
-          <option value="{{difficulty.regular}}" {{#if options.difficultyLevel.regular}}selected{{/if}}>{{localize 'CoC7.RollDifficultyRegular'}}</option>
-          <option value="{{difficulty.hard}}" {{#if options.difficultyLevel.hard}}selected{{/if}}>{{localize 'CoC7.RollDifficultyHard'}}</option>
-          <option value="{{difficulty.extreme}}" {{#if options.difficultyLevel.extreme}}selected{{/if}}>{{localize 'CoC7.RollDifficultyExtreme'}}</option>
-        {{else}}
-          <option value="{{difficulty.unknown}}" {{#if unknownDifficultyDefault}}selected{{/if}}>{{localize 'CoC7.RollDifficultyUnknown'}}</option>
-          <option value="{{difficulty.regular}}" {{#unless unknownDifficultyDefault}}selected{{/unless}}>{{localize 'CoC7.RollDifficultyRegular'}}</option>
-          <option value="{{difficulty.hard}}">{{localize 'CoC7.RollDifficultyHard'}}</option>
-          <option value="{{difficulty.extreme}}">{{localize 'CoC7.RollDifficultyExtreme'}}</option>
-        {{/if}}
-      </select>
-    </div>
+    {{#unless hideDifficulty}}
+      <div class="flexrow">
+        <label>{{localize 'CoC7.RollDifficulty'}}</label>
+        <select name="difficulty">
+          {{#if options.difficulty}}
+            <option value="{{difficulty.unknown}}" {{#if options.difficultyLevel.unknown}}selected{{/if}}>{{localize 'CoC7.RollDifficultyUnknown'}}</option>
+            <option value="{{difficulty.regular}}" {{#if options.difficultyLevel.regular}}selected{{/if}}>{{localize 'CoC7.RollDifficultyRegular'}}</option>
+            <option value="{{difficulty.hard}}" {{#if options.difficultyLevel.hard}}selected{{/if}}>{{localize 'CoC7.RollDifficultyHard'}}</option>
+            <option value="{{difficulty.extreme}}" {{#if options.difficultyLevel.extreme}}selected{{/if}}>{{localize 'CoC7.RollDifficultyExtreme'}}</option>
+          {{else}}
+            <option value="{{difficulty.unknown}}" {{#if unknownDifficultyDefault}}selected{{/if}}>{{localize 'CoC7.RollDifficultyUnknown'}}</option>
+            <option value="{{difficulty.regular}}" {{#unless unknownDifficultyDefault}}selected{{/unless}}>{{localize 'CoC7.RollDifficultyRegular'}}</option>
+            <option value="{{difficulty.hard}}">{{localize 'CoC7.RollDifficultyHard'}}</option>
+            <option value="{{difficulty.extreme}}">{{localize 'CoC7.RollDifficultyExtreme'}}</option>
+          {{/if}}
+        </select>
+      </div>
+    {{/unless}}
 
     {{#if allowFlatDiceModifier}}
       <div class="flexrow">

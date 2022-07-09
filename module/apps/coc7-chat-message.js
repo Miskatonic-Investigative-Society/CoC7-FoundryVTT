@@ -66,6 +66,38 @@ export class CoC7ChatMessage {
 
   static normalizeRequest (options) {
     if (
+      typeof options.event === 'undefined' &&
+      typeof options.cardType !== 'undefined' &&
+      typeof options.actor !== 'undefined' &&
+      (typeof options.skillId !== 'undefined' ||
+        typeof options.skillName !== 'undefined' ||
+        typeof options.attribute !== 'undefined' ||
+        typeof options.characteristic !== 'undefined')
+    ) {
+      if (typeof options.skillId !== 'undefined') {
+        if (options.actor.items.get(options.skillId)) {
+          options.rollType = CoC7ChatMessage.ROLL_TYPE_SKILL
+        }
+      } else if (typeof options.skillName !== 'undefined') {
+        const skillIds = options.actor.getSkillsByName(options.skillName)
+        if (skillIds.length > 0) {
+          options.skillId = skillIds[0].id
+          options.rollType = CoC7ChatMessage.ROLL_TYPE_SKILL
+        }
+      } else if (
+        typeof options.attribute !== 'undefined' &&
+        ['lck', 'san'].includes(options.attribute)
+      ) {
+        options.rollType = CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
+      } else if (
+        typeof options.characteristic !== 'undefined' &&
+        typeof options.actor.data.data.characteristics[
+          options.characteristic
+        ] !== 'undefined'
+      ) {
+        options.rollType = CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC
+      }
+    } else if (
       typeof options.event === 'undefined' ||
       typeof options.cardType === 'undefined' ||
       typeof options.rollType === 'undefined'
@@ -110,16 +142,20 @@ export class CoC7ChatMessage {
     const config = {
       options: {
         cardType: options.cardType,
-        shiftKey: options.event.shiftKey,
-        altKey: options.event.altKey,
-        isCtrlKey: isCtrlKey(options.event),
-        isCombat: options.event.currentTarget.classList?.contains('combat')
+        shiftKey: options.event?.shiftKey ?? options.fastForward ?? false,
+        altKey: options.event?.altKey ?? false,
+        isCtrlKey: isCtrlKey(options.event ?? false),
+        isCombat:
+          options.event?.currentTarget.classList?.contains('combat') ?? false,
+        preventStandby: options.preventStandby ?? false
       },
       dialogOptions: {
         rollType: options.rollType,
         cardType: options.cardType,
         attribute: '',
-        toMessage: (options.toMessage ?? true)
+        chatMessage: options.chatMessage ?? true,
+        forcedCardType: options.forcedCardType ?? false,
+        hideDifficulty: options.hideDifficulty ?? false
       }
     }
     switch (config.dialogOptions.rollType) {
@@ -127,20 +163,25 @@ export class CoC7ChatMessage {
       case CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC:
       case CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE:
         config.options.skillId =
-          options.event.currentTarget.closest('.item')?.dataset.skillId
+          options.skillId ??
+          options.event?.currentTarget.closest('.item')?.dataset.skillId
         config.options.itemId =
-          options.event.currentTarget.closest('.item')?.dataset.itemId
+          options.event?.currentTarget.closest('.item')?.dataset.itemId
         config.options.characteristic =
-          options.event.currentTarget.parentElement.dataset.characteristic
+          options.characteristic ??
+          options.event?.currentTarget.parentElement.dataset.characteristic
         config.options.attribute =
-          options.event.currentTarget.parentElement.dataset.attrib
+          options.attribute ??
+          options.event?.currentTarget.parentElement.dataset.attrib
         config.dialogOptions.attribute = config.options.attribute
         config.options.actorId =
-          options.event.currentTarget.closest('form').dataset.actorId
+          options.event?.currentTarget.closest('form').dataset.actorId ??
+          options.actor.id
         config.options.tokenKey =
-          options.event.currentTarget.closest('form').dataset.tokenId
+          options.event?.currentTarget.closest('form').dataset.tokenId ??
+          options.actor.tokenKey
         config.options.weaponAltSkill =
-          options.event.currentTarget.classList.contains('alternativ-skill')
+          options.event?.currentTarget.classList.contains('alternativ-skill')
         config.options.actor = options.actor
         if (
           config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_SKILL &&
@@ -243,6 +284,7 @@ export class CoC7ChatMessage {
         }
         config.dialogOptions.modifier = 0
         config.dialogOptions.difficulty =
+          options.difficulty ??
           CoC7Check.difficultyLevel[
             game.settings.get('CoC7', 'defaultCheckDifficulty')
           ]
@@ -271,7 +313,7 @@ export class CoC7ChatMessage {
       if (!config.options.shiftKey) {
         await CoC7ChatMessage.createRoll(config)
       }
-      CoC7ChatMessage.runRoll(config)
+      return CoC7ChatMessage.runRoll(config)
     }
   }
 
@@ -389,6 +431,7 @@ export class CoC7ChatMessage {
         check.flatDiceModifier = config.dialogOptions.flatDiceModifier
         check.flatThresholdModifier = config.dialogOptions.flatThresholdModifier
         check.standby =
+          !config.options.preventStandby &&
           game.settings.get('CoC7', 'stanbyGMRolls') &&
           game.user.isGM &&
           config.options.hasPlayerOwner
@@ -402,13 +445,20 @@ export class CoC7ChatMessage {
         } else {
           await check.rollCharacteristic(config.options.characteristic)
         }
-        if (config.dialogOptions.toMessage) {
+        if (config.dialogOptions.chatMessage) {
           check.toMessage()
         }
         return {
           result: check.modifiedResult,
           successLevel: check.rolledSuccessLevel,
-          success: check.passed
+          isFumble: check.isFumble,
+          isCritical: check.isCritical,
+          successLevels: {
+            1: check.regularThreshold,
+            2: check.hardThreshold,
+            3: check.extremeThreshold
+          },
+          passed: check.passed
         }
       }
       case CoC7ChatMessage.CARD_TYPE_OPPOSED:
