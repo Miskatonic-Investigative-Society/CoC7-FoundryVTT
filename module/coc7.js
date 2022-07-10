@@ -25,11 +25,6 @@ import { DropActorSheetData } from './hooks/drop-actor-sheet-data.js'
 import { TestCard } from './chat/cards/test.js'
 import { initECC } from './common/chatcardlib/src/chatcardlib.js'
 
-if (CONST.COMPATIBILITY_MODES && !isNewerVersion(game.version, '10.262')) {
-  // hide compatibility warnings while still in testing v10 and supporting v9
-  CONFIG.compatibility.mode = CONST.COMPATIBILITY_MODES.SILENT
-}
-
 Hooks.on('renderSettingsConfig', (app, html, options) => {
   const systemTab = $(app.form).find('.tab[data-tab=system]')
   systemTab
@@ -115,6 +110,11 @@ Hooks.on('renderSettingsConfig', (app, html, options) => {
 })
 
 Hooks.once('init', async function () {
+  if (typeof CONST.COMPATIBILITY_MODES !== 'undefined' && !isNewerVersion(game.version, '10.300')) {
+    // hide compatibility warnings while we still support v9 and v10 with the same version
+    CONFIG.compatibility.mode = CONST.COMPATIBILITY_MODES.SILENT
+  }
+
   game.CoC7 = {
     macros: {
       skillCheck: CoC7Utilities.skillCheckMacro,
