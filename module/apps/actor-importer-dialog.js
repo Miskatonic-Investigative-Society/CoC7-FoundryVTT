@@ -1,6 +1,7 @@
 /* global $, CONFIG, Dialog, game, Hooks, renderTemplate, ui */
 
 import { CoC7ActorImporter } from './actor-importer.js'
+import { CoC7DholeHouseActorImporter } from './dholehouse_importer.js'
 import { CoC7ActorImporterRegExp } from './actor-importer-regexp.js'
 import { CoC7Utilities } from '../utilities.js'
 
@@ -89,7 +90,7 @@ export class CoC7ActorImporterDialog extends Dialog {
     // console.debug('updated:', updated)
   }
 
-  submit (button) {
+  async submit (button) {
     if (button.cssClass === 'getExampleNow') {
       const content = CoC7ActorImporterRegExp.getExampleText(
         $('#coc-entity-lang :selected').val()
@@ -98,6 +99,9 @@ export class CoC7ActorImporterDialog extends Dialog {
         return ui.notifications.info(game.i18n.localize('CoC7.Copied'))
       })
       return
+    }
+    if (button.cssClass === 'dholehouseImporter') {
+      await CoC7DholeHouseActorImporter.pasteDholeHouseJSONDialog()
     }
     if (
       $('#coc-pasted-character-data').val().trim() !== '' ||
@@ -129,6 +133,10 @@ export class CoC7ActorImporterDialog extends Dialog {
               icon: '<i class="fas fa-file-import"></i>',
               label: game.i18n.localize('CoC7.Import'),
               callback: CoC7ActorImporterDialog.importActor
+            },
+            dholehouseImporter: {
+              icon: '<i class="fas fa-file-import"></i>',
+              label: game.i18n.localize('CoC7.DholeHouseActorImporter')
             },
             getExampleNow: {
               icon: '<i class="fas fa-info-circle"></i>',
