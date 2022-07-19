@@ -180,8 +180,8 @@ export class CoC7ActorImporterDialog extends FormApplication {
   //  * create it's the default web to crate the CoC7ActorImporterDialog
   //  */
   static async create (options = {}) {
-    options.importType = options.importType ?? 'dholehouse'
-    options.language = options.language ?? null
+    options.importType = options.importType ?? 'npc'
+    options.language = options.language ?? CoC7ActorImporterRegExp.checkLanguage(null);
     options.convert6E = options.language ?? 'coc-guess'
     options.source = options.source ?? 'iwms'
     options.characterData = options.characterData ?? ''
