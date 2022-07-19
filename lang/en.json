@@ -757,8 +757,9 @@
   "CoC7.ImportActorItemsItemWorldModuleSystem": "Items / World / Modules / System",
   "CoC7.ImportActorItemsWorldModuleItemSystem": "World / Modules / Items / System",
 
-  "CoC7.DholeHouseActorImporter": "Dholehouse Actor Importer",
-  "CoC7.DholeHouseActorImporterSummary": "Paste the JSON data copied from the DholeHouse below",
+  "CoC7.DholeHouseActorImporter": "The Dhole's House Actor Importer JSON",
+  "CoC7.DholeHouseActorImporterSummary": "Paste the JSON data copied from The Dhole's House Actor below",
+  "CoC7.DholeHouseActorImporterSource": "Imported from The Dhole's House Actor",
 
   "CoC7.HowToTranslateTitle": "How to translate?",
   "CoC7.HowToTranslateWarning": "Do not install any modules you do not trust.",

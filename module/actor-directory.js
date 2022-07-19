@@ -12,9 +12,7 @@ export class CoC7ActorDirectory extends ActorDirectory {
           '</a>'
       )
     html.find('.actor-import').click(() => {
-      CoC7ActorImporterDialog.create({
-        title: game.i18n.localize('CoC7.ActorImporter')
-      })
+      CoC7ActorImporterDialog.create()
     })
   }
 }
