@@ -1,4 +1,4 @@
-/* global Actor, game */
+/* global Actor, File, FilePicker, game, ui */
 import { CoC7Item } from '../items/item.js'
 import { CoC7Utilities } from '../utilities.js'
 
@@ -88,31 +88,30 @@ export class CoC7DholeHouseActorImporter {
       name: dholeHouseData.PersonalDetails.Name,
       actor: {
         characteristics: {
-          str: { value: dholeHouseData.Characteristics.STR },
-          con: { value: dholeHouseData.Characteristics.CON },
-          siz: { value: dholeHouseData.Characteristics.SIZ },
-          dex: { value: dholeHouseData.Characteristics.DEX },
-          app: { value: dholeHouseData.Characteristics.APP },
-          int: { value: dholeHouseData.Characteristics.INT },
-          pow: { value: dholeHouseData.Characteristics.POW },
-          edu: { value: dholeHouseData.Characteristics.EDU }
+          str: { value: parseInt(dholeHouseData.Characteristics.STR, 10) },
+          con: { value: parseInt(dholeHouseData.Characteristics.CON, 10) },
+          siz: { value: parseInt(dholeHouseData.Characteristics.SIZ, 10) },
+          dex: { value: parseInt(dholeHouseData.Characteristics.DEX, 10) },
+          app: { value: parseInt(dholeHouseData.Characteristics.APP, 10) },
+          int: { value: parseInt(dholeHouseData.Characteristics.INT, 10) },
+          pow: { value: parseInt(dholeHouseData.Characteristics.POW, 10) },
+          edu: { value: parseInt(dholeHouseData.Characteristics.EDU, 10) }
         },
         attribs: {
           san: {
-            value: dholeHouseData.Characteristics.Sanity,
-            max: dholeHouseData.Characteristics.SanityMax
+            value: parseInt(dholeHouseData.Characteristics.Sanity, 10),
+            max: parseInt(dholeHouseData.Characteristics.SanityMax, 10)
           },
           hp: {
-            value: dholeHouseData.Characteristics.HitPts,
-            max: dholeHouseData.Characteristics.HitPtsMax
+            value: parseInt(dholeHouseData.Characteristics.HitPts, 10),
+            max: parseInt(dholeHouseData.Characteristics.HitPtsMax, 10)
           },
           mp: {
-            value: dholeHouseData.Characteristics.MagicPts,
-            max: dholeHouseData.Characteristics.MagicPtsMax
+            value: parseInt(dholeHouseData.Characteristics.MagicPts, 10),
+            max: parseInt(dholeHouseData.Characteristics.MagicPtsMax, 10)
           },
           lck: {
-            value: dholeHouseData.Characteristics.Luck,
-            max: dholeHouseData.Characteristics.LuckMax
+            value: parseInt(dholeHouseData.Characteristics.Luck, 10)
           },
           mov: {
             value: dholeHouseData.Characteristics.Move,
@@ -133,6 +132,9 @@ export class CoC7DholeHouseActorImporter {
         ),
         description: {
           keeper: game.i18n.localize('CoC7.DholeHouseActorImporterSource')
+        },
+        indefiniteInsanityLevel: {
+          max: Math.floor(dholeHouseData.Characteristics.Sanity / 5)
         }
       },
       skills: CoC7DholeHouseActorImporter.extractSkills(
@@ -204,7 +206,6 @@ export class CoC7DholeHouseActorImporter {
         }
       })
     }
-    console.log(skills)
     return skills
   }
 
@@ -214,10 +215,10 @@ export class CoC7DholeHouseActorImporter {
     const characterSkill = skills.find(i => {
       return (
         i.data.data?.skillName === checkName ||
-        i.data.data?.skillName.indexOf(checkName) !== false
+        i.data.data?.skillName.indexOf(checkName) > -1
       )
     })
-    return characterSkill?.id
+    return characterSkill
   }
 
   static extractPossessions (dholehousePossessions) {
@@ -243,66 +244,77 @@ export class CoC7DholeHouseActorImporter {
       dholehouseWeapons = [dholehouseWeapons]
     }
     for (const weapon of dholehouseWeapons) {
+      const skill = CoC7DholeHouseActorImporter.findWeaponSkillId(
+        weapon.skillname,
+        character
+      )
+      const damage = weapon.damage.replace(/\+DB/i, '')
+      const addb = damage !== weapon.damage
+      console.log(addb, damage, weapon.damage)
       weapons.push({
         name: weapon.name,
         type: 'weapon',
-        description: {
-          value: weapon.Name
-        },
-        wpnType: '',
-        skill: {
-          main: {
-            name: weapon.skillname,
-            id: CoC7DholeHouseActorImporter.findWeaponSkillId(
-              weapon.skillname,
-              character
-            )
+        data: {
+          description: {
+            value: weapon.Name
           },
-          alternativ: {
-            name: '',
-            id: ''
-          }
-        },
-        range: {
-          normal: {
-            value: 0,
-            units: '',
-            damage: weapon.damage
+          wpnType: '',
+          skill: {
+            main: {
+              name: skill?.name ?? '',
+              id: skill?.id ?? ''
+            },
+            alternativ: {
+              name: '',
+              id: ''
+            }
           },
-          long: {
-            value: 0,
-            units: '',
-            damage: ''
+          range: {
+            normal: {
+              value: 0,
+              units: '',
+              damage: damage
+            },
+            long: {
+              value: 0,
+              units: '',
+              damage: ''
+            },
+            extreme: {
+              value: 0,
+              units: '',
+              damage: ''
+            }
           },
-          extreme: {
-            value: 0,
-            units: '',
-            damage: ''
-          }
-        },
-        usesPerRound: {
-          normal: 1,
-          max: null,
-          burst: null
-        },
-        bullets: null,
-        ammo: weapon.ammo,
-        malfunction: weapon.malf,
-        blastRadius: null,
-        properties: {
-          melee: weapon.skillname === 'Brawl',
-          // "rngd": weapon.skillname === "Handgun" || weapon.skillname === "Throw",
-          rngd: weapon.range !== 'None' || weapon.skillname !== '-',
-          thrown: weapon.skillname === 'Throw'
-        },
-        eras: {},
-        price: {}
+          usesPerRound: {
+            normal: 1,
+            max: null,
+            burst: null
+          },
+          bullets: null,
+          ammo: weapon.ammo,
+          malfunction: weapon.malf,
+          blastRadius: null,
+          properties: {
+            melee: skill?.data.data.properties?.fighting ?? false,
+            rngd: skill?.data.data.properties?.firearm ?? false,
+            addb: addb
+          },
+          eras: {},
+          price: {}
+        }
       })
     }
     return weapons
   }
 
   static async createNPCFromDholeHouse (dholeHouseCharacterData) {
+    if (!game.user?.can('FILES_UPLOAD')) {
+      ui.notifications.error(
+        game.i18n.localize('CoC7.ActorImporterUploadError')
+      )
+      return false
+    }
     const characterData =
       CoC7DholeHouseActorImporter.convertDholeHouseCharacterData(
         dholeHouseCharacterData
@@ -310,16 +322,51 @@ export class CoC7DholeHouseActorImporter {
     console.log(characterData)
     const importedCharactersFolder =
       await CoC7Utilities.createImportCharactersFolderIfNotExists()
+    // To be made a setting to allow S3 buckets
+    try {
+      await FilePicker.createDirectory(
+        'data',
+        'worlds/' + game.world.id + '/dhole-images'
+      )
+    } catch (e) {
+      if (!e.startsWith('EEXIST')) {
+        ui.notifications.error(
+          game.i18n.localize('CoC7.ActorImporterUploadError')
+        )
+        return false
+      }
+    }
     const actorData = {
       name: characterData.name,
       type: 'character',
-      img:
-        'data:image/png;base64,' +
-        dholeHouseCharacterData.Investigator.PersonalDetails.Portrait,
       folder: importedCharactersFolder.id,
       data: characterData.actor
     }
     const npc = await Actor.create(actorData)
+
+    if (
+      dholeHouseCharacterData.Investigator.PersonalDetails.Portrait?.length > 10
+    ) {
+      const pngtext = atob(
+        dholeHouseCharacterData.Investigator.PersonalDetails.Portrait
+      )
+      const pngnums = new Array(pngtext.length)
+      for (let i = 0; i < pngtext.length; i++) {
+        pngnums[i] = pngtext.charCodeAt(i)
+      }
+      FilePicker.upload(
+        'data',
+        'worlds/' + game.world.id + '/dhole-images/',
+        new File([new Uint8Array(pngnums)], 'avatar-' + npc.id + '.png', {
+          type: 'image/png'
+        })
+      )
+      npc.update({
+        img:
+          'worlds/' + game.world.id + '/dhole-images/avatar-' + npc.id + '.png'
+      })
+    }
+
     console.log(characterData.items)
     await npc.createEmbeddedDocuments('Item', characterData.skills, {
       renderSheet: false

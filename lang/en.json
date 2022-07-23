@@ -734,6 +734,8 @@
   "CoC7.ActorImporterSummary": "Import an NPC or Creature from description and stats. Just paste the corresponding plain text",
   "CoC7.PasteTheDataBelow": "Paste the raw text data below",
   "CoC7.TextFieldInvalidCharacters": "There are invalid characters in the text, please fix them or they will be removed",
+  "CoC7.TextFieldInvalidJSON": "Unable to parse the JSON, please try again",
+  "CoC7.ActorImporterUploadError": "Import stopped, unable to write image",
   "CoC7.SelectActorType": "Select actor type",
   "CoC7.NonPlayingCharacter": "Non Playing Character (NPC)",
   "CoC7.Creature": "Creature",
@@ -810,6 +812,7 @@
 
   "CoC7.UnableToInteractWithChatCard": "You are not able to interact with this message, if you need to make a change please ask your Keeper to select the options for you",
   "CoC7.UnableToCopyToClipboard": "Unable to copy to clipboard, this is likely due to your browser security settings.",
+  "CoC7.UnableToUploadDholeImage": "You do not have permission to upload images, if you import the default avatar will be used.",
 
   "CoC7.MessageTitleSelectUserToGiveTo": "Give item to another character",
   "CoC7.MessageSelectUserToGiveTo": "Which character would you like to give this item to?",

@@ -1,4 +1,4 @@
-/* global Actor, CONFIG, duplicate, Folder, game, ui */
+/* global Actor, CONFIG, duplicate, game, ui */
 import { CoC7ActorImporterRegExp } from './actor-importer-regexp.js'
 import { CoCActor } from '../actors/actor.js'
 import { CoC7Item } from '../items/item.js'
@@ -730,7 +730,6 @@ export class CoC7ActorImporter {
     return npc
   }
 
-
   /**
    * actorData, convert parseCharacter data into Actor data
    * @param {Object} pc object with the data extracted from the character as returned from `parseCharacter`
@@ -1078,7 +1077,7 @@ export class CoC7ActorImporter {
    * @param {Object} the entity object as obtained from `parseCharacter`
    * @return the same object but with updated characteristics for 7 edition
    */
-  async convert7E(creature) {
+  async convert7E (creature) {
     if (CONFIG.debug.CoC7Importer) {
       console.debug('Converting npc', creature)
     }

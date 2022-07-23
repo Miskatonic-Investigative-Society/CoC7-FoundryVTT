@@ -26,7 +26,7 @@ export class CoC7ActorImporterDialog extends FormApplication {
     data.convert6E = data.object.convert6E
     data.source = data.object.source
     data.characterData = data.object.characterData
-
+    data.canUpload = game.user?.can('FILES_UPLOAD')
     if (['npc', 'creature'].includes(data.importType)) {
       data.languages = CoC7ActorImporterRegExp.getTranslations()
       data.language = CoC7ActorImporterRegExp.checkLanguage(
@@ -50,7 +50,7 @@ export class CoC7ActorImporterDialog extends FormApplication {
           .val()
           .match(/[\udbc0-\udbfe][\udc00-\udfff]/)
         const prompt = $('#coc-prompt')
-        if (prompt.data('text') && charactersTooExtended) {
+        if (prompt.data('extended') && charactersTooExtended) {
           prompt
             .html(game.i18n.localize('CoC7.TextFieldInvalidCharacters'))
             .addClass('error')
@@ -115,20 +115,32 @@ export class CoC7ActorImporterDialog extends FormApplication {
       const inputs = CoC7ActorImporterDialog.getInputs(form)
       if (inputs.text !== '') {
         if (inputs.entity === 'dholehouse') {
-          const characterJSON = JSON.parse(inputs.text)
-          const character =
-            await CoC7DholeHouseActorImporter.createNPCFromDholeHouse(
-              characterJSON
-            )
-          if (CONFIG.debug.CoC7Importer) {
-            console.debug('character:', character)
+          try {
+            const characterJSON = JSON.parse(inputs.text)
+            const character =
+              await CoC7DholeHouseActorImporter.createNPCFromDholeHouse(
+                characterJSON
+              )
+            if (character !== false) {
+              if (CONFIG.debug.CoC7Importer) {
+                console.debug('character:', character)
+              }
+              ui.notifications.info(
+                'Created Character: ' + character.data?.name
+              )
+              await character.sheet.render(true)
+              this.close()
+            }
+          } catch (e) {
+            $('#coc-prompt')
+              .html(game.i18n.localize('CoC7.TextFieldInvalidJSON'))
+              .addClass('error')
+            event.preventDefault()
           }
-          ui.notifications.info('Created Character: ' + character.data?.name)
-          await character.sheet.render(true)
         } else {
           CoC7ActorImporterDialog.importActor(inputs)
+          this.close()
         }
-        this.close()
       }
     }
   }
@@ -181,7 +193,8 @@ export class CoC7ActorImporterDialog extends FormApplication {
   //  */
   static async create (options = {}) {
     options.importType = options.importType ?? 'npc'
-    options.language = options.language ?? CoC7ActorImporterRegExp.checkLanguage(null);
+    options.language =
+      options.language ?? CoC7ActorImporterRegExp.checkLanguage(null)
     options.convert6E = options.language ?? 'coc-guess'
     options.source = options.source ?? 'iwms'
     options.characterData = options.characterData ?? ''

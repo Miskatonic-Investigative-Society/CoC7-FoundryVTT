@@ -43,9 +43,12 @@
     </div>
   {{/if}}
   {{#if (or (eq importType "npc") (eq importType "creature"))}}
-    <div id="coc-prompt" data-text="{{localize 'CoC7.PasteTheDataBelow'}}">{{localize 'CoC7.PasteTheDataBelow'}}</div>
+    <div id="coc-prompt" data-text="{{localize 'CoC7.PasteTheDataBelow'}}" data-extended="limit">{{localize 'CoC7.PasteTheDataBelow'}}</div>
   {{else if (eq importType "dholehouse")}}
-    <div id="coc-prompt">{{localize 'CoC7.DholeHouseActorImporterSummary'}}</div>
+    <div id="coc-prompt" data-text="{{localize 'CoC7.DholeHouseActorImporterSummary'}}">{{localize 'CoC7.DholeHouseActorImporterSummary'}}</div>
+    {{#unless canUpload}}
+      <div class="error">{{localize 'CoC7.UnableToUploadDholeImage'}}</div>
+    {{/unless}}
   {{/if}}
   <div class="form-group">
    <textarea id="coc-pasted-character-data" name="coc-pasted-character-data" rows="30" style="min-height:300px" placeholder="{{placeholder}}">{{characterData}}</textarea>
