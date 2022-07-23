@@ -83,6 +83,7 @@ export class CoC7Canvas {
                 typeof doc[data.callBack] === 'function'
               ) {
                 try {
+                  data.scene = canvas.scene.uuid
                   doc[data.callBack](data)
                 } catch (error) {
                   console.warn(error.message)

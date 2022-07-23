@@ -422,6 +422,22 @@ export class CoC7Chase extends CoC7Item {
     // test.toMessage()
   }
 
+  //Handle rounds
+
+  async progressToNextRound( {render = true} = {}){
+    const participants = this.data.data.participants
+    ? foundry.utils.duplicate(this.data.data.participants)
+    : []
+    participants.forEach( p => {
+      if( p.currentMovementActions < p.movementAction){
+        p.currentMovementActions += p.movementAction
+        if( p.currentMovementActions > p.movementAction) p.currentMovementActions = p.movementAction
+      }
+    })
+    await this.updateParticipants( participants, {render:false})
+    this.activateNexParticpantTurn( { render: render})
+  }
+
   /** @override */
   async updateRoll (rollString) {
     if (game.user.isGM) {
@@ -834,14 +850,27 @@ export class CoC7Chase extends CoC7Item {
   }
 
   async locatorDropped (data) {
-    ui.notifications.info(`Pin dropped: ${data.x}/${data.y}`)
-    await this.setLocationCoordinates(data.locationUuid, data.x, data.y)
+    await this.setLocationCoordinates(data.locationUuid, data.x, data.y, data.scene)
   }
 
-  async setLocationCoordinates (locationUuid, x, y, { render = false } = {}) {
+  async setLocationCoordinates (locationUuid, x, y, sceneId, { render = true } = {}) {
     const locations = foundry.utils.duplicate(this.data.data.locations.list)
     let locationIndex = locations.findIndex(l => locationUuid == l.uuid)
-    locations[locationIndex].coordinates = { x: x, y: y }
+    locations[locationIndex].coordinates = { x: x, y: y, scene: sceneId }
+
+    return await this.updateLocationsList(locations, { render: render })
+  }
+
+  async clearActiveLocationCoordinates({render = true} = {}){
+    if( this.activeLocation){
+      return await this.clearLocationCoordinates( this.activeLocation.uuid, {render: render})
+    }
+  }
+
+  async clearLocationCoordinates( locationUuid, {render = true} = {}){
+    const locations = foundry.utils.duplicate(this.data.data.locations.list)
+    let locationIndex = locations.findIndex(l => locationUuid == l.uuid)
+    delete locations[locationIndex].coordinates
 
     return await this.updateLocationsList(locations, { render: render })
   }
@@ -936,7 +965,10 @@ export class CoC7Chase extends CoC7Item {
     })
   }
 
-  async addParticipant (participant, { render = true, locationUuid = null } = {}) {
+  async addParticipant (
+    participant,
+    { render = true, locationUuid = null } = {}
+  ) {
     const participantsData = this.data.data.participants
       ? foundry.utils.duplicate(this.data.data.participants)
       : []
@@ -963,15 +995,16 @@ export class CoC7Chase extends CoC7Item {
       const locationsData = this.data.data.locations.list
         ? foundry.utils.duplicate(this.data.data.locations.list)
         : []
-      
-      if( 0 == locationsData.length) {
+
+      if (0 == locationsData.length) {
         ui.notifications.error('Empty locations list !')
       }
 
       let locationIndex = locationsData.findIndex(l => locationUuid == l.uuid)
-      if( -1 === locationIndex) locationIndex = 0
-      if( !locationsData[locationIndex].participants) locationsData[locationIndex].participants = []
-      locationsData[locationIndex].participants.push( participant.uuid)
+      if (-1 === locationIndex) locationIndex = 0
+      if (!locationsData[locationIndex].participants)
+        locationsData[locationIndex].participants = []
+      locationsData[locationIndex].participants.push(participant.uuid)
       await this.updateLocationsList(locationsData, { render: render })
     }
   }
@@ -1212,16 +1245,17 @@ export class CoC7Chase extends CoC7Item {
   }
 
   generateNewUuid () {
-    let unique = false
-    let uuid
-    while (!unique) {
-      uuid = foundry.utils.randomID(16)
-      unique =
-        0 === this.data.data.participants.filter(p => p.uuid == uuid).length &&
-        0 === this.data.data.locations.list.filter(p => p.uuid == uuid).length
-    }
+    return foundry.utils.randomID(16)
+    // let unique = false
+    // let uuid
+    // while (!unique) {
+    //   uuid = foundry.utils.randomID(16)
+    //   unique =
+    //     0 === this.data.data.participants.filter(p => p.uuid == uuid).length &&
+    //     0 === this.data.data.locations.list.filter(p => p.uuid == uuid).length
+    // }
 
-    return uuid
+    // return uuid
   }
 
   getActorSkillsAndCharacteristics (participantUuid) {

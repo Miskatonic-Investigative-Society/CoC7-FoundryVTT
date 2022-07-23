@@ -116,6 +116,11 @@ export class CoC7ChaseSheet extends ItemSheet {
     data.locations = this.item.locations
     data.allHaveValidMov = this.allHaveValidMov
     data.activeLocation = this.item.activeLocation
+    data.activeLocation.title = data.activeLocation.coordinates?game.i18n.format('CoC7.LocationCoordinate',
+    {
+      x: data.activeLocation.coordinates.x,
+      y: data.activeLocation.coordinates.y
+    }): null
     data.previousLocation = this.item.previousLocation
     data.nextLocation = this.item.nextLocation
     data.started = this.item.started
@@ -164,6 +169,8 @@ export class CoC7ChaseSheet extends ItemSheet {
       )
 
     html.on('dblclick', '.open-actor', CoC7Chat._onOpenActor.bind(this))
+
+    html.find('.pin-location').contextmenu(this.clearActiveLocationCoordinates.bind(this))
 
     html
       .find('.participant')
@@ -617,27 +624,37 @@ export class CoC7ChaseSheet extends ItemSheet {
     if (!participantUuid) return
     switch (target.dataset.action) {
       case 'drawGun':
-        return await this.toggleParticipantGun(participantUuid)
+        await this.toggleParticipantGun(participantUuid)
+        break;
       case 'decreaseActions':
-        return await this._onChangeMovementActions(-1, event)
+        await this._onChangeMovementActions(-1, event)
+        break;
       case 'increaseActions':
-        return await this._onChangeMovementActions(1, event)
+        await this._onChangeMovementActions(1, event)
+        break;
       case 'moveBackward':
-        return await this.item.moveParticipant(participantUuid, -1)
+        await this.item.moveParticipant(participantUuid, -1, {render: false})
+        break
       case 'moveForward':
-        return await this.item.moveParticipant(participantUuid, 1)
+        await this.item.moveParticipant(participantUuid, 1,  {render: false})
+        break
       case 'activateParticipant':
         return await this.item.activateParticipant(participantUuid)
       case 'bonusDice':
         const diceNumber = target.dataset.count
-        return await this.item.toggleBonusDice(participantUuid, diceNumber)
+        await this.item.toggleBonusDice(participantUuid, diceNumber)
+        this.item.activateNexParticpantTurn()
+        break
       case 'cautiousApproach':
-        return await this.item.cautiousApproach(participantUuid)
+        await this.item.cautiousApproach(participantUuid)
+        break
       case 'editParticipant':
         return await this.item.editParticipant(participantUuid)
       case 'removeParticipant':
-        return await this.item.removeParticipant(participantUuid)
+        await this.item.removeParticipant(participantUuid)
+        break
     }
+    this.item.activateNexParticpantTurn()
   }
 
   async _onChaseControlClicked (event) {
@@ -723,6 +740,18 @@ export class CoC7ChaseSheet extends ItemSheet {
           )}</p>`,
           yes: () => this.item.restart()
         })
+        break
+
+      case 'nextRound':
+        if( this.item.nextActiveParticipant){
+          Dialog.confirm({
+            title: `${game.i18n.localize('CoC7.ConfirmRestartChase')}`,
+            content: `<p>${game.i18n.localize(
+              'CoC7.ConfirmRestartChaseHint'
+            )}</p>`,
+            yes: () => this.item.progressToNextRound()
+          })
+          } else this.item.progressToNextRound()
         break
 
       default:
@@ -1012,6 +1041,10 @@ export class CoC7ChaseSheet extends ItemSheet {
     if (oldParticipant.mov) delete oldParticipant.mov
     mergeObject(oldParticipant, participant)
     await this.item.update({ 'data.participants': participants })
+  }
+
+  async clearActiveLocationCoordinates(){
+    await this.item.clearActiveLocationCoordinates()
   }
 
   async addParticipant (data) {

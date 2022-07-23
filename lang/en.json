@@ -565,6 +565,7 @@
   "CoC7.TryToNegotiateHazard": "You try to negotiate that hazard.",
   "CoC7.TryToGetPastBarriers": "You try to get past that barrier.",
   "CoC7.TryToBreak": "You try to break down that barrier.",
+  "CoC7.LocationCoordinate": "Location : {x}, {y}.\nRight click to clear",
 
 
   "CoC7.SpellCastingTime": "Casting Time",

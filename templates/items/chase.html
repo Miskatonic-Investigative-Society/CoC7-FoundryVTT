@@ -34,7 +34,7 @@
                 <a class="flex0 location-control" data-action="remove" title="{{ localize 'CoC7.RemoveLocation'}}"><i class="icon fas fa-minus-circle"></i></a>
               {{/if}}
             {{/if}}
-            <a class="flex0 pin-location" draggable="true">
+            <a class="flex0 pin-location {{#if activeLocation.coordinates}}locationSet{{/if}}" draggable="true" title="{{activeLocation.title}}">
               <img class="pin-image" src="systems/CoC7/assets/icons/red-pin.svg"/>
               <i class="icon game-icon game-icon-pin"></i>
             </a>
@@ -371,7 +371,8 @@
 
           {{#if locations}}
           {{#if started}}
-            <div class="button" data-action="restart">{{localize 'CoC7.Restart'}}</div>
+          <div class="button" data-action="nextRound">{{localize 'CoC7.NextRound'}}</div>
+          <div class="button" data-action="restart">{{localize 'CoC7.Restart'}}</div>
           {{else}}
             <div class="button" data-action="reset">{{localize 'CoC7.Reset'}}</div>
             <div class="button" data-action="cut2chase">{{localize 'CoC7.cut2chase'}}</div>

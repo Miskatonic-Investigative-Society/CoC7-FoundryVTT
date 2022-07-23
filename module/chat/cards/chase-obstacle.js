@@ -667,20 +667,22 @@ export class ChaseObstacleCard extends EnhancedChatCard {
           {
             scrollToLocation: true,
             activateLocation: false,
-            render: !(loactionChanged || participantChaged)
+            render: false
           }
         )
       }
     }
 
     if (loactionChanged)
-      await this.chase.updateLocation(this.location.uuid, obstacleUpdate)
+      await this.chase.updateLocation(this.location.uuid, obstacleUpdate, {render: false})
     if (participantChaged)
       await this.chase.updateParticipant(
         this.participantData.uuid,
-        participantUpdate
+        participantUpdate,
+        {render: false}
       )
     this.data.states.closed = true
+    await this.chase.activateNexParticpantTurn() //Render will be done there !
     return true
   }
 
