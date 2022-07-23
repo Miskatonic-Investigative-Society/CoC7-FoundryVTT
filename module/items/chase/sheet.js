@@ -122,7 +122,7 @@ export class CoC7ChaseSheet extends ItemSheet {
             x: data.activeLocation.coordinates.x,
             y: data.activeLocation.coordinates.y
           })
-        : null
+        : game.i18n.localize('CoC7.DragOnCanvas')
     }
     data.previousLocation = this.item.previousLocation
     data.nextLocation = this.item.nextLocation
@@ -409,7 +409,7 @@ export class CoC7ChaseSheet extends ItemSheet {
         const pCount = data.participants.length
         const width = (pCount * 11.2 + 3) * remSize
         app._tabs[0].active = 'setup'
-        app.position.width = width
+        app.position.width = Math.max(width, 40 * remSize)
         // html.css('width', `${width}px`)
       }
       return await app.item.activateNexParticpantTurn({ html: html }) //html is not rendered, element have size = 0
@@ -730,11 +730,16 @@ export class CoC7ChaseSheet extends ItemSheet {
         break
 
       case 'cut2chase':
-        Dialog.confirm({
-          title: `${game.i18n.localize('CoC7.ConfirmCut2Chase')}`,
-          content: `<p>${game.i18n.localize('CoC7.ConfirmCut2ChaseHint')}</p>`,
-          yes: () => this.item.cutToTheChase()
-        })
+        if (this.item.allHaveSpeedRoll) {
+          Dialog.confirm({
+            title: `${game.i18n.localize('CoC7.ConfirmCut2Chase')}`,
+            content: `<p>${game.i18n.localize(
+              'CoC7.ConfirmCut2ChaseHint'
+            )}</p>`,
+            yes: () => this.item.cutToTheChase()
+          })
+        } else
+          ui.notifications.warn(game.i18n.localize('CoC7.NotAllHaveSpeedRoll'))
         break
 
       case 'restart':
@@ -750,9 +755,9 @@ export class CoC7ChaseSheet extends ItemSheet {
       case 'nextRound':
         if (this.item.nextActiveParticipant) {
           Dialog.confirm({
-            title: `${game.i18n.localize('CoC7.ConfirmRestartChase')}`,
+            title: `${game.i18n.localize('CoC7.ConfirmNextChaseRound')}`,
             content: `<p>${game.i18n.localize(
-              'CoC7.ConfirmRestartChaseHint'
+              'CoC7.ConfirmNextChaseRoundHint'
             )}</p>`,
             yes: () => this.item.progressToNextRound()
           })
@@ -1118,14 +1123,14 @@ export class CoC7ChaseSheet extends ItemSheet {
         break
     }
 
-    //TODO:Check for speed check, if none add speedcheck con non vehicule, drive auto for vehicule
+    //TODO:Check for speed check, if none add speedcheck con non vehicle, drive auto for vehicle
     //speedCheck = {
     //   id: 'con'
     //   type: 'characteristic'
     // }
 
     if (!participant.speedCheck) {
-      if (!this.item.data.data.vehicule) {
+      if (!this.item.data.data.vehicle) {
         participant.speedCheck = {
           id: 'con',
           type: 'characteristic',

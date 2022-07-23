@@ -646,10 +646,11 @@
       },
       "includeEscapees": false,
       "includeLatecomers": false,
+      "showTokenMovement": true,
       "startingRange": 2,
       "startingIndex": 0,
       "started": false,
-      "vehicule": false,
+      "vehicle": false,
       "participants": []
     }
   }

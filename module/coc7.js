@@ -110,6 +110,15 @@ Hooks.on('renderSettingsConfig', (app, html, options) => {
         game.i18n.localize('SETTINGS.TitleRollTable') +
         '</h2>'
     )
+  // MOVED TO CHASSE INDIVIDUAL SETTING
+  // systemTab
+  //   .find('input[name=CoC7\\.chaseShowTokenMovement]')
+  //   .closest('div.form-group')
+  //   .before(
+  //     '<h2 class="setting-header">' +
+  //       game.i18n.localize('SETTINGS.TitleChaseSettings') +
+  //       '</h2>'
+  //   )
 })
 
 Hooks.once('diceSoNiceReady', dice3d => {
@@ -400,14 +409,14 @@ Hooks.on('ready', async () => {
       game.settings.get('CoC7', 'boutOfMadnessSummaryTable') === 'none'
         ? null
         : game.tables.get(
-          game.settings.get('CoC7', 'boutOfMadnessSummaryTable')
-        ),
+            game.settings.get('CoC7', 'boutOfMadnessSummaryTable')
+          ),
     boutOfMadness_RealTime:
       game.settings.get('CoC7', 'boutOfMadnessRealTimeTable') === 'none'
         ? null
         : game.tables.get(
-          game.settings.get('CoC7', 'boutOfMadnessRealTimeTable')
-        )
+            game.settings.get('CoC7', 'boutOfMadnessRealTimeTable')
+          )
     // maniasIndex: ge.settings.get('CoC7', 'boutOfMadnessPhobiasIndex'),
     // phobiasIndex: game.settings.get('CoC7', 'boutOfMadnessManiasIndex'),
     // phobias: ('none' == game.settings.get('CoC7', 'samplePhobiasTable'))?null:game.tables.get(game.settings.get('CoC7', 'samplePhobiasTable')),

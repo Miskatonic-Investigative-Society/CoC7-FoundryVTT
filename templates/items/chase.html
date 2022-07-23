@@ -53,14 +53,14 @@
                   <div class="form-group">
                     <input type="text" class="{{#unless activeLocation.activeActorHasSkill}}no-skill{{/unless}}" name="locations.{{activeLocation.uuid}}.obstacleDetails.checkName" value="{{activeLocation.obstacleDetails.checkName}}" placeholder="{{ localize 'CoC7.CheckName' }}" list='check-all-options' data-override='true'/>
                     {{#if started}}
-                    <a class="chase-control" data-action="obstacle-skill-check">
+                    <a class="chase-control" data-action="obstacle-skill-check" title="{{ localize 'CoC7.OpenObstacleResolutionCard' }}">
                       <i class="icon game-icon game-icon-d10"></i>
                     </a>
                     {{/if}}
                   </div>
                   <div class="form-group">
                     <div class="flexrow flex1">
-                      <a toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasDamage" class="flex0 icon toggle {{#if activeLocation.obstacleDetails.hasDamage}}switched-on{{/if}}">
+                      <a toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasDamage" class="flex0 icon toggle {{#if activeLocation.obstacleDetails.hasDamage}}switched-on{{/if}}" title="{{ localize 'CoC7.DamageOnFail' }}>
                         <i class="game-icon game-icon-broken-bone"></i>
                       </a>
                       {{#if activeLocation.obstacleDetails.hasDamage}}
@@ -69,7 +69,7 @@
                     </div>
                     {{#if activeLocation.obstacleDetails.barrier}}
                       <div class="flexrow flex1">
-                        <a toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasHitPoints" class="flex0 icon toggle {{#if activeLocation.obstacleDetails.hasHitPoints}}switched-on{{/if}}">
+                        <a toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasHitPoints" class="flex0 icon toggle {{#if activeLocation.obstacleDetails.hasHitPoints}}switched-on{{/if}}" title="{{ localize 'CoC7.ObstacleHasHitPoint' }}">
                           <i class="game-icon game-icon-life-bar"></i>
                         </a>
                         {{#if activeLocation.obstacleDetails.hasHitPoints}}
@@ -78,7 +78,7 @@
                       </div>
                     {{else}}
                       <div class="flexrow flex1">
-                        <a toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasActionCost" class="flex0 icon toggle {{#if activeLocation.obstacleDetails.hasActionCost}}switched-on{{/if}}">
+                        <a toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasActionCost" class="flex0 icon toggle {{#if activeLocation.obstacleDetails.hasActionCost}}switched-on{{/if}}" title="{{ localize 'CoC7.ActionCostOnFail' }}">
                           <i class="fas fa-bahai"></i>
                         </a>
                         {{#if activeLocation.obstacleDetails.hasActionCost}}
@@ -103,14 +103,14 @@
                   <div class="form-group">
                     <input type="text" class="{{#unless nextLocation.activeActorHasSkill}}no-skill{{/unless}}" name="locations.{{nextLocation.uuid}}.obstacleDetails.checkName" value="{{nextLocation.obstacleDetails.checkName}}" placeholder="{{ localize 'CoC7.CheckName' }}" list='check-all-options' data-override='true'/>
                     {{#if started}}
-                    <a class="chase-control" data-action="obstacle-skill-check">
+                    <a class="chase-control" data-action="obstacle-skill-check" title="{{ localize 'CoC7.OpenObstacleResolutionCard' }}">
                       <i class="icon game-icon game-icon-d10"></i>
                     </a>
                     {{/if}}
                   </div>
                   <div class="form-group">
                     <div class="flexrow flex1">
-                      <a toggle="locations.{{nextLocation.uuid}}.obstacleDetails.hasDamage" class="flex0 icon toggle {{#if nextLocation.obstacleDetails.hasDamage}}switched-on{{/if}}">
+                      <a toggle="locations.{{nextLocation.uuid}}.obstacleDetails.hasDamage" class="flex0 icon toggle {{#if nextLocation.obstacleDetails.hasDamage}}switched-on{{/if}}"  title="{{ localize 'CoC7.DamageOnFail' }}>
                         <i class="game-icon game-icon-broken-bone"></i>
                       </a>
                       {{#if nextLocation.obstacleDetails.hasDamage}}
@@ -119,7 +119,7 @@
                     </div>
                     {{#if nextLocation.obstacleDetails.barrier}}
                       <div class="flexrow flex1">
-                        <a toggle="locations.{{nextLocation.uuid}}.obstacleDetails.hasHitPoints" class="flex0 icon toggle {{#if nextLocation.obstacleDetails.hasHitPoints}}switched-on{{/if}}">
+                        <a toggle="locations.{{nextLocation.uuid}}.obstacleDetails.hasHitPoints" class="flex0 icon toggle {{#if nextLocation.obstacleDetails.hasHitPoints}}switched-on{{/if}}" title="{{ localize 'CoC7.ObstacleHasHitPoint' }}">
                           <i class="game-icon game-icon-life-bar"></i>
                         </a>
                         {{#if nextLocation.obstacleDetails.hasHitPoints}}
@@ -128,7 +128,7 @@
                       </div>
                     {{else}}
                       <div class="flexrow flex1">
-                        <a toggle="locations.{{nextLocation.uuid}}.obstacleDetails.hasActionCost" class="flex0 icon toggle {{#if nextLocation.obstacleDetails.hasActionCost}}switched-on{{/if}}">
+                        <a toggle="locations.{{nextLocation.uuid}}.obstacleDetails.hasActionCost" class="flex0 icon toggle {{#if nextLocation.obstacleDetails.hasActionCost}}switched-on{{/if}}" title="{{ localize 'CoC7.ActionCostOnFail' }}">
                           <i class="fas fa-bahai"></i>
                         </a>
                         {{#if nextLocation.obstacleDetails.hasActionCost}}
@@ -189,9 +189,9 @@
     </header>
 
     <nav class="sheet-nav tabs" data-group="primary">
-      <a data-tab="setup"><div class="tab-name" ><span>{{localize 'CoC7.Setup'}}</span></div></a>
-      <a data-tab="participants"><div class="tab-name" ><span>{{localize 'CoC7.Participants'}}</span></div></a>
-      <!-- <a data-tab="cut2chase"><div class="tab-name" ><span>{{localize 'CoC7.Cut2Chase'}}</span></div></a> -->
+      <a data-tab="setup"><div class="tab-name" ><span>{{localize 'CoC7.ChaseSetup'}}</span></div></a>
+      <a data-tab="participants"><div class="tab-name" ><span>{{localize 'CoC7.ParticipantsList'}}</span></div></a>
+      <!-- <a data-tab="cut2chase"><div class="tab-name" ><span>{{localize 'CoC7.CutToTheChase'}}</span></div></a> -->
       {{#if isKeeper}}
         <a style="line-height: 24px;" class="keeper-only-tab" data-tab="keeper" title="{{localize 'CoC7.GmNotes'}}"><i class="game-icon game-icon-tentacles-skull"></i></a>
       {{/if}}
@@ -238,14 +238,14 @@
             <div class="participant-controls">
               <a class="participant-control toggle {{#unless p.hasAGunReady}}disabled{{/unless}}" title="{{#if p.hasAGunReady}}{{localize 'CoC7.PutGunAway'}}{{else}}{{localize 'CoC7.DrawGun'}}{{/if}}" data-action="drawGun">
                 <i class="game-icon game-icon-revolver"></i></a>
-              <a class="participant-control toggle {{#unless p.hasOneBonusDice}}disabled{{/unless}}" title="{{#if p.hasOneBonusDice}}{{localize 'CoC7.RemoveBonusDice'}}{{else}}{{localize 'CoC7.AddBonusDice'}}{{/if}}" data-action="bonusDice" data-count="1">
+              <a class="participant-control toggle {{#unless p.hasOneBonusDice}}disabled{{/unless}}" title="{{#if p.hasOneBonusDice}}{{localize 'CoC7.RemoveBonusDie'}}{{else}}{{localize 'CoC7.AddBonusDie'}}{{/if}}" data-action="bonusDice" data-count="1">
                 <i class="game-icon game-icon-d10"></i></a>
-              <a class="participant-control toggle {{#unless p.hasTwoBonusDice}}disabled{{/unless}}" title="{{#if p.hasTwoBonusDice}}{{localize 'CoC7.RemoveBonusDice'}}{{else}}{{localize 'CoC7.AddBonusDice'}}{{/if}}" data-action="bonusDice" data-count="2">
+              <a class="participant-control toggle {{#unless p.hasTwoBonusDice}}disabled{{/unless}}" title="{{#if p.hasTwoBonusDice}}{{localize 'CoC7.RemoveBonusDie'}}{{else}}{{localize 'CoC7.AddBonusDie'}}{{/if}}" data-action="bonusDice" data-count="2">
                 <i class="game-icon game-icon-d10"></i></a>
               <div class="separator"></div>
-              <a class="participant-control" title="{{localize 'CoC7.IncreasMVTAction'}}" data-action="decreaseActions">
+              <a class="participant-control" title="{{localize 'CoC7.DecreaseMovementAction'}}" data-action="decreaseActions">
                 <i class="far fa-minus-square"></i></a>
-              <a class="participant-control {{#if p.hasMaxMvtActions}}inactive{{/if}}" title="{{localize 'CoC7.IncreasMVTAction'}}" data-action="increaseActions">
+              <a class="participant-control {{#if p.hasMaxMvtActions}}inactive{{/if}}" title="{{localize 'CoC7.IncreaseMovementAction'}}" data-action="increaseActions">
                 <i class="far fa-plus-square"></i></a>
               {{#unless p.hasNoMvtActions}}
               <div class="separator"></div>
@@ -357,7 +357,7 @@
             <input type="checkbox" name="data.includeLatecomers" {{checked data.includeLatecomers}}/> {{ localize "CoC7.IncludeLatecomers" }}
           </label>
           <label class="checkbox flex-content">
-            <input type="checkbox" name="data.vehicule" {{checked data.vehicule}}/> {{ localize "CoC7.VehiculeChase" }}
+            <input type="checkbox" name="data.vehicle" {{checked data.vehicle}}/> {{ localize "CoC7.VehicleChase" }}
           </label>
           <div class="form-group">
             <label>{{localize 'CoC7.StartingRange'}}</label>
@@ -375,9 +375,12 @@
           <div class="button" data-action="restart">{{localize 'CoC7.Restart'}}</div>
           {{else}}
             <div class="button" data-action="reset">{{localize 'CoC7.Reset'}}</div>
-            <div class="button" data-action="cut2chase">{{localize 'CoC7.cut2chase'}}</div>
+            <div class="button" data-action="cut2chase">{{localize 'CoC7.CutToTheChase'}}</div>
           {{/if}}
           {{/if}}
+          <label class="checkbox flex-content" title="{{ localize 'SETTINGS.ChaseShowTokenMovementHint' }}">
+            <input type="checkbox" name="data.showTokenMovement" {{checked data.showTokenMovement}}/> {{ localize "SETTINGS.ChaseShowTokenMovement" }}
+          </label>
         </div>
       </div>
       <div class="tab participants" data-group="primary" data-tab="participants">

@@ -339,8 +339,17 @@ export function registerSettings () {
       scope: 'world',
       config: true,
       default: 16,
-      type: Number
+      type: Number,
+      onChange: size => _setRootFontSize(size)
     })
+
+    function _setRootFontSize (size) {
+      $(':root').css('font-size', size)
+      ui.sidebar.render(true)
+      for (const [, w] of Object.entries(ui.windows)) {
+        w.render(true)
+      }
+    }
   }
 
   /**
@@ -362,6 +371,19 @@ export function registerSettings () {
     default: false,
     type: Boolean
   })
+
+  /**
+   * Chases
+   */
+  // MOVED TO CHASSE INDIVIDUAL SETTING
+  // game.settings.register('CoC7', 'chaseShowTokenMovement', {
+  //   name: 'SETTINGS.ChaseShowTokenMovement',
+  //   hint: 'SETTINGS.ChaseShowTokenMovementHint',
+  //   scope: 'world',
+  //   config: true,
+  //   default: true,
+  //   type: Boolean
+  // })
 
   /**
    * Dice So Nice

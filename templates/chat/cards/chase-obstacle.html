@@ -145,7 +145,7 @@
                       <div class="form-group small">
                         <div class="flexrow flex1">
                           {{#if data.obstacle.hazard}}
-                            <a data-ecc-permissions="gm" data-name="data.obstacle.hasActionCost" class="icon ecc-switch">
+                            <a data-ecc-permissions="gm" data-name="data.obstacle.hasActionCost" class="icon ecc-switch" title="{{ localize 'CoC7.ActionCostOnFail' }}">
                               <i class="fas fa-bahai"></i>
                             </a>
                             {{#if data.obstacle.hasActionCost }}
@@ -154,7 +154,7 @@
                           {{/if}}
                         </div>
                         <div class="flexrow flex1">
-                          <a data-ecc-permissions="gm" data-name="data.obstacle.hasDamage" class="icon ecc-switch">
+                          <a data-ecc-permissions="gm" data-name="data.obstacle.hasDamage" class="icon ecc-switch" title="{{ localize 'CoC7.DamageOnFail' }}">
                             <i class="game-icon game-icon-broken-bone"></i>
                           </a>
                           {{#if data.obstacle.hasDamage }}
@@ -220,7 +220,7 @@
             {{else}}
               <div class="definePlayerAction">
                 <div class="form-group small">
-                  <span class="icon bigger" title="{{ localize 'CoC7.HitPoints' }}"><i class="game-icon game-icon-life-bar"></i></span>
+                  <span class="icon bigger" title="{{ localize 'CoC7.HitPoints' }}" title="{{ localize 'CoC7.ObstacleHasHitPoint' }}"><i class="game-icon game-icon-life-bar"></i></span>
                   <input type="text" data-ecc-permissions="gm" name="data.obstacle.HitPoints" value="{{data.obstacle.HitPoints}}" data-dtype="Number">
                   <button type="button" class="button-icon" data-action="cancelBreakOrPassChoice" title="{{ localize 'CoC7.Cancel' }}"><i class="fas fa-undo"></i></button>
                 </div>

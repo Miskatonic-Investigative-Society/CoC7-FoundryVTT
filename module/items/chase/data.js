@@ -898,7 +898,7 @@ export class CoC7Chase extends CoC7Item {
   //Handle mechanics
   async cutToTheChase () {
     if (!this.allHaveSpeedRoll) {
-      ui.notifications.warn('Speed roll missing')
+      ui.notifications.warn(game.i18n.localize('CoC7.NotAllHaveSpeedRoll'))
       return
     }
     if (this.allHaveValidMov) {
@@ -1136,7 +1136,7 @@ export class CoC7Chase extends CoC7Item {
     {
       scrollToLocation = true,
       activateLocation = true,
-      animate = false,
+      animate = null,
       moveToken = true,
       render = true
     } = {}
@@ -1211,7 +1211,7 @@ export class CoC7Chase extends CoC7Item {
           let foundFreeSpace = false
           while (!foundFreeSpace) {
             const overlapingToken = scene.tokens.find(t => {
-              if( t.id === particpantDocument.id) return false //You can't overlap with yourself
+              if (t.id === particpantDocument.id) return false //You can't overlap with yourself
               return t.object.bounds.intersects(targetRect)
             })
             if (overlapingToken) {
@@ -1244,10 +1244,11 @@ export class CoC7Chase extends CoC7Item {
           //     if( pDoc.object.width) x += pDoc.object.width
           //   }
           // })
+          const showTokenMovement = 'boolean' === typeof animate?animate:this.data.data.showTokenMovement
           await particpantDocument.parent.updateEmbeddedDocuments(
             'Token',
             update,
-            { animate: animate }
+            { animate: showTokenMovement }
           )
         }
       }
