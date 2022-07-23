@@ -116,11 +116,14 @@ export class CoC7ChaseSheet extends ItemSheet {
     data.locations = this.item.locations
     data.allHaveValidMov = this.allHaveValidMov
     data.activeLocation = this.item.activeLocation
-    data.activeLocation.title = data.activeLocation.coordinates?game.i18n.format('CoC7.LocationCoordinate',
-    {
-      x: data.activeLocation.coordinates.x,
-      y: data.activeLocation.coordinates.y
-    }): null
+    if (data.activeLocation) {
+      data.activeLocation.title = data.activeLocation.coordinates
+        ? game.i18n.format('CoC7.LocationCoordinate', {
+            x: data.activeLocation.coordinates.x,
+            y: data.activeLocation.coordinates.y
+          })
+        : null
+    }
     data.previousLocation = this.item.previousLocation
     data.nextLocation = this.item.nextLocation
     data.started = this.item.started
@@ -170,7 +173,9 @@ export class CoC7ChaseSheet extends ItemSheet {
 
     html.on('dblclick', '.open-actor', CoC7Chat._onOpenActor.bind(this))
 
-    html.find('.pin-location').contextmenu(this.clearActiveLocationCoordinates.bind(this))
+    html
+      .find('.pin-location')
+      .contextmenu(this.clearActiveLocationCoordinates.bind(this))
 
     html
       .find('.participant')
@@ -625,18 +630,18 @@ export class CoC7ChaseSheet extends ItemSheet {
     switch (target.dataset.action) {
       case 'drawGun':
         await this.toggleParticipantGun(participantUuid)
-        break;
+        break
       case 'decreaseActions':
         await this._onChangeMovementActions(-1, event)
-        break;
+        break
       case 'increaseActions':
         await this._onChangeMovementActions(1, event)
-        break;
+        break
       case 'moveBackward':
-        await this.item.moveParticipant(participantUuid, -1, {render: false})
+        await this.item.moveParticipant(participantUuid, -1, { render: false })
         break
       case 'moveForward':
-        await this.item.moveParticipant(participantUuid, 1,  {render: false})
+        await this.item.moveParticipant(participantUuid, 1, { render: false })
         break
       case 'activateParticipant':
         return await this.item.activateParticipant(participantUuid)
@@ -743,7 +748,7 @@ export class CoC7ChaseSheet extends ItemSheet {
         break
 
       case 'nextRound':
-        if( this.item.nextActiveParticipant){
+        if (this.item.nextActiveParticipant) {
           Dialog.confirm({
             title: `${game.i18n.localize('CoC7.ConfirmRestartChase')}`,
             content: `<p>${game.i18n.localize(
@@ -751,7 +756,7 @@ export class CoC7ChaseSheet extends ItemSheet {
             )}</p>`,
             yes: () => this.item.progressToNextRound()
           })
-          } else this.item.progressToNextRound()
+        } else this.item.progressToNextRound()
         break
 
       default:
@@ -1043,7 +1048,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     await this.item.update({ 'data.participants': participants })
   }
 
-  async clearActiveLocationCoordinates(){
+  async clearActiveLocationCoordinates () {
     await this.item.clearActiveLocationCoordinates()
   }
 

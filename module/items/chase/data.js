@@ -1181,38 +1181,74 @@ export class CoC7Chase extends CoC7Item {
         particpantDocument &&
         !(
           /*particpantDocument.isToken || */ (
-            particpantDocument instanceof TokenDocument
+            particpantDocument instanceof TokenDocument ||
+            particpantDocument?.object instanceof Token
           )
         )
       ) {
-        ui.notifications.warn('No token associated with this actor')
+        console.warn('No token associated with this actor')
       } else {
         if (destination.coordinates.scene != game.scenes.viewed.uuid)
-          ui.notifications.warn('Caution the scene is not the active scene')
+          console.warn('Caution the scene is not the active scene')
         if (particpantDocument.parent?.uuid != destination.coordinates.scene)
           ui.notifications.error(
-            'Token does not belongs to this location scene'
+            "Token does not belongs to this location's scene"
           )
         else {
-          // if( !animate) await particpantDocument.object.setPosition( destination.coordinates.x, destination.coordinates.y, {animate:false})
-          let x = destination.coordinates.x
-          let y = destination.coordinates.y
+          const scene = CoC7Utilities.getDocumentFromKey(
+            destination.coordinates.scene
+          )
+          let x = destination.coordinates.x,
+            y = destination.coordinates.y
+          let targetRect = new NormalizedRectangle(
+            x,
+            y,
+            particpantDocument.object.width,
+            particpantDocument.object.height
+          )
           const update = []
           let updates = false
-          destination.participants?.forEach( pUuid =>{
-            const p = this.getParticipant(pUuid)
-            const pDoc = CoC7Utilities.getDocumentFromKey( p?.data?.docUuid)
-            if( pDoc instanceof TokenDocument && pDoc.object instanceof Token){
-              updates = true
-              update.push({
-                _id: pDoc.id,
-                x:x,
-                y:y
-              })
-              if( pDoc.object.width) x += pDoc.object.width
-            }
+          let foundFreeSpace = false
+          while (!foundFreeSpace) {
+            const overlapingToken = scene.tokens.find(t => {
+              if( t.id === particpantDocument.id) return false //You can't overlap with yourself
+              return t.object.bounds.intersects(targetRect)
+            })
+            if (overlapingToken) {
+              x = overlapingToken.object.bounds.right + 1
+              targetRect = new NormalizedRectangle(
+                x,
+                y,
+                particpantDocument.object.width,
+                particpantDocument.object.height
+              )
+            } else foundFreeSpace = true
+          }
+
+          update.push({
+            _id: particpantDocument.id,
+            x: x,
+            y: y
           })
-          if( updates) await particpantDocument.parent.updateEmbeddedDocuments( "Token", update, {animate:animate})
+
+          // destination.participants?.forEach( pUuid =>{
+          //   const p = this.getParticipant(pUuid)
+          //   const pDoc = CoC7Utilities.getDocumentFromKey( p?.data?.docUuid)
+          //   if( pDoc instanceof TokenDocument && pDoc.object instanceof Token){
+          //     updates = true
+          //     update.push({
+          //       _id: pDoc.id,
+          //       x:x,
+          //       y:y
+          //     })
+          //     if( pDoc.object.width) x += pDoc.object.width
+          //   }
+          // })
+          await particpantDocument.parent.updateEmbeddedDocuments(
+            'Token',
+            update,
+            { animate: animate }
+          )
         }
       }
     }
