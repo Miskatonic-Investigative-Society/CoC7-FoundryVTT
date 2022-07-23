@@ -644,7 +644,7 @@
         "startingRange": 1,
         "list": []
       },
-      "includeEscapees": false,
+      "includeEscaped": false,
       "includeLatecomers": false,
       "showTokenMovement": true,
       "startingRange": 2,

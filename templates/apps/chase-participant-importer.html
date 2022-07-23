@@ -41,6 +41,13 @@
 			<label>Movement actions</label>
 			<input type="text" name="object.movementAction" value="{{participant.movementAction}}" data-dtype="Number"/>
 		</div>
+		{{else}}
+		{{#unless actor}}
+		<div class="form-group">
+			<label>Movement</label>
+			<input class="value" type="text" name="object.mov" value="{{participant.mov}}" data-dtype="Number"/>
+		</div>
+		{{/unless}}
 		{{/if}}
   </div>
   <div class="dialog-buttons">

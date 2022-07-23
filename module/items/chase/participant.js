@@ -454,7 +454,7 @@ export class _participant {
         if (item) {
           if (item.type === 'item' && item.value.data?.type === 'skill') {
             check.ref = item.value
-            check.name = item.value.name
+            check.name = item.value.fullName
             check.type = 'skill'
             check.isSkill = true
             check.refSet = true
@@ -482,7 +482,7 @@ export class _participant {
         if (item) {
           if (item.type === 'item' && item.value.data?.type === 'skill') {
             check.ref = item.value
-            check.name = item.value.name
+            check.name = item.value.fullName
             check.type = 'skill'
             check.isSkill = true
             check.refSet = true

@@ -129,6 +129,7 @@ export class CoC7Chase extends CoC7Item {
   }
 
   get nextActiveParticipant () {
+    if (!this.started) return undefined
     return this.participantsByInitiative.find(
       p => p.data.currentMovementActions > 0
     )
@@ -334,7 +335,7 @@ export class CoC7Chase extends CoC7Item {
       render: render,
       html: html
     }
-    if (!activeParticipant) return this.activateParticipant(null, options)
+    if (!activeParticipant) return this.activateParticipant(undefined, options)
     return this.activateParticipant(activeParticipant.uuid, options)
   }
 
@@ -360,15 +361,15 @@ export class CoC7Chase extends CoC7Item {
     { scrollToLocation = true, activateLocation = true, html = null } = {}
   ) {
     const pUuid = participantUuid
-      ? participantUuid
-      : this.participantsByInitiative[0]?.uuid
+    //   ? participantUuid
+    //   : this.participantsByInitiative[0]?.uuid
     const participantsDataUpdate = {}
     const participants = this.data.data.participants
       ? foundry.utils.duplicate(this.data.data.participants)
       : []
     participants.forEach(p => {
       delete p.active
-      if (pUuid == p.uuid) p.active = true
+      if (pUuid && pUuid == p.uuid) p.active = true
     })
     participantsDataUpdate['data.participants'] = participants
 
@@ -381,19 +382,18 @@ export class CoC7Chase extends CoC7Item {
           { scrollToLocation: scrollToLocation, html: html }
         )
       } else if (scrollToLocation) {
-        if (scrollToLocation) {
-          locationsDataUpdate = {}
-          locationsDataUpdate[
-            'data.scroll.chaseTrack.from'
-          ] = this.chaseTrackCurrentScrollPosition
-          locationsDataUpdate[
-            'data.scroll.chaseTrack.to'
-          ] = this.getChaseTrackLocationScrollPosition(
-            participantLocation.uuid,
-            { html: html }
-          )
-        }
+        locationsDataUpdate = {}
+        locationsDataUpdate[
+          'data.scroll.chaseTrack.from'
+        ] = this.chaseTrackCurrentScrollPosition
+        locationsDataUpdate[
+          'data.scroll.chaseTrack.to'
+        ] = this.getChaseTrackLocationScrollPosition(participantLocation.uuid, {
+          html: html
+        })
       }
+    } else {
+      locationsDataUpdate = this.getActivateLocationUpdateData( undefined, { scrollToLocation: scrollToLocation})
     }
 
     if (locationsDataUpdate) {
@@ -607,7 +607,11 @@ export class CoC7Chase extends CoC7Item {
       ? this.preys
       : this.preys?.filter(p => !p.data.escaped)
     //Get chasers
-    const chasers = this.chasers // Recursivity !! with getParticipantLocation and get participants
+    const chasers = this.data.data.includeLatecomers
+      ? this.chasers
+      : this.chasers?.filter( c => !c.data.excluded)
+      
+      // Recursivity !! with getParticipantLocation and get participants
 
     //If no prey or no chasser
     // if (0 == chasers.length) {
@@ -770,10 +774,34 @@ export class CoC7Chase extends CoC7Item {
     await this.update(updateData, { render: render })
   }
 
+  getClearActiveLocationUpdateData ({
+    scrollToLocation = true,
+    html = null
+  } = {}) {
+    const updateData = {}
+    const locations = this.data.data.locations.list
+      ? foundry.utils.duplicate(this.data.data.locations.list)
+      : []
+    locations.forEach(l => {
+      delete l.active
+    })
+    updateData['data.locations.list'] = this.cleanLocationsList(locations)
+
+    if (scrollToLocation) {
+      updateData['data.scroll.chaseTrack.from'] = 0
+      updateData['data.scroll.chaseTrack.to'] = -1
+    }
+    return updateData
+  }
+
   getActivateLocationUpdateData (
     locationUuid,
     { scrollToLocation = true, html = null } = {}
   ) {
+    if (!locationUuid)
+      return this.getClearActiveLocationUpdateData({
+        scrollToLocation: scrollToLocation
+      })
     const updateData = {}
     const locations = this.data.data.locations.list
       ? foundry.utils.duplicate(this.data.data.locations.list)
@@ -1244,7 +1272,10 @@ export class CoC7Chase extends CoC7Item {
           //     if( pDoc.object.width) x += pDoc.object.width
           //   }
           // })
-          const showTokenMovement = 'boolean' === typeof animate?animate:this.data.data.showTokenMovement
+          const showTokenMovement =
+            'boolean' === typeof animate
+              ? animate
+              : this.data.data.showTokenMovement
           await particpantDocument.parent.updateEmbeddedDocuments(
             'Token',
             update,
@@ -1410,6 +1441,37 @@ export class CoC7Chase extends CoC7Item {
       `${game.i18n.localize('CoC7.Attribute')} (${game.i18n.localize(
         'CoC7.SAN'
       )})`
+    )
+
+    game.CoC7.skillList?.forEach(s => {
+      if (
+        !list.includes(s.fullName) &&
+        !s.fullName
+          .toLowerCase()
+          .includes(`(${game.i18n.localize('CoC7.AnySpecName')})`.toLowerCase())
+      )
+        list.push(s.fullName)
+    }) // TODO: Remove ??
+    this.participants.forEach(p => {
+      if (p.actor) {
+        p.actor.skills.forEach(s => {
+          if (!list.includes(s.fullName)) list.push(s.fullName)
+        })
+      }
+    })
+    return list.sort(Intl.Collator().compare)
+  }
+
+  get allSkillsAndCharacteristicsShort () {
+    const list = []
+    CoCActor.getCharacteristicDefinition().forEach(c =>
+      list.push( `${c.label}`)
+    )
+    list.push(
+      `${game.i18n.localize( 'CoC7.Luck')}`
+    )
+    list.push(
+      `${game.i18n.localize( 'CoC7.SAN')}`
     )
 
     game.CoC7.skillList?.forEach(s => {

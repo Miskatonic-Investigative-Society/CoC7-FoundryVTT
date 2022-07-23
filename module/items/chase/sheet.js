@@ -403,14 +403,16 @@ export class CoC7ChaseSheet extends ItemSheet {
     if (undefined == end) end = -1
 
     if (initialOpening) {
+      const remString = $(':root').css('font-size')
+      const remSize = Number(remString.replace('px', ''))
       if (app.item.started) {
-        const remString = $(':root').css('font-size')
-        const remSize = Number(remString.replace('px', ''))
         const pCount = data.participants.length
         const width = (pCount * 11.2 + 3) * remSize
         app._tabs[0].active = 'setup'
         app.position.width = Math.max(width, 40 * remSize)
         // html.css('width', `${width}px`)
+      } else {
+        app.position.width = 45 * remSize
       }
       return await app.item.activateNexParticpantTurn({ html: html }) //html is not rendered, element have size = 0
       // if (end > 0) {

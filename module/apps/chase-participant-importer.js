@@ -94,25 +94,21 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
 
     data.optionsList = {}
     if (this.chase) {
-      data.skillsAndCharacteristicsList = this.chase.allSkillsAndCharacteristics
+      data.skillsAndCharacteristicsList = this.chase.allSkillsAndCharacteristicsShort
     }
 
     if (this.actor) {
       data.skillsAndCharacteristicsList = []
       CoCActor.getCharacteristicDefinition().forEach(c =>
         data.skillsAndCharacteristicsList.push(
-          `${game.i18n.localize('CoC7.Characteristics')} (${c.shortName})`
+          `${c.label}`
         )
       )
       data.skillsAndCharacteristicsList.push(
-        `${game.i18n.localize('CoC7.Attribute')} (${game.i18n.localize(
-          'CoC7.Luck'
-        )})`
+        `${game.i18n.localize( 'CoC7.Luck')}`
       )
       data.skillsAndCharacteristicsList.push(
-        `${game.i18n.localize('CoC7.Attribute')} (${game.i18n.localize(
-          'CoC7.SAN'
-        )})`
+        `${game.i18n.localize( 'CoC7.SAN')}`
       )
       this.actor.skills.forEach(s =>
         data.skillsAndCharacteristicsList.push(s.fullName)

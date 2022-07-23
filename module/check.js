@@ -1410,7 +1410,7 @@ export class CoC7Check {
     if (this.actor?.data) {
       if (this.skill) {
         flavor = game.i18n.format('CoC7.CheckResult', {
-          name: this.skill.name,
+          name: this.skill.fullName,
           value: this.rawValueString,
           difficulty: this.difficultyString
         })
