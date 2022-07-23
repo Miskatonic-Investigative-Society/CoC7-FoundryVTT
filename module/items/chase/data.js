@@ -424,18 +424,19 @@ export class CoC7Chase extends CoC7Item {
 
   //Handle rounds
 
-  async progressToNextRound( {render = true} = {}){
+  async progressToNextRound ({ render = true } = {}) {
     const participants = this.data.data.participants
-    ? foundry.utils.duplicate(this.data.data.participants)
-    : []
-    participants.forEach( p => {
-      if( p.currentMovementActions < p.movementAction){
+      ? foundry.utils.duplicate(this.data.data.participants)
+      : []
+    participants.forEach(p => {
+      if (p.currentMovementActions < p.movementAction) {
         p.currentMovementActions += p.movementAction
-        if( p.currentMovementActions > p.movementAction) p.currentMovementActions = p.movementAction
+        if (p.currentMovementActions > p.movementAction)
+          p.currentMovementActions = p.movementAction
       }
     })
-    await this.updateParticipants( participants, {render:false})
-    this.activateNexParticpantTurn( { render: render})
+    await this.updateParticipants(participants, { render: false })
+    this.activateNexParticpantTurn({ render: render })
   }
 
   /** @override */
@@ -850,10 +851,21 @@ export class CoC7Chase extends CoC7Item {
   }
 
   async locatorDropped (data) {
-    await this.setLocationCoordinates(data.locationUuid, data.x, data.y, data.scene)
+    await this.setLocationCoordinates(
+      data.locationUuid,
+      data.x,
+      data.y,
+      data.scene
+    )
   }
 
-  async setLocationCoordinates (locationUuid, x, y, sceneId, { render = true } = {}) {
+  async setLocationCoordinates (
+    locationUuid,
+    x,
+    y,
+    sceneId,
+    { render = true } = {}
+  ) {
     const locations = foundry.utils.duplicate(this.data.data.locations.list)
     let locationIndex = locations.findIndex(l => locationUuid == l.uuid)
     locations[locationIndex].coordinates = { x: x, y: y, scene: sceneId }
@@ -861,13 +873,15 @@ export class CoC7Chase extends CoC7Item {
     return await this.updateLocationsList(locations, { render: render })
   }
 
-  async clearActiveLocationCoordinates({render = true} = {}){
-    if( this.activeLocation){
-      return await this.clearLocationCoordinates( this.activeLocation.uuid, {render: render})
+  async clearActiveLocationCoordinates ({ render = true } = {}) {
+    if (this.activeLocation) {
+      return await this.clearLocationCoordinates(this.activeLocation.uuid, {
+        render: render
+      })
     }
   }
 
-  async clearLocationCoordinates( locationUuid, {render = true} = {}){
+  async clearLocationCoordinates (locationUuid, { render = true } = {}) {
     const locations = foundry.utils.duplicate(this.data.data.locations.list)
     let locationIndex = locations.findIndex(l => locationUuid == l.uuid)
     delete locations[locationIndex].coordinates
@@ -1020,6 +1034,12 @@ export class CoC7Chase extends CoC7Item {
     } = {}
   ) {}
 
+  /**
+   * Move a participant for a number of locations.
+   * @param {string|null} participantUuid     Uuid of participant
+   * @param {*} locationMoved                 Number of locations movred
+   * @returns {number}                        Total number of locations crossed
+   */
   async moveParticipant (
     participantUuid,
     locationMoved,
@@ -1113,7 +1133,13 @@ export class CoC7Chase extends CoC7Item {
   async moveParticipantToLocation (
     participantUuid,
     locationUuid,
-    { scrollToLocation = true, activateLocation = true, render = true } = {}
+    {
+      scrollToLocation = true,
+      activateLocation = true,
+      animate = false,
+      moveToken = true,
+      render = true
+    } = {}
   ) {
     const locations = foundry.utils.duplicate(this.data.data.locations.list)
 
@@ -1136,9 +1162,8 @@ export class CoC7Chase extends CoC7Item {
       return
     }
 
-    if (destination.participants.includes(participantUuid)) return //moving particpant to a location he already occupies
-
     if (!destination.participants) destination.participants = []
+    if (destination.participants.includes(participantUuid)) return //moving particpant to a location he already occupies
     destination.participants.push(participantUuid)
     // destination.participants.sort(sortByRoleAndDex)
 
@@ -1146,6 +1171,51 @@ export class CoC7Chase extends CoC7Item {
       p => participantUuid != p
     )
     origin.participants = oldParticipantsList
+
+    if (moveToken && destination.coordinates) {
+      const participant = this.getParticipant(participantUuid)
+      const particpantDocument = CoC7Utilities.getDocumentFromKey(
+        participant?.data?.docUuid
+      )
+      if (
+        particpantDocument &&
+        !(
+          /*particpantDocument.isToken || */ (
+            particpantDocument instanceof TokenDocument
+          )
+        )
+      ) {
+        ui.notifications.warn('No token associated with this actor')
+      } else {
+        if (destination.coordinates.scene != game.scenes.viewed.uuid)
+          ui.notifications.warn('Caution the scene is not the active scene')
+        if (particpantDocument.parent?.uuid != destination.coordinates.scene)
+          ui.notifications.error(
+            'Token does not belongs to this location scene'
+          )
+        else {
+          // if( !animate) await particpantDocument.object.setPosition( destination.coordinates.x, destination.coordinates.y, {animate:false})
+          let x = destination.coordinates.x
+          let y = destination.coordinates.y
+          const update = []
+          let updates = false
+          destination.participants?.forEach( pUuid =>{
+            const p = this.getParticipant(pUuid)
+            const pDoc = CoC7Utilities.getDocumentFromKey( p?.data?.docUuid)
+            if( pDoc instanceof TokenDocument && pDoc.object instanceof Token){
+              updates = true
+              update.push({
+                _id: pDoc.id,
+                x:x,
+                y:y
+              })
+              if( pDoc.object.width) x += pDoc.object.width
+            }
+          })
+          if( updates) await particpantDocument.parent.updateEmbeddedDocuments( "Token", update, {animate:animate})
+        }
+      }
+    }
 
     await this.updateLocationsList(locations, { render: render })
   }
