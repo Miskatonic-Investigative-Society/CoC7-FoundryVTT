@@ -125,7 +125,7 @@ export class CoC7Parser {
     html,
     data /* chatMessage, data/*, option, user */
   ) {
-    // @coc7.sanloss[sanMax:1D6,sanMin:1,difficulty:++,modifier:-1]{Hard San Loss (-1) 1/1D6}
+    // @coc7.sanloss[sanMax:1D6,sanMin:1,sanReason:Ghouls,difficulty:++,modifier:-1]{Hard San Loss (-1) 1/1D6}
     // @coc7.check[type:charac,name:STR,difficulty:+,modifier:-1]{Hard STR check(-1)}
     // @coc7.check[type:attrib,name:lck,difficulty:+,modifier:-1]{Hard luck check(-1)}
     // @coc7.check[type:skill,name:anthropology,difficulty:+,modifier:-1]{Hard Anthropology check(-1)}
@@ -445,16 +445,9 @@ export class CoC7Parser {
               break
 
             case 'sanloss': {
-              SanCheckCard.create(token.actor.id, options, {
+              SanCheckCard.create(token.actor.actorKey, options, {
                 fastForward: event.shiftKey
               })
-              // const check = new CoC7SanCheck(
-              //   token.actor.id,
-              //   options.sanMin,
-              //   options.sanMax,
-              //   undefined != options.difficulty?CoC7Utilities.convertDifficulty(options.difficulty):CoC7Check.difficultyLevel.regular,
-              //   undefined != options.modifier?Number(options.modifier):0);
-              // check.toMessage( event.shiftKey);
               break
             }
 

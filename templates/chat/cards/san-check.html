@@ -3,14 +3,16 @@
     <header class="card-header">
       <div class="left-portrait">
         {{#if displayActorOnCard}}
-        <img class="portrait open-actor" data-actor-key="{{actor.actorKey}}" src="{{actor.img}}" title="{{actor.name}}"/>
+          <img class="portrait open-actor" data-actor-key="{{actor.actorKey}}" src="{{actor.img}}" title="{{actor.name}}"/>
         {{/if}}
       </div>
       <div class="card-title">
         {{ localize 'CoC7.SanityCheck' }}
       </div>
       <div class="right-portrait">
-        <img class="portrait open-actor" data-actor-key="{{creature.actorKey}}"  src="{{creature.img}}" title="{{creature.name}}"/>
+        {{#if sanLossSource}}
+          <img class="portrait open-actor" data-actor-key="{{sanLossSource.actorKey}}"  src="{{sanLossSource.img}}" title="{{sanLossSource.name}}"/>
+        {{/if}}
       </div>
     </header>
   {{/unless}}
@@ -24,15 +26,8 @@
   <div class="status-list">
     <div class="status">{{localize 'CoC7.DailyLoss'}}: {{actor.dailySanLoss}}</div>
     <div class="status">{{localize 'CoC7.Sanity'}}: {{actor.san}}/{{actor.sanMax}}</div>
-    {{#if creature}}
-      {{#if creatureEncountered}}<div class="status">Creature encountered</div>{{/if}}
-      {{#if creatureSpecieEncountered}}<div class="status">Specie encountered</div>{{/if}}
-      <div class="status">Already lost: {{sanLostToThisCreature}}</div>
-      <div class="status">Creature max loss: {{creature.sanLossMax}}</div>
-      <div class="status">Max loss to this creature: {{maxSanLossToThisCreature}}</div>
-    {{else}}
-      <div class="status">Max loss: {{maxSanLoss}}</div>
-    {{/if}}
+    {{#if sanLossReasonEncountered}}<div class="status">{{localize 'CoC7.AlreadyEncountered'}} :{{sanData.sanReason}} lost {{sanLostToReason}}/{{maxSanLoss}}</div>{{/if}}
+    <div class="status">{{localize 'CoC7.MaxPossibleSanLoss'}}: {{maxPossibleSanLoss}}</div>
     {{#if state.sanRolled}}
       {{#if sanCheck.failed}}
         <div class="status">Check failed</div>
@@ -212,7 +207,7 @@
       <div class="status">{{ localize 'CoC7.BoutActive'}}</div>
     {{/if}}
 
-    {{#if creature}}
+    {{#if sanData.sanReason}}
       {{#if state.insanity}}
         {{#if sanLoss}}
           {{#unless state.cthulhuMythosAwarded}}
@@ -228,24 +223,22 @@
         {{/if}}
       {{/if}}
 
-      {{#if creatureEncountered}}<div class="status">Creature encountered</div>{{/if}}
-      {{#if creatureHasSpecie}}{{#if creatureSpecieEncountered}}<div class="status">Specie encountered</div>{{/if}}{{/if}}
-      <div class="status">{{ localize 'CoC7.AlreadyLost'}}: {{sanLostToThisCreature}}</div>
-      <div class="status">{{ localize 'CoC7.CreatureMaxLoss'}}: {{creature.sanLossMax}}</div>
-      <div class="status">{{ localize 'CoC7.MaxLossToCreature'}}: {{maxSanLossToThisCreature}}</div>
+      {{#if sanData.sanReason}}
+        {{#if sanLossReasonEncountered}}
+          <div class="status">Already encountered "{{sanData.sanReason}}"</div>
+          <div class="status">{{ localize 'CoC7.AlreadyLost'}}: {{sanLostToReason}}</div>
+          <div class="status">{{ localize 'CoC7.CreatureMaxLoss'}}: {{maxSanLoss}}</div>
+        {{/if}}
+      {{/if}}
+      <div class="status">Max loss: {{maxPossibleSanLoss}}</div>
 
       {{#unless state.keepCreatureSanData}}
         <div class='card-buttons'>
 
-        {{#if creatureEncountered}}
+        {{#if sanLossReasonEncountered}}
           <button data-action="reset-creature-san-data">{{ localize 'CoC7.ResetCreatureSan' }}</button>
-        {{/if}}
-        {{#if creatureHasSpecie}}
-          {{#if creatureSpecieEncountered}}
-            <button data-action="reset-specie-san-data">{{ localize 'CoC7.ResetSpecieSan' }}</button>
-          {{/if}}
-        {{/if}}
           <button data-action="advance-state" data-state="keepCreatureSanData">{{ localize 'CoC7.KeepData' }}</button>
+        {{/if}}
         </div>
       {{/unless}}
 

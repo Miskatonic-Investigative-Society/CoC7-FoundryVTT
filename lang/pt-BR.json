@@ -1,15 +1,12 @@
 {
   "I18N.LANGUAGE": "Português (Brasil)",
   "I18N.MAINTAINERS": "@Castanho#3271 reviewed by zorieuq360#6074",
-
   "CoC7.title": "Chamado de Cthulhu 7ª Edição (Não-oficial)",
-
   "CoC7.Entities.Container": "Contêiner",
   "CoC7.Entities.Character": "Personagem",
   "CoC7.Entities.Creature": "Criatura",
   "CoC7.Entities.Npc": "PNJ",
   "CoC7.Entities.Vehicle": "Veículo",
-
   "CoC7.Entities.Archetype": "Arquétipo",
   "CoC7.Entities.Book": "Livro",
   "CoC7.Entities.Chase": "Perseguição",
@@ -21,7 +18,6 @@
   "CoC7.Entities.Status": "Condição",
   "CoC7.Entities.Talent": "Talento",
   "CoC7.Entities.Weapon": "Arma",
-
   "CHARAC.STR": "FOR",
   "CHARAC.Strengh": "Força",
   "CHARAC.Strength": "Força",
@@ -39,7 +35,6 @@
   "CHARAC.Power": "Poder",
   "CHARAC.EDU": "EDU",
   "CHARAC.Education": "Educação",
-
   "CoC7.PlayerName": "Jogador",
   "CoC7.Name": "Nome",
   "CoC7.Archetype": "Arquétipo",
@@ -123,7 +118,6 @@
   "CoC7.Check": "Teste",
   "CoC7.ItemWeapon": "Item (Arma)",
   "CoC7.AttacksPerRound": "Ataques por Turno",
-
   "CoC7.Cast": "Conjurar",
   "CoC7.SanityCost": "Custo em Sanidade",
   "CoC7.PowerCost": "Custo em Poder",
@@ -132,12 +126,10 @@
   "CoC7.OtherCosts": "Outros Custos",
   "CoC7.CastingSpell": "Conjurando <i>{spell}</i>.",
   "CoC7.NotEnoughMagicPoints": "{spell} custa {originalMagicPoints} Pontos de Magia, mas você tem apenas {actorMagicPoints}. Gostaria de retirar os restantes {convertedHitPoints} dos seus Pontos de Vida? Você irá levar {convertedHitPoints} de dano se proceder.",
-
   "CoC7.CopyToClipboard": "Copiar para Área de Transferência",
   "CoC7.WhisperToSelection": "Sussurrar aos Tokens Selecionados",
   "CoC7.WhisperTo": "Sussurrar para:",
   "CoC7.SendToChat": "Enviar no Chat",
-
   "CoC7.RegularSuccess": "Sucesso Regular",
   "CoC7.HardSuccess": "Sucesso Sólido",
   "CoC7.ExtremeSuccess": "Sucesso Extremo",
@@ -145,7 +137,6 @@
   "CoC7.Fumble": "Falha Crítica",
   "CoC7.Failure": "Falha",
   "CoC7.Malfunction": "{itemName} sofreu um defeito",
-
   "CoC7.Dice": "Dados",
   "CoC7.DiceModifierBonus": "Dado(s) de Bônus",
   "CoC7.DiceModifierPenalty": "Dado(s) de Penalidade",
@@ -176,9 +167,7 @@
   "CoC7.RollSecretDice": "O Guardião realizou um teste privado.",
   "CoC7.KeeperSentDecoy": "Rolagem falsa enviada aos jogadores.",
   "CoC7.FakeRoll": "Fingir Rolagem",
-
   "CoC7.ConstitutionCheck": "Teste de Constituição",
-
   "CoC7.SanDataSelectionWindow": "Selecione as perdas de Sanidade",
   "CoC7.BonusSelectionWindow": "Janela de seleção de bônus",
   "CoC7.BonusSelectionWindowNamed": "Selecionar modificador para teste de {name}",
@@ -207,11 +196,9 @@
   "CoC7.CombinedAnyHint": "Algum dos Testes deve ter Sucesso",
   "CoC7.CombinedAllHint": "Todos os Testes devem ter Sucesso",
   "CoC7.CloseCard": "Finalizar Cartão",
-
   "CoC7.CheckResult": "Teste de {name} ({value}%) - Dificuldade {difficulty}",
   "CoC7.ItemCheckResult": "{item} - Teste de {skill} ({value}%) - Dificuldade {difficulty}",
   "CoC7.CheckRawValue": "({rawvalue}%) - Dificuldade {difficulty}",
-
   "CoC7.ArmorAbsorbsDamage": "Armadura Absorve o Dano",
   "CoC7.Critical": "Crítico",
   "CoC7.Impale": "Empalamento",
@@ -223,7 +210,6 @@
   "CoC7.ShotIsImpossible": "O Disparo é Impossível",
   "CoC7.OutOfAmmo": "Sem Munição",
   "CoC7.OutOfShots": "Sem Disparos",
-
   "CoC7.BonusDamageRoll": "Jogando Dano Extra",
   "CoC7.Type": "Tipo",
   "CoC7.FightBack": "Contra-Ataque",
@@ -252,9 +238,7 @@
   "CoC7.Tie": "Empate",
   "CoC7.DamageInflicted": "Dano Infringido",
   "CoC7.TotalDamage": "Dano Total",
-
   "CoC7.combatCard.dive4cover": "Buscar cobertura",
-
   "CoC7.rangeCombatCard.SingleShot": "Disparo Simples",
   "CoC7.rangeCombatCard.MultipleShots": "Disparo Múltiplo",
   "CoC7.AutomaticFire": "Fogo Automático",
@@ -288,14 +272,11 @@
   "CoC7.rangeCombatCard.NormalTargetTitle": "O alvo tem um tamanho padrão, sem bônus ou penalidades.",
   "CoC7.rangeCombatCard.InMeleeTitle": "1 Dado de Penalidade. O alvo está engajado em combate corpo-a-corpo.",
   "CoC7.rangeCombatCard.FastMovingTargetTitle": "1 Dado de Penalidade. O alvo é veloz (MOV maior que 8) e está movendo-se rapidamente.",
-
   "CoC7.meleeCombatDamageTakes": "recebe",
   "CoC7.meleeCombatDamageFrom": "de",
   "CoC7.meleeCombatDamageDeals": "causa",
   "CoC7.meleeCombatDamageWith": "com",
-
   "CoC7.DropZone": "DropZone",
-
   "CoC7.Value": "Valor",
   "CoC7.SkillValue": "Valor da Perícia",
   "CoC7.SkillBase": "Valor Base",
@@ -304,14 +285,12 @@
   "CoC7.SkillArchetype": "Perícias de Arquétipo",
   "CoC7.SkillOccupation": "Perícias da Ocupação",
   "CoC7.SkillPersonal": "Perícias Pessoais",
-
   "CoC7.SkillTotalExperience": "Pontos de Experiência",
   "CoC7.SkillTotalArchetype": "Pontos de Arquétipo",
   "CoC7.SkillTotalOccupation": "Pontos de Ocupação",
   "CoC7.SkillTotalPersonal": "Pontos Pessoais",
   "CoC7.CharacteristicsPoints": "Pontos de Características",
   "CoC7.TotalPoints": "Total de Pontos de Ocupação",
-
   "CoC7.ItemQuantity": "Quantidade",
   "CoC7.ItemWeight": "Peso",
   "CoC7.ItemDetails": "Detalhes",
@@ -331,7 +310,6 @@
   "CoC7.WeaponSpecial": "Especial",
   "CoC7.ItemPrice": "Preço",
   "CoC7.Armor": "Armadura",
-
   "CoC7.EraNvct": "Invictus",
   "CoC7.EraDrka": "Idade das Trevas",
   "CoC7.EraDdts": "Entre Trilhas Sombrias",
@@ -340,7 +318,6 @@
   "CoC7.EraPulp": "Cthulhu Pulp",
   "CoC7.EraMdrn": "Moderno",
   "CoC7.Eras": "Cthulhu Através das Eras",
-
   "CoC7.SkillNoAdjustments": "Sem Ajustes",
   "CoC7.SkillNoXpGain": "Sem ganho de Experiência",
   "CoC7.SkillSpecial": "Especialização",
@@ -349,7 +326,6 @@
   "CoC7.SkillCombat": "Combate",
   "CoC7.SkillFighting": "Lutar",
   "CoC7.SkillFirearm": "Armas de Fogo",
-
   "CoC7.WeaponRngd": "Alcance",
   "CoC7.WeaponProperyManeuver": "Manobra",
   "CoC7.WeaponTouch": "Toque",
@@ -370,16 +346,13 @@
   "CoC7.Weapon.Property.Thrown": "Arremessável",
   "CoC7.Weapon.Property.Burn": "Queimar",
   "CoC7.Weapon.Property.Shotgun": "Espingarda",
-
   "CoC7.ErrorItem": "Item não Encontrado",
   "CoC7.ErrorActor": "Ator não Encontrado",
   "CoC7.ErrorInvalidFormula": "{value} não é uma fórmula válida",
   "CoC7.ErrorInvalid": "Inválido",
   "CoC7.Validate": "Validar",
   "CoC7.Apply": "Aplicar",
-
   "CoC7.NewBioSectionName": "Nova Seção",
-
   "CoC7.DodgeSkillName": "Esquivar",
   "CoC7.CthulhuMythosName": "Mythos de Cthulhu",
   "CoC7.CreditRatingSkillName": "Nível de Crédito",
@@ -391,7 +364,6 @@
   "CoC7.AnySpecName": "Genérica",
   "CoC7.BoutOfMadnessName": "Acesso de Loucura",
   "CoC7.InsanityName": "Insanidade",
-
   "CoC7.NewSkillName": "Nova Perícia",
   "CoC7.AddSkill": "Adicionar perícia",
   "CoC7.DevelopemmentPhase": "Fase de Desenvolvimento",
@@ -424,12 +396,10 @@
   "CoC7.SortBySkillValue": "Ordenar perícias por pontos",
   "CoC7.UncommonSkillsShow": "Mostrar perícias incomuns",
   "CoC7.UncommonSkillsHide": "Ocultar perícias incomuns",
-
   "CoC7.NewBookName": "novo livro",
   "CoC7.AddBook": "Adicionar Livro",
   "CoC7.NewSpellName": "novo feitiço",
   "CoC7.AddSpell": "Adicionar Feitiço",
-
   "CoC7.AddWeapon": "Adicionar Arma",
   "CoC7.NewWeaponName": "Nova Arma",
   "CoC7.EditWeapon": "Editar Arma",
@@ -450,7 +420,6 @@
   "CoC7.SANCheckTitle": "Perda de Sanidade: {name} ({sanMin}/{sanMax})",
   "CoC7.NoSkill": "Sem Perícia",
   "CoC7.AddWeapontHint": "<p>{actor} não possui {weapon}.<br>Gostaria de criar ?</p>",
-
   "CoC7.LinkCheck": "Teste de {name}",
   "CoC7.LinkCheckDiff": "Teste [{difficulty}] de {name}",
   "CoC7.LinkCheckModif": " Teste de {name}, com modificador ({modifier})",
@@ -463,7 +432,6 @@
   "CoC7.LinkItemDiff": "[{difficulty}] {name}",
   "CoC7.LinkItemModif": " de {name} ({modifier})",
   "CoC7.LinkItemDiffModif": "[{difficulty}] {name} ({modifier})",
-
   "CoC7.ManualCreditValues": "Valores de Nível de Crédito Manual",
   "CoC7.MonetarySymbol": "Símbolo:",
   "CoC7.MonetaryFactor": "Fator:",
@@ -473,16 +441,13 @@
   "CoC7.MonetarySpent": "Gasto:",
   "CoC7.MonetaryAssets": "Patrimônio:",
   "CoC7.MonetaryAssetsDetails": "Detalhes do Patrimônio",
-
   "CoC7.PossessionsNotes": "Anotações:",
   "CoC7.PossessionsNotesHolder": "Notas",
-
   "CoC7.BackgroundNewSection": "Adicionar nova Seção",
   "CoC7.BackgroundSectionNameHolder": "Título da Seção",
   "CoC7.BackgroundDeleteSection": "Deletar Seção",
   "CoC7.BackgroundSectionMoveUp": "Para Cima",
   "CoC7.BackgroundSectionMoveDown": "Para Baixo",
-
   "CoC7.creatureFightingSkill": "Lutar",
   "CoC7.InvoluntaryAction": "Ação Involuntária",
   "CoC7.InvoluntaryActionPerfomed": "Realizar Ação Involuntária",
@@ -531,7 +496,24 @@
   "CoC7.MythosGain": "Ganho de Mythos",
   "CoC7.YouGainedCthulhuMythos": "Sua mente vacila diante da manifestação sobrenatural, (+{value}% Mythos de Cthulhu).",
   "CoC7.CardResolved": "Cartão Resolvido",
-
+  "CoC7.AddSanityLossEncounter": "Adicionar Encontro de Perda de Sanidade",
+  "CoC7.AddSanityLossImmunity": "Adicionar Imunidade à Perda de Sanidade",
+  "CoC7.BackgroundEncounters": "Perdas Por Entidades Estranhas",
+  "CoC7.BackgroundFlags": "Flags",
+  "CoC7.BackgroundFlagsMythosExperienced": "+5% Cthulhu Mythos Recebido",
+  "CoC7.BackgroundFlagsMythosHardened": "Cthulhu Mythos Dificultado",
+  "CoC7.DeleteSanityLossEncounter": "Excluir Encontro de Perda de Sanidade",
+  "CoC7.DeleteSanityLossImmunity": "Excluir Imunidade à Perda de Sanidade",
+  "CoC7.Migrate.Complete": "Seus dados foram migrados com sucesso!",
+  "CoC7.ReduceSanityLimits": "Reduz todos os limites de Sanidade por um",
+  "CoC7.SanityLossEncounter": "Encontro de perda de Sanidade",
+  "CoC7.SanityLossEncounters": "Encontros de Perda de Sanidade",
+  "CoC7.SanityLossImmunities": "Imunidades à Perda de Sanidade",
+  "CoC7.SanityLossImmunity": "Imunidade à perda de Sanidade",
+  "CoC7.SanityLossTypeDialogBody": "Adicionar novo Encontro de Mythos, Perda de Sanidade ou Imunidade ao personagem.",
+  "CoC7.SanityLossTypeDialogTitle": "Nova perda de Sanidade ou imunidade",
+  "CoC7.SanityLossTypeReason": "Motivo",
+  "CoC7.SanityLossTypeValue": "Pontos de Sanidade perdidos",
   "CoC7.CthulhuMythosInitial": "Leitura Inicial",
   "CoC7.CthulhuMythosFinal": "Estudo Completo",
   "CoC7.Occult": "Ocultismo",
@@ -548,7 +530,6 @@
   "CoC7.GateSpell": "Portal",
   "CoC7.CombatSpell": "Combate",
   "CoC7.SpellType": "Tipo de Feitiço",
-
   "CoC7.BookHasNothingMoreToTeach": "{book} não tem mais nada a ensinar. Perícia de Mythos de Cthulhu de {actor} é maior que seu Nível de Mythos.",
   "CoC7.BookType": "Tipo de Livro",
   "CoC7.Content": "Conteúdo",
@@ -573,11 +554,9 @@
   "CoC7.Mythos": "Mythos",
   "CoC7.RedoFullStudy": "Refazer Estudo Completo",
   "CoC7.SpellsLearned": "Feitiços Aprendidos",
-
   "CoC7.Crew": "Passageiros",
   "CoC7.Origin": "Origem",
   "CoC7.ArmedVehicle": "Veículo Blindado",
-
   "CoC7.PulpTalents": "Talentos Pulp",
   "CoC7.TalentType": "Tipos de Talento",
   "CoC7.PhysicalTalent": "Físico",
@@ -587,12 +566,10 @@
   "CoC7.BasicTalent": "Básico",
   "CoC7.InsaneTalent": "Insano",
   "CoC7.OtherTalent": "Outro",
-
   "CoC7.Items": "Itens",
   "CoC7.Vehicle": "Veículos",
   "CoC7.Books": "Livros",
   "CoC7.Status": "Condições",
-
   "CoC7.Classic": "Clássico",
   "CoC7.Lovecraftian": "Lovecraftiana",
   "CoC7.Pulp": "Pulp",
@@ -632,7 +609,6 @@
   "CoC7.SkillSelectBase": "Selecionar valor base para Perícia {name}",
   "CoC7.SelectSkill": "Selecionar uma Perícia existente",
   "CoC7.CreateNewSkill": "Criar nova Perícia",
-
   "CoC7.Characteristics": "Atributos",
   "CoC7.Characteristic": "Atributo",
   "CoC7.EnableCharacteristics": "Habilitar Atributos",
@@ -642,10 +618,8 @@
   "CoC7.BonusPoints": "Pontos de Bônus",
   "CoC7.SuggestedOccupations": "Ocupações Sugeridas",
   "CoC7.SuggestedTraits": "Traços Sugeridos",
-
   "CoC7.PutGunAway": "Guardar arma",
   "CoC7.DrawGun": "Sacar arma",
-
   "CoC7.GmTools": "Recursos do Guardião",
   "CoC7.GmNotes": "Anotações do Guardião",
   "CoC7.DevPhase": "Fase de Desenvolvimento",
@@ -664,7 +638,6 @@
   "CoC7.WarnNoControlledActor": "Você não tem atores selecionados",
   "CoC7.WarnFastTargetWithWrongMOV": "Movimento Rápido selecionado em ator com menos de 8 MOV. (MOV: {mov})",
   "CoC7.WarnTooManyTarget": "Muitos alvos selecionados. Mantendo apenas último selecionado",
-
   "CoC7.startRest": "Iniciar Descanso",
   "CoC7.dreaming": "Os Investigadores aguardam sonhando",
   "CoC7.healthRecovered": "Recuperou 1 Ponto de Vida",
@@ -675,30 +648,24 @@
   "CoC7.quickHealer": "Cura Rápida",
   "CoC7.allActors": "Todos Atores",
   "CoC7.restTargets": "Alvos do Descanso",
-
   "CoC7.ErrorNoDodgeSkill": "Ator não tem a Perícia Esquivar",
   "CoC7.ErrorNotEnoughLuck": "{actor} não teve sorte suficiente para obter sucesso no teste",
   "CoC7.ErrorManeuverNotPossible": "Seu oponente é muito grande para você realizar uma manobra",
   "CoC7.ErrorNotFound": "{missing} não foi encontrado!",
   "CoC7.ErrorNotFoundForActor": "{missing} não foi encontrado no ator {actor}!",
-
   "CoC7.InfoLessSkillThanOptions": "{skillCount} e {optionsCount}, adicionando todas.",
   "CoC7.InfoAllSkillsAlreadySelected": "Todas as perícias já estão selecionadas.",
-
   "CoC7.MessageCheckRequestedWait": "{check}<br>",
   "CoC7.MessageTargetCheckRequested": "O Guardião está solicitando um teste de {check} para {name}.",
   "CoC7.MessageTitleSelectSingleUserForTarget": "Qual usuário pode responder a este ataque",
   "CoC7.MessageSelectSingleUserForTarget": "Esse token é controlado por vários usuários, por favor selecione qual deles pode responder a este ataque",
   "CoC7.MessageBoutOfMadnessTableNotFound": "O resultado da tabela de loucura não foi encontrado, por favor verifique se todas as suas tabelas estão criadas",
   "CoC7.MessageBoutOfMadnessItemNotFound": "O resultado da tabela de loucura não foi encontrado, por favor verifique que todos os seus estados estão criados",
-
   "CoC7.DealDamage": "Causar {damage} pontos de dano em {target}?",
   "CoC7.NoTargetSelected": "Você não selecionou um alvo para seu teste de {weapon}. Deseja proceder assim mesmo?",
-
   "CoC7.Import": "Importar",
   "CoC7.Proceed": "Proceder",
   "CoC7.Cancel": "Cancelar",
-
   "CoC7.ActorImporter": "Importar Ator",
   "CoC7.ActorImporterSummary": "Importe um PNJ ou Criatura a partir da descrição de informações. Apenas cole o texto correspondente.",
   "CoC7.PasteTheDataBelow": "Cole as informações abaixo.",
@@ -710,14 +677,12 @@
   "CoC7.Convert": "Converter",
   "CoC7.NoConvert": "Não Converter",
   "CoC7.Guess": "Talvez",
-
   "CoC7.English": "Inglês",
   "CoC7.Spanish": "Espanhol",
   "CoC7.French": "Francês",
   "CoC7.German": "Alemão",
   "CoC7.Polish": "Polonês",
   "CoC7.TraditionalChinese": "Chinês Tradicional",
-
   "CoC7.SelectSourceLanguage": "Selecione o idioma de fonte.",
   "CoC7.ImportedCharactersFolder": "Personagens importados",
   "CoC7.ImportSkillItemLocations": "Buscando por perícias/feitiços/armas em",
@@ -725,7 +690,6 @@
   "CoC7.ImportActorItemsItem": "Itens",
   "CoC7.ImportActorItemsItemWorldModuleSystem": "Itens / Mundo / Módulos / Sistema",
   "CoC7.ImportActorItemsWorldModuleItemSystem": "Mundo / Módulos / Itens / Sistema",
-
   "CoC7.Migrate.Title": "Atualização Necessária!",
   "CoC7.Migrate.Message": "<p>Seu Mundo precisa ser atualizado para a rodar a versão {version}.</p><p>Por favor, faça um backup da pasta de seu Mundo antes de prosseguir.</p><p>Se você não atualizar seu Mundo, o sistema não funcionará devidamente.</p><p>Reinicie o Mundo quando o processo for concluído.</p>",
   "CoC7.Migrate.WithModulesMessage": "<p>Seu Mundo ou módulos podem requerer uma atualização para rodar  a versão {version}.</p><p>Por favor, faça um backup da pasta de seu Mundo e das pastas dos módulos abaixo antes de prosseguir.</p><p>Se você não atualizar seu Mundo, o sistema não funcionará devidamente.</p><p>Os seguintes módulos contém Atores ou Items.</p>{modules}<p>O mundo precisará ser reiniciado quando a atualização terminar.</p>",
@@ -738,14 +702,10 @@
   "CoC7.Migrate.TriggerContents": "<p>Iniciar migração e reiniciar</p>",
   "CoC7.Migrate.TriggerRestart": "Salvar e reiniciar",
   "CoC7.Migrate.TriggerTitle": "Acionar Migração",
-
   "CoC7.Maximize": "Maximizar",
   "CoC7.Summarize": "Resumir",
-
   "CoC7.UnableToInteractWithChatCard": "Não é possível interagir com essa mensagem, por favor peça ao Guardião para alterá-la para você.",
   "CoC7.UnableToCopyToClipboard": "Impossível copiar para a área de transferência, provavelmente por causa das configurações de segurança de seu navegador.",
-  "CoC7.WarningCharacterSheetV1Depreciated": "Essa versão da ficha está obsoleta e pode não funcionar corretamente. Será removida na versão 0.9 do Foundry VTT, por favor, mude o tipo da ficha para CoC7.CoC7CharacterSheetV2",
-
   "CoC7.ImportedUnnamedCharacter": "Personagem sem nome importado",
   "CoC7.CreatedImportedCharactersFolder": "Pasta de 'Personagens Importados' criada",
   "CoC7.HowToTranslateTitle": "Como traduzir?",
@@ -754,11 +714,9 @@
   "CoC7.HowToTranslateInstallTranslation": "Instale/Atualize a Tradução no gerenciador de módulos do Foundry.",
   "CoC7.HowToTranslateEnableTranslation": "Dentro do Mundo de Jogo, em Configuração/Gerenciar Módulos ative tanto o Babele quanto as traduções.",
   "CoC7.HowToTranslateNoTranslation": "instruções para criar traduções em novas línguas estão disponíveis nos módulos de tradução existentes.",
-
   "CoC7.MessageTitleSelectUserToGiveTo": "Entregar este item para outro personagem",
   "CoC7.MessageSelectUserToGiveTo": "Qual personagem gostaria de repassar este item?",
   "CoC7.MessageDistanceCalculationFailure": "Não é possível calcular distância entre tokens, por favor, use a ficha de personagem.",
-
   "CoC7.ToolTipSkill": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Clique Esquerdo</strong> Teste com Opções</li><li><strong>Shift + Clique Esquerdo</strong> Teste Regular Imediato</li></ol><label>Testes Resistidos</label><ol><li><strong>Clique Direito</strong> Teste Resistido com Opções</li><li><strong>Shift + Clique Direito</strong> Teste Resistido Imediato</li></ol><label>Teste Combinado</label><ol><li><strong>Alt/Option + Clique Direito</strong> Teste Combinado com Opções</li></ol>",
   "CoC7.ToolTipKeeperSkill": "<label>Testes do Guardião</label><ol><li><strong>CTRL + Clique Esquerdo</strong> Criar Link</li>{other}</ol>",
   "CoC7.ToolTipKeeperStandbySkill": "<li><strong>Clique Esquerdo</strong> Requisitar um teste para {name}</li>",
@@ -768,7 +726,6 @@
   "CoC7.ToolTipSkillFlagToggle": "<label>{status}</label><ol><li><strong>Dois Cliques</strong> Alternar Status de Desenvolvimento</li>",
   "CoC7.ToolTipSkillFlagged": "Marcada para Desenvolvimento",
   "CoC7.ToolTipSkillUnflagged": "Desmarcada para Desenvolvimento",
-
   "SETTINGS.TitleRules": "Regras",
   "SETTINGS.TitleInitiative": "Iniciativa",
   "SETTINGS.TitleRoll": "Rolagens",
@@ -908,5 +865,19 @@
   "CoC7.Settings.Rules.Name": "Regras Variantes/Opcionais",
   "CoC7.SpellAlreadyLearned": "Feitiço ('{spell}') já foi aprendido.",
   "CoC7.SpellSuccessfullyLearned": "Feitiço '{spell}' foi aprendido com sucesso!",
-  "CoC7.WarnNoTargetsSanCheck": "Não há alvos selecionados. Selecione um alvo ou crie um link"
+  "CoC7.WarnNoTargetsSanCheck": "Não há alvos selecionados. Selecione um alvo ou crie um link",
+  "CoC7.AlreadyEncountered": "Já encontrado",
+  "CoC7.AttackManeuver": "Manobra de Ataque",
+  "CoC7.CardType": "Tipo de cartão",
+  "CoC7.ErrorInvalidCardType": "Tipo de Cartão",
+  "CoC7.ErrorInvalidRollType": "Tipo de Rolagem",
+  "CoC7.ErrorMissingKeeperUser": "O Guardião precisa estar conectado para realizar essa ação",
+  "CoC7.GroupRollCard": "Cartão de rolagem de grupo",
+  "CoC7.MaxPossibleSanLoss": "Perda Máxima Possível",
+  "CoC7.Migrate.UpdateCurrentScene": "Atualizar cena atual",
+  "CoC7.RegularRollCard": "Cartão de rolagem regular",
+  "CoC7.ToolTipCombat": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Clique esquerdo</strong> rolar teste com opções</li><li><strong>Shift + Clique esquerdo</strong> Teste com dificuldade regular</li></ol><label>Manobra oposta de combate</label><ol><li><strong>Clique direito</strong> Manobra oposta de combate com opções</li><li><strong>Shift + Clique direito</strong> Manobra oposta de combate com dificuldade regular</li></ol>",
+  "CoC7.ToolTipSanity": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Clique esquerdo</strong> rolar teste com opções</li><li><strong>Alt/Option + Clique esquerdo</strong> rolar perda de Sanidade com opções</li><li><strong>Shift + Clique esquerdo</strong> Teste imediato na dificuldade regular</li><li><strong>Shift + Alt/Option + Clique esquerdo</strong> rolar perda de Sanidade sem opções adicionais</li></ol><label>Testes opostos</label><ol><li><strong>Clique direito</strong> Teste oposto com opções</li><li><strong>Shift + Clique direito</strong> Teste oposto imediato</li></ol><label>Testes combinados</label><ol><li><strong>Alt/Option + Clique direito</strong> Teste combinado com opções</li><li><strong>Shift + Alt/Option + Clique direito</strong> Teste combinado imediato</li></ol>",
+  "CoC7.days": "dia(s)",
+  "CoC7.months": "mês(es)"
 }

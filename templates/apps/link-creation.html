@@ -45,7 +45,7 @@
             {{#if selectedCheckType.skill}}
                 <div class="form-group">
                     <label>{{ localize 'CoC7.Name' }} :</label>
-                    <input type="text" name="skillName" value="{{data.skillName}}" {{#if isSetFromGame}}readonly{{/if}}/>
+                    <input type="text" name="skillName" value="{{data.skillName}}" required {{#if isSetFromGame}}readonly{{/if}}/>
                 </div>
             {{/if}}
         {{/if}}
@@ -53,18 +53,22 @@
         {{#if link.is.item}}
             <div class="form-group">
                 <label>{{ localize 'CoC7.Name' }} :</label>
-                <input type="text" name="itemName" value="{{data.itemName}}" {{#if isSetFromGame}}readonly{{/if}}/>
+                <input type="text" name="itemName" value="{{data.itemName}}" required {{#if isSetFromGame}}readonly{{/if}}/>
             </div>
         {{/if}}
 
         {{#if link.is.sanloss}}
             <div class="form-group">
                 <label>{{ localize 'CoC7.MinSanloss' }} :</label>
-                <input type="text" name="sanMin" value="{{data.sanMin}}"/>
+                <input type="text" name="sanMin" value="{{data.sanMin}}" required/>
             </div>
             <div class="form-group">
                 <label>{{ localize 'CoC7.MaxSanloss' }} :</label>
-                <input type="text" name="sanMax" value="{{data.sanMax}}"/>
+                <input type="text" name="sanMax" value="{{data.sanMax}}" required/>
+            </div>
+            <div class="form-group">
+                <label>{{ localize 'CoC7.SanityLossTypeReason' }} :</label>
+                <input type="text" name="sanReason" value="{{data.sanReason}}"/>
             </div>
         {{/if}}
 
@@ -109,7 +113,7 @@
             </label>
             <label class="checkbox">
                 <input type="checkbox" name="hasIcon" {{checked data.hasIcon}}/> {{ localize 'CoC7.Icon' }}
-            </label>         
+            </label>
         </div>
 
 
@@ -150,16 +154,20 @@
             <div class="form-group">
                 <label>{{ localize 'CoC7.Label' }} :</label>
                 <input type="text" name="label" value="{{data.label}}"/>
-            </div>        
+            </div>
         {{/if}}
 
         {{#if data.hasIcon}}
             <div class="form-group">
                 <label>{{ localize 'CoC7.Icon' }} :</label>
                 <input type="text" name="icon" value="{{data.icon}}"/>
-            </div>        
+            </div>
         {{/if}}
     </div>
+
+    {{#if link.link}}
+      <div style="border: 1px solid #000;background-color: #fff;padding: 2px;margin: 3px 0;text-align: center;">{{link.link}}</div>
+    {{/if}}
 
     <button class="submit-button" type="submit" data-action="clipboard"><i class="fas fa-clipboard"></i>{{ localize 'CoC7.CopyToClipboard' }}</button>
     <button class="submit-button" type="submit" data-action="whisper-selected"><i class="far fa-object-group"></i>{{ localize 'CoC7.WhisperToSelection' }}</button>

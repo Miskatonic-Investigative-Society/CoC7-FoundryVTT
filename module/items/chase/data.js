@@ -1415,7 +1415,7 @@ export class CoC7Chase extends CoC7Item {
         'CoC7.SAN'
       )})`
     )
-    participant.actor.skills.forEach(s => list.push(s.fullName))
+    participant.actor.skills.forEach(s => list.push(s.name))
     return list
   }
 
@@ -1445,17 +1445,17 @@ export class CoC7Chase extends CoC7Item {
 
     game.CoC7.skillList?.forEach(s => {
       if (
-        !list.includes(s.fullName) &&
-        !s.fullName
+        !list.includes(s.name) &&
+        !s.name
           .toLowerCase()
           .includes(`(${game.i18n.localize('CoC7.AnySpecName')})`.toLowerCase())
       )
-        list.push(s.fullName)
+        list.push(s.name)
     }) // TODO: Remove ??
     this.participants.forEach(p => {
       if (p.actor) {
         p.actor.skills.forEach(s => {
-          if (!list.includes(s.fullName)) list.push(s.fullName)
+          if (!list.includes(s.name)) list.push(s.name)
         })
       }
     })
@@ -1476,17 +1476,17 @@ export class CoC7Chase extends CoC7Item {
 
     game.CoC7.skillList?.forEach(s => {
       if (
-        !list.includes(s.fullName) &&
-        !s.fullName
+        !list.includes(s.name) &&
+        !s.name
           .toLowerCase()
           .includes(`(${game.i18n.localize('CoC7.AnySpecName')})`.toLowerCase())
       )
-        list.push(s.fullName)
+        list.push(s.name)
     }) // TODO: Remove ??
     this.participants.forEach(p => {
       if (p.actor) {
         p.actor.skills.forEach(s => {
-          if (!list.includes(s.fullName)) list.push(s.fullName)
+          if (!list.includes(s.name)) list.push(s.name)
         })
       }
     })

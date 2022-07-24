@@ -98,6 +98,30 @@ h3.keeper-only-tab i {
     overflow: auto;
     .bio-section {
       padding: 0 2px;
+      .bio-section-value {
+        height: max-content;
+        resize: none;
+        font-family: customSheetFont, 'Palatino Linotype', serif;
+        font-size: 0.75rem;
+      }
+      div.bio-section-type,
+      div.item-controls {
+        padding: 2px 0;
+      }
+      div.bio-section-value {
+        padding: 5px;
+        background: rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--color-border-dark);
+        border-radius: 3px;
+        color: #000;
+        div.bio-section-values {
+          flex: 0 0 40px;
+          text-align: center;
+          input {
+            width: 28px;
+          }
+        }
+      }
     }
   }
 

@@ -21,7 +21,7 @@
                             {{#if r.item}}
                                 <span class="tag">{{r.item.name}}</span>
                             {{/if}}
-                            <span class="tag">{{r.sName}}</span>
+                            <span class="tag">{{r.shortName}}</span>
                         </div>
                         <a class="gm-visible-only" data-action="remove-roll" title="{{localize 'CoC7.remove'}}"><i class="far fa-times-circle"></i></a>
                     </div>
@@ -38,7 +38,7 @@
     {{#if rolled}}
         {{{_htmlRoll}}}
     {{else}}
-    <div class='card-buttons owner-only' data-actor-key="{{mainActorKey}}">
+    <div class='card-buttons {{#if checkGMInitiator}}gm-only{{else}}owner-only{{/if}}' data-actor-key="{{mainActorKey}}">
         <button data-action='roll-card'>{{localize 'CoC7.RollDice'}}</button>
     </div>
     {{/if}}

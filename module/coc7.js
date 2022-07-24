@@ -1,7 +1,7 @@
-/* global $, Combat, CONFIG, fromUuid, game, Hooks, tinyMCE */
+/* global $, Combat, CONFIG, CONST, game, Hooks, isNewerVersion, tinyMCE */
 import { CoC7NPCSheet } from './actors/sheets/npc-sheet.js'
 import { CoC7CreatureSheet } from './actors/sheets/creature-sheet.js'
-import { CoC7CharacterSheetV2 } from './actors/sheets/character.js'
+import { CoC7CharacterSheet } from './actors/sheets/character.js'
 import { CoC7Chat } from './chat.js'
 import { CoC7Combat, rollInitiative } from './combat.js'
 import { COC7 } from './config.js'
@@ -10,8 +10,6 @@ import { CoC7Utilities } from './utilities.js'
 import { CoC7Parser } from './apps/parser.js'
 import { CoC7Check } from './check.js'
 import { CoC7Menu } from './menu.js'
-import { OpposedCheckCard } from './chat/cards/opposed-roll.js'
-import { CombinedCheckCard } from './chat/cards/combined-roll.js'
 import { DamageCard } from './chat/cards/damage.js'
 import { CoC7Canvas } from './apps/canvas.js'
 import { CoC7SettingsDirectory } from './settings-directory.js'
@@ -22,6 +20,7 @@ import * as DiceBot from './dicebot.js'
 import '../styles/system/index.less'
 import { CoC7ChaseSheet } from './items/chase/sheet.js'
 import { CoC7Socket } from './hooks/socket.js'
+import { CoC7SystemSocket } from './apps/coc7-system-socket.js'
 import { DropActorSheetData } from './hooks/drop-actor-sheet-data.js'
 
 // Card init
@@ -121,19 +120,12 @@ Hooks.on('renderSettingsConfig', (app, html, options) => {
   //   )
 })
 
-Hooks.once('diceSoNiceReady', dice3d => {
-  dice3d.addDicePreset(
-    {
-      type: 'dt',
-      labels: ['10', '20', '30', '40', '50', '60', '70', '80', '90', '00'],
-      fontScale: 0.75,
-      system: 'standard'
-    },
-    'dt'
-  )
-})
-
 Hooks.once('init', async function () {
+  if (typeof CONST.COMPATIBILITY_MODES !== 'undefined' && !isNewerVersion(game.version, '10.300')) {
+    // hide compatibility warnings while we still support v9 and v10 with the same version
+    CONFIG.compatibility.mode = CONST.COMPATIBILITY_MODES.SILENT
+  }
+
   game.CoC7 = {
     macros: {
       skillCheck: CoC7Utilities.skillCheckMacro,
@@ -305,22 +297,7 @@ Hooks.on('ready', async () => {
   game.CoC7.skillList = await game.packs.get('CoC7.skills')?.getDocuments()
 
   game.socket.on('system.CoC7', async data => {
-    if (data.type === 'updateChar') CoC7Utilities.updateCharSheets()
-
-    if (game.user.isGM) {
-      if (OpposedCheckCard.defaultConfig.type === data.type) {
-        OpposedCheckCard.dispatch(data)
-      }
-
-      if (CombinedCheckCard.defaultConfig.type === data.type) {
-        CombinedCheckCard.dispatch(data)
-      }
-
-      if (data.type === 'invoke') {
-        const item = await fromUuid(data.item)
-        item[data.method](data.data)
-      }
-    }
+    CoC7SystemSocket.callSocket(data)
   })
 
   // "SETTINGS.BoutOfMadnessPhobiasIndex": "Phobias index",
@@ -486,10 +463,10 @@ Hooks.on('renderChatMessage', (app, html, data) => {
   CoC7Chat.renderChatMessageHook(app, html, data)
   CoC7Parser.ParseMessage(app, html, data)
 })
-// Sheet V2 css options
-// Hooks.on('renderCoC7CharacterSheetV2', CoC7CharacterSheetV2.renderSheet);
-Hooks.on('renderActorSheet', CoC7CharacterSheetV2.renderSheet) // TODO : change from CoC7CharacterSheetV2
-Hooks.on('renderItemSheet', CoC7CharacterSheetV2.renderSheet) // TODO : change from CoC7CharacterSheetV2
+// Sheet css options
+// Hooks.on('renderCoC7CharacterSheet', CoC7CharacterSheet.renderSheet);
+Hooks.on('renderActorSheet', CoC7CharacterSheet.renderSheet)
+Hooks.on('renderItemSheet', CoC7CharacterSheet.renderSheet)
 
 // Hooks.on('dropCanvasData', CoC7Parser.onDropSomething);
 Hooks.on('getSceneControlButtons', CoC7Menu.getButtons)

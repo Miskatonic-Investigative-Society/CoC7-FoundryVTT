@@ -111,7 +111,7 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
         `${game.i18n.localize( 'CoC7.SAN')}`
       )
       this.actor.skills.forEach(s =>
-        data.skillsAndCharacteristicsList.push(s.fullName)
+        data.skillsAndCharacteristicsList.push(s.name)
       )
     }
     return data

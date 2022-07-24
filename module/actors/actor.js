@@ -1,6 +1,7 @@
 /* global Actor, CONFIG, CONST, Dialog, Die, duplicate, game, getProperty, Hooks, mergeObject, Roll, TextEditor, Token, ui */
 
 import { COC7 } from '../config.js'
+import { CoC7ChatMessage } from '../apps/coc7-chat-message.js'
 import { CoC7Check } from '../check.js'
 import { CoC7ConCheck } from '../chat/concheck.js'
 import { RollDialog } from '../apps/roll-dialog.js'
@@ -244,7 +245,7 @@ export class CoCActor extends Actor {
       result.tableRoll = await boutOfMadnessTable.roll()
       if (typeof result.tableRoll.results[0] !== 'undefined') {
         if (
-          CONST.TABLE_RESULT_TYPES.ENTITY ===
+          CONST.TABLE_RESULT_TYPES.DOCUMENT ===
           result.tableRoll.results[0].data.type
         ) {
           const item = game.items.get(result.tableRoll.results[0].data.resultId)
@@ -321,6 +322,8 @@ export class CoCActor extends Actor {
       type: 'skill',
       data: {
         value: value,
+        skillName: skillName,
+        specialization: '',
         properties: {
           special: false,
           rarity: rarity,
@@ -333,7 +336,10 @@ export class CoCActor extends Actor {
       data.img = img
     }
     if (specialization !== false) {
-      data.data.specialization = specialization
+      const parts = CoC7Item.getNamePartsSpec(skillName, specialization)
+      data.data.specialization = parts.specialization
+      data.data.skillName = parts.skillName
+      data.name = parts.name
       data.data.properties.special = true
     }
     return data
@@ -393,15 +399,18 @@ export class CoCActor extends Actor {
       name
     )
     const value = Number(skillData.get('base-value'))
+    const parts = CoC7Item.getNamePartsSpec(
+      name,
+      game.i18n.localize(
+        firearms
+          ? 'CoC7.FirearmSpecializationName'
+          : 'CoC7.FightingSpecializationName'
+      )
+    )
     const data = {
-      name: name,
+      name: parts.name,
       type: 'skill',
       data: {
-        specialization: game.i18n.localize(
-          firearms
-            ? 'CoC7.FirearmSpecializationName'
-            : 'CoC7.FightingSpecializationName'
-        ),
         base: isNaN(value) ? 0 : value,
         adjustments: {
           personal: null,
@@ -409,6 +418,8 @@ export class CoCActor extends Actor {
           archetype: null,
           experience: null
         },
+        skillName: parts.skillName,
+        specialization: parts.specialization,
         properties: {
           special: true,
           fighting: !firearms,
@@ -438,29 +449,29 @@ export class CoCActor extends Actor {
     if (skills.length === 0) {
       // Creating natural attack skill
       try {
-        const skill = await this.createEmbeddedDocuments(
-          'Item', // MODIF: 0.8.x 'OwnedItmem' => 'Item
-          [
-            {
-              name: game.i18n.localize(COC7.creatureFightingSkill),
-              type: 'skill',
-              data: {
-                base: 0,
-                value: null,
-                specialization: game.i18n.localize(
-                  COC7.fightingSpecializationName
-                ),
-                properties: {
-                  combat: true,
-                  fighting: true,
-                  special: true
-                },
-                flags: {}
-              }
-            }
-          ],
-          { renderSheet: false }
+        const parts = CoC7Item.getNamePartsSpec(
+          game.i18n.localize(COC7.creatureFightingSkill),
+          game.i18n.localize(COC7.fightingSpecializationName)
         )
+        const data = {
+          type: 'skill',
+          name: parts.name,
+          data: {
+            base: 0,
+            value: null,
+            skillName: parts.skillName,
+            specialization: parts.specialization,
+            properties: {
+              combat: true,
+              fighting: true,
+              special: true
+            },
+            flags: {}
+          }
+        }
+        const skill = await this.createEmbeddedDocuments('Item', [data], {
+          renderSheet: false
+        })
 
         const attack = await this.createEmbeddedDocuments(
           'Item',
@@ -730,58 +741,53 @@ export class CoCActor extends Actor {
           } else data.data.value = null
 
           if (CoC7Item.isAnySpec(data)) {
-            const specialization = data.data.specialization?.toLowerCase()
-            if (specialization) {
-              let skillList = []
-              if (data.data?.flags?.occupation || data.data?.flags?.archetype) {
-                skillList = this.skills.filter(el => {
-                  if (!el.data.data.specialization) return false
-                  if (
-                    data.data?.flags?.occupation &&
-                    el.data.data.flags?.occupation
-                  ) {
-                    return false
-                  }
-                  if (
-                    data.data?.flags?.archetype &&
-                    el.data.data.flags?.archetype
-                  ) {
-                    return false
-                  }
-                  return (
-                    specialization.toLowerCase() ===
-                    el.data.data.specialization?.toLowerCase()
-                  )
-                })
-              }
-              // if( 1 <= skillList.length) {
-              const skillData = await SkillSpecSelectDialog.create(
-                skillList,
-                data.data.specialization,
-                baseCalculated
-              )
-              if (skillData) {
-                if (skillData.get('existing-skill')) {
-                  const existingItem = this.items.get(
-                    skillData.get('existing-skill')
-                  )
-                  for (const [key, value] of Object.entries(data.data.flags)) {
-                    if (value) await existingItem.setItemFlag(key)
-                  }
-                  data.name = CoC7Item.getNameWithoutSpec(existingItem)
-                  return
-                } else {
-                  if (skillData.get('new-skill-name')) {
-                    data.name = skillData.get('new-skill-name')
-                  } else data.name = CoC7Item.getNameWithoutSpec(data)
+            let skillList = []
+            if (data.data?.flags?.occupation || data.data?.flags?.archetype) {
+              skillList = this.skills.filter(el => {
+                if (!el.data.data.specialization) return false
+                if (
+                  data.data?.flags?.occupation &&
+                  el.data.data.flags?.occupation
+                ) {
+                  return false
                 }
-              }
+                if (
+                  data.data?.flags?.archetype &&
+                  el.data.data.flags?.archetype
+                ) {
+                  return false
+                }
+                return (
+                  data.data.specialization.toLocaleLowerCase() ===
+                  el.data.data.specialization.toLocaleLowerCase()
+                )
+              })
             }
-            // }
-          } else {
-            const specialization = data.data.specialization
-            if (specialization) {
-              data.name = CoC7Item.getNameWithoutSpec(data)
+            const skillData = await SkillSpecSelectDialog.create(
+              skillList,
+              data.data.specialization,
+              baseCalculated
+            )
+            if (skillData) {
+              baseCalculated = skillData.get('base-value')
+              data.data.value = baseCalculated
+              if (skillData.get('existing-skill')) {
+                const existingItem = this.items.get(
+                  skillData.get('existing-skill')
+                )
+                for (const [key, value] of Object.entries(data.data.flags)) {
+                  if (value) await existingItem.setItemFlag(key)
+                }
+                data.name = CoC7Item.getNameWithoutSpec(existingItem)
+                return
+              } else {
+                const parts = CoC7Item.getNamePartsSpec(
+                  skillData.get('new-skill-name'),
+                  data.data.specialization
+                )
+                data.data.skillName = parts.skillName
+                data.name = parts.name
+              }
             }
           }
 
@@ -1098,15 +1104,6 @@ export class CoCActor extends Actor {
 
               // if there's none, do nothing.
               if (dialogData.skills.length !== 0) {
-                for (const skill of dialogData.skills) {
-                  if (
-                    skill.data.specialization &&
-                    !skill.name.includes(skill.data.specialization)
-                  ) {
-                    skill.displayName = `${skill.data.specialization} (${skill.name})`
-                  } else skill.displayName = skill.name
-                }
-
                 if (dialogData.skills.length <= dialogData.optionsCount) {
                   // If there's is less skill than options, add them all.
                   ui.notifications.info(
@@ -1167,14 +1164,6 @@ export class CoCActor extends Actor {
 
               // if there's none, do nothing.
               if (dialogData.skills.length !== 0) {
-                for (const skill of dialogData.skills) {
-                  if (
-                    skill.data.specialization &&
-                    !skill.name.includes(skill.data.specialization)
-                  ) {
-                    skill.displayName = `${skill.data.specialization} (${skill.name})`
-                  } else skill.displayName = skill.name
-                }
                 if (dialogData.skills.length <= dialogData.optionsCount) {
                   // If there's is less skill than options, add them all.
                   ui.notifications.info(
@@ -1395,6 +1384,18 @@ export class CoCActor extends Actor {
     return null
   }
 
+  async runRoll (options = {}) {
+    if (typeof options.cardType === 'undefined') {
+      options.cardType = CoC7ChatMessage.CARD_TYPE_NORMAL
+    }
+    if (typeof options.preventStandby === 'undefined') {
+      options.preventStandby = true
+    }
+    options.actor = this
+    const results = await CoC7ChatMessage.trigger(options)
+    return results
+  }
+
   get occupation () {
     const occupation = this.items.filter(item => item.type === 'occupation')
     return occupation[0]
@@ -1571,345 +1572,80 @@ export class CoCActor extends Actor {
     return parseInt(this.data.data.attribs.mp.max)
   }
 
-  encounteredCreaturesSanData (creature) {
-    const i = this.encounteredCreaturesSanDataIndex(creature)
-    if (i !== -1) return this.data.data.encounteredCreatures[i]
-    return null
-  }
-
-  encounteredCreaturesSanDataIndex (creature) {
-    const sanData = CoC7Utilities.getCreatureSanData(creature)
-    return this.data.data.encounteredCreatures.findIndex(cd => {
+  getReasonSanLoss (sanReason) {
+    if (typeof sanReason === 'string') {
       return (
-        cd.id === sanData?.id ||
-        cd.name.toLowerCase() === sanData.name?.toLocaleLowerCase()
+        this.data.data.sanityLossEvents.filter(
+          r => r.type.toLocaleLowerCase() === sanReason.toLocaleLowerCase()
+        )[0] ?? { type: '', totalLoss: 0, immunity: false }
       )
-    })
-  }
-
-  sanLostToCreature (creature) {
-    const sanData = this.encounteredCreaturesSanData(creature)
-    if (sanData) {
-      // check for if specie already encountered return max of both;
-      if (sanData.specie) {
-        return Math.max(sanData.specie.totalLoss || 0, sanData.totalLoss)
-      }
-
-      return sanData.totalLoss || 0
-    } else {
-      // That creature was never encountered. What about his specie.
-      const creatureSanData = CoC7Utilities.getCreatureSanData(creature)
-      if (creatureSanData.specie) {
-        const specieEncountered = this.encounteredCreaturesSanData(
-          creatureSanData.specie
-        )
-        if (specieEncountered) return specieEncountered.totalLoss
-      }
-      return 0 // Never encountered that specie or this creature.
     }
+    return { type: '', totalLoss: 0, immunity: false }
   }
 
-  maxPossibleSanLossToCreature (creature) {
-    // Do we know you ?
-    const sanData = this.encounteredCreaturesSanData(creature)
-    const creatureSanData = CoC7Utilities.getCreatureSanData(creature)
+  sanLostToReason (sanReason) {
+    if (sanReason) {
+      const sanityLossEvent = this.getReasonSanLoss(sanReason)
+      return sanityLossEvent.totalLoss
+    }
+    return 0
+  }
 
-    if (sanData) {
-      // Was there any update to that creature ?
-      let changes = false
-      if (creatureSanData.sanLossMax !== sanData.sanLossMax) {
-        sanData.sanLossMax = creatureSanData.sanLossMax
-        changes = true
-      }
-      if (creatureSanData.specie && !sanData.specie) {
-        sanData.specie = creatureSanData.specie
-        changes = true
-      }
-      if (
-        creatureSanData.specie &&
-        creatureSanData.specie.sanLossMax !== sanData.specie.sanLossMax
-      ) {
-        sanData.specie.sanLossMax = creatureSanData.specie.sanLossMax
-        changes = true
-      }
-      if (sanData.totalLoss > sanData.sanLossMax) {
-        sanData.totalLoss = sanData.sanLossMax
-        changes = true
-      }
-      if (
-        sanData.specie &&
-        sanData.specie.totalLoss > sanData.specie.sanLossMax
-      ) {
-        sanData.specie.totalLoss = sanData.specie.sanLossMax
-        changes = true
-      }
+  sanLossReasonEncountered (sanReason) {
+    if (sanReason) {
+      const sanityLossEvent = this.getReasonSanLoss(sanReason)
+      return sanityLossEvent.type !== ''
+    }
+    return false
+  }
 
-      if (changes) {
-        const encounteredCreaturesList = this.data.data.encounteredCreatures
-          ? duplicate(this.data.data.encounteredCreatures)
-          : []
-        const sanDataIndex = this.encounteredCreaturesSanDataIndex(creature)
-        encounteredCreaturesList[sanDataIndex] = sanData
-        if (sanData.specie) {
-          this._updateAllOfSameSpecie(encounteredCreaturesList, sanData.specie)
+  setReasonSanLoss (sanReason, sanLoss) {
+    if (typeof sanReason === 'string' && sanReason !== '') {
+      const sanityLossEvents = duplicate(this.data.data.sanityLossEvents)
+      const index = sanityLossEvents.findIndex(
+        r => r.type.toLocaleLowerCase() === sanReason.toLocaleLowerCase()
+      )
+      if (sanLoss > 0) {
+        if (index === -1) {
+          sanityLossEvents.push({
+            type: sanReason,
+            totalLoss: sanLoss,
+            immunity: false
+          })
+        } else {
+          sanityLossEvents[index].totalLoss += sanLoss
         }
-
-        this.update({
-          'data.encounteredCreatures': encounteredCreaturesList
+      } else if (index > -1) {
+        sanityLossEvents.splice(index, 1)
+        sanityLossEvents.sort(function (left, right) {
+          return left.type.localeCompare(right.type)
         })
       }
-
-      return sanData.sanLossMax - sanData.totalLoss
-    }
-    // We don't know you.
-    if (creatureSanData) {
-      const sanLostToCreature = this.sanLostToCreature(creature)
-      return Math.max(0, creatureSanData.sanLossMax - sanLostToCreature)
-    }
-    return 99
-  }
-
-  creatureEncountered (creature) {
-    return !!~this.encounteredCreaturesSanDataIndex(creature)
-  }
-
-  creatureSpecieEncountered (creature) {
-    const creatureSanData = CoC7Utilities.getCreatureSanData(creature)
-    if (creatureSanData.specie) {
-      return !!~this.encounteredCreaturesSanDataIndex(creatureSanData.specie)
-    }
-    return this.creatureEncountered(creature)
-  }
-
-  _updateAllOfSameSpecie (encounteredCreaturesList, specieSanData) {
-    for (let index = 0; index < encounteredCreaturesList.length; index++) {
-      if (
-        encounteredCreaturesList[index].specie?.id === specieSanData.id ||
-        encounteredCreaturesList[index].specie?.name.toLowerCase() ===
-          specieSanData.name?.toLowerCase()
-      ) {
-        // New encounter with that specie.
-        if (
-          encounteredCreaturesList[index].specie.totalLoss !==
-          specieSanData.totalLoss
-        ) {
-          const delta =
-            specieSanData.totalLoss -
-            encounteredCreaturesList[index].specie.totalLoss
-          if (delta > 0) {
-            encounteredCreaturesList[index].specie = specieSanData
-            encounteredCreaturesList[index].totalLoss += delta
-            encounteredCreaturesList[index].totalLoss = Math.min(
-              encounteredCreaturesList[index].totalLoss,
-              encounteredCreaturesList[index].sanLossMax
-            )
-          }
-        }
-      }
-    }
-  }
-
-  _removeSpecie (encounteredCreaturesList, specieSanData) {
-    for (let index = 0; index < encounteredCreaturesList.length; index++) {
-      if (
-        encounteredCreaturesList[index].specie?.id === specieSanData.id ||
-        encounteredCreaturesList[index].specie?.name.toLowerCase() ===
-          specieSanData.name?.toLowerCase()
-      ) {
-        const previousSpecieLost =
-          encounteredCreaturesList[index].specie.totalLoss
-        delete encounteredCreaturesList[index].specie
-
-        encounteredCreaturesList[index].totalLoss =
-          encounteredCreaturesList[index].totalLoss - previousSpecieLost
-        if (encounteredCreaturesList[index].totalLoss < 0) {
-          encounteredCreaturesList[index].totalLoss = 0
-        }
-      }
-    }
-  }
-
-  async resetCreature (creature) {
-    const indexSanData = this.encounteredCreaturesSanDataIndex(creature)
-    if (~indexSanData) {
-      const creatureSanData = CoC7Utilities.getCreatureSanData(creature)
-      const encounteredCreaturesList = this.data.data.encounteredCreatures
-        ? duplicate(this.data.data.encounteredCreatures)
-        : []
-      encounteredCreaturesList.splice(indexSanData, 1)
-      creatureSanData.totalLoss = 0
-      if (creatureSanData.specie) delete creatureSanData.specie
-      this._updateAllOfSameSpecie(encounteredCreaturesList, creatureSanData)
-      await this.update({
-        'data.encounteredCreatures': encounteredCreaturesList
+      return this.update({
+        'data.sanityLossEvents': sanityLossEvents
       })
     }
   }
 
-  async resetSpecie (creature) {
-    const encounteredCreaturesList = this.data.data.encounteredCreatures
-      ? duplicate(this.data.data.encounteredCreatures)
-      : []
-    const creatureSanData = CoC7Utilities.getCreatureSanData(creature)
-    if (!creatureSanData.specie) return
-    const indexSanData = this.encounteredCreaturesSanDataIndex(
-      creatureSanData.specie
-    )
-    if (~indexSanData) {
-      encounteredCreaturesList.splice(indexSanData, 1)
+  maxLossToSanReason (sanReason, sanMaxFormula) {
+    const sanMax = new Roll(sanMaxFormula.toString()).evaluate({
+      maximize: true
+    }).total
+    const sanityLossEvent = this.getReasonSanLoss(sanReason)
+    if (sanityLossEvent.immunity) {
+      return 0
     }
-    this._removeSpecie(encounteredCreaturesList, creatureSanData.specie)
-    await this.update({
-      'data.encounteredCreatures': encounteredCreaturesList
-    })
-
-    return false
+    return Math.max(0, sanMax - sanityLossEvent.totalLoss)
   }
 
-  async looseSanToCreature (sanLoss, creature) {
-    let exactSanLoss = sanLoss
-    // Get that creature SAN data.
-    const creatureSanData = CoC7Utilities.getCreatureSanData(creature)
-
-    // Get actor SAN data for that creature.
-    const indexSanData = this.encounteredCreaturesSanDataIndex(creature)
-
-    // Check if that creature belongs to a specie and have we already encoutered it.
-    let indexSpeciesSanData = -1
-    if (creatureSanData.specie?.id) {
-      indexSpeciesSanData = this.encounteredCreaturesSanDataIndex(
-        creatureSanData.specie.id
-      )
+  async looseSan (sanReason, sanLoss) {
+    const sanityLossEvent = this.getReasonSanLoss(sanReason)
+    if (!sanityLossEvent.immunity) {
+      await this.setSan(this.san - sanLoss)
+      this.setReasonSanLoss(sanReason, sanLoss)
+      return sanLoss
     }
-    if (indexSpeciesSanData === -1 && creatureSanData.specie?.name) {
-      indexSpeciesSanData = this.encounteredCreaturesSanDataIndex(
-        creatureSanData.specie.name
-      )
-    }
-
-    // Copy the array for updating.
-    const encounteredCreaturesList = this.data.data.encounteredCreatures
-      ? duplicate(this.data.data.encounteredCreatures)
-      : []
-
-    // Creature already encountered.
-    if (~indexSanData) {
-      const oldSanData = encounteredCreaturesList[indexSanData]
-      let newSanData
-      // Update sanData with new SAN data (might have been updated ?)
-      if (creatureSanData) {
-        newSanData = creatureSanData
-        newSanData.totalLoss = oldSanData.totalLoss || 0
-        if (newSanData.specie) {
-          newSanData.specie.totalLoss = oldSanData.specie?.totalLoss
-            ? oldSanData.specie.totalLoss
-            : 0
-        } else {
-          if (oldSanData.specie) newSanData.specie = oldSanData.specie // Should never happen
-        }
-      }
-
-      newSanData.totalLoss = newSanData.totalLoss
-        ? newSanData.totalLoss + sanLoss
-        : sanLoss
-      if (newSanData.totalLoss > newSanData.sanLossMax) {
-        exactSanLoss =
-          exactSanLoss - (newSanData.totalLoss - newSanData.sanLossMax)
-        newSanData.totalLoss = newSanData.sanLossMax
-      }
-
-      // Credit the loss to that creature specie as well if it exists.
-      if (newSanData.specie) {
-        newSanData.specie.totalLoss = newSanData.specie.totalLoss
-          ? newSanData.specie.totalLoss + exactSanLoss
-          : exactSanLoss
-        if (newSanData.specie.totalLoss > newSanData.specie.sanLossMax) {
-          newSanData.specie.totalLoss = newSanData.specie.sanLossMax
-        }
-
-        // Update all creture from the same specie.
-        this._updateAllOfSameSpecie(encounteredCreaturesList, newSanData.specie)
-      }
-
-      encounteredCreaturesList[indexSanData] = newSanData
-      // Update the specie also :
-      if (~indexSpeciesSanData && newSanData.specie) {
-        encounteredCreaturesList[indexSpeciesSanData] = newSanData.specie
-      } else {
-        // We already encoutered that specie
-        // Should never happen (encountered that creature but never his specie).
-        if (newSanData.specie) encounteredCreaturesList.push(newSanData.specie)
-      }
-    } else {
-      // Creature never encountered.
-      const newSanData = creatureSanData
-      newSanData.totalLoss = 0
-
-      if (newSanData.specie) {
-        // Specie already encountered.
-        if (~indexSpeciesSanData) {
-          newSanData.specie.totalLoss =
-            encounteredCreaturesList[indexSpeciesSanData].totalLoss
-
-          // We already loss SAN to this specie of creature. The base los for this creature is the specie base loss.
-          newSanData.totalLoss = newSanData.specie.totalLoss
-          if (newSanData.totalLoss > newSanData.sanLossMax) {
-            newSanData.totalLoss = newSanData.sanLossMax
-          }
-        } else {
-          // We never encountered specie or creature.
-          newSanData.specie.totalLoss = 0
-          newSanData.totalLoss = 0
-        }
-      }
-
-      // Apply the san loss to that creature.
-      newSanData.totalLoss = newSanData.totalLoss + sanLoss
-
-      // If loss is more thant creature Max.
-      if (newSanData.totalLoss > newSanData.sanLossMax) {
-        // Get the exact san loss = loss - (overflow - max)
-        exactSanLoss =
-          exactSanLoss - (newSanData.totalLoss - newSanData.sanLossMax)
-        newSanData.totalLoss = newSanData.sanLossMax
-      }
-
-      // Deduct the exact loss to that specie.
-      if (newSanData.specie) {
-        // Wait for exact san LOSS before deduciting it from specie.
-        newSanData.specie.totalLoss = newSanData.specie.totalLoss + exactSanLoss
-        if (newSanData.specie.totalLoss > newSanData.specie.sanLossMax) {
-          newSanData.specie.totalLoss = newSanData.specie.sanLossMax
-        }
-
-        // If we now that specie update it. If we don't add it.
-        if (~indexSpeciesSanData) {
-          encounteredCreaturesList[indexSpeciesSanData] = newSanData.specie
-        } else {
-          encounteredCreaturesList.push(newSanData.specie)
-        }
-
-        // Update all creature from the same specie.
-        this._updateAllOfSameSpecie(encounteredCreaturesList, newSanData.specie)
-      }
-
-      encounteredCreaturesList.push(newSanData)
-    }
-
-    await this.setSan(this.san - exactSanLoss)
-    await this.update({
-      'data.encounteredCreatures': encounteredCreaturesList
-    })
-    return exactSanLoss
-  }
-
-  async looseSan (sanLoss, creature = null) {
-    if (creature) await this.looseSanToCreature(sanLoss, creature)
-    else await this.setSan(this.san - sanLoss)
-  }
-
-  get sanData () {
-    return CoC7Utilities.getCreatureSanData(this)
+    return 0
   }
 
   sanLoss (checkPassed) {
@@ -2062,9 +1798,15 @@ export class CoCActor extends Actor {
     return 2 * Number(this.data.data.characteristics.int.value)
   }
 
-  get hasSkillFlaggedForExp () {
+  get hasDevelopmentPhase () {
     for (const skill of this.skills) {
       if (skill.data.data.flags?.developement) return true
+    }
+    if (this.onlyRunOncePerSession) {
+      return false
+    }
+    for (const sanityLossEvent of this.data.data.sanityLossEvents) {
+      if (!sanityLossEvent.immunity) return true
     }
     return false
   }
@@ -2073,29 +1815,6 @@ export class CoCActor extends Actor {
     if (value < 0) value = 0
     if (value > this.sanMax) value = this.sanMax
     const loss = parseInt(this.data.data.attribs.san.value) - value
-    // if( creatureData){
-    //  const creatureIndex = this.data.data.encounteredCreatures.findIndex( c => {
-    //    if( c.id && c.id == creatureData.id) return true;
-    //    if( c.name && c.name.toLowerCase() == creatureData.name?.toLowerCase()) return true;
-    //    return false;});
-    //  let encounteredCreaturesList;
-    //  if( -1 < creatureIndex){
-    //    encounteredCreaturesList = this.data.data.encounteredCreatures ? duplicate( this.data.data.encounteredCreatures) : [];
-    //    const maxLossRemaining = encounteredCreaturesList[creatureIndex].maxLoss - encounteredCreaturesList[creatureIndex].totalLoss;
-    //    if( loss > maxLossRemaining) loss = maxLossRemaining;
-    //    encounteredCreaturesList[creatureIndex].totalLoss += loss;
-    //  } else {
-    //    if( loss > createData.maxLoss) loss = createData.maxLoss;
-    //    encounteredCreaturesList = [{
-    //        id: creatureData.id,
-    //        name: creatureData.name,
-    //        maxLoss: createData.maxLoss,
-    //        totalLoss: loss
-    //      }];
-    //  }
-
-    //  await this.item.update( { ['data.encounteredCreatures'] : encounteredCreaturesList});
-    // }
 
     if (loss > 0) {
       let totalLoss = parseInt(this.data.data.attribs.san.dailyLoss)
@@ -2579,9 +2298,9 @@ export class CoCActor extends Actor {
         !!s.name &&
         (s.name.toLocaleLowerCase().replace(/\s/g, '') ===
           name.toLocaleLowerCase().replace(/\s/g, '') ||
-          s.sName.toLocaleLowerCase().replace(/\s/g, '') ===
+          s.name.toLocaleLowerCase().replace(/\s/g, '') ===
             name.toLocaleLowerCase().replace(/\s/g, '') ||
-          s.sName.toLocaleLowerCase().replace(/\s/g, '') ===
+          s.name.toLocaleLowerCase().replace(/\s/g, '') ===
             shortName?.toLocaleLowerCase().replace(/\s/g, ''))
       )
     })
@@ -2648,8 +2367,7 @@ export class CoCActor extends Actor {
   get pilotSkills () {
     return this.skills.filter(s => {
       return (
-        !!s.data.data.specialization &&
-        s.data.data.specialization.length &&
+        s.data.data.properties?.special &&
         s.data.data.specialization?.toLocaleLowerCase() ===
           game.i18n
             .localize('CoC7.PilotSpecializationName')
@@ -2661,8 +2379,7 @@ export class CoCActor extends Actor {
   get driveSkills () {
     return this.skills.filter(s => {
       return (
-        !!s.data.data.specialization &&
-        s.data.data.specialization.length &&
+        s.data.data.properties?.special &&
         s.data.data.specialization?.toLocaleLowerCase() ===
           game.i18n
             .localize('CoC7.DriveSpecializationName')
@@ -2816,10 +2533,12 @@ export class CoCActor extends Actor {
     const alwaysSuccessThreshold = 95
 
     const title = game.i18n.localize('CoC7.RollAll4Dev')
+    let skillsRolled = 0
     let message = '<p class="chat-card">'
     for (const item of this.items) {
       if (item.type === 'skill') {
         if (item.developementFlag) {
+          skillsRolled++
           const die = await new Die({ faces: 100 }).evaluate({ async: true })
           const skillValue = item.value
           let augment = null
@@ -2882,10 +2601,35 @@ export class CoCActor extends Actor {
         }
       }
     }
+    const sanityLossEvents = []
+    let changed = false
+    for (const sanityLossEvent of this.data.data.sanityLossEvents) {
+      if (sanityLossEvent.immunity) {
+        sanityLossEvents.push(sanityLossEvent)
+      } else if (sanityLossEvent.totalLoss > 1) {
+        sanityLossEvent.totalLoss--
+        sanityLossEvents.push(sanityLossEvent)
+        changed = true
+      } else {
+        changed = true
+      }
+    }
+    if (changed) {
+      if (skillsRolled) {
+        message += '<br>'
+      }
+      message += `<span>${game.i18n.format('CoC7.ReduceSanityLimits')}</span>`
+      await this.update({
+        'data.sanityLossEvents': sanityLossEvents
+      })
+    }
     if (!fastForward) {
       message += '</p>'
-      const speaker = { actor: this.actor }
-      await chatHelper.createMessage(title, message, { speaker: speaker })
+      const speaker = { actor: this }
+      await chatHelper.createMessage(skillsRolled ? title : '', message, {
+        speaker: speaker
+      })
+      this.onlyRunOncePerSession = true
     }
     return { failure: failure, success: success }
   }
@@ -3281,6 +3025,14 @@ export class CoCActor extends Actor {
       return parseInt(CM.data.data.value)
     }
     return 0
+  }
+
+  get mythosHardened () {
+    return this.getFlag('CoC7', 'mythosHardened') || false
+  }
+
+  async setMythosHardened () {
+    await this.setFlag('CoC7', 'mythosHardened', true)
   }
 
   get mythosInsanityExperienced () {

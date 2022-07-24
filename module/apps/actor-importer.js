@@ -954,27 +954,6 @@ export class CoC7ActorImporter {
     return items
   }
 
-  /**
-   * basicWeaponData creates a basic object with the default basic data for a weapon skill
-   * @param {boolean} firearms true if the weapon uses firearms, false if it's a melee one.
-   * @returns object with default values for the weapon
-   */
-  basicWeaponSkillData (firearms) {
-    return {
-      specialization: game.i18n.localize(
-        firearms
-          ? 'CoC7.FirearmSpecializationName'
-          : 'CoC7.FightingSpecializationName'
-      ),
-      properties: {
-        special: true,
-        fighting: !firearms,
-        firearm: firearms,
-        combat: true
-      }
-    }
-  }
-
   /** weaponSkill tries to guess what kind of weapon skill to use for weapon from it's name
    * @param weapon: JSON, weapon data
    */
@@ -1020,13 +999,31 @@ export class CoC7ActorImporter {
       })
       return skillClone
     }
+    const firearms = weapon.data?.properties?.rngd
+    const parts = CoC7Item.getNamePartsSpec(
+      weapon.name,
+      game.i18n.localize(
+        firearms
+          ? 'CoC7.FirearmSpecializationName'
+          : 'CoC7.FightingSpecializationName'
+      )
+    )
     const newSkill = {
-      name: weapon.name,
       type: 'skill',
-      data: this.basicWeaponSkillData(weapon.data?.properties?.rngd)
+      name: parts.name,
+      data: {
+        skillName: parts.skillName,
+        specialization: parts.specialization,
+        properties: {
+          special: true,
+          fighting: !firearms,
+          firearm: firearms,
+          combat: true
+        },
+        base: weapon.data?.skill?.id,
+        value: weapon.data?.skill?.id
+      }
     }
-    newSkill.data.base = weapon.data?.skill?.id
-    newSkill.data.value = weapon.data?.skill?.id
     if (CONFIG.debug.CoC7Importer) {
       console.debug(
         `Weapon skill not found for ${weapon.name}, creating a new one`,

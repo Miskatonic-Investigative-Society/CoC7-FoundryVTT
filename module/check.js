@@ -192,7 +192,16 @@ export class CoC7Check {
   }
 
   get fumbleThreshold () {
-    if (this.rawValue) return this.rawValue < 50 ? 96 : 100
+    if (this.rawValue) {
+      if (this.difficulty) {
+        if (this.difficulty >= CoC7Check.difficultyLevel.extreme) {
+          return this.extremeThreshold < 50 ? 96 : 100
+        } else if (this.difficulty >= CoC7Check.difficultyLevel.hard) {
+          return this.hardThreshold < 50 ? 96 : 100
+        }
+      }
+      return this.rawValue < 50 ? 96 : 100
+    }
     return null
   }
 
@@ -317,7 +326,7 @@ export class CoC7Check {
 
   get name () {
     if (this.actor) {
-      if (this.skill) return this.skill.name
+      if (this.skill) return this.skill.shortName
       if (this.item) return this.item.name
       if (this.characteristic) {
         return CoC7Utilities.getCharacteristicNames(this.characteristic)?.label
@@ -330,9 +339,9 @@ export class CoC7Check {
     return null
   }
 
-  get sName () {
+  get shortName () {
     if (this.actor) {
-      if (this.skill) return this.skill.sName
+      if (this.skill) return this.skill.shortName
       if (this.item) return this.item.name
       if (this.characteristic) {
         return CoC7Utilities.getCharacteristicNames(this.characteristic)?.short
@@ -772,11 +781,17 @@ export class CoC7Check {
     if (!this.standby) await this._perform()
   }
 
+  get rolledSuccessLevel () {
+    return this.successLevel
+  }
+
   async _perform (options = {}) {
     this.dice =
       options.roll ||
       (await CoC7Dice.roll(this.diceModifier, this.rollMode, this.isBlind))
-    if (!options.silent) AudioHelper.play({ src: CONFIG.sounds.dice })
+    if (!options.silent) {
+      AudioHelper.play({ src: CONFIG.sounds.dice }, true)
+    }
 
     if (options.forceDSN) {
       await CoC7Dice.showRollDice3d(this.dice.roll)
@@ -1410,7 +1425,7 @@ export class CoC7Check {
     if (this.actor?.data) {
       if (this.skill) {
         flavor = game.i18n.format('CoC7.CheckResult', {
-          name: this.skill.fullName,
+          name: this.skill.name,
           value: this.rawValueString,
           difficulty: this.difficultyString
         })

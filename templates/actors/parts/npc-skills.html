@@ -1,19 +1,19 @@
 {{#each skills as |skill id|}}
-	<div class="item flexrow {{#if skill.data.properties.combat}}combat-skill{{/if}}" style="flex: 0 0 33%;flex-wrap: wrap;border-right: 1px groove;" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
-		{{#if skill.data.properties.special}}
-			<div class="npc-specialization">{{skill.data.specialization}}</div>
-		{{/if}}
-		{{#if ../data.flags.locked}}
-			<h4 class="skill-name combat rollable" style="height:18px;padding: 1px 0 1px 2px;margin: 0;overflow: hidden;">{{skill.name}}</h4>
-			<input class="npc-skill-score read-only" style="flex: 0 0 25px;height: fit-content;padding: 0 2px;text-align: right;" type="text" value="{{skill.data.value}}" data-dtype="Number" readonly>
-			<span style="flex: 0 0 10px;">%</span>
-		{{else}}
-			<input class="skill-name flex1" style="height: fit-content;padding: 0 1px;text-align: left;" type="text" value="{{skill.name}}">
-			<input class="npc-skill-score" style="flex: 0 0 25px;height: fit-content;padding: 0 2px;text-align: right;" type="text" value="{{skill.data.value}}" data-dtype="Number">
-			<div class="item-controls" style="height: 18px;padding-top: 3px;">
-				<a class="item-control item-delete" title="{{localize 'CoC7.DeleteSkill'}}"><i class="fas fa-trash"></i></a>
-				<a class="item-control item-edit" title="{{localize 'CoC7.EditSkill'}}"><i class="fas fa-edit"></i></a>
-			</div>
-		{{/if}}
-	</div>
+  <div class="item flexrow {{#if skill.data.properties.combat}}combat-skill{{/if}}" style="flex: 0 0 33%;flex-wrap: wrap;border-right: 1px groove;" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
+    {{#if skill.data.properties.special}}
+      <div class="npc-specialization">{{skill.data.specialization}}</div>
+    {{/if}}
+    {{#if ../data.flags.locked}}
+      <h4 class="skill-name combat rollable" style="height:18px;padding: 1px 0 1px 2px;margin: 0;overflow: hidden;">{{skill.data.skillName}}</h4>
+      <input class="npc-skill-score read-only" style="flex: 0 0 25px;height: fit-content;padding: 0 2px;text-align: right;" type="text" value="{{skill.data.value}}" data-dtype="Number" readonly>
+      <span style="flex: 0 0 10px;">%</span>
+    {{else}}
+      <input class="skill-name flex1" style="height: fit-content;padding: 0 1px;text-align: left;" type="text" value="{{skill.data.skillName}}">
+      <input class="npc-skill-score" style="flex: 0 0 25px;height: fit-content;padding: 0 2px;text-align: right;" type="text" value="{{skill.data.value}}" data-dtype="Number">
+      <div class="item-controls" style="height: 18px;padding-top: 3px;">
+        <a class="item-control item-delete" title="{{localize 'CoC7.DeleteSkill'}}"><i class="fas fa-trash"></i></a>
+        <a class="item-control item-edit" title="{{localize 'CoC7.EditSkill'}}"><i class="fas fa-edit"></i></a>
+      </div>
+    {{/if}}
+  </div>
 {{/each}}

@@ -181,7 +181,7 @@
         "archetype": null
       },
       "biography": [],
-      "encounteredCreatures": [],
+      "sanityLossEvents": [],
       "backstory": "",
       "indefiniteInsanityLevel": {
         "value": 0,
@@ -356,6 +356,7 @@
       "price": {}
     },
     "skill": {
+      "skillName": "",
       "specialization": "",
       "description": {
         "value": "",
@@ -589,7 +590,8 @@
       "spells": [],
       "study": {
         "necessary": 0,
-        "progress": 0
+        "progress": 0,
+        "units": "CoC7.weeks"
       },
       "type": {
         "mythos": false,

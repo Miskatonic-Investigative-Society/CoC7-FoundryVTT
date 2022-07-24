@@ -6,6 +6,7 @@ import { CoC7Check } from '../../check.js'
 export class RollCard {
   constructor () {
     this.rolls = []
+    this.initiator = null
   }
 
   static async fromMessageId (messageId) {
@@ -74,6 +75,9 @@ export class RollCard {
           this.defaultConfig.type === message.getFlag('CoC7', 'type') &&
           message.getFlag('CoC7', 'state') !== 'resolved'
         ) {
+          if (['combinedCard'].includes(this.defaultConfig.type)) {
+            return message.getFlag('CoC7', 'initiator') === data.roll.initiator
+          }
           return true
         }
         return false
@@ -93,6 +97,9 @@ export class RollCard {
       let card
       if (!messages.length) card = new this()
       else card = await this.fromMessage(messages[0])
+      if (typeof data._rollMode !== 'undefined') {
+        card._rollMode = data._rollMode
+      }
       await card.process(data)
     } else game.socket.emit('system.CoC7', data)
   }
@@ -109,7 +116,8 @@ export class RollCard {
       flags: {
         CoC7: {
           type: this.config.type,
-          state: 'initiated'
+          state: 'initiated',
+          initiator: this.initiator
         }
       }
     }
@@ -155,6 +163,9 @@ export class RollCard {
   addRollData (data) {
     const check = Object.assign(new CoC7Check(), data.roll)
     this.rolls.push(check)
+    if (this.config.type === 'combinedCard') {
+      this.initiator = data.roll.initiator
+    }
   }
 
   addRoll (data) {

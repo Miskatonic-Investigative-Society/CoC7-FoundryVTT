@@ -2,10 +2,83 @@
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Add actor.runRoll(...) function to allow third party modules/macros to perform rolls
+- Fix dice sounds not being pushed to other clients
+- Fix tooltip for character summary sheet
+- Fix updater not always running automatically
+- Update untranslated text in sanity debug information, thanks to @zeteticl
+- Update to French localization, thanks to @vonv
+- Update to Italian localization, thanks to @Stefano1975t
+- Update to Japanese localization, thanks to Asami
+- Update to Polish localization, thanks to @everyonecancode
+- Update to Portuguese localization
+- Update to Taiwanese localization, thanks to @zeteticl
+
+## Version 0.7.11
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Add roll configuration dialog box option to allow changing roll card type after starting, options are Regular, Combined, Opposed, and Sanity Loss Encounter
+- Add sanity loss reason to sanity rolls triggered from character sheets
+- Fix combined and opposed roll skill names tags not showing
+- Fix combined roll success/failure message and roll values to show correctly
+- Fix fumble threshold for hard and extreme rolls
+- Fix viewing character sheet if default permission is limited but user permissions are different
+- Prevent players from viewing minimised character sheets if permissions are set to limited
+- Prevent players from clicking roll on Keeper combined cards
+- Remove Trigger Data Migration button from non keepers
+- Update tooltips for roll options
+- Update to Italian localization, thanks to @Stefano1975t
+- Update to Swedish localization, thanks to @Rangertheman
+
+## Version 0.7.10
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Add limited view to character sheets
+- Allow setting duration units for books
+- When creating opposedCard/combinedCard messages use the roll mode of the user creating the message
+- Fix sanity loss from books
+- Fix opposedCard/combinedCard message selection rules
+- Fix updater only outputting errors to the console
+- Update to Japanese localization, thanks to Asami
+- Update to Portuguese localization
+- Update to Spanish localization, thanks to @lozanoje
+
+## Version 0.7.9
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix bonus/penalty dice rolling without DsN or empty alternative colours
+- Fix skill name editing on skills created/edited via an Actor sheet
+- Update to Swedish localization, thanks to @Rangertheman
+
+## Version 0.7.8
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix skill name migration issue with 0.7.7
+- Update to French localization, thanks to @vonv
+
+## Version 0.7.7:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Change creature encounters based on tokens/actors to sanity loss events based on type/name
+- Change skill names system and token image location to begin support for FoundryVTT v10 changes
 - Default weapons added via character/NPC sheet to either melee or ranged
 - Fix critical and impale buttons on combat card not formatting correctly
+- Fix Dice So Nice appearing to roll d10s instead of d10 and decaders if using image faces
+- Fix French documentation path, thanks to @vonv
+- Remove character sheet v1 as it is no longer supported
+- Update combined roll messages to be per user and allow separate difficulties and number of bonus/penalty dice
+- Update link creation UI to make required fields and blur events clearer
+- Update to Italian localization, thanks to @Stefano1975t
 - Update to Japanese localization, thanks to Asami
+- Update to Polish localization, thanks to @everyonecancode
+- Update to Simplified Chinese Translation, thanks to kwh3884858
 - Update to Swedish localization, thanks to @Rangertheman
+- Update to Taiwanese localization, thanks to @zeteticl
 
 ## Version 0.7.6:
 

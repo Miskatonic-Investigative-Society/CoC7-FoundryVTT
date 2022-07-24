@@ -190,17 +190,11 @@ export class CoC7SetupSheet extends ItemSheet {
 
     data.skillListEmpty = data.skills.length === 0
     data.itemsListEmpty = data.otherItems.length === 0
-    for (const skill of data.skills) {
-      if (
-        skill.data.specialization &&
-        !skill.name.includes(skill.data.specialization)
-      ) {
-        skill.displayName = `${skill.data.specialization} (${skill.name})`
-      } else skill.displayName = skill.name
-    }
 
     data.skills.sort((a, b) => {
-      return a.displayName.localeCompare(b.displayName)
+      return a.name
+        .toLocaleLowerCase()
+        .localeCompare(b.name.toLocaleLowerCase())
     })
 
     data.eras = {}

@@ -12,8 +12,9 @@ export class CoC7Dice {
     }
     const roll = await new Roll(
       '1dt' +
-        (
-          '+1dt' + (alternativeDice !== '' ? '[' + alternativeDice + ']' : '')
+        (alternativeDice !== ''
+          ? '+1do[' + alternativeDice + ']'
+          : '+1dt'
         ).repeat(Math.abs(modif)) +
         '+1d10'
     ).roll({ async: true })
@@ -72,5 +73,104 @@ export class CoC7Dice {
         chatData.blind
       )
     }
+  }
+
+  static async combinedRoll (options) {
+    options.pool = options.pool ?? {}
+    options.pool['0'] = false
+    const keys = Object.keys(options.pool).map(v => parseInt(v, 10))
+    let penaltyDice = Math.abs(Math.min(0, Math.min(...keys)))
+    let bonusDice = Math.max(0, Math.max(...keys))
+    const hasDSN = game.modules.get('dice-so-nice')?.active
+
+    const pool = []
+    pool.push('1dt+1d10')
+
+    if (penaltyDice > 0) {
+      pool.push(
+        (hasDSN
+          ? '+1do[' + game.settings.get('CoC7', 'tenDiePenalty') + ']'
+          : '1dt'
+        ).repeat(Math.abs(penaltyDice))
+      )
+    }
+    if (bonusDice > 0) {
+      pool.push(
+        (hasDSN
+          ? '+1do[' + game.settings.get('CoC7', 'tenDieBonus') + ']'
+          : '1dt'
+        ).repeat(Math.abs(bonusDice))
+      )
+    }
+    const roll = await new Roll(pool.join('')).roll({ async: true })
+    const result = {
+      groups: {
+        baseDie: 0,
+        penaltyDice: [],
+        bonusDice: []
+      },
+      unit: 0,
+      roll: roll
+    }
+    let baseSet = false
+    for (const d of roll.dice) {
+      if (d instanceof CONFIG.Dice.terms.t) {
+        if (!baseSet) {
+          result.groups.baseDie = d.total
+          baseSet = true
+        } else if (penaltyDice > 0) {
+          result.groups.penaltyDice.push(d.total)
+          penaltyDice--
+        } else {
+          result.groups.bonusDice.push(d.total)
+          bonusDice--
+        }
+      } else {
+        result.unit = d.total === 10 ? 0 : d.total
+      }
+    }
+
+    const output = {}
+
+    for (const key in options.pool) {
+      output[key] = {
+        unit: {
+          total: result.unit,
+          results: [result.unit]
+        },
+        tens: {
+          total: 0,
+          results: []
+        },
+        total: 0,
+        roll: roll
+      }
+      const modif = parseInt(key, 10)
+      let modifier = modif
+      output[key].tens.results.push(result.groups.baseDie)
+      for (const offset = Math.abs(modifier); modifier < 0; modifier++) {
+        output[key].tens.results.push(
+          result.groups.penaltyDice[modifier + offset]
+        )
+      }
+      for (const offset = modifier; modifier > 0; modifier--) {
+        output[key].tens.results.push(
+          result.groups.bonusDice[Math.abs(modifier - offset)]
+        )
+      }
+      if (modif < 0) {
+        output[key].tens.total =
+          output[key].unit.total === 0 && output[key].tens.results.includes(0)
+            ? 100
+            : Math.max(...output[key].tens.results)
+      } else if (output[key].unit.total === 0) {
+        const dice = output[key].tens.results.filter(t => t > 0)
+        output[key].tens.total = dice.length === 0 ? 100 : Math.min(...dice)
+      } else {
+        output[key].tens.total = Math.min(...output[key].tens.results)
+      }
+      output[key].total = output[key].unit.total + output[key].tens.total
+    }
+    return output
   }
 }

@@ -436,11 +436,11 @@ export class _participant {
       }
 
       for (const s of this.actor.driveSkills) {
-        check.options.push(s.fullName)
+        check.options.push(s.name)
       }
 
       for (const s of this.actor.pilotSkills) {
-        check.options.push(s.fullName)
+        check.options.push(s.name)
       }
       check.hasOptions = !!check.options.length
 
@@ -454,7 +454,7 @@ export class _participant {
         if (item) {
           if (item.type === 'item' && item.value.data?.type === 'skill') {
             check.ref = item.value
-            check.name = item.value.fullName
+            check.name = item.value.name
             check.type = 'skill'
             check.isSkill = true
             check.refSet = true
@@ -482,7 +482,7 @@ export class _participant {
         if (item) {
           if (item.type === 'item' && item.value.data?.type === 'skill') {
             check.ref = item.value
-            check.name = item.value.fullName
+            check.name = item.value.name
             check.type = 'skill'
             check.isSkill = true
             check.refSet = true

@@ -60,7 +60,7 @@
                   </div>
                   <div class="form-group">
                     <div class="flexrow flex1">
-                      <a toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasDamage" class="flex0 icon toggle {{#if activeLocation.obstacleDetails.hasDamage}}switched-on{{/if}}" title="{{ localize 'CoC7.DamageOnFail' }}>
+                      <a toggle="locations.{{activeLocation.uuid}}.obstacleDetails.hasDamage" class="flex0 icon toggle {{#if activeLocation.obstacleDetails.hasDamage}}switched-on{{/if}}" title="{{ localize 'CoC7.DamageOnFail' }}">
                         <i class="game-icon game-icon-broken-bone"></i>
                       </a>
                       {{#if activeLocation.obstacleDetails.hasDamage}}
@@ -90,8 +90,8 @@
                 {{/if}}
               {{/unless}}
             </div>
-            <div class="obstacle flexcol" data-uuid="{{nextLocation.uuid}}">
-              {{#unless nextLocation.last}}
+            <div class="obstacle flexcol" data-uuid="{{nextLocation.uuid}}" data-caca="true">
+              {{#unless activeLocation.last}}
                 <div class="form-group">
                   <div class="tag obstacle-type barrier {{#if nextLocation.obstacleDetails.barrier}}switched-on{{/if}}">barrier</div>
                   <div class="tag obstacle-type hazard {{#if nextLocation.obstacleDetails.hazard}}switched-on{{/if}}">hazard</div>
@@ -110,7 +110,7 @@
                   </div>
                   <div class="form-group">
                     <div class="flexrow flex1">
-                      <a toggle="locations.{{nextLocation.uuid}}.obstacleDetails.hasDamage" class="flex0 icon toggle {{#if nextLocation.obstacleDetails.hasDamage}}switched-on{{/if}}"  title="{{ localize 'CoC7.DamageOnFail' }}>
+                      <a toggle="locations.{{nextLocation.uuid}}.obstacleDetails.hasDamage" class="flex0 icon toggle {{#if nextLocation.obstacleDetails.hasDamage}}switched-on{{/if}}"  title="{{ localize 'CoC7.DamageOnFail' }}">
                         <i class="game-icon game-icon-broken-bone"></i>
                       </a>
                       {{#if nextLocation.obstacleDetails.hasDamage}}

@@ -212,7 +212,7 @@
   "CoC7.Critical": "大成功",
   "CoC7.Impale": "贯穿伤害",
   "CoC7.CriticalTitle": "致命一击",
-  "CoC7.ImpaleTitle":"贯穿武器",
+  "CoC7.ImpaleTitle": "贯穿武器",
   "CoC7.Target": "目标",
   "CoC7.TargetOutOfRange": "目标在射程外",
   "CoC7.NoTargetToDamage": "没有可以施加伤害的目标",
@@ -421,7 +421,7 @@
   "CoC7.SortBySkillValue": "按技能大小排序",
   "CoC7.UncommonSkillsShow": "显示不常见的技能",
   "CoC7.UncommonSkillsHide": "隐藏不常见的技能",
-  
+
   "CoC7.NewBookName": "新书书籍",
   "CoC7.AddBook": "添加书籍",
   "CoC7.NewSpellName": "新法术",
@@ -460,7 +460,7 @@
   "CoC7.LinkItemDiff": "[{difficulty}] {name}",
   "CoC7.LinkItemModif": " {name} ({modifier})",
   "CoC7.LinkItemDiffModif": "[{difficulty}] {name} ({modifier})",
-  
+
   "CoC7.ManualCreditValues": "手动输入信誉值",
   "CoC7.MonetarySymbol": "更改货币单位 :",
   "CoC7.MonetaryFactor": "倍率 :",
@@ -577,7 +577,7 @@
   "CoC7.Crew": "成员",
   "CoC7.Origin": "出身",
   "CoC7.ArmedVehicle": "武装车辆",
-  
+
   "CoC7.PulpTalents": "英雄 天赋",
   "CoC7.TalentType": "天赋类型",
   "CoC7.PhysicalTalent": "肉体",
@@ -773,7 +773,6 @@
 
   "CoC7.UnableToInteractWithChatCard": "你无法与这条信息互动，如果你需要进行此行动，请让你的KP去帮你进行选择。",
   "CoC7.UnableToCopyToClipboard": "无法复制到剪贴板，这可能是由于你的浏览器安全设定造成的。",
-  "CoC7.WarningCharacterSheetV1Depreciated": "这个布局已经过时了，可能无法正常工作。它将随着FoundryVTT v9的发布而被移除，请让你的KP将角色表类型改为CoC7.CoC7CharacterSheetV2。",
 
   "CoC7.MessageTitleSelectUserToGiveTo": "将物品交给另一个角色。",
   "CoC7.MessageSelectUserToGiveTo": "你想把这个物品给哪个角色？。",

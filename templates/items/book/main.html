@@ -75,7 +75,7 @@
             {{#unless exhausted}}
               data-label="{{localize "CoC7.Progress"}}:
                 {{data.study.progress}} / {{data.study.necessary}}
-                {{localize "CoC7.weeks"}}"
+                {{localize data.study.units}}"
             {{/unless}}
           ></progress>
           {{#if isKeeper}}

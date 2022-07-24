@@ -145,7 +145,8 @@ export class CoC7Item extends Item {
             'data.properties.special': false,
             'data.properties.fighting': false,
             'data.properties.firearm': false,
-            'data.specialization': null
+            'data.specialization': '',
+            name: this.data.data.skillName
           }
         }
         modif = true
@@ -180,23 +181,52 @@ export class CoC7Item extends Item {
             'data.properties.fighting': true,
             'data.properties.firearm': false,
             'data.properties.combat': true,
-            'data.properties.special': true,
-            'data.specialization': game.i18n.localize(
-              COC7.fightingSpecializationName
-            )
+            'data.properties.special': true
           }
+          const parts = CoC7Item.getNamePartsSpec(
+            this.data.data.skillName,
+            game.i18n.localize(COC7.fightingSpecializationName)
+          )
+          checkedProps.name = parts.name
+          checkedProps.skillName = parts.skillName
+          checkedProps['data.specialization'] = parts.specialization
         }
-
         if (firearms) {
           checkedProps = {
             'data.properties.fighting': false,
             'data.properties.firearm': true,
             'data.properties.combat': true,
-            'data.properties.special': true,
-            'data.specialization': game.i18n.localize(
-              COC7.firearmSpecializationName
-            )
+            'data.properties.special': true
           }
+          const parts = CoC7Item.getNamePartsSpec(
+            this.data.data.skillName,
+            game.i18n.localize(COC7.firearmSpecializationName)
+          )
+          checkedProps.name = parts.name
+          checkedProps.skillName = parts.skillName
+          checkedProps['data.specialization'] = parts.specialization
+        }
+      }
+    }
+
+    if (propertyId === 'special') {
+      if (this.data.data.properties[propertyId]) {
+        checkedProps = {
+          'data.properties.special': false,
+          'data.properties.fighting': false,
+          'data.properties.firearm': false,
+          'data.properties.combat': false,
+          'data.specialization': '',
+          name: this.data.data.skillName
+        }
+      } else {
+        checkedProps = {
+          'data.properties.special': true,
+          name:
+            this.data.data.specialization +
+            ' (' +
+            this.data.data.skillName +
+            ')'
         }
       }
     }
@@ -217,53 +247,11 @@ export class CoC7Item extends Item {
     return this.isIncludedInSet('properties', propertyId)
   }
 
-  get name () {
-    if (this.type !== 'skill' || !this.data.data?.properties?.special) {
-      return super.name
+  get shortName () {
+    if (this.data.data.properties.special) {
+      return this.data.data.skillName
     }
-    if (
-      this.data.name
-        .toLowerCase()
-        .includes(this.data.data.specialization?.toLowerCase())
-    ) {
-      // Restore names that have already been processed
-      if (this.isOwned && super.name === this.data.name) {
-        const re = new RegExp(
-          '^' +
-            CoC7Utilities.quoteRegExp(this.data.data.specialization) +
-            ' \\((.+)\\)$'
-        )
-        const match = re.exec(this.data.name)
-        if (match !== null && typeof match[1] !== 'undefined') {
-          return match[1]
-        }
-      }
-      return super.name
-    }
-    if (this.isOwned) {
-      return super.name
-    }
-    return `${this.data.data.specialization} (${this.data.name})`
-  }
-
-  get fullName () {
-    if (this.data.data.properties.special)
-      return `${this.data.data.specialization} (${this.data.name})`
     return this.name
-  }
-
-  get sName () {
-    if (this.type !== 'skill' || !this.data.data?.properties?.special) {
-      return super.name
-    }
-    if (
-      this.data.name
-        .toLowerCase()
-        .includes(this.data.data.specialization?.toLowerCase())
-    ) {
-      return super.name
-    }
-    return `${this.data.name}`
   }
 
   async updateRoll (roll) {
@@ -272,28 +260,41 @@ export class CoC7Item extends Item {
     return undefined
   }
 
+  static getNamePartsSpec (skillName, specialization) {
+    if (!specialization) {
+      return {
+        name: skillName,
+        specialization: '',
+        skillName: skillName
+      }
+    }
+    const specNameRegex = new RegExp(
+      '^(' + CoC7Utilities.quoteRegExp(specialization) + ')\\s*\\((.+)\\)$',
+      'i'
+    )
+    const match = skillName.match(specNameRegex)
+    if (match) {
+      return {
+        name: match[0],
+        specialization: match[1],
+        skillName: match[2]
+      }
+    }
+    return {
+      name: specialization + ' (' + skillName + ')',
+      specialization: specialization,
+      skillName: skillName
+    }
+  }
+
   static getNameWithoutSpec (item) {
     if (item instanceof CoC7Item) {
       if (item.data.data?.properties?.special) {
-        const specNameRegex = new RegExp(
-          CoC7Utilities.quoteRegExp(item.data.data.specialization),
-          'ig'
-        )
-        const filteredName = item.name
-          .replace(specNameRegex, '')
-          .trim()
-          .replace(/^\(+|\)+$/gm, '')
-        return filteredName.length ? filteredName : item.name
+        return item.data.data.skillName
       }
     } else {
       if (item.data.properties?.special) {
-        const specNameRegex = new RegExp(
-          '^' +
-            CoC7Utilities.quoteRegExp(item.data.specialization) +
-            '\\s*\\((.+)\\)$',
-          'i'
-        )
-        return item.name.replace(specNameRegex, '$1')
+        return item.data.skillName
       }
     }
     return item.name
@@ -579,8 +580,9 @@ export class CoC7Item extends Item {
 
   get _base () {
     if (this.type !== 'skill') return [null, false]
-    if (typeof this.data.data.base !== 'string')
+    if (typeof this.data.data.base !== 'string') {
       return [this.data.data.base, false]
+    }
 
     if (this.data.data.base.includes('@')) {
       const parsed = {}
@@ -733,20 +735,9 @@ export class CoC7Item extends Item {
         return [...newArray, item]
       }, [])
       .sort((a, b) => {
-        let lca
-        let lcb
-        if (a.data.properties && b.data.properties) {
-          lca = a.data.properties.special
-            ? a.data.specialization.toLowerCase() + a.name.toLowerCase()
-            : a.name.toLowerCase()
-          lcb = b.data.properties.special
-            ? b.data.specialization.toLowerCase() + b.name.toLowerCase()
-            : b.name.toLowerCase()
-        } else {
-          lca = a.name.toLowerCase()
-          lcb = b.name.toLowerCase()
-        }
-        return lca.localeCompare(lcb)
+        return a.name
+          .toLocaleLowerCase()
+          .localeCompare(b.name.toLocaleLowerCase())
       })
   }
 

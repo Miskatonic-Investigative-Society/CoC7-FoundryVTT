@@ -78,7 +78,8 @@ export class CoC7ContainerSheet extends ActorSheet {
       !sheetData.data.flags.locked
     sheetData.showInventoryTalents =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'talent') ||
-      (!data.data.flags.locked && game.settings.get('CoC7', 'pulpRuleTalents'))
+      (!sheetData.data.flags.locked &&
+        game.settings.get('CoC7', 'pulpRuleTalents'))
     sheetData.showInventoryWeapons =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'weapon') ||
       !sheetData.data.flags.locked
@@ -169,7 +170,10 @@ export class CoC7ContainerSheet extends ActorSheet {
       let visible = false
       for (const [k, v] of Object.entries(e.data.permission)) {
         if (k === 'default' || k === game.user.id) {
-          visible = visible || v !== CONST.ENTITY_PERMISSIONS.NONE
+          visible =
+            visible ||
+            v !==
+              (CONST.DOCUMENT_OWNERSHIP_LEVELS || CONST.ENTITY_PERMISSIONS).NONE
         }
       }
       return visible

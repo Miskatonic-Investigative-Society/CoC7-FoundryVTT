@@ -99,7 +99,9 @@
   "CoC7.Other": "Altro",
   "CoC7.rounds": "turno(i)",
   "CoC7.hours": "ora(e)",
+  "CoC7.days": "giorno(i)",
   "CoC7.weeks": "settimana(e)",
+  "CoC7.months": "mese(i)",
   "CoC7.remove": "Rimuovi",
   "CoC7.Any": "Uno",
   "CoC7.All": "Tutto",
@@ -172,6 +174,7 @@
   "CoC7.RollSecretDice": "Il Custode ha tirato in privato alcuni dadi",
   "CoC7.KeeperSentDecoy": "Tiro diversivo inviato ai giocatori",
   "CoC7.FakeRoll": "Invia un tiro diversivo ai giocatori",
+  "CoC7.ErrorMissingKeeperUser": "Il Custode deve essere connesso per poter eseguire questa azione",
 
   "CoC7.ConstitutionCheck": "Tiro Costituzione",
 
@@ -198,11 +201,15 @@
   "CoC7.CreateLink": "Crea collegamento",
   "CoC7.SuccesLevelHint": "{value} livello(i) di successo",
   "CoC7.FailureLevelHint": "Fallito per {value} livello(i)",
+  "CoC7.CardType": "Tipo di Tiro",
   "CoC7.CombinedRollCard": "Scheda Tiri combinati",
   "CoC7.OpposedRollCard": "Scheda Tiri contrapposti",
+  "CoC7.GroupRollCard": "Scheda Tiro di gruppo",
+  "CoC7.RegularRollCard": "Scheda Tiro Normale",
   "CoC7.CombinedAnyHint": "Un Tiro deve avere successo",
   "CoC7.CombinedAllHint": "Tutti i Tiri devono avere successo",
   "CoC7.CloseCard": "Chiudi scheda",
+  "CoC7.AttackManeuver": "Manovra di attacco",
 
   "CoC7.CheckResult": "Tiro {name} ({value}%) - {difficulty} difficoltà",
   "CoC7.ItemCheckResult": "{item} - tiro {skill} ({value}%) - {difficulty} difficoltà",
@@ -218,7 +225,7 @@
   "CoC7.NoTargetToDamage": "Non c'è alcun bersaglio a cui applicare il danno",
   "CoC7.ShotIsImpossible": "È impossibile sparare",
   "CoC7.OutOfAmmo": "Munizioni esaurite",
-  "CoC7.OutOfShots": "Spari finiti",
+  "CoC7.OutOfShots": "Colpi finiti",
 
   "CoC7.BonusDamageRoll": "Sto tirando il Bonus al Danno",
   "CoC7.Type": "Tipo",
@@ -372,6 +379,8 @@
   "CoC7.ErrorActor": "Impossibile individuare il personaggio",
   "CoC7.ErrorInvalidFormula": "{value} non è una formula valida",
   "CoC7.ErrorInvalid": "invalido",
+  "CoC7.ErrorInvalidCardType": "Tipo di Scheda",
+  "CoC7.ErrorInvalidRollType": "Tipo di Tiro",
   "CoC7.Validate": "Convalida",
   "CoC7.Apply": "Applica",
 
@@ -402,6 +411,7 @@
   "CoC7.DevSuccessDetails": "{item} migliorato di {augment}%",
   "CoC7.SanGained": "Guadagnati 2d6 ({results} = <strong>{sanGained}</strong>) Sanità dopo aver padroneggiato <strong>{skill}</strong> con un <strong>{skillValue}%</strong>",
   "CoC7.DevFailureDetails": "{item} NON migliorato",
+  "CoC7.ReduceSanityLimits": "Tutti i limiti della Sanità sono ridotti di uno",
   "CoC7.DevSuccess": "{item} migliorato ({die}/{score}%) di {augment}%",
   "CoC7.DevFailure": "{item} NON migliorato ({die}/{score}%)",
   "CoC7.LuckIncreased": "Fortuna recuperata ({die}/{score}): {augment} punti",
@@ -479,6 +489,24 @@
   "CoC7.BackgroundDeleteSection": "Cancellare sezione",
   "CoC7.BackgroundSectionMoveUp": "Muovi Su",
   "CoC7.BackgroundSectionMoveDown": "Muovi Giù",
+  "CoC7.BackgroundEncounters": "Perdite per Strane Entità",
+  "CoC7.BackgroundFlags": "Contrassegni",
+  "CoC7.BackgroundFlagsMythosExperienced": "Assegnato il 5% di follia per i Miti",
+  "CoC7.BackgroundFlagsMythosHardened": "Temprato ai Miti",
+
+  "CoC7.SanityLossEncounters": "Perdita di Sanità per gli incontri",
+  "CoC7.SanityLossImmunities": "Immunità per la perdita di Sanità",
+  "CoC7.AddSanityLossEncounter": "Aggiungi la perdita di Sanità per l'incontro",
+  "CoC7.AddSanityLossImmunity": "Aggiungi l'immunità alla perdita di Sanità",
+  "CoC7.DeleteSanityLossEncounter": "Elimina la perdita di Sanità per l'incontro",
+  "CoC7.DeleteSanityLossImmunity": "Elimina l'immunità alla perdita di Sanità",
+
+  "CoC7.SanityLossTypeDialogTitle": "Nuova perdita o immunità di Sanità",
+  "CoC7.SanityLossTypeDialogBody": "Aggiungi al personaggio un nuovo incontro dei Miti, una perdita di Sanità, o un'immunità alla Sanità.",
+  "CoC7.SanityLossTypeReason": "Causa",
+  "CoC7.SanityLossTypeValue": "Punti Sanità perduti",
+  "CoC7.SanityLossEncounter": "Perdita di Sanità per l'incontro",
+  "CoC7.SanityLossImmunity": "Immunità per la perdita di Sanità",
 
   "CoC7.creatureFightingSkill": "Combattere",
 
@@ -515,8 +543,10 @@
   "CoC7.MaxSanloss": "Perdita Max",
   "CoC7.MinSanloss": "Perdita Min",
   "CoC7.AlreadyLost": "Già perso",
+  "CoC7.AlreadyEncountered": "Già incontrata", 
   "CoC7.CreatureMaxLoss": "Perdità Max della creatura",
   "CoC7.MaxLossToCreature": "Perdita Max per questa creatura",
+  "CoC7.MaxPossibleSanLoss": "Perdita Max possibile",
   "CoC7.ResetCreatureSan": "Ripristina la cronologia della creatura",
   "CoC7.ResetSpecieSan": "Ripristina la cronologia della specie",
   "CoC7.KeepData": "Conserva i dati della creatura",
@@ -748,6 +778,9 @@
   "CoC7.Migrate.TriggerContents": "<p>Attiva lo spostamento dei dati e riavvia</p>",
   "CoC7.Migrate.TriggerRestart": "Salva e riavvia",
 
+  "CoC7.Migrate.UpdateCurrentScene": "Migrazione della tua scena attuale",
+  "CoC7.Migrate.Complete": "Terminata la migrazione dei tuoi dati",
+  
   "CoC7.Settings.CoreRules.Title": "Regole opzionali del regolamento base",
   "CoC7.Settings.Rules.Name": "Regole opzionali/variazioni",
   "CoC7.Settings.Rules.Label": "Configurazione delle regole opzionali/variazioni",
@@ -773,7 +806,6 @@
 
   "CoC7.UnableToInteractWithChatCard": "Non sei in grado di interagire con questo messaggio, se devi apportare una modifica chiedi al tuo Custode di selezionare le opzioni per te",
   "CoC7.UnableToCopyToClipboard": "Impossibile copiare negli appunti, ciò è probabilmente dovuto alle impostazioni di sicurezza del tuo browser.",
-  "CoC7.WarningCharacterSheetV1Depreciated": "Questo layout è obsoleto e potrebbe non funzionare correttamente. Verrà rimosso con la versione FoundryVTT v9, chiedi al tuo Custode di cambiare il tipo di scheda in CoC7.CoC7CharacterSheetV2",
 
   "CoC7.MessageTitleSelectUserToGiveTo": "Dai l'oggetto a un altro personaggio",
   "CoC7.MessageSelectUserToGiveTo": "A quale personaggio vorresti dare questo oggetto?",
@@ -783,6 +815,8 @@
   "CoC7.ToolTipKeeperSkill": "<label>Tiri del Custode</label><ol><li><strong>CTRL + Cliccare col sinistro</strong> Crea collegamento al tiro</li>{other}</ol>",
   "CoC7.ToolTipKeeperStandbySkill": "<li><strong>Cliccare col sinistro</strong> Richiedi un tiro a {name}</li>",
   "CoC7.ToolTipDB": "<label>Bonus ad Danno</label><ol><li><strong>Cliccare col sinistro</strong> Tiro immediato con difficoltà Normale</li></ol>",
+  "CoC7.ToolTipSanity": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Cliccare col sinistro</strong> tiro con opzioni</li><li><strong>Alt/Opzione + Cliccare col sinistro</strong> tiro di perdità di sanità con opzioni</li><li><strong>Shift + Cliccare col sinistro</strong> Tiro immediato a difficoltà Normale</li><li><strong>Shift + Alt/Opzione + Cliccare col sinistro</strong> tiro di perdità di sanità senza opzioni di riserva di dadi</li></ol><label>Tiri contrapposti</label><ol><li><strong>Cliccare col destro</strong> Tiro contrapposto con opzioni</li><li><strong>Shift + Cliccare col destro</strong> Tiro contrapposto immediato</li></ol><label>Tiri combinati</label><ol><li><strong>Alt/Opzione + Cliccare col destro</strong> Tiro combinato con opzioni</li><li><strong>Shift + Alt/Opzione + Cliccare col destro</strong> Tiro combinato immediato</li></ol>",
+  "CoC7.ToolTipCombat": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Cliccare col sinistro</strong> tiro con opzioni</li><li><strong>Shift + Cliccare col sinistro</strong> Tiro immediato a difficoltà Normale</li></ol><label>Manovra di combattimento contrapposta</label><ol><li><strong>Cliccare col destro</strong> Manovra di combattimento contrapposta con opzioni</li><li><strong>Shift + Cliccare col destro</strong> Manovra di combattimento contrapposta immediata</li></ol>",
   "CoC7.ToolTipKeeperSanity": "<li><strong>CTRL + Alt/Optione</strong> Crea collegamento al Tiro Sanità</li>",
   "CoC7.ToolTipAutoToggle": "<label>Attiva/disattiva calcolo automatico</label><ol><li><strong>Cliccare col sinistro</strong> Attiva/disattiva calcolo automatico o inserimento manuale</li>",
   "CoC7.ToolTipSkillFlagToggle": "<label>{status}</label><ol><li><strong>Cliccare due volte </strong> Attiva/disattiva il contrassegnare la condizione</li>",

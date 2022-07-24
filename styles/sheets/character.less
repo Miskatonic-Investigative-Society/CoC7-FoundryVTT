@@ -37,6 +37,21 @@
       border-image: var(--main-sheet-bg);
       border-image-slice: 450 200 50 200 fill;
       border-image-width: 450 200 50 200;
+      &.permission-limited {
+        background: var(--other-sheet-bg);
+        background-repeat: repeat;
+        border-image: none;
+        padding: 0 5px;
+        img.photo {
+          border: 0;
+        }
+        .sheet-portrait {
+          flex: 0 0 auto;
+          padding-bottom: 10px;
+          border-bottom: 2px groove;
+          justify-content: center;
+        }
+      }
       .container {
         background-image: var(--main-sheet-image);
         background-repeat: no-repeat;
@@ -338,6 +353,12 @@
           }
           .restore-list-styles ol {
             list-style-type: decimal;
+          }
+
+          .character-background {
+            .editor {
+              height: calc(100% - 40px);
+            }
           }
 
           .tab {
