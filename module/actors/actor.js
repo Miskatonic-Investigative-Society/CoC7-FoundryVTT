@@ -339,6 +339,37 @@ export class CoCActor extends Actor {
     return data
   }
 
+  /**
+   * Clean list of skills by removing specialization from name
+   */
+  async cleanSkills () {
+    Dialog.confirm({
+      title: `${game.i18n.localize('CoC7.CleanSkillList')}`,
+      content: `<p>${game.i18n.localize('CoC7.CleanSkillListHint')}</p>`,
+      yes: () => clean(this)
+    })
+    async function clean (actor) {
+      const update = []
+      actor.skills.forEach(s => {
+        if (s.data.data.properties.special) {
+          const clean = CoC7Item.getNameWithoutSpec(s)?.trim()
+          if (clean.toLowerCase() != s.name.toLowerCase() || clean.toLowerCase() != s.data.name.toLowerCase()) {
+            update.push({
+              _id: s.id,
+              name: clean
+            })
+          }
+        }
+      })
+      if (update.length != 0){
+        await actor.updateEmbeddedDocuments('Item', update)
+        ui.notifications.info( `Skills : ${Array.from( update, e => e.name).join(', ')} updated.`)
+      } else {
+        ui.notifications.info( 'Skill list was clean already !')
+      }
+    }
+  }
+
   /** @override */
   async createSkill (skillName, value, showSheet = false) {
     const data = CoCActor.emptySkill(skillName, value)
@@ -2641,7 +2672,7 @@ export class CoCActor extends Actor {
   }
 
   get tokenUuid () {
-    if( this.sheet.token){
+    if (this.sheet.token) {
       return this.sheet.token.uuid
     }
     return null
@@ -3360,6 +3391,8 @@ export class CoCActor extends Actor {
         armorValue = (await new Roll(armorData).roll({ async: true })).total
       } else if (!isNaN(Number(armorData))) {
         armorValue = Number(armorData)
+      } else if (!isNaN(Number(armorData?.value))) {
+        armorValue = Number(armorData.value)
       } else {
         ui.notifications.warn(
           `Unable to process armor value: ${armorData}. Ignoring armor.`

@@ -399,6 +399,8 @@
 
   "CoC7.NewSkillName": "new skill",
   "CoC7.AddSkill": "Add skill",
+  "CoC7.CleanSkillList": "Clean skill list",
+  "CoC7.CleanSkillListHint": "<p>This will Clean your skill list by removing specialization from skill name.</p> <p>This will avoid to display skill as : 'specialization(specialization(skill))'</p>",
   "CoC7.DevelopemmentPhase": "Development Phase",
   "CoC7.RecoverLuckPoints": "Recover Luck Points",
   "CoC7.SkillCantGainXp": "Skill can't gain XP automatically",

@@ -263,7 +263,7 @@
           </div>
           <div class="flex1"></div>
 
-          <div class="flexrow sheet-controls" style="flex: 0 0 80px;align-content: flex-start;">
+          <div class="flexrow sheet-controls" style="flex: 0 0 96px;align-content: flex-start;">
             {{#if allowFormula}}
               {{#if data.flags.locked}}
                 <div style="flex: 0 0 32px;"></div>
@@ -281,6 +281,7 @@
             {{#if data.flags.locked}}
               <a class="lock" style="flex: 0 0 32px;align-content: flex-start;"  title="{{localize 'CoC7.UnlockActor'}}" data-locked="true"> <i class="fas fa-lock"></i></a>
             {{else}}
+              <a class="clean-skill-list" style="flex: 0 0 16px;" title='{{localize "CoC7.CleanSkillList"}}'><i class="game-icon game-icon-broom"></i></a>
               <a class="lock" style="flex: 0 0 16px;" title="{{localize 'CoC7.LockActor'}}" data-locked="false"> <i class="fas fa-lock-open"></i></a>
               {{#if allowFormula}}
                 {{#if displayFormula}}
