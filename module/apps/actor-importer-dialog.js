@@ -1,4 +1,4 @@
-/* global $, CONFIG, FormApplication, game, Hooks, mergeObject, ui */
+/* global $, CONFIG, FormApplication, game, Hooks, mergeObject, ui, FileReader */
 
 import { CoC7ActorImporter } from './actor-importer.js'
 import { CoC7DholeHouseActorImporter } from './dholehouse_importer.js'

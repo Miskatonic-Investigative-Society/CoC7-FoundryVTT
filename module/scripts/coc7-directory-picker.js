@@ -104,11 +104,11 @@ export class CoC7DirectoryPicker extends FilePicker {
     }
   }
 
-  static uploadToDefaultDirectory (file, filename) {
+  static async uploadToDefaultDirectory (file, filename) {
     const parsed = CoC7DirectoryPicker.parse(
       game.settings.get('CoC7', 'dholeUploadDirectory')
     )
-    FilePicker.upload(
+    const response = await FilePicker.upload(
       parsed.activeSource,
       parsed.current,
       new File([file], filename, {
@@ -116,6 +116,10 @@ export class CoC7DirectoryPicker extends FilePicker {
       }),
       { bucket: parsed.bucket }
     )
+    if (!response.path) {
+      ui.notifications.error(game.i18n.localize('CoC7.FileUploadError'))
+      return false
+    }
     return parsed.current + '/' + filename
   }
 }

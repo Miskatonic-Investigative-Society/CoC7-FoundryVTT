@@ -1,4 +1,4 @@
-/* global Actor, game, ui */
+/* global Actor, game, ui, fetch */
 import { CoC7DirectoryPicker } from '../scripts/coc7-directory-picker.js'
 import { CoC7Item } from '../items/item.js'
 import { CoC7Utilities } from '../utilities.js'
@@ -216,7 +216,7 @@ export class CoC7DholeHouseActorImporter {
     const characterSkill = skills.find(i => {
       return (
         i.data.data?.skillName === checkName ||
-        i.data.data?.skillName.indexOf(checkName) > -1
+        i.data.data?.skillName?.indexOf(checkName) > -1
       )
     })
     return characterSkill
