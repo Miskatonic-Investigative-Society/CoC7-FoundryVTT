@@ -302,7 +302,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       if (
         this.data.obstacle.barrier &&
         this.data.obstacle.hasHitPoints &&
-        this.data.objects.obstacleDamageRoll?.total
+        this.data.objects?.obstacleDamageRoll?.total
       ) {
         if (undefined === this.data.totalObstacleDamage) {
           this.data.totalObstacleDamage = this.data.objects.obstacleDamageRoll.total
@@ -736,6 +736,10 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     if( !this.data.flags.hasBonusDice){
       this.data.flags.hasBonusDice = true
     }
+    if( this.data.movementAction <= this.data.totalActionCost) {
+      this.data.states.cardResolved = true
+      this.data.movePlayer = false
+    }
     return true
   }
 
@@ -820,6 +824,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     await this.data.objects.obstacleDamageRoll.evaluate({ async: true })
     await CoC7Dice.showRollDice3d(this.data.objects.obstacleDamageRoll)
     this.data.states.obstacleDamageRolled = true
+    this.data.totalActionCost += 1
     this.data.states.cardResolved = true
     return true
   }
