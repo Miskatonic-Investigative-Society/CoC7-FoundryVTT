@@ -41,7 +41,11 @@ export class CoC7ActorImporterDialog extends FormApplication {
   activateListeners (html) {
     super.activateListeners(html)
 
+    html.find('#dholehouse-character-preview').hide()
     html.find('#coc-entity-type').change(this._onChangeSubmit.bind(this))
+    html
+      .find('#dholehouse-json-file-picker')
+      .change(this._onJSONFileSelected.bind(this))
 
     html
       .find('#coc-pasted-character-data')
@@ -73,26 +77,80 @@ export class CoC7ActorImporterDialog extends FormApplication {
    */
   static getInputs (form) {
     const inputs = {}
-    inputs.entity = form.find('#coc-entity-type').val().trim()
+    inputs.entity = form
+      .find('#coc-entity-type')
+      .val()
+      .trim()
     if (CONFIG.debug.CoC7Importer) {
       console.debug('entity type:', inputs.entity)
     }
     if (form.find('#coc-convert-6E').length > 0) {
-      inputs.convertFrom6E = form.find('#coc-convert-6E').val().trim()
+      inputs.convertFrom6E = form
+        .find('#coc-convert-6E')
+        .val()
+        .trim()
     }
     if (form.find('#coc-entity-lang').length > 0) {
       inputs.lang = CoC7ActorImporterRegExp.checkLanguage(
-        form.find('#coc-entity-lang').val().trim()
+        form
+          .find('#coc-entity-lang')
+          .val()
+          .trim()
       )
     }
     if (form.find('#source').length > 0) {
-      inputs.source = form.find('#source').val().trim()
+      inputs.source = form
+        .find('#source')
+        .val()
+        .trim()
     }
-    inputs.text = form.find('#coc-pasted-character-data').val().trim()
+    if (form.find('#coc-pasted-character-data').length > 0) {
+      inputs.text = form
+        .find('#coc-pasted-character-data')
+        .val()
+        .trim()
+    }
+
     if (CONFIG.debug.CoC7Importer) {
       console.debug('received text', '##' + inputs.text + '##')
     }
     return inputs
+  }
+
+  _onJSONFileSelected (event) {
+    const jsonFileInput = document.getElementById('dholehouse-json-file-picker')
+    const portraitImage = document.getElementById(
+      'dholehouse-character-portrait'
+    )
+    const characterName = document.getElementById('dholehouse-character-name')
+    const preview = document.getElementById('dholehouse-character-preview')
+    const file = jsonFileInput.files[0]
+    const dialog = this
+    const fileReader = new FileReader()
+    fileReader.onload = function (e) {
+      try {
+        dialog.characterJSON = JSON.parse(fileReader.result)
+      } catch (e) {
+        $('#coc-prompt')
+          .html(game.i18n.localize('CoC7.TextFieldInvalidJSON'))
+          .addClass('error')
+        event.preventDefault()
+        return
+      }
+      const personalDetails =
+        dialog.characterJSON?.Investigator?.PersonalDetails
+      if (!personalDetails) {
+        ui.notifications.error(
+          game.i18n.localize('CoC7.DholeHouseInvalidActor')
+        )
+        return
+      }
+      characterName.textContent = personalDetails.Name
+      portraitImage.src = 'data:image/png;base64,' + personalDetails.Portrait
+      preview.style.display = 'block'
+      $('.dialog.actor-importer').height('500px')
+    }
+    fileReader.readAsText(file)
   }
 
   _onChangeSubmit (event) {
@@ -113,34 +171,26 @@ export class CoC7ActorImporterDialog extends FormApplication {
     } else if (id === 'import') {
       const form = $(event.currentTarget).closest('form')
       const inputs = CoC7ActorImporterDialog.getInputs(form)
-      if (inputs.text !== '') {
-        if (inputs.entity === 'dholehouse') {
-          try {
-            const characterJSON = JSON.parse(inputs.text)
-            const character =
-              await CoC7DholeHouseActorImporter.createNPCFromDholeHouse(
-                characterJSON
-              )
-            if (character !== false) {
-              if (CONFIG.debug.CoC7Importer) {
-                console.debug('character:', character)
-              }
-              ui.notifications.info(
-                'Created Character: ' + character.data?.name
-              )
-              await character.sheet.render(true)
-              this.close()
-            }
-          } catch (e) {
-            $('#coc-prompt')
-              .html(game.i18n.localize('CoC7.TextFieldInvalidJSON'))
-              .addClass('error')
-            event.preventDefault()
+      if (inputs.entity === 'dholehouse' && this.characterJSON) {
+        const character = await CoC7DholeHouseActorImporter.createNPCFromDholeHouse(
+          this.characterJSON
+        )
+        if (character !== false) {
+          if (CONFIG.debug.CoC7Importer) {
+            console.debug('character:', character)
           }
-        } else {
-          CoC7ActorImporterDialog.importActor(inputs)
+          ui.notifications.info(
+            game.i18n.format('CoC7.ActorImported', {
+              actorType: game.i18n.localize('CoC7.Entities.Character'),
+              actorName: character.data?.name
+            })
+          )
+          await character.sheet.render(true)
           this.close()
         }
+      } else if (inputs.text && inputs.text !== '') {
+        CoC7ActorImporterDialog.importActor(inputs)
+        this.close()
       }
     }
   }
@@ -150,7 +200,7 @@ export class CoC7ActorImporterDialog extends FormApplication {
    */
   async _updateObject (event, formData) {
     this.object.importType = formData['coc-entity-type']
-    this.object.characterData = formData['coc-pasted-character-data'].trim()
+    this.object.characterData = formData['coc-pasted-character-data']?.trim()
     if (typeof formData['coc-convert-6E'] !== 'undefined') {
       this.object.convert6E = formData['coc-convert-6E']
     }
@@ -178,10 +228,10 @@ export class CoC7ActorImporterDialog extends FormApplication {
       console.debug('createdActor:', createdActor)
     }
     ui.notifications.info(
-      'Created ' +
-        createdActor.data?.type?.toUpperCase() +
-        ': ' +
-        createdActor.data?.name
+      game.i18n.format('CoC7.ActorImported', {
+        actorType: createdActor.data?.type?.toUpperCase(),
+        actorName: createdActor.data?.name
+      })
     )
     await createdActor.sheet.render(true)
     // const updated = await Updater.updateActor(npc)

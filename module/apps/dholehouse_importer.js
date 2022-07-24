@@ -308,6 +308,18 @@ export class CoC7DholeHouseActorImporter {
     return weapons
   }
 
+  static async savePortrait (base64Portrait, fileName) {
+    const base64Response = await fetch(
+      'data:image/png;base64,' + base64Portrait
+    )
+    const imageBlob = await base64Response.blob()
+    const filePath = CoC7DirectoryPicker.uploadToDefaultDirectory(
+      imageBlob,
+      fileName
+    )
+    return filePath
+  }
+
   static async createNPCFromDholeHouse (dholeHouseCharacterData) {
     if (!game.user?.can('FILES_UPLOAD')) {
       ui.notifications.error(
@@ -315,14 +327,11 @@ export class CoC7DholeHouseActorImporter {
       )
       return false
     }
-    const characterData =
-      CoC7DholeHouseActorImporter.convertDholeHouseCharacterData(
-        dholeHouseCharacterData
-      )
+    const characterData = CoC7DholeHouseActorImporter.convertDholeHouseCharacterData(
+      dholeHouseCharacterData
+    )
     console.log(characterData)
-    const importedCharactersFolder =
-      await CoC7Utilities.createImportCharactersFolderIfNotExists()
-    // To be made a setting to allow S3 buckets
+    const importedCharactersFolder = await CoC7Utilities.createImportCharactersFolderIfNotExists()
     if (!CoC7DirectoryPicker.createDefaultDirectory()) {
       return false
     }
@@ -333,24 +342,18 @@ export class CoC7DholeHouseActorImporter {
       data: characterData.actor
     }
     const npc = await Actor.create(actorData)
-
+    // If possible upload the image portrait
     if (
       dholeHouseCharacterData.Investigator.PersonalDetails.Portrait?.length > 10
     ) {
-      const pngtext = atob(
-        dholeHouseCharacterData.Investigator.PersonalDetails.Portrait
+      const fileName = 'avatar-' + npc.id + '.png'
+      const portrait = await CoC7DholeHouseActorImporter.savePortrait(
+        dholeHouseCharacterData.Investigator.PersonalDetails.Portrait,
+        fileName
       )
-      const pngnums = new Array(pngtext.length)
-      for (let i = 0; i < pngtext.length; i++) {
-        pngnums[i] = pngtext.charCodeAt(i)
-      }
-      const filename = CoC7DirectoryPicker.uploadToDefaultDirectory(
-        new Uint8Array(pngnums),
-        'avatar-' + npc.id + '.png'
-      )
-      if (filename !== false) {
+      if (portrait !== false) {
         npc.update({
-          img: filename
+          img: portrait
         })
       }
     }

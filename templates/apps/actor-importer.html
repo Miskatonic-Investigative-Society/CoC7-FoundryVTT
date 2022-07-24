@@ -1,13 +1,21 @@
 <form autocomplete="off">
   <h2>{{localize 'CoC7.ActorImporter'}}</h2>
+  {{#if (eq importType "dholehouse")}}
+  <div id="coc-prompt" data-text="{{localize 'CoC7.DholeHouseActorImporterSummary'}}">{{localize 'CoC7.DholeHouseActorImporterSummary'}}</div>
+  {{#unless canUpload}}
+      <div class="error">{{localize 'CoC7.UnableToUploadDholeImage'}}</div>
+  {{/unless}}
+    <div class="form-group-stacked">
+  {{else}}
   <p>{{localize 'CoC7.ActorImporterSummary'}}</p>
+  {{/if}}
   <div class="form-group">
     <label for="coc-entity-type">{{localize 'CoC7.SelectActorType'}}:</label>
     <select id="coc-entity-type" name="coc-entity-type">
       {{#select importType}}
-        <option value="dholehouse">{{localize 'CoC7.DholeHouseActorImporter'}}</option>
         <option value="npc">{{localize 'CoC7.NonPlayingCharacter'}}</option>
         <option value="creature">{{localize 'CoC7.Creature'}}</option>
+        <option value="dholehouse">{{localize 'CoC7.DholeHouseActorImporter'}}</option>
       {{/select}}
     </select>
   </div>
@@ -42,17 +50,23 @@
       </select>
     </div>
   {{/if}}
-  {{#if (or (eq importType "npc") (eq importType "creature"))}}
+  {{#if (eq importType "dholehouse")}}
+      <label for="dholehouse-json-file-picker">{{localize 'CoC7.DholeHousePickYourJSONFile'}}</label><br/>
+      <input id="dholehouse-json-file-picker" name="dholehouse-json-file-picker" type="file" accept="application/json" />
+    </div>
+    <div id="dholehouse-character-preview" class="form-group">
+        <p><strong>{{localize 'CoC7.DholeHouseImportingName'}}</strong><br/>
+        <span id="dholehouse-character-name"</span>
+        </p>
+        {{!-- By defaults the image is a transparent pixel to be replaced when the JSON is loaded --}}
+        <img id="dholehouse-character-portrait" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" />
+    </div>
+    {{else}}
     <div id="coc-prompt" data-text="{{localize 'CoC7.PasteTheDataBelow'}}" data-extended="limit">{{localize 'CoC7.PasteTheDataBelow'}}</div>
-  {{else if (eq importType "dholehouse")}}
-    <div id="coc-prompt" data-text="{{localize 'CoC7.DholeHouseActorImporterSummary'}}">{{localize 'CoC7.DholeHouseActorImporterSummary'}}</div>
-    {{#unless canUpload}}
-      <div class="error">{{localize 'CoC7.UnableToUploadDholeImage'}}</div>
-    {{/unless}}
+    <div class="form-group">
+      <textarea id="coc-pasted-character-data" name="coc-pasted-character-data" rows="30" style="min-height:300px" placeholder="{{placeholder}}">{{characterData}}</textarea>
+    </div>
   {{/if}}
-  <div class="form-group">
-   <textarea id="coc-pasted-character-data" name="coc-pasted-character-data" rows="30" style="min-height:300px" placeholder="{{placeholder}}">{{characterData}}</textarea>
-  </div>
   <div class="dialog-buttons flexrow">
     <button class="submit-button" data-button="import">
       <i class="fas fa-file-import"></i>
@@ -63,8 +77,6 @@
         <i class="fas fa-info-circle"></i>
         {{localize 'CoC7.getTheExample'}}
       </button>
-    {{else}}
-      <div></div>
     {{/if}}
     <button class="submit-button" data-button="no">
       <i class="fas fa-times"></i>

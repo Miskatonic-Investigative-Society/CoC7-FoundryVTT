@@ -759,10 +759,14 @@
   "CoC7.ImportActorItemsItem": "Items",
   "CoC7.ImportActorItemsItemWorldModuleSystem": "Items / World / Modules / System",
   "CoC7.ImportActorItemsWorldModuleItemSystem": "World / Modules / Items / System",
+  "CoC7.ActorImported": "New {actorType} imported: {actorName}",
 
   "CoC7.DholeHouseActorImporter": "The Dhole's House Actor Importer JSON",
-  "CoC7.DholeHouseActorImporterSummary": "Paste the JSON data copied from The Dhole's House Actor below",
+  "CoC7.DholeHouseActorImporterSummary": "Export your DholeHouse's character as JSON and upload it here.",
+  "CoC7.DholeHouseImportingName": "About to import: ",
+  "CoC7.DholeHousePickYourJSONFile": "Pick the JSON file exported from The Dhole's House",
   "CoC7.DholeHouseActorImporterSource": "Imported from The Dhole's House Actor",
+  "CoC7.DholeHouseInvalidActor": "The selected JSON doesn't seem to be a valid Dhole's House exported character",
 
   "CoC7.HowToTranslateTitle": "How to translate?",
   "CoC7.HowToTranslateWarning": "Do not install any modules you do not trust.",
