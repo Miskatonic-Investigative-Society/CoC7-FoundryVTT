@@ -1,4 +1,5 @@
-/* global Actor, File, FilePicker, game, ui */
+/* global Actor, game, ui */
+import { CoC7DirectoryPicker } from '../scripts/coc7-directory-picker.js'
 import { CoC7Item } from '../items/item.js'
 import { CoC7Utilities } from '../utilities.js'
 
@@ -250,7 +251,6 @@ export class CoC7DholeHouseActorImporter {
       )
       const damage = weapon.damage.replace(/\+DB/i, '')
       const addb = damage !== weapon.damage
-      console.log(addb, damage, weapon.damage)
       weapons.push({
         name: weapon.name,
         type: 'weapon',
@@ -323,18 +323,8 @@ export class CoC7DholeHouseActorImporter {
     const importedCharactersFolder =
       await CoC7Utilities.createImportCharactersFolderIfNotExists()
     // To be made a setting to allow S3 buckets
-    try {
-      await FilePicker.createDirectory(
-        'data',
-        'worlds/' + game.world.id + '/dhole-images'
-      )
-    } catch (e) {
-      if (!e.startsWith('EEXIST')) {
-        ui.notifications.error(
-          game.i18n.localize('CoC7.ActorImporterUploadError')
-        )
-        return false
-      }
+    if (!CoC7DirectoryPicker.createDefaultDirectory()) {
+      return false
     }
     const actorData = {
       name: characterData.name,
@@ -354,17 +344,15 @@ export class CoC7DholeHouseActorImporter {
       for (let i = 0; i < pngtext.length; i++) {
         pngnums[i] = pngtext.charCodeAt(i)
       }
-      FilePicker.upload(
-        'data',
-        'worlds/' + game.world.id + '/dhole-images/',
-        new File([new Uint8Array(pngnums)], 'avatar-' + npc.id + '.png', {
-          type: 'image/png'
-        })
+      const filename = CoC7DirectoryPicker.uploadToDefaultDirectory(
+        new Uint8Array(pngnums),
+        'avatar-' + npc.id + '.png'
       )
-      npc.update({
-        img:
-          'worlds/' + game.world.id + '/dhole-images/avatar-' + npc.id + '.png'
-      })
+      if (filename !== false) {
+        npc.update({
+          img: filename
+        })
+      }
     }
 
     console.log(characterData.items)

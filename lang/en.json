@@ -753,6 +753,7 @@
   "CoC7.ImportedUnnamedCharacter": "Imported unnamed character",
   "CoC7.CreatedImportedCharactersFolder": "Created 'Imported Characters' folder",
   "CoC7.ImportedCharactersFolder": "Imported characters",
+  "CoC7.PickDirectory": "Pick Directory",
   "CoC7.ImportSkillItemLocations": "Look for skills/spells/weapons in",
   "CoC7.ImportActorItemsNone": "None",
   "CoC7.ImportActorItemsItem": "Items",
@@ -806,6 +807,8 @@
   "CoC7.Settings.PulpRules.FasterRecovery.Hint": "Natural healing is increased to two hit points per day",
   "CoC7.Settings.PulpRules.IgnoreMajorWounds.Name": "Ignore Major Wounds",
   "CoC7.Settings.PulpRules.IgnoreMajorWounds.Hint": "",
+  "CoC7.Settings.DholeUpload.Directory.Name": "The Dhole's House image upload directory",
+  "CoC7.Settings.DholeUpload.Directory.Hint": "Upload path for The Dhole's House avatars, relative to the Foundry/Data directory.",
 
   "CoC7.Maximize": "Maximize",
   "CoC7.Summarize": "Summarize",
