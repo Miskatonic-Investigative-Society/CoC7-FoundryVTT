@@ -10,8 +10,11 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Update to French localization, thanks to @vonv
 - Update to Italian localization, thanks to @Stefano1975t
 - Update to Japanese localization, thanks to Asami
+- Update to Korean localization, thanks to @jbblily
 - Update to Polish localization, thanks to @everyonecancode
 - Update to Portuguese localization
+- Update to Spanish localization, thanks to @lozanoje
+- Update to Swedish localization, thanks to @Rangertheman
 - Update to Taiwanese localization, thanks to @zeteticl
 
 ## Version 0.7.11
