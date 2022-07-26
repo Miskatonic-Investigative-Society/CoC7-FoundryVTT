@@ -279,6 +279,15 @@ export class CoC7Parser {
   }
 
   static _createLink (match, tag, type, options, name) {
+    if (typeof match !== 'string') {
+      // Foundry VTT v10
+      name = match[4] ?? undefined
+      options = match[3] ?? undefined
+      type = match[2] ?? undefined
+      tag = match[1] ?? undefined
+      match = match[0] ?? undefined
+    }
+
     const data = {
       cls: ['coc7-link'],
       dataset: { check: type },
