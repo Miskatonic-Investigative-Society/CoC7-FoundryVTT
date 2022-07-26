@@ -3,6 +3,7 @@
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Add actor.runRoll(...) function to allow third party modules/macros to perform rolls
+- Add The Dhole's House JSON actor importer, thanks to @pconcepcion
 - Fix dice sounds not being pushed to other clients
 - Fix tooltip for character summary sheet
 - Fix updater not always running automatically
