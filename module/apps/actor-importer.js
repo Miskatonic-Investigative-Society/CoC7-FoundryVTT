@@ -1,7 +1,8 @@
-/* global Actor, CONFIG, duplicate, Folder, game, ui */
+/* global Actor, CONFIG, duplicate, game, ui */
 import { CoC7ActorImporterRegExp } from './actor-importer-regexp.js'
 import { CoCActor } from '../actors/actor.js'
 import { CoC7Item } from '../items/item.js'
+import { CoC7Utilities } from '../utilities.js'
 
 /**
  * CoC7ActorImporter helper class to import an Actor from the raw text description.
@@ -634,7 +635,7 @@ export class CoC7ActorImporter {
    */
   async createEntity (characterData, entityType) {
     const importedCharactersFolder =
-      await this.createImportCharactersFolderIfNotExists()
+      await CoC7Utilities.createImportCharactersFolderIfNotExists()
     if (entityType !== 'npc') {
       entityType = 'creature'
     }
@@ -730,35 +731,6 @@ export class CoC7ActorImporter {
   }
 
   /**
-   * Creates a folder on the actors tab called "Imported Characters" if the folder doesn't exist.
-   * @returns {Folder} the importedCharactersFolder
-   */
-  async createImportCharactersFolderIfNotExists () {
-    let folderName = game.i18n.localize('CoC7.ImportedCharactersFolder')
-    if (folderName === 'CoC7.ImportedCharactersFolder') {
-      folderName = 'Imported characters'
-    }
-    let importedCharactersFolder = game.folders.find(
-      entry => entry.data.name === folderName && entry.data.type === 'Actor'
-    )
-    if (
-      importedCharactersFolder === null ||
-      typeof importedCharactersFolder === 'undefined'
-    ) {
-      // Create the folder
-      importedCharactersFolder = await Folder.create({
-        name: folderName,
-        type: 'Actor',
-        parent: null
-      })
-      ui.notifications.info(
-        game.i18n.localize('CoC7.CreatedImportedCharactersFolder')
-      )
-    }
-    return importedCharactersFolder
-  }
-
-  /**
    * actorData, convert parseCharacter data into Actor data
    * @param {Object} pc object with the data extracted from the character as returned from `parseCharacter`
    * @returns {Object} formatted Actor data
@@ -838,7 +810,7 @@ export class CoC7ActorImporter {
     name = name.toLowerCase()
     let existing = null
     for (let o = 0, oM = this.itemLocations.length; o < oM; o++) {
-      switch (this.itemLocations.substr(o, 1)) {
+      switch (this.itemLocations.substring(o, 1)) {
         case 'i':
           existing = game.items.find(
             item =>

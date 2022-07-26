@@ -435,7 +435,7 @@ export class Updater {
           value: item.data.description,
           keeper: ''
         }
-      } else if (typeof item.data.description === 'undefined') {
+      } else if (typeof item.data.description === 'undefined' || item.data.description === null) {
         updateData['data.description'] = {
           value: '',
           keeper: ''

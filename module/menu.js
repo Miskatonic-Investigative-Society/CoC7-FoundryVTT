@@ -59,10 +59,7 @@ export class CoC7Menu {
           icon: 'fas fa-user-plus',
           name: 'actor-import',
           title: 'CoC7.ActorImporter',
-          onClick: async () =>
-            await CoC7ActorImporterDialog.create({
-              title: game.i18n.localize('CoC7.ActorImporter')
-            })
+          onClick: async () => await CoC7ActorImporterDialog.create()
         },
         {
           toggle: true,
