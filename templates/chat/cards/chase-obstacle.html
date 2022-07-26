@@ -31,18 +31,21 @@
           <div>{{strings.obstacleDefined}}</div>
           {{#if data.states.playerActionDefined}}
             <div>{{ strings.playerIntentions }}</div>
+            {{#if data.totalCautiousApproach}}
+            <div>{{{strings.cautiousApproachType}}}</div>
+            {{/if}}
             {{#if data.states.checkRolled}}
               <div class="roll-line"> {{data.objects.check.name}} : {{{ htmlCheck }}}</div>
               {{#if data.objects.check.passed}}
-                <div>**** obstaclePassed {{ strings.obstaclePassed }} ****</div>
+                <div>{{ strings.obstaclePassed }}</div>
               {{else}}
-                <div>**** checkFailed {{ strings.checkFailed }} ****</div>
+                <div>{{ strings.checkFailed }}</div>
                 {{#if data.states.closed}}
                   {{#if playerDamageTaken}}
                     <div class="roll-line">{{ strings.damageTaken}}</div>
                   {{/if}}
                   {{#if actionLost}}
-                    <div class="roll-line">{{ strings.actionLost }}</div>
+                    <div class="roll-line">{{ strings.actionLost }} : {{{inlineActionLostRoll}}}</div>
                   {{/if}}
                 {{/if}}
               {{/if}}
@@ -66,6 +69,10 @@
           {{/if}}
         {{else}}
           <div>{{ localize 'CoC7.SomethingInTheWay' }}</div>
+        {{/if}}
+
+        {{#if data.states.closed}}
+        <div>{{{ strings.finalOutcome }}}</div>
         {{/if}}
       </div>
     </div>
@@ -200,7 +207,7 @@
                   </div>
                   <div class="card-buttons">
                     {{#if canTakeCautiousApproach}}
-                    <button class="" data-action="takeCautiousApproach">Cautious Approach</button>
+                    <button class="" data-action="takeCautiousApproach">{{ localize 'CoC7.CautiousApproach' }}</button>
                     {{/if}}
                     {{#if validCheck}}
                     <button class="" data-action="requestRoll">Request roll</button>

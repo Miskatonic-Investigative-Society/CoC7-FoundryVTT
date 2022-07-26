@@ -61,7 +61,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
         data.validCheck = true
     }
 
-    if( !data.data.bonusDice) data.data.bonusDice = 0
+    if (!data.data.bonusDice) data.data.bonusDice = 0
 
     if (
       data.data.bonusDice < 2 &&
@@ -159,22 +159,54 @@ export class ChaseObstacleCard extends EnhancedChatCard {
         data.status.push({ name: game.i18n.localize('CoC7.Negotiate') })
       }
 
+      if (this.data.totalCautiousApproach) {
+        const cautiousStatus = {
+          name: game.i18n.localize('CoC7.Cautious'),
+          css: ''
+        }
+        if (this.data.totalCautiousApproach > 1) {
+          cautiousStatus.css = 'strong'
+          data.strings.cautiousApproachType = game.i18n.localize(
+            'CoC7.BeingVeryCautious'
+          )
+        } else {
+          data.strings.cautiousApproachType = game.i18n.localize(
+            'CoC7.BeingCautious'
+          )
+        }
+
+        if (this.data.flags.consumeBonusDice) cautiousStatus.css += ' consume'
+        data.status.push(cautiousStatus)
+      }
+
       if (this.data.objects?.check) {
-        if (this.data.objects.check.passed)
+        if (this.data.obstacle.hazard) this.data.movePlayer = true //On hazard, you pass even if you fail your roll
+        if (this.data.objects.check.passed) {
+          data.strings.obstaclePassed = game.i18n.localize(
+            'CoC7.ObstaclePassed'
+          )
+          if (this.data.objects.check.luckSpent) {
+            data.strings.obstaclePassed += ` (${game.i18n.localize(
+              'CoC7.GotLucky'
+            )})`
+          }
           data.status.push({
             name: game.i18n.localize('CoC7.Success'),
             css: 'success'
           })
-        else if (this.data.objects.check.isFumble)
+        } else if (this.data.objects.check.isFumble) {
+          data.strings.checkFailed = game.i18n.localize('CoC7.ObstacleFumble')
           data.status.push({
             name: game.i18n.localize('CoC7.Fumble'),
             css: 'fumble'
           })
-        else
+        } else {
+          data.strings.checkFailed = game.i18n.localize('CoC7.ObstacleFail')
           data.status.push({
             name: game.i18n.localize('CoC7.Failure'),
             css: 'failure'
           })
+        }
       }
     }
 
@@ -251,6 +283,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
         this.data.objects?.check?.isFailure
       ) {
         data.actionLost = true
+        data.strings.actionLost = game.i18n.localize('CoC7.YouLostTime')
         data.inlineActionLostRoll = createInlineRoll(
           this.data.objects.failedActionRoll
         )?.outerHTML
@@ -259,6 +292,15 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       data.status.push({
         name: game.i18n.localize('CoC7.CardResolved')
       })
+    }
+
+    if (this.data.states.closed) {
+      if( this.data.movePlayer){
+      data.strings.finalOutcome = game.i18n.localize( 'CoC7.MoveToLocation' )
+    }
+      else{
+        data.strings.finalOutcome = game.i18n.localize( 'CoC7.DontMoveToLocation' )
+      }
     }
     return data
   }
@@ -318,7 +360,6 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       this.data.movementActionArray = duplicate(
         this.participant.movementActionArray
       )
-
       this.data.EEC_ACTION = { detachData: true }
     }
   }
@@ -646,8 +687,11 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       participantChaged = true
       participantUpdate.bonusDice = 0
     } else {
-      if( !isNaN(this.data.bonusDice) && this.data.bonusDice != this.participant.bonusDice)
-      participantUpdate.bonusDice = this.data.bonusDice
+      if (
+        !isNaN(this.data.bonusDice) &&
+        this.data.bonusDice != this.participant.bonusDice
+      )
+        participantUpdate.bonusDice = this.data.bonusDice
     }
 
     if (this.data.movePlayer) {
@@ -674,12 +718,14 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     }
 
     if (loactionChanged)
-      await this.chase.updateLocation(this.location.uuid, obstacleUpdate, {render: false})
+      await this.chase.updateLocation(this.location.uuid, obstacleUpdate, {
+        render: false
+      })
     if (participantChaged)
       await this.chase.updateParticipant(
         this.participantData.uuid,
         participantUpdate,
-        {render: false}
+        { render: false }
       )
     this.data.states.closed = true
     await this.chase.activateNexParticpantTurn() //Render will be done there !
@@ -728,15 +774,18 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   }
 
   async takeCautiousApproach (options) {
+    if (!this.data.totalCautiousApproach) this.data.totalCautiousApproach = 0
+    this.data.totalCautiousApproach += 1
     this.data.bonusDice += 1
     this.data.totalActionCost += 1
-    if (!this.data.flags.consumeBonusDice){
+    if (!this.data.flags.consumeBonusDice) {
       this.data.flags.consumeBonusDice = true
     }
-    if( !this.data.flags.hasBonusDice){
+    if (!this.data.flags.hasBonusDice) {
       this.data.flags.hasBonusDice = true
     }
-    if( this.data.movementAction <= this.data.totalActionCost) {
+    if (this.data.movementAction <= this.data.totalActionCost) {
+      this.data.flags.consumeBonusDice = false
       this.data.states.cardResolved = true
       this.data.movePlayer = false
     }

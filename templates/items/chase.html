@@ -249,6 +249,22 @@
                 <i class="far fa-plus-square"></i></a>
               {{#unless p.hasNoMvtActions}}
               <div class="separator"></div>
+              {{!-- <!-- {{#if p.location.first}}
+                <a class="participant-control inactive"></a>
+              {{else}}
+                {{#if ../activeLocation.obstacle}}
+                <div class="participant-control dropdown">
+                  <i class="fas fa-running fa-flip-horizontal dropbtn"></i>
+                  <div class="dropdown-content">
+                    <a class="dropdown-element"><i class="fas fa-running fa-flip-horizontal"></i>{{localize 'CoC7.MoveBackward'}}</a>
+                    <a class="dropdown-element"><i class="icon game-icon game-icon-d10"></i>{{ localize 'CoC7.OpenObstacleResolutionCard' }}</a>
+                  </div>
+                </div>
+                {{else}}
+                  <a class="participant-control" title="{{localize 'CoC7.MoveBackward'}}" data-action="moveBackward">
+                  <i class="fas fa-running fa-flip-horizontal"></i></a>
+                {{/if}}
+              {{/if}}}} --> --}}
               <a class="participant-control {{#if p.location.first}}inactive{{/if}}" title="{{localize 'CoC7.MoveBackward'}}" data-action="moveBackward">
                 <i class="fas fa-running fa-flip-horizontal"></i></a>
               <a class="participant-control {{#if p.location.last}}inactive{{/if}}" title="{{localize 'CoC7.MoveForward'}}" data-action="moveForward">

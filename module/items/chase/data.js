@@ -74,11 +74,21 @@ export class CoC7Chase extends CoC7Item {
   }
 
   get participantsByAdjustedMov () {
-    return this.participants.sort((a, b) => a.adjustedMov - b.adjustedMov)
+    const pList = this.participants.sort(
+      (a, b) => a.adjustedMov - b.adjustedMov
+    )
+    pList.forEach(p => {
+      p.location = this.getParticipantLocation(p.uuid)
+    })
+    return pList
   }
 
   get participantsByInitiative () {
-    return this.participants.sort((a, b) => b.initiative - a.initiative)
+    const pList = this.participants.sort((a, b) => b.initiative - a.initiative)
+    pList.forEach(p => {
+      p.location = this.getParticipantLocation(p.uuid)
+    })
+    return pList
   }
 
   get preys () {
@@ -393,7 +403,9 @@ export class CoC7Chase extends CoC7Item {
         })
       }
     } else {
-      locationsDataUpdate = this.getActivateLocationUpdateData( undefined, { scrollToLocation: scrollToLocation})
+      locationsDataUpdate = this.getActivateLocationUpdateData(undefined, {
+        scrollToLocation: scrollToLocation
+      })
     }
 
     if (locationsDataUpdate) {
@@ -609,9 +621,9 @@ export class CoC7Chase extends CoC7Item {
     //Get chasers
     const chasers = this.data.data.includeLatecomers
       ? this.chasers
-      : this.chasers?.filter( c => !c.data.excluded)
-      
-      // Recursivity !! with getParticipantLocation and get participants
+      : this.chasers?.filter(c => !c.data.excluded)
+
+    // Recursivity !! with getParticipantLocation and get participants
 
     //If no prey or no chasser
     // if (0 == chasers.length) {
@@ -1464,15 +1476,9 @@ export class CoC7Chase extends CoC7Item {
 
   get allSkillsAndCharacteristicsShort () {
     const list = []
-    CoCActor.getCharacteristicDefinition().forEach(c =>
-      list.push( `${c.label}`)
-    )
-    list.push(
-      `${game.i18n.localize( 'CoC7.Luck')}`
-    )
-    list.push(
-      `${game.i18n.localize( 'CoC7.SAN')}`
-    )
+    CoCActor.getCharacteristicDefinition().forEach(c => list.push(`${c.label}`))
+    list.push(`${game.i18n.localize('CoC7.Luck')}`)
+    list.push(`${game.i18n.localize('CoC7.SAN')}`)
 
     game.CoC7.skillList?.forEach(s => {
       if (
