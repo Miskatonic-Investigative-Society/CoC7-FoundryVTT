@@ -607,6 +607,14 @@ export class CoC7ChaseSheet extends ItemSheet {
       case 'add-before':
         await this.item.insertLocation(lUuid, { shift: 0 })
         break
+      
+      case 'add-participant':
+        CoC7ChaseParticipantImporter.create({
+          chaseUuid: this.item.uuid,
+          locationUuid: lUuid,
+          dropData: {}
+        })
+        break
 
       default:
         break

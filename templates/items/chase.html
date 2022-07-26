@@ -25,6 +25,7 @@
           </datalist>
           <div class="form-group">
             <input class="location-name" type="text" name="locations.{{activeLocation.uuid}}.name" value="{{activeLocation.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
+            <a class="flex0 location-control" data-action="add-participant" title="{{ localize 'CoC7.AddParticipant'}}"><i class="icon fas fa-user-plus"></i></a>
             {{#if activeLocation.hasParticipant}}
               <a class="flex0 location-control inactive" title="{{ localize 'CoC7.LocationNotEmpty'}}"><i class="icon fas fa-minus-circle"></i></a>
             {{else}}
