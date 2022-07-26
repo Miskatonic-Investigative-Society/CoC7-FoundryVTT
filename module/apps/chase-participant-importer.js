@@ -1,4 +1,5 @@
 import { CoCActor } from '../actors/actor.js'
+import { CoC7Check } from '../check.js'
 import { _participant } from '../items/chase/participant.js'
 import { CoC7Utilities } from '../utilities.js'
 
@@ -37,7 +38,9 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
       await this.render(true)
     })
 
-    html.find('button').click(this._onButton.bind(this))
+    html.find('[data-action]').click(this._onAction.bind(this))
+
+    // html.find('button').click(this._onButton.bind(this))
   }
 
   async getData () {
@@ -45,19 +48,23 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
       const init = CoCActor.getCharacteristicDefinition().find(
         c => c.key === 'dex'
       )
-      this.object.initiative = `${game.i18n.localize(
-        'CoC7.Characteristics'
-      )} (${init.shortName})`
+      this.object.initiative = init.label
+      // this.object.initiative = `${game.i18n.localize(
+      //   'CoC7.Characteristics'
+      // )} (${init.shortName})`
     }
     if (!this.object.speedCheck) {
       const speedCheck = CoCActor.getCharacteristicDefinition().find(
         c => c.key === 'con'
       )
       this.object.speedCheck = {
-        name: `${game.i18n.localize('CoC7.Characteristics')} (${
-          speedCheck.shortName
-        })`
+        name: speedCheck.label
       }
+      // this.object.speedCheck = {
+      //   name: `${game.i18n.localize('CoC7.Characteristics')} (${
+      //     speedCheck.shortName
+      //   })`
+      // }
     }
 
     // const speedCheck = this.actor?.find( this.object.speedCheck?.name)
@@ -100,20 +107,19 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
     if (this.actor) {
       data.skillsAndCharacteristicsList = []
       CoCActor.getCharacteristicDefinition().forEach(c =>
-        data.skillsAndCharacteristicsList.push(
-          `${c.label}`
-        )
+        data.skillsAndCharacteristicsList.push(`${c.label}`)
       )
       data.skillsAndCharacteristicsList.push(
-        `${game.i18n.localize( 'CoC7.Luck')}`
+        `${game.i18n.localize('CoC7.Luck')}`
       )
       data.skillsAndCharacteristicsList.push(
-        `${game.i18n.localize( 'CoC7.SAN')}`
+        `${game.i18n.localize('CoC7.SAN')}`
       )
       this.actor.skills.forEach(s =>
         data.skillsAndCharacteristicsList.push(s.name)
       )
     }
+
     return data
   }
 
@@ -145,11 +151,15 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
 
     //If actor is controlled by GM only we assume he is a chaser
     this.object.chaser = 0 == this.actor?.owners?.filter(u => !u.isGM).length
+    if (this.object.speedCheck.rollDataString)
+      delete this.object.speedCheck.rollDataString
 
     await this.render(true)
   }
 
-  async _onButton (event) {
+  async _onAction (event) {
+    event.preventDefault()
+
     const action = event.currentTarget.dataset.action
     switch (action) {
       case 'cancel':
@@ -158,11 +168,58 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
       case 'add':
         {
           const participant = new _participant(this.object)
+
+          if (
+            this.chase.started &&
+            !(participant.movementAction ||
+              (participant.mov && participant.speedCheck?.rolled))
+          )
+            return
+
           await this.chase.addParticipant(participant, {
             locationUuid: this.object.locationUuid
           })
           this.close()
         }
+        break
+
+      case 'roll-speed-check':
+        {
+          ui.notifications.info('rolling speed check !!')
+          const participant = new _participant(this.object)
+          if (participant.speedCheck.refSet) {
+            const roll = new CoC7Check()
+            participant.data.rolled = true
+            roll.actor = participant.actor.actorKey
+            if (participant.speedCheck.isCharacteristic) {
+              await roll.rollCharacteristic(participant.speedCheck.ref.key)
+              participant.data.speedCheck.rollDataString = roll.JSONRollString
+            } else if (participant.speedCheck.isSkill) {
+              roll.skill = participant.speedCheck.ref
+              await roll.roll()
+              participant.data.speedCheck.rollDataString = roll.JSONRollString
+            } else if (participant.speedCheck.isAttribute) {
+              await roll.rollAttribute(participant.speedCheck.ref.key)
+              participant.data.speedCheck.rollDataString = roll.JSONRollString
+            }
+          } else if (participant.speedCheck.score) {
+            const rollData = {
+              rawValue: participant.speedCheck.score,
+              displayName: participant.speedCheck.name,
+              actorName: participant.name ? participant.name : undefined
+            }
+            if (participant.hasActor)
+              rollData.actor = participant.actor.actorKey
+            const roll = CoC7Check.create(rollData)
+            await roll.roll()
+            participant.data.speedCheck.rollDataString = roll.JSONRollString
+            participant.data.rolled = true
+          }
+
+          foundry.utils.mergeObject(this.object, participant.data)
+          this.render(true)
+        }
+
         break
 
       default:

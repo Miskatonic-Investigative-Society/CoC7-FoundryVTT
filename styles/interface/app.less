@@ -1,3 +1,8 @@
+.coc7 {
+  input.right-text {
+    text-align: right;
+  }
+}
 .coc7.dialog {
   &.chase-participant-importer {
     input:read-only,
@@ -6,6 +11,10 @@
       border: 1px solid transparent;
       box-shadow: none;
       cursor: default;
+    }
+
+    .separator {
+      border-bottom: 3px groove;
     }
 
     .actor-header {
@@ -31,15 +40,58 @@
         font-weight: bolder;
       }
     }
-    .form-group.triple {
-      label {
-        flex: 3;
+    .form-group {
+      .group-label {
+        flex: 9;
+        border: 1px solid transparent;
+        padding: 0 3px;
+        display: flex;
+
+        &.inline-roll {
+          flex: 0;
+          display: block;
+          border: none;
+          a,
+          i {
+            font-size: 0.75rem;
+          }
+          div {
+            flex: none;
+            display: block;
+          }
+        }
+        label {
+          flex: 1;
+          padding: 0;
+          border: 0;
+        }
       }
-      .name {
-        flex: 6;
-      }
-      .value {
+
+      .group-result {
         flex: 1;
+        text-align: right;
+        padding: 1px 3px;
+        margin: 0 0 1px 0;
+        line-height: 1.25rem;
+        border: 1px solid transparent;
+      }
+
+      a,
+      i {
+        line-height: 20px;
+        font-size: 1rem;
+      }
+
+      &.triple {
+        label {
+          flex: 3;
+        }
+        .name {
+          flex: 6;
+        }
+        .value {
+          flex: 1;
+        }
       }
     }
   }

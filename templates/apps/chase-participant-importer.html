@@ -28,26 +28,40 @@
 		<div class="form-group triple">
 			<label>Init</label>
 			<input class="name" type="text" name="object.initiative" value="{{object.initiative}}" list="check-options"/>
-			<input class="value" type="text" name="object.dex" value="{{participant.initiative}}" data-dtype="Number" {{#if initReadOnly}}readonly{{/if}}/>
+			<input class="value right-text" type="text" name="object.dex" value="{{participant.initiative}}" data-dtype="Number" {{#if initReadOnly}}readonly{{/if}}/>
 		</div>
 		<div class="form-group triple">
 			<label>Speed check</label>
 			<input class="name" type="text" name="object.speedCheck.name" value="{{object.speedCheck.name}}" list="check-options"/>
-			<input class="value" type="text" name="object.speedCheck.score" value="{{participant.speedCheck.score}}" data-dtype="Number" {{#if speedCheckReadOnly}}readonly{{/if}}/>
+			<input class="value right-text" type="text" name="object.speedCheck.score" value="{{participant.speedCheck.score}}" data-dtype="Number" {{#if speedCheckReadOnly}}readonly{{/if}}/>
 		</div>
 
+		<div class="form-group">
+			<div class="group-label"><label>Movement</label></div>
+			<input class="value right-text" type="text" name="object.mov" value="{{participant.mov}}" data-dtype="Number"/>
+		</div>
+
+		<div class="separator"></div>
+		<div class="form-group">
+			<div class="group-label">
+				<label>Adjusted movement</label>
+				{{#if participant.speedCheck.rolled}}
+          <div class="inline-roll">{{{participant.speedCheck.inlineRoll}}}</div>
+        {{/if}}
+				{{#if participant.speedCheck.canBeRolled}}
+					<a data-action="roll-speed-check"><i class="game-icon game-icon-d10"></i></a>
+				{{else}}
+					<i class="fas fa-exclamation-triangle" title="{{ localize 'CoC7.CantCalculateAdjustedMov' }}"></i>
+				{{/if}}
+			</div>
+			<div class="group-result">{{ participant.adjustedMov }}</div>
+		</div>
+			
 		{{#if chase.started}}
 		<div class="form-group">
-			<label>Movement actions</label>
-			<input type="text" name="object.movementAction" value="{{participant.movementAction}}" data-dtype="Number"/>
+			<div><label>Movement actions</label></div>
+			<input class="right-text" type="text" name="object.movementAction" value="{{participant.movementAction}}" data-dtype="Number"/>
 		</div>
-		{{else}}
-		{{#unless actor}}
-		<div class="form-group">
-			<label>Movement</label>
-			<input class="value" type="text" name="object.mov" value="{{participant.mov}}" data-dtype="Number"/>
-		</div>
-		{{/unless}}
 		{{/if}}
   </div>
   <div class="dialog-buttons">

@@ -518,9 +518,18 @@ export class _participant {
           check.score = item.base
         }
       }
+    } else if (this.data.speedCheck?.name && this.data.speedCheck?.score) {
+      check.name = this.data.speedCheck.name
+      check.score = this.data.speedCheck.score
+      check.refSet = false
     }
 
-    if (!check.rolled && !check.score) check.cssClasses += ' invalid'
+    check.canBeRolled = true
+
+    if (!check.rolled && !check.score) {
+      check.cssClasses += ' invalid'
+      check.canBeRolled = false
+    }
     check.isValid = check.rolled && !isNaN(check.score)
 
     return check
