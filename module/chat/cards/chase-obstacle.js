@@ -182,6 +182,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       if (this.data.objects?.check) {
         if (this.data.obstacle.hazard) this.data.movePlayer = true //On hazard, you pass even if you fail your roll
         if (this.data.objects.check.passed) {
+          this.data.movePlayer = true
           data.strings.obstaclePassed = game.i18n.localize(
             'CoC7.ObstaclePassed'
           )
