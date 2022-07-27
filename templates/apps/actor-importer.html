@@ -1,41 +1,86 @@
 <form autocomplete="off">
-    <h2>{{localize 'CoC7.ActorImporter'}}</h2>
-    <p>{{localize 'CoC7.ActorImporterSummary'}}</p>
+  <h2>{{localize 'CoC7.ActorImporter'}}</h2>
+  {{#if (eq importType "dholehouse")}}
+  <div id="coc-prompt" data-text="{{localize 'CoC7.DholeHouseActorImporterSummary'}}">{{localize 'CoC7.DholeHouseActorImporterSummary'}}</div>
+  {{#unless canUpload}}
+      <div class="error">{{localize 'CoC7.UnableToUploadDholeImage'}}</div>
+  {{/unless}}
+    <div class="form-group-stacked">
+  {{else}}
+  <p>{{localize 'CoC7.ActorImporterSummary'}}</p>
+  {{/if}}
+  <div class="form-group">
+    <label for="coc-entity-type">{{localize 'CoC7.SelectActorType'}}:</label>
+    <select id="coc-entity-type" name="coc-entity-type">
+      {{#select importType}}
+        <option value="npc">{{localize 'CoC7.NonPlayingCharacter'}}</option>
+        <option value="creature">{{localize 'CoC7.Creature'}}</option>
+        <option value="dholehouse">{{localize 'CoC7.DholeHouseActorImporter'}}</option>
+      {{/select}}
+    </select>
+  </div>
+  {{#if (or (eq importType "npc") (eq importType "creature"))}}
     <div class="form-group">
-        <label for="coc-entity-type">{{localize 'CoC7.SelectActorType'}}:</label>
-        <select id="coc-entity-type" name="coc-entity-type">
-            <option value="npc">{{localize 'CoC7.NonPlayingCharacter'}}</option>
-            <option value="creature">{{localize 'CoC7.Creature'}}</option>
-        </select>
+      <label for="coc-convert-6E">{{localize 'CoC7.ConvertFrom6Edition'}}:</label>
+      <select id="coc-convert-6E" name="coc-convert-6E">
+        {{#select convert6E}}
+          <option value="coc-guess">{{localize 'CoC7.Guess'}}</option>
+          <option value="coc-convert">{{localize 'CoC7.Convert'}}</option>
+          <option value="coc-no-convert">{{localize 'CoC7.NoConvert'}}</option>
+        {{/select}}
+      </select>
     </div>
     <div class="form-group">
-        <label for="coc-convert-6E">{{localize 'CoC7.ConvertFrom6Edition'}}:</label>
-        <select id="coc-convert-6E" name="coc-convert-6E">
-            <option value="coc-guess">{{localize 'CoC7.Guess'}}</option>
-            <option value="coc-convert">{{localize 'CoC7.Convert'}}</option>
-            <option value="coc-no-convert">{{localize 'CoC7.NoConvert'}}</option>
-        </select>
-    </div>
-     <div class="form-group">
-        <label for="coc-entity-lang">{{localize 'CoC7.SelectSourceLanguage'}}:</label>
-        <select id="coc-entity-lang" name="coc-entity-lang">
+      <label for="coc-entity-lang">{{localize 'CoC7.SelectSourceLanguage'}}:</label>
+      <select id="coc-entity-lang" name="coc-entity-lang">
         {{#each languages as |key id|}}
-            <option value="{{id}}"{{#if (eq ../language id)}} selected="selected"{{/if}}>{{localize key}}</option>
+          <option value="{{id}}"{{#if (eq ../language id)}} selected="selected"{{/if}}>{{localize key}}</option>
         {{/each}}
-        </select>
+      </select>
     </div>
     <div class="form-group">
-        <label for="source">{{localize 'CoC7.ImportSkillItemLocations'}}:</label>
-        <select id="source" name="source">
-            <option value="">{{localize 'CoC7.ImportActorItemsNone'}}</option>
-            <option value="i">{{localize 'CoC7.ImportActorItemsItem'}}</option>
-            <option value="iwms" selected="selected">{{localize 'CoC7.ImportActorItemsItemWorldModuleSystem'}}</option>
-            <option value="wmis">{{localize 'CoC7.ImportActorItemsWorldModuleItemSystem'}}</option>
-        </select>
+      <label for="source">{{localize 'CoC7.ImportSkillItemLocations'}}:</label>
+      <select id="source" name="source">
+        {{#select source}}
+          <option value="">{{localize 'CoC7.ImportActorItemsNone'}}</option>
+          <option value="i">{{localize 'CoC7.ImportActorItemsItem'}}</option>
+          <option value="iwms">{{localize 'CoC7.ImportActorItemsItemWorldModuleSystem'}}</option>
+          <option value="wmis">{{localize 'CoC7.ImportActorItemsWorldModuleItemSystem'}}</option>
+        {{/select}}
+      </select>
     </div>
-    <div id="coc-prompt">{{localize 'CoC7.PasteTheDataBelow'}}</div>
+  {{/if}}
+  {{#if (eq importType "dholehouse")}}
+      <label for="dholehouse-json-file-picker">{{localize 'CoC7.DholeHousePickYourJSONFile'}}</label><br/>
+      <input id="dholehouse-json-file-picker" name="dholehouse-json-file-picker" type="file" accept="application/json" />
+    </div>
+    <div id="dholehouse-character-preview" class="form-group">
+        <p><strong>{{localize 'CoC7.DholeHouseImportingName'}}</strong><br/>
+        <span id="dholehouse-character-name"</span>
+        </p>
+        {{!-- By defaults the image is a transparent pixel to be replaced when the JSON is loaded --}}
+        <img id="dholehouse-character-portrait" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" />
+    </div>
+    {{else}}
+    <div id="coc-prompt" data-text="{{localize 'CoC7.PasteTheDataBelow'}}" data-extended="limit">{{localize 'CoC7.PasteTheDataBelow'}}</div>
     <div class="form-group">
-        <textarea id="coc-pasted-character-data" name="coc-pasted-character-data" rows="30"
-            style="min-height:300px" placeholder=""></textarea>
+      <textarea id="coc-pasted-character-data" name="coc-pasted-character-data" rows="30" style="min-height:300px" placeholder="{{placeholder}}">{{characterData}}</textarea>
     </div>
+  {{/if}}
+  <div class="dialog-buttons flexrow">
+    <button class="submit-button" data-button="import">
+      <i class="fas fa-file-import"></i>
+      {{localize 'CoC7.Import'}}
+    </button>
+    {{#if (or (eq importType "npc") (eq importType "creature"))}}
+      <button class="submit-button" data-button="getExampleNow">
+        <i class="fas fa-info-circle"></i>
+        {{localize 'CoC7.getTheExample'}}
+      </button>
+    {{/if}}
+    <button class="submit-button" data-button="no">
+      <i class="fas fa-times"></i>
+      {{localize 'CoC7.Cancel'}}
+    </button>
+  </div>
 </form>

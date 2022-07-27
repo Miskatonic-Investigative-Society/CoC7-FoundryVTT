@@ -2,6 +2,7 @@
 import { CoC7DecaderDie } from '../apps/decader-die.js'
 import { CoC7DecaderDieOther } from '../apps/decader-die-other.js'
 import { CoC7GameRuleSettings } from './game-rules.js'
+import { CoC7DirectoryPicker } from './coc7-directory-picker.js'
 
 export function registerSettings () {
   /**
@@ -16,6 +17,15 @@ export function registerSettings () {
     restricted: true
   })
   CoC7GameRuleSettings.registerSettings()
+
+  game.settings.register('CoC7', 'dholeUploadDirectory', {
+    name: 'CoC7.Settings.DholeUpload.Directory.Name',
+    hint: 'CoC7.Settings.DholeUpload.Directory.Hint',
+    scope: 'world',
+    config: true,
+    type: CoC7DirectoryPicker.DefaultDirectory,
+    default: '[data] worlds/' + game.world.id + '/dhole-images'
+  })
 
   /**
    * Initiative

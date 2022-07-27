@@ -838,4 +838,33 @@ export class CoC7Utilities {
     if (doc.constructor?.name == 'CoCActor') return doc
     return null
   }
+
+   /**
+   * Creates a folder on the actors tab called "Imported Characters" if the folder doesn't exist.
+   * @returns {Folder} the importedCharactersFolder
+   */
+  static async createImportCharactersFolderIfNotExists () {
+    let folderName = game.i18n.localize('CoC7.ImportedCharactersFolder')
+    if (folderName === 'CoC7.ImportedCharactersFolder') {
+      folderName = 'Imported characters'
+    }
+    let importedCharactersFolder = game.folders.find(
+      entry => entry.data.name === folderName && entry.data.type === 'Actor'
+    )
+    if (
+      importedCharactersFolder === null ||
+      typeof importedCharactersFolder === 'undefined'
+    ) {
+      // Create the folder
+      importedCharactersFolder = await Folder.create({
+        name: folderName,
+        type: 'Actor',
+        parent: null
+      })
+      ui.notifications.info(
+        game.i18n.localize('CoC7.CreatedImportedCharactersFolder')
+      )
+    }
+    return importedCharactersFolder
+  }
 }

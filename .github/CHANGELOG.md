@@ -3,6 +3,7 @@
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Add actor.runRoll(...) function to allow third party modules/macros to perform rolls
+- Add The Dhole's House JSON actor importer, thanks to @pconcepcion
 - Fix dice sounds not being pushed to other clients
 - Fix tooltip for character summary sheet
 - Fix updater not always running automatically
@@ -10,8 +11,11 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Update to French localization, thanks to @vonv
 - Update to Italian localization, thanks to @Stefano1975t
 - Update to Japanese localization, thanks to Asami
+- Update to Korean localization, thanks to @jbblily
 - Update to Polish localization, thanks to @everyonecancode
 - Update to Portuguese localization
+- Update to Spanish localization, thanks to @lozanoje
+- Update to Swedish localization, thanks to @Rangertheman
 - Update to Taiwanese localization, thanks to @zeteticl
 
 ## Version 0.7.11
