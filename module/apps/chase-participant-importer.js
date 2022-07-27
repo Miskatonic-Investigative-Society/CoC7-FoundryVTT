@@ -217,6 +217,12 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
           }
 
           foundry.utils.mergeObject(this.object, participant.data)
+          const slowestPrey = this.chase.slowestPrey
+          const fastestChaser = this.chase.fastestChaser
+          const slowest = this.chase.slowestParticipant
+          ui.notifications.info( `Slowest: ${slowest.name}. Mov rate: ${slowest.adjustedMov}`)
+          ui.notifications.info( `Slowest fleeing: ${slowestPrey.name}. Mov rate: ${slowestPrey.adjustedMov}`)
+          ui.notifications.info( `Fastest chasing: ${fastestChaser.name}. Mov rate: ${fastestChaser.adjustedMov}`)
           this.render(true)
         }
 

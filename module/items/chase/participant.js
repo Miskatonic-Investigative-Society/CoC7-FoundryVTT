@@ -238,6 +238,10 @@ export class _participant {
     return !!this.data.chaser
   }
 
+  get isPrey () {
+    return !this.isChaser
+  }
+
   get isValid () {
     return this.hasValidDex && this.hasValidMov
   }

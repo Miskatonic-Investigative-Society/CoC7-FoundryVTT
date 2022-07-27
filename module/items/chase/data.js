@@ -74,7 +74,7 @@ export class CoC7Chase extends CoC7Item {
   }
 
   get participantsByAdjustedMov () {
-    const pList = this.participants.sort(
+    const pList = this.actualParticipants.sort(
       (a, b) => a.adjustedMov - b.adjustedMov
     )
     pList.forEach(p => {
@@ -84,7 +84,7 @@ export class CoC7Chase extends CoC7Item {
   }
 
   get participantsByInitiative () {
-    const pList = this.participants.sort((a, b) => b.initiative - a.initiative)
+    const pList = this.actualParticipants.sort((a, b) => b.initiative - a.initiative)
     pList.forEach(p => {
       p.location = this.getParticipantLocation(p.uuid)
     })
@@ -143,6 +143,45 @@ export class CoC7Chase extends CoC7Item {
     return this.participantsByInitiative.find(
       p => p.data.currentMovementActions > 0
     )
+  }
+
+  get slowestPrey () {
+    const preys = this.participants.sort(
+      (a, b) => a.adjustedMov - b.adjustedMov
+    )?.filter( p => p.isPrey)
+    if( preys.length > 0) return preys[0]
+    return undefined
+  }
+
+  get fastestChaser () {
+    const chasers = this.participants.sort(
+      (a, b) => a.adjustedMov - b.adjustedMov
+    )?.filter( p => p.isChaser)
+    if( chasers.length > 0) return chasers.slice(-1).pop()
+    return undefined
+  }
+
+  get actualParticipants () {
+    const slowestPrey = this.slowestPrey
+    const fastestChaser = this.fastestChaser
+    let pList = this.participants
+    if( !this.data.data.includeLatecomers && slowestPrey){
+      pList = pList.filter( p => { return p.isPrey || (p.isChaser && p.adjustedMov >= slowestPrey.adjustedMov)})
+    }
+
+    if( !this.data.data.includeEscaped && fastestChaser) {
+      pList = pList.filter ( p => { 
+        return p.isChaser || (p.isPrey && p.adjustedMov <= fastestChaser.adjustedMov)
+      })
+    }
+
+    return pList
+  }
+
+  get slowestParticipant () {
+    const pList = this.participantsByAdjustedMov
+    if( pList.length > 0) return pList[0]
+    return undefined
   }
 
   async updateParticipants (list, { render = true } = {}) {
