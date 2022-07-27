@@ -9,9 +9,9 @@
     top: -3rem;
   }
 
-  .pin-location.locationSet{
-    i{
-      color: red
+  .pin-location.locationSet {
+    i {
+      color: red;
     }
   }
 
@@ -423,9 +423,9 @@
     .participant {
       flex: 1;
       display: grid;
-      grid-template-columns: 2rem 2rem 0.5rem 5fr 2.5rem 2.5rem 4fr 2rem 3rem 1.25rem 2rem 1rem 1rem;
+      grid-template-columns: 2rem 2rem 0.5rem 5fr 2.5rem 2.5rem 4fr 2rem 3rem 1.25rem 2rem 1.5rem;
       grid-template-rows: 2rem;
-      grid-template-areas: 'p-side p-icon p-expand p-name p-init p-movement p-speed-check p-score p-roll p-adjust p-modified-mov p-control p-movement-action';
+      grid-template-areas: 'p-side p-icon p-expand p-name p-init p-movement p-speed-check p-score p-roll p-adjust p-modified-mov p-control';
       align-items: center;
       margin-bottom: 2px;
 
@@ -542,6 +542,10 @@
           color: red;
           transform: rotate(180deg);
         }
+      }
+
+      .p-control {
+        text-align: center;
       }
     }
 

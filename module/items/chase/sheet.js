@@ -406,7 +406,7 @@ export class CoC7ChaseSheet extends ItemSheet {
       const remString = $(':root').css('font-size')
       const remSize = Number(remString.replace('px', ''))
       if (app.item.started) {
-        const pCount = data.participants.length
+        const pCount = app.item.actualParticipants?.length
         const width = (pCount * 11.2 + 3) * remSize
         app._tabs[0].active = 'setup'
         app.position.width = Math.max(width, 40 * remSize)
@@ -619,7 +619,7 @@ export class CoC7ChaseSheet extends ItemSheet {
       default:
         break
     }
-    ui.notifications.info(`Location ${lUuid} Clicked. Action: ${action}`)
+    // ui.notifications.info(`Location ${lUuid} Clicked. Action: ${action}`)
   }
 
   async _onChaseParticipantClick (event) {
@@ -664,7 +664,13 @@ export class CoC7ChaseSheet extends ItemSheet {
         await this.item.cautiousApproach(participantUuid)
         break
       case 'editParticipant':
-        return await this.item.editParticipant(participantUuid)
+        const participant = this.item.getParticipant( participantUuid)
+        const location = this.item.getParticipantLocation( participantUuid)
+        participant.data.chaseUuid = this.item.uuid
+        participant.data.locationUuid = location.uuid
+        participant.data.update = true
+        CoC7ChaseParticipantImporter.create( participant.data)
+        break
       case 'removeParticipant':
         await this.item.removeParticipant(participantUuid)
         break

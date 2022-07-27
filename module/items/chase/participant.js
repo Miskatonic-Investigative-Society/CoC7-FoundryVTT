@@ -329,7 +329,14 @@ export class _participant {
   }
 
   calculateMovementActions (minMov) {
-    this.movementAction = 1 + (this.adjustedMov - minMov)
+    if (
+      undefined == this.movementAction ||
+      undefined == this.adjustedMov ||
+      isNaN(minMov)
+    )
+      this.movementAction = 0
+    else this.movementAction = 1 + (this.adjustedMov - minMov)
+    // if( this.movementAction < 0) this.movementAction = 0
   }
 
   set movementAction (x) {

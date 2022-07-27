@@ -84,7 +84,9 @@ export class CoC7Chase extends CoC7Item {
   }
 
   get participantsByInitiative () {
-    const pList = this.actualParticipants.sort((a, b) => b.initiative - a.initiative)
+    const pList = this.actualParticipants.sort(
+      (a, b) => b.initiative - a.initiative
+    )
     pList.forEach(p => {
       p.location = this.getParticipantLocation(p.uuid)
     })
@@ -146,18 +148,18 @@ export class CoC7Chase extends CoC7Item {
   }
 
   get slowestPrey () {
-    const preys = this.participants.sort(
-      (a, b) => a.adjustedMov - b.adjustedMov
-    )?.filter( p => p.isPrey)
-    if( preys.length > 0) return preys[0]
+    const preys = this.participants
+      .sort((a, b) => a.adjustedMov - b.adjustedMov)
+      ?.filter(p => p.isPrey)
+    if (preys.length > 0) return preys[0]
     return undefined
   }
 
   get fastestChaser () {
-    const chasers = this.participants.sort(
-      (a, b) => a.adjustedMov - b.adjustedMov
-    )?.filter( p => p.isChaser)
-    if( chasers.length > 0) return chasers.slice(-1).pop()
+    const chasers = this.participants
+      .sort((a, b) => a.adjustedMov - b.adjustedMov)
+      ?.filter(p => p.isChaser)
+    if (chasers.length > 0) return chasers.slice(-1).pop()
     return undefined
   }
 
@@ -165,13 +167,19 @@ export class CoC7Chase extends CoC7Item {
     const slowestPrey = this.slowestPrey
     const fastestChaser = this.fastestChaser
     let pList = this.participants
-    if( !this.data.data.includeLatecomers && slowestPrey){
-      pList = pList.filter( p => { return p.isPrey || (p.isChaser && p.adjustedMov >= slowestPrey.adjustedMov)})
+    if (!this.data.data.includeLatecomers && slowestPrey) {
+      pList = pList.filter(p => {
+        return (
+          p.isPrey || (p.isChaser && p.adjustedMov >= slowestPrey.adjustedMov)
+        )
+      })
     }
 
-    if( !this.data.data.includeEscaped && fastestChaser) {
-      pList = pList.filter ( p => { 
-        return p.isChaser || (p.isPrey && p.adjustedMov <= fastestChaser.adjustedMov)
+    if (!this.data.data.includeEscaped && fastestChaser) {
+      pList = pList.filter(p => {
+        return (
+          p.isChaser || (p.isPrey && p.adjustedMov <= fastestChaser.adjustedMov)
+        )
       })
     }
 
@@ -180,7 +188,7 @@ export class CoC7Chase extends CoC7Item {
 
   get slowestParticipant () {
     const pList = this.participantsByAdjustedMov
-    if( pList.length > 0) return pList[0]
+    if (pList.length > 0) return pList[0]
     return undefined
   }
 
@@ -985,7 +993,7 @@ export class CoC7Chase extends CoC7Item {
 
       //Calculate movement actions
       const participants = this.participants
-      const minMov = this.findMinMov(participants)
+      const minMov = this.findMinMov(this.actualParticipants)
       participants.forEach(p => {
         // p.data.movementAction = 1 + (p.adjustedMov - minMov)
         p.calculateMovementActions(minMov)
@@ -1060,7 +1068,7 @@ export class CoC7Chase extends CoC7Item {
 
   async addParticipant (
     participant,
-    { render = true, locationUuid = null } = {}
+    { render = true, locationUuid = null, recalculateMovementActions = true, update = false } = {}
   ) {
     const participantsData = this.data.data.participants
       ? foundry.utils.duplicate(this.data.data.participants)
@@ -1068,6 +1076,7 @@ export class CoC7Chase extends CoC7Item {
 
     if (participant.data.chaseUuid) delete participant.data.chaseUuid
     if (participant.data.locationUuid) delete participant.data.locationUuid
+    if (participant.data.update) delete participant.data.update
 
     if (!participant.uuid) {
       let unique = false
@@ -1078,13 +1087,28 @@ export class CoC7Chase extends CoC7Item {
       }
     }
 
-    participantsData.push(participant.data)
+    if( update){
+      if( participant.currentMovementActions > participant.movementAction) participant.currentMovementActions = participant.movementAction
+      const index = participantsData.findIndex( p => p.uuid == participant.uuid)
+      participantsData[index] = participant.data
+    } else participantsData.push(participant.data)
+
 
     await this.updateParticipants(participantsData, {
-      render: render && !this.started
+      render: render && !this.started &&!this.recalculateMovementActions
     })
+    
+    if( recalculateMovementActions || update){
+      let slowest = this.slowestParticipant?.adjustedMov
+      const participants = this.participants
+      participants.forEach( p => p.calculateMovementActions(slowest))
+      await this.updateParticipants( participants, {
+        render: render && !this.started
+      })
+    }
 
-    if (this.started) {
+
+    if (this.started && !(participant.data.escaped || participant.data.excluded)) {
       const locationsData = this.data.data.locations.list
         ? foundry.utils.duplicate(this.data.data.locations.list)
         : []
@@ -1097,6 +1121,7 @@ export class CoC7Chase extends CoC7Item {
       if (-1 === locationIndex) locationIndex = 0
       if (!locationsData[locationIndex].participants)
         locationsData[locationIndex].participants = []
+      if( -1 == locationsData[locationIndex].participants.findIndex( p => p == participant.uuid))
       locationsData[locationIndex].participants.push(participant.uuid)
       await this.updateLocationsList(locationsData, { render: render })
     }
@@ -1422,11 +1447,12 @@ export class CoC7Chase extends CoC7Item {
   async start () {
     const remString = $(':root').css('font-size')
     const remSize = Number(remString.replace('px', ''))
-    const pCount = this.data.data.participants.length
-    const width = (pCount * 11.2 + 3) * remSize
+    const pCount = this.actualParticipants.length
+    const width = Math.max((pCount * 11.2 + 3) * remSize, 40 * remSize)
     this.sheet._tabs[0].active = 'setup'
     this.sheet.position.width = width
-    return this.setFlag('CoC7', 'started', true)
+    await this.setFlag('CoC7', 'started', true)
+    await this.activateNexParticpantTurn()
   }
 
   async stop () {

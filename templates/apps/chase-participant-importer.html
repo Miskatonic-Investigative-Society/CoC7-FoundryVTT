@@ -1,7 +1,7 @@
 <form id="chase-participant-importer" autocomplete="off" data-doc-uuid="{{docUuid}}">
   <div class="form-container">
 
-		<h2>{{localize 'CoC7.ActorImporter'}}</h2>
+		<h2>{{localize 'CoC7.AddActorToChase'}}</h2>
     	<p>{{localize 'CoC7.ParticipantDropHint'}}</p>
 
 		<datalist id="check-options">
@@ -26,32 +26,30 @@
 		</div>
 
 		<div class="form-group triple">
-			<label>Init</label>
+			<label>{{ localize 'CoC7.Initiative' }}</label>
 			<input class="name" type="text" name="object.initiative" value="{{object.initiative}}" list="check-options"/>
 			<input class="value right-text" type="text" name="object.dex" value="{{participant.initiative}}" data-dtype="Number" {{#if initReadOnly}}readonly{{/if}}/>
 		</div>
 		<div class="form-group triple">
-			<label>Speed check</label>
+			<label>{{ localize 'CoC7.SpeedCheck' }}</label>
 			<input class="name" type="text" name="object.speedCheck.name" value="{{object.speedCheck.name}}" list="check-options"/>
 			<input class="value right-text" type="text" name="object.speedCheck.score" value="{{participant.speedCheck.score}}" data-dtype="Number" {{#if speedCheckReadOnly}}readonly{{/if}}/>
 		</div>
 
 		<div class="form-group">
-			<div class="group-label"><label>Movement</label></div>
+			<div class="group-label"><label>{{ localize 'CoC7.Movement' }}</label></div>
 			<input class="value right-text" type="text" name="object.mov" value="{{participant.mov}}" data-dtype="Number"/>
 		</div>
 
 		<div class="separator"></div>
 		<div class="form-group">
 			<div class="group-label">
-				<label>Adjusted movement</label>
+				<label>{{ localize 'CoC7.AdjustedMovement' }}</label>
 				{{#if participant.speedCheck.rolled}}
           <div class="inline-roll">{{{participant.speedCheck.inlineRoll}}}</div>
         {{/if}}
 				{{#if participant.speedCheck.canBeRolled}}
 					<a data-action="roll-speed-check"><i class="game-icon game-icon-d10"></i></a>
-				{{else}}
-					<i class="fas fa-exclamation-triangle" title="{{ localize 'CoC7.CantCalculateAdjustedMov' }}"></i>
 				{{/if}}
 			</div>
 			<div class="group-result">{{ participant.adjustedMov }}</div>
@@ -59,19 +57,41 @@
 			
 		{{#if chase.started}}
 		<div class="form-group">
-			<div><label>Movement actions</label></div>
-			<input class="right-text" type="text" name="object.movementAction" value="{{participant.movementAction}}" data-dtype="Number"/>
+			<label class="checkbox">
+				<input type="checkbox" name="data.overrideMovementAction" {{checked data.overrideMovementAction}}/>
+				{{ localize 'CoC7.OverrideCalc' }}
+			</label>
 		</div>
+		<div class="form-group">
+			<div class="group-label">
+				<label>{{ localize 'CoC7.MovementAction' }}</label>
+				{{#if data.recalculationNeeded}}<div class="tag" title="All participant will have their movement action recalculated">{{ localize 'CoC7.NeedRecalculate' }}</div>{{/if}}
+				{{#if data.participantExcluded}}<div class="tag" title="{{ data.excludedBecauseHint }}">{{ data.excludedBecause }}</div>{{/if}}
+			</div>
+			{{#if data.overrideMovementAction}}
+				<input class="right-text" type="text" name="object.movementAction" value="{{participant.movementAction}}" data-dtype="Number"/>
+			{{else}}
+				<div class="group-result">{{ participant.movementAction }}</div>
+			{{/if}}
+		</div>
+
 		{{/if}}
   </div>
   <div class="dialog-buttons">
+	{{#if object.update}}
+    <button class="dialog-button" data-action="add">
+        <i class="fas fa-user-edit"></i>
+        {{ localize 'CoC7.Update' }}
+    </button>
+	{{else}}
     <button class="dialog-button" data-action="add">
         <i class="fas fa-plus"></i>
-        Add
+        {{ localize 'CoC7.Add' }}
     </button>
+	{{/if}}
     <button class="dialog-button " data-action="cancel">
         <i class="fas fa-times"></i>
-        Cancel
+        {{ localize 'CoC7.Cancel' }}
     </button>
 	</div>
 </form>

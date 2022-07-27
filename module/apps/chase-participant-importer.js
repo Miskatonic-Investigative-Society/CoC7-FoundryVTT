@@ -67,6 +67,8 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
       // }
     }
 
+    this.validateParticipant()
+
     // const speedCheck = this.actor?.find( this.object.speedCheck?.name)
     // if( speedCheck){
     //   this.object.speedCheck = speedCheck
@@ -98,6 +100,7 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
 
     data.actor = this.actor
     data.chase = this.chase
+    data.data = this.data
 
     data.optionsList = {}
     if (this.chase) {
@@ -169,15 +172,21 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
         {
           const participant = new _participant(this.object)
 
-          if (
-            this.chase.started &&
-            !(participant.movementAction ||
-              (participant.mov && participant.speedCheck?.rolled))
-          )
+          if ( this.chase.started ){
+            if(!(participant.movementAction && participant.movementAction > 0 )){
+              ui.notifications.warn(game.i18n.localize( 'CoC7.DoesNotMeetMinimumReqToBeAdded'))
             return
+          }
+          if( this.data.overrideMovementAction){
+            const slowest = this.chase.slowestParticipant
+            if( isNaN(participant.adjustedMov)){
+              participant.mov = slowest.adjustedMov
+            } else participant.data.mov = slowest.adjustedMov + participant.adjustedMov
+          }
+        }
 
           await this.chase.addParticipant(participant, {
-            locationUuid: this.object.locationUuid
+            locationUuid: this.object.locationUuid, recalculateMovementActions: this.data.recalculationNeeded, update: this.object.update, 
           })
           this.close()
         }
@@ -185,7 +194,6 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
 
       case 'roll-speed-check':
         {
-          ui.notifications.info('rolling speed check !!')
           const participant = new _participant(this.object)
           if (participant.speedCheck.refSet) {
             const roll = new CoC7Check()
@@ -217,12 +225,6 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
           }
 
           foundry.utils.mergeObject(this.object, participant.data)
-          const slowestPrey = this.chase.slowestPrey
-          const fastestChaser = this.chase.fastestChaser
-          const slowest = this.chase.slowestParticipant
-          ui.notifications.info( `Slowest: ${slowest.name}. Mov rate: ${slowest.adjustedMov}`)
-          ui.notifications.info( `Slowest fleeing: ${slowestPrey.name}. Mov rate: ${slowestPrey.adjustedMov}`)
-          ui.notifications.info( `Fastest chasing: ${fastestChaser.name}. Mov rate: ${fastestChaser.adjustedMov}`)
           this.render(true)
         }
 
@@ -230,6 +232,55 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
 
       default:
         break
+    }
+  }
+
+  validateParticipant () {
+    const participant = new _participant(this.object)
+    if (!this.data) this.data = {}
+    this.object.excluded = false
+    this.object.escaped = false
+    this.data.recalculationNeeded = false
+    this.data.participantExcluded = false
+    this.data.movementActionDelta = 0
+
+    if (!this.data.overrideMovementAction) {
+      const slowestPrey = this.chase.slowestPrey
+      const fastestChaser = this.chase.fastestChaser
+      const slowest = this.chase.slowestParticipant
+
+      if (participant.adjustedMov < slowest?.adjustedMov) {
+        this.data.recalculationNeeded = true
+        participant.movementAction = 1
+      } else {
+        this.data.recalculationNeeded = false
+        participant.calculateMovementActions(slowest.adjustedMov)
+      }
+      if (participant.isChaser) {
+        if (
+          slowestPrey &&
+          !this.chase.data.data.includeLastCommers &&
+          participant.adjustedMov < slowestPrey.adjustedMov
+        ) {
+          this.object.excluded = true
+          this.data.participantExcluded = true
+          this.data.excludedBecause = game.i18n.localize( 'CoC7.TooSlow')
+          this.data.recalculationNeeded = false
+        }
+      }
+
+      if (participant.isPrey) {
+        if (
+          fastestChaser &&
+          !this.chase.data.data.includeEscaped &&
+          participant.adjustedMov > fastestChaser.adjustedMov
+        ) {
+          this.object.escaped = true
+          this.data.participantExcluded = true
+          this.data.excludedBecause = game.i18n.localize( 'CoC7.TooFast')
+          this.data.recalculationNeeded = false
+        }
+      }
     }
   }
 
