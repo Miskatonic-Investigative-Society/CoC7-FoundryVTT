@@ -278,7 +278,23 @@ export class CoC7Parser {
     event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
   }
 
-  static _createLink (match, tag, type, options, name) {
+  static _createLink (match_v9, tag_v9, type_v9, options_v9, name_v9) {
+    // Foundry VTT v9
+    let match, tag, type, options, name
+    if( match_v9 instanceof Array){
+      match = match_v9[0]
+      tag = match_v9[1]
+      type = match_v9[2]
+      options = match_v9[3]
+      name = match_v9[4]
+    } else {
+      match = match_v9
+      tag = tag_v9
+      type = type_v9
+      options = options_v9
+      name = name_v9
+    }
+
     const data = {
       cls: ['coc7-link'],
       dataset: { check: type },
