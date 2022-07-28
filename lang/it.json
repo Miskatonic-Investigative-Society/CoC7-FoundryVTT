@@ -734,6 +734,9 @@
   "CoC7.ActorImporterSummary": "Importa un PNG o una Creatura dalla descrizione e dalle statistiche. Basta incollare il testo corrispondente",
   "CoC7.PasteTheDataBelow": "Incolla qui sotto i dati di testo grezzo",
   "CoC7.TextFieldInvalidCharacters": "Sono presenti caratteri non validi nel testo, correggili o verranno rimossi",
+  "CoC7.TextFieldInvalidJSON": "Impossibile interpretare il file JSON, per favore provare di nuovo",
+  "CoC7.ActorImporterUploadError": "Importazione fermata, impossibile scrivere l'immagine",
+  "CoC7.FileUploadError": "Impossibile scrivere l'immagine, errore di upload del file",
   "CoC7.SelectActorType": "Seleziona la tipologia del personaggio",
   "CoC7.NonPlayingCharacter": "Personaggio Non Giocante (PNG)",
   "CoC7.Creature": "Creatura",
@@ -751,12 +754,21 @@
   "CoC7.ImportedUnnamedCharacter": "Personaggio senza nome importato",
   "CoC7.CreatedImportedCharactersFolder": "Creata la cartella dei 'Personaggi importati'",
   "CoC7.ImportedCharactersFolder": "Personaggi importati",
+  "CoC7.PickDirectory": "Scegli la cartella",
   "CoC7.ImportSkillItemLocations": "Cerca abilità/incantesimi/armi in",
   "CoC7.ImportActorItemsNone": "Nessuno",
   "CoC7.ImportActorItemsItem": "Oggetti",
   "CoC7.ImportActorItemsItemWorldModuleSystem": "Oggetti / Mondi / Moduli / Sistema",
   "CoC7.ImportActorItemsWorldModuleItemSystem": "Mondi / Moduli / Oggetti / Sistema",
-
+  "CoC7.ActorImported": "Nuovo {actorType} importato: {actorName}",
+  
+  "CoC7.DholeHouseActorImporter": "Importatore JSON per personaggi della The Dhole's House",
+  "CoC7.DholeHouseActorImporterSummary": "Esporta il tuo personaggio della Dhole's House in formato JSON e importalo qui.",
+  "CoC7.DholeHouseImportingName": "Pronto a importare: ",
+  "CoC7.DholeHousePickYourJSONFile": "Scegli il file JSON esportato dalla The Dhole's House",
+  "CoC7.DholeHouseActorImporterSource": "Personaggio importato dalla The Dhole's House",
+  "CoC7.DholeHouseInvalidActor": "Il file JSON selezionato non sembra essere un personaggio esportato dalla The Dhole's House valido",
+  
   "CoC7.HowToTranslateTitle": "Come tradurre?",
   "CoC7.HowToTranslateWarning": "Non installare moduli di cui non ti fidi.",
   "CoC7.HowToTranslateInstallBabele": "Installa/aggiorna il modulo Babele dal gestore dei moduli di Foundry.",
@@ -800,12 +812,15 @@
   "CoC7.Settings.PulpRules.FasterRecovery.Hint": "La guarigione naturale è aumentata di due punti ferita al giorno",
   "CoC7.Settings.PulpRules.IgnoreMajorWounds.Name": "Ignorare Ferite Gravi",
   "CoC7.Settings.PulpRules.IgnoreMajorWounds.Hint": "",
+  "CoC7.Settings.DholeUpload.Directory.Name": "Cartella di upload dell'immagine dalla The Dhole's House",
+  "CoC7.Settings.DholeUpload.Directory.Hint": "Percorso di upload per gli avatar dalla The Dhole's House, relativo alla cartella Foundry/Data.",
 
   "CoC7.Maximize": "Massimizza",
   "CoC7.Summarize": "Riassumi",
 
   "CoC7.UnableToInteractWithChatCard": "Non sei in grado di interagire con questo messaggio, se devi apportare una modifica chiedi al tuo Custode di selezionare le opzioni per te",
   "CoC7.UnableToCopyToClipboard": "Impossibile copiare negli appunti, ciò è probabilmente dovuto alle impostazioni di sicurezza del tuo browser.",
+  "CoC7.UnableToUploadDholeImage": "Non hai il permesso per effettuare l'upload di immagini, se importi verrà utilizzato l'avatar predefinito.",
 
   "CoC7.MessageTitleSelectUserToGiveTo": "Dai l'oggetto a un altro personaggio",
   "CoC7.MessageSelectUserToGiveTo": "A quale personaggio vorresti dare questo oggetto?",
