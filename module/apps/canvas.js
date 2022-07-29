@@ -1,7 +1,5 @@
 /* global game, ui */
-
 import { chatHelper } from '../chat/helper.js'
-import { CoC7Chase } from '../items/chase/data.js'
 import { CoC7Utilities } from '../utilities.js'
 import { CoC7Link } from './link.js'
 
@@ -75,19 +73,17 @@ export class CoC7Canvas {
           break
 
         default:
-          {
-            if (data.docUuid && data.callBack) {
-              const doc = CoC7Utilities.SfromUuid(data.docUuid)
-              if (
-                doc[data.callBack] &&
-                typeof doc[data.callBack] === 'function'
-              ) {
-                try {
-                  data.scene = canvas.scene.uuid
-                  doc[data.callBack](data)
-                } catch (error) {
-                  console.warn(error.message)
-                }
+          if (data.docUuid && data.callBack) {
+            const doc = CoC7Utilities.SfromUuid(data.docUuid)
+            if (
+              doc[data.callBack] &&
+              typeof doc[data.callBack] === 'function'
+            ) {
+              try {
+                data.scene = canvas.scene.uuid
+                doc[data.callBack](data)
+              } catch (error) {
+                console.warn(error.message)
               }
             }
           }

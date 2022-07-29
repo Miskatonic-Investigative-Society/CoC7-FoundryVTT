@@ -9,7 +9,7 @@
     }
   ],
   "minimumCoreVersion": "9",
-  "compatibleCoreVersion": "10.275",
+  "compatibleCoreVersion": "10.276",
   "esmodules": [
     "lib/socketlib/src/libwrapper_shim.js",
     "lib/socketlib/src/socketlib.js",

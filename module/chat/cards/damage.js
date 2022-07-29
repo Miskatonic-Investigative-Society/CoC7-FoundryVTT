@@ -238,7 +238,7 @@ export class DamageCard extends InteractiveChatCard {
     const range = this.range
     let formula = this.weapon?.data?.data?.range[range]?.damage
     let db = this.actor.db
-    if (null === db || 0 === Number(db)) {
+    if (db === null || Number(db) === 0) {
       db = ''
     } else {
       db = `${db}`

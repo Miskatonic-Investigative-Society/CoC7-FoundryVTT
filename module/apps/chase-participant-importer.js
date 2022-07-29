@@ -1,3 +1,4 @@
+/* global DragDrop, FormApplication, foundry, game, ui */
 import { CoCActor } from '../actors/actor.js'
 import { CoC7Check } from '../check.js'
 import { _participant } from '../items/chase/participant.js'
@@ -104,7 +105,8 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
 
     data.optionsList = {}
     if (this.chase) {
-      data.skillsAndCharacteristicsList = this.chase.allSkillsAndCharacteristicsShort
+      data.skillsAndCharacteristicsList =
+        this.chase.allSkillsAndCharacteristicsShort
     }
 
     if (this.actor) {
@@ -127,15 +129,17 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
   }
 
   get chase () {
-    if (!this._chase)
+    if (!this._chase) {
       this._chase = CoC7Utilities.SfromUuid(this.object.chaseUuid)
+    }
     return this._chase
   }
 
   get actor () {
     if (!this.object.docUuid) return null
-    if (!this._actor)
+    if (!this._actor) {
       this._actor = CoC7Utilities.getActorFromKey(this.object.docUuid)
+    }
     return this._actor
   }
 
@@ -152,10 +156,11 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
 
     this.object.docUuid = docUuid
 
-    //If actor is controlled by GM only we assume he is a chaser
-    this.object.chaser = 0 == this.actor?.owners?.filter(u => !u.isGM).length
-    if (this.object.speedCheck.rollDataString)
+    // If actor is controlled by GM only we assume he is a chaser
+    this.object.chaser = this.actor?.owners?.filter(u => !u.isGM).length === 0
+    if (this.object.speedCheck.rollDataString) {
       delete this.object.speedCheck.rollDataString
+    }
 
     await this.render(true)
   }
@@ -172,21 +177,30 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
         {
           const participant = new _participant(this.object)
 
-          if ( this.chase.started ){
-            if(!(participant.movementAction && participant.movementAction > 0 )){
-              ui.notifications.warn(game.i18n.localize( 'CoC7.DoesNotMeetMinimumReqToBeAdded'))
-            return
+          if (this.chase.started) {
+            if (
+              !(participant.movementAction && participant.movementAction > 0)
+            ) {
+              ui.notifications.warn(
+                game.i18n.localize('CoC7.DoesNotMeetMinimumReqToBeAdded')
+              )
+              return
+            }
+            if (this.data.overrideMovementAction) {
+              const slowest = this.chase.slowestParticipant
+              if (isNaN(participant.adjustedMov)) {
+                participant.mov = slowest.adjustedMov
+              } else {
+                participant.data.mov =
+                  slowest.adjustedMov + participant.adjustedMov
+              }
+            }
           }
-          if( this.data.overrideMovementAction){
-            const slowest = this.chase.slowestParticipant
-            if( isNaN(participant.adjustedMov)){
-              participant.mov = slowest.adjustedMov
-            } else participant.data.mov = slowest.adjustedMov + participant.adjustedMov
-          }
-        }
 
           await this.chase.addParticipant(participant, {
-            locationUuid: this.object.locationUuid, recalculateMovementActions: this.data.recalculationNeeded, update: this.object.update, 
+            locationUuid: this.object.locationUuid,
+            recalculateMovementActions: this.data.recalculationNeeded,
+            update: this.object.update
           })
           this.close()
         }
@@ -216,8 +230,9 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
               displayName: participant.speedCheck.name,
               actorName: participant.name ? participant.name : undefined
             }
-            if (participant.hasActor)
+            if (participant.hasActor) {
               rollData.actor = participant.actor.actorKey
+            }
             const roll = CoC7Check.create(rollData)
             await roll.roll()
             participant.data.speedCheck.rollDataString = roll.JSONRollString
@@ -264,7 +279,7 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
         ) {
           this.object.excluded = true
           this.data.participantExcluded = true
-          this.data.excludedBecause = game.i18n.localize( 'CoC7.TooSlow')
+          this.data.excludedBecause = game.i18n.localize('CoC7.TooSlow')
           this.data.recalculationNeeded = false
         }
       }
@@ -277,7 +292,7 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
         ) {
           this.object.escaped = true
           this.data.participantExcluded = true
-          this.data.excludedBecause = game.i18n.localize( 'CoC7.TooFast')
+          this.data.excludedBecause = game.i18n.localize('CoC7.TooFast')
           this.data.recalculationNeeded = false
         }
       }

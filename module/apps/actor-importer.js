@@ -303,7 +303,7 @@ export class CoC7ActorImporter {
     } while (maxLoops > 0 && (!!weapon || !!dodge || !!text))
     if (maxLoops === 0) {
       ui.notifications.warn(
-        'Unexpected weapons text, please raise a bug report with the text you are attempting to import'
+        game.i18n.localize('CoC7.ErrorUnexpectedWeaponText')
       )
       console.debug('Unexpected weapons:', text)
     }
@@ -341,7 +341,7 @@ export class CoC7ActorImporter {
     } while (maxLoops > 0 && skill)
     if (maxLoops === 0) {
       ui.notifications.warn(
-        'Unexpected skills text, please raise a bug report with the text you are attempting to import'
+        game.i18n.localize('CoC7.ErrorUnexpectedSkillsText')
       )
       console.debug('Unexpected skills:', text)
     }

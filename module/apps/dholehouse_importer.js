@@ -14,67 +14,111 @@ export class CoC7DholeHouseActorImporter {
    */
   static getBackstory (backstoryJSON) {
     let backstory = '<h2>Backstory</h2>\n'
+    const biography = []
     if (backstoryJSON.description !== null) {
       backstory += `<h3>Description</h3>
       <div class="description">
       ${backstoryJSON.description}
       </div>\n`
+      biography.push({
+        title: 'Description',
+        value: backstoryJSON.description
+      })
     }
     if (backstoryJSON.traits !== null) {
       backstory += `<h3>Traits</h3>
       <div class="traits">
       ${backstoryJSON.traits}
       <div>\n`
+      biography.push({
+        title: 'Traits',
+        value: backstoryJSON.traits
+      })
     }
     if (backstoryJSON.ideology !== null) {
       backstory += `<h3>Ideology</h3>
       <div class="ideology">
       ${backstoryJSON.ideology}
       <div>\n`
+      biography.push({
+        title: 'Ideology',
+        value: backstoryJSON.ideology
+      })
     }
     if (backstoryJSON.injurues !== null) {
       backstory += `<h3>Injuries</h3>
       <div class="injuries">
       ${backstoryJSON.injurues}
       <div>\n`
+      biography.push({
+        title: 'Injuries',
+        value: backstoryJSON.injurues
+      })
     }
     if (backstoryJSON.people !== null) {
       backstory += `<h3>People</h3>
       <div class="people">
       ${backstoryJSON.people}
       <div>\n`
+      biography.push({
+        title: 'People',
+        value: backstoryJSON.people
+      })
     }
     if (backstoryJSON.phobias !== null) {
       backstory += `<h3>Phobias</h3>
       <div class="phobias">
       ${backstoryJSON.phobias}
       <div>\n`
+      biography.push({
+        title: 'Phobias',
+        value: backstoryJSON.phobias
+      })
     }
     if (backstoryJSON.locations !== null) {
       backstory += `<h3>Locations</h3>
       <div class="locations">
       ${backstoryJSON.locations}
       <div>\n`
+      biography.push({
+        title: 'Locations',
+        value: backstoryJSON.locations
+      })
     }
     if (backstoryJSON.tomes !== null) {
       backstory += `<h3>Tomes</h3>
       <div class="tomes">
       ${backstoryJSON.tomes}
       <div>\n`
+      biography.push({
+        title: 'Tomes',
+        value: backstoryJSON.tomes
+      })
     }
     if (backstoryJSON.possessions !== null) {
       backstory += `<h3>Possessions</h3>
       <div class="possessions">
       ${backstoryJSON.possessions}
       <div>\n`
+      biography.push({
+        title: 'Possessions',
+        value: backstoryJSON.possessions
+      })
     }
     if (backstoryJSON.encounters !== null) {
       backstory += `<h3>Encounters</h3>
       <div class="encounters">
       ${backstoryJSON.encounters}
       <div>\n`
+      biography.push({
+        title: 'Encounters',
+        value: backstoryJSON.encounters
+      })
     }
-    return backstory
+    return {
+      backstory: backstory,
+      biography: biography
+    }
   }
 
   /**
@@ -85,6 +129,9 @@ export class CoC7DholeHouseActorImporter {
   static convertDholeHouseCharacterData (dholeHouseData) {
     console.log(dholeHouseData)
     dholeHouseData = dholeHouseData.Investigator
+    const backstories = CoC7DholeHouseActorImporter.getBackstory(
+      dholeHouseData.Backstory
+    )
     const cData = {
       name: dholeHouseData.PersonalDetails.Name,
       actor: {
@@ -128,9 +175,8 @@ export class CoC7DholeHouseActorImporter {
           residence: dholeHouseData.PersonalDetails.Residence,
           birthplace: dholeHouseData.PersonalDetails.Birthplace
         },
-        backstory: CoC7DholeHouseActorImporter.getBackstory(
-          dholeHouseData.Backstory
-        ),
+        backstory: backstories.backstory,
+        biography: backstories.biography,
         description: {
           keeper: game.i18n.localize('CoC7.DholeHouseActorImporterSource')
         },
@@ -327,11 +373,13 @@ export class CoC7DholeHouseActorImporter {
       )
       return false
     }
-    const characterData = CoC7DholeHouseActorImporter.convertDholeHouseCharacterData(
-      dholeHouseCharacterData
-    )
+    const characterData =
+      CoC7DholeHouseActorImporter.convertDholeHouseCharacterData(
+        dholeHouseCharacterData
+      )
     console.log(characterData)
-    const importedCharactersFolder = await CoC7Utilities.createImportCharactersFolderIfNotExists()
+    const importedCharactersFolder =
+      await CoC7Utilities.createImportCharactersFolderIfNotExists()
     if (!CoC7DirectoryPicker.createDefaultDirectory()) {
       return false
     }
