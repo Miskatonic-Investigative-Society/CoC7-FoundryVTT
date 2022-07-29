@@ -988,6 +988,10 @@ export class CoC7Chase extends CoC7Item {
       ui.notifications.warn(game.i18n.localize('CoC7.NotAllHaveSpeedRoll'))
       return
     }
+    if( this.actualParticipants?.length < 2){
+      ui.notifications.warn(game.i18n.localize('CoC7.NeedMin2Participants'))
+      return
+    }
     if (this.allHaveValidMov) {
       //TODO : Check for speed roll ??
 

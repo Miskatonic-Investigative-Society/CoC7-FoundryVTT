@@ -631,6 +631,7 @@
   "CoC7.ChaseSetup": "Chase setup",
   "CoC7.ParticipantsList": "Participants list",
   "CoC7.NotAllHaveSpeedRoll": "Some participants don't have a speed roll!",
+  "CoC7.NeedMin2Participants": "You need to have a chaser and a prey to start a chase!",
   "CoC7.ConfirmCut2Chase": "Are you ready to cut to the chase ?",
   "CoC7.ConfirmCut2ChaseHint": "This will start the chase and the first chase round.",
   "CoC7.NextRound": "Next round",
@@ -655,6 +656,8 @@
   "CoC7.OverrideCalc": "Override calculation",
   "CoC7.NeedRecalculate": "Recalculation needed",
   "CoC7.SpeedCheck": "Speed check",
+  "CoC7.Initalize": "Initialize",
+  "CoC7.Locations": "Chase locations",
 
   "CoC7.SpellCastingTime": "Casting Time",
   "CoC7.SpellCastingCost": "Casting Cost",

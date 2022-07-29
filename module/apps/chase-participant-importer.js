@@ -254,7 +254,7 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
         participant.movementAction = 1
       } else {
         this.data.recalculationNeeded = false
-        participant.calculateMovementActions(slowest.adjustedMov)
+        participant.calculateMovementActions(slowest?.adjustedMov)
       }
       if (participant.isChaser) {
         if (
