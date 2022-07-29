@@ -454,7 +454,10 @@ Hooks.on('getSceneControlButtons', (/* controls */) => {
 // Hooks.on('renderSceneControls', () => CoC7Utilities.updateCharSheets());
 // Hooks.on('renderSceneNavigation', () => CoC7Utilities.updateCharSheets());
 Hooks.on('renderItemSheet', CoC7Parser.ParseSheetContent)
+// Foundry VTT v9
 Hooks.on('renderJournalSheet', CoC7Parser.ParseSheetContent)
+// Foundry VTT v10
+Hooks.on('renderJournalPageSheet', CoC7Parser.ParseSheetContent)
 Hooks.on('renderActorSheet', CoC7Parser.ParseSheetContent)
 // Chat command processing
 // Hooks.on('preCreateChatMessage', CoC7Parser.ParseMessage);
