@@ -759,9 +759,9 @@ export class CoC7ActorSheet extends ActorSheet {
       }
     })
 
-    html.find('.clean-skill-list').click(() => {
-      this.actor.cleanSkills()
-    })
+    // html.find('.clean-skill-list').click(() => {
+    //   this.actor.cleanSkills()
+    // })
 
     html.find('.item-trade').click(this._onTradeItem.bind(this))
 
