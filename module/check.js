@@ -1670,11 +1670,11 @@ export class CoC7Check {
       chatData.whisper = []
       chatData.blind = false
       ChatMessage.applyRollMode(chatData)
-    } else {
-      chatData.whisper = []
-      chatData.blind = false
-      ChatMessage.applyRollMode(chatData, game.settings.get('core', 'rollMode'))
-    }
+    } //else {
+      // chatData.whisper = []
+      // chatData.blind = false
+      // ChatMessage.applyRollMode(chatData, game.settings.get('core', 'rollMode'))
+    //}
 
     if (chatData.blind) {
       this.isBlind = true
@@ -1706,7 +1706,7 @@ export class CoC7Check {
       } else chatData.type = CONST.CHAT_MESSAGE_TYPES.OTHER
     }
 
-    if (forceRoll && this.dice?.roll) {
+    if (forceRoll && this.dice?.roll && (game.user.isGM || !this.isBlind)) {
       await CoC7Dice.showRollDice3d(this.dice.roll)
     }
 
