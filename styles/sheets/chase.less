@@ -1,4 +1,20 @@
 .sheetV2.item.chase {
+  .pin-image {
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    background: none;
+    position: fixed;
+    left: -3rem;
+    top: -3rem;
+  }
+
+  .pin-location.locationSet {
+    i {
+      color: red;
+    }
+  }
+
   .flex-content {
     flex: 0;
   }
@@ -6,10 +22,39 @@
   .form-group {
     flex-wrap: nowrap;
     height: 19.5px;
+
+    .icon {
+      //duplicate of chase-card
+      font-size: 1rem;
+      line-height: 1.25rem;
+      padding: 1px 6px;
+      display: inline;
+      flex: 0;
+
+      &.bigger {
+        padding: 1px 4px;
+        font-size: 1.4rem;
+      }
+
+      &.switched-off {
+        display: inline;
+      }
+      &.switched-on {
+        color: red;
+        text-shadow: 0 0 8px red;
+        border: none;
+        background: none;
+        box-shadow: none;
+      }
+    }
   }
 
   .flex-auto {
     flex: 0 0 auto;
+  }
+
+  .flex0 {
+    flex: 0;
   }
 
   form {
@@ -18,7 +63,17 @@
         // display: flex;
         // flex-direction: column;
         // flex-wrap: nowrap;
-        grid-template-rows: 10rem 1.875rem auto;
+        grid-template-rows: 10.5rem 1.875rem auto;
+      }
+
+      .location-control {
+        &.inactive {
+          color: grey;
+          cursor: not-allowed;
+          &:hover {
+            text-shadow: none;
+          }
+        }
       }
 
       .sheet-header {
@@ -28,13 +83,51 @@
           height: auto;
         }
 
+        .chase-location {
+          justify-content: center;
+          align-items: center;
+          flex-wrap: nowrap;
+        }
+
+        .location-controls {
+          padding: 0.25rem;
+          justify-content: center;
+          flex: 0 0 1rem;
+          .icon {
+            font-size: 1.25rem;
+          }
+        }
+
         .active-location {
           height: 100%;
-          padding: 0.5rem;
+          padding: 0.25rem;
+          flex: 0 0 30rem;
+          display: flex;
+          .form-group {
+            flex: 0 0 1.4rem;
+            margin: 0;
+            padding: 0.25rem;
+            input {
+              height: auto;
+              font-size: 0.8rem;
+            }
+            .icon {
+              font-size: 1.25rem;
+            }
+          }
           .location-name {
-            flex: 0 0 auto;
+            flex: 1;
             text-align: center;
           }
+
+          .chase-control {
+            flex: 0;
+            margin: 0 0.25rem;
+          }
+        }
+
+        .no-skill {
+          color: red;
         }
       }
 
@@ -78,7 +171,119 @@
   }
 }
 
-.track {
+.initiative-track {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  // overflow-x: scroll;
+  // overflow-y: hidden;
+  .initiative-block {
+    border: 2px solid transparent;
+    margin: 0 1rem 0 0.2rem;
+    border-radius: 0.5rem;
+    flex: 0 0 10rem;
+    &.prey {
+      background-color: rgba(60, 128, 60, 0.1);
+      &.no-actions {
+        background-color: rgba(60, 60, 60, 0.1);
+      }
+    }
+    &.chaser {
+      background-color: rgba(128, 60, 60, 0.1);
+      &.no-actions {
+        background-color: rgba(60, 60, 60, 0.1);
+      }
+    }
+    &.active {
+      border-color: #ff6400;
+    }
+
+    .participant-controls {
+      flex: 0 0 1rem;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      display: flex;
+      flex-direction: row;
+    }
+
+    .separator {
+      flex: 0 0 0.2rem;
+      border-right: 2px groove;
+      margin-right: 0.2rem;
+    }
+
+    .participant-control {
+      color: rgb(0, 0, 0);
+      flex: 0 0 auto;
+      margin-right: 0.2rem;
+      &.toggle {
+        color: goldenrod;
+      }
+      &.active {
+        color: rgb(0, 0, 0);
+      }
+      &.disabled {
+        color: white;
+      }
+      &.assisted {
+        color: goldenrod;
+      }
+      &.inactive {
+        color: #eee;
+        &:hover {
+          text-shadow: none;
+          cursor: default;
+        }
+      }
+    }
+
+    .participant {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      overflow: hidden;
+      .portrait {
+        flex: 0 0 4rem;
+        img {
+          border: none;
+        }
+      }
+
+      .infos {
+        flex: 0 0 6rem;
+        div {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        input {
+          flex: 0 0 3rem;
+          height: 1.1rem;
+        }
+      }
+    }
+
+    .movement-action {
+      display: flex;
+      justify-content: center;
+      .deficit {
+        color: red;
+        text-shadow: 0 0 8px red;
+      }
+      .base {
+        color: gray;
+        &.deficit {
+          text-shadow: 0 0 8px red;
+        }
+        &.available {
+          color: goldenrod;
+        }
+      }
+    }
+  }
+}
+
+.chase-track {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -114,6 +319,12 @@
         justify-content: center;
         .chase-participant {
           width: 2rem;
+
+          &.active {
+            img {
+              border: 1px solid #ff6400;
+            }
+          }
         }
       }
     }
@@ -184,7 +395,7 @@
       }
       &.active {
         // scroll-snap-stop: always;
-        border: 0.125rem solid red;
+        border: 0.125rem solid #ff6400;
       }
       &.init {
         border: 0.125rem solid slategrey;
@@ -212,9 +423,9 @@
     .participant {
       flex: 1;
       display: grid;
-      grid-template-columns: 2rem 2rem 0.5rem 5fr 2.5rem 2.5rem 4fr 2rem 3rem 1.25rem 2rem 1rem 1rem;
+      grid-template-columns: 2rem 2rem 0.5rem 5fr 2.5rem 2.5rem 4fr 2rem 3rem 1.25rem 2rem 1.5rem;
       grid-template-rows: 2rem;
-      grid-template-areas: 'p-side p-icon p-expand p-name p-init p-movement p-speed-check p-score p-roll p-adjust p-modified-mov p-control p-movement-action';
+      grid-template-areas: 'p-side p-icon p-expand p-name p-init p-movement p-speed-check p-score p-roll p-adjust p-modified-mov p-control';
       align-items: center;
       margin-bottom: 2px;
 
@@ -331,6 +542,10 @@
           color: red;
           transform: rotate(180deg);
         }
+      }
+
+      .p-control {
+        text-align: center;
       }
     }
 

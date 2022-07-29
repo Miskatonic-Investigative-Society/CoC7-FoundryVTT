@@ -345,6 +345,37 @@ export class CoCActor extends Actor {
     return data
   }
 
+  /**
+   * Clean list of skills by removing specialization from name
+   */
+  async cleanSkills () {
+    Dialog.confirm({
+      title: `${game.i18n.localize('CoC7.CleanSkillList')}`,
+      content: `<p>${game.i18n.localize('CoC7.CleanSkillListHint')}</p>`,
+      yes: () => clean(this)
+    })
+    async function clean (actor) {
+      const update = []
+      actor.skills.forEach(s => {
+        if (s.data.data.properties.special) {
+          const clean = CoC7Item.getNameWithoutSpec(s)?.trim()
+          if (clean.toLowerCase() != s.name.toLowerCase() || clean.toLowerCase() != s.data.name.toLowerCase()) {
+            update.push({
+              _id: s.id,
+              name: clean
+            })
+          }
+        }
+      })
+      if (update.length != 0){
+        await actor.updateEmbeddedDocuments('Item', update)
+        ui.notifications.info( `Skills : ${Array.from( update, e => e.name).join(', ')} updated.`)
+      } else {
+        ui.notifications.info( 'Skill list was clean already !')
+      }
+    }
+  }
+
   /** @override */
   async createSkill (skillName, value, showSheet = false) {
     const data = CoCActor.emptySkill(skillName, value)
@@ -820,10 +851,12 @@ export class CoCActor extends Actor {
             data.data.characteristics.list.luck.value = isNaN(this.luck)
               ? null
               : this.luck
-            data.data.characteristics.list.luck.label =
-              game.i18n.localize('CoC7.Luck')
-            data.data.characteristics.list.luck.shortName =
-              game.i18n.localize('CoC7.Luck')
+            data.data.characteristics.list.luck.label = game.i18n.localize(
+              'CoC7.Luck'
+            )
+            data.data.characteristics.list.luck.shortName = game.i18n.localize(
+              'CoC7.Luck'
+            )
 
             if (!data.data.characteristics.values) {
               data.data.characteristics.values = {}
@@ -890,10 +923,11 @@ export class CoCActor extends Actor {
                   data.data.characteristics.values.pow
                 updateData['data.attribs.san.oneFifthSanity'] =
                   ' / ' + Math.floor(data.data.characteristics.values.pow / 5)
-                updateData['data.indefiniteInsanityLevel.max'] =
-                  updateData['data.attribs.mp.value'] =
-                  updateData['data.attribs.mp.max'] =
-                    Math.floor(data.data.characteristics.values.pow / 5)
+                updateData['data.indefiniteInsanityLevel.max'] = updateData[
+                  'data.attribs.mp.value'
+                ] = updateData['data.attribs.mp.max'] = Math.floor(
+                  data.data.characteristics.values.pow / 5
+                )
               }
               await this.update(updateData)
               await this.update({
@@ -2244,6 +2278,7 @@ export class CoCActor extends Actor {
 
   /** Try to find a characteristic, attribute or skill that matches the name */
   find (name) {
+    if (!name) return undefined
     // Try ID
     const item = this.items.get(name)
     if (item) {
@@ -2276,13 +2311,23 @@ export class CoCActor extends Actor {
     for (let i = 0; i < charKey.length; i++) {
       const char = this.getCharacteristic(charKey[i])
       if (char) {
-        if (char.key?.toLocaleLowerCase() === name.toLowerCase()) {
+        char.name = char.label
+        if (
+          char.key?.toLocaleLowerCase() === name.toLowerCase() ||
+          char.key?.toLocaleLowerCase() === shortName?.toLowerCase()
+        ) {
           return { type: 'characteristic', value: char }
         }
-        if (char.shortName?.toLocaleLowerCase() === name.toLowerCase()) {
+        if (
+          char.shortName?.toLocaleLowerCase() === name.toLowerCase() ||
+          char.shortName?.toLocaleLowerCase() === shortName?.toLowerCase()
+        ) {
           return { type: 'characteristic', value: char }
         }
-        if (char.label?.toLocaleLowerCase() === name.toLowerCase()) {
+        if (
+          char.label?.toLocaleLowerCase() === name.toLowerCase() ||
+          char.label?.toLocaleLowerCase() === shortName?.toLowerCase()
+        ) {
           return { type: 'characteristic', value: char }
         }
       }
@@ -2293,13 +2338,23 @@ export class CoCActor extends Actor {
     for (let i = 0; i < attribKey.length; i++) {
       const attr = this.getAttribute(attribKey[i])
       if (attr) {
-        if (attr.key?.toLocaleLowerCase() === name.toLowerCase()) {
+        attr.name = attr.label
+        if (
+          attr.key?.toLocaleLowerCase() === name.toLowerCase() ||
+          attr.key?.toLocaleLowerCase() === shortName?.toLowerCase()
+        ) {
           return { type: 'attribute', value: attr }
         }
-        if (attr.shortName?.toLocaleLowerCase() === name.toLowerCase()) {
+        if (
+          attr.shortName?.toLocaleLowerCase() === name.toLowerCase() ||
+          attr.shortName?.toLocaleLowerCase() === shortName?.toLowerCase()
+        ) {
           return { type: 'attribute', value: attr }
         }
-        if (attr.label?.toLocaleLowerCase() === name.toLowerCase()) {
+        if (
+          attr.label?.toLocaleLowerCase() === name.toLowerCase() ||
+          attr.label?.toLocaleLowerCase() === shortName?.toLowerCase()
+        ) {
           return { type: 'attribute', value: attr }
         }
       }
@@ -2331,6 +2386,13 @@ export class CoCActor extends Actor {
             ?.toLocaleLowerCase()
       )
     })
+  }
+
+  get tokenUuid () {
+    if (this.sheet.token) {
+      return this.sheet.token.uuid
+    }
+    return null
   }
 
   get tokenKey () {
@@ -3068,7 +3130,10 @@ export class CoCActor extends Actor {
   }
 
   async dealDamage (amount, options = {}) {
-    const armorData = this.data.data.attribs.armor.value
+    //TODO: Change options to list of values
+    const armorData = options.armor
+      ? options.armor
+      : this.data.data.attribs.armor //if there armor value passed we use it
     const grossDamage = parseInt(amount)
     let armorValue = 0
     if (!options.ignoreArmor) {
@@ -3078,6 +3143,8 @@ export class CoCActor extends Actor {
         armorValue = (await new Roll(armorData).roll({ async: true })).total
       } else if (!isNaN(Number(armorData))) {
         armorValue = Number(armorData)
+      } else if (!isNaN(Number(armorData?.value))) {
+        armorValue = Number(armorData.value)
       } else {
         ui.notifications.warn(
           `Unable to process armor value: ${armorData}. Ignoring armor.`

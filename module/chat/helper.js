@@ -1,6 +1,7 @@
 /* global canvas, ChatMessage, CONST, duplicate, game, Ray, Token, ui */
 
 import { CoC7Check } from '../check.js'
+import { CoC7Utilities } from '../utilities.js'
 
 /**
  * Return <a> element of a roll instance. foundry.js ref:TextEditor._createInlineRoll
@@ -114,6 +115,12 @@ export class chatHelper {
 
   static getActorFromKey (key) {
     if (!key) return null
+    // Case 0 - a document Uuid
+    if( CoC7Utilities.isDocumentUuid( key)){
+      if( CoC7Utilities.isDocumentUuidPack( key)) return fromUuid( key); //TODO Check we can do that
+      return CoC7Utilities.SfromUuid( key)
+    }
+
     // Case 1 - a synthetic actor from a Token
     if (key.includes('.')) {
       // REFACTORING (2)

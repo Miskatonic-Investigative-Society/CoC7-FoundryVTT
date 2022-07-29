@@ -332,7 +332,9 @@ export class CoC7Chat {
       const ownerOnly = html.find('.owner-only')
       for (const zone of ownerOnly) {
         // Try retrieving actor
-        let actor = CoC7Chat._getActorFromKey(zone.dataset?.actorKey) // Try with self.
+        let actor = CoC7Chat._getActorFromKey(
+          zone.dataset?.actorKey || zone.dataset?.actorId
+        ) // Try with self.
         if (!actor) {
           actor = CoC7Chat._getChatCardActor(zone.closest('.chat-card')) // Try with closest chat card.
         }

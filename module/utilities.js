@@ -644,8 +644,8 @@ export class CoC7Utilities {
           document.execCommand('copy')
             ? resolve()
             : reject(
-              new Error(game.i18n.localize('CoC7.UnableToCopyToClipboard'))
-            )
+                new Error(game.i18n.localize('CoC7.UnableToCopyToClipboard'))
+              )
           textArea.remove()
         }).catch(err => ui.notifications.error(err))
       }
@@ -706,7 +706,140 @@ export class CoC7Utilities {
     return qString
   }
 
-    /**
+  static setByPath (obj, path, value) {
+    var parts = path.split('.')
+    var o = obj
+    if (parts.length > 1) {
+      for (var i = 0; i < parts.length - 1; i++) {
+        if (!o[parts[i]]) o[parts[i]] = {}
+        o = o[parts[i]]
+      }
+    }
+
+    o[parts[parts.length - 1]] = value
+  }
+
+  static getByPath (obj, path) {
+    var parts = path.split('.')
+    var o = obj
+    if (parts.length > 1) {
+      for (var i = 0; i < parts.length - 1; i++) {
+        if (!o[parts[i]]) return undefined
+        o = o[parts[i]]
+      }
+    }
+
+    return o[parts[parts.length - 1]]
+  }
+
+  /**
+   * Retrieve a Document by its Universally Unique Identifier (uuid).
+   * @param {string} uuid   The uuid of the Document to retrieve
+   * @return {Promise<Document|null>}
+   */
+  static SfromUuid (uuid) {
+    let parts = uuid.split('.')
+    let doc
+
+    // Compendium Documents
+    if (parts[0] === 'Compendium') {
+      return null
+      // return fromUuid(uuid) // Return Promise
+      // parts.shift();
+      // const [scope, packName, id] = parts.slice(0, 3);
+      // parts = parts.slice(3);
+      // const pack = game.packs.get(`${scope}.${packName}`);
+      // return await pack?.getDocument(id);
+    }
+
+    // World Documents
+    else {
+      const [docName, docId] = parts.slice(0, 2)
+      parts = parts.slice(2)
+      const collection = CONFIG[docName].collection.instance
+      doc = collection.get(docId)
+    }
+
+    // Embedded Documents
+    while (doc && parts.length > 1) {
+      const [embeddedName, embeddedId] = parts.slice(0, 2)
+      doc = doc.getEmbeddedDocument(embeddedName, embeddedId)
+      parts = parts.slice(2)
+    }
+    return doc || null
+  }
+
+  static isDocumentUuidPack (uuid) {
+    if (uuid.includes('Compendium')) return true
+    else return false
+  }
+
+  static isDocumentUuid (uuid) {
+    const identifiers = ['Actor', 'Scene', 'Token', 'Item', 'Compendium']
+    for (let i = 0; i < identifiers.length; i++) {
+      if (uuid.includes(identifiers[i])) return true
+    }
+    return false
+  }
+
+  static getActorDocumentFromDropData (dropData) {
+    let docUuid, actor
+    if (dropData.tokenUuid) docUuid = dropData.tokenUuid
+    else
+      docUuid =
+        dropData.sceneId && dropData.tokenId
+          ? `Scene.${dropData.sceneId}.Token.${dropData.tokenId}`
+          : dropData.actorId || dropData.actorKey || dropData.id
+
+    if ('Token' === dropData.type) {
+      docUuid = dropData.uuid
+    } else if (docUuid) {
+      actor = CoC7Utilities.getActorFromKey(docUuid)
+      if (!actor && 'Item' === dropData.type) docUuid = null
+    }
+
+    if (actor && docUuid != actor.uuid) {
+      docUuid = actor.uuid
+    }
+    return docUuid
+  }
+
+  static getDocumentFromKey (key) {
+    if (!key) return null
+    // Case 0 - a document Uuid
+    if (CoC7Utilities.isDocumentUuid(key)) {
+      if (CoC7Utilities.isDocumentUuidPack(key)) return fromUuid(key) //TODO Check we can do that
+      return CoC7Utilities.SfromUuid(key)
+    }
+
+    // Case 1 - a synthetic actor from a Token
+    if (key.includes('.')) {
+      // REFACTORING (2)
+      const [sceneId, tokenId] = key.split('.')
+      if (sceneId === 'TOKEN') {
+        return game.actors.tokens[tokenId] // REFACTORING (2)
+      }
+      const scene = game.scenes.get(sceneId)
+      if (!scene) return null
+      const tokenData = scene.getEmbeddedDocument('Token', tokenId)
+      if (!tokenData) return null
+      const token = new Token(tokenData)
+      if (!token.scene) token.scene = duplicate(scene.data)
+      return token
+    }
+    // Case 2 - use Actor ID directory
+    return game.actors.get(key) || null
+  }
+
+  static getActorFromKey (key) {
+    const doc = CoC7Utilities.getDocumentFromKey(key)
+    if (!doc) return null
+    if (doc.actor) return doc.actor
+    if (doc.constructor?.name == 'CoCActor') return doc
+    return null
+  }
+
+   /**
    * Creates a folder on the actors tab called "Imported Characters" if the folder doesn't exist.
    * @returns {Folder} the importedCharactersFolder
    */
@@ -734,5 +867,4 @@ export class CoC7Utilities {
     }
     return importedCharactersFolder
   }
-
 }

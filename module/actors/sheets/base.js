@@ -13,7 +13,6 @@ import { isCtrlKey } from '../../chat/helper.js'
 import { CoC7Parser } from '../../apps/parser.js'
 import { DamageCard } from '../../chat/cards/damage.js'
 import { CoC7LinkCreationDialog } from '../../apps/link-creation-dialog.js'
-import { TestCard } from '../../chat/cards/test.js'
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -28,6 +27,9 @@ export class CoC7ActorSheet extends ActorSheet {
     data.editable = this.isEditable // MODIF 0.8.x : editable removed
     /******************/
 
+    data.hasToken = !!this.token
+    data.canDragToken = data.hasToken && game.user.isGM
+    data.linkedActor = this.actor.data?.token?.actorLink
     data.isToken = this.actor.isToken
     data.itemsByType = {}
     data.skills = {}
@@ -622,6 +624,10 @@ export class CoC7ActorSheet extends ActorSheet {
   activateListeners (html) {
     super.activateListeners(html)
 
+    html
+      .find('.token-drag-handle')
+      .on('dragstart', this._onDragTokenStart.bind(this))
+
     // Owner Only Listeners
     if (this.actor.isOwner && typeof this.actor.compendium === 'undefined') {
       html
@@ -753,6 +759,10 @@ export class CoC7ActorSheet extends ActorSheet {
       }
     })
 
+    html.find('.clean-skill-list').click(() => {
+      this.actor.cleanSkills()
+    })
+
     html.find('.item-trade').click(this._onTradeItem.bind(this))
 
     html.find('.add-new-section').click(() => {
@@ -839,8 +849,6 @@ export class CoC7ActorSheet extends ActorSheet {
       .on('dragstart', event => CoC7Parser._onDragCoC7Link(event))
 
     html.find('.test-trigger').click(async event => {
-      const test = new TestCard({})
-      test.toMessage()
       // await OpposedCheckCard.dispatch({
       //   type: OpposedCheckCard.defaultConfig.type,
       //   combat: false,
@@ -850,7 +858,6 @@ export class CoC7ActorSheet extends ActorSheet {
       //     actor: this.actor.actorKey
       //   }
       // })
-
       // await OpposedCheckCard.dispatch({
       //   type: OpposedCheckCard.defaultConfig.type,
       //   combat: false,
@@ -861,23 +868,19 @@ export class CoC7ActorSheet extends ActorSheet {
       //   }
       // })
       // const val = getProperty( this.actor, 'data.data.attribs.san.value');
-
       // this.actor.enterBoutOfMadness( true, 10);
-
       // const roll = new CoC7Check();
       // roll.actor = this.actorKey;
       // roll.attribute = 'san';
       // roll.difficulty = this.options.sanDifficulty || CoC7Check.difficultyLevel.regular;
       // roll.diceModifier = this.options.sanModifier || 0;
       // await roll._perform();
-
       // for (const effect of this.actor.effects) {
       //  await effect.sheet.render(true);
       //  // effect.delete();
       // }
       // for (const e of this.actor.effects) { e.delete() }
       // await setProperty( this.actor, 'data.data.encounteredCreatures', []);
-
       // await this.actor.update( {['data.encounteredCreatures'] : []});
       // if (event.shiftKey) ui.notifications.info('Shift cliecked')
       // SanCheckCard.create( this.actor.actorKey, {min:'1D10',max:'1D12'}, {fastForward:event.shiftKey});
@@ -937,8 +940,8 @@ export class CoC7ActorSheet extends ActorSheet {
                     game.settings.get('CoC7', 'stanbyGMRolls') &&
                     sheet.actor.hasPlayerOwner
                       ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                        name: sheet.actor.name
-                      })
+                          name: sheet.actor.name
+                        })
                       : ''
                 })
             }
@@ -977,8 +980,8 @@ export class CoC7ActorSheet extends ActorSheet {
                     game.settings.get('CoC7', 'stanbyGMRolls') &&
                     sheet.actor.hasPlayerOwner
                       ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                        name: sheet.actor.name
-                      })
+                          name: sheet.actor.name
+                        })
                       : ''
                 })
             }
@@ -1020,8 +1023,8 @@ export class CoC7ActorSheet extends ActorSheet {
                         game.settings.get('CoC7', 'stanbyGMRolls') &&
                         sheet.actor.hasPlayerOwner
                           ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                            name: sheet.actor.name
-                          })
+                              name: sheet.actor.name
+                            })
                           : ''
                     })
                 }
@@ -1047,8 +1050,8 @@ export class CoC7ActorSheet extends ActorSheet {
                         (game.settings.get('CoC7', 'stanbyGMRolls') &&
                         sheet.actor.hasPlayerOwner
                           ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                            name: sheet.actor.name
-                          })
+                              name: sheet.actor.name
+                            })
                           : '')
                     })
                 }
@@ -1176,6 +1179,17 @@ export class CoC7ActorSheet extends ActorSheet {
     await game.CoC7socket.executeAsGM('gmtradeitemto', message)
   }
 
+  _onDragStart (event) {
+    super._onDragStart(event)
+    if (this.token) {
+      const dragData = JSON.parse(event.dataTransfer.getData('text/plain'))
+      dragData.tokenUuid = this.token.uuid
+      dragData.tokenId = this.token.id
+      dragData.sceneId = this.token.parent.id
+      event.dataTransfer.setData('text/plain', JSON.stringify(dragData))
+    }
+  }
+
   _onDragCharacteristic (event) {
     const box = event.currentTarget.parentElement
     const data = {
@@ -1186,7 +1200,11 @@ export class CoC7ActorSheet extends ActorSheet {
       hasPlayerOwner: this.actor.hasPlayerOwner,
       actorKey: this.actor.actorKey,
       name: box.dataset.characteristic,
-      icon: null
+      icon: null,
+      document: {
+        type: this.document.type,
+        uuid: this.document.uuid
+      }
     }
 
     event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
@@ -1202,7 +1220,11 @@ export class CoC7ActorSheet extends ActorSheet {
       hasPlayerOwner: this.actor.hasPlayerOwner,
       actorKey: this.actor.actorKey,
       name: box.dataset.attrib,
-      icon: null
+      icon: null,
+      document: {
+        type: this.document.type,
+        uuid: this.document.uuid
+      }
     }
 
     event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
@@ -1219,7 +1241,11 @@ export class CoC7ActorSheet extends ActorSheet {
       actorKey: this.actor.actorKey,
       sanMin: sanMin.innerText,
       sanMax: sanMax.innerText,
-      icon: null
+      icon: null,
+      document: {
+        type: this.document.type,
+        uuid: this.document.uuid
+      }
     }
 
     event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
@@ -1250,6 +1276,17 @@ export class CoC7ActorSheet extends ActorSheet {
     )
     conCheck.stayAlive = true
     conCheck.toMessage(event.shiftKey)
+  }
+
+  async _onDragTokenStart (event) {
+    const data = {
+      type: 'Token',
+      uuid: this.token.uuid
+    }
+
+    const test = await fromUuid('Scene.Ow0gawVcTFxiQz5X.Token.hqUr4OgO4dTWuDrU')
+
+    event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
   }
 
   async _onResetCounter (event) {
@@ -1412,7 +1449,9 @@ export class CoC7ActorSheet extends ActorSheet {
 
   _onInventoryHeader (event) {
     event.preventDefault()
-    $(event.currentTarget).siblings('li').toggle()
+    $(event.currentTarget)
+      .siblings('li')
+      .toggle()
   }
 
   async _onItemPopup (event) {
@@ -1850,8 +1889,9 @@ export class CoC7ActorSheet extends ActorSheet {
                   value: event.currentTarget.value
                 })
               )
-              formData[event.currentTarget.name] =
-                game.i18n.format('CoC7.ErrorInvalid')
+              formData[event.currentTarget.name] = game.i18n.format(
+                'CoC7.ErrorInvalid'
+              )
             }
           }
         }
@@ -1871,8 +1911,9 @@ export class CoC7ActorSheet extends ActorSheet {
                   value: event.currentTarget.value
                 })
               )
-              formData[event.currentTarget.name] =
-                game.i18n.format('CoC7.ErrorInvalid')
+              formData[event.currentTarget.name] = game.i18n.format(
+                'CoC7.ErrorInvalid'
+              )
             }
           }
         }

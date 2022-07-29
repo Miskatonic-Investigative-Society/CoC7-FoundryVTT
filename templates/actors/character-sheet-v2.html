@@ -1,7 +1,20 @@
 <form class="{{cssClass}} flexcol {{#if permissionLimited}}permission-limited{{/if}}" autocomplete="off" data-actor-id="{{actor.id}}" {{#if tokenId}}data-token-id="{{tokenId}}" {{/if}}>
   {{#unless permissionLimited}}
-  <div class="container">
-    <section class="sheet-header">
+  <div class="token-extras">
+	{{#if canDragToken}}
+	<div draggable="true" class="token-drag-handle" title="{{ localize 'CoC7.ActorIsTokenHint'}}"><i class="fas fa-user-circle"></i></div>
+	{{/if}}
+	{{#if linkedActor}}
+	<div title="{{ localize 'CoC7.ActorDataLinked'}}"><i class="fas fa-link"></i></div>
+    {{else}}
+	<div title="{{ localize 'CoC7.ActorDataNotLinked'}}"><i class="fas fa-unlink"></i></div>
+    {{/if}}
+    {{#if isToken}}
+	<div title="{{ localize 'CoC7.ActorIsSyntheticActor'}}"><i class="game-icon game-icon-backup"></i></div>
+	{{/if}}
+	</div>
+	<div class="container">
+		<section class="sheet-header">
 
       <div class="sheet-portrait">
         <img class="photo" src="{{actor.img}}" title="{{actor.name}}" data-edit="img" />

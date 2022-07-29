@@ -1,6 +1,9 @@
 <div class="floating-left">
   {{#unless data.flags.locked}}
+  <div>
+    <a class="clean-skill-list" title='{{localize "CoC7.CleanSkillList"}}'><i class="game-icon game-icon-broom"></i></a>
     <a class="add-item" data-type="skill" title='{{localize "CoC7.AddSkill"}}'><i class="fas fa-plus"></i></a>
+  </div>
   {{/unless}}
   <a class="toggle-list-mode" title='{{#if skillListModeValue}}{{localize "CoC7.SortBySkillName"}}{{else}}{{localize "CoC7.SortBySkillValue"}}{{/if}}'><i class="fas {{#if skillListModeValue}}fa-sort-alpha-down{{else}}fa-sort-amount-down{{/if}}"></i></a>
   <a class="toggle-uncommon-mode" title='{{#if skillShowUncommon}}{{localize "CoC7.UncommonSkillsShow"}}{{else}}{{localize "CoC7.UncommonSkillsHide"}}{{/if}}'><i class="fas {{#if skillShowUncommon}}fa-toggle-on{{else}}fa-toggle-off{{/if}}"></i></a>

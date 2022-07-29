@@ -12,8 +12,8 @@ export class TestCard extends EnhancedChatCard {
     })
   }
 
-  getData () {
-    const data = super.getData()
+  async getData () {
+    const data = await super.getData()
     data.mySelectOptions = {
       0: 'option 1',
       1: 'option 2'

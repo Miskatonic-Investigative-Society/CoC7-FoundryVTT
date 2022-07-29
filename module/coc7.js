@@ -18,12 +18,14 @@ import { CoC7ActorDirectory } from './actor-directory.js'
 import { CoC7Hooks } from './hooks/index.js'
 import * as DiceBot from './dicebot.js'
 import '../styles/system/index.less'
-import { CoC7ChaseSheet } from './items/sheets/chase.js'
+import { CoC7ChaseSheet } from './items/chase/sheet.js'
 import { CoC7Socket } from './hooks/socket.js'
 import { CoC7SystemSocket } from './apps/coc7-system-socket.js'
 import { DropActorSheetData } from './hooks/drop-actor-sheet-data.js'
-import { TestCard } from './chat/cards/test.js'
+
+// Card init
 import { initECC } from './common/chatcardlib/src/chatcardlib.js'
+import { ChaseObstacleCard } from './chat/cards/chase-obstacle.js'
 
 Hooks.on('renderSettingsConfig', (app, html, options) => {
   const systemTab = $(app.form).find('.tab[data-tab=system]')
@@ -107,6 +109,15 @@ Hooks.on('renderSettingsConfig', (app, html, options) => {
         game.i18n.localize('SETTINGS.TitleRollTable') +
         '</h2>'
     )
+  // MOVED TO CHASSE INDIVIDUAL SETTING
+  // systemTab
+  //   .find('input[name=CoC7\\.chaseShowTokenMovement]')
+  //   .closest('div.form-group')
+  //   .before(
+  //     '<h2 class="setting-header">' +
+  //       game.i18n.localize('SETTINGS.TitleChaseSettings') +
+  //       '</h2>'
+  //   )
 })
 
 Hooks.once('init', async function () {
@@ -128,7 +139,7 @@ Hooks.once('init', async function () {
   Combat.prototype.rollInitiative = rollInitiative
 })
 
-initECC(TestCard) // TO BE REMOVED FOR PROD
+initECC(ChaseObstacleCard)
 
 Hooks.on('renderCombatTracker', (app, html, data) =>
   CoC7Combat.renderCombatTracker(app, html, data)
@@ -375,14 +386,14 @@ Hooks.on('ready', async () => {
       game.settings.get('CoC7', 'boutOfMadnessSummaryTable') === 'none'
         ? null
         : game.tables.get(
-          game.settings.get('CoC7', 'boutOfMadnessSummaryTable')
-        ),
+            game.settings.get('CoC7', 'boutOfMadnessSummaryTable')
+          ),
     boutOfMadness_RealTime:
       game.settings.get('CoC7', 'boutOfMadnessRealTimeTable') === 'none'
         ? null
         : game.tables.get(
-          game.settings.get('CoC7', 'boutOfMadnessRealTimeTable')
-        )
+            game.settings.get('CoC7', 'boutOfMadnessRealTimeTable')
+          )
     // maniasIndex: ge.settings.get('CoC7', 'boutOfMadnessPhobiasIndex'),
     // phobiasIndex: game.settings.get('CoC7', 'boutOfMadnessManiasIndex'),
     // phobias: ('none' == game.settings.get('CoC7', 'samplePhobiasTable'))?null:game.tables.get(game.settings.get('CoC7', 'samplePhobiasTable')),
