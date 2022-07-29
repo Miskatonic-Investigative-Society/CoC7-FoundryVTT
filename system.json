@@ -3,9 +3,13 @@
   "title": "Call of Cthulhu 7th Edition (Unofficial)",
   "description": "An unofficial implementation of the Call of Cthulhu 7th Edition game system for Foundry Virtual Tabletop.",
   "version": "0.7.11",
-  "author": "Miskatonic Investigative Society",
+  "authors": [
+    {
+      "name": "Miskatonic Investigative Society"
+    }
+  ],
   "minimumCoreVersion": "9",
-  "compatibleCoreVersion": "10.265",
+  "compatibleCoreVersion": "10.275",
   "esmodules": [
     "lib/socketlib/src/libwrapper_shim.js",
     "lib/socketlib/src/socketlib.js",
@@ -16,35 +20,35 @@
   "packs": [
     {
       "label": "Skills",
-      "entity": "Item",
+      "type": "Item",
       "name": "skills",
       "path": "./packs/skills.db",
       "system": "CoC7"
     },
     {
       "label": "Items Examples",
-      "entity": "Item",
+      "type": "Item",
       "name": "items",
       "path": "./packs/items.db",
       "system": "CoC7"
     },
     {
       "label": "Examples",
-      "entity": "Actor",
+      "type": "Actor",
       "name": "examples",
       "path": "./packs/examples.db",
       "system": "CoC7"
     },
     {
       "label": "Roll Requests",
-      "entity": "JournalEntry",
+      "type": "JournalEntry",
       "name": "roll-requests",
       "path": "./packs/roll-requests.db",
       "system": "CoC7"
     },
     {
       "label": "Sanity Roll Table",
-      "entity": "RollTable",
+      "type": "RollTable",
       "name": "sanity-tables-examples",
       "path": "./packs/sanity-tables-examples.db",
       "system": "CoC7"
