@@ -272,7 +272,10 @@ export class CoC7ActorSheet extends ActorSheet {
                 ).total
               } catch (err) {
                 console.warn(
-                  `unable to parse formula :${item.data.value} for skill ${item.name}`
+                  game.i18n.format('CoC7.ErrorUnableToParseSkillFormula', {
+                    value: item.data.value,
+                    name: item.name
+                  })
                 )
                 value = null
               }
@@ -940,8 +943,8 @@ export class CoC7ActorSheet extends ActorSheet {
                     game.settings.get('CoC7', 'stanbyGMRolls') &&
                     sheet.actor.hasPlayerOwner
                       ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                          name: sheet.actor.name
-                        })
+                        name: sheet.actor.name
+                      })
                       : ''
                 })
             }
@@ -980,8 +983,8 @@ export class CoC7ActorSheet extends ActorSheet {
                     game.settings.get('CoC7', 'stanbyGMRolls') &&
                     sheet.actor.hasPlayerOwner
                       ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                          name: sheet.actor.name
-                        })
+                        name: sheet.actor.name
+                      })
                       : ''
                 })
             }
@@ -1023,8 +1026,8 @@ export class CoC7ActorSheet extends ActorSheet {
                         game.settings.get('CoC7', 'stanbyGMRolls') &&
                         sheet.actor.hasPlayerOwner
                           ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                              name: sheet.actor.name
-                            })
+                            name: sheet.actor.name
+                          })
                           : ''
                     })
                 }
@@ -1050,8 +1053,8 @@ export class CoC7ActorSheet extends ActorSheet {
                         (game.settings.get('CoC7', 'stanbyGMRolls') &&
                         sheet.actor.hasPlayerOwner
                           ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                              name: sheet.actor.name
-                            })
+                            name: sheet.actor.name
+                          })
                           : '')
                     })
                 }
@@ -1283,9 +1286,6 @@ export class CoC7ActorSheet extends ActorSheet {
       type: 'Token',
       uuid: this.token.uuid
     }
-
-    const test = await fromUuid('Scene.Ow0gawVcTFxiQz5X.Token.hqUr4OgO4dTWuDrU')
-
     event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
   }
 
@@ -1449,9 +1449,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
   _onInventoryHeader (event) {
     event.preventDefault()
-    $(event.currentTarget)
-      .siblings('li')
-      .toggle()
+    $(event.currentTarget).siblings('li').toggle()
   }
 
   async _onItemPopup (event) {
@@ -1889,9 +1887,8 @@ export class CoC7ActorSheet extends ActorSheet {
                   value: event.currentTarget.value
                 })
               )
-              formData[event.currentTarget.name] = game.i18n.format(
-                'CoC7.ErrorInvalid'
-              )
+              formData[event.currentTarget.name] =
+                game.i18n.format('CoC7.ErrorInvalid')
             }
           }
         }
@@ -1911,9 +1908,8 @@ export class CoC7ActorSheet extends ActorSheet {
                   value: event.currentTarget.value
                 })
               )
-              formData[event.currentTarget.name] = game.i18n.format(
-                'CoC7.ErrorInvalid'
-              )
+              formData[event.currentTarget.name] =
+                game.i18n.format('CoC7.ErrorInvalid')
             }
           }
         }
@@ -1970,7 +1966,9 @@ export class CoC7ActorSheet extends ActorSheet {
               await r.roll({ async: true })
               if (isNaN(r.total) || typeof r.total === 'undefined') {
                 ui.notifications.error(
-                  event.currentTarget.value + ' is not a valid formula'
+                  game.i18n.format('CoC7.ErrorUnableToParseFormula', {
+                    value: event.currentTarget.value
+                  })
                 )
               } else {
                 switch (event.currentTarget.dataset.range) {

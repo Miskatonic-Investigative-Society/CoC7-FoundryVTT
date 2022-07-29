@@ -1,4 +1,4 @@
-/* global Dialog, renderTemplate, Roll */
+/* global Dialog, game, renderTemplate, Roll */
 
 export class CharacRollDialog extends Dialog {
   constructor (data, options) {
@@ -97,7 +97,10 @@ export class CharacRollDialog extends Dialog {
         const roll = new Roll(formula)
         await roll.evaluate({ async: true })
         roll.toMessage({
-          flavor: `Rolling characterisitic ${this.data.data.characteristics.list[key].label}: ${formula}`
+          flavor: game.i18n.format('CoC7.MessageRollingCharacteristic', {
+            label: this.data.data.characteristics.list[key].label,
+            formula: formula
+          })
         })
         input.value = roll.total
       } else input.value = Number(formula)

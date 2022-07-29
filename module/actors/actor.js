@@ -851,12 +851,10 @@ export class CoCActor extends Actor {
             data.data.characteristics.list.luck.value = isNaN(this.luck)
               ? null
               : this.luck
-            data.data.characteristics.list.luck.label = game.i18n.localize(
-              'CoC7.Luck'
-            )
-            data.data.characteristics.list.luck.shortName = game.i18n.localize(
-              'CoC7.Luck'
-            )
+            data.data.characteristics.list.luck.label =
+              game.i18n.localize('CoC7.Luck')
+            data.data.characteristics.list.luck.shortName =
+              game.i18n.localize('CoC7.Luck')
 
             if (!data.data.characteristics.values) {
               data.data.characteristics.values = {}
@@ -923,11 +921,10 @@ export class CoCActor extends Actor {
                   data.data.characteristics.values.pow
                 updateData['data.attribs.san.oneFifthSanity'] =
                   ' / ' + Math.floor(data.data.characteristics.values.pow / 5)
-                updateData['data.indefiniteInsanityLevel.max'] = updateData[
-                  'data.attribs.mp.value'
-                ] = updateData['data.attribs.mp.max'] = Math.floor(
-                  data.data.characteristics.values.pow / 5
-                )
+                updateData['data.indefiniteInsanityLevel.max'] =
+                  updateData['data.attribs.mp.value'] =
+                  updateData['data.attribs.mp.max'] =
+                    Math.floor(data.data.characteristics.values.pow / 5)
               }
               await this.update(updateData)
               await this.update({
@@ -1009,7 +1006,13 @@ export class CoCActor extends Actor {
                 )
                 await roll.roll({ async: true })
                 roll.toMessage({
-                  flavor: `Rolling characterisitic ${char.label}: ${data.data.coreCharacteristicsFormula.value}`
+                  flavor: game.i18n.format(
+                    'CoC7.MessageRollingCharacteristic',
+                    {
+                      label: char.label,
+                      formula: data.data.coreCharacteristicsFormula.value
+                    }
+                  )
                 })
                 value = char.value < roll.total ? roll.total : char.value
               }
@@ -2192,13 +2195,19 @@ export class CoCActor extends Actor {
           await weapons[0].reload()
         } else {
           ui.notifications.warn(
-            `Actor ${this.name} has no weapon named ${weaponData.name}`
+            game.i18n.format('CoC7.ErrorActorHasNoWeaponNamed', {
+              actorName: this.name,
+              weaponName: weaponData.name
+            })
           )
           return
         }
       } else if (weapons.length > 1) {
         ui.notifications.warn(
-          `Actor ${this.name} has more than one weapon named ${weaponData.name}. The first found will be used`
+          game.i18n.format('CoC7.ErrorActorHasTooManyWeaponsNamed', {
+            actorName: this.name,
+            weaponName: weaponData.name
+          })
         )
       }
       weapon = weapons[0]
@@ -3130,10 +3139,10 @@ export class CoCActor extends Actor {
   }
 
   async dealDamage (amount, options = {}) {
-    //TODO: Change options to list of values
+    // TODO: Change options to list of values
     const armorData = options.armor
       ? options.armor
-      : this.data.data.attribs.armor //if there armor value passed we use it
+      : this.data.data.attribs.armor // if there armor value passed we use it
     const grossDamage = parseInt(amount)
     let armorValue = 0
     if (!options.ignoreArmor) {
@@ -3147,7 +3156,9 @@ export class CoCActor extends Actor {
         armorValue = Number(armorData.value)
       } else {
         ui.notifications.warn(
-          `Unable to process armor value: ${armorData}. Ignoring armor.`
+          game.i18n.format('CoC7.ErrorUnableToParseArmorFormula', {
+            value: armorData
+          })
         )
       }
     }

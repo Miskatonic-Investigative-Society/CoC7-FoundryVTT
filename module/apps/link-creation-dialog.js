@@ -251,7 +251,9 @@ export class CoC7LinkCreationDialog extends FormApplication {
       case 'whisper-selected':
         {
           if (!canvas.tokens.controlled.length) {
-            ui.notifications.warn('No tokens selected')
+            ui.notifications.warn(
+              game.i18n.localize('CoC7.ErrorNoTokensSelected')
+            )
             return
           }
           const option = {}
