@@ -44,7 +44,7 @@ export class DamageCard extends InteractiveChatCard {
   }
 
   get impale () {
-    if (this._impale === 'undefined') return this.weapon.impale
+    if (typeof this._impale === 'undefined') return this.weapon.impale
     return this._impale
   }
 
