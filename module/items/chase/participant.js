@@ -1,3 +1,4 @@
+/* global game, ui */
 import { chatHelper } from '../../chat/helper.js'
 import { CoC7Check } from '../../check.js'
 import { CoC7Utilities } from '../../utilities.js'
@@ -115,8 +116,9 @@ export class _participant {
       isNaN(this.data.bonusDice) ||
       this.data.bonusDice < 0 ||
       this.data.bonusDice > 2
-    )
+    ) {
       return 0
+    }
     return this.data.bonusDice
   }
 
@@ -324,18 +326,28 @@ export class _participant {
     this.data.slowest = x
   }
 
+  get slowest () {
+    return this.data.slowest
+  }
+
   set fastest (x) {
     this.data.fastest = x
   }
 
+  get fastest () {
+    return this.data.fastest
+  }
+
   calculateMovementActions (minMov) {
     if (
-      undefined == this.movementAction ||
-      undefined == this.adjustedMov ||
+      typeof this.movementAction === 'undefined' ||
+      typeof this.adjustedMov === 'undefined' ||
       isNaN(minMov)
-    )
+    ) {
       this.movementAction = 0
-    else this.movementAction = 1 + (this.adjustedMov - minMov)
+    } else {
+      this.movementAction = 1 + (this.adjustedMov - minMov)
+    }
     // if( this.movementAction < 0) this.movementAction = 0
   }
 
@@ -363,14 +375,11 @@ export class _participant {
     return this.currentMovementActions <= 0
   }
 
-  get isActive () {
-    return this.data.active || false
-  }
-
   addMovementActions (x = 1) {
     this.currentMovementActions += x
-    if (this.currentMovementActions > this.movementAction)
+    if (this.currentMovementActions > this.movementAction) {
       this.currentMovementActions = this.movementAction
+    }
   }
 
   addMovementActions (x = 1) {
@@ -379,8 +388,9 @@ export class _participant {
 
   alterMovementActions (x) {
     this.currentMovementActions += x
-    if (this.currentMovementActions > this.movementAction)
+    if (this.currentMovementActions > this.movementAction) {
       this.currentMovementActions = this.movementAction
+    }
   }
 
   get movementActionArray () {
@@ -551,9 +561,9 @@ export function sortByRoleAndDex (a, b) {
   if (!a && b) return 1
   if (!b && a) return -1
   if (!a && !b) return 0
-  //Put chasers first
+  // Put chasers first
   if (b.chaser && !a.chaser) return 1
   if (a.chaser && !b.chaser) return -1
-  //If sametype sort by dex
+  // If sametype sort by dex
   return a.dex - b.dex
 }

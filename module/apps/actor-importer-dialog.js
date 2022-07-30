@@ -77,38 +77,23 @@ export class CoC7ActorImporterDialog extends FormApplication {
    */
   static getInputs (form) {
     const inputs = {}
-    inputs.entity = form
-      .find('#coc-entity-type')
-      .val()
-      .trim()
+    inputs.entity = form.find('#coc-entity-type').val().trim()
     if (CONFIG.debug.CoC7Importer) {
       console.debug('entity type:', inputs.entity)
     }
     if (form.find('#coc-convert-6E').length > 0) {
-      inputs.convertFrom6E = form
-        .find('#coc-convert-6E')
-        .val()
-        .trim()
+      inputs.convertFrom6E = form.find('#coc-convert-6E').val().trim()
     }
     if (form.find('#coc-entity-lang').length > 0) {
       inputs.lang = CoC7ActorImporterRegExp.checkLanguage(
-        form
-          .find('#coc-entity-lang')
-          .val()
-          .trim()
+        form.find('#coc-entity-lang').val().trim()
       )
     }
     if (form.find('#source').length > 0) {
-      inputs.source = form
-        .find('#source')
-        .val()
-        .trim()
+      inputs.source = form.find('#source').val().trim()
     }
     if (form.find('#coc-pasted-character-data').length > 0) {
-      inputs.text = form
-        .find('#coc-pasted-character-data')
-        .val()
-        .trim()
+      inputs.text = form.find('#coc-pasted-character-data').val().trim()
     }
 
     if (CONFIG.debug.CoC7Importer) {
@@ -172,9 +157,10 @@ export class CoC7ActorImporterDialog extends FormApplication {
       const form = $(event.currentTarget).closest('form')
       const inputs = CoC7ActorImporterDialog.getInputs(form)
       if (inputs.entity === 'dholehouse' && this.characterJSON) {
-        const character = await CoC7DholeHouseActorImporter.createNPCFromDholeHouse(
-          this.characterJSON
-        )
+        const character =
+          await CoC7DholeHouseActorImporter.createNPCFromDholeHouse(
+            this.characterJSON
+          )
         if (character !== false) {
           if (CONFIG.debug.CoC7Importer) {
             console.debug('character:', character)

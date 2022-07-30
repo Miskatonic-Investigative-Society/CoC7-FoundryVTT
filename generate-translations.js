@@ -16,7 +16,7 @@ glob('./lang/*.json', {}, async function (er, files) {
       if (lang !== 'en') {
         const json = jsonfile.readFileSync(filename)
         const missingKeys = keys.filter(x => !Object.keys(json).includes(x))
-        if (missingKeys.length < 141) {
+        if (missingKeys.length < 200) {
           unordered[lang] = missingKeys
           missing = missing.concat(unordered[lang])
         } else {

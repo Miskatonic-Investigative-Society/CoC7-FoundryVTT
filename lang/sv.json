@@ -543,7 +543,7 @@
   "CoC7.MaxSanloss": "Maximal förlust",
   "CoC7.MinSanloss": "Minsta förlust",
   "CoC7.AlreadyLost": "Redan förlorat",
-  "CoC7.AlreadyEncountered": "Redan stött på", 
+  "CoC7.AlreadyEncountered": "Redan stött på",
   "CoC7.CreatureMaxLoss": "Maximal förlust",
   "CoC7.MaxLossToCreature": "Maximal förlust vid möten med den här varelsen",
   "CoC7.MaxPossibleSanLoss": "Högsta möjliga förlust",
@@ -789,7 +789,7 @@
 
   "CoC7.Migrate.UpdateCurrentScene": "Migrerar din nuvarande scen",
   "CoC7.Migrate.Complete": "Migreringen av din data är klar",
-  
+
   "CoC7.Settings.CoreRules.Title": "Valfria regler från grundregelboken",
   "CoC7.Settings.Rules.Name": "Alternativa/frivilliga regler",
   "CoC7.Settings.Rules.Label": "Konfigurera Alternativa/frivilliga regler",

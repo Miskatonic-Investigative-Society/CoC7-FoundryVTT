@@ -30,7 +30,7 @@
       {{/if}}
       {{#if damageInflicted}}
         {{#if ignoreArmor}}
-          <span class='tag gm-visible-only'>Armor Ignored</span>
+          <span class='tag gm-visible-only'>{{localize 'CoC7.ArmorIgnored'}}</span>
         {{else if (and (ne armor '') (ne armor null))}}
           <span class='tag gm-visible-only'>{{localize 'CoC7.Armor'}}: {{armor}}</span>
           <span class='tag owner-visible-only'>{{localize 'CoC7.Armor'}}: {{armor}}</span>
@@ -100,18 +100,18 @@
   {{!--
     <div class="flexrow gm-select-only ic-radio">
       <span class="flex1 ic-radio-switch gm-select-only {{#if advantageAttacker}}switched-on{{/if}} "
-          title="{{localize CoC7.AdvantageAttacker}}"
+          title="{{localize 'CoC7.AdvantageAttacker'}}"
           data-flag="advantageAttacker"
           data-selected={{advantageAttacker}}>{{localize 'CoC7.AdvantageAttacker'}}</span>
       <span class="flex1 ic-radio-switch gm-select-only {{#if advantageDefender}}switched-on{{/if}}"
-          title="{{localize CoC7.AdvantageDefender}}"
+          title="{{localize 'CoC7.AdvantageDefender'}}"
           data-flag="advantageDefender"
           data-selected={{advantageDefender}}>{{localize 'CoC7.AdvantageDefender'}}</span>
     </div>
 
     <div class="flexrow">
       <span class="flex1 ic-switch gm-select-only {{#if switchTest}}switched-on{{/if}} "
-          title="{{localize CoC7.switchTest}}"
+          title="{{localize 'CoC7.switchTest'}}"
           data-flag="switchTest"
           data-selected={{switchTest}}>{{localize 'CoC7.AdvantageAttacker'}}</span>
     </div>

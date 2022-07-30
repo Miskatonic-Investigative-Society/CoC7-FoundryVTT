@@ -543,7 +543,7 @@
   "CoC7.MaxSanloss": "Perdita Max",
   "CoC7.MinSanloss": "Perdita Min",
   "CoC7.AlreadyLost": "Già perso",
-  "CoC7.AlreadyEncountered": "Già incontrata", 
+  "CoC7.AlreadyEncountered": "Già incontrata",
   "CoC7.CreatureMaxLoss": "Perdità Max della creatura",
   "CoC7.MaxLossToCreature": "Perdita Max per questa creatura",
   "CoC7.MaxPossibleSanLoss": "Perdita Max possibile",
@@ -761,14 +761,14 @@
   "CoC7.ImportActorItemsItemWorldModuleSystem": "Oggetti / Mondi / Moduli / Sistema",
   "CoC7.ImportActorItemsWorldModuleItemSystem": "Mondi / Moduli / Oggetti / Sistema",
   "CoC7.ActorImported": "Nuovo {actorType} importato: {actorName}",
-  
+
   "CoC7.DholeHouseActorImporter": "Importatore JSON per personaggi della The Dhole's House",
   "CoC7.DholeHouseActorImporterSummary": "Esporta il tuo personaggio della Dhole's House in formato JSON e importalo qui.",
   "CoC7.DholeHouseImportingName": "Pronto a importare: ",
   "CoC7.DholeHousePickYourJSONFile": "Scegli il file JSON esportato dalla The Dhole's House",
   "CoC7.DholeHouseActorImporterSource": "Personaggio importato dalla The Dhole's House",
   "CoC7.DholeHouseInvalidActor": "Il file JSON selezionato non sembra essere un personaggio esportato dalla The Dhole's House valido",
-  
+
   "CoC7.HowToTranslateTitle": "Come tradurre?",
   "CoC7.HowToTranslateWarning": "Non installare moduli di cui non ti fidi.",
   "CoC7.HowToTranslateInstallBabele": "Installa/aggiorna il modulo Babele dal gestore dei moduli di Foundry.",
@@ -792,7 +792,7 @@
 
   "CoC7.Migrate.UpdateCurrentScene": "Migrazione della tua scena attuale",
   "CoC7.Migrate.Complete": "Terminata la migrazione dei tuoi dati",
-  
+
   "CoC7.Settings.CoreRules.Title": "Regole opzionali del regolamento base",
   "CoC7.Settings.Rules.Name": "Regole opzionali/variazioni",
   "CoC7.Settings.Rules.Label": "Configurazione delle regole opzionali/variazioni",

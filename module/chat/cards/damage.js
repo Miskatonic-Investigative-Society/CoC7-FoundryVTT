@@ -149,7 +149,7 @@ export class DamageCard extends InteractiveChatCard {
   async dealDamageToSelectedTarget (options = { update: true }) {
     if (this.isArmorForula) await this.rollArmor()
     if (isNaN(Number(this.totalDamageString))) {
-      ui.notifications.error('Error evaluating damage')
+      ui.notifications.error(game.i18n.localize('CoC7.ErrorEvaluatingDamage'))
       return
     }
     const targets = []
@@ -197,7 +197,10 @@ export class DamageCard extends InteractiveChatCard {
         ignoreArmor: false
       })
       ChatMessage.create({
-        content: `Damage ${targets[index].name} ${this.totalDamageString}HP`
+        content: game.i18n.format('CoC7.DamageDealTo', {
+          name: targets[index].name,
+          damage: this.totalDamageString
+        })
       })
     }
   }

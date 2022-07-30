@@ -434,7 +434,7 @@ export class CoC7Item extends Item {
       if (game.settings.get('CoC7', 'xpEnabled') || game.user.isGM) {
         await this.update({ [name]: flagValue })
       } else {
-        ui.notifications.info('XP Gain disabled.')
+        ui.notifications.info(game.i18n.localize('CoC7.SkillXpGainDisabled'))
       }
     } else await this.update({ [name]: flagValue })
   }

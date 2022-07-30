@@ -72,15 +72,9 @@ export class CoC7DirectoryPicker extends FilePicker {
   activateListeners (html) {
     super.activateListeners(html)
 
-    $(html)
-      .find('ol.files-list')
-      .remove()
-    $(html)
-      .find('footer div')
-      .remove()
-    $(html)
-      .find('footer button')
-      .text(game.i18n.localize('CoC7.PickDirectory'))
+    $(html).find('ol.files-list').remove()
+    $(html).find('footer div').remove()
+    $(html).find('footer button').text(game.i18n.localize('CoC7.PickDirectory'))
   }
 
   static async createDefaultDirectory () {

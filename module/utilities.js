@@ -1,4 +1,4 @@
-/* global canvas, ChatMessage, CONST, Dialog, game, getDocumentClass, Hooks, Macro, Roll, ui */
+/* global canvas, ChatMessage, CONFIG, CONST, Dialog, duplicate, Folder, fromUuid, game, getDocumentClass, Hooks, Macro, Roll, Token, ui */
 
 import { COC7 } from './config.js'
 import { CoC7Check } from './check.js'
@@ -644,8 +644,8 @@ export class CoC7Utilities {
           document.execCommand('copy')
             ? resolve()
             : reject(
-                new Error(game.i18n.localize('CoC7.UnableToCopyToClipboard'))
-              )
+              new Error(game.i18n.localize('CoC7.UnableToCopyToClipboard'))
+            )
           textArea.remove()
         }).catch(err => ui.notifications.error(err))
       }
@@ -707,10 +707,10 @@ export class CoC7Utilities {
   }
 
   static setByPath (obj, path, value) {
-    var parts = path.split('.')
-    var o = obj
+    const parts = path.split('.')
+    let o = obj
     if (parts.length > 1) {
-      for (var i = 0; i < parts.length - 1; i++) {
+      for (let i = 0; i < parts.length - 1; i++) {
         if (!o[parts[i]]) o[parts[i]] = {}
         o = o[parts[i]]
       }
@@ -720,10 +720,10 @@ export class CoC7Utilities {
   }
 
   static getByPath (obj, path) {
-    var parts = path.split('.')
-    var o = obj
+    const parts = path.split('.')
+    let o = obj
     if (parts.length > 1) {
-      for (var i = 0; i < parts.length - 1; i++) {
+      for (let i = 0; i < parts.length - 1; i++) {
         if (!o[parts[i]]) return undefined
         o = o[parts[i]]
       }
@@ -750,10 +750,8 @@ export class CoC7Utilities {
       // parts = parts.slice(3);
       // const pack = game.packs.get(`${scope}.${packName}`);
       // return await pack?.getDocument(id);
-    }
-
-    // World Documents
-    else {
+    } else {
+      // World Documents
       const [docName, docId] = parts.slice(0, 2)
       parts = parts.slice(2)
       const collection = CONFIG[docName].collection.instance
@@ -784,21 +782,24 @@ export class CoC7Utilities {
 
   static getActorDocumentFromDropData (dropData) {
     let docUuid, actor
-    if (dropData.tokenUuid) docUuid = dropData.tokenUuid
-    else
+    if (dropData.tokenUuid) {
+      docUuid = dropData.tokenUuid
+    } else if (typeof dropData.uuid !== 'undefined') {
+      docUuid = dropData.uuid
+    } else {
       docUuid =
         dropData.sceneId && dropData.tokenId
           ? `Scene.${dropData.sceneId}.Token.${dropData.tokenId}`
           : dropData.actorId || dropData.actorKey || dropData.id
-
-    if ('Token' === dropData.type) {
+    }
+    if (dropData.type === 'Token') {
       docUuid = dropData.uuid
     } else if (docUuid) {
       actor = CoC7Utilities.getActorFromKey(docUuid)
-      if (!actor && 'Item' === dropData.type) docUuid = null
+      if (!actor && dropData.type === 'Item') docUuid = null
     }
 
-    if (actor && docUuid != actor.uuid) {
+    if (actor && docUuid !== actor.uuid) {
       docUuid = actor.uuid
     }
     return docUuid
@@ -808,7 +809,7 @@ export class CoC7Utilities {
     if (!key) return null
     // Case 0 - a document Uuid
     if (CoC7Utilities.isDocumentUuid(key)) {
-      if (CoC7Utilities.isDocumentUuidPack(key)) return fromUuid(key) //TODO Check we can do that
+      if (CoC7Utilities.isDocumentUuidPack(key)) return fromUuid(key) // TODO Check we can do that
       return CoC7Utilities.SfromUuid(key)
     }
 
@@ -835,11 +836,11 @@ export class CoC7Utilities {
     const doc = CoC7Utilities.getDocumentFromKey(key)
     if (!doc) return null
     if (doc.actor) return doc.actor
-    if (doc.constructor?.name == 'CoCActor') return doc
+    if (doc.constructor?.name === 'CoCActor') return doc
     return null
   }
 
-   /**
+  /**
    * Creates a folder on the actors tab called "Imported Characters" if the folder doesn't exist.
    * @returns {Folder} the importedCharactersFolder
    */

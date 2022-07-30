@@ -56,7 +56,9 @@ export class CoC7SystemSocket {
         data.listener = keepers[0].id
         game.socket.emit('system.CoC7', data)
       } else {
-        ui.notifications.error(game.i18n.localize('CoC7.ErrorMissingKeeperUser'))
+        ui.notifications.error(
+          game.i18n.localize('CoC7.ErrorMissingKeeperUser')
+        )
       }
     }
   }
@@ -69,7 +71,10 @@ export class CoC7SystemSocket {
    * @param {boolean} includeSelf     If running as all users should the current user also run the action.
    * @return {void}
    */
-  static requestUserAction (data, { userId = null, errorIfMissing = true, includeSelf = true } = {}) {
+  static requestUserAction (
+    data,
+    { userId = null, errorIfMissing = true, includeSelf = true } = {}
+  ) {
     if (userId && typeof userId !== 'undefined') {
       if (userId === game.user.id) {
         data.listener = game.user.id

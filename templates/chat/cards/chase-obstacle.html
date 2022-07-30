@@ -19,7 +19,7 @@
     </header>
 
 		<datalist id="check-options">
-      
+
       {{#each checkOptions as |o|}}
         <option>{{o}}</option>
       {{/each}}
@@ -248,7 +248,7 @@
                   {{/if}}
                   {{#if card.validObstacleDamage}}
                     <div class="card-buttons">
-                      <button class="" data-action="askRollObstacleDamage">Ask damage roll</button>
+                      <button class="" data-action="askRollObstacleDamage">{{localize 'CoC7.AskDamageRoll'}}</button>
                     </div>
                   {{/if}}
                 </div>
@@ -261,8 +261,8 @@
                 <button type="button" class="button-icon" data-action="cancelObstacleDefinition" title="{{ localize 'CoC7.Cancel' }}"><i class="fas fa-undo"></i></button>
               </div>
               <div class="card-buttons">
-                <button class="" data-action="tryToNegotiateObstacle">Attempt to negotiate that obstacle</button>
-                <button class="" data-action="tryToBreakDownObstacle">Attempt to break down !!</button>
+                <button class="" data-action="tryToNegotiateObstacle">{{localize 'CoC7.AttemptNegotiateObstacle'}}</button>
+                <button class="" data-action="tryToBreakDownObstacle">{{localize 'CoC7.AttemptBreakDown'}}</button>
               </div>
             </div>
           {{/if}}
@@ -278,11 +278,11 @@
               </div>
             {{/if}}
             <div class="form-group">
-              <label>Obstacle name:</label>
+              <label>{{localize 'CoC7.ObstacleName'}}</label>
               <input type="text" data-ecc-permissions="gm" name="data.obstacle.name" value="{{data.obstacle.name}}"/>
             </div>
             <div class="card-buttons">
-              <button class="" data-action="defineObstacle">Validate</button>
+              <button class="" data-action="defineObstacle">{{localize 'CoC7.Validate'}}</button>
             </div>
           </div>
         {{/if}}
@@ -290,7 +290,7 @@
 
       <div class="status-list">
         <div class="status movement-action">
-            <span>actions :</span>
+            <span>{{localize 'CoC7.Actions'}}</span>
             {{#each data.movementActionArray as |actionClass|}}
             <i class="fas fa-bahai {{actionClass}}"></i>
             {{/each}}

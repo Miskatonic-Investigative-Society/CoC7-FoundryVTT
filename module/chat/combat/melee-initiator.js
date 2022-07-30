@@ -222,7 +222,9 @@ export class CoC7MeleeInitiator extends ChatCardActor {
     // TODO : Check if this needs to be async
     if (!this.actor.spendLuck(luckAmount)) {
       ui.notifications.error(
-        `${this.actor.name} didn't have enough luck to pass the check`
+        game.i18n.format('CoC7.LuckNotEnough', {
+          name: this.actor.name
+        })
       )
     }
     this.roll.value = null

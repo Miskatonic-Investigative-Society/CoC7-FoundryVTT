@@ -246,7 +246,7 @@
             <div class="tab coc7 sheet actor temp-retro-compat restore-list-styles character-background" data-group="primary" data-tab="keeper">
               {{editor content=data.description.keeper target="data.description.keeper" button=true owner=owner editable=editable}}
               {{#if hasConditions}}
-                <div><a class="clear_conditions button">Clear All Conditions</a></div>
+                <div><a class="clear_conditions button">{{localize 'CoC7.ClearAllConditions'}}</a></div>
               {{/if}}
               <div class="flexrow">
                 {{> "systems/CoC7/templates/actors/parts/actor-keeper-mythos-enounters.hbs"}}
