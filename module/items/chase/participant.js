@@ -382,10 +382,6 @@ export class _participant {
     }
   }
 
-  addMovementActions (x = 1) {
-    this.currentMovementActions -= x
-  }
-
   alterMovementActions (x) {
     this.currentMovementActions += x
     if (this.currentMovementActions > this.movementAction) {
