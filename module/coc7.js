@@ -121,7 +121,10 @@ Hooks.on('renderSettingsConfig', (app, html, options) => {
 })
 
 Hooks.once('init', async function () {
-  if (typeof CONST.COMPATIBILITY_MODES !== 'undefined' && !isNewerVersion(game.version, '10.300')) {
+  if (
+    typeof CONST.COMPATIBILITY_MODES !== 'undefined' &&
+    !isNewerVersion(game.version, '10.300')
+  ) {
     // hide compatibility warnings while we still support v9 and v10 with the same version
     CONFIG.compatibility.mode = CONST.COMPATIBILITY_MODES.SILENT
   }
@@ -134,6 +137,12 @@ Hooks.once('init', async function () {
     },
     cards: {
       DamageCard: DamageCard
+    },
+    dev: {
+      dice: {
+        alwaysCrit: false,
+        alwaysFumble: false
+      }
     }
   }
   Combat.prototype.rollInitiative = rollInitiative
