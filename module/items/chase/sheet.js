@@ -71,26 +71,26 @@ export class CoC7ChaseSheet extends ItemSheet {
 
     data.preysMinMov = data.preys.length
       ? data.preys.reduce((prev, current) =>
-          prev.adjustedMov < current.adjustedMov ? prev : current
-        ).adjustedMov
+        prev.adjustedMov < current.adjustedMov ? prev : current
+      ).adjustedMov
       : -1
 
     data.preysMaxMov = data.preys.length
       ? data.preys.reduce((prev, current) =>
-          prev.adjustedMov > current.adjustedMov ? prev : current
-        ).adjustedMov
+        prev.adjustedMov > current.adjustedMov ? prev : current
+      ).adjustedMov
       : -1
 
     data.chasersMinMov = data.chasers.length
       ? data.chasers.reduce((prev, current) =>
-          prev.adjustedMov < current.adjustedMov ? prev : current
-        ).adjustedMov
+        prev.adjustedMov < current.adjustedMov ? prev : current
+      ).adjustedMov
       : -1
 
     data.chasersMaxMov = data.chasers.length
       ? data.chasers.reduce((prev, current) =>
-          prev.adjustedMov > current.adjustedMov ? prev : current
-        ).adjustedMov
+        prev.adjustedMov > current.adjustedMov ? prev : current
+      ).adjustedMov
       : -1
 
     data.chasers.forEach(p => {
@@ -113,9 +113,9 @@ export class CoC7ChaseSheet extends ItemSheet {
     if (data.activeLocation) {
       data.activeLocation.title = data.activeLocation.coordinates
         ? game.i18n.format('CoC7.LocationCoordinate', {
-            x: data.activeLocation.coordinates.x,
-            y: data.activeLocation.coordinates.y
-          })
+          x: data.activeLocation.coordinates.x,
+          y: data.activeLocation.coordinates.y
+        })
         : game.i18n.localize('CoC7.DragOnCanvas')
     }
     data.previousLocation = this.item.previousLocation
