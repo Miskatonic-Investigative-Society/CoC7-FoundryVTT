@@ -343,7 +343,7 @@
   "CoC7.EraPulp": "펄프 크툴루",
   "CoC7.EraMdrn": "현대",
   "CoC7.Eras": "크툴루 배경",
- "CoC7.EraAvailability": "시대 선택",
+  "CoC7.EraAvailability": "시대 선택",
 
   "CoC7.SkillNoAdjustments": "수정 불가",
   "CoC7.SkillNoXpGain": "경험치 습득 불가",
@@ -564,7 +564,7 @@
   "CoC7.SpellCastingCost": "시전 비용",
   "CoC7.CallSpell": "강림",
   "CoC7.DismissSpell": "취소",
-  "CoC7.ContactSpell": "접촉", 
+  "CoC7.ContactSpell": "접촉",
   "CoC7.SummonSpell": "소환",
   "CoC7.BindSpell": "구속",
   "CoC7.EnchantmentSpell": "암시",
@@ -573,7 +573,7 @@
   "CoC7.SpellType": "주문 타입",
   "CoC7.SpellSuccessfullyLearned": " '{spell}' 주문을 성공적으로 배웠습니다!",
   "CoC7.SpellAlreadyLearned": "('{spell}') 는(은) 이미 알고있는 주문입니다.",
-  
+
   "CoC7.BookHasNothingMoreToTeach": "{book}로 더이상 얻을 지식이 없습니다. {actor}의 크툴루 신화 기능이 이 신화 등급보다 높습니다.",
   "CoC7.BookType": "서적 타입",
   "CoC7.Content": "내용",
@@ -695,7 +695,7 @@
   "CoC7.WarnFastTargetWithWrongMOV": "이동력 8 미만인 적을 빠르게 목표로 선택합니다. (이동력: {mov})",
   "CoC7.WarnTooManyTarget": "너무 많은 목표를 선택했습니다 마지막으로 선택한 목표만 유지합니다",
   "CoC7.WarnNoTargetsSanCheck": "선택한 목표가 없습니다. 목표를 선택하거나 링크를 생성하십시오.",
- 
+
   "CoC7.allActors": "모든 캐릭터",
   "CoC7.restTargets": "남은 목표",
   "CoC7.startRest": "휴식 시작",
@@ -772,7 +772,7 @@
   "CoC7.Migrate.ButtonUpdate": "업데이트",
   "CoC7.Migrate.ButtonSkip": "건너뛰기",
   "CoC7.Migrate.ButtonOkay": "확인",
-  
+
   "CoC7.Migrate.TriggerButton": "데이터 마이그레이션",
   "CoC7.Migrate.TriggerTitle": "데이터 마이그레이션",
   "CoC7.Migrate.TriggerContents": "<p>데이터 마이그레이션 버튼을 키고 재시작</p>",

@@ -139,7 +139,10 @@ export class Updater {
           await actor.update(updateData, { enforceTypes: false })
         }
       } catch (err) {
-        err.message = `Failed CoC7 system migration for Actor ${actor.name}: ${err.message}`
+        err.message = game.i18n.format('CoC7.Migrate.ErrorActor', {
+          name: actor.name,
+          message: err.message
+        })
         ui.notifications.error(err.message, { permanent: true })
         console.error(err)
       }
@@ -154,7 +157,10 @@ export class Updater {
           await item.update(updateData, { enforceTypes: false })
         }
       } catch (err) {
-        err.message = `Failed CoC7 system migration for Item ${item.name}: ${err.message}`
+        err.message = game.i18n.format('CoC7.Migrate.ErrorItem', {
+          name: item.name,
+          message: err.message
+        })
         ui.notifications.error(err.message, { permanent: true })
         console.error(err)
       }
@@ -169,7 +175,10 @@ export class Updater {
           await table.update(updateData, { enforceTypes: false })
         }
       } catch (err) {
-        err.message = `Failed CoC7 system migration for Table ${table.name}: ${err.message}`
+        err.message = game.i18n.format('CoC7.Migrate.ErrorTable', {
+          name: table.name,
+          message: err.message
+        })
         ui.notifications.error(err.message, { permanent: true })
         console.error(err)
       }
@@ -184,7 +193,10 @@ export class Updater {
           await macro.update(updateData, { enforceTypes: false })
         }
       } catch (err) {
-        err.message = `Failed CoC7 system migration for Table ${macro.name}: ${err.message}`
+        err.message = game.i18n.format('CoC7.Migrate.ErrorMacro', {
+          name: macro.name,
+          message: err.message
+        })
         ui.notifications.error(err.message, { permanent: true })
         console.error(err)
       }
@@ -237,7 +249,10 @@ export class Updater {
         }
         scene.tokens.forEach(t => (t._actor = null))
       } catch (err) {
-        err.message = `Failed CoC7 system migration for Scene ${scene.name}: ${err.message}`
+        err.message = game.i18n.format('CoC7.Migrate.ErrorScene', {
+          name: scene.name,
+          message: err.message
+        })
         ui.notifications.error(err.message, { permanent: true })
         console.error(err)
       }
@@ -335,7 +350,11 @@ export class Updater {
           await doc.update(updateData)
         }
       } catch (err) {
-        err.message = `Failed CoC7 system migration for document ${doc.name} in pack ${pack.collection}: ${err.message}`
+        err.message = game.i18n.format('CoC7.Migrate.ErrorDocumentPack', {
+          name: doc.name,
+          collection: pack.collection,
+          message: err.message
+        })
         ui.notifications.error(err.message, { permanent: true })
         console.error(err)
       }
@@ -435,7 +454,10 @@ export class Updater {
           value: item.data.description,
           keeper: ''
         }
-      } else if (typeof item.data.description === 'undefined' || item.data.description === null) {
+      } else if (
+        typeof item.data.description === 'undefined' ||
+        item.data.description === null
+      ) {
         updateData['data.description'] = {
           value: '',
           keeper: ''

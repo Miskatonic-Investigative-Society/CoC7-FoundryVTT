@@ -143,8 +143,12 @@ export class SanCheckCard extends ChatCardActor {
 
   get boutDurationText () {
     if (this.boutDuration) {
-      if (this.boutRealTime) return `${this.boutDuration} rounds`
-      if (this.boutSummary) return `${this.boutDuration} hours`
+      if (this.boutRealTime) {
+        return `${this.boutDuration} ${game.i18n.localize('CoC7.rounds')}`
+      }
+      if (this.boutSummary) {
+        return `${this.boutDuration} ${game.i18n.localize('CoC7.hours')}`
+      }
     }
     return null
   }

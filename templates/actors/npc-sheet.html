@@ -339,7 +339,7 @@
           </div>
           {{/unless}}
         </div>
-        <div class="combat flexcol pannel expanded"  style="padding-top: 1px;border-bottom: 2px groove;">
+        <div class="combat flexcol pannel expanded" style="padding-top: 1px;border-bottom: 2px groove;">
           <div class="flexrow" style="border-bottom: 1px groove;">
             <div class="flexrow" style="flex: 0 0 66%;flex-wrap: wrap;">&nbsp;</div>
             <div class="flexrow" style="flex: 0 0 33%;flex-wrap: wrap;border-left: 1px groove;">
@@ -383,7 +383,7 @@
           <div class="keeper pannel expanded resizededitor">
             {{editor content=data.description.keeper target="data.description.keeper" button=true owner=owner editable=editable}}
             {{#if hasConditions}}
-              <div><a class="clear_conditions button">Clear All Conditions</a></div>
+              <div><a class="clear_conditions button">{{localize 'CoC7.ClearAllConditions'}}</a></div>
             {{/if}}
         </div>
         </section>

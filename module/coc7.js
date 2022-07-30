@@ -121,7 +121,10 @@ Hooks.on('renderSettingsConfig', (app, html, options) => {
 })
 
 Hooks.once('init', async function () {
-  if (typeof CONST.COMPATIBILITY_MODES !== 'undefined' && !isNewerVersion(game.version, '10.300')) {
+  if (
+    typeof CONST.COMPATIBILITY_MODES !== 'undefined' &&
+    !isNewerVersion(game.version, '10.300')
+  ) {
     // hide compatibility warnings while we still support v9 and v10 with the same version
     CONFIG.compatibility.mode = CONST.COMPATIBILITY_MODES.SILENT
   }
@@ -386,14 +389,14 @@ Hooks.on('ready', async () => {
       game.settings.get('CoC7', 'boutOfMadnessSummaryTable') === 'none'
         ? null
         : game.tables.get(
-            game.settings.get('CoC7', 'boutOfMadnessSummaryTable')
-          ),
+          game.settings.get('CoC7', 'boutOfMadnessSummaryTable')
+        ),
     boutOfMadness_RealTime:
       game.settings.get('CoC7', 'boutOfMadnessRealTimeTable') === 'none'
         ? null
         : game.tables.get(
-            game.settings.get('CoC7', 'boutOfMadnessRealTimeTable')
-          )
+          game.settings.get('CoC7', 'boutOfMadnessRealTimeTable')
+        )
     // maniasIndex: ge.settings.get('CoC7', 'boutOfMadnessPhobiasIndex'),
     // phobiasIndex: game.settings.get('CoC7', 'boutOfMadnessManiasIndex'),
     // phobias: ('none' == game.settings.get('CoC7', 'samplePhobiasTable'))?null:game.tables.get(game.settings.get('CoC7', 'samplePhobiasTable')),

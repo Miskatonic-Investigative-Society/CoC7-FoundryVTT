@@ -2,22 +2,22 @@
 	{{#if isUnknown}}
 	<div class="flexrow difficulty-selector gm-visible-only" style="padding-bottom: 2px;">
 		<span class="flex1 toggle-switch simple-flag {{#if gmDifficultyRegular}}switched-on{{/if}}"
-			title="Regular difficulty"
+			title="{{localize 'CoC7.RollDifficultyRegularTitle'}}"
 			style="text-align:center;white-space: nowrap;"
 			data-flag="gmDifficultyRegular"
 			data-selected={{gmDifficultyRegular}}>{{localize 'CoC7.RollDifficultyRegular'}} {{regularThreshold}}%</span>
 		<span class="flex1 toggle-switch simple-flag {{#if gmDifficultyHard}}switched-on{{/if}}"
-			title="Hard difficulty"
+			title="{{localize 'CoC7.RollDifficultyHardTitle'}}"
 			style="text-align:center;white-space: nowrap;"
 			data-flag="gmDifficultyHard"
 			data-selected={{gmDifficultyHard}}>{{localize 'CoC7.RollDifficultyHard'}} {{hardThreshold}}%</span>
 		<span class="flex1 toggle-switch simple-flag {{#if gmDifficultyExtreme}}switched-on{{/if}}"
-			title="Extreme difficulty"
+			title="{{localize 'CoC7.RollDifficultyExtremeTitle'}}"
 			style="text-align:center;white-space: nowrap;"
 			data-flag="gmDifficultyExtreme"
 			data-selected={{gmDifficultyExtreme}}>{{localize 'CoC7.RollDifficultyExtreme'}} {{extremeThreshold}}%</span>
 		<span class="flex1 toggle-switch simple-flag {{#if gmDifficultyCritical}}switched-on{{/if}}"
-			title="Critical difficulty"
+			title="{{localize 'CoC7.RollDifficultyCriticalTitle'}}"
 			style="text-align:center;white-space: nowrap;"
 			data-flag="gmDifficultyCritical"
 			data-selected={{gmDifficultyCritical}}>{{localize 'CoC7.RollDifficultyCritical'}}</span>

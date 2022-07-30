@@ -39,9 +39,9 @@
 						</select>
 					{{/if}}
 				{{else}}
-					<input class="item-skill" style="flex: 1;overflow: hidden;" type="text" name="data.skill.main.name" value="{{data.skill.main.name}}" placeholder="Main skill"/>
+					<input class="item-skill" style="flex: 1;overflow: hidden;" type="text" name="data.skill.main.name" value="{{data.skill.main.name}}" placeholder="{{localize 'CoC7.WeaponSkillMain'}}"/>
 					{{#if usesAlternateSkill}}
-					<input class="item-skill" style="flex: 1;overflow: hidden;" type="text" name="data.skill.alternativ.name" value="{{data.skill.alternativ.name}}" placeholder="Alt. skill"/>
+					<input class="item-skill" style="flex: 1;overflow: hidden;" type="text" name="data.skill.alternativ.name" value="{{data.skill.alternativ.name}}" placeholder="{{localize 'CoC7.WeaponSkillAlt'}}"/>
 					{{/if}}
 				{{/if}}
 				</div>

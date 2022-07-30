@@ -507,7 +507,7 @@
   "CoC7.SanityLossTypeValue": "Perte de points de SAN",
   "CoC7.SanityLossEncounter": "Perte de SAN liée à la Rencontre",
   "CoC7.SanityLossImmunity": "Immunité à la perte de SAN",
-  
+
   "CoC7.creatureFightingSkill": "Combat rapproché",
 
   "CoC7.InvoluntaryAction": "Action involontaire",
@@ -695,7 +695,7 @@
   "CoC7.WarnFastTargetWithWrongMOV": "'Rapide' sélectionné sur une cible avec un Mvt de moins de 8. (Mvt: {mov})",
   "CoC7.WarnTooManyTarget": "Trop de cibles sélectionnées. Seule la première est prise en compte",
   "CoC7.WarnNoTargetsSanCheck": "Pas de cible sélectionnée. Choisissez une cible ou créez un lien.",
-  
+
   "CoC7.allActors": "Tous les Personnages",
   "CoC7.restTargets": "Candidats au repos",
   "CoC7.startRest": "Se reposer",

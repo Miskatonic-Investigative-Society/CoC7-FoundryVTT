@@ -54,7 +54,7 @@
 			</div>
 			<div class="group-result">{{ participant.adjustedMov }}</div>
 		</div>
-			
+
 		{{#if chase.started}}
 		<div class="form-group">
 			<label class="checkbox">
@@ -65,7 +65,7 @@
 		<div class="form-group">
 			<div class="group-label">
 				<label>{{ localize 'CoC7.MovementAction' }}</label>
-				{{#if data.recalculationNeeded}}<div class="tag" title="All participant will have their movement action recalculated">{{ localize 'CoC7.NeedRecalculate' }}</div>{{/if}}
+				{{#if data.recalculationNeeded}}<div class="tag" title="{{localize 'CoC7.NeedToRecalculate'}}">{{ localize 'CoC7.NeedRecalculate' }}</div>{{/if}}
 				{{#if data.participantExcluded}}<div class="tag" title="{{ data.excludedBecauseHint }}">{{ data.excludedBecause }}</div>{{/if}}
 			</div>
 			{{#if data.overrideMovementAction}}

@@ -26,43 +26,43 @@
   <div class="status-list">
     <div class="status">{{localize 'CoC7.DailyLoss'}}: {{actor.dailySanLoss}}</div>
     <div class="status">{{localize 'CoC7.Sanity'}}: {{actor.san}}/{{actor.sanMax}}</div>
-    {{#if sanLossReasonEncountered}}<div class="status">{{localize 'CoC7.AlreadyEncountered'}} :{{sanData.sanReason}} lost {{sanLostToReason}}/{{maxSanLoss}}</div>{{/if}}
+    {{#if sanLossReasonEncountered}}<div class="status">{{localize 'CoC7.AlreadyEncounteredInformation' reason=sanData.sanReason lost=sanLostToReason max=maxSanLoss}}</div>{{/if}}
     <div class="status">{{localize 'CoC7.MaxPossibleSanLoss'}}: {{maxPossibleSanLoss}}</div>
     {{#if state.sanRolled}}
       {{#if sanCheck.failed}}
-        <div class="status">Check failed</div>
+        <div class="status">{{localize 'CoC7.CheckFailed'}}</div>
         <div class="status {{#unless state.involuntaryActionPerformed}}pending{{/unless}}">{{localize 'CoC7.InvoluntaryAction'}} {{#if state.involuntaryActionPerformed}}<i class="fas fa-check"></i>{{/if}}</div>
       {{else}}
-        <div class="status">Check passed</div>
+        <div class="status">{{localize 'CoC7.CheckPassed'}}</div>
       {{/if}}
       {{#if state.sanLossRolled}}
         <div class="status {{#unless state.sanLossApplied}}pending{{/unless}}">{{ localize 'CoC7.SANLoss' }}: {{sanLoss}} {{#if state.sanLossApplied}}<i class="fas fa-check"></i>{{/if}}</div>
       {{/if}}
     {{/if}}
     {{#if state.insanity}}
-      <div class="status">Insanity</div>
+      <div class="status">{{localize 'CoC7.InsanityName'}}</div>
     {{/if}}
     {{#if state.sane}}
-      <div class="status">Sane</div>
+      <div class="status">{{localize 'CoC7.Sane'}}</div>
     {{/if}}
     {{#if state.memoryRepressed}}
-      <div class="status">Memory repressed</div>
+      <div class="status">{{localize 'CoC7.CheckMemoryRepressed'}}</div>
     {{/if}}
     {{#if state.inSanity}}
-      <div class="status">Insanity</div>
+      <div class="status">{{localize 'CoC7.InsanityName'}}</div>
     {{/if}}
     {{#if state.temporaryInsane}}
-      <div class="status">Temporary insannity</div>
+      <div class="status">{{localize 'CoC7.TemporaryInsanity'}}</div>
     {{/if}}
     {{#if state.indefinitelyInsane}}
-      <div class="status">Indefinitely insane</div>
+      <div class="status">{{localize 'CoC7.IndefiniteInsanity'}}</div>
     {{/if}}
     {{#if state.definitelyInsane}}
-      <div class="status">Good for the asylum</div>
+      <div class="status">{{localize 'CoC7.DefinitelyInsane'}}</div>
     {{/if}}
 
     {{#if state.finish}}
-      <div class="status">--F-I-N-I-S-H--</div>
+      <div class="status">{{localize 'CoC7.FINISH'}}</div>
     {{/if}}
 
   </div>
@@ -225,12 +225,12 @@
 
       {{#if sanData.sanReason}}
         {{#if sanLossReasonEncountered}}
-          <div class="status">Already encountered "{{sanData.sanReason}}"</div>
+          <div class="status">{{localize 'CoC7.AlreadyEncountered'}} "{{sanData.sanReason}}"</div>
           <div class="status">{{ localize 'CoC7.AlreadyLost'}}: {{sanLostToReason}}</div>
           <div class="status">{{ localize 'CoC7.CreatureMaxLoss'}}: {{maxSanLoss}}</div>
         {{/if}}
       {{/if}}
-      <div class="status">Max loss: {{maxPossibleSanLoss}}</div>
+      <div class="status">{{localize 'CoC7.MaxSanloss'}}: {{maxPossibleSanLoss}}</div>
 
       {{#unless state.keepCreatureSanData}}
         <div class='card-buttons'>

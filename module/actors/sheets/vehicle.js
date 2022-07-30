@@ -1,4 +1,4 @@
-/* global duplicate, expandObject, flattenObject, FormDataExtended, game, mergeObject, ui */
+/* global duplicate, expandObject, flattenObject, FormDataExtended, game, mergeObject */
 
 import { CoC7ActorSheet } from './base.js'
 

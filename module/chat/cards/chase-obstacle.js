@@ -32,11 +32,11 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     })
 
     data.card.breakableObstacle =
-      data.data.obstacle.barrier && data.data.obstacle.hasHitPoints // TODO: Check if usefull
+      data.data.obstacle?.barrier && data.data.obstacle.hasHitPoints // TODO: Check if usefull
     data.card.validCheck = false
 
     if (
-      data.data.states.obstacleDefined &&
+      data.data.states?.obstacleDefined &&
       (data.data.obstacle.hazard ||
         (data.data.obstacle.barrier && !data.data.obstacle.hasHitPoints))
     ) {
@@ -45,7 +45,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       data.data.states.breakOrNegotiateDefined = true
     }
 
-    if (this.participant.actor) {
+    if (this.participant?.actor) {
       data.skill = this.participant.actor.find(data.data.obstacle.checkName)
       data.checkOptions = this.chase.getActorSkillsAndCharacteristics(
         this.data.participantUuid
@@ -91,7 +91,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
         name: checkName,
         value: value
       })
-      if (data.data.bonusDice != 0) {
+      if (data.data.bonusDice !== 0) {
         if (data.data.bonusDice > 0) {
           data.strings.checkRollRequest += ` (+${data.data.bonusDice})`
         } else data.strings.checkRollRequest += ` (${data.data.bonusDice})`
@@ -151,12 +151,15 @@ export class ChaseObstacleCard extends EnhancedChatCard {
 
         if (this.data.states.obstacleDamageRolled) {
           if (this.data.objects?.obstacleDamageRoll?.total <= 0) {
-            data.strings.obstacleDamage = 'No damage dealt'
+            data.strings.obstacleDamage =
+              game.i18n.localize('CoC7.NoDamageDealt')
           } else {
             data.inlineDamageRoll = createInlineRoll(
               this.data.objects.obstacleDamageRoll
             )?.outerHTML
-            data.strings.obstacleDamage = `You deal ${data.inlineDamageRoll} damage.`
+            data.strings.obstacleDamage = game.i18n.format('CoC7.DamageDealt', {
+              value: data.inlineDamageRoll
+            })
           }
         }
       }
@@ -269,7 +272,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
         // if (data.data.totalPlayerDamageTaken < 0)
         //   data.data.totalPlayerDamageTaken = 0
 
-        if (data.data.totalPlayerDamageTaken == 0) {
+        if (data.data.totalPlayerDamageTaken === 0) {
           data.strings.damageTaken = game.i18n.localize('CoC7.YouTakeNoDamage')
         } else {
           data.strings.damageTaken = game.i18n.format(
@@ -332,7 +335,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
           this.data.armor = Number(armorValue)
         }
 
-        if (undefined == this.data.totalPlayerDamageTaken) {
+        if (typeof this.data.totalPlayerDamageTaken === 'undefined') {
           this.data.totalPlayerDamageTaken = totalDamage - this.data.armor
           if (this.data.totalPlayerDamageTaken < 0) {
             this.data.totalPlayerDamageTaken = 0
@@ -416,9 +419,12 @@ export class ChaseObstacleCard extends EnhancedChatCard {
   async initialize () {
     // const chase = await fromUuid(this.data.chaseUuid)
     if (!this.chase) return
+    if (typeof this.chase.activeParticipantData?.uuid === 'undefined') {
+      return
+    }
 
-    if (undefined == this.data) this.data = {}
-    if (undefined == this.data.states) this.data.states = {}
+    if (typeof this.data === 'undefined') this.data = {}
+    if (typeof this.data.states === 'undefined') this.data.states = {}
 
     // const location = chase.getLocationData(this.data.locationUuid)
     this.data.obstacle = this.location?.obstacleDetails // Feed the obstacle definition
@@ -474,7 +480,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       const actorSkill = this.participant.actor.find(
         this.data.obstacle.checkName
       )
-      if (undefined != actorSkill) {
+      if (typeof actorSkill !== 'undefined') {
         rollData = actorSkill
       } else {
         rollData = {
@@ -604,7 +610,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
 
     if (this.data.weaponChoice) {
       const weapon = this.weaponsOptions.find(
-        e => e.uuid == this.data.weaponChoice
+        e => e.uuid === this.data.weaponChoice
       )
       if (weapon) return weapon
     }
@@ -658,7 +664,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     if (diff.changes) {
       if (this.data.reflectObstaleChanges) {
         for (const [key, value] of Object.entries(diff.obstacle)) {
-          if (key != 'type') {
+          if (key !== 'type') {
             obstacleUpdate.obstacleDetails[value.key] = value.new
             loactionChanged = true
           }
@@ -670,7 +676,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       let remainingHp = this.data.obstacle.HitPoints
       remainingHp -= this.data.totalObstacleDamage
       if (remainingHp < 0) remainingHp = 0
-      if (this.obstacle.HitPoints != remainingHp) {
+      if (this.obstacle.HitPoints !== remainingHp) {
         obstacleUpdate.obstacleDetails.HitPoints = remainingHp
         this.data.obstacle.HitPoints = remainingHp
         loactionChanged = true
@@ -704,7 +710,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     } else {
       if (
         !isNaN(this.data.bonusDice) &&
-        this.data.bonusDice != this.participant.bonusDice
+        this.data.bonusDice !== this.participant.bonusDice
       ) {
         participantUpdate.bonusDice = this.data.bonusDice
       }
@@ -746,7 +752,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       )
     }
     this.data.states.closed = true
-    await this.chase.activateNexParticpantTurn() // Render will be done there !
+    await this.chase.activateNextParticipantTurn() // Render will be done there !
     return true
   }
 
@@ -815,7 +821,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     if (target.classList.contains('disabled')) return
     target.classList.toggle('disabled')
     if (!this.roll) {
-      ui.notifications.error('Nothing to roll !!')
+      ui.notifications.error(game.i18n.localize('CoC7.NothingToRoll'))
       return
     }
     if (!this.data.objects) this.data.objects = {}
@@ -829,7 +835,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       this.data.states.cardResolved = true
       this.data.totalActionCost += 1
     } else {
-      if (undefined == this.data.armor && this.participant.actor) {
+      if (typeof this.data.armor === 'undefined' && this.participant.actor) {
         this.data.armor =
           this.participant.actor.data.data.attribs.armor.value || 0
       }

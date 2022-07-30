@@ -1,4 +1,4 @@
-/* global CONFIG, game */
+/* global $, CONFIG, game, ui */
 import { CoC7DecaderDie } from '../apps/decader-die.js'
 import { CoC7DecaderDieOther } from '../apps/decader-die-other.js'
 import { CoC7GameRuleSettings } from './game-rules.js'

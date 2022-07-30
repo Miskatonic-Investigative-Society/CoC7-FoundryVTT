@@ -108,9 +108,8 @@ export class CoC7Check {
     // if (!this.actor || !this.actor.id) return undefined
     if (!this._rawValue) {
       if (this.characteristic) {
-        this.rawValue = this.actor.data.data.characteristics[
-          this.characteristic
-        ].value
+        this.rawValue =
+          this.actor.data.data.characteristics[this.characteristic].value
       }
       if (this.skill) this.rawValue = this.skill.value
       if (this.attribute) {
@@ -687,11 +686,13 @@ export class CoC7Check {
     // check Modifier
     if (rollData.difficulty) roll.difficulty = rollData.difficulty
     if (rollData.diceModifier) roll.diceModifier = rollData.diceModifier
-    if (true == rollData.denyPush) roll.denyPush = true
-    if (rollData.flatDiceModifier)
+    if (rollData.denyPush === true) roll.denyPush = true
+    if (rollData.flatDiceModifier) {
       roll.flatDiceModifier = rollData.flatDiceModifier
-    if (rollData.flatThresholdModifier)
+    }
+    if (rollData.flatThresholdModifier) {
       roll.flatThresholdModifier = rollData.flatThresholdModifier
+    }
     // Actor
     if (rollData.actor?.actorKey) roll.actorKey = rollData.actor.actorKey
     else if (rollData.actor?.name) roll.actorName = rollData.actor.name
@@ -705,7 +706,7 @@ export class CoC7Check {
         break
       case CoC7Check.type.item:
         roll.actorKey = rollData.value.actor.actorKey
-        if ('skill' == rollData.value?.type) roll.skill = rollData.value.id
+        if (rollData.value?.type === 'skill') roll.skill = rollData.value.id
         else roll.item = rollData.value.id
         break
       case CoC7Check.type.skill:
@@ -739,7 +740,7 @@ export class CoC7Check {
   } = {}) {
     const check = new CoC7Check()
     check.difficulty = difficulty
-    if (true === denyPush) check.denyPush = true
+    if (denyPush === true) check.denyPush = true
     if (diceModifier) check.diceModifier = diceModifier
     if (flatDiceModifier) check.flatDiceModifier = flatDiceModifier
     if (flatThresholdModifier) {
@@ -871,9 +872,8 @@ export class CoC7Check {
     } else {
       if (this.characteristic) {
         this.isCharactiristic = true
-        this.rawValue = this.actor.data.data.characteristics[
-          this.characteristic
-        ].value
+        this.rawValue =
+          this.actor.data.data.characteristics[this.characteristic].value
       }
 
       if (this.skill) {
@@ -966,7 +966,7 @@ export class CoC7Check {
       }
     }
 
-    if (undefined == this.canBePushed) {
+    if (typeof this.canBePushed === 'undefined') {
       this.canBePushed = this.skill ? this.skill.canBePushed() : false
       if (this.characteristic != null) this.canBePushed = true
       if (this.isFumble) this.canBePushed = false
@@ -1670,11 +1670,11 @@ export class CoC7Check {
       chatData.whisper = []
       chatData.blind = false
       ChatMessage.applyRollMode(chatData)
-    } //else {
-      // chatData.whisper = []
-      // chatData.blind = false
-      // ChatMessage.applyRollMode(chatData, game.settings.get('core', 'rollMode'))
-    //}
+    } // else {
+    // chatData.whisper = []
+    // chatData.blind = false
+    // ChatMessage.applyRollMode(chatData, game.settings.get('core', 'rollMode'))
+    // }
 
     if (chatData.blind) {
       this.isBlind = true
@@ -1761,8 +1761,9 @@ export class CoC7Check {
     a.classList.add(...this.cssClassList)
     a.title = this.tooltipHeader
     a.dataset.roll = escape(this.JSONRollString) // TODO!IMPORTANT!!!
-    a.innerHTML = `<i class="game-icon game-icon-d10"></i> ${this
-      .modifiedResult || '??'}`
+    a.innerHTML = `<i class="game-icon game-icon-d10"></i> ${
+      this.modifiedResult || '??'
+    }`
     return a
   }
 
