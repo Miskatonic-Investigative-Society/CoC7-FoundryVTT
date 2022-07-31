@@ -810,7 +810,7 @@ export class CoC7ActorImporter {
     name = name.toLowerCase()
     let existing = null
     for (let o = 0, oM = this.itemLocations.length; o < oM; o++) {
-      switch (this.itemLocations.substring(o, 1)) {
+      switch (this.itemLocations.substring(o, o + 1)) {
         case 'i':
           existing = game.items.find(
             item =>
@@ -827,7 +827,7 @@ export class CoC7ActorImporter {
         case 's':
           for (const pack of game.packs) {
             if (
-              pack.metadata.entity === 'Item' &&
+              pack.metadata.type === 'Item' &&
               ((this.itemLocations[o] === 'w' &&
                 pack.metadata.package === 'world') ||
                 (this.itemLocations[o] === 'S' &&
