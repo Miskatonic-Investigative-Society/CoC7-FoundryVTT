@@ -190,6 +190,9 @@
       <a data-tab="background">
         <div class="tab-name"><span>{{localize 'CoC7.Background'}}</span></div>
       </a>
+      <a class="keeper-only-tab" data-tab="effects" title="{{localize 'CoC7.GmNotes'}}">
+        <div class="tab-name"><span><i class="game-icon game-icon-aura"></i></span></div>
+      </a>
       {{#if isGM}}
         <a class="keeper-only-tab" data-tab="keeper" title="{{localize 'CoC7.GmNotes'}}">
           <div class="tab-name"><span><i class="game-icon game-icon-tentacles-skull"></i></span></div>
@@ -246,6 +249,10 @@
             {{else}}
               {{> "systems/CoC7/templates/actors/parts/actor-background.html"}}
             {{/if}}
+          </div>
+
+          <div class="tab coc7" data-group="primary" data-tab="effects">
+            {{> "systems/CoC7/templates/common/effects.hbs"}}
           </div>
 
           {{#if isGM}}
