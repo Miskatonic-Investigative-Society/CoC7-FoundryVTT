@@ -1,4 +1,10 @@
 <form class="{{cssClass}} flexcol {{#if permissionLimited}}permission-limited{{/if}}" autocomplete="off" data-actor-id="{{actor.id}}" {{#if tokenId}}data-token-id="{{tokenId}}" {{/if}}>
+  {{#if showHiddenDevMenu}}
+  <div class="floating-debug">
+    <a class="test-trigger" title='Test Icon, if you see that and do not know why, then you should not click it'>
+      <i class="game-icon game-icon-test-tubes"></i></a>
+  </div>
+  {{/if}}
   {{#unless permissionLimited}}
   <div class="token-extras">
 	{{#if canDragToken}}
