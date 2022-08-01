@@ -800,59 +800,6 @@ export class CoC7ActorImporter {
   }
 
   /**
-   * guessItem, try and find the item in the locations defined in this.itemLocations i = Item Directory, w = World Compendiums, m = Module Compendiums, s = System Compendiums
-   * @param {String} type Item type to find
-   * @param {String} name Name of item to find
-   * @param {Object} combat null (default). If boolean combat property of skill must match
-   * @returns {Object} formatted Actor data Item or null
-   */
-  async guessItem (type, name, { combat = null } = {}) {
-    name = name.toLowerCase()
-    let existing = null
-    for (let o = 0, oM = this.itemLocations.length; o < oM; o++) {
-      switch (this.itemLocations.substring(o, o + 1)) {
-        case 'i':
-          existing = game.items.find(
-            item =>
-              item.data.type === type &&
-              item.data.name.toLowerCase() === name &&
-              (combat === null || item.data.properties.combat === combat)
-          )
-          if (existing) {
-            return existing
-          }
-          break
-        case 'w':
-        case 'm':
-        case 's':
-          for (const pack of game.packs) {
-            if (
-              pack.metadata.type === 'Item' &&
-              ((this.itemLocations[o] === 'w' &&
-                pack.metadata.package === 'world') ||
-                (this.itemLocations[o] === 'S' &&
-                  pack.metadata.package === 'CoC7') ||
-                (this.itemLocations[o] === 's' &&
-                  !['world', 'CoC7'].includes(pack.metadata.package)))
-            ) {
-              const documents = await pack.getDocuments()
-              existing = documents.find(
-                item =>
-                  item.data.type === type &&
-                  item.data.name.toLowerCase() === name &&
-                  (combat === null || item.data.properties.combat === combat)
-              )
-              if (existing) {
-                return existing
-              }
-            }
-          }
-          break
-      }
-    }
-  }
-
-  /**
    * itemsData, convert parseCharacter data into Actor item data
    * @param {Object} pc object with the data extracted from the character as returned from `parseCharacter`
    * @returns {Object} formatted Actor data
@@ -876,7 +823,9 @@ export class CoC7ActorImporter {
     // Skills
     if (typeof pc.skills !== 'undefined') {
       for (const skill of pc.skills) {
-        const existing = await this.guessItem('skill', skill.name)
+        const existing = await CoC7Utilities.guessItem('skill', skill.name, {
+          source: this.itemLocations
+        })
         if (typeof existing !== 'undefined') {
           const cloned = existing.toObject()
           cloned.data.base = skill.value
@@ -896,7 +845,9 @@ export class CoC7ActorImporter {
     // Languages
     if (typeof pc.languages !== 'undefined') {
       for (const skill of pc.languages) {
-        const existing = await this.guessItem('skill', skill.name)
+        const existing = await CoC7Utilities.guessItem('skill', skill.name, {
+          source: this.itemLocations
+        })
         if (typeof existing !== 'undefined') {
           const cloned = existing.toObject()
           cloned.data.base = skill.value
@@ -914,7 +865,9 @@ export class CoC7ActorImporter {
     // Spells
     if (typeof pc.spells !== 'undefined') {
       for (const name of pc.spells) {
-        const existing = await this.guessItem('spell', name)
+        const existing = await CoC7Utilities.guessItem('spell', name, {
+          source: this.itemLocations
+        })
         if (typeof existing !== 'undefined') {
           const cloned = existing.toObject()
           items.push(duplicate(cloned))
@@ -932,33 +885,54 @@ export class CoC7ActorImporter {
   async weaponSkill (weapon) {
     let skill = null
     if (this.getRegEx('handgun').exec(weapon.name)) {
-      skill = await this.guessItem('skill', 'Handgun', { combat: true })
+      skill = await CoC7Utilities.guessItem('skill', 'Handgun', {
+        combat: true,
+        source: this.itemLocations
+      })
       if (CONFIG.debug.CoC7Importer) {
         console.debug(`${weapon.name} uses Handgun skill: ${skill}`)
       }
     } else if (this.getRegEx('rifle').exec(weapon.name)) {
-      skill = await this.guessItem('skill', 'Rifle/Shotgun', { combat: true })
+      skill = await CoC7Utilities.guessItem('skill', 'Rifle/Shotgun', {
+        combat: true,
+        source: this.itemLocations
+      })
       if (!skill) {
-        skill = await this.guessItem('skill', 'Rifle', { combat: true })
+        skill = await CoC7Utilities.guessItem('skill', 'Rifle', {
+          combat: true,
+          source: this.itemLocations
+        })
         if (!skill) {
-          skill = await this.guessItem('skill', 'Shotgun', { combat: true })
+          skill = await CoC7Utilities.guessItem('skill', 'Shotgun', {
+            combat: true,
+            source: this.itemLocations
+          })
         }
       }
       if (CONFIG.debug.CoC7Importer) {
         console.debug(`${weapon.name} uses Rifle skill: ${skill}`)
       }
     } else if (this.getRegEx('smb').exec(weapon.name)) {
-      skill = await this.guessItem('skill', 'Submachine Gun', { combat: true })
+      skill = await CoC7Utilities.guessItem('skill', 'Submachine Gun', {
+        combat: true,
+        source: this.itemLocations
+      })
       if (CONFIG.debug.CoC7Importer) {
         console.debug(`${weapon.name} uses Submachine Gun skill: ${skill}`)
       }
     } else if (this.getRegEx('machineGun').exec(weapon.name)) {
-      skill = await this.guessItem('skill', 'Machine Gun', { combat: true })
+      skill = await CoC7Utilities.guessItem('skill', 'Machine Gun', {
+        combat: true,
+        source: this.itemLocations
+      })
       if (CONFIG.debug.CoC7Importer) {
         console.debug(`${weapon.name} uses Machine Gun skill: ${skill}`)
       }
     } else if (this.getRegEx('launched').exec(weapon.name)) {
-      skill = await this.guessItem('skill', 'Launch', { combat: true })
+      skill = await CoC7Utilities.guessItem('skill', 'Launch', {
+        combat: true,
+        source: this.itemLocations
+      })
       if (CONFIG.debug.CoC7Importer) {
         console.debug(`${weapon.name} uses Launch skill: ${skill}`)
       }

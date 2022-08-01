@@ -17,7 +17,7 @@ export class CoC7DholeHouseActorImporter {
       ['description', 'Description'],
       ['traits', 'Traits'],
       ['ideology', 'Ideology'],
-      ['injurues', 'Injuries'],
+      ['injurues', 'Injuries', 'injuries'],
       ['people', 'People'],
       ['phobias', 'Phobias'],
       ['locations', 'Locations'],
@@ -31,8 +31,11 @@ export class CoC7DholeHouseActorImporter {
     }
     for (const section of sections) {
       if (backstoryJSON[section[0]] !== null) {
+        if (typeof section[2] === 'undefined' || section[2] === '') {
+          section[2] = section[0]
+        }
         backstory.block.push(
-          `<h3>${section[1]}</h3>\n<div class="${section[0]}">\n${
+          `<h3>${section[1]}</h3>\n<div class="${section[2]}">\n${
             backstoryJSON[section[0]]
           }\n</div>`
         )
@@ -143,68 +146,6 @@ export class CoC7DholeHouseActorImporter {
     }
   }
 
-  /**
-   * guessItem, try and find the item in the locations defined in source i = Item Directory, w = World Compendiums, m = Module Compendiums, s = System Compendiums
-   * @param {String} type Item type to find
-   * @param {String} name Name of item to find
-   * @param {Object} combat null (default). If boolean combat property of skill must match
-   * @param {Object} source '' (default). Check order
-   * @returns {Object} formatted Actor data Item or null
-   */
-  static async guessItem (type, name, { combat = null, source = '' } = {}) {
-    let existing = null
-    name = name.toLowerCase()
-    for (let o = 0, oM = source.length; o < oM; o++) {
-      switch (source.substring(o, o + 1)) {
-        case 'i':
-          existing = game.items.find(
-            item =>
-              item.data.type === type &&
-              item.data.name.toLowerCase() === name &&
-              (combat === null || item.data.properties.combat === combat)
-          )
-          if (existing) {
-            return existing
-          }
-          break
-        case 'w':
-        case 'm':
-        case 's':
-          for (const pack of game.packs) {
-            if (
-              pack.metadata.type === 'Item' &&
-              ((source[o] === 'w' && pack.metadata.package === 'world') ||
-                (source[o] === 'S' && pack.metadata.package === 'CoC7') ||
-                (source[o] === 's' &&
-                  !['world', 'CoC7'].includes(pack.metadata.package)))
-            ) {
-              const documents = await pack.getDocuments()
-              existing = documents.find(
-                item =>
-                  item.data.type === type &&
-                  item.data.name.toLowerCase() === name &&
-                  (combat === null || item.data.properties.combat === combat)
-              )
-              if (existing) {
-                return existing
-              }
-            }
-          }
-          break
-      }
-    }
-    if (type === 'skill') {
-      const match = name.match(/^(.+ \()(?!any).+(\))$/)
-      if (match) {
-        return await CoC7DholeHouseActorImporter.guessItem(
-          type,
-          match[1] + 'any' + match[2],
-          { combat: combat, source: source }
-        )
-      }
-    }
-  }
-
   static async extractSkills (dholeHouseskills, options) {
     const skills = []
     for (const skill of dholeHouseskills) {
@@ -220,13 +161,10 @@ export class CoC7DholeHouseActorImporter {
         skill.name,
         skill.subskill ?? ''
       )
-      const existing = await CoC7DholeHouseActorImporter.guessItem(
-        'skill',
-        parts.name,
-        {
-          source: options.source
-        }
-      )
+      const existing = await CoC7Utilities.guessItem('skill', parts.name, {
+        source: options.source,
+        fallbackAny: true
+      })
       let cloned = null
       if (typeof existing !== 'undefined') {
         cloned = duplicate(existing.toObject())
@@ -284,13 +222,9 @@ export class CoC7DholeHouseActorImporter {
   static async extractPossessions (dholehousePossessions, options) {
     const items = []
     for (const item of dholehousePossessions) {
-      const existing = await CoC7DholeHouseActorImporter.guessItem(
-        'item',
-        item.description,
-        {
-          source: options.source
-        }
-      )
+      const existing = await CoC7Utilities.guessItem('item', item.description, {
+        source: options.source
+      })
       let cloned = null
       if (typeof existing !== 'undefined') {
         cloned = duplicate(existing.toObject())
@@ -317,13 +251,9 @@ export class CoC7DholeHouseActorImporter {
       )
       const damage = weapon.damage.replace(/\+DB/i, '')
       const addb = damage !== weapon.damage
-      const existing = await CoC7DholeHouseActorImporter.guessItem(
-        'weapon',
-        weapon.name,
-        {
-          source: options.source
-        }
-      )
+      const existing = await CoC7Utilities.guessItem('weapon', weapon.name, {
+        source: options.source
+      })
       let cloned = null
       if (typeof existing !== 'undefined') {
         cloned = duplicate(existing.toObject())
