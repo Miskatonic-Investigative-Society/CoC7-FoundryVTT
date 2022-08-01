@@ -30,7 +30,7 @@ export class CoC7Menu {
   static getButtons (controls) {
     canvas.coc7gmtools = new CoC7MenuLayer()
     const isGM = game.user.isGM
-    const showHiddenDevMenu = game.settings.get('CoC7', 'hiddendebugmenu')
+    const showHiddenDevMenu = game.settings.get('CoC7', 'hiddendevmenu')
     controls.push({
       name: 'coc7menu',
       title: 'CoC7.GmTools',

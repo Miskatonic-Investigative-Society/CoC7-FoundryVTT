@@ -451,7 +451,7 @@ export function registerSettings () {
   /**
    * Other settings
    */
-   game.settings.register('CoC7', 'hiddendebugmenu', {
+   game.settings.register('CoC7', 'hiddendevmenu', {
     name: 'Hidden dev menu',
     hint: 'Use at your own risk',
     scope: 'world',

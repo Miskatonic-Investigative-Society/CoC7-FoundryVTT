@@ -27,7 +27,7 @@ export class CoC7ActorSheet extends ActorSheet {
     data.editable = this.isEditable // MODIF 0.8.x : editable removed
     /******************/
 
-    data.showHiddenDevMenu = game.settings.get('CoC7', 'hiddendebugmenu')
+    data.showHiddenDevMenu = game.settings.get('CoC7', 'hiddendevmenu')
 
     data.hasToken = !!this.token
     data.canDragToken = data.hasToken && game.user.isGM
