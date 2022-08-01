@@ -133,7 +133,7 @@ export class CoC7ActorImporterDialog extends FormApplication {
       characterName.textContent = personalDetails.Name
       portraitImage.src = 'data:image/png;base64,' + personalDetails.Portrait
       preview.style.display = 'block'
-      $('.dialog.actor-importer').height('500px')
+      $('.dialog.actor-importer').height('auto')
     }
     fileReader.readAsText(file)
   }
@@ -154,12 +154,15 @@ export class CoC7ActorImporterDialog extends FormApplication {
         return ui.notifications.info(game.i18n.localize('CoC7.Copied'))
       })
     } else if (id === 'import') {
+      const app = $(event.currentTarget).closest('div.dialog.actor-importer')
+      app.hide()
       const form = $(event.currentTarget).closest('form')
       const inputs = CoC7ActorImporterDialog.getInputs(form)
       if (inputs.entity === 'dholehouse' && this.characterJSON) {
         const character =
           await CoC7DholeHouseActorImporter.createNPCFromDholeHouse(
-            this.characterJSON
+            this.characterJSON,
+            { source: inputs.source }
           )
         if (character !== false) {
           if (CONFIG.debug.CoC7Importer) {
@@ -173,10 +176,14 @@ export class CoC7ActorImporterDialog extends FormApplication {
           )
           await character.sheet.render(true)
           this.close()
+        } else {
+          app.show()
         }
       } else if (inputs.text && inputs.text !== '') {
         CoC7ActorImporterDialog.importActor(inputs)
         this.close()
+      } else {
+        app.show()
       }
     }
   }

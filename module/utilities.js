@@ -868,4 +868,71 @@ export class CoC7Utilities {
     }
     return importedCharactersFolder
   }
+
+  /**
+   * guessItem, try and find the item in the locations defined in ${source} i = Item Directory, w = World Compendiums, m = Module Compendiums, s = System Compendiums
+   * @param {String} type Item type to find
+   * @param {String} name Name of item to find
+   * @param {Object} combat null (default). If boolean combat property of skill must match
+   * @param {Object} source '' (default). Check order
+   * @param {Object} fallbackAny false (default). Should any specialization that isn't found try using (Any) items
+   * @returns {Object} formatted Actor data Item or null
+   */
+  static async guessItem (
+    type,
+    name,
+    { combat = null, source = '', fallbackAny = false } = {}
+  ) {
+    let existing = null
+    name = name.toLowerCase()
+    for (let o = 0, oM = source.length; o < oM; o++) {
+      switch (source.substring(o, o + 1)) {
+        case 'i':
+          existing = game.items.find(
+            item =>
+              item.data.type === type &&
+              item.data.name.toLowerCase() === name &&
+              (combat === null || item.data.properties.combat === combat)
+          )
+          if (existing) {
+            return existing
+          }
+          break
+        case 'w':
+        case 'm':
+        case 's':
+          for (const pack of game.packs) {
+            if (
+              pack.metadata.type === 'Item' &&
+              ((source[o] === 'w' && pack.metadata.package === 'world') ||
+                (source[o] === 'S' && pack.metadata.package === 'CoC7') ||
+                (source[o] === 's' &&
+                  !['world', 'CoC7'].includes(pack.metadata.package)))
+            ) {
+              const documents = await pack.getDocuments()
+              existing = documents.find(
+                item =>
+                  item.data.type === type &&
+                  item.data.name.toLowerCase() === name &&
+                  (combat === null || item.data.properties.combat === combat)
+              )
+              if (existing) {
+                return existing
+              }
+            }
+          }
+          break
+      }
+    }
+    if (fallbackAny && type === 'skill') {
+      const match = name.match(/^(.+ \()(?!any).+(\))$/)
+      if (match) {
+        return await CoC7Utilities.guessItem(
+          type,
+          match[1] + 'any' + match[2],
+          { combat: combat, source: source }
+        )
+      }
+    }
+  }
 }

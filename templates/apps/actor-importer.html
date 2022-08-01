@@ -38,20 +38,20 @@
         {{/each}}
       </select>
     </div>
-    <div class="form-group">
-      <label for="source">{{localize 'CoC7.ImportSkillItemLocations'}}:</label>
-      <select id="source" name="source">
-        {{#select source}}
-          <option value="">{{localize 'CoC7.ImportActorItemsNone'}}</option>
-          <option value="i">{{localize 'CoC7.ImportActorItemsItem'}}</option>
-          <option value="iwms">{{localize 'CoC7.ImportActorItemsItemWorldModuleSystem'}}</option>
-          <option value="wmis">{{localize 'CoC7.ImportActorItemsWorldModuleItemSystem'}}</option>
-        {{/select}}
-      </select>
-    </div>
   {{/if}}
+  <div class="form-group">
+    <label for="source">{{localize 'CoC7.ImportSkillItemLocations'}}:</label>
+    <select id="source" name="source">
+      {{#select source}}
+        <option value="">{{localize 'CoC7.ImportActorItemsNone'}}</option>
+        <option value="i">{{localize 'CoC7.ImportActorItemsItem'}}</option>
+        <option value="iwms">{{localize 'CoC7.ImportActorItemsItemWorldModuleSystem'}}</option>
+        <option value="wmis">{{localize 'CoC7.ImportActorItemsWorldModuleItemSystem'}}</option>
+      {{/select}}
+    </select>
+  </div>
   {{#if (eq importType "dholehouse")}}
-      <label for="dholehouse-json-file-picker">{{localize 'CoC7.DholeHousePickYourJSONFile'}}</label><br/>
+    <label for="dholehouse-json-file-picker">{{localize 'CoC7.DholeHousePickYourJSONFile'}}</label><br/>
       <input id="dholehouse-json-file-picker" name="dholehouse-json-file-picker" type="file" accept="application/json" />
     </div>
     <div id="dholehouse-character-preview" class="form-group">

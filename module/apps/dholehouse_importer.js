@@ -1,6 +1,6 @@
-/* global Actor, game, ui, fetch */
+/* global Actor, CONFIG, duplicate, game, ui, fetch */
+import { CoCActor } from '../actors/actor.js'
 import { CoC7DirectoryPicker } from '../scripts/coc7-directory-picker.js'
-import { CoC7Item } from '../items/item.js'
 import { CoC7Utilities } from '../utilities.js'
 
 /**
@@ -13,112 +13,41 @@ export class CoC7DholeHouseActorImporter {
    * @returns HTML with the formatted backstory
    */
   static getBackstory (backstoryJSON) {
-    let backstory = '<h2>Backstory</h2>\n'
-    const biography = []
-    if (backstoryJSON.description !== null) {
-      backstory += `<h3>Description</h3>
-      <div class="description">
-      ${backstoryJSON.description}
-      </div>\n`
-      biography.push({
-        title: 'Description',
-        value: backstoryJSON.description
-      })
+    const sections = [
+      ['description', 'Description'],
+      ['traits', 'Traits'],
+      ['ideology', 'Ideology'],
+      ['injurues', 'Injuries', 'injuries'],
+      ['people', 'People'],
+      ['phobias', 'Phobias'],
+      ['locations', 'Locations'],
+      ['tomes', 'Tomes'],
+      ['possessions', 'Possessions'],
+      ['encounters', 'Encounters']
+    ]
+    const backstory = {
+      block: [],
+      sections: []
     }
-    if (backstoryJSON.traits !== null) {
-      backstory += `<h3>Traits</h3>
-      <div class="traits">
-      ${backstoryJSON.traits}
-      <div>\n`
-      biography.push({
-        title: 'Traits',
-        value: backstoryJSON.traits
-      })
+    for (const section of sections) {
+      if (backstoryJSON[section[0]] !== null) {
+        if (typeof section[2] === 'undefined' || section[2] === '') {
+          section[2] = section[0]
+        }
+        backstory.block.push(
+          `<h3>${section[1]}</h3>\n<div class="${section[2]}">\n${
+            backstoryJSON[section[0]]
+          }\n</div>`
+        )
+        backstory.sections.push({
+          title: section[1],
+          value: backstoryJSON[section[0]]
+        })
+      }
     }
-    if (backstoryJSON.ideology !== null) {
-      backstory += `<h3>Ideology</h3>
-      <div class="ideology">
-      ${backstoryJSON.ideology}
-      <div>\n`
-      biography.push({
-        title: 'Ideology',
-        value: backstoryJSON.ideology
-      })
-    }
-    if (backstoryJSON.injurues !== null) {
-      backstory += `<h3>Injuries</h3>
-      <div class="injuries">
-      ${backstoryJSON.injurues}
-      <div>\n`
-      biography.push({
-        title: 'Injuries',
-        value: backstoryJSON.injurues
-      })
-    }
-    if (backstoryJSON.people !== null) {
-      backstory += `<h3>People</h3>
-      <div class="people">
-      ${backstoryJSON.people}
-      <div>\n`
-      biography.push({
-        title: 'People',
-        value: backstoryJSON.people
-      })
-    }
-    if (backstoryJSON.phobias !== null) {
-      backstory += `<h3>Phobias</h3>
-      <div class="phobias">
-      ${backstoryJSON.phobias}
-      <div>\n`
-      biography.push({
-        title: 'Phobias',
-        value: backstoryJSON.phobias
-      })
-    }
-    if (backstoryJSON.locations !== null) {
-      backstory += `<h3>Locations</h3>
-      <div class="locations">
-      ${backstoryJSON.locations}
-      <div>\n`
-      biography.push({
-        title: 'Locations',
-        value: backstoryJSON.locations
-      })
-    }
-    if (backstoryJSON.tomes !== null) {
-      backstory += `<h3>Tomes</h3>
-      <div class="tomes">
-      ${backstoryJSON.tomes}
-      <div>\n`
-      biography.push({
-        title: 'Tomes',
-        value: backstoryJSON.tomes
-      })
-    }
-    if (backstoryJSON.possessions !== null) {
-      backstory += `<h3>Possessions</h3>
-      <div class="possessions">
-      ${backstoryJSON.possessions}
-      <div>\n`
-      biography.push({
-        title: 'Possessions',
-        value: backstoryJSON.possessions
-      })
-    }
-    if (backstoryJSON.encounters !== null) {
-      backstory += `<h3>Encounters</h3>
-      <div class="encounters">
-      ${backstoryJSON.encounters}
-      <div>\n`
-      biography.push({
-        title: 'Encounters',
-        value: backstoryJSON.encounters
-      })
-    }
-    return {
-      backstory: backstory,
-      biography: biography
-    }
+    backstory.block =
+      '<h2>Backstory</h2>\n' + backstory.block.join('\n', backstory.block)
+    return backstory
   }
 
   /**
@@ -126,8 +55,10 @@ export class CoC7DholeHouseActorImporter {
    * @param {JSON} dholeHouseData DholeHouseJSON
    * @returns
    */
-  static convertDholeHouseCharacterData (dholeHouseData) {
-    console.log(dholeHouseData)
+  static async convertDholeHouseCharacterData (dholeHouseData, options) {
+    if (CONFIG.debug.CoC7Importer) {
+      console.log('Source:', dholeHouseData)
+    }
     dholeHouseData = dholeHouseData.Investigator
     const backstories = CoC7DholeHouseActorImporter.getBackstory(
       dholeHouseData.Backstory
@@ -162,11 +93,11 @@ export class CoC7DholeHouseActorImporter {
             value: parseInt(dholeHouseData.Characteristics.Luck, 10)
           },
           mov: {
-            value: dholeHouseData.Characteristics.Move,
-            max: dholeHouseData.Characteristics.Move
+            value: parseInt(dholeHouseData.Characteristics.Move, 10),
+            max: parseInt(dholeHouseData.Characteristics.Move, 10)
           },
           db: { value: dholeHouseData.Characteristics.DamageBonus },
-          build: { value: dholeHouseData.Characteristics.Build }
+          build: { value: parseInt(dholeHouseData.Characteristics.Build, 10) }
         },
         infos: {
           occupation: dholeHouseData.PersonalDetails.Occupation,
@@ -175,8 +106,8 @@ export class CoC7DholeHouseActorImporter {
           residence: dholeHouseData.PersonalDetails.Residence,
           birthplace: dholeHouseData.PersonalDetails.Birthplace
         },
-        backstory: backstories.backstory,
-        biography: backstories.biography,
+        backstory: backstories.block,
+        biography: backstories.sections,
         description: {
           keeper: game.i18n.localize('CoC7.DholeHouseActorImporterSource')
         },
@@ -184,24 +115,40 @@ export class CoC7DholeHouseActorImporter {
           max: Math.floor(dholeHouseData.Characteristics.Sanity / 5)
         }
       },
-      skills: CoC7DholeHouseActorImporter.extractSkills(
-        dholeHouseData.Skills.Skill ?? []
+      skills: await CoC7DholeHouseActorImporter.extractSkills(
+        dholeHouseData.Skills.Skill ?? [],
+        options
       ),
-      possesions: CoC7DholeHouseActorImporter.extractPossessions(
-        dholeHouseData.Possessions?.item ?? []
+      possesions: await CoC7DholeHouseActorImporter.extractPossessions(
+        dholeHouseData.Possessions?.item ?? [],
+        options
       )
     }
     return cData
   }
 
-  static extractSkills (dholeHousekills) {
+  static makeSkillName (name, specialization) {
+    if (specialization === 'None') {
+      specialization = 'Any'
+    }
+    if (name === 'Language (Other)' || name === 'Language (Own)') {
+      name = 'Language'
+    } else if (name === 'Operate Heavy Machine') {
+      name = 'Operate Heavy Machinery'
+    } else if (name === 'Throw' && specialization === '') {
+      name = 'Fighting'
+      specialization = 'Throw'
+    }
+    return {
+      skillName: specialization === '' ? name : specialization,
+      specialization: specialization === '' ? '' : name,
+      name: name + (specialization === '' ? '' : ' (' + specialization + ')')
+    }
+  }
+
+  static async extractSkills (dholeHouseskills, options) {
     const skills = []
-    for (const skill of dholeHousekills) {
-      let name = skill.name
-      let specialization = ''
-      let isSpecial = false
-      let isOccupational = false
-      const value = skill.value
+    for (const skill of dholeHouseskills) {
       if (
         skill.subskill === 'None' &&
         skill.value === '1' &&
@@ -210,48 +157,52 @@ export class CoC7DholeHouseActorImporter {
       ) {
         continue
       }
-      if (skill.subskill && skill.subskill !== 'None') {
-        name = skill.subskill
-        specialization = skill.name
-        isSpecial = true
-      }
-      if (skill.occupation) {
-        isOccupational = true
-      }
-      console.log(
-        'skill name: ',
-        name,
-        ' skill value: ',
-        value,
-        ' specialization: ',
-        specialization
+      const parts = CoC7DholeHouseActorImporter.makeSkillName(
+        skill.name,
+        skill.subskill ?? ''
       )
-      const skillName = name
-      if (['Language (Other)', 'Language (Own)'].includes(specialization)) {
-        specialization = 'Language'
-      }
-      if (isSpecial) {
-        const parts = CoC7Item.getNamePartsSpec(skillName, specialization)
-        name = parts.name
-      }
-      skills.push({
-        type: 'skill',
-        name: name,
-        data: {
-          skillName: skillName,
-          specialization: specialization,
-          properties: {
-            special: isSpecial,
-            fighting: specialization === 'Fighting',
-            firearm: specialization === 'Firearms',
-            combat:
-              specialization === 'Fighting' || specialization === 'Firearms'
-          },
-          flags: { occupation: isOccupational },
-          base: Number(value),
-          value: Number(value)
-        }
+      const existing = await CoC7Utilities.guessItem('skill', parts.name, {
+        source: options.source,
+        fallbackAny: true
       })
+      let cloned = null
+      if (typeof existing !== 'undefined') {
+        cloned = duplicate(existing.toObject())
+        cloned.name = parts.name
+        cloned.data.skillName = parts.skillName
+        cloned.data.specialization = parts.specialization
+      } else {
+        cloned = CoCActor.emptySkill(
+          parts.skillName,
+          parseInt(skill.value ?? 0, 10),
+          {
+            specialization:
+              parts.specialization === '' ? false : parts.specialization
+          }
+        )
+        cloned.data.properties = cloned.data.properties ?? {}
+        if (parts.specialization === 'Fighting') {
+          cloned.data.properties.fighting = true
+          cloned.data.properties.combat = true
+          cloned.data.properties.push = false
+        } else if (parts.specialization === 'Firearms') {
+          cloned.data.properties.firearm = true
+          cloned.data.properties.combat = true
+          cloned.data.properties.push = false
+        } else if (parts.skillName === 'Dodge') {
+          cloned.data.properties.push = false
+        }
+      }
+      if (cloned.data.skillName === 'Any') {
+        cloned.name = cloned.name.replace(' (Any)', ' (None)')
+        cloned.data.skillName = 'None'
+      }
+      cloned.data.base = parseInt(skill.value ?? 0, 10)
+      cloned.data.value = parseInt(skill.value ?? 0, 10)
+      cloned.data.flags = cloned.data.flags ?? {}
+      cloned.data.flags.occupation =
+        skill.occupation === true || skill.occupation === 'true'
+      skills.push(cloned)
     }
     return skills
   }
@@ -268,24 +219,27 @@ export class CoC7DholeHouseActorImporter {
     return characterSkill
   }
 
-  static extractPossessions (dholehousePossessions) {
+  static async extractPossessions (dholehousePossessions, options) {
     const items = []
     for (const item of dholehousePossessions) {
-      items.push({
-        name: item.description,
-        type: 'item',
-        description: {
-          value: item.description
-        },
-        quantity: 1,
-        weight: 0,
-        attributes: {}
+      const existing = await CoC7Utilities.guessItem('item', item.description, {
+        source: options.source
       })
+      let cloned = null
+      if (typeof existing !== 'undefined') {
+        cloned = duplicate(existing.toObject())
+      } else {
+        cloned = {
+          name: item.description,
+          type: 'item'
+        }
+      }
+      items.push(cloned)
     }
     return items
   }
 
-  static extractWeapons (dholehouseWeapons, character) {
+  static async extractWeapons (dholehouseWeapons, character, options) {
     const weapons = []
     if (!Array.isArray(dholehouseWeapons)) {
       dholehouseWeapons = [dholehouseWeapons]
@@ -297,59 +251,52 @@ export class CoC7DholeHouseActorImporter {
       )
       const damage = weapon.damage.replace(/\+DB/i, '')
       const addb = damage !== weapon.damage
-      weapons.push({
-        name: weapon.name,
-        type: 'weapon',
-        data: {
-          description: {
-            value: weapon.Name
-          },
-          wpnType: '',
-          skill: {
-            main: {
-              name: skill?.name ?? '',
-              id: skill?.id ?? ''
-            },
-            alternativ: {
-              name: '',
-              id: ''
-            }
-          },
-          range: {
-            normal: {
-              value: 0,
-              units: '',
-              damage: damage
-            },
-            long: {
-              value: 0,
-              units: '',
-              damage: ''
-            },
-            extreme: {
-              value: 0,
-              units: '',
-              damage: ''
-            }
-          },
-          usesPerRound: {
-            normal: 1,
-            max: null,
-            burst: null
-          },
-          bullets: null,
-          ammo: weapon.ammo,
-          malfunction: weapon.malf,
-          blastRadius: null,
-          properties: {
-            melee: skill?.data.data.properties?.fighting ?? false,
-            rngd: skill?.data.data.properties?.firearm ?? false,
-            addb: addb
-          },
-          eras: {},
-          price: {}
-        }
+      const existing = await CoC7Utilities.guessItem('weapon', weapon.name, {
+        source: options.source
       })
+      let cloned = null
+      if (typeof existing !== 'undefined') {
+        cloned = duplicate(existing.toObject())
+        cloned.data.skill.main.name = skill?.name ?? ''
+        cloned.data.skill.main.id = skill?.id ?? ''
+        cloned.data.range = cloned.data.range ?? {}
+        cloned.data.range.normal = cloned.data.range.normal ?? {}
+        cloned.data.range.normal.damage = damage
+        cloned.data.ammo = weapon.ammo
+        cloned.data.malfunction = weapon.malf
+        cloned.data.properties = cloned.data.properties ?? {}
+        cloned.data.properties.melee =
+          skill?.data.data.properties?.fighting ?? false
+        cloned.data.properties.rngd =
+          skill?.data.data.properties?.firearm ?? false
+        cloned.data.properties.addb = addb
+      } else {
+        cloned = {
+          name: weapon.name,
+          type: 'weapon',
+          data: {
+            skill: {
+              main: {
+                name: skill?.name ?? '',
+                id: skill?.id ?? ''
+              }
+            },
+            range: {
+              normal: {
+                damage: damage
+              }
+            },
+            ammo: weapon.ammo,
+            malfunction: weapon.malf,
+            properties: {
+              melee: skill?.data.data.properties?.fighting ?? false,
+              rngd: skill?.data.data.properties?.firearm ?? false,
+              addb: addb
+            }
+          }
+        }
+      }
+      weapons.push(cloned)
     }
     return weapons
   }
@@ -366,7 +313,7 @@ export class CoC7DholeHouseActorImporter {
     return filePath
   }
 
-  static async createNPCFromDholeHouse (dholeHouseCharacterData) {
+  static async createNPCFromDholeHouse (dholeHouseCharacterData, options) {
     if (!game.user?.can('FILES_UPLOAD')) {
       ui.notifications.error(
         game.i18n.localize('CoC7.ActorImporterUploadError')
@@ -374,10 +321,13 @@ export class CoC7DholeHouseActorImporter {
       return false
     }
     const characterData =
-      CoC7DholeHouseActorImporter.convertDholeHouseCharacterData(
-        dholeHouseCharacterData
+      await CoC7DholeHouseActorImporter.convertDholeHouseCharacterData(
+        dholeHouseCharacterData,
+        options
       )
-    console.log(characterData)
+    if (CONFIG.debug.CoC7Importer) {
+      console.log('Character Data:', characterData)
+    }
     const importedCharactersFolder =
       await CoC7Utilities.createImportCharactersFolderIfNotExists()
     if (!CoC7DirectoryPicker.createDefaultDirectory()) {
@@ -405,19 +355,23 @@ export class CoC7DholeHouseActorImporter {
         })
       }
     }
-
-    console.log(characterData.items)
+    if (CONFIG.debug.CoC7Importer) {
+      console.log('Items: ', characterData.items)
+    }
     await npc.createEmbeddedDocuments('Item', characterData.skills, {
       renderSheet: false
     })
     await npc.createEmbeddedDocuments('Item', characterData.possesions, {
       renderSheet: false
     })
-    const weapons = CoC7DholeHouseActorImporter.extractWeapons(
+    const weapons = await CoC7DholeHouseActorImporter.extractWeapons(
       dholeHouseCharacterData.Investigator.Weapons?.weapon ?? [],
-      npc
+      npc,
+      options
     )
-    console.log('weapons', weapons)
+    if (CONFIG.debug.CoC7Importer) {
+      console.log('Weapons: ', weapons)
+    }
     await npc.createEmbeddedDocuments('Item', weapons, {
       renderSheet: false
     })
