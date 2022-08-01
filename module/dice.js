@@ -10,14 +10,23 @@ export class CoC7Dice {
         alternativeDice = game.settings.get('CoC7', 'tenDieBonus')
       }
     }
-    const roll = await new Roll(
-      '1dt' +
-        (alternativeDice !== ''
-          ? '+1do[' + alternativeDice + ']'
-          : '+1dt'
-        ).repeat(Math.abs(modif)) +
-        '+1d10'
-    ).roll({ async: true })
+    let roll
+    if (game.CoC7.dev.dice.alwaysCrit && game.settings.get('CoC7', 'hiddendevmenu')) {
+      roll = Roll.fromData(CoC7Dice.crit01)
+    } else  if (game.CoC7.dev.dice.alwaysFumble && game.settings.get('CoC7', 'hiddendevmenu')) {
+      roll = Roll.fromData(CoC7Dice.fumble99)
+    }
+    else{
+      roll = await new Roll(
+        '1dt' +
+          (alternativeDice !== ''
+            ? '+1do[' + alternativeDice + ']'
+            : '+1dt'
+          ).repeat(Math.abs(modif)) +
+          '+1d10'
+      ).roll({ async: true })
+    }
+
     const result = {
       unit: {
         total: 0,
@@ -30,6 +39,7 @@ export class CoC7Dice {
       total: 0,
       roll: roll
     }
+
     if (rollMode) result.rollMode = rollMode
     if (hideDice) result.hideDice = hideDice
     for (const d of roll.dice) {
@@ -172,5 +182,96 @@ export class CoC7Dice {
       output[key].total = output[key].unit.total + output[key].tens.total
     }
     return output
+  }
+
+  // Predetermined value of dice, used only for DEV and test purposes
+  static fumble99 = {
+    class: 'Roll',
+    options: {},
+    dice: [],
+    formula: '1dt + 1d10',
+    terms: [
+      {
+        class: 'CoC7DecaderDie',
+        options: {},
+        evaluated: true,
+        number: 1,
+        faces: 10,
+        modifiers: [],
+        results: [
+          {
+            result: 9,
+            active: true
+          }
+        ]
+      },
+      {
+        class: 'OperatorTerm',
+        options: {},
+        evaluated: true,
+        operator: '+'
+      },
+      {
+        class: 'Die',
+        options: {},
+        evaluated: true,
+        number: 1,
+        faces: 10,
+        modifiers: [],
+        results: [
+          {
+            result: 9,
+            active: true
+          }
+        ]
+      }
+    ],
+    total: 99,
+    evaluated: true
+  }
+
+  static crit01 = {
+    class: 'Roll',
+    options: {},
+    dice: [],
+    formula: '1dt + 1d10',
+    terms: [
+      {
+        class: 'CoC7DecaderDie',
+        options: {},
+        evaluated: true,
+        number: 1,
+        faces: 10,
+        modifiers: [],
+        results: [
+          {
+            result: 10,
+            active: true
+          }
+        ]
+      },
+      {
+        class: 'OperatorTerm',
+        options: {},
+        evaluated: true,
+        operator: '+'
+      },
+      {
+        class: 'Die',
+        options: {},
+        evaluated: true,
+        number: 1,
+        faces: 10,
+        modifiers: [],
+        results: [
+          {
+            result: 1,
+            active: true
+          }
+        ]
+      }
+    ],
+    total: 1,
+    evaluated: true
   }
 }

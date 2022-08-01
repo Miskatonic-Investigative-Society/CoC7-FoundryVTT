@@ -27,6 +27,8 @@ export class CoC7ActorSheet extends ActorSheet {
     data.editable = this.isEditable // MODIF 0.8.x : editable removed
     /******************/
 
+    data.showHiddenDevMenu = game.settings.get('CoC7', 'hiddendevmenu')
+
     data.hasToken = !!this.token
     data.canDragToken = data.hasToken && game.user.isGM
     data.linkedActor = this.actor.data?.token?.actorLink
@@ -851,43 +853,13 @@ export class CoC7ActorSheet extends ActorSheet {
       .find('a.coc7-link')
       .on('dragstart', event => CoC7Parser._onDragCoC7Link(event))
 
+    /**
+     * This is used for dev purposes only !
+     */
     html.find('.test-trigger').click(async event => {
-      // await OpposedCheckCard.dispatch({
-      //   type: OpposedCheckCard.defaultConfig.type,
-      //   combat: false,
-      //   action: 'new',
-      //   roll: {
-      //     characteristic: 'str',
-      //     actor: this.actor.actorKey
-      //   }
-      // })
-      // await OpposedCheckCard.dispatch({
-      //   type: OpposedCheckCard.defaultConfig.type,
-      //   combat: false,
-      //   action: 'new',
-      //   roll: {
-      //     characteristic: 'con'
-      // actor: this.actor.actorKey
-      //   }
-      // })
-      // const val = getProperty( this.actor, 'data.data.attribs.san.value');
-      // this.actor.enterBoutOfMadness( true, 10);
-      // const roll = new CoC7Check();
-      // roll.actor = this.actorKey;
-      // roll.attribute = 'san';
-      // roll.difficulty = this.options.sanDifficulty || CoC7Check.difficultyLevel.regular;
-      // roll.diceModifier = this.options.sanModifier || 0;
-      // await roll._perform();
-      // for (const effect of this.actor.effects) {
-      //  await effect.sheet.render(true);
-      //  // effect.delete();
-      // }
-      // for (const e of this.actor.effects) { e.delete() }
-      // await setProperty( this.actor, 'data.data.encounteredCreatures', []);
-      // await this.actor.update( {['data.encounteredCreatures'] : []});
-      // if (event.shiftKey) ui.notifications.info('Shift cliecked')
-      // SanCheckCard.create( this.actor.actorKey, {min:'1D10',max:'1D12'}, {fastForward:event.shiftKey});
+      if(!game.settings.get('CoC7', 'hiddendevmenu')) return
     })
+
     html
       .find('.skill-name.rollable')
       .mouseenter(this.toolTipSkillEnter.bind(this))

@@ -137,6 +137,12 @@ Hooks.once('init', async function () {
     },
     cards: {
       DamageCard: DamageCard
+    },
+    dev: {
+      dice: {
+        alwaysCrit: false,
+        alwaysFumble: false
+      }
     }
   }
   Combat.prototype.rollInitiative = rollInitiative

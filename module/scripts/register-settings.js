@@ -435,7 +435,7 @@ export function registerSettings () {
   game.settings.register('CoC7', 'debugmode', {
     name: 'SETTINGS.DebugMode',
     hint: 'SETTINGS.DebugModeHint',
-    scope: 'world',
+    scope: 'client',
     config: true,
     type: Boolean,
     default: false
@@ -451,6 +451,14 @@ export function registerSettings () {
   /**
    * Other settings
    */
+   game.settings.register('CoC7', 'hiddendevmenu', {
+    name: 'Hidden dev menu',
+    hint: 'Use at your own risk',
+    scope: 'world',
+    config: false,
+    type: Boolean,
+    default: false
+  })
   game.settings.register('CoC7', 'developmentEnabled', {
     name: 'Dev phased allowed',
     scope: 'world',

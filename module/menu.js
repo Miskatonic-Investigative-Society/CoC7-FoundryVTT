@@ -30,6 +30,7 @@ export class CoC7Menu {
   static getButtons (controls) {
     canvas.coc7gmtools = new CoC7MenuLayer()
     const isGM = game.user.isGM
+    const showHiddenDevMenu = game.settings.get('CoC7', 'hiddendevmenu')
     controls.push({
       name: 'coc7menu',
       title: 'CoC7.GmTools',
@@ -86,6 +87,41 @@ export class CoC7Menu {
         }
       ]
     })
+    if (showHiddenDevMenu) {
+      canvas.coc7DevTools = new CoC7MenuLayer()
+      controls.push({
+        name: 'coc7DevMenu',
+        title:
+          "Dev tools. If you don't know what it is, you don't need it and you shouldn't use it !!",
+        layer: 'coc7DevTools',
+        icon: 'game-icon game-icon-police-badge',
+        visible: isGM,
+        tools: [
+          {
+            toggle: true,
+            icon: 'game-icon game-icon-dice-fire',
+            name: 'alwaysCrit',
+            active: game.CoC7.dev.dice.alwaysCrit,
+            title: 'All rolls will crit',
+            onClick: toggle => {
+              game.CoC7.dev.dice.alwaysFumble = false
+              game.CoC7.dev.dice.alwaysCrit = toggle
+            }
+          },
+          {
+            toggle: true,
+            icon: 'game-icon game-icon-fire-extinguisher',
+            name: 'alwaysFumble',
+            active: game.CoC7.dev.dice.alwaysFumble,
+            title: 'All rolls will fumble',
+            onClick: toggle => {
+              game.CoC7.dev.dice.alwaysFumble = toggle
+              game.CoC7.dev.dice.alwaysCrit = false
+            }
+          }
+        ]
+      })
+    }
   }
 
   static renderControls (app, html, data) {
