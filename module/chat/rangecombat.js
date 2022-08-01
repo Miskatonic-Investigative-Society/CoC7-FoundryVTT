@@ -714,86 +714,88 @@ export class CoC7RangeInitiator {
       const volleySize = parseInt(h.shot.bulletsShot)
       const damageRolls = []
 
-      let damageFormula = String(h.shot.damage)
-      if (!damageFormula || damageFormula === '') damageFormula = '0'
-      const damageDie = CoC7Damage.getMainDie(damageFormula)
-      const maxDamage = new Roll(damageFormula).evaluate({
-        maximize: true
-      }).total
-      const criticalDamageFormula = this.weapon.impale
-        ? `${damageFormula} + ${maxDamage}`
-        : `${maxDamage}`
-      const criticalDamageDie = CoC7Damage.getMainDie(criticalDamageFormula)
+      if (volleySize > 0) {
+        let damageFormula = String(h.shot.damage)
+        if (!damageFormula || damageFormula === '') damageFormula = '0'
+        const damageDie = CoC7Damage.getMainDie(damageFormula)
+        const maxDamage = new Roll(damageFormula).evaluate({
+          maximize: true
+        }).total
+        const criticalDamageFormula = this.weapon.impale
+          ? `${damageFormula} + ${maxDamage}`
+          : `${maxDamage}`
+        const criticalDamageDie = CoC7Damage.getMainDie(criticalDamageFormula)
 
-      let impalingShots = 0
-      let successfulShots = 0
-      let critical = false
-      if (this.fullAuto || this.burst) {
-        successfulShots = Math.floor(volleySize / 2)
-      }
-      if (successfulShots === 0) successfulShots = 1
-      if (h.roll.successLevel >= CoC7Check.difficultyLevel.extreme) {
-        impalingShots = successfulShots
-        successfulShots = volleySize - impalingShots
-        critical = true
-        if (
-          CoC7Check.difficultyLevel.critical !== h.roll.successLevel &&
-          (CoC7Check.difficultyLevel.extreme <= h.roll.difficulty ||
-            h.shot.extremeRange)
-        ) {
-          successfulShots = volleySize
-          impalingShots = 0
-          critical = false
+        let impalingShots = 0
+        let successfulShots = 0
+        let critical = false
+        if (this.fullAuto || this.burst) {
+          successfulShots = Math.floor(volleySize / 2)
         }
-      }
+        if (successfulShots === 0) successfulShots = 1
+        if (h.roll.successLevel >= CoC7Check.difficultyLevel.extreme) {
+          impalingShots = successfulShots
+          successfulShots = volleySize - impalingShots
+          critical = true
+          if (
+            CoC7Check.difficultyLevel.critical !== h.roll.successLevel &&
+            (CoC7Check.difficultyLevel.extreme <= h.roll.difficulty ||
+              h.shot.extremeRange)
+          ) {
+            successfulShots = volleySize
+            impalingShots = 0
+            critical = false
+          }
+        }
 
-      let total = 0
-      for (let index = 0; index < successfulShots; index++) {
-        const roll = new Roll(damageFormula)
-        /** MODIF 0.8.x **/
-        await roll.evaluate({ async: true })
-        await CoC7Dice.showRollDice3d(roll)
-        /*****************/
-        damageRolls.push({
-          formula: damageFormula,
-          total: roll.total,
-          die: damageDie,
-          critical: false
-        })
-        total += roll.total
-      }
-      for (let index = 0; index < impalingShots; index++) {
-        const roll = new Roll(criticalDamageFormula)
-        /** MODIF 0.8.x **/
-        await roll.evaluate({ async: true })
-        await CoC7Dice.showRollDice3d(roll)
-        /*****************/
-        damageRolls.push({
-          formula: criticalDamageFormula,
-          total: roll.total,
-          die: criticalDamageDie,
-          critical: true
-        })
-        total += roll.total
-      }
+        let total = 0
+        for (let index = 0; index < successfulShots; index++) {
+          const roll = new Roll(damageFormula)
+          /** MODIF 0.8.x **/
+          await roll.evaluate({ async: true })
+          await CoC7Dice.showRollDice3d(roll)
+          /*****************/
+          damageRolls.push({
+            formula: damageFormula,
+            total: roll.total,
+            die: damageDie,
+            critical: false
+          })
+          total += roll.total
+        }
+        for (let index = 0; index < impalingShots; index++) {
+          const roll = new Roll(criticalDamageFormula)
+          /** MODIF 0.8.x **/
+          await roll.evaluate({ async: true })
+          await CoC7Dice.showRollDice3d(roll)
+          /*****************/
+          damageRolls.push({
+            formula: criticalDamageFormula,
+            total: roll.total,
+            die: criticalDamageDie,
+            critical: true
+          })
+          total += roll.total
+        }
 
-      let targetName = 'dummy'
-      let target = chatHelper.getTokenFromKey(h.roll.targetKey)
-      if (!target) target = chatHelper.getActorFromKey(h.roll.targetKey) // REFACTORING (2)
-      if (target) targetName = target.name
+        let targetName = 'dummy'
+        let target = chatHelper.getTokenFromKey(h.roll.targetKey)
+        if (!target) target = chatHelper.getActorFromKey(h.roll.targetKey) // REFACTORING (2)
+        if (target) targetName = target.name
 
-      this.damage.push({
-        targetKey: h.roll.targetKey,
-        targetName: targetName,
-        rolls: damageRolls,
-        total: total,
-        critical: critical,
-        dealt: false,
-        resultString: game.i18n.format('CoC7.rangeCombatDamage', {
-          name: targetName,
-          total: total
+        this.damage.push({
+          targetKey: h.roll.targetKey,
+          targetName: targetName,
+          rolls: damageRolls,
+          total: total,
+          critical: critical,
+          dealt: false,
+          resultString: game.i18n.format('CoC7.rangeCombatDamage', {
+            name: targetName,
+            total: total
+          })
         })
-      })
+      }
     }
 
     this.damageRolled = this.damage.length !== 0
