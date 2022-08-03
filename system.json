@@ -52,6 +52,13 @@
       "name": "sanity-tables-examples",
       "path": "./packs/sanity-tables-examples.db",
       "system": "CoC7"
+    },
+    {
+      "label": "System manual",
+      "type": "JournalEntry",
+      "name": "system-doc",
+      "path": "./packs/system-doc.db",
+      "system": "CoC7"
     }
   ],
   "languages": [
