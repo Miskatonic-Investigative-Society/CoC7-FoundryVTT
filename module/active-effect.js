@@ -56,10 +56,20 @@ export default class CoC7ActiveEffect extends ActiveEffect {
   /**
    * @override
    */
-  // get isTemporary(){
-  //     const duration = this.data.duration.seconds ?? (this.data.duration.rounds || this.data.duration.turns) ?? 0;
-  //     return (duration > 0)
-  // }
+  get duration () {
+    const d = this.data.duration
+    const duration = super.duration
+    if (Number.isNumeric(d.seconds)) {
+      let label = duration.label
+      if (d.seconds > 3600) {
+        label = new Date(d.seconds * 1000).toISOString().slice(11, 19)
+      } else if (d.seconds > 100) {
+        label = new Date(d.seconds * 1000).toISOString().slice(14, 19)
+      }
+      duration.label = label
+    }
+    return duration
+  }
 
   get isStatus () {
     const statusId = this.getFlag('core', 'statusId')
@@ -115,6 +125,33 @@ export default class CoC7ActiveEffect extends ActiveEffect {
     }
 
     categories.suppressed.hidden = !categories.suppressed.effects.length
+    return categories
+  }
+
+  static prepareNPCActiveEffectCategories (effects) {
+    let count = 0
+    // Define effect header categories
+    const categories = {
+      active: {
+        type: 'active',
+        label: game.i18n.localize('Active'),
+        effects: []
+      },
+      inactive: {
+        type: 'inactive',
+        label: game.i18n.localize('Innactive'),
+        effects: []
+      }
+    }
+    // Iterate over active effects, classifying them into categories
+    for (const e of effects) {
+      count += 1
+      e._getSourceName() // Trigger a lookup for the source name
+      if (e.isSuppressed || e.data.disabled) categories.inactive.effects.push(e)
+      else categories.active.effects.push(e)
+    }
+
+    if (count > 0) categories.expended = true
     return categories
   }
 }

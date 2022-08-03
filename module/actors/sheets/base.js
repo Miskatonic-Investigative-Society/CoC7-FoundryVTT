@@ -42,9 +42,10 @@ export class CoC7ActorSheet extends ActorSheet {
     data.meleeWpn = []
     data.actorFlags = {}
 
-    data.effects = CoC7ActiveEffect.prepareActiveEffectCategories(
-      this.actor.effects
-    )
+    data.effects =
+      this.actor.type === 'character'
+        ? CoC7ActiveEffect.prepareActiveEffectCategories(this.actor.effects)
+        : CoC7ActiveEffect.prepareNPCActiveEffectCategories(this.actor.effects)
 
     data.permissionLimited =
       !game.user.isGM &&
@@ -1407,9 +1408,8 @@ export class CoC7ActorSheet extends ActorSheet {
 
       li.append(div.hide())
       CoC7Parser.bindEventsHandler(div)
-      div.slideDown(200)
+      div.slideDown(200, () => li.toggleClass('expanded'))
     }
-    li.toggleClass('expanded')
     // $(event.currentTarget).toggleClass('expanded');
   }
 
@@ -1424,25 +1424,25 @@ export class CoC7ActorSheet extends ActorSheet {
     const pannel = $(section).find(`.pannel.${pannelClass}`)
     // pannel.toggle();
     if (pannel.hasClass('expanded')) {
-      pannel.slideUp(200)
+      // Could remove expanded class and use (pannel.is(':visible'))
+      pannel.slideUp(200, () => pannel.toggleClass('expanded'))
     } else {
-      pannel.slideDown(200)
+      pannel.slideDown(200, () => pannel.toggleClass('expanded'))
     }
-    pannel.toggleClass('expanded')
   }
 
   _onInventoryHeader (event) {
     event.preventDefault()
-    $(event.currentTarget)
-      .siblings('li')
-      .toggle()
+    const li = $(event.currentTarget).siblings('li')
+    if (li.is(':visible')) li.slideUp(200)
+    else li.slideDown(200)
   }
 
   _onItemHeader (event) {
     event.preventDefault()
-    $(event.currentTarget)
-      .next('ol')
-      .toggle()
+    const ol = $(event.currentTarget).next('ol')
+    if (ol.is(':visible')) ol.slideUp(200)
+    else ol.slideDown(200)
   }
 
   async _onItemPopup (event) {

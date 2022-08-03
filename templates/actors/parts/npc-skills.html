@@ -1,4 +1,5 @@
-{{#each skills as |skill id|}}
+<div class="flexrow">
+  {{#each skills as |skill id|}}
   <div class="item flexrow {{#if skill.data.properties.combat}}combat-skill{{/if}}" style="flex: 0 0 33%;flex-wrap: wrap;border-right: 1px groove;" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
     {{#if skill.data.properties.special}}
       <div class="npc-specialization">{{skill.data.specialization}}</div>
@@ -16,4 +17,5 @@
       </div>
     {{/if}}
   </div>
-{{/each}}
+  {{/each}}
+</div>
