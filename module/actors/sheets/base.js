@@ -13,6 +13,7 @@ import { isCtrlKey } from '../../chat/helper.js'
 import { CoC7Parser } from '../../apps/parser.js'
 import { DamageCard } from '../../chat/cards/damage.js'
 import { CoC7LinkCreationDialog } from '../../apps/link-creation-dialog.js'
+import CoC7ActiveEffect from '../../active-effect.js'
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -40,6 +41,10 @@ export class CoC7ActorSheet extends ActorSheet {
     data.rangeWpn = []
     data.meleeWpn = []
     data.actorFlags = {}
+
+    data.effects = CoC7ActiveEffect.prepareActiveEffectCategories(
+      this.actor.effects
+    )
 
     data.permissionLimited =
       !game.user.isGM &&
@@ -706,6 +711,7 @@ export class CoC7ActorSheet extends ActorSheet {
       html.on('click', '.weapon-damage', this._onWeaponDamage.bind(this))
 
       html.find('.inventory-header').click(this._onInventoryHeader.bind(this))
+      html.find('.items-header').click(this._onItemHeader.bind(this))
       html.find('.section-header').click(this._onSectionHeader.bind(this))
 
       const wheelInputs = html.find('.attribute-value')
@@ -857,7 +863,7 @@ export class CoC7ActorSheet extends ActorSheet {
      * This is used for dev purposes only !
      */
     html.find('.test-trigger').click(async event => {
-      if(!game.settings.get('CoC7', 'hiddendevmenu')) return
+      if (!game.settings.get('CoC7', 'hiddendevmenu')) return null
     })
 
     html
@@ -880,6 +886,11 @@ export class CoC7ActorSheet extends ActorSheet {
       .find('.item-control.development-flag')
       .mouseenter(this.toolTipFlagForDevelopment.bind(this))
       .mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
+
+    // Active Effects
+    html
+      .find('.effect-control')
+      .click(ev => CoC7ActiveEffect.onManageActiveEffect(ev, this.actor))
   }
 
   toolTipSkillEnter (event) {
@@ -892,8 +903,9 @@ export class CoC7ActorSheet extends ActorSheet {
           typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' &&
           game.CoC7Tooltips.ToolTipHover !== null
         ) {
-          const isCombat =
-            game.CoC7Tooltips.ToolTipHover.classList?.contains('combat')
+          const isCombat = game.CoC7Tooltips.ToolTipHover.classList?.contains(
+            'combat'
+          )
           const item = game.CoC7Tooltips.ToolTipHover.closest('.item')
           if (typeof item !== 'undefined') {
             const skillId = item.dataset.skillId
@@ -915,8 +927,8 @@ export class CoC7ActorSheet extends ActorSheet {
                     game.settings.get('CoC7', 'stanbyGMRolls') &&
                     sheet.actor.hasPlayerOwner
                       ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                        name: sheet.actor.name
-                      })
+                          name: sheet.actor.name
+                        })
                       : ''
                 })
             }
@@ -955,8 +967,8 @@ export class CoC7ActorSheet extends ActorSheet {
                     game.settings.get('CoC7', 'stanbyGMRolls') &&
                     sheet.actor.hasPlayerOwner
                       ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                        name: sheet.actor.name
-                      })
+                          name: sheet.actor.name
+                        })
                       : ''
                 })
             }
@@ -998,8 +1010,8 @@ export class CoC7ActorSheet extends ActorSheet {
                         game.settings.get('CoC7', 'stanbyGMRolls') &&
                         sheet.actor.hasPlayerOwner
                           ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                            name: sheet.actor.name
-                          })
+                              name: sheet.actor.name
+                            })
                           : ''
                     })
                 }
@@ -1025,8 +1037,8 @@ export class CoC7ActorSheet extends ActorSheet {
                         (game.settings.get('CoC7', 'stanbyGMRolls') &&
                         sheet.actor.hasPlayerOwner
                           ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                            name: sheet.actor.name
-                          })
+                              name: sheet.actor.name
+                            })
                           : '')
                     })
                 }
@@ -1421,7 +1433,16 @@ export class CoC7ActorSheet extends ActorSheet {
 
   _onInventoryHeader (event) {
     event.preventDefault()
-    $(event.currentTarget).siblings('li').toggle()
+    $(event.currentTarget)
+      .siblings('li')
+      .toggle()
+  }
+
+  _onItemHeader (event) {
+    event.preventDefault()
+    $(event.currentTarget)
+      .next('ol')
+      .toggle()
   }
 
   async _onItemPopup (event) {
@@ -1859,8 +1880,9 @@ export class CoC7ActorSheet extends ActorSheet {
                   value: event.currentTarget.value
                 })
               )
-              formData[event.currentTarget.name] =
-                game.i18n.format('CoC7.ErrorInvalid')
+              formData[event.currentTarget.name] = game.i18n.format(
+                'CoC7.ErrorInvalid'
+              )
             }
           }
         }
@@ -1880,8 +1902,9 @@ export class CoC7ActorSheet extends ActorSheet {
                   value: event.currentTarget.value
                 })
               )
-              formData[event.currentTarget.name] =
-                game.i18n.format('CoC7.ErrorInvalid')
+              formData[event.currentTarget.name] = game.i18n.format(
+                'CoC7.ErrorInvalid'
+              )
             }
           }
         }

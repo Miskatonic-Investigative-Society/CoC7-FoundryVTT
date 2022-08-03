@@ -19,7 +19,8 @@
   .inventory {
     height: 100%;
   }
-  .inventory-list {
+  .inventory-list,
+  .effects-list {
     list-style: none;
     margin: 0;
     padding: 0 5px;
@@ -47,7 +48,7 @@
       h4 {
         margin: 0;
         white-space: nowrap;
-        overflow-x: hidden;
+        overflow: hidden;
       }
       &.rollable:hover .item-image {
         background-image: url('/icons/svg/d20-grey.svg') !important;
@@ -73,7 +74,8 @@
         white-space: nowrap;
       }
     }
-    .inventory-header {
+    .inventory-header,
+    .items-header {
       margin: 2px 0;
       padding: 0;
       background: rgba(0, 0, 0, 0.05);
@@ -125,6 +127,9 @@
         font-size: 10px;
         text-align: center;
         color: @colorTan;
+        &.effect-control {
+          flex: 1;
+        }
       }
     }
     .item-summary {

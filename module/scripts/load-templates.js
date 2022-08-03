@@ -14,7 +14,7 @@ export const preloadHandlebarsTemplates = async function () {
     'systems/CoC7/templates/actors/parts/actor-inventory.html',
     'systems/CoC7/templates/actors/parts/actor-inventory-items.html',
     'systems/CoC7/templates/actors/parts/actor-background.html',
-    'systems/CoC7/templates/common/effects.hbs',
+    'systems/CoC7/templates/common/active-effects.hbs',
     'systems/CoC7/templates/actors/parts/actor-mythos-enounters.hbs',
     'systems/CoC7/templates/actors/parts/actor-keeper-mythos-enounters.hbs',
     'systems/CoC7/templates/actors/parts/actor-skills-v2.html',
