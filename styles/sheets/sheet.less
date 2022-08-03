@@ -33,7 +33,7 @@
         border-bottom: none;
       }
       .item-name {
-        cursor: pointer;
+        // cursor: pointer;
         max-height: 16px;
         width: 0;
         text-overflow: ellipsis;
@@ -44,6 +44,11 @@
         background-size: 16px;
         margin-right: 5px;
         height: 16px;
+        border: none;
+        &:hover {
+          background-image: none !important;
+          cursor: default;
+        }
       }
       h4 {
         margin: 0;
