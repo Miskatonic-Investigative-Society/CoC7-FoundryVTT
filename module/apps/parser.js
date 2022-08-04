@@ -242,10 +242,7 @@ export class CoC7Parser {
 
     text = TextEditor._getTextNodes(html)
     // Alternative regex : '@(coc7).([^\[]+)\[([^\]]+)\](?:{([^}]+)})?'
-    const rgx = new RegExp(
-      '@(coc7).(.*?)\\[([^\\]]+)\\]' + '(?:{([^}]+)})?',
-      'gi'
-    )
+    const rgx = new RegExp('@(coc7).(.*?)\\[(.*)\\]' + '(?:{([^}]+)})?', 'gi')
     TextEditor._replaceTextContent(text, rgx, CoC7Parser._createLink)
     return html.innerHTML
   }
@@ -261,11 +258,19 @@ export class CoC7Parser {
 
   static _onDragCoC7Link (event) {
     const a = event.currentTarget
-    const i = a.querySelector('i.link-icon')
+    const i = a.querySelector('[data-link-icon]')
     const data = duplicate(a.dataset)
     data.linkType = 'coc7-link'
     data.CoC7Type = 'link'
     data.icon = null
+
+    if (
+      data.object &&
+      (typeof data.object === 'string' || data.object instanceof String)
+    ) {
+      data.object = JSON.parse(data.object)
+      data.type = 'effect'
+    }
 
     if (
       i.dataset &&
@@ -276,6 +281,10 @@ export class CoC7Parser {
     }
     data.displayName = a.dataset.displayName ? a.innerText : null
     event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
+    const pouet = JSON.parse(
+      event.originalEvent.dataTransfer.getData('text/plain')
+    )
+    const prout = 45
   }
 
   static _createLink (match, tag, type, options, name) {
@@ -291,20 +300,25 @@ export class CoC7Parser {
     const data = {
       cls: ['coc7-link'],
       dataset: { check: type },
-      icon: 'fas fa-dice',
+      icon: null,
       blind: false,
       name: name
     }
 
     const matches = options.matchAll(/[^,]+/gi)
-    for (const match of Array.from(matches)) {
-      let [key, value] = match[0].split(':')
-      if (key === 'icon') data.icon = value
-      if (key === 'blind' && typeof value === 'undefined') {
-        value = true
-        data.blind = true && ['check'].includes(type.toLowerCase())
+    if ('effect' == type) {
+      data.effect = JSON.parse(options)
+      data.dataset.object = options
+    } else {
+      for (const match of Array.from(matches)) {
+        let [key, value] = match[0].split(':')
+        if (key === 'icon') data.icon = value
+        if (key === 'blind' && typeof value === 'undefined') {
+          value = true
+          data.blind = true && ['check'].includes(type.toLowerCase())
+        }
+        data.dataset[key] = value
       }
-      data.dataset[key] = value
     }
 
     let title
@@ -330,9 +344,8 @@ export class CoC7Parser {
             data.dataset.type?.toLowerCase()
           )
         ) {
-          humanName = CoC7Utilities.getCharacteristicNames(
-            data.dataset.name
-          )?.label
+          humanName = CoC7Utilities.getCharacteristicNames(data.dataset.name)
+            ?.label
         }
         title = game.i18n.format(
           `CoC7.LinkCheck${!data.dataset.difficulty ? '' : 'Diff'}${
@@ -371,6 +384,8 @@ export class CoC7Parser {
           }
         )
         break
+      case 'effect':
+        title = data.effect.label
       default:
         break
     }
@@ -386,11 +401,16 @@ export class CoC7Parser {
       a.dataset[k] = v
     }
     a.draggable = true
-    a.innerHTML = `${
-      data.blind ? '<i class="fas fa-eye-slash"></i>' : ''
-    }<i data-link-icon="${data.icon}" class="link-icon ${data.icon}"></i>${
-      data.name
-    }`
+    data.icon = data.icon ?? data.effect?.icon ?? 'fas fa-dice'
+    // check if it's an image or an icon
+    if (data.icon.includes('\\') || data.icon.includes('.'))
+      data.img = data.icon
+    if (data.blind) a.innerHTML += '<i class="fas fa-eye-slash"></i>'
+    if (data.img)
+      a.innerHTML += `<img data-link-icon="${data.icon}" src="${data.img}">`
+    else
+      a.innerHTML += `<i data-link-icon="${data.icon}" class="link-icon ${data.icon}"></i>`
+    a.innerHTML += `<span>${data.name}</span>`
 
     return a
   }

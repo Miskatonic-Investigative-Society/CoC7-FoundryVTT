@@ -39,33 +39,43 @@ export class CoC7Canvas {
               alias: game.user.name
             }
 
-            if (!dropTargetTokens.length) {
-              const whisperTargets = game.users.players.filter(
-                u => !!u.character
-              ) // User with at least a character
-              for (const u of whisperTargets) {
-                option.whisper = [u]
-                chatHelper.createMessage(
-                  null,
-                  game.i18n.format('CoC7.MessageTargetCheckRequested', {
-                    name: u.character.name,
-                    check: link.link
-                  }),
-                  option
-                )
+            if (link.is.effect) {
+              if (!dropTargetTokens.length) {
+                // Apply to everyone ? or only players ? or nobody
+              } else {
+                for( const t of dropTargetTokens){
+                  await t.actor.createEmbeddedDocuments( 'ActiveEffect', [link._linkData.effect])
+                }
               }
             } else {
-              for (const t of dropTargetTokens) {
-                if (t.actor.hasPlayerOwner) {
-                  option.whisper = t.actor.owners
+              if (!dropTargetTokens.length) {
+                const whisperTargets = game.users.players.filter(
+                  u => !!u.character
+                ) // User with at least a character
+                for (const u of whisperTargets) {
+                  option.whisper = [u]
                   chatHelper.createMessage(
                     null,
                     game.i18n.format('CoC7.MessageTargetCheckRequested', {
-                      name: t.actor.name,
+                      name: u.character.name,
                       check: link.link
                     }),
                     option
                   )
+                }
+              } else {
+                for (const t of dropTargetTokens) {
+                  if (t.actor.hasPlayerOwner) {
+                    option.whisper = t.actor.owners
+                    chatHelper.createMessage(
+                      null,
+                      game.i18n.format('CoC7.MessageTargetCheckRequested', {
+                        name: t.actor.name,
+                        check: link.link
+                      }),
+                      option
+                    )
+                  }
                 }
               }
             }

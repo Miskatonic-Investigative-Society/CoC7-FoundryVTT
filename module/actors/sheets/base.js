@@ -865,6 +865,23 @@ export class CoC7ActorSheet extends ActorSheet {
      */
     html.find('.test-trigger').click(async event => {
       if (!game.settings.get('CoC7', 'hiddendevmenu')) return null
+      const item = await Item.create({
+        name: '__CoC7InternalItem__',
+        type: 'item'
+      })
+      // const effects = await item.createEmbeddedDocuments('ActiveEffect', [
+      //   {
+      //     label: game.i18n.localize('CoC7.EffectNew'),
+      //     icon: 'icons/svg/aura.svg',
+      //     origin: null,
+      //     'duration.rounds': undefined,
+      //     disabled: true
+      //   }
+      // ])
+      // const effect = effects[0]
+      // await effect.sheet.render(true)
+      // ui.notifications.info( 'effect created !')
+      ui.notifications.info('effect created !')
     })
 
     html
