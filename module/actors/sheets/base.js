@@ -14,6 +14,7 @@ import { CoC7Parser } from '../../apps/parser.js'
 import { DamageCard } from '../../chat/cards/damage.js'
 import { CoC7LinkCreationDialog } from '../../apps/link-creation-dialog.js'
 import CoC7ActiveEffect from '../../active-effect.js'
+import { CoC7Link } from '../../apps/link.js'
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -1257,6 +1258,16 @@ export class CoC7ActorSheet extends ActorSheet {
   }
 
   async _onDrop (event) {
+    const dataString = event.dataTransfer.getData('text/plain')
+    const data = JSON.parse(dataString)
+    if (data.linkType === 'coc7-link') {
+      if (data.type === 'effect') {
+        const link = await CoC7Link.fromData(data)
+        if( link.data.effect){
+          this.actor.createEmbeddedDocuments( 'ActiveEffect', [link.data.effect])
+        }
+      }
+    } 
     await super._onDrop(event)
   }
 

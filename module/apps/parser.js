@@ -47,28 +47,33 @@ export class CoC7Parser {
     const data = JSON.parse(dataString)
     if (data.linkType === 'coc7-link') {
       event.stopPropagation()
-      if (
-        !event.shiftKey &&
-        (typeof data.difficulty === 'undefined' ||
-          typeof data.modifier === 'undefined')
-      ) {
-        const usage = await RollDialog.create({
-          disableFlatDiceModifier: true
-        })
-        if (usage) {
-          data.modifier = usage.get('bonusDice')
-          data.difficulty = usage.get('difficulty')
+      if (data.type !== 'effect') {
+        if (
+          !event.shiftKey &&
+          (typeof data.difficulty === 'undefined' ||
+            typeof data.modifier === 'undefined')
+        ) {
+          const usage = await RollDialog.create({
+            disableFlatDiceModifier: true
+          })
+          if (usage) {
+            data.modifier = usage.get('bonusDice')
+            data.difficulty = usage.get('difficulty')
+          }
         }
-      }
-      if (game.settings.get('core', 'rollMode') === 'blindroll') {
-        data.blind = true
-      }
-
+        if (game.settings.get('core', 'rollMode') === 'blindroll') {
+          data.blind = true
+        }
       const link = CoC7Parser.createCoC7Link(data)
-
       if (link) {
         editor.insertContent(link)
       }
+      } else {
+        const link = await CoC7Link.fromData(data)
+        editor.insertContent(link.link)
+      }
+
+
     } else if (isCtrlKey(event)) {
       event.stopPropagation()
 
@@ -440,6 +445,8 @@ export class CoC7Parser {
         return
       }
       if (canvas.tokens.controlled.length) {
+        const link = await CoC7Link.fromData(options)
+
         for (const token of canvas.tokens.controlled) {
           switch (options.check) {
             case 'check':
@@ -482,6 +489,10 @@ export class CoC7Parser {
 
             case 'item': {
               return token.actor.weaponCheck(options, event.shiftKey)
+            }
+
+            case 'effect': {
+              await token.actor.createEmbeddedDocuments( 'ActiveEffect', [link.data.effect])
             }
 
             default:

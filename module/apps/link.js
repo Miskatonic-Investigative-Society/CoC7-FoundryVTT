@@ -216,7 +216,9 @@ export class CoC7Link {
 
     // Effect
     if (this.is.effect || x.object) {
-      this._linkData.effect = foundry.utils.deepClone(x.object)
+      if( x.object && (typeof x.object === 'string' || x.object instanceof String)){
+        this._linkData.effect = JSON.parse(x.object)
+      } else this._linkData.effect = foundry.utils.deepClone(x.object)
       if (!this._linkData.effect.changes) this._linkData.effect.changes = []
     }
   }

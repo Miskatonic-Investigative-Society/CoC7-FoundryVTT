@@ -44,7 +44,7 @@ export class CoC7Canvas {
                 // Apply to everyone ? or only players ? or nobody
               } else {
                 for( const t of dropTargetTokens){
-                  await t.actor.createEmbeddedDocuments( 'ActiveEffect', [link._linkData.effect])
+                  await t.actor.createEmbeddedDocuments( 'ActiveEffect', [link.data.effect])
                 }
               }
             } else {
