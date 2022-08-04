@@ -1,5 +1,6 @@
 /* global game, ItemSheet, mergeObject */
 
+import CoC7ActiveEffect from '../../active-effect.js'
 import { COC7 } from '../../config.js'
 
 /**
@@ -57,6 +58,10 @@ export class CoC7SkillSheet extends ItemSheet {
 
     data.hasOwner = this.item.actor !== null
 
+    data.effects = CoC7ActiveEffect.prepareActiveEffectCategories(
+      this.item.effects
+    )
+
     if (this.item.data.type === 'skill') {
       data._properties = []
       for (const [key, value] of Object.entries(COC7.skillProperties)) {
@@ -104,8 +109,8 @@ export class CoC7SkillSheet extends ItemSheet {
 
   async _onClickToggle (event) {
     event.preventDefault()
-    const propertyId =
-      event.currentTarget.closest('.toggle-switch').dataset.property
+    const propertyId = event.currentTarget.closest('.toggle-switch').dataset
+      .property
     await this.item.toggleProperty(
       propertyId,
       event.metaKey ||

@@ -145,7 +145,8 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
       dragDrop: [{ dragSelector: '.item', dropSelector: null }],
       template: 'systems/CoC7/templates/actors/npc-sheet.html',
       width: 580,
-      resizable: true
+      resizable: false,
+      minimizable: true
     })
   }
 
@@ -171,13 +172,14 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
   }
 
   static forceAuto (app, html) {
-    const cell = html.find('.pannel.expanded.resizededitor')
-    if (cell.length) {
-      cell.height(
-        Math.max(200, (html.height() - cell.position().top - 8) / cell.length) +
-          'px'
-      )
-    }
+    html.height('auto')
+    // const cell = html.find('.pannel.expanded.resizededitor')
+    // if (cell.length) {
+    //   cell.height(
+    //     Math.max(200, (html.height() - cell.position().top - 8) / cell.length) +
+    //       'px'
+    //   )
+    // }
   }
 
   setPosition (a) {

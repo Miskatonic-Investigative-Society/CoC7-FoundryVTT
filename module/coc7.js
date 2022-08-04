@@ -278,6 +278,19 @@ Hooks.on('deleteActiveEffect', (data, options, userId) => {
   }
 })
 
+// This will hide the item called '__CoC7InternalItem__'
+// This item is used for internal purposes and should not be seen by anyone
+Hooks.on('changeSidebarTab', directory => {
+  if (directory instanceof ItemDirectory) {
+    const item = game.items.find(i => i.name === '__CoC7InternalItem__')
+    if (item) {
+      const html = directory._element
+      const itemElement = html.find(`[data-document-id='${item.id}']`)
+      if (itemElement) itemElement[0].style.display = 'none'
+    }
+  }
+})
+
 Hooks.on('hotbarDrop', async (bar, data, slot) =>
   CoC7Utilities.createMacro(bar, data, slot)
 )
@@ -395,14 +408,14 @@ Hooks.on('ready', async () => {
       game.settings.get('CoC7', 'boutOfMadnessSummaryTable') === 'none'
         ? null
         : game.tables.get(
-          game.settings.get('CoC7', 'boutOfMadnessSummaryTable')
-        ),
+            game.settings.get('CoC7', 'boutOfMadnessSummaryTable')
+          ),
     boutOfMadness_RealTime:
       game.settings.get('CoC7', 'boutOfMadnessRealTimeTable') === 'none'
         ? null
         : game.tables.get(
-          game.settings.get('CoC7', 'boutOfMadnessRealTimeTable')
-        )
+            game.settings.get('CoC7', 'boutOfMadnessRealTimeTable')
+          )
     // maniasIndex: ge.settings.get('CoC7', 'boutOfMadnessPhobiasIndex'),
     // phobiasIndex: game.settings.get('CoC7', 'boutOfMadnessManiasIndex'),
     // phobias: ('none' == game.settings.get('CoC7', 'samplePhobiasTable'))?null:game.tables.get(game.settings.get('CoC7', 'samplePhobiasTable')),

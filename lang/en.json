@@ -692,7 +692,9 @@
   "CoC7.ErrorTokenNotOnScene": "Token does not belongs to this location's scene",
   "CoC7.AddParticipant": "Add Participant",
   "CoC7.Remove": "Remove",
+  "CoC7.Delete": "Delete",
   "CoC7.Edit": "Edit",
+  "CoC7.Create": "Create",
   "CoC7.MakeActive": "Make Active",
   "CoC7.SelectNewSkill": "Select skill",
   "CoC7.AskDamageRoll": "Ask damage roll",
@@ -891,6 +893,9 @@
   "CoC7.Cancel": "Cancel",
   "CoC7.Add": "Add",
   "CoC7.Update": "Update",
+  "CoC7.Enable": "Enable",
+  "CoC7.Disable": "Disable",
+  "CoC7.Duration": "Duration",
 
   "CoC7.ActorImporter": "Actor Importer",
   "CoC7.ActorImporterSummary": "Import an NPC or Creature from description and stats. Just paste the corresponding plain text",
@@ -1127,5 +1132,7 @@
   "SETTINGS.ChaseShowTokenMovementHint": "Show movement on the grid when a token is moved to the next location.",
 
   "CoC7.getTheExample": "Copy Example",
-  "CoC7.Copied": "Copied the Example Text to Clipboard"
+  "CoC7.Copied": "Copied the Example Text to Clipboard",
+
+  "CoC7.EffectNew": "New effect"
 }

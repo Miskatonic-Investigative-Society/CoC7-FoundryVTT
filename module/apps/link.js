@@ -8,7 +8,12 @@ export class CoC7Link {
   constructor () {
     this._linkData = {
       type: CoC7Link.LINK_TYPE.CHECK,
-      check: CoC7Link.CHECK_TYPE.SKILL
+      check: CoC7Link.CHECK_TYPE.SKILL,
+      effect: {
+        label: game.i18n.localize('CoC7.EffectNew'),
+        icon: 'icons/svg/aura.svg',
+        changes: []
+      }
     }
   }
 
@@ -45,7 +50,8 @@ export class CoC7Link {
     return {
       CHECK: 1,
       SANLOSS: 2,
-      ITEM: 3
+      ITEM: 3,
+      EFFECT: 4
     }
   }
 
@@ -69,6 +75,7 @@ export class CoC7Link {
     data.isCheck = this.is.check
     data.isSanloss = this.is.sanloss
     data.isItem = this.is.item
+    data.isEffect = this.is.effect
     return data
   }
 
@@ -206,6 +213,14 @@ export class CoC7Link {
     // San Data
     this._linkData.sanMin = x.sanMin
     this._linkData.sanMax = x.sanMax
+
+    // Effect
+    if (this.is.effect || x.object) {
+      if( x.object && (typeof x.object === 'string' || x.object instanceof String)){
+        this._linkData.effect = JSON.parse(x.object)
+      } else this._linkData.effect = foundry.utils.deepClone(x.object)
+      if (!this._linkData.effect.changes) this._linkData.effect.changes = []
+    }
   }
 
   get type () {
@@ -220,6 +235,8 @@ export class CoC7Link {
         return 'attribute'
       case CoC7Link.CHECK_TYPE.SKILL:
         return 'skill'
+      case CoC7Link.CHECK_TYPE.EFFECT:
+        return 'effect'
       default:
         return undefined
     }
@@ -237,6 +254,9 @@ export class CoC7Link {
           break
         case 'item':
           this._linkData.type = CoC7Link.LINK_TYPE.ITEM
+          break
+        case 'effect':
+          this._linkData.type = CoC7Link.LINK_TYPE.EFFECT
           break
         default:
           this._linkData.type = undefined
@@ -326,6 +346,12 @@ export class CoC7Link {
       },
       set item (x) {
         if (x === true) link.type = CoC7Link.LINK_TYPE.ITEM
+      },
+      get effect () {
+        return link.type === CoC7Link.LINK_TYPE.EFFECT
+      },
+      set effect (x) {
+        if (x === true) link.type = CoC7Link.LINK_TYPE.EFFECT
       }
     }
   }
@@ -421,8 +447,33 @@ export class CoC7Link {
         return link
       }
 
+      case CoC7Link.LINK_TYPE.EFFECT: {
+        let effectData = foundry.utils.deepClone(this._linkData.effect)
+        if (!this.effectIsTemp) delete effectData.duration
+        if (effectData.changes.length === 0) delete effectData.changes
+        if (!effectData.disabled) delete effectData.disabled
+        if (!effectData.tint) delete effectData.tint
+        let link = `@coc7.effect[${JSON.stringify(effectData)}]`
+        if (
+          this._linkData.hasLabel &&
+          typeof this._linkData.label != 'undefined'
+        )
+          link += `{${this._linkData.label}}`
+        return link
+      }
+
       default:
         return null
     }
+  }
+
+  get effectIsTemp () {
+    if (!this._linkData.effect.duration) return false
+    const duration =
+      this._linkData.effect.duration.seconds ??
+      (this._linkData.effect.duration.rounds ||
+        this._linkData.effect.duration.turns) ??
+      0
+    return duration > 0
   }
 }

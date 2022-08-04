@@ -19,7 +19,8 @@
   .inventory {
     height: 100%;
   }
-  .inventory-list {
+  .inventory-list,
+  .effects-list {
     list-style: none;
     margin: 0;
     padding: 0 5px;
@@ -32,7 +33,7 @@
         border-bottom: none;
       }
       .item-name {
-        cursor: pointer;
+        // cursor: pointer;
         max-height: 16px;
         width: 0;
         text-overflow: ellipsis;
@@ -41,13 +42,18 @@
       .item-image {
         flex: 0 0 16px;
         background-size: 16px;
-        margin-right: 5px;
+        margin: 0 5px 0 0;
         height: 16px;
+        border: none;
+        &:hover {
+          background-image: none !important;
+          cursor: default;
+        }
       }
       h4 {
         margin: 0;
         white-space: nowrap;
-        overflow-x: hidden;
+        overflow: hidden;
       }
       &.rollable:hover .item-image {
         background-image: url('/icons/svg/d20-grey.svg') !important;
@@ -73,7 +79,8 @@
         white-space: nowrap;
       }
     }
-    .inventory-header {
+    .inventory-header,
+    .items-header {
       margin: 2px 0;
       padding: 0;
       background: rgba(0, 0, 0, 0.05);
@@ -125,6 +132,9 @@
         font-size: 10px;
         text-align: center;
         color: @colorTan;
+        &.effect-control {
+          flex: 1;
+        }
       }
     }
     .item-summary {
