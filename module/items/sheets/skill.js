@@ -109,8 +109,8 @@ export class CoC7SkillSheet extends ItemSheet {
 
   async _onClickToggle (event) {
     event.preventDefault()
-    const propertyId = event.currentTarget.closest('.toggle-switch').dataset
-      .property
+    const propertyId =
+      event.currentTarget.closest('.toggle-switch').dataset.property
     await this.item.toggleProperty(
       propertyId,
       event.metaKey ||

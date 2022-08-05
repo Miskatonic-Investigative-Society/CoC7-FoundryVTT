@@ -11,12 +11,17 @@ export class CoC7Dice {
       }
     }
     let roll
-    if (game.CoC7.dev.dice.alwaysCrit && game.settings.get('CoC7', 'hiddendevmenu')) {
+    if (
+      game.CoC7.dev.dice.alwaysCrit &&
+      game.settings.get('CoC7', 'hiddendevmenu')
+    ) {
       roll = Roll.fromData(CoC7Dice.crit01)
-    } else  if (game.CoC7.dev.dice.alwaysFumble && game.settings.get('CoC7', 'hiddendevmenu')) {
+    } else if (
+      game.CoC7.dev.dice.alwaysFumble &&
+      game.settings.get('CoC7', 'hiddendevmenu')
+    ) {
       roll = Roll.fromData(CoC7Dice.fumble99)
-    }
-    else{
+    } else {
       roll = await new Roll(
         '1dt' +
           (alternativeDice !== ''

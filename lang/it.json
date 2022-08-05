@@ -426,7 +426,7 @@
   "CoC7.AnySpecName": "Generico",
   "CoC7.BoutOfMadnessName": "Attacco di follia",
   "CoC7.InsanityName": "Follia",
-  
+
   "CoC7.NewSkillName": "nuova abilità",
   "CoC7.AddSkill": "Aggiungi abilità",
   "CoC7.CleanSkillList": "Svuota la lista delle abilità",
@@ -592,7 +592,7 @@
   "CoC7.MythosGain": "Guadagno per i Miti",
   "CoC7.YouGainedCthulhuMythos": "La tua mente trema davanti alla manifestazione ultraterrena (+{value}% Miti di Cthulhu)",
   "CoC7.CardResolved": "Scheda risolta",
-  
+
   "CoC7.InsertLocation": "Inserisci luogo",
   "CoC7.RemoveLocation": "Rimuovi luogo",
   "CoC7.LocationNotEmpty": "Non puoi rimuovere un luogo con un personaggio",
@@ -707,7 +707,7 @@
   "CoC7.Chase.PreysMax": "Prede Max: {value}",
   "CoC7.Chase.ChasersMin": "Inseguitori Min: {value}",
   "CoC7.Chase.ChasersMax": "Inseguitori Max: {value}",
-  
+
   "CoC7.SpellCastingTime": "Tempo di lancio",
   "CoC7.SpellCastingCost": "Costo di lancio",
   "CoC7.CallSpell": "Richiamare",

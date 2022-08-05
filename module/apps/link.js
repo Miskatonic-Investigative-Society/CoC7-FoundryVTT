@@ -1,4 +1,4 @@
-/* global duplicate, game, mergeObject */
+/* global duplicate, foundry, game, mergeObject */
 
 import { chatHelper } from '../chat/helper.js'
 import { CoCActor } from '../actors/actor.js'
@@ -216,7 +216,10 @@ export class CoC7Link {
 
     // Effect
     if (this.is.effect || x.object) {
-      if( x.object && (typeof x.object === 'string' || x.object instanceof String)){
+      if (
+        x.object &&
+        (typeof x.object === 'string' || x.object instanceof String)
+      ) {
         this._linkData.effect = JSON.parse(x.object)
       } else this._linkData.effect = foundry.utils.deepClone(x.object)
       if (!this._linkData.effect.changes) this._linkData.effect.changes = []
@@ -448,7 +451,7 @@ export class CoC7Link {
       }
 
       case CoC7Link.LINK_TYPE.EFFECT: {
-        let effectData = foundry.utils.deepClone(this._linkData.effect)
+        const effectData = foundry.utils.deepClone(this._linkData.effect)
         if (!this.effectIsTemp) delete effectData.duration
         if (effectData.changes.length === 0) delete effectData.changes
         if (!effectData.disabled) delete effectData.disabled
@@ -456,9 +459,10 @@ export class CoC7Link {
         let link = `@coc7.effect[${JSON.stringify(effectData)}]`
         if (
           this._linkData.hasLabel &&
-          typeof this._linkData.label != 'undefined'
-        )
+          typeof this._linkData.label !== 'undefined'
+        ) {
           link += `{${this._linkData.label}}`
+        }
         return link
       }
 
