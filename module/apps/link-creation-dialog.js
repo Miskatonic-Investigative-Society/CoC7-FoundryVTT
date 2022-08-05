@@ -1,4 +1,4 @@
-/* global canvas, diffObject, expandObject, FormApplication, game, mergeObject, ui */
+/* global canvas, CONST,diffObject, expandObject, FormApplication, FormDataExtended, foundry, game, mergeObject, ui */
 import { CoCActor } from '../actors/actor.js'
 import { chatHelper } from '../chat/helper.js'
 import { CoC7Check } from '../check.js'
@@ -164,7 +164,7 @@ export class CoC7LinkCreationDialog extends FormApplication {
 
     super.activateListeners(html)
 
-    //Handling effects
+    // Handling effects
     html.find('.effect-control').click(this._onEffectControl.bind(this))
   }
 
@@ -197,10 +197,11 @@ export class CoC7LinkCreationDialog extends FormApplication {
   /** @inheritdoc */
   _getSubmitData (updateData = {}) {
     const fd = new FormDataExtended(this.form, { editors: this.editors })
-    let data = foundry.utils.expandObject(fd.toObject())
+    const data = foundry.utils.expandObject(fd.toObject())
     if (updateData) foundry.utils.mergeObject(data, updateData)
-    if (data.effect)
+    if (data.effect) {
       data.effect.changes = Array.from(Object.values(data.effect.changes || {}))
+    }
     return data
   }
 

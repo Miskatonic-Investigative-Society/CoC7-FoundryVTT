@@ -1,25 +1,22 @@
+/* global CONST, foundry */
 import { CoC7Item } from '../item.js'
 
 export class CoC7Skill extends CoC7Item {
   async applyModifier (change) {
-    return
-
-    const changes = this.data.data.changes
-      ? foundry.utils.duplicate(this.data.data.changes)
-      : []
-
-    const index = changes.findIndex(c => c.effect._id == change.effect.id)
-
-    if (-1 === index) {
-      changes.push(change)
-      await this.update({ 'data.changes': changes })
-    } else {
-      //Compare if there's a change in the efect data
-      if (!JSON.stringify(change) === JSON.stringify(changes[index])) {
-        changes[index] = change
-        await this.update({ 'data.changes': changes })
-      }
-    }
+    // const changes = this.data.data.changes
+    //   ? foundry.utils.duplicate(this.data.data.changes)
+    //   : []
+    // const index = changes.findIndex(c => c.effect._id == change.effect.id)
+    // if (-1 === index) {
+    //   changes.push(change)
+    //   await this.update({ 'data.changes': changes })
+    // } else {
+    //   //Compare if there's a change in the efect data
+    //   if (!JSON.stringify(change) === JSON.stringify(changes[index])) {
+    //     changes[index] = change
+    //     await this.update({ 'data.changes': changes })
+    //   }
+    // }
   }
 
   get hasActiveEffects () {
@@ -44,8 +41,8 @@ export class CoC7Skill extends CoC7Item {
       changes.sort((a, b) => a.priority - b.priority)
       changes = changes.filter(
         e =>
-          e.key.toLowerCase() == effectKeyShort ||
-          e.key.toLowerCase() == effectKeyFull
+          e.key.toLowerCase() === effectKeyShort ||
+          e.key.toLowerCase() === effectKeyFull
       )
       return changes
     }
@@ -70,17 +67,18 @@ export class CoC7Skill extends CoC7Item {
             updated = modifier
             break
           case modes.UPGRADE:
-            if (modifer > updated) updated = modifier
+            if (modifier > updated) updated = modifier
             break
           case modes.DOWNGRADE:
-            if (modifer < updated) updated = modifier
+            if (modifier < updated) updated = modifier
             break
         }
       }
     }
-    if (!isNaN(updated) && updated != value) {
+    if (!isNaN(updated) && updated !== value) {
       if (updated < 0) updated = 0
       return updated
-    } return value
+    }
+    return value
   }
 }

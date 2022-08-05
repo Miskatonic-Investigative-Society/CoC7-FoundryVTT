@@ -1,4 +1,4 @@
-/* global $, Combat, CONFIG, CONST, game, Hooks, isNewerVersion, tinyMCE */
+/* global $, Combat, CONFIG, CONST, game, Hooks, isNewerVersion, ItemDirectory, tinyMCE */
 import { CoC7NPCSheet } from './actors/sheets/npc-sheet.js'
 import { CoC7CreatureSheet } from './actors/sheets/creature-sheet.js'
 import { CoC7CharacterSheet } from './actors/sheets/character.js'
@@ -408,14 +408,14 @@ Hooks.on('ready', async () => {
       game.settings.get('CoC7', 'boutOfMadnessSummaryTable') === 'none'
         ? null
         : game.tables.get(
-            game.settings.get('CoC7', 'boutOfMadnessSummaryTable')
-          ),
+          game.settings.get('CoC7', 'boutOfMadnessSummaryTable')
+        ),
     boutOfMadness_RealTime:
       game.settings.get('CoC7', 'boutOfMadnessRealTimeTable') === 'none'
         ? null
         : game.tables.get(
-            game.settings.get('CoC7', 'boutOfMadnessRealTimeTable')
-          )
+          game.settings.get('CoC7', 'boutOfMadnessRealTimeTable')
+        )
     // maniasIndex: ge.settings.get('CoC7', 'boutOfMadnessPhobiasIndex'),
     // phobiasIndex: game.settings.get('CoC7', 'boutOfMadnessManiasIndex'),
     // phobias: ('none' == game.settings.get('CoC7', 'samplePhobiasTable'))?null:game.tables.get(game.settings.get('CoC7', 'samplePhobiasTable')),
