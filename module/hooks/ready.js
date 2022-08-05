@@ -1,4 +1,4 @@
-/* global game, Hooks */
+/* global game, Hooks, isNewerVersion */
 import { CoC7Tooltips } from '../apps/tooltips.js'
 
 // import { CoC7WelcomeMessage } from '../apps/welcome-message.js'
@@ -11,5 +11,13 @@ export function listen () {
       // await CoC7WelcomeMessage.create()
     }
     game.CoC7Tooltips = new CoC7Tooltips()
+
+    const instructionsVersion = game.settings.get('CoC7', 'showInstructions')
+    if (isNewerVersion(game.system.data.version, instructionsVersion ?? '0')) {
+      ;(
+        await game.packs.get('CoC7.system-doc').getDocument('wZtTHpGV3atKV2oD')
+      ).sheet.render(true)
+      // game.settings.set('CoC7', 'showInstructions', game.system.data.version) // Don't turn off while testing
+    }
   })
 }
