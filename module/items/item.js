@@ -615,6 +615,7 @@ export class CoC7Item extends Item {
   async asyncBase () {
     const e = this._base
     if (e[1]) {
+      console.info( `[COC7] (${this.parent?.name}) Evaluating skill ${this.name}:${this.data.data.base} to ${e[0]}`)
       await this.update({ 'data.base': e[0] })
     }
     return e[0]

@@ -59,6 +59,11 @@ export class CoCActor extends Actor {
   //
 
   /** @override */
+  prepareDerivedData(){
+    super.prepareDerivedData()
+  }
+
+  /** @override */
   static async create (data, options = {}) {
     data.token = data.token || {}
     if (data.type === 'character') {

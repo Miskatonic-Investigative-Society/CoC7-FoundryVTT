@@ -226,36 +226,39 @@ export class CoC7ActorSheet extends ActorSheet {
         if (item.type === 'skill') {
           if (item.data.properties.special) {
             if (item.data.properties.fighting) {
-              if (
-                item.data.specialization !==
-                game.i18n.localize('CoC7.FightingSpecializationName')
-              ) {
-                const itemToUpdate = this.actor.items.get(item._id)
-                await itemToUpdate.update({
-                  'data.specialization': game.i18n.localize(
-                    'CoC7.FightingSpecializationName'
-                  )
-                })
+              // if (
+              //   item.data.specialization !==
+              //   game.i18n.localize('CoC7.FightingSpecializationName')
+              // ) {
+                // ui.notifications.info('Setting fichting spec name')
+                // Not necessary to cmmit the changes in DB
+                // const itemToUpdate = this.actor.items.get(item._id)
+                // await itemToUpdate.update({
+                //   'data.specialization': game.i18n.localize(
+                //     'CoC7.FightingSpecializationName'
+                //   )
+                // })
                 item.data.specialization = game.i18n.localize(
                   'CoC7.FightingSpecializationName'
                 ) // TODO : Client with different language = recursive call when opening the same sheet.
-              }
+              // }
             }
             if (item.data.properties.firearm) {
-              if (
-                item.data.specialization !==
-                game.i18n.localize('CoC7.FirearmSpecializationName')
-              ) {
-                const itemToUpdate = this.actor.items.get(item._id)
-                await itemToUpdate.update({
-                  'data.specialization': game.i18n.localize(
-                    'CoC7.FirearmSpecializationName'
-                  )
-                })
+              // if (
+              //   item.data.specialization !==
+              //   game.i18n.localize('CoC7.FirearmSpecializationName')
+              // ) {
+              //   const itemToUpdate = this.actor.items.get(item._id)
+                // ui.notifications.info('Setting firearms spec name')
+                // await itemToUpdate.update({
+                //   'data.specialization': game.i18n.localize(
+                //     'CoC7.FirearmSpecializationName'
+                //   )
+                // })
                 item.data.specialization = game.i18n.localize(
                   'CoC7.FirearmSpecializationName'
                 )
-              }
+              // }
             }
           }
 
@@ -292,22 +295,29 @@ export class CoC7ActorSheet extends ActorSheet {
               if (value) {
                 item.data.value = value
                 const itemToUpdate = this.actor.items.get(item._id)
+                console.info(`[COC7] (Actor:${this.name}) Evaluating skill ${item.name}:${item.data.value} to ${value}`)
                 await itemToUpdate.update({
                   'data.value': value
                 })
               }
             }
+            const skill = this.actor.items.get(item._id)
+            item.data.base = skill.value // ACTIVE_EFFECT necessary to apply effects
+            item.data.value = skill.value
           } else {
             const skill = this.actor.items.get(item._id)
             item.data.base = await skill.asyncBase()
 
             if (item.data.value) {
+              // This should be part of migration or done at init !
+              // Was done when skill value was changed to base + adjustement
               const value = item.data.value
               const exp = item.data.adjustments?.experience
                 ? parseInt(item.data.adjustments.experience)
                 : 0
               let updatedExp = exp + parseInt(item.data.value) - skill.value
               if (updatedExp <= 0) updatedExp = null
+              console.info(`[COC7] Updating skill ${skill.name} experience. Experience missing: ${updatedExp}`)
               await this.actor.updateEmbeddedDocuments('Item', [
                 {
                   _id: item._id,
@@ -317,8 +327,8 @@ export class CoC7ActorSheet extends ActorSheet {
               ])
               if (!item.data.adjustments) item.data.adjustments = {}
               item.data.adjustments.experience = updatedExp
-              item.data.value = value
-            } else item.data.value = skill.value
+              item.data.value = skill.value // ACTIVE_EFFECT necessary to apply effects
+            } else item.data.value = skill.value // ACTIVE_EFFECT necessary to apply effects
           }
         }
 
@@ -403,8 +413,7 @@ export class CoC7ActorSheet extends ActorSheet {
             // si il n'existe plus il faut le retrouver ou passer skillset a false.
             if (data.combatSkills[weapon.data.skill.main.id]) {
               const skill = this.actor.items.get(weapon.data.skill.main.id)
-              weapon.data.skill.main.name =
-                data.combatSkills[weapon.data.skill.main.id].name
+              weapon.data.skill.main.name = skill.data.data.skillName
               weapon.data.skill.main.value = skill.value
             } else {
               weapon.skillSet = false
@@ -415,8 +424,7 @@ export class CoC7ActorSheet extends ActorSheet {
                 const skill = this.actor.items.get(
                   weapon.data.skill.alternativ.id
                 )
-                weapon.data.skill.alternativ.name =
-                  data.combatSkills[weapon.data.skill.alternativ.id].name
+                weapon.data.skill.alternativ.name = skill.data.data.skillName
                 weapon.data.skill.alternativ.value = skill.value
               }
             }
@@ -486,6 +494,10 @@ export class CoC7ActorSheet extends ActorSheet {
     data.data.attribs.build.value = this.actor.build
 
     if (typeof this.actor.compendium === 'undefined' && this.actor.isOwner) {
+      ui.notifications.info('changr spec name 4')
+      // ACTIVE_EFFECT should be applied here
+      // This whole part needs to be re-evaluated
+      // Seeting this shouldn't be necessary
       this.actor.update(
         { 'data.attribs.mov.value': this.actor.mov },
         { render: false }
