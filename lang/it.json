@@ -692,7 +692,9 @@
   "CoC7.ErrorTokenNotOnScene": "La Pedina non appartiene alla scena di questo luogo",
   "CoC7.AddParticipant": "Aggiungi Partecipante",
   "CoC7.Remove": "Rimuovi",
+  "CoC7.Delete": "Cancella",
   "CoC7.Edit": "Modifica",
+  "CoC7.Create": "Crea",
   "CoC7.MakeActive": "Rendi Attivo",
   "CoC7.SelectNewSkill": "Seleziona l'abilità",
   "CoC7.AskDamageRoll": "Chiedi il tiro per il danno",
@@ -891,6 +893,9 @@
   "CoC7.Cancel": "Cancella",
   "CoC7.Add": "Aggiungi",
   "CoC7.Update": "Aggiorna",
+  "CoC7.Enable": "Attiva",
+  "CoC7.Disable": "Disattiva",
+  "CoC7.Duration": "Durata",
 
   "CoC7.ActorImporter": "Importa Personaggio",
   "CoC7.ActorImporterSummary": "Importa un PNG o una Creatura dalla descrizione e dalle statistiche. Basta incollare il testo corrispondente",
@@ -1128,4 +1133,6 @@
 
   "CoC7.getTheExample": "Copia Esempio",
   "CoC7.Copied": "Copiato il testo di esempio negli Appunti"
+  
+  "CoC7.EffectNew": "Nuovo effetto"
 }
