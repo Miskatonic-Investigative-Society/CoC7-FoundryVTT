@@ -36,6 +36,7 @@
     "less": "^4.1.1",
     "less-loader": "^10.0.1",
     "mini-css-extract-plugin": "^2.2.0",
+    "remarkable": "^2.0.1",
     "standard": "^16.0.3",
     "terser-webpack-plugin": "^5.1.4",
     "thread-loader": "^3.0.4",
