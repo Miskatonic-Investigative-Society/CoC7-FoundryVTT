@@ -54,7 +54,7 @@ for (const id in sources) {
       dbFile.push(JSON.stringify(dbEntry))
 
       let mdFile = input
-        .replace(/\.\n/g, '')
+        .replace(/\n.\n/g, '\n')
         .replace(/\[(fas fa-[^\]]+|game-icon game-icon-[^\]]+)\]/g, '')
 
       const compendiumLinks = mdFile.matchAll(
