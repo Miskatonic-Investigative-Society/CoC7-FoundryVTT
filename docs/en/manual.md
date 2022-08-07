@@ -1,13 +1,15 @@
 # System documentation v0.7.12
 
-This document is a work in progress overview of the CoC7 system it is not a tutorial for how to use FoundryVTT
+This document is a work in progress overview of the CoC7 system it is not a tutorial for how to use FoundryVTT.
+
 You will need one of the following to play the game
 
 - Chaosium's Call of Cthulhu 7th Edition - Keeper's Rulebook
 - Chaosium's Call of Cthulhu 7th Edition - Call of Cthulhu Starter Set
 - Chaosium's Call of Cthulhu 7th Edition - Quick-Start Rules
 
-The system automates most of the regular tasks and rules involved with running a game
+The system automates most of the regular tasks and rules involved with running a game.
+
 
 This documentation can be reopened under  Compendiums -> JournalEntry -> System manual -> Call of Cthulhu 7th Edition (Unofficial) [en]
 
@@ -46,17 +48,21 @@ For a full list of changes checkout the [changelog](https://github.com/Miskatoni
 # Items overview
 
 - _Archetype_ - A set of skills and other stats that implement a Pulp Cthulhu archetype. These do not trigger automation in the system. 
-- _Book_ - An arcane tome that can hold spells and character improvements- _Item_ - A piece of equipment- _Occupation_ - A set of skills and other stats that implement a CoC occupation. 
+- _Book_ - An arcane tome that can hold spells and character improvements.
+- _Item_ - A piece of equipment.
+- _Occupation_ - A set of skills and other stats that implement a CoC occupation. 
 - _Setup_ - A set of default configurations for character, creature, or NPC creation. 
 - _Skill_ - A skill with a base percentage and some tags. 
-- _Spell_ - A magic spell- _Status_ - An phobia or mania condition. 
+- _Spell_ - A magic spell.
+- _Status_ - An phobia or mania condition. 
 - _Talent_ -A special power for Pulp Cthulhu. These do not trigger automation in the system. 
 - _Weapon_ - An item with weapon statistics (this includes unarmed attacks). 
 
 
 # Settings overview
 
-Click on the Game Settings tab then under the Game Settings heading click on Configure Settings
+Click on the Game Settings tab then under the Game Settings heading click on Configure Settings.
+
 Click on System Settings
 
 - _Variant/Optional Rules_ - Here you can turn on individual Pulp Cthulhu rules and other optional rules
@@ -73,7 +79,8 @@ Click on System Settings
 
 # Call of Cthulhu Scene Menu
 
-To access this menu you will need to have an active scene which can be created in the Scenes Directory
+To access this menu you will need to have an active scene which can be created in the Scenes Directory.
+
 - _Keeper's tools_ - Here you can toggle character creation mode, character development phase, actor importer, toggle automatic XP gain on a success, and start a rest
 - _Roll !_ - Create a roll in chat
 - _Create link_ - Create a roll link for players to click
