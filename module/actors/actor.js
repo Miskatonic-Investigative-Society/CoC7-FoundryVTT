@@ -22,6 +22,33 @@ import { CoC7Utilities } from '../utilities.js'
  * Extend the base Actor class to implement additional logic specialized for CoC 7th.
  */
 export class CoCActor extends Actor {
+  /** Create derived document classes for specific Item types */
+  constructor (data, context) {
+    /** @see CONFIG.Actor.documentClasses in module/scripts/configure-documents */
+    if (data.type in CONFIG.Actor.documentClasses && !context?.extended) {
+      /**
+       * When the constructor for the new class will call it's super(),
+       * the extended flag will be true, thus bypassing this whole process
+       * and resume default behavior
+       */
+      return new CONFIG.Actor.documentClasses[data.type](data, {
+        ...{ extended: true },
+        ...context
+      })
+    }
+    // if (typeof data.img === 'undefined') {
+    //   if (data.type === 'skill') {
+    //     data.img = 'systems/CoC7/assets/icons/skills.svg'
+    //   } else if (data.type === 'status') {
+    //     data.img = 'icons/svg/aura.svg'
+    //   } else if (data.type === 'weapon') {
+    //     data.img = 'icons/svg/sword.svg'
+    //   }
+    // }
+    /** Default behavior, just call super() and do all the default Item inits */
+    super(data, context)
+  }
+
   async initialize () {
     super.initialize()
     await this.creatureInit() // TODO : move this in CoCActor.create(data, options)
@@ -58,8 +85,53 @@ export class CoCActor extends Actor {
   // }
   //
 
-  /** @override */
-  prepareDerivedData(){
+  /**
+   * @override
+   * Prepare data related to this Document itself, before any embedded Documents or derived data is computed.
+   * @memberof ClientDocumentMixin#
+   */
+  prepareBaseData () {
+    this.data.data.skills = {}
+    for (const i of this.items) {
+      if (i.type === 'skill') {
+        this.data.data.skills[`${i.data.data.skillName}`] = {
+          value: i.rawValue
+        }
+        this.data.data.skills[`${i.id}`] = { value: i.rawValue }
+      }
+    }
+
+    // return computed values or fixed values if not auto.
+    this.data.data.attribs.mov.value = this.mov
+    this.data.data.attribs.mov.rawValue = this.mov
+    this.data.data.attribs.db.value = this.db
+    this.data.data.attribs.db.rawValue = this.db
+    this.data.data.attribs.build.value = this.build
+    this.data.data.attribs.build.rawValue = this.build
+
+    //For vehicle only :
+    this.data.data.attribs.build.current = this.hp
+
+    super.prepareBaseData()
+  }
+
+  /**
+   * @override
+   * Prepare all embedded Document instances which exist within this primary Document.
+   * @memberof ClientDocumentMixin#
+   * active effects are applied
+   */
+  prepareEmbeddedDocuments () {
+    super.prepareEmbeddedDocuments()
+  }
+
+  /**
+   * @override
+   * Apply transformations or derivations to the values of the source data object.
+   * Compute data fields whose values are not stored to the database.
+   * @memberof ClientDocumentMixin#
+   */
+  prepareDerivedData () {
     super.prepareDerivedData()
   }
 
@@ -78,8 +150,10 @@ export class CoCActor extends Actor {
         },
         { overwrite: false }
       )
-    } else if (data.type === 'vehicle') {
-      data.img = 'systems/CoC7/assets/icons/jeep.svg'
+    } else if (data.type === 'npc' ) {
+      data.img = 'systems/CoC7/assets/icons/cultist.svg'
+    } else if (data.type === 'creature' ) {
+      data.img = 'systems/CoC7/assets/icons/floating-tentacles.svg'
     } else if (data.type === 'container') {
       data.img = 'icons/svg/chest.svg'
       mergeObject(data.token, {
@@ -856,10 +930,12 @@ export class CoCActor extends Actor {
             data.data.characteristics.list.luck.value = isNaN(this.luck)
               ? null
               : this.luck
-            data.data.characteristics.list.luck.label =
-              game.i18n.localize('CoC7.Luck')
-            data.data.characteristics.list.luck.shortName =
-              game.i18n.localize('CoC7.Luck')
+            data.data.characteristics.list.luck.label = game.i18n.localize(
+              'CoC7.Luck'
+            )
+            data.data.characteristics.list.luck.shortName = game.i18n.localize(
+              'CoC7.Luck'
+            )
 
             if (!data.data.characteristics.values) {
               data.data.characteristics.values = {}
@@ -926,10 +1002,11 @@ export class CoCActor extends Actor {
                   data.data.characteristics.values.pow
                 updateData['data.attribs.san.oneFifthSanity'] =
                   ' / ' + Math.floor(data.data.characteristics.values.pow / 5)
-                updateData['data.indefiniteInsanityLevel.max'] =
-                  updateData['data.attribs.mp.value'] =
-                  updateData['data.attribs.mp.max'] =
-                    Math.floor(data.data.characteristics.values.pow / 5)
+                updateData['data.indefiniteInsanityLevel.max'] = updateData[
+                  'data.attribs.mp.value'
+                ] = updateData['data.attribs.mp.max'] = Math.floor(
+                  data.data.characteristics.values.pow / 5
+                )
               }
               await this.update(updateData)
               await this.update({
@@ -1455,28 +1532,10 @@ export class CoCActor extends Actor {
   }
 
   get hp () {
-    if (['vehicle'].includes(this.data.type)) {
-      if (
-        this.data.data.attribs.build.current === null ||
-        undefined === this.data.data.attribs.build.current ||
-        this.data.data.attribs.build.current === ''
-      ) {
-        return this.build
-      }
-      if (
-        this.data.data.attribs.build.current >
-        this.data.data.attribs.build.value
-      ) {
-        return this.build
-      }
-      const hp = parseInt(this.data.data.attribs.build.current)
-      return isNaN(hp) ? null : hp
-    }
     return parseInt(this.data.data.attribs.hp.value)
   }
 
   get hpMax () {
-    if (['vehicle'].includes(this.data.type)) return this.build
     if (this.data.data.attribs.hp.auto) {
       if (
         this.data.data.characteristics.siz.value != null &&
@@ -1501,10 +1560,6 @@ export class CoCActor extends Actor {
 
   async setHp (value) {
     if (value < 0) value = 0
-    if (['vehicle'].includes(this.data.type)) {
-      if (value > this.build) value = parseInt(this.build)
-      return await this.update({ 'data.attribs.build.current': value })
-    }
     if (value > this.hpMax) value = parseInt(this.hpMax)
     return await this.update({ 'data.attribs.hp.value': value })
   }
@@ -1850,10 +1905,6 @@ export class CoCActor extends Actor {
   }
 
   get build () {
-    if (['vehicle'].includes(this.data.type)) {
-      const build = parseInt(this.data.data.attribs.build.value)
-      return isNaN(build) ? null : build
-    }
     if (!this.data.data.attribs) return null
     if (!this.data.data.attribs.build) return null
     if (this.data.data.attribs.build.value === 'auto') {
@@ -1874,7 +1925,6 @@ export class CoCActor extends Actor {
   }
 
   get db () {
-    if (['vehicle'].includes(this.data.type)) return 0
     if (!this.data.data.attribs) return null
     if (!this.data.data.attribs.db) return null
     if (this.data.data.attribs.db.value === 'auto') {
@@ -1894,9 +1944,6 @@ export class CoCActor extends Actor {
   }
 
   get mov () {
-    if (['vehicle'].includes(this.data.type)) {
-      return this.data.data.attribs.mov.value
-    }
     if (!this.data.data.attribs) return null
     if (!this.data.data.attribs.mov) return null
     if (this.data.data.attribs.mov.value === 'auto') {

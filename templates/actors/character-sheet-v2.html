@@ -135,7 +135,7 @@
                 {{#if data.attribs.mov.auto}}
                   {{data.attribs.mov.value}}
                 {{else}}
-                  <input type="text" name="data.attribs.mov.value" value="{{data.attribs.mov.value}}" data-dtype="Number" />
+                  <input type="text" name="data.attribs.mov.value" value="{{data.attribs.mov.rawValue}}" data-dtype="Number" />
                 {{/if}}
               </div>
             </div>
@@ -147,7 +147,7 @@
                 {{#if data.attribs.build.auto}}
                   {{data.attribs.build.value}}
                 {{else}}
-                  <input type="text" name="data.attribs.build.value" value="{{data.attribs.build.value}}" data-dtype="Number" />
+                  <input type="text" name="data.attribs.build.value" value="{{data.attribs.build.rawValue}}" data-dtype="Number" />
                 {{/if}}
               </div>
             </div>
@@ -158,7 +158,7 @@
               {{#if data.attribs.db.auto}}
                 <div class="attribute-value">{{data.attribs.db.value}}</div>
               {{else}}
-                <div class="attribute-value"><input type="text" name="data.attribs.db.value" value="{{data.attribs.db.value}}" data-dtype="String" /></div>
+                <div class="attribute-value"><input type="text" name="data.attribs.db.value" value="{{data.attribs.db.rawValue}}" data-dtype="String" /></div>
               {{/if}}
             </div>
             <div class="attribute">

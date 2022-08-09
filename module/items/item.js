@@ -615,7 +615,9 @@ export class CoC7Item extends Item {
   async asyncBase () {
     const e = this._base
     if (e[1]) {
-      console.info( `[COC7] (${this.parent?.name}) Evaluating skill ${this.name}:${this.data.data.base} to ${e[0]}`)
+      console.info(
+        `[COC7] (${this.parent?.name}) Evaluating skill ${this.name}:${this.data.data.base} to ${e[0]}`
+      )
       await this.update({ 'data.base': e[0] })
     }
     return e[0]
@@ -627,59 +629,6 @@ export class CoC7Item extends Item {
       this.update({ 'data.base': e[0] })
     }
     return e[0]
-  }
-
-  get value () {
-    if (this.type !== 'skill') return null
-    let value = 0
-    if (this.actor.data.type === 'character') {
-      value = this.base
-      value += this.data.data.adjustments?.personal
-        ? parseInt(this.data.data.adjustments?.personal)
-        : 0
-      value += this.data.data.adjustments?.occupation
-        ? parseInt(this.data.data.adjustments?.occupation)
-        : 0
-      value += this.data.data.adjustments?.experience
-        ? parseInt(this.data.data.adjustments?.experience)
-        : 0
-      if (
-        game.settings.get('CoC7', 'pulpRuleArchetype') &&
-        this.data.data.adjustments?.archetype
-      ) {
-        value += parseInt(this.data.data.adjustments?.archetype)
-      }
-    } else {
-      value = parseInt(this.data.data.value)
-    }
-    return !isNaN(value) ? value : null
-  }
-
-  async updateValue (value) {
-    if (this.type !== 'skill') return null
-    if (this.actor.data.type === 'character') {
-      const delta = parseInt(value) - this.value
-      const exp =
-        (this.data.data.adjustments?.experience
-          ? parseInt(this.data.data.adjustments.experience)
-          : 0) + delta
-      await this.update({
-        'data.adjustments.experience': exp > 0 ? exp : 0
-      })
-    } else await this.update({ 'data.value': value })
-  }
-
-  async increaseExperience (x) {
-    if (this.type !== 'skill') return null
-    if (this.actor.data.type === 'character') {
-      const exp =
-        (this.data.data.adjustments?.experience
-          ? parseInt(this.data.data.adjustments.experience)
-          : 0) + parseInt(x)
-      await this.update({
-        'data.adjustments.experience': exp > 0 ? exp : 0
-      })
-    }
   }
 
   getBulletLeft () {

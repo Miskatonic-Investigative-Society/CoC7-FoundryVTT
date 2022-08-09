@@ -8,8 +8,23 @@ export default class CoC7ActiveEffect extends ActiveEffect {
     //   this.applyToSkill(actor, change)
     //   return null
     // }
-    return super.apply(actor, change)
+
+    if( !isNaN(Number(change.value))) change.value = Number(change.value)
+    const result = super.apply(actor, change)
+
+    function parse(str) {
+      try {
+        return eval(str)
+      } catch (e) {
+        return NaN;
+      }
+    }
+  
+    const evaluated = parse(result)
+    if( isNaN( evaluated)) return result
+    return evaluated     
   }
+
 
   // async applyToSkill (actor, change) {
   //   const [, skillName, key] = change.key.split('.')

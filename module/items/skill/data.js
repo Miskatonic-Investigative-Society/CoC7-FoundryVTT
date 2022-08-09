@@ -52,35 +52,104 @@ export class CoC7Skill extends CoC7Item {
     return []
   }
 
-  get value () {
-    const value = super.value
-    let updated = value
-    for (const change of this.activeEffects) {
-      const modifier = Number.fromString(change.value)
-      if (!isNaN(modifier)) {
-        const modes = CONST.ACTIVE_EFFECT_MODES
-        switch (change.mode) {
-          case modes.ADD:
-            updated += modifier
-            break
-          case modes.MULTIPLY:
-            updated = Math.round(updated * modifier)
-            break
-          case modes.OVERRIDE:
-            updated = modifier
-            break
-          case modes.UPGRADE:
-            if (modifer > updated) updated = modifier
-            break
-          case modes.DOWNGRADE:
-            if (modifer < updated) updated = modifier
-            break
-        }
+  /**
+   * This is the value of the skill score unaffected by active effects
+   */
+  get rawValue () {
+    let value = 0
+    if (this.actor.data.type === 'character') {
+      // For an actor with experience we need to calculate skill value
+      value = this.base
+      value += this.data.data.adjustments?.personal
+        ? parseInt(this.data.data.adjustments?.personal)
+        : 0
+      value += this.data.data.adjustments?.occupation
+        ? parseInt(this.data.data.adjustments?.occupation)
+        : 0
+      value += this.data.data.adjustments?.experience
+        ? parseInt(this.data.data.adjustments?.experience)
+        : 0
+      if (
+        game.settings.get('CoC7', 'pulpRuleArchetype') &&
+        this.data.data.adjustments?.archetype
+      ) {
+        value += parseInt(this.data.data.adjustments?.archetype)
       }
+    } else {
+      // For all others actor we store the value directly
+      value = parseInt(this.data.data.value)
     }
-    if (!isNaN(updated) && updated != value) {
-      if (updated < 0) updated = 0
-      return updated
-    } return value
+    return !isNaN(value) ? value : null
   }
+
+  /**
+   * This is the skill's value after active effects have been applied
+   */
+  get value () {
+    const value = this.parent?.data.data.skills?.[`${this.data.data.skillName}`]
+      ?.value
+    return value || this.rawValue
+  }
+
+  async updateValue (value) {
+    if (this.actor.data.type === 'character') {
+      const delta = parseInt(value) - this.rawValue
+      const exp =
+        (this.data.data.adjustments?.experience
+          ? parseInt(this.data.data.adjustments.experience)
+          : 0) + delta
+      await this.update({
+        'data.adjustments.experience': exp > 0 ? exp : 0
+      })
+    } else await this.update({ 'data.value': value })
+  }
+
+  async increaseExperience (x) {
+    if (this.type !== 'skill') return null
+    if (this.actor.data.type === 'character') {
+      const exp =
+        (this.data.data.adjustments?.experience
+          ? parseInt(this.data.data.adjustments.experience)
+          : 0) + parseInt(x)
+      await this.update({
+        'data.adjustments.experience': exp > 0 ? exp : 0
+      })
+    }
+  }
+
+  // get value () {
+  //   let pValue
+  //   if( this.parent){
+
+  //   }
+  //   const value = super.value
+  //   let updated = value
+  //   for (const change of this.activeEffects) {
+  //     const modifier = Number.fromString(change.value)
+  //     if (!isNaN(modifier)) {
+  //       const modes = CONST.ACTIVE_EFFECT_MODES
+  //       switch (change.mode) {
+  //         case modes.ADD:
+  //           updated += modifier
+  //           break
+  //         case modes.MULTIPLY:
+  //           updated = Math.round(updated * modifier)
+  //           break
+  //         case modes.OVERRIDE:
+  //           updated = modifier
+  //           break
+  //         case modes.UPGRADE:
+  //           if (modifer > updated) updated = modifier
+  //           break
+  //         case modes.DOWNGRADE:
+  //           if (modifer < updated) updated = modifier
+  //           break
+  //       }
+  //     }
+  //   }
+  //   if (!isNaN(updated) && updated != value) {
+  //     if (updated < 0) updated = 0
+  //     return updated
+  //   } return value
+  // }
 }

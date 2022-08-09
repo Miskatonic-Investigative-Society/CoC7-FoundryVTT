@@ -226,39 +226,14 @@ export class CoC7ActorSheet extends ActorSheet {
         if (item.type === 'skill') {
           if (item.data.properties.special) {
             if (item.data.properties.fighting) {
-              // if (
-              //   item.data.specialization !==
-              //   game.i18n.localize('CoC7.FightingSpecializationName')
-              // ) {
-                // ui.notifications.info('Setting fichting spec name')
-                // Not necessary to cmmit the changes in DB
-                // const itemToUpdate = this.actor.items.get(item._id)
-                // await itemToUpdate.update({
-                //   'data.specialization': game.i18n.localize(
-                //     'CoC7.FightingSpecializationName'
-                //   )
-                // })
-                item.data.specialization = game.i18n.localize(
-                  'CoC7.FightingSpecializationName'
-                ) // TODO : Client with different language = recursive call when opening the same sheet.
-              // }
+              item.data.specialization = game.i18n.localize(
+                'CoC7.FightingSpecializationName'
+              )
             }
             if (item.data.properties.firearm) {
-              // if (
-              //   item.data.specialization !==
-              //   game.i18n.localize('CoC7.FirearmSpecializationName')
-              // ) {
-              //   const itemToUpdate = this.actor.items.get(item._id)
-                // ui.notifications.info('Setting firearms spec name')
-                // await itemToUpdate.update({
-                //   'data.specialization': game.i18n.localize(
-                //     'CoC7.FirearmSpecializationName'
-                //   )
-                // })
-                item.data.specialization = game.i18n.localize(
-                  'CoC7.FirearmSpecializationName'
-                )
-              // }
+              item.data.specialization = game.i18n.localize(
+                'CoC7.FirearmSpecializationName'
+              )
             }
           }
 
@@ -295,14 +270,16 @@ export class CoC7ActorSheet extends ActorSheet {
               if (value) {
                 item.data.value = value
                 const itemToUpdate = this.actor.items.get(item._id)
-                console.info(`[COC7] (Actor:${this.name}) Evaluating skill ${item.name}:${item.data.value} to ${value}`)
+                console.info(
+                  `[COC7] (Actor:${this.name}) Evaluating skill ${item.name}:${item.data.value} to ${value}`
+                )
                 await itemToUpdate.update({
                   'data.value': value
                 })
               }
             }
             const skill = this.actor.items.get(item._id)
-            item.data.base = skill.value // ACTIVE_EFFECT necessary to apply effects
+            item.data.rawValue = skill.rawValue
             item.data.value = skill.value
           } else {
             const skill = this.actor.items.get(item._id)
@@ -317,7 +294,9 @@ export class CoC7ActorSheet extends ActorSheet {
                 : 0
               let updatedExp = exp + parseInt(item.data.value) - skill.value
               if (updatedExp <= 0) updatedExp = null
-              console.info(`[COC7] Updating skill ${skill.name} experience. Experience missing: ${updatedExp}`)
+              console.info(
+                `[COC7] Updating skill ${skill.name} experience. Experience missing: ${updatedExp}`
+              )
               await this.actor.updateEmbeddedDocuments('Item', [
                 {
                   _id: item._id,
@@ -327,8 +306,12 @@ export class CoC7ActorSheet extends ActorSheet {
               ])
               if (!item.data.adjustments) item.data.adjustments = {}
               item.data.adjustments.experience = updatedExp
+              item.data.rawValue = skill.rawValue
               item.data.value = skill.value // ACTIVE_EFFECT necessary to apply effects
-            } else item.data.value = skill.value // ACTIVE_EFFECT necessary to apply effects
+            } else {
+              item.data.value = skill.value // ACTIVE_EFFECT necessary to apply effects
+              item.data.rawValue = skill.rawValue
+            }
           }
         }
 
@@ -489,36 +472,37 @@ export class CoC7ActorSheet extends ActorSheet {
       data.data.attribs.build.auto = false
     }
 
-    data.data.attribs.mov.value = this.actor.mov // return computed values or fixed values if not auto.
-    data.data.attribs.db.value = this.actor.db
-    data.data.attribs.build.value = this.actor.build
+    // data.data.attribs.mov.value = this.actor.mov // return computed values or fixed values if not auto.
+    // data.data.attribs.db.value = this.actor.db
+    // data.data.attribs.build.value = this.actor.build
 
-    if (typeof this.actor.compendium === 'undefined' && this.actor.isOwner) {
-      ui.notifications.info('changr spec name 4')
-      // ACTIVE_EFFECT should be applied here
-      // This whole part needs to be re-evaluated
-      // Seeting this shouldn't be necessary
-      this.actor.update(
-        { 'data.attribs.mov.value': this.actor.mov },
-        { render: false }
-      )
-      this.actor.update(
-        { 'data.attribs.mov.max': this.actor.mov },
-        { render: false }
-      )
-      this.actor.update(
-        { 'data.attribs.db.value': this.actor.db },
-        { render: false }
-      )
-      this.actor.update(
-        { 'data.attribs.build.current': this.actor.build },
-        { render: false }
-      )
-      this.actor.update(
-        { 'data.attribs.build.value': this.actor.build },
-        { render: false }
-      )
-    }
+    // if (typeof this.actor.compendium === 'undefined' && this.actor.isOwner) {
+    //   ui.notifications.info('changr spec name 4')
+    //   // ACTIVE_EFFECT should be applied here
+    //   // This whole part needs to be re-evaluated
+    //   // Seeting this shouldn't be necessary
+    //   this.actor.update(
+    //     { 'data.attribs.mov.value': this.actor.mov },
+    //     { render: false }
+    //   )
+    //   // mov.max never used
+    //   // this.actor.update(
+    //   //   { 'data.attribs.mov.max': this.actor.mov },
+    //   //   { render: false }
+    //   // )
+    //   this.actor.update(
+    //     { 'data.attribs.db.value': this.actor.db },
+    //     { render: false }
+    //   )
+    //   this.actor.update(
+    //     { 'data.attribs.build.current': this.actor.build },
+    //     { render: false }
+    //   )
+    //   this.actor.update(
+    //     { 'data.attribs.build.value': this.actor.build },
+    //     { render: false }
+    //   )
+    // }
 
     // if( data.data.attribs.hp.value < 0) data.data.attribs.hp.value = null;
     if (data.data.attribs.mp.value < 0) data.data.attribs.mp.value = null
@@ -1275,11 +1259,11 @@ export class CoC7ActorSheet extends ActorSheet {
     if (data.linkType === 'coc7-link') {
       if (data.type === 'effect') {
         const link = await CoC7Link.fromData(data)
-        if( link.data.effect){
-          this.actor.createEmbeddedDocuments( 'ActiveEffect', [link.data.effect])
+        if (link.data.effect) {
+          this.actor.createEmbeddedDocuments('ActiveEffect', [link.data.effect])
         }
       }
-    } 
+    }
     await super._onDrop(event)
   }
 
@@ -1800,6 +1784,12 @@ export class CoC7ActorSheet extends ActorSheet {
   async _updateObject (event, formData) {
     // ui.notifications.info('_updateObject');
     // TODO: Replace with   _getSubmitData(updateData={}) Cf. sheet.js(243)
+    const overrides = foundry.utils.flattenObject(this.actor.overrides);
+    const name = event.currentTarget.name
+    if(overrides[name]){
+      ui.notifications.warn( game.i18n.format('CoC7.EffectAppliedCantOverride', {name: name}))
+    }
+
     if (event.currentTarget) {
       if (event.currentTarget.classList) {
         if (event.currentTarget.classList.contains('skill-adjustment')) {

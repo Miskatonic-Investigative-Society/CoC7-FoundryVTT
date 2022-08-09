@@ -7,11 +7,14 @@ import { CoC7Spell } from '../items/spell/data.js'
 import { CoC7Chase } from '../items/chase/data.js'
 import CoC7ActiveEffect from '../active-effect.js'
 import { CoC7Skill } from '../items/skill/data.js'
+import { CoC7Vehicle } from '../actors/vehicle/data.js'
 
 export function configureDocuments () {
   CONFIG.ActiveEffect.documentClass = CoC7ActiveEffect
   CONFIG.Actor.documentClass = CoCActor
-  CONFIG.Actor.documentClasses = {}
+  CONFIG.Actor.documentClasses = {
+    vehicle: CoC7Vehicle
+  }
   CONFIG.Item.documentClass = CoC7Item
   CONFIG.Item.documentClasses = {
     book: CoC7Book,
