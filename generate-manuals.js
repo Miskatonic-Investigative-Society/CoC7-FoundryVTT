@@ -3,10 +3,22 @@ import * as fs from 'fs'
 import write from './node_modules/write/index.js'
 
 const sources = {
+  xV4Hxxmu6zjIMw9h: {
+    en: {
+      name: 'Actor Importer [en]',
+      file: 'actor_importer.md'
+    }
+  },
   wZtTHpGV3atKV2oD: {
     en: {
       name: 'Call of Cthulhu 7th Edition (Unofficial) [en]',
       file: 'manual.md'
+    }
+  },
+  VdOeGcxsu3jsVm3F: {
+    en: {
+      name: 'Chases [en]',
+      file: 'chases.md'
     }
   },
   nVYLlqVzmUV5dXAW: {
@@ -15,10 +27,16 @@ const sources = {
       file: 'first_investigator.md'
     }
   },
-  VdOeGcxsu3jsVm3F: {
+  '7hFq9EqLviAxqMFz': {
     en: {
-      name: 'Chases [en]',
-      file: 'chases.md'
+      name: 'Item Type: Occupation [en]',
+      file: 'item_occupation.md'
+    }
+  },
+  JU1GCWwc8at7gzJ4: {
+    en: {
+      name: 'Item Type: Setup [en]',
+      file: 'item_setup.md'
     }
   }
 }

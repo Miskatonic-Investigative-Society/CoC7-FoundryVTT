@@ -10,6 +10,7 @@ You will need one of the following to play the game
 
 The system automates most of the regular tasks and rules involved with running a game.
 
+Several parts of the actor sheets have pop up tooltips that trigger after two seconds, this delay can be changed in the settings
 .
 
 This documentation can be reopened under [fas fa-atlas] Compendiums -> JournalEntry -> System manual -> Call of Cthulhu 7th Edition (Unofficial) [en]
@@ -23,23 +24,47 @@ For a full list of changes checkout the [changelog](https://github.com/Miskatoni
 .
 
 - @Compendium[CoC7.system-doc.VdOeGcxsu3jsVm3F]{Chases}
-- The Dhole's House JSON actor importer
+- @Compendium[CoC7.system-doc.xV4Hxxmu6zjIMw9h]{Actor importer} - added The Dhole's House JSON support
 
 .
 
 # Overview sections below
 
+If this is your first time it is recommends you also read the following sections.
+
 - Actor overview
 - Items overview
 - Settings overview
 - Scene menu overview
+- @Compendium[CoC7.system-doc.nVYLlqVzmUV5dXAW]{Creating your first investigator}
 
 .
 
 # How to use the system
 
-- @Compendium[CoC7.system-doc.nVYLlqVzmUV5dXAW]{Creating your first investigator}
-- @Compendium[CoC7.system-doc.VdOeGcxsu3jsVm3F]{Chases}
+- @Compendium[CoC7.system-doc.xV4Hxxmu6zjIMw9h]{Actor importer}
+- Actor Type: Character
+- Actor Type: Container
+- Actor Type: Creature
+- Actor Type: NPC
+- Chat link creator
+- Character creation mode
+- Development phase
+- Item Type: Archetype
+- Item Type: Book
+- @Compendium[CoC7.system-doc.VdOeGcxsu3jsVm3F]{Item Type: Chases}
+- Item Type: Item
+- @Compendium[CoC7.system-doc.7hFq9EqLviAxqMFz]{Item Type: Occupation}
+- @Compendium[CoC7.system-doc.JU1GCWwc8at7gzJ4]{Item Type: Setup}
+- Item Type: Skill
+- Item Type: Spell
+- Item Type: Status
+- Item Type: Talent
+- Item Type: Weapon
+- Macros
+- Rolls
+- Start Rest
+- XP Gain
 
 .
 
@@ -69,7 +94,7 @@ For a full list of changes checkout the [changelog](https://github.com/Miskatoni
 
 # Settings overview
 
-Click on the [fas fa-cogs]Game Settings tab then under the Game Settings heading click on Configure Settings.
+Click on the [fas fa-cogs]Game Settings tab then under the Game Settings heading click on [fas fa-cogs]Configure Settings.
 
 Click on [fas fa-cogs]System Settings
 
@@ -81,7 +106,7 @@ Click on [fas fa-cogs]System Settings
 - _Game Artwork Settings_ - This allows you to set a custom pause icon and message
 - _Sheet Settings_ - This allows you to change character sheet settings and optional CSS
 - _Weapon Settings_ - Weapon Settings
-- _Developer And Debug Settings_ - These settings can break your world when new updates are released so only use them on test world
+- _Developer And Debug Settings_ - These settings can break your world when new updates are released so only use them on test worlds
 - _Roll Table Settings_ - When sanity rolls are made the system can automatically roll for a bout of madness. You can see example roll tables in the Sanity Roll Table compendiums
 
 .
