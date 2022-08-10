@@ -34,6 +34,10 @@ export class CoC7Vehicle extends CoCActor {
     return this.build
   }
 
+  get rawHpMax () {
+    return this.build
+  }
+
   async setHp (value) {
     if (value > this.build) value = this.build
     return await this.update({ 'data.attribs.build.current': value })
@@ -49,5 +53,17 @@ export class CoC7Vehicle extends CoCActor {
 
   get mpMax () {
     return parseInt(this.data.data.attribs?.mp?.max) || 0
+  }
+
+  get rawMpMax () {
+    return parseInt(this.data.data.attribs?.mp?.max) || 0
+  }
+
+  get sanMax () {
+    return null
+  }
+
+  get rawSanMax () {
+    return null
   }
 }

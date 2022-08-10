@@ -558,15 +558,15 @@ export class CoC7ActorSheet extends ActorSheet {
     // }
 
     if (!['vehicle'].includes(this.actor.data.type)) {
-      if (
-        data.data.attribs.san.value == null &&
-        data.data.characteristics.pow.value != null
-      ) {
-        data.data.attribs.san.value = data.data.characteristics.pow.value
-      }
-      if (data.data.attribs.san.value > data.data.attribs.san.max) {
-        data.data.attribs.san.value = data.data.attribs.san.max
-      }
+      // if (
+      //   data.data.attribs.san.value == null &&
+      //   data.data.characteristics.pow.value != null
+      // ) {
+      //   data.data.attribs.san.value = data.data.characteristics.pow.value
+      // }
+      // if (data.data.attribs.san.value > data.data.attribs.san.max) {
+      //   data.data.attribs.san.value = data.data.attribs.san.max
+      // }
 
       if (data.data.biography instanceof Array && data.data.biography.length) {
         data.data.biography[0].isFirst = true
@@ -910,8 +910,9 @@ export class CoC7ActorSheet extends ActorSheet {
           typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' &&
           game.CoC7Tooltips.ToolTipHover !== null
         ) {
-          const isCombat =
-            game.CoC7Tooltips.ToolTipHover.classList?.contains('combat')
+          const isCombat = game.CoC7Tooltips.ToolTipHover.classList?.contains(
+            'combat'
+          )
           const item = game.CoC7Tooltips.ToolTipHover.closest('.item')
           if (typeof item !== 'undefined') {
             const skillId = item.dataset.skillId
@@ -933,8 +934,8 @@ export class CoC7ActorSheet extends ActorSheet {
                     game.settings.get('CoC7', 'stanbyGMRolls') &&
                     sheet.actor.hasPlayerOwner
                       ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                        name: sheet.actor.name
-                      })
+                          name: sheet.actor.name
+                        })
                       : ''
                 })
             }
@@ -973,8 +974,8 @@ export class CoC7ActorSheet extends ActorSheet {
                     game.settings.get('CoC7', 'stanbyGMRolls') &&
                     sheet.actor.hasPlayerOwner
                       ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                        name: sheet.actor.name
-                      })
+                          name: sheet.actor.name
+                        })
                       : ''
                 })
             }
@@ -1016,8 +1017,8 @@ export class CoC7ActorSheet extends ActorSheet {
                         game.settings.get('CoC7', 'stanbyGMRolls') &&
                         sheet.actor.hasPlayerOwner
                           ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                            name: sheet.actor.name
-                          })
+                              name: sheet.actor.name
+                            })
                           : ''
                     })
                 }
@@ -1043,8 +1044,8 @@ export class CoC7ActorSheet extends ActorSheet {
                         (game.settings.get('CoC7', 'stanbyGMRolls') &&
                         sheet.actor.hasPlayerOwner
                           ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                            name: sheet.actor.name
-                          })
+                              name: sheet.actor.name
+                            })
                           : '')
                     })
                 }
@@ -1292,8 +1293,7 @@ export class CoC7ActorSheet extends ActorSheet {
   async _onResetCounter (event) {
     event.preventDefault()
     const counter = event.currentTarget.dataset.counter
-    this.actor.setOneFifthSanity()
-    if (counter) this.actor.resetCounter(counter)
+    await this.actor.resetDailySanity()
   }
 
   async _onAutoToggle (event) {
@@ -1831,7 +1831,17 @@ export class CoC7ActorSheet extends ActorSheet {
         if (event.currentTarget.classList.contains('attribute-value')) {
           // TODO : check why SAN only ?
           if (event.currentTarget.name === 'data.attribs.san.value') {
-            this.actor.setSan(parseInt(event.currentTarget.value))
+            const value = await this.actor.setSan(
+              parseInt(event.currentTarget.value)
+            )
+            this.render(true)
+            return
+          }
+          if (event.currentTarget.name === 'data.attribs.hp.value') {
+            const value = await this.actor.setHp(
+              parseInt(event.currentTarget.value)
+            )
+            this.render(true)
             return
           }
         }
@@ -1901,8 +1911,9 @@ export class CoC7ActorSheet extends ActorSheet {
                   value: event.currentTarget.value
                 })
               )
-              formData[event.currentTarget.name] =
-                game.i18n.format('CoC7.ErrorInvalid')
+              formData[event.currentTarget.name] = game.i18n.format(
+                'CoC7.ErrorInvalid'
+              )
             }
           }
         }
@@ -1922,8 +1933,9 @@ export class CoC7ActorSheet extends ActorSheet {
                   value: event.currentTarget.value
                 })
               )
-              formData[event.currentTarget.name] =
-                game.i18n.format('CoC7.ErrorInvalid')
+              formData[event.currentTarget.name] = game.i18n.format(
+                'CoC7.ErrorInvalid'
+              )
             }
           }
         }

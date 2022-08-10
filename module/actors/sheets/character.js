@@ -243,9 +243,15 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
         .find('.reset-archetype')
         .click(async () => await this.actor.resetArchetype())
       html.find('.open-item').click(event => this._onItemDetails(event))
-      html
-        .find('[name="data.attribs.hp.value"]')
-        .change(event => this.actor.setHealthStatusManually(event))
+      // html
+      //   .find('[name="data.attribs.hp.value"]')
+      //   .change(async event =>{
+      //     event.preventDefault()
+      //     event.stopPropagation()
+      //     let value = Number( event.currentTarget?.value)
+      //     if( !isNaN(value)) await this.actor.setHp(event)
+      //     else ui.notifications.warn('Error parsing HP value')
+      //   })
       html.find('.toggle-list-mode').click(event => {
         this.toggleSkillListMode(event)
       })
