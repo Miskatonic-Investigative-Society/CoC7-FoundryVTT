@@ -1,3 +1,4 @@
+/* global CONST, foundry */
 import { CoC7Item } from '../item.js'
 
 export class CoC7Skill extends CoC7Item {
@@ -44,8 +45,8 @@ export class CoC7Skill extends CoC7Item {
       changes.sort((a, b) => a.priority - b.priority)
       changes = changes.filter(
         e =>
-          e.key.toLowerCase() == effectKeyShort ||
-          e.key.toLowerCase() == effectKeyFull
+          e.key.toLowerCase() === effectKeyShort ||
+          e.key.toLowerCase() === effectKeyFull
       )
       return changes
     }

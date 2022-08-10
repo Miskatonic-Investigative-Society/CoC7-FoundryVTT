@@ -42,7 +42,9 @@ export class CoC7ActorImporterDialog extends FormApplication {
     super.activateListeners(html)
 
     html.find('#dholehouse-character-preview').hide()
-    html.find('#coc-entity-type').change(this._onChangeSubmit.bind(this))
+    html
+      .find('#coc-entity-type,#coc-entity-lang')
+      .change(this._onChangeSubmit.bind(this))
     html
       .find('#dholehouse-json-file-picker')
       .change(this._onJSONFileSelected.bind(this))

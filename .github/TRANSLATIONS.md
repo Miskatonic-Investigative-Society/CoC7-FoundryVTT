@@ -4,213 +4,207 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 The **it** translation is currently up to date
 
-The following translations have been abandoned **cn**, **cs**, **de**, [are you able to help?](./ABANDONED.md)
+The following translations have been abandoned **cn**, **cs**, **de**, **es**, [are you able to help?](./ABANDONED.md)
 
-| Key                                                                                   |    es    |    fr    |    ja    |    ko    |    pl    |  pt-BR   |    sv    |  zh-TW   |
-| :------------------------------------------------------------------------------------ | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-| **Remaining**:                                                                        | **199**  | **185**  | **187**  | **186**  | **187**  | **185**  | **185**  | **185**  |
-| [CoC7.ABarrier](#coc7abarrier)                                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.AHazard](#coc7ahazard)                                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ActionCost](#coc7actioncost)                                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ActionCostOnFail](#coc7actioncostonfail)                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Actions](#coc7actions)                                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ActorDataLinked](#coc7actordatalinked)                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ActorDataNotLinked](#coc7actordatanotlinked)                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ActorImported](#coc7actorimported)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ActorImporterUploadError](#coc7actorimporteruploaderror)                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ActorIsSyntheticActor](#coc7actorissyntheticactor)                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ActorIsTokenHint](#coc7actoristokenhint)                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Add](#coc7add)                                                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.AddActorToChase](#coc7addactortochase)                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.AddBonusDie](#coc7addbonusdie)                                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.AddParticipant](#coc7addparticipant)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.AdjustedMovement](#coc7adjustedmovement)                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.AlreadyEncountered](#coc7alreadyencountered)                                    | &#x274C; | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.AlreadyEncounteredInformation](#coc7alreadyencounteredinformation)              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ArmorIgnored](#coc7armorignored)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.AskDamageRoll](#coc7askdamageroll)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.AskIntentions](#coc7askintentions)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.AskRoll](#coc7askroll)                                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Assist](#coc7assist)                                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.AttackManeuver](#coc7attackmaneuver)                                            | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.AttemptBreakDown](#coc7attemptbreakdown)                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.AttemptNegotiateObstacle](#coc7attemptnegotiateobstacle)                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Barrier](#coc7barrier)                                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.BeingCautious](#coc7beingcautious)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.BeingVeryCautious](#coc7beingverycautious)                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.BonusDieAssailantReason](#coc7bonusdieassailantreason)                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.BreakDown](#coc7breakdown)                                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Breakable](#coc7breakable)                                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.CardType](#coc7cardtype)                                                        | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Cautious](#coc7cautious)                                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.CautiousApproach](#coc7cautiousapproach)                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Chase.AdjustedMovementShort](#coc7chaseadjustedmovementshort)                   | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Chase.ChasersMax](#coc7chasechasersmax)                                         | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Chase.ChasersMin](#coc7chasechasersmin)                                         | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Chase.CheckName](#coc7chasecheckname)                                           | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Chase.InitiativeShort](#coc7chaseinitiativeshort)                               | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Chase.PreysMax](#coc7chasepreysmax)                                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Chase.PreysMin](#coc7chasepreysmin)                                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ChaseSetup](#coc7chasesetup)                                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.CheckFailed](#coc7checkfailed)                                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.CheckMemoryRepressed](#coc7checkmemoryrepressed)                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.CheckName](#coc7checkname)                                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.CheckPassed](#coc7checkpassed)                                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.CleanSkillList](#coc7cleanskilllist)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.CleanSkillListHint](#coc7cleanskilllisthint)                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ClearAllConditions](#coc7clearallconditions)                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ConfirmCut2Chase](#coc7confirmcut2chase)                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ConfirmCut2ChaseHint](#coc7confirmcut2chasehint)                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ConfirmNextChaseRound](#coc7confirmnextchaseround)                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ConfirmNextChaseRoundHint](#coc7confirmnextchaseroundhint)                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ConfirmResetChase](#coc7confirmresetchase)                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ConfirmResetChaseHint](#coc7confirmresetchasehint)                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ConfirmRestartChase](#coc7confirmrestartchase)                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ConfirmRestartChaseHint](#coc7confirmrestartchasehint)                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ConsumeBonusDice](#coc7consumebonusdice)                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.CutToTheChase](#coc7cuttothechase)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Damage](#coc7damage)                                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.DamageDealTo](#coc7damagedealto)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.DamageDealt](#coc7damagedealt)                                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.DamageOnFail](#coc7damageonfail)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.DecreaseMovementAction](#coc7decreasemovementaction)                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.DefinitelyInsane](#coc7definitelyinsane)                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.DholeHouseActorImporter](#coc7dholehouseactorimporter)                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.DholeHouseActorImporterSource](#coc7dholehouseactorimportersource)              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.DholeHouseActorImporterSummary](#coc7dholehouseactorimportersummary)            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.DholeHouseImportingName](#coc7dholehouseimportingname)                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.DholeHouseInvalidActor](#coc7dholehouseinvalidactor)                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.DholeHousePickYourJSONFile](#coc7dholehousepickyourjsonfile)                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.DoesNotMeetMinimumReqToBeAdded](#coc7doesnotmeetminimumreqtobeadded)            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.DontMoveToLocation](#coc7dontmovetolocation)                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.DragOnCanvas](#coc7dragoncanvas)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Edit](#coc7edit)                                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ErrorActorHasNoWeaponNamed](#coc7erroractorhasnoweaponnamed)                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ErrorActorHasTooManyWeaponsNamed](#coc7erroractorhastoomanyweaponsnamed)        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ErrorBeneficiaryAtMaxBonus](#coc7errorbeneficiaryatmaxbonus)                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ErrorEmptyLocationsList](#coc7erroremptylocationslist)                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ErrorEvaluatingDamage](#coc7errorevaluatingdamage)                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ErrorInvalidCardType](#coc7errorinvalidcardtype)                                | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.ErrorInvalidRollType](#coc7errorinvalidrolltype)                                | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.ErrorMissingKeeperUser](#coc7errormissingkeeperuser)                            | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.ErrorNoTokensSelected](#coc7errornotokensselected)                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ErrorParticipantAtMaxBonus](#coc7errorparticipantatmaxbonus)                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ErrorTokenNotOnScene](#coc7errortokennotonscene)                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ErrorUnableToParseArmorFormula](#coc7errorunabletoparsearmorformula)            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ErrorUnableToParseFormula](#coc7errorunabletoparseformula)                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ErrorUnableToParseSkillFormula](#coc7errorunabletoparseskillformula)            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ErrorUnexpectedSkillsText](#coc7errorunexpectedskillstext)                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ErrorUnexpectedWeaponText](#coc7errorunexpectedweapontext)                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.FINISH](#coc7finish)                                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.FacingObstacle](#coc7facingobstacle)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.FileUploadError](#coc7fileuploaderror)                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.German](#coc7german)                                                            | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.GotLucky](#coc7gotlucky)                                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.GroupRollCard](#coc7grouprollcard)                                              | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Hazard](#coc7hazard)                                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.IncludeEscapees](#coc7includeescapees)                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.IncludeLatecomers](#coc7includelatecomers)                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.IncreaseMovementAction](#coc7increasemovementaction)                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Initialize](#coc7initialize)                                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Initiative](#coc7initiative)                                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.InsertLocation](#coc7insertlocation)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.LocationCoordinate](#coc7locationcoordinate)                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.LocationInit](#coc7locationinit)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.LocationNotEmpty](#coc7locationnotempty)                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Locations](#coc7locations)                                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.LuckNotEnough](#coc7lucknotenough)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.MakeActive](#coc7makeactive)                                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.MaxPossibleSanLoss](#coc7maxpossiblesanloss)                                    | &#x274C; | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.MessageRollingCharacteristic](#coc7messagerollingcharacteristic)                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Migrate.ErrorActor](#coc7migrateerroractor)                                     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Migrate.ErrorDocumentPack](#coc7migrateerrordocumentpack)                       | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Migrate.ErrorItem](#coc7migrateerroritem)                                       | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Migrate.ErrorMacro](#coc7migrateerrormacro)                                     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Migrate.ErrorScene](#coc7migrateerrorscene)                                     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Migrate.ErrorTable](#coc7migrateerrortable)                                     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Migrate.UpdateCurrentScene](#coc7migrateupdatecurrentscene)                     | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.MoveBackward](#coc7movebackward)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.MoveForward](#coc7moveforward)                                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.MoveToLocation](#coc7movetolocation)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.MovementAction](#coc7movementaction)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.NeedMin2Participants](#coc7needmin2participants)                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.NeedRecalculate](#coc7needrecalculate)                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.NeedToRecalculate](#coc7needtorecalculate)                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Negotiate](#coc7negotiate)                                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.NextRound](#coc7nextround)                                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.NoDamageDealt](#coc7nodamagedealt)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.NoValidCheck](#coc7novalidcheck)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.NoValidSkill](#coc7novalidskill)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.NotAllHaveSpeedRoll](#coc7notallhavespeedroll)                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.NothingToRoll](#coc7nothingtoroll)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Obstacle](#coc7obstacle)                                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ObstacleDamage](#coc7obstacledamage)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ObstacleFail](#coc7obstaclefail)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ObstacleFumble](#coc7obstaclefumble)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ObstacleHasHitPoint](#coc7obstaclehashitpoint)                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ObstacleName](#coc7obstaclename)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ObstaclePassed](#coc7obstaclepassed)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.OpenObstacleResolutionCard](#coc7openobstacleresolutioncard)                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.OverrideCalc](#coc7overridecalc)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ParticipantAlreadyProcessed](#coc7participantalreadyprocessed)                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ParticipantDataMissing](#coc7participantdatamissing)                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ParticipantDropHint](#coc7participantdrophint)                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ParticipantNotEnoughMovement](#coc7participantnotenoughmovement)                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ParticipantNotFound](#coc7participantnotfound)                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ParticipantUuidNotFound](#coc7participantuuidnotfound)                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ParticipantsList](#coc7participantslist)                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.PenaltyDice](#coc7penaltydice)                                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.PenaltyDieSelfReason](#coc7penaltydieselfreason)                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.PickDirectory](#coc7pickdirectory)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.PlayerMovesToLocation](#coc7playermovestolocation)                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Polish](#coc7polish)                                                            | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.ReflectObstacleChanges](#coc7reflectobstaclechanges)                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.RegularRollCard](#coc7regularrollcard)                                          | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.Remove](#coc7remove)                                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.RemoveBonusDie](#coc7removebonusdie)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.RemoveLocation](#coc7removelocation)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.RemoveObstacle](#coc7removeobstacle)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Reset](#coc7reset)                                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Restart](#coc7restart)                                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.RollDifficultyCriticalTitle](#coc7rolldifficultycriticaltitle)                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.RollDifficultyExtremeTitle](#coc7rolldifficultyextremetitle)                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.RollDifficultyHardTitle](#coc7rolldifficultyhardtitle)                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.RollDifficultyRegularTitle](#coc7rolldifficultyregulartitle)                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Sane](#coc7sane)                                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.SelectNewSkill](#coc7selectnewskill)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Settings.DholeUpload.Directory.Hint](#coc7settingsdholeuploaddirectoryhint)     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Settings.DholeUpload.Directory.Name](#coc7settingsdholeuploaddirectoryname)     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.SkillXpGainDisabled](#coc7skillxpgaindisabled)                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.SomethingInTheWay](#coc7somethingintheway)                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.SpeedCheck](#coc7speedcheck)                                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.StartingIndex](#coc7startingindex)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.StartingRange](#coc7startingrange)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.TextFieldInvalidJSON](#coc7textfieldinvalidjson)                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.TooFast](#coc7toofast)                                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.TooSlow](#coc7tooslow)                                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.ToolTipCombat](#coc7tooltipcombat)                                              | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.ToolTipSanity](#coc7tooltipsanity)                                              | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.TryToBreak](#coc7trytobreak)                                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.TryToGetPastBarriers](#coc7trytogetpastbarriers)                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.TryToNegotiateHazard](#coc7trytonegotiatehazard)                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.UnableToUploadDholeImage](#coc7unabletouploaddholeimage)                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.UnarmedWeaponName](#coc7unarmedweaponname)                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.Update](#coc7update)                                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.UpgradeSuccessWithLuck](#coc7upgradesuccesswithluck)                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.VehicleChase](#coc7vehiclechase)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.WaitForPlayerInput](#coc7waitforplayerinput)                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.WeaponSkillMain](#coc7weaponskillmain)                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.YouLostTime](#coc7youlosttime)                                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.YouTakeNoDamage](#coc7youtakenodamage)                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.YouTakeSomeDamage](#coc7youtakesomedamage)                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.combatCard.automaticSuccess](#coc7combatcardautomaticsuccess)                   | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [CoC7.days](#coc7days)                                                                | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.months](#coc7months)                                                            | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
-| [CoC7.rangeCombatCard.SurprisedTargetTitle](#coc7rangecombatcardsurprisedtargettitle) | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [SETTINGS.ChaseShowTokenMovement](#settingschaseshowtokenmovement)                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [SETTINGS.ChaseShowTokenMovementHint](#settingschaseshowtokenmovementhint)            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
-| [SETTINGS.DefaultDifficulty](#settingsdefaultdifficulty)                              | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
-| [SETTINGS.TitleChaseSettings](#settingstitlechasesettings)                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| Key                                                                                   |    fr    |    ja    |    ko    |    pl    |  pt-BR   |    sv    |  zh-TW   |
+| :------------------------------------------------------------------------------------ | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
+| **Remaining**:                                                                        | **191**  | **193**  | **192**  | **193**  | **191**  | **191**  | **191**  |
+| [CoC7.ABarrier](#coc7abarrier)                                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.AHazard](#coc7ahazard)                                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ActionCost](#coc7actioncost)                                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ActionCostOnFail](#coc7actioncostonfail)                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Actions](#coc7actions)                                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ActorDataLinked](#coc7actordatalinked)                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ActorDataNotLinked](#coc7actordatanotlinked)                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ActorImported](#coc7actorimported)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ActorImporterUploadError](#coc7actorimporteruploaderror)                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ActorIsSyntheticActor](#coc7actorissyntheticactor)                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ActorIsTokenHint](#coc7actoristokenhint)                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Add](#coc7add)                                                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.AddActorToChase](#coc7addactortochase)                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.AddBonusDie](#coc7addbonusdie)                                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.AddParticipant](#coc7addparticipant)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.AdjustedMovement](#coc7adjustedmovement)                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.AlreadyEncountered](#coc7alreadyencountered)                                    | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.AlreadyEncounteredInformation](#coc7alreadyencounteredinformation)              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ArmorIgnored](#coc7armorignored)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.AskDamageRoll](#coc7askdamageroll)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.AskIntentions](#coc7askintentions)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.AskRoll](#coc7askroll)                                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Assist](#coc7assist)                                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.AttemptBreakDown](#coc7attemptbreakdown)                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.AttemptNegotiateObstacle](#coc7attemptnegotiateobstacle)                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Barrier](#coc7barrier)                                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.BeingCautious](#coc7beingcautious)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.BeingVeryCautious](#coc7beingverycautious)                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.BonusDieAssailantReason](#coc7bonusdieassailantreason)                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.BreakDown](#coc7breakdown)                                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Breakable](#coc7breakable)                                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Cautious](#coc7cautious)                                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.CautiousApproach](#coc7cautiousapproach)                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Chase.AdjustedMovementShort](#coc7chaseadjustedmovementshort)                   | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Chase.ChasersMax](#coc7chasechasersmax)                                         | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Chase.ChasersMin](#coc7chasechasersmin)                                         | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Chase.CheckName](#coc7chasecheckname)                                           | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Chase.InitiativeShort](#coc7chaseinitiativeshort)                               | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Chase.PreysMax](#coc7chasepreysmax)                                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Chase.PreysMin](#coc7chasepreysmin)                                             | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ChaseSetup](#coc7chasesetup)                                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.CheckFailed](#coc7checkfailed)                                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.CheckMemoryRepressed](#coc7checkmemoryrepressed)                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.CheckName](#coc7checkname)                                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.CheckPassed](#coc7checkpassed)                                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.CleanSkillList](#coc7cleanskilllist)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.CleanSkillListHint](#coc7cleanskilllisthint)                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ClearAllConditions](#coc7clearallconditions)                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ConfirmCut2Chase](#coc7confirmcut2chase)                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ConfirmCut2ChaseHint](#coc7confirmcut2chasehint)                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ConfirmNextChaseRound](#coc7confirmnextchaseround)                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ConfirmNextChaseRoundHint](#coc7confirmnextchaseroundhint)                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ConfirmResetChase](#coc7confirmresetchase)                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ConfirmResetChaseHint](#coc7confirmresetchasehint)                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ConfirmRestartChase](#coc7confirmrestartchase)                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ConfirmRestartChaseHint](#coc7confirmrestartchasehint)                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ConsumeBonusDice](#coc7consumebonusdice)                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Create](#coc7create)                                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.CutToTheChase](#coc7cuttothechase)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Damage](#coc7damage)                                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.DamageDealTo](#coc7damagedealto)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.DamageDealt](#coc7damagedealt)                                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.DamageOnFail](#coc7damageonfail)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.DecreaseMovementAction](#coc7decreasemovementaction)                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.DefinitelyInsane](#coc7definitelyinsane)                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Delete](#coc7delete)                                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.DholeHouseActorImporter](#coc7dholehouseactorimporter)                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.DholeHouseActorImporterSource](#coc7dholehouseactorimportersource)              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.DholeHouseActorImporterSummary](#coc7dholehouseactorimportersummary)            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.DholeHouseImportingName](#coc7dholehouseimportingname)                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.DholeHouseInvalidActor](#coc7dholehouseinvalidactor)                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.DholeHousePickYourJSONFile](#coc7dholehousepickyourjsonfile)                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Disable](#coc7disable)                                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.DoesNotMeetMinimumReqToBeAdded](#coc7doesnotmeetminimumreqtobeadded)            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.DontMoveToLocation](#coc7dontmovetolocation)                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.DragOnCanvas](#coc7dragoncanvas)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Duration](#coc7duration)                                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Edit](#coc7edit)                                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.EffectNew](#coc7effectnew)                                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Enable](#coc7enable)                                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ErrorActorHasNoWeaponNamed](#coc7erroractorhasnoweaponnamed)                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ErrorActorHasTooManyWeaponsNamed](#coc7erroractorhastoomanyweaponsnamed)        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ErrorBeneficiaryAtMaxBonus](#coc7errorbeneficiaryatmaxbonus)                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ErrorEmptyLocationsList](#coc7erroremptylocationslist)                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ErrorEvaluatingDamage](#coc7errorevaluatingdamage)                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ErrorNoTokensSelected](#coc7errornotokensselected)                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ErrorParticipantAtMaxBonus](#coc7errorparticipantatmaxbonus)                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ErrorTokenNotOnScene](#coc7errortokennotonscene)                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ErrorUnableToParseArmorFormula](#coc7errorunabletoparsearmorformula)            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ErrorUnableToParseFormula](#coc7errorunabletoparseformula)                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ErrorUnableToParseSkillFormula](#coc7errorunabletoparseskillformula)            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ErrorUnexpectedSkillsText](#coc7errorunexpectedskillstext)                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ErrorUnexpectedWeaponText](#coc7errorunexpectedweapontext)                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.FINISH](#coc7finish)                                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.FacingObstacle](#coc7facingobstacle)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.FileUploadError](#coc7fileuploaderror)                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.German](#coc7german)                                                            | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.GotLucky](#coc7gotlucky)                                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Hazard](#coc7hazard)                                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.IncludeEscapees](#coc7includeescapees)                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.IncludeLatecomers](#coc7includelatecomers)                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.IncreaseMovementAction](#coc7increasemovementaction)                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Initialize](#coc7initialize)                                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Initiative](#coc7initiative)                                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.InsertLocation](#coc7insertlocation)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.LocationCoordinate](#coc7locationcoordinate)                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.LocationInit](#coc7locationinit)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.LocationNotEmpty](#coc7locationnotempty)                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Locations](#coc7locations)                                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.LuckNotEnough](#coc7lucknotenough)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.MakeActive](#coc7makeactive)                                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.MaxPossibleSanLoss](#coc7maxpossiblesanloss)                                    | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.MessageRollingCharacteristic](#coc7messagerollingcharacteristic)                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Migrate.ErrorActor](#coc7migrateerroractor)                                     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Migrate.ErrorDocumentPack](#coc7migrateerrordocumentpack)                       | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Migrate.ErrorItem](#coc7migrateerroritem)                                       | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Migrate.ErrorMacro](#coc7migrateerrormacro)                                     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Migrate.ErrorScene](#coc7migrateerrorscene)                                     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Migrate.ErrorTable](#coc7migrateerrortable)                                     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.MoveBackward](#coc7movebackward)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.MoveForward](#coc7moveforward)                                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.MoveToLocation](#coc7movetolocation)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.MovementAction](#coc7movementaction)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.NeedMin2Participants](#coc7needmin2participants)                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.NeedRecalculate](#coc7needrecalculate)                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.NeedToRecalculate](#coc7needtorecalculate)                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Negotiate](#coc7negotiate)                                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.NextRound](#coc7nextround)                                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.NoDamageDealt](#coc7nodamagedealt)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.NoValidCheck](#coc7novalidcheck)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.NoValidSkill](#coc7novalidskill)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.NotAllHaveSpeedRoll](#coc7notallhavespeedroll)                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.NothingToRoll](#coc7nothingtoroll)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Obstacle](#coc7obstacle)                                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ObstacleDamage](#coc7obstacledamage)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ObstacleFail](#coc7obstaclefail)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ObstacleFumble](#coc7obstaclefumble)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ObstacleHasHitPoint](#coc7obstaclehashitpoint)                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ObstacleName](#coc7obstaclename)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ObstaclePassed](#coc7obstaclepassed)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.OpenObstacleResolutionCard](#coc7openobstacleresolutioncard)                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.OverrideCalc](#coc7overridecalc)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ParticipantAlreadyProcessed](#coc7participantalreadyprocessed)                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ParticipantDataMissing](#coc7participantdatamissing)                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ParticipantDropHint](#coc7participantdrophint)                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ParticipantNotEnoughMovement](#coc7participantnotenoughmovement)                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ParticipantNotFound](#coc7participantnotfound)                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ParticipantUuidNotFound](#coc7participantuuidnotfound)                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.ParticipantsList](#coc7participantslist)                                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.PenaltyDice](#coc7penaltydice)                                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.PenaltyDieSelfReason](#coc7penaltydieselfreason)                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.PickDirectory](#coc7pickdirectory)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.PlayerMovesToLocation](#coc7playermovestolocation)                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Polish](#coc7polish)                                                            | &#9989;  | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  |
+| [CoC7.ReflectObstacleChanges](#coc7reflectobstaclechanges)                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Remove](#coc7remove)                                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.RemoveBonusDie](#coc7removebonusdie)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.RemoveLocation](#coc7removelocation)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.RemoveObstacle](#coc7removeobstacle)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Reset](#coc7reset)                                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Restart](#coc7restart)                                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.RollDifficultyCriticalTitle](#coc7rolldifficultycriticaltitle)                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.RollDifficultyExtremeTitle](#coc7rolldifficultyextremetitle)                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.RollDifficultyHardTitle](#coc7rolldifficultyhardtitle)                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.RollDifficultyRegularTitle](#coc7rolldifficultyregulartitle)                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Sane](#coc7sane)                                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.SelectNewSkill](#coc7selectnewskill)                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Settings.DholeUpload.Directory.Hint](#coc7settingsdholeuploaddirectoryhint)     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Settings.DholeUpload.Directory.Name](#coc7settingsdholeuploaddirectoryname)     | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.SkillXpGainDisabled](#coc7skillxpgaindisabled)                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.SomethingInTheWay](#coc7somethingintheway)                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.SpeedCheck](#coc7speedcheck)                                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.StartingIndex](#coc7startingindex)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.StartingRange](#coc7startingrange)                                              | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.TextFieldInvalidJSON](#coc7textfieldinvalidjson)                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.TooFast](#coc7toofast)                                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.TooSlow](#coc7tooslow)                                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.TryToBreak](#coc7trytobreak)                                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.TryToGetPastBarriers](#coc7trytogetpastbarriers)                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.TryToNegotiateHazard](#coc7trytonegotiatehazard)                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.UnableToUploadDholeImage](#coc7unabletouploaddholeimage)                        | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.UnarmedWeaponName](#coc7unarmedweaponname)                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.Update](#coc7update)                                                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.UpgradeSuccessWithLuck](#coc7upgradesuccesswithluck)                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.VehicleChase](#coc7vehiclechase)                                                | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.WaitForPlayerInput](#coc7waitforplayerinput)                                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.WeaponSkillMain](#coc7weaponskillmain)                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.YouLostTime](#coc7youlosttime)                                                  | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.YouTakeNoDamage](#coc7youtakenodamage)                                          | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.YouTakeSomeDamage](#coc7youtakesomedamage)                                      | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.combatCard.automaticSuccess](#coc7combatcardautomaticsuccess)                   | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [CoC7.rangeCombatCard.SurprisedTargetTitle](#coc7rangecombatcardsurprisedtargettitle) | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [SETTINGS.ChaseShowTokenMovement](#settingschaseshowtokenmovement)                    | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [SETTINGS.ChaseShowTokenMovementHint](#settingschaseshowtokenmovementhint)            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
+| [SETTINGS.DefaultDifficulty](#settingsdefaultdifficulty)                              | &#9989;  | &#9989;  | &#x274C; | &#9989;  | &#9989;  | &#9989;  | &#9989;  |
+| [SETTINGS.TitleChaseSettings](#settingstitlechasesettings)                            | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; | &#x274C; |
 
 ##### CoC7.ABarrier
 
@@ -304,10 +298,6 @@ The following translations have been abandoned **cn**, **cs**, **de**, [are you 
 
 ` "CoC7.Assist": "Assist ally",`
 
-##### CoC7.AttackManeuver
-
-` "CoC7.AttackManeuver": "Attack Maneuver",`
-
 ##### CoC7.AttemptBreakDown
 
 ` "CoC7.AttemptBreakDown": "Attempt to break down !!",`
@@ -339,10 +329,6 @@ The following translations have been abandoned **cn**, **cs**, **de**, [are you 
 ##### CoC7.Breakable
 
 ` "CoC7.Breakable": "Breakable",`
-
-##### CoC7.CardType
-
-` "CoC7.CardType": "Roll type",`
 
 ##### CoC7.Cautious
 
@@ -448,6 +434,10 @@ The following translations have been abandoned **cn**, **cs**, **de**, [are you 
 
 ` "CoC7.ConsumeBonusDice": "Consume Bonus Dice",`
 
+##### CoC7.Create
+
+` "CoC7.Create": "Create",`
+
 ##### CoC7.CutToTheChase
 
 ` "CoC7.CutToTheChase": "Cut to the chase",`
@@ -476,6 +466,10 @@ The following translations have been abandoned **cn**, **cs**, **de**, [are you 
 
 ` "CoC7.DefinitelyInsane": "Good for the asylum",`
 
+##### CoC7.Delete
+
+` "CoC7.Delete": "Delete",`
+
 ##### CoC7.DholeHouseActorImporter
 
 ` "CoC7.DholeHouseActorImporter": "The Dhole's House Actor Importer JSON",`
@@ -500,6 +494,10 @@ The following translations have been abandoned **cn**, **cs**, **de**, [are you 
 
 ` "CoC7.DholeHousePickYourJSONFile": "Pick the JSON file exported from The Dhole's House",`
 
+##### CoC7.Disable
+
+` "CoC7.Disable": "Disable",`
+
 ##### CoC7.DoesNotMeetMinimumReqToBeAdded
 
 ` "CoC7.DoesNotMeetMinimumReqToBeAdded": "Can not add participant, need at least valid movement action",`
@@ -512,9 +510,21 @@ The following translations have been abandoned **cn**, **cs**, **de**, [are you 
 
 ` "CoC7.DragOnCanvas": "Drag this on canvas to set the position of this location.",`
 
+##### CoC7.Duration
+
+` "CoC7.Duration": "Duration",`
+
 ##### CoC7.Edit
 
 ` "CoC7.Edit": "Edit",`
+
+##### CoC7.EffectNew
+
+` "CoC7.EffectNew": "New effect",`
+
+##### CoC7.Enable
+
+` "CoC7.Enable": "Enable",`
 
 ##### CoC7.ErrorActorHasNoWeaponNamed
 
@@ -535,18 +545,6 @@ The following translations have been abandoned **cn**, **cs**, **de**, [are you 
 ##### CoC7.ErrorEvaluatingDamage
 
 ` "CoC7.ErrorEvaluatingDamage": "Error evaluating damage",`
-
-##### CoC7.ErrorInvalidCardType
-
-` "CoC7.ErrorInvalidCardType": "Card Type",`
-
-##### CoC7.ErrorInvalidRollType
-
-` "CoC7.ErrorInvalidRollType": "Roll Type",`
-
-##### CoC7.ErrorMissingKeeperUser
-
-` "CoC7.ErrorMissingKeeperUser": "Your keeper needs to be connected to perform this action",`
 
 ##### CoC7.ErrorNoTokensSelected
 
@@ -599,10 +597,6 @@ The following translations have been abandoned **cn**, **cs**, **de**, [are you 
 ##### CoC7.GotLucky
 
 ` "CoC7.GotLucky": "You got lucky, this time...",`
-
-##### CoC7.GroupRollCard
-
-` "CoC7.GroupRollCard": "Group roll card",`
 
 ##### CoC7.Hazard
 
@@ -687,10 +681,6 @@ The following translations have been abandoned **cn**, **cs**, **de**, [are you 
 ##### CoC7.Migrate.ErrorTable
 
 ` "CoC7.Migrate.ErrorTable": "Failed CoC7 system migration for Table {name}: {message}",`
-
-##### CoC7.Migrate.UpdateCurrentScene
-
-` "CoC7.Migrate.UpdateCurrentScene": "Migrating your current scene",`
 
 ##### CoC7.MoveBackward
 
@@ -836,10 +826,6 @@ The following translations have been abandoned **cn**, **cs**, **de**, [are you 
 
 ` "CoC7.ReflectObstacleChanges": "Reflect changes to obstacle",`
 
-##### CoC7.RegularRollCard
-
-` "CoC7.RegularRollCard": "Regular roll card",`
-
 ##### CoC7.Remove
 
 ` "CoC7.Remove": "Remove",`
@@ -928,14 +914,6 @@ The following translations have been abandoned **cn**, **cs**, **de**, [are you 
 
 ` "CoC7.TooSlow": "Too slow",`
 
-##### CoC7.ToolTipCombat
-
-` "CoC7.ToolTipCombat": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Left click</strong> roll check with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li></ol><label>Combat opposed maneuver</label><ol><li><strong>Right click</strong> Combat opposed maneuver with options</li><li><strong>Shift + Right click</strong> Immediate combat opposed maneuver</li></ol>",`
-
-##### CoC7.ToolTipSanity
-
-` "CoC7.ToolTipSanity": "<label>{skill} {regular}% ({hard}/{extreme})</label><ol><li><strong>Left click</strong> roll check with options</li><li><strong>Alt/Option + Left click</strong> roll sanity loss with options</li><li><strong>Shift + Left click</strong> Immediate regular difficulty roll</li><li><strong>Shift + Alt/Option + Left click</strong> roll sanity loss without dice pool options</li></ol><label>Opposed checks</label><ol><li><strong>Right click</strong> Opposed check with options</li><li><strong>Shift + Right click</strong> Immediate opposed check</li></ol><label>Combined checks</label><ol><li><strong>Alt/Option + Right click</strong> Combined check with options</li><li><strong>Shift + Alt/Option + Right click</strong> Immediate combined check</li></ol>",`
-
 ##### CoC7.TryToBreak
 
 ` "CoC7.TryToBreak": "You try to break down that barrier.",`
@@ -991,14 +969,6 @@ The following translations have been abandoned **cn**, **cs**, **de**, [are you 
 ##### CoC7.combatCard.automaticSuccess
 
 ` "CoC7.combatCard.automaticSuccess": "Automatic Success",`
-
-##### CoC7.days
-
-` "CoC7.days": "days(s)",`
-
-##### CoC7.months
-
-` "CoC7.months": "months(s)",`
 
 ##### CoC7.rangeCombatCard.SurprisedTargetTitle
 

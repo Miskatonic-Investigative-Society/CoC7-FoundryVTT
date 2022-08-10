@@ -1,4 +1,4 @@
-/* global $, ActorSheet, ChatMessage, CONST, Dialog, FormData, game, getProperty, Hooks, mergeObject, Roll, TextEditor, ui */
+/* global $, ActorSheet, ChatMessage, CONST, Dialog, FormData, game, getProperty, Hooks, Item, mergeObject, Roll, TextEditor, ui */
 
 import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7ChatMessage } from '../../apps/coc7-chat-message.js'
@@ -862,7 +862,7 @@ export class CoC7ActorSheet extends ActorSheet {
      */
     html.find('.test-trigger').click(async event => {
       if (!game.settings.get('CoC7', 'hiddendevmenu')) return null
-      const item = await Item.create({
+      await Item.create({
         name: '__CoC7InternalItem__',
         type: 'item'
       })
@@ -918,9 +918,8 @@ export class CoC7ActorSheet extends ActorSheet {
           typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' &&
           game.CoC7Tooltips.ToolTipHover !== null
         ) {
-          const isCombat = game.CoC7Tooltips.ToolTipHover.classList?.contains(
-            'combat'
-          )
+          const isCombat =
+            game.CoC7Tooltips.ToolTipHover.classList?.contains('combat')
           const item = game.CoC7Tooltips.ToolTipHover.closest('.item')
           if (typeof item !== 'undefined') {
             const skillId = item.dataset.skillId
@@ -942,8 +941,8 @@ export class CoC7ActorSheet extends ActorSheet {
                     game.settings.get('CoC7', 'stanbyGMRolls') &&
                     sheet.actor.hasPlayerOwner
                       ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                          name: sheet.actor.name
-                        })
+                        name: sheet.actor.name
+                      })
                       : ''
                 })
             }
@@ -982,8 +981,8 @@ export class CoC7ActorSheet extends ActorSheet {
                     game.settings.get('CoC7', 'stanbyGMRolls') &&
                     sheet.actor.hasPlayerOwner
                       ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                          name: sheet.actor.name
-                        })
+                        name: sheet.actor.name
+                      })
                       : ''
                 })
             }
@@ -1025,8 +1024,8 @@ export class CoC7ActorSheet extends ActorSheet {
                         game.settings.get('CoC7', 'stanbyGMRolls') &&
                         sheet.actor.hasPlayerOwner
                           ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                              name: sheet.actor.name
-                            })
+                            name: sheet.actor.name
+                          })
                           : ''
                     })
                 }
@@ -1052,8 +1051,8 @@ export class CoC7ActorSheet extends ActorSheet {
                         (game.settings.get('CoC7', 'stanbyGMRolls') &&
                         sheet.actor.hasPlayerOwner
                           ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                              name: sheet.actor.name
-                            })
+                            name: sheet.actor.name
+                          })
                           : '')
                     })
                 }
@@ -1912,9 +1911,8 @@ export class CoC7ActorSheet extends ActorSheet {
                   value: event.currentTarget.value
                 })
               )
-              formData[event.currentTarget.name] = game.i18n.format(
-                'CoC7.ErrorInvalid'
-              )
+              formData[event.currentTarget.name] =
+                game.i18n.format('CoC7.ErrorInvalid')
             }
           }
         }
@@ -1934,9 +1932,8 @@ export class CoC7ActorSheet extends ActorSheet {
                   value: event.currentTarget.value
                 })
               )
-              formData[event.currentTarget.name] = game.i18n.format(
-                'CoC7.ErrorInvalid'
-              )
+              formData[event.currentTarget.name] =
+                game.i18n.format('CoC7.ErrorInvalid')
             }
           }
         }

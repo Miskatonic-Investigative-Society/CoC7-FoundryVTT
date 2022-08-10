@@ -451,7 +451,7 @@ export function registerSettings () {
   /**
    * Other settings
    */
-   game.settings.register('CoC7', 'hiddendevmenu', {
+  game.settings.register('CoC7', 'hiddendevmenu', {
     name: 'Hidden dev menu',
     hint: 'Use at your own risk',
     scope: 'world',
@@ -500,6 +500,13 @@ export function registerSettings () {
     config: false,
     type: Boolean,
     default: true
+  })
+  game.settings.register('CoC7', 'showInstructions', {
+    name: 'Show changelog/instructions',
+    scope: 'world',
+    config: false,
+    type: String,
+    default: '0'
   })
   /** Set an initiative formula for the system */
   CONFIG.Combat.initiative = {

@@ -64,16 +64,14 @@ export class CoC7Parser {
         if (game.settings.get('core', 'rollMode') === 'blindroll') {
           data.blind = true
         }
-      const link = CoC7Parser.createCoC7Link(data)
-      if (link) {
-        editor.insertContent(link)
-      }
+        const link = CoC7Parser.createCoC7Link(data)
+        if (link) {
+          editor.insertContent(link)
+        }
       } else {
         const link = await CoC7Link.fromData(data)
         editor.insertContent(link.link)
       }
-
-
     } else if (isCtrlKey(event)) {
       event.stopPropagation()
 
@@ -287,10 +285,6 @@ export class CoC7Parser {
     }
     data.displayName = a.dataset.displayName ? a.innerText : null
     event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
-    const pouet = JSON.parse(
-      event.originalEvent.dataTransfer.getData('text/plain')
-    )
-    const prout = 45
   }
 
   static _createLink (match, tag, type, options, name) {
@@ -312,7 +306,7 @@ export class CoC7Parser {
     }
 
     const matches = options.matchAll(/[^,]+/gi)
-    if ('effect' == type) {
+    if (type === 'effect') {
       data.effect = JSON.parse(options)
       data.dataset.object = options
     } else {
@@ -350,8 +344,9 @@ export class CoC7Parser {
             data.dataset.type?.toLowerCase()
           )
         ) {
-          humanName = CoC7Utilities.getCharacteristicNames(data.dataset.name)
-            ?.label
+          humanName = CoC7Utilities.getCharacteristicNames(
+            data.dataset.name
+          )?.label
         }
         title = game.i18n.format(
           `CoC7.LinkCheck${!data.dataset.difficulty ? '' : 'Diff'}${
@@ -392,6 +387,7 @@ export class CoC7Parser {
         break
       case 'effect':
         title = data.effect.label
+        break
       default:
         break
     }
@@ -409,13 +405,15 @@ export class CoC7Parser {
     a.draggable = true
     data.icon = data.icon ?? data.effect?.icon ?? 'fas fa-dice'
     // check if it's an image or an icon
-    if (data.icon.includes('\\') || data.icon.includes('.'))
+    if (data.icon.includes('\\') || data.icon.includes('.')) {
       data.img = data.icon
+    }
     if (data.blind) a.innerHTML += '<i class="fas fa-eye-slash"></i>'
-    if (data.img)
+    if (data.img) {
       a.innerHTML += `<img data-link-icon="${data.icon}" src="${data.img}">`
-    else
+    } else {
       a.innerHTML += `<i data-link-icon="${data.icon}" class="link-icon ${data.icon}"></i>`
+    }
     a.innerHTML += `<span>${data.name}</span>`
 
     return a
@@ -492,9 +490,11 @@ export class CoC7Parser {
               return token.actor.weaponCheck(options, event.shiftKey)
             }
 
-            case 'effect': {
-              await token.actor.createEmbeddedDocuments( 'ActiveEffect', [link.data.effect])
-            }
+            case 'effect':
+              await token.actor.createEmbeddedDocuments('ActiveEffect', [
+                link.data.effect
+              ])
+              break
 
             default:
           }

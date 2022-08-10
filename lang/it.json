@@ -426,7 +426,7 @@
   "CoC7.AnySpecName": "Generico",
   "CoC7.BoutOfMadnessName": "Attacco di follia",
   "CoC7.InsanityName": "Follia",
-  
+
   "CoC7.NewSkillName": "nuova abilità",
   "CoC7.AddSkill": "Aggiungi abilità",
   "CoC7.CleanSkillList": "Svuota la lista delle abilità",
@@ -592,7 +592,7 @@
   "CoC7.MythosGain": "Guadagno per i Miti",
   "CoC7.YouGainedCthulhuMythos": "La tua mente trema davanti alla manifestazione ultraterrena (+{value}% Miti di Cthulhu)",
   "CoC7.CardResolved": "Scheda risolta",
-  
+
   "CoC7.InsertLocation": "Inserisci luogo",
   "CoC7.RemoveLocation": "Rimuovi luogo",
   "CoC7.LocationNotEmpty": "Non puoi rimuovere un luogo con un personaggio",
@@ -692,7 +692,9 @@
   "CoC7.ErrorTokenNotOnScene": "La Pedina non appartiene alla scena di questo luogo",
   "CoC7.AddParticipant": "Aggiungi Partecipante",
   "CoC7.Remove": "Rimuovi",
+  "CoC7.Delete": "Cancella",
   "CoC7.Edit": "Modifica",
+  "CoC7.Create": "Crea",
   "CoC7.MakeActive": "Rendi Attivo",
   "CoC7.SelectNewSkill": "Seleziona l'abilità",
   "CoC7.AskDamageRoll": "Chiedi il tiro per il danno",
@@ -707,7 +709,7 @@
   "CoC7.Chase.PreysMax": "Prede Max: {value}",
   "CoC7.Chase.ChasersMin": "Inseguitori Min: {value}",
   "CoC7.Chase.ChasersMax": "Inseguitori Max: {value}",
-  
+
   "CoC7.SpellCastingTime": "Tempo di lancio",
   "CoC7.SpellCastingCost": "Costo di lancio",
   "CoC7.CallSpell": "Richiamare",
@@ -891,6 +893,9 @@
   "CoC7.Cancel": "Cancella",
   "CoC7.Add": "Aggiungi",
   "CoC7.Update": "Aggiorna",
+  "CoC7.Enable": "Attiva",
+  "CoC7.Disable": "Disattiva",
+  "CoC7.Duration": "Durata",
 
   "CoC7.ActorImporter": "Importa Personaggio",
   "CoC7.ActorImporterSummary": "Importa un PNG o una Creatura dalla descrizione e dalle statistiche. Basta incollare il testo corrispondente",
@@ -1127,5 +1132,7 @@
   "SETTINGS.ChaseShowTokenMovementHint": "Mostra movimento sulla griglia quando una pedina viene mossa nel luogo successivo.",
 
   "CoC7.getTheExample": "Copia Esempio",
-  "CoC7.Copied": "Copiato il testo di esempio negli Appunti"
+  "CoC7.Copied": "Copiato il testo di esempio negli Appunti",
+
+  "CoC7.EffectNew": "Nuovo effetto"
 }
