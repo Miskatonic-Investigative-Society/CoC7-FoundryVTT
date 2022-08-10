@@ -102,15 +102,38 @@ export class CoCActor extends Actor {
     }
 
     // return computed values or fixed values if not auto.
-    this.data.data.attribs.mov.value = this.mov
     this.data.data.attribs.mov.rawValue = this.mov
-    this.data.data.attribs.db.value = this.db
     this.data.data.attribs.db.rawValue = this.db
-    this.data.data.attribs.build.value = this.build
     this.data.data.attribs.build.rawValue = this.build
 
     //For vehicle only :
     this.data.data.attribs.build.current = this.hp
+
+    // if (
+    //   data.data.attribs.mp.value > data.data.attribs.mp.max ||
+    //   data.data.attribs.mp.max == null
+    // ) {
+    //   data.data.attribs.mp.value = data.data.attribs.mp.max
+    // }
+    // if (
+    //   data.data.attribs.hp.value > data.data.attribs.hp.max ||
+    //   data.data.attribs.hp.max == null
+    // ) {
+    //   data.data.attribs.hp.value = data.data.attribs.hp.max
+    // }
+
+    // if (
+    //   data.data.attribs.hp.value == null &&
+    //   data.data.attribs.hp.max != null
+    // ) {
+    //   data.data.attribs.hp.value = data.data.attribs.hp.max
+    // }
+    // if (
+    //   data.data.attribs.mp.value == null &&
+    //   data.data.attribs.mp.max != null
+    // ) {
+    //   data.data.attribs.mp.value = data.data.attribs.mp.max
+    // }
 
     super.prepareBaseData()
   }
@@ -123,6 +146,50 @@ export class CoCActor extends Actor {
    */
   prepareEmbeddedDocuments () {
     super.prepareEmbeddedDocuments()
+    //Set hpMax, mpMax, sanMax, mov, db, build. This is to allow calculation of derived value with modifed characteristics.
+    this.data.data.attribs.mov.value = this.mov
+    this.data.data.attribs.db.value = this.db
+    this.data.data.attribs.build.value = this.build
+
+    this.data.data.attribs.hp.max = this.hpMax
+    if( this.hp === null) this.data.data.attribs.hp.value = this.hpMax
+    // if( this.hpMax && this.hpMax < this.hp) this.data.data.attribs.hp.value = this.hpMax
+
+    this.data.data.attribs.mp.max = this.mpMax
+    if( this.mp === null) this.data.data.attribs.mp.value = this.mpMax
+
+    this.data.data.attribs.san.max = this.sanMax
+    if( this.san === null) this.data.data.attribs.san.value = this.hpMax
+
+    //Apply effects to those value.
+    const filterMatrix = [
+      'data.attribs.hp.max',
+      'data.attribs.mp.max',
+      'data.attribs.san.max',
+      'data.attribs.mov.value',
+      'data.attribs.db.value',
+      'data.attribs.build.value'
+    ]
+
+    const changes = this.effects.reduce((changes, e) => {
+      if (e.data.disabled || e.isSuppressed) return changes
+      return changes.concat(
+        e.data.changes.map(c => {
+          c = foundry.utils.duplicate(c)
+          c.effect = e
+          c.priority = c.priority ?? c.mode * 10
+          return c
+        })
+      )
+    }, [])
+    changes.sort((a, b) => a.priority - b.priority)
+
+    const selectChanges = changes.filter(e => filterMatrix.includes(e.key))
+
+    // Apply all changes
+    for (let change of selectChanges) {
+      change.effect.apply(this, change)
+    }
   }
 
   /**
@@ -150,9 +217,9 @@ export class CoCActor extends Actor {
         },
         { overwrite: false }
       )
-    } else if (data.type === 'npc' ) {
+    } else if (data.type === 'npc') {
       data.img = 'systems/CoC7/assets/icons/cultist.svg'
-    } else if (data.type === 'creature' ) {
+    } else if (data.type === 'creature') {
       data.img = 'systems/CoC7/assets/icons/floating-tentacles.svg'
     } else if (data.type === 'container') {
       data.img = 'icons/svg/chest.svg'
@@ -1560,8 +1627,11 @@ export class CoCActor extends Actor {
 
   async setHp (value) {
     if (value < 0) value = 0
-    if (value > this.hpMax) value = parseInt(this.hpMax)
+    if (value > this.data.data.attribs.hp.max){
+      value = parseInt(this.data.data.attribs.hp.max)
+    }
     return await this.update({ 'data.attribs.hp.value': value })
+    
   }
 
   async addUniqueItems (skillList, flag = null) {
@@ -1765,9 +1835,20 @@ export class CoCActor extends Actor {
     return parseInt(this.data.data.attribs.mp.value)
   }
 
+  get mpMax () {
+    if (this.data.data.attribs.mp.auto) {
+      // TODO if any is null set max back to null.
+      if (this.data.data.characteristics.pow.value != null) {
+        return Math.floor(this.data.data.characteristics.pow.value / 5)
+      }
+      return 0
+    }
+    return parseInt(this.data.data.attribs.mp.max)
+  }
+
   async setMp (value) {
     if (value < 0) value = 0
-    if (value > parseInt(this.mpMax)) value = parseInt(this.mpMax)
+    if (value > parseInt(this.data.data.attribs.mp.max)) value = parseInt(this.data.data.attribs.mp.max)
     return await this.update({ 'data.attribs.mp.value': value })
   }
 
@@ -3179,7 +3260,7 @@ export class CoCActor extends Actor {
       const healthBefore = parseInt(
         event.originalEvent.currentTarget.defaultValue
       )
-      const healthAfter = parseInt(event.originalEvent.currentTarget.value)
+      const healthAfter = parseInt(event.originalEvent.currentTarget.value) || this.data.data.attribs.hp.max
       let damageTaken
       // is healing
       if (healthAfter > healthBefore) return await this.setHp(healthAfter)
@@ -3217,17 +3298,17 @@ export class CoCActor extends Actor {
     const netDamage = grossDamage - armorValue
     if (netDamage <= 0) return 0
     await this.setHp(this.hp - netDamage)
-    if (netDamage >= this.hpMax) {
+    if (netDamage >= this.data.data.attribs.hp.max) {
       await this.setCondition(COC7.status.dead)
     } else {
       if (game.settings.get('CoC7', 'pulpRuleIgnoreMajorWounds')) {
         if (this.hp === 0) {
-          if (netDamage >= Math.ceil(this.hpMax / 2)) {
+          if (netDamage >= Math.ceil(this.data.data.attribs.hp.max / 2)) {
             this.setCondition(COC7.status.dying)
           } else {
             this.setCondition(COC7.status.unconscious)
           }
-        } else if (netDamage >= Math.ceil(this.hpMax / 2)) {
+        } else if (netDamage >= Math.ceil(this.data.data.attribs.hp.max / 2)) {
           const conCheck = new CoC7ConCheck(
             this.isToken ? this.tokenKey : this.id
           )
@@ -3235,7 +3316,7 @@ export class CoCActor extends Actor {
         }
       } else {
         let hasMajorWound = false
-        if (netDamage >= Math.ceil(this.hpMax / 2)) {
+        if (netDamage >= Math.ceil(this.data.data.attribs.hp.max / 2)) {
           await this.setCondition(COC7.status.criticalWounds)
           hasMajorWound = true
         } else {

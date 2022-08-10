@@ -1,26 +1,26 @@
 import { CoC7Item } from '../item.js'
 
 export class CoC7Skill extends CoC7Item {
-  async applyModifier (change) {
-    return
+  // async applyModifier (change) {
+  //   return
 
-    const changes = this.data.data.changes
-      ? foundry.utils.duplicate(this.data.data.changes)
-      : []
+  //   const changes = this.data.data.changes
+  //     ? foundry.utils.duplicate(this.data.data.changes)
+  //     : []
 
-    const index = changes.findIndex(c => c.effect._id == change.effect.id)
+  //   const index = changes.findIndex(c => c.effect._id == change.effect.id)
 
-    if (-1 === index) {
-      changes.push(change)
-      await this.update({ 'data.changes': changes })
-    } else {
-      //Compare if there's a change in the efect data
-      if (!JSON.stringify(change) === JSON.stringify(changes[index])) {
-        changes[index] = change
-        await this.update({ 'data.changes': changes })
-      }
-    }
-  }
+  //   if (-1 === index) {
+  //     changes.push(change)
+  //     await this.update({ 'data.changes': changes })
+  //   } else {
+  //     //Compare if there's a change in the efect data
+  //     if (!JSON.stringify(change) === JSON.stringify(changes[index])) {
+  //       changes[index] = change
+  //       await this.update({ 'data.changes': changes })
+  //     }
+  //   }
+  // }
 
   get hasActiveEffects () {
     return this.activeEffects.length > 0

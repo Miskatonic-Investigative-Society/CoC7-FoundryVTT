@@ -508,54 +508,54 @@ export class CoC7ActorSheet extends ActorSheet {
     if (data.data.attribs.mp.value < 0) data.data.attribs.mp.value = null
     if (data.data.attribs.san.value < 0) data.data.attribs.san.value = null
     // data.data.attribs.san.fiftyOfCurrent = data.data.attribs.san.value >= 0 ? ' / '+Math.floor(data.data.attribs.san.value/5):'';
-    if (data.data.attribs.hp.auto) {
-      // TODO if any is null set max back to null.
-      if (
-        data.data.characteristics.siz.value != null &&
-        data.data.characteristics.con.value != null
-      ) {
-        data.data.attribs.hp.max = this.actor.hpMax
-      }
-    }
+    // if (data.data.attribs.hp.auto) {
+    //   // TODO if any is null set max back to null.
+    //   if (
+    //     data.data.characteristics.siz.value != null &&
+    //     data.data.characteristics.con.value != null
+    //   ) {
+    //     data.data.attribs.hp.max = this.actor.hpMax
+    //   }
+    // }
 
-    if (data.data.attribs.mp.auto) {
-      // TODO if any is null set max back to null.
-      if (data.data.characteristics.pow.value != null) {
-        data.data.attribs.mp.max = Math.floor(
-          data.data.characteristics.pow.value / 5
-        )
-      }
-    }
+    // if (data.data.attribs.mp.auto) {
+    //   // TODO if any is null set max back to null.
+    //   if (data.data.characteristics.pow.value != null) {
+    //     data.data.attribs.mp.max = Math.floor(
+    //       data.data.characteristics.pow.value / 5
+    //     )
+    //   }
+    // }
 
-    if (data.data.attribs.san.auto) {
-      data.data.attribs.san.max = this.actor.sanMax
-    }
+    // if (data.data.attribs.san.auto) {
+    //   data.data.attribs.san.max = this.actor.sanMax
+    // }
 
-    if (
-      data.data.attribs.mp.value > data.data.attribs.mp.max ||
-      data.data.attribs.mp.max == null
-    ) {
-      data.data.attribs.mp.value = data.data.attribs.mp.max
-    }
-    if (
-      data.data.attribs.hp.value > data.data.attribs.hp.max ||
-      data.data.attribs.hp.max == null
-    ) {
-      data.data.attribs.hp.value = data.data.attribs.hp.max
-    }
+    // if (
+    //   data.data.attribs.mp.value > data.data.attribs.mp.max ||
+    //   data.data.attribs.mp.max == null
+    // ) {
+    //   data.data.attribs.mp.value = data.data.attribs.mp.max
+    // }
+    // if (
+    //   data.data.attribs.hp.value > data.data.attribs.hp.max ||
+    //   data.data.attribs.hp.max == null
+    // ) {
+    //   data.data.attribs.hp.value = data.data.attribs.hp.max
+    // }
 
-    if (
-      data.data.attribs.hp.value == null &&
-      data.data.attribs.hp.max != null
-    ) {
-      data.data.attribs.hp.value = data.data.attribs.hp.max
-    }
-    if (
-      data.data.attribs.mp.value == null &&
-      data.data.attribs.mp.max != null
-    ) {
-      data.data.attribs.mp.value = data.data.attribs.mp.max
-    }
+    // if (
+    //   data.data.attribs.hp.value == null &&
+    //   data.data.attribs.hp.max != null
+    // ) {
+    //   data.data.attribs.hp.value = data.data.attribs.hp.max
+    // }
+    // if (
+    //   data.data.attribs.mp.value == null &&
+    //   data.data.attribs.mp.max != null
+    // ) {
+    //   data.data.attribs.mp.value = data.data.attribs.mp.max
+    // }
 
     if (!['vehicle'].includes(this.actor.data.type)) {
       if (
@@ -1357,7 +1357,7 @@ export class CoC7ActorSheet extends ActorSheet {
   }
 
   async _onWheel (event) {
-    let value = parseInt(event.currentTarget.value)
+    let value = parseInt(event.currentTarget.value) || null
     if (event.deltaY > 0) {
       value = value === 0 ? 0 : value - 1
     }
@@ -1784,10 +1784,12 @@ export class CoC7ActorSheet extends ActorSheet {
   async _updateObject (event, formData) {
     // ui.notifications.info('_updateObject');
     // TODO: Replace with   _getSubmitData(updateData={}) Cf. sheet.js(243)
-    const overrides = foundry.utils.flattenObject(this.actor.overrides);
-    const name = event.currentTarget.name
-    if(overrides[name]){
-      ui.notifications.warn( game.i18n.format('CoC7.EffectAppliedCantOverride', {name: name}))
+    const overrides = foundry.utils.flattenObject(this.actor.overrides)
+    const name = event?.currentTarget?.name
+    if (name && overrides && overrides[name]) {
+      ui.notifications.warn(
+        game.i18n.format('CoC7.EffectAppliedCantOverride', { name: name })
+      )
     }
 
     if (event.currentTarget) {

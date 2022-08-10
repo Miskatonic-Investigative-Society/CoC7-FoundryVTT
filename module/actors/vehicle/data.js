@@ -2,7 +2,7 @@ import { CoCActor } from '../actor.js'
 
 export class CoC7Vehicle extends CoCActor {
   constructor (data, context) {
-    if( typeof data.img === 'undefined'){
+    if (typeof data.img === 'undefined') {
       data.img = 'systems/CoC7/assets/icons/jeep.svg'
     }
     super(data, context)
@@ -45,5 +45,9 @@ export class CoC7Vehicle extends CoCActor {
 
   get mov () {
     return this.data.data.attribs.mov.value
+  }
+
+  get mpMax () {
+    return parseInt(this.data.data.attribs?.mp?.max) || 0
   }
 }

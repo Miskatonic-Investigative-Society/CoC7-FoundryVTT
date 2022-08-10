@@ -102,25 +102,25 @@
         </div>
         <div class="footer">
           {{#if data.flags.locked}}
-            <div class="attribute">
+            <div class="attribute flex">
               <div class="attribute-label">
                 <h2>{{localize 'CoC7.Mov'}}:</h2>
               </div>
               <div class="attribute-value">{{data.attribs.mov.value}}</div>
             </div>
-            <div class="attribute">
+            <div class="attribute flex">
               <div class="attribute-label">
                 <h2>{{localize 'CoC7.Build'}}:</h2>
               </div>
               <div class="attribute-value">{{data.attribs.build.value}}</div>
             </div>
-            <div class="attribute" data-attrib="db" data-roll-formula="{{data.attribs.db.value}}">
+            <div class="attribute flex" data-attrib="db" data-roll-formula="{{data.attribs.db.value}}">
               <div class="attribute-label rollable">
                 <h2>{{localize 'CoC7.DB'}}:</h2>
               </div>
               <div class="attribute-value">{{data.attribs.db.value}}</div>
             </div>
-            <div class="attribute">
+            <div class="attribute flex">
               <div class="attribute-label">
                 <h2>{{localize 'CoC7.Armor'}}:</h2>
               </div>

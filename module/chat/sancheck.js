@@ -87,9 +87,7 @@ export class CoC7SanCheck {
 
   get isSanLossFormula () {
     if (this.sanLossFormula) {
-      if (this.sanLossFormula.match(Roll.diceRgx)) return true
-      // const rgx = RegExp( Die.rgx.dice);
-      // return rgx.test(this.sanLossFormula);
+      return Roll.validate(this.sanLossFormula)
     }
     return false
   }
