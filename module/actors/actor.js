@@ -102,9 +102,9 @@ export class CoCActor extends Actor {
     }
 
     // return computed values or fixed values if not auto.
-    this.data.data.attribs.mov.rawValue = this.mov
-    this.data.data.attribs.db.rawValue = this.db
-    this.data.data.attribs.build.rawValue = this.build
+    // this.data.data.attribs.mov.rawValue = this.mov
+    // this.data.data.attribs.db.rawValue = this.db
+    // this.data.data.attribs.build.rawValue = this.build
 
     //For vehicle only :
     this.data.data.attribs.build.current = this.hp
