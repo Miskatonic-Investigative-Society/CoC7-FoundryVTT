@@ -358,14 +358,6 @@ export class SanCheckCard extends ChatCardActor {
       this.state.intRolled = false
     }
 
-    /** Removal of 1/5 sanity */
-    if( !this.data.data.attribs.san.dailyLimit){
-      if( this.data.data.attribs.san.oneFifthSanity){
-        const s = this.data.data.attribs.san.oneFifthSanity.split('/')
-        if( s[1] && !isNaN(Number(s[1]))) this.data.data.attribs.san.dailyLimit = Number(s[1])
-        else this.data.data.attribs.san.dailyLimit = 0
-      } else this.data.data.attribs.san.dailyLimit = 0
-    }
     if (this.actor.dailySanLoss >= this.data.data.attribs.san.dailyLimit) {
       // this.actor.san/5
       this.state.insanity = true

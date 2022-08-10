@@ -101,6 +101,19 @@ export class CoCActor extends Actor {
       }
     }
 
+    /**
+     * Removal of 1/5 sanity 
+     * this is to remove the 
+    */
+    if (!this.data.data.attribs.san.dailyLimit) {
+      if (this.data.data.attribs.san.oneFifthSanity) {
+        const s = this.data.data.attribs.san.oneFifthSanity.split('/')
+        if (s[1] && !isNaN(Number(s[1])))
+          this.data.data.attribs.san.dailyLimit = Number(s[1])
+        else this.data.data.attribs.san.dailyLimit = 0
+      } else this.data.data.attribs.san.dailyLimit = 0
+    }
+
     // return computed values or fixed values if not auto.
     // this.data.data.attribs.mov.rawValue = this.mov
     // this.data.data.attribs.db.rawValue = this.db
@@ -152,14 +165,14 @@ export class CoCActor extends Actor {
     this.data.data.attribs.build.value = this.build
 
     this.data.data.attribs.hp.max = this.hpMax
-    if( this.hp === null) this.data.data.attribs.hp.value = this.hpMax
+    if (this.hp === null) this.data.data.attribs.hp.value = this.hpMax
     // if( this.hpMax && this.hpMax < this.hp) this.data.data.attribs.hp.value = this.hpMax
 
     this.data.data.attribs.mp.max = this.mpMax
-    if( this.mp === null) this.data.data.attribs.mp.value = this.mpMax
+    if (this.mp === null) this.data.data.attribs.mp.value = this.mpMax
 
     this.data.data.attribs.san.max = this.sanMax
-    if( this.san === null) this.data.data.attribs.san.value = this.sanMax
+    if (this.san === null) this.data.data.attribs.san.value = this.sanMax
 
     //Apply effects to those value.
     const filterMatrix = [
@@ -1067,7 +1080,9 @@ export class CoCActor extends Actor {
               if (data.data.characteristics.values.pow) {
                 updateData['data.attribs.san.value'] =
                   data.data.characteristics.values.pow
-                updateData['data.attribs.san.dailyLimit'] = Math.floor(data.data.characteristics.values.pow / 5)
+                updateData['data.attribs.san.dailyLimit'] = Math.floor(
+                  data.data.characteristics.values.pow / 5
+                )
                 updateData['data.attribs.mp.max'] = Math.floor(
                   data.data.characteristics.values.pow / 5
                 )
@@ -1624,11 +1639,10 @@ export class CoCActor extends Actor {
 
   async setHp (value) {
     if (value < 0) value = 0
-    if (value > this.data.data.attribs.hp.max){
+    if (value > this.data.data.attribs.hp.max) {
       value = parseInt(this.data.data.attribs.hp.max)
     }
     return await this.update({ 'data.attribs.hp.value': value })
-    
   }
 
   async addUniqueItems (skillList, flag = null) {
@@ -1845,7 +1859,8 @@ export class CoCActor extends Actor {
 
   async setMp (value) {
     if (value < 0) value = 0
-    if (value > parseInt(this.data.data.attribs.mp.max)) value = parseInt(this.data.data.attribs.mp.max)
+    if (value > parseInt(this.data.data.attribs.mp.max))
+      value = parseInt(this.data.data.attribs.mp.max)
     return await this.update({ 'data.attribs.mp.value': value })
   }
 
@@ -1954,16 +1969,18 @@ export class CoCActor extends Actor {
 
   async setSan (value) {
     if (value < 0) value = 0
-    if (value > this.data.data.attribs.san.max) value = this.data.data.attribs.san.max
+    if (value > this.data.data.attribs.san.max)
+      value = this.data.data.attribs.san.max
     const loss = parseInt(this.data.data.attribs.san.value) - value
 
-    if( !this.data.data.attribs.san.dailyLimit){
-      if( this.data.data.attribs.san.oneFifthSanity){
-        const s = this.data.data.attribs.san.oneFifthSanity.split('/')
-        if( s[1] && !isNaN(Number(s[1]))) this.data.data.attribs.san.dailyLimit = Number(s[1])
-        else this.data.data.attribs.san.dailyLimit = 0
-      } else this.data.data.attribs.san.dailyLimit = 0
-    }
+    // if (!this.data.data.attribs.san.dailyLimit) {
+    //   if (this.data.data.attribs.san.oneFifthSanity) {
+    //     const s = this.data.data.attribs.san.oneFifthSanity.split('/')
+    //     if (s[1] && !isNaN(Number(s[1])))
+    //       this.data.data.attribs.san.dailyLimit = Number(s[1])
+    //     else this.data.data.attribs.san.dailyLimit = 0
+    //   } else this.data.data.attribs.san.dailyLimit = 0
+    // }
 
     if (loss > 0) {
       let totalLoss = parseInt(this.data.data.attribs.san.dailyLoss)
@@ -3080,7 +3097,11 @@ export class CoCActor extends Actor {
   }
 
   async setOneFifthSanity () {
-    await this.update({ 'data.attribs.san.dailyLimit': Math.floor(this.data.data.attribs.san.value / 5) })
+    await this.update({
+      'data.attribs.san.dailyLimit': Math.floor(
+        this.data.data.attribs.san.value / 5
+      )
+    })
   }
 
   get fightingSkills () {
@@ -3265,7 +3286,9 @@ export class CoCActor extends Actor {
       const healthBefore = parseInt(
         event.originalEvent.currentTarget.defaultValue
       )
-      const healthAfter = parseInt(event.originalEvent.currentTarget.value) || this.data.data.attribs.hp.max
+      const healthAfter =
+        parseInt(event.originalEvent.currentTarget.value) ||
+        this.data.data.attribs.hp.max
       let damageTaken
       // is healing
       if (healthAfter > healthBefore) return await this.setHp(healthAfter)
