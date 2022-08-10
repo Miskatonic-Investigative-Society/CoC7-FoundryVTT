@@ -54,12 +54,12 @@
             </div>
         </div>
         <div>
-            <label>{{localize 'CoC7.DailyLoss'}}: {{data.attribs.san.dailyLoss}}{{data.attribs.san.oneFifthSanity}}</label>
+            <label>{{localize 'CoC7.DailyLoss'}}: {{data.attribs.san.dailyLoss}}/{{data.attribs.san.dailyLimit}}</label>
         </div>
         <div class="status">
             <div class="invisible">
-                <input class="locked" type="text" name="data.indefiniteInsanityLevel.value" value="{{data.indefiniteInsanityLevel.value}}" data-dtype="Number" readonly/>
-                <input class="locked" type="text" name="data.indefiniteInsanityLevel.max" value="{{data.indefiniteInsanityLevel.max}}" data-dtype="Number" readonly/>
+                <input class="locked" type="text" name="data.attribs.san.dailyLoss" value="{{data.attribs.san.dailyLoss}}" data-dtype="Number" readonly/>
+                <input class="locked" type="text" name="data.attribs.san.dailyLimit" value="{{data.attribs.san.dailyLimit}}" data-dtype="Number" readonly/>
             </div>
             <a class="condition-monitor {{#if data.conditions.tempoInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.BoutOfMadness'}}{{#if actor.getTempoInsaneDurationText}}: {{actor.getTempoInsaneDurationText}}{{/if}}" data-condition="tempoInsane"><i class="game-icon game-icon-hanging-spider"></i></a>
             <a class="condition-monitor {{#if data.conditions.indefInsane.value}}status-on{{/if}}" title="{{#if data.conditions.indefInsane.value}}{{localize 'CoC7.UnderlyingInsanity'}}{{else}}{{localize 'CoC7.IndefiniteInsanity'}}{{/if}}" data-condition="indefInsane"><i class="game-icon game-icon-tentacles-skull"></i></a>

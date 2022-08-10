@@ -572,14 +572,6 @@ export class CoC7ActorSheet extends ActorSheet {
         data.data.biography[0].isFirst = true
         data.data.biography[data.data.biography.length - 1].isLast = true
       }
-
-      data.data.indefiniteInsanityLevel = {}
-      data.data.indefiniteInsanityLevel.value = data.data.attribs.san.dailyLoss
-        ? data.data.attribs.san.dailyLoss
-        : 0
-      data.data.indefiniteInsanityLevel.max = Math.floor(
-        data.data.attribs.san.value / 5
-      )
     }
     data.showInventoryItems = false
     data.showInventoryBooks = false
@@ -1300,9 +1292,7 @@ export class CoC7ActorSheet extends ActorSheet {
   async _onResetCounter (event) {
     event.preventDefault()
     const counter = event.currentTarget.dataset.counter
-    const oneFifthSanity =
-      ' / ' + Math.floor(this.actor.data.data.attribs.san.value / 5)
-    this.actor.setOneFifthSanity(oneFifthSanity)
+    this.actor.setOneFifthSanity()
     if (counter) this.actor.resetCounter(counter)
   }
 
