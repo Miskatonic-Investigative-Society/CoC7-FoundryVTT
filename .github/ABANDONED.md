@@ -235,7 +235,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.TitleChaseSettings": "Chase Settings",
 "SETTINGS.ChaseShowTokenMovement": "Show token movement.",
 "SETTINGS.ChaseShowTokenMovementHint": "Show movement on the grid when a token is moved to the next location.",
-"CoC7.EffectNew": "New effect"
+"CoC7.EffectNew": "New effect",
+"CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value."
 ```
 
 ## cs.json
@@ -648,7 +649,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.ChaseShowTokenMovementHint": "Show movement on the grid when a token is moved to the next location.",
 "CoC7.getTheExample": "Copy Example",
 "CoC7.Copied": "Copied the Example Text to Clipboard",
-"CoC7.EffectNew": "New effect"
+"CoC7.EffectNew": "New effect",
+"CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value."
 ```
 
 ## de.json
@@ -906,7 +908,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.ChaseShowTokenMovementHint": "Show movement on the grid when a token is moved to the next location.",
 "CoC7.getTheExample": "Copy Example",
 "CoC7.Copied": "Copied the Example Text to Clipboard",
-"CoC7.EffectNew": "New effect"
+"CoC7.EffectNew": "New effect",
+"CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value."
 ```
 
 ## es.json
@@ -1116,5 +1119,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.TitleChaseSettings": "Chase Settings",
 "SETTINGS.ChaseShowTokenMovement": "Show token movement.",
 "SETTINGS.ChaseShowTokenMovementHint": "Show movement on the grid when a token is moved to the next location.",
-"CoC7.EffectNew": "New effect"
+"CoC7.EffectNew": "New effect",
+"CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value."
 ```
