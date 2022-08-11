@@ -358,9 +358,7 @@ export class SanCheckCard extends ChatCardActor {
       this.state.intRolled = false
     }
 
-    let oneFifthSanity = this.actor.data.data.attribs.san.oneFifthSanity
-    oneFifthSanity = parseInt(oneFifthSanity.replace(/\D/g, ''))
-    if (this.actor.dailySanLoss >= oneFifthSanity) {
+    if (this.actor.dailySanLoss >= this.data.data.attribs.san.dailyLimit) {
       // this.actor.san/5
       this.state.insanity = true
       this.state.intRolled = true

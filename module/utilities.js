@@ -486,7 +486,7 @@ export class CoC7Utilities {
             )}.</b>`
           actor.update({
             'data.attribs.san.dailyLoss': 0,
-            'data.attribs.san.oneFifthSanity': oneFifthSanity
+            'data.attribs.san.dailyLimit': Math.floor(actor.data.data.attribs.san.value / 5)
           })
         }
         const hours = 7

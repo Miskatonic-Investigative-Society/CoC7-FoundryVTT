@@ -79,7 +79,8 @@ export class CoC7DholeHouseActorImporter {
         attribs: {
           san: {
             value: parseInt(dholeHouseData.Characteristics.Sanity, 10),
-            max: parseInt(dholeHouseData.Characteristics.SanityMax, 10)
+            max: parseInt(dholeHouseData.Characteristics.SanityMax, 10),
+            dailyLimit: Math.floor(dholeHouseData.Characteristics.Sanity / 5)
           },
           hp: {
             value: parseInt(dholeHouseData.Characteristics.HitPts, 10),
@@ -110,9 +111,6 @@ export class CoC7DholeHouseActorImporter {
         biography: backstories.sections,
         description: {
           keeper: game.i18n.localize('CoC7.DholeHouseActorImporterSource')
-        },
-        indefiniteInsanityLevel: {
-          max: Math.floor(dholeHouseData.Characteristics.Sanity / 5)
         }
       },
       skills: await CoC7DholeHouseActorImporter.extractSkills(

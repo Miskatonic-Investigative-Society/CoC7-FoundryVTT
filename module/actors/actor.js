@@ -101,6 +101,21 @@ export class CoCActor extends Actor {
       }
     }
 
+    /**
+     * Removal of 1/5 sanity
+     * this is to remove the
+     * actor.data.attribs.san.oneFifthSanity to be removed from template
+     * and indefiniteInsanityLevel to be removed from template
+     */
+    if (typeof this.data.data.attribs.san.dailyLimit === 'undefined') {
+      if (this.data.data.attribs.san.oneFifthSanity) {
+        const s = this.data.data.attribs.san.oneFifthSanity.split('/')
+        if (s[1] && !isNaN(Number(s[1])))
+          this.data.data.attribs.san.dailyLimit = Number(s[1])
+        else this.data.data.attribs.san.dailyLimit = 0
+      } else this.data.data.attribs.san.dailyLimit = 0
+    }
+
     // return computed values or fixed values if not auto.
     // this.data.data.attribs.mov.rawValue = this.mov
     // this.data.data.attribs.db.rawValue = this.db
@@ -146,20 +161,29 @@ export class CoCActor extends Actor {
    */
   prepareEmbeddedDocuments () {
     super.prepareEmbeddedDocuments()
+  }
+
+  /**
+   * @override
+   * Apply transformations or derivations to the values of the source data object.
+   * Compute data fields whose values are not stored to the database.
+   * @memberof ClientDocumentMixin#
+   */
+  prepareDerivedData () {
+    super.prepareDerivedData()
     //Set hpMax, mpMax, sanMax, mov, db, build. This is to allow calculation of derived value with modifed characteristics.
     this.data.data.attribs.mov.value = this.mov
     this.data.data.attribs.db.value = this.db
     this.data.data.attribs.build.value = this.build
 
-    this.data.data.attribs.hp.max = this.hpMax
-    if( this.hp === null) this.data.data.attribs.hp.value = this.hpMax
-    // if( this.hpMax && this.hpMax < this.hp) this.data.data.attribs.hp.value = this.hpMax
+    this.data.data.attribs.hp.max = this.rawHpMax
+    if (this.hp === null) this.data.data.attribs.hp.value = this.rawHpMax
 
-    this.data.data.attribs.mp.max = this.mpMax
-    if( this.mp === null) this.data.data.attribs.mp.value = this.mpMax
+    this.data.data.attribs.mp.max = this.rawMpMax
+    if (this.mp === null) this.data.data.attribs.mp.value = this.rawMpMax
 
-    this.data.data.attribs.san.max = this.sanMax
-    if( this.san === null) this.data.data.attribs.san.value = this.hpMax
+    this.data.data.attribs.san.max = this.rawSanMax
+    if (this.san === null) this.data.data.attribs.san.value = this.rawSanMax
 
     //Apply effects to those value.
     const filterMatrix = [
@@ -190,16 +214,13 @@ export class CoCActor extends Actor {
     for (let change of selectChanges) {
       change.effect.apply(this, change)
     }
-  }
 
-  /**
-   * @override
-   * Apply transformations or derivations to the values of the source data object.
-   * Compute data fields whose values are not stored to the database.
-   * @memberof ClientDocumentMixin#
-   */
-  prepareDerivedData () {
-    super.prepareDerivedData()
+    if (this.hpMax && this.hpMax < this.hp)
+      this.data.data.attribs.hp.value = this.hpMax
+    if (this.mpMax && this.mpMax < this.mp)
+      this.data.data.attribs.mp.value = this.mpMax
+    if (this.sanMax && this.sanMax < this.san)
+      this.data.data.attribs.san.value = this.sanMax
   }
 
   /** @override */
@@ -1067,18 +1088,17 @@ export class CoCActor extends Actor {
               if (data.data.characteristics.values.pow) {
                 updateData['data.attribs.san.value'] =
                   data.data.characteristics.values.pow
-                updateData['data.attribs.san.oneFifthSanity'] =
-                  ' / ' + Math.floor(data.data.characteristics.values.pow / 5)
-                updateData['data.indefiniteInsanityLevel.max'] = updateData[
-                  'data.attribs.mp.value'
-                ] = updateData['data.attribs.mp.max'] = Math.floor(
+                updateData['data.attribs.san.dailyLimit'] = Math.floor(
+                  data.data.characteristics.values.pow / 5
+                )
+                updateData['data.attribs.mp.max'] = Math.floor(
                   data.data.characteristics.values.pow / 5
                 )
               }
               await this.update(updateData)
               await this.update({
-                'data.attribs.hp.value': this.hpMax,
-                'data.attribs.hp.max': this.hpMax
+                'data.attribs.hp.value': this.rawHpMax,
+                'data.attribs.hp.max': this.rawHpMax
               })
             } else return
           }
@@ -1602,7 +1622,7 @@ export class CoCActor extends Actor {
     return parseInt(this.data.data.attribs.hp.value)
   }
 
-  get hpMax () {
+  get rawHpMax () {
     if (this.data.data.attribs.hp.auto) {
       if (
         this.data.data.characteristics.siz.value != null &&
@@ -1625,13 +1645,16 @@ export class CoCActor extends Actor {
     return parseInt(this.data.data.attribs.hp.max)
   }
 
-  async setHp (value) {
+  get hpMax () {
+    return parseInt(this.data.data.attribs.hp.max)
+  }
+
+  async _setHp (value) {
     if (value < 0) value = 0
-    if (value > this.data.data.attribs.hp.max){
+    if (value > this.data.data.attribs.hp.max) {
       value = parseInt(this.data.data.attribs.hp.max)
     }
     return await this.update({ 'data.attribs.hp.value': value })
-    
   }
 
   async addUniqueItems (skillList, flag = null) {
@@ -1696,11 +1719,11 @@ export class CoCActor extends Actor {
     }
   }
 
-  get mpMax () {
+  get rawMpMax () {
     if (this.data.data.attribs.mp.auto) {
       if (this.data.data.characteristics.pow.value != null) {
         return Math.floor(this.data.data.characteristics.pow.value / 5)
-      } else return null
+      } else return 0
     }
     return parseInt(this.data.data.attribs.mp.max)
   }
@@ -1822,12 +1845,16 @@ export class CoCActor extends Actor {
     return this.data.data.attribs.san?.dailyLoss || 0
   }
 
-  get sanMax () {
+  get rawSanMax () {
     if (!this.data.data.attribs) return undefined
     if (this.data.data.attribs?.san?.auto) {
       if (this.cthulhuMythos) return Math.max(99 - this.cthulhuMythos, 0)
       return 99
     }
+    return parseInt(this.data.data.attribs.san.max)
+  }
+
+  get sanMax () {
     return parseInt(this.data.data.attribs.san.max)
   }
 
@@ -1848,7 +1875,8 @@ export class CoCActor extends Actor {
 
   async setMp (value) {
     if (value < 0) value = 0
-    if (value > parseInt(this.data.data.attribs.mp.max)) value = parseInt(this.data.data.attribs.mp.max)
+    if (value > parseInt(this.data.data.attribs.mp.max))
+      value = parseInt(this.data.data.attribs.mp.max)
     return await this.update({ 'data.attribs.mp.value': value })
   }
 
@@ -1957,7 +1985,8 @@ export class CoCActor extends Actor {
 
   async setSan (value) {
     if (value < 0) value = 0
-    if (value > this.sanMax) value = this.sanMax
+    if (value > this.data.data.attribs.san.max)
+      value = this.data.data.attribs.san.max
     const loss = parseInt(this.data.data.attribs.san.value) - value
 
     if (loss > 0) {
@@ -1966,14 +1995,15 @@ export class CoCActor extends Actor {
         : 0
       totalLoss = totalLoss + loss
       if (loss >= 5) this.setCondition(COC7.status.tempoInsane)
-      if (totalLoss >= Math.floor(this.san / 5)) {
+      if (totalLoss >= this.data.data.attribs.san.dailyLimit) {
         this.setCondition(COC7.status.indefInsane)
       }
-      return await this.update({
+      await this.update({
         'data.attribs.san.value': value,
         'data.attribs.san.dailyLoss': totalLoss
       })
-    } else return await this.update({ 'data.attribs.san.value': value })
+    } else await this.update({ 'data.attribs.san.value': value })
+    return value
   }
 
   async setAttribAuto (value, attrib) {
@@ -3070,12 +3100,18 @@ export class CoCActor extends Actor {
     }
   }
 
+  // TODO : check if ever used
   async resetCounter (counter) {
     await this.update({ [counter]: 0 })
   }
 
-  async setOneFifthSanity (oneFifthSanity) {
-    await this.update({ 'data.attribs.san.oneFifthSanity': oneFifthSanity })
+  async resetDailySanity () {
+    await this.update({
+      'data.attribs.san.dailyLimit': Math.floor(
+        this.data.data.attribs.san.value / 5
+      ),
+      'data.attribs.san.dailyLoss': 0
+    })
   }
 
   get fightingSkills () {
@@ -3254,21 +3290,19 @@ export class CoCActor extends Actor {
     )
   }
 
-  async setHealthStatusManually (event) {
-    event.preventDefault()
-    if (event.originalEvent) {
-      const healthBefore = parseInt(
-        event.originalEvent.currentTarget.defaultValue
-      )
-      const healthAfter = parseInt(event.originalEvent.currentTarget.value) || this.data.data.attribs.hp.max
-      let damageTaken
-      // is healing
-      if (healthAfter > healthBefore) return await this.setHp(healthAfter)
-      else if (healthAfter < 0) damageTaken = Math.abs(healthAfter)
-      else damageTaken = healthBefore - healthAfter
-      this.render(true) // needed, or negative values will not work
-      return await this.dealDamage(damageTaken, { ignoreArmor: true })
+  async setHp (value) {
+    if (value < 0) value = 0
+    if (value > this.data.data.attribs.san.max)
+      value = this.data.data.attribs.san.max
+    const healthBefore = this.hp
+    let damageTaken
+    // is healing
+    if (value >= healthBefore) await this._setHp(value)
+    else {
+      damageTaken = healthBefore - value
+      await this.dealDamage(damageTaken, { ignoreArmor: true })
     }
+    return value
   }
 
   async dealDamage (amount, options = {}) {
@@ -3297,7 +3331,7 @@ export class CoCActor extends Actor {
     }
     const netDamage = grossDamage - armorValue
     if (netDamage <= 0) return 0
-    await this.setHp(this.hp - netDamage)
+    await this._setHp(this.hp - netDamage)
     if (netDamage >= this.data.data.attribs.hp.max) {
       await this.setCondition(COC7.status.dead)
     } else {
