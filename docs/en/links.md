@@ -1,4 +1,4 @@
-## Links
+# Links
 
 - Links are a way for a GM to request for a roll (Characteristic, Attribute, Skill, SAN loss, Weapon).
 - Links can contain an active effect.
@@ -19,9 +19,6 @@
 ## Writing links
 
 - Links should be written using the link creation window. The link creation window is a tool for GM. It's located in the left side bar.
-
-![image](https://user-images.githubusercontent.com/65915923/184080988-bc5f4ee3-58d7-470f-b187-e2414bb40f8b.png)
-
 
 Links for chat messages and sheet editors (NPC, Journal entries...).
 Format of link is `@coc7.TYPE_OF_REQUEST[OPTIONS]{TEXT_TO_DISPLAY}`

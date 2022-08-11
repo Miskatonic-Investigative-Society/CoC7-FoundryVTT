@@ -117,11 +117,11 @@ export class CoCActor extends Actor {
     }
 
     // return computed values or fixed values if not auto.
-    // this.data.data.attribs.mov.rawValue = this.mov
-    // this.data.data.attribs.db.rawValue = this.db
-    // this.data.data.attribs.build.rawValue = this.build
+    this.data.data.attribs.mov.value = this.rawMov
+    this.data.data.attribs.db.value = this.rawDb
+    this.data.data.attribs.build.value = this.rawBuild
 
-    //For vehicle only :
+    // For vehicle only :
     this.data.data.attribs.build.current = this.hp
 
     // if (
@@ -172,9 +172,9 @@ export class CoCActor extends Actor {
   prepareDerivedData () {
     super.prepareDerivedData()
     //Set hpMax, mpMax, sanMax, mov, db, build. This is to allow calculation of derived value with modifed characteristics.
-    this.data.data.attribs.mov.value = this.mov
-    this.data.data.attribs.db.value = this.db
-    this.data.data.attribs.build.value = this.build
+    this.data.data.attribs.mov.value = this.rawMov
+    this.data.data.attribs.db.value = this.rawDb
+    this.data.data.attribs.build.value = this.rawBuild
 
     this.data.data.attribs.hp.max = this.rawHpMax
     if (this.hp === null) this.data.data.attribs.hp.value = this.rawHpMax
@@ -185,15 +185,15 @@ export class CoCActor extends Actor {
     this.data.data.attribs.san.max = this.rawSanMax
     if (this.san === null) this.data.data.attribs.san.value = this.rawSanMax
 
-    //Apply effects to those value.
-    const filterMatrix = [
-      'data.attribs.hp.max',
-      'data.attribs.mp.max',
-      'data.attribs.san.max',
-      'data.attribs.mov.value',
-      'data.attribs.db.value',
-      'data.attribs.build.value'
-    ]
+    //Apply effects to automaticaly calculated values.
+    const filterMatrix = []
+
+    if( this.data.data.attribs.hp.auto) filterMatrix.push( 'data.attribs.hp.max')
+    if( this.data.data.attribs.mp.auto) filterMatrix.push( 'data.attribs.mp.max')
+    if( this.data.data.attribs.san.auto) filterMatrix.push( 'data.attribs.san.max')
+    if( this.data.data.attribs.mov.auto) filterMatrix.push( 'data.attribs.mov.value')
+    if( this.data.data.attribs.db.auto) filterMatrix.push( 'data.attribs.db.value')
+    if( this.data.data.attribs.build.auto) filterMatrix.push( 'data.attribs.build.value')
 
     const changes = this.effects.reduce((changes, e) => {
       if (e.data.disabled || e.isSuppressed) return changes
@@ -2015,7 +2015,7 @@ export class CoCActor extends Actor {
     this.setAttribAuto(!this.data.data.attribs[attrib].auto, attrib)
   }
 
-  get build () {
+  get rawBuild () {
     if (!this.data.data.attribs) return null
     if (!this.data.data.attribs.build) return null
     if (this.data.data.attribs.build.value === 'auto') {
@@ -2035,7 +2035,11 @@ export class CoCActor extends Actor {
     return this.data.data.attribs.build.value
   }
 
-  get db () {
+  get build () {
+    return this.data.data.attribs.build.value
+  }
+
+  get rawDb () {
     if (!this.data.data.attribs) return null
     if (!this.data.data.attribs.db) return null
     if (this.data.data.attribs.db.value === 'auto') {
@@ -2054,7 +2058,11 @@ export class CoCActor extends Actor {
     return this.data.data.attribs.db.value
   }
 
-  get mov () {
+  get db () {
+    return this.data.data.attribs.db.value
+  }
+
+  get rawMov () {
     if (!this.data.data.attribs) return null
     if (!this.data.data.attribs.mov) return null
     if (this.data.data.attribs.mov.value === 'auto') {
@@ -2089,6 +2097,10 @@ export class CoCActor extends Actor {
       }
       if (MOV > 0) return MOV
     }
+    return this.data.data.attribs.mov.value
+  }
+
+  get mov () {
     return this.data.data.attribs.mov.value
   }
 
