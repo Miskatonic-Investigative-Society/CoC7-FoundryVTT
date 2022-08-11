@@ -8,6 +8,10 @@ export class CoC7Vehicle extends CoCActor {
     super(data, context)
   }
 
+  get rawBuild () {
+    return this.build
+  }
+
   get build () {
     const build = parseInt(this.data.data.attribs.build.value)
     return isNaN(build) ? null : build
@@ -43,12 +47,22 @@ export class CoC7Vehicle extends CoCActor {
     return await this.update({ 'data.attribs.build.current': value })
   }
 
+  get rawDb () {
+    return this.db
+  }
+  
   get db () {
-    return 0
+    const db = parseInt(this.data.data.attribs.db?.value)
+    return isNaN(db) ? null : db
   }
 
+  get rawMov () {
+    return this.mov
+  }
+  
   get mov () {
-    return this.data.data.attribs.mov.value
+    const mov = parseInt(this.data.data.attribs.mov?.value)
+    return isNaN(mov) ? null : mov
   }
 
   get mpMax () {
@@ -56,7 +70,7 @@ export class CoC7Vehicle extends CoCActor {
   }
 
   get rawMpMax () {
-    return parseInt(this.data.data.attribs?.mp?.max) || 0
+    return this.mpMax
   }
 
   get sanMax () {
