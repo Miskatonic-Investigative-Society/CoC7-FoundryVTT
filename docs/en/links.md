@@ -1,6 +1,7 @@
 ## Links
 
 - Links are a way for a GM to request for a roll (Characteristic, Attribute, Skill, SAN loss, Weapon).
+- Links can contain an active effect.
 - Links are created in the chat log. When you click a link it will trigger a check for your(s) controlled/impersonated character(s).
 - Links can be included in any editor, mainly journal entries.
 - Link can be created in 5 ways:
@@ -16,6 +17,11 @@
 - When a link is created without a difficulty or a penalty, the difficulty/penalty windows will pop. Holding SHIFT will fastforward the roll (regular/no penalty).
 
 ## Writing links
+
+- Links should be written using the link creation window. The link creation window is a tool for GM. It's located in the left side bar.
+
+![image](https://user-images.githubusercontent.com/65915923/184080988-bc5f4ee3-58d7-470f-b187-e2414bb40f8b.png)
+
 
 Links for chat messages and sheet editors (NPC, Journal entries...).
 Format of link is `@coc7.TYPE_OF_REQUEST[OPTIONS]{TEXT_TO_DISPLAY}`
@@ -52,6 +58,7 @@ Format of link is `@coc7.TYPE_OF_REQUEST[OPTIONS]{TEXT_TO_DISPLAY}`
 ### Using links
 
 - You can drag/drop links from chat to sheets and between sheets.
+- You can drar/drop a link directly on a token.
 - You can drag/drop items and skills on a journal entry while holding CTRL, this will create the corresponding check with regular difficulty and 0 modifier.
 - You can create link in the chat by clicking and holding CTRL from any sheet (PC/NPC/Creature) corresponding characteristic/luck/SAN/Competence/weapon/San loss.
   - This will open the select penalty/difficulty dialogue. Clicking on the generated link will then trigger the check with all parameters.
