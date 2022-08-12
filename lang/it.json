@@ -1134,5 +1134,6 @@
   "CoC7.getTheExample": "Copia Esempio",
   "CoC7.Copied": "Copiato il testo di esempio negli Appunti",
 
-  "CoC7.EffectNew": "Nuovo effetto"
+  "CoC7.EffectNew": "Nuovo effetto",
+  "CoC7.EffectAppliedCantOverride": "Viene applicato un effetto attivo. Non puoi modificare [{name}]. Per modificare questo valore devi disattivare l'effetto corrispondente."
 }
