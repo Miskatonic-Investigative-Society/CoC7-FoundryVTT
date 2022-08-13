@@ -4,6 +4,7 @@ You can use the actor importer to import serveral NPC/Creatures blocks from adve
 
 To open the actor importer either open the Actor Directory and click Actor Importer at the bottom of the side bar or on an active scene  then click Actor Importer
 
+.
 
 # Overview
 
@@ -12,6 +13,7 @@ If this is your first time it is recommends you also read the following sections
 - Non Playing Character (NPC) / Creature
 - The Dhole's House Actor Importer JSON
 
+.
 
 # Non Playing Character (NPC) / Creature
 
@@ -34,6 +36,7 @@ If this is your first time it is recommends you also read the following sections
 
 Click import will create an actor under the Actor directory will be created in the Imported characters folder any text that was not understood will be stored in Keeper notes
 
+.
 
 # The Dhole's House Actor Importer JSON
 

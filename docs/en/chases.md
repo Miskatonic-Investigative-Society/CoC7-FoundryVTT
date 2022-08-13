@@ -94,6 +94,7 @@ To modify a location select it by clicking on it. This will display the location
 4. Add a new location.
 5. Active location.
 
+.
 
 # Setting up obstacles.
 
@@ -106,6 +107,7 @@ You can add obstacle after and before a location. You can pre-fill an obstacle w
 3. Movement action cost in case of failure.
 4. Check used to pass the location. When it's red the active actor does not have the associated check.
 
+.
 
 # Cut to the chase.
 

@@ -2,6 +2,7 @@
 
 The system comes with some compendiums ready for you to customise. These are reset every time you update or install the system so it is recommended you copy them into your own compendium and edit them as required.
 
+.
 
 # Skill
 
@@ -47,6 +48,7 @@ On the Details tab you can set the Occupation Points calculation and Minimum/Max
 
 On the Skills tab you can drag skills from the Compendiums or Item Directory to Common skills, you can also set up multiple Optional skill groups deciding how many the investigator must select.
 
+.
 
 # Creating your first investigator
 
