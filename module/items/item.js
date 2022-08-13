@@ -265,7 +265,7 @@ export class CoC7Item extends Item {
       return {
         name: skillName,
         specialization: '',
-        skillName: skillName
+        skillName
       }
     }
     const specNameRegex = new RegExp(
@@ -282,8 +282,8 @@ export class CoC7Item extends Item {
     }
     return {
       name: specialization + ' (' + skillName + ')',
-      specialization: specialization,
-      skillName: skillName
+      specialization,
+      skillName
     }
   }
 

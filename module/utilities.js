@@ -76,9 +76,9 @@ export class CoC7Utilities {
 
       if (ask) {
         const dialogOptions = {
-          threshold: threshold,
+          threshold,
           modifier: diceModifier,
-          difficulty: difficulty,
+          difficulty,
           askValue: true
         }
         const usage = await RollDialog.create(dialogOptions)
@@ -275,7 +275,7 @@ export class CoC7Utilities {
   }
 
   static async checkMacro (threshold = undefined, event = null) {
-    await CoC7Utilities.rollDice(event, { threshold: threshold })
+    await CoC7Utilities.rollDice(event, { threshold })
   }
 
   static async createMacro (bar, data, slot) {
@@ -334,7 +334,7 @@ export class CoC7Utilities {
         name: item.name,
         type: 'script',
         img: item.img,
-        command: command
+        command
       })
     }
     game.user.assignHotbarMacro(macro, slot)
@@ -436,8 +436,6 @@ export class CoC7Utilities {
         const dailySanityLoss = actor.data.data.attribs.san.dailyLoss
         const hpValue = actor.data.data.attribs.hp.value
         const hpMax = actor.data.data.attribs.hp.max
-        const oneFifthSanity =
-          ' / ' + Math.floor(actor.data.data.attribs.san.value / 5)
         const mpValue = actor.data.data.attribs.mp.value
         const mpMax = actor.data.data.attribs.mp.max
         const pow = actor.data.data.characteristics.pow.value
@@ -930,7 +928,7 @@ export class CoC7Utilities {
         return await CoC7Utilities.guessItem(
           type,
           match[1] + 'any' + match[2],
-          { combat: combat, source: source }
+          { combat, source }
         )
       }
     }

@@ -250,7 +250,7 @@ export class CoC7MeleeInitiator extends ChatCardActor {
         resulDetails.innerText = game.i18n.format(
           'CoC7.RollResult.LuckSpendText',
           {
-            luckAmount: luckAmount,
+            luckAmount,
             successLevel: game.i18n.localize('CoC7.RegularDifficulty')
           }
         )
@@ -261,7 +261,7 @@ export class CoC7MeleeInitiator extends ChatCardActor {
         resulDetails.innerText = game.i18n.format(
           'CoC7.RollResult.LuckSpendText',
           {
-            luckAmount: luckAmount,
+            luckAmount,
             successLevel: game.i18n.localize('CoC7.HardDifficulty')
           }
         )
@@ -273,7 +273,7 @@ export class CoC7MeleeInitiator extends ChatCardActor {
         resulDetails.innerText = game.i18n.format(
           'CoC7.RollResult.LuckSpendText',
           {
-            luckAmount: luckAmount,
+            luckAmount,
             successLevel: game.i18n.localize('CoC7.ExtremeDifficulty')
           }
         )
@@ -285,7 +285,7 @@ export class CoC7MeleeInitiator extends ChatCardActor {
         resulDetails.innerText = game.i18n.format(
           'CoC7.RollResult.LuckSpendText',
           {
-            luckAmount: luckAmount,
+            luckAmount,
             successLevel: game.i18n.localize('CoC7.CriticalDifficulty')
           }
         )

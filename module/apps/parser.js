@@ -302,7 +302,7 @@ export class CoC7Parser {
       dataset: { check: type },
       icon: null,
       blind: false,
-      name: name
+      name
     }
 
     const matches = options.matchAll(/[^,]+/gi)
@@ -353,7 +353,7 @@ export class CoC7Parser {
             !data.dataset.modifier ? '' : 'Modif'
           }`,
           {
-            difficulty: difficulty,
+            difficulty,
             modifier: data.dataset.modifier,
             name: humanName
           }
@@ -366,7 +366,7 @@ export class CoC7Parser {
             !data.dataset.modifier ? '' : 'Modif'
           }`,
           {
-            difficulty: difficulty,
+            difficulty,
             modifier: data.dataset.modifier,
             sanMin: data.dataset.sanMin,
             sanMax: data.dataset.sanMax
@@ -379,7 +379,7 @@ export class CoC7Parser {
             !data.dataset.modifier ? '' : 'Modif'
           }`,
           {
-            difficulty: difficulty,
+            difficulty,
             modifier: data.dataset.modifier,
             name: data.dataset.name
           }

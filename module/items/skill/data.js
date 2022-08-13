@@ -1,4 +1,4 @@
-/* global CONST, foundry */
+/* global foundry, game */
 import { CoC7Item } from '../item.js'
 
 export class CoC7Skill extends CoC7Item {

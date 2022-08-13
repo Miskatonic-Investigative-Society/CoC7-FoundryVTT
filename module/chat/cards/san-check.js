@@ -449,10 +449,10 @@ export class SanCheckCard extends ChatCardActor {
       for (const t of targets) {
         if (t.actor.isToken) {
           SanCheckCard.create(t.actor.tokenKey, sanData, {
-            fastForward: fastForward
+            fastForward
           })
         } else {
-          SanCheckCard.create(t.actor.id, sanData, { fastForward: fastForward })
+          SanCheckCard.create(t.actor.id, sanData, { fastForward })
         }
       }
     } else {

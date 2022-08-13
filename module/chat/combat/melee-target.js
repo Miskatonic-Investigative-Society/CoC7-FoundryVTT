@@ -196,7 +196,7 @@ export class CoC7MeleeTarget extends ChatCardActor {
             title: game.i18n.localize(
               'CoC7.MessageTitleSelectSingleUserForTarget'
             ),
-            content: content,
+            content,
             callback: html => {
               const formData = new FormData(
                 html[0].querySelector('#selectform')
@@ -433,7 +433,7 @@ export class CoC7MeleeTarget extends ChatCardActor {
         resulDetails.innerText = game.i18n.format(
           'CoC7.RollResult.LuckSpendText',
           {
-            luckAmount: luckAmount,
+            luckAmount,
             successLevel: game.i18n.localize('CoC7.RegularDifficulty')
           }
         )
@@ -444,7 +444,7 @@ export class CoC7MeleeTarget extends ChatCardActor {
         resulDetails.innerText = game.i18n.format(
           'CoC7.RollResult.LuckSpendText',
           {
-            luckAmount: luckAmount,
+            luckAmount,
             successLevel: game.i18n.localize('CoC7.HardDifficulty')
           }
         )
@@ -455,7 +455,7 @@ export class CoC7MeleeTarget extends ChatCardActor {
         resulDetails.innerText = game.i18n.format(
           'CoC7.RollResult.LuckSpendText',
           {
-            luckAmount: luckAmount,
+            luckAmount,
             successLevel: game.i18n.localize('CoC7.ExtremeDifficulty')
           }
         )
@@ -466,7 +466,7 @@ export class CoC7MeleeTarget extends ChatCardActor {
         resulDetails.innerText = game.i18n.format(
           'CoC7.RollResult.LuckSpendText',
           {
-            luckAmount: luckAmount,
+            luckAmount,
             successLevel: game.i18n.localize('CoC7.CriticalDifficulty')
           }
         )

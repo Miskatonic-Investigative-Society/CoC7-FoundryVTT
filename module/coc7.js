@@ -136,7 +136,7 @@ Hooks.once('init', async function () {
       check: CoC7Utilities.checkMacro
     },
     cards: {
-      DamageCard: DamageCard
+      DamageCard
     },
     dev: {
       dice: {
@@ -248,8 +248,8 @@ Hooks.on('createActiveEffect', (data, options, userId) => {
           }
           data.parent.setCondition(COC7.status.tempoInsane, {
             forceValue: true,
-            realTime: realTime,
-            duration: duration
+            realTime,
+            duration
           })
         }
         break

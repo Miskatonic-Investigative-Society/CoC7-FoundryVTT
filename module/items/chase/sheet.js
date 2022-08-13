@@ -416,7 +416,7 @@ export class CoC7ChaseSheet extends ItemSheet {
       } else {
         app.position.width = 45 * remSize
       }
-      return await app.item.activateNextParticipantTurn({ html: html }) // html is not rendered, element have size = 0
+      return await app.item.activateNextParticipantTurn({ html }) // html is not rendered, element have size = 0
       // if (end > 0) {
       //   start = 0
       // } else if (start > 0) {
@@ -850,7 +850,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     } else {
       CoC7ChaseParticipantImporter.create({
         chaseUuid: this.item.uuid,
-        locationUuid: locationUuid,
+        locationUuid,
         dropData: data
       })
     }

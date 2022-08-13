@@ -209,7 +209,7 @@ export class OpposedCheckCard extends RollCard {
     const data = {
       type: this.config.type,
       action: 'updateRoll',
-      rank: rank,
+      rank,
       fromGM: game.user.isGM
     }
     if (!game.user.isGM) data.roll = this.rolls[rank].JSONRollData
@@ -285,7 +285,7 @@ export class OpposedCheckCard extends RollCard {
         const data = {
           type: this.defaultConfig.type,
           action: 'updateRoll',
-          rank: rank,
+          rank,
           fromGM: game.user.isGM
         }
         if (!game.user.isGM) data.roll = card.rolls[rank].JSONRollData

@@ -1,4 +1,4 @@
-/* global ActiveEffect, game */
+/* global ActiveEffect, foundry, game, Roll */
 
 export default class CoC7ActiveEffect extends ActiveEffect {
   /** @inheritdoc */
@@ -75,14 +75,15 @@ export default class CoC7ActiveEffect extends ActiveEffect {
           else update = current + String(value)
         }
         break
-      case 'number':
+      case 'number':{
         const n = Number.fromString(value)
         if (!isNaN(n)) update = current + n
+      }
         break
-      case 'Array':
+      case 'Array':{
         const at = foundry.utils.getType(current[0])
-        if (!current.length || foundry.utils.getType(value) === at)
-          update = current.concat([value])
+        if (!current.length || foundry.utils.getType(value) === at) { update = current.concat([value]) }
+      }
     }
     if (update !== null) foundry.utils.setProperty(actor.data, key, update)
     return update
@@ -227,7 +228,7 @@ export default class CoC7ActiveEffect extends ActiveEffect {
 
 function parse (str) {
   try {
-    return eval(str)
+    return new Roll(str).evaluate({ async: false }).total
   } catch (e) {
     return NaN
   }

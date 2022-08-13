@@ -195,7 +195,7 @@ export class CoC7Chase extends CoC7Item {
     const participantsData = this.cleanParticipantList(list)
     return await this.update(
       { 'data.participants': participantsData },
-      { render: render }
+      { render }
     )
   }
 
@@ -210,7 +210,7 @@ export class CoC7Chase extends CoC7Item {
     foundry.utils.mergeObject(participants[participantIndex], update, {
       overwrite: true
     })
-    await this.updateParticipants(participants, { render: render })
+    await this.updateParticipants(participants, { render })
   }
 
   cleanParticipantList (list) {
@@ -267,7 +267,7 @@ export class CoC7Chase extends CoC7Item {
       if (assistant.currentMovementActions < 1) {
         ui.notifications.error(
           game.i18n.format('CoC7.ParticipantNotEnoughMovement', {
-            assistantUuid: assistantUuid,
+            assistantUuid,
             actions: assistant.currentMovementActions
           })
         )
@@ -283,7 +283,7 @@ export class CoC7Chase extends CoC7Item {
     )
     await this.update(
       { 'data.participants': participantsData },
-      { render: render }
+      { render }
     )
   }
 
@@ -293,7 +293,7 @@ export class CoC7Chase extends CoC7Item {
     if (!participant) {
       ui.notifications.error(
         game.i18n.format('CoC7.ParticipantUuidNotFound', {
-          participantUuid: participantUuid
+          participantUuid
         })
       )
       return undefined
@@ -312,7 +312,7 @@ export class CoC7Chase extends CoC7Item {
     )
     await this.update(
       { 'data.participants': participantsData },
-      { render: render }
+      { render }
     )
   }
 
@@ -325,7 +325,7 @@ export class CoC7Chase extends CoC7Item {
     if (!participant) {
       ui.notifications.error(
         game.i18n.format('CoC7.ParticipantUuidNotFound', {
-          participantUuid: participantUuid
+          participantUuid
         })
       )
       return undefined
@@ -340,7 +340,7 @@ export class CoC7Chase extends CoC7Item {
     if (participant.hasMaxBonusDice) {
       ui.notifications.error(
         game.i18n.format('CoC7.ErrorParticipantAtMaxBonus', {
-          participantUuid: participantUuid
+          participantUuid
         })
       )
       return
@@ -363,7 +363,7 @@ export class CoC7Chase extends CoC7Item {
     )
     await this.update(
       { 'data.participants': participantsData },
-      { render: render }
+      { render }
     )
   }
 
@@ -377,7 +377,7 @@ export class CoC7Chase extends CoC7Item {
     if (!participant) {
       ui.notifications.error(
         game.i18n.format('CoC7.ParticipantUuidNotFound', {
-          participantUuid: participantUuid
+          participantUuid
         })
       )
       return undefined
@@ -397,7 +397,7 @@ export class CoC7Chase extends CoC7Item {
     )
     await this.update(
       { 'data.participants': participantsData },
-      { render: render }
+      { render }
     )
   }
 
@@ -409,10 +409,10 @@ export class CoC7Chase extends CoC7Item {
   } = {}) {
     const activeParticipant = this.nextActiveParticipant
     const options = {
-      scrollToLocation: scrollToLocation,
-      activateLocation: activateLocation,
-      render: render,
-      html: html
+      scrollToLocation,
+      activateLocation,
+      render,
+      html
     }
     if (!activeParticipant) return this.activateParticipant(undefined, options)
     return this.activateParticipant(activeParticipant.uuid, options)
@@ -428,11 +428,11 @@ export class CoC7Chase extends CoC7Item {
     } = {}
   ) {
     const dataUpdate = this.getActivateParticipantUpdateData(participantUuid, {
-      scrollToLocation: scrollToLocation,
+      scrollToLocation,
       activeLocation: activateLocation,
-      html: html
+      html
     })
-    await this.update(dataUpdate, { render: render })
+    await this.update(dataUpdate, { render })
   }
 
   getActivateParticipantUpdateData (
@@ -458,7 +458,7 @@ export class CoC7Chase extends CoC7Item {
       if (activateLocation) {
         locationsDataUpdate = this.getActivateLocationUpdateData(
           participantLocation.uuid,
-          { scrollToLocation: scrollToLocation, html: html }
+          { scrollToLocation, html }
         )
       } else if (scrollToLocation) {
         locationsDataUpdate = {}
@@ -466,12 +466,12 @@ export class CoC7Chase extends CoC7Item {
           this.chaseTrackCurrentScrollPosition
         locationsDataUpdate['data.scroll.chaseTrack.to'] =
           this.getChaseTrackLocationScrollPosition(participantLocation.uuid, {
-            html: html
+            html
           })
       }
     } else {
       locationsDataUpdate = this.getActivateLocationUpdateData(undefined, {
-        scrollToLocation: scrollToLocation
+        scrollToLocation
       })
     }
 
@@ -489,8 +489,8 @@ export class CoC7Chase extends CoC7Item {
   ) {
     const card = new ChaseObstacleCard({
       chaseUuid: this.uuid,
-      locationUuid: locationUuid,
-      moveParticipant: moveParticipant,
+      locationUuid,
+      moveParticipant,
       forward: locationUuid !== this.activeLocation.uuid
     })
     card.toMessage()
@@ -515,7 +515,7 @@ export class CoC7Chase extends CoC7Item {
       }
     })
     await this.updateParticipants(participants, { render: false })
-    this.activateNextParticipantTurn({ render: render })
+    this.activateNextParticipantTurn({ render })
   }
 
   /** @override */
@@ -769,7 +769,7 @@ export class CoC7Chase extends CoC7Item {
     const updatedList = this.cleanLocationsList(list)
     await this.update(
       { 'data.locations.list': updatedList },
-      { render: render }
+      { render }
     )
   }
 
@@ -782,7 +782,7 @@ export class CoC7Chase extends CoC7Item {
     foundry.utils.mergeObject(locations[locationIndex], update, {
       overwrite: true
     })
-    await this.updateLocationsList(locations, { render: render })
+    await this.updateLocationsList(locations, { render })
   }
 
   cleanLocationsList (list) {
@@ -833,7 +833,7 @@ export class CoC7Chase extends CoC7Item {
     newLocation.init = locations[locationIndex].init
     newLocation.active = true
     locations.splice(newLocationIndex, 0, newLocation)
-    return await this.updateLocationsList(locations, { render: render })
+    return await this.updateLocationsList(locations, { render })
   }
 
   async removeLocation (uuid, { render = true } = {}) {
@@ -848,7 +848,7 @@ export class CoC7Chase extends CoC7Item {
       if (index < 0) index = 0
       locations[index].active = true
     }
-    return await this.updateLocationsList(locations, { render: render })
+    return await this.updateLocationsList(locations, { render })
   }
 
   async activateLocation (
@@ -856,9 +856,9 @@ export class CoC7Chase extends CoC7Item {
     { scrollToLocation = true, render = true } = {}
   ) {
     const updateData = this.getActivateLocationUpdateData(locationUuid, {
-      scrollToLocation: scrollToLocation
+      scrollToLocation
     })
-    await this.update(updateData, { render: render })
+    await this.update(updateData, { render })
   }
 
   getClearActiveLocationUpdateData ({
@@ -887,7 +887,7 @@ export class CoC7Chase extends CoC7Item {
   ) {
     if (!locationUuid) {
       return this.getClearActiveLocationUpdateData({
-        scrollToLocation: scrollToLocation
+        scrollToLocation
       })
     }
     const updateData = {}
@@ -904,7 +904,7 @@ export class CoC7Chase extends CoC7Item {
       updateData['data.scroll.chaseTrack.from'] =
         this.chaseTrackCurrentScrollPosition
       updateData['data.scroll.chaseTrack.to'] =
-        this.getChaseTrackLocationScrollPosition(locationUuid, { html: html })
+        this.getChaseTrackLocationScrollPosition(locationUuid, { html })
       // await this.setchaseTrackScroll({
       //   from: this.chaseTrackCurrentScrollPosition,
       //   to: this.chaseTrackActiveLocationScrollPosition
@@ -982,15 +982,15 @@ export class CoC7Chase extends CoC7Item {
   ) {
     const locations = foundry.utils.duplicate(this.data.data.locations.list)
     const locationIndex = locations.findIndex(l => locationUuid === l.uuid)
-    locations[locationIndex].coordinates = { x: x, y: y, scene: sceneId }
+    locations[locationIndex].coordinates = { x, y, scene: sceneId }
 
-    return await this.updateLocationsList(locations, { render: render })
+    return await this.updateLocationsList(locations, { render })
   }
 
   async clearActiveLocationCoordinates ({ render = true } = {}) {
     if (this.activeLocation) {
       return await this.clearLocationCoordinates(this.activeLocation.uuid, {
-        render: render
+        render
       })
     }
   }
@@ -1000,7 +1000,7 @@ export class CoC7Chase extends CoC7Item {
     const locationIndex = locations.findIndex(l => locationUuid === l.uuid)
     delete locations[locationIndex].coordinates
 
-    return await this.updateLocationsList(locations, { render: render })
+    return await this.updateLocationsList(locations, { render })
   }
 
   // get activeParticipantHaveActiveLocationSkill (){
@@ -1093,7 +1093,7 @@ export class CoC7Chase extends CoC7Item {
           }
         })
         await this.updateParticipants(newParticipantsData, { render: false })
-        await this.updateLocationsList(locationsData, { render: render })
+        await this.updateLocationsList(locationsData, { render })
       }
     })
   }
@@ -1171,7 +1171,7 @@ export class CoC7Chase extends CoC7Item {
       ) {
         locationsData[locationIndex].participants.push(participant.uuid)
       }
-      await this.updateLocationsList(locationsData, { render: render })
+      await this.updateLocationsList(locationsData, { render })
     }
   }
 
@@ -1268,8 +1268,8 @@ export class CoC7Chase extends CoC7Item {
 
     if (activateParticipant) {
       await this.activateParticipant(participantUuid, {
-        scrollToLocation: scrollToLocation,
-        activateLocation: activateLocation,
+        scrollToLocation,
+        activateLocation,
         render: false
       })
       modified = true
@@ -1277,7 +1277,7 @@ export class CoC7Chase extends CoC7Item {
 
     if (activateLocation && !activateParticipant) {
       await this.activateLocation(locations[destinationIndex].uuid, {
-        scrollToLocation: scrollToLocation,
+        scrollToLocation,
         render: false
       })
       modified = true
@@ -1384,8 +1384,8 @@ export class CoC7Chase extends CoC7Item {
 
           update.push({
             _id: particpantDocument.id,
-            x: x,
-            y: y
+            x,
+            y
           })
 
           // destination.participants?.forEach( pUuid =>{
@@ -1414,7 +1414,7 @@ export class CoC7Chase extends CoC7Item {
       }
     }
 
-    await this.updateLocationsList(locations, { render: render })
+    await this.updateLocationsList(locations, { render })
   }
 
   // Handle scrolling
@@ -1430,7 +1430,7 @@ export class CoC7Chase extends CoC7Item {
         'data.scroll.chaseTrack.to':
           undefined === to ? this.chaseTrackCurrentScrollPosition : to
       },
-      { render: render }
+      { render }
     )
   }
 

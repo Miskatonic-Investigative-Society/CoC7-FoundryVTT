@@ -107,7 +107,7 @@ function _setInitiativeOptions (rule) {
   }
   CONFIG.Combat.initiative = {
     formula: null,
-    decimals: decimals
+    decimals
   }
 }
 

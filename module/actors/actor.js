@@ -1,4 +1,4 @@
-/* global Actor, CONFIG, CONST, Dialog, Die, duplicate, game, getProperty, Hooks, mergeObject, Roll, TextEditor, Token, ui */
+/* global Actor, CONFIG, CONST, Dialog, Die, duplicate, foundry, game, getProperty, Hooks, mergeObject, Roll, TextEditor, Token, ui */
 
 import { COC7 } from '../config.js'
 import { CoC7ChatMessage } from '../apps/coc7-chat-message.js'
@@ -110,10 +110,14 @@ export class CoCActor extends Actor {
     if (typeof this.data.data.attribs.san.dailyLimit === 'undefined') {
       if (this.data.data.attribs.san.oneFifthSanity) {
         const s = this.data.data.attribs.san.oneFifthSanity.split('/')
-        if (s[1] && !isNaN(Number(s[1])))
+        if (s[1] && !isNaN(Number(s[1]))) {
           this.data.data.attribs.san.dailyLimit = Number(s[1])
-        else this.data.data.attribs.san.dailyLimit = 0
-      } else this.data.data.attribs.san.dailyLimit = 0
+        } else {
+          this.data.data.attribs.san.dailyLimit = 0
+        }
+      } else {
+        this.data.data.attribs.san.dailyLimit = 0
+      }
     }
 
     // return computed values or fixed values if not auto.
@@ -171,7 +175,7 @@ export class CoCActor extends Actor {
    */
   prepareDerivedData () {
     super.prepareDerivedData()
-    //Set hpMax, mpMax, sanMax, mov, db, build. This is to allow calculation of derived value with modifed characteristics.
+    // Set hpMax, mpMax, sanMax, mov, db, build. This is to allow calculation of derived value with modifed characteristics.
     this.data.data.attribs.mov.value = this.rawMov
     this.data.data.attribs.db.value = this.rawDb
     this.data.data.attribs.build.value = this.rawBuild
@@ -185,15 +189,15 @@ export class CoCActor extends Actor {
     this.data.data.attribs.san.max = this.rawSanMax
     if (this.san === null) this.data.data.attribs.san.value = this.rawSanMax
 
-    //Apply effects to automaticaly calculated values.
+    // Apply effects to automaticaly calculated values.
     const filterMatrix = []
 
-    if( this.data.data.attribs.hp.auto) filterMatrix.push( 'data.attribs.hp.max')
-    if( this.data.data.attribs.mp.auto) filterMatrix.push( 'data.attribs.mp.max')
-    if( this.data.data.attribs.san.auto) filterMatrix.push( 'data.attribs.san.max')
-    if( this.data.data.attribs.mov.auto) filterMatrix.push( 'data.attribs.mov.value')
-    if( this.data.data.attribs.db.auto) filterMatrix.push( 'data.attribs.db.value')
-    if( this.data.data.attribs.build.auto) filterMatrix.push( 'data.attribs.build.value')
+    if (this.data.data.attribs.hp.auto) filterMatrix.push('data.attribs.hp.max')
+    if (this.data.data.attribs.mp.auto) filterMatrix.push('data.attribs.mp.max')
+    if (this.data.data.attribs.san.auto) filterMatrix.push('data.attribs.san.max')
+    if (this.data.data.attribs.mov.auto) filterMatrix.push('data.attribs.mov.value')
+    if (this.data.data.attribs.db.auto) filterMatrix.push('data.attribs.db.value')
+    if (this.data.data.attribs.build.auto) filterMatrix.push('data.attribs.build.value')
 
     const changes = this.effects.reduce((changes, e) => {
       if (e.data.disabled || e.isSuppressed) return changes
@@ -211,16 +215,13 @@ export class CoCActor extends Actor {
     const selectChanges = changes.filter(e => filterMatrix.includes(e.key))
 
     // Apply all changes
-    for (let change of selectChanges) {
+    for (const change of selectChanges) {
       change.effect.apply(this, change)
     }
 
-    if (this.hpMax && this.hpMax < this.hp)
-      this.data.data.attribs.hp.value = this.hpMax
-    if (this.mpMax && this.mpMax < this.mp)
-      this.data.data.attribs.mp.value = this.mpMax
-    if (this.sanMax && this.sanMax < this.san)
-      this.data.data.attribs.san.value = this.sanMax
+    if (this.hpMax && this.hpMax < this.hp) { this.data.data.attribs.hp.value = this.hpMax }
+    if (this.mpMax && this.mpMax < this.mp) { this.data.data.attribs.mp.value = this.mpMax }
+    if (this.sanMax && this.sanMax < this.san) { this.data.data.attribs.san.value = this.sanMax }
   }
 
   /** @override */
@@ -344,7 +345,7 @@ export class CoCActor extends Actor {
         this.data.data.characteristics
       )) {
         characteristics[key] = {
-          key: key,
+          key,
           shortName: game.i18n.localize(value.short),
           label: game.i18n.localize(value.label),
           value: value.value,
@@ -450,8 +451,8 @@ export class CoCActor extends Actor {
     if (!realTime) return result
 
     this.setCondition(COC7.status.tempoInsane, {
-      realTime: realTime,
-      duration: duration
+      realTime,
+      duration
     })
 
     // const effect = this.effects.get( effectData._id);
@@ -488,14 +489,14 @@ export class CoCActor extends Actor {
       name: skillName,
       type: 'skill',
       data: {
-        value: value,
-        skillName: skillName,
+        value,
+        skillName,
         specialization: '',
         properties: {
           special: false,
-          rarity: rarity,
-          push: push,
-          combat: combat
+          rarity,
+          push,
+          combat
         }
       }
     }
@@ -682,7 +683,7 @@ export class CoCActor extends Actor {
       name: itemName,
       type: 'item',
       data: {
-        quantity: quantity
+        quantity
       }
     }
     const created = await this.createEmbeddedDocuments('Item', [data], {
@@ -816,7 +817,7 @@ export class CoCActor extends Actor {
       ? duplicate(this.data.data.biography)
       : []
     bio.push({
-      title: title,
+      title,
       value: null
     })
     await this.update({ 'data.biography': bio })
@@ -1494,7 +1495,7 @@ export class CoCActor extends Actor {
       game.system.template.Actor.templates.characteristics.characteristics
     )) {
       characteristics.push({
-        key: key,
+        key,
         shortName: game.i18n.localize(value.short),
         label: game.i18n.localize(value.label)
       })
@@ -1515,7 +1516,7 @@ export class CoCActor extends Actor {
           key === charName.toLowerCase()
         ) {
           return {
-            key: key,
+            key,
             shortName: game.i18n.localize(value.short),
             label: game.i18n.localize(value.label),
             value: value.value
@@ -1875,8 +1876,7 @@ export class CoCActor extends Actor {
 
   async setMp (value) {
     if (value < 0) value = 0
-    if (value > parseInt(this.data.data.attribs.mp.max))
-      value = parseInt(this.data.data.attribs.mp.max)
+    if (value > parseInt(this.data.data.attribs.mp.max)) { value = parseInt(this.data.data.attribs.mp.max) }
     return await this.update({ 'data.attribs.mp.value': value })
   }
 
@@ -1985,8 +1985,7 @@ export class CoCActor extends Actor {
 
   async setSan (value) {
     if (value < 0) value = 0
-    if (value > this.data.data.attribs.san.max)
-      value = this.data.data.attribs.san.max
+    if (value > this.data.data.attribs.san.max) { value = this.data.data.attribs.san.max }
     const loss = parseInt(this.data.data.attribs.san.value) - value
 
     if (loss > 0) {
@@ -2748,7 +2747,7 @@ export class CoCActor extends Actor {
                 'CoC7.SanGained',
                 {
                   results: `${augmentSANDie.values[0]} + ${augmentSANDie.values[1]}`,
-                  sanGained: sanGained,
+                  sanGained,
                   skill: item.data.name,
                   skillValue: skillValue + augmentDie.total
                 }
@@ -2811,11 +2810,11 @@ export class CoCActor extends Actor {
       message += '</p>'
       const speaker = { actor: this }
       await chatHelper.createMessage(skillsRolled ? title : '', message, {
-        speaker: speaker
+        speaker
       })
       this.onlyRunOncePerSession = true
     }
-    return { failure: failure, success: success }
+    return { failure, success }
   }
 
   async developLuck (fastForward = false) {
@@ -2861,7 +2860,7 @@ export class CoCActor extends Actor {
     if (!fastForward) {
       message += '</p>'
       const speaker = { actor: this }
-      await chatHelper.createMessage(title, message, { speaker: speaker })
+      await chatHelper.createMessage(title, message, { speaker })
     }
   }
 
@@ -2898,7 +2897,7 @@ export class CoCActor extends Actor {
       })
     }
     const speaker = { actor: this._id }
-    await chatHelper.createMessage(title, message, { speaker: speaker })
+    await chatHelper.createMessage(title, message, { speaker })
     await skill.unflagForDevelopement()
   }
 
@@ -2974,7 +2973,7 @@ export class CoCActor extends Actor {
             custom.flags.CoC7.realTime = realTime
             custom.flags = {
               CoC7: {
-                realTime: realTime
+                realTime
               }
             }
             if (duration !== null && typeof duration !== 'undefined') {
@@ -3304,8 +3303,7 @@ export class CoCActor extends Actor {
 
   async setHp (value) {
     if (value < 0) value = 0
-    if (value > this.data.data.attribs.san.max)
-      value = this.data.data.attribs.san.max
+    if (value > this.data.data.attribs.san.max) { value = this.data.data.attribs.san.max }
     const healthBefore = this.hp
     let damageTaken
     // is healing

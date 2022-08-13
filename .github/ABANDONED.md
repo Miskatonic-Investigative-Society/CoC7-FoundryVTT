@@ -10,8 +10,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 [es.json](#esjson)
 
-## cn.json
 
+## cn.json
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -238,9 +238,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EffectNew": "New effect",
 "CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value."
 ```
-
 ## cs.json
-
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -652,9 +650,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EffectNew": "New effect",
 "CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value."
 ```
-
 ## de.json
-
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -911,9 +907,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EffectNew": "New effect",
 "CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value."
 ```
-
 ## es.json
-
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",

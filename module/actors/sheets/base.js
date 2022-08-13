@@ -1,4 +1,4 @@
-/* global $, ActorSheet, ChatMessage, CONST, Dialog, FormData, game, getProperty, Hooks, Item, mergeObject, Roll, TextEditor, ui */
+/* global $, ActorSheet, ChatMessage, CONST, Dialog, FormData, foundry, game, getProperty, Hooks, Item, mergeObject, Roll, TextEditor, ui */
 
 import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7ChatMessage } from '../../apps/coc7-chat-message.js'
@@ -288,7 +288,6 @@ export class CoC7ActorSheet extends ActorSheet {
             if (item.data.value) {
               // This should be part of migration or done at init !
               // Was done when skill value was changed to base + adjustement
-              const value = item.data.value
               const exp = item.data.adjustments?.experience
                 ? parseInt(item.data.adjustments.experience)
                 : 0
@@ -934,8 +933,8 @@ export class CoC7ActorSheet extends ActorSheet {
                     game.settings.get('CoC7', 'stanbyGMRolls') &&
                     sheet.actor.hasPlayerOwner
                       ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                          name: sheet.actor.name
-                        })
+                        name: sheet.actor.name
+                      })
                       : ''
                 })
             }
@@ -974,8 +973,8 @@ export class CoC7ActorSheet extends ActorSheet {
                     game.settings.get('CoC7', 'stanbyGMRolls') &&
                     sheet.actor.hasPlayerOwner
                       ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                          name: sheet.actor.name
-                        })
+                        name: sheet.actor.name
+                      })
                       : ''
                 })
             }
@@ -1017,8 +1016,8 @@ export class CoC7ActorSheet extends ActorSheet {
                         game.settings.get('CoC7', 'stanbyGMRolls') &&
                         sheet.actor.hasPlayerOwner
                           ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                              name: sheet.actor.name
-                            })
+                            name: sheet.actor.name
+                          })
                           : ''
                     })
                 }
@@ -1044,8 +1043,8 @@ export class CoC7ActorSheet extends ActorSheet {
                         (game.settings.get('CoC7', 'stanbyGMRolls') &&
                         sheet.actor.hasPlayerOwner
                           ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                              name: sheet.actor.name
-                            })
+                            name: sheet.actor.name
+                          })
                           : '')
                     })
                 }
@@ -1149,7 +1148,7 @@ export class CoC7ActorSheet extends ActorSheet {
     message.actorTo = await new Promise(resolve => {
       const dlg = new Dialog({
         title: game.i18n.localize('CoC7.MessageTitleSelectUserToGiveTo'),
-        content: content,
+        content,
         buttons: {
           confirm: {
             label: game.i18n.localize('CoC7.Validate'),
@@ -1292,7 +1291,6 @@ export class CoC7ActorSheet extends ActorSheet {
 
   async _onResetCounter (event) {
     event.preventDefault()
-    const counter = event.currentTarget.dataset.counter
     await this.actor.resetDailySanity()
   }
 
@@ -1646,7 +1644,7 @@ export class CoC7ActorSheet extends ActorSheet {
     const range = event.currentTarget.closest('.weapon-damage').dataset.range
     const damageChatCard = new DamageCard({
       fastForward: event.shiftKey,
-      range: range
+      range
     })
     damageChatCard.actorKey = this.actor.tokenKey
     damageChatCard.itemId = itemId
@@ -1662,7 +1660,7 @@ export class CoC7ActorSheet extends ActorSheet {
     const data = {
       rollType: CoC7ChatMessage.ROLL_TYPE_SKILL,
       cardType: CoC7ChatMessage.CARD_TYPE_OPPOSED,
-      event: event,
+      event,
       actor: this.actor
     }
     if (event.currentTarget.classList.contains('characteristic-label')) {
@@ -1689,7 +1687,7 @@ export class CoC7ActorSheet extends ActorSheet {
     CoC7ChatMessage.trigger({
       rollType: CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC,
       cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
-      event: event,
+      event,
       actor: this.actor
     })
   }
@@ -1724,7 +1722,7 @@ export class CoC7ActorSheet extends ActorSheet {
         event.altKey && attrib === 'san'
           ? CoC7ChatMessage.CARD_TYPE_SAN_CHECK
           : CoC7ChatMessage.CARD_TYPE_NORMAL,
-      event: event,
+      event,
       actor: this.actor
     })
   }
@@ -1740,7 +1738,7 @@ export class CoC7ActorSheet extends ActorSheet {
     CoC7ChatMessage.trigger({
       rollType: CoC7ChatMessage.ROLL_TYPE_SKILL,
       cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
-      event: event,
+      event,
       actor: this.actor
     })
   }
@@ -1777,7 +1775,7 @@ export class CoC7ActorSheet extends ActorSheet {
     const name = event?.currentTarget?.name
     if (name && overrides && overrides[name]) {
       ui.notifications.warn(
-        game.i18n.format('CoC7.EffectAppliedCantOverride', { name: name })
+        game.i18n.format('CoC7.EffectAppliedCantOverride', { name })
       )
     }
 
@@ -1831,14 +1829,14 @@ export class CoC7ActorSheet extends ActorSheet {
         if (event.currentTarget.classList.contains('attribute-value')) {
           // TODO : check why SAN only ?
           if (event.currentTarget.name === 'data.attribs.san.value') {
-            const value = await this.actor.setSan(
+            await this.actor.setSan(
               parseInt(event.currentTarget.value)
             )
             this.render(true)
             return
           }
           if (event.currentTarget.name === 'data.attribs.hp.value') {
-            const value = await this.actor.setHp(
+            await this.actor.setHp(
               parseInt(event.currentTarget.value)
             )
             this.render(true)

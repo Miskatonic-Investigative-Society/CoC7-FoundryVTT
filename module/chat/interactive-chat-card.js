@@ -119,7 +119,7 @@ export class InteractiveChatCard {
     const button = event.currentTarget
     // button.style.display = 'none' //Avoid multiple push
     const action = button.dataset.action
-    if (this[action]) this[action]({ event: event, update: true })
+    if (this[action]) this[action]({ event, update: true })
   }
 
   /**

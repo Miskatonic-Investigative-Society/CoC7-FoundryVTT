@@ -1,4 +1,4 @@
-import del from './node_modules/del/index.js'
+import { deleteAsync } from 'del'
 import glob from './node_modules/glob/glob.js'
 import jsonfile from './node_modules/jsonfile/index.js'
 import write from './node_modules/write/index.js'
@@ -149,6 +149,6 @@ glob('./lang/*.json', {}, async function (er, files) {
     })
     write('./.github/ABANDONED.md', output)
   } else {
-    del('./.github/ABANDONED.md')
+    deleteAsync('./.github/ABANDONED.md')
   }
 })

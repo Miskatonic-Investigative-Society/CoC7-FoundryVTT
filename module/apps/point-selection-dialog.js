@@ -60,7 +60,7 @@ export class PointSelectDialog extends Dialog {
         {
           title: data.title,
           content: html,
-          data: data,
+          data,
           buttons: {},
           close: () => {
             if (data.resolved) return resolve(data)

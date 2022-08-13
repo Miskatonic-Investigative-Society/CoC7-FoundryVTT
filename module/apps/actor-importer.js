@@ -173,7 +173,7 @@ export class CoC7ActorImporter {
       maxLoops--
       text = text.trim()
       if (
-        (dodge = this.check('weaponDodge', { saveKeys: false, text: text }))
+        (dodge = this.check('weaponDodge', { saveKeys: false, text }))
       ) {
         text = text.replace(dodge['-source'], '\n')
         if (typeof this.parsed.skills === 'undefined') {
@@ -187,7 +187,7 @@ export class CoC7ActorImporter {
       } else if (
         (weapon = this.check('weapon', {
           saveKeys: false,
-          text: text,
+          text,
           requiredGroup: lastPercent === false ? 'percentage' : false
         }))
       ) {
@@ -262,7 +262,7 @@ export class CoC7ActorImporter {
         const damages = damage.split('/')
         const isShotgun = damages.length === 3
         const data = {
-          name: name,
+          name,
           type: 'weapon',
           data: {
             skill: {
@@ -327,7 +327,7 @@ export class CoC7ActorImporter {
     do {
       maxLoops--
       text = text.trim()
-      skill = this.check('skill', { saveKeys: false, text: text })
+      skill = this.check('skill', { saveKeys: false, text })
       if (skill) {
         text = text.replace(skill['-source'], '\n')
         if (typeof this.parsed[key] === 'undefined') {

@@ -151,14 +151,14 @@ export class CombinedCheckCard extends RollCard {
           }
         }
 
-        const roll = await CoC7Dice.combinedRoll({ pool: pool })
+        const roll = await CoC7Dice.combinedRoll({ pool })
         roll.initiator = game.user.id
 
         const data = {
           type: this.defaultConfig.type,
           action: 'assignRoll',
           fromGM: game.user.isGM,
-          roll: roll
+          roll
         }
         AudioHelper.play({ src: CONFIG.sounds.dice }, true)
         card.process(data)
@@ -176,7 +176,7 @@ export class CombinedCheckCard extends RollCard {
         const data = {
           type: this.defaultConfig.type,
           action: 'updateRoll',
-          rank: rank,
+          rank,
           fromGM: game.user.isGM,
           roll: {
             initiator: game.user.id
