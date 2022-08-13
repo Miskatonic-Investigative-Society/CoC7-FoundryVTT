@@ -174,7 +174,7 @@ export default class CoC7ActiveEffect extends ActiveEffect {
       },
       inactive: {
         type: 'inactive',
-        label: game.i18n.localize('Innactive'),
+        label: game.i18n.localize('Inactive'),
         effects: []
       },
       suppressed: {
@@ -209,7 +209,7 @@ export default class CoC7ActiveEffect extends ActiveEffect {
       },
       inactive: {
         type: 'inactive',
-        label: game.i18n.localize('Innactive'),
+        label: game.i18n.localize('Inactive'),
         effects: []
       }
     }
@@ -227,7 +227,7 @@ export default class CoC7ActiveEffect extends ActiveEffect {
 }
 
 function parse (str) {
-  const regEx = /^[\+\-*/\(\)\d]+$/
+  const regEx = /^[+\-*/)(\d]+$/
   if (!regEx.exec(str)) return NaN
   try {
     return new Roll(str).evaluate({ async: false }).total

@@ -82,7 +82,7 @@ The chase is initialized, you can adjust some options. Locations in white are in
 
 During setup or during chase you can select a location to modify it.
 
-Starting (white) locations can not be modified during setup.</p>
+Starting (white) locations can not be modified during setup.
 
 To modify a location select it by clicking on it. This will display the location details on the header part of the sheet.
 
@@ -93,8 +93,6 @@ To modify a location select it by clicking on it. This will display the location
 3. You can drag this and drop it on a scene. This will set the coordinates for that location. A red pin indicate that coordinates has been set. Right clicking a red pin will reset it's coordinate. If coordinates are set, and a participant with an associated token enter that location his token will be moved to that location.
 4. Add a new location.
 5. Active location.
-
-.
 
 # Setting up obstacles.
 
@@ -107,8 +105,6 @@ You can add obstacle after and before a location. You can pre-fill an obstacle w
 3. Movement action cost in case of failure.
 4. Check used to pass the location. When it's red the active actor does not have the associated check.
 
-.
-
 # Cut to the chase.
 
 When you are ready you can cut to the chase. If not all participant have a speed check this will trigger a warning and will not let you start.
@@ -116,7 +112,7 @@ When you are ready you can cut to the chase. If not all participant have a speed
 ![](../../assets/manual/chases/cut_to_the_chase_1.webp)
 
 1. Initiative track. The active participant is circled in orange.
-2. Chase track. Active location and participant. You can drag drop participant from the chase track to move them freely. You can drag a new actor or token directly on the chase track. This will pop the import window and add that participant to the chase. In some cases (eg. new prey slower than the slowest particpant) all movement action will be recalculated.
+2. Chase track. Active location and participant. You can drag drop participant from the chase track to move them freely. You can drag a new actor or token directly on the chase track. This will pop the import window and add that participant to the chase. In some cases (eg. new prey slower than the slowest participant) all movement action will be recalculated.
 3. A barrier.
 4. A hazard.
 

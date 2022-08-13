@@ -91,55 +91,56 @@ export class CoCActor extends Actor {
    * @memberof ClientDocumentMixin#
    */
   prepareBaseData () {
-    this.data.data.skills = {}
-    for (const i of this.items) {
-      if (i.type === 'skill') {
-        this.data.data.skills[`${i.data.data.skillName}`] = {
-          value: i.rawValue
+    if (['character', 'npc', 'creature'].includes(this.type)) {
+      this.data.data.skills = {}
+      for (const i of this.items) {
+        if (i.type === 'skill') {
+          this.data.data.skills[`${i.data.data.skillName}`] = {
+            value: i.rawValue
+          }
+          this.data.data.skills[`${i.id}`] = { value: i.rawValue }
         }
-        this.data.data.skills[`${i.id}`] = { value: i.rawValue }
       }
-    }
 
-    /**
+      /**
      * Removal of 1/5 sanity
      * this is to remove the
      * actor.data.attribs.san.oneFifthSanity to be removed from template
      * and indefiniteInsanityLevel to be removed from template
      */
-    if (typeof this.data.data.attribs.san.dailyLimit === 'undefined') {
-      if (this.data.data.attribs.san.oneFifthSanity) {
-        const s = this.data.data.attribs.san.oneFifthSanity.split('/')
-        if (s[1] && !isNaN(Number(s[1]))) {
-          this.data.data.attribs.san.dailyLimit = Number(s[1])
+      if (typeof this.data.data.attribs.san.dailyLimit === 'undefined') {
+        if (this.data.data.attribs.san.oneFifthSanity) {
+          const s = this.data.data.attribs.san.oneFifthSanity.split('/')
+          if (s[1] && !isNaN(Number(s[1]))) {
+            this.data.data.attribs.san.dailyLimit = Number(s[1])
+          } else {
+            this.data.data.attribs.san.dailyLimit = 0
+          }
         } else {
           this.data.data.attribs.san.dailyLimit = 0
         }
-      } else {
-        this.data.data.attribs.san.dailyLimit = 0
       }
-    }
 
-    // return computed values or fixed values if not auto.
-    this.data.data.attribs.mov.value = this.rawMov
-    this.data.data.attribs.db.value = this.rawDb
-    this.data.data.attribs.build.value = this.rawBuild
+      // return computed values or fixed values if not auto.
+      this.data.data.attribs.mov.value = this.rawMov
+      this.data.data.attribs.db.value = this.rawDb
+      this.data.data.attribs.build.value = this.rawBuild
 
-    // For vehicle only :
-    this.data.data.attribs.build.current = this.hp
+      // For vehicle only :
+      this.data.data.attribs.build.current = this.hp
 
-    // if (
-    //   data.data.attribs.mp.value > data.data.attribs.mp.max ||
-    //   data.data.attribs.mp.max == null
-    // ) {
-    //   data.data.attribs.mp.value = data.data.attribs.mp.max
-    // }
-    // if (
-    //   data.data.attribs.hp.value > data.data.attribs.hp.max ||
-    //   data.data.attribs.hp.max == null
-    // ) {
-    //   data.data.attribs.hp.value = data.data.attribs.hp.max
-    // }
+      // if (
+      //   data.data.attribs.mp.value > data.data.attribs.mp.max ||
+      //   data.data.attribs.mp.max == null
+      // ) {
+      //   data.data.attribs.mp.value = data.data.attribs.mp.max
+      // }
+      // if (
+      //   data.data.attribs.hp.value > data.data.attribs.hp.max ||
+      //   data.data.attribs.hp.max == null
+      // ) {
+      //   data.data.attribs.hp.value = data.data.attribs.hp.max
+      // }
 
     // if (
     //   data.data.attribs.hp.value == null &&
@@ -153,7 +154,7 @@ export class CoCActor extends Actor {
     // ) {
     //   data.data.attribs.mp.value = data.data.attribs.mp.max
     // }
-
+    }
     super.prepareBaseData()
   }
 
@@ -174,54 +175,56 @@ export class CoCActor extends Actor {
    * @memberof ClientDocumentMixin#
    */
   prepareDerivedData () {
-    super.prepareDerivedData()
-    // Set hpMax, mpMax, sanMax, mov, db, build. This is to allow calculation of derived value with modifed characteristics.
-    this.data.data.attribs.mov.value = this.rawMov
-    this.data.data.attribs.db.value = this.rawDb
-    this.data.data.attribs.build.value = this.rawBuild
+    if (['character', 'npc', 'creature'].includes(this.type)) {
+      super.prepareDerivedData()
+      // Set hpMax, mpMax, sanMax, mov, db, build. This is to allow calculation of derived value with modifed characteristics.
+      this.data.data.attribs.mov.value = this.rawMov
+      this.data.data.attribs.db.value = this.rawDb
+      this.data.data.attribs.build.value = this.rawBuild
 
-    this.data.data.attribs.hp.max = this.rawHpMax
-    if (this.hp === null) this.data.data.attribs.hp.value = this.rawHpMax
+      this.data.data.attribs.hp.max = this.rawHpMax
+      if (this.hp === null) this.data.data.attribs.hp.value = this.rawHpMax
 
-    this.data.data.attribs.mp.max = this.rawMpMax
-    if (this.mp === null) this.data.data.attribs.mp.value = this.rawMpMax
+      this.data.data.attribs.mp.max = this.rawMpMax
+      if (this.mp === null) this.data.data.attribs.mp.value = this.rawMpMax
 
-    this.data.data.attribs.san.max = this.rawSanMax
-    if (this.san === null) this.data.data.attribs.san.value = this.rawSanMax
+      this.data.data.attribs.san.max = this.rawSanMax
+      if (this.san === null) this.data.data.attribs.san.value = this.rawSanMax
 
-    // Apply effects to automaticaly calculated values.
-    const filterMatrix = []
+      // Apply effects to automaticaly calculated values.
+      const filterMatrix = []
 
-    if (this.data.data.attribs.hp.auto) filterMatrix.push('data.attribs.hp.max')
-    if (this.data.data.attribs.mp.auto) filterMatrix.push('data.attribs.mp.max')
-    if (this.data.data.attribs.san.auto) filterMatrix.push('data.attribs.san.max')
-    if (this.data.data.attribs.mov.auto) filterMatrix.push('data.attribs.mov.value')
-    if (this.data.data.attribs.db.auto) filterMatrix.push('data.attribs.db.value')
-    if (this.data.data.attribs.build.auto) filterMatrix.push('data.attribs.build.value')
+      if (this.data.data.attribs.hp.auto) filterMatrix.push('data.attribs.hp.max')
+      if (this.data.data.attribs.mp.auto) filterMatrix.push('data.attribs.mp.max')
+      if (this.data.data.attribs.san.auto) filterMatrix.push('data.attribs.san.max')
+      if (this.data.data.attribs.mov.auto) filterMatrix.push('data.attribs.mov.value')
+      if (this.data.data.attribs.db.auto) filterMatrix.push('data.attribs.db.value')
+      if (this.data.data.attribs.build.auto) filterMatrix.push('data.attribs.build.value')
 
-    const changes = this.effects.reduce((changes, e) => {
-      if (e.data.disabled || e.isSuppressed) return changes
-      return changes.concat(
-        e.data.changes.map(c => {
-          c = foundry.utils.duplicate(c)
-          c.effect = e
-          c.priority = c.priority ?? c.mode * 10
-          return c
-        })
-      )
-    }, [])
-    changes.sort((a, b) => a.priority - b.priority)
+      const changes = this.effects.reduce((changes, e) => {
+        if (e.data.disabled || e.isSuppressed) return changes
+        return changes.concat(
+          e.data.changes.map(c => {
+            c = foundry.utils.duplicate(c)
+            c.effect = e
+            c.priority = c.priority ?? c.mode * 10
+            return c
+          })
+        )
+      }, [])
+      changes.sort((a, b) => a.priority - b.priority)
 
-    const selectChanges = changes.filter(e => filterMatrix.includes(e.key))
+      const selectChanges = changes.filter(e => filterMatrix.includes(e.key))
 
-    // Apply all changes
-    for (const change of selectChanges) {
-      change.effect.apply(this, change)
+      // Apply all changes
+      for (const change of selectChanges) {
+        change.effect.apply(this, change)
+      }
+
+      if (this.hpMax && this.hpMax < this.hp) { this.data.data.attribs.hp.value = this.hpMax }
+      if (this.mpMax && this.mpMax < this.mp) { this.data.data.attribs.mp.value = this.mpMax }
+      if (this.sanMax && this.sanMax < this.san) { this.data.data.attribs.san.value = this.sanMax }
     }
-
-    if (this.hpMax && this.hpMax < this.hp) { this.data.data.attribs.hp.value = this.hpMax }
-    if (this.mpMax && this.mpMax < this.mp) { this.data.data.attribs.mp.value = this.mpMax }
-    if (this.sanMax && this.sanMax < this.san) { this.data.data.attribs.san.value = this.sanMax }
   }
 
   /** @override */

@@ -2,6 +2,33 @@
 import { CoC7Item } from '../item.js'
 
 export class CoC7Skill extends CoC7Item {
+  constructor (data, context) {
+    if (typeof data.data?.skillName === 'undefined') {
+      if (typeof data.data === 'undefined') {
+        data.data = {}
+      }
+      const construct = CoC7Skill.guessNameParts(data.name)
+      if (!construct.isSpecialization) {
+        data.data.skillName = data.name
+      } else {
+        data.data.skillName = construct.skillName
+        data.data.specialization = construct.specialization
+        if (typeof data.data.properties === 'undefined') {
+          data.data.properties = {}
+        }
+        data.data.properties.special = true
+        if (construct.isFighting || construct.isFirearms) {
+          data.data.properties.combat = true
+          if (construct.isFighting) {
+            data.data.properties.fighting = true
+          } else {
+            data.data.properties.firearm = true
+          }
+        }
+      }
+    }
+    super(data, context)
+  }
   // async applyModifier (change) {
   //   return
 
@@ -22,6 +49,28 @@ export class CoC7Skill extends CoC7Item {
   //     }
   //   }
   // }
+
+  static guessNameParts (skillName) {
+    const output = {
+      skillName,
+      specialization: '',
+      isSpecialization: false,
+      isFighting: false,
+      isFirearms: false
+    }
+    const match = skillName.match(/^(.+)\s*\(([^)]+)\)$/)
+    if (match) {
+      output.skillName = match[2].trim()
+      output.specialization = match[1].trim()
+      output.isSpecialization = true
+      if (output.specialization === game.i18n.localize('CoC7.FightingSpecializationName')) {
+        output.isFighting = true
+      } else if (output.specialization === game.i18n.localize('CoC7.FirearmSpecializationName')) {
+        output.isFirearms = true
+      }
+    }
+    return output
+  }
 
   get hasActiveEffects () {
     return this.activeEffects.length > 0

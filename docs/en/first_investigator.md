@@ -2,7 +2,7 @@
 
 The system comes with some compendiums ready for you to customise. These are reset every time you update or install the system so it is recommended you copy them into your own compendium and edit them as required.
 
-.
+This page creates an investigator using the provided compendiums, if you are ready to full customise your character people read [Character creation](character_creation.md) instead.
 
 # Skill
 
@@ -20,7 +20,7 @@ You can create a new Item Compendium and copy the skills you require into it all
 
 ## Setup
 
-Once you have set up your skills next create up a Setup, here is an example from the Items Examples compendium 
+Once you have set up your skills next create up a Setup, here is an example from the Items Examples compendium [_1920's Setup Example_]
 
 Setups allow to you standardise what skills, items, biography sections, and characteristics the investigators start with.
 
@@ -28,7 +28,7 @@ Click on the Items Directory tab then Create Item give this a name e.g. New Inve
 
 On the Description tab to set the description click the button to get an editor.
 
-On the Details tab click the  on the Biography Sections to add any sections you require from the Create a Backstory step of investigator creation. Click on the Compendium Packs tab then under the Item heading open up the Items Examples Item (CoC7) and drag the  onto the setup.
+On the Details tab click the  on the Biography Sections to add any sections you require from the Create a Backstory step of investigator creation. Click on the Compendium Packs tab then under the Item heading open up the Items Examples Item (CoC7) and drag the [_Punch_] onto the setup.
 
 On the Characteristics tab you can customise how investigator characteristics are rolled / bought
 
@@ -38,7 +38,7 @@ All actor and item sheets have a tab which can be used by the Keepers to store n
 
 ## Occupation
 
-Occupations allow you set how many the occupation points, credit rating range, and skills the investigator starts with. Here is an example from the Items Examples compendium 
+Occupations allow you set how many the occupation points, credit rating range, and skills the investigator starts with. Here is an example from the Items Examples compendium [_Occupation Example_]
 
 Click on the Items Directory tab then Create Item give this a name e.g. Driver and set the Type to Occupation
 
@@ -48,8 +48,6 @@ On the Details tab you can set the Occupation Points calculation and Minimum/Max
 
 On the Skills tab you can drag skills from the Compendiums or Item Directory to Common skills, you can also set up multiple Optional skill groups deciding how many the investigator must select.
 
-.
-
 # Creating your first investigator
 
 ## Character
@@ -58,9 +56,9 @@ To complete your character you need to have an active scene which can be created
 
 Click on the Actors Directory tab then Create Item give this a name e.g. New Investigator and set the Type to Character.
 
-You can drag your setup created above on to the character for the initial setup or drag this example instead 
+You can drag your setup created above on to the character for the initial setup or drag this example instead [_1920's Setup Example_]
 
-Next drag your occupation created above on to the character or drag this example instead 
+Next drag your occupation created above on to the character or drag this example instead [_Occupation Example_]
 
 On the left hand menu bar select Keeper's tools then select Character creation mode.
 
