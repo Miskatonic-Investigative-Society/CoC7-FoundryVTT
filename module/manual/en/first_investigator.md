@@ -2,7 +2,7 @@
 
 The system comes with some compendiums ready for you to customise. These are reset every time you update or install the system so it is recommended you copy them into your own compendium and edit them as required.
 
-.
+This page creates an investigator using the provided compendiums, if you are ready to full customise your character people read @Compendium[CoC7.system-doc.uug1mm5nokly4o2v]{Character creation} instead.
 
 # Skill
 
@@ -24,7 +24,7 @@ Once you have set up your skills next create up a Setup, here is an example from
 
 Setups allow to you standardise what skills, items, biography sections, and characteristics the investigators start with.
 
-Click on the [fas fa-suitcas]Items Directory tab then Create Item give this a name e.g. New Investigator Setup and set the Type to Setup
+Click on the [fas fa-suitcase]Items Directory tab then Create Item give this a name e.g. New Investigator Setup and set the Type to Setup
 
 On the Description tab to set the description click the [fas fa-edit]button to get an editor.
 
@@ -47,8 +47,6 @@ On the Description tab to set the description click the [fas fa-edit]button to g
 On the Details tab you can set the Occupation Points calculation and Minimum/Maximum Credit Rating
 
 On the Skills tab you can drag skills from the Compendiums or Item Directory to Common skills, you can also set up multiple Optional skill groups deciding how many the investigator must select.
-
-.
 
 # Creating your first investigator
 

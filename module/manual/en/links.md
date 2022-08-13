@@ -8,7 +8,7 @@
   - By manually typing it (read details below).
   - By CTRL+click on any sheet element (Characteristic, Attribute, skill, SAN loss).
   - By dragging a sheet element (Characteristic, Attribute, skill (+CTRL)) on an editor (Journal entry)
-  - By CTRL + dragging an item (skill or weapon) from a compendium or an item directory on an editor. When a link is created that way and the used as a GM, if your controlled character doen't hold the weapon/skill you'll be prompted to create the corresponding item.
+  - By CTRL + dragging an item (skill or weapon) from a compendium or an item directory on an editor. When a link is created that way and the used as a GM, if your controlled character doesn't hold the weapon/skill you'll be prompted to create the corresponding item.
   - By using the included compendium written by Lozalojo.
 - Links can be dragged from chat log on an editor.
 - When a link is created the difficulty/penalty selection windows will open. Hold SHIFT to bypass that comportment.
@@ -21,7 +21,7 @@
 - Links should be written using the @Compendium[CoC7.system-doc.emuu3wo0uul91029]{Link creation tool}. The link creation window is a tool for GM. It's located in the left side bar.
 
 Links for chat messages and sheet editors (NPC, Journal entries...).
-Format of link is `@coc7.TYPE_OF_REQUEST[OPTIONS]{TEXT_TO_DISPLAY}`
+Format of link is `@@coc7.TYPE_OF_REQUEST[OPTIONS]{TEXT_TO_DISPLAY}`
 
 - `TYPE_OF_REQUEST` :
   - `sanloss`: trigger a san check, upon failure will propose to deduct the corresponding SAN.
@@ -45,17 +45,17 @@ Format of link is `@coc7.TYPE_OF_REQUEST[OPTIONS]{TEXT_TO_DISPLAY}`
 
 | Link                                                                                                    | Result                                                             |
 | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| `@coc7.sanloss[sanMax:1D6,sanMin:1,difficulty:++,modifier:-1]`                                          | {Hard San Loss (-1) 1/1D6}                                         |
-| `@coc7.check[type:charac,name:STR,difficulty:+,modifier:-1]`                                            | {Hard STR check(-1)}                                               |
-| `@coc7.check[type:attrib,name:lck,difficulty:+,modifier:-1]`                                            | {Hard luck check(-1)}                                              |
-| `@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,difficulty:+,modifier:-1]` | {Hard Anthropology check(-1)} (with icon)                          |
-| `@coc7.sanloss[sanMax:1D6,sanMin:1]`                                                                    | {San Loss (-1) 1/1D6} (without name, difficulty nor modifier)      |
-| `@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,modifier:+1]`              | {Anthropology check (+1)} (with icon, without name nor difficulty) |
+| `@@coc7.sanloss[sanMax:1D6,sanMin:1,difficulty:++,modifier:-1]`                                          | {Hard San Loss (-1) 1/1D6}                                         |
+| `@@coc7.check[type:charac,name:STR,difficulty:+,modifier:-1]`                                            | {Hard STR check(-1)}                                               |
+| `@@coc7.check[type:attrib,name:lck,difficulty:+,modifier:-1]`                                            | {Hard luck check(-1)}                                              |
+| `@@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,difficulty:+,modifier:-1]` | {Hard Anthropology check(-1)} (with icon)                          |
+| `@@coc7.sanloss[sanMax:1D6,sanMin:1]`                                                                    | {San Loss (-1) 1/1D6} (without name, difficulty nor modifier)      |
+| `@@coc7.check[type:skill,icon:fas fa-arrow-alt-circle-right,name:anthropology,modifier:+1]`              | {Anthropology check (+1)} (with icon, without name nor difficulty) |
 
 ### Using links
 
 - You can drag/drop links from chat to sheets and between sheets.
-- You can drar/drop a link directly on a token.
+- You can drag/drop a link directly on a token.
 - You can drag/drop items and skills on a journal entry while holding CTRL, this will create the corresponding check with regular difficulty and 0 modifier.
 - You can create link in the chat by clicking and holding CTRL from any sheet (PC/NPC/Creature) corresponding characteristic/luck/SAN/Competence/weapon/San loss.
   - This will open the select penalty/difficulty dialogue. Clicking on the generated link will then trigger the check with all parameters.

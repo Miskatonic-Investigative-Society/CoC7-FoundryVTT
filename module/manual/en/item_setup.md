@@ -2,7 +2,7 @@
 
 Setups are predefined sets of skills and a way to generate the characteristics (this can be by rolling dices or assigning certain amount of points for example).
 
-1. Go to the [fas fa-suitcas]Items Directory tab
+1. Go to the [fas fa-suitcase]Items Directory tab
 2. Click on [fas fa-suitcase]Create Item
 
    1. Give the set up a name e.g. _1920's Setup_

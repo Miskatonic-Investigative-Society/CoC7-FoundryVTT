@@ -4,10 +4,10 @@ The system comes with some compendiums ready for you to customise. These are res
 
 # Skills
 
-In this section you will create or edit [skills](item_skill.md)
+In this section you will create or edit @Compendium[CoC7.system-doc.mz0ulbkecfvv8nw7]{skills}
 
-1. Go to compendium packs
-2. Click on Create Compendium
+1. Go to [fas fa-atlas]compendium packs
+2. Click on [fas fa-atlas]Create Compendium
 
     - Give your compendium a name (e.g. `My Skills`)
     - Select _Item_ as _Document Type_
@@ -19,18 +19,18 @@ In this section you will create or edit [skills](item_skill.md)
 
 ## Create new skills
 
-1. Go to Items Directory
-2. Cick on Create Item
+1. Go to [fas fa-suitcase]Items Directory
+2. Cick on [fas fa-suitcase]Create Item
 
     - Give the skill a name
     - Set _Type_ to _Skill_
 
 # Setup
 
-[Setups](item_setup.md) are predefined sets of skills and a way to generate the characteristics (this can be by rolling dices or assigning certain amount of points for example). Once a setup has been created it can be used in the creation of multiple characters.
+@Compendium[CoC7.system-doc.JU1GCWwc8at7gzJ4]{Setups} are predefined sets of skills and a way to generate the characteristics (this can be by rolling dices or assigning certain amount of points for example). Once a setup has been created it can be used in the creation of multiple characters.
 
-1. Go to Items Directory
-2. Click on Create Item
+1. Go to [fas fa-suitcase]Items Directory
+2. Click on [fas fa-suitcase]Create Item
 
     - Give the skill a name
     - Set _Type_ to _Setup_
@@ -41,21 +41,21 @@ In this section you will create or edit [skills](item_skill.md)
     - On the _Details_ tab you can:
         - Select the _Cthulhu Flavors_ where this setup is valid
         - Define the biography sections and their names (click on the `+` to add extra Biography sections)
-        - Drag default items like [_Punch_]
+        - Drag default items like @Compendium[CoC7.items.3elxAwnv7WCUNwng]{Punch}
         - Show / Hide the _Characteristics_ tab with the _Enable characteristics_ checkbox
     - The _Characteristics_ tab allows you to define the formula to roll the dices for each characteristic
     - The _Skills_ tab allows you to define the default set of skills by dragging items of type _skill_ to the _common skills_ area.
 
 # Occupations
 
-An [occupation](item_occupation.md) helps to define the character background, think about it as the definition of the set of _occupational skills_ (the ones where the character can spend their occupation points) plus the definition of how to calculate the amount of available occupation points. Finally the _occupation_ also allows to define the minimum and the maximum _credit_ for a character with this _occupation_.
+An @Compendium[CoC7.system-doc.qa934whpkpauiyc9]{occupation} helps to define the character background, think about it as the definition of the set of _occupational skills_ (the ones where the character can spend their occupation points) plus the definition of how to calculate the amount of available occupation points. Finally the _occupation_ also allows to define the minimum and the maximum _credit_ for a character with this _occupation_.
 
 Keep in mind that the set of _occupational skills_ doesn't need to be fixed, the system allows to configure the _occupation_ so when it's dragged to a Character sheet will give the option of selecting one or more skills from a closed list, or even add a pre defined number of skills to select from all the available ones.
 
 The _occupation_ creation process is the following one:
 
-1. Go to Items Directory
-2. Cick on Create Item
+1. Go to [fas fa-suitcase]Items Directory
+2. Cick on [fas fa-suitcase]Create Item
 
     - Give the skill a name
     - Set _Type_ to _Occupation_
@@ -79,8 +79,8 @@ The _occupation_ creation process is the following one:
 
 You can create a _Player Character_ by creating the _actor_ and filling the corresponding blank _Character Sheet_, but it's much easier if you have previously created a _setup_ and an _occupation_ (see above), if you have created both the process to create the _Player Character_ is as follows:
 
-1. Go to Actors Directory
-2. Cick on Create Actor
+1. Go to [fas fa-users]Actors Directory
+2. Cick on [fas fa-user]Create Actor
 
     - Give the actor a name
     - Set _Type_ to _Character_
@@ -89,9 +89,9 @@ You can create a _Player Character_ by creating the _actor_ and filling the corr
 
 4. Drag and drop an _occupation_ Type item on the sheet, this will probably involve selecting some skills from a given reduced set or from the remaining ones. This will calculate the available _Personal points_ and _Occupation points_ and assign the part of the Occupation points to reach the minimum value for _Credit Rating_ of the selected occupation.
 
-5. On the keeper's menu on the left click Keeper's tools, if this menu is not available need to have an active scene which can be created in the Scenes Directory
+5. On the keeper's menu on the left click [game-icon game-icon-tentacle-strike]Keeper's tools, if this menu is not available need to have an active scene which can be created in the [fas fa-map]Scenes Directory
 
-6. On the new submenu click Character creation mode. A new tab called _Development_ should appear on the character sheets.
+6. On the new submenu click [fas fa-user-edit]Character creation mode. A new tab called _Development_ should appear on the character sheets.
 
 7. Click on the characters Development tab
 
