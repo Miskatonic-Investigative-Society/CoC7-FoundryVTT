@@ -1,6 +1,32 @@
 /* global ActiveEffect, foundry, game, Roll */
 
 export default class CoC7ActiveEffect extends ActiveEffect {
+  constructor (...args) {
+    super(...args)
+    // Used for V9 compat only.
+    if (game.version && !game.version.startsWith('10')) {
+      if (this.combats) {
+        const duration = this.duration
+        delete this.duration
+        Object.defineProperty(this, 'duration', {
+          get () {
+            const d = this.data.duration
+            if (Number.isNumeric(d.seconds)) {
+              let label = duration.label
+              if (d.seconds > 3600) {
+                label = new Date(d.seconds * 1000).toISOString().slice(11, 19)
+              } else if (d.seconds > 100) {
+                label = new Date(d.seconds * 1000).toISOString().slice(14, 19)
+              }
+              duration.label = label
+            }
+            return duration
+          }
+        })
+      }
+    }
+  }
+
   /** @inheritdoc */
   apply (actor, change) {
     if (!isNaN(Number(change.value))) change.value = Number(change.value)
@@ -123,23 +149,51 @@ export default class CoC7ActiveEffect extends ActiveEffect {
     }
   }
 
-  /**
-   * @override
-   */
-  get duration () {
-    const d = this.data.duration
-    const duration = super.duration
-    if (Number.isNumeric(d.seconds)) {
+  // prepareData () {
+  //   super.prepareData()
+  // }
+
+  prepareEmbeddedDocuments () {
+    super.prepareEmbeddedDocuments()
+  }
+
+  // Used in V10 only !!
+  _prepareDuration () {
+    super._prepareDuration()
+
+    const duration = this.duration
+    if (Number.isNumeric(duration.seconds)) {
       let label = duration.label
-      if (d.seconds > 3600) {
-        label = new Date(d.seconds * 1000).toISOString().slice(11, 19)
-      } else if (d.seconds > 100) {
-        label = new Date(d.seconds * 1000).toISOString().slice(14, 19)
+      if (duration.seconds > 3600) {
+        label = new Date(duration.seconds * 1000).toISOString().slice(11, 19)
+      } else if (duration.seconds > 100) {
+        label = new Date(duration.seconds * 1000).toISOString().slice(14, 19)
       }
       duration.label = label
     }
-    return duration
   }
+
+  /**
+   * @override
+   */
+  // get duration () {
+  //   const d = this.data.duration
+  //   const duration = super.duration
+  //   if (Number.isNumeric(d.seconds)) {
+  //     let label = duration.label
+  //     if (d.seconds > 3600) {
+  //       label = new Date(d.seconds * 1000).toISOString().slice(11, 19)
+  //     } else if (d.seconds > 100) {
+  //       label = new Date(d.seconds * 1000).toISOString().slice(14, 19)
+  //     }
+  //     duration.label = label
+  //   }
+  //   return duration
+  // }
+
+  // set duration (x) {
+  //   super.duration = x
+  // }
 
   get isStatus () {
     const statusId = this.getFlag('core', 'statusId')
