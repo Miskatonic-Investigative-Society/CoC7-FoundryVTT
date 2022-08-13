@@ -11,18 +11,24 @@ You will need one of the following to play the game
 The system automates most of the regular tasks and rules involved with running a game.
 
 Several parts of the actor sheets have pop up tooltips that trigger after two seconds, this delay can be changed in the settings
+.
 
 This documentation can be reopened under  Compendiums -> JournalEntry -> System manual -> Call of Cthulhu 7th Edition (Unofficial) [en]
 
+.
 
 # Recent changes
 
 For a full list of changes checkout the [changelog](https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/blob/develop/.github/CHANGELOG.md) on GitHub
 
+.
 
 - [Chases](chases.md)
 - [Actor importer](actor_importer.md) - added The Dhole's House JSON support
+- [Active effects](effects.md) - implementation of active effects
+- Active effects added to [links](links.md) and [Link creation tool](link_creation_window.md)
 
+.
 
 # Overview sections below
 
@@ -34,6 +40,7 @@ If this is your first time it is recommends you also read the following sections
 - Scene menu overview
 - [Creating your first investigator](first_investigator.md)
 
+.
 
 # How to use the system
 
@@ -42,7 +49,6 @@ If this is your first time it is recommends you also read the following sections
 - Actor Type: Container
 - Actor Type: Creature
 - Actor Type: NPC
-- Chat link creator
 - Character creation mode
 - Development phase
 - Item Type: Archetype
@@ -60,7 +66,11 @@ If this is your first time it is recommends you also read the following sections
 - Rolls
 - Start Rest
 - XP Gain
+- [links](links.md)
+- [Link creation tool](link_creation_window.md)
+- [Active effects](effects.md)
 
+.
 
 # Actor overview
 
@@ -69,6 +79,7 @@ If this is your first time it is recommends you also read the following sections
 - _Creature_ - A more simple character, suitable for creatures. 
 - _NPC_ - A more simple character, suitable for NPCs. 
 
+.
 
 # Items overview
 
@@ -83,6 +94,7 @@ If this is your first time it is recommends you also read the following sections
 - _Talent_ -A special power for Pulp Cthulhu. These do not trigger automation in the system. 
 - _Weapon_ - An item with weapon statistics (this includes unarmed attacks). 
 
+.
 
 # Settings overview
 
@@ -101,6 +113,7 @@ Click on System Settings
 - _Developer And Debug Settings_ - These settings can break your world when new updates are released so only use them on test worlds
 - _Roll Table Settings_ - When sanity rolls are made the system can automatically roll for a bout of madness. You can see example roll tables in the Sanity Roll Table compendiums
 
+.
 
 # Call of Cthulhu Scene Menu
 

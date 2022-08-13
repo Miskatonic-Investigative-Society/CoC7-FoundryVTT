@@ -3,6 +3,24 @@ import * as fs from 'fs'
 import write from './node_modules/write/index.js'
 
 const sources = {
+  fk040vqb4per5ju1: {
+    en: {
+      name: 'Links [en]',
+      file: 'links.md'
+    }
+  },
+  emuu3wo0uul91029: {
+    en: {
+      name: 'Link creation tool [en]',
+      file: 'link_creation_window.md'
+    }
+  },
+  rmtiwtbixojhyf5v: {
+    en: {
+      name: 'Active effects [en]',
+      file: 'effects.md'
+    }
+  },
   xV4Hxxmu6zjIMw9h: {
     en: {
       name: 'Actor Importer [en]',

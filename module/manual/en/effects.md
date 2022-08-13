@@ -2,7 +2,7 @@
 
 The system allows for the creation of Active Effects.
 An active effect will modify an actor characteristic(s), attribute(s), skill(s).
-Effects can be created as a [links](links.md) using the [Link creation tool](link_creation_window.md) or directly in the character sheet by clicking the  button.
+Effects can be created as a @Compendium[CoC7.system-doc.fk040vqb4per5ju1]{links} using the @Compendium[CoC7.system-doc.emuu3wo0uul91029]{Link creation tool} or directly in the character sheet by clicking the [game-icon game-icon-aura] button.
 
 ## Effects tab
 

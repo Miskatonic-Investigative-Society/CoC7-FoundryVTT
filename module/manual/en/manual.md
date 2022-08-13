@@ -25,6 +25,8 @@ For a full list of changes checkout the [changelog](https://github.com/Miskatoni
 
 - @Compendium[CoC7.system-doc.VdOeGcxsu3jsVm3F]{Chases}
 - @Compendium[CoC7.system-doc.xV4Hxxmu6zjIMw9h]{Actor importer} - added The Dhole's House JSON support
+- @Compendium[CoC7.system-doc.rmtiwtbixojhyf5v]{Active effects} - implementation of active effects
+- Active effects added to @Compendium[CoC7.system-doc.fk040vqb4per5ju1]{links} and @Compendium[CoC7.system-doc.emuu3wo0uul91029]{Link creation tool}
 
 .
 
@@ -47,7 +49,6 @@ If this is your first time it is recommends you also read the following sections
 - Actor Type: Container
 - Actor Type: Creature
 - Actor Type: NPC
-- Chat link creator
 - Character creation mode
 - Development phase
 - Item Type: Archetype
@@ -65,6 +66,9 @@ If this is your first time it is recommends you also read the following sections
 - Rolls
 - Start Rest
 - XP Gain
+- @Compendium[CoC7.system-doc.fk040vqb4per5ju1]{links}
+- @Compendium[CoC7.system-doc.emuu3wo0uul91029]{Link creation tool}
+- @Compendium[CoC7.system-doc.rmtiwtbixojhyf5v]{Active effects}
 
 .
 
