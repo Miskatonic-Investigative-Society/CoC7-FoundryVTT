@@ -4,7 +4,7 @@ An _occupation_ helps to define the character background, think about it as the 
 
 Keep in mind that the set of _occupational skills_ doesn't need to be fixed, the system allows to configure the _occupation_ so when it's dragged to a Character sheet will give the option of selecting one or more skills from a closed list, or even add a pre defined number of skills to select from all the available ones.
 
-1. Go to the [fas fa-suitcas]Items Directory tab
+1. Go to the [fas fa-suitcase]Items Directory tab
 2. Click on [fas fa-suitcase]Create Item
 
    1. Give the set up a name e.g. _Librarian_

@@ -1,10 +1,8 @@
 # Actor Importer
 
-You can use the actor importer to import serveral NPC/Creatures blocks from adventures and using the JSON exporter from [The Dholes House](https://www.dholeshouse.org/)
+You can use the actor importer to import several NPC/Creatures blocks from adventures and using the JSON exporter from [The Dholes House](https://www.dholeshouse.org/)
 
 To open the actor importer either open the [fas fa-users]Actor Directory and click Actor Importer at the bottom of the side bar or on an active scene [game-icon game-icon-tentacle-strike] then click [fas fa-user-plus]Actor Importer
-
-.
 
 # Overview
 
@@ -12,8 +10,6 @@ If this is your first time it is recommends you also read the following sections
 
 - Non Playing Character (NPC) / Creature
 - The Dhole's House Actor Importer JSON
-
-.
 
 # Non Playing Character (NPC) / Creature
 
@@ -35,8 +31,6 @@ If this is your first time it is recommends you also read the following sections
 5. An example layout is given here you can copy this to your clipboard if you want to edit it or paste in the text from an adventure
 
 Click import will create an actor under the [fas fa-users]Actor directory will be created in the Imported characters folder any text that was not understood will be stored in Keeper notes
-
-.
 
 # The Dhole's House Actor Importer JSON
 
