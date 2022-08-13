@@ -114,13 +114,13 @@ export class CoC7SanCheck {
         const speaker = chatHelper.getSpeakerFromKey(tokenKey)
         const title = game.i18n.format('CoC7.SANCheckTitle', {
           name: speaker.alias,
-          sanMin: sanMin,
-          sanMax: sanMax
+          sanMin,
+          sanMax
         })
         chatHelper.createMessage(
           null,
           `@coc7.sanloss[sanMax:${sanMax},sanMin:${sanMin}]{${title}}`,
-          { speaker: speaker }
+          { speaker }
         )
       } else ui.notifications.error('No target selected')
     }
@@ -176,7 +176,7 @@ export class CoC7SanCheck {
 
     const chatData = {
       user: user.id,
-      speaker: speaker,
+      speaker,
       flavor: this.flavor,
       content: htmlElement.outerHTML
     }

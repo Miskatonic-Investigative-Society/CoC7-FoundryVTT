@@ -147,8 +147,8 @@ export class ChatCardActor {
 
     const chatData = {
       user: user.id,
-      speaker: speaker,
-      flavor: flavor,
+      speaker,
+      flavor,
       content: message
     }
 

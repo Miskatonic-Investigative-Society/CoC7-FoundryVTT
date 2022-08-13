@@ -50,7 +50,7 @@ export class CoC7Vehicle extends CoCActor {
   get rawDb () {
     return this.db
   }
-  
+
   get db () {
     const db = parseInt(this.data.data.attribs.db?.value)
     return isNaN(db) ? null : db
@@ -59,7 +59,7 @@ export class CoC7Vehicle extends CoCActor {
   get rawMov () {
     return this.mov
   }
-  
+
   get mov () {
     const mov = parseInt(this.data.data.attribs.mov?.value)
     return isNaN(mov) ? null : mov

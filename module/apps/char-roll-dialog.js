@@ -99,7 +99,7 @@ export class CharacRollDialog extends Dialog {
         roll.toMessage({
           flavor: game.i18n.format('CoC7.MessageRollingCharacteristic', {
             label: this.data.data.characteristics.list[key].label,
-            formula: formula
+            formula
           })
         })
         input.value = roll.total
@@ -230,8 +230,8 @@ export class CharacRollDialog extends Dialog {
         {
           title: data.title,
           content: html,
-          data: data,
-          rolled: rolled,
+          data,
+          rolled,
           buttons: {},
           close: () => {
             if (data.validate) return resolve(true)

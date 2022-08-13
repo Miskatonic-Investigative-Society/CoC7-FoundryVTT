@@ -366,7 +366,7 @@ export class CoC7Check {
       `CoC7.LinkCheck${!difficulty ? '' : 'Diff'}${
         !this._diceModifier ? '' : 'Modif'
       }`,
-      { difficulty: difficulty, modifier: modifier, name: this.name }
+      { difficulty, modifier, name: this.name }
     )
   }
 
@@ -484,7 +484,7 @@ export class CoC7Check {
         success: true,
         cssClass: this.isCritical ? 'critical' : 'success',
         hint: successHint,
-        icons: icons
+        icons
       }
     } else {
       const icons = []
@@ -499,7 +499,7 @@ export class CoC7Check {
         success: false,
         cssClass: this.isFumble ? 'fumble' : 'failure',
         hint: failureHint,
-        icons: icons
+        icons
       }
     }
   }
@@ -653,7 +653,7 @@ export class CoC7Check {
         !this._diceModifier ? '' : 'Modif'
       }`,
       {
-        difficulty: difficulty,
+        difficulty,
         modifier: this._diceModifier,
         name: this.name
       }
@@ -1593,7 +1593,7 @@ export class CoC7Check {
 
     const chatData = {
       user: user.id,
-      speaker: speaker,
+      speaker,
       flavor: this.flavor,
       content: html,
       flags: {

@@ -35,7 +35,7 @@ export class SkillSelectDialog extends Dialog {
         {
           title: data.title,
           content: html,
-          data: data,
+          data,
           buttons: {},
           close: () => {
             if (!data.added >= data.optionsCount) return resolve(false)

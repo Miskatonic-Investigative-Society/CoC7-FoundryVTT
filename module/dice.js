@@ -42,7 +42,7 @@ export class CoC7Dice {
         results: []
       },
       total: 0,
-      roll: roll
+      roll
     }
 
     if (rollMode) result.rollMode = rollMode
@@ -125,7 +125,7 @@ export class CoC7Dice {
         bonusDice: []
       },
       unit: 0,
-      roll: roll
+      roll
     }
     let baseSet = false
     for (const d of roll.dice) {
@@ -158,7 +158,7 @@ export class CoC7Dice {
           results: []
         },
         total: 0,
-        roll: roll
+        roll
       }
       const modif = parseInt(key, 10)
       let modifier = modif

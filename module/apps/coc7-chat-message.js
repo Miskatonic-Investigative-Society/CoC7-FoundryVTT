@@ -411,7 +411,7 @@ export class CoC7ChatMessage {
 
             SanCheckCard.create(
               config.options.actor.actorKey,
-              { sanMin: sanMin, sanMax: sanMax, sanReason: sanReason },
+              { sanMin, sanMax, sanReason },
               {
                 sanModifier: config.dialogOptions.modifier,
                 sanDifficulty: config.dialogOptions.difficulty,

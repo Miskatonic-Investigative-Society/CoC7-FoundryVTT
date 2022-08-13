@@ -949,7 +949,7 @@ export class Updater {
                   effects[i] = mergeObject(effect, {
                     flags: {
                       core: {
-                        statusId: statusId
+                        statusId
                       }
                     }
                   })

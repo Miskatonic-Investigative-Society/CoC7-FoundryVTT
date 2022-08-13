@@ -343,8 +343,8 @@ export class CoC7RangeInitiator {
     return {
       level: difficulty,
       name: difficultyName,
-      modifier: modifier,
-      damage: damage,
+      modifier,
+      damage,
       impossible: difficulty === CoC7Check.difficultyLevel.impossible
     }
   }
@@ -785,14 +785,14 @@ export class CoC7RangeInitiator {
 
         this.damage.push({
           targetKey: h.roll.targetKey,
-          targetName: targetName,
+          targetName,
           rolls: damageRolls,
-          total: total,
-          critical: critical,
+          total,
+          critical,
           dealt: false,
           resultString: game.i18n.format('CoC7.rangeCombatDamage', {
             name: targetName,
-            total: total
+            total
           })
         })
       }

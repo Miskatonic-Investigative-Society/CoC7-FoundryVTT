@@ -42,25 +42,25 @@ function buildDestination () {
 const optimization =
   buildMode === 'production'
     ? {
-      minimize: true,
-      minimizer: [
-        new TerserPlugin({
-          terserOptions: {
-            mangle: false
-          }
-        }),
-        new CssMinimizerPlugin()
-      ],
-      splitChunks: {
-        chunks: 'all',
-        cacheGroups: {
-          default: {
-            name: 'main',
-            test: 'module/coc7.js'
+        minimize: true,
+        minimizer: [
+          new TerserPlugin({
+            terserOptions: {
+              mangle: false
+            }
+          }),
+          new CssMinimizerPlugin()
+        ],
+        splitChunks: {
+          chunks: 'all',
+          cacheGroups: {
+            default: {
+              name: 'main',
+              test: 'module/coc7.js'
+            }
           }
         }
       }
-    }
     : undefined
 
 /**
@@ -102,7 +102,7 @@ const bundleScript = {
       }
     ]
   },
-  optimization: optimization,
+  optimization,
   output: {
     clean: true,
     path: buildDestination(),

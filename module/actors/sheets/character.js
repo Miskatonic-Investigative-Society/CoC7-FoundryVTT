@@ -418,11 +418,12 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
             '--other-sheet-bg',
             "url( './assets/images/void.webp')"
           )
-        } else
+        } else {
           sheet.element.css(
             '--other-sheet-bg',
             game.settings.get('CoC7', 'artWorkOtherSheetBackground')
           )
+        }
       }
 
       if (game.settings.get('CoC7', 'artworkSheetImage')) {
@@ -434,11 +435,12 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
             '--main-sheet-image',
             "url( './assets/images/void.webp')"
           )
-        } else
+        } else {
           sheet.element.css(
             '--main-sheet-image',
             game.settings.get('CoC7', 'artworkSheetImage')
           )
+        }
       }
 
       if (game.settings.get('CoC7', 'artworkFrontColor')) {

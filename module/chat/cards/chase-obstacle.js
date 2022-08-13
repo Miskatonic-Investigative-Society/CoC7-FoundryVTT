@@ -89,7 +89,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       }
       data.strings.checkRollRequest = game.i18n.format('CoC7.AskRoll', {
         name: checkName,
-        value: value
+        value
       })
       if (data.data.bonusDice !== 0) {
         if (data.data.bonusDice > 0) {
@@ -966,7 +966,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
           old: this.obstacle[key],
           new: newObstacle[key],
           name: names[key],
-          key: key
+          key
         }
         if (validate) this.data.validation[key] = true
       }

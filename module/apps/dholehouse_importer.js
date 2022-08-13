@@ -281,7 +281,7 @@ export class CoC7DholeHouseActorImporter {
             },
             range: {
               normal: {
-                damage: damage
+                damage
               }
             },
             ammo: weapon.ammo,
@@ -289,7 +289,7 @@ export class CoC7DholeHouseActorImporter {
             properties: {
               melee: skill?.data.data.properties?.fighting ?? false,
               rngd: skill?.data.data.properties?.firearm ?? false,
-              addb: addb
+              addb
             }
           }
         }

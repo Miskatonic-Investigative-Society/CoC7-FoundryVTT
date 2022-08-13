@@ -113,7 +113,7 @@ export class CoC7ConCheck {
 
     const chatData = {
       user: user.id,
-      speaker: speaker,
+      speaker,
       flavor: this.flavor,
       content: htmlElement.outerHTML
     }

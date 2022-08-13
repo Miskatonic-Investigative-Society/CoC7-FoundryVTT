@@ -32,7 +32,7 @@ export class RollDialog {
         game.settings.get('CoC7', 'allowFlatThresholdModifier') &&
         !options.disableFlatThresholdModifier,
       difficulty: CoC7Check.difficultyLevel,
-      unknownDifficultyDefault: unknownDifficultyDefault,
+      unknownDifficultyDefault,
       hideDifficulty: options.hideDifficulty ?? false,
       options
     }

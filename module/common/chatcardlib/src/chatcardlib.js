@@ -215,7 +215,7 @@ export class EnhancedChatCard {
       {
         // user: userId,
         user: game.user.id,
-        speaker: speaker,
+        speaker,
         flavor: game.i18n.localize(this.options.title),
         content: htmlCardElement.outerHTML
       },
@@ -511,7 +511,7 @@ export class EnhancedChatCard {
       if (!formUpdate) return // If the form was updated we still update the card
     }
     if (this[action]) {
-      actionUpdate = await this[action]({ event: event, updateCard: false })
+      actionUpdate = await this[action]({ event, updateCard: false })
     }
 
     if (formUpdate || actionUpdate) await this.updateChatCard()

@@ -186,7 +186,7 @@ export class CoC7ContainerSheet extends ActorSheet {
     content = content + '</select></form></p>'
     await Dialog.prompt({
       title: game.i18n.localize('CoC7.MessageTitleSelectUserToGiveTo'),
-      content: content,
+      content,
       callback: html => {
         const formData = new FormData(html[0].querySelector('#selectform'))
         for (const [name, value] of formData) {

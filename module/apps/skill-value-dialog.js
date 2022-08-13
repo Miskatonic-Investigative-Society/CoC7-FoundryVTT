@@ -4,12 +4,12 @@ export class SkillValueDialog {
   static async create (name = null, baseValue = null) {
     const html = await renderTemplate(
       'systems/CoC7/templates/apps/skill-value.html',
-      { base: baseValue, name: name }
+      { base: baseValue, name }
     )
     return new Promise(resolve => {
       let formData = null
       const dlg = new Dialog({
-        title: game.i18n.format('CoC7.SkillValue', { name: name }),
+        title: game.i18n.format('CoC7.SkillValue', { name }),
         content: html,
         buttons: {
           validate: {
