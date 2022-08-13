@@ -5,7 +5,7 @@ export default class CoC7ActiveEffect extends ActiveEffect {
   apply (actor, change) {
     if (!isNaN(Number(change.value))) change.value = Number(change.value)
     const result = super.apply(actor, change)
-    const evaluated = parse(result)
+    const evaluated = isNaN(result)?parse(result):result
     if (isNaN(evaluated)) return result
     return evaluated
   }
@@ -226,9 +226,11 @@ export default class CoC7ActiveEffect extends ActiveEffect {
 }
 
 function parse (str) {
+  const regEx = /^[\+\-*/\(\)\d]+$/
+  if( !regEx.exec(str)) return NaN
   try {
-    return eval(str)
-  } catch (e) {
+    return new Roll(str).evaluate({async: false}).total
+    } catch (e) {
     return NaN
   }
 }
