@@ -2,8 +2,12 @@
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Add active effects to manipulate actor sheet value totals
 - Add actor.runRoll(...) function to allow third party modules/macros to perform rolls
+- Add chase items that Keepers can use to track chases
+- Add manual pages which will pop up on first load, this is a work in progress
 - Add The Dhole's House JSON actor importer, thanks to @pconcepcion
+- Add FoundryVTT v10 tour for finding the rules variant settings
 - Fix dice sounds not being pushed to other clients
 - Fix tooltip for character summary sheet
 - Fix updater not always running automatically
