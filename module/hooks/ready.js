@@ -1,7 +1,7 @@
 /* global game, Hooks, isNewerVersion */
 import { CoC7Tooltips } from '../apps/tooltips.js'
-
 // import { CoC7WelcomeMessage } from '../apps/welcome-message.js'
+import { registerTours } from '../scripts/register-tours.js'
 
 export function listen () {
   Hooks.once('ready', async () => {
@@ -14,10 +14,18 @@ export function listen () {
 
     const instructionsVersion = game.settings.get('CoC7', 'showInstructions')
     if (isNewerVersion(game.system.data.version, instructionsVersion ?? '0')) {
-      ;(
-        await game.packs.get('CoC7.system-doc').getDocument('wZtTHpGV3atKV2oD')
-      ).sheet.render(true)
+      let lang = game.i18n.lang
+      const readMe = {
+        en: 'wZtTHpGV3atKV2oD'
+      }
+      if (typeof readMe[lang] === 'undefined') {
+        lang = 'en'
+      }
+      (await game.packs.get('CoC7.system-doc').getDocument(readMe[lang])).sheet.render(true)
       // game.settings.set('CoC7', 'showInstructions', game.system.data.version) // Don't turn off while testing
+    }
+    if (typeof game.tours !== 'undefined') {
+      registerTours()
     }
   })
 }
