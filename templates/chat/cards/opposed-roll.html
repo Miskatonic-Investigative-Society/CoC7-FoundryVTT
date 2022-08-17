@@ -20,12 +20,12 @@
             {{#if needsTieBreaker}}
                 <div class="flexrow gm-visible-only toggle">
                     <span class="flex1 toggle-switch gm-select-only {{#if advantageAttacker}}switched-on{{/if}} "
-                    title="{{localize CoC7.AdvantageAttacker}}" 
-                    data-flag="advantageAttacker" 
+                    title="{{localize 'CoC7.AdvantageAttacker'}}"
+                    data-flag="advantageAttacker"
                     data-selected={{advantageAttacker}}>{{localize 'CoC7.AdvantageAttacker'}}</span>
                     <span class="flex1 toggle-switch gm-select-only {{#if advantageDefender}}switched-on{{/if}}"
-                    title="{{localize CoC7.AdvantageDefender}}" 
-                    data-flag="advantageDefender" 
+                    title="{{localize 'CoC7.AdvantageDefender'}}"
+                    data-flag="advantageDefender"
                     data-selected={{advantageDefender}}>{{localize 'CoC7.AdvantageDefender'}}</span>
                 </div>
                 <div class='user-visible-only'>
@@ -48,14 +48,14 @@
         {{#each rolls as |r id| }}
             <li class= 'actor-roll{{#if r.winner}} won{{/if}}{{#if r.tie}} tie{{/if}}{{#if r.attacker}} attacker{{/if}}'
                 data-rank='{{id}}' data-actor-key="{{r.actor.actorKey}}">
-                <img class="open-actor" data-actor-key="{{r.actor.actorKey}}" src="{{r.actor.portrait}}" title="{{r.actor.name}}"/>
+                <img class="open-actor" data-actor-key="{{r.actor.actorKey}}" src="{{rollActorImg r.actorKey}}" title="{{r.actor.name}}"/>
                 <div class="roll-details">
                     <div class="header">
                         <div class='name'>
                             {{#if r.item}}
                                 <span class="tag">{{r.item.name}}</span>
                             {{else}}
-                                <span class="tag">{{r.sName}}</span>
+                                <span class="tag">{{r.shortName}}</span>
                             {{/if}}
                             {{#if r.maneuver}}
                                 <span class='tag'>{{localize 'CoC7.WeaponProperyManeuver'}} ({{localize 'CoC7.Build'}}: {{r.actor.build}})</span>

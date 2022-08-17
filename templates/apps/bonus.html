@@ -1,61 +1,72 @@
-
 <form id="bonus-roll-form">
 
-    <div class="flexcol">
-        {{#if options.askValue}}
-        <div class="flexrow">
-            <label>{{localize 'CoC7.RollThreshold'}}</label>
-            <input type="number" name="threshold" value="{{options.threshold}}"/>
-        </div>
-        {{/if}}
+  <div class="flexcol">
 
-        <div class="flexrow">
-            <label>{{localize 'CoC7.RollDifficulty'}}</label>
-            <select name="difficulty">
-                {{#if options.difficulty}}
-                    <option value="{{difficulty.unknown}}" {{#if options.difficultyLevel.unknown}}selected{{/if}}>{{localize 'CoC7.RollDifficultyUnknown'}}</option>
-                    <option value="{{difficulty.regular}}"  {{#if options.difficultyLevel.regular}}selected{{/if}}>{{localize 'CoC7.RollDifficultyRegular'}}</option>
-                    <option value="{{difficulty.hard}}" {{#if options.difficultyLevel.hard}}selected{{/if}}>{{localize 'CoC7.RollDifficultyHard'}}</option>
-                    <option value="{{difficulty.extreme}}"{{#if options.difficultyLevel.extreme}}selected{{/if}}>{{localize 'CoC7.RollDifficultyExtreme'}}</option>
-                {{else}}
-                    <option value="{{difficulty.unknown}}" {{#if unknownDifficultyDefault}}selected{{/if}}>{{localize 'CoC7.RollDifficultyUnknown'}}</option>
-                    <option value="{{difficulty.regular}}" {{#unless unknownDifficultyDefault}}selected{{/unless}}>{{localize 'CoC7.RollDifficultyRegular'}}</option>
-                    <option value="{{difficulty.hard}}">{{localize 'CoC7.RollDifficultyHard'}}</option>
-                    <option value="{{difficulty.extreme}}">{{localize 'CoC7.RollDifficultyExtreme'}}</option>
-                {{/if}}
-            </select>
-        </div>
+    {{#if cardTypes}}
+      <div class="flexrow">
+        <label>{{localize 'CoC7.CardType'}}</label>
+        <select name="cardType">
+          {{selectOptions cardTypes selected=options.cardType localize=true}}
+        </select>
+      </div>
+    {{/if}}
 
-        {{#if allowFlatDiceModifier}}
-        <div class="flexrow">
-            <label>{{localize 'CoC7.FlatDiceModifier'}}</label>
-            <input type="number" name="flatDiceModifier" value="0"/>
-        </div>
-        {{/if}}
+    {{#if options.askValue}}
+      <div class="flexrow">
+        <label>{{localize 'CoC7.RollThreshold'}}</label>
+        <input type="number" name="threshold" value="{{options.threshold}}" />
+      </div>
+    {{/if}}
 
-        {{#if allowFlatThresholdModifier}}
-        <div class="flexrow">
-            <label>{{localize 'CoC7.FlatModifier'}}</label>
-            <input type="number" name="flatThresholdModifier" value="0"/>
-        </div>
-        {{/if}}
+    {{#unless hideDifficulty}}
+      <div class="flexrow">
+        <label>{{localize 'CoC7.RollDifficulty'}}</label>
+        <select name="difficulty">
+          {{#if options.difficulty}}
+            <option value="{{difficulty.unknown}}" {{#if options.difficultyLevel.unknown}}selected{{/if}}>{{localize 'CoC7.RollDifficultyUnknown'}}</option>
+            <option value="{{difficulty.regular}}" {{#if options.difficultyLevel.regular}}selected{{/if}}>{{localize 'CoC7.RollDifficultyRegular'}}</option>
+            <option value="{{difficulty.hard}}" {{#if options.difficultyLevel.hard}}selected{{/if}}>{{localize 'CoC7.RollDifficultyHard'}}</option>
+            <option value="{{difficulty.extreme}}" {{#if options.difficultyLevel.extreme}}selected{{/if}}>{{localize 'CoC7.RollDifficultyExtreme'}}</option>
+          {{else}}
+            <option value="{{difficulty.unknown}}" {{#if unknownDifficultyDefault}}selected{{/if}}>{{localize 'CoC7.RollDifficultyUnknown'}}</option>
+            <option value="{{difficulty.regular}}" {{#unless unknownDifficultyDefault}}selected{{/unless}}>{{localize 'CoC7.RollDifficultyRegular'}}</option>
+            <option value="{{difficulty.hard}}">{{localize 'CoC7.RollDifficultyHard'}}</option>
+            <option value="{{difficulty.extreme}}">{{localize 'CoC7.RollDifficultyExtreme'}}</option>
+          {{/if}}
+        </select>
+      </div>
+    {{/unless}}
 
-        <div class="flexrow" style="padding: 4px 0;">
-            <div style="flex: 1;"><label>{{localize 'CoC7.BonusDice'}}</label></div>
-            <div style="flex: 1;display: flex;flex-direction: column;">
-                <div class="flexrow">
-                    <span style="flex: 1; text-align: left;">-2</span>
-                    <span style="flex: 1; text-align: center;"></span>
-                    <span style="flex: 1; text-align: center;">-1</span>
-                    <span style="flex: 1; text-align: center;"></span>
-                    <span style="flex: 1; text-align: center;">0</span>
-                    <span style="flex: 1; text-align: center;"></span>
-                    <span style="flex: 1; text-align: center;">+1</span>
-                    <span style="flex: 1; text-align: center;"></span>
-                    <span style="flex: 1; text-align: right;">+2</span>
-                </div>
-                <input type="range" name="bonusDice" min="-2" max="2" value="{{#if options.modifier}}{{options.modifier}}{{else}}0{{/if}}" class="slider" id="myslider">
-            </div>
+    {{#if allowFlatDiceModifier}}
+      <div class="flexrow">
+        <label>{{localize 'CoC7.FlatDiceModifier'}}</label>
+        <input type="number" name="flatDiceModifier" value="{{#if options.flatDiceModifier}}{{options.flatDiceModifier}}{{else}}0{{/if}}" />
+      </div>
+    {{/if}}
+
+    {{#if allowFlatThresholdModifier}}
+      <div class="flexrow">
+        <label>{{localize 'CoC7.FlatModifier'}}</label>
+        <input type="number" name="flatThresholdModifier" value="{{#if options.flatThresholdModifier}}{{options.flatThresholdModifier}}{{else}}0{{/if}}" />
+      </div>
+    {{/if}}
+
+    <div class="flexrow" style="padding: 4px 0;">
+      <div style="flex: 1;"><label>{{localize 'CoC7.BonusDice'}}</label></div>
+      <div style="flex: 1;display: flex;flex-direction: column;">
+        <div class="flexrow">
+          <span style="flex: 1; text-align: left;">-2</span>
+          <span style="flex: 1; text-align: center;"></span>
+          <span style="flex: 1; text-align: center;">-1</span>
+          <span style="flex: 1; text-align: center;"></span>
+          <span style="flex: 1; text-align: center;">0</span>
+          <span style="flex: 1; text-align: center;"></span>
+          <span style="flex: 1; text-align: center;">+1</span>
+          <span style="flex: 1; text-align: center;"></span>
+          <span style="flex: 1; text-align: right;">+2</span>
         </div>
+        <input type="range" name="bonusDice" min="-2" max="2" value="{{#if options.modifier}}{{options.modifier}}{{else}}0{{/if}}" class="slider" id="myslider">
+      </div>
     </div>
+  </div>
 </form>

@@ -1,3 +1,285 @@
+# :warning: Important note
+
+> The system is on a transition stage between FVTT V9 and V10. Most of it has been tested and should be working on V10.
+>
+> However foundry V10 is still in testing stage.
+>
+> Be aware that migrating to V10 now is not advisable. Your may break your worlds as they will be migrated and you won't be able to return to V9.
+>
+> Despite out best efforts, some part of this system may not work with V10.
+
+_If you decide to go on with V10:_
+
+- :warning: __MAKE A COPY OF YOUR WORLD BEFORE UPGRADING__
+- please report any bug encountered on GitHub, specify if you used V10 version.
+
+Happy gaming !
+
+## Version 0.8.0
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Add active effects to manipulate actor sheet value totals
+- Add actor.runRoll(...) function to allow third party modules/macros to perform rolls
+- Add chase items that Keepers can use to track chases
+- Add manual pages which will pop up on first load, this is a work in progress
+- Add The Dhole's House JSON actor importer, thanks to @pconcepcion
+- Add FoundryVTT v10 tour for finding the rules variant settings
+- Add options to allow trusted players to interact with chat cards
+- Fix dice sounds not being pushed to other clients
+- Fix tooltip for character summary sheet
+- Fix updater not always running automatically
+- Further support for FoundryVTT v10
+- Update untranslated text in sanity debug information, thanks to @zeteticl
+- Update to French localization, thanks to @vonv
+- Update to Italian localization, thanks to @Stefano1975t
+- Update to Japanese localization, thanks to Asami
+- Update to Korean localization, thanks to @jbblily
+- Update to Polish localization, thanks to @everyonecancode
+- Update to Portuguese localization
+- Update to Spanish localization, thanks to @lozanoje
+- Update to Swedish localization, thanks to @Rangertheman
+- Update to Taiwanese localization, thanks to @zeteticl
+
+## Version 0.7.11
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Add roll configuration dialog box option to allow changing roll card type after starting, options are Regular, Combined, Opposed, and Sanity Loss Encounter
+- Add sanity loss reason to sanity rolls triggered from character sheets
+- Fix combined and opposed roll skill names tags not showing
+- Fix combined roll success/failure message and roll values to show correctly
+- Fix fumble threshold for hard and extreme rolls
+- Fix viewing character sheet if default permission is limited but user permissions are different
+- Prevent players from viewing minimised character sheets if permissions are set to limited
+- Prevent players from clicking roll on Keeper combined cards
+- Remove Trigger Data Migration button from non keepers
+- Update tooltips for roll options
+- Update to Italian localization, thanks to @Stefano1975t
+- Update to Swedish localization, thanks to @Rangertheman
+
+## Version 0.7.10
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Add limited view to character sheets
+- Allow setting duration units for books
+- When creating opposedCard/combinedCard messages use the roll mode of the user creating the message
+- Fix sanity loss from books
+- Fix opposedCard/combinedCard message selection rules
+- Fix updater only outputting errors to the console
+- Update to Japanese localization, thanks to Asami
+- Update to Portuguese localization
+- Update to Spanish localization, thanks to @lozanoje
+
+## Version 0.7.9
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix bonus/penalty dice rolling without DsN or empty alternative colours
+- Fix skill name editing on skills created/edited via an Actor sheet
+- Update to Swedish localization, thanks to @Rangertheman
+
+## Version 0.7.8
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix skill name migration issue with 0.7.7
+- Update to French localization, thanks to @vonv
+
+## Version 0.7.7:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Change creature encounters based on tokens/actors to sanity loss events based on type/name
+- Change skill names system and token image location to begin support for FoundryVTT v10 changes
+- Default weapons added via character/NPC sheet to either melee or ranged
+- Fix critical and impale buttons on combat card not formatting correctly
+- Fix Dice So Nice appearing to roll d10s instead of d10 and decaders if using image faces
+- Fix French documentation path, thanks to @vonv
+- Remove character sheet v1 as it is no longer supported
+- Update combined roll messages to be per user and allow separate difficulties and number of bonus/penalty dice
+- Update link creation UI to make required fields and blur events clearer
+- Update to Italian localization, thanks to @Stefano1975t
+- Update to Japanese localization, thanks to Asami
+- Update to Polish localization, thanks to @everyonecancode
+- Update to Simplified Chinese Translation, thanks to kwh3884858
+- Update to Swedish localization, thanks to @Rangertheman
+- Update to Taiwanese localization, thanks to @zeteticl
+
+## Version 0.7.6:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Add skill specialization to NPC sheet
+- Fix font size on NPC sheet for sanity loss
+- Fix Invalid BaseTexture in FireFox for active effects
+- Fix major wounds round up/down issue
+- Fix player lacks permission to update Token when adding/removing active effects if there are more than two players
+- Fix possibility to edit or delete spells from books for keepers
+- Fix weapon navigation incorrect flex layout
+- If clicking NPC sanity loss with no targets selected show warning message
+- Update to French localization, thanks to @vonv
+- Update to Italian localization, thanks to @Stefano1975t
+
+## Version 0.7.5:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix unable to remove conditions (prone, unconscious, insanity, etc) when the setting "Scene Settings / Enable status icons" is disabled
+- Now rest is available again
+- Remove myterious button that produces mysterious messages
+
+## Version 0.7.4:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Add ignore major wounds rule for Pulp rules
+- Fix showing Actor / Item create dialog box dropdown translations
+- Split Pulp rules into individual options
+- Replace effect and status with conditions. Allow activating conditions from FoundryVTT combat tracker and effects menu as well as the character sheets
+- Update rest function to prevent showing more than max hp or mp was added to the chat summary message
+- Update to NPC sheet to use same icons for dead, indefInsane, prone, tempoInsane, and unconscious as PCs
+- New Italian localization, thanks to @Stefano1975t
+- New Korean localization, thanks to @Mero-Pe
+- Now it is possible to learn spell directly from books, thanks to @brockhaus
+- Update to French localization, thanks to @vonv
+- Update to German localization, thanks to @brockhaus
+- Update to Polish localization, thanks to @everyonecancode
+- Update to Portuguese localization
+- Update to Spanish localization, thanks to @lozalojo
+- Update to Swedish localization, thanks to @Rangertheman
+
+## Version 0.7.3:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+
+- Compatible with Foundry VTT v9
+- Fix compendium render in v8/v9
+- Fix multiple chat messages for tokens to the correct users
+- Now Actor Importer support Polish, thanks to @frondeus
+- Prevent character sheets editing themselves if not editable
+- Update layout for weapon sheet tab navigation
+- Update to French localization, thanks to @vonv
+- Update to Japanese localization, thanks to `@Asami#8627`
+- Update to Polish localization, thanks to @frondeus
+- Update to Portuguese localization
+- Update to Spanish localization, thanks to @lozalojo
+- Update to Swedish localization, thanks to @Rangertheman
+- Update to Taiwanese localization, thanks to @zeteticl
+
+## Version 0.7.2:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+
+- Add filters to Item compendiums
+- Fix Keeper notes incongruency and Spell inside Book rendering
+- Fix luck recovery rules for 1920 and Pulp
+- Fix negative MP bug
+- Now Actor Importer support German, thanks to @brockhaus
+- Now it is possible to convert remaining MP into HP (KR, pg. 176)
+- Now it is possible to copy Actor Importer example, thanks to @zeteticl
+- Now it is possible to select specific Actors for Rest feature, thanks to @zeteticl
+- Update to German localization, thanks to @brockhaus
+- Update to Portuguese localization
+- Update to Swedish localization, thanks to @Rangertheman
+- Update to Taiwanese localization, thanks to @zeteticl
+
+## Version 0.7.1:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+
+- Fix wrong attribute in Keeper Notes on Spell sheet.
+- Merge any notes accidentally stored in data.notes on Spell sheet.
+- Prevent error when updating related compendiums/modules.
+
+## Version 0.7.0:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+
+- Add options to change pause icon and text on settings.
+- Add Pulp Luck recovery rules.
+- Add several tooltips to the Character sheet (Skill, DB, Sanity, etc).
+- Initial refactor of Spell system.
+  - Cast Spell prompts its description and costs results on chat;
+  - Now Spell costs are discounted when casting;
+  - Now you can open Spell sheet from Book Spell list and edit the Spell information within the Book without affecting the original one.
+  - Update sheet layout to V2.
+- Fix "The key ? does not exist in the EmbeddedCollection Collection" dragging an English setup onto a translated Actor.
+- Fix background integrity on Book sheet.
+- Fix bug on Archetype Item properties.
+- Fix bug on Ranged Combat damage not being rolled when value is number.
+- Fix bug where GM is speaking instead of NPC on checks
+- Fix Combined / Opposed Roll using the incorrect image path for wildcard tokens.
+- Fix DsN 3D dices not rolling sometimes.
+- Fix summarized sheet colors.
+- Fix rounding for max Hit Points on Pulp.
+- Now Actor die instantly when damage is equal or higher than its max hp.
+- Now Actor Importer support Traditional Chinese, thanks to @zeteticl.
+- Now double click on Item in inventory list open its sheet.
+- Now the defender has an option to do nothing in combat flow.
+- Now there is an option to show or not show uncommon skills on Character sheet.
+- Several improvements on the Actor Importer app;
+- Update menu system compatibility for 0.8 and V9 Foundry VTT.
+- Update updater to check module compendiums for Actor and Item when modules version module numbers are new or changed.
+- Update to French localization, thanks to @vonv.
+- Update to Japanese localization, thanks to `@Asami#8627`.
+- Update to Polish localization, thanks to @everyonecancode and @zakonfeniksa.
+- Update to Portuguese localization.
+- Update to Spanish localization, thanks to @lozalojo.
+- Update to Swedish localization, thanks to @Rangertheman.
+- Update to Taiwanese localization, thanks to @zeteticl.
+
+## Version 0.6.9:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+
+- Fix JavaScript Error "Call of Cthulhu 7th Edition (Unofficial): Error detected in system. (See JS Console)" if libWrapper module is active.
+- Update updater to check module compendiums for Actors and Items.
+- Fixes to compendium packs.
+  - Demolitions - set base skill to 1%.
+  - Diving - replace icon and mark as uncommon.
+  - Language (Other) - remove skill use Language (Any) instead.
+  - Lore (Any) - add skill.
+  - Science (Engineering) - add skill.
+  - Science (Mathematics) - set base skill to 10%.
+- Update to french localization, thanks to @vonv.
+- Update to japanese localization, thanks to `@Asami#8627`.
+
+## Version 0.6.8:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
+
+- Add actor importer button on bottom of actor directory.
+- Add button for summarize character sheet, keeping only the essential stuff on minimalistic way.
+- Add keeper notes tab to all sheets.
+- Add option to show only icons on the summarized sheet skills list.
+- Add option to sort skills by value on default sheet.
+- Add socketlib as a project library.
+- Disable melee buttons after clicked to prevent multiple clicks while waiting for dice so nice.
+- Fix character importer spells import.
+- Fix character movement calculation.
+- Fix error on actor importer when it receives an array, thanks to @pconception.
+- Fix errors when override sheet artwork is enable, background type is not slice, and an inline style tag has been added.
+- Fix sanity loss from creature not being rolled.
+- Fix some Foundry warnings on console for deprecated stuff.
+- Handle 00 special case for advantage/disadvantage rolls, thanks to @pconception.
+- Now it is possible to create new spells and books directly on actors.
+- Now it is possible to trade items between actors.
+- Now skill sorting to support accented characters.
+- Now the monetary symbol goes before numeral on cash fields.
+- Now there is an setting to enable experimental features.
+  - This is for testing only. DO NOT enable this in your game worlds.
+- Now there is default icons for skills on compendium.
+- Prevent error on keeper self roll if no token selected.
+- Prevent importing Actor if textarea is empty.
+- Resolve issue with returning array in array.
+- The system now supports elevation on distance calculation on ranged combat.
+- Update character sheet to prevent reloading when editing backstory.
+- Update message card triggered from chat card update to use current roll mode.
+- Update to swedish localization, thanks to @Rangertheman.
+- Update to taiwanese localization, thanks to @zeteticl.
+
 ## Version 0.6.7:
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.

@@ -1,6 +1,5 @@
 /* global AudioHelper, CONFIG, game, mergeObject */
 
-import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7Check } from '../../check.js'
 import { CoC7Dice } from '../../dice.js'
 import { RollCard } from './roll-card.js'
@@ -40,9 +39,9 @@ export class CombinedCheckCard extends RollCard {
   get successCount () {
     if (this.rolled) {
       let count = 0
-      this.rolls.forEach(r => {
+      for (const r of this.rolls) {
         if (r.passed) count += 1
-      })
+      }
       return count
     }
     return undefined
@@ -70,10 +69,17 @@ export class CombinedCheckCard extends RollCard {
     return !this.success
   }
 
+  get checkGMInitiator () {
+    return game.users.get(this.initiator)?.isGM
+  }
+
   async getHtmlRoll () {
     if (!this.rolled) return undefined
     const check = new CoC7Check()
-    await check._perform({ roll: this._roll, silent: true })
+    await check._perform({
+      roll: this._roll[check.diceModifier || 0],
+      silent: true
+    })
     return await check.getHtmlRoll({ hideSuccess: true })
   }
 
@@ -107,7 +113,6 @@ export class CombinedCheckCard extends RollCard {
       if (!this.rolled) {
         this.rolled = true
         this._roll = data.roll
-        this.options = data.options
       }
     }
   }
@@ -138,39 +143,24 @@ export class CombinedCheckCard extends RollCard {
       }
 
       case 'roll-card': {
-        const roll = {}
-
-        if (!event.shiftKey) {
-          const usage = await RollDialog.create({
-            disableFlatThresholdModifier:
-              event.metaKey ||
-              event.ctrlKey ||
-              event.keyCode === 91 ||
-              event.keyCode === 224,
-            disableFlatDiceModifier:
-              event.metaKey ||
-              event.ctrlKey ||
-              event.keyCode === 91 ||
-              event.keyCode === 224
-          })
-          if (usage) {
-            roll.diceModifier = Number(usage.get('bonusDice'))
-            roll.difficulty = Number(usage.get('difficulty'))
-            roll.flatDiceModifier = Number(usage.get('flatDiceModifier'))
-            roll.flatThresholdModifier = Number(
-              usage.get('flatThresholdModifier')
-            )
+        const pool = {}
+        for (const dice of card.rolls) {
+          const diceModifier = parseInt(dice.diceModifier, 10)
+          if (!isNaN(diceModifier)) {
+            pool[diceModifier] = false
           }
         }
+
+        const roll = await CoC7Dice.combinedRoll({ pool })
+        roll.initiator = game.user.id
 
         const data = {
           type: this.defaultConfig.type,
           action: 'assignRoll',
           fromGM: game.user.isGM,
-          options: roll
+          roll
         }
-        data.roll = await CoC7Dice.roll(roll.modifier || 0)
-        AudioHelper.play({ src: CONFIG.sounds.dice })
+        AudioHelper.play({ src: CONFIG.sounds.dice }, true)
         card.process(data)
         break
       }
@@ -186,8 +176,11 @@ export class CombinedCheckCard extends RollCard {
         const data = {
           type: this.defaultConfig.type,
           action: 'updateRoll',
-          rank: rank,
-          fromGM: game.user.isGM
+          rank,
+          fromGM: game.user.isGM,
+          roll: {
+            initiator: game.user.id
+          }
         }
         if (!game.user.isGM) data.roll = card.rolls[rank].JSONRollData
         card.process(data)
@@ -198,17 +191,20 @@ export class CombinedCheckCard extends RollCard {
 
   async compute () {
     if (!this._roll) return
-    this.rolls.forEach(async r => {
-      if (!r.rolled) {
-        r.modifier = this.options.modifier || 0
-        r.difficulty =
-          this.options.difficulty || CoC7Check.difficultyLevel.regular
-        r.flatDiceModifier = this.options.flatDiceModifier || 0
-        r.flatThresholdModifier = this.options.flatThresholdModifier || 0
-        await r._perform({ roll: this._roll, silent: true })
-      }
+
+    this.rolls = this.rolls.filter(roll => {
+      return typeof roll.actor.data !== 'undefined' // remove any actors that no longer exist
     })
 
+    for (const r of this.rolls) {
+      if (!r.rolled) {
+        r.modifier = r.diceModifier || 0
+        r.difficulty = r.difficulty || CoC7Check.difficultyLevel.regular
+        r.flatDiceModifier = r.flatDiceModifier || 0
+        r.flatThresholdModifier = r.flatThresholdModifier || 0
+        await r._perform({ roll: this._roll[r.modifier], silent: true })
+      }
+    }
     for (let i = 0; i < this.rolls.length; i++) {
       if (this.rolls[i].rolled) {
         this.rolls[i]._htmlRoll = await this.rolls[i].getHtmlRoll({
@@ -216,10 +212,6 @@ export class CombinedCheckCard extends RollCard {
         })
       }
     }
-
-    this.rolls = this.rolls.filter(roll => {
-      return (typeof roll.actor.data !== 'undefined') // Check if there's an actor set and if there's one and it doesnt exist remove him.
-    })
 
     this._htmlRoll = await this.getHtmlRoll()
   }

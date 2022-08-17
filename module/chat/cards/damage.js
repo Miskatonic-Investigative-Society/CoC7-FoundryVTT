@@ -21,9 +21,9 @@ export class DamageCard extends InteractiveChatCard {
     })
   }
 
-  activateListeners (html) {
-    super.activateListeners(html)
-  }
+  // activateListeners (html) {
+  //   super.activateListeners(html)
+  // }
 
   async assignObject () {
     if (this.damageRoll && this.damageRoll.constructor.name === 'Object') {
@@ -44,7 +44,7 @@ export class DamageCard extends InteractiveChatCard {
   }
 
   get impale () {
-    if (this._impale === 'undefined') return this.weapon.impale
+    if (typeof this._impale === 'undefined') return this.weapon.impale
     return this._impale
   }
 
@@ -149,7 +149,7 @@ export class DamageCard extends InteractiveChatCard {
   async dealDamageToSelectedTarget (options = { update: true }) {
     if (this.isArmorForula) await this.rollArmor()
     if (isNaN(Number(this.totalDamageString))) {
-      ui.notifications.error('Error evaluating damage')
+      ui.notifications.error(game.i18n.localize('CoC7.ErrorEvaluatingDamage'))
       return
     }
     const targets = []
@@ -197,7 +197,10 @@ export class DamageCard extends InteractiveChatCard {
         ignoreArmor: false
       })
       ChatMessage.create({
-        content: `Damage ${targets[index].name} ${this.totalDamageString}HP`
+        content: game.i18n.format('CoC7.DamageDealTo', {
+          name: targets[index].name,
+          damage: this.totalDamageString
+        })
       })
     }
   }
@@ -238,7 +241,7 @@ export class DamageCard extends InteractiveChatCard {
     const range = this.range
     let formula = this.weapon?.data?.data?.range[range]?.damage
     let db = this.actor.db
-    if (db === null) {
+    if (db === null || Number(db) === 0) {
       db = ''
     } else {
       db = `${db}`

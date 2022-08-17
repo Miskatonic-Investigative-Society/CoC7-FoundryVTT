@@ -1,4 +1,3 @@
-import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import * as fs from 'fs'
 import * as os from 'os'
@@ -11,7 +10,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import TerserPlugin from 'terser-webpack-plugin'
 import WebpackBar from 'webpackbar'
 
-const __dirname = dirname(fileURLToPath(import.meta.url))
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 /** Set the run mode for @constant bundleScript */
 const buildMode =
@@ -103,7 +102,7 @@ const bundleScript = {
       }
     ]
   },
-  optimization: optimization,
+  optimization,
   output: {
     clean: true,
     path: buildDestination(),
@@ -114,6 +113,7 @@ const bundleScript = {
       patterns: [
         { from: 'assets/', to: 'assets/' },
         { from: 'lang/', to: 'lang/' },
+        { from: 'lib/', to: 'lib/' },
         { from: 'LICENSE' },
         { from: 'packs/', to: 'packs/' },
         { from: 'README.md' },
@@ -123,7 +123,7 @@ const bundleScript = {
       ]
     }),
     new MiniCssExtractPlugin({
-      filename: 'style.css',
+      filename: 'coc7g.css',
       insert: 'head'
     }),
     new WebpackBar({})

@@ -15,6 +15,7 @@ import { OpposedCheckCard } from './chat/cards/opposed-roll.js'
 import { CombinedCheckCard } from './chat/cards/combined-roll.js'
 import { InteractiveChatCard } from './chat/interactive-chat-card.js'
 import { DamageCard } from './chat/cards/damage.js'
+import { CoC7Dice } from './dice.js'
 
 const CHAT_COC7_MESSAGE = {
   FAKEROLL:
@@ -222,12 +223,14 @@ export class CoC7Chat {
     }
 
     // Handle showing dropdown selection
-    html.find('.dropbtn').click(event =>
-      event.currentTarget
-        .closest('.dropdown')
-        .querySelector('.dropdown-content')
-        .classList.toggle('show')
-    )
+    html
+      .find('.dropbtn')
+      .click(event =>
+        event.currentTarget
+          .closest('.dropdown')
+          .querySelector('.dropdown-content')
+          .classList.toggle('show')
+      )
     html
       .find('.dropdown')
       .mouseleave(event =>
@@ -295,7 +298,7 @@ export class CoC7Chat {
 
     const gmVisibleOnly = html.find('.gm-visible-only')
     for (const elem of gmVisibleOnly) {
-      if (!game.user.isGM) elem.style.display = 'none'
+      if (!(game.user.isGM || (game.user.isTrusted && game.settings.get('CoC7', 'trustedCanSeeChatCard')))) elem.style.display = 'none'
     }
 
     const ownerVisibleOnly = html.find('.owner-visible-only')
@@ -329,7 +332,9 @@ export class CoC7Chat {
       const ownerOnly = html.find('.owner-only')
       for (const zone of ownerOnly) {
         // Try retrieving actor
-        let actor = CoC7Chat._getActorFromKey(zone.dataset?.actorKey) // Try with self.
+        let actor = CoC7Chat._getActorFromKey(
+          zone.dataset?.actorKey || zone.dataset?.actorId
+        ) // Try with self.
         if (!actor) {
           actor = CoC7Chat._getChatCardActor(zone.closest('.chat-card')) // Try with closest chat card.
         }
@@ -355,9 +360,11 @@ export class CoC7Chat {
       }
 
       const gmSelectOnly = html.find('.gm-select-only')
-      for (const select of gmSelectOnly) {
-        select.classList.add('inactive')
-        select.classList.remove('simple-flag')
+      if (!(game.user.isTrusted && game.settings.get('CoC7', 'trustedCanModfyChatCard'))) {
+        for (const select of gmSelectOnly) {
+          select.classList.add('inactive')
+          select.classList.remove('simple-flag')
+        }
       }
     }
   }
@@ -373,17 +380,17 @@ export class CoC7Chat {
   static _onTargetSelect (event) {
     const index = parseInt(event.currentTarget.dataset.key)
     const targetsSelector = event.currentTarget.closest('.targets-selector')
-    targetsSelector.querySelectorAll('img').forEach(i => {
+    for (const i of targetsSelector.querySelectorAll('img')) {
       i.style.border = 'none'
-    })
+    }
     targetsSelector
       .querySelector(`[data-key="${index}"]`)
       .querySelector('img').style.border = '1px solid #000'
     const targets = event.currentTarget.closest('.targets')
-    targets.querySelectorAll('.target').forEach(t => {
+    for (const t of targets.querySelectorAll('.target')) {
       t.style.display = 'none'
       t.dataset.active = 'false'
-    })
+    }
     const targetToDisplay = targets.querySelector(
       `[data-target-key="${index}"]`
     )
@@ -406,9 +413,9 @@ export class CoC7Chat {
     const dropDownBoxes = event.currentTarget
       .closest('.response-selection')
       .querySelectorAll('.toggle-switch')
-    ;[].forEach.call(dropDownBoxes, dpdnBox =>
+    for (const dpdnBox of dropDownBoxes) {
       dpdnBox.classList.remove('switched-on')
-    )
+    }
     event.currentTarget.closest('.toggle-switch').classList.add('switched-on')
 
     // close dropdown
@@ -489,9 +496,9 @@ export class CoC7Chat {
     const dropDownBoxes = event.currentTarget
       .closest('.response-selection')
       .querySelectorAll('.toggle-switch')
-    ;[].forEach.call(dropDownBoxes, dpdnBox =>
+    for (const dpdnBox of dropDownBoxes) {
       dpdnBox.classList.remove('switched-on')
-    )
+    }
     event.currentTarget.classList.add('switched-on') // Need to test if it's really a dodge !!!
 
     // Save action for the roll
@@ -518,9 +525,8 @@ export class CoC7Chat {
   static _onChatCardRadioSwitch (event) {
     // console.log('-->CoC7Chat._onChatCardRadioSwitch');
     event.preventDefault()
-    const optionList = event.currentTarget.parentElement.getElementsByClassName(
-      'radio-switch'
-    )
+    const optionList =
+      event.currentTarget.parentElement.getElementsByClassName('radio-switch')
     let index
     for (index = 0; index < optionList.length; index++) {
       const element = optionList[index]
@@ -696,6 +702,7 @@ export class CoC7Chat {
 
     const button = event.currentTarget
     const card = button.closest('.chat-card')
+    if (!card) return
     const originMessage = button.closest('.message')
     // const messageId = originMessage.dataset.messageId;
     const action = button.dataset.action
@@ -744,9 +751,8 @@ export class CoC7Chat {
           }
         } else {
           const actor = CoC7Chat._getChatCardActor(card)
-          const detailedResultPlaceHolder = card.querySelector(
-            '.result-details'
-          )
+          const detailedResultPlaceHolder =
+            card.querySelector('.result-details')
 
           if (actor.spendLuck(luckAmount)) {
             const result = card.querySelector('.dice-total')
@@ -758,7 +764,7 @@ export class CoC7Chat {
                 detailedResultPlaceHolder.innerText = game.i18n.format(
                   'CoC7.RollResult.LuckSpendText',
                   {
-                    luckAmount: luckAmount,
+                    luckAmount,
                     successLevel: game.i18n.localize('CoC7.RegularDifficulty')
                   }
                 )
@@ -769,7 +775,7 @@ export class CoC7Chat {
                 detailedResultPlaceHolder.innerText = game.i18n.format(
                   'CoC7.RollResult.LuckSpendText',
                   {
-                    luckAmount: luckAmount,
+                    luckAmount,
                     successLevel: game.i18n.localize('CoC7.HardDifficulty')
                   }
                 )
@@ -780,7 +786,7 @@ export class CoC7Chat {
                 detailedResultPlaceHolder.innerText = game.i18n.format(
                   'CoC7.RollResult.LuckSpendText',
                   {
-                    luckAmount: luckAmount,
+                    luckAmount,
                     successLevel: game.i18n.localize('CoC7.ExtremeDifficulty')
                   }
                 )
@@ -791,7 +797,7 @@ export class CoC7Chat {
                 detailedResultPlaceHolder.innerText = game.i18n.format(
                   'CoC7.RollResult.LuckSpendText',
                   {
-                    luckAmount: luckAmount,
+                    luckAmount,
                     successLevel: game.i18n.localize('CoC7.CriticalDifficulty')
                   }
                 )
@@ -901,13 +907,28 @@ export class CoC7Chat {
 
       case 'melee-initiator-roll': {
         const initiator = CoC7MeleeInitiator.getFromCard(card)
-        await initiator.performSkillCheck(event.currentTarget.dataset.skill)
+        const check = await initiator.performSkillCheck(
+          event.currentTarget.dataset.skill
+        )
+        $(button).prop('disabled', true)
+        await CoC7Dice.showRollDice3d(check.dice.roll)
         await initiator.publishCheckResult()
         break
       }
+
+      case 'melee-target-no-response': {
+        const target = CoC7MeleeTarget.getFromCard(card)
+        await target.publishNoReponseResult()
+        break
+      }
+
       case 'melee-target-roll': {
         const target = CoC7MeleeTarget.getFromCard(card)
-        await target.performSkillCheck(event.currentTarget.dataset.skill)
+        const check = await target.performSkillCheck(
+          event.currentTarget.dataset.skill
+        )
+        $(button).prop('disabled', true)
+        await CoC7Dice.showRollDice3d(check.dice.roll)
         await target.publishCheckResult()
         break
       }
@@ -935,7 +956,7 @@ export class CoC7Chat {
         // if( originMessage.dataset.messageId) damageCard.messageId = originMessage.dataset.messageId;
         // damageCard.rollDamage();
         // if( originMessage.dataset.messageId) {
-        //  card.querySelectorAll('.card-buttons').forEach( b => b.remove());
+        //  for (const b of card.querySelectorAll('.card-buttons')) { b.remove() }
         //  await CoC7Chat.updateChatCard( card);
         // }
         break
@@ -1018,7 +1039,7 @@ export class CoC7Chat {
         ) {
           check.updateChatCard({ makePublic: true })
         } else {
-          check.updateChatCard()
+          check.updateChatCard({ makePublic: true })
         }
         break
       }
@@ -1041,14 +1062,7 @@ export class CoC7Chat {
 
       case 'reset-creature-san-data': {
         const sanCheck = SanCheckCard.getFromCard(card)
-        await sanCheck.resetCreatureSanData()
-        await sanCheck.updateChatCard()
-        break
-      }
-
-      case 'reset-specie-san-data': {
-        const sanCheck = SanCheckCard.getFromCard(card)
-        await sanCheck.resetSpecieSanData()
+        await sanCheck.clearSanLossReason()
         await sanCheck.updateChatCard()
         break
       }

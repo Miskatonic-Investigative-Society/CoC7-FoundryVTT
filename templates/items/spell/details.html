@@ -1,0 +1,56 @@
+<div class="details">
+  <div class="type">
+    <label>{{localize "CoC7.SpellType"}}</label>
+      <div class="flexrow">
+        <input id="bind" type="checkbox" name="data.type.bind" {{checked data.type.bind}}/>
+        <label class="option" for="data.type.bind">{{localize "CoC7.BindSpell"}}</label>
+        <input id="call" type="checkbox" name="data.type.call" {{checked data.type.call}}/>
+        <label class="option" for="data.type.call">{{localize "CoC7.CallSpell"}}</label>
+        <input id="combat" type="checkbox" name="data.type.combat" {{checked data.type.combat}}/>
+        <label class="option" for="data.type.combat">{{localize "CoC7.CombatSpell"}}</label>
+        <input id="contact" type="checkbox" name="data.type.contact" {{checked data.type.contact}}/>
+        <label class="option" for="data.type.contact">{{localize "CoC7.ContactSpell"}}</label>
+        <input id="dismiss" type="checkbox" name="data.type.dismiss" {{checked data.type.dismiss}}/>
+        <label class="option" for="data.type.dismiss">{{localize "CoC7.DismissSpell"}}</label>
+        <input id="enchantment" type="checkbox" name="data.type.enchantment" {{checked data.type.enchantment}}/>
+        <label class="option" for="data.type.enchantment">{{localize "CoC7.EnchantmentSpell"}}</label>
+        <input id="gate" type="checkbox" name="data.type.gate" {{checked data.type.gate}}/>
+        <label class="option" for="data.type.gate">{{localize "CoC7.GateSpell"}}</label>
+        <input id="summon" type="checkbox" name="data.type.summon" {{checked data.type.summon}}/>
+        <label class="option" for="data.type.summon">{{localize "CoC7.SummonSpell"}}</label>
+      </div>
+  </div>
+  <div class="cost">
+    <div class="left">
+      <div class="flexrow">
+        <label>{{localize "CoC7.SanityCost"}}:</label>
+        <input type="text" name="data.costs.sanity" value="{{data.costs.sanity}}"/>
+      </div>
+      <div class="flexrow">
+        <label>{{localize "CoC7.PowerCost"}}:</label>
+        <input type="text" name="data.costs.power" value="{{data.costs.power}}"/>
+      </div>
+    </div>
+    <div class="right">
+      <div class="flexrow">
+        <label>{{localize "CoC7.HitPointsCost"}}:</label>
+        <input type="text" name="data.costs.hitPoints" value="{{data.costs.hitPoints}}"/>
+      </div>
+      <div class="flexrow">
+        <label>{{localize "CoC7.MagicPointsCost"}}:</label>
+        <input type="text" name="data.costs.magicPoints" value="{{data.costs.magicPoints}}"/>
+      </div>
+    </div>
+  </div>
+  <div class="other">
+    <div class="flexrow">
+      <label>{{localize "CoC7.OtherCosts"}}:</label>
+      <input type="text" name="data.costs.others" value="{{data.costs.others}}"/>
+    </div>
+  </div>
+  <div class="combat">
+    {{#if data.type.combat}}
+      <label>Combat</label>
+    {{/if}}
+  </div>
+</div>

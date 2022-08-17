@@ -2,8 +2,21 @@
   &.character {
     .floating-left {
       position: absolute;
-      left: 140px;
+      left: 135px;
       color: var(--main-sheet-front-color);
+      // div {
+      //   display: flex;
+      //   flex-direction: row;
+      //   position: relative;
+      //   right: 1.3rem;
+      // }
+      a {
+        display: block;
+        // &.clean-skill-list {
+        //   font-size: 1rem;
+        //   margin-right: 0.3rem;
+        // }
+      }
     }
 
     .manual-override {
@@ -24,6 +37,21 @@
       border-image: var(--main-sheet-bg);
       border-image-slice: 450 200 50 200 fill;
       border-image-width: 450 200 50 200;
+      &.permission-limited {
+        background: var(--other-sheet-bg);
+        background-repeat: repeat;
+        border-image: none;
+        padding: 0 5px;
+        img.photo {
+          border: 0;
+        }
+        .sheet-portrait {
+          flex: 0 0 auto;
+          padding-bottom: 10px;
+          border-bottom: 2px groove;
+          justify-content: center;
+        }
+      }
       .container {
         background-image: var(--main-sheet-image);
         background-repeat: no-repeat;
@@ -106,6 +134,9 @@
                 grid-template-columns: auto 2rem;
                 align-items: center;
                 justify-content: center;
+                &.flex {
+                  display: flex;
+                }
               }
 
               .attribute-label {
@@ -241,7 +272,7 @@
           display: flex;
           flex-direction: row;
           flex-wrap: wrap;
-          justify-content: flex-start;
+          justify-content: space-around;
           align-items: center;
 
           a {
@@ -252,9 +283,20 @@
             }
 
             &.active {
+              &.keeper-only-tab span {
+                background-color: @colorGreen;
+                color: white;
+              }
               span {
                 color: white;
                 background-color: var(--main-sheet-front-color);
+              }
+            }
+            &.keeper-only-tab span {
+              color: @colorGreen;
+
+              &:hover {
+                border: 1px solid @colorGreen;
               }
             }
           }
@@ -284,7 +326,7 @@
             margin-top: 2px;
           }
 
-          .unlock-control-disabbled {
+          .unlock-control-disabled {
             flex: 0 0 1.5rem;
             margin-top: 2px;
             color: darkred;
@@ -316,6 +358,12 @@
             list-style-type: decimal;
           }
 
+          .character-background {
+            .editor {
+              height: calc(100% - 40px);
+            }
+          }
+
           .tab {
             height: 100%;
           }
@@ -334,7 +382,7 @@
               text-align: center;
 
               a:hover {
-                text-shadow: 0 0 10px var(--main-sheet-interactie-color);
+                text-shadow: 0 0 10px var(--main-sheet-interactive-color);
               }
             }
 
@@ -353,6 +401,7 @@
             height: 100%;
             flex-direction: column;
             flex-wrap: wrap;
+            margin: 0 0 10px;
           }
 
           .specialization-header {

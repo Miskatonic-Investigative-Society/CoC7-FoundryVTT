@@ -1,5 +1,6 @@
-/* global canvas, ChatMessage, CONST, game, getDocumentClass, Macro, Roll, ui */
+/* global canvas, ChatMessage, CONFIG, CONST, Dialog, duplicate, Folder, fromUuid, game, getDocumentClass, Hooks, Macro, Roll, Token, ui */
 
+import { COC7 } from './config.js'
 import { CoC7Check } from './check.js'
 import { CoC7Item } from './items/item.js'
 import { RollDialog } from './apps/roll-dialog.js'
@@ -14,7 +15,7 @@ export class CoC7Utilities {
   //   if (speaker.token) actor = game.actors.tokens[speaker.token];
   //   if (!actor) actor = game.actors.get(speaker.actor);
 
-  //  actor.inflictMajorWound();
+  //  actor.setCondition(COC7.status.criticalWounds);
   // }
 
   static isFormula (x) {
@@ -56,16 +57,16 @@ export class CoC7Utilities {
       const thresholdStr = escaped.match(/[^(]+(?=\))/)
       if (thresholdStr && thresholdStr.length) {
         threshold = Number(thresholdStr[0])
-        thresholdStr.forEach(match => {
+        for (const match of thresholdStr) {
           escaped = escaped.replace(`(${match})`, '')
-        })
+        }
       }
       const difficultyStr = escaped.match(/[^[]+(?=\])/)
       if (difficultyStr && difficultyStr.length) {
         difficulty = CoC7Utilities.convertDifficulty(difficultyStr[0])
-        difficultyStr.forEach(match => {
+        for (const match of difficultyStr) {
           escaped = escaped.replace(`[${match}]`, '')
-        })
+        }
       }
       if (escaped.includes('?')) {
         ask = true
@@ -75,9 +76,9 @@ export class CoC7Utilities {
 
       if (ask) {
         const dialogOptions = {
-          threshold: threshold,
+          threshold,
           modifier: diceModifier,
-          difficulty: difficulty,
+          difficulty,
           askValue: true
         }
         const usage = await RollDialog.create(dialogOptions)
@@ -113,56 +114,6 @@ export class CoC7Utilities {
 
   static async test () {
     ui.notifications.infos('Do some stuff')
-  }
-
-  static getCreatureSanData (creature) {
-    let creatureData
-    let actor
-    if (creature.constructor.name === 'CoCActor') {
-      actor = creature
-    }
-
-    if (typeof creature === 'string') {
-      actor = CoC7Utilities.getActorFromString(creature)
-    }
-
-    if (actor) {
-      if (actor.isToken) {
-        const specie = game.actors.get(actor.id)
-        // The token has a different maximum san loss.
-        // We assume it's a special represantant of his specie.
-        // The san loss for encoutered creature will counted for that token in particular
-        // and for the all specie
-        if (specie && specie.sanLossMax !== actor.sanLossMax) {
-          creatureData = {
-            id: actor.token.id,
-            name: actor.name,
-            sanLossMax: actor.sanLossMax,
-            specie: {
-              id: specie.id,
-              name: specie.name,
-              sanLossMax: specie.sanLossMax
-            }
-          }
-        } else {
-          // If they induce the same SAN loos credit everything to the specie.
-          // If the actor doen't exist in actor directory use the token data instead.
-          creatureData = {
-            id: specie ? specie.id : actor.id,
-            name: specie ? specie.name : actor.name,
-            sanLossMax: specie ? specie.sanLossMax : actor.sanLossMax
-          }
-        }
-      } else {
-        creatureData = {
-          id: actor.id,
-          name: actor.name,
-          sanLossMax: actor.sanLossMax
-        }
-      }
-      return creatureData
-    } else if (typeof creature === 'object') return creature
-    return null
   }
 
   static getActorFromString (actorString) {
@@ -324,7 +275,7 @@ export class CoC7Utilities {
   }
 
   static async checkMacro (threshold = undefined, event = null) {
-    await CoC7Utilities.rollDice(event, { threshold: threshold })
+    await CoC7Utilities.rollDice(event, { threshold })
   }
 
   static async createMacro (bar, data, slot) {
@@ -383,134 +334,175 @@ export class CoC7Utilities {
         name: item.name,
         type: 'script',
         img: item.img,
-        command: command
+        command
       })
     }
     game.user.assignHotbarMacro(macro, slot)
     return false
   }
 
-  static async toggleDevPhase () {
-    const isDevEnabled = game.settings.get('CoC7', 'developmentEnabled')
-    await game.settings.set('CoC7', 'developmentEnabled', !isDevEnabled)
-    const group = game.CoC7.menus.controls.find(b => b.name === 'main-menu')
-    const tool = group.tools.find(t => t.name === 'devphase')
-    tool.title = game.settings.get('CoC7', 'developmentEnabled')
-      ? game.i18n.localize('CoC7.DevPhaseEnabled')
-      : game.i18n.localize('CoC7.DevPhaseDisabled')
+  static async toggleDevPhase (toggle) {
+    await game.settings.set('CoC7', 'developmentEnabled', toggle)
     ui.notifications.info(
-      game.settings.get('CoC7', 'developmentEnabled')
+      toggle
         ? game.i18n.localize('CoC7.DevPhaseEnabled')
         : game.i18n.localize('CoC7.DevPhaseDisabled')
     )
-    ui.controls.render()
     game.socket.emit('system.CoC7', {
       type: 'updateChar'
     })
     CoC7Utilities.updateCharSheets()
   }
 
-  static async toggleCharCreation () {
-    const isCharCreation = game.settings.get('CoC7', 'charCreationEnabled')
-    await game.settings.set('CoC7', 'charCreationEnabled', !isCharCreation)
-    const group = game.CoC7.menus.controls.find(b => b.name === 'main-menu')
-    const tool = group.tools.find(t => t.name === 'charcreate')
-    tool.title = game.settings.get('CoC7', 'charCreationEnabled')
-      ? game.i18n.localize('CoC7.CharCreationEnabled')
-      : game.i18n.localize('CoC7.CharCreationDisabled')
+  static async toggleCharCreation (toggle) {
+    await game.settings.set('CoC7', 'charCreationEnabled', toggle)
     ui.notifications.info(
-      game.settings.get('CoC7', 'charCreationEnabled')
+      toggle
         ? game.i18n.localize('CoC7.CharCreationEnabled')
         : game.i18n.localize('CoC7.CharCreationDisabled')
     )
-    ui.controls.render()
     game.socket.emit('system.CoC7', {
       type: 'updateChar'
     })
     CoC7Utilities.updateCharSheets()
+    Hooks.call('toggleCharCreation', toggle)
   }
 
-  static async startRest () {
-    const actors = game.actors.filter(actor => actor.hasPlayerOwner)
-    let chatContent = `<i>${game.i18n.localize('CoC7.dreaming')}...</i><br>`
+  static async getTarget () {
+    const users = game.users.filter(user => user.active)
+    const actors = game.actors
+    let checkOptions = `<input type="checkbox" name="COCCheckAllPC" id="COCCheckAllPC">\n
+    <label for="COCCheckAllPC">${game.i18n.localize('CoC7.allActors')}</label>`
+    const playerTokenIds = users
+      .map(u => u.character?.id)
+      .filter(id => id !== undefined)
+    const selectedPlayerIds = canvas.tokens.controlled.map(token => {
+      return token.actor.id
+    })
+
+    // Build checkbox list for all active players
     actors.forEach(actor => {
-      let quickHealer = false
-      actor.data.items.forEach(item => {
-        if (item.type === 'talent') {
-          if (item.name === `${game.i18n.localize('CoC7.quickHealer')}`) {
-            quickHealer = true
+      const checked =
+        (selectedPlayerIds.includes(actor.id) ||
+          playerTokenIds.includes(actor.id)) &&
+        'checked'
+      checkOptions += `
+     <br>
+     <input type="checkbox" name="${actor.id}" id="${actor.id}" value="${actor.name}" ${checked}>\n
+     <label for="${actor.id}">${actor.name}</label>
+       `
+    })
+
+    new Dialog({
+      title: `${game.i18n.localize('CoC7.dreaming')}`,
+      content: `${game.i18n.localize(
+        'CoC7.restTargets'
+      )}: ${checkOptions} <br>`,
+      buttons: {
+        whisper: {
+          label: `${game.i18n.localize('CoC7.startRest')}`,
+          callback: async html => {
+            const targets = []
+            let all = false
+            const users = html.find('[type="checkbox"]')
+            for (const user of users) {
+              if (user.name === 'COCCheckAllPC' && user.checked) all = true
+              if (user.checked || all) targets.push(user.id)
+            }
+            await CoC7Utilities.startRest(targets)
           }
         }
-      })
-      const isCriticalWounds = actor.data.data.status.criticalWounds.value
-      const dailySanityLoss = actor.data.data.attribs.san.dailyLoss
-      const hpValue = actor.data.data.attribs.hp.value
-      const hpMax = actor.data.data.attribs.hp.max
-      const oneFifthSanity =
-        ' / ' + Math.floor(actor.data.data.attribs.san.value / 5)
-      const mpValue = actor.data.data.attribs.mp.value
-      const mpMax = actor.data.data.attribs.mp.max
-      chatContent = chatContent + `<br><b>${actor.name}. </b>`
-      if (isCriticalWounds === false && hpValue < hpMax) {
-        if (game.settings.get('CoC7', 'pulpRules') && quickHealer === true) {
-          chatContent =
-            chatContent +
-            `<b style="color:darkolivegreen">${game.i18n.format(
-              'CoC7.pulpHealthRecovered',
-              { number: 3 }
-            )}. </b>`
-          actor.update({
-            'data.attribs.hp.value': actor.data.data.attribs.hp.value + 3
-          })
-        } else if (game.settings.get('CoC7', 'pulpRules')) {
-          chatContent =
-            chatContent +
-            `<b style="color:darkolivegreen">${game.i18n.format(
-              'CoC7.pulpHealthRecovered',
-              { number: 2 }
-            )}. </b>`
-          actor.update({
-            'data.attribs.hp.value': actor.data.data.attribs.hp.value + 2
-          })
-        } else {
+      }
+    }).render(true)
+  }
+
+  static async startRest (targets) {
+    if (!targets.length) return
+    const actors = game.actors.filter(actor => targets.includes(actor.id))
+    let chatContent = `<i>${game.i18n.localize('CoC7.dreaming')}...</i><br>`
+    for (const actor of actors) {
+      if (['character', 'npc', 'creature'].includes(actor.type)) {
+        let quickHealer = false
+        for (const item of actor.data.items) {
+          if (item.type === 'talent') {
+            if (item.name === `${game.i18n.localize('CoC7.quickHealer')}`) {
+              quickHealer = true
+            }
+          }
+        }
+        const isCriticalWounds =
+          !game.settings.get('CoC7', 'pulpRuleIgnoreMajorWounds') &&
+          actor.hasConditionStatus(COC7.status.criticalWounds)
+        const dailySanityLoss = actor.data.data.attribs.san.dailyLoss
+        const hpValue = actor.data.data.attribs.hp.value
+        const hpMax = actor.data.data.attribs.hp.max
+        const mpValue = actor.data.data.attribs.mp.value
+        const mpMax = actor.data.data.attribs.mp.max
+        const pow = actor.data.data.characteristics.pow.value
+        chatContent = chatContent + `<br><b>${actor.name}. </b>`
+        if (hpValue < hpMax) {
+          if (isCriticalWounds === true) {
+            chatContent =
+              chatContent +
+              `<b style="color:darkred">${game.i18n.localize(
+                'CoC7.hasCriticalWounds'
+              )}. </b>`
+          } else {
+            let healAmount = 1
+            if (game.settings.get('CoC7', 'pulpRuleFasterRecovery')) {
+              healAmount = 2
+            }
+            if (quickHealer === true) {
+              healAmount++
+            }
+            healAmount = Math.min(healAmount, hpMax - hpValue)
+            if (healAmount === 1) {
+              chatContent =
+                chatContent +
+                `<b style="color:darkolivegreen">${game.i18n.localize(
+                  'CoC7.healthRecovered'
+                )}. </b>`
+            } else {
+              chatContent =
+                chatContent +
+                `<b style="color:darkolivegreen">${game.i18n.format(
+                  'CoC7.pulpHealthRecovered',
+                  { number: healAmount }
+                )}. </b>`
+            }
+            actor.update({
+              'data.attribs.hp.value':
+                actor.data.data.attribs.hp.value + healAmount
+            })
+          }
+        }
+        if (dailySanityLoss > 0) {
           chatContent =
             chatContent +
             `<b style="color:darkolivegreen">${game.i18n.localize(
-              'CoC7.healthRecovered'
-            )}. </b>`
+              'CoC7.dailySanLossRestarted'
+            )}.</b>`
           actor.update({
-            'data.attribs.hp.value': actor.data.data.attribs.hp.value + 1
+            'data.attribs.san.dailyLoss': 0,
+            'data.attribs.san.dailyLimit': Math.floor(actor.data.data.attribs.san.value / 5)
           })
         }
-      } else if (isCriticalWounds === true && hpValue < hpMax) {
-        chatContent =
-          chatContent +
-          `<b style="color:darkred">${game.i18n.localize(
-            'CoC7.hasCriticalWounds'
-          )}. </b>`
+        const hours = 7
+        if (hours > 0 && mpValue < mpMax) {
+          let magicAmount = hours * Math.ceil(pow / 100)
+          magicAmount = Math.min(magicAmount, mpMax - mpValue)
+          chatContent =
+            chatContent +
+            `<b style="color:darkolivegreen">${game.i18n.format(
+              'CoC7.magicPointsRecovered'
+            )}: ${magicAmount}.</b>`
+          actor.update({
+            'data.attribs.mp.value':
+              actor.data.data.attribs.mp.value + magicAmount
+          })
+        }
       }
-      if (dailySanityLoss > 0) {
-        chatContent =
-          chatContent +
-          `<b style="color:darkolivegreen">${game.i18n.localize(
-            'CoC7.dailySanLossRestarted'
-          )}.</b>`
-        actor.update({
-          'data.attribs.san.dailyLoss': 0,
-          'data.attribs.san.oneFifthSanity': oneFifthSanity
-        })
-      }
-      if (mpValue < mpMax) {
-        chatContent =
-          chatContent +
-          `<b style="color:darkolivegreen">${game.i18n.format(
-            'CoC7.magicPointsRecovered'
-          )}: 7.</b>`
-        actor.update({
-          'data.attribs.mp.value': actor.data.data.attribs.mp.value + 7
-        })
-      }
-    })
+    }
     const chatData = {
       user: game.user.id,
       speaker: ChatMessage.getSpeaker(),
@@ -520,20 +512,13 @@ export class CoC7Utilities {
     ChatMessage.create(chatData)
   }
 
-  static async toggleXPGain () {
-    const isXPEnabled = game.settings.get('CoC7', 'xpEnabled')
-    await game.settings.set('CoC7', 'xpEnabled', !isXPEnabled)
-    const group = game.CoC7.menus.controls.find(b => b.name === 'main-menu')
-    const tool = group.tools.find(t => t.name === 'xptoggle')
-    tool.title = game.settings.get('CoC7', 'xpEnabled')
-      ? game.i18n.localize('CoC7.XPGainEnabled')
-      : game.i18n.localize('CoC7.XPGainDisabled')
+  static async toggleXPGain (toggle) {
+    await game.settings.set('CoC7', 'xpEnabled', toggle)
     ui.notifications.info(
-      game.settings.get('CoC7', 'xpEnabled')
+      toggle
         ? game.i18n.localize('CoC7.XPGainEnabled')
         : game.i18n.localize('CoC7.XPGainDisabled')
     )
-    ui.controls.render()
   }
 
   static async rollDice (event, options = {}) {
@@ -560,14 +545,14 @@ export class CoC7Utilities {
     const actors = []
 
     if (game.user.isGM && canvas.tokens.controlled.length) {
-      canvas.tokens.controlled.forEach(token => {
+      for (const token of canvas.tokens.controlled) {
         actors.push(token.actor.tokenKey)
-      })
+      }
     } else if (game.user.character) {
       actors.push(game.user.character.tokenKey)
     }
 
-    await actors.forEach(async tk => {
+    for (const tk of actors) {
       const check = new CoC7Check()
       check.diceModifier = diceModifier || 0
       check.difficulty = difficulty || CoC7Check.difficultyLevel.regular
@@ -577,7 +562,7 @@ export class CoC7Utilities {
       check.actor = tk
       await check.roll()
       check.toMessage()
-    })
+    }
 
     if (!actors.length) {
       const check = new CoC7Check()
@@ -593,19 +578,19 @@ export class CoC7Utilities {
 
   static updateCharSheets () {
     if (game.user.isGM) {
-      game.actors.contents.forEach(a => {
+      for (const a of game.actors.contents) {
         if (a?.data?.type === 'character' && a?.sheet && a?.sheet?.rendered) {
           a.update({ 'data.flags.locked': true })
           a.render(false)
         }
-      })
+      }
     } else {
-      game.actors.contents.forEach(a => {
+      for (const a of game.actors.contents) {
         if (a.isOwner) {
           a.update({ 'data.flags.locked': true })
           a.render(false)
         }
-      })
+      }
     }
   }
 
@@ -654,12 +639,298 @@ export class CoC7Utilities {
         textArea.focus()
         textArea.select()
         return new Promise((resolve, reject) => {
-          document.execCommand('copy') ? resolve() : reject(new Error('Unable to copy to clipboard, this is likely due to your browser security settings.'))
+          document.execCommand('copy')
+            ? resolve()
+            : reject(
+              new Error(game.i18n.localize('CoC7.UnableToCopyToClipboard'))
+            )
           textArea.remove()
         }).catch(err => ui.notifications.error(err))
       }
     } catch (err) {
-      ui.notifications.error('Unable to copy to clipboard, this is likely due to your browser security settings.')
+      ui.notifications.error(game.i18n.localize('CoC7.UnableToCopyToClipboard'))
+    }
+  }
+
+  static quoteRegExp (string) {
+    // https://bitbucket.org/cggaertner/js-hacks/raw/master/quote.js
+    const len = string.length
+    let qString = ''
+
+    for (let current, i = 0; i < len; ++i) {
+      current = string.charAt(i)
+
+      if (current >= ' ' && current <= '~') {
+        if (current === '\\' || current === "'") {
+          qString += '\\'
+        }
+
+        qString += current.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&')
+      } else {
+        switch (current) {
+          case '\b':
+            qString += '\\b'
+            break
+
+          case '\f':
+            qString += '\\f'
+            break
+
+          case '\n':
+            qString += '\\n'
+            break
+
+          case '\r':
+            qString += '\\r'
+            break
+
+          case '\t':
+            qString += '\\t'
+            break
+
+          case '\v':
+            qString += '\\v'
+            break
+
+          default:
+            qString += '\\u'
+            current = current.charCodeAt(0).toString(16)
+            for (let j = 4; --j >= current.length; qString += '0');
+            qString += current
+        }
+      }
+    }
+
+    return qString
+  }
+
+  static setByPath (obj, path, value) {
+    const parts = path.split('.')
+    let o = obj
+    if (parts.length > 1) {
+      for (let i = 0; i < parts.length - 1; i++) {
+        if (!o[parts[i]]) o[parts[i]] = {}
+        o = o[parts[i]]
+      }
+    }
+
+    o[parts[parts.length - 1]] = value
+  }
+
+  static getByPath (obj, path) {
+    const parts = path.split('.')
+    let o = obj
+    if (parts.length > 1) {
+      for (let i = 0; i < parts.length - 1; i++) {
+        if (!o[parts[i]]) return undefined
+        o = o[parts[i]]
+      }
+    }
+
+    return o[parts[parts.length - 1]]
+  }
+
+  /**
+   * Retrieve a Document by its Universally Unique Identifier (uuid).
+   * @param {string} uuid   The uuid of the Document to retrieve
+   * @return {Promise<Document|null>}
+   */
+  static SfromUuid (uuid) {
+    let parts = uuid.split('.')
+    let doc
+
+    // Compendium Documents
+    if (parts[0] === 'Compendium') {
+      return null
+      // return fromUuid(uuid) // Return Promise
+      // parts.shift();
+      // const [scope, packName, id] = parts.slice(0, 3);
+      // parts = parts.slice(3);
+      // const pack = game.packs.get(`${scope}.${packName}`);
+      // return await pack?.getDocument(id);
+    } else {
+      // World Documents
+      const [docName, docId] = parts.slice(0, 2)
+      parts = parts.slice(2)
+      const collection = CONFIG[docName].collection.instance
+      doc = collection.get(docId)
+    }
+
+    // Embedded Documents
+    while (doc && parts.length > 1) {
+      const [embeddedName, embeddedId] = parts.slice(0, 2)
+      doc = doc.getEmbeddedDocument(embeddedName, embeddedId)
+      parts = parts.slice(2)
+    }
+    return doc || null
+  }
+
+  static isDocumentUuidPack (uuid) {
+    if (uuid.includes('Compendium')) return true
+    else return false
+  }
+
+  static isDocumentUuid (uuid) {
+    const identifiers = ['Actor', 'Scene', 'Token', 'Item', 'Compendium']
+    for (let i = 0; i < identifiers.length; i++) {
+      if (uuid.includes(identifiers[i])) return true
+    }
+    return false
+  }
+
+  static getActorDocumentFromDropData (dropData) {
+    let docUuid, actor
+    if (dropData.tokenUuid) {
+      docUuid = dropData.tokenUuid
+    } else if (typeof dropData.uuid !== 'undefined') {
+      docUuid = dropData.uuid
+    } else {
+      docUuid =
+        dropData.sceneId && dropData.tokenId
+          ? `Scene.${dropData.sceneId}.Token.${dropData.tokenId}`
+          : dropData.actorId || dropData.actorKey || dropData.id
+    }
+    if (dropData.type === 'Token') {
+      docUuid = dropData.uuid
+    } else if (docUuid) {
+      actor = CoC7Utilities.getActorFromKey(docUuid)
+      if (!actor && dropData.type === 'Item') docUuid = null
+    }
+
+    if (actor && docUuid !== actor.uuid) {
+      docUuid = actor.uuid
+    }
+    return docUuid
+  }
+
+  static getDocumentFromKey (key) {
+    if (!key) return null
+    // Case 0 - a document Uuid
+    if (CoC7Utilities.isDocumentUuid(key)) {
+      if (CoC7Utilities.isDocumentUuidPack(key)) return fromUuid(key) // TODO Check we can do that
+      return CoC7Utilities.SfromUuid(key)
+    }
+
+    // Case 1 - a synthetic actor from a Token
+    if (key.includes('.')) {
+      // REFACTORING (2)
+      const [sceneId, tokenId] = key.split('.')
+      if (sceneId === 'TOKEN') {
+        return game.actors.tokens[tokenId] // REFACTORING (2)
+      }
+      const scene = game.scenes.get(sceneId)
+      if (!scene) return null
+      const tokenData = scene.getEmbeddedDocument('Token', tokenId)
+      if (!tokenData) return null
+      const token = new Token(tokenData)
+      if (!token.scene) token.scene = duplicate(scene.data)
+      return token
+    }
+    // Case 2 - use Actor ID directory
+    return game.actors.get(key) || null
+  }
+
+  static getActorFromKey (key) {
+    const doc = CoC7Utilities.getDocumentFromKey(key)
+    if (!doc) return null
+    if (doc.actor) return doc.actor
+    if (doc.constructor?.name === 'CoCActor') return doc
+    return null
+  }
+
+  /**
+   * Creates a folder on the actors tab called "Imported Characters" if the folder doesn't exist.
+   * @returns {Folder} the importedCharactersFolder
+   */
+  static async createImportCharactersFolderIfNotExists () {
+    let folderName = game.i18n.localize('CoC7.ImportedCharactersFolder')
+    if (folderName === 'CoC7.ImportedCharactersFolder') {
+      folderName = 'Imported characters'
+    }
+    let importedCharactersFolder = game.folders.find(
+      entry => entry.data.name === folderName && entry.data.type === 'Actor'
+    )
+    if (
+      importedCharactersFolder === null ||
+      typeof importedCharactersFolder === 'undefined'
+    ) {
+      // Create the folder
+      importedCharactersFolder = await Folder.create({
+        name: folderName,
+        type: 'Actor',
+        parent: null
+      })
+      ui.notifications.info(
+        game.i18n.localize('CoC7.CreatedImportedCharactersFolder')
+      )
+    }
+    return importedCharactersFolder
+  }
+
+  /**
+   * guessItem, try and find the item in the locations defined in ${source} i = Item Directory, w = World Compendiums, m = Module Compendiums, s = System Compendiums
+   * @param {String} type Item type to find
+   * @param {String} name Name of item to find
+   * @param {Object} combat null (default). If boolean combat property of skill must match
+   * @param {Object} source '' (default). Check order
+   * @param {Object} fallbackAny false (default). Should any specialization that isn't found try using (Any) items
+   * @returns {Object} formatted Actor data Item or null
+   */
+  static async guessItem (
+    type,
+    name,
+    { combat = null, source = '', fallbackAny = false } = {}
+  ) {
+    let existing = null
+    name = name.toLowerCase()
+    for (let o = 0, oM = source.length; o < oM; o++) {
+      switch (source.substring(o, o + 1)) {
+        case 'i':
+          existing = game.items.find(
+            item =>
+              item.data.type === type &&
+              item.data.name.toLowerCase() === name &&
+              (combat === null || item.data.properties.combat === combat)
+          )
+          if (existing) {
+            return existing
+          }
+          break
+        case 'w':
+        case 'm':
+        case 's':
+          for (const pack of game.packs) {
+            if (
+              pack.metadata.type === 'Item' &&
+              ((source[o] === 'w' && pack.metadata.package === 'world') ||
+                (source[o] === 'S' && pack.metadata.package === 'CoC7') ||
+                (source[o] === 's' &&
+                  !['world', 'CoC7'].includes(pack.metadata.package)))
+            ) {
+              const documents = await pack.getDocuments()
+              existing = documents.find(
+                item =>
+                  item.data.type === type &&
+                  item.data.name.toLowerCase() === name &&
+                  (combat === null || item.data.properties.combat === combat)
+              )
+              if (existing) {
+                return existing
+              }
+            }
+          }
+          break
+      }
+    }
+    if (fallbackAny && type === 'skill') {
+      const match = name.match(/^(.+ \()(?!any).+(\))$/)
+      if (match) {
+        return await CoC7Utilities.guessItem(
+          type,
+          match[1] + 'any' + match[2],
+          { combat, source }
+        )
+      }
     }
   }
 }

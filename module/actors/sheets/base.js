@@ -1,20 +1,20 @@
-/* global $, ActorSheet, ChatMessage, CONST, Dialog, game, getProperty, mergeObject, Roll, TextEditor, ui */
+/* global $, ActorSheet, ChatMessage, CONST, Dialog, FormData, foundry, game, getProperty, Hooks, Item, mergeObject, Roll, TextEditor, ui */
 
 import { RollDialog } from '../../apps/roll-dialog.js'
+import { CoC7ChatMessage } from '../../apps/coc7-chat-message.js'
 import { CoC7Check } from '../../check.js'
 import { COC7 } from '../../config.js'
+import { CoC7Item } from '../../items/item.js'
 import { CoC7MeleeInitiator } from '../../chat/combat/melee-initiator.js'
 import { CoC7RangeInitiator } from '../../chat/rangecombat.js'
 // import { CoC7DamageRoll } from '../../chat/damagecards.js';
 import { CoC7ConCheck } from '../../chat/concheck.js'
 import { isCtrlKey } from '../../chat/helper.js'
 import { CoC7Parser } from '../../apps/parser.js'
-import { SanDataDialog } from '../../apps/sandata-dialog.js'
-import { SanCheckCard } from '../../chat/cards/san-check.js'
-import { OpposedCheckCard } from '../../chat/cards/opposed-roll.js'
-import { CombinedCheckCard } from '../../chat/cards/combined-roll.js'
 import { DamageCard } from '../../chat/cards/damage.js'
 import { CoC7LinkCreationDialog } from '../../apps/link-creation-dialog.js'
+import CoC7ActiveEffect from '../../active-effect.js'
+import { CoC7Link } from '../../apps/link.js'
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -29,6 +29,11 @@ export class CoC7ActorSheet extends ActorSheet {
     data.editable = this.isEditable // MODIF 0.8.x : editable removed
     /******************/
 
+    data.showHiddenDevMenu = game.settings.get('CoC7', 'hiddendevmenu')
+
+    data.hasToken = !!this.token
+    data.canDragToken = data.hasToken && game.user.isGM
+    data.linkedActor = this.actor.data?.token?.actorLink
     data.isToken = this.actor.isToken
     data.itemsByType = {}
     data.skills = {}
@@ -38,12 +43,17 @@ export class CoC7ActorSheet extends ActorSheet {
     data.meleeWpn = []
     data.actorFlags = {}
 
+    data.effects =
+      this.actor.type === 'character'
+        ? CoC7ActiveEffect.prepareActiveEffectCategories(this.actor.effects)
+        : CoC7ActiveEffect.prepareNPCActiveEffectCategories(this.actor.effects)
+
     data.permissionLimited =
-      (this.actor.data.permission[game.user.id] ===
-        CONST.ENTITY_PERMISSIONS.LIMITED ||
-        this.actor.data.permission.default ===
-          CONST.ENTITY_PERMISSIONS.LIMITED) &&
-      !game.user.isGM
+      !game.user.isGM &&
+      (this.actor.data.permission[game.user.id] ??
+        this.actor.data.permission.default) ===
+        (CONST.DOCUMENT_OWNERSHIP_LEVELS || CONST.ENTITY_PERMISSIONS).LIMITED
+
     data.isGM = game.user.isGM
     data.alowUnlock =
       game.settings.get('CoC7', 'playerUnlockSheetMode') === 'always' ||
@@ -157,18 +167,6 @@ export class CoC7ActorSheet extends ActorSheet {
         }
       }
 
-      if (!data.data.status) {
-        data.data.status = {
-          criticalWounds: { type: 'Boolean', value: false },
-          unconscious: { type: 'Boolean', value: false },
-          dying: { type: 'Boolean', value: false },
-          dead: { type: 'Boolean', value: false },
-          prone: { type: 'Boolean', value: false },
-          tempoInsane: { type: 'boolean', value: false },
-          indefInsane: { type: 'boolean', value: false }
-        }
-      }
-
       if (!data.data.biography) {
         data.data.biography = {
           personalDescription: { type: 'string', value: '' }
@@ -210,13 +208,12 @@ export class CoC7ActorSheet extends ActorSheet {
       }
 
       if (!data.data.biography) data.data.biography = []
-      if (!data.data.encounteredCreatures) data.data.encounteredCreatures = []
 
-      data.isInABoutOfMadness = this.actor.isInABoutOfMadness
-      data.isInsane = this.actor.isInsane
-      data.boutOfMadness = this.actor.boutOfMadness
-      data.sanity = this.actor.sanity
-      data.pulpCharacter = game.settings.get('CoC7', 'pulpRules')
+      data.pulpRuleArchetype = game.settings.get('CoC7', 'pulpRuleArchetype')
+      data.pulpRuleOrganization = game.settings.get(
+        'CoC7',
+        'pulpRuleOrganization'
+      )
     }
 
     data.isDead = this.actor.dead
@@ -229,36 +226,14 @@ export class CoC7ActorSheet extends ActorSheet {
         if (item.type === 'skill') {
           if (item.data.properties.special) {
             if (item.data.properties.fighting) {
-              if (
-                item.data.specialization !==
-                game.i18n.localize('CoC7.FightingSpecializationName')
-              ) {
-                const itemToUpdate = this.actor.items.get(item._id)
-                await itemToUpdate.update({
-                  'data.specialization': game.i18n.localize(
-                    'CoC7.FightingSpecializationName'
-                  )
-                })
-                item.data.specialization = game.i18n.localize(
-                  'CoC7.FightingSpecializationName'
-                ) // TODO : Client with different language = recursive call when opening the same sheet.
-              }
+              item.data.specialization = game.i18n.localize(
+                'CoC7.FightingSpecializationName'
+              )
             }
             if (item.data.properties.firearm) {
-              if (
-                item.data.specialization !==
-                game.i18n.localize('CoC7.FirearmSpecializationName')
-              ) {
-                const itemToUpdate = this.actor.items.get(item._id)
-                await itemToUpdate.update({
-                  'data.specialization': game.i18n.localize(
-                    'CoC7.FirearmSpecializationName'
-                  )
-                })
-                item.data.specialization = game.i18n.localize(
-                  'CoC7.FirearmSpecializationName'
-                )
-              }
+              item.data.specialization = game.i18n.localize(
+                'CoC7.FirearmSpecializationName'
+              )
             }
           }
 
@@ -284,7 +259,10 @@ export class CoC7ActorSheet extends ActorSheet {
                 ).total
               } catch (err) {
                 console.warn(
-                  `unable to parse formula :${item.data.value} for skill ${item.name}`
+                  game.i18n.format('CoC7.ErrorUnableToParseSkillFormula', {
+                    value: item.data.value,
+                    name: item.name
+                  })
                 )
                 value = null
               }
@@ -292,31 +270,47 @@ export class CoC7ActorSheet extends ActorSheet {
               if (value) {
                 item.data.value = value
                 const itemToUpdate = this.actor.items.get(item._id)
+                console.info(
+                  `[COC7] (Actor:${this.name}) Evaluating skill ${item.name}:${item.data.value} to ${value}`
+                )
                 await itemToUpdate.update({
                   'data.value': value
                 })
               }
             }
+            const skill = this.actor.items.get(item._id)
+            item.data.rawValue = skill.rawValue
+            item.data.value = skill.value
           } else {
             const skill = this.actor.items.get(item._id)
             item.data.base = await skill.asyncBase()
 
             if (item.data.value) {
-              const value = item.data.value
+              // This should be part of migration or done at init !
+              // Was done when skill value was changed to base + adjustement
               const exp = item.data.adjustments?.experience
                 ? parseInt(item.data.adjustments.experience)
                 : 0
               let updatedExp = exp + parseInt(item.data.value) - skill.value
               if (updatedExp <= 0) updatedExp = null
-              await this.actor.updateEmbeddedEntity('OwnedItem', {
-                _id: item._id,
-                'data.adjustments.experience': updatedExp,
-                'data.value': null
-              })
+              console.info(
+                `[COC7] Updating skill ${skill.name} experience. Experience missing: ${updatedExp}`
+              )
+              await this.actor.updateEmbeddedDocuments('Item', [
+                {
+                  _id: item._id,
+                  'data.adjustments.experience': updatedExp,
+                  'data.value': null
+                }
+              ])
               if (!item.data.adjustments) item.data.adjustments = {}
               item.data.adjustments.experience = updatedExp
-              item.data.value = value
-            } else item.data.value = skill.value
+              item.data.rawValue = skill.rawValue
+              item.data.value = skill.value // ACTIVE_EFFECT necessary to apply effects
+            } else {
+              item.data.value = skill.value // ACTIVE_EFFECT necessary to apply effects
+              item.data.rawValue = skill.rawValue
+            }
           }
         }
 
@@ -330,52 +324,16 @@ export class CoC7ActorSheet extends ActorSheet {
 
       for (const itemType in data.itemsByType) {
         data.itemsByType[itemType].sort((a, b) => {
-          let lca
-          let lcb
-          if (a.data.properties && b.data.properties) {
-            lca =
-              a.data.properties.special &&
-              typeof a.data.specialization !== 'undefined'
-                ? a.data.specialization
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')
-                    .toLowerCase() +
-                  a.name
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')
-                    .toLowerCase()
-                : a.name
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')
-                    .toLowerCase()
-            lcb =
-              b.data.properties.special &&
-              typeof b.data.specialization !== 'undefined'
-                ? b.data.specialization
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')
-                    .toLowerCase() +
-                  b.name
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')
-                    .toLowerCase()
-                : b.name
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')
-                    .toLowerCase()
-          } else {
-            lca = a.name
-              .normalize('NFD')
-              .replace(/[\u0300-\u036f]/g, '')
-              .toLowerCase()
-            lcb = b.name
-              .normalize('NFD')
-              .replace(/[\u0300-\u036f]/g, '')
-              .toLowerCase()
-          }
-          if (lca < lcb) return -1
-          if (lca > lcb) return 1
-          return 0
+          return a.name
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLocaleLowerCase()
+            .localeCompare(
+              b.name
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLocaleLowerCase()
+            )
         })
       }
 
@@ -383,48 +341,16 @@ export class CoC7ActorSheet extends ActorSheet {
       data.skills = data.items
         .filter(item => item.type === 'skill')
         .sort((a, b) => {
-          let lca
-          let lcb
-          if (a.data.properties && b.data.properties) {
-            lca = a.data.properties.special
-              ? a.data.specialization
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase() +
-                a.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
-              : a.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
-            lcb = b.data.properties.special
-              ? b.data.specialization
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase() +
-                b.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
-              : b.name
-                  .normalize('NFD')
-                  .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
-          } else {
-            lca = a.name
-              .normalize('NFD')
-              .replace(/[\u0300-\u036f]/g, '')
-              .toLowerCase()
-            lcb = b.name
-              .normalize('NFD')
-              .replace(/[\u0300-\u036f]/g, '')
-              .toLowerCase()
-          }
-          if (lca < lcb) return -1
-          if (lca > lcb) return 1
-          return 0
+          return a.name
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLocaleLowerCase()
+            .localeCompare(
+              b.name
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLocaleLowerCase()
+            )
         })
 
       data.meleeSkills = data.skills.filter(
@@ -469,8 +395,7 @@ export class CoC7ActorSheet extends ActorSheet {
             // si il n'existe plus il faut le retrouver ou passer skillset a false.
             if (data.combatSkills[weapon.data.skill.main.id]) {
               const skill = this.actor.items.get(weapon.data.skill.main.id)
-              weapon.data.skill.main.name =
-                data.combatSkills[weapon.data.skill.main.id].name
+              weapon.data.skill.main.name = skill.data.data.skillName
               weapon.data.skill.main.value = skill.value
             } else {
               weapon.skillSet = false
@@ -481,8 +406,7 @@ export class CoC7ActorSheet extends ActorSheet {
                 const skill = this.actor.items.get(
                   weapon.data.skill.alternativ.id
                 )
-                weapon.data.skill.alternativ.name =
-                  data.combatSkills[weapon.data.skill.alternativ.id].name
+                weapon.data.skill.alternativ.name = skill.data.data.skillName
                 weapon.data.skill.alternativ.value = skill.value
               }
             }
@@ -535,7 +459,7 @@ export class CoC7ActorSheet extends ActorSheet {
     }
 
     // For compat with previous characters test if auto is definied, if not we define it
-    if (!['vehicle'].includes(this.actor.data.type)) {
+    if (!['vehicle', 'container'].includes(this.actor.data.type)) {
       const auto = this.actor.checkUndefinedAuto()
       data.data = mergeObject(data.data, auto)
     } else {
@@ -547,115 +471,120 @@ export class CoC7ActorSheet extends ActorSheet {
       data.data.attribs.build.auto = false
     }
 
-    data.data.attribs.mov.value = this.actor.mov // return computed values or fixed values if not auto.
-    data.data.attribs.db.value = this.actor.db
-    data.data.attribs.build.value = this.actor.build
+    // data.data.attribs.mov.value = this.actor.mov // return computed values or fixed values if not auto.
+    // data.data.attribs.db.value = this.actor.db
+    // data.data.attribs.build.value = this.actor.build
 
-    if (typeof this.actor.compendium === 'undefined') {
-      this.actor.update(
-        { 'data.attribs.mov.value': this.actor.mov },
-        { render: false }
-      )
-      this.actor.update(
-        { 'data.attribs.mov.max': this.actor.mov },
-        { render: false }
-      )
-      this.actor.update(
-        { 'data.attribs.db.value': this.actor.db },
-        { render: false }
-      )
-      this.actor.update(
-        { 'data.attribs.build.current': this.actor.build },
-        { render: false }
-      )
-      this.actor.update(
-        { 'data.attribs.build.value': this.actor.build },
-        { render: false }
-      )
-    }
+    // if (typeof this.actor.compendium === 'undefined' && this.actor.isOwner) {
+    //   ui.notifications.info('changr spec name 4')
+    //   // ACTIVE_EFFECT should be applied here
+    //   // This whole part needs to be re-evaluated
+    //   // Seeting this shouldn't be necessary
+    //   this.actor.update(
+    //     { 'data.attribs.mov.value': this.actor.mov },
+    //     { render: false }
+    //   )
+    //   // mov.max never used
+    //   // this.actor.update(
+    //   //   { 'data.attribs.mov.max': this.actor.mov },
+    //   //   { render: false }
+    //   // )
+    //   this.actor.update(
+    //     { 'data.attribs.db.value': this.actor.db },
+    //     { render: false }
+    //   )
+    //   this.actor.update(
+    //     { 'data.attribs.build.current': this.actor.build },
+    //     { render: false }
+    //   )
+    //   this.actor.update(
+    //     { 'data.attribs.build.value': this.actor.build },
+    //     { render: false }
+    //   )
+    // }
 
     // if( data.data.attribs.hp.value < 0) data.data.attribs.hp.value = null;
     if (data.data.attribs.mp.value < 0) data.data.attribs.mp.value = null
     if (data.data.attribs.san.value < 0) data.data.attribs.san.value = null
     // data.data.attribs.san.fiftyOfCurrent = data.data.attribs.san.value >= 0 ? ' / '+Math.floor(data.data.attribs.san.value/5):'';
-    if (data.data.attribs.hp.auto) {
-      // TODO if any is null set max back to null.
-      if (
-        data.data.characteristics.siz.value != null &&
-        data.data.characteristics.con.value != null
-      ) {
-        data.data.attribs.hp.max = this.actor.hpMax
-      }
-    }
+    // if (data.data.attribs.hp.auto) {
+    //   // TODO if any is null set max back to null.
+    //   if (
+    //     data.data.characteristics.siz.value != null &&
+    //     data.data.characteristics.con.value != null
+    //   ) {
+    //     data.data.attribs.hp.max = this.actor.hpMax
+    //   }
+    // }
 
-    if (data.data.attribs.mp.auto) {
-      // TODO if any is null set max back to null.
-      if (data.data.characteristics.pow.value != null) {
-        data.data.attribs.mp.max = Math.floor(
-          data.data.characteristics.pow.value / 5
-        )
-      }
-    }
+    // if (data.data.attribs.mp.auto) {
+    //   // TODO if any is null set max back to null.
+    //   if (data.data.characteristics.pow.value != null) {
+    //     data.data.attribs.mp.max = Math.floor(
+    //       data.data.characteristics.pow.value / 5
+    //     )
+    //   }
+    // }
 
-    if (data.data.attribs.san.auto) {
-      data.data.attribs.san.max = this.actor.sanMax
-    }
+    // if (data.data.attribs.san.auto) {
+    //   data.data.attribs.san.max = this.actor.sanMax
+    // }
 
-    if (
-      data.data.attribs.mp.value > data.data.attribs.mp.max ||
-      data.data.attribs.mp.max == null
-    ) {
-      data.data.attribs.mp.value = data.data.attribs.mp.max
-    }
-    if (
-      data.data.attribs.hp.value > data.data.attribs.hp.max ||
-      data.data.attribs.hp.max == null
-    ) {
-      data.data.attribs.hp.value = data.data.attribs.hp.max
-    }
+    // if (
+    //   data.data.attribs.mp.value > data.data.attribs.mp.max ||
+    //   data.data.attribs.mp.max == null
+    // ) {
+    //   data.data.attribs.mp.value = data.data.attribs.mp.max
+    // }
+    // if (
+    //   data.data.attribs.hp.value > data.data.attribs.hp.max ||
+    //   data.data.attribs.hp.max == null
+    // ) {
+    //   data.data.attribs.hp.value = data.data.attribs.hp.max
+    // }
 
-    if (
-      data.data.attribs.hp.value == null &&
-      data.data.attribs.hp.max != null
-    ) {
-      data.data.attribs.hp.value = data.data.attribs.hp.max
-    }
-    if (
-      data.data.attribs.mp.value == null &&
-      data.data.attribs.mp.max != null
-    ) {
-      data.data.attribs.mp.value = data.data.attribs.mp.max
-    }
+    // if (
+    //   data.data.attribs.hp.value == null &&
+    //   data.data.attribs.hp.max != null
+    // ) {
+    //   data.data.attribs.hp.value = data.data.attribs.hp.max
+    // }
+    // if (
+    //   data.data.attribs.mp.value == null &&
+    //   data.data.attribs.mp.max != null
+    // ) {
+    //   data.data.attribs.mp.value = data.data.attribs.mp.max
+    // }
 
     if (!['vehicle'].includes(this.actor.data.type)) {
-      if (
-        data.data.attribs.san.value == null &&
-        data.data.characteristics.pow.value != null
-      ) {
-        data.data.attribs.san.value = data.data.characteristics.pow.value
-      }
-      if (data.data.attribs.san.value > data.data.attribs.san.max) {
-        data.data.attribs.san.value = data.data.attribs.san.max
-      }
+      // if (
+      //   data.data.attribs.san.value == null &&
+      //   data.data.characteristics.pow.value != null
+      // ) {
+      //   data.data.attribs.san.value = data.data.characteristics.pow.value
+      // }
+      // if (data.data.attribs.san.value > data.data.attribs.san.max) {
+      //   data.data.attribs.san.value = data.data.attribs.san.max
+      // }
 
       if (data.data.biography instanceof Array && data.data.biography.length) {
         data.data.biography[0].isFirst = true
         data.data.biography[data.data.biography.length - 1].isLast = true
       }
-
-      data.data.indefiniteInsanityLevel = {}
-      data.data.indefiniteInsanityLevel.value = data.data.attribs.san.dailyLoss
-        ? data.data.attribs.san.dailyLoss
-        : 0
-      data.data.indefiniteInsanityLevel.max = Math.floor(
-        data.data.attribs.san.value / 5
-      )
     }
-    data.hasInventory =
-      Object.prototype.hasOwnProperty.call(data.itemsByType, 'item') ||
-      Object.prototype.hasOwnProperty.call(data.itemsByType, 'book') ||
-      Object.prototype.hasOwnProperty.call(data.itemsByType, 'spell') ||
-      Object.prototype.hasOwnProperty.call(data.itemsByType, 'talent')
+    data.showInventoryItems = false
+    data.showInventoryBooks = false
+    data.showInventorySpells = false
+    data.showInventoryTalents = false
+    data.showInventoryStatuses = false
+    data.showInventoryWeapons = false
+
+    data.hasConditions =
+      this.actor.effects.size > 0 ||
+      (typeof this.actor.data.data.conditions !== 'undefined' &&
+        Object.keys(this.actor.data.data.conditions).filter(
+          condition => this.actor.data.data.conditions[condition].value
+        ).length > 0)
     // const first = data.data.biography[0];
     // first.isFirst = true;
     // data.data.biography[0] = first;
@@ -694,6 +623,10 @@ export class CoC7ActorSheet extends ActorSheet {
   activateListeners (html) {
     super.activateListeners(html)
 
+    html
+      .find('.token-drag-handle')
+      .on('dragstart', this._onDragTokenStart.bind(this))
+
     // Owner Only Listeners
     if (this.actor.isOwner && typeof this.actor.compendium === 'undefined') {
       html
@@ -722,9 +655,7 @@ export class CoC7ActorSheet extends ActorSheet {
       html
         .find('.characteristic-label')
         .click(this._onRollCharacteriticTest.bind(this))
-      html
-        .find('.skill-name.rollable')
-        .click(this._onRollSkillTest.bind(this))
+      html.find('.skill-name.rollable').click(this._onRollSkillTest.bind(this))
       html.find('.skill-image').click(this._onRollSkillTest.bind(this))
       html
         .find('.attribute-label.rollable')
@@ -744,7 +675,9 @@ export class CoC7ActorSheet extends ActorSheet {
       // Status monitor
       if (game.user.isGM || game.settings.get('CoC7', 'statusPlayerEditable')) {
         html.find('.reset-counter').click(this._onResetCounter.bind(this))
-        html.find('.status-monitor').click(this._onStatusToggle.bind(this))
+        html
+          .find('.condition-monitor')
+          .click(this._onConditionToggle.bind(this))
         html.find('.is-dying').click(this.heal.bind(this))
         html.find('.is-dead').click(this.revive.bind(this))
       }
@@ -767,6 +700,7 @@ export class CoC7ActorSheet extends ActorSheet {
       html.on('click', '.weapon-damage', this._onWeaponDamage.bind(this))
 
       html.find('.inventory-header').click(this._onInventoryHeader.bind(this))
+      html.find('.items-header').click(this._onItemHeader.bind(this))
       html.find('.section-header').click(this._onSectionHeader.bind(this))
 
       const wheelInputs = html.find('.attribute-value')
@@ -784,11 +718,8 @@ export class CoC7ActorSheet extends ActorSheet {
     html.find('.item-popup').click(this._onItemPopup.bind(this))
 
     // Update Inventory Item
-    html.find('.item-edit').click(ev => {
-      const li = $(ev.currentTarget).parents('.item')
-      const item = this.actor.items.get(li.data('itemId'))
-      item.sheet.render(true)
-    })
+    html.find('.show-detail').dblclick(event => this._onRenderItemSheet(event))
+    html.find('.item-edit').click(event => this._onRenderItemSheet(event))
 
     // Delete Inventory Item
     html.find('.item-delete').click(async ev => {
@@ -802,17 +733,37 @@ export class CoC7ActorSheet extends ActorSheet {
 
     html.find('.add-item').click(ev => {
       switch (ev.currentTarget.dataset.type) {
-        case 'skill':
-          this.actor.createEmptySkill(ev)
+        case 'book':
+          this.actor.createEmptyBook(ev)
           break
         case 'item':
           this.actor.createEmptyItem(ev)
           break
+        case 'skill':
+          this.actor.createEmptySkill(ev)
+          break
+        case 'spell':
+          this.actor.createEmptySpell(ev)
+          break
         case 'weapon':
-          this.actor.createEmptyWeapon(ev)
+          {
+            const properties = {}
+            if (ev.currentTarget.dataset.melee) {
+              properties.melee = true
+            } else if (ev.currentTarget.dataset.rngd) {
+              properties.rngd = true
+            }
+            this.actor.createEmptyWeapon(ev, properties)
+          }
           break
       }
     })
+
+    // html.find('.clean-skill-list').click(() => {
+    //   this.actor.cleanSkills()
+    // })
+
+    html.find('.item-trade').click(this._onTradeItem.bind(this))
 
     html.find('.add-new-section').click(() => {
       this.actor.createBioSection()
@@ -870,55 +821,366 @@ export class CoC7ActorSheet extends ActorSheet {
       }
     })
 
-    html
-      .find('a.coc7-link')
-      .on('click', async event => await CoC7Parser._onCheck(event))
+    html.find('.clear_conditions').click(event => {
+      if (typeof this.actor.data.data.conditions !== 'undefined') {
+        const disable = {}
+        for (const condition in this.actor.data.data.conditions) {
+          if (
+            typeof this.actor.data.data.conditions[condition].value !==
+              'undefined' &&
+            this.actor.data.data.conditions[condition].value === true
+          ) {
+            disable[`data.conditions.${condition}.value`] = false
+          }
+        }
+        if (Object.keys(disable).length > 0) {
+          this.actor.update(disable)
+        }
+      }
+      const effects = this.actor.effects.map(effect => effect.id)
+      if (effects.length > 0) {
+        this.actor.deleteEmbeddedDocuments('ActiveEffect', effects)
+      }
+    })
+
+    html.find('a.coc7-link').on('click', event => CoC7Parser._onCheck(event))
     html
       .find('a.coc7-link')
       .on('dragstart', event => CoC7Parser._onDragCoC7Link(event))
 
+    /**
+     * This is used for dev purposes only !
+     */
     html.find('.test-trigger').click(async event => {
-      await OpposedCheckCard.dispatch({
-        type: OpposedCheckCard.defaultConfig.type,
-        combat: false,
-        action: 'new',
-        roll: {
-          characteristic: 'str',
-          actor: this.actor.actorKey
-        }
+      if (!game.settings.get('CoC7', 'hiddendevmenu')) return null
+      await Item.create({
+        name: '__CoC7InternalItem__',
+        type: 'item'
       })
-
-      await OpposedCheckCard.dispatch({
-        type: OpposedCheckCard.defaultConfig.type,
-        combat: false,
-        action: 'new',
-        roll: {
-          characteristic: 'con'
-          // actor: this.actor.actorKey
-        }
-      })
-      // const val = getProperty( this.actor, 'data.data.attribs.san.value');
-
-      // this.actor.enterBoutOfMadness( true, 10);
-
-      // const roll = new CoC7Check();
-      // roll.actor = this.actorKey;
-      // roll.attribute = 'san';
-      // roll.difficulty = this.options.sanDifficulty || CoC7Check.difficultyLevel.regular;
-      // roll.diceModifier = this.options.sanModifier || 0;
-      // await roll._perform();
-
-      // for (const effect of this.actor.effects) {
-      //  await effect.sheet.render(true);
-      //  // effect.delete();
-      // }
-      // this.actor.effects.forEach( e => e.delete());
-      // await setProperty( this.actor, 'data.data.encounteredCreatures', []);
-
-      // await this.actor.update( {['data.encounteredCreatures'] : []});
-      if (event.shiftKey) ui.notifications.info('Shift cliecked')
-      // SanCheckCard.create( this.actor.actorKey, {min:'1D10',max:'1D12'}, {fastForward:event.shiftKey});
+      // const effects = await item.createEmbeddedDocuments('ActiveEffect', [
+      //   {
+      //     label: game.i18n.localize('CoC7.EffectNew'),
+      //     icon: 'icons/svg/aura.svg',
+      //     origin: null,
+      //     'duration.rounds': undefined,
+      //     disabled: true
+      //   }
+      // ])
+      // const effect = effects[0]
+      // await effect.sheet.render(true)
+      // ui.notifications.info( 'effect created !')
+      ui.notifications.info('effect created !')
     })
+
+    html
+      .find('.skill-name.rollable')
+      .mouseenter(this.toolTipSkillEnter.bind(this))
+      .mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
+    html
+      .find('.characteristic-label')
+      .mouseenter(this.toolTipCharacteristicEnter.bind(this))
+      .mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
+    html
+      .find('.attribute-label.rollable')
+      .mouseenter(this.toolTipAttributeEnter.bind(this))
+      .mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
+    html
+      .find('.auto-toggle')
+      .mouseenter(this.toolTipAutoEnter.bind(this))
+      .mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
+    html
+      .find('.item-control.development-flag')
+      .mouseenter(this.toolTipFlagForDevelopment.bind(this))
+      .mouseleave(game.CoC7Tooltips.toolTipLeave.bind(this))
+
+    // Active Effects
+    html
+      .find('.effect-control')
+      .click(ev => CoC7ActiveEffect.onManageActiveEffect(ev, this.actor))
+  }
+
+  toolTipSkillEnter (event) {
+    const delay = parseInt(game.settings.get('CoC7', 'toolTipDelay'))
+    if (delay > 0) {
+      const sheet = this
+      game.CoC7Tooltips.ToolTipHover = event.currentTarget
+      game.CoC7Tooltips.toolTipTimer = setTimeout(function () {
+        if (
+          typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' &&
+          game.CoC7Tooltips.ToolTipHover !== null
+        ) {
+          const isCombat = game.CoC7Tooltips.ToolTipHover.classList?.contains(
+            'combat'
+          )
+          const item = game.CoC7Tooltips.ToolTipHover.closest('.item')
+          if (typeof item !== 'undefined') {
+            const skillId = item.dataset.skillId
+            const skill = sheet.actor.items.get(skillId)
+            let toolTip = game.i18n.format(
+              isCombat ? 'CoC7.ToolTipCombat' : 'CoC7.ToolTipSkill',
+              {
+                skill: skill.name,
+                regular: skill.value,
+                hard: Math.floor(skill.value / 2),
+                extreme: Math.floor(skill.value / 5)
+              }
+            )
+            if (game.user.isGM) {
+              toolTip =
+                toolTip +
+                game.i18n.format('CoC7.ToolTipKeeperSkill', {
+                  other:
+                    game.settings.get('CoC7', 'stanbyGMRolls') &&
+                    sheet.actor.hasPlayerOwner
+                      ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
+                        name: sheet.actor.name
+                      })
+                      : ''
+                })
+            }
+            game.CoC7Tooltips.displayToolTip(toolTip)
+          }
+        }
+      }, delay)
+    }
+  }
+
+  toolTipCharacteristicEnter (event) {
+    const delay = parseInt(game.settings.get('CoC7', 'toolTipDelay'))
+    if (delay > 0) {
+      const sheet = this
+      game.CoC7Tooltips.ToolTipHover = event.currentTarget
+      game.CoC7Tooltips.toolTipTimer = setTimeout(function () {
+        if (
+          typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' &&
+          game.CoC7Tooltips.ToolTipHover !== null
+        ) {
+          const char = game.CoC7Tooltips.ToolTipHover.closest('.char-box')
+          if (typeof char !== 'undefined' && !!char) {
+            const charId = char.dataset.characteristic
+            const characteristic = sheet.actor.characteristics[charId]
+            let toolTip = game.i18n.format('CoC7.ToolTipSkill', {
+              skill: characteristic.label,
+              regular: characteristic.value ?? 0,
+              hard: characteristic.hard ?? 0,
+              extreme: characteristic.extreme ?? 0
+            })
+            if (game.user.isGM) {
+              toolTip =
+                toolTip +
+                game.i18n.format('CoC7.ToolTipKeeperSkill', {
+                  other:
+                    game.settings.get('CoC7', 'stanbyGMRolls') &&
+                    sheet.actor.hasPlayerOwner
+                      ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
+                        name: sheet.actor.name
+                      })
+                      : ''
+                })
+            }
+            game.CoC7Tooltips.displayToolTip(toolTip)
+          }
+        }
+      }, delay)
+    }
+  }
+
+  toolTipAttributeEnter (event) {
+    const delay = parseInt(game.settings.get('CoC7', 'toolTipDelay'))
+    if (delay > 0) {
+      const sheet = this
+      game.CoC7Tooltips.ToolTipHover = event.currentTarget
+      game.CoC7Tooltips.toolTipTimer = setTimeout(function () {
+        if (
+          typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' &&
+          game.CoC7Tooltips.ToolTipHover !== null
+        ) {
+          const attrib = game.CoC7Tooltips.ToolTipHover.closest('.attribute')
+          if (typeof attrib !== 'undefined') {
+            const attributeId = attrib.dataset.attrib
+            let toolTip = ''
+            const attributes = sheet.actor.data.data.attribs[attributeId]
+            switch (attributeId) {
+              case 'lck':
+                toolTip = game.i18n.format('CoC7.ToolTipSkill', {
+                  skill: attributes.label,
+                  regular: attributes.value ?? 0,
+                  hard: Math.floor((attributes.value ?? 0) / 2),
+                  extreme: Math.floor((attributes.value ?? 0) / 5)
+                })
+                if (game.user.isGM) {
+                  toolTip =
+                    toolTip +
+                    game.i18n.format('CoC7.ToolTipKeeperSkill', {
+                      other:
+                        game.settings.get('CoC7', 'stanbyGMRolls') &&
+                        sheet.actor.hasPlayerOwner
+                          ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
+                            name: sheet.actor.name
+                          })
+                          : ''
+                    })
+                }
+                game.CoC7Tooltips.displayToolTip(toolTip)
+                break
+              case 'db':
+                toolTip = game.i18n.localize('CoC7.ToolTipDB')
+                game.CoC7Tooltips.displayToolTip(toolTip)
+                break
+              case 'san':
+                toolTip = game.i18n.format('CoC7.ToolTipSanity', {
+                  skill: 'Sanity',
+                  regular: attributes.value ?? 0,
+                  hard: Math.floor((attributes.value ?? 0) / 2),
+                  extreme: Math.floor((attributes.value ?? 0) / 5)
+                })
+                if (game.user.isGM) {
+                  toolTip =
+                    toolTip +
+                    game.i18n.format('CoC7.ToolTipKeeperSkill', {
+                      other:
+                        game.i18n.localize('CoC7.ToolTipKeeperSanity') +
+                        (game.settings.get('CoC7', 'stanbyGMRolls') &&
+                        sheet.actor.hasPlayerOwner
+                          ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
+                            name: sheet.actor.name
+                          })
+                          : '')
+                    })
+                }
+                game.CoC7Tooltips.displayToolTip(toolTip)
+                break
+            }
+          }
+        }
+      }, delay)
+    }
+  }
+
+  toolTipAutoEnter (event) {
+    const delay = parseInt(game.settings.get('CoC7', 'toolTipDelay'))
+    if (delay > 0) {
+      game.CoC7Tooltips.ToolTipHover = event.currentTarget
+      game.CoC7Tooltips.toolTipTimer = setTimeout(function () {
+        if (
+          typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' &&
+          game.CoC7Tooltips.ToolTipHover !== null
+        ) {
+          const toolTip = game.i18n.localize('CoC7.ToolTipAutoToggle')
+          game.CoC7Tooltips.displayToolTip(toolTip)
+        }
+      }, delay)
+    }
+  }
+
+  toolTipFlagForDevelopment (event) {
+    const delay = parseInt(game.settings.get('CoC7', 'toolTipDelay'))
+    if (delay > 0) {
+      const sheet = this
+      game.CoC7Tooltips.ToolTipHover = event.currentTarget
+      game.CoC7Tooltips.toolTipTimer = setTimeout(function () {
+        if (
+          typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' &&
+          game.CoC7Tooltips.ToolTipHover !== null
+        ) {
+          const item = game.CoC7Tooltips.ToolTipHover.closest('.item')
+          if (typeof item !== 'undefined') {
+            const skillId = item.dataset.skillId
+            const skill = sheet.actor.items.get(skillId)
+            const toolTip = game.i18n.format('CoC7.ToolTipSkillFlagToggle', {
+              status: game.i18n.localize(
+                skill.data.data.flags.developement
+                  ? 'CoC7.ToolTipSkillFlagged'
+                  : 'CoC7.ToolTipSkillUnflagged'
+              )
+            })
+            game.CoC7Tooltips.displayToolTip(toolTip)
+          }
+        }
+      }, delay)
+    }
+  }
+
+  _onRenderItemSheet (event) {
+    const li = $(event.currentTarget).parents('.item')
+    const item = this.actor.items.get(li.data('itemId'))
+    item.sheet.render(true)
+  }
+
+  async _onTradeItem (event) {
+    const li = $(event.currentTarget).parents('.item')
+    const item = this.actor.items.get(li.data('itemId'))
+    let content = '<p>' + game.i18n.localize('CoC7.MessageSelectUserToGiveTo')
+    const message = {
+      actorFrom: this.actor.id,
+      scene: null,
+      actorTo: this.actor.id,
+      item: item.id
+    }
+    if (this.token?.actor) {
+      message.actorFrom = this.token.id
+      message.scene = this.token.parent.id
+    }
+    const actors = game.actors.filter(e => {
+      if (!['character', 'npc', 'creature', 'container'].includes(e.type)) {
+        return false
+      }
+      if (this.actor.id === e.id) {
+        return false
+      }
+      let visible = false
+      for (const [k, v] of Object.entries(e.data.permission)) {
+        if (k === 'default' || k === game.user.id) {
+          visible =
+            visible ||
+            v !==
+              (CONST.DOCUMENT_OWNERSHIP_LEVELS || CONST.ENTITY_PERMISSIONS).NONE
+        }
+      }
+      return visible
+    })
+    content = content + '<form id="selectform"><select name="user">'
+    for (const actor of actors) {
+      content =
+        content + '<option value="' + actor.id + '">' + actor.name + '</option>'
+    }
+    content = content + '</select></form></p>'
+    message.actorTo = await new Promise(resolve => {
+      const dlg = new Dialog({
+        title: game.i18n.localize('CoC7.MessageTitleSelectUserToGiveTo'),
+        content,
+        buttons: {
+          confirm: {
+            label: game.i18n.localize('CoC7.Validate'),
+            callback: html => {
+              const formData = new FormData(
+                html[0].querySelector('#selectform')
+              )
+              for (const [name, value] of formData) {
+                if (name === 'user') {
+                  return resolve(value)
+                }
+              }
+            }
+          }
+        },
+        default: 'confirm',
+        close: () => {}
+      })
+      dlg.render(true)
+    })
+    await game.CoC7socket.executeAsGM('gmtradeitemto', message)
+  }
+
+  _onDragStart (event) {
+    super._onDragStart(event)
+    if (this.token) {
+      const dragData = JSON.parse(event.dataTransfer.getData('text/plain'))
+      dragData.tokenUuid = this.token.uuid
+      dragData.tokenId = this.token.id
+      dragData.sceneId = this.token.parent.id
+      event.dataTransfer.setData('text/plain', JSON.stringify(dragData))
+    }
   }
 
   _onDragCharacteristic (event) {
@@ -931,7 +1193,11 @@ export class CoC7ActorSheet extends ActorSheet {
       hasPlayerOwner: this.actor.hasPlayerOwner,
       actorKey: this.actor.actorKey,
       name: box.dataset.characteristic,
-      icon: null
+      icon: null,
+      document: {
+        type: this.document.type,
+        uuid: this.document.uuid
+      }
     }
 
     event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
@@ -947,7 +1213,11 @@ export class CoC7ActorSheet extends ActorSheet {
       hasPlayerOwner: this.actor.hasPlayerOwner,
       actorKey: this.actor.actorKey,
       name: box.dataset.attrib,
-      icon: null
+      icon: null,
+      document: {
+        type: this.document.type,
+        uuid: this.document.uuid
+      }
     }
 
     event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
@@ -964,31 +1234,43 @@ export class CoC7ActorSheet extends ActorSheet {
       actorKey: this.actor.actorKey,
       sanMin: sanMin.innerText,
       sanMax: sanMax.innerText,
-      icon: null
+      icon: null,
+      document: {
+        type: this.document.type,
+        uuid: this.document.uuid
+      }
     }
 
     event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
   }
 
   async _onDrop (event) {
+    const dataString = event.dataTransfer.getData('text/plain')
+    const data = JSON.parse(dataString)
+    if (data.linkType === 'coc7-link') {
+      if (data.type === 'effect') {
+        const link = await CoC7Link.fromData(data)
+        if (link.data.effect) {
+          this.actor.createEmbeddedDocuments('ActiveEffect', [link.data.effect])
+        }
+      }
+    }
     await super._onDrop(event)
   }
 
-  async _onStatusToggle (event) {
+  async _onConditionToggle (event) {
     event.preventDefault()
-    if (event.currentTarget.dataset.status) {
-      await this.actor.toggleStatus(event.currentTarget.dataset.status)
-    } else if (event.currentTarget.dataset.effect) {
-      await this.actor.toggleEffect(event.currentTarget.dataset.effect)
+    if (event.currentTarget.dataset.condition) {
+      await this.actor.toggleCondition(event.currentTarget.dataset.condition)
     }
   }
 
   async revive () {
-    if (game.user.isGM) this.actor.unsetStatus(COC7.status.dead)
+    if (game.user.isGM) this.actor.unsetCondition(COC7.status.dead)
   }
 
   async heal () {
-    if (game.user.isGM) this.actor.unsetStatus(COC7.status.dying)
+    if (game.user.isGM) this.actor.unsetCondition(COC7.status.dying)
   }
 
   async checkForDeath (event) {
@@ -999,13 +1281,17 @@ export class CoC7ActorSheet extends ActorSheet {
     conCheck.toMessage(event.shiftKey)
   }
 
+  async _onDragTokenStart (event) {
+    const data = {
+      type: 'Token',
+      uuid: this.token.uuid
+    }
+    event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
+  }
+
   async _onResetCounter (event) {
     event.preventDefault()
-    const counter = event.currentTarget.dataset.counter
-    const oneFifthSanity =
-      ' / ' + Math.floor(this.actor.data.data.attribs.san.value / 5)
-    this.actor.setOneFifthSanity(oneFifthSanity)
-    if (counter) this.actor.resetCounter(counter)
+    await this.actor.resetDailySanity()
   }
 
   async _onAutoToggle (event) {
@@ -1043,6 +1329,7 @@ export class CoC7ActorSheet extends ActorSheet {
     event.preventDefault()
     const isLocked = this.actor.locked
     this.actor.locked = !isLocked
+    Hooks.call('actorLockClickedCoC7', [!isLocked])
   }
 
   async _onFlagClicked (event) {
@@ -1057,7 +1344,7 @@ export class CoC7ActorSheet extends ActorSheet {
   }
 
   async _onWheel (event) {
-    let value = parseInt(event.currentTarget.value)
+    let value = parseInt(event.currentTarget.value) || null
     if (event.deltaY > 0) {
       value = value === 0 ? 0 : value - 1
     }
@@ -1104,11 +1391,11 @@ export class CoC7ActorSheet extends ActorSheet {
       const div = $('<div class="item-summary"></div>')
 
       const labels = $('<div class="item-labels"></div>')
-      chatData.labels.forEach(p =>
+      for (const p of chatData.labels) {
         labels.append(
           `<div class="item-label"><span class="label-name">${p.name} :</span><span class="label-value">${p.value}</span></div>`
         )
-      )
+      }
       div.append(labels)
 
       div.append(
@@ -1123,18 +1410,17 @@ export class CoC7ActorSheet extends ActorSheet {
       }
 
       const props = $('<div class="item-properties"></div>')
-      chatData.properties.forEach(p =>
+      for (const p of chatData.properties) {
         props.append(
           `<div class="tag item-property">${game.i18n.localize(p)}</div>`
         )
-      )
+      }
       div.append(props)
 
       li.append(div.hide())
       CoC7Parser.bindEventsHandler(div)
-      div.slideDown(200)
+      div.slideDown(200, () => li.toggleClass('expanded'))
     }
-    li.toggleClass('expanded')
     // $(event.currentTarget).toggleClass('expanded');
   }
 
@@ -1149,18 +1435,25 @@ export class CoC7ActorSheet extends ActorSheet {
     const pannel = $(section).find(`.pannel.${pannelClass}`)
     // pannel.toggle();
     if (pannel.hasClass('expanded')) {
-      pannel.slideUp(200)
+      // Could remove expanded class and use (pannel.is(':visible'))
+      pannel.slideUp(200, () => pannel.toggleClass('expanded'))
     } else {
-      pannel.slideDown(200)
+      pannel.slideDown(200, () => pannel.toggleClass('expanded'))
     }
-    pannel.toggleClass('expanded')
   }
 
   _onInventoryHeader (event) {
     event.preventDefault()
-    const li = $(event.currentTarget).parents('.inventory-section')
-    const details = li.find('ol')
-    details.toggle()
+    const li = $(event.currentTarget).siblings('li')
+    if (li.is(':visible')) li.slideUp(200)
+    else li.slideDown(200)
+  }
+
+  _onItemHeader (event) {
+    event.preventDefault()
+    const ol = $(event.currentTarget).next('ol')
+    if (ol.is(':visible')) ol.slideUp(200)
+    else ol.slideDown(200)
   }
 
   async _onItemPopup (event) {
@@ -1351,7 +1644,7 @@ export class CoC7ActorSheet extends ActorSheet {
     const range = event.currentTarget.closest('.weapon-damage').dataset.range
     const damageChatCard = new DamageCard({
       fastForward: event.shiftKey,
-      range: range
+      range
     })
     damageChatCard.actorKey = this.actor.tokenKey
     damageChatCard.itemId = itemId
@@ -1362,82 +1655,25 @@ export class CoC7ActorSheet extends ActorSheet {
   async _onOpposedRoll (event) {
     event.preventDefault()
 
-    if (!event.altKey) {
-      // if( event.ctrlKey) ui.notifications.info('CTRL pressed!');
-      const data = {
-        type: OpposedCheckCard.defaultConfig.type,
-        combat: event.currentTarget.classList?.contains('combat'),
-        action: 'new'
-      }
-      const roll = new CoC7Check()
-      roll.actor =
-        event.currentTarget.closest('form').dataset.tokenId ||
-        event.currentTarget.closest('form').dataset.actorId
-      roll.characteristic =
-        event.currentTarget.parentElement.dataset.characteristic
-      roll.attribute = event.currentTarget.parentElement.dataset.attrib
-      roll.item = event.currentTarget.closest('.item')?.dataset.itemId
-      roll.weaponAltSkill = event.currentTarget.classList.contains(
-        'alternativ-skill'
-      )
-      roll.skillId = event.currentTarget.closest('.item')?.dataset.skillId
-      roll.rollMode = game.settings.get('core', 'rollMode')
-      roll.initiator = game.user.id
+    if (event.currentTarget.parentElement.dataset.attrib === 'db') return
 
-      if (roll.attrib === 'db') return
-
-      if (!event.shiftKey) {
-        const usage = await RollDialog.create({
-          disableFlatThresholdModifier:
-            event.metaKey ||
-            event.ctrlKey ||
-            event.keyCode === 91 ||
-            event.keyCode === 224, // TODO: do we need this CTRL?
-          disableFlatDiceModifier:
-            event.metaKey ||
-            event.ctrlKey ||
-            event.keyCode === 91 ||
-            event.keyCode === 224
-        })
-        if (usage) {
-          roll.diceModifier = Number(usage.get('bonusDice'))
-          roll.difficulty = Number(usage.get('difficulty'))
-          roll.flatDiceModifier = Number(usage.get('flatDiceModifier'))
-          roll.flatThresholdModifier = Number(
-            usage.get('flatThresholdModifier')
-          )
-        }
-      }
-
-      roll.denyPush = true // Opposed rolled can't be pushed.
-
-      await roll._perform()
-
-      data.roll = roll.JSONRollData
-
-      OpposedCheckCard.dispatch(data)
-    } else {
-      const data = {
-        type: CombinedCheckCard.defaultConfig.type,
-        action: 'new'
-      }
-      const roll = new CoC7Check()
-      roll.actor =
-        event.currentTarget.closest('form').dataset.tokenId ||
-        event.currentTarget.closest('form').dataset.actorId
-      roll.characteristic =
-        event.currentTarget.parentElement.dataset.characteristic
-      roll.attribute = event.currentTarget.parentElement.dataset.attrib
-      roll.skillId = event.currentTarget.closest('.item')?.dataset.skillId
-      roll.rollMode = game.settings.get('core', 'rollMode')
-      roll.initiator = game.user.id
-
-      if (roll.attrib === 'db') return
-
-      data.roll = roll.JSONRollData
-
-      CombinedCheckCard.dispatch(data)
+    const data = {
+      rollType: CoC7ChatMessage.ROLL_TYPE_SKILL,
+      cardType: CoC7ChatMessage.CARD_TYPE_OPPOSED,
+      event,
+      actor: this.actor
     }
+    if (event.currentTarget.classList.contains('characteristic-label')) {
+      data.rollType = CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC
+    } else if (event.currentTarget.classList.contains('attribute-label')) {
+      data.rollType = CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
+    }
+
+    if (event.altKey) {
+      data.cardType = CoC7ChatMessage.CARD_TYPE_COMBINED
+    }
+
+    CoC7ChatMessage.trigger(data)
   }
 
   /**
@@ -1446,99 +1682,20 @@ export class CoC7ActorSheet extends ActorSheet {
    * @private
    */
   async _onRollCharacteriticTest (event) {
-    // FLATMODIF
     event.preventDefault()
-
-    const actorId = event.currentTarget.closest('form').dataset.actorId
-    const tokenKey = event.currentTarget.closest('form').dataset.tokenId
-    const characteristic =
-      event.currentTarget.parentElement.dataset.characteristic
-
-    if (isCtrlKey(event) && game.user.isGM) {
-      const linkData = {
-        check: 'check',
-        type: 'characteristic',
-        name: characteristic,
-        hasPlayerOwner: this.actor.hasPlayerOwner,
-        actorKey: this.actor.actorKey,
-        forceModifiers: event.shiftKey
-      }
-      if (game.settings.get('core', 'rollMode') === 'blindroll') {
-        linkData.blind = true
-      }
-      CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg =>
-        dlg.render(true)
-      )
-      return
-    }
-
-    let difficulty, modifier, flatDiceModifier, flatThresholdModifier
-    if (!event.shiftKey) {
-      const usage = await RollDialog.create({
-        disableFlatThresholdModifier:
-          event.metaKey ||
-          event.ctrlKey ||
-          event.keyCode === 91 ||
-          event.keyCode === 224, // TODO : This can be removed ?
-        disableFlatDiceModifier:
-          event.metaKey ||
-          event.ctrlKey ||
-          event.keyCode === 91 ||
-          event.keyCode === 224
-      })
-      if (usage) {
-        modifier = Number(usage.get('bonusDice'))
-        difficulty = Number(usage.get('difficulty'))
-        flatDiceModifier = Number(usage.get('flatDiceModifier'))
-        flatThresholdModifier = Number(usage.get('flatThresholdModifier'))
-      }
-    }
-
-    const check = new CoC7Check()
-    if (modifier !== 'undefined') check.diceModifier = modifier
-    if (typeof difficulty !== 'undefined') check.difficulty = difficulty
-    check.actor = !tokenKey ? actorId : tokenKey
-    check.flatDiceModifier = flatDiceModifier
-    check.flatThresholdModifier = flatThresholdModifier
-    check.standby =
-      game.settings.get('CoC7', 'stanbyGMRolls') &&
-      game.user.isGM &&
-      this.actor.hasPlayerOwner
-    await check.rollCharacteristic(characteristic)
-    check.toMessage()
+    if (event.currentTarget.classList.contains('flagged4dev')) return
+    CoC7ChatMessage.trigger({
+      rollType: CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC,
+      cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
+      event,
+      actor: this.actor
+    })
   }
 
   async _onRollAttribTest (event) {
     // FLATMODIFIER
     event.preventDefault()
-
     const attrib = event.currentTarget.parentElement.dataset.attrib
-
-    if (isCtrlKey(event) && game.user.isGM && ['lck', 'san'].includes(attrib)) {
-      const linkData = event.altKey
-        ? {
-            check: 'sanloss',
-            hasPlayerOwner: this.actor.hasPlayerOwner,
-            actorKey: this.actor.actorKey,
-            forceModifiers: event.shiftKey
-          }
-        : {
-            check: 'check',
-            type: 'attribute',
-            name: attrib,
-            hasPlayerOwner: this.actor.hasPlayerOwner,
-            actorKey: this.actor.actorKey,
-            forceModifiers: event.shiftKey
-          }
-      if (game.settings.get('core', 'rollMode') === 'blindroll') {
-        linkData.blind = true
-      }
-      CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg =>
-        dlg.render(true)
-      )
-      return
-    }
-
     if (attrib === 'db') {
       if (
         !/^-{0,1}\d+$/.test(
@@ -1559,68 +1716,15 @@ export class CoC7ActorSheet extends ActorSheet {
       return
     }
 
-    if (attrib === 'lck') {
-      if (!this.actor.data.data.attribs.lck.value) return // If luck is null, 0 or non defined stop there.
-    }
-
-    const actorId = event.currentTarget.closest('form').dataset.actorId
-    const tokenKey = event.currentTarget.closest('form').dataset.tokenId
-
-    let difficulty, modifier, flatDiceModifier, flatThresholdModifier
-    if (!event.shiftKey) {
-      const usage = await RollDialog.create({
-        disableFlatThresholdModifier: false, // TODO: Remove, deprecated.
-        disableFlatDiceModifier: false
-      }) // TODO: Remove, deprecated.
-      if (usage) {
-        modifier = Number(usage.get('bonusDice'))
-        difficulty = Number(usage.get('difficulty'))
-        flatDiceModifier = Number(usage.get('flatDiceModifier'))
-        flatThresholdModifier = Number(usage.get('flatThresholdModifier'))
-      }
-    }
-
-    let sanMin, sanMax
-    if (event.altKey && attrib === 'san') {
-      const sanData = await SanDataDialog.create({
-        promptLabel: false // TODO: Remove, deprecated.
-      })
-      if (sanData) {
-        sanMin = sanData.get('sanMin') || 0
-        sanMax = sanData.get('sanMax') || 0
-
-        if (!isNaN(Number(sanMin))) sanMin = Number(sanMin)
-        if (!isNaN(Number(sanMax))) sanMax = Number(sanMax)
-      }
-    }
-
-    const isSanCheck =
-      typeof sanMin !== 'undefined' && typeof sanMax !== 'undefined'
-
-    if (isSanCheck) {
-      SanCheckCard.create(
-        this.actor.actorKey,
-        { sanMin: sanMin, sanMax: sanMax },
-        {
-          sanModifier: modifier,
-          sanDifficulty: difficulty,
-          fastForward: event.shiftKey
-        }
-      )
-    } else {
-      const check = new CoC7Check()
-      if (typeof modifier !== 'undefined') check.diceModifier = modifier
-      if (typeof difficulty !== 'undefined') check.difficulty = difficulty
-      check.flatDiceModifier = flatDiceModifier
-      check.flatThresholdModifier = flatThresholdModifier
-      check.actor = !tokenKey ? actorId : tokenKey
-      check.standby =
-        game.settings.get('CoC7', 'stanbyGMRolls') &&
-        game.user.isGM &&
-        this.actor.hasPlayerOwner
-      await check.rollAttribute(attrib)
-      check.toMessage()
-    }
+    CoC7ChatMessage.trigger({
+      rollType: CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE,
+      cardType:
+        event.altKey && attrib === 'san'
+          ? CoC7ChatMessage.CARD_TYPE_SAN_CHECK
+          : CoC7ChatMessage.CARD_TYPE_NORMAL,
+      event,
+      actor: this.actor
+    })
   }
 
   /**
@@ -1628,61 +1732,15 @@ export class CoC7ActorSheet extends ActorSheet {
    * @param {Event} event   The originating click event
    * @private
    */
-  async _onRollSkillTest (event) {
-    // FLATMODIF
-    if (event.currentTarget.classList.contains('flagged4dev')) return
+  _onRollSkillTest (event) {
     event.preventDefault()
-    const skillId = event.currentTarget.closest('.item').dataset.skillId
-    const actorId = event.currentTarget.closest('form').dataset.actorId
-    const tokenKey = event.currentTarget.closest('form').dataset.tokenId
-
-    if (isCtrlKey(event) && game.user.isGM) {
-      const name = this.actor.items.get(skillId)?.name
-      if (!name) return
-      const linkData = {
-        check: 'check',
-        type: 'skill',
-        name: name,
-        hasPlayerOwner: this.actor.hasPlayerOwner,
-        actorKey: this.actor.actorKey,
-        forceModifiers: event.shiftKey
-      }
-      if (game.settings.get('core', 'rollMode') === 'blindroll') {
-        linkData.blind = true
-      }
-      CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg =>
-        dlg.render(true)
-      )
-      return
-    }
-
-    let difficulty, modifier, flatDiceModifier, flatThresholdModifier
-    if (!event.shiftKey) {
-      const usage = await RollDialog.create({
-        disableFlatThresholdModifier: false,
-        disableFlatDiceModifier: false
-      })
-      if (usage) {
-        modifier = Number(usage.get('bonusDice'))
-        difficulty = Number(usage.get('difficulty'))
-        flatDiceModifier = Number(usage.get('flatDiceModifier'))
-        flatThresholdModifier = Number(usage.get('flatThresholdModifier'))
-      }
-    }
-
-    const check = new CoC7Check()
-    if (typeof modifier !== 'undefined') check.diceModifier = modifier
-    if (typeof difficulty !== 'undefined') check.difficulty = difficulty
-    check.actor = !tokenKey ? actorId : tokenKey
-    check.skill = skillId
-    check.flatDiceModifier = flatDiceModifier
-    check.flatThresholdModifier = flatThresholdModifier
-    check.standby =
-      game.settings.get('CoC7', 'stanbyGMRolls') &&
-      game.user.isGM &&
-      this.actor.hasPlayerOwner
-    await check.roll()
-    check.toMessage()
+    if (event.currentTarget.classList.contains('flagged4dev')) return
+    CoC7ChatMessage.trigger({
+      rollType: CoC7ChatMessage.ROLL_TYPE_SKILL,
+      cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
+      event,
+      actor: this.actor
+    })
   }
 
   /** @override */
@@ -1713,6 +1771,14 @@ export class CoC7ActorSheet extends ActorSheet {
   async _updateObject (event, formData) {
     // ui.notifications.info('_updateObject');
     // TODO: Replace with   _getSubmitData(updateData={}) Cf. sheet.js(243)
+    const overrides = foundry.utils.flattenObject(this.actor.overrides)
+    const name = event?.currentTarget?.name
+    if (name && overrides && overrides[name]) {
+      ui.notifications.warn(
+        game.i18n.format('CoC7.EffectAppliedCantOverride', { name })
+      )
+    }
+
     if (event.currentTarget) {
       if (event.currentTarget.classList) {
         if (event.currentTarget.classList.contains('skill-adjustment')) {
@@ -1736,7 +1802,9 @@ export class CoC7ActorSheet extends ActorSheet {
               }
             }
             if (game.i18n.localize(COC7.creditRatingSkillName) === item.name) {
-              const creditValue = value || 0
+              const creditValue =
+                (item.value || 0) -
+                (item.data.data.adjustments?.experience || 0)
               if (
                 creditValue >
                   Number(this.actor.occupation.data.data.creditRating.max) ||
@@ -1761,7 +1829,17 @@ export class CoC7ActorSheet extends ActorSheet {
         if (event.currentTarget.classList.contains('attribute-value')) {
           // TODO : check why SAN only ?
           if (event.currentTarget.name === 'data.attribs.san.value') {
-            this.actor.setSan(parseInt(event.currentTarget.value))
+            await this.actor.setSan(
+              parseInt(event.currentTarget.value)
+            )
+            this.render(true)
+            return
+          }
+          if (event.currentTarget.name === 'data.attribs.hp.value') {
+            await this.actor.setHp(
+              parseInt(event.currentTarget.value)
+            )
+            this.render(true)
             return
           }
         }
@@ -1802,7 +1880,20 @@ export class CoC7ActorSheet extends ActorSheet {
             event.currentTarget.closest('.item').dataset.skillId
           )
           if (item) {
-            await item.update({ name: event.currentTarget.value })
+            const data = {}
+            if (item.data.data.properties.special) {
+              const parts = CoC7Item.getNamePartsSpec(
+                event.currentTarget.value,
+                item.data.data.specialization
+              )
+              data.name = parts.name
+              data['data.skillName'] = parts.skillName
+              data['data.specialization'] = parts.specialization
+            } else {
+              data['data.skillName'] = event.currentTarget.value
+              data.name = event.currentTarget.value
+            }
+            await item.update(data)
           }
         }
 
@@ -1899,7 +1990,9 @@ export class CoC7ActorSheet extends ActorSheet {
               await r.roll({ async: true })
               if (isNaN(r.total) || typeof r.total === 'undefined') {
                 ui.notifications.error(
-                  event.currentTarget.value + ' is not a valid formula'
+                  game.i18n.format('CoC7.ErrorUnableToParseFormula', {
+                    value: event.currentTarget.value
+                  })
                 )
               } else {
                 switch (event.currentTarget.dataset.range) {

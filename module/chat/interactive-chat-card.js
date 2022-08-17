@@ -87,6 +87,7 @@ export class InteractiveChatCard {
     const htmlMessageElement = html[0]
     const htmlCardElement = htmlMessageElement.querySelector('.chat-card')
     if (!htmlCardElement) return
+    if (!htmlCardElement.dataset.cardClass) return
     if (
       !Object.getOwnPropertyNames(game.CoC7.cards).includes(
         htmlCardElement.dataset.cardClass
@@ -118,7 +119,7 @@ export class InteractiveChatCard {
     const button = event.currentTarget
     // button.style.display = 'none' //Avoid multiple push
     const action = button.dataset.action
-    if (this[action]) this[action]({ event: event, update: true })
+    if (this[action]) this[action]({ event, update: true })
   }
 
   /**
@@ -159,7 +160,7 @@ export class InteractiveChatCard {
 
   get message () {
     if (this._message) return this._message
-    if (this._messageId) return game.message.get(this._messageId)
+    if (this._messageId) return game.messages.get(this._messageId)
     return undefined
   }
 
@@ -273,7 +274,9 @@ export class InteractiveChatCard {
       this.toggleFlag(flag)
     } else {
       const buttons = toggle.querySelectorAll('.ic-radio-switch')
-      buttons.forEach(b => this.unsetFlag(b.dataset.flag))
+      for (const b of buttons) {
+        this.unsetFlag(b.dataset.flag)
+      }
       this.setFlag(flag)
     }
     const card = target.closest('.interactive-card')

@@ -1,6 +1,7 @@
-/* global canvas, ChatMessage, CONST, duplicate, game, Ray, Token */
+/* global canvas, ChatMessage, CONST, duplicate, fromUuid, game, Ray, Token, ui */
 
 import { CoC7Check } from '../check.js'
+import { CoC7Utilities } from '../utilities.js'
 
 /**
  * Return <a> element of a roll instance. foundry.js ref:TextEditor._createInlineRoll
@@ -67,6 +68,9 @@ export function exclude__ (key, value) {
  * @returns
  */
 export function isCtrlKey (event) {
+  if (event === false) {
+    return false
+  }
   return (
     event.metaKey ||
     event.ctrlKey ||
@@ -111,6 +115,12 @@ export class chatHelper {
 
   static getActorFromKey (key) {
     if (!key) return null
+    // Case 0 - a document Uuid
+    if (CoC7Utilities.isDocumentUuid(key)) {
+      if (CoC7Utilities.isDocumentUuidPack(key)) return fromUuid(key) // TODO Check we can do that
+      return CoC7Utilities.SfromUuid(key)
+    }
+
     // Case 1 - a synthetic actor from a Token
     if (key.includes('.')) {
       // REFACTORING (2)
@@ -143,7 +153,7 @@ export class chatHelper {
   }
 
   static attachObjectToElement (object, element, objectName = '') {
-    Object.keys(object).forEach(prop => {
+    for (const prop of Object.keys(object)) {
       if (!prop.startsWith('_')) {
         if (typeof object[prop] === 'object') {
           chatHelper.attachObjectToElement(
@@ -155,7 +165,7 @@ export class chatHelper {
           element.dataset[`${objectName}${prop}`] = object[prop]
         }
       }
-    })
+    }
   }
 
   static getObjectFromElement (object, element) {
@@ -175,10 +185,10 @@ export class chatHelper {
     }
 
     if (!element || !object) return
-    Object.keys(element.dataset).forEach(prop => {
+    for (const prop of Object.keys(element.dataset)) {
       if (prop === 'template') return
       deserialize(object, prop, element.dataset[prop])
-    })
+    }
   }
 
   static getTokenFromKey (key) {
@@ -240,12 +250,38 @@ export class chatHelper {
     if (game.settings.get('CoC7', 'useToken')) {
       // Try to find a token.
       const token = chatHelper.getTokenFromKey(actorKey)
-      if (token) return token.data.img
+      if (token) {
+        // Foundry VTT v9
+        if (token.data.img) {
+          if (token.data.img.indexOf('*') === -1) {
+            return token.data.img
+          }
+        }
+        // Foundry VTT v10
+        if (token.data.texture.src) {
+          if (token.data.texture.src.indexOf('*') === -1) {
+            return token.data.texture.src
+          }
+        }
+      }
     }
     const actor = chatHelper.getActorFromKey(actorKey) // REFACTORING (2)
     if (game.settings.get('CoC7', 'useToken')) {
       // if no token found for that actor return the prototype token image.
-      if (actor.data.token) return actor.data.token.img
+      if (actor.data.token) {
+        // Foundry VTT v9
+        if (actor.data.token.img) {
+          if (actor.data.token.img.indexOf('*') === -1) {
+            return actor.data.token.img
+          }
+        }
+        // Foundry VTT v10
+        if (actor.data.token.texture.src) {
+          if (actor.data.token.texture.src?.indexOf('*') === -1) {
+            return actor.data.token.texture.src
+          }
+        }
+      }
     }
     return actor.data.img
   }
@@ -253,6 +289,22 @@ export class chatHelper {
   static getDistance (startToken, endToken) {
     // startToken.updateSource();
     // canvas.sight.initializeTokens();
+    if (
+      typeof endToken.center === 'undefined' &&
+      typeof endToken.data.document?.id !== 'undefined'
+    ) {
+      if (startToken.scene?.id || false) {
+        const scene = game.scenes.get(startToken.scene.id)
+        if (typeof scene?.tokens !== 'undefined') {
+          const tokens = scene?.tokens
+            .filter(token => token.actor.id === endToken.data.document.id)
+            .map(token => token.object)
+          if (tokens.length === 1) {
+            endToken = tokens[0]
+          }
+        }
+      }
+    }
     let distance = {
       gridUnit: 0,
       value: 0,
@@ -274,6 +326,18 @@ export class chatHelper {
         })[0],
         unit: canvas.scene.data.gridUnits
       }
+      if (game.settings.get('CoC7', 'distanceElevation')) {
+        const elevation = Math.abs(
+          (startToken.data.elevation || 0) - (endToken.data.elevation || 0)
+        )
+        distance.value = Math.sqrt(
+          distance.value * distance.value + elevation * elevation
+        )
+      }
+    } else {
+      ui.notifications.warn(
+        game.i18n.localize('CoC7.MessageDistanceCalculationFailure')
+      )
     }
     return distance
   }
@@ -345,9 +409,9 @@ export class CoC7Roll {
   showDiceRoll () {
     if (game.modules.get('dice-so-nice')?.active) {
       const diceResults = []
-      this.dices.tens.forEach(dieResult => {
+      for (const dieResult of this.dices.tens) {
         diceResults.push(dieResult.value === 100 ? 0 : dieResult.value / 10)
-      })
+      }
       diceResults.push(this.dices.unit.value)
 
       const diceData = {
@@ -380,7 +444,7 @@ export class CoC7Roll {
         : game.i18n.format('CoC7.DiceModifierBonus')
     const tenDice = element.querySelector('.ten-dice')
     if (tenDice) {
-      tenDice.querySelectorAll('li').forEach(d => {
+      for (const d of tenDice.querySelectorAll('li')) {
         const die = {
           selected: false,
           isMax: false,
@@ -389,7 +453,7 @@ export class CoC7Roll {
         }
         chatHelper.getObjectFromElement(die, d)
         roll.dices.tens.push(die)
-      })
+      }
     }
     const unitDie = element.querySelector('.unit-die')
       ? element.querySelector('.unit-die').querySelector('li')
@@ -399,11 +463,11 @@ export class CoC7Roll {
     roll.increaseSuccess = []
     const increaseSuccess = element.querySelector('.increase-success')
     if (increaseSuccess && increaseSuccess.querySelectorAll('button')) {
-      increaseSuccess.querySelectorAll('button').forEach(isl => {
+      for (const isl of increaseSuccess.querySelectorAll('button')) {
         const newSuccesLevel = {}
         chatHelper.getObjectFromElement(newSuccesLevel, isl)
         roll.increaseSuccess.push(newSuccesLevel)
-      })
+      }
     }
 
     if (roll.luckNeeded) {
@@ -475,11 +539,11 @@ export class CoC7Damage {
     chatHelper.getObjectFromElement(damage, element)
     const rolls = element.querySelector('.dice-rolls').querySelectorAll('li')
     damage.rolls = []
-    rolls.forEach(r => {
+    for (const r of rolls) {
       const roll = {}
       chatHelper.getObjectFromElement(roll, r)
       damage.rolls.push(roll)
-    })
+    }
 
     if (!object) return damage
   }

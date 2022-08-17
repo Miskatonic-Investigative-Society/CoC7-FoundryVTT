@@ -1,12 +1,10 @@
 {
   "name": "fvtt-coc7",
-  "version": "0.6.6",
+  "version": "0.7.11",
   "description": "An unofficial implementation of Call of Cthulhu 7th Edition system for Foundry VTT.",
-  "main": "gulpfile.js",
   "scripts": {
     "build": "webpack --mode production",
-    "format": "prettier-standard --format --changed",
-    "lint": "prettier-standard --lint --changed",
+    "format": "standard --fix",
     "watch": "webpack --mode development"
   },
   "repository": {
@@ -14,30 +12,32 @@
     "url": "git+https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Miskatonic Investigative Society",
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/issues"
   },
   "homepage": "https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT#readme",
+  "type": "module",
   "devDependencies": {
-    "copy-webpack-plugin": "^9.0.1",
-    "css-loader": "^6.2.0",
-    "css-minimizer-webpack-plugin": "^3.0.2",
-    "glob": "^7.1.7",
+    "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.7.1",
+    "css-minimizer-webpack-plugin": "^4.0.0",
+    "del": "^7.0.0",
     "jsonfile": "^6.1.0",
-    "less": "^4.1.1",
-    "less-loader": "^10.0.1",
-    "mini-css-extract-plugin": "^2.2.0",
-    "prettier-standard": "^16.4.1",
-    "standard": "^16.0.3",
-    "terser-webpack-plugin": "^5.1.4",
+    "less-loader": "^11.0.0",
+    "mini-css-extract-plugin": "^2.6.1",
+    "remarkable": "^2.0.1",
+    "standard": "^17.0.0",
     "thread-loader": "^3.0.4",
-    "webpack": "^5.50.0",
-    "webpack-cli": "^4.8.0",
-    "webpackbar": "^5.0.0-3",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpackbar": "^5.0.2",
     "write": "^2.0.0"
   },
-  "type": "module",
-  "dependencies": {}
+  "standard": {
+    "ignore": [
+      "/lib/socketlib/"
+    ]
+  }
 }

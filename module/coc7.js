@@ -1,7 +1,7 @@
-/* global $, Combat, CONFIG, CONST, fromUuid, game, Hooks, tinyMCE, ui */
+/* global $, Combat, CONFIG, CONST, game, Hooks, isNewerVersion, ItemDirectory, tinyMCE */
 import { CoC7NPCSheet } from './actors/sheets/npc-sheet.js'
 import { CoC7CreatureSheet } from './actors/sheets/creature-sheet.js'
-import { CoC7CharacterSheetV2 } from './actors/sheets/character.js'
+import { CoC7CharacterSheet } from './actors/sheets/character.js'
 import { CoC7Chat } from './chat.js'
 import { CoC7Combat, rollInitiative } from './combat.js'
 import { COC7 } from './config.js'
@@ -10,27 +10,27 @@ import { CoC7Utilities } from './utilities.js'
 import { CoC7Parser } from './apps/parser.js'
 import { CoC7Check } from './check.js'
 import { CoC7Menu } from './menu.js'
-import { OpposedCheckCard } from './chat/cards/opposed-roll.js'
-import { CombinedCheckCard } from './chat/cards/combined-roll.js'
 import { DamageCard } from './chat/cards/damage.js'
 import { CoC7Canvas } from './apps/canvas.js'
+import { CoC7SettingsDirectory } from './settings-directory.js'
 import { CoC7CompendiumDirectory } from './compendium-directory.js'
+import { CoC7ActorDirectory } from './actor-directory.js'
 import { CoC7Hooks } from './hooks/index.js'
 import * as DiceBot from './dicebot.js'
 import '../styles/system/index.less'
+import { CoC7ChaseSheet } from './items/chase/sheet.js'
+import { CoC7Socket } from './hooks/socket.js'
+import { CoC7SystemSocket } from './apps/coc7-system-socket.js'
+import { DropActorSheetData } from './hooks/drop-actor-sheet-data.js'
+
+// Card init
+import { initECC } from './common/chatcardlib/src/chatcardlib.js'
+import { ChaseObstacleCard } from './chat/cards/chase-obstacle.js'
 
 Hooks.on('renderSettingsConfig', (app, html, options) => {
   const systemTab = $(app.form).find('.tab[data-tab=system]')
   systemTab
-    .find('input[name=CoC7\\.pulpRules]')
-    .closest('div.form-group')
-    .before(
-      '<h2 class="setting-header">' +
-        game.i18n.localize('SETTINGS.TitleRules') +
-        '</h2>'
-    )
-  systemTab
-    .find('select[name=CoC7\\.initiativeRule]')
+    .find('input[name=CoC7\\.displayInitDices]')
     .closest('div.form-group')
     .before(
       '<h2 class="setting-header">' +
@@ -46,7 +46,7 @@ Hooks.on('renderSettingsConfig', (app, html, options) => {
         '</h2>'
     )
   systemTab
-    .find('input[name=CoC7\\.displayActorOnCard]')
+    .find('input[name=CoC7\\.trustedCanModfyChatCard]')
     .closest('div.form-group')
     .before(
       '<h2 class="setting-header">' +
@@ -59,6 +59,14 @@ Hooks.on('renderSettingsConfig', (app, html, options) => {
     .before(
       '<h2 class="setting-header">' +
         game.i18n.localize('SETTINGS.TitleScene') +
+        '</h2>'
+    )
+  systemTab
+    .find('input[name=CoC7\\.overrideGameArtwork]')
+    .closest('div.form-group')
+    .before(
+      '<h2 class="setting-header">' +
+        game.i18n.localize('SETTINGS.TitleGameArtwork') +
         '</h2>'
     )
   systemTab
@@ -101,21 +109,26 @@ Hooks.on('renderSettingsConfig', (app, html, options) => {
         game.i18n.localize('SETTINGS.TitleRollTable') +
         '</h2>'
     )
-})
-
-Hooks.once('diceSoNiceReady', dice3d => {
-  dice3d.addDicePreset(
-    {
-      type: 'dt',
-      labels: ['10', '20', '30', '40', '50', '60', '70', '80', '90', '00'],
-      fontScale: 0.75,
-      system: 'standard'
-    },
-    'dt'
-  )
+  // MOVED TO CHASSE INDIVIDUAL SETTING
+  // systemTab
+  //   .find('input[name=CoC7\\.chaseShowTokenMovement]')
+  //   .closest('div.form-group')
+  //   .before(
+  //     '<h2 class="setting-header">' +
+  //       game.i18n.localize('SETTINGS.TitleChaseSettings') +
+  //       '</h2>'
+  //   )
 })
 
 Hooks.once('init', async function () {
+  if (
+    typeof CONST.COMPATIBILITY_MODES !== 'undefined' &&
+    !isNewerVersion(game.version, '10.300')
+  ) {
+    // hide compatibility warnings while we still support v9 and v10 with the same version
+    CONFIG.compatibility.mode = CONST.COMPATIBILITY_MODES.SILENT
+  }
+
   game.CoC7 = {
     macros: {
       skillCheck: CoC7Utilities.skillCheckMacro,
@@ -123,11 +136,19 @@ Hooks.once('init', async function () {
       check: CoC7Utilities.checkMacro
     },
     cards: {
-      DamageCard: DamageCard
+      DamageCard
+    },
+    dev: {
+      dice: {
+        alwaysCrit: false,
+        alwaysFumble: false
+      }
     }
   }
   Combat.prototype.rollInitiative = rollInitiative
 })
+
+initECC(ChaseObstacleCard)
 
 Hooks.on('renderCombatTracker', (app, html, data) =>
   CoC7Combat.renderCombatTracker(app, html, data)
@@ -135,6 +156,8 @@ Hooks.on('renderCombatTracker', (app, html, data) =>
 
 DiceBot.listen()
 CoC7Hooks.listen()
+
+Hooks.once('socketlib.ready', CoC7Socket)
 
 Hooks.once('setup', function () {
   // Localize CONFIG objects once up-front
@@ -156,38 +179,116 @@ Hooks.once('setup', function () {
     }, {})
   }
 
-  let effectIndex = CONFIG.statusEffects.findIndex(t => t.id === 'dead')
+  let effectIndex = CONFIG.statusEffects.findIndex(
+    t => t.id === COC7.status.dead
+  )
   if (effectIndex !== -1) {
     CONFIG.statusEffects[effectIndex].icon =
       'systems/CoC7/assets/icons/tombstone.svg'
   }
-  effectIndex = CONFIG.statusEffects.findIndex(t => t.id === 'unconscious')
+  effectIndex = CONFIG.statusEffects.findIndex(
+    t => t.id === COC7.status.unconscious
+  )
   if (effectIndex !== -1) {
     CONFIG.statusEffects[effectIndex].icon =
       'systems/CoC7/assets/icons/knocked-out-stars.svg'
   }
   CONFIG.statusEffects.unshift(
     {
-      id: 'boutOfMadness',
+      id: COC7.status.tempoInsane,
       label: 'CoC7.BoutOfMadnessName',
       icon: 'systems/CoC7/assets/icons/hanging-spider.svg'
     },
     {
-      id: 'insanity',
+      id: COC7.status.indefInsane,
       label: 'CoC7.InsanityName',
       icon: 'systems/CoC7/assets/icons/tentacles-skull.svg'
     },
     {
-      id: 'criticalWounds',
-      label: 'criticalWounds',
+      id: COC7.status.criticalWounds,
+      label: 'CoC7.CriticalWounds',
       icon: 'systems/CoC7/assets/icons/arm-sling.svg'
     },
     {
-      id: 'dying',
-      label: 'dying',
+      id: COC7.status.dying,
+      label: 'CoC7.Dying',
       icon: 'systems/CoC7/assets/icons/heart-beats.svg'
     }
   )
+})
+
+Hooks.on('createActiveEffect', (data, options, userId) => {
+  if (
+    game.userId === userId &&
+    typeof data.data.flags.core !== 'undefined' &&
+    typeof data.data.flags.core.statusId !== 'undefined'
+  ) {
+    switch (data.data.flags.core.statusId) {
+      case COC7.status.indefInsane:
+      case COC7.status.unconscious:
+      case COC7.status.criticalWounds:
+      case COC7.status.dying:
+      case COC7.status.prone:
+      case COC7.status.dead:
+        data.parent.setCondition(data.data.flags.core.statusId, {
+          forceValue: true
+        })
+        break
+      case COC7.status.tempoInsane:
+        {
+          const realTime = data.data.flags.CoC7?.realTime
+          let duration = null
+          if (realTime === true) {
+            duration = data.data.duration?.rounds
+          } else if (realTime === false) {
+            duration = data.data.duration?.seconds
+            if (!isNaN(duration)) {
+              duration = Math.floor(duration / 3600)
+            }
+          }
+          data.parent.setCondition(COC7.status.tempoInsane, {
+            forceValue: true,
+            realTime,
+            duration
+          })
+        }
+        break
+    }
+  }
+})
+
+Hooks.on('deleteActiveEffect', (data, options, userId) => {
+  if (
+    game.userId === userId &&
+    typeof data.data.flags.core !== 'undefined' &&
+    typeof data.data.flags.core.statusId !== 'undefined'
+  ) {
+    switch (data.data.flags.core.statusId) {
+      case COC7.status.tempoInsane:
+      case COC7.status.indefInsane:
+      case COC7.status.unconscious:
+      case COC7.status.criticalWounds:
+      case COC7.status.dying:
+      case COC7.status.prone:
+      case COC7.status.dead:
+        data.parent.unsetCondition(data.data.flags.core.statusId, {
+          forceValue: true
+        })
+    }
+  }
+})
+
+// This will hide the item called '__CoC7InternalItem__'
+// This item is used for internal purposes and should not be seen by anyone
+Hooks.on('changeSidebarTab', directory => {
+  if (directory instanceof ItemDirectory) {
+    const item = game.items.find(i => i.name === '__CoC7InternalItem__')
+    if (item) {
+      const html = directory._element
+      const itemElement = html.find(`[data-document-id='${item.id}']`)
+      if (itemElement) itemElement[0].style.display = 'none'
+    }
+  }
 })
 
 Hooks.on('hotbarDrop', async (bar, data, slot) =>
@@ -211,23 +312,14 @@ Hooks.on('ready', async () => {
 
   activateGlobalListener()
 
+  // setGlobalCssVar()
+
+  configureTinyMCE()
+
+  game.CoC7.skillList = await game.packs.get('CoC7.skills')?.getDocuments()
+
   game.socket.on('system.CoC7', async data => {
-    if (data.type === 'updateChar') CoC7Utilities.updateCharSheets()
-
-    if (game.user.isGM) {
-      if (OpposedCheckCard.defaultConfig.type === data.type) {
-        OpposedCheckCard.dispatch(data)
-      }
-
-      if (CombinedCheckCard.defaultConfig.type === data.type) {
-        CombinedCheckCard.dispatch(data)
-      }
-
-      if (data.type === 'invoke') {
-        const item = await fromUuid(data.item)
-        item[data.method](data.data)
-      }
-    }
+    CoC7SystemSocket.callSocket(data)
   })
 
   // "SETTINGS.BoutOfMadnessPhobiasIndex": "Phobias index",
@@ -247,9 +339,9 @@ Hooks.on('ready', async () => {
   // }
 
   const tableChoice = { none: 'SETTINGS.LetKeeperDecide' }
-  game.tables.forEach(t => {
+  for (const t of game.tables) {
     tableChoice[t.data._id] = t.data.name
-  })
+  }
 
   game.settings.register('CoC7', 'boutOfMadnessSummaryTable', {
     name: 'SETTINGS.BoutOfMadnessSummaryTable',
@@ -316,14 +408,14 @@ Hooks.on('ready', async () => {
       game.settings.get('CoC7', 'boutOfMadnessSummaryTable') === 'none'
         ? null
         : game.tables.get(
-            game.settings.get('CoC7', 'boutOfMadnessSummaryTable')
-          ),
+          game.settings.get('CoC7', 'boutOfMadnessSummaryTable')
+        ),
     boutOfMadness_RealTime:
       game.settings.get('CoC7', 'boutOfMadnessRealTimeTable') === 'none'
         ? null
         : game.tables.get(
-            game.settings.get('CoC7', 'boutOfMadnessRealTimeTable')
-          )
+          game.settings.get('CoC7', 'boutOfMadnessRealTimeTable')
+        )
     // maniasIndex: ge.settings.get('CoC7', 'boutOfMadnessPhobiasIndex'),
     // phobiasIndex: game.settings.get('CoC7', 'boutOfMadnessManiasIndex'),
     // phobias: ('none' == game.settings.get('CoC7', 'samplePhobiasTable'))?null:game.tables.get(game.settings.get('CoC7', 'samplePhobiasTable')),
@@ -332,6 +424,16 @@ Hooks.on('ready', async () => {
 })
 
 // Hooks.on('preCreateActor', (createData) => CoCActor.initToken( createData));
+
+Hooks.on(
+  'renderCoC7ChaseSheet',
+  /** async */ (app, html, data) =>
+    /** await */ CoC7ChaseSheet.setScroll(app, html, data)
+)
+
+Hooks.on('closeCoC7ChaseSheet', (app, html) =>
+  CoC7ChaseSheet.onClose(app, html)
+)
 
 // Called on closing a character sheet to lock it on getting it to display values
 Hooks.on('closeActorSheet', characterSheet => characterSheet.onCloseSheet())
@@ -374,7 +476,10 @@ Hooks.on('getSceneControlButtons', (/* controls */) => {
 // Hooks.on('renderSceneControls', () => CoC7Utilities.updateCharSheets());
 // Hooks.on('renderSceneNavigation', () => CoC7Utilities.updateCharSheets());
 Hooks.on('renderItemSheet', CoC7Parser.ParseSheetContent)
+// Foundry VTT v9
 Hooks.on('renderJournalSheet', CoC7Parser.ParseSheetContent)
+// Foundry VTT v10
+Hooks.on('renderJournalPageSheet', CoC7Parser.ParseSheetContent)
 Hooks.on('renderActorSheet', CoC7Parser.ParseSheetContent)
 // Chat command processing
 // Hooks.on('preCreateChatMessage', CoC7Parser.ParseMessage);
@@ -383,21 +488,18 @@ Hooks.on('renderChatMessage', (app, html, data) => {
   CoC7Chat.renderChatMessageHook(app, html, data)
   CoC7Parser.ParseMessage(app, html, data)
 })
-// Sheet V2 css options
-// Hooks.on('renderCoC7CharacterSheetV2', CoC7CharacterSheetV2.renderSheet);
-Hooks.on('renderActorSheet', CoC7CharacterSheetV2.renderSheet) // TODO : change from CoC7CharacterSheetV2
-Hooks.on('renderItemSheet', CoC7CharacterSheetV2.renderSheet) // TODO : change from CoC7CharacterSheetV2
+// Sheet css options
+// Hooks.on('renderCoC7CharacterSheet', CoC7CharacterSheet.renderSheet);
+Hooks.on('renderActorSheet', CoC7CharacterSheet.renderSheet)
+Hooks.on('renderItemSheet', CoC7CharacterSheet.renderSheet)
 
 // Hooks.on('dropCanvasData', CoC7Parser.onDropSomething);
-Hooks.on('renderSceneControls', CoC7Menu.renderMenu)
+Hooks.on('getSceneControlButtons', CoC7Menu.getButtons)
+Hooks.on('renderSceneControls', CoC7Menu.renderControls)
 
 Hooks.on('dropCanvasData', CoC7Canvas.onDropSomething)
 
-tinyMCE.PluginManager.add('CoC7_Editor_OnDrop', function (editor) {
-  editor.on('drop', event => CoC7Parser.onEditorDrop(event, editor))
-})
-
-CONFIG.TinyMCE.plugins = `CoC7_Editor_OnDrop ${CONFIG.TinyMCE.plugins}`
+Hooks.on('dropActorSheetData', DropActorSheetData)
 
 function activateGlobalListener () {
   const body = $('body')
@@ -405,43 +507,46 @@ function activateGlobalListener () {
   document.addEventListener('mousedown', _onLeftClick)
 }
 
+/**
+ * Configuration of TinyMCE editor
+ */
+function configureTinyMCE () {
+  // Add on drop event to tinyMCE to hendle the links drop
+  tinyMCE.PluginManager.add('CoC7_Editor_OnDrop', function (editor) {
+    editor.on('drop', event => CoC7Parser.onEditorDrop(event, editor))
+  })
+
+  // Add custom plugins to list of plugins.
+  // CONFIG.TinyMCE.plugins = `CoC7_Editor_OnInit CoC7_Editor_OnDrop ${CONFIG.TinyMCE.plugins}`
+  CONFIG.TinyMCE.plugins = `CoC7_Editor_OnDrop ${CONFIG.TinyMCE.plugins}`
+  //
+  //  if (game.user.isGM) {
+  //    // Define css and menu for keeper only blocks
+  //    CONFIG.TinyMCE.content_css.push('/systems/CoC7/assets/mce.css')
+  //    CONFIG.TinyMCE.style_formats.push({
+  //      title: 'CoC7',
+  //      items: [
+  //        {
+  //          title: 'Keeper Only',
+  //          block: 'section',
+  //          classes: 'keeper-only',
+  //          wrapper: true
+  //        }
+  //      ]
+  //    })
+  //  } else {
+  //    // Prevent player to edit and view source code if settings is disabled
+  //    if (!game.settings.get('CoC7', 'enablePlayerSourceCode'))
+  //      CONFIG.TinyMCE.toolbar = CONFIG.TinyMCE.toolbar.replace(' code', '')
+  //    // Hide keeper only blocks to players
+  //    CONFIG.TinyMCE.content_style = '.keeper-only {display: none}'
+  //  }
+}
+
 function _onLeftClick (event) {
   return event.shiftKey
 }
 
-Hooks.on('targetToken', function (user, token, targeted) {
-  if (targeted) {
-    // Check if the targeted token is a player controlled token but no user controls it
-    let gmonly = true
-    if (
-      token.actor.data.permission.default === CONST.ENTITY_PERMISSIONS.OWNER
-    ) {
-      gmonly = false
-    } else {
-      const gms = game.users.filter(a => a.isGM).map(a => a.id)
-      for (const [k, v] of Object.entries(token.actor.data.permission)) {
-        if (
-          k !== 'default' &&
-          v === CONST.ENTITY_PERMISSIONS.OWNER &&
-          !gms.includes(k)
-        ) {
-          gmonly = false
-        }
-      }
-    }
-    if (!gmonly) {
-      const controlled = game.users.filter(
-        a => !a.isGM && a.data.character === token.actor.id
-      )
-      if (controlled.length === 0) {
-        ui.notifications.error(
-          game.i18n.format('CoC7.MessageSelectedTargetIsNotControlled', {
-            name: token.name
-          })
-        )
-      }
-    }
-  }
-})
-
+CONFIG.ui.settings = CoC7SettingsDirectory
 CONFIG.ui.compendium = CoC7CompendiumDirectory
+CONFIG.ui.actors = CoC7ActorDirectory

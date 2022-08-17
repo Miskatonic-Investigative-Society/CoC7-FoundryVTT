@@ -1,11 +1,10 @@
-/* global Actors, Items, ItemSheet */
+/* global Actors, ActorSheet, Items, ItemSheet */
 
-import { CoC7ActorSheet } from '../actors/sheets/base.js'
 import { CoC7ArchetypeSheet } from '../items/sheets/archetype.js'
 import { CoC7BookSheet } from '../items/book/sheet.js'
-import { CoC7CharacterSheet } from '../actors/sheets/actor-sheet.js'
-import { CoC7CharacterSheetV2 } from '../actors/sheets/character.js'
-import { CoC7ChaseSheet } from '../items/sheets/chase.js'
+import { CoC7CharacterSheet } from '../actors/sheets/character.js'
+import { CoC7ContainerSheet } from '../actors/sheets/container.js'
+import { CoC7ChaseSheet } from '../items/chase/sheet.js'
 import { CoC7CreatureSheet } from '../actors/sheets/creature-sheet.js'
 import { CoC7ItemSheet } from '../items/sheets/item-sheet.js'
 import { CoC7ItemSheetV2 } from '../items/sheets/item-sheetV2.js'
@@ -13,14 +12,14 @@ import { CoC7NPCSheet } from '../actors/sheets/npc-sheet.js'
 import { CoC7OccupationSheet } from '../items/sheets/occupation.js'
 import { CoC7SetupSheet } from '../items/sheets/setup.js'
 import { CoC7SkillSheet } from '../items/sheets/skill.js'
-import { CoC7SpellSheet } from '../items/sheets/spell.js'
+import { CoC7SpellSheet } from '../items/spell/sheet.js'
 import { CoC7StatusSheet } from '../items/sheets/status.js'
 import { CoC7TalentSheet } from '../items/sheets/talent.js'
 import { CoC7VehicleSheet } from '../actors/sheets/vehicle.js'
 import { CoC7WeaponSheet } from '../items/sheets/weapon-sheet.js'
 
 export function registerSheets () {
-  Actors.unregisterSheet('core', CoC7ActorSheet)
+  Actors.unregisterSheet('core', ActorSheet)
   Actors.registerSheet('CoC7', CoC7NPCSheet, {
     types: ['npc'],
     makeDefault: true
@@ -33,8 +32,11 @@ export function registerSheets () {
     types: ['creature'],
     makeDefault: true
   })
-  Actors.registerSheet('CoC7', CoC7CharacterSheet, { types: ['character'] })
-  Actors.registerSheet('CoC7', CoC7CharacterSheetV2, {
+  Actors.registerSheet('CoC7', CoC7ContainerSheet, {
+    types: ['container'],
+    makeDefault: true
+  })
+  Actors.registerSheet('CoC7', CoC7CharacterSheet, {
     types: ['character'],
     makeDefault: true
   })

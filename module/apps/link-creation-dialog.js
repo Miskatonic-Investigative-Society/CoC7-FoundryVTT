@@ -1,4 +1,4 @@
-/* global canvas, diffObject, expandObject, FormApplication, game, mergeObject, ui */
+/* global canvas, CONST,diffObject, expandObject, FormApplication, FormDataExtended, foundry, game, mergeObject, ui */
 import { CoCActor } from '../actors/actor.js'
 import { chatHelper } from '../chat/helper.js'
 import { CoC7Check } from '../check.js'
@@ -10,19 +10,26 @@ export class CoC7LinkCreationDialog extends FormApplication {
   static get defaultOptions () {
     return mergeObject(super.defaultOptions, {
       id: 'link-creation',
-      classes: ['coc7'],
+      classes: ['coc7', 'active-effect-sheet'],
       title: game.i18n.localize('CoC7.CreateLink'),
       dragDrop: [{ dragSelector: null, dropSelector: '.container' }],
       template: 'systems/CoC7/templates/apps/link-creation.html',
       closeOnSubmit: false,
       submitOnClose: true,
       submitOnChange: true,
-      width: 400,
+      width: 560,
       height: 'auto',
       choices: {},
       allowCustom: true,
       minimum: 0,
-      maximum: null
+      maximum: null,
+      tabs: [
+        {
+          navSelector: '.tabs',
+          contentSelector: '.effect-options',
+          initial: 'details'
+        }
+      ]
     })
   }
 
@@ -31,12 +38,34 @@ export class CoC7LinkCreationDialog extends FormApplication {
     return new CoC7LinkCreationDialog(link, options)
   }
 
+  static get attributes () {
+    return [
+      {
+        key: 'lck',
+        label: game.i18n.localize('CoC7.Luck'),
+        selected: false
+      },
+      {
+        key: 'san',
+        label: game.i18n.localize('CoC7.Sanity'),
+        selected: false
+      }
+    ]
+  }
+
   /** @override */
   async getData () {
     const data = await super.getData()
 
     data.link = this.link
     data.data = this.link.data
+    data.data.effect.modes = Object.entries(CONST.ACTIVE_EFFECT_MODES).reduce(
+      (obj, e) => {
+        obj[e[1]] = game.i18n.localize('EFFECT.MODE_' + e[0])
+        return obj
+      },
+      {}
+    )
     data.fromGame =
       this.link.is.item ||
       (this.link.is.check && this.link.check === CoC7Link.CHECK_TYPE.SKILL)
@@ -79,6 +108,11 @@ export class CoC7LinkCreationDialog extends FormApplication {
         key: CoC7Link.LINK_TYPE.ITEM,
         label: game.i18n.localize('CoC7.ItemWeapon'),
         selected: this.link.is.item
+      },
+      {
+        key: CoC7Link.LINK_TYPE.EFFECT,
+        label: game.i18n.localize('EFFECT.TabEffects'),
+        selected: this.link.is.effect
       }
     ]
 
@@ -106,18 +140,10 @@ export class CoC7LinkCreationDialog extends FormApplication {
     }
 
     // Prepare characteristics
-    data.attributes = [
-      {
-        key: 'lck',
-        label: game.i18n.localize('CoC7.Luck'),
-        selected: data.data.attributeKey === 'lck'
-      },
-      {
-        key: 'san',
-        label: game.i18n.localize('CoC7.Sanity'),
-        selected: data.data.attributeKey === 'san'
-      }
-    ]
+    data.attributes = CoC7LinkCreationDialog.attributes.map(e => {
+      e.selected = data.data.attributeKey === e.key
+      return e
+    })
 
     return data
   }
@@ -137,6 +163,46 @@ export class CoC7LinkCreationDialog extends FormApplication {
     // const test = dragDrop.bind(html[0]);
 
     super.activateListeners(html)
+
+    // Handling effects
+    html.find('.effect-control').click(this._onEffectControl.bind(this))
+  }
+
+  _onEffectControl (event) {
+    event.preventDefault()
+    const button = event.currentTarget
+    switch (button.dataset.action) {
+      case 'add':
+        return this._addEffectChange()
+      case 'delete':
+        button.closest('.effect-change').remove()
+        return this.submit({ preventClose: true }).then(() => this.render())
+    }
+  }
+
+  async _addEffectChange () {
+    const idx = this.link.data.effect.changes.length
+    return this.submit({
+      preventClose: true,
+      updateData: {
+        [`effect.changes.${idx}`]: {
+          key: '',
+          mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+          value: ''
+        }
+      }
+    })
+  }
+
+  /** @inheritdoc */
+  _getSubmitData (updateData = {}) {
+    const fd = new FormDataExtended(this.form, { editors: this.editors })
+    const data = foundry.utils.expandObject(fd.toObject())
+    if (updateData) foundry.utils.mergeObject(data, updateData)
+    if (data.effect) {
+      data.effect.changes = Array.from(Object.values(data.effect.changes || {}))
+    }
+    return data
   }
 
   async _onDrop (event) {
@@ -196,8 +262,30 @@ export class CoC7LinkCreationDialog extends FormApplication {
     }
   }
 
-  _onClickSubmit (event) {
+  async _onClickSubmit (event) {
     const action = event.currentTarget.dataset.action
+    // if( action === 'create-effect'){
+    //   let item = game.items.find(i => i.name === '__CoC7InternalItem__')
+    //   if (!item)
+    //     item = await Item.create({
+    //       name: '__CoC7InternalItem__',
+    //       type: 'item'
+    //     })
+    //   for( const e of item.effects){
+    //     await e.delete()
+    //   }
+    //   const effects = await item.createEmbeddedDocuments('ActiveEffect', [
+    //     {
+    //       label: game.i18n.localize('CoC7.EffectNew'),
+    //       icon: 'icons/svg/aura.svg',
+    //       origin: null,
+    //       'duration.rounds': undefined,
+    //       disabled: true
+    //     }
+    //   ])
+    //   const effect = effects[0]
+    //   await effect.sheet.render(true)
+    // }
     if (!this.link.link) {
       // ui.notifications.warn( 'Link is invalid !');
       return
@@ -210,16 +298,18 @@ export class CoC7LinkCreationDialog extends FormApplication {
       case 'chat':
         {
           const option = {}
+          let message
           option.speaker = {
             alias: game.user.name
           }
-          chatHelper.createMessage(
-            null,
-            game.i18n.format('CoC7.MessageCheckRequestedWait', {
+          if (this.link.is.effect) {
+            message = `<div class="effect-message">${this.link.link}</div>`
+          } else {
+            message = game.i18n.format('CoC7.MessageCheckRequestedWait', {
               check: this.link.link
-            }),
-            option
-          )
+            })
+          }
+          chatHelper.createMessage(null, message, option)
         }
         break
 
@@ -244,14 +334,16 @@ export class CoC7LinkCreationDialog extends FormApplication {
       case 'whisper-selected':
         {
           if (!canvas.tokens.controlled.length) {
-            ui.notifications.warn('No tokens selected')
+            ui.notifications.warn(
+              game.i18n.localize('CoC7.ErrorNoTokensSelected')
+            )
             return
           }
           const option = {}
           option.speaker = {
             alias: game.user.name
           }
-          canvas.tokens.controlled.forEach(t => {
+          for (const t of canvas.tokens.controlled) {
             if (t.actor.hasPlayerOwner) {
               option.whisper = t.actor.owners
               chatHelper.createMessage(
@@ -263,7 +355,7 @@ export class CoC7LinkCreationDialog extends FormApplication {
                 option
               )
             }
-          })
+          }
         }
         break
 

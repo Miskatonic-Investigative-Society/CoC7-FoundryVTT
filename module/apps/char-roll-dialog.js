@@ -1,4 +1,4 @@
-/* global Dialog, renderTemplate, Roll */
+/* global Dialog, game, renderTemplate, Roll */
 
 export class CharacRollDialog extends Dialog {
   constructor (data, options) {
@@ -97,7 +97,10 @@ export class CharacRollDialog extends Dialog {
         const roll = new Roll(formula)
         await roll.evaluate({ async: true })
         roll.toMessage({
-          flavor: `Rolling characterisitic ${this.data.data.characteristics.list[key].label}: ${formula}`
+          flavor: game.i18n.format('CoC7.MessageRollingCharacteristic', {
+            label: this.data.data.characteristics.list[key].label,
+            formula
+          })
         })
         input.value = roll.total
       } else input.value = Number(formula)
@@ -185,9 +188,8 @@ export class CharacRollDialog extends Dialog {
           !Object.entries(this.rolled).find(el => !el) &&
           Object.entries(this.rolled).length === 9
         if (this.data.data.validate) {
-          const validateButton = this._element[0].querySelector(
-            'button.validate'
-          )
+          const validateButton =
+            this._element[0].querySelector('button.validate')
           validateButton.classList.remove('inactive')
         }
       }
@@ -212,7 +214,8 @@ export class CharacRollDialog extends Dialog {
 
     if (data.characteristics.points.enabled) {
       if (
-        Number(data.characteristics.points.total) !== Number(data.characteristics.points.value)
+        Number(data.characteristics.points.total) !==
+        Number(data.characteristics.points.value)
       ) {
         data.pointsWarning = true
       }
@@ -227,8 +230,8 @@ export class CharacRollDialog extends Dialog {
         {
           title: data.title,
           content: html,
-          data: data,
-          rolled: rolled,
+          data,
+          rolled,
           buttons: {},
           close: () => {
             if (data.validate) return resolve(true)

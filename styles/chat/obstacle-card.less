@@ -1,0 +1,194 @@
+.coc7.chat-card.obstacle-card {
+  .gm-actions {
+    .status-list {
+      display: block;
+      padding: 3px 0;
+      border-bottom: none;
+      border-top: 2px groove #fff;
+
+      .movement-action {
+        display: inline-block;
+      }
+
+      .warning {
+        background-color: rgba(255, 166, 0, 0.5);
+      }
+
+      .error {
+        background-color: rgba(255, 0, 0, 0.5);
+      }
+
+      .success {
+        .success-color();
+      }
+
+      .failure {
+        .failure-color();
+      }
+
+      .fumble {
+        .fumble-color();
+      }
+
+      .strong {
+        font-weight: bold;
+      }
+
+      .consume {
+        text-decoration: line-through;
+        color: darkred;
+        // background-image: linear-gradient(yellow, red);
+      }
+    }
+  }
+  .card-header {
+    .card-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  button {
+    &.disabled {
+      background: rgba(255, 255, 255, 0.5) !important;
+      &:hover {
+        box-shadow: none !important;
+      }
+    }
+  }
+
+  .card-buttons {
+    span {
+      line-height: 1.5rem;
+      border: none;
+    }
+    button {
+      font-size: 12px;
+      height: 24px;
+      line-height: 20px;
+      margin: 2px 0;
+      background: rgba(255, 255, 240, 0.8);
+      border: 1px solid #b5b3a4;
+      border-radius: 3px;
+      width: 100%;
+      font-family: 'Signika', sans-serif;
+    }
+  }
+
+  .form-group {
+    &.small {
+      .toggle-icon,
+      .icon {
+        font-size: 1rem;
+        line-height: 1.25rem;
+        padding: 1px 6px;
+        display: inline;
+        flex: 0;
+        vertical-align: middle;
+
+        &.bigger {
+          padding: 1px 4px;
+          font-size: 1.4rem;
+        }
+
+        &.switched-off {
+          display: inline;
+        }
+        &.switched-on {
+          color: red;
+          text-shadow: 0 0 8px red;
+          border: none;
+          background: none;
+          box-shadow: none;
+        }
+      }
+
+      input {
+        margin: 0;
+        line-height: 1.25rem;
+        height: calc(100% - 2px);
+      }
+
+      button {
+        &.button-icon {
+          line-height: 1.25rem;
+          padding: 1px 6px;
+          display: inline;
+          flex: 0;
+          background: none;
+          border: none;
+          font-size: 1rem;
+          &:hover {
+            box-shadow: none;
+            text-shadow: 0 0 8px red;
+          }
+        }
+      }
+    }
+
+    &.armor {
+      height: 16px;
+      line-height: 16px;
+      .ecc-switch {
+        color: grey;
+        border: none;
+        box-shadow: none;
+        font-weight: bold;
+
+        font-size: 20px;
+        flex: 0;
+
+        &.switched-off {
+          color: black;
+        }
+      }
+
+      label {
+        height: 16px;
+        line-height: 16px;
+        color: black;
+        font-weight: bold;
+        flex: 0 0 content;
+      }
+
+      input {
+        height: 16px;
+        flex: 0 0 40px;
+        text-align: end;
+      }
+    }
+  }
+
+  .switched-off {
+    display: block;
+  }
+
+  .movement-action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .deficit {
+      color: red;
+      text-shadow: 0 0 8px red;
+    }
+    .base {
+      color: gray;
+      &.deficit {
+        text-shadow: 0 0 8px red;
+      }
+      &.available {
+        color: goldenrod;
+      }
+    }
+  }
+
+  .player-actions {
+    .info {
+      .roll-line {
+        line-height: 1.25rem;
+        min-height: 1.25rem;
+      }
+    }
+  }
+}

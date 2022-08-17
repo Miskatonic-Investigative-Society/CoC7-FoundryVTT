@@ -25,6 +25,7 @@ export class CoC7SetupSheet extends ItemSheet {
     html.find('.item-delete').click(event => this._onItemDelete(event, 'items'))
     html.find('.add-bio').click(async () => await this._onAddBio())
     html.find('.remove-section').click(this._onRemoveSection.bind(this))
+    html.find('.toggle-switch').click(this._onClickToggle.bind(this))
 
     // html.find('.item-edit').click(async ev => {
     //   const li = $(ev.currentTarget).parents('.item');
@@ -36,6 +37,19 @@ export class CoC7SetupSheet extends ItemSheet {
     // });
   }
 
+  async _onClickToggle (event) {
+    event.preventDefault()
+    const propertyId =
+      event.currentTarget.closest('.toggle-switch').dataset.property
+    await this.item.toggleProperty(
+      propertyId,
+      event.metaKey ||
+        event.ctrlKey ||
+        event.keyCode === 91 ||
+        event.keyCode === 224
+    )
+  }
+
   async _onDrop (event, collectionName = 'items') {
     event.preventDefault()
     event.stopPropagation()
@@ -45,22 +59,22 @@ export class CoC7SetupSheet extends ItemSheet {
     const collection = this.item.data.data[collectionName]
       ? duplicate(this.item.data.data[collectionName])
       : []
-    dataList.forEach(async item => {
-      if (!item || !item.data) return
+    for (const item of dataList) {
+      if (!item || !item.data) continue
       if (
         !['item', 'weapon', 'skill', 'book', 'spell'].includes(item.data.type)
       ) {
-        return
+        continue
       }
 
       if (!CoC7Item.isAnySpec(item)) {
         if (collection.find(el => el.name === item.data.name)) {
-          return
+          continue
         }
       }
 
       collection.push(duplicate(item.data))
-    })
+    }
     await this.item.update({ [`data.${collectionName}`]: collection })
   }
 
@@ -95,7 +109,7 @@ export class CoC7SetupSheet extends ItemSheet {
     } else {
       const div = $(`<div class="item-summary">${chatData.value}</div>`)
       const props = $('<div class="item-properties"></div>')
-      // chatData.properties.forEach(p => props.append(`<span class="tag">${p}</span>`));
+      // for (const p of chatData.properties) { props.append(`<span class="tag">${p}</span>`) }
       div.append(props)
       li.append(div.hide())
       div.slideDown(200)
@@ -104,9 +118,7 @@ export class CoC7SetupSheet extends ItemSheet {
   }
 
   async _onItemDelete (event, collectionName = 'items') {
-    const itemIndex = $(event.currentTarget)
-      .parents('.item')
-      .data('item-id')
+    const itemIndex = $(event.currentTarget).parents('.item').data('item-id')
     if (itemIndex) await this.removeItem(itemIndex, collectionName)
   }
 
@@ -177,37 +189,29 @@ export class CoC7SetupSheet extends ItemSheet {
     data.otherItems = data.data.items.filter(it => it.type !== 'skill')
 
     data.skillListEmpty = data.skills.length === 0
-    data.skills.forEach(skill => {
-      if (
-        skill.data.specialization &&
-        !skill.name.includes(skill.data.specialization)
-      ) {
-        skill.displayName = `${skill.data.specialization} (${skill.name})`
-      } else skill.displayName = skill.name
-    })
+    data.itemsListEmpty = data.otherItems.length === 0
 
     data.skills.sort((a, b) => {
-      return a.displayName.localeCompare(b.displayName)
+      return a.name
+        .toLocaleLowerCase()
+        .localeCompare(b.name.toLocaleLowerCase())
     })
 
     data.eras = {}
     data.itemProperties = []
 
+    data._eras = []
     for (const [key, value] of Object.entries(COC7.eras)) {
-      if (!data.data.eras[key]) {
-        data.data.eras[key] = {}
-        data.data.eras[key].selected = false
-      }
-      data.data.eras[key].name = game.i18n.localize(value)
-      data.data.eras[key].internalName = value
-    }
-
-    for (const entry of Object.entries(data.data.eras)) {
-      if (entry[1].selected) data.itemProperties.push(entry[1].name)
+      const era = {}
+      era.id = key
+      era.name = value
+      era.isEnabled = this.item.data.data.eras[key] === true
+      data._eras.push(era)
     }
 
     data.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
 
+    data.isKeeper = game.user.isGM
     return data
   }
 
@@ -229,8 +233,8 @@ export class CoC7SetupSheet extends ItemSheet {
     }
 
     if (event.currentTarget?.name === 'data.characteristics.rolls.enabled') {
-      formData.data.characteristics.points.enabled = !event.currentTarget
-        .checked
+      formData.data.characteristics.points.enabled =
+        !event.currentTarget.checked
     }
 
     super._updateObject(event, formData)

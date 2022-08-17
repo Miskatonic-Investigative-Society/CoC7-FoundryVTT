@@ -1,0 +1,78 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <div class="container">
+    <div class="portrait">
+      <img src="{{item.img}}" title="{{item.name}}" data-edit="img" />
+    </div>
+    <div class="information">
+      <div class="flexrow">
+        <input class="name" name="name" type="text" value="{{item.name}}" />
+      </div>
+      {{#if isKeeper}}
+        <div class="flexrow">
+          <label>{{localize "CoC7.Source"}}:</label>
+          <input type="text" name="data.source" value="{{data.source}}" />
+        </div>
+        <div class="flexrow">
+          <label>{{localize "CoC7.SpellCastingTime"}}:</label>
+          <input type="text" name="data.castingTime" value="{{data.castingTime}}" />
+        </div>
+      {{/if}}
+    </div>
+    <div class="aside">
+      {{#if (or isKeeper isOwner)}}
+        <div class="flexrow">
+          <span id="cast-spell">
+            <label>
+              {{localize "CoC7.Cast"}}
+            </label>
+          </span>
+        </div>
+      {{/if}}
+    </div>
+    <nav class="navigation tabs" data-group="primary">
+      <a data-tab="description">
+        <div class="tab-name">
+          <span>
+            {{localize "CoC7.Description"}}
+          </span>
+        </div>
+      </a>
+      {{#if isKeeper}}
+        <a data-tab="details">
+          <div class="tab-name">
+            <span>
+              {{localize "CoC7.Details"}}
+            </span>
+          </div>
+        </a>
+        <a data-tab="notes" class="keeper-only-tab" title="{{localize 'CoC7.GmNotes'}}">
+          <div class="tab-name">
+            <span><i class="game-icon game-icon-tentacles-skull"></i></span>
+          </div>
+        </a>
+      {{/if}}
+    </nav>
+    <section class="body">
+      <div class="tab" data-group="primary" data-tab="description">
+        {{editor
+          content=data.description.value
+          target="data.description.value"
+          button=true
+          owner=owner
+          editable=editable
+        }}
+      </div>
+      <div class="tab" data-group="primary" data-tab="details">
+        {{> "systems/CoC7/templates/items/spell/details.html"}}
+      </div>
+      <div class="tab" data-group="primary" data-tab="notes">
+        {{editor
+          content=data.description.keeper
+          target="data.description.keeper"
+          button=true owner=owner
+          editable=editable
+        }}
+      </div>
+    </section>
+  </div>
+</form>

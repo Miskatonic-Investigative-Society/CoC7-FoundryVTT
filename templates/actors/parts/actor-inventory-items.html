@@ -1,0 +1,159 @@
+{{#unless hasInventory}}
+  <h3 class="warning">{{localize 'CoC7.InventoryIsCurrentlyEmpty'}}</h3>
+{{/unless}}
+<ol class="inventory-list">
+  <li>
+    {{#if showInventoryItems}}
+      <div class="inventory-section">
+        <ol class="item-list">
+          <li class="flexrow inventory-header">
+            <div class="item-name flexrow">
+              <h3>{{localize 'CoC7.Items'}}</h3>
+              {{#unless data.flags.locked}}
+                <div style='flex:initial;'>
+                  <div class="add-item button" title="{{localize 'CoC7.AddItem'}}" data-type="item">{{localize 'CoC7.AddItem'}}</div>
+                </div>
+              {{/unless}}
+            </div>
+          </li>
+          {{#each itemsByType.item as |item id|}}
+            <li class="item flexrow" data-item-id="{{item._id}}">
+              <div class="item-image" style="background-image: url({{item.img}})"></div>
+              <h4 class="item-name show-detail">{{item.name}}</h4>
+              <div class="item-controls">
+                <a class="item-control item-trade" title="{{localize 'CoC7.TradeItem'}}"><i class="game-icon game-icon-trade"></i></a>
+                <a class="item-control item-edit" title="{{localize 'CoC7.EditItem'}}"><i class="fas fa-edit"></i></a>
+                <a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
+              </div>
+            </li>
+          {{/each}}
+        </ol>
+      </div>
+    {{/if}}
+    {{#if showInventoryBooks}}
+      <div class="inventory-section">
+        <ol class="item-list">
+          <li class="flexrow inventory-header">
+            <div class="item-name flexrow">
+              <h3>{{localize 'CoC7.Books'}}</h3>
+              {{#unless data.flags.locked}}
+                <div style='flex:initial;'>
+                  <div class="add-item button" title="{{localize 'CoC7.AddBook'}}" data-type="book">{{localize 'CoC7.AddBook'}}</div>
+                </div>
+              {{/unless}}
+            </div>
+          </li>
+          {{#each itemsByType.book as |item id|}}
+            <li class="item flexrow" data-item-id="{{item._id}}">
+              <div class="item-image" style="background-image: url({{item.img}})"></div>
+              <h4 class="item-name show-detail">{{item.name}}</h4>
+              <div class="item-controls">
+                <a class="item-control item-trade" title="{{localize 'CoC7.TradeItem'}}"><i class="game-icon game-icon-trade"></i></a>
+                <a class="item-control item-edit" title="{{localize 'CoC7.EditItem'}}"><i class="fas fa-edit"></i></a>
+                <a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
+              </div>
+            </li>
+          {{/each}}
+        </ol>
+      </div>
+    {{/if}}
+    {{#if showInventorySpells}}
+      <div class="inventory-section">
+        <ol class="item-list">
+          <li class="flexrow inventory-header">
+            <div class="item-name flexrow">
+              <h3>{{localize 'CoC7.Spells'}}</h3>
+              {{#unless data.flags.locked}}
+                <div style='flex:initial;'>
+                  <div class="add-item button" title="{{localize 'CoC7.AddSpell'}}" data-type="spell">{{localize 'CoC7.AddSpell'}}</div>
+                </div>
+              {{/unless}}
+            </div>
+          </li>
+          {{#each itemsByType.spell as |item id|}}
+            <li class="item flexrow" data-item-id="{{item._id}}">
+              <div class="item-image" style="background-image: url({{item.img}})"></div>
+              <h4 class="item-name show-detail">{{item.name}}</h4>
+              <div class="item-controls">
+                <a class="item-control item-trade" title="{{localize 'CoC7.TradeItem'}}"><i class="game-icon game-icon-trade"></i></a>
+                <a class="item-control item-edit" title="{{localize 'CoC7.EditItem'}}"><i class="fas fa-edit"></i></a>
+                <a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
+              </div>
+            </li>
+          {{/each}}
+        </ol>
+      </div>
+    {{/if}}
+    {{#if showInventoryTalents}}
+      <div class="inventory-section">
+        <ol class="item-list">
+          <li class="flexrow inventory-header">
+            <div class="item-name flexrow">
+              <h3>{{localize 'CoC7.PulpTalents'}}</h3>
+            </div>
+          </li>
+          {{#each itemsByType.talent as |item id|}}
+            <li class="item flexrow" data-item-id="{{item._id}}">
+              <div class="item-image" style="background-image: url({{item.img}})"></div>
+              <h4 class="item-name show-detail">{{item.name}}</h4>
+              <div class="item-controls">
+                <a class="item-control item-edit" title="{{localize 'CoC7.EditItem'}}"><i class="fas fa-edit"></i></a>
+                <a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
+              </div>
+            </li>
+          {{/each}}
+        </ol>
+      </div>
+    {{/if}}
+    {{#if showInventoryWeapons}}
+      <div class="inventory-section">
+        <ol class="item-list">
+          <li class="flexrow inventory-header">
+            <div class="item-name flexrow">
+              <h3>{{localize 'CoC7.Weapons'}}</h3>
+              {{#unless data.flags.locked}}
+                <div style='flex:initial;'>
+                  <div class="add-item button" title="{{localize 'CoC7.AddWeapon'}}" data-type="weapon">{{localize 'CoC7.AddWeapon'}}</div>
+                </div>
+              {{/unless}}
+            </div>
+          </li>
+          {{#each itemsByType.weapon as |item id|}}
+            <li class="item flexrow" data-item-id="{{item._id}}">
+              <div class="item-image" style="background-image: url({{item.img}})"></div>
+              <h4 class="item-name show-detail">{{item.name}}</h4>
+              <div class="item-controls">
+                <a class="item-control item-trade" title="{{localize 'CoC7.TradeItem'}}"><i class="game-icon game-icon-trade"></i></a>
+                <a class="item-control item-edit" title="{{localize 'CoC7.EditItem'}}"><i class="fas fa-edit"></i></a>
+                <a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
+              </div>
+            </li>
+          {{/each}}
+        </ol>
+      </div>
+    {{/if}}
+    {{#if showInventoryStatuses}}
+      <div class="inventory-section">
+        <ol class="item-list">
+          <li class="flexrow inventory-header">
+            <div class="item-name flexrow">
+              <h3>{{localize 'CoC7.Status'}}</h3>
+            </div>
+          </li>
+          {{#each itemsByType.status as |item id|}}
+            <li class="item flexrow" data-item-id="{{item._id}}">
+              <div class="item-image" style="background-image: url({{item.img}})"></div>
+              <h4 class="item-name show-detail">{{item.name}}</h4>
+              <div class="item-controls">
+                {{#if ../isGM}}
+                  <a class="item-control item-edit" title="{{localize 'CoC7.EditItem'}}"><i class="fas fa-edit"></i></a>
+                  <a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
+                {{/if}}
+              </div>
+            </li>
+          {{/each}}
+        </ol>
+      </div>
+    {{/if}}
+  </li>
+</ol>

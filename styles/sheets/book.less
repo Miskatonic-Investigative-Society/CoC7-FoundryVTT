@@ -11,6 +11,10 @@
     background: var(--main-sheet-front-color);
     border: none;
   }
+  .window-content {
+    background: var(--other-sheet-bg);
+    background-repeat: repeat;
+  }
   .container {
     display: grid;
     grid-template-columns: 0.7fr 1.5fr 0.8fr;
@@ -195,6 +199,15 @@
           text-shadow: none;
         }
       }
+      a.keeper-only-tab {
+        flex: 0 0 30px;
+      }
+      a.keeper-only-tab span {
+        vertical-align: bottom;
+      }
+      a.keeper-only-tab span i {
+        color: @colorGreen;
+      }
     }
     .body {
       input {
@@ -208,17 +221,10 @@
         border: 0.065rem solid var(--main-sheet-front-color);
         border-radius: 0.25rem;
         height: 100%;
+        overflow: scroll;
         padding: 0.15rem 0;
       }
       .details {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
-        gap: 0px 0px;
-        grid-auto-flow: row;
-        grid-template-areas:
-          'traits gains'
-          'other other';
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 0.2fr 1.8fr;

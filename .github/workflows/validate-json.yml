@@ -1,0 +1,17 @@
+name: Validate JSONs
+on:
+  pull_request:
+    branches:
+      - develop
+    paths:
+      - 'lang/*.json'
+jobs:
+  verify-json-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Validate JSON
+        uses: docker://orrosenblatt/validate-json-action:latest
+        env:
+          INPUT_SCHEMA: ./lang/en.json
+          INPUT_JSONS: ./lang/cn.json,./lang/cs.json,./lang/de.json,./lang/es.json,./lang/fr.json,./lang/it.json,./lang/ja.json,./lang/ko.json,./lang/pl.json,./lang/pt-BR.json,./lang/sv.json,./lang/zh-TW.json

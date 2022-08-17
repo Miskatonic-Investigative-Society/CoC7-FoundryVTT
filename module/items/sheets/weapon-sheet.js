@@ -62,20 +62,9 @@ export class CoC7WeaponSheet extends ItemSheet {
       })
 
       data.combatSkill.sort((a, b) => {
-        let lca
-        let lcb
-        if (a.data.properties && b.data.properties) {
-          lca = a.data.properties.special
-            ? a.data.specialization.toLowerCase() + a.name.toLowerCase()
-            : a.name.toLowerCase()
-          lcb = b.data.properties.special
-            ? b.data.specialization.toLowerCase() + b.name.toLowerCase()
-            : b.name.toLowerCase()
-        } else {
-          lca = a.name.toLowerCase()
-          lcb = b.name.toLowerCase()
-        }
-        return lca.localeCompare(lcb)
+        return a.name
+          .toLocaleLowerCase()
+          .localeCompare(b.name.toLocaleLowerCase())
       })
     }
 
@@ -105,6 +94,7 @@ export class CoC7WeaponSheet extends ItemSheet {
       this.item.data.data.properties.brst === true ||
       this.item.data.data.properties.thrown === true
 
+    data.isKeeper = game.user.isGM
     return data
   }
 
@@ -129,23 +119,21 @@ export class CoC7WeaponSheet extends ItemSheet {
    */
   async _onClickToggle (event) {
     event.preventDefault()
-    const propertyId = event.currentTarget.closest('.toggle-switch').dataset
-      .property
-    const set = event.currentTarget.parentElement.dataset.set
-    const elementName = set + '-' + propertyId
-    const checkboxControl = this.form.elements.namedItem(elementName)
-
-    if (checkboxControl.checked) checkboxControl.checked = false
-    else checkboxControl.checked = true
-
-    event.target.classList.toggle('switched-on')
-    await this._onSubmit(event)
+    const propertyId =
+      event.currentTarget.closest('.toggle-switch').dataset.property
+    await this.item.toggleProperty(
+      propertyId,
+      event.metaKey ||
+        event.ctrlKey ||
+        event.keyCode === 91 ||
+        event.keyCode === 224
+    )
   }
 
   async _onPropertyClick (event) {
     event.preventDefault()
-    const property = event.currentTarget.closest('.weapon-property').dataset
-      .property
+    const property =
+      event.currentTarget.closest('.weapon-property').dataset.property
     const weaponId = event.currentTarget.closest('.weapon').dataset.itemId
     const actorKey = event.currentTarget.closest('.weapon').dataset.actorKey
     let weapon = null

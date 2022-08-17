@@ -1,0 +1,102 @@
+<div class="details">
+  <div class="traits">
+    <div class="type">
+      <label>{{localize "CoC7.BookType"}}</label>
+      <div class="flexrow">
+        <input id="mythos" type="checkbox" name="data.type.mythos" {{checked data.type.mythos}}/>
+        <label class="option" for="data.type.mythos">{{localize "CoC7.Mythos"}}</label>
+
+        <input id="occult" type="checkbox" name="data.type.occult" {{checked data.type.occult}}/>
+        <label class="option" for="data.type.occult">{{localize "CoC7.Occult"}}</label>
+
+        <input id="other" type="checkbox" name="data.type.other" {{checked data.type.other}}/>
+        <label class="option" for="data.type.other">{{localize "CoC7.Other"}}</label>
+      </div>
+    </div>
+    <div class="flexrow">
+      <label>{{localize "CoC7.DifficultyLevel"}}:</label>
+      <select name="data.difficultyLevel">
+        {{#select data.difficultyLevel}}
+            <option value="regular">{{localize "CoC7.RollDifficultyRegular"}}</option>
+            <option value="hard">{{localize "CoC7.RollDifficultyHard"}}</option>
+            <option value="extreme">{{localize "CoC7.RollDifficultyExtreme"}}</option>
+            <option value="critical">{{localize "CoC7.RollDifficultyCritical"}}</option>
+            <option value="unreadable">{{localize "CoC7.Unreadable"}}</option>
+        {{/select}}
+      </select>
+    </div>
+    {{#if data.type.mythos}}
+      <div class="flexrow">
+        <label>{{localize "CoC7.StudyTime"}}:</label>
+        <input type="number" name="data.study.necessary" value="{{data.study.necessary}}"/>
+        <select name="data.study.units">
+          {{#select data.study.units}}
+              <option value="CoC7.months">{{localize "CoC7.months"}}</option>
+              <option value="CoC7.weeks">{{localize "CoC7.weeks"}}</option>
+              <option value="CoC7.days">{{localize "CoC7.days"}}</option>
+              <option value="CoC7.hours">{{localize "CoC7.hours"}}</option>
+          {{/select}}
+        </select>
+      </div>
+    {{/if}}
+    {{#if (or data.type.mythos data.type.occult)}}
+    <div class="flexrow">
+      <label>{{localize "CoC7.SANLoss"}}:</label>
+      <input type="text" name="data.sanityLoss" value="{{data.sanityLoss}}"/>
+    </div>
+    {{/if}}
+  </div>
+  <div class="gains">
+    <label>{{localize "CoC7.Gains"}}</label>
+    <br>
+    {{#if data.type.mythos}}
+    <div class="flexrow">
+      <label>{{localize "CoC7.CthulhuMythosInitial"}}:</label>
+      <input type="number" name="data.gains.cthulhuMythos.initial" value="{{data.gains.cthulhuMythos.initial}}"/>
+    </div>
+    <div class="flexrow">
+      <label>{{localize "CoC7.CthulhuMythosFinal"}}:</label>
+      <input type="number" name="data.gains.cthulhuMythos.final" value="{{data.gains.cthulhuMythos.final}}"/>
+    </div>
+    <div class="flexrow">
+      <label>{{localize "CoC7.MythosRating"}}:</label>
+      <input type="number" name="data.mythosRating" value="{{data.mythosRating}}"/>
+    </div>
+    {{/if}}
+    {{#if data.type.occult}}
+    <div class="flexrow">
+      <label>{{localize "CoC7.Occult"}}:</label>
+      <input type="number" name="data.gains.occult" value="{{data.gains.occult}}"/>
+    </div>
+    {{/if}}
+  </div>
+  <div class="other">
+    {{#if data.type.other}}
+    <div class="flexrow">
+      <table>
+        <tr>
+          <th><label>Skill</label></th>
+          <th><label>Gain</label></th>
+          <th><i class="fas fa-plus add-other-gains"></i></th>
+        </tr>
+        {{#each data.gains.others as |skill key|}}
+          <tr data-index="{{@index}}">
+            <td><input class="change-other-gains" type="text" value="{{skill.name}}"></td>
+            <td>
+              <select class="change-other-gains">
+                {{#select skill.value}}
+                    <option value="development">{{localize "CoC7.Development"}}</option>
+                    <option value="1d6">+1D6</option>
+                    <option value="1d10">+1D10</option>
+                {{/select}}
+              </select>
+            </td>
+            <td><i class="fas fa-trash remove-other-gains"></i></td>
+          </tr>
+        {{/each}}
+      </table>
+    </div>
+    {{/if}}
+  </div>
+</div>
+

@@ -1,52 +1,35 @@
-/* global CONFIG, game */
+/* global $, CONFIG, game, ui */
 import { CoC7DecaderDie } from '../apps/decader-die.js'
+import { CoC7DecaderDieOther } from '../apps/decader-die-other.js'
+import { CoC7GameRuleSettings } from './game-rules.js'
+import { CoC7DirectoryPicker } from './coc7-directory-picker.js'
 
 export function registerSettings () {
   /**
    * Rules
    */
-  game.settings.register('CoC7', 'pulpRules', {
-    name: 'SETTINGS.PulpRules',
-    hint: 'SETTINGS.PulpRulesHint',
+  game.settings.registerMenu('CoC7', 'gameRules', {
+    name: 'CoC7.Settings.Rules.Name',
+    label: 'CoC7.Settings.Rules.Label',
+    hint: 'CoC7.Settings.Rules.Hint',
+    icon: 'fas fa-book',
+    type: CoC7GameRuleSettings,
+    restricted: true
+  })
+  CoC7GameRuleSettings.registerSettings()
+
+  game.settings.register('CoC7', 'dholeUploadDirectory', {
+    name: 'CoC7.Settings.DholeUpload.Directory.Name',
+    hint: 'CoC7.Settings.DholeUpload.Directory.Hint',
     scope: 'world',
     config: true,
-    default: false,
-    type: Boolean
-  })
-  game.settings.register('CoC7', 'developmentRollForLuck', {
-    name: 'SETTINGS.developmentRollForLuck',
-    hint: 'SETTINGS.developmentRollForLuckHint',
-    scope: 'world',
-    config: true,
-    default: false,
-    type: Boolean
-  })
-  game.settings.register('CoC7', 'opposedRollTieBreaker', {
-    name: 'SETTINGS.OpposedRollTieBreaker',
-    hint: 'SETTINGS.OpposedRollTieBreakerHint',
-    scope: 'wolrd',
-    config: true,
-    default: false,
-    type: Boolean
+    type: CoC7DirectoryPicker.DefaultDirectory,
+    default: '[data] worlds/' + game.world.id + '/dhole-images'
   })
 
   /**
    * Initiative
    */
-  /** Set the initiative rule */
-  game.settings.register('CoC7', 'initiativeRule', {
-    name: 'SETTINGS.InitiativeRule',
-    hint: 'SETTINGS.InitiativeRuleHint',
-    scope: 'world',
-    config: true,
-    default: 'basic',
-    type: String,
-    choices: {
-      basic: 'SETTINGS.InitiativeRuleBasic',
-      optional: 'SETTINGS.InitiativeRuleOptional'
-    },
-    onChange: rule => _setInitiativeOptions(rule)
-  })
   /** Set displaying dices for init roll */
   game.settings.register('CoC7', 'displayInitDices', {
     name: 'SETTINGS.displayInitDices',
@@ -125,6 +108,24 @@ export function registerSettings () {
   /**
    * Chat Cards
    */
+  /** Trusted players will be allowed to modify chat cards */
+  game.settings.register('CoC7', 'trustedCanModfyChatCard', {
+    name: 'SETTINGS.TrustedCanModfyChatCard',
+    hint: 'SETTINGS.TrustedCanModfyChatCardHint',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
+  })
+  /** Trusted players will be allowed to see chat cards private sections */
+  game.settings.register('CoC7', 'trustedCanSeeChatCard', {
+    name: 'SETTINGS.TrustedCanSeeChatCard',
+    hint: 'SETTINGS.TrustedCanSeeChatCardHint',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
+  })
   /** Set the need to display actor image on chat cards */
   game.settings.register('CoC7', 'displayActorOnCard', {
     name: 'SETTINGS.DisplayActorOnCard',
@@ -177,12 +178,64 @@ export function registerSettings () {
     default: false,
     type: Boolean
   })
+  game.settings.register('CoC7', 'distanceElevation', {
+    name: 'SETTINGS.CheckElevation',
+    hint: 'SETTINGS.CheckElevationHint',
+    scope: 'world',
+    config: true,
+    default: true,
+    type: Boolean
+  })
+
+  /**
+   * Game Artwork Settings
+   */
+  game.settings.register('CoC7', 'overrideGameArtwork', {
+    name: 'SETTINGS.OverrideGameArtwork',
+    hint: 'SETTINGS.OverrideGameArtworkHint',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
+  })
+  if (game.settings.get('CoC7', 'overrideGameArtwork')) {
+    game.settings.register('CoC7', 'artPauseImage', {
+      name: 'SETTINGS.ArtPauseImage',
+      hint: 'SETTINGS.ArtPauseImageHint',
+      scope: 'world',
+      config: true,
+      default: 'systems/CoC7/assets/icons/time-trap.svg',
+      type: String
+    })
+    game.settings.register('CoC7', 'artPauseText', {
+      name: 'SETTINGS.ArtPauseText',
+      hint: 'SETTINGS.ArtPauseTextHint',
+      scope: 'world',
+      config: true,
+      default: 'The Blind Idiot God is dreaming...',
+      type: String
+    })
+  }
 
   /**
    * Sheet settings
    */
   game.settings.register('CoC7', 'displayPlayerNameOnSheet', {
     name: 'SETTINGS.displayPlayerNameOnSheet',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
+  })
+  game.settings.register('CoC7', 'toolTipDelay', {
+    name: 'CoC7.toolTipDelay',
+    scope: 'world',
+    config: true,
+    default: 2000,
+    type: Number
+  })
+  game.settings.register('CoC7', 'showIconsOnly', {
+    name: 'SETTINGS.showIconsOnly',
     scope: 'world',
     config: true,
     default: false,
@@ -315,8 +368,17 @@ export function registerSettings () {
       scope: 'world',
       config: true,
       default: 16,
-      type: Number
+      type: Number,
+      onChange: size => _setRootFontSize(size)
     })
+
+    function _setRootFontSize (size) {
+      $(':root').css('font-size', size)
+      ui.sidebar.render(true)
+      for (const [, w] of Object.entries(ui.windows)) {
+        w.render(true)
+      }
+    }
   }
 
   /**
@@ -338,6 +400,19 @@ export function registerSettings () {
     default: false,
     type: Boolean
   })
+
+  /**
+   * Chases
+   */
+  // MOVED TO CHASSE INDIVIDUAL SETTING
+  // game.settings.register('CoC7', 'chaseShowTokenMovement', {
+  //   name: 'SETTINGS.ChaseShowTokenMovement',
+  //   hint: 'SETTINGS.ChaseShowTokenMovementHint',
+  //   scope: 'world',
+  //   config: true,
+  //   default: true,
+  //   type: Boolean
+  // })
 
   /**
    * Dice So Nice
@@ -378,21 +453,45 @@ export function registerSettings () {
   game.settings.register('CoC7', 'debugmode', {
     name: 'SETTINGS.DebugMode',
     hint: 'SETTINGS.DebugModeHint',
+    scope: 'client',
+    config: true,
+    type: Boolean,
+    default: false
+  })
+  game.settings.register('CoC7', 'experimentalFeatures', {
+    name: 'SETTINGS.ShowExperimentalFeatures',
+    hint: 'SETTINGS.ShowExperimentalFeaturesHint',
     scope: 'world',
     config: true,
     type: Boolean,
     default: false
   })
-
   /**
    * Other settings
    */
+  game.settings.register('CoC7', 'hiddendevmenu', {
+    name: 'Hidden dev menu',
+    hint: 'Use at your own risk',
+    scope: 'world',
+    config: false,
+    type: Boolean,
+    default: false
+  })
   game.settings.register('CoC7', 'developmentEnabled', {
     name: 'Dev phased allowed',
     scope: 'world',
     config: false,
     type: Boolean,
     default: false
+  })
+  /** Feat: welcome message */
+  game.settings.register('CoC7', 'showWelcomeMessage', {
+    name: 'SETTINGS.showWelcomeMessage',
+    hint: 'SETTINGS.showWelcomeMessage',
+    scope: 'world',
+    config: false,
+    default: true,
+    type: Boolean
   })
   game.settings.register('CoC7', 'charCreationEnabled', {
     name: 'Char creation allowed',
@@ -405,8 +504,13 @@ export function registerSettings () {
     name: 'System update version',
     scope: 'world',
     config: false,
-    type: Number,
-    default: '0.2'
+    type: String,
+    default: '0'
+  })
+  game.settings.register('CoC7', 'systemUpdatedModuleVersion', {
+    scope: 'world',
+    config: false,
+    default: {}
   })
   game.settings.register('CoC7', 'xpEnabled', {
     name: 'Enable XP gain',
@@ -415,28 +519,19 @@ export function registerSettings () {
     type: Boolean,
     default: true
   })
+  game.settings.register('CoC7', 'showInstructions', {
+    name: 'Show changelog/instructions',
+    scope: 'world',
+    config: false,
+    type: String,
+    default: '0'
+  })
   /** Set an initiative formula for the system */
   CONFIG.Combat.initiative = {
     formula: '@characteristics.dex.value',
     decimals: 4
   }
   CONFIG.debug.hooks = !!game.settings.get('CoC7', 'debugmode')
-  function _setInitiativeOptions (rule) {
-    let decimals = 0
-    switch (rule) {
-      case 'optional':
-        decimals = 2
-        break
-      case 'basic':
-        decimals = 0
-        break
-    }
-    CONFIG.Combat.initiative = {
-      formula: null,
-      decimals: decimals
-    }
-  }
-  _setInitiativeOptions(game.settings.get('CoC7', 'initiativeRule'))
-
   CONFIG.Dice.terms.t = CoC7DecaderDie
+  CONFIG.Dice.terms.o = CoC7DecaderDieOther
 }

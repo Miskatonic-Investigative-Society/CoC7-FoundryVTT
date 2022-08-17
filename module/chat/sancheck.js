@@ -87,9 +87,7 @@ export class CoC7SanCheck {
 
   get isSanLossFormula () {
     if (this.sanLossFormula) {
-      if (this.sanLossFormula.match(Roll.diceRgx)) return true
-      // const rgx = RegExp( Die.rgx.dice);
-      // return rgx.test(this.sanLossFormula);
+      return Roll.validate(this.sanLossFormula)
     }
     return false
   }
@@ -102,7 +100,7 @@ export class CoC7SanCheck {
   static checkTargets (sanMin, sanMax, fastForward = false, tokenKey = null) {
     const targets = [...game.user.targets]
     if (targets.length) {
-      targets.forEach(t => {
+      for (const t of targets) {
         let check
         if (t.actor.isToken) {
           check = new CoC7SanCheck(t.actor.tokenKey, sanMin, sanMax)
@@ -110,19 +108,19 @@ export class CoC7SanCheck {
           check = new CoC7SanCheck(t.actor.id, sanMin, sanMax)
         }
         check.toMessage(fastForward)
-      })
+      }
     } else {
       if (tokenKey) {
         const speaker = chatHelper.getSpeakerFromKey(tokenKey)
         const title = game.i18n.format('CoC7.SANCheckTitle', {
           name: speaker.alias,
-          sanMin: sanMin,
-          sanMax: sanMax
+          sanMin,
+          sanMax
         })
         chatHelper.createMessage(
           null,
           `@coc7.sanloss[sanMax:${sanMax},sanMin:${sanMin}]{${title}}`,
-          { speaker: speaker }
+          { speaker }
         )
       } else ui.notifications.error('No target selected')
     }
@@ -178,7 +176,7 @@ export class CoC7SanCheck {
 
     const chatData = {
       user: user.id,
-      speaker: speaker,
+      speaker,
       flavor: this.flavor,
       content: htmlElement.outerHTML
     }

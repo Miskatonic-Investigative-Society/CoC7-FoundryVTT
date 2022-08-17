@@ -20,7 +20,7 @@
 									<option value="{{cbs.id}}">{{cbs.data.name}}</option>
 								{{/each}}
 							{{/if}}
-                        {{/select}}
+            {{/select}}
 					</select>
 
 					{{#if usesAlternateSkill}}
@@ -39,9 +39,9 @@
 						</select>
 					{{/if}}
 				{{else}}
-					<input class="item-skill" style="flex: 1;overflow: hidden;" type="text" name="data.skill.main.name" value="{{data.skill.main.name}}" placeholder="Main skill"/>
+					<input class="item-skill" style="flex: 1;overflow: hidden;" type="text" name="data.skill.main.name" value="{{data.skill.main.name}}" placeholder="{{localize 'CoC7.WeaponSkillMain'}}"/>
 					{{#if usesAlternateSkill}}
-					<input class="item-skill" style="flex: 1;overflow: hidden;" type="text" name="data.skill.alternativ.name" value="{{data.skill.alternativ.name}}" placeholder="Alt. skill"/>
+					<input class="item-skill" style="flex: 1;overflow: hidden;" type="text" name="data.skill.alternativ.name" value="{{data.skill.alternativ.name}}" placeholder="{{localize 'CoC7.WeaponSkillAlt'}}"/>
 					{{/if}}
 				{{/if}}
 				</div>
@@ -84,25 +84,25 @@
 	</div>
 
 	{{!-- Sheet Tab Navigation --}}
-	<nav class="sheet-tabs tabs" data-group="primary">
+	<nav class="sheet-tabs tabs" style="flex: 0;" data-group="primary">
 		<a class="item" data-tab="details">{{localize 'CoC7.ItemDetails'}}</a>
 		<a class="item" data-tab="description">{{localize 'CoC7.Description'}}</a>
+    {{#if isKeeper}}
+      <a class="item keeper-only-tab" data-tab="keeper" title="{{localize 'CoC7.GmNotes'}}"><i class="game-icon game-icon-tentacles-skull"></i></a>
+    {{/if}}
 	</nav>
 
 	{{!-- Sheet Body --}}
 	<section class="sheet-body">
 		<div class="tab skills flexcol active" data-group="primary" data-tab="details">
-			<label>Availability :</label>
-			<div class="skill-attributes" style="flex: 0 0 25px;" data-set="eras">
+      <h3 class="form-header" style="flex:0;">{{ localize "CoC7.EraAvailability" }}</h3>
+			<div class="skill-attributes" style="margin-bottom: 6px;flex:0;" data-set="eras">
 				{{#each _eras as |era key|}}
 					<span class="toggle-switch {{#if era.isEnabled}} switched-on {{/if}}" data-property="{{era.id}}">{{localize era.name}}</span>
-					<div style="display: none;">
-						<input id="eras-{{era.id}}" type="checkbox" name="data.eras.{{era.id}}" {{checked era.isEnabled}}/>
-					</div>
 				{{/each}}
 			</div>
 
-			<div class="flexrow" style="flex: 0 0 auto;">
+			<div class="flexrow" style="flex: 0 0 auto; border-top: 2px groove #eeede0;">
 				<div class="flexrow" style="flex: 0 0 32%">
 					<label>{{localize 'CoC7.WeaponMalfunction'}} :</label>
 					<input class="weapon-detail" style="flex: 0 0 40px;" type="text" name="data.malfunction" value="{{data.malfunction}}" placeholder="-"/>
@@ -153,8 +153,13 @@
 
 		</div>
 
-		<div class="tab description flexcol" style="display: flex;border: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="description">
+		<div class="tab description flexcol" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="description">
 			{{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
 		</div>
+    {{#if isKeeper}}
+      <div class="tab keeper flexcol" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="keeper">
+        {{editor content=data.description.keeper target="data.description.keeper" button=true owner=owner editable=editable}}
+      </div>
+    {{/if}}
 	</section>
 </form>

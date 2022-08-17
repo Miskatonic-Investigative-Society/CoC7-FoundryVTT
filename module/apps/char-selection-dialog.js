@@ -25,7 +25,7 @@ export class CharacSelectDialog extends Dialog {
         {
           title: data.title,
           content: html,
-          data: data,
+          data,
           buttons: {},
           close: () => {
             if (data.selected) return resolve(data.selected)

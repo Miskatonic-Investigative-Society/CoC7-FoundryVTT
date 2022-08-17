@@ -1,0 +1,200 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+  <div class="container">
+    <div class="portrait">
+      <img src="{{item.img}}" title="{{item.name}}" data-edit="img" />
+    </div>
+    <div class="information">
+      <div class="flexrow">
+        <input class="name" name="name" type="text" value="{{item.name}}" />
+      </div>
+      {{#if (or isKeeper initialReading)}}
+        <div class="flexrow">
+          <label>{{localize "CoC7.Author"}}:</label>
+          <input type="text" name="data.author" value="{{data.author}}" />
+        </div>
+        <div class="flexrow">
+          <label>{{localize "CoC7.Date"}}:</label>
+          <input type="text" name="data.date" value="{{data.date}}" />
+        </div>
+        <div class="flexrow">
+          <label>{{localize "CoC7.language"}}:</label>
+          <input type="text" name="data.language" value="{{data.language}}" />
+        </div>
+      {{/if}}
+    </div>
+    <div class="aside">
+      {{#if data.initialReading}}
+        <div class="flexrow">
+          <span>
+            <label>
+              {{localize "CoC7.InitialReading"}}
+            </label>
+          </span>
+            <i class="fas fa-check"></i>
+        </div>
+        <div class="flexrow">
+          <span>
+            <label>
+              {{localize "CoC7.FullStudies"}}:
+            </label>
+          </span>
+          <span>
+            <label>
+              {{data.fullStudies}}
+            </label>
+          </span>
+          <span>
+            {{#if studyCompleted}}
+              <i id="redo-full-study" class="fas fa-redo" title="{{localize "CoC7.RedoFullStudy"}}"></i>
+            {{/if}}
+          </span>
+        </div>
+      {{else}}
+        <div class="flexrow">
+          {{#if (or isKeeper isOwner)}}
+            <span id="attempt-initial-reading">
+              <label>
+                {{localize "CoC7.InitialReading"}}
+              </label>
+            </span>
+          {{/if}}
+        </div>
+      {{/if}}
+    </div>
+    <div class="progress">
+      {{#if data.type.mythos}}
+        {{#if (or isKeeper initialReading)}}
+          {{#if isKeeper}}
+            <i id="decrease-progress" class="fas fa-minus"></i>
+          {{/if}}
+          <progress
+            id="progress"
+            name="data.study.progress"
+            value="{{data.study.progress}}"
+            max="{{data.study.necessary}}"
+            {{#unless exhausted}}
+              data-label="{{localize "CoC7.Progress"}}:
+                {{data.study.progress}} / {{data.study.necessary}}
+                {{localize data.study.units}}"
+            {{/unless}}
+          ></progress>
+          {{#if isKeeper}}
+            <i id="increase-progress" class="fas fa-plus increase-progress"></i>
+          {{/if}}
+        {{/if}}
+      {{/if}}
+    </div>
+    <nav class="navigation tabs" data-group="primary">
+      <a
+        data-tab="description"
+      >
+        <div class="tab-name">
+          <span>
+            {{localize "CoC7.Description"}}
+          </span>
+        </div>
+      </a>
+      {{#if (or isKeeper initialReading)}}
+        <a data-tab="content">
+          <div class="tab-name">
+            <span>
+              {{localize "CoC7.Content"}}
+            </span>
+          </div>
+        </a>
+      {{/if}}
+      {{#if isKeeper}}
+        <a data-tab="details">
+          <div class="tab-name">
+            <span>
+              {{localize "CoC7.Details"}}
+            </span>
+          </div>
+        </a>
+      {{/if}}
+      {{#if (or data.type.mythos data.type.occult)}}
+        {{#if (or isKeeper initialReading)}}
+          <a data-tab="spells">
+            <div class="tab-name">
+              <span>
+                {{localize "CoC7.Spells"}}
+              </span>
+            </div>
+          </a>
+        {{/if}}
+      {{/if}}
+      {{#if isKeeper}}
+        <a data-tab="notes" class="keeper-only-tab" title="{{localize 'CoC7.GmNotes'}}">
+          <div class="tab-name">
+            <span><i class="game-icon game-icon-tentacles-skull"></i></span>
+          </div>
+        </a>
+      {{/if}}
+    </nav>
+    <section class="body">
+      <div class="tab" data-group="primary" data-tab="description">
+        {{editor
+          content=data.description.value
+          target="data.description.value"
+          button=true
+          owner=owner
+          editable=editable
+        }}
+      </div>
+      <div class="tab" data-group="primary" data-tab="content">
+        {{editor
+          content=data.content
+          target="data.content"
+          button=true
+          owner=owner
+          editable=editable
+        }}
+      </div>
+      <div class="tab" data-group="primary" data-tab="details">
+        {{> "systems/CoC7/templates/items/book/details.html"}}
+      </div>
+      <div class="tab" data-group="primary" data-tab="spells">
+        <div class="spells">
+          {{#if spellListEmpty}}
+            <label>{{localize "CoC7.DragSpell"}}</label>
+          {{/if}}
+          <ul>
+            {{#each data.spells as |spell key|}}
+              <li class="spell" data-index="{{@index}}" data-id="{{spell._id}}">
+                <div class="portrait">
+                  <img src="{{spell.img}}" />
+                </div>
+                <div class="name">
+                  <label class="spell-name">
+                    {{spell.name}}
+                  </label>
+                </div>
+                <div class="edit">
+                  {{#if (or ../isKeeper spell.data.learned)}}
+                  <i class="fas fa-edit edit-spell"></i>
+                  {{/if}}
+                  {{#if ../isKeeper}}
+                  <i class="fas fa-trash delete-spell"></i>
+                  {{/if}}
+                </div>
+                {{#if (not spell.data.learned)}}
+                <div class="status">
+                  <i class="fas fa-book-open teach-spell"></i>
+                </div>
+                {{/if}}
+              </li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+      <div class="tab" data-group="primary" data-tab="notes">
+        {{editor
+          content=data.description.keeper
+          target="data.description.keeper"
+          button=true owner=owner
+          editable=editable
+        }}
+      </div>
+    </section>
+  </div>
+</form>

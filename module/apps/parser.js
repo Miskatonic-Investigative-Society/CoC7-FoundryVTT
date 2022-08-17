@@ -47,27 +47,30 @@ export class CoC7Parser {
     const data = JSON.parse(dataString)
     if (data.linkType === 'coc7-link') {
       event.stopPropagation()
-      if (
-        !event.shiftKey &&
-        (typeof data.difficulty === 'undefined' ||
-          typeof data.modifier === 'undefined')
-      ) {
-        const usage = await RollDialog.create({
-          disableFlatDiceModifier: true
-        })
-        if (usage) {
-          data.modifier = usage.get('bonusDice')
-          data.difficulty = usage.get('difficulty')
+      if (data.type !== 'effect') {
+        if (
+          !event.shiftKey &&
+          (typeof data.difficulty === 'undefined' ||
+            typeof data.modifier === 'undefined')
+        ) {
+          const usage = await RollDialog.create({
+            disableFlatDiceModifier: true
+          })
+          if (usage) {
+            data.modifier = usage.get('bonusDice')
+            data.difficulty = usage.get('difficulty')
+          }
         }
-      }
-      if (game.settings.get('core', 'rollMode') === 'blindroll') {
-        data.blind = true
-      }
-
-      const link = CoC7Parser.createCoC7Link(data)
-
-      if (link) {
-        editor.insertContent(link)
+        if (game.settings.get('core', 'rollMode') === 'blindroll') {
+          data.blind = true
+        }
+        const link = CoC7Parser.createCoC7Link(data)
+        if (link) {
+          editor.insertContent(link)
+        }
+      } else {
+        const link = await CoC7Link.fromData(data)
+        editor.insertContent(link.link)
       }
     } else if (isCtrlKey(event)) {
       event.stopPropagation()
@@ -125,7 +128,7 @@ export class CoC7Parser {
     html,
     data /* chatMessage, data/*, option, user */
   ) {
-    // @coc7.sanloss[sanMax:1D6,sanMin:1,difficulty:++,modifier:-1]{Hard San Loss (-1) 1/1D6}
+    // @coc7.sanloss[sanMax:1D6,sanMin:1,sanReason:Ghouls,difficulty:++,modifier:-1]{Hard San Loss (-1) 1/1D6}
     // @coc7.check[type:charac,name:STR,difficulty:+,modifier:-1]{Hard STR check(-1)}
     // @coc7.check[type:attrib,name:lck,difficulty:+,modifier:-1]{Hard luck check(-1)}
     // @coc7.check[type:skill,name:anthropology,difficulty:+,modifier:-1]{Hard Anthropology check(-1)}
@@ -242,10 +245,8 @@ export class CoC7Parser {
 
     text = TextEditor._getTextNodes(html)
     // Alternative regex : '@(coc7).([^\[]+)\[([^\]]+)\](?:{([^}]+)})?'
-    const rgx = new RegExp(
-      '@(coc7).(.*?)\\[([^\\]]+)\\]' + '(?:{([^}]+)})?',
-      'gi'
-    )
+    // Before active effect :       '@(coc7).(.*?)\\[([^\\]]+)\\]' + '(?:{([^}]+)})?',
+    const rgx = new RegExp('@(coc7).(.*?)\\[(.*)\\]' + '(?:{([^}]+)})?', 'gi')
     TextEditor._replaceTextContent(text, rgx, CoC7Parser._createLink)
     return html.innerHTML
   }
@@ -261,11 +262,19 @@ export class CoC7Parser {
 
   static _onDragCoC7Link (event) {
     const a = event.currentTarget
-    const i = a.querySelector('i.link-icon')
+    const i = a.querySelector('[data-link-icon]')
     const data = duplicate(a.dataset)
     data.linkType = 'coc7-link'
     data.CoC7Type = 'link'
     data.icon = null
+
+    if (
+      data.object &&
+      (typeof data.object === 'string' || data.object instanceof String)
+    ) {
+      data.object = JSON.parse(data.object)
+      data.type = 'effect'
+    }
 
     if (
       i.dataset &&
@@ -279,23 +288,37 @@ export class CoC7Parser {
   }
 
   static _createLink (match, tag, type, options, name) {
+    if (typeof match !== 'string') {
+      // Foundry VTT v10
+      name = match[4] ?? undefined
+      options = match[3] ?? undefined
+      type = match[2] ?? undefined
+      tag = match[1] ?? undefined
+      match = match[0] ?? undefined
+    }
+
     const data = {
       cls: ['coc7-link'],
       dataset: { check: type },
-      icon: 'fas fa-dice',
+      icon: null,
       blind: false,
-      name: name
+      name
     }
 
     const matches = options.matchAll(/[^,]+/gi)
-    for (const match of Array.from(matches)) {
-      let [key, value] = match[0].split(':')
-      if (key === 'icon') data.icon = value
-      if (key === 'blind' && typeof value === 'undefined') {
-        value = true
-        data.blind = true && ['check'].includes(type.toLowerCase())
+    if (type === 'effect') {
+      data.effect = JSON.parse(options)
+      data.dataset.object = options
+    } else {
+      for (const match of Array.from(matches)) {
+        let [key, value] = match[0].split(':')
+        if (key === 'icon') data.icon = value
+        if (key === 'blind' && typeof value === 'undefined') {
+          value = true
+          data.blind = true && ['check'].includes(type.toLowerCase())
+        }
+        data.dataset[key] = value
       }
-      data.dataset[key] = value
     }
 
     let title
@@ -321,15 +344,16 @@ export class CoC7Parser {
             data.dataset.type?.toLowerCase()
           )
         ) {
-          humanName = CoC7Utilities.getCharacteristicNames(data.dataset.name)
-            ?.label
+          humanName = CoC7Utilities.getCharacteristicNames(
+            data.dataset.name
+          )?.label
         }
         title = game.i18n.format(
           `CoC7.LinkCheck${!data.dataset.difficulty ? '' : 'Diff'}${
             !data.dataset.modifier ? '' : 'Modif'
           }`,
           {
-            difficulty: difficulty,
+            difficulty,
             modifier: data.dataset.modifier,
             name: humanName
           }
@@ -342,7 +366,7 @@ export class CoC7Parser {
             !data.dataset.modifier ? '' : 'Modif'
           }`,
           {
-            difficulty: difficulty,
+            difficulty,
             modifier: data.dataset.modifier,
             sanMin: data.dataset.sanMin,
             sanMax: data.dataset.sanMax
@@ -355,11 +379,14 @@ export class CoC7Parser {
             !data.dataset.modifier ? '' : 'Modif'
           }`,
           {
-            difficulty: difficulty,
+            difficulty,
             modifier: data.dataset.modifier,
             name: data.dataset.name
           }
         )
+        break
+      case 'effect':
+        title = data.effect.label
         break
       default:
         break
@@ -376,11 +403,18 @@ export class CoC7Parser {
       a.dataset[k] = v
     }
     a.draggable = true
-    a.innerHTML = `${
-      data.blind ? '<i class="fas fa-eye-slash"></i>' : ''
-    }<i data-link-icon="${data.icon}" class="link-icon ${data.icon}"></i>${
-      data.name
-    }`
+    data.icon = data.icon ?? data.effect?.icon ?? 'fas fa-dice'
+    // check if it's an image or an icon
+    if (data.icon.includes('\\') || data.icon.includes('.')) {
+      data.img = data.icon
+    }
+    if (data.blind) a.innerHTML += '<i class="fas fa-eye-slash"></i>'
+    if (data.img) {
+      a.innerHTML += `<img data-link-icon="${data.icon}" src="${data.img}">`
+    } else {
+      a.innerHTML += `<i data-link-icon="${data.icon}" class="link-icon ${data.icon}"></i>`
+    }
+    a.innerHTML += `<span>${data.name}</span>`
 
     return a
   }
@@ -410,7 +444,9 @@ export class CoC7Parser {
         return
       }
       if (canvas.tokens.controlled.length) {
-        canvas.tokens.controlled.forEach(token => {
+        const link = await CoC7Link.fromData(options)
+
+        for (const token of canvas.tokens.controlled) {
           switch (options.check) {
             case 'check':
               if (
@@ -444,16 +480,9 @@ export class CoC7Parser {
               break
 
             case 'sanloss': {
-              SanCheckCard.create(token.actor.id, options, {
+              SanCheckCard.create(token.actor.actorKey, options, {
                 fastForward: event.shiftKey
               })
-              // const check = new CoC7SanCheck(
-              //   token.actor.id,
-              //   options.sanMin,
-              //   options.sanMax,
-              //   undefined != options.difficulty?CoC7Utilities.convertDifficulty(options.difficulty):CoC7Check.difficultyLevel.regular,
-              //   undefined != options.modifier?Number(options.modifier):0);
-              // check.toMessage( event.shiftKey);
               break
             }
 
@@ -461,9 +490,15 @@ export class CoC7Parser {
               return token.actor.weaponCheck(options, event.shiftKey)
             }
 
+            case 'effect':
+              await token.actor.createEmbeddedDocuments('ActiveEffect', [
+                link.data.effect
+              ])
+              break
+
             default:
           }
-        })
+        }
       } else {
         if (game.user.data.document.character?.data) {
           await Promise.all(

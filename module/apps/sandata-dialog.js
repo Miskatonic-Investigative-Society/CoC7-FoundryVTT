@@ -21,8 +21,8 @@ export class SanDataDialog extends Dialog {
       const dlg = new SanDataDialog({
         title: options.displayName
           ? game.i18n.format('CoC7.SanDataSelectionWindowNamed', {
-              name: options.displayName
-            })
+            name: options.displayName
+          })
           : game.i18n.localize('CoC7.SanDataSelectionWindow'), // TODO: Remove SanDataSelectionWindowNamed
         content: html,
         buttons: {

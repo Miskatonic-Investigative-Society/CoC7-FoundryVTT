@@ -126,9 +126,9 @@ export class OpposedCheckCard extends RollCard {
 
   get winnerCount () {
     let count = 0
-    this.rolls.forEach(r => {
+    for (const r of this.rolls) {
       if (r.winner) count += 1
-    })
+    }
     return count
   }
 
@@ -209,7 +209,7 @@ export class OpposedCheckCard extends RollCard {
     const data = {
       type: this.config.type,
       action: 'updateRoll',
-      rank: rank,
+      rank,
       fromGM: game.user.isGM
     }
     if (!game.user.isGM) data.roll = this.rolls[rank].JSONRollData
@@ -285,7 +285,7 @@ export class OpposedCheckCard extends RollCard {
         const data = {
           type: this.defaultConfig.type,
           action: 'updateRoll',
-          rank: rank,
+          rank,
           fromGM: game.user.isGM
         }
         if (!game.user.isGM) data.roll = card.rolls[rank].JSONRollData
@@ -296,6 +296,10 @@ export class OpposedCheckCard extends RollCard {
   }
 
   async compute (rank = undefined) {
+    this.rolls = this.rolls.filter(roll => {
+      return typeof roll.actor.data !== 'undefined' // remove any actors that no longer exist
+    })
+
     if (!rank) {
       for (let i = 0; i < this.rolls.length; i++) {
         delete this.rolls[i].maneuver
@@ -325,10 +329,6 @@ export class OpposedCheckCard extends RollCard {
       }
     }
 
-    this.rolls = this.rolls.filter(roll => {
-      return (typeof roll.actor.data !== 'undefined') // Check if there's an actor set and if there's one and it doesnt exist remove him.
-    })
-
     if (this.combat) {
       // Sort combat rolls by index.
       this.rolls.sort((a, b) => {
@@ -340,10 +340,10 @@ export class OpposedCheckCard extends RollCard {
       // Combat roll includes only 2 persons, remove the rest.
       if (this.rolls.length > 1) {
         this.rolls = [this.rolls[0], this.rolls[1]]
-        this.rolls.forEach(r => {
+        for (const r of this.rolls) {
           delete r.winner
           delete r.tie
-        })
+        }
       }
 
       // First person added is the attacker.

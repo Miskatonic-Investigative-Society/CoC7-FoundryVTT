@@ -4,7 +4,7 @@ import { CoC7Utilities } from '../../utilities.js'
 export class CoC7BookSheet extends ItemSheet {
   static get defaultOptions () {
     return mergeObject(super.defaultOptions, {
-      template: 'systems/CoC7/templates/items/book/main.hbs',
+      template: 'systems/CoC7/templates/items/book/main.html',
       classes: ['coc7', 'item', 'book'],
       width: 500,
       height: 'auto',
@@ -27,11 +27,14 @@ export class CoC7BookSheet extends ItemSheet {
     data.data = itemData.data
     data.initialReading = this.item.data.data.initialReading
     data.isKeeper = game.user.isGM
-    data.isOwned = this.item.isOwned
+    data.isOwner = this.item.isOwner
     data.spellsLearned = this.spellsLearned
-    data.exhausted = await this.item.checkExhaustion() !== false
+    data.exhausted = (await this.item.checkExhaustion()) !== false
     data.studyCompleted =
       this.item.data.data.study.progress === this.item.data.data.study.necessary
+
+    data.spellListEmpty = data.data.spells.length === 0
+
     return data
   }
 
@@ -51,10 +54,10 @@ export class CoC7BookSheet extends ItemSheet {
       this.item.attemptInitialReading()
     })
     html.find('.delete-spell').click(event => this._onDelete(event))
+    html.find('.edit-spell').click(event => this._onSpellDetail(event))
+    html.find('.spell-name').click(event => this._onSpellDetail(event))
     html.find('.teach-spell').click(event => {
-      const id = $(event.currentTarget)
-        .parents('li')
-        .data('id')
+      const id = $(event.currentTarget).parents('li').data('id')
       this.item.attemptSpellLearning(id)
     })
     html.find('[name="data.study.necessary"]').change(event => {
@@ -80,6 +83,14 @@ export class CoC7BookSheet extends ItemSheet {
       this.modifyOthersGains(event, 'remove')
     })
     html.find('.option').click(event => this.modifyType(event))
+  }
+
+  async _onSpellDetail (event) {
+    event.preventDefault()
+    const element = $(event.currentTarget)
+    /** @see data-index property on template */
+    const index = element.parents('li').data('index')
+    return await this.item.spellDetail(index)
   }
 
   /**
@@ -115,10 +126,14 @@ export class CoC7BookSheet extends ItemSheet {
     const dataList = await CoC7Utilities.getDataFromDropEvent(event, 'Item')
 
     const spells = []
-    dataList.forEach(async item => {
-      if (!item || !(item.data.type === 'spell')) return
-      spells.push(item.data)
-    })
+    for (const item of dataList) {
+      if (!item || !['skill', 'spell'].includes(item.data.type)) continue
+      if (item.data.type === 'spell') {
+        spells.push(item.data)
+      } else if (item.data.type === 'skill' && this.item.data.data.type.other) {
+        this.modifyOthersGains(null, 'add', { name: item.name })
+      }
+    }
     await this.item.addSpells(spells)
   }
 
@@ -143,13 +158,17 @@ export class CoC7BookSheet extends ItemSheet {
    * @param {string} mode 'add' || 'change' || 'remove'
    * @returns {Promise<Document>} update to Item document
    */
-  async modifyOthersGains (event, mode) {
+  async modifyOthersGains (event, mode, options = {}) {
     /** No need to check if user is GM because only they can see details tab */
-    event.preventDefault()
-    const element = $(event.currentTarget)
-    /** @see data-index property on template */
-    const index = element.parents('tr').data('index')
-    /** Always has to be @type {Array} */
+    let index = null
+    let element = null
+    if (event) {
+      event.preventDefault()
+      element = $(event.currentTarget)
+      /** @see data-index property on template */
+      index = element.parents('tr').data('index')
+      /** Always has to be @type {Array} */
+    }
     const skills = this.item.data.data.gains.others
       ? duplicate(this.item.data.data.gains.others)
       : []
@@ -158,7 +177,7 @@ export class CoC7BookSheet extends ItemSheet {
         /** User clicked on plus icon to add a new skill on other gains table */
         skills.push({
           /** new skill */
-          name: game.i18n.localize('CoC7.NewSkillName'),
+          name: options.name || game.i18n.localize('CoC7.NewSkillName'),
           /** development by default, value can also be 1d6 or 1d10 */
           value: 'development'
         })

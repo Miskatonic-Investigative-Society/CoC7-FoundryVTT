@@ -1,0 +1,9 @@
+<html>
+  <ul style="color: red;">
+    {{#each losses as |loss key|}}
+      <li>{{loss.characteristicName}}: -{{loss.loss}} {{localize "CoC7.Points"}}</li>
+    {{/each}}
+  </ul>
+  <hr>
+  {{{description}}}
+</html>

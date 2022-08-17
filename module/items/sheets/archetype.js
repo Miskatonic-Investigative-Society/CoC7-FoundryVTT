@@ -36,19 +36,19 @@ export class CoC7ArchetypeSheet extends ItemSheet {
     const collection = this.item.data.data[collectionName]
       ? duplicate(this.item.data.data[collectionName])
       : []
-    dataList.forEach(async item => {
-      if (!item || !item.data) return
+    for (const item of dataList) {
+      if (!item || !item.data) continue
       if (![type].includes(item.data.type)) {
-        return
+        continue
       }
       if (!CoC7Item.isAnySpec(item)) {
         if (collection.find(el => el.name === item.data.name)) {
-          return
+          continue
         }
       }
 
       collection.push(duplicate(item.data))
-    })
+    }
     await this.item.update({ [`data.${collectionName}`]: collection })
   }
 
@@ -67,7 +67,7 @@ export class CoC7ArchetypeSheet extends ItemSheet {
     } else {
       const div = $(`<div class="item-summary">${chatData.value}</div>`)
       const props = $('<div class="item-properties"></div>')
-      // chatData.properties.forEach(p => props.append(`<span class="tag">${p}</span>`));
+      // for (const p of chatData.properties) { props.append(`<span class="tag">${p}</span>`) }
       div.append(props)
       li.append(div.hide())
       div.slideDown(200)
@@ -76,9 +76,7 @@ export class CoC7ArchetypeSheet extends ItemSheet {
   }
 
   async _onItemDelete (event, collectionName = 'items') {
-    const itemIndex = $(event.currentTarget)
-      .parents('.item')
-      .data('item-id')
+    const itemIndex = $(event.currentTarget).parents('.item').data('item-id')
     if (itemIndex) await this.removeItem(itemIndex, collectionName)
   }
 
@@ -147,18 +145,11 @@ export class CoC7ArchetypeSheet extends ItemSheet {
     }
 
     data.skillListEmpty = data.data.skills.length === 0
-    data.data.skills.forEach(skill => {
-      // For each skill if it's a spec and spac name not included in the name add it
-      if (
-        skill.data.specialization &&
-        !skill.name.includes(skill.data.specialization)
-      ) {
-        skill.displayName = `${skill.data.specialization} (${skill.name})`
-      } else skill.displayName = skill.name
-    })
 
     data.data.skills.sort((a, b) => {
-      return a.displayName.localeCompare(b.displayName)
+      return a.name
+        .toLocaleLowerCase()
+        .localeCompare(b.name.toLocaleLowerCase())
     })
 
     data.coreCharacteristicsString = ''
@@ -170,15 +161,17 @@ export class CoC7ArchetypeSheet extends ItemSheet {
     data.itemProperties = []
 
     data.itemProperties.push(
-      `${game.i18n.localize('CoC7.PulpTalents')}: ${data.data.bonusPoints}`
+      `${game.i18n.localize('CoC7.PulpTalents')}: ${data.data.talents}`
     )
     data.itemProperties.push(
-      `${game.i18n.localize('CoC7.BonusPoints')}: ${data.data.talents}`
+      `${game.i18n.localize('CoC7.BonusPoints')}: ${data.data.bonusPoints}`
     )
 
     // for (let [key, value] of Object.entries(data.data.type)) {
     //   if( value) data.itemProperties.push( COC7.occupationProperties[key]?COC7.occupationProperties[key]:null);
     // }
+
+    data.isKeeper = game.user.isGM
     return data
   }
 

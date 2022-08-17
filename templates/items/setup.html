@@ -23,6 +23,9 @@
 		<a style="line-height: 24px;" class="item" data-tab="details">{{ localize "CoC7.Details" }}</a>
 		{{#if data.enableCharacterisitics}}<a style="line-height: 24px;" class="item" data-tab="characteristics">{{ localize "CoC7.Characteristics" }}</a>{{/if}}
 		<a style="line-height: 24px;" class="item" data-tab="skills">{{ localize "CoC7.Skills" }}</a>
+    {{#if isKeeper}}
+      <a style="line-height: 24px;" class="item keeper-only-tab" data-tab="keeper" title="{{localize 'CoC7.GmNotes'}}"><i class="game-icon game-icon-tentacles-skull"></i></a>
+    {{/if}}
 	</nav>
 
 
@@ -54,13 +57,11 @@
 			</div>
 
 			<h3 class="form-header">{{ localize "CoC7.Eras" }}</h3>
-			<div class="form-group stacked">
-                {{#each data.eras as |era key|}}
-				<label class="checkbox">
-					<input type="checkbox" name="data.eras.{{key}}.selected" {{checked this.selected}}/> {{ era.name }}
-                </label>
-                {{/each}}
-			</div>
+      <div class="skill-attributes" style="margin-bottom: 6px;" data-set="eras">
+        {{#each _eras as |era key|}}
+          <span class="toggle-switch {{#if era.isEnabled}} switched-on {{/if}}" data-property="{{era.id}}">{{localize era.name}}</span>
+        {{/each}}
+      </div>
 
 			{{#if oneBlockBackStory}}
 				<h3 class="form-header">
@@ -85,7 +86,7 @@
 			<div class='droppable main-skills'>
 				<h3 class="form-header">{{ localize "CoC7.Items" }}</h3>
 
-				{{#if skillListEmpty}}
+				{{#if itemsListEmpty}}
 					<h3 class="warning">{{ localize "CoC7.EmptyItemList" }}</h3>
 				{{/if}}
 
@@ -97,7 +98,7 @@
 						</div>
 
 						<div class="item-controls">
-                            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                            <a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
                             {{!-- <a class="item-control item-edit" title="{{localize 'CoC7.EditItem'}}"><i class="fas fa-edit"></i></a> --}}
 						</div>
 					</li>
@@ -118,11 +119,11 @@
 					{{#each skills as |skill|}}
 					<li class="item flexrow" data-item-id="{{skill._id}}">
 						<div class="item-name flexrow">
-							<h4>{{skill.displayName}} ({{skill.data.base}}%)</h4>
+							<h4>{{skill.name}} ({{skill.data.base}}%)</h4>
 						</div>
 
 						<div class="item-controls">
-                            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                            <a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
                             {{!-- <a class="item-control item-edit" title="{{localize 'CoC7.EditItem'}}"><i class="fas fa-edit"></i></a> --}}
 						</div>
 					</li>
@@ -186,12 +187,11 @@
 				<input type="text" name="data.characteristics.rolls.luck" value="{{data.characteristics.rolls.luck}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}"/>
 			</div>
 			{{/if}}
-
-
-
-
-
 		</div>
-
+    {{#if isKeeper}}
+      <div class="tab keeper flexcol" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="keeper">
+        {{editor content=data.description.keeper target="data.description.keeper" button=true owner=owner editable=editable}}
+      </div>
+    {{/if}}
 	</section>
 </form>

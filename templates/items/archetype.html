@@ -25,6 +25,9 @@
 		<a style="line-height: 24px;" class="item active" data-tab="description">{{ localize "CoC7.Description" }}</a>
 		<a style="line-height: 24px;" class="item" data-tab="details">{{ localize "CoC7.Details" }}</a>
 		<a style="line-height: 24px;" class="item" data-tab="skills">{{ localize "CoC7.Skills" }}</a>
+    {{#if isKeeper}}
+      <a style="line-height: 24px;" class="item keeper-only-tab" data-tab="keeper" title="{{localize 'CoC7.GmNotes'}}"><i class="game-icon game-icon-tentacles-skull"></i></a>
+    {{/if}}
 	</nav>
 
 
@@ -125,12 +128,12 @@
 					{{#each data.skills as |skill|}}
 					<li class="item flexrow" data-item-id="{{skill._id}}">
 						<div class="item-name flexrow">
-							<h4>{{skill.displayName}} ({{skill.data.base}}%)</h4>
+							<h4>{{skill.name}} ({{skill.data.base}}%)</h4>
 						</div>
 
 						<div class="item-controls">
 							{{#unless ../isOwned}}
-							<a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+							<a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
 							{{/unless}}
 						</div>
 					</li>
@@ -138,5 +141,10 @@
 				</ol>
 			</div>
 		</div>
+    {{#if isKeeper}}
+      <div class="tab keeper" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="keeper">
+        {{editor content=data.description.keeper target="data.description.keeper" button=true owner=owner editable=editable}}
+      </div>
+    {{/if}}
 	</section>
 </form>

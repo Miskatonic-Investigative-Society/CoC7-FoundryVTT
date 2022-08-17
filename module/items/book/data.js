@@ -3,6 +3,7 @@
 import { SanCheckCard } from '../../chat/cards/san-check.js'
 import { CoC7Check } from '../../check.js'
 import { CoC7Item } from '../item.js'
+import { CoC7Spell } from '../spell/data.js'
 
 export class CoC7Book extends CoC7Item {
   constructor (data, context) {
@@ -37,10 +38,20 @@ export class CoC7Book extends CoC7Item {
     const collection = this.data.data.spells
       ? duplicate(this.data.data.spells)
       : []
-    spells.forEach(async spell => {
+    for (const spell of spells) {
       collection.push(spell)
-    })
+    }
     return await this.update({ 'data.spells': collection })
+  }
+
+  async spellDetail (index) {
+    const isKeeper = game.user.isGM
+    const data = this.data.data.spells[index]
+    const parent = this.actor ? this.actor : null
+    const spell = new CoC7Spell(data, { parent, bookId: this.id })
+    if (isKeeper || spell.data.data.learned) {
+      return await spell.sheet.render(true)
+    }
   }
 
   /**
@@ -230,7 +241,7 @@ export class CoC7Book extends CoC7Item {
       })
     }
     if (other.type) {
-      other.gains.forEach(async skill => {
+      for (const skill of other.gains) {
         const pattern = skill.name.match(/^(.+) \((.+)\)$/)
         /** Sanitization to deal with specializations */
         if (pattern) {
@@ -249,7 +260,7 @@ export class CoC7Book extends CoC7Item {
             specialization: skill.specialization
           })
         }
-      })
+      }
     }
     await this.grantSkillDevelopment(developments)
     if ((mythos.type || occult.type) && this.data.data.sanityLoss) {
@@ -259,10 +270,47 @@ export class CoC7Book extends CoC7Item {
     return await this.update({ 'data.initialReading': true })
   }
 
-  async grantSpellLearning () {
-    return ui.notifications.warn(
-      'Automation of learning spells from books is not currently supported and will be added in future updates.'
-    )
+  /**
+   *
+   * @param {Item} spelllearned The spell that was learned successfully from book
+   * @returns
+   */
+  async grantSpellLearning (spelllearned) {
+    for (const spell of this.data.data.spells) {
+      if (spell._id === spelllearned._id) {
+        spell.data.learned = true
+        // Does the actor already has a spell of that name? Then do not add the spell
+        const existingSpell = await this.actor.items.find(
+          item =>
+            item.data.type === 'spell' && item.data.name === spelllearned.name
+        )
+        if (!existingSpell) {
+          spelllearned.data.learned = true
+        } else {
+          ui.notifications.warn(
+            game.i18n.format('CoC7.SpellAlreadyLearned', {
+              spell: spelllearned.name,
+              book: this.name
+            })
+          )
+        }
+        break
+      }
+    }
+    // Save spell list of book
+    await this.update({ 'data.spells': this.data.data.spells })
+    // Add learned spell to actor
+    if (spelllearned.data.learned) {
+      ui.notifications.info(
+        game.i18n.format('CoC7.SpellSuccessfullyLearned', {
+          spell: spelllearned.name,
+          book: this.name
+        })
+      )
+      await this.actor.createEmbeddedDocuments('Item', [
+        duplicate(spelllearned)
+      ])
+    }
   }
 
   /**
@@ -389,7 +437,7 @@ export class CoC7Book extends CoC7Item {
         )}`
       }
     }
-    const template = 'systems/CoC7/templates/items/book/development.hbs'
+    const template = 'systems/CoC7/templates/items/book/development.html'
     const html = await renderTemplate(template, { developments })
     return await ChatMessage.create({
       user: game.user.id,
@@ -426,6 +474,7 @@ export class CoC7Book extends CoC7Item {
         spell: spell.name
       })
       check.context = 'SPELL_LEARNING'
+      check.spell = spell
       await check.rollCharacteristic('int')
       await check.toMessage()
     }
@@ -434,12 +483,13 @@ export class CoC7Book extends CoC7Item {
   /** Listen to changes on the check card */
   async updateRoll (roll) {
     const check = CoC7Check.fromRollString(roll)
+
     /** Will know if user push the roll or spend Luck */
     if (check.passed) {
       if (check.context === 'INITIAL_READING') {
         return await this.grantInitialReading()
       } else if (check.context === 'SPELL_LEARNING') {
-        return await this.grantSpellLearning()
+        return await this.grantSpellLearning(check.spell)
       }
     }
   }

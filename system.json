@@ -2,47 +2,62 @@
   "name": "CoC7",
   "title": "Call of Cthulhu 7th Edition (Unofficial)",
   "description": "An unofficial implementation of the Call of Cthulhu 7th Edition game system for Foundry Virtual Tabletop.",
-  "version": "0.6.7",
-  "author": "Miskatonic Investigative Society",
-  "minimumCoreVersion": "0.8.6",
-  "compatibleCoreVersion": "0.8.9",
-  "esmodules": ["bundle.js"],
+  "version": "0.8.0",
+  "authors": [
+    {
+      "name": "Miskatonic Investigative Society"
+    }
+  ],
+  "minimumCoreVersion": "9",
+  "compatibleCoreVersion": "10",
+  "esmodules": [
+    "lib/socketlib/src/libwrapper_shim.js",
+    "lib/socketlib/src/socketlib.js",
+    "bundle.js"
+  ],
   "templateVersion": 1,
-  "styles": ["style.css"],
+  "styles": ["lib/game-icons/game-icons.css", "coc7g.css"],
   "packs": [
     {
       "label": "Skills",
-      "entity": "Item",
+      "type": "Item",
       "name": "skills",
       "path": "./packs/skills.db",
       "system": "CoC7"
     },
     {
       "label": "Items Examples",
-      "entity": "Item",
+      "type": "Item",
       "name": "items",
       "path": "./packs/items.db",
       "system": "CoC7"
     },
     {
       "label": "Examples",
-      "entity": "Actor",
+      "type": "Actor",
       "name": "examples",
       "path": "./packs/examples.db",
       "system": "CoC7"
     },
     {
       "label": "Roll Requests",
-      "entity": "JournalEntry",
+      "type": "JournalEntry",
       "name": "roll-requests",
       "path": "./packs/roll-requests.db",
       "system": "CoC7"
     },
     {
       "label": "Sanity Roll Table",
-      "entity": "RollTable",
+      "type": "RollTable",
       "name": "sanity-tables-examples",
       "path": "./packs/sanity-tables-examples.db",
+      "system": "CoC7"
+    },
+    {
+      "label": "System manual",
+      "type": "JournalEntry",
+      "name": "system-doc",
+      "path": "./packs/system-doc.db",
       "system": "CoC7"
     }
   ],
@@ -90,7 +105,7 @@
     {
       "lang": "zh-tw",
       "name": "正體中文",
-      "path": "lang/zh-tw.json"
+      "path": "lang/zh-TW.json"
     },
     {
       "lang": "sv",
@@ -101,6 +116,16 @@
       "lang": "cs",
       "name": "Čeština",
       "path": "lang/cs.json"
+    },
+    {
+      "lang": "ko",
+      "name": "한국어",
+      "path": "lang/ko.json"
+    },
+    {
+      "lang": "it",
+      "name": "Italiano",
+      "path": "lang/it.json"
     }
   ],
   "socket": true,

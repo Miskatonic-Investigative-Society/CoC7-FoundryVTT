@@ -1,0 +1,304 @@
+<div class="coc7 chat-card chat-card-v2">
+  <form class="flexcol">
+    <header class="card-header">
+      <div class="left-portrait">
+        {{#if displayActorOnCard}}
+					<img class="open-actor {{card.participant.cssClass}}" data-actor-key="{{card.participant.key}}" src="{{card.participant.icon}}" title="{{card.participant.name}}" width="36" height="36"/>
+        {{/if}}
+      </div>
+      {{#if data.states.obstacleDefined}}
+      <div class="card-title">{{#if data.obstacle.name}}{{data.obstacle.name}}{{else}}{{ localize 'CoC7.Obstacle'}}{{/if}}</div>
+      <div class="right-portrait">
+          {{#if data.obstacle.barrier}}
+            <img src="systems/CoC7/assets/icons/barrier.svg">
+          {{else}}
+            <img src="systems/CoC7/assets/icons/hazard-sign.svg">
+          {{/if}}
+      </div>
+      {{/if}}
+    </header>
+
+		<datalist id="check-options">
+
+      {{#each checkOptions as |o|}}
+        <option>{{o}}</option>
+      {{/each}}
+    </datalist>
+
+    <div class="player-actions">
+      <div class="info">
+        {{#if data.states.obstacleDefined}}
+          <div>{{strings.obstacleDefined}}</div>
+          {{#if data.states.playerActionDefined}}
+            <div>{{ strings.playerIntentions }}</div>
+            {{#if data.totalCautiousApproach}}
+            <div>{{{strings.cautiousApproachType}}}</div>
+            {{/if}}
+            {{#if data.states.checkRolled}}
+              <div class="roll-line"> {{data.objects.check.name}} : {{{ htmlCheck }}}</div>
+              {{#if data.objects.check.passed}}
+                <div>{{ strings.obstaclePassed }}</div>
+              {{else}}
+                <div>{{ strings.checkFailed }}</div>
+                {{#if data.states.closed}}
+                  {{#if playerDamageTaken}}
+                    <div class="roll-line">{{ strings.damageTaken}}</div>
+                  {{/if}}
+                  {{#if actionLost}}
+                    <div class="roll-line">{{ strings.actionLost }} : {{{inlineActionLostRoll}}}</div>
+                  {{/if}}
+                {{/if}}
+              {{/if}}
+            {{else}}
+              {{#if data.states.tryToBreak}}
+                {{#if data.states.obstacleDamageRolled}}
+                  <div> {{{ strings.obstacleDamage }}} </div>
+                {{else}}
+                  <div class="card-buttons">
+                    <button class="" data-ecc-visibility="{{card.participant.actor.uuid}}" data-action="rollObstacleDamage">{{ card.strings.damageRollRequest }}</button>
+                  </div>
+                {{/if}}
+              {{else}}
+                <div class="card-buttons">
+                  <button class="" data-ecc-visibility="{{card.participant.actor.uuid}}" data-action="rollSkillCheck">{{ strings.checkRollRequest }}</button>
+                </div>
+              {{/if}}
+            {{/if}}
+          {{else}}
+            <div>{{ localize 'CoC7.AskIntentions' }}</div>
+          {{/if}}
+        {{else}}
+          <div>{{ localize 'CoC7.SomethingInTheWay' }}</div>
+        {{/if}}
+
+        {{#if data.states.closed}}
+        <div>{{{ strings.finalOutcome }}}</div>
+        {{/if}}
+      </div>
+    </div>
+
+    <div data-ecc-visibility="gm" class="gm-actions">
+      {{#if data.states.cardResolved}}
+        {{#unless data.states.closed}}
+          <div class="cardResolution">
+            {{#if obstalceDefinitionChanged}}
+            <div class="form-group">
+              <div data-name="data.reflectObstaleChanges" class="toggle-switch ecc-switch">{{ localize 'CoC7.ReflectObstacleChanges' }}</div>
+            </div>
+            {{/if}}
+            {{#if data.states.tryToBreak}}
+            <div class="form-group small">
+              <div  class="flex3">
+                <span>{{localize 'CoC7.ObstacleDamage'}} : {{{inlineDamageRoll}}} (<i class="icon game-icon game-icon-life-bar" title="{{localize 'CoC7.HitPoints'}}"></i>{{data.obstacle.HitPoints}})</span>
+              </div>
+              <div class="flexrow flex1">
+                <input type="text" data-ecc-permissions="gm" name="data.totalObstacleDamage" value="{{data.totalObstacleDamage}}" data-dtype="Number">
+                <a data-ecc-permissions="gm" data-flag="obstacleDestoyed" class="flex0 icon bigger ecc-switch" title="{{ localize 'CoC7.RemoveObstacle' }}"><i class="game-icon game-icon-wrecking-ball"></i></a>
+              </div>
+            </div>
+            {{/if}}
+            {{#if playerDamageTaken}}
+            <div class="form-group">
+              <div  class="flex3">
+                <span>{{localize 'CoC7.DamageInflicted'}} : {{{inlineDamageTakenRoll}}} {{#unless data.flags.ignoreArmor}}- <i class="game-icon game-icon-armor-upgrade"></i>{{data.armor}}{{/unless}}</span>
+              </div>
+              <div  class="flex1">
+                <input type="text" data-ecc-permissions="gm" name="data.totalPlayerDamageTaken" value="{{data.totalPlayerDamageTaken}}" data-dtype="Number">
+              </div>
+            </div>
+            {{/if}}
+            <div class="form-group">
+              <div  class="flex3">
+                <span>{{localize 'CoC7.ActionCost'}} {{#if actionLost}}: {{{inlineActionLostRoll}}}{{/if}}</span>
+              </div>
+              <div  class="flex1">
+                <input type="text" data-ecc-permissions="gm" name="data.totalActionCost" value="{{data.totalActionCost}}" data-dtype="Number">
+              </div>
+            </div>
+            <div class="form-group">
+              <div data-name="data.movePlayer" class="toggle-switch ecc-switch">{{ localize 'CoC7.PlayerMovesToLocation' }}</div>
+            </div>
+            <div class="card-buttons">
+                <button class="" data-action="validateCard">Validate</button>
+            </div>
+          </div>
+        {{/unless}}
+      {{else}}
+        {{#if data.states.obstacleDefined}}
+          {{#if data.states.breakOrNegotiateDefined}}
+            {{#if data.states.tryToNegotiate}}
+              {{#if data.states.playerActionDefined}}
+                {{#if data.states.checkRolled}}
+                  {{#unless data.objects.check.passed}}
+                    {{#unless data.states.failedConsequencesRolled}}
+                      <div class="defineFailureConsequeces">
+                        {{#if data.obstacle.hasDamage }} <!-- Armor relevant only if there's some damage -->
+                          <div class="form-group armor">
+                            <div class="flexrow flex-end">
+                              <a data-ecc-permissions="gm" data-flag="ignoreArmor" class="ecc-switch" title="{{ localize 'CoC7.IgnoreArmor' }}">
+                                {{#if data.flags.ignoreArmor}}
+                                  <i class="game-icon game-icon-armor-downgrade"></i>
+                                {{else}}
+                                  <i class="game-icon game-icon-armor-upgrade"></i>
+                                {{/if}}
+                              </a>
+                              {{#unless data.flags.ignoreArmor}}
+                                <label>{{ localize 'CoC7.Armor'}}:</label>
+                                <input type="text" data-ecc-permissions="gm" name="data.armor" value="{{data.armor}}">
+                              {{/unless}}
+                            </div>
+                          </div>
+                        {{/if}}
+                        <div class="form-group small">
+                          <div class="flexrow flex1">
+                            {{#if data.obstacle.hazard}}
+                              <a data-ecc-permissions="gm" data-name="data.obstacle.hasActionCost" class="icon ecc-switch" title="{{ localize 'CoC7.ActionCostOnFail' }}">
+                                <i class="fas fa-bahai"></i>
+                              </a>
+                              {{#if data.obstacle.hasActionCost }}
+                                <input type="text" data-ecc-permissions="gm" name="data.obstacle.failedActionCost" value="{{data.obstacle.failedActionCost}}">
+                              {{/if}}
+                            {{/if}}
+                          </div>
+                          <div class="flexrow flex1">
+                            <a data-ecc-permissions="gm" data-name="data.obstacle.hasDamage" class="icon ecc-switch" title="{{ localize 'CoC7.DamageOnFail' }}">
+                              <i class="game-icon game-icon-broken-bone"></i>
+                            </a>
+                            {{#if data.obstacle.hasDamage }}
+                              <input type="text" data-ecc-permissions="gm" name="data.obstacle.failedCheckDamage" value="{{data.obstacle.failedCheckDamage}}">
+                            {{/if}}
+                          </div>
+                        </div>
+                        <div class="card-buttons">
+                          {{#if card.validFailedRolls}}
+                            <button class="" data-action="rollFailConsequences">Validate</button>
+                          {{/if}}
+                        </div>
+                      </div>
+                    {{/unless}}
+                  {{/unless}}
+                {{else}}
+                  <div class="waitForPlayerInput">
+                    <span>{{ localize 'CoC7.WaitForPlayerInput' }}</span>
+                  </div>
+                {{/if}}
+              {{else}}
+                <div class="defineSkillCheck">
+                  <div class="form-group small">
+                    {{#if data.flags.hasBonusDice}}
+                    <a data-ecc-permissions="gm" data-flag="consumeBonusDice" class="icon bigger ecc-switch" title="{{ localize 'CoC7.ConsumeBonusDice' }}"><i class="game-icon game-icon-dice-fire"></i></a>
+                    {{/if}}
+                    <input type="range" data-ecc-permissions="gm" name="data.bonusDice" min="-2" max="2" value="{{data.bonusDice}}" class="slider">
+                    {{#if data.obstacle.barrier}}
+                      <button type="button" class="button-icon" data-action="cancelBreakOrPassChoice" title="{{ localize 'CoC7.Cancel' }}"><i class="fas fa-undo"></i></button>
+                    {{else}}
+                      <button type="button" class="button-icon" data-action="cancelObstacleDefinition" title="{{ localize 'CoC7.Cancel' }}"><i class="fas fa-undo"></i></button>
+                    {{/if}}
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="flex4" data-ecc-permissions="gm" name="data.obstacle.checkName" value="{{data.obstacle.checkName}}"
+                      list="check-options" placeholder="{{ localize 'CoC7.Skill' }}"/>
+                    {{#if validSkill}}
+                      : {{skill.value.value}}%
+                    {{else}}
+                      : <input type="text" data-ecc-permissions="gm" name="data.checkThreshold" value="{{data.checkThreshold}}"
+                        placeholder="{{ localize 'CoC7.Value'}}" title="{{strings.EnterValueTitle}}"/>
+                    {{/if}}
+                  </div>
+                  <div class="card-buttons">
+                    {{#if canTakeCautiousApproach}}
+                    <button class="" data-action="takeCautiousApproach">{{ localize 'CoC7.CautiousApproach' }}</button>
+                    {{/if}}
+                    {{#if validCheck}}
+                    <button class="" data-action="requestRoll">Request roll</button>
+                    {{/if}}
+                  </div>
+                </div>
+              {{/if}}
+            {{/if}}
+            {{#if data.states.tryToBreak}}
+              {{#if data.states.playerActionDefined}}
+                {{#if data.states.obstacleDamageRolled}}
+                {{else}}
+                  <div class="waitForPlayerInput">
+                    <span>{{ localize 'CoC7.WaitForPlayerInput' }}</span>
+                  </div>
+                {{/if}}
+              {{else}}
+                <div class="definePlayerAction">
+                  <div class="form-group small">
+                    <span class="icon bigger" title="{{ localize 'CoC7.HitPoints' }}" title="{{ localize 'CoC7.ObstacleHasHitPoint' }}"><i class="game-icon game-icon-life-bar"></i></span>
+                    <input type="text" data-ecc-permissions="gm" name="data.obstacle.HitPoints" value="{{data.obstacle.HitPoints}}" data-dtype="Number">
+                    <button type="button" class="button-icon" data-action="cancelBreakOrPassChoice" title="{{ localize 'CoC7.Cancel' }}"><i class="fas fa-undo"></i></button>
+                  </div>
+                  <div class="form-group small">
+                    <span class="icon bigger" title="{{ localize 'CoC7.ChooseWeapon' }}"><i class="game-icon game-icon-gooey-impact"></i></span>
+                    <select name="data.weaponChoice">
+                      {{selectOptions card.weaponsOptions nameAttr="uuid" labelAttr="name" selected=data.weaponChoice}}
+                    </select>
+                  </div>
+                  {{#if customWeapon}}
+                    <div class="form-group small">
+                      <div class="flex1"></div>
+                      <div class="flex1 flexrow">
+                        <span class="icon bigger" title="{{ localize 'CoC7.DamageInflicted' }}"><i class="game-icon game-icon-rolling-dices"></i></span>
+                        <input type="text" data-ecc-permissions="gm" name="data.customWeaponDamage" value="{{data.customWeaponDamage}}">
+                      </div>
+                    </div>
+                  {{/if}}
+                  {{#if card.validObstacleDamage}}
+                    <div class="card-buttons">
+                      <button class="" data-action="askRollObstacleDamage">{{localize 'CoC7.AskDamageRoll'}}</button>
+                    </div>
+                  {{/if}}
+                </div>
+              {{/if}}
+            {{/if}}
+          {{else}}
+            <div class="askPlayerForIntentions">
+              <div class="form-group small">
+                <div class="flex">{{ localize 'CoC7.WaitForPlayerInput' }}</div>
+                <button type="button" class="button-icon" data-action="cancelObstacleDefinition" title="{{ localize 'CoC7.Cancel' }}"><i class="fas fa-undo"></i></button>
+              </div>
+              <div class="card-buttons">
+                <button class="" data-action="tryToNegotiateObstacle">{{localize 'CoC7.AttemptNegotiateObstacle'}}</button>
+                <button class="" data-action="tryToBreakDownObstacle">{{localize 'CoC7.AttemptBreakDown'}}</button>
+              </div>
+            </div>
+          {{/if}}
+        {{else}}
+          <div class="defineObstacle">
+            <div class="form-group ecc-radio">
+              <div data-name="data.obstacle.barrier" class="toggle-switch ecc-switch">{{ localize 'CoC7.Barrier' }}</div>
+              <div data-name="data.obstacle.hazard" class="toggle-switch ecc-switch">{{ localize 'CoC7.Hazard' }}</div>
+            </div>
+            {{#if data.obstacle.barrier}}
+              <div class="form-group">
+                <div data-name="data.obstacle.hasHitPoints" class="toggle-switch ecc-switch">{{ localize 'CoC7.Breakable' }}</div>
+              </div>
+            {{/if}}
+            <div class="form-group">
+              <label>{{localize 'CoC7.ObstacleName'}}</label>
+              <input type="text" data-ecc-permissions="gm" name="data.obstacle.name" value="{{data.obstacle.name}}"/>
+            </div>
+            <div class="card-buttons">
+              <button class="" data-action="defineObstacle">{{localize 'CoC7.Validate'}}</button>
+            </div>
+          </div>
+        {{/if}}
+      {{/if}}
+
+      <div class="status-list">
+        <div class="status movement-action">
+            <span>{{localize 'CoC7.Actions'}}</span>
+            {{#each data.movementActionArray as |actionClass|}}
+            <i class="fas fa-bahai {{actionClass}}"></i>
+            {{/each}}
+        </div>
+        {{#each status as |s|}}
+        <div class="status {{s.css}}">{{s.name}}</div>
+        {{/each}}
+      </div>
+    </div>
+  </form>
+</div>

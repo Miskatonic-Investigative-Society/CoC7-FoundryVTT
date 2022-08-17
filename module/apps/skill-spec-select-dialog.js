@@ -11,19 +11,19 @@ export class SkillSpecSelectDialog {
       'systems/CoC7/templates/apps/skill-spec-select.html',
       {
         hasSkills: skills.length > 0,
-        skills: skills,
+        skills,
         base: baseValue,
-        name: name
+        name
       }
     )
     return new Promise(resolve => {
       let formData = null
       const dlg = new Dialog({
         title: name
-          ? game.i18n.format('CoC7.SkillSelectBase', { name: name })
+          ? game.i18n.format('CoC7.SkillSelectBase', { name })
           : game.i18n.format('CoC7.SkillSpecSelectTitle', {
-              specialization: specializationName
-            }),
+            specialization: specializationName
+          }),
         content: html,
         buttons: {
           validate: {

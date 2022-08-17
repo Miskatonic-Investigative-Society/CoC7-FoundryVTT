@@ -3,7 +3,6 @@
 import { CoC7Dice } from '../dice.js'
 import { CoC7Check } from '../check.js'
 import { chatHelper, CoC7Roll, CoC7Damage } from './helper.js'
-// import { CoC7Chat } from '../chat.js';
 
 export class CoC7RangeInitiator {
   constructor (actorKey = null, itemId = null, fastForward = false) {
@@ -27,11 +26,11 @@ export class CoC7RangeInitiator {
     this.aimed = false
     this.totalBulletsFired = 0
     this._targets = []
-    ;[...game.user.targets].forEach(t => {
+    for (const t of [...game.user.targets]) {
       const target = new CoC7RangeTarget(`${t.scene.id}.${t.id}`) //
       target.token = t
       this._targets.push(target)
-    })
+    }
     if (this._targets.length) this._targets[0].active = true
     else {
       const target = new CoC7RangeTarget()
@@ -51,7 +50,7 @@ export class CoC7RangeInitiator {
       }
     }
     if (this.tokenKey) {
-      this._targets.forEach(t => {
+      for (const t of this._targets) {
         if (t.token && this.token) {
           t.distance = chatHelper.getDistance(t.token, this.token)
           t.roundedDistance = Math.round(t.distance.value * 100) / 100
@@ -111,7 +110,7 @@ export class CoC7RangeInitiator {
           }
           // }
         } else t.baseRange = true
-      })
+      }
     }
   }
 
@@ -201,9 +200,9 @@ export class CoC7RangeInitiator {
 
   get didAnyShotHit () {
     let anyHit = false
-    this.rolls.forEach(r => {
+    for (const r of this.rolls) {
       anyHit = anyHit || r.isSuccess
-    })
+    }
     return anyHit
   }
 
@@ -294,9 +293,9 @@ export class CoC7RangeInitiator {
   }
 
   calcTargetsDifficulty () {
-    this.targets.forEach(t => {
+    for (const t of this.targets) {
       t.shotDifficulty = this.shotDifficulty(t)
-    })
+    }
   }
 
   shotDifficulty (t = null) {
@@ -344,8 +343,8 @@ export class CoC7RangeInitiator {
     return {
       level: difficulty,
       name: difficultyName,
-      modifier: modifier,
-      damage: damage,
+      modifier,
+      damage,
       impossible: difficulty === CoC7Check.difficultyLevel.impossible
     }
   }
@@ -662,18 +661,18 @@ export class CoC7RangeInitiator {
 
     chatHelper.getObjectFromElement(rangeInitiator, card)
     const cardTargets = card.querySelectorAll('.target')
-    cardTargets.forEach(t => {
+    for (const t of cardTargets) {
       const target = CoC7RangeTarget.getFromElement(t)
       rangeInitiator.targets.push(target)
-    })
+    }
 
     const cardShots = card.querySelectorAll('.shot')
     if (cardShots) {
-      cardShots.forEach(s => {
+      for (const s of cardShots) {
         const shot = {}
         chatHelper.getObjectFromElement(shot, s)
         rangeInitiator.shots.push(shot)
-      })
+      }
     }
     // else {
     //  const shot = {
@@ -685,17 +684,17 @@ export class CoC7RangeInitiator {
 
     rangeInitiator.rolls = []
     const rolls = card.querySelectorAll('.roll-result')
-    rolls.forEach(r => {
+    for (const r of rolls) {
       const roll = CoC7Roll.getFromElement(r)
       rangeInitiator.rolls.push(roll)
-    })
+    }
 
     rangeInitiator.damage = []
     const damageRolls = card.querySelectorAll('.damage-results')
-    damageRolls.forEach(dr => {
+    for (const dr of damageRolls) {
       const damageRoll = CoC7Damage.getFromElement(dr)
       rangeInitiator.damage.push(damageRoll)
-    })
+    }
 
     return rangeInitiator
   }
@@ -715,85 +714,88 @@ export class CoC7RangeInitiator {
       const volleySize = parseInt(h.shot.bulletsShot)
       const damageRolls = []
 
-      const damageFormula = h.shot.damage
-      const damageDie = CoC7Damage.getMainDie(damageFormula)
-      const maxDamage = new Roll(damageFormula).evaluate({
-        maximize: true
-      }).total
-      const criticalDamageFormula = this.weapon.impale
-        ? `${damageFormula} + ${maxDamage}`
-        : `${maxDamage}`
-      const criticalDamageDie = CoC7Damage.getMainDie(criticalDamageFormula)
+      if (volleySize > 0) {
+        let damageFormula = String(h.shot.damage)
+        if (!damageFormula || damageFormula === '') damageFormula = '0'
+        const damageDie = CoC7Damage.getMainDie(damageFormula)
+        const maxDamage = new Roll(damageFormula).evaluate({
+          maximize: true
+        }).total
+        const criticalDamageFormula = this.weapon.impale
+          ? `${damageFormula} + ${maxDamage}`
+          : `${maxDamage}`
+        const criticalDamageDie = CoC7Damage.getMainDie(criticalDamageFormula)
 
-      let impalingShots = 0
-      let successfulShots = 0
-      let critical = false
-      if (this.fullAuto || this.burst) {
-        successfulShots = Math.floor(volleySize / 2)
-      }
-      if (successfulShots === 0) successfulShots = 1
-      if (h.roll.successLevel >= CoC7Check.difficultyLevel.extreme) {
-        impalingShots = successfulShots
-        successfulShots = volleySize - impalingShots
-        critical = true
-        if (
-          CoC7Check.difficultyLevel.critical !== h.roll.successLevel &&
-          (CoC7Check.difficultyLevel.extreme <= h.roll.difficulty ||
-            h.shot.extremeRange)
-        ) {
-          successfulShots = volleySize
-          impalingShots = 0
-          critical = false
+        let impalingShots = 0
+        let successfulShots = 0
+        let critical = false
+        if (this.fullAuto || this.burst) {
+          successfulShots = Math.floor(volleySize / 2)
         }
-      }
+        if (successfulShots === 0) successfulShots = 1
+        if (h.roll.successLevel >= CoC7Check.difficultyLevel.extreme) {
+          impalingShots = successfulShots
+          successfulShots = volleySize - impalingShots
+          critical = true
+          if (
+            CoC7Check.difficultyLevel.critical !== h.roll.successLevel &&
+            (CoC7Check.difficultyLevel.extreme <= h.roll.difficulty ||
+              h.shot.extremeRange)
+          ) {
+            successfulShots = volleySize
+            impalingShots = 0
+            critical = false
+          }
+        }
 
-      let total = 0
-      for (let index = 0; index < successfulShots; index++) {
-        const roll = new Roll(damageFormula)
-        /** MODIF 0.8.x **/
-        await roll.evaluate({ async: true })
-        await CoC7Dice.showRollDice3d(roll)
-        /*****************/
-        damageRolls.push({
-          formula: damageFormula,
-          total: roll.total,
-          die: damageDie,
-          critical: false
-        })
-        total += roll.total
-      }
-      for (let index = 0; index < impalingShots; index++) {
-        const roll = new Roll(criticalDamageFormula)
-        /** MODIF 0.8.x **/
-        await roll.evaluate({ async: true })
-        await CoC7Dice.showRollDice3d(roll)
-        /*****************/
-        damageRolls.push({
-          formula: criticalDamageFormula,
-          total: roll.total,
-          die: criticalDamageDie,
-          critical: true
-        })
-        total += roll.total
-      }
+        let total = 0
+        for (let index = 0; index < successfulShots; index++) {
+          const roll = new Roll(damageFormula)
+          /** MODIF 0.8.x **/
+          await roll.evaluate({ async: true })
+          await CoC7Dice.showRollDice3d(roll)
+          /*****************/
+          damageRolls.push({
+            formula: damageFormula,
+            total: roll.total,
+            die: damageDie,
+            critical: false
+          })
+          total += roll.total
+        }
+        for (let index = 0; index < impalingShots; index++) {
+          const roll = new Roll(criticalDamageFormula)
+          /** MODIF 0.8.x **/
+          await roll.evaluate({ async: true })
+          await CoC7Dice.showRollDice3d(roll)
+          /*****************/
+          damageRolls.push({
+            formula: criticalDamageFormula,
+            total: roll.total,
+            die: criticalDamageDie,
+            critical: true
+          })
+          total += roll.total
+        }
 
-      let targetName = 'dummy'
-      let target = chatHelper.getTokenFromKey(h.roll.targetKey)
-      if (!target) target = chatHelper.getActorFromKey(h.roll.targetKey) // REFACTORING (2)
-      if (target) targetName = target.name
+        let targetName = 'dummy'
+        let target = chatHelper.getTokenFromKey(h.roll.targetKey)
+        if (!target) target = chatHelper.getActorFromKey(h.roll.targetKey) // REFACTORING (2)
+        if (target) targetName = target.name
 
-      this.damage.push({
-        targetKey: h.roll.targetKey,
-        targetName: targetName,
-        rolls: damageRolls,
-        total: total,
-        critical: critical,
-        dealt: false,
-        resultString: game.i18n.format('CoC7.rangeCombatDamage', {
-          name: targetName,
-          total: total
+        this.damage.push({
+          targetKey: h.roll.targetKey,
+          targetName,
+          rolls: damageRolls,
+          total,
+          critical,
+          dealt: false,
+          resultString: game.i18n.format('CoC7.rangeCombatDamage', {
+            name: targetName,
+            total
+          })
         })
-      })
+      }
     }
 
     this.damageRolled = this.damage.length !== 0
@@ -915,7 +917,16 @@ export class CoC7RangeTarget {
   }
 
   get img () {
-    if (this.token) return this.token.data.img
+    if (this.token) {
+      // Foundry VTT v9
+      if (this.token.data.img) {
+        return this.token.data.img
+      }
+      // Foundry VTT v10
+      if (this.token.document?.texture.src) {
+        return this.token.document?.texture.src
+      }
+    }
     if (this.actor) return this.actor.data.img
     return '../icons/svg/mystery-man-black.svg'
   }

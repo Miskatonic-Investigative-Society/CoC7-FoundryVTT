@@ -63,6 +63,16 @@ export class CoC7Check {
     }
   }
 
+  static get type () {
+    return {
+      characteristic: 'characteristic',
+      attribute: 'attribute',
+      skill: 'item',
+      item: 'item',
+      value: 'value'
+    }
+  }
+
   static difficultyString (difficultyLevel) {
     switch (
       !isNaN(Number(difficultyLevel))
@@ -98,9 +108,8 @@ export class CoC7Check {
     // if (!this.actor || !this.actor.id) return undefined
     if (!this._rawValue) {
       if (this.characteristic) {
-        this.rawValue = this.actor.data.data.characteristics[
-          this.characteristic
-        ].value
+        this.rawValue =
+          this.actor.data.data.characteristics[this.characteristic].value
       }
       if (this.skill) this.rawValue = this.skill.value
       if (this.attribute) {
@@ -182,7 +191,16 @@ export class CoC7Check {
   }
 
   get fumbleThreshold () {
-    if (this.rawValue) return this.rawValue < 50 ? 96 : 100
+    if (this.rawValue) {
+      if (this.difficulty) {
+        if (this.difficulty >= CoC7Check.difficultyLevel.extreme) {
+          return this.extremeThreshold < 50 ? 96 : 100
+        } else if (this.difficulty >= CoC7Check.difficultyLevel.hard) {
+          return this.hardThreshold < 50 ? 96 : 100
+        }
+      }
+      return this.rawValue < 50 ? 96 : 100
+    }
     return null
   }
 
@@ -307,7 +325,7 @@ export class CoC7Check {
 
   get name () {
     if (this.actor) {
-      if (this.skill) return this.skill.name
+      if (this.skill) return this.skill.shortName
       if (this.item) return this.item.name
       if (this.characteristic) {
         return CoC7Utilities.getCharacteristicNames(this.characteristic)?.label
@@ -320,9 +338,9 @@ export class CoC7Check {
     return null
   }
 
-  get sName () {
+  get shortName () {
     if (this.actor) {
-      if (this.skill) return this.skill.sName
+      if (this.skill) return this.skill.shortName
       if (this.item) return this.item.name
       if (this.characteristic) {
         return CoC7Utilities.getCharacteristicNames(this.characteristic)?.short
@@ -348,7 +366,7 @@ export class CoC7Check {
       `CoC7.LinkCheck${!difficulty ? '' : 'Diff'}${
         !this._diceModifier ? '' : 'Modif'
       }`,
-      { difficulty: difficulty, modifier: modifier, name: this.name }
+      { difficulty, modifier, name: this.name }
     )
   }
 
@@ -466,7 +484,7 @@ export class CoC7Check {
         success: true,
         cssClass: this.isCritical ? 'critical' : 'success',
         hint: successHint,
-        icons: icons
+        icons
       }
     } else {
       const icons = []
@@ -481,7 +499,7 @@ export class CoC7Check {
         success: false,
         cssClass: this.isFumble ? 'fumble' : 'failure',
         hint: failureHint,
-        icons: icons
+        icons
       }
     }
   }
@@ -635,7 +653,7 @@ export class CoC7Check {
         !this._diceModifier ? '' : 'Modif'
       }`,
       {
-        difficulty: difficulty,
+        difficulty,
         modifier: this._diceModifier,
         name: this.name
       }
@@ -651,10 +669,58 @@ export class CoC7Check {
     return a
   }
 
-  async roll (diceMod = null, difficulty = null) {
+  async roll (diceMod = null, difficulty = null, options = {}) {
     if (diceMod) this.diceModifier = diceMod
     if (difficulty) this.difficulty = difficulty
-    if (!this.standby) await this._perform()
+    if (!this.standby) await this._perform(options)
+  }
+
+  /**
+   * Create a check with the provided data
+   * Process roll data to a format that can be fed to create()
+   * @param {*} rollData A roll data structure as returned by actor.find
+   * @returns A check with the roll data provided
+   */
+  static createFromActorRollData (rollData) {
+    const roll = {}
+    // check Modifier
+    if (rollData.difficulty) roll.difficulty = rollData.difficulty
+    if (rollData.diceModifier) roll.diceModifier = rollData.diceModifier
+    if (rollData.denyPush === true) roll.denyPush = true
+    if (rollData.flatDiceModifier) {
+      roll.flatDiceModifier = rollData.flatDiceModifier
+    }
+    if (rollData.flatThresholdModifier) {
+      roll.flatThresholdModifier = rollData.flatThresholdModifier
+    }
+    // Actor
+    if (rollData.actor?.actorKey) roll.actorKey = rollData.actor.actorKey
+    else if (rollData.actor?.name) roll.actorName = rollData.actor.name
+    // Check type
+    switch (rollData.type) {
+      case CoC7Check.type.characteristic:
+        roll.characteristic = rollData.value?.key
+        break
+      case CoC7Check.type.attribute:
+        roll.attribute = rollData.value?.key
+        break
+      case CoC7Check.type.item:
+        roll.actorKey = rollData.value.actor.actorKey
+        if (rollData.value?.type === 'skill') roll.skill = rollData.value.id
+        else roll.item = rollData.value.id
+        break
+      case CoC7Check.type.skill:
+        roll.actorKey = rollData.value.actor.actorKey
+        roll.skill = rollData.value.id
+        break
+      case CoC7Check.type.value:
+        roll.displayName = rollData.value.name
+        roll.rawValue = rollData.value.threshold
+        break
+      default:
+        break
+    }
+    return CoC7Check.create(roll)
   }
 
   static create ({
@@ -664,14 +730,17 @@ export class CoC7Check {
     characteristic = null,
     attribute = null,
     rawValue = 0,
+    item = null,
     skill = null,
     flatDiceModifier = 0,
     flatThresholdModifier = 0,
     displayName = null,
-    actorName = null
+    actorName = null,
+    denyPush = undefined
   } = {}) {
     const check = new CoC7Check()
     check.difficulty = difficulty
+    if (denyPush === true) check.denyPush = true
     if (diceModifier) check.diceModifier = diceModifier
     if (flatDiceModifier) check.flatDiceModifier = flatDiceModifier
     if (flatThresholdModifier) {
@@ -687,6 +756,7 @@ export class CoC7Check {
       // TODO : try retrieve skill by name
       else if (characteristic) check.characteristic = characteristic
       else if (attribute) check.attribute = attribute
+      else if (item) check.item = item
     }
     return check
   }
@@ -712,11 +782,21 @@ export class CoC7Check {
     if (!this.standby) await this._perform()
   }
 
+  get rolledSuccessLevel () {
+    return this.successLevel
+  }
+
   async _perform (options = {}) {
     this.dice =
       options.roll ||
       (await CoC7Dice.roll(this.diceModifier, this.rollMode, this.isBlind))
-    if (!options.silent) AudioHelper.play({ src: CONFIG.sounds.dice })
+    if (!options.silent) {
+      AudioHelper.play({ src: CONFIG.sounds.dice }, true)
+    }
+
+    if (options.forceDSN) {
+      await CoC7Dice.showRollDice3d(this.dice.roll)
+    }
 
     this.dices = {
       tens: [],
@@ -792,9 +872,8 @@ export class CoC7Check {
     } else {
       if (this.characteristic) {
         this.isCharactiristic = true
-        this.rawValue = this.actor.data.data.characteristics[
-          this.characteristic
-        ].value
+        this.rawValue =
+          this.actor.data.data.characteristics[this.characteristic].value
       }
 
       if (this.skill) {
@@ -887,10 +966,12 @@ export class CoC7Check {
       }
     }
 
-    this.canBePushed = this.skill ? this.skill.canBePushed() : false
-    if (this.characteristic != null) this.canBePushed = true
-    if (this.isFumble) this.canBePushed = false
-    if (this.denyPush) this.canBePushed = false
+    if (typeof this.canBePushed === 'undefined') {
+      this.canBePushed = this.skill ? this.skill.canBePushed() : false
+      if (this.characteristic != null) this.canBePushed = true
+      if (this.isFumble) this.canBePushed = false
+      if (this.denyPush) this.canBePushed = false
+    }
 
     if (!this.denyLuck && this.actor) {
       if (
@@ -1001,9 +1082,9 @@ export class CoC7Check {
   showDiceRoll () {
     if (game.modules.get('dice-so-nice')?.active) {
       const diceResults = []
-      this.dices.tens.forEach(dieResult => {
+      for (const dieResult of this.dices.tens) {
         diceResults.push(dieResult.value === 100 ? 0 : dieResult.value / 10)
-      })
+      }
       diceResults.push(this.dices.unit.value)
 
       const diceData = {
@@ -1088,9 +1169,9 @@ export class CoC7Check {
     for (let index = 0; index < upgradeindex + 1; index++) {
       this.increaseSuccess.shift()
     }
-    this.increaseSuccess.forEach(s => {
+    for (const s of this.increaseSuccess) {
       s.luckToSpend = s.luckToSpend - luckAmount
-    })
+    }
     this.luckSpent = true
     this.computeCheck()
     if (update) return await this.updateChatCard()
@@ -1108,11 +1189,12 @@ export class CoC7Check {
     if (luckAmount) {
       this.actor.spendLuck(luckAmount)
       this.successLevel = this.difficulty
-      this.increaseSuccess.forEach(s => {
+      for (const s of this.increaseSuccess) {
         s.luckToSpend = s.luckToSpend - luckAmount
-      })
+      }
       this.luckSpent = true
       this.isSuccess = true
+      this.isFailure = false
       this.totalLuckSpent = !parseInt(this.totalLuckSpent)
         ? 0
         : parseInt(this.totalLuckSpent)
@@ -1495,13 +1577,14 @@ export class CoC7Check {
     const speakerData = {}
     let speaker
     if (this.actor) {
-      if (this.actor.isToken) speakerData.token = this.token.document
-      else if (this.actor.isDummy) {
+      if (this.actor.isToken) {
+        speakerData.token = this.token.document
+      } else if (this.actor.isDummy) {
         if (this.actor.name) speaker = { alias: this.actor.name }
       } else {
         speakerData.actor = this.actor
-        speaker = ChatMessage.getSpeaker(speakerData)
       }
+      speaker = ChatMessage.getSpeaker(speakerData)
     } else {
       speaker = ChatMessage.getSpeaker()
     }
@@ -1510,7 +1593,7 @@ export class CoC7Check {
 
     const chatData = {
       user: user.id,
-      speaker: speaker,
+      speaker,
       flavor: this.flavor,
       content: html,
       flags: {
@@ -1529,9 +1612,11 @@ export class CoC7Check {
         chatData.flavor = `[${this.actor.name}] ${chatData.flavor}`
         chatData.flags = {
           CoC7: {
-            GMSelfRoll: true,
-            originalSpeaker: duplicate(chatData.speaker)
+            GMSelfRoll: true
           }
+        }
+        if (typeof chatData.speaker !== 'undefined') {
+          chatData.flags.CoC7.originalSpeaker = duplicate(chatData.speaker)
         }
         if (game.user.isGM) {
           switch (game.settings.get('CoC7', 'selfRollWhisperTarget')) {
@@ -1578,6 +1663,23 @@ export class CoC7Check {
    */
   async updateChatCard ({ makePublic = false, forceRoll = false } = {}) {
     if (makePublic) this.rollMode = false // reset roll mode
+
+    const chatData = { flavor: this.flavor }
+
+    if (makePublic) {
+      chatData.whisper = []
+      chatData.blind = false
+      ChatMessage.applyRollMode(chatData)
+    } // else {
+    // chatData.whisper = []
+    // chatData.blind = false
+    // ChatMessage.applyRollMode(chatData, game.settings.get('core', 'rollMode'))
+    // }
+
+    if (chatData.blind) {
+      this.isBlind = true
+    }
+
     const template = 'systems/CoC7/templates/chat/roll-result.html'
     const html = await renderTemplate(template, this)
     let newContent = html
@@ -1596,21 +1698,15 @@ export class CoC7Check {
       newContent = htmlMessage.outerHTML
     }
 
-    const chatData = { flavor: this.flavor, content: newContent }
+    chatData.content = newContent
+
     if (CONST.CHAT_MESSAGE_TYPES.ROLL === message.data.type) {
       if (message.data.whisper?.length) {
         chatData.type = CONST.CHAT_MESSAGE_TYPES.WHISPER
       } else chatData.type = CONST.CHAT_MESSAGE_TYPES.OTHER
     }
 
-    if (makePublic) {
-      chatData.whisper = []
-      chatData.blind = false
-    }
-
-    ChatMessage.applyRollMode(chatData)
-
-    if (forceRoll && this.dice?.roll) {
+    if (forceRoll && this.dice?.roll && (game.user.isGM || !this.isBlind)) {
       await CoC7Dice.showRollDice3d(this.dice.roll)
     }
 
@@ -1665,8 +1761,9 @@ export class CoC7Check {
     a.classList.add(...this.cssClassList)
     a.title = this.tooltipHeader
     a.dataset.roll = escape(this.JSONRollString) // TODO!IMPORTANT!!!
-    a.innerHTML = `<i class="game-icon game-icon-d10"></i> ${this
-      .modifiedResult || '??'}`
+    a.innerHTML = `<i class="game-icon game-icon-d10"></i> ${
+      this.modifiedResult || '??'
+    }`
     return a
   }
 

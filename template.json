@@ -1,6 +1,6 @@
 {
   "Actor": {
-    "types": ["character", "npc", "creature", "vehicle"],
+    "types": ["character", "npc", "creature", "vehicle", "container"],
     "templates": {
       "characteristics": {
         "characteristics": {
@@ -122,33 +122,26 @@
         }
       },
       "status": {
-        "status": {
+        "conditions": {
           "criticalWounds": {
-            "type": "Boolean",
             "value": false
           },
           "unconscious": {
-            "type": "Boolean",
             "value": false
           },
           "dying": {
-            "type": "Boolean",
             "value": false
           },
           "dead": {
-            "type": "Boolean",
             "value": false
           },
           "prone": {
-            "type": "Boolean",
             "value": false
           },
           "tempoInsane": {
-            "type": "boolean",
             "value": false
           },
           "indefInsane": {
-            "type": "boolean",
             "value": false
           }
         }
@@ -188,16 +181,29 @@
         "archetype": null
       },
       "biography": [],
-      "encounteredCreatures": [],
+      "sanityLossEvents": [],
       "backstory": "",
       "indefiniteInsanityLevel": {
         "value": 0,
         "max": 0
       },
+      "description": {
+        "keeper": ""
+      },
       "notes": ""
     },
     "npc": {
       "templates": ["characteristics", "attribs", "status", "biography"],
+      "description": {
+        "keeper": ""
+      },
+      "special": {
+        "sanLoss": {
+          "checkPassed": null,
+          "checkFailled": null
+        },
+        "attacksPerRound": 1
+      },
       "infos": {
         "occupation": "",
         "age": "",
@@ -209,6 +215,9 @@
     },
     "creature": {
       "templates": ["characteristics", "attribs", "status", "biography"],
+      "description": {
+        "keeper": ""
+      },
       "special": {
         "attribs": {
           "move": {
@@ -264,6 +273,15 @@
       "properties": {
         "armed": false
       }
+    },
+    "container": {
+      "description": {
+        "value": "",
+        "keeper": ""
+      },
+      "flags": {
+        "locked": false
+      }
     }
   },
   "Item": {
@@ -281,7 +299,10 @@
       "chase"
     ],
     "item": {
-      "description": "",
+      "description": {
+        "value": "",
+        "keeper": ""
+      },
       "quantity": 1,
       "weight": 0,
       "attributes": {}
@@ -290,7 +311,8 @@
       "description": {
         "value": "",
         "chat": "",
-        "special": ""
+        "special": "",
+        "keeper": ""
       },
       "wpnType": "",
       "skill": {
@@ -334,12 +356,14 @@
       "price": {}
     },
     "skill": {
+      "skillName": "",
       "specialization": "",
       "description": {
         "value": "",
         "opposingDifficulty": "",
         "pushedFaillureConsequences": "",
-        "chat": ""
+        "chat": "",
+        "keeper": ""
       },
       "base": 0,
       "adjustments": {
@@ -356,7 +380,8 @@
     },
     "occupation": {
       "description": {
-        "value": ""
+        "value": "",
+        "keeper": ""
       },
       "source": null,
       "type": {
@@ -431,7 +456,8 @@
     },
     "archetype": {
       "description": {
-        "value": ""
+        "value": "",
+        "keeper": ""
       },
       "source": null,
       "type": {
@@ -465,7 +491,8 @@
     },
     "setup": {
       "description": {
-        "value": ""
+        "value": "",
+        "keeper": ""
       },
       "characteristics": {
         "points": {
@@ -508,43 +535,43 @@
       "flags": {}
     },
     "spell": {
-      "source": null,
-      "castingTime": null,
-      "cost": {
-        "mp": null,
-        "san": null,
-        "pow": null,
-        "hp": null,
-        "other": []
+      "alternativeNames": [],
+      "castingTime": "",
+      "costs": {
+        "hitPoints": 0,
+        "magicPoints": 0,
+        "others": "",
+        "sanity": 0,
+        "power": 0
       },
       "description": {
-        "value": "",
         "chat": "",
-        "unidentified": "",
-        "notes": ""
+        "value": "",
+        "keeper": ""
       },
+      "effects": [],
+      "source": "",
+      "learned": false,
       "type": {
-        "call": false,
-        "dismiss": false,
-        "contact": false,
-        "summon": false,
         "bind": false,
+        "call": false,
+        "combat": false,
+        "contact": false,
+        "dismiss": false,
         "enchantment": false,
         "gate": false,
-        "combat": false
-      },
-      "alternativeNames": [],
-      "effects": [],
-      "properties": {},
-      "flags": {}
+        "summon": false
+      }
     },
     "book": {
+      "alternativeNames": [],
       "author": "",
       "content": "",
       "date": "",
       "description": {
         "chat": "",
-        "value": ""
+        "value": "",
+        "keeper": ""
       },
       "difficultyLevel": "",
       "fullStudies": 0,
@@ -557,14 +584,14 @@
         "others": []
       },
       "initialReading": false,
-      "keeperNotes": "",
       "language": "",
       "mythosRating": 0,
       "sanityLoss": 0,
       "spells": [],
       "study": {
         "necessary": 0,
-        "progress": 0
+        "progress": 0,
+        "units": "CoC7.weeks"
       },
       "type": {
         "mythos": false,
@@ -577,7 +604,8 @@
       "description": {
         "value": "",
         "chat": "",
-        "notes": ""
+        "notes": "",
+        "keeper": ""
       },
       "type": {
         "physical": false,
@@ -595,7 +623,8 @@
       "description": {
         "value": "",
         "chat": "",
-        "notes": ""
+        "notes": "",
+        "keeper": ""
       },
       "duration": {
         "permanent": true,
@@ -609,11 +638,21 @@
       }
     },
     "chase": {
+      "description": {
+        "keeper": ""
+      },
       "locations": {
         "total": 0,
         "startingRange": 1,
         "list": []
       },
+      "includeEscaped": false,
+      "includeLatecomers": false,
+      "showTokenMovement": true,
+      "startingRange": 2,
+      "startingIndex": 0,
+      "started": false,
+      "vehicle": false,
       "participants": []
     }
   }

@@ -138,7 +138,9 @@ COC7.status = {
   dead: 'dead'
 }
 
+COC7.newBookName = 'CoC7.NewBookName'
 COC7.newSkillName = 'CoC7.NewSkillName'
+COC7.newSpellName = 'CoC7.NewSpellName'
 COC7.newItemName = 'CoC7.NewItemName'
 COC7.newWeaponName = 'CoC7.NewWeaponName'
 
@@ -153,28 +155,6 @@ COC7.firearmSpecializationName = 'CoC7.FirearmSpecializationName'
 COC7.combatCards = {
   fightBack: 'CoC7.FightBack',
   dodge: 'CoC7.Dodge',
-  maneuver: 'CoC7.Maneuver'
+  maneuver: 'CoC7.Maneuver',
+  noResponse: 'CoC7.NoResponse'
 }
-
-// COC7.dodge = {
-//  'name': COC7.dodgeSkillName,
-//  'type': 'skill',
-//  'base': '1/2*@DEX',
-//  'value': -1,
-//  'data': {
-//    'specialization': COC7.fightingSpecializationName },
-//  'properties': {
-//    'special': true,
-//    'rarity': false,
-//    'push': false,
-//    'combat': true,
-//    'fighting': true,
-//    'firearm': false
-//  },
-//  'flags': { 'wpnexcl': true}
-// };
-
-// COC7.PcSkills = {
-//  'dodge' : COC7.dodge,
-//  'throw' : {}
-// };
