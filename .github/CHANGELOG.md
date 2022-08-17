@@ -1,4 +1,4 @@
-## Changes coming in a future release:
+## Version 0.8.0:
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
@@ -8,6 +8,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Add manual pages which will pop up on first load, this is a work in progress
 - Add The Dhole's House JSON actor importer, thanks to @pconcepcion
 - Add FoundryVTT v10 tour for finding the rules variant settings
+- Add options to allow trusted players to interact with chat cards
 - Fix dice sounds not being pushed to other clients
 - Fix tooltip for character summary sheet
 - Fix updater not always running automatically

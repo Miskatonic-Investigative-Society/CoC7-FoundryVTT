@@ -46,7 +46,7 @@ Hooks.on('renderSettingsConfig', (app, html, options) => {
         '</h2>'
     )
   systemTab
-    .find('input[name=CoC7\\.displayActorOnCard]')
+    .find('input[name=CoC7\\.trustedCanModfyChatCard]')
     .closest('div.form-group')
     .before(
       '<h2 class="setting-header">' +
