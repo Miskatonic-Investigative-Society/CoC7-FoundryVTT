@@ -14,39 +14,39 @@ export class Updater {
     this.currentModules = {}
     for (const pack of game.packs) {
       if (
-        !['CoC7', 'world'].includes(
-          pack.metadata.package || pack.metadata.packageName
+        !['CoC7', 'system', 'world'].includes(
+          pack.metadata.package || pack.metadata.packageType
         ) &&
         ['Actor', 'Item', 'Scene'].includes(pack.metadata.type)
       ) {
         if (
           !Object.prototype.hasOwnProperty.call(
             this.currentModules,
-            pack.metadata.package || pack.metadata.packageName
+            pack.metadata.package || pack.metadata.packageType
           )
         ) {
           // Only check each package once
           if (
             !Object.prototype.hasOwnProperty.call(
               this.updatedModules,
-              pack.metadata.package || pack.metadata.packageName
+              pack.metadata.package || pack.metadata.packageType
             ) ||
             String(
               this.updatedModules[
-                pack.metadata.package || pack.metadata.packageName
+                pack.metadata.package || pack.metadata.packageType
               ]
             ) !==
               String(
                 game.modules.get(
-                  pack.metadata.package || pack.metadata.packageName
+                  pack.metadata.package || pack.metadata.packageType
                 ).data.version
               )
           ) {
             // Package has not been updated before or the version number has changed
             this.currentModules[
-              pack.metadata.package || pack.metadata.packageName
+              pack.metadata.package || pack.metadata.packageType
             ] = game.modules.get(
-              pack.metadata.package || pack.metadata.packageName
+              pack.metadata.package || pack.metadata.packageType
             ).data.version
           }
         }
@@ -261,7 +261,7 @@ export class Updater {
     // Migrate World Compendium Packs
     for (const pack of game.packs) {
       if (
-        (pack.metadata.package || pack.metadata.packageName) !== 'CoC7' &&
+        (pack.metadata.package || pack.metadata.packageType) !== 'CoC7' &&
         ['Actor', 'Item', 'Macro', 'RollTable', 'Scene'].includes(
           pack.metadata.type
         )
