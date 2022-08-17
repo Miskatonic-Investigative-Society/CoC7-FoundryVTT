@@ -8,10 +8,10 @@
 >
 > Despite out best efforts, some part of this system may not work with V10.
 
-_If you decide to go on with V10 :_
+_If you decide to go on with V10:_
 
-- :warning: __MAKE A COPY OF YOUR WORLD BEFORE UPGRADIND__
-- please report any bug encoutered on github, specify if you used V10 version.
+- :warning: __MAKE A COPY OF YOUR WORLD BEFORE UPGRADING__
+- please report any bug encountered on GitHub, specify if you used V10 version.
 
 Happy gaming !
 
