@@ -1,10 +1,10 @@
 # Warning
 
-The system is on a transition stage between FVTT V9 and V10. Most of it has been tested and is working on V10.
+The system is on a transition stage between FVTT V9 and V10. Most of it has been tested and should be working on V10.
 
-Be aware that V10 is still in testing stage, hence not ready for 'production'.
+However foundry V10 is still in testing stage.
 
-However be aware that migrating to V10 now is not advisable. Your may break your worlds as they will be migrated and you won't be able to return to V9.
+Be aware that migrating to V10 now is not advisable. Your may break your worlds as they will be migrated and you won't be able to return to V9.
 
 Despite out best efforts, some part of this system may not work with V10.
 
