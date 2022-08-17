@@ -1,4 +1,21 @@
-## Version 0.8.0:
+# Warning
+
+The system is on a transition stage between FVTT V9 and V10. Most of it has been tested and is working on V10.
+
+Be aware that V10 is still in testing stage, hence not ready for 'production'.
+
+However be aware that migrating to V10 now is not advisable. Your may break your worlds as they will be migrated and you won't be able to return to V9.
+
+Despite out best efforts, some part of this system may not work with V10.
+
+_If you decide to go on with V10 :_
+
+- __MAKE A COPY OF YOUR WORLD BEFORE UPGRADIND__
+- please report any bug encoutered on github, specify if you used V10 version.
+
+Happy gaming !
+
+## Version 0.8.0
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
