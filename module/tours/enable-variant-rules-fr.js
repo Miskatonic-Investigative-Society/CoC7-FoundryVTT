@@ -3,21 +3,21 @@ import { EnableVariantRulesEn } from './enable-variant-rules-en.js'
 export class EnableVariantRulesFr extends EnableVariantRulesEn {
   constructor (config) {
     super({
-      title: 'Enable optional/variant rules.',
-      description: 'Learn how to enable Pulp Cthulhu rules, or other variant rules',
+      title: 'Activez les règles optionnelles.',
+      description: 'Activez les règles optionelles et Pulp Cthulhu',
       localization: {
-        'COC7.Tour.GotoSettingsTitle': 'Game Settings',
-        'COC7.Tour.GotoSettingsContent': 'Go to the Game Settings tab',
-        'COC7.Tour.GotoConfigureTitle': 'Configure Settings',
-        'COC7.Tour.GotoConfigureContent': 'Click on the Configure Settings button',
-        'COC7.Tour.GotoSystemSettingsTitle': 'System Settings',
-        'COC7.Tour.GotoSystemSettingsContent': 'Go to the System Settings tab',
-        'COC7.Tour.GotoGameRulesTitle': 'Configure Variant/Optional Rules',
-        'COC7.Tour.GotoGameRulesContent': 'Click on the Configure Variant/Optional Rules button',
-        'COC7.Tour.SaveGameRulesTitle': 'Save rule changes',
-        'COC7.Tour.SaveGameRulesContent': 'Once you have made your changes click on the Save Changes button',
-        'COC7.Tour.SaveSystemSettingsTitle': 'Save system settings',
-        'COC7.Tour.SaveSystemSettingsContent': 'Finally click on the Save Changes button'
+        'COC7.Tour.GotoSettingsTitle': 'Paramètres',
+        'COC7.Tour.GotoSettingsContent': 'Ouvrir l\'onglet "Paramètres"',
+        'COC7.Tour.GotoConfigureTitle': 'Configuration des options',
+        'COC7.Tour.GotoConfigureContent': 'Cliquez sur "Configuration des options"',
+        'COC7.Tour.GotoSystemSettingsTitle': 'Système de jeu',
+        'COC7.Tour.GotoSystemSettingsContent': 'Ouvrez l\'onglet "Système de jeu"',
+        'COC7.Tour.GotoGameRulesTitle': 'Configurer les variantes/règles optionnelles',
+        'COC7.Tour.GotoGameRulesContent': 'Clickez sur le boutton "Configurer les variantes/règles optionnelles"',
+        'COC7.Tour.SaveGameRulesTitle': 'Sauvegarder les modifications',
+        'COC7.Tour.SaveGameRulesContent': 'Apres avoir choisis les options cliquez sur le bouton "Sauvegarder les modifications"',
+        'COC7.Tour.SaveSystemSettingsTitle': 'Saugarder',
+        'COC7.Tour.SaveSystemSettingsContent': 'Cliquez sur "Sauvegarer" !'
       }
     })
   }
