@@ -108,6 +108,24 @@ export function registerSettings () {
   /**
    * Chat Cards
    */
+  /** Trusted players will be allowed to modify chat cards */
+  game.settings.register('CoC7', 'trustedCanModfyChatCard', {
+    name: 'SETTINGS.TrustedCanModfyChatCard',
+    hint: 'SETTINGS.TrustedCanModfyChatCardHint',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
+  })
+  /** Trusted players will be allowed to see chat cards private sections */
+  game.settings.register('CoC7', 'trustedCanSeeChatCard', {
+    name: 'SETTINGS.TrustedCanSeeChatCard',
+    hint: 'SETTINGS.TrustedCanSeeChatCardHint',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
+  })
   /** Set the need to display actor image on chat cards */
   game.settings.register('CoC7', 'displayActorOnCard', {
     name: 'SETTINGS.DisplayActorOnCard',
