@@ -22,7 +22,7 @@ export function listen () {
         lang = 'en'
       }
       (await game.packs.get('CoC7.system-doc').getDocument(readMe[lang])).sheet.render(true)
-      // game.settings.set('CoC7', 'showInstructions', game.system.data.version) // Don't turn off while testing
+      game.settings.set('CoC7', 'showInstructions', game.system.data.version)
     }
     if (typeof game.tours !== 'undefined') {
       registerTours()
