@@ -298,7 +298,7 @@ export class CoC7Chat {
 
     const gmVisibleOnly = html.find('.gm-visible-only')
     for (const elem of gmVisibleOnly) {
-      if (!game.user.isGM) elem.style.display = 'none'
+      if (!(game.user.isGM || (game.user.isTrusted && game.settings.get('CoC7', 'trustedCanSeeChatCard')))) elem.style.display = 'none'
     }
 
     const ownerVisibleOnly = html.find('.owner-visible-only')
@@ -360,9 +360,11 @@ export class CoC7Chat {
       }
 
       const gmSelectOnly = html.find('.gm-select-only')
-      for (const select of gmSelectOnly) {
-        select.classList.add('inactive')
-        select.classList.remove('simple-flag')
+      if (!(game.user.isTrusted && game.settings.get('CoC7', 'trustedCanModfyChatCard'))) {
+        for (const select of gmSelectOnly) {
+          select.classList.add('inactive')
+          select.classList.remove('simple-flag')
+        }
       }
     }
   }
