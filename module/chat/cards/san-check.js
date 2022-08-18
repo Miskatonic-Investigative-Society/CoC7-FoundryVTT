@@ -358,7 +358,7 @@ export class SanCheckCard extends ChatCardActor {
       this.state.intRolled = false
     }
 
-    if (this.actor.dailySanLoss >= this.data.data.attribs.san.dailyLimit) {
+    if (this.actor.dailySanLoss >= this.actor.dailySanLimit) {
       // this.actor.san/5
       this.state.insanity = true
       this.state.intRolled = true

@@ -25,14 +25,14 @@ export class EnableVariantRulesEn extends CoC7Tour {
         },
         {
           id: 'goto-system-settings',
-          selector: '[data-tab="system"]',
+          selector: '[data-category="system"]',
           title: 'COC7.Tour.GotoSystemSettingsTitle',
           content: 'COC7.Tour.GotoSystemSettingsContent',
           action: 'click'
         },
         {
           id: 'goto-game-rules',
-          selector: '[data-key="CoC7.gameRules"]',
+          selector: '[data-category="system"] [data-key="CoC7.gameRules"]',
           title: 'COC7.Tour.GotoGameRulesTitle',
           content: 'COC7.Tour.GotoGameRulesContent',
           action: 'click'
@@ -42,12 +42,6 @@ export class EnableVariantRulesEn extends CoC7Tour {
           selector: '#rules-settings [name=submit]',
           title: 'COC7.Tour.SaveGameRulesTitle',
           content: 'COC7.Tour.SaveGameRulesContent'
-        },
-        {
-          id: 'save-system-settings-rules',
-          selector: '#client-settings [name=submit]',
-          title: 'COC7.Tour.SaveSystemSettingsTitle',
-          content: 'COC7.Tour.SaveSystemSettingsContent'
         }
       ],
       localization: {
@@ -60,10 +54,17 @@ export class EnableVariantRulesEn extends CoC7Tour {
         'COC7.Tour.GotoGameRulesTitle': 'Configure Variant/Optional Rules',
         'COC7.Tour.GotoGameRulesContent': 'Click on the Configure Variant/Optional Rules button',
         'COC7.Tour.SaveGameRulesTitle': 'Save rule changes',
-        'COC7.Tour.SaveGameRulesContent': 'Once you have made your changes click on the Save Changes button',
-        'COC7.Tour.SaveSystemSettingsTitle': 'Save system settings',
-        'COC7.Tour.SaveSystemSettingsContent': 'Finally click on the Save Changes button'
+        'COC7.Tour.SaveGameRulesContent': 'Once you have made your changes click on the Save Changes button'
       }
     }, config))
+  }
+
+  async _preStep () {
+    await super._preStep()
+
+    if (this.currentStep.id === 'goto-game-rules') {
+      await this.waitForElement('.category-filter.system.active')
+      await this.waitForElement(this.currentStep.selector)
+    }
   }
 }

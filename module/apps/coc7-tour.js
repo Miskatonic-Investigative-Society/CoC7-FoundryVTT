@@ -12,7 +12,7 @@ if (typeof Tour !== 'undefined') {
 
         const observer = new MutationObserver((mutations, observer) => {
           document.querySelectorAll(selector).forEach((el) => {
-            resolve(el)
+            resolve()
             observer.disconnect()
           })
         })
