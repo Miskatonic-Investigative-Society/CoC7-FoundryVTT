@@ -1386,7 +1386,10 @@ export class CoC7ActorSheet extends ActorSheet {
     // Toggle summary
     if (li.hasClass('expanded')) {
       const summary = li.children('.item-summary')
-      summary.slideUp(200, () => summary.remove())
+      summary.slideUp(200, () => {
+        summary.remove()
+        li.toggleClass('expanded')
+      })
     } else {
       const div = $('<div class="item-summary"></div>')
 
