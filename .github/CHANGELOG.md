@@ -20,6 +20,7 @@ Happy gaming !
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Bug correction of sanity flow where applying san loss will fail the card.
+- Bug correction on item summary slide down.
 - Further support for FoundryVTT v10 #1188
 - Update to Italian localization, thanks to @Stefano1975t #1187
 
