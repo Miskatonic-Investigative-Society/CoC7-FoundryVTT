@@ -1849,6 +1849,10 @@ export class CoCActor extends Actor {
     return this.data.data.attribs.san?.dailyLoss || 0
   }
 
+  get dailySanLimit () {
+    return this.data.data.attribs.san?.dailyLimit || 0
+  }
+
   get rawSanMax () {
     if (!this.data.data.attribs) return undefined
     if (this.data.data.attribs?.san?.auto) {
