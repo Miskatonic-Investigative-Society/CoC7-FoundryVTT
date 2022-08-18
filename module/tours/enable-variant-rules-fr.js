@@ -15,9 +15,7 @@ export class EnableVariantRulesFr extends EnableVariantRulesEn {
         'COC7.Tour.GotoGameRulesTitle': 'Configurer les variantes/règles optionnelles',
         'COC7.Tour.GotoGameRulesContent': 'Clickez sur le boutton "Configurer les variantes/règles optionnelles"',
         'COC7.Tour.SaveGameRulesTitle': 'Sauvegarder les modifications',
-        'COC7.Tour.SaveGameRulesContent': 'Apres avoir choisis les options cliquez sur le bouton "Sauvegarder les modifications"',
-        'COC7.Tour.SaveSystemSettingsTitle': 'Saugarder',
-        'COC7.Tour.SaveSystemSettingsContent': 'Cliquez sur "Sauvegarer" !'
+        'COC7.Tour.SaveGameRulesContent': 'Apres avoir choisis les options cliquez sur le bouton "Sauvegarder les modifications"'
       }
     })
   }
