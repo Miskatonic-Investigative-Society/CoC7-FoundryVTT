@@ -15,6 +15,7 @@ import { DamageCard } from '../../chat/cards/damage.js'
 import { CoC7LinkCreationDialog } from '../../apps/link-creation-dialog.js'
 import CoC7ActiveEffect from '../../active-effect.js'
 import { CoC7Link } from '../../apps/link.js'
+import { CoC7ContextMenu } from '../../context-menu.js'
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -622,6 +623,8 @@ export class CoC7ActorSheet extends ActorSheet {
    */
   activateListeners (html) {
     super.activateListeners(html)
+
+    CoC7ContextMenu.bindTo(html)
 
     html
       .find('.token-drag-handle')
