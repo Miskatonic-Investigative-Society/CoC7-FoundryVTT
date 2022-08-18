@@ -3310,12 +3310,15 @@ export class CoCActor extends Actor {
 
   async setHp (value) {
     if (value < 0) value = 0
-    if (value > this.data.data.attribs.san.max) { value = this.data.data.attribs.san.max }
+    if (value > this.data.data.attribs.san.max) {
+      value = this.data.data.attribs.san.max
+    }
     const healthBefore = this.hp
     let damageTaken
     // is healing
-    if (value >= healthBefore) await this._setHp(value)
-    else {
+    if (isNaN(healthBefore) || value >= healthBefore) {
+      await this._setHp(value)
+    } else {
       damageTaken = healthBefore - value
       await this.dealDamage(damageTaken, { ignoreArmor: true })
     }
