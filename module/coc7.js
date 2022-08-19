@@ -26,6 +26,7 @@ import { DropActorSheetData } from './hooks/drop-actor-sheet-data.js'
 // Card init
 import { initECC } from './common/chatcardlib/src/chatcardlib.js'
 import { ChaseObstacleCard } from './chat/cards/chase-obstacle.js'
+import { CoC7ContextMenu } from './context-menu.js'
 
 Hooks.on('renderSettingsConfig', (app, html, options) => {
   const systemTab = $(app.form).find('.tab[data-tab=system]')
@@ -503,6 +504,7 @@ Hooks.on('dropActorSheetData', DropActorSheetData)
 
 function activateGlobalListener () {
   const body = $('body')
+  body.on('click', CoC7ContextMenu.closeAll)
   body.on('click', 'a.coc7-inline-check', CoC7Check._onClickInlineRoll)
   document.addEventListener('mousedown', _onLeftClick)
 }

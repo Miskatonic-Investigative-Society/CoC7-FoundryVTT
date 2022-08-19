@@ -13,11 +13,6 @@
   <h3 class="warning">{{localize 'CoC7.EmptyCharacterSkillList'}}</h3>
 {{/if}}
 
-<div class="menu-wrapper">
-  {{> "systems/CoC7/templates/actors/parts/check-context-menu.html"}}
-</div>
-
-
 <ol class="item-list">
   {{#if skillListModeValue}}
     {{#each skillsByValue as |skill|}}

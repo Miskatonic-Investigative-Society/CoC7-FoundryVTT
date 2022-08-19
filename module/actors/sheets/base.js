@@ -624,7 +624,40 @@ export class CoC7ActorSheet extends ActorSheet {
   activateListeners (html) {
     super.activateListeners(html)
 
-    CoC7ContextMenu.bindTo(html)
+    const menu = {
+      id: 'skill-roll',
+      classes: 'roll-menu',
+      section: [
+        {
+          classes: 'main',
+          items: [
+            { action: 'roll', label: 'Roll' },
+            { action: 'oposed-roll', label: 'Opposed roll' },
+            { action: 'combined-roll', label: 'Combined roll' }
+          ]
+        },
+        {
+          classes: 'keeper',
+          visibility: 'gm',
+          items: [
+            {
+              label: { icon: 'fas fa-link', text: 'Link' },
+              subMenu: {
+                items: [
+                  { action: 'link-tool', label: 'Open in link tool' },
+                  { action: 'send-chat', label: 'Send to chat' },
+                  { action: 'copy-clip', label: 'Copy to clip-board' }
+                ]
+              }
+            },
+            { action: 'request-roll', label: 'Request roll' }
+          ]
+        }
+      ]
+    }
+
+    const contextMenu = new CoC7ContextMenu()
+    contextMenu.bind(menu, html, this._onContextMenuClick.bind(this))
 
     html
       .find('.token-drag-handle')
@@ -1102,6 +1135,10 @@ export class CoC7ActorSheet extends ActorSheet {
         }
       }, delay)
     }
+  }
+
+  _onContextMenuClick (event, target) {
+    ui.notifications.info(`Executing action ${event.currentTarget.dataset.action} on item ${target.dataset.itemId}`)
   }
 
   _onRenderItemSheet (event) {
