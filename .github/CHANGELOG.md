@@ -20,6 +20,7 @@ Happy gaming !
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 - Fix unable to set HP value if max HP was set without using a setup
 - Further support for FoundryVTT v10
+- Update to Portuguese localization
 
 ## Version 0.8.1
 
