@@ -384,10 +384,7 @@ export class CoC7ActorSheet extends ActorSheet {
           if (!weapon.data.ammo) weapon.data.ammo = 0
 
           weapon.skillSet = true
-          // weapon.data.skill.main.name = '';
-          // weapon.data.skill.main.value = 0;
-          // weapon.data.skill.alternativ.name = '';
-          // weapon.data.skill.alternativ.value = 0;
+
           if (weapon.data.skill.main.id === '') {
             // TODO : si l'ID n'ests pas définie mais qu'un nom a été donné, utiliser ce nom et tanter de retrouver le skill
             weapon.skillSet = false
@@ -472,102 +469,10 @@ export class CoC7ActorSheet extends ActorSheet {
       data.data.attribs.build.auto = false
     }
 
-    // data.data.attribs.mov.value = this.actor.mov // return computed values or fixed values if not auto.
-    // data.data.attribs.db.value = this.actor.db
-    // data.data.attribs.build.value = this.actor.build
-
-    // if (typeof this.actor.compendium === 'undefined' && this.actor.isOwner) {
-    //   ui.notifications.info('changr spec name 4')
-    //   // ACTIVE_EFFECT should be applied here
-    //   // This whole part needs to be re-evaluated
-    //   // Seeting this shouldn't be necessary
-    //   this.actor.update(
-    //     { 'data.attribs.mov.value': this.actor.mov },
-    //     { render: false }
-    //   )
-    //   // mov.max never used
-    //   // this.actor.update(
-    //   //   { 'data.attribs.mov.max': this.actor.mov },
-    //   //   { render: false }
-    //   // )
-    //   this.actor.update(
-    //     { 'data.attribs.db.value': this.actor.db },
-    //     { render: false }
-    //   )
-    //   this.actor.update(
-    //     { 'data.attribs.build.current': this.actor.build },
-    //     { render: false }
-    //   )
-    //   this.actor.update(
-    //     { 'data.attribs.build.value': this.actor.build },
-    //     { render: false }
-    //   )
-    // }
-
-    // if( data.data.attribs.hp.value < 0) data.data.attribs.hp.value = null;
     if (data.data.attribs.mp.value < 0) data.data.attribs.mp.value = null
     if (data.data.attribs.san.value < 0) data.data.attribs.san.value = null
-    // data.data.attribs.san.fiftyOfCurrent = data.data.attribs.san.value >= 0 ? ' / '+Math.floor(data.data.attribs.san.value/5):'';
-    // if (data.data.attribs.hp.auto) {
-    //   // TODO if any is null set max back to null.
-    //   if (
-    //     data.data.characteristics.siz.value != null &&
-    //     data.data.characteristics.con.value != null
-    //   ) {
-    //     data.data.attribs.hp.max = this.actor.hpMax
-    //   }
-    // }
-
-    // if (data.data.attribs.mp.auto) {
-    //   // TODO if any is null set max back to null.
-    //   if (data.data.characteristics.pow.value != null) {
-    //     data.data.attribs.mp.max = Math.floor(
-    //       data.data.characteristics.pow.value / 5
-    //     )
-    //   }
-    // }
-
-    // if (data.data.attribs.san.auto) {
-    //   data.data.attribs.san.max = this.actor.sanMax
-    // }
-
-    // if (
-    //   data.data.attribs.mp.value > data.data.attribs.mp.max ||
-    //   data.data.attribs.mp.max == null
-    // ) {
-    //   data.data.attribs.mp.value = data.data.attribs.mp.max
-    // }
-    // if (
-    //   data.data.attribs.hp.value > data.data.attribs.hp.max ||
-    //   data.data.attribs.hp.max == null
-    // ) {
-    //   data.data.attribs.hp.value = data.data.attribs.hp.max
-    // }
-
-    // if (
-    //   data.data.attribs.hp.value == null &&
-    //   data.data.attribs.hp.max != null
-    // ) {
-    //   data.data.attribs.hp.value = data.data.attribs.hp.max
-    // }
-    // if (
-    //   data.data.attribs.mp.value == null &&
-    //   data.data.attribs.mp.max != null
-    // ) {
-    //   data.data.attribs.mp.value = data.data.attribs.mp.max
-    // }
 
     if (!['vehicle'].includes(this.actor.data.type)) {
-      // if (
-      //   data.data.attribs.san.value == null &&
-      //   data.data.characteristics.pow.value != null
-      // ) {
-      //   data.data.attribs.san.value = data.data.characteristics.pow.value
-      // }
-      // if (data.data.attribs.san.value > data.data.attribs.san.max) {
-      //   data.data.attribs.san.value = data.data.attribs.san.max
-      // }
-
       if (data.data.biography instanceof Array && data.data.biography.length) {
         data.data.biography[0].isFirst = true
         data.data.biography[data.data.biography.length - 1].isLast = true
@@ -586,12 +491,6 @@ export class CoC7ActorSheet extends ActorSheet {
         Object.keys(this.actor.data.data.conditions).filter(
           condition => this.actor.data.data.conditions[condition].value
         ).length > 0)
-    // const first = data.data.biography[0];
-    // first.isFirst = true;
-    // data.data.biography[0] = first;
-    // const last = data.data.biography[data.data.biography.length - 1];
-    // last.isLast = true;
-    // data.data.biography[data.data.biography.length - 1] = last;
     return data
   }
 
@@ -624,7 +523,9 @@ export class CoC7ActorSheet extends ActorSheet {
   activateListeners (html) {
     super.activateListeners(html)
 
-    const menu = {
+    if (!this.menus) this.menus = []
+
+    const rollMenu = {
       id: 'skill-roll',
       classes: 'roll-menu',
       section: [
@@ -656,8 +557,56 @@ export class CoC7ActorSheet extends ActorSheet {
       ]
     }
 
-    const contextMenu = new CoC7ContextMenu()
-    contextMenu.bind(menu, html, this._onContextMenuClick.bind(this))
+    const sanMenu = {
+      id: 'san-roll',
+      classes: 'roll-menu',
+      section: [
+        {
+          classes: 'main',
+          items: [
+            { action: 'roll', label: 'Roll' },
+            { action: 'oposed-roll', label: 'Opposed roll' },
+            { action: 'combined-roll', label: 'Combined roll' }
+          ]
+        },
+        {
+          classes: 'keeper',
+          visibility: 'trusted',
+          items: [
+            { action: 'ecounter', label: 'Encounter' },
+            { action: 'request-roll', label: 'Request roll' },
+            {
+              label: { icon: 'fas fa-link', text: 'Link' },
+              subMenu: {
+                items: [
+                  { action: 'link-tool', label: 'Open in link tool' },
+                  { action: 'send-chat', label: 'Send to chat' },
+                  { action: 'copy-clip', label: 'Copy to clip-board' }
+                ]
+              }
+            },
+            {
+              label: { icon: 'fas fa-link', text: 'Encounter link' },
+              subMenu: {
+                items: [
+                  { action: 'encounter-link-tool', label: 'Open in link tool' },
+                  { action: 'encounter-send-chat', label: 'Send to chat' },
+                  { action: 'encounter-copy-clip', label: 'Copy to clip-board' }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+
+    const rollContextMenu = new CoC7ContextMenu()
+    rollContextMenu.bind(rollMenu, html, this._onContextMenuClick.bind(this))
+    this.menus.push(rollContextMenu)
+
+    const sanContextMenu = new CoC7ContextMenu()
+    sanContextMenu.bind(sanMenu, html, this._onContextMenuClick.bind(this))
+    this.menus.push(sanContextMenu)
 
     html
       .find('.token-drag-handle')

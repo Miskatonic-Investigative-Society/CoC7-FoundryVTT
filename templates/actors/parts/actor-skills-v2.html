@@ -16,7 +16,7 @@
 <ol class="item-list">
   {{#if skillListModeValue}}
     {{#each skillsByValue as |skill|}}
-      <li class="item itemV2" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}" data-menu="skill-roll">
+      <li class="item itemV2" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}" data-context-menu="skill-roll">
         <div class="item-image" style="background-image: url('{{skill.img}}')"></div>
         {{#if ../data.flags.locked}}
           <div class="item-name skill-name rollable" title="{{skill.name}}">{{skill.name}}</div>
@@ -50,7 +50,7 @@
       {{#if skill.isSpecialization}}
         <li class="specialization-header"> {{skill.name}} </li>
       {{else}}
-        <li class="item itemV2 {{#if skill.data.properties.special}}specialization{{/if}}" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}" data-menu="skill-roll">
+        <li class="item itemV2 {{#if skill.data.properties.special}}specialization{{/if}}" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}" data-context-menu="skill-roll">
           <div class="item-image" style="background-image: url('{{skill.img}}')"></div>
           {{#if ../data.flags.locked}}
             <div class="item-name skill-name rollable">{{skill.data.skillName}}</div>

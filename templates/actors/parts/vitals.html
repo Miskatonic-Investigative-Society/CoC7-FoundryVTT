@@ -1,12 +1,16 @@
 <div class="luck-group attribute" data-attrib="lck">
-    <label class="attribute-label rollable"  draggable="true">{{localize 'CoC7.Luck'}}</label>
+    <label
+        class="attribute-label rollable"
+        draggable="true"
+        data-context-menu="{{#if data.flags.locked}}skill-roll{{/if}}">{{localize 'CoC7.Luck'}}</label>
     <input class="attribute-value" type="text" name="data.attribs.lck.value" value="{{data.attribs.lck.value}}" data-dtype="Number" data-attrib="lck">
     <input class="attribute-value invisible" type="text" name="data.attribs.lck.max" value="99" data-dtype="Number" data-attrib="lck" readonly>
 </div>
 
 <div class="hp-group">
     <div class="hp-text attribute" data-attrib="hp">
-        <label class="{{#unless data.flags.locked}} auto-toggle {{#unless data.attribs.hp.auto}}manual-override{{/unless}}{{/unless}}">{{localize 'CoC7.HitPoints'}}</label>
+        <label
+            class="{{#unless data.flags.locked}} auto-toggle {{#unless data.attribs.hp.auto}}manual-override{{/unless}}{{/unless}}">{{localize 'CoC7.HitPoints'}}</label>
         <div class="monitor hp-value">
             <div class="current-value">
                 <input class="attribute-value" type="text" name="data.attribs.hp.value" value="{{data.attribs.hp.value}}"  data-dtype="Number"/>
@@ -39,7 +43,10 @@
 
 <div class="san-group">
     <div class="san-text attribute" data-attrib="san" >
-        <label class="{{#if data.flags.locked}} attribute-label rollable{{else}} auto-toggle{{#unless data.attribs.san.auto}} manual-override{{/unless}}{{/if}}" draggable="true">{{localize 'CoC7.Sanity'}}</label>
+        <label 
+            class="{{#if data.flags.locked}} attribute-label rollable{{else}} auto-toggle{{#unless data.attribs.san.auto}} manual-override{{/unless}}{{/if}}" 
+            draggable="true"
+            data-context-menu="{{#if data.flags.locked}}san-roll{{/if}}">{{localize 'CoC7.Sanity'}}</label>
         <div class="monitor san-value">
             <div class="current-value">
                 <input class="attribute-value" type="text" name="data.attribs.san.value" value="{{data.attribs.san.value}}"  data-dtype="Number"/>

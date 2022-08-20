@@ -1,16 +1,11 @@
-/* global $ */
+/* global $,game */
 export class CoC7ContextMenu {
   bind (menu, html, callback) {
     this._callback = callback
     this._html = html
     this._menu = menu
-    // let menuContainer = html.find('.menu-container')
-    // if (menuContainer.length === 0) {
-    //   html.append('<div class="menu-container"></div>')
-    //   menuContainer = html.find('.menu-container')
-    // }
     try {
-      const menuTrigger = html.find(`[data-menu=${menu.id}]`) // Find all menu triggers.
+      const menuTrigger = html.find(`[data-context-menu=${menu.id}]`) // Find all menu triggers.
       if (menuTrigger.length === 0) return // If there is no trigger, do not continue.
       menuTrigger.contextmenu(this._onContextMenu.bind(this)) // Attach the handler.
       const menuElement = CoC7ContextMenu.CreateMenu(menu) // Build the menu
@@ -55,10 +50,11 @@ export class CoC7ContextMenu {
 
   _onContextMenu (event) {
     event.preventDefault(true)
+    CoC7ContextMenu.closeAll() // Only 1 menu can be open.
     const target = event?.currentTarget
     this.target = target
     if (!target) return
-    const menuName = target.dataset?.menu
+    const menuName = target.dataset?.contextMenu
     if (menuName === this._menu.id) {
       const wrapper = this.menu
       if (wrapper.length > 0) {
@@ -95,6 +91,17 @@ export class CoC7ContextMenu {
     }
   }
 
+  static canSee (visibility) {
+    switch (visibility.toLowerCase()) {
+      case 'gm':
+        return game.user.isGM
+      case 'trusted':
+        return game.user.isTrusted
+      default:
+        return true
+    }
+  }
+
   static CreateMenu (menu) {
     const classes = typeof menu.classes === 'string' ? [menu.classes] : menu.classes
     classes.push('context-menu-wrapper')
@@ -115,6 +122,7 @@ export class CoC7ContextMenu {
 
   static CreateSection (s, { multi = false, subMenu = false } = {}) {
     if (!s.items) return null
+    if (s.visibility && !CoC7ContextMenu.canSee(s.visibility)) return null
     const classes = s.classes ? typeof s.classes === 'string' ? [s.classes] : s.classes : []
     if (multi) classes.push('menu-section')
     if (subMenu) classes.push('sub-menu')

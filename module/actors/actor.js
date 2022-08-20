@@ -866,6 +866,18 @@ export class CoCActor extends Actor {
     await this.update({ [name]: textArea.value })
   }
 
+  // async _updateEmbeddedDocuments (documentClass, parent, { updates, options, pack }, user) {
+  //   const pouet = 'toto'
+  // }
+
+  // async preUpdateActiveEffect (a,b,c,d) {
+  //   const pouet = 'toto'
+  // }
+
+  // async updateActiveEffect (a,b,c,d) {
+  //   const pouet = 'toto'
+  // }
+
   /**
    * Create an item for that actor.
    * If it's a skill first check if the skill is already owned. If it is don't create a second time.
