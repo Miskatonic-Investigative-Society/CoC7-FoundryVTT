@@ -190,7 +190,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       if (this.data.objects?.check) {
         if (this.data.obstacle.hazard) this.data.movePlayer = true // On hazard, you pass even if you fail your roll
         if (this.data.objects.check.passed) {
-          this.data.movePlayer = true
+          if (typeof this.data.movePlayer === 'undefined') this.data.movePlayer = true
           data.strings.obstaclePassed = game.i18n.localize(
             'CoC7.ObstaclePassed'
           )
@@ -829,11 +829,11 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     if (!this.data.objects.check) return false
     this.data.objects.check.denyPush = true // Obstacle check can't be pushed
     await this.data.objects.check._perform({ forceDSN: true })
+    this.data.totalActionCost += 1
     this.data.states.checkRolled = true
     target.classList.toggle('disabled')
     if (this.data.objects.check.passed) {
       this.data.states.cardResolved = true
-      this.data.totalActionCost += 1
     } else {
       if (typeof this.data.armor === 'undefined' && this.participant.actor) {
         this.data.armor =
