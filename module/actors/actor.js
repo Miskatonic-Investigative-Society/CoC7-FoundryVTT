@@ -229,28 +229,38 @@ export class CoCActor extends Actor {
 
   /** @override */
   static async create (data, options = {}) {
-    data.token = data.token || {}
     if (data.type === 'character') {
-      mergeObject(
-        data.token,
-        {
-          vision: true,
-          dimSight: 30,
-          brightSight: 0,
-          actorLink: true,
-          disposition: 1
-        },
-        { overwrite: false }
-      )
+      if (typeof data.prototypeToken === 'undefined') {
+        data.token = data.token || {}
+        mergeObject(
+          data.token,
+          {
+            vision: true,
+            dimSight: 30,
+            brightSight: 0,
+            actorLink: true,
+            disposition: 1
+          },
+          { overwrite: false }
+        )
+      }
     } else if (data.type === 'npc') {
-      data.img = 'systems/CoC7/assets/icons/cultist.svg'
+      if (typeof data.img === 'undefined' || data.img === 'icons/svg/mystery-man.svg') {
+        data.img = 'systems/CoC7/assets/icons/cultist.svg'
+      }
     } else if (data.type === 'creature') {
-      data.img = 'systems/CoC7/assets/icons/floating-tentacles.svg'
+      if (typeof data.img === 'undefined' || data.img === 'icons/svg/mystery-man.svg') {
+        data.img = 'systems/CoC7/assets/icons/floating-tentacles.svg'
+      }
     } else if (data.type === 'container') {
-      data.img = 'icons/svg/chest.svg'
-      mergeObject(data.token, {
-        actorLink: true
-      })
+      if (typeof data.img === 'undefined' || data.img === 'icons/svg/mystery-man.svg') {
+        data.img = 'icons/svg/chest.svg'
+      }
+      if (typeof data.prototypeToken === 'undefined') {
+        mergeObject(data.token, {
+          actorLink: true
+        })
+      }
     }
     return super.create(data, options)
   }
@@ -3322,12 +3332,15 @@ export class CoCActor extends Actor {
 
   async setHp (value) {
     if (value < 0) value = 0
-    if (value > this.data.data.attribs.san.max) { value = this.data.data.attribs.san.max }
+    if (value > this.data.data.attribs.san.max) {
+      value = this.data.data.attribs.san.max
+    }
     const healthBefore = this.hp
     let damageTaken
     // is healing
-    if (value >= healthBefore) await this._setHp(value)
-    else {
+    if (isNaN(healthBefore) || value >= healthBefore) {
+      await this._setHp(value)
+    } else {
       damageTaken = healthBefore - value
       await this.dealDamage(damageTaken, { ignoreArmor: true })
     }

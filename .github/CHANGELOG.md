@@ -15,10 +15,19 @@ _If you decide to go on with V10:_
 
 Happy gaming !
 
+## Changes coming in a future release:
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+- Fix unable to set HP value if max HP was set without using a setup
+- Further support for FoundryVTT v10
+- Update to Portuguese localization
+
 ## Version 0.8.1
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Bug correction of sanity flow where applying san loss will fail the card.
+- Bug correction on item summary slide down.
 - Further support for FoundryVTT v10 #1188
 - Update to Italian localization, thanks to @Stefano1975t #1187
 

@@ -190,10 +190,11 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
               const slowest = this.chase.slowestParticipant
               if (isNaN(participant.adjustedMov)) {
                 participant.mov = slowest.adjustedMov
-              } else {
+              } /** else {
                 participant.data.mov =
-                  slowest.adjustedMov + participant.adjustedMov
-              }
+                  slowest.adjustedMov + participant.movementAction - 1
+              } */
+              this.data.recalculationNeeded = false
             }
           }
 
