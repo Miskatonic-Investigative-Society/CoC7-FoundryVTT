@@ -691,6 +691,8 @@
   "CoC7.ErrorParticipantAtMaxBonus": "{participantUuid} already has max bonus dice",
   "CoC7.ErrorTokenNotOnScene": "Token does not belongs to this location's scene",
   "CoC7.AddParticipant": "Add Participant",
+  "CoC7.RemoveParticipant": "Remove participant",
+  "CoC7.RemoveParticipantHint": "Participant will be completely removed from the chase",
   "CoC7.Remove": "Remove",
   "CoC7.Delete": "Delete",
   "CoC7.Edit": "Edit",
