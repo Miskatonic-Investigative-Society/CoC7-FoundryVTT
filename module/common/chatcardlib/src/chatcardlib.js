@@ -1,5 +1,4 @@
 /* global $, ChatMessage, deepClone, FormDataExtended, foundry, fromUuid, game, Hooks, mergeObject, renderTemplate, socketlib, ui */
-import { CoC7Utilities } from '../../../utilities.js'
 
 const ECC_CLASS = 'enhanced-chat-card'
 
@@ -117,6 +116,32 @@ class EnhancedChatCardLib {
   // static gm_onToggle (data){
   //   ui.notifications.info( 'gm_onToggle')
   // }
+}
+
+function setByPath (obj, path, value) {
+  const parts = path.split('.')
+  let o = obj
+  if (parts.length > 1) {
+    for (let i = 0; i < parts.length - 1; i++) {
+      if (!o[parts[i]]) o[parts[i]] = {}
+      o = o[parts[i]]
+    }
+  }
+
+  o[parts[parts.length - 1]] = value
+}
+
+function getByPath (obj, path) {
+  const parts = path.split('.')
+  let o = obj
+  if (parts.length > 1) {
+    for (let i = 0; i < parts.length - 1; i++) {
+      if (!o[parts[i]]) return undefined
+      o = o[parts[i]]
+    }
+  }
+
+  return o[parts[parts.length - 1]]
 }
 
 export class EnhancedChatCard {
@@ -308,7 +333,7 @@ export class EnhancedChatCard {
       )
     }
     if (element.dataset.name) {
-      const value = CoC7Utilities.getByPath(this, element.dataset.name)
+      const value = getByPath(this, element.dataset.name)
       element.classList.add(value ? STATE.ON : STATE.OFF)
     }
   }
@@ -563,9 +588,9 @@ export class EnhancedChatCard {
       //   foundry.utils.expandObject(data)
       // )
       for (const [key, value] of Object.entries(data)) {
-        const oldValue = CoC7Utilities.getByPath(this, key)
+        const oldValue = getByPath(this, key)
         if (!(oldValue === value)) {
-          CoC7Utilities.setByPath(this, key, value)
+          setByPath(this, key, value)
           updates = true
         }
       }
@@ -677,18 +702,18 @@ export class EnhancedChatCard {
 
   setData (name) {
     if (!name && !($.type(name) === 'string')) return
-    CoC7Utilities.setByPath(this, name, true)
+    setByPath(this, name, true)
   }
 
   unsetData (name) {
     if (!name && !($.type(name) === 'string')) return
-    CoC7Utilities.setByPath(this, name, false)
+    setByPath(this, name, false)
   }
 
   toggleData (name) {
     if (!name && !($.type(name) === 'string')) return
-    const value = CoC7Utilities.getByPath(this, name)
-    CoC7Utilities.setByPath(this, name, !value)
+    const value = getByPath(this, name)
+    setByPath(this, name, !value)
   }
 
   async _onToggle (event) {
