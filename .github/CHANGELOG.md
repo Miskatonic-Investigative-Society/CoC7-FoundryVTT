@@ -15,9 +15,10 @@ _If you decide to go on with V10:_
 
 Happy gaming !
 
-## Changes coming in a future release:
+## Version 0.8.2
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
 - Fix unable to set HP value if max HP was set without using a setup
 - Further support for FoundryVTT v10
 - Update to Portuguese localization
