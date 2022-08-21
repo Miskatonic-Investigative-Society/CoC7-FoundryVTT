@@ -624,27 +624,27 @@ export class CoC7ActorSheet extends ActorSheet {
         .find('.san-check')
         .on('dragstart', event => this._onDragSanCheck(event))
 
-      html
-        .find('.characteristic-label')
-        .contextmenu(this._onOpposedRoll.bind(this))
-      html
-        .find('.skill-name.rollable')
-        .contextmenu(this._onOpposedRoll.bind(this))
-      html
-        .find('.attribute-label.rollable')
-        .contextmenu(this._onOpposedRoll.bind(this))
+      // html
+      //   .find('.characteristic-label')
+      //   .contextmenu(this._onOpposedRoll.bind(this))
+      // html
+      //   .find('.skill-name.rollable')
+      //   .contextmenu(this._onOpposedRoll.bind(this))
+      // html
+      //   .find('.attribute-label.rollable')
+      //   .contextmenu(this._onOpposedRoll.bind(this))
       html
         .find('.weapon-name.rollable')
         .contextmenu(this._onOpposedRoll.bind(this))
 
-      html
-        .find('.characteristic-label')
-        .click(this._onRollCharacteriticTest.bind(this))
-      html.find('.skill-name.rollable').click(this._onRollSkillTest.bind(this))
-      html.find('.skill-image').click(this._onRollSkillTest.bind(this))
-      html
-        .find('.attribute-label.rollable')
-        .click(this._onRollAttribTest.bind(this))
+      // html
+      //   .find('.characteristic-label')
+      //   .click(this._onRollCharacteriticTest.bind(this))
+      // html.find('.skill-name.rollable').click(this._onRollSkillTest.bind(this))
+      // html.find('.skill-image').click(this._onRollSkillTest.bind(this))
+      // html
+      //   .find('.attribute-label.rollable')
+      //   .click(this._onRollAttribTest.bind(this))
       html.find('.lock').click(this._onLockClicked.bind(this))
       html.find('.flag').click(this._onFlagClicked.bind(this))
       html.find('.formula').click(this._onFormulaClicked.bind(this))
