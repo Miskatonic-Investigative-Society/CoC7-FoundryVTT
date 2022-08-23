@@ -173,13 +173,6 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
 
   static forceAuto (app, html) {
     html.height('auto')
-    // const cell = html.find('.pannel.expanded.resizededitor')
-    // if (cell.length) {
-    //   cell.height(
-    //     Math.max(200, (html.height() - cell.position().top - 8) / cell.length) +
-    //       'px'
-    //   )
-    // }
   }
 
   setPosition (a) {
