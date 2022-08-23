@@ -17,13 +17,13 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
             ? 'fas fa-window-maximize'
             : 'fas fa-window-minimize',
           onclick: event => this.toggleSheetMode(event)
-        },
+        }/* ,
         {
           label: '',
           class: 'drag-test-thingy',
           icon: 'game-icon game-icon-d10',
           ondragstart: () => ui.notifications.info('drag started')
-        }
+        } */
       ].concat(buttons)
       return buttons
     }

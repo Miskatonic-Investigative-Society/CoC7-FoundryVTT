@@ -1136,6 +1136,8 @@
   "CoC7.toolTipDelay": "Millisecond delay before tooltip should show, 0 for never",
   "SETTINGS.ChaseShowTokenMovement": "Show token movement.",
   "SETTINGS.ChaseShowTokenMovementHint": "Show movement on the grid when a token is moved to the next location.",
+  "SETTINGS.UseContextMenus": "Use context menus",
+  "SETTINGS.UseContextMenusHint": "[EXPERIMENTAL] Use context menus for rolls instead of key combination.",
 
   "CoC7.getTheExample": "Copy Example",
   "CoC7.Copied": "Copied the Example Text to Clipboard",

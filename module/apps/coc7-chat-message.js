@@ -142,7 +142,7 @@ export class CoC7ChatMessage {
     const config = {
       options: {
         cardType: options.cardType,
-        shiftKey: options.event?.shiftKey ?? options.fastForward ?? false,
+        shiftKey: options.fastForward ?? options.event?.shiftKey ?? options.fastForward ?? false,
         altKey: options.event?.altKey ?? false,
         isCtrlKey: isCtrlKey(options.event ?? false),
         isCombat:
