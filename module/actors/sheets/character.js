@@ -510,10 +510,8 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
       for (const [key, value] of Object.entries(sheet.actor.data.data.pannel)) {
         const pannelClass = chatHelper.camelCaseToHyphen(key)
         const pannel = html.find(`.pannel.${pannelClass}`)
-        if (pannel.length > 1) {
-          if (value.expanded) pannel.addClass('expanded')
-          else pannel.removeClass('expanded')
-        }
+        if (value.expanded) pannel.addClass('expanded')
+        else pannel.removeClass('expanded')
       }
     }
   }
