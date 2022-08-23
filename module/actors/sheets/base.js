@@ -9,7 +9,7 @@ import { CoC7MeleeInitiator } from '../../chat/combat/melee-initiator.js'
 import { CoC7RangeInitiator } from '../../chat/rangecombat.js'
 // import { CoC7DamageRoll } from '../../chat/damagecards.js';
 import { CoC7ConCheck } from '../../chat/concheck.js'
-import { isCtrlKey } from '../../chat/helper.js'
+import { chatHelper, isCtrlKey } from '../../chat/helper.js'
 import { CoC7Parser } from '../../apps/parser.js'
 import { DamageCard } from '../../chat/cards/damage.js'
 import { CoC7LinkCreationDialog } from '../../apps/link-creation-dialog.js'
@@ -1427,7 +1427,7 @@ export class CoC7ActorSheet extends ActorSheet {
     // $(event.currentTarget).toggleClass('expanded');
   }
 
-  _onSectionHeader (event) {
+  async _onSectionHeader (event) {
     event.preventDefault()
     // let section = $(event.currentTarget).parents('section'),
     //  pannelClass = $(event.currentTarget).data('pannel'),
@@ -1435,7 +1435,9 @@ export class CoC7ActorSheet extends ActorSheet {
     // pannel.toggle();
     const section = event.currentTarget.closest('section')
     const pannelClass = event.currentTarget.dataset.pannel
+    if (typeof pannelClass === 'undefined') return
     const pannel = $(section).find(`.pannel.${pannelClass}`)
+
     // pannel.toggle();
     if (pannel.hasClass('expanded')) {
       // Could remove expanded class and use (pannel.is(':visible'))
@@ -1443,6 +1445,12 @@ export class CoC7ActorSheet extends ActorSheet {
     } else {
       pannel.slideDown(200, () => pannel.toggleClass('expanded'))
     }
+
+    const camelFlag = chatHelper.hyphenToCamelCase(`data.pannel.${pannelClass}.expanded`)
+
+    this.actor.update(
+      { [camelFlag]: !pannel.hasClass('expanded') },
+      { render: false })
   }
 
   _onInventoryHeader (event) {

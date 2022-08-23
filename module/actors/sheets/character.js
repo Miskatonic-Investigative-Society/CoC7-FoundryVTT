@@ -1,6 +1,7 @@
 /* global $, FontFace, game, mergeObject, ui */
 import { CoC7ActorSheet } from './base.js'
 import { CoC7CreateMythosEncounter } from '../../apps/create-mythos-encounters.js'
+import { chatHelper } from '../../chat/helper.js'
 
 export class CoC7CharacterSheet extends CoC7ActorSheet {
   _getHeaderButtons () {
@@ -343,7 +344,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
     if (item) item.sheet.render(true)
   }
 
-  static renderSheet (sheet) {
+  static renderSheet (sheet, html) {
     if (game.settings.get('CoC7', 'overrideSheetArtwork')) {
       if (game.settings.get('CoC7', 'artWorkSheetBackground')) {
         if (
@@ -502,6 +503,15 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
         if (size !== $(':root').css('font-size')) {
           $(':root').css('font-size', size)
         }
+      }
+    }
+
+    if (typeof sheet.actor?.data.data.pannel !== 'undefined') {
+      for (const [key, value] of Object.entries(sheet.actor.data.data.pannel)) {
+        const pannelClass = chatHelper.camelCaseToHyphen(key)
+        const pannel = html.find(`.pannel.${pannelClass}`)
+        if (value.expanded) pannel.addClass('expanded')
+        else pannel.removeClass('expanded')
       }
     }
   }
