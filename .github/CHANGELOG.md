@@ -21,6 +21,8 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 - Fix unable to set HP value if max HP was set without using a setup
 - Further support for FoundryVTT v10
+- Update to Italian localization, thanks to @Stefano1975t #1209
+- Update to Polish localization, thanks to @everyonecancode #1210
 - Update to Portuguese localization
 
 ## Version 0.8.1
