@@ -637,7 +637,7 @@
   "CoC7.ConfirmRestartChase": "Czy chcesz ponownie rozpocząć pościg?",
   "CoC7.ConfirmRestartChaseHint": "To ponownie rozpocznie pościg.\nWszystkie pozycje zostaną zresetowane.\nAktorzy, którzy nie rzucali na test szybkości będą musieli rzucać.",
   "CoC7.ConfirmResetChase": "Czy chcesz zresetować pościg?",
-  "CoC7.ConfirmResetChaseHint": "To zresetuje pościg.\bWszystkie pozycje i przeszkody zostaną usunięte.",
+  "CoC7.ConfirmResetChaseHint": "To zresetuje pościg.\nWszystkie pozycje i przeszkody zostaną usunięte.",
   "CoC7.IncludeEscapees": "Pozwól najszybszym aktorom brać udział w pościgu.",
   "CoC7.TooSlow": "Za wolno",
   "CoC7.TooFast": "Za szybko",

@@ -924,7 +924,7 @@
   "CoC7.ConfirmRestartChase": "Você deseja reiniciar a perseguição?",
   "CoC7.ConfirmRestartChaseHint": "Isso irá reiniciar a perseguição.\nTodas as posições serão reiniciadas.\nAtores terão que rolar novamente.",
   "CoC7.ConfirmResetChase": "Você deseja reinicializar a perseguição?",
-  "CoC7.ConfirmResetChaseHint": "Isso irá reinicializar a perseguição.\bTodas posições e obstáculos serão reiniciados.",
+  "CoC7.ConfirmResetChaseHint": "Isso irá reinicializar a perseguição.\nTodas posições e obstáculos serão reiniciados.",
   "CoC7.IncludeEscapees": "Permitir que Atores escapem.",
   "CoC7.TooSlow": "Muito lento",
   "CoC7.TooFast": "Muito rápido",
