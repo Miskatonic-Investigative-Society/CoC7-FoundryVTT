@@ -19,6 +19,7 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix multiple roll requests on the same line not being parsed correctly
 - Fix unable to set HP value if max HP was set without using a setup
 - Further support for FoundryVTT v10
 - Update to Italian localization, thanks to @Stefano1975t #1209
