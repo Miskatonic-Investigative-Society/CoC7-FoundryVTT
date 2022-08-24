@@ -637,7 +637,7 @@
   "CoC7.ConfirmRestartChase": "Vuoi far cominciare da capo l'inseguimento?",
   "CoC7.ConfirmRestartChaseHint": "Questo farà cominciare da capo il tuo inseguimento.\nTutte le posizioni verranno resettate.\nI Personaggi che non hanno effettuato un Tiro Velocità dovranno tirare.",
   "CoC7.ConfirmResetChase": "Vuoi resettare l'inseguimento?",
-  "CoC7.ConfirmResetChaseHint": "Questo resetterà l'inseguimento.\bTutte le posizioni e gli ostacoli verranno rimossi.",
+  "CoC7.ConfirmResetChaseHint": "Questo resetterà l'inseguimento.\nTutte le posizioni e gli ostacoli verranno rimossi.",
   "CoC7.IncludeEscapees": "Permetti ai Personaggi in fuga più veloci di partecipare.",
   "CoC7.TooSlow": "Troppo lento",
   "CoC7.TooFast": "Troppo veloce",
