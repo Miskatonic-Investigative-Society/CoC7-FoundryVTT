@@ -691,6 +691,8 @@
   "CoC7.ErrorParticipantAtMaxBonus": "{participantUuid} ha già il massimo dei dadi bonus",
   "CoC7.ErrorTokenNotOnScene": "La Pedina non appartiene alla scena di questo luogo",
   "CoC7.AddParticipant": "Aggiungi Partecipante",
+  "CoC7.RemoveParticipant": "Rimuovi Partecipante",
+  "CoC7.RemoveParticipantHint": "Il Partecipante verrà completamente rimosso dall'inseguimento",
   "CoC7.Remove": "Rimuovi",
   "CoC7.Delete": "Cancella",
   "CoC7.Edit": "Modifica",
