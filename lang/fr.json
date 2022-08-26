@@ -1138,7 +1138,7 @@
   "SETTINGS.ChaseShowTokenMovementHint": "Afficher les mouvements sur la grille quand le token est déplacé vers le prochain lieu.",
 
   "CoC7.getTheExample": "Copier l'Exemple",
-  "CoC7.Copied": "Texte de l'Exemple copié dans le presse-papier"
+  "CoC7.Copied": "Texte de l'Exemple copié dans le presse-papier",
 
   "CoC7.EffectNew": "Nouvel effet",
   "CoC7.EffectAppliedCantOverride": "Un effet actif est applicable. Vous de pouvez modifier [{name}]. Désactivez cet effet pour pouvoir modifier cette valeur."
