@@ -246,16 +246,9 @@ export class CoC7Parser {
     text = TextEditor._getTextNodes(html)
     // Alternative regex : '@(coc7).([^\[]+)\[([^\]]+)\](?:{([^}]+)})?'
     // Before active effect :       '@(coc7).(.*?)\\[([^\\]]+)\\]' + '(?:{([^}]+)})?',
-    const rgx = new RegExp('@(coc7).(effect)\\[(.*)\\]' + '(?:{([^}]+)})?', 'gi')
+    const rgx = new RegExp('@(coc7)\\.' + '([^\\]]+?)' + '\\[((?:[^\\]\\[]+|\\[(?:[^\\]\\[]+|\\[[^\\]\\[]*\\])*\\])*)\\]' + '(?:{([^}]+)})?', 'gi')
     TextEditor._replaceTextContent(text, rgx, CoC7Parser._createLink)
-
-    const html2 = document.createElement('div')
-    html2.innerHTML = html.innerHTML
-    text = TextEditor._getTextNodes(html2)
-
-    const rgx2 = new RegExp('@(coc7).(.*?)\\[(.*?)\\]' + '(?:{([^}]+)})?', 'gi')
-    TextEditor._replaceTextContent(text, rgx2, CoC7Parser._createLink)
-    return html2.innerHTML
+    return html.innerHTML
   }
 
   static bindEventsHandler (html) {
