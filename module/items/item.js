@@ -289,11 +289,11 @@ export class CoC7Item extends Item {
 
   static getNameWithoutSpec (item) {
     if (item instanceof CoC7Item) {
-      if (item.data.data?.properties?.special) {
+      if (item.data.data?.properties?.special && typeof item.data.data.skillName !== 'undefined') {
         return item.data.data.skillName
       }
     } else {
-      if (item.data.properties?.special) {
+      if (item.data.properties?.special && typeof item.data.skillName !== 'undefined') {
         return item.data.skillName
       }
     }
