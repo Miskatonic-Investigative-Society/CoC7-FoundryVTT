@@ -46,6 +46,10 @@ export class CoC7Link {
     return ['skill']
   }
 
+  static get EFFECT_KEYWORD () {
+    return ['effect', 'effects']
+  }
+
   static get LINK_TYPE () {
     return {
       CHECK: 1,
@@ -59,7 +63,8 @@ export class CoC7Link {
     return {
       CHARACTERISTIC: 1,
       ATTRIBUTE: 2,
-      SKILL: 3
+      SKILL: 3,
+      EFFECT: 4
     }
   }
 
@@ -290,6 +295,10 @@ export class CoC7Link {
         this.type = CoC7Link.LINK_TYPE.CHECK
         this._linkData.check = CoC7Link.CHECK_TYPE.SKILL
       }
+      if (CoC7Link.EFFECT_KEYWORD.includes(x)) {
+        this.type = CoC7Link.LINK_TYPE.EFFECT
+        this._linkData.check = CoC7Link.CHECK_TYPE.EFFECT
+      }
     }
   }
 
@@ -453,7 +462,7 @@ export class CoC7Link {
       case CoC7Link.LINK_TYPE.EFFECT: {
         const effectData = foundry.utils.deepClone(this._linkData.effect)
         if (!this.effectIsTemp) delete effectData.duration
-        if (effectData.changes.length === 0) delete effectData.changes
+        if (effectData.changes?.length === 0) delete effectData.changes
         if (!effectData.disabled) delete effectData.disabled
         if (!effectData.tint) delete effectData.tint
         let link = `@coc7.effect[${JSON.stringify(effectData)}]`

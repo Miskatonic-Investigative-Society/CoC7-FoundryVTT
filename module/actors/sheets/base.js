@@ -689,6 +689,23 @@ export class CoC7ActorSheet extends ActorSheet {
         .find('.weapon-name.rollable')
         .click(event => this._onWeaponRoll(event))
       html
+        .find('.item-name.effect-name')
+        .click(event => this._onEffect(event))
+      // html
+      //   .find('.item-name.effect-name')
+      //   .keydown((event) => {
+      //     if (isCtrlKey(event)) {
+      //       event.currentTarget.classList.add('pointer')
+      //     }
+      //   })
+      // html
+      //   .find('.item-name.effect-name')
+      //   .keydown((event) => {
+      //     if (isCtrlKey(event)) {
+      //       event.currentTarget.classList.remove('pointer')
+      //     }
+      //   })
+      html
         .find('.weapon-skill.rollable')
         .click(async event => this._onWeaponSkillRoll(event))
       html.find('.reload-weapon').click(event => this._onReloadWeapon(event))
@@ -1513,6 +1530,18 @@ export class CoC7ActorSheet extends ActorSheet {
     // check.item = itemId;
     // check.roll();
     // check.toMessage();
+  }
+
+  async _onEffect (event) {
+    event.preventDefault()
+    const effectId = event.currentTarget.closest('li').dataset.effectId
+    const effect = this.actor.effects.get(effectId)
+    if (isCtrlKey(event) && game.user.isGM) {
+      const link = new CoC7Link()
+      await link.setData({ type: 'effect', object: effect.data })
+      const linkDialog = new CoC7LinkCreationDialog(link)
+      linkDialog.render(true)
+    }
   }
 
   async _onWeaponRoll (event) {
