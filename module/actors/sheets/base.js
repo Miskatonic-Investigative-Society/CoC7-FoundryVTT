@@ -9,7 +9,7 @@ import { CoC7MeleeInitiator } from '../../chat/combat/melee-initiator.js'
 import { CoC7RangeInitiator } from '../../chat/rangecombat.js'
 // import { CoC7DamageRoll } from '../../chat/damagecards.js';
 import { CoC7ConCheck } from '../../chat/concheck.js'
-import { isCtrlKey } from '../../chat/helper.js'
+import { chatHelper, isCtrlKey } from '../../chat/helper.js'
 import { CoC7Parser } from '../../apps/parser.js'
 import { DamageCard } from '../../chat/cards/damage.js'
 import { CoC7LinkCreationDialog } from '../../apps/link-creation-dialog.js'
@@ -688,6 +688,23 @@ export class CoC7ActorSheet extends ActorSheet {
       html
         .find('.weapon-name.rollable')
         .click(event => this._onWeaponRoll(event))
+      html
+        .find('.item-name.effect-name')
+        .click(event => this._onEffect(event))
+      // html
+      //   .find('.item-name.effect-name')
+      //   .keydown((event) => {
+      //     if (isCtrlKey(event)) {
+      //       event.currentTarget.classList.add('pointer')
+      //     }
+      //   })
+      // html
+      //   .find('.item-name.effect-name')
+      //   .keydown((event) => {
+      //     if (isCtrlKey(event)) {
+      //       event.currentTarget.classList.remove('pointer')
+      //     }
+      //   })
       html
         .find('.weapon-skill.rollable')
         .click(async event => this._onWeaponSkillRoll(event))
@@ -1427,7 +1444,7 @@ export class CoC7ActorSheet extends ActorSheet {
     // $(event.currentTarget).toggleClass('expanded');
   }
 
-  _onSectionHeader (event) {
+  async _onSectionHeader (event) {
     event.preventDefault()
     // let section = $(event.currentTarget).parents('section'),
     //  pannelClass = $(event.currentTarget).data('pannel'),
@@ -1435,7 +1452,9 @@ export class CoC7ActorSheet extends ActorSheet {
     // pannel.toggle();
     const section = event.currentTarget.closest('section')
     const pannelClass = event.currentTarget.dataset.pannel
+    if (typeof pannelClass === 'undefined') return
     const pannel = $(section).find(`.pannel.${pannelClass}`)
+
     // pannel.toggle();
     if (pannel.hasClass('expanded')) {
       // Could remove expanded class and use (pannel.is(':visible'))
@@ -1443,6 +1462,12 @@ export class CoC7ActorSheet extends ActorSheet {
     } else {
       pannel.slideDown(200, () => pannel.toggleClass('expanded'))
     }
+
+    const camelFlag = chatHelper.hyphenToCamelCase(`data.pannel.${pannelClass}.expanded`)
+
+    this.actor.update(
+      { [camelFlag]: !pannel.hasClass('expanded') },
+      { render: false })
   }
 
   _onInventoryHeader (event) {
@@ -1505,6 +1530,18 @@ export class CoC7ActorSheet extends ActorSheet {
     // check.item = itemId;
     // check.roll();
     // check.toMessage();
+  }
+
+  async _onEffect (event) {
+    event.preventDefault()
+    const effectId = event.currentTarget.closest('li').dataset.effectId
+    const effect = this.actor.effects.get(effectId)
+    if (isCtrlKey(event) && game.user.isGM) {
+      const link = new CoC7Link()
+      await link.setData({ type: 'effect', object: effect.data })
+      const linkDialog = new CoC7LinkCreationDialog(link)
+      linkDialog.render(true)
+    }
   }
 
   async _onWeaponRoll (event) {

@@ -190,7 +190,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       if (this.data.objects?.check) {
         if (this.data.obstacle.hazard) this.data.movePlayer = true // On hazard, you pass even if you fail your roll
         if (this.data.objects.check.passed) {
-          this.data.movePlayer = true
+          if (typeof this.data.movePlayer === 'undefined') this.data.movePlayer = true
           data.strings.obstaclePassed = game.i18n.localize(
             'CoC7.ObstaclePassed'
           )
@@ -434,7 +434,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     if (this.participantData?.bonusDice > 0) {
       this.data.bonusDice = this.participantData.bonusDice
       this.data.flags.consumeBonusDice = true
-      this.data.flags.hasBonusDice = this.participantData.hasBonusDice
+      this.data.flags.hasBonusDice = this.participant.hasBonusDice
     }
 
     this.data.movementActionArray = duplicate(
@@ -704,6 +704,8 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       participantUpdate.currentMovementActions -= this.data.totalActionCost
     }
 
+    if (typeof this.data.flags.consumeBonusDice === 'undefined') this.data.flags.consumeBonusDice = true // Bonus dice awarded during flow are being consumed
+
     if (this.data.flags.consumeBonusDice) {
       participantChaged = true
       participantUpdate.bonusDice = 0
@@ -808,8 +810,8 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     if (!this.data.flags.hasBonusDice) {
       this.data.flags.hasBonusDice = true
     }
-    if (this.data.movementAction <= this.data.totalActionCost) {
-      this.data.flags.consumeBonusDice = false
+    if (this.data.movementAction <= this.data.totalActionCost) { // All mov action have been used to take cuatious approach.
+      this.data.flags.consumeBonusDice = false // Do not consume the bonus dice.
       this.data.states.cardResolved = true
       this.data.movePlayer = false
     }
@@ -829,11 +831,12 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     if (!this.data.objects.check) return false
     this.data.objects.check.denyPush = true // Obstacle check can't be pushed
     await this.data.objects.check._perform({ forceDSN: true })
+    this.data.totalActionCost += 1
     this.data.states.checkRolled = true
     target.classList.toggle('disabled')
     if (this.data.objects.check.passed) {
+      this.data.movePlayer = true
       this.data.states.cardResolved = true
-      this.data.totalActionCost += 1
     } else {
       if (typeof this.data.armor === 'undefined' && this.participant.actor) {
         this.data.armor =
@@ -851,6 +854,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     })
     if (this.data.objects.check.passed) {
       this.data.states.cardResolved = true
+      this.data.movePlayer = true
       this.data.totalActionCost += 1
     }
     return true

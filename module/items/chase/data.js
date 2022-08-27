@@ -1136,7 +1136,7 @@ export class CoC7Chase extends CoC7Item {
       render: render && !this.started && !this.recalculateMovementActions
     })
 
-    if (recalculateMovementActions || update) {
+    if (recalculateMovementActions) {
       const slowest = this.slowestParticipant?.adjustedMov
       const participants = this.participants
       participants.forEach(p => p.calculateMovementActions(slowest))

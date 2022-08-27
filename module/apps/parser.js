@@ -246,7 +246,7 @@ export class CoC7Parser {
     text = TextEditor._getTextNodes(html)
     // Alternative regex : '@(coc7).([^\[]+)\[([^\]]+)\](?:{([^}]+)})?'
     // Before active effect :       '@(coc7).(.*?)\\[([^\\]]+)\\]' + '(?:{([^}]+)})?',
-    const rgx = new RegExp('@(coc7).(.*?)\\[(.*)\\]' + '(?:{([^}]+)})?', 'gi')
+    const rgx = new RegExp('@(coc7)\\.' + '([^\\]]+?)' + '\\[((?:[^\\]\\[]+|\\[(?:[^\\]\\[]+|\\[[^\\]\\[]*\\])*\\])*)\\]' + '(?:{([^}]+)})?', 'gi')
     TextEditor._replaceTextContent(text, rgx, CoC7Parser._createLink)
     return html.innerHTML
   }
