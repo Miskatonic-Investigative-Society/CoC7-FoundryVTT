@@ -3,7 +3,7 @@
   "name": "CoC7",
   "title": "Call of Cthulhu 7th Edition (Unofficial)",
   "description": "An unofficial implementation of the Call of Cthulhu 7th Edition game system for Foundry Virtual Tabletop.",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "authors": [
     {
       "name": "Miskatonic Investigative Society"

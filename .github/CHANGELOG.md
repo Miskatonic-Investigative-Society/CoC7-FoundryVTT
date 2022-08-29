@@ -15,6 +15,10 @@ _If you decide to go on with V10:_
 
 Happy gaming !
 
+## Version 0.8.3
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
 ## Version 0.8.2
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
