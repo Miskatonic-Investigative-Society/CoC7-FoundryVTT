@@ -534,7 +534,7 @@ export class CoC7ActorSheet extends ActorSheet {
             classes: 'main',
             items: [
               { action: 'roll', label: 'Roll' },
-              { action: 'oposed-roll', label: 'Opposed roll' },
+              { action: 'opposed-roll', label: 'Opposed roll' },
               { action: 'combined-roll', label: 'Combined roll' }
             ]
           },
@@ -548,7 +548,7 @@ export class CoC7ActorSheet extends ActorSheet {
                   items: [
                     { action: 'link-tool', label: 'Open in link tool' },
                     { action: 'send-chat', label: 'Send to chat' },
-                    { action: 'copy-clip', label: 'Copy to clip-board' }
+                    { action: 'copy-to-clipboard', label: 'Copy to clip-board' }
                   ]
                 }
               },
@@ -566,7 +566,7 @@ export class CoC7ActorSheet extends ActorSheet {
             classes: 'main',
             items: [
               { action: 'roll', label: 'Roll' },
-              { action: 'oposed-roll', label: 'Opposed roll' },
+              { action: 'opposed-roll', label: 'Opposed roll' },
               { action: 'combined-roll', label: 'Combined roll' }
             ]
           },
@@ -582,7 +582,7 @@ export class CoC7ActorSheet extends ActorSheet {
                   items: [
                     { action: 'link-tool', label: 'Open in link tool' },
                     { action: 'send-chat', label: 'Send to chat' },
-                    { action: 'copy-clip', label: 'Copy to clip-board' }
+                    { action: 'copy-to-clipboard', label: 'Copy to clip-board' }
                   ]
                 }
               },
@@ -592,7 +592,7 @@ export class CoC7ActorSheet extends ActorSheet {
                   items: [
                     { action: 'encounter-link-tool', label: 'Open in link tool' },
                     { action: 'encounter-send-chat', label: 'Send to chat' },
-                    { action: 'encounter-copy-clip', label: 'Copy to clip-board' }
+                    { action: 'encounter-to-clipboard', label: 'Copy to clip-board' }
                   ]
                 }
               }
@@ -1093,14 +1093,58 @@ export class CoC7ActorSheet extends ActorSheet {
 
   _onContextMenuClick (event, target) {
     const targetType = target.dataset?.targetType
+    const rollOptions = {
+      preventStandby: true,
+      fastForward: false,
+      actor: this.actor
+    }
+    switch (targetType) {
+      case ('skill'):
+        rollOptions.rollType = CoC7ChatMessage.ROLL_TYPE_SKILL
+        rollOptions.skillId = target.closest('.item')?.dataset.skillId
+
+        break
+      case ('characteristic'):
+        rollOptions.rollType = CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC
+        rollOptions.characteristic = target.closest('.char-box').dataset.characteristic
+        break
+
+      case ('attribute'):
+        rollOptions.rollType = CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
+        rollOptions.attribute = target.closest('.attribute').dataset.attrib
+    }
     switch (event.currentTarget.dataset.action) {
       case ('roll'):
-
+        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NORMAL
+        break
+      case ('opposed-roll'):
+        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_OPPOSED
+        break
+      case ('combined-roll'):
+        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_COMBINED
+        break
+      case ('request-roll'):
+        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NORMAL
+        rollOptions.preventStandby = false
+        break
+      case ('link-tool'):
+        break
+      case ('send-chat'):
+        break
+      case ('copy-to-clipboard'):
+        break
+      case ('encounter-link-tool'):
+        break
+      case ('encounter-send-chat'):
+        break
+      case ('encounter-to-clipboard'):
         break
 
       default:
         break
     }
+
+    CoC7ChatMessage.trigger(rollOptions)
 
     ui.notifications.info(`Executing action ${event.currentTarget.dataset.action} on ${targetType}`)
   }
