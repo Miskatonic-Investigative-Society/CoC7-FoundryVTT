@@ -376,8 +376,9 @@ export class CoC7Utilities {
     const playerTokenIds = users
       .map(u => u.character?.id)
       .filter(id => id !== undefined)
-    const selectedPlayerIds = canvas.tokens.controlled.map(token => {
-      return token.actor.id
+    let selectedPlayerIds = []
+    game.user.targets.forEach(target => {
+        selectedPlayerIds.push(target.actor.id)
     })
 
     // Build checkbox list for all active players
