@@ -13,7 +13,7 @@ export function listen () {
     game.CoC7Tooltips = new CoC7Tooltips()
 
     const instructionsVersion = game.settings.get('CoC7', 'showInstructions')
-    if (isNewerVersion(game.system.data.version, instructionsVersion ?? '0')) {
+    if (isNewerVersion(game.system.version, instructionsVersion ?? '0')) {
       let lang = game.i18n.lang
       const readMe = {
         en: 'wZtTHpGV3atKV2oD'
@@ -22,7 +22,7 @@ export function listen () {
         lang = 'en'
       }
       (await game.packs.get('CoC7.system-doc').getDocument(readMe[lang])).sheet.render(true)
-      game.settings.set('CoC7', 'showInstructions', game.system.data.version)
+      game.settings.set('CoC7', 'showInstructions', game.system.version)
     }
     if (typeof game.tours !== 'undefined') {
       registerTours()

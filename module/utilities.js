@@ -604,19 +604,13 @@ export class CoC7Utilities {
     try {
       const dataList = JSON.parse(event.dataTransfer.getData('text/plain'))
       if (dataList.type === 'Folder' && dataList.documentName === entityType) {
-        const folder = game.folders.get(dataList.id)
+        const folder = await fromUuid(dataList.uuid)
         if (!folder) return []
         return folder.contents
       } else if (dataList.type === entityType) {
-        if (dataList.pack) {
-          const pack = game.packs.get(dataList.pack)
-          if (pack.metadata.entity !== entityType) return []
-          return [await pack.getDocument(dataList.id)]
-        } else if (dataList.data) {
-          return [dataList]
-        } else {
-          return [game.items.get(dataList.id)]
-        }
+        const item = await fromUuid(dataList.uuid)
+        if (!item) return []
+        return [item]
       } else {
         return []
       }

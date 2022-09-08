@@ -3,8 +3,7 @@
 import { COC7 } from '../../config.js'
 import { CoC7Item } from '../item.js'
 import { CoC7Utilities } from '../../utilities.js'
-// import { CoC7Item } from '../item.js';
-// import { CoCActor } from '../../actors/actor.js';
+import { isCtrlKey } from '../../chat/helper.js'
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
@@ -19,9 +18,7 @@ export class CoC7SetupSheet extends ItemSheet {
 
     if (!this.options.editable) return
 
-    html
-      .find('.item .item-name h4')
-      .click(event => this._onItemSummary(event, 'items'))
+    html.find('.item .item-name h4').click(event => this._onItemSummary(event, 'items'))
     html.find('.item-delete').click(event => this._onItemDelete(event, 'items'))
     html.find('.add-bio').click(async () => await this._onAddBio())
     html.find('.remove-section').click(this._onRemoveSection.bind(this))
@@ -39,14 +36,10 @@ export class CoC7SetupSheet extends ItemSheet {
 
   async _onClickToggle (event) {
     event.preventDefault()
-    const propertyId =
-      event.currentTarget.closest('.toggle-switch').dataset.property
+    const propertyId = event.currentTarget.dataset.property
     await this.item.toggleProperty(
       propertyId,
-      event.metaKey ||
-        event.ctrlKey ||
-        event.keyCode === 91 ||
-        event.keyCode === 224
+      isCtrlKey(event)
     )
   }
 
@@ -56,51 +49,45 @@ export class CoC7SetupSheet extends ItemSheet {
 
     const dataList = await CoC7Utilities.getDataFromDropEvent(event, 'Item')
 
-    const collection = this.item.data.data[collectionName]
-      ? duplicate(this.item.data.data[collectionName])
-      : []
+    const collection = this.item.system[collectionName] ? duplicate(this.item.system[collectionName]) : []
     for (const item of dataList) {
-      if (!item || !item.data) continue
-      if (
-        !['item', 'weapon', 'skill', 'book', 'spell'].includes(item.data.type)
-      ) {
+      if (!item || !item.system) continue
+      if (!['item', 'weapon', 'skill', 'book', 'spell'].includes(item.type)) {
         continue
       }
 
       if (!CoC7Item.isAnySpec(item)) {
-        if (collection.find(el => el.name === item.data.name)) {
+        if (collection.find(el => el.name === item.name)) {
           continue
         }
       }
 
-      collection.push(duplicate(item.data))
+      collection.push(duplicate(item))
     }
-    await this.item.update({ [`data.${collectionName}`]: collection })
+    await this.item.update({ [`system.${collectionName}`]: collection })
   }
 
   async _onRemoveSection (event) {
     const a = event.currentTarget
     const div = a.closest('.item')
-    const bio = duplicate(this.item.data.data.bioSections)
+    const bio = duplicate(this.item.system.bioSections)
     bio.splice(Number(div.dataset.index), 1)
-    await this.item.update({ 'data.bioSections': bio })
+    await this.item.update({ 'system.bioSections': bio })
   }
 
   async _onAddBio () {
-    const bio = this.item.data.data.bioSections
-      ? duplicate(this.item.data.data.bioSections)
-      : []
+    const bio = this.item.system.bioSections ? duplicate(this.item.system.bioSections) : []
     bio.push(null)
-    await this.item.update({ 'data.bioSections': bio })
+    await this.item.update({ 'system.bioSections': bio })
   }
 
   _onItemSummary (event, collectionName = 'items') {
     event.preventDefault()
     const li = $(event.currentTarget).parents('.item')
-    const item = this.item.data.data[collectionName].find(s => {
+    const item = this.item.system[collectionName].find(s => {
       return s._id === li.data('item-id')
     })
-    const chatData = item.data.description
+    const chatData = item.system.description
 
     // Toggle summary
     if (li.hasClass('expanded')) {
@@ -123,28 +110,29 @@ export class CoC7SetupSheet extends ItemSheet {
   }
 
   getItem (itemId, collectionName = 'items') {
-    return this.item.data.data[collectionName].find(s => {
+    return this.item.system[collectionName].find(s => {
       return s._id === itemId
     })
   }
 
   async removeItem (itemId, collectionName = 'items') {
-    const itemIndex = this.item.data.data[collectionName].findIndex(s => {
+    const itemIndex = this.item.system[collectionName].findIndex(s => {
       return s._id === itemId
     })
     if (itemIndex > -1) {
-      const collection = this.item.data.data[collectionName]
-        ? duplicate(this.item.data.data[collectionName])
+      const collection = this.item.system[collectionName]
+        ? duplicate(this.item.system[collectionName])
         : []
       collection.splice(itemIndex, 1)
-      await this.item.update({ [`data.${collectionName}`]: collection })
+      await this.item.update({ [`system.${collectionName}`]: collection })
     }
   }
 
   static get defaultOptions () {
     return mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'setup'],
-      width: 520,
+      template: 'systems/CoC7/templates/items/setup.html',
+      width: 525,
       height: 530,
       dragDrop: [{ dragSelector: '.item' }],
       scrollY: ['.tab.description'],
@@ -158,83 +146,52 @@ export class CoC7SetupSheet extends ItemSheet {
     })
   }
 
-  get template () {
-    return 'systems/CoC7/templates/items/setup.html'
-  }
-
-  _onDragStart (event) {
-    const li = event.currentTarget.closest('.item')
-    const skill = this.item.data.data.items.find(s => {
-      return s._id === li.dataset.itemId
-    })
-
-    const dragData = { type: 'Item', data: skill }
-    event.dataTransfer.setData('text/plain', JSON.stringify(dragData))
-  }
-
   getData () {
-    const data = super.getData()
+    const item = super.getData()
 
-    data.isOwned = this.item.isOwned
+    item.hasOwner = this.item.isEmbedded === true
 
-    /** MODIF: 0.8.x **/
-    const itemData = data.data
-    data.data = itemData.data // MODIF: 0.8.x data.data
-    /*****************/
+    item.skills = this.item.system.items.filter(it => it.type === 'skill')
+    item.otherItems = this.item.system.items.filter(it => it.type !== 'skill')
 
-    // data.data.items = duplicate( data.data.skills);
-    // this.item.update( { ['data.items'] : duplicate( data.data.skills)});
+    item.skillListEmpty = item.skills.length === 0
+    item.itemsListEmpty = item.otherItems.length === 0
 
-    data.skills = data.data.items.filter(it => it.type === 'skill')
-    data.otherItems = data.data.items.filter(it => it.type !== 'skill')
-
-    data.skillListEmpty = data.skills.length === 0
-    data.itemsListEmpty = data.otherItems.length === 0
-
-    data.skills.sort((a, b) => {
+    item.skills.sort((a, b) => {
       return a.name
         .toLocaleLowerCase()
         .localeCompare(b.name.toLocaleLowerCase())
     })
 
-    data.eras = {}
-    data.itemProperties = []
-
-    data._eras = []
+    item._eras = []
     for (const [key, value] of Object.entries(COC7.eras)) {
-      const era = {}
-      era.id = key
-      era.name = value
-      era.isEnabled = this.item.data.data.eras[key] === true
-      data._eras.push(era)
+      item._eras.push({
+        id: key,
+        name: value,
+        isEnabled: this.item.system.eras[key] === true
+      })
     }
 
-    data.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
+    item.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
 
-    data.isKeeper = game.user.isGM
-    return data
+    item.isKeeper = game.user.isGM
+    return item
   }
 
   _updateObject (event, formData) {
-    // TODO: This can be removed once 0.7.x is release channel
-    if (!formData.data) formData = expandObject(formData)
-
-    if (formData.data.bioSections) {
-      formData.data.bioSections = Object.values(
-        formData.data?.bioSections || []
+    const system = expandObject(formData)?.system
+    if (system.bioSections) {
+      formData['system.bioSections'] = Object.values(
+        system.bioSections || []
       )
-      // for(let index = 0; index < this.item.data.data.bioSections.length; index++) {
-      //   formData.data.bioSections[index] = duplicate(this.item.data.data.bioSections[index]);
-      // }
     }
 
-    if (event.currentTarget?.name === 'data.characteristics.points.enabled') {
-      formData.data.characteristics.rolls.enabled = !event.currentTarget.checked
+    if (event.currentTarget?.name === 'system.characteristics.points.enabled') {
+      formData['system.characteristics.rolls.enabled'] = !event.currentTarget.checked
     }
 
-    if (event.currentTarget?.name === 'data.characteristics.rolls.enabled') {
-      formData.data.characteristics.points.enabled =
-        !event.currentTarget.checked
+    if (event.currentTarget?.name === 'system.characteristics.rolls.enabled') {
+      formData['system.characteristics.points.enabled'] = !event.currentTarget.checked
     }
 
     super._updateObject(event, formData)

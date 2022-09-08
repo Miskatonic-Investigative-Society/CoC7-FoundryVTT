@@ -1,8 +1,4 @@
-/* global $, duplicate, expandObject, game, ItemSheet, mergeObject */
-
-// import  { COC7 } from '../../config.js';
-// import { CoCActor } from '../../actors/actor.js';
-
+/* global $, duplicate, game, ItemSheet, mergeObject */
 import { CoC7Item } from '../item.js'
 import { CoC7Utilities } from '../../utilities.js'
 
@@ -33,32 +29,30 @@ export class CoC7ArchetypeSheet extends ItemSheet {
 
     const dataList = await CoC7Utilities.getDataFromDropEvent(event, 'Item')
 
-    const collection = this.item.data.data[collectionName]
-      ? duplicate(this.item.data.data[collectionName])
-      : []
+    const collection = this.item.system[collectionName] ? duplicate(this.item.system[collectionName]) : []
     for (const item of dataList) {
-      if (!item || !item.data) continue
-      if (![type].includes(item.data.type)) {
+      if (!item || !item.system) continue
+      if (![type].includes(item.type)) {
         continue
       }
       if (!CoC7Item.isAnySpec(item)) {
-        if (collection.find(el => el.name === item.data.name)) {
+        if (collection.find(el => el.name === item.name)) {
           continue
         }
       }
 
-      collection.push(duplicate(item.data))
+      collection.push(duplicate(item))
     }
-    await this.item.update({ [`data.${collectionName}`]: collection })
+    await this.item.update({ [`system.${collectionName}`]: collection })
   }
 
   _onItemSummary (event, collectionName = 'items') {
     event.preventDefault()
     const li = $(event.currentTarget).parents('.item')
-    const item = this.item.data.data[collectionName].find(s => {
+    const item = this.item.system[collectionName].find(s => {
       return s._id === li.data('item-id')
     })
-    const chatData = item.data.description
+    const chatData = item.system.description
 
     // Toggle summary
     if (li.hasClass('expanded')) {
@@ -81,21 +75,20 @@ export class CoC7ArchetypeSheet extends ItemSheet {
   }
 
   async removeItem (itemId, collectionName = 'items') {
-    const itemIndex = this.item.data.data[collectionName].findIndex(s => {
+    const itemIndex = this.item.system[collectionName].findIndex(s => {
       return s._id === itemId
     })
     if (itemIndex > -1) {
-      const collection = this.item.data.data[collectionName]
-        ? duplicate(this.item.data.data[collectionName])
-        : []
+      const collection = this.item.system[collectionName] ? duplicate(this.item.system[collectionName]) : []
       collection.splice(itemIndex, 1)
-      await this.item.update({ [`data.${collectionName}`]: collection })
+      await this.item.update({ [`system.${collectionName}`]: collection })
     }
   }
 
   static get defaultOptions () {
     return mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'occupation'],
+      template: 'systems/CoC7/templates/items/archetype.html',
       width: 520,
       height: 480,
       dragDrop: [{ dragSelector: '.item' }],
@@ -110,33 +103,14 @@ export class CoC7ArchetypeSheet extends ItemSheet {
     })
   }
 
-  get template () {
-    return 'systems/CoC7/templates/items/archetype.html'
-  }
-
-  _onDragStart (event) {
-    const li = event.currentTarget.closest('.item')
-    const skill = this.item.data.data.skills.find(s => {
-      return s._id === li.dataset.itemId
-    })
-
-    const dragData = { type: 'Item', data: skill }
-    event.dataTransfer.setData('text/plain', JSON.stringify(dragData))
-  }
-
   getData () {
-    const data = super.getData()
+    const item = super.getData()
 
-    /** MODIF: 0.8.x **/
-    const itemData = data.data
-    data.data = itemData.data // MODIF: 0.8.x data.data
-    /*****************/
-
-    data.isOwned = this.item.isOwned
+    item.hasOwner = this.item.isEmbedded === true
 
     const coreCharacteristics = []
     for (const [key, selected] of Object.entries(
-      data.data.coreCharacteristics
+      item.data.system.coreCharacteristics
     )) {
       if (selected) {
         const characName = game.i18n.localize(`CHARAC.${key.toUpperCase()}`)
@@ -144,50 +118,30 @@ export class CoC7ArchetypeSheet extends ItemSheet {
       }
     }
 
-    data.skillListEmpty = data.data.skills.length === 0
+    item.skillListEmpty = item.data.system.skills.length === 0
 
-    data.data.skills.sort((a, b) => {
+    item.data.system.skills.sort((a, b) => {
       return a.name
         .toLocaleLowerCase()
         .localeCompare(b.name.toLocaleLowerCase())
     })
 
-    data.coreCharacteristicsString = ''
+    item.coreCharacteristicsString = ''
     const orString = ` ${game.i18n.localize('CoC7.Or')} `
     if (coreCharacteristics.length) {
-      data.coreCharacteristicsString += coreCharacteristics.join(orString)
+      item.coreCharacteristicsString += coreCharacteristics.join(orString)
     }
 
-    data.itemProperties = []
+    item.itemProperties = []
 
-    data.itemProperties.push(
-      `${game.i18n.localize('CoC7.PulpTalents')}: ${data.data.talents}`
+    item.itemProperties.push(
+      `${game.i18n.localize('CoC7.PulpTalents')}: ${item.data.system.talents}`
     )
-    data.itemProperties.push(
-      `${game.i18n.localize('CoC7.BonusPoints')}: ${data.data.bonusPoints}`
+    item.itemProperties.push(
+      `${game.i18n.localize('CoC7.BonusPoints')}: ${item.data.system.bonusPoints}`
     )
 
-    // for (let [key, value] of Object.entries(data.data.type)) {
-    //   if( value) data.itemProperties.push( COC7.occupationProperties[key]?COC7.occupationProperties[key]:null);
-    // }
-
-    data.isKeeper = game.user.isGM
-    return data
-  }
-
-  _updateObject (event, formData) {
-    // TODO: This can be removed once 0.7.x is release channel
-    if (!formData.data) formData = expandObject(formData)
-
-    if (formData.data.groups) {
-      formData.data.groups = Object.values(formData.data?.groups || {})
-      for (let index = 0; index < this.item.data.data.groups.length; index++) {
-        formData.data.groups[index].skills = duplicate(
-          this.item.data.data.groups[index].skills
-        )
-      }
-    }
-
-    super._updateObject(event, formData)
+    item.isKeeper = game.user.isGM
+    return item
   }
 }

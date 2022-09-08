@@ -54,106 +54,106 @@ export class CoC7Item extends Item {
     let firearms
     if (typeof COC7.eras[propertyId] !== 'undefined') {
       checkedProps = {
-        ['data.eras.' + propertyId]: !(this.data.data.eras[propertyId] ?? false)
+        ['system.eras.' + propertyId]: !(this.system.eras[propertyId] ?? false)
       }
     } else if (this.type === 'weapon' && !override) {
       if (propertyId === 'ahdb') {
-        if (!this.data.data.properties.ahdb) {
+        if (!this.system.properties.ahdb) {
           checkedProps = {
-            'data.properties.ahdb': true,
-            'data.properties.addb': false
+            'system.properties.ahdb': true,
+            'system.properties.addb': false
           }
         } else {
           checkedProps = {
-            'data.properties.ahdb': false
+            'system.properties.ahdb': false
           }
         }
       }
 
       if (propertyId === 'addb') {
-        if (!this.data.data.properties.addb) {
+        if (!this.system.properties.addb) {
           checkedProps = {
-            'data.properties.addb': true,
-            'data.properties.ahdb': false
+            'system.properties.addb': true,
+            'system.properties.ahdb': false
           }
         } else {
           checkedProps = {
-            'data.properties.addb': false
+            'system.properties.addb': false
           }
         }
       }
 
       if (propertyId === 'shotgun') {
-        if (!this.data.data.properties.shotgun) {
+        if (!this.system.properties.shotgun) {
           checkedProps = {
-            'data.properties.rngd': true,
-            'data.properties.melee': false,
-            'data.properties.shotgun': true
+            'system.properties.rngd': true,
+            'system.properties.melee': false,
+            'system.properties.shotgun': true
           }
         } else {
           checkedProps = {
-            'data.properties.shotgun': false,
-            'data.range.extreme.value': null,
-            'data.range.extreme.damage': null,
-            'data.range.long.value': null,
-            'data.range.long.damage': null
+            'system.properties.shotgun': false,
+            'system.range.extreme.value': null,
+            'system.range.extreme.damage': null,
+            'system.range.long.value': null,
+            'system.range.long.damage': null
           }
         }
       }
 
       if (propertyId === 'melee' || propertyId === 'rngd') {
         let meleeWeapon
-        if (propertyId === 'melee' && !this.data.data.properties.melee) {
+        if (propertyId === 'melee' && !this.system.properties.melee) {
           meleeWeapon = true
         }
-        if (propertyId === 'melee' && this.data.data.properties.melee) {
+        if (propertyId === 'melee' && this.system.properties.melee) {
           meleeWeapon = false
         }
-        if (propertyId === 'rngd' && !this.data.data.properties.rngd) {
+        if (propertyId === 'rngd' && !this.system.properties.rngd) {
           meleeWeapon = false
         }
-        if (propertyId === 'rngd' && this.data.data.properties.rngd) {
+        if (propertyId === 'rngd' && this.system.properties.rngd) {
           meleeWeapon = true
         }
         if (meleeWeapon) {
           checkedProps = {
-            'data.properties.melee': true,
-            'data.properties.rngd': false,
-            'data.properties.shotgun': false,
-            'data.properties.brst': false,
-            'data.properties.auto': false,
-            'data.properties.dbrl': false
+            'system.properties.melee': true,
+            'system.properties.rngd': false,
+            'system.properties.shotgun': false,
+            'system.properties.brst': false,
+            'system.properties.auto': false,
+            'system.properties.dbrl': false
           }
         } else {
           checkedProps = {
-            'data.properties.melee': false,
-            'data.properties.rngd': true
+            'system.properties.melee': false,
+            'system.properties.rngd': true
           }
         }
       }
     } else if (this.type === 'skill' && !override) {
       let modif = false
       if (propertyId === 'combat') {
-        if (!this.data.data.properties.combat) {
+        if (!this.system.properties.combat) {
           // Close combat by default
-          if (!this.data.data.properties.firearm) {
+          if (!this.system.properties.firearm) {
             fighting = true
           } else firearms = true
         } else {
           checkedProps = {
-            'data.properties.combat': false,
-            'data.properties.special': false,
-            'data.properties.fighting': false,
-            'data.properties.firearm': false,
-            'data.specialization': '',
-            name: this.data.data.skillName
+            'system.properties.combat': false,
+            'system.properties.special': false,
+            'system.properties.fighting': false,
+            'system.properties.firearm': false,
+            'system.specialization': '',
+            name: this.system.skillName
           }
         }
         modif = true
       }
 
       if (propertyId === 'fighting') {
-        if (!this.data.data.properties.fighting) {
+        if (!this.system.properties.fighting) {
           firearms = false
           fighting = true
         } else {
@@ -164,7 +164,7 @@ export class CoC7Item extends Item {
       }
 
       if (propertyId === 'firearm') {
-        if (!this.data.data.properties.firearm) {
+        if (!this.system.properties.firearm) {
           firearms = true
           fighting = false
         } else {
@@ -178,55 +178,51 @@ export class CoC7Item extends Item {
         // set specialisation if fighting or firearm
         if (fighting) {
           checkedProps = {
-            'data.properties.fighting': true,
-            'data.properties.firearm': false,
-            'data.properties.combat': true,
-            'data.properties.special': true
+            'system.properties.fighting': true,
+            'system.properties.firearm': false,
+            'system.properties.combat': true,
+            'system.properties.special': true
           }
           const parts = CoC7Item.getNamePartsSpec(
-            this.data.data.skillName,
+            this.system.skillName,
             game.i18n.localize(COC7.fightingSpecializationName)
           )
           checkedProps.name = parts.name
           checkedProps.skillName = parts.skillName
-          checkedProps['data.specialization'] = parts.specialization
+          checkedProps['system.specialization'] = parts.specialization
         }
         if (firearms) {
           checkedProps = {
-            'data.properties.fighting': false,
-            'data.properties.firearm': true,
-            'data.properties.combat': true,
-            'data.properties.special': true
+            'system.properties.fighting': false,
+            'system.properties.firearm': true,
+            'system.properties.combat': true,
+            'system.properties.special': true
           }
           const parts = CoC7Item.getNamePartsSpec(
-            this.data.data.skillName,
+            this.system.skillName,
             game.i18n.localize(COC7.firearmSpecializationName)
           )
           checkedProps.name = parts.name
           checkedProps.skillName = parts.skillName
-          checkedProps['data.specialization'] = parts.specialization
+          checkedProps['system.specialization'] = parts.specialization
         }
       }
     }
 
     if (propertyId === 'special') {
-      if (this.data.data.properties[propertyId]) {
+      if (this.system.properties[propertyId]) {
         checkedProps = {
-          'data.properties.special': false,
-          'data.properties.fighting': false,
-          'data.properties.firearm': false,
-          'data.properties.combat': false,
-          'data.specialization': '',
-          name: this.data.data.skillName
+          'system.properties.special': false,
+          'system.properties.fighting': false,
+          'system.properties.firearm': false,
+          'system.properties.combat': false,
+          'system.specialization': '',
+          name: this.system.skillName
         }
       } else {
         checkedProps = {
-          'data.properties.special': true,
-          name:
-            this.data.data.specialization +
-            ' (' +
-            this.data.data.skillName +
-            ')'
+          'system.properties.special': true,
+          name: this.system.specialization + ' (' + this.system.skillName + ')'
         }
       }
     }
@@ -235,8 +231,8 @@ export class CoC7Item extends Item {
       const item = await this.update(checkedProps)
       return item
     } else {
-      const propName = `data.properties.${propertyId}`
-      const propValue = !this.data.data.properties[propertyId]
+      const propName = `system.properties.${propertyId}`
+      const propValue = !this.system.properties[propertyId]
       await this.update({ [propName]: propValue }).then(item => {
         return item
       })
@@ -248,8 +244,8 @@ export class CoC7Item extends Item {
   }
 
   get shortName () {
-    if (this.data.data.properties.special) {
-      return this.data.data.skillName
+    if (this.system.properties.special) {
+      return this.system.skillName
     }
     return this.name
   }
@@ -289,12 +285,12 @@ export class CoC7Item extends Item {
 
   static getNameWithoutSpec (item) {
     if (item instanceof CoC7Item) {
-      if (item.data.data?.properties?.special && typeof item.data.data.skillName !== 'undefined') {
-        return item.data.data.skillName
+      if (item.system?.properties?.special && typeof item.system.skillName !== 'undefined') {
+        return item.system.skillName
       }
     } else {
-      if (item.data.properties?.special && typeof item.data.skillName !== 'undefined') {
-        return item.data.skillName
+      if (item.system.properties?.special && typeof item.system.skillName !== 'undefined') {
+        return item.system.skillName
       }
     }
     return item.name
@@ -302,7 +298,7 @@ export class CoC7Item extends Item {
 
   static isAnySpec (item) {
     if (item instanceof CoC7Item) {
-      if (item.type !== 'skill' || !item.data.data.properties?.special) {
+      if (item.type !== 'skill' || !item.system.properties?.special) {
         return false
       }
       return [
@@ -311,7 +307,7 @@ export class CoC7Item extends Item {
       ].includes(CoC7Item.getNameWithoutSpec(item).toLowerCase())
     } else {
       // Assume it's data only
-      if (item.type !== 'skill' || !item.data.properties?.special) return false
+      if (item.type !== 'skill' || !item.system.properties?.special) return false
       return [
         game.i18n.localize('CoC7.AnySpecName').toLowerCase(),
         'any'

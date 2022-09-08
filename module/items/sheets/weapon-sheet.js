@@ -1,7 +1,6 @@
 /* global game, ItemSheet, mergeObject */
-
 import { COC7 } from '../../config.js'
-import { CoCActor } from '../../actors/actor.js'
+import { isCtrlKey } from '../../chat/helper.js'
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
@@ -13,7 +12,7 @@ export class CoC7WeaponSheet extends ItemSheet {
   static get defaultOptions () {
     return mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'item'],
-      width: 520,
+      width: 545,
       height: 480,
       tabs: [
         {
@@ -38,64 +37,57 @@ export class CoC7WeaponSheet extends ItemSheet {
    * The prepared data object contains both the actor data as well as additional sheet options
    */
   getData () {
-    const data = super.getData()
-    data.dtypes = ['String', 'Number', 'Boolean']
-    /** MODIF 0.8.x */
-    const itemData = data.data
-    data.data = itemData.data // MODIF: 0.8.x data.data
-    /** MODIF 0.8.x */
+    const item = super.getData()
 
-    data.hasOwner = this.item.actor != null
-    if (data.hasOwner) data.actorKey = this.item.actor.actorKey
+    item.combatSkill = []
 
-    data.combatSkill = []
-    if (data.hasOwner) {
-      data.firearmSkills = this.actor.firearmSkills
-      data.fightingSkills = this.actor.fightingSkills
-      data.combatSkill = this.item.actor.items.filter(item => {
+    item.hasOwner = this.item.isEmbedded === true
+    if (item.hasOwner) {
+      item.firearmSkills = this.actor.firearmSkills
+      item.fightingSkills = this.actor.fightingSkills
+      item.combatSkill = this.item.actor.items.filter(item => {
         if (item.type === 'skill') {
-          if (item.data.data.properties.combat) {
+          if (item.system.properties.combat) {
             return true
           }
         }
         return false
       })
 
-      data.combatSkill.sort((a, b) => {
+      item.combatSkill.sort((a, b) => {
         return a.name
           .toLocaleLowerCase()
           .localeCompare(b.name.toLocaleLowerCase())
       })
     }
 
-    data._properties = []
+    item._properties = []
     for (const [key, value] of Object.entries(COC7.weaponProperties)) {
-      const property = {}
-      property.id = key
-      property.name = value
-      property.isEnabled = this.item.data.data.properties[key] === true
-      data._properties.push(property)
+      const property = {
+        id: key,
+        name: value,
+        isEnabled: this.item.system.properties[key] === true
+      }
+      item._properties.push(property)
     }
 
-    if (!this.item.data.data.price) this.item.data.data.price = {}
-
-    data._eras = []
+    item._eras = []
     for (const [key, value] of Object.entries(COC7.eras)) {
-      const era = {}
-      if (!this.item.data.data.price[key]) this.item.data.data.price[key] = 0
-      era.price = this.item.data.data.price[key]
-      era.id = key
-      era.name = value
-      era.isEnabled = this.item.data.data.eras[key] === true
-      data._eras.push(era)
+      item._eras.push({
+        price: this.item.system.price[key] ?? 0,
+        id: key,
+        name: value,
+        isEnabled: this.item.system.eras[key] === true
+      })
     }
-    data.usesAlternateSkill =
-      this.item.data.data.properties.auto === true ||
-      this.item.data.data.properties.brst === true ||
-      this.item.data.data.properties.thrown === true
 
-    data.isKeeper = game.user.isGM
-    return data
+    item.usesAlternateSkill =
+      this.item.system.properties.auto === true ||
+      this.item.system.properties.brst === true ||
+      this.item.system.properties.thrown === true
+
+    item.isKeeper = game.user.isGM
+    return item
   }
 
   /* -------------------------------------------- */
@@ -119,30 +111,16 @@ export class CoC7WeaponSheet extends ItemSheet {
    */
   async _onClickToggle (event) {
     event.preventDefault()
-    const propertyId =
-      event.currentTarget.closest('.toggle-switch').dataset.property
+    const propertyId = event.currentTarget.closest('.toggle-switch').dataset.property
     await this.item.toggleProperty(
       propertyId,
-      event.metaKey ||
-        event.ctrlKey ||
-        event.keyCode === 91 ||
-        event.keyCode === 224
+      isCtrlKey(event)
     )
   }
 
   async _onPropertyClick (event) {
     event.preventDefault()
-    const property =
-      event.currentTarget.closest('.weapon-property').dataset.property
-    const weaponId = event.currentTarget.closest('.weapon').dataset.itemId
-    const actorKey = event.currentTarget.closest('.weapon').dataset.actorKey
-    let weapon = null
-    if (actorKey) {
-      const actor = CoCActor.getActorFromKey(actorKey)
-      weapon = actor.items.get(weaponId)
-    } else {
-      weapon = game.items.get(weaponId)
-    }
-    await weapon.toggleProperty(property)
+    const propertyId = event.currentTarget.closest('.weapon-property').dataset.property
+    await this.item.toggleProperty(propertyId)
   }
 }

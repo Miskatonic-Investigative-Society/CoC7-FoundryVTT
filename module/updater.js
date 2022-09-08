@@ -6,7 +6,7 @@ export class Updater {
     const systemUpdateVersion = game.settings.get('CoC7', 'systemUpdateVersion')
 
     const runMigrate = isNewerVersion(
-      game.system.data.version,
+      game.system.version,
       systemUpdateVersion ?? '0'
     )
     this.updatedModules =
@@ -61,7 +61,7 @@ export class Updater {
               ? 'CoC7.Migrate.Message'
               : 'CoC7.Migrate.WithModulesMessage',
             {
-              version: game.system.data.version,
+              version: game.system.version,
               modules:
                 '<ul><li>' +
                 Object.keys(this.currentModules)
@@ -84,7 +84,7 @@ export class Updater {
         new Dialog({
           title: game.i18n.localize('CoC7.Migrate.Title'),
           content: game.i18n.format('CoC7.Migrate.GMRequired', {
-            version: game.system.data.version
+            version: game.system.version
           }),
           buttons: {
             OK: {
@@ -122,7 +122,7 @@ export class Updater {
 
     const settings = mergeObject(this.updatedModules || {}, this.currentModules)
     game.settings.set('CoC7', 'systemUpdatedModuleVersion', settings)
-    game.settings.set('CoC7', 'systemUpdateVersion', game.system.data.version)
+    game.settings.set('CoC7', 'systemUpdateVersion', game.system.version)
 
     ui.notifications.info(game.i18n.format('CoC7.Migrate.Complete'), {
       permanent: true
