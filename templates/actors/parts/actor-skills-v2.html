@@ -1,10 +1,10 @@
 <div class="floating-left">
-  {{#unless data.flags.locked}}
-  {{!-- <!-- <div>
+  {{#unless data.system.flags.locked}}
+    {{!-- <!-- <div>
     <a class="clean-skill-list" title='{{localize "CoC7.CleanSkillList"}}'><i class="game-icon game-icon-broom"></i></a>
     <a class="add-item" data-type="skill" title='{{localize "CoC7.AddSkill"}}'><i class="fas fa-plus"></i></a>
   </div> --> --}}
-  <a class="add-item" data-type="skill" title='{{localize "CoC7.AddSkill"}}'><i class="fas fa-plus"></i></a>
+    <a class="add-item" data-type="skill" title='{{localize "CoC7.AddSkill"}}'><i class="fas fa-plus"></i></a>
   {{/unless}}
   <a class="toggle-list-mode" title='{{#if skillListModeValue}}{{localize "CoC7.SortBySkillName"}}{{else}}{{localize "CoC7.SortBySkillValue"}}{{/if}}'><i class="fas {{#if skillListModeValue}}fa-sort-alpha-down{{else}}fa-sort-amount-down{{/if}}"></i></a>
   <a class="toggle-uncommon-mode" title='{{#if skillShowUncommon}}{{localize "CoC7.UncommonSkillsShow"}}{{else}}{{localize "CoC7.UncommonSkillsHide"}}{{/if}}'><i class="fas {{#if skillShowUncommon}}fa-toggle-on{{else}}fa-toggle-off{{/if}}"></i></a>
@@ -17,12 +17,12 @@
     {{#each skillsByValue as |skill|}}
       <li class="item itemV2" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
         <div class="item-image" style="background-image: url('{{skill.img}}')"></div>
-        {{#if ../data.flags.locked}}
+        {{#if ../data.system.flags.locked}}
           <div class="item-name skill-name rollable" title="{{skill.name}}">{{skill.name}}</div>
-          <div class="item-score">{{skill.data.value}}</div>
+          <div class="item-score">{{skill.system.value}}</div>
           <div class="item-controls">
-            {{#unless skill.data.properties.noxpgain}}
-              {{#if skill.data.flags.developement}}
+            {{#unless skill.system.properties.noxpgain}}
+              {{#if skill.system.flags.developement}}
                 <a class="item-control development-flag active" title="{{localize 'CoC7.SkillUnflagForDevelopement'}}"><i class="fas fa-certificate"></i></a>
               {{else}}
                 <a class="item-control development-flag" title="{{localize 'CoC7.SkillFlagForDevelopement'}}"><i class="fas fa-certificate"></i></a>
@@ -35,7 +35,7 @@
             <input class="skill-name" type="text" value="{{skill.name}}" data-dtype="String">
           </div>
           <div class="item-score">
-            <input class="npc-skill-score" type="text" value="{{skill.data.rawValue}}" data-dtype="Number">
+            <input class="npc-skill-score" type="text" value="{{skill.system.rawValue}}" data-dtype="Number">
           </div>
           <div class="item-controls">
             <a class="item-control item-edit" title="{{localize 'CoC7.EditSkill'}}"><i class="fas fa-edit"></i></a>
@@ -49,15 +49,15 @@
       {{#if skill.isSpecialization}}
         <li class="specialization-header"> {{skill.name}} </li>
       {{else}}
-        <li class="item itemV2 {{#if skill.data.properties.special}}specialization{{/if}}" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
+        <li class="item itemV2 {{#if skill.system.properties.special}}specialization{{/if}}" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
           <div class="item-image" style="background-image: url('{{skill.img}}')"></div>
-          {{#if ../data.flags.locked}}
-            <div class="item-name skill-name rollable">{{skill.data.skillName}}</div>
-            <div class="item-score">{{skill.data.value}}</div>
+          {{#if ../data.system.flags.locked}}
+            <div class="item-name skill-name rollable">{{skill.system.skillName}}</div>
+            <div class="item-score">{{skill.system.value}}</div>
             <div class="item-controls">
-              {{#unless skill.data.properties.noxpgain}}
+              {{#unless skill.system.properties.noxpgain}}
                 <!-- <a class="item-control inactive" title="{{localize 'CoC7.SkillCantGainXp'}}"><i class="fas fa-certificate"></i></a> -->
-                {{#if skill.data.flags.developement}}
+                {{#if skill.system.flags.developement}}
                   <a class="item-control development-flag active"><i class="fas fa-certificate"></i></a>
                 {{else}}
                   <a class="item-control development-flag"><i class="fas fa-certificate"></i></a>
@@ -67,10 +67,10 @@
             </div>
           {{else}}
             <div class="item-name">
-              <input class="skill-name" type="text" value="{{skill.data.skillName}}" data-dtype="String">
+              <input class="skill-name" type="text" value="{{skill.system.skillName}}" data-dtype="String">
             </div>
             <div class="item-score">
-              <input class="npc-skill-score" type="text" value="{{skill.data.rawValue}}" data-dtype="Number">
+              <input class="npc-skill-score" type="text" value="{{skill.system.rawValue}}" data-dtype="Number">
             </div>
             <div class="item-controls">
               <a class="item-control item-edit" title="{{localize 'CoC7.EditSkill'}}"><i class="fas fa-edit"></i></a>

@@ -244,7 +244,7 @@ export class RollCard {
     return false
   }
 
-  get isGM () {
+  get isKeeper () {
     return game.user.isGM
   }
 

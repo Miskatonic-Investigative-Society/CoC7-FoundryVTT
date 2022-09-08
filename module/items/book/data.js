@@ -1,5 +1,4 @@
 /* global ChatMessage, duplicate, game, renderTemplate, Roll, ui */
-
 import { SanCheckCard } from '../../chat/cards/san-check.js'
 import { CoC7Check } from '../../check.js'
 import { CoC7Item } from '../item.js'
@@ -35,21 +34,21 @@ export class CoC7Book extends CoC7Item {
    * @returns {Promise<Document>} update to Item document
    */
   async addSpells (spells) {
-    const collection = this.data.data.spells
-      ? duplicate(this.data.data.spells)
+    const collection = this.system.spells
+      ? duplicate(this.system.spells)
       : []
     for (const spell of spells) {
       collection.push(spell)
     }
-    return await this.update({ 'data.spells': collection })
+    return await this.update({ 'system.spells': collection })
   }
 
   async spellDetail (index) {
     const isKeeper = game.user.isGM
-    const data = this.data.data.spells[index]
+    const data = this.system.spells[index]
     const parent = this.actor ? this.actor : null
     const spell = new CoC7Spell(data, { parent, bookId: this.id })
-    if (isKeeper || spell.data.data.learned) {
+    if (isKeeper || spell.system.learned) {
       return await spell.sheet.render(true)
     }
   }
@@ -61,9 +60,9 @@ export class CoC7Book extends CoC7Item {
   async attemptInitialReading () {
     /** Converts the difficulty value to something accepted by CoC7Check */
     const difficulty = CoC7Book.convertDifficulty(
-      this.data.data.difficultyLevel
+      this.system.difficultyLevel
     )
-    const language = this.data.data.language
+    const language = this.system.language
     const skill = this.actor?.getSkillsByName(language)
     if (!skill) {
       /** This is not owned by any Actor */
@@ -86,7 +85,7 @@ export class CoC7Book extends CoC7Item {
       check.flavor = game.i18n.format('CoC7.ReadAttempt', {
         book: this.name,
         language,
-        difficulty: this.data.data.difficultyLevel
+        difficulty: this.system.difficultyLevel
       })
       await check.roll()
       return await check.toMessage()
@@ -104,7 +103,7 @@ export class CoC7Book extends CoC7Item {
       /** This is not owned by any Actor */
       return ui.notifications.error(game.i18n.localize('CoC7.NotOwned'))
     }
-    if (!this.data.data.initialReading && mode !== 'reset') {
+    if (!this.system.initialReading && mode !== 'reset') {
       /** Actor did not performed an initial reading first */
       return ui.notifications.error(
         game.i18n.format('CoC7.InitialReadingNeeded', {
@@ -113,16 +112,16 @@ export class CoC7Book extends CoC7Item {
         })
       )
     }
-    if (!this.data.data.type.mythos && mode !== 'reset') {
+    if (!this.system.type.mythos && mode !== 'reset') {
       return ui.notifications.error(game.i18n.localize('CoC7.NotMythosTome'))
     }
-    const necessary = this.data.data.study.necessary
-    let fullStudy = this.data.data.fullStudy
-    let progress = this.data.data.study.progress
+    const necessary = this.system.study.necessary
+    let fullStudy = this.system.fullStudy
+    let progress = this.system.study.progress
     if (isNaN(progress)) {
       /** It seems a little impossible, but you never know */
       return await this.update({
-        'data.study.progress': 0
+        'system.study.progress': 0
       })
     }
     if (value && progress > value) {
@@ -131,8 +130,8 @@ export class CoC7Book extends CoC7Item {
        * reset progress to be equal necessary and complete full study
        */
       await this.update({
-        'data.fullStudy': ++fullStudy,
-        'data.study.progress': value
+        'system.fullStudy': ++fullStudy,
+        'system.study.progress': value
       })
       return await this.completeFullStudy()
     }
@@ -140,28 +139,28 @@ export class CoC7Book extends CoC7Item {
       /** User clicked on plus icon to increase progress */
       if ((await this.checkExhaustion()) !== false) return
       await this.update({
-        'data.study.progress': ++progress
+        'system.study.progress': ++progress
       })
       if (progress === necessary) {
         /** Complete full study if progress is equal necessary */
-        await this.update({ 'data.fullStudy': ++fullStudy })
+        await this.update({ 'system.fullStudy': ++fullStudy })
         return await this.grantFullStudy()
       }
     } else if (mode === 'decrease' && progress > 0) {
       /** User clicked on minus icon to decrease progress */
       return await this.update({
-        'data.study.progress': --progress
+        'system.study.progress': --progress
       })
     }
   }
 
   async checkExhaustion () {
     const actorMythosValue = this.actor?.cthulhuMythos
-    const mythosRating = this.data.data.mythosRating
-    if (this.data.data.initialReading) {
+    const mythosRating = this.system.mythosRating
+    if (this.system.initialReading) {
       if (actorMythosValue >= mythosRating) {
         await this.update({
-          'data.study.progress': this.data.data.study.necessary
+          'system.study.progress': this.system.study.necessary
         })
         return ui.notifications.warn(
           game.i18n.format('CoC7.BookHasNothingMoreToTeach', {
@@ -174,12 +173,12 @@ export class CoC7Book extends CoC7Item {
   }
 
   async grantFullStudy () {
-    if (!this.data.data.type.mythos) return
+    if (!this.system.type.mythos) return
     if ((await this.checkExhaustion()) !== false) return
     const actorMythosValue = this.actor.cthulhuMythos
     const developments = []
-    const mythosRating = this.data.data.mythosRating
-    let mythosFinal = this.data.data.gains.cthulhuMythos.final
+    const mythosRating = this.system.mythosRating
+    let mythosFinal = this.system.gains.cthulhuMythos.final
     if (actorMythosValue + mythosFinal > mythosRating) {
       for (let index = 1; index <= mythosFinal; index++) {
         if (actorMythosValue + mythosFinal - index <= mythosRating) {
@@ -197,14 +196,14 @@ export class CoC7Book extends CoC7Item {
         gain: parseInt(mythosFinal)
       },
       {
-        name: this.data.data.language,
+        name: this.system.language,
         gain: 'development'
       }
     )
     await this.grantSkillDevelopment(developments)
     await this.rollSanityLoss()
     return await this.update({
-      'data.fullStudies': ++this.data.data.fullStudies
+      'system.fullStudies': ++this.system.fullStudies
     })
   }
 
@@ -214,19 +213,19 @@ export class CoC7Book extends CoC7Item {
    */
   async grantInitialReading () {
     /** If initial reading has already been done there is nothing to do here */
-    if (this.data.data.initialReading) return
+    if (this.system.initialReading) return
     const developments = []
     const mythos = {
-      gains: this.data.data.gains.cthulhuMythos.initial,
-      type: this.data.data.type.mythos
+      gains: this.system.gains.cthulhuMythos.initial,
+      type: this.system.type.mythos
     }
     const occult = {
-      gains: this.data.data.gains.occult,
-      type: this.data.data.type.occult
+      gains: this.system.gains.occult,
+      type: this.system.type.occult
     }
     const other = {
-      gains: this.data.data.gains.others,
-      type: this.data.data.type.other
+      gains: this.system.gains.others,
+      type: this.system.type.other
     }
     if (mythos.type && mythos.gains) {
       developments.push({
@@ -263,11 +262,11 @@ export class CoC7Book extends CoC7Item {
       }
     }
     await this.grantSkillDevelopment(developments)
-    if ((mythos.type || occult.type) && this.data.data.sanityLoss) {
+    if ((mythos.type || occult.type) && this.system.sanityLoss) {
       await this.rollSanityLoss()
     }
     /** Mark initial reading as complete */
-    return await this.update({ 'data.initialReading': true })
+    return await this.update({ 'system.initialReading': true })
   }
 
   /**
@@ -276,16 +275,16 @@ export class CoC7Book extends CoC7Item {
    * @returns
    */
   async grantSpellLearning (spelllearned) {
-    for (const spell of this.data.data.spells) {
+    for (const spell of this.system.spells) {
       if (spell._id === spelllearned._id) {
-        spell.data.learned = true
+        spell.system.learned = true
         // Does the actor already has a spell of that name? Then do not add the spell
         const existingSpell = await this.actor.items.find(
           item =>
-            item.data.type === 'spell' && item.data.name === spelllearned.name
+            item.type === 'spell' && item.name === spelllearned.name
         )
         if (!existingSpell) {
-          spelllearned.data.learned = true
+          spelllearned.system.learned = true
         } else {
           ui.notifications.warn(
             game.i18n.format('CoC7.SpellAlreadyLearned', {
@@ -298,9 +297,9 @@ export class CoC7Book extends CoC7Item {
       }
     }
     // Save spell list of book
-    await this.update({ 'data.spells': this.data.data.spells })
+    await this.update({ 'system.spells': this.system.spells })
     // Add learned spell to actor
-    if (spelllearned.data.learned) {
+    if (spelllearned.system.learned) {
       ui.notifications.info(
         game.i18n.format('CoC7.SpellSuccessfullyLearned', {
           spell: spelllearned.name,
@@ -331,7 +330,7 @@ export class CoC7Book extends CoC7Item {
       if (skill.length === 0) {
         const existingSkill = await game.items.find(
           item =>
-            item.data.type === 'skill' && item.data.name === development.name
+            item.type === 'skill' && item.name === development.name
         )
         if (existingSkill) {
           skill = await this.actor.createEmbeddedDocuments('Item', [
@@ -341,8 +340,8 @@ export class CoC7Book extends CoC7Item {
           skill = await this.actor.createSkill(development.name, 0)
           if (development.specialization) {
             await skill[0].update({
-              'data.properties.special': true,
-              'data.specialization': development.specialization
+              'system.properties.special': true,
+              'system.specialization': development.specialization
             })
           }
         }
@@ -377,15 +376,15 @@ export class CoC7Book extends CoC7Item {
    * @returns {Promise.<Document>} update to Item document
    */
   async redoFullStudy () {
-    await this.update({ 'data.study.progress': 0 })
+    await this.update({ 'system.study.progress': 0 })
     return await this.update({
-      'data.study.necessary': this.data.data.study.necessary * 2
+      'system.study.necessary': this.system.study.necessary * 2
     })
   }
 
   /** Bypass the Sanity check and just roll the damage */
   async rollSanityLoss () {
-    const value = this.data.data.sanityLoss
+    const value = this.system.sanityLoss
     if (!value || value === '') return
     const template = SanCheckCard.template
     let html = await renderTemplate(template, {})
@@ -452,7 +451,7 @@ export class CoC7Book extends CoC7Item {
       /** This is not owned by any Actor */
       return ui.notifications.error(game.i18n.localize('CoC7.NotOwned'))
     }
-    if (!this.data.data.initialReading) {
+    if (!this.system.initialReading) {
       /** Actor did not performed an initial reading first */
       return ui.notifications.error(
         game.i18n.format('CoC7.InitialReadingNeeded', {
@@ -461,7 +460,7 @@ export class CoC7Book extends CoC7Item {
         })
       )
     }
-    const spell = this.data.data.spells.find(spell => {
+    const spell = this.system.spells.find(spell => {
       return spell._id === id
     })
     if (spell) {

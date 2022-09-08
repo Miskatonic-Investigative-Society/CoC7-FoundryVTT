@@ -1,102 +1,108 @@
 <form class="{{cssClass}} sheetV2 flexcol" autocomplete="off">
-	<div class="token-extras">
-		{{#if canDragToken}}
-		<div draggable="true" class="token-drag-handle" title="{{ localize 'CoC7.ActorIsTokenHint'}}"><i class="fas fa-user-circle"></i></div>
-		{{/if}}
-		{{#if linkedActor}}
-		<div title="{{ localize 'CoC7.ActorDataLinked'}}"><i class="fas fa-link"></i></div>
-        {{else}}
-        <div title="{{ localize 'CoC7.ActorDataNotLinked'}}"><i class="fas fa-unlink"></i></div>
-        {{/if}}
-        {{#if isToken}}
-		<div title="{{ localize 'CoC7.ActorIsSyntheticActor'}}"><i class="game-icon game-icon-backup"></i></div>
-		{{/if}}
-	</div>
-    <div class="container {{#if expanded}}expanded{{else}}collapsed{{/if}}">
-        <div class="expand-button" title='{{#if expanded}}{{localize "CoC7.Collapse"}}{{else}}{{localize "CoC7.Expand"}}{{/if}}'>
-            <a class="toggle-expand">
-                {{#if expanded}}
-                    <i class="fas fa-caret-square-up"></i>
-                {{else}}
-                    <i class="fas fa-caret-square-down"></i>
-                {{/if}}
-            </a>
-        </div>
-        <header class="sheet-header">
-            <div class="sheet-portrait">
-                <img class="photo" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
-            </div>
-
-
-            <div class="infos">
-                <div class="row flexrow">
-                    <input class="name" name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
-                </div>
-
-                <div class="row flexrow">
-                    <input class="name" type="text" name="data.infos.type" value="{{data.infos.type}}" placeholder="{{ localize 'CoC7.Type' }}"/>
-                </div>
-                <div class="row flexrow">
-                    <input class="name" type="text" name="data.infos.origin" value="{{data.infos.origin}}" placeholder="{{ localize 'CoC7.Origin' }}"/>
-                </div>
-                <div class="row flexrow">
-                    <label>{{ localize 'CoC7.Crew' }} :</label>
-                    <input type="text" name="data.crew.total" value="{{data.crew.total}}" />
-                </div>
-            </div>
-
-            <div class="flex1" style="padding: 1px, 3px;">
-                <div class="attribute flexrow">
-                    <div class="flex1"><label>{{localize "CoC7.Movement"}} :</label></div>
-                    <div class="flex1"><span>{{actor.mov}}</span></div>
-                    <div class="flex1"><label>{{localize "CoC7.Build"}} :</label></div>
-                    <div class="flex2 flexrow"><input class="attribute-value" type="text" value="{{actor.hp}}" name="data.attribs.build.current"/><span>/{{actor.build}}</span></div>
-                </div>
-                {{#if data.attribs.armor.localized}}
-                <label>{{ localize 'CoC7.ArmourPlating'}} :</label>
-                <div class="armor-infos">
-                    {{#each data.attribs.armor.locations as |location|}}
-                        <div class="armor-location">{{location.name}}</div>
-                    {{/each}}
-                </div>
-                <div class="armor-infos">
-                    {{#each data.attribs.armor.locations as |location|}}
-                        <div class="armor-location">{{location.value}}</div>
-                    {{/each}}
-                </div>
-                {{else}}
-                <div class="flexrow">
-                    <label>{{localize "CoC7.Armor"}} :</label>
-                    <span>{{data.attribs.armor.value}}</span>
-                </div>
-                {{/if}}
-                <div class="properties">
-                    {{#each properties as |property|}}
-                    <span class="tag">{{ property }}</span>
-                    {{/each}}
-                </div>
-            </div>
-
-
-        </header>
+  <div class="token-extras">
+    {{#if canDragToken}}
+      <div draggable="true" class="token-drag-handle" title="{{ localize 'CoC7.ActorIsTokenHint'}}"><i class="fas fa-user-circle"></i></div>
+    {{/if}}
+    {{#if linkedActor}}
+      <div title="{{ localize 'CoC7.ActorDataLinked'}}"><i class="fas fa-link"></i></div>
+    {{else}}
+      <div title="{{ localize 'CoC7.ActorDataNotLinked'}}"><i class="fas fa-unlink"></i></div>
+    {{/if}}
+    {{#if isToken}}
+      <div title="{{ localize 'CoC7.ActorIsSyntheticActor'}}"><i class="game-icon game-icon-backup"></i></div>
+    {{/if}}
+  </div>
+  <div class="container {{#if expanded}}expanded{{else}}collapsed{{/if}}">
+    <div class="expand-button" title='{{#if expanded}}{{localize "CoC7.Collapse"}}{{else}}{{localize "CoC7.Expand"}}{{/if}}'>
+      <a class="toggle-expand">
         {{#if expanded}}
-            {{!-- Item Sheet Navigation --}}
-            <nav class="sheet-nav tabs" data-group="primary">
-                <a data-tab="description"><div class="tab-name" ><span>{{ localize "CoC7.Description" }}</span></div></a>
-                {{#if isGM}}
-                    <a data-tab="details"><div class="tab-name" ><span>{{ localize "CoC7.Details" }}</span></div></a>
-                    <a data-tab="gmNotes" class="keeper-only-tab"><div class="tab-name" ><span><i class="game-icon game-icon-tentacles-skull"></i></span></div></a>
-                {{/if}}
-            </nav>
+          <i class="fas fa-caret-square-up"></i>
+        {{else}}
+          <i class="fas fa-caret-square-down"></i>
+        {{/if}}
+      </a>
+    </div>
+    <header class="sheet-header">
+      <div class="sheet-portrait">
+        <img class="photo" src="{{actor.img}}" title="{{actor.name}}" data-edit="img" />
+      </div>
 
 
-            {{!-- Item Sheet Body --}}
-            <section class="sheet-body">
+      <div class="infos">
+        <div class="row flexrow">
+          <input class="name" name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'CoC7.Name' }}" />
+        </div>
 
-                {{!-- Description Tab --}}
-                <div class="tab" data-group="primary" data-tab="description">
+        <div class="row flexrow">
+          <input class="name" type="text" name="data.infos.type" value="{{data.infos.type}}" placeholder="{{ localize 'CoC7.Type' }}" />
+        </div>
+        <div class="row flexrow">
+          <input class="name" type="text" name="data.infos.origin" value="{{data.infos.origin}}" placeholder="{{ localize 'CoC7.Origin' }}" />
+        </div>
+        <div class="row flexrow">
+          <label>{{ localize 'CoC7.Crew' }} :</label>
+          <input type="text" name="data.crew.total" value="{{data.crew.total}}" />
+        </div>
+      </div>
 
-                    <!-- <div class="item-properties">
+      <div class="flex1" style="padding: 1px, 3px;">
+        <div class="attribute flexrow">
+          <div class="flex1"><label>{{localize "CoC7.Movement"}} :</label></div>
+          <div class="flex1"><span>{{actor.mov}}</span></div>
+          <div class="flex1"><label>{{localize "CoC7.Build"}} :</label></div>
+          <div class="flex2 flexrow"><input class="attribute-value" type="text" value="{{actor.hp}}" name="data.attribs.build.current" /><span>/{{actor.build}}</span></div>
+        </div>
+        {{#if data.attribs.armor.localized}}
+          <label>{{ localize 'CoC7.ArmourPlating'}} :</label>
+          <div class="armor-infos">
+            {{#each data.attribs.armor.locations as |location|}}
+              <div class="armor-location">{{location.name}}</div>
+            {{/each}}
+          </div>
+          <div class="armor-infos">
+            {{#each data.attribs.armor.locations as |location|}}
+              <div class="armor-location">{{location.value}}</div>
+            {{/each}}
+          </div>
+        {{else}}
+          <div class="flexrow">
+            <label>{{localize "CoC7.Armor"}} :</label>
+            <span>{{data.attribs.armor.value}}</span>
+          </div>
+        {{/if}}
+        <div class="properties">
+          {{#each properties as |property|}}
+            <span class="tag">{{ property }}</span>
+          {{/each}}
+        </div>
+      </div>
+
+
+    </header>
+    {{#if expanded}}
+      {{!-- Item Sheet Navigation --}}
+      <nav class="sheet-nav tabs" data-group="primary">
+        <a data-tab="description">
+          <div class="tab-name"><span>{{ localize "CoC7.Description" }}</span></div>
+        </a>
+        {{#if isKeeper}}
+          <a data-tab="details">
+            <div class="tab-name"><span>{{ localize "CoC7.Details" }}</span></div>
+          </a>
+          <a data-tab="gmNotes" class="keeper-only-tab">
+            <div class="tab-name"><span><i class="game-icon game-icon-tentacles-skull"></i></span></div>
+          </a>
+        {{/if}}
+      </nav>
+
+
+      {{!-- Item Sheet Body --}}
+      <section class="sheet-body">
+
+        {{!-- Description Tab --}}
+        <div class="tab" data-group="primary" data-tab="description">
+
+          <!-- <div class="item-properties">
                         <ol class="properties-list">
                             {{#each itemProperties}}
                             <li>{{this}}</li>
@@ -104,93 +110,93 @@
                         </ol>
                     </div> -->
 
-                    {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
-                </div>
+          {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
+        </div>
 
-                <!-- <div class="tab flexrow" data-group="primary" data-tab="crew">
+        <!-- <div class="tab flexrow" data-group="primary" data-tab="crew">
                     {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
                 </div> -->
 
 
 
-                {{!-- Details Tab --}}
-                <div class="tab details scroll-y" data-group="primary" data-tab="details">
-                    <section class="armor">
-                        <label class="section-header"> {{localize 'CoC7.Armor'}} </label>
-                        <div class="section-content">
-                            <div class="section-group stacked">
-                                <label class="checkbox">
-                                    <input type="checkbox" name="data.attribs.armor.localized" {{checked data.attribs.armor.localized}}/>
-                                    {{localize "CoC7.ArmourPlating"}}
-                                </label>
-                                {{#if data.attribs.armor.localized}}
-                                    <div class="button">
-                                        <a class="add-armor"><i class="fas fa-plus"></i></a>
-                                    </div>
-                                {{/if}}
-                            </div>
-                            {{#if data.attribs.armor.localized}}
-                                {{#each data.attribs.armor.locations as |location i|}}
-                                <div class="section-group armor" data-index="{{i}}">
-                                    <label>
-                                        <input type="text" name="data.attribs.armor.locations.{{i}}.name" value="{{location.name}}" placeholder="{{localize 'CoC7.Location'}}"/>
-                                    </label>
-                                    <div class="section-fields">
-                                        <input type="text" name="data.attribs.armor.locations.{{i}}.value" value="{{location.value}}" placeholder="{{localize 'CoC7.Armor'}}"/>
-                                        <div class="button">
-                                            <a class="remove-armor"><i class="fas fa-minus"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{/each}}
-                            {{else}}
-                                <div class="section-group">
-                                    <label>{{localize "CoC7.Armor"}}</label>
-                                    <div class="section-fields">
-                                        <input type="text" name="data.attribs.armor.value" value="{{data.attribs.armor.value}}"/>
-                                    </div>
-                                </div>
-                            {{/if}}
-                        </div>
-                    </section>
-
-                    <section>
-                        <label class="section-header"> {{localize 'CoC7.Attributes'}} </label>
-                        <div class="section-content">
-                            <div class="section-group">
-                                <label>{{localize "CoC7.Movement"}}</label>
-                                <div class="section-fields">
-                                    <input type="text" name="data.attribs.mov.value" value="{{data.attribs.mov.value}}"/>
-                                </div>
-                            </div>
-                            <div class="section-group">
-                                <label>{{localize "CoC7.Build"}}</label>
-                                <div class="section-fields">
-                                    <input type="text" name="data.attribs.build.value" value="{{data.attribs.build.value}}"/>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section>
-                        <label class="section-header"> {{localize 'CoC7.Properties'}} </label>
-                        <div class="section-content">
-                            <div class="section-group">
-                                <label class="checkbox">
-                                    <input type="checkbox" name="data.properties.armed" {{checked data.properties.armed}}/>
-                                    {{localize "CoC7.ArmedVehicle"}}
-                                </label>
-                            </div>
-                        </div>
-                    </section>
+        {{!-- Details Tab --}}
+        <div class="tab details scroll-y" data-group="primary" data-tab="details">
+          <section class="armor">
+            <label class="section-header"> {{localize 'CoC7.Armor'}} </label>
+            <div class="section-content">
+              <div class="section-group stacked">
+                <label class="checkbox">
+                  <input type="checkbox" name="data.attribs.armor.localized" {{checked data.attribs.armor.localized}} />
+                  {{localize "CoC7.ArmourPlating"}}
+                </label>
+                {{#if data.attribs.armor.localized}}
+                  <div class="button">
+                    <a class="add-armor"><i class="fas fa-plus"></i></a>
+                  </div>
+                {{/if}}
+              </div>
+              {{#if data.attribs.armor.localized}}
+                {{#each data.attribs.armor.locations as |location i|}}
+                  <div class="section-group armor" data-index="{{i}}">
+                    <label>
+                      <input type="text" name="data.attribs.armor.locations.{{i}}.name" value="{{location.name}}" placeholder="{{localize 'CoC7.Location'}}" />
+                    </label>
+                    <div class="section-fields">
+                      <input type="text" name="data.attribs.armor.locations.{{i}}.value" value="{{location.value}}" placeholder="{{localize 'CoC7.Armor'}}" />
+                      <div class="button">
+                        <a class="remove-armor"><i class="fas fa-minus"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                {{/each}}
+              {{else}}
+                <div class="section-group">
+                  <label>{{localize "CoC7.Armor"}}</label>
+                  <div class="section-fields">
+                    <input type="text" name="data.attribs.armor.value" value="{{data.attribs.armor.value}}" />
+                  </div>
                 </div>
+              {{/if}}
+            </div>
+          </section>
 
-                {{!-- GM Notes Tab --}}
-                <div class="tab" data-group="primary" data-tab="gmNotes">
-                    {{editor content=data.description.notes target="data.description.notes" button=true owner=owner editable=editable}}
+          <section>
+            <label class="section-header"> {{localize 'CoC7.Attributes'}} </label>
+            <div class="section-content">
+              <div class="section-group">
+                <label>{{localize "CoC7.Movement"}}</label>
+                <div class="section-fields">
+                  <input type="text" name="data.attribs.mov.value" value="{{data.attribs.mov.value}}" />
                 </div>
+              </div>
+              <div class="section-group">
+                <label>{{localize "CoC7.Build"}}</label>
+                <div class="section-fields">
+                  <input type="text" name="data.attribs.build.value" value="{{data.attribs.build.value}}" />
+                </div>
+              </div>
+            </div>
+          </section>
 
-            </section>
-        {{/if}}
-    </div>
+          <section>
+            <label class="section-header"> {{localize 'CoC7.Properties'}} </label>
+            <div class="section-content">
+              <div class="section-group">
+                <label class="checkbox">
+                  <input type="checkbox" name="data.properties.armed" {{checked data.properties.armed}} />
+                  {{localize "CoC7.ArmedVehicle"}}
+                </label>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        {{!-- GM Notes Tab --}}
+        <div class="tab" data-group="primary" data-tab="gmNotes">
+          {{editor content=data.description.notes target="data.description.notes" button=true owner=owner editable=editable}}
+        </div>
+
+      </section>
+    {{/if}}
+  </div>
 </form>

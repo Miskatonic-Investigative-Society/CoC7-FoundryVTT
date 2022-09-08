@@ -1,78 +1,78 @@
-<form class="summarized" autocomplete="off" data-actor-id="{{actor.id}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
+<form class="summarized" autocomplete="off" data-actor-id="{{actor.id}}" {{#if tokenId}}data-token-id="{{tokenId}}" {{/if}}>
   <div class="container">
     <div class="header flexrow">
       <div class="flexrow attribute" data-attrib="lck">
         <label class="attribute-label rollable">{{localize 'CoC7.Luck'}}</label>
         <div class="current-value">
-          <input class="attribute-value" type="text" name="data.attribs.lck.value" value="{{data.attribs.lck.value}}" data-dtype="Number"/>
+          <input class="attribute-value" type="text" name="system.attribs.lck.value" value="{{data.system.attribs.lck.value}}" data-dtype="Number" />
         </div>
         <div class="separator">/</div>
         <div class="max-value">
-            {{#if data.attribs.lck.auto}}
-                <input type="text" name="data.attribs.lck.max" value="{{data.attribs.lck.max}}" data-dtype="Number" readonly/>
-            {{else}}
-                <input type="text" name="data.attribs.lck.max" value="{{data.attribs.lck.max}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}/>
-            {{/if}}
+          {{#if data.system.attribs.lck.auto}}
+            <input type="text" name="system.attribs.lck.max" value="{{data.system.attribs.lck.max}}" data-dtype="Number" readonly />
+          {{else}}
+            <input type="text" name="system.attribs.lck.max" value="{{data.system.attribs.lck.max}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}} />
+          {{/if}}
         </div>
       </div>
       <div class="flexrow" data-attrib="hp">
         <label class="attribute-label">{{localize 'CoC7.HitPoints'}}</label>
         <div class="current-value">
-          <input class="attribute-value" type="text" name="data.attribs.hp.value" value="{{data.attribs.hp.value}}"  data-dtype="Number"/>
+          <input class="attribute-value" type="text" name="data.system.attribs.hp.value" value="{{data.system.attribs.hp.value}}" data-dtype="Number" />
         </div>
         <div class="separator">/</div>
         <div class="max-value">
-            {{#if data.attribs.hp.auto}}
-                <input type="text" name="data.attribs.hp.max" value="{{data.attribs.hp.max}}" data-dtype="Number" readonly/>
-            {{else}}
-                <input type="text" name="data.attribs.hp.max" value="{{data.attribs.hp.max}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}/>
-            {{/if}}
+          {{#if data.system.attribs.hp.auto}}
+            <input type="text" name="system.attribs.hp.max" value="{{data.system.attribs.hp.max}}" data-dtype="Number" readonly />
+          {{else}}
+            <input type="text" name="system.attribs.hp.max" value="{{data.system.attribs.hp.max}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}} />
+          {{/if}}
         </div>
         <div class="status">
-          <a class="condition-monitor {{#if data.status.prone.value}}status-on{{/if}}" title="{{localize 'CoC7.Prone'}}" data-condition="prone"><i class="game-icon game-icon-falling"></i></a>
-          <a class="condition-monitor {{#if data.status.unconscious.value}}status-on{{/if}}" title="{{localize 'CoC7.Unconsious'}}" data-condition="unconscious"><i class="game-icon game-icon-knocked-out-stars"></i></a>
-          <a class="condition-monitor {{#if data.status.criticalWounds.value}}status-on{{/if}}" title="{{localize 'CoC7.CriticalWounds'}}" data-condition="criticalWounds"><i class="game-icon game-icon-arm-sling"></i></a>
-          <a class="condition-monitor {{#if data.status.dying.value}}status-on{{/if}}" title="{{localize 'CoC7.Dying'}}" data-condition="dying"><i class="game-icon game-icon-heart-beats"></i></a>
-          {{#if data.status.dead.value}}
-          <a class="condition-monitor status-on" title="{{localize 'CoC7.Dead'}}" data-condition="dead"><i class="game-icon game-icon-tombstone"></i></a>
+          <a class="condition-monitor {{#if data.system.status.prone.value}}status-on{{/if}}" title="{{localize 'CoC7.Prone'}}" data-condition="prone"><i class="game-icon game-icon-falling"></i></a>
+          <a class="condition-monitor {{#if data.system.status.unconscious.value}}status-on{{/if}}" title="{{localize 'CoC7.Unconsious'}}" data-condition="unconscious"><i class="game-icon game-icon-knocked-out-stars"></i></a>
+          <a class="condition-monitor {{#if data.system.status.criticalWounds.value}}status-on{{/if}}" title="{{localize 'CoC7.CriticalWounds'}}" data-condition="criticalWounds"><i class="game-icon game-icon-arm-sling"></i></a>
+          <a class="condition-monitor {{#if data.system.status.dying.value}}status-on{{/if}}" title="{{localize 'CoC7.Dying'}}" data-condition="dying"><i class="game-icon game-icon-heart-beats"></i></a>
+          {{#if data.system.status.dead.value}}
+            <a class="condition-monitor status-on" title="{{localize 'CoC7.Dead'}}" data-condition="dead"><i class="game-icon game-icon-tombstone"></i></a>
           {{else}}
-          <a class="{{#if data.status.dying.value}}condition-monitor dying-check{{else}}inative-status{{/if}}" title="{{#if data.status.dying.value}}{{localize 'CoC7.DyingCheck'}}{{/if}}"><i class="game-icon game-icon-d10"></i></a>
+            <a class="{{#if data.system.status.dying.value}}condition-monitor dying-check{{else}}inative-status{{/if}}" title="{{#if data.system.status.dying.value}}{{localize 'CoC7.DyingCheck'}}{{/if}}"><i class="game-icon game-icon-d10"></i></a>
           {{/if}}
         </div>
       </div>
       <div class="flexrow attribute" data-attrib="san">
         <label class="attribute-label rollable">{{localize 'CoC7.Sanity'}}</label>
         <div class="current-value">
-          <input class="attribute-value" type="text" name="data.attribs.san.value" value="{{data.attribs.san.value}}"  data-dtype="Number"/>
+          <input class="attribute-value" type="text" name="system.attribs.san.value" value="{{data.system.attribs.san.value}}" data-dtype="Number" />
+        </div>
+        <div class="separator">/</div>
+        <div class="max-value">
+          {{#if data.system.attribs.san.auto}}
+            <input type="text" name="system.attribs.san.max" value="{{data.system.attribs.san.max}}" data-dtype="Number" readonly />
+          {{else}}
+            <input type="text" name="system.attribs.san.max" value="{{data.system.attribs.san.max}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}} />
+          {{/if}}
+        </div>
+        <div class="status">
+          <div class="invisible">
+            <input class="locked" type="text" name="system.attribs.san.dailyLoss" value="{{data.system.attribs.san.dailyLoss}}" data-dtype="Number" readonly />
+            <input class="locked" type="text" name="system.attribs.san.dailyLimit" value="{{data.system.attribs.san.dailyLimit}}" data-dtype="Number" readonly />
           </div>
-          <div class="separator">/</div>
-          <div class="max-value">
-              {{#if data.attribs.san.auto}}
-                  <input type="text" name="data.attribs.san.max" value="{{data.attribs.san.max}}" data-dtype="Number" readonly/>
-              {{else}}
-                  <input type="text" name="data.attribs.san.max" value="{{data.attribs.san.max}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}/>
-              {{/if}}
-          </div>
-          <div class="status">
-            <div class="invisible">
-                <input class="locked" type="text" name="data.attribs.san.dailyLoss" value="{{data.attribs.san.dailyLoss}}" data-dtype="Number" readonly/>
-                <input class="locked" type="text" name="data.attribs.san.dailyLimit" value="{{data.attribs.san.dailyLimit}}" data-dtype="Number" readonly/>
-            </div>
-            <a class="condition-monitor {{#if data.conditions.tempoInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.BoutOfMadness'}}{{#if actor.getTempoInsaneDurationText}}: {{actor.getTempoInsaneDurationText}}{{/if}}" data-condition="tempoInsane"><i class="game-icon game-icon-hanging-spider"></i></a>
-            <a class="condition-monitor {{#if data.conditions.indefInsane.value}}status-on{{/if}}" title="{{#if data.conditions.indefInsane.value}}{{localize 'CoC7.UnderlyingInsanity'}}{{else}}{{localize 'CoC7.IndefiniteInsanity'}}{{/if}}" data-condition="indefInsane"><i class="game-icon game-icon-tentacles-skull"></i></a>
-            </div>
+          <a class="condition-monitor {{#if data.system.conditions.tempoInsane.value}}status-on{{/if}}" title="{{localize 'CoC7.BoutOfMadness'}}{{#if actor.getTempoInsaneDurationText}}: {{actor.getTempoInsaneDurationText}}{{/if}}" data-condition="tempoInsane"><i class="game-icon game-icon-hanging-spider"></i></a>
+          <a class="condition-monitor {{#if data.system.conditions.indefInsane.value}}status-on{{/if}}" title="{{#if data.system.conditions.indefInsane.value}}{{localize 'CoC7.UnderlyingInsanity'}}{{else}}{{localize 'CoC7.IndefiniteInsanity'}}{{/if}}" data-condition="indefInsane"><i class="game-icon game-icon-tentacles-skull"></i></a>
+        </div>
       </div>
       <div class="flexrow" data-attrib="mp">
         <label class="attribute-label">{{localize 'CoC7.MagicPoints'}}</label>
         <div class="current-value">
-            <input class="attribute-value" type="text" name="data.attribs.mp.value" value="{{data.attribs.mp.value}}"  data-dtype="Number"/>
+          <input class="attribute-value" type="text" name="system.attribs.mp.value" value="{{data.system.attribs.mp.value}}" data-dtype="Number" />
         </div>
         <div class="separator">/</div>
         <div class="max-value">
-          {{#if data.attribs.mp.auto}}
-            <input type="text" name="data.attribs.mp.max" value="{{data.attribs.mp.max}}" data-dtype="Number" readonly/>
+          {{#if data.system.attribs.mp.auto}}
+            <input type="text" name="system.attribs.mp.max" value="{{data.system.attribs.mp.max}}" data-dtype="Number" readonly />
           {{else}}
-            <input type="text" name="data.attribs.mp.max" value="{{data.attribs.mp.max}}" data-dtype="Number" {{#if data.flags.locked}}readonly{{/if}}/>
+            <input type="text" name="system.attribs.mp.max" value="{{data.system.attribs.mp.max}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}} />
           {{/if}}
         </div>
       </div>
@@ -80,12 +80,12 @@
     <div class="characteristics">
       <div class="char-boxes">
         {{#each actor.characteristics as |characteristic key|}}
-          <div class="char-box"  data-characteristic="{{key}}" draggable="true">
+          <div class="char-box" data-characteristic="{{key}}" draggable="true">
             <div class="roll-icon"><i class="game-icon game-icon-d10"></i></div>
-            <div class="charac-name characteristic-label rollable"  draggable="true">{{characteristic.shortName}}</div>
+            <div class="charac-name characteristic-label rollable" draggable="true">{{characteristic.shortName}}</div>
             <div class="charac-score">
               <div class="main-score">
-                <input class="characteristic-score" type="text" name="data.characteristics.{{key}}.value" value="{{characteristic.value}}" data-dtype="Number"/>
+                <input class="characteristic-score" type="text" name="system.characteristics.{{key}}.value" value="{{characteristic.value}}" data-dtype="Number" />
               </div>
               <div class="half-score">{{characteristic.hard}}</div>
               <div class="fith-score">{{characteristic.extreme}}</div>
@@ -94,116 +94,124 @@
         {{/each}}
       </div>
       <div class="footer">
-        {{#if data.flags.locked}}
+        {{#if data.system.flags.locked}}
           <div class="attribute">
-            <div class="attribute-label"><h2>{{localize 'CoC7.Mov'}}:</h2></div>
-            <div class="attribute-value">{{data.attribs.mov.value}}</div>
+            <div class="attribute-label">
+              <h2>{{localize 'CoC7.Mov'}}:</h2>
+            </div>
+            <div class="attribute-value">{{data.system.attribs.mov.value}}</div>
           </div>
           <div class="attribute">
-            <div class="attribute-label"><h2>{{localize 'CoC7.Build'}}:</h2></div>
-            <div class="attribute-value">{{data.attribs.build.value}}</div>
+            <div class="attribute-label">
+              <h2>{{localize 'CoC7.Build'}}:</h2>
+            </div>
+            <div class="attribute-value">{{data.system.attribs.build.value}}</div>
           </div>
-          <div class="attribute" data-attrib="db" data-roll-formula="{{data.attribs.db.value}}">
-            <div class="attribute-label rollable"><h2>{{localize 'CoC7.DB'}}:</h2></div>
-            <div class="attribute-value">{{data.attribs.db.value}}</div>
+          <div class="attribute" data-attrib="db" data-roll-formula="{{data.system.attribs.db.value}}">
+            <div class="attribute-label rollable">
+              <h2>{{localize 'CoC7.DB'}}:</h2>
+            </div>
+            <div class="attribute-value">{{data.system.attribs.db.value}}</div>
           </div>
           <div class="attribute">
-            <div class="attribute-label"><h2>{{localize 'CoC7.Armor'}}:</h2></div>
-            <div class="attribute-value">{{data.attribs.armor.value}}</div>
+            <div class="attribute-label">
+              <h2>{{localize 'CoC7.Armor'}}:</h2>
+            </div>
+            <div class="attribute-value">{{data.system.attribs.armor.value}}</div>
           </div>
         {{/if}}
       </div>
     </div>
     <div class="skills">
       {{#if showIconsOnly}}
-      <ol class="item-list icons">
-        {{#each skillsByValue as |skill|}}
-        <li class="item" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
-          <div class="item-image skill-name item-name rollable" title="{{skill.name}}" style="background-image: url('{{skill.img}}')"></div>
-        </li>
-        {{/each}}
-      </ol>
+        <ol class="item-list icons">
+          {{#each skillsByValue as |skill|}}
+            <li class="item" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
+              <div class="item-image skill-name item-name rollable" title="{{skill.name}}" style="background-image: url('{{skill.img}}')"></div>
+            </li>
+          {{/each}}
+        </ol>
       {{else}}
-      <ol class="item-list">
-        {{#each topSkills as |skill|}}
-          <li class="item itemV2" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
-            <div class="item-image" style="background-image: url('{{skill.img}}')"></div>
-            <div class="item-name skill-name rollable">{{skill.name}}</div>
-            <div class="item-score">{{skill.data.value}}</div>
-            <div class="item-controls">
-              {{#unless skill.data.properties.noxpgain}}
-                {{#if skill.data.flags.developement}}
-                  <a class="item-control development-flag active" title="{{localize 'CoC7.SkillUnflagForDevelopement'}}"><i class="fas fa-certificate"></i></a>
-                {{else}}
-                  <a class="item-control development-flag" title="{{localize 'CoC7.SkillFlagForDevelopement'}}"><i class="fas fa-certificate"></i></a>
-                {{/if}}
-              {{/unless}}
-            </div>
-          </li>
-        {{/each}}
-      </ol>
+        <ol class="item-list">
+          {{#each topSkills as |skill|}}
+            <li class="item itemV2" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
+              <div class="item-image" style="background-image: url('{{skill.img}}')"></div>
+              <div class="item-name skill-name rollable">{{skill.name}}</div>
+              <div class="item-score">{{skill.system.value}}</div>
+              <div class="item-controls">
+                {{#unless skill.system.properties.noxpgain}}
+                  {{#if skill.system.flags.developement}}
+                    <a class="item-control development-flag active" title="{{localize 'CoC7.SkillUnflagForDevelopement'}}"><i class="fas fa-certificate"></i></a>
+                  {{else}}
+                    <a class="item-control development-flag" title="{{localize 'CoC7.SkillFlagForDevelopement'}}"><i class="fas fa-certificate"></i></a>
+                  {{/if}}
+                {{/unless}}
+              </div>
+            </li>
+          {{/each}}
+        </ol>
       {{/if}}
     </div>
     <div class="other">
       <ol>
         {{#each topWeapons as |weapon|}}
-        {{#if weapon.data.properties.melee}}
-          <li class="weapon-row item weapon {{#unless weapon.skillSet}}error{{/unless}}" data-item-id="{{weapon._id}}" title="{{#unless weapon.skillSet}}{{localize 'CoC7.NoSkill'}}{{/unless}}">
-            <div class="weapon-image" style="background-image: url('{{weapon.img}}')"></div>
-            <div class="flexrow">
+          {{#if weapon.system.properties.melee}}
+            <li class="weapon-row item weapon {{#unless weapon.skillSet}}error{{/unless}}" data-item-id="{{weapon._id}}" title="{{#unless weapon.skillSet}}{{localize 'CoC7.NoSkill'}}{{/unless}}">
+              <div class="weapon-image" style="background-image: url('{{weapon.img}}')"></div>
+              <div class="flexrow">
                 <div class="weapon-name combat {{#if weapon.skillSet}}rollable{{else}}item-edit{{/if}}">{{weapon.name}}</div>
-                {{#if weapon.data.properties.thrown}}
-                    <a class="weapon-name combat alternativ-skill {{#if weapon.skillSet}}rollable{{else}}item-edit{{/if}}" title="Throw"><i class="game-icon game-icon-thrown-knife"></i></a>
+                {{#if weapon.system.properties.thrown}}
+                  <a class="weapon-name combat alternativ-skill {{#if weapon.skillSet}}rollable{{else}}item-edit{{/if}}" title="Throw"><i class="game-icon game-icon-thrown-knife"></i></a>
                 {{/if}}
-            </div>
-            <div class="weapon-damage">
-              {{weapon.data.range.normal.damage}}
-            </div>
-            <div class="weapon-control">
-                {{#if weapon.data.properties.addb}}<span class="tag" title="Add DB">{{localize 'CoC7.WeaponAddb'}}</span>{{/if}}
-                {{#if weapon.data.properties.ahdb}}<span class="tag" title="Add DB">{{localize 'CoC7.WeaponAhdb'}}</span>{{/if}}
-            </div>
-          </li>
-        {{else}}
-          <li class="weapon-row item weapon {{#unless weapon.skillSet}}error{{/unless}}" data-item-id="{{weapon._id}}" title="{{#unless weapon.skillSet}}{{localize 'CoC7.NoSkill'}}{{/unless}}">
-            <div class="weapon-image" style="background-image: url('{{weapon.img}}')"></div>
-            <div class="flexrow">
+              </div>
+              <div class="weapon-damage">
+                {{weapon.system.range.normal.damage}}
+              </div>
+              <div class="weapon-control">
+                {{#if weapon.system.properties.addb}}<span class="tag" title="Add DB">{{localize 'CoC7.WeaponAddb'}}</span>{{/if}}
+                {{#if weapon.system.properties.ahdb}}<span class="tag" title="Add DB">{{localize 'CoC7.WeaponAhdb'}}</span>{{/if}}
+              </div>
+            </li>
+          {{else}}
+            <li class="weapon-row item weapon {{#unless weapon.skillSet}}error{{/unless}}" data-item-id="{{weapon._id}}" title="{{#unless weapon.skillSet}}{{localize 'CoC7.NoSkill'}}{{/unless}}">
+              <div class="weapon-image" style="background-image: url('{{weapon.img}}')"></div>
+              <div class="flexrow">
                 <div class="weapon-name combat {{#if weapon.skillSet}}rollable{{else}}item-edit{{/if}}">{{weapon.name}}</div>
                 {{#if weapon.usesAlternateSkill}}
-                    <a class="weapon-name combat alternativ-skill {{#if weapon.skillSet}}rollable{{else}}item-edit{{/if}}" title="{{localize 'CoC7.AutomaticFire'}}"><i class="game-icon game-icon-machine-gun-magazine"></i></a>
+                  <a class="weapon-name combat alternativ-skill {{#if weapon.skillSet}}rollable{{else}}item-edit{{/if}}" title="{{localize 'CoC7.AutomaticFire'}}"><i class="game-icon game-icon-machine-gun-magazine"></i></a>
                 {{/if}}
-            </div>
-            <div class="weapon-damage">
-              {{weapon.data.range.normal.damage}}
-            </div>
-            <div class="weapon-controls">
+              </div>
+              <div class="weapon-damage">
+                {{weapon.system.range.normal.damage}}
+              </div>
+              <div class="weapon-controls">
                 <div class="ammo">
-                    <span class="tag">{{weapon.data.ammo}}</span>
+                  <span class="tag">{{weapon.system.ammo}}</span>
                 </div>
                 <div class="control">
-                    <a class="reload-weapon" title="{{localize 'CoC7.Reload'}}"><i class="game-icon game-icon-chaingun"></i></a>
+                  <a class="reload-weapon" title="{{localize 'CoC7.Reload'}}"><i class="game-icon game-icon-chaingun"></i></a>
                 </div>
-            </div>
-          </li>
-        {{/if}}
-       {{/each}}
+              </div>
+            </li>
+          {{/if}}
+        {{/each}}
       </ol>
       <div class="flexrow cash-row">
         <label>{{localize 'CoC7.MonetarySpendingLevel'}}</label>
-        {{#if data.flags.manualCredit}}
-            <input type="text" name="data.credit.spendingLevel" value="{{data.credit.spendingLevel}}">
+        {{#if data.system.flags.manualCredit}}
+          <input type="text" name="system.credit.spendingLevel" value="{{data.system.credit.spendingLevel}}">
         {{else}}
-            <span>{{credit.spendingLevel}}</span>
+          <span>{{credit.spendingLevel}}</span>
         {{/if}}
       </div>
       <div class="flexrow cash-row">
-          <label>{{localize 'CoC7.MonetaryCash'}}</label>
-          {{#if data.flags.manualCredit}}
-              <input type="text" name="data.credit.cash" value="{{data.credit.cash}}">
-          {{else}}
-              <span>{{credit.cash}}</span>
-          {{/if}}
-          <label>{{localize 'CoC7.MonetarySpent'}}</label><input type="text" name="data.credit.spent" value="{{data.credit.spent}}">
+        <label>{{localize 'CoC7.MonetaryCash'}}</label>
+        {{#if data.system.flags.manualCredit}}
+          <input type="text" name="system.credit.cash" value="{{data.system.credit.cash}}">
+        {{else}}
+          <span>{{credit.cash}}</span>
+        {{/if}}
+        <label>{{localize 'CoC7.MonetarySpent'}}</label><input type="text" name="system.credit.spent" value="{{data.system.credit.spent}}">
       </div>
     </div>
   </div>

@@ -29,14 +29,14 @@ class CoC7MenuLayer extends PlaceablesLayer {
 export class CoC7Menu {
   static getButtons (controls) {
     canvas.coc7gmtools = new CoC7MenuLayer()
-    const isGM = game.user.isGM
+    const isKeeper = game.user.isGM
     const showHiddenDevMenu = game.settings.get('CoC7', 'hiddendevmenu')
     controls.push({
       name: 'coc7menu',
       title: 'CoC7.GmTools',
       layer: 'coc7gmtools',
       icon: 'game-icon game-icon-tentacle-strike',
-      visible: isGM,
+      visible: isKeeper,
       tools: [
         {
           toggle: true,
@@ -95,7 +95,7 @@ export class CoC7Menu {
           "Dev tools. If you don't know what it is, you don't need it and you shouldn't use it !!",
         layer: 'coc7DevTools',
         icon: 'game-icon game-icon-police-badge',
-        visible: isGM,
+        visible: isKeeper,
         tools: [
           {
             toggle: true,
@@ -125,10 +125,10 @@ export class CoC7Menu {
   }
 
   static renderControls (app, html, data) {
-    const isGM = game.user.isGM
+    const isKeeper = game.user.isGM
     const keeperMenu = html.find('.game-icon-tentacle-strike').parent()
     keeperMenu.addClass('coc7-menu')
-    if (isGM) {
+    if (isKeeper) {
       keeperMenu.after(
         '<li class="scene-control coc7-menu coc7-create-link" title="' +
           game.i18n.localize('CoC7.CreateLink') +

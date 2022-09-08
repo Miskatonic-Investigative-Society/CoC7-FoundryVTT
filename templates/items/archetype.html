@@ -2,12 +2,12 @@
   <header class="sheet-header flexrow" style="flex: 0 0 64px;padding-bottom: 2px;">
     <div class="header-details flexrow">
       <h1 class="name" style="height: 48px;">
-        <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'CoC7.Name' }}"/>
+        <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'CoC7.Name' }}" />
       </h1>
 
       <ul class="summary flexrow">
         <li class="flex2">
-          <input type="text" name="system.source" value="{{data.system.source}}" placeholder="{{ localize 'CoC7.Source' }}"/>
+          <input type="text" name="system.source" value="{{data.system.source}}" placeholder="{{ localize 'CoC7.Source' }}" />
         </li>
         <li class="flex3">
           {{coreCharacteristicsString}}
@@ -15,12 +15,11 @@
       </ul>
 
     </div>
-    <img class="profile" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <img class="profile" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64" />
   </header>
 
   {{!-- Item Sheet Navigation --}}
-  <nav style="flex: 0 0 24px;margin-bottom: 4px;font-family: 'Modesto Condensed', 'Palatino Linotype', serif;font-size: 16px;font-weight: 700;"
-    class="sheet-navigation tabs" data-group="primary">
+  <nav style="flex: 0 0 24px;margin-bottom: 4px;font-family: 'Modesto Condensed', 'Palatino Linotype', serif;font-size: 16px;font-weight: 700;" class="sheet-navigation tabs" data-group="primary">
     <a style="line-height: 24px;" class="item active" data-tab="description">{{ localize "CoC7.Description" }}</a>
     <a style="line-height: 24px;" class="item" data-tab="details">{{ localize "CoC7.Details" }}</a>
     <a style="line-height: 24px;" class="item" data-tab="skills">{{ localize "CoC7.Skills" }}</a>
@@ -58,47 +57,47 @@
         <h3 class="form-header">{{ localize "CoC7.Details" }}</h3>
         <div class="form-group">
           <label>{{ localize "CoC7.BonusPoints" }}</label>
-          <input type="text" name="system.bonusPoints" value="{{data.system.bonusPoints}}" data-dtype="Number"/>
+          <input type="text" name="system.bonusPoints" value="{{data.system.bonusPoints}}" data-dtype="Number" />
         </div>
         <div class="form-group">
           <label>{{ localize "CoC7.PulpTalents" }}</label>
-          <input type="text" name="system.talents" value="{{data.system.talents}}" data-dtype="Number"/>
+          <input type="text" name="system.talents" value="{{data.system.talents}}" data-dtype="Number" />
         </div>
 
         <h3 class="form-header">{{ localize "CoC7.CoreCharacteristics" }}</h3>
         <div class="form-group stacked">
           <label class="checkbox">
-            <input type="checkbox" name="system.coreCharacteristics.str" {{checked data.system.coreCharacteristics.str}}/> {{ localize "CHARAC.Strengh" }}
+            <input type="checkbox" name="system.coreCharacteristics.str" {{checked data.system.coreCharacteristics.str}} /> {{ localize "CHARAC.Strengh" }}
           </label>
           <label class="checkbox">
-            <input type="checkbox" name="system.coreCharacteristics.con" {{checked data.system.coreCharacteristics.con}}/> {{ localize "CHARAC.Constitution" }}
+            <input type="checkbox" name="system.coreCharacteristics.con" {{checked data.system.coreCharacteristics.con}} /> {{ localize "CHARAC.Constitution" }}
           </label>
           <label class="checkbox">
-            <input type="checkbox" name="system.coreCharacteristics.siz" {{checked data.system.coreCharacteristics.siz}}/> {{ localize "CHARAC.Size" }}
+            <input type="checkbox" name="system.coreCharacteristics.siz" {{checked data.system.coreCharacteristics.siz}} /> {{ localize "CHARAC.Size" }}
           </label>
           <label class="checkbox">
-            <input type="checkbox" name="system.coreCharacteristics.dex" {{checked data.system.coreCharacteristics.dex}}/> {{ localize "CHARAC.Dexterity" }}
+            <input type="checkbox" name="system.coreCharacteristics.dex" {{checked data.system.coreCharacteristics.dex}} /> {{ localize "CHARAC.Dexterity" }}
           </label>
           <label class="checkbox">
-            <input type="checkbox" name="system.coreCharacteristics.app" {{checked data.system.coreCharacteristics.app}}/> {{ localize "CHARAC.Appearance" }}
+            <input type="checkbox" name="system.coreCharacteristics.app" {{checked data.system.coreCharacteristics.app}} /> {{ localize "CHARAC.Appearance" }}
           </label>
           <label class="checkbox">
-            <input type="checkbox" name="system.coreCharacteristics.int" {{checked data.system.coreCharacteristics.int}}/> {{ localize "CHARAC.Intelligence" }}
+            <input type="checkbox" name="system.coreCharacteristics.int" {{checked data.system.coreCharacteristics.int}} /> {{ localize "CHARAC.Intelligence" }}
           </label>
           <label class="checkbox">
-            <input type="checkbox" name="system.coreCharacteristics.pow" {{checked data.system.coreCharacteristics.pow}}/> {{ localize "CHARAC.Power" }}
+            <input type="checkbox" name="system.coreCharacteristics.pow" {{checked data.system.coreCharacteristics.pow}} /> {{ localize "CHARAC.Power" }}
           </label>
           <label class="checkbox">
-            <input type="checkbox" name="system.coreCharacteristics.edu" {{checked data.system.coreCharacteristics.edu}}/> {{ localize "CHARAC.Education" }}
+            <input type="checkbox" name="system.coreCharacteristics.edu" {{checked data.system.coreCharacteristics.edu}} /> {{ localize "CHARAC.Education" }}
           </label>
         </div>
 
         <div class="form-group">
           <label class="checkbox">
-            <input type="checkbox" name="system.coreCharacteristicsFormula.enabled" {{checked data.system.coreCharacteristicsFormula.enabled}}/> {{ localize "CoC7.UseFormula" }}
+            <input type="checkbox" name="system.coreCharacteristicsFormula.enabled" {{checked data.system.coreCharacteristicsFormula.enabled}} /> {{ localize "CoC7.UseFormula" }}
           </label>
           {{#if data.system.coreCharacteristicsFormula.enabled}}
-            <input type="text" name="system.coreCharacteristicsFormula.value" value="{{data.system.coreCharacteristicsFormula.value}}" placeholder="{{ localize 'CoC7.EnterFormula' }}"/>
+            <input type="text" name="system.coreCharacteristicsFormula.value" value="{{data.system.coreCharacteristicsFormula.value}}" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
           {{/if}}
         </div>
 
@@ -122,17 +121,17 @@
 
         <ol class="item-list">
           {{#each data.system.skills as |skill|}}
-          <li class="item flexrow" data-item-id="{{skill._id}}">
-            <div class="item-name flexrow">
-              <h4>{{skill.name}} ({{skill.system.base}}%)</h4>
-            </div>
+            <li class="item flexrow" data-item-id="{{skill._id}}">
+              <div class="item-name flexrow">
+                <h4>{{skill.name}} ({{skill.data.base}}%)</h4>
+              </div>
 
-            <div class="item-controls">
-              {{#unless ../hasOwner}}
-              <a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
-              {{/unless}}
-            </div>
-          </li>
+              <div class="item-controls">
+                {{#unless ../hasOwner}}
+                  <a class="item-control item-delete" title="{{localize 'CoC7.DeleteItem'}}"><i class="fas fa-trash"></i></a>
+                {{/unless}}
+              </div>
+            </li>
           {{/each}}
         </ol>
       </div>

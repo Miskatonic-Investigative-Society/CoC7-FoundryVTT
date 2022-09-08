@@ -22,27 +22,24 @@ export class CoC7BookSheet extends ItemSheet {
   }
 
   async getData () {
-    const data = super.getData()
-    const itemData = data.data
-    data.data = itemData.data
-    data.initialReading = this.item.data.data.initialReading
-    data.isKeeper = game.user.isGM
-    data.isOwner = this.item.isOwner
-    data.spellsLearned = this.spellsLearned
-    data.exhausted = (await this.item.checkExhaustion()) !== false
-    data.studyCompleted =
-      this.item.data.data.study.progress === this.item.data.data.study.necessary
+    const item = super.getData()
+    item.initialReading = this.item.system.initialReading
+    item.isKeeper = game.user.isGM
+    item.isOwner = this.item.isOwner
+    item.spellsLearned = this.spellsLearned
+    item.exhausted = (await this.item.checkExhaustion()) !== false
+    item.studyCompleted = this.item.system.study.progress === this.item.system.study.necessary
+    item.hasOwner = this.item.isEmbedded === true
+    item.spellListEmpty = this.item.system.spells.length === 0
 
-    data.spellListEmpty = data.data.spells.length === 0
-
-    return data
+    return item
   }
 
   get spellsLearned () {
     let amount = 0
-    const spells = this.item.data.data.spells
+    const spells = this.item.system.spells
     for (const spell of spells) {
-      if (spell.data.learned) amount++
+      if (spell.system.learned) amount++
     }
     return `${amount} / ${spells.length}`
   }
@@ -105,8 +102,8 @@ export class CoC7BookSheet extends ItemSheet {
     /** @see data-index property on template */
     const index = element.parents('li').data('index')
     /** Always has to be @type {Array} */
-    const spells = this.item.data.data.spells
-      ? duplicate(this.item.data.data.spells)
+    const spells = this.item.system.spells
+      ? duplicate(this.item.system.spells)
       : []
     if (index >= 0) spells.splice(index, 1)
     return await this.item.update({ 'data.spells': spells })
@@ -127,10 +124,10 @@ export class CoC7BookSheet extends ItemSheet {
 
     const spells = []
     for (const item of dataList) {
-      if (!item || !['skill', 'spell'].includes(item.data.type)) continue
-      if (item.data.type === 'spell') {
-        spells.push(item.data)
-      } else if (item.data.type === 'skill' && this.item.data.data.type.other) {
+      if (!item || !['skill', 'spell'].includes(item.type)) continue
+      if (item.type === 'spell') {
+        spells.push(item)
+      } else if (item.type === 'skill' && this.item.system.type.other) {
         this.modifyOthersGains(null, 'add', { name: item.name })
       }
     }
@@ -169,8 +166,8 @@ export class CoC7BookSheet extends ItemSheet {
       index = element.parents('tr').data('index')
       /** Always has to be @type {Array} */
     }
-    const skills = this.item.data.data.gains.others
-      ? duplicate(this.item.data.data.gains.others)
+    const skills = this.item.system.gains.others
+      ? duplicate(this.item.system.gains.others)
       : []
     switch (mode) {
       case 'add':

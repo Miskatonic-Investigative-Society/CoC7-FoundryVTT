@@ -156,10 +156,7 @@ export class CoC7MeleeTarget extends ChatCardActor {
       let owners = []
       const gms = game.users.filter(a => a.isGM).map(a => a.id)
       for (const [k, v] of Object.entries(this.actor.data.permission)) {
-        if (
-          v ===
-          (CONST.DOCUMENT_OWNERSHIP_LEVELS || CONST.ENTITY_PERMISSIONS).OWNER
-        ) {
+        if (v === CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER) {
           if (k === 'default') {
             owners = game.users.map(a => a.id)
             break

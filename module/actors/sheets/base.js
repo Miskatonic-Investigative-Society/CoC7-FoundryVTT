@@ -1,5 +1,4 @@
 /* global $, ActorSheet, ChatMessage, CONST, Dialog, FormData, foundry, game, getProperty, Hooks, Item, mergeObject, Roll, TextEditor, ui */
-
 import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7ChatMessage } from '../../apps/coc7-chat-message.js'
 import { CoC7Check } from '../../check.js'
@@ -7,7 +6,6 @@ import { COC7 } from '../../config.js'
 import { CoC7Item } from '../../items/item.js'
 import { CoC7MeleeInitiator } from '../../chat/combat/melee-initiator.js'
 import { CoC7RangeInitiator } from '../../chat/rangecombat.js'
-// import { CoC7DamageRoll } from '../../chat/damagecards.js';
 import { CoC7ConCheck } from '../../chat/concheck.js'
 import { chatHelper, isCtrlKey } from '../../chat/helper.js'
 import { CoC7Parser } from '../../apps/parser.js'
@@ -21,41 +19,30 @@ import { CoC7Link } from '../../apps/link.js'
  */
 export class CoC7ActorSheet extends ActorSheet {
   async getData () {
-    const data = await super.getData()
+    const actor = await super.getData()
 
-    /** MODIF: 0.8.x **/
-    const actorData = this.actor.data.toObject(false)
-    data.data = actorData.data // Modif 0.8.x : data.data
-    data.editable = this.isEditable // MODIF 0.8.x : editable removed
-    /******************/
+    actor.showHiddenDevMenu = game.settings.get('CoC7', 'hiddendevmenu')
 
-    data.showHiddenDevMenu = game.settings.get('CoC7', 'hiddendevmenu')
+    actor.canDragToken = !!this.token && game.user.isGM
+    actor.linkedActor = this.actor.token?.actorLink === true
+    actor.isToken = this.actor.isToken
+    actor.itemsByType = {}
+    actor.skills = {}
+    actor.combatSkills = {}
+    actor.weapons = {}
+    actor.rangeWpn = []
+    actor.meleeWpn = []
+    actor.actorFlags = {}
 
-    data.hasToken = !!this.token
-    data.canDragToken = data.hasToken && game.user.isGM
-    data.linkedActor = this.actor.data?.token?.actorLink
-    data.isToken = this.actor.isToken
-    data.itemsByType = {}
-    data.skills = {}
-    data.combatSkills = {}
-    data.weapons = {}
-    data.rangeWpn = []
-    data.meleeWpn = []
-    data.actorFlags = {}
-
-    data.effects =
+    actor.effects =
       this.actor.type === 'character'
         ? CoC7ActiveEffect.prepareActiveEffectCategories(this.actor.effects)
         : CoC7ActiveEffect.prepareNPCActiveEffectCategories(this.actor.effects)
 
-    data.permissionLimited =
-      !game.user.isGM &&
-      (this.actor.data.permission[game.user.id] ??
-        this.actor.data.permission.default) ===
-        (CONST.DOCUMENT_OWNERSHIP_LEVELS || CONST.ENTITY_PERMISSIONS).LIMITED
+    actor.permissionLimited = !game.user.isGM && (this.actor.ownership[game.user.id] ?? this.actor.ownership.default) === CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED
 
-    data.isGM = game.user.isGM
-    data.alowUnlock =
+    actor.isKeeper = game.user.isGM
+    actor.allowUnlock =
       game.settings.get('CoC7', 'playerUnlockSheetMode') === 'always' ||
       game.user.isGM ||
       (game.settings.get('CoC7', 'playerUnlockSheetMode') === 'creation' &&
@@ -64,12 +51,12 @@ export class CoC7ActorSheet extends ActorSheet {
       game.settings.get('CoC7', 'playerUnlockSheetMode') === 'creation' &&
       game.settings.get('CoC7', 'charCreationEnabled')
     ) {
-      data['data.flags.locked'] = false
+      actor['system.flags.locked'] = false
     }
 
-    if (!['vehicle'].includes(this.actor.data.type)) {
-      if (!data.data.characteristics) {
-        data.data.characteristics = {
+    if (!['vehicle'].includes(this.actor.type)) {
+      if (!actor.data.system.characteristics) {
+        actor.data.system.characteristics = {
           str: {
             value: null,
             short: 'CHARAC.STR',
@@ -121,8 +108,8 @@ export class CoC7ActorSheet extends ActorSheet {
         }
       }
 
-      if (!data.data.attribs) {
-        data.data.attribs = {
+      if (!actor.data.system.attribs) {
+        actor.data.system.attribs = {
           hp: {
             value: null,
             max: null,
@@ -167,14 +154,14 @@ export class CoC7ActorSheet extends ActorSheet {
         }
       }
 
-      if (!data.data.biography) {
-        data.data.biography = {
+      if (!actor.data.system.biography) {
+        actor.data.system.biography = {
           personalDescription: { type: 'string', value: '' }
         }
       }
 
-      if (!data.data.infos) {
-        data.data.infos = {
+      if (!actor.data.system.infos) {
+        actor.data.system.infos = {
           occupation: '',
           age: '',
           sex: '',
@@ -186,12 +173,12 @@ export class CoC7ActorSheet extends ActorSheet {
         }
       }
 
-      if (!data.data.flags) {
-        data.data.flags = { locked: true, manualCredit: false }
+      if (!actor.data.system.flags) {
+        actor.data.system.flags = { locked: true, manualCredit: false }
       }
 
-      if (!data.data.credit) {
-        data.data.credit = {
+      if (!actor.data.system.credit) {
+        actor.data.system.credit = {
           monetarySymbol: null,
           multiplier: null,
           spent: null,
@@ -199,46 +186,46 @@ export class CoC7ActorSheet extends ActorSheet {
         }
       }
 
-      if (!data.data.development) {
-        data.data.development = {
+      if (!actor.data.system.development) {
+        actor.data.system.development = {
           personal: null,
           occupation: null,
           archetype: null
         }
       }
 
-      if (!data.data.biography) data.data.biography = []
+      if (!actor.data.system.biography) actor.data.system.biography = []
 
-      data.pulpRuleArchetype = game.settings.get('CoC7', 'pulpRuleArchetype')
-      data.pulpRuleOrganization = game.settings.get(
+      actor.pulpRuleArchetype = game.settings.get('CoC7', 'pulpRuleArchetype')
+      actor.pulpRuleOrganization = game.settings.get(
         'CoC7',
         'pulpRuleOrganization'
       )
     }
 
-    data.isDead = this.actor.dead
-    data.isDying = this.actor.dying
+    actor.isDead = this.actor.dead
+    actor.isDying = this.actor.dying
 
-    if (data.items) {
-      for (const item of data.items) {
+    if (actor.items) {
+      for (const item of actor.items) {
         // si c'est une formule et qu'on peut l'evaluer
         // ce bloc devrait etre déplacé dans le bloc _updateFormData
         if (item.type === 'skill') {
-          if (item.data.properties.special) {
-            if (item.data.properties.fighting) {
-              item.data.specialization = game.i18n.localize(
+          if (item.system.properties.special) {
+            if (item.system.properties.fighting) {
+              item.system.specialization = game.i18n.localize(
                 'CoC7.FightingSpecializationName'
               )
             }
-            if (item.data.properties.firearm) {
-              item.data.specialization = game.i18n.localize(
+            if (item.system.properties.firearm) {
+              item.system.specialization = game.i18n.localize(
                 'CoC7.FirearmSpecializationName'
               )
             }
           }
 
-          if (this.actor.data.type !== 'character') {
-            if (isNaN(Number(item.data.value))) {
+          if (this.actor.type !== 'character') {
+            if (isNaN(Number(item.system.value))) {
               let value = null
               const parsed = {}
               for (const [key, value] of Object.entries(
@@ -253,14 +240,14 @@ export class CoC7ActorSheet extends ActorSheet {
               }
               try {
                 value = (
-                  await new Roll(item.data.value, parsed).evaluate({
+                  await new Roll(item.system.value, parsed).evaluate({
                     async: true
                   })
                 ).total
               } catch (err) {
                 console.warn(
                   game.i18n.format('CoC7.ErrorUnableToParseSkillFormula', {
-                    value: item.data.value,
+                    value: item.system.value,
                     name: item.name
                   })
                 )
@@ -268,30 +255,30 @@ export class CoC7ActorSheet extends ActorSheet {
               }
 
               if (value) {
-                item.data.value = value
+                item.system.value = value
                 const itemToUpdate = this.actor.items.get(item._id)
                 console.info(
-                  `[COC7] (Actor:${this.name}) Evaluating skill ${item.name}:${item.data.value} to ${value}`
+                  `[COC7] (Actor:${this.name}) Evaluating skill ${item.name}:${item.system.value} to ${value}`
                 )
                 await itemToUpdate.update({
-                  'data.value': value
+                  'system.value': value
                 })
               }
             }
             const skill = this.actor.items.get(item._id)
-            item.data.rawValue = skill.rawValue
-            item.data.value = skill.value
+            item.system.rawValue = skill.rawValue
+            item.system.value = skill.value
           } else {
             const skill = this.actor.items.get(item._id)
-            item.data.base = await skill.asyncBase()
+            item.system.base = await skill.asyncBase()
 
-            if (item.data.value) {
+            if (item.system.value) {
               // This should be part of migration or done at init !
               // Was done when skill value was changed to base + adjustement
-              const exp = item.data.adjustments?.experience
-                ? parseInt(item.data.adjustments.experience)
+              const exp = item.system.adjustments?.experience
+                ? parseInt(item.system.adjustments.experience)
                 : 0
-              let updatedExp = exp + parseInt(item.data.value) - skill.value
+              let updatedExp = exp + parseInt(item.system.value) - skill.value
               if (updatedExp <= 0) updatedExp = null
               console.info(
                 `[COC7] Updating skill ${skill.name} experience. Experience missing: ${updatedExp}`
@@ -299,31 +286,31 @@ export class CoC7ActorSheet extends ActorSheet {
               await this.actor.updateEmbeddedDocuments('Item', [
                 {
                   _id: item._id,
-                  'data.adjustments.experience': updatedExp,
-                  'data.value': null
+                  'system.adjustments.experience': updatedExp,
+                  'system.value': null
                 }
               ])
-              if (!item.data.adjustments) item.data.adjustments = {}
-              item.data.adjustments.experience = updatedExp
-              item.data.rawValue = skill.rawValue
-              item.data.value = skill.value // ACTIVE_EFFECT necessary to apply effects
+              if (!item.system.adjustments) item.system.adjustments = {}
+              item.system.adjustments.experience = updatedExp
+              item.system.rawValue = skill.rawValue
+              item.system.value = skill.value // ACTIVE_EFFECT necessary to apply effects
             } else {
-              item.data.value = skill.value // ACTIVE_EFFECT necessary to apply effects
-              item.data.rawValue = skill.rawValue
+              item.system.value = skill.value // ACTIVE_EFFECT necessary to apply effects
+              item.system.rawValue = skill.rawValue
             }
           }
         }
 
-        let list = data.itemsByType[item.type]
+        let list = actor.itemsByType[item.type]
         if (!list) {
           list = []
-          data.itemsByType[item.type] = list
+          actor.itemsByType[item.type] = list
         }
         list.push(item)
       }
 
-      for (const itemType in data.itemsByType) {
-        data.itemsByType[itemType].sort((a, b) => {
+      for (const itemType in actor.itemsByType) {
+        actor.itemsByType[itemType].sort((a, b) => {
           return a.name
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '')
@@ -338,7 +325,7 @@ export class CoC7ActorSheet extends ActorSheet {
       }
 
       // redondant avec matrice itembytype
-      data.skills = data.items
+      actor.skills = actor.items
         .filter(item => item.type === 'skill')
         .sort((a, b) => {
           return a.name
@@ -353,88 +340,88 @@ export class CoC7ActorSheet extends ActorSheet {
             )
         })
 
-      data.meleeSkills = data.skills.filter(
+      actor.meleeSkills = actor.skills.filter(
         skill =>
-          skill.data.properties.combat === true &&
-          skill.data.properties.fighting === true
+          skill.system.properties.combat === true &&
+          skill.system.properties.fighting === true
       )
-      data.rangeSkills = data.skills.filter(
+      actor.rangeSkills = actor.skills.filter(
         skill =>
-          skill.data.properties.combat === true &&
-          skill.data.properties.firearm === true
+          skill.system.properties.combat === true &&
+          skill.system.properties.firearm === true
       )
 
-      const cbtSkills = data.skills.filter(
-        skill => skill.data.properties.combat === true
+      const cbtSkills = actor.skills.filter(
+        skill => skill.system.properties.combat === true
       )
       if (cbtSkills) {
         for (const skill of cbtSkills) {
-          data.combatSkills[skill._id] = skill
+          actor.combatSkills[skill._id] = skill
         }
       }
 
-      const weapons = data.itemsByType.weapon
+      const weapons = actor.itemsByType.weapon
 
       if (weapons) {
         for (const weapon of weapons) {
           weapon.usesAlternateSkill =
-            weapon.data.properties.auto === true ||
-            weapon.data.properties.brst === true
-          if (!weapon.data.ammo) weapon.data.ammo = 0
+            weapon.system.properties.auto === true ||
+            weapon.system.properties.brst === true
+          if (!weapon.system.ammo) weapon.system.ammo = 0
 
           weapon.skillSet = true
-          // weapon.data.skill.main.name = '';
-          // weapon.data.skill.main.value = 0;
-          // weapon.data.skill.alternativ.name = '';
-          // weapon.data.skill.alternativ.value = 0;
-          if (weapon.data.skill.main.id === '') {
+          // weapon.system.skill.main.name = '';
+          // weapon.system.skill.main.value = 0;
+          // weapon.system.skill.alternativ.name = '';
+          // weapon.system.skill.alternativ.value = 0;
+          if (weapon.system.skill.main.id === '') {
             // TODO : si l'ID n'ests pas définie mais qu'un nom a été donné, utiliser ce nom et tanter de retrouver le skill
             weapon.skillSet = false
           } else {
             // TODO : avant d'assiger le skill vérifier qu'il existe toujours.
             // si il n'existe plus il faut le retrouver ou passer skillset a false.
-            if (data.combatSkills[weapon.data.skill.main.id]) {
-              const skill = this.actor.items.get(weapon.data.skill.main.id)
-              weapon.data.skill.main.name = skill.data.data.skillName
-              weapon.data.skill.main.value = skill.value
+            if (actor.combatSkills[weapon.system.skill.main.id]) {
+              const skill = this.actor.items.get(weapon.system.skill.main.id)
+              weapon.system.skill.main.name = skill.system.skillName
+              weapon.system.skill.main.value = skill.value
             } else {
               weapon.skillSet = false
             }
 
-            if (weapon.data.skill.alternativ.id !== '') {
-              if (data.combatSkills[weapon.data.skill.alternativ.id]) {
+            if (weapon.system.skill.alternativ.id !== '') {
+              if (actor.combatSkills[weapon.system.skill.alternativ.id]) {
                 const skill = this.actor.items.get(
-                  weapon.data.skill.alternativ.id
+                  weapon.system.skill.alternativ.id
                 )
-                weapon.data.skill.alternativ.name = skill.data.data.skillName
-                weapon.data.skill.alternativ.value = skill.value
+                weapon.system.skill.alternativ.name = skill.system.skillName
+                weapon.system.skill.alternativ.value = skill.value
               }
             }
           }
 
-          weapon.data._properties = []
+          weapon.system._properties = []
           for (const [key, value] of Object.entries(COC7.weaponProperties)) {
             const property = {}
             property.id = key
             property.name = value
-            property.value = weapon.data.properties[key] === true
-            weapon.data._properties.push(property)
+            property.value = weapon.system.properties[key] === true
+            weapon.system._properties.push(property)
           }
 
-          data.weapons[weapon._id] = weapon
-          if (weapon.data.properties.rngd) data.rangeWpn.push(weapon)
-          else data.meleeWpn.push(weapon)
+          actor.weapons[weapon._id] = weapon
+          if (weapon.system.properties.rngd) actor.rangeWpn.push(weapon)
+          else actor.meleeWpn.push(weapon)
         }
       }
 
       const token = this.token
-      data.tokenId = token
+      actor.tokenId = token
         ? `${token.parent?.id ? token.parent.id : 'TOKEN'}.${token.id}`
         : null // REFACTORING (2)
 
-      data.hasEmptyValueWithFormula = false
-      if (data.data.characteristics) {
-        for (const characteristic of Object.values(data.data.characteristics)) {
+      actor.hasEmptyValueWithFormula = false
+      if (actor.data.system.characteristics) {
+        for (const characteristic of Object.values(actor.data.system.characteristics)) {
           if (!characteristic.value) characteristic.editable = true
           characteristic.hard = Math.floor(characteristic.value / 2)
           characteristic.extreme = Math.floor(characteristic.value / 5)
@@ -451,29 +438,29 @@ export class CoC7ActorSheet extends ActorSheet {
             characteristic.hasEmptyValueWithFormula = true
           }
 
-          data.hasEmptyValueWithFormula =
-            data.hasEmptyValueWithFormula ||
+          actor.hasEmptyValueWithFormula =
+            actor.hasEmptyValueWithFormula ||
             characteristic.hasEmptyValueWithFormula
         }
       }
     }
 
     // For compat with previous characters test if auto is definied, if not we define it
-    if (!['vehicle', 'container'].includes(this.actor.data.type)) {
+    if (!['vehicle', 'container'].includes(this.actor.type)) {
       const auto = this.actor.checkUndefinedAuto()
-      data.data = mergeObject(data.data, auto)
+      actor.data.system = mergeObject(actor.data.system, auto)
     } else {
-      data.data.attribs.hp.auto = false
-      data.data.attribs.mp.auto = false
-      data.data.attribs.san.auto = false
-      data.data.attribs.mov.auto = false
-      data.data.attribs.db.auto = false
-      data.data.attribs.build.auto = false
+      actor.data.system.attribs.hp.auto = false
+      actor.data.system.attribs.mp.auto = false
+      actor.data.system.attribs.san.auto = false
+      actor.data.system.attribs.mov.auto = false
+      actor.data.system.attribs.db.auto = false
+      actor.data.system.attribs.build.auto = false
     }
 
-    // data.data.attribs.mov.value = this.actor.mov // return computed values or fixed values if not auto.
-    // data.data.attribs.db.value = this.actor.db
-    // data.data.attribs.build.value = this.actor.build
+    // actor.data.system.attribs.mov.value = this.actor.mov // return computed values or fixed values if not auto.
+    // actor.data.system.attribs.db.value = this.actor.db
+    // actor.data.system.attribs.build.value = this.actor.build
 
     // if (typeof this.actor.compendium === 'undefined' && this.actor.isOwner) {
     //   ui.notifications.info('changr spec name 4')
@@ -481,117 +468,117 @@ export class CoC7ActorSheet extends ActorSheet {
     //   // This whole part needs to be re-evaluated
     //   // Seeting this shouldn't be necessary
     //   this.actor.update(
-    //     { 'data.attribs.mov.value': this.actor.mov },
+    //     { 'system.attribs.mov.value': this.actor.mov },
     //     { render: false }
     //   )
     //   // mov.max never used
     //   // this.actor.update(
-    //   //   { 'data.attribs.mov.max': this.actor.mov },
+    //   //   { 'system.attribs.mov.max': this.actor.mov },
     //   //   { render: false }
     //   // )
     //   this.actor.update(
-    //     { 'data.attribs.db.value': this.actor.db },
+    //     { 'system.attribs.db.value': this.actor.db },
     //     { render: false }
     //   )
     //   this.actor.update(
-    //     { 'data.attribs.build.current': this.actor.build },
+    //     { 'system.attribs.build.current': this.actor.build },
     //     { render: false }
     //   )
     //   this.actor.update(
-    //     { 'data.attribs.build.value': this.actor.build },
+    //     { 'system.attribs.build.value': this.actor.build },
     //     { render: false }
     //   )
     // }
 
-    // if( data.data.attribs.hp.value < 0) data.data.attribs.hp.value = null;
-    if (data.data.attribs.mp.value < 0) data.data.attribs.mp.value = null
-    if (data.data.attribs.san.value < 0) data.data.attribs.san.value = null
-    // data.data.attribs.san.fiftyOfCurrent = data.data.attribs.san.value >= 0 ? ' / '+Math.floor(data.data.attribs.san.value/5):'';
-    // if (data.data.attribs.hp.auto) {
+    // if (actor.data.system.attribs.hp.value < 0) actor.data.system.attribs.hp.value = null;
+    if (actor.data.system.attribs.mp.value < 0) actor.data.system.attribs.mp.value = null
+    if (actor.data.system.attribs.san.value < 0) actor.data.system.attribs.san.value = null
+    // actor.data.system.attribs.san.fiftyOfCurrent = actor.data.system.attribs.san.value >= 0 ? ' / '+Math.floor(actor.data.system.attribs.san.value/5):'';
+    // if (actor.data.system.attribs.hp.auto) {
     //   // TODO if any is null set max back to null.
     //   if (
-    //     data.data.characteristics.siz.value != null &&
-    //     data.data.characteristics.con.value != null
+    //     actor.data.system.characteristics.siz.value != null &&
+    //     actor.data.system.characteristics.con.value != null
     //   ) {
-    //     data.data.attribs.hp.max = this.actor.hpMax
+    //     actor.data.system.attribs.hp.max = this.actor.hpMax
     //   }
     // }
 
-    // if (data.data.attribs.mp.auto) {
+    // if (actor.data.system.attribs.mp.auto) {
     //   // TODO if any is null set max back to null.
-    //   if (data.data.characteristics.pow.value != null) {
-    //     data.data.attribs.mp.max = Math.floor(
-    //       data.data.characteristics.pow.value / 5
+    //   if (actor.data.system.characteristics.pow.value != null) {
+    //     actor.data.system.attribs.mp.max = Math.floor(
+    //       actor.data.system.characteristics.pow.value / 5
     //     )
     //   }
     // }
 
-    // if (data.data.attribs.san.auto) {
-    //   data.data.attribs.san.max = this.actor.sanMax
+    // if (actor.data.system.attribs.san.auto) {
+    //   actor.data.system.attribs.san.max = this.actor.sanMax
     // }
 
     // if (
-    //   data.data.attribs.mp.value > data.data.attribs.mp.max ||
-    //   data.data.attribs.mp.max == null
+    //   actor.data.system.attribs.mp.value > actor.data.system.attribs.mp.max ||
+    //   actor.data.system.attribs.mp.max == null
     // ) {
-    //   data.data.attribs.mp.value = data.data.attribs.mp.max
+    //   actor.data.system.attribs.mp.value = actor.data.system.attribs.mp.max
     // }
     // if (
-    //   data.data.attribs.hp.value > data.data.attribs.hp.max ||
-    //   data.data.attribs.hp.max == null
+    //   actor.data.system.attribs.hp.value > actor.data.system.attribs.hp.max ||
+    //   actor.data.system.attribs.hp.max == null
     // ) {
-    //   data.data.attribs.hp.value = data.data.attribs.hp.max
+    //   actor.data.system.attribs.hp.value = actor.data.system.attribs.hp.max
     // }
 
     // if (
-    //   data.data.attribs.hp.value == null &&
-    //   data.data.attribs.hp.max != null
+    //   actor.data.system.attribs.hp.value == null &&
+    //   actor.data.system.attribs.hp.max != null
     // ) {
-    //   data.data.attribs.hp.value = data.data.attribs.hp.max
+    //   actor.data.system.attribs.hp.value = actor.data.system.attribs.hp.max
     // }
     // if (
-    //   data.data.attribs.mp.value == null &&
-    //   data.data.attribs.mp.max != null
+    //   actor.data.system.attribs.mp.value == null &&
+    //   actor.data.system.attribs.mp.max != null
     // ) {
-    //   data.data.attribs.mp.value = data.data.attribs.mp.max
+    //   actor.data.system.attribs.mp.value = actor.data.system.attribs.mp.max
     // }
 
-    if (!['vehicle'].includes(this.actor.data.type)) {
+    if (!['vehicle'].includes(this.actor.type)) {
       // if (
-      //   data.data.attribs.san.value == null &&
-      //   data.data.characteristics.pow.value != null
+      //   actor.data.system.attribs.san.value == null &&
+      //   actor.data.system.characteristics.pow.value != null
       // ) {
-      //   data.data.attribs.san.value = data.data.characteristics.pow.value
+      //   actor.data.system.attribs.san.value = actor.data.system.characteristics.pow.value
       // }
-      // if (data.data.attribs.san.value > data.data.attribs.san.max) {
-      //   data.data.attribs.san.value = data.data.attribs.san.max
+      // if (actor.data.system.attribs.san.value > actor.data.system.attribs.san.max) {
+      //   actor.data.system.attribs.san.value = actor.data.system.attribs.san.max
       // }
 
-      if (data.data.biography instanceof Array && data.data.biography.length) {
-        data.data.biography[0].isFirst = true
-        data.data.biography[data.data.biography.length - 1].isLast = true
+      if (actor.data.system.biography instanceof Array && actor.data.system.biography.length) {
+        actor.data.system.biography[0].isFirst = true
+        actor.data.system.biography[actor.data.system.biography.length - 1].isLast = true
       }
     }
-    data.showInventoryItems = false
-    data.showInventoryBooks = false
-    data.showInventorySpells = false
-    data.showInventoryTalents = false
-    data.showInventoryStatuses = false
-    data.showInventoryWeapons = false
+    actor.showInventoryItems = false
+    actor.showInventoryBooks = false
+    actor.showInventorySpells = false
+    actor.showInventoryTalents = false
+    actor.showInventoryStatuses = false
+    actor.showInventoryWeapons = false
 
-    data.hasConditions =
+    actor.hasConditions =
       this.actor.effects.size > 0 ||
-      (typeof this.actor.data.data.conditions !== 'undefined' &&
-        Object.keys(this.actor.data.data.conditions).filter(
-          condition => this.actor.data.data.conditions[condition].value
+      (typeof this.actor.system.conditions !== 'undefined' &&
+        Object.keys(this.actor.system.conditions).filter(
+          condition => this.actor.system.conditions[condition].value
         ).length > 0)
-    // const first = data.data.biography[0];
+    // const first = actor.data.system.biography[0];
     // first.isFirst = true;
-    // data.data.biography[0] = first;
-    // const last = data.data.biography[data.data.biography.length - 1];
+    // actor.data.system.biography[0] = first;
+    // const last = actor.data.system.biography[actor.data.system.biography.length - 1];
     // last.isLast = true;
-    // data.data.biography[data.data.biography.length - 1] = last;
-    return data
+    // actor.data.system.biography[actor.data.system.biography.length - 1] = last;
+    return actor
   }
 
   /* -------------------------------------------- */
@@ -1148,10 +1135,7 @@ export class CoC7ActorSheet extends ActorSheet {
       let visible = false
       for (const [k, v] of Object.entries(e.data.permission)) {
         if (k === 'default' || k === game.user.id) {
-          visible =
-            visible ||
-            v !==
-              (CONST.DOCUMENT_OWNERSHIP_LEVELS || CONST.ENTITY_PERMISSIONS).NONE
+          visible = visible || v !== CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE
         }
       }
       return visible

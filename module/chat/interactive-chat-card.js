@@ -334,7 +334,7 @@ export class InteractiveChatCard {
     return this.target.isOwner
   }
 
-  get isGM () {
+  get isKeeper () {
     return game.user.isGM
   }
 

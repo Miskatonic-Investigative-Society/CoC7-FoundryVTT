@@ -10,11 +10,11 @@
               {{#select data.system.skill.main.id}}
                 {{#if data.system.properties.rngd}}
                   {{#each firearmSkills as |cbs|}}
-                    <option value="{{cbs.id}}">{{cbs.data.name}}</option>
+                    <option value="{{cbs.id}}">{{cbs.name}}</option>
                   {{/each}}
                 {{else}}
                   {{#each fightingSkills as |cbs|}}
-                    <option value="{{cbs.id}}">{{cbs.data.name}}</option>
+                    <option value="{{cbs.id}}">{{cbs.name}}</option>
                   {{/each}}
                 {{/if}}
               {{/select}}
@@ -25,11 +25,11 @@
                 {{#select data.system.skill.alternativ.id}}
                   {{#if data.system.properties.rngd}}
                     {{#each firearmSkills as |cbs|}}
-                      <option value="{{cbs.id}}">{{cbs.data.name}}</option>
+                      <option value="{{cbs.id}}">{{cbs.name}}</option>
                     {{/each}}
                   {{else}}
                     {{#each fightingSkills as |cbs|}}
-                      <option value="{{cbs.id}}">{{cbs.data.name}}</option>
+                      <option value="{{cbs.id}}">{{cbs.name}}</option>
                     {{/each}}
                   {{/if}}
                 {{/select}}

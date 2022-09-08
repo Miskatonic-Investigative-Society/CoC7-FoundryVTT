@@ -1738,14 +1738,6 @@ export class CoC7Check {
     check.updateChatCard()
   }
 
-  // OBSOLETE !
-  async shortResult (details = false) {
-    const template = 'systems/CoC7/templates/chat/roll.html'
-    this.details = details || false
-    const html = await renderTemplate(template, this)
-    return html
-  }
-
   get tooltip () {
     return renderTemplate(
       'systems/CoC7/templates/chat/rolls/roll-tooltip.html',

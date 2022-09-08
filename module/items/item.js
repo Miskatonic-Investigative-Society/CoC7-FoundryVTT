@@ -318,28 +318,28 @@ export class CoC7Item extends Item {
   async checkSkillProperties () {
     if (this.type !== 'skill') return
     const checkedProps = {}
-    if (this.data.data.properties.combat) {
+    if (this.system.properties.combat) {
       // if skill is not a specialisation make it a specialisation
-      if (!this.data.data.properties.special) {
-        this.data.data.properties.special = true
+      if (!this.system.properties.special) {
+        this.system.properties.special = true
         checkedProps['data.properties.special'] = true
       }
 
       // If skill is combat skill and no specialisation set then make it a fighting( closecombat) skill
       if (
-        !this.data.data.properties.fighting &&
-        !this.data.data.properties.firearm
+        !this.system.properties.fighting &&
+        !this.system.properties.firearm
       ) {
-        this.data.data.properties.fighting = true
+        this.system.properties.fighting = true
         checkedProps['data.properties.fighting'] = true
       }
 
       // if skill is close combat without specialisation name make set it according to the fightingSpecializationName
       if (
-        this.data.data.properties.fighting &&
-        (!this.data.data.specialization || this.data.data.specialization === '')
+        this.system.properties.fighting &&
+        (!this.system.specialization || this.system.specialization === '')
       ) {
-        this.data.data.specialization = game.i18n.localize(
+        this.system.specialization = game.i18n.localize(
           COC7.fightingSpecializationName
         )
         checkedProps['data.specialization'] = game.i18n.localize(
@@ -349,10 +349,10 @@ export class CoC7Item extends Item {
 
       // if skill is range combat without a specialisation name make set it according to the firearmSpecializationName
       if (
-        this.data.data.properties.firearm &&
-        (!this.data.data.specialization || this.data.data.specialization === '')
+        this.system.properties.firearm &&
+        (!this.system.specialization || this.system.specialization === '')
       ) {
-        this.data.data.specialization = game.i18n.localize(
+        this.system.specialization = game.i18n.localize(
           COC7.firearmSpecializationName
         )
         checkedProps['data.specialization'] = game.i18n.localize(
@@ -360,12 +360,12 @@ export class CoC7Item extends Item {
         )
       }
     } else {
-      if (this.data.data.properties.fighting) {
-        this.data.data.properties.fighting = false
+      if (this.system.properties.fighting) {
+        this.system.properties.fighting = false
         checkedProps['data.properties.fighting'] = false
       }
-      if (this.data.data.properties.firearm) {
-        this.data.data.properties.firearm = false
+      if (this.system.properties.firearm) {
+        this.system.properties.firearm = false
         checkedProps['data.properties.firearm'] = false
       }
     }
@@ -376,7 +376,7 @@ export class CoC7Item extends Item {
 
     return checkedProps
 
-    // for (const property in this.data.data.properties) {
+    // for (const property in this.system.properties) {
     //  checkedProps[`data.data.properties${property}`] = true;
     // }
   }
@@ -394,7 +394,7 @@ export class CoC7Item extends Item {
 
   async flagForDevelopement () {
     if (game.settings.get('CoC7', 'xpEnabled') || game.user.isGM) {
-      if (!this.data.data.flags) {
+      if (!this.system.flags) {
         await this.update({ 'data.flags': {} })
       }
       await this.update({ 'data.flags.developement': true })
@@ -403,7 +403,7 @@ export class CoC7Item extends Item {
 
   async unflagForDevelopement () {
     if (game.settings.get('CoC7', 'xpEnabled') || game.user.isGM) {
-      if (!this.data.data.flags) {
+      if (!this.system.flags) {
         await this.update({ 'data.flags': {} })
       }
       await this.update({ 'data.flags.developement': false })
@@ -453,57 +453,57 @@ export class CoC7Item extends Item {
   }
 
   getItemFlag (flagName) {
-    if (!this.data.data.flags) {
-      this.data.data.flags = {}
-      this.data.data.flags.locked = true
+    if (!this.system.flags) {
+      this.system.flags = {}
+      this.system.flags.locked = true
       this.update({ 'data.flags': {} })
       return false
     }
 
-    if (!this.data.data.flags[flagName]) return false
-    return this.data.data.flags[flagName]
+    if (!this.system.flags[flagName]) return false
+    return this.system.flags[flagName]
   }
 
   get usesAlternativeSkill () {
     return (
       this.type === 'weapon' &&
-      (this.data.data.properties?.auto === true ||
-        this.data.data.properties?.brst === true ||
-        this.data.data.properties?.thrown === true)
+      (this.system.properties?.auto === true ||
+        this.system.properties?.brst === true ||
+        this.system.properties?.thrown === true)
     )
   }
 
   get maxUsesPerRound () {
     if (this.type !== 'weapon') return null
-    const multiShot = parseInt(this.data.data.usesPerRound.max)
+    const multiShot = parseInt(this.system.usesPerRound.max)
     if (isNaN(multiShot)) return 0
     return multiShot
   }
 
   get usesPerRound () {
     if (this.type !== 'weapon') return null
-    const singleShot = parseInt(this.data.data.usesPerRound.normal)
+    const singleShot = parseInt(this.system.usesPerRound.normal)
     if (isNaN(singleShot)) return 0
     return singleShot
   }
 
   get usesPerRoundString () {
     let usesPerRound
-    if (this.data.data.usesPerRound.normal) {
-      usesPerRound = this.data.data.usesPerRound.normal
+    if (this.system.usesPerRound.normal) {
+      usesPerRound = this.system.usesPerRound.normal
     } else {
       usesPerRound = '1'
     }
-    if (this.data.data.usesPerRound.max) {
-      usesPerRound += `(${this.data.data.usesPerRound.max})`
+    if (this.system.usesPerRound.max) {
+      usesPerRound += `(${this.system.usesPerRound.max})`
     }
-    if (this.data.data.properties.auto) {
+    if (this.system.properties.auto) {
       usesPerRound += ` ${game.i18n.localize('CoC7.WeaponAuto')}`
     }
-    if (this.data.data.properties.brst) {
+    if (this.system.properties.brst) {
       usesPerRound += ` ${game.i18n.localize('CoC7.WeaponBrst')}`
-      if (this.data.data.usesPerRound.burst) {
-        usesPerRound += `(${this.data.data.usesPerRound.burst})`
+      if (this.system.usesPerRound.burst) {
+        usesPerRound += `(${this.system.usesPerRound.burst})`
       }
     }
 
@@ -527,15 +527,15 @@ export class CoC7Item extends Item {
   }
 
   get baseRange () {
-    return parseInt(this.data.data.range.normal.value)
+    return parseInt(this.system.range.normal.value)
   }
 
   get longRange () {
-    return parseInt(this.data.data.range.long.value)
+    return parseInt(this.system.range.long.value)
   }
 
   get extremeRange () {
-    return parseInt(this.data.data.range.extreme.value)
+    return parseInt(this.system.range.extreme.value)
   }
 
   get skillProperties () {
@@ -543,7 +543,7 @@ export class CoC7Item extends Item {
 
     const skillProperties = []
     for (const [key, value] of Object.entries(COC7.skillProperties)) {
-      if (this.data.data.properties[key] === true) {
+      if (this.system.properties[key] === true) {
         skillProperties.push(game.i18n.localize(value))
       }
     }
@@ -552,7 +552,7 @@ export class CoC7Item extends Item {
 
   static async calculateBase (actor, data) {
     if (data.type !== 'skill') return null
-    if (String(data.data.base).includes('@')) {
+    if (String(data.system.base).includes('@')) {
       const parsed = {}
       for (const [key, value] of Object.entries(COC7.formula.actorsheet)) {
         if (key.startsWith('@') && value.startsWith('this.actor.')) {
@@ -562,7 +562,7 @@ export class CoC7Item extends Item {
       let value
       try {
         value = Math.floor(
-          new Roll(data.data.base, parsed).evaluate({
+          new Roll(data.system.base, parsed).evaluate({
             maximize: true
           }).total
         )
@@ -571,16 +571,16 @@ export class CoC7Item extends Item {
       }
       return value
     }
-    return !isNaN(parseInt(data.data.base)) ? parseInt(data.data.base) : null
+    return !isNaN(parseInt(data.system.base)) ? parseInt(data.system.base) : null
   }
 
   get _base () {
     if (this.type !== 'skill') return [null, false]
-    if (typeof this.data.data.base !== 'string') {
-      return [this.data.data.base, false]
+    if (typeof this.system.base !== 'string') {
+      return [this.system.base, false]
     }
 
-    if (this.data.data.base.includes('@')) {
+    if (this.system.base.includes('@')) {
       const parsed = {}
       for (const [key, value] of Object.entries(COC7.formula.actorsheet)) {
         if (key.startsWith('@') && value.startsWith('this.')) {
@@ -590,7 +590,7 @@ export class CoC7Item extends Item {
       let value
       try {
         value = Math.floor(
-          new Roll(this.data.data.base, parsed).evaluate({
+          new Roll(this.system.base, parsed).evaluate({
             maximize: true
           }).total
         )
@@ -601,8 +601,8 @@ export class CoC7Item extends Item {
       return [value, true]
     }
     return [
-      !isNaN(parseInt(this.data.data.base))
-        ? parseInt(this.data.data.base)
+      !isNaN(parseInt(this.system.base))
+        ? parseInt(this.system.base)
         : null,
       false
     ]
@@ -612,7 +612,7 @@ export class CoC7Item extends Item {
     const e = this._base
     if (e[1]) {
       console.info(
-        `[COC7] (${this.parent?.name}) Evaluating skill ${this.name}:${this.data.data.base} to ${e[0]}`
+        `[COC7] (${this.parent?.name}) Evaluating skill ${this.name}:${this.system.base} to ${e[0]}`
       )
       await this.update({ 'data.base': e[0] })
     }
@@ -629,17 +629,17 @@ export class CoC7Item extends Item {
 
   getBulletLeft () {
     if (this.type !== 'weapon') return null
-    if (!this.data.data.ammo) {
+    if (!this.system.ammo) {
       this.setBullets(0)
       return 0
     }
-    return this.data.data.ammo
+    return this.system.ammo
   }
 
   async reload () {
     if (this.type !== 'weapon') return null
-    const maxBullet = this.data.data.bullets
-      ? parseInt(this.data.data.bullets)
+    const maxBullet = this.system.bullets
+      ? parseInt(this.system.bullets)
       : 1
     await this.setBullets(maxBullet)
   }
@@ -652,8 +652,8 @@ export class CoC7Item extends Item {
   async addBullet () {
     if (this.type !== 'weapon') return null
     const bullets = await this.getBulletLeft()
-    const maxBullets = this.data.data.bullets
-      ? parseInt(this.data.data.bullets)
+    const maxBullets = this.system.bullets
+      ? parseInt(this.system.bullets)
       : 1
     if (bullets + 1 >= maxBullets) await this.setBullets(maxBullets)
     else await this.setBullets(bullets + 1)
@@ -760,7 +760,7 @@ export class CoC7Item extends Item {
 
     if (this.type === 'skill') {
       for (const [key, value] of Object.entries(COC7.skillProperties)) {
-        if (this.data.data.properties[key] === true) props.push(value)
+        if (this.system.properties[key] === true) props.push(value)
       }
     }
 
@@ -772,23 +772,23 @@ export class CoC7Item extends Item {
 
   _weaponChatData (data, labels, props) {
     for (const [key, value] of Object.entries(COC7.weaponProperties)) {
-      if (this.data.data.properties[key] === true) props.push(value)
+      if (this.system.properties[key] === true) props.push(value)
     }
 
     let skillLabel = game.i18n.localize('CoC7.Skill')
     let skillName = ''
     let found = false
-    if (this.data.data.skill.main.id) {
-      const skill = this.actor?.items.get(this.data.data.skill.main.id)
+    if (this.system.skill.main.id) {
+      const skill = this.actor?.items.get(this.system.skill.main.id)
       if (skill) {
         skillName += CoC7Item.getNameWithoutSpec(skill)
         found = true
       }
     }
 
-    if (this.usesAlternativeSkill && this.data.data.skill.alternativ.id) {
+    if (this.usesAlternativeSkill && this.system.skill.alternativ.id) {
       skillLabel = game.i18n.localize('CoC7.Skills')
-      const skill = this.actor?.items.get(this.data.data.skill.alternativ.id)
+      const skill = this.actor?.items.get(this.system.skill.alternativ.id)
       if (skill) {
         skillName += `/${CoC7Item.getNameWithoutSpec(skill)}`
         found = true
@@ -796,9 +796,9 @@ export class CoC7Item extends Item {
     }
 
     if (!found) {
-      skillName = this.data.data.skill.main.name
-      if (this.usesAlternativeSkill && this.data.data.skill.alternativ.name) {
-        skillName += `/${this.data.data.skill.alternativ.name}`
+      skillName = this.system.skill.main.name
+      if (this.usesAlternativeSkill && this.system.skill.alternativ.name) {
+        skillName += `/${this.system.skill.alternativ.name}`
       }
     }
 
@@ -816,24 +816,24 @@ export class CoC7Item extends Item {
 
     labels.push({
       name: game.i18n.localize('CoC7.WeaponMalfunction'),
-      value: this.data.data.malfunction ? this.data.data.malfunction : '-'
+      value: this.system.malfunction ? this.system.malfunction : '-'
     })
 
-    if (this.data.data.bullets) {
+    if (this.system.bullets) {
       labels.push({
         name: game.i18n.localize('CoC7.WeaponBulletsInMag'),
-        value: this.data.data.bullets
+        value: this.system.bullets
       })
     }
   }
 
   canBePushed () {
-    if (this.type === 'skill' && this.data.data.properties.push) return true
+    if (this.type === 'skill' && this.system.properties.push) return true
     return false
   }
 
   get impale () {
-    return this.data.data.properties.impl
+    return this.system.properties.impl
   }
 
   get isDodge () {

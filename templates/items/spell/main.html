@@ -10,16 +10,16 @@
       {{#if isKeeper}}
         <div class="flexrow">
           <label>{{localize "CoC7.Source"}}:</label>
-          <input type="text" name="data.source" value="{{data.source}}" />
+          <input type="text" name="system.source" value="{{data.system.source}}" />
         </div>
         <div class="flexrow">
           <label>{{localize "CoC7.SpellCastingTime"}}:</label>
-          <input type="text" name="data.castingTime" value="{{data.castingTime}}" />
+          <input type="text" name="system.castingTime" value="{{data.system.castingTime}}" />
         </div>
       {{/if}}
     </div>
     <div class="aside">
-      {{#if (or isKeeper isOwner)}}
+      {{#if (and hasOwner (or isKeeper isOwner))}}
         <div class="flexrow">
           <span id="cast-spell">
             <label>
@@ -54,24 +54,13 @@
     </nav>
     <section class="body">
       <div class="tab" data-group="primary" data-tab="description">
-        {{editor
-          content=data.description.value
-          target="data.description.value"
-          button=true
-          owner=owner
-          editable=editable
-        }}
+        {{editor data.system.description.value target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
       </div>
       <div class="tab" data-group="primary" data-tab="details">
         {{> "systems/CoC7/templates/items/spell/details.html"}}
       </div>
       <div class="tab" data-group="primary" data-tab="notes">
-        {{editor
-          content=data.description.keeper
-          target="data.description.keeper"
-          button=true owner=owner
-          editable=editable
-        }}
+        {{editor data.system.description.keeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
       </div>
     </section>
   </div>

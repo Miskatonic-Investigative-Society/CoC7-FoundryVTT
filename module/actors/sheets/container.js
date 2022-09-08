@@ -172,8 +172,7 @@ export class CoC7ContainerSheet extends ActorSheet {
         if (k === 'default' || k === game.user.id) {
           visible =
             visible ||
-            v !==
-              (CONST.DOCUMENT_OWNERSHIP_LEVELS || CONST.ENTITY_PERMISSIONS).NONE
+            v !== CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE
         }
       }
       return visible
