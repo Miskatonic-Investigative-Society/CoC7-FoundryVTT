@@ -410,7 +410,8 @@ export class CoC7ChaseSheet extends ItemSheet {
       if (app.item.started) {
         const pCount = app.item.actualParticipants?.length
         const width = (pCount * 11.2 + 3) * remSize
-        app._tabs[0].active = 'setup'
+        app.activateTab('setup')
+        // app._tabs[0].active = 'setup'
         app.position.width = Math.max(width, 40 * remSize)
         // html.css('width', `${width}px`)
       } else {

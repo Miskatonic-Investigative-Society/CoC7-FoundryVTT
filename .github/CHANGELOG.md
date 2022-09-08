@@ -15,9 +15,11 @@ _If you decide to go on with V10:_
 
 Happy gaming !
 
-## Version 0.8.3
+## Version 0.9.0
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Drop support for V9
 
 ## Version 0.8.2
 
