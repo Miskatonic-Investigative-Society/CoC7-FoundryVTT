@@ -37,15 +37,15 @@ export class CoC7WeaponSheet extends ItemSheet {
    * The prepared data object contains both the actor data as well as additional sheet options
    */
   getData () {
-    const item = super.getData()
+    const sheetData = super.getData()
 
-    item.combatSkill = []
+    sheetData.combatSkill = []
 
-    item.hasOwner = this.item.isEmbedded === true
-    if (item.hasOwner) {
-      item.firearmSkills = this.actor.firearmSkills
-      item.fightingSkills = this.actor.fightingSkills
-      item.combatSkill = this.item.actor.items.filter(item => {
+    sheetData.hasOwner = this.item.isEmbedded === true
+    if (sheetData.hasOwner) {
+      sheetData.firearmSkills = this.actor.firearmSkills
+      sheetData.fightingSkills = this.actor.fightingSkills
+      sheetData.combatSkill = this.item.actor.items.filter(item => {
         if (item.type === 'skill') {
           if (item.system.properties.combat) {
             return true
@@ -54,26 +54,26 @@ export class CoC7WeaponSheet extends ItemSheet {
         return false
       })
 
-      item.combatSkill.sort((a, b) => {
+      sheetData.combatSkill.sort((a, b) => {
         return a.name
           .toLocaleLowerCase()
           .localeCompare(b.name.toLocaleLowerCase())
       })
     }
 
-    item._properties = []
+    sheetData._properties = []
     for (const [key, value] of Object.entries(COC7.weaponProperties)) {
       const property = {
         id: key,
         name: value,
         isEnabled: this.item.system.properties[key] === true
       }
-      item._properties.push(property)
+      sheetData._properties.push(property)
     }
 
-    item._eras = []
+    sheetData._eras = []
     for (const [key, value] of Object.entries(COC7.eras)) {
-      item._eras.push({
+      sheetData._eras.push({
         price: this.item.system.price[key] ?? 0,
         id: key,
         name: value,
@@ -81,13 +81,13 @@ export class CoC7WeaponSheet extends ItemSheet {
       })
     }
 
-    item.usesAlternateSkill =
+    sheetData.usesAlternateSkill =
       this.item.system.properties.auto === true ||
       this.item.system.properties.brst === true ||
       this.item.system.properties.thrown === true
 
-    item.isKeeper = game.user.isGM
-    return item
+    sheetData.isKeeper = game.user.isGM
+    return sheetData
   }
 
   /* -------------------------------------------- */

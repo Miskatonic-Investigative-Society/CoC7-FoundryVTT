@@ -104,13 +104,13 @@ export class CoC7ArchetypeSheet extends ItemSheet {
   }
 
   getData () {
-    const item = super.getData()
+    const sheetData = super.getData()
 
-    item.hasOwner = this.item.isEmbedded === true
+    sheetData.hasOwner = this.item.isEmbedded === true
 
     const coreCharacteristics = []
     for (const [key, selected] of Object.entries(
-      item.data.system.coreCharacteristics
+      sheetData.data.system.coreCharacteristics
     )) {
       if (selected) {
         const characName = game.i18n.localize(`CHARAC.${key.toUpperCase()}`)
@@ -118,30 +118,30 @@ export class CoC7ArchetypeSheet extends ItemSheet {
       }
     }
 
-    item.skillListEmpty = item.data.system.skills.length === 0
+    sheetData.skillListEmpty = sheetData.data.system.skills.length === 0
 
-    item.data.system.skills.sort((a, b) => {
+    sheetData.data.system.skills.sort((a, b) => {
       return a.name
         .toLocaleLowerCase()
         .localeCompare(b.name.toLocaleLowerCase())
     })
 
-    item.coreCharacteristicsString = ''
+    sheetData.coreCharacteristicsString = ''
     const orString = ` ${game.i18n.localize('CoC7.Or')} `
     if (coreCharacteristics.length) {
-      item.coreCharacteristicsString += coreCharacteristics.join(orString)
+      sheetData.coreCharacteristicsString += coreCharacteristics.join(orString)
     }
 
-    item.itemProperties = []
+    sheetData.itemProperties = []
 
-    item.itemProperties.push(
-      `${game.i18n.localize('CoC7.PulpTalents')}: ${item.data.system.talents}`
+    sheetData.itemProperties.push(
+      `${game.i18n.localize('CoC7.PulpTalents')}: ${sheetData.data.system.talents}`
     )
-    item.itemProperties.push(
-      `${game.i18n.localize('CoC7.BonusPoints')}: ${item.data.system.bonusPoints}`
+    sheetData.itemProperties.push(
+      `${game.i18n.localize('CoC7.BonusPoints')}: ${sheetData.data.system.bonusPoints}`
     )
 
-    item.isKeeper = game.user.isGM
-    return item
+    sheetData.isKeeper = game.user.isGM
+    return sheetData
   }
 }

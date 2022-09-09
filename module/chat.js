@@ -6,7 +6,7 @@ import { CoC7MeleeInitiator } from './chat/combat/melee-initiator.js'
 import { CoC7MeleeTarget } from './chat/combat/melee-target.js'
 import { CoC7MeleeResoltion } from './chat/combat/melee-resolution.js'
 import { CoC7RangeInitiator } from './chat/rangecombat.js'
-import { CoC7Roll, chatHelper } from './chat/helper.js'
+import { CoC7Roll, chatHelper, isCtrlKey } from './chat/helper.js'
 // import { CoC7DamageRoll } from './chat/damagecards.js';
 import { CoC7ConCheck } from './chat/concheck.js'
 import { CoC7Parser } from './apps/parser.js'
@@ -1032,10 +1032,7 @@ export class CoC7Chat {
         check.isBlind = false
         check.computeCheck()
         if (
-          event.metaKey ||
-          event.ctrlKey ||
-          event.keyCode === 91 ||
-          event.keyCode === 224
+          isCtrlKey(event)
         ) {
           check.updateChatCard({ makePublic: true })
         } else {

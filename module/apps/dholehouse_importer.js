@@ -272,7 +272,7 @@ export class CoC7DholeHouseActorImporter {
         cloned = {
           name: weapon.name,
           type: 'weapon',
-          data: {
+          system: {
             skill: {
               main: {
                 name: skill?.name ?? '',

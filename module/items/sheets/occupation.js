@@ -189,13 +189,13 @@ export class CoC7OccupationSheet extends ItemSheet {
   }
 
   getData () {
-    const item = super.getData()
+    const sheetData = super.getData()
 
-    item.hasOwner = this.item.isEmbedded === true
+    sheetData.hasOwner = this.item.isEmbedded === true
 
     const optionnal = []
     const mandatory = []
-    for (const [key, carac] of Object.entries(item.data.system.occupationSkillPoints)) {
+    for (const [key, carac] of Object.entries(sheetData.data.system.occupationSkillPoints)) {
       if (carac.multiplier) {
         const caracName = game.i18n.localize(`CHARAC.${key.toUpperCase()}`)
         if (carac.selected && carac.optional) {
@@ -207,44 +207,44 @@ export class CoC7OccupationSheet extends ItemSheet {
       }
     }
 
-    item.skillListEmpty = item.data.system.skills.length === 0
+    sheetData.skillListEmpty = sheetData.data.system.skills.length === 0
 
-    item.data.system.skills.sort((a, b) => {
+    sheetData.data.system.skills.sort((a, b) => {
       return a.name
         .toLocaleLowerCase()
         .localeCompare(b.name.toLocaleLowerCase())
     })
 
-    for (let index = 0, len = item.data.system.groups.length; index < len; index++) {
-      item.data.system.groups[index].isEmpty = item.data.system.groups[index].skills.length === 0
+    for (let index = 0, len = sheetData.data.system.groups.length; index < len; index++) {
+      sheetData.data.system.groups[index].isEmpty = sheetData.data.system.groups[index].skills.length === 0
 
-      item.data.system.groups[index].skills.sort((a, b) => {
+      sheetData.data.system.groups[index].skills.sort((a, b) => {
         return a.name
           .toLocaleLowerCase()
           .localeCompare(b.name.toLocaleLowerCase())
       })
     }
 
-    item.occupationPointsString = ''
+    sheetData.occupationPointsString = ''
     const orString = ` ${game.i18n.localize('CoC7.Or')} `
-    if (mandatory.length) item.occupationPointsString += mandatory.join(' + ')
+    if (mandatory.length) sheetData.occupationPointsString += mandatory.join(' + ')
     if (optionnal.length && mandatory.length) {
-      item.occupationPointsString += ` + (${optionnal.join(orString)})`
+      sheetData.occupationPointsString += ` + (${optionnal.join(orString)})`
     }
     if (optionnal.length && !mandatory.length) {
-      item.occupationPointsString += optionnal.join(orString)
+      sheetData.occupationPointsString += optionnal.join(orString)
     }
 
-    item.itemProperties = []
+    sheetData.itemProperties = []
 
-    for (const [key, value] of Object.entries(item.data.system.type)) {
+    for (const [key, value] of Object.entries(sheetData.data.system.type)) {
       if (value) {
-        item.itemProperties.push(COC7.occupationProperties[key] ? COC7.occupationProperties[key] : null)
+        sheetData.itemProperties.push(COC7.occupationProperties[key] ? COC7.occupationProperties[key] : null)
       }
     }
 
-    item.isKeeper = game.user.isGM
-    return item
+    sheetData.isKeeper = game.user.isGM
+    return sheetData
   }
 
   _updateObject (event, formData) {

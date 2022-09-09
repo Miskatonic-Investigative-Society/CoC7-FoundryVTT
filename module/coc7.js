@@ -340,7 +340,7 @@ Hooks.on('ready', async () => {
 
   const tableChoice = { none: 'SETTINGS.LetKeeperDecide' }
   for (const t of game.tables) {
-    tableChoice[t.data._id] = t.data.name
+    tableChoice[t._id] = t.name
   }
 
   game.settings.register('CoC7', 'boutOfMadnessSummaryTable', {

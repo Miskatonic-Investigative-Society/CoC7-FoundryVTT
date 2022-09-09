@@ -49,39 +49,39 @@ export class CoC7SkillSheet extends ItemSheet {
    */
   getData () {
     // this.item.checkSkillProperties();
-    const item = super.getData()
+    const sheetData = super.getData()
 
-    item.hasOwner = this.item.isEmbedded === true
+    sheetData.hasOwner = this.item.isEmbedded === true
 
-    item.effects = CoC7ActiveEffect.prepareActiveEffectCategories(
+    sheetData.effects = CoC7ActiveEffect.prepareActiveEffectCategories(
       this.item.effects
     )
 
-    item._properties = []
+    sheetData._properties = []
     for (const [key, value] of Object.entries(COC7.skillProperties)) {
-      item._properties.push({
+      sheetData._properties.push({
         id: key,
         name: value,
         isEnabled: this.item.system.properties[key] === true
       })
     }
 
-    item._eras = []
+    sheetData._eras = []
     for (const [key, value] of Object.entries(COC7.eras)) {
-      item._eras.push({
+      sheetData._eras.push({
         id: key,
         name: value,
         isEnabled: this.item.system.eras[key] === true
       })
     }
 
-    item.isSpecialized = this.item.system.properties.special
-    item.canModifySpec =
+    sheetData.isSpecialized = this.item.system.properties.special
+    sheetData.canModifySpec =
       !this.item.system.properties.firearm &&
       !this.item.system.properties.fighting
 
-    item.isKeeper = game.user.isGM
-    return item
+    sheetData.isKeeper = game.user.isGM
+    return sheetData
   }
 
   /* -------------------------------------------- */

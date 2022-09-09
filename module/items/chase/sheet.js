@@ -46,58 +46,58 @@ export class CoC7ChaseSheet extends ItemSheet {
   /** @override */
 
   getData (options = {}) {
-    const item = super.getData(options)
+    const sheetData = super.getData(options)
 
-    item.participants = this.item.participantsObject
-    item.participantsByInitiative = this.item.participantsByInitiative
-    item.preys = this.item.preys
-    item.chasers = this.item.chasers
+    sheetData.participants = this.item.participantsObject
+    sheetData.participantsByInitiative = this.item.participantsByInitiative
+    sheetData.preys = this.item.preys
+    sheetData.chasers = this.item.chasers
 
-    item.preysMinMov = item.preys.length ? item.preys.reduce((prev, current) => prev.adjustedMov < current.adjustedMov ? prev : current).adjustedMov : -1
+    sheetData.preysMinMov = sheetData.preys.length ? sheetData.preys.reduce((prev, current) => prev.adjustedMov < current.adjustedMov ? prev : current).adjustedMov : -1
 
-    item.preysMaxMov = item.preys.length ? item.preys.reduce((prev, current) => prev.adjustedMov > current.adjustedMov ? prev : current).adjustedMov : -1
+    sheetData.preysMaxMov = sheetData.preys.length ? sheetData.preys.reduce((prev, current) => prev.adjustedMov > current.adjustedMov ? prev : current).adjustedMov : -1
 
-    item.chasersMinMov = item.chasers.length ? item.chasers.reduce((prev, current) => prev.adjustedMov < current.adjustedMov ? prev : current).adjustedMov : -1
+    sheetData.chasersMinMov = sheetData.chasers.length ? sheetData.chasers.reduce((prev, current) => prev.adjustedMov < current.adjustedMov ? prev : current).adjustedMov : -1
 
-    item.chasersMaxMov = item.chasers.length ? item.chasers.reduce((prev, current) => prev.adjustedMov > current.adjustedMov ? prev : current).adjustedMov : -1
+    sheetData.chasersMaxMov = sheetData.chasers.length ? sheetData.chasers.reduce((prev, current) => prev.adjustedMov > current.adjustedMov ? prev : current).adjustedMov : -1
 
-    item.chasers.forEach(p => {
-      if (p.adjustedMov < item.preysMinMov) {
+    sheetData.chasers.forEach(p => {
+      if (p.adjustedMov < sheetData.preysMinMov) {
         p.tooSlow()
       } else {
         p.includeInChase()
       }
-      p.fastest = p.adjustedMov === item.chasersMaxMov
-      p.slowest = p.adjustedMov === item.chasersMinMov
+      p.fastest = p.adjustedMov === sheetData.chasersMaxMov
+      p.slowest = p.adjustedMov === sheetData.chasersMinMov
     })
 
-    item.preys.forEach(p => {
-      if (p.adjustedMov > item.chasersMaxMov) {
+    sheetData.preys.forEach(p => {
+      if (p.adjustedMov > sheetData.chasersMaxMov) {
         p.escaped()
       } else {
         p.includeInChase()
       }
-      p.fastest = p.adjustedMov === item.preysMaxMov
-      p.slowest = p.adjustedMov === item.preysMinMov
+      p.fastest = p.adjustedMov === sheetData.preysMaxMov
+      p.slowest = p.adjustedMov === sheetData.preysMinMov
     })
 
-    item.locations = this.item.locations
-    item.allHaveValidMov = this.allHaveValidMov
-    item.activeLocation = this.item.activeLocation
-    if (item.activeLocation) {
-      item.activeLocation.title = item.activeLocation.coordinates
+    sheetData.locations = this.item.locations
+    sheetData.allHaveValidMov = this.allHaveValidMov
+    sheetData.activeLocation = this.item.activeLocation
+    if (sheetData.activeLocation) {
+      sheetData.activeLocation.title = sheetData.activeLocation.coordinates
         ? game.i18n.format('CoC7.LocationCoordinate', {
-          x: item.activeLocation.coordinates.x,
-          y: item.activeLocation.coordinates.y
+          x: sheetData.activeLocation.coordinates.x,
+          y: sheetData.activeLocation.coordinates.y
         })
         : game.i18n.localize('CoC7.DragOnCanvas')
     }
-    item.previousLocation = this.item.previousLocation
-    item.nextLocation = this.item.nextLocation
-    item.started = this.item.started
+    sheetData.previousLocation = this.item.previousLocation
+    sheetData.nextLocation = this.item.nextLocation
+    sheetData.started = this.item.started
 
-    item.isKeeper = game.user.isGM
-    return item
+    sheetData.isKeeper = game.user.isGM
+    return sheetData
   }
 
   // get activeParticipant () {

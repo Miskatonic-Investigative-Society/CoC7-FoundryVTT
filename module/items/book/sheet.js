@@ -22,17 +22,17 @@ export class CoC7BookSheet extends ItemSheet {
   }
 
   async getData () {
-    const item = super.getData()
-    item.initialReading = this.item.system.initialReading
-    item.isKeeper = game.user.isGM
-    item.isOwner = this.item.isOwner
-    item.spellsLearned = this.spellsLearned
-    item.exhausted = (await this.item.checkExhaustion()) !== false
-    item.studyCompleted = this.item.system.study.progress === this.item.system.study.necessary
-    item.hasOwner = this.item.isEmbedded === true
-    item.spellListEmpty = this.item.system.spells.length === 0
+    const sheetData = super.getData()
+    sheetData.initialReading = this.item.system.initialReading
+    sheetData.isKeeper = game.user.isGM
+    sheetData.isOwner = this.item.isOwner
+    sheetData.spellsLearned = this.spellsLearned
+    sheetData.exhausted = (await this.item.checkExhaustion()) !== false
+    sheetData.studyCompleted = this.item.system.study.progress === this.item.system.study.necessary
+    sheetData.hasOwner = this.item.isEmbedded === true
+    sheetData.spellListEmpty = this.item.system.spells.length === 0
 
-    return item
+    return sheetData
   }
 
   get spellsLearned () {

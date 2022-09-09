@@ -29,19 +29,19 @@ export class CoC7StatusSheet extends ItemSheet {
    * The prepared data object contains both the actor data as well as additional sheet options
    */
   getData () {
-    const item = super.getData()
+    const sheetData = super.getData()
 
-    item.itemProperties = []
+    sheetData.itemProperties = []
 
     for (const [key, value] of Object.entries(this.item.system.type)) {
       if (value) {
-        item.itemProperties.push(
+        sheetData.itemProperties.push(
           COC7.statusType[key] ? COC7.statusType[key] : null
         )
       }
     }
 
-    item.isKeeper = game.user.isGM
-    return item
+    sheetData.isKeeper = game.user.isGM
+    return sheetData
   }
 }

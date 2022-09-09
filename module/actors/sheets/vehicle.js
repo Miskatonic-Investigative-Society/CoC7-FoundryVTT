@@ -25,25 +25,25 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
     // ui.notifications.warn(
     //   game.i18n.localize('CoC7.ExperimentalFeaturesWarning')
     // )
-    const data = await super.getData()
+    const sheetData = await super.getData()
 
-    data.properties = []
-    if (this.actor.data.data.properties.armed) {
-      data.properties.push(game.i18n.localize('CoC7.ArmedVehicle'))
+    sheetData.properties = []
+    if (this.actor.sheetData.properties.armed) {
+      sheetData.properties.push(game.i18n.localize('CoC7.ArmedVehicle'))
     }
-    data.actor = this.actor
+    sheetData.actor = this.actor
 
     const expanded = this.actor.getFlag('CoC7', 'expanded')
-    if (undefined === expanded) data.expanded = true
-    else data.expanded = expanded
-    if (data.expanded) {
-      data.options.height = 420
-    } else data.options.height = 'auto'
+    if (undefined === expanded) sheetData.expanded = true
+    else sheetData.expanded = expanded
+    if (sheetData.expanded) {
+      sheetData.options.height = 420
+    } else sheetData.options.height = 'auto'
 
-    // for (let [key, value] of Object.entries(data.data.type)) {
-    //   if( value) data.itemProperties.push( COC7.bookType[key]?COC7.bookType[key]:null);
+    // for (let [key, value] of Object.entries(sheetData.data.type)) {
+    //   if( value) sheetData.itemProperties.push( COC7.bookType[key]?COC7.bookType[key]:null);
     // }
-    return data
+    return sheetData
   }
 
   activateListeners (html) {

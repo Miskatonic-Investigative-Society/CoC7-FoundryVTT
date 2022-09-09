@@ -29,10 +29,10 @@ export class CoC7ItemSheetV2 extends ItemSheet {
    * The prepared data object contains both the actor data as well as additional sheet options
    */
   getData (options = {}) {
-    const item = super.getData(options)
+    const sheetData = super.getData(options)
 
-    item.isKeeper = game.user.isGM
+    sheetData.isKeeper = game.user.isGM
 
-    return item
+    return sheetData
   }
 }

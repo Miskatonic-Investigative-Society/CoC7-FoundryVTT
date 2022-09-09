@@ -147,35 +147,35 @@ export class CoC7SetupSheet extends ItemSheet {
   }
 
   getData () {
-    const item = super.getData()
+    const sheetData = super.getData()
 
-    item.hasOwner = this.item.isEmbedded === true
+    sheetData.hasOwner = this.item.isEmbedded === true
 
-    item.skills = this.item.system.items.filter(it => it.type === 'skill')
-    item.otherItems = this.item.system.items.filter(it => it.type !== 'skill')
+    sheetData.skills = this.item.system.items.filter(it => it.type === 'skill')
+    sheetData.otherItems = this.item.system.items.filter(it => it.type !== 'skill')
 
-    item.skillListEmpty = item.skills.length === 0
-    item.itemsListEmpty = item.otherItems.length === 0
+    sheetData.skillListEmpty = sheetData.skills.length === 0
+    sheetData.itemsListEmpty = sheetData.otherItems.length === 0
 
-    item.skills.sort((a, b) => {
+    sheetData.skills.sort((a, b) => {
       return a.name
         .toLocaleLowerCase()
         .localeCompare(b.name.toLocaleLowerCase())
     })
 
-    item._eras = []
+    sheetData._eras = []
     for (const [key, value] of Object.entries(COC7.eras)) {
-      item._eras.push({
+      sheetData._eras.push({
         id: key,
         name: value,
         isEnabled: this.item.system.eras[key] === true
       })
     }
 
-    item.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
+    sheetData.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
 
-    item.isKeeper = game.user.isGM
-    return item
+    sheetData.isKeeper = game.user.isGM
+    return sheetData
   }
 
   _updateObject (event, formData) {

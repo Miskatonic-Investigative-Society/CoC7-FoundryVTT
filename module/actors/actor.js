@@ -500,7 +500,7 @@ export class CoCActor extends Actor {
     const data = {
       name: skillName,
       type: 'skill',
-      data: {
+      system: {
         value,
         skillName,
         specialization: '',
@@ -517,10 +517,10 @@ export class CoCActor extends Actor {
     }
     if (specialization !== false) {
       const parts = CoC7Item.getNamePartsSpec(skillName, specialization)
-      data.data.specialization = parts.specialization
-      data.data.skillName = parts.skillName
+      data.system.specialization = parts.specialization
+      data.system.skillName = parts.skillName
       data.name = parts.name
-      data.data.properties.special = true
+      data.system.properties.special = true
     }
     return data
   }
@@ -636,7 +636,7 @@ export class CoCActor extends Actor {
         const data = {
           type: 'skill',
           name: parts.name,
-          data: {
+          system: {
             base: 0,
             value: null,
             skillName: parts.skillName,
@@ -659,7 +659,7 @@ export class CoCActor extends Actor {
             {
               name: 'Innate attack',
               type: 'weapon',
-              data: {
+              system: {
                 description: {
                   value: "Creature's natural attack",
                   chat: "Creature's natural attack"
@@ -677,8 +677,8 @@ export class CoCActor extends Actor {
         if (skill.length > 0 && attack.length > 0) {
           const createdAttack = this.items.get(attack[0].id)
           await createdAttack.update({
-            'data.skill.main.id': skill[0].id,
-            'data.skill.main.name': skill[0].name
+            'system.skill.main.id': skill[0].id,
+            'system.skill.main.name': skill[0].name
           })
         }
       } catch (err) {
@@ -694,7 +694,7 @@ export class CoCActor extends Actor {
     const data = {
       name: itemName,
       type: 'item',
-      data: {
+      system: {
         quantity
       }
     }
@@ -722,7 +722,7 @@ export class CoCActor extends Actor {
     const data = {
       name: itemName,
       type: 'book',
-      data: {}
+      system: {}
     }
     const created = await this.createEmbeddedDocuments('Item', [data], {
       renderSheet: showSheet
@@ -748,7 +748,7 @@ export class CoCActor extends Actor {
     const data = {
       name: itemName,
       type: 'spell',
-      data: {}
+      system: {}
     }
     return data
   }
@@ -809,13 +809,13 @@ export class CoCActor extends Actor {
     const data = {
       name: weaponName,
       type: 'weapon',
-      data: {
+      system: {
         properties: {}
       }
     }
 
     for (const [key] of Object.entries(COC7.weaponProperties)) {
-      data.data.properties[key] =
+      data.system.properties[key] =
         Object.prototype.hasOwnProperty.call(properties, key) ?? false
     }
 

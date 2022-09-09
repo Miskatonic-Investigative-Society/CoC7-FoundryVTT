@@ -38,14 +38,14 @@ export class CoC7ContainerSheet extends ActorSheet {
   onCloseSheet () {}
 
   async getData () {
-    const data = await super.getData()
-    const sheetData = data.data
+    const sheetData = await super.getData()
+
     sheetData.isKeeper = game.user.isGM
     sheetData.editable = this.isEditable
 
     sheetData.itemsByType = {}
-    if (data.items) {
-      for (const item of data.items) {
+    if (sheetData.items) {
+      for (const item of sheetData.items) {
         if (
           !Object.prototype.hasOwnProperty.call(
             sheetData.itemsByType,

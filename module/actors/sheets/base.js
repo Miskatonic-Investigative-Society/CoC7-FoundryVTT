@@ -19,30 +19,30 @@ import { CoC7Link } from '../../apps/link.js'
  */
 export class CoC7ActorSheet extends ActorSheet {
   async getData () {
-    const actor = await super.getData()
+    const sheetData = await super.getData()
 
-    actor.showHiddenDevMenu = game.settings.get('CoC7', 'hiddendevmenu')
+    sheetData.showHiddenDevMenu = game.settings.get('CoC7', 'hiddendevmenu')
 
-    actor.canDragToken = !!this.token && game.user.isGM
-    actor.linkedActor = this.actor.token?.actorLink === true
-    actor.isToken = this.actor.isToken
-    actor.itemsByType = {}
-    actor.skills = {}
-    actor.combatSkills = {}
-    actor.weapons = {}
-    actor.rangeWpn = []
-    actor.meleeWpn = []
-    actor.actorFlags = {}
+    sheetData.canDragToken = !!this.token && game.user.isGM
+    sheetData.linkedActor = this.actor.token?.actorLink === true
+    sheetData.isToken = this.actor.isToken
+    sheetData.itemsByType = {}
+    sheetData.skills = {}
+    sheetData.combatSkills = {}
+    sheetData.weapons = {}
+    sheetData.rangeWpn = []
+    sheetData.meleeWpn = []
+    sheetData.actorFlags = {}
 
-    actor.effects =
+    sheetData.effects =
       this.actor.type === 'character'
         ? CoC7ActiveEffect.prepareActiveEffectCategories(this.actor.effects)
         : CoC7ActiveEffect.prepareNPCActiveEffectCategories(this.actor.effects)
 
-    actor.permissionLimited = !game.user.isGM && (this.actor.ownership[game.user.id] ?? this.actor.ownership.default) === CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED
+    sheetData.permissionLimited = !game.user.isGM && (this.actor.ownership[game.user.id] ?? this.actor.ownership.default) === CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED
 
-    actor.isKeeper = game.user.isGM
-    actor.allowUnlock =
+    sheetData.isKeeper = game.user.isGM
+    sheetData.allowUnlock =
       game.settings.get('CoC7', 'playerUnlockSheetMode') === 'always' ||
       game.user.isGM ||
       (game.settings.get('CoC7', 'playerUnlockSheetMode') === 'creation' &&
@@ -51,12 +51,12 @@ export class CoC7ActorSheet extends ActorSheet {
       game.settings.get('CoC7', 'playerUnlockSheetMode') === 'creation' &&
       game.settings.get('CoC7', 'charCreationEnabled')
     ) {
-      actor['system.flags.locked'] = false
+      sheetData.data.system.flags.locked = false
     }
 
     if (!['vehicle'].includes(this.actor.type)) {
-      if (!actor.data.system.characteristics) {
-        actor.data.system.characteristics = {
+      if (!sheetData.data.system.characteristics) {
+        sheetData.data.system.characteristics = {
           str: {
             value: null,
             short: 'CHARAC.STR',
@@ -108,8 +108,8 @@ export class CoC7ActorSheet extends ActorSheet {
         }
       }
 
-      if (!actor.data.system.attribs) {
-        actor.data.system.attribs = {
+      if (!sheetData.data.system.attribs) {
+        sheetData.data.system.attribs = {
           hp: {
             value: null,
             max: null,
@@ -154,14 +154,14 @@ export class CoC7ActorSheet extends ActorSheet {
         }
       }
 
-      if (!actor.data.system.biography) {
-        actor.data.system.biography = {
+      if (!sheetData.data.system.biography) {
+        sheetData.data.system.biography = {
           personalDescription: { type: 'string', value: '' }
         }
       }
 
-      if (!actor.data.system.infos) {
-        actor.data.system.infos = {
+      if (!sheetData.data.system.infos) {
+        sheetData.data.system.infos = {
           occupation: '',
           age: '',
           sex: '',
@@ -173,12 +173,12 @@ export class CoC7ActorSheet extends ActorSheet {
         }
       }
 
-      if (!actor.data.system.flags) {
-        actor.data.system.flags = { locked: true, manualCredit: false }
+      if (!sheetData.data.system.flags) {
+        sheetData.data.system.flags = { locked: true, manualCredit: false }
       }
 
-      if (!actor.data.system.credit) {
-        actor.data.system.credit = {
+      if (!sheetData.data.system.credit) {
+        sheetData.data.system.credit = {
           monetarySymbol: null,
           multiplier: null,
           spent: null,
@@ -186,28 +186,28 @@ export class CoC7ActorSheet extends ActorSheet {
         }
       }
 
-      if (!actor.data.system.development) {
-        actor.data.system.development = {
+      if (!sheetData.data.system.development) {
+        sheetData.data.system.development = {
           personal: null,
           occupation: null,
           archetype: null
         }
       }
 
-      if (!actor.data.system.biography) actor.data.system.biography = []
+      if (!sheetData.data.system.biography) sheetData.data.system.biography = []
 
-      actor.pulpRuleArchetype = game.settings.get('CoC7', 'pulpRuleArchetype')
-      actor.pulpRuleOrganization = game.settings.get(
+      sheetData.pulpRuleArchetype = game.settings.get('CoC7', 'pulpRuleArchetype')
+      sheetData.pulpRuleOrganization = game.settings.get(
         'CoC7',
         'pulpRuleOrganization'
       )
     }
 
-    actor.isDead = this.actor.dead
-    actor.isDying = this.actor.dying
+    sheetData.isDead = this.actor.dead
+    sheetData.isDying = this.actor.dying
 
-    if (actor.items) {
-      for (const item of actor.items) {
+    if (sheetData.items) {
+      for (const item of sheetData.items) {
         // si c'est une formule et qu'on peut l'evaluer
         // ce bloc devrait etre déplacé dans le bloc _updateFormData
         if (item.type === 'skill') {
@@ -301,16 +301,16 @@ export class CoC7ActorSheet extends ActorSheet {
           }
         }
 
-        let list = actor.itemsByType[item.type]
+        let list = sheetData.itemsByType[item.type]
         if (!list) {
           list = []
-          actor.itemsByType[item.type] = list
+          sheetData.itemsByType[item.type] = list
         }
         list.push(item)
       }
 
-      for (const itemType in actor.itemsByType) {
-        actor.itemsByType[itemType].sort((a, b) => {
+      for (const itemType in sheetData.itemsByType) {
+        sheetData.itemsByType[itemType].sort((a, b) => {
           return a.name
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '')
@@ -325,7 +325,7 @@ export class CoC7ActorSheet extends ActorSheet {
       }
 
       // redondant avec matrice itembytype
-      actor.skills = actor.items
+      sheetData.skills = sheetData.items
         .filter(item => item.type === 'skill')
         .sort((a, b) => {
           return a.name
@@ -340,27 +340,27 @@ export class CoC7ActorSheet extends ActorSheet {
             )
         })
 
-      actor.meleeSkills = actor.skills.filter(
+      sheetData.meleeSkills = sheetData.skills.filter(
         skill =>
           skill.system.properties.combat === true &&
           skill.system.properties.fighting === true
       )
-      actor.rangeSkills = actor.skills.filter(
+      sheetData.rangeSkills = sheetData.skills.filter(
         skill =>
           skill.system.properties.combat === true &&
           skill.system.properties.firearm === true
       )
 
-      const cbtSkills = actor.skills.filter(
+      const cbtSkills = sheetData.skills.filter(
         skill => skill.system.properties.combat === true
       )
       if (cbtSkills) {
         for (const skill of cbtSkills) {
-          actor.combatSkills[skill._id] = skill
+          sheetData.combatSkills[skill._id] = skill
         }
       }
 
-      const weapons = actor.itemsByType.weapon
+      const weapons = sheetData.itemsByType.weapon
 
       if (weapons) {
         for (const weapon of weapons) {
@@ -380,7 +380,7 @@ export class CoC7ActorSheet extends ActorSheet {
           } else {
             // TODO : avant d'assiger le skill vérifier qu'il existe toujours.
             // si il n'existe plus il faut le retrouver ou passer skillset a false.
-            if (actor.combatSkills[weapon.system.skill.main.id]) {
+            if (sheetData.combatSkills[weapon.system.skill.main.id]) {
               const skill = this.actor.items.get(weapon.system.skill.main.id)
               weapon.system.skill.main.name = skill.system.skillName
               weapon.system.skill.main.value = skill.value
@@ -389,7 +389,7 @@ export class CoC7ActorSheet extends ActorSheet {
             }
 
             if (weapon.system.skill.alternativ.id !== '') {
-              if (actor.combatSkills[weapon.system.skill.alternativ.id]) {
+              if (sheetData.combatSkills[weapon.system.skill.alternativ.id]) {
                 const skill = this.actor.items.get(
                   weapon.system.skill.alternativ.id
                 )
@@ -408,20 +408,20 @@ export class CoC7ActorSheet extends ActorSheet {
             weapon.system._properties.push(property)
           }
 
-          actor.weapons[weapon._id] = weapon
-          if (weapon.system.properties.rngd) actor.rangeWpn.push(weapon)
-          else actor.meleeWpn.push(weapon)
+          sheetData.weapons[weapon._id] = weapon
+          if (weapon.system.properties.rngd) sheetData.rangeWpn.push(weapon)
+          else sheetData.meleeWpn.push(weapon)
         }
       }
 
       const token = this.token
-      actor.tokenId = token
+      sheetData.tokenId = token
         ? `${token.parent?.id ? token.parent.id : 'TOKEN'}.${token.id}`
         : null // REFACTORING (2)
 
-      actor.hasEmptyValueWithFormula = false
-      if (actor.data.system.characteristics) {
-        for (const characteristic of Object.values(actor.data.system.characteristics)) {
+      sheetData.hasEmptyValueWithFormula = false
+      if (sheetData.data.system.characteristics) {
+        for (const characteristic of Object.values(sheetData.data.system.characteristics)) {
           if (!characteristic.value) characteristic.editable = true
           characteristic.hard = Math.floor(characteristic.value / 2)
           characteristic.extreme = Math.floor(characteristic.value / 5)
@@ -438,8 +438,8 @@ export class CoC7ActorSheet extends ActorSheet {
             characteristic.hasEmptyValueWithFormula = true
           }
 
-          actor.hasEmptyValueWithFormula =
-            actor.hasEmptyValueWithFormula ||
+          sheetData.hasEmptyValueWithFormula =
+            sheetData.hasEmptyValueWithFormula ||
             characteristic.hasEmptyValueWithFormula
         }
       }
@@ -448,19 +448,19 @@ export class CoC7ActorSheet extends ActorSheet {
     // For compat with previous characters test if auto is definied, if not we define it
     if (!['vehicle', 'container'].includes(this.actor.type)) {
       const auto = this.actor.checkUndefinedAuto()
-      actor.data.system = mergeObject(actor.data.system, auto)
+      sheetData.data.system = mergeObject(sheetData.data.system, auto)
     } else {
-      actor.data.system.attribs.hp.auto = false
-      actor.data.system.attribs.mp.auto = false
-      actor.data.system.attribs.san.auto = false
-      actor.data.system.attribs.mov.auto = false
-      actor.data.system.attribs.db.auto = false
-      actor.data.system.attribs.build.auto = false
+      sheetData.data.system.attribs.hp.auto = false
+      sheetData.data.system.attribs.mp.auto = false
+      sheetData.data.system.attribs.san.auto = false
+      sheetData.data.system.attribs.mov.auto = false
+      sheetData.data.system.attribs.db.auto = false
+      sheetData.data.system.attribs.build.auto = false
     }
 
-    // actor.data.system.attribs.mov.value = this.actor.mov // return computed values or fixed values if not auto.
-    // actor.data.system.attribs.db.value = this.actor.db
-    // actor.data.system.attribs.build.value = this.actor.build
+    // sheetData.data.system.attribs.mov.value = this.actor.mov // return computed values or fixed values if not auto.
+    // sheetData.data.system.attribs.db.value = this.actor.db
+    // sheetData.data.system.attribs.build.value = this.actor.build
 
     // if (typeof this.actor.compendium === 'undefined' && this.actor.isOwner) {
     //   ui.notifications.info('changr spec name 4')
@@ -490,95 +490,95 @@ export class CoC7ActorSheet extends ActorSheet {
     //   )
     // }
 
-    // if (actor.data.system.attribs.hp.value < 0) actor.data.system.attribs.hp.value = null;
-    if (actor.data.system.attribs.mp.value < 0) actor.data.system.attribs.mp.value = null
-    if (actor.data.system.attribs.san.value < 0) actor.data.system.attribs.san.value = null
-    // actor.data.system.attribs.san.fiftyOfCurrent = actor.data.system.attribs.san.value >= 0 ? ' / '+Math.floor(actor.data.system.attribs.san.value/5):'';
-    // if (actor.data.system.attribs.hp.auto) {
+    // if (sheetData.data.system.attribs.hp.value < 0) sheetData.data.system.attribs.hp.value = null;
+    if (sheetData.data.system.attribs.mp.value < 0) sheetData.data.system.attribs.mp.value = null
+    if (sheetData.data.system.attribs.san.value < 0) sheetData.data.system.attribs.san.value = null
+    // sheetData.data.system.attribs.san.fiftyOfCurrent = sheetData.data.system.attribs.san.value >= 0 ? ' / '+Math.floor(sheetData.data.system.attribs.san.value/5):'';
+    // if (sheetData.data.system.attribs.hp.auto) {
     //   // TODO if any is null set max back to null.
     //   if (
-    //     actor.data.system.characteristics.siz.value != null &&
-    //     actor.data.system.characteristics.con.value != null
+    //     sheetData.data.system.characteristics.siz.value != null &&
+    //     sheetData.data.system.characteristics.con.value != null
     //   ) {
-    //     actor.data.system.attribs.hp.max = this.actor.hpMax
+    //     sheetData.data.system.attribs.hp.max = this.actor.hpMax
     //   }
     // }
 
-    // if (actor.data.system.attribs.mp.auto) {
+    // if (sheetData.data.system.attribs.mp.auto) {
     //   // TODO if any is null set max back to null.
-    //   if (actor.data.system.characteristics.pow.value != null) {
-    //     actor.data.system.attribs.mp.max = Math.floor(
-    //       actor.data.system.characteristics.pow.value / 5
+    //   if (sheetData.data.system.characteristics.pow.value != null) {
+    //     sheetData.data.system.attribs.mp.max = Math.floor(
+    //       sheetData.data.system.characteristics.pow.value / 5
     //     )
     //   }
     // }
 
-    // if (actor.data.system.attribs.san.auto) {
-    //   actor.data.system.attribs.san.max = this.actor.sanMax
+    // if (sheetData.data.system.attribs.san.auto) {
+    //   sheetData.data.system.attribs.san.max = this.actor.sanMax
     // }
 
     // if (
-    //   actor.data.system.attribs.mp.value > actor.data.system.attribs.mp.max ||
-    //   actor.data.system.attribs.mp.max == null
+    //   sheetData.data.system.attribs.mp.value > sheetData.data.system.attribs.mp.max ||
+    //   sheetData.data.system.attribs.mp.max == null
     // ) {
-    //   actor.data.system.attribs.mp.value = actor.data.system.attribs.mp.max
+    //   sheetData.data.system.attribs.mp.value = sheetData.data.system.attribs.mp.max
     // }
     // if (
-    //   actor.data.system.attribs.hp.value > actor.data.system.attribs.hp.max ||
-    //   actor.data.system.attribs.hp.max == null
+    //   sheetData.data.system.attribs.hp.value > sheetData.data.system.attribs.hp.max ||
+    //   sheetData.data.system.attribs.hp.max == null
     // ) {
-    //   actor.data.system.attribs.hp.value = actor.data.system.attribs.hp.max
+    //   sheetData.data.system.attribs.hp.value = sheetData.data.system.attribs.hp.max
     // }
 
     // if (
-    //   actor.data.system.attribs.hp.value == null &&
-    //   actor.data.system.attribs.hp.max != null
+    //   sheetData.data.system.attribs.hp.value == null &&
+    //   sheetData.data.system.attribs.hp.max != null
     // ) {
-    //   actor.data.system.attribs.hp.value = actor.data.system.attribs.hp.max
+    //   sheetData.data.system.attribs.hp.value = sheetData.data.system.attribs.hp.max
     // }
     // if (
-    //   actor.data.system.attribs.mp.value == null &&
-    //   actor.data.system.attribs.mp.max != null
+    //   sheetData.data.system.attribs.mp.value == null &&
+    //   sheetData.data.system.attribs.mp.max != null
     // ) {
-    //   actor.data.system.attribs.mp.value = actor.data.system.attribs.mp.max
+    //   sheetData.data.system.attribs.mp.value = sheetData.data.system.attribs.mp.max
     // }
 
     if (!['vehicle'].includes(this.actor.type)) {
       // if (
-      //   actor.data.system.attribs.san.value == null &&
-      //   actor.data.system.characteristics.pow.value != null
+      //   sheetData.data.system.attribs.san.value == null &&
+      //   sheetData.data.system.characteristics.pow.value != null
       // ) {
-      //   actor.data.system.attribs.san.value = actor.data.system.characteristics.pow.value
+      //   sheetData.data.system.attribs.san.value = sheetData.data.system.characteristics.pow.value
       // }
-      // if (actor.data.system.attribs.san.value > actor.data.system.attribs.san.max) {
-      //   actor.data.system.attribs.san.value = actor.data.system.attribs.san.max
+      // if (sheetData.data.system.attribs.san.value > sheetData.data.system.attribs.san.max) {
+      //   sheetData.data.system.attribs.san.value = sheetData.data.system.attribs.san.max
       // }
 
-      if (actor.data.system.biography instanceof Array && actor.data.system.biography.length) {
-        actor.data.system.biography[0].isFirst = true
-        actor.data.system.biography[actor.data.system.biography.length - 1].isLast = true
+      if (sheetData.data.system.biography instanceof Array && sheetData.data.system.biography.length) {
+        sheetData.data.system.biography[0].isFirst = true
+        sheetData.data.system.biography[sheetData.data.system.biography.length - 1].isLast = true
       }
     }
-    actor.showInventoryItems = false
-    actor.showInventoryBooks = false
-    actor.showInventorySpells = false
-    actor.showInventoryTalents = false
-    actor.showInventoryStatuses = false
-    actor.showInventoryWeapons = false
+    sheetData.showInventoryItems = false
+    sheetData.showInventoryBooks = false
+    sheetData.showInventorySpells = false
+    sheetData.showInventoryTalents = false
+    sheetData.showInventoryStatuses = false
+    sheetData.showInventoryWeapons = false
 
-    actor.hasConditions =
+    sheetData.hasConditions =
       this.actor.effects.size > 0 ||
       (typeof this.actor.system.conditions !== 'undefined' &&
         Object.keys(this.actor.system.conditions).filter(
           condition => this.actor.system.conditions[condition].value
         ).length > 0)
-    // const first = actor.data.system.biography[0];
+    // const first = sheetData.data.system.biography[0];
     // first.isFirst = true;
-    // actor.data.system.biography[0] = first;
-    // const last = actor.data.system.biography[actor.data.system.biography.length - 1];
+    // sheetData.data.system.biography[0] = first;
+    // const last = sheetData.data.system.biography[sheetData.data.system.biography.length - 1];
     // last.isLast = true;
-    // actor.data.system.biography[actor.data.system.biography.length - 1] = last;
-    return actor
+    // sheetData.data.system.biography[sheetData.data.system.biography.length - 1] = last;
+    return sheetData
   }
 
   /* -------------------------------------------- */
@@ -1309,10 +1309,7 @@ export class CoC7ActorSheet extends ActorSheet {
     if (weapon) {
       weapon.toggleProperty(
         event.currentTarget.dataset.property,
-        event.metaKey ||
-          event.ctrlKey ||
-          event.keyCode === 91 ||
-          event.keyCode === 224
+        isCtrlKey(event)
       )
     }
   }
