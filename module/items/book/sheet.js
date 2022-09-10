@@ -57,7 +57,7 @@ export class CoC7BookSheet extends ItemSheet {
       const id = $(event.currentTarget).parents('li').data('id')
       this.item.attemptSpellLearning(id)
     })
-    html.find('[name="data.study.necessary"]').change(event => {
+    html.find('[name="system.study.necessary"]').change(event => {
       const value = parseInt(event.currentTarget.value)
       this.item.changeProgress('reset', value)
     })
@@ -106,7 +106,7 @@ export class CoC7BookSheet extends ItemSheet {
       ? duplicate(this.item.system.spells)
       : []
     if (index >= 0) spells.splice(index, 1)
-    return await this.item.update({ 'data.spells': spells })
+    return await this.item.update({ 'system.spells': spells })
   }
 
   /**
@@ -190,6 +190,6 @@ export class CoC7BookSheet extends ItemSheet {
         /** User clicked on minus icon to remove a skill on other gains table */
         if (index >= 0) skills.splice(index, 1)
     }
-    return await this.item.update({ 'data.gains.others': skills })
+    return await this.item.update({ 'system.gains.others': skills })
   }
 }

@@ -1,5 +1,4 @@
 /* global $, duplicate, expandObject, game, ItemSheet, mergeObject */
-
 import { COC7 } from '../../config.js'
 import { CoC7Item } from '../item.js'
 import { CoC7Utilities } from '../../utilities.js'

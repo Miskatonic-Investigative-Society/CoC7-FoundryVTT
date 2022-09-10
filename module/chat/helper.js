@@ -204,7 +204,7 @@ export class chatHelper {
         const tokenData = scene.getEmbeddedDocument('Token', tokenId)
         if (!tokenData) return null
         const token = new Token(tokenData)
-        if (!token.scene) token.scene = duplicate(scene.data)
+        if (!token.scene) token.scene = duplicate(scene.document)
         return token
       }
     } else {
@@ -251,16 +251,9 @@ export class chatHelper {
       // Try to find a token.
       const token = chatHelper.getTokenFromKey(actorKey)
       if (token) {
-        // Foundry VTT v9
-        if (token.data.img) {
-          if (token.data.img.indexOf('*') === -1) {
-            return token.data.img
-          }
-        }
-        // Foundry VTT v10
-        if (token.data.texture.src) {
-          if (token.data.texture.src.indexOf('*') === -1) {
-            return token.data.texture.src
+        if (token.document.texture.src) {
+          if (token.document.texture.src.indexOf('*') === -1) {
+            return token.document.texture.src
           }
         }
       }
@@ -268,22 +261,15 @@ export class chatHelper {
     const actor = chatHelper.getActorFromKey(actorKey) // REFACTORING (2)
     if (game.settings.get('CoC7', 'useToken')) {
       // if no token found for that actor return the prototype token image.
-      if (actor.data.token) {
-        // Foundry VTT v9
-        if (actor.data.token.img) {
-          if (actor.data.token.img.indexOf('*') === -1) {
-            return actor.data.token.img
-          }
-        }
-        // Foundry VTT v10
-        if (actor.data.token.texture.src) {
-          if (actor.data.token.texture.src?.indexOf('*') === -1) {
-            return actor.data.token.texture.src
+      if (actor.prototypeToken) {
+        if (actor.prototypeToken.texture.src) {
+          if (actor.prototypeToken.texture.src?.indexOf('*') === -1) {
+            return actor.prototypeToken.texture.src
           }
         }
       }
     }
-    return actor.data.img
+    return actor.img
   }
 
   static getDistance (startToken, endToken) {

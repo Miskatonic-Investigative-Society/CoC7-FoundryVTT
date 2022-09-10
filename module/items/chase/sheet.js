@@ -356,7 +356,7 @@ export class CoC7ChaseSheet extends ItemSheet {
             delete participants[index].speedCheck.type
           } else participants[index].speedCheck = {}
           participants[index].speedCheck.name = target.value
-          await this.item.update({ 'data.participants': participants })
+          await this.item.update({ 'system.participants': participants })
           return
         }
       }
@@ -423,7 +423,7 @@ export class CoC7ChaseSheet extends ItemSheet {
   }
 
   static onClose (app, html) {
-    app.item.update({ 'data.trackScrollPosition': -1 })
+    app.item.update({ 'system.trackScrollPosition': -1 })
   }
 
   // async _onSheetReady (html) {

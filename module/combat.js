@@ -1,6 +1,6 @@
 /* global $, game */
-
 import { CoC7Check } from './check.js'
+
 export class CoC7Combat {
   static renderCombatTracker (app, html, data) {
     const currentCombat = data.combats[data.currentIndex - 1]
@@ -14,7 +14,7 @@ export class CoC7Combat {
       const combId = el.getAttribute('data-combatant-id')
       const combatantControlsDiv = el.querySelector('.combatant-controls')
       // const combatant = game.combat.getCombatant(combId);
-      const combatant = currentCombat.data.combatants.get(combId)
+      const combatant = currentCombat.combatants.get(combId)
 
       if (combatant.getFlag('CoC7', 'hasGun')) {
         $(combatantControlsDiv).prepend(
@@ -129,16 +129,11 @@ export async function rollInitiative (
   ids,
   { formula = null, updateTurn = true, messageOptions = {} } = {}
 ) {
-  // Structure input data
-  ids = typeof ids === 'string' ? [ids] : ids
-  const currentId = this.combatant.id
-
   // Iterate over Combatants, performing an initiative roll for each
   const updates = []
   for (const [, id] of ids.entries()) {
     // Get Combatant data (non-strictly)
     const combatant = this.combatants.get(id)
-    if (!combatant?.isOwner) return null
 
     // Produce an initiative roll for the Combatant
     const roll = await combatant.actor.rollInitiative(
@@ -150,11 +145,6 @@ export async function rollInitiative (
 
   // Update multiple combatants
   await this.updateEmbeddedDocuments('Combatant', updates)
-
-  // Ensure the turn order remains with the same combatant
-  if (updateTurn) {
-    await this.update({ turn: this.turns.findIndex(t => t.id === currentId) })
-  }
 
   return this
 }

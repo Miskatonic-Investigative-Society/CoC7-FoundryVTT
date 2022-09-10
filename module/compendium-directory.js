@@ -1,5 +1,4 @@
 /* global CompendiumDirectory, Dialog, game */
-
 export class CoC7CompendiumDirectory extends CompendiumDirectory {
   activateListeners (html) {
     super.activateListeners(html)

@@ -5,49 +5,19 @@ export class Updater {
   static async checkForUpdate () {
     const systemUpdateVersion = game.settings.get('CoC7', 'systemUpdateVersion')
 
-    const runMigrate = isNewerVersion(
-      game.system.version,
-      systemUpdateVersion ?? '0'
-    )
-    this.updatedModules =
-      game.settings.get('CoC7', 'systemUpdatedModuleVersion') || {}
+    const runMigrate = isNewerVersion(game.system.version, systemUpdateVersion ?? '0')
+    this.updatedModules = game.settings.get('CoC7', 'systemUpdatedModuleVersion') || {}
     this.currentModules = {}
     for (const pack of game.packs) {
-      if (
-        !['CoC7', 'system', 'world'].includes(
-          pack.metadata.package || pack.metadata.packageType
-        ) &&
-        ['Actor', 'Item', 'Scene'].includes(pack.metadata.type)
-      ) {
-        if (
-          !Object.prototype.hasOwnProperty.call(
-            this.currentModules,
-            pack.metadata.package || pack.metadata.packageType
-          )
-        ) {
-          // Only check each package once
-          if (
-            !Object.prototype.hasOwnProperty.call(
-              this.updatedModules,
-              pack.metadata.package || pack.metadata.packageType
-            ) ||
-            String(
-              this.updatedModules[
-                pack.metadata.package || pack.metadata.packageType
-              ]
-            ) !==
-              String(
-                game.modules.get(
-                  pack.metadata.package || pack.metadata.packageType
-                ).data.version
-              )
-          ) {
-            // Package has not been updated before or the version number has changed
-            this.currentModules[
-              pack.metadata.package || pack.metadata.packageType
-            ] = game.modules.get(
-              pack.metadata.package || pack.metadata.packageType
-            ).data.version
+      if (!['CoC7', 'world'].includes(pack.metadata.packageName) && ['Actor', 'Item', 'Scene'].includes(pack.metadata.type)) {
+        if (!Object.prototype.hasOwnProperty.call(this.currentModules, pack.metadata.packageName)) {
+          // Only need to check each module once
+          const module = game.modules.get(pack.metadata.packageName)
+          if (module) {
+            if (runMigrate || !Object.prototype.hasOwnProperty.call(this.updatedModules, module.id) || String(this.updatedModules[module.id]) !== String(module.id.version)) {
+              // A migration is required, module has not been updated before, or the version number has changed
+              this.currentModules[module.id] = game.modules.get(module.id).version
+            }
           }
         }
       }
@@ -65,7 +35,7 @@ export class Updater {
               modules:
                 '<ul><li>' +
                 Object.keys(this.currentModules)
-                  .map(mod => game.modules.get(mod).data.name)
+                  .map(mod => game.modules.get(mod).title)
                   .join('</li><li>') +
                 '</li></ul>'
             }
@@ -134,17 +104,17 @@ export class Updater {
     for (const actor of game.actors.contents) {
       try {
         const updateData = this.migrateActorData(actor.toObject())
-        if (!foundry.utils.isObjectEmpty(updateData)) {
+        if (!foundry.utils.isEmpty(updateData)) {
           console.log(`Migrating Actor document ${actor.name}`)
           await actor.update(updateData, { enforceTypes: false })
         }
       } catch (err) {
+        console.log('Error details', err)
         err.message = game.i18n.format('CoC7.Migrate.ErrorActor', {
           name: actor.name,
           message: err.message
         })
         ui.notifications.error(err.message, { permanent: true })
-        console.error(err)
       }
     }
 
@@ -152,17 +122,17 @@ export class Updater {
     for (const item of game.items.contents) {
       try {
         const updateData = Updater.migrateItemData(item.toObject())
-        if (!foundry.utils.isObjectEmpty(updateData)) {
+        if (!foundry.utils.isEmpty(updateData)) {
           console.log(`Migrating Item document ${item.name}`)
           await item.update(updateData, { enforceTypes: false })
         }
       } catch (err) {
+        console.log('Error details', err)
         err.message = game.i18n.format('CoC7.Migrate.ErrorItem', {
           name: item.name,
           message: err.message
         })
         ui.notifications.error(err.message, { permanent: true })
-        console.error(err)
       }
     }
 
@@ -170,17 +140,17 @@ export class Updater {
     for (const table of game.tables.contents) {
       try {
         const updateData = Updater.migrateTableData(table.toObject())
-        if (!foundry.utils.isObjectEmpty(updateData)) {
+        if (!foundry.utils.isEmpty(updateData)) {
           console.log(`Migrating Table document ${table.name}`)
           await table.update(updateData, { enforceTypes: false })
         }
       } catch (err) {
+        console.log('Error details', err)
         err.message = game.i18n.format('CoC7.Migrate.ErrorTable', {
           name: table.name,
           message: err.message
         })
         ui.notifications.error(err.message, { permanent: true })
-        console.error(err)
       }
     }
 
@@ -188,25 +158,25 @@ export class Updater {
     for (const macro of game.macros.contents) {
       try {
         const updateData = Updater.migrateMacroData(macro.toObject())
-        if (!foundry.utils.isObjectEmpty(updateData)) {
+        if (!foundry.utils.isEmpty(updateData)) {
           console.log(`Migrating Macro document ${macro.name}`)
           await macro.update(updateData, { enforceTypes: false })
         }
       } catch (err) {
+        console.log('Error details', err)
         err.message = game.i18n.format('CoC7.Migrate.ErrorMacro', {
           name: macro.name,
           message: err.message
         })
         ui.notifications.error(err.message, { permanent: true })
-        console.error(err)
       }
     }
 
     // Migrate Scenes [Token] Actors
     for (const scene of game.scenes) {
       try {
-        const updateData = Updater.migrateSceneData(scene.data)
-        if (!foundry.utils.isObjectEmpty(updateData)) {
+        const updateData = Updater.migrateSceneData(scene)
+        if (!foundry.utils.isEmpty(updateData)) {
           console.log(`Migrating Scene document ${scene.name}`)
           // if (
           //   scene.id === game.scenes.current.id &&
@@ -249,19 +219,19 @@ export class Updater {
         }
         scene.tokens.forEach(t => (t._actor = null))
       } catch (err) {
+        console.log('Error details', err)
         err.message = game.i18n.format('CoC7.Migrate.ErrorScene', {
           name: scene.name,
           message: err.message
         })
         ui.notifications.error(err.message, { permanent: true })
-        console.error(err)
       }
     }
 
     // Migrate World Compendium Packs
     for (const pack of game.packs) {
       if (
-        (pack.metadata.package || pack.metadata.packageType) !== 'CoC7' &&
+        pack.metadata.packageName !== 'CoC7' &&
         ['Actor', 'Item', 'Macro', 'RollTable', 'Scene'].includes(
           pack.metadata.type
         )
@@ -288,7 +258,7 @@ export class Updater {
         const itemData =
           i instanceof CONFIG.Item.documentClass ? i.toObject() : i
         const itemUpdate = Updater.migrateItemData(itemData)
-        if (!foundry.utils.isObjectEmpty(itemUpdate)) {
+        if (!foundry.utils.isEmpty(itemUpdate)) {
           itemUpdate._id = itemData._id
           arr.push(expandObject(itemUpdate))
         }
@@ -314,11 +284,7 @@ export class Updater {
     const wasLocked = pack.locked
     await pack.configure({ locked: false })
 
-    try {
-      await pack.migrate()
-    } catch (err) {
-      // This errors on v10
-    }
+    await pack.migrate()
     const documents = await pack.getDocuments()
 
     // Iterate over compendium entries - applying fine-tuned migration functions
@@ -339,24 +305,24 @@ export class Updater {
             updateData = Updater.migrateTableData(doc.toObject())
             break
           case 'Scene':
-            updateData = Updater.migrateSceneData(doc.data)
+            updateData = Updater.migrateSceneData(doc.document)
             break
         }
         // Save the entry, if data was changed
-        if (!foundry.utils.isObjectEmpty(updateData)) {
+        if (!foundry.utils.isEmpty(updateData)) {
           console.log(
             `Migrated ${documentType} document ${doc.name} in Compendium ${pack.collection}`
           )
           await doc.update(updateData)
         }
       } catch (err) {
+        console.log('Error details', err)
         err.message = game.i18n.format('CoC7.Migrate.ErrorDocumentPack', {
           name: doc.name,
           collection: pack.collection,
           message: err.message
         })
         ui.notifications.error(err.message, { permanent: true })
-        console.error(err)
       }
     }
 
@@ -400,38 +366,43 @@ export class Updater {
   }
 
   static migrateSceneData (scene) {
-    const tokens = scene.tokens.map(token => {
-      const t = token.toObject()
-      const updateData = {}
-      Updater._migrateTokenArtwork(t, updateData)
-      if (Object.keys(updateData).length) {
-        foundry.utils.mergeObject(t, updateData)
-      }
-      if (!t.actorId || t.actorLink) {
-        t.actorData = {}
-      } else if (!game.actors.has(t.actorId)) {
-        t.actorId = null
-        t.actorData = {}
-      } else if (!t.actorLink) {
-        const actorData = foundry.utils.duplicate(t.actorData)
-        actorData.type = token.actor?.type
-        const update = Updater.migrateActorData(actorData)
-        ;['items', 'effects'].forEach(embeddedName => {
-          if (!update[embeddedName]?.length) {
-            return
-          }
-          const updates = new Map(update[embeddedName].map(u => [u._id, u]))
-          t.actorData[embeddedName].forEach(original => {
-            const update = updates.get(original._id)
-            if (update) mergeObject(original, update)
+    const returns = {
+      tokens: []
+    }
+    if (typeof scene.tokens !== 'undefined' && scene.tokens.length) {
+      returns.tokens = scene.tokens.map(token => {
+        const t = token.toObject()
+        const updateData = {}
+        Updater._migrateTokenArtwork(t, updateData)
+        if (Object.keys(updateData).length) {
+          foundry.utils.mergeObject(t, updateData)
+        }
+        if (!t.actorId || t.actorLink) {
+          t.actorData = {}
+        } else if (!game.actors.has(t.actorId)) {
+          t.actorId = null
+          t.actorData = {}
+        } else if (!t.actorLink) {
+          const actorData = foundry.utils.duplicate(t.actorData)
+          actorData.type = token.actor?.type
+          const update = Updater.migrateActorData(actorData)
+          ;['items', 'effects'].forEach(embeddedName => {
+            if (!update[embeddedName]?.length) {
+              return
+            }
+            const updates = new Map(update[embeddedName].map(u => [u._id, u]))
+            t.actorData[embeddedName].forEach(original => {
+              const update = updates.get(original._id)
+              if (update) mergeObject(original, update)
+            })
+            delete update[embeddedName]
           })
-          delete update[embeddedName]
-        })
-        mergeObject(t.actorData, update)
-      }
-      return t
-    })
-    return { tokens }
+          mergeObject(t.actorData, update)
+        }
+        return t
+      })
+    }
+    return returns
   }
 
   static _migrateItemKeeperNotes (item, updateData) {
@@ -449,21 +420,21 @@ export class Updater {
         'weapon'
       ].includes(item.type)
     ) {
-      if (typeof item.data.description === 'string') {
-        updateData['data.description'] = {
-          value: item.data.description,
+      if (typeof item.system.description === 'string') {
+        updateData['system.description'] = {
+          value: item.system.description,
           keeper: ''
         }
       } else if (
-        typeof item.data.description === 'undefined' ||
-        item.data.description === null
+        typeof item.system.description === 'undefined' ||
+        item.system.description === null
       ) {
-        updateData['data.description'] = {
+        updateData['system.description'] = {
           value: '',
           keeper: ''
         }
-      } else if (typeof item.data.description.keeper === 'undefined') {
-        updateData['data.description.keeper'] = ''
+      } else if (typeof item.system.description.keeper === 'undefined') {
+        updateData['system.description.keeper'] = ''
       }
     }
     return updateData
@@ -471,8 +442,8 @@ export class Updater {
 
   static _migrateItemExperience (item, updateData) {
     if (item.type === 'skill') {
-      if (typeof item.data.adjustments?.experience === 'undefined') {
-        updateData['data.adjustments.experience'] = 0
+      if (typeof item.system.adjustments?.experience === 'undefined') {
+        updateData['system.adjustments.experience'] = 0
       }
     }
     return updateData
@@ -484,58 +455,58 @@ export class Updater {
       updateData.img = 'systems/CoC7/assets/icons/' + image[1]
     }
     if (item.type === 'setup') {
-      for (const [k, v] of Object.entries(item.data.items)) {
+      for (const [k, v] of Object.entries(item.system.items)) {
         image = String(v.img).match(/systems\/CoC7\/artwork\/icons\/(.+)/)
         if (image !== null) {
-          if (typeof updateData['data.items'] === 'undefined') {
-            updateData['data.items'] = item.data.items
+          if (typeof updateData['system.items'] === 'undefined') {
+            updateData['system.items'] = item.system.items
           }
-          updateData['data.items'][k].img =
+          updateData['system.items'][k].img =
             'systems/CoC7/assets/icons/' + image[1]
         }
       }
     } else if (item.type === 'occupation') {
-      for (const [k, v] of Object.entries(item.data.skills)) {
+      for (const [k, v] of Object.entries(item.system.skills)) {
         image = String(v.img).match(/systems\/CoC7\/artwork\/icons\/(.+)/)
         if (image !== null) {
-          if (typeof updateData['data.skills'] === 'undefined') {
-            updateData['data.skills'] = item.data.skills
+          if (typeof updateData['system.skills'] === 'undefined') {
+            updateData['system.skills'] = item.system.skills
           }
-          updateData['data.skills'][k].img =
+          updateData['system.skills'][k].img =
             'systems/CoC7/assets/icons/' + image[1]
         }
       }
-      for (const [o, g] of Object.entries(item.data.groups)) {
+      for (const [o, g] of Object.entries(item.system.groups)) {
         for (const [k, v] of Object.entries(g.skills)) {
           image = String(v.img).match(/systems\/CoC7\/artwork\/icons\/(.+)/)
           if (image !== null) {
-            if (typeof updateData['data.groups'] === 'undefined') {
-              updateData['data.groups'] = item.data.groups
+            if (typeof updateData['system.groups'] === 'undefined') {
+              updateData['system.groups'] = item.system.groups
             }
-            updateData['data.groups'][o].skills[k].img =
+            updateData['system.groups'][o].skills[k].img =
               'systems/CoC7/assets/icons/' + image[1]
           }
         }
       }
     } else if (item.type === 'book') {
-      for (const [k, v] of Object.entries(item.data.spells)) {
+      for (const [k, v] of Object.entries(item.system.spells)) {
         image = String(v.img).match(/systems\/CoC7\/artwork\/icons\/(.+)/)
         if (image !== null) {
-          if (typeof updateData['data.spells'] === 'undefined') {
-            updateData['data.spells'] = item.data.spells
+          if (typeof updateData['system.spells'] === 'undefined') {
+            updateData['system.spells'] = item.system.spells
           }
-          updateData['data.spells'][k].img =
+          updateData['system.spells'][k].img =
             'systems/CoC7/assets/icons/' + image[1]
         }
       }
     } else if (item.type === 'archetype') {
-      for (const [k, v] of Object.entries(item.data.skills)) {
+      for (const [k, v] of Object.entries(item.system.skills)) {
         image = String(v.img).match(/systems\/CoC7\/artwork\/icons\/(.+)/)
         if (image !== null) {
-          if (typeof updateData['data.skills'] === 'undefined') {
-            updateData['data.skills'] = item.data.skills
+          if (typeof updateData['system.skills'] === 'undefined') {
+            updateData['system.skills'] = item.system.skills
           }
-          updateData['data.skills'][k].img =
+          updateData['system.skills'][k].img =
             'systems/CoC7/assets/icons/' + image[1]
         }
       }
@@ -544,17 +515,17 @@ export class Updater {
   }
 
   static _migrateItemSpellAutomated (item, updateData) {
-    if (item.type === 'spell' && typeof item.data.cost !== 'undefined') {
-      updateData['data.castingTime'] = item.data.castingTime || ''
-      updateData['data.costs.hitPoints'] = item.data.cost.hp || 0
-      updateData['data.costs.magicPoints'] = item.data.cost.mp || 0
-      updateData['data.costs.sanity'] = item.data.cost.san || 0
-      updateData['data.costs.power'] = item.data.cost.pow || 0
-      updateData['data.costs.others'] = ''
+    if (item.type === 'spell' && typeof item.system.cost !== 'undefined') {
+      updateData['system.castingTime'] = item.system.castingTime || ''
+      updateData['system.costs.hitPoints'] = item.system.cost.hp || 0
+      updateData['system.costs.magicPoints'] = item.system.cost.mp || 0
+      updateData['system.costs.sanity'] = item.system.cost.san || 0
+      updateData['system.costs.power'] = item.system.cost.pow || 0
+      updateData['system.costs.others'] = ''
 
-      updateData['data.-=cost'] = null
-      updateData['data.description.-=unidentified'] = null
-      updateData['data.description.-=notes'] = null
+      updateData['system.-=cost'] = null
+      updateData['system.description.-=unidentified'] = null
+      updateData['system.description.-=notes'] = null
     }
   }
 
@@ -567,45 +538,45 @@ export class Updater {
    */
   static _migrateItemBookAutomated (item, updateData) {
     if (item.type === 'book') {
-      /** If book still has the data.description.unidentified key then run migrate on it */
-      if (typeof item.data.description.unidentified !== 'undefined') {
+      /** If book still has the system.description.unidentified key then run migrate on it */
+      if (typeof item.system.description.unidentified !== 'undefined') {
         /** Fields changed from null default to empty string */
-        updateData['data.author'] = item.data.author || ''
-        updateData['data.date'] = item.data.date || ''
-        updateData['data.language'] = item.data.language || ''
+        updateData['system.author'] = item.system.author || ''
+        updateData['system.date'] = item.system.date || ''
+        updateData['system.language'] = item.system.language || ''
         /** Fields changed from null/string defaults to integer to 0 */
-        updateData['data.sanityLoss'] = item.data.sanLoss || 0
-        updateData['data.mythosRating'] = Number(item.data.mythosRating) || 0
+        updateData['system.sanityLoss'] = item.system.sanLoss || 0
+        updateData['system.mythosRating'] = Number(item.system.mythosRating) || 0
         /** Renamed/moved fields */
-        updateData['data.content'] = item.data.description.unidentified
-        updateData['data.description.keeper'] = item.data.description.notes
+        updateData['system.content'] = item.system.description.unidentified
+        updateData['system.description.keeper'] = item.system.description.notes
         /** New fields set default values */
-        updateData['data.difficultyLevel'] = 'regular'
-        updateData['data.fullStudies'] = 0
-        updateData['data.initialReading'] = false
-        updateData['data.keeperNotes'] = ''
+        updateData['system.difficultyLevel'] = 'regular'
+        updateData['system.fullStudies'] = 0
+        updateData['system.initialReading'] = false
+        updateData['system.keeperNotes'] = ''
         /** Move and rename gain fields to gains, default NaN values to 0 */
-        updateData['data.gains.cthulhuMythos.initial'] =
-          Number(item.data.gain.cthulhuMythos.CMI) || 0
-        updateData['data.gains.cthulhuMythos.final'] =
-          Number(item.data.gain.cthulhuMythos.CMF) || 0
-        updateData['data.gains.occult'] = Number(item.data.gain.occult) || 0
-        updateData['data.gains.others'] = []
+        updateData['system.gains.cthulhuMythos.initial'] =
+          Number(item.system.gain.cthulhuMythos.CMI) || 0
+        updateData['system.gains.cthulhuMythos.final'] =
+          Number(item.system.gain.cthulhuMythos.CMF) || 0
+        updateData['system.gains.occult'] = Number(item.system.gain.occult) || 0
+        updateData['system.gains.others'] = []
         /** New study field default necessary to integer of weeksStudyTime or 0 if not set */
-        updateData['data.study'] = {
-          necessary: Number(item.data.weeksStudyTime) || 0,
+        updateData['system.study'] = {
+          necessary: Number(item.system.weeksStudyTime) || 0,
           progress: 0,
           units: 'CoC7.weeks'
         }
         /** Remove old keys */
-        updateData['data.-=sanLoss'] = null
-        updateData['data.-=weeksStudyTime'] = null
-        updateData['data.-=gain'] = null
-        updateData['data.description.-=unidentified'] = null
-        updateData['data.description.-=notes'] = null
-        updateData['data.gains.-=other'] = null
-        updateData['data.-=properties'] = null
-        updateData['data.-=flags'] = null
+        updateData['system.-=sanLoss'] = null
+        updateData['system.-=weeksStudyTime'] = null
+        updateData['system.-=gain'] = null
+        updateData['system.description.-=unidentified'] = null
+        updateData['system.description.-=notes'] = null
+        updateData['system.gains.-=other'] = null
+        updateData['system.-=properties'] = null
+        updateData['system.-=flags'] = null
       }
     }
     return updateData
@@ -614,33 +585,33 @@ export class Updater {
   static _migrateItemBookUnits (item, updateData) {
     if (item.type === 'book') {
       if (
-        typeof item.data.study.necessary !== 'undefined' &&
-        typeof item.data.study.units === 'undefined'
+        typeof item.system.study.necessary !== 'undefined' &&
+        typeof item.system.study.units === 'undefined'
       ) {
-        updateData['data.study.units'] = 'CoC7.weeks'
+        updateData['system.study.units'] = 'CoC7.weeks'
       }
     }
   }
 
   static _migrateItemKeeperNotesMerge (item, updateData) {
     if (item.type === 'spell' || item.type === 'book') {
-      if (typeof item.data.notes !== 'undefined') {
-        if (typeof item.data.description.keeper !== 'undefined') {
-          updateData['data.description.keeper'] =
-            item.data.description.keeper + item.data.notes
+      if (typeof item.system.notes !== 'undefined') {
+        if (typeof item.system.description.keeper !== 'undefined') {
+          updateData['system.description.keeper'] =
+            item.system.description.keeper + item.system.notes
         } else {
-          updateData['data.description.keeper'] = item.data.notes
+          updateData['system.description.keeper'] = item.system.notes
         }
-        updateData['data.-=notes'] = null
+        updateData['system.-=notes'] = null
       }
-      if (typeof item.data.keeperNotes !== 'undefined') {
-        if (typeof updateData['data.description.keeper'] !== 'undefined') {
-          updateData['data.description.keeper'] =
-            item.data.keeperNotes + updateData['data.description.keeper']
+      if (typeof item.system.keeperNotes !== 'undefined') {
+        if (typeof updateData['system.description.keeper'] !== 'undefined') {
+          updateData['system.description.keeper'] =
+            item.system.keeperNotes + updateData['system.description.keeper']
         } else {
-          updateData['data.description.keeper'] = item.data.keeperNotes
+          updateData['system.description.keeper'] = item.system.keeperNotes
         }
-        updateData['data.-=keeperNotes'] = null
+        updateData['system.-=keeperNotes'] = null
       }
     }
   }
@@ -648,7 +619,7 @@ export class Updater {
   static _migrateItemv10 (item, updateData) {
     if (
       item.type === 'skill' &&
-      (typeof item.data.skillName === 'undefined' || item.data.skillName === '')
+      (typeof item.system.skillName === 'undefined' || item.system.skillName === '')
     ) {
       updateData.name = item.name
       // Update Polish dodge translation from Uniki to Unik to match update to lang/pl.json
@@ -657,111 +628,111 @@ export class Updater {
       }
       const parts = CoC7Item.getNamePartsSpec(
         updateData.name,
-        typeof item.data.specialization?.group === 'string'
-          ? item.data.specialization.group
-          : item.data.specialization
+        typeof item.system.specialization?.group === 'string'
+          ? item.system.specialization.group
+          : item.system.specialization
       )
       updateData.name = parts.name
-      updateData['data.skillName'] = parts.skillName
-      updateData['data.specialization'] = parts.specialization
+      updateData['system.skillName'] = parts.skillName
+      updateData['system.specialization'] = parts.specialization
     } else if (item.type === 'setup') {
-      for (const [k, v] of Object.entries(item.data.items)) {
+      for (const [k, v] of Object.entries(item.system.items)) {
         if (
           v.type === 'skill' &&
-          (typeof v.data.skillName === 'undefined' || v.data.skillName === '')
+          (typeof v.system.skillName === 'undefined' || v.system.skillName === '')
         ) {
-          if (typeof updateData['data.items'] === 'undefined') {
-            updateData['data.items'] = item.data.items
+          if (typeof updateData['system.items'] === 'undefined') {
+            updateData['system.items'] = item.system.items
           }
-          updateData['data.items'][k].name = v.name
-          if (updateData['data.items'][k].name === 'Uniki') {
-            updateData['data.items'][k].name = 'Unik'
+          updateData['system.items'][k].name = v.name
+          if (updateData['system.items'][k].name === 'Uniki') {
+            updateData['system.items'][k].name = 'Unik'
           }
           const parts = CoC7Item.getNamePartsSpec(
-            updateData['data.items'][k].name,
-            typeof v.data.specialization?.group === 'string'
-              ? v.data.specialization.group
-              : v.data.specialization
+            updateData['system.items'][k].name,
+            typeof v.system.specialization?.group === 'string'
+              ? v.system.specialization.group
+              : v.system.specialization
           )
-          updateData['data.items'][k].name = parts.name
-          updateData['data.items'][k].data.skillName = parts.skillName
-          updateData['data.items'][k].data.specialization = parts.specialization
+          updateData['system.items'][k].name = parts.name
+          updateData['system.items'][k].system.skillName = parts.skillName
+          updateData['system.items'][k].system.specialization = parts.specialization
         }
       }
     } else if (item.type === 'occupation') {
-      for (const [k, v] of Object.entries(item.data.skills)) {
+      for (const [k, v] of Object.entries(item.system.skills)) {
         if (
           v.type === 'skill' &&
-          (typeof v.data.skillName === 'undefined' || v.data.skillName === '')
+          (typeof v.system.skillName === 'undefined' || v.system.skillName === '')
         ) {
-          if (typeof updateData['data.skills'] === 'undefined') {
-            updateData['data.skills'] = item.data.skills
+          if (typeof updateData['system.skills'] === 'undefined') {
+            updateData['system.skills'] = item.system.skills
           }
-          updateData['data.skills'][k].name = v.name
-          if (updateData['data.skills'][k].name === 'Uniki') {
-            updateData['data.skills'][k].name = 'Unik'
+          updateData['system.skills'][k].name = v.name
+          if (updateData['system.skills'][k].name === 'Uniki') {
+            updateData['system.skills'][k].name = 'Unik'
           }
           const parts = CoC7Item.getNamePartsSpec(
-            updateData['data.skills'][k].name,
-            typeof v.data.specialization?.group === 'string'
-              ? v.data.specialization.group
-              : v.data.specialization
+            updateData['system.skills'][k].name,
+            typeof v.system.specialization?.group === 'string'
+              ? v.system.specialization.group
+              : v.system.specialization
           )
-          updateData['data.skills'][k].name = parts.name
-          updateData['data.skills'][k].data.skillName = parts.skillName
-          updateData['data.skills'][k].data.specialization =
+          updateData['system.skills'][k].name = parts.name
+          updateData['system.skills'][k].system.skillName = parts.skillName
+          updateData['system.skills'][k].system.specialization =
             parts.specialization
         }
       }
-      for (const [o, g] of Object.entries(item.data.groups)) {
+      for (const [o, g] of Object.entries(item.system.groups)) {
         for (const [k, v] of Object.entries(g.skills)) {
           if (
             v.type === 'skill' &&
-            (typeof v.data.skillName === 'undefined' || v.data.skillName === '')
+            (typeof v.system.skillName === 'undefined' || v.system.skillName === '')
           ) {
-            if (typeof updateData['data.groups'] === 'undefined') {
-              updateData['data.groups'] = item.data.groups
+            if (typeof updateData['system.groups'] === 'undefined') {
+              updateData['system.groups'] = item.system.groups
             }
-            updateData['data.groups'][o].skills[k].name = v.name
-            if (updateData['data.groups'][o].skills[k].name === 'Uniki') {
-              updateData['data.groups'][o].skills[k].name = 'Unik'
+            updateData['system.groups'][o].skills[k].name = v.name
+            if (updateData['system.groups'][o].skills[k].name === 'Uniki') {
+              updateData['system.groups'][o].skills[k].name = 'Unik'
             }
             const parts = CoC7Item.getNamePartsSpec(
-              updateData['data.groups'][o].skills[k].name,
-              typeof v.data.specialization?.group === 'string'
-                ? v.data.specialization.group
-                : v.data.specialization
+              updateData['system.groups'][o].skills[k].name,
+              typeof v.system.specialization?.group === 'string'
+                ? v.system.specialization.group
+                : v.system.specialization
             )
-            updateData['data.groups'][o].skills[k].name = parts.name
-            updateData['data.groups'][o].skills[k].data.skillName =
+            updateData['system.groups'][o].skills[k].name = parts.name
+            updateData['system.groups'][o].skills[k].system.skillName =
               parts.skillName
-            updateData['data.groups'][o].skills[k].data.specialization =
+            updateData['system.groups'][o].skills[k].system.specialization =
               parts.specialization
           }
         }
       }
     } else if (item.type === 'archetype') {
-      for (const [k, v] of Object.entries(item.data.skills)) {
+      for (const [k, v] of Object.entries(item.system.skills)) {
         if (
           v.type === 'skill' &&
-          (typeof v.data.skillName === 'undefined' || v.data.skillName === '')
+          (typeof v.system.skillName === 'undefined' || v.system.skillName === '')
         ) {
-          if (typeof updateData['data.skills'] === 'undefined') {
-            updateData['data.skills'] = item.data.skills
+          if (typeof updateData['system.skills'] === 'undefined') {
+            updateData['system.skills'] = item.system.skills
           }
-          updateData['data.skills'][k].name = v.name
-          if (updateData['data.skills'][k].name === 'Uniki') {
-            updateData['data.skills'][k].name = 'Unik'
+          updateData['system.skills'][k].name = v.name
+          if (updateData['system.skills'][k].name === 'Uniki') {
+            updateData['system.skills'][k].name = 'Unik'
           }
           const parts = CoC7Item.getNamePartsSpec(
-            updateData['data.skills'][k].name,
-            typeof v.data.specialization?.group === 'string'
-              ? v.data.specialization.group
-              : v.data.specialization
+            updateData['system.skills'][k].name,
+            typeof v.system.specialization?.group === 'string'
+              ? v.system.specialization.group
+              : v.system.specialization
           )
-          updateData['data.skills'][k].name = parts.name
-          updateData['data.skills'][k].data.skillName = parts.skillName
-          updateData['data.skills'][k].data.specialization =
+          updateData['system.skills'][k].name = parts.name
+          updateData['system.skills'][k].system.skillName = parts.skillName
+          updateData['system.skills'][k].system.specialization =
             parts.specialization
         }
       }
@@ -770,9 +741,9 @@ export class Updater {
 
   static _migrateItemSetupEras (item, updateData) {
     if (item.type === 'setup') {
-      for (const [key, value] of Object.entries(item.data.eras)) {
+      for (const [key, value] of Object.entries(item.system.eras)) {
         if (typeof value.selected !== 'undefined') {
-          updateData['data.eras.' + key] = value.selected
+          updateData['system.eras.' + key] = value.selected
         }
       }
     }
@@ -784,14 +755,14 @@ export class Updater {
       updateData.img = 'systems/CoC7/assets/icons/' + image[1]
     }
     if (
-      typeof actor.token !== 'undefined' &&
-      typeof actor.token.img !== 'undefined'
+      typeof actor.prototypeToken !== 'undefined' &&
+      typeof actor.prototypeToken.texture?.src !== 'undefined'
     ) {
-      image = String(actor.token.img).match(
+      image = String(actor.prototypeToken.texture.src).match(
         /systems\/CoC7\/artwork\/icons\/(.+)/
       )
       if (image !== null) {
-        updateData['token.img'] = 'systems/CoC7/assets/icons/' + image[1]
+        updateData['prototypeToken.texture.src'] = 'systems/CoC7/assets/icons/' + image[1]
       }
     }
     if (typeof actor.effects !== 'undefined') {
@@ -811,10 +782,10 @@ export class Updater {
   static _migrateActorKeeperNotes (actor, updateData) {
     if (['character', 'npc', 'creature'].includes(actor.type)) {
       if (
-        typeof actor.data !== 'undefined' &&
-        typeof actor.data.description === 'undefined'
+        typeof actor.system !== 'undefined' &&
+        typeof actor.system.description === 'undefined'
       ) {
-        updateData['data.description'] = {
+        updateData['system.description'] = {
           keeper: ''
         }
       }
@@ -825,10 +796,10 @@ export class Updater {
   static _migrateActorSanLossReasons (actor, updateData) {
     if (
       actor.type === 'character' &&
-      typeof actor.data?.encounteredCreatures !== 'undefined'
+      typeof actor.system?.encounteredCreatures !== 'undefined'
     ) {
       const groups = {}
-      for (const sanityLossEvent of actor.data.encounteredCreatures) {
+      for (const sanityLossEvent of actor.system.encounteredCreatures) {
         if (sanityLossEvent.totalLoss > 0) {
           groups[sanityLossEvent.name] = Math.max(
             groups[sanityLossEvent.name] ?? 0,
@@ -844,66 +815,66 @@ export class Updater {
           immunity: false
         })
       }
-      updateData['data.sanityLossEvents'] = sanityLossEvents
-      updateData['data.-=encounteredCreatures'] = null
+      updateData['system.sanityLossEvents'] = sanityLossEvents
+      updateData['system.-=encounteredCreatures'] = null
     }
   }
 
   static _migrateActorStatusEffectActive (actor, updateData) {
     if (['character', 'npc', 'creature'].includes(actor.type)) {
       if (
-        typeof actor.data !== 'undefined' &&
-        (typeof actor.data.status !== 'undefined' ||
-          typeof actor.data.conditions === 'undefined')
+        typeof actor.system !== 'undefined' &&
+        (typeof actor.system.status !== 'undefined' ||
+          typeof actor.system.conditions === 'undefined')
       ) {
-        updateData['data.conditions.criticalWounds.value'] = false
-        updateData['data.conditions.unconscious.value'] = false
-        updateData['data.conditions.dying.value'] = false
-        updateData['data.conditions.dead.value'] = false
-        updateData['data.conditions.prone.value'] = false
-        updateData['data.conditions.tempoInsane.value'] = false
-        updateData['data.conditions.indefInsane.value'] = false
+        updateData['system.conditions.criticalWounds.value'] = false
+        updateData['system.conditions.unconscious.value'] = false
+        updateData['system.conditions.dying.value'] = false
+        updateData['system.conditions.dead.value'] = false
+        updateData['system.conditions.prone.value'] = false
+        updateData['system.conditions.tempoInsane.value'] = false
+        updateData['system.conditions.indefInsane.value'] = false
         if (
-          typeof actor.data.status?.criticalWounds?.value !== 'undefined' &&
-          actor.data.status?.criticalWounds.value
+          typeof actor.system.status?.criticalWounds?.value !== 'undefined' &&
+          actor.system.status?.criticalWounds.value
         ) {
-          updateData['data.conditions.criticalWounds.value'] = true
+          updateData['system.conditions.criticalWounds.value'] = true
         }
         if (
-          typeof actor.data.status?.unconscious?.value !== 'undefined' &&
-          actor.data.status?.unconscious.value
+          typeof actor.system.status?.unconscious?.value !== 'undefined' &&
+          actor.system.status?.unconscious.value
         ) {
-          updateData['data.conditions.unconscious.value'] = true
+          updateData['system.conditions.unconscious.value'] = true
         }
         if (
-          typeof actor.data.status?.dying?.value !== 'undefined' &&
-          actor.data.status?.dying.value
+          typeof actor.system.status?.dying?.value !== 'undefined' &&
+          actor.system.status?.dying.value
         ) {
-          updateData['data.conditions.dying.value'] = true
+          updateData['system.conditions.dying.value'] = true
         }
         if (
-          typeof actor.data.status?.dead?.value !== 'undefined' &&
-          actor.data.status?.dead.value
+          typeof actor.system.status?.dead?.value !== 'undefined' &&
+          actor.system.status?.dead.value
         ) {
-          updateData['data.conditions.dead.value'] = true
+          updateData['system.conditions.dead.value'] = true
         }
         if (
-          typeof actor.data.status?.prone?.value !== 'undefined' &&
-          actor.data.status?.prone.value
+          typeof actor.system.status?.prone?.value !== 'undefined' &&
+          actor.system.status?.prone.value
         ) {
-          updateData['data.conditions.prone.value'] = true
+          updateData['system.conditions.prone.value'] = true
         }
         if (
-          typeof actor.data.status?.tempoInsane?.value !== 'undefined' &&
-          actor.data.status?.tempoInsane.value
+          typeof actor.system.status?.tempoInsane?.value !== 'undefined' &&
+          actor.system.status?.tempoInsane.value
         ) {
-          updateData['data.conditions.tempoInsane.value'] = true
+          updateData['system.conditions.tempoInsane.value'] = true
         }
         if (
-          typeof actor.data.status?.indefInsane?.value !== 'undefined' &&
-          actor.data.status?.indefInsane.value
+          typeof actor.system.status?.indefInsane?.value !== 'undefined' &&
+          actor.system.status?.indefInsane.value
         ) {
-          updateData['data.conditions.indefInsane.value'] = true
+          updateData['system.conditions.indefInsane.value'] = true
         }
         if (typeof actor.effects !== 'undefined') {
           const effects = actor.effects
@@ -941,8 +912,8 @@ export class Updater {
                   break
               }
               if (statusId !== '') {
-                if (!updateData[`data.conditions.${statusId}.value`]) {
-                  updateData[`data.conditions.${statusId}.value`] = true
+                if (!updateData[`system.conditions.${statusId}.value`]) {
+                  updateData[`system.conditions.${statusId}.value`] = true
                   changed = true
                 }
                 if (effect.flags.core?.statusId !== statusId) {
@@ -962,22 +933,22 @@ export class Updater {
             updateData.effects = effects
           }
         }
-        updateData['data.-=status'] = null
+        updateData['system.-=status'] = null
       }
     }
     return updateData
   }
 
   static _migrateActorNpcCreature (actor, updateData) {
-    if (['npc'].includes(actor.type) && typeof actor.data !== 'undefined') {
-      if (typeof actor.data.special === 'undefined') {
-        updateData['data.special'] = {
+    if (['npc'].includes(actor.type) && typeof actor.system !== 'undefined') {
+      if (typeof actor.system.special === 'undefined') {
+        updateData['system.special'] = {
           checkPassed: null,
           checkFailled: null
         }
       }
-      if (typeof actor.data.attacksPerRound === 'undefined') {
-        updateData['data.attacksPerRound'] = 1
+      if (typeof actor.system.attacksPerRound === 'undefined') {
+        updateData['system.attacksPerRound'] = 1
       }
     }
     return updateData
@@ -986,62 +957,62 @@ export class Updater {
   static _migrateActorCharacterSanity (actor, updateData) {
     if (
       actor.type === 'character' &&
-      typeof actor.data?.attribs?.san !== 'undefined'
+      typeof actor.system?.attribs?.san !== 'undefined'
     ) {
-      const oneFifthSanity = Math.ceil(actor.data.attribs.san.value / 5)
+      const oneFifthSanity = Math.ceil(actor.system.attribs.san.value / 5)
       if (
-        typeof actor.data.attribs.san.dailyLoss === 'undefined' ||
-        actor.data.attribs.san.dailyLoss === null
+        typeof actor.system.attribs.san.dailyLoss === 'undefined' ||
+        actor.system.attribs.san.dailyLoss === null
       ) {
-        updateData['data.attribs.san.dailyLoss'] = 0
+        updateData['system.attribs.san.dailyLoss'] = 0
       }
       if (
-        typeof actor.data.attribs.san.oneFifthSanity === 'undefined' ||
-        actor.data.attribs.san.oneFifthSanity === null
+        typeof actor.system.attribs.san.oneFifthSanity === 'undefined' ||
+        actor.system.attribs.san.oneFifthSanity === null
       ) {
-        updateData['data.attribs.san.oneFifthSanity'] = ' / ' + oneFifthSanity
+        updateData['system.attribs.san.oneFifthSanity'] = ' / ' + oneFifthSanity
       }
       if (
-        typeof actor.data.attribs.san.dailyLoss === 'undefined' ||
-        actor.data.attribs.san.dailyLoss === null
+        typeof actor.system.attribs.san.dailyLoss === 'undefined' ||
+        actor.system.attribs.san.dailyLoss === null
       ) {
-        updateData['data.attribs.san.dailyLoss'] = 0
+        updateData['system.attribs.san.dailyLoss'] = 0
       }
       if (
-        typeof actor.data.indefiniteInsanityLevel === 'undefined' ||
-        actor.data.indefiniteInsanityLevel === null ||
-        typeof actor.data.indefiniteInsanityLevel.value === 'undefined' ||
-        actor.data.indefiniteInsanityLevel.value === null
+        typeof actor.system.indefiniteInsanityLevel === 'undefined' ||
+        actor.system.indefiniteInsanityLevel === null ||
+        typeof actor.system.indefiniteInsanityLevel.value === 'undefined' ||
+        actor.system.indefiniteInsanityLevel.value === null
       ) {
-        updateData['data.indefiniteInsanityLevel.value'] = 0
+        updateData['system.indefiniteInsanityLevel.value'] = 0
       }
       if (
-        typeof actor.data.indefiniteInsanityLevel === 'undefined' ||
-        actor.data.indefiniteInsanityLevel === null ||
-        typeof actor.data.indefiniteInsanityLevel.max === 'undefined' ||
-        actor.data.indefiniteInsanityLevel.max === null
+        typeof actor.system.indefiniteInsanityLevel === 'undefined' ||
+        actor.system.indefiniteInsanityLevel === null ||
+        typeof actor.system.indefiniteInsanityLevel.max === 'undefined' ||
+        actor.system.indefiniteInsanityLevel.max === null
       ) {
-        updateData['data.indefiniteInsanityLevel.max'] = oneFifthSanity
+        updateData['system.indefiniteInsanityLevel.max'] = oneFifthSanity
       }
-      if (typeof actor.data.attribs.mp !== 'undefined') {
+      if (typeof actor.system.attribs.mp !== 'undefined') {
         if (
-          typeof actor.data.attribs.mp.value === 'undefined' ||
-          actor.data.attribs.mp.value === null
+          typeof actor.system.attribs.mp.value === 'undefined' ||
+          actor.system.attribs.mp.value === null
         ) {
-          updateData['data.attribs.mp.value'] = oneFifthSanity
+          updateData['system.attribs.mp.value'] = oneFifthSanity
         }
         if (
-          typeof actor.data.attribs.mp.max === 'undefined' ||
-          actor.data.attribs.mp.max === null
+          typeof actor.system.attribs.mp.max === 'undefined' ||
+          actor.system.attribs.mp.max === null
         ) {
-          updateData['data.attribs.mp.max'] = oneFifthSanity
+          updateData['system.attribs.mp.max'] = oneFifthSanity
         }
       }
       if (
-        typeof actor.data.notes === 'undefined' ||
-        actor.data.notes === null
+        typeof actor.system.notes === 'undefined' ||
+        actor.system.notes === null
       ) {
-        updateData['data.notes'] = ''
+        updateData['system.notes'] = ''
       }
     }
     return updateData

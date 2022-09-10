@@ -322,7 +322,7 @@ export class CoC7Item extends Item {
       // if skill is not a specialisation make it a specialisation
       if (!this.system.properties.special) {
         this.system.properties.special = true
-        checkedProps['data.properties.special'] = true
+        checkedProps['system.properties.special'] = true
       }
 
       // If skill is combat skill and no specialisation set then make it a fighting( closecombat) skill
@@ -331,7 +331,7 @@ export class CoC7Item extends Item {
         !this.system.properties.firearm
       ) {
         this.system.properties.fighting = true
-        checkedProps['data.properties.fighting'] = true
+        checkedProps['system.properties.fighting'] = true
       }
 
       // if skill is close combat without specialisation name make set it according to the fightingSpecializationName
@@ -342,7 +342,7 @@ export class CoC7Item extends Item {
         this.system.specialization = game.i18n.localize(
           COC7.fightingSpecializationName
         )
-        checkedProps['data.specialization'] = game.i18n.localize(
+        checkedProps['system.specialization'] = game.i18n.localize(
           COC7.fightingSpecializationName
         )
       }
@@ -355,18 +355,18 @@ export class CoC7Item extends Item {
         this.system.specialization = game.i18n.localize(
           COC7.firearmSpecializationName
         )
-        checkedProps['data.specialization'] = game.i18n.localize(
+        checkedProps['system.specialization'] = game.i18n.localize(
           COC7.firearmSpecializationName
         )
       }
     } else {
       if (this.system.properties.fighting) {
         this.system.properties.fighting = false
-        checkedProps['data.properties.fighting'] = false
+        checkedProps['system.properties.fighting'] = false
       }
       if (this.system.properties.firearm) {
         this.system.properties.firearm = false
-        checkedProps['data.properties.firearm'] = false
+        checkedProps['system.properties.firearm'] = false
       }
     }
 
@@ -377,17 +377,17 @@ export class CoC7Item extends Item {
     return checkedProps
 
     // for (const property in this.system.properties) {
-    //  checkedProps[`data.data.properties${property}`] = true;
+    //  checkedProps[`system.properties${property}`] = true;
     // }
   }
 
   // async toggleInSet( set, propertyId){
-  //  if( this.data.data[set][propertyId] == "false") this.data.data[set][propertyId] = "true"; else this.data.data[set][propertyId] = "false";
+  //  if( this.system[set][propertyId] == "false") this.system[set][propertyId] = "true"; else this.system[set][propertyId] = "false";
   // }
 
   isIncludedInSet (set, propertyId) {
-    if (!this.data.data[set]) this.data.data[set] = []
-    const propertyIndex = this.data.data[set].indexOf(propertyId)
+    if (!this.system[set]) this.system[set] = []
+    const propertyIndex = this.system[set].indexOf(propertyId)
     if (propertyIndex > -1) return true
     return false
   }
@@ -395,18 +395,18 @@ export class CoC7Item extends Item {
   async flagForDevelopement () {
     if (game.settings.get('CoC7', 'xpEnabled') || game.user.isGM) {
       if (!this.system.flags) {
-        await this.update({ 'data.flags': {} })
+        await this.update({ 'system.flags': {} })
       }
-      await this.update({ 'data.flags.developement': true })
+      await this.update({ 'system.flags.developement': true })
     }
   }
 
   async unflagForDevelopement () {
     if (game.settings.get('CoC7', 'xpEnabled') || game.user.isGM) {
       if (!this.system.flags) {
-        await this.update({ 'data.flags': {} })
+        await this.update({ 'system.flags': {} })
       }
-      await this.update({ 'data.flags.developement': false })
+      await this.update({ 'system.flags.developement': false })
     }
   }
 
@@ -416,14 +416,14 @@ export class CoC7Item extends Item {
 
   async toggleItemFlag (flagName, eraseAdjustment = true) {
     const flagValue = !this.getItemFlag(flagName)
-    const name = `data.flags.${flagName}`
+    const name = `system.flags.${flagName}`
     if (
       (flagName === 'occupation' || flagName === 'archetype') &&
       !flagValue &&
       eraseAdjustment
     ) {
       await this.update({
-        [`data.adjustments.${flagName}`]: null,
+        [`system.adjustments.${flagName}`]: null,
         [name]: flagValue
       })
     } else if (flagName === 'developement') {
@@ -436,17 +436,17 @@ export class CoC7Item extends Item {
   }
 
   async setItemFlag (flagName) {
-    await this.update({ [`data.flags.${flagName}`]: true })
+    await this.update({ [`system.flags.${flagName}`]: true })
   }
 
   async unsetItemFlag (flagName, eraseAdjustment = true) {
-    const name = `data.flags.${flagName}`
+    const name = `system.flags.${flagName}`
     if (
       (flagName === 'occupation' || flagName === 'archetype') &&
       eraseAdjustment
     ) {
       await this.update({
-        [`data.adjustments.${flagName}`]: null,
+        [`system.adjustments.${flagName}`]: null,
         [name]: false
       })
     } else await this.update({ [name]: false })
@@ -456,7 +456,7 @@ export class CoC7Item extends Item {
     if (!this.system.flags) {
       this.system.flags = {}
       this.system.flags.locked = true
-      this.update({ 'data.flags': {} })
+      this.update({ 'system.flags': {} })
       return false
     }
 
@@ -614,7 +614,7 @@ export class CoC7Item extends Item {
       console.info(
         `[COC7] (${this.parent?.name}) Evaluating skill ${this.name}:${this.system.base} to ${e[0]}`
       )
-      await this.update({ 'data.base': e[0] })
+      await this.update({ 'system.base': e[0] })
     }
     return e[0]
   }
@@ -622,7 +622,7 @@ export class CoC7Item extends Item {
   get base () {
     const e = this._base
     if (e[1]) {
-      this.update({ 'data.base': e[0] })
+      this.update({ 'system.base': e[0] })
     }
     return e[0]
   }
@@ -646,7 +646,7 @@ export class CoC7Item extends Item {
 
   async setBullets (bullets) {
     if (this.type !== 'weapon') return null
-    await this.update({ 'data.ammo': bullets || 0 })
+    await this.update({ 'system.ammo': bullets || 0 })
   }
 
   async addBullet () {
@@ -725,7 +725,7 @@ export class CoC7Item extends Item {
    * @return {Object}               An object of chat data to render
    */
   getChatData (htmlOptions = {}) {
-    const data = duplicate(this.data.data)
+    const data = duplicate(this.system)
     // Fix : data can have description directly in field, not under value.
     if (typeof data.description === 'string') {
       data.description = {
@@ -755,7 +755,7 @@ export class CoC7Item extends Item {
 
     // Item type specific properties
     const props = []
-    const fn = this[`_${this.data.type}ChatData`]
+    const fn = this[`_${this.type}ChatData`]
     if (fn) fn.bind(this)(data, labels, props, htmlOptions)
 
     if (this.type === 'skill') {

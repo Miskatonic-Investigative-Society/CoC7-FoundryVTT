@@ -1,5 +1,4 @@
 /* global $, ChatMessage, game, renderTemplate, ui */
-
 import { CoC7Check } from '../../check.js'
 import { chatHelper, CoC7Roll } from '../helper.js'
 import { CoC7Chat } from '../../chat.js'
@@ -192,7 +191,7 @@ export class CoC7MeleeInitiator extends ChatCardActor {
   static getFromMessageId (messageId) {
     const message = game.messages.get(messageId)
     if (!message) return null
-    const card = $(message.data.content)[0]
+    const card = $(message.content)[0]
 
     const initiator = CoC7MeleeInitiator.getFromCard(card, messageId)
     initiator.messageId = messageId

@@ -1,5 +1,4 @@
 /* global $, Actor, AudioHelper, ChatMessage, CONFIG, CONST, duplicate, foundry, fromUuid, game, getComputedStyle, Item, mergeObject, renderTemplate, Token, ui */
-
 import { CoC7Dice } from './dice.js'
 import { CoC7Item } from './items/item.js'
 import { chatHelper, CoC7Roll } from './chat/helper.js'
@@ -109,11 +108,11 @@ export class CoC7Check {
     if (!this._rawValue) {
       if (this.characteristic) {
         this.rawValue =
-          this.actor.data.data.characteristics[this.characteristic].value
+          this.actor.system.characteristics[this.characteristic].value
       }
       if (this.skill) this.rawValue = this.skill.value
       if (this.attribute) {
-        this.rawValue = this.actor.data.data.attribs[this.attribute].value
+        this.rawValue = this.actor.system.attribs[this.attribute].value
       }
     }
     if (this._rawValue) {
@@ -584,15 +583,15 @@ export class CoC7Check {
       this._skill = this.actor?.items.get(this.skillId)
     }
     if (!this._skill && this.item) {
-      if (this.item.data.data.skill) {
-        if (this.item.data.data.skill.main.id && !this.weaponAltSkill) {
-          this._skill = this._actor.items.get(this.item.data.data.skill.main.id)
+      if (this.item.system.skill) {
+        if (this.item.system.skill.main.id && !this.weaponAltSkill) {
+          this._skill = this._actor.items.get(this.item.system.skill.main.id)
         } else if (
-          this.item.data.data.skill.alternativ.id &&
+          this.item.system.skill.alternativ.id &&
           this.weaponAltSkill
         ) {
           this._skill = this._actor.items.get(
-            this.item.data.data.skill.alternativ.id
+            this.item.system.skill.alternativ.id
           )
         }
       }
@@ -873,7 +872,7 @@ export class CoC7Check {
       if (this.characteristic) {
         this.isCharactiristic = true
         this.rawValue =
-          this.actor.data.data.characteristics[this.characteristic].value
+          this.actor.system.characteristics[this.characteristic].value
       }
 
       if (this.skill) {
@@ -883,7 +882,7 @@ export class CoC7Check {
 
       if (this.attribute) {
         this.isAttribute = true
-        this.rawValue = this.actor.data.data.attribs[this.attribute].value
+        this.rawValue = this.actor.system.attribs[this.attribute].value
       }
     }
 
@@ -953,9 +952,9 @@ export class CoC7Check {
 
     if (this.item) {
       this.isItem = true
-      if (this.item.data.data.malfunction) {
+      if (this.item.system.malfunction) {
         if (
-          Number(this.modifiedResult) >= Number(this.item.data.data.malfunction)
+          Number(this.modifiedResult) >= Number(this.item.system.malfunction)
         ) {
           this.hasMalfunction = true
           this.malfunctionTxt = game.i18n.format('CoC7.Malfunction', {
@@ -1055,13 +1054,13 @@ export class CoC7Check {
     }
 
     this.canAwardExperience =
-      this.skill && !this.skill.data.data.properties.noxpgain
+      this.skill && !this.skill.system.properties.noxpgain
 
     if (
       this.passed &&
       this.diceModifier <= 0 &&
       this.skill &&
-      !this.skill.data.data.properties.noxpgain &&
+      !this.skill.system.properties.noxpgain &&
       !this.luckSpent &&
       !this.forced &&
       !this.isBlind &&
@@ -1422,7 +1421,7 @@ export class CoC7Check {
   get flavor () {
     if (this._flavor) return this._flavor
     let flavor = ''
-    if (this.actor?.data) {
+    if (this.actor?.system) {
       if (this.skill) {
         flavor = game.i18n.format('CoC7.CheckResult', {
           name: this.skill.name,
@@ -1439,7 +1438,7 @@ export class CoC7Check {
       } else if (this.characteristic) {
         flavor = game.i18n.format('CoC7.CheckResult', {
           name: game.i18n.format(
-            this.actor.data.data.characteristics[this.characteristic].label
+            this.actor.system.characteristics[this.characteristic].label
           ),
           value: this.rawValueString,
           difficulty: this.difficultyString
@@ -1447,7 +1446,7 @@ export class CoC7Check {
       } else if (this.attribute) {
         flavor = game.i18n.format('CoC7.CheckResult', {
           name: game.i18n.format(
-            `CoC7.${this.actor.data.data.attribs[this.attribute].label}`
+            `CoC7.${this.actor.system.attribs[this.attribute].label}`
           ),
           value: this.rawValueString,
           difficulty: this.difficultyString
@@ -1496,10 +1495,10 @@ export class CoC7Check {
             difficulty: this.difficultyString,
             modifier: this.diceModifier,
             name: game.i18n.format(
-              `CoC7.${this.actor.data.data.attribs[this.attribute].label}`
+              `CoC7.${this.actor.system.attribs[this.attribute].label}`
             )
           }
-        ) + ` (${this.actor.data.data.attribs[this.attribute].value}%)`
+        ) + ` (${this.actor.system.attribs[this.attribute].value}%)`
       )
     }
     if (this.characteristic) {
@@ -1512,11 +1511,11 @@ export class CoC7Check {
             difficulty: this.difficultyString,
             modifier: this.diceModifier,
             name: game.i18n.localize(
-              this.actor.data.data.characteristics[this.characteristic].label
+              this.actor.system.characteristics[this.characteristic].label
             )
           }
         ) +
-        ` (${this.actor.data.data.characteristics[this.characteristic].value}%)`
+        ` (${this.actor.system.characteristics[this.characteristic].value}%)`
       )
     }
     if (this.skill) {
@@ -1688,7 +1687,7 @@ export class CoC7Check {
     // If no messageId
 
     const message = game.messages.get(this.messageId)
-    const htmlMessage = $.parseHTML(message.data.content)[0]
+    const htmlMessage = $.parseHTML(message.content)[0]
     if (!htmlMessage.classList.contains('roll-result')) {
       const htmlCheck = $.parseHTML(html)[0]
       const rollResultElement = htmlMessage.querySelector('.roll-result')
@@ -1700,8 +1699,8 @@ export class CoC7Check {
 
     chatData.content = newContent
 
-    if (CONST.CHAT_MESSAGE_TYPES.ROLL === message.data.type) {
-      if (message.data.whisper?.length) {
+    if (CONST.CHAT_MESSAGE_TYPES.ROLL === message.type) {
+      if (message.whisper?.length) {
         chatData.type = CONST.CHAT_MESSAGE_TYPES.WHISPER
       } else chatData.type = CONST.CHAT_MESSAGE_TYPES.OTHER
     }

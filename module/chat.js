@@ -1,5 +1,4 @@
 /* global $, ChatMessage, CONST, game, Token, tokenData, ui */
-
 import { CoC7Check } from './check.js'
 import { COC7 } from './config.js'
 import { CoC7MeleeInitiator } from './chat/combat/melee-initiator.js'
@@ -159,8 +158,8 @@ export class CoC7Chat {
 
     // if( chatMessage.getFlag( 'CoC7', 'reveled')){
     // }
-    if (game.user.isGM && chatMessage.data.type === 0) {
-      const card = $(chatMessage.data.content)[0]
+    if (game.user.isGM && chatMessage.type === 0) {
+      const card = $(chatMessage.content)[0]
       if (card.classList.contains('melee')) {
         if (card.dataset.resolved === 'true') {
           if (card.classList.contains('initiator')) {

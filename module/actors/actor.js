@@ -2619,7 +2619,7 @@ export class CoCActor extends Actor {
   }
 
   get actorKey () {
-    if (this.data.token.actorLink) return this.id // REFACTORING (2)
+    if (this.prototypeToken.actorLink) return this.id // REFACTORING (2)
     return this.tokenKey
   }
 

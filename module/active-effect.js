@@ -1,5 +1,4 @@
 /* global ActiveEffect, foundry, game, Roll */
-
 export default class CoC7ActiveEffect extends ActiveEffect {
   /** @inheritdoc */
   apply (actor, change) {
@@ -23,7 +22,7 @@ export default class CoC7ActiveEffect extends ActiveEffect {
    */
   _applyMultiply (actor, change) {
     const { key, value } = change
-    const current = foundry.utils.getProperty(actor.data, key)
+    const current = foundry.utils.getProperty(actor, key)
     const n = Number.fromString(value)
 
     let update
@@ -33,7 +32,7 @@ export default class CoC7ActiveEffect extends ActiveEffect {
     else if (Roll.validate(strUpdate)) update = strUpdate
     else if (typeof current !== 'number' || isNaN(n)) return null
     else update = current * n
-    foundry.utils.setProperty(actor.data, key, update)
+    foundry.utils.setProperty(actor, key, update)
     return update
   }
 
@@ -56,7 +55,7 @@ export default class CoC7ActiveEffect extends ActiveEffect {
    */
   _applyAdd (actor, change) {
     const { key, value } = change
-    const current = foundry.utils.getProperty(actor.data, key) ?? null
+    const current = foundry.utils.getProperty(actor, key) ?? null
     const ct = foundry.utils.getType(current)
     let update = null
 
@@ -85,7 +84,7 @@ export default class CoC7ActiveEffect extends ActiveEffect {
         if (!current.length || foundry.utils.getType(value) === at) { update = current.concat([value]) }
       }
     }
-    if (update !== null) foundry.utils.setProperty(actor.data, key, update)
+    if (update !== null) foundry.utils.setProperty(actor, key, update)
     return update
   }
 
@@ -119,7 +118,7 @@ export default class CoC7ActiveEffect extends ActiveEffect {
       case 'delete':
         return effect.delete()
       case 'toggle':
-        return effect.update({ disabled: !effect.data.disabled })
+        return effect.update({ disabled: !effect.disabled })
     }
   }
 

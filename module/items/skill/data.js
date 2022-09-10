@@ -142,27 +142,27 @@ export class CoC7Skill extends CoC7Item {
   }
 
   async updateValue (value) {
-    if (this.actor.data.type === 'character') {
+    if (this.actor.type === 'character') {
       const delta = parseInt(value) - this.rawValue
       const exp =
         (this.system.adjustments?.experience
           ? parseInt(this.system.adjustments.experience)
           : 0) + delta
       await this.update({
-        'data.adjustments.experience': exp > 0 ? exp : 0
+        'system.adjustments.experience': exp > 0 ? exp : 0
       })
-    } else await this.update({ 'data.value': value })
+    } else await this.update({ 'system.value': value })
   }
 
   async increaseExperience (x) {
     if (this.type !== 'skill') return null
-    if (this.actor.data.type === 'character') {
+    if (this.actor.type === 'character') {
       const exp =
         (this.system.adjustments?.experience
           ? parseInt(this.system.adjustments.experience)
           : 0) + parseInt(x)
       await this.update({
-        'data.adjustments.experience': exp > 0 ? exp : 0
+        'system.adjustments.experience': exp > 0 ? exp : 0
       })
     }
   }
