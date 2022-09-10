@@ -7,10 +7,10 @@
 
       <ul class="summary flexrow">
         <li class="flex2">
-          <input type="text" name="data.data.specialization" value="{{content.data.data.specialization}}" readonly />
+          <input type="text" value="{{content.system.specialization}}" readonly />
         </li>
         <li class="flex1">
-          <input type="text" name="data.data.value" value="{{content.value}}%" readonly />
+          <input type="text" value="{{content.system.value}}%" readonly />
         </li>
       </ul>
 
@@ -29,7 +29,7 @@
       </div>
 
       <div class='item-description'>
-        {{{content.data.data.description.enrichedValue}}}
+        {{{content.system.description.enrichedValue}}}
       </div>
     </div>
   </section>

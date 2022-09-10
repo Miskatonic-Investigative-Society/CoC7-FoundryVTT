@@ -193,12 +193,12 @@ export class CoCActor extends Actor {
       // Apply effects to automaticaly calculated values.
       const filterMatrix = []
 
-      if (this.system.attribs.hp.auto) filterMatrix.push('data.attribs.hp.max')
-      if (this.system.attribs.mp.auto) filterMatrix.push('data.attribs.mp.max')
-      if (this.system.attribs.san.auto) filterMatrix.push('data.attribs.san.max')
-      if (this.system.attribs.mov.auto) filterMatrix.push('data.attribs.mov.value')
-      if (this.system.attribs.db.auto) filterMatrix.push('data.attribs.db.value')
-      if (this.system.attribs.build.auto) filterMatrix.push('data.attribs.build.value')
+      if (this.system.attribs.hp.auto) filterMatrix.push('system.attribs.hp.max')
+      if (this.system.attribs.mp.auto) filterMatrix.push('system.attribs.mp.max')
+      if (this.system.attribs.san.auto) filterMatrix.push('system.attribs.san.max')
+      if (this.system.attribs.mov.auto) filterMatrix.push('system.attribs.mov.value')
+      if (this.system.attribs.db.auto) filterMatrix.push('system.attribs.db.value')
+      if (this.system.attribs.build.auto) filterMatrix.push('system.attribs.build.value')
 
       const changes = this.effects.reduce((changes, e) => {
         if (e.disabled || e.isSuppressed) return changes
@@ -433,7 +433,8 @@ export class CoCActor extends Actor {
             if (item.data?.data?.type?.phobia) result.phobia = true
             if (item.data?.data?.type?.mania) result.mania = true
             result.description = `${item.name}:${TextEditor.enrichHTML(
-              item.system.description.value
+              item.system.description.value,
+              { async: false }
             )}`
             result.name = item.name
             delete item.data._id
@@ -449,7 +450,8 @@ export class CoCActor extends Actor {
           result.tableRoll.results[0].data.type
         ) {
           result.description = TextEditor.enrichHTML(
-            result.tableRoll.results[0].data.text
+            result.tableRoll.results[0].data.text,
+            { async: false }
           )
         }
       } else {
@@ -2455,16 +2457,16 @@ export class CoCActor extends Actor {
   }
 
   async setActorFlag (flagName) {
-    await this.update({ [`data.flags.${flagName}`]: true })
+    await this.update({ [`system.flags.${flagName}`]: true })
   }
 
   async unsetActorFlag (flagName) {
-    await this.update({ [`data.flags.${flagName}`]: false })
+    await this.update({ [`system.flags.${flagName}`]: false })
   }
 
   getWeaponSkills (itemId) {
     const weapon = this.items.get(itemId)
-    if (weapon.data.type !== 'weapon') return null
+    if (weapon.type !== 'weapon') return null
     const skills = []
     if (weapon.system.skill.main.id) {
       skills.push(this.items.get(weapon.system.skill.main.id))

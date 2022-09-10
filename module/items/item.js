@@ -725,6 +725,8 @@ export class CoC7Item extends Item {
    * @return {Object}               An object of chat data to render
    */
   getChatData (htmlOptions = {}) {
+    // FoundryVTT v10
+    htmlOptions.async = false
     const data = duplicate(this.system)
     // Fix : data can have description directly in field, not under value.
     if (typeof data.description === 'string') {

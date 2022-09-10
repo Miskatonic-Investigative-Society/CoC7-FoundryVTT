@@ -826,15 +826,15 @@ export class CoC7ActorSheet extends ActorSheet {
     })
 
     html.find('.clear_conditions').click(event => {
-      if (typeof this.actor.data.data.conditions !== 'undefined') {
+      if (typeof this.actor.system.conditions !== 'undefined') {
         const disable = {}
-        for (const condition in this.actor.data.data.conditions) {
+        for (const condition in this.actor.system.conditions) {
           if (
-            typeof this.actor.data.data.conditions[condition].value !==
+            typeof this.actor.system.conditions[condition].value !==
               'undefined' &&
-            this.actor.data.data.conditions[condition].value === true
+            this.actor.system.conditions[condition].value === true
           ) {
-            disable[`data.conditions.${condition}.value`] = false
+            disable[`system.conditions.${condition}.value`] = false
           }
         }
         if (Object.keys(disable).length > 0) {
@@ -1003,7 +1003,7 @@ export class CoC7ActorSheet extends ActorSheet {
           if (typeof attrib !== 'undefined') {
             const attributeId = attrib.dataset.attrib
             let toolTip = ''
-            const attributes = sheet.actor.data.data.attribs[attributeId]
+            const attributes = sheet.actor.system.attribs[attributeId]
             switch (attributeId) {
               case 'lck':
                 toolTip = game.i18n.format('CoC7.ToolTipSkill', {
@@ -1093,7 +1093,7 @@ export class CoC7ActorSheet extends ActorSheet {
             const skill = sheet.actor.items.get(skillId)
             const toolTip = game.i18n.format('CoC7.ToolTipSkillFlagToggle', {
               status: game.i18n.localize(
-                skill.data.data.flags.developement
+                skill.system.flags.developement
                   ? 'CoC7.ToolTipSkillFlagged'
                   : 'CoC7.ToolTipSkillUnflagged'
               )
@@ -1133,7 +1133,7 @@ export class CoC7ActorSheet extends ActorSheet {
         return false
       }
       let visible = false
-      for (const [k, v] of Object.entries(e.data.permission)) {
+      for (const [k, v] of Object.entries(e.ownership)) {
         if (k === 'default' || k === game.user.id) {
           visible = visible || v !== CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE
         }
@@ -1251,8 +1251,8 @@ export class CoC7ActorSheet extends ActorSheet {
     if (data.linkType === 'coc7-link') {
       if (data.type === 'effect') {
         const link = await CoC7Link.fromData(data)
-        if (link.data.effect) {
-          this.actor.createEmbeddedDocuments('ActiveEffect', [link.data.effect])
+        if (link._linkData.effect) {
+          this.actor.createEmbeddedDocuments('ActiveEffect', [link._linkData.effect])
         }
       }
     }
@@ -1352,19 +1352,19 @@ export class CoC7ActorSheet extends ActorSheet {
     }
 
     switch (event.currentTarget.name) {
-      case 'data.attribs.hp.value':
+      case 'system.attribs.hp.value':
         this.actor.setHp(value)
         break
-      case 'data.attribs.mp.value':
+      case 'system.attribs.mp.value':
         this.actor.setMp(value)
         break
-      case 'data.attribs.san.value':
+      case 'system.attribs.san.value':
         this.actor.setSan(value)
         break
-      case 'data.attribs.lck.value':
+      case 'system.attribs.lck.value':
         this.actor.setLuck(value)
         break
-      case 'data.attribs.build.current':
+      case 'system.attribs.build.current':
         this.actor.setHp(value)
         break
     }
@@ -1403,7 +1403,7 @@ export class CoC7ActorSheet extends ActorSheet {
         $(`<div class="item-description">${chatData.description.value}</div>`)
       )
 
-      if (item.data.data.properties?.spcl) {
+      if (item.system.properties?.spcl) {
         const specialDiv = $(
           `<div class="item-special">${chatData.description.special}</div>`
         )
@@ -1474,8 +1474,9 @@ export class CoC7ActorSheet extends ActorSheet {
   }
 
   static async popupSkill (skill) {
-    skill.data.data.description.enrichedValue = TextEditor.enrichHTML(
-      skill.data.data.description.value
+    skill.system.description.enrichedValue = TextEditor.enrichHTML(
+      skill.system.description.value,
+      { async: false }
     )
     // game.CoC7.enricher( skill.data.data.description.enrichedValue);
     const dlg = new Dialog(
@@ -1519,7 +1520,7 @@ export class CoC7ActorSheet extends ActorSheet {
     const effect = this.actor.effects.get(effectId)
     if (isCtrlKey(event) && game.user.isGM) {
       const link = new CoC7Link()
-      await link.setData({ type: 'effect', object: effect.data })
+      await link.setData({ type: 'effect', object: effect })
       const linkDialog = new CoC7LinkCreationDialog(link)
       linkDialog.render(true)
     }
@@ -1588,7 +1589,7 @@ export class CoC7ActorSheet extends ActorSheet {
         })
       }
       if (game.user.targets.size > 0 || proceedWithoutTarget) {
-        if (!weapon.data.data.properties.rngd) {
+        if (!weapon.system.properties.rngd) {
           if (game.user.targets.size > 1) {
             ui.notifications.warn(game.i18n.localize('CoC7.WarnTooManyTarget'))
           }
@@ -1596,7 +1597,7 @@ export class CoC7ActorSheet extends ActorSheet {
           const card = new CoC7MeleeInitiator(actorKey, itemId, fastForward)
           card.createChatCard()
         }
-        if (weapon.data.data.properties.rngd) {
+        if (weapon.system.properties.rngd) {
           const card = new CoC7RangeInitiator(actorKey, itemId, fastForward)
           card.createChatCard()
         }
@@ -1825,20 +1826,20 @@ export class CoC7ActorSheet extends ActorSheet {
             if (game.i18n.localize(COC7.creditRatingSkillName) === item.name) {
               const creditValue =
                 (item.value || 0) -
-                (item.data.data.adjustments?.experience || 0)
+                (item.system.adjustments?.experience || 0)
               if (
                 creditValue >
-                  Number(this.actor.occupation.data.data.creditRating.max) ||
+                  Number(this.actor.occupation.system.creditRating.max) ||
                 creditValue <
-                  Number(this.actor.occupation.data.data.creditRating.min)
+                  Number(this.actor.occupation.system.creditRating.min)
               ) {
                 ui.notifications.warn(
                   game.i18n.format('CoC7.CreditOutOfRange', {
                     min: Number(
-                      this.actor.occupation.data.data.creditRating.min
+                      this.actor.occupation.system.creditRating.min
                     ),
                     max: Number(
-                      this.actor.occupation.data.data.creditRating.max
+                      this.actor.occupation.system.creditRating.max
                     )
                   })
                 )
@@ -1849,14 +1850,14 @@ export class CoC7ActorSheet extends ActorSheet {
 
         if (event.currentTarget.classList.contains('attribute-value')) {
           // TODO : check why SAN only ?
-          if (event.currentTarget.name === 'data.attribs.san.value') {
+          if (event.currentTarget.name === 'system.attribs.san.value') {
             await this.actor.setSan(
               parseInt(event.currentTarget.value)
             )
             this.render(true)
             return
           }
-          if (event.currentTarget.name === 'data.attribs.hp.value') {
+          if (event.currentTarget.name === 'system.attribs.hp.value') {
             await this.actor.setHp(
               parseInt(event.currentTarget.value)
             )
@@ -1902,16 +1903,16 @@ export class CoC7ActorSheet extends ActorSheet {
           )
           if (item) {
             const data = {}
-            if (item.data.data.properties.special) {
+            if (item.system.properties.special) {
               const parts = CoC7Item.getNamePartsSpec(
                 event.currentTarget.value,
-                item.data.data.specialization
+                item.system.specialization
               )
               data.name = parts.name
-              data['data.skillName'] = parts.skillName
-              data['data.specialization'] = parts.specialization
+              data['system.skillName'] = parts.skillName
+              data['system.specialization'] = parts.specialization
             } else {
-              data['data.skillName'] = event.currentTarget.value
+              data['system.skillName'] = event.currentTarget.value
               data.name = event.currentTarget.value
             }
             await item.update(data)
@@ -1973,14 +1974,14 @@ export class CoC7ActorSheet extends ActorSheet {
             switch (event.currentTarget.dataset.skill) {
               case 'main':
                 await weapon.update({
-                  'data.skill.main.id': skill.id,
-                  'data.skill.main.name': skill.name
+                  'system.skill.main.id': skill.id,
+                  'system.skill.main.name': skill.name
                 })
                 break
               case 'alternativ':
                 await weapon.update({
-                  'data.skill.alternativ.id': skill.id,
-                  'data.skill.alternativ.name': skill.name
+                  'system.skill.alternativ.id': skill.id,
+                  'system.skill.alternativ.name': skill.name
                 })
                 break
             }
@@ -2019,17 +2020,17 @@ export class CoC7ActorSheet extends ActorSheet {
                 switch (event.currentTarget.dataset.range) {
                   case 'normal':
                     await weapon.update({
-                      'data.range.normal.damage': event.currentTarget.value
+                      'system.range.normal.damage': event.currentTarget.value
                     })
                     break
                   case 'long':
                     await weapon.update({
-                      'data.range.long.damage': event.currentTarget.value
+                      'system.range.long.damage': event.currentTarget.value
                     })
                     break
                   case 'extreme':
                     await weapon.update({
-                      'data.range.extreme.damage': event.currentTarget.value
+                      'system.range.extreme.damage': event.currentTarget.value
                     })
                     break
                 }
@@ -2038,17 +2039,17 @@ export class CoC7ActorSheet extends ActorSheet {
               switch (event.currentTarget.dataset.range) {
                 case 'normal':
                   await weapon.update({
-                    'data.range.normal.damage': null
+                    'system.range.normal.damage': null
                   })
                   break
                 case 'long':
                   await weapon.update({
-                    'data.range.long.damage': null
+                    'system.range.long.damage': null
                   })
                   break
                 case 'extreme':
                   await weapon.update({
-                    'data.range.extreme.damage': null
+                    'system.range.extreme.damage': null
                   })
                   break
               }

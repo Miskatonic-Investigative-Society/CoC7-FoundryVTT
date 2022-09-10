@@ -69,20 +69,20 @@ export class CoC7ContainerSheet extends ActorSheet {
 
     sheetData.showInventoryItems =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'item') ||
-      !sheetData.data.flags.locked
+      !sheetData.data.system.flags.locked
     sheetData.showInventoryBooks =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'book') ||
-      !sheetData.data.flags.locked
+      !sheetData.data.system.flags.locked
     sheetData.showInventorySpells =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'spell') ||
-      !sheetData.data.flags.locked
+      !sheetData.data.system.flags.locked
     sheetData.showInventoryTalents =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'talent') ||
-      (!sheetData.data.flags.locked &&
+      (!sheetData.data.system.flags.locked &&
         game.settings.get('CoC7', 'pulpRuleTalents'))
     sheetData.showInventoryWeapons =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'weapon') ||
-      !sheetData.data.flags.locked
+      !sheetData.data.system.flags.locked
 
     sheetData.hasInventory =
       sheetData.showInventoryItems ||
@@ -168,7 +168,7 @@ export class CoC7ContainerSheet extends ActorSheet {
         return false
       }
       let visible = false
-      for (const [k, v] of Object.entries(e.data.permission)) {
+      for (const [k, v] of Object.entries(e.ownership)) {
         if (k === 'default' || k === game.user.id) {
           visible =
             visible ||
@@ -222,8 +222,7 @@ export class CoC7ContainerSheet extends ActorSheet {
       div.append(
         $(`<div class="item-description">${chatData.description.value}</div>`)
       )
-
-      if (item.data.data.properties?.spcl) {
+      if (item.system.properties?.spcl) {
         const specialDiv = $(
           `<div class="item-special">${chatData.description.special}</div>`
         )

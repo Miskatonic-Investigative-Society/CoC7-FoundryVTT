@@ -116,15 +116,15 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
       sheetData.credit = {}
       let factor
       let monetarySymbol
-      if (!sheetData.data.credit) {
+      if (!sheetData.data.system.credit) {
         factor = 1
         monetarySymbol = '$'
       } else {
-        factor = parseInt(sheetData.data.credit.multiplier)
-          ? parseInt(sheetData.data.credit.multiplier)
+        factor = parseInt(sheetData.data.system.credit.multiplier)
+          ? parseInt(sheetData.data.system.credit.multiplier)
           : 1
-        monetarySymbol = sheetData.data.credit.monetarySymbol
-          ? sheetData.data.credit.monetarySymbol
+        monetarySymbol = sheetData.data.system.credit.monetarySymbol
+          ? sheetData.data.system.credit.monetarySymbol
           : '$'
       }
 
@@ -139,7 +139,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
     sheetData.skillList = []
     let previousSpec = ''
     for (const skill of sheetData.skills) {
-      if (sheetData.skillShowUncommon || !skill.data.properties.rarity) {
+      if (sheetData.skillShowUncommon || !skill.system.properties.rarity) {
         if (skill.system.properties.special) {
           if (previousSpec !== skill.system.specialization) {
             previousSpec = skill.system.specialization
@@ -169,10 +169,10 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
       'CoC7',
       'displayPlayerNameOnSheet'
     )
-    if (sheetData.displayPlayerName && !sheetData.data.infos.playername) {
+    if (sheetData.displayPlayerName && !sheetData.data.system.infos.playername) {
       const user = this.actor.characterUser
       if (user) {
-        sheetData.data.infos.playername = user.name
+        sheetData.data.system.infos.playername = user.name
       }
     }
 
@@ -180,19 +180,19 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 
     sheetData.showInventoryItems =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'item') ||
-      !sheetData.data.flags.locked
+      !sheetData.data.system.flags.locked
     sheetData.showInventoryBooks =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'book') ||
-      !sheetData.data.flags.locked
+      !sheetData.data.system.flags.locked
     sheetData.showInventorySpells =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'spell') ||
-      !sheetData.data.flags.locked
+      !sheetData.data.system.flags.locked
     sheetData.showInventoryTalents =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'talent') ||
-      (!sheetData.data.flags.locked && game.settings.get('CoC7', 'pulpRuleTalents'))
+      (!sheetData.data.system.flags.locked && game.settings.get('CoC7', 'pulpRuleTalents'))
     sheetData.showInventoryStatuses =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'status') ||
-      !sheetData.data.flags.locked
+      !sheetData.data.system.flags.locked
 
     sheetData.hasInventory =
     sheetData.showInventoryItems ||
@@ -329,7 +329,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
     sanityLossEvents.sort(function (left, right) {
       return left.type.localeCompare(right.type)
     })
-    this.actor.update({ 'data.sanityLossEvents': sanityLossEvents })
+    this.actor.update({ 'system.sanityLossEvents': sanityLossEvents })
   }
 
   async toggleSkillListMode (event) {

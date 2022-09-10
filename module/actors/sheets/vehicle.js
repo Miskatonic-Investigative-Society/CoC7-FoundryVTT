@@ -1,5 +1,4 @@
 /* global duplicate, expandObject, flattenObject, FormDataExtended, game, mergeObject */
-
 import { CoC7ActorSheet } from './base.js'
 
 export class CoC7VehicleSheet extends CoC7ActorSheet {
@@ -73,10 +72,10 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
 
   async _onAddArmor () {
     const locations = duplicate(
-      this.actor.data.data.attribs.armor.locations || []
+      this.actor.system.attribs.armor.locations || []
     )
     locations.push({ name: null, value: null })
-    await this.actor.update({ 'data.attribs.armor.locations': locations })
+    await this.actor.update({ 'system.attribs.armor.locations': locations })
   }
 
   async _onRemoveArmor (event) {
@@ -84,11 +83,11 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
     const location = button.closest('.armor')
     const index = location.dataset.index
     const locations = duplicate(
-      this.actor.data.data.attribs.armor.locations || null
+      this.actor.system.attribs.armor.locations || null
     )
     if (!locations) return
     locations.splice(index, 1)
-    await this.actor.update({ 'data.attribs.armor.locations': locations })
+    await this.actor.update({ 'system.attribs.armor.locations': locations })
   }
 
   onCloseSheet () {
@@ -113,7 +112,7 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
       const armor = data.data?.attribs.armor
       if (armor) {
         armor.locations = Object.values(
-          armor?.locations || this.actor.data.data.attribs.armor.locations || {}
+          armor?.locations || this.actor.system.attribs.armor.locations || {}
         )
       }
     }

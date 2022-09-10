@@ -88,10 +88,10 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
       }
       const linkData = {
         check: 'sanloss',
-        sanMin: this.actor.data.data.special.sanLoss.checkPassed,
-        sanMax: this.actor.data.data.special.sanLoss.checkFailled,
-        sanReason: this.actor.data.data.infos.type?.length
-          ? this.actor.data.data.infos.type
+        sanMin: this.actor.system.special.sanLoss.checkPassed,
+        sanMax: this.actor.system.special.sanLoss.checkFailled,
+        sanReason: this.actor.system.infos.type?.length
+          ? this.actor.system.infos.type
           : this.actor.name,
         tokenKey: this.actor.actorKey
       }
@@ -113,8 +113,8 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
       const sanData = {
         sanMax: this.actor.sanLossCheckFailled,
         sanMin: this.actor.sanLossCheckPassed,
-        sanReason: this.actor.data.data.infos.type?.length
-          ? this.actor.data.data.infos.type
+        sanReason: this.actor.system.infos.type?.length
+          ? this.actor.system.infos.type
           : this.actor.name,
         tokenKey: this.actor.actorKey
       }
