@@ -34,12 +34,12 @@ async function performFilter (e) {
     }
     if (filter && era !== '') {
       if (
-        item.data.data.eras[era] === false ||
-        item.data.data.eras[era] === true
+        item.system.eras[era] === false ||
+        item.system.eras[era] === true
       ) {
-        filter = item.data.data.eras[era]
+        filter = item.system.eras[era]
       } else {
-        filter = item.data.data.eras[era]?.selected ?? false
+        filter = item.system.eras[era]?.selected ?? false
       }
     }
     if (filter) {
@@ -144,7 +144,7 @@ export function compendiumFilter () {
             '</option>'
         )
       }
-      html.data('packId', app.metadata.package + '.' + app.metadata.name)
+      html.data('packId', app.metadata.id)
       html.find('header.directory-header').remove()
       html
         .find('div.compendium.directory')

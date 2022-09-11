@@ -1,152 +1,157 @@
+import * as crypto from 'crypto'
 import { Remarkable } from 'remarkable'
 import * as fs from 'fs'
 import write from './node_modules/write/index.js'
 
+const collisions = {}
+
 const sources = {
-  rmtiwtbixojhyf5v: {
-    name: 'Active effects',
-    lang: 'en',
-    file: 'effects.md'
-  },
-  xV4Hxxmu6zjIMw9h: {
-    name: 'Actor Importer',
-    lang: 'en',
-    file: 'actor_importer.md'
-  },
-  wZtTHpGV3atKV2oD: {
+  en: {
     name: 'Call of Cthulhu 7th Edition (Unofficial)',
-    lang: 'en',
-    file: 'README.md'
-  },
-  uug1mm5nokly4o2v: {
-    name: 'Character Creation',
-    lang: 'en',
-    file: 'character_creation.md'
-  },
-  VdOeGcxsu3jsVm3F: {
-    name: 'Chases',
-    lang: 'en',
-    file: 'chases.md'
-  },
-  nk68b2ew15iw0bb8: {
-    name: 'Combat',
-    lang: 'en',
-    file: 'combat.md'
-  },
-  wilj4rvkreemh70n: {
-    name: 'Commands Cheat Sheet',
-    lang: 'en',
-    file: 'commands_cheat_sheet.md'
-  },
-  nVYLlqVzmUV5dXAW: {
-    name: 'Creating your first investigator',
-    lang: 'en',
-    file: 'first_investigator.md'
-  },
-  di6mcnaxfyi0y2l4: {
-    name: 'Items',
-    lang: 'en',
-    file: 'items.md'
-  },
-  kv2tbz6x29cq6ewq: {
-    name: 'Item Type: Archetype',
-    lang: 'en',
-    file: 'item_archetype.md'
-  },
-  oruecvy7jne4u4gt: {
-    name: 'Item Type: Book',
-    lang: 'en',
-    file: 'item_book.md'
-  },
-  qa934whpkpauiyc9: {
-    name: 'Item Type: Occupation',
-    lang: 'en',
-    file: 'item_occupation.md'
-  },
-  JU1GCWwc8at7gzJ4: {
-    name: 'Item Type: Setup',
-    lang: 'en',
-    file: 'item_setup.md'
-  },
-  mz0ulbkecfvv8nw7: {
-    name: 'Item Type: Skill',
-    lang: 'en',
-    file: 'item_skill.md'
-  },
-  fk040vqb4per5ju1: {
-    name: 'Links',
-    lang: 'en',
-    file: 'links.md'
-  },
-  emuu3wo0uul91029: {
-    name: 'Link creation tool',
-    lang: 'en',
-    file: 'link_creation_window.md'
-  },
-  ce7s8psgyctzx5r1: {
-    name: 'Sanity',
-    lang: 'en',
-    file: 'sanity.md'
+    pages: [
+      {
+        name: 'System documentation for version 9.0',
+        file: 'README.md'
+      },
+      {
+        name: 'Active effects',
+        file: 'effects.md'
+      },
+      {
+        name: 'Actor Importer',
+        file: 'actor_importer.md'
+      },
+      {
+        name: 'Character Creation',
+        file: 'character_creation.md'
+      },
+      {
+        name: 'Chases',
+        file: 'chases.md'
+      },
+      {
+        name: 'Combat',
+        file: 'combat.md'
+      },
+      {
+        name: 'Commands Cheat Sheet',
+        file: 'commands_cheat_sheet.md'
+      },
+      {
+        name: 'Creating your first investigator',
+        file: 'first_investigator.md'
+      },
+      {
+        name: 'Items',
+        file: 'items.md'
+      },
+      {
+        name: 'Item Type: Archetype',
+        file: 'item_archetype.md'
+      },
+      {
+        name: 'Item Type: Book',
+        file: 'item_book.md'
+      },
+      {
+        name: 'Item Type: Occupation',
+        file: 'item_occupation.md'
+      },
+      {
+        name: 'Item Type: Setup',
+        file: 'item_setup.md'
+      },
+      {
+        name: 'Item Type: Skill',
+        file: 'item_skill.md'
+      },
+      {
+        name: 'Links',
+        file: 'links.md'
+      },
+      {
+        name: 'Link creation tool',
+        file: 'link_creation_window.md'
+      },
+      {
+        name: 'Sanity',
+        file: 'sanity.md'
+      }
+    ]
   }
 }
 
 const dbFile = []
-
-for (const id in sources) {
-  try {
-    const md = new Remarkable()
-    const input = fs.readFileSync(
-      './module/manual/' + sources[id].lang + '/' + sources[id].file,
-      'utf8'
-    )
-
-    const source = md.render(input)
-
-    const html = source
-      .replace(/<p>\.<\/p>/g, '<p>&nbsp;</p>')
-      .replace(
-        /\[(fas fa-[^\]]+|game-icon game-icon-[^\]]+)\]/g,
-        '<em class="$1">&nbsp;</em>'
-      )
-      .replace(/src="..\/..\/assets\//g, 'src="systems/CoC7/assets/')
-      .replace(/\n\s*/g, '\n')
-      .replace(/@@coc7./g, '<span>@</span>coc7.')
-
+try {
+  for (const lang in sources) {
+    let id = crypto.createHash('md5').update('manual' + lang).digest('base64').replace(/[\\+=\\/]/g, '').substring(0, 16)
+    while (typeof collisions[id] !== 'undefined') {
+      id = crypto.createHash('md5').update('manual' + lang + Math.random().toString()).digest('base64').replace(/[\\+=\\/]/g, '').substring(0, 16)
+    }
     const dbEntry = {
-      _id: id,
-      name: sources[id].name + ' [' + sources[id].lang + ']',
-      content: '<div class="coc7overview">\n' + html + '\n</div>'
+      name: sources[lang].name + ' [' + lang + ']',
+      pages: [],
+      _id: id
     }
-
-    dbFile.push(JSON.stringify(dbEntry))
-
-    let mdFile = input
-      .replace(/\n.\n/g, '\n')
-      .replace(/\[(fas fa-[^\]]+|game-icon game-icon-[^\]]+)\]/g, '')
-      .replace(/@@coc7./g, '@coc7.')
-
-    const compendiumLinks = mdFile.matchAll(
-      /@Compendium\[(?<pack>[^\]]+)\.(?<id>[^\\.]+)\]{(?<name>[^}]+)}/g
-    )
-    for (const link of compendiumLinks) {
-      if (link.groups.pack !== 'CoC7.system-doc') {
-        mdFile = mdFile.replace(link[0], '[_' + link.groups.name + '_]')
-      } else {
-        mdFile = mdFile.replace(
-          link[0],
-          '[' +
-              link.groups.name +
-              '](' +
-              sources[link.groups.id].file +
-              ')'
-        )
+    const links = {}
+    for (const source of sources[lang].pages) {
+      let id = crypto.createHash('md5').update('manual' + lang + source.file).digest('base64').replace(/[\\+=\\/]/g, '').substring(0, 16)
+      while (typeof collisions[id] !== 'undefined') {
+        id = crypto.createHash('md5').update('manual' + lang + source.file + Math.random().toString()).digest('base64').replace(/[\\+=\\/]/g, '').substring(0, 16)
       }
+      collisions[id] = true
+      links[source.file] = id
     }
+    for (const page in sources[lang].pages) {
+      const md = new Remarkable()
+      let input = fs.readFileSync(
+        './module/manual/' + lang + '/' + sources[lang].pages[page].file,
+        'utf8'
+      )
 
-    write('./docs/' + sources[id].lang + '/' + sources[id].file, mdFile)
-  } catch (e) {
-    console.log('EXCEPTION:', e)
+      const mdFile = input
+        .replace(/\[(fas fa-[^\]]+|game-icon game-icon-[^\]]+)\]/g, '')
+        .replace(/@@coc7./g, '@coc7.')
+        .replace(/@Compendium\[[^\]]+\.[^\\.]+\]{([^}]+)}/g, '[_$1_]')
+
+      write('./docs/' + lang + '/' + sources[lang].pages[page].file, mdFile)
+
+      const matches = input.matchAll(/\[(.+?)\]\(((?![a-z]{1,10}:)(.+?))\)/g)
+      for (const match of matches) {
+        if (typeof links[match[2]] !== 'undefined') {
+          input = input.replace(match[0], '@UUID[.' + links[match[2]] + ']{' + match[1] + '}')
+        }
+      }
+
+      const html = md.render(input)
+        .replace(
+          /\[(fas fa-[^\]]+|game-icon game-icon-[^\]]+)\]/g,
+          '<em class="$1">&nbsp;</em>'
+        )
+        .replace(/src="..\/..\/assets\//g, 'src="systems/CoC7/assets/')
+        .replace(/\n\s*/g, '\n')
+        .replace(/@@coc7./g, '<span>@</span>coc7.')
+
+      dbEntry.pages.push({
+        name: sources[lang].pages[page].name,
+        type: 'text',
+        _id: links[sources[lang].pages[page].file],
+        title: {
+          show: false,
+          level: 1
+        },
+        text: {
+          format: 1,
+          content: '<div class="coc7overview">\n' + html + '\n</div>',
+          markdown: ''
+        },
+        sort: Number(page)
+      })
+    }
+    dbFile.push(JSON.stringify(dbEntry))
   }
+} catch (e) {
+  console.log('EXCEPTION:', e)
 }
 
 write('./packs/system-doc.db', dbFile.join('\n'))

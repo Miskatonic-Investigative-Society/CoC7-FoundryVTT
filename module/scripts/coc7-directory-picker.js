@@ -61,6 +61,7 @@ export class CoC7DirectoryPicker extends FilePicker {
               game.i18n.localize('CoC7.PickDirectory') +
               '"><i class="fas fa-file-import fa-fw"></i></button>'
           )
+          CoC7DirectoryPicker.createDefaultDirectory()
           pickerButton.on('click', () => {
             picker.render(true)
           })

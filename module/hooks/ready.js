@@ -16,7 +16,7 @@ export function listen () {
     if (isNewerVersion(game.system.version, instructionsVersion ?? '0')) {
       let lang = game.i18n.lang
       const readMe = {
-        en: 'wZtTHpGV3atKV2oD'
+        en: 'sxB2OXbfwV6M0nyQ'
       }
       if (typeof readMe[lang] === 'undefined') {
         lang = 'en'
@@ -24,8 +24,6 @@ export function listen () {
       (await game.packs.get('CoC7.system-doc').getDocument(readMe[lang])).sheet.render(true)
       game.settings.set('CoC7', 'showInstructions', game.system.version)
     }
-    if (typeof game.tours !== 'undefined') {
-      registerTours()
-    }
+    registerTours()
   })
 }

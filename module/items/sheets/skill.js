@@ -80,7 +80,6 @@ export class CoC7SkillSheet extends ItemSheet {
       !this.item.system.properties.firearm &&
       !this.item.system.properties.fighting
 
-
     sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
       sheetData.data.system.description.value,
       { async: false }

@@ -485,7 +485,7 @@ export class SanCheckCard extends ChatCardActor {
 
   static getFromMessageId (messageId) {
     const message = game.messages.get(messageId)
-    const htmlMessage = $.parseHTML(message.data.content)[0]
+    const htmlMessage = $.parseHTML(message.content)[0]
 
     const htmlCard = htmlMessage.querySelector('.chat-card')
 

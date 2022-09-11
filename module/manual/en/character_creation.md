@@ -4,7 +4,7 @@ The system comes with some compendiums ready for you to customise. These are res
 
 # Skills
 
-In this section you will create or edit @Compendium[CoC7.system-doc.mz0ulbkecfvv8nw7]{skills}
+In this section you will create or edit [skills](item_skill.md)
 
 1. Go to [fas fa-atlas]compendium packs
 2. Click on [fas fa-atlas]Create Compendium
@@ -27,7 +27,7 @@ In this section you will create or edit @Compendium[CoC7.system-doc.mz0ulbkecfvv
 
 # Setup
 
-@Compendium[CoC7.system-doc.JU1GCWwc8at7gzJ4]{Setups} are predefined sets of skills and a way to generate the characteristics (this can be by rolling dices or assigning certain amount of points for example). Once a setup has been created it can be used in the creation of multiple characters.
+[Setups](item_setup.md) are predefined sets of skills and a way to generate the characteristics (this can be by rolling dices or assigning certain amount of points for example). Once a setup has been created it can be used in the creation of multiple characters.
 
 1. Go to [fas fa-suitcase]Items Directory
 2. Click on [fas fa-suitcase]Create Item
@@ -48,7 +48,7 @@ In this section you will create or edit @Compendium[CoC7.system-doc.mz0ulbkecfvv
 
 # Occupations
 
-An @Compendium[CoC7.system-doc.qa934whpkpauiyc9]{occupation} helps to define the character background, think about it as the definition of the set of _occupational skills_ (the ones where the character can spend their occupation points) plus the definition of how to calculate the amount of available occupation points. Finally the _occupation_ also allows to define the minimum and the maximum _credit_ for a character with this _occupation_.
+An [occupation](item_occupation.md) helps to define the character background, think about it as the definition of the set of _occupational skills_ (the ones where the character can spend their occupation points) plus the definition of how to calculate the amount of available occupation points. Finally the _occupation_ also allows to define the minimum and the maximum _credit_ for a character with this _occupation_.
 
 Keep in mind that the set of _occupational skills_ doesn't need to be fixed, the system allows to configure the _occupation_ so when it's dragged to a Character sheet will give the option of selecting one or more skills from a closed list, or even add a pre defined number of skills to select from all the available ones.
 
