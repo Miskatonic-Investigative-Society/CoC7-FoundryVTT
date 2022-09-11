@@ -1,4 +1,4 @@
-/* global Actor, CONFIG, CONST, Dialog, Die, duplicate, foundry, game, getProperty, Hooks, mergeObject, Roll, TextEditor, Token, ui */
+/* global Actor, CONFIG, CONST, Dialog, Die, duplicate, foundry, fromUuid, fromUuidSync, game, getProperty, Hooks, mergeObject, Roll, TextEditor, Token, ui */
 import { COC7 } from '../config.js'
 import { CoC7ChatMessage } from '../apps/coc7-chat-message.js'
 import { CoC7Check } from '../check.js'
@@ -2338,9 +2338,13 @@ export class CoCActor extends Actor {
   }
 
   async weaponCheck (weaponData, fastForward = false) {
-    const itemId = weaponData.id
     let weapon
-    weapon = this.items.get(itemId)
+    if (typeof weaponData.uuid !== 'undefined') {
+      weapon = await fromUuid(weaponData.uuid)
+    }
+    if (typeof weaponData.id !== 'undefined') {
+      weapon = this.items.get(weaponData.id)
+    }
     if (!weapon) {
       let weapons = this.getItemsFromName(weaponData.name)
       if (weapons.length === 0) {
@@ -2405,11 +2409,11 @@ export class CoCActor extends Actor {
         ui.notifications.warn(game.i18n.localize('CoC7.WarnTooManyTarget'))
       }
 
-      const card = new CoC7MeleeInitiator(this.tokenKey, weapon.id, fastForward)
+      const card = new CoC7MeleeInitiator(this.tokenKey, (weaponData.uuid || weapon.id), fastForward)
       card.createChatCard()
     }
     if (weapon.system.properties.rngd) {
-      const card = new CoC7RangeInitiator(this.tokenKey, weapon.id, fastForward)
+      const card = new CoC7RangeInitiator(this.tokenKey, (weaponData.uuid || weapon.id), fastForward)
       card.createChatCard()
     }
   }
@@ -2458,7 +2462,12 @@ export class CoCActor extends Actor {
   }
 
   getWeaponSkills (itemId) {
-    const weapon = this.items.get(itemId)
+    let weapon = fromUuidSync(itemId)
+    if (!weapon) {
+      weapon = this.items.get(itemId)
+    } else if (typeof weapon.system === 'undefined') {
+      weapon = game.packs.get(weapon.pack).get(weapon._id)
+    }
     if (weapon.type !== 'weapon') return null
     const skills = []
     if (weapon.system.skill.main.id) {
@@ -2468,7 +2477,6 @@ export class CoCActor extends Actor {
     if (weapon.usesAlternativeSkill && weapon.system.skill.alternativ.id) {
       skills.push(this.items.get(weapon.system.skill.alternativ.id))
     }
-
     return skills
   }
 

@@ -291,9 +291,9 @@ Hooks.on('changeSidebarTab', directory => {
   }
 })
 
-Hooks.on('hotbarDrop', async (bar, data, slot) =>
-  CoC7Utilities.createMacro(bar, data, slot)
-)
+Hooks.on('hotbarDrop', async (bar, data, slot) => {
+  return CoC7Utilities.createMacro(bar, data, slot)
+})
 
 Hooks.on('renderChatLog', (app, html, data) =>
   CoC7Chat.chatListeners(app, html, data)

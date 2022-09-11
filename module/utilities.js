@@ -280,23 +280,7 @@ export class CoC7Utilities {
   static async createMacro (bar, data, slot) {
     if (data.type !== 'Item') return
 
-    let item
-    let origin
-    let packName = null
-
-    if (data.pack) {
-      const pack = game.packs.get(data.pack)
-      if (pack.metadata.entity !== 'Item') return
-      packName = data.pack
-      item = await pack.getDocument(data.id)
-      origin = 'pack'
-    } else if (data.data) {
-      item = data.data
-      origin = 'actor'
-    } else {
-      item = game.items.get(data.id)
-      origin = 'game'
-    }
+    const item = await fromUuid(data.uuid)
 
     if (!item) {
       return ui.notifications.warn(
@@ -309,10 +293,10 @@ export class CoC7Utilities {
       )
     }
 
-    let command
+    let command = ''
 
     if (item.type === 'weapon') {
-      command = `game.CoC7.macros.weaponCheck({name:'${item.name}', id:'${item.id}', origin:'${origin}', pack: '${packName}'}, event);`
+      command = `game.CoC7.macros.weaponCheck({name:'${item.name}', uuid:'${data.uuid}'}, event);`
     }
 
     if (item.type === 'skill') {
@@ -321,23 +305,25 @@ export class CoC7Utilities {
           game.i18n.localize('CoC7.WarnNoGlobalSpec')
         )
       }
-      command = `game.CoC7.macros.skillCheck({name:'${item.name}', id:'${item.id}', origin:'${origin}', pack: '${packName}'}, event);`
+      command = `game.CoC7.macros.skillCheck({name:'${item.name}', uuid:'${data.uuid}'}, event);`
     }
 
-    // Create the macro command
-    let macro = game.macros.contents.find(
-      m => m.name === item.name && m.command === command
-    )
-    if (!macro) {
-      macro = await Macro.create({
-        name: item.name,
-        type: 'script',
-        img: item.img,
-        command
-      })
+    if (command !== '') {
+      // Create the macro command
+      let macro = game.macros.contents.find(
+        m => m.name === item.name && m.command === command
+      )
+      if (!macro) {
+        macro = await Macro.create({
+          name: item.name,
+          type: 'script',
+          img: item.img,
+          command
+        })
+      }
+      game.user.assignHotbarMacro(macro, slot)
     }
-    game.user.assignHotbarMacro(macro, slot)
-    return false
+    return true
   }
 
   static async toggleDevPhase (toggle) {
@@ -816,7 +802,7 @@ export class CoC7Utilities {
       const tokenData = scene.getEmbeddedDocument('Token', tokenId)
       if (!tokenData) return null
       const token = new Token(tokenData)
-      if (!token.scene) token.scene = duplicate(scene.data)
+      if (!token.scene) token.scene = duplicate(scene)
       return token
     }
     // Case 2 - use Actor ID directory
