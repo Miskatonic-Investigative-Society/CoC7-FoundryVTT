@@ -11,7 +11,7 @@
       {{#each skills as |skill i|}}
         <li class="item flexrow" data-index="{{i}}">
           <div class="item-name flexrow">
-            <h4>{{skill.name}} ({{skill.data.base}}%)</h4>
+            <h4>{{skill.name}} ({{skill.system.base}}%)</h4>
           </div>
           <div class="item-controls">
             <a class="item-control select-skill" title="{{localize 'CoC7.SelectNewSkill'}}"><i class="fas fa-plus"></i></a>

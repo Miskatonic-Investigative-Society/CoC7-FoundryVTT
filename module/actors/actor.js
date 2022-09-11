@@ -1134,7 +1134,7 @@ export class CoCActor extends Actor {
           break
         }
         case 'archetype':
-          if (this.data.type === 'character') {
+          if (this.type === 'character') {
             // Archetypre only for PCs
             if (this.archetype) {
               let resetArchetype = false
@@ -1153,9 +1153,9 @@ export class CoCActor extends Actor {
             }
 
             const coreCharac = []
-            for (const entry of Object.entries(data.data.coreCharacteristics)) {
+            for (const entry of Object.entries(data.system.coreCharacteristics)) {
               const [key, value] = entry
-              data.data.coreCharacteristics[key] = false
+              data.system.coreCharacteristics[key] = false
               if (value) {
                 const char = this.getCharacteristic(key)
                 char.key = key
@@ -1175,13 +1175,13 @@ export class CoCActor extends Actor {
             }
 
             if (!charac) return
-            data.data.coreCharacteristics[charac] = true
-            if (data.data.coreCharacteristicsFormula.enabled) {
-              let value = Number(data.data.coreCharacteristicsFormula.value)
+            data.system.coreCharacteristics[charac] = true
+            if (data.system.coreCharacteristicsFormula.enabled) {
+              let value = Number(data.system.coreCharacteristicsFormula.value)
               if (isNaN(value)) {
                 const char = this.getCharacteristic(charac)
                 const roll = new Roll(
-                  data.data.coreCharacteristicsFormula.value
+                  data.system.coreCharacteristicsFormula.value
                 )
                 await roll.roll({ async: true })
                 roll.toMessage({
@@ -1189,19 +1189,19 @@ export class CoCActor extends Actor {
                     'CoC7.MessageRollingCharacteristic',
                     {
                       label: char.label,
-                      formula: data.data.coreCharacteristicsFormula.value
+                      formula: data.system.coreCharacteristicsFormula.value
                     }
                   )
                 })
                 value = char.value < roll.total ? roll.total : char.value
               }
               await this.update({
-                [`data.characteristics.${charac}.value`]: value
+                [`system.characteristics.${charac}.value`]: value
               })
             }
 
             // Add all skills
-            await this.addUniqueItems(data.data.skills, 'archetype')
+            await this.addUniqueItems(data.system.skills, 'archetype')
 
             processedDataArray.push(duplicate(data))
             archetype = true
@@ -1209,7 +1209,7 @@ export class CoCActor extends Actor {
 
           break
         case 'occupation':
-          if (this.data.type === 'character') {
+          if (this.type === 'character') {
             // Occupation only for PCs
             if (this.occupation) {
               let resetOccupation = false
@@ -1229,11 +1229,11 @@ export class CoCActor extends Actor {
 
             // Select characteristic
             const pointsDialogData = {}
-            pointsDialogData.characteristics = data.data.occupationSkillPoints
+            pointsDialogData.characteristics = data.system.occupationSkillPoints
             let total = 0
             let optionalChar = false
             for (const entry of Object.entries(
-              data.data.occupationSkillPoints
+              data.system.occupationSkillPoints
             )) {
               const [key, value] = entry
               const char = this.getCharacteristic(key)
@@ -1258,16 +1258,16 @@ export class CoCActor extends Actor {
             }
 
             // Add optional skills
-            for (let index = 0; index < data.data.groups.length; index++) {
+            for (let index = 0; index < data.system.groups.length; index++) {
               const dialogData = {}
               dialogData.skills = []
               dialogData.type = 'occupation'
               dialogData.actorId = this.id
-              dialogData.optionsCount = Number(data.data.groups[index].options)
+              dialogData.optionsCount = Number(data.system.groups[index].options)
               dialogData.title = game.i18n.localize('CoC7.SkillSelectionWindow')
 
               // Select only skills that are not present or are not flagged as occupation.
-              for (const value of data.data.groups[index].skills) {
+              for (const value of data.system.groups[index].skills) {
                 if (CoC7Item.isAnySpec(value)) dialogData.skills.push(value)
                 // If it's a generic spec we always add it
                 else {
@@ -1276,7 +1276,7 @@ export class CoCActor extends Actor {
                   })
                   if (!skill || !skill.system.flags?.occupation) {
                     // if skill was added to skill list previously, remove it
-                    const alreadySelectedSkill = data.data.skills.find(item => {
+                    const alreadySelectedSkill = data.system.skills.find(item => {
                       return item.name === value.name
                     })
                     if (!alreadySelectedSkill) dialogData.skills.push(value)
@@ -1296,19 +1296,19 @@ export class CoCActor extends Actor {
                   )
                   // await this.addUniqueItems( dialogData.skills, 'occupation');
                   const merged = CoC7Item.mergeOptionalSkills(
-                    data.data.skills,
+                    data.system.skills,
                     dialogData.skills
                   )
-                  data.data.skills = merged
+                  data.system.skills = merged
                 } else {
                   // Wait for skill selection.
                   const selected = await SkillSelectDialog.create(dialogData)
                   if (!selected) return
                   const merged = CoC7Item.mergeOptionalSkills(
-                    data.data.skills,
+                    data.system.skills,
                     selected
                   )
-                  data.data.skills = merged
+                  data.system.skills = merged
                 }
               } else {
                 ui.notifications.info(
@@ -1318,14 +1318,14 @@ export class CoCActor extends Actor {
             }
 
             // Add extra skills
-            if (Number(data.data.personal)) {
+            if (Number(data.system.personal)) {
               const dialogData = {}
               dialogData.skills = []
               dialogData.type = 'occupation'
               dialogData.actorId = this.id
-              dialogData.optionsCount = Number(data.data.personal)
+              dialogData.optionsCount = Number(data.system.personal)
               dialogData.title = game.i18n.format('CoC7.SelectPersonalSkills', {
-                number: Number(data.data.personal)
+                number: Number(data.system.personal)
               })
 
               // Select only skills that are not present or are not flagged as occupation.
@@ -1337,10 +1337,10 @@ export class CoCActor extends Actor {
                   !s.system.properties.noxpgain
                 ) {
                   // if skill already selected don't add it
-                  const alreadySelectedSkill = data.data.skills.find(item => {
+                  const alreadySelectedSkill = data.system.skills.find(item => {
                     return item.name === s.name
                   })
-                  if (!alreadySelectedSkill) dialogData.skills.push(s.data)
+                  if (!alreadySelectedSkill) dialogData.skills.push(s)
                 }
               }
 
@@ -1356,19 +1356,19 @@ export class CoCActor extends Actor {
                   )
                   // await this.addUniqueItems( dialogData.skills, 'occupation');
                   const merged = CoC7Item.mergeOptionalSkills(
-                    data.data.skills,
+                    data.system.skills,
                     dialogData.skills
                   )
-                  data.data.skills = merged
+                  data.system.skills = merged
                 } else {
                   // Wait for skill selection.
                   const selected = await SkillSelectDialog.create(dialogData) // Dialog data bug ???
                   if (!selected) return
                   const merged = CoC7Item.mergeOptionalSkills(
-                    data.data.skills,
+                    data.system.skills,
                     selected
                   )
-                  data.data.skills = merged
+                  data.system.skills = merged
                 }
               } else {
                 ui.notifications.info(
@@ -1378,12 +1378,12 @@ export class CoCActor extends Actor {
             }
 
             // Add all skills
-            await this.addUniqueItems(data.data.skills, 'occupation')
+            await this.addUniqueItems(data.system.skills, 'occupation')
             // Credit rating is always part of occupation
             await this.creditRatingSkill?.setItemFlag('occupation')
             // setting it to min credit rating
             await this.creditRatingSkill?.update({
-              'data.adjustments.occupation': Number(data.data.creditRating.min)
+              'system.adjustments.occupation': Number(data.system.creditRating.min)
             })
 
             processedDataArray.push(duplicate(data))
@@ -1407,15 +1407,15 @@ export class CoCActor extends Actor {
     if (archetype) {
       // setting points
       await this.update({
-        'data.development.archetype': this.archetypePoints
+        'system.development.archetype': this.archetypePoints
       })
       Hooks.call('archetypeFinishedCoC7')
     }
     if (occupation) {
       // setting points
       await this.update({
-        'data.development.occupation': this.occupationPoints,
-        'data.development.personal': this.personalPoints
+        'system.development.occupation': this.occupationPoints,
+        'system.development.personal': this.personalPoints
       })
       Hooks.call('occupationFinishedCoC7')
     }
@@ -1598,7 +1598,7 @@ export class CoCActor extends Actor {
       }
     }
     if (this.occupation) await this.occupation.delete()
-    await this.update({ 'data.development.occupation': null })
+    await this.update({ 'system.development.occupation': null })
   }
 
   async resetArchetype (eraseOld = true) {
@@ -1611,7 +1611,7 @@ export class CoCActor extends Actor {
       }
     }
     if (this.archetype) await this.archetype.delete()
-    await this.update({ 'data.development.archetype': null })
+    await this.update({ 'system.development.archetype': null })
   }
 
   get luck () {
@@ -1619,7 +1619,7 @@ export class CoCActor extends Actor {
   }
 
   async setLuck (value) {
-    return await this.update({ 'data.attribs.lck.value': value })
+    return await this.update({ 'system.attribs.lck.value': value })
   }
 
   async spendLuck (amount) {
@@ -1642,7 +1642,7 @@ export class CoCActor extends Actor {
           (parseInt(this.system.characteristics.siz.value, 10) +
             parseInt(this.system.characteristics.con.value, 10)) /
             (game.settings.get('CoC7', 'pulpRuleDoubleMaxHealth') &&
-            this.data.type === 'character'
+            this.type === 'character'
               ? 5
               : 10)
         )
@@ -1664,22 +1664,22 @@ export class CoCActor extends Actor {
     if (value > this.system.attribs.hp.max) {
       value = parseInt(this.system.attribs.hp.max)
     }
-    return await this.update({ 'data.attribs.hp.value': value })
+    return await this.update({ 'system.attribs.hp.value': value })
   }
 
   async addUniqueItems (skillList, flag = null) {
     const processed = []
     for (const skill of skillList) {
       if (CoC7Item.isAnySpec(skill)) {
-        if (!skill.data.flags) skill.data.flags = {}
-        if (flag) skill.data.flags[flag] = true
+        if (!skill.system.flags) skill.system.flags = {}
+        if (flag) skill.system.flags[flag] = true
         processed.push(duplicate(skill))
       } else {
         const itemId = this.getItemIdByName(skill.name)
         if (!itemId) {
           if (flag) {
-            if (!skill.data.flags) skill.data.flags = {}
-            skill.data.flags[flag] = true
+            if (!skill.system.flags) skill.system.flags = {}
+            skill.system.flags[flag] = true
           }
           processed.push(duplicate(skill))
         } else if (flag) {
@@ -1700,8 +1700,8 @@ export class CoCActor extends Actor {
     const processed = []
     for (const item of itemList) {
       if (flag) {
-        if (!item.data.flags) item.data.flags = {}
-        item.data.flags[flag] = true
+        if (!item.system.flags) item.system.flags = {}
+        item.system.flags[flag] = true
       }
       processed.push(duplicate(item))
     }
@@ -1717,8 +1717,8 @@ export class CoCActor extends Actor {
     const itemId = this.getItemIdByName(skill.name)
     if (!itemId) {
       if (flag) {
-        if (!skill.data.flags) skill.data.flags = {}
-        skill.data.flags[flag] = true
+        if (!skill.system.flags) skill.system.flags = {}
+        skill.system.flags[flag] = true
       }
       await this.createEmbeddedDocuments('Item', [skill], {
         renderSheet: false
@@ -1788,7 +1788,7 @@ export class CoCActor extends Actor {
         })
       }
       return this.update({
-        'data.sanityLossEvents': sanityLossEvents
+        'system.sanityLossEvents': sanityLossEvents
       })
     }
   }
@@ -1890,7 +1890,7 @@ export class CoCActor extends Actor {
   async setMp (value) {
     if (value < 0) value = 0
     if (value > parseInt(this.system.attribs.mp.max)) { value = parseInt(this.system.attribs.mp.max) }
-    return await this.update({ 'data.attribs.mp.value': value })
+    return await this.update({ 'system.attribs.mp.value': value })
   }
 
   get san () {
@@ -1928,19 +1928,19 @@ export class CoCActor extends Actor {
 
   async resetOccupationPoints () {
     await this.update({
-      'data.development.occupation': this.occupationPoints
+      'system.development.occupation': this.occupationPoints
     })
   }
 
   async resetArchetypePoints () {
     await this.update({
-      'data.development.archetype': this.occupationPoints
+      'system.development.archetype': this.occupationPoints
     })
   }
 
   async resetPersonalPoints () {
     await this.update({
-      'data.development.personal': this.personalPoints
+      'system.development.personal': this.personalPoints
     })
   }
 
@@ -2011,15 +2011,15 @@ export class CoCActor extends Actor {
         this.setCondition(COC7.status.indefInsane)
       }
       await this.update({
-        'data.attribs.san.value': value,
-        'data.attribs.san.dailyLoss': totalLoss
+        'system.attribs.san.value': value,
+        'system.attribs.san.dailyLoss': totalLoss
       })
-    } else await this.update({ 'data.attribs.san.value': value })
+    } else await this.update({ 'system.attribs.san.value': value })
     return value
   }
 
   async setAttribAuto (value, attrib) {
-    const updatedKey = `data.attribs.${attrib}.auto`
+    const updatedKey = `system.attribs.${attrib}.auto`
     return await this.update({ [updatedKey]: value })
   }
 
@@ -2125,8 +2125,8 @@ export class CoCActor extends Actor {
     if (!this.system.flags) {
       this.system.flags = {}
       this.system.flags.locked = true // Locked by default
-      this.update({ 'data.flags': {} })
-      this.update({ 'data.flags.locked': false })
+      this.update({ 'system.flags': {} })
+      this.update({ 'system.flags.locked': false })
     }
 
     return this.system.flags.locked
@@ -2137,12 +2137,12 @@ export class CoCActor extends Actor {
   }
 
   set locked (value) {
-    this.update({ 'data.flags.locked': value })
+    this.update({ 'system.flags.locked': value })
   }
 
   async toggleActorFlag (flagName) {
     const flagValue = !this.system.flags[flagName]
-    const name = `data.flags.${flagName}`
+    const name = `system.flags.${flagName}`
     await this.update({ [name]: flagValue })
   }
 
@@ -2441,7 +2441,7 @@ export class CoCActor extends Actor {
     if (!this.system.flags) {
       this.system.flags = {}
       this.system.flags.locked = true
-      this.update({ 'data.flags': {} })
+      this.update({ 'system.flags': {} })
       return false
     }
 
@@ -2649,7 +2649,7 @@ export class CoCActor extends Actor {
         const r = new Roll(value.formula)
         await r.roll({ async: true })
         if (r.total) {
-          characteristics[`data.characteristics.${key}.value`] = Math.floor(
+          characteristics[`system.characteristics.${key}.value`] = Math.floor(
             r.total
           )
         }
@@ -2673,7 +2673,7 @@ export class CoCActor extends Actor {
         const charValue =
           average % 5 === 0 ? average : Math.round(average / 10) * 10
         if (charValue) {
-          characteristics[`data.characteristics.${key}.value`] = charValue
+          characteristics[`system.characteristics.${key}.value`] = charValue
         }
       }
     }
@@ -2699,7 +2699,7 @@ export class CoCActor extends Actor {
           charValue = null
         }
         if (charValue) {
-          characteristics[`data.characteristics.${key}.value`] = charValue
+          characteristics[`system.characteristics.${key}.value`] = charValue
         }
       }
     }
@@ -2761,7 +2761,7 @@ export class CoCActor extends Actor {
                 {
                   results: `${augmentSANDie.values[0]} + ${augmentSANDie.values[1]}`,
                   sanGained,
-                  skill: item.data.name,
+                  skill: item.system.name,
                   skillValue: skillValue + augmentDie.total
                 }
               )}</span><br>`
@@ -2772,7 +2772,7 @@ export class CoCActor extends Actor {
             message += `<span class="upgrade-success">${game.i18n.format(
               'CoC7.DevSuccess',
               {
-                item: item.data.name,
+                item: item.system.name,
                 die: die.total,
                 score: item.value,
                 augment: augmentDie.total
@@ -2786,7 +2786,7 @@ export class CoCActor extends Actor {
             message += `<span class="upgrade-failed">${game.i18n.format(
               'CoC7.DevFailure',
               {
-                item: item.data.name,
+                item: item.system.name,
                 die: die.total,
                 score: item.value
               }
@@ -2816,7 +2816,7 @@ export class CoCActor extends Actor {
       }
       message += `<span>${game.i18n.format('CoC7.ReduceSanityLimits')}</span>`
       await this.update({
-        'data.sanityLossEvents': sanityLossEvents
+        'system.sanityLossEvents': sanityLossEvents
       })
     }
     if (!fastForward) {
@@ -2832,7 +2832,7 @@ export class CoCActor extends Actor {
 
   async developLuck (fastForward = false) {
     const currentLuck = this.system.attribs.lck.value
-    if (!currentLuck) await this.update({ 'data.attribs.lck.value': 0 })
+    if (!currentLuck) await this.update({ 'system.attribs.lck.value': 0 })
     const pulpRuleDevelopmentRollLuck = game.settings.get(
       'CoC7',
       'pulpRuleDevelopmentRollLuck'
@@ -2853,7 +2853,7 @@ export class CoCActor extends Actor {
       const augmentValue = (await new Roll(augmentRoll).roll({ async: true }))
         .total
       await this.update({
-        'data.attribs.lck.value':
+        'system.attribs.lck.value':
           this.system.attribs.lck.value + augmentValue
       })
       message += `<span class="upgrade-success">${game.i18n.format(
@@ -2961,7 +2961,7 @@ export class CoCActor extends Actor {
   ) {
     if (!forceValue && game.settings.get('CoC7', 'enableStatusIcons')) {
       const effects = this.effects
-        .filter(effect => effect.data.flags.core?.statusId === conditionName)
+        .filter(effect => effect.flags.core?.statusId === conditionName)
         .map(effect => effect.id)
       const custom = {}
       switch (conditionName) {
@@ -3037,34 +3037,34 @@ export class CoCActor extends Actor {
         case COC7.status.prone:
         case COC7.status.dead:
           await this.update({
-            [`data.conditions.${conditionName}.value`]: true
+            [`system.conditions.${conditionName}.value`]: true
           })
           break
         case COC7.status.tempoInsane:
           {
             const fields = {}
-            fields[`data.conditions.${conditionName}.value`] = true
+            fields[`system.conditions.${conditionName}.value`] = true
             if (realTime === true || realTime === false) {
-              fields[`data.conditions.${conditionName}.realTime`] = realTime
+              fields[`system.conditions.${conditionName}.realTime`] = realTime
               if (duration !== null && typeof duration !== 'undefined') {
-                fields[`data.conditions.${conditionName}.duration`] = duration
+                fields[`system.conditions.${conditionName}.duration`] = duration
               }
             }
             if (
               !Object.prototype.hasOwnProperty.call(
                 fields,
-                `data.conditions.${conditionName}.realTime`
+                `system.conditions.${conditionName}.realTime`
               )
             ) {
-              fields[`data.conditions.${conditionName}.-=realTime`] = null
+              fields[`system.conditions.${conditionName}.-=realTime`] = null
             }
             if (
               !Object.prototype.hasOwnProperty.call(
                 fields,
-                `data.conditions.${conditionName}.duration`
+                `system.conditions.${conditionName}.duration`
               )
             ) {
-              fields[`data.conditions.${conditionName}.-=duration`] = null
+              fields[`system.conditions.${conditionName}.-=duration`] = null
             }
             await this.update(fields)
           }
@@ -3099,7 +3099,7 @@ export class CoCActor extends Actor {
   async unsetCondition (conditionName, { forceValue = false } = {}) {
     if (!forceValue && game.settings.get('CoC7', 'enableStatusIcons')) {
       const effects = this.effects
-        .filter(effect => effect.data.flags.core?.statusId === conditionName)
+        .filter(effect => effect.flags.core?.statusId === conditionName)
         .map(effect => effect.id)
       if (effects.length > 0) {
         await super.deleteEmbeddedDocuments('ActiveEffect', effects)
@@ -3117,7 +3117,7 @@ export class CoCActor extends Actor {
         case COC7.status.prone:
         case COC7.status.dead:
           await this.update({
-            [`data.conditions.${conditionName}.value`]: false
+            [`system.conditions.${conditionName}.value`]: false
           })
           break
       }
@@ -3131,10 +3131,10 @@ export class CoCActor extends Actor {
 
   async resetDailySanity () {
     await this.update({
-      'data.attribs.san.dailyLimit': Math.floor(
+      'system.attribs.san.dailyLimit': Math.floor(
         this.system.attribs.san.value / 5
       ),
-      'data.attribs.san.dailyLoss': 0
+      'system.attribs.san.dailyLoss': 0
     })
   }
 

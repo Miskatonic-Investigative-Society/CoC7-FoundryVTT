@@ -616,12 +616,12 @@ export class CoC7ActorImporter {
   disableAttribAuto (key, attribValue, check, updateData) {
     const value = Math.max(0, Number(attribValue))
     if (value !== Number(check)) {
-      updateData[`data.attribs.${key}.auto`] = false
-      updateData[`data.attribs.${key}.value`] = value
+      updateData[`system.attribs.${key}.auto`] = false
+      updateData[`system.attribs.${key}.value`] = value
       if (key === 'build') {
-        updateData[`data.attribs.${key}.current`] = value
+        updateData[`system.attribs.${key}.current`] = value
       } else {
-        updateData[`data.attribs.${key}.max`] = value
+        updateData[`system.attribs.${key}.max`] = value
       }
     }
     return updateData
@@ -686,8 +686,8 @@ export class CoC7ActorImporter {
     if (typeof characterData.actor.attribs.db?.value !== 'undefined') {
       value = String(characterData.actor.attribs.db.value).replace(/^\+\s*/, '')
       if (value !== String(npc.db)) {
-        updateData['data.attribs.db.auto'] = false
-        updateData['data.attribs.db.value'] = value
+        updateData['system.attribs.db.auto'] = false
+        updateData['system.attribs.db.value'] = value
       }
     }
     if (Object.keys(updateData).length > 0) {
@@ -938,12 +938,12 @@ export class CoC7ActorImporter {
     if (skill !== null && typeof skill !== 'undefined') {
       const skillClone = skill.clone({
         system: {
-          value: weapon.data?.skill?.id
+          value: weapon.system?.skill?.id
         }
       })
       return skillClone
     }
-    const firearms = weapon.data?.properties?.rngd
+    const firearms = weapon.system?.properties?.rngd
     const parts = CoC7Item.getNamePartsSpec(
       weapon.name,
       game.i18n.localize(

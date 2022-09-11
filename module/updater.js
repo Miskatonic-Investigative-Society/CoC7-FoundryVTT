@@ -231,7 +231,7 @@ export class Updater {
     // Migrate World Compendium Packs
     for (const pack of game.packs) {
       if (
-        // pack.metadata.packageName !== 'CoC7' &&
+        pack.metadata.packageName !== 'CoC7' &&
         ['Actor', 'Item', 'Macro', 'RollTable', 'Scene'].includes(
           pack.metadata.type
         )

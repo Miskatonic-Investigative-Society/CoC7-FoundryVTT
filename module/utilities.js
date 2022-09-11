@@ -578,7 +578,7 @@ export class CoC7Utilities {
   static updateCharSheets () {
     if (game.user.isGM) {
       for (const a of game.actors.contents) {
-        if (a?.data?.type === 'character' && a?.sheet && a?.sheet?.rendered) {
+        if (a?.type === 'character' && a?.sheet && a?.sheet?.rendered) {
           a.update({ 'system.flags.locked': true })
           a.render(false)
         }
