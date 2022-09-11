@@ -5,7 +5,7 @@ async function performFilter (e) {
   const appId = e.currentTarget.name.replace(/^coc7[^0-9]+(\d+)$/, '$1')
   const app = $('#app-' + appId)
   const type = app.find('select[name=coc7type' + appId + ']').val()
-  const name = app.find('input[name=coc7name' + appId + ']').val()
+  const name = app.find('input[name=search]').val()
   const eraElement = app.find('select[name=coc7era' + appId + ']')
   let era = ''
   switch (type) {
@@ -56,7 +56,7 @@ async function performFilter (e) {
 export function compendiumFilter () {
   Hooks.on('renderCompendium', async (app, html, data) => {
     if (app.collection.documentName === 'Item') {
-      const types = [...new Set(data.index.map(item => item.type))]
+      const types = [...new Set(data.index.filter(i => i.name !== '#[CF_tempEntity]').map(item => item.type))]
       const select = []
       select.push(
         '<option value="">' + game.i18n.localize('CoC7.All') + '</option>'
@@ -145,23 +145,13 @@ export function compendiumFilter () {
         )
       }
       html.data('packId', app.metadata.id)
-      html.find('header.directory-header').remove()
       html
-        .find('div.compendium.directory')
-        .before(
-          '<div class="compendiumfilter"><div class="flexrow"><i class="fas fa-layer-group"></i><select name="coc7type' +
-            app.appId +
-            '" style="">' +
-            select.join('') +
-            '</select></div><div class="flexrow"><i class="fas fa-search"></i><input type="text" name="coc7name' +
-            app.appId +
-            '" placeholder="' +
-            game.i18n.localize('FILES.Search') +
-            '" autocomplete="off"></div><div class="flexrow era_select" style="display:none"><i class="fas fa-layer-group"></i><select name="coc7era' +
-            app.appId +
-            '" style="">' +
-            eras.join('') +
-            '</select></div></div>'
+        .find('header.directory-header')
+        .after(
+          '<div class="compendiumfilter">' +
+          '<div class="header-search flexrow"><i class="fas fa-layer-group"></i><select name="coc7type' + app.appId + '" style="">' + select.join('') + '</select></div>' +
+          '<div class="header-search flexrow era_select" style="display:none"><i class="fas fa-layer-group"></i><select name="coc7era' + app.appId + '" style="">' + eras.join('') + '</select></div>' +
+          '</div>'
         )
       html.find('select').change(performFilter.bind(this))
       html.find('input').keyup(performFilter.bind(this))
