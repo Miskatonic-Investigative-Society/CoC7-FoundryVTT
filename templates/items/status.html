@@ -39,7 +39,7 @@
         </ol>
       </div>
 
-      {{editor data.system.description.value target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
+      {{editor enrichedDescriptionValue target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
     </div>
 
     {{!-- Details Tab --}}
@@ -60,14 +60,14 @@
       </div>
 
       <h3 class="form-header">{{ localize "CoC7.Notes"}}</h3>
-      {{editor data.system.description.notes target="system.description.notes" engine="prosemirror" button=true owner=owner editable=editable}}
+      {{editor enrichedDescriptionNotes target="system.description.notes" engine="prosemirror" button=true owner=owner editable=editable}}
     </div>
     <div class="tab effects" data-group="primary" data-tab="effects">
       <h1>To be implemented</h1>
     </div>
     {{#if isKeeper}}
       <div class="tab keeper flexcol" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="keeper">
-        {{editor data.system.description.keeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
+        {{editor enrichedDescriptionKeeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
       </div>
     {{/if}}
   </section>

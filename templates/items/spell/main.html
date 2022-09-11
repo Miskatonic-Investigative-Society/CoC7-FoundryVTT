@@ -54,13 +54,13 @@
     </nav>
     <section class="body">
       <div class="tab" data-group="primary" data-tab="description">
-        {{editor data.system.description.value target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
+        {{editor enrichedDescriptionValue target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
       </div>
       <div class="tab" data-group="primary" data-tab="details">
         {{> "systems/CoC7/templates/items/spell/details.html"}}
       </div>
       <div class="tab" data-group="primary" data-tab="notes">
-        {{editor data.system.description.keeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
+        {{editor enrichedDescriptionKeeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
       </div>
     </section>
   </div>

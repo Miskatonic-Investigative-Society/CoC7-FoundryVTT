@@ -1,4 +1,4 @@
-/* global $, Dialog, DragDrop, duplicate, expandObject, flattenObject, FormDataExtended, foundry, game, getType, ItemSheet, mergeObject, ui */
+/* global $, Dialog, DragDrop, duplicate, expandObject, flattenObject, FormDataExtended, foundry, game, getType, ItemSheet, mergeObject, TextEditor, ui */
 import { CoC7ChaseParticipantImporter } from '../../apps/chase-participant-importer.js'
 import { CoC7Chat } from '../../chat.js'
 import { chatHelper } from '../../chat/helper.js'
@@ -97,6 +97,12 @@ export class CoC7ChaseSheet extends ItemSheet {
     sheetData.started = this.item.started
 
     sheetData.isKeeper = game.user.isGM
+
+    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+      sheetData.data.system.description.keeper,
+      { async: false }
+    )
+
     return sheetData
   }
 

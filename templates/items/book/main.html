@@ -123,10 +123,10 @@
     </nav>
     <section class="body">
       <div class="tab" data-group="primary" data-tab="description">
-        {{editor data.system.description.value target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
+        {{editor enrichedDescriptionValue target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
       </div>
       <div class="tab" data-group="primary" data-tab="content">
-        {{editor data.system.content target="system.content" engine="prosemirror" button=true owner=owner editable=editable}}
+        {{editor enrichedContent target="system.content" engine="prosemirror" button=true owner=owner editable=editable}}
       </div>
       <div class="tab" data-group="primary" data-tab="details">
         {{> "systems/CoC7/templates/items/book/details.html"}}
@@ -166,7 +166,7 @@
         </div>
       </div>
       <div class="tab" data-group="primary" data-tab="notes">
-        {{editor data.system.description.keeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
+        {{editor enrichedDescriptionKeeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
       </div>
     </section>
   </div>

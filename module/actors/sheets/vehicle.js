@@ -5,7 +5,7 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
   static get defaultOptions () {
     return mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheetV2', 'actor', 'item', 'vehicle'],
-      width: 520,
+      width: 555,
       height: 420,
       resizable: true,
       template: 'systems/CoC7/templates/actors/vehicle.html',
@@ -27,13 +27,12 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
     const sheetData = await super.getData()
 
     sheetData.properties = []
-    if (this.actor.sheetData.properties.armed) {
+    if (this.actor.system.properties.armed) {
       sheetData.properties.push(game.i18n.localize('CoC7.ArmedVehicle'))
     }
-    sheetData.actor = this.actor
 
     const expanded = this.actor.getFlag('CoC7', 'expanded')
-    if (undefined === expanded) sheetData.expanded = true
+    if (typeof expanded === 'undefined') sheetData.expanded = true
     else sheetData.expanded = expanded
     if (sheetData.expanded) {
       sheetData.options.height = 420
@@ -98,26 +97,14 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
   /* -------------------------------------------- */
   /*  Form Submission                             */
   /* -------------------------------------------- */
-
-  /** @override */
-  _getSubmitData (updateData = {}) {
-    // Create the expanded update data object
-    const fd = new FormDataExtended(this.form, { editors: this.editors })
-    let data = fd.toObject()
-    if (updateData) data = mergeObject(data, updateData)
-    else data = expandObject(data)
-
-    // Handle Armor array
-    if (data.data.attribs.armor?.localized) {
-      const armor = data.data?.attribs.armor
-      if (armor) {
-        armor.locations = Object.values(
-          armor?.locations || this.actor.system.attribs.armor.locations || {}
-        )
-      }
+  _updateObject (event, formData) {
+    const system = expandObject(formData)?.system
+    if (system.attribs.armor.locations) {
+      formData['system.attribs.armor.locations'] = Object.values(
+        system.attribs.armor.locations || []
+      )
     }
 
-    // Return the flattened submission data
-    return flattenObject(data)
+    super._updateObject(event, formData)
   }
 }

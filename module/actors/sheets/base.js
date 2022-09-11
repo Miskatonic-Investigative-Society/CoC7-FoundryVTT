@@ -24,7 +24,7 @@ export class CoC7ActorSheet extends ActorSheet {
     sheetData.showHiddenDevMenu = game.settings.get('CoC7', 'hiddendevmenu')
 
     sheetData.canDragToken = !!this.token && game.user.isGM
-    sheetData.linkedActor = this.actor.token?.actorLink === true
+    sheetData.linkedActor = this.actor.prototypeToken?.actorLink === true
     sheetData.isToken = this.actor.isToken
     sheetData.itemsByType = {}
     sheetData.skills = {}

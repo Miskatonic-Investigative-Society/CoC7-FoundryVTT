@@ -289,8 +289,8 @@ export class CoC7Item extends Item {
         return item.system.skillName
       }
     } else {
-      if (item.system.properties?.special && typeof item.system.skillName !== 'undefined') {
-        return item.system.skillName
+      if (item.properties?.special && typeof item.skillName !== 'undefined') {
+        return item.skillName
       }
     }
     return item.name
@@ -307,7 +307,7 @@ export class CoC7Item extends Item {
       ].includes(CoC7Item.getNameWithoutSpec(item).toLowerCase())
     } else {
       // Assume it's data only
-      if (item.type !== 'skill' || !item.system.properties?.special) return false
+      if (item.type !== 'skill' || !item.properties?.special) return false
       return [
         game.i18n.localize('CoC7.AnySpecName').toLowerCase(),
         'any'

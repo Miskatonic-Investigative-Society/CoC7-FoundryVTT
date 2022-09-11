@@ -1,4 +1,4 @@
-/* global game, ItemSheet, mergeObject */
+/* global game, ItemSheet, mergeObject, TextEditor */
 import { COC7 } from '../../config.js'
 
 /**
@@ -40,6 +40,21 @@ export class CoC7StatusSheet extends ItemSheet {
         )
       }
     }
+
+    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+      sheetData.data.system.description.value,
+      { async: false }
+    )
+
+    sheetData.enrichedDescriptionNotes = TextEditor.enrichHTML(
+      sheetData.data.system.description.notes,
+      { async: false }
+    )
+
+    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+      sheetData.data.system.description.keeper,
+      { async: false }
+    )
 
     sheetData.isKeeper = game.user.isGM
     return sheetData

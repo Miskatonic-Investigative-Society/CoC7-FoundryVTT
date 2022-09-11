@@ -1,4 +1,4 @@
-/* global $, game, ItemSheet, mergeObject */
+/* global $, game, ItemSheet, mergeObject, TextEditor */
 export class CoC7SpellSheet extends ItemSheet {
   static get defaultOptions () {
     return mergeObject(super.defaultOptions, {
@@ -19,11 +19,22 @@ export class CoC7SpellSheet extends ItemSheet {
   }
 
   async getData () {
-    const item = super.getData()
-    item.hasOwner = this.item.isEmbedded === true
-    item.isKeeper = game.user.isGM
-    item.isOwner = this.item.isOwner
-    return item
+    const sheetData = super.getData()
+    sheetData.hasOwner = this.item.isEmbedded === true
+    sheetData.isKeeper = game.user.isGM
+    sheetData.isOwner = this.item.isOwner
+
+    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+      sheetData.data.system.description.value,
+      { async: false }
+    )
+
+    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+      sheetData.data.system.description.keeper,
+      { async: false }
+    )
+
+    return sheetData
   }
 
   activateListeners (html) {

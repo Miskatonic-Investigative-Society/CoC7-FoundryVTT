@@ -1,4 +1,4 @@
-/* global $, duplicate, game, ItemSheet, mergeObject */
+/* global $, duplicate, game, ItemSheet, mergeObject, TextEditor */
 import { CoC7Utilities } from '../../utilities.js'
 
 export class CoC7BookSheet extends ItemSheet {
@@ -31,6 +31,21 @@ export class CoC7BookSheet extends ItemSheet {
     sheetData.studyCompleted = this.item.system.study.progress === this.item.system.study.necessary
     sheetData.hasOwner = this.item.isEmbedded === true
     sheetData.spellListEmpty = this.item.system.spells.length === 0
+
+    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+      sheetData.data.system.description.value,
+      { async: false }
+    )
+
+    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+      sheetData.data.system.description.keeper,
+      { async: false }
+    )
+
+    sheetData.enrichedContent = TextEditor.enrichHTML(
+      sheetData.data.system.content,
+      { async: false }
+    )
 
     return sheetData
   }

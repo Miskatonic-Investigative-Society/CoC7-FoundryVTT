@@ -1,4 +1,4 @@
-/* global $, DragDrop, duplicate, expandObject, game, ItemSheet, mergeObject */
+/* global $, DragDrop, duplicate, expandObject, game, ItemSheet, mergeObject, TextEditor */
 import { COC7 } from '../../config.js'
 import { CoC7Item } from '../item.js'
 import { CoC7Utilities } from '../../utilities.js'
@@ -242,6 +242,16 @@ export class CoC7OccupationSheet extends ItemSheet {
         sheetData.itemProperties.push(COC7.occupationProperties[key] ? COC7.occupationProperties[key] : null)
       }
     }
+
+    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+      sheetData.data.system.description.value,
+      { async: false }
+    )
+
+    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+      sheetData.data.system.description.keeper,
+      { async: false }
+    )
 
     sheetData.isKeeper = game.user.isGM
     return sheetData

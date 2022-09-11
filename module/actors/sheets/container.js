@@ -1,5 +1,7 @@
 /* global $, ActorSheet, CONST, Dialog, FormData, game, mergeObject */
 import { CoC7Parser } from '../../apps/parser.js'
+import { CoC7Utilities } from '../../utilities.js'
+
 export class CoC7ContainerSheet extends ActorSheet {
   /**
    * Extend and override the default options used by the 5e Actor Sheet
@@ -22,17 +24,25 @@ export class CoC7ContainerSheet extends ActorSheet {
     })
   }
 
-  async _onDropFolder (event, data) {
-    if (!this.actor.isOwner) return []
-    if (data.documentName !== 'Item') return []
-    const folder = game.folders.get(data.id)
-    if (!folder) return []
-    const items = folder.contents
-      .filter(item => ['book', 'item', 'spell', 'weapon'].includes(item.type))
-      .map(item => item.toJSON())
-    if (items.length > 0) {
-      await this.actor.createEmbeddedDocuments('Item', items)
+  async _onDrop (event) {
+    event.preventDefault()
+    event.stopPropagation()
+
+    const dataList = await CoC7Utilities.getDataFromDropEvent(event, 'Item')
+    if (!this.options.editable) {
+      return
     }
+    const items = this.actor.items.toObject() || []
+    for (const item of dataList) {
+      if (!item || !item.system) {
+        continue
+      }
+      if (!['book', 'item', 'spell', 'weapon'].includes(item.type)) {
+        continue
+      }
+      items.push(item.toObject())
+    }
+    await this.actor.update({ items })
   }
 
   onCloseSheet () {}

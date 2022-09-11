@@ -1,4 +1,4 @@
-/* global $, duplicate, game, ItemSheet, mergeObject */
+/* global $, duplicate, game, ItemSheet, mergeObject, TextEditor */
 import { CoC7Item } from '../item.js'
 import { CoC7Utilities } from '../../utilities.js'
 
@@ -117,6 +117,26 @@ export class CoC7ArchetypeSheet extends ItemSheet {
         coreCharacteristics.push(characName)
       }
     }
+
+    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+      sheetData.data.system.description.value,
+      { async: false }
+    )
+
+    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+      sheetData.data.system.description.keeper,
+      { async: false }
+    )
+
+    sheetData.enrichedSuggestedOccupations = TextEditor.enrichHTML(
+      sheetData.data.system.suggestedOccupations,
+      { async: false }
+    )
+
+    sheetData.enrichedSuggestedTraits = TextEditor.enrichHTML(
+      sheetData.data.system.suggestedTraits,
+      { async: false }
+    )
 
     sheetData.skillListEmpty = sheetData.data.system.skills.length === 0
 

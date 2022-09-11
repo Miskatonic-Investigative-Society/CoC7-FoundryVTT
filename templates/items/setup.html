@@ -42,7 +42,7 @@
         </ol>
       </div>
 
-      {{editor data.system.description.value target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
+      {{editor enrichedDescriptionValue target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
     </div>
 
     {{!-- Details Tab --}}
@@ -66,7 +66,7 @@
           {{ localize "CoC7.Background" }}
         </h3>
         <div class="backstory-editor">
-          {{editor data.system.backstory target="system.backstory" engine="prosemirror" button=true owner=owner editable=editable}}
+          {{editor enrichedBackstory target="system.backstory" engine="prosemirror" button=true owner=owner editable=editable}}
         </div>
       {{else}}
         <h3 class="form-header">
@@ -188,7 +188,7 @@
     </div>
     {{#if isKeeper}}
       <div class="tab keeper flexcol" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="keeper">
-        {{editor data.system.description.keeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
+        {{editor enrichedDescriptionKeeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
       </div>
     {{/if}}
   </section>

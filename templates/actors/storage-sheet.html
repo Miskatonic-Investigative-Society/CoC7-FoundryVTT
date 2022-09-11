@@ -2,10 +2,10 @@
   <header class="sheet-header flexrow" style="flex: 0 0 80px;padding-bottom: 2px;">
     <div class="header-details flexrow">
       <h1 class="name">
-        <input name="name" type="text" value="{{name}}" placeholder="{{ localize 'CoC7.Name' }}" style="margin:0; padding:0;" />
+        <input name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'CoC7.Name' }}" style="margin:0; padding:0;" />
       </h1>
     </div>
-    <img class="profile" src="{{img}}" data-edit="img" title="{{name}}" height="64" width="64" style="flex: 0 0 64px; height: 64px;" />
+    <img class="profile" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="64" width="64" style="flex: 0 0 64px; height: 64px;" />
   </header>
   <nav class="sheet-nav tabs" data-group="primary" style="border-bottom: 2px groove #eeede0;padding-bottom: 10px;">
     <a class="item active" data-tab="items">{{ localize "CoC7.Items" }}</a>

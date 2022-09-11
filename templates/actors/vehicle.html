@@ -27,21 +27,20 @@
         <img class="photo" src="{{actor.img}}" title="{{actor.name}}" data-edit="img" />
       </div>
 
-
       <div class="infos">
         <div class="row flexrow">
           <input class="name" name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'CoC7.Name' }}" />
         </div>
 
         <div class="row flexrow">
-          <input class="name" type="text" name="data.infos.type" value="{{data.infos.type}}" placeholder="{{ localize 'CoC7.Type' }}" />
+          <input class="name" type="text" name="system.infos.type" value="{{data.system.infos.type}}" placeholder="{{ localize 'CoC7.Type' }}" />
         </div>
         <div class="row flexrow">
-          <input class="name" type="text" name="data.infos.origin" value="{{data.infos.origin}}" placeholder="{{ localize 'CoC7.Origin' }}" />
+          <input class="name" type="text" name="system.infos.origin" value="{{data.system.infos.origin}}" placeholder="{{ localize 'CoC7.Origin' }}" />
         </div>
         <div class="row flexrow">
           <label>{{ localize 'CoC7.Crew' }} :</label>
-          <input type="text" name="data.crew.total" value="{{data.crew.total}}" />
+          <input type="text" name="system.crew.total" value="{{data.system.crew.total}}" />
         </div>
       </div>
 
@@ -50,24 +49,24 @@
           <div class="flex1"><label>{{localize "CoC7.Movement"}} :</label></div>
           <div class="flex1"><span>{{actor.mov}}</span></div>
           <div class="flex1"><label>{{localize "CoC7.Build"}} :</label></div>
-          <div class="flex2 flexrow"><input class="attribute-value" type="text" value="{{actor.hp}}" name="data.attribs.build.current" /><span>/{{actor.build}}</span></div>
+          <div class="flex2 flexrow"><input class="attribute-value" type="text" value="{{actor.hp}}" name="system.attribs.build.current" /><span>/{{actor.build}}</span></div>
         </div>
-        {{#if data.attribs.armor.localized}}
+        {{#if data.system.attribs.armor.localized}}
           <label>{{ localize 'CoC7.ArmourPlating'}} :</label>
           <div class="armor-infos">
-            {{#each data.attribs.armor.locations as |location|}}
+            {{#each data.system.attribs.armor.locations as |location|}}
               <div class="armor-location">{{location.name}}</div>
             {{/each}}
           </div>
           <div class="armor-infos">
-            {{#each data.attribs.armor.locations as |location|}}
+            {{#each data.system.attribs.armor.locations as |location|}}
               <div class="armor-location">{{location.value}}</div>
             {{/each}}
           </div>
         {{else}}
           <div class="flexrow">
             <label>{{localize "CoC7.Armor"}} :</label>
-            <span>{{data.attribs.armor.value}}</span>
+            <span>{{data.system.attribs.armor.value}}</span>
           </div>
         {{/if}}
         <div class="properties">
@@ -76,7 +75,6 @@
           {{/each}}
         </div>
       </div>
-
 
     </header>
     {{#if expanded}}
@@ -95,29 +93,22 @@
         {{/if}}
       </nav>
 
-
       {{!-- Item Sheet Body --}}
       <section class="sheet-body">
 
         {{!-- Description Tab --}}
         <div class="tab" data-group="primary" data-tab="description">
 
-          <!-- <div class="item-properties">
+          {{!-- <div class="item-properties">
                         <ol class="properties-list">
                             {{#each itemProperties}}
                             <li>{{this}}</li>
                             {{/each}}
                         </ol>
-                    </div> -->
+                    </div> --}}
 
-          {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
+          {{editor data.system.description.value target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
         </div>
-
-        <!-- <div class="tab flexrow" data-group="primary" data-tab="crew">
-                    {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
-                </div> -->
-
-
 
         {{!-- Details Tab --}}
         <div class="tab details scroll-y" data-group="primary" data-tab="details">
@@ -126,23 +117,23 @@
             <div class="section-content">
               <div class="section-group stacked">
                 <label class="checkbox">
-                  <input type="checkbox" name="data.attribs.armor.localized" {{checked data.attribs.armor.localized}} />
+                  <input type="checkbox" name="system.attribs.armor.localized" {{checked data.system.attribs.armor.localized}} />
                   {{localize "CoC7.ArmourPlating"}}
                 </label>
-                {{#if data.attribs.armor.localized}}
+                {{#if data.system.attribs.armor.localized}}
                   <div class="button">
                     <a class="add-armor"><i class="fas fa-plus"></i></a>
                   </div>
                 {{/if}}
               </div>
-              {{#if data.attribs.armor.localized}}
-                {{#each data.attribs.armor.locations as |location i|}}
+              {{#if data.system.attribs.armor.localized}}
+                {{#each data.system.attribs.armor.locations as |location i|}}
                   <div class="section-group armor" data-index="{{i}}">
                     <label>
-                      <input type="text" name="data.attribs.armor.locations.{{i}}.name" value="{{location.name}}" placeholder="{{localize 'CoC7.Location'}}" />
+                      <input type="text" name="system.attribs.armor.locations.{{i}}.name" value="{{location.name}}" placeholder="{{localize 'CoC7.Location'}}" />
                     </label>
                     <div class="section-fields">
-                      <input type="text" name="data.attribs.armor.locations.{{i}}.value" value="{{location.value}}" placeholder="{{localize 'CoC7.Armor'}}" />
+                      <input type="text" name="system.attribs.armor.locations.{{i}}.value" value="{{location.value}}" placeholder="{{localize 'CoC7.Armor'}}" />
                       <div class="button">
                         <a class="remove-armor"><i class="fas fa-minus"></i></a>
                       </div>
@@ -153,7 +144,7 @@
                 <div class="section-group">
                   <label>{{localize "CoC7.Armor"}}</label>
                   <div class="section-fields">
-                    <input type="text" name="data.attribs.armor.value" value="{{data.attribs.armor.value}}" />
+                    <input type="text" name="system.attribs.armor.value" value="{{data.system.attribs.armor.value}}" />
                   </div>
                 </div>
               {{/if}}
@@ -166,13 +157,13 @@
               <div class="section-group">
                 <label>{{localize "CoC7.Movement"}}</label>
                 <div class="section-fields">
-                  <input type="text" name="data.attribs.mov.value" value="{{data.attribs.mov.value}}" />
+                  <input type="text" name="system.attribs.mov.value" value="{{data.system.attribs.mov.value}}" />
                 </div>
               </div>
               <div class="section-group">
                 <label>{{localize "CoC7.Build"}}</label>
                 <div class="section-fields">
-                  <input type="text" name="data.attribs.build.value" value="{{data.attribs.build.value}}" />
+                  <input type="text" name="system.attribs.build.value" value="{{data.system.attribs.build.value}}" />
                 </div>
               </div>
             </div>
@@ -183,7 +174,7 @@
             <div class="section-content">
               <div class="section-group">
                 <label class="checkbox">
-                  <input type="checkbox" name="data.properties.armed" {{checked data.properties.armed}} />
+                  <input type="checkbox" name="system.properties.armed" {{checked data.system.properties.armed}} />
                   {{localize "CoC7.ArmedVehicle"}}
                 </label>
               </div>
@@ -193,7 +184,7 @@
 
         {{!-- GM Notes Tab --}}
         <div class="tab" data-group="primary" data-tab="gmNotes">
-          {{editor content=data.description.notes target="data.description.notes" button=true owner=owner editable=editable}}
+          {{editor data.system.description.notes target="system.description.notes" engine="prosemirror" button=true owner=owner editable=editable}}
         </div>
 
       </section>

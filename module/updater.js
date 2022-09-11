@@ -231,7 +231,7 @@ export class Updater {
     // Migrate World Compendium Packs
     for (const pack of game.packs) {
       if (
-        pack.metadata.packageName !== 'CoC7' &&
+        // pack.metadata.packageName !== 'CoC7' &&
         ['Actor', 'Item', 'Macro', 'RollTable', 'Scene'].includes(
           pack.metadata.type
         )
@@ -334,6 +334,7 @@ export class Updater {
     const updateData = {}
 
     // Update World Item
+    Updater._migrateItemEmbeddedv10(item, updateData)
     Updater._migrateItemExperience(item, updateData)
     Updater._migrateItemArtwork(item, updateData)
     Updater._migrateItemBookAutomated(item, updateData)
@@ -612,6 +613,59 @@ export class Updater {
           updateData['system.description.keeper'] = item.system.keeperNotes
         }
         updateData['system.-=keeperNotes'] = null
+      }
+    }
+  }
+
+  static _migrateItemEmbeddedv10 (item, updateData) {
+    if (item.type === 'occupation') {
+      let changed = false
+      for (const [o, g] of Object.entries(item.system.groups)) {
+        for (const [k, v] of Object.entries(g.skills)) {
+          if (typeof v.system === 'undefined') {
+            item.system.groups[o].skills[k].system = v.data
+            changed = true
+          }
+        }
+      }
+      if (changed) {
+        updateData['system.groups'] = item.system.groups
+      }
+    }
+    if (['setup'].includes(item.type)) {
+      let changed = false
+      for (const [k, v] of Object.entries(item.system.items)) {
+        if (typeof v.system === 'undefined') {
+          item.system.items[k].system = v.data
+          changed = true
+        }
+      }
+      if (changed) {
+        updateData['system.items'] = item.system.items
+      }
+    }
+    if (['archetype', 'occupation'].includes(item.type)) {
+      let changed = false
+      for (const [k, v] of Object.entries(item.system.skills)) {
+        if (typeof v.system === 'undefined') {
+          item.system.skills[k].system = v.data
+          changed = true
+        }
+      }
+      if (changed) {
+        updateData['system.skills'] = item.system.skills
+      }
+    }
+    if (['book'].includes(item.type)) {
+      let changed = false
+      for (const [k, v] of Object.entries(item.system.spells)) {
+        if (typeof v.system === 'undefined') {
+          item.system.spells[k].system = v.data
+          changed = true
+        }
+      }
+      if (changed) {
+        updateData['system.spells'] = item.system.spells
       }
     }
   }

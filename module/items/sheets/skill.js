@@ -1,4 +1,4 @@
-/* global game, ItemSheet, mergeObject */
+/* global game, ItemSheet, mergeObject, TextEditor */
 import CoC7ActiveEffect from '../../active-effect.js'
 import { COC7 } from '../../config.js'
 import { isCtrlKey } from '../../chat/helper.js'
@@ -79,6 +79,17 @@ export class CoC7SkillSheet extends ItemSheet {
     sheetData.canModifySpec =
       !this.item.system.properties.firearm &&
       !this.item.system.properties.fighting
+
+
+    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+      sheetData.data.system.description.value,
+      { async: false }
+    )
+
+    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+      sheetData.data.system.description.keeper,
+      { async: false }
+    )
 
     sheetData.isKeeper = game.user.isGM
     return sheetData

@@ -1,4 +1,4 @@
-/* global $, duplicate, expandObject, game, ItemSheet, mergeObject */
+/* global $, duplicate, expandObject, game, ItemSheet, mergeObject, TextEditor */
 import { COC7 } from '../../config.js'
 import { CoC7Item } from '../item.js'
 import { CoC7Utilities } from '../../utilities.js'
@@ -172,6 +172,21 @@ export class CoC7SetupSheet extends ItemSheet {
     }
 
     sheetData.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
+
+    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+      sheetData.data.system.description.value,
+      { async: false }
+    )
+
+    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+      sheetData.data.system.description.keeper,
+      { async: false }
+    )
+
+    sheetData.enrichedBackstory = TextEditor.enrichHTML(
+      sheetData.data.system.backstory,
+      { async: false }
+    )
 
     sheetData.isKeeper = game.user.isGM
     return sheetData

@@ -1,4 +1,4 @@
-/* global game, ItemSheet, mergeObject */
+/* global game, ItemSheet, mergeObject, TextEditor */
 /**
  * Extend the basic ItemSheet with some very simple modifications
  */
@@ -30,6 +30,16 @@ export class CoC7ItemSheetV2 extends ItemSheet {
    */
   getData (options = {}) {
     const sheetData = super.getData(options)
+
+    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+      sheetData.data.system.description.value,
+      { async: false }
+    )
+
+    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+      sheetData.data.system.description.keeper,
+      { async: false }
+    )
 
     sheetData.isKeeper = game.user.isGM
 
