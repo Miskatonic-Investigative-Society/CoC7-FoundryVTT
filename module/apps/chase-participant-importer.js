@@ -7,6 +7,7 @@ import { CoC7Utilities } from '../utilities.js'
 export class CoC7ChaseParticipantImporter extends FormApplication {
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
+      title: game.i18n.localize('CoC7.AddActorToChase'),
       template: 'systems/CoC7/templates/apps/chase-participant-importer.html',
       classes: ['coc7', 'dialog', 'chase-participant-importer'],
       editable: true,
@@ -170,10 +171,10 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
 
     const action = event.currentTarget.dataset.action
     switch (action) {
-      case 'cancel':
+      case 'chase-cancel':
         this.close()
         break
-      case 'add':
+      case 'chase-add':
         {
           const participant = new _participant(this.object)
 
