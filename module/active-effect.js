@@ -249,14 +249,9 @@ export default class CoC7ActiveEffect extends ActiveEffect {
     ].includes(statusId)
   }
 
-  static prepareActiveEffectCategories (effects) {
+  static prepareActiveEffectCategories (effects, { status = true } = {}) {
     // Define effect header categories
     const categories = {
-      status: {
-        type: 'status',
-        label: game.i18n.localize('Status'),
-        effects: []
-      },
       temporary: {
         type: 'temporary',
         label: game.i18n.localize('Temporary'),
@@ -277,6 +272,14 @@ export default class CoC7ActiveEffect extends ActiveEffect {
         label: game.i18n.localize('Suppressed'),
         effects: [],
         info: [game.i18n.localize('Unavailable')]
+      }
+    }
+
+    if (status) {
+      categories.status = {
+        type: 'status',
+        label: game.i18n.localize('Status'),
+        effects: []
       }
     }
     // Iterate over active effects, classifying them into categories

@@ -48,7 +48,7 @@ export class CoC7StatusSheet extends ItemSheet {
     // this.item.checkSkillProperties();
     const data = super.getData()
 
-    data.effects = CoC7ActiveEffect.prepareActiveEffectCategories(this.item.effects)
+    data.effects = CoC7ActiveEffect.prepareActiveEffectCategories(this.item.effects, { status: false })
 
     /** MODIF: 0.8.x **/
     const itemData = data.data
