@@ -9,10 +9,10 @@
       "name": "Miskatonic Investigative Society"
     }
   ],
-  "minimumCoreVersion": "9",
+  "minimumCoreVersion": "10",
   "compatibleCoreVersion": "10",
   "compatibility": {
-    "minimum": 9,
+    "minimum": 10,
     "verified": 10
   },
   "esmodules": [
