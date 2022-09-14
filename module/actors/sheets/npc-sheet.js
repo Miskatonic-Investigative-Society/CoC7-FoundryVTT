@@ -51,7 +51,7 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
       sheetData.showInventoryWeapons
 
     sheetData.enrichedBiographyPersonalDescription = TextEditor.enrichHTML(
-      sheetData.data.system.biography.personalDescription.value,
+      sheetData.data.system.biography.personalDescription?.value,
       { async: false }
     )
 
