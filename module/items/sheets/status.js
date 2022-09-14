@@ -1,7 +1,7 @@
 /* global game, ItemSheet, mergeObject */
 
+import CoC7ActiveEffect from '../../active-effect.js'
 import { COC7 } from '../../config.js'
-// import { CoCActor } from '../../actors/actor.js';
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
@@ -33,12 +33,22 @@ export class CoC7StatusSheet extends ItemSheet {
     return 'systems/CoC7/templates/items/status.html'
   }
 
+  activateListeners (html) {
+    super.activateListeners(html)
+
+    html
+      .find('.effect-control')
+      .click(ev => CoC7ActiveEffect.onManageActiveEffect(ev, this.item))
+  }
+
   /* Prepare data for rendering the Item sheet
    * The prepared data object contains both the actor data as well as additional sheet options
    */
   getData () {
     // this.item.checkSkillProperties();
     const data = super.getData()
+
+    data.effects = CoC7ActiveEffect.prepareActiveEffectCategories(this.item.effects)
 
     /** MODIF: 0.8.x **/
     const itemData = data.data

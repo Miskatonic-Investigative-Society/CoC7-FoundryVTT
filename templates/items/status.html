@@ -20,9 +20,10 @@
       class="sheet-navigation tabs" data-group="primary">
         <a style="line-height: 24px;" class="item active" data-tab="description">{{ localize "CoC7.Description" }}</a>
         <a style="line-height: 24px;" class="item" data-tab="details">{{ localize "CoC7.Details" }}</a>
-        <a style="line-height: 24px;" class="item" data-tab="effects">{{ localize "CoC7.Effects" }}</a>
-        {{#if isKeeper}}
-          <a style="line-height: 24px;" class="item keeper-only-tab" data-tab="keeper" title="{{localize 'CoC7.GmNotes'}}"><i class="game-icon game-icon-tentacles-skull"></i></a>
+        <a class="keeper-only-tab" data-tab="effects" title="{{localize 'CoC7.GmNotes'}}">
+            <div class="tab-name"><span><i class="game-icon game-icon-aura"></i></span></div>
+        </a>        {{#if isKeeper}}
+        <a style="line-height: 24px;" class="item keeper-only-tab" data-tab="keeper" title="{{localize 'CoC7.GmNotes'}}"><i class="game-icon game-icon-tentacles-skull"></i></a>
         {{/if}}
     </nav>
 
@@ -64,8 +65,8 @@
             <h3 class="form-header">{{ localize "CoC7.Notes"}}</h3>
             {{editor content=data.description.notes target="data.description.notes" button=true owner=owner editable=editable}}
         </div>
-        <div class="tab effects" data-group="primary" data-tab="effects">
-            <h1>To be implemented</h1>
+        <div class="tab coc7 sheet" data-group="primary" data-tab="effects">
+            {{> "systems/CoC7/templates/common/active-effects.hbs"}}
         </div>
       {{#if isKeeper}}
         <div class="tab keeper flexcol" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="keeper">
