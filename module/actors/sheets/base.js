@@ -552,7 +552,8 @@ export class CoC7ActorSheet extends ActorSheet {
                   ]
                 }
               },
-              { action: 'request-roll', label: 'Request roll' }
+              { action: 'request-roll', label: 'Request roll' },
+              { action: 'link-tool', label: 'Open in link tool' } // Test only to be removed for final
             ]
           }
         ]
@@ -1128,6 +1129,8 @@ export class CoC7ActorSheet extends ActorSheet {
         rollOptions.preventStandby = false
         break
       case ('link-tool'):
+        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NORMAL
+        rollOptions.openLinkTool = true
         break
       case ('send-chat'):
         break

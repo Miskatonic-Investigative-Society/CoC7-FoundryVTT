@@ -144,7 +144,7 @@ export class CoC7ChatMessage {
         cardType: options.cardType,
         shiftKey: options.fastForward ?? options.event?.shiftKey ?? options.fastForward ?? false,
         altKey: options.event?.altKey ?? false,
-        isCtrlKey: isCtrlKey(options.event ?? false),
+        isCtrlKey: isCtrlKey(options.event ?? false) || options.openLinkTool,
         isCombat:
           options.event?.currentTarget.classList?.contains('combat') ?? false,
         preventStandby: options.preventStandby ?? false
@@ -301,7 +301,7 @@ export class CoC7ChatMessage {
       return
     }
     if (
-      config.options.isCtrlKey &&
+      (config.options.isCtrlKey || config.options.openLinkTool) &&
       game.user.isGM &&
       [
         CoC7ChatMessage.CARD_TYPE_NORMAL,
