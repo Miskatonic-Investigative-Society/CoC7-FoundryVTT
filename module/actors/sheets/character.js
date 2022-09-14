@@ -1,4 +1,4 @@
-/* global $, FontFace, game, mergeObject, ui */
+/* global $, FontFace, game, mergeObject, TextEditor, ui */
 import { CoC7ActorSheet } from './base.js'
 import { CoC7CreateMythosEncounter } from '../../apps/create-mythos-encounters.js'
 import { chatHelper } from '../../chat/helper.js'
@@ -201,6 +201,16 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
       sheetData.showInventoryTalents ||
       sheetData.showInventoryStatuses ||
       sheetData.showInventoryWeapons
+
+    sheetData.enrichedBackstory = TextEditor.enrichHTML(
+      sheetData.data.system.backstory,
+      { async: false }
+    )
+
+    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+      sheetData.data.system.description.keeper,
+      { async: false }
+    )
 
     return sheetData
   }

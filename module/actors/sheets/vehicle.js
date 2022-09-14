@@ -1,4 +1,4 @@
-/* global duplicate, expandObject, flattenObject, FormDataExtended, game, mergeObject */
+/* global duplicate, expandObject, game, mergeObject, TextEditor */
 import { CoC7ActorSheet } from './base.js'
 
 export class CoC7VehicleSheet extends CoC7ActorSheet {
@@ -37,6 +37,16 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
     if (sheetData.expanded) {
       sheetData.options.height = 420
     } else sheetData.options.height = 'auto'
+
+    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+      sheetData.data.system.description.value,
+      { async: false }
+    )
+
+    sheetData.enrichedDescriptionNotes = TextEditor.enrichHTML(
+      sheetData.data.system.description.notes,
+      { async: false }
+    )
 
     // for (let [key, value] of Object.entries(sheetData.data.type)) {
     //   if( value) sheetData.itemProperties.push( COC7.bookType[key]?COC7.bookType[key]:null);

@@ -32,11 +32,11 @@
       {{> "systems/CoC7/templates/actors/parts/actor-inventory-items.html"}}
     </div>
     <div class="tab flexrow" data-group="primary" data-tab="description">
-      {{editor data.system.description.value target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
+      {{editor enrichedDescriptionValue target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
     </div>
     {{#if isKeeper}}
       <div class="tab flexcol" data-group="primary" data-tab="keeper">
-        {{editor data.system.description.keeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
+        {{editor enrichedDescriptionKeeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
       </div>
     {{/if}}
   </section>

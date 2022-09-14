@@ -1,4 +1,4 @@
-/* global $, ActorSheet, CONST, Dialog, FormData, game, mergeObject */
+/* global $, ActorSheet, CONST, Dialog, FormData, game, mergeObject, TextEditor */
 import { CoC7Parser } from '../../apps/parser.js'
 import { CoC7Utilities } from '../../utilities.js'
 
@@ -100,6 +100,16 @@ export class CoC7ContainerSheet extends ActorSheet {
       sheetData.showInventorySpells ||
       sheetData.showInventoryTalents ||
       sheetData.showInventoryWeapons
+
+    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+      sheetData.data.system.description.value,
+      { async: false }
+    )
+
+    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+      sheetData.data.system.description.keeper,
+      { async: false }
+    )
 
     return sheetData
   }

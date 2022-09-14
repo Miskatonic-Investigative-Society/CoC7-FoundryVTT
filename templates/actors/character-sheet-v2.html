@@ -34,7 +34,7 @@
           {{#if displayPlayerName}}
             <div class="row flexrow">
               <label>{{ localize 'CoC7.PlayerName' }} :</label>
-              <input name="system.infos.playername" type="text" value="{{data.system.system.infos.playername}}" />
+              <input name="system.infos.playername" type="text" value="{{data.system.infos.playername}}" />
             </div>
           {{/if}}
           {{#if pulpRuleArchetype}}
@@ -42,11 +42,11 @@
               <label>{{ localize 'CoC7.Archetype' }} :</label>
               {{#if data.system.infos.archetypeSet}}
                 <span class="rollable open-item" data-type="archetype">{{data.system.infos.archetype}}</span>
-                {{#unless data.system.lags.locked}}
+                {{#unless data.system.flags.locked}}
                   <a class="reset-archetype" title="{{ localize 'CoC7.ResetArchetype'}}" data-type="archetype"><i class="far fa-times-circle"></i></a>
                 {{/unless}}
               {{else}}
-                <input name="systeminfos.archetype" type="text" value="{{data.system.infos.archetype}}" />
+                <input name="system.infos.archetype" type="text" value="{{data.system.infos.archetype}}" />
               {{/if}}
             </div>
           {{/if}}
@@ -151,7 +151,7 @@
                   {{/if}}
                 </div>
               </div>
-              <div class="attribute  {{#unless data.system.attribs.db.auto}}manual-override{{/unless}}" data-attrib="db" data-roll-formula="{{data.system.attribs.db.value}}">
+              <div class="attribute {{#unless data.system.attribs.db.auto}}manual-override{{/unless}}" data-attrib="db" data-roll-formula="{{data.system.attribs.db.value}}">
                 <div class="attribute-label auto-toggle">
                   <h2>{{localize 'CoC7.DB'}}:</h2>
                 </div>
@@ -244,7 +244,7 @@
 
             <div class="tab coc7 sheet actor temp-retro-compat restore-list-styles character-background" data-group="primary" data-tab="background">
               {{#if oneBlockBackStory}}
-                {{editor data.system.backstory target="system.backstory" engine="prosemirror" button=true owner=owner editable=editable}}
+                {{editor enrichedBackstory target="system.backstory" engine="prosemirror" button=true owner=owner editable=editable}}
                 {{> "systems/CoC7/templates/actors/parts/actor-mythos-enounters.hbs"}}
               {{else}}
                 {{> "systems/CoC7/templates/actors/parts/actor-background.html"}}
@@ -257,7 +257,7 @@
 
             {{#if isKeeper}}
               <div class="tab coc7 sheet actor temp-retro-compat restore-list-styles character-background" data-group="primary" data-tab="keeper">
-                {{editor data.system.description.keeper target="system.description.keeper" editor="prosemirror" button=true owner=owner editable=editable}}
+                {{editor enrichedDescriptionKeeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
                 {{#if hasConditions}}
                   <div><a class="clear_conditions button">{{localize 'CoC7.ClearAllConditions'}}</a></div>
                 {{/if}}

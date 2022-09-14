@@ -1,4 +1,4 @@
-/* global game, mergeObject */
+/* global game, mergeObject, TextEditor */
 import { CoC7ActorSheet } from './base.js'
 import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7Parser } from '../../apps/parser.js'
@@ -49,6 +49,16 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
       sheetData.showInventoryTalents ||
       sheetData.showInventoryStatuses ||
       sheetData.showInventoryWeapons
+
+    sheetData.enrichedBiographyPersonalDescription = TextEditor.enrichHTML(
+      sheetData.data.system.biography.personalDescription.value,
+      { async: false }
+    )
+
+    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+      sheetData.data.system.description.keeper,
+      { async: false }
+    )
 
     return sheetData
   }

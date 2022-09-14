@@ -107,7 +107,7 @@
                         </ol>
                     </div> --}}
 
-          {{editor data.system.description.value target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
+          {{editor enrichedDescriptionValue target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
         </div>
 
         {{!-- Details Tab --}}
@@ -184,7 +184,7 @@
 
         {{!-- GM Notes Tab --}}
         <div class="tab" data-group="primary" data-tab="gmNotes">
-          {{editor data.system.description.notes target="system.description.notes" engine="prosemirror" button=true owner=owner editable=editable}}
+          {{editor enrichedDescriptionNotes target="system.description.notes" engine="prosemirror" button=true owner=owner editable=editable}}
         </div>
 
       </section>

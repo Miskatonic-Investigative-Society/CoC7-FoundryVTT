@@ -371,7 +371,7 @@
             <h3 class="flex1">{{localize 'CoC7.Notes'}} </h3>
           </div>
           <div class="description pannel expanded resizededitor">
-            {{editor data.system.biography.personalDescription.value target="system.biography.personalDescription.value" engine="prosemirror" button=true owner=owner editable=editable}}
+            {{editor enrichedBiographyPersonalDescription target="system.biography.personalDescription.value" engine="prosemirror" button=true owner=owner editable=editable}}
           </div>
         </section>
 
@@ -390,7 +390,7 @@
               <h3 class="flex1 keeper-only-tab">{{localize 'CoC7.GmNotes'}} <i class="game-icon game-icon-tentacles-skull"></i></h3>
             </div>
             <div class="keeper pannel resizededitor">
-              {{editor data.system.description.keeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
+              {{editor enrichedDescriptionKeeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
               {{#if hasConditions}}
                 <div><a class="clear_conditions button">{{localize 'CoC7.ClearAllConditions'}}</a></div>
               {{/if}}
