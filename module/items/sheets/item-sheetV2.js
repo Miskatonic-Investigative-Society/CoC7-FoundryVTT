@@ -1,5 +1,6 @@
 /* global game, ItemSheet, mergeObject */
 
+import CoC7ActiveEffect from '../../active-effect.js'
 import { COC7 } from '../../config.js'
 
 /**
@@ -18,8 +19,8 @@ export class CoC7ItemSheetV2 extends ItemSheet {
   static get defaultOptions () {
     return mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheetV2', 'item'],
-      width: 290,
-      height: 326,
+      width: 500,
+      height: 450,
       scrollY: ['.tab.description'],
       tabs: [
         {
@@ -49,6 +50,8 @@ export class CoC7ItemSheetV2 extends ItemSheet {
   getData (options = {}) {
     // this.item.checkSkillProperties();
     const data = super.getData(options)
+
+    data.effects = CoC7ActiveEffect.prepareActiveEffectCategories(this.item.effects, { status: false })
 
     /** MODIF: 0.8.x **/
     const itemData = data.data
@@ -98,6 +101,10 @@ export class CoC7ItemSheetV2 extends ItemSheet {
     if (!this.options.editable) return
 
     html.find('.toggle-switch').click(this._onClickToggle.bind(this))
+
+    html
+      .find('.effect-control')
+      .click(ev => CoC7ActiveEffect.onManageActiveEffect(ev, this.item))
   }
 
   /* -------------------------------------------- */
