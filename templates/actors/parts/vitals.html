@@ -47,9 +47,9 @@
       <div class="separator">/</div>
       <div class="max-value">
         {{#if data.system.attribs.san.auto}}
-          <input type="text" name="data.system.attribs.san.max" value="{{data.system.attribs.san.max}}" data-dtype="Number" readonly />
+          <input type="text" name="system.attribs.san.max" value="{{data.system.attribs.san.max}}" data-dtype="Number" readonly />
         {{else}}
-          <input type="text" name="data.system.attribs.san.max" value="{{data.system.attribs.san.max}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}} />
+          <input type="text" name="system.attribs.san.max" value="{{data.system.attribs.san.max}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}} />
         {{/if}}
       </div>
     </div>
