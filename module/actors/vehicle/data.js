@@ -13,24 +13,24 @@ export class CoC7Vehicle extends CoCActor {
   }
 
   get build () {
-    const build = parseInt(this.data.data.attribs.build.value)
+    const build = parseInt(this.system.attribs.build.value)
     return isNaN(build) ? null : build
   }
 
   get hp () {
     if (
-      this.data.data.attribs.build.current === null ||
-      undefined === this.data.data.attribs.build.current ||
-      this.data.data.attribs.build.current === ''
+      this.system.attribs.build.current === null ||
+      undefined === this.system.attribs.build.current ||
+      this.system.attribs.build.current === ''
     ) {
       return this.build
     }
     if (
-      this.data.data.attribs.build.current > this.data.data.attribs.build.value
+      this.system.attribs.build.current > this.system.attribs.build.value
     ) {
       return this.build
     }
-    const hp = parseInt(this.data.data.attribs.build.current)
+    const hp = parseInt(this.system.attribs.build.current)
     return isNaN(hp) ? null : hp
   }
 
@@ -44,7 +44,7 @@ export class CoC7Vehicle extends CoCActor {
 
   async setHp (value) {
     if (value > this.build) value = this.build
-    return await this.update({ 'data.attribs.build.current': value })
+    return await this.update({ 'system.attribs.build.current': value })
   }
 
   get rawDb () {
@@ -52,7 +52,7 @@ export class CoC7Vehicle extends CoCActor {
   }
 
   get db () {
-    const db = parseInt(this.data.data.attribs.db?.value)
+    const db = parseInt(this.system.attribs.db?.value)
     return isNaN(db) ? null : db
   }
 
@@ -61,12 +61,12 @@ export class CoC7Vehicle extends CoCActor {
   }
 
   get mov () {
-    const mov = parseInt(this.data.data.attribs.mov?.value)
+    const mov = parseInt(this.system.attribs.mov?.value)
     return isNaN(mov) ? null : mov
   }
 
   get mpMax () {
-    return parseInt(this.data.data.attribs?.mp?.max) || 0
+    return parseInt(this.system.attribs?.mp?.max) || 0
   }
 
   get rawMpMax () {

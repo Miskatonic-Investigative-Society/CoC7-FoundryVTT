@@ -1,5 +1,4 @@
 /* global $, ChatMessage, CONST, Dialog, FormData, game, renderTemplate, ui */
-
 import { CoC7Check } from '../../check.js'
 import { chatHelper, CoC7Roll } from '../helper.js'
 import { CoC7Chat } from '../../chat.js'
@@ -107,7 +106,7 @@ export class CoC7MeleeTarget extends ChatCardActor {
   static getFromMessageId (messageId) {
     const message = game.messages.get(messageId)
     if (!message) return null
-    const card = $(message.data.content)[0]
+    const card = $(message.content)[0]
 
     const target = CoC7MeleeTarget.getFromCard(card, messageId)
     target.messageId = messageId
@@ -155,11 +154,8 @@ export class CoC7MeleeTarget extends ChatCardActor {
     if (typeof this.actor.user === 'undefined') {
       let owners = []
       const gms = game.users.filter(a => a.isGM).map(a => a.id)
-      for (const [k, v] of Object.entries(this.actor.data.permission)) {
-        if (
-          v ===
-          (CONST.DOCUMENT_OWNERSHIP_LEVELS || CONST.ENTITY_PERMISSIONS).OWNER
-        ) {
+      for (const [k, v] of Object.entries(this.actor.ownership)) {
+        if (v === CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER) {
           if (k === 'default') {
             owners = game.users.map(a => a.id)
             break

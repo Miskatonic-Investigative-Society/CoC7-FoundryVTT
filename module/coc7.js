@@ -1,4 +1,4 @@
-/* global $, Combat, CONFIG, CONST, game, Hooks, isNewerVersion, ItemDirectory, tinyMCE */
+/* global $, Combat, CONFIG, game, Hooks, ItemDirectory, tinyMCE */
 import { CoC7NPCSheet } from './actors/sheets/npc-sheet.js'
 import { CoC7CreatureSheet } from './actors/sheets/creature-sheet.js'
 import { CoC7CharacterSheet } from './actors/sheets/character.js'
@@ -121,14 +121,6 @@ Hooks.on('renderSettingsConfig', (app, html, options) => {
 })
 
 Hooks.once('init', async function () {
-  if (
-    typeof CONST.COMPATIBILITY_MODES !== 'undefined' &&
-    !isNewerVersion(game.version, '10.300')
-  ) {
-    // hide compatibility warnings while we still support v9 and v10 with the same version
-    CONFIG.compatibility.mode = CONST.COMPATIBILITY_MODES.SILENT
-  }
-
   game.CoC7 = {
     macros: {
       skillCheck: CoC7Utilities.skillCheckMacro,
@@ -220,28 +212,28 @@ Hooks.once('setup', function () {
 Hooks.on('createActiveEffect', (data, options, userId) => {
   if (
     game.userId === userId &&
-    typeof data.data.flags.core !== 'undefined' &&
-    typeof data.data.flags.core.statusId !== 'undefined'
+    typeof data.flags.core !== 'undefined' &&
+    typeof data.flags.core.statusId !== 'undefined'
   ) {
-    switch (data.data.flags.core.statusId) {
+    switch (data.flags.core.statusId) {
       case COC7.status.indefInsane:
       case COC7.status.unconscious:
       case COC7.status.criticalWounds:
       case COC7.status.dying:
       case COC7.status.prone:
       case COC7.status.dead:
-        data.parent.setCondition(data.data.flags.core.statusId, {
+        data.parent.setCondition(data.flags.core.statusId, {
           forceValue: true
         })
         break
       case COC7.status.tempoInsane:
         {
-          const realTime = data.data.flags.CoC7?.realTime
+          const realTime = data.flags.CoC7?.realTime
           let duration = null
           if (realTime === true) {
-            duration = data.data.duration?.rounds
+            duration = data.duration?.rounds
           } else if (realTime === false) {
-            duration = data.data.duration?.seconds
+            duration = data.duration?.seconds
             if (!isNaN(duration)) {
               duration = Math.floor(duration / 3600)
             }
@@ -260,10 +252,10 @@ Hooks.on('createActiveEffect', (data, options, userId) => {
 Hooks.on('deleteActiveEffect', (data, options, userId) => {
   if (
     game.userId === userId &&
-    typeof data.data.flags.core !== 'undefined' &&
-    typeof data.data.flags.core.statusId !== 'undefined'
+    typeof data.flags.core !== 'undefined' &&
+    typeof data.flags.core.statusId !== 'undefined'
   ) {
-    switch (data.data.flags.core.statusId) {
+    switch (data.flags.core.statusId) {
       case COC7.status.tempoInsane:
       case COC7.status.indefInsane:
       case COC7.status.unconscious:
@@ -271,7 +263,7 @@ Hooks.on('deleteActiveEffect', (data, options, userId) => {
       case COC7.status.dying:
       case COC7.status.prone:
       case COC7.status.dead:
-        data.parent.unsetCondition(data.data.flags.core.statusId, {
+        data.parent.unsetCondition(data.flags.core.statusId, {
           forceValue: true
         })
     }
@@ -291,9 +283,9 @@ Hooks.on('changeSidebarTab', directory => {
   }
 })
 
-Hooks.on('hotbarDrop', async (bar, data, slot) =>
-  CoC7Utilities.createMacro(bar, data, slot)
-)
+Hooks.on('hotbarDrop', async (bar, data, slot) => {
+  return CoC7Utilities.createMacro(bar, data, slot)
+})
 
 Hooks.on('renderChatLog', (app, html, data) =>
   CoC7Chat.chatListeners(app, html, data)
@@ -340,7 +332,7 @@ Hooks.on('ready', async () => {
 
   const tableChoice = { none: 'SETTINGS.LetKeeperDecide' }
   for (const t of game.tables) {
-    tableChoice[t.data._id] = t.data.name
+    tableChoice[t._id] = t.name
   }
 
   game.settings.register('CoC7', 'boutOfMadnessSummaryTable', {
@@ -476,9 +468,6 @@ Hooks.on('getSceneControlButtons', (/* controls */) => {
 // Hooks.on('renderSceneControls', () => CoC7Utilities.updateCharSheets());
 // Hooks.on('renderSceneNavigation', () => CoC7Utilities.updateCharSheets());
 Hooks.on('renderItemSheet', CoC7Parser.ParseSheetContent)
-// Foundry VTT v9
-Hooks.on('renderJournalSheet', CoC7Parser.ParseSheetContent)
-// Foundry VTT v10
 Hooks.on('renderJournalPageSheet', CoC7Parser.ParseSheetContent)
 Hooks.on('renderActorSheet', CoC7Parser.ParseSheetContent)
 // Chat command processing

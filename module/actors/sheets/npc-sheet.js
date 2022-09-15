@@ -1,9 +1,8 @@
-/* global game, mergeObject */
-
+/* global game, mergeObject, TextEditor */
 import { CoC7ActorSheet } from './base.js'
 import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7Parser } from '../../apps/parser.js'
-import { chatHelper } from '../../chat/helper.js'
+import { chatHelper, isCtrlKey } from '../../chat/helper.js'
 import { SanCheckCard } from '../../chat/cards/san-check.js'
 
 /**
@@ -15,44 +14,53 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
    * The prepared data object contains both the actor data as well as additional sheet options
    */
   async getData () {
-    const data = await super.getData()
+    const sheetData = await super.getData()
 
     // TODO : do we need that ?
-    data.allowFormula = true
-    data.displayFormula = this.actor.getActorFlag('displayFormula')
-    if (data.displayFormula === undefined) data.displayFormula = false
-    // await this.actor.creatureInit();
-    data.hasSan = data.data.attribs.san.value !== null
-    data.hasMp = data.data.attribs.mp.value !== null
-    data.hasLuck = data.data.attribs.lck.value !== null
+    sheetData.allowFormula = true
+    sheetData.displayFormula = (this.actor.getActorFlag('displayFormula') || false)
 
-    data.isCreature = false
+    sheetData.hasSan = sheetData.data.system.attribs.san.value !== null
+    sheetData.hasMp = sheetData.data.system.attribs.mp.value !== null
+    sheetData.hasLuck = sheetData.data.system.attribs.lck.value !== null
 
-    data.showInventoryItems =
-      Object.prototype.hasOwnProperty.call(data.itemsByType, 'item') ||
-      !data.data.flags.locked
-    data.showInventoryBooks =
-      Object.prototype.hasOwnProperty.call(data.itemsByType, 'book') ||
-      !data.data.flags.locked
-    data.showInventorySpells =
-      Object.prototype.hasOwnProperty.call(data.itemsByType, 'spell') ||
-      !data.data.flags.locked
-    data.showInventoryTalents =
-      Object.prototype.hasOwnProperty.call(data.itemsByType, 'talent') ||
-      (!data.data.flags.locked && game.settings.get('CoC7', 'pulpRuleTalents'))
-    data.showInventoryStatuses =
-      Object.prototype.hasOwnProperty.call(data.itemsByType, 'status') ||
-      !data.data.flags.locked
-    data.showInventoryWeapons = false
-    data.hasInventory =
-      data.showInventoryItems ||
-      data.showInventoryBooks ||
-      data.showInventorySpells ||
-      data.showInventoryTalents ||
-      data.showInventoryStatuses ||
-      data.showInventoryWeapons
+    sheetData.isCreature = false
 
-    return data
+    sheetData.showInventoryItems =
+      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'item') ||
+      !sheetData.data.system.flags.locked
+    sheetData.showInventoryBooks =
+      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'book') ||
+      !sheetData.data.system.flags.locked
+    sheetData.showInventorySpells =
+      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'spell') ||
+      !sheetData.data.system.flags.locked
+    sheetData.showInventoryTalents =
+      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'talent') ||
+      (!sheetData.data.system.flags.locked && game.settings.get('CoC7', 'pulpRuleTalents'))
+    sheetData.showInventoryStatuses =
+      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'status') ||
+      !sheetData.data.system.flags.locked
+    sheetData.showInventoryWeapons = false
+    sheetData.hasInventory =
+      sheetData.showInventoryItems ||
+      sheetData.showInventoryBooks ||
+      sheetData.showInventorySpells ||
+      sheetData.showInventoryTalents ||
+      sheetData.showInventoryStatuses ||
+      sheetData.showInventoryWeapons
+
+    sheetData.enrichedBiographyPersonalDescription = TextEditor.enrichHTML(
+      sheetData.data.system.biography.personalDescription?.value,
+      { async: false }
+    )
+
+    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+      sheetData.data.system.description.keeper,
+      { async: false }
+    )
+
+    return sheetData
   }
 
   activateListeners (html) {
@@ -68,17 +76,14 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
   async _onSanCheck (event) {
     event.preventDefault()
     if (
-      !this.actor.data.data.special.sanLoss.checkPassed &&
-      !this.actor.data.data.special.sanLoss.checkFailled
+      !this.actor.system.special.sanLoss.checkPassed &&
+      !this.actor.system.special.sanLoss.checkFailled
     ) {
       // ui.notifications.info('No sanity loss value');
       return
     }
     if (
-      (event.metaKey ||
-        event.ctrlKey ||
-        event.keyCode === 91 ||
-        event.keyCode === 224) &&
+      isCtrlKey(event) &&
       game.user.isGM
     ) {
       let difficulty, modifier
@@ -93,10 +98,10 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
       }
       const linkData = {
         check: 'sanloss',
-        sanMin: this.actor.data.data.special.sanLoss.checkPassed,
-        sanMax: this.actor.data.data.special.sanLoss.checkFailled,
-        sanReason: this.actor.data.data.infos.type?.length
-          ? this.actor.data.data.infos.type
+        sanMin: this.actor.system.special.sanLoss.checkPassed,
+        sanMax: this.actor.system.special.sanLoss.checkFailled,
+        sanReason: this.actor.system.infos.type?.length
+          ? this.actor.system.infos.type
           : this.actor.name,
         tokenKey: this.actor.actorKey
       }
@@ -118,8 +123,8 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
       const sanData = {
         sanMax: this.actor.sanLossCheckFailled,
         sanMin: this.actor.sanLossCheckPassed,
-        sanReason: this.actor.data.data.infos.type?.length
-          ? this.actor.data.data.infos.type
+        sanReason: this.actor.system.infos.type?.length
+          ? this.actor.system.infos.type
           : this.actor.name,
         tokenKey: this.actor.actorKey
       }

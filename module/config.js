@@ -107,25 +107,25 @@ COC7.occupationProperties = {
 COC7.formula = {}
 
 COC7.formula.actor = {
-  '@STR': 'this.data.data.characteristics.str.value',
-  '@CON': 'this.data.data.characteristics.con.value',
-  '@SIZ': 'this.data.data.characteristics.siz.value',
-  '@DEX': 'this.data.data.characteristics.dex.value',
-  '@APP': 'this.data.data.characteristics.app.value',
-  '@INT': 'this.data.data.characteristics.int.value',
-  '@POW': 'this.data.data.characteristics.pow.value',
-  '@EDU': 'this.data.data.characteristics.edu.value'
+  '@STR': 'this.system.characteristics.str.value',
+  '@CON': 'this.system.characteristics.con.value',
+  '@SIZ': 'this.system.characteristics.siz.value',
+  '@DEX': 'this.system.characteristics.dex.value',
+  '@APP': 'this.system.characteristics.app.value',
+  '@INT': 'this.system.characteristics.int.value',
+  '@POW': 'this.system.characteristics.pow.value',
+  '@EDU': 'this.system.characteristics.edu.value'
 }
 
 COC7.formula.actorsheet = {
-  '@STR': 'this.actor.data.data.characteristics.str.value',
-  '@CON': 'this.actor.data.data.characteristics.con.value',
-  '@SIZ': 'this.actor.data.data.characteristics.siz.value',
-  '@DEX': 'this.actor.data.data.characteristics.dex.value',
-  '@APP': 'this.actor.data.data.characteristics.app.value',
-  '@INT': 'this.actor.data.data.characteristics.int.value',
-  '@POW': 'this.actor.data.data.characteristics.pow.value',
-  '@EDU': 'this.actor.data.data.characteristics.edu.value'
+  '@STR': 'this.actor.system.characteristics.str.value',
+  '@CON': 'this.actor.system.characteristics.con.value',
+  '@SIZ': 'this.actor.system.characteristics.siz.value',
+  '@DEX': 'this.actor.system.characteristics.dex.value',
+  '@APP': 'this.actor.system.characteristics.app.value',
+  '@INT': 'this.actor.system.characteristics.int.value',
+  '@POW': 'this.actor.system.characteristics.pow.value',
+  '@EDU': 'this.actor.system.characteristics.edu.value'
 }
 
 COC7.status = {

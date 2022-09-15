@@ -1,5 +1,4 @@
 /* global ChatMessage, game, mergeObject */
-
 import { CoC7Check } from '../../check.js'
 import { DamageCard } from './damage.js'
 import { RollCard } from './roll-card.js'
@@ -137,7 +136,7 @@ export class OpposedCheckCard extends RollCard {
       this.combat &&
       this.attackerRoll &&
       (!this.attackerRoll?.item ||
-        this.attackerRoll?.item.data.data.properties?.mnvr)
+        this.attackerRoll?.item.system.properties?.mnvr)
     ) {
       return true
     }
@@ -297,7 +296,7 @@ export class OpposedCheckCard extends RollCard {
 
   async compute (rank = undefined) {
     this.rolls = this.rolls.filter(roll => {
-      return typeof roll.actor.data !== 'undefined' // remove any actors that no longer exist
+      return typeof roll.actor.actorKey !== 'undefined' // remove any actors that no longer exist
     })
 
     if (!rank) {
@@ -306,7 +305,7 @@ export class OpposedCheckCard extends RollCard {
         if (
           this.combat &&
           (!this.rolls[i].item ||
-            this.rolls[i].item.data.data.properties?.mnvr) &&
+            this.rolls[i].item.system.properties?.mnvr) &&
           ((this.rolls[i]?.actor?.dodgeSkill?.name &&
             this.rolls[i]?.skill?.name &&
             this.rolls[i].actor.dodgeSkill.name.toLowerCase() !==

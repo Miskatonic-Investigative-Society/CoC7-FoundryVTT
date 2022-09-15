@@ -3,11 +3,11 @@
   <header class="card-header flexcol">
     <div class="flexrow">
       {{#if displayActorOnCard}}
-        <img class="open-actor" data-actor-key="{{actorKey}}" style="flex: none;" src="{{actorImg}}" title="{{name}}" width="36" height="36"/>
+        <img class="open-actor" data-actor-key="{{actorKey}}" style="flex: none;" src="{{actorImg}}" title="{{name}}" width="36" height="36" />
       {{/if}}
-      <img class="open-actor" data-actor-key="{{actorKey}}" style="flex: none;" src="{{item.img}}" title="{{item.name}}" width="36" height="36"/>
-      <h3 style="text-align: center;font-weight: bolder;"class="item-name card-title">{{item.name}}</h3>
-      <img class="open-actor" style="flex: none;" data-actor-key="{{targetKey}}" src="{{targetImg}}" title="{{targetName}}" width="36" height="36"/>
+      <img class="open-actor" data-actor-key="{{actorKey}}" style="flex: none;" src="{{item.img}}" title="{{item.name}}" width="36" height="36" />
+      <h3 style="text-align: center;font-weight: bolder;" class="item-name card-title">{{item.name}}</h3>
+      <img class="open-actor" style="flex: none;" data-actor-key="{{targetKey}}" src="{{targetImg}}" title="{{targetName}}" width="36" height="36" />
     </div>
 
     <div class="card-content">
@@ -23,9 +23,9 @@
           {{/if}}
         {{/if}}
       {{else}}
-        <span class='ic-switch{{#if critical}} switched-on{{/if}}'  data-flag='critical' title="{{localize 'CoC7.CriticalTitle'}}">{{localize 'CoC7.Critical'}}</span>
+        <span class='ic-switch{{#if critical}} switched-on{{/if}}' data-flag='critical' title="{{localize 'CoC7.CriticalTitle'}}">{{localize 'CoC7.Critical'}}</span>
         {{#if critical}}
-          <span class='ic-switch{{#if impale}} switched-on{{/if}}'  data-flag='impale' title="{{localize 'CoC7.ImpaleTitle'}}">{{localize 'CoC7.Impale'}}</span>
+          <span class='ic-switch{{#if impale}} switched-on{{/if}}' data-flag='impale' title="{{localize 'CoC7.ImpaleTitle'}}">{{localize 'CoC7.Impale'}}</span>
         {{/if}}
       {{/if}}
       {{#if damageInflicted}}
@@ -38,7 +38,7 @@
       {{else}}
         <div class="armor flexrow">
           <div class="flexrow flex-end gm-visible-only">
-            <a class='ic-switch gm-visible-only{{#unless ignoreArmor}} switched-on{{/unless}}'  data-flag='ignoreArmor'>
+            <a class='ic-switch gm-visible-only{{#unless ignoreArmor}} switched-on{{/unless}}' data-flag='ignoreArmor'>
               {{#if ignoreArmor}}
                 <i class="game-icon game-icon-armor-downgrade"></i>
               {{else}}
@@ -48,10 +48,10 @@
             {{#unless ignoreArmor}}
               <label>{{localize 'CoC7.Armor'}}:</label>
               <form>
-                <input type='text' name='armor' value='{{armor}}'/>
+                <input type='text' name='armor' value='{{armor}}' />
               </form>
               {{#if isArmorForula}}
-                <a class='ic-switch gm-visible-only'  data-action='rollArmor'>
+                <a class='ic-switch gm-visible-only' data-action='rollArmor'>
                   <i class="fas fa-dice"></i>
                 </a>
               {{/if}}
@@ -70,7 +70,6 @@
   </header>
 
   {{#if rolled}}
-    {{!-- <div class='card-result'>Damage roll: {{{_htmlInlineRoll}}}</div> --}}
     {{{_htmlRoll}}}
     {{#if targetKey}}
       {{#if damageInflicted}}
@@ -96,24 +95,4 @@
       <button data-action="rollDamage">{{ localize 'CoC7.RollDamage' }}: {{damageFormula}}</button>
     </div>
   {{/if}}
-
-  {{!--
-    <div class="flexrow gm-select-only ic-radio">
-      <span class="flex1 ic-radio-switch gm-select-only {{#if advantageAttacker}}switched-on{{/if}} "
-          title="{{localize 'CoC7.AdvantageAttacker'}}"
-          data-flag="advantageAttacker"
-          data-selected={{advantageAttacker}}>{{localize 'CoC7.AdvantageAttacker'}}</span>
-      <span class="flex1 ic-radio-switch gm-select-only {{#if advantageDefender}}switched-on{{/if}}"
-          title="{{localize 'CoC7.AdvantageDefender'}}"
-          data-flag="advantageDefender"
-          data-selected={{advantageDefender}}>{{localize 'CoC7.AdvantageDefender'}}</span>
-    </div>
-
-    <div class="flexrow">
-      <span class="flex1 ic-switch gm-select-only {{#if switchTest}}switched-on{{/if}} "
-          title="{{localize 'CoC7.switchTest'}}"
-          data-flag="switchTest"
-          data-selected={{switchTest}}>{{localize 'CoC7.AdvantageAttacker'}}</span>
-    </div>
-  --}}
 </div>

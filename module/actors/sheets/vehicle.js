@@ -1,12 +1,11 @@
-/* global duplicate, expandObject, flattenObject, FormDataExtended, game, mergeObject */
-
+/* global duplicate, expandObject, game, mergeObject, TextEditor */
 import { CoC7ActorSheet } from './base.js'
 
 export class CoC7VehicleSheet extends CoC7ActorSheet {
   static get defaultOptions () {
     return mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheetV2', 'actor', 'item', 'vehicle'],
-      width: 520,
+      width: 555,
       height: 420,
       resizable: true,
       template: 'systems/CoC7/templates/actors/vehicle.html',
@@ -25,25 +24,34 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
     // ui.notifications.warn(
     //   game.i18n.localize('CoC7.ExperimentalFeaturesWarning')
     // )
-    const data = await super.getData()
+    const sheetData = await super.getData()
 
-    data.properties = []
-    if (this.actor.data.data.properties.armed) {
-      data.properties.push(game.i18n.localize('CoC7.ArmedVehicle'))
+    sheetData.properties = []
+    if (this.actor.system.properties.armed) {
+      sheetData.properties.push(game.i18n.localize('CoC7.ArmedVehicle'))
     }
-    data.actor = this.actor
 
     const expanded = this.actor.getFlag('CoC7', 'expanded')
-    if (undefined === expanded) data.expanded = true
-    else data.expanded = expanded
-    if (data.expanded) {
-      data.options.height = 420
-    } else data.options.height = 'auto'
+    if (typeof expanded === 'undefined') sheetData.expanded = true
+    else sheetData.expanded = expanded
+    if (sheetData.expanded) {
+      sheetData.options.height = 420
+    } else sheetData.options.height = 'auto'
 
-    // for (let [key, value] of Object.entries(data.data.type)) {
-    //   if( value) data.itemProperties.push( COC7.bookType[key]?COC7.bookType[key]:null);
+    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+      sheetData.data.system.description.value,
+      { async: false }
+    )
+
+    sheetData.enrichedDescriptionNotes = TextEditor.enrichHTML(
+      sheetData.data.system.description.notes,
+      { async: false }
+    )
+
+    // for (let [key, value] of Object.entries(sheetData.data.type)) {
+    //   if( value) sheetData.itemProperties.push( COC7.bookType[key]?COC7.bookType[key]:null);
     // }
-    return data
+    return sheetData
   }
 
   activateListeners (html) {
@@ -73,10 +81,10 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
 
   async _onAddArmor () {
     const locations = duplicate(
-      this.actor.data.data.attribs.armor.locations || []
+      this.actor.system.attribs.armor.locations || []
     )
     locations.push({ name: null, value: null })
-    await this.actor.update({ 'data.attribs.armor.locations': locations })
+    await this.actor.update({ 'system.attribs.armor.locations': locations })
   }
 
   async _onRemoveArmor (event) {
@@ -84,11 +92,11 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
     const location = button.closest('.armor')
     const index = location.dataset.index
     const locations = duplicate(
-      this.actor.data.data.attribs.armor.locations || null
+      this.actor.system.attribs.armor.locations || null
     )
     if (!locations) return
     locations.splice(index, 1)
-    await this.actor.update({ 'data.attribs.armor.locations': locations })
+    await this.actor.update({ 'system.attribs.armor.locations': locations })
   }
 
   onCloseSheet () {
@@ -99,26 +107,14 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
   /* -------------------------------------------- */
   /*  Form Submission                             */
   /* -------------------------------------------- */
-
-  /** @override */
-  _getSubmitData (updateData = {}) {
-    // Create the expanded update data object
-    const fd = new FormDataExtended(this.form, { editors: this.editors })
-    let data = fd.toObject()
-    if (updateData) data = mergeObject(data, updateData)
-    else data = expandObject(data)
-
-    // Handle Armor array
-    if (data.data.attribs.armor?.localized) {
-      const armor = data.data?.attribs.armor
-      if (armor) {
-        armor.locations = Object.values(
-          armor?.locations || this.actor.data.data.attribs.armor.locations || {}
-        )
-      }
+  _updateObject (event, formData) {
+    const system = expandObject(formData)?.system
+    if (system.attribs.armor.locations) {
+      formData['system.attribs.armor.locations'] = Object.values(
+        system.attribs.armor.locations || []
+      )
     }
 
-    // Return the flattened submission data
-    return flattenObject(data)
+    super._updateObject(event, formData)
   }
 }

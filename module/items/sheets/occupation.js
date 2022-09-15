@@ -1,9 +1,7 @@
-/* global $, DragDrop, duplicate, expandObject, game, ItemSheet, mergeObject */
-
+/* global $, DragDrop, duplicate, expandObject, game, ItemSheet, mergeObject, TextEditor */
 import { COC7 } from '../../config.js'
 import { CoC7Item } from '../item.js'
 import { CoC7Utilities } from '../../utilities.js'
-// import { CoCActor } from '../../actors/actor.js';
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
@@ -39,30 +37,25 @@ export class CoC7OccupationSheet extends ItemSheet {
     event.preventDefault()
     event.stopPropagation()
 
-    const optionalSkill =
-      event?.currentTarget?.classList?.contains('optional-skills')
+    const optionalSkill = event?.currentTarget?.classList?.contains('optional-skills')
     const ol = event?.currentTarget?.closest('ol')
     const index = ol?.dataset?.group
 
     const dataList = await CoC7Utilities.getDataFromDropEvent(event, 'Item')
 
-    const collection = this.item.data.data[collectionName]
-      ? duplicate(this.item.data.data[collectionName])
-      : []
-    const groups = this.item.data.data.groups
-      ? duplicate(this.item.data.data.groups)
-      : []
+    const collection = this.item.system[collectionName] ? duplicate(this.item.system[collectionName]) : []
+    const groups = this.item.system.groups ? duplicate(this.item.system.groups) : []
 
     for (const item of dataList) {
-      if (!item || !item.data) continue
-      if (![type].includes(item.data.type)) {
+      if (!item || !item.system) continue
+      if (![type].includes(item.type)) {
         continue
       }
 
       if (optionalSkill) {
         if (!CoC7Item.isAnySpec(item)) {
           // Generic specialization can be included many times
-          if (collection.find(el => el.name === item.data.name)) {
+          if (collection.find(el => el.name === item.name)) {
             continue // If skill is already in main don't add it
           }
           if (groups[index].skills.find(el => el.name === item.name)) {
@@ -70,29 +63,29 @@ export class CoC7OccupationSheet extends ItemSheet {
           }
         }
 
-        groups[index].skills = groups[index].skills.concat([item.data])
+        groups[index].skills = groups[index].skills.concat([item])
       } else {
         if (!CoC7Item.isAnySpec(item)) {
           // Generic specialization can be included many times
-          if (collection.find(el => el.name === item.data.name)) {
+          if (collection.find(el => el.name === item.name)) {
             continue
           }
 
           for (let i = 0; i < groups.length; i++) {
             // If the same skill is in one of the group remove it from the groups
             const index = groups[i].skills.findIndex(
-              el => el.name === item.data.name
+              el => el.name === item.name
             )
             if (index !== -1) {
               groups[i].skills.splice(index, 1)
             }
           }
         }
-        collection.push(duplicate(item.data))
+        collection.push(duplicate(item))
       }
     }
-    await this.item.update({ 'data.groups': groups })
-    await this.item.update({ [`data.${collectionName}`]: collection })
+    await this.item.update({ 'system.groups': groups })
+    await this.item.update({ [`system.${collectionName}`]: collection })
   }
 
   async _onGroupControl (event) {
@@ -102,28 +95,37 @@ export class CoC7OccupationSheet extends ItemSheet {
     // Add new damage component
     if (a.classList.contains('add-group')) {
       await this._onSubmit(event) // Submit any unsaved changes
-      const groups = this.item.data.data.groups
+      const groups = this.item.system.groups
       await this.item.update({
-        'data.groups': groups.concat([{ options: 0, skills: [] }])
+        'system.groups': groups.concat([{ options: 0, skills: [] }])
       })
     }
 
     if (a.classList.contains('remove-group')) {
       await this._onSubmit(event) // Submit any unsaved changes
-      const groups = duplicate(this.item.data.data.groups)
+      const groups = duplicate(this.item.system.groups)
       const ol = a.closest('.item-list.group')
       groups.splice(Number(ol.dataset.group), 1)
-      await this.item.update({ 'data.groups': groups })
+      await this.item.update({ 'system.groups': groups })
     }
   }
 
   _onItemSummary (event, collectionName = 'items') {
     event.preventDefault()
-    const li = $(event.currentTarget).parents('.item')
-    const item = this.item.data.data[collectionName].find(s => {
-      return s._id === li.data('item-id')
-    })
-    const chatData = item.data.description
+    const obj = $(event.currentTarget)
+    const li = obj.parents('.item')
+    const group = obj.closest('.group')
+    let item
+    if (group.length) {
+      item = this.item.system.groups[group.data('group')][collectionName].find(s => {
+        return s._id === li.data('item-id')
+      })
+    } else {
+      item = this.item.system[collectionName].find(s => {
+        return s._id === li.data('item-id')
+      })
+    }
+    const chatData = item.system.description
 
     // Toggle summary
     if (li.hasClass('expanded')) {
@@ -149,31 +151,30 @@ export class CoC7OccupationSheet extends ItemSheet {
     const a = event.currentTarget
     const li = a.closest('.item')
     const ol = li.closest('.item-list.group')
-    const groups = duplicate(this.item.data.data.groups)
+    const groups = duplicate(this.item.system.groups)
     groups[Number(ol.dataset.group)].skills.splice(
       Number(li.dataset.itemIndex),
       1
     )
-    await this.item.update({ 'data.groups': groups })
+    await this.item.update({ 'system.groups': groups })
   }
 
   async removeItem (itemId, collectionName = 'items') {
-    const itemIndex = this.item.data.data[collectionName].findIndex(s => {
+    const itemIndex = this.item.system[collectionName].findIndex(s => {
       return s._id === itemId
     })
     if (itemIndex > -1) {
-      const collection = this.item.data.data[collectionName]
-        ? duplicate(this.item.data.data[collectionName])
-        : []
+      const collection = this.item.system[collectionName] ? duplicate(this.item.system[collectionName]) : []
       collection.splice(itemIndex, 1)
-      await this.item.update({ [`data.${collectionName}`]: collection })
+      await this.item.update({ [`system.${collectionName}`]: collection })
     }
   }
 
   static get defaultOptions () {
     return mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'occupation'],
-      width: 520,
+      template: 'systems/CoC7/templates/items/occupation.html',
+      width: 525,
       height: 480,
       dragDrop: [{ dragSelector: '.item' }],
       scrollY: ['.tab.description'],
@@ -187,35 +188,14 @@ export class CoC7OccupationSheet extends ItemSheet {
     })
   }
 
-  get template () {
-    return 'systems/CoC7/templates/items/occupation.html'
-  }
-
-  _onDragStart (event) {
-    const li = event.currentTarget.closest('.item')
-    const skill = this.item.data.data.skills.find(s => {
-      return s._id === li.dataset.itemId
-    })
-
-    const dragData = { type: 'Item', data: skill }
-    event.dataTransfer.setData('text/plain', JSON.stringify(dragData))
-  }
-
   getData () {
-    const data = super.getData()
+    const sheetData = super.getData()
 
-    /** MODIF: 0.8.x **/
-    const itemData = data.data
-    data.data = itemData.data // MODIF: 0.8.x data.data
-    /*****************/
-
-    data.isOwned = this.item.isOwned
+    sheetData.hasOwner = this.item.isEmbedded === true
 
     const optionnal = []
     const mandatory = []
-    for (const [key, carac] of Object.entries(
-      data.data.occupationSkillPoints
-    )) {
+    for (const [key, carac] of Object.entries(sheetData.data.system.occupationSkillPoints)) {
       if (carac.multiplier) {
         const caracName = game.i18n.localize(`CHARAC.${key.toUpperCase()}`)
         if (carac.selected && carac.optional) {
@@ -227,58 +207,65 @@ export class CoC7OccupationSheet extends ItemSheet {
       }
     }
 
-    data.skillListEmpty = data.data.skills.length === 0
+    sheetData.skillListEmpty = sheetData.data.system.skills.length === 0
 
-    data.data.skills.sort((a, b) => {
+    sheetData.data.system.skills.sort((a, b) => {
       return a.name
         .toLocaleLowerCase()
         .localeCompare(b.name.toLocaleLowerCase())
     })
 
-    for (let index = 0; index < data.data.groups.length; index++) {
-      data.data.groups[index].isEmpty =
-        data.data.groups[index].skills.length === 0
+    for (let index = 0, len = sheetData.data.system.groups.length; index < len; index++) {
+      sheetData.data.system.groups[index].isEmpty = sheetData.data.system.groups[index].skills.length === 0
 
-      data.data.groups[index].skills.sort((a, b) => {
+      sheetData.data.system.groups[index].skills.sort((a, b) => {
         return a.name
           .toLocaleLowerCase()
           .localeCompare(b.name.toLocaleLowerCase())
       })
     }
 
-    data.occupationPointsString = ''
+    sheetData.occupationPointsString = ''
     const orString = ` ${game.i18n.localize('CoC7.Or')} `
-    if (mandatory.length) data.occupationPointsString += mandatory.join(' + ')
+    if (mandatory.length) sheetData.occupationPointsString += mandatory.join(' + ')
     if (optionnal.length && mandatory.length) {
-      data.occupationPointsString += ` + (${optionnal.join(orString)})`
+      sheetData.occupationPointsString += ` + (${optionnal.join(orString)})`
     }
     if (optionnal.length && !mandatory.length) {
-      data.occupationPointsString += optionnal.join(orString)
+      sheetData.occupationPointsString += optionnal.join(orString)
     }
 
-    data.itemProperties = []
+    sheetData.itemProperties = []
 
-    for (const [key, value] of Object.entries(data.data.type)) {
+    for (const [key, value] of Object.entries(sheetData.data.system.type)) {
       if (value) {
-        data.itemProperties.push(
-          COC7.occupationProperties[key] ? COC7.occupationProperties[key] : null
-        )
+        sheetData.itemProperties.push(COC7.occupationProperties[key] ? COC7.occupationProperties[key] : null)
       }
     }
 
-    data.isKeeper = game.user.isGM
-    return data
+    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+      sheetData.data.system.description.value,
+      { async: false }
+    )
+
+    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+      sheetData.data.system.description.keeper,
+      { async: false }
+    )
+
+    sheetData.isKeeper = game.user.isGM
+    return sheetData
   }
 
   _updateObject (event, formData) {
-    // TODO: This can be removed once 0.7.x is release channel
-    if (!formData.data) formData = expandObject(formData)
-
-    if (formData.data.groups) {
-      formData.data.groups = Object.values(formData.data?.groups || {})
-      for (let index = 0; index < this.item.data.data.groups.length; index++) {
-        formData.data.groups[index].skills = duplicate(
-          this.item.data.data.groups[index].skills
+    const system = expandObject(formData)?.system
+    if (system.groups) {
+      formData['system.groups'] = Object.values(
+        system.groups || []
+      )
+      for (let index = 0; index < this.item.system.groups.length; index++) {
+        formData[`system.groups.${index}.skills`] = duplicate(
+          this.item.system.groups[index].skills
         )
       }
     }

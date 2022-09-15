@@ -173,7 +173,7 @@ export class CoC7ActorImporterDialog extends FormApplication {
           ui.notifications.info(
             game.i18n.format('CoC7.ActorImported', {
               actorType: game.i18n.localize('CoC7.Entities.Character'),
-              actorName: character.data?.name
+              actorName: character.name
             })
           )
           await character.sheet.render(true)
@@ -224,8 +224,8 @@ export class CoC7ActorImporterDialog extends FormApplication {
     }
     ui.notifications.info(
       game.i18n.format('CoC7.ActorImported', {
-        actorType: createdActor.data?.type?.toUpperCase(),
-        actorName: createdActor.data?.name
+        actorType: createdActor.type?.toUpperCase(),
+        actorName: createdActor.name
       })
     )
     await createdActor.sheet.render(true)

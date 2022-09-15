@@ -1,4 +1,4 @@
-# System documentation for version 0.8.0
+# System documentation for version 0.9.0
 
 This document is a work in progress overview of the CoC7 system it is not a tutorial for how to use FoundryVTT.
 
@@ -11,7 +11,6 @@ You will need one of the following to play the game
 The system automates most of the regular tasks and rules involved with running a game.
 
 Several parts of the actor sheets have pop up tooltips that trigger after two seconds, this delay can be changed in the settings
-.
 
 This documentation can be reopened under [fas fa-atlas] Compendiums -> JournalEntry -> System manual -> Call of Cthulhu 7th Edition (Unofficial) [en]
 
@@ -19,10 +18,10 @@ This documentation can be reopened under [fas fa-atlas] Compendiums -> JournalEn
 
 For a full list of changes checkout the [changelog](https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/blob/develop/.github/CHANGELOG.md) on GitHub
 
-- @Compendium[CoC7.system-doc.VdOeGcxsu3jsVm3F]{Chases}
-- @Compendium[CoC7.system-doc.xV4Hxxmu6zjIMw9h]{Actor importer} - added The Dhole's House JSON support
-- @Compendium[CoC7.system-doc.rmtiwtbixojhyf5v]{Active effects} - implementation of active effects
-- Active effects added to @Compendium[CoC7.system-doc.fk040vqb4per5ju1]{links} and @Compendium[CoC7.system-doc.emuu3wo0uul91029]{Link creation tool}
+- [Chases](chases.md)
+- [Actor importer](actor_importer.md) - added The Dhole's House JSON support
+- [Active effects](effects.md) - implementation of active effects
+- Active effects added to [links](links.md) and [Link creation tool](link_creation_window.md)
 
 # Overview sections below
 
@@ -35,38 +34,38 @@ Foundry VTT is based in actors and items. This module includes a number of syste
 - Settings overview
 - Scene menu overview
 - Keyboard and mouse shortcuts
-- @Compendium[CoC7.system-doc.nVYLlqVzmUV5dXAW]{Creating your first investigator}
-- @Compendium[CoC7.system-doc.uug1mm5nokly4o2v]{Character creation}
+- [Creating your first investigator](first_investigator.md)
+- [Character creation](character_creation.md)
 
 # How to use the system
 
-- @Compendium[CoC7.system-doc.rmtiwtbixojhyf5v]{Active effects} - An active effect will modify an actor characteristic(s), attribute(s), skill(s).
-- @Compendium[CoC7.system-doc.xV4Hxxmu6zjIMw9h]{Actor importer}
+- [Active effects](effects.md) - An active effect will modify an actor characteristic(s), attribute(s), skill(s).
+- [Actor importer](actor_importer.md)
 - Actor Type: Character (TODO)
 - Actor Type: Container (TODO)
 - Actor Type: Creature (TODO)
 - Actor Type: NPC (TODO)
 - Chat link creator (TODO)
 - Character creation mode (TODO)
-- @Compendium[CoC7.system-doc.nk68b2ew15iw0bb8]{Combat} (TODO)
+- [Combat](combat.md) (TODO)
 - Development phase (TODO)
-- @Compendium[CoC7.system-doc.di6mcnaxfyi0y2l4]{Item Types} (TODO)
-- @Compendium[CoC7.system-doc.kv2tbz6x29cq6ewq]{Item Type: Archetype} (TODO)
-- @Compendium[CoC7.system-doc.oruecvy7jne4u4gt]{Item Type: Book} (TODO)
-- @Compendium[CoC7.system-doc.VdOeGcxsu3jsVm3F]{Item Type: Chases}
+- [Item Types](items.md) (TODO)
+- [Item Type: Archetype](item_archetype.md) (TODO)
+- [Item Type: Book](item_book.md) (TODO)
+- [Item Type: Chases](chases.md)
 - Item Type: Item (TODO)
-- @Compendium[CoC7.system-doc.qa934whpkpauiyc9]{Item Type: Occupation}
-- @Compendium[CoC7.system-doc.JU1GCWwc8at7gzJ4]{Item Type: Setup}
-- @Compendium[CoC7.system-doc.mz0ulbkecfvv8nw7]{Item Type: Skill} (TODO)
+- [Item Type: Occupation](item_occupation.md)
+- [Item Type: Setup](item_setup.md)
+- [Item Type: Skill](item_skill.md) (TODO)
 - Item Type: Spell (TODO)
 - Item Type: Status (TODO)
 - Item Type: Talent (TODO)
 - Item Type: Weapon (TODO)
-- @Compendium[CoC7.system-doc.emuu3wo0uul91029]{Link Creation Tool}
-- @Compendium[CoC7.system-doc.fk040vqb4per5ju1]{Links} (TODO)
+- [Link Creation Tool](link_creation_window.md)
+- [Links](links.md) (TODO)
 - Macros (TODO)
 - Rolls (TODO)
-- @Compendium[CoC7.system-doc.ce7s8psgyctzx5r1]{Sanity} (TODO)
+- [Sanity](sanity.md) (TODO)
 - Start Rest (TODO)
 - XP Gain (TODO)
 

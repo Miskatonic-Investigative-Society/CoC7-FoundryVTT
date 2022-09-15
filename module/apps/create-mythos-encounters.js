@@ -28,7 +28,7 @@ export class CoC7CreateMythosEncounter extends FormApplication {
       const name = html.find('.field_name').val()
       const value = parseInt(html.find('.field_value').val())
       const sanityLossEvents =
-        this.object.actor.data.data.sanityLossEvents ?? []
+        this.object.actor.system.sanityLossEvents ?? []
       sanityLossEvents.push({
         type: name,
         totalLoss: value,

@@ -1,5 +1,4 @@
 /* global ChatMessage, Dialog, game, mergeObject, Roll, renderTemplate, ui */
-
 import { CoC7Utilities } from '../../utilities.js'
 import { CoC7Item } from '../item.js'
 import { SanCheckCard } from '../../chat/cards/san-check.js'
@@ -18,7 +17,7 @@ export class CoC7Spell extends CoC7Item {
       /** This is not owned by any Actor */
       return ui.notifications.error(game.i18n.localize('CoC7.NotOwned'))
     }
-    const costs = this.data.data.costs
+    const costs = this.system.costs
     const losses = []
     let convertSurplusIntoHitPoints
     costs.magicPoints = CoC7Utilities.isFormula(costs.magicPoints)
@@ -26,16 +25,16 @@ export class CoC7Spell extends CoC7Item {
       : parseInt(costs.magicPoints)
     if (
       costs.magicPoints &&
-      costs.magicPoints > this.actor.data.data.attribs.mp.value
+      costs.magicPoints > this.actor.system.attribs.mp.value
     ) {
       convertSurplusIntoHitPoints = await new Promise(resolve => {
         const convertedHitPoints =
-          costs.magicPoints - this.actor.data.data.attribs.mp.value
+          costs.magicPoints - this.actor.system.attribs.mp.value
         const convertedMagicPoints = costs.magicPoints - convertedHitPoints
         const data = {
           title: ' ',
           content: game.i18n.format('CoC7.NotEnoughMagicPoints', {
-            actorMagicPoints: this.actor.data.data.attribs.mp.value,
+            actorMagicPoints: this.actor.system.attribs.mp.value,
             convertedHitPoints,
             convertedMagicPoints,
             originalMagicPoints: costs.magicPoints,
@@ -71,7 +70,7 @@ export class CoC7Spell extends CoC7Item {
       losses.push(await this.resolveLosses(key, value))
     }
     const template = 'systems/CoC7/templates/items/spell/chat.html'
-    const description = this.data.data.description.value
+    const description = this.system.description.value
     const html = await renderTemplate(template, { description, losses })
     return await ChatMessage.create({
       user: game.user.id,
@@ -89,7 +88,7 @@ export class CoC7Spell extends CoC7Item {
     } else {
       loss = parseInt(value)
     }
-    const actorData = this.actor.data.data
+    const actorData = this.actor.system
     switch (characteristic) {
       case 'hitPoints':
         characteristicName = game.i18n.localize('CoC7.HitPoints')
@@ -106,7 +105,7 @@ export class CoC7Spell extends CoC7Item {
       case 'power':
         characteristicName = game.i18n.localize('CHARAC.Power')
         this.actor.update({
-          'data.characteristics.pow.value':
+          'system.characteristics.pow.value':
             actorData.characteristics.pow.value - loss
         })
     }
@@ -160,24 +159,24 @@ export class CoC7Spell extends CoC7Item {
       } else {
         book = this.context.parent.items.get(this.context.bookId).toObject()
       }
-      for (let i = 0, im = book.data.spells.length; i < im; i++) {
-        if (book.data.spells[i]._id === this.id) {
-          book.data.spells[i] = mergeObject(book.data.spells[i], data)
-          // spellData = book.data.spells[i]
+      for (let i = 0, im = book.system.spells.length; i < im; i++) {
+        if (book.system.spells[i]._id === this.id) {
+          book.system.spells[i] = mergeObject(book.system.spells[i], data)
+          // spellData = book.system.spells[i]
         }
       }
       if (this.context.parent === null) {
         await item.update({
-          'data.spells': book.data.spells
+          'system.spells': book.system.spells
         })
         this.sheet.object = new CoC7Spell(
-          book.data.spells.find(spell => spell._id === this.id),
+          book.system.spells.find(spell => spell._id === this.id),
           this.context
         )
       } else {
         await this.context.parent.updateEmbeddedDocuments('Item', [book])
         this.sheet.object = new CoC7Spell(
-          book.data.spells.find(spell => spell._id === this.id),
+          book.system.spells.find(spell => spell._id === this.id),
           this.context
         )
       }

@@ -582,7 +582,7 @@ export class EnhancedChatCard {
     for (let i = 0; i < forms.length; i++) {
       const form = forms[i]
       const fd = new FormDataExtended(form)
-      const data = fd.toObject()
+      const data = fd.object
       // data = foundry.utils.diffObject(
       //   this.data,
       //   foundry.utils.expandObject(data)

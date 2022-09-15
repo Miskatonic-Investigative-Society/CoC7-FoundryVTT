@@ -4,23 +4,23 @@
       <div class="item-name" style="display: flex; flex-direction: row; height: 24px;">
         <input type="hidden" name="name" value="{{item.name}}" />
         {{#if isSpecialized}}
-          <input class="item-class" style="flex: 1;" type="text" name="data.skillName" value="{{data.skillName}}" placeholder="name" />
+          <input class="item-class" style="flex: 1;" type="text" name="system.skillName" value="{{data.system.skillName}}" placeholder="name" />
           <span style="line-height: 22px;padding-right: 3px;">/</span>
           {{#if canModifySpec}}
-            <input class="item-subclass" style="flex: 1;" type="text" name="data.specialization" value="{{data.specialization}}" placeholder="specialization" />
+            <input class="item-subclass" style="flex: 1;" type="text" name="system.specialization" value="{{data.system.specialization}}" placeholder="specialization" />
           {{else}}
-            <div class="item-subclass" style="flex: 1;line-height: 22px;">{{data.specialization}}</div>
+            <div class="item-subclass" style="flex: 1;line-height: 22px;">{{data.system.specialization}}</div>
           {{/if}}
         {{else}}
-          <input class="item-class" style="flex: 1;" type="text" name="data.skillName" value="{{data.skillName}}" placeholder="name" />
+          <input class="item-class" style="flex: 1;" type="text" name="system.skillName" value="{{data.system.skillName}}" placeholder="name" />
         {{/if}}
         {{#if hasOwner}}
           <label>{{localize 'CoC7.SkillBase'}}</label>
-          <input type="text" name="data.base" value="{{data.base}}" />
+          <input type="text" name="system.base" value="{{data.system.base}}" />
         {{else}}
           <label>{{localize 'CoC7.SkillBase'}}</label>
 
-          <input type="text" name="data.base" value="{{data.base}}" />
+          <input type="text" name="system.base" value="{{data.system.base}}" />
         {{/if}}
       </div>
       <div class="skill-attributes" style="display: block;" data-set="properties">
@@ -55,14 +55,14 @@
 
   <section class="sheet-body">
     <div class="tab description flexrow active" style="border-top: 2px groove #eeede0;padding: 0 0 0 5px;overflow: auto;" data-group="primary" data-tab="description">
-      {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
+      {{editor enrichedDescriptionValue target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
     </div>
     <div class="tab coc7" data-group="primary" data-tab="effects">
       {{> "systems/CoC7/templates/common/active-effects.hbs"}}
     </div>
     {{#if isKeeper}}
       <div class="tab keeper flexcol" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="keeper">
-        {{editor content=data.description.keeper target="data.description.keeper" button=true owner=owner editable=editable}}
+        {{editor enrichedDescriptionKeeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
       </div>
     {{/if}}
   </section>

@@ -13,7 +13,7 @@ export class CoC7Canvas {
       data.CoC7Type &&
       CoC7Canvas.COC7_TYPES_SUPPORTED.includes(data.CoC7Type)
     ) {
-      const gridSize = canvas.scene.data.grid
+      const gridSize = canvas.scene.grid
       const x = data.x - gridSize / 2
       const y = data.y - gridSize / 2
       const height = gridSize
@@ -45,7 +45,7 @@ export class CoC7Canvas {
               } else {
                 for (const t of dropTargetTokens) {
                   await t.actor.createEmbeddedDocuments('ActiveEffect', [
-                    link.data.effect
+                    link._linkData.effect
                   ])
                 }
               }
