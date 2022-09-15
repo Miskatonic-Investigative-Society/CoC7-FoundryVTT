@@ -552,8 +552,7 @@ export class CoC7ActorSheet extends ActorSheet {
                   ]
                 }
               },
-              { action: 'request-roll', label: 'Request roll' },
-              { action: 'link-tool', label: 'Open in link tool' } // Test only to be removed for final
+              { action: 'request-roll', label: 'Request roll' }
             ]
           }
         ]
@@ -575,7 +574,7 @@ export class CoC7ActorSheet extends ActorSheet {
             classes: 'keeper',
             visibility: 'trusted',
             items: [
-              { action: 'ecounter', label: 'Encounter' },
+              { action: 'encounter', label: 'Encounter' },
               { action: 'request-roll', label: 'Request roll' },
               {
                 label: { icon: 'fas fa-link', text: 'Link' },
@@ -584,16 +583,6 @@ export class CoC7ActorSheet extends ActorSheet {
                     { action: 'link-tool', label: 'Open in link tool' },
                     { action: 'send-chat', label: 'Send to chat' },
                     { action: 'copy-to-clipboard', label: 'Copy to clip-board' }
-                  ]
-                }
-              },
-              {
-                label: { icon: 'fas fa-link', text: 'Encounter link' },
-                subMenu: {
-                  items: [
-                    { action: 'encounter-link-tool', label: 'Open in link tool' },
-                    { action: 'encounter-send-chat', label: 'Send to chat' },
-                    { action: 'encounter-to-clipboard', label: 'Copy to clip-board' }
                   ]
                 }
               }
@@ -1129,18 +1118,18 @@ export class CoC7ActorSheet extends ActorSheet {
         rollOptions.preventStandby = false
         break
       case ('link-tool'):
-        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NORMAL
+        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NONE
         rollOptions.openLinkTool = true
         break
       case ('send-chat'):
+        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NONE
+        rollOptions.sendToChat = true
         break
       case ('copy-to-clipboard'):
+        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NONE
+        rollOptions.sendToClip = true
         break
-      case ('encounter-link-tool'):
-        break
-      case ('encounter-send-chat'):
-        break
-      case ('encounter-to-clipboard'):
+      case ('encounter'):
         break
 
       default:
@@ -1738,19 +1727,28 @@ export class CoC7ActorSheet extends ActorSheet {
   async _onRollCharacteriticTest (event) {
     event.preventDefault()
     if (event.currentTarget.classList.contains('flagged4dev')) return
-    if (game.settings.get('CoC7', 'useContextMenus')) event.shiftKey = true
-    CoC7ChatMessage.trigger({
-      rollType: CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC,
-      cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
-      event,
-      actor: this.actor
-    })
+    if (game.settings.get('CoC7', 'useContextMenus')) {
+      CoC7ChatMessage.trigger({
+        rollType: CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC,
+        cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
+        preventStandby: true,
+        fastForward: true,
+        characteristic: event.currentTarget.closest('.char-box').dataset.characteristic,
+        actor: this.actor
+      })
+    } else {
+      CoC7ChatMessage.trigger({
+        rollType: CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC,
+        cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
+        event,
+        actor: this.actor
+      })
+    }
   }
 
   async _onRollAttribTest (event) {
     // FLATMODIFIER
     event.preventDefault()
-    if (game.settings.get('CoC7', 'useContextMenus')) event.shiftKey = true
     const attrib = event.currentTarget.parentElement.dataset.attrib
     if (attrib === 'db') {
       if (
@@ -1772,15 +1770,26 @@ export class CoC7ActorSheet extends ActorSheet {
       return
     }
 
-    CoC7ChatMessage.trigger({
-      rollType: CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE,
-      cardType:
+    if (game.settings.get('CoC7', 'useContextMenus')) {
+      CoC7ChatMessage.trigger({
+        rollType: CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC,
+        cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
+        preventStandby: true,
+        fastForward: true,
+        attribute: event.currentTarget.closest('.attribute').dataset.attrib,
+        actor: this.actor
+      })
+    } else {
+      CoC7ChatMessage.trigger({
+        rollType: CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE,
+        cardType:
         event.altKey && attrib === 'san'
           ? CoC7ChatMessage.CARD_TYPE_SAN_CHECK
           : CoC7ChatMessage.CARD_TYPE_NORMAL,
-      event,
-      actor: this.actor
-    })
+        event,
+        actor: this.actor
+      })
+    }
   }
 
   /**

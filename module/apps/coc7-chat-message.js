@@ -7,6 +7,7 @@ import { CombinedCheckCard } from '../chat/cards/combined-roll.js'
 import { OpposedCheckCard } from '../chat/cards/opposed-roll.js'
 import { SanCheckCard } from '../chat/cards/san-check.js'
 import { SanDataDialog } from './sandata-dialog.js'
+import { CoC7Link } from './link.js'
 
 export class CoC7ChatMessage {
   static get ROLL_TYPE_ATTRIBUTE () {
@@ -44,6 +45,18 @@ export class CoC7ChatMessage {
   static get CARD_TYPE_SAN_CHECK () {
     return 'C/SC'
   }
+
+  static get CARD_TYPE_NONE () {
+    return 'C/NO'
+  }
+
+  // static get ROLL_TO_CHAT () {
+  //   return 'R/CH'
+  // }
+
+  // static get ROLL_TO_CLIPBOARD () {
+  //   return 'R/CL'
+  // }
 
   static cardTypes (config) {
     if (config.rollType === CoC7ChatMessage.ROLL_TYPE_COMBAT) {
@@ -144,7 +157,10 @@ export class CoC7ChatMessage {
         cardType: options.cardType,
         shiftKey: options.fastForward ?? options.event?.shiftKey ?? options.fastForward ?? false,
         altKey: options.event?.altKey ?? false,
-        isCtrlKey: isCtrlKey(options.event ?? false) || options.openLinkTool,
+        isCtrlKey: isCtrlKey(options.event ?? false),
+        openLinkTool: options.openLinkTool,
+        sendToChat: options.sendToChat,
+        sendToClip: options.sendToClip,
         isCombat:
           options.event?.currentTarget.classList?.contains('combat') ?? false,
         preventStandby: options.preventStandby ?? false
@@ -301,12 +317,18 @@ export class CoC7ChatMessage {
       return
     }
     if (
-      (config.options.isCtrlKey || config.options.openLinkTool) &&
+      (config.options.isCtrlKey) &&
       game.user.isGM &&
       [
         CoC7ChatMessage.CARD_TYPE_NORMAL,
         CoC7ChatMessage.CARD_TYPE_SAN_CHECK
       ].includes(config.dialogOptions.cardType)
+    ) {
+      CoC7ChatMessage.createLink(config)
+    } else if (
+      (config.options.sendToChat || config.options.sendToClip || config.options.openLinkTool) &&
+      game.user.isGM &&
+      CoC7ChatMessage.CARD_TYPE_NONE === config.dialogOptions.cardType
     ) {
       CoC7ChatMessage.createLink(config)
     } else {
@@ -368,9 +390,15 @@ export class CoC7ChatMessage {
           if (game.settings.get('core', 'rollMode') === 'blindroll') {
             linkData.blind = true
           }
-          CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg =>
-            dlg.render(true)
-          )
+          if (config.options.sendToChat) {
+            CoC7Link.fromData(linkData).then(link => link.sendToChat())
+          } else if (config.options.sendToClip) {
+            CoC7Link.fromData(linkData).then(link => link.sendToClipboard())
+          } else {
+            CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg =>
+              dlg.render(true)
+            )
+          }
         }
         break
     }
