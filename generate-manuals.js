@@ -84,10 +84,7 @@ const sources = {
 const dbFile = []
 try {
   for (const lang in sources) {
-    let id = crypto.createHash('md5').update('manual' + lang).digest('base64').replace(/[\\+=\\/]/g, '').substring(0, 16)
-    while (typeof collisions[id] !== 'undefined') {
-      id = crypto.createHash('md5').update('manual' + lang + Math.random().toString()).digest('base64').replace(/[\\+=\\/]/g, '').substring(0, 16)
-    }
+    let id = generateBuildConsistentID('manual' + lang)
     const dbEntry = {
       name: sources[lang].name + ' [' + lang + ']',
       pages: [],
@@ -95,10 +92,7 @@ try {
     }
     const links = {}
     for (const source of sources[lang].pages) {
-      let id = crypto.createHash('md5').update('manual' + lang + source.file).digest('base64').replace(/[\\+=\\/]/g, '').substring(0, 16)
-      while (typeof collisions[id] !== 'undefined') {
-        id = crypto.createHash('md5').update('manual' + lang + source.file + Math.random().toString()).digest('base64').replace(/[\\+=\\/]/g, '').substring(0, 16)
-      }
+      let id = generateBuildConsistentID('manual' + lang + source.file)
       collisions[id] = true
       links[source.file] = id
     }
@@ -155,3 +149,20 @@ try {
 }
 
 write('./packs/system-doc.db', dbFile.join('\n'))
+
+/**
+ * generateBuildConsistentID uses idSource to generate an id that will be consistent across builds.
+ *
+ * Note: This is called outside of foundry to build manual .db files and substitutes foundry.utils.randomID in a build consistent way.
+ * It creates a hash from the key so it is consistent between builds and the converts to base 64 so it uses the same range of characters as FoundryVTTs generator.
+ * @param {string} idSource
+ * @returns id, an string of 16 characters with the id consistently generated from idSource
+ */
+function generateBuildConsistentID(idSource) {
+  let id = crypto.createHash('md5').update(idSource).digest('base64').replace(/[\\+=\\/]/g, '').substring(0, 16)
+  while (typeof collisions[id] !== 'undefined') {
+    id = crypto.createHash('md5').update(idSource + Math.random().toString()).digest('base64').replace(/[\\+=\\/]/g, '').substring(0, 16)
+  }
+  return id
+}
+
