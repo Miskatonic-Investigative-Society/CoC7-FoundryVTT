@@ -149,6 +149,15 @@ try {
 }
 
 write('./packs/system-doc.db', dbFile.join('\n'))
+
+/**
+ * generateBuildConsistentID uses idSource to generate an id that will be consistent across builds.
+ *
+ * Note: This is called outside of foundry to build manual .db files and substitutes foundry.utils.randomID in a build consistent way.
+ * It creates a hash from the key so it is consistent between builds and the converts to base 64 so it uses the same range of characters as FoundryVTTs generator.
+ * @param {string} idSource
+ * @returns id, an string of 16 characters with the id consistently generated from idSource
+ */
 function generateBuildConsistentID(idSource) {
   let id = crypto.createHash('md5').update(idSource).digest('base64').replace(/[\\+=\\/]/g, '').substring(0, 16)
   while (typeof collisions[id] !== 'undefined') {
