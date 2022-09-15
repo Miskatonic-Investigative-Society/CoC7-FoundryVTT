@@ -10,11 +10,11 @@
         </div>
         <div class="row flexrow">
           <label>{{localize 'CoC7.ItemQuantity'}}</label>
-          <input type="text" name="system.quantity" value="{{data.system.quantity}}" data-dtype="Number" />
+          <input type="text" name="data.quantity" value="{{data.quantity}}" data-dtype="Number" />
         </div>
         <div class="row flexrow">
           <label>{{localize 'CoC7.ItemWeight'}}</label>
-          <input type="text" name="system.weight" value="{{data.system.weight}}" data-dtype="Number" />
+          <input type="text" name="data.weight" value="{{data.weight}}" data-dtype="Number" />
         </div>
       </div>
       <div class="flex1"></div>
@@ -22,6 +22,9 @@
 
     <nav style="flex: 0 0 24px;margin-bottom: 4px;font-family: 'Modesto Condensed', 'Palatino Linotype', serif;font-size: 16px;font-weight: 700;" class="sheet-navigation tabs" data-group="primary">
       <a style="line-height: 24px;" class="item active" data-tab="description">{{ localize "CoC7.Description" }}</a>
+      <a class="keeper-only-tab" data-tab="effects" title="{{localize 'CoC7.GmNotes'}}">
+        <div class="tab-name"><span><i class="game-icon game-icon-aura"></i></span></div>
+      </a>
       {{#if isKeeper}}
         <a style="line-height: 24px;" class="item keeper-only-tab" data-tab="keeper" title="{{localize 'CoC7.GmNotes'}}"><i class="game-icon game-icon-tentacles-skull"></i></a>
       {{/if}}
@@ -29,11 +32,14 @@
 
     <section class="sheet-body">
       <div class="tab description flexrow active" style="border-top: 2px groove #eeede0;padding: 0 0 0 5px;overflow: auto;" data-group="primary" data-tab="description">
-        {{editor enrichedDescriptionValue target="system.description.value" engine="prosemirror" button=true owner=owner editable=editable}}
+        {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
+      </div>
+      <div class="tab coc7 sheet" data-group="primary" data-tab="effects">
+        {{> "systems/CoC7/templates/common/active-effects.hbs"}}
       </div>
       {{#if isKeeper}}
         <div class="tab keeper flexcol" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="keeper">
-          {{editor enrichedDescriptionKeeper target="system.description.keeper" engine="prosemirror" button=true owner=owner editable=editable}}
+          {{editor content=data.description.keeper target="data.description.keeper" button=true owner=owner editable=editable}}
         </div>
       {{/if}}
     </section>
