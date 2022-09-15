@@ -1135,7 +1135,7 @@ export class CoC7ActorSheet extends ActorSheet {
         break
       case ('copy-to-clipboard'):
         rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NONE
-        rollOptions.sendToClip = true
+        rollOptions.sendToClipboard = true
         break
       case ('encounter'):
         break

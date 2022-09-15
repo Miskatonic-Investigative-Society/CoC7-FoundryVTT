@@ -160,7 +160,7 @@ export class CoC7ChatMessage {
         isCtrlKey: isCtrlKey(options.event ?? false),
         openLinkTool: options.openLinkTool,
         sendToChat: options.sendToChat,
-        sendToClip: options.sendToClip,
+        sendToClipboard: options.sendToClipboard,
         isCombat:
           options.event?.currentTarget.classList?.contains('combat') ?? false,
         preventStandby: options.preventStandby ?? false
@@ -326,7 +326,7 @@ export class CoC7ChatMessage {
     ) {
       CoC7ChatMessage.createLink(config)
     } else if (
-      (config.options.sendToChat || config.options.sendToClip || config.options.openLinkTool) &&
+      (config.options.sendToChat || config.options.sendToClipboard || config.options.openLinkTool) &&
       game.user.isGM &&
       CoC7ChatMessage.CARD_TYPE_NONE === config.dialogOptions.cardType
     ) {
@@ -392,7 +392,7 @@ export class CoC7ChatMessage {
           }
           if (config.options.sendToChat) {
             CoC7Link.fromData(linkData).then(link => link.sendToChat())
-          } else if (config.options.sendToClip) {
+          } else if (config.options.sendToClipboard) {
             CoC7Link.fromData(linkData).then(link => link.sendToClipboard())
           } else {
             CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg =>
