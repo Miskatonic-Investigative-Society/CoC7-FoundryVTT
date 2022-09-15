@@ -84,10 +84,7 @@ const sources = {
 const dbFile = []
 try {
   for (const lang in sources) {
-    let id = crypto.createHash('md5').update('manual' + lang).digest('base64').replace(/[\\+=\\/]/g, '').substring(0, 16)
-    while (typeof collisions[id] !== 'undefined') {
-      id = crypto.createHash('md5').update('manual' + lang + Math.random().toString()).digest('base64').replace(/[\\+=\\/]/g, '').substring(0, 16)
-    }
+    let id = generateBuildConsistentID('manual' + lang)
     const dbEntry = {
       name: sources[lang].name + ' [' + lang + ']',
       pages: [],
@@ -95,10 +92,7 @@ try {
     }
     const links = {}
     for (const source of sources[lang].pages) {
-      let id = crypto.createHash('md5').update('manual' + lang + source.file).digest('base64').replace(/[\\+=\\/]/g, '').substring(0, 16)
-      while (typeof collisions[id] !== 'undefined') {
-        id = crypto.createHash('md5').update('manual' + lang + source.file + Math.random().toString()).digest('base64').replace(/[\\+=\\/]/g, '').substring(0, 16)
-      }
+      let id = generateBuildConsistentID('manual' + lang + source.file)
       collisions[id] = true
       links[source.file] = id
     }
@@ -155,3 +149,11 @@ try {
 }
 
 write('./packs/system-doc.db', dbFile.join('\n'))
+function generateBuildConsistentID(idSource) {
+  let id = crypto.createHash('md5').update(idSource).digest('base64').replace(/[\\+=\\/]/g, '').substring(0, 16)
+  while (typeof collisions[id] !== 'undefined') {
+    id = crypto.createHash('md5').update(idSource + Math.random().toString()).digest('base64').replace(/[\\+=\\/]/g, '').substring(0, 16)
+  }
+  return id
+}
+
