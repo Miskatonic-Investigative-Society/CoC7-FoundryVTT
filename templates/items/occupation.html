@@ -9,9 +9,6 @@
         <li class="flex2">
           <input type="text" name="system.source" value="{{data.system.source}}" placeholder="{{ localize 'CoC7.Source' }}" />
         </li>
-        {{!-- <li class="flex2">
-          <input type="text" name="system.related" value="{{data.system.related}}" placeholder="{{ localize 'CoC7.Related' }}"/>
-        </li> --}}
         <li class="flex3">
           {{occupationPointsString}}
         </li>
@@ -173,10 +170,6 @@
         <input type="text" name="system.creditRating.min" value="{{data.system.creditRating.min}}" placeholder="{{  localize 'CoC7.Minimum' }}" />
         <input type="text" name="system.creditRating.max" value="{{data.system.creditRating.max}}" placeholder="{{  localize 'CoC7.Maximum' }}" />
       </div>
-      {{!--
-      <h3 class="form-header">{{ localize "CoC7.Notes"}}</h3>
-      {{editor data.system.description.notes target="system.description.notes" engine="prosemirror" button=true owner=owner editable=editable}}
-      --}}
     </div>
 
     {{!-- Spells Tab --}}

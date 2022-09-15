@@ -1515,16 +1515,6 @@ export class CoC7Chase extends CoC7Item {
 
   generateNewUuid () {
     return foundry.utils.randomID(16)
-    // let unique = false
-    // let uuid
-    // while (!unique) {
-    //   uuid = foundry.utils.randomID(16)
-    //   unique =
-    //     0 === this.system.participants.filter(p => p.uuid == uuid).length &&
-    //     0 === this.system.locations.list.filter(p => p.uuid == uuid).length
-    // }
-
-    // return uuid
   }
 
   getActorSkillsAndCharacteristics (participantUuid) {

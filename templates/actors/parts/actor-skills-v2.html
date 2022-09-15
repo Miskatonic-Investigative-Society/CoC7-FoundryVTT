@@ -1,9 +1,5 @@
 <div class="floating-left">
   {{#unless data.system.flags.locked}}
-    {{!-- <!-- <div>
-    <a class="clean-skill-list" title='{{localize "CoC7.CleanSkillList"}}'><i class="game-icon game-icon-broom"></i></a>
-    <a class="add-item" data-type="skill" title='{{localize "CoC7.AddSkill"}}'><i class="fas fa-plus"></i></a>
-  </div> --> --}}
     <a class="add-item" data-type="skill" title='{{localize "CoC7.AddSkill"}}'><i class="fas fa-plus"></i></a>
   {{/unless}}
   <a class="toggle-list-mode" title='{{#if skillListModeValue}}{{localize "CoC7.SortBySkillName"}}{{else}}{{localize "CoC7.SortBySkillValue"}}{{/if}}'><i class="fas {{#if skillListModeValue}}fa-sort-alpha-down{{else}}fa-sort-amount-down{{/if}}"></i></a>
@@ -56,7 +52,6 @@
             <div class="item-score">{{skill.system.value}}</div>
             <div class="item-controls">
               {{#unless skill.system.properties.noxpgain}}
-                <!-- <a class="item-control inactive" title="{{localize 'CoC7.SkillCantGainXp'}}"><i class="fas fa-certificate"></i></a> -->
                 {{#if skill.system.flags.developement}}
                   <a class="item-control development-flag active"><i class="fas fa-certificate"></i></a>
                 {{else}}

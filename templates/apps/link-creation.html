@@ -74,20 +74,15 @@
 
     {{#if link.is.effect}}
       <div class="sheet effect-options">
-        <!-- Effect Header -->
-        <!-- <header class="sheet-header">
-            <img class="effect-icon" src="{{ data.effect.icon }}" data-edit="effect.icon">
-            <h1 class="effect-title">{{ data.effect.label }}</h1>
-        </header> -->
 
-        <!-- Effect Configuration Tabs -->
+        {{!-- Effect Configuration Tabs --}}
         <nav class="sheet-tabs tabs">
           <a class="item" data-tab="details"><i class="fas fa-book"></i> {{localize "EFFECT.TabDetails"}}</a>
           <a class="item" data-tab="duration"><i class="fas fa-clock"></i> {{localize "EFFECT.TabDuration"}}</a>
           <a class="item" data-tab="effects"><i class="fas fa-cogs"></i> {{localize "EFFECT.TabEffects"}}</a>
         </nav>
 
-        <!-- Details Tab -->
+        {{!-- Details Tab --}}
         <section class="tab" data-tab="details">
 
           <div class="form-group">
@@ -148,7 +143,7 @@
           </div>
         </section>
 
-        <!-- Duration Tab -->
+        {{!-- Duration Tab --}}
         <section class="tab" data-tab="duration">
           <div class="form-group">
             <label>{{ localize "EFFECT.DurationSecs" }}</label>
@@ -156,12 +151,6 @@
               <input type="number" name="effect.duration.seconds" value="{{ data.effect.duration.seconds }}" />
             </div>
           </div>
-          <!-- <div class="form-group">
-                <label>{{ localize "EFFECT.StartTime" }}</label>
-                <div class="form-fields">
-                    <input type="number" name="effect.duration.startTime" value="{{ data.effect.duration.startTime }}"/>
-                </div>
-            </div> -->
           <hr />
           <div class="form-group">
             <label>{{ localize "EFFECT.DurationTurns" }}</label>
@@ -172,25 +161,9 @@
               <input type="number" name="effect.duration.turns" value="{{ data.effect.duration.turns }}" />
             </div>
           </div>
-          <!-- <div class="form-group">
-                <label>{{ localize "EFFECT.Combat" }}</label>
-                <div class="form-fields">
-                    <input type="text" name="effect.duration.combat" value="{{ data.effect.duration.combat }}" disabled/>
-                </div>
-            </div> -->
-
-          <!-- <div class="form-group">
-                <label>{{ localize "EFFECT.StartTurns" }}</label>
-                <div class="form-fields">
-                    <label>{{ localize "COMBAT.Round" }}</label>
-                    <input type="number" name="effect.duration.startRound" value="{{ data.effect.duration.startRound }}"/>
-                    <label>{{ localize "COMBAT.Turn" }}</label>
-                    <input type="number" name="effect.duration.startTurn" value="{{ data.effect.duration.startTurn }}"/>
-                </div>
-            </div> -->
         </section>
 
-        <!-- Effects Tab -->
+        {{!-- Effects Tab --}}
         <section class="tab" data-tab="effects">
           <header class="effect-change effects-header flexrow">
             <div class="key">{{ localize "EFFECT.ChangeKey" }}</div>
@@ -221,10 +194,6 @@
             {{/each}}
           </ol>
         </section>
-
-        <!-- <footer class="sheet-footer">
-            <button type="submit"><i class="fas fa-save"></i> {{localize submitText}}</button>
-        </footer> -->
       </div>
     {{/if}}
 

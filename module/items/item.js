@@ -375,15 +375,7 @@ export class CoC7Item extends Item {
     }
 
     return checkedProps
-
-    // for (const property in this.system.properties) {
-    //  checkedProps[`system.properties${property}`] = true;
-    // }
   }
-
-  // async toggleInSet( set, propertyId){
-  //  if( this.system[set][propertyId] == "false") this.system[set][propertyId] = "true"; else this.system[set][propertyId] = "false";
-  // }
 
   isIncludedInSet (set, propertyId) {
     if (!this.system[set]) this.system[set] = []

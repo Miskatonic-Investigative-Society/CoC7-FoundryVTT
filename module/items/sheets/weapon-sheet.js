@@ -63,12 +63,11 @@ export class CoC7WeaponSheet extends ItemSheet {
 
     sheetData._properties = []
     for (const [key, value] of Object.entries(COC7.weaponProperties)) {
-      const property = {
+      sheetData._properties.push({
         id: key,
         name: value,
         isEnabled: this.item.system.properties[key] === true
-      }
-      sheetData._properties.push(property)
+      })
     }
 
     sheetData._eras = []

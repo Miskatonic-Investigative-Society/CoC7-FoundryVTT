@@ -95,7 +95,6 @@
             <span style="flex: none;font-size: 14px;line-height:20px;">/</span>
             {{#if data.system.attribs.hp.auto}}
               <input class="attribute-max" type="text" name="system.attribs.hp.max" value="{{data.system.attribs.hp.max}}" data-dtype="Number" readonly />
-              {{!-- <span class="attribute-max" type="text" style="line-height: 22px;"> {{data.system.attribs.hp.max}} </span> --}}
             {{else}}
               <input class="attribute-max {{#if data.system.flags.locked}}read-only{{/if}}" type="text" name="system.attribs.hp.max" value="{{data.system.attribs.hp.max}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}}>
             {{/if}}
@@ -103,7 +102,6 @@
             {{#unless data.system.flags.locked}}
               <div class="auto-toggle {{#if data.system.attribs.hp.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
             {{/unless}}
-            {{!-- <div class="flex1"></div> --}}
           </div>
           {{#if data.system.flags.locked}}
             <div class="flexrow flex1 attribute" data-attrib="mp">
@@ -113,11 +111,9 @@
                 <span style="flex: none;font-size: 14px;line-height:20px;">/</span>
                 {{#if data.system.attribs.mp.auto}}
                   <input class="attribute-max" type="text" name="system.attribs.mp.max" value="{{data.system.attribs.mp.max}}" data-dtype="Number" readonly />
-                  {{!-- <span class="attribute-max" type="text" style="line-height: 22px;"> {{data.system.attribs.mp.max}} </span> --}}
                 {{else}}
                   <input class="attribute-max {{#if data.system.flags.locked}}read-only{{/if}}" type="text" name="system.attribs.mp.max" value="{{data.system.attribs.mp.max}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}}>
                 {{/if}}
-                {{!-- <div class="flex1"></div> --}}
               {{/if}}
             </div>
 
@@ -131,7 +127,6 @@
                 {{else}}
                   <input class="attribute-max {{#if data.system.flags.locked}}read-only{{/if}}" type="text" name="system.attribs.san.max" value="{{data.system.attribs.san.max}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}}>
                 {{/if}}
-                {{!-- <div class="flex1"></div> --}}
               {{/if}}
             </div>
 
@@ -139,7 +134,6 @@
               {{#if hasLuck}}
                 <label class="attribute-label rollable" draggable="true">{{localize 'CoC7.Luck'}} :</label>
                 <input class="attribute-value single read-only" type="text" name="system.attribs.lck.value" value="{{data.system.attribs.lck.value}}" data-dtype="Number" readonly>
-                {{!-- <div class="flex1"></div> --}}
               {{/if}}
             </div>
           {{else}}
@@ -153,7 +147,6 @@
                 <input class="attribute-max {{#if data.system.flags.locked}}read-only{{/if}}" type="text" name="system.attribs.mp.max" value="{{data.system.attribs.mp.max}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}}>
               {{/if}}
               <div class="auto-toggle {{#if data.system.attribs.mp.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
-              {{!-- <div class="flex1"></div> --}}
             </div>
 
             <div class="flexrow flex1 attribute" data-attrib="san">
@@ -166,13 +159,11 @@
                 <input class="attribute-max {{#if data.system.flags.locked}}read-only{{/if}}" type="text" name="system.attribs.san.max" value="{{data.system.attribs.san.max}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}}>
               {{/if}}
               <div class="auto-toggle {{#if data.system.attribs.san.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
-              {{!-- <div class="flex1"></div> --}}
             </div>
 
             <div class="flexrow flex1 attribute" data-attrib="lck">
               <label class="attribute-label rollable">{{localize 'CoC7.Luck'}} :</label>
               <input class="attribute-value single read-only" type="text" name="system.attribs.lck.value" value="{{data.system.attribs.lck.value}}" data-dtype="Number">
-              {{!-- <div class="flex1"></div> --}}
             </div>
           {{/if}}
         </div>
@@ -201,11 +192,6 @@
               <input class="attribute-value single {{#if data.system.flags.locked}}read-only{{/if}}" type="text" name="system.attribs.db.value" value="{{data.system.attribs.db.value}}" data-dtype="String" {{#if data.system.flags.locked}}readonly{{/if}}>
             {{/if}}
 
-            {{!-- {{#if hasDBFormula}}
-            <a class="inline-roll roll" data-mode="roll" data-formula="{{DB}}"><i class="fas fa-dice-d20"></i> {{DB}}</a>
-            {{else}}
-            <span style="flex: none">{{DB}}</span>
-            {{/if}} --}}
             {{#unless data.system.flags.locked}}
               <div class="auto-toggle {{#if data.system.attribs.db.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
             {{/unless}}
@@ -224,15 +210,7 @@
           </div>
           <div class="flexrow flex1 attribute" data-attrib="armor">
             <label>{{localize 'CoC7.Armor'}} :</label>
-            {{!-- {{#if data.system.attribs.armor.auto}}
-              <span class="attribute-value" type="text" style="line-height: 22px;"> {{data.system.attribs.build.value}} </span>
-            {{else}} --}}
             <input class="attribute-value single {{#if data.system.flags.locked}}read-only{{/if}}" type="text" name="system.attribs.armor.value" value="{{data.system.attribs.armor.value}}" data-dtype="Number" {{#if data.system.flags.locked}}readonly{{/if}}>
-            {{!-- {{/if}}
-
-            {{#unless data.system.flags.locked}}
-            <div class="auto-toggle {{#if data.system.attribs.build.auto}}auto-on{{else}}auto-off{{/if}}"><i class="fas fa-cogs" style="padding-top: 4px;"></i></div>
-            {{/unless}} --}}
           </div>
         </div>
 
@@ -281,7 +259,6 @@
               {{#if data.system.flags.locked}}
                 <a class="lock" style="flex: 0 0 32px;align-content: flex-start;" title="{{localize 'CoC7.UnlockActor'}}" data-locked="true"> <i class="fas fa-lock"></i></a>
               {{else}}
-                {{!-- <!-- <a class="clean-skill-list" style="flex: 0 0 16px;" title='{{localize "CoC7.CleanSkillList"}}'><i class="game-icon game-icon-broom"></i></a> --> --}}
                 <a class="lock" style="flex: 0 0 16px;" title="{{localize 'CoC7.LockActor'}}" data-locked="false"> <i class="fas fa-lock-open"></i></a>
                 {{#if allowFormula}}
                   {{#if displayFormula}}
@@ -380,7 +357,7 @@
             <h3 class="flex1">{{localize 'CoC7.Effects'}} <i class="game-icon game-icon-aura"></i></h3>
           </div>
           <div class="effects flexrow pannel">
-            {{> "systems/CoC7/templates/common/active-effects.hbs" hasOwner=true}}
+            {{> "systems/CoC7/templates/common/active-effects.hbs"}}
           </div>
         </section>
 

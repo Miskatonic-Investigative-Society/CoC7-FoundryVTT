@@ -54,7 +54,7 @@ export class CoC7ActorSheet extends ActorSheet {
       sheetData.data.system.flags.locked = false
     }
 
-    if (!['vehicle'].includes(this.actor.type)) {
+    if (this.actor.type === 'vehicle') {
       if (!sheetData.data.system.characteristics) {
         sheetData.data.system.characteristics = {
           str: {
@@ -458,102 +458,10 @@ export class CoC7ActorSheet extends ActorSheet {
       sheetData.data.system.attribs.build.auto = false
     }
 
-    // sheetData.data.system.attribs.mov.value = this.actor.mov // return computed values or fixed values if not auto.
-    // sheetData.data.system.attribs.db.value = this.actor.db
-    // sheetData.data.system.attribs.build.value = this.actor.build
-
-    // if (typeof this.actor.compendium === 'undefined' && this.actor.isOwner) {
-    //   ui.notifications.info('changr spec name 4')
-    //   // ACTIVE_EFFECT should be applied here
-    //   // This whole part needs to be re-evaluated
-    //   // Seeting this shouldn't be necessary
-    //   this.actor.update(
-    //     { 'system.attribs.mov.value': this.actor.mov },
-    //     { render: false }
-    //   )
-    //   // mov.max never used
-    //   // this.actor.update(
-    //   //   { 'system.attribs.mov.max': this.actor.mov },
-    //   //   { render: false }
-    //   // )
-    //   this.actor.update(
-    //     { 'system.attribs.db.value': this.actor.db },
-    //     { render: false }
-    //   )
-    //   this.actor.update(
-    //     { 'system.attribs.build.current': this.actor.build },
-    //     { render: false }
-    //   )
-    //   this.actor.update(
-    //     { 'system.attribs.build.value': this.actor.build },
-    //     { render: false }
-    //   )
-    // }
-
-    // if (sheetData.data.system.attribs.hp.value < 0) sheetData.data.system.attribs.hp.value = null;
     if (sheetData.data.system.attribs.mp.value < 0) sheetData.data.system.attribs.mp.value = null
     if (sheetData.data.system.attribs.san.value < 0) sheetData.data.system.attribs.san.value = null
-    // sheetData.data.system.attribs.san.fiftyOfCurrent = sheetData.data.system.attribs.san.value >= 0 ? ' / '+Math.floor(sheetData.data.system.attribs.san.value/5):'';
-    // if (sheetData.data.system.attribs.hp.auto) {
-    //   // TODO if any is null set max back to null.
-    //   if (
-    //     sheetData.data.system.characteristics.siz.value != null &&
-    //     sheetData.data.system.characteristics.con.value != null
-    //   ) {
-    //     sheetData.data.system.attribs.hp.max = this.actor.hpMax
-    //   }
-    // }
-
-    // if (sheetData.data.system.attribs.mp.auto) {
-    //   // TODO if any is null set max back to null.
-    //   if (sheetData.data.system.characteristics.pow.value != null) {
-    //     sheetData.data.system.attribs.mp.max = Math.floor(
-    //       sheetData.data.system.characteristics.pow.value / 5
-    //     )
-    //   }
-    // }
-
-    // if (sheetData.data.system.attribs.san.auto) {
-    //   sheetData.data.system.attribs.san.max = this.actor.sanMax
-    // }
-
-    // if (
-    //   sheetData.data.system.attribs.mp.value > sheetData.data.system.attribs.mp.max ||
-    //   sheetData.data.system.attribs.mp.max == null
-    // ) {
-    //   sheetData.data.system.attribs.mp.value = sheetData.data.system.attribs.mp.max
-    // }
-    // if (
-    //   sheetData.data.system.attribs.hp.value > sheetData.data.system.attribs.hp.max ||
-    //   sheetData.data.system.attribs.hp.max == null
-    // ) {
-    //   sheetData.data.system.attribs.hp.value = sheetData.data.system.attribs.hp.max
-    // }
-
-    // if (
-    //   sheetData.data.system.attribs.hp.value == null &&
-    //   sheetData.data.system.attribs.hp.max != null
-    // ) {
-    //   sheetData.data.system.attribs.hp.value = sheetData.data.system.attribs.hp.max
-    // }
-    // if (
-    //   sheetData.data.system.attribs.mp.value == null &&
-    //   sheetData.data.system.attribs.mp.max != null
-    // ) {
-    //   sheetData.data.system.attribs.mp.value = sheetData.data.system.attribs.mp.max
-    // }
 
     if (!['vehicle'].includes(this.actor.type)) {
-      // if (
-      //   sheetData.data.system.attribs.san.value == null &&
-      //   sheetData.data.system.characteristics.pow.value != null
-      // ) {
-      //   sheetData.data.system.attribs.san.value = sheetData.data.system.characteristics.pow.value
-      // }
-      // if (sheetData.data.system.attribs.san.value > sheetData.data.system.attribs.san.max) {
-      //   sheetData.data.system.attribs.san.value = sheetData.data.system.attribs.san.max
-      // }
-
       if (sheetData.data.system.biography instanceof Array && sheetData.data.system.biography.length) {
         sheetData.data.system.biography[0].isFirst = true
         sheetData.data.system.biography[sheetData.data.system.biography.length - 1].isLast = true
@@ -572,12 +480,7 @@ export class CoC7ActorSheet extends ActorSheet {
         Object.keys(this.actor.system.conditions).filter(
           condition => this.actor.system.conditions[condition].value
         ).length > 0)
-    // const first = sheetData.data.system.biography[0];
-    // first.isFirst = true;
-    // sheetData.data.system.biography[0] = first;
-    // const last = sheetData.data.system.biography[sheetData.data.system.biography.length - 1];
-    // last.isLast = true;
-    // sheetData.data.system.biography[sheetData.data.system.biography.length - 1] = last;
+
     return sheetData
   }
 

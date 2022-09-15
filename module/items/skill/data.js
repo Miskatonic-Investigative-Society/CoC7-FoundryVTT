@@ -29,26 +29,6 @@ export class CoC7Skill extends CoC7Item {
     }
     super(data, context)
   }
-  // async applyModifier (change) {
-  //   return
-
-  //   const changes = this.system.changes
-  //     ? foundry.utils.duplicate(this.system.changes)
-  //     : []
-
-  //   const index = changes.findIndex(c => c.effect._id == change.effect.id)
-
-  //   if (-1 === index) {
-  //     changes.push(change)
-  //     await this.update({ 'data.changes': changes })
-  //   } else {
-  //     //Compare if there's a change in the efect data
-  //     if (!JSON.stringify(change) === JSON.stringify(changes[index])) {
-  //       changes[index] = change
-  //       await this.update({ 'data.changes': changes })
-  //     }
-  //   }
-  // }
 
   static guessNameParts (skillName) {
     const output = {

@@ -57,7 +57,6 @@
     <div class="dice-roll {{#unless checkRevealed}}gm-visible-only{{/unless}}" style="padding-top: 5px;" data-roll-type="{{roll.rollType}}" data-side="{{roll.side}}" data-action="{{roll.action}}" data-ref-message-id="{{roll.referenceMessageId}}" data-success-level="{{roll.successLevel}}" data-difficulty="{{roll.difficulty}}" data-actor-id="{{roll.actorId}}" data-token-id="{{roll.tokenId}}" data-actor-key="{{roll.actorKey}}" data-skill-id="{{roll.skillId}}" data-item-id="{{roll.itemId}}" data-dice-mod="{{roll.diceMod}}" data-value="{{roll.value}}" data-result="{{roll.result}}" data-fumble="{{roll.fumble}}" data-critical="{{roll.critical}}" data-characteristic="{{roll.characteristic}}" data-dice-modifier="{{check.diceModifier}}" data-flat-modifier="{{check.flatDiceModifier}}" data-is-blind="false">
 
       <div class="dice-result" data-total="{{check.dices.total}}" data-ten-result="{{check.dices.tenResult}}">
-        {{!-- <div class="dice-formula">1D% {{#if check.dices.hasBonus}}{{check.dices.bonus}} {{check.dices.bonusType}} {{localize 'CoC7.Dice'}}{{/if}}</div> --}}
         <div class="dice-tooltip" style="display: none;">
           <section class="tooltip-part">
             <div class="dice ten-dice">

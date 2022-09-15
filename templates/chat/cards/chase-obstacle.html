@@ -133,7 +133,7 @@
                     {{#unless data.states.failedConsequencesRolled}}
                       <div class="defineFailureConsequeces">
                         {{#if data.obstacle.hasDamage }}
-                          <!-- Armor relevant only if there's some damage -->
+                          {{!-- Armor relevant only if there's some damage --}}
                           <div class="form-group armor">
                             <div class="flexrow flex-end">
                               <a data-ecc-permissions="gm" data-flag="ignoreArmor" class="ecc-switch" title="{{ localize 'CoC7.IgnoreArmor' }}">
