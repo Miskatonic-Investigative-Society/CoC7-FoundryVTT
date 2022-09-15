@@ -2,7 +2,7 @@
 
 The system allows for the creation of Active Effects.
 An active effect will modify an actor characteristic(s), attribute(s), skill(s).
-Effects can be created as a @Compendium[CoC7.system-doc.fk040vqb4per5ju1]{link} using the @Compendium[CoC7.system-doc.emuu3wo0uul91029]{Link creation tool} or directly in the character sheet by clicking the [game-icon game-icon-aura] button.
+Effects can be created as a [link](links.md) using the [Link creation tool](link_creation_window.md) or directly in the character sheet by clicking the [game-icon game-icon-aura] button.
 
 ## Effects tab
 
@@ -42,18 +42,18 @@ This last tab will includes all changes made to the character sheet.
 
 ## Changes
 
-An effect includes a list of changes. Each change needs to be addressed with the corresponding data path.
+An effect includes a list of changes. Each change needs to be addressed with the corresponding system path.
 The available changes are :
 
-- Characteristics: data.characteristics.\[characteristic\].value
+- Characteristics: system.characteristics.\[characteristic\].value
   - available \[characteristic\] are: str, con, siz, dex, app, int, pow, edu
 - attributes:
-  - mov: data.attribs.mov.value
-  - build: data.attribs.build.value
-  - bonus damage: data.attribs.db.value
-  - armor: data.attribs.armor.value
+  - mov: system.attribs.mov.value
+  - build: system.attribs.build.value
+  - bonus damage: system.attribs.db.value
+  - armor: system.attribs.armor.value
 - derived attributes. Only the maximum value of those attributes should be modified. Those changes are applied after all other changes have been made. If that attibute is in auto mode, it will be recalculated with the previous characteristics changes before having it's value affected.
-  - max hit points: data.attribs.hp.max
-  - max sanity: data.attribs.san.max
+  - max hit points: system.attribs.hp.max
+  - max sanity: system.attribs.san.max
 - skills. Skills are identified by their name without specialization. Skill names are case sensitive !
-  - data.skills.Handgun.value
+  - system.skills.Handgun.value

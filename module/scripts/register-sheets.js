@@ -1,5 +1,4 @@
 /* global Actors, ActorSheet, Items, ItemSheet */
-
 import { CoC7ArchetypeSheet } from '../items/sheets/archetype.js'
 import { CoC7BookSheet } from '../items/book/sheet.js'
 import { CoC7CharacterSheet } from '../actors/sheets/character.js'

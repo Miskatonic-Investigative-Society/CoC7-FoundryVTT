@@ -1,5 +1,7 @@
-/* global $, ActorSheet, CONST, Dialog, FormData, game, mergeObject */
+/* global $, ActorSheet, CONST, Dialog, FormData, game, mergeObject, TextEditor */
 import { CoC7Parser } from '../../apps/parser.js'
+import { CoC7Utilities } from '../../utilities.js'
+
 export class CoC7ContainerSheet extends ActorSheet {
   /**
    * Extend and override the default options used by the 5e Actor Sheet
@@ -22,30 +24,38 @@ export class CoC7ContainerSheet extends ActorSheet {
     })
   }
 
-  async _onDropFolder (event, data) {
-    if (!this.actor.isOwner) return []
-    if (data.documentName !== 'Item') return []
-    const folder = game.folders.get(data.id)
-    if (!folder) return []
-    const items = folder.contents
-      .filter(item => ['book', 'item', 'spell', 'weapon'].includes(item.type))
-      .map(item => item.toJSON())
-    if (items.length > 0) {
-      await this.actor.createEmbeddedDocuments('Item', items)
+  async _onDrop (event) {
+    event.preventDefault()
+    event.stopPropagation()
+
+    const dataList = await CoC7Utilities.getDataFromDropEvent(event, 'Item')
+    if (!this.options.editable) {
+      return
     }
+    const items = this.actor.items.toObject() || []
+    for (const item of dataList) {
+      if (!item || !item.system) {
+        continue
+      }
+      if (!['book', 'item', 'spell', 'weapon'].includes(item.type)) {
+        continue
+      }
+      items.push(item.toObject())
+    }
+    await this.actor.update({ items })
   }
 
   onCloseSheet () {}
 
   async getData () {
-    const data = await super.getData()
-    const sheetData = data.data
+    const sheetData = await super.getData()
+
     sheetData.isKeeper = game.user.isGM
     sheetData.editable = this.isEditable
 
     sheetData.itemsByType = {}
-    if (data.items) {
-      for (const item of data.items) {
+    if (sheetData.items) {
+      for (const item of sheetData.items) {
         if (
           !Object.prototype.hasOwnProperty.call(
             sheetData.itemsByType,
@@ -69,20 +79,20 @@ export class CoC7ContainerSheet extends ActorSheet {
 
     sheetData.showInventoryItems =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'item') ||
-      !sheetData.data.flags.locked
+      !sheetData.data.system.flags.locked
     sheetData.showInventoryBooks =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'book') ||
-      !sheetData.data.flags.locked
+      !sheetData.data.system.flags.locked
     sheetData.showInventorySpells =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'spell') ||
-      !sheetData.data.flags.locked
+      !sheetData.data.system.flags.locked
     sheetData.showInventoryTalents =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'talent') ||
-      (!sheetData.data.flags.locked &&
+      (!sheetData.data.system.flags.locked &&
         game.settings.get('CoC7', 'pulpRuleTalents'))
     sheetData.showInventoryWeapons =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'weapon') ||
-      !sheetData.data.flags.locked
+      !sheetData.data.system.flags.locked
 
     sheetData.hasInventory =
       sheetData.showInventoryItems ||
@@ -90,6 +100,16 @@ export class CoC7ContainerSheet extends ActorSheet {
       sheetData.showInventorySpells ||
       sheetData.showInventoryTalents ||
       sheetData.showInventoryWeapons
+
+    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+      sheetData.data.system.description.value,
+      { async: false }
+    )
+
+    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+      sheetData.data.system.description.keeper,
+      { async: false }
+    )
 
     return sheetData
   }
@@ -168,12 +188,11 @@ export class CoC7ContainerSheet extends ActorSheet {
         return false
       }
       let visible = false
-      for (const [k, v] of Object.entries(e.data.permission)) {
+      for (const [k, v] of Object.entries(e.ownership)) {
         if (k === 'default' || k === game.user.id) {
           visible =
             visible ||
-            v !==
-              (CONST.DOCUMENT_OWNERSHIP_LEVELS || CONST.ENTITY_PERMISSIONS).NONE
+            v !== CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE
         }
       }
       return visible
@@ -223,8 +242,7 @@ export class CoC7ContainerSheet extends ActorSheet {
       div.append(
         $(`<div class="item-description">${chatData.description.value}</div>`)
       )
-
-      if (item.data.data.properties?.spcl) {
+      if (item.system.properties?.spcl) {
         const specialDiv = $(
           `<div class="item-special">${chatData.description.special}</div>`
         )

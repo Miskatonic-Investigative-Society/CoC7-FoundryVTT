@@ -246,7 +246,7 @@ export class CoC7Parser {
     text = TextEditor._getTextNodes(html)
     // Alternative regex : '@(coc7).([^\[]+)\[([^\]]+)\](?:{([^}]+)})?'
     // Before active effect :       '@(coc7).(.*?)\\[([^\\]]+)\\]' + '(?:{([^}]+)})?',
-    const rgx = new RegExp('@(coc7).(.*?)\\[(.*)\\]' + '(?:{([^}]+)})?', 'gi')
+    const rgx = new RegExp('@(coc7)\\.' + '([^\\]]+?)' + '\\[((?:[^\\]\\[]+|\\[(?:[^\\]\\[]+|\\[[^\\]\\[]*\\])*\\])*)\\]' + '(?:{([^}]+)})?', 'gi')
     TextEditor._replaceTextContent(text, rgx, CoC7Parser._createLink)
     return html.innerHTML
   }
@@ -287,15 +287,11 @@ export class CoC7Parser {
     event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(data))
   }
 
-  static _createLink (match, tag, type, options, name) {
-    if (typeof match !== 'string') {
-      // Foundry VTT v10
-      name = match[4] ?? undefined
-      options = match[3] ?? undefined
-      type = match[2] ?? undefined
-      tag = match[1] ?? undefined
-      match = match[0] ?? undefined
-    }
+  static _createLink (match) {
+    const name = match[4] ?? undefined
+    const options = match[3] ?? undefined
+    const type = match[2] ?? undefined
+    // const tag = match[1] ?? undefined
 
     const data = {
       cls: ['coc7-link'],

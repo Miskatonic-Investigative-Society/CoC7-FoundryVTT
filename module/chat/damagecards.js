@@ -24,12 +24,12 @@ export class CoC7DamageRoll extends ChatCardActor {
    * @param {String} range
    */
   async rollDamage (range = 'normal') {
-    this.rollString = this.weapon.data.data.range[range].damage
+    this.rollString = this.weapon.system.range[range].damage
 
-    if (this.weapon.data.data.properties.addb) {
+    if (this.weapon.system.properties.addb) {
       this.rollString = this.rollString + '+' + this.actor.db
     }
-    if (this.weapon.data.data.properties.ahdb) {
+    if (this.weapon.system.properties.ahdb) {
       this.rollString = this.rollString + '+' + this.actor.db + '/2'
     }
 

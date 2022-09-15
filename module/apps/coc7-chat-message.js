@@ -104,7 +104,7 @@ export class CoC7ChatMessage {
         options.rollType = CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
       } else if (
         typeof options.characteristic !== 'undefined' &&
-        typeof options.actor.data.data.characteristics[
+        typeof options.actor.system.characteristics[
           options.characteristic
         ] !== 'undefined'
       ) {
@@ -247,7 +247,7 @@ export class CoC7ChatMessage {
             return false
           } else if (
             !game.user.isGM &&
-            !config.options.actor.data.data.characteristics[
+            !config.options.actor.system.characteristics[
               config.options.characteristic
             ]?.value
           ) {
@@ -265,7 +265,7 @@ export class CoC7ChatMessage {
             return false
           } else if (
             !game.user.isGM &&
-            !config.options.actor.data.data.attribs[config.options.attribute]
+            !config.options.actor.system.attribs[config.options.attribute]
               ?.value
           ) {
             return false

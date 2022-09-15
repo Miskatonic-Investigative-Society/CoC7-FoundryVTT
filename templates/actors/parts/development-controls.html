@@ -8,9 +8,9 @@
           <div class="separator">/</div>
           <div class="max-value">
             {{#if allowCharCreation}}
-              <input type="text" name="data.development.personal"  value="{{data.development.personal}}" data-dtype="Number"/>
+              <input type="text" name="system.development.personal" value="{{data.system.development.personal}}" data-dtype="Number" />
             {{else}}
-              <span>{{data.development.personal}}</span>
+              <span>{{data.system.development.personal}}</span>
             {{/if}}
           </div>
         </div>
@@ -22,9 +22,9 @@
           <div class="separator">/</div>
           <div class="max-value">
             {{#if allowCharCreation}}
-              <input type="text" name="data.development.occupation"  value="{{data.development.occupation}}" data-dtype="Number"/>
+              <input type="text" name="system.development.occupation" value="{{data.system.development.occupation}}" data-dtype="Number" />
             {{else}}
-              <span>{{data.development.occupation}}</span>
+              <span>{{data.system.development.occupation}}</span>
             {{/if}}
           </div>
         </div>
@@ -37,9 +37,9 @@
             <div class="separator">/</div>
             <div class="max-value">
               {{#if allowCharCreation}}
-                <input type="text" name="data.development.archetype"  value="{{data.development.archetype}}" data-dtype="Number"/>
+                <input type="text" name="system.development.archetype" value="{{data.system.development.archetype}}" data-dtype="Number" />
               {{else}}
-                <span>{{data.development.archetype}}</span>
+                <span>{{data.system.development.archetype}}</span>
               {{/if}}
             </div>
           </div>
@@ -50,12 +50,12 @@
 
   <div class="validation">
     {{#if allowCharCreation}}
-      {{#if data.infos.occupationSet}}
+      {{#if data.system.infos.occupationSet}}
         <div class="header-section {{#if invalidCreditRating}}warning{{/if}}" title="{{localize 'CoC7.CreditRatingSkillName'}}">
           <label class="{{#if invalidCreditRating}}error{{/if}}">{{creditRatingMin}}&lt{{localize 'CoC7.CreditRatingSkillName'}}&lt{{creditRatingMax}}</label>
         </div>
       {{/if}}
-      {{#if data.infos.archetypeSet}}
+      {{#if data.system.infos.archetypeSet}}
         <div class="header-section {{#if invalidPulpTalents}}warning{{/if}}" title="{{localize 'CoC7.PulpTalents'}}">
           <label class="{{#if invalidPulpTalents}}error{{/if}}">{{localize 'CoC7.PulpTalents'}}: {{pulpTalentCount}}/{{minPulpTalents}}</label>
         </div>

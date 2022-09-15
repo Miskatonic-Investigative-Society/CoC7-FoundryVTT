@@ -435,7 +435,7 @@ export function registerSettings () {
       default: true,
       type: Boolean
     })
-    const [version] = game.modules.get('dice-so-nice')?.data.version.split('.')
+    const [version] = game.modules.get('dice-so-nice')?.version.split('.')
     if (!isNaN(Number(version)) && Number(version) >= 3) {
       game.settings.register('CoC7', 'tenDieBonus', {
         name: 'SETTINGS.TenDieBonus',

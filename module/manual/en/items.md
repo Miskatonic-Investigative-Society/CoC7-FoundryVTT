@@ -16,13 +16,13 @@ And have some common structure so on all of them:
 - If you click on the _icon_ you can pick or upload a new one
 
 # Available types
-- @Compendium[CoC7.system-doc.kv2tbz6x29cq6ewq]{Item Type: Archetype}
-- @Compendium[CoC7.system-doc.oruecvy7jne4u4gt]{Item Type: Book}
-- @Compendium[CoC7.system-doc.VdOeGcxsu3jsVm3F]{Item Type: Chases}
+- [Item Type: Archetype](item_archetype.md)
+- [Item Type: Book](item_book.md)
+- [Item Type: Chases](chases.md)
 - Item Type: Item
-- @Compendium[CoC7.system-doc.qa934whpkpauiyc9]{Item Type: Occupation}
-- @Compendium[CoC7.system-doc.JU1GCWwc8at7gzJ4]{Item Type: Setup}
-- @Compendium[CoC7.system-doc.mz0ulbkecfvv8nw7]{Item Type: Skill}
+- [Item Type: Occupation](item_occupation.md)
+- [Item Type: Setup](item_setup.md)
+- [Item Type: Skill](item_skill.md)
 - Item Type: Spell
 - Item Type: Status
 - Item Type: Talent

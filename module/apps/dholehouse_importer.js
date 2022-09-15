@@ -167,8 +167,8 @@ export class CoC7DholeHouseActorImporter {
       if (typeof existing !== 'undefined') {
         cloned = duplicate(existing.toObject())
         cloned.name = parts.name
-        cloned.data.skillName = parts.skillName
-        cloned.data.specialization = parts.specialization
+        cloned.system.skillName = parts.skillName
+        cloned.system.specialization = parts.specialization
       } else {
         cloned = CoCActor.emptySkill(
           parts.skillName,
@@ -178,27 +178,27 @@ export class CoC7DholeHouseActorImporter {
               parts.specialization === '' ? false : parts.specialization
           }
         )
-        cloned.data.properties = cloned.data.properties ?? {}
+        cloned.system.properties = cloned.system.properties ?? {}
         if (parts.specialization === 'Fighting') {
-          cloned.data.properties.fighting = true
-          cloned.data.properties.combat = true
-          cloned.data.properties.push = false
+          cloned.system.properties.fighting = true
+          cloned.system.properties.combat = true
+          cloned.system.properties.push = false
         } else if (parts.specialization === 'Firearms') {
-          cloned.data.properties.firearm = true
-          cloned.data.properties.combat = true
-          cloned.data.properties.push = false
+          cloned.system.properties.firearm = true
+          cloned.system.properties.combat = true
+          cloned.system.properties.push = false
         } else if (parts.skillName === 'Dodge') {
-          cloned.data.properties.push = false
+          cloned.system.properties.push = false
         }
       }
-      if (cloned.data.skillName === 'Any') {
+      if (cloned.system.skillName === 'Any') {
         cloned.name = cloned.name.replace(' (Any)', ' (None)')
-        cloned.data.skillName = 'None'
+        cloned.system.skillName = 'None'
       }
-      cloned.data.base = parseInt(skill.value ?? 0, 10)
-      cloned.data.value = parseInt(skill.value ?? 0, 10)
-      cloned.data.flags = cloned.data.flags ?? {}
-      cloned.data.flags.occupation =
+      cloned.system.base = parseInt(skill.value ?? 0, 10)
+      cloned.system.value = parseInt(skill.value ?? 0, 10)
+      cloned.system.flags = cloned.system.flags ?? {}
+      cloned.system.flags.occupation =
         skill.occupation === true || skill.occupation === 'true'
       skills.push(cloned)
     }
@@ -210,8 +210,8 @@ export class CoC7DholeHouseActorImporter {
     const checkName = skillName.replace(/^\((.+)\)$/, '$1')
     const characterSkill = skills.find(i => {
       return (
-        i.data.data?.skillName === checkName ||
-        i.data.data?.skillName?.indexOf(checkName) > -1
+        i.system?.skillName === checkName ||
+        i.system?.skillName?.indexOf(checkName) > -1
       )
     })
     return characterSkill
@@ -255,24 +255,24 @@ export class CoC7DholeHouseActorImporter {
       let cloned = null
       if (typeof existing !== 'undefined') {
         cloned = duplicate(existing.toObject())
-        cloned.data.skill.main.name = skill?.name ?? ''
-        cloned.data.skill.main.id = skill?.id ?? ''
-        cloned.data.range = cloned.data.range ?? {}
-        cloned.data.range.normal = cloned.data.range.normal ?? {}
-        cloned.data.range.normal.damage = damage
-        cloned.data.ammo = weapon.ammo
-        cloned.data.malfunction = weapon.malf
-        cloned.data.properties = cloned.data.properties ?? {}
-        cloned.data.properties.melee =
-          skill?.data.data.properties?.fighting ?? false
-        cloned.data.properties.rngd =
-          skill?.data.data.properties?.firearm ?? false
-        cloned.data.properties.addb = addb
+        cloned.system.skill.main.name = skill?.name ?? ''
+        cloned.system.skill.main.id = skill?.id ?? ''
+        cloned.system.range = cloned.system.range ?? {}
+        cloned.system.range.normal = cloned.system.range.normal ?? {}
+        cloned.system.range.normal.damage = damage
+        cloned.system.ammo = weapon.ammo
+        cloned.system.malfunction = weapon.malf
+        cloned.system.properties = cloned.system.properties ?? {}
+        cloned.system.properties.melee =
+          skill?.system.properties?.fighting ?? false
+        cloned.system.properties.rngd =
+          skill?.system.properties?.firearm ?? false
+        cloned.system.properties.addb = addb
       } else {
         cloned = {
           name: weapon.name,
           type: 'weapon',
-          data: {
+          system: {
             skill: {
               main: {
                 name: skill?.name ?? '',
@@ -287,8 +287,8 @@ export class CoC7DholeHouseActorImporter {
             ammo: weapon.ammo,
             malfunction: weapon.malf,
             properties: {
-              melee: skill?.data.data.properties?.fighting ?? false,
-              rngd: skill?.data.data.properties?.firearm ?? false,
+              melee: skill?.system.properties?.fighting ?? false,
+              rngd: skill?.system.properties?.firearm ?? false,
               addb
             }
           }

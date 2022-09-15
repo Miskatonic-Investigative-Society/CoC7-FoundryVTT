@@ -1,5 +1,4 @@
 /* global $, ChatMessage, diffObject, expandObject, FormDataExtended, game, mergeObject, renderTemplate, ui */
-
 import { chatHelper } from './helper.js'
 
 export class InteractiveChatCard {
@@ -218,7 +217,7 @@ export class InteractiveChatCard {
   }
 
   static async fromMessage (message) {
-    const cardElement = $(message.data.content)[0]
+    const cardElement = $(message.content)[0]
     if (!cardElement) return undefined
     const card = await this.fromHTMLCardElement(cardElement)
     card.message = message
@@ -334,7 +333,7 @@ export class InteractiveChatCard {
     return this.target.isOwner
   }
 
-  get isGM () {
+  get isKeeper () {
     return game.user.isGM
   }
 

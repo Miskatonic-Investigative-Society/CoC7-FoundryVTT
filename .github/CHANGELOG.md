@@ -15,11 +15,27 @@ _If you decide to go on with V10:_
 
 Happy gaming !
 
-## Changes coming in a future release:
+## Version 0.9.0
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Drop support for V9, and fix #1226, #1232, #1235.
+- Active effect added to items and status.
+- Implementation of context menu instead of key combination for advanced rolls.
+  - Option added to enable context menus.
+- Fix polish translation duplicate thanks to @everyonecancode #1229.
+- Update to Taiwanese localization, thanks to @zeteticl.
+
+## Version 0.8.2
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix multiple roll requests on the same line not being parsed correctly
 - Fix unable to set HP value if max HP was set without using a setup
 - Further support for FoundryVTT v10
+- Update to French localization, thanks to @vonv #1215
+- Update to Italian localization, thanks to @Stefano1975t #1209
+- Update to Polish localization, thanks to @everyonecancode #1210
 - Update to Portuguese localization
 
 ## Version 0.8.1

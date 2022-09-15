@@ -1,7 +1,7 @@
-/* global game, ItemSheet, mergeObject */
-
+/* global game, ItemSheet, mergeObject, TextEditor */
 import CoC7ActiveEffect from '../../active-effect.js'
 import { COC7 } from '../../config.js'
+import { isCtrlKey } from '../../chat/helper.js'
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
@@ -36,7 +36,7 @@ export class CoC7SkillSheet extends ItemSheet {
 
   /** @override */
   get template () {
-    return `systems/CoC7/templates/items/${this.item.data.type}-sheet.html`
+    return `systems/CoC7/templates/items/${this.item.type}-sheet.html`
   }
 
   /* -------------------------------------------- */
@@ -49,46 +49,49 @@ export class CoC7SkillSheet extends ItemSheet {
    */
   getData () {
     // this.item.checkSkillProperties();
-    const data = super.getData()
+    const sheetData = super.getData()
 
-    /** MODIF: 0.8.x **/
-    const itemData = data.data
-    data.data = itemData.data // MODIF: 0.8.x data.data
-    /*****************/
+    sheetData.hasOwner = this.item.isEmbedded === true
 
-    data.hasOwner = this.item.actor !== null
-
-    data.effects = CoC7ActiveEffect.prepareActiveEffectCategories(
+    sheetData.effects = CoC7ActiveEffect.prepareActiveEffectCategories(
       this.item.effects
     )
 
-    if (this.item.data.type === 'skill') {
-      data._properties = []
-      for (const [key, value] of Object.entries(COC7.skillProperties)) {
-        const property = {}
-        property.id = key
-        property.name = value
-        property.isEnabled = this.item.data.data.properties[key] === true
-        data._properties.push(property)
-      }
-
-      data._eras = []
-      for (const [key, value] of Object.entries(COC7.eras)) {
-        const era = {}
-        era.id = key
-        era.name = value
-        era.isEnabled = this.item.data.data.eras[key] === true
-        data._eras.push(era)
-      }
-
-      data.isSpecialized = this.item.data.data.properties.special
-      data.canModifySpec =
-        !this.item.data.data.properties.firearm &&
-        !this.item.data.data.properties.fighting
+    sheetData._properties = []
+    for (const [key, value] of Object.entries(COC7.skillProperties)) {
+      sheetData._properties.push({
+        id: key,
+        name: value,
+        isEnabled: this.item.system.properties[key] === true
+      })
     }
 
-    data.isKeeper = game.user.isGM
-    return data
+    sheetData._eras = []
+    for (const [key, value] of Object.entries(COC7.eras)) {
+      sheetData._eras.push({
+        id: key,
+        name: value,
+        isEnabled: this.item.system.eras[key] === true
+      })
+    }
+
+    sheetData.isSpecialized = this.item.system.properties.special
+    sheetData.canModifySpec =
+      !this.item.system.properties.firearm &&
+      !this.item.system.properties.fighting
+
+    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+      sheetData.data.system.description.value,
+      { async: false }
+    )
+
+    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+      sheetData.data.system.description.keeper,
+      { async: false }
+    )
+
+    sheetData.isKeeper = game.user.isGM
+    return sheetData
   }
 
   /* -------------------------------------------- */
@@ -109,14 +112,10 @@ export class CoC7SkillSheet extends ItemSheet {
 
   async _onClickToggle (event) {
     event.preventDefault()
-    const propertyId =
-      event.currentTarget.closest('.toggle-switch').dataset.property
+    const propertyId = event.currentTarget.closest('.toggle-switch').dataset.property
     await this.item.toggleProperty(
       propertyId,
-      event.metaKey ||
-        event.ctrlKey ||
-        event.keyCode === 91 ||
-        event.keyCode === 224
+      isCtrlKey(event)
     )
   }
 
@@ -180,11 +179,9 @@ export class CoC7SkillSheet extends ItemSheet {
   // }
 
   async _updateObject (event, formData) {
-    const skillName =
-      formData['data.skillName'] || this.item.data.data.skillName
-    if (this.item.data.data.properties?.special) {
-      const specialization =
-        formData['data.specialization'] || this.item.data.data.specialization
+    const skillName = formData['system.skillName'] || this.item.system.skillName
+    if (this.item.system.properties?.special) {
+      const specialization = formData['system.specialization'] || this.item.system.specialization
       formData.name = specialization + ' (' + skillName + ')'
     } else {
       formData.name = skillName

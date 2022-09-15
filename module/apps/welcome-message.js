@@ -1,5 +1,4 @@
 /* global $, Dialog, game, renderTemplate */
-
 export class CoC7WelcomeMessage extends Dialog {
   activateListeners (html) {
     super.activateListeners(html)

@@ -1,5 +1,4 @@
 /* global AudioHelper, CONFIG, game, mergeObject */
-
 import { CoC7Check } from '../../check.js'
 import { CoC7Dice } from '../../dice.js'
 import { RollCard } from './roll-card.js'

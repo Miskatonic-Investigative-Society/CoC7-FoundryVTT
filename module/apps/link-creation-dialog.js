@@ -197,7 +197,7 @@ export class CoC7LinkCreationDialog extends FormApplication {
   /** @inheritdoc */
   _getSubmitData (updateData = {}) {
     const fd = new FormDataExtended(this.form, { editors: this.editors })
-    const data = foundry.utils.expandObject(fd.toObject())
+    const data = foundry.utils.expandObject(fd.object)
     if (updateData) foundry.utils.mergeObject(data, updateData)
     if (data.effect) {
       data.effect.changes = Array.from(Object.values(data.effect.changes || {}))

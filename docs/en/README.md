@@ -1,4 +1,4 @@
-# System documentation for version 0.8.0
+# System documentation for version 0.9.0
 
 This document is a work in progress overview of the CoC7 system it is not a tutorial for how to use FoundryVTT.
 

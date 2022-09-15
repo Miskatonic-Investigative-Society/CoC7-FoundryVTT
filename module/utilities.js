@@ -1,5 +1,4 @@
 /* global canvas, ChatMessage, CONFIG, CONST, Dialog, duplicate, Folder, fromUuid, game, getDocumentClass, Hooks, Macro, Roll, Token, ui */
-
 import { COC7 } from './config.js'
 import { CoC7Check } from './check.js'
 import { CoC7Item } from './items/item.js'
@@ -281,23 +280,7 @@ export class CoC7Utilities {
   static async createMacro (bar, data, slot) {
     if (data.type !== 'Item') return
 
-    let item
-    let origin
-    let packName = null
-
-    if (data.pack) {
-      const pack = game.packs.get(data.pack)
-      if (pack.metadata.entity !== 'Item') return
-      packName = data.pack
-      item = await pack.getDocument(data.id)
-      origin = 'pack'
-    } else if (data.data) {
-      item = data.data
-      origin = 'actor'
-    } else {
-      item = game.items.get(data.id)
-      origin = 'game'
-    }
+    const item = await fromUuid(data.uuid)
 
     if (!item) {
       return ui.notifications.warn(
@@ -310,10 +293,10 @@ export class CoC7Utilities {
       )
     }
 
-    let command
+    let command = ''
 
     if (item.type === 'weapon') {
-      command = `game.CoC7.macros.weaponCheck({name:'${item.name}', id:'${item.id}', origin:'${origin}', pack: '${packName}'}, event);`
+      command = `game.CoC7.macros.weaponCheck({name:'${item.name}', uuid:'${data.uuid}'}, event);`
     }
 
     if (item.type === 'skill') {
@@ -322,23 +305,25 @@ export class CoC7Utilities {
           game.i18n.localize('CoC7.WarnNoGlobalSpec')
         )
       }
-      command = `game.CoC7.macros.skillCheck({name:'${item.name}', id:'${item.id}', origin:'${origin}', pack: '${packName}'}, event);`
+      command = `game.CoC7.macros.skillCheck({name:'${item.name}', uuid:'${data.uuid}'}, event);`
     }
 
-    // Create the macro command
-    let macro = game.macros.contents.find(
-      m => m.name === item.name && m.command === command
-    )
-    if (!macro) {
-      macro = await Macro.create({
-        name: item.name,
-        type: 'script',
-        img: item.img,
-        command
-      })
+    if (command !== '') {
+      // Create the macro command
+      let macro = game.macros.contents.find(
+        m => m.name === item.name && m.command === command
+      )
+      if (!macro) {
+        macro = await Macro.create({
+          name: item.name,
+          type: 'script',
+          img: item.img,
+          command
+        })
+      }
+      game.user.assignHotbarMacro(macro, slot)
     }
-    game.user.assignHotbarMacro(macro, slot)
-    return false
+    return true
   }
 
   static async toggleDevPhase (toggle) {
@@ -423,7 +408,7 @@ export class CoC7Utilities {
     for (const actor of actors) {
       if (['character', 'npc', 'creature'].includes(actor.type)) {
         let quickHealer = false
-        for (const item of actor.data.items) {
+        for (const item of actor.items) {
           if (item.type === 'talent') {
             if (item.name === `${game.i18n.localize('CoC7.quickHealer')}`) {
               quickHealer = true
@@ -433,12 +418,12 @@ export class CoC7Utilities {
         const isCriticalWounds =
           !game.settings.get('CoC7', 'pulpRuleIgnoreMajorWounds') &&
           actor.hasConditionStatus(COC7.status.criticalWounds)
-        const dailySanityLoss = actor.data.data.attribs.san.dailyLoss
-        const hpValue = actor.data.data.attribs.hp.value
-        const hpMax = actor.data.data.attribs.hp.max
-        const mpValue = actor.data.data.attribs.mp.value
-        const mpMax = actor.data.data.attribs.mp.max
-        const pow = actor.data.data.characteristics.pow.value
+        const dailySanityLoss = actor.system.attribs.san.dailyLoss
+        const hpValue = actor.system.attribs.hp.value
+        const hpMax = actor.system.attribs.hp.max
+        const mpValue = actor.system.attribs.mp.value
+        const mpMax = actor.system.attribs.mp.max
+        const pow = actor.system.characteristics.pow.value
         chatContent = chatContent + `<br><b>${actor.name}. </b>`
         if (hpValue < hpMax) {
           if (isCriticalWounds === true) {
@@ -471,8 +456,8 @@ export class CoC7Utilities {
                 )}. </b>`
             }
             actor.update({
-              'data.attribs.hp.value':
-                actor.data.data.attribs.hp.value + healAmount
+              'system.attribs.hp.value':
+                actor.system.attribs.hp.value + healAmount
             })
           }
         }
@@ -483,8 +468,8 @@ export class CoC7Utilities {
               'CoC7.dailySanLossRestarted'
             )}.</b>`
           actor.update({
-            'data.attribs.san.dailyLoss': 0,
-            'data.attribs.san.dailyLimit': Math.floor(actor.data.data.attribs.san.value / 5)
+            'system.attribs.san.dailyLoss': 0,
+            'system.attribs.san.dailyLimit': Math.floor(actor.system.attribs.san.value / 5)
           })
         }
         const hours = 7
@@ -497,8 +482,8 @@ export class CoC7Utilities {
               'CoC7.magicPointsRecovered'
             )}: ${magicAmount}.</b>`
           actor.update({
-            'data.attribs.mp.value':
-              actor.data.data.attribs.mp.value + magicAmount
+            'system.attribs.mp.value':
+              actor.system.attribs.mp.value + magicAmount
           })
         }
       }
@@ -579,15 +564,15 @@ export class CoC7Utilities {
   static updateCharSheets () {
     if (game.user.isGM) {
       for (const a of game.actors.contents) {
-        if (a?.data?.type === 'character' && a?.sheet && a?.sheet?.rendered) {
-          a.update({ 'data.flags.locked': true })
+        if (a?.type === 'character' && a?.sheet && a?.sheet?.rendered) {
+          a.update({ 'system.flags.locked': true })
           a.render(false)
         }
       }
     } else {
       for (const a of game.actors.contents) {
         if (a.isOwner) {
-          a.update({ 'data.flags.locked': true })
+          a.update({ 'system.flags.locked': true })
           a.render(false)
         }
       }
@@ -604,19 +589,13 @@ export class CoC7Utilities {
     try {
       const dataList = JSON.parse(event.dataTransfer.getData('text/plain'))
       if (dataList.type === 'Folder' && dataList.documentName === entityType) {
-        const folder = game.folders.get(dataList.id)
+        const folder = await fromUuid(dataList.uuid)
         if (!folder) return []
         return folder.contents
       } else if (dataList.type === entityType) {
-        if (dataList.pack) {
-          const pack = game.packs.get(dataList.pack)
-          if (pack.metadata.entity !== entityType) return []
-          return [await pack.getDocument(dataList.id)]
-        } else if (dataList.data) {
-          return [dataList]
-        } else {
-          return [game.items.get(dataList.id)]
-        }
+        const item = await fromUuid(dataList.uuid)
+        if (!item) return []
+        return [item]
       } else {
         return []
       }
@@ -823,7 +802,7 @@ export class CoC7Utilities {
       const tokenData = scene.getEmbeddedDocument('Token', tokenId)
       if (!tokenData) return null
       const token = new Token(tokenData)
-      if (!token.scene) token.scene = duplicate(scene.data)
+      if (!token.scene) token.scene = duplicate(scene)
       return token
     }
     // Case 2 - use Actor ID directory
@@ -848,7 +827,7 @@ export class CoC7Utilities {
       folderName = 'Imported characters'
     }
     let importedCharactersFolder = game.folders.find(
-      entry => entry.data.name === folderName && entry.data.type === 'Actor'
+      entry => entry.name === folderName && entry.type === 'Actor'
     )
     if (
       importedCharactersFolder === null ||
@@ -887,10 +866,9 @@ export class CoC7Utilities {
       switch (source.substring(o, o + 1)) {
         case 'i':
           existing = game.items.find(
-            item =>
-              item.data.type === type &&
-              item.data.name.toLowerCase() === name &&
-              (combat === null || item.data.properties.combat === combat)
+            item => item.type === type &&
+              item.name.toLowerCase() === name &&
+              (combat === null || item.system.properties.combat === combat)
           )
           if (existing) {
             return existing
@@ -910,9 +888,9 @@ export class CoC7Utilities {
               const documents = await pack.getDocuments()
               existing = documents.find(
                 item =>
-                  item.data.type === type &&
-                  item.data.name.toLowerCase() === name &&
-                  (combat === null || item.data.properties.combat === combat)
+                  item.type === type &&
+                  item.name.toLowerCase() === name &&
+                  (combat === null || item.system.properties.combat === combat)
               )
               if (existing) {
                 return existing

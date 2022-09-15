@@ -3,22 +3,22 @@
     <header class="card-header">
       <div class="left-portrait">
         {{#if displayActorOnCard}}
-					<img class="open-actor {{card.participant.cssClass}}" data-actor-key="{{card.participant.key}}" src="{{card.participant.icon}}" title="{{card.participant.name}}" width="36" height="36"/>
+          <img class="open-actor {{card.participant.cssClass}}" data-actor-key="{{card.participant.key}}" src="{{card.participant.icon}}" title="{{card.participant.name}}" width="36" height="36" />
         {{/if}}
       </div>
       {{#if data.states.obstacleDefined}}
-      <div class="card-title">{{#if data.obstacle.name}}{{data.obstacle.name}}{{else}}{{ localize 'CoC7.Obstacle'}}{{/if}}</div>
-      <div class="right-portrait">
+        <div class="card-title">{{#if data.obstacle.name}}{{data.obstacle.name}}{{else}}{{ localize 'CoC7.Obstacle'}}{{/if}}</div>
+        <div class="right-portrait">
           {{#if data.obstacle.barrier}}
             <img src="systems/CoC7/assets/icons/barrier.svg">
           {{else}}
             <img src="systems/CoC7/assets/icons/hazard-sign.svg">
           {{/if}}
-      </div>
+        </div>
       {{/if}}
     </header>
 
-		<datalist id="check-options">
+    <datalist id="check-options">
 
       {{#each checkOptions as |o|}}
         <option>{{o}}</option>
@@ -32,7 +32,7 @@
           {{#if data.states.playerActionDefined}}
             <div>{{ strings.playerIntentions }}</div>
             {{#if data.totalCautiousApproach}}
-            <div>{{{strings.cautiousApproachType}}}</div>
+              <div>{{{strings.cautiousApproachType}}}</div>
             {{/if}}
             {{#if data.states.checkRolled}}
               <div class="roll-line"> {{data.objects.check.name}} : {{{ htmlCheck }}}</div>
@@ -72,7 +72,7 @@
         {{/if}}
 
         {{#if data.states.closed}}
-        <div>{{{ strings.finalOutcome }}}</div>
+          <div>{{{ strings.finalOutcome }}}</div>
         {{/if}}
       </div>
     </div>
@@ -82,36 +82,36 @@
         {{#unless data.states.closed}}
           <div class="cardResolution">
             {{#if obstalceDefinitionChanged}}
-            <div class="form-group">
-              <div data-name="data.reflectObstaleChanges" class="toggle-switch ecc-switch">{{ localize 'CoC7.ReflectObstacleChanges' }}</div>
-            </div>
+              <div class="form-group">
+                <div data-name="data.reflectObstaleChanges" class="toggle-switch ecc-switch">{{ localize 'CoC7.ReflectObstacleChanges' }}</div>
+              </div>
             {{/if}}
             {{#if data.states.tryToBreak}}
-            <div class="form-group small">
-              <div  class="flex3">
-                <span>{{localize 'CoC7.ObstacleDamage'}} : {{{inlineDamageRoll}}} (<i class="icon game-icon game-icon-life-bar" title="{{localize 'CoC7.HitPoints'}}"></i>{{data.obstacle.HitPoints}})</span>
+              <div class="form-group small">
+                <div class="flex3">
+                  <span>{{localize 'CoC7.ObstacleDamage'}} : {{{inlineDamageRoll}}} (<i class="icon game-icon game-icon-life-bar" title="{{localize 'CoC7.HitPoints'}}"></i>{{data.obstacle.HitPoints}})</span>
+                </div>
+                <div class="flexrow flex1">
+                  <input type="text" data-ecc-permissions="gm" name="data.totalObstacleDamage" value="{{data.totalObstacleDamage}}" data-dtype="Number">
+                  <a data-ecc-permissions="gm" data-flag="obstacleDestoyed" class="flex0 icon bigger ecc-switch" title="{{ localize 'CoC7.RemoveObstacle' }}"><i class="game-icon game-icon-wrecking-ball"></i></a>
+                </div>
               </div>
-              <div class="flexrow flex1">
-                <input type="text" data-ecc-permissions="gm" name="data.totalObstacleDamage" value="{{data.totalObstacleDamage}}" data-dtype="Number">
-                <a data-ecc-permissions="gm" data-flag="obstacleDestoyed" class="flex0 icon bigger ecc-switch" title="{{ localize 'CoC7.RemoveObstacle' }}"><i class="game-icon game-icon-wrecking-ball"></i></a>
-              </div>
-            </div>
             {{/if}}
             {{#if playerDamageTaken}}
-            <div class="form-group">
-              <div  class="flex3">
-                <span>{{localize 'CoC7.DamageInflicted'}} : {{{inlineDamageTakenRoll}}} {{#unless data.flags.ignoreArmor}}- <i class="game-icon game-icon-armor-upgrade"></i>{{data.armor}}{{/unless}}</span>
+              <div class="form-group">
+                <div class="flex3">
+                  <span>{{localize 'CoC7.DamageInflicted'}} : {{{inlineDamageTakenRoll}}} {{#unless data.flags.ignoreArmor}}- <i class="game-icon game-icon-armor-upgrade"></i>{{data.armor}}{{/unless}}</span>
+                </div>
+                <div class="flex1">
+                  <input type="text" data-ecc-permissions="gm" name="data.totalPlayerDamageTaken" value="{{data.totalPlayerDamageTaken}}" data-dtype="Number">
+                </div>
               </div>
-              <div  class="flex1">
-                <input type="text" data-ecc-permissions="gm" name="data.totalPlayerDamageTaken" value="{{data.totalPlayerDamageTaken}}" data-dtype="Number">
-              </div>
-            </div>
             {{/if}}
             <div class="form-group">
-              <div  class="flex3">
+              <div class="flex3">
                 <span>{{localize 'CoC7.ActionCost'}} {{#if actionLost}}: {{{inlineActionLostRoll}}}{{/if}}</span>
               </div>
-              <div  class="flex1">
+              <div class="flex1">
                 <input type="text" data-ecc-permissions="gm" name="data.totalActionCost" value="{{data.totalActionCost}}" data-dtype="Number">
               </div>
             </div>
@@ -119,7 +119,7 @@
               <div data-name="data.movePlayer" class="toggle-switch ecc-switch">{{ localize 'CoC7.PlayerMovesToLocation' }}</div>
             </div>
             <div class="card-buttons">
-                <button class="" data-action="validateCard">Validate</button>
+              <button class="" data-action="validateCard">Validate</button>
             </div>
           </div>
         {{/unless}}
@@ -132,7 +132,8 @@
                   {{#unless data.objects.check.passed}}
                     {{#unless data.states.failedConsequencesRolled}}
                       <div class="defineFailureConsequeces">
-                        {{#if data.obstacle.hasDamage }} <!-- Armor relevant only if there's some damage -->
+                        {{#if data.obstacle.hasDamage }}
+                          {{!-- Armor relevant only if there's some damage --}}
                           <div class="form-group armor">
                             <div class="flexrow flex-end">
                               <a data-ecc-permissions="gm" data-flag="ignoreArmor" class="ecc-switch" title="{{ localize 'CoC7.IgnoreArmor' }}">
@@ -186,7 +187,7 @@
                 <div class="defineSkillCheck">
                   <div class="form-group small">
                     {{#if data.flags.hasBonusDice}}
-                    <a data-ecc-permissions="gm" data-flag="consumeBonusDice" class="icon bigger ecc-switch" title="{{ localize 'CoC7.ConsumeBonusDice' }}"><i class="game-icon game-icon-dice-fire"></i></a>
+                      <a data-ecc-permissions="gm" data-flag="consumeBonusDice" class="icon bigger ecc-switch" title="{{ localize 'CoC7.ConsumeBonusDice' }}"><i class="game-icon game-icon-dice-fire"></i></a>
                     {{/if}}
                     <input type="range" data-ecc-permissions="gm" name="data.bonusDice" min="-2" max="2" value="{{data.bonusDice}}" class="slider">
                     {{#if data.obstacle.barrier}}
@@ -196,21 +197,19 @@
                     {{/if}}
                   </div>
                   <div class="form-group">
-                    <input type="text" class="flex4" data-ecc-permissions="gm" name="data.obstacle.checkName" value="{{data.obstacle.checkName}}"
-                      list="check-options" placeholder="{{ localize 'CoC7.Skill' }}"/>
+                    <input type="text" class="flex4" data-ecc-permissions="gm" name="data.obstacle.checkName" value="{{data.obstacle.checkName}}" list="check-options" placeholder="{{ localize 'CoC7.Skill' }}" />
                     {{#if validSkill}}
                       : {{skill.value.value}}%
                     {{else}}
-                      : <input type="text" data-ecc-permissions="gm" name="data.checkThreshold" value="{{data.checkThreshold}}"
-                        placeholder="{{ localize 'CoC7.Value'}}" title="{{strings.EnterValueTitle}}"/>
+                      : <input type="text" data-ecc-permissions="gm" name="data.checkThreshold" value="{{data.checkThreshold}}" placeholder="{{ localize 'CoC7.Value'}}" title="{{strings.EnterValueTitle}}" />
                     {{/if}}
                   </div>
                   <div class="card-buttons">
                     {{#if canTakeCautiousApproach}}
-                    <button class="" data-action="takeCautiousApproach">{{ localize 'CoC7.CautiousApproach' }}</button>
+                      <button class="" data-action="takeCautiousApproach">{{ localize 'CoC7.CautiousApproach' }}</button>
                     {{/if}}
                     {{#if validCheck}}
-                    <button class="" data-action="requestRoll">Request roll</button>
+                      <button class="" data-action="requestRoll">Request roll</button>
                     {{/if}}
                   </div>
                 </div>
@@ -279,7 +278,7 @@
             {{/if}}
             <div class="form-group">
               <label>{{localize 'CoC7.ObstacleName'}}</label>
-              <input type="text" data-ecc-permissions="gm" name="data.obstacle.name" value="{{data.obstacle.name}}"/>
+              <input type="text" data-ecc-permissions="gm" name="data.obstacle.name" value="{{data.obstacle.name}}" />
             </div>
             <div class="card-buttons">
               <button class="" data-action="defineObstacle">{{localize 'CoC7.Validate'}}</button>
@@ -290,13 +289,13 @@
 
       <div class="status-list">
         <div class="status movement-action">
-            <span>{{localize 'CoC7.Actions'}}</span>
-            {{#each data.movementActionArray as |actionClass|}}
+          <span>{{localize 'CoC7.Actions'}}</span>
+          {{#each data.movementActionArray as |actionClass|}}
             <i class="fas fa-bahai {{actionClass}}"></i>
-            {{/each}}
+          {{/each}}
         </div>
         {{#each status as |s|}}
-        <div class="status {{s.css}}">{{s.name}}</div>
+          <div class="status {{s.css}}">{{s.name}}</div>
         {{/each}}
       </div>
     </div>

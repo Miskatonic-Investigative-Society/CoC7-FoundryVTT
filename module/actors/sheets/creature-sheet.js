@@ -10,9 +10,9 @@ export class CoC7CreatureSheet extends CoC7NPCSheet {
    * The prepared data object contains both the actor data as well as additional sheet options
    */
   async getData () {
-    const data = await super.getData()
-    data.isCreature = true
-    return data
+    const sheetData = await super.getData()
+    sheetData.isCreature = true
+    return sheetData
   }
 
   /**

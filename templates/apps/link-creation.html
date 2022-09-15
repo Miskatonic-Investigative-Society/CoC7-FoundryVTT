@@ -73,160 +73,129 @@
     {{/if}}
 
     {{#if link.is.effect}}
-    <div class="sheet effect-options">
-        <!-- Effect Header -->
-        <!-- <header class="sheet-header">
-            <img class="effect-icon" src="{{ data.effect.icon }}" data-edit="effect.icon">
-            <h1 class="effect-title">{{ data.effect.label }}</h1>
-        </header> -->
-    
-        <!-- Effect Configuration Tabs -->
-        <nav class="sheet-tabs tabs">
-            <a class="item" data-tab="details"><i class="fas fa-book"></i> {{localize "EFFECT.TabDetails"}}</a>
-            <a class="item" data-tab="duration"><i class="fas fa-clock"></i> {{localize "EFFECT.TabDuration"}}</a>
-            <a class="item" data-tab="effects"><i class="fas fa-cogs"></i> {{localize "EFFECT.TabEffects"}}</a>
-        </nav>
-    
-        <!-- Details Tab -->
-        <section class="tab" data-tab="details">
-    
-            <div class="form-group">
-                <label>{{ localize "EFFECT.Label" }}</label>
-                <div class="form-fields">
-                    <input type="text" name="effect.label" value="{{ data.effect.label }}"/>
-                </div>
-            </div>
-    
-            <div class="form-group">
-                <label>{{ localize "EFFECT.Icon" }}</label>
-                <div class="form-fields">
-                    {{filePicker target="effect.icon" type="image"}}
-                    <input class="image" type="text" name="effect.icon" placeholder="path/image.png" value="{{data.effect.icon}}"/>
-                </div>
-            </div>
-    
-            <div class="form-group">
-                <label>{{ localize "EFFECT.IconTint" }}</label>
-                <div class="form-fields">
-                    <input class="color" type="text" name="effect.tint" value="{{data.effect.tint}}"/>
-                    <input type="color" value="{{data.effect.tint}}" data-edit="effect.tint"/>
-                </div>
-            </div>
-    
-            <div class="form-group">
-                <label>{{ localize "EFFECT.Disabled" }}</label>
-                <input type="checkbox" name="effect.disabled" {{ checked data.effect.disabled }}/>
-            </div>
-    
-            {{#if isActorEffect}}
-            <div class="form-group">
-                <label>{{ localize "EFFECT.Origin" }}</label>
-                <div class="form-fields">
-                    <input type="text" name="effect.origin" value="{{ data.effect.origin }}" disabled/>
-                </div>
-            </div>
-            {{/if}}
-    
-            {{#if isItemEffect}}
-            <div class="form-group">
-                <label>{{ localize "EFFECT.Transfer" }}</label>
-                <div class="form-fields">
-                    <input type="checkbox" name="effect.transfer" {{checked data.effect.transfer}}/>
-                </div>
-            </div>
-            {{/if}}
+      <div class="sheet effect-options">
 
+        {{!-- Effect Configuration Tabs --}}
+        <nav class="sheet-tabs tabs">
+          <a class="item" data-tab="details"><i class="fas fa-book"></i> {{localize "EFFECT.TabDetails"}}</a>
+          <a class="item" data-tab="duration"><i class="fas fa-clock"></i> {{localize "EFFECT.TabDuration"}}</a>
+          <a class="item" data-tab="effects"><i class="fas fa-cogs"></i> {{localize "EFFECT.TabEffects"}}</a>
+        </nav>
+
+        {{!-- Details Tab --}}
+        <section class="tab" data-tab="details">
+
+          <div class="form-group">
+            <label>{{ localize "EFFECT.Label" }}</label>
+            <div class="form-fields">
+              <input type="text" name="effect.label" value="{{ data.effect.label }}" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>{{ localize "EFFECT.Icon" }}</label>
+            <div class="form-fields">
+              {{filePicker target="effect.icon" type="image"}}
+              <input class="image" type="text" name="effect.icon" placeholder="path/image.png" value="{{data.effect.icon}}" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>{{ localize "EFFECT.IconTint" }}</label>
+            <div class="form-fields">
+              <input class="color" type="text" name="effect.tint" value="{{data.effect.tint}}" />
+              <input type="color" value="{{data.effect.tint}}" data-edit="effect.tint" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>{{ localize "EFFECT.Disabled" }}</label>
+            <input type="checkbox" name="effect.disabled" {{ checked data.effect.disabled }} />
+          </div>
+
+          {{#if isActorEffect}}
             <div class="form-group">
-              <label class="checkbox">
-                <input type="checkbox" name="hasLabel" {{checked data.hasLabel}} /> {{ localize 'CoC7.Label' }}
-              </label>
-              {{#if data.hasLabel}}
+              <label>{{ localize "EFFECT.Origin" }}</label>
+              <div class="form-fields">
+                <input type="text" name="effect.origin" value="{{ data.effect.origin }}" disabled />
+              </div>
+            </div>
+          {{/if}}
+
+          {{#if isItemEffect}}
+            <div class="form-group">
+              <label>{{ localize "EFFECT.Transfer" }}</label>
+              <div class="form-fields">
+                <input type="checkbox" name="effect.transfer" {{checked data.effect.transfer}} />
+              </div>
+            </div>
+          {{/if}}
+
+          <div class="form-group">
+            <label class="checkbox">
+              <input type="checkbox" name="hasLabel" {{checked data.hasLabel}} /> {{ localize 'CoC7.Label' }}
+            </label>
+            {{#if data.hasLabel}}
               <div class="form-fields">
                 <input type="text" name="label" value="{{data.label}}" />
               </div>
-              {{/if}}
-            </div>
+            {{/if}}
+          </div>
         </section>
-    
-        <!-- Duration Tab -->
+
+        {{!-- Duration Tab --}}
         <section class="tab" data-tab="duration">
-            <div class="form-group">
-                <label>{{ localize "EFFECT.DurationSecs" }}</label>
-                <div class="form-fields">
-                    <input type="number" name="effect.duration.seconds" value="{{ data.effect.duration.seconds }}"/>
-                </div>
+          <div class="form-group">
+            <label>{{ localize "EFFECT.DurationSecs" }}</label>
+            <div class="form-fields">
+              <input type="number" name="effect.duration.seconds" value="{{ data.effect.duration.seconds }}" />
             </div>
-            <!-- <div class="form-group">
-                <label>{{ localize "EFFECT.StartTime" }}</label>
-                <div class="form-fields">
-                    <input type="number" name="effect.duration.startTime" value="{{ data.effect.duration.startTime }}"/>
-                </div>
-            </div> -->
-            <hr/>
-            <div class="form-group">
-                <label>{{ localize "EFFECT.DurationTurns" }}</label>
-                <div class="form-fields">
-                    <label>{{ localize "COMBAT.Rounds" }}</label>
-                    <input type="number" name="effect.duration.rounds" value="{{ data.effect.duration.rounds }}"/>
-                    <label>{{ localize "COMBAT.Turns" }}</label>
-                    <input type="number" name="effect.duration.turns" value="{{ data.effect.duration.turns }}"/>
-                </div>
+          </div>
+          <hr />
+          <div class="form-group">
+            <label>{{ localize "EFFECT.DurationTurns" }}</label>
+            <div class="form-fields">
+              <label>{{ localize "COMBAT.Rounds" }}</label>
+              <input type="number" name="effect.duration.rounds" value="{{ data.effect.duration.rounds }}" />
+              <label>{{ localize "COMBAT.Turns" }}</label>
+              <input type="number" name="effect.duration.turns" value="{{ data.effect.duration.turns }}" />
             </div>
-            <!-- <div class="form-group">
-                <label>{{ localize "EFFECT.Combat" }}</label>
-                <div class="form-fields">
-                    <input type="text" name="effect.duration.combat" value="{{ data.effect.duration.combat }}" disabled/>
-                </div>
-            </div> -->
-    
-            <!-- <div class="form-group">
-                <label>{{ localize "EFFECT.StartTurns" }}</label>
-                <div class="form-fields">
-                    <label>{{ localize "COMBAT.Round" }}</label>
-                    <input type="number" name="effect.duration.startRound" value="{{ data.effect.duration.startRound }}"/>
-                    <label>{{ localize "COMBAT.Turn" }}</label>
-                    <input type="number" name="effect.duration.startTurn" value="{{ data.effect.duration.startTurn }}"/>
-                </div>
-            </div> -->
+          </div>
         </section>
-    
-        <!-- Effects Tab -->
+
+        {{!-- Effects Tab --}}
         <section class="tab" data-tab="effects">
-            <header class="effect-change effects-header flexrow">
-                <div class="key">{{ localize "EFFECT.ChangeKey" }}</div>
-                <div class="mode">{{ localize "EFFECT.ChangeMode" }}</div>
-                <div class="value">{{ localize "EFFECT.ChangeValue" }}</div>
-                <div class="effect-controls">
-                    <a class="effect-control" data-action="add"><i class="far fa-plus-square"></i></a>
+          <header class="effect-change effects-header flexrow">
+            <div class="key">{{ localize "EFFECT.ChangeKey" }}</div>
+            <div class="mode">{{ localize "EFFECT.ChangeMode" }}</div>
+            <div class="value">{{ localize "EFFECT.ChangeValue" }}</div>
+            <div class="effect-controls">
+              <a class="effect-control" data-action="add"><i class="far fa-plus-square"></i></a>
+            </div>
+          </header>
+          <ol class="changes-list">
+            {{#each data.effect.changes as |change i|}}
+              <li class="effect-change flexrow" data-index="{{i}}">
+                <div class="key">
+                  <input type="text" name="effect.changes.{{i}}.key" value="{{change.key}}" />
                 </div>
-            </header>
-            <ol class="changes-list">
-                {{#each data.effect.changes as |change i|}}
-                <li class="effect-change flexrow" data-index="{{i}}">
-                    <div class="key">
-                        <input type="text" name="effect.changes.{{i}}.key" value="{{change.key}}"/>
-                    </div>
-                    <div class="mode">
-                        <select name="effect.changes.{{i}}.mode" data-dtype="Number">
-                            {{selectOptions @root.data.effect.modes selected=change.mode}}
-                        </select>
-                    </div>
-                    <div class="value">
-                        <input type="text" name="effect.changes.{{i}}.value" value="{{change.value}}"/>
-                    </div>
-                    <div class="effect-controls">
-                        <a class="effect-control" data-action="delete"><i class="fas fa-trash"></i></a>
-                    </div>
-                </li>
-                {{/each}}
-            </ol>
+                <div class="mode">
+                  <select name="effect.changes.{{i}}.mode" data-dtype="Number">
+                    {{selectOptions @root.data.effect.modes selected=change.mode}}
+                  </select>
+                </div>
+                <div class="value">
+                  <input type="text" name="effect.changes.{{i}}.value" value="{{change.value}}" />
+                </div>
+                <div class="effect-controls">
+                  <a class="effect-control" data-action="delete"><i class="fas fa-trash"></i></a>
+                </div>
+              </li>
+            {{/each}}
+          </ol>
         </section>
-    
-        <!-- <footer class="sheet-footer">
-            <button type="submit"><i class="fas fa-save"></i> {{localize submitText}}</button>
-        </footer> -->
-    </div>
-        {{/if}}
+      </div>
+    {{/if}}
 
     {{#if fromGame}}
       <div class="form-group" data-group="origin">
@@ -234,7 +203,7 @@
           <input type="checkbox" name="fromCompendium" {{checked data.fromCompendium}} /> {{ localize 'SIDEBAR.TabCompendium' }}
         </label>
         <label class="checkbox">
-          <input type="checkbox" name="fromDirectory" {{checked data.fromDirectory}} /> {{#if (eq (localize 'SIDEBAR.TabItems') 'SIDEBAR.TabItems')}}{{ localize 'DOCUMENT.Items' }}{{!-- Foundry VTT V10 --}}{{else}}{{ localize 'SIDEBAR.TabItems' }}{{/if}}
+          <input type="checkbox" name="fromDirectory" {{checked data.fromDirectory}} /> {{ localize 'DOCUMENT.Items' }}
         </label>
       </div>
       <div class="form-group stacked">
@@ -254,70 +223,70 @@
     {{/if}}
 
     {{#unless link.is.effect}}
-    <div class="form-group" data-group="modifiers">
-      {{#unless link.is.item}}
+      <div class="form-group" data-group="modifiers">
+        {{#unless link.is.item}}
+          <label class="checkbox">
+            <input type="checkbox" name="forceModifiers" {{checked data.forceModifiers}} /> {{ localize 'CoC7.Modifiers' }}
+          </label>
+        {{/unless}}
+        {{#if link.is.check}}
+          <label class="checkbox">
+            <input type="checkbox" name="blind" {{checked data.blind}} /> {{ localize 'CoC7.Blind' }}
+          </label>
+        {{/if}}
         <label class="checkbox">
-          <input type="checkbox" name="forceModifiers" {{checked data.forceModifiers}} /> {{ localize 'CoC7.Modifiers' }}
+          <input type="checkbox" name="hasLabel" {{checked data.hasLabel}} /> {{ localize 'CoC7.Label' }}
         </label>
-      {{/unless}}
-      {{#if link.is.check}}
         <label class="checkbox">
-          <input type="checkbox" name="blind" {{checked data.blind}} /> {{ localize 'CoC7.Blind' }}
+          <input type="checkbox" name="hasIcon" {{checked data.hasIcon}} /> {{ localize 'CoC7.Icon' }}
         </label>
-      {{/if}}
-      <label class="checkbox">
-        <input type="checkbox" name="hasLabel" {{checked data.hasLabel}} /> {{ localize 'CoC7.Label' }}
-      </label>
-      <label class="checkbox">
-        <input type="checkbox" name="hasIcon" {{checked data.hasIcon}} /> {{ localize 'CoC7.Icon' }}
-      </label>
-    </div>
+      </div>
 
-    {{#if data.forceModifiers}}
-      <div class='form-group stacked'>
-        <div class='form-group subgroup'>
-          <label>{{localize 'CoC7.RollDifficulty'}}</label>
-          <select name="difficulty">
-            <option value="{{difficultyLevel.unknown}}" {{#if selectedDifficulty.unknown}}selected{{/if}}>{{localize 'CoC7.RollDifficultyUnknown'}}</option>
-            <option value="{{difficultyLevel.regular}}" {{#if selectedDifficulty.regular}}selected{{/if}}>{{localize 'CoC7.RollDifficultyRegular'}}</option>
-            <option value="{{difficultyLevel.hard}}" {{#if selectedDifficulty.hard}}selected{{/if}}>{{localize 'CoC7.RollDifficultyHard'}}</option>
-            <option value="{{difficultyLevel.extreme}}" {{#if selectedDifficulty.extreme}}selected{{/if}}>{{localize 'CoC7.RollDifficultyExtreme'}}</option>
-            <option value="{{difficultyLevel.critical}}" {{#if selectedDifficulty.critical}}selected{{/if}}>{{localize 'CoC7.RollDifficultyCritical'}}</option>
-          </select>
-        </div>
-        <div class='form-group subgroup'>
-          <label>{{localize 'CoC7.BonusDice'}}</label>
-          <div class="penalty-selector">
-            <div class="flexrow">
-              <span style="flex: 1; text-align: left;">-2</span>
-              <span style="flex: 1; text-align: center;"></span>
-              <span style="flex: 1; text-align: center;">-1</span>
-              <span style="flex: 1; text-align: center;"></span>
-              <span style="flex: 1; text-align: center;">0</span>
-              <span style="flex: 1; text-align: center;"></span>
-              <span style="flex: 1; text-align: center;">+1</span>
-              <span style="flex: 1; text-align: center;"></span>
-              <span style="flex: 1; text-align: right;">+2</span>
+      {{#if data.forceModifiers}}
+        <div class='form-group stacked'>
+          <div class='form-group subgroup'>
+            <label>{{localize 'CoC7.RollDifficulty'}}</label>
+            <select name="difficulty">
+              <option value="{{difficultyLevel.unknown}}" {{#if selectedDifficulty.unknown}}selected{{/if}}>{{localize 'CoC7.RollDifficultyUnknown'}}</option>
+              <option value="{{difficultyLevel.regular}}" {{#if selectedDifficulty.regular}}selected{{/if}}>{{localize 'CoC7.RollDifficultyRegular'}}</option>
+              <option value="{{difficultyLevel.hard}}" {{#if selectedDifficulty.hard}}selected{{/if}}>{{localize 'CoC7.RollDifficultyHard'}}</option>
+              <option value="{{difficultyLevel.extreme}}" {{#if selectedDifficulty.extreme}}selected{{/if}}>{{localize 'CoC7.RollDifficultyExtreme'}}</option>
+              <option value="{{difficultyLevel.critical}}" {{#if selectedDifficulty.critical}}selected{{/if}}>{{localize 'CoC7.RollDifficultyCritical'}}</option>
+            </select>
+          </div>
+          <div class='form-group subgroup'>
+            <label>{{localize 'CoC7.BonusDice'}}</label>
+            <div class="penalty-selector">
+              <div class="flexrow">
+                <span style="flex: 1; text-align: left;">-2</span>
+                <span style="flex: 1; text-align: center;"></span>
+                <span style="flex: 1; text-align: center;">-1</span>
+                <span style="flex: 1; text-align: center;"></span>
+                <span style="flex: 1; text-align: center;">0</span>
+                <span style="flex: 1; text-align: center;"></span>
+                <span style="flex: 1; text-align: center;">+1</span>
+                <span style="flex: 1; text-align: center;"></span>
+                <span style="flex: 1; text-align: right;">+2</span>
+              </div>
+              <input type="range" name="modifier" min="-2" max="2" value="{{data.modifier}}">
             </div>
-            <input type="range" name="modifier" min="-2" max="2" value="{{data.modifier}}">
           </div>
         </div>
-      </div>
-    {{/if}}
+      {{/if}}
 
-    {{#if data.hasLabel}}
-      <div class="form-group">
-        <label>{{ localize 'CoC7.Label' }} :</label>
-        <input type="text" name="label" value="{{data.label}}" />
-      </div>
-    {{/if}}
+      {{#if data.hasLabel}}
+        <div class="form-group">
+          <label>{{ localize 'CoC7.Label' }} :</label>
+          <input type="text" name="label" value="{{data.label}}" />
+        </div>
+      {{/if}}
 
-    {{#if data.hasIcon}}
-      <div class="form-group">
-        <label>{{ localize 'CoC7.Icon' }} :</label>
-        <input type="text" name="icon" value="{{data.icon}}" />
-      </div>
-    {{/if}}
+      {{#if data.hasIcon}}
+        <div class="form-group">
+          <label>{{ localize 'CoC7.Icon' }} :</label>
+          <input type="text" name="icon" value="{{data.icon}}" />
+        </div>
+      {{/if}}
     {{/unless}}
   </div>
 

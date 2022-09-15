@@ -1,5 +1,4 @@
 /* global Dialog, renderTemplate */
-
 export class SkillSelectDialog extends Dialog {
   activateListeners (html) {
     super.activateListeners(html)
