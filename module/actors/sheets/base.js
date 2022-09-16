@@ -556,6 +556,7 @@ export class CoC7ActorSheet extends ActorSheet {
           {
             classes: 'main',
             items: [
+              { action: 'encounter', label: 'Encounter' },
               { action: 'roll', label: 'Roll' },
               { action: 'opposed-roll', label: 'Opposed roll' },
               { action: 'combined-roll', label: 'Combined roll' }
@@ -565,7 +566,6 @@ export class CoC7ActorSheet extends ActorSheet {
             classes: 'keeper',
             visibility: 'trusted',
             items: [
-              { action: 'encounter', label: 'Encounter' },
               { action: 'request-roll', label: 'Request roll' },
               {
                 label: { icon: 'fas fa-link', text: 'Link' },
@@ -573,7 +573,8 @@ export class CoC7ActorSheet extends ActorSheet {
                   items: [
                     { action: 'link-tool', label: 'Open in link tool' },
                     { action: 'send-chat', label: 'Send to chat' },
-                    { action: 'copy-to-clipboard', label: 'Copy to clip-board' }
+                    { action: 'copy-to-clipboard', label: 'Copy to clip-board' },
+                    { action: 'link-encounter', label: 'Encounter' }
                   ]
                 }
               }
@@ -1110,6 +1111,7 @@ export class CoC7ActorSheet extends ActorSheet {
       case ('attribute'):
         rollOptions.rollType = CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
         rollOptions.attribute = target.closest('.attribute').dataset.attrib
+        break
     }
     switch (event.currentTarget.dataset.action) {
       case ('roll'):
@@ -1137,7 +1139,14 @@ export class CoC7ActorSheet extends ActorSheet {
         rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NONE
         rollOptions.sendToClipboard = true
         break
+      case ('link-encounter'):
+        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NONE
+        rollOptions.createEncounter = true
+        break
       case ('encounter'):
+        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_SAN_CHECK
+        rollOptions.rollType = CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
+        rollOptions.fastForward = true
         break
 
       default:
@@ -1145,8 +1154,6 @@ export class CoC7ActorSheet extends ActorSheet {
     }
 
     CoC7ChatMessage.trigger(rollOptions)
-
-    ui.notifications.info(`Executing action ${event.currentTarget.dataset.action} on ${targetType}`)
   }
 
   _onRenderItemSheet (event) {

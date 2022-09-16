@@ -158,9 +158,10 @@ export class CoC7ChatMessage {
         shiftKey: options.fastForward ?? options.event?.shiftKey ?? options.fastForward ?? false,
         altKey: options.event?.altKey ?? false,
         isCtrlKey: isCtrlKey(options.event ?? false),
-        openLinkTool: options.openLinkTool,
-        sendToChat: options.sendToChat,
-        sendToClipboard: options.sendToClipboard,
+        createEncounter: options.createEncounter ?? false,
+        openLinkTool: options.openLinkTool ?? false,
+        sendToChat: options.sendToChat ?? false,
+        sendToClipboard: options.sendToClipboard ?? false,
         isCombat:
           options.event?.currentTarget.classList?.contains('combat') ?? false,
         preventStandby: options.preventStandby ?? false
@@ -326,7 +327,7 @@ export class CoC7ChatMessage {
     ) {
       CoC7ChatMessage.createLink(config)
     } else if (
-      (config.options.sendToChat || config.options.sendToClipboard || config.options.openLinkTool) &&
+      (config.options.sendToChat || config.options.sendToClipboard || config.options.openLinkTool || config.options.createEncounter) &&
       game.user.isGM &&
       CoC7ChatMessage.CARD_TYPE_NONE === config.dialogOptions.cardType
     ) {
@@ -372,7 +373,7 @@ export class CoC7ChatMessage {
             config.dialogOptions.rollType ===
             CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
           ) {
-            if (config.options.altKey && config.options.attribute === 'san') {
+            if ((config.options.altKey || config.options.createEncounter) && config.options.attribute === 'san') {
               linkData.check = 'sanloss'
             } else {
               linkData.type = 'attribute'

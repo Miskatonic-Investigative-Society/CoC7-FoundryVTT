@@ -72,12 +72,12 @@ export class CoC7ContextMenu {
         if (subMenu.length > 0) {
           if (window.innerWidth < menuWidth + left + subMenu.outerWidth()) {
             subMenu.css({
-              right: `${menuWidth - 3}px`,
+              right: `${menuWidth - 5}px`,
               left: ''
             })
           } else {
             subMenu.css({
-              left: `${menuWidth - 3}px`,
+              left: `${menuWidth - 5}px`,
               right: ''
             })
           }
