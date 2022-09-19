@@ -22,8 +22,9 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Drop support for V9, and fix #1226, #1232, #1235.
 - Active effect added to items and status.
 - Implementation of context menu instead of key combination for advanced rolls.
-  - Option added to enable context menus.
+  - Option added to enable context menus, option disabled by default.
 - Fix polish translation duplicate thanks to @everyonecancode #1229.
+- Fix chase not updated on participant move #1227
 - Update to Taiwanese localization, thanks to @zeteticl.
 
 ## Version 0.8.2
