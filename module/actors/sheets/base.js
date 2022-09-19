@@ -54,7 +54,7 @@ export class CoC7ActorSheet extends ActorSheet {
       sheetData.data.system.flags.locked = false
     }
 
-    if (this.actor.type === 'vehicle') {
+    if (this.actor.type !== 'vehicle') {
       if (!sheetData.data.system.characteristics) {
         sheetData.data.system.characteristics = {
           str: {
