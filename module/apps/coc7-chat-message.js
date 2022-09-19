@@ -26,6 +26,10 @@ export class CoC7ChatMessage {
     return 'R/SK'
   }
 
+  static get ROLL_TYPE_ENCOUNTER () {
+    return 'R/EC'
+  }
+
   static get CARD_TYPE_COMBINED () {
     return 'C/CO'
   }
@@ -85,7 +89,8 @@ export class CoC7ChatMessage {
       (typeof options.skillId !== 'undefined' ||
         typeof options.skillName !== 'undefined' ||
         typeof options.attribute !== 'undefined' ||
-        typeof options.characteristic !== 'undefined')
+        typeof options.characteristic !== 'undefined' ||
+        options.rollType === CoC7ChatMessage.ROLL_TYPE_ENCOUNTER)
     ) {
       if (typeof options.skillId !== 'undefined') {
         if (options.actor.items.get(options.skillId)) {
@@ -142,7 +147,8 @@ export class CoC7ChatMessage {
       ![
         CoC7ChatMessage.ROLL_TYPE_SKILL,
         CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC,
-        CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
+        CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE,
+        CoC7ChatMessage.ROLL_TYPE_ENCOUNTER
       ].includes(options.rollType)
     ) {
       ui.notifications.error(
@@ -179,6 +185,7 @@ export class CoC7ChatMessage {
       case CoC7ChatMessage.ROLL_TYPE_SKILL:
       case CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC:
       case CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE:
+      case CoC7ChatMessage.ROLL_TYPE_ENCOUNTER:
         config.options.skillId =
           options.skillId ??
           options.event?.currentTarget.closest('.item')?.dataset.skillId
@@ -346,6 +353,7 @@ export class CoC7ChatMessage {
       case CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC:
       case CoC7ChatMessage.ROLL_TYPE_COMBAT:
       case CoC7ChatMessage.ROLL_TYPE_SKILL:
+      case CoC7ChatMessage.ROLL_TYPE_ENCOUNTER:
         {
           const linkData = {
             check: 'check',
@@ -385,6 +393,17 @@ export class CoC7ChatMessage {
             linkData.check = 'item'
             linkData.type = 'weapon'
             linkData.name = config.options.weaponName
+          } else if (
+            config.dialogOptions.rollType ===
+            CoC7ChatMessage.ROLL_TYPE_ENCOUNTER
+          ) {
+            linkData.check = 'sanloss'
+            linkData.sanMin = config.options.actor?.system?.special?.sanLoss?.checkPassed
+            linkData.sanMax = config.options.actor?.system?.special?.sanLoss?.checkFailled
+            linkData.sanReason = config.options.actor.system.infos.type?.length
+              ? config.options.actor.system.infos.type
+              : config.options.actor.name
+            linkData.tokenKey = config.options.actor.actorKey
           } else {
             return
           }

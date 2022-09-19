@@ -219,6 +219,7 @@ export class CoC7Link {
     // San Data
     this._linkData.sanMin = x.sanMin
     this._linkData.sanMax = x.sanMax
+    this._linkData.sanReason = x.sanReason
 
     // Effect
     if (this.is.effect || x.object) {

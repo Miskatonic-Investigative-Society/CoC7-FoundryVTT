@@ -84,7 +84,7 @@ const sources = {
 const dbFile = []
 try {
   for (const lang in sources) {
-    let id = generateBuildConsistentID('manual' + lang)
+    const id = generateBuildConsistentID('manual' + lang)
     const dbEntry = {
       name: sources[lang].name + ' [' + lang + ']',
       pages: [],
@@ -92,7 +92,7 @@ try {
     }
     const links = {}
     for (const source of sources[lang].pages) {
-      let id = generateBuildConsistentID('manual' + lang + source.file)
+      const id = generateBuildConsistentID('manual' + lang + source.file)
       collisions[id] = true
       links[source.file] = id
     }
@@ -158,11 +158,10 @@ write('./packs/system-doc.db', dbFile.join('\n'))
  * @param {string} idSource
  * @returns id, an string of 16 characters with the id consistently generated from idSource
  */
-function generateBuildConsistentID(idSource) {
+function generateBuildConsistentID (idSource) {
   let id = crypto.createHash('md5').update(idSource).digest('base64').replace(/[\\+=\\/]/g, '').substring(0, 16)
   while (typeof collisions[id] !== 'undefined') {
     id = crypto.createHash('md5').update(idSource + Math.random().toString()).digest('base64').replace(/[\\+=\\/]/g, '').substring(0, 16)
   }
   return id
 }
-
