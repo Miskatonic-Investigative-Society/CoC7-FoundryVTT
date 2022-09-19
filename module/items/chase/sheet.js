@@ -629,10 +629,10 @@ export class CoC7ChaseSheet extends ItemSheet {
         await this._onChangeMovementActions(1, event)
         break
       case 'moveBackward':
-        await this.item.moveParticipant(participantUuid, -1, { render: false })
+        await this.item.moveParticipant(participantUuid, -1, { render: true })
         break
       case 'moveForward':
-        await this.item.moveParticipant(participantUuid, 1, { render: false })
+        await this.item.moveParticipant(participantUuid, 1, { render: true })
         break
       case 'activateParticipant':
         return await this.item.activateParticipant(participantUuid)

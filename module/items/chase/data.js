@@ -463,9 +463,9 @@ export class CoC7Chase extends CoC7Item {
         )
       } else if (scrollToLocation) {
         locationsDataUpdate = {}
-        locationsDataUpdate['data.scroll.chaseTrack.from'] =
+        locationsDataUpdate['system.scroll.chaseTrack.from'] =
           this.chaseTrackCurrentScrollPosition
-        locationsDataUpdate['data.scroll.chaseTrack.to'] =
+        locationsDataUpdate['system.scroll.chaseTrack.to'] =
           this.getChaseTrackLocationScrollPosition(participantLocation.uuid, {
             html
           })
@@ -529,7 +529,7 @@ export class CoC7Chase extends CoC7Item {
       const index = participants.findIndex(p => p.rollUuid === roll.uuid)
       if (index >= 0) {
         participants[index].speedCheck.rollDataString = roll.JSONRollString
-        await this.update({ 'data.participants': participants })
+        await this.update({ 'system.participants': participants })
       }
     } else {
       const data = {
@@ -769,7 +769,7 @@ export class CoC7Chase extends CoC7Item {
     // Remove all unnecessary items (cssClass, )
     const updatedList = this.cleanLocationsList(list)
     await this.update(
-      { 'data.locations.list': updatedList },
+      { 'system.locations.list': updatedList },
       { render }
     )
   }
@@ -873,11 +873,11 @@ export class CoC7Chase extends CoC7Item {
     locations.forEach(l => {
       delete l.active
     })
-    updateData['data.locations.list'] = this.cleanLocationsList(locations)
+    updateData['system.locations.list'] = this.cleanLocationsList(locations)
 
     if (scrollToLocation) {
-      updateData['data.scroll.chaseTrack.from'] = 0
-      updateData['data.scroll.chaseTrack.to'] = -1
+      updateData['system.scroll.chaseTrack.from'] = 0
+      updateData['system.scroll.chaseTrack.to'] = -1
     }
     return updateData
   }
@@ -899,12 +899,12 @@ export class CoC7Chase extends CoC7Item {
       delete l.active
       if (locationUuid === l.uuid) l.active = true
     })
-    updateData['data.locations.list'] = this.cleanLocationsList(locations)
+    updateData['system.locations.list'] = this.cleanLocationsList(locations)
     // await this.updateLocationsList(locations, { render: false })
     if (scrollToLocation) {
-      updateData['data.scroll.chaseTrack.from'] =
+      updateData['system.scroll.chaseTrack.from'] =
         this.chaseTrackCurrentScrollPosition
-      updateData['data.scroll.chaseTrack.to'] =
+      updateData['system.scroll.chaseTrack.to'] =
         this.getChaseTrackLocationScrollPosition(locationUuid, { html })
       // await this.setchaseTrackScroll({
       //   from: this.chaseTrackCurrentScrollPosition,
@@ -1252,7 +1252,7 @@ export class CoC7Chase extends CoC7Item {
         participant.data
       )
       await this.update(
-        { 'data.participants': participantsData },
+        { 'system.participants': participantsData },
         { render: false }
       )
       modified = true
@@ -1426,9 +1426,9 @@ export class CoC7Chase extends CoC7Item {
   } = {}) {
     await this.update(
       {
-        'data.scroll.chaseTrack.from':
+        'system.scroll.chaseTrack.from':
           undefined === from ? this.chaseTrackCurrentScrollPosition : from,
-        'data.scroll.chaseTrack.to':
+        'system.scroll.chaseTrack.to':
           undefined === to ? this.chaseTrackCurrentScrollPosition : to
       },
       { render }
