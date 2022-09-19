@@ -4,6 +4,8 @@ import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7Parser } from '../../apps/parser.js'
 import { chatHelper, isCtrlKey } from '../../chat/helper.js'
 import { SanCheckCard } from '../../chat/cards/san-check.js'
+import { CoC7ContextMenu } from '../../context-menu.js'
+import { CoC7ChatMessage } from '../../apps/coc7-chat-message.js'
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -65,12 +67,69 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
 
   activateListeners (html) {
     super.activateListeners(html)
+
+    if (game.settings.get('CoC7', 'useContextMenus')) {
+      if (!this.menus) this.menus = []
+
+      const sanlossMenu = {
+        id: 'san-loss-roll',
+        classes: 'roll-menu',
+        section: [
+          {
+            classes: 'main',
+            items: [
+              { action: 'link-tool', label: 'Open in link tool' },
+              { action: 'send-chat', label: 'Send to chat' },
+              { action: 'copy-to-clipboard', label: 'Copy to clip-board' }
+            ]
+          }
+
+        ]
+      }
+
+      const sanlossContextMenu = new CoC7ContextMenu()
+      sanlossContextMenu.bind(sanlossMenu, html, this._onSanLossContextMenuClick.bind(this))
+      this.menus.push(sanlossContextMenu)
+    }
+
     html.find('.roll-san').click(this._onSanCheck.bind(this))
     // if (this.actor.isOwner) {
     //   html
     //     .find('[name="data.attribs.hp.value"]')
     //     .change(event => this.actor.setHealthStatusManually(event))
     // }
+  }
+
+  async _onSanLossContextMenuClick (event) {
+    const rollOptions = {
+      rollType: CoC7ChatMessage.ROLL_TYPE_ENCOUNTER,
+      preventStandby: true,
+      fastForward: false,
+      event,
+      cardType: CoC7ChatMessage.CARD_TYPE_SAN_CHECK,
+      actor: this.actor
+    }
+
+    switch (event.currentTarget.dataset.action) {
+      case ('link-tool'):
+        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NONE
+        rollOptions.createEncounter = true
+        rollOptions.openLinkTool = true
+        break
+      case ('send-chat'):
+        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NONE
+        rollOptions.createEncounter = true
+        rollOptions.sendToChat = true
+        break
+      case ('copy-to-clipboard'):
+        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NONE
+        rollOptions.createEncounter = true
+        rollOptions.sendToClipboard = true
+        break
+      default:
+        break
+    }
+    CoC7ChatMessage.trigger(rollOptions)
   }
 
   async _onSanCheck (event) {

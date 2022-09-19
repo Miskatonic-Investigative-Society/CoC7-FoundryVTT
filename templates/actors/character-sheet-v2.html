@@ -5,6 +5,7 @@
         <i class="game-icon game-icon-test-tubes"></i></a>
     </div>
   {{/if}}
+
   {{#unless permissionLimited}}
     <div class="token-extras">
       {{#if canDragToken}}
@@ -89,7 +90,7 @@
             {{#each actor.characteristics as |characteristic key|}}
               <div class="char-box" data-characteristic="{{key}}" draggable="true">
                 <div class="roll-icon"><i class="game-icon game-icon-d10"></i></div>
-                <div class="charac-name characteristic-label rollable" draggable="true">{{characteristic.shortName}}</div>
+                <div class="charac-name characteristic-label rollable" draggable="true"  data-context-menu="skill-roll" data-target-type="characteristic">{{characteristic.shortName}}</div>
                 <div class="charac-score">
                   <div class="main-score">
                     <input class="characteristic-score" type="text" name="system.characteristics.{{key}}.value" value="{{characteristic.value}}" data-dtype="Number" />

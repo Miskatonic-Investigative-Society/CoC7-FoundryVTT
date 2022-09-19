@@ -13,6 +13,7 @@ import { DamageCard } from '../../chat/cards/damage.js'
 import { CoC7LinkCreationDialog } from '../../apps/link-creation-dialog.js'
 import CoC7ActiveEffect from '../../active-effect.js'
 import { CoC7Link } from '../../apps/link.js'
+import { CoC7ContextMenu } from '../../context-menu.js'
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -513,6 +514,104 @@ export class CoC7ActorSheet extends ActorSheet {
   activateListeners (html) {
     super.activateListeners(html)
 
+    if (game.settings.get('CoC7', 'useContextMenus')) {
+      if (!this.menus) this.menus = []
+
+      const rollMenu = {
+        id: 'skill-roll',
+        classes: 'roll-menu',
+        section: [
+          {
+            classes: 'main',
+            items: [
+              { action: 'roll', label: 'Roll' },
+              { action: 'opposed-roll', label: 'Opposed roll' },
+              { action: 'combined-roll', label: 'Combined roll' }
+            ]
+          },
+          {
+            classes: 'keeper',
+            visibility: 'gm',
+            items: [
+              {
+                label: { icon: 'fas fa-link', text: 'Link' },
+                subMenu: {
+                  items: [
+                    { action: 'link-tool', label: 'Open in link tool' },
+                    { action: 'send-chat', label: 'Send to chat' },
+                    { action: 'copy-to-clipboard', label: 'Copy to clip-board' }
+                  ]
+                }
+              },
+              { action: 'request-roll', label: 'Request roll' }
+            ]
+          }
+        ]
+      }
+
+      const sanMenu = {
+        id: 'san-roll',
+        classes: 'roll-menu',
+        section: [
+          {
+            classes: 'main',
+            items: [
+              { action: 'encounter', label: 'Encounter' },
+              { action: 'roll', label: 'Roll' },
+              { action: 'opposed-roll', label: 'Opposed roll' },
+              { action: 'combined-roll', label: 'Combined roll' }
+            ]
+          },
+          {
+            classes: 'keeper',
+            visibility: 'trusted',
+            items: [
+              { action: 'request-roll', label: 'Request roll' },
+              {
+                label: { icon: 'fas fa-link', text: 'Link' },
+                subMenu: {
+                  items: [
+                    { action: 'link-tool', label: 'Open in link tool' },
+                    { action: 'send-chat', label: 'Send to chat' },
+                    { action: 'copy-to-clipboard', label: 'Copy to clip-board' },
+                    { action: 'link-encounter', label: 'Encounter' }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+
+      const rollContextMenu = new CoC7ContextMenu()
+      rollContextMenu.bind(rollMenu, html, this._onContextMenuClick.bind(this))
+      this.menus.push(rollContextMenu)
+
+      const sanContextMenu = new CoC7ContextMenu()
+      sanContextMenu.bind(sanMenu, html, this._onContextMenuClick.bind(this))
+      this.menus.push(sanContextMenu)
+    } else {
+      html
+        .find('.characteristic-label')
+        .contextmenu(this._onOpposedRoll.bind(this))
+      html
+        .find('.skill-name.rollable')
+        .contextmenu(this._onOpposedRoll.bind(this))
+      html
+        .find('.attribute-label.rollable')
+        .contextmenu(this._onOpposedRoll.bind(this))
+    }
+
+    // context menu bind
+    html
+      .find('.characteristic-label')
+      .click(this._onRollCharacteriticTest.bind(this))
+    html.find('.skill-name.rollable').click(this._onRollSkillTest.bind(this))
+    html.find('.skill-image').click(this._onRollSkillTest.bind(this))
+    html
+      .find('.attribute-label.rollable')
+      .click(this._onRollAttribTest.bind(this))
+
     html
       .find('.token-drag-handle')
       .on('dragstart', this._onDragTokenStart.bind(this))
@@ -530,26 +629,9 @@ export class CoC7ActorSheet extends ActorSheet {
         .on('dragstart', event => this._onDragSanCheck(event))
 
       html
-        .find('.characteristic-label')
-        .contextmenu(this._onOpposedRoll.bind(this))
-      html
-        .find('.skill-name.rollable')
-        .contextmenu(this._onOpposedRoll.bind(this))
-      html
-        .find('.attribute-label.rollable')
-        .contextmenu(this._onOpposedRoll.bind(this))
-      html
         .find('.weapon-name.rollable')
         .contextmenu(this._onOpposedRoll.bind(this))
 
-      html
-        .find('.characteristic-label')
-        .click(this._onRollCharacteriticTest.bind(this))
-      html.find('.skill-name.rollable').click(this._onRollSkillTest.bind(this))
-      html.find('.skill-image').click(this._onRollSkillTest.bind(this))
-      html
-        .find('.attribute-label.rollable')
-        .click(this._onRollAttribTest.bind(this))
       html.find('.lock').click(this._onLockClicked.bind(this))
       html.find('.flag').click(this._onFlagClicked.bind(this))
       html.find('.formula').click(this._onFormulaClicked.bind(this))
@@ -1006,6 +1088,72 @@ export class CoC7ActorSheet extends ActorSheet {
         }
       }, delay)
     }
+  }
+
+  _onContextMenuClick (event, target) {
+    const targetType = target.dataset?.targetType
+    const rollOptions = {
+      preventStandby: true,
+      fastForward: false,
+      actor: this.actor
+    }
+    switch (targetType) {
+      case ('skill'):
+        rollOptions.rollType = CoC7ChatMessage.ROLL_TYPE_SKILL
+        rollOptions.skillId = target.closest('.item')?.dataset.skillId
+
+        break
+      case ('characteristic'):
+        rollOptions.rollType = CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC
+        rollOptions.characteristic = target.closest('.char-box').dataset.characteristic
+        break
+
+      case ('attribute'):
+        rollOptions.rollType = CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
+        rollOptions.attribute = target.closest('.attribute').dataset.attrib
+        break
+    }
+    switch (event.currentTarget.dataset.action) {
+      case ('roll'):
+        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NORMAL
+        break
+      case ('opposed-roll'):
+        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_OPPOSED
+        break
+      case ('combined-roll'):
+        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_COMBINED
+        break
+      case ('request-roll'):
+        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NORMAL
+        rollOptions.preventStandby = false
+        break
+      case ('link-tool'):
+        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NONE
+        rollOptions.openLinkTool = true
+        break
+      case ('send-chat'):
+        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NONE
+        rollOptions.sendToChat = true
+        break
+      case ('copy-to-clipboard'):
+        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NONE
+        rollOptions.sendToClipboard = true
+        break
+      case ('link-encounter'):
+        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_NONE
+        rollOptions.createEncounter = true
+        break
+      case ('encounter'):
+        rollOptions.cardType = CoC7ChatMessage.CARD_TYPE_SAN_CHECK
+        rollOptions.rollType = CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
+        rollOptions.fastForward = true
+        break
+
+      default:
+        break
+    }
+
+    CoC7ChatMessage.trigger(rollOptions)
   }
 
   _onRenderItemSheet (event) {
@@ -1609,12 +1757,23 @@ export class CoC7ActorSheet extends ActorSheet {
   async _onRollCharacteriticTest (event) {
     event.preventDefault()
     if (event.currentTarget.classList.contains('flagged4dev')) return
-    CoC7ChatMessage.trigger({
-      rollType: CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC,
-      cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
-      event,
-      actor: this.actor
-    })
+    if (game.settings.get('CoC7', 'useContextMenus')) {
+      CoC7ChatMessage.trigger({
+        rollType: CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC,
+        cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
+        preventStandby: true,
+        fastForward: true,
+        characteristic: event.currentTarget.closest('.char-box').dataset.characteristic,
+        actor: this.actor
+      })
+    } else {
+      CoC7ChatMessage.trigger({
+        rollType: CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC,
+        cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
+        event,
+        actor: this.actor
+      })
+    }
   }
 
   async _onRollAttribTest (event) {
@@ -1641,15 +1800,26 @@ export class CoC7ActorSheet extends ActorSheet {
       return
     }
 
-    CoC7ChatMessage.trigger({
-      rollType: CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE,
-      cardType:
+    if (game.settings.get('CoC7', 'useContextMenus')) {
+      CoC7ChatMessage.trigger({
+        rollType: CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC,
+        cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
+        preventStandby: true,
+        fastForward: true,
+        attribute: event.currentTarget.closest('.attribute').dataset.attrib,
+        actor: this.actor
+      })
+    } else {
+      CoC7ChatMessage.trigger({
+        rollType: CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE,
+        cardType:
         event.altKey && attrib === 'san'
           ? CoC7ChatMessage.CARD_TYPE_SAN_CHECK
           : CoC7ChatMessage.CARD_TYPE_NORMAL,
-      event,
-      actor: this.actor
-    })
+        event,
+        actor: this.actor
+      })
+    }
   }
 
   /**
@@ -1660,12 +1830,23 @@ export class CoC7ActorSheet extends ActorSheet {
   _onRollSkillTest (event) {
     event.preventDefault()
     if (event.currentTarget.classList.contains('flagged4dev')) return
-    CoC7ChatMessage.trigger({
-      rollType: CoC7ChatMessage.ROLL_TYPE_SKILL,
-      cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
-      event,
-      actor: this.actor
-    })
+    if (game.settings.get('CoC7', 'useContextMenus')) {
+      CoC7ChatMessage.trigger({
+        rollType: CoC7ChatMessage.ROLL_TYPE_SKILL,
+        cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
+        preventStandby: true,
+        fastForward: true,
+        skillId: event?.currentTarget.closest('.item')?.dataset.skillId,
+        actor: this.actor
+      })
+    } else {
+      CoC7ChatMessage.trigger({
+        rollType: CoC7ChatMessage.ROLL_TYPE_SKILL,
+        cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
+        event,
+        actor: this.actor
+      })
+    }
   }
 
   /** @override */

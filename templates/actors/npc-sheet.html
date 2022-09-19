@@ -52,9 +52,9 @@
           {{#each data.system.characteristics as |characteristic key|}}
             {{#if ../data.system.flags.locked}}
               {{#if characteristic.display}}
-                <div class="flexcol" style=" margin-right: 2px;" data-characteristic="{{key}}">
+                <div class="flexcol char-box" style=" margin-right: 2px;" data-characteristic="{{key}}">
                   <div class="characteristic-label rollable" draggable="true" style="text-align: left;">
-                    <label>{{localize characteristic.short}}</label>
+                    <label data-context-menu="skill-roll" data-target-type="characteristic">{{localize characteristic.short}}</label>
                   </div>
                   <div style="text-align:center;border: 1px groove;margin-right: 2px;">
                     {{#if characteristic.editable}}
@@ -119,7 +119,7 @@
 
             <div class="flexrow flex1 attribute" data-attrib="san">
               {{#if hasSan}}
-                <label class="attribute-label rollable" draggable="true">{{localize 'CoC7.SAN'}} :</label>
+                <label class="attribute-label rollable" draggable="true" data-context-menu="san-roll" data-target-type="attribute">{{localize 'CoC7.SAN'}} :</label>
                 <input class="attribute-value" type="text" name="system.attribs.san.value" value="{{data.system.attribs.san.value}}" data-dtype="Number" />
                 <span style="flex: none;font-size: 14px;line-height:20px;">/</span>
                 {{#if data.system.attribs.san.auto}}
@@ -227,7 +227,7 @@
             <a class="condition-monitor {{#if data.system.conditions.indefInsane.value}}status-on{{/if}}" title="{{#if data.system.conditions.indefInsane.value}}{{localize 'CoC7.UnderlyingInsanity'}}{{else}}{{localize 'CoC7.IndefiniteInsanity'}}{{/if}}" data-condition="indefInsane"><i class="game-icon game-icon-tentacles-skull"></i></a>
             <div class="flex1"></div>
 
-            <div class="san-check flexrow" style="flex: 8; font-size: 12px;" draggable="true">
+            <div class="san-check flexrow" style="flex: 8; font-size: 12px;" draggable="true" data-context-menu="san-loss-roll" data-target-type="san-check">
               <label class="roll-san rollable" style="text-align: right;" title="{{ localize 'CoC7.SanRollHint'}}">{{ localize "CoC7.SANLoss" }} :</label>
               {{#if data.system.flags.locked}}
                 <span class="san-value pass flex1" style="line-height: 22px;padding-left: 2px; text-align: right;" placeholder="pass">{{data.system.special.sanLoss.checkPassed}}</span>

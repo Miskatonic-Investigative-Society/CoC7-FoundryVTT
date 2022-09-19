@@ -1,5 +1,8 @@
 <div class="luck-group attribute" data-attrib="lck">
-  <label class="attribute-label rollable" draggable="true">{{localize 'CoC7.Luck'}}</label>
+  <label
+    class="attribute-label rollable"
+    draggable="true"
+    data-context-menu="{{#if data.system.flags.locked}}skill-roll{{/if}}" data-target-type="attribute">{{localize 'CoC7.Luck'}}</label>
   <input class="attribute-value" type="text" name="system.attribs.lck.value" value="{{data.system.attribs.lck.value}}" data-dtype="Number" data-attrib="lck">
   <input class="attribute-value invisible" type="text" name="system.attribs.lck.max" value="99" data-dtype="Number" data-attrib="lck" readonly>
 </div>
@@ -39,7 +42,10 @@
 
 <div class="san-group">
   <div class="san-text attribute" data-attrib="san">
-    <label class="{{#if data.system.flags.locked}} attribute-label rollable{{else}} auto-toggle{{#unless data.system.attribs.san.auto}} manual-override{{/unless}}{{/if}}" draggable="true">{{localize 'CoC7.Sanity'}}</label>
+    <label
+      class="{{#if data.system.flags.locked}} attribute-label rollable{{else}} auto-toggle{{#unless data.system.attribs.san.auto}} manual-override{{/unless}}{{/if}}"
+      draggable="true"
+      data-context-menu="{{#if data.system.flags.locked}}san-roll{{/if}}" data-target-type="attribute">{{localize 'CoC7.Sanity'}}</label>
     <div class="monitor san-value">
       <div class="current-value">
         <input class="attribute-value" type="text" name="system.attribs.san.value" value="{{data.system.attribs.san.value}}" data-dtype="Number" />

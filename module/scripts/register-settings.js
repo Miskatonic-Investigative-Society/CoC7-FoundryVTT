@@ -18,6 +18,15 @@ export function registerSettings () {
   })
   CoC7GameRuleSettings.registerSettings()
 
+  game.settings.register('CoC7', 'useContextMenus', {
+    name: 'SETTINGS.UseContextMenus',
+    hint: 'SETTINGS.UseContextMenusHint',
+    scope: 'world',
+    config: true,
+    type: Boolean,
+    default: false
+  })
+
   game.settings.register('CoC7', 'dholeUploadDirectory', {
     name: 'CoC7.Settings.DholeUpload.Directory.Name',
     hint: 'CoC7.Settings.DholeUpload.Directory.Hint',
