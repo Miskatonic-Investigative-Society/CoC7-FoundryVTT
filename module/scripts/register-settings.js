@@ -18,6 +18,15 @@ export function registerSettings () {
   })
   CoC7GameRuleSettings.registerSettings()
 
+  game.settings.register('CoC7', 'useContextMenus', {
+    name: 'SETTINGS.UseContextMenus',
+    hint: 'SETTINGS.UseContextMenusHint',
+    scope: 'world',
+    config: true,
+    type: Boolean,
+    default: false
+  })
+
   game.settings.register('CoC7', 'dholeUploadDirectory', {
     name: 'CoC7.Settings.DholeUpload.Directory.Name',
     hint: 'CoC7.Settings.DholeUpload.Directory.Hint',
@@ -426,7 +435,7 @@ export function registerSettings () {
       default: true,
       type: Boolean
     })
-    const [version] = game.modules.get('dice-so-nice')?.data.version.split('.')
+    const [version] = game.modules.get('dice-so-nice')?.version.split('.')
     if (!isNaN(Number(version)) && Number(version) >= 3) {
       game.settings.register('CoC7', 'tenDieBonus', {
         name: 'SETTINGS.TenDieBonus',

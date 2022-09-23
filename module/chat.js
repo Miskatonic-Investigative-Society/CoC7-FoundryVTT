@@ -1,12 +1,11 @@
 /* global $, ChatMessage, CONST, game, Token, tokenData, ui */
-
 import { CoC7Check } from './check.js'
 import { COC7 } from './config.js'
 import { CoC7MeleeInitiator } from './chat/combat/melee-initiator.js'
 import { CoC7MeleeTarget } from './chat/combat/melee-target.js'
 import { CoC7MeleeResoltion } from './chat/combat/melee-resolution.js'
 import { CoC7RangeInitiator } from './chat/rangecombat.js'
-import { CoC7Roll, chatHelper } from './chat/helper.js'
+import { CoC7Roll, chatHelper, isCtrlKey } from './chat/helper.js'
 // import { CoC7DamageRoll } from './chat/damagecards.js';
 import { CoC7ConCheck } from './chat/concheck.js'
 import { CoC7Parser } from './apps/parser.js'
@@ -159,8 +158,8 @@ export class CoC7Chat {
 
     // if( chatMessage.getFlag( 'CoC7', 'reveled')){
     // }
-    if (game.user.isGM && chatMessage.data.type === 0) {
-      const card = $(chatMessage.data.content)[0]
+    if (game.user.isGM && chatMessage.type === 0) {
+      const card = $(chatMessage.content)[0]
       if (card.classList.contains('melee')) {
         if (card.dataset.resolved === 'true') {
           if (card.classList.contains('initiator')) {
@@ -1032,10 +1031,7 @@ export class CoC7Chat {
         check.isBlind = false
         check.computeCheck()
         if (
-          event.metaKey ||
-          event.ctrlKey ||
-          event.keyCode === 91 ||
-          event.keyCode === 224
+          isCtrlKey(event)
         ) {
           check.updateChatCard({ makePublic: true })
         } else {

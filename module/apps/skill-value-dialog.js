@@ -1,5 +1,4 @@
 /* global Dialog, FormData, game, renderTemplate */
-
 export class SkillValueDialog {
   static async create (name = null, baseValue = null) {
     const html = await renderTemplate(

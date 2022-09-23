@@ -1,5 +1,4 @@
 /* global $, ChatMessage, game, renderTemplate, ui */
-
 // import { CoCActor } from '../../actors/actor.js';
 import { CoC7Check } from '../../check.js'
 
@@ -18,7 +17,7 @@ export class RollCard {
   }
 
   static async fromMessage (message) {
-    const cardElement = $(message.data.content)[0]
+    const cardElement = $(message.content)[0]
     if (!cardElement) return undefined
     const card = await this.fromHTMLCardElement(cardElement)
     card.message = message
@@ -85,7 +84,7 @@ export class RollCard {
 
       if (messages.length) {
         // Old messages can't be used if message is more than a day old mark it as resolved
-        const timestamp = new Date(messages[0].data.timestamp)
+        const timestamp = new Date(messages[0].timestamp)
         const now = new Date()
         const timeDiffSec = (now - timestamp) / 1000
         if (24 * 60 * 60 < timeDiffSec) {
@@ -244,7 +243,7 @@ export class RollCard {
     return false
   }
 
-  get isGM () {
+  get isKeeper () {
     return game.user.isGM
   }
 

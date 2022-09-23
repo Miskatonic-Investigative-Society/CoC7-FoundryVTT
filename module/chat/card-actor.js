@@ -1,5 +1,4 @@
 /* global ChatMessage, game */
-
 import { chatHelper } from './helper.js'
 
 export class ChatCardActor {

@@ -6,7 +6,7 @@ This tools is available to GM only.
 
 ![Creation tool](../../assets/manual/links/links-creation-tool.webp)
 
-using this you can create @Compendium[CoC7.system-doc.fk040vqb4per5ju1]{link} for skill check, san check, effects ...
+using this you can create [link](links.md) for skill check, san check, effects ...
 alternatively you can open the tool by holding CTRL while clicking no an item or a skill.
 
 ## Main window
@@ -31,7 +31,7 @@ If you do not supply a label and/or an icon, a default label and icon will be ad
 
 ## Effects window
 
-Selecting effects will open an advance window where you can create links for @Compendium[CoC7.system-doc.rmtiwtbixojhyf5v]{active effects}.
+Selecting effects will open an advance window where you can create links for [active effects](effects.md).
 Select the options the same way you will be doing for a regular effect.
 
 ## Using links

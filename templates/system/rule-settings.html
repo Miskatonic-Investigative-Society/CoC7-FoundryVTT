@@ -3,7 +3,7 @@
   <div class="form-group">
     <label>{{localize 'SETTINGS.developmentRollForLuck'}}</label>
     <div class="form-fields" style="flex: 1;">
-        <input type="checkbox" {{checked developmentRollForLuck.value}} name="developmentRollForLuck">
+      <input type="checkbox" {{checked developmentRollForLuck.value}} name="developmentRollForLuck">
     </div>
     <p class="notes">{{localize 'SETTINGS.developmentRollForLuckHint'}}</p>
   </div>
@@ -12,8 +12,8 @@
     <div class="form-fields">
       <select name="initiativeRule" data-dtype="String">
         {{#select initiativeRule.value}}
-        <option value="basic">{{localize 'SETTINGS.InitiativeRuleBasic'}}</option>
-        <option value="optional">{{localize 'SETTINGS.InitiativeRuleOptional'}}</option>
+          <option value="basic">{{localize 'SETTINGS.InitiativeRuleBasic'}}</option>
+          <option value="optional">{{localize 'SETTINGS.InitiativeRuleOptional'}}</option>
         {{/select}}
       </select>
     </div>
@@ -24,62 +24,62 @@
   <div class="form-group">
     <label>{{localize 'SETTINGS.PulpRules'}}</label>
     <div class="form-fields">
-          <select id="pulpRulesSelect">
-          {{#select pulpSelection}}
+      <select id="pulpRulesSelect">
+        {{#select pulpSelection}}
           <option value="none">{{localize 'None'}}</option>
           <option value="some">{{localize 'Partial'}}</option>
           <option value="all">{{localize 'All'}}</option>
-          {{/select}}
-        </select>
+        {{/select}}
+      </select>
     </div>
     <p class="notes">{{localize 'SETTINGS.PulpRulesHint'}}</p>
   </div>
   <div class="form-group">
     <label>{{localize 'CoC7.Settings.PulpRules.DoubleMaxHealth.Name'}}</label>
     <div class="form-fields" style="flex: 1;">
-        <input type="checkbox" {{checked pulpRuleDoubleMaxHealth.value}} name="pulpRuleDoubleMaxHealth" class="pulpRulesSelect">
+      <input type="checkbox" {{checked pulpRuleDoubleMaxHealth.value}} name="pulpRuleDoubleMaxHealth" class="pulpRulesSelect">
     </div>
     <p class="notes">{{localize 'CoC7.Settings.PulpRules.DoubleMaxHealth.Hint'}}</p>
   </div>
   <div class="form-group">
     <label>{{localize 'CoC7.Settings.PulpRules.DevelopmentRollLuck.Name'}}</label>
     <div class="form-fields" style="flex: 1;">
-        <input type="checkbox" {{checked pulpRuleDevelopmentRollLuck.value}} name="pulpRuleDevelopmentRollLuck" class="pulpRulesSelect">
+      <input type="checkbox" {{checked pulpRuleDevelopmentRollLuck.value}} name="pulpRuleDevelopmentRollLuck" class="pulpRulesSelect">
     </div>
     <p class="notes">{{localize 'CoC7.Settings.PulpRules.DevelopmentRollLuck.Hint'}}</p>
   </div>
   <div class="form-group">
     <label>{{localize 'CoC7.Settings.PulpRules.Archetype.Name'}}</label>
     <div class="form-fields" style="flex: 1;">
-        <input type="checkbox" {{checked pulpRuleArchetype.value}} name="pulpRuleArchetype" class="pulpRulesSelect">
+      <input type="checkbox" {{checked pulpRuleArchetype.value}} name="pulpRuleArchetype" class="pulpRulesSelect">
     </div>
     <p class="notes">{{localize 'CoC7.Settings.PulpRules.Archetype.Hint'}}</p>
   </div>
   <div class="form-group">
     <label>{{localize 'CoC7.Settings.PulpRules.Organization.Name'}}</label>
     <div class="form-fields" style="flex: 1;">
-        <input type="checkbox" {{checked pulpRuleOrganization.value}} name="pulpRuleOrganization" class="pulpRulesSelect">
+      <input type="checkbox" {{checked pulpRuleOrganization.value}} name="pulpRuleOrganization" class="pulpRulesSelect">
     </div>
     <p class="notes">{{localize 'CoC7.Settings.PulpRules.Organization.Hint'}}</p>
   </div>
   <div class="form-group">
     <label>{{localize 'CoC7.Settings.PulpRules.Talents.Name'}}</label>
     <div class="form-fields" style="flex: 1;">
-        <input type="checkbox" {{checked pulpRuleTalents.value}} name="pulpRuleTalents" class="pulpRulesSelect">
+      <input type="checkbox" {{checked pulpRuleTalents.value}} name="pulpRuleTalents" class="pulpRulesSelect">
     </div>
     <p class="notes">{{localize 'CoC7.Settings.PulpRules.Talents.Hint'}}</p>
   </div>
   <div class="form-group">
     <label>{{localize 'CoC7.Settings.PulpRules.FasterRecovery.Name'}}</label>
     <div class="form-fields" style="flex: 1;">
-        <input type="checkbox" {{checked pulpRuleFasterRecovery.value}} name="pulpRuleFasterRecovery" class="pulpRulesSelect">
+      <input type="checkbox" {{checked pulpRuleFasterRecovery.value}} name="pulpRuleFasterRecovery" class="pulpRulesSelect">
     </div>
     <p class="notes">{{localize 'CoC7.Settings.PulpRules.FasterRecovery.Hint'}}</p>
   </div>
   <div class="form-group">
     <label>{{localize 'CoC7.Settings.PulpRules.IgnoreMajorWounds.Name'}}</label>
     <div class="form-fields" style="flex: 1;">
-        <input type="checkbox" {{checked pulpRuleIgnoreMajorWounds.value}} name="pulpRuleIgnoreMajorWounds" class="pulpRulesSelect">
+      <input type="checkbox" {{checked pulpRuleIgnoreMajorWounds.value}} name="pulpRuleIgnoreMajorWounds" class="pulpRulesSelect">
     </div>
     <p class="notes">{{localize 'CoC7.Settings.PulpRules.IgnoreMajorWounds.Hint'}}</p>
   </div>
@@ -88,16 +88,16 @@
   <div class="form-group">
     <label>{{localize 'SETTINGS.OpposedRollTieBreaker'}}</label>
     <div class="form-fields" style="flex: 1;">
-        <input type="checkbox" {{checked opposedRollTieBreaker.value}} name="opposedRollTieBreaker">
+      <input type="checkbox" {{checked opposedRollTieBreaker.value}} name="opposedRollTieBreaker">
     </div>
     <p class="notes">{{localize 'SETTINGS.OpposedRollTieBreakerHint'}}</p>
   </div>
   <footer class="sheet-footer flexrow">
     <button type="submit" name="submit">
-        <i class="far fa-save"></i> {{localize "Save Changes"}}
+      <i class="far fa-save"></i> {{localize "Save Changes"}}
     </button>
     <button type="button" name="reset">
-        <i class="fas fa-undo"></i> {{localize "Reset Defaults"}}
+      <i class="fas fa-undo"></i> {{localize "Reset Defaults"}}
     </button>
   </footer>
 </form>

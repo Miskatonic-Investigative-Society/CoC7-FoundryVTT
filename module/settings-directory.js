@@ -1,5 +1,4 @@
 /* global Dialog, game, Settings */
-
 export class CoC7SettingsDirectory extends Settings {
   activateListeners (html) {
     super.activateListeners(html)

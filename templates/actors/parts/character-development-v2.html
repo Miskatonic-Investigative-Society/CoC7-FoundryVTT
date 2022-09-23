@@ -2,9 +2,9 @@
   {{#each skills as |skill id|}}
     <li class="item {{#if ../pulpRuleArchetype}}pulpCharacter{{/if}}" data-skill-id="{{skill._id}}" data-item-id="{{skill._id}}">
       <div class="item-controls flexrow">
-        {{#unless skill.data.properties.noadjustments}}
+        {{#unless skill.system.properties.noadjustments}}
           <div class="item-control occupation-skill-flag {{#if../allowCharCreation}}clickable{{/if}}" title="{{localize 'CoC7.OccupationSkill'}}">
-            {{#if skill.data.flags.occupation}}
+            {{#if skill.system.flags.occupation}}
               <i class="fas fa-circle"></i>
             {{else}}
               <i class="far fa-circle"></i>
@@ -12,7 +12,7 @@
           </div>
           {{#if ../pulpRuleArchetype}}
             <div class="item-control archetype-skill-flag {{#if../allowCharCreation}}clickable{{/if}}" title="{{localize 'CoC7.ArchetypeSkill'}}">
-              {{#if skill.data.flags.archetype}}
+              {{#if skill.system.flags.archetype}}
                 <i class="fas fa-circle"></i>
               {{else}}
                 <i class="far fa-circle"></i>
@@ -22,52 +22,52 @@
         {{/unless}}
       </div>
 
-      <span class="skill-name {{#if skill.data.flags.developement}}{{#if ../allowDevelopment}}rollable{{/if}} flagged4dev{{/if}}">{{#if skill.data.properties.special}}{{skill.data.specialization}} :{{/if}}{{skill.name}}</span>
+      <span class="skill-name {{#if skill.system.flags.developement}}{{#if ../allowDevelopment}}rollable{{/if}} flagged4dev{{/if}}">{{#if skill.system.properties.special}}{{skill.system.specialization}} :{{/if}}{{skill.name}}</span>
       <div class="adjustment-value locked" title="{{localize 'CoC7.SkillBase'}}">
-        <span>{{skill.data.base}}</span>
+        <span>{{skill.system.base}}</span>
       </div>
-      <div class="adjustment-value {{#if skill.data.properties.noadjustments}}locked{{/if}}" title="{{localize 'CoC7.SkillPersonal'}}">
+      <div class="adjustment-value {{#if skill.system.properties.noadjustments}}locked{{/if}}" title="{{localize 'CoC7.SkillPersonal'}}">
         {{#if ../allowCharCreation}}
-          {{#unless skill.data.properties.noadjustments}}
-            <input type="text" class="skill-adjustment" name="data.adjustments.personal" value="{{skill.data.adjustments.personal}}" data-dtype="Number">
+          {{#unless skill.system.properties.noadjustments}}
+            <input type="text" class="skill-adjustment" name="system.adjustments.personal" value="{{skill.system.adjustments.personal}}" data-dtype="Number">
           {{/unless}}
         {{else}}
-          <span>{{skill.data.adjustments.personal}}</span>
+          <span>{{skill.system.adjustments.personal}}</span>
         {{/if}}
       </div>
-      <div class="adjustment-value {{#unless skill.data.flags.occupation}}locked{{/unless}}" title="{{localize 'CoC7.SkillOccupation'}}">
+      <div class="adjustment-value {{#unless skill.system.flags.occupation}}locked{{/unless}}" title="{{localize 'CoC7.SkillOccupation'}}">
         {{#if ../allowCharCreation}}
-          {{#if skill.data.flags.occupation}}
-            <input type="text" class="skill-adjustment" name="data.adjustments.occupation" value="{{skill.data.adjustments.occupation}}" data-dtype="Number">
+          {{#if skill.system.flags.occupation}}
+            <input type="text" class="skill-adjustment" name="system.adjustments.occupation" value="{{skill.system.adjustments.occupation}}" data-dtype="Number">
           {{else}}
-            <span>{{skill.data.adjustments.occupation}}</span>
+            <span>{{skill.system.adjustments.occupation}}</span>
           {{/if}}
         {{else}}
-          <span>{{skill.data.adjustments.occupation}}</span>
+          <span>{{skill.system.adjustments.occupation}}</span>
         {{/if}}
       </div>
       {{#if ../pulpRuleArchetype}}
-        <div class="adjustment-value {{#unless skill.data.flags.archetype}}locked{{/unless}}" title="{{localize 'CoC7.SkillArchetype'}}">
+        <div class="adjustment-value {{#unless skill.system.flags.archetype}}locked{{/unless}}" title="{{localize 'CoC7.SkillArchetype'}}">
           {{#if ../allowCharCreation}}
-            {{#if skill.data.flags.archetype}}
-              <input type="text" class="skill-adjustment" name="data.adjustments.archetype" value="{{skill.data.adjustments.archetype}}" data-dtype="Number">
+            {{#if skill.system.flags.archetype}}
+              <input type="text" class="skill-adjustment" name="system.adjustments.archetype" value="{{skill.system.adjustments.archetype}}" data-dtype="Number">
             {{else}}
-              <span>{{skill.data.adjustments.archetype}}</span>
+              <span>{{skill.system.adjustments.archetype}}</span>
             {{/if}}
           {{else}}
-            <span>{{skill.data.adjustments.archetype}}</span>
+            <span>{{skill.system.adjustments.archetype}}</span>
           {{/if}}
         </div>
       {{/if}}
       <div class="adjustment-value" title="{{localize 'CoC7.SkillExperience'}}">
         {{#if ../allowCharCreation}}
-          <input type="text" class="skill-adjustment" name="data.adjustments.experience" value="{{skill.data.adjustments.experience}}" data-dtype="Number">
+          <input type="text" class="skill-adjustment" name="system.adjustments.experience" value="{{skill.system.adjustments.experience}}" data-dtype="Number">
         {{else}}
-          <span>{{skill.data.adjustments.experience}}</span>
+          <span>{{skill.system.adjustments.experience}}</span>
         {{/if}}
       </div>
       <div class="adjustment-value locked" title="{{localize 'CoC7.Value'}}">
-        <span>{{skill.data.value}}</span>
+        <span>{{skill.system.value}}</span>
       </div>
     </li>
   {{/each}}

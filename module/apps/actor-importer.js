@@ -264,7 +264,7 @@ export class CoC7ActorImporter {
         const data = {
           name,
           type: 'weapon',
-          data: {
+          system: {
             skill: {
               id: lastPercent
             },
@@ -286,11 +286,11 @@ export class CoC7ActorImporter {
           }
         }
         // Set some of the properties
-        data.data.properties.shotgun = isShotgun
-        data.data.properties.rngd = isRanged || isShotgun
-        data.data.properties.melee = !data.data.properties.rngd
-        data.data.properties.ahdb = ahdb
-        data.data.properties.addb = addb
+        data.system.properties.shotgun = isShotgun
+        data.system.properties.rngd = isRanged || isShotgun
+        data.system.properties.melee = !data.system.properties.rngd
+        data.system.properties.ahdb = ahdb
+        data.system.properties.addb = addb
         if (typeof this.parsed.attacks === 'undefined') {
           this.parsed.attacks = []
         }
@@ -616,12 +616,12 @@ export class CoC7ActorImporter {
   disableAttribAuto (key, attribValue, check, updateData) {
     const value = Math.max(0, Number(attribValue))
     if (value !== Number(check)) {
-      updateData[`data.attribs.${key}.auto`] = false
-      updateData[`data.attribs.${key}.value`] = value
+      updateData[`system.attribs.${key}.auto`] = false
+      updateData[`system.attribs.${key}.value`] = value
       if (key === 'build') {
-        updateData[`data.attribs.${key}.current`] = value
+        updateData[`system.attribs.${key}.current`] = value
       } else {
-        updateData[`data.attribs.${key}.max`] = value
+        updateData[`system.attribs.${key}.max`] = value
       }
     }
     return updateData
@@ -686,8 +686,8 @@ export class CoC7ActorImporter {
     if (typeof characterData.actor.attribs.db?.value !== 'undefined') {
       value = String(characterData.actor.attribs.db.value).replace(/^\+\s*/, '')
       if (value !== String(npc.db)) {
-        updateData['data.attribs.db.auto'] = false
-        updateData['data.attribs.db.value'] = value
+        updateData['system.attribs.db.auto'] = false
+        updateData['system.attribs.db.value'] = value
       }
     }
     if (Object.keys(updateData).length > 0) {
@@ -701,23 +701,21 @@ export class CoC7ActorImporter {
     for (const pair of this.weaponSkills) {
       if (pair[0] !== false) {
         lastWeaponSkill = npc.items.filter(
-          i =>
-            i.name === pair[0].name &&
+          i => i.name === pair[0].name &&
             i.type === 'skill' &&
-            Number(i.data.data.value) === Number(pair[0].data.value)
+            Number(i.system.value) === Number(pair[0].system.value)
         )
       }
       const weapon = npc.items.filter(
-        i =>
-          i.name === pair[1].name &&
+        i => i.name === pair[1].name &&
           i.type === 'weapon' &&
-          i.data.data.range.normal.damage === pair[1].data.range.normal.damage
+          i.system.range.normal.damage === pair[1].system.range.normal.damage
       )
       if (lastWeaponSkill[0] && weapon[0]) {
         updateItemData.push({
           _id: weapon[0].id,
-          'data.skill.main.id': lastWeaponSkill[0].id,
-          'data.skill.main.name': lastWeaponSkill[0].name
+          'system.skill.main.id': lastWeaponSkill[0].id,
+          'system.skill.main.name': lastWeaponSkill[0].name
         })
       }
     }
@@ -811,11 +809,11 @@ export class CoC7ActorImporter {
     if (typeof pc.attacks !== 'undefined') {
       for (const attack of pc.attacks) {
         let skill = false
-        if (attack.data?.skill?.id !== true) {
+        if (attack.system?.skill?.id !== true) {
           skill = await this.weaponSkill(attack)
           items.push(skill)
         }
-        attack.data.skill.id = null
+        attack.system.skill.id = null
         items.push(attack)
         this.weaponSkills.push([skill, attack])
       }
@@ -828,9 +826,9 @@ export class CoC7ActorImporter {
         })
         if (typeof existing !== 'undefined') {
           const cloned = existing.toObject()
-          cloned.data.base = skill.value
+          cloned.system.base = skill.value
           if (typeof skill.push !== 'undefined') {
-            cloned.data.properties.push = skill.push
+            cloned.system.properties.push = skill.push
           }
           items.push(duplicate(cloned))
         } else {
@@ -850,7 +848,7 @@ export class CoC7ActorImporter {
         })
         if (typeof existing !== 'undefined') {
           const cloned = existing.toObject()
-          cloned.data.base = skill.value
+          cloned.system.base = skill.value
           items.push(duplicate(cloned))
         } else {
           items.push(
@@ -939,13 +937,13 @@ export class CoC7ActorImporter {
     }
     if (skill !== null && typeof skill !== 'undefined') {
       const skillClone = skill.clone({
-        data: {
-          value: weapon.data?.skill?.id
+        system: {
+          value: weapon.system?.skill?.id
         }
       })
       return skillClone
     }
-    const firearms = weapon.data?.properties?.rngd
+    const firearms = weapon.system?.properties?.rngd
     const parts = CoC7Item.getNamePartsSpec(
       weapon.name,
       game.i18n.localize(
@@ -957,7 +955,7 @@ export class CoC7ActorImporter {
     const newSkill = {
       type: 'skill',
       name: parts.name,
-      data: {
+      system: {
         skillName: parts.skillName,
         specialization: parts.specialization,
         properties: {
@@ -966,8 +964,8 @@ export class CoC7ActorImporter {
           firearm: firearms,
           combat: true
         },
-        base: weapon.data?.skill?.id,
-        value: weapon.data?.skill?.id
+        base: weapon.system?.skill?.id,
+        value: weapon.system?.skill?.id
       }
     }
     if (CONFIG.debug.CoC7Importer) {

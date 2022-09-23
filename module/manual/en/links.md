@@ -18,7 +18,7 @@
 
 ## Writing links
 
-- Links should be written using the @Compendium[CoC7.system-doc.emuu3wo0uul91029]{Link creation tool}. The link creation window is a tool for GM. It's located in the left side bar.
+- Links should be written using the [Link creation tool](link_creation_window.md). The link creation window is a tool for GM. It's located in the left side bar.
 
 Links for chat messages and sheet editors (NPC, Journal entries...).
 Format of link is `@@coc7.TYPE_OF_REQUEST[OPTIONS]{TEXT_TO_DISPLAY}`

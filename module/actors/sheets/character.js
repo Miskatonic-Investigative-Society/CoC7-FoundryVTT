@@ -1,4 +1,4 @@
-/* global $, FontFace, game, mergeObject, ui */
+/* global $, FontFace, game, mergeObject, TextEditor, ui */
 import { CoC7ActorSheet } from './base.js'
 import { CoC7CreateMythosEncounter } from '../../apps/create-mythos-encounters.js'
 import { chatHelper } from '../../chat/helper.js'
@@ -18,7 +18,13 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
             ? 'fas fa-window-maximize'
             : 'fas fa-window-minimize',
           onclick: event => this.toggleSheetMode(event)
-        }
+        }/* ,
+        {
+          label: '',
+          class: 'drag-test-thingy',
+          icon: 'game-icon game-icon-d10',
+          ondragstart: () => ui.notifications.info('drag started')
+        } */
       ].concat(buttons)
       return buttons
     }
@@ -40,7 +46,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
   }
 
   async getData () {
-    const data = await super.getData()
+    const sheetData = await super.getData()
     if (
       this.isEditable &&
       typeof this.actor.getFlag('CoC7', 'skillListMode') === 'undefined'
@@ -53,157 +59,186 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
     ) {
       await this.actor.setFlag('CoC7', 'skillShowUncommon', true)
     }
-    data.skillListModeValue =
+    sheetData.skillListModeValue =
       this.actor.getFlag('CoC7', 'skillListMode') ?? false
-    data.skillShowUncommon =
+    sheetData.skillShowUncommon =
       this.actor.getFlag('CoC7', 'skillShowUncommon') ?? true
-    data.showIconsOnly = game.settings.get('CoC7', 'showIconsOnly')
+    sheetData.showIconsOnly = game.settings.get('CoC7', 'showIconsOnly')
 
     if (this.actor.occupation) {
-      data.data.infos.occupation = this.actor.occupation.name
-      data.data.infos.occupationSet = true
-    } else data.data.infos.occupationSet = false
+      sheetData.data.system.infos.occupation = this.actor.occupation.name
+      sheetData.data.system.infos.occupationSet = true
+    } else sheetData.data.system.infos.occupationSet = false
 
     if (this.actor.archetype) {
-      data.data.infos.archetype = this.actor.archetype.name
-      data.data.infos.archetypeSet = true
-    } else data.data.infos.archetypeSet = false
+      sheetData.data.system.infos.archetype = this.actor.archetype.name
+      sheetData.data.system.infos.archetypeSet = true
+    } else sheetData.data.system.infos.archetypeSet = false
 
-    data.totalExperience = this.actor.experiencePoints
-    data.totalOccupation = this.actor.occupationPointsSpent
-    data.invalidOccupationPoints =
+    sheetData.totalExperience = this.actor.experiencePoints
+    sheetData.totalOccupation = this.actor.occupationPointsSpent
+    sheetData.invalidOccupationPoints =
       Number(this.actor.occupationPointsSpent) !==
-      Number(this.actor.data.data.development?.occupation)
-    data.totalArchetype = this.actor.archetypePointsSpent
-    data.invalidArchetypePoints =
+      Number(this.actor.system.development?.occupation)
+    sheetData.totalArchetype = this.actor.archetypePointsSpent
+    sheetData.invalidArchetypePoints =
       Number(this.actor.archetypePointsSpent) !==
-      Number(this.actor.data.data.development?.archetype)
-    data.totalPersonal = this.actor.personalPointsSpent
-    data.invalidPersonalPoints =
+      Number(this.actor.system.development?.archetype)
+    sheetData.totalPersonal = this.actor.personalPointsSpent
+    sheetData.invalidPersonalPoints =
       Number(this.actor.personalPointsSpent) !==
-      Number(this.actor.data.data.development?.personal)
-    data.creditRatingMax = Number(
-      this.actor.occupation?.data.data.creditRating.max
+      Number(this.actor.system.development?.personal)
+    sheetData.creditRatingMax = Number(
+      this.actor.occupation?.system.creditRating.max
     )
-    data.creditRatingMin = Number(
-      this.actor.occupation?.data.data.creditRating.min
+    sheetData.creditRatingMin = Number(
+      this.actor.occupation?.system.creditRating.min
     )
-    data.invalidCreditRating =
-      this.actor.creditRatingSkill?.data.data.adjustments?.occupation >
-        data.creditRatingMax ||
-      this.actor.creditRatingSkill?.data.data.adjustments?.occupation <
-        data.creditRatingMin
-    data.pulpTalentCount = data.itemsByType.talent?.length
-      ? data.itemsByType.talent?.length
+    sheetData.invalidCreditRating =
+      this.actor.creditRatingSkill?.system.adjustments?.occupation >
+      sheetData.creditRatingMax ||
+      this.actor.creditRatingSkill?.system.adjustments?.occupation <
+      sheetData.creditRatingMin
+    sheetData.pulpTalentCount = sheetData.itemsByType.talent?.length
+      ? sheetData.itemsByType.talent?.length
       : 0
-    data.minPulpTalents = this.actor.archetype?.data.data.talents
-      ? this.actor.archetype?.data.data.talents
+    sheetData.minPulpTalents = this.actor.archetype?.system.talents
+      ? this.actor.archetype?.system.talents
       : 0
-    data.invalidPulpTalents = data.pulpTalentCount < data.minPulpTalents
+    sheetData.invalidPulpTalents = sheetData.pulpTalentCount < sheetData.minPulpTalents
 
-    data.hasDevelopmentPhase = this.actor.hasDevelopmentPhase
+    sheetData.hasDevelopmentPhase = this.actor.hasDevelopmentPhase
 
-    data.allowDevelopment = game.settings.get('CoC7', 'developmentEnabled')
-    data.allowCharCreation = game.settings.get('CoC7', 'charCreationEnabled')
-    data.developmentRollForLuck = game.settings.get(
+    sheetData.allowDevelopment = game.settings.get('CoC7', 'developmentEnabled')
+    sheetData.allowCharCreation = game.settings.get('CoC7', 'charCreationEnabled')
+    sheetData.developmentRollForLuck = game.settings.get(
       'CoC7',
       'developmentRollForLuck'
     )
-    data.showDevPannel = data.allowDevelopment || data.allowCharCreation
+    sheetData.showDevPannel = sheetData.allowDevelopment || sheetData.allowCharCreation
 
-    data.manualCredit = this.actor.getActorFlag('manualCredit')
-    if (!data.manualCredit) {
-      data.credit = {}
+    sheetData.manualCredit = this.actor.getActorFlag('manualCredit')
+    if (!sheetData.manualCredit) {
+      sheetData.credit = {}
       let factor
       let monetarySymbol
-      if (!data.data.credit) {
+      if (!sheetData.data.system.credit) {
         factor = 1
         monetarySymbol = '$'
       } else {
-        factor = parseInt(data.data.credit.multiplier)
-          ? parseInt(data.data.credit.multiplier)
+        factor = parseInt(sheetData.data.system.credit.multiplier)
+          ? parseInt(sheetData.data.system.credit.multiplier)
           : 1
-        monetarySymbol = data.data.credit.monetarySymbol
-          ? data.data.credit.monetarySymbol
+        monetarySymbol = sheetData.data.system.credit.monetarySymbol
+          ? sheetData.data.system.credit.monetarySymbol
           : '$'
       }
 
-      data.credit.spendingLevel = `${monetarySymbol}${this.actor.spendingLevel *
-        factor}`
-      data.credit.assets = `${monetarySymbol}${this.actor.assets * factor}`
-      data.credit.cash = `${monetarySymbol}${this.actor.cash * factor}`
+      sheetData.credit.spendingLevel = `${monetarySymbol}${this.actor.spendingLevel * factor}`
+      sheetData.credit.assets = `${monetarySymbol}${this.actor.assets * factor}`
+      sheetData.credit.cash = `${monetarySymbol}${this.actor.cash * factor}`
     }
 
-    data.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
+    sheetData.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
 
-    data.summarized = this.summarized && !data.permissionLimited
-    data.skillList = []
+    sheetData.summarized = this.summarized && !sheetData.permissionLimited
+    sheetData.skillList = []
     let previousSpec = ''
-    for (const skill of data.skills) {
-      if (data.skillShowUncommon || !skill.data.properties.rarity) {
-        if (skill.data.properties.special) {
-          if (previousSpec !== skill.data.specialization) {
-            previousSpec = skill.data.specialization
-            data.skillList.push({
+    for (const skill of sheetData.skills) {
+      if (sheetData.skillShowUncommon || !skill.system.properties.rarity) {
+        if (skill.system.properties.special) {
+          if (previousSpec !== skill.system.specialization) {
+            previousSpec = skill.system.specialization
+            sheetData.skillList.push({
               isSpecialization: true,
-              name: skill.data.specialization
+              name: skill.system.specialization
             })
           }
         }
-        data.skillList.push(skill)
+        sheetData.skillList.push(skill)
       }
     }
-    data.skillsByValue = [...data.skills].sort((a, b) => {
-      return b.data.value - a.data.value
+    sheetData.skillsByValue = [...sheetData.skills].sort((a, b) => {
+      return b.system.value - a.system.value
     })
-    data.topSkills = [...data.skillsByValue].slice(0, 14)
-    data.skillsByValue = data.skillsByValue.filter(
-      skill => data.skillShowUncommon || !skill.data.properties.rarity
+    sheetData.topSkills = [...sheetData.skillsByValue].slice(0, 14)
+    sheetData.skillsByValue = sheetData.skillsByValue.filter(
+      skill => sheetData.skillShowUncommon || !skill.system.properties.rarity
     )
-    data.topWeapons = [...data.meleeWpn, ...data.rangeWpn]
+    sheetData.topWeapons = [...sheetData.meleeWpn, ...sheetData.rangeWpn]
       .sort((a, b) => {
-        return a.data.skill.main?.value - b.data.skill.main?.value
+        return a.system.skill.main?.value - b.system.skill.main?.value
       })
       .reverse()
       .slice(0, 3)
-    data.displayPlayerName = game.settings.get(
+    sheetData.displayPlayerName = game.settings.get(
       'CoC7',
       'displayPlayerNameOnSheet'
     )
-    if (data.displayPlayerName && !data.data.infos.playername) {
+    if (sheetData.displayPlayerName && !sheetData.data.system.infos.playername) {
       const user = this.actor.characterUser
       if (user) {
-        data.data.infos.playername = user.name
+        sheetData.data.system.infos.playername = user.name
       }
     }
 
-    data.skillListEmpty = data.skills.length === 0
+    sheetData.skillListEmpty = sheetData.skills.length === 0
 
-    data.showInventoryItems =
-      Object.prototype.hasOwnProperty.call(data.itemsByType, 'item') ||
-      !data.data.flags.locked
-    data.showInventoryBooks =
-      Object.prototype.hasOwnProperty.call(data.itemsByType, 'book') ||
-      !data.data.flags.locked
-    data.showInventorySpells =
-      Object.prototype.hasOwnProperty.call(data.itemsByType, 'spell') ||
-      !data.data.flags.locked
-    data.showInventoryTalents =
-      Object.prototype.hasOwnProperty.call(data.itemsByType, 'talent') ||
-      (!data.data.flags.locked && game.settings.get('CoC7', 'pulpRuleTalents'))
-    data.showInventoryStatuses =
-      Object.prototype.hasOwnProperty.call(data.itemsByType, 'status') ||
-      !data.data.flags.locked
+    sheetData.showInventoryItems =
+      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'item') ||
+      !sheetData.data.system.flags.locked
+    sheetData.showInventoryBooks =
+      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'book') ||
+      !sheetData.data.system.flags.locked
+    sheetData.showInventorySpells =
+      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'spell') ||
+      !sheetData.data.system.flags.locked
+    sheetData.showInventoryTalents =
+      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'talent') ||
+      (!sheetData.data.system.flags.locked && game.settings.get('CoC7', 'pulpRuleTalents'))
+    sheetData.showInventoryStatuses =
+      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'status') ||
+      !sheetData.data.system.flags.locked
 
-    data.hasInventory =
-      data.showInventoryItems ||
-      data.showInventoryBooks ||
-      data.showInventorySpells ||
-      data.showInventoryTalents ||
-      data.showInventoryStatuses ||
-      data.showInventoryWeapons
+    sheetData.hasInventory =
+    sheetData.showInventoryItems ||
+      sheetData.showInventoryBooks ||
+      sheetData.showInventorySpells ||
+      sheetData.showInventoryTalents ||
+      sheetData.showInventoryStatuses ||
+      sheetData.showInventoryWeapons
 
-    return data
+    sheetData.enrichedBackstory = TextEditor.enrichHTML(
+      sheetData.data.system.backstory,
+      { async: false }
+    )
+
+    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+      sheetData.data.system.description.keeper,
+      { async: false }
+    )
+
+    return sheetData
+  }
+
+  _saveScrollPositions (html) {
+    super._saveScrollPositions(html)
+    const selectors = ['.right-panel .tab.development ol']
+    this._scrollPositionsX = selectors.reduce((pos, sel) => {
+      const el = html.find(sel)
+      pos[sel] = Array.from(el).map(el => el.scrollLeft)
+      return pos
+    }, {})
+  }
+
+  _restoreScrollPositions (html) {
+    super._restoreScrollPositions(html)
+    const selectors = ['.right-panel .tab.development ol']
+    const positions = this._scrollPositionsX || {}
+    for (const sel of selectors) {
+      const el = html.find(sel)
+      el.each((i, el) => { el.scrollLeft = positions[sel]?.[i] || 0 })
+    }
   }
 
   /**
@@ -305,12 +340,12 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
     const offset = $(event.currentTarget)
       .closest('.flexrow')
       .data('offset')
-    const sanityLossEvents = this.actor.data.data.sanityLossEvents ?? []
+    const sanityLossEvents = this.actor.system.sanityLossEvents ?? []
     sanityLossEvents.splice(offset, 1)
     sanityLossEvents.sort(function (left, right) {
       return left.type.localeCompare(right.type)
     })
-    this.actor.update({ 'data.sanityLossEvents': sanityLossEvents })
+    this.actor.update({ 'system.sanityLossEvents': sanityLossEvents })
   }
 
   async toggleSkillListMode (event) {
@@ -506,8 +541,8 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
       }
     }
 
-    if (typeof sheet.actor?.data.data.pannel !== 'undefined') {
-      for (const [key, value] of Object.entries(sheet.actor.data.data.pannel)) {
+    if (typeof sheet.actor?.system.pannel !== 'undefined') {
+      for (const [key, value] of Object.entries(sheet.actor.system.pannel)) {
         const pannelClass = chatHelper.camelCaseToHyphen(key)
         const pannel = html.find(`.pannel.${pannelClass}`)
         if (value.expanded) pannel.addClass('expanded')

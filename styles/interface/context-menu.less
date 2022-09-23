@@ -1,0 +1,75 @@
+.context-menu-wrapper{
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  z-index: 509;
+  visibility: hidden;
+  position: fixed;
+  width: auto;
+  border-radius: 0.5rem;
+  border: 2px solid #670b0b;
+  background: url(/ui/parchment.jpg) repeat;
+  ul{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    list-style: none;
+  }
+//   .menu-wrapper .menu{
+//     padding: 0.5rem 0.8rem;
+//   }
+  .menu-item{
+    // list-style: none;
+    font-size: 0.75rem;
+    height: 1.25rem;
+    display: flex;
+    width: 100%;
+    cursor: pointer;
+    align-items: center;
+    border-radius: 0.3rem;
+    margin-bottom: 0.1rem;
+    padding: 0 0.3rem 0 0;
+  }
+  
+  .menu-item:hover{
+    background: #f2f2f2;
+  }
+  
+  .menu-item span{
+    margin-left: 0.3rem;
+    font-size: 0.75rem;
+    padding: 0;
+    flex: 1;
+    white-space: nowrap;
+  }
+  
+  .menu-section:not(:first-child){
+    // margin-top: 5px;
+    // padding: 5px 0px;
+    border-top: 2px groove;
+  }
+
+  
+  .sub-menu-button{
+    position: relative;
+    justify-content: space-between;
+  }
+  
+  .sub-menu-button .sub-menu{
+    border: 2px solid #670b0b;
+    position: absolute;
+    background: url(/ui/parchment.jpg) repeat;
+    width: auto;
+    top: 0px;
+    opacity: 0;
+    pointer-events: none;
+    border-radius: 0.5rem;
+    transition: 0.2s ease;
+  }
+  
+  .sub-menu-button:hover .sub-menu{
+    opacity: 1;
+    pointer-events: auto;
+  }
+}

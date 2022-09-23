@@ -3,6 +3,7 @@
 import { chatHelper } from '../chat/helper.js'
 import { CoCActor } from '../actors/actor.js'
 import { CoC7LinkCreationDialog } from './link-creation-dialog.js'
+import { CoC7Utilities } from '../utilities.js'
 
 export class CoC7Link {
   constructor () {
@@ -218,6 +219,7 @@ export class CoC7Link {
     // San Data
     this._linkData.sanMin = x.sanMin
     this._linkData.sanMax = x.sanMax
+    this._linkData.sanReason = x.sanReason
 
     // Effect
     if (this.is.effect || x.object) {
@@ -488,5 +490,25 @@ export class CoC7Link {
         this._linkData.effect.duration.turns) ??
       0
     return duration > 0
+  }
+
+  sendToChat () {
+    const option = {}
+    let message
+    option.speaker = {
+      alias: game.user.name
+    }
+    if (this.is.effect) {
+      message = `<div class="effect-message">${this.link}</div>`
+    } else {
+      message = game.i18n.format('CoC7.MessageCheckRequestedWait', {
+        check: this.link
+      })
+    }
+    chatHelper.createMessage(null, message, option)
+  }
+
+  sendToClipboard () {
+    CoC7Utilities.copyToClipboard(this.link)
   }
 }

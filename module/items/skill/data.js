@@ -3,52 +3,32 @@ import { CoC7Item } from '../item.js'
 
 export class CoC7Skill extends CoC7Item {
   constructor (data, context) {
-    if (typeof data.data?.skillName === 'undefined') {
-      if (typeof data.data === 'undefined') {
-        data.data = {}
+    if (typeof data.system?.skillName === 'undefined') {
+      if (typeof data.system === 'undefined') {
+        data.system = {}
       }
       const construct = CoC7Skill.guessNameParts(data.name)
       if (!construct.isSpecialization) {
-        data.data.skillName = data.name
+        data.system.skillName = data.name
       } else {
-        data.data.skillName = construct.skillName
-        data.data.specialization = construct.specialization
-        if (typeof data.data.properties === 'undefined') {
-          data.data.properties = {}
+        data.system.skillName = construct.skillName
+        data.system.specialization = construct.specialization
+        if (typeof data.system.properties === 'undefined') {
+          data.system.properties = {}
         }
-        data.data.properties.special = true
+        data.system.properties.special = true
         if (construct.isFighting || construct.isFirearms) {
-          data.data.properties.combat = true
+          data.system.properties.combat = true
           if (construct.isFighting) {
-            data.data.properties.fighting = true
+            data.system.properties.fighting = true
           } else {
-            data.data.properties.firearm = true
+            data.system.properties.firearm = true
           }
         }
       }
     }
     super(data, context)
   }
-  // async applyModifier (change) {
-  //   return
-
-  //   const changes = this.data.data.changes
-  //     ? foundry.utils.duplicate(this.data.data.changes)
-  //     : []
-
-  //   const index = changes.findIndex(c => c.effect._id == change.effect.id)
-
-  //   if (-1 === index) {
-  //     changes.push(change)
-  //     await this.update({ 'data.changes': changes })
-  //   } else {
-  //     //Compare if there's a change in the efect data
-  //     if (!JSON.stringify(change) === JSON.stringify(changes[index])) {
-  //       changes[index] = change
-  //       await this.update({ 'data.changes': changes })
-  //     }
-  //   }
-  // }
 
   static guessNameParts (skillName) {
     const output = {
@@ -79,9 +59,9 @@ export class CoC7Skill extends CoC7Item {
   get activeEffects () {
     if (this.parent && this.parent.effects) {
       const effectKeyFull = `skill.${this.name}`.toLowerCase()
-      const effectKeyShort = `skill.${this.data.data.skillName}`.toLowerCase()
+      const effectKeyShort = `skill.${this.system.skillName}`.toLowerCase()
       let changes = this.parent.effects.reduce((changes, e) => {
-        if (e.data.disabled || e.isSuppressed) return changes
+        if (e.disabled || e.isSuppressed) return changes
         return changes.concat(
           e.data.changes.map(c => {
             c = foundry.utils.duplicate(c)
@@ -107,27 +87,27 @@ export class CoC7Skill extends CoC7Item {
    */
   get rawValue () {
     let value = 0
-    if (this.actor.data.type === 'character') {
+    if (this.actor.type === 'character') {
       // For an actor with experience we need to calculate skill value
       value = this.base
-      value += this.data.data.adjustments?.personal
-        ? parseInt(this.data.data.adjustments?.personal)
+      value += this.system.adjustments?.personal
+        ? parseInt(this.system.adjustments?.personal)
         : 0
-      value += this.data.data.adjustments?.occupation
-        ? parseInt(this.data.data.adjustments?.occupation)
+      value += this.system.adjustments?.occupation
+        ? parseInt(this.system.adjustments?.occupation)
         : 0
-      value += this.data.data.adjustments?.experience
-        ? parseInt(this.data.data.adjustments?.experience)
+      value += this.system.adjustments?.experience
+        ? parseInt(this.system.adjustments?.experience)
         : 0
       if (
         game.settings.get('CoC7', 'pulpRuleArchetype') &&
-        this.data.data.adjustments?.archetype
+        this.system.adjustments?.archetype
       ) {
-        value += parseInt(this.data.data.adjustments?.archetype)
+        value += parseInt(this.system.adjustments?.archetype)
       }
     } else {
       // For all others actor we store the value directly
-      value = parseInt(this.data.data.value)
+      value = parseInt(this.system.value)
     }
     return !isNaN(value) ? value : null
   }
@@ -136,33 +116,33 @@ export class CoC7Skill extends CoC7Item {
    * This is the skill's value after active effects have been applied
    */
   get value () {
-    const value = this.parent?.data.data.skills?.[`${this.data.data.skillName}`]
+    const value = this.parent?.system.skills?.[`${this.system.skillName}`]
       ?.value
     return value || this.rawValue
   }
 
   async updateValue (value) {
-    if (this.actor.data.type === 'character') {
+    if (this.actor.type === 'character') {
       const delta = parseInt(value) - this.rawValue
       const exp =
-        (this.data.data.adjustments?.experience
-          ? parseInt(this.data.data.adjustments.experience)
+        (this.system.adjustments?.experience
+          ? parseInt(this.system.adjustments.experience)
           : 0) + delta
       await this.update({
-        'data.adjustments.experience': exp > 0 ? exp : 0
+        'system.adjustments.experience': exp > 0 ? exp : 0
       })
-    } else await this.update({ 'data.value': value })
+    } else await this.update({ 'system.value': value })
   }
 
   async increaseExperience (x) {
     if (this.type !== 'skill') return null
-    if (this.actor.data.type === 'character') {
+    if (this.actor.type === 'character') {
       const exp =
-        (this.data.data.adjustments?.experience
-          ? parseInt(this.data.data.adjustments.experience)
+        (this.system.adjustments?.experience
+          ? parseInt(this.system.adjustments.experience)
           : 0) + parseInt(x)
       await this.update({
-        'data.adjustments.experience': exp > 0 ? exp : 0
+        'system.adjustments.experience': exp > 0 ? exp : 0
       })
     }
   }

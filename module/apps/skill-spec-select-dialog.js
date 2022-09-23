@@ -1,5 +1,4 @@
 /* global Dialog, FormData, game, renderTemplate */
-
 export class SkillSpecSelectDialog {
   static async create (
     skills,

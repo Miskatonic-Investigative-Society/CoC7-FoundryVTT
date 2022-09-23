@@ -15,6 +15,21 @@ _If you decide to go on with V10:_
 
 Happy gaming !
 
+## Version 0.9.0
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- __:warning: DROP SUPPORT FOR V9. :warning:__
+- Fix #1226, #1232, #1235.
+- Active effect added to items and status. Those effect will be transfered to actors.
+- Implementation of context menu instead of key combination for advanced rolls.
+  - Option added to enable context menus, option disabled by default.
+- Fix chase not updated on participant move #1227
+- Fix polish translation duplicate thanks to @everyonecancode #1229.
+- Update to Taiwanese localization, thanks to @zeteticl.
+- Updated and reworked German translation, thanks to @kaeltis.
+- New Russian translation, thanks to @paranoicsan.
+
 ## Version 0.8.2
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
@@ -108,7 +123,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Fix skill name migration issue with 0.7.7
 - Update to French localization, thanks to @vonv
 
-## Version 0.7.7:
+## Version 0.7.7
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
@@ -128,7 +143,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Update to Swedish localization, thanks to @Rangertheman
 - Update to Taiwanese localization, thanks to @zeteticl
 
-## Version 0.7.6:
+## Version 0.7.6
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
@@ -143,7 +158,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Update to French localization, thanks to @vonv
 - Update to Italian localization, thanks to @Stefano1975t
 
-## Version 0.7.5:
+## Version 0.7.5
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
@@ -151,7 +166,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Now rest is available again
 - Remove myterious button that produces mysterious messages
 
-## Version 0.7.4:
+## Version 0.7.4
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
@@ -171,7 +186,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Update to Spanish localization, thanks to @lozalojo
 - Update to Swedish localization, thanks to @Rangertheman
 
-## Version 0.7.3:
+## Version 0.7.3
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
 
@@ -189,7 +204,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Update to Swedish localization, thanks to @Rangertheman
 - Update to Taiwanese localization, thanks to @zeteticl
 
-## Version 0.7.2:
+## Version 0.7.2
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
 
@@ -206,7 +221,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Update to Swedish localization, thanks to @Rangertheman
 - Update to Taiwanese localization, thanks to @zeteticl
 
-## Version 0.7.1:
+## Version 0.7.1
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
 
@@ -214,7 +229,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Merge any notes accidentally stored in data.notes on Spell sheet.
 - Prevent error when updating related compendiums/modules.
 
-## Version 0.7.0:
+## Version 0.7.0
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
 
@@ -251,7 +266,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Update to Swedish localization, thanks to @Rangertheman.
 - Update to Taiwanese localization, thanks to @zeteticl.
 
-## Version 0.6.9:
+## Version 0.6.9
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
 
@@ -267,7 +282,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Update to french localization, thanks to @vonv.
 - Update to japanese localization, thanks to `@Asami#8627`.
 
-## Version 0.6.8:
+## Version 0.6.8
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
 
@@ -301,7 +316,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Update to swedish localization, thanks to @Rangertheman.
 - Update to taiwanese localization, thanks to @zeteticl.
 
-## Version 0.6.7:
+## Version 0.6.7
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
 
@@ -324,13 +339,13 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Update to spanish localization, thanks to @lozalojo;
 - Update to swedish localization, thanks to @Rangertheman;
 
-## Version 0.6.6:
+## Version 0.6.6
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV and @snap01.
 
 - Fix bug on character sheet interactions.
 
-## Version 0.6.5:
+## Version 0.6.5
 
 This release features major code refactoring and data migration. It is highly recommended to backup the worlds directories linked to Call of Cthulhu 7th Edition before updating the system.
 
@@ -378,11 +393,11 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Update to Swedish localization, thanks to @Rangertheman;
 - Update to Taiwanese localization, thanks to @zeteticl;
 
-## Version 0.6.4:
+## Version 0.6.4
 
 - Fix bug on folder select tag when creating a new entity.
 
-## Version 0.6.3:
+## Version 0.6.3
 
 - Dying, dead, major wounds, prone and unconscious conditions now trigger active effects;
 - Fix DB not rolling when whole number, thanks to @snap01;
@@ -404,7 +419,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
   - If no roll: a roll button will be proposed to the owner.
   - If no actor: a button will be displayed, player or GM who click it will trigger the corresponding roll and add it to the card.
 
-## Version 0.6.2:
+## Version 0.6.2
 
 - All these hotfixes were made thanks to the kind help of @snap01:
   - Improved the roll request message logic for GMs;
@@ -412,7 +427,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
   - Possible race condition on actor's characteristics fixed;
   - User selection when there is only one GM user fixed;
 
-## Version 0.6.1:
+## Version 0.6.1
 
 - Actor Importer refactored, thanks to @pconcepcion;
 - Bug "The effects Datastore is not yet connected!" fixed, thanks to @snap01;
@@ -450,7 +465,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
   - [Korean](https://foundryvtt.com/packages/CoC7kr)
   - [Traditional Chinese](https://github.com/hktrpg/call-of-cthulhu-7th-babele-zh-tw)
 
-## Version 0.6.0:
+## Version 0.6.0
 
 - Ready for 0.8.x thanks to the kind help of
   - @pconcepcion
@@ -464,7 +479,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - #555 regression fixed by @snap01.
 - Taiwanese Mandarin translations updated thanks to @zeteticl.
 
-## Version 0.5.9:
+## Version 0.5.9
 
 - **_!! Last release in 0.7.x cycle !!_**
 - Development improvement thanks to @castanhocorreia.
@@ -479,7 +494,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
   - #524 Books containing spells were not pre-processed.
 - Swedish translation updated thanks to @rangertheman.
 
-## Version 0.5.8:
+## Version 0.5.8
 
 - **_!! This will probably be the last release in 0.7.x cycle !!_**
 - Bug correction:
@@ -497,7 +512,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - German translation updated thanks to @IchbinkeinReh
 - Chase items are not operational.
 
-## Version 0.5.7:
+## Version 0.5.7
 
 - Bug correction:
   - CSS reworked on sheetV2 to prevent sliding items no to display correctly.
@@ -520,7 +535,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Swedish translation updated thanks to @rangertheman
 - French doc and translation updated thanks to @vonv
 
-## Version 0.5.6:
+## Version 0.5.6
 
 - Implementation of vehicle sheet.
   - No automation so far on the sheets.
@@ -541,7 +556,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - German translation updated thanks to @nilsriesenberg.
 - French doc and translation updated thanks to @vonv.
 
-## Version 0.5.5:
+## Version 0.5.5
 
 - New feature thanks to [@pconcepcion](https://github.com/pconcepcion)!
   - You can now import your actors in the system using GM Tools.
@@ -567,7 +582,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Taiwanese Mandarin translation updated thanks to @Zeteticl.
 - Português (Brasil) translation updated thanks to @castanhocorreia.
 
-## Version 0.5.4:
+## Version 0.5.4
 
 - Bug correction:
   - Changes from px to rem in some part of the sheet.
@@ -577,7 +592,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - A toggle allowing character to gain XP is added on the keeper's tools.
 - An option is added to replace backstory entries with one big editor block with formatting and links support.
 
-## Version 0.5.3:
+## Version 0.5.3
 
 - Bug correction:
   - Corrected a bug where editor in archetype sheet did not display correctly.
@@ -636,19 +651,19 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Português (Brasil) translation updated thanks to Castanho.
 - Taiwanese Mandarin and Chinese translations updated thanks to Zeteticl.
 
-## Version 0.5.2:
+## Version 0.5.2
 
 - Bug correction:
   - Corrected a bug on inline check where the full actor was embedded. ( This is a temporary fix until refactorization.)
 
-## Version 0.5.1:
+## Version 0.5.1
 
 - Bug correction:
   - Corrected a bug preventing attribute and sanity to be dragged onto a journal entry to create a link.
   - Corrected a bug on sanity chat-card where the full actor was embedded in the card resulting in high chat-log size. ( This is a temporary fix until refactorization.)
   - PR #373 thanks to Pengouin. Fix a bug on MAC where ctrl key wasn't properly implemented.
 
-## Version 0.5.0:
+## Version 0.5.0
 
 - General reminder:
   - Most sheet component can be clicked on the trigger a check/roll.
@@ -673,7 +688,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
   - Upon exiting creation mode, all sheets get locked.
 - Taiwanese Mandarin translation added thanks to zeteticl.
 
-## Version 0.4.9:
+## Version 0.4.9
 
 - Bout roll tables example added.
   - You can import those table from the included 'Sanity Roll Table' compendium. Once imported you need to restart your client.
@@ -683,7 +698,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
   - Phobias and Manias tables can contain text or a status item. Each table contain text and items.
   - Table rolls are recursive until an item or a text is found.
 
-## Version 0.4.8:
+## Version 0.4.8
 
 - Bug correction/Feature :
   - Kckaiwei helped to tackle some issues :
@@ -712,7 +727,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Polish translation updated thanks to Yossabart.
 - French translation updated.
 
-## Version 0.4.7:
+## Version 0.4.7
 
 - First sheet V2 implementation.
 - **Special thanks to Darshyne for providing the initial sheets design.**
@@ -733,13 +748,13 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Polish translation updated thanks to Yossabart.
 - Typo correction thanks to drober76.
 
-## Version 0.4.6:
+## Version 0.4.6
 
 - Bug correction :
   - Regular difficulty was misinterpreted in links.
 - Polish translation added thanks to Yossabart.
 
-## Version 0.4.5:
+## Version 0.4.5
 
 - Bug correction :
   - Internal field datas integrity check missing.
@@ -802,7 +817,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Chinese translation added thanks to hmqgg.
 - Compendium (Journal entries) with links example, courtesy of Lozalojo.
 
-## Version 0.4.4:
+## Version 0.4.4
 
 - **Last version to support foundry 0.6.x.**
 - Bug correction :
@@ -816,7 +831,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - French translation updated thanks to Mandaar
 - French translation updated thanks to Ferin29
 
-## Version 0.4.3:
+## Version 0.4.3
 
 - Bug correction :
   - localization for individual development roll added.
@@ -826,7 +841,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - German translation updated thanks to Taglar
 - Spanish translation updated thanks to Lozalojo.
 
-## Version 0.4.2:
+## Version 0.4.2
 
 - Bug correction :
   - Not having a credit rating skill will not block char creation.
@@ -834,17 +849,17 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Typo correction validate
 - Spanish translation updated thanks to Lozalojo.
 
-## Version 0.4.1:
+## Version 0.4.1
 
 - Quick fix, DsN V3 is now working.
 - A few settings added for DsN V3, color set for unit and ten dice, and a setting to sync dice rolls between players.
 
-## Version 0.4.0:
+## Version 0.4.0
 
 - Ready for 0.7.5
 - The latest version of 'Dice So Nice!' will not work with skills check. You have to keep an older version to see the dice.
 
-## Version 0.3.9:
+## Version 0.3.9
 
 - Bug correction:
   - Typo correction and missing strings.
@@ -870,7 +885,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
   - Player can now modify dying and dead status.
 - Spanish translation updated thanks to Lozalojo.
 
-## Version 0.3.8:
+## Version 0.3.8
 
 - SAN can be displayed as a bar on token.
 - Bug correction:
@@ -897,7 +912,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
   - [Example of char creation](https://www.youtube.com/watch?v=OnUPIgj4Gdc&t=4s)
 - Spanish translation updated thanks to Lozalojo.
 
-## Version 0.3.7:
+## Version 0.3.7
 
 - Bug correction:
   - Typo on the character sheet.
@@ -913,7 +928,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
   - By default, for combat range calculation, the distance measured is the euclidean distance. To see that distance using the ruler you'll need to hold shift while measuring. An option is added to use grid spaces instead of euclidean distance. By selecting it, distance will be calculated as per the default ruler for that grid type (Grid less; Square, Hex...)
 - Spanish translation updated thanks to Lozalojo.
 
-## Version 0.3.6:
+## Version 0.3.6
 
 - Addition of pulp talents (To be tested, I’m not familiar with Pulp Cthulhu, all of this is mainly cosmetic, no automation implemented so far)
   - There's a new sheet for pulp talents.
@@ -927,7 +942,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Added option to ignore bullets limitation.
 - Added option to ignore uses per round limitation.
 
-## Version 0.3.5:
+## Version 0.3.5
 
 - Automatic damage.
   - When a combat card is resolved an option will appear to automatically deal the damage to the target(s).
@@ -941,7 +956,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
   - Using a range weapon will now compare the number of bullet shot to the number of bullets available.
   - Shots will be limited by the max uses/round of the weapon.
 
-## Version 0.3.4:
+## Version 0.3.4
 
 - Inventory tab added to NPC and Creatures. Inventory can contains items, books and spells.
   - Items, book and spells can be dragged/dropped.
@@ -953,7 +968,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Creature and NPC sheet design slightly reworked.
 - Japanese translation updated thanks to AdmiralNyar.
 
-## Version 0.3.3:
+## Version 0.3.3
 
 - Inventory (Gear&Cash tab) displays items, books and spells.
   - clicking on a section will toggle the display of it's content.
@@ -967,7 +982,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Option added for Pulp HP.
 - Bug correction on skill specialization localization.
 
-## Version 0.3.2:
+## Version 0.3.2
 
 - First implementation of SAN checks (to be localized):
   - You can select one or many targets and click on the new SAN loss field in the creature sheet to trigger a SAN check.
@@ -985,18 +1000,18 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
   - Hardening of what has been implemented so far.
   - Lot's of requests for PULP cthulhu, I'm having a look at it.
 
-## Version 0.3.1:
+## Version 0.3.1
 
 - Templates for books and spells added.
   - You can add a spell to a book by dragging it (from item directory only for the time being) on the book.
 - Bug fix, luck amount spent is now correctly displayed on the roll result.
 - Japanese translation improved thanks to AdmiralNyar
 
-## Version 0.3.0:
+## Version 0.3.0
 
 - Hot fix on luck spent.
 
-## Version 0.2.9:
+## Version 0.2.9
 
 - Bug fix forcing a fail or a pass should work as intended.
   - Doing so will show a fail or a pass to the player.
@@ -1008,7 +1023,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - On blind roll, the level of success will not be revealed until you push reveal check button.
   - Pushing force fail/pass will just indicate to the player the failure or the success with no level indication.
 
-## Version 0.2.8:
+## Version 0.2.8
 
 - Bug fix/improvement on melee flow cards.
   - Synthetic actors and token are retrieved from the viewed scene (use to be from active scene).
@@ -1032,7 +1047,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - French discord community is helping with debugging and testing (special thanks to Carter#2703 and Drakenvar#8665).
 - Tutorial videos are on the way !
 
-## Version 0.2.7:
+## Version 0.2.7
 
 - Bug fix/improvement on melee flow cards.
   - Addition of portraits on cards.
@@ -1042,19 +1057,19 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
   - Keeper has the possibility to reveal the check result.
   - Awarding experience automatically is disabled for blind check. Keeper can award experience.
 
-## Version 0.2.6:
+## Version 0.2.6
 
 - Modification of rolls and dice to be compatible with 0.7.x.
   - 0.7.x bring a lot of changes. **This needs more testing. I _strongly_ recommend to wait before upgrading to 0.7.x**
 
-## Version 0.2.5:
+## Version 0.2.5
 
 - Bug correction on creature sheets.
   - Size is now limited and content will be scrolled.
   - Weapon damage is now correctly entered.
   - Added a small reminder for bonus damage after weapons damage formula
 
-## Version 0.2.4:
+## Version 0.2.4
 
 - Range combat supports shotguns.
 - Bug correction (spending luck on luck and SAN rolls no more possible).
@@ -1063,11 +1078,11 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
   - Bonus, penalties, target response have been moved to the card tooltip once the card is resolved.
 - Spanish translation updated thanks to Gerbek.
 
-## Version 0.2.3:
+## Version 0.2.3
 
 - Hotfix.
 
-## Version 0.2.2:
+## Version 0.2.2
 
 - PDFoundry Integration.
 - First implementation of range combat.
@@ -1095,11 +1110,11 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Bugs correction
   - Movement calculation.
 
-## Version 0.2.1:
+## Version 0.2.1
 
 - Template and CSS correction.
 
-## Version 0.2.0:
+## Version 0.2.0
 
 - Implementation of experience tracking.
   - A successful (no bonus, not pushed, no luck used) check will flag a skill for development. A skill flagged for development will show a gold star next to it’s score. You can flag or un-flag a skill by double clicking on the corresponding star in the skill tab.
@@ -1133,7 +1148,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
     - The red scale will average characteristics values when a formula is available.
   - In 'formula' (icon next to the lock should display a small square-root symbol) you can now reference other characteristics (Enter @POW for example to set that characteristic to the same value as POW).
 
-## Version 0.1.9:
+## Version 0.1.9
 
 - Rework of the close combat mechanism. Select a target click on the weapon name and select the different options on the chat cards.
 - Implementation of damage bonus on weapon damage roll.
@@ -1141,7 +1156,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Typo corrections.
 - German translation, thanks to MrViso.
 
-## Version 0.1.8:
+## Version 0.1.8
 
 - Started to implement the combat mechanisms (close combat only).
   - You can select one or many targets and click on a weapon name in the combat tab/section.
@@ -1156,7 +1171,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Added the add skill/weapon/item to the PC sheet.
 - Be aware this is an 'experimental' increment, template had to be modified. I did my best but I can't assure that previously created entities will work.
 
-## Version 0.1.7:
+## Version 0.1.7
 
 - Added a lock switch to allow editing of NPC/Creature sheet
   - When locked you still can modify some of the sheet numbers by double clicking on them.
@@ -1168,7 +1183,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
   - Formulas need to be valid roll strings (like the /r command).
 - Starting to implement localization.
 
-## Version 0.1.6:
+## Version 0.1.6
 
 - Lock mechanism to avoid inadvertent actor modification (NPC only so far).
 - Implementation of basic NPC sheet.
@@ -1176,7 +1191,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Bug correction:
   - You can add many time the same weapon or item, not twice the same skill with the same name.
 
-## Version 0.1.5:
+## Version 0.1.5
 
 - Luck and San roll implemented.
 - Start implementing NPC sheet with only attributes and skills.
@@ -1185,13 +1200,13 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV and @sn
 - Bug correction:
   - Parasite (future) windows during skill roll removed.
 
-## Version 0.1.4:
+## Version 0.1.4
 
 - You can spend luck (providing you have enough) to pass a failed check.
 - You can push a skill if it is 'pushable' (pushed enabled on the skill sheet).
 - Typo correction.
 
-## Version 0.1.3:
+## Version 0.1.3
 
 - The character sheet.
   - You can enter your characteristics. Entering them will update the attributes (max HP, MP …).

@@ -1,5 +1,4 @@
 /* global Dialog, game, renderTemplate, Roll */
-
 export class CharacRollDialog extends Dialog {
   constructor (data, options) {
     super(data, options)

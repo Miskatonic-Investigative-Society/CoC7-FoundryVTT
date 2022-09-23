@@ -1,5 +1,4 @@
 /* global $, ChatMessage, game, renderTemplate, Roll, ui */
-
 import { CoC7Dice } from '../dice.js'
 import { CoC7Check } from '../check.js'
 import { chatHelper, CoC7Roll, CoC7Damage } from './helper.js'
@@ -45,7 +44,7 @@ export class CoC7RangeInitiator {
         const weapon = actor.items.get(itemId)
         if (weapon) {
           if (this.weapon.singleShot) this.singleShot = true
-          else if (this.weapon.data.data.properties.auto) this.fullAuto = true
+          else if (this.weapon.system.properties.auto) this.fullAuto = true
         }
       }
     }
@@ -61,7 +60,7 @@ export class CoC7RangeInitiator {
           if (this.actor) {
             t.pointBlankRange = false
             const pbRangeInYd =
-              this.actor.data.data.characteristics.dex.value / 15
+              this.actor.system.characteristics.dex.value / 15
             if (distInYd <= pbRangeInYd) t.pointBlankRange = true
           }
           if (this.weapon) {
@@ -70,7 +69,7 @@ export class CoC7RangeInitiator {
               t.longRange = false
               t.extremeRange = false
               t.outOfRange = false
-              if (this.weapon.data.data.properties.shotgun) {
+              if (this.weapon.system.properties.shotgun) {
                 if (distInYd <= this.weapon.baseRange) t.baseRange = true
                 if (
                   distInYd > this.weapon.baseRange &&
@@ -151,12 +150,12 @@ export class CoC7RangeInitiator {
   }
 
   get mainWeaponSkill () {
-    return this.actor.items.get(this.weapon.data.data.skill.main.id)
+    return this.actor.items.get(this.weapon.system.skill.main.id)
   }
 
   get autoWeaponSkill () {
-    if (this.weapon.data.data.skill.alternativ.id) {
-      return this.actor.items.get(this.weapon.data.data.skill.alternativ.id)
+    if (this.weapon.system.skill.alternativ.id) {
+      return this.actor.items.get(this.weapon.system.skill.alternativ.id)
     }
     return this.mainWeaponSkill
   }
@@ -233,8 +232,8 @@ export class CoC7RangeInitiator {
     if (this.fullAuto) return '∞'
     // return this.weapon.data.data.usesPerRound.max;
 
-    return this.weapon.data.data.usesPerRound.max
-      ? parseInt(this.weapon.data.data.usesPerRound.max)
+    return this.weapon.system.usesPerRound.max
+      ? parseInt(this.weapon.system.usesPerRound.max)
       : 1
   }
 
@@ -259,7 +258,7 @@ export class CoC7RangeInitiator {
   }
 
   get volleySize () {
-    if (!this.weapon.data.data.properties.auto) return 1
+    if (!this.weapon.system.properties.auto) return 1
     if (this._volleySize) return this._volleySize
     const size = Math.floor(this.autoWeaponSkill.value / 10)
     return size < 3 ? 3 : size
@@ -300,14 +299,14 @@ export class CoC7RangeInitiator {
 
   shotDifficulty (t = null) {
     const target = t || this.activeTarget
-    let damage = this.weapon.data.data.range.normal.damage
-    if (this.weapon.data.data.properties.shotgun) {
-      if (t.longRange) damage = this.weapon.data.data.range.long.damage
-      if (t.extremeRange) damage = this.weapon.data.data.range.extreme.damage
+    let damage = this.weapon.system.range.normal.damage
+    if (this.weapon.system.properties.shotgun) {
+      if (t.longRange) damage = this.weapon.system.range.long.damage
+      if (t.extremeRange) damage = this.weapon.system.range.extreme.damage
     }
     let modifier = target.modifier
     let difficulty
-    this.weapon.data.data.properties.shotgun
+    this.weapon.system.properties.shotgun
       ? (difficulty = 1)
       : (difficulty = target.difficulty)
     let difficultyName = ''
@@ -399,8 +398,8 @@ export class CoC7RangeInitiator {
       shot.bulletsShotTransit = shot.bulletsShot + shot.transitBullets
     }
     if (this.burst) {
-      shot.bulletsShot = parseInt(this.weapon.data.data.usesPerRound.burst)
-        ? parseInt(this.weapon.data.data.usesPerRound.burst)
+      shot.bulletsShot = parseInt(this.weapon.system.usesPerRound.burst)
+        ? parseInt(this.weapon.system.usesPerRound.burst)
         : 1
       if (shot.bulletsShot >= bulletLeft && !this.ignoreAmmo) {
         shot.bulletsShot = bulletLeft
@@ -517,7 +516,7 @@ export class CoC7RangeInitiator {
         await CoC7Dice.showRollDice3d(roll.dice.roll)
       }
       let bulletFired = this.burst
-        ? parseInt(this.weapon.data.data.usesPerRound.burst)
+        ? parseInt(this.weapon.system.usesPerRound.burst)
         : 1
       if (bulletFired >= this.totalAmmo) bulletFired = this.totalAmmo
       const shot = {
@@ -583,7 +582,7 @@ export class CoC7RangeInitiator {
   static getFromMessageId (messageId) {
     const message = game.messages.get(messageId)
     if (!message) return null
-    const card = $(message.data.content)[0]
+    const card = $(message.content)[0]
 
     const initiator = CoC7RangeInitiator.getFromCard(card, messageId)
     initiator.messageId = messageId
@@ -918,11 +917,6 @@ export class CoC7RangeTarget {
 
   get img () {
     if (this.token) {
-      // Foundry VTT v9
-      if (this.token.data.img) {
-        return this.token.data.img
-      }
-      // Foundry VTT v10
       if (this.token.document?.texture.src) {
         return this.token.document?.texture.src
       }

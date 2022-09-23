@@ -881,7 +881,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
             : this.data.obstacle.failedActionCost
         this.data.objects.failedActionRoll = new Roll(actionCost)
         await this.data.objects.failedActionRoll.evaluate({ async: true })
-        this.data.totalActionCost += this.data.objects.failedActionRoll.total
+        this.data.totalActionCost += (this.data.objects.failedActionRoll.total - 1) // 1 action already spend for skill check
       }
     }
 

@@ -6,7 +6,7 @@
     </div>
   </div>
   <div class="bio-section-value" style="min-height: 80px;">
-    {{#each data.sanityLossEvents as |sanityLossEvent mythosOffset|}}
+    {{#each data.system.sanityLossEvents as |sanityLossEvent mythosOffset|}}
       {{#unless sanityLossEvent.immunity}}
         <div class="flexrow" data-offset="{{mythosOffset}}">
           <div class="bio-section-type">{{sanityLossEvent.type}}</div>
@@ -29,7 +29,7 @@
     </div>
   </div>
   <div class="bio-section-value" style="min-height: 80px;">
-    {{#each data.sanityLossEvents as |sanityLossEvent mythosOffset|}}
+    {{#each data.system.sanityLossEvents as |sanityLossEvent mythosOffset|}}
       {{#if sanityLossEvent.immunity}}
         <div class="flexrow" data-offset="{{mythosOffset}}">
           <div class="bio-section-type">{{sanityLossEvent.type}}</div>

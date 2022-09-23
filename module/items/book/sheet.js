@@ -1,4 +1,4 @@
-/* global $, duplicate, game, ItemSheet, mergeObject */
+/* global $, duplicate, game, ItemSheet, mergeObject, TextEditor */
 import { CoC7Utilities } from '../../utilities.js'
 
 export class CoC7BookSheet extends ItemSheet {
@@ -22,27 +22,39 @@ export class CoC7BookSheet extends ItemSheet {
   }
 
   async getData () {
-    const data = super.getData()
-    const itemData = data.data
-    data.data = itemData.data
-    data.initialReading = this.item.data.data.initialReading
-    data.isKeeper = game.user.isGM
-    data.isOwner = this.item.isOwner
-    data.spellsLearned = this.spellsLearned
-    data.exhausted = (await this.item.checkExhaustion()) !== false
-    data.studyCompleted =
-      this.item.data.data.study.progress === this.item.data.data.study.necessary
+    const sheetData = super.getData()
+    sheetData.initialReading = this.item.system.initialReading
+    sheetData.isKeeper = game.user.isGM
+    sheetData.isOwner = this.item.isOwner
+    sheetData.spellsLearned = this.spellsLearned
+    sheetData.exhausted = (await this.item.checkExhaustion()) !== false
+    sheetData.studyCompleted = this.item.system.study.progress === this.item.system.study.necessary
+    sheetData.hasOwner = this.item.isEmbedded === true
+    sheetData.spellListEmpty = this.item.system.spells.length === 0
 
-    data.spellListEmpty = data.data.spells.length === 0
+    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+      sheetData.data.system.description.value,
+      { async: false }
+    )
 
-    return data
+    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+      sheetData.data.system.description.keeper,
+      { async: false }
+    )
+
+    sheetData.enrichedContent = TextEditor.enrichHTML(
+      sheetData.data.system.content,
+      { async: false }
+    )
+
+    return sheetData
   }
 
   get spellsLearned () {
     let amount = 0
-    const spells = this.item.data.data.spells
+    const spells = this.item.system.spells
     for (const spell of spells) {
-      if (spell.data.learned) amount++
+      if (spell.system.learned) amount++
     }
     return `${amount} / ${spells.length}`
   }
@@ -60,7 +72,7 @@ export class CoC7BookSheet extends ItemSheet {
       const id = $(event.currentTarget).parents('li').data('id')
       this.item.attemptSpellLearning(id)
     })
-    html.find('[name="data.study.necessary"]').change(event => {
+    html.find('[name="system.study.necessary"]').change(event => {
       const value = parseInt(event.currentTarget.value)
       this.item.changeProgress('reset', value)
     })
@@ -105,11 +117,11 @@ export class CoC7BookSheet extends ItemSheet {
     /** @see data-index property on template */
     const index = element.parents('li').data('index')
     /** Always has to be @type {Array} */
-    const spells = this.item.data.data.spells
-      ? duplicate(this.item.data.data.spells)
+    const spells = this.item.system.spells
+      ? duplicate(this.item.system.spells)
       : []
     if (index >= 0) spells.splice(index, 1)
-    return await this.item.update({ 'data.spells': spells })
+    return await this.item.update({ 'system.spells': spells })
   }
 
   /**
@@ -127,10 +139,10 @@ export class CoC7BookSheet extends ItemSheet {
 
     const spells = []
     for (const item of dataList) {
-      if (!item || !['skill', 'spell'].includes(item.data.type)) continue
-      if (item.data.type === 'spell') {
-        spells.push(item.data)
-      } else if (item.data.type === 'skill' && this.item.data.data.type.other) {
+      if (!item || !['skill', 'spell'].includes(item.type)) continue
+      if (item.type === 'spell') {
+        spells.push(item)
+      } else if (item.type === 'skill' && this.item.system.type.other) {
         this.modifyOthersGains(null, 'add', { name: item.name })
       }
     }
@@ -169,8 +181,8 @@ export class CoC7BookSheet extends ItemSheet {
       index = element.parents('tr').data('index')
       /** Always has to be @type {Array} */
     }
-    const skills = this.item.data.data.gains.others
-      ? duplicate(this.item.data.data.gains.others)
+    const skills = this.item.system.gains.others
+      ? duplicate(this.item.system.gains.others)
       : []
     switch (mode) {
       case 'add':
@@ -193,6 +205,6 @@ export class CoC7BookSheet extends ItemSheet {
         /** User clicked on minus icon to remove a skill on other gains table */
         if (index >= 0) skills.splice(index, 1)
     }
-    return await this.item.update({ 'data.gains.others': skills })
+    return await this.item.update({ 'system.gains.others': skills })
   }
 }

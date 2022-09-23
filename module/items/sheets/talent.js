@@ -1,7 +1,5 @@
-/* global game, ItemSheet, mergeObject */
-
+/* global game, ItemSheet, mergeObject, TextEditor */
 import { COC7 } from '../../config.js'
-// import { CoCActor } from '../../actors/actor.js';
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
@@ -13,7 +11,8 @@ export class CoC7TalentSheet extends ItemSheet {
   static get defaultOptions () {
     return mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'talent'],
-      width: 520,
+      template: 'systems/CoC7/templates/items/talent.html',
+      width: 525,
       height: 480,
       scrollY: ['.tab.description'],
       tabs: [
@@ -26,36 +25,38 @@ export class CoC7TalentSheet extends ItemSheet {
     })
   }
 
-  /**
-   *
-   */
-  get template () {
-    return 'systems/CoC7/templates/items/talent.html'
-  }
-
   /* Prepare data for rendering the Item sheet
    * The prepared data object contains both the actor data as well as additional sheet options
    */
   getData () {
-    // this.item.checkSkillProperties();
-    const data = super.getData()
+    const sheetData = super.getData()
 
-    /** MODIF: 0.8.x **/
-    const itemData = data.data
-    data.data = itemData.data // MODIF: 0.8.x data.data
-    /*****************/
+    sheetData.itemProperties = []
 
-    data.itemProperties = []
-
-    for (const [key, value] of Object.entries(data.data.type)) {
+    for (const [key, value] of Object.entries(this.item.system.type)) {
       if (value) {
-        data.itemProperties.push(
+        sheetData.itemProperties.push(
           COC7.talentType[key] ? COC7.talentType[key] : null
         )
       }
     }
 
-    data.isKeeper = game.user.isGM
-    return data
+    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+      sheetData.data.system.description.value,
+      { async: false }
+    )
+
+    sheetData.enrichedDescriptionNotes = TextEditor.enrichHTML(
+      sheetData.data.system.description.notes,
+      { async: false }
+    )
+
+    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+      sheetData.data.system.description.keeper,
+      { async: false }
+    )
+
+    sheetData.isKeeper = game.user.isGM
+    return sheetData
   }
 }

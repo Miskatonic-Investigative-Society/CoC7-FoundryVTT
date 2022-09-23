@@ -1,5 +1,4 @@
 /* global Dialog, renderTemplate */
-
 export class CharacSelectDialog extends Dialog {
   activateListeners (html) {
     super.activateListeners(html)

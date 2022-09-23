@@ -1,5 +1,4 @@
 /* global canvas, ChatMessage, Dialog, game, mergeObject, Roll, ui */
-
 import { CoC7Dice } from '../../dice.js'
 import { InteractiveChatCard } from '../interactive-chat-card.js'
 import { createInlineRoll } from '../helper.js'
@@ -239,7 +238,7 @@ export class DamageCard extends InteractiveChatCard {
 
   get damageFormula () {
     const range = this.range
-    let formula = this.weapon?.data?.data?.range[range]?.damage
+    let formula = this.weapon?.system?.range[range]?.damage
     let db = this.actor.db
     if (db === null || Number(db) === 0) {
       db = ''
@@ -248,8 +247,8 @@ export class DamageCard extends InteractiveChatCard {
     }
 
     if (db && !db.startsWith('-')) db = '+' + db
-    if (this.weapon.data.data.properties.addb) formula = formula + db
-    if (this.weapon.data.data.properties.ahdb) formula = formula + db + '/2'
+    if (this.weapon.system.properties.addb) formula = formula + db
+    if (this.weapon.system.properties.ahdb) formula = formula + db + '/2'
 
     if (formula) {
       const maxDamage = new Roll(formula).evaluate({ maximize: true }).total
@@ -270,7 +269,7 @@ export class DamageCard extends InteractiveChatCard {
   get armor () {
     if (undefined !== this._armor && this._armor !== '') return this._armor
     if (this.target) {
-      return this.targetActor.data.data.attribs.armor.value
+      return this.targetActor.system.attribs.armor.value
     }
     return 0
   }

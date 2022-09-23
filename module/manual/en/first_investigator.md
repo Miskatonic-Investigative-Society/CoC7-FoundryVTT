@@ -2,7 +2,7 @@
 
 The system comes with some compendiums ready for you to customise. These are reset every time you update or install the system so it is recommended you copy them into your own compendium and edit them as required.
 
-This page creates an investigator using the provided compendiums, if you are ready to full customise your character people read @Compendium[CoC7.system-doc.uug1mm5nokly4o2v]{Character creation} instead.
+This page creates an investigator using the provided compendiums, if you are ready to full customise your character people read [Character creation](character_creation.md) instead.
 
 # Skill
 
