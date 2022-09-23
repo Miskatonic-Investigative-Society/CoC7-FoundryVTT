@@ -19,7 +19,7 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
-- __:warning: DROP SUPPORT FOR V9.__
+- __:warning: DROP SUPPORT FOR V9. :warning:__
 - Fix #1226, #1232, #1235.
 - Active effect added to items and status. Those effect will be transfered to actors.
 - Implementation of context menu instead of key combination for advanced rolls.
