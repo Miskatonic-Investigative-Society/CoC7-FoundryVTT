@@ -20,12 +20,14 @@ Happy gaming !
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Drop support for V9, and fix #1226, #1232, #1235.
-- Active effect added to items and status.
+- Active effect added to items and status. Those effect will be transfered to actors.
 - Implementation of context menu instead of key combination for advanced rolls.
   - Option added to enable context menus, option disabled by default.
-- Fix polish translation duplicate thanks to @everyonecancode #1229.
 - Fix chase not updated on participant move #1227
+- Fix polish translation duplicate thanks to @everyonecancode #1229.
 - Update to Taiwanese localization, thanks to @zeteticl.
+- Updated and reworked German translation, thanks to @kaeltis.
+- New Russian translation, thanks to @paranoicsan.
 
 ## Version 0.8.2
 
