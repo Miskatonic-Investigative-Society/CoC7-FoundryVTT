@@ -15,6 +15,14 @@ _If you decide to go on with V10:_
 
 Happy gaming !
 
+## Version 0.9.1
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix scene compendium migration errors
+- Fix migration always triggering if modules are enabled
+- Update to Italian localization, thanks to @Stefano1975t #1253
+
 ## Version 0.9.0
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.

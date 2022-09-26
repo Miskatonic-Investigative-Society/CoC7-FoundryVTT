@@ -1136,6 +1136,8 @@
   "CoC7.toolTipDelay": "Ritardo in millisecondi prima che la descrizione del comando venga visualizzata, 0 per mai",
   "SETTINGS.ChaseShowTokenMovement": "Mostra movimento della pedina.",
   "SETTINGS.ChaseShowTokenMovementHint": "Mostra movimento sulla griglia quando una pedina viene mossa nel luogo successivo.",
+  "SETTINGS.UseContextMenus": "Usa menu contestuali",
+  "SETTINGS.UseContextMenusHint": "[SPERIMENTALE] Usa i menu contestuali per i tiri invece della combinazione di tasti.",
 
   "CoC7.getTheExample": "Copia Esempio",
   "CoC7.Copied": "Copiato il testo di esempio negli Appunti",

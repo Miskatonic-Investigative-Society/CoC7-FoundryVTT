@@ -14,9 +14,9 @@ export class Updater {
           // Only need to check each module once
           const module = game.modules.get(pack.metadata.packageName)
           if (module) {
-            if (runMigrate || !Object.prototype.hasOwnProperty.call(this.updatedModules, module.id) || String(this.updatedModules[module.id]) !== String(module.id.version)) {
+            if (runMigrate || !Object.prototype.hasOwnProperty.call(this.updatedModules, module.id) || String(this.updatedModules[module.id]) !== String(module.version)) {
               // A migration is required, module has not been updated before, or the version number has changed
-              this.currentModules[module.id] = game.modules.get(module.id).version
+              this.currentModules[module.id] = module.version
             }
           }
         }
@@ -284,7 +284,11 @@ export class Updater {
     const wasLocked = pack.locked
     await pack.configure({ locked: false })
 
-    await pack.migrate()
+    try {
+      await pack.migrate()
+    } catch (err) {
+      console.log('pack migrate failed', pack, err)
+    }
     const documents = await pack.getDocuments()
 
     // Iterate over compendium entries - applying fine-tuned migration functions
@@ -305,7 +309,7 @@ export class Updater {
             updateData = Updater.migrateTableData(doc.toObject())
             break
           case 'Scene':
-            updateData = Updater.migrateSceneData(doc.document)
+            updateData = Updater.migrateSceneData(doc)
             break
         }
         // Save the entry, if data was changed
