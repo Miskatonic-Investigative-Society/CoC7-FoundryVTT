@@ -14,9 +14,9 @@ export class Updater {
           // Only need to check each module once
           const module = game.modules.get(pack.metadata.packageName)
           if (module) {
-            if (runMigrate || !Object.prototype.hasOwnProperty.call(this.updatedModules, module.id) || String(this.updatedModules[module.id]) !== String(module.id.version)) {
+            if (runMigrate || !Object.prototype.hasOwnProperty.call(this.updatedModules, module.id) || String(this.updatedModules[module.id]) !== String(module.version)) {
               // A migration is required, module has not been updated before, or the version number has changed
-              this.currentModules[module.id] = game.modules.get(module.id).version
+              this.currentModules[module.id] = module.version
             }
           }
         }
