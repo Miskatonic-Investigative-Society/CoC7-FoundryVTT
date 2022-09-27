@@ -1,0 +1,48 @@
+h1,h2,h3 {
+  &:not(.noborder) {
+    background: url('/systems/CoC7/assets/ui/active-tab-bottom.png') bottom right no-repeat;
+  }
+}
+
+#navigation #scene-list .scene {
+  &.gm {
+  background: var(--color-control-toggle);
+  border: 1px solid var(--color-control-border);
+  }
+
+  &.view {
+    background: var(--color-control-toggle-active);
+  }
+}
+
+#controls ol.control-tools > li {
+	&:hover {
+		text-shadow: 0 0 5px var(--color-shadow-primary);
+		box-shadow: none;
+	}
+
+	&.active{
+		background: var(--color-control-toggle-active);
+		box-shadow: 0 0 10px var(--color-shadow-highlight);
+	}
+
+	&.toggle {
+		border: 1px solid var(--color-control-border);
+		background: var(--color-control-toggle);
+
+		&:hover {
+			text-shadow: 0 0 5px var(--color-shadow-primary);
+			color: var(--color-text-light-highlight);
+			border: 1px solid var(--color-border-highlight-alt);
+			border-bottom: 1px solid var(--color-border-highlight);
+			background: var(--color-control-toggle);
+			box-shadow: none;
+		}
+
+		&.active {
+			background: var(--color-control-toggle-active);
+			border: 1px solid var(--color-border-highlight-alt);
+			box-shadow: 0 0 10px var(--color-shadow-highlight);
+		}
+	}
+}

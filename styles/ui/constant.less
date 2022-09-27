@@ -6,7 +6,7 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-.chatFont() {
+.chatFont {
   font-family: customChatFont, 'Voltaire', sans-serif;
 }
 
@@ -16,10 +16,32 @@
 
 :root {
     --chat-background: url('/systems/CoC7/assets/ui/message-background.jpg') repeat;
-    --color-border-highlight: #00ff64;
+    --color-border-highlight: #5b9203;
     --color-border-highlight-alt: #00ff00;
     --color-shadow-primary: #00ff00;
     --color-shadow-highlight: #00ff64;
+    --color-underline-active: #1a4419;
+    --color-underline-header: #22782e;
+    
+    //System specifics
+    --color-control-border: #00ae3a;
+    --color-control-toggle: #002713;
+    --color-control-toggle-active: rgba( 52, 52, 52, 0.95);
     // --color-border-highlight-alt: #5b9203;
 }
 
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #5b9203;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-highlight-alt);
+}
+
+
+// 091 146 003
+//  5B  92  03
+// 065 082 038
+//  41  52  26
