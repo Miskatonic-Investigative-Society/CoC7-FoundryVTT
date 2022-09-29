@@ -1,0 +1,60 @@
+@font-face {
+  font-family: 'Voltaire';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/voltaire/v15/1Pttg8PcRfSblAvGvTovaqQ.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Parisienne';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/parisienne/v13/E21i_d3kivvAkxhLEVZpQyhwDw.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+.cursiveFont {
+  font-family: 'CoC7-cursive', 'Parisienne', sans-serif;
+}
+
+.systemFont, .defaultFont {
+  font-family: 'CoC7-default', 'Bradley Hand', sans-serif;
+}
+
+.chatFont {
+  font-family: 'CoC7-chat', 'Signika', sans-serif;
+}
+
+.sheetFont {
+  font-family: 'CoC7-sheet', 'Voltaire', sans-serif;
+}
+
+:root {
+    --chat-background: url('/systems/CoC7/assets/ui/message-background.jpg') repeat;
+    --color-border-highlight: #5b9203;
+    --color-border-highlight-alt: #00ff00;
+    --color-shadow-primary: #00ff00;
+    --color-shadow-highlight: #00ff64;
+    --color-underline-active: #1a4419;
+    --color-underline-header: #22782e;
+    
+    //System specifics
+    --color-control-border: #00ae3a;
+    --color-control-toggle: #002713;
+    --color-control-toggle-active: #343434F0;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-underline-active);
+}
+
+
+// 091 146 003
+//  5B  92  03
+// 065 082 038
+//  41  52  26
