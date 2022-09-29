@@ -1014,6 +1014,9 @@
   "CoC7.ToolTipSkillFlagged": "Flagged for development",
   "CoC7.ToolTipSkillUnflagged": "Not flagged for development",
 
+  "SETTINGS.ArtworkConfigurationName": "System artwork",
+  "SETTINGS.ArtworkConfigurationLabel": "Configure system artwork",
+  "SETTINGS.ArtworkConfigurationHint": "[experimental] This will reset system font",
   "SETTINGS.TitleRules": "Rules",
   "SETTINGS.TitleInitiative": "Initiative Settings",
   "SETTINGS.TitleRoll": "Roll Settings",

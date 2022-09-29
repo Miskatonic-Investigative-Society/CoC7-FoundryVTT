@@ -3,6 +3,7 @@ import { CoC7DecaderDie } from '../apps/decader-die.js'
 import { CoC7DecaderDieOther } from '../apps/decader-die-other.js'
 import { CoC7GameRuleSettings } from './game-rules.js'
 import { CoC7DirectoryPicker } from './coc7-directory-picker.js'
+import { CoC7ArtworkSettings } from '../apps/artwork-settings.js'
 
 export function registerSettings () {
   /**
@@ -17,6 +18,14 @@ export function registerSettings () {
     restricted: true
   })
   CoC7GameRuleSettings.registerSettings()
+
+  game.settings.registerMenu('CoC7', 'artwork', {
+    name: 'SETTINGS.ArtworkConfigurationName',
+    label: 'SETTINGS.ArtworkConfigurationLabel',
+    hint: 'SETTINGS.ArtworkConfigurationHint',
+    icon: 'fas fa-paint-brush',
+    type: CoC7ArtworkSettings
+  })
 
   game.settings.register('CoC7', 'useContextMenus', {
     name: 'SETTINGS.UseContextMenus',
@@ -205,7 +214,8 @@ export function registerSettings () {
     scope: 'world',
     config: true,
     default: false,
-    type: Boolean
+    type: Boolean,
+    requiresReload: true
   })
   if (game.settings.get('CoC7', 'overrideGameArtwork')) {
     game.settings.register('CoC7', 'artPauseImage', {

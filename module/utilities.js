@@ -1,4 +1,4 @@
-/* global canvas, ChatMessage, CONFIG, CONST, Dialog, duplicate, Folder, fromUuid, game, getDocumentClass, Hooks, Macro, Roll, Token, ui */
+/* global canvas, ChatMessage, CONFIG, CONST, Dialog, duplicate, Folder, fromUuid, game, getDocumentClass, Hooks, Macro, Roll, Token, ui, FontConfig, SettingsConfig */
 import { COC7 } from './config.js'
 import { CoC7Check } from './check.js'
 import { CoC7Item } from './items/item.js'
@@ -16,6 +16,25 @@ export class CoC7Utilities {
 
   //  actor.setCondition(COC7.status.criticalWounds);
   // }
+
+  static resetFonts () {
+    const definitions = game.settings.get('core', FontConfig.SETTING)
+    const coc7FontsList = ['CoC7-cursive', 'CoC7-default', 'CoC7-chat', 'CoC7-sheet']
+    let update = false
+    for (const f of coc7FontsList) {
+      if (definitions[f]) {
+        delete definitions[f]
+        update = true
+      }
+    }
+
+    if (update) {
+      game.settings.set('core', FontConfig.SETTING, definitions).then(
+        SettingsConfig.reloadConfirm({ world: true })
+      )
+      // await FontConfig._loadFonts()
+    }
+  }
 
   static isFormula (x) {
     if (typeof x !== 'string') return false

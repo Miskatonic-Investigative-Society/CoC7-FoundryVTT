@@ -1,4 +1,4 @@
-/* global $, ActorSheet, ChatMessage, CONST, Dialog, FormData, foundry, game, getProperty, Hooks, Item, mergeObject, Roll, TextEditor, ui */
+/* global $, ActorSheet, ChatMessage, CONST, Dialog, FormData, foundry, game, getProperty, Hooks, mergeObject, Roll, TextEditor, ui */
 import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7ChatMessage } from '../../apps/coc7-chat-message.js'
 import { CoC7Check } from '../../check.js'
@@ -14,6 +14,7 @@ import { CoC7LinkCreationDialog } from '../../apps/link-creation-dialog.js'
 import CoC7ActiveEffect from '../../active-effect.js'
 import { CoC7Link } from '../../apps/link.js'
 import { CoC7ContextMenu } from '../../context-menu.js'
+import { CoC7Utilities } from '../../utilities.js'
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -842,10 +843,11 @@ export class CoC7ActorSheet extends ActorSheet {
      */
     html.find('.test-trigger').click(async event => {
       if (!game.settings.get('CoC7', 'hiddendevmenu')) return null
-      await Item.create({
-        name: '__CoC7InternalItem__',
-        type: 'item'
-      })
+      CoC7Utilities.resetFonts()
+      // await Item.create({
+      //   name: '__CoC7InternalItem__',
+      //   type: 'item'
+      // })
       // const effects = await item.createEmbeddedDocuments('ActiveEffect', [
       //   {
       //     label: game.i18n.localize('CoC7.EffectNew'),
@@ -858,7 +860,7 @@ export class CoC7ActorSheet extends ActorSheet {
       // const effect = effects[0]
       // await effect.sheet.render(true)
       // ui.notifications.info( 'effect created !')
-      ui.notifications.info('effect created !')
+      // ui.notifications.info('effect created !')
     })
 
     html
