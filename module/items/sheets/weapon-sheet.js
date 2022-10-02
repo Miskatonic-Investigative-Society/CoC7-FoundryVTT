@@ -1,6 +1,7 @@
 /* global game, ItemSheet, mergeObject, TextEditor */
 import { COC7 } from '../../config.js'
 import { isCtrlKey } from '../../chat/helper.js'
+import { CoC7Utilities } from '../../utilities.js'
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
@@ -54,11 +55,7 @@ export class CoC7WeaponSheet extends ItemSheet {
         return false
       })
 
-      sheetData.combatSkill.sort((a, b) => {
-        return a.name
-          .toLocaleLowerCase()
-          .localeCompare(b.name.toLocaleLowerCase())
-      })
+      sheetData.combatSkill.sort(CoC7Utilities.sortByNameKey)
     }
 
     sheetData._properties = []
