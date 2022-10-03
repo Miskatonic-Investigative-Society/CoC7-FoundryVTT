@@ -1136,7 +1136,9 @@
   "CoC7.toolTipDelay": "Délai en millisecondes avant qu'une info-bulle apparaisse, 0 pour jamais",
   "SETTINGS.ChaseShowTokenMovement": "Afficher les mouvements des tokens.",
   "SETTINGS.ChaseShowTokenMovementHint": "Afficher les mouvements sur la grille quand le token est déplacé vers le prochain lieu.",
-
+  "SETTINGS.UseContextMenus": "Utiliser les menus contextuels",
+  "SETTINGS.UseContextMenusHint": "[EXPERIMENTAL] Utiliser les menus contextuels pour les jets à la place des combinaisons de touches.",
+  
   "CoC7.getTheExample": "Copier l'Exemple",
   "CoC7.Copied": "Texte de l'Exemple copié dans le presse-papier",
 
