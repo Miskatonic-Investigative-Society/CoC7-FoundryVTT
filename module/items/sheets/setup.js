@@ -145,7 +145,7 @@ export class CoC7SetupSheet extends ItemSheet {
     })
   }
 
-  getData () {
+  async getData () {
     const sheetData = super.getData()
 
     sheetData.hasOwner = this.item.isEmbedded === true
@@ -156,11 +156,7 @@ export class CoC7SetupSheet extends ItemSheet {
     sheetData.skillListEmpty = sheetData.skills.length === 0
     sheetData.itemsListEmpty = sheetData.otherItems.length === 0
 
-    sheetData.skills.sort((a, b) => {
-      return a.name
-        .toLocaleLowerCase()
-        .localeCompare(b.name.toLocaleLowerCase())
-    })
+    sheetData.skills.sort(CoC7Utilities.sortByNameKey)
 
     sheetData._eras = []
     for (const [key, value] of Object.entries(COC7.eras)) {

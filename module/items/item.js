@@ -672,11 +672,7 @@ export class CoC7Item extends Item {
         // Else item is added
         return [...newArray, item]
       }, [])
-      .sort((a, b) => {
-        return a.name
-          .toLocaleLowerCase()
-          .localeCompare(b.name.toLocaleLowerCase())
-      })
+      .sort(CoC7Utilities.sortByNameKey)
   }
 
   /** TODO : rien a faire ici !!

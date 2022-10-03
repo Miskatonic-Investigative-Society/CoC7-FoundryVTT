@@ -2781,7 +2781,7 @@ export class CoCActor extends Actor {
                 {
                   results: `${augmentSANDie.values[0]} + ${augmentSANDie.values[1]}`,
                   sanGained,
-                  skill: item.system.name,
+                  skill: item.name,
                   skillValue: skillValue + augmentDie.total
                 }
               )}</span><br>`
@@ -2792,7 +2792,7 @@ export class CoCActor extends Actor {
             message += `<span class="upgrade-success">${game.i18n.format(
               'CoC7.DevSuccess',
               {
-                item: item.system.name,
+                item: item.name,
                 die: die.total,
                 score: item.value,
                 augment: augmentDie.total
@@ -2806,7 +2806,7 @@ export class CoCActor extends Actor {
             message += `<span class="upgrade-failed">${game.i18n.format(
               'CoC7.DevFailure',
               {
-                item: item.system.name,
+                item: item.name,
                 die: die.total,
                 score: item.value
               }
@@ -3166,9 +3166,7 @@ export class CoCActor extends Actor {
       }
     }
 
-    skillList.sort((a, b) => {
-      return a.name.localeCompare(b.name)
-    })
+    skillList.sort(CoC7Utilities.sortByNameKey)
 
     return skillList
   }
@@ -3183,9 +3181,7 @@ export class CoCActor extends Actor {
       }
     }
 
-    weaponList.sort((a, b) => {
-      return a.name.localeCompare(b.name)
-    })
+    weaponList.sort(CoC7Utilities.sortByNameKey)
 
     return weaponList
   }
@@ -3198,9 +3194,7 @@ export class CoCActor extends Actor {
       }
     }
 
-    skillList.sort((a, b) => {
-      return a.name.localeCompare(b.name)
-    })
+    skillList.sort(CoC7Utilities.sortByNameKey)
 
     return skillList
   }
@@ -3311,9 +3305,7 @@ export class CoCActor extends Actor {
       if (value.type === 'skill') skillList.push(value)
     }
 
-    skillList.sort((a, b) => {
-      return a.name.localeCompare(b.name)
-    })
+    skillList.sort(CoC7Utilities.sortByNameKey)
 
     return skillList
   }

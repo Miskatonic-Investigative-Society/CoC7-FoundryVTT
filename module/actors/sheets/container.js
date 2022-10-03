@@ -67,9 +67,7 @@ export class CoC7ContainerSheet extends ActorSheet {
         sheetData.itemsByType[item.type].push(item)
       }
       for (const itemType in sheetData.itemsByType) {
-        sheetData.itemsByType[itemType].sort((a, b) => {
-          return a.name.localeCompare(b.name)
-        })
+        sheetData.itemsByType[itemType].sort(CoC7Utilities.sortByNameKey)
       }
     }
 
