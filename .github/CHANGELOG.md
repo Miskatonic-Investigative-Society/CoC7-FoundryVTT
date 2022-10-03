@@ -15,6 +15,17 @@ _If you decide to go on with V10:_
 
 Happy gaming !
 
+## Version 0.9.2
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix "Development Phase" names showing as undefined in chat message Development Phase cites checked skills as "undefined" in chat message. #1261
+- Remove "Actor Importer" button for users that do not have Actor create rights
+- Update character sheet partials to include with ~ to prevent extra whitespace added to textareas Text input adding tabulation if you're making a new line #1248
+- Update to French localization, thanks to @vonv #1267
+- Update to Polish localization, thanks to @Medramerek #1260
+- Updates to socketlib library https://github.com/manuelVo/foundryvtt-socketlib
+
 ## Version 0.9.1
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
