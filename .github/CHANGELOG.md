@@ -15,7 +15,7 @@ _If you decide to go on with V10:_
 
 Happy gaming !
 
-## Version 0.9.2
+## Version 0.9.2 - upcoming release
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
