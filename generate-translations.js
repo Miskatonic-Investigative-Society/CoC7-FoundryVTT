@@ -65,7 +65,7 @@ glob('./lang/*.json', {}, async function (er, files) {
   if (Object.keys(abandoned).length > 0) {
     output =
       output +
-      'The following translations have more than 100 untranslated string **' +
+      'The following translations have more than 100 untranslated strings **' +
       Object.keys(abandoned).join('**, **') +
       '**, [are you able to help?](./ABANDONED.md)\n\n'
   }
@@ -129,13 +129,13 @@ glob('./lang/*.json', {}, async function (er, files) {
         output +
         '[' +
         key +
-        '.json (' + Object.entries(abandoned[key]).length + ' untranslated string)](#' +
+        '.json (' + Object.entries(abandoned[key]).length + ' untranslated strings)](#' +
         (key + '.json').toLowerCase().replace(/[^a-zA-Z0-9]+/g, '') +
         ')\n\n'
     })
     output = output + '\n'
     Object.entries(abandoned).forEach(([key, values]) => {
-      output = output + '## ' + key + '.json\n' + Object.entries(abandoned[key]).length + ' untranslated string\n```\n'
+      output = output + '## ' + key + '.json\n' + Object.entries(abandoned[key]).length + ' untranslated strings\n```\n'
       values.forEach(sourceKey => {
         output =
           output +

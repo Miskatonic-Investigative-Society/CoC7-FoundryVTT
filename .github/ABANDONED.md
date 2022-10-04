@@ -2,23 +2,23 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (232 untranslated string)](#cnjson)
+[cn.json (232 untranslated strings)](#cnjson)
 
-[cs.json (417 untranslated string)](#csjson)
+[cs.json (417 untranslated strings)](#csjson)
 
-[es.json (214 untranslated string)](#esjson)
+[es.json (214 untranslated strings)](#esjson)
 
-[ja.json (202 untranslated string)](#jajson)
+[ja.json (202 untranslated strings)](#jajson)
 
-[ko.json (201 untranslated string)](#kojson)
+[ko.json (201 untranslated strings)](#kojson)
 
-[ru.json (1079 untranslated string)](#rujson)
+[ru.json (1079 untranslated strings)](#rujson)
 
-[sv.json (200 untranslated string)](#svjson)
+[sv.json (200 untranslated strings)](#svjson)
 
 
 ## cn.json
-232 untranslated string
+232 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -254,7 +254,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value."
 ```
 ## cs.json
-417 untranslated string
+417 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -675,7 +675,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value."
 ```
 ## es.json
-214 untranslated string
+214 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -893,7 +893,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value."
 ```
 ## ja.json
-202 untranslated string
+202 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -1099,7 +1099,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value."
 ```
 ## ko.json
-201 untranslated string
+201 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -1304,7 +1304,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value."
 ```
 ## ru.json
-1079 untranslated string
+1079 untranslated strings
 ```
 "CoC7.title": "Call of Cthulhu 7h Edition (Unofficial)",
 "CoC7.Entities.Character": "Character",
@@ -2387,7 +2387,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value."
 ```
 ## sv.json
-200 untranslated string
+200 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
