@@ -4,7 +4,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 The following translations are currently up to date **de**, **fr**, **it**
 
-The following translations have been abandoned **cn**, **cs**, **es**, **ja**, **ko**, **ru**, **sv**, [are you able to help?](./ABANDONED.md)
+The following translations have more than 100 untranslated string **cn**, **cs**, **es**, **ja**, **ko**, **ru**, **sv**, [are you able to help?](./ABANDONED.md)
 
 |Key|pl|pt-BR|zh-TW|
 |:---|:---:|:---:|:---:|
