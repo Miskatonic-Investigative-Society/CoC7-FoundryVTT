@@ -16,7 +16,7 @@ glob('./lang/*.json', {}, async function (er, files) {
       if (lang !== 'en') {
         const json = jsonfile.readFileSync(filename)
         const missingKeys = keys.filter(x => !Object.keys(json).includes(x))
-        if (missingKeys.length < 200) {
+        if (missingKeys.length < 100) {
           unordered[lang] = missingKeys
           missing = missing.concat(unordered[lang])
         } else {
@@ -65,7 +65,7 @@ glob('./lang/*.json', {}, async function (er, files) {
   if (Object.keys(abandoned).length > 0) {
     output =
       output +
-      'The following translations have been abandoned **' +
+      'The following translations have more than 100 untranslated strings **' +
       Object.keys(abandoned).join('**, **') +
       '**, [are you able to help?](./ABANDONED.md)\n\n'
   }
@@ -129,13 +129,13 @@ glob('./lang/*.json', {}, async function (er, files) {
         output +
         '[' +
         key +
-        '.json](#' +
+        '.json (' + Object.entries(abandoned[key]).length + ' untranslated strings)](#' +
         (key + '.json').toLowerCase().replace(/[^a-zA-Z0-9]+/g, '') +
         ')\n\n'
     })
     output = output + '\n'
     Object.entries(abandoned).forEach(([key, values]) => {
-      output = output + '## ' + key + '.json\n```\n'
+      output = output + '## ' + key + '.json\n' + Object.entries(abandoned[key]).length + ' untranslated strings\n```\n'
       values.forEach(sourceKey => {
         output =
           output +
