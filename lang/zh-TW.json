@@ -903,7 +903,7 @@
   "CoC7.Initiative": "先攻",
   "CoC7.PenaltyDice": "懲罰骰",
   "CoC7.LuckNotEnough": "{name} 沒有足夠的運氣通過檢定",
-  "CoC7.UpgradeSuccessWithLuck": "使用 {{luckToSpend}} 點運氣，提升到 {{difficultyName}} 成功。",
+  "CoC7.UpgradeSuccessWithLuck": "使用 {luckToSpend} 點運氣，提升到 {difficultyName} 成功。",
   "CoC7.BonusDieAssailantReason": "添加 1 粒獎勵骰（攻擊者俯臥，被束縛......）",
   "CoC7.PenaltyDieSelfReason": "添加 1 粒懲罰骰（因為俯臥、束縛......）",
   "CoC7.RollDifficultyRegularTitle": "一般難度",

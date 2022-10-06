@@ -175,7 +175,7 @@
   "CoC7.LuckSpentAlt": "Szczęście wydane",
   "CoC7.LuckError": "{actorName} nie ma wystarczająco szczęścia, aby zdać test",
   "CoC7.LuckNotEnough": "{name} nie ma wystarczająco szczęścia, aby zdać test",
-  "CoC7.UpgradeSuccessWithLuck": "Ulepsz sukces do {{difficultyName}} za {{luckToSpend}} punkty Szczęścia.",
+  "CoC7.UpgradeSuccessWithLuck": "Ulepsz sukces do {difficultyName} za {luckToSpend} punkty Szczęścia.",
   "CoC7.check.AutoSuccess": "Auto. sukces",
   "CoC7.check.AutoFailure": "Auto. niepowodzenie",
   "CoC7.RevealCheck": "Pokaż wynik",
