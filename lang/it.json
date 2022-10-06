@@ -175,7 +175,7 @@
   "CoC7.LuckSpentAlt": "Fortuna spesa",
   "CoC7.LuckError": "{actorName} non ha abbastanza Fortuna per passare il tiro",
   "CoC7.LuckNotEnough": "{name} non ha avuto abbstanza fortuna per passare il tiro",
-  "CoC7.UpgradeSuccessWithLuck": "Aggiorna a successo {{difficultyName}} per {{luckToSpend}} fortuna.",
+  "CoC7.UpgradeSuccessWithLuck": "Aggiorna a successo {difficultyName} per {luckToSpend} fortuna.",
   "CoC7.check.AutoSuccess": "Successo automatico",
   "CoC7.check.AutoFailure": "Fallimento automatico",
   "CoC7.RevealCheck": "Rivela Tiro",
