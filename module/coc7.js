@@ -493,7 +493,7 @@ Hooks.on('dropActorSheetData', DropActorSheetData)
 
 function activateGlobalListener () {
   const body = $('body')
-  body.on('click', CoC7ContextMenu.closeAll)
+  document.addEventListener('click', CoC7ContextMenu.closeAll)
   body.on('click', 'a.coc7-inline-check', CoC7Check._onClickInlineRoll)
   document.addEventListener('mousedown', _onLeftClick)
 }
