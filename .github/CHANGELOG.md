@@ -1,15 +1,5 @@
 # :warning: Important note
 
-> The system is on a transition stage between FVTT V9 and V10. Most of it has been tested and should be working on V10.
->
-> However foundry V10 is still in testing stage.
->
-> Be aware that migrating to V10 now is not advisable. Your may break your worlds as they will be migrated and you won't be able to return to V9.
->
-> Despite out best efforts, some part of this system may not work with V10.
-
-_If you decide to go on with V10:_
-
 - :warning: __MAKE A COPY OF YOUR WORLD BEFORE UPGRADING__
 - please report any bug encountered on GitHub, specify if you used V10 version.
 
@@ -20,6 +10,7 @@ Happy gaming !
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Fix "Development Phase" names showing as undefined in chat message Development Phase cites checked skills as "undefined" in chat message. #1261
+- Fix Luck spend on combat card not formatting correctly #1270
 - Remove "Actor Importer" button for users that do not have Actor create rights
 - Update character sheet partials to include with ~ to prevent extra whitespace added to textareas Text input adding tabulation if you're making a new line #1248
 - Update to French localization, thanks to @vonv #1267

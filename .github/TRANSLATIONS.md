@@ -236,7 +236,7 @@ The following translations have more than 100 untranslated strings **cn**, **cs*
 ##### CoC7.Update
 ```  "CoC7.Update": "Update",```
 ##### CoC7.UpgradeSuccessWithLuck
-```  "CoC7.UpgradeSuccessWithLuck": "Upgrade to {{difficultyName}} success for {{luckToSpend}} luck.",```
+```  "CoC7.UpgradeSuccessWithLuck": "Upgrade to {difficultyName} success for {luckToSpend} luck.",```
 ##### CoC7.WeaponSkillMain
 ```  "CoC7.WeaponSkillMain": "Main skill",```
 ##### CoC7.combatCard.automaticSuccess
