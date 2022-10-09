@@ -10,6 +10,7 @@ Happy gaming !
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Fix "Development Phase" names showing as undefined in chat message Development Phase cites checked skills as "undefined" in chat message. #1261
+- Fix getting token image from key if it is from a prototype token
 - Fix Luck spend on combat card not formatting correctly #1270
 - Fix range combat token selection and distance value calculation
 - Prevent context menus hijacking click events #1273 & #1274
