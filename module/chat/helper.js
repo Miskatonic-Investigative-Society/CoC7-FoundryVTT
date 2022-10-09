@@ -250,9 +250,9 @@ export class chatHelper {
       // Try to find a token.
       const token = chatHelper.getTokenFromKey(actorKey)
       if (token) {
-        if (token.document.texture.src) {
-          if (token.document.texture.src.indexOf('*') === -1) {
-            return token.document.texture.src
+        if ((token.document || token).texture.src) {
+          if ((token.document || token).texture.src.indexOf('*') === -1) {
+            return (token.document || token).texture.src
           }
         }
       }
