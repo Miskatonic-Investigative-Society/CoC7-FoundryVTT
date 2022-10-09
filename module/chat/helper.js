@@ -215,8 +215,7 @@ export class chatHelper {
 
   static getActorToken (actor) {
     if (!actor) return null
-    /** * MODIF 0.8.x ***/
-    return actor.token || { data: actor.data.token }
+    return actor.token || actor.prototypeToken
     /*******************/
     // // Case 0 - Actor is a token (synthetic actor), return that token.
     // if(actor.isToken) return actor.token;
@@ -277,7 +276,7 @@ export class chatHelper {
     // canvas.sight.initializeTokens();
     if (
       typeof endToken.center === 'undefined' &&
-      typeof endToken.data.document?.id !== 'undefined'
+      typeof endToken.id !== 'undefined'
     ) {
       if (startToken.scene?.id || false) {
         const scene = game.scenes.get(startToken.scene.id)
@@ -294,7 +293,7 @@ export class chatHelper {
     let distance = {
       gridUnit: 0,
       value: 0,
-      unit: canvas.scene.data.gridUnits
+      unit: canvas.scene.grid.units
     }
     if (
       typeof startToken !== 'undefined' &&
@@ -305,16 +304,16 @@ export class chatHelper {
       const ray = new Ray(startToken.center, endToken.center)
       const segment = [{ ray }]
       distance = {
-        gridUnit: ray.distance / canvas.scene.data.grid,
+        gridUnit: ray.distance / canvas.scene.grid.size,
         // value: (ray.distance/canvas.scene.data.grid)*canvas.scene.data.gridDistance,
         value: canvas.grid.measureDistances(segment, {
           gridSpaces: game.settings.get('CoC7', 'gridSpaces')
         })[0],
-        unit: canvas.scene.data.gridUnits
+        unit: canvas.scene.grid.units
       }
       if (game.settings.get('CoC7', 'distanceElevation')) {
         const elevation = Math.abs(
-          (startToken.data.elevation || 0) - (endToken.data.elevation || 0)
+          (startToken.document.elevation || 0) - (endToken.document.elevation || 0)
         )
         distance.value = Math.sqrt(
           distance.value * distance.value + elevation * elevation
