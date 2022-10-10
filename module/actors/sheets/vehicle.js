@@ -40,12 +40,18 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
 
     sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
       sheetData.data.system.description.value,
-      { async: false }
+      {
+        async: false,
+        secrets: sheetData.editable
+      }
     )
 
     sheetData.enrichedDescriptionNotes = TextEditor.enrichHTML(
       sheetData.data.system.description.notes,
-      { async: false }
+      {
+        async: false,
+        secrets: sheetData.editable
+      }
     )
 
     // for (let [key, value] of Object.entries(sheetData.data.type)) {

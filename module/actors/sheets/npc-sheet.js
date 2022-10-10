@@ -54,12 +54,18 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
 
     sheetData.enrichedBiographyPersonalDescription = TextEditor.enrichHTML(
       sheetData.data.system.biography.personalDescription?.value,
-      { async: false }
+      {
+        async: false,
+        secrets: sheetData.editable
+      }
     )
 
     sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
       sheetData.data.system.description.keeper,
-      { async: false }
+      {
+        async: false,
+        secrets: sheetData.editable
+      }
     )
 
     return sheetData

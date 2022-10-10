@@ -120,22 +120,34 @@ export class CoC7ArchetypeSheet extends ItemSheet {
 
     sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
       sheetData.data.system.description.value,
-      { async: false }
+      {
+        async: false,
+        secrets: sheetData.editable
+      }
     )
 
     sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
       sheetData.data.system.description.keeper,
-      { async: false }
+      {
+        async: false,
+        secrets: sheetData.editable
+      }
     )
 
     sheetData.enrichedSuggestedOccupations = TextEditor.enrichHTML(
       sheetData.data.system.suggestedOccupations,
-      { async: false }
+      {
+        async: false,
+        secrets: sheetData.editable
+      }
     )
 
     sheetData.enrichedSuggestedTraits = TextEditor.enrichHTML(
       sheetData.data.system.suggestedTraits,
-      { async: false }
+      {
+        async: false,
+        secrets: sheetData.editable
+      }
     )
 
     sheetData.skillListEmpty = sheetData.data.system.skills.length === 0
