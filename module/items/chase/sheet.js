@@ -100,7 +100,10 @@ export class CoC7ChaseSheet extends ItemSheet {
 
     sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
       sheetData.data.system.description.keeper,
-      { async: false }
+      {
+        async: false,
+        secrets: sheetData.editable
+      }
     )
 
     return sheetData
