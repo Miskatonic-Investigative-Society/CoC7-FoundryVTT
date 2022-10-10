@@ -15,6 +15,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Fix range combat token selection and distance value calculation
 - Prevent context menus hijacking click events #1273 & #1274
 - Remove "Actor Importer" button for users that do not have Actor create rights
+- Show enriched text secrets on sheets for the owner
 - Update character sheet partials to include with ~ to prevent extra whitespace added to textareas Text input adding tabulation if you're making a new line #1248
 - Update to French localization, thanks to @vonv #1267
 - Update to Polish localization, thanks to @Medramerek #1260
