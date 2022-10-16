@@ -5,7 +5,7 @@
 
 Happy gaming !
 
-## Version 0.9.2 - upcoming release
+## Version 0.9.2
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
