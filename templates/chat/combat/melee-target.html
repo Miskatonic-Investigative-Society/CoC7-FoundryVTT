@@ -6,7 +6,7 @@
         <img class="open-actor" data-actor-key="{{actorKey}}" style="flex: none;" src="{{actorImg}}" title="{{name}}" width="36" height="36" />
       {{/if}}
       {{#if dodging}}
-        <img class="open-actor" style="flex: none;" data-actor-key="{{actorKey}}" src="{{actor.dodgeSkill.data.img}}" title="{{actor.dodgeSkill.name}}" width="36" height="36" />
+        <img class="open-actor" style="flex: none;" data-actor-key="{{actorKey}}" src="{{actor.dodgeSkill.img}}" title="{{actor.dodgeSkill.name}}" width="36" height="36" />
         <h3 style="text-align: center;font-weight: bolder;" class="item-name card-title">{{actor.dodgeSkill.name}}</h3>
       {{else if notResponding}}
         <h3 style="text-align: center;font-weight: bolder;" class="item-name card-title">{{localize 'CoC7.NoResponse'}}</h3>
@@ -14,8 +14,8 @@
         <img class="open-actor" style="flex: none;" data-actor-key="{{actorKey}}" src="{{weapon.img}}" title="{{weapon.name}}" width="36" height="36" />
         <h3 style="text-align: center;font-weight: bolder;" class="item-name card-title">{{weapon.name}}</h3>
       {{else if maneuvering}}
-        <img class="open-actor" style="flex: none;" data-actor-key="{{actorKey}}" src="{{skill.data.img}}" title="{{skill.data.name}}" width="36" height="36" />
-        <h3 style="text-align: center;font-weight: bolder;" class="item-name card-title">{{skill.data.name}}</h3>
+        <img class="open-actor" style="flex: none;" data-actor-key="{{actorKey}}" src="{{skill.img}}" title="{{skill.name}}" width="36" height="36" />
+        <h3 style="text-align: center;font-weight: bolder;" class="item-name card-title">{{skill.name}}</h3>
       {{else}}
         <h3 style="text-align: center;font-weight: bolder;" class="item-name card-title">...</h3>
       {{/if}}
@@ -25,17 +25,17 @@
     {{#unless notResponding}}
       <div class="card-content">
         {{#if dodging}}
-          {{{actor.dodgeSkill.data.data.description.value}}}
+          {{{actor.dodgeSkill.system.description.value}}}
         {{else if fightingBack}}
-          {{{weapon.data.data.description.value}}}
+          {{{weapon.system.description.value}}}
         {{else if maneuvering}}
-          {{{skill.data.data.description.value}}}
+          {{{skill.system.description.value}}}
         {{/if}}
         {{#if rolled}}
           <div class="flex0 advantage-selection">
             {{#if dodging}}<span class="tag" title="{{actor.dodgeSkill.name}}">{{localize 'CoC7.Dodge'}}</span>{{/if}}
             {{#if fightingBack}}<span class="tag" title="{{weapon.name}}">{{localize 'CoC7.FightBack'}}</span>{{/if}}
-            {{#if maneuvering}}<span class="tag" title="{{skill.data.name}}">{{localize 'CoC7.Maneuver'}}</span>{{/if}}
+            {{#if maneuvering}}<span class="tag" title="{{skill.name}}">{{localize 'CoC7.Maneuver'}}</span>{{/if}}
             {{#if advantage}}<span class="tag" title="{{localize 'CoC7.Advantage'}}">{{localize 'CoC7.Advantage'}}</span>{{/if}}
             {{#if disadvantage}}<span class="tag" title="{{localize 'CoC7.Disadvantage'}}">{{localize 'CoC7.Disadvantage'}}</span>{{/if}}
           </div>
@@ -62,7 +62,7 @@
         <span class="combat-action {{#unless rolled}}dropbtn{{/unless}}">{{localize 'CoC7.FightBack'}}</span>
         <div class="actor-skill dropdown-content">
           {{#each actor.closeCombatWeapons as |weapon key|}}
-            <a class="dropdown-element" data-action="fightBack" data-weapon-id="{{weapon.id}}" data-skill-id="{{weapon.data.data.skill.main.id}}">{{weapon.name}} ({{weapon.data.data.skill.main.value}}%)</a> {{!-- TODO: Check skill value correctly displayed --}}
+            <a class="dropdown-element" data-action="fightBack" data-weapon-id="{{weapon.id}}" data-skill-id="{{weapon.system.skill.main.id}}">{{weapon.name}} ({{weapon.system.skill.main.value}}%)</a> {{!-- TODO: Check skill value correctly displayed --}}
           {{/each}}
         </div>
       </div>
@@ -70,7 +70,7 @@
         <span class="combat-action {{#unless rolled}}dropbtn{{/unless}}">{{localize 'CoC7.Maneuver'}}</span>
         <div class="actor-skill dropdown-content">
           {{#each actor.fightingSkills as |skill key|}}
-            <a class="dropdown-element" data-action="maneuver" data-skill-id="{{skill.id}}">{{skill.data.name}} ({{skill.value}}%)</a>
+            <a class="dropdown-element" data-action="maneuver" data-skill-id="{{skill.id}}">{{skill.name}} ({{skill.value}}%)</a>
           {{/each}}
         </div>
       </div>
@@ -150,11 +150,11 @@
   {{else if actionSelected}}
     <div class="selected-action card-buttons owner-only">
       {{#if fightingBack}}
-        <button data-action="melee-target-roll" data-skill="{{skill.id}}" data-item-id="{{weapon.id}}">{{weapon.name}}: {{skill.data.name}} ({{skill.value}}%)</button>
+        <button data-action="melee-target-roll" data-skill="{{skill.id}}" data-item-id="{{weapon.id}}">{{weapon.name}}: {{skill.name}} ({{skill.value}}%)</button>
       {{else if notResponding}}
         <button data-action="melee-target-no-response">{{localize 'CoC7.NoResponse'}}</button>
       {{else}}
-        <button data-action="melee-target-roll" data-skill="{{skill.id}}">{{skill.data.name}} ({{skill.value}}%)</button>
+        <button data-action="melee-target-roll" data-skill="{{skill.id}}">{{skill.name}} ({{skill.value}}%)</button>
       {{/if}}
     </div>
   {{/if}}

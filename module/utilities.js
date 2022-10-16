@@ -911,4 +911,17 @@ export class CoC7Utilities {
       }
     }
   }
+
+  static sortByNameKey (a, b) {
+    return a.name
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLocaleLowerCase()
+      .localeCompare(
+        b.name
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .toLocaleLowerCase()
+      )
+  }
 }

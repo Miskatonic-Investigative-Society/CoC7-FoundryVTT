@@ -67,9 +67,7 @@ export class CoC7ContainerSheet extends ActorSheet {
         sheetData.itemsByType[item.type].push(item)
       }
       for (const itemType in sheetData.itemsByType) {
-        sheetData.itemsByType[itemType].sort((a, b) => {
-          return a.name.localeCompare(b.name)
-        })
+        sheetData.itemsByType[itemType].sort(CoC7Utilities.sortByNameKey)
       }
     }
 
@@ -103,12 +101,18 @@ export class CoC7ContainerSheet extends ActorSheet {
 
     sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
       sheetData.data.system.description.value,
-      { async: false }
+      {
+        async: false,
+        secrets: sheetData.editable
+      }
     )
 
     sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
       sheetData.data.system.description.keeper,
-      { async: false }
+      {
+        async: false,
+        secrets: sheetData.editable
+      }
     )
 
     return sheetData

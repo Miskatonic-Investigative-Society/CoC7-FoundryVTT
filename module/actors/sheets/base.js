@@ -14,6 +14,7 @@ import { CoC7LinkCreationDialog } from '../../apps/link-creation-dialog.js'
 import CoC7ActiveEffect from '../../active-effect.js'
 import { CoC7Link } from '../../apps/link.js'
 import { CoC7ContextMenu } from '../../context-menu.js'
+import { CoC7Utilities } from '../../utilities.js'
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -311,35 +312,13 @@ export class CoC7ActorSheet extends ActorSheet {
       }
 
       for (const itemType in sheetData.itemsByType) {
-        sheetData.itemsByType[itemType].sort((a, b) => {
-          return a.name
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .toLocaleLowerCase()
-            .localeCompare(
-              b.name
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLocaleLowerCase()
-            )
-        })
+        sheetData.itemsByType[itemType].sort(CoC7Utilities.sortByNameKey)
       }
 
       // redondant avec matrice itembytype
       sheetData.skills = sheetData.items
         .filter(item => item.type === 'skill')
-        .sort((a, b) => {
-          return a.name
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .toLocaleLowerCase()
-            .localeCompare(
-              b.name
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLocaleLowerCase()
-            )
-        })
+        .sort(CoC7Utilities.sortByNameKey)
 
       sheetData.meleeSkills = sheetData.skills.filter(
         skill =>

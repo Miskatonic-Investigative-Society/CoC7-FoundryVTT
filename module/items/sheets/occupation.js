@@ -188,52 +188,22 @@ export class CoC7OccupationSheet extends ItemSheet {
     })
   }
 
-  getData () {
+  async getData () {
     const sheetData = super.getData()
 
     sheetData.hasOwner = this.item.isEmbedded === true
 
-    const optionnal = []
-    const mandatory = []
-    for (const [key, carac] of Object.entries(sheetData.data.system.occupationSkillPoints)) {
-      if (carac.multiplier) {
-        const caracName = game.i18n.localize(`CHARAC.${key.toUpperCase()}`)
-        if (carac.selected && carac.optional) {
-          optionnal.push(`${caracName}x${carac.multiplier}`)
-        }
-        if (carac.selected && !carac.optional) {
-          mandatory.push(`${caracName}x${carac.multiplier}`)
-        }
-      }
-    }
-
     sheetData.skillListEmpty = sheetData.data.system.skills.length === 0
 
-    sheetData.data.system.skills.sort((a, b) => {
-      return a.name
-        .toLocaleLowerCase()
-        .localeCompare(b.name.toLocaleLowerCase())
-    })
+    sheetData.data.system.skills.sort(CoC7Utilities.sortByNameKey)
 
     for (let index = 0, len = sheetData.data.system.groups.length; index < len; index++) {
       sheetData.data.system.groups[index].isEmpty = sheetData.data.system.groups[index].skills.length === 0
 
-      sheetData.data.system.groups[index].skills.sort((a, b) => {
-        return a.name
-          .toLocaleLowerCase()
-          .localeCompare(b.name.toLocaleLowerCase())
-      })
+      sheetData.data.system.groups[index].skills.sort(CoC7Utilities.sortByNameKey)
     }
 
-    sheetData.occupationPointsString = ''
-    const orString = ` ${game.i18n.localize('CoC7.Or')} `
-    if (mandatory.length) sheetData.occupationPointsString += mandatory.join(' + ')
-    if (optionnal.length && mandatory.length) {
-      sheetData.occupationPointsString += ` + (${optionnal.join(orString)})`
-    }
-    if (optionnal.length && !mandatory.length) {
-      sheetData.occupationPointsString += optionnal.join(orString)
-    }
+    sheetData.occupationPointsString = CoC7OccupationSheet.occupationPointsString(sheetData.data.system.occupationSkillPoints)
 
     sheetData.itemProperties = []
 
@@ -245,16 +215,48 @@ export class CoC7OccupationSheet extends ItemSheet {
 
     sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
       sheetData.data.system.description.value,
-      { async: false }
+      {
+        async: false,
+        secrets: sheetData.editable
+      }
     )
 
     sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
       sheetData.data.system.description.keeper,
-      { async: false }
+      {
+        async: false,
+        secrets: sheetData.editable
+      }
     )
 
     sheetData.isKeeper = game.user.isGM
     return sheetData
+  }
+
+  static occupationPointsString (occupationSkillPoints) {
+    const optionnal = []
+    const mandatory = []
+    for (const [key, carac] of Object.entries(occupationSkillPoints)) {
+      if (carac.multiplier) {
+        const caracName = game.i18n.localize(`CHARAC.${key.toUpperCase()}`)
+        if (carac.selected && carac.optional) {
+          optionnal.push(`${caracName}x${carac.multiplier}`)
+        }
+        if (carac.selected && !carac.optional) {
+          mandatory.push(`${caracName}x${carac.multiplier}`)
+        }
+      }
+    }
+    let occupationPointsString = ''
+    const orString = ` ${game.i18n.localize('CoC7.Or')} `
+    if (mandatory.length) occupationPointsString += mandatory.join(' + ')
+    if (optionnal.length && mandatory.length) {
+      occupationPointsString += ` + (${optionnal.join(orString)})`
+    }
+    if (optionnal.length && !mandatory.length) {
+      occupationPointsString += optionnal.join(orString)
+    }
+    return occupationPointsString
   }
 
   _updateObject (event, formData) {

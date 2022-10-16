@@ -1,19 +1,26 @@
 # :warning: Important note
 
-> The system is on a transition stage between FVTT V9 and V10. Most of it has been tested and should be working on V10.
->
-> However foundry V10 is still in testing stage.
->
-> Be aware that migrating to V10 now is not advisable. Your may break your worlds as they will be migrated and you won't be able to return to V9.
->
-> Despite out best efforts, some part of this system may not work with V10.
-
-_If you decide to go on with V10:_
-
 - :warning: __MAKE A COPY OF YOUR WORLD BEFORE UPGRADING__
 - please report any bug encountered on GitHub, specify if you used V10 version.
 
 Happy gaming !
+
+## Version 0.9.2
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix "Development Phase" names showing as undefined in chat message Development Phase cites checked skills as "undefined" in chat message. #1261
+- Fix don't play dice sound if Dice So Nice! is enabled, thanks to @BenChand #1282
+- Fix getting token image from key if it is from a prototype token
+- Fix Luck spend on combat card not formatting correctly #1270
+- Fix range combat token selection and distance value calculation
+- Prevent context menus hijacking click events #1273 & #1274
+- Remove "Actor Importer" button for users that do not have Actor create rights
+- Show enriched text secrets on sheets for the owner
+- Update character sheet partials to include with ~ to prevent extra whitespace added to textareas Text input adding tabulation if you're making a new line #1248
+- Update to French localization, thanks to @vonv #1267
+- Update to Polish localization, thanks to @Medramerek #1260
+- Updates to socketlib library https://github.com/manuelVo/foundryvtt-socketlib
 
 ## Version 0.9.1
 

@@ -2,22 +2,23 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json](#cnjson)
+[cn.json (232 untranslated strings)](#cnjson)
 
-[cs.json](#csjson)
+[cs.json (417 untranslated strings)](#csjson)
 
-[es.json](#esjson)
+[es.json (214 untranslated strings)](#esjson)
 
-[ja.json](#jajson)
+[ja.json (202 untranslated strings)](#jajson)
 
-[ko.json](#kojson)
+[ko.json (201 untranslated strings)](#kojson)
 
-[ru.json](#rujson)
+[ru.json (1079 untranslated strings)](#rujson)
 
-[sv.json](#svjson)
+[sv.json (200 untranslated strings)](#svjson)
 
 
 ## cn.json
+232 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -34,7 +35,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Initiative": "Initiative",
 "CoC7.PenaltyDice": "Penalty Dice",
 "CoC7.LuckNotEnough": "{name} didn't have enough luck to pass the check",
-"CoC7.UpgradeSuccessWithLuck": "Upgrade to {{difficultyName}} success for {{luckToSpend}} luck.",
+"CoC7.UpgradeSuccessWithLuck": "Upgrade to {difficultyName} success for {luckToSpend} luck.",
 "CoC7.ErrorMissingKeeperUser": "Your keeper needs to be connected to perform this action",
 "CoC7.BonusDieAssailantReason": "Add 1 bonus die (assailant is prone, restrained...)",
 "CoC7.PenaltyDieSelfReason": "Add 1 penalty die (for being prone, restrained...)",
@@ -253,6 +254,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value."
 ```
 ## cs.json
+417 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -297,7 +299,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.NotEnoughMagicPoints": "{spell} costs {originalMagicPoints} Magic Points, but you only have {actorMagicPoints}. Would you like to take the remaining {convertedHitPoints} from your Hit Points? You will take {convertedHitPoints} damage if you proceed.",
 "CoC7.PenaltyDice": "Penalty Dice",
 "CoC7.LuckNotEnough": "{name} didn't have enough luck to pass the check",
-"CoC7.UpgradeSuccessWithLuck": "Upgrade to {{difficultyName}} success for {{luckToSpend}} luck.",
+"CoC7.UpgradeSuccessWithLuck": "Upgrade to {difficultyName} success for {luckToSpend} luck.",
 "CoC7.ErrorMissingKeeperUser": "Your keeper needs to be connected to perform this action",
 "CoC7.BonusDieAssailantReason": "Add 1 bonus die (assailant is prone, restrained...)",
 "CoC7.PenaltyDieSelfReason": "Add 1 penalty die (for being prone, restrained...)",
@@ -673,6 +675,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value."
 ```
 ## es.json
+214 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -689,7 +692,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Initiative": "Initiative",
 "CoC7.PenaltyDice": "Penalty Dice",
 "CoC7.LuckNotEnough": "{name} didn't have enough luck to pass the check",
-"CoC7.UpgradeSuccessWithLuck": "Upgrade to {{difficultyName}} success for {{luckToSpend}} luck.",
+"CoC7.UpgradeSuccessWithLuck": "Upgrade to {difficultyName} success for {luckToSpend} luck.",
 "CoC7.ErrorMissingKeeperUser": "Your keeper needs to be connected to perform this action",
 "CoC7.BonusDieAssailantReason": "Add 1 bonus die (assailant is prone, restrained...)",
 "CoC7.PenaltyDieSelfReason": "Add 1 penalty die (for being prone, restrained...)",
@@ -890,6 +893,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value."
 ```
 ## ja.json
+202 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -904,7 +908,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Initiative": "Initiative",
 "CoC7.PenaltyDice": "Penalty Dice",
 "CoC7.LuckNotEnough": "{name} didn't have enough luck to pass the check",
-"CoC7.UpgradeSuccessWithLuck": "Upgrade to {{difficultyName}} success for {{luckToSpend}} luck.",
+"CoC7.UpgradeSuccessWithLuck": "Upgrade to {difficultyName} success for {luckToSpend} luck.",
 "CoC7.BonusDieAssailantReason": "Add 1 bonus die (assailant is prone, restrained...)",
 "CoC7.PenaltyDieSelfReason": "Add 1 penalty die (for being prone, restrained...)",
 "CoC7.RollDifficultyRegularTitle": "Regular difficulty",
@@ -1095,6 +1099,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value."
 ```
 ## ko.json
+201 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -1109,7 +1114,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Initiative": "Initiative",
 "CoC7.PenaltyDice": "Penalty Dice",
 "CoC7.LuckNotEnough": "{name} didn't have enough luck to pass the check",
-"CoC7.UpgradeSuccessWithLuck": "Upgrade to {{difficultyName}} success for {{luckToSpend}} luck.",
+"CoC7.UpgradeSuccessWithLuck": "Upgrade to {difficultyName} success for {luckToSpend} luck.",
 "CoC7.BonusDieAssailantReason": "Add 1 bonus die (assailant is prone, restrained...)",
 "CoC7.PenaltyDieSelfReason": "Add 1 penalty die (for being prone, restrained...)",
 "CoC7.RollDifficultyRegularTitle": "Regular difficulty",
@@ -1299,6 +1304,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value."
 ```
 ## ru.json
+1079 untranslated strings
 ```
 "CoC7.title": "Call of Cthulhu 7h Edition (Unofficial)",
 "CoC7.Entities.Character": "Character",
@@ -1469,7 +1475,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.LuckSpentAlt": "Luck spent",
 "CoC7.LuckError": "{actorName} didn't have enough luck to pass the check",
 "CoC7.LuckNotEnough": "{name} didn't have enough luck to pass the check",
-"CoC7.UpgradeSuccessWithLuck": "Upgrade to {{difficultyName}} success for {{luckToSpend}} luck.",
+"CoC7.UpgradeSuccessWithLuck": "Upgrade to {difficultyName} success for {luckToSpend} luck.",
 "CoC7.check.AutoSuccess": "Auto. Success",
 "CoC7.check.AutoFailure": "Auto. Fail",
 "CoC7.RevealCheck": "Reveal check",
@@ -2381,6 +2387,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value."
 ```
 ## sv.json
+200 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -2395,7 +2402,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Initiative": "Initiative",
 "CoC7.PenaltyDice": "Penalty Dice",
 "CoC7.LuckNotEnough": "{name} didn't have enough luck to pass the check",
-"CoC7.UpgradeSuccessWithLuck": "Upgrade to {{difficultyName}} success for {{luckToSpend}} luck.",
+"CoC7.UpgradeSuccessWithLuck": "Upgrade to {difficultyName} success for {luckToSpend} luck.",
 "CoC7.BonusDieAssailantReason": "Add 1 bonus die (assailant is prone, restrained...)",
 "CoC7.PenaltyDieSelfReason": "Add 1 penalty die (for being prone, restrained...)",
 "CoC7.RollDifficultyRegularTitle": "Regular difficulty",

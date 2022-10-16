@@ -126,7 +126,7 @@ export class CoC7MeleeResoltion {
             })
             this.winner = this.target
             this.looser = this.initiator
-            this.winnerImg = this.target.skill.data.img
+            this.winnerImg = this.target.skill.img
             this.winnerTitle = this.target.skill.name
             this.action = 'dodge'
             this.rollDamage = false

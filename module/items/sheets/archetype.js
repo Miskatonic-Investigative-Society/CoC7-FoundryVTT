@@ -103,7 +103,7 @@ export class CoC7ArchetypeSheet extends ItemSheet {
     })
   }
 
-  getData () {
+  async getData () {
     const sheetData = super.getData()
 
     sheetData.hasOwner = this.item.isEmbedded === true
@@ -120,31 +120,39 @@ export class CoC7ArchetypeSheet extends ItemSheet {
 
     sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
       sheetData.data.system.description.value,
-      { async: false }
+      {
+        async: false,
+        secrets: sheetData.editable
+      }
     )
 
     sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
       sheetData.data.system.description.keeper,
-      { async: false }
+      {
+        async: false,
+        secrets: sheetData.editable
+      }
     )
 
     sheetData.enrichedSuggestedOccupations = TextEditor.enrichHTML(
       sheetData.data.system.suggestedOccupations,
-      { async: false }
+      {
+        async: false,
+        secrets: sheetData.editable
+      }
     )
 
     sheetData.enrichedSuggestedTraits = TextEditor.enrichHTML(
       sheetData.data.system.suggestedTraits,
-      { async: false }
+      {
+        async: false,
+        secrets: sheetData.editable
+      }
     )
 
     sheetData.skillListEmpty = sheetData.data.system.skills.length === 0
 
-    sheetData.data.system.skills.sort((a, b) => {
-      return a.name
-        .toLocaleLowerCase()
-        .localeCompare(b.name.toLocaleLowerCase())
-    })
+    sheetData.data.system.skills.sort(CoC7Utilities.sortByNameKey)
 
     sheetData.coreCharacteristicsString = ''
     const orString = ` ${game.i18n.localize('CoC7.Or')} `

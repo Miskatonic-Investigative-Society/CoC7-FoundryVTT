@@ -175,7 +175,7 @@
   "CoC7.LuckSpentAlt": "Luck spent",
   "CoC7.LuckError": "{actorName} didn't have enough luck to pass the check",
   "CoC7.LuckNotEnough": "{name} didn't have enough luck to pass the check",
-  "CoC7.UpgradeSuccessWithLuck": "Upgrade to {{difficultyName}} success for {{luckToSpend}} luck.",
+  "CoC7.UpgradeSuccessWithLuck": "Upgrade to {difficultyName} success for {luckToSpend} luck.",
   "CoC7.check.AutoSuccess": "Auto. Success",
   "CoC7.check.AutoFailure": "Auto. Fail",
   "CoC7.RevealCheck": "Reveal check",

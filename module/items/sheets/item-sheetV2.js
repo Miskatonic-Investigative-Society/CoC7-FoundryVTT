@@ -36,12 +36,18 @@ export class CoC7ItemSheetV2 extends ItemSheet {
 
     sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
       sheetData.data.system.description.value,
-      { async: false }
+      {
+        async: false,
+        secrets: sheetData.editable
+      }
     )
 
     sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
       sheetData.data.system.description.keeper,
-      { async: false }
+      {
+        async: false,
+        secrets: sheetData.editable
+      }
     )
 
     sheetData.isKeeper = game.user.isGM
@@ -58,23 +64,8 @@ export class CoC7ItemSheetV2 extends ItemSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return
 
-    html.find('.toggle-switch').click(this._onClickToggle.bind(this))
-
     html
       .find('.effect-control')
       .click(ev => CoC7ActiveEffect.onManageActiveEffect(ev, this.item))
-  }
-
-  async _onClickToggle (event) {
-    event.preventDefault()
-    const propertyId =
-      event.currentTarget.closest('.toggle-switch').dataset.property
-    await this.item.toggleProperty(
-      propertyId,
-      event.metaKey ||
-        event.ctrlKey ||
-        event.keyCode === 91 ||
-        event.keyCode === 224
-    )
   }
 }

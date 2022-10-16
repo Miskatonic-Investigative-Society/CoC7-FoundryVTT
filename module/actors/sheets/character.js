@@ -210,12 +210,18 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 
     sheetData.enrichedBackstory = TextEditor.enrichHTML(
       sheetData.data.system.backstory,
-      { async: false }
+      {
+        async: false,
+        secrets: sheetData.editable
+      }
     )
 
     sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
       sheetData.data.system.description.keeper,
-      { async: false }
+      {
+        async: false,
+        secrets: sheetData.editable
+      }
     )
 
     return sheetData
