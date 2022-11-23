@@ -4,95 +4,96 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 The following translations are currently up to date **de**, **fr**, **it**
 
-The following translations have more than 100 untranslated strings **cn**, **cs**, **es**, **ja**, **ko**, **ru**, **sv**, [are you able to help?](./ABANDONED.md)
+The following translations have more than 100 untranslated strings **cn**, **cs**, **es**, **ja**, **ru**, **sv**, [are you able to help?](./ABANDONED.md)
 
-|Key|pl|pt-BR|zh-TW|
-|:---|:---:|:---:|:---:|
-|**Remaining**:|**2**|**84**|**3**|
-|[CoC7.ActorDataLinked](#coc7actordatalinked)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ActorDataNotLinked](#coc7actordatanotlinked)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ActorImported](#coc7actorimported)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ActorImporterUploadError](#coc7actorimporteruploaderror)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ActorIsSyntheticActor](#coc7actorissyntheticactor)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ActorIsTokenHint](#coc7actoristokenhint)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Add](#coc7add)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.AdjustedMovement](#coc7adjustedmovement)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.AlreadyEncounteredInformation](#coc7alreadyencounteredinformation)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ArmorIgnored](#coc7armorignored)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.BonusDieAssailantReason](#coc7bonusdieassailantreason)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.CheckFailed](#coc7checkfailed)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.CheckMemoryRepressed](#coc7checkmemoryrepressed)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.CheckPassed](#coc7checkpassed)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.CleanSkillList](#coc7cleanskilllist)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.CleanSkillListHint](#coc7cleanskilllisthint)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ClearAllConditions](#coc7clearallconditions)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Damage](#coc7damage)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.DamageDealTo](#coc7damagedealto)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.DefinitelyInsane](#coc7definitelyinsane)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.DholeHouseActorImporter](#coc7dholehouseactorimporter)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.DholeHouseActorImporterSource](#coc7dholehouseactorimportersource)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.DholeHouseActorImporterSummary](#coc7dholehouseactorimportersummary)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.DholeHouseImportingName](#coc7dholehouseimportingname)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.DholeHouseInvalidActor](#coc7dholehouseinvalidactor)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.DholeHousePickYourJSONFile](#coc7dholehousepickyourjsonfile)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Disable](#coc7disable)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Duration](#coc7duration)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.EffectAppliedCantOverride](#coc7effectappliedcantoverride)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.EffectNew](#coc7effectnew)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Enable](#coc7enable)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ErrorActorHasNoWeaponNamed](#coc7erroractorhasnoweaponnamed)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ErrorActorHasTooManyWeaponsNamed](#coc7erroractorhastoomanyweaponsnamed)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ErrorEvaluatingDamage](#coc7errorevaluatingdamage)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ErrorNoTokensSelected](#coc7errornotokensselected)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ErrorUnableToParseArmorFormula](#coc7errorunabletoparsearmorformula)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ErrorUnableToParseFormula](#coc7errorunabletoparseformula)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ErrorUnableToParseSkillFormula](#coc7errorunabletoparseskillformula)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ErrorUnexpectedSkillsText](#coc7errorunexpectedskillstext)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ErrorUnexpectedWeaponText](#coc7errorunexpectedweapontext)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.FINISH](#coc7finish)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.FileUploadError](#coc7fileuploaderror)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Initiative](#coc7initiative)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.LuckNotEnough](#coc7lucknotenough)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.MessageRollingCharacteristic](#coc7messagerollingcharacteristic)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Migrate.ErrorActor](#coc7migrateerroractor)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Migrate.ErrorDocumentPack](#coc7migrateerrordocumentpack)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Migrate.ErrorItem](#coc7migrateerroritem)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Migrate.ErrorMacro](#coc7migrateerrormacro)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Migrate.ErrorScene](#coc7migrateerrorscene)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Migrate.ErrorTable](#coc7migrateerrortable)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.MovementAction](#coc7movementaction)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.PenaltyDice](#coc7penaltydice)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.PenaltyDieSelfReason](#coc7penaltydieselfreason)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.PickDirectory](#coc7pickdirectory)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.RemoveParticipant](#coc7removeparticipant)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.RemoveParticipantHint](#coc7removeparticipanthint)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Reset](#coc7reset)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Restart](#coc7restart)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.RollDifficultyCriticalTitle](#coc7rolldifficultycriticaltitle)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.RollDifficultyExtremeTitle](#coc7rolldifficultyextremetitle)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.RollDifficultyHardTitle](#coc7rolldifficultyhardtitle)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.RollDifficultyRegularTitle](#coc7rolldifficultyregulartitle)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Sane](#coc7sane)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Settings.DholeUpload.Directory.Hint](#coc7settingsdholeuploaddirectoryhint)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Settings.DholeUpload.Directory.Name](#coc7settingsdholeuploaddirectoryname)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.SkillXpGainDisabled](#coc7skillxpgaindisabled)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.TextFieldInvalidJSON](#coc7textfieldinvalidjson)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.UnableToUploadDholeImage](#coc7unabletouploaddholeimage)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.UnarmedWeaponName](#coc7unarmedweaponname)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Update](#coc7update)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.UpgradeSuccessWithLuck](#coc7upgradesuccesswithluck)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.WeaponSkillMain](#coc7weaponskillmain)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.combatCard.automaticSuccess](#coc7combatcardautomaticsuccess)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.rangeCombatCard.SurprisedTargetTitle](#coc7rangecombatcardsurprisedtargettitle)|&#9989;|&#x274C;|&#x274C;|
-|[SETTINGS.ChaseShowTokenMovement](#settingschaseshowtokenmovement)|&#9989;|&#x274C;|&#9989;|
-|[SETTINGS.ChaseShowTokenMovementHint](#settingschaseshowtokenmovementhint)|&#9989;|&#x274C;|&#9989;|
-|[SETTINGS.TitleChaseSettings](#settingstitlechasesettings)|&#9989;|&#x274C;|&#9989;|
-|[SETTINGS.TrustedCanModfyChatCard](#settingstrustedcanmodfychatcard)|&#9989;|&#x274C;|&#9989;|
-|[SETTINGS.TrustedCanModfyChatCardHint](#settingstrustedcanmodfychatcardhint)|&#9989;|&#x274C;|&#9989;|
-|[SETTINGS.TrustedCanSeeChatCard](#settingstrustedcanseechatcard)|&#9989;|&#x274C;|&#9989;|
-|[SETTINGS.TrustedCanSeeChatCardHint](#settingstrustedcanseechatcardhint)|&#9989;|&#x274C;|&#9989;|
-|[SETTINGS.UseContextMenus](#settingsusecontextmenus)|&#x274C;|&#x274C;|&#x274C;|
-|[SETTINGS.UseContextMenusHint](#settingsusecontextmenushint)|&#x274C;|&#x274C;|&#x274C;|
+|Key|ko|pl|pt-BR|zh-TW|
+|:---|:---:|:---:|:---:|:---:|
+|**Remaining**:|**14**|**2**|**84**|**3**|
+|[CoC7.ActorDataLinked](#coc7actordatalinked)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.ActorDataNotLinked](#coc7actordatanotlinked)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.ActorImported](#coc7actorimported)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.ActorImporterUploadError](#coc7actorimporteruploaderror)|&#x274C;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.ActorIsSyntheticActor](#coc7actorissyntheticactor)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.ActorIsTokenHint](#coc7actoristokenhint)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.Add](#coc7add)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.AdjustedMovement](#coc7adjustedmovement)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.AlreadyEncounteredInformation](#coc7alreadyencounteredinformation)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.ArmorIgnored](#coc7armorignored)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.BonusDieAssailantReason](#coc7bonusdieassailantreason)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.CheckFailed](#coc7checkfailed)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.CheckMemoryRepressed](#coc7checkmemoryrepressed)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.CheckPassed](#coc7checkpassed)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.CleanSkillList](#coc7cleanskilllist)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.CleanSkillListHint](#coc7cleanskilllisthint)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.ClearAllConditions](#coc7clearallconditions)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.Damage](#coc7damage)|&#x274C;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.DamageDealTo](#coc7damagedealto)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.DefinitelyInsane](#coc7definitelyinsane)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.DholeHouseActorImporter](#coc7dholehouseactorimporter)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.DholeHouseActorImporterSource](#coc7dholehouseactorimportersource)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.DholeHouseActorImporterSummary](#coc7dholehouseactorimportersummary)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.DholeHouseImportingName](#coc7dholehouseimportingname)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.DholeHouseInvalidActor](#coc7dholehouseinvalidactor)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.DholeHousePickYourJSONFile](#coc7dholehousepickyourjsonfile)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.Disable](#coc7disable)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.Duration](#coc7duration)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.EffectAppliedCantOverride](#coc7effectappliedcantoverride)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.EffectNew](#coc7effectnew)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.Enable](#coc7enable)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.ErrorActorHasNoWeaponNamed](#coc7erroractorhasnoweaponnamed)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.ErrorActorHasTooManyWeaponsNamed](#coc7erroractorhastoomanyweaponsnamed)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.ErrorEvaluatingDamage](#coc7errorevaluatingdamage)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.ErrorNoTokensSelected](#coc7errornotokensselected)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.ErrorUnableToParseArmorFormula](#coc7errorunabletoparsearmorformula)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.ErrorUnableToParseFormula](#coc7errorunabletoparseformula)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.ErrorUnableToParseSkillFormula](#coc7errorunabletoparseskillformula)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.ErrorUnexpectedSkillsText](#coc7errorunexpectedskillstext)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.ErrorUnexpectedWeaponText](#coc7errorunexpectedweapontext)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.FINISH](#coc7finish)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.FileUploadError](#coc7fileuploaderror)|&#x274C;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.Initiative](#coc7initiative)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.LuckNotEnough](#coc7lucknotenough)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.MessageRollingCharacteristic](#coc7messagerollingcharacteristic)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.Migrate.ErrorActor](#coc7migrateerroractor)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.Migrate.ErrorDocumentPack](#coc7migrateerrordocumentpack)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.Migrate.ErrorItem](#coc7migrateerroritem)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.Migrate.ErrorMacro](#coc7migrateerrormacro)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.Migrate.ErrorScene](#coc7migrateerrorscene)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.Migrate.ErrorTable](#coc7migrateerrortable)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.MovementAction](#coc7movementaction)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.PenaltyDice](#coc7penaltydice)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.PenaltyDieSelfReason](#coc7penaltydieselfreason)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.PickDirectory](#coc7pickdirectory)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.RemoveParticipant](#coc7removeparticipant)|&#x274C;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.RemoveParticipantHint](#coc7removeparticipanthint)|&#x274C;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.Reset](#coc7reset)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.Restart](#coc7restart)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.RollDifficultyCriticalTitle](#coc7rolldifficultycriticaltitle)|&#x274C;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.RollDifficultyExtremeTitle](#coc7rolldifficultyextremetitle)|&#x274C;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.RollDifficultyHardTitle](#coc7rolldifficultyhardtitle)|&#x274C;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.RollDifficultyRegularTitle](#coc7rolldifficultyregulartitle)|&#x274C;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.Sane](#coc7sane)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.Settings.DholeUpload.Directory.Hint](#coc7settingsdholeuploaddirectoryhint)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.Settings.DholeUpload.Directory.Name](#coc7settingsdholeuploaddirectoryname)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.SkillXpGainDisabled](#coc7skillxpgaindisabled)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.TextFieldInvalidJSON](#coc7textfieldinvalidjson)|&#x274C;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.UnableToUploadDholeImage](#coc7unabletouploaddholeimage)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.UnarmedWeaponName](#coc7unarmedweaponname)|&#x274C;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.Update](#coc7update)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.UpgradeSuccessWithLuck](#coc7upgradesuccesswithluck)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.WeaponSkillMain](#coc7weaponskillmain)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.combatCard.automaticSuccess](#coc7combatcardautomaticsuccess)|&#x274C;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.rangeCombatCard.SurprisedTargetTitle](#coc7rangecombatcardsurprisedtargettitle)|&#x274C;|&#9989;|&#x274C;|&#x274C;|
+|[SETTINGS.ChaseShowTokenMovement](#settingschaseshowtokenmovement)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[SETTINGS.ChaseShowTokenMovementHint](#settingschaseshowtokenmovementhint)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[SETTINGS.DefaultDifficulty](#settingsdefaultdifficulty)|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[SETTINGS.TitleChaseSettings](#settingstitlechasesettings)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[SETTINGS.TrustedCanModfyChatCard](#settingstrustedcanmodfychatcard)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[SETTINGS.TrustedCanModfyChatCardHint](#settingstrustedcanmodfychatcardhint)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[SETTINGS.TrustedCanSeeChatCard](#settingstrustedcanseechatcard)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[SETTINGS.TrustedCanSeeChatCardHint](#settingstrustedcanseechatcardhint)|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[SETTINGS.UseContextMenus](#settingsusecontextmenus)|&#9989;|&#x274C;|&#x274C;|&#x274C;|
+|[SETTINGS.UseContextMenusHint](#settingsusecontextmenushint)|&#9989;|&#x274C;|&#x274C;|&#x274C;|
 ##### CoC7.ActorDataLinked
 ```  "CoC7.ActorDataLinked": "Actor data are linked",```
 ##### CoC7.ActorDataNotLinked
@@ -247,6 +248,8 @@ The following translations have more than 100 untranslated strings **cn**, **cs*
 ```  "SETTINGS.ChaseShowTokenMovement": "Show token movement.",```
 ##### SETTINGS.ChaseShowTokenMovementHint
 ```  "SETTINGS.ChaseShowTokenMovementHint": "Show movement on the grid when a token is moved to the next location.",```
+##### SETTINGS.DefaultDifficulty
+```  "SETTINGS.DefaultDifficulty": "Default check difficulty",```
 ##### SETTINGS.TitleChaseSettings
 ```  "SETTINGS.TitleChaseSettings": "Chase Settings",```
 ##### SETTINGS.TrustedCanModfyChatCard
