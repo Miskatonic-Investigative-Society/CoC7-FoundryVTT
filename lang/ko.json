@@ -176,7 +176,7 @@
   "CoC7.LuckSpentAlt": "행운 소모",
   "CoC7.LuckError": "{actorName} 은(는) 판정에 필요한 행운이 모자랍니다",
   "CoC7.LuckNotEnough": "{name}은(는) 판정에 사용할만한 운이 충분하지 않습니다",
-  "CoC7.UpgradeSuccessWithLuck": "{luckToSend} 행운에 대해 {diabilityName}(으)로 업그레이드해주세요.",
+  "CoC7.UpgradeSuccessWithLuck": "{luckToSend} 행운에 대해 {difficultyName}(으)로 업그레이드해주세요.",
   "CoC7.check.AutoSuccess": "자동. 성공",
   "CoC7.check.AutoFailure": "자동. 실패",
   "CoC7.RevealCheck": "판정 공개",
