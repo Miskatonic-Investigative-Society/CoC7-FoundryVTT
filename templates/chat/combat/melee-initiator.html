@@ -14,6 +14,10 @@
 
     <div class="card-content">
       {{{item.system.description.value}}}
+      {{#if this.item.system.properties.spcl}}
+        <span class="tag">{{localize 'CoC7.WeaponSpecial'}}</span>
+        {{{this.item.system.description.special}}}
+      {{/if}}
       {{#if rolled}}
         <div class="flex0 advantage-selection">
           {{#if advantage}}<span class="tag" title="{{localize 'CoC7.Advantage'}}">{{localize 'CoC7.Advantage'}}</span>{{/if}}
