@@ -5,6 +5,13 @@
 
 Happy gaming !
 
+## Upcoming Release
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Show special property of weapons on combat chat cards, thanks to @acd-jake #1291
+- Update to Korean localization, thanks to @SRagg #1288
+
 ## Version 0.9.2
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
