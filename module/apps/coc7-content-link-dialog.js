@@ -228,9 +228,20 @@ export class CoC7ContentLinkDialog extends FormApplication {
       switch (target.name) {
         case 'type':
           this.object.link.setValue('check', target.value)
+          if (target.value === CoC7Link.CHECK_TYPE.CHECK) {
+            this.object.link.setValue('linkType', CoC7Link.LINK_TYPE.SKILL)
+            this.object.link.setValue('name', '')
+          }
           break
         case 'check':
           this.object.link.setValue('linkType', target.value)
+          if (target.value === CoC7Link.LINK_TYPE.CHARACTERISTIC) {
+            this.object.link.setValue('name', CoCActor.getCharacteristicDefinition()[0].key)
+          } else if (target.value === CoC7Link.LINK_TYPE.ATTRIBUTE) {
+            this.object.link.setValue('name', 'lck')
+          } else {
+            this.object.link.setValue('name', '')
+          }
           break
         case 'attributeKey':
         case 'characteristicKey':
