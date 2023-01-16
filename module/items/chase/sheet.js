@@ -1,4 +1,5 @@
 /* global $, Dialog, DragDrop, duplicate, expandObject, flattenObject, FormDataExtended, foundry, game, getType, ItemSheet, mergeObject, TextEditor, ui */
+import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { CoC7ChaseParticipantImporter } from '../../apps/chase-participant-importer.js'
 import { CoC7Chat } from '../../chat.js'
 import { chatHelper } from '../../chat/helper.js'
@@ -38,12 +39,11 @@ export class CoC7ChaseSheet extends ItemSheet {
     return 'coc7ChaseSheet'
   }
 
-  // /** @override */
-  // async render(force, options) {
-  //   return super.render(force, options);
-  // }
-
-  /** @override */
+  _getHeaderButtons () {
+    const headerButtons = super._getHeaderButtons()
+    addCoCIDSheetHeaderButton(headerButtons, this)
+    return headerButtons
+  }
 
   getData (options = {}) {
     const sheetData = super.getData(options)
@@ -1144,7 +1144,7 @@ export class CoC7ChaseSheet extends ItemSheet {
       } else {
         participant.speedCheck = {
           type: 'item',
-          name: game.i18n.localize('CoC7.DriveAutoSkillName')
+          name: game.i18n.localize('CoC7.CoCIDFlag.keys.i.skill.drive-auto')
         }
       }
     }

@@ -34,7 +34,7 @@
           <label style="margin-right: 10px;">{{ localize "CoC7.Eras" }}</label>
           <div class="skill-attributes" data-set="eras">
             {{#each _eras as |era key|}}
-              <span class="toggle-switch {{#if era.isEnabled}} switched-on {{/if}}" data-property="{{era.id}}">{{localize era.name}}</span>
+              <span class="toggle-switch {{#if era.isEnabled}} switched-on {{/if}}" data-property="{{era.id}}">{{era.name}}</span>
             {{/each}}
           </div>
         </div>

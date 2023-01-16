@@ -356,13 +356,13 @@
   "CoC7.ItemPrice": "가격",
   "CoC7.Armor": "장갑",
 
-  "CoC7.EraNvct": "인빅터스",
-  "CoC7.EraDrka": "암흑기",
-  "CoC7.EraDdts": "더 어두운 오솔길로",
-  "CoC7.EraGlit": "가스등의 크툴루",
+  "CoC7.EraInvictus": "인빅터스",
+  "CoC7.EraDarkAges": "암흑기",
+  "CoC7.EraDownDarkerTrails": "더 어두운 오솔길로",
+  "CoC7.EraGasLight": "가스등의 크툴루",
   "CoC7.Era1920": "1920년대",
   "CoC7.EraPulp": "펄프 크툴루",
-  "CoC7.EraMdrn": "현대",
+  "CoC7.EraModern": "현대",
   "CoC7.Eras": "크툴루 배경",
   "CoC7.EraAvailability": "시대 선택",
 
@@ -408,10 +408,10 @@
 
   "CoC7.NewBioSectionName": "새 단락",
 
-  "CoC7.DodgeSkillName": "회피",
-  "CoC7.CthulhuMythosName": "크툴루 신화",
-  "CoC7.CreditRatingSkillName": "신용 등급",
-  "CoC7.DriveAutoSkillName": "자동 운행",
+  "CoC7.CoCIDFlag.keys.i.skill.dodge": "회피",
+  "CoC7.CoCIDFlag.keys.i.skill.cthulhu-mythos": "크툴루 신화",
+  "CoC7.CoCIDFlag.keys.i.skill.credit-rating": "신용 등급",
+  "CoC7.CoCIDFlag.keys.i.skill.drive-auto": "자동 운행",
   "CoC7.FightingSpecializationName": "근접전",
   "CoC7.FirearmSpecializationName": "사격",
   "CoC7.DriveSpecializationName": "운전",

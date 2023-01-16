@@ -352,7 +352,6 @@
       "malfunction": null,
       "blastRadius": null,
       "properties": {},
-      "eras": {},
       "price": {}
     },
     "skill": {
@@ -375,7 +374,6 @@
       "value": -1,
       "attributes": {},
       "properties": {},
-      "eras": {},
       "flags": {}
     },
     "occupation": {
@@ -451,7 +449,6 @@
       "personal": null,
       "attributes": {},
       "properties": {},
-      "eras": {},
       "flags": {}
     },
     "archetype": {
@@ -486,7 +483,6 @@
       "skills": [],
       "attributes": {},
       "properties": {},
-      "eras": {},
       "flags": {}
     },
     "setup": {
@@ -531,7 +527,6 @@
       "backstory": "",
       "attributes": {},
       "properties": {},
-      "eras": {},
       "flags": {}
     },
     "spell": {

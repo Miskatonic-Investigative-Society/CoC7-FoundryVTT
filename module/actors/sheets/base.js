@@ -1,4 +1,5 @@
 /* global $, ActorSheet, ChatMessage, CONST, Dialog, FormData, foundry, game, getProperty, Hooks, Item, mergeObject, Roll, TextEditor, ui */
+import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7ChatMessage } from '../../apps/coc7-chat-message.js'
 import { CoC7Check } from '../../check.js'
@@ -20,6 +21,12 @@ import { CoC7Utilities } from '../../utilities.js'
  * Extend the basic ActorSheet with some very simple modifications
  */
 export class CoC7ActorSheet extends ActorSheet {
+  _getHeaderButtons () {
+    const headerButtons = super._getHeaderButtons()
+    addCoCIDSheetHeaderButton(headerButtons, this)
+    return headerButtons
+  }
+
   async getData () {
     const sheetData = await super.getData()
 
@@ -1886,7 +1893,7 @@ export class CoC7ActorSheet extends ActorSheet {
                 })
               }
             }
-            if (game.i18n.localize(COC7.creditRatingSkillName) === item.name) {
+            if (game.i18n.localize('CoC7.CoCIDFlag.keys.i.skill.credit-rating') === item.name) {
               const creditValue =
                 (item.value || 0) -
                 (item.system.adjustments?.experience || 0)

@@ -1,6 +1,8 @@
 /* global game, ItemSheet, mergeObject, TextEditor */
+import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import CoC7ActiveEffect from '../../active-effect.js'
 import { COC7 } from '../../config.js'
+import { CoC7Utilities } from '../../utilities.js'
 import { isCtrlKey } from '../../chat/helper.js'
 
 /**
@@ -32,16 +34,16 @@ export class CoC7SkillSheet extends ItemSheet {
     })
   }
 
-  /* -------------------------------------------- */
-
   /** @override */
   get template () {
     return `systems/CoC7/templates/items/${this.item.type}-sheet.html`
   }
 
-  /* -------------------------------------------- */
-
-  /* -------------------------------------------- */
+  _getHeaderButtons () {
+    const headerButtons = super._getHeaderButtons()
+    addCoCIDSheetHeaderButton(headerButtons, this)
+    return headerButtons
+  }
 
   /**
    * Prepare data for rendering the Item sheet
@@ -70,10 +72,11 @@ export class CoC7SkillSheet extends ItemSheet {
     for (const [key, value] of Object.entries(COC7.eras)) {
       sheetData._eras.push({
         id: key,
-        name: value,
-        isEnabled: this.item.system.eras[key] === true
+        name: game.i18n.localize(value),
+        isEnabled: (this.item.flags?.CoC7?.cocidFlag?.eras ?? {})[key] === true
       })
     }
+    sheetData._eras.sort(CoC7Utilities.sortByNameKey)
 
     sheetData.isSpecialized = this.item.system.properties.special
     sheetData.canModifySpec =

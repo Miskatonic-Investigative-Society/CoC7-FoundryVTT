@@ -1,4 +1,5 @@
 /* global game, ItemSheet, mergeObject, TextEditor */
+import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { COC7 } from '../../config.js'
 import { isCtrlKey } from '../../chat/helper.js'
 import { CoC7Utilities } from '../../utilities.js'
@@ -31,6 +32,12 @@ export class CoC7WeaponSheet extends ItemSheet {
   get template () {
     const path = 'systems/CoC7/templates/items'
     return `${path}/weapon-sheet.html`
+  }
+
+  _getHeaderButtons () {
+    const headerButtons = super._getHeaderButtons()
+    addCoCIDSheetHeaderButton(headerButtons, this)
+    return headerButtons
   }
 
   /**
@@ -72,10 +79,11 @@ export class CoC7WeaponSheet extends ItemSheet {
       sheetData._eras.push({
         price: this.item.system.price[key] ?? 0,
         id: key,
-        name: value,
-        isEnabled: this.item.system.eras[key] === true
+        name: game.i18n.localize(value),
+        isEnabled: (this.item.flags?.CoC7?.cocidFlag?.eras ?? {})[key] === true
       })
     }
+    sheetData._eras.sort(CoC7Utilities.sortByNameKey)
 
     sheetData.usesAlternateSkill =
       this.item.system.properties.auto === true ||

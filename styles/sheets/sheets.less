@@ -28,70 +28,72 @@ html {
 //   line-height: 2rem;
 // }
 
-.tabs {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
+.coc7 {
+  .tabs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
 
-.tabs>* {
-  flex: 1;
-}
+  .tabs>* {
+    flex: 1;
+  }
 
-.tabs>.flex0 {
-  display: block;
-  flex: 0;
-}
+  .tabs>.flex0 {
+    display: block;
+    flex: 0;
+  }
 
-.tabs>.flex1 {
-  flex: 1;
-}
+  .tabs>.flex1 {
+    flex: 1;
+  }
 
-.tabs>.flex2 {
-  flex: 2;
-}
+  .tabs>.flex2 {
+    flex: 2;
+  }
 
-.tabs>.flex3 {
-  flex: 3;
-}
+  .tabs>.flex3 {
+    flex: 3;
+  }
 
-.tabs .item {
-  text-align: center;
-}
+  .tabs .item {
+    text-align: center;
+  }
 
-.tabs .item.active {
-  text-shadow: 0 0 10px red;
-}
+  .tabs .item.active {
+    text-shadow: 0 0 10px red;
+  }
 
-.tab[data-tab] {
-  display: none;
-}
+  .tab[data-tab] {
+    display: none;
+  }
 
-.tab[data-tab].active {
-  display: block;
-}
+  .tab[data-tab].active {
+    display: block;
+  }
 
-.tab[data-tab].active.flexrow,
-.tab[data-tab].active.flexcol {
-  display: flex;
-}
+  .tab[data-tab].active.flexrow,
+  .tab[data-tab].active.flexcol {
+    display: flex;
+  }
 
-a.keeper-only-tab {
-  flex: 0 0 30px;
-  color: @colorGreen;
-}
+  a.keeper-only-tab {
+    flex: 0 0 30px;
+    color: @colorGreen;
+  }
 
-h3.keeper-only-tab i {
-  color: @colorGreen;
-}
+  h3.keeper-only-tab i {
+    color: @colorGreen;
+  }
 
-.permission-limited img {
-  height: auto !important;
-  width: 580px !important;
-  max-width: none !important;
-  margin: 0 !important;
-  flex: none !important;
+  .permission-limited img {
+    height: auto !important;
+    width: 580px !important;
+    max-width: none !important;
+    margin: 0 !important;
+    flex: none !important;
+  }
 }
 
 .sheetV2 {

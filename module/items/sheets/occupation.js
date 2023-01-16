@@ -1,7 +1,9 @@
 /* global $, DragDrop, duplicate, expandObject, game, ItemSheet, mergeObject, TextEditor */
+import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { COC7 } from '../../config.js'
 import { CoC7Item } from '../item.js'
 import { CoC7Utilities } from '../../utilities.js'
+import { DropCoCID } from '../../apps/drop-coc-id.js'
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
@@ -43,6 +45,7 @@ export class CoC7OccupationSheet extends ItemSheet {
 
     const dataList = await CoC7Utilities.getDataFromDropEvent(event, 'Item')
 
+    let useCoCID = 0
     const collection = this.item.system[collectionName] ? duplicate(this.item.system[collectionName]) : []
     const groups = this.item.system.groups ? duplicate(this.item.system.groups) : []
 
@@ -63,7 +66,10 @@ export class CoC7OccupationSheet extends ItemSheet {
           }
         }
 
-        groups[index].skills = groups[index].skills.concat([item])
+        if (useCoCID === 0) {
+          useCoCID = await DropCoCID.create()
+        }
+        groups[index].skills = groups[index].skills.concat([DropCoCID.processItem(useCoCID, item)])
       } else {
         if (!CoC7Item.isAnySpec(item)) {
           // Generic specialization can be included many times
@@ -81,7 +87,10 @@ export class CoC7OccupationSheet extends ItemSheet {
             }
           }
         }
-        collection.push(duplicate(item))
+        if (useCoCID === 0) {
+          useCoCID = await DropCoCID.create()
+        }
+        collection.push(DropCoCID.processItem(useCoCID, item))
       }
     }
     await this.item.update({ 'system.groups': groups })
@@ -188,16 +197,26 @@ export class CoC7OccupationSheet extends ItemSheet {
     })
   }
 
+  _getHeaderButtons () {
+    const headerButtons = super._getHeaderButtons()
+    addCoCIDSheetHeaderButton(headerButtons, this)
+    return headerButtons
+  }
+
   async getData () {
     const sheetData = super.getData()
 
     sheetData.hasOwner = this.item.isEmbedded === true
+
+    sheetData.data.system.skills = await game.system.api.cocid.expandItemArray({ itemList: sheetData.data.system.skills })
 
     sheetData.skillListEmpty = sheetData.data.system.skills.length === 0
 
     sheetData.data.system.skills.sort(CoC7Utilities.sortByNameKey)
 
     for (let index = 0, len = sheetData.data.system.groups.length; index < len; index++) {
+      sheetData.data.system.groups[index].skills = await game.system.api.cocid.expandItemArray({ itemList: sheetData.data.system.groups[index].skills })
+
       sheetData.data.system.groups[index].isEmpty = sheetData.data.system.groups[index].skills.length === 0
 
       sheetData.data.system.groups[index].skills.sort(CoC7Utilities.sortByNameKey)

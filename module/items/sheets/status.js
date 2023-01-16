@@ -1,4 +1,5 @@
 /* global game, ItemSheet, mergeObject, TextEditor */
+import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import CoC7ActiveEffect from '../../active-effect.js'
 import { COC7 } from '../../config.js'
 
@@ -32,6 +33,12 @@ export class CoC7StatusSheet extends ItemSheet {
     html
       .find('.effect-control')
       .click(ev => CoC7ActiveEffect.onManageActiveEffect(ev, this.item))
+  }
+
+  _getHeaderButtons () {
+    const headerButtons = super._getHeaderButtons()
+    addCoCIDSheetHeaderButton(headerButtons, this)
+    return headerButtons
   }
 
   /* Prepare data for rendering the Item sheet

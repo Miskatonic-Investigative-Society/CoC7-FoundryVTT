@@ -1,4 +1,5 @@
 /* global $, CONFIG, game, ui */
+import { COC7 } from '../config.js'
 import { CoC7DecaderDie } from '../apps/decader-die.js'
 import { CoC7DecaderDieOther } from '../apps/decader-die-other.js'
 import { CoC7GameRuleSettings } from './game-rules.js'
@@ -34,6 +35,33 @@ export function registerSettings () {
     config: true,
     type: CoC7DirectoryPicker.DefaultDirectory,
     default: '[data] worlds/' + game.world.id + '/dhole-images'
+  })
+
+  game.settings.register('CoC7', 'worldEra', {
+    name: 'CoC7.Settings.WorldEra.Name',
+    hint: 'CoC7.Settings.WorldEra.Hint',
+    scope: 'world',
+    config: true,
+    default: 'standard',
+    type: String,
+    choices: COC7.eras,
+    onChange: () => {
+      ui.players.render(true)
+    }
+  })
+
+  game.settings.register('CoC7', 'dropCoCID', {
+    name: 'CoC7.Settings.DropCoCID.Name',
+    hint: 'CoC7.Settings.DropCoCID.Hint',
+    scope: 'world',
+    config: true,
+    default: '',
+    type: String,
+    choices: {
+      '': 'CoC7.Settings.DropCoCID.Prompt',
+      Y: 'CoC7.Settings.DropCoCID.UseCoCID',
+      N: 'CoC7.Settings.DropCoCID.IgnoreCoCID'
+    }
   })
 
   /**
