@@ -2,23 +2,23 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (268 untranslated strings)](#cnjson)
+[cn.json (270 untranslated strings)](#cnjson)
 
-[cs.json (453 untranslated strings)](#csjson)
+[cs.json (455 untranslated strings)](#csjson)
 
-[es.json (250 untranslated strings)](#esjson)
+[es.json (252 untranslated strings)](#esjson)
 
-[ja.json (238 untranslated strings)](#jajson)
+[ja.json (240 untranslated strings)](#jajson)
 
-[pt-BR.json (120 untranslated strings)](#ptbrjson)
+[pt-BR.json (122 untranslated strings)](#ptbrjson)
 
-[ru.json (1115 untranslated strings)](#rujson)
+[ru.json (1117 untranslated strings)](#rujson)
 
-[sv.json (236 untranslated strings)](#svjson)
+[sv.json (238 untranslated strings)](#svjson)
 
 
 ## cn.json
-268 untranslated strings
+270 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -243,6 +243,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Migrate.ErrorTable": "Failed CoC7 system migration for Table {name}: {message}",
 "CoC7.Migrate.ErrorItem": "Failed CoC7 system migration for Item {name}: {message}",
 "CoC7.Migrate.ErrorActor": "Failed CoC7 system migration for Actor {name}: {message}",
+"CoC7.Settings.PulpRules.IgnoreAgePenalties.Name": "Ignore Age Penalties",
+"CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint": "Do not alter movement rate based on age. When creating an investigator improvements and characteristic deductions are made",
 "CoC7.Settings.DholeUpload.Directory.Name": "The Dhole's House image upload directory",
 "CoC7.Settings.DholeUpload.Directory.Hint": "Upload path for The Dhole's House avatars, relative to the Foundry/Data directory.",
 "CoC7.Settings.WorldEra.Name": "Era for the world",
@@ -290,7 +292,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language "{lang}", and era "{era}". Please check your Era for the world setting."
 ```
 ## cs.json
-453 untranslated strings
+455 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -652,6 +654,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Settings.PulpRules.FasterRecovery.Hint": "Natural healing is increased to two hit points per day",
 "CoC7.Settings.PulpRules.IgnoreMajorWounds.Name": "Ignore Major Wounds",
 "CoC7.Settings.PulpRules.IgnoreMajorWounds.Hint": "",
+"CoC7.Settings.PulpRules.IgnoreAgePenalties.Name": "Ignore Age Penalties",
+"CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint": "Do not alter movement rate based on age. When creating an investigator improvements and characteristic deductions are made",
 "CoC7.Settings.DholeUpload.Directory.Name": "The Dhole's House image upload directory",
 "CoC7.Settings.DholeUpload.Directory.Hint": "Upload path for The Dhole's House avatars, relative to the Foundry/Data directory.",
 "CoC7.Settings.WorldEra.Name": "Era for the world",
@@ -747,7 +751,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language "{lang}", and era "{era}". Please check your Era for the world setting."
 ```
 ## es.json
-250 untranslated strings
+252 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -954,6 +958,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Migrate.ErrorTable": "Failed CoC7 system migration for Table {name}: {message}",
 "CoC7.Migrate.ErrorItem": "Failed CoC7 system migration for Item {name}: {message}",
 "CoC7.Migrate.ErrorActor": "Failed CoC7 system migration for Actor {name}: {message}",
+"CoC7.Settings.PulpRules.IgnoreAgePenalties.Name": "Ignore Age Penalties",
+"CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint": "Do not alter movement rate based on age. When creating an investigator improvements and characteristic deductions are made",
 "CoC7.Settings.DholeUpload.Directory.Name": "The Dhole's House image upload directory",
 "CoC7.Settings.DholeUpload.Directory.Hint": "Upload path for The Dhole's House avatars, relative to the Foundry/Data directory.",
 "CoC7.Settings.WorldEra.Name": "Era for the world",
@@ -1001,7 +1007,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language "{lang}", and era "{era}". Please check your Era for the world setting."
 ```
 ## ja.json
-238 untranslated strings
+240 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -1198,6 +1204,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Migrate.ErrorTable": "Failed CoC7 system migration for Table {name}: {message}",
 "CoC7.Migrate.ErrorItem": "Failed CoC7 system migration for Item {name}: {message}",
 "CoC7.Migrate.ErrorActor": "Failed CoC7 system migration for Actor {name}: {message}",
+"CoC7.Settings.PulpRules.IgnoreAgePenalties.Name": "Ignore Age Penalties",
+"CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint": "Do not alter movement rate based on age. When creating an investigator improvements and characteristic deductions are made",
 "CoC7.Settings.DholeUpload.Directory.Name": "The Dhole's House image upload directory",
 "CoC7.Settings.DholeUpload.Directory.Hint": "Upload path for The Dhole's House avatars, relative to the Foundry/Data directory.",
 "CoC7.Settings.WorldEra.Name": "Era for the world",
@@ -1243,7 +1251,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language "{lang}", and era "{era}". Please check your Era for the world setting."
 ```
 ## pt-BR.json
-120 untranslated strings
+122 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -1322,6 +1330,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Migrate.ErrorTable": "Failed CoC7 system migration for Table {name}: {message}",
 "CoC7.Migrate.ErrorItem": "Failed CoC7 system migration for Item {name}: {message}",
 "CoC7.Migrate.ErrorActor": "Failed CoC7 system migration for Actor {name}: {message}",
+"CoC7.Settings.PulpRules.IgnoreAgePenalties.Name": "Ignore Age Penalties",
+"CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint": "Do not alter movement rate based on age. When creating an investigator improvements and characteristic deductions are made",
 "CoC7.Settings.DholeUpload.Directory.Name": "The Dhole's House image upload directory",
 "CoC7.Settings.DholeUpload.Directory.Hint": "Upload path for The Dhole's House avatars, relative to the Foundry/Data directory.",
 "CoC7.Settings.WorldEra.Name": "Era for the world",
@@ -1367,7 +1377,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language "{lang}", and era "{era}". Please check your Era for the world setting."
 ```
 ## ru.json
-1115 untranslated strings
+1117 untranslated strings
 ```
 "CoC7.title": "Call of Cthulhu 7h Edition (Unofficial)",
 "CoC7.Entities.Character": "Character",
@@ -2302,6 +2312,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Settings.PulpRules.FasterRecovery.Hint": "Natural healing is increased to two hit points per day",
 "CoC7.Settings.PulpRules.IgnoreMajorWounds.Name": "Ignore Major Wounds",
 "CoC7.Settings.PulpRules.IgnoreMajorWounds.Hint": "",
+"CoC7.Settings.PulpRules.IgnoreAgePenalties.Name": "Ignore Age Penalties",
+"CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint": "Do not alter movement rate based on age. When creating an investigator improvements and characteristic deductions are made",
 "CoC7.Settings.DholeUpload.Directory.Name": "The Dhole's House image upload directory",
 "CoC7.Settings.DholeUpload.Directory.Hint": "Upload path for The Dhole's House avatars, relative to the Foundry/Data directory.",
 "CoC7.Settings.WorldEra.Name": "Era for the world",
@@ -2486,7 +2498,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language "{lang}", and era "{era}". Please check your Era for the world setting."
 ```
 ## sv.json
-236 untranslated strings
+238 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -2681,6 +2693,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Migrate.ErrorTable": "Failed CoC7 system migration for Table {name}: {message}",
 "CoC7.Migrate.ErrorItem": "Failed CoC7 system migration for Item {name}: {message}",
 "CoC7.Migrate.ErrorActor": "Failed CoC7 system migration for Actor {name}: {message}",
+"CoC7.Settings.PulpRules.IgnoreAgePenalties.Name": "Ignore Age Penalties",
+"CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint": "Do not alter movement rate based on age. When creating an investigator improvements and characteristic deductions are made",
 "CoC7.Settings.DholeUpload.Directory.Name": "The Dhole's House image upload directory",
 "CoC7.Settings.DholeUpload.Directory.Hint": "Upload path for The Dhole's House avatars, relative to the Foundry/Data directory.",
 "CoC7.Settings.WorldEra.Name": "Era for the world",
