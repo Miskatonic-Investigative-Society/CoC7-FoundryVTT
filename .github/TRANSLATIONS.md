@@ -6,7 +6,7 @@ The following translations have more than 100 untranslated strings **cn**, **cs*
 
 |Key|de|fr|it|ko|pl|zh-TW|
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**36**|**36**|**36**|**50**|**38**|**39**|
+|**Remaining**:|**38**|**38**|**38**|**52**|**40**|**41**|
 |[CoC7.ActorImporterUploadError](#coc7actorimporteruploaderror)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|
 |[CoC7.CoCIDFlag.documents-in-compendiums](#coc7cocidflagdocumentsincompendiums)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.CoCIDFlag.documents-in-world](#coc7cocidflagdocumentsinworld)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
@@ -46,6 +46,8 @@ The following translations have more than 100 untranslated strings **cn**, **cs*
 |[CoC7.Settings.DropCoCID.Prompt](#coc7settingsdropcocidprompt)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.Settings.DropCoCID.Remember](#coc7settingsdropcocidremember)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.Settings.DropCoCID.UseCoCID](#coc7settingsdropcocidusecocid)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint](#coc7settingspulprulesignoreagepenaltieshint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.Settings.PulpRules.IgnoreAgePenalties.Name](#coc7settingspulprulesignoreagepenaltiesname)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.Settings.WorldEra.Hint](#coc7settingsworlderahint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.Settings.WorldEra.Name](#coc7settingsworlderaname)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.SkillKeepBaseValue](#coc7skillkeepbasevalue)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
@@ -137,6 +139,10 @@ The following translations have more than 100 untranslated strings **cn**, **cs*
 ```  "CoC7.Settings.DropCoCID.Remember": "Remember this selection, you can change this under settings",```
 ##### CoC7.Settings.DropCoCID.UseCoCID
 ```  "CoC7.Settings.DropCoCID.UseCoCID": "Use CoC ID Where Possible",```
+##### CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint
+```  "CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint": "Do not alter movement rate based on age. When creating an investigator improvements and characteristic deductions are made",```
+##### CoC7.Settings.PulpRules.IgnoreAgePenalties.Name
+```  "CoC7.Settings.PulpRules.IgnoreAgePenalties.Name": "Ignore Age Penalties",```
 ##### CoC7.Settings.WorldEra.Hint
 ```  "CoC7.Settings.WorldEra.Hint": "Skills can vary slightly between eras, please select the era for this world so system searches for skills find the correct ones.",```
 ##### CoC7.Settings.WorldEra.Name
