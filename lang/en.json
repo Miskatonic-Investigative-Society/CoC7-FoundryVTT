@@ -991,6 +991,8 @@
   "CoC7.Settings.PulpRules.FasterRecovery.Hint": "Natural healing is increased to two hit points per day",
   "CoC7.Settings.PulpRules.IgnoreMajorWounds.Name": "Ignore Major Wounds",
   "CoC7.Settings.PulpRules.IgnoreMajorWounds.Hint": "",
+  "CoC7.Settings.PulpRules.IgnoreAgePenalties.Name": "Ignore Age Penalties",
+  "CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint": "Do not alter movement rate based on age. When creating an investigator improvements and characteristic deductions are made",
   "CoC7.Settings.DholeUpload.Directory.Name": "The Dhole's House image upload directory",
   "CoC7.Settings.DholeUpload.Directory.Hint": "Upload path for The Dhole's House avatars, relative to the Foundry/Data directory.",
   "CoC7.Settings.WorldEra.Name": "Era for the world",

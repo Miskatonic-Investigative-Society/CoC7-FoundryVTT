@@ -2212,7 +2212,7 @@ export class CoCActor extends Actor {
       } else {
         MOV = 7
       }
-      if (this.system.type !== 'creature') {
+      if (this.system.type !== 'creature' && !game.settings.get('CoC7', 'pulpRuleIgnoreAgePenalties')) {
         if (!isNaN(parseInt(this.system.infos.age))) {
           MOV =
             parseInt(this.system.infos.age) >= 40
