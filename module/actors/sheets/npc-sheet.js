@@ -1,7 +1,7 @@
 /* global game, mergeObject, TextEditor */
 import { CoC7ActorSheet } from './base.js'
 import { RollDialog } from '../../apps/roll-dialog.js'
-import { CoC7Parser } from '../../apps/parser.js'
+import { CoC7Link } from '../../apps/coc7-link.js'
 import { chatHelper, isCtrlKey } from '../../chat/helper.js'
 import { SanCheckCard } from '../../chat/cards/san-check.js'
 import { CoC7ContextMenu } from '../../context-menu.js'
@@ -175,7 +175,7 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
       }
       if (typeof modifier !== 'undefined') linkData.modifier = modifier
       if (typeof difficulty !== 'undefined') linkData.difficulty = difficulty
-      const link = CoC7Parser.createCoC7Link(linkData)
+      const link = (new CoC7Link())._createDocumentLink(linkData)
       if (link) {
         chatHelper.createMessage(
           null,
