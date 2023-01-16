@@ -7,7 +7,7 @@ import { CoC7Combat, rollInitiative } from './combat.js'
 import { COC7 } from './config.js'
 import { Updater } from './updater.js'
 import { CoC7Utilities } from './utilities.js'
-import { CoC7Parser } from './apps/parser.js'
+import { CoC7Parser } from './apps/coc7-parser.js'
 import { CoC7Check } from './check.js'
 import { CoC7Menu } from './menu.js'
 import { DamageCard } from './chat/cards/damage.js'
@@ -287,7 +287,7 @@ Hooks.on('changeSidebarTab', directory => {
   }
 })
 
-Hooks.on('hotbarDrop', async (bar, data, slot) => {
+Hooks.on('hotbarDrop', (bar, data, slot) => {
   return CoC7Utilities.createMacro(bar, data, slot)
 })
 

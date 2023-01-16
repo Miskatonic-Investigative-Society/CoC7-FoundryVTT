@@ -1,5 +1,5 @@
 /* global CONFIG, duplicate, game, getProperty, Item, Roll, TextEditor, Token, ui */
-import { CoC7Parser } from '../apps/parser.js'
+import { CoC7Parser } from '../apps/coc7-parser.js'
 import { COC7 } from '../config.js'
 import { CoC7Utilities } from '../utilities.js'
 import { CoCIDEditor } from '../apps/coc-id-editor.js'

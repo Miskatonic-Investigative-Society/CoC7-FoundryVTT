@@ -1,6 +1,6 @@
 /* global $, ActorSheet, CONST, Dialog, FormData, game, mergeObject, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
-import { CoC7Parser } from '../../apps/parser.js'
+import { CoC7Link } from '../../apps/coc7-link.js'
 import { CoC7Utilities } from '../../utilities.js'
 
 export class CoC7ContainerSheet extends ActorSheet {
@@ -269,7 +269,7 @@ export class CoC7ContainerSheet extends ActorSheet {
       div.append(props)
 
       li.append(div.hide())
-      CoC7Parser.bindEventsHandler(div)
+      CoC7Link.bindEventsHandler(div)
       div.slideDown(200)
     }
     li.toggleClass('expanded')
