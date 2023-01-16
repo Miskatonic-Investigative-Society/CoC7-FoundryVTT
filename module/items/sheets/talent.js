@@ -1,4 +1,5 @@
 /* global game, ItemSheet, mergeObject, TextEditor */
+import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { COC7 } from '../../config.js'
 
 /**
@@ -23,6 +24,12 @@ export class CoC7TalentSheet extends ItemSheet {
         }
       ]
     })
+  }
+
+  _getHeaderButtons () {
+    const headerButtons = super._getHeaderButtons()
+    addCoCIDSheetHeaderButton(headerButtons, this)
+    return headerButtons
   }
 
   /* Prepare data for rendering the Item sheet

@@ -1,7 +1,9 @@
 /* global $, duplicate, expandObject, game, ItemSheet, mergeObject, TextEditor */
+import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { COC7 } from '../../config.js'
 import { CoC7Item } from '../item.js'
 import { CoC7Utilities } from '../../utilities.js'
+import { DropCoCID } from '../../apps/drop-coc-id.js'
 import { isCtrlKey } from '../../chat/helper.js'
 
 /**
@@ -48,6 +50,7 @@ export class CoC7SetupSheet extends ItemSheet {
 
     const dataList = await CoC7Utilities.getDataFromDropEvent(event, 'Item')
 
+    let useCoCID = 0
     const collection = this.item.system[collectionName] ? duplicate(this.item.system[collectionName]) : []
     for (const item of dataList) {
       if (!item || !item.system) continue
@@ -61,8 +64,12 @@ export class CoC7SetupSheet extends ItemSheet {
         }
       }
 
-      collection.push(duplicate(item))
+      if (useCoCID === 0) {
+        useCoCID = await DropCoCID.create()
+      }
+      collection.push(DropCoCID.processItem(useCoCID, item))
     }
+
     await this.item.update({ [`system.${collectionName}`]: collection })
   }
 
@@ -145,13 +152,23 @@ export class CoC7SetupSheet extends ItemSheet {
     })
   }
 
+  _getHeaderButtons () {
+    const headerButtons = super._getHeaderButtons()
+    addCoCIDSheetHeaderButton(headerButtons, this)
+    return headerButtons
+  }
+
   async getData () {
     const sheetData = super.getData()
 
     sheetData.hasOwner = this.item.isEmbedded === true
 
-    sheetData.skills = this.item.system.items.filter(it => it.type === 'skill')
-    sheetData.otherItems = this.item.system.items.filter(it => it.type !== 'skill')
+    const era = Object.entries(this.item.flags?.CoC7?.cocidFlag?.eras ?? {}).filter(e => e[1]).map(e => e[0])
+
+    const items = await game.system.api.cocid.expandItemArray({ itemList: this.item.system.items, era: (typeof era[0] !== 'undefined' ? era[0] : true) })
+
+    sheetData.skills = items.filter(it => it.type === 'skill')
+    sheetData.otherItems = items.filter(it => it.type !== 'skill')
 
     sheetData.skillListEmpty = sheetData.skills.length === 0
     sheetData.itemsListEmpty = sheetData.otherItems.length === 0
@@ -162,10 +179,11 @@ export class CoC7SetupSheet extends ItemSheet {
     for (const [key, value] of Object.entries(COC7.eras)) {
       sheetData._eras.push({
         id: key,
-        name: value,
-        isEnabled: this.item.system.eras[key] === true
+        name: game.i18n.localize(value),
+        isEnabled: (this.item.flags?.CoC7?.cocidFlag?.eras ?? {})[key] === true
       })
     }
+    sheetData._eras.sort(CoC7Utilities.sortByNameKey)
 
     sheetData.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
 

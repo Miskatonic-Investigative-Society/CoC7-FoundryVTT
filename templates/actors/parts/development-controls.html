@@ -51,8 +51,8 @@
   <div class="validation">
     {{#if allowCharCreation}}
       {{#if data.system.infos.occupationSet}}
-        <div class="header-section {{#if invalidCreditRating}}warning{{/if}}" title="{{localize 'CoC7.CreditRatingSkillName'}}">
-          <label class="{{#if invalidCreditRating}}error{{/if}}">{{creditRatingMin}}&lt{{localize 'CoC7.CreditRatingSkillName'}}&lt{{creditRatingMax}}</label>
+        <div class="header-section {{#if invalidCreditRating}}warning{{/if}}" title="{{localize 'CoC7.CoCIDFlag.keys.i.skill.credit-rating'}}">
+          <label class="{{#if invalidCreditRating}}error{{/if}}">{{creditRatingMin}}&lt{{localize 'CoC7.CoCIDFlag.keys.i.skill.credit-rating'}}&lt{{creditRatingMax}}</label>
         </div>
       {{/if}}
       {{#if data.system.infos.archetypeSet}}

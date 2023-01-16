@@ -362,13 +362,13 @@
   "CoC7.ItemPrice": "Prezzo",
   "CoC7.Armor": "Armatura",
 
-  "CoC7.EraNvct": "Invictus",
-  "CoC7.EraDrka": "Secoli Bui",
-  "CoC7.EraDdts": "Down Darker Trails",
-  "CoC7.EraGlit": "Cthulhu by Gaslight",
+  "CoC7.EraInvictus": "Invictus",
+  "CoC7.EraDarkAges": "Secoli Bui",
+  "CoC7.EraDownDarkerTrails": "Down Darker Trails",
+  "CoC7.EraGasLight": "Cthulhu by Gaslight",
   "CoC7.Era1920": "1920s",
   "CoC7.EraPulp": "Pulp Cthulhu",
-  "CoC7.EraMdrn": "Moderno",
+  "CoC7.EraModern": "Moderno",
   "CoC7.Eras": "Tipologie di Cthulhu",
   "CoC7.EraAvailability": "Disponibilità",
 
@@ -414,10 +414,10 @@
 
   "CoC7.NewBioSectionName": "Nuova Sezione",
 
-  "CoC7.DodgeSkillName": "Schivare",
-  "CoC7.CthulhuMythosName": "Miti di Cthulhu",
-  "CoC7.CreditRatingSkillName": "Valore di Credito",
-  "CoC7.DriveAutoSkillName": "Guidare Auto",
+  "CoC7.CoCIDFlag.keys.i.skill.dodge": "Schivare",
+  "CoC7.CoCIDFlag.keys.i.skill.cthulhu-mythos": "Miti di Cthulhu",
+  "CoC7.CoCIDFlag.keys.i.skill.credit-rating": "Valore di Credito",
+  "CoC7.CoCIDFlag.keys.i.skill.drive-auto": "Guidare Auto",
   "CoC7.FightingSpecializationName": "Combattere",
   "CoC7.UnarmedWeaponName": "A mani nude",
   "CoC7.FirearmSpecializationName": "Armi da Fuoco",

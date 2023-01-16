@@ -1,4 +1,5 @@
 /* global $, duplicate, game, ItemSheet, mergeObject, TextEditor */
+import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { CoC7Utilities } from '../../utilities.js'
 
 export class CoC7BookSheet extends ItemSheet {
@@ -19,6 +20,12 @@ export class CoC7BookSheet extends ItemSheet {
         }
       ]
     })
+  }
+
+  _getHeaderButtons () {
+    const headerButtons = super._getHeaderButtons()
+    addCoCIDSheetHeaderButton(headerButtons, this)
+    return headerButtons
   }
 
   async getData () {

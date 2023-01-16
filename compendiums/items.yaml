@@ -1,0 +1,251 @@
+_id: CcH7CdXGtGTjMSCg
+name: 1920's Setup Example
+type: setup
+img: icons/svg/item-bag.svg
+system:
+  description:
+    value: <p>Default setup for 1920's character.</p>
+  source: ''
+  items:
+   - i.skill.accounting
+   - i.skill.anthropology
+   - i.skill.appraise
+   - i.skill.archaeology
+   - i.skill.art-craft-any
+   - i.skill.charm
+   - i.skill.climb
+   - i.skill.credit-rating
+   - i.skill.cthulhu-mythos
+   - i.skill.disguise
+   - i.skill.dodge
+   - i.skill.drive-auto
+   - i.skill.electrical-repair
+   - i.skill.fast-talk
+   - i.skill.fighting-brawl
+   - i.skill.fighting-throw
+   - i.skill.firearms-handgun
+   - i.skill.firearms-rifle-shotgun
+   - i.skill.first-aid
+   - i.skill.history
+   - i.skill.intimidate
+   - i.skill.jump
+   - i.skill.language-own
+   - i.skill.law
+   - i.skill.library-use
+   - i.skill.listen
+   - i.skill.locksmith
+   - i.skill.mechanical-repair
+   - i.skill.medicine
+   - i.skill.natural-world
+   - i.skill.navigate
+   - i.skill.occult
+   - i.skill.operate-heavy-machinery
+   - i.skill.persuade
+   - i.skill.pilot-any
+   - i.skill.psychoanalysis
+   - i.skill.psychology
+   - i.skill.ride
+   - i.skill.science-any
+   - i.skill.sleight-of-hand
+   - i.skill.spot-hidden
+   - i.skill.stealth
+   - i.skill.survival-any
+   - i.skill.swim
+   - i.skill.track
+   - i.weapon.brawl
+  bioSections:
+   - Personal Description
+   - Ideology/Beliefs
+   - Significant People
+   - Meaningful Locations
+   - Treasured Possessions
+   - Traits
+flags:
+  cocidFlag:
+    id: i.setup.standard
+    lang: en
+    eras:
+      standard: true
+    priority: 0
+---
+_id: lu04TIRrg9P3vRqY
+name: Archetype Example
+type: archetype
+img: icons/svg/item-bag.svg
+system:
+  source: ''
+  coreCharacteristics:
+    app: true
+    int: true
+  skills:
+   - i.skill.appraise
+   - i.skill.art-craft-acting
+   - i.skill.art-craft-any
+   - i.skill.charm
+   - i.skill.disguise
+   - i.skill.drive-auto
+   - i.skill.fast-talk
+   - i.skill.fighting-brawl
+   - i.skill.firearms-handgun
+   - i.skill.listen
+   - i.skill.psychology
+   - i.skill.sleight-of-hand
+   - i.skill.stealth
+---
+_id: zyCszwqyTg21l9E2
+name: Death ray (prototype)
+type: weapon
+img: icons/svg/sword.svg
+system:
+  range:
+    normal:
+      value: 50ft
+      damage: 5d6
+  usesPerRound:
+    max: ''
+    burst: ''
+  bullets: ''
+  malfunction: ''
+  properties:
+    rngd: true
+    slnt: true
+---
+_id: uWQYNsMURpspTetM
+name: Experimental weapon
+type: weapon
+img: icons/svg/sword.svg
+system:
+  description:
+    value: <p>Description of the weapon</p><p>selecting 'Area of effect' will enable 3 different damage and range</p><p>selecting 'Full-auto' will allow 2 different skills to be selected for the weapon</p><p>selecting 'Special' will activate the special input field</p><p>In the combat tab, if the icons are with a red background, it means that no skill have been selected for that weapon</p><p>Edit the weapon and select the correct skill.</p>
+    special: '<p>You can add special description or slugs there:</p><p>Slug 1: [[/r 2d17kh]]</p>'
+  skill:
+    main:
+      name: To be selected once the weapon is owned
+  range:
+    normal:
+      value: 15ft
+      damage: 3d6
+  usesPerRound:
+    max: ''
+    burst: ''
+  bullets: ''
+  malfunction: 85
+  properties:
+    rngd: true
+    brst: true
+    spcl: true
+---
+_id: DVdvEDizPZPux1pK
+name: Mania 1
+type: status
+img: icons/svg/aura.svg
+system:
+  source: ''
+  type:
+    mania: true
+---
+_id: Vm9OzZnAVOpDdwfB
+name: Mania 2
+type: status
+img: icons/svg/aura.svg
+system:
+  source: ''
+  type:
+    mania: true
+---
+_id: NOsh6EdNSjpjahDF
+name: Occupation Example
+type: occupation
+img: icons/svg/item-bag.svg
+system:
+  source: ''
+  type:
+    classic: true
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 10
+    max: 80
+  skills:
+   - i.skill.art-craft-any
+   - i.skill.art-craft-any
+   - i.skill.drive-auto
+   - i.skill.listen
+   - i.skill.stealth
+  groups:
+   - options: 2
+     skills:
+      - i.skill.charm
+      - i.skill.fast-talk
+      - i.skill.intimidate
+      - i.skill.persuade
+   - options: 1
+     skills:
+      - i.skill.fighting-brawl
+      - i.skill.firearms-handgun
+  personal: 1
+---
+_id: PFpgtSKUcBDLVLY6
+name: Phobia 1
+type: status
+img: icons/svg/aura.svg
+system:
+  source: ''
+  type:
+    phobia: true
+---
+_id: 2dqgtyGfwr8M60he
+name: Phobia 2
+type: status
+img: icons/svg/aura.svg
+system:
+  source: ''
+  type:
+    phobia: true
+---
+_id: 3elxAwnv7WCUNwng
+name: Punch
+type: weapon
+img: systems/CoC7/assets/icons/skills/fighting_brawl.svg
+system:
+  skill:
+    main:
+      name: Brawl
+  range:
+    normal:
+      damage: 1D3
+  usesPerRound:
+    max: ''
+  bullets: ''
+  malfunction: ''
+  properties:
+    melee: true
+    addb: true
+flags:
+  cocidFlag:
+    id: i.weapon.brawl
+    lang: en
+    priority: 0
+---
+_id: yqvwz769ZeJplOW7
+name: Talent 1
+type: talent
+img: icons/svg/item-bag.svg
+system:
+  source: ''
+  type:
+    physical: true
+---
+_id: NVz7eCFnoH8J12qH
+name: Talent 2
+type: talent
+img: icons/svg/item-bag.svg
+system:
+  source: ''
+  type:
+    mental: true

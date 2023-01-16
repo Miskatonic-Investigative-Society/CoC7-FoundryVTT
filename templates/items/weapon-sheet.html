@@ -95,7 +95,7 @@
       <h3 class="form-header" style="flex:0;">{{ localize "CoC7.EraAvailability" }}</h3>
       <div class="skill-attributes" style="margin-bottom: 6px;flex:0;" data-set="eras">
         {{#each _eras as |era key|}}
-          <span class="toggle-switch {{#if era.isEnabled}} switched-on {{/if}}" data-property="{{era.id}}">{{localize era.name}}</span>
+          <span class="toggle-switch {{#if era.isEnabled}} switched-on {{/if}}" data-property="{{era.id}}">{{era.name}}</span>
         {{/each}}
       </div>
 

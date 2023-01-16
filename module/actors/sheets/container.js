@@ -1,4 +1,5 @@
 /* global $, ActorSheet, CONST, Dialog, FormData, game, mergeObject, TextEditor */
+import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { CoC7Parser } from '../../apps/parser.js'
 import { CoC7Utilities } from '../../utilities.js'
 
@@ -46,6 +47,12 @@ export class CoC7ContainerSheet extends ActorSheet {
   }
 
   onCloseSheet () {}
+
+  _getHeaderButtons () {
+    const headerButtons = super._getHeaderButtons()
+    addCoCIDSheetHeaderButton(headerButtons, this)
+    return headerButtons
+  }
 
   async getData () {
     const sheetData = await super.getData()

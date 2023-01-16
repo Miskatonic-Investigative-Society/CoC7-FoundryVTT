@@ -912,6 +912,19 @@ export class CoC7Utilities {
     }
   }
 
+  static toKebabCase (s) {
+    if (!s) {
+      return ''
+    }
+    const match = s.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
+
+    if (!match) {
+      return ''
+    }
+
+    return match.join('-').toLowerCase()
+  }
+
   static sortByNameKey (a, b) {
     return a.name
       .normalize('NFD')
