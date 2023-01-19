@@ -1162,7 +1162,7 @@
   "CoC7.Copied": "Copiato il testo di esempio negli Appunti",
 
   "CoC7.EffectNew": "Nuovo effetto",
-  "CoC7.EffectAppliedCantOverride": "Viene applicato un effetto attivo. Non puoi modificare [{name}]. Per modificare questo valore devi disattivare l'effetto corrispondente."
+  "CoC7.EffectAppliedCantOverride": "Viene applicato un effetto attivo. Non puoi modificare [{name}]. Per modificare questo valore devi disattivare l'effetto corrispondente.",
   
   "CoC7.CoCIDFlag.id": "ID",
   "CoC7.CoCIDFlag.title": "Modifica l'ID di Sistema (CoC ID)",
