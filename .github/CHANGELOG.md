@@ -9,7 +9,11 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Add additional pulp rule to ignore age when calculating movement speed
+- Implement CoC ID system to set tags on documents for example i.skill.dodge to find dodge skills on actors
+- Separate link and parser logic, remove duplication for function, and fix v10 link issues
 - Show special property of weapons on combat chat cards, thanks to @acd-jake #1291
+- Update to Italian localization, thanks to @Stefano1975t #1301
 - Update to Korean localization, thanks to @SRagg #1288
 
 ## Version 0.9.2
