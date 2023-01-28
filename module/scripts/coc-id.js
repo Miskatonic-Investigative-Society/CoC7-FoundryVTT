@@ -52,11 +52,10 @@ export class CoCID {
 
   /**
    * Get CoCID type.subtype.partial-name(-removed)
-   * @param document
+   * @param key
    * @returns string
    */
-  static guessGroup (document) {
-    const id = document.flags?.CoC7?.cocidFlag?.id
+  static guessGroupFromKey (id) {
     if (id) {
       const key = id.replace(/([^\\.-]+)$/, '')
       if (key.substr(-1) === '-') {
@@ -64,6 +63,15 @@ export class CoCID {
       }
     }
     return ''
+  }
+
+  /**
+   * Get CoCID type.subtype.partial-name(-removed)
+   * @param document
+   * @returns string
+   */
+  static guessGroupFromDocument (document) {
+    return CoCID.guessGroupFromKey(document.flags?.CoC7?.cocidFlag?.id)
   }
 
   /**

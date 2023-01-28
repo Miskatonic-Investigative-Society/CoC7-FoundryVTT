@@ -1,0 +1,24 @@
+<h1 style="flex: 0 0 auto;">{{localize 'CoC7.InvestigatorWizard.TitleSelectArchetype'}}</h1>
+<div class="scrollsection">
+  <p>{{localize 'CoC7.InvestigatorWizard.ArchetypePage'}}</p>
+  <div class="form-group">
+    <label for="coc-archetype">{{localize 'CoC7.InvestigatorWizard.ArchetypeSelect'}}:</label>
+    <select name="coc-archetype" class="submit_on_change">
+      <option value="">&nbsp;</option>
+      {{#select object.archetype}}
+        {{#each archetypes as |archetype|}}
+          <option value="{{archetype.flags.CoC7.cocidFlag.id}}">{{archetype.name}}</option>
+        {{/each}}
+      {{/select}}
+    </select>
+  </div>
+  {{#if object.archetype}}
+    {{{description}}}
+    <ul>
+      <li>Core characteristic: {{coreCharacteristic}}.</li>
+      <li>Add {{bonusPoints}} bonus points divided among any of the following skills: {{skills}}</li>
+      <li>Suggested occupations: {{{suggestedOccupations}}}</li>
+      <li>Suggested traits: {{{suggestedTraits}}}</li>
+    </ul>
+  {{/if}}
+</div>

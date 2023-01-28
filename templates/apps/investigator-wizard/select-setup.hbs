@@ -1,0 +1,18 @@
+<h1 style="flex: 0 0 auto;">{{localize 'CoC7.InvestigatorWizard.TitleSelectSetup'}}</h1>
+<div class="scrollsection">
+  <p>{{localize 'CoC7.InvestigatorWizard.SetupPage'}}</p>
+  <div class="form-group">
+    <label for="coc-setup">{{localize 'CoC7.InvestigatorWizard.SetupSelect'}}:</label>
+    <select name="coc-setup" class="submit_on_change">
+      <option value="">&nbsp;</option>
+      {{#select object.setup}}
+        {{#each setups as |setup|}}
+          <option value="{{setup.flags.CoC7.cocidFlag.id}}">{{setup.name}}</option>
+        {{/each}}
+      {{/select}}
+    </select>
+  </div>
+  {{#if object.setup}}
+    {{{description}}}
+  {{/if}}
+</div>

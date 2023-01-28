@@ -1,4 +1,5 @@
 /* global fromUuid, game, ui */
+import { CoC7InvestigatorWizard } from './investigator-wizard.js'
 import { CoC7Utilities } from '../utilities.js'
 import { CombinedCheckCard } from '../chat/cards/combined-roll.js'
 import { OpposedCheckCard } from '../chat/cards/opposed-roll.js'
@@ -14,7 +15,12 @@ export class CoC7SystemSocket {
     if (typeof data.listener !== 'undefined') {
       if (game.user.id === data.listener) {
         switch (data.type) {
-          default:
+          case 'character-wizard':
+            CoC7InvestigatorWizard.createCharacterFromData(data.payload)
+            break
+          case 'open-character':
+            game.actors.get(data.payload).sheet.render(true)
+            break
         }
       }
     } else {

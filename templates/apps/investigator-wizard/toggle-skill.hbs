@@ -1,0 +1,36 @@
+{{#if skill.isMultiple}}
+  <li class="item toggle clickable" data-key="{{skill.key}}" data-index="{{skill.index}}" data-toggle-key="{{toggleKey}}">
+    <i class="far fa-square-plus"></i>
+    {{skill.name}}
+  </li>
+{{else if skill.isPickable}}
+  {{#if skill.picked}}
+    <li class="item toggle clickable" data-key="{{skill.key}}" data-index="{{skill.index}}" data-toggle-key="{{toggleKey}}">
+      <i class="fa-solid fa-filter-circle-xmark"></i>
+      {{skill.specialization}} ({{skill.skillName}})
+    </li>
+  {{else}}
+    <li class="item toggle clickable" data-key="{{skill.key}}" data-index="{{skill.index}}" data-toggle-key="{{toggleKey}}">
+      <i class="fa-regular fa-filter"></i>
+      {{skill.name}}
+    </li>
+  {{/if}}
+{{else}}
+  <li class="item flexrow toggle {{#unless skill.isCreditRating}}toggleable{{/unless}}" data-key="{{skill.key}}" data-index="{{skill.index}}" data-toggle-key="{{toggleKey}}">
+    <div style="flex: 0 0 auto;">
+      {{#if skill.toggle}}
+        <i class="fas fa-circle"></i>
+      {{else}}
+        <i class="far fa-circle"></i>
+      {{/if}}
+    </div>
+    <div style="flex: 1; padding: 0 1px;">
+      {{skill.name}}
+    </div>
+    <div class="remove-skill">
+      {{#if skill.deleteable}}
+        <i class="fas fa-trash"></i>
+      {{/if}}
+    </div>
+  </li>
+{{/if}}

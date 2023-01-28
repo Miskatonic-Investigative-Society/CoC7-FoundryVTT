@@ -50,7 +50,8 @@ COC7.skillProperties = {
   firearm: 'CoC7.SkillFirearm',
   requiresname: 'CoC7.SkillRequiresName',
   keepbasevalue: 'CoC7.SkillKeepBaseValue',
-  picknameonly: 'CoC7.SkillPickNameOnly'
+  picknameonly: 'CoC7.SkillPickNameOnly',
+  onlyone: 'CoC7.SkillSpecializationIsUnique'
 }
 
 COC7.weaponProperties = {
