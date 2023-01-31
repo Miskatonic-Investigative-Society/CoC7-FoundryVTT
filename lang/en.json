@@ -1236,5 +1236,8 @@
   "CoC7.CoCIDFlag.error.unknown-era": "Unknown Era \"{era}\"",
   "CoC7.CoCIDFlag.error.incorrect.type": "Tried to convert CoC ID with non existing document type. See console log.",
   "CoC7.CoCIDFlag.error.document-not-found": "Document not found in world or Compendia matching the CoC ID \"{cocid}\", language \"{lang}\", and era \"{era}\". Please check your Era for the world setting.",
-  "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language \"{lang}\", and era \"{era}\". Please check your Era for the world setting."
+  "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language \"{lang}\", and era \"{era}\". Please check your Era for the world setting.",
+
+  "CoC7.CoCIDBatch.title": "Batch set System ID (CoC ID)",
+  "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
 }

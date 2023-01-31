@@ -1167,6 +1167,9 @@ export class CoC7InvestigatorWizard extends FormApplication {
             item.system.skillName = row.selected
             item._id = randomID()
             item.name = item.system.specialization + ' (' + item.system.skillName + ')'
+            if (typeof item.flags.CoC7?.cocidFlag?.id !== 'undefined') {
+              item.flags.CoC7.cocidFlag.id = game.system.api.cocid.guessId(item)
+            }
           }
           if (item.system.properties?.fighting) {
             weaponSkills.melee[item.name] = item._id

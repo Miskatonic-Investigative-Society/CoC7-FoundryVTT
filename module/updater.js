@@ -1,10 +1,15 @@
 /* global CONFIG, Dialog, expandObject, foundry, game, isNewerVersion, mergeObject, ui */
 import { CoC7Item } from './items/item.js'
+import { CoCIDBatch } from './apps/coc-id-batch.js'
 
 export class Updater {
   static async checkForUpdate () {
-    const systemUpdateVersion = game.settings.get('CoC7', 'systemUpdateVersion')
-
+    let systemUpdateVersion = game.settings.get('CoC7', 'systemUpdateVersion')
+    if (game.actors.size + game.scenes.size + game.items.size + game.journal.size + game.tables.size === 0) {
+      // If there are no actors, items, journals, roll tables, or scenes skip world update
+      systemUpdateVersion = game.system.version
+      await game.settings.set('CoC7', 'systemUpdateVersion', systemUpdateVersion)
+    }
     const runMigrate = isNewerVersion(game.system.version, systemUpdateVersion ?? '0')
     this.updatedModules = game.settings.get('CoC7', 'systemUpdatedModuleVersion') || {}
     this.currentModules = {}
@@ -88,7 +93,10 @@ export class Updater {
       game.settings.set('CoC7', 'pulpRuleTalents', true)
       game.settings.set('CoC7', 'pulpRuleFasterRecovery', true)
       game.settings.set('CoC7', 'pulpRuleIgnoreMajorWounds', true)
+      game.settings.set('CoC7', 'pulpRuleIgnoreAgePenalties', true)
     }
+
+    await CoCIDBatch.create('skill')
 
     const settings = mergeObject(this.updatedModules || {}, this.currentModules)
     game.settings.set('CoC7', 'systemUpdatedModuleVersion', settings)
