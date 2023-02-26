@@ -413,7 +413,6 @@ export class CoC7InvestigatorWizard extends FormApplication {
             sheetData.deductTotal = sheetData.deductTotal - parseInt(this.object.setupModifiers[key], 10)
           }
           sheetData.deductFrom = this.object.requiresAgeAdjustments.deduct.from.map(n => n.toLocaleUpperCase()).join(', ').replace(/, ([a-z]+)$/i, ', or $1')
-          console.log(sheetData.deductTotal, this.object.requiresAgeAdjustments.deduct.total)
           if (sheetData.deductTotal !== this.object.requiresAgeAdjustments.deduct.total) {
             sheetData.canNext = false
           }
@@ -707,7 +706,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
         sheetData.creditRatingOkay = !(this.object.creditRating.max > 0)
         sheetData.personal = {
           count: 0,
-          total: 2 * this.object.setupPoints.int,
+          total: 2 * (parseInt(this.object.setupPoints.int, 10) + parseInt(this.object.setupModifiers.int, 10)),
           remaining: 0
         }
         sheetData.occupation = {
@@ -727,9 +726,9 @@ export class CoC7InvestigatorWizard extends FormApplication {
             for (const [key, carac] of Object.entries(occupation.system.occupationSkillPoints)) {
               if (carac.selected) {
                 if (carac.optional) {
-                  options.push(carac.multiplier * this.object.setupPoints[key])
+                  options.push(carac.multiplier * (parseInt(this.object.setupPoints[key], 10) + parseInt(this.object.setupModifiers[key], 10)))
                 } else {
-                  sheetData.occupation.total += carac.multiplier * this.object.setupPoints[key]
+                  sheetData.occupation.total += carac.multiplier * (parseInt(this.object.setupPoints[key], 10) + parseInt(this.object.setupModifiers[key], 10))
                 }
               }
             }
@@ -758,7 +757,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
                 if (!Number.isNumeric(base)) {
                   for (const key in this.object.setupPoints) {
                     const regEx = new RegExp('@' + key, 'i')
-                    base = base.replace(regEx, this.object.setupPoints[key])
+                    base = base.replace(regEx, parseInt(this.object.setupPoints[key], 10) + parseInt(this.object.setupModifiers[key], 10))
                   }
                 }
                 if (!Number.isNumeric(base)) {
@@ -1017,7 +1016,6 @@ export class CoC7InvestigatorWizard extends FormApplication {
   }
 
   async _onDrop (event) {
-    const data = event.dataTransfer.getData('text/plain')
     try {
       const dataList = JSON.parse(event.dataTransfer.getData('text/plain'))
       if (typeof dataList.type !== 'undefined' && dataList.type === 'investigatorCharacteristic') {
@@ -1025,7 +1023,6 @@ export class CoC7InvestigatorWizard extends FormApplication {
         dataList.okay = false
         if (dataList.key === '-' && typeof this.object.setupPoints[dataList.destination] !== 'undefined') {
           const index = this.object.placeable.indexOf(parseInt(dataList.value, 10))
-          console.log('Add', index, dataList.value, dataList.destination)
           if (index !== -1) {
             this.object.placeable.splice(index, 1)
           }
@@ -1036,7 +1033,6 @@ export class CoC7InvestigatorWizard extends FormApplication {
           this.object.placeable.sort().reverse()
           dataList.okay = true
         } else if (typeof this.object.setupPoints[dataList.key] !== 'undefined' && dataList.destination === '-') {
-          console.log('Remove', dataList.destination)
           if (this.object.setupPoints[dataList.key] !== '') {
             this.object.placeable.push(parseInt(this.object.setupPoints[dataList.key], 10))
             this.object.setupPoints[dataList.key] = ''
@@ -1044,7 +1040,6 @@ export class CoC7InvestigatorWizard extends FormApplication {
             dataList.okay = true
           }
         } else if (typeof this.object.setupPoints[dataList.key] !== 'undefined' && typeof this.object.setupPoints[dataList.destination] !== 'undefined') {
-          console.log('Swap', dataList.value, dataList.destination)
           const temp = (this.object.setupPoints[dataList.key] === '' ? '' : parseInt(this.object.setupPoints[dataList.key], 10))
           this.object.setupPoints[dataList.key] = (this.object.setupPoints[dataList.destination] === '' ? '' : parseInt(this.object.setupPoints[dataList.destination], 10))
           this.object.setupPoints[dataList.destination] = temp
@@ -1057,7 +1052,6 @@ export class CoC7InvestigatorWizard extends FormApplication {
       }
     } catch (err) {
     }
-    console.log('_onDrop', event, data)
     const dataList = await CoC7Utilities.getDataFromDropEvent(event, 'Item')
     if ([this.pageList.PAGE_ARCHETYPE_SKILLS, this.pageList.PAGE_OCCUPATION_SKILLS].includes(this.object.step)) {
       for (const item of dataList) {
@@ -1602,7 +1596,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
           if (!Number.isNumeric(base)) {
             for (const key in data.setupPoints) {
               const regEx = new RegExp('@' + key, 'i')
-              base = base.replace(regEx, data.setupPoints[key])
+              base = base.replace(regEx, parseInt(data.setupPoints[key], 10) + parseInt(data.setupModifiers[key], 10))
             }
           }
           if (!Number.isNumeric(base)) {
@@ -1663,7 +1657,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
       items.push(item)
     }
     const development = {
-      personal: 2 * parseInt(data.setupPoints.int, 10),
+      personal: 2 * (parseInt(data.setupPoints.int, 10) + parseInt(data.setupModifiers.int, 10)),
       occupation: 0,
       archetype: 0
     }
@@ -1682,9 +1676,9 @@ export class CoC7InvestigatorWizard extends FormApplication {
         for (const [key, carac] of Object.entries(occupation[0].system.occupationSkillPoints)) {
           if (carac.selected) {
             if (carac.optional) {
-              options.push(carac.multiplier * data.setupPoints[key])
+              options.push(carac.multiplier * (parseInt(data.setupPoints[key], 10) + parseInt(data.setupModifiers[key], 10)))
             } else {
-              development.occupation += carac.multiplier * data.setupPoints[key]
+              development.occupation += carac.multiplier * (parseInt(data.setupPoints[key], 10) + parseInt(data.setupModifiers[key], 10))
             }
           }
         }
@@ -1707,36 +1701,36 @@ export class CoC7InvestigatorWizard extends FormApplication {
       system: {
         characteristics: {
           str: {
-            value: parseInt(data.setupPoints.str, 10)
+            value: parseInt(data.setupPoints.str, 10) + parseInt(data.setupModifiers.str, 10)
           },
           con: {
-            value: parseInt(data.setupPoints.con, 10)
+            value: parseInt(data.setupPoints.con, 10) + parseInt(data.setupModifiers.con, 10)
           },
           siz: {
-            value: parseInt(data.setupPoints.siz, 10)
+            value: parseInt(data.setupPoints.siz, 10) + parseInt(data.setupModifiers.siz, 10)
           },
           dex: {
-            value: parseInt(data.setupPoints.dex, 10)
+            value: parseInt(data.setupPoints.dex, 10) + parseInt(data.setupModifiers.dex, 10)
           },
           app: {
-            value: parseInt(data.setupPoints.app, 10)
+            value: parseInt(data.setupPoints.app, 10) + parseInt(data.setupModifiers.app, 10)
           },
           int: {
-            value: parseInt(data.setupPoints.int, 10)
+            value: parseInt(data.setupPoints.int, 10) + parseInt(data.setupModifiers.int, 10)
           },
           pow: {
-            value: parseInt(data.setupPoints.pow, 10)
+            value: parseInt(data.setupPoints.pow, 10) + parseInt(data.setupModifiers.pow, 10)
           },
           edu: {
-            value: parseInt(data.setupPoints.edu, 10)
+            value: parseInt(data.setupPoints.edu, 10) + parseInt(data.setupModifiers.edu, 10)
           }
         },
         attribs: {
           lck: {
-            value: parseInt(data.setupPoints.luck, 10)
+            value: Math.max(parseInt(data.setupPoints.luck, 10), parseInt(data.setupModifiers.luck, 10))
           },
           san: {
-            value: parseInt(data.setupPoints.pow, 10)
+            value: parseInt(data.setupPoints.pow, 10) + parseInt(data.setupModifiers.pow, 10)
           }
         },
         infos: {
