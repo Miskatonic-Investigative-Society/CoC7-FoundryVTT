@@ -273,9 +273,14 @@ export class CoC7ActorSheet extends ActorSheet {
                 })
               }
             }
+
             const skill = this.actor.items.get(item._id)
-            item.system.rawValue = skill.rawValue
-            item.system.value = skill.value
+            const { base, rawValue, value } = skill.system
+
+            // Assume fallback values, useful for initial setup of skills
+            item.system.rawValue = rawValue || value || base
+            item.system.value = value || base      
+          
           } else {
             const skill = this.actor.items.get(item._id)
             item.system.base = await skill.asyncBase()
