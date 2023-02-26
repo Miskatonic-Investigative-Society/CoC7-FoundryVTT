@@ -15,6 +15,10 @@
       {{> 'systems/CoC7/templates/apps/investigator-wizard/select-occupation.hbs'}}
     {{else if (eq object.step pages.PAGE_CHARACTISTICS)}}
       {{> 'systems/CoC7/templates/apps/investigator-wizard/set-characteristics.hbs'}}
+    {{else if (eq object.step pages.PAGE_ATTRIBUTES)}}
+      {{> 'systems/CoC7/templates/apps/investigator-wizard/set-attributes.hbs'}}
+    {{else if (eq object.step pages.PAGE_VIEW_ATTRIBUTES)}}
+      {{> 'systems/CoC7/templates/apps/investigator-wizard/view-attributes.hbs'}}
     {{else if (eq object.step pages.PAGE_INVESTIGATOR)}}
       {{> 'systems/CoC7/templates/apps/investigator-wizard/set-investigator.hbs'}}
     {{else if (eq object.step pages.PAGE_OCCUPATION_SKILLS)}}
@@ -33,7 +37,7 @@
     {{#unless (gt object.step 0)}}
       <div class="no-button"></div>
     {{else}}
-      <button class="submit-button" data-button="back"{{#unless canNext}} style="margin-right: 0;"{{/unless}}>
+      <button class="submit-button" data-button="back" {{#unless canNext}} style="margin-right: 0;" {{/unless}}>
         <i class="fas fa-backward"></i>
         {{localize 'CoC7.InvestigatorWizard.BackStep'}}
       </button>

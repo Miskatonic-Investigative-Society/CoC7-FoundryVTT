@@ -591,6 +591,20 @@ export function registerSettings () {
     type: Boolean,
     default: false
   })
+  game.settings.register('CoC7', 'InvestigatorWizardPointBuy', {
+    name: 'Force point buy instead of setup choice',
+    scope: 'world',
+    config: false,
+    type: Boolean,
+    default: false
+  })
+  game.settings.register('CoC7', 'InvestigatorWizardQuickFire', {
+    name: 'Quick fire setup values',
+    scope: 'world',
+    config: false,
+    type: Array,
+    default: []
+  })
   /** Set an initiative formula for the system */
   CONFIG.Combat.initiative = {
     formula: '@characteristics.dex.value',

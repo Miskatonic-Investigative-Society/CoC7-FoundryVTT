@@ -1,0 +1,15 @@
+<h1 style="flex: 0 0 auto;">{{localize 'CoC7.InvestigatorWizard.TitleAttributes'}}</h1>
+<div class="scrollsection">
+  <div class="flexcol">
+    <ol class="item-list">
+      {{#each points as |characteristic id|}}
+        <li class="item flexrow">
+          <div class="item-name flexrow">
+            <label class="flex2">{{localize characteristic.label}}:</label>
+            <div>{{characteristic.prefix}}{{characteristic.value}}{{characteristic.suffix}}</div>
+          </div>
+        </li>
+      {{/each}}
+    </ol>
+  </div>
+</div>

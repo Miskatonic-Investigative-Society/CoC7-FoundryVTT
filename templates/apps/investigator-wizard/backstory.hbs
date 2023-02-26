@@ -7,9 +7,9 @@
     </div>
     <div class="form-group">
       {{#if backstory.rolls}}
-        <button class="backstory-roll" type="button" data-index="{{backstory.index}}" data-key="{{backstory.rolls}}"><i class="fas fa-dice-d20"></i> {{ localize "TABLE.Roll" }}</button>
+        <button class="backstory-roll" type="button" data-index="{{backstory.index}}" data-key="{{backstory.rolls}}"><i class="fas fa-dice-d20"></i> {{localize 'TABLE.Roll'}}</button>
       {{/if}}
-      <button class="backstory-reset" type="button" data-index="{{backstory.index}}"><i class="fas fa-undo"></i> {{ localize "TABLE.Reset" }}</button>
+      <button class="backstory-reset" type="button" data-index="{{backstory.index}}"><i class="fas fa-undo"></i> {{localize 'TABLE.Reset'}}</button>
     </div>
     <div class="form-group">&nbsp;</div>
   {{/each}}

@@ -1749,14 +1749,7 @@ export class CoCActor extends Actor {
         this.system.characteristics.siz.value != null &&
         this.system.characteristics.con.value != null
       ) {
-        return Math.floor(
-          (parseInt(this.system.characteristics.siz.value, 10) +
-            parseInt(this.system.characteristics.con.value, 10)) /
-            (game.settings.get('CoC7', 'pulpRuleDoubleMaxHealth') &&
-            this.type === 'character'
-              ? 5
-              : 10)
-        )
+        return CoCActor.hpFromCharacteristics(this.system.characteristics, this.type)
       }
       if (this.system.attribs.hp.max) {
         return parseInt(this.system.attribs.hp.max)
@@ -1844,7 +1837,7 @@ export class CoCActor extends Actor {
   get rawMpMax () {
     if (this.system.attribs.mp.auto) {
       if (this.system.characteristics.pow.value != null) {
-        return Math.floor(this.system.characteristics.pow.value / 5)
+        return CoCActor.mpFromCharacteristics(this.system.characteristics)
       } else return 0
     }
     return parseInt(this.system.attribs.mp.max)
@@ -2139,6 +2132,51 @@ export class CoCActor extends Actor {
     this.setAttribAuto(!this.system.attribs[attrib].auto, attrib)
   }
 
+  static dbFromCharacteristics (characteristics) {
+    const sum = (characteristics.str.value ?? 0) + (characteristics.siz.value ?? 0)
+    if (sum < 65) return -2
+    if (sum < 85) return -1
+    if (sum < 125) return 0
+    if (sum < 165) return '1D4'
+    return `${Math.floor((sum - 45) / 80)}D6`
+  }
+
+  static buildFromCharacteristics (characteristics) {
+    const sum = (characteristics.str.value ?? 0) + (characteristics.siz.value ?? 0)
+    if (sum < 65) return -2
+    if (sum < 85) return -1
+    if (sum < 125) return 0
+    if (sum < 165) return 1
+    return Math.floor((sum - 45) / 80) + 1
+  }
+
+  static hpFromCharacteristics (characteristics, type) {
+    const sum = parseInt(characteristics.siz.value ?? 0, 10) + parseInt(characteristics.con.value ?? 0, 10)
+    const divisor = (game.settings.get('CoC7', 'pulpRuleDoubleMaxHealth') && type === 'character' ? 5 : 10)
+    return Math.floor(sum / divisor)
+  }
+
+  static mpFromCharacteristics (characteristics) {
+    return Math.floor(characteristics.pow.value / 5)
+  }
+
+  static movFromCharacteristics (characteristics, type, age) {
+    let MOV
+    if (characteristics.dex.value > characteristics.siz.value && characteristics.str.value > characteristics.siz.value) {
+      MOV = 9 // Bug correction by AdmiralNyar.
+    } else if (characteristics.dex.value >= characteristics.siz.value || characteristics.str.value >= characteristics.siz.value) {
+      MOV = 8
+    } else {
+      MOV = 7
+    }
+    if (type !== 'creature' && !game.settings.get('CoC7', 'pulpRuleIgnoreAgePenalties')) {
+      if (!isNaN(parseInt(age))) {
+        MOV = parseInt(age) >= 40 ? MOV - Math.floor(parseInt(age) / 10) + 3 : MOV
+      }
+    }
+    return Math.max(0, MOV)
+  }
+
   get rawBuild () {
     if (!this.system.attribs) return null
     if (!this.system.attribs.build) return null
@@ -2146,14 +2184,7 @@ export class CoCActor extends Actor {
       this.system.attribs.build.auto = true
     }
     if (this.system.attribs.build.auto) {
-      const sum =
-        this.system.characteristics.str.value +
-        this.system.characteristics.siz.value
-      if (sum > 164) return Math.floor((sum - 45) / 80) + 1
-      if (sum < 65) return -2
-      if (sum < 85) return -1
-      if (sum < 125) return 0
-      if (sum < 165) return 1
+      return CoCActor.buildFromCharacteristics(this.system.characteristics)
     }
 
     return this.system.attribs.build.value
@@ -2170,14 +2201,7 @@ export class CoCActor extends Actor {
       this.system.attribs.db.auto = true
     }
     if (this.system.attribs.db.auto) {
-      const sum =
-        this.system.characteristics.str.value +
-        this.system.characteristics.siz.value
-      if (sum > 164) return `${Math.floor((sum - 45) / 80)}D6`
-      if (sum < 65) return -2
-      if (sum < 85) return -1
-      if (sum < 125) return 0
-      if (sum < 165) return '1D4'
+      return CoCActor.dbFromCharacteristics(this.system.characteristics)
     }
     return this.system.attribs.db.value
   }
@@ -2193,32 +2217,7 @@ export class CoCActor extends Actor {
       this.system.attribs.mov.auto = true
     }
     if (this.system.attribs.mov.auto) {
-      let MOV
-      if (
-        this.system.characteristics.dex.value >
-          this.system.characteristics.siz.value &&
-        this.system.characteristics.str.value >
-          this.system.characteristics.siz.value
-      ) {
-        MOV = 9 // Bug correction by AdmiralNyar.
-      } else if (
-        this.system.characteristics.dex.value >=
-          this.system.characteristics.siz.value ||
-        this.system.characteristics.str.value >=
-          this.system.characteristics.siz.value
-      ) {
-        MOV = 8
-      } else {
-        MOV = 7
-      }
-      if (this.system.type !== 'creature' && !game.settings.get('CoC7', 'pulpRuleIgnoreAgePenalties')) {
-        if (!isNaN(parseInt(this.system.infos.age))) {
-          MOV =
-            parseInt(this.system.infos.age) >= 40
-              ? MOV - Math.floor(parseInt(this.system.infos.age) / 10) + 3
-              : MOV
-        }
-      }
+      const MOV = CoCActor.movFromCharacteristics(this.system.characteristics, this.system.type, this.system.infos.age)
       if (MOV > 0) return MOV
     }
     return this.system.attribs.mov.value

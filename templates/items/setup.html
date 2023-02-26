@@ -129,60 +129,57 @@
     </div>
 
     <div class="tab details" data-group="primary" data-tab="characteristics">
-      <div class="form-group stacked">
-        <label class="checkbox">
-          <input type="checkbox" name="system.characteristics.points.enabled" {{checked data.system.characteristics.points.enabled}} /> {{ localize "CoC7.UsePoints" }}
-        </label>
-        <label class="checkbox">
-          <input type="checkbox" name="system.characteristics.rolls.enabled" {{checked data.system.characteristics.rolls.enabled}} /> {{ localize "CoC7.UseRolls" }}
-        </label>
-      </div>
-
       <h3 class="form-header">{{ localize "CoC7.Characteristics" }}</h3>
-
-      {{#if data.system.characteristics.points.enabled}}
-        <div class="form-group">
-          <label>{{ localize "CoC7.CharacteristicsPoints" }}</label>
-          <input type="text" name="system.characteristics.points.value" value="{{data.system.characteristics.points.value}}" placeholder="{{ localize 'CoC7.Value' }}" />
-        </div>
-      {{else}}
-        <div class="form-group">
-          <label>{{ localize "CHARAC.Strengh" }}</label>
-          <input type="text" name="system.characteristics.rolls.str" value="{{data.system.characteristics.rolls.str}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
-        </div>
-        <div class="form-group">
-          <label>{{ localize "CHARAC.Constitution" }}</label>
-          <input type="text" name="system.characteristics.rolls.con" value="{{data.system.characteristics.rolls.con}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
-        </div>
-        <div class="form-group">
-          <label>{{ localize "CHARAC.Size" }}</label>
-          <input type="text" name="system.characteristics.rolls.siz" value="{{data.system.characteristics.rolls.siz}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
-        </div>
-        <div class="form-group">
-          <label>{{ localize "CHARAC.Dexterity" }}</label>
-          <input type="text" name="system.characteristics.rolls.dex" value="{{data.system.characteristics.rolls.dex}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
-        </div>
-        <div class="form-group">
-          <label>{{ localize "CHARAC.Appearance" }}</label>
-          <input type="text" name="system.characteristics.rolls.app" value="{{data.system.characteristics.rolls.app}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
-        </div>
-        <div class="form-group">
-          <label>{{ localize "CHARAC.Intelligence" }}</label>
-          <input type="text" name="system.characteristics.rolls.int" value="{{data.system.characteristics.rolls.int}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
-        </div>
-        <div class="form-group">
-          <label>{{ localize "CHARAC.Power" }}</label>
-          <input type="text" name="system.characteristics.rolls.pow" value="{{data.system.characteristics.rolls.pow}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
-        </div>
-        <div class="form-group">
-          <label>{{ localize "CHARAC.Education" }}</label>
-          <input type="text" name="system.characteristics.rolls.edu" value="{{data.system.characteristics.rolls.edu}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
-        </div>
-        <div class="form-group">
-          <label>{{ localize "CoC7.Luck" }}</label>
-          <input type="text" name="system.characteristics.rolls.luck" value="{{data.system.characteristics.rolls.luck}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
-        </div>
-      {{/if}}
+      <div class="form-group">
+        <label>{{ localize "CoC7.UsePoints" }}</label>
+        <label class="checkbox" style="text-align: center;"><input type="checkbox" name="system.characteristics.points.enabled" {{checked data.system.characteristics.points.enabled}} /></label>
+      </div>
+      <div class="form-group">
+        <label>{{ localize "CoC7.CharacteristicsPoints" }}</label>
+        <input type="text" name="system.characteristics.points.value" value="{{data.system.characteristics.points.value}}" placeholder="{{ localize 'CoC7.Value' }}" />
+      </div>
+      <p>&nbsp;</p>
+      <h3 class="form-header">{{ localize "CoC7.Characteristics" }}</h3>
+      <div class="form-group">
+        <label>{{ localize "CoC7.UseRolls" }}</label>
+        <label class="checkbox" style="text-align: center;"><input type="checkbox" name="system.characteristics.rolls.enabled" {{checked data.system.characteristics.rolls.enabled}} /></label>
+      </div>
+      <div class="form-group">
+        <label>{{ localize "CHARAC.Strengh" }}</label>
+        <input type="text" name="system.characteristics.rolls.str" value="{{data.system.characteristics.rolls.str}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
+      </div>
+      <div class="form-group">
+        <label>{{ localize "CHARAC.Constitution" }}</label>
+        <input type="text" name="system.characteristics.rolls.con" value="{{data.system.characteristics.rolls.con}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
+      </div>
+      <div class="form-group">
+        <label>{{ localize "CHARAC.Size" }}</label>
+        <input type="text" name="system.characteristics.rolls.siz" value="{{data.system.characteristics.rolls.siz}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
+      </div>
+      <div class="form-group">
+        <label>{{ localize "CHARAC.Dexterity" }}</label>
+        <input type="text" name="system.characteristics.rolls.dex" value="{{data.system.characteristics.rolls.dex}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
+      </div>
+      <div class="form-group">
+        <label>{{ localize "CHARAC.Appearance" }}</label>
+        <input type="text" name="system.characteristics.rolls.app" value="{{data.system.characteristics.rolls.app}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
+      </div>
+      <div class="form-group">
+        <label>{{ localize "CHARAC.Intelligence" }}</label>
+        <input type="text" name="system.characteristics.rolls.int" value="{{data.system.characteristics.rolls.int}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
+      </div>
+      <div class="form-group">
+        <label>{{ localize "CHARAC.Power" }}</label>
+        <input type="text" name="system.characteristics.rolls.pow" value="{{data.system.characteristics.rolls.pow}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
+      </div>
+      <div class="form-group">
+        <label>{{ localize "CHARAC.Education" }}</label>
+        <input type="text" name="system.characteristics.rolls.edu" value="{{data.system.characteristics.rolls.edu}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
+      </div>
+      <div class="form-group">
+        <label>{{ localize "CoC7.Luck" }}</label>
+        <input type="text" name="system.characteristics.rolls.luck" value="{{data.system.characteristics.rolls.luck}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
+      </div>
     </div>
     {{#if isKeeper}}
       <div class="tab keeper flexcol" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="keeper">

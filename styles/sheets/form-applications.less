@@ -40,12 +40,37 @@ div.investigator-wizard {
         .item {
           text-align: center;
 
+          &.unsorted-characteristics {
+            min-height: 1.2rem;
+            margin-bottom: 1rem;
+          }
+
           a.increase-characteristic,
           a.decrease-characteristic,
           a.reset-characteristic,
           a.roll-characteristic,
+          a.increase-10-characteristic,
+          a.decrease-10-characteristic,
           div.nothing-characteristic {
             flex: 0 0 30px;
+          }
+
+          a.increase-10-characteristic,
+          a.decrease-10-characteristic,
+          div.nothing-10-characteristic {
+            flex: 0 0 15px;
+          }
+
+          div.draggable,
+          div.notdraggable {
+            &.characteristic {
+              flex: 0 0 2rem;
+              margin: 0 0.4rem;
+            }
+
+            div {
+              border: 1px solid #000;
+            }
           }
         }
       }

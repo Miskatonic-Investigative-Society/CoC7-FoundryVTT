@@ -1,4 +1,5 @@
 <h1 style="flex: 0 0 auto;">{{localize 'CoC7.InvestigatorWizard.TitleKeeperConfiguration'}}</h1>
+<div class="erachange" style="display:none;flex: 1 0 0;">{{localize 'CoC7.InvestigatorWizard.ChangingEraDelay'}}</div>
 <div class="scrollsection">
   <div class="form-group flexrow">
     <label for="default-enabled">{{localize 'CoC7.InvestigatorWizard.PlayerEnabled'}}:</label>
@@ -32,13 +33,41 @@
       {{/select}}
     </select>
   </div>
+  <h2>{{localize 'CoC7.InvestigatorWizard.Characteristics'}}</h2>
   <div class="form-group flexrow">
     <label for="rerolls-enabled">{{localize 'CoC7.InvestigatorWizard.AllowRerolls'}}:</label>
     <div class="flex1">
       <input type="checkbox" name="rerolls-enabled" value="on" class="submit_on_change" style="margin-left: -5px;" {{checked object.rerollsEnabled}}>
     </div>
   </div>
-
+  <div class="form-group flexrow">
+    <label for="characteristics-method-1">{{localize 'CoC7.InvestigatorWizard.UseSetupMethod'}}:</label>
+    <div class="flex1">
+      <input type="radio" name="characteristics-method" value="1" class="submit_on_change" style="margin-left: -2px; transform: scale(1.5);" {{checked (eq characteristicsMethod characteristicsMethods.METHOD_DEFAULT)}}>
+    </div>
+  </div>
+  <div class="form-group flexrow">
+    <label for="characteristics-method-2">{{localize 'CoC7.InvestigatorWizard.EnforcePointBuy'}}:</label>
+    <div class="flex1">
+      <input type="radio" name="characteristics-method" value="2" class="submit_on_change" style="margin-left: -2px; transform: scale(1.5);" {{checked (eq characteristicsMethod characteristicsMethods.METHOD_POINTS)}}>
+    </div>
+  </div>
+  <div class="form-group flexrow">
+    <label for="characteristics-method-3">{{localize 'CoC7.InvestigatorWizard.QuickFireValues'}}:</label>
+    <div class="flex1">
+      <input type="radio" name="characteristics-method" value="3" class="submit_on_change" style="margin-left: -2px; transform: scale(1.5);" {{checked (eq characteristicsMethod characteristicsMethods.METHOD_VALUES)}}>
+    </div>
+  </div>
+  {{#if object.quickFireValues.length}}
+    <div class="form-group flexrow">
+      <label>{{localize 'CoC7.InvestigatorWizard.QuickFireValues'}}:</label>
+      <div class="flex1">
+        {{#each object.quickFireValues as |value offset|}}
+          <input type="number" name="quick-fire-values-{{offset}}" value="{{value}}" style="{{#unless offset}}margin-left: -5px; {{/unless}}width: 27px;">
+        {{/each}}
+      </div>
+    </div>
+  {{/if}}
   <h2>{{localize 'CoC7.InvestigatorWizard.Setups'}}</h2>
   <p>{{localize 'CoC7.InvestigatorWizard.SetupCounts' count=setups.length}}</p>
   <div class="form-group">

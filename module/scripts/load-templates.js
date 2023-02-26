@@ -34,6 +34,8 @@ export const preloadHandlebarsTemplates = async function () {
     'systems/CoC7/templates/apps/investigator-wizard/select-archetype.hbs',
     'systems/CoC7/templates/apps/investigator-wizard/select-occupation.hbs',
     'systems/CoC7/templates/apps/investigator-wizard/set-characteristics.hbs',
+    'systems/CoC7/templates/apps/investigator-wizard/set-attributes.hbs',
+    'systems/CoC7/templates/apps/investigator-wizard/view-attributes.hbs',
     'systems/CoC7/templates/apps/investigator-wizard/set-investigator.hbs',
     'systems/CoC7/templates/apps/investigator-wizard/set-occupation-skills.hbs',
     'systems/CoC7/templates/apps/investigator-wizard/toggle-skill.hbs',
