@@ -87,7 +87,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
 
   static async loadCacheItemByCoCID () {
     return new Promise((resolve, reject) => {
-      game.system.api.cocid.fromCoCIDRegexBest({ cocidRegExp: /^i\./, type: 'i' }).then((items) => {
+      game.system.api.cocid.fromCoCIDRegexBest({ cocidRegExp: /^i\./, type: 'i', showLoading: true }).then((items) => {
         const list = {}
         for (const item of items) {
           list[item.flags.CoC7.cocidFlag.id] = item
@@ -1406,6 +1406,12 @@ export class CoC7InvestigatorWizard extends FormApplication {
    * A subclass of the FormApplication must implement the _updateObject method.
    */
   async _updateObject (event, formData) {
+    if (['back', 'next'].includes(event.submitter?.dataset.button)) {
+      if (event.submitter.className.indexOf('currently-submitting') > -1) {
+        return
+      }
+      event.submitter.className = event.submitter.className + ' currently-submitting'
+    }
     if (typeof formData['default-setup'] !== 'undefined' && typeof formData['world-era'] !== 'undefined' && typeof formData['default-ownership'] !== 'undefined') {
       if (this.object.defaultSetup !== formData['default-setup']) {
         this.object.defaultSetup = formData['default-setup']
@@ -1450,6 +1456,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
             this.object.quickFireValues = [80, 70, 60, 60, 50, 50, 50, 40]
           }
         }
+        this.object.placeable = duplicate(this.object.quickFireValues)
         game.settings.set('CoC7', 'InvestigatorWizardPointBuy', this.object.enforcePointBuy)
         game.settings.set('CoC7', 'InvestigatorWizardQuickFire', this.object.quickFireValues)
       }
@@ -1805,7 +1812,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
       rerollsEnabled: game.settings.get('CoC7', 'InvestigatorWizardRerolls'),
       enforcePointBuy: game.settings.get('CoC7', 'InvestigatorWizardPointBuy'),
       quickFireValues: game.settings.get('CoC7', 'InvestigatorWizardQuickFire'),
-      placeable: [],
+      placeable: duplicate(game.settings.get('CoC7', 'InvestigatorWizardQuickFire')),
       cacheCoCID: CoC7InvestigatorWizard.loadCacheItemByCoCID(),
       cacheBackstories: game.system.api.cocid.fromCoCIDRegexBest({ cocidRegExp: /^rt\.\.backstory-/, type: 'rt' }),
       cacheItems: {},
