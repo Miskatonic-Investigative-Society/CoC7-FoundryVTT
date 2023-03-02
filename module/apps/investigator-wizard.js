@@ -849,7 +849,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
 
   activateListeners (html) {
     super.activateListeners(html)
-
+    html.keypress(e => /textarea/i.test((e.target || e.srcElement).tagName) || (e.keyCode || e.which || e.charCode || 0) !== 13)
     html.find('.submit_on_change').change(this._onChangeSubmit.bind(this))
     html.find('.roll-characteristic').click(this._onRollCharacteristic.bind(this))
     html.find('.increase-10-characteristic').click(this._onIncreaseCharacteristic10.bind(this))
@@ -1456,7 +1456,6 @@ export class CoC7InvestigatorWizard extends FormApplication {
             this.object.quickFireValues = [80, 70, 60, 60, 50, 50, 50, 40]
           }
         }
-        this.object.placeable = duplicate(this.object.quickFireValues)
         game.settings.set('CoC7', 'InvestigatorWizardPointBuy', this.object.enforcePointBuy)
         game.settings.set('CoC7', 'InvestigatorWizardQuickFire', this.object.quickFireValues)
       }
@@ -1469,6 +1468,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
         }
       }
       this.object.quickFireValues.sort().reverse()
+      this.object.placeable = duplicate(this.object.quickFireValues)
       if (typeof formData['default-enabled'] === 'string') {
         if (this.object.defaultQuantity.toString() === '0') {
           this.object.defaultQuantity = 1
