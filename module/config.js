@@ -24,6 +24,75 @@ COC7.eras = {
   invictus: 'CoC7.EraInvictus'
 }
 
+COC7.monetaryFormatKeys = {
+  decimalLeft: 'decimalLeft',
+  decimalRight: 'decimalRight',
+  integerLeft: 'integerLeft',
+  integerRight: 'integerRight',
+  lsd: 'lsd',
+  roman: 'roman'
+}
+
+COC7.monetaryFormats = {
+  decimalLeft: 'CoC7.MonetaryFormatDecimalLeft',
+  decimalRight: 'CoC7.MonetaryFormatDecimalRight',
+  integerLeft: 'CoC7.MonetaryFormatIntegerLeft',
+  integerRight: 'CoC7.MonetaryFormatIntegerRight',
+  lsd: 'CoC7.MonetaryFormatLsd',
+  roman: 'CoC7.MonetaryFormatRoman'
+}
+
+COC7.monetaryTypeKeys = {
+  none: 'none',
+  asses: 'asses',
+  sestertii: 'sestertii',
+  quinarii: 'quinarii',
+  denarii: 'denarii',
+  d: 'd',
+  s: 's',
+  value: 'value',
+  multiplier: 'multiplier'
+}
+
+COC7.monetaryTypes = {
+  none: {
+    name: 'CoC7.MonetaryTypeNone',
+    filter: []
+  },
+  asses: {
+    name: 'CoC7.MonetaryTypeAsses',
+    filter: ['roman']
+  },
+  sestertii: {
+    name: 'CoC7.MonetaryTypeSestertii',
+    filter: ['roman']
+  },
+  quinarii: {
+    name: 'CoC7.MonetaryTypeQuinarii',
+    filter: ['roman']
+  },
+  denarii: {
+    name: 'CoC7.MonetaryTypeDenarii',
+    filter: ['roman']
+  },
+  d: {
+    name: 'CoC7.MonetaryTypeDeniers',
+    filter: ['lsd']
+  },
+  s: {
+    name: 'CoC7.MonetaryTypeSous',
+    filter: ['lsd']
+  },
+  value: {
+    name: 'CoC7.MonetaryTypeOne',
+    filter: []
+  },
+  multiplier: {
+    name: 'CoC7.MonetaryTypeCreditRating',
+    filter: []
+  }
+}
+
 COC7.characteristics = {
   str: 'CoC7.CharacStr',
   con: 'CoC7.CharacCon',

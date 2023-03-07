@@ -3368,34 +3368,79 @@ export class CoCActor extends Actor {
     return 0
   }
 
+  static monetaryFormat (format, symbol, value) {
+    switch (format) {
+      case COC7.monetaryFormatKeys.lsd:
+        return Math.floor(value / 240) + '/' + (Math.floor(value / 12) % 20) + '/' + (value % 12)
+      case COC7.monetaryFormatKeys.roman:
+        return (Math.floor(value / 400)) + '/' + (Math.floor(value / 16) % 25) + '/' + (Math.floor(value / 8) % 2) + '/' + (Math.floor(value / 4) % 2) + '/' + (value % 4)
+      case COC7.monetaryFormatKeys.decimalLeft:
+        return symbol + Number(value).toLocaleString(undefined, { minimumFractionDigits: 2 }).replace(/\.00$/, '')
+      case COC7.monetaryFormatKeys.decimalRight:
+        return Number(value).toLocaleString(undefined, { minimumFractionDigits: 2 }).replace(/\.00$/, '') + ' ' + symbol
+      case COC7.monetaryFormatKeys.integerLeft:
+        return symbol + Number(value).toLocaleString()
+      case COC7.monetaryFormatKeys.integerRight:
+        return Number(value).toLocaleString() + ' ' + symbol
+    }
+    return '0'
+  }
+
+  static monetaryValue (format, values, CR, type, value) {
+    const row = values.find(r => (typeof r.min === 'object' || r.min <= CR) && (typeof r.max === 'object' || r.max >= CR))
+    if (typeof row[type] !== 'undefined' && typeof row[value] !== 'undefined') {
+      switch (format) {
+        case COC7.monetaryFormatKeys.lsd:
+          switch (row[type]) {
+            case COC7.monetaryTypeKeys.multiplier:
+              return 240 * CR * row[value]
+            case COC7.monetaryTypeKeys.value:
+              return 240 * row[value]
+            case COC7.monetaryTypeKeys.s:
+              return 12 * row[value]
+            case COC7.monetaryTypeKeys.d:
+              return 1 * row[value]
+          }
+          break
+        case COC7.monetaryFormatKeys.roman:
+          switch (row[type]) {
+            case COC7.monetaryTypeKeys.multiplier:
+              return 400 * CR * row[value]
+            case COC7.monetaryTypeKeys.value:
+              return 400 * row[value]
+            case COC7.monetaryTypeKeys.denarii:
+              return 16 * row[value]
+            case COC7.monetaryTypeKeys.quinarii:
+              return 8 * row[value]
+            case COC7.monetaryTypeKeys.sestertii:
+              return 4 * row[value]
+            case COC7.monetaryTypeKeys.asses:
+              return 1 * row[value]
+          }
+          break
+        default:
+          switch (row[type]) {
+            case COC7.monetaryTypeKeys.multiplier:
+              return CR * row[value]
+            case COC7.monetaryTypeKeys.value:
+              return 1 * row[value]
+          }
+          break
+      }
+    }
+    return 0
+  }
+
   get spendingLevel () {
-    const CR = this.creditRating
-    if (CR >= 99) return 5000
-    if (CR >= 90) return 250
-    if (CR >= 50) return 50
-    if (CR >= 10) return 10
-    if (CR >= 1) return 2
-    return 0.5
+    return CoCActor.monetaryValue(this.system.monetary.format, this.system.monetary.values, this.creditRating, 'spendingType', 'spendingValue')
   }
 
   get cash () {
-    const CR = this.creditRating
-    if (CR >= 99) return 50000
-    if (CR >= 90) return CR * 20
-    if (CR >= 50) return CR * 5
-    if (CR >= 10) return CR * 2
-    if (CR >= 1) return CR
-    return 0.5
+    return CoCActor.monetaryValue(this.system.monetary.format, this.system.monetary.values, this.creditRating, 'cashType', 'cashValue')
   }
 
   get assets () {
-    const CR = this.creditRating
-    if (CR >= 99) return 5000000
-    if (CR >= 90) return CR * 2000
-    if (CR >= 50) return CR * 500
-    if (CR >= 10) return CR * 50
-    if (CR >= 1) return CR * 10
-    return 0
+    return CoCActor.monetaryValue(this.system.monetary.format, this.system.monetary.values, this.creditRating, 'assetsType', 'assetsValue')
   }
 
   get skills () {

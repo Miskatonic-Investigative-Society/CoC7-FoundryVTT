@@ -1880,7 +1880,7 @@ export class CoC7ActorSheet extends ActorSheet {
                 })
               }
             }
-            if (game.i18n.localize('CoC7.CoCIDFlag.keys.i.skill.credit-rating') === item.name) {
+            if (game.i18n.localize('CoC7.CoCIDFlag.keys.i.skill.credit-rating') === item.name && typeof this.actor.occupation?.system?.creditRating?.max !== 'undefined') {
               const creditValue =
                 (item.value || 0) -
                 (item.system.adjustments?.experience || 0)
