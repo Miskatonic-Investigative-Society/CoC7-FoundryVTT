@@ -1663,6 +1663,11 @@ export class CoC7InvestigatorWizard extends FormApplication {
       }
       items.push(item)
     }
+    let monetary = {}
+    const setup = await this.getCacheItemByCoCID(this.object.setup)
+    if (setup) {
+      monetary = duplicate(setup.system.monetary)
+    }
     const development = {
       personal: 2 * (parseInt(data.setupPoints.int, 10) + parseInt(data.setupModifiers.int, 10)),
       occupation: 0,
@@ -1746,7 +1751,8 @@ export class CoC7InvestigatorWizard extends FormApplication {
           birthplace: data.birthplace
         },
         development,
-        biography
+        biography,
+        monetary
       },
       prototypeToken: {
         name: data.name,

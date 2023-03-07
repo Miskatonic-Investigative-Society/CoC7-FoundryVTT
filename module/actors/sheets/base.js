@@ -280,7 +280,6 @@ export class CoC7ActorSheet extends ActorSheet {
             // Assume fallback values, useful for initial setup of skills
             item.system.rawValue = rawValue || value || base
             item.system.value = value || base
-          
           } else {
             const skill = this.actor.items.get(item._id)
             item.system.base = await skill.asyncBase()
@@ -746,6 +745,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
     html.find('.add-new-section').click(() => {
       this.actor.createBioSection()
+      this.render()
     })
 
     html.find('.delete-section').click(ev => {

@@ -828,7 +828,7 @@ export class CoCActor extends Actor {
       title,
       value: null
     })
-    await this.update({ 'system.biography': bio })
+    await this.update({ 'system.biography': bio }, { renderSheet: false })
   }
 
   async updateBioValue (index, content) {
@@ -1190,12 +1190,14 @@ export class CoCActor extends Actor {
                   data.system.characteristics.values.pow / 5
                 )
               }
-              await this.update(updateData)
+              await this.update(updateData, { renderSheet: false })
               await this.update({
                 'system.attribs.hp.value': this.rawHpMax,
                 'system.attribs.hp.max': this.rawHpMax
-              })
-            } else return
+              }, { renderSheet: false })
+            } else {
+              return
+            }
           }
           const era = Object.entries(data.flags?.CoC7?.cocidFlag?.eras).filter(e => e[1]).map(e => e[0])
           const items = await game.system.api.cocid.expandItemArray({ itemList: data.system.items, era: (typeof era[0] !== 'undefined' ? era[0] : true) })
@@ -1204,7 +1206,7 @@ export class CoCActor extends Actor {
           await this.addUniqueItems(skills)
           await this.addItems(othersItems)
           if (game.settings.get('CoC7', 'oneBlockBackstory')) {
-            await this.update({ 'system.backstory': data.system.backstory })
+            await this.update({ 'system.backstory': data.system.backstory }, { renderSheet: false })
           } else {
             for (const sectionName of data.system.bioSections) {
               if (
@@ -1217,6 +1219,18 @@ export class CoCActor extends Actor {
               }
             }
           }
+          // await this.sheet.close()
+          const monetary = mergeObject(this.system.monetary, duplicate(data.system.monetary))
+          const sheet = this.sheet
+          let rendered = false
+          do {
+            rendered = await new Promise(resolve => setTimeout(() => {
+              resolve(sheet.rendered)
+            }, 100))
+          } while (!rendered)
+          await this.update({
+            'system.monetary': monetary
+          })
           Hooks.call('setupFinishedCoC7')
           break
         }
@@ -3387,8 +3401,9 @@ export class CoCActor extends Actor {
   }
 
   static monetaryValue (format, values, CR, type, value) {
+    CR = CR || 0
     const row = values.find(r => (typeof r.min === 'object' || r.min <= CR) && (typeof r.max === 'object' || r.max >= CR))
-    if (typeof row[type] !== 'undefined' && typeof row[value] !== 'undefined') {
+    if (typeof row !== 'undefined' && typeof row[type] !== 'undefined' && typeof row[value] !== 'undefined') {
       switch (format) {
         case COC7.monetaryFormatKeys.lsd:
           switch (row[type]) {
