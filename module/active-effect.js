@@ -257,7 +257,7 @@ export default class CoC7ActiveEffect extends ActiveEffect {
 }
 
 function parse (str) {
-  const regEx = /^[+\-*/)(\d]+$/
+  const regEx = /^[+\-*/)(\d.]+$/
   if (!regEx.exec(str)) return NaN
   try {
     return new Roll(str).evaluate({ async: false }).total
