@@ -1219,15 +1219,15 @@ export class CoCActor extends Actor {
               }
             }
           }
-          // await this.sheet.close()
+          // refactor this
           const monetary = mergeObject(this.system.monetary, duplicate(data.system.monetary))
           const sheet = this.sheet
-          let rendered = false
+          let state = false
           do {
-            rendered = await new Promise(resolve => setTimeout(() => {
-              resolve(sheet.rendered)
+            state = await new Promise(resolve => setTimeout(() => {
+              resolve(sheet._state)
             }, 100))
-          } while (!rendered)
+          } while (state === Application.RENDER_STATES.RENDERING)
           await this.update({
             'system.monetary': monetary
           })
