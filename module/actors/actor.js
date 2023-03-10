@@ -94,12 +94,8 @@ export class CoCActor extends Actor {
     if (['character', 'npc', 'creature'].includes(this.type)) {
       this.system.skills = {}
       for (const i of this.items) {
-        if (i.type === 'skill') {
-          this.system.skills[`${i.system.skillName}`] = {
-            value: i.rawValue
-          }
-          this.system.skills[`${i.id}`] = { value: i.rawValue }
-        }
+        if (i.type !== 'skill') continue
+        this.system.skills[`${i.itemIdentifier}`] = { value: i.rawValue }
       }
 
       /**
