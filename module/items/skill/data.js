@@ -1,55 +1,24 @@
 /* global foundry, game */
 import { CoC7Item } from '../item.js'
+import { SkillNameParts } from './skill-name-parts.js'
 
 export class CoC7Skill extends CoC7Item {
   constructor (data, context) {
     if (typeof data.system?.skillName === 'undefined') {
-      if (typeof data.system === 'undefined') {
-        data.system = {}
-      }
-      const construct = CoC7Skill.guessNameParts(data.name)
-      if (!construct.isSpecialization) {
-        data.system.skillName = data.name
-      } else {
-        data.system.skillName = construct.skillName
-        data.system.specialization = construct.specialization
-        if (typeof data.system.properties === 'undefined') {
-          data.system.properties = {}
-        }
-        data.system.properties.special = true
-        if (construct.isFighting || construct.isFirearms) {
-          data.system.properties.combat = true
-          if (construct.isFighting) {
-            data.system.properties.fighting = true
-          } else {
-            data.system.properties.firearm = true
-          }
-        }
-      }
-    }
-    super(data, context)
-  }
+      const skill = new SkillNameParts(data.name, game.i18n).guess()
+      const { firearm, fighting, skillName, specialization } = skill
 
-  static guessNameParts (skillName) {
-    const output = {
-      skillName,
-      specialization: '',
-      isSpecialization: false,
-      isFighting: false,
-      isFirearms: false
-    }
-    const match = skillName.match(/^(.+)\s*\(([^)]+)\)$/)
-    if (match) {
-      output.skillName = match[2].trim()
-      output.specialization = match[1].trim()
-      output.isSpecialization = true
-      if (output.specialization === game.i18n.localize('CoC7.FightingSpecializationName')) {
-        output.isFighting = true
-      } else if (output.specialization === game.i18n.localize('CoC7.FirearmSpecializationName')) {
-        output.isFirearms = true
+      data.system ||= {}
+      data.system.skillName = skillName
+
+      if (specialization) {
+        const combat = fighting || firearm
+        const properties = { ...data.system.properties, fighting, firearm, combat, special: true }
+        data.system = { ...data.system, specialization, properties }
       }
     }
-    return output
+
+    super(data, context)
   }
 
   get hasActiveEffects () {
