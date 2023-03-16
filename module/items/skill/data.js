@@ -83,6 +83,15 @@ export class CoC7Skill extends CoC7Item {
   }
 
   /**
+  * Unique identifier should be used to store and obtain item to assess item uniqueness.
+  * For old items without id, fallback of skillName may still be used
+  * but if skill name is not unique it will cause problems.
+  */
+  get itemIdentifier () {
+    return this.id || this.system.skillName
+  }
+
+  /**
    * This is the value of the skill score unaffected by active effects
    */
   get rawValue () {
@@ -116,8 +125,7 @@ export class CoC7Skill extends CoC7Item {
    * This is the skill's value after active effects have been applied
    */
   get value () {
-    const value = this.parent?.system.skills?.[`${this.system.skillName}`]
-      ?.value
+    const value = this.parent?.system.skills?.[`${this.itemIdentifier}`]?.value
     return value || this.rawValue
   }
 
