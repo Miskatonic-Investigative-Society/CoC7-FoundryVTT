@@ -1,4 +1,4 @@
-/* global Actor, CONFIG, CONST, Dialog, Die, duplicate, foundry, fromUuid, fromUuidSync, game, getProperty, Hooks, mergeObject, Roll, TextEditor, Token, ui */
+/* global Actor, Application, CONFIG, CONST, Dialog, Die, duplicate, foundry, fromUuid, fromUuidSync, game, getProperty, Hooks, mergeObject, Roll, TextEditor, Token, ui */
 import { COC7 } from '../config.js'
 import { CoC7ChatMessage } from '../apps/coc7-chat-message.js'
 import { CoC7Check } from '../check.js'

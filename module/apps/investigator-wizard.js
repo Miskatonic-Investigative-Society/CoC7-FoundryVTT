@@ -50,6 +50,14 @@ export class CoC7InvestigatorWizard extends FormApplication {
     }
   }
 
+  get cocidCreditRating () {
+    return 'i.skill.credit-rating'
+  }
+
+  get cocidLanguageOwn () {
+    return 'i.skill.language-own'
+  }
+
   get pageOrder () {
     const pages = this.pageList
     let pageOrder = [
@@ -192,6 +200,8 @@ export class CoC7InvestigatorWizard extends FormApplication {
     let setup
     let archetype
     let occupation
+
+    let showMonetary = false
 
     switch (sheetData.object.step) {
       case sheetData.pages.PAGE_INTRODUCTION:
@@ -524,9 +534,9 @@ export class CoC7InvestigatorWizard extends FormApplication {
         break
 
       case sheetData.pages.PAGE_INVESTIGATOR:
-        sheetData.language = (typeof this.object.skillItems['i.skill.language-own'] !== 'undefined')
+        sheetData.language = (typeof this.object.skillItems[this.cocidLanguageOwn] !== 'undefined')
         if (sheetData.language) {
-          sheetData.languageName = this.object.skillItems['i.skill.language-own'].item.name
+          sheetData.languageName = this.object.skillItems[this.cocidLanguageOwn].item.name
         } else {
           sheetData.languageName = ''
         }
@@ -589,7 +599,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
               sheetData.selected++
             }
             let name = sheetData.object.skillItems[key].item.name
-            if (key === 'i.skill.language-own') {
+            if (key === this.cocidLanguageOwn) {
               name = specialization + ' (' + skillName + ')'
             } else if (!isPickable && picked) {
               name = specialization + ' (' + skillName + ')'
@@ -671,7 +681,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
               sheetData.selected++
             }
             let name = sheetData.object.skillItems[key].item.name
-            if (key === 'i.skill.language-own') {
+            if (key === this.cocidLanguageOwn) {
               name = specialization + ' (' + skillName + ')'
             } else if (!isPickable && picked) {
               name = specialization + ' (' + skillName + ')'
@@ -718,6 +728,9 @@ export class CoC7InvestigatorWizard extends FormApplication {
           count: 0,
           total: 0,
           remaining: 0
+        }
+        if (sheetData.object.setup !== '') {
+          showMonetary = (await this.getCacheItemByCoCID(sheetData.object.setup)).system.monetary.values.length > 0
         }
         if (sheetData.object.occupation !== '') {
           occupation = await this.getCacheItemByCoCID(this.object.occupation)
@@ -784,7 +797,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
                   totalPoints = totalPoints + num
                 }
                 let name = item.name
-                if (key === 'i.skill.language-own') {
+                if (key === this.cocidLanguageOwn) {
                   name = item.system.specialization + ' (' + item.system.skillName + ')'
                 } else if (skill.flags.isCreditRating) {
                   name = name + ' [' + this.object.creditRating.min + ' - ' + this.object.creditRating.max + ']'
@@ -805,7 +818,8 @@ export class CoC7InvestigatorWizard extends FormApplication {
                   occupationPoints: row.occupationPoints,
                   archetypePoints: row.archetypePoints,
                   experiencePoints: row.experiencePoints,
-                  totalPoints
+                  totalPoints,
+                  showCreditRating: showMonetary && key === this.cocidCreditRating
                 })
               }
             }
@@ -991,15 +1005,14 @@ export class CoC7InvestigatorWizard extends FormApplication {
         }
       }
       if (Number(this.object.creditRating.max) > 0) {
-        const keyCreditRating = 'i.skill.credit-rating'
-        const nameCreditRating = game.i18n.format('CoC7.CoCIDFlag.keys.' + keyCreditRating)
+        const nameCreditRating = game.i18n.format('CoC7.CoCIDFlag.keys.' + this.cocidCreditRating)
         const flags = { isOccupationDefault: true, occupationToggle: true, isCreditRating: true }
-        if (typeof this.object.skillItems[keyCreditRating] !== 'undefined') {
-          this.addItemToList(this.object.skillItems[keyCreditRating].item, flags)
+        if (typeof this.object.skillItems[this.cocidCreditRating] !== 'undefined') {
+          this.addItemToList(this.object.skillItems[this.cocidCreditRating].item, flags)
         } else if (typeof this.object.skillItems[nameCreditRating] !== 'undefined') {
           this.addItemToList(this.object.skillItems[nameCreditRating].item, flags)
         } else {
-          const skill = await game.system.api.cocid.fromCoCID(keyCreditRating)
+          const skill = await game.system.api.cocid.fromCoCID(this.cocidCreditRating)
           if (skill.length) {
             this.addItemToList(skill[0], flags)
           }
@@ -1622,7 +1635,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
           if (Number(row.experiencePoints) > 0) {
             item.system.adjustments.experience = parseInt(row.experiencePoints, 10)
           }
-          if (key === 'i.skill.language-own') {
+          if (key === this.cocidLanguageOwn) {
             item.system.skillName = data.language
             item.name = item.system.specialization + ' (' + item.system.skillName + ')'
           } else if (typeof row.selected === 'string') {
