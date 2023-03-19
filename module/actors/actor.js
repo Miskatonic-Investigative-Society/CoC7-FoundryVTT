@@ -3425,8 +3425,8 @@ export class CoCActor extends Actor {
 
   async setHp (value) {
     if (value < 0) value = 0
-    if (value > this.system.attribs.san.max) {
-      value = this.system.attribs.san.max
+    if (value > this.system.attribs.hp.max) {
+      value = this.system.attribs.hp.max
     }
     const healthBefore = this.hp
     let damageTaken
