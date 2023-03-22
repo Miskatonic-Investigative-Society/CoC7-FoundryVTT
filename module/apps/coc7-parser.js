@@ -9,7 +9,7 @@ export class CoC7Parser {
     let text = []
 
     text = TextEditor._getTextNodes(html)
-    const rgx = new RegExp('@(coc7)\\.' + '([^\\]]+?)' + '\\[((?:[^\\]\\[]+|\\[(?:[^\\]\\[]+|\\[[^\\]\\[]*\\])*\\])*)\\]' + '(?:{([^}]+)})?', 'gi')
+    const rgx = new RegExp('@(coc7)\\.' + '(check|effect|item|sanloss)' + '\\[([^\\[\\]]*(?:\\[[^\\[\\]]*(?:\\[[^\\[\\]]*\\])*[^\\[\\]]*\\])*[^\\[\\]]*)\\]' + '(?:{([^}]+)})?', 'gi')
     TextEditor._replaceTextContent(text, rgx, CoC7Link._createLink)
     return html.innerHTML
   }
