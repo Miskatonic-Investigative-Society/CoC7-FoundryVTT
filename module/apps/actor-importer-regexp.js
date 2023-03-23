@@ -520,9 +520,9 @@ const translations = {
     build:
       '(?<![a-z])' + 'Carrure' + '(\\s*:)?\\s+(?<build>[+-]?\\d+)[,\\s\n]*',
     armor:
-      '(?<![a-z])' +
+      '(?<![a-z])(?:' +
       'Armure|Protection' +
-      '(\\s*:)?\\s+(?<armor>' +
+      ')(\\s*:)?\\s+(?<armor>' +
       keys.fr.armorNone +
       '|\\d+)[,\\s\n]*',
     mov:
