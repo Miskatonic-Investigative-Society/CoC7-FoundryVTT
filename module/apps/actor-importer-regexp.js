@@ -500,7 +500,7 @@ const translations = {
     app: '(?<![a-z])' + 'APP' + '(\\s*:)?\\s*(?<app>\\d+|-)[,\\s\n]*',
     edu: '(?<![a-z])' + 'ÉDU' + '(\\s*:)?\\s*(?<edu>\\d+|-)[,\\s\n]*',
     san:
-      '(?<![a-z])(?:' +
+      '(?<!([a-z]|de\\s))(?:' +
       'SAN|Santé Mentale' +
       ')(\\s*:)?\\s*(?<san>\\d+|-)[,\\s\n]*',
     hp:
