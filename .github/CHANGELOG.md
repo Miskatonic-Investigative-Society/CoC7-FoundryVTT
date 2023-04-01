@@ -10,6 +10,7 @@ Happy gaming !
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Add additional pulp rule to ignore age when calculating movement speed
+- Add workaround for using external links in coc7 links
 - Fix NPC/Creature sheet fallback to base value in skills, if there is no user defined value to override it, thanks to @kwitczak #1306
 - Fix multiplication active effect to work with floating numbers, thanks to @kwitczak #1307
 - Fix issue with skill item value being taken from another skill item, thanks to @kwitczak #1309
