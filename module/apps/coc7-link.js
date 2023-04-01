@@ -139,6 +139,9 @@ export class CoC7Link {
     for (const key of ['name', 'displayName', 'icon', 'id', 'pack', 'sanMin', 'sanMax', 'sanReason']) {
       cls.object[key] = cls.object[key] ?? ''
     }
+    if (typeof cls.object.object.icon !== 'undefined' && typeof cls.object.object.external !== 'undefined' && ['http', 'https'].includes(cls.object.object.external)) {
+      cls.object.object.icon = cls.object.object.external + '://' + cls.object.object.icon
+    }
     cls.options = options
     return cls
   }
@@ -159,6 +162,9 @@ export class CoC7Link {
     if (type === CoC7Link.CHECK_TYPE.EFFECT) {
       data.effect = JSON.parse(options)
       data.dataset.object = options
+      if (typeof data.effect.icon !== 'undefined' && typeof data.effect.external !== 'undefined' && ['http', 'https'].includes(data.effect.external)) {
+        data.effect.icon = data.effect.external + '://' + data.effect.icon
+      }
     } else {
       const matches = options.matchAll(/[^,]+/gi)
       for (const match of Array.from(matches)) {
@@ -171,6 +177,10 @@ export class CoC7Link {
           data.blind = true && [CoC7Link.CHECK_TYPE.CHECK].includes(type.toLowerCase())
         }
         data.dataset[key] = value
+      }
+      if (typeof data.dataset.icon !== 'undefined' && typeof data.dataset.external !== 'undefined' && ['http', 'https'].includes(data.dataset.external)) {
+        data.dataset.icon = data.dataset.external + '://' + data.dataset.icon
+        data.icon = data.dataset.icon
       }
     }
 
@@ -291,7 +301,12 @@ export class CoC7Link {
           options += `,modifier:${eventData.modifier}`
         }
         if (eventData.icon) {
-          options += `,icon:${eventData.icon}`
+          const parts = eventData.icon.match(/^(https?):\/\/(.+)$/)
+          if (parts) {
+            options += `,external:${parts[1]},icon:${parts[2]}`
+          } else {
+            options += `,icon:${eventData.icon}`
+          }
         }
         if (eventData.pack) {
           options += `,pack:${eventData.pack}`
@@ -323,7 +338,12 @@ export class CoC7Link {
           options += `,modifier:${eventData.modifier}`
         }
         if (eventData.icon) {
-          options += `,icon:${eventData.icon}`
+          const parts = eventData.icon.match(/^(https?):\/\/(.+)$/)
+          if (parts) {
+            options += `,external:${parts[1]},icon:${parts[2]}`
+          } else {
+            options += `,icon:${eventData.icon}`
+          }
         }
         let link = `@coc7.sanloss[${options}]`
         const displayName = eventData.displayName ?? (label ?? '')
@@ -340,7 +360,12 @@ export class CoC7Link {
         }
         let options = `${eventData.blind ? 'blind,' : ''}name:${eventData.name}`
         if (eventData.icon) {
-          options += `,icon:${eventData.icon}`
+          const parts = eventData.icon.match(/^(https?):\/\/(.+)$/)
+          if (parts) {
+            options += `,external:${parts[1]},icon:${parts[2]}`
+          } else {
+            options += `,icon:${eventData.icon}`
+          }
         }
         if (eventData.pack) {
           options += `,pack:${eventData.pack}`
@@ -363,6 +388,11 @@ export class CoC7Link {
         // if (effectData.changes?.length === 0) delete effectData.changes
         // if (!effectData.disabled) delete effectData.disabled
         // if (!effectData.tint) delete effectData.tint
+        const parts = eventData.object.icon.match(/^(https?):\/\/(.+)$/)
+        if (parts) {
+          eventData.object.external = parts[1]
+          eventData.object.icon = parts[2]
+        }
         let link = `@coc7.effect[${JSON.stringify(eventData.object)}]`
         const displayName = eventData.displayName ?? (label ?? '')
         if (displayName) {
