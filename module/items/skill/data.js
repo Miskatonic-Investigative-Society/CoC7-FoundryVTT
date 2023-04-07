@@ -1,21 +1,17 @@
 /* global foundry, game */
 import { CoC7Item } from '../item.js'
-import { SkillNameParts } from './skill-name-parts.js'
+import { SkillNameParts } from './utils/skill-name-parts.js'
 
 export class CoC7Skill extends CoC7Item {
   constructor (data, context) {
     if (typeof data.system?.skillName === 'undefined') {
       const skill = new SkillNameParts(data.name, game.i18n).guess()
-      const { firearm, fighting, skillName, specialization } = skill
+      const { firearm, fighting, skillName, specialization, special } = skill
 
       data.system ||= {}
-      data.system.skillName = skillName
-
-      if (specialization) {
-        const combat = fighting || firearm
-        const properties = { ...data.system.properties, fighting, firearm, combat, special: true }
-        data.system = { ...data.system, specialization, properties }
-      }
+      const combat = fighting || firearm
+      const properties = { ...data.system.properties, combat, fighting, firearm, special }
+      data.system = { ...data.system, skillName, specialization, properties }
     }
 
     super(data, context)
