@@ -5,8 +5,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "format": "standard --fix",
-    "watch": "webpack --mode development",
-    "test": "ava"
+    "watch": "webpack --mode development"
   },
   "repository": {
     "type": "git",
