@@ -269,11 +269,8 @@ export class CoC7Item extends Item {
     )
     const match = skillName.match(specNameRegex)
     if (match) {
-      return {
-        name: match[0],
-        specialization: match[1],
-        skillName: match[2]
-      }
+      specialization = match[1]
+      skillName = match[2]
     }
     return {
       name: specialization + ' (' + skillName + ')',
