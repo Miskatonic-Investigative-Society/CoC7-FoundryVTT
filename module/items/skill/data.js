@@ -88,7 +88,7 @@ export class CoC7Skill extends CoC7Item {
   * but if skill name is not unique it will cause problems.
   */
   get itemIdentifier () {
-    return this.id || this.system.skillName
+    return this.name
   }
 
   /**

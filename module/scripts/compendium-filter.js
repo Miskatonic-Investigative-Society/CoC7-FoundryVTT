@@ -4,7 +4,7 @@ import { CoC7Utilities } from '../utilities.js'
 
 async function performFilter (e) {
   const appId = e.currentTarget.name.replace(/^coc7[^0-9]+(\d+)$/, '$1')
-  const app = $('#app-' + appId)
+  const app = $('div.app[data-appid=' + appId + ']')
   const type = app.find('select[name=coc7type' + appId + ']').val()
   const name = app.find('input[name=search]').val()
   const eraElement = app.find('select[name=coc7era' + appId + ']')
@@ -53,7 +53,14 @@ async function performFilter (e) {
 export function compendiumFilter () {
   Hooks.on('renderCompendium', async (app, html, data) => {
     if (app.collection.documentName === 'Item') {
-      const types = [...new Set(data.index.filter(i => i.name !== '#[CF_tempEntity]').map(item => item.type))]
+      let types = []
+      if (typeof data.index !== 'undefined') {
+        // DEPRECIATED IN v11
+        types = [...new Set(data.index.filter(i => i.name !== '#[CF_tempEntity]').map(item => item.type))]
+      } else {
+        await app.collection.getIndex()
+        types = data.tree.entries.filter(i => i.name !== '#[CF_tempEntity]').map(item => item.type)
+      }
       const select = []
       select.push(
         '<option value="">' + game.i18n.localize('CoC7.All') + '</option>'
@@ -148,9 +155,15 @@ export function compendiumFilter () {
       }
       html.find('li.directory-item').each(function () {
         const row = $(this)
-        const item = data.index.find(i => i._id === row.data('document-id'))
+        let item = []
+        if (typeof data.index !== 'undefined') {
+          // DEPRECIATED IN v11
+          item = data.index.find(i => i._id === row.data('document-id'))
+        } else {
+          item = app.collection.index.get(row.data('document-id'))
+        }
         if (item && item.type === 'skill') {
-          row.find('a').html(item.name + ' (' + item.system.base + '%' + ((item.system.properties?.rarity ?? false) ? ' ' + uncommon : '') + ')')
+          row.find('a').html(item.name + ' (' + (item.system?.base ?? '?') + '%' + ((item.system?.properties?.rarity ?? false) ? ' ' + uncommon : '') + ')')
         }
       })
       html
