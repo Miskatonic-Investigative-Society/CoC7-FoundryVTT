@@ -1,20 +1,42 @@
 /* global foundry, game */
 import { CoC7Item } from '../item.js'
-import { SkillNameParts } from './utils/skill-name-parts.js'
 
 export class CoC7Skill extends CoC7Item {
   constructor (data, context) {
     if (typeof data.system?.skillName === 'undefined') {
-      const skill = new SkillNameParts(data.name, game.i18n).guess()
-      const { firearm, fighting, skillName, specialization, special } = skill
-
+      const skill = CoC7Skill.guessNameParts(data.name)
+      const { firearm, fighting, name, skillName, specialization, special } = skill
+      data.name = name
       data.system ||= {}
       const combat = fighting || firearm
       const properties = { ...data.system.properties, combat, fighting, firearm, special }
       data.system = { ...data.system, skillName, specialization, properties }
     }
-
     super(data, context)
+  }
+
+  static guessNameParts (skillName) {
+    const output = {
+      fighting: false,
+      firearm: false,
+      name: skillName,
+      skillName,
+      special: false,
+      specialization: ''
+    }
+
+    const match = skillName.match(/^(.+)\s*\(([^)]+)\)$/)
+    if (match) {
+      output.skillName = match[2].trim()
+      output.special = true
+
+      const specialization = match[1].trim()
+      output.specialization = specialization
+      output.fighting = specialization === game.i18n.localize('CoC7.FightingSpecializationName')
+      output.firearm = specialization === game.i18n.localize('CoC7.FirearmSpecializationName')
+      output.name = specialization + ' (' + output.skillName + ')'
+    }
+    return output
   }
 
   get hasActiveEffects () {
