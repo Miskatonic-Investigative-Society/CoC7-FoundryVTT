@@ -5,7 +5,6 @@ import { registerSettings } from '../scripts/register-settings.js'
 import { registerSheets } from '../scripts/register-sheets.js'
 import { handlebarsHelper } from '../scripts/handlebars-helper.js'
 import { compendiumFilter } from '../scripts/compendium-filter.js'
-import { registerTestingUtils } from '../scripts/testing-utils.js'
 import { CoCID } from '../scripts/coc-id.js'
 import { CoC7Link } from '../apps/coc7-link.js'
 
@@ -17,7 +16,6 @@ export function listen () {
     registerSheets()
     handlebarsHelper()
     compendiumFilter()
-    registerTestingUtils()
     CoCID.init()
     CoC7Link.init()
   })
