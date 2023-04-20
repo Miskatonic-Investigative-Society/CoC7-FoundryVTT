@@ -5,11 +5,10 @@ export class CoC7Skill extends CoC7Item {
   constructor (data, context) {
     if (typeof data.system?.skillName === 'undefined') {
       const skill = CoC7Skill.guessNameParts(data.name)
-      const { firearm, fighting, name, skillName, specialization, special } = skill
+      const { name, skillName, specialization, ...newProperties } = skill
       data.name = name
       data.system ||= {}
-      const combat = fighting || firearm
-      const properties = { ...data.system.properties, combat, fighting, firearm, special }
+      const properties = { ...data.system.properties, ...newProperties }
       data.system = { ...data.system, skillName, specialization, properties }
     }
     super(data, context)
@@ -17,6 +16,7 @@ export class CoC7Skill extends CoC7Item {
 
   static guessNameParts (skillName) {
     const output = {
+      combat: false,
       fighting: false,
       firearm: false,
       name: skillName,
@@ -32,9 +32,10 @@ export class CoC7Skill extends CoC7Item {
 
       const specialization = match[1].trim()
       output.specialization = specialization
+      output.name = specialization + ' (' + output.skillName + ')'
       output.fighting = specialization === game.i18n.localize('CoC7.FightingSpecializationName')
       output.firearm = specialization === game.i18n.localize('CoC7.FirearmSpecializationName')
-      output.name = specialization + ' (' + output.skillName + ')'
+      output.combat = output.fighting || output.firearm
     }
     return output
   }
