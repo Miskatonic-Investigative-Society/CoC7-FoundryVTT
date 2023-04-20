@@ -4,50 +4,38 @@ import { CoC7Item } from '../item.js'
 export class CoC7Skill extends CoC7Item {
   constructor (data, context) {
     if (typeof data.system?.skillName === 'undefined') {
-      if (typeof data.system === 'undefined') {
-        data.system = {}
-      }
-      const construct = CoC7Skill.guessNameParts(data.name)
-      if (!construct.isSpecialization) {
-        data.system.skillName = data.name
-      } else {
-        data.system.skillName = construct.skillName
-        data.system.specialization = construct.specialization
-        if (typeof data.system.properties === 'undefined') {
-          data.system.properties = {}
-        }
-        data.system.properties.special = true
-        if (construct.isFighting || construct.isFirearms) {
-          data.system.properties.combat = true
-          if (construct.isFighting) {
-            data.system.properties.fighting = true
-          } else {
-            data.system.properties.firearm = true
-          }
-        }
-      }
+      const skill = CoC7Skill.guessNameParts(data.name)
+      const { name, skillName, specialization, ...newProperties } = skill
+      data.name = name
+      data.system ||= {}
+      const properties = { ...data.system.properties, ...newProperties }
+      data.system = { ...data.system, skillName, specialization, properties }
     }
     super(data, context)
   }
 
   static guessNameParts (skillName) {
     const output = {
+      combat: false,
+      fighting: false,
+      firearm: false,
+      name: skillName,
       skillName,
-      specialization: '',
-      isSpecialization: false,
-      isFighting: false,
-      isFirearms: false
+      special: false,
+      specialization: ''
     }
+
     const match = skillName.match(/^(.+)\s*\(([^)]+)\)$/)
     if (match) {
       output.skillName = match[2].trim()
-      output.specialization = match[1].trim()
-      output.isSpecialization = true
-      if (output.specialization === game.i18n.localize('CoC7.FightingSpecializationName')) {
-        output.isFighting = true
-      } else if (output.specialization === game.i18n.localize('CoC7.FirearmSpecializationName')) {
-        output.isFirearms = true
-      }
+      output.special = true
+
+      const specialization = match[1].trim()
+      output.specialization = specialization
+      output.name = specialization + ' (' + output.skillName + ')'
+      output.fighting = specialization === game.i18n.localize('CoC7.FightingSpecializationName')
+      output.firearm = specialization === game.i18n.localize('CoC7.FirearmSpecializationName')
+      output.combat = output.fighting || output.firearm
     }
     return output
   }
@@ -88,7 +76,7 @@ export class CoC7Skill extends CoC7Item {
   * but if skill name is not unique it will cause problems.
   */
   get itemIdentifier () {
-    return this.id || this.system.skillName
+    return this.name
   }
 
   /**

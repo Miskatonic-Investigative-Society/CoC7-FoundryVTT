@@ -500,7 +500,7 @@ const translations = {
     app: '(?<![a-z])' + 'APP' + '(\\s*:)?\\s*(?<app>\\d+|-)[,\\s\n]*',
     edu: '(?<![a-z])' + 'ÉDU' + '(\\s*:)?\\s*(?<edu>\\d+|-)[,\\s\n]*',
     san:
-      '(?<![a-z])(?:' +
+      '(?<!([a-z]|de\\s))(?:' +
       'SAN|Santé Mentale' +
       ')(\\s*:)?\\s*(?<san>\\d+|-)[,\\s\n]*',
     hp:
@@ -520,9 +520,9 @@ const translations = {
     build:
       '(?<![a-z])' + 'Carrure' + '(\\s*:)?\\s+(?<build>[+-]?\\d+)[,\\s\n]*',
     armor:
-      '(?<![a-z])' +
+      '(?<![a-z])(?:' +
       'Armure|Protection' +
-      '(\\s*:)?\\s+(?<armor>' +
+      ')(\\s*:)?\\s+(?<armor>' +
       keys.fr.armorNone +
       '|\\d+)[,\\s\n]*',
     mov:
