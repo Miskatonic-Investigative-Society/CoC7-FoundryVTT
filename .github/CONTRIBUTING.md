@@ -109,6 +109,9 @@ After rename `fvtt.config.example.js` to `fvtt.config.js` consider run:
 
 This way Git does not assume the original file has been deleted from the repository.
 
+## Running automated tests
+In order to run tests and see if you didn't introduce breaking changes, download [secondary repository with e2e Quench tests](https://github.com/Miskatonic-Investigative-Society/coc7-system-tests) and follow setup instructions there.
+
 ### Contributing
 
 The project structure is made as follows:
