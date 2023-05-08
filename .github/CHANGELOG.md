@@ -10,6 +10,7 @@ Happy gaming !
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Add additional pulp rule to ignore age when calculating movement speed
+- Add support for bonus/penalty dice to active effects
 - Add workaround for using external links in coc7 links
 - Fix active effect repeats change to actor when closing the sheet
 - Fix NPC/Creature sheet fallback to base value in skills, if there is no user defined value to override it, thanks to @kwitczak #1306
