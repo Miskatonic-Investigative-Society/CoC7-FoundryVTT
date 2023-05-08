@@ -95,7 +95,7 @@ export class CoCActor extends Actor {
       this.system.skills = {}
       for (const i of this.items) {
         if (i.type !== 'skill') continue
-        this.system.skills[`${i.itemIdentifier}`] = { value: i.rawValue }
+        this.system.skills[`${i.itemIdentifier}`] = { foundryID: i.id, cocid: i.flags?.CoC7?.cocidFlag?.id, value: i.rawValue, bonusDice: i.system.bonusDice }
       }
 
       /**
