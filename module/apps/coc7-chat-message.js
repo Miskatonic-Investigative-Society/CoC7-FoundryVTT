@@ -171,7 +171,8 @@ export class CoC7ChatMessage {
         sendToClipboard: options.sendToClipboard ?? false,
         isCombat:
           options.event?.currentTarget.classList?.contains('combat') ?? false,
-        preventStandby: options.preventStandby ?? false
+        preventStandby: options.preventStandby ?? false,
+        bonusDice: 0
       },
       dialogOptions: {
         rollType: options.rollType,
@@ -341,6 +342,25 @@ export class CoC7ChatMessage {
     ) {
       CoC7ChatMessage.createLink(config)
     } else {
+      if (typeof config.options.actor !== 'undefined') {
+        if (typeof config.options.attribute !== 'undefined') {
+          const bonusDice = config.options.actor.system?.attribs?.[config.options.attribute]?.bonusDice
+          if (bonusDice) {
+            config.dialogOptions.modifier = bonusDice
+          }
+        } else if (typeof config.options.characteristic !== 'undefined') {
+          const bonusDice = config.options.actor.system?.characteristics?.[config.options.characteristic]?.bonusDice
+          if (bonusDice) {
+            config.dialogOptions.modifier = bonusDice
+          }
+        } else if (typeof config.options.itemId !== 'undefined') {
+          const itemModifiers = Object.values(config.options.actor.system.skills).find(k => k.foundryID === config.options.itemId)
+          if (typeof itemModifiers.bonusDice !== 'undefined') {
+            config.dialogOptions.modifier = itemModifiers.bonusDice
+          }
+        }
+        config.dialogOptions.modifier = Math.min(Math.max(config.dialogOptions.modifier, -2), 2)
+      }
       if (!config.options.shiftKey) {
         await CoC7ChatMessage.createRoll(config)
       }
