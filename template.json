@@ -9,56 +9,64 @@
             "tempValue": null,
             "short": "CHARAC.STR",
             "label": "CHARAC.Strength",
-            "formula": null
+            "formula": null,
+            "bonusDice": 0
           },
           "con": {
             "value": null,
             "tempValue": null,
             "short": "CHARAC.CON",
             "label": "CHARAC.Constitution",
-            "formula": null
+            "formula": null,
+            "bonusDice": 0
           },
           "siz": {
             "value": null,
             "tempValue": null,
             "short": "CHARAC.SIZ",
             "label": "CHARAC.Size",
-            "formula": null
+            "formula": null,
+            "bonusDice": 0
           },
           "dex": {
             "value": null,
             "tempValue": null,
             "short": "CHARAC.DEX",
             "label": "CHARAC.Dexterity",
-            "formula": null
+            "formula": null,
+            "bonusDice": 0
           },
           "app": {
             "value": null,
             "tempValue": null,
             "short": "CHARAC.APP",
             "label": "CHARAC.Appearance",
-            "formula": null
+            "formula": null,
+            "bonusDice": 0
           },
           "int": {
             "value": null,
             "tempValue": null,
             "short": "CHARAC.INT",
             "label": "CHARAC.Intelligence",
-            "formula": null
+            "formula": null,
+            "bonusDice": 0
           },
           "pow": {
             "value": null,
             "tempValue": null,
             "short": "CHARAC.POW",
             "label": "CHARAC.Power",
-            "formula": null
+            "formula": null,
+            "bonusDice": 0
           },
           "edu": {
             "value": null,
             "tempValue": null,
             "short": "CHARAC.EDU",
             "label": "CHARAC.Education",
-            "formula": null
+            "formula": null,
+            "bonusDice": 0
           }
         }
       },
@@ -82,7 +90,8 @@
             "value": null,
             "short": "LCK",
             "label": "Luck",
-            "max": 99
+            "max": 99,
+            "bonusDice": 0
           },
           "san": {
             "value": null,
@@ -91,7 +100,8 @@
             "label": "Sanity",
             "auto": true,
             "dailyLoss": 0,
-            "oneFifthSanity": " / 0"
+            "oneFifthSanity": " / 0",
+            "bonusDice": 0
           },
           "mov": {
             "value": null,
@@ -436,6 +446,7 @@
         "keeper": ""
       },
       "base": 0,
+      "bonusDice": 0,
       "adjustments": {
         "personal": null,
         "occupation": null,

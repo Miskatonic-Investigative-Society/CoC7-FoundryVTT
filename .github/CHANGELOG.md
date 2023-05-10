@@ -10,6 +10,7 @@ Happy gaming !
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Add additional pulp rule to ignore age when calculating movement speed
+- Add support for bonus/penalty dice to active effects
 - Add workaround for using external links in coc7 links
 - Fix active effect repeats change to actor when closing the sheet
 - Fix NPC/Creature sheet fallback to base value in skills, if there is no user defined value to override it, thanks to @kwitczak #1306
@@ -19,6 +20,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Implement CoC ID system to set tags on documents for example i.skill.dodge to find dodge skills on actors
 - Separate link and parser logic, remove duplication for function, and fix v10 link issues
 - Show special property of weapons on combat chat cards, thanks to @acd-jake #1291
+- Small refactor of skills constructor, thanks to kwitczak #1313
 - Update to Italian localization, thanks to @Stefano1975t #1301
 - Update to Korean localization, thanks to @SRagg #1288
 
