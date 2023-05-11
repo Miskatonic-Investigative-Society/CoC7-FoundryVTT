@@ -1,10 +1,15 @@
-/* global CONFIG, Dialog, expandObject, foundry, game, isNewerVersion, mergeObject, ui */
+/* global CONFIG, Dialog, duplicate, expandObject, foundry, game, isNewerVersion, mergeObject, ui */
 import { CoC7Item } from './items/item.js'
+import { CoCIDBatch } from './apps/coc-id-batch.js'
 
 export class Updater {
   static async checkForUpdate () {
-    const systemUpdateVersion = game.settings.get('CoC7', 'systemUpdateVersion')
-
+    let systemUpdateVersion = game.settings.get('CoC7', 'systemUpdateVersion')
+    if (game.actors.size + game.scenes.size + game.items.size + game.journal.size + game.tables.size === 0) {
+      // If there are no actors, items, journals, roll tables, or scenes skip world update
+      systemUpdateVersion = game.system.version
+      await game.settings.set('CoC7', 'systemUpdateVersion', systemUpdateVersion)
+    }
     const runMigrate = isNewerVersion(game.system.version, systemUpdateVersion ?? '0')
     this.updatedModules = game.settings.get('CoC7', 'systemUpdatedModuleVersion') || {}
     this.currentModules = {}
@@ -88,7 +93,10 @@ export class Updater {
       game.settings.set('CoC7', 'pulpRuleTalents', true)
       game.settings.set('CoC7', 'pulpRuleFasterRecovery', true)
       game.settings.set('CoC7', 'pulpRuleIgnoreMajorWounds', true)
+      game.settings.set('CoC7', 'pulpRuleIgnoreAgePenalties', true)
     }
+
+    await CoCIDBatch.create('skill')
 
     const settings = mergeObject(this.updatedModules || {}, this.currentModules)
     game.settings.set('CoC7', 'systemUpdatedModuleVersion', settings)
@@ -251,6 +259,7 @@ export class Updater {
     Updater._migrateActorNpcCreature(actor, updateData)
     Updater._migrateActorStatusEffectActive(actor, updateData)
     Updater._migrateActorSanLossReasons(actor, updateData)
+    Updater._migrateActorMonetary(actor, updateData)
 
     // Migrate World Actor Items
     if (actor.items) {
@@ -922,7 +931,6 @@ export class Updater {
         }
       }
     }
-    return updateData
   }
 
   static _migrateActorKeeperNotes (actor, updateData) {
@@ -936,7 +944,30 @@ export class Updater {
         }
       }
     }
-    return updateData
+  }
+
+  static _migrateActorMonetary (actor, updateData) {
+    if (actor.type === 'character' && typeof actor.system.credit?.multiplier !== 'undefined') {
+      updateData['system.monetary.symbol'] = actor.system.credit?.monetarySymbol ? actor.system.credit.monetarySymbol : '$'
+      if (updateData['system.monetary.symbol'].toString().trim() === '') {
+        updateData['system.monetary.symbol'] = '$'
+      }
+      const multiplier = parseInt(actor.system.credit.multiplier) ? parseInt(actor.system.credit.multiplier) : 1
+      updateData['system.monetary.spent'] = actor.system.credit.spent
+      updateData['system.monetary.assetsDetails'] = actor.system.credit.assetsDetails
+      updateData['system.monetary.spendingLevel'] = actor.system.credit.spendingLevel
+      updateData['system.monetary.cash'] = actor.system.credit.cash
+      updateData['system.monetary.assets'] = actor.system.credit.assets
+      updateData['system.monetary.values'] = duplicate(actor.system.monetary.values)
+      if (multiplier !== 1) {
+        for (const value of updateData['system.monetary.values']) {
+          value.cashValue = multiplier * value.cashValue
+          value.assetsValue = multiplier * value.assetsValue
+          value.spendingValue = multiplier * value.spendingValue
+        }
+      }
+      updateData['system.-=credit'] = null
+    }
   }
 
   static _migrateActorSanLossReasons (actor, updateData) {

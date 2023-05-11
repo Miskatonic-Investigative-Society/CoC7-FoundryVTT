@@ -134,6 +134,9 @@ export class CoC7OccupationSheet extends ItemSheet {
         return s._id === li.data('item-id')
       })
     }
+    if (!item) {
+      return
+    }
     const chatData = item.system.description
 
     // Toggle summary
@@ -152,30 +155,29 @@ export class CoC7OccupationSheet extends ItemSheet {
   }
 
   async _onItemDelete (event, collectionName = 'items') {
-    const itemIndex = $(event.currentTarget).parents('.item').data('item-id')
-    if (itemIndex) await this.removeItem(itemIndex, collectionName)
-  }
-
-  async _onGroupItemDelete (event) {
-    const a = event.currentTarget
-    const li = a.closest('.item')
-    const ol = li.closest('.item-list.group')
-    const groups = duplicate(this.item.system.groups)
-    groups[Number(ol.dataset.group)].skills.splice(
-      Number(li.dataset.itemIndex),
-      1
-    )
-    await this.item.update({ 'system.groups': groups })
-  }
-
-  async removeItem (itemId, collectionName = 'items') {
-    const itemIndex = this.item.system[collectionName].findIndex(s => {
-      return s._id === itemId
-    })
+    const item = $(event.currentTarget).closest('.item')
+    const itemId = item.data('item-id')
+    const CoCId = item.data('cocid')
+    const itemIndex = this.item.system[collectionName].findIndex(i => (itemId && i._id === itemId) || (CoCId && i === CoCId))
     if (itemIndex > -1) {
       const collection = this.item.system[collectionName] ? duplicate(this.item.system[collectionName]) : []
       collection.splice(itemIndex, 1)
       await this.item.update({ [`system.${collectionName}`]: collection })
+    }
+  }
+
+  async _onGroupItemDelete (event) {
+    const item = $(event.currentTarget).closest('.item')
+    const group = Number(item.closest('.item-list.group').data('group'))
+    const groups = duplicate(this.item.system.groups)
+    if (typeof groups[group] !== 'undefined') {
+      const itemId = item.data('item-id')
+      const CoCId = item.data('cocid')
+      const itemIndex = groups[group].skills.findIndex(i => (itemId && i._id === itemId) || (CoCId && i === CoCId))
+      if (itemIndex > -1) {
+        groups[group].skills.splice(itemIndex, 1)
+        await this.item.update({ 'system.groups': groups })
+      }
     }
   }
 

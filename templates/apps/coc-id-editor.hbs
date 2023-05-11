@@ -43,7 +43,7 @@
     </select>
   </div>
   <div class="form-group">
-    <label>{{ localize "CoC7.Eras" }}:</label>
+    <label>{{localize 'CoC7.Eras'}}:</label>
     <div style="flex: 2; border: 1px solid transparent; padding: 1px 3px 1px 0;">
       {{#each eras as |era key|}}
         <span class="toggle-switch {{#if era.isEnabled}} switched-on {{/if}}" data-property="{{era.id}}">{{era.name}}</span>
@@ -78,12 +78,12 @@
               <tr>
                 {{#each ../usedEras as |era|}}
                   <td class="eracolumn"><a title="{{era.name}}">
-                  {{#if (lookup ../eras era.id)}}
-                    <i class="fas fa-circle"></i>
-                  {{else}}
-                    <i class="far fa-circle"></i>
-                  {{/if}}
-                  </a></td>
+                      {{#if (lookup ../eras era.id)}}
+                        <i class="fas fa-circle"></i>
+                      {{else}}
+                        <i class="far fa-circle"></i>
+                      {{/if}}
+                    </a></td>
                 {{/each}}
                 <td class="shorttext">{{priority}}</td>
                 <td class="shorttext">{{lang}}</td>
@@ -94,7 +94,7 @@
           </table>
         </details>
         <details>
-            <summary>{{localize 'CoC7.CoCIDFlag.documents-in-compendiums' count=compendiumDuplicates}}{{#if warnDuplicateCompendiumPriority}} <span class="warning"><i class="fas fa-exclamation-triangle"></i>{{localize 'CoC7.CoCIDFlag.error.duplicate'}}</span>{{/if}}</summary>
+          <summary>{{localize 'CoC7.CoCIDFlag.documents-in-compendiums' count=compendiumDuplicates}}{{#if warnDuplicateCompendiumPriority}} <span class="warning"><i class="fas fa-exclamation-triangle"></i>{{localize 'CoC7.CoCIDFlag.error.duplicate'}}</span>{{/if}}</summary>
           <table>
             <tr>
               {{#each usedEras as |era|}}
@@ -109,12 +109,12 @@
               <tr>
                 {{#each ../usedEras as |era|}}
                   <td class="eracolumn"><a title="{{era.name}}">
-                  {{#if (lookup ../eras era.id)}}
-                    <i class="fas fa-circle"></i>
-                  {{else}}
-                    <i class="far fa-circle"></i>
-                  {{/if}}
-                  </a></td>
+                      {{#if (lookup ../eras era.id)}}
+                        <i class="fas fa-circle"></i>
+                      {{else}}
+                        <i class="far fa-circle"></i>
+                      {{/if}}
+                    </a></td>
                 {{/each}}
                 <td class="shorttext">{{priority}}</td>
                 <td class="shorttext">{{lang}}</td>
@@ -130,7 +130,7 @@
       <label>{{localize 'CoC7.CoCIDFlag.foundry-id'}}:</label>
       <div class="flexrow">
         <input type="text" value="{{object.id}}" readonly>
-          <a title="{{localize 'CoC7.CopyToClipboard'}}" class="copy-to-clipboard">
+        <a title="{{localize 'CoC7.CopyToClipboard'}}" class="copy-to-clipboard">
           <i class="fas fa-copy"></i>
         </a>
       </div>
@@ -139,7 +139,7 @@
       <label>{{localize 'CoC7.CoCIDFlag.foundry-uuid'}}:</label>
       <div class="flexrow">
         <input type="text" value="{{object.uuid}}" readonly>
-          <a title="{{localize 'CoC7.CopyToClipboard'}}" class="copy-to-clipboard">
+        <a title="{{localize 'CoC7.CopyToClipboard'}}" class="copy-to-clipboard">
           <i class="fas fa-copy"></i>
         </a>
       </div>
@@ -148,7 +148,7 @@
       <label>{{localize 'CoC7.CoCIDFlag.get-this-document'}}:</label>
       <div class="flexrow">
         <input type="text" value="await fromUuid('{{object.uuid}}')" readonly>
-          <a title="{{localize 'CoC7.CopyToClipboard'}}" class="copy-to-clipboard">
+        <a title="{{localize 'CoC7.CopyToClipboard'}}" class="copy-to-clipboard">
           <i class="fas fa-copy"></i>
         </a>
       </div>

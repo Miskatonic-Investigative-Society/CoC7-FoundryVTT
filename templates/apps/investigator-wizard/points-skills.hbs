@@ -1,0 +1,75 @@
+<h1 style="flex: 0 0 auto;">{{localize 'CoC7.InvestigatorWizard.TitlePointsSkills'}}</h1>
+<div class="scrollsection scroll-to-points">
+  <ol class="skills-list">
+    <li class="item pointsrow flexrow">
+      <span class="skill-name">&nbsp;</span>
+      <div class="adjustment-value"><span title="{{localize 'CoC7.SkillBase'}}"><i class="fa-solid fa-percent"></i></span></div>
+      <div class="adjustment-value"><span title="{{localize 'CoC7.SkillPersonal'}}"><i class="fa-solid fa-percent"></i></span></div>
+      <div class="adjustment-value"><span title="{{localize 'CoC7.SkillOccupation'}}"><i class="fa-solid fa-percent"></i></span></div>
+      {{#if (gt archetype.total 0)}}
+        <div class="adjustment-value"><span title="{{localize 'CoC7.SkillArchetype'}}"><i class="fa-solid fa-percent"></i></span></div>
+      {{/if}}
+      {{!-- <div class="adjustment-value"><span title="{{localize 'CoC7.SkillExperience'}}"><i class="fa-solid fa-percent"></i></span></div> --}}
+      <div class="adjustment-value"><span title="{{localize 'CoC7.Value'}}"><i class="fa-solid fa-percent"></i></span></div>
+    </li>
+    {{#each skills as |skill|}}
+      <li class="item pointsrow flexrow" data-key="{{skill.key}}" data-index="{{skill.index}}">
+        <span class="skill-name">{{skill.name}}</span>
+        <div class="adjustment-value" title="{{localize 'CoC7.SkillBase'}}">
+          {{skill.base}}
+        </div>
+        <div class="adjustment-value" title="{{localize 'CoC7.SkillPersonal'}}">
+          <input type="text" class="skill-adjustment" data-adjustment="personalPoints" value="{{skill.personalPoints}}" data-dtype="Number">
+        </div>
+        <div class="adjustment-value" title="{{localize 'CoC7.SkillOccupation'}}">
+          {{#if skill.isOccupation}}
+            <input type="text" class="skill-adjustment" data-adjustment="occupationPoints" value="{{skill.occupationPoints}}" data-dtype="Number">
+          {{else}}
+            &nbsp;
+          {{/if}}
+        </div>
+        {{#if (gt ../archetype.total 0)}}
+          <div class="adjustment-value" title="{{localize 'CoC7.SkillArchetype'}}">
+            {{#if skill.isArchetype}}
+              <input type="text" class="skill-adjustment" data-adjustment="archetypePoints" value="{{skill.archetypePoints}}" data-dtype="Number">
+            {{else}}
+              &nbsp;
+            {{/if}}
+          </div>
+        {{/if}}
+        {{!-- <div class="adjustment-value" title="Experience Package"><span>50</span></div> --}}
+        <div class="adjustment-value" title="{{localize 'CoC7.Value'}}">
+          {{skill.totalPoints}}
+        </div>
+      </li>
+      {{!-- #if skill.showCreditRating}}
+        <li class="item pointsrow flexrow">
+          <div style="align-self: flex-end; text-align: center;">Super Rich (90 - 98)</div>
+          <div style="flex: 0 0 100px; text-align: center;">Cash<br>$50,000</div>
+          <div style="flex: 0 0 100px; text-align: center;">Assets<br>$5,000,000</div>
+          <div style="flex: 0 0 100px; text-align: center;">Spending Level<br>$5,000</div>
+        </li>
+      {{/if --}}
+    {{/each}}
+  </ol>
+</div>
+<div style="flex: 0 0 auto;">
+  <div class="form-group status flexrow">
+    <div style="flex: 0 0 auto;">{{#if (eq personal.count personal.total)}}<i class="fa-solid fa-circle-check"></i>{{else}}<i class="fa-solid fa-circle-xmark"></i>{{/if}}</div>
+    <div>{{localize 'CoC7.InvestigatorWizard.SkillSpendInterestPoints' count=personal.count total=personal.total remaining=personal.remaining}}</div>
+  </div>
+  <div class="form-group status flexrow">
+    <div style="flex: 0 0 auto;">{{#if (eq occupation.count occupation.total)}}<i class="fa-solid fa-circle-check"></i>{{else}}<i class="fa-solid fa-circle-xmark"></i>{{/if}}</div>
+    <div>{{localize 'CoC7.InvestigatorWizard.SkillSpendOccupationPoints' count=occupation.count total=occupation.total remaining=occupation.remaining}}</div>
+  </div>
+  {{#if (gt archetype.total 0)}}
+    <div class="form-group status flexrow">
+      <div style="flex: 0 0 auto;">{{#if (eq archetype.count archetype.total)}}<i class="fa-solid fa-circle-check"></i>{{else}}<i class="fa-solid fa-circle-xmark"></i>{{/if}}</div>
+      <div>{{localize 'CoC7.InvestigatorWizard.SkillSpendArchetypePoints' count=archetype.count total=archetype.total remaining=archetype.remaining}}</div>
+    </div>
+  {{/if}}
+  <div class="form-group status flexrow">
+    <div style="flex: 0 0 auto;">{{#if creditRatingOkay}}<i class="fa-solid fa-circle-check"></i>{{else}}<i class="fa-solid fa-circle-xmark"></i>{{/if}}</div>
+    <div>{{localize 'CoC7.CreditOutOfRange' min=object.creditRating.min max=object.creditRating.max}}</div>
+  </div>
+</div>

@@ -1703,6 +1703,7 @@ system:
     special: true
     requiresname: true
     keepbasevalue: true
+    onlyone: true
 flags:
   cocidFlag:
     id: i.skill.language-own

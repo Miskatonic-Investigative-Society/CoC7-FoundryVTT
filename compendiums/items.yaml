@@ -69,28 +69,34 @@ flags:
     priority: 0
 ---
 _id: lu04TIRrg9P3vRqY
-name: Archetype Example
+name: Peacemaker
 type: archetype
-img: icons/svg/item-bag.svg
+img: icons/svg/invisible.svg
 system:
-  source: ''
+  source: 'FoundryVTT CoC7'
+  description:
+    value: '<p>A problem solver who possesses a natural ability to find or see the “eye of the storm” and see an issue from all sides. Motivated by harmony, the peacemaker seeks to maintain the balance, be it between individuals or groups of people, and preserve the status quo. They aim to bring solutions and can be very adaptable, although sometimes to their own detriment as they can put everyone else ahead of their own needs. While often described as “easy going” or a “push over,” they can be steadfast, level-headed, and bold, especially when a crisis strikes.</p>'
+  suggestedOccupations: '<p>Athlete, Bartender/Waitress, Beat Cop, Butler, Criminal, Elected Official, Laborer, Missionary, Nurse, Priest, Secretary, Yogi.</p>'
+  suggestedTraits: '<p>calm under pressure, level-headed, unassuming, selfless.</p>'
   coreCharacteristics:
     app: true
     int: true
   skills:
-   - i.skill.appraise
-   - i.skill.art-craft-acting
-   - i.skill.art-craft-any
    - i.skill.charm
-   - i.skill.disguise
-   - i.skill.drive-auto
    - i.skill.fast-talk
-   - i.skill.fighting-brawl
-   - i.skill.firearms-handgun
+   - i.skill.history
+   - i.skill.first-aid
+   - i.skill.intimidate
+   - i.skill.language-any
    - i.skill.listen
+   - i.skill.persuade
    - i.skill.psychology
-   - i.skill.sleight-of-hand
-   - i.skill.stealth
+   - i.skill.spot-hidden
+flags:
+  cocidFlag:
+    id: i.archetype.peacemaker
+    lang: en
+    priority: 0
 ---
 _id: zyCszwqyTg21l9E2
 name: Death ray (prototype)
@@ -154,41 +160,47 @@ system:
     mania: true
 ---
 _id: NOsh6EdNSjpjahDF
-name: Occupation Example
+name: Street Vendor
 type: occupation
-img: icons/svg/item-bag.svg
+img: icons/svg/ice-aura.svg
 system:
-  source: ''
+  source: 'FoundryVTT CoC7'
+  description:
+    value: '<p>Also commonly known as “hawkers” and “peddlers,” street vendors travel around, usually with a handcart or trolley, selling small things to passersby, such as hand-crafted objects, food and snacks, or other inexpensive items. They are known for shouting out or otherwise vocalizing their wares to attract customers, as well as their turn of phrase or banter to up-sell and enhance sales.</p><p>Being on the street all day means they get to know different localities, the comings and goings of residents, and are a magnet for collecting—or starting—gossip.</p><p><strong>Suggested Contacts:</strong> other vendors, local law enforcement, trade suppliers, butlers and other household staff.</p>'
   type:
     classic: true
   occupationSkillPoints:
     app:
-      multiplier: 2
-      selected: true
-    edu:
-      multiplier: 2
+      multiplier: 4
       selected: true
   creditRating:
     min: 10
-    max: 80
+    max: 40
   skills:
-   - i.skill.art-craft-any
-   - i.skill.art-craft-any
-   - i.skill.drive-auto
+   - i.skill.appraise
+   - i.skill.fighting-brawl
    - i.skill.listen
-   - i.skill.stealth
+   - i.skill.navigate
+   - i.skill.psychology
   groups:
-   - options: 2
+   - options: 1
+     skills:
+      - i.skill.accounting
+      - i.skill.art-craft-any
+   - options: 1
      skills:
       - i.skill.charm
       - i.skill.fast-talk
-      - i.skill.intimidate
-      - i.skill.persuade
    - options: 1
      skills:
-      - i.skill.fighting-brawl
-      - i.skill.firearms-handgun
-  personal: 1
+      - i.skill.language-any
+      - i.skill.sleight-of-hand
+  personal: 0
+flags:
+  cocidFlag:
+    id: i.occupation.street-vendor
+    lang: en
+    priority: 0
 ---
 _id: PFpgtSKUcBDLVLY6
 name: Phobia 1

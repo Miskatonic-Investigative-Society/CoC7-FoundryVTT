@@ -58,6 +58,9 @@ export class CoC7ArchetypeSheet extends ItemSheet {
     const item = this.item.system[collectionName].find(s => {
       return s._id === li.data('item-id')
     })
+    if (!item) {
+      return
+    }
     const chatData = item.system.description
 
     // Toggle summary
@@ -76,14 +79,10 @@ export class CoC7ArchetypeSheet extends ItemSheet {
   }
 
   async _onItemDelete (event, collectionName = 'items') {
-    const itemIndex = $(event.currentTarget).parents('.item').data('item-id')
-    if (itemIndex) await this.removeItem(itemIndex, collectionName)
-  }
-
-  async removeItem (itemId, collectionName = 'items') {
-    const itemIndex = this.item.system[collectionName].findIndex(s => {
-      return s._id === itemId
-    })
+    const item = $(event.currentTarget).closest('.item')
+    const itemId = item.data('item-id')
+    const CoCId = item.data('cocid')
+    const itemIndex = this.item.system[collectionName].findIndex(i => (itemId && i._id === itemId) || (CoCId && i === CoCId))
     if (itemIndex > -1) {
       const collection = this.item.system[collectionName] ? duplicate(this.item.system[collectionName]) : []
       collection.splice(itemIndex, 1)

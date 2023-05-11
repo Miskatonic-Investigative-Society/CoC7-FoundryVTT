@@ -1,4 +1,6 @@
-/* global $, FontFace, game, mergeObject, TextEditor, ui */
+/* global $, duplicate, expandObject, FontFace, game, mergeObject, TextEditor, ui */
+import { COC7 } from '../../config.js'
+import { CoCActor } from '../actor.js'
 import { CoC7ActorSheet } from './base.js'
 import { CoC7CreateMythosEncounter } from '../../apps/create-mythos-encounters.js'
 import { chatHelper } from '../../chat/helper.js'
@@ -117,26 +119,27 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
     )
     sheetData.showDevPannel = sheetData.allowDevelopment || sheetData.allowCharCreation
 
+    sheetData._monetaryFormats = []
+    for (const key in COC7.monetaryFormats) {
+      sheetData._monetaryFormats.push({ key, val: game.i18n.localize(COC7.monetaryFormats[key]) })
+    }
+
+    sheetData.showCurrencySymbol = ['decimalLeft', 'decimalRight', 'integerLeft', 'integerRight'].includes(sheetData.data.system.monetary.format)
+
+    sheetData._monetaryTypes = []
+    for (const key in COC7.monetaryTypes) {
+      if (COC7.monetaryTypes[key].filter.length === 0 || COC7.monetaryTypes[key].filter.includes(sheetData.data.system.monetary.format)) {
+        sheetData._monetaryTypes.push({ key, val: game.i18n.localize(COC7.monetaryTypes[key].name) })
+      }
+    }
+
     sheetData.manualCredit = this.actor.getActorFlag('manualCredit')
     if (!sheetData.manualCredit) {
-      sheetData.credit = {}
-      let factor
-      let monetarySymbol
-      if (!sheetData.data.system.credit) {
-        factor = 1
-        monetarySymbol = '$'
-      } else {
-        factor = parseInt(sheetData.data.system.credit.multiplier)
-          ? parseInt(sheetData.data.system.credit.multiplier)
-          : 1
-        monetarySymbol = sheetData.data.system.credit.monetarySymbol
-          ? sheetData.data.system.credit.monetarySymbol
-          : '$'
+      sheetData.monetary = {
+        spendingLevel: CoCActor.monetaryFormat(sheetData.data.system.monetary.format, sheetData.data.system.monetary.symbol, this.actor.spendingLevel),
+        assets: CoCActor.monetaryFormat(sheetData.data.system.monetary.format, sheetData.data.system.monetary.symbol, this.actor.assets),
+        cash: CoCActor.monetaryFormat(sheetData.data.system.monetary.format, sheetData.data.system.monetary.symbol, this.actor.cash)
       }
-
-      sheetData.credit.spendingLevel = `${monetarySymbol}${this.actor.spendingLevel * factor}`
-      sheetData.credit.assets = `${monetarySymbol}${this.actor.assets * factor}`
-      sheetData.credit.cash = `${monetarySymbol}${this.actor.cash * factor}`
     }
 
     sheetData.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
@@ -310,8 +313,34 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
         html
           .find('.toggle-keeper-flags')
           .click(this._onToggleKeeperFlags.bind(this))
+        html.find('.add-monetary').click(this._onAddMonetary.bind(this))
+        html.find('.remove-monetary').click(this._onRemoveMonetary.bind(this))
       }
     }
+  }
+
+  _onAddMonetary () {
+    const values = this.actor.system.monetary.values ? duplicate(this.actor.system.monetary.values) : []
+    values.push({
+      name: '',
+      min: null,
+      max: null,
+      cashType: 0,
+      cashValue: '',
+      assetsType: 0,
+      assetsValue: '',
+      spendingType: 0,
+      spendingValue: ''
+    })
+    this.actor.update({ 'system.monetary.values': values })
+  }
+
+  _onRemoveMonetary (event) {
+    const a = event.currentTarget
+    const div = a.closest('.item')
+    const values = duplicate(this.actor.system.monetary.values)
+    values.splice(Number(div.dataset.index), 1)
+    this.actor.update({ 'system.monetary.values': values })
   }
 
   _onToggleKeeperFlags (event) {
@@ -383,6 +412,14 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
     const type = event.currentTarget.dataset.type
     const item = this.actor[type]
     if (item) item.sheet.render(true)
+  }
+
+  _updateObject (event, formData) {
+    const system = expandObject(formData)?.system
+    if (system.monetary?.values) {
+      formData['system.monetary.values'] = Object.values(system.monetary.values || [])
+    }
+    super._updateObject(event, formData)
   }
 
   static renderSheet (sheet, html) {

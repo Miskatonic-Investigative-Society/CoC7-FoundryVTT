@@ -16,7 +16,6 @@
 
     {{#if (and object.allowCustom (eq object.selected ''))}}
       <div class="flexrow">
-        {{log object}}
         <label>{{localize 'CoC7.CustomSpecialisationLabel' specialisation=object.label}}</label>
       </div>
 
@@ -24,13 +23,13 @@
         <input name="new-skill-name" type="text" value="{{object.name}}" placeholder="{{ localize 'CoC7.CreateNewSkill' }}"/>
       </div>
 
-      {{#if object.fixedBaseValue}}
+      {{#unless object.fixedBaseValue}}
         <br>
         <div class="flexrow">
           <label>{{localize 'CoC7.BaseSkillValue'}} :</label>
           <input name="base-value" type="text" value="{{object.baseValue}}" placeholder="{{ localize 'CoC7.SkillBase' }}"/>
         </div>
-      {{/if}}
+      {{/unless}}
       <br>
     {{/if}}
 

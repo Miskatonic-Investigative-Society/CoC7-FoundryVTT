@@ -1,4 +1,4 @@
-/* global Actor, CONFIG, CONST, Dialog, Die, duplicate, foundry, fromUuid, fromUuidSync, game, getProperty, Hooks, mergeObject, Roll, TextEditor, Token, ui */
+/* global Actor, Application, CONFIG, CONST, Dialog, Die, duplicate, foundry, fromUuid, fromUuidSync, game, getProperty, Hooks, mergeObject, Roll, TextEditor, Token, ui */
 import { COC7 } from '../config.js'
 import { CoC7ChatMessage } from '../apps/coc7-chat-message.js'
 import { CoC7Check } from '../check.js'
@@ -824,7 +824,7 @@ export class CoCActor extends Actor {
       title,
       value: null
     })
-    await this.update({ 'system.biography': bio })
+    await this.update({ 'system.biography': bio }, { renderSheet: false })
   }
 
   async updateBioValue (index, content) {
@@ -930,9 +930,8 @@ export class CoCActor extends Actor {
 
           if (CoC7Item.isAnySpec(data)) {
             let skillList = []
-            const group = game.system.api.cocid.guessGroup(data)
+            const group = game.system.api.cocid.guessGroupFromDocument(data)
             if (group) {
-              // Also check existing skills? CoC7.Skillpicknameonly
               skillList = (await game.system.api.cocid.fromCoCIDRegexBest({ cocidRegExp: new RegExp('^' + CoC7Utilities.quoteRegExp(group) + '.+$'), type: 'i' })).filter(item => {
                 return !(item.system.properties?.special && !!(item.system.properties?.requiresname || item.system.properties?.picknameonly))
               })
@@ -979,7 +978,7 @@ export class CoCActor extends Actor {
             const skillData = await SkillSpecializationSelectDialog.create({
               skills: skillList,
               allowCustom: (data.system.properties?.requiresname ?? false),
-              fixedBaseValue: !(data.system.properties?.keepbasevalue ?? false),
+              fixedBaseValue: (data.system.properties?.keepbasevalue ?? false),
               specializationName: data.system.specialization,
               label: data.name,
               baseValue: data.system.base
@@ -1187,12 +1186,14 @@ export class CoCActor extends Actor {
                   data.system.characteristics.values.pow / 5
                 )
               }
-              await this.update(updateData)
+              await this.update(updateData, { renderSheet: false })
               await this.update({
                 'system.attribs.hp.value': this.rawHpMax,
                 'system.attribs.hp.max': this.rawHpMax
-              })
-            } else return
+              }, { renderSheet: false })
+            } else {
+              return
+            }
           }
           const era = Object.entries(data.flags?.CoC7?.cocidFlag?.eras).filter(e => e[1]).map(e => e[0])
           const items = await game.system.api.cocid.expandItemArray({ itemList: data.system.items, era: (typeof era[0] !== 'undefined' ? era[0] : true) })
@@ -1201,7 +1202,7 @@ export class CoCActor extends Actor {
           await this.addUniqueItems(skills)
           await this.addItems(othersItems)
           if (game.settings.get('CoC7', 'oneBlockBackstory')) {
-            await this.update({ 'system.backstory': data.system.backstory })
+            await this.update({ 'system.backstory': data.system.backstory }, { renderSheet: false })
           } else {
             for (const sectionName of data.system.bioSections) {
               if (
@@ -1214,6 +1215,18 @@ export class CoCActor extends Actor {
               }
             }
           }
+          // refactor this
+          const monetary = mergeObject(this.system.monetary, duplicate(data.system.monetary))
+          const sheet = this.sheet
+          let state = false
+          do {
+            state = await new Promise(resolve => setTimeout(() => {
+              resolve(sheet._state)
+            }, 100))
+          } while (state === Application.RENDER_STATES.RENDERING)
+          await this.update({
+            'system.monetary': monetary
+          })
           Hooks.call('setupFinishedCoC7')
           break
         }
@@ -1746,14 +1759,7 @@ export class CoCActor extends Actor {
         this.system.characteristics.siz.value != null &&
         this.system.characteristics.con.value != null
       ) {
-        return Math.floor(
-          (parseInt(this.system.characteristics.siz.value, 10) +
-            parseInt(this.system.characteristics.con.value, 10)) /
-            (game.settings.get('CoC7', 'pulpRuleDoubleMaxHealth') &&
-            this.type === 'character'
-              ? 5
-              : 10)
-        )
+        return CoCActor.hpFromCharacteristics(this.system.characteristics, this.type)
       }
       if (this.system.attribs.hp.max) {
         return parseInt(this.system.attribs.hp.max)
@@ -1841,7 +1847,7 @@ export class CoCActor extends Actor {
   get rawMpMax () {
     if (this.system.attribs.mp.auto) {
       if (this.system.characteristics.pow.value != null) {
-        return Math.floor(this.system.characteristics.pow.value / 5)
+        return CoCActor.mpFromCharacteristics(this.system.characteristics)
       } else return 0
     }
     return parseInt(this.system.attribs.mp.max)
@@ -2136,6 +2142,51 @@ export class CoCActor extends Actor {
     this.setAttribAuto(!this.system.attribs[attrib].auto, attrib)
   }
 
+  static dbFromCharacteristics (characteristics) {
+    const sum = (characteristics.str.value ?? 0) + (characteristics.siz.value ?? 0)
+    if (sum < 65) return -2
+    if (sum < 85) return -1
+    if (sum < 125) return 0
+    if (sum < 165) return '1D4'
+    return `${Math.floor((sum - 45) / 80)}D6`
+  }
+
+  static buildFromCharacteristics (characteristics) {
+    const sum = (characteristics.str.value ?? 0) + (characteristics.siz.value ?? 0)
+    if (sum < 65) return -2
+    if (sum < 85) return -1
+    if (sum < 125) return 0
+    if (sum < 165) return 1
+    return Math.floor((sum - 45) / 80) + 1
+  }
+
+  static hpFromCharacteristics (characteristics, type) {
+    const sum = parseInt(characteristics.siz.value ?? 0, 10) + parseInt(characteristics.con.value ?? 0, 10)
+    const divisor = (game.settings.get('CoC7', 'pulpRuleDoubleMaxHealth') && type === 'character' ? 5 : 10)
+    return Math.floor(sum / divisor)
+  }
+
+  static mpFromCharacteristics (characteristics) {
+    return Math.floor(characteristics.pow.value / 5)
+  }
+
+  static movFromCharacteristics (characteristics, type, age) {
+    let MOV
+    if (characteristics.dex.value > characteristics.siz.value && characteristics.str.value > characteristics.siz.value) {
+      MOV = 9 // Bug correction by AdmiralNyar.
+    } else if (characteristics.dex.value >= characteristics.siz.value || characteristics.str.value >= characteristics.siz.value) {
+      MOV = 8
+    } else {
+      MOV = 7
+    }
+    if (type !== 'creature' && !game.settings.get('CoC7', 'pulpRuleIgnoreAgePenalties')) {
+      if (!isNaN(parseInt(age))) {
+        MOV = parseInt(age) >= 40 ? MOV - Math.floor(parseInt(age) / 10) + 3 : MOV
+      }
+    }
+    return Math.max(0, MOV)
+  }
+
   get rawBuild () {
     if (!this.system.attribs) return null
     if (!this.system.attribs.build) return null
@@ -2143,14 +2194,7 @@ export class CoCActor extends Actor {
       this.system.attribs.build.auto = true
     }
     if (this.system.attribs.build.auto) {
-      const sum =
-        this.system.characteristics.str.value +
-        this.system.characteristics.siz.value
-      if (sum > 164) return Math.floor((sum - 45) / 80) + 1
-      if (sum < 65) return -2
-      if (sum < 85) return -1
-      if (sum < 125) return 0
-      if (sum < 165) return 1
+      return CoCActor.buildFromCharacteristics(this.system.characteristics)
     }
 
     return this.system.attribs.build.value
@@ -2167,14 +2211,7 @@ export class CoCActor extends Actor {
       this.system.attribs.db.auto = true
     }
     if (this.system.attribs.db.auto) {
-      const sum =
-        this.system.characteristics.str.value +
-        this.system.characteristics.siz.value
-      if (sum > 164) return `${Math.floor((sum - 45) / 80)}D6`
-      if (sum < 65) return -2
-      if (sum < 85) return -1
-      if (sum < 125) return 0
-      if (sum < 165) return '1D4'
+      return CoCActor.dbFromCharacteristics(this.system.characteristics)
     }
     return this.system.attribs.db.value
   }
@@ -2190,32 +2227,7 @@ export class CoCActor extends Actor {
       this.system.attribs.mov.auto = true
     }
     if (this.system.attribs.mov.auto) {
-      let MOV
-      if (
-        this.system.characteristics.dex.value >
-          this.system.characteristics.siz.value &&
-        this.system.characteristics.str.value >
-          this.system.characteristics.siz.value
-      ) {
-        MOV = 9 // Bug correction by AdmiralNyar.
-      } else if (
-        this.system.characteristics.dex.value >=
-          this.system.characteristics.siz.value ||
-        this.system.characteristics.str.value >=
-          this.system.characteristics.siz.value
-      ) {
-        MOV = 8
-      } else {
-        MOV = 7
-      }
-      if (this.system.type !== 'creature' && !game.settings.get('CoC7', 'pulpRuleIgnoreAgePenalties')) {
-        if (!isNaN(parseInt(this.system.infos.age))) {
-          MOV =
-            parseInt(this.system.infos.age) >= 40
-              ? MOV - Math.floor(parseInt(this.system.infos.age) / 10) + 3
-              : MOV
-        }
-      }
+      const MOV = CoCActor.movFromCharacteristics(this.system.characteristics, this.system.type, this.system.infos.age)
       if (MOV > 0) return MOV
     }
     return this.system.attribs.mov.value
@@ -3366,34 +3378,80 @@ export class CoCActor extends Actor {
     return 0
   }
 
+  static monetaryFormat (format, symbol, value) {
+    switch (format) {
+      case COC7.monetaryFormatKeys.lsd:
+        return Math.floor(value / 240) + '/' + (Math.floor(value / 12) % 20) + '/' + (value % 12)
+      case COC7.monetaryFormatKeys.roman:
+        return (Math.floor(value / 400)) + '/' + (Math.floor(value / 16) % 25) + '/' + (Math.floor(value / 8) % 2) + '/' + (Math.floor(value / 4) % 2) + '/' + (value % 4)
+      case COC7.monetaryFormatKeys.decimalLeft:
+        return symbol + Number(value).toLocaleString(undefined, { minimumFractionDigits: 2 }).replace(/\.00$/, '')
+      case COC7.monetaryFormatKeys.decimalRight:
+        return Number(value).toLocaleString(undefined, { minimumFractionDigits: 2 }).replace(/\.00$/, '') + ' ' + symbol
+      case COC7.monetaryFormatKeys.integerLeft:
+        return symbol + Number(value).toLocaleString()
+      case COC7.monetaryFormatKeys.integerRight:
+        return Number(value).toLocaleString() + ' ' + symbol
+    }
+    return '0'
+  }
+
+  static monetaryValue (format, values, CR, type, value) {
+    CR = CR || 0
+    const row = values.find(r => (typeof r.min === 'object' || r.min <= CR) && (typeof r.max === 'object' || r.max >= CR))
+    if (typeof row !== 'undefined' && typeof row[type] !== 'undefined' && typeof row[value] !== 'undefined') {
+      switch (format) {
+        case COC7.monetaryFormatKeys.lsd:
+          switch (row[type]) {
+            case COC7.monetaryTypeKeys.multiplier:
+              return 240 * CR * row[value]
+            case COC7.monetaryTypeKeys.value:
+              return 240 * row[value]
+            case COC7.monetaryTypeKeys.s:
+              return 12 * row[value]
+            case COC7.monetaryTypeKeys.d:
+              return 1 * row[value]
+          }
+          break
+        case COC7.monetaryFormatKeys.roman:
+          switch (row[type]) {
+            case COC7.monetaryTypeKeys.multiplier:
+              return 400 * CR * row[value]
+            case COC7.monetaryTypeKeys.value:
+              return 400 * row[value]
+            case COC7.monetaryTypeKeys.denarii:
+              return 16 * row[value]
+            case COC7.monetaryTypeKeys.quinarii:
+              return 8 * row[value]
+            case COC7.monetaryTypeKeys.sestertii:
+              return 4 * row[value]
+            case COC7.monetaryTypeKeys.asses:
+              return 1 * row[value]
+          }
+          break
+        default:
+          switch (row[type]) {
+            case COC7.monetaryTypeKeys.multiplier:
+              return CR * row[value]
+            case COC7.monetaryTypeKeys.value:
+              return 1 * row[value]
+          }
+          break
+      }
+    }
+    return 0
+  }
+
   get spendingLevel () {
-    const CR = this.creditRating
-    if (CR >= 99) return 5000
-    if (CR >= 90) return 250
-    if (CR >= 50) return 50
-    if (CR >= 10) return 10
-    if (CR >= 1) return 2
-    return 0.5
+    return CoCActor.monetaryValue(this.system.monetary.format, this.system.monetary.values, this.creditRating, 'spendingType', 'spendingValue')
   }
 
   get cash () {
-    const CR = this.creditRating
-    if (CR >= 99) return 50000
-    if (CR >= 90) return CR * 20
-    if (CR >= 50) return CR * 5
-    if (CR >= 10) return CR * 2
-    if (CR >= 1) return CR
-    return 0.5
+    return CoCActor.monetaryValue(this.system.monetary.format, this.system.monetary.values, this.creditRating, 'cashType', 'cashValue')
   }
 
   get assets () {
-    const CR = this.creditRating
-    if (CR >= 99) return 5000000
-    if (CR >= 90) return CR * 2000
-    if (CR >= 50) return CR * 500
-    if (CR >= 10) return CR * 50
-    if (CR >= 1) return CR * 10
-    return 0
+    return CoCActor.monetaryValue(this.system.monetary.format, this.system.monetary.values, this.creditRating, 'assetsType', 'assetsValue')
   }
 
   get skills () {

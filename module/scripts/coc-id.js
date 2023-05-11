@@ -1,4 +1,4 @@
-/* global Actor, Card, CONFIG, flattenObject, game, Item, JournalEntry, Macro, Playlist, RollTable, Scene, ui */
+/* global Actor, Card, CONFIG, flattenObject, game, Item, JournalEntry, Macro, Playlist, RollTable, Scene, SceneNavigation, ui */
 import { COC7 } from '../config.js'
 import { CoC7Utilities } from '../utilities.js'
 
@@ -52,11 +52,10 @@ export class CoCID {
 
   /**
    * Get CoCID type.subtype.partial-name(-removed)
-   * @param document
+   * @param key
    * @returns string
    */
-  static guessGroup (document) {
-    const id = document.flags?.CoC7?.cocidFlag?.id
+  static guessGroupFromKey (id) {
     if (id) {
       const key = id.replace(/([^\\.-]+)$/, '')
       if (key.substr(-1) === '-') {
@@ -64,6 +63,15 @@ export class CoCID {
       }
     }
     return ''
+  }
+
+  /**
+   * Get CoCID type.subtype.partial-name(-removed)
+   * @param document
+   * @returns string
+   */
+  static guessGroupFromDocument (document) {
+    return CoCID.guessGroupFromKey(document.flags?.CoC7?.cocidFlag?.id)
   }
 
   /**
@@ -85,15 +93,16 @@ export class CoCID {
    * @param lang the language to match against ('en', 'es', ...)
    * @param era the eras to match against ('standard', 'modernPulp', ...), true = world default, false = no filter
    * @param langFallback should the system fall back to en incase there is no translation
+   * @param showLoading Show loading bar
    * @returns array
    */
-  static async expandItemArray ({ itemList, lang = game.i18n.lang, era = true, langFallback = true } = {}) {
+  static async expandItemArray ({ itemList, lang = game.i18n.lang, era = true, langFallback = true, showLoading = false } = {}) {
     let items = []
     const cocids = itemList.filter(it => typeof it === 'string')
     items = itemList.filter(it => typeof it !== 'string')
 
     if (cocids.length) {
-      const found = await CoCID.fromCoCIDRegexBest({ cocidRegExp: CoCID.makeGroupRegEx(cocids), type: 'i', lang, era, langFallback })
+      const found = await CoCID.fromCoCIDRegexBest({ cocidRegExp: CoCID.makeGroupRegEx(cocids), type: 'i', lang, era, langFallback, showLoading })
       const all = []
       for (const cocid of cocids) {
         const item = found.find(i => i.flags.CoC7.cocidFlag.id === cocid)
@@ -196,26 +205,44 @@ export class CoCID {
    * **world**: only search in world,
    * **compendiums**: only search in compendiums
    * @param langFallback should the system fall back to en incase there is no translation
+   * @param showLoading Show loading bar
    * @returns array
    */
-  static async fromCoCIDRegexAll ({ cocidRegExp, type, lang = game.i18n.lang, era = false, scope = 'match', langFallback = true } = {}) {
+  static async fromCoCIDRegexAll ({ cocidRegExp, type, lang = game.i18n.lang, era = false, scope = 'match', langFallback = true, showLoading = false } = {}) {
     if (!cocidRegExp) {
       return []
     }
     const result = []
 
+    let count = 0
+    if (showLoading) {
+      if (['match', 'all', 'world'].includes(scope)) {
+        count++
+      }
+      if (['match', 'all', 'compendiums'].includes(scope)) {
+        count = count + game.packs.size
+      }
+    }
+
     if (['match', 'all', 'world'].includes(scope)) {
-      const worldDocuments = await CoCID.documentsFromWorld({ cocidRegExp, type, lang, era, langFallback })
+      const worldDocuments = await CoCID.documentsFromWorld({ cocidRegExp, type, lang, era, langFallback, progressBar: count })
       if (scope === 'match' && worldDocuments.length) {
+        if (showLoading) {
+          SceneNavigation.displayProgressBar({ label: game.i18n.localize('SETUP.PackagesLoading'), pct: 100 })
+        }
         return this.filterAllCoCID(worldDocuments, langFallback && lang !== 'en')
       }
       result.splice(0, 0, ...worldDocuments)
     }
 
     if (['match', 'all', 'compendiums'].includes(scope)) {
-      const compendiaDocuments = await CoCID.documentsFromCompendia({ cocidRegExp, type, lang, era, langFallback })
+      const compendiaDocuments = await CoCID.documentsFromCompendia({ cocidRegExp, type, lang, era, langFallback, progressBar: count })
 
       result.splice(result.length, 0, ...compendiaDocuments)
+    }
+
+    if (showLoading) {
+      SceneNavigation.displayProgressBar({ label: game.i18n.localize('SETUP.PackagesLoading'), pct: 100 })
     }
 
     return this.filterAllCoCID(result, langFallback && lang !== 'en')
@@ -233,9 +260,10 @@ export class CoCID {
    * **world**: only search in world,
    * **compendiums**: only search in compendiums
    * @param langFallback should the system fall back to en incase there is no translation
+   * @param showLoading Show loading bar
    * @returns array
    */
-  static async fromCoCIDAll ({ cocid, lang = game.i18n.lang, era = false, scope = 'match', langFallback = true } = {}) {
+  static async fromCoCIDAll ({ cocid, lang = game.i18n.lang, era = false, scope = 'match', langFallback = true, showLoading = false } = {}) {
     if (!cocid || typeof cocid !== 'string') {
       return []
     }
@@ -246,7 +274,7 @@ export class CoCID {
     if (lang === '') {
       lang = game.i18n.lang
     }
-    return CoCID.fromCoCIDRegexAll({ cocidRegExp: new RegExp('^' + CoC7Utilities.quoteRegExp(cocid) + '$'), type: parts[1], lang, era, scope, langFallback })
+    return CoCID.fromCoCIDRegexAll({ cocidRegExp: new RegExp('^' + CoC7Utilities.quoteRegExp(cocid) + '$'), type: parts[1], lang, era, scope, langFallback, showLoading })
   }
 
   /**
@@ -259,9 +287,10 @@ export class CoCID {
    * @param lang the language to match against ("en", "es", ...)
    * @param era the eras to match against ('standard', 'modernPulp', ...), true = world default, false = no filter
    * @param langFallback should the system fall back to en incase there is no translation
+   * @param showLoading Show loading bar
    */
-  static async fromCoCIDRegexBest ({ cocidRegExp, type, lang = game.i18n.lang, era = true, langFallback = true } = {}) {
-    const allDocuments = await this.fromCoCIDRegexAll({ cocidRegExp, type, lang, era, scope: 'all', langFallback })
+  static async fromCoCIDRegexBest ({ cocidRegExp, type, lang = game.i18n.lang, era = true, langFallback = true, showLoading = false } = {}) {
+    const allDocuments = await this.fromCoCIDRegexAll({ cocidRegExp, type, lang, era, scope: 'all', langFallback, showLoading })
     const bestDocuments = this.filterBestCoCID(allDocuments)
     return bestDocuments
   }
@@ -289,14 +318,15 @@ export class CoCID {
    * @param lang the language to match against ("en", "es", ...)
    * @param era the eras to match against ('standard', 'modernPulp', ...), true = world default, false = no filter
    * @param langFallback should the system fall back to en incase there is no translation
+   * @param showLoading Show loading bar
    */
-  static fromCoCIDBest ({ cocid, lang = game.i18n.lang, era = true, langFallback = true } = {}) {
+  static fromCoCIDBest ({ cocid, lang = game.i18n.lang, era = true, langFallback = true, showLoading = false } = {}) {
     if (!cocid || typeof cocid !== 'string') {
       return []
     }
     const type = cocid.split('.')[0]
     const cocidRegExp = new RegExp('^' + CoC7Utilities.quoteRegExp(cocid) + '$')
-    return CoCID.fromCoCIDRegexBest({ cocidRegExp, type, lang, era, langFallback })
+    return CoCID.fromCoCIDRegexBest({ cocidRegExp, type, lang, era, langFallback, showLoading })
   }
 
   /**
@@ -369,9 +399,10 @@ export class CoCID {
    * @param era the eras to match against ('standard', 'modernPulp', ...), true = world default, false = no filter
    * @param lang the language to match against ('en', 'es', ...)
    * @param langFallback should the system fall back to en incase there is no translation
+   * @param progressBar If greater than zero show percentage
    * @returns array
    */
-  static async documentsFromWorld ({ cocidRegExp, type, lang = game.i18n.lang, era = false, langFallback = true } = {}) {
+  static async documentsFromWorld ({ cocidRegExp, type, lang = game.i18n.lang, era = false, langFallback = true, progressBar = 0 } = {}) {
     if (!cocidRegExp) {
       return []
     }
@@ -380,6 +411,10 @@ export class CoCID {
     }
     if (era === true) {
       era = game.settings.get('CoC7', 'worldEra')
+    }
+
+    if (progressBar > 0) {
+      SceneNavigation.displayProgressBar({ label: game.i18n.localize('SETUP.PackagesLoading'), pct: Math.floor(100 / progressBar) })
     }
 
     const gameProperty = CoCID.getGameProperty(`${type}..`)
@@ -409,9 +444,10 @@ export class CoCID {
    * @param era the eras to match against ('standard', 'modernPulp', ...), true = world default, false = no filter
    * @param lang the language to match against ('en', 'es', ...)
    * @param langFallback should the system fall back to en incase there is no translation
+   * @param progressBar If greater than zero show percentage
    * @returns array
    */
-  static async documentsFromCompendia ({ cocidRegExp, type, lang = game.i18n.lang, era = false, langFallback = true }) {
+  static async documentsFromCompendia ({ cocidRegExp, type, lang = game.i18n.lang, era = false, langFallback = true, progressBar = 0 }) {
     if (!cocidRegExp) {
       return []
     }
@@ -426,7 +462,12 @@ export class CoCID {
     const documentType = CoCID.getDocumentType(type).schema.name
     const candidateDocuments = []
 
+    let count = 1
     for (const pack of game.packs) {
+      if (progressBar > 0) {
+        SceneNavigation.displayProgressBar({ label: game.i18n.localize('SETUP.PackagesLoading'), pct: Math.floor(count * 100 / progressBar) })
+        count++
+      }
       if (pack.documentName === documentType) {
         if (!pack.indexed) {
           await pack.getIndex()

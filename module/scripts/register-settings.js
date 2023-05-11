@@ -1,4 +1,4 @@
-/* global $, CONFIG, game, ui */
+/* global $, CONFIG, CONST, game, ui */
 import { COC7 } from '../config.js'
 import { CoC7DecaderDie } from '../apps/decader-die.js'
 import { CoC7DecaderDieOther } from '../apps/decader-die-other.js'
@@ -562,6 +562,48 @@ export function registerSettings () {
     config: false,
     type: String,
     default: '0'
+  })
+  game.settings.register('CoC7', 'InvestigatorWizardSetup', {
+    name: 'Force specific setup CoC ID for Investigator Wizard',
+    scope: 'world',
+    config: false,
+    type: String,
+    default: ''
+  })
+  game.settings.register('CoC7', 'InvestigatorWizardQuantity', {
+    name: 'Number of investigators a single user without create actor rights can own',
+    scope: 'world',
+    config: false,
+    type: Number,
+    default: 0
+  })
+  game.settings.register('CoC7', 'InvestigatorWizardOwnership', {
+    name: 'Default permissions for non owner players',
+    scope: 'world',
+    config: false,
+    type: Number,
+    default: CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE
+  })
+  game.settings.register('CoC7', 'InvestigatorWizardRerolls', {
+    name: 'Allow players to reroll characteristics',
+    scope: 'world',
+    config: false,
+    type: Boolean,
+    default: false
+  })
+  game.settings.register('CoC7', 'InvestigatorWizardPointBuy', {
+    name: 'Force point buy instead of setup choice',
+    scope: 'world',
+    config: false,
+    type: Boolean,
+    default: false
+  })
+  game.settings.register('CoC7', 'InvestigatorWizardQuickFire', {
+    name: 'Quick fire setup values',
+    scope: 'world',
+    config: false,
+    type: Array,
+    default: []
   })
   /** Set an initiative formula for the system */
   CONFIG.Combat.initiative = {
