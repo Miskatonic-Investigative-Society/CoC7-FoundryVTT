@@ -152,7 +152,7 @@ try {
     }
     dbFile.push(JSON.stringify(dbEntry))
     console.log('Created: ' + dbEntry.name)
-    console.log(includedPages.join("\n"))
+    console.log(includedPages.join('\n'))
   }
 } catch (e) {
   console.log('EXCEPTION:', e)
