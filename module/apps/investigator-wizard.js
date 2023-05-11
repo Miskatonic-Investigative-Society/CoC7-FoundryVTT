@@ -997,11 +997,11 @@ export class CoC7InvestigatorWizard extends FormApplication {
         for (let index = 0, im = items.length; index < im; index++) {
           this.addItemToList(items[index], { inOccupationGroup: group })
         }
-        if (archetype) {
-          items = await this.expandItemArray(archetype.system.skills)
-          for (let index = 0, im = items.length; index < im; index++) {
-            this.addItemToList(items[index], { isArchetypeDefault: true, archetypeToggle: true })
-          }
+      }
+      if (archetype) {
+        items = await this.expandItemArray(archetype.system.skills)
+        for (let index = 0, im = items.length; index < im; index++) {
+          this.addItemToList(items[index], { isArchetypeDefault: true, archetypeToggle: true })
         }
       }
       if (Number(this.object.creditRating.max) > 0) {
