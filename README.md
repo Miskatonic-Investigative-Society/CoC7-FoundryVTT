@@ -1,4 +1,4 @@
-<h1 align="center">Call of Cthulhu 7th Edition (Unofficial) for Foundry VTT</h1>
+<h1 align="center">Call of Cthulhu 7th Edition for Foundry VTT</h1>
 <p align="center">
   <img src="https://img.shields.io/github/repo-size/Miskatonic-Investigative-Society/CoC7-FoundryVTT.svg">
   <a href="https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/commits/develop">
@@ -19,7 +19,7 @@
 
 ## Overview.
 
-An unofficial implementation of the Call of Cthulhu 7th Edition game system for [Foundry Virtual Tabletop](http://foundryvtt.com). This provides sheets and system in addition to some compendiums as examples.
+An implementation of the Call of Cthulhu 7th Edition game system for [Foundry Virtual Tabletop](http://foundryvtt.com). This provides sheets and system in addition to some compendiums as examples.
 
 If you have any suggestions or feedback, please visit us on Discord in the `#chaosium` channel on the [Foundry Discord Server](discord.gg/foundryvtt), or see: [CONTRIBUTING](https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/blob/develop/.github/CONTRIBUTING.md)
 
@@ -27,14 +27,14 @@ For the list of changes, see: [CHANGELOG](https://github.com/Miskatonic-Investig
 
 ### Disclaimer.
 
-This project does not include any materials from the official books and you will have to enter manually the weapons, skills, items, etc… to be able to play. We have just provided some basics skills that you can use as example. This system is completely Unofficial.
+This project does not include any materials from the official books and you will have to enter manually the weapons, skills, items, etc… to be able to play. We have just provided some basics skills that you can use as example.
 
 ## Usage.
 
 Install in Foundry VTT from the Game Systems tab, using the following manifest:
 `https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/releases/latest/download/system.json`
 
-You can also search for "Call of Cthulhu 7th edition (Unofficial)" on the package finder.
+You can also search for "Call of Cthulhu 7th edition" on the package finder.
 
 - Compendium "Examples" contains a 1920's Character Sheet, you just need to import it to start a new Character. It contains also a NPC and a Creature as examples.
 - Compendium "Skills" contains a set of basic Skills that you can use for your Characters.
@@ -64,3 +64,7 @@ This project uses some assets from Game Icons, thanks to its [authors](https://g
 This project uses [socketlib](https://github.com/manuelVo/foundryvtt-socketlib) by Manuel Vögele which is licensed under [MIT](lib/socketlib/LICENSE).
 
 This system uses trademarks and/or copyrights owned by Chaosium Inc/Moon Design Publications LLC, which are used under [Chaosium Inc's Fan Material Policy](https://www.chaosium.com/fan-material-policy/). We are expressly prohibited from charging you to use or access this content. This system is not published, endorsed, or specifically approved by Chaosium Inc. For more information about Chaosium Inc's products, please visit www.chaosium.com.
+
+> Permission is given for users to make limited derivative use of this publication for personal use on the Foundry VTT platform. No rights for any commercial use are granted. No part of this publication may be reproduced or distributed for use outside of the Foundry VTT platform. All rights are reserved with Chaosium Inc.
+>
+> Call of Cthulhu © copyright 1981–2023 Chaosium Inc. All rights reserved.

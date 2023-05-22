@@ -1,7 +1,7 @@
 {
   "name": "fvtt-coc7",
   "version": "0.9.0",
-  "description": "An unofficial implementation of Call of Cthulhu 7th Edition system for Foundry VTT.",
+  "description": "An implementation of Call of Cthulhu 7th Edition system for Foundry VTT.",
   "scripts": {
     "build": "webpack --mode production",
     "format": "standard --fix",
