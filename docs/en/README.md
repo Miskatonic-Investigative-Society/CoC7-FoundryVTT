@@ -12,7 +12,7 @@ The system automates most of the regular tasks and rules involved with running a
 
 Several parts of the actor sheets have pop up tooltips that trigger after two seconds, this delay can be changed in the settings
 
-This documentation can be reopened under  Compendiums -> JournalEntry -> System manual -> Call of Cthulhu 7th Edition (Unofficial) [en]
+This documentation can be reopened under  Compendiums -> JournalEntry -> System manual -> Call of Cthulhu 7th Edition [en]
 
 # Recent changes
 

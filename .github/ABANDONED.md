@@ -1655,7 +1655,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 ## ru.json
 1218 untranslated strings
 ```
-"CoC7.title": "Call of Cthulhu 7h Edition (Unofficial)",
+"CoC7.title": "Call of Cthulhu 7h Edition",
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
 "CoC7.Entities.Creature": "Creature",

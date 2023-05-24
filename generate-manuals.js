@@ -7,7 +7,7 @@ const collisions = {}
 
 const sources = {
   en: {
-    name: 'Call of Cthulhu 7th Edition (Unofficial)',
+    name: 'Call of Cthulhu 7th Edition',
     pages: [
       {
         name: 'System documentation',
