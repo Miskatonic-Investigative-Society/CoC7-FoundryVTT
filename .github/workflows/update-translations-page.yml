@@ -13,9 +13,9 @@ jobs:
       matrix:
         node-version: [16.x]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
       - run: |
@@ -28,4 +28,4 @@ jobs:
           git add .github/TRANSLATIONS.md
           git commit -m "Updated translations list"
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v5
