@@ -9,6 +9,10 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 0.10.0
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
 - Add additional pulp rule to ignore age when calculating movement speed
 - Add support for bonus/penalty dice to active effects
 - Add workaround for using external links in coc7 links
