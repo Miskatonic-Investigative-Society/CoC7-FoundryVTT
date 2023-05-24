@@ -362,13 +362,13 @@
   "CoC7.ItemPrice": "価格",
   "CoC7.Armor": "装甲",
 
-  "CoC7.EraNvct": "インヴィクタス",
-  "CoC7.EraDrka": "ダークエイジ",
-  "CoC7.EraDdts": "西部開拓",
-  "CoC7.EraGlit": "クトゥルフ･バイ･ガスライト",
+  "CoC7.EraInvictus": "インヴィクタス",
+  "CoC7.EraDarkAges": "ダークエイジ",
+  "CoC7.EraDownDarkerTrails": "西部開拓",
+  "CoC7.EraGasLight": "クトゥルフ･バイ･ガスライト",
   "CoC7.Era1920": "1920年代",
   "CoC7.EraPulp": "パルプ･クトゥルフ",
-  "CoC7.EraMdrn": "現代",
+  "CoC7.EraModern": "現代",
   "CoC7.Eras": "対応サプリメント",
   "CoC7.EraAvailability": "出典",
 
@@ -414,10 +414,10 @@
 
   "CoC7.NewBioSectionName": "新規セクション",
 
-  "CoC7.DodgeSkillName": "回避",
-  "CoC7.CthulhuMythosName": "クトゥルフ神話",
-  "CoC7.CreditRatingSkillName": "信用",
-  "CoC7.DriveAutoSkillName": "運転（自動車）",
+  "CoC7.CoCIDFlag.keys.i.skill.dodge": "回避",
+  "CoC7.CoCIDFlag.keys.i.skill.cthulhu-mythos": "クトゥルフ神話",
+  "CoC7.CoCIDFlag.keys.i.skill.credit-rating": "信用",
+  "CoC7.CoCIDFlag.keys.i.skill.drive-auto": "運転（自動車）",
   "CoC7.FightingSpecializationName": "近接格闘",
   "CoC7.UnarmedWeaponName": "素手",
   "CoC7.FirearmSpecializationName": "射撃",
