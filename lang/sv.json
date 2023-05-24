@@ -335,13 +335,13 @@
   "CoC7.ItemPrice": "Pris",
   "CoC7.Armor": "Skydd",
 
-  "CoC7.EraNvct": "Invictus",
-  "CoC7.EraDrka": "Dark Ages",
-  "CoC7.EraDdts": "Down Darker Trails",
-  "CoC7.EraGlit": "Cthulhu by Gaslight",
+  "CoC7.EraInvictus": "Invictus",
+  "CoC7.EraDarkAges": "Dark Ages",
+  "CoC7.EraDownDarkerTrails": "Down Darker Trails",
+  "CoC7.EraGasLight": "Cthulhu by Gaslight",
   "CoC7.Era1920": "1920s",
   "CoC7.EraPulp": "Pulp Cthulhu",
-  "CoC7.EraMdrn": "Modern",
+  "CoC7.EraModern": "Modern",
   "CoC7.Eras": "Cthulhu-varianter",
   "CoC7.EraAvailability": "Tillgänglighet",
 
@@ -386,10 +386,10 @@
 
   "CoC7.NewBioSectionName": "Ny sektion",
 
-  "CoC7.DodgeSkillName": "Ducka",
-  "CoC7.CthulhuMythosName": "Cthulhumyten",
-  "CoC7.CreditRatingSkillName": "Levnadsstandard",
-  "CoC7.DriveAutoSkillName": "Köra bil",
+  "CoC7.CoCIDFlag.keys.i.skill.dodge": "Ducka",
+  "CoC7.CoCIDFlag.keys.i.skill.cthulhu-mythos": "Cthulhumyten",
+  "CoC7.CoCIDFlag.keys.i.skill.credit-rating": "Levnadsstandard",
+  "CoC7.CoCIDFlag.keys.i.skill.drive-auto": "Köra bil",
   "CoC7.FightingSpecializationName": "Strid",
   "CoC7.FirearmSpecializationName": "Skjutvapen",
   "CoC7.DriveSpecializationName": "Chaufför",

@@ -165,7 +165,7 @@
         {{/if}}
       </div>
 
-      <h3 class="form-header">{{ localize "CoC7.CreditRatingSkillName" }}</h3>
+      <h3 class="form-header">{{ localize "CoC7.CoCIDFlag.keys.i.skill.credit-rating" }}</h3>
       <div class="form-group">
         <input type="text" name="system.creditRating.min" value="{{data.system.creditRating.min}}" placeholder="{{  localize 'CoC7.Minimum' }}" />
         <input type="text" name="system.creditRating.max" value="{{data.system.creditRating.max}}" placeholder="{{  localize 'CoC7.Maximum' }}" />
@@ -184,7 +184,7 @@
 
         <ol class="item-list">
           {{#each data.system.skills as |skill|}}
-            <li class="item flexrow" data-item-id="{{skill._id}}">
+            <li class="item flexrow" data-item-id="{{skill._id}}" data-cocid="{{skill.flags.CoC7.cocidFlag.id}}">
               <div class="item-name flexrow">
                 <h4>{{skill.name}} ({{skill.system.base}}%)</h4>
               </div>
@@ -216,8 +216,8 @@
               {{#if group.isEmpty}}
                 <h3 class="warning">{{ localize "CoC7.EmptySkillList" }}</h3>
               {{/if}}
-              {{#each group.skills as |skill index|}}
-                <li class="item flexrow" data-item-id="{{skill._id}}" data-item-index="{{index}}">
+              {{#each group.skills as |skill|}}
+                <li class="item flexrow" data-item-id="{{skill._id}}" data-cocid="{{skill.flags.CoC7.cocidFlag.id}}">
                   <div class="item-name flexrow">
                     <h4>{{skill.name}} ({{skill.system.base}}%)</h4>
                   </div>

@@ -9,56 +9,64 @@
             "tempValue": null,
             "short": "CHARAC.STR",
             "label": "CHARAC.Strength",
-            "formula": null
+            "formula": null,
+            "bonusDice": 0
           },
           "con": {
             "value": null,
             "tempValue": null,
             "short": "CHARAC.CON",
             "label": "CHARAC.Constitution",
-            "formula": null
+            "formula": null,
+            "bonusDice": 0
           },
           "siz": {
             "value": null,
             "tempValue": null,
             "short": "CHARAC.SIZ",
             "label": "CHARAC.Size",
-            "formula": null
+            "formula": null,
+            "bonusDice": 0
           },
           "dex": {
             "value": null,
             "tempValue": null,
             "short": "CHARAC.DEX",
             "label": "CHARAC.Dexterity",
-            "formula": null
+            "formula": null,
+            "bonusDice": 0
           },
           "app": {
             "value": null,
             "tempValue": null,
             "short": "CHARAC.APP",
             "label": "CHARAC.Appearance",
-            "formula": null
+            "formula": null,
+            "bonusDice": 0
           },
           "int": {
             "value": null,
             "tempValue": null,
             "short": "CHARAC.INT",
             "label": "CHARAC.Intelligence",
-            "formula": null
+            "formula": null,
+            "bonusDice": 0
           },
           "pow": {
             "value": null,
             "tempValue": null,
             "short": "CHARAC.POW",
             "label": "CHARAC.Power",
-            "formula": null
+            "formula": null,
+            "bonusDice": 0
           },
           "edu": {
             "value": null,
             "tempValue": null,
             "short": "CHARAC.EDU",
             "label": "CHARAC.Education",
-            "formula": null
+            "formula": null,
+            "bonusDice": 0
           }
         }
       },
@@ -82,7 +90,8 @@
             "value": null,
             "short": "LCK",
             "label": "Luck",
-            "max": 99
+            "max": 99,
+            "bonusDice": 0
           },
           "san": {
             "value": null,
@@ -91,7 +100,8 @@
             "label": "Sanity",
             "auto": true,
             "dailyLoss": 0,
-            "oneFifthSanity": " / 0"
+            "oneFifthSanity": " / 0",
+            "bonusDice": 0
           },
           "mov": {
             "value": null,
@@ -169,11 +179,82 @@
         "locked": true,
         "manualCredit": false
       },
-      "credit": {
-        "monetarySymbol": null,
-        "multiplier": null,
+      "monetary": {
+        "format": "decimalLeft",
+        "symbol": "$",
+        "values": [
+          {
+            "name": "CoC7.MonetaryDefaultPenniless",
+            "min": null,
+            "max": 0,
+            "cashType": "value",
+            "cashValue": 0.5,
+            "assetsType": "value",
+            "assetsValue": 0,
+            "spendingType": "value",
+            "spendingValue": 0.5
+          },
+          {
+            "name": "CoC7.MonetaryDefaultPoor",
+            "min": 1,
+            "max": 9,
+            "cashType": "multiplier",
+            "cashValue": 1,
+            "assetsType": "multiplier",
+            "assetsValue": 10,
+            "spendingType": "value",
+            "spendingValue": 2
+          },
+          {
+            "name": "CoC7.MonetaryDefaultAverage",
+            "min": 10,
+            "max": 49,
+            "cashType": "multiplier",
+            "cashValue": 2,
+            "assetsType": "multiplier",
+            "assetsValue": 50,
+            "spendingType": "value",
+            "spendingValue": 10
+          },
+          {
+            "name": "CoC7.MonetaryDefaultWealthy",
+            "min": 50,
+            "max": 89,
+            "cashType": "multiplier",
+            "cashValue": 5,
+            "assetsType": "multiplier",
+            "assetsValue": 500,
+            "spendingType": "value",
+            "spendingValue": 50
+          },
+          {
+            "name": "CoC7.MonetaryDefaultRich",
+            "min": 90,
+            "max": 98,
+            "cashType": "multiplier",
+            "cashValue": 20,
+            "assetsType": "multiplier",
+            "assetsValue": 2000,
+            "spendingType": "value",
+            "spendingValue": 250
+          },
+          {
+            "name": "CoC7.MonetaryDefaultSuperRich",
+            "min": 99,
+            "max": null,
+            "cashType": "value",
+            "cashValue": 50000,
+            "assetsType": "value",
+            "assetsValue": 5000000,
+            "spendingType": "value",
+            "spendingValue": 5000
+          }
+        ],
         "spent": "",
-        "assetsDetails": ""
+        "assetsDetails": "",
+        "spendingLevel": "",
+        "cash": "",
+        "assets": ""
       },
       "development": {
         "personal": null,
@@ -352,7 +433,6 @@
       "malfunction": null,
       "blastRadius": null,
       "properties": {},
-      "eras": {},
       "price": {}
     },
     "skill": {
@@ -366,6 +446,7 @@
         "keeper": ""
       },
       "base": 0,
+      "bonusDice": 0,
       "adjustments": {
         "personal": null,
         "occupation": null,
@@ -375,7 +456,6 @@
       "value": -1,
       "attributes": {},
       "properties": {},
-      "eras": {},
       "flags": {}
     },
     "occupation": {
@@ -451,7 +531,6 @@
       "personal": null,
       "attributes": {},
       "properties": {},
-      "eras": {},
       "flags": {}
     },
     "archetype": {
@@ -486,7 +565,6 @@
       "skills": [],
       "attributes": {},
       "properties": {},
-      "eras": {},
       "flags": {}
     },
     "setup": {
@@ -524,6 +602,78 @@
           "luck": null
         }
       },
+      "monetary": {
+        "format": "decimalLeft",
+        "symbol": "$",
+        "values": [
+          {
+            "name": "CoC7.MonetaryDefaultPenniless",
+            "min": null,
+            "max": 0,
+            "cashType": "value",
+            "cashValue": 0.5,
+            "assetsType": "value",
+            "assetsValue": 0,
+            "spendingType": "value",
+            "spendingValue": 0.5
+          },
+          {
+            "name": "CoC7.MonetaryDefaultPoor",
+            "min": 1,
+            "max": 9,
+            "cashType": "multiplier",
+            "cashValue": 1,
+            "assetsType": "multiplier",
+            "assetsValue": 10,
+            "spendingType": "value",
+            "spendingValue": 2
+          },
+          {
+            "name": "CoC7.MonetaryDefaultAverage",
+            "min": 10,
+            "max": 49,
+            "cashType": "multiplier",
+            "cashValue": 2,
+            "assetsType": "multiplier",
+            "assetsValue": 50,
+            "spendingType": "value",
+            "spendingValue": 10
+          },
+          {
+            "name": "CoC7.MonetaryDefaultWealthy",
+            "min": 50,
+            "max": 89,
+            "cashType": "multiplier",
+            "cashValue": 5,
+            "assetsType": "multiplier",
+            "assetsValue": 500,
+            "spendingType": "value",
+            "spendingValue": 50
+          },
+          {
+            "name": "CoC7.MonetaryDefaultRich",
+            "min": 90,
+            "max": 98,
+            "cashType": "multiplier",
+            "cashValue": 20,
+            "assetsType": "multiplier",
+            "assetsValue": 2000,
+            "spendingType": "value",
+            "spendingValue": 250
+          },
+          {
+            "name": "CoC7.MonetaryDefaultSuperRich",
+            "min": 99,
+            "max": null,
+            "cashType": "value",
+            "cashValue": 50000,
+            "assetsType": "value",
+            "assetsValue": 5000000,
+            "spendingType": "value",
+            "spendingValue": 5000
+          }
+        ]
+      },
       "source": null,
       "enableCharacterisitics": true,
       "items": [],
@@ -531,7 +681,6 @@
       "backstory": "",
       "attributes": {},
       "properties": {},
-      "eras": {},
       "flags": {}
     },
     "spell": {

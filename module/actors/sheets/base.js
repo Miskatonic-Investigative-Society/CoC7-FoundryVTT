@@ -1,18 +1,18 @@
 /* global $, ActorSheet, ChatMessage, CONST, Dialog, FormData, foundry, game, getProperty, Hooks, Item, mergeObject, Roll, TextEditor, ui */
+import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7ChatMessage } from '../../apps/coc7-chat-message.js'
 import { CoC7Check } from '../../check.js'
+import { CoC7ContentLinkDialog } from '../../apps/coc7-content-link-dialog.js'
 import { COC7 } from '../../config.js'
 import { CoC7Item } from '../../items/item.js'
 import { CoC7MeleeInitiator } from '../../chat/combat/melee-initiator.js'
 import { CoC7RangeInitiator } from '../../chat/rangecombat.js'
 import { CoC7ConCheck } from '../../chat/concheck.js'
 import { chatHelper, isCtrlKey } from '../../chat/helper.js'
-import { CoC7Parser } from '../../apps/parser.js'
+import { CoC7Link } from '../../apps/coc7-link.js'
 import { DamageCard } from '../../chat/cards/damage.js'
-import { CoC7LinkCreationDialog } from '../../apps/link-creation-dialog.js'
 import CoC7ActiveEffect from '../../active-effect.js'
-import { CoC7Link } from '../../apps/link.js'
 import { CoC7ContextMenu } from '../../context-menu.js'
 import { CoC7Utilities } from '../../utilities.js'
 
@@ -20,6 +20,12 @@ import { CoC7Utilities } from '../../utilities.js'
  * Extend the basic ActorSheet with some very simple modifications
  */
 export class CoC7ActorSheet extends ActorSheet {
+  _getHeaderButtons () {
+    const headerButtons = super._getHeaderButtons()
+    addCoCIDSheetHeaderButton(headerButtons, this)
+    return headerButtons
+  }
+
   async getData () {
     const sheetData = await super.getData()
 
@@ -267,9 +273,13 @@ export class CoC7ActorSheet extends ActorSheet {
                 })
               }
             }
+
             const skill = this.actor.items.get(item._id)
-            item.system.rawValue = skill.rawValue
-            item.system.value = skill.value
+            const { base, rawValue, value } = skill.system
+
+            // Assume fallback values, useful for initial setup of skills
+            item.system.rawValue = rawValue || value || base
+            item.system.value = value || base
           } else {
             const skill = this.actor.items.get(item._id)
             item.system.base = await skill.asyncBase()
@@ -735,6 +745,7 @@ export class CoC7ActorSheet extends ActorSheet {
 
     html.find('.add-new-section').click(() => {
       this.actor.createBioSection()
+      this.render()
     })
 
     html.find('.delete-section').click(ev => {
@@ -811,10 +822,7 @@ export class CoC7ActorSheet extends ActorSheet {
       }
     })
 
-    html.find('a.coc7-link').on('click', event => CoC7Parser._onCheck(event))
-    html
-      .find('a.coc7-link')
-      .on('dragstart', event => CoC7Parser._onDragCoC7Link(event))
+    CoC7Link.bindEventsHandler(html)
 
     /**
      * This is used for dev purposes only !
@@ -1277,13 +1285,13 @@ export class CoC7ActorSheet extends ActorSheet {
 
   async _onDrop (event) {
     const dataString = event.dataTransfer.getData('text/plain')
+    if (dataString === '') {
+      return false
+    }
     const data = JSON.parse(dataString)
-    if (data.linkType === 'coc7-link') {
-      if (data.type === 'effect') {
-        const link = await CoC7Link.fromData(data)
-        if (link._linkData.effect) {
-          this.actor.createEmbeddedDocuments('ActiveEffect', [link._linkData.effect])
-        }
+    if (data.type === 'CoC7Link') {
+      if (data.check === CoC7Link.CHECK_TYPE.EFFECT) {
+        CoC7Link._onLinkActorClick(this.actor, data)
       }
     }
     await super._onDrop(event)
@@ -1449,7 +1457,7 @@ export class CoC7ActorSheet extends ActorSheet {
       div.append(props)
 
       li.append(div.hide())
-      CoC7Parser.bindEventsHandler(div)
+      CoC7Link.bindEventsHandler(div)
       div.slideDown(200, () => li.toggleClass('expanded'))
     }
     // $(event.currentTarget).toggleClass('expanded');
@@ -1549,10 +1557,7 @@ export class CoC7ActorSheet extends ActorSheet {
     const effectId = event.currentTarget.closest('li').dataset.effectId
     const effect = this.actor.effects.get(effectId)
     if (isCtrlKey(event) && game.user.isGM) {
-      const link = new CoC7Link()
-      await link.setData({ type: 'effect', object: effect })
-      const linkDialog = new CoC7LinkCreationDialog(link)
-      linkDialog.render(true)
+      CoC7ContentLinkDialog.create({ type: 'CoC7Link', check: CoC7Link.CHECK_TYPE.EFFECT, object: effect })
     }
   }
 
@@ -1577,16 +1582,10 @@ export class CoC7ActorSheet extends ActorSheet {
 
     if (isCtrlKey(event) && game.user.isGM) {
       const linkData = {
-        check: 'item',
-        type: 'weapon',
-        name: weapon.name,
-        hasPlayerOwner: this.actor.hasPlayerOwner,
-        actorKey: this.actor.actorKey
+        check: CoC7Link.CHECK_TYPE.ITEM,
+        name: weapon.name
       }
-
-      CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg =>
-        dlg.render(true)
-      )
+      CoC7ContentLinkDialog.create(linkData, { actors: [this.actor] })
     } else {
       let proceedWithoutTarget
       if (game.user.targets.size <= 0) {
@@ -1886,7 +1885,7 @@ export class CoC7ActorSheet extends ActorSheet {
                 })
               }
             }
-            if (game.i18n.localize(COC7.creditRatingSkillName) === item.name) {
+            if (game.i18n.localize('CoC7.CoCIDFlag.keys.i.skill.credit-rating') === item.name && typeof this.actor.occupation?.system?.creditRating?.max !== 'undefined') {
               const creditValue =
                 (item.value || 0) -
                 (item.system.adjustments?.experience || 0)

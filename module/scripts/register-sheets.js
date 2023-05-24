@@ -1,4 +1,4 @@
-/* global Actors, ActorSheet, Items, ItemSheet */
+/* global Actors, ActorSheet, Items, ItemSheet, Journal, JournalSheet, MacroConfig, Macros, PlaylistConfig, Playlists, RollTables, RollTableConfig, Scenes, SceneConfig */
 import { CoC7ArchetypeSheet } from '../items/sheets/archetype.js'
 import { CoC7BookSheet } from '../items/book/sheet.js'
 import { CoC7CharacterSheet } from '../actors/sheets/character.js'
@@ -7,8 +7,13 @@ import { CoC7ChaseSheet } from '../items/chase/sheet.js'
 import { CoC7CreatureSheet } from '../actors/sheets/creature-sheet.js'
 import { CoC7ItemSheet } from '../items/sheets/item-sheet.js'
 import { CoC7ItemSheetV2 } from '../items/sheets/item-sheetV2.js'
+import { CoC7JournalSheet } from '../sheets/coc7-journal-sheet.js'
+import { CoC7MacroConfig } from '../sheets/coc7-macro-config.js'
 import { CoC7NPCSheet } from '../actors/sheets/npc-sheet.js'
 import { CoC7OccupationSheet } from '../items/sheets/occupation.js'
+import { CoC7PlaylistConfig } from '../sheets/coc7-playlist-config.js'
+import { CoC7RollTableConfig } from '../sheets/coc7-roll-table-config.js'
+import { CoC7SceneConfig } from '../sheets/coc7-scene-config.js'
 import { CoC7SetupSheet } from '../items/sheets/setup.js'
 import { CoC7SkillSheet } from '../items/sheets/skill.js'
 import { CoC7SpellSheet } from '../items/spell/sheet.js'
@@ -39,6 +44,7 @@ export function registerSheets () {
     types: ['character'],
     makeDefault: true
   })
+
   Items.unregisterSheet('core', ItemSheet)
   Items.registerSheet('CoC7', CoC7SkillSheet, {
     types: ['skill'],
@@ -83,6 +89,31 @@ export function registerSheets () {
   Items.registerSheet('CoC7', CoC7ItemSheet, { types: ['item'] })
   Items.registerSheet('CoC7', CoC7ItemSheetV2, {
     types: ['item'],
+    makeDefault: true
+  })
+
+  Scenes.unregisterSheet('core', SceneConfig)
+  Scenes.registerSheet('CoC7', CoC7SceneConfig, {
+    makeDefault: true
+  })
+
+  Journal.unregisterSheet('core', JournalSheet)
+  Journal.registerSheet('CoC7', CoC7JournalSheet, {
+    makeDefault: true
+  })
+
+  RollTables.unregisterSheet('core', RollTableConfig)
+  RollTables.registerSheet('CoC7', CoC7RollTableConfig, {
+    makeDefault: true
+  })
+
+  Macros.unregisterSheet('core', MacroConfig)
+  Macros.registerSheet('CoC7', CoC7MacroConfig, {
+    makeDefault: true
+  })
+
+  Playlists.unregisterSheet('core', PlaylistConfig)
+  Playlists.registerSheet('CoC7', CoC7PlaylistConfig, {
     makeDefault: true
   })
 }

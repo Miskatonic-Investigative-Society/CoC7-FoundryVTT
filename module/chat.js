@@ -1,6 +1,7 @@
 /* global $, ChatMessage, CONST, game, Token, tokenData, ui */
 import { CoC7Check } from './check.js'
 import { COC7 } from './config.js'
+import { CoC7Link } from './apps/coc7-link.js'
 import { CoC7MeleeInitiator } from './chat/combat/melee-initiator.js'
 import { CoC7MeleeTarget } from './chat/combat/melee-target.js'
 import { CoC7MeleeResoltion } from './chat/combat/melee-resolution.js'
@@ -8,7 +9,6 @@ import { CoC7RangeInitiator } from './chat/rangecombat.js'
 import { CoC7Roll, chatHelper, isCtrlKey } from './chat/helper.js'
 // import { CoC7DamageRoll } from './chat/damagecards.js';
 import { CoC7ConCheck } from './chat/concheck.js'
-import { CoC7Parser } from './apps/parser.js'
 import { SanCheckCard } from './chat/cards/san-check.js'
 import { OpposedCheckCard } from './chat/cards/opposed-roll.js'
 import { CombinedCheckCard } from './chat/cards/combined-roll.js'
@@ -21,9 +21,6 @@ const CHAT_COC7_MESSAGE = {
     '<div class="dice-roll"><div class="dice-result"><div class="dice-formula">???</div><h4 class="dice-total">?</h4></div></div>'
 }
 export class CoC7Chat {
-  // static createChatMessageHook(chatMessage, options, user){
-  // }
-
   static renderChatMessageHook (chatMessage, html) {
     if (chatMessage.getFlag('CoC7', 'GMSelfRoll') && !game.user.isGM) {
       html.find('.whisper-to').remove()
@@ -134,8 +131,7 @@ export class CoC7Chat {
 
     html.on('dblclick', '.open-actor', CoC7Chat._onOpenActor.bind(this))
 
-    html.on('click', '.coc7-link', await CoC7Parser._onCheck.bind(this))
-    html.on('dragstart', 'a.coc7-link', CoC7Parser._onDragCoC7Link.bind(this))
+    CoC7Link.bindEventsHandler(html)
 
     html.on('click', 'coc7-inline-result', CoC7Chat._onInline.bind(this))
 

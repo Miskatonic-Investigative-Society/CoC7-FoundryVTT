@@ -192,7 +192,7 @@ export class CoC7Book extends CoC7Item {
      */
     developments.push(
       {
-        name: game.i18n.localize('CoC7.CthulhuMythosName'),
+        name: game.i18n.localize('CoC7.CoCIDFlag.keys.i.skill.cthulhu-mythos'),
         gain: parseInt(mythosFinal)
       },
       {
@@ -229,7 +229,7 @@ export class CoC7Book extends CoC7Item {
     }
     if (mythos.type && mythos.gains) {
       developments.push({
-        name: game.i18n.localize('CoC7.CthulhuMythosName'),
+        name: game.i18n.localize('CoC7.CoCIDFlag.keys.i.skill.cthulhu-mythos'),
         gain: parseInt(mythos.gains)
       })
     }

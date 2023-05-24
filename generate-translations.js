@@ -9,6 +9,8 @@ const abandoned = {}
 const source = jsonfile.readFileSync('./lang/en.json')
 const keys = Object.keys(source)
 
+const maxMissingKeys = 153
+
 glob('./lang/*.json', {}, async function (er, files) {
   await Promise.all(
     files.map(async filename => {
@@ -16,7 +18,7 @@ glob('./lang/*.json', {}, async function (er, files) {
       if (lang !== 'en') {
         const json = jsonfile.readFileSync(filename)
         const missingKeys = keys.filter(x => !Object.keys(json).includes(x))
-        if (missingKeys.length < 100) {
+        if (missingKeys.length <= maxMissingKeys) {
           unordered[lang] = missingKeys
           missing = missing.concat(unordered[lang])
         } else {
@@ -65,7 +67,7 @@ glob('./lang/*.json', {}, async function (er, files) {
   if (Object.keys(abandoned).length > 0) {
     output =
       output +
-      'The following translations have more than 100 untranslated strings **' +
+      'The following translations have more than ' + maxMissingKeys + ' untranslated strings **' +
       Object.keys(abandoned).join('**, **') +
       '**, [are you able to help?](./ABANDONED.md)\n\n'
   }
@@ -145,7 +147,7 @@ glob('./lang/*.json', {}, async function (er, files) {
           source[sourceKey].replace(/\n/g, '\\n') +
           '",\n'
       })
-      output = output.substr(0, output.length - 2) + '\n```\n'
+      output = output.substring(0, output.length - 2) + '\n```\n'
     })
     write('./.github/ABANDONED.md', output)
   } else {

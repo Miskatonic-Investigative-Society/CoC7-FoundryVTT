@@ -2,7 +2,8 @@
 import { CoC7Chat } from './chat.js'
 import { CoC7Utilities } from './utilities.js'
 import { CoC7ActorImporterDialog } from './apps/actor-importer-dialog.js'
-import { CoC7LinkCreationDialog } from './apps/link-creation-dialog.js'
+import { CoC7ContentLinkDialog } from './apps/coc7-content-link-dialog.js'
+import { CoC7InvestigatorWizard } from './apps/investigator-wizard.js'
 
 class CoC7MenuLayer extends PlaceablesLayer {
   constructor () {
@@ -61,6 +62,13 @@ export class CoC7Menu {
           name: 'actor-import',
           title: 'CoC7.ActorImporter',
           onClick: async () => await CoC7ActorImporterDialog.create()
+        },
+        {
+          button: true,
+          icon: 'fas fa-user-check',
+          name: 'investigator-wizard',
+          title: 'CoC7.InvestigatorWizard.Title',
+          onClick: async () => await CoC7InvestigatorWizard.create()
         },
         {
           toggle: true,
@@ -145,6 +153,6 @@ export class CoC7Menu {
       .click(event => CoC7Utilities.rollDice(event))
     html
       .find('.coc7-menu.coc7-create-link')
-      .click(event => CoC7LinkCreationDialog.create(event))
+      .click(event => CoC7ContentLinkDialog.create(event))
   }
 }

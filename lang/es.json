@@ -331,13 +331,13 @@
   "CoC7.ItemPrice": "Precio",
   "CoC7.Armor": "Armadura",
 
-  "CoC7.EraNvct": "Invictus",
-  "CoC7.EraDrka": "Edad Oscura",
-  "CoC7.EraDdts": "El Viejo Oeste",
-  "CoC7.EraGlit": "Luz de Gas",
+  "CoC7.EraInvictus": "Invictus",
+  "CoC7.EraDarkAges": "Edad Oscura",
+  "CoC7.EraDownDarkerTrails": "El Viejo Oeste",
+  "CoC7.EraGasLight": "Luz de Gas",
   "CoC7.Era1920": "Años 20",
   "CoC7.EraPulp": "Pulp Cthulhu",
-  "CoC7.EraMdrn": "Época Actual",
+  "CoC7.EraModern": "Época Actual",
   "CoC7.Eras": "Épocas Cthulhu",
   "CoC7.EraAvailability": "Disponibilidad",
 
@@ -380,10 +380,10 @@
 
   "CoC7.NewBioSectionName": "Nueva Sección",
 
-  "CoC7.DodgeSkillName": "Esquivar",
-  "CoC7.CthulhuMythosName": "Mitos de Cthulhu",
-  "CoC7.CreditRatingSkillName": "Crédito",
-  "CoC7.DriveAutoSkillName": "Conducir automóvil",
+  "CoC7.CoCIDFlag.keys.i.skill.dodge": "Esquivar",
+  "CoC7.CoCIDFlag.keys.i.skill.cthulhu-mythos": "Mitos de Cthulhu",
+  "CoC7.CoCIDFlag.keys.i.skill.credit-rating": "Crédito",
+  "CoC7.CoCIDFlag.keys.i.skill.drive-auto": "Conducir automóvil",
   "CoC7.FightingSpecializationName": "Combatir",
   "CoC7.FirearmSpecializationName": "Armas de fuego",
   "CoC7.DriveSpecializationName": "Conducir",

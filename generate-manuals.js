@@ -7,10 +7,10 @@ const collisions = {}
 
 const sources = {
   en: {
-    name: 'Call of Cthulhu 7th Edition (Unofficial)',
+    name: 'Call of Cthulhu 7th Edition',
     pages: [
       {
-        name: 'System documentation for version 9.0',
+        name: 'System documentation',
         file: 'README.md'
       },
       {
@@ -28,6 +28,10 @@ const sources = {
       {
         name: 'Chases',
         file: 'chases.md'
+      },
+      {
+        name: 'CoC ID System',
+        file: 'coc-id-system.md'
       },
       {
         name: 'Combat',
@@ -91,6 +95,7 @@ try {
       _id: id
     }
     const links = {}
+    const includedPages = []
     for (const source of sources[lang].pages) {
       const id = generateBuildConsistentID('manual' + lang + source.file)
       collisions[id] = true
@@ -102,6 +107,7 @@ try {
         './module/manual/' + lang + '/' + sources[lang].pages[page].file,
         'utf8'
       )
+      includedPages.push(' - "' + sources[lang].pages[page].name + '" from module/manual/' + lang + '/' + sources[lang].pages[page].file)
 
       const mdFile = input
         .replace(/\[(fas fa-[^\]]+|game-icon game-icon-[^\]]+)\]/g, '')
@@ -112,7 +118,9 @@ try {
 
       const matches = input.matchAll(/\[(.+?)\]\(((?![a-z]{1,10}:)(.+?))\)/g)
       for (const match of matches) {
-        if (typeof links[match[2]] !== 'undefined') {
+        if (match[2].substring(0, 1) === '#') {
+          input = input.replace(match[0], '@UUID[.' + links[sources[lang].pages[page].file] + match[2] + ']{' + match[1] + '}')
+        } else if (typeof links[match[2]] !== 'undefined') {
           input = input.replace(match[0], '@UUID[.' + links[match[2]] + ']{' + match[1] + '}')
         }
       }
@@ -143,6 +151,8 @@ try {
       })
     }
     dbFile.push(JSON.stringify(dbEntry))
+    console.log('Created: ' + dbEntry.name)
+    console.log(includedPages.join('\n'))
   }
 } catch (e) {
   console.log('EXCEPTION:', e)

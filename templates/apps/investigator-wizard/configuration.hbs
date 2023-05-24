@@ -1,0 +1,95 @@
+<h1 style="flex: 0 0 auto;">{{localize 'CoC7.InvestigatorWizard.TitleKeeperConfiguration'}}</h1>
+<div class="erachange" style="display:none;flex: 1 0 0;">{{localize 'CoC7.InvestigatorWizard.ChangingEraDelay'}}</div>
+<div class="scrollsection">
+  <div class="form-group flexrow">
+    <label for="default-enabled">{{localize 'CoC7.InvestigatorWizard.PlayerEnabled'}}:</label>
+    <div class="flex1">
+      <input type="checkbox" name="default-enabled" value="on" class="submit_on_change" style="margin-left: -5px;" {{checked object.defaultQuantity}}>
+    </div>
+  </div>
+  {{#if object.defaultQuantity}}
+    <div class="form-group">
+      <label for="default-quantity">{{localize 'CoC7.InvestigatorWizard.PlayerQuantity'}}:</label>
+      <input type="number" name="default-quantity" value="{{object.defaultQuantity}}" class="submit_on_change">
+    </div>
+  {{/if}}
+  <div class="form-group">
+    <label for="default-ownership">{{localize 'CoC7.InvestigatorWizard.OtherPlayerOwnership'}}:</label>
+    <select name="default-ownership" class="submit_on_change">
+      {{#select object.defaultOwnership}}
+        {{#each ownership as |name id|}}
+          <option value="{{id}}">{{localize name}}</option>
+        {{/each}}
+      {{/select}}
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="world-era">{{localize 'CoC7.Settings.WorldEra.Name'}}:</label>
+    <select name="world-era" class="submit_on_change">
+      {{#select object.defaultEra}}
+        {{#each _eras as |era|}}
+          <option value="{{era.id}}">{{era.name}}</option>
+        {{/each}}
+      {{/select}}
+    </select>
+  </div>
+  <h2>{{localize 'CoC7.InvestigatorWizard.Characteristics'}}</h2>
+  <div class="form-group flexrow">
+    <label for="rerolls-enabled">{{localize 'CoC7.InvestigatorWizard.AllowRerolls'}}:</label>
+    <div class="flex1">
+      <input type="checkbox" name="rerolls-enabled" value="on" class="submit_on_change" style="margin-left: -5px;" {{checked object.rerollsEnabled}}>
+    </div>
+  </div>
+  <div class="form-group flexrow">
+    <label for="characteristics-method-1">{{localize 'CoC7.InvestigatorWizard.UseSetupMethod'}}:</label>
+    <div class="flex1">
+      <input type="radio" name="characteristics-method" value="1" class="submit_on_change" style="margin-left: -2px; transform: scale(1.5);" {{checked (eq characteristicsMethod characteristicsMethods.METHOD_DEFAULT)}}>
+    </div>
+  </div>
+  <div class="form-group flexrow">
+    <label for="characteristics-method-2">{{localize 'CoC7.InvestigatorWizard.EnforcePointBuy'}}:</label>
+    <div class="flex1">
+      <input type="radio" name="characteristics-method" value="2" class="submit_on_change" style="margin-left: -2px; transform: scale(1.5);" {{checked (eq characteristicsMethod characteristicsMethods.METHOD_POINTS)}}>
+    </div>
+  </div>
+  <div class="form-group flexrow">
+    <label for="characteristics-method-3">{{localize 'CoC7.InvestigatorWizard.QuickFireValues'}}:</label>
+    <div class="flex1">
+      <input type="radio" name="characteristics-method" value="3" class="submit_on_change" style="margin-left: -2px; transform: scale(1.5);" {{checked (eq characteristicsMethod characteristicsMethods.METHOD_VALUES)}}>
+    </div>
+  </div>
+  {{#if object.quickFireValues.length}}
+    <div class="form-group flexrow">
+      <label>{{localize 'CoC7.InvestigatorWizard.QuickFireValues'}}:</label>
+      <div class="flex1">
+        {{#each object.quickFireValues as |value offset|}}
+          <input type="number" name="quick-fire-values-{{offset}}" value="{{value}}" style="{{#unless offset}}margin-left: -5px; {{/unless}}width: 27px;">
+        {{/each}}
+      </div>
+    </div>
+  {{/if}}
+  <h2>{{localize 'CoC7.InvestigatorWizard.Setups'}}</h2>
+  <p>{{localize 'CoC7.InvestigatorWizard.SetupCounts' count=setups.length}}</p>
+  <div class="form-group">
+    <label for="default-setup">{{localize 'CoC7.InvestigatorWizard.SetupSelect'}}:</label>
+    <select name="default-setup" class="submit_on_change">
+      <option value="">{{localize 'CoC7.InvestigatorWizard.SetupAny'}}</option>
+      {{#select object.defaultSetup}}
+        {{#each setups as |setup|}}
+          <option value="{{setup.flags.CoC7.cocidFlag.id}}">{{setup.name}}</option>
+        {{/each}}
+      {{/select}}
+    </select>
+  </div>
+  {{#if object.defaultSetup}}
+    {{{description}}}
+  {{/if}}
+
+  <h2>{{localize 'CoC7.InvestigatorWizard.Occupations'}}</h2>
+  <p>{{localize 'CoC7.InvestigatorWizard.OccupationCounts' count=occupations.length}}</p>
+
+  {{#if hasArchetypes}}
+    <h2>{{localize 'CoC7.InvestigatorWizard.Archetypes'}}</h2>
+    <p>{{localize 'CoC7.InvestigatorWizard.ArchetypeCounts' count=archetypes.length}}</p>
+  {{/if}}
+</div>

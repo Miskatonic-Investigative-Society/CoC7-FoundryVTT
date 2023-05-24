@@ -45,15 +45,55 @@ This last tab will includes all changes made to the character sheet.
 An effect includes a list of changes. Each change needs to be addressed with the corresponding system path.
 The available changes are :
 
-- Characteristics: system.characteristics.\[characteristic\].value
-  - available \[characteristic\] are: str, con, siz, dex, app, int, pow, edu
-- attributes:
-  - mov: system.attribs.mov.value
-  - build: system.attribs.build.value
-  - bonus damage: system.attribs.db.value
-  - armor: system.attribs.armor.value
-- derived attributes. Only the maximum value of those attributes should be modified. Those changes are applied after all other changes have been made. If that attibute is in auto mode, it will be recalculated with the previous characteristics changes before having it's value affected.
-  - max hit points: system.attribs.hp.max
-  - max sanity: system.attribs.san.max
-- skills. Skills are identified by their name without specialization. Skill names are case sensitive !
-  - system.skills.Handgun.value
+- Characteristics: 
+  - Strength:
+    - system.characteristics.str.value
+    - system.characteristics.str.bonusDice
+  - Constitution:
+    - system.characteristics.con.value
+    - system.characteristics.con.bonusDice
+  - Size:
+    - system.characteristics.siz.value
+    - system.characteristics.siz.bonusDice
+  - Dexterity:
+    - system.characteristics.dex.value
+    - system.characteristics.dex.bonusDice
+  - Appearance:
+    - system.characteristics.app.value
+    - system.characteristics.app.bonusDice
+  - Intelligence:
+    - system.characteristics.int.value
+    - system.characteristics.int.bonusDice
+  - Power:
+    - system.characteristics.pow.value
+    - system.characteristics.pow.bonusDice
+  - Education:
+    - system.characteristics.edu.value
+    - system.characteristics.edu.bonusDice
+- Attributes:
+  - Luck:
+    - system.characteristics.lck.value
+    - system.characteristics.lck.bonusDice
+  - Sanity:
+    - system.characteristics.san.value
+    - system.characteristics.san.bonusDice
+  - Movement Rate:
+    - system.attribs.mov.value
+  - Build:
+    - system.attribs.build.value
+  - Damage Bonus:
+    - system.attribs.db.value
+  - Armor:
+    - system.attribs.armor.value
+- Derived attributes. Only the maximum value of those attributes should be modified. Those changes are applied after all other changes have been made. If that attibute is in auto mode, it will be recalculated with the previous characteristics changes before having it's value affected.
+  - Hit Points:
+    - system.attribs.hp.max
+  - Sanity:
+    - system.attribs.san.max
+- Skills. Skills are identified by their full names and are case sensitive!
+  - Charm
+    - system.skills.Charm.value
+    - system.skills.Charm.bonusDice
+  - Fighting (Brawl)
+    - system.skills.Fighting (Brawl).value
+    - system.skills.Fighting (Brawl).bonusDice

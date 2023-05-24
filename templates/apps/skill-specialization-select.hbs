@@ -1,0 +1,38 @@
+<form>
+  <div class="flexcol">
+    {{#if object.allowSelect}}
+      <div class="flexrow">
+        <select name="existing-skill">
+          <option value="">{{localize 'CoC7.SkillPickNameOnly'}}</option>
+          {{#select object.selected}}
+            {{#each object.skills as |skill|}}
+              <option value="{{skill.id}}" data-base="{{skill.base}}">{{skill.name}}</option>
+            {{/each}}
+          {{/select}}
+        </select>
+      </div>
+      <br>
+    {{/if}}
+
+    {{#if (and object.allowCustom (eq object.selected ''))}}
+      <div class="flexrow">
+        <label>{{localize 'CoC7.CustomSpecialisationLabel' specialisation=object.label}}</label>
+      </div>
+
+      <div class="flexrow">
+        <input name="new-skill-name" type="text" value="{{object.name}}" placeholder="{{ localize 'CoC7.CreateNewSkill' }}"/>
+      </div>
+
+      {{#unless object.fixedBaseValue}}
+        <br>
+        <div class="flexrow">
+          <label>{{localize 'CoC7.BaseSkillValue'}} :</label>
+          <input name="base-value" type="text" value="{{object.baseValue}}" placeholder="{{ localize 'CoC7.SkillBase' }}"/>
+        </div>
+      {{/unless}}
+      <br>
+    {{/if}}
+
+    <button class="submit-button" type="button" data-action="chat"><i class="fas fa-check"></i>{{ localize 'CoC7.Validate' }}</button>
+  </div>
+</form>

@@ -5,6 +5,8 @@ import { registerSettings } from '../scripts/register-settings.js'
 import { registerSheets } from '../scripts/register-sheets.js'
 import { handlebarsHelper } from '../scripts/handlebars-helper.js'
 import { compendiumFilter } from '../scripts/compendium-filter.js'
+import { CoCID } from '../scripts/coc-id.js'
+import { CoC7Link } from '../apps/coc7-link.js'
 
 export function listen () {
   Hooks.once('init', async () => {
@@ -14,5 +16,7 @@ export function listen () {
     registerSheets()
     handlebarsHelper()
     compendiumFilter()
+    CoCID.init()
+    CoC7Link.init()
   })
 }

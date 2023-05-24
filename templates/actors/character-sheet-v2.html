@@ -191,7 +191,7 @@
         <a data-tab="background">
           <div class="tab-name"><span>{{localize 'CoC7.Background'}}</span></div>
         </a>
-        <a class="keeper-only-tab" data-tab="effects" title="{{localize 'CoC7.GmNotes'}}">
+        <a class="keeper-only-tab" data-tab="effects" title="{{localize 'CoC7.Effects'}}">
           <div class="tab-name"><span><i class="game-icon game-icon-aura"></i></span></div>
         </a>
         {{#if isKeeper}}
@@ -294,6 +294,63 @@
                         </div>
                       </div>
                     </div>
+                  </div>
+                </div>
+                <div>
+                  <p>&nbsp;</p>
+                  <h3 class="form-header">
+                    {{localize 'CoC7.MonetaryTitle'}}
+                    <a class="item-control add-monetary"><i class="fas fa-plus"></i></a>
+                  </h3>
+                  <div class="cash-assets">
+                    <div class="form-group">
+                      <label>{{localize 'CoC7.MonetaryFormatTitle'}}</label>
+                      <select name="system.monetary.format">
+                        {{#select data.system.monetary.format}}
+                          {{#each _monetaryFormats as |monetaryFormat|}}
+                            <option value="{{monetaryFormat.key}}">{{monetaryFormat.val}}</option>
+                          {{/each}}
+                        {{/select}}
+                      </select>
+                    </div>
+                    {{#if showCurrencySymbol}}
+                      <div class="form-group">
+                        <label>{{localize 'CoC7.MonetarySymbol'}}</label>
+                        <input type="text" name="system.monetary.symbol" value="{{data.system.monetary.symbol}}">
+                      </div>
+                    {{/if}}
+                    {{#each data.system.monetary.values as |value index|}}
+                      <div class="flexrow form-group item" data-index="{{index}}">
+                        <input name="system.monetary.values.{{index}}.name" value="{{localize value.name}}" type="text" placeholder="{{localize 'CoC7.Name'}}">
+                        <input name="system.monetary.values.{{index}}.min" value="{{value.min}}" class="cash-assets-range" type="number" placeholder="{{localize 'CoC7.MonetaryCreditRatingMin'}}">
+                        <input name="system.monetary.values.{{index}}.max" value="{{value.max}}" class="cash-assets-range" type="number" placeholder="{{localize 'CoC7.MonetaryCreditRatingMax'}}">
+                        <select name="system.monetary.values.{{index}}.cashType" class="cash-assets-type">
+                          {{#select value.cashType}}
+                            {{#each ../_monetaryTypes as |monetaryType|}}
+                              <option value="{{monetaryType.key}}">{{monetaryType.val}}</option>
+                            {{/each}}
+                          {{/select}}
+                        </select>
+                        <input name="system.monetary.values.{{index}}.cashValue" value="{{value.cashValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueCash'}}">
+                        <select name="system.monetary.values.{{index}}.assetsType" class="cash-assets-type">
+                          {{#select value.assetsType}}
+                            {{#each ../_monetaryTypes as |monetaryType|}}
+                              <option value="{{monetaryType.key}}">{{monetaryType.val}}</option>
+                            {{/each}}
+                          {{/select}}
+                        </select>
+                        <input name="system.monetary.values.{{index}}.assetsValue" value="{{value.assetsValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueAssets'}}">
+                        <select name="system.monetary.values.{{index}}.spendingType" class="cash-assets-type">
+                          {{#select value.spendingType}}
+                            {{#each ../_monetaryTypes as |monetaryType|}}
+                              <option value="{{monetaryType.key}}">{{monetaryType.val}}</option>
+                            {{/each}}
+                          {{/select}}
+                        </select>
+                        <input name="system.monetary.values.{{index}}.spendingValue" value="{{value.spendingValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueSpendingLevel'}}">
+                        <a class="item-control remove-monetary"><i class="fas fa-minus"></i></a>
+                      </div>
+                    {{/each}}
                   </div>
                 </div>
               </div>

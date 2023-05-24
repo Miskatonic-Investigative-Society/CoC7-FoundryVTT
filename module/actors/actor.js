@@ -1,4 +1,4 @@
-/* global Actor, CONFIG, CONST, Dialog, Die, duplicate, foundry, fromUuid, fromUuidSync, game, getProperty, Hooks, mergeObject, Roll, TextEditor, Token, ui */
+/* global Actor, Application, CONFIG, CONST, Dialog, Die, duplicate, foundry, fromUuid, fromUuidSync, game, getProperty, Hooks, mergeObject, Roll, TextEditor, Token, ui */
 import { COC7 } from '../config.js'
 import { CoC7ChatMessage } from '../apps/coc7-chat-message.js'
 import { CoC7Check } from '../check.js'
@@ -9,6 +9,7 @@ import { PointSelectDialog } from '../apps/point-selection-dialog.js'
 import { CharacSelectDialog } from '../apps/char-selection-dialog.js'
 import { CharacRollDialog } from '../apps/char-roll-dialog.js'
 import { SkillSpecSelectDialog } from '../apps/skill-spec-select-dialog.js'
+import { SkillSpecializationSelectDialog } from '../apps/skill-specialization-select-dialog.js'
 import { SkillValueDialog } from '../apps/skill-value-dialog.js'
 import { CoC7MeleeInitiator } from '../chat/combat/melee-initiator.js'
 import { CoC7RangeInitiator } from '../chat/rangecombat.js'
@@ -93,12 +94,8 @@ export class CoCActor extends Actor {
     if (['character', 'npc', 'creature'].includes(this.type)) {
       this.system.skills = {}
       for (const i of this.items) {
-        if (i.type === 'skill') {
-          this.system.skills[`${i.system.skillName}`] = {
-            value: i.rawValue
-          }
-          this.system.skills[`${i.id}`] = { value: i.rawValue }
-        }
+        if (i.type !== 'skill') continue
+        this.system.skills[`${i.itemIdentifier}`] = { foundryID: i.id, cocid: i.flags?.CoC7?.cocidFlag?.id, value: i.rawValue, bonusDice: i.system.bonusDice }
       }
 
       /**
@@ -827,7 +824,7 @@ export class CoCActor extends Actor {
       title,
       value: null
     })
-    await this.update({ 'system.biography': bio })
+    await this.update({ 'system.biography': bio }, { renderSheet: false })
   }
 
   async updateBioValue (index, content) {
@@ -896,9 +893,9 @@ export class CoCActor extends Actor {
     let baseCalculated = 0
     let archetype = false
     let occupation = false
-    for (const data of dataArray) {
+    for (let data of dataArray) {
       switch (data.type) {
-        case 'skill':
+        case 'skill': {
           baseValue = data.system.base
           baseCalculated = await CoC7Item.calculateBase(this, data)
           if (this.type !== 'character') {
@@ -929,10 +926,18 @@ export class CoCActor extends Actor {
             data.system.value = null
           }
 
+          let addThis = true
+
           if (CoC7Item.isAnySpec(data)) {
             let skillList = []
+            const group = game.system.api.cocid.guessGroupFromDocument(data)
+            if (group) {
+              skillList = (await game.system.api.cocid.fromCoCIDRegexBest({ cocidRegExp: new RegExp('^' + CoC7Utilities.quoteRegExp(group) + '.+$'), type: 'i' })).filter(item => {
+                return !(item.system.properties?.special && !!(item.system.properties?.requiresname || item.system.properties?.picknameonly))
+              })
+            }
             if (data.system?.flags?.occupation || data.system?.flags?.archetype) {
-              skillList = this.skills.filter(el => {
+              const existingSkills = this.skills.filter(el => {
                 if (!el.system.specialization) return false
                 if (
                   data.system?.flags?.occupation &&
@@ -951,41 +956,105 @@ export class CoCActor extends Actor {
                   el.system.specialization.toLocaleLowerCase()
                 )
               })
-            }
-            const skillData = await SkillSpecSelectDialog.create(
-              skillList,
-              data.system.specialization,
-              baseCalculated
-            )
-            if (skillData) {
-              baseCalculated = skillData.get('base-value')
-              data.system.value = baseCalculated
-              if (skillData.get('existing-skill')) {
-                const existingItem = this.items.get(
-                  skillData.get('existing-skill')
-                )
-                for (const [key, value] of Object.entries(data.system.flags)) {
-                  if (value) await existingItem.setItemFlag(key)
+              if (existingSkills.length > 0) {
+                if (skillList.length > 0) {
+                  for (let i = existingSkills.length - 1; i >= 0; i--) {
+                    const found = skillList.findIndex(item => {
+                      return item.name === existingSkills[i].name || item.flags?.CoC7?.cocidFlag?.id === existingSkills[i].flags?.CoC7?.cocidFlag?.id
+                    })
+                    if (found > -1) {
+                      skillList.splice(found, 1)
+                    }
+                  }
+                  skillList = skillList.concat(existingSkills)
+                } else {
+                  skillList = existingSkills
                 }
-                data.name = CoC7Item.getNameWithoutSpec(existingItem)
-                return
+              }
+            }
+            if (skillList.length > 0) {
+              skillList.sort(CoC7Utilities.sortByNameKey)
+            }
+            const skillData = await SkillSpecializationSelectDialog.create({
+              skills: skillList,
+              allowCustom: (data.system.properties?.requiresname ?? false),
+              fixedBaseValue: (data.system.properties?.keepbasevalue ?? false),
+              specializationName: data.system.specialization,
+              label: data.name,
+              baseValue: data.system.base
+            })
+            if (Object.prototype.hasOwnProperty.call(skillData, 'selected')) {
+              if (skillData.selected) {
+                const existingItem = this.items.get(
+                  skillData.selected
+                )
+                if (existingItem) {
+                  const changes = {}
+                  if (!(data.system.properties?.keepbasevalue ?? false)) {
+                    if (skillData.baseValue !== '') {
+                      baseCalculated = skillData.baseValue
+                      changes['system.value'] = baseCalculated
+                    }
+                  }
+                  for (const [key, value] of Object.entries(data.system.flags)) {
+                    if (value) {
+                      changes[`system.flags.${key}`] = true
+                    }
+                  }
+                  if (Object.keys(changes).length > 0) {
+                    changes._id = existingItem.id
+                    await this.updateEmbeddedDocuments('Item', [changes])
+                  }
+                  data.name = CoC7Item.getNameWithoutSpec(existingItem)
+                  addThis = false
+                } else {
+                  const existing = skillList.find(i => i.id === skillData.selected)
+                  if (existing) {
+                    const flags = data.system?.flags
+                    data = duplicate(existing)
+                    for (const [key, value] of Object.entries(flags)) {
+                      if (value) {
+                        data.system.flags[key] = true
+                      }
+                    }
+                    if (!(data.system.properties?.keepbasevalue ?? false)) {
+                      if (skillData.baseValue !== '') {
+                        baseCalculated = skillData.baseValue
+                        data.system.value = baseCalculated
+                      } else {
+                        baseValue = data.system.value
+                      }
+                    }
+                  }
+                }
               } else {
                 const parts = CoC7Item.getNamePartsSpec(
-                  skillData.get('new-skill-name'),
+                  skillData.name,
                   data.system.specialization
                 )
+                if (!(data.system.properties?.keepbasevalue ?? false)) {
+                  if (skillData.baseValue !== '') {
+                    baseCalculated = skillData.baseValue
+                    data.system.value = baseCalculated
+                  } else {
+                    baseValue = data.system.value
+                  }
+                }
                 data.system.skillName = parts.skillName
                 data.name = parts.name
               }
             }
           }
 
-          if (String(baseValue) !== String(baseCalculated)) {
-            data.system.base = baseCalculated
-          }
+          if (addThis) {
+            if (String(baseValue) !== String(baseCalculated)) {
+              data.system.base = baseCalculated
+            }
 
-          processedDataArray.push(duplicate(data))
+            processedDataArray.push(duplicate(data))
+          }
           break
+        }
 
         case 'weapon': {
           if (this.type !== 'container') {
@@ -1117,19 +1186,23 @@ export class CoCActor extends Actor {
                   data.system.characteristics.values.pow / 5
                 )
               }
-              await this.update(updateData)
+              await this.update(updateData, { renderSheet: false })
               await this.update({
                 'system.attribs.hp.value': this.rawHpMax,
                 'system.attribs.hp.max': this.rawHpMax
-              })
-            } else return
+              }, { renderSheet: false })
+            } else {
+              return
+            }
           }
-          const skills = data.system.items.filter(it => it.type === 'skill')
-          const othersItems = data.system.items.filter(it => it.type !== 'skill')
+          const era = Object.entries(data.flags?.CoC7?.cocidFlag?.eras).filter(e => e[1]).map(e => e[0])
+          const items = await game.system.api.cocid.expandItemArray({ itemList: data.system.items, era: (typeof era[0] !== 'undefined' ? era[0] : true) })
+          const skills = items.filter(it => it.type === 'skill')
+          const othersItems = items.filter(it => it.type !== 'skill')
           await this.addUniqueItems(skills)
           await this.addItems(othersItems)
           if (game.settings.get('CoC7', 'oneBlockBackstory')) {
-            await this.update({ 'system.backstory': data.system.backstory })
+            await this.update({ 'system.backstory': data.system.backstory }, { renderSheet: false })
           } else {
             for (const sectionName of data.system.bioSections) {
               if (
@@ -1142,6 +1215,18 @@ export class CoCActor extends Actor {
               }
             }
           }
+          // refactor this
+          const monetary = mergeObject(this.system.monetary, duplicate(data.system.monetary))
+          const sheet = this.sheet
+          let state = false
+          do {
+            state = await new Promise(resolve => setTimeout(() => {
+              resolve(sheet._state)
+            }, 100))
+          } while (state === Application.RENDER_STATES.RENDERING)
+          await this.update({
+            'system.monetary': monetary
+          })
           Hooks.call('setupFinishedCoC7')
           break
         }
@@ -1213,6 +1298,7 @@ export class CoCActor extends Actor {
             }
 
             // Add all skills
+            data.system.skills = await game.system.api.cocid.expandItemArray({ itemList: data.system.skills })
             await this.addUniqueItems(data.system.skills, 'archetype')
 
             processedDataArray.push(duplicate(data))
@@ -1237,6 +1323,24 @@ export class CoCActor extends Actor {
               })
               if (resetOccupation) await this.resetOccupation()
               else return
+            }
+
+            // Convert CoCIDs to items
+            data.system.skills = await game.system.api.cocid.expandItemArray({ itemList: data.system.skills })
+
+            if (Number(data.system.creditRating.max) > 0) {
+              // Occupations with a credit rating require a credit rating skill
+              const actorCreditRating = game.system.api.cocid.findCocIdInList('i.skill.credit-rating', data.system.skills)
+              if (actorCreditRating.length === 0) {
+                if (game.system.api.cocid.findCocIdInList('i.skill.credit-rating', this.items).length === 0) {
+                  data.system.skills.push('i.skill.credit-rating')
+                  data.system.skills = await game.system.api.cocid.expandItemArray({ itemList: data.system.skills })
+                }
+              } else {
+                if (game.system.api.cocid.findCocIdInList('i.skill.credit-rating', this.items).length === 0) {
+                  data.system.skills.push(actorCreditRating[0])
+                }
+              }
             }
 
             // Select characteristic
@@ -1271,6 +1375,9 @@ export class CoCActor extends Actor {
 
             // Add optional skills
             for (let index = 0; index < data.system.groups.length; index++) {
+              // Convert CoCIds to items
+              data.system.groups[index].skills = await game.system.api.cocid.expandItemArray({ itemList: data.system.groups[index].skills })
+
               const dialogData = {}
               dialogData.skills = []
               dialogData.type = 'occupation'
@@ -1482,8 +1589,10 @@ export class CoCActor extends Actor {
 
     for (const value of this.items) {
       if (
-        CoC7Item.getNameWithoutSpec(value).toLowerCase() ===
-          name.toLowerCase() &&
+        (
+          CoC7Item.getNameWithoutSpec(value).toLowerCase() === name.toLowerCase() ||
+          value.flags?.CoC7?.cocidFlag?.id === skillName
+        ) &&
         value.type === 'skill'
       ) {
         skillList.push(value)
@@ -1650,14 +1759,7 @@ export class CoCActor extends Actor {
         this.system.characteristics.siz.value != null &&
         this.system.characteristics.con.value != null
       ) {
-        return Math.floor(
-          (parseInt(this.system.characteristics.siz.value, 10) +
-            parseInt(this.system.characteristics.con.value, 10)) /
-            (game.settings.get('CoC7', 'pulpRuleDoubleMaxHealth') &&
-            this.type === 'character'
-              ? 5
-              : 10)
-        )
+        return CoCActor.hpFromCharacteristics(this.system.characteristics, this.type)
       }
       if (this.system.attribs.hp.max) {
         return parseInt(this.system.attribs.hp.max)
@@ -1681,19 +1783,20 @@ export class CoCActor extends Actor {
 
   async addUniqueItems (skillList, flag = null) {
     const processed = []
-    for (const skill of skillList) {
+    for (let skill of skillList) {
+      skill = duplicate(skill)
+      if (flag) {
+        if (!Object.prototype.hasOwnProperty.call(skill.system, 'flags')) {
+          skill.system.flags = {}
+        }
+        skill.system.flags[flag] = true
+      }
       if (CoC7Item.isAnySpec(skill)) {
-        if (!skill.system.flags) skill.system.flags = {}
-        if (flag) skill.system.flags[flag] = true
-        processed.push(duplicate(skill))
+        processed.push(skill)
       } else {
         const itemId = this.getItemIdByName(skill.name)
         if (!itemId) {
-          if (flag) {
-            if (!skill.system.flags) skill.system.flags = {}
-            skill.system.flags[flag] = true
-          }
-          processed.push(duplicate(skill))
+          processed.push(skill)
         } else if (flag) {
           const item = this.items.get(itemId)
           await item.setItemFlag(flag)
@@ -1744,7 +1847,7 @@ export class CoCActor extends Actor {
   get rawMpMax () {
     if (this.system.attribs.mp.auto) {
       if (this.system.characteristics.pow.value != null) {
-        return Math.floor(this.system.characteristics.pow.value / 5)
+        return CoCActor.mpFromCharacteristics(this.system.characteristics)
       } else return 0
     }
     return parseInt(this.system.attribs.mp.max)
@@ -2039,6 +2142,51 @@ export class CoCActor extends Actor {
     this.setAttribAuto(!this.system.attribs[attrib].auto, attrib)
   }
 
+  static dbFromCharacteristics (characteristics) {
+    const sum = (characteristics.str.value ?? 0) + (characteristics.siz.value ?? 0)
+    if (sum < 65) return -2
+    if (sum < 85) return -1
+    if (sum < 125) return 0
+    if (sum < 165) return '1D4'
+    return `${Math.floor((sum - 45) / 80)}D6`
+  }
+
+  static buildFromCharacteristics (characteristics) {
+    const sum = (characteristics.str.value ?? 0) + (characteristics.siz.value ?? 0)
+    if (sum < 65) return -2
+    if (sum < 85) return -1
+    if (sum < 125) return 0
+    if (sum < 165) return 1
+    return Math.floor((sum - 45) / 80) + 1
+  }
+
+  static hpFromCharacteristics (characteristics, type) {
+    const sum = parseInt(characteristics.siz.value ?? 0, 10) + parseInt(characteristics.con.value ?? 0, 10)
+    const divisor = (game.settings.get('CoC7', 'pulpRuleDoubleMaxHealth') && type === 'character' ? 5 : 10)
+    return Math.floor(sum / divisor)
+  }
+
+  static mpFromCharacteristics (characteristics) {
+    return Math.floor(characteristics.pow.value / 5)
+  }
+
+  static movFromCharacteristics (characteristics, type, age) {
+    let MOV
+    if (characteristics.dex.value > characteristics.siz.value && characteristics.str.value > characteristics.siz.value) {
+      MOV = 9 // Bug correction by AdmiralNyar.
+    } else if (characteristics.dex.value >= characteristics.siz.value || characteristics.str.value >= characteristics.siz.value) {
+      MOV = 8
+    } else {
+      MOV = 7
+    }
+    if (type !== 'creature' && !game.settings.get('CoC7', 'pulpRuleIgnoreAgePenalties')) {
+      if (!isNaN(parseInt(age))) {
+        MOV = parseInt(age) >= 40 ? MOV - Math.floor(parseInt(age) / 10) + 3 : MOV
+      }
+    }
+    return Math.max(0, MOV)
+  }
+
   get rawBuild () {
     if (!this.system.attribs) return null
     if (!this.system.attribs.build) return null
@@ -2046,14 +2194,7 @@ export class CoCActor extends Actor {
       this.system.attribs.build.auto = true
     }
     if (this.system.attribs.build.auto) {
-      const sum =
-        this.system.characteristics.str.value +
-        this.system.characteristics.siz.value
-      if (sum > 164) return Math.floor((sum - 45) / 80) + 1
-      if (sum < 65) return -2
-      if (sum < 85) return -1
-      if (sum < 125) return 0
-      if (sum < 165) return 1
+      return CoCActor.buildFromCharacteristics(this.system.characteristics)
     }
 
     return this.system.attribs.build.value
@@ -2070,14 +2211,7 @@ export class CoCActor extends Actor {
       this.system.attribs.db.auto = true
     }
     if (this.system.attribs.db.auto) {
-      const sum =
-        this.system.characteristics.str.value +
-        this.system.characteristics.siz.value
-      if (sum > 164) return `${Math.floor((sum - 45) / 80)}D6`
-      if (sum < 65) return -2
-      if (sum < 85) return -1
-      if (sum < 125) return 0
-      if (sum < 165) return '1D4'
+      return CoCActor.dbFromCharacteristics(this.system.characteristics)
     }
     return this.system.attribs.db.value
   }
@@ -2093,32 +2227,7 @@ export class CoCActor extends Actor {
       this.system.attribs.mov.auto = true
     }
     if (this.system.attribs.mov.auto) {
-      let MOV
-      if (
-        this.system.characteristics.dex.value >
-          this.system.characteristics.siz.value &&
-        this.system.characteristics.str.value >
-          this.system.characteristics.siz.value
-      ) {
-        MOV = 9 // Bug correction by AdmiralNyar.
-      } else if (
-        this.system.characteristics.dex.value >=
-          this.system.characteristics.siz.value ||
-        this.system.characteristics.str.value >=
-          this.system.characteristics.siz.value
-      ) {
-        MOV = 8
-      } else {
-        MOV = 7
-      }
-      if (this.system.type !== 'creature') {
-        if (!isNaN(parseInt(this.system.infos.age))) {
-          MOV =
-            parseInt(this.system.infos.age) >= 40
-              ? MOV - Math.floor(parseInt(this.system.infos.age) / 10) + 3
-              : MOV
-        }
-      }
+      const MOV = CoCActor.movFromCharacteristics(this.system.characteristics, this.system.type, this.system.infos.age)
       if (MOV > 0) return MOV
     }
     return this.system.attribs.mov.value
@@ -3211,7 +3320,7 @@ export class CoCActor extends Actor {
 
   get dodgeSkill () {
     const skillList = this.getSkillsByName(
-      game.i18n.localize(COC7.dodgeSkillName)
+      game.i18n.localize('CoC7.CoCIDFlag.keys.i.skill.dodge')
     )
     if (skillList.length !== 0) return skillList[0]
     return null
@@ -3219,7 +3328,7 @@ export class CoCActor extends Actor {
 
   get creditRatingSkill () {
     const skillList = this.getSkillsByName(
-      game.i18n.localize(COC7.creditRatingSkillName)
+      game.i18n.localize('CoC7.CoCIDFlag.keys.i.skill.credit-rating')
     )
     if (skillList.length !== 0) return skillList[0]
     return null
@@ -3227,7 +3336,7 @@ export class CoCActor extends Actor {
 
   get cthulhuMythosSkill () {
     const skillList = this.getSkillsByName(
-      game.i18n.localize(COC7.CthulhuMythosName)
+      game.i18n.localize('CoC7.CoCIDFlag.keys.i.skill.cthulhu-mythos')
     )
     if (skillList.length !== 0) return skillList[0]
     return null
@@ -3269,34 +3378,80 @@ export class CoCActor extends Actor {
     return 0
   }
 
+  static monetaryFormat (format, symbol, value) {
+    switch (format) {
+      case COC7.monetaryFormatKeys.lsd:
+        return Math.floor(value / 240) + '/' + (Math.floor(value / 12) % 20) + '/' + (value % 12)
+      case COC7.monetaryFormatKeys.roman:
+        return (Math.floor(value / 400)) + '/' + (Math.floor(value / 16) % 25) + '/' + (Math.floor(value / 8) % 2) + '/' + (Math.floor(value / 4) % 2) + '/' + (value % 4)
+      case COC7.monetaryFormatKeys.decimalLeft:
+        return symbol + Number(value).toLocaleString(undefined, { minimumFractionDigits: 2 }).replace(/\.00$/, '')
+      case COC7.monetaryFormatKeys.decimalRight:
+        return Number(value).toLocaleString(undefined, { minimumFractionDigits: 2 }).replace(/\.00$/, '') + ' ' + symbol
+      case COC7.monetaryFormatKeys.integerLeft:
+        return symbol + Number(value).toLocaleString()
+      case COC7.monetaryFormatKeys.integerRight:
+        return Number(value).toLocaleString() + ' ' + symbol
+    }
+    return '0'
+  }
+
+  static monetaryValue (format, values, CR, type, value) {
+    CR = CR || 0
+    const row = values.find(r => (typeof r.min === 'object' || r.min <= CR) && (typeof r.max === 'object' || r.max >= CR))
+    if (typeof row !== 'undefined' && typeof row[type] !== 'undefined' && typeof row[value] !== 'undefined') {
+      switch (format) {
+        case COC7.monetaryFormatKeys.lsd:
+          switch (row[type]) {
+            case COC7.monetaryTypeKeys.multiplier:
+              return 240 * CR * row[value]
+            case COC7.monetaryTypeKeys.value:
+              return 240 * row[value]
+            case COC7.monetaryTypeKeys.s:
+              return 12 * row[value]
+            case COC7.monetaryTypeKeys.d:
+              return 1 * row[value]
+          }
+          break
+        case COC7.monetaryFormatKeys.roman:
+          switch (row[type]) {
+            case COC7.monetaryTypeKeys.multiplier:
+              return 400 * CR * row[value]
+            case COC7.monetaryTypeKeys.value:
+              return 400 * row[value]
+            case COC7.monetaryTypeKeys.denarii:
+              return 16 * row[value]
+            case COC7.monetaryTypeKeys.quinarii:
+              return 8 * row[value]
+            case COC7.monetaryTypeKeys.sestertii:
+              return 4 * row[value]
+            case COC7.monetaryTypeKeys.asses:
+              return 1 * row[value]
+          }
+          break
+        default:
+          switch (row[type]) {
+            case COC7.monetaryTypeKeys.multiplier:
+              return CR * row[value]
+            case COC7.monetaryTypeKeys.value:
+              return 1 * row[value]
+          }
+          break
+      }
+    }
+    return 0
+  }
+
   get spendingLevel () {
-    const CR = this.creditRating
-    if (CR >= 99) return 5000
-    if (CR >= 90) return 250
-    if (CR >= 50) return 50
-    if (CR >= 10) return 10
-    if (CR >= 1) return 2
-    return 0.5
+    return CoCActor.monetaryValue(this.system.monetary.format, this.system.monetary.values, this.creditRating, 'spendingType', 'spendingValue')
   }
 
   get cash () {
-    const CR = this.creditRating
-    if (CR >= 99) return 50000
-    if (CR >= 90) return CR * 20
-    if (CR >= 50) return CR * 5
-    if (CR >= 10) return CR * 2
-    if (CR >= 1) return CR
-    return 0.5
+    return CoCActor.monetaryValue(this.system.monetary.format, this.system.monetary.values, this.creditRating, 'cashType', 'cashValue')
   }
 
   get assets () {
-    const CR = this.creditRating
-    if (CR >= 99) return 5000000
-    if (CR >= 90) return CR * 2000
-    if (CR >= 50) return CR * 500
-    if (CR >= 10) return CR * 50
-    if (CR >= 1) return CR * 10
-    return 0
+    return CoCActor.monetaryValue(this.system.monetary.format, this.system.monetary.values, this.creditRating, 'assetsType', 'assetsValue')
   }
 
   get skills () {
@@ -3328,8 +3483,8 @@ export class CoCActor extends Actor {
 
   async setHp (value) {
     if (value < 0) value = 0
-    if (value > this.system.attribs.san.max) {
-      value = this.system.attribs.san.max
+    if (value > this.system.attribs.hp.max) {
+      value = this.system.attribs.hp.max
     }
     const healthBefore = this.hp
     let damageTaken

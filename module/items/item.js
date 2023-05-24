@@ -1,7 +1,8 @@
 /* global CONFIG, duplicate, game, getProperty, Item, Roll, TextEditor, Token, ui */
-import { CoC7Parser } from '../apps/parser.js'
+import { CoC7Parser } from '../apps/coc7-parser.js'
 import { COC7 } from '../config.js'
 import { CoC7Utilities } from '../utilities.js'
+import { CoCIDEditor } from '../apps/coc-id-editor.js'
 
 /**
  * Override and extend the basic :class:`Item` implementation
@@ -53,9 +54,7 @@ export class CoC7Item extends Item {
     let fighting
     let firearms
     if (typeof COC7.eras[propertyId] !== 'undefined') {
-      checkedProps = {
-        ['system.eras.' + propertyId]: !(this.system.eras[propertyId] ?? false)
-      }
+      return CoCIDEditor.eraToggle(this, propertyId)
     } else if (this.type === 'weapon' && !override) {
       if (propertyId === 'ahdb') {
         if (!this.system.properties.ahdb) {
@@ -270,11 +269,8 @@ export class CoC7Item extends Item {
     )
     const match = skillName.match(specNameRegex)
     if (match) {
-      return {
-        name: match[0],
-        specialization: match[1],
-        skillName: match[2]
-      }
+      specialization = match[1]
+      skillName = match[2]
     }
     return {
       name: specialization + ' (' + skillName + ')',
@@ -297,22 +293,16 @@ export class CoC7Item extends Item {
   }
 
   static isAnySpec (item) {
-    if (item instanceof CoC7Item) {
-      if (item.type !== 'skill' || !item.system.properties?.special) {
-        return false
-      }
-      return [
-        game.i18n.localize('CoC7.AnySpecName').toLowerCase(),
-        'any'
-      ].includes(CoC7Item.getNameWithoutSpec(item).toLowerCase())
-    } else {
-      // Assume it's data only
-      if (item.type !== 'skill' || !item.properties?.special) return false
-      return [
-        game.i18n.localize('CoC7.AnySpecName').toLowerCase(),
-        'any'
-      ].includes(CoC7Item.getNameWithoutSpec(item).toLowerCase())
+    if (item.type !== 'skill' || !item.system.properties?.special) {
+      return false
     }
+    if (item.system.properties?.requiresname || item.system.properties?.picknameonly) {
+      return true
+    }
+    return [
+      game.i18n.localize('CoC7.AnySpecName').toLowerCase(),
+      'any'
+    ].includes(CoC7Item.getNameWithoutSpec(item).toLowerCase())
   }
 
   async checkSkillProperties () {
@@ -830,7 +820,7 @@ export class CoC7Item extends Item {
     if (this.type !== 'skill') return false
     return (
       this.name.toLowerCase() ===
-      game.i18n.localize('CoC7.DodgeSkillName').toLowerCase()
+      game.i18n.localize('CoC7.CoCIDFlag.keys.i.skill.dodge').toLowerCase()
     )
   }
 }

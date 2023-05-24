@@ -1,4 +1,4 @@
-# System documentation for version 0.9.0
+# System documentation for version 0.10.0
 
 This document is a work in progress overview of the CoC7 system it is not a tutorial for how to use FoundryVTT.
 
@@ -12,16 +12,16 @@ The system automates most of the regular tasks and rules involved with running a
 
 Several parts of the actor sheets have pop up tooltips that trigger after two seconds, this delay can be changed in the settings
 
-This documentation can be reopened under  Compendiums -> JournalEntry -> System manual -> Call of Cthulhu 7th Edition (Unofficial) [en]
+This documentation can be reopened under  Compendiums -> JournalEntry -> System manual -> Call of Cthulhu 7th Edition [en]
 
 # Recent changes
 
 For a full list of changes checkout the [changelog](https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/blob/develop/.github/CHANGELOG.md) on GitHub
 
-- [Chases](chases.md)
-- [Actor importer](actor_importer.md) - added The Dhole's House JSON support
-- [Active effects](effects.md) - implementation of active effects
-- Active effects added to [links](links.md) and [Link creation tool](link_creation_window.md)
+ - [CoC ID system](coc-id-system.md) - Set tags on documents for example i.skill.dodge to find dodge skills on actors
+ - Investigator Wizard - Use CoC ID Items to create investigators
+ - [Pulp Rules](#settings-overview) - Implement optional pulp rule to ignore age when calculating movement speed
+ - [Active effects](effects.md) - Add support for bonus/penalty dice when rolling from the Actor sheets
 
 # Overview sections below
 
@@ -29,11 +29,11 @@ If this is your first time it is recommends you also read the following sections
 
 Foundry VTT is based in actors and items. This module includes a number of system specific actors and items, and some examples of them can be found in the included system compendiums.
 
-- Actor overview
-- Items overview
-- Settings overview
-- Scene menu overview
-- Keyboard and mouse shortcuts
+- [Actor overview](#actor-overview)
+- [Items overview](#items-overview)
+- [Settings overview](#settings-overview)
+- [Scene menu overview](#call-of-cthulhu-scene-menu)
+- [Keyboard and mouse shortcuts](#keyboard-and-mouse-shortcuts)
 - [Creating your first investigator](first_investigator.md)
 - [Character creation](character_creation.md)
 

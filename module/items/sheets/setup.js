@@ -1,7 +1,9 @@
 /* global $, duplicate, expandObject, game, ItemSheet, mergeObject, TextEditor */
+import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { COC7 } from '../../config.js'
 import { CoC7Item } from '../item.js'
 import { CoC7Utilities } from '../../utilities.js'
+import { DropCoCID } from '../../apps/drop-coc-id.js'
 import { isCtrlKey } from '../../chat/helper.js'
 
 /**
@@ -22,15 +24,8 @@ export class CoC7SetupSheet extends ItemSheet {
     html.find('.add-bio').click(async () => await this._onAddBio())
     html.find('.remove-section').click(this._onRemoveSection.bind(this))
     html.find('.toggle-switch').click(this._onClickToggle.bind(this))
-
-    // html.find('.item-edit').click(async ev => {
-    //   const li = $(ev.currentTarget).parents('.item');
-    //   const itemData = this.getItem(li.data('itemId'), 'skills');
-    //   delete itemData._id;
-    //   delete itemData.folder;
-    //   const item = new CoC7Item(itemData);
-    //   await item.sheet.render(true); //marche pas !!
-    // });
+    html.find('.add-monetary').click(this._onAddMonetary.bind(this))
+    html.find('.remove-monetary').click(this._onRemoveMonetary.bind(this))
   }
 
   async _onClickToggle (event) {
@@ -48,6 +43,7 @@ export class CoC7SetupSheet extends ItemSheet {
 
     const dataList = await CoC7Utilities.getDataFromDropEvent(event, 'Item')
 
+    let useCoCID = 0
     const collection = this.item.system[collectionName] ? duplicate(this.item.system[collectionName]) : []
     for (const item of dataList) {
       if (!item || !item.system) continue
@@ -61,8 +57,12 @@ export class CoC7SetupSheet extends ItemSheet {
         }
       }
 
-      collection.push(duplicate(item))
+      if (useCoCID === 0) {
+        useCoCID = await DropCoCID.create()
+      }
+      collection.push(DropCoCID.processItem(useCoCID, item))
     }
+
     await this.item.update({ [`system.${collectionName}`]: collection })
   }
 
@@ -80,12 +80,39 @@ export class CoC7SetupSheet extends ItemSheet {
     await this.item.update({ 'system.bioSections': bio })
   }
 
+  _onAddMonetary () {
+    const values = this.item.system.monetary.values ? duplicate(this.item.system.monetary.values) : []
+    values.push({
+      name: '',
+      min: null,
+      max: null,
+      cashType: 0,
+      cashValue: '',
+      assetsType: 0,
+      assetsValue: '',
+      spendingType: 0,
+      spendingValue: ''
+    })
+    this.item.update({ 'system.monetary.values': values })
+  }
+
+  _onRemoveMonetary (event) {
+    const a = event.currentTarget
+    const div = a.closest('.item')
+    const values = duplicate(this.item.system.monetary.values)
+    values.splice(Number(div.dataset.index), 1)
+    this.item.update({ 'system.monetary.values': values })
+  }
+
   _onItemSummary (event, collectionName = 'items') {
     event.preventDefault()
     const li = $(event.currentTarget).parents('.item')
     const item = this.item.system[collectionName].find(s => {
       return s._id === li.data('item-id')
     })
+    if (!item) {
+      return
+    }
     const chatData = item.system.description
 
     // Toggle summary
@@ -104,24 +131,12 @@ export class CoC7SetupSheet extends ItemSheet {
   }
 
   async _onItemDelete (event, collectionName = 'items') {
-    const itemIndex = $(event.currentTarget).parents('.item').data('item-id')
-    if (itemIndex) await this.removeItem(itemIndex, collectionName)
-  }
-
-  getItem (itemId, collectionName = 'items') {
-    return this.item.system[collectionName].find(s => {
-      return s._id === itemId
-    })
-  }
-
-  async removeItem (itemId, collectionName = 'items') {
-    const itemIndex = this.item.system[collectionName].findIndex(s => {
-      return s._id === itemId
-    })
+    const item = $(event.currentTarget).closest('.item')
+    const itemId = item.data('item-id')
+    const CoCId = item.data('cocid')
+    const itemIndex = this.item.system[collectionName].findIndex(i => (itemId && i._id === itemId) || (CoCId && i === CoCId))
     if (itemIndex > -1) {
-      const collection = this.item.system[collectionName]
-        ? duplicate(this.item.system[collectionName])
-        : []
+      const collection = this.item.system[collectionName] ? duplicate(this.item.system[collectionName]) : []
       collection.splice(itemIndex, 1)
       await this.item.update({ [`system.${collectionName}`]: collection })
     }
@@ -131,7 +146,7 @@ export class CoC7SetupSheet extends ItemSheet {
     return mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'setup'],
       template: 'systems/CoC7/templates/items/setup.html',
-      width: 525,
+      width: 565,
       height: 530,
       dragDrop: [{ dragSelector: '.item' }],
       scrollY: ['.tab.description'],
@@ -145,13 +160,23 @@ export class CoC7SetupSheet extends ItemSheet {
     })
   }
 
+  _getHeaderButtons () {
+    const headerButtons = super._getHeaderButtons()
+    addCoCIDSheetHeaderButton(headerButtons, this)
+    return headerButtons
+  }
+
   async getData () {
     const sheetData = super.getData()
 
     sheetData.hasOwner = this.item.isEmbedded === true
 
-    sheetData.skills = this.item.system.items.filter(it => it.type === 'skill')
-    sheetData.otherItems = this.item.system.items.filter(it => it.type !== 'skill')
+    const era = Object.entries(this.item.flags?.CoC7?.cocidFlag?.eras ?? {}).filter(e => e[1]).map(e => e[0])
+
+    const items = await game.system.api.cocid.expandItemArray({ itemList: this.item.system.items, era: (typeof era[0] !== 'undefined' ? era[0] : true) })
+
+    sheetData.skills = items.filter(it => it.type === 'skill')
+    sheetData.otherItems = items.filter(it => it.type !== 'skill')
 
     sheetData.skillListEmpty = sheetData.skills.length === 0
     sheetData.itemsListEmpty = sheetData.otherItems.length === 0
@@ -162,9 +187,24 @@ export class CoC7SetupSheet extends ItemSheet {
     for (const [key, value] of Object.entries(COC7.eras)) {
       sheetData._eras.push({
         id: key,
-        name: value,
-        isEnabled: this.item.system.eras[key] === true
+        name: game.i18n.localize(value),
+        isEnabled: (this.item.flags?.CoC7?.cocidFlag?.eras ?? {})[key] === true
       })
+    }
+    sheetData._eras.sort(CoC7Utilities.sortByNameKey)
+
+    sheetData._monetaryFormats = []
+    for (const key in COC7.monetaryFormats) {
+      sheetData._monetaryFormats.push({ key, val: game.i18n.localize(COC7.monetaryFormats[key]) })
+    }
+
+    sheetData.showCurrencySymbol = ['decimalLeft', 'decimalRight', 'integerLeft', 'integerRight'].includes(sheetData.data.system.monetary.format)
+
+    sheetData._monetaryTypes = []
+    for (const key in COC7.monetaryTypes) {
+      if (COC7.monetaryTypes[key].filter.length === 0 || COC7.monetaryTypes[key].filter.includes(sheetData.data.system.monetary.format)) {
+        sheetData._monetaryTypes.push({ key, val: game.i18n.localize(COC7.monetaryTypes[key].name) })
+      }
     }
 
     sheetData.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
@@ -203,6 +243,9 @@ export class CoC7SetupSheet extends ItemSheet {
       formData['system.bioSections'] = Object.values(
         system.bioSections || []
       )
+    }
+    if (system.monetary.values) {
+      formData['system.monetary.values'] = Object.values(system.monetary.values || [])
     }
 
     if (event.currentTarget?.name === 'system.characteristics.points.enabled') {

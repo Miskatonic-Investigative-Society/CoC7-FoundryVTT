@@ -328,13 +328,13 @@
   "CoC7.ItemPrice": "价格",
   "CoC7.Armor": "护甲",
 
-  "CoC7.EraNvct": "克苏鲁不败",
-  "CoC7.EraDrka": "克苏鲁黑暗时代",
-  "CoC7.EraDdts": "神秘冰岛",
-  "CoC7.EraGlit": "克苏鲁煤气灯",
+  "CoC7.EraInvictus": "克苏鲁不败",
+  "CoC7.EraDarkAges": "克苏鲁黑暗时代",
+  "CoC7.EraDownDarkerTrails": "神秘冰岛",
+  "CoC7.EraGasLight": "克苏鲁煤气灯",
   "CoC7.Era1920": "1920s",
   "CoC7.EraPulp": "通俗克苏鲁",
-  "CoC7.EraMdrn": "现代",
+  "CoC7.EraModern": "现代",
   "CoC7.Eras": "克苏鲁年代",
   "CoC7.EraAvailability": "可用性",
 
@@ -377,10 +377,10 @@
 
   "CoC7.NewBioSectionName": "新增章节",
 
-  "CoC7.DodgeSkillName": "闪避",
-  "CoC7.CthulhuMythosName": "克苏鲁神话",
-  "CoC7.CreditRatingSkillName": "信用",
-  "CoC7.DriveAutoSkillName": "自动驾驶",
+  "CoC7.CoCIDFlag.keys.i.skill.dodge": "闪避",
+  "CoC7.CoCIDFlag.keys.i.skill.cthulhu-mythos": "克苏鲁神话",
+  "CoC7.CoCIDFlag.keys.i.skill.credit-rating": "信用",
+  "CoC7.CoCIDFlag.keys.i.skill.drive-auto": "自动驾驶",
   "CoC7.FightingSpecializationName": "近身战斗",
   "CoC7.FirearmSpecializationName": "射击",
   "CoC7.DriveSpecializationName": "驾驶",

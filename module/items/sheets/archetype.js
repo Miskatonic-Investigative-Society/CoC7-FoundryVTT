@@ -1,6 +1,8 @@
 /* global $, duplicate, game, ItemSheet, mergeObject, TextEditor */
+import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { CoC7Item } from '../item.js'
 import { CoC7Utilities } from '../../utilities.js'
+import { DropCoCID } from '../../apps/drop-coc-id.js'
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
@@ -29,6 +31,7 @@ export class CoC7ArchetypeSheet extends ItemSheet {
 
     const dataList = await CoC7Utilities.getDataFromDropEvent(event, 'Item')
 
+    let useCoCID = 0
     const collection = this.item.system[collectionName] ? duplicate(this.item.system[collectionName]) : []
     for (const item of dataList) {
       if (!item || !item.system) continue
@@ -41,7 +44,10 @@ export class CoC7ArchetypeSheet extends ItemSheet {
         }
       }
 
-      collection.push(duplicate(item))
+      if (useCoCID === 0) {
+        useCoCID = await DropCoCID.create()
+      }
+      collection.push(DropCoCID.processItem(useCoCID, item))
     }
     await this.item.update({ [`system.${collectionName}`]: collection })
   }
@@ -52,6 +58,9 @@ export class CoC7ArchetypeSheet extends ItemSheet {
     const item = this.item.system[collectionName].find(s => {
       return s._id === li.data('item-id')
     })
+    if (!item) {
+      return
+    }
     const chatData = item.system.description
 
     // Toggle summary
@@ -70,14 +79,10 @@ export class CoC7ArchetypeSheet extends ItemSheet {
   }
 
   async _onItemDelete (event, collectionName = 'items') {
-    const itemIndex = $(event.currentTarget).parents('.item').data('item-id')
-    if (itemIndex) await this.removeItem(itemIndex, collectionName)
-  }
-
-  async removeItem (itemId, collectionName = 'items') {
-    const itemIndex = this.item.system[collectionName].findIndex(s => {
-      return s._id === itemId
-    })
+    const item = $(event.currentTarget).closest('.item')
+    const itemId = item.data('item-id')
+    const CoCId = item.data('cocid')
+    const itemIndex = this.item.system[collectionName].findIndex(i => (itemId && i._id === itemId) || (CoCId && i === CoCId))
     if (itemIndex > -1) {
       const collection = this.item.system[collectionName] ? duplicate(this.item.system[collectionName]) : []
       collection.splice(itemIndex, 1)
@@ -101,6 +106,12 @@ export class CoC7ArchetypeSheet extends ItemSheet {
         }
       ]
     })
+  }
+
+  _getHeaderButtons () {
+    const headerButtons = super._getHeaderButtons()
+    addCoCIDSheetHeaderButton(headerButtons, this)
+    return headerButtons
   }
 
   async getData () {
@@ -150,6 +161,7 @@ export class CoC7ArchetypeSheet extends ItemSheet {
       }
     )
 
+    sheetData.data.system.skills = await game.system.api.cocid.expandItemArray({ itemList: sheetData.data.system.skills })
     sheetData.skillListEmpty = sheetData.data.system.skills.length === 0
 
     sheetData.data.system.skills.sort(CoC7Utilities.sortByNameKey)

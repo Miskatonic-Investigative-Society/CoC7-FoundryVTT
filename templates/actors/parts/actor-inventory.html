@@ -8,11 +8,6 @@
         {{#if data.system.flags.manualCredit}}
           <label>{{localize 'CoC7.ManualCreditValues'}}</label>
           <div class='flex1'></div>
-        {{else}}
-          <label>{{localize 'CoC7.MonetarySymbol'}}</label>
-          <input type="text" name="system.credit.monetarySymbol" value="{{data.system.credit.monetarySymbol}}">
-          <label>{{localize 'CoC7.MonetaryFactor'}}</label>
-          <input type="text" pattern="\d*" data-dtype="number" name="system.credit.multiplier" value="{{data.system.credit.multiplier}}">
         {{/if}}
         <div class="flag {{#if data.system.flags.manualCredit}}auto-off{{else}}auto-on{{/if}}" data-flag="manualCredit" title="{{localize 'CoC7.AutoCreditValues'}}" style="flex: 0;margin-right: 5px;">
           <i class="fas fa-cogs" style="padding-top: 4px;"></i>
@@ -22,30 +17,32 @@
     <div class="flexrow cash-row">
       <label>{{localize 'CoC7.MonetarySpendingLevel'}}</label>
       {{#if data.system.flags.manualCredit}}
-        <input type="text" name="system.credit.spendingLevel" value="{{data.system.credit.spendingLevel}}">
+        <input type="text" name="system.monetary.spendingLevel" value="{{data.system.monetary.spendingLevel}}">
       {{else}}
-        <span>{{credit.spendingLevel}}</span>
+        <span>{{monetary.spendingLevel}}</span>
       {{/if}}
     </div>
     <div class="flexrow cash-row">
       <label>{{localize 'CoC7.MonetaryCash'}}</label>
       {{#if data.system.flags.manualCredit}}
-        <input type="text" name="system.credit.cash" value="{{data.system.credit.cash}}">
+        <input type="text" name="system.monetary.cash" value="{{data.system.monetary.cash}}">
       {{else}}
-        <span>{{credit.cash}}</span>
+        <span>{{monetary.cash}}</span>
       {{/if}}
-      <label>{{localize 'CoC7.MonetarySpent'}}</label><input type="text" name="system.credit.spent" value="{{data.system.credit.spent}}">
+    </div>
+    <div class="flexrow cash-row">
+      <label>{{localize 'CoC7.MonetarySpent'}}</label><input type="text" name="system.monetary.spent" value="{{data.system.monetary.spent}}">
     </div>
     <div class="flexrow  cash-row">
       <label>{{localize 'CoC7.MonetaryAssets'}}</label>
       {{#if data.system.flags.manualCredit}}
-        <input type="text" name="system.credit.assets" value="{{data.system.credit.assets}}">
+        <input type="text" name="system.monetary.assets" value="{{data.system.monetary.assets}}">
       {{else}}
-        <span style="line-height: 22px;">{{credit.assets}}</span>
+        <span style="line-height: 22px;">{{monetary.assets}}</span>
       {{/if}}
     </div>
     <div style="flex:none">
-      <textarea name="system.credit.assetsDetails" placeholder="{{localize 'CoC7.MonetaryAssetsDetails'}}" rows="4">{{data.system.credit.assetsDetails}}</textarea>
+      <textarea name="system.monetary.assetsDetails" placeholder="{{localize 'CoC7.MonetaryAssetsDetails'}}" rows="4">{{data.system.monetary.assetsDetails}}</textarea>
     </div>
     <label style="flex: initial;">{{localize 'CoC7.PossessionsNotes'}}</label>
     <div class="flex1">

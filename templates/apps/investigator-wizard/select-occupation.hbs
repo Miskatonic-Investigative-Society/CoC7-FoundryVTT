@@ -1,0 +1,49 @@
+<h1 style="flex: 0 0 auto;">{{localize 'CoC7.InvestigatorWizard.TitleSelectOccupation'}}</h1>
+<div class="scrollsection">
+  <p>{{localize 'CoC7.InvestigatorWizard.OccupationPage'}}</p>
+  <div class="form-group">
+    <label for="coc-occupation">{{localize 'CoC7.InvestigatorWizard.OccupationSelect'}}:</label>
+    <select name="coc-occupation" class="submit_on_change">
+      <option value="">&nbsp;</option>
+      {{#select object.occupation}}
+        {{#each occupations as |occupation|}}
+          <option value="{{occupation.flags.CoC7.cocidFlag.id}}">{{occupation.name}}</option>
+        {{/each}}
+      {{/select}}
+    </select>
+  </div>
+  {{#if object.occupation}}
+    {{{description}}}
+    <div class="form-group">
+      <label>{{localize 'CoC7.InvestigatorWizard.OccupationCreditRating'}}:</label>
+      <div style="flex: 2;">{{creditRating.min}} - {{creditRating.max}}</div>
+    </div>
+    <div class="form-group">
+      <label>{{localize 'CoC7.InvestigatorWizard.OccupationSkillPoints'}}:</label>
+      <div style="flex: 2;">{{occupationPointsString}}: {{points}}</div>
+    </div>
+    <div class="form-group" style="align-items: baseline;">
+      <label>{{localize 'CoC7.InvestigatorWizard.OccupationSkills'}}:</label>
+      <div style="flex: 2;">
+        <ol class="skills-list">
+          {{#each skills as |skill|}}
+            <li>{{skill.name}}</li>
+          {{/each}}
+        </ol>
+        {{#each groups as |group|}}
+          <div class="form-group">{{localize 'CoC7.InvestigatorWizard.OccupationPickThisMany' count=group.options}}</div>
+          <ol class="skills-list skills-list-child">
+            {{#each group.skills as |set|}}
+              <li>{{set.name}}</li>
+            {{/each}}
+          </ol>
+        {{/each}}
+        {{#if personal}}
+          <ol class="skills-list">
+            <li>{{localize 'CoC7.InvestigatorWizard.OccupationPersonalThisMany' count=personal}}</li>
+          </ol>
+        {{/if}}
+      </div>
+    </div>
+  {{/if}}
+</div>

@@ -1,9 +1,10 @@
 /* global $, game, Hooks */
 import { COC7 } from '../config.js'
+import { CoC7Utilities } from '../utilities.js'
 
 async function performFilter (e) {
   const appId = e.currentTarget.name.replace(/^coc7[^0-9]+(\d+)$/, '$1')
-  const app = $('#app-' + appId)
+  const app = $('div.app[data-appid=' + appId + ']')
   const type = app.find('select[name=coc7type' + appId + ']').val()
   const name = app.find('input[name=search]').val()
   const eraElement = app.find('select[name=coc7era' + appId + ']')
@@ -33,13 +34,9 @@ async function performFilter (e) {
       filter = item.type === type
     }
     if (filter && era !== '') {
-      if (
-        item.system.eras[era] === false ||
-        item.system.eras[era] === true
-      ) {
-        filter = item.system.eras[era]
-      } else {
-        filter = item.system.eras[era]?.selected ?? false
+      const eras = item.flags?.CoC7?.cocidFlag?.eras
+      if (eras && Object.keys(eras).length > 0 && !(eras[era] ?? false)) {
+        filter = false
       }
     }
     if (filter) {
@@ -56,7 +53,14 @@ async function performFilter (e) {
 export function compendiumFilter () {
   Hooks.on('renderCompendium', async (app, html, data) => {
     if (app.collection.documentName === 'Item') {
-      const types = [...new Set(data.index.filter(i => i.name !== '#[CF_tempEntity]').map(item => item.type))]
+      let types = []
+      if (typeof data.index !== 'undefined') {
+        // DEPRECIATED IN v11
+        types = [...new Set(data.index.filter(i => i.name !== '#[CF_tempEntity]').map(item => item.type))]
+      } else {
+        await app.collection.getIndex()
+        types = data.tree.entries.filter(i => i.name !== '#[CF_tempEntity]').map(item => item.type)
+      }
       const select = []
       select.push(
         '<option value="">' + game.i18n.localize('CoC7.All') + '</option>'
@@ -135,16 +139,33 @@ export function compendiumFilter () {
       eras.push(
         '<option value="">' + game.i18n.localize('CoC7.All') + '</option>'
       )
-      for (const [key, value] of Object.entries(COC7.eras)) {
+      for (const era of Object.entries(COC7.eras).map(e => { return { id: e[0], name: game.i18n.localize(e[1]) } }).sort(CoC7Utilities.sortByNameKey)) {
         eras.push(
           '<option value="' +
-            key +
+            era.id +
             '">' +
-            game.i18n.localize(value) +
+            era.name +
             '</option>'
         )
       }
       html.data('packId', app.metadata.id)
+      let uncommon = game.i18n.localize('CoC7.SkillRarityShort')
+      if (uncommon === 'CoC7.SkillRarityShort') {
+        uncommon = '??'
+      }
+      html.find('li.directory-item').each(function () {
+        const row = $(this)
+        let item = []
+        if (typeof data.index !== 'undefined') {
+          // DEPRECIATED IN v11
+          item = data.index.find(i => i._id === row.data('document-id'))
+        } else {
+          item = app.collection.index.get(row.data('document-id'))
+        }
+        if (item && item.type === 'skill') {
+          row.find('a').html(item.name + ' (' + (item.system?.base ?? '?') + '%' + ((item.system?.properties?.rarity ?? false) ? ' ' + uncommon : '') + ')')
+        }
+      })
       html
         .find('header.directory-header')
         .after(

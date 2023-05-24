@@ -2,215 +2,424 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`. Feel free to create a new `*.json` file for a language that is not shown here!
 
-The following translations are currently up to date **de**, **fr**, **it**
+The **it** translation is currently up to date
 
-The following translations have more than 100 untranslated strings **cn**, **cs**, **es**, **ja**, **ko**, **ru**, **sv**, [are you able to help?](./ABANDONED.md)
+The following translations have more than 153 untranslated strings **cn**, **cs**, **es**, **ja**, **ru**, **sv**, [are you able to help?](./ABANDONED.md)
 
-|Key|pl|pt-BR|zh-TW|
-|:---|:---:|:---:|:---:|
-|**Remaining**:|**2**|**84**|**3**|
-|[CoC7.ActorDataLinked](#coc7actordatalinked)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ActorDataNotLinked](#coc7actordatanotlinked)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ActorImported](#coc7actorimported)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ActorImporterUploadError](#coc7actorimporteruploaderror)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ActorIsSyntheticActor](#coc7actorissyntheticactor)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ActorIsTokenHint](#coc7actoristokenhint)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Add](#coc7add)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.AdjustedMovement](#coc7adjustedmovement)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.AlreadyEncounteredInformation](#coc7alreadyencounteredinformation)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ArmorIgnored](#coc7armorignored)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.BonusDieAssailantReason](#coc7bonusdieassailantreason)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.CheckFailed](#coc7checkfailed)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.CheckMemoryRepressed](#coc7checkmemoryrepressed)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.CheckPassed](#coc7checkpassed)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.CleanSkillList](#coc7cleanskilllist)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.CleanSkillListHint](#coc7cleanskilllisthint)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ClearAllConditions](#coc7clearallconditions)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Damage](#coc7damage)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.DamageDealTo](#coc7damagedealto)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.DefinitelyInsane](#coc7definitelyinsane)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.DholeHouseActorImporter](#coc7dholehouseactorimporter)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.DholeHouseActorImporterSource](#coc7dholehouseactorimportersource)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.DholeHouseActorImporterSummary](#coc7dholehouseactorimportersummary)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.DholeHouseImportingName](#coc7dholehouseimportingname)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.DholeHouseInvalidActor](#coc7dholehouseinvalidactor)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.DholeHousePickYourJSONFile](#coc7dholehousepickyourjsonfile)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Disable](#coc7disable)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Duration](#coc7duration)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.EffectAppliedCantOverride](#coc7effectappliedcantoverride)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.EffectNew](#coc7effectnew)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Enable](#coc7enable)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ErrorActorHasNoWeaponNamed](#coc7erroractorhasnoweaponnamed)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ErrorActorHasTooManyWeaponsNamed](#coc7erroractorhastoomanyweaponsnamed)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ErrorEvaluatingDamage](#coc7errorevaluatingdamage)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ErrorNoTokensSelected](#coc7errornotokensselected)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ErrorUnableToParseArmorFormula](#coc7errorunabletoparsearmorformula)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ErrorUnableToParseFormula](#coc7errorunabletoparseformula)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ErrorUnableToParseSkillFormula](#coc7errorunabletoparseskillformula)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ErrorUnexpectedSkillsText](#coc7errorunexpectedskillstext)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.ErrorUnexpectedWeaponText](#coc7errorunexpectedweapontext)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.FINISH](#coc7finish)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.FileUploadError](#coc7fileuploaderror)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Initiative](#coc7initiative)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.LuckNotEnough](#coc7lucknotenough)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.MessageRollingCharacteristic](#coc7messagerollingcharacteristic)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Migrate.ErrorActor](#coc7migrateerroractor)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Migrate.ErrorDocumentPack](#coc7migrateerrordocumentpack)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Migrate.ErrorItem](#coc7migrateerroritem)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Migrate.ErrorMacro](#coc7migrateerrormacro)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Migrate.ErrorScene](#coc7migrateerrorscene)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Migrate.ErrorTable](#coc7migrateerrortable)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.MovementAction](#coc7movementaction)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.PenaltyDice](#coc7penaltydice)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.PenaltyDieSelfReason](#coc7penaltydieselfreason)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.PickDirectory](#coc7pickdirectory)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.RemoveParticipant](#coc7removeparticipant)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.RemoveParticipantHint](#coc7removeparticipanthint)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Reset](#coc7reset)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Restart](#coc7restart)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.RollDifficultyCriticalTitle](#coc7rolldifficultycriticaltitle)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.RollDifficultyExtremeTitle](#coc7rolldifficultyextremetitle)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.RollDifficultyHardTitle](#coc7rolldifficultyhardtitle)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.RollDifficultyRegularTitle](#coc7rolldifficultyregulartitle)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Sane](#coc7sane)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Settings.DholeUpload.Directory.Hint](#coc7settingsdholeuploaddirectoryhint)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Settings.DholeUpload.Directory.Name](#coc7settingsdholeuploaddirectoryname)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.SkillXpGainDisabled](#coc7skillxpgaindisabled)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.TextFieldInvalidJSON](#coc7textfieldinvalidjson)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.UnableToUploadDholeImage](#coc7unabletouploaddholeimage)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.UnarmedWeaponName](#coc7unarmedweaponname)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.Update](#coc7update)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.UpgradeSuccessWithLuck](#coc7upgradesuccesswithluck)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.WeaponSkillMain](#coc7weaponskillmain)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.combatCard.automaticSuccess](#coc7combatcardautomaticsuccess)|&#9989;|&#x274C;|&#9989;|
-|[CoC7.rangeCombatCard.SurprisedTargetTitle](#coc7rangecombatcardsurprisedtargettitle)|&#9989;|&#x274C;|&#x274C;|
-|[SETTINGS.ChaseShowTokenMovement](#settingschaseshowtokenmovement)|&#9989;|&#x274C;|&#9989;|
-|[SETTINGS.ChaseShowTokenMovementHint](#settingschaseshowtokenmovementhint)|&#9989;|&#x274C;|&#9989;|
-|[SETTINGS.TitleChaseSettings](#settingstitlechasesettings)|&#9989;|&#x274C;|&#9989;|
-|[SETTINGS.TrustedCanModfyChatCard](#settingstrustedcanmodfychatcard)|&#9989;|&#x274C;|&#9989;|
-|[SETTINGS.TrustedCanModfyChatCardHint](#settingstrustedcanmodfychatcardhint)|&#9989;|&#x274C;|&#9989;|
-|[SETTINGS.TrustedCanSeeChatCard](#settingstrustedcanseechatcard)|&#9989;|&#x274C;|&#9989;|
-|[SETTINGS.TrustedCanSeeChatCardHint](#settingstrustedcanseechatcardhint)|&#9989;|&#x274C;|&#9989;|
-|[SETTINGS.UseContextMenus](#settingsusecontextmenus)|&#x274C;|&#x274C;|&#x274C;|
-|[SETTINGS.UseContextMenusHint](#settingsusecontextmenushint)|&#x274C;|&#x274C;|&#x274C;|
-##### CoC7.ActorDataLinked
-```  "CoC7.ActorDataLinked": "Actor data are linked",```
-##### CoC7.ActorDataNotLinked
-```  "CoC7.ActorDataNotLinked": "Actor data are NOT linked",```
-##### CoC7.ActorImported
-```  "CoC7.ActorImported": "New {actorType} imported: {actorName}",```
+|Key|de|fr|ko|pl|pt-BR|zh-TW|
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|
+|**Remaining**:|**139**|**139**|**153**|**141**|**101**|**142**|
+|[CoC7.ActorImporterUploadError](#coc7actorimporteruploaderror)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.CoCIDBatch.summary](#coc7cocidbatchsummary)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.CoCIDBatch.title](#coc7cocidbatchtitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.CoCIDFlag.documents-in-compendiums](#coc7cocidflagdocumentsincompendiums)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.CoCIDFlag.documents-in-world](#coc7cocidflagdocumentsinworld)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.CoCIDFlag.error.document-not-found](#coc7cocidflagerrordocumentnotfound)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.CoCIDFlag.error.documents-not-found](#coc7cocidflagerrordocumentsnotfound)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.CoCIDFlag.error.duplicate](#coc7cocidflagerrorduplicate)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.CoCIDFlag.error.incorrect.type](#coc7cocidflagerrorincorrecttype)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.CoCIDFlag.error.unknown-era](#coc7cocidflagerrorunknownera)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.CoCIDFlag.foundry-id](#coc7cocidflagfoundryid)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.CoCIDFlag.foundry-uuid](#coc7cocidflagfoundryuuid)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.CoCIDFlag.get-document-like-this](#coc7cocidflaggetdocumentlikethis)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.CoCIDFlag.get-this-document](#coc7cocidflaggetthisdocument)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.CoCIDFlag.guess](#coc7cocidflagguess)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.CoCIDFlag.id](#coc7cocidflagid)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.CoCIDFlag.key](#coc7cocidflagkey)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.CoCIDFlag.new](#coc7cocidflagnew)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.CoCIDFlag.others](#coc7cocidflagothers)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.CoCIDFlag.priority](#coc7cocidflagpriority)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.CoCIDFlag.summary](#coc7cocidflagsummary)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.CoCIDFlag.title](#coc7cocidflagtitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.CustomSpecialisationLabel](#coc7customspecialisationlabel)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.Damage](#coc7damage)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.EraDarkAgesPulp](#coc7eradarkagespulp)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.EraDownDarkerTrailsPulp](#coc7eradowndarkertrailspulp)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.EraModernPulp](#coc7eramodernpulp)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.FileUploadError](#coc7fileuploaderror)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.InvestigatorWizard.AddBonusPointsToSkills](#coc7investigatorwizardaddbonuspointstoskills)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.AgeRange](#coc7investigatorwizardagerange)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.AllowRerolls](#coc7investigatorwizardallowrerolls)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.ArchetypeCounts](#coc7investigatorwizardarchetypecounts)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.ArchetypeDefaultSkills](#coc7investigatorwizardarchetypedefaultskills)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.ArchetypeOptionalSkills](#coc7investigatorwizardarchetypeoptionalskills)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.ArchetypePage](#coc7investigatorwizardarchetypepage)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.ArchetypeSelect](#coc7investigatorwizardarchetypeselect)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.Archetypes](#coc7investigatorwizardarchetypes)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.BackStep](#coc7investigatorwizardbackstep)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.ChangingEraDelay](#coc7investigatorwizardchangingeradelay)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.CharacterAvatarImage](#coc7investigatorwizardcharacteravatarimage)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.CharacterTokenImage](#coc7investigatorwizardcharactertokenimage)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.CharacteristicDragInformation](#coc7investigatorwizardcharacteristicdraginformation)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.Characteristics](#coc7investigatorwizardcharacteristics)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.CoreCharacteristicName](#coc7investigatorwizardcorecharacteristicname)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.CoreCharacteristicSelect](#coc7investigatorwizardcorecharacteristicselect)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.CreateInstructions](#coc7investigatorwizardcreateinstructions)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.CreateStep](#coc7investigatorwizardcreatestep)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.CreatingInvestigator](#coc7investigatorwizardcreatinginvestigator)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.DeductPointsFromCharacteristics](#coc7investigatorwizarddeductpointsfromcharacteristics)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.EnforcePointBuy](#coc7investigatorwizardenforcepointbuy)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.Introduction](#coc7investigatorwizardintroduction)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.IntroductionKeeper](#coc7investigatorwizardintroductionkeeper)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.MakeEDUImprovementCheck](#coc7investigatorwizardmakeeduimprovementcheck)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.MakeEDUImprovementChecks](#coc7investigatorwizardmakeeduimprovementchecks)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.NextStep](#coc7investigatorwizardnextstep)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.OccupationCounts](#coc7investigatorwizardoccupationcounts)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.OccupationCreditRating](#coc7investigatorwizardoccupationcreditrating)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.OccupationDefaultSkills](#coc7investigatorwizardoccupationdefaultskills)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.OccupationPage](#coc7investigatorwizardoccupationpage)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.OccupationPersonalThisMany](#coc7investigatorwizardoccupationpersonalthismany)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.OccupationPickThisMany](#coc7investigatorwizardoccupationpickthismany)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.OccupationSelect](#coc7investigatorwizardoccupationselect)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.OccupationSkillPoints](#coc7investigatorwizardoccupationskillpoints)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.OccupationSkills](#coc7investigatorwizardoccupationskills)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.Occupations](#coc7investigatorwizardoccupations)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.OtherPlayerOwnership](#coc7investigatorwizardotherplayerownership)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.PlayerEnabled](#coc7investigatorwizardplayerenabled)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.PlayerQuantity](#coc7investigatorwizardplayerquantity)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.QuickFireValues](#coc7investigatorwizardquickfirevalues)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.ReducePointsFromCharacteristic](#coc7investigatorwizardreducepointsfromcharacteristic)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.RollTwiceForLuck](#coc7investigatorwizardrolltwiceforluck)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.SetupAny](#coc7investigatorwizardsetupany)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.SetupCounts](#coc7investigatorwizardsetupcounts)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.SetupPage](#coc7investigatorwizardsetuppage)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.SetupSelect](#coc7investigatorwizardsetupselect)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.Setups](#coc7investigatorwizardsetups)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.SkillSpendArchetypeCountIncorrect](#coc7investigatorwizardskillspendarchetypecountincorrect)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.SkillSpendArchetypePoints](#coc7investigatorwizardskillspendarchetypepoints)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.SkillSpendInterestPoints](#coc7investigatorwizardskillspendinterestpoints)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.SkillSpendOccupationCountIncorrect](#coc7investigatorwizardskillspendoccupationcountincorrect)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.SkillSpendOccupationPoints](#coc7investigatorwizardskillspendoccupationpoints)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.SuggestedOccupations](#coc7investigatorwizardsuggestedoccupations)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.SuggestedTraits](#coc7investigatorwizardsuggestedtraits)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.Title](#coc7investigatorwizardtitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.TitleAdjustCharacteristics](#coc7investigatorwizardtitleadjustcharacteristics)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.TitleArchetypeSkills](#coc7investigatorwizardtitlearchetypeskills)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.TitleAttributes](#coc7investigatorwizardtitleattributes)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.TitleBackstory](#coc7investigatorwizardtitlebackstory)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.TitleCharacteristics](#coc7investigatorwizardtitlecharacteristics)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.TitleCreate](#coc7investigatorwizardtitlecreate)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.TitleDetails](#coc7investigatorwizardtitledetails)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.TitleKeeperConfiguration](#coc7investigatorwizardtitlekeeperconfiguration)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.TitleOccupationSkills](#coc7investigatorwizardtitleoccupationskills)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.TitlePointsSkills](#coc7investigatorwizardtitlepointsskills)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.TitleSelectArchetype](#coc7investigatorwizardtitleselectarchetype)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.TitleSelectOccupation](#coc7investigatorwizardtitleselectoccupation)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.TitleSelectSetup](#coc7investigatorwizardtitleselectsetup)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.InvestigatorWizard.UseSetupMethod](#coc7investigatorwizardusesetupmethod)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryCreditRatingMax](#coc7monetarycreditratingmax)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryCreditRatingMin](#coc7monetarycreditratingmin)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryDefaultAverage](#coc7monetarydefaultaverage)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryDefaultPenniless](#coc7monetarydefaultpenniless)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryDefaultPoor](#coc7monetarydefaultpoor)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryDefaultRich](#coc7monetarydefaultrich)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryDefaultSuperRich](#coc7monetarydefaultsuperrich)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryDefaultWealthy](#coc7monetarydefaultwealthy)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryFormatDecimalLeft](#coc7monetaryformatdecimalleft)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryFormatDecimalRight](#coc7monetaryformatdecimalright)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryFormatIntegerLeft](#coc7monetaryformatintegerleft)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryFormatIntegerRight](#coc7monetaryformatintegerright)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryFormatLsd](#coc7monetaryformatlsd)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryFormatRoman](#coc7monetaryformatroman)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryFormatTitle](#coc7monetaryformattitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryTitle](#coc7monetarytitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryTypeAsses](#coc7monetarytypeasses)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryTypeCreditRating](#coc7monetarytypecreditrating)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryTypeDenarii](#coc7monetarytypedenarii)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryTypeDeniers](#coc7monetarytypedeniers)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryTypeNone](#coc7monetarytypenone)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryTypeOne](#coc7monetarytypeone)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryTypeQuinarii](#coc7monetarytypequinarii)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryTypeSestertii](#coc7monetarytypesestertii)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryTypeSous](#coc7monetarytypesous)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryValueAssets](#coc7monetaryvalueassets)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryValueCash](#coc7monetaryvaluecash)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.MonetaryValueSpendingLevel](#coc7monetaryvaluespendinglevel)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.RemoveParticipant](#coc7removeparticipant)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.RemoveParticipantHint](#coc7removeparticipanthint)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.RollDifficultyCriticalTitle](#coc7rolldifficultycriticaltitle)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.RollDifficultyExtremeTitle](#coc7rolldifficultyextremetitle)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.RollDifficultyHardTitle](#coc7rolldifficultyhardtitle)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.RollDifficultyRegularTitle](#coc7rolldifficultyregulartitle)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.Settings.DropCoCID.Dialog](#coc7settingsdropcociddialog)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.Settings.DropCoCID.Hint](#coc7settingsdropcocidhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.Settings.DropCoCID.IgnoreCoCID](#coc7settingsdropcocidignorecocid)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.Settings.DropCoCID.Name](#coc7settingsdropcocidname)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.Settings.DropCoCID.Prompt](#coc7settingsdropcocidprompt)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.Settings.DropCoCID.Remember](#coc7settingsdropcocidremember)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.Settings.DropCoCID.UseCoCID](#coc7settingsdropcocidusecocid)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint](#coc7settingspulprulesignoreagepenaltieshint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.Settings.PulpRules.IgnoreAgePenalties.Name](#coc7settingspulprulesignoreagepenaltiesname)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.Settings.WorldEra.Hint](#coc7settingsworlderahint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.Settings.WorldEra.Name](#coc7settingsworlderaname)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.SkillKeepBaseValue](#coc7skillkeepbasevalue)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.SkillPickNameOnly](#coc7skillpicknameonly)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.SkillRarityShort](#coc7skillrarityshort)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.SkillRequiresName](#coc7skillrequiresname)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.SkillSpecializationIsUnique](#coc7skillspecializationisunique)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.TextFieldInvalidJSON](#coc7textfieldinvalidjson)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.UnarmedWeaponName](#coc7unarmedweaponname)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.combatCard.automaticSuccess](#coc7combatcardautomaticsuccess)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[CoC7.rangeCombatCard.SurprisedTargetTitle](#coc7rangecombatcardsurprisedtargettitle)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|
+|[SETTINGS.DefaultDifficulty](#settingsdefaultdifficulty)|&#9989;|&#9989;|&#x274C;|&#9989;|&#9989;|&#9989;|
+|[SETTINGS.UseContextMenus](#settingsusecontextmenus)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|
+|[SETTINGS.UseContextMenusHint](#settingsusecontextmenushint)|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|
 ##### CoC7.ActorImporterUploadError
 ```  "CoC7.ActorImporterUploadError": "Import stopped, unable to write image",```
-##### CoC7.ActorIsSyntheticActor
-```  "CoC7.ActorIsSyntheticActor": "Actor is a synthetic actor (instance of an actor)",```
-##### CoC7.ActorIsTokenHint
-```  "CoC7.ActorIsTokenHint": "Actor is a token",```
-##### CoC7.Add
-```  "CoC7.Add": "Add",```
-##### CoC7.AdjustedMovement
-```  "CoC7.AdjustedMovement": "Adjusted movement",```
-##### CoC7.AlreadyEncounteredInformation
-```  "CoC7.AlreadyEncounteredInformation": "Already encountered: {reason} lost {lost}/{max}",```
-##### CoC7.ArmorIgnored
-```  "CoC7.ArmorIgnored": "Armor Ignored",```
-##### CoC7.BonusDieAssailantReason
-```  "CoC7.BonusDieAssailantReason": "Add 1 bonus die (assailant is prone, restrained...)",```
-##### CoC7.CheckFailed
-```  "CoC7.CheckFailed": "Check failed",```
-##### CoC7.CheckMemoryRepressed
-```  "CoC7.CheckMemoryRepressed": "Memory repressed",```
-##### CoC7.CheckPassed
-```  "CoC7.CheckPassed": "Check passed",```
-##### CoC7.CleanSkillList
-```  "CoC7.CleanSkillList": "Clean skill list",```
-##### CoC7.CleanSkillListHint
-```  "CoC7.CleanSkillListHint": "<p>This will Clean your skill list by removing specialization from skill name.</p> <p>This will avoid to display skill as : 'specialization(specialization(skill))'</p>",```
-##### CoC7.ClearAllConditions
-```  "CoC7.ClearAllConditions": "Clear All Conditions",```
+##### CoC7.CoCIDBatch.summary
+```  "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages.",```
+##### CoC7.CoCIDBatch.title
+```  "CoC7.CoCIDBatch.title": "Batch set System ID (CoC ID)",```
+##### CoC7.CoCIDFlag.documents-in-compendiums
+```  "CoC7.CoCIDFlag.documents-in-compendiums": "{count} documents in compendiums",```
+##### CoC7.CoCIDFlag.documents-in-world
+```  "CoC7.CoCIDFlag.documents-in-world": "{count} documents in the world",```
+##### CoC7.CoCIDFlag.error.document-not-found
+```  "CoC7.CoCIDFlag.error.document-not-found": "Document not found in world or Compendia matching the CoC ID "{cocid}", language "{lang}", and era "{era}". Please check your Era for the world setting.",```
+##### CoC7.CoCIDFlag.error.documents-not-found
+```  "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language "{lang}", and era "{era}". Please check your Era for the world setting.",```
+##### CoC7.CoCIDFlag.error.duplicate
+```  "CoC7.CoCIDFlag.error.duplicate": "Warning: Multiple System IDs with same priority!",```
+##### CoC7.CoCIDFlag.error.incorrect.type
+```  "CoC7.CoCIDFlag.error.incorrect.type": "Tried to convert CoC ID with non existing document type. See console log.",```
+##### CoC7.CoCIDFlag.error.unknown-era
+```  "CoC7.CoCIDFlag.error.unknown-era": "Unknown Era "{era}"",```
+##### CoC7.CoCIDFlag.foundry-id
+```  "CoC7.CoCIDFlag.foundry-id": "Foundry ID",```
+##### CoC7.CoCIDFlag.foundry-uuid
+```  "CoC7.CoCIDFlag.foundry-uuid": "Foundry UUID",```
+##### CoC7.CoCIDFlag.get-document-like-this
+```  "CoC7.CoCIDFlag.get-document-like-this": "Get document like this",```
+##### CoC7.CoCIDFlag.get-this-document
+```  "CoC7.CoCIDFlag.get-this-document": "Get this document",```
+##### CoC7.CoCIDFlag.guess
+```  "CoC7.CoCIDFlag.guess": "Create System ID (CoC ID) based on current document.",```
+##### CoC7.CoCIDFlag.id
+```  "CoC7.CoCIDFlag.id": "ID",```
+##### CoC7.CoCIDFlag.key
+```  "CoC7.CoCIDFlag.key": "System ID (CoC ID)",```
+##### CoC7.CoCIDFlag.new
+```  "CoC7.CoCIDFlag.new": "- Custom System ID -",```
+##### CoC7.CoCIDFlag.others
+```  "CoC7.CoCIDFlag.others": "Other documents with this CoC ID and language (excluding documents in other actors and items)",```
+##### CoC7.CoCIDFlag.priority
+```  "CoC7.CoCIDFlag.priority": "System ID Priority",```
+##### CoC7.CoCIDFlag.summary
+```  "CoC7.CoCIDFlag.summary": "Set a group identifier that can be used to find the the most up to date version of this {type}. The System ID should use the English translation of the {type} to support localization across all languages.",```
+##### CoC7.CoCIDFlag.title
+```  "CoC7.CoCIDFlag.title": "Edit System ID (CoC ID)",```
+##### CoC7.CustomSpecialisationLabel
+```  "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",```
 ##### CoC7.Damage
 ```  "CoC7.Damage": "Damage",```
-##### CoC7.DamageDealTo
-```  "CoC7.DamageDealTo": "Damage {name} {damage}HP",```
-##### CoC7.DefinitelyInsane
-```  "CoC7.DefinitelyInsane": "Good for the asylum",```
-##### CoC7.DholeHouseActorImporter
-```  "CoC7.DholeHouseActorImporter": "The Dhole's House Actor Importer JSON",```
-##### CoC7.DholeHouseActorImporterSource
-```  "CoC7.DholeHouseActorImporterSource": "Imported from The Dhole's House Actor",```
-##### CoC7.DholeHouseActorImporterSummary
-```  "CoC7.DholeHouseActorImporterSummary": "Export your DholeHouse's character as JSON and upload it here.",```
-##### CoC7.DholeHouseImportingName
-```  "CoC7.DholeHouseImportingName": "About to import: ",```
-##### CoC7.DholeHouseInvalidActor
-```  "CoC7.DholeHouseInvalidActor": "The selected JSON doesn't seem to be a valid Dhole's House exported character",```
-##### CoC7.DholeHousePickYourJSONFile
-```  "CoC7.DholeHousePickYourJSONFile": "Pick the JSON file exported from The Dhole's House",```
-##### CoC7.Disable
-```  "CoC7.Disable": "Disable",```
-##### CoC7.Duration
-```  "CoC7.Duration": "Duration",```
-##### CoC7.EffectAppliedCantOverride
-```  "CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value.",```
-##### CoC7.EffectNew
-```  "CoC7.EffectNew": "New effect",```
-##### CoC7.Enable
-```  "CoC7.Enable": "Enable",```
-##### CoC7.ErrorActorHasNoWeaponNamed
-```  "CoC7.ErrorActorHasNoWeaponNamed": "Actor {actorName} has no weapon named {weaponName}",```
-##### CoC7.ErrorActorHasTooManyWeaponsNamed
-```  "CoC7.ErrorActorHasTooManyWeaponsNamed": "`Actor {actorName} has more than one weapon named {weaponName}. The first found will be used`",```
-##### CoC7.ErrorEvaluatingDamage
-```  "CoC7.ErrorEvaluatingDamage": "Error evaluating damage",```
-##### CoC7.ErrorNoTokensSelected
-```  "CoC7.ErrorNoTokensSelected": "No tokens selected",```
-##### CoC7.ErrorUnableToParseArmorFormula
-```  "CoC7.ErrorUnableToParseArmorFormula": "Unable to process armor value: {value}. Ignoring armor.",```
-##### CoC7.ErrorUnableToParseFormula
-```  "CoC7.ErrorUnableToParseFormula": "{value} is not a valid formula",```
-##### CoC7.ErrorUnableToParseSkillFormula
-```  "CoC7.ErrorUnableToParseSkillFormula": "Unable to parse formula: {value} for skill {name}",```
-##### CoC7.ErrorUnexpectedSkillsText
-```  "CoC7.ErrorUnexpectedSkillsText": "Unexpected skills text, please raise a bug report with the text you are attempting to import",```
-##### CoC7.ErrorUnexpectedWeaponText
-```  "CoC7.ErrorUnexpectedWeaponText": "Unexpected weapons text, please raise a bug report with the text you are attempting to import",```
-##### CoC7.FINISH
-```  "CoC7.FINISH": "--F-I-N-I-S-H--",```
+##### CoC7.EraDarkAgesPulp
+```  "CoC7.EraDarkAgesPulp": "Dark Ages - Pulp",```
+##### CoC7.EraDownDarkerTrailsPulp
+```  "CoC7.EraDownDarkerTrailsPulp": "Down Darker Trails - Pulp",```
+##### CoC7.EraModernPulp
+```  "CoC7.EraModernPulp": "Modern - Pulp",```
 ##### CoC7.FileUploadError
 ```  "CoC7.FileUploadError": "Unable to write image, file upload error",```
-##### CoC7.Initiative
-```  "CoC7.Initiative": "Initiative",```
-##### CoC7.LuckNotEnough
-```  "CoC7.LuckNotEnough": "{name} didn't have enough luck to pass the check",```
-##### CoC7.MessageRollingCharacteristic
-```  "CoC7.MessageRollingCharacteristic": "Rolling characteristic {label}: {formula}",```
-##### CoC7.Migrate.ErrorActor
-```  "CoC7.Migrate.ErrorActor": "Failed CoC7 system migration for Actor {name}: {message}",```
-##### CoC7.Migrate.ErrorDocumentPack
-```  "CoC7.Migrate.ErrorDocumentPack": "Failed CoC7 system migration for document {name} in pack {collection}: {message}",```
-##### CoC7.Migrate.ErrorItem
-```  "CoC7.Migrate.ErrorItem": "Failed CoC7 system migration for Item {name}: {message}",```
-##### CoC7.Migrate.ErrorMacro
-```  "CoC7.Migrate.ErrorMacro": "Failed CoC7 system migration for Macro {name}: {message}",```
-##### CoC7.Migrate.ErrorScene
-```  "CoC7.Migrate.ErrorScene": "Failed CoC7 system migration for Scene {name}: {message}",```
-##### CoC7.Migrate.ErrorTable
-```  "CoC7.Migrate.ErrorTable": "Failed CoC7 system migration for Table {name}: {message}",```
-##### CoC7.MovementAction
-```  "CoC7.MovementAction": "Movement action",```
-##### CoC7.PenaltyDice
-```  "CoC7.PenaltyDice": "Penalty Dice",```
-##### CoC7.PenaltyDieSelfReason
-```  "CoC7.PenaltyDieSelfReason": "Add 1 penalty die (for being prone, restrained...)",```
-##### CoC7.PickDirectory
-```  "CoC7.PickDirectory": "Pick Directory",```
+##### CoC7.InvestigatorWizard.AddBonusPointsToSkills
+```  "CoC7.InvestigatorWizard.AddBonusPointsToSkills": "<strong>Add {bonusPoints} bonus skill points divided among any of the following skills:</strong> {skills}",```
+##### CoC7.InvestigatorWizard.AgeRange
+```  "CoC7.InvestigatorWizard.AgeRange": "Age (15-89):",```
+##### CoC7.InvestigatorWizard.AllowRerolls
+```  "CoC7.InvestigatorWizard.AllowRerolls": "Allow characteristics to be rerolled",```
+##### CoC7.InvestigatorWizard.ArchetypeCounts
+```  "CoC7.InvestigatorWizard.ArchetypeCounts": "You currently have {count} archetypes. The system comes with a default archetypes with a CoC ID set. You can add more archetypes with valid CoC ID values using the header on then archetypes item sheet. Compendiums with these values set will automatically be added to the available list.",```
+##### CoC7.InvestigatorWizard.ArchetypeDefaultSkills
+```  "CoC7.InvestigatorWizard.ArchetypeDefaultSkills": "All {count} of the following skill(s)",```
+##### CoC7.InvestigatorWizard.ArchetypeOptionalSkills
+```  "CoC7.InvestigatorWizard.ArchetypeOptionalSkills": "Check with your keeper before selecting the following skills",```
+##### CoC7.InvestigatorWizard.ArchetypePage
+```  "CoC7.InvestigatorWizard.ArchetypePage": "Selecting your character archetype will set additional default skills on your character sheet.",```
+##### CoC7.InvestigatorWizard.ArchetypeSelect
+```  "CoC7.InvestigatorWizard.ArchetypeSelect": "Select your archetype",```
+##### CoC7.InvestigatorWizard.Archetypes
+```  "CoC7.InvestigatorWizard.Archetypes": "Pulp Archetypes",```
+##### CoC7.InvestigatorWizard.BackStep
+```  "CoC7.InvestigatorWizard.BackStep": "Back",```
+##### CoC7.InvestigatorWizard.ChangingEraDelay
+```  "CoC7.InvestigatorWizard.ChangingEraDelay": "Changing era please wait",```
+##### CoC7.InvestigatorWizard.CharacterAvatarImage
+```  "CoC7.InvestigatorWizard.CharacterAvatarImage": "Avatar Image",```
+##### CoC7.InvestigatorWizard.CharacterTokenImage
+```  "CoC7.InvestigatorWizard.CharacterTokenImage": "Token Image",```
+##### CoC7.InvestigatorWizard.CharacteristicDragInformation
+```  "CoC7.InvestigatorWizard.CharacteristicDragInformation": "Drag your characteristics",```
+##### CoC7.InvestigatorWizard.Characteristics
+```  "CoC7.InvestigatorWizard.Characteristics": "Characteristic values",```
+##### CoC7.InvestigatorWizard.CoreCharacteristicName
+```  "CoC7.InvestigatorWizard.CoreCharacteristicName": "<strong>Core characteristic:</strong> {coreCharacteristic}.",```
+##### CoC7.InvestigatorWizard.CoreCharacteristicSelect
+```  "CoC7.InvestigatorWizard.CoreCharacteristicSelect": "Archetype core characteristic",```
+##### CoC7.InvestigatorWizard.CreateInstructions
+```  "CoC7.InvestigatorWizard.CreateInstructions": "Click create to create your character. You Keeper needs to be online for the character to be created.",```
+##### CoC7.InvestigatorWizard.CreateStep
+```  "CoC7.InvestigatorWizard.CreateStep": "Create",```
+##### CoC7.InvestigatorWizard.CreatingInvestigator
+```  "CoC7.InvestigatorWizard.CreatingInvestigator": "Please wait while the keeper creates your investigator.",```
+##### CoC7.InvestigatorWizard.DeductPointsFromCharacteristics
+```  "CoC7.InvestigatorWizard.DeductPointsFromCharacteristics": "Deduct {total} points among {from}",```
+##### CoC7.InvestigatorWizard.EnforcePointBuy
+```  "CoC7.InvestigatorWizard.EnforcePointBuy": "Enforce point buy",```
+##### CoC7.InvestigatorWizard.Introduction
+```  "CoC7.InvestigatorWizard.Introduction": "The Investigator Creation Wizard is a step-by-step process for creating a brand-new investigator.",```
+##### CoC7.InvestigatorWizard.IntroductionKeeper
+```  "CoC7.InvestigatorWizard.IntroductionKeeper": "Your world is set to the "{era}" era this can be changed under settings or on the next page.",```
+##### CoC7.InvestigatorWizard.MakeEDUImprovementCheck
+```  "CoC7.InvestigatorWizard.MakeEDUImprovementCheck": "Make an improvement check for EDU",```
+##### CoC7.InvestigatorWizard.MakeEDUImprovementChecks
+```  "CoC7.InvestigatorWizard.MakeEDUImprovementChecks": "Make {total} improvement checks for EDU",```
+##### CoC7.InvestigatorWizard.NextStep
+```  "CoC7.InvestigatorWizard.NextStep": "Next",```
+##### CoC7.InvestigatorWizard.OccupationCounts
+```  "CoC7.InvestigatorWizard.OccupationCounts": "You currently have {count} occupations. The system comes with a default occupation with a CoC ID set. You can add more occupations with valid CoC ID values using the header on then occupation item sheet. Compendiums with these values set will automatically be added to the available list.",```
+##### CoC7.InvestigatorWizard.OccupationCreditRating
+```  "CoC7.InvestigatorWizard.OccupationCreditRating": "Credit Rating",```
+##### CoC7.InvestigatorWizard.OccupationDefaultSkills
+```  "CoC7.InvestigatorWizard.OccupationDefaultSkills": "All {count} of the following skill(s)",```
+##### CoC7.InvestigatorWizard.OccupationPage
+```  "CoC7.InvestigatorWizard.OccupationPage": "Occupations give you a set of bonus points to split between eight skills and credit rating",```
+##### CoC7.InvestigatorWizard.OccupationPersonalThisMany
+```  "CoC7.InvestigatorWizard.OccupationPersonalThisMany": "{count} personal skill(s)",```
+##### CoC7.InvestigatorWizard.OccupationPickThisMany
+```  "CoC7.InvestigatorWizard.OccupationPickThisMany": "{count} of the following skill(s)",```
+##### CoC7.InvestigatorWizard.OccupationSelect
+```  "CoC7.InvestigatorWizard.OccupationSelect": "Select your occupation",```
+##### CoC7.InvestigatorWizard.OccupationSkillPoints
+```  "CoC7.InvestigatorWizard.OccupationSkillPoints": "Occupation Skill Points",```
+##### CoC7.InvestigatorWizard.OccupationSkills
+```  "CoC7.InvestigatorWizard.OccupationSkills": "Occupation Skills",```
+##### CoC7.InvestigatorWizard.Occupations
+```  "CoC7.InvestigatorWizard.Occupations": "Occupations",```
+##### CoC7.InvestigatorWizard.OtherPlayerOwnership
+```  "CoC7.InvestigatorWizard.OtherPlayerOwnership": "Default permission level for players that did not create this investigator",```
+##### CoC7.InvestigatorWizard.PlayerEnabled
+```  "CoC7.InvestigatorWizard.PlayerEnabled": "Allow players without actor creation permission to create investigators",```
+##### CoC7.InvestigatorWizard.PlayerQuantity
+```  "CoC7.InvestigatorWizard.PlayerQuantity": "How many investigators can one player have ownership of?",```
+##### CoC7.InvestigatorWizard.QuickFireValues
+```  "CoC7.InvestigatorWizard.QuickFireValues": "Quick fire characteristics values",```
+##### CoC7.InvestigatorWizard.ReducePointsFromCharacteristic
+```  "CoC7.InvestigatorWizard.ReducePointsFromCharacteristic": "Reduce {from} by {total}",```
+##### CoC7.InvestigatorWizard.RollTwiceForLuck
+```  "CoC7.InvestigatorWizard.RollTwiceForLuck": "Roll a second time for luck",```
+##### CoC7.InvestigatorWizard.SetupAny
+```  "CoC7.InvestigatorWizard.SetupAny": "No default",```
+##### CoC7.InvestigatorWizard.SetupCounts
+```  "CoC7.InvestigatorWizard.SetupCounts": "You currently have {count} setup options. It is recommended you set a single setup for all your players to set the default skills on your character sheet. The system comes with a default setup with a CoC ID set. You can add more setups with valid CoC ID values using the header on then setup item sheet. Compendiums with these values set will automatically be added to the available list.",```
+##### CoC7.InvestigatorWizard.SetupPage
+```  "CoC7.InvestigatorWizard.SetupPage": "Selecting your era will set the default skills on your character sheet.",```
+##### CoC7.InvestigatorWizard.SetupSelect
+```  "CoC7.InvestigatorWizard.SetupSelect": "Select your investigator setup",```
+##### CoC7.InvestigatorWizard.Setups
+```  "CoC7.InvestigatorWizard.Setups": "Character sheets",```
+##### CoC7.InvestigatorWizard.SkillSpendArchetypeCountIncorrect
+```  "CoC7.InvestigatorWizard.SkillSpendArchetypeCountIncorrect": "You have selected {count} of {max} archetype skills, check with your Keeper before removing standard archetype skills.",```
+##### CoC7.InvestigatorWizard.SkillSpendArchetypePoints
+```  "CoC7.InvestigatorWizard.SkillSpendArchetypePoints": "Archetype points {count} of {total} remaining {remaining}",```
+##### CoC7.InvestigatorWizard.SkillSpendInterestPoints
+```  "CoC7.InvestigatorWizard.SkillSpendInterestPoints": "Personal interest points {count} of {total} remaining {remaining}",```
+##### CoC7.InvestigatorWizard.SkillSpendOccupationCountIncorrect
+```  "CoC7.InvestigatorWizard.SkillSpendOccupationCountIncorrect": "You have selected {count} of {max} occupation skills, check with your Keeper before removing standard occupation skills.",```
+##### CoC7.InvestigatorWizard.SkillSpendOccupationPoints
+```  "CoC7.InvestigatorWizard.SkillSpendOccupationPoints": "Occupation skill points {count} of {total} remaining {remaining}",```
+##### CoC7.InvestigatorWizard.SuggestedOccupations
+```  "CoC7.InvestigatorWizard.SuggestedOccupations": "<strong>Suggested Occupations:</strong> {suggested}",```
+##### CoC7.InvestigatorWizard.SuggestedTraits
+```  "CoC7.InvestigatorWizard.SuggestedTraits": "<strong>Suggested Traits:</strong> {suggested}",```
+##### CoC7.InvestigatorWizard.Title
+```  "CoC7.InvestigatorWizard.Title": "Investigator Creation Wizard",```
+##### CoC7.InvestigatorWizard.TitleAdjustCharacteristics
+```  "CoC7.InvestigatorWizard.TitleAdjustCharacteristics": "Adjust Characteristics",```
+##### CoC7.InvestigatorWizard.TitleArchetypeSkills
+```  "CoC7.InvestigatorWizard.TitleArchetypeSkills": "Archetype Skills",```
+##### CoC7.InvestigatorWizard.TitleAttributes
+```  "CoC7.InvestigatorWizard.TitleAttributes": "Attributes",```
+##### CoC7.InvestigatorWizard.TitleBackstory
+```  "CoC7.InvestigatorWizard.TitleBackstory": "Investigator Backstory",```
+##### CoC7.InvestigatorWizard.TitleCharacteristics
+```  "CoC7.InvestigatorWizard.TitleCharacteristics": "Characteristics",```
+##### CoC7.InvestigatorWizard.TitleCreate
+```  "CoC7.InvestigatorWizard.TitleCreate": "Create Investigator",```
+##### CoC7.InvestigatorWizard.TitleDetails
+```  "CoC7.InvestigatorWizard.TitleDetails": "Investigator Details",```
+##### CoC7.InvestigatorWizard.TitleKeeperConfiguration
+```  "CoC7.InvestigatorWizard.TitleKeeperConfiguration": "Keeper Configuration",```
+##### CoC7.InvestigatorWizard.TitleOccupationSkills
+```  "CoC7.InvestigatorWizard.TitleOccupationSkills": "Occupation Skills",```
+##### CoC7.InvestigatorWizard.TitlePointsSkills
+```  "CoC7.InvestigatorWizard.TitlePointsSkills": "Spend Skill Points",```
+##### CoC7.InvestigatorWizard.TitleSelectArchetype
+```  "CoC7.InvestigatorWizard.TitleSelectArchetype": "Archetype Selection",```
+##### CoC7.InvestigatorWizard.TitleSelectOccupation
+```  "CoC7.InvestigatorWizard.TitleSelectOccupation": "Occupation Selection",```
+##### CoC7.InvestigatorWizard.TitleSelectSetup
+```  "CoC7.InvestigatorWizard.TitleSelectSetup": "Investigator Setup",```
+##### CoC7.InvestigatorWizard.UseSetupMethod
+```  "CoC7.InvestigatorWizard.UseSetupMethod": "Use method from setup item",```
+##### CoC7.MonetaryCreditRatingMax
+```  "CoC7.MonetaryCreditRatingMax": "Max",```
+##### CoC7.MonetaryCreditRatingMin
+```  "CoC7.MonetaryCreditRatingMin": "Min",```
+##### CoC7.MonetaryDefaultAverage
+```  "CoC7.MonetaryDefaultAverage": "Average",```
+##### CoC7.MonetaryDefaultPenniless
+```  "CoC7.MonetaryDefaultPenniless": "Penniless",```
+##### CoC7.MonetaryDefaultPoor
+```  "CoC7.MonetaryDefaultPoor": "Poor",```
+##### CoC7.MonetaryDefaultRich
+```  "CoC7.MonetaryDefaultRich": "Rich",```
+##### CoC7.MonetaryDefaultSuperRich
+```  "CoC7.MonetaryDefaultSuperRich": "Super Rich",```
+##### CoC7.MonetaryDefaultWealthy
+```  "CoC7.MonetaryDefaultWealthy": "Wealthy",```
+##### CoC7.MonetaryFormatDecimalLeft
+```  "CoC7.MonetaryFormatDecimalLeft": "Decimal (?0.00)",```
+##### CoC7.MonetaryFormatDecimalRight
+```  "CoC7.MonetaryFormatDecimalRight": "Decimal (0.00 ?)",```
+##### CoC7.MonetaryFormatIntegerLeft
+```  "CoC7.MonetaryFormatIntegerLeft": "Integer (?0)",```
+##### CoC7.MonetaryFormatIntegerRight
+```  "CoC7.MonetaryFormatIntegerRight": "Integer (0 ?)",```
+##### CoC7.MonetaryFormatLsd
+```  "CoC7.MonetaryFormatLsd": "£sd",```
+##### CoC7.MonetaryFormatRoman
+```  "CoC7.MonetaryFormatRoman": "Roman",```
+##### CoC7.MonetaryFormatTitle
+```  "CoC7.MonetaryFormatTitle": "Money Format :",```
+##### CoC7.MonetaryTitle
+```  "CoC7.MonetaryTitle": "Cash and Assets",```
+##### CoC7.MonetaryTypeAsses
+```  "CoC7.MonetaryTypeAsses": "Asses",```
+##### CoC7.MonetaryTypeCreditRating
+```  "CoC7.MonetaryTypeCreditRating": "CR x",```
+##### CoC7.MonetaryTypeDenarii
+```  "CoC7.MonetaryTypeDenarii": "Denarii",```
+##### CoC7.MonetaryTypeDeniers
+```  "CoC7.MonetaryTypeDeniers": "Deniers / Pennies",```
+##### CoC7.MonetaryTypeNone
+```  "CoC7.MonetaryTypeNone": "None",```
+##### CoC7.MonetaryTypeOne
+```  "CoC7.MonetaryTypeOne": "1 x",```
+##### CoC7.MonetaryTypeQuinarii
+```  "CoC7.MonetaryTypeQuinarii": "Quinarii",```
+##### CoC7.MonetaryTypeSestertii
+```  "CoC7.MonetaryTypeSestertii": "Sestertii",```
+##### CoC7.MonetaryTypeSous
+```  "CoC7.MonetaryTypeSous": "Sous / Shillings",```
+##### CoC7.MonetaryValueAssets
+```  "CoC7.MonetaryValueAssets": "Assets",```
+##### CoC7.MonetaryValueCash
+```  "CoC7.MonetaryValueCash": "Cash",```
+##### CoC7.MonetaryValueSpendingLevel
+```  "CoC7.MonetaryValueSpendingLevel": "Spending",```
 ##### CoC7.RemoveParticipant
 ```  "CoC7.RemoveParticipant": "Remove participant",```
 ##### CoC7.RemoveParticipantHint
 ```  "CoC7.RemoveParticipantHint": "Participant will be completely removed from the chase",```
-##### CoC7.Reset
-```  "CoC7.Reset": "Reset",```
-##### CoC7.Restart
-```  "CoC7.Restart": "Restart",```
 ##### CoC7.RollDifficultyCriticalTitle
 ```  "CoC7.RollDifficultyCriticalTitle": "Critical difficulty",```
 ##### CoC7.RollDifficultyExtremeTitle
@@ -219,44 +428,48 @@ The following translations have more than 100 untranslated strings **cn**, **cs*
 ```  "CoC7.RollDifficultyHardTitle": "Hard difficulty",```
 ##### CoC7.RollDifficultyRegularTitle
 ```  "CoC7.RollDifficultyRegularTitle": "Regular difficulty",```
-##### CoC7.Sane
-```  "CoC7.Sane": "Sane",```
-##### CoC7.Settings.DholeUpload.Directory.Hint
-```  "CoC7.Settings.DholeUpload.Directory.Hint": "Upload path for The Dhole's House avatars, relative to the Foundry/Data directory.",```
-##### CoC7.Settings.DholeUpload.Directory.Name
-```  "CoC7.Settings.DholeUpload.Directory.Name": "The Dhole's House image upload directory",```
-##### CoC7.SkillXpGainDisabled
-```  "CoC7.SkillXpGainDisabled": "XP Gain disabled.",```
+##### CoC7.Settings.DropCoCID.Dialog
+```  "CoC7.Settings.DropCoCID.Dialog": "Use the CoC ID for dropped items where possible? This allows the system to select the correct item for your world era.",```
+##### CoC7.Settings.DropCoCID.Hint
+```  "CoC7.Settings.DropCoCID.Hint": "When dropping items with a CoC ID prompt to store the CoC ID instead of the item",```
+##### CoC7.Settings.DropCoCID.IgnoreCoCID
+```  "CoC7.Settings.DropCoCID.IgnoreCoCID": "Do Not Use CoC ID",```
+##### CoC7.Settings.DropCoCID.Name
+```  "CoC7.Settings.DropCoCID.Name": "Use CoC ID on item drops",```
+##### CoC7.Settings.DropCoCID.Prompt
+```  "CoC7.Settings.DropCoCID.Prompt": "Prompt each time",```
+##### CoC7.Settings.DropCoCID.Remember
+```  "CoC7.Settings.DropCoCID.Remember": "Remember this selection, you can change this under settings",```
+##### CoC7.Settings.DropCoCID.UseCoCID
+```  "CoC7.Settings.DropCoCID.UseCoCID": "Use CoC ID Where Possible",```
+##### CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint
+```  "CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint": "Do not alter movement rate based on age. When using the investigator wizard improvements and characteristic adjustments are not made",```
+##### CoC7.Settings.PulpRules.IgnoreAgePenalties.Name
+```  "CoC7.Settings.PulpRules.IgnoreAgePenalties.Name": "Ignore Age Penalties",```
+##### CoC7.Settings.WorldEra.Hint
+```  "CoC7.Settings.WorldEra.Hint": "Skills can vary slightly between eras, please select the era for this world so system searches for skills find the correct ones.",```
+##### CoC7.Settings.WorldEra.Name
+```  "CoC7.Settings.WorldEra.Name": "Era for the world",```
+##### CoC7.SkillKeepBaseValue
+```  "CoC7.SkillKeepBaseValue": "Keep Base Value",```
+##### CoC7.SkillPickNameOnly
+```  "CoC7.SkillPickNameOnly": "Select Specialization",```
+##### CoC7.SkillRarityShort
+```  "CoC7.SkillRarityShort": "[UC]",```
+##### CoC7.SkillRequiresName
+```  "CoC7.SkillRequiresName": "Requires Name",```
+##### CoC7.SkillSpecializationIsUnique
+```  "CoC7.SkillSpecializationIsUnique": "Unique Specialization",```
 ##### CoC7.TextFieldInvalidJSON
 ```  "CoC7.TextFieldInvalidJSON": "Unable to parse the JSON, please try again",```
-##### CoC7.UnableToUploadDholeImage
-```  "CoC7.UnableToUploadDholeImage": "You do not have permission to upload images, if you import the default avatar will be used.",```
 ##### CoC7.UnarmedWeaponName
 ```  "CoC7.UnarmedWeaponName": "Unarmed",```
-##### CoC7.Update
-```  "CoC7.Update": "Update",```
-##### CoC7.UpgradeSuccessWithLuck
-```  "CoC7.UpgradeSuccessWithLuck": "Upgrade to {difficultyName} success for {luckToSpend} luck.",```
-##### CoC7.WeaponSkillMain
-```  "CoC7.WeaponSkillMain": "Main skill",```
 ##### CoC7.combatCard.automaticSuccess
 ```  "CoC7.combatCard.automaticSuccess": "Automatic Success",```
 ##### CoC7.rangeCombatCard.SurprisedTargetTitle
 ```  "CoC7.rangeCombatCard.SurprisedTargetTitle": "1 bonus die for surprised target",```
-##### SETTINGS.ChaseShowTokenMovement
-```  "SETTINGS.ChaseShowTokenMovement": "Show token movement.",```
-##### SETTINGS.ChaseShowTokenMovementHint
-```  "SETTINGS.ChaseShowTokenMovementHint": "Show movement on the grid when a token is moved to the next location.",```
-##### SETTINGS.TitleChaseSettings
-```  "SETTINGS.TitleChaseSettings": "Chase Settings",```
-##### SETTINGS.TrustedCanModfyChatCard
-```  "SETTINGS.TrustedCanModfyChatCard": "Allow trusted user to modify chat card",```
-##### SETTINGS.TrustedCanModfyChatCardHint
-```  "SETTINGS.TrustedCanModfyChatCardHint": "Enabling this setting will give permission to trusted users to select options on chat card. The GM only section will still not be visible to them",```
-##### SETTINGS.TrustedCanSeeChatCard
-```  "SETTINGS.TrustedCanSeeChatCard": "Allow trusted user to see GM only sections",```
-##### SETTINGS.TrustedCanSeeChatCardHint
-```  "SETTINGS.TrustedCanSeeChatCardHint": "Enabling this setting will give permission to trusted users to see GM only section on chat card. Use this with caution!",```
+##### SETTINGS.DefaultDifficulty
+```  "SETTINGS.DefaultDifficulty": "Default check difficulty",```
 ##### SETTINGS.UseContextMenus
 ```  "SETTINGS.UseContextMenus": "Use context menus",```
 ##### SETTINGS.UseContextMenusHint

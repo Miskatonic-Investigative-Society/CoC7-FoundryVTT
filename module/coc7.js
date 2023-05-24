@@ -1,4 +1,4 @@
-/* global $, Combat, CONFIG, game, Hooks, ItemDirectory, tinyMCE */
+/* global $, Combat, CONFIG, game, Hooks, ItemDirectory */
 import { CoC7NPCSheet } from './actors/sheets/npc-sheet.js'
 import { CoC7CreatureSheet } from './actors/sheets/creature-sheet.js'
 import { CoC7CharacterSheet } from './actors/sheets/character.js'
@@ -7,7 +7,7 @@ import { CoC7Combat, rollInitiative } from './combat.js'
 import { COC7 } from './config.js'
 import { Updater } from './updater.js'
 import { CoC7Utilities } from './utilities.js'
-import { CoC7Parser } from './apps/parser.js'
+import { CoC7Parser } from './apps/coc7-parser.js'
 import { CoC7Check } from './check.js'
 import { CoC7Menu } from './menu.js'
 import { DamageCard } from './chat/cards/damage.js'
@@ -136,6 +136,9 @@ Hooks.once('init', async function () {
         alwaysCrit: false,
         alwaysFumble: false
       }
+    },
+    eras: (era, name) => {
+      COC7.eras[era] = name
     }
   }
   Combat.prototype.rollInitiative = rollInitiative
@@ -284,15 +287,12 @@ Hooks.on('changeSidebarTab', directory => {
   }
 })
 
-Hooks.on('hotbarDrop', async (bar, data, slot) => {
+Hooks.on('hotbarDrop', (bar, data, slot) => {
   return CoC7Utilities.createMacro(bar, data, slot)
 })
 
 Hooks.on('renderChatLog', (app, html, data) =>
   CoC7Chat.chatListeners(app, html, data)
-)
-Hooks.on('renderChatMessage', (app, html, data) =>
-  CoC7Chat.renderMessageHook(app, html, data)
 )
 Hooks.on('updateChatMessage', (chatMessage, chatData, diff, speaker) =>
   CoC7Chat.onUpdateChatMessage(chatMessage, chatData, diff, speaker)
@@ -306,8 +306,6 @@ Hooks.on('ready', async () => {
   activateGlobalListener()
 
   // setGlobalCssVar()
-
-  configureTinyMCE()
 
   game.CoC7.skillList = await game.packs.get('CoC7.skills')?.getDocuments()
 
@@ -471,13 +469,6 @@ Hooks.on('getSceneControlButtons', (/* controls */) => {
 Hooks.on('renderItemSheet', CoC7Parser.ParseSheetContent)
 Hooks.on('renderJournalPageSheet', CoC7Parser.ParseSheetContent)
 Hooks.on('renderActorSheet', CoC7Parser.ParseSheetContent)
-// Chat command processing
-// Hooks.on('preCreateChatMessage', CoC7Parser.ParseMessage);
-// Hooks.on('createChatMessage', CoC7Chat.createChatMessageHook);
-Hooks.on('renderChatMessage', (app, html, data) => {
-  CoC7Chat.renderChatMessageHook(app, html, data)
-  CoC7Parser.ParseMessage(app, html, data)
-})
 // Sheet css options
 // Hooks.on('renderCoC7CharacterSheet', CoC7CharacterSheet.renderSheet);
 Hooks.on('renderActorSheet', CoC7CharacterSheet.renderSheet)
@@ -496,42 +487,6 @@ function activateGlobalListener () {
   document.addEventListener('click', CoC7ContextMenu.closeAll)
   body.on('click', 'a.coc7-inline-check', CoC7Check._onClickInlineRoll)
   document.addEventListener('mousedown', _onLeftClick)
-}
-
-/**
- * Configuration of TinyMCE editor
- */
-function configureTinyMCE () {
-  // Add on drop event to tinyMCE to hendle the links drop
-  tinyMCE.PluginManager.add('CoC7_Editor_OnDrop', function (editor) {
-    editor.on('drop', event => CoC7Parser.onEditorDrop(event, editor))
-  })
-
-  // Add custom plugins to list of plugins.
-  // CONFIG.TinyMCE.plugins = `CoC7_Editor_OnInit CoC7_Editor_OnDrop ${CONFIG.TinyMCE.plugins}`
-  CONFIG.TinyMCE.plugins = `CoC7_Editor_OnDrop ${CONFIG.TinyMCE.plugins}`
-  //
-  //  if (game.user.isGM) {
-  //    // Define css and menu for keeper only blocks
-  //    CONFIG.TinyMCE.content_css.push('/systems/CoC7/assets/mce.css')
-  //    CONFIG.TinyMCE.style_formats.push({
-  //      title: 'CoC7',
-  //      items: [
-  //        {
-  //          title: 'Keeper Only',
-  //          block: 'section',
-  //          classes: 'keeper-only',
-  //          wrapper: true
-  //        }
-  //      ]
-  //    })
-  //  } else {
-  //    // Prevent player to edit and view source code if settings is disabled
-  //    if (!game.settings.get('CoC7', 'enablePlayerSourceCode'))
-  //      CONFIG.TinyMCE.toolbar = CONFIG.TinyMCE.toolbar.replace(' code', '')
-  //    // Hide keeper only blocks to players
-  //    CONFIG.TinyMCE.content_style = '.keeper-only {display: none}'
-  //  }
 }
 
 function _onLeftClick (event) {

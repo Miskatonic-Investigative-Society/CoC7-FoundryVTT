@@ -1,0 +1,59 @@
+<form autocomplete="off" class="flexcol">
+  <div class="panel flexcol">
+    {{#if (eq object.step pages.PAGE_INTRODUCTION)}}
+      {{!-- This page is mainly here to make cache population less obvious --}}
+      {{> 'systems/CoC7/templates/apps/investigator-wizard/introduction.hbs'}}
+    {{else if (eq object.step pages.PAGE_CONFIGURATION)}}
+      {{!-- If you are a Keeper allow settings a default setup and allow character creation --}}
+      {{> 'systems/CoC7/templates/apps/investigator-wizard/configuration.hbs'}}
+    {{else if (eq object.step pages.PAGE_SETUPS)}}
+      {{!-- If setup is not fixed for the world --}}
+      {{> 'systems/CoC7/templates/apps/investigator-wizard/select-setup.hbs'}}
+    {{else if (eq object.step pages.PAGE_ARCHETYPES)}}
+      {{> 'systems/CoC7/templates/apps/investigator-wizard/select-archetype.hbs'}}
+    {{else if (eq object.step pages.PAGE_OCCUPATIONS)}}
+      {{> 'systems/CoC7/templates/apps/investigator-wizard/select-occupation.hbs'}}
+    {{else if (eq object.step pages.PAGE_CHARACTISTICS)}}
+      {{> 'systems/CoC7/templates/apps/investigator-wizard/set-characteristics.hbs'}}
+    {{else if (eq object.step pages.PAGE_ATTRIBUTES)}}
+      {{> 'systems/CoC7/templates/apps/investigator-wizard/set-attributes.hbs'}}
+    {{else if (eq object.step pages.PAGE_VIEW_ATTRIBUTES)}}
+      {{> 'systems/CoC7/templates/apps/investigator-wizard/view-attributes.hbs'}}
+    {{else if (eq object.step pages.PAGE_INVESTIGATOR)}}
+      {{> 'systems/CoC7/templates/apps/investigator-wizard/set-investigator.hbs'}}
+    {{else if (eq object.step pages.PAGE_OCCUPATION_SKILLS)}}
+      {{> 'systems/CoC7/templates/apps/investigator-wizard/set-occupation-skills.hbs'}}
+    {{else if (eq object.step pages.PAGE_ARCHETYPE_SKILLS)}}
+      {{> 'systems/CoC7/templates/apps/investigator-wizard/set-archetype-skills.hbs'}}
+    {{else if (eq object.step pages.PAGE_POINTS_SKILLS)}}
+      {{> 'systems/CoC7/templates/apps/investigator-wizard/points-skills.hbs'}}
+    {{else if (eq object.step pages.PAGE_BACKSTORY)}}
+      {{~> 'systems/CoC7/templates/apps/investigator-wizard/backstory.hbs'}}
+    {{else if (eq object.step pages.PAGE_CREATE)}}
+      {{> 'systems/CoC7/templates/apps/investigator-wizard/create.hbs'}}
+    {{/if}}
+  </div>
+  <div class="dialog-buttons flexrow">
+    {{#unless (gt object.step 0)}}
+      <div class="no-button"></div>
+    {{else}}
+      <button class="submit-button" data-button="back" {{#unless canNext}} style="margin-right: 0;" {{/unless}}>
+        <i class="fas fa-backward"></i>
+        {{localize 'CoC7.InvestigatorWizard.BackStep'}}
+      </button>
+    {{/unless}}
+    {{#unless canNext}}
+      <div class="no-button"></div>
+    {{else}}
+      <button class="submit-button" data-button="next">
+        {{#if createButton}}
+          <i class="fas fa-user"></i>
+          {{localize 'CoC7.InvestigatorWizard.CreateStep'}}
+        {{else}}
+          <i class="fas fa-forward"></i>
+          {{localize 'CoC7.InvestigatorWizard.NextStep'}}
+        {{/if}}
+      </button>
+    {{/unless}}
+  </div>
+</form>

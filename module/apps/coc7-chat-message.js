@@ -1,13 +1,14 @@
 /* global game, ui */
 import { CoC7Check } from '../check.js'
-import { CoC7LinkCreationDialog } from './link-creation-dialog.js'
+import { CoC7ContentLinkDialog } from './coc7-content-link-dialog.js'
 import { isCtrlKey } from '../chat/helper.js'
 import { RollDialog } from './roll-dialog.js'
 import { CombinedCheckCard } from '../chat/cards/combined-roll.js'
 import { OpposedCheckCard } from '../chat/cards/opposed-roll.js'
 import { SanCheckCard } from '../chat/cards/san-check.js'
 import { SanDataDialog } from './sandata-dialog.js'
-import { CoC7Link } from './link.js'
+import { CoC7Link } from './coc7-link.js'
+import { CoC7Utilities } from '../utilities.js'
 
 export class CoC7ChatMessage {
   static get ROLL_TYPE_ATTRIBUTE () {
@@ -170,7 +171,8 @@ export class CoC7ChatMessage {
         sendToClipboard: options.sendToClipboard ?? false,
         isCombat:
           options.event?.currentTarget.classList?.contains('combat') ?? false,
-        preventStandby: options.preventStandby ?? false
+        preventStandby: options.preventStandby ?? false,
+        bonusDice: 0
       },
       dialogOptions: {
         rollType: options.rollType,
@@ -340,6 +342,25 @@ export class CoC7ChatMessage {
     ) {
       CoC7ChatMessage.createLink(config)
     } else {
+      if (typeof config.options.actor !== 'undefined') {
+        if (typeof config.options.attribute !== 'undefined') {
+          const bonusDice = config.options.actor.system?.attribs?.[config.options.attribute]?.bonusDice
+          if (bonusDice) {
+            config.dialogOptions.modifier = bonusDice
+          }
+        } else if (typeof config.options.characteristic !== 'undefined') {
+          const bonusDice = config.options.actor.system?.characteristics?.[config.options.characteristic]?.bonusDice
+          if (bonusDice) {
+            config.dialogOptions.modifier = bonusDice
+          }
+        } else if (typeof config.options.itemId !== 'undefined') {
+          const itemModifiers = Object.values(config.options.actor.system.skills).find(k => k.foundryID === config.options.itemId)
+          if (typeof itemModifiers.bonusDice !== 'undefined') {
+            config.dialogOptions.modifier = itemModifiers.bonusDice
+          }
+        }
+        config.dialogOptions.modifier = Math.min(Math.max(config.dialogOptions.modifier, -2), 2)
+      }
       if (!config.options.shiftKey) {
         await CoC7ChatMessage.createRoll(config)
       }
@@ -356,54 +377,35 @@ export class CoC7ChatMessage {
       case CoC7ChatMessage.ROLL_TYPE_ENCOUNTER:
         {
           const linkData = {
-            check: 'check',
-            type: '',
-            name: '',
-            hasPlayerOwner: config.options.hasPlayerOwner,
-            actorKey: config.options.actor.actorKey,
-            forceModifiers: config.options.shiftKey
+            type: 'CoC7Link'
           }
-          if (
-            config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_SKILL
-          ) {
-            linkData.type = 'skill'
-            linkData.name = config.options.actor.items.get(
-              config.options.skillId
-            )?.shortName
+          if (config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_SKILL) {
+            linkData.check = CoC7Link.CHECK_TYPE.CHECK
+            linkData.linkType = CoC7Link.LINK_TYPE.SKILL
+            linkData.name = config.options.actor.items.get(config.options.skillId)?.shortName
             if (!linkData.name) return
-          } else if (
-            config.dialogOptions.rollType ===
-            CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC
-          ) {
-            linkData.type = 'characteristic'
+          } else if (config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC) {
+            linkData.check = CoC7Link.CHECK_TYPE.CHECK
+            linkData.linkType = CoC7Link.LINK_TYPE.CHARACTERISTIC
             linkData.name = config.options.characteristic
-          } else if (
-            config.dialogOptions.rollType ===
-            CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
-          ) {
+          } else if (config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE) {
             if ((config.options.altKey || config.options.createEncounter) && config.options.attribute === 'san') {
-              linkData.check = 'sanloss'
+              linkData.check = CoC7Link.CHECK_TYPE.SANLOSS
             } else {
-              linkData.type = 'attribute'
+              linkData.check = CoC7Link.CHECK_TYPE.CHECK
+              linkData.linkType = CoC7Link.LINK_TYPE.ATTRIBUTE
               linkData.name = config.options.attribute
             }
-          } else if (
-            config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_COMBAT
-          ) {
-            linkData.check = 'item'
-            linkData.type = 'weapon'
+          } else if (config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_COMBAT) {
+            linkData.check = CoC7Link.CHECK_TYPE.ITEM
             linkData.name = config.options.weaponName
-          } else if (
-            config.dialogOptions.rollType ===
-            CoC7ChatMessage.ROLL_TYPE_ENCOUNTER
-          ) {
-            linkData.check = 'sanloss'
+          } else if (config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_ENCOUNTER) {
+            linkData.check = CoC7Link.CHECK_TYPE.SANLOSS
             linkData.sanMin = config.options.actor?.system?.special?.sanLoss?.checkPassed
             linkData.sanMax = config.options.actor?.system?.special?.sanLoss?.checkFailled
             linkData.sanReason = config.options.actor.system.infos.type?.length
               ? config.options.actor.system.infos.type
               : config.options.actor.name
-            linkData.tokenKey = config.options.actor.actorKey
           } else {
             return
           }
@@ -411,13 +413,13 @@ export class CoC7ChatMessage {
             linkData.blind = true
           }
           if (config.options.sendToChat) {
-            CoC7Link.fromData(linkData).then(link => link.sendToChat())
+            CoC7Link.toChatMessage(linkData)
           } else if (config.options.sendToClipboard) {
-            CoC7Link.fromData(linkData).then(link => link.sendToClipboard())
+            CoC7Link.fromDropData(linkData).then(link => {
+              CoC7Utilities.copyToClipboard(link.link)
+            })
           } else {
-            CoC7LinkCreationDialog.fromLinkData(linkData).then(dlg =>
-              dlg.render(true)
-            )
+            CoC7ContentLinkDialog.create(linkData, { actors: [config.options.actor].filter(a => a.owners.length), hasModifiers: config.options.shiftKey })
           }
         }
         break

@@ -1,4 +1,4 @@
-/* global canvas, ChatMessage, CONFIG, CONST, Dialog, duplicate, Folder, fromUuid, game, getDocumentClass, Hooks, Macro, Roll, Token, ui */
+/* global canvas, ChatMessage, CONFIG, CONST, Dialog, duplicate, Folder, fromUuid, fromUuidSync, game, getDocumentClass, Hooks, Macro, Roll, Token, ui */
 import { COC7 } from './config.js'
 import { CoC7Check } from './check.js'
 import { CoC7Item } from './items/item.js'
@@ -195,6 +195,11 @@ export class CoC7Utilities {
           short: game.i18n.localize('CHARAC.EDU'),
           label: game.i18n.localize('CHARAC.Education')
         }
+      case 'luck':
+        return {
+          short: game.i18n.localize('CoC7.Luck'),
+          label: game.i18n.localize('CoC7.Luck')
+        }
       default: {
         for (const [, value] of Object.entries(
           game.system.template.Actor.templates.characteristics.characteristics
@@ -277,10 +282,10 @@ export class CoC7Utilities {
     await CoC7Utilities.rollDice(event, { threshold })
   }
 
-  static async createMacro (bar, data, slot) {
+  static createMacro (bar, data, slot) {
     if (data.type !== 'Item') return
 
-    const item = await fromUuid(data.uuid)
+    const item = fromUuidSync(data.uuid, bar)
 
     if (!item) {
       return ui.notifications.warn(
@@ -310,18 +315,22 @@ export class CoC7Utilities {
 
     if (command !== '') {
       // Create the macro command
-      let macro = game.macros.contents.find(
+      const macro = game.macros.contents.find(
         m => m.name === item.name && m.command === command
       )
       if (!macro) {
-        macro = await Macro.create({
+        Macro.create(duplicate({
           name: item.name,
           type: 'script',
           img: item.img,
           command
+        })).then(macro => {
+          game.user.assignHotbarMacro(macro, slot)
         })
+        return false
       }
       game.user.assignHotbarMacro(macro, slot)
+      return false
     }
     return true
   }
@@ -910,6 +919,19 @@ export class CoC7Utilities {
         )
       }
     }
+  }
+
+  static toKebabCase (s) {
+    if (!s) {
+      return ''
+    }
+    const match = s.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
+
+    if (!match) {
+      return ''
+    }
+
+    return match.join('-').toLowerCase()
   }
 
   static sortByNameKey (a, b) {

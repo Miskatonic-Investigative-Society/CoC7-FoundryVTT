@@ -26,7 +26,23 @@ export const preloadHandlebarsTemplates = async function () {
     'systems/CoC7/templates/actors/character/summary.html',
 
     'systems/CoC7/templates/items/book/details.html',
-    'systems/CoC7/templates/items/spell/details.html'
+    'systems/CoC7/templates/items/spell/details.html',
+
+    'systems/CoC7/templates/apps/investigator-wizard/introduction.hbs',
+    'systems/CoC7/templates/apps/investigator-wizard/configuration.hbs',
+    'systems/CoC7/templates/apps/investigator-wizard/select-setup.hbs',
+    'systems/CoC7/templates/apps/investigator-wizard/select-archetype.hbs',
+    'systems/CoC7/templates/apps/investigator-wizard/select-occupation.hbs',
+    'systems/CoC7/templates/apps/investigator-wizard/set-characteristics.hbs',
+    'systems/CoC7/templates/apps/investigator-wizard/set-attributes.hbs',
+    'systems/CoC7/templates/apps/investigator-wizard/view-attributes.hbs',
+    'systems/CoC7/templates/apps/investigator-wizard/set-investigator.hbs',
+    'systems/CoC7/templates/apps/investigator-wizard/set-occupation-skills.hbs',
+    'systems/CoC7/templates/apps/investigator-wizard/toggle-skill.hbs',
+    'systems/CoC7/templates/apps/investigator-wizard/set-archetype-skills.hbs',
+    'systems/CoC7/templates/apps/investigator-wizard/points-skills.hbs',
+    'systems/CoC7/templates/apps/investigator-wizard/backstory.hbs',
+    'systems/CoC7/templates/apps/investigator-wizard/create.hbs'
   ]
 
   /** Load the template parts */

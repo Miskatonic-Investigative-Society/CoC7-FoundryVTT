@@ -1,0 +1,51 @@
+<h1 style="flex: 0 0 auto;">{{localize 'CoC7.InvestigatorWizard.TitleDetails'}}</h1>
+<div class="scrollsection">
+  <div class="form-group">
+    <label for="name">{{localize 'CoC7.Name'}}:</label>
+    <div>
+      <input type="text" name="name" value="{{object.name}}" required="required">
+    </div>
+  </div>
+  {{#if language}}
+    <div class="form-group">
+      <label for="language">{{languageName}}:</label>
+      <div>
+        <input type="text" name="language" value="{{object.language}}" required="required">
+      </div>
+    </div>
+  {{/if}}
+  <div class="form-group">
+    <label for="residence">{{localize 'CoC7.Residence'}}:</label>
+    <div>
+      <input type="text" name="residence" value="{{object.residence}}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="birthplace">{{localize 'CoC7.Birthplace'}}:</label>
+    <div>
+      <input type="text" name="birthplace" value="{{object.birthplace}}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="avatar">{{localize 'CoC7.InvestigatorWizard.CharacterAvatarImage'}}:</label>
+    <div class="flexrow">
+      <input type="text" name="avatar" value="{{object.avatar}}" class="submit_on_change">
+      {{filePicker type='image' target='avatar'}}
+    </div>
+  </div>
+  <div class="form-group">
+    <div></div>
+    <img class="photo" src="{{object.avatar}}" data-edit="avatar" />
+  </div>
+  <div class="form-group">
+    <label for="token">{{localize 'CoC7.InvestigatorWizard.CharacterTokenImage'}}:</label>
+    <div class="flexrow">
+      <input type="text" name="token" value="{{object.token}}" class="submit_on_change">
+      {{filePicker type='image' target='token'}}
+    </div>
+  </div>
+  <div class="form-group">
+    <div></div>
+    <img class="photo" src="{{object.token}}" data-edit="token" />
+  </div>
+</div>

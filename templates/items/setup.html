@@ -2,12 +2,12 @@
   <header class="sheet-header flexrow" style="flex: 0 0 64px;padding-bottom: 2px;">
     <div class="header-details flexrow">
       <h1 class="name" style="height: 48px;">
-        <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'CoC7.Name' }}" />
+        <input name="name" type="text" value="{{item.name}}" placeholder="{{localize 'CoC7.Name'}}" />
       </h1>
 
       <ul class="summary flexrow">
         <li class="flex2">
-          <input type="text" name="system.source" value="{{data.system.source}}" placeholder="{{ localize 'CoC7.Source' }}" />
+          <input type="text" name="system.source" value="{{data.system.source}}" placeholder="{{localize 'CoC7.Source'}}" />
         </li>
       </ul>
 
@@ -17,10 +17,10 @@
 
   {{!-- Item Sheet Navigation --}}
   <nav style="flex: 0 0 24px;margin-bottom: 4px;font-family: 'Modesto Condensed', 'Palatino Linotype', serif;font-size: 16px;font-weight: 700;" class="sheet-navigation tabs" data-group="primary">
-    <a style="line-height: 24px;" class="item active" data-tab="description">{{ localize "CoC7.Description" }}</a>
-    <a style="line-height: 24px;" class="item" data-tab="details">{{ localize "CoC7.Details" }}</a>
-    {{#if data.system.enableCharacterisitics}}<a style="line-height: 24px;" class="item" data-tab="characteristics">{{ localize "CoC7.Characteristics" }}</a>{{/if}}
-    <a style="line-height: 24px;" class="item" data-tab="skills">{{ localize "CoC7.Skills" }}</a>
+    <a style="line-height: 24px;" class="item active" data-tab="description">{{localize 'CoC7.Description'}}</a>
+    <a style="line-height: 24px;" class="item" data-tab="details">{{localize 'CoC7.Details'}}</a>
+    {{#if data.system.enableCharacterisitics}}<a style="line-height: 24px;" class="item" data-tab="characteristics">{{localize 'CoC7.Characteristics'}}</a>{{/if}}
+    <a style="line-height: 24px;" class="item" data-tab="skills">{{localize 'CoC7.Skills'}}</a>
     {{#if isKeeper}}
       <a style="line-height: 24px;" class="item keeper-only-tab" data-tab="keeper" title="{{localize 'CoC7.GmNotes'}}"><i class="game-icon game-icon-tentacles-skull"></i></a>
     {{/if}}
@@ -36,7 +36,7 @@
         <ol class="properties-list">
           {{#each _eras as |era key|}}
             {{#if era.isEnabled}}
-              <li>{{localize era.name}}</li>
+              <li>{{era.name}}</li>
             {{/if}}
           {{/each}}
         </ol>
@@ -50,47 +50,102 @@
 
       <div class="form-group">
         <label class="checkbox">
-          <input type="checkbox" name="system.enableCharacterisitics" {{checked data.system.enableCharacterisitics}} /> {{ localize "CoC7.EnableCharacteristics" }}
+          <input type="checkbox" name="system.enableCharacterisitics" {{checked data.system.enableCharacterisitics}} /> {{localize 'CoC7.EnableCharacteristics'}}
         </label>
       </div>
 
-      <h3 class="form-header">{{ localize "CoC7.Eras" }}</h3>
+      <h3 class="form-header">{{localize 'CoC7.Eras'}}</h3>
       <div class="skill-attributes" style="margin-bottom: 6px;" data-set="eras">
         {{#each _eras as |era key|}}
           <span class="toggle-switch {{#if era.isEnabled}} switched-on {{/if}}" data-property="{{era.id}}">{{localize era.name}}</span>
         {{/each}}
       </div>
 
+      <h3 class="form-header">
+        {{localize 'CoC7.MonetaryTitle'}}
+        <a class="item-control add-monetary"><i class="fas fa-plus"></i></a>
+      </h3>
+      <div class="cash-assets">
+        <div class="form-group">
+          <label>{{localize 'CoC7.MonetaryFormatTitle'}}</label>
+          <select name="system.monetary.format">
+            {{#select data.system.monetary.format}}
+              {{#each _monetaryFormats as |monetaryFormat|}}
+                <option value="{{monetaryFormat.key}}">{{monetaryFormat.val}}</option>
+              {{/each}}
+            {{/select}}
+          </select>
+        </div>
+        {{#if showCurrencySymbol}}
+          <div class="form-group">
+            <label>{{localize 'CoC7.MonetarySymbol'}}</label>
+            <input type="text" name="system.monetary.symbol" value="{{data.system.monetary.symbol}}">
+          </div>
+        {{/if}}
+        {{#each data.system.monetary.values as |value index|}}
+          <div class="flexrow form-group item" data-index="{{index}}">
+            <input name="system.monetary.values.{{index}}.name" value="{{localize value.name}}" type="text" placeholder="{{localize 'CoC7.Name'}}">
+            <input name="system.monetary.values.{{index}}.min" value="{{value.min}}" class="cash-assets-range" type="number" placeholder="{{localize 'CoC7.MonetaryCreditRatingMin'}}">
+            <input name="system.monetary.values.{{index}}.max" value="{{value.max}}" class="cash-assets-range" type="number" placeholder="{{localize 'CoC7.MonetaryCreditRatingMax'}}">
+            <select name="system.monetary.values.{{index}}.cashType" class="cash-assets-type">
+              {{#select value.cashType}}
+                {{#each ../_monetaryTypes as |monetaryType|}}
+                  <option value="{{monetaryType.key}}">{{monetaryType.val}}</option>
+                {{/each}}
+              {{/select}}
+            </select>
+            <input name="system.monetary.values.{{index}}.cashValue" value="{{value.cashValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueCash'}}">
+            <select name="system.monetary.values.{{index}}.assetsType" class="cash-assets-type">
+              {{#select value.assetsType}}
+                {{#each ../_monetaryTypes as |monetaryType|}}
+                  <option value="{{monetaryType.key}}">{{monetaryType.val}}</option>
+                {{/each}}
+              {{/select}}
+            </select>
+            <input name="system.monetary.values.{{index}}.assetsValue" value="{{value.assetsValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueAssets'}}">
+            <select name="system.monetary.values.{{index}}.spendingType" class="cash-assets-type">
+              {{#select value.spendingType}}
+                {{#each ../_monetaryTypes as |monetaryType|}}
+                  <option value="{{monetaryType.key}}">{{monetaryType.val}}</option>
+                {{/each}}
+              {{/select}}
+            </select>
+            <input name="system.monetary.values.{{index}}.spendingValue" value="{{value.spendingValue}}" type="number" placeholder="{{localize 'CoC7.MonetaryValueSpendingLevel'}}">
+            <a class="item-control remove-monetary"><i class="fas fa-minus"></i></a>
+          </div>
+        {{/each}}
+      </div>
+
       {{#if oneBlockBackStory}}
         <h3 class="form-header">
-          {{ localize "CoC7.Background" }}
+          {{localize 'CoC7.Background'}}
         </h3>
         <div class="backstory-editor">
           {{editor enrichedBackstory target="system.backstory" engine="prosemirror" button=true owner=owner editable=editable}}
         </div>
       {{else}}
         <h3 class="form-header">
-          {{ localize "CoC7.BioSections" }}
+          {{localize 'CoC7.BioSections'}}
           <a class="item-control add-bio"><i class="fas fa-plus"></i></a>
         </h3>
         {{#each data.system.bioSections as |value index|}}
           <div class="form-group item" data-index="{{index}}">
-            <input type="text" name="system.bioSections.{{index}}" value="{{value}}" placeholder="{{ localize 'CoC7.BioSectionName' }}" />
+            <input type="text" name="system.bioSections.{{index}}" value="{{value}}" placeholder="{{localize 'CoC7.BioSectionName'}}" />
             <a class="item-control remove-section"><i class="fas fa-minus" style="line-height: 20px;"></i></a>
           </div>
         {{/each}}
       {{/if}}
 
       <div class='droppable main-skills'>
-        <h3 class="form-header">{{ localize "CoC7.Items" }}</h3>
+        <h3 class="form-header">{{localize 'CoC7.Items'}}</h3>
 
         {{#if itemsListEmpty}}
-          <h3 class="warning">{{ localize "CoC7.EmptyItemList" }}</h3>
+          <h3 class="warning">{{localize 'CoC7.EmptyItemList'}}</h3>
         {{/if}}
 
         <ol class="item-list">
           {{#each otherItems as |item|}}
-            <li class="item flexrow" data-item-id="{{item._id}}">
+            <li class="item flexrow" data-item-id="{{item._id}}" data-cocid="{{item.flags.CoC7.cocidFlag.id}}">
               <div class="item-name flexrow">
                 <h4>{{item.name}} ({{item.type}})</h4>
               </div>
@@ -106,15 +161,15 @@
     <div class="tab details" data-group="primary" data-tab="skills">
       <div class='droppable main-skills'>
 
-        <h3 class="form-header">{{ localize "CoC7.CommonSkills" }}</h3>
+        <h3 class="form-header">{{localize 'CoC7.CommonSkills'}}</h3>
 
         {{#if skillListEmpty}}
-          <h3 class="warning">{{ localize "CoC7.EmptySkillList" }}</h3>
+          <h3 class="warning">{{localize 'CoC7.EmptySkillList'}}</h3>
         {{/if}}
 
         <ol class="item-list">
           {{#each skills as |skill|}}
-            <li class="item flexrow" data-item-id="{{skill._id}}">
+            <li class="item flexrow" data-item-id="{{skill._id}}" data-cocid="{{skill.flags.CoC7.cocidFlag.id}}">
               <div class="item-name flexrow">
                 <h4>{{skill.name}} ({{skill.system.base}}%)</h4>
               </div>
@@ -129,60 +184,57 @@
     </div>
 
     <div class="tab details" data-group="primary" data-tab="characteristics">
-      <div class="form-group stacked">
-        <label class="checkbox">
-          <input type="checkbox" name="system.characteristics.points.enabled" {{checked data.system.characteristics.points.enabled}} /> {{ localize "CoC7.UsePoints" }}
-        </label>
-        <label class="checkbox">
-          <input type="checkbox" name="system.characteristics.rolls.enabled" {{checked data.system.characteristics.rolls.enabled}} /> {{ localize "CoC7.UseRolls" }}
-        </label>
+      <h3 class="form-header">{{localize 'CoC7.Characteristics'}}</h3>
+      <div class="form-group">
+        <label>{{localize 'CoC7.UsePoints'}}</label>
+        <label class="checkbox" style="text-align: center;"><input type="checkbox" name="system.characteristics.points.enabled" {{checked data.system.characteristics.points.enabled}} /></label>
       </div>
-
-      <h3 class="form-header">{{ localize "CoC7.Characteristics" }}</h3>
-
-      {{#if data.system.characteristics.points.enabled}}
-        <div class="form-group">
-          <label>{{ localize "CoC7.CharacteristicsPoints" }}</label>
-          <input type="text" name="system.characteristics.points.value" value="{{data.system.characteristics.points.value}}" placeholder="{{ localize 'CoC7.Value' }}" />
-        </div>
-      {{else}}
-        <div class="form-group">
-          <label>{{ localize "CHARAC.Strengh" }}</label>
-          <input type="text" name="system.characteristics.rolls.str" value="{{data.system.characteristics.rolls.str}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
-        </div>
-        <div class="form-group">
-          <label>{{ localize "CHARAC.Constitution" }}</label>
-          <input type="text" name="system.characteristics.rolls.con" value="{{data.system.characteristics.rolls.con}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
-        </div>
-        <div class="form-group">
-          <label>{{ localize "CHARAC.Size" }}</label>
-          <input type="text" name="system.characteristics.rolls.siz" value="{{data.system.characteristics.rolls.siz}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
-        </div>
-        <div class="form-group">
-          <label>{{ localize "CHARAC.Dexterity" }}</label>
-          <input type="text" name="system.characteristics.rolls.dex" value="{{data.system.characteristics.rolls.dex}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
-        </div>
-        <div class="form-group">
-          <label>{{ localize "CHARAC.Appearance" }}</label>
-          <input type="text" name="system.characteristics.rolls.app" value="{{data.system.characteristics.rolls.app}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
-        </div>
-        <div class="form-group">
-          <label>{{ localize "CHARAC.Intelligence" }}</label>
-          <input type="text" name="system.characteristics.rolls.int" value="{{data.system.characteristics.rolls.int}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
-        </div>
-        <div class="form-group">
-          <label>{{ localize "CHARAC.Power" }}</label>
-          <input type="text" name="system.characteristics.rolls.pow" value="{{data.system.characteristics.rolls.pow}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
-        </div>
-        <div class="form-group">
-          <label>{{ localize "CHARAC.Education" }}</label>
-          <input type="text" name="system.characteristics.rolls.edu" value="{{data.system.characteristics.rolls.edu}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
-        </div>
-        <div class="form-group">
-          <label>{{ localize "CoC7.Luck" }}</label>
-          <input type="text" name="system.characteristics.rolls.luck" value="{{data.system.characteristics.rolls.luck}}" data-dtype="String" placeholder="{{ localize 'CoC7.EnterFormula' }}" />
-        </div>
-      {{/if}}
+      <div class="form-group">
+        <label>{{localize 'CoC7.CharacteristicsPoints'}}</label>
+        <input type="text" name="system.characteristics.points.value" value="{{data.system.characteristics.points.value}}" placeholder="{{localize 'CoC7.Value'}}" />
+      </div>
+      <p>&nbsp;</p>
+      <h3 class="form-header">{{localize 'CoC7.Characteristics'}}</h3>
+      <div class="form-group">
+        <label>{{localize 'CoC7.UseRolls'}}</label>
+        <label class="checkbox" style="text-align: center;"><input type="checkbox" name="system.characteristics.rolls.enabled" {{checked data.system.characteristics.rolls.enabled}} /></label>
+      </div>
+      <div class="form-group">
+        <label>{{localize 'CHARAC.Strengh'}}</label>
+        <input type="text" name="system.characteristics.rolls.str" value="{{data.system.characteristics.rolls.str}}" data-dtype="String" placeholder="{{localize 'CoC7.EnterFormula'}}" />
+      </div>
+      <div class="form-group">
+        <label>{{localize 'CHARAC.Constitution'}}</label>
+        <input type="text" name="system.characteristics.rolls.con" value="{{data.system.characteristics.rolls.con}}" data-dtype="String" placeholder="{{localize 'CoC7.EnterFormula'}}" />
+      </div>
+      <div class="form-group">
+        <label>{{localize 'CHARAC.Size'}}</label>
+        <input type="text" name="system.characteristics.rolls.siz" value="{{data.system.characteristics.rolls.siz}}" data-dtype="String" placeholder="{{localize 'CoC7.EnterFormula'}}" />
+      </div>
+      <div class="form-group">
+        <label>{{localize 'CHARAC.Dexterity'}}</label>
+        <input type="text" name="system.characteristics.rolls.dex" value="{{data.system.characteristics.rolls.dex}}" data-dtype="String" placeholder="{{localize 'CoC7.EnterFormula'}}" />
+      </div>
+      <div class="form-group">
+        <label>{{localize 'CHARAC.Appearance'}}</label>
+        <input type="text" name="system.characteristics.rolls.app" value="{{data.system.characteristics.rolls.app}}" data-dtype="String" placeholder="{{localize 'CoC7.EnterFormula'}}" />
+      </div>
+      <div class="form-group">
+        <label>{{localize 'CHARAC.Intelligence'}}</label>
+        <input type="text" name="system.characteristics.rolls.int" value="{{data.system.characteristics.rolls.int}}" data-dtype="String" placeholder="{{localize 'CoC7.EnterFormula'}}" />
+      </div>
+      <div class="form-group">
+        <label>{{localize 'CHARAC.Power'}}</label>
+        <input type="text" name="system.characteristics.rolls.pow" value="{{data.system.characteristics.rolls.pow}}" data-dtype="String" placeholder="{{localize 'CoC7.EnterFormula'}}" />
+      </div>
+      <div class="form-group">
+        <label>{{localize 'CHARAC.Education'}}</label>
+        <input type="text" name="system.characteristics.rolls.edu" value="{{data.system.characteristics.rolls.edu}}" data-dtype="String" placeholder="{{localize 'CoC7.EnterFormula'}}" />
+      </div>
+      <div class="form-group">
+        <label>{{localize 'CoC7.Luck'}}</label>
+        <input type="text" name="system.characteristics.rolls.luck" value="{{data.system.characteristics.rolls.luck}}" data-dtype="String" placeholder="{{localize 'CoC7.EnterFormula'}}" />
+      </div>
     </div>
     {{#if isKeeper}}
       <div class="tab keeper flexcol" style="border-top: 2px groove #eeede0;padding: 0 5px;" data-group="primary" data-tab="keeper">

@@ -199,19 +199,19 @@
       <div class="flexrow cash-row">
         <label>{{localize 'CoC7.MonetarySpendingLevel'}}</label>
         {{#if data.system.flags.manualCredit}}
-          <input type="text" name="system.credit.spendingLevel" value="{{data.system.credit.spendingLevel}}">
+          <input type="text" name="system.monetary.spendingLevel" value="{{data.system.monetary.spendingLevel}}">
         {{else}}
-          <span>{{credit.spendingLevel}}</span>
+          <span>{{monetary.spendingLevel}}</span>
         {{/if}}
       </div>
       <div class="flexrow cash-row">
         <label>{{localize 'CoC7.MonetaryCash'}}</label>
         {{#if data.system.flags.manualCredit}}
-          <input type="text" name="system.credit.cash" value="{{data.system.credit.cash}}">
+          <input type="text" name="system.monetary.cash" value="{{data.system.monetary.cash}}">
         {{else}}
-          <span>{{credit.cash}}</span>
+          <span>{{monetary.cash}}</span>
         {{/if}}
-        <label>{{localize 'CoC7.MonetarySpent'}}</label><input type="text" name="system.credit.spent" value="{{data.system.credit.spent}}">
+        <label>{{localize 'CoC7.MonetarySpent'}}</label><input type="text" name="system.monetary.spent" value="{{data.system.monetary.spent}}">
       </div>
     </div>
   </div>

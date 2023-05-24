@@ -7,8 +7,148 @@
 
   .form-fields {
     flex: 2;
+
     .file-picker {
       flex: 0;
+    }
+  }
+}
+
+div.investigator-wizard {
+  div.panel {
+    padding: 5px;
+
+    div.scrollsection {
+      overflow-y: scroll;
+      flex: 1 0 0;
+
+      label {
+        white-space: normal;
+        height: auto;
+      }
+
+      img.photo {
+        flex: 0 0 100px;
+        width: 100px;
+        height: 100px;
+      }
+
+      .item-list {
+        width: 400px;
+        margin: 0 auto;
+
+        .item {
+          text-align: center;
+
+          &.unsorted-characteristics {
+            min-height: 1.2rem;
+            margin-bottom: 1rem;
+          }
+
+          a.increase-characteristic,
+          a.decrease-characteristic,
+          a.reset-characteristic,
+          a.roll-characteristic,
+          a.increase-10-characteristic,
+          a.decrease-10-characteristic,
+          div.nothing-characteristic {
+            flex: 0 0 30px;
+          }
+
+          a.increase-10-characteristic,
+          a.decrease-10-characteristic,
+          div.nothing-10-characteristic {
+            flex: 0 0 15px;
+          }
+
+          div.draggable,
+          div.notdraggable {
+            &.characteristic {
+              flex: 0 0 2rem;
+              margin: 0 0.4rem;
+            }
+
+            div {
+              border: 1px solid #000;
+            }
+          }
+        }
+      }
+
+      .skills-list {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+
+        &.skills-list-child {
+          margin-left: 1em;
+        }
+
+        li.item {
+          padding: 0 5px;
+
+          &.pointsrow {
+            border-bottom: 1px solid var(--main-sheet-front-color);
+            margin: 0 0 2px;
+
+            span.skill-name {
+              align-self: center;
+            }
+          }
+
+          &.toggle {
+            margin: 2px 0;
+            line-height: 1.7;
+
+            &.toggleable,
+            &.clickable {
+              cursor: pointer;
+            }
+
+            &:hover {
+              background-color: @whiteBackground;
+            }
+
+            div.remove-skill {
+              flex: 0 0 auto;
+            }
+
+            input {
+              width: 200px;
+              cursor: default;
+            }
+          }
+        }
+
+        div.adjustment-value {
+          flex: 0 0 2.5rem;
+          position: relative;
+          align-self: center;
+          text-align: center;
+        }
+      }
+    }
+
+    div.form-group.status {
+      border: 1px solid #000;
+
+      i.fa-solid.fa-circle-check,
+      i.fa-solid.fa-circle-xmark {
+        margin: 0 0.5rem;
+      }
+
+      i.fa-solid.fa-circle-xmark {
+        color: red;
+      }
+    }
+  }
+
+  div.dialog-buttons {
+    flex: 0 0 32px;
+
+    div.no-button {
+      margin: 0 5px 0 0;
+      padding: 8px;
     }
   }
 }

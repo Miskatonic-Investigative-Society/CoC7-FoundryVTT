@@ -85,6 +85,14 @@ const SETTINGS = {
     default: false,
     type: Boolean
   },
+  pulpRuleIgnoreAgePenalties: {
+    name: 'CoC7.Settings.PulpRules.IgnoreAgePenalties.Name',
+    hint: 'CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint',
+    scope: 'world',
+    config: false,
+    default: false,
+    type: Boolean
+  },
   opposedRollTieBreaker: {
     name: 'SETTINGS.OpposedRollTieBreaker',
     hint: 'SETTINGS.OpposedRollTieBreakerHint',
