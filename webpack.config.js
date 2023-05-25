@@ -104,7 +104,7 @@ const bundleScript = {
   },
   optimization,
   output: {
-    clean: true,
+    clean: (buildMode === 'production'),
     path: buildDestination(),
     filename: 'bundle.js'
   },

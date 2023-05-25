@@ -1,4 +1,4 @@
-/* global CONFIG, duplicate, game, getProperty, Item, Roll, TextEditor, Token, ui */
+/* global CONFIG, duplicate, game, getProperty, Item, Roll, TextEditor, Token, ui, fromUuid */
 import { CoC7Parser } from '../apps/coc7-parser.js'
 import { COC7 } from '../config.js'
 import { CoC7Utilities } from '../utilities.js'
@@ -33,6 +33,17 @@ export class CoC7Item extends Item {
     }
     /** Default behavior, just call super() and do all the default Item inits */
     super(data, context)
+  }
+
+  async _createDocumentLink (eventData, { relativeTo, label } = {}) {
+    if (typeof eventData.type === 'string' && typeof eventData.uuid === 'string' && eventData.type === 'Item' && eventData.uuid.match(/^Actor\./) && relativeTo instanceof CONFIG.JournalEntryPage.documentClass) {
+      // If dropping a skill/weapon from an Actor onto a Journal Entry Page convert to a check link
+      const item = await fromUuid(eventData.uuid)
+      if (['skill', 'weapon'].includes(item.type)) {
+        return '@coc7.check[type:' + item.type + ',name:' + item.name + ']'
+      }
+    }
+    return super._createDocumentLink(eventData, { relativeTo, label })
   }
 
   static get iconLanguage () {
