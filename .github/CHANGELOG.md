@@ -9,6 +9,8 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- If dropping a skill/weapon from an Actor onto a Journal Entry Page convert it to a check link
+
 ## Version 0.10.0
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
