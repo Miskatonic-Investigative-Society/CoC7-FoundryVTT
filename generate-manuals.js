@@ -95,12 +95,16 @@ const sources = {
         file: 'effects.md'
       },
       {
-        name: 'Imoirtation de PNJs',
+        name: 'Importation d\'acteurs',
         file: 'actor_importer.md'
       },
       {
-        name: 'Création',
+        name: 'Création de Personnage',
         file: 'character_creation.md'
+      },
+      {
+        name: 'Expérience & évolution',
+        file: 'experience.md'
       },
       {
         name: 'Poursuites',
