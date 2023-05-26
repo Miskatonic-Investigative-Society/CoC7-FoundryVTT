@@ -1,22 +1,39 @@
 ## Documentation du Système :squid:
 
 [Combat](combat.md)
+
 [Création](character_creation.md)
+
 [Créer son premier investigateur](first_investigator.md)
+
 [Documentation du système](README.md)
+
 [Effets](effects.md)
+
 [Imoirtation de PNJs](actor_importer.md)
+
 [Liens](links.md)
+
 [Objets](items.md)
+
 [Outil de création de Lien](link_creation_window.md)
+
 [Poursuites](chases.md)
+
 [Santé Mentale](sanity.md)
+
 [Système de gestion des ID ](coc-id-system.md)
+
 [Tableau des commandes](commands_cheat_sheet.md)
+
 [Type d'Objet: Archétype](item_archetype.md)
+
 [Type d'Objet: Compétence](item_skill.md)
+
 [Type d'Objet: Livre](item_book.md)
+
 [Type d'Objet: Occupation](item_occupation.md)
+
 [Type d'Objet: Setup](item_setup.md)
 
 \
