@@ -623,7 +623,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
             })
           }
         }
-        sheetData.max = sheetData.default + sheetData.object.personal + Object.values(sheetData.object.occupationGroups).reduce((s, v) => s + v, 0)
+        sheetData.max = parseInt(sheetData.default, 10) + parseInt(sheetData.object.personal, 10) + Object.values(sheetData.object.occupationGroups).reduce((s, v) => s + parseInt(v, 10), 0)
         sheetData.skillItems.sort(CoC7Utilities.sortByNameKey)
         if (sheetData.selected === sheetData.max) {
           sheetData.canNext = true
