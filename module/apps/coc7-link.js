@@ -414,10 +414,10 @@ export class CoC7Link {
             options
           )
         }
-        if (['skill'].includes(options.type.toLowerCase())) {
+        if (['skill'].includes(options.linkType.toLowerCase())) {
           return actor.skillCheck(options, shiftKey, options)
         }
-        if (['attributes', 'attribute', 'attrib', 'attribs'].includes(options.type.toLowerCase())) {
+        if (['attributes', 'attribute', 'attrib', 'attribs'].includes(options.linkType.toLowerCase())) {
           return actor.attributeCheck(options.name, shiftKey, options)
         }
         break
