@@ -710,6 +710,7 @@ export class CoC7ActorSheet extends ActorSheet {
     })
 
     html.find('.add-item').click(ev => {
+      ev.stopPropagation()
       switch (ev.currentTarget.dataset.type) {
         case 'book':
           this.actor.createEmptyBook(ev)
