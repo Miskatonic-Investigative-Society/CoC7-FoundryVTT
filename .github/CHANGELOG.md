@@ -9,6 +9,8 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix adding (Any) specialisation skills to actors if both requiresname and picknameonly are not set
+
 ## Version 0.10.1
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
