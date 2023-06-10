@@ -929,6 +929,7 @@ export class CoCActor extends Actor {
           let addThis = true
 
           if (CoC7Item.isAnySpec(data)) {
+            const isAnyButNotFlagged = (!(data.system.properties?.requiresname) ?? false) && !(data.system.properties?.picknameonly ?? false)
             let skillList = []
             const group = game.system.api.cocid.guessGroupFromDocument(data)
             if (group) {
@@ -977,7 +978,7 @@ export class CoCActor extends Actor {
             }
             const skillData = await SkillSpecializationSelectDialog.create({
               skills: skillList,
-              allowCustom: (data.system.properties?.requiresname ?? false),
+              allowCustom: (isAnyButNotFlagged || (data.system.properties?.requiresname ?? false)),
               fixedBaseValue: (data.system.properties?.keepbasevalue ?? false),
               specializationName: data.system.specialization,
               label: data.name,

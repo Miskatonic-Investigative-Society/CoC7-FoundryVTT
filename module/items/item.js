@@ -313,7 +313,7 @@ export class CoC7Item extends Item {
     return [
       game.i18n.localize('CoC7.AnySpecName').toLowerCase(),
       'any'
-    ].includes(CoC7Item.getNameWithoutSpec(item).toLowerCase())
+    ].includes(CONFIG.Item.documentClasses.skill.guessNameParts(item.name).skillName.toLowerCase())
   }
 
   async checkSkillProperties () {
