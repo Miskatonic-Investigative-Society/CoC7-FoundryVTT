@@ -31,6 +31,27 @@
       "system": "CoC7"
     },
     {
+      "label": "Fertigkeiten",
+      "type": "Item",
+      "name": "skills-de",
+      "path": "./packs/skills-de.db",
+      "system": "CoC7"
+    },
+    {
+      "label": "Occupations",
+      "type": "Item",
+      "name": "occupations",
+      "path": "./packs/occupations.db",
+      "system": "CoC7"
+    },
+    {
+      "label": "Berufe",
+      "type": "Item",
+      "name": "occupations-de",
+      "path": "./packs/occupations-de.db",
+      "system": "CoC7"
+    },
+    {
       "label": "Items Examples",
       "type": "Item",
       "name": "items",

@@ -1,0 +1,5324 @@
+---
+_id: 1awl8I1Y2yoFk0YM
+name: Buchhalter
+type: occupation
+img: systems/CoC7/assets/icons/occupations/accountant.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 54
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 30
+    max: 70
+  skills:
+    - i.skill.accounting
+    - i.skill.law
+    - i.skill.library-use
+    - i.skill.listen
+    - i.skill.persuade
+    - i.skill.spot-hidden
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.accountant
+    lang: de
+    priority: 0
+---
+_id: 2MHPEAikPPPOaSwC
+name: Akrobat
+type: occupation
+img: systems/CoC7/assets/icons/occupations/acrobat.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 50
+  occupationSkillPoints:
+    edu:
+      multiplier: 2
+      selected: true
+    dex:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 9
+    max: 20
+  skills:
+    - i.skill.climb
+    - i.skill.dodge
+    - i.skill.jump
+    - i.skill.fighting-throw
+    - i.skill.spot-hidden
+    - i.skill.swim
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.acrobat
+    lang: de
+    priority: 0
+---
+_id: 2ekxCcmYhm2Q4VP7
+name: Bühnenschauspieler
+type: occupation
+img: systems/CoC7/assets/icons/occupations/stage_actor.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 71
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 9
+    max: 40
+  skills:
+    - i.skill.art-craft-acting
+    - i.skill.disguise
+    - i.skill.history
+    - i.skill.psychology
+  groups:
+    - options: 1
+      skills:
+        - i.skill.fighting-any
+        - i.skill.fighting-axe
+        - i.skill.fighting-brawl
+        - i.skill.fighting-chainsaw
+        - i.skill.fighting-flail
+        - i.skill.fighting-garrote
+        - i.skill.fighting-spear
+        - i.skill.fighting-sword
+        - i.skill.fighting-whip
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.stage-actor
+    lang: de
+    priority: 0
+---
+_id: 3vZ0u166Co0ELHuz
+name: Filmstar
+type: occupation
+img: systems/CoC7/assets/icons/occupations/film_star.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 71
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 20
+    max: 90
+  skills:
+    - i.skill.art-craft-acting
+    - i.skill.disguise
+    - i.skill.drive-auto
+    - i.skill.psychology
+  groups:
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.film-star
+    lang: de
+    priority: 0
+---
+_id: 3jDz4uiK1dHbhLIr
+name: Agenturdetektiv
+type: occupation
+img: systems/CoC7/assets/icons/occupations/agency_detective.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 50
+  occupationSkillPoints:
+    edu:
+      multiplier: 2
+      selected: true
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 20
+    max: 45
+  skills:
+    - i.skill.fighting-brawl
+    - i.skill.law
+    - i.skill.library-use
+    - i.skill.psychology
+    - i.skill.stealth
+    - i.skill.track
+  groups:
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+    - options: 1
+      skills:
+        - i.skill.firearms-any
+        - i.skill.firearms-handgun
+        - i.skill.firearms-machine-gun
+        - i.skill.firearms-submachine-gun
+        - i.skill.firearms-rifle-shotgun
+flags:
+  cocidFlag:
+    id: i.occupation.agency-detective
+    lang: de
+    priority: 0
+---
+_id: 4DTdvgvkA2AzwbDc
+name: Irrenarzt
+type: occupation
+img: systems/CoC7/assets/icons/occupations/alienist.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 62
+  type:
+    classic: true
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 10
+    max: 60
+  skills:
+    - i.skill.law
+    - i.skill.listen
+    - i.skill.medicine
+    - i.skill.psychoanalysis
+    - i.skill.psychology
+    - i.skill.science-biology
+    - i.skill.science-chemistry
+  groups:
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+flags:
+  cocidFlag:
+    id: i.occupation.alienist
+    lang: de
+    priority: 0
+---
+_id: 4T1qNwHF3LBHgZDO
+name: Tiertrainer
+type: occupation
+img: systems/CoC7/assets/icons/occupations/animal_trainer.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 74
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    pow:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 10
+    max: 40
+  skills:
+    - i.skill.jump
+    - i.skill.listen
+    - i.skill.natural-world
+    - i.skill.psychology
+    - i.skill.science-zoology
+    - i.skill.stealth
+    - i.skill.track
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.animal-trainer
+    lang: de
+    priority: 0
+---
+_id: 4rVY6S41lP1ehXfZ
+name: Altertumsforscher
+type: occupation
+img: systems/CoC7/assets/icons/occupations/antiquarian.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 50
+  type:
+    lovecraftian: true
+  occupationSkillPoints:
+    edu:
+        multiplier: 4
+        selected: true
+  creditRating:
+    min: 30
+    max: 70
+  skills:
+    - i.skill.appraise
+    - i.skill.history
+    - i.skill.library-use
+    - i.skill.spot-hidden
+  groups:
+    - options: 1
+      skills:
+        - i.skill.art-craft-any
+        - i.skill.art-craft-acting
+        - i.skill.art-craft-calligraphy
+        - i.skill.art-craft-fine-art
+        - i.skill.art-craft-forgery
+        - i.skill.art-craft-instrument
+        - i.skill.art-craft-literature
+        - i.skill.art-craft-painting
+        - i.skill.art-craft-photography
+        - i.skill.art-craft-pottery
+        - i.skill.art-craft-sculpting
+        - i.skill.art-craft-writing
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.antiquarian
+    lang: de
+    priority: 0
+---
+_id: 5LPpKGW53kR6vymU
+name: Antiquitätenhändler
+type: occupation
+img: systems/CoC7/assets/icons/occupations/accountant.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 51
+  occupationSkillPoints:
+    edu:
+        multiplier: 4
+        selected: true
+  creditRating:
+    min: 30
+    max: 50
+  skills:
+    - i.skill.accounting
+    - i.skill.appraise
+    - i.skill.drive-auto
+    - i.skill.history
+    - i.skill.library-use
+    - i.skill.navigate
+  groups:
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+flags:
+  cocidFlag:
+    id: i.occupation.antique-dealer
+    lang: de
+    priority: 0
+---
+_id: 70621EX9fp7bmRJG
+name: Archäologe
+type: occupation
+img: systems/CoC7/assets/icons/occupations/archeologist.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 51 f.
+  type:
+    lovecraftian: true
+  occupationSkillPoints:
+    edu:
+        multiplier: 4
+        selected: true
+  creditRating:
+    min: 10
+    max: 40
+  skills:
+    - i.skill.appraise
+    - i.skill.archaeology
+    - i.skill.history
+    - i.skill.library-use
+    - i.skill.spot-hidden
+    - i.skill.mechanical-repair
+    - i.skill.navigate
+  groups:
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+    - options: 1
+      skills:
+        - i.skill.science-any
+        - i.skill.science-chemistry
+        - i.skill.science-geology
+        - i.skill.science-physics
+flags:
+  cocidFlag:
+    id: i.occupation.archeologist
+    lang: de
+    priority: 0
+---
+_id: 8xbFeCx4rt7v7HH4
+name: Architekt
+type: occupation
+img: systems/CoC7/assets/icons/occupations/architect.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 52
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 30
+    max: 70
+  skills:
+    - i.skill.accounting
+    - i.skill.art-craft-technical-drawing
+    - i.skill.law
+    - i.skill.language-own
+    - i.skill.persuade
+    - i.skill.psychology
+    - i.skill.science-mathematics
+  groups:
+    - options: 1
+      skills:
+        - i.skill.computer-use
+        - i.skill.library-use
+flags:
+  cocidFlag:
+    id: i.occupation.architect
+    lang: de
+    priority: 0
+---
+_id: 93BilO2Y8nYpUW3n
+name: Künstler
+type: occupation
+img: systems/CoC7/assets/icons/occupations/artist.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 64
+  occupationSkillPoints:
+    dex:
+        multiplier: 2
+        selected: true
+        optional: true
+    edu:
+        multiplier: 2
+        selected: true
+    pow:
+        multiplier: 2
+        selected: true
+        optional: true
+  creditRating:
+    min: 9
+    max: 50
+  skills:
+    - i.skill.psychology
+    - i.skill.spot-hidden
+  groups:
+    - options: 1
+      skills:
+        - i.skill.art-craft-any
+        - i.skill.art-craft-acting
+        - i.skill.art-craft-barbery
+        - i.skill.art-craft-calligraphy
+        - i.skill.art-craft-carpentry
+        - i.skill.art-craft-comedy
+        - i.skill.art-craft-cooking
+        - i.skill.art-craft-dancing
+        - i.skill.art-craft-decorating
+        - i.skill.art-craft-fine-art
+        - i.skill.art-craft-forgery
+        - i.skill.art-craft-instrument
+        - i.skill.art-craft-literature
+        - i.skill.art-craft-painting
+        - i.skill.art-craft-photography
+        - i.skill.art-craft-pottery
+        - i.skill.art-craft-sculpting
+        - i.skill.art-craft-singing
+        - i.skill.art-craft-tailoring
+        - i.skill.art-craft-technical-drawing
+        - i.skill.art-craft-welding
+        - i.skill.art-craft-writing
+        - i.skill.art-craft-woodworking
+    - options: 1
+      skills:
+        - i.skill.history
+        - i.skill.natural-world
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.artist
+    lang: de
+    priority: 0
+---
+_id: 9NnhcxDNM1Ir2zG9
+name: Anstaltswärter
+type: occupation
+img: systems/CoC7/assets/icons/occupations/asylum_attendant.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 50 f.
+  occupationSkillPoints:
+    dex:
+        multiplier: 2
+        selected: true
+        optional: true
+    edu:
+        multiplier: 2
+        selected: true
+    str:
+        multiplier: 2
+        selected: true
+        optional: true
+  creditRating:
+    min: 8
+    max: 20
+  skills:
+    - i.skill.dodge
+    - i.skill.fighting-brawl
+    - i.skill.first-aid
+    - i.skill.listen
+    - i.skill.psychology
+    - i.skill.stealth
+  groups:
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+flags:
+  cocidFlag:
+    id: i.occupation.asylum-attendant
+    lang: de
+    priority: 0
+---
+_id: 9m1ks2PFFiY23D6n
+name: Berufssportler
+type: occupation
+img: systems/CoC7/assets/icons/occupations/athlete.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 53
+  occupationSkillPoints:
+    dex:
+        multiplier: 2
+        selected: true
+        optional: true
+    edu:
+        multiplier: 2
+        selected: true
+    str:
+        multiplier: 2
+        selected: true
+        optional: true
+  creditRating:
+    min: 9
+    max: 70
+  skills:
+    - i.skill.climb
+    - i.skill.jump
+    - i.skill.fighting-brawl
+    - i.skill.ride
+    - i.skill.swim
+    - i.skill.fighting-throw
+  groups:
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.athlete
+    lang: de
+    priority: 0
+---
+_id: AC03JT1bhaKJM6hy
+name: Schriftsteller
+type: occupation
+img: systems/CoC7/assets/icons/occupations/author.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 72
+  type:
+    lovecraftian: true
+  occupationSkillPoints:
+    edu:
+        multiplier: 4
+        selected: true
+  creditRating:
+    min: 9
+    max: 30
+  skills:
+    - i.skill.art-craft-literature
+    - i.skill.history
+    - i.skill.library-use
+    - i.skill.language-own
+    - i.skill.psychology
+  groups:
+    - options: 1
+      skills:
+        - i.skill.natural-world
+        - i.skill.occult
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.author
+    lang: de
+    priority: 0
+---
+_id: AWMj90XFqFqfT8PQ
+name: Barkeeper
+type: occupation
+img: systems/CoC7/assets/icons/occupations/bartender.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 53
+  occupationSkillPoints:
+    app:
+        multiplier: 2
+        selected: true
+    edu:
+        multiplier: 2
+        selected: true
+  creditRating:
+    min: 8
+    max: 25
+  skills:
+    - i.skill.accounting
+    - i.skill.fighting-brawl
+    - i.skill.listen
+    - i.skill.psychology
+    - i.skill.spot-hidden
+  groups:
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.bartender
+    lang: de
+    priority: 0
+---
+_id: CntT6OkbVznKvrpu
+name: Großwildjäger
+type: occupation
+img: systems/CoC7/assets/icons/occupations/big_game_hunter.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 60 ff.
+  occupationSkillPoints:
+    dex:
+        multiplier: 2
+        selected: true
+        optional: true
+    edu:
+        multiplier: 2
+        selected: true
+    str:
+        multiplier: 2
+        selected: true
+        optional: true
+  creditRating:
+    min: 20
+    max: 50
+  skills:
+    - i.skill.natural-world
+    - i.skill.navigate
+    - i.skill.stealth
+    - i.skill.track
+  groups:
+    - options: 1
+      skills:
+        - i.skill.firearms-any
+        - i.skill.firearms-bow
+        - i.skill.firearms-handgun
+        - i.skill.firearms-rifle-shotgun
+    - options: 1
+      skills:
+        - i.skill.listen
+        - i.skill.spot-hidden
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+        - i.skill.survival-any
+        - i.skill.survival-alpine
+        - i.skill.survival-arctic
+        - i.skill.survival-desert
+        - i.skill.survival-sea
+        - i.skill.survival-woodland
+    - options: 1
+      skills:
+        - i.skill.science-biology
+        - i.skill.science-botany
+flags:
+  cocidFlag:
+    id: i.occupation.big-game-hunter
+    lang: de
+    priority: 0
+---
+_id: CsARoS898TYPHNso
+name: Buchhändler
+type: occupation
+img: systems/CoC7/assets/icons/occupations/book_dealer.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 54
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 20
+    max: 40
+  skills:
+    - i.skill.accounting
+    - i.skill.appraise
+    - i.skill.drive-auto
+    - i.skill.history
+    - i.skill.library-use
+    - i.skill.language-own
+  groups:
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+flags:
+  cocidFlag:
+    id: i.occupation.book-dealer
+    lang: de
+    priority: 0
+---
+_id: DVt4tm8IWISffhwD
+name: Kopfgeldjäger
+type: occupation
+img: systems/CoC7/assets/icons/occupations/bounty_hunter.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 64
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 9
+    max: 30
+  skills:
+    - i.skill.drive-auto
+    - i.skill.law
+    - i.skill.psychology
+    - i.skill.stealth
+    - i.skill.track
+  groups:
+    - options: 1
+      skills:
+        - i.skill.electronics
+        - i.skill.electrical-repair
+    - options: 1
+      skills:
+        - i.skill.fighting-any
+        - i.skill.fighting-axe
+        - i.skill.fighting-brawl
+        - i.skill.fighting-chainsaw
+        - i.skill.fighting-flail
+        - i.skill.fighting-garrote
+        - i.skill.fighting-spear
+        - i.skill.fighting-sword
+        - i.skill.fighting-whip
+        - i.skill.firearms-any
+        - i.skill.firearms-bow
+        - i.skill.firearms-flamethrower
+        - i.skill.firearms-heavy-weapons
+        - i.skill.firearms-handgun
+        - i.skill.firearms-machine-gun
+        - i.skill.firearms-submachine-gun
+        - i.skill.firearms-rifle-shotgun
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+flags:
+  cocidFlag:
+    id: i.occupation.bounty-hunter
+    lang: de
+    priority: 0
+---
+_id: EpTOFJGzMv8mLCj1
+name: Boxer/Ringer
+type: occupation
+img: systems/CoC7/assets/icons/occupations/boxer_wrestler.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 54
+  occupationSkillPoints:
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 9
+    max: 60
+  skills:
+    - i.skill.dodge
+    - i.skill.fighting-brawl
+    - i.skill.intimidate
+    - i.skill.jump
+    - i.skill.psychology
+    - i.skill.spot-hidden
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.boxer-wrestler
+    lang: de
+    priority: 0
+---
+_id: G5GO2NWxOHU3viov
+name: Butler/Kammerdiener/Dienstmädchen
+type: occupation
+img: systems/CoC7/assets/icons/occupations/butler_valet.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 55
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 9
+    max: 40
+  skills:
+    - i.skill.first-aid
+    - i.skill.listen
+    - i.skill.psychology
+    - i.skill.spot-hidden
+  groups:
+    - options: 1
+      skills:
+        - i.skill.accounting
+        - i.skill.appraise
+    - options: 1
+      skills:
+        - i.skill.art-craft-any
+        - i.skill.art-craft-barbery
+        - i.skill.art-craft-cooking
+        - i.skill.art-craft-tailoring
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.butler-valet
+    lang: de
+    priority: 0
+---
+_id: Gh9yIiIXkUGuo5iy
+name: Geistlicher
+type: occupation
+img: systems/CoC7/assets/icons/occupations/clergy_member.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 59 f.
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 9
+    max: 60
+  skills:
+    - i.skill.accounting
+    - i.skill.history
+    - i.skill.library-use
+    - i.skill.listen
+    - i.skill.psychology
+  groups:
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.clergy-member
+    lang: de
+    priority: 0
+---
+_id: HFWf29wtlvJPXETl
+name: Computerprogrammierer/-Techniker
+type: occupation
+img: systems/CoC7/assets/icons/occupations/computer_programmer_technician.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 55 f.
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 10
+    max: 70
+  skills:
+    - i.skill.computer-use
+    - i.skill.electrical-repair
+    - i.skill.electronics
+    - i.skill.library-use
+    - i.skill.science-mathematics
+    - i.skill.spot-hidden
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.computer-programmer-technician
+    lang: de
+    priority: 0
+---
+_id: IzXuTVi61zoHiraG
+name: Hacker
+type: occupation
+img: systems/CoC7/assets/icons/occupations/hacker.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 55 f.
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 10
+    max: 70
+  skills:
+    - i.skill.computer-use
+    - i.skill.electrical-repair
+    - i.skill.electronics
+    - i.skill.library-use
+    - i.skill.spot-hidden
+  groups:
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.hacker
+    lang: de
+    priority: 0
+---
+_id: JNEHWB3tjPanBDhh
+name: Cowboy/-girl
+type: occupation
+img: systems/CoC7/assets/icons/occupations/cowboy.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 56
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 9
+    max: 20
+  skills:
+    - i.skill.dodge
+    - i.skill.jump
+    - i.skill.ride
+    - i.skill.fighting-throw
+    - i.skill.track
+  groups:
+    - options: 1
+      skills:
+        - i.skill.fighting-any
+        - i.skill.fighting-axe
+        - i.skill.fighting-brawl
+        - i.skill.fighting-whip
+        - i.skill.firearms-any
+        - i.skill.firearms-bow
+        - i.skill.firearms-handgun
+        - i.skill.firearms-rifle-shotgun
+    - options: 1
+      skills:
+        - i.skill.first-aid
+        - i.skill.natural-world
+    - options: 1
+      skills:
+        - i.skill.survival-any
+        - i.skill.survival-alpine
+        - i.skill.survival-desert
+flags:
+  cocidFlag:
+    id: i.occupation.cowboy
+    lang: de
+    priority: 0
+---
+_id: JNoYygioHY2MHOFh
+name: Handwerker
+type: occupation
+img: systems/CoC7/assets/icons/occupations/craftsperson.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 62
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 10
+    max: 40
+  skills:
+    - i.skill.accounting
+    - i.skill.mechanical-repair
+    - i.skill.natural-world
+    - i.skill.spot-hidden
+  groups:
+    - options: 2
+      skills:
+        - i.skill.art-craft-any
+        - i.skill.art-craft-acting
+        - i.skill.art-craft-barbery
+        - i.skill.art-craft-carpentry
+        - i.skill.art-craft-cooking
+        - i.skill.art-craft-farming
+        - i.skill.art-craft-fine-art
+        - i.skill.art-craft-forgery
+        - i.skill.art-craft-instrument
+        - i.skill.art-craft-painting
+        - i.skill.art-craft-plumbing
+        - i.skill.art-craft-pottery
+        - i.skill.art-craft-sculpting
+        - i.skill.art-craft-tailoring
+        - i.skill.art-craft-technical-drawing
+        - i.skill.art-craft-welding
+        - i.skill.art-craft-woodworking
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.craftsperson
+    lang: de
+    priority: 0
+---
+_id: LJCqHVLWMcigJ1UT
+name: Auftragskiller
+type: occupation
+img: systems/CoC7/assets/icons/occupations/assassin.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 74 f.
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 30
+    max: 60
+  skills:
+    - i.skill.disguise
+    - i.skill.electrical-repair
+    - i.skill.locksmith
+    - i.skill.mechanical-repair
+    - i.skill.stealth
+    - i.skill.psychology
+  groups:
+    - options: 1
+      skills:
+        - i.skill.fighting-any
+        - i.skill.fighting-axe
+        - i.skill.fighting-brawl
+        - i.skill.fighting-chainsaw
+        - i.skill.fighting-flail
+        - i.skill.fighting-garrote
+        - i.skill.fighting-spear
+        - i.skill.fighting-sword
+        - i.skill.fighting-whip
+    - options: 1
+      skills:
+        - i.skill.firearms-any
+        - i.skill.firearms-bow
+        - i.skill.firearms-flamethrower
+        - i.skill.firearms-heavy-weapons
+        - i.skill.firearms-handgun
+        - i.skill.firearms-machine-gun
+        - i.skill.firearms-submachine-gun
+        - i.skill.firearms-rifle-shotgun
+flags:
+  cocidFlag:
+    id: i.occupation.assassin
+    lang: de
+    priority: 0
+---
+_id: LMHB70LuoJQD24cs
+name: Bankräuber
+type: occupation
+img: systems/CoC7/assets/icons/occupations/bank_robber.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 74 f.
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 5
+    max: 75
+  skills:
+    - i.skill.drive-auto
+    - i.skill.intimidate
+    - i.skill.locksmith
+    - i.skill.operate-heavy-machinery
+  groups:
+    - options: 1
+      skills:
+        - i.skill.electrical-repair
+        - i.skill.mechanical-repair
+    - options: 1
+      skills:
+        - i.skill.fighting-any
+        - i.skill.fighting-axe
+        - i.skill.fighting-brawl
+        - i.skill.fighting-chainsaw
+        - i.skill.fighting-garrote
+    - options: 1
+      skills:
+        - i.skill.firearms-any
+        - i.skill.firearms-handgun
+        - i.skill.firearms-machine-gun
+        - i.skill.firearms-submachine-gun
+        - i.skill.firearms-rifle-shotgun
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.bank-robber
+    lang: de
+    priority: 0
+---
+_id: MumrrBQQfAhFlKhU
+name: Alkoholschmuggler/Schläger
+type: occupation
+img: systems/CoC7/assets/icons/occupations/bootlegger_thug.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 74 f.
+  occupationSkillPoints:
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 5
+    max: 30
+  skills:
+    - i.skill.drive-auto
+    - i.skill.psychology
+    - i.skill.stealth
+    - i.skill.spot-hidden
+  groups:
+    - options: 1
+      skills:
+        - i.skill.fighting-any
+        - i.skill.fighting-axe
+        - i.skill.fighting-brawl
+        - i.skill.fighting-chainsaw
+        - i.skill.fighting-garrote
+    - options: 1
+      skills:
+        - i.skill.firearms-any
+        - i.skill.firearms-flamethrower
+        - i.skill.firearms-handgun
+        - i.skill.firearms-machine-gun
+        - i.skill.firearms-submachine-gun
+        - i.skill.firearms-rifle-shotgun
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+flags:
+  cocidFlag:
+    id: i.occupation.bootlegger-thug
+    lang: de
+    priority: 0
+---
+_id: NYZytoWu0gbNOvbw
+name: Einbrecher
+type: occupation
+img: systems/CoC7/assets/icons/occupations/burglar.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 74 f.
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 5
+    max: 40
+  skills:
+    - i.skill.appraise
+    - i.skill.climb
+    - i.skill.listen
+    - i.skill.locksmith
+    - i.skill.sleight-of-hand
+    - i.skill.stealth
+    - i.skill.spot-hidden
+  groups:
+    - options: 1
+      skills:
+        - i.skill.electrical-repair
+        - i.skill.mechanical-repair
+flags:
+  cocidFlag:
+    id: i.occupation.burglar
+    lang: de
+    priority: 0
+---
+_id: OI1bFtMlprDltdd2
+name: Hochstapler
+type: occupation
+img: systems/CoC7/assets/icons/occupations/conman.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 10
+    max: 65
+  skills:
+    - i.skill.appraise
+    - i.skill.art-craft-acting
+    - i.skill.listen
+    - i.skill.psychology
+    - i.skill.sleight-of-hand
+  groups:
+    - options: 1
+      skills:
+        - i.skill.law
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+flags:
+  cocidFlag:
+    id: i.occupation.conman
+    lang: de
+    priority: 0
+---
+_id: PIxHKE1pwGpVy8Yv
+name: Krimineller Einzelgänger
+type: occupation
+img: systems/CoC7/assets/icons/occupations/criminal_freelance_solo.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 74 ff.
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+      optional: true
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 5
+    max: 65
+  skills:
+    - i.skill.appraise
+    - i.skill.stealth
+    - i.skill.psychology
+    - i.skill.spot-hidden
+  groups:
+    - options: 1
+      skills:
+        - i.skill.art-craft-acting
+        - i.skill.disguise
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+    - options: 1
+      skills:
+        - i.skill.fighting-any
+        - i.skill.fighting-axe
+        - i.skill.fighting-brawl
+        - i.skill.fighting-chainsaw
+        - i.skill.fighting-flail
+        - i.skill.fighting-garrote
+        - i.skill.fighting-spear
+        - i.skill.fighting-sword
+        - i.skill.fighting-whip
+        - i.skill.firearms-any
+        - i.skill.firearms-handgun
+        - i.skill.firearms-machine-gun
+        - i.skill.firearms-submachine-gun
+        - i.skill.firearms-rifle-shotgun
+    - options: 1
+      skills:
+        - i.skill.locksmith
+        - i.skill.mechanical-repair
+flags:
+  cocidFlag:
+    id: i.occupation.criminal-freelance-solo
+    lang: de
+    priority: 0
+---
+_id: QVG3XOGU69o7X4Xk
+name: Hehler
+type: occupation
+img: systems/CoC7/assets/icons/occupations/fence.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 74 f.
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 20
+    max: 40
+  skills:
+    - i.skill.accounting
+    - i.skill.appraise
+    - i.skill.art-craft-forgery
+    - i.skill.history
+    - i.skill.library-use
+    - i.skill.spot-hidden
+  groups:
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.fence
+    lang: de
+    priority: 0
+---
+_id: QoSylylYkupNqQCP
+name: Fälscher/Falschmünzer
+type: occupation
+img: systems/CoC7/assets/icons/occupations/forger_counterfeiter.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 74 f.
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 20
+    max: 60
+  skills:
+    - i.skill.accounting
+    - i.skill.appraise
+    - i.skill.art-craft-forgery
+    - i.skill.history
+    - i.skill.library-use
+    - i.skill.spot-hidden
+    - i.skill.sleight-of-hand
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.forger-counterfeiter
+    lang: de
+    priority: 0
+---
+_id: Qohy2CZAgkkVAMuN
+name: Schmuggler
+type: occupation
+img: systems/CoC7/assets/icons/occupations/smuggler.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 74 ff.
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+      optional: true
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 20
+    max: 60
+  skills:
+    - i.skill.listen
+    - i.skill.navigate
+    - i.skill.psychology
+    - i.skill.sleight-of-hand
+    - i.skill.spot-hidden
+  groups:
+    - options: 1
+      skills:
+        - i.skill.firearms-any
+        - i.skill.firearms-heavy-weapons
+        - i.skill.firearms-handgun
+        - i.skill.firearms-machine-gun
+        - i.skill.firearms-submachine-gun
+        - i.skill.firearms-rifle-shotgun
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+    - options: 1
+      skills:
+        - i.skill.drive-auto
+        - i.skill.pilot-any
+        - i.skill.pilot-aircraft
+        - i.skill.pilot-boat
+flags:
+  cocidFlag:
+    id: i.occupation.smuggler
+    lang: de
+    priority: 0
+---
+_id: Qt8dlobaJBlWHnbJ
+name: Rowdy
+type: occupation
+img: systems/CoC7/assets/icons/occupations/street_punk.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 74 ff.
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 3
+    max: 10
+  skills:
+    - i.skill.climb
+    - i.skill.jump
+    - i.skill.sleight-of-hand
+    - i.skill.stealth
+    - i.skill.fighting-throw
+  groups:
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+    - options: 1
+      skills:
+        - i.skill.fighting-any
+        - i.skill.fighting-axe
+        - i.skill.fighting-brawl
+        - i.skill.fighting-chainsaw
+        - i.skill.fighting-flail
+        - i.skill.fighting-garrote
+        - i.skill.fighting-spear
+        - i.skill.fighting-sword
+        - i.skill.fighting-whip
+    - options: 1
+      skills:
+        - i.skill.firearms-any
+        - i.skill.firearms-handgun
+        - i.skill.firearms-machine-gun
+        - i.skill.firearms-submachine-gun
+        - i.skill.firearms-rifle-shotgun
+flags:
+  cocidFlag:
+    id: i.occupation.street-punk
+    lang: de
+    priority: 0
+---
+_id: SFccid8iPnGMogl2
+name: Sektenführer
+type: occupation
+img: systems/CoC7/assets/icons/occupations/cult_leader.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 72
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 30
+    max: 60
+  skills:
+    - i.skill.accounting
+    - i.skill.occult
+    - i.skill.psychology
+    - i.skill.spot-hidden
+  groups:
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.cult-leader
+    lang: de
+    priority: 0
+---
+_id: StW9Dp4HMhZhh5Nc
+name: Deprogrammierer
+type: occupation
+img: systems/CoC7/assets/icons/occupations/deprogrammer.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 56
+  type:
+    modern: true
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 20
+    max: 50
+  skills:
+    - i.skill.drive-auto
+    - i.skill.history
+    - i.skill.occult
+    - i.skill.psychology
+    - i.skill.stealth
+  groups:
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+    - options: 1
+      skills:
+        - i.skill.fighting-brawl
+        - i.skill.firearms-any
+        - i.skill.firearms-handgun
+        - i.skill.firearms-rifle-shotgun
+flags:
+  cocidFlag:
+    id: i.occupation.deprogrammer
+    lang: de
+    priority: 0
+---
+_id: Sz1VxaKApgpiBkAO
+name: Designer
+type: occupation
+img: systems/CoC7/assets/icons/occupations/designer.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 56
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 20
+    max: 60
+  skills:
+    - i.skill.accounting
+    - i.skill.art-craft-photography
+    - i.skill.mechanical-repair
+    - i.skill.psychology
+    - i.skill.spot-hidden
+  groups:
+    - options: 1
+      skills:
+        - i.skill.art-craft-any
+        - i.skill.art-craft-calligraphy
+        - i.skill.art-craft-carpentry
+        - i.skill.art-craft-decorating
+        - i.skill.art-craft-fine-art
+        - i.skill.art-craft-forgery
+        - i.skill.art-craft-instrument
+        - i.skill.art-craft-painting
+        - i.skill.art-craft-pottery
+        - i.skill.art-craft-sculpting
+        - i.skill.art-craft-tailoring
+        - i.skill.art-craft-technical-drawing
+        - i.skill.art-craft-welding
+        - i.skill.art-craft-woodworking
+    - options: 1
+      skills:
+        - i.skill.computer-use
+        - i.skill.library-use
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.designer
+    lang: de
+    priority: 0
+---
+_id: TfzIWdQ9qk8jyZk9
+name: Müßiggänger
+type: occupation
+img: systems/CoC7/assets/icons/occupations/dilettante.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 66
+  type:
+    lovecraftian: true
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 50
+    max: 99
+  skills:
+    - i.skill.ride
+  groups:
+    - options: 1
+      skills:
+        - i.skill.art-craft-any
+        - i.skill.art-craft-acting
+        - i.skill.art-craft-calligraphy
+        - i.skill.art-craft-dancing
+        - i.skill.art-craft-fine-art
+        - i.skill.art-craft-instrument
+        - i.skill.art-craft-literature
+        - i.skill.art-craft-painting
+        - i.skill.art-craft-photography
+        - i.skill.art-craft-pottery
+        - i.skill.art-craft-sculpting
+        - i.skill.art-craft-singing
+        - i.skill.art-craft-writing
+    - options: 1
+      skills:
+        - i.skill.firearms-any
+        - i.skill.firearms-bow
+        - i.skill.firearms-handgun
+        - i.skill.firearms-rifle-shotgun
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 3
+flags:
+  cocidFlag:
+    id: i.occupation.dilettante
+    lang: de
+    priority: 0
+---
+_id: UIS9pkWejfFvGZ3h
+name: Taucher
+type: occupation
+img: systems/CoC7/assets/icons/occupations/diver.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 9
+    max: 30
+  skills:
+    - i.skill.diving
+    - i.skill.first-aid
+    - i.skill.mechanical-repair
+    - i.skill.pilot-boat
+    - i.skill.science-biology
+    - i.skill.spot-hidden
+    - i.skill.swim
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.diver
+    lang: de
+    priority: 0
+---
+_id: VjqOpmNFPckY3zEi
+name: Arzt
+type: occupation
+img: systems/CoC7/assets/icons/occupations/doctor_of_medicine.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 
+  type:
+    lovecraftian: true
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 30
+    max: 80
+  skills:
+    - i.skill.first-aid
+    - i.skill.medicine
+    - i.skill.language-latin
+    - i.skill.psychology
+    - i.skill.science-biology
+    - i.skill.science-pharmacy
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.doctor-of-medicine
+    lang: de
+    priority: 0
+---
+_id: W36KWMZmp6gV30vj
+name: Landstreicher
+type: occupation
+img: systems/CoC7/assets/icons/occupations/drifter.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 65
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+      optional: true
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 0
+    max: 5
+  skills:
+    - i.skill.climb
+    - i.skill.jump
+    - i.skill.listen
+    - i.skill.navigate
+    - i.skill.stealth
+  groups:
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.drifter
+    lang: de
+    priority: 0
+---
+_id: W7XZtBr6fprsMDyU
+name: Chauffeur
+type: occupation
+img: systems/CoC7/assets/icons/occupations/chauffeur.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 57
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 10
+    max: 40
+  skills:
+    - i.skill.drive-auto
+    - i.skill.listen
+    - i.skill.mechanical-repair
+    - i.skill.navigate
+    - i.skill.spot-hidden
+  groups:
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.chauffeur
+    lang: de
+    priority: 0
+---
+_id: WmKFESctTQ9EEkRR
+name: Berufsfahrer
+type: occupation
+img: systems/CoC7/assets/icons/occupations/driver.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 57
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 9
+    max: 20
+  skills:
+    - i.skill.accounting
+    - i.skill.drive-auto
+    - i.skill.listen
+    - i.skill.mechanical-repair
+    - i.skill.navigate
+    - i.skill.psychology
+  groups:
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.driver
+    lang: de
+    priority: 0
+---
+_id: WqKdhvMMVzUtCNeH
+name: Taxifahrer
+type: occupation
+img: systems/CoC7/assets/icons/occupations/taxi_driver.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 57
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 9
+    max: 30
+  skills:
+    - i.skill.accounting
+    - i.skill.drive-auto
+    - i.skill.electrical-repair
+    - i.skill.fast-talk
+    - i.skill.mechanical-repair
+    - i.skill.navigate
+    - i.skill.spot-hidden
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.taxi-driver
+    lang: de
+    priority: 0
+---
+_id: XAErLM8h15DYKx8n
+name: Redakteur
+type: occupation
+img: systems/CoC7/assets/icons/occupations/editor.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 70
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 10
+    max: 30
+  skills:
+    - i.skill.accounting
+    - i.skill.history
+    - i.skill.language-own
+    - i.skill.psychology
+    - i.skill.spot-hidden
+  groups:
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.editor
+    lang: de
+    priority: 0
+---
+_id: YM0UokwltbVmnoWZ
+name: Volksvertreter
+type: occupation
+img: systems/CoC7/assets/icons/occupations/elected_official.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 76
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 50
+    max: 90
+  skills:
+    - i.skill.charm
+    - i.skill.history
+    - i.skill.intimidate
+    - i.skill.fast-talk
+    - i.skill.listen
+    - i.skill.language-own
+    - i.skill.persuade
+    - i.skill.psychology
+flags:
+  cocidFlag:
+    id: i.occupation.elected-official
+    lang: de
+    priority: 0
+---
+_id: Zy0v4FrOW1ztcKEd
+name: Ingeneur
+type: occupation
+img: systems/CoC7/assets/icons/occupations/engineer.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 62
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 30
+    max: 60
+  skills:
+    - i.skill.art-craft-technical-drawing
+    - i.skill.electrical-repair
+    - i.skill.library-use
+    - i.skill.mechanical-repair
+    - i.skill.operate-heavy-machinery
+    - i.skill.science-engineering
+    - i.skill.science-physics
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.engineer
+    lang: de
+    priority: 0
+---
+_id: a4a6YsktyB5mCe1E
+name: Unterhaltungskünstler
+type: occupation
+img: systems/CoC7/assets/icons/occupations/entertainer.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 74
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 9
+    max: 70
+  skills:
+    - i.skill.disguise
+    - i.skill.listen
+    - i.skill.psychology
+  groups:
+    - options: 1
+      skills:
+        - i.skill.art-craft-any
+        - i.skill.art-craft-acting
+        - i.skill.art-craft-comedy
+        - i.skill.art-craft-singing
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.entertainer
+    lang: de
+    priority: 0
+---
+_id: btZapZ5IOrhOCuKX
+name: Entdecker
+type: occupation
+img: systems/CoC7/assets/icons/occupations/explorer.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 56 f.
+  type:
+    classic: true
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+      optional: true
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 55
+    max: 80
+  skills:
+    - i.skill.history
+    - i.skill.jump
+    - i.skill.natural-world
+    - i.skill.navigate
+  groups:
+    - options: 1
+      skills:
+        - i.skill.climb
+        - i.skill.swim
+    - options: 1
+      skills:
+        - i.skill.firearms-any
+        - i.skill.firearms-bow
+        - i.skill.firearms-handgun
+        - i.skill.firearms-rifle-shotgun
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+    - options: 1
+      skills:
+        - i.skill.survival-any
+        - i.skill.survival-alpine
+        - i.skill.survival-arctic
+        - i.skill.survival-desert
+        - i.skill.survival-sea
+        - i.skill.survival-woodland
+flags:
+  cocidFlag:
+    id: i.occupation.explorer
+    lang: de
+    priority: 0
+---
+_id: cXeIbqxZI52BH8Vc
+name: Farmer (Landwirt)
+type: occupation
+img: systems/CoC7/assets/icons/occupations/farmer.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 57
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 9
+    max: 30
+  skills:
+    - i.skill.art-craft-farming
+    - i.skill.drive-auto
+    - i.skill.mechanical-repair
+    - i.skill.natural-world
+    - i.skill.operate-heavy-machinery
+    - i.skill.track
+  groups:
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.farmer
+    lang: de
+    priority: 0
+---
+_id: duGtFxL8OymLPrjE
+name: Bundesagent
+type: occupation
+img: systems/CoC7/assets/icons/occupations/federal_agent.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 55
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 20
+    max: 40
+  skills:
+    - i.skill.drive-auto
+    - i.skill.fighting-brawl
+    - i.skill.law
+    - i.skill.persuade
+    - i.skill.stealth
+    - i.skill.spot-hidden
+  groups:
+    - options: 1
+      skills:
+        - i.skill.firearms-any
+        - i.skill.firearms-heavy-weapons
+        - i.skill.firearms-handgun
+        - i.skill.firearms-machine-gun
+        - i.skill.firearms-submachine-gun
+        - i.skill.firearms-rifle-shotgun
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.federal-agent
+    lang: de
+    priority: 0
+---
+_id: ePX6SUMP3qqRqSkU
+name: Feuerwehrmann/-frau
+type: occupation
+img: systems/CoC7/assets/icons/occupations/firefighter.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 58
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 9
+    max: 30
+  skills:
+    - i.skill.climb
+    - i.skill.dodge
+    - i.skill.drive-auto
+    - i.skill.first-aid
+    - i.skill.jump
+    - i.skill.mechanical-repair
+    - i.skill.operate-heavy-machinery
+    - i.skill.fighting-throw
+flags:
+  cocidFlag:
+    id: i.occupation.firefighter
+    lang: de
+    priority: 0
+---
+_id: eqyvBnPSMOlRkgbY
+name: Flapper
+type: occupation
+img: systems/CoC7/assets/icons/occupations/flapper.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 58
+  type:
+    classic: true
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 10
+    max: 30
+  skills:
+    - i.skill.art-craft-dancing
+    - i.skill.drive-auto
+    - i.skill.psychology
+  groups:
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 3
+flags:
+  cocidFlag:
+    id: i.occupation.flapper
+    lang: de
+    priority: 0
+---
+_id: f9IFuJg1jSN209yI
+name: Auslandskorrespondent
+type: occupation
+img: systems/CoC7/assets/icons/occupations/foreign_correspondent.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 52
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 10
+    max: 40
+  skills:
+    - i.skill.history
+    - i.skill.language-own
+    - i.skill.listen
+    - i.skill.psychology
+  groups:
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.foreign-correspondent
+    lang: de
+    priority: 0
+---
+_id: fWaD8tC1xX9aRjzv
+name: Leichenbestatter
+type: occupation
+img: systems/CoC7/assets/icons/occupations/forensic_surgeon.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 65
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 40
+    max: 60
+  skills:
+    - i.skill.language-latin
+    - i.skill.library-use
+    - i.skill.medicine
+    - i.skill.persuade
+    - i.skill.science-biology
+    - i.skill.science-forensics
+    - i.skill.science-pharmacy
+    - i.skill.spot-hidden
+flags:
+  cocidFlag:
+    id: i.occupation.forensic-surgeon
+    lang: de
+    priority: 0
+---
+_id: ft8DTxdBK6TqwwvP
+name: Spieler
+type: occupation
+img: systems/CoC7/assets/icons/occupations/gambler.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 73
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+      optional: true
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 8
+    max: 50
+  skills:
+    - i.skill.accounting
+    - i.skill.art-craft-acting
+    - i.skill.listen
+    - i.skill.psychology
+    - i.skill.sleight-of-hand
+    - i.skill.spot-hidden
+  groups:
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+flags:
+  cocidFlag:
+    id: i.occupation.gambler
+    lang: de
+    priority: 0
+---
+_id: hBst2yGUU6JCRoQ8
+name: Gangsterboss
+type: occupation
+img: systems/CoC7/assets/icons/occupations/gangster_boss.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 59
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 60
+    max: 95
+  skills:
+    - i.skill.law
+    - i.skill.listen
+    - i.skill.psychology
+    - i.skill.spot-hidden
+  groups:
+    - options: 1
+      skills:
+        - i.skill.fighting-any
+        - i.skill.fighting-axe
+        - i.skill.fighting-brawl
+        - i.skill.fighting-chainsaw
+        - i.skill.fighting-flail
+        - i.skill.fighting-garrote
+        - i.skill.fighting-spear
+        - i.skill.fighting-sword
+        - i.skill.fighting-whip
+    - options: 1
+      skills:
+        - i.skill.firearms-any
+        - i.skill.firearms-flamethrower
+        - i.skill.firearms-heavy-weapons
+        - i.skill.firearms-handgun
+        - i.skill.firearms-machine-gun
+        - i.skill.firearms-submachine-gun
+        - i.skill.firearms-rifle-shotgun
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+flags:
+  cocidFlag:
+    id: i.occupation.gangster-boss
+    lang: de
+    priority: 0
+---
+_id: i3QOM8voGmUgnf52
+name: Bandenmitglied
+type: occupation
+img: systems/CoC7/assets/icons/occupations/gangster_underling.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 59
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 9
+    max: 20
+  skills:
+    - i.skill.drive-auto
+    - i.skill.psychology
+  groups:
+    - options: 1
+      skills:
+        - i.skill.fighting-any
+        - i.skill.fighting-axe
+        - i.skill.fighting-brawl
+        - i.skill.fighting-chainsaw
+        - i.skill.fighting-flail
+        - i.skill.fighting-garrote
+        - i.skill.fighting-spear
+        - i.skill.fighting-sword
+        - i.skill.fighting-whip
+    - options: 1
+      skills:
+        - i.skill.firearms-any
+        - i.skill.firearms-handgun
+        - i.skill.firearms-machine-gun
+        - i.skill.firearms-submachine-gun
+        - i.skill.firearms-rifle-shotgun
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.gangster-underling
+    lang: de
+    priority: 0
+---
+_id: iLoSYdzW9VocDSet
+name: Gangsterbraut
+type: occupation
+img: systems/CoC7/assets/icons/occupations/gangsters_moll.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 59
+  type:
+    classic: true
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 10
+    max: 80
+  skills:
+    - i.skill.drive-auto
+    - i.skill.listen
+    - i.skill.stealth
+  groups:
+    - options: 1
+      skills:
+        - i.skill.art-craft-any
+        - i.skill.art-craft-acting
+        - i.skill.art-craft-barbery
+        - i.skill.art-craft-cooking
+        - i.skill.art-craft-dancing
+        - i.skill.art-craft-fine-art
+        - i.skill.art-craft-forgery
+        - i.skill.art-craft-instrument
+        - i.skill.art-craft-literature
+        - i.skill.art-craft-painting
+        - i.skill.art-craft-photography
+        - i.skill.art-craft-pottery
+        - i.skill.art-craft-sculpting
+        - i.skill.art-craft-singing
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+    - options: 1
+      skills:
+        - i.skill.fighting-brawl
+        - i.skill.firearms-handgun
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.gangsters-moll
+    lang: de
+    priority: 0
+---
+_id: jJatgvNZynSHf6MW
+name: Gentleman/Lady
+type: occupation
+img: systems/CoC7/assets/icons/occupations/gentleman.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 60
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 40
+    max: 90
+  skills:
+    - i.skill.firearms-rifle-shotgun
+    - i.skill.history
+    - i.skill.navigate
+    - i.skill.ride
+  groups:
+    - options: 1
+      skills:
+        - i.skill.art-craft-any
+        - i.skill.art-craft-acting
+        - i.skill.art-craft-dancing
+        - i.skill.art-craft-fine-art
+        - i.skill.art-craft-forgery
+        - i.skill.art-craft-instrument
+        - i.skill.art-craft-literature
+        - i.skill.art-craft-painting
+        - i.skill.art-craft-photography
+        - i.skill.art-craft-singing
+        - i.skill.art-craft-writing
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+flags:
+  cocidFlag:
+    id: i.occupation.gentleman
+    lang: de
+    priority: 0
+---
+_id: jj4LUa0BkodIYTx9
+name: Hobo
+type: occupation
+img: systems/CoC7/assets/icons/occupations/hobo.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 62
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+      optional: true
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 0
+    max: 5
+  skills:
+    - i.skill.climb
+    - i.skill.jump
+    - i.skill.listen
+    - i.skill.navigate
+    - i.skill.stealth
+  groups:
+    - options: 1
+      skills:
+        - i.skill.art-craft-any
+        - i.skill.art-craft-acting
+        - i.skill.art-craft-barbery
+        - i.skill.art-craft-calligraphy
+        - i.skill.art-craft-carpentry
+        - i.skill.art-craft-comedy
+        - i.skill.art-craft-cooking
+        - i.skill.art-craft-dancing
+        - i.skill.art-craft-decorating
+        - i.skill.art-craft-farming
+        - i.skill.art-craft-fine-art
+        - i.skill.art-craft-forgery
+        - i.skill.art-craft-instrument
+        - i.skill.art-craft-literature
+        - i.skill.art-craft-painting
+        - i.skill.art-craft-photography
+        - i.skill.art-craft-plumbing
+        - i.skill.art-craft-pottery
+        - i.skill.art-craft-sculpting
+        - i.skill.art-craft-short-hand
+        - i.skill.art-craft-singing
+        - i.skill.art-craft-tailoring
+        - i.skill.art-craft-technical-drawing
+        - i.skill.art-craft-typing
+        - i.skill.art-craft-welding
+        - i.skill.art-craft-writing
+        - i.skill.art-craft-woodworking
+    - options: 1
+      skills:
+        - i.skill.locksmith
+        - i.skill.sleight-of-hand
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.hobo
+    lang: de
+    priority: 0
+---
+_id: l8O8ZCytVX3BRsxt
+name: Prostituierte
+type: occupation
+img: systems/CoC7/assets/icons/occupations/hooker.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 70
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 5
+    max: 50
+  skills:
+    - i.skill.dodge
+    - i.skill.psychology
+    - i.skill.sleight-of-hand
+    - i.skill.stealth
+  groups:
+    - options: 1
+      skills:
+        - i.skill.art-craft-any
+        - i.skill.art-craft-acting
+        - i.skill.art-craft-barbery
+        - i.skill.art-craft-calligraphy
+        - i.skill.art-craft-comedy
+        - i.skill.art-craft-cooking
+        - i.skill.art-craft-dancing
+        - i.skill.art-craft-decorating
+        - i.skill.art-craft-fine-art
+        - i.skill.art-craft-forgery
+        - i.skill.art-craft-instrument
+        - i.skill.art-craft-literature
+        - i.skill.art-craft-painting
+        - i.skill.art-craft-photography
+        - i.skill.art-craft-pottery
+        - i.skill.art-craft-sculpting
+        - i.skill.art-craft-singing
+        - i.skill.art-craft-tailoring
+        - i.skill.art-craft-writing
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.hooker
+    lang: de
+    priority: 0
+---
+_id: o0eKfoPVyoHC8DRa
+name: Krankenhelfer
+type: occupation
+img: systems/CoC7/assets/icons/occupations/hospital_orderly.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 64
+  occupationSkillPoints:
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 6
+    max: 15
+  skills:
+    - i.skill.electrical-repair
+    - i.skill.fighting-brawl
+    - i.skill.first-aid
+    - i.skill.listen
+    - i.skill.mechanical-repair
+    - i.skill.psychology
+    - i.skill.stealth
+  groups:
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+flags:
+  cocidFlag:
+    id: i.occupation.hospital-orderly
+    lang: de
+    priority: 0
+---
+_id: qNMsfarwWMYYtCRP
+name: Enthüllungsjournalist
+type: occupation
+img: systems/CoC7/assets/icons/occupations/investigative_journalist.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 63
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 9
+    max: 30
+  skills:
+    - i.skill.history
+    - i.skill.library-use
+    - i.skill.language-own
+    - i.skill.psychology
+  groups:
+    - options: 1
+      skills:
+        - i.skill.art-craft-fine-art
+        - i.skill.art-craft-photography
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.investigative-journalist
+    lang: de
+    priority: 0
+---
+_id: rdiw0bJqQj0SIo40
+name: Reporter
+type: occupation
+img: systems/CoC7/assets/icons/occupations/reporter.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 63
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 9
+    max: 30
+  skills:
+    - i.skill.art-craft-acting
+    - i.skill.history
+    - i.skill.listen
+    - i.skill.language-own
+    - i.skill.psychology
+    - i.skill.stealth
+    - i.skill.spot-hidden
+  groups:
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+flags:
+  cocidFlag:
+    id: i.occupation.reporter
+    lang: de
+    priority: 0
+---
+_id: reolKsSCkMwoRM1E
+name: Richter
+type: occupation
+img: systems/CoC7/assets/icons/occupations/judge.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 71
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 50
+    max: 80
+  skills:
+    - i.skill.history
+    - i.skill.intimidate
+    - i.skill.law
+    - i.skill.library-use
+    - i.skill.listen
+    - i.skill.language-own
+    - i.skill.persuade
+    - i.skill.psychology
+flags:
+  cocidFlag:
+    id: i.occupation.judge
+    lang: de
+    priority: 0
+---
+_id: rnrFWwlUFvhIqVOn
+name: Laborant
+type: occupation
+img: systems/CoC7/assets/icons/occupations/laboratory_assistant.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 64 f.
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 10
+    max: 30
+  skills:
+    - i.skill.electrical-repair
+    - i.skill.science-chemistry
+    - i.skill.spot-hidden
+  groups:
+    - options: 1
+      skills:
+        - i.skill.computer-use
+        - i.skill.library-use
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+    - options: 2
+      skills:
+        - i.skill.science-any
+        - i.skill.science-astronomy
+        - i.skill.science-biology
+        - i.skill.science-botany
+        - i.skill.science-cryptography
+        - i.skill.science-engineering
+        - i.skill.science-forensics
+        - i.skill.science-geology
+        - i.skill.science-mathematics
+        - i.skill.science-meteorology
+        - i.skill.science-pharmacy
+        - i.skill.science-physics
+        - i.skill.science-zoology
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.laboratory-assistant
+    lang: de
+    priority: 0
+---
+_id: rrK6Ef6JTZzZednK
+name: Arbeiter (ungelernt)
+type: occupation
+img: systems/CoC7/assets/icons/occupations/laborer_unskilled.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 51
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 9
+    max: 30
+  skills:
+    - i.skill.drive-auto
+    - i.skill.electrical-repair
+    - i.skill.first-aid
+    - i.skill.mechanical-repair
+    - i.skill.operate-heavy-machinery
+    - i.skill.fighting-throw
+  personal: 1
+  groups:
+    - options: 1
+      skills:
+        - i.skill.fighting-any
+        - i.skill.fighting-axe
+        - i.skill.fighting-brawl
+        - i.skill.fighting-chainsaw
+flags:
+  cocidFlag:
+    id: i.occupation.laborer-unskilled
+    lang: de
+    priority: 0
+---
+_id: tW5Mnu4ks5E4CBE6
+name: Holzfäller
+type: occupation
+img: systems/CoC7/assets/icons/occupations/lumberjack.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 51
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 9
+    max: 30
+  skills:
+    - i.skill.climb
+    - i.skill.dodge
+    - i.skill.fighting-chainsaw
+    - i.skill.first-aid
+    - i.skill.jump
+    - i.skill.mechanical-repair
+    - i.skill.fighting-throw
+  groups:
+    - options: 1
+      skills:
+        - i.skill.natural-world
+        - i.skill.science-biology
+        - i.skill.science-botany
+flags:
+  cocidFlag:
+    id: i.occupation.lumberjack
+    lang: de
+    priority: 0
+---
+_id: thRDzoZFVmwnZxn7
+name: Bergmann
+type: occupation
+img: systems/CoC7/assets/icons/occupations/miner.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 51
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 9
+    max: 30
+  skills:
+    - i.skill.climb
+    - i.skill.science-geology
+    - i.skill.jump
+    - i.skill.mechanical-repair
+    - i.skill.operate-heavy-machinery
+    - i.skill.stealth
+    - i.skill.spot-hidden
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.miner
+    lang: de
+    priority: 0
+---
+_id: vKoLTn7rmqwQMGC8
+name: Jurist
+type: occupation
+img: systems/CoC7/assets/icons/occupations/lawyer.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 63
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 30
+    max: 80
+  skills:
+    - i.skill.accounting
+    - i.skill.law
+    - i.skill.library-use
+    - i.skill.psychology
+  groups:
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.lawyer
+    lang: de
+    priority: 0
+---
+_id: vjDyAELvzvRQm1ou
+name: Bibliothekar
+type: occupation
+img: systems/CoC7/assets/icons/occupations/librarian.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 53 f.
+  type:
+    lovecraftian: true
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 9
+    max: 35
+  skills:
+    - i.skill.accounting
+    - i.skill.library-use
+    - i.skill.language-own
+  groups:
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+  personal: 4
+flags:
+  cocidFlag:
+    id: i.occupation.librarian
+    lang: de
+    priority: 0
+---
+_id: wAVIkU3AfmDmE7lY
+name: Mechaniker
+type: occupation
+img: systems/CoC7/assets/icons/occupations/mechanic.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 66
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 9
+    max: 40
+  skills:
+    - i.skill.climb
+    - i.skill.drive-auto
+    - i.skill.electrical-repair
+    - i.skill.mechanical-repair
+    - i.skill.operate-heavy-machinery
+  groups:
+    - options: 1
+      skills:
+        - i.skill.art-craft-any
+        - i.skill.art-craft-carpentry
+        - i.skill.art-craft-plumbing
+        - i.skill.art-craft-welding
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.mechanic
+    lang: de
+    priority: 0
+---
+_id: wgFU2vDTCpUCKf6z
+name: Offizier
+type: occupation
+img: systems/CoC7/assets/icons/occupations/military_officer.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 67 f.
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 20
+    max: 70
+  skills:
+    - i.skill.accounting
+    - i.skill.navigate
+    - i.skill.first-aid
+    - i.skill.psychology
+  groups:
+    - options: 1
+      skills:
+        - i.skill.firearms-any
+        - i.skill.firearms-flamethrower
+        - i.skill.firearms-heavy-weapons
+        - i.skill.firearms-handgun
+        - i.skill.firearms-machine-gun
+        - i.skill.firearms-submachine-gun
+        - i.skill.firearms-rifle-shotgun
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.military-officer
+    lang: de
+    priority: 0
+---
+_id: zIvIatZeFEwAZ9C8
+name: Missionar
+type: occupation
+img: systems/CoC7/assets/icons/occupations/missionary.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 66
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 0
+    max: 30
+  skills:
+    - i.skill.first-aid
+    - i.skill.mechanical-repair
+    - i.skill.medicine
+    - i.skill.natural-world
+  groups:
+    - options: 1
+      skills:
+        - i.skill.art-craft-any
+        - i.skill.art-craft-calligraphy
+        - i.skill.art-craft-carpentry
+        - i.skill.art-craft-cooking
+        - i.skill.art-craft-farming
+        - i.skill.art-craft-fine-art
+        - i.skill.art-craft-instrument
+        - i.skill.art-craft-literature
+        - i.skill.art-craft-painting
+        - i.skill.art-craft-singing
+        - i.skill.art-craft-writing
+        - i.skill.art-craft-woodworking
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.missionary
+    lang: de
+    priority: 0
+---
+_id: zn5lubIt7DCqy2sJ
+name: Bergsteiger
+type: occupation
+img: systems/CoC7/assets/icons/occupations/mountain_climber.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 53
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 30
+    max: 60
+  skills:
+    - i.skill.climb
+    - i.skill.first-aid
+    - i.skill.jump
+    - i.skill.listen
+    - i.skill.navigate
+    - i.skill.track
+  groups:
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+    - options: 1
+      skills:
+        - i.skill.survival-any
+        - i.skill.survival-alpine
+flags:
+  cocidFlag:
+    id: i.occupation.mountain-climber
+    lang: de
+    priority: 0
+---
+_id: 0D851kqlnmXQfvQr
+name: Museumskurator
+type: occupation
+img: systems/CoC7/assets/icons/occupations/museum_curator.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 66
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 10
+    max: 30
+  skills:
+    - i.skill.accounting
+    - i.skill.appraise
+    - i.skill.archaeology
+    - i.skill.history
+    - i.skill.library-use
+    - i.skill.occult
+    - i.skill.spot-hidden
+  groups:
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+flags:
+  cocidFlag:
+    id: i.occupation.museum-curator
+    lang: de
+    priority: 0
+---
+_id: 0ZahgKTz3KqcQpwa
+name: Musiker
+type: occupation
+img: systems/CoC7/assets/icons/occupations/musician.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 66 f.
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+      optional: true
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 9
+    max: 30
+  skills:
+    - i.skill.art-craft-instrument
+    - i.skill.listen
+    - i.skill.psychology
+  groups:
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 4
+flags:
+  cocidFlag:
+    id: i.occupation.musician
+    lang: de
+    priority: 0
+---
+_id: 0f3scyJNAwtOFPIV
+name: Krankenschwester (-pfleger)
+type: occupation
+img: systems/CoC7/assets/icons/occupations/nurse.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 64
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 9
+    max: 30
+  skills:
+    - i.skill.first-aid
+    - i.skill.listen
+    - i.skill.medicine
+    - i.skill.psychology
+    - i.skill.science-biology
+    - i.skill.science-chemistry
+    - i.skill.spot-hidden
+  groups:
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+flags:
+  cocidFlag:
+    id: i.occupation.nurse
+    lang: de
+    priority: 0
+---
+_id: 1KxDWdfTdNBDUct2
+name: Okkultist
+type: occupation
+img: systems/CoC7/assets/icons/occupations/occultist.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 68
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 9
+    max: 65
+  skills:
+    - i.skill.anthropology
+    - i.skill.history
+    - i.skill.library-use
+    - i.skill.occult
+    - i.skill.science-astronomy
+  groups:
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.occultist
+    lang: de
+    priority: 0
+---
+_id: 1aQkGaS9ZmfXI6Dw
+name: Naturbursche
+type: occupation
+img: systems/CoC7/assets/icons/occupations/outdoorsman.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 67
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 5
+    max: 20
+  skills:
+    - i.skill.first-aid
+    - i.skill.listen
+    - i.skill.natural-world
+    - i.skill.navigate
+    - i.skill.spot-hidden
+    - i.skill.track
+  groups:
+    - options: 1
+      skills:
+        - i.skill.firearms-any
+        - i.skill.firearms-bow
+        - i.skill.firearms-handgun
+        - i.skill.firearms-rifle-shotgun
+    - options: 1
+      skills:
+        - i.skill.survival-any
+        - i.skill.survival-alpine
+        - i.skill.survival-arctic
+        - i.skill.survival-desert
+        - i.skill.survival-sea
+        - i.skill.survival-woodland
+flags:
+  cocidFlag:
+    id: i.occupation.outdoorsman
+    lang: de
+    priority: 0
+---
+_id: 1xNpVEXIFCjm4r8P
+name: Parapsychologe
+type: occupation
+img: systems/CoC7/assets/icons/occupations/parapsychologist.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 68
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 9
+    max: 30
+  skills:
+    - i.skill.anthropology
+    - i.skill.art-craft-photography
+    - i.skill.history
+    - i.skill.library-use
+    - i.skill.occult
+    - i.skill.psychology
+  groups:
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.parapsychologist
+    lang: de
+    priority: 0
+---
+_id: 2ntqKJ225hASWL9p
+name: Apotheker
+type: occupation
+img: systems/CoC7/assets/icons/occupations/pharmacist.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 51
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 35
+    max: 75
+  skills:
+    - i.skill.accounting
+    - i.skill.first-aid
+    - i.skill.language-latin
+    - i.skill.library-use
+    - i.skill.psychology
+    - i.skill.science-pharmacy
+    - i.skill.science-chemistry
+  groups:
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+flags:
+  cocidFlag:
+    id: i.occupation.pharmacist
+    lang: de
+    priority: 0
+---
+_id: 2tnyUbMxtAbVSSOo
+name: Fotograf
+type: occupation
+img: systems/CoC7/assets/icons/occupations/photographer.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 58
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 9
+    max: 30
+  skills:
+    - i.skill.art-craft-photography
+    - i.skill.psychology
+    - i.skill.science-chemistry
+    - i.skill.stealth
+    - i.skill.spot-hidden
+  groups:
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.photographer
+    lang: de
+    priority: 0
+---
+_id: 3dN1BooDyisfeIn4
+name: Fotojournalist
+type: occupation
+img: systems/CoC7/assets/icons/occupations/photojournalist.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 58
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 10
+    max: 30
+  skills:
+    - i.skill.art-craft-photography
+    - i.skill.climb
+    - i.skill.psychology
+    - i.skill.science-chemistry
+  groups:
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.photojournalist
+    lang: de
+    priority: 0
+---
+_id: 3q9I856zWUB9ujEt
+name: Pilot
+type: occupation
+img: systems/CoC7/assets/icons/occupations/pilot.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 69 f.
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 20
+    max: 70
+  skills:
+    - i.skill.electrical-repair
+    - i.skill.mechanical-repair
+    - i.skill.navigate
+    - i.skill.operate-heavy-machinery
+    - i.skill.pilot-aircraft
+    - i.skill.science-astronomy
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.pilot
+    lang: de
+    priority: 0
+---
+_id: 45OLjvQi7sGmC2Z8
+name: Kunstflieger
+type: occupation
+img: systems/CoC7/assets/icons/occupations/aviator.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 69 f.
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 30
+    max: 60
+  skills:
+    - i.skill.accounting
+    - i.skill.electrical-repair
+    - i.skill.listen
+    - i.skill.mechanical-repair
+    - i.skill.navigate
+    - i.skill.pilot-aircraft
+    - i.skill.spot-hidden
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.aviator
+    lang: de
+    priority: 0
+---
+_id: 4cTMpLQxBVumeLWC
+name: Kriminalbeamter
+type: occupation
+img: systems/CoC7/assets/icons/occupations/police_detective.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 69
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 20
+    max: 50
+  skills:
+    - i.skill.law
+    - i.skill.listen
+    - i.skill.psychology
+    - i.skill.spot-hidden
+  groups:
+    - options: 1
+      skills:
+        - i.skill.art-craft-acting
+        - i.skill.disguise
+    - options: 1
+      skills:
+        - i.skill.firearms-any
+        - i.skill.firearms-handgun
+        - i.skill.firearms-machine-gun
+        - i.skill.firearms-submachine-gun
+        - i.skill.firearms-rifle-shotgun
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.police-detective
+    lang: de
+    priority: 0
+---
+_id: 5ci4fbCtCGO0kVFk
+name: Streifenpolizist
+type: occupation
+img: systems/CoC7/assets/icons/occupations/uniformed_police_officer.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 69
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 9
+    max: 30
+  skills:
+    - i.skill.fighting-brawl
+    - i.skill.first-aid
+    - i.skill.law
+    - i.skill.psychology
+    - i.skill.spot-hidden
+  groups:
+    - options: 1
+      skills:
+        - i.skill.firearms-any
+        - i.skill.firearms-handgun
+        - i.skill.firearms-rifle-shotgun
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+    - options: 1
+      skills:
+        - i.skill.drive-auto
+        - i.skill.ride
+flags:
+  cocidFlag:
+    id: i.occupation.uniformed-police-officer
+    lang: de
+    priority: 0
+---
+_id: 61RiD63qeLS1dseI
+name: Privatdetektiv
+type: occupation
+img: systems/CoC7/assets/icons/occupations/private_investigator.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 69
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 9
+    max: 30
+  skills:
+    - i.skill.art-craft-photography
+    - i.skill.disguise
+    - i.skill.law
+    - i.skill.library-use
+    - i.skill.psychology
+    - i.skill.spot-hidden
+  groups:
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.private-investigator
+    lang: de
+    priority: 0
+---
+_id: 7jWNAtFMLZMTRo34
+name: Akademiker
+type: occupation
+img: systems/CoC7/assets/icons/occupations/professor.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 50
+  type:
+    lovecraftian: true
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 20
+    max: 70
+  skills:
+    - i.skill.library-use
+    - i.skill.language-own
+    - i.skill.psychology
+  groups:
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+  personal: 4
+flags:
+  cocidFlag:
+    id: i.occupation.professor
+    lang: de
+    priority: 0
+---
+_id: 7uy1FCrVVd5tY88W
+name: Prospektor
+type: occupation
+img: systems/CoC7/assets/icons/occupations/prospector.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 70
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 0
+    max: 10
+  skills:
+    - i.skill.climb
+    - i.skill.first-aid
+    - i.skill.history
+    - i.skill.mechanical-repair
+    - i.skill.navigate
+    - i.skill.science-geology
+    - i.skill.spot-hidden
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.prospector
+    lang: de
+    priority: 0
+---
+_id: 8SbhFy4Q20tayjDQ
+name: Psychiater
+type: occupation
+img: systems/CoC7/assets/icons/occupations/psychiatrist.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 70
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 30
+    max: 80
+  skills:
+    - i.skill.listen
+    - i.skill.medicine
+    - i.skill.persuade
+    - i.skill.psychoanalysis
+    - i.skill.psychology
+    - i.skill.science-biology
+    - i.skill.science-chemistry
+  groups:
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+flags:
+  cocidFlag:
+    id: i.occupation.psychiatrist
+    lang: de
+    priority: 0
+---
+_id: 8f8jzEluFeo6hLic
+name: Psychologe
+type: occupation
+img: systems/CoC7/assets/icons/occupations/psychologist_psychoanalyst.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 70
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 10
+    max: 40
+  skills:
+    - i.skill.accounting
+    - i.skill.library-use
+    - i.skill.listen
+    - i.skill.persuade
+    - i.skill.psychoanalysis
+    - i.skill.psychology
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.psychologist-psychoanalyst
+    lang: de
+    priority: 0
+---
+_id: 9Omh00ecdrCnEaWE
+name: Feldforscher
+type: occupation
+img: systems/CoC7/assets/icons/occupations/researcher.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 57 f.
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 9
+    max: 30
+  skills:
+    - i.skill.history
+    - i.skill.library-use
+    - i.skill.spot-hidden
+  groups:
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+  personal: 3
+flags:
+  cocidFlag:
+    id: i.occupation.researcher
+    lang: de
+    priority: 0
+---
+_id: AF5EMmt8Y429XGoh
+name: Matrose (Marine)
+type: occupation
+img: systems/CoC7/assets/icons/occupations/sailor_naval.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 65 f.
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 9
+    max: 30
+  skills:
+    - i.skill.first-aid
+    - i.skill.navigate
+    - i.skill.pilot-boat
+    - i.skill.survival-sea
+    - i.skill.swim
+  groups:
+    - options: 1
+      skills:
+        - i.skill.electrical-repair
+        - i.skill.mechanical-repair
+    - options: 1
+      skills:
+        - i.skill.fighting-any
+        - i.skill.fighting-axe
+        - i.skill.fighting-brawl
+    - options: 1
+      skills:
+        - i.skill.firearms-any
+        - i.skill.firearms-handgun
+        - i.skill.firearms-heavy-weapons
+        - i.skill.firearms-machine-gun
+        - i.skill.firearms-rifle-shotgun
+        - i.skill.firearms-submachine-gun
+flags:
+  cocidFlag:
+    id: i.occupation.sailor-naval
+    lang: de
+    priority: 0
+---
+_id: AfBjFsCCWZsriCu5
+name: Matrose (zivil)
+type: occupation
+img: systems/CoC7/assets/icons/occupations/sailor_commercial.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 65 f.
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 20
+    max: 40
+  skills:
+    - i.skill.first-aid
+    - i.skill.mechanical-repair
+    - i.skill.natural-world
+    - i.skill.navigate
+    - i.skill.pilot-boat
+    - i.skill.spot-hidden
+    - i.skill.swim
+  groups:
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+flags:
+  cocidFlag:
+    id: i.occupation.sailor-commercial
+    lang: de
+    priority: 0
+---
+_id: BpWDLnoxLw1G8k72
+name: Vertreter
+type: occupation
+img: systems/CoC7/assets/icons/occupations/salesperson.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 76
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 9
+    max: 40
+  skills:
+    - i.skill.accounting
+    - i.skill.drive-auto
+    - i.skill.listen
+    - i.skill.psychology
+  groups:
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+    - options: 1
+      skills:
+        - i.skill.stealth
+        - i.skill.sleight-of-hand
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.salesperson
+    lang: de
+    priority: 0
+---
+_id: BwooG5OSRPe4t6zL
+name: Naturwissenschaftler
+type: occupation
+img: systems/CoC7/assets/icons/occupations/scientist.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 67
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 9
+    max: 50
+  skills:
+    - i.skill.language-own
+    - i.skill.spot-hidden
+  groups:
+    - options: 3
+      skills:
+        - i.skill.science-any
+        - i.skill.science-astronomy
+        - i.skill.science-biology
+        - i.skill.science-botany
+        - i.skill.science-chemistry
+        - i.skill.science-cryptography
+        - i.skill.science-engineering
+        - i.skill.science-forensics
+        - i.skill.science-geology
+        - i.skill.science-mathematics
+        - i.skill.science-meteorology
+        - i.skill.science-pharmacy
+        - i.skill.science-physics
+        - i.skill.science-zoology
+    - options: 1
+      skills:
+        - i.skill.computer-use
+        - i.skill.library-use
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+flags:
+  cocidFlag:
+    id: i.occupation.scientist
+    lang: de
+    priority: 0
+---
+_id: CH4t1OZ5fELjoFRJ
+name: Sekretärin
+type: occupation
+img: systems/CoC7/assets/icons/occupations/secretary.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 72
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+      optional: true
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 9
+    max: 30
+  skills:
+    - i.skill.accounting
+    - i.skill.language-own
+    - i.skill.psychology
+  groups:
+    - options: 1
+      skills:
+        - i.skill.art-craft-typing
+        - i.skill.art-craft-short-hand
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+    - options: 1
+      skills:
+        - i.skill.computer-use
+        - i.skill.library-use
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.secretary
+    lang: de
+    priority: 0
+---
+_id: CV4E3jFX65vSPVSq
+name: Ladenbesitzer
+type: occupation
+img: systems/CoC7/assets/icons/occupations/shopkeeper.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 65
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+      optional: true
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 20
+    max: 40
+  skills:
+    - i.skill.accounting
+    - i.skill.electrical-repair
+    - i.skill.listen
+    - i.skill.mechanical-repair
+    - i.skill.psychology
+    - i.skill.spot-hidden
+  groups:
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+flags:
+  cocidFlag:
+    id: i.occupation.shopkeeper
+    lang: de
+    priority: 0
+---
+_id: CcswWNuhiF1lvKE7
+name: Soldat/US-Marine
+type: occupation
+img: systems/CoC7/assets/icons/occupations/soldier_marine.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 72 f.
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 9
+    max: 30
+  skills:
+    - i.skill.dodge
+    - i.skill.stealth
+  groups:
+    - options: 1
+      skills:
+        - i.skill.climb
+        - i.skill.swim
+    - options: 1
+      skills:
+        - i.skill.fighting-any
+        - i.skill.fighting-axe
+        - i.skill.fighting-brawl
+        - i.skill.fighting-chainsaw
+        - i.skill.fighting-flail
+        - i.skill.fighting-garrote
+        - i.skill.fighting-spear
+        - i.skill.fighting-sword
+        - i.skill.fighting-whip
+    - options: 1
+      skills:
+        - i.skill.firearms-any
+        - i.skill.firearms-bow
+        - i.skill.firearms-flamethrower
+        - i.skill.firearms-heavy-weapons
+        - i.skill.firearms-handgun
+        - i.skill.firearms-machine-gun
+        - i.skill.firearms-submachine-gun
+        - i.skill.firearms-rifle-shotgun
+    - options: 1
+      skills:
+        - i.skill.survival-any
+        - i.skill.survival-alpine
+        - i.skill.survival-arctic
+        - i.skill.survival-desert
+        - i.skill.survival-sea
+        - i.skill.survival-woodland
+    - options: 2
+      skills:
+        - i.skill.first-aid
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+        - i.skill.mechanical-repair
+flags:
+  cocidFlag:
+    id: i.occupation.soldier-marine
+    lang: de
+    priority: 0
+---
+_id: D29seRZeec3dsj8J
+name: Spion
+type: occupation
+img: systems/CoC7/assets/icons/occupations/spy.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 73
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+      optional: true
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 20
+    max: 60
+  skills:
+    - i.skill.listen
+    - i.skill.psychology
+    - i.skill.sleight-of-hand
+    - i.skill.stealth
+  groups:
+    - options: 1
+      skills:
+        - i.skill.art-craft-acting
+        - i.skill.disguise
+    - options: 1
+      skills:
+        - i.skill.firearms-any
+        - i.skill.firearms-bow
+        - i.skill.firearms-flamethrower
+        - i.skill.firearms-heavy-weapons
+        - i.skill.firearms-handgun
+        - i.skill.firearms-machine-gun
+        - i.skill.firearms-submachine-gun
+        - i.skill.firearms-rifle-shotgun
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+flags:
+  cocidFlag:
+    id: i.occupation.spy
+    lang: de
+    priority: 0
+---
+_id: DHl2C1HOYNduA2F9
+name: Student/Volontär
+type: occupation
+img: systems/CoC7/assets/icons/occupations/student_intern.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 73
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 5
+    max: 10
+  skills:
+    - i.skill.library-use
+    - i.skill.listen
+  groups:
+    - options: 1
+      skills:
+        - i.skill.language-own
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+  personal: 5
+flags:
+  cocidFlag:
+    id: i.occupation.student-intern
+    lang: de
+    priority: 0
+---
+_id: DoxcwB5VLhR7zC8O
+name: Stuntman
+type: occupation
+img: systems/CoC7/assets/icons/occupations/stuntman.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 73 f.
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 10
+    max: 50
+  skills:
+    - i.skill.climb
+    - i.skill.dodge
+    - i.skill.first-aid
+    - i.skill.jump
+    - i.skill.swim
+  groups:
+    - options: 1
+      skills:
+        - i.skill.electrical-repair
+        - i.skill.mechanical-repair
+    - options: 1
+      skills:
+        - i.skill.fighting-any
+        - i.skill.fighting-axe
+        - i.skill.fighting-brawl
+        - i.skill.fighting-chainsaw
+        - i.skill.fighting-flail
+        - i.skill.fighting-garrote
+        - i.skill.fighting-spear
+        - i.skill.fighting-sword
+        - i.skill.fighting-whip
+    - options: 1
+      skills:
+        - i.skill.diving
+        - i.skill.drive-auto
+        - i.skill.pilot-any
+        - i.skill.pilot-aircraft
+        - i.skill.pilot-boat
+        - i.skill.ride
+flags:
+  cocidFlag:
+    id: i.occupation.stuntman
+    lang: de
+    priority: 0
+---
+_id: GVSexETSFcCuU5Qs
+name: Stammesmitglied
+type: occupation
+img: systems/CoC7/assets/icons/occupations/tribe_member.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 73
+  occupationSkillPoints:
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    str:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 0
+    max: 15
+  skills:
+    - i.skill.climb
+    - i.skill.listen
+    - i.skill.natural-world
+    - i.skill.occult
+    - i.skill.spot-hidden
+    - i.skill.swim
+  groups:
+    - options: 1
+      skills:
+        - i.skill.fighting-any
+        - i.skill.fighting-axe
+        - i.skill.fighting-brawl
+        - i.skill.fighting-flail
+        - i.skill.fighting-spear
+        - i.skill.fighting-sword
+        - i.skill.fighting-throw
+        - i.skill.fighting-whip
+    - options: 1
+      skills:
+        - i.skill.survival-any
+        - i.skill.survival-alpine
+        - i.skill.survival-arctic
+        - i.skill.survival-desert
+        - i.skill.survival-sea
+        - i.skill.survival-woodland
+flags:
+  cocidFlag:
+    id: i.occupation.tribe-member
+    lang: de
+    priority: 0
+---
+_id: H2ifoc9RdqFCZFng
+name: Leichenbestatter
+type: occupation
+img: systems/CoC7/assets/icons/occupations/undertaker.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 65
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 20
+    max: 40
+  skills:
+    - i.skill.accounting
+    - i.skill.drive-auto
+    - i.skill.history
+    - i.skill.occult
+    - i.skill.psychology
+    - i.skill.science-biology
+    - i.skill.science-chemistry
+  groups:
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+flags:
+  cocidFlag:
+    id: i.occupation.undertaker
+    lang: de
+    priority: 0
+---
+_id: HAo8ly0tKx9M9zHK
+name: Gewerkschaftler
+type: occupation
+img: systems/CoC7/assets/icons/occupations/union_activist.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 60
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 5
+    max: 30
+  skills:
+    - i.skill.accounting
+    - i.skill.fighting-brawl
+    - i.skill.law
+    - i.skill.listen
+    - i.skill.operate-heavy-machinery
+    - i.skill.psychology
+  groups:
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+flags:
+  cocidFlag:
+    id: i.occupation.union-activist
+    lang: de
+    priority: 0
+---
+_id: HlxG7fmFL8BdIFdX
+name: Kellnerin/Kellner (Cocktail-)
+type: occupation
+img: systems/CoC7/assets/icons/occupations/waitress_cocktail.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 63 f.
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+      optional: true
+    dex:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+  creditRating:
+    min: 9
+    max: 20
+  skills:
+    - i.skill.accounting
+    - i.skill.dodge
+    - i.skill.listen
+    - i.skill.psychology
+  groups:
+    - options: 1
+      skills:
+        - i.skill.art-craft-any
+        - i.skill.art-craft-acting
+        - i.skill.art-craft-barbery
+        - i.skill.art-craft-calligraphy
+        - i.skill.art-craft-carpentry
+        - i.skill.art-craft-comedy
+        - i.skill.art-craft-cooking
+        - i.skill.art-craft-dancing
+        - i.skill.art-craft-decorating
+        - i.skill.art-craft-farming
+        - i.skill.art-craft-fine-art
+        - i.skill.art-craft-forgery
+        - i.skill.art-craft-instrument
+        - i.skill.art-craft-literature
+        - i.skill.art-craft-painting
+        - i.skill.art-craft-photography
+        - i.skill.art-craft-plumbing
+        - i.skill.art-craft-pottery
+        - i.skill.art-craft-sculpting
+        - i.skill.art-craft-short-hand
+        - i.skill.art-craft-singing
+        - i.skill.art-craft-tailoring
+        - i.skill.art-craft-technical-drawing
+        - i.skill.art-craft-typing
+        - i.skill.art-craft-welding
+        - i.skill.art-craft-writing
+        - i.skill.art-craft-woodworking
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 1
+flags:
+  cocidFlag:
+    id: i.occupation.waitress-cocktail
+    lang: de
+    priority: 0
+---
+_id: JLPcfKPMBPyZqVYB
+name: Verkäufer/Geschäftsrepräsentant
+type: occupation
+img: systems/CoC7/assets/icons/occupations/clerk_executive.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 54 f.
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 9
+    max: 20
+  skills:
+    - i.skill.accounting
+    - i.skill.law
+    - i.skill.listen
+  groups:
+    - options: 1
+      skills:
+        - i.skill.language-own
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+    - options: 1
+      skills:
+        - i.skill.computer-use
+        - i.skill.library-use
+    - options: 1
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.clerk-executive
+    lang: de
+    priority: 0
+---
+_id: JhWpZ7aIyIHrAily
+name: Mittlere Führungskraft/Bereichsleiter
+type: occupation
+img: systems/CoC7/assets/icons/occupations/middle_senior_manager.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 54 f.
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 20
+    max: 80
+  skills:
+    - i.skill.accounting
+    - i.skill.law
+    - i.skill.psychology
+  groups:
+    - options: 1
+      skills:
+        - i.skill.language-any
+        - i.skill.language-arabic
+        - i.skill.language-chinese
+        - i.skill.language-english
+        - i.skill.language-french
+        - i.skill.language-german
+        - i.skill.language-greek
+        - i.skill.language-hindi
+        - i.skill.language-italian
+        - i.skill.language-japanese
+        - i.skill.language-latin
+        - i.skill.language-russian
+        - i.skill.language-spanish
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 2
+flags:
+  cocidFlag:
+    id: i.occupation.middle-senior-manager
+    lang: de
+    priority: 0
+---
+_id: KM1bFeRazfGIwGGa
+name: Religiöser Eiferer
+type: occupation
+img: systems/CoC7/assets/icons/occupations/zealot.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 71
+  occupationSkillPoints:
+    app:
+      multiplier: 2
+      selected: true
+      optional: true
+    edu:
+      multiplier: 2
+      selected: true
+    pow:
+      multiplier: 2
+      selected: true
+      optional: true
+  creditRating:
+    min: 0
+    max: 30
+  skills:
+    - i.skill.history
+    - i.skill.psychology
+    - i.skill.stealth
+  groups:
+    - options: 2
+      skills:
+        - i.skill.charm
+        - i.skill.fast-talk
+        - i.skill.intimidate
+        - i.skill.persuade
+  personal: 3
+flags:
+  cocidFlag:
+    id: i.occupation.zealot
+    lang: de
+    priority: 0
+---
+_id: Kni8nTkG0pFvTb2x
+name: Zoowärter
+type: occupation
+img: systems/CoC7/assets/icons/occupations/zookeeper.svg
+system:
+  description:
+    value: <p>Siehe Cthulhu - Regelwerk für Spieler (7. Edition)</p>
+  source: Regelwerk für Spieler, S. 76
+  occupationSkillPoints:
+    edu:
+      multiplier: 4
+      selected: true
+  creditRating:
+    min: 9
+    max: 40
+  skills:
+    - i.skill.animal-handling
+    - i.skill.accounting
+    - i.skill.dodge
+    - i.skill.first-aid
+    - i.skill.natural-world
+    - i.skill.medicine
+    - i.skill.science-pharmacy
+    - i.skill.science-zoology
+flags:
+  cocidFlag:
+    id: i.occupation.zookeeper
+    lang: de
+    priority: 0
