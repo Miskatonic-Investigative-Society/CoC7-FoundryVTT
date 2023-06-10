@@ -9,6 +9,19 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 0.10.1
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix German translations html tag, thanks to marcstraube #1349
+- Fix links not working for skill/attrib checks, thanks to @lumisphere902 #1343
+- Fix max skill count for Occupation Skills in Investigator Wizard
+- Fix show era on player list if other modules add to h3 tag
+- If dropping a skill/weapon from an Actor onto a Journal Entry Page convert it to a check link
+- On NPC sheet prevent panel toggle being called when adding items
+- Update to French localization and manual skeleton, thanks to @vonv #1339
+- Update to Taiwanese localization, thanks to @zeteticl. #1340
+
 ## Version 0.10.0
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.

@@ -63,11 +63,10 @@ export class CoC7Link {
 
   static bindEventsHandler (html) {
     html
-      .find('a.coc7-link')
+      .find('a.coc7-link:not(.hascoc7linked)')
       .on('click', event => CoC7Link._onLinkClick(event))
-    html
-      .find('a.coc7-link')
       .on('dragstart', event => CoC7Link._onDragCoC7Link(event))
+      .addClass('hascoc7linked')
   }
 
   static _linkFromEvent (event) {
@@ -414,10 +413,10 @@ export class CoC7Link {
             options
           )
         }
-        if (['skill'].includes(options.type.toLowerCase())) {
+        if (['skill'].includes(options.linkType.toLowerCase())) {
           return actor.skillCheck(options, shiftKey, options)
         }
-        if (['attributes', 'attribute', 'attrib', 'attribs'].includes(options.type.toLowerCase())) {
+        if (['attributes', 'attribute', 'attrib', 'attribs'].includes(options.linkType.toLowerCase())) {
           return actor.attributeCheck(options.name, shiftKey, options)
         }
         break
