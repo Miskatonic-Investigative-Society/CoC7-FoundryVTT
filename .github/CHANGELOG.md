@@ -10,6 +10,7 @@ Happy gaming !
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Fix adding (Any) specialisation skills to actors if both requiresname and picknameonly are not set
+- Fix migrated skills with eras not having a CoC ID preventing migration completing
 
 ## Version 0.10.1
 
