@@ -147,7 +147,7 @@ export class CoCIDBatch extends FormApplication {
         for (const item of actorData.items) {
           const itemData = item instanceof CONFIG.Item.documentClass ? item.toObject() : item
           if (itemData.type === 'skill') {
-            if (!itemData.flags.CoC7?.cocidFlag?.id.match(/^i.skill/)) {
+            if (!itemData.flags.CoC7?.cocidFlag?.id?.match(/^i.skill/)) {
               if (typeof missingNames[itemData.name] === 'undefined') {
                 missingNames[itemData.name] = ''
               }
@@ -167,7 +167,7 @@ export class CoCIDBatch extends FormApplication {
     for (const item of game.items.contents) {
       const itemData = item instanceof CONFIG.Item.documentClass ? item.toObject() : item
       if (itemData.type === 'skill') {
-        if (!itemData.flags.CoC7?.cocidFlag?.id.match(/^i.skill/)) {
+        if (!itemData.flags.CoC7?.cocidFlag?.id?.match(/^i.skill/)) {
           if (typeof missingNames[itemData.name] === 'undefined') {
             missingNames[itemData.name] = ''
           }
@@ -189,7 +189,7 @@ export class CoCIDBatch extends FormApplication {
           for (const item of actorData.items ?? []) {
             const itemData = item instanceof CONFIG.Item.documentClass ? item.toObject() : item
             if (itemData.type === 'skill') {
-              if (!itemData.flags.CoC7?.cocidFlag?.id.match(/^i.skill/)) {
+              if (!itemData.flags.CoC7?.cocidFlag?.id?.match(/^i.skill/)) {
                 if (typeof missingNames[itemData.name] === 'undefined') {
                   missingNames[itemData.name] = ''
                 }
