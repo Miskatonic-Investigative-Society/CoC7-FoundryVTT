@@ -1,13 +1,20 @@
 # :warning: Important note
 
 - :warning: __MAKE A COPY OF YOUR WORLD BEFORE UPGRADING__
-- please report any bug encountered on GitHub, specify if you used V10 version.
+- please report any bug encountered on GitHub
 
 Happy gaming !
 
 ## Upcoming Release
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+## Version 0.10.2
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix adding (Any) specialisation skills to actors if both requiresname and picknameonly are not set
+- Fix migrated skills with eras not having a CoC ID preventing migration completing
 
 ## Version 0.10.1
 
