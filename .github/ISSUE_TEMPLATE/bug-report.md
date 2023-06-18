@@ -12,6 +12,7 @@ assignees: ''
 
 <!-- Your issue may already be reported! Please search on the issue tracker before creating one. -->
 
+- [ ] Have you checked the Upcoming Release section of the changelog to see if the issue will be resolved in the next release? https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/blob/develop/.github/CHANGELOG.md
 - [ ] Are you running the latest version of both Foundry VTT and Call of Cthulhu 7th Edition?
 - [ ] Have you tested whether the bug persists without any other modules activated or on Foundry Launch in Safe Configuration?
 
