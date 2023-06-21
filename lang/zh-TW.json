@@ -521,7 +521,7 @@
   "CoC7.InvestigatorManiaGained": "調查員患上躁狂症",
   "CoC7.ManiaGained": "你患上躁狂症",
   "CoC7.AlreadyUnderlyingInsanity": "調查員已經處於潛在的瘋狂狀態。",
-  "CoC7.IndefinitelyInsane": "你變成不定性瘋狂。",
+  "CoC7.IndefinitelyInsane": "你進入不定性瘋狂。",
   "CoC7.TemporaryInsane": "你進入臨時性瘋狂。",
   "CoC7.GoodForAsylum": "你精神得要被送去精神療養院了",
   "CoC7.BoutOfMadness": "臨時性瘋狂",
@@ -1212,5 +1212,9 @@
   "CoC7.CoCIDFlag.error.document-not-found": "在世界或綜合手冊中找不到與 CoC ID「{cocid}」，語言「{lang}」和時代「{era}」匹配的文檔。請檢查您的世界設置的時代。",
   "CoC7.CoCIDFlag.error.documents-not-found": "在世界或綜合手冊中找不到與 CoC ID（{cocids}）、語言「{lang}」和時代「{era}」匹配的文檔。請檢查您的世界設置的時代。",
   "CoC7.CoCIDBatch.title": "批量設置系統 ID（CoC ID）",
-  "CoC7.CoCIDBatch.summary": "CoC7系統引入了系統 ID（CoC ID）。這允許系統識別FoundryVTT文檔，例如技能。此頁面將允許您為現有的{type}文檔設置ID。系統ID應使用名稱的英文翻譯來支持所有語言的本地化。"
+  "CoC7.CoCIDBatch.summary": "CoC7系統引入了系統 ID（CoC ID）。這允許系統識別FoundryVTT文檔，例如技能。此頁面將允許您為現有的{type}文檔設置ID。系統ID應使用名稱的英文翻譯來支持所有語言的本地化。",
+  "CoC7.Settings.PulpRules.Archetype.Hint": "",
+  "CoC7.Settings.PulpRules.Organization.Hint": "",
+  "CoC7.Settings.PulpRules.Talents.Hint": "",
+  "CoC7.Settings.PulpRules.IgnoreMajorWounds.Hint": ""
 }
