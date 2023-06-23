@@ -53,14 +53,8 @@ async function performFilter (e) {
 export function compendiumFilter () {
   Hooks.on('renderCompendium', async (app, html, data) => {
     if (app.collection.documentName === 'Item') {
-      let types = []
-      if (typeof data.index !== 'undefined') {
-        // DEPRECIATED IN v11
-        types = [...new Set(data.index.filter(i => i.name !== '#[CF_tempEntity]').map(item => item.type))]
-      } else {
-        await app.collection.getIndex()
-        types = data.tree.entries.filter(i => i.name !== '#[CF_tempEntity]').map(item => item.type)
-      }
+      await app.collection.getIndex()
+      const types = [...new Set(data.index.filter(i => i.name !== '#[CF_tempEntity]').map(item => item.type))]
       const select = []
       select.push(
         '<option value="">' + game.i18n.localize('CoC7.All') + '</option>'
