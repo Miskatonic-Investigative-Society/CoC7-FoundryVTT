@@ -9,6 +9,10 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix compendium list view in v11 not showing base % or uncommon status on first load for skills
+- Update to Polish localization, thanks to @everyonecancode #1360.
+- Update to Taiwanese localization, thanks to @zeteticl. #1361
+
 ## Version 0.10.2
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
