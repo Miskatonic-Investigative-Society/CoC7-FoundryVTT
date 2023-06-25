@@ -33,9 +33,9 @@
   {{#if rollDamage}}
     <div class="card details">
       {{#if looser}}
-        <h4 style="font-weight: bolder;">{{looser.name}} {{ localize 'CoC7.meleeCombatDamageTakes' }} {{winner.weapon.data.data.range.normal.damage}}{{#if winner.weapon.data.data.properties.addb}}+DB{{/if}}{{#if winner.weapon.data.data.properties.ahdb}}+DB/2{{/if}} {{ localize 'CoC7.meleeCombatDamageFrom' }} {{winner.weapon.name}}</h4>
+        <h4 style="font-weight: bolder;">{{looser.name}} {{ localize 'CoC7.meleeCombatDamageTakes' }} {{winner.weapon.system.range.normal.damage}}{{#if winner.weapon.system.properties.addb}}+DB{{/if}}{{#if winner.weapon.system.properties.ahdb}}+DB/2{{/if}} {{ localize 'CoC7.meleeCombatDamageFrom' }} {{winner.weapon.name}}</h4>
       {{else}}
-        <h4 style="font-weight: bolder;">{{winner.name}} {{ localize 'CoC7.meleeCombatDamageDeals' }} {{winner.weapon.data.data.range.normal.damage}}{{#if winner.weapon.data.data.properties.addb}}+DB{{/if}}{{#if winner.weapon.data.data.properties.ahdb}}+DB/2{{/if}} {{ localize 'CoC7.meleeCombatDamageWith' }} {{winner.weapon.name}}</h4>
+        <h4 style="font-weight: bolder;">{{winner.name}} {{ localize 'CoC7.meleeCombatDamageDeals' }} {{winner.weapon.system.range.normal.damage}}{{#if winner.weapon.system.properties.addb}}+DB{{/if}}{{#if winner.weapon.system.properties.ahdb}}+DB/2{{/if}} {{ localize 'CoC7.meleeCombatDamageWith' }} {{winner.weapon.name}}</h4>
       {{/if}}
     </div>
     <div class="card-buttons owner-only" data-actor-id="{{winner.actorKey}}" style="padding: 2px 0;margin: 0;">
