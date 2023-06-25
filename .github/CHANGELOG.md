@@ -9,6 +9,10 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 0.10.3
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
 - Fix compendium list view in v11 not showing base % or uncommon status on first load for skills
 - Fix issues with half db if value is 0 or -1
 - Update to Polish localization, thanks to @everyonecancode #1360.
