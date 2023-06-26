@@ -9,6 +9,8 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix Actor not looking at COC ID values to find specific skills
+
 ## Version 0.10.3
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
