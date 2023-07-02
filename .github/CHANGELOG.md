@@ -9,7 +9,12 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 0.10.4
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
 - Fix Actor not looking at COC ID values to find specific skills
+- Update to French localization, thanks to @vonv #1370
 
 ## Version 0.10.3
 

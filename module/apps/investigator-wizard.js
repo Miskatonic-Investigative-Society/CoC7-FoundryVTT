@@ -1623,6 +1623,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
             base = Math.floor(new Roll(base).evaluate({ async: false }).total)
           }
           item.system.base = base
+          item.system.adjustments = item.system.adjustments ?? {}
           if (Number(row.personalPoints) > 0) {
             item.system.adjustments.personal = parseInt(row.personalPoints, 10)
           }
