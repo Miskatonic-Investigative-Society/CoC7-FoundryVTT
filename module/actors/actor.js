@@ -1602,6 +1602,10 @@ export class CoCActor extends Actor {
     return skillList
   }
 
+  getFirstSkillByCoCID (cocid) {
+    return this.items.find(i => i.flags?.CoC7?.cocidFlag?.id === cocid)
+  }
+
   parseFormula (formula) {
     let parsedFormula = formula
     for (const [key, value] of Object.entries(COC7.formula.actor)) {
@@ -3320,6 +3324,10 @@ export class CoCActor extends Actor {
   }
 
   get dodgeSkill () {
+    const skill = this.getFirstSkillByCoCID('i.skill.dodge')
+    if (skill) {
+      return skill
+    }
     const skillList = this.getSkillsByName(
       game.i18n.localize('CoC7.CoCIDFlag.keys.i.skill.dodge')
     )
@@ -3328,6 +3336,10 @@ export class CoCActor extends Actor {
   }
 
   get creditRatingSkill () {
+    const skill = this.getFirstSkillByCoCID('i.skill.credit-rating')
+    if (skill) {
+      return skill
+    }
     const skillList = this.getSkillsByName(
       game.i18n.localize('CoC7.CoCIDFlag.keys.i.skill.credit-rating')
     )
@@ -3336,6 +3348,10 @@ export class CoCActor extends Actor {
   }
 
   get cthulhuMythosSkill () {
+    const skill = this.getFirstSkillByCoCID('i.skill.cthulhu-mythos')
+    if (skill) {
+      return skill
+    }
     const skillList = this.getSkillsByName(
       game.i18n.localize('CoC7.CoCIDFlag.keys.i.skill.cthulhu-mythos')
     )
