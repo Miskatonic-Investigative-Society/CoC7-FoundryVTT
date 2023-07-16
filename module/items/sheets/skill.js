@@ -54,6 +54,7 @@ export class CoC7SkillSheet extends ItemSheet {
     const sheetData = super.getData()
 
     sheetData.hasOwner = this.item.isEmbedded === true
+    sheetData.hadNonCharacterOwner = sheetData.hasOwner && this.actor?.type !== 'character'
 
     sheetData.effects = CoC7ActiveEffect.prepareActiveEffectCategories(
       this.item.effects

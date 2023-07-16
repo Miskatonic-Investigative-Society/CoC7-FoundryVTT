@@ -758,7 +758,7 @@ export class CoCActor extends Actor {
     if (!this.getItemIdByName(game.i18n.localize(COC7.newSkillName))) {
       return this.createSkill(
         game.i18n.localize(COC7.newSkillName),
-        null,
+        (this.type !== 'character' ? 1 : null),
         showSheet
       )
     }

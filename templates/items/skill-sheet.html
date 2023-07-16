@@ -14,12 +14,11 @@
         {{else}}
           <input class="item-class" style="flex: 1;" type="text" name="system.skillName" value="{{data.system.skillName}}" placeholder="name" />
         {{/if}}
-        {{#if hasOwner}}
-          <label>{{localize 'CoC7.SkillBase'}}</label>
-          <input type="text" name="system.base" value="{{data.system.base}}" />
+        {{#if hadNonCharacterOwner}}
+          <label>{{localize 'CoC7.Value'}}</label>
+          <input type="text" name="system.value" value="{{data.system.value}}" />
         {{else}}
           <label>{{localize 'CoC7.SkillBase'}}</label>
-
           <input type="text" name="system.base" value="{{data.system.base}}" />
         {{/if}}
       </div>
