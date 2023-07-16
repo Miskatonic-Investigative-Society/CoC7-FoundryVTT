@@ -9,6 +9,10 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix indefinite insanity marker not clearing properly if set automatically #1375
+- When editing npc/creature skills edit the %value directly
+- Update to French localization, thanks to @vonv #1373
+
 ## Version 0.10.4
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
