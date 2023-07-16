@@ -934,7 +934,7 @@ export class CoCActor extends Actor {
             const group = game.system.api.cocid.guessGroupFromDocument(data)
             if (group) {
               skillList = (await game.system.api.cocid.fromCoCIDRegexBest({ cocidRegExp: new RegExp('^' + CoC7Utilities.quoteRegExp(group) + '.+$'), type: 'i' })).filter(item => {
-                return !(item.system.properties?.special && !!(item.system.properties?.requiresname || item.system.properties?.picknameonly))
+                return (item.system.properties?.special ?? false) && !(item.system.properties?.requiresname ?? false) && !(item.system.properties?.picknameonly ?? false)
               })
             }
             if (data.system?.flags?.occupation || data.system?.flags?.archetype) {
@@ -2126,9 +2126,9 @@ export class CoCActor extends Actor {
         ? parseInt(this.system.attribs.san.dailyLoss)
         : 0
       totalLoss = totalLoss + loss
-      if (loss >= 5) this.setCondition(COC7.status.tempoInsane)
+      if (loss >= 5) await this.setCondition(COC7.status.tempoInsane)
       if (totalLoss >= this.system.attribs.san.dailyLimit) {
-        this.setCondition(COC7.status.indefInsane)
+        await this.setCondition(COC7.status.indefInsane)
       }
       await this.update({
         'system.attribs.san.value': value,
@@ -3251,6 +3251,9 @@ export class CoCActor extends Actor {
         case COC7.status.prone:
         case COC7.status.dead:
           await this.update({
+            [`system.conditions.${conditionName}.-=value`]: null
+          })
+          await this.update({
             [`system.conditions.${conditionName}.value`]: false
           })
           break
@@ -3622,5 +3625,10 @@ export class CoCActor extends Actor {
   //   const injuried = dataUpdate?.actorData?.flags?.CoC7?.injuried;
   //   if( injuried) ui.notifications.info( game.i18n.format('CoC7.InfoActorInjuried', {actor: token.name}));
   //   return;
+  // }
+
+  // async update (data = {}, context = {}) {
+  //   console.log('>>>>', data, context)
+  //   super.update(data, context)
   // }
 }
