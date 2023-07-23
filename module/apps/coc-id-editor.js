@@ -202,7 +202,7 @@ export class CoCIDEditor extends FormApplication {
       await document.update({
         'flags.CoC7.cocidFlag.eras': update
       })
-    } else if (typeof document.flags?.CoC7?.cocidFlag?.eras[propertyId] === 'undefined') {
+    } else if (typeof document.flags?.CoC7?.cocidFlag?.eras?.[propertyId] === 'undefined') {
       if (typeof document.flags?.CoC7?.cocidFlag?.eras === 'undefined') {
         await document.update({
           'flags.CoC7.cocidFlag.eras': {
