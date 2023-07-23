@@ -17,8 +17,8 @@ COC7.eras = {
   downDarkerTrailsPulp: 'CoC7.EraDownDarkerTrailsPulp',
   darkAges: 'CoC7.EraDarkAges',
   darkAgesPulp: 'CoC7.EraDarkAgesPulp',
-  // Regency Cthulhu
-  // Regency Cthulhu Pulp
+  regency: 'CoC7.EraRegency',
+  regencyPulp: 'CoC7.EraRegencyPulp',
   // Reign of Terror
   gasLight: 'CoC7.EraGasLight',
   invictus: 'CoC7.EraInvictus'
