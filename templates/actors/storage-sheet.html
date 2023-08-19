@@ -1,5 +1,5 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
-  <header class="sheet-header flexrow" style="flex: 0 0 80px;padding-bottom: 2px;">
+  <header class="header flexrow" style="flex: 0 0 80px;padding-bottom: 2px;">
     <div class="header-details flexrow">
       <h1 class="name">
         <input name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'CoC7.Name' }}" style="margin:0; padding:0;" />
@@ -27,7 +27,7 @@
       {{/if}}
     {{/if}}
   </nav>
-  <section class="sheet-body">
+  <section class="body">
     <div class="tab active" data-group="primary" data-tab="items">
       {{> "systems/CoC7/templates/actors/parts/actor-inventory-items.html"}}
     </div>

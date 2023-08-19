@@ -20,27 +20,11 @@
             "formula": null,
             "bonusDice": 0
           },
-          "siz": {
-            "value": null,
-            "tempValue": null,
-            "short": "CHARAC.SIZ",
-            "label": "CHARAC.Size",
-            "formula": null,
-            "bonusDice": 0
-          },
           "dex": {
             "value": null,
             "tempValue": null,
             "short": "CHARAC.DEX",
             "label": "CHARAC.Dexterity",
-            "formula": null,
-            "bonusDice": 0
-          },
-          "app": {
-            "value": null,
-            "tempValue": null,
-            "short": "CHARAC.APP",
-            "label": "CHARAC.Appearance",
             "formula": null,
             "bonusDice": 0
           },
@@ -52,11 +36,27 @@
             "formula": null,
             "bonusDice": 0
           },
+          "siz": {
+            "value": null,
+            "tempValue": null,
+            "short": "CHARAC.SIZ",
+            "label": "CHARAC.Size",
+            "formula": null,
+            "bonusDice": 0
+          },
           "pow": {
             "value": null,
             "tempValue": null,
             "short": "CHARAC.POW",
             "label": "CHARAC.Power",
+            "formula": null,
+            "bonusDice": 0
+          },
+          "app": {
+            "value": null,
+            "tempValue": null,
+            "short": "CHARAC.APP",
+            "label": "CHARAC.Appearance",
             "formula": null,
             "bonusDice": 0
           },

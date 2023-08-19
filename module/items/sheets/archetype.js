@@ -101,7 +101,7 @@ export class CoC7ArchetypeSheet extends ItemSheet {
       tabs: [
         {
           navSelector: '.sheet-navigation',
-          contentSelector: '.sheet-body',
+          contentSelector: '.body',
           initial: 'description'
         }
       ]

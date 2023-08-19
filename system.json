@@ -18,10 +18,7 @@
     "bundle.js"
   ],
   "templateVersion": 1,
-  "styles": [
-    "lib/game-icons/game-icons.css",
-    "coc7g.css"
-  ],
+  "styles": ["lib/game-icons/game-icons.css", "index.css"],
   "packs": [
     {
       "label": "Skills",

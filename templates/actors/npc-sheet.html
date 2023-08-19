@@ -13,10 +13,10 @@
     {{/if}}
   </div>
   {{!-- Sheet Header --}}
-  <header class="sheet-header flexrow" style="flex: 0 0 auto;padding-bottom: 10px;border-bottom: 2px groove;">
+  <header class="header flexrow" style="flex: 0 0 auto;padding-bottom: 10px;border-bottom: 2px groove;">
     {{#unless permissionLimited}}
       <div class="flexcol">
-        <div class="infos flexrow" style="flex: 0 0 auto;display: flex;">
+        <div class="information flexrow" style="flex: 0 0 auto;display: flex;">
           {{#if isCreature}}
             <div class="flexrow flex1">
               <label>{{localize 'CoC7.Name'}}</label>
@@ -47,7 +47,6 @@
             </div>
           {{/if}}
         </div>
-
         <div class="characteritics flexrow" style="flex: 0 0 auto;display: flex;">
           {{#each data.system.characteristics as |characteristic key|}}
             {{#if ../data.system.flags.locked}}
@@ -87,7 +86,6 @@
             {{/if}}
           {{/each}}
         </div>
-
         <div class="attribute-list flexrow" style="display: flex;">
           <div class="flexrow flex1 attribute" style="display: flex;" data-attrib="hp">
             <label class="attribute-label">{{localize 'CoC7.HP'}} :</label>
@@ -290,7 +288,7 @@
 
   {{!-- Sheet Body --}}
   {{#unless permissionLimited}}
-    <section class="sheet-body">
+    <section class="body">
       <div class="tab">
 
         <section class="sheet-section">

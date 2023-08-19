@@ -27,7 +27,7 @@ export class CoC7SkillSheet extends ItemSheet {
       tabs: [
         {
           navSelector: '.sheet-navigation',
-          contentSelector: '.sheet-body',
+          contentSelector: '.body',
           initial: 'description'
         }
       ]

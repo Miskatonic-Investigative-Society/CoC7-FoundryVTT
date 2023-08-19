@@ -28,6 +28,9 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
 
     sheetData.isCreature = false
 
+    sheetData.showInventoryWeapons =
+      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, "weapon") ||
+      !sheetData.data.system.flags.locked;
     sheetData.showInventoryItems =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'item') ||
       !sheetData.data.system.flags.locked
@@ -211,7 +214,7 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
 
   static get defaultOptions () {
     return mergeObject(super.defaultOptions, {
-      classes: ['coc7', 'sheet', 'actor', 'npc'],
+      classes:  ["CoC7", "sheet", "default"],
       dragDrop: [{ dragSelector: '.item', dropSelector: null }],
       template: 'systems/CoC7/templates/actors/npc-sheet.html',
       width: 580,

@@ -1,6 +1,6 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
   <div class="container expanded">
-    <header class="sheet-header">
+    <header class="header">
       {{#unless started}}
         <div class="sheet-portrait">
           <img class="photo" src="{{item.img}}" title="{{item.name}}" data-edit="img" />
@@ -165,7 +165,7 @@
       {{/if}}
     </nav>
 
-    <section class="sheet-body">
+    <section class="body">
       <div class="tab setup" data-group="primary" data-tab="setup">
         {{#if locations}}
 

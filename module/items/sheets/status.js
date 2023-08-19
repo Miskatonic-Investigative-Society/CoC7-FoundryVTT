@@ -20,7 +20,7 @@ export class CoC7StatusSheet extends ItemSheet {
       tabs: [
         {
           navSelector: '.sheet-navigation',
-          contentSelector: '.sheet-body',
+          contentSelector: '.body',
           initial: 'description'
         }
       ]

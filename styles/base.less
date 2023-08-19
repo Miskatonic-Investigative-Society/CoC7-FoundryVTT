@@ -1,0 +1,276 @@
+.CoC7 {
+  --color-shadow-primary: black;
+  .container {
+    height: 100%;
+    width: 100%;
+    .header {
+      align-items: center;
+      border: 0px;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      .portrait {
+        display: flex;
+        padding: 0px 0.5rem;
+        width: 20rem;
+        img {
+          border: 0.1875rem dashed white;
+          height: auto;
+          max-width: 100%;
+        }
+      }
+      .information {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        div {
+          align-items: center;
+          min-height: 1.25rem;
+          label {
+            margin: 0 0.5rem;
+            max-width: fit-content;
+          }
+        }
+      }
+      aside {
+        display: flex;
+        flex-direction: column;
+        height: fit-content;
+        min-width: 16rem;
+        align-items: center;
+        .vitals {
+          display: grid;
+          grid-template-columns: repeat(2, 7rem);
+          justify-items: center;
+          .luck,
+          .hitPoints,
+          .sanity,
+          .magicPoints {
+            display: inline-block;
+            width: fit-content;
+            border-radius: 0.3125rem;
+            text-align: center;
+            font-size: 1.4rem;
+            margin-bottom: 0.25rem;
+            input {
+              background: white;
+              text-align: center;
+            }
+            .monitor {
+              align-items: center;
+              display: grid;
+              grid-template-areas: ". current separator max .";
+              grid-template-columns: auto 2.875rem 5px 2.875rem auto;
+              height: auto;
+              .current {
+                color: @red;
+                grid-area: current;
+                padding-right: 0.25rem;
+                text-align: right;
+              }
+              .separator {
+                color: @blue;
+                grid-area: separator;
+              }
+              .max {
+                grid-area: max;
+                padding-left: 0.25rem;
+                text-align: left;
+                input {
+                  color: @red;
+                }
+              }
+            }
+          }
+        }
+        .loss {
+          display: flex;
+          justify-content: center;
+          width: 100%;
+          align-items: center;
+          gap: 0.5rem;
+          justify-items: center;
+        }
+        .status {
+          background: white;
+          border-radius: 0.5rem;
+          margin-top: 0.75rem;
+          padding: 0.5rem;
+          font-size: 1rem;
+        }
+        .attributes {
+          display: flex;
+          flex: 1 1 0%;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-evenly;
+          margin-top: 0.75rem;
+          gap: 1rem;
+          .attribute {
+            display: flex;
+          }
+        }
+      }
+    }
+    .navigation {
+      align-items: center;
+      color: @blue;
+      display: flex;
+      flex-flow: wrap;
+      font-size: 1.4rem;
+      justify-content: space-around;
+      margin: 2rem 0;
+      a {
+        span {
+          border-radius: 0.25rem;
+          padding: 0.5rem;
+        }
+        &.active {
+          span {
+            background-color: @blue;
+            color: rgb(255, 255, 255);
+          }
+        }
+      }
+    }
+    .body {
+      flex-direction: column;
+      display: flex;
+      .tab {
+        width: 100%;
+        .characteristics {
+          display: grid;
+          flex: 0 0 6rem;
+          gap: 2rem;
+          grid-template-columns: repeat(8, 3.75rem);
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          .box {
+            align-items: baseline;
+            display: grid;
+            grid-template: "name name" 1rem "scores scores" 2rem / 1rem 2.75rem;
+            .name {
+              color: @blue;
+              grid-area: name;
+              font-size: 1.4rem;
+              line-height: 1.4rem;
+              text-align: center;
+            }
+            .scores {
+              background: rgba(255, 255, 255, 0.5);
+              border-radius: 0.25rem;
+              color: @red;
+              display: grid;
+              gap: 0.25rem;
+              grid-area: scores;
+              grid-template: "main half" 0.875rem "main oneFifth" 0.875rem / 2.375rem 0.875rem;
+              margin-top: 0.5rem;
+              min-height: 2.5rem;
+              min-width: 4rem;
+              align-content: center;
+              justify-content: center;
+              .main {
+                place-self: center;
+                font-size: 1.6rem;
+                grid-area: main;
+                text-align: center;
+                input {
+                  background: transparent;
+                }
+              }
+              .half {
+                place-self: center;
+                font-size: 1rem;
+                grid-area: half;
+                text-align: center;
+              }
+              .one-fifth {
+                place-self: center;
+                font-size: 1rem;
+                grid-area: oneFifth;
+                text-align: center;
+              }
+            }
+          }
+        }
+        .inventory {
+          display: flex;
+          flex-direction: column;
+          flex-wrap: nowrap;
+          justify-content: flex-start;
+          .item {
+            display: flex;
+            flex-flow: wrap;
+            justify-content: flex-start;
+            width: 100%;
+            .image {
+              height: 0.25rem;
+              max-width: 2.5rem;
+              width: 0.25rem;
+              img {
+                border: none;
+                height: 1.875rem;
+                width: 1.875rem;
+              }
+            }
+            .name {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              width: 0px;
+            }
+            .controls {
+              max-width: fit-content;
+            }
+          }
+          h2 {
+            border-bottom: .125rem solid @blue;
+            border-radius: 1px;
+          }
+        }
+        .cash {
+          margin-top: 2rem;
+        }
+      }
+    }
+  }
+  input {
+    &[type="text"] {
+      background: white;
+      border-radius: 0.25rem;
+      border: 0px;
+      flex: 1 1 0%;
+      height: 1.5rem;
+      line-height: normal;
+      margin: 0px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
+    }
+  }
+  label {
+    color: @blue;
+  }
+  ul, ol {
+    margin:0;
+    padding: 0;
+    text-indent: 0;
+    list-style-type: 0;
+  }
+  .warning {
+    display: flex;
+    color: goldenrod;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    margin-top: 1rem;
+    i {
+      font-size: 2rem;
+      margin: 1rem;
+    }
+    span {
+      font-size: 1rem;
+    }
+  }
+}

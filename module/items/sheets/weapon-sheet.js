@@ -19,7 +19,7 @@ export class CoC7WeaponSheet extends ItemSheet {
       tabs: [
         {
           navSelector: '.sheet-tabs',
-          contentSelector: '.sheet-body',
+          contentSelector: '.body',
           initial: 'skills'
         }
       ]

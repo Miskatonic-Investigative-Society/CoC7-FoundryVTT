@@ -13,7 +13,7 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
       tabs: [
         {
           navSelector: '.sheet-nav',
-          contentSelector: '.sheet-body',
+          contentSelector: '.body',
           initial: 'description'
         }
       ]

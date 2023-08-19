@@ -21,7 +21,7 @@ export class CoC7ChaseSheet extends ItemSheet {
       tabs: [
         {
           navSelector: '.sheet-nav',
-          contentSelector: '.sheet-body',
+          contentSelector: '.body',
           initial: 'participants'
         }
       ]

@@ -153,7 +153,7 @@ export class CoC7SetupSheet extends ItemSheet {
       tabs: [
         {
           navSelector: '.sheet-navigation',
-          contentSelector: '.sheet-body',
+          contentSelector: '.body',
           initial: 'description'
         }
       ]

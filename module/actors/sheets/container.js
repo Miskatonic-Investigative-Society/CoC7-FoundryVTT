@@ -18,7 +18,7 @@ export class CoC7ContainerSheet extends ActorSheet {
       tabs: [
         {
           navSelector: '.sheet-nav',
-          contentSelector: '.sheet-body',
+          contentSelector: '.body',
           initial: 'items'
         }
       ]
@@ -82,6 +82,9 @@ export class CoC7ContainerSheet extends ActorSheet {
       game.settings.get('CoC7', 'playerUnlockSheetMode') === 'always' ||
       game.user.isGM
 
+    sheetData.showInventoryWeapons =
+      Object.prototype.hasOwnProperty.call(sheetData.itemsByType, "weapon") ||
+      !sheetData.data.system.flags.locked;
     sheetData.showInventoryItems =
       Object.prototype.hasOwnProperty.call(sheetData.itemsByType, 'item') ||
       !sheetData.data.system.flags.locked

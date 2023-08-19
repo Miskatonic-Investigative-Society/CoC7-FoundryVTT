@@ -19,7 +19,7 @@ export class CoC7TalentSheet extends ItemSheet {
       tabs: [
         {
           navSelector: '.sheet-navigation',
-          contentSelector: '.sheet-body',
+          contentSelector: '.body',
           initial: 'description'
         }
       ]

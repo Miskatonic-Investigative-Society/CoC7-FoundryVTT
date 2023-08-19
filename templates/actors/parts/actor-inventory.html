@@ -1,8 +1,9 @@
-<div class="flexrow" style="height: 100%">
-  <div class="flexcol flex3 inventory">
+
+  {{> "systems/CoC7/templates/actors/parts/combat.html"}}
+  <div class="inventory">
     {{> "systems/CoC7/templates/actors/parts/actor-inventory-items.html"}}
   </div>
-  <div class="flexcol flex2 cash" style="border: 1px groove;">
+  <div class="cash">
     {{#unless data.system.flags.locked}}
       <div class="flexrow cash-row">
         {{#if data.system.flags.manualCredit}}
@@ -44,9 +45,4 @@
     <div style="flex:none">
       <textarea name="system.monetary.assetsDetails" placeholder="{{localize 'CoC7.MonetaryAssetsDetails'}}" rows="4">{{data.system.monetary.assetsDetails}}</textarea>
     </div>
-    <label style="flex: initial;">{{localize 'CoC7.PossessionsNotes'}}</label>
-    <div class="flex1">
-      <textarea name="system.notes" placeholder="{{localize 'CoC7.PossessionsNotesHolder'}}">{{data.system.notes}}</textarea>
-    </div>
   </div>
-</div>
