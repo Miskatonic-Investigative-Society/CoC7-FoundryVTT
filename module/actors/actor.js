@@ -1066,10 +1066,22 @@ export class CoCActor extends Actor {
                 const name = mainSkill.match(/\(([^)]+)\)/)
                   ? mainSkill.match(/\(([^)]+)\)/)[1]
                   : mainSkill
-                skill = await this.createWeaponSkill(
-                  name,
-                  !!data.system.properties?.rngd
-                )
+                // try to use an already defined skill
+                // TODO: search on the compendiums
+                const existing = game.items.find(
+                    item => item.type === 'skill' &&
+                    (item.name.toLocaleLowerCase() === name.toLocaleLowerCase() || item.system.skillName?.toLocaleLowerCase() === name.toLocaleLowerCase())
+                  )
+                if (typeof existing !== 'undefined') {
+                   await this.addItems([existing])
+                   skill = await this.getSkillsByName(mainSkill)[0]
+                  //skill = existing.toObject()
+                } else {
+                  skill = await this.createWeaponSkill(
+                    name,
+                    !!data.system.properties?.rngd
+                  )
+                }
               }
               if (skill) data.system.skill.main.id = skill.id
             } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
