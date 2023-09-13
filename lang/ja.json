@@ -1186,7 +1186,7 @@
   "SETTINGS.UseContextMenusHint": "[試験中] 同時押しの代わりにロールにコンテクストメニューを使用。",
 
   "CoC7.getTheExample": "例をコピー",
-  "CoC7.Copied": "例をクリップボードにコピー"
+  "CoC7.Copied": "例をクリップボードにコピー",
 
   "CoC7.EffectNew": "New effect",
   "CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value.",
