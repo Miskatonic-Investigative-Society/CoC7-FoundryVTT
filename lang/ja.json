@@ -209,13 +209,9 @@
   "CoC7.FlatDiceModifier": "ダイス修正値",
   "CoC7.FlatModifier": "技能修正値",
   "CoC7.RollDifficultyUnknown": "見えない",
-  "CoC7.RollDifficultyRegular": "レギュラー",
   "CoC7.RollDifficultyRegular": "レギュラーの難易度",
-  "CoC7.RollDifficultyHard": "ハード",
   "CoC7.RollDifficultyHard": "ハードの難易度",
-  "CoC7.RollDifficultyExtreme": "イクストリーム",
   "CoC7.RollDifficultyExtreme": "イクストリームの難易度",
-  "CoC7.RollDifficultyCritical": "クリティカル",
   "CoC7.RollDifficultyCritical": "クリティカルの難易度",
   "CoC7.RollResult.LuckSpendText": "{luckAmount} の幸運を消費して {successLevel} 成功した",
   "CoC7.RollDice": "ロール !",
@@ -920,7 +916,7 @@
   "CoC7.MessageBoutOfMadnessTableNotFound": "狂気テーブルの結果が見つからない。すべてのロールテーブルが作成されているか確認すること",
   "CoC7.MessageBoutOfMadnessItemNotFound": "狂気テーブルの結果が見つからない。すべてのステータスが作成されているか確認すること",
   "CoC7.MessageRollingCharacteristic": "能力値をロール中 {label}: {formula}",
-  
+
   "CoC7.DealDamage": "{target} に {damage}点のダメージを与えるか？",
   "CoC7.DamageDealTo": "{name} に {damage}点のダメ―ジ",
   "CoC7.NoTargetSelected": "{weapon} 判定の対象となる目標が選択されていない。続行するか？",
