@@ -231,12 +231,7 @@ export class CoCActor extends Actor {
         disposition: 1,
         sight: {
           enabled: true
-        },
-        detectionModes: [{
-          id: 'basicSight',
-          range: 30,
-          enabled: true
-        }]
+        }
       })
     } else if (data.type === 'npc') {
       if (typeof data.img === 'undefined' || data.img === 'icons/svg/mystery-man.svg') {
