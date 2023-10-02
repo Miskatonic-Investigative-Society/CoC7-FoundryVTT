@@ -15,6 +15,7 @@ import { DamageCard } from '../../chat/cards/damage.js'
 import CoC7ActiveEffect from '../../active-effect.js'
 import { CoC7ContextMenu } from '../../context-menu.js'
 import { CoC7Utilities } from '../../utilities.js'
+import { MeleeAttackCard } from '../../chat/cards/melee-attack.js'
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -1626,6 +1627,8 @@ export class CoC7ActorSheet extends ActorSheet {
 
           const card = new CoC7MeleeInitiator(actorKey, itemId, fastForward)
           card.createChatCard()
+          const meleeAttackCard = new MeleeAttackCard({})
+          meleeAttackCard.toMessage()
         }
         if (weapon.system.properties.rngd) {
           const card = new CoC7RangeInitiator(actorKey, itemId, fastForward)

@@ -412,7 +412,7 @@ export class EnhancedChatCard {
     }
 
     if (permissionsArray.includes(PERMISSION_TYPE.SPEAKER)) {
-      const speaker = this.message.data.speaker
+      const speaker = this.message.speaker
       if (speaker.token && speaker.scene) {
         const actor = await fromUuid(
           `Scene.${speaker.scene}.Token.${speaker.token}`
@@ -664,7 +664,7 @@ export class EnhancedChatCard {
   }
 
   static async fromMessage (message) {
-    const cardElement = $(message.data.content)[0]
+    const cardElement = $(message.content)[0]
     if (!cardElement) return undefined
     const card = await this.fromHTMLCardElement(cardElement)
     card.message = message

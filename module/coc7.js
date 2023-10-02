@@ -27,6 +27,7 @@ import { DropActorSheetData } from './hooks/drop-actor-sheet-data.js'
 import { initECC } from './common/chatcardlib/src/chatcardlib.js'
 import { ChaseObstacleCard } from './chat/cards/chase-obstacle.js'
 import { CoC7ContextMenu } from './context-menu.js'
+import { MeleeAttackCard } from './chat/cards/melee-attack.js'
 
 Hooks.on('renderSettingsConfig', (app, html, options) => {
   const systemTab = $(app.form).find('.tab[data-tab=system]')
@@ -144,7 +145,7 @@ Hooks.once('init', async function () {
   Combat.prototype.rollInitiative = rollInitiative
 })
 
-initECC(ChaseObstacleCard)
+initECC(ChaseObstacleCard, MeleeAttackCard)
 
 Hooks.on('renderCombatTracker', (app, html, data) =>
   CoC7Combat.renderCombatTracker(app, html, data)

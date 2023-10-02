@@ -17,6 +17,7 @@ import { chatHelper } from '../chat/helper.js'
 import { CoC7Dice } from '../dice.js'
 import { CoC7Item } from '../items/item.js'
 import { CoC7Utilities } from '../utilities.js'
+import { MeleeAttackCard } from '../chat/cards/melee-attack.js'
 
 /**
  * Extend the base Actor class to implement additional logic specialized for CoC 7th.
@@ -2566,6 +2567,8 @@ export class CoCActor extends Actor {
 
       const card = new CoC7MeleeInitiator(this.tokenKey, (weaponData.uuid || weapon.id), fastForward)
       card.createChatCard()
+      const meleeAttackCard = new MeleeAttackCard({})
+      meleeAttackCard.toMessage()
     }
     if (weapon.system.properties.rngd) {
       const card = new CoC7RangeInitiator(this.tokenKey, (weaponData.uuid || weapon.id), fastForward)
