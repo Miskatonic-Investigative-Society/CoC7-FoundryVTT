@@ -10,9 +10,11 @@ Happy gaming !
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Remove 30 feet basic vision on newly created characters to prevent players seeing doors with no vision
+- Restore Canvas drop ability to whisper check links to tokens and placing chase markers
 - Improvements to weapon skill selection and creation when dropping a weapon on an actor sheet, thanks to pconcepcion #1390
 - Update to Italian localization, thanks to @Stefano1975t #1382
 - Update to Japanese localization, thanks to @doumoku #1391, #1394
+- Update to Polish localization, thanks to @everyonecancode #1399.
 - Update to Spanish actor importer localization, thanks to pconcepcion #1389
 
 ## Version 0.10.5
