@@ -2,21 +2,21 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (373 untranslated strings)](#cnjson)
+[cn.json (374 untranslated strings)](#cnjson)
 
-[cs.json (558 untranslated strings)](#csjson)
+[cs.json (559 untranslated strings)](#csjson)
 
-[es.json (355 untranslated strings)](#esjson)
+[es.json (356 untranslated strings)](#esjson)
 
-[ko.json (155 untranslated strings)](#kojson)
+[ko.json (156 untranslated strings)](#kojson)
 
-[ru.json (1220 untranslated strings)](#rujson)
+[ru.json (1221 untranslated strings)](#rujson)
 
-[sv.json (341 untranslated strings)](#svjson)
+[sv.json (342 untranslated strings)](#svjson)
 
 
 ## cn.json
-373 untranslated strings
+374 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -215,6 +215,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorBeneficiaryAtMaxBonus": "Beneficiary {name} already has max bonus dice",
 "CoC7.ErrorParticipantAtMaxBonus": "{participantUuid} already has max bonus dice",
 "CoC7.ErrorTokenNotOnScene": "Token does not belongs to this location's scene",
+"CoC7.ErrorTokenIncorrect": "Unable to find selected token",
 "CoC7.AddParticipant": "Add Participant",
 "CoC7.RemoveParticipant": "Remove participant",
 "CoC7.RemoveParticipantHint": "Participant will be completely removed from the chase",
@@ -393,7 +394,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
 ```
 ## cs.json
-558 untranslated strings
+559 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -642,6 +643,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorBeneficiaryAtMaxBonus": "Beneficiary {name} already has max bonus dice",
 "CoC7.ErrorParticipantAtMaxBonus": "{participantUuid} already has max bonus dice",
 "CoC7.ErrorTokenNotOnScene": "Token does not belongs to this location's scene",
+"CoC7.ErrorTokenIncorrect": "Unable to find selected token",
 "CoC7.AddParticipant": "Add Participant",
 "CoC7.RemoveParticipant": "Remove participant",
 "CoC7.RemoveParticipantHint": "Participant will be completely removed from the chase",
@@ -955,7 +957,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
 ```
 ## es.json
-355 untranslated strings
+356 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -1137,6 +1139,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorBeneficiaryAtMaxBonus": "Beneficiary {name} already has max bonus dice",
 "CoC7.ErrorParticipantAtMaxBonus": "{participantUuid} already has max bonus dice",
 "CoC7.ErrorTokenNotOnScene": "Token does not belongs to this location's scene",
+"CoC7.ErrorTokenIncorrect": "Unable to find selected token",
 "CoC7.AddParticipant": "Add Participant",
 "CoC7.RemoveParticipant": "Remove participant",
 "CoC7.RemoveParticipantHint": "Participant will be completely removed from the chase",
@@ -1314,7 +1317,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
 ```
 ## ko.json
-155 untranslated strings
+156 untranslated strings
 ```
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
 "CoC7.RollDifficultyRegularTitle": "Regular difficulty",
@@ -1363,6 +1366,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.MonetaryDefaultWealthy": "Wealthy",
 "CoC7.MonetaryDefaultRich": "Rich",
 "CoC7.MonetaryDefaultSuperRich": "Super Rich",
+"CoC7.ErrorTokenIncorrect": "Unable to find selected token",
 "CoC7.RemoveParticipant": "Remove participant",
 "CoC7.RemoveParticipantHint": "Participant will be completely removed from the chase",
 "CoC7.TextFieldInvalidJSON": "Unable to parse the JSON, please try again",
@@ -1473,7 +1477,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
 ```
 ## ru.json
-1220 untranslated strings
+1221 untranslated strings
 ```
 "CoC7.title": "Call of Cthulhu 7h Edition",
 "CoC7.Entities.Character": "Character",
@@ -2164,6 +2168,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorBeneficiaryAtMaxBonus": "Beneficiary {name} already has max bonus dice",
 "CoC7.ErrorParticipantAtMaxBonus": "{participantUuid} already has max bonus dice",
 "CoC7.ErrorTokenNotOnScene": "Token does not belongs to this location's scene",
+"CoC7.ErrorTokenIncorrect": "Unable to find selected token",
 "CoC7.AddParticipant": "Add Participant",
 "CoC7.RemoveParticipant": "Remove participant",
 "CoC7.RemoveParticipantHint": "Participant will be completely removed from the chase",
@@ -2697,7 +2702,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
 ```
 ## sv.json
-341 untranslated strings
+342 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -2868,6 +2873,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorBeneficiaryAtMaxBonus": "Beneficiary {name} already has max bonus dice",
 "CoC7.ErrorParticipantAtMaxBonus": "{participantUuid} already has max bonus dice",
 "CoC7.ErrorTokenNotOnScene": "Token does not belongs to this location's scene",
+"CoC7.ErrorTokenIncorrect": "Unable to find selected token",
 "CoC7.AddParticipant": "Add Participant",
 "CoC7.RemoveParticipant": "Remove participant",
 "CoC7.RemoveParticipantHint": "Participant will be completely removed from the chase",
