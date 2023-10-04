@@ -11,6 +11,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 
 - Remove 30 feet basic vision on newly created characters to prevent players seeing doors with no vision
 - Restore Canvas drop ability to whisper check links to tokens and placing chase markers
+- Improvements to Chase item to allow adding canvas tokens to chases and to move tokens from linked actors 
 - Improvements to weapon skill selection and creation when dropping a weapon on an actor sheet, thanks to pconcepcion #1390
 - Update to Italian localization, thanks to @Stefano1975t #1382
 - Update to Japanese localization, thanks to @doumoku #1391, #1394
