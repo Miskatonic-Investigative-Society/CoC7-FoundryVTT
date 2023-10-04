@@ -1,10 +1,10 @@
-/* global game */
+/* global game, ui */
 import { CoC7Utilities } from '../utilities.js'
 import { CoC7Link } from './coc7-link.js'
 
 export class CoC7Canvas {
   static get COC7_TYPES_SUPPORTED () {
-    return ['CoC7Link', 'locator']
+    return ['CoC7Link', 'locator', 'getToken']
   }
 
   static async onDropSomething (canvas, data) {
@@ -39,6 +39,11 @@ export class CoC7Canvas {
             CoC7Link.toWhisperMessage(data, dropTargetTokens.filter(t => t.actor.owners.length).map(t => t.actor))
           } else {
             CoC7Link.toWhisperMessage(data, game.users.players.filter(u => !!u.character).map(u => u.character))
+          }
+          break
+        case 'getToken':
+          if (typeof data.appId !== 'undefined' && typeof data.callBack === 'string' && typeof ui.windows[data.appId] !== 'undefined' && typeof ui.windows[data.appId][data.callBack] === 'function') {
+            ui.windows[data.appId][data.callBack](dropTargetTokens)
           }
           break
 

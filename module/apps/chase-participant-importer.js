@@ -29,6 +29,17 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
     })
     participantDragDrop.bind(html[0])
 
+    const tokenSelectorDragDrop = new DragDrop({
+      dragSelector: '.chase-token',
+      permissions: {
+        dragstart: game.user.isGM
+      },
+      callbacks: {
+        dragstart: this._onTokenSelectorDragStart.bind(this)
+      }
+    })
+    tokenSelectorDragDrop.bind(html[0])
+
     html.find('.reset-participant').click(async () => {
       this.object = {}
       this._actor = null
@@ -43,6 +54,15 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
     html.find('[data-action]').click(this._onAction.bind(this))
 
     // html.find('button').click(this._onButton.bind(this))
+  }
+
+  async _onTokenSelectorDragStart (event) {
+    const data = {
+      type: 'getToken',
+      appId: this.appId,
+      callBack: 'addTokenToChase'
+    }
+    event.dataTransfer.setData('text/plain', JSON.stringify(data))
   }
 
   async getData () {
@@ -166,6 +186,20 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
     await this.render(true)
   }
 
+  async addTokenToChase (tokens) {
+    if (tokens.length === 1) {
+      this.object.docUuid = tokens[0].document?.uuid
+      // If actor is controlled by GM only we assume he is a chaser
+      this.object.chaser = this.actor?.owners?.filter(u => !u.isGM).length === 0
+      if (this.object.speedCheck.rollDataString) {
+        delete this.object.speedCheck.rollDataString
+      }
+      await this.render(true)
+    } else {
+      ui.notifications.warn(game.i18n.localize('CoC7.ErrorTokenIncorrect'))
+    }
+  }
+
   async _onAction (event) {
     event.preventDefault()
 
@@ -276,7 +310,7 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
       if (participant.isChaser) {
         if (
           slowestPrey &&
-          !this.chase.data.data.includeLastCommers &&
+          !this.chase.system.includeLastCommers &&
           participant.adjustedMov < slowestPrey.adjustedMov
         ) {
           this.object.excluded = true
@@ -289,7 +323,7 @@ export class CoC7ChaseParticipantImporter extends FormApplication {
       if (participant.isPrey) {
         if (
           fastestChaser &&
-          !this.chase.data.data.includeEscaped &&
+          !this.chase.system.includeEscaped &&
           participant.adjustedMov > fastestChaser.adjustedMov
         ) {
           this.object.escaped = true

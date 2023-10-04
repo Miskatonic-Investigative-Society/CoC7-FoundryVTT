@@ -41,7 +41,7 @@ Dragging a token to the participant list or to a location will activate the impo
 
 Here you can setup your participant. All fields can be changed. Note that you can select a different initiative and speed check. This is non standard in the CoC, but allows to setup unusual chases (futuristic matrix chase, dreamlands chase...)
 
-1. Clicking this will change the participant side from prey to chaser.
+1. Clicking this will change the participant side from prey to chaser. You can drag the question mark onto a token on the scene to add them to the chase.
 2. Clicking this will trigger a speed check. Note that there will be no player entries necessary nor any roll card displayed.
 
 # Participant list
