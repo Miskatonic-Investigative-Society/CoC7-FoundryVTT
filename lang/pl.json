@@ -568,6 +568,7 @@
   "CoC7.DeleteSanityLossEncounter": "Usuń Utratę Poczytalności ze Spotkania",
   "CoC7.DeleteSanityLossImmunity": "Usuń Odporność na Utratę Poczytalności",
 
+  "CoC7.SanityLossType": "Typ",
   "CoC7.SanityLossTypeDialogTitle": "Nowa Utrata Poczytalności lub Odporność",
   "CoC7.SanityLossTypeDialogBody": "Dodaj nowe Spotkanie z Istotą z Mitów, Utratę Poczytalności, lub Odporność na Utratę Poczytalności do karty Badacza.",
   "CoC7.SanityLossTypeReason": "Powód",

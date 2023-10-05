@@ -568,6 +568,7 @@
   "CoC7.DeleteSanityLossEncounter": "Delete Sanity Loss Encounter",
   "CoC7.DeleteSanityLossImmunity": "Delete Sanity Loss Immunity",
 
+  "CoC7.SanityLossType": "Type",
   "CoC7.SanityLossTypeDialogTitle": "New sanity loss or immunity",
   "CoC7.SanityLossTypeDialogBody": "Add a new Mythos Encounter, Sanity Loss, or Sanity Immunity to the character.",
   "CoC7.SanityLossTypeReason": "Reason",

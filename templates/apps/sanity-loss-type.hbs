@@ -3,7 +3,7 @@
     {{ localize 'CoC7.SanityLossTypeDialogBody' }}
   </div>
   <div class="form-group">
-    <label>{{ localize 'CoC7.AddSanityLossEncounter' }}</label>
+    <label>{{ localize 'CoC7.SanityLossType' }}</label>
     <select class="field_type">
       {{#select object.type}}
         <option value="encounter">{{ localize 'CoC7.SanityLossEncounter' }}</option>
@@ -24,11 +24,11 @@
   <div class="flexrow" style="margin: 10px 0 0;">
     <button class="dialog-button add" type="button" data-button="add">
       <i class="fas fa-check"></i>
-      {{ localize 'Activate' }}
+      {{ localize 'CoC7.Add' }}
     </button>
     <button class="dialog-button close" type="button" data-button="close">
       <i class="fas fa-ban"></i>
-      {{ localize 'Cancel' }}
+      {{ localize 'CoC7.Cancel' }}
     </button>
   </div>
 </form>
