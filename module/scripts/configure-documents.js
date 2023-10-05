@@ -7,6 +7,7 @@ import { CoC7Chase } from '../items/chase/data.js'
 import CoC7ActiveEffect from '../active-effect.js'
 import { CoC7Skill } from '../items/skill/data.js'
 import { CoC7Vehicle } from '../actors/vehicle/data.js'
+import { CoCChatMessage } from '../chat/chat-message.js'
 
 export function configureDocuments () {
   CONFIG.ActiveEffect.documentClass = CoC7ActiveEffect
@@ -21,4 +22,6 @@ export function configureDocuments () {
     chase: CoC7Chase,
     skill: CoC7Skill
   }
+
+  CONFIG.ChatMessage.documentClass = CoCChatMessage
 }

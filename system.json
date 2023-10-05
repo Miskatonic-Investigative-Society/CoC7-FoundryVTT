@@ -18,14 +18,14 @@
     "bundle.js"
   ],
   "scripts": [
-    "lib/tooltipster/tooltipster.bundle.min.js"
+    "lib/tooltipster/tooltipster.bundle.min.js",
+    "lib/tooltipster/tooltipster-follower.min.js"
   ],
   "templateVersion": 1,
   "styles": [
     "lib/game-icons/game-icons.css",
     "lib/tooltipster/tooltipster.bundle.min.css",
-    "lib/tooltipster/tooltipster-sideTip-noir.min.css",
-    "lib/tooltipster/tooltipster-sideTip-shadow.min.css",
+    "lib/tooltipster/tooltipster-follower.min.css",
     "coc7g.css"
   ],
   "packs": [

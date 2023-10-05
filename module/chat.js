@@ -48,11 +48,6 @@ export class CoC7Chat {
         .replaceWith(game.i18n.localize('CoC7.KeeperSentDecoy'))
       html.find('.message-content').remove()
     }
-
-    // Render tooltips in chat messages.
-    html.find('.tooltipstered').each((i, el) => {
-      $(el).tooltipster({ content: el.dataset.description, theme: 'tooltipster-shadow' })
-    })
   }
 
   static fakeRollMessage () {
@@ -143,8 +138,6 @@ export class CoC7Chat {
     // RollCard.bindListerners( html);
     OpposedCheckCard.bindListerners(html)
     CombinedCheckCard.bindListerners(html)
-
-    // html.find('.tooltipstered').tooltipster({ content: 'content content content content content' })
   }
 
   static _onOpenActor (event) {
