@@ -178,7 +178,7 @@
   "CoC7.LuckNotEnough": "{name} nie ma wystarczająco szczęścia, aby zdać test",
   "CoC7.UpgradeSuccessWithLuck": "Ulepsz sukces do {difficultyName} za Punkty Szczęścia równe {luckToSpend}.",
   "CoC7.check.AutoSuccess": "Auto. sukces",
-  "CoC7.check.AutoFailure": "Auto. niepowodzenie",
+  "CoC7.check.AutoFailure": "Auto. porażka",
   "CoC7.RevealCheck": "Pokaż wynik",
   "CoC7.RevealSanLoss": "Pokaż utratę PP",
   "CoC7.check.ForcePass": "Wymuś sukces",
