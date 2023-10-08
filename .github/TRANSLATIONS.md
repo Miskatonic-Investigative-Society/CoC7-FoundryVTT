@@ -2,11 +2,13 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`. Feel free to create a new `*.json` file for a language that is not shown here!
 
-The following translations have more than 153 untranslated strings **cn**, **cs**, **es**, **ja**, **ko**, **ru**, **sv**, [are you able to help?](./ABANDONED.md)
+The **pl** translation is currently up to date
 
-|Key|de|fr|it|pl|pt-BR|zh-TW|
+The following translations have more than 153 untranslated strings **cn**, **cs**, **es**, **ko**, **ru**, **sv**, [are you able to help?](./ABANDONED.md)
+
+|Key|de|fr|it|ja|pt-BR|zh-TW|
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**141**|**2**|**2**|**2**|**103**|**2**|
+|**Remaining**:|**143**|**4**|**2**|**2**|**105**|**4**|
 |[CoC7.CoCIDBatch.summary](#coc7cocidbatchsummary)|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
 |[CoC7.CoCIDBatch.title](#coc7cocidbatchtitle)|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
 |[CoC7.CoCIDFlag.documents-in-compendiums](#coc7cocidflagdocumentsincompendiums)|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|
@@ -32,8 +34,9 @@ The following translations have more than 153 untranslated strings **cn**, **cs*
 |[CoC7.EraDarkAgesPulp](#coc7eradarkagespulp)|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|
 |[CoC7.EraDownDarkerTrailsPulp](#coc7eradowndarkertrailspulp)|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|
 |[CoC7.EraModernPulp](#coc7eramodernpulp)|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|
-|[CoC7.EraRegency](#coc7eraregency)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.EraRegencyPulp](#coc7eraregencypulp)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.EraRegency](#coc7eraregency)|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.EraRegencyPulp](#coc7eraregencypulp)|&#x274C;|&#x274C;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.ErrorTokenIncorrect](#coc7errortokenincorrect)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.InvestigatorWizard.AddBonusPointsToSkills](#coc7investigatorwizardaddbonuspointstoskills)|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
 |[CoC7.InvestigatorWizard.AgeRange](#coc7investigatorwizardagerange)|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
 |[CoC7.InvestigatorWizard.AllowRerolls](#coc7investigatorwizardallowrerolls)|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
@@ -132,6 +135,7 @@ The following translations have more than 153 untranslated strings **cn**, **cs*
 |[CoC7.MonetaryValueAssets](#coc7monetaryvalueassets)|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
 |[CoC7.MonetaryValueCash](#coc7monetaryvaluecash)|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
 |[CoC7.MonetaryValueSpendingLevel](#coc7monetaryvaluespendinglevel)|&#x274C;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
+|[CoC7.SanityLossType](#coc7sanitylosstype)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.Settings.DropCoCID.Dialog](#coc7settingsdropcociddialog)|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|
 |[CoC7.Settings.DropCoCID.Hint](#coc7settingsdropcocidhint)|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|
 |[CoC7.Settings.DropCoCID.IgnoreCoCID](#coc7settingsdropcocidignorecocid)|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|
@@ -202,6 +206,8 @@ The following translations have more than 153 untranslated strings **cn**, **cs*
 ```  "CoC7.EraRegency": "Regency Cthulhu - Standard",```
 ##### CoC7.EraRegencyPulp
 ```  "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",```
+##### CoC7.ErrorTokenIncorrect
+```  "CoC7.ErrorTokenIncorrect": "Unable to find selected token",```
 ##### CoC7.InvestigatorWizard.AddBonusPointsToSkills
 ```  "CoC7.InvestigatorWizard.AddBonusPointsToSkills": "<strong>Add {bonusPoints} bonus skill points divided among any of the following skills:</strong> {skills}",```
 ##### CoC7.InvestigatorWizard.AgeRange
@@ -398,6 +404,8 @@ The following translations have more than 153 untranslated strings **cn**, **cs*
 ```  "CoC7.MonetaryValueCash": "Cash",```
 ##### CoC7.MonetaryValueSpendingLevel
 ```  "CoC7.MonetaryValueSpendingLevel": "Spending",```
+##### CoC7.SanityLossType
+```  "CoC7.SanityLossType": "Type",```
 ##### CoC7.Settings.DropCoCID.Dialog
 ```  "CoC7.Settings.DropCoCID.Dialog": "Use the CoC ID for dropped items where possible? This allows the system to select the correct item for your world era.",```
 ##### CoC7.Settings.DropCoCID.Hint

@@ -1,4 +1,4 @@
-/* global $, Dialog, foundry, game, mergeObject, NormalizedRectangle, Token, TokenDocument, ui */
+/* global $, canvas, Dialog, foundry, game, mergeObject, PIXI, Token, TokenDocument, ui */
 import { CoCActor } from '../../actors/actor.js'
 import { ChaseObstacleCard } from '../../chat/cards/chase-obstacle.js'
 import { CoC7Check } from '../../check.js'
@@ -1332,9 +1332,16 @@ export class CoC7Chase extends CoC7Item {
 
     if (moveToken && destination.coordinates) {
       const participant = this.getParticipant(participantUuid)
-      const particpantDocument = CoC7Utilities.getDocumentFromKey(
+      let particpantDocument = CoC7Utilities.getDocumentFromKey(
         participant?.data?.docUuid
       )
+      // Find token
+      if (particpantDocument && !(particpantDocument instanceof TokenDocument || particpantDocument?.object instanceof Token)) {
+        const foundTokens = canvas.scene.tokens.filter(d => d.actorLink && d.actor?.id === particpantDocument.id)
+        if (foundTokens.length === 1) {
+          particpantDocument = foundTokens[0]
+        }
+      }
       if (
         particpantDocument &&
         !(
@@ -1359,12 +1366,12 @@ export class CoC7Chase extends CoC7Item {
           )
           let x = destination.coordinates.x
           const y = destination.coordinates.y
-          let targetRect = new NormalizedRectangle(
+          let targetRect = new PIXI.Rectangle(
             x,
             y,
             particpantDocument.object.width,
             particpantDocument.object.height
-          )
+          ).normalize()
           const update = []
           let foundFreeSpace = false
           while (!foundFreeSpace) {
@@ -1374,12 +1381,12 @@ export class CoC7Chase extends CoC7Item {
             })
             if (overlapingToken) {
               x = overlapingToken.object.bounds.right + 1
-              targetRect = new NormalizedRectangle(
+              targetRect = new PIXI.Rectangle(
                 x,
                 y,
                 particpantDocument.object.width,
                 particpantDocument.object.height
-              )
+              ).normalize()
             } else foundFreeSpace = true
           }
 

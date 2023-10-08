@@ -568,6 +568,7 @@
   "CoC7.DeleteSanityLossEncounter": "Delete Sanity Loss Encounter",
   "CoC7.DeleteSanityLossImmunity": "Delete Sanity Loss Immunity",
 
+  "CoC7.SanityLossType": "Type",
   "CoC7.SanityLossTypeDialogTitle": "New sanity loss or immunity",
   "CoC7.SanityLossTypeDialogBody": "Add a new Mythos Encounter, Sanity Loss, or Sanity Immunity to the character.",
   "CoC7.SanityLossTypeReason": "Reason",
@@ -725,6 +726,7 @@
   "CoC7.ErrorBeneficiaryAtMaxBonus": "Beneficiary {name} already has max bonus dice",
   "CoC7.ErrorParticipantAtMaxBonus": "{participantUuid} already has max bonus dice",
   "CoC7.ErrorTokenNotOnScene": "Token does not belongs to this location's scene",
+  "CoC7.ErrorTokenIncorrect": "Unable to find selected token",
   "CoC7.AddParticipant": "Add Participant",
   "CoC7.RemoveParticipant": "Remove participant",
   "CoC7.RemoveParticipantHint": "Participant will be completely removed from the chase",

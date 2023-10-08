@@ -1,9 +1,10 @@
-/* global game */
+/* global game, ui */
+import { CoC7Utilities } from '../utilities.js'
 import { CoC7Link } from './coc7-link.js'
 
 export class CoC7Canvas {
   static get COC7_TYPES_SUPPORTED () {
-    return ['CoC7Link']
+    return ['CoC7Link', 'locator', 'getToken']
   }
 
   static async onDropSomething (canvas, data) {
@@ -40,25 +41,33 @@ export class CoC7Canvas {
             CoC7Link.toWhisperMessage(data, game.users.players.filter(u => !!u.character).map(u => u.character))
           }
           break
+        case 'getToken':
+          if (typeof data.appId !== 'undefined' && typeof data.callBack === 'string' && typeof ui.windows[data.appId] !== 'undefined' && typeof ui.windows[data.appId][data.callBack] === 'function') {
+            ui.windows[data.appId][data.callBack](dropTargetTokens)
+          }
+          break
 
-        // This does not appear to be called in FoundryVTT v10, remove if not needed
-        // COC7_TYPES_SUPPORTED chase has been removed because of this
-        // default:
-        //   if (data.docUuid && data.callBack) {
-        //     const doc = CoC7Utilities.SfromUuid(data.docUuid)
-        //     if (
-        //       doc[data.callBack] &&
-        //       typeof doc[data.callBack] === 'function'
-        //     ) {
-        //       try {
-        //         data.scene = canvas.scene.uuid
-        //         doc[data.callBack](data)
-        //       } catch (error) {
-        //         console.warn(error.message)
-        //       }
-        //     }
-        //   }
-        //   break
+        // Handles generic canva drop.
+        // dataTransfer must include :
+        // - docUuid : the Uuid of the document to call
+        // - callBack : the name of the function to call in the document.
+        // Used to select location for chase
+        default:
+          if (data.docUuid && data.callBack) {
+            const doc = CoC7Utilities.SfromUuid(data.docUuid)
+            if (
+              doc[data.callBack] &&
+              typeof doc[data.callBack] === 'function'
+            ) {
+              try {
+                data.scene = canvas.scene.uuid
+                doc[data.callBack](data)
+              } catch (error) {
+                console.warn(error.message)
+              }
+            }
+          }
+          break
       }
     }
   }

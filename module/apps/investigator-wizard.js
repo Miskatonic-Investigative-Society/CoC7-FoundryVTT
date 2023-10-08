@@ -1777,12 +1777,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
         disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY,
         sight: {
           enabled: true
-        },
-        detectionModes: [{
-          id: 'basicSight',
-          range: 30,
-          enabled: true
-        }]
+        }
       },
       items,
       ownership: {

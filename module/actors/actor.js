@@ -231,12 +231,7 @@ export class CoCActor extends Actor {
         disposition: 1,
         sight: {
           enabled: true
-        },
-        detectionModes: [{
-          id: 'basicSight',
-          range: 30,
-          enabled: true
-        }]
+        }
       })
     } else if (data.type === 'npc') {
       if (typeof data.img === 'undefined' || data.img === 'icons/svg/mystery-man.svg') {
@@ -1066,10 +1061,22 @@ export class CoCActor extends Actor {
                 const name = mainSkill.match(/\(([^)]+)\)/)
                   ? mainSkill.match(/\(([^)]+)\)/)[1]
                   : mainSkill
-                skill = await this.createWeaponSkill(
-                  name,
-                  !!data.system.properties?.rngd
+                // try to use an already defined skill
+                // TODO: search on the compendiums
+                const existing = game.items.find(
+                  item => item.type === 'skill' &&
+                    (item.name.toLocaleLowerCase() === name.toLocaleLowerCase() || item.system.skillName?.toLocaleLowerCase() === name.toLocaleLowerCase())
                 )
+                if (typeof existing !== 'undefined') {
+                  await this.addItems([existing])
+                  skill = await this.getSkillsByName(mainSkill)[0]
+                  // skill = existing.toObject()
+                } else {
+                  skill = await this.createWeaponSkill(
+                    name,
+                    !!data.system.properties?.rngd
+                  )
+                }
               }
               if (skill) data.system.skill.main.id = skill.id
             } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
@@ -1078,13 +1085,23 @@ export class CoCActor extends Actor {
             if (secondSkill) {
               let skill = this.getSkillsByName(secondSkill)[0]
               if (!skill) {
-                const name = mainSkill.match(/\(([^)]+)\)/)
-                  ? mainSkill.match(/\(([^)]+)\)/)[1]
-                  : mainSkill
-                skill = await this.createWeaponSkill(
-                  name,
-                  !!data.system.properties?.rngd
+                const name = secondSkill.match(/\(([^)]+)\)/)
+                  ? secondSkill.match(/\(([^)]+)\)/)[1]
+                  : secondSkill
+                const existing = game.items.find(
+                  item => item.type === 'skill' &&
+                    (item.name.toLocaleLowerCase() === name.toLocaleLowerCase() || item.system.skillName?.toLocaleLowerCase() === name.toLocaleLowerCase())
                 )
+                if (typeof existing !== 'undefined') {
+                  await this.addItems([existing])
+                  skill = await this.getSkillsByName(secondSkill)[0]
+                  // skill = existing.toObject()
+                } else {
+                  skill = await this.createWeaponSkill(
+                    name,
+                    !!data.system.properties?.rngd
+                  )
+                }
               }
               if (skill) data.system.skill.alternativ.id = skill.id
             } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
@@ -2370,9 +2387,21 @@ export class CoCActor extends Actor {
   }
 
   async skillCheck (skillData, fastForward, options = {}) {
-    let skill = this.getSkillsByName(
-      skillData.name ? skillData.name : skillData
-    )
+    const skillIdentifier = skillData.name ? skillData.name : skillData
+    console.log(skillIdentifier)
+    const isCoCID = !!skillIdentifier.match(/^i\.skill\./)
+    let skill = []
+    if (isCoCID) {
+      // Attempt to load from actor from CoC ID
+      const item = this.getFirstSkillByCoCID(skillIdentifier)
+      if (item) {
+        skill.push(item)
+      }
+    }
+    if (!skill.length) {
+      // Attempt to load for actor by name
+      skill = this.getSkillsByName(skillIdentifier)
+    }
     if (!skill.length) {
       let item = null
       if (skillData.pack) {
@@ -2394,7 +2423,7 @@ export class CoCActor extends Actor {
       }
       if (!item) {
         return ui.notifications.warn(
-          game.i18n.format('CoC7.NoSkill') +
+          game.i18n.format('CoC7.NoSkill') + ' ' +
             game.i18n.format('CoC7.ErrorNotFoundForActor', {
               missing: skillData.name ? skillData.name : skillData,
               actor: this.name

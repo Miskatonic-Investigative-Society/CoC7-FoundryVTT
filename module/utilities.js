@@ -870,7 +870,7 @@ export class CoC7Utilities {
     { combat = null, source = '', fallbackAny = false } = {}
   ) {
     let existing = null
-    name = name.toLowerCase()
+    name = name.toLocaleLowerCase()
     for (let o = 0, oM = source.length; o < oM; o++) {
       switch (source.substring(o, o + 1)) {
         case 'i':

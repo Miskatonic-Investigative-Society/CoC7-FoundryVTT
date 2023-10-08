@@ -647,7 +647,7 @@ const translations = {
       'The player has|but they regenerate' +
       '))\\s+\\(?(?<percentage>\\d+)[^d]%?\\)?(\\s*\\(\\d+/\\d+\\))?[\\.,]?\\s*',
     guessStartCombat:
-      '(^|(?<!,)\n)(' + 'Combatir|Armas de fuego|Brawl|Bite' + ')',
+      '(^|(?<!,)\n)(' + 'Combatir|Armas de fuego|Pelea|Mordisco' + ')',
     name: '^(?<name>[\\.\\s' + nameCharacters + ']+)[,\\s\n]+',
     sections:
       '(' +

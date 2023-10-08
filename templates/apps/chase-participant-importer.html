@@ -11,7 +11,11 @@
     </datalist>
 
     <div class="actor-header">
-      <img class="photo" src="{{participant.icon}}" title="{{participant.name}}" />
+      {{#if participant.isActor}}
+        <img class="photo chase-token" src="{{participant.icon}}" title="{{participant.name}}" /></a>
+      {{else}}
+        <a class="photo chase-token" draggable="true"><i class="fas fa-circle-question"></i></a>
+      {{/if}}
       {{#if participant.isChaser}}
         <a class="food-chain chaser"><i class="game-icon game-icon-moon-claws"></i></a>
       {{else}}
