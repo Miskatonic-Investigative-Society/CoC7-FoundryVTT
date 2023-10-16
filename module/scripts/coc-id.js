@@ -340,18 +340,21 @@ export class CoCID {
     for (const doc of documents) {
       const docCoCID = doc.getFlag('CoC7', 'cocidFlag')?.id
       if (docCoCID) {
-        const currentExists = bestMatchDocuments.get(docCoCID)?.id
+        const currentDoc = bestMatchDocuments.get(docCoCID)
+        if (!currentDoc?.id) {
+          bestMatchDocuments.set(docCoCID, doc)
+        }
         const docLang = doc.getFlag('CoC7', 'cocidFlag')?.lang ?? 'en'
-        const existingLang = bestMatchDocuments.get(docCoCID)?.getFlag('CoC7', 'cocidFlag')?.lang ?? 'en'
-        const preferLang = (!currentExists || existingLang === 'en' || existingLang === docLang)
+        const existingLang = currentDoc?.getFlag('CoC7', 'cocidFlag')?.lang ?? 'en'
+        const preferLang = existingLang === 'en' || existingLang === docLang
         // console.log('preferLang', '>', docLang, '< >', existingLang, '<', preferLang)
         const docPack = (doc.pack ?? '')
-        const existingPack = (bestMatchDocuments.get(docCoCID)?.pack ?? '')
-        const preferWorld = (!currentExists || docPack === '' || existingPack !== '')
+        const existingPack = (currentDoc?.pack ?? '')
+        const preferWorld = docPack === '' || existingPack !== ''
         // console.log('preferWorld', '>', docPack, '< >', existingPack, '<', preferWorld)
-        const docPriority = parseInt(doc.getFlag('CoC7', 'cocidFlag')?.priority, 10)
-        const existingPriority = parseInt(bestMatchDocuments.get(docCoCID)?.getFlag('CoC7', 'cocidFlag')?.priority ?? Number.MIN_SAFE_INTEGER)
-        const preferPriority = (!currentExists || docPriority === existingPriority || docPriority > existingPriority)
+        const docPriority = parseInt(doc.getFlag('CoC7', 'cocidFlag')?.priority) ?? Number.MIN_SAFE_INTEGER
+        const existingPriority = parseInt(currentDoc?.getFlag('CoC7', 'cocidFlag')?.priority ?? Number.MIN_SAFE_INTEGER) ?? Number.MIN_SAFE_INTEGER
+        const preferPriority = docPriority >= existingPriority
         // console.log('preferPriority', '>', docPriority, '< >', existingPriority, '<', preferPriority)
         if (preferLang && preferWorld && preferPriority) {
           bestMatchDocuments.set(docCoCID, doc)
@@ -365,7 +368,7 @@ export class CoCID {
   /**
    * For an array of documents, returns filter out en documents if a translated one exists matching the same eras
    * @param documents
-   * @param langFallback should the system fall back to en incase there is no translation
+   * @param langFallback should the system fall back to en in case there is no translation
    * @returns
    */
   static filterAllCoCID (documents, langFallback) {
@@ -376,14 +379,21 @@ export class CoCID {
 
     for (const doc of documents) {
       const docCoCID = doc.getFlag('CoC7', 'cocidFlag')?.id
-      const docEras = Object.entries(doc.getFlag('CoC7', 'cocidFlag')?.eras ?? {}).filter(e => e[1]).map(e => e[0]).join('/')
+      const docEras = Object.entries(doc.getFlag('CoC7', 'cocidFlag')?.eras ?? {}).filter(e => e[1]).map(e => e[0]).sort().join('/')
+      const key = docCoCID + '/' + docEras
       if (docCoCID) {
-        const currentExists = bestMatchDocuments.get(docCoCID)?.id
+        const currentDoc = bestMatchDocuments.get(key)
+        if (!currentDoc?.id) {
+          bestMatchDocuments.set(key, doc)
+        }
         const docLang = doc.getFlag('CoC7', 'cocidFlag')?.lang ?? 'en'
-        const existingLang = bestMatchDocuments.get(docCoCID)?.getFlag('CoC7', 'cocidFlag')?.lang ?? 'en'
-        const preferLang = (!currentExists || existingLang === 'en' || existingLang === docLang)
-        if (preferLang) {
-          bestMatchDocuments.set(docCoCID + '/' + docEras, doc)
+        const existingLang = currentDoc?.getFlag('CoC7', 'cocidFlag')?.lang ?? 'en'
+        const preferLang = existingLang === 'en' || existingLang === docLang
+        const docPriority = parseInt(doc.getFlag('CoC7', 'cocidFlag')?.priority) ?? Number.MIN_SAFE_INTEGER
+        const existingPriority = parseInt(currentDoc?.getFlag('CoC7', 'cocidFlag')?.priority ?? Number.MIN_SAFE_INTEGER) ?? Number.MIN_SAFE_INTEGER
+        const preferPriority = docPriority >= existingPriority
+        if (preferLang && preferPriority) {
+          bestMatchDocuments.set(key, doc)
         }
       }
     }
