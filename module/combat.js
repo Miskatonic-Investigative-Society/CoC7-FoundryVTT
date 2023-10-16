@@ -1,4 +1,4 @@
-/* global $, game */
+/* global $, game, ui */
 import { CoC7Check } from './check.js'
 
 export class CoC7Combat {
@@ -113,6 +113,36 @@ export class CoC7Combat {
     if (c.getFlag('CoC7', 'hasGun')) {
       if (c.initiative < newInit) game.combat.setInitiative(c.id, newInit)
     } else game.combat.setInitiative(c.id, newInit)
+  }
+
+  static async newRound (combat, data, options) {
+    await CoC7Combat.resetCombatants(combat)
+  }
+
+  static async newTurn () {
+  }
+
+  static async combatStart (combat, data) {
+    await CoC7Combat.resetCombatants(combat)
+  }
+
+  static async combatStop (combat, options, userId) {
+    await CoC7Combat.resetCombatants(combat)
+  }
+
+  static async createCombatant (doc, options, userId) {
+    // If combat already started when new combatant is joining we need to reset his attacks/defenses count
+    if (doc.documentName === 'Combatant' && doc.combat?.started) {
+      doc.actor.resetCombat()
+      ui.notifications.info(`Reseting combatant ${doc.actor.name}, Attacks remaining ${doc.actor.attacksRemaining}, responses remainning ${doc.actor.responsesRemaining}`)
+    }
+  }
+
+  static async resetCombatants (combat) {
+    for (const c of combat.combatants) {
+      await c.actor.resetCombat()
+      ui.notifications.info(`Reseting combatant ${c.actor.name}, Attacks remaining ${c.actor.attacksRemaining}, responses remainning ${c.actor.responsesRemaining}`)
+    }
   }
 }
 

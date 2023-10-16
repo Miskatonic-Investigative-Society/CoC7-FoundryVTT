@@ -1,9 +1,21 @@
 <div class="coc7 chat-card chat-card-v2">
     
   <form class="flexcol">
-    <input type="text" name="data.armor" value="{{data.armor}}" />
-    <input type="range" data-ecc-permissions="gm" name="data.bonusDice" min="-2" max="2" value="{{data.bonusDice}}" class="slider">
-    <select name="data.mySelect">
+    <div class="debug">
+      <span>Attacker : {{card.attacker.name}}||</span>
+      <span>Attacker's weapon : {{card.attackerWeapon.name}}||</span>
+      <span>Defender : {{card.defender.name}}</span>
+    </div>
+    <div class="gm-options" data-ecc-visibility="gm">
+      <input type="range" data-ecc-permissions="gm" name="data.bonusDice" min="-2" max="2" value="{{data.bonusDice}}" class="slider">
+      <div class="flexrow bonus-selection">
+        <span class="flex1 toggle-switch outnumbered simple-flag ecc-switch" title="Add 1 bonus dice for outnumbered target" data-flag="outnumbered">Outnumbered</span>
+        <!-- <span class="flex1 toggle-switch surprised simple-flag ecc-switch" title="Add 1 bonus dice for surprised target" data-flag="surprised">Surprised</span>
+        <span class="flex1 toggle-switch auto-success simple-flag ecc-switch" title="Attack automatically hit" data-flag="auto-success">Auto. Success</span> -->
+      </div>
+    </div>
+
+    <!-- <select name="data.mySelect">
       {{selectOptions mySelectOptions selected=data.mySelect}}
     </select>
     <select name="data.mySelect2" data-ecc-permissions="gm">
@@ -12,7 +24,7 @@
         <option value="1">option 1</option>
         <option value="2">option 2</option>
       {{/select}}
-    </select>
+    </select> -->
 
     <div title="CoC7.ActorIsSyntheticActor">
       <input type="radio" id="contactChoice1" name="data.contact" value="email">

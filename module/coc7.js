@@ -151,6 +151,26 @@ Hooks.on('renderCombatTracker', (app, html, data) =>
   CoC7Combat.renderCombatTracker(app, html, data)
 )
 
+Hooks.on('combatRound', (combat, data, options) =>
+  CoC7Combat.newRound(combat, data, options)
+)
+
+Hooks.on('combatTurn', (combat, data, options) =>
+  CoC7Combat.newTurn(combat, data, options)
+)
+
+Hooks.on('combatStart', (combat, data) =>
+  CoC7Combat.combatStart(combat, data)
+)
+
+Hooks.on('deleteCombat', (combat, options, userId) =>
+  CoC7Combat.combatStop(combat, options, userId)
+)
+
+Hooks.on('createCombatant', (doc, options, userId) =>
+  CoC7Combat.createCombatant(doc, options, userId)
+)
+
 DiceBot.listen()
 CoC7Hooks.listen()
 

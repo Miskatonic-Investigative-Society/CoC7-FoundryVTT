@@ -1627,8 +1627,13 @@ export class CoC7ActorSheet extends ActorSheet {
 
           const card = new CoC7MeleeInitiator(actorKey, itemId, fastForward)
           card.createChatCard()
-          const meleeAttackCard = new MeleeAttackCard({})
-          meleeAttackCard.toMessage()
+          for (const t of game.user.targets) {
+            const meleeAttackCard = new MeleeAttackCard({ actorUuid: this.actor.uuid, weaponUuid: weapon.uuid, targetUuid: t.actor.uuid, fast: fastForward })
+            meleeAttackCard.toMessage()
+          }
+          if (proceedWithoutTarget) {
+            new MeleeAttackCard({ actorUuid: this.actor.uuid, weaponUuid: weapon.uuid, targetUuid: null, fast: fastForward }).toMessage()
+          }
         }
         if (weapon.system.properties.rngd) {
           const card = new CoC7RangeInitiator(actorKey, itemId, fastForward)

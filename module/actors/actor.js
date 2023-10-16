@@ -3632,6 +3632,50 @@ export class CoCActor extends Actor {
     return this.hasConditionStatus(COC7.status.prone)
   }
 
+  async useAttack (amount = 1) {
+    await this.update({ 'system.combat.attacksUsed': this.attacksUsed + amount }, { renderSheet: false })
+  }
+
+  async resetAttacks () {
+    await this.update({ 'system.combat.attacksUsed': 0 }, { renderSheet: false })
+  }
+
+  async useResponse (amount = 1) {
+    await this.update({ 'system.combat.responsesUsed': this.responsesUsed + amount }, { renderSheet: false })
+  }
+
+  async resetResponses () {
+    await this.update({ 'system.combat.responsesUsed': 0 }, { renderSheet: false })
+  }
+
+  async resetCombat () {
+    await this.update({ 'system.combat.responsesUsed': 0, 'system.combat.attacksUsed': 0 }, { renderSheet: false })
+  }
+
+  get attacksPerRound () {
+    return parseInt(this.system.special?.attacksPerRound) || 1
+  }
+
+  get attacksUsed () {
+    return parseInt(this.system.combat?.attacksUsed) || 0
+  }
+
+  get attacksRemaining () {
+    return Math.max(this.attacksPerRound - this.attacksUsed, 0)
+  }
+
+  get responsesUsed () {
+    return parseInt(this.system.combat?.responsesUsedUsed) || 0
+  }
+
+  get responsesRemaining () {
+    return Math.max(this.attacksPerRound - this.responsesUsed, 0)
+  }
+
+  get isOutnumbered () {
+    return this.responsesRemaining === 0
+  }
+
   // static updateActor( actor, dataUpdate){
   //   if( game.user.isGM){
   //     // ui.notifications.info( `updating actor ${actor.name}`);
