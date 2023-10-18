@@ -3,6 +3,15 @@ import { EnhancedChatCard } from '../../common/chatcardlib/src/chatcardlib.js'
 
 export class MeleeAttackCard extends EnhancedChatCard {
   /**
+   * Data initialisation before sending message to chat.
+   * @override
+   */
+  async initialize () {
+    this.data.flags.rulesMode = true // By default, automatic mode is enabled
+    this.data.flags.outnumbered = (this.defender && this.defender.isOutnumbered) // Check if there's a target and that taget is outnumbered already
+  }
+
+  /**
    * Extend and override the default options
    * @returns {Object}
    */

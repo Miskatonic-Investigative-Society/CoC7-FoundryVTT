@@ -905,6 +905,7 @@ export class CoC7Chat {
         const check = await initiator.performSkillCheck(
           event.currentTarget.dataset.skill
         )
+        await initiator.actor.useAttack()
         $(button).prop('disabled', true)
         await CoC7Dice.showRollDice3d(check.dice.roll)
         await initiator.publishCheckResult()
@@ -922,6 +923,7 @@ export class CoC7Chat {
         const check = await target.performSkillCheck(
           event.currentTarget.dataset.skill
         )
+        await target.actor.useResponse()
         $(button).prop('disabled', true)
         await CoC7Dice.showRollDice3d(check.dice.roll)
         await target.publishCheckResult()

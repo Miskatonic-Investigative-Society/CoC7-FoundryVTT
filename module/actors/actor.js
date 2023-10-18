@@ -3632,16 +3632,20 @@ export class CoCActor extends Actor {
     return this.hasConditionStatus(COC7.status.prone)
   }
 
-  async useAttack (amount = 1) {
-    await this.update({ 'system.combat.attacksUsed': this.attacksUsed + amount }, { renderSheet: false })
+  get isFighting () {
+    return undefined !== game.combats.viewed.getCombatantByActor(this)
+  }
+
+  async useAttack ({ amount = 1, checkForActiveEncounter = true } = {}) {
+    if ((checkForActiveEncounter && this.isFighting) || !checkForActiveEncounter) await this.update({ 'system.combat.attacksUsed': this.attacksUsed + amount }, { renderSheet: false })
   }
 
   async resetAttacks () {
     await this.update({ 'system.combat.attacksUsed': 0 }, { renderSheet: false })
   }
 
-  async useResponse (amount = 1) {
-    await this.update({ 'system.combat.responsesUsed': this.responsesUsed + amount }, { renderSheet: false })
+  async useResponse ({ amount = 1, checkForActiveEncounter = true } = {}) {
+    if ((checkForActiveEncounter && this.isFighting) || !checkForActiveEncounter) await this.update({ 'system.combat.responsesUsed': this.responsesUsed + amount }, { renderSheet: false })
   }
 
   async resetResponses () {
@@ -3665,7 +3669,7 @@ export class CoCActor extends Actor {
   }
 
   get responsesUsed () {
-    return parseInt(this.system.combat?.responsesUsedUsed) || 0
+    return parseInt(this.system.combat?.responsesUsed) || 0
   }
 
   get responsesRemaining () {

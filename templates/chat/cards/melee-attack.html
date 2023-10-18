@@ -7,12 +7,21 @@
       <span>Defender : {{card.defender.name}}</span>
     </div>
     <div class="gm-options" data-ecc-visibility="gm">
-      <input type="range" data-ecc-permissions="gm" name="data.bonusDice" min="-2" max="2" value="{{data.bonusDice}}" class="slider">
-      <div class="flexrow bonus-selection">
-        <span class="flex1 toggle-switch outnumbered simple-flag ecc-switch" title="Add 1 bonus dice for outnumbered target" data-flag="outnumbered">Outnumbered</span>
-        <!-- <span class="flex1 toggle-switch surprised simple-flag ecc-switch" title="Add 1 bonus dice for surprised target" data-flag="surprised">Surprised</span>
-        <span class="flex1 toggle-switch auto-success simple-flag ecc-switch" title="Attack automatically hit" data-flag="auto-success">Auto. Success</span> -->
+      <div class="flexrow mode-selection ecc-radio" title="CoC7.SelectMode">
+        <span class="toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.RulesMode" data-flag="rulesMode">{{localize 'CoC7.RulesMode'}}</span>
+        <span class="toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.ManualMode" data-flag="ManualMode">{{localize 'CoC7.ManualMode'}}</span>
       </div>
+      {{#if data.flags.ManualMode}}
+      <div>
+        <input class="slider tooltipster-active" data-description="CoC7.Hint.BonusDice" type="range" name="data.bonusDice" min="-2" max="2" value="{{data.bonusDice}}">
+      </div>
+      {{else}}
+      <div class="flexrow bonus-selection">
+        <span class="toggle-switch simple-flag ecc-switch tooltipster-active" data-description="CoC7.Hint.Outnumbered" data-flag="outnumbered">{{localize 'CoC7.Outnumbered'}}</span>
+        <span class="toggle-switch simple-flag ecc-switch tooltipster-active" data-description="CoC7.Hint.Surprised" data-flag="surprised">{{localize 'CoC7.Surprised'}}</span>
+        <span class="toggle-switch simple-flag ecc-switch tooltipster-active" data-description="CoC7.Hint.autoHit" data-flag="auto-success">{{localize 'CoC7.AutoSuccess'}}</span>
+      </div>
+      {{/if}}
     </div>
 
     <!-- <select name="data.mySelect">
