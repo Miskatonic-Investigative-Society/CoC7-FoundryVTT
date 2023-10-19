@@ -1,4 +1,4 @@
-/* global ChatMessage, game, $ */
+/* global ChatMessage, game, $, fromUuid */
 export class CoCChatMessage extends ChatMessage {
   /** @inheritdoc */
   async getHTML (...args) {
@@ -19,7 +19,7 @@ export class CoCChatMessage extends ChatMessage {
     })
 
     // Render tooltips in chat messages.
-    html.find('.tooltipster-active').each((i, el) => {
+    html.find('.tooltipster-active').each(async (i, el) => {
       if (el.dataset?.description) {
         $(el).tooltipster({
           trigger: 'hover',
@@ -34,9 +34,44 @@ export class CoCChatMessage extends ChatMessage {
           // autoClose: false,
           // trigger: 'click'
         })
+      } else if (el.dataset.documentKey) {
+        if (el.classList.contains('tooltipster-dynamic')) {
+          $(el).tooltipster({
+            trigger: 'hover',
+            delay: [2000, 250],
+            contentAsHTML: false,
+            content: 'Dynamic content',
+            animation: 'fall',
+            updateAnimation: 'fall',
+            theme: 'coc7-tooltip',
+            maxWidth: 300,
+            autoClose: true,
+            functionBefore: CoCChatMessage.getDynamicInformation
+          })
+        } else {
+          const document = await fromUuid(el.dataset.documentKey)
+          const descrition = await document.getHtmlTooltip()
+          $(el).tooltipster({
+            trigger: 'hover',
+            delay: [2000, 250],
+            contentAsHTML: true,
+            content: descrition,
+            animation: 'fall',
+            theme: 'coc7-tooltip',
+            maxWidth: 300,
+            autoClose: true
+          })
+        }
       }
     })
 
     return html
+  }
+
+  static async getDynamicInformation (toolTip, helper) {
+    const docUuid = helper.origin.dataset.documentKey
+    const document = await fromUuid(docUuid)
+    const description = await document.getHtmlTooltip()
+    toolTip.content(description)
   }
 }

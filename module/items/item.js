@@ -1,8 +1,9 @@
-/* global CONFIG, duplicate, game, getProperty, Item, Roll, TextEditor, Token, ui, fromUuid */
+/* global CONFIG, duplicate, game, getProperty, Item, Roll, TextEditor, Token, ui, fromUuid, renderTemplate */
 import { CoC7Parser } from '../apps/coc7-parser.js'
 import { COC7 } from '../config.js'
 import { CoC7Utilities } from '../utilities.js'
 import { CoCIDEditor } from '../apps/coc-id-editor.js'
+// import { render } from 'less'
 
 /**
  * Override and extend the basic :class:`Item` implementation
@@ -763,7 +764,7 @@ export class CoC7Item extends Item {
 
   _weaponChatData (data, labels, props) {
     for (const [key, value] of Object.entries(COC7.weaponProperties)) {
-      if (this.system.properties[key] === true) props.push(value)
+      if (this.system.properties[key] === true) props.push(game.i18n.localize(value))
     }
 
     let skillLabel = game.i18n.localize('CoC7.Skill')
@@ -833,5 +834,12 @@ export class CoC7Item extends Item {
       this.name.toLowerCase() ===
       game.i18n.localize('CoC7.CoCIDFlag.keys.i.skill.dodge').toLowerCase()
     )
+  }
+
+  async getHtmlTooltip () {
+    const data = this.getChatData()
+    data.user = game.user
+    data.item = this
+    return renderTemplate(`systems/CoC7/templates/tooltips/item-${this.type}.hbs`, data)
   }
 }

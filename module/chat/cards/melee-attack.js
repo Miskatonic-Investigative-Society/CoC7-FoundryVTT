@@ -1,4 +1,4 @@
-/* global foundry, game, ui, fromUuid, fromUuidSync */
+/* global foundry, game, fromUuidSync */
 import { EnhancedChatCard } from '../../common/chatcardlib/src/chatcardlib.js'
 
 export class MeleeAttackCard extends EnhancedChatCard {
@@ -51,7 +51,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
   }
 
   get defender () {
-    if (!this.data.targetUuid) return { name: game.i18n.localize('CoC7.Dummy'), img:'icons/svg/mystery-man-black.svg', type: undefined}
+    if (!this.data.targetUuid) return { name: game.i18n.localize('CoC7.Dummy'), img: 'icons/svg/mystery-man-black.svg', type: undefined }
     if (!this._target) this._target = fromUuidSync(this.data.targetUuid)
     return this._target
   }

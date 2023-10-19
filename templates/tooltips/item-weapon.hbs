@@ -1,0 +1,16 @@
+<div class="item-name">
+    <h3>{{item.name}}</h3>
+</div>
+<div class="description">
+    {{{description.value}}}
+</div>
+{{#if user.isGM}}
+<div class="gm-notes">
+    {{{data.keeper}}}
+</div>
+{{/if}}
+<div class="properties">
+    {{#each properties as |p|}}
+        <div class="property">{{p}}</div>
+    {{/each}}
+</div>

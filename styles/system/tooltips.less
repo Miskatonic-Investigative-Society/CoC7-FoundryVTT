@@ -48,7 +48,30 @@
     // color: black;
     font-weight: 400;
     font-size: 0.8rem;
-    line-height: 0.9rem;
+
+    p {
+      margin: 0;
+      line-height: 1rem;
+    }
+
+    .properties {
+      border-top: 2px groove #fff;
+      padding: 0;
+      margin: 0;
+      line-height: unset;
+      .property {
+        display: inline;
+        vertical-align: middle;
+        text-align: center;
+        padding: 0 3px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-size: 0.6rem;
+        border: 1px solid #999;
+        border-radius: 3px;
+        background: rgba(0, 0, 0, 0.05);
+      }
+    }
   }
 
   .tooltipster-arrow-background {
