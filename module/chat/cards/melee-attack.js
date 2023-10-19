@@ -7,8 +7,10 @@ export class MeleeAttackCard extends EnhancedChatCard {
    * @override
    */
   async initialize () {
-    this.data.flags.rulesMode = true // By default, automatic mode is enabled
+    this.data.flags.rulesMode = this.hasTaget // By default, automatic mode is enabled
+    this.data.flags.manualMode = !this.hasTaget
     this.data.flags.outnumbered = (this.defender && this.defender.isOutnumbered) // Check if there's a target and that taget is outnumbered already
+    this.data.flags.autoHit = true // By default, surprise attacks hit automatically
   }
 
   /**
@@ -17,7 +19,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
    */
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      template: 'systems/CoC7/templates/chat/cards/melee-attack.html'
+      template: 'systems/CoC7/templates/chat/cards/melee-attack.hbs'
     })
   }
 
@@ -49,8 +51,12 @@ export class MeleeAttackCard extends EnhancedChatCard {
   }
 
   get defender () {
-    if (!this.data.targetUuid) return undefined
+    if (!this.data.targetUuid) return { name: game.i18n.localize('CoC7.Dummy'), img:'icons/svg/mystery-man-black.svg', type: undefined}
     if (!this._target) this._target = fromUuidSync(this.data.targetUuid)
     return this._target
+  }
+
+  get hasTaget () {
+    return undefined !== this.defender.type
   }
 }

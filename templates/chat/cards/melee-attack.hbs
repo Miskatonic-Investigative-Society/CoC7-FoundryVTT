@@ -1,0 +1,97 @@
+<div class="coc7 chat-card chat-card-v2">
+    
+  <form class="flexcol">
+    <div class="card-header">
+      <div class="left-portrait">
+      {{#if displayActorOnCard}}
+        <img class="portrait open-actor" data-actor-key="{{card.attacker.uuid}}" src="{{card.attacker.img}}" title="{{card.attacker.name}}"/>
+      {{else}}
+        <img class="portrait open-actor" data-actor-key="{{card.attacker.uuid}}" src="{{card.attackerWeapon.img}}" title="{{card.attackerWeapon.name}}"/>
+      {{/if}}
+      </div>
+      <div class="card-title">
+        {{card.attackerWeapon.name}}
+      </div>
+      {{#if card.hasTaget}}
+      <div class="right-portrait">
+        <img class="portrait open-actor" data-actor-key="{{card.defender.uuid}}" src="{{card.defender.img}}" title="{{card.defender.name}}"/>
+      </div> 
+      {{/if}}
+    </div>
+    <div class="gm-options" data-ecc-visibility="gm">
+      <div class="flexrow mode-selection ecc-radio">
+        <span class="toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.RulesMode" data-flag="rulesMode">{{localize 'CoC7.RulesMode'}}</span>
+        <span class="toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.ManualMode" data-flag="manualMode">{{localize 'CoC7.ManualMode'}}</span>
+      </div>
+      {{#if data.flags.manualMode}}
+      <div>
+        <div class="flexrow">
+          <div class="flexno">-2</div>
+          <div class="flex1"></div>
+          <div class="flexno">-1</div>
+          <div class="flex1"></div>
+          <div class="flexno">0</div>
+          <div class="flex1"></div>
+          <div class="flexno">+1</div>
+          <div class="flex1"></div>
+          <div class="flexno">+2</div>
+        </div>
+        <input class="slider" data-description="CoC7.Hint.BonusDice" type="range" name="data.bonusDice" min="-2" max="2" value="{{data.bonusDice}}">
+      </div>
+      {{else}}
+      <div class="flexrow status-selection">
+        <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.Outnumbered" data-flag="outnumbered">{{localize 'CoC7.Outnumbered'}}</span>
+        <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.Surprised" data-flag="surprised">{{localize 'CoC7.Surprised'}}</span>
+      </div>
+        {{#if data.flags.surprised}}
+        <div class="flexrow suprised-options ecc-radio">
+          <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.AutoHit" data-flag="autoHit">{{localize 'CoC7.AutoHit'}}</span>
+          <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.SuprisedBonusDice" data-flag="suprisedBonusDice">{{localize 'CoC7.BonusDice'}}</span>
+          {{#if card.hasTaget}}
+            <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.CanDetect" data-flag="canDetect">{{localize 'CoC7.CanDetect'}}</span>
+          {{/if}}
+        </div>
+          {{#if data.flags.canDetect}}
+          {{/if}}
+        {{/if}}
+      {{/if}}
+    </div>
+
+    {{!-- <select name="data.mySelect">
+      {{selectOptions mySelectOptions selected=data.mySelect}}
+    </select>
+    <select name="data.mySelect2" data-ecc-permissions="gm">
+      {{#select data.mySelect2}}
+        <option value="0">option 0</option>
+        <option value="1">option 1</option>
+        <option value="2">option 2</option>
+      {{/select}}
+    </select>
+
+    <div title="CoC7.ActorIsSyntheticActor">
+      <input type="radio" id="contactChoice1" name="data.contact" value="email">
+      <label for="contactChoice1">Email</label>
+      <input type="radio" id="contactChoice2" name="data.contact" value="phone">
+      <label for="contactChoice2">Phone</label>
+      <input type="radio" id="contactChoice3" name="data.contact" value="mail">
+      <label for="contactChoice3">Mail</label>
+    </div>
+
+
+    <div class="flexrow ecc-radio">
+      <span class="flex1 ecc-switch" data-flag="advantageAttacker"  title="CoC7.testMultiLine">{{localize 'CoC7.AdvantageAttacker'}}</span>
+      <span class="flex1 ecc-switch" data-flag="advantageDefender"  title="Le titre !!!">{{localize 'CoC7.AdvantageDefender'}}</span>
+    </div>
+
+    <div>
+      <span class="tooltipster-active" data-description="CoC7.testMultiLine"  title="Le titre !!!">Pouet pouet !!!</span>
+      <span class="ecc-switch" data-flag="critical" data-ecc-visibility="gm speaker" title="{{localize 'CoC7.CriticalTitle'}}">azerazerazer</span>
+      {{#if flags.critical}}
+        <span> CRITICAL IS ON</span>
+      {{/if}}
+      <div class='card-buttons' data-ecc-visibility="blacklist gm">
+        <button class='submit' data-action='trouloulou'>Submit</button>
+      </div>
+    </div> --}}
+  </form>
+</div>

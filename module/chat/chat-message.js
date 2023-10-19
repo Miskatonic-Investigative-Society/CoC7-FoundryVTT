@@ -22,11 +22,14 @@ export class CoCChatMessage extends ChatMessage {
     html.find('.tooltipster-active').each((i, el) => {
       if (el.dataset?.description) {
         $(el).tooltipster({
+          trigger: 'hover',
+          delay: [2000, 250],
           contentAsHTML: false,
           content: game.i18n.localize(el.dataset.description),
           animation: 'fall',
           theme: 'coc7-tooltip',
-          maxWidth: 300
+          maxWidth: 300,
+          autoClose: true
           // plugins: ['follower'],
           // autoClose: false,
           // trigger: 'click'
