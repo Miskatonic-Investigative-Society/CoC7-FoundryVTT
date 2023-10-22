@@ -2,21 +2,21 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (375 untranslated strings)](#cnjson)
+[cn.json (376 untranslated strings)](#cnjson)
 
-[cs.json (560 untranslated strings)](#csjson)
+[cs.json (561 untranslated strings)](#csjson)
 
-[es.json (357 untranslated strings)](#esjson)
+[es.json (358 untranslated strings)](#esjson)
 
-[ko.json (157 untranslated strings)](#kojson)
+[ko.json (158 untranslated strings)](#kojson)
 
-[ru.json (1222 untranslated strings)](#rujson)
+[ru.json (1223 untranslated strings)](#rujson)
 
-[sv.json (343 untranslated strings)](#svjson)
+[sv.json (344 untranslated strings)](#svjson)
 
 
 ## cn.json
-375 untranslated strings
+376 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -274,6 +274,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Migrate.ErrorTable": "Failed CoC7 system migration for Table {name}: {message}",
 "CoC7.Migrate.ErrorItem": "Failed CoC7 system migration for Item {name}: {message}",
 "CoC7.Migrate.ErrorActor": "Failed CoC7 system migration for Actor {name}: {message}",
+"CoC7.System.Documentation": "View CoC7 System Manual",
 "CoC7.Settings.PulpRules.IgnoreAgePenalties.Name": "Ignore Age Penalties",
 "CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint": "Do not alter movement rate based on age. When using the investigator wizard improvements and characteristic adjustments are not made",
 "CoC7.Settings.DholeUpload.Directory.Name": "The Dhole's House image upload directory",
@@ -395,7 +396,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
 ```
 ## cs.json
-560 untranslated strings
+561 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -771,6 +772,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Migrate.ErrorTable": "Failed CoC7 system migration for Table {name}: {message}",
 "CoC7.Migrate.ErrorItem": "Failed CoC7 system migration for Item {name}: {message}",
 "CoC7.Migrate.ErrorActor": "Failed CoC7 system migration for Actor {name}: {message}",
+"CoC7.System.Documentation": "View CoC7 System Manual",
 "CoC7.Settings.CoreRules.Title": "Core Rule Book Optional Rules",
 "CoC7.Settings.Rules.Name": "Variant/Optional Rules",
 "CoC7.Settings.Rules.Label": "Configure Variant/Optional Rules",
@@ -959,7 +961,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
 ```
 ## es.json
-357 untranslated strings
+358 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -1199,6 +1201,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Migrate.ErrorTable": "Failed CoC7 system migration for Table {name}: {message}",
 "CoC7.Migrate.ErrorItem": "Failed CoC7 system migration for Item {name}: {message}",
 "CoC7.Migrate.ErrorActor": "Failed CoC7 system migration for Actor {name}: {message}",
+"CoC7.System.Documentation": "View CoC7 System Manual",
 "CoC7.Settings.PulpRules.IgnoreAgePenalties.Name": "Ignore Age Penalties",
 "CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint": "Do not alter movement rate based on age. When using the investigator wizard improvements and characteristic adjustments are not made",
 "CoC7.Settings.DholeUpload.Directory.Name": "The Dhole's House image upload directory",
@@ -1320,7 +1323,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
 ```
 ## ko.json
-157 untranslated strings
+158 untranslated strings
 ```
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
 "CoC7.RollDifficultyRegularTitle": "Regular difficulty",
@@ -1376,6 +1379,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TextFieldInvalidJSON": "Unable to parse the JSON, please try again",
 "CoC7.ActorImporterUploadError": "Import stopped, unable to write image",
 "CoC7.FileUploadError": "Unable to write image, file upload error",
+"CoC7.System.Documentation": "View CoC7 System Manual",
 "CoC7.Settings.PulpRules.IgnoreAgePenalties.Name": "Ignore Age Penalties",
 "CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint": "Do not alter movement rate based on age. When using the investigator wizard improvements and characteristic adjustments are not made",
 "CoC7.Settings.WorldEra.Name": "Era for the world",
@@ -1481,7 +1485,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
 ```
 ## ru.json
-1222 untranslated strings
+1223 untranslated strings
 ```
 "CoC7.title": "Call of Cthulhu 7h Edition",
 "CoC7.Entities.Character": "Character",
@@ -2430,6 +2434,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Migrate.ErrorTable": "Failed CoC7 system migration for Table {name}: {message}",
 "CoC7.Migrate.ErrorItem": "Failed CoC7 system migration for Item {name}: {message}",
 "CoC7.Migrate.ErrorActor": "Failed CoC7 system migration for Actor {name}: {message}",
+"CoC7.System.Documentation": "View CoC7 System Manual",
 "CoC7.Settings.CoreRules.Title": "Core Rule Book Optional Rules",
 "CoC7.Settings.Rules.Name": "Variant/Optional Rules",
 "CoC7.Settings.Rules.Label": "Configure Variant/Optional Rules",
@@ -2707,7 +2712,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
 ```
 ## sv.json
-343 untranslated strings
+344 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -2935,6 +2940,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Migrate.ErrorTable": "Failed CoC7 system migration for Table {name}: {message}",
 "CoC7.Migrate.ErrorItem": "Failed CoC7 system migration for Item {name}: {message}",
 "CoC7.Migrate.ErrorActor": "Failed CoC7 system migration for Actor {name}: {message}",
+"CoC7.System.Documentation": "View CoC7 System Manual",
 "CoC7.Settings.PulpRules.IgnoreAgePenalties.Name": "Ignore Age Penalties",
 "CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint": "Do not alter movement rate based on age. When using the investigator wizard improvements and characteristic adjustments are not made",
 "CoC7.Settings.DholeUpload.Directory.Name": "The Dhole's House image upload directory",
