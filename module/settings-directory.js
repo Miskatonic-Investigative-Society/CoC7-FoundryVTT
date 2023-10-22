@@ -1,4 +1,4 @@
-/* global Dialog, game, Settings */
+/* global CONFIG, Dialog, game, Settings */
 export class CoC7SettingsDirectory extends Settings {
   activateListeners (html) {
     super.activateListeners(html)
@@ -10,6 +10,10 @@ export class CoC7SettingsDirectory extends Settings {
             game.i18n.localize('CoC7.Migrate.TriggerButton') +
             '</button>'
         )
+      html.find('#settings-documentation')
+        .append('<button class="trigger-system-manual"><i class="fas fa-books"></i> ' +
+        game.i18n.localize('CoC7.System.Documentation') +
+        '</button>')
       html.find('.trigger-data-migration').click(() => {
         new Dialog(
           {
@@ -34,6 +38,9 @@ export class CoC7SettingsDirectory extends Settings {
           },
           {}
         ).render(true)
+      })
+      html.find('.trigger-system-manual').click(async () => {
+        (await game.packs.get('CoC7.system-doc').getDocument(CONFIG.CoC7.Manual))?.sheet.render(true)
       })
     }
   }

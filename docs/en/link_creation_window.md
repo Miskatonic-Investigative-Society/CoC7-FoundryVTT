@@ -1,7 +1,7 @@
 # Link creation tool
 
 The system includes a tool to help you create links easily.
-It's located on the left side bar. Click on the  icon.
+It's located on the left side bar. Click on the icon.
 This tools is available to GM only.
 
 ![Creation tool](../../assets/manual/links/links-creation-tool.webp)
