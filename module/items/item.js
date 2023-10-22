@@ -840,6 +840,55 @@ export class CoC7Item extends Item {
     const data = this.getChatData()
     data.user = game.user
     data.item = this
+    data.damageFormula = this.getDamageFormula({ replaceDamageBonus: true })
     return renderTemplate(`systems/CoC7/templates/tooltips/item-${this.type}.hbs`, data)
+  }
+
+  getDamageFormula ({ replaceDamageBonus = false, critical = false, range = 'normal' } = {}) {
+    if (this.type !== 'weapon') return null
+    let formula = this.system?.range[range]?.damage
+    if (this.system.properties.addb || this.system.properties.ahdb) {
+      let db
+      if (replaceDamageBonus) {
+        db = this.parent?.db
+        if (db && isNaN(db)) {
+          db = ((db ?? '').toString().trim() === '' ? 0 : db).toString().trim()
+          if (!db.startsWith('-')) db = '+' + db
+        }
+
+        if (db && db !== 0) {
+          if (this.system.properties.addb) formula = formula + db
+          if (this.system.properties.ahdb) {
+            if (!isNaN(db)) {
+              db = Math.sign(db) * Math.floor(Math.abs(db) / 2)
+              if (db !== 0) {
+                if (db > 0) formula = `${formula}+${db}`
+                else formula = `${formula}${db}`
+              }
+            } else {
+              formula = `${formula}+${db}/2`
+            }
+          }
+        }
+      } else {
+        if (this.system.properties.addb) formula = formula + game.i18n.localize('CoC7.WeaponAddb')
+        if (this.system.properties.ahdb) formula = formula + game.i18n.localize('CoC7.WeaponAhdb')
+      }
+    }
+
+    if (critical && replaceDamageBonus) {
+      const maxDamage = Math.floor(new Roll(formula).evaluate({ maximize: true }).total)
+      let rollString
+      if (critical) {
+        if (this.impale) {
+          rollString = formula + '+' + maxDamage
+          return rollString
+        } else {
+          return maxDamage
+        }
+      }
+    } else {
+      return formula
+    }
   }
 }

@@ -1,0 +1,84 @@
+<div class="gm-options" data-ecc-visibility="gm">
+  <div class="flexrow tooltipster-active" data-description="CoC7.Hint.OverrideRules">
+    {{!-- <input type="checkbox" class="ecc-switch toggle-switch" data-flag="overrideRules"/> --}}
+    <span class="toggle-switch ecc-switch" data-flag="overrideRules">{{localize 'CoC7.OverrideCalc'}}</span>
+  </div>
+  {{#if data.flags.overrideRules}}
+  <div class="bonus-selection">
+    <div class="flexrow">
+      <div class="flexno">-2</div>
+      <div class="flex1"></div>
+      <div class="flexno">-1</div>
+      <div class="flex1"></div>
+      <div class="flexno">0</div>
+      <div class="flex1"></div>
+      <div class="flexno">+1</div>
+      <div class="flex1"></div>
+      <div class="flexno">+2</div>
+    </div>
+    <input class="slider" data-description="CoC7.Hint.BonusDice" type="range" name="data.bonusDice" min="-2" max="2" value="{{data.bonusDice}}">
+  </div>
+  {{else}}
+  <div class="flexrow status-selection">
+    <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.Outnumbered" data-flag="outnumbered">{{localize 'CoC7.OutNumbered'}}</span>
+    <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.Surprised" data-flag="surprised">{{localize 'CoC7.combatCard.surprised'}}</span>
+  </div>
+    {{#if data.flags.surprised}}
+      {{#if (and card.hasTaget (lt data.checks.detection.state card.rollStates.requested))}}
+      <div class="flexrow">
+        <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.CanDetect" data-flag="canDetect">{{localize 'CoC7.CanDetect'}}</span>
+      </div>
+      {{/if}}
+      {{#unless data.flags.canDetect}}
+      <div class="flexrow suprised-options ecc-radio">
+        <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.AutoHit" data-flag="autoHit">{{localize 'CoC7.combatCard.automaticSuccess'}}</span>
+        <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.SuprisedBonusDice" data-flag="suprisedBonusDice">{{localize 'CoC7.Advantage'}}</span>
+      </div>
+      {{/unless}}
+      {{#if (and data.flags.canDetect (lt data.checks.detection.state card.rollStates.requested))}}
+        {{#if card.attacker.hasPlayerOwner}}
+          <div class="flexrow detection-check-select">
+            <input type="text" name="data.checks.detection.name" value="{{data.checks.detection.name}}" list="attacker-check-options-{{card.messageId}}" placeholder="{{ localize 'CoC7.SelectSkill' }}" />
+          </div>
+          <div class="flexrow">
+            <label class="flex1">Select difficulty</label>
+            <div class="flexcol flex2">
+              <div class="flexrow">
+                <div class="flexno">{{ localize 'CoC7.RollDifficultyRegular'}}</div>
+                <div class="flex1"></div>
+                <div class="flexno">{{ localize 'CoC7.RollDifficultyHard'}}</div>
+                <div class="flex1"></div>
+                <div class="flexno">{{ localize 'CoC7.RollDifficultyExtreme'}}</div>
+              </div>
+              <input class="slider" data-description="CoC7.Hint.SelectDifficulty" type="range" name="data.checks.detection.difficulty" min="0" max="2" value="{{data.checks.detection.difficulty}}">
+            </div>
+          </div>
+        {{else}}
+          <div class="flexrow detection-check-select">
+            <input type="text" name="data.checks.detection.name" value="{{data.checks.detection.name}}" list="defender-check-options-{{card.messageId}}" placeholder="{{ localize 'CoC7.SelectSkill' }}" />
+          </div>
+          <div class="flexrow">
+            <label>Select difficulty</label>
+            <div class="flexcol">
+              <div class="flexrow">
+                <div class="flexno">{{ localize 'CoC7.RollDifficultyRegular'}}</div>
+                <div class="flex1"></div>
+                <div class="flexno">{{ localize 'CoC7.RollDifficultyHard'}}</div>
+                <div class="flex1"></div>
+                <div class="flexno">{{ localize 'CoC7.RollDifficultyExtreme'}}</div>
+              </div>
+              <input class="slider" data-description="CoC7.Hint.SelectDifficulty" type="range" name="data.checks.detection.difficulty" min="0" max="2" value="{{data.checks.detection.difficulty}}">
+            </div>
+          </div>
+        {{/if}}
+        {{#if card.hasValidDetectionCheck}}
+          <div class="card-buttons">
+            <button data-action="validateDetectionCheck">{{ card.strings.validateDetectionCheck }}</button>
+          </div>
+        {{/if}}
+      {{/if}}
+    {{/if}}
+  {{/if}}
+</div>
+
+

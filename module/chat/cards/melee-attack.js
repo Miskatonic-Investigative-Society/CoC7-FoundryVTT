@@ -1,16 +1,36 @@
-/* global foundry, game, fromUuidSync */
+/* global foundry, game, fromUuidSync,ui */
 import { EnhancedChatCard } from '../../common/chatcardlib/src/chatcardlib.js'
+import { CoCID } from '../../../module/scripts/coc-id.js'
 
 export class MeleeAttackCard extends EnhancedChatCard {
+  get rollStates () {
+    return {
+      notRequested: -1,
+      requested: 1,
+      rolled: 2,
+      closed: 3
+    }
+  }
+
   /**
    * Data initialisation before sending message to chat.
    * @override
    */
   async initialize () {
+    this.data.states = {}
     this.data.flags.rulesMode = this.hasTaget // By default, automatic mode is enabled
     this.data.flags.manualMode = !this.hasTaget
     this.data.flags.outnumbered = (this.defender && this.defender.isOutnumbered) // Check if there's a target and that taget is outnumbered already
     this.data.flags.autoHit = true // By default, surprise attacks hit automatically
+    const skill = this.attacker.hasPlayerOwner ? await CoCID.fromCoCID('i.skill.stealth') : await CoCID.fromCoCID('i.skill.spot-hidden')
+    const skillName = skill.length > 0 ? skill[0].name : ''
+    this.data.checks = {
+      detection: {
+        name: skillName,
+        difficulty: 0,
+        state: this.rollStates.notRequested
+      }
+    } // If the target is surprised, and the GM allows we roll by default Stealth for attack, Listen for defence (player should alsways perform the check)
   }
 
   /**
@@ -58,5 +78,32 @@ export class MeleeAttackCard extends EnhancedChatCard {
 
   get hasTaget () {
     return undefined !== this.defender.type
+  }
+
+  /**
+   * Return the skillcheck to perform for detection
+   */
+  get detectionCheck () {
+    let actor
+    if (this.attacker.hasPlayerOwner) actor = this.attacker
+    if (this.defender.hasPlayerOwner) actor = this.defender
+    if (actor) {
+      const skill = actor.getSkillsByName(this.data.checks.detection.name)
+      if (skill.length > 0) return skill[0]
+    }
+    return null
+  }
+
+  /**
+   * Return true if the card has a valid detection check to propose.
+   */
+  get hasValidDetectionCheck () {
+    return !!this.detectionCheck
+  }
+
+  async validateDetectionCheck (options) {
+    this.data.checks.detection.state = this.rollStates.requested
+    this.updateChatCard()
+    ui.notifications.info('rollDetectionCheck')
   }
 }

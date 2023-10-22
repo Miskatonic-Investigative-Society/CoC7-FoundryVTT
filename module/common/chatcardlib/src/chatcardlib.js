@@ -322,6 +322,9 @@ export class EnhancedChatCard {
     html
       .find(`.${ECC_CLASS} input[type="radio"]`)
       .each((i, el) => this.setRadioState(el))
+    html
+      .find(`.${ECC_CLASS} input[type="checkbox"]`)
+      .each((i, el) => this.setCheckboxState(el))
     // html.find(`.${ECC_CLASS} .ecc-radio-switch`).each( (i, el) => this.setState(el))
   }
 
@@ -346,6 +349,14 @@ export class EnhancedChatCard {
       if (this.data[splited[1]] === element.value) {
         element.checked = true
       }
+    }
+  }
+
+  setCheckboxState (element) {
+    if (!element || !element.name) return
+    if (!element.dataset.flag) return
+    if (this.flags && typeof this.flags[element.dataset.flag] !== 'undefined') {
+      this.flags[element.dataset.flag] ? element.checked = true : element.checked = false
     }
   }
 

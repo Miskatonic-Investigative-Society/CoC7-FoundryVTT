@@ -1,4 +1,6 @@
 /* global ChatMessage, game, $, fromUuid */
+
+// TODO : Switch from ToolTipster to system tooltips
 export class CoCChatMessage extends ChatMessage {
   /** @inheritdoc */
   async getHTML (...args) {
@@ -23,7 +25,7 @@ export class CoCChatMessage extends ChatMessage {
       if (el.dataset?.description) {
         $(el).tooltipster({
           trigger: 'hover',
-          delay: [2000, 250],
+          delay: [2000, 250000],
           contentAsHTML: false,
           content: game.i18n.localize(el.dataset.description),
           animation: 'fall',
@@ -38,7 +40,7 @@ export class CoCChatMessage extends ChatMessage {
         if (el.classList.contains('tooltipster-dynamic')) {
           $(el).tooltipster({
             trigger: 'hover',
-            delay: [2000, 250],
+            delay: [2000, 250000],
             contentAsHTML: false,
             content: 'Dynamic content',
             animation: 'fall',
@@ -53,7 +55,7 @@ export class CoCChatMessage extends ChatMessage {
           const descrition = await document.getHtmlTooltip()
           $(el).tooltipster({
             trigger: 'hover',
-            delay: [2000, 250],
+            delay: [2000, 250000],
             contentAsHTML: true,
             content: descrition,
             animation: 'fall',

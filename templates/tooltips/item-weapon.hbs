@@ -1,16 +1,20 @@
 <div class="item-name">
     <h3>{{item.name}}</h3>
 </div>
-<div class="description">
+<div class="section description">
     {{{description.value}}}
 </div>
 {{#if user.isGM}}
-<div class="gm-notes">
-    {{{data.keeper}}}
+<div class="section gm-notes">
+    {{{description.keeper}}}
 </div>
 {{/if}}
-<div class="properties">
-    {{#each properties as |p|}}
-        <div class="property">{{p}}</div>
+<div class="section properties">
+    {{#each properties as |property|}}
+        <div class="property">{{property}}</div>
+    {{/each}}
+    <div class="property">{{ localize 'CoC7.Damage'}}:{{damageFormula}}</div>
+    {{#each labels as |label|}}
+        <div class="property">{{label.name}}:{{label.value}}</div>
     {{/each}}
 </div>

@@ -54,11 +54,26 @@
       line-height: 1rem;
     }
 
-    .properties {
+    .section {
+      &:empty {
+        display: none;
+      }
+      display: block;
       border-top: 2px groove #fff;
       padding: 0;
       margin: 0;
       line-height: unset;
+    }
+
+    .description {
+      border-top: none
+    }
+
+    .gm-notes {
+      background-color: gainsboro;
+    }
+
+    .properties {
       .property {
         display: inline;
         vertical-align: middle;

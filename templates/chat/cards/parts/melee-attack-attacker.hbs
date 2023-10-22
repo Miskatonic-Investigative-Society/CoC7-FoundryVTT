@@ -1,0 +1,6 @@
+{{#if (and card.hasValidDetectionCheck (eq data.checks.detection.state card.rollStates.requested) (not data.flags.overrideRules))}}
+    ROLL REQUESTED
+    --roll state: {{data.checks.detection.state}}
+    --requested state:{{card.rollStates.requested}}
+    --has valid:{{card.hasValidDetectionCheck}}
+{{/if}}

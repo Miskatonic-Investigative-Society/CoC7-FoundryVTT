@@ -3680,6 +3680,37 @@ export class CoCActor extends Actor {
     return this.responsesRemaining === 0
   }
 
+  get skillsList () {
+    const list = []
+    this.skills.forEach(s => list.push(s.name))
+    return list
+  }
+
+  get characteristicsList () {
+    const list = []
+    CoCActor.getCharacteristicDefinition().forEach(c =>
+      list.push(
+        `${game.i18n.localize('CoC7.Characteristics')} (${c.shortName})`
+      )
+    )
+    return list
+  }
+
+  get attributesList () {
+    const list = []
+    list.push(
+      `${game.i18n.localize('CoC7.Attribute')} (${game.i18n.localize(
+        'CoC7.Luck'
+      )})`
+    )
+    list.push(
+      `${game.i18n.localize('CoC7.Attribute')} (${game.i18n.localize(
+        'CoC7.SAN'
+      )})`
+    )
+    return list
+  }
+
   // static updateActor( actor, dataUpdate){
   //   if( game.user.isGM){
   //     // ui.notifications.info( `updating actor ${actor.name}`);
