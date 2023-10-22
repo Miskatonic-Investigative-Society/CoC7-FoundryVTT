@@ -572,6 +572,7 @@
   "CoC7.DeleteSanityLossEncounter": "Elimina la perdita di Sanità per l'incontro",
   "CoC7.DeleteSanityLossImmunity": "Elimina l'immunità alla perdita di Sanità",
 
+  "CoC7.SanityLossType": "Tipo",
   "CoC7.SanityLossTypeDialogTitle": "Nuova perdita o immunità di Sanità",
   "CoC7.SanityLossTypeDialogBody": "Aggiungi al personaggio un nuovo incontro dei Miti, una perdita di Sanità, o un'immunità alla Sanità.",
   "CoC7.SanityLossTypeReason": "Causa",
@@ -729,6 +730,7 @@
   "CoC7.ErrorBeneficiaryAtMaxBonus": "Il destinatario {name} ha già il massimo dei dadi bonus",
   "CoC7.ErrorParticipantAtMaxBonus": "{participantUuid} ha già il massimo dei dadi bonus",
   "CoC7.ErrorTokenNotOnScene": "La Pedina non appartiene alla scena di questo luogo",
+  "CoC7.ErrorTokenIncorrect": "Impossibile trovare la pedina selezionata",
   "CoC7.AddParticipant": "Aggiungi Partecipante",
   "CoC7.RemoveParticipant": "Rimuovi Partecipante",
   "CoC7.RemoveParticipantHint": "Il Partecipante verrà completamente rimosso dall'inseguimento",
