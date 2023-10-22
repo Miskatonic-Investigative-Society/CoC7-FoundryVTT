@@ -1005,6 +1005,8 @@
   "CoC7.Migrate.ErrorItem": "Failed CoC7 system migration for Item {name}: {message}",
   "CoC7.Migrate.ErrorActor": "Failed CoC7 system migration for Actor {name}: {message}",
 
+  "CoC7.System.Documentation": "View CoC7 System Manual",
+
   "CoC7.Settings.CoreRules.Title": "Core Rule Book Optional Rules",
   "CoC7.Settings.Rules.Name": "Variant/Optional Rules",
   "CoC7.Settings.Rules.Label": "Configure Variant/Optional Rules",

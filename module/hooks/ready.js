@@ -1,4 +1,4 @@
-/* global game, Hooks, isNewerVersion */
+/* global CONFIG, game, Hooks, isNewerVersion */
 import { CoC7Tooltips } from '../apps/tooltips.js'
 // import { CoC7WelcomeMessage } from '../apps/welcome-message.js'
 import { registerTours } from '../scripts/register-tours.js'
@@ -13,16 +13,18 @@ export function listen () {
     game.CoC7Tooltips = new CoC7Tooltips()
 
     const instructionsVersion = game.settings.get('CoC7', 'showInstructions')
+    let lang = game.i18n.lang
+    const readMe = {
+      en: 'sxB2OXbfwV6M0nyQ',
+      fr: 'tdakyzTVOQsAMdSm'
+    }
+    if (typeof readMe[lang] === 'undefined') {
+      lang = 'en'
+    }
+    CONFIG.CoC7 = CONFIG.CoC7 ?? {}
+    CONFIG.CoC7.Manual = readMe[lang]
     if (isNewerVersion(game.system.version, instructionsVersion ?? '0')) {
-      let lang = game.i18n.lang
-      const readMe = {
-        en: 'sxB2OXbfwV6M0nyQ',
-        fr: 'tdakyzTVOQsAMdSm'
-      }
-      if (typeof readMe[lang] === 'undefined') {
-        lang = 'en'
-      }
-      (await game.packs.get('CoC7.system-doc').getDocument(readMe[lang])).sheet.render(true)
+      (await game.packs.get('CoC7.system-doc').getDocument(CONFIG.CoC7.Manual))?.sheet.render(true)
       game.settings.set('CoC7', 'showInstructions', game.system.version)
     }
     registerTours()

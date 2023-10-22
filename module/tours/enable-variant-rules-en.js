@@ -11,10 +11,10 @@ export class EnableVariantRulesEn extends CoC7Tour {
       steps: [
         {
           id: 'goto-settings',
-          selector: '[data-tab="settings"]',
+          selector: '.tabs>a[data-tab="settings"]',
           title: 'COC7.Tour.GotoSettingsTitle',
           content: 'COC7.Tour.GotoSettingsContent',
-          action: 'click'
+          sidebarTab: 'settings'
         },
         {
           id: 'goto-configure',
@@ -25,7 +25,7 @@ export class EnableVariantRulesEn extends CoC7Tour {
         },
         {
           id: 'goto-system-settings',
-          selector: '[data-category="system"]',
+          selector: '[data-tab="system"]',
           title: 'COC7.Tour.GotoSystemSettingsTitle',
           content: 'COC7.Tour.GotoSystemSettingsContent',
           action: 'click'
@@ -57,14 +57,5 @@ export class EnableVariantRulesEn extends CoC7Tour {
         'COC7.Tour.SaveGameRulesContent': 'Once you have made your changes click on the Save Changes button'
       }
     }, config))
-  }
-
-  async _preStep () {
-    await super._preStep()
-
-    if (this.currentStep.id === 'goto-game-rules') {
-      await this.waitForElement('.category-filter.system.active')
-      await this.waitForElement(this.currentStep.selector)
-    }
   }
 }

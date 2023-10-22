@@ -28,7 +28,7 @@ Click on the [fas fa-suitcase]Items Directory tab then Create Item give this a n
 
 On the Description tab to set the description click the [fas fa-edit]button to get an editor.
 
-On the Details tab click the [fas fa-plus] on the Biography Sections to add any sections you require from the Create a Backstory step of investigator creation. Click on the [fas fa-atlas]Compendium Packs tab then under the Item heading open up the Items Examples Item (CoC7) and drag the @Compendium[CoC7.items.3elxAwnv7WCUNwng]{Punch} onto the setup.
+On the Details tab click the [fas fa-plus]on the Biography Sections to add any sections you require from the Create a Backstory step of investigator creation. Click on the [fas fa-atlas]Compendium Packs tab then under the Item heading open up the Items Examples Item (CoC7) and drag the @Compendium[CoC7.items.3elxAwnv7WCUNwng]{Punch} onto the setup.
 
 On the Characteristics tab you can customise how investigator characteristics are rolled / bought
 

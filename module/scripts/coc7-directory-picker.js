@@ -90,7 +90,7 @@ export class CoC7DirectoryPicker extends FilePicker {
       )
       return true
     } catch (e) {
-      if (!e.startsWith('EEXIST')) {
+      if (!e.message.startsWith('EEXIST')) {
         ui.notifications.error(
           game.i18n.localize('CoC7.ActorImporterUploadError')
         )
