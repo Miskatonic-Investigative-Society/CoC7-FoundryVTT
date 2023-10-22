@@ -9,6 +9,10 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Add system manual button to Game Settings sidebar tab
+- Update to French localization, thanks to @vonv #1415
+- Update to Italian localization, thanks to @Stefano1975t #1419
+
 ## Version 0.10.6
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
