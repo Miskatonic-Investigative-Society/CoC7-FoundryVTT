@@ -1009,6 +1009,8 @@
   "CoC7.Migrate.ErrorItem": "E' fallita la migrazione del sistema CoC7 per l'Oggetto {name}: {message}",
   "CoC7.Migrate.ErrorActor": "E' fallita la migrazione del sistema CoC7 per il Personaggio {name}: {message}",
 
+  "CoC7.System.Documentation": "Visione del Manuale del Sistema CoC7",
+  
   "CoC7.Settings.CoreRules.Title": "Regole opzionali del regolamento base",
   "CoC7.Settings.Rules.Name": "Regole opzionali/variazioni",
   "CoC7.Settings.Rules.Label": "Configurazione delle regole opzionali/variazioni",
