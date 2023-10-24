@@ -46,6 +46,14 @@
     </div>
     {{> "systems/CoC7/templates/chat/cards/parts/melee-attack-keeper.hbs"}}
 
+    {{#if (and card.hasValidDetectionCheck  (gt data.checks.detection.state card.rollStates.notRequested) (not data.flags.overrideRules))}}
+        {{> "systems/CoC7/templates/chat/cards/parts/melee-attack-surprise.hbs"}}
+        ROLL REQUESTED
+        --roll state: {{data.checks.detection.state}}
+        --requested state:{{card.rollStates.requested}}
+        --has valid:{{card.hasValidDetectionCheck}}
+    {{/if}}
+
     {{> "systems/CoC7/templates/chat/cards/parts/melee-attack-attacker.hbs" }}
 
     {{> "systems/CoC7/templates/chat/cards/parts/melee-attack-defender.hbs" }}

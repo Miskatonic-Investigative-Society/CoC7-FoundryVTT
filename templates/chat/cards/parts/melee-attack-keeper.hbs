@@ -29,12 +29,15 @@
         <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.CanDetect" data-flag="canDetect">{{localize 'CoC7.CanDetect'}}</span>
       </div>
       {{/if}}
-      {{#unless data.flags.canDetect}}
+      {{#if (and (not (eq data.checks.detection.state card.rollStates.closed)) (not data.flags.canDetect))}}
       <div class="flexrow suprised-options ecc-radio">
         <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.AutoHit" data-flag="autoHit">{{localize 'CoC7.combatCard.automaticSuccess'}}</span>
         <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.SuprisedBonusDice" data-flag="suprisedBonusDice">{{localize 'CoC7.Advantage'}}</span>
       </div>
-      {{/unless}}
+      <div class="card-buttons">
+        <button data-action="resolveSurpriseAttack">{{ localize 'CoC7.CloseSurpriseAttack' }}</button>
+      </div>
+      {{/if}}
       {{#if (and data.flags.canDetect (lt data.checks.detection.state card.rollStates.requested))}}
         {{#if card.attacker.hasPlayerOwner}}
           <div class="flexrow detection-check-select">
@@ -50,7 +53,7 @@
                 <div class="flex1"></div>
                 <div class="flexno">{{ localize 'CoC7.RollDifficultyExtreme'}}</div>
               </div>
-              <input class="slider" data-description="CoC7.Hint.SelectDifficulty" type="range" name="data.checks.detection.difficulty" min="0" max="2" value="{{data.checks.detection.difficulty}}">
+              <input class="slider" data-description="CoC7.Hint.SelectDifficulty" type="range" name="data.checks.detection.difficulty" min="1" max="3" value="{{data.checks.detection.difficulty}}">
             </div>
           </div>
         {{else}}
@@ -67,14 +70,45 @@
                 <div class="flex1"></div>
                 <div class="flexno">{{ localize 'CoC7.RollDifficultyExtreme'}}</div>
               </div>
-              <input class="slider" data-description="CoC7.Hint.SelectDifficulty" type="range" name="data.checks.detection.difficulty" min="0" max="2" value="{{data.checks.detection.difficulty}}">
+              <input class="slider" data-description="CoC7.Hint.SelectDifficulty" type="range" name="data.checks.detection.difficulty" min="1" max="3" value="{{data.checks.detection.difficulty}}">
             </div>
           </div>
         {{/if}}
         {{#if card.hasValidDetectionCheck}}
           <div class="card-buttons">
-            <button data-action="validateDetectionCheck">{{ card.strings.validateDetectionCheck }}</button>
+            <button data-action="validateDetectionCheck">{{ localize 'CoC7.ValidateCheck' }}</button>
           </div>
+        {{/if}}
+      {{/if}}
+      {{#if (gte data.checks.detection.state card.rollStates.rolled)}}
+        {{ localize 'CoC7.DetectionCheckRolled'}}: {{{ htmlDetectionCheckInline }}}
+        {{#if (eq data.checks.detection.state card.rollStates.rolled)}}
+          {{#if card.attacker.hasPlayerOwner}}
+            {{#if data.checks.detection.roll.passed}}
+              {{localize 'CoC7.PLayerSurpriseAttackSucess'}}
+              <div class="flexrow suprised-options ecc-radio">
+                <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.AutoHit" data-flag="autoHit">{{localize 'CoC7.combatCard.automaticSuccess'}}</span>
+                <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.SuprisedBonusDice" data-flag="suprisedBonusDice">{{localize 'CoC7.Advantage'}}</span>
+              </div>
+            {{else}}
+              {{localize 'CoC7.PLayerSurpriseAttackFaillure'}}
+            {{/if}}
+          {{else}}
+            {{#if data.checks.detection.roll.passed}}
+              {{localize 'CoC7.PLayerIsNotSurprised'}}
+            {{else}}
+              {{localize 'CoC7.PLayerIsSurprised'}}
+              <div class="flexrow suprised-options ecc-radio">
+                <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.AutoHit" data-flag="autoHit">{{localize 'CoC7.combatCard.automaticSuccess'}}</span>
+                <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.SuprisedBonusDice" data-flag="suprisedBonusDice">{{localize 'CoC7.Advantage'}}</span>
+              </div>
+            {{/if}}          
+          {{/if}}
+          {{#unless (eq data.checks.detection.state card.rollStates.closed)}}
+          <div class="card-buttons">
+            <button data-action="resolveSurpriseAttack">{{ localize 'CoC7.CloseSurpriseAttack' }}</button>
+          </div>
+          {{/unless}}
         {{/if}}
       {{/if}}
     {{/if}}

@@ -1,6 +1,7 @@
 /* global foundry, game, fromUuidSync,ui */
 import { EnhancedChatCard } from '../../common/chatcardlib/src/chatcardlib.js'
 import { CoCID } from '../../../module/scripts/coc-id.js'
+import { CoC7Check } from '../../check.js'
 
 export class MeleeAttackCard extends EnhancedChatCard {
   get rollStates () {
@@ -18,6 +19,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
    */
   async initialize () {
     this.data.states = {}
+    this.data.objects = {}
     this.data.flags.rulesMode = this.hasTaget // By default, automatic mode is enabled
     this.data.flags.manualMode = !this.hasTaget
     this.data.flags.outnumbered = (this.defender && this.defender.isOutnumbered) // Check if there's a target and that taget is outnumbered already
@@ -27,7 +29,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
     this.data.checks = {
       detection: {
         name: skillName,
-        difficulty: 0,
+        difficulty: CoC7Check.difficultyLevel.regular,
         state: this.rollStates.notRequested
       }
     } // If the target is surprised, and the GM allows we roll by default Stealth for attack, Listen for defence (player should alsways perform the check)
@@ -43,18 +45,27 @@ export class MeleeAttackCard extends EnhancedChatCard {
     })
   }
 
+  /** @override */
+  async assignObjects () {
+    if (
+      this.data.checks.detection.roll &&
+      this.data.checks.detection.roll?.constructor?.name === 'Object'
+    ) {
+      this.data.checks.detection.roll = CoC7Check.fromData(this.data.checks.detection.roll)
+    }
+  }
+
   async getData () {
     const data = await super.getData()
 
     // Get card settings
     data.displayActorOnCard = game.settings.get('CoC7', 'displayActorOnCard')
 
-    data.mySelectOptions = {
-      0: 'option 1',
-      1: 'option 2'
+    // Get card rolls
+    if (this.data.checks.detection.roll && (this.data.checks.detection.state >= this.rollStates.rolled)) {
+      data.htmlDetectionCheck = await this.data.checks.detection.roll.getHtmlRoll()
+      data.htmlDetectionCheckInline = await this.data.checks.detection.roll.inlineCheck?.outerHTML
     }
-    // ui.notifications.info(`actor: ${this.data.actor}, weapon: ${this.data.weapon}`)
-
     return data
   }
 
@@ -80,13 +91,17 @@ export class MeleeAttackCard extends EnhancedChatCard {
     return undefined !== this.defender.type
   }
 
+  get detectionCheckActor () {
+    if (this.attacker.hasPlayerOwner) return this.attacker
+    if (this.defender.hasPlayerOwner) return this.defender
+    return this.attacker
+  }
+
   /**
    * Return the skillcheck to perform for detection
    */
   get detectionCheck () {
-    let actor
-    if (this.attacker.hasPlayerOwner) actor = this.attacker
-    if (this.defender.hasPlayerOwner) actor = this.defender
+    const actor = this.detectionCheckActor
     if (actor) {
       const skill = actor.getSkillsByName(this.data.checks.detection.name)
       if (skill.length > 0) return skill[0]
@@ -103,7 +118,33 @@ export class MeleeAttackCard extends EnhancedChatCard {
 
   async validateDetectionCheck (options) {
     this.data.checks.detection.state = this.rollStates.requested
-    this.updateChatCard()
-    ui.notifications.info('rollDetectionCheck')
+    return true
+  }
+
+  async rollDetectionCheck (options) {
+    this.data.checks.detection.roll = new CoC7Check
+    this.data.checks.detection.roll.actor = this.detectionCheckActor
+    this.data.checks.detection.roll.skill = this.detectionCheck
+    this.data.checks.detection.roll.difficulty = this.data.checks.detection.difficulty
+
+    if (!this.data.checks.detection.roll) return false
+    await this.data.checks.detection.roll._perform({ forceDSN: true })
+    this.data.checks.detection.state = this.rollStates.rolled
+    return true
+  }
+
+  async useLuck (options) {
+    const div = options.event.currentTarget.closest('[data-roll]')
+    const roll = div.dataset.roll
+    await CoC7Check.alter(this.data.checks[roll].roll, 'useLuck', {
+      target: options.event.currentTarget,
+      update: false
+    })
+    return true
+  }
+
+  async resolveSurpriseAttack (options) {
+    this.data.checks.detection.state = this.rollStates.closed
+    return true
   }
 }

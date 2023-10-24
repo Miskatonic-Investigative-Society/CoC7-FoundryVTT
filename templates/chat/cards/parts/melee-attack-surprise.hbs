@@ -1,0 +1,41 @@
+<div class="flexcol surprise-check">
+  {{#if card.attacker.hasPlayerOwner}} <span>{{ localize 'CoC7.YouTryToSurprise' }}</span>
+  {{else}} <span>{{ localize 'CoC7.SomeoneTryingToSurpriseYou' }}</span> {{/if}}
+  {{#if (eq data.checks.detection.state card.rollStates.requested)}}
+    <div class="card-buttons">
+      <button data-action="rollDetectionCheck">{{ localize 'CoC7.roll' }} - {{ card.detectionCheck.name }} ({{card.detectionCheck.value}})</button>
+    </div>
+  {{/if}}
+  {{#if (eq data.checks.detection.state card.rollStates.rolled)}}
+    <div data-roll="detection">
+      {{{htmlDetectionCheck}}}
+    </div>
+  {{/if}}
+  {{#if (eq data.checks.detection.state card.rollStates.closed)}}
+    {{#if card.attacker.hasPlayerOwner}}
+      {{#if data.checks.detection.roll.passed}}
+        <span>{{ localize 'CoC7.YouTakeBySurprise' }}  ({{{htmlDetectionCheckInline}}})</span>
+        {{#if data.flags.autoHit}}
+          <span>{{ localize 'CoC7.AttackAutoSuccess'}}</span>
+        {{/if}}
+        {{#if data.flags.suprisedBonusDice}}
+          <span>{{ localize 'CoC7.AttackGainBonusDice'}}</span>
+        {{/if}}
+      {{else}}
+        <span>{{ localize 'CoC7.YouFaillToSurprise' }} ({{{htmlDetectionCheckInline}}})</span>
+      {{/if}}
+    {{else}}
+      {{#if data.checks.detection.roll.passed}}
+        <span>{{ localize 'CoC7.YouAreAwareOfAttack' }}  ({{{htmlDetectionCheckInline}}})</span>
+      {{else}}
+        <span>{{ localize 'CoC7.YouAreSurprisedByAttack' }} ({{{htmlDetectionCheckInline}}})</span>
+        {{#if data.flags.autoHit}}
+          <span>{{ localize 'CoC7.OpponentAttackAutoSuccess'}}</span>
+        {{/if}}
+        {{#if data.flags.suprisedBonusDice}}
+          <span>{{ localize 'CoC7.OpponentAttackGainBonusDice'}}</span>
+        {{/if}}
+      {{/if}}
+    {{/if}}  
+  {{/if}}
+</div>

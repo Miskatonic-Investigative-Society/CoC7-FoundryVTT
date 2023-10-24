@@ -314,12 +314,12 @@ export class CoC7Check {
   }
 
   get diceModifier () {
-    if (this._diceModifier) return this._diceModifier
+    if (this.internalDiceModifier) return this.internalDiceModifier
     return null
   }
 
   set diceModifier (x) {
-    this._diceModifier = parseInt(x)
+    this.internalDiceModifier = parseInt(x)
   }
 
   get name () {
@@ -354,16 +354,16 @@ export class CoC7Check {
 
   get fullName () {
     const difficulty =
-      this._difficulty === CoC7Check.difficultyLevel.regular
+      this.internalDifficulty === CoC7Check.difficultyLevel.regular
         ? false
-        : CoC7Check.difficultyString(this._difficulty)
+        : CoC7Check.difficultyString(this.internalDifficulty)
     const modifier =
-      this._diceModifier > 0
-        ? `+${this._diceModifier}`
-        : this._diceModifier.toString()
+      this.internalDiceModifier > 0
+        ? `+${this.internalDiceModifier}`
+        : this.internalDiceModifier.toString()
     return game.i18n.format(
       `CoC7.LinkCheck${!difficulty ? '' : 'Diff'}${
-        !this._diceModifier ? '' : 'Modif'
+        !this.internalDiceModifier ? '' : 'Modif'
       }`,
       { difficulty, modifier, name: this.name }
     )
@@ -538,13 +538,13 @@ export class CoC7Check {
 
   set skill (x) {
     this._skill = this._getItemFromId(x)
-    this.skillId = x
+    this.skillId = this._skill?this._skill.id:null
   }
 
   set item (x) {
     this._item = this._getItemFromId(x)
     if (this._item?.type === 'weapon') {
-      this.itemId = x
+      this.itemId = this._item.id
     } else {
       this._item = undefined
       this.itemId = undefined
@@ -646,14 +646,14 @@ export class CoC7Check {
       blind: this.isBlind
     }
 
-    const difficulty = CoC7Check.difficultyString(this._difficulty)
+    const difficulty = CoC7Check.difficultyString(this.internalDifficulty)
     const title = game.i18n.format(
-      `CoC7.LinkCheck${!this._difficulty ? '' : 'Diff'}${
-        !this._diceModifier ? '' : 'Modif'
+      `CoC7.LinkCheck${!this.internalDifficulty ? '' : 'Diff'}${
+        !this.internalDiceModifier ? '' : 'Modif'
       }`,
       {
         difficulty,
-        modifier: this._diceModifier,
+        modifier: this.internalDiceModifier,
         name: this.name
       }
     )
@@ -1388,11 +1388,11 @@ export class CoC7Check {
   }
 
   set difficulty (x) {
-    this._difficulty = parseInt(x)
+    this.internalDifficulty = parseInt(x)
   }
 
   get difficulty () {
-    return this._difficulty
+    return this.internalDifficulty
   }
 
   set flavor (x) {
