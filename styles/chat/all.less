@@ -38,7 +38,7 @@
     padding: 3px 0;
     border-bottom: 2px groove #fff;
   }
-  .gm-actions {
+  .gm-actions, .keeper {
     &:empty {
       display: none;
     }
@@ -74,5 +74,18 @@
     &.pending {
       box-shadow: 0 0 4px darkred;
     }
+
+    &.success {
+      .success-color();
+    }
+
+    &.failure {
+      .failure-color();
+    }
+
+    &.fumble {
+      .fumble-color();
+    }
+
   }
 }

@@ -538,7 +538,7 @@ export class CoC7Check {
 
   set skill (x) {
     this._skill = this._getItemFromId(x)
-    this.skillId = this._skill?this._skill.id:null
+    this.skillId = this._skill ? this._skill.id : null
   }
 
   set item (x) {

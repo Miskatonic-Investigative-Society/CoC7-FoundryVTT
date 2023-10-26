@@ -98,7 +98,7 @@
       }
     }
   }
-  .card-content {
+  .extendable-card-content {
     display: none;
     margin: 5px 0;
     h3 {
@@ -113,6 +113,21 @@
       user-select: text;
     }
   }
+
+  .card-section {
+    &:has(> div) {
+      &:not(:last-child) {
+        border-bottom: 2px groove;
+      }
+    }
+
+    &.keeper {
+      margin: 0;
+      padding: 6px 0;
+      background-color: gainsboro;
+    }
+  }
+
   .card-buttons {
     margin: 5px 0;
     span {
@@ -129,15 +144,17 @@
     }
   }
   .card-footer {
-    padding: 3px 0 0;
-    border-top: 2px groove #fff;
-    span {
-      border-right: 2px groove #fff;
-      padding: 0 5px 0 0;
-      font-size: 10px;
-      &:last-child {
-        border-right: none;
-        padding-right: 0;
+    &:has(> div){
+      padding: 3px 0 0;
+      border-top: 2px groove #fff;
+      span {
+        border-right: 2px groove #fff;
+        padding: 0 5px 0 0;
+        font-size: 10px;
+        &:last-child {
+          border-right: none;
+          padding-right: 0;
+        }
       }
     }
   }
