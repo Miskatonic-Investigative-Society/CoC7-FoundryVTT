@@ -12,7 +12,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Fix dholehouse importer for characters with a single item on their possesions. Fixes #1423, thanks to @pconcepcion #1424
 - Add system manual button to Game Settings sidebar tab
 - Update to French localization, thanks to @vonv #1415
-- Update to Italian localization, thanks to @Stefano1975t #1419
+- Update to Italian localization, thanks to @Stefano1975t #1419 and #1422
 
 ## Version 0.10.6
 
