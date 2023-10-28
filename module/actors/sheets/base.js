@@ -1817,21 +1817,31 @@ export class CoC7ActorSheet extends ActorSheet {
   _onRollSkillTest (event) {
     event.preventDefault()
     if (event.currentTarget.classList.contains('flagged4dev')) return
+    let rollManeuver = true
+    if (!event.currentTarget.classList.contains('combat')) rollManeuver = false
+    const skillId = event?.currentTarget.closest('.item')?.dataset.skillId
+    const skill = skillId?this.actor.items.get(skillId):null
+    if (!skill || !skill.system.properties.combat || !skill.system.properties.fighting) rollManeuver = false
+    if (game.user.targets.size < 1) rollManeuver = false
+    const rollType = rollManeuver?CoC7ChatMessage.ROLL_TYPE_MANEUVER:CoC7ChatMessage.ROLL_TYPE_SKILL
+    const cardType = rollManeuver?CoC7ChatMessage.CARD_TYPE_MELEE:CoC7ChatMessage.CARD_TYPE_NORMAL
     if (game.settings.get('CoC7', 'useContextMenus')) {
       CoC7ChatMessage.trigger({
-        rollType: CoC7ChatMessage.ROLL_TYPE_SKILL,
-        cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
+        rollType: rollType,
+        cardType: cardType,
         preventStandby: true,
-        fastForward: true,
-        skillId: event?.currentTarget.closest('.item')?.dataset.skillId,
-        actor: this.actor
+        fastForward: rollManeuver?false:true,
+        skillId: skillId,
+        actor: this.actor,
+        maneuver: rollManeuver
       })
     } else {
       CoC7ChatMessage.trigger({
-        rollType: CoC7ChatMessage.ROLL_TYPE_SKILL,
-        cardType: CoC7ChatMessage.CARD_TYPE_NORMAL,
+        rollType: rollType,
+        cardType: cardType,
         event,
-        actor: this.actor
+        actor: this.actor,
+        maneuver: rollManeuver
       })
     }
   }

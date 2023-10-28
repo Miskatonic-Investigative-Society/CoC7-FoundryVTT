@@ -11,9 +11,8 @@
 {{/if}}
 <div class="section properties">
     {{#each properties as |property|}}
-        <div class="property">{{localize property}}</div>
+        <div class="property">{{ localize property}}</div>
     {{/each}}
-    <div class="property">{{ localize 'CoC7.Damage'}}:{{damageFormula}}</div>
     {{#each labels as |label|}}
         <div class="property">{{label.name}}:{{label.value}}</div>
     {{/each}}

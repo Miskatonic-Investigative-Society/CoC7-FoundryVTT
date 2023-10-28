@@ -88,6 +88,13 @@ export class MeleeAttackCard extends EnhancedChatCard {
     return this._weapon
   }
 
+  get isAttackManeuver () {
+    if (!this.attackerWeapon) return false
+    if (this.attackerWeapon.type === 'skill') return true
+    if (this.attackerWeapon.type === 'weapon') return this.attackerWeapon.system.properties.mnvr
+    return false
+  }
+
   get defender () {
     if (!this.data.targetUuid) return { name: game.i18n.localize('CoC7.Dummy'), img: 'icons/svg/mystery-man-black.svg', type: undefined }
     if (!this._target) this._target = fromUuidSync(this.data.targetUuid)
@@ -100,12 +107,16 @@ export class MeleeAttackCard extends EnhancedChatCard {
 
   get detectionCheckActor () {
     if (this.attacker.hasPlayerOwner) return this.attacker
-    if (this.defender.hasPlayerOwner) return this.defender
+    if (this.defender?.hasPlayerOwner) return this.defender
     return this.attacker
   }
 
   get statusList () {
     const statusList = []
+    if (this.isAttackManeuver) {
+      statusList.push({ name: game.i18n.localize('CoC7.AttackManeuver')})
+      if (this.defender) statusList.push({ name: `${game.i18n.localize('CoC7.Build')}:${this.attacker.build}/${this.defender.build}`})
+    }
     if (this.data.flags.overrideRules) statusList.push({ name: game.i18n.localize('CoC7.OverrideRules'), hint: game.i18n.localize('CoC7.hint.OverrideRules') })
     if (this.data.flags.outnumbered) statusList.push({ name: game.i18n.localize('CoC7.Outnumbered'), hint: game.i18n.localize('CoC7.hint.TargetOutnumbered') })
     if (this.data.flags.surprised) {
@@ -207,6 +218,10 @@ export class MeleeAttackCard extends EnhancedChatCard {
 
   async requestAttack (options) {
     this.data.checks.attack.state = this.rollStates.requested
+    return true
+  }
+
+  async rollAttackCheck (options) {
     return true
   }
 }

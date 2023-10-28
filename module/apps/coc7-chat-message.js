@@ -9,6 +9,7 @@ import { SanCheckCard } from '../chat/cards/san-check.js'
 import { SanDataDialog } from './sandata-dialog.js'
 import { CoC7Link } from './coc7-link.js'
 import { CoC7Utilities } from '../utilities.js'
+import { MeleeAttackCard } from '../chat/cards/melee-attack.js'
 
 export class CoC7ChatMessage {
   static get ROLL_TYPE_ATTRIBUTE () {
@@ -29,6 +30,10 @@ export class CoC7ChatMessage {
 
   static get ROLL_TYPE_ENCOUNTER () {
     return 'R/EC'
+  }
+
+  static get ROLL_TYPE_MANEUVER () {
+    return 'R/MN'
   }
 
   static get CARD_TYPE_COMBINED () {
@@ -55,6 +60,10 @@ export class CoC7ChatMessage {
     return 'C/NO'
   }
 
+  static get CARD_TYPE_MELEE () {
+    return 'C/ML'
+  }
+
   // static get ROLL_TO_CHAT () {
   //   return 'R/CH'
   // }
@@ -73,6 +82,7 @@ export class CoC7ChatMessage {
       [CoC7ChatMessage.CARD_TYPE_OPPOSED]: 'CoC7.OpposedRollCard'
       // [CoC7ChatMessage.CARD_TYPE_GROUP]: 'CoC7.GroupRollCard' - NYI
     }
+    if (config.rollType === CoC7ChatMessage.ROLL_TYPE_MANEUVER) select[CoC7ChatMessage.CARD_TYPE_MELEE] = 'CoC7.MeleeAttackCard'
     if (
       config.rollType === CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE &&
       config.attribute === 'san'
@@ -94,7 +104,7 @@ export class CoC7ChatMessage {
         options.rollType === CoC7ChatMessage.ROLL_TYPE_ENCOUNTER)
     ) {
       if (typeof options.skillId !== 'undefined') {
-        if (options.actor.items.get(options.skillId)) {
+        if (options.actor.items.get(options.skillId) && (options.rollType !== CoC7ChatMessage.ROLL_TYPE_MANEUVER)) {
           options.rollType = CoC7ChatMessage.ROLL_TYPE_SKILL
         }
       } else if (typeof options.skillName !== 'undefined') {
@@ -134,7 +144,8 @@ export class CoC7ChatMessage {
         CoC7ChatMessage.CARD_TYPE_GROUP,
         CoC7ChatMessage.CARD_TYPE_NORMAL,
         CoC7ChatMessage.CARD_TYPE_OPPOSED,
-        CoC7ChatMessage.CARD_TYPE_SAN_CHECK
+        CoC7ChatMessage.CARD_TYPE_SAN_CHECK,
+        CoC7ChatMessage.CARD_TYPE_MELEE
       ].includes(options.cardType)
     ) {
       ui.notifications.error(
@@ -149,7 +160,8 @@ export class CoC7ChatMessage {
         CoC7ChatMessage.ROLL_TYPE_SKILL,
         CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC,
         CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE,
-        CoC7ChatMessage.ROLL_TYPE_ENCOUNTER
+        CoC7ChatMessage.ROLL_TYPE_ENCOUNTER,
+        CoC7ChatMessage.ROLL_TYPE_MANEUVER
       ].includes(options.rollType)
     ) {
       ui.notifications.error(
@@ -187,6 +199,7 @@ export class CoC7ChatMessage {
       case CoC7ChatMessage.ROLL_TYPE_SKILL:
       case CoC7ChatMessage.ROLL_TYPE_CHARACTERISTIC:
       case CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE:
+      case CoC7ChatMessage.ROLL_TYPE_MANEUVER:
       case CoC7ChatMessage.ROLL_TYPE_ENCOUNTER:
         config.options.skillId =
           options.skillId ??
@@ -361,8 +374,12 @@ export class CoC7ChatMessage {
         }
         config.dialogOptions.modifier = Math.min(Math.max(config.dialogOptions.modifier, -2), 2)
       }
-      if (!config.options.shiftKey) {
+      if (!config.options.shiftKey && !(config.options.actor.type === 'character' && config.options.cardType === CoC7ChatMessage.CARD_TYPE_MELEE)) {
         await CoC7ChatMessage.createRoll(config)
+        if (config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_MANEUVER && config.dialogOptions.cardType === CoC7ChatMessage.CARD_TYPE_NORMAL){
+          config.dialogOptions.rollType = CoC7ChatMessage.ROLL_TYPE_SKILL
+          config.options.cardType = CoC7ChatMessage.CARD_TYPE_NORMAL
+        }
       }
       return CoC7ChatMessage.runRoll(config)
     }
@@ -553,6 +570,15 @@ export class CoC7ChatMessage {
             CombinedCheckCard.dispatch(data)
           }
         }
+        case CoC7ChatMessage.CARD_TYPE_MELEE: {
+          if (!config.options.actor || !config.options.skillId) return
+          const skill = config.options.actor.items.get(config.options.skillId)
+          for (const t of game.user.targets) {
+            const meleeAttackCard = new MeleeAttackCard({ actorUuid: config.options.actor.uuid, weaponUuid: skill.uuid, targetUuid: t.actor.uuid, fast: false })
+            meleeAttackCard.toMessage()
+          }
+        }
+
         break
     }
   }
