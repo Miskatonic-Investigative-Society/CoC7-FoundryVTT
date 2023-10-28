@@ -376,9 +376,9 @@ export class CoC7ChatMessage {
       }
       if (!config.options.shiftKey && !(config.options.actor.type === 'character' && config.options.cardType === CoC7ChatMessage.CARD_TYPE_MELEE)) {
         await CoC7ChatMessage.createRoll(config)
-        if (config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_MANEUVER && config.dialogOptions.cardType === CoC7ChatMessage.CARD_TYPE_NORMAL){
+        if (config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_MANEUVER && config.dialogOptions.cardType !== CoC7ChatMessage.CARD_TYPE_MELEE){
           config.dialogOptions.rollType = CoC7ChatMessage.ROLL_TYPE_SKILL
-          config.options.cardType = CoC7ChatMessage.CARD_TYPE_NORMAL
+          config.options.cardType = config.dialogOptions.cardType
         }
       }
       return CoC7ChatMessage.runRoll(config)
@@ -463,8 +463,7 @@ export class CoC7ChatMessage {
 
   static async runRoll (config) {
     switch (config.dialogOptions.cardType) {
-      case CoC7ChatMessage.CARD_TYPE_SAN_CHECK:
-        {
+      case CoC7ChatMessage.CARD_TYPE_SAN_CHECK: {
           const sanData = await SanDataDialog.create({
             promptLabel: true
           })
@@ -489,48 +488,48 @@ export class CoC7ChatMessage {
         }
         break
       case CoC7ChatMessage.CARD_TYPE_NORMAL: {
-        const check = new CoC7Check()
-        check.diceModifier = config.dialogOptions.modifier
-        check.difficulty = config.dialogOptions.difficulty
-        check.actor = !config.options.tokenKey
-          ? config.options.actorId
-          : config.options.tokenKey
-        check.flatDiceModifier = config.dialogOptions.flatDiceModifier
-        check.flatThresholdModifier = config.dialogOptions.flatThresholdModifier
-        check.standby =
-          !config.options.preventStandby &&
-          game.settings.get('CoC7', 'stanbyGMRolls') &&
-          game.user.isGM &&
-          config.options.hasPlayerOwner
-        if (config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_SKILL) {
-          check.skill = config.options.skillId
-          await check.roll()
-        } else if (
-          config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
-        ) {
-          await check.rollAttribute(config.options.attribute)
-        } else {
-          await check.rollCharacteristic(config.options.characteristic)
+          const check = new CoC7Check()
+          check.diceModifier = config.dialogOptions.modifier
+          check.difficulty = config.dialogOptions.difficulty
+          check.actor = !config.options.tokenKey
+            ? config.options.actorId
+            : config.options.tokenKey
+          check.flatDiceModifier = config.dialogOptions.flatDiceModifier
+          check.flatThresholdModifier = config.dialogOptions.flatThresholdModifier
+          check.standby =
+            !config.options.preventStandby &&
+            game.settings.get('CoC7', 'stanbyGMRolls') &&
+            game.user.isGM &&
+            config.options.hasPlayerOwner
+          if (config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_SKILL) {
+            check.skill = config.options.skillId
+            await check.roll()
+          } else if (
+            config.dialogOptions.rollType === CoC7ChatMessage.ROLL_TYPE_ATTRIBUTE
+          ) {
+            await check.rollAttribute(config.options.attribute)
+          } else {
+            await check.rollCharacteristic(config.options.characteristic)
+          }
+          if (config.dialogOptions.chatMessage) {
+            check.toMessage()
+          }
+          return {
+            result: check.modifiedResult,
+            successLevel: check.rolledSuccessLevel,
+            isFumble: check.isFumble,
+            isCritical: check.isCritical,
+            successLevels: {
+              1: check.regularThreshold,
+              2: check.hardThreshold,
+              3: check.extremeThreshold
+            },
+            passed: check.passed
+          }
         }
-        if (config.dialogOptions.chatMessage) {
-          check.toMessage()
-        }
-        return {
-          result: check.modifiedResult,
-          successLevel: check.rolledSuccessLevel,
-          isFumble: check.isFumble,
-          isCritical: check.isCritical,
-          successLevels: {
-            1: check.regularThreshold,
-            2: check.hardThreshold,
-            3: check.extremeThreshold
-          },
-          passed: check.passed
-        }
-      }
+        break
       case CoC7ChatMessage.CARD_TYPE_OPPOSED:
-      case CoC7ChatMessage.CARD_TYPE_COMBINED:
-        {
+      case CoC7ChatMessage.CARD_TYPE_COMBINED: {
           const check = new CoC7Check()
           check.actor = !config.options.tokenKey
             ? config.options.actorId
@@ -570,7 +569,8 @@ export class CoC7ChatMessage {
             CombinedCheckCard.dispatch(data)
           }
         }
-        case CoC7ChatMessage.CARD_TYPE_MELEE: {
+        break
+      case CoC7ChatMessage.CARD_TYPE_MELEE: {
           if (!config.options.actor || !config.options.skillId) return
           const skill = config.options.actor.items.get(config.options.skillId)
           for (const t of game.user.targets) {
@@ -578,7 +578,6 @@ export class CoC7ChatMessage {
             meleeAttackCard.toMessage()
           }
         }
-
         break
     }
   }
