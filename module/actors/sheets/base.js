@@ -1,4 +1,4 @@
-/* global $, ActorSheet, ChatMessage, CONST, Dialog, FormData, foundry, game, getProperty, Hooks, Item, mergeObject, Roll, TextEditor, ui */
+/* global $, ActorSheet, ChatMessage, CONST, Dialog, FormData, foundry, game, getProperty, Hooks, mergeObject, Roll, TextEditor, ui */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7ChatMessage } from '../../apps/coc7-chat-message.js'
@@ -16,6 +16,7 @@ import CoC7ActiveEffect from '../../active-effect.js'
 import { CoC7ContextMenu } from '../../context-menu.js'
 import { CoC7Utilities } from '../../utilities.js'
 import { MeleeAttackCard } from '../../chat/cards/melee-attack.js'
+// import { TestCard } from '../../chat/cards/test.js'
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -831,10 +832,10 @@ export class CoC7ActorSheet extends ActorSheet {
      */
     html.find('.test-trigger').click(async event => {
       if (!game.settings.get('CoC7', 'hiddendevmenu')) return null
-      await Item.create({
-        name: '__CoC7InternalItem__',
-        type: 'item'
-      })
+      // await Item.create({
+      //   name: '__CoC7InternalItem__',
+      //   type: 'item'
+      // })
       // const effects = await item.createEmbeddedDocuments('ActiveEffect', [
       //   {
       //     label: game.i18n.localize('CoC7.EffectNew'),
@@ -847,7 +848,9 @@ export class CoC7ActorSheet extends ActorSheet {
       // const effect = effects[0]
       // await effect.sheet.render(true)
       // ui.notifications.info( 'effect created !')
-      ui.notifications.info('effect created !')
+      // ui.notifications.info('effect created !')
+      // const test = new TestCard()
+      // test.toMessage()
     })
 
     html
@@ -1819,26 +1822,26 @@ export class CoC7ActorSheet extends ActorSheet {
     if (event.currentTarget.classList.contains('flagged4dev')) return
     let rollManeuver = true
     if (!event.currentTarget.classList.contains('combat')) rollManeuver = false
-    const skillId = event?.currentTarget.closest('.item')?.dataset.skillId
-    const skill = skillId?this.actor.items.get(skillId):null
+    const _skillId = event?.currentTarget.closest('.item')?.dataset.skillId
+    const skill = _skillId ? this.actor.items.get(_skillId) : null
     if (!skill || !skill.system.properties.combat || !skill.system.properties.fighting) rollManeuver = false
     if (game.user.targets.size < 1) rollManeuver = false
-    const rollType = rollManeuver?CoC7ChatMessage.ROLL_TYPE_MANEUVER:CoC7ChatMessage.ROLL_TYPE_SKILL
-    const cardType = rollManeuver?CoC7ChatMessage.CARD_TYPE_MELEE:CoC7ChatMessage.CARD_TYPE_NORMAL
+    const _rollType = rollManeuver ? CoC7ChatMessage.ROLL_TYPE_MANEUVER : CoC7ChatMessage.ROLL_TYPE_SKILL
+    const _cardType = rollManeuver ? CoC7ChatMessage.CARD_TYPE_MELEE : CoC7ChatMessage.CARD_TYPE_NORMAL
     if (game.settings.get('CoC7', 'useContextMenus')) {
       CoC7ChatMessage.trigger({
-        rollType: rollType,
-        cardType: cardType,
+        rollType: _rollType,
+        cardType: _cardType,
         preventStandby: true,
-        fastForward: rollManeuver?false:true,
-        skillId: skillId,
+        fastForward: !rollManeuver,
+        skillId: _skillId,
         actor: this.actor,
         maneuver: rollManeuver
       })
     } else {
       CoC7ChatMessage.trigger({
-        rollType: rollType,
-        cardType: cardType,
+        rollType: _rollType,
+        cardType: _cardType,
         event,
         actor: this.actor,
         maneuver: rollManeuver

@@ -1,5 +1,12 @@
-{{#if card.checks.attack.requested}}
-    <div class="card-buttons">
-      <button data-action="rollAttackCheck">{{ localize 'CoC7.roll' }} - {{ card.attackerWeapon.name }} ()</button>
-    </div>
+{{#if (eq data.checks.attack.state card.rollStates.requested)}}
+  {{#if card.isAttackManeuver}}
+  <span>{{card.strings.youPerformManeuver}}</span>
+  {{else}}
+  <span>{{card.strings.youPerformAttack}}</span>
+  {{/if}}
+  <div class="card-buttons">
+  {{#each card.attackerSkills as |skill|}}
+    <button data-action="rollAttackCheck" data-uuid="{{skill.uuid}}">{{ localize 'CoC7.Roll' }} - {{ skill.name }} ({{skill.value}}%)</button>
+  {{/each}}
+  </div>
 {{/if}}

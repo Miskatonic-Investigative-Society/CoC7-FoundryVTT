@@ -76,6 +76,13 @@ export class MeleeAttackCard extends EnhancedChatCard {
     return data
   }
 
+  get strings () {
+    return {
+      youPerformManeuver: () => { return game.i18n.format('CoC7.YouPerformManeuver', { name: this.attackerWeapon.name }) },
+      youPerformAttack: () => { return game.i18n.format('CoC7.YouPerformAttack', { name: this.attackerWeapon.name }) }
+    }
+  }
+
   get attacker () {
     if (!this.data.actorUuid) return undefined
     if (!this._actor) this._actor = fromUuidSync(this.data.actorUuid)
@@ -86,6 +93,12 @@ export class MeleeAttackCard extends EnhancedChatCard {
     if (!this.data.weaponUuid) return undefined
     if (!this._weapon) this._weapon = fromUuidSync(this.data.weaponUuid)
     return this._weapon
+  }
+
+  get attackerSkills () {
+    if (!this.attackerWeapon) return null
+    if (this.attackerWeapon.type === 'skill') return [this.attackerWeapon]
+    return this.attacker.getWeaponSkills(this.data.weaponUuid)
   }
 
   get isAttackManeuver () {
@@ -114,8 +127,8 @@ export class MeleeAttackCard extends EnhancedChatCard {
   get statusList () {
     const statusList = []
     if (this.isAttackManeuver) {
-      statusList.push({ name: game.i18n.localize('CoC7.AttackManeuver')})
-      if (this.defender) statusList.push({ name: `${game.i18n.localize('CoC7.Build')}:${this.attacker.build}/${this.defender.build}`})
+      statusList.push({ name: game.i18n.localize('CoC7.AttackManeuver') })
+      if (this.defender) statusList.push({ name: `${game.i18n.localize('CoC7.Build')}:${this.attacker.build}/${this.defender.build}` })
     }
     if (this.data.flags.overrideRules) statusList.push({ name: game.i18n.localize('CoC7.OverrideRules'), hint: game.i18n.localize('CoC7.hint.OverrideRules') })
     if (this.data.flags.outnumbered) statusList.push({ name: game.i18n.localize('CoC7.Outnumbered'), hint: game.i18n.localize('CoC7.hint.TargetOutnumbered') })
@@ -218,10 +231,24 @@ export class MeleeAttackCard extends EnhancedChatCard {
 
   async requestAttack (options) {
     this.data.checks.attack.state = this.rollStates.requested
+    if (!this.data.flags.surprised || (this.data.flags.surprised && !this.data.flags.autoHit)) this.data.checks.defense.state = this.rollStates.requested
     return true
   }
 
   async rollAttackCheck (options) {
+    return true
+  }
+
+  async rollDefenseCheck (options) {
+    return true
+  }
+
+  async fightBack (options) {
+    this.data.checks.defense.fightBack = true
+    this.data.checks.defense.dodge = false
+    this.data.checks.defense.maneuver = false
+    this.data.checks.defense.doNothing = false
+    // ui.notifications.info('fightBack')
     return true
   }
 }

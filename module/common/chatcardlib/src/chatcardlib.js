@@ -13,7 +13,8 @@ const PERMISSION_TYPE = {
 
 const STATE = {
   ON: 'switched-on',
-  OFF: 'switched-off'
+  OFF: 'switched-off',
+  SELECTED: 'value-selected'
 }
 
 export function initECC (...cardclass) {
@@ -73,9 +74,47 @@ class EnhancedChatCardLib {
       $('head').append($('<style  type="text/css"></style>'))
       style = $('head').find('style')
     }
-    style.append(
-      `.ecc-restricted {color: red}
-    .ecc-restricted:hover {cursor: not-allowed}`
+    style.append(`
+      .ecc-restricted {color: red}
+      .ecc-restricted:hover {cursor: not-allowed}
+      .ecc-dropdown-button {
+        font-size: 10px;
+        border: none;
+        cursor: pointer;
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+      }
+      .ecc-dropdown {
+        position: relative;
+        display: inline-block;
+      }
+      .ecc-dropdown:hover {
+        background-color: lightgray;
+      }
+      .ecc-dropdown a:hover {
+        background-color: #ddd;
+        text-shadow: 0 0 8px red;
+      }
+
+      .ecc-dropdown-content {
+        display: block;
+        visibility: hidden;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 126px;
+        overflow: auto;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+      }
+      .ecc-dropdown-content a {
+        color: black;
+        text-decoration: none;
+        display: block;
+      }
+      .show {
+        visibility: visible;
+      }`
     )
   }
 
@@ -305,6 +344,26 @@ export class EnhancedChatCard {
     html.on('click', `.${ECC_CLASS} button`, this._onButton.bind(this))
     html.on('keydown', `.${ECC_CLASS} form`, this._onKey.bind(this))
 
+    // ECC DropDown Management
+    html
+      .find(`.${ECC_CLASS} .ecc-dropdown .ecc-dropdown-button`).click(event => {
+        event.preventDefault()
+        event.stopPropagation()
+        event.currentTarget
+          ?.closest('.ecc-dropdown')
+          ?.querySelector('.ecc-dropdown-content')
+          ?.classList.toggle('show')
+      })
+    html
+      .find('.ecc-dropdown')
+      .mouseleave(event =>
+        event.currentTarget
+          ?.querySelector('.ecc-dropdown-content')
+          ?.classList.remove('show')
+      )
+
+    html.on('click', `.${ECC_CLASS} .ecc-dropdown .ecc-dropdown-element`, this._onDropDownSelect.bind(this))
+
     // const visi = html.find('[data-ecc-visibility]')
     // for (let i = 0; i < visi.length; i++) {
     //   const el = visi[i];
@@ -319,6 +378,7 @@ export class EnhancedChatCard {
       .find('[data-ecc-permissions]')
       .each(async (i, el) => await this.setPermission(el))
     html.find(`.${ECC_CLASS} .ecc-switch`).each((i, el) => this.setState(el))
+    html.find(`.${ECC_CLASS} .ecc-dropdown`).each((i, el) => this.setSelectedState(el))
     html
       .find(`.${ECC_CLASS} input[type="radio"]`)
       .each((i, el) => this.setRadioState(el))
@@ -334,10 +394,25 @@ export class EnhancedChatCard {
       element.classList.add(
         this.flags[element.dataset.flag] ? STATE.ON : STATE.OFF
       )
-    }
-    if (element.dataset.name) {
+    } else if (element.dataset.name) {
       const value = getByPath(this, element.dataset.name)
       element.classList.add(value ? STATE.ON : STATE.OFF)
+    }
+  }
+
+  setSelectedState (element) {
+    if (!element) return
+    if (element.dataset.name) {
+      const value = getByPath(this, element.dataset.name)
+      if (!value) return
+      if (Array.from(element.querySelectorAll('.ecc-dropdown-element'), node => node.dataset?.value).includes(value)) {
+        element.classList.add(STATE.SELECTED)
+      }
+    }
+    if (element.dataset.flag) {
+      element.classList.add(
+        this.flags[element.dataset.flag] ? STATE.ON : STATE.OFF
+      )
     }
   }
 
@@ -517,6 +592,7 @@ export class EnhancedChatCard {
 
     const target = event.currentTarget
 
+    const originalDisplayStyle = target.style.display
     target.style.display = 'none' // Avoid multiple push
     const action = target.dataset.action
 
@@ -536,15 +612,13 @@ export class EnhancedChatCard {
       )
     }
 
-    const originalDisplayStyle = target.style.display
-
     if (!action) {
       console.warn('no action associated with this button')
-      if (!formUpdate) return // If the form was updated we still update the card
+      if (!formUpdate) return false// If the form was updated we still update the card
     }
     if (!this[action]) {
       console.warn(`no ${action} action found for this card`)
-      if (!formUpdate) return // If the form was updated we still update the card
+      if (!formUpdate) return false// If the form was updated we still update the card
     }
     if (this[action]) {
       actionUpdate = await this[action]({ event, updateCard: false })
@@ -552,6 +626,7 @@ export class EnhancedChatCard {
 
     if (formUpdate || actionUpdate) await this.updateChatCard()
     else target.style.display = originalDisplayStyle
+    return (formUpdate || actionUpdate)
   }
 
   /**
@@ -711,9 +786,9 @@ export class EnhancedChatCard {
     return card
   }
 
-  setData (name) {
+  setData (name, value = true) {
     if (!name && !($.type(name) === 'string')) return
-    setByPath(this, name, true)
+    setByPath(this, name, value)
   }
 
   unsetData (name) {
@@ -725,6 +800,47 @@ export class EnhancedChatCard {
     if (!name && !($.type(name) === 'string')) return
     const value = getByPath(this, name)
     setByPath(this, name, !value)
+  }
+
+  // setDataValue (name, value) {
+  //   if (!name && !($.type(name) === 'string')) return
+  //   setByPath(this, name, value)
+  // }
+
+  clearData (name) {
+    if (!name && !($.type(name) === 'string')) return
+    setByPath(this, name, null)
+  }
+
+  async _onDropDownSelect (event) {
+    event.preventDefault()
+
+    const target = event.currentTarget
+    if (
+      target &&
+      target.classList.contains('gm-select-only') &&
+      !game.user.isGM
+    ) {
+      return
+    }
+    const dropdown = target.closest('.ecc-dropdown')
+    const name = dropdown.dataset.name
+    const value = target.dataset.value
+    // ui.notifications.info(`SELECT ${name} to value ${value}`)
+    this.setData(name, value)
+    const card = target.closest(`.${ECC_CLASS}`)
+    card.querySelectorAll(`[data-name="${name}"][data-flag]`).forEach((node) => {
+      if (node.dataset.value && node.dataset.value === value) this.flags[node.dataset.flag] = true
+      else if (Array.from(node.querySelectorAll('.ecc-dropdown-element'), el => el.dataset?.value).includes(value)) this.flags[node.dataset.flag] = true
+      else this.flags[node.dataset.flag] = false
+    })
+    if (dropdown.dataset.flag) this.flags[dropdown.dataset.flag] = true // Should be on already
+    if (this.options.submitOnChange) {
+      if (card) this._update(card)
+    }
+    let updated = false
+    if ('action' in target.dataset) updated = await this._onButton(event)
+    if (!updated) await this.updateChatCard() // Submit on change ?
   }
 
   async _onToggle (event) {
@@ -749,6 +865,13 @@ export class EnhancedChatCard {
     if (!name) return
     const toggle = target.closest('.ecc-radio')
     if (!toggle) {
+      if (target.dataset.name) {
+        this.setData(target.dataset.name, target.dataset.flag ? target.dataset.flag : name)
+        const card = target.closest(`.${ECC_CLASS}`)
+        card.querySelectorAll(`[data-name="${target.dataset.name}"][data-flag]`).forEach((node) => {
+          this.flags[node.dataset.flag] = false
+        })
+      }
       this.toggleData(name)
     } else {
       const buttons = toggle.querySelectorAll('.ecc-switch')

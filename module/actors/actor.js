@@ -2225,7 +2225,7 @@ export class CoCActor extends Actor {
 
   get build () {
     if (!isNaN(Number(this.system.attribs.build?.value))) return Number(this.system.attribs.build.value)
-    return 0 //default build is 0
+    return 0 // default build is 0
   }
 
   get rawDb () {
