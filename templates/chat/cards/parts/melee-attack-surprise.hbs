@@ -13,8 +13,8 @@
   {{/if}}
   {{#if (eq data.checks.detection.state card.rollStates.closed)}}
     {{#if card.attacker.hasPlayerOwner}}
-      {{#if data.checks.detection.roll.passed}}
-        <span>{{ localize 'CoC7.YouTakeBySurprise' }}  ({{{htmlDetectionCheckInline}}})</span>
+      {{#if card.defenderStartled}}
+        <span>{{ localize 'CoC7.YouTakeBySurprise' }} {{#if data.checks.detection.roll}} ({{{htmlDetectionCheckInline}}}) {{/if}}</span>
         {{#if data.flags.autoHit}}
           <span>{{ localize 'CoC7.AttackAutoSuccess'}}</span>
         {{/if}}
@@ -22,18 +22,20 @@
           <span>{{ localize 'CoC7.AttackGainBonusDice'}}</span>
         {{/if}}
       {{else}}
-        <span>{{ localize 'CoC7.YouFaillToSurprise' }} ({{{htmlDetectionCheckInline}}})</span>
+        {{#if data.checks.detection.roll}}<span>{{ localize 'CoC7.YouFaillToSurprise' }} ({{{htmlDetectionCheckInline}}})</span>{{/if}}
       {{/if}}
     {{else}}
       {{#if data.checks.detection.roll.passed}}
         <span>{{ localize 'CoC7.YouAreAwareOfAttack' }}  ({{{htmlDetectionCheckInline}}})</span>
       {{else}}
-        <span>{{ localize 'CoC7.YouAreSurprisedByAttack' }} ({{{htmlDetectionCheckInline}}})</span>
-        {{#if data.flags.autoHit}}
-          <span>{{ localize 'CoC7.OpponentAttackAutoSuccess'}}</span>
-        {{/if}}
-        {{#if data.flags.suprisedBonusDice}}
-          <span>{{ localize 'CoC7.OpponentAttackGainBonusDice'}}</span>
+        {{#if card.defenderStartled}}
+          <span>{{ localize 'CoC7.YouAreSurprisedByAttack' }} ({{{htmlDetectionCheckInline}}})</span>
+          {{#if data.flags.autoHit}}
+            <span>{{ localize 'CoC7.OpponentAttackAutoSuccess'}}</span>
+          {{/if}}
+          {{#if data.flags.suprisedBonusDice}}
+            <span>{{ localize 'CoC7.OpponentAttackGainBonusDice'}}</span>
+          {{/if}}
         {{/if}}
       {{/if}}
     {{/if}}  

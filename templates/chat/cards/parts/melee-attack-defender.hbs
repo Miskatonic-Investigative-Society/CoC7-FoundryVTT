@@ -1,27 +1,37 @@
-{{#if (eq data.checks.defense.state card.rollStates.requested)}}
-  <span>ACTION:{{ data.checks.defense.name }}</span>
-  <div class="flexrow">
-    <div class="flex1 toggle-switch ecc-dropdown" data-name="data.checks.defense.name" data-flag="fightback">
-      <span class="ecc-dropdown-button">{{localize 'CoC7.FightBack'}}</span>
-      <div class="ecc-dropdown-content">
-        <a class="ecc-dropdown-element" data-value="1">Element 1</a>
-        <a class="ecc-dropdown-element" data-value="2">Element 2</a>
-        <a class="ecc-dropdown-element" data-value="3">Element 3</a>
+{{#if card.defenderCanRetaliate}}
+  {{#if (eq data.checks.defense.state card.rollStates.requested)}}
+    <div class="flexcol naration">
+      {{#if data.flags.suprisedBonusDice}}<span>{{ localize 'CoC7.TakenBySurpriseAttackerBonus' }}</span>{{/if}}
+      {{#if data.flags.fightback }}<span>{{ localize 'CoC7.FightBack' }}</span>{{/if}}
+      {{#if data.flags.maneuver }}<span>{{ localize 'CoC7.Maneuver' }}</span>{{/if}}
+      {{#if data.flags.dodge }}<span>{{ localize 'CoC7.Dodging' }}</span>{{/if}}
+      {{#if data.flags.doNothing }}<span>{{ localize 'CoC7.NoResponse' }}</span>{{/if}}
+    </div>
+    <div class="flexrow">
+      <div class="flex1 toggle-switch ecc-dropdown" data-name="data.checks.defense.name" data-flag="fightback">
+        <span class="ecc-dropdown-button">{{localize 'CoC7.FightBack'}}</span>
+        <div class="ecc-dropdown-content">
+          <a class="ecc-dropdown-element" data-value="1">Element 1</a>
+          <a class="ecc-dropdown-element" data-value="2">Element 2</a>
+          <a class="ecc-dropdown-element" data-value="3">Element 3</a>
+        </div>
+      </div>
+      <div class="flex1 toggle-switch ecc-dropdown" data-name="data.checks.defense.name" data-flag="maneuver">
+        <span class="ecc-dropdown-button">{{localize 'CoC7.Maneuver'}}</span>
+        <div class="ecc-dropdown-content">
+          <a class="ecc-dropdown-element" data-value="4">Element 4</a>
+          <a class="ecc-dropdown-element" data-value="5">Element 5</a>
+          <a class="ecc-dropdown-element" data-value="6">Element 6</a>
+        </div>
+      </div>
+      <div class="flex1 toggle-switch ecc-switch" data-name="data.checks.defense.name" data-flag="dodge">
+        <span class="">{{ localize 'CoC7.Dodge' }}</span>
+      </div>
+      <div class="flex1 toggle-switch ecc-switch" data-name="data.checks.defense.name" data-flag="doNothing">
+        <span class="">{{ localize 'CoC7.NoResponse' }}</span>
       </div>
     </div>
-    <div class="flex1 toggle-switch ecc-dropdown" data-name="data.checks.defense.name" data-flag="maneuver">
-      <span class="ecc-dropdown-button">{{localize 'CoC7.Maneuver'}}</span>
-      <div class="ecc-dropdown-content">
-        <a class="ecc-dropdown-element" data-value="4">Element 4</a>
-        <a class="ecc-dropdown-element" data-value="5">Element 5</a>
-        <a class="ecc-dropdown-element" data-value="6">Element 6</a>
-      </div>
-    </div>
-    <div class="flex1 toggle-switch ecc-switch" data-name="data.checks.defense.name" data-flag="dodge">
-      <span class="">{{ localize 'CoC7.Dodge' }}</span>
-    </div>
-    <div class="flex1 toggle-switch ecc-switch" data-name="data.checks.defense.name" data-flag="doNothing">
-      <span class="">{{ localize 'CoC7.NoResponse' }}</span>
-    </div>
-  </div>
+  {{/if}}
+{{else}}
+  <span>{{ localize 'CoC7.TakenBySurpriseNoResponse' }}</span>
 {{/if}}

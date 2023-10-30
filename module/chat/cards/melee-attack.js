@@ -171,6 +171,26 @@ export class MeleeAttackCard extends EnhancedChatCard {
     return null
   }
 
+  // If de
+  get defenderCanRetaliate () {
+    if (!this.defender) return false
+    if (this.flags.outnumbered) return false
+    if (this.flags.surprised) {
+      if ((!this.flags.canDetect || this.data.checks.detection.roll?.passed) && this.flags.autoHit) return false
+    } 
+    return true
+  }
+
+  // Surprise is a success, defender is startled and attacker get a bonus
+  get defenderStartled () {
+    if (!this.flags.surprised) return false
+    if (this.flags.canDetect) {
+      if (this.data.checks.detection.roll?.passed) return true
+      return false
+    }
+    return true
+  }
+
   get surpriseResolved () {
     return !this.data.flags.surprised || (this.data.checks.detection.state === this.rollStates.closed)
   }
