@@ -72,7 +72,6 @@ export class MeleeAttackCard extends EnhancedChatCard {
       data.htmlDetectionCheck = await this.data.checks.detection.roll.getHtmlRoll()
       data.htmlDetectionCheckInline = await this.data.checks.detection.roll.inlineCheck?.outerHTML
     }
-
     return data
   }
 
@@ -177,7 +176,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
     if (this.flags.outnumbered) return false
     if (this.flags.surprised) {
       if ((!this.flags.canDetect || this.data.checks.detection.roll?.passed) && this.flags.autoHit) return false
-    } 
+    }
     return true
   }
 
@@ -264,11 +263,14 @@ export class MeleeAttackCard extends EnhancedChatCard {
   }
 
   async fightBack (options) {
-    this.data.checks.defense.fightBack = true
-    this.data.checks.defense.dodge = false
-    this.data.checks.defense.maneuver = false
-    this.data.checks.defense.doNothing = false
-    // ui.notifications.info('fightBack')
     return true
+  }
+
+  get fightBackWeapon () {
+    return this.defender.meleeWeapons.find((wp) => wp.uuid === this.data.checks.defense.name)
+  }
+
+  get defenseManeuver () {
+    return this.defender.meleeManeuvers.find((mn) => mn.uuid === this.data.checks.defense.name)
   }
 }

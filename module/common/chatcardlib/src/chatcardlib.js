@@ -338,15 +338,15 @@ export class EnhancedChatCard {
     //   this._onToggle.bind(this)
     // )
     html.on('change', 'input,select,textarea', this._onChange.bind(this))
-    html.on('click', `.${ECC_CLASS} .ecc-switch`, this._onToggle.bind(this))
-    html.on('click', `.${ECC_CLASS} .submit`, this._onSubmit.bind(this))
-    html.on('focusout', `.${ECC_CLASS} input`, this._onChange.bind(this))
-    html.on('click', `.${ECC_CLASS} button`, this._onButton.bind(this))
-    html.on('keydown', `.${ECC_CLASS} form`, this._onKey.bind(this))
+    html.on('click', `.${ECC_CLASS} .ecc-switch:not('.inactive')`, this._onToggle.bind(this))
+    html.on('click', `.${ECC_CLASS} .submit:not('.inactive')`, this._onSubmit.bind(this))
+    html.on('focusout', `.${ECC_CLASS} input:not('.inactive')`, this._onChange.bind(this))
+    html.on('click', `.${ECC_CLASS} button:not('.inactive')`, this._onButton.bind(this))
+    html.on('keydown', `.${ECC_CLASS} form:not('.inactive')`, this._onKey.bind(this))
 
     // ECC DropDown Management
     html
-      .find(`.${ECC_CLASS} .ecc-dropdown .ecc-dropdown-button`).click(event => {
+      .find(`.${ECC_CLASS} .ecc-dropdown .ecc-dropdown-button:not('.inactive')`).click(event => {
         event.preventDefault()
         event.stopPropagation()
         event.currentTarget
@@ -355,7 +355,7 @@ export class EnhancedChatCard {
           ?.classList.toggle('show')
       })
     html
-      .find('.ecc-dropdown')
+      .find('.ecc-dropdown:not(".inactive")')
       .mouseleave(event =>
         event.currentTarget
           ?.querySelector('.ecc-dropdown-content')

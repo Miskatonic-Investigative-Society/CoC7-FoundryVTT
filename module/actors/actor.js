@@ -3336,6 +3336,35 @@ export class CoCActor extends Actor {
     return weaponList
   }
 
+  get meleeWeapons () {
+    const weaponList = this.items?.filter(el => el.type === 'weapon' && !el.system.properties.rngd && !el.system.properties.mnvr)
+    weaponList.sort(CoC7Utilities.sortByNameKey)
+    weaponList.forEach(wp => {
+      wp.skills = {}
+      wp.skills.main = wp.system.skill.main.id ? this.items.get(wp.system.skill.main.id) : { name: null, value: 0 }
+      wp.skills.alternativ = wp.system.skill.alternativ.id ? this.items.get(wp.system.skill.alternativ.id) : null
+    })
+    return weaponList
+  }
+
+  get meleeManeuvers () {
+    const maneuverList = this.items?.filter(el => (el.type === 'skill' && el.system.properties.fighting) || (el.type === 'weapon' && el.system.properties.mnvr))
+    maneuverList.sort(CoC7Utilities.sortByNameKey)
+    maneuverList.forEach(mn => {
+      if (mn.type === 'skill') {
+        mn.skills = { main: mn, alternativ: null }
+        mn.specialManeuver = false
+      }
+      if (mn.type === 'weapon') {
+        mn.skills = {}
+        mn.skills.main = mn.system.skill.main.id ? this.items.get(mn.system.skill.main.id) : { name: null, value: 0 }
+        mn.skills.alternativ = mn.system.skill.alternativ.id ? this.items.get(mn.system.skill.alternativ.id) : null
+        mn.specialManeuver = true
+      }
+    })
+    return maneuverList
+  }
+
   get firearmSkills () {
     const skillList = []
     for (const value of this.items) {
