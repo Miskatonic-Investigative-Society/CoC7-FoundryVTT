@@ -10,7 +10,9 @@ Happy gaming !
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Fix dholehouse importer for characters with a single item on their possesions. Fixes #1423, thanks to @pconcepcion #1424
+- Fix targeting system not being able to calculate distance from the minimized sheet #1426
 - Add system manual button to Game Settings sidebar tab
+- Add system setting to not trigger an error message for ranged token distance calculations if playing theatre of the mind
 - Update to French localization, thanks to @vonv #1415
 - Update to Italian localization, thanks to @Stefano1975t #1419 and #1422
 
