@@ -2,21 +2,21 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (376 untranslated strings)](#cnjson)
+[cn.json (378 untranslated strings)](#cnjson)
 
-[cs.json (561 untranslated strings)](#csjson)
+[cs.json (563 untranslated strings)](#csjson)
 
-[es.json (358 untranslated strings)](#esjson)
+[es.json (360 untranslated strings)](#esjson)
 
-[ko.json (158 untranslated strings)](#kojson)
+[ko.json (160 untranslated strings)](#kojson)
 
-[ru.json (1223 untranslated strings)](#rujson)
+[ru.json (1225 untranslated strings)](#rujson)
 
-[sv.json (344 untranslated strings)](#svjson)
+[sv.json (346 untranslated strings)](#svjson)
 
 
 ## cn.json
-376 untranslated strings
+378 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -301,6 +301,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.ChaseShowTokenMovementHint": "Show movement on the grid when a token is moved to the next location.",
 "SETTINGS.UseContextMenus": "Use context menus",
 "SETTINGS.UseContextMenusHint": "[EXPERIMENTAL] Use context menus for rolls instead of key combination.",
+"SETTINGS.SceneDistanceNotCalcualtedNoError": "Don't show error for ranged distance",
+"SETTINGS.SceneDistanceNotCalcualtedNoErrorHint": "When starting a ranged combat if playing theatre of the mind do not show the unable to calculate distance message.",
 "CoC7.EffectNew": "New effect",
 "CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value.",
 "CoC7.InvestigatorWizard.Title": "Investigator Creation Wizard",
@@ -396,7 +398,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
 ```
 ## cs.json
-561 untranslated strings
+563 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -863,6 +865,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.ChaseShowTokenMovementHint": "Show movement on the grid when a token is moved to the next location.",
 "SETTINGS.UseContextMenus": "Use context menus",
 "SETTINGS.UseContextMenusHint": "[EXPERIMENTAL] Use context menus for rolls instead of key combination.",
+"SETTINGS.SceneDistanceNotCalcualtedNoError": "Don't show error for ranged distance",
+"SETTINGS.SceneDistanceNotCalcualtedNoErrorHint": "When starting a ranged combat if playing theatre of the mind do not show the unable to calculate distance message.",
 "CoC7.getTheExample": "Copy Example",
 "CoC7.Copied": "Copied the Example Text to Clipboard",
 "CoC7.EffectNew": "New effect",
@@ -961,7 +965,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
 ```
 ## es.json
-358 untranslated strings
+360 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -1228,6 +1232,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.ChaseShowTokenMovementHint": "Show movement on the grid when a token is moved to the next location.",
 "SETTINGS.UseContextMenus": "Use context menus",
 "SETTINGS.UseContextMenusHint": "[EXPERIMENTAL] Use context menus for rolls instead of key combination.",
+"SETTINGS.SceneDistanceNotCalcualtedNoError": "Don't show error for ranged distance",
+"SETTINGS.SceneDistanceNotCalcualtedNoErrorHint": "When starting a ranged combat if playing theatre of the mind do not show the unable to calculate distance message.",
 "CoC7.EffectNew": "New effect",
 "CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value.",
 "CoC7.InvestigatorWizard.Title": "Investigator Creation Wizard",
@@ -1323,7 +1329,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
 ```
 ## ko.json
-158 untranslated strings
+160 untranslated strings
 ```
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
 "CoC7.RollDifficultyRegularTitle": "Regular difficulty",
@@ -1392,6 +1398,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Settings.DropCoCID.UseCoCID": "Use CoC ID Where Possible",
 "CoC7.Settings.DropCoCID.IgnoreCoCID": "Do Not Use CoC ID",
 "SETTINGS.DefaultDifficulty": "Default check difficulty",
+"SETTINGS.SceneDistanceNotCalcualtedNoError": "Don't show error for ranged distance",
+"SETTINGS.SceneDistanceNotCalcualtedNoErrorHint": "When starting a ranged combat if playing theatre of the mind do not show the unable to calculate distance message.",
 "CoC7.InvestigatorWizard.Title": "Investigator Creation Wizard",
 "CoC7.InvestigatorWizard.TitleKeeperConfiguration": "Keeper Configuration",
 "CoC7.InvestigatorWizard.TitleSelectSetup": "Investigator Setup",
@@ -1485,7 +1493,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
 ```
 ## ru.json
-1223 untranslated strings
+1225 untranslated strings
 ```
 "CoC7.title": "Call of Cthulhu 7h Edition",
 "CoC7.Entities.Character": "Character",
@@ -2611,6 +2619,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.ChaseShowTokenMovementHint": "Show movement on the grid when a token is moved to the next location.",
 "SETTINGS.UseContextMenus": "Use context menus",
 "SETTINGS.UseContextMenusHint": "[EXPERIMENTAL] Use context menus for rolls instead of key combination.",
+"SETTINGS.SceneDistanceNotCalcualtedNoError": "Don't show error for ranged distance",
+"SETTINGS.SceneDistanceNotCalcualtedNoErrorHint": "When starting a ranged combat if playing theatre of the mind do not show the unable to calculate distance message.",
 "CoC7.getTheExample": "Copy Example",
 "CoC7.Copied": "Copied the Example Text to Clipboard",
 "CoC7.EffectNew": "New effect",
@@ -2712,7 +2722,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
 ```
 ## sv.json
-344 untranslated strings
+346 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -2965,6 +2975,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.ChaseShowTokenMovementHint": "Show movement on the grid when a token is moved to the next location.",
 "SETTINGS.UseContextMenus": "Use context menus",
 "SETTINGS.UseContextMenusHint": "[EXPERIMENTAL] Use context menus for rolls instead of key combination.",
+"SETTINGS.SceneDistanceNotCalcualtedNoError": "Don't show error for ranged distance",
+"SETTINGS.SceneDistanceNotCalcualtedNoErrorHint": "When starting a ranged combat if playing theatre of the mind do not show the unable to calculate distance message.",
 "CoC7.EffectNew": "New effect",
 "CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value.",
 "CoC7.InvestigatorWizard.Title": "Investigator Creation Wizard",
