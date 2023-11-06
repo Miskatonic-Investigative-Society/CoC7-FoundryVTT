@@ -223,6 +223,14 @@ export function registerSettings () {
     default: true,
     type: Boolean
   })
+  game.settings.register('CoC7', 'distanceTheatreOfTheMind', {
+    name: 'SETTINGS.SceneDistanceNotCalcualtedNoError',
+    hint: 'SETTINGS.SceneDistanceNotCalcualtedNoErrorHint',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean
+  })
 
   /**
    * Game Artwork Settings

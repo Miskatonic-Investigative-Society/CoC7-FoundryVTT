@@ -1,4 +1,4 @@
-/* global $, duplicate, expandObject, FontFace, game, mergeObject, TextEditor, ui */
+/* global $, duplicate, expandObject, FontFace, foundry, game, mergeObject, TextEditor, ui */
 import { COC7 } from '../../config.js'
 import { CoCActor } from '../actor.js'
 import { CoC7ActorSheet } from './base.js'
@@ -35,15 +35,17 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
 
   async toggleSheetMode (event) {
     this.summarized = !this.summarized
+    let options = foundry.utils.duplicate(CoC7CharacterSheet.defaultOptions)
+    if (this.summarized) {
+      options = foundry.utils.mergeObject(options, {
+        classes: ['coc7', 'actor', 'character', 'summarized'],
+        height: 200,
+        resizable: false,
+        width: 700
+      })
+    }
+    options.token = this.options.token
     await this.close()
-    const options = this.summarized
-      ? {
-          classes: ['coc7', 'actor', 'character', 'summarized'],
-          height: 200,
-          resizable: false,
-          width: 700
-        }
-      : CoC7CharacterSheet.defaultOptions
     await this.render(true, options)
   }
 
