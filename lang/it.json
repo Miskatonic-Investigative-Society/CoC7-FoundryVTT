@@ -1192,6 +1192,8 @@
   "SETTINGS.ChaseShowTokenMovementHint": "Mostra movimento sulla griglia quando una pedina viene mossa nel luogo successivo.",
   "SETTINGS.UseContextMenus": "Usa menu contestuali",
   "SETTINGS.UseContextMenusHint": "[SPERIMENTALE] Usa i menu contestuali per i tiri invece della combinazione di tasti.",
+  "SETTINGS.SceneDistanceNotCalcualtedNoError": "Non mostrare un errore per la distanza",
+  "SETTINGS.SceneDistanceNotCalcualtedNoErrorHint": "Quando si inizia un combattimento a distanza, e si sta usando il teatro della mente, non viene mostrato il messaggio sull'impossibilità di calcolare la distanza.",
 
   "CoC7.getTheExample": "Copia Esempio",
   "CoC7.Copied": "Copiato il testo di esempio negli Appunti",
