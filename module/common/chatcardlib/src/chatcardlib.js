@@ -346,7 +346,7 @@ export class EnhancedChatCard {
 
     // ECC DropDown Management
     html
-      .find(`.${ECC_CLASS} .ecc-dropdown .ecc-dropdown-button:not('.inactive')`).click(event => {
+      .find(`.${ECC_CLASS} .ecc-dropdown:not('.inactive') .ecc-dropdown-button`).click(event => {
         event.preventDefault()
         event.stopPropagation()
         event.currentTarget

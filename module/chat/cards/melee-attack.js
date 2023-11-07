@@ -1,15 +1,17 @@
-/* global foundry, game, fromUuidSync */
+/* global foundry, game, fromUuidSync, CONFIG, ui */
 import { EnhancedChatCard } from '../../common/chatcardlib/src/chatcardlib.js'
 import { CoCID } from '../../../module/scripts/coc-id.js'
 import { CoC7Check } from '../../check.js'
+import { chatHelper } from '../helper.js'
 
 export class MeleeAttackCard extends EnhancedChatCard {
   get rollStates () {
     return {
       notRequested: -1,
       requested: 1,
-      rolled: 2,
-      closed: 3
+      locked: 2,
+      rolled: 3,
+      closed: 4
     }
   }
 
@@ -18,7 +20,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
    * @override
    */
   async initialize () {
-    this.data.states = {}
+    // this.data.states = {}
     this.data.objects = {}
     this.data.flags.rulesMode = this.hasTaget // By default, automatic mode is enabled
     this.data.flags.manualMode = !this.hasTaget
@@ -84,8 +86,26 @@ export class MeleeAttackCard extends EnhancedChatCard {
 
   get attacker () {
     if (!this.data.actorUuid) return undefined
-    if (!this._actor) this._actor = fromUuidSync(this.data.actorUuid)
+    if (!this._actor) {
+      const doc = fromUuidSync(this.data.actorUuid)
+      this._actor = (doc.constructor === CONFIG.Token.documentClass) ? doc.actor : doc
+    }
     return this._actor
+  }
+
+  get attackerTokenDocument () {
+    if (!this.data.actorUuid) return undefined
+    if (!this._attackerTokenDocument) {
+      const doc = fromUuidSync(this.data.actorUuid)
+      if (doc.constructor === CONFIG.Token.documentClass) this._attackerTokenDocument = doc
+      else if (doc.token) this._attackerTokenDocument = doc.token
+      else this._attackerTokenDocument = undefined
+    }
+    return this._attackerTokenDocument
+  }
+
+  get attackerToken () {
+    return this.attackerTokenDocument?._object
   }
 
   get attackerWeapon () {
@@ -109,8 +129,26 @@ export class MeleeAttackCard extends EnhancedChatCard {
 
   get defender () {
     if (!this.data.targetUuid) return { name: game.i18n.localize('CoC7.Dummy'), img: 'icons/svg/mystery-man-black.svg', type: undefined }
-    if (!this._target) this._target = fromUuidSync(this.data.targetUuid)
+    if (!this._target) {
+      const doc = fromUuidSync(this.data.targetUuid)
+      this._target = (doc.constructor === CONFIG.Token.documentClass) ? doc.actor : doc
+    }
     return this._target
+  }
+
+  get defenderTokenDocument () {
+    if (!this.data.targetUuid) return undefined
+    if (!this._defenderTokenDocument) {
+      const doc = fromUuidSync(this.data.targetUuid)
+      if (doc.constructor === CONFIG.Token.documentClass) this._defenderTokenDocument = doc
+      else if (doc.token) this._defenderTokenDocument = doc.token
+      else this._defenderTokenDocument = undefined
+    }
+    return this._defenderTokenDocument
+  }
+
+  get defenderToken () {
+    return this.defenderTokenDocument?._object
   }
 
   get hasTaget () {
@@ -126,8 +164,22 @@ export class MeleeAttackCard extends EnhancedChatCard {
   get statusList () {
     const statusList = []
     if (this.isAttackManeuver) {
-      statusList.push({ name: game.i18n.localize('CoC7.AttackManeuver') })
-      if (this.defender) statusList.push({ name: `${game.i18n.localize('CoC7.Build')}:${this.attacker.build}/${this.defender.build}` })
+      statusList.push({ name: game.i18n.localize('CoC7.AttackManeuver'), css: this.attackerCanManeuver ? 'success' : 'failure' })
+      if (this.defender) {
+        statusList.push({
+          name: `${game.i18n.localize('CoC7.Build')}:${this.attacker.build}/${this.defender.build}`,
+          css: this.attackerCanManeuver ? 'success' : 'failure'
+        })
+      }
+    }
+    if (this.data.thrown) {
+      statusList.push({ name: game.i18n.localize('CoC7.Thrown') })
+      if (this.distance) {
+        statusList.push({ name: game.i18n.format(`CoC7.Distance:${this.distance.value}${this.distance.unit}`), hint: game.i18n.localize('CoC7.ThrownAttackRules') })
+      }
+      if (this.defenderFightBackOption) {
+        statusList.push({ name: game.i18n.localize('CoC7.PointBlank') })
+      }
     }
     if (this.data.flags.overrideRules) statusList.push({ name: game.i18n.localize('CoC7.OverrideRules'), hint: game.i18n.localize('CoC7.hint.OverrideRules') })
     if (this.data.flags.outnumbered) statusList.push({ name: game.i18n.localize('CoC7.Outnumbered'), hint: game.i18n.localize('CoC7.hint.TargetOutnumbered') })
@@ -151,6 +203,10 @@ export class MeleeAttackCard extends EnhancedChatCard {
       }
     }
 
+    if (this.defenderCanManeuver && this.data.flags.maneuver) {
+      statusList.push({ name: `${game.i18n.localize('CoC7.Build')}:${this.attacker.build}/${this.defender.build}` })
+    }
+
     if (this.totalAttackBonus !== 0) {
       statusList.push({ name: `${game.i18n.localize('CoC7.AttackModifier')}: ${this.totalAttackBonus}` })
     }
@@ -170,24 +226,50 @@ export class MeleeAttackCard extends EnhancedChatCard {
     return null
   }
 
-  // If de
-  get defenderCanRetaliate () {
-    if (!this.defender) return false
-    if (this.flags.outnumbered) return false
-    if (this.flags.surprised) {
-      if ((!this.flags.canDetect || this.data.checks.detection.roll?.passed) && this.flags.autoHit) return false
+  // Surprise is a success, defender is startled and attacker get a bonus
+  get defenderStartled () {
+    if (!this.flags.surprised) return false
+    if (this.data.checks.detection.state !== this.rollStates.closed) return false
+    if (this.flags.canDetect) {
+      if (this.attacker.hasPlayerOwner && this.data.checks.detection.roll?.passed) return true // Attacker try to surprise and succeed
+      if (!this.attacker.hasPlayerOwner && !this.data.checks.detection.roll?.passed) return true // Defender is surprised but see the attack
+      return false
     }
     return true
   }
 
-  // Surprise is a success, defender is startled and attacker get a bonus
-  get defenderStartled () {
-    if (!this.flags.surprised) return false
-    if (this.flags.canDetect) {
-      if (this.data.checks.detection.roll?.passed) return true
-      return false
+  // If defender
+  get defenderCanRespond () {
+    if (!this.defender) return false
+    if (this.flags.outnumbered) return false
+    if (this.flags.surprised) {
+      if (this.defenderStartled && this.flags.autoHit) return false
     }
     return true
+  }
+
+  get defenderResponseValidated () {
+    if (!this.defenderCanRespond) return true
+    if (!this.defenderCanDodge && !this.defenderCanFightBack && !this.defenderCanManeuver) return true
+    return this.data.checks.defense.state >= this.rollStates.locked
+  }
+
+  get defenderCanDodge () {
+    return !!(this.defender.dodgeSkill)
+  }
+
+  get defenderCanFightBack () {
+    return (this.defender.meleeWeapons?.length > 0)
+  }
+
+  get defenderCanManeuver () {
+    if (!isNaN(this.attacker.build) && !isNaN(this.defender.build) && this.attacker.build <= (this.defender.build + 2)) return (this.defender.meleeManeuvers?.length > 0)
+    return false
+  }
+
+  get attackerCanManeuver () {
+    if (!isNaN(this.attacker.build) && !isNaN(this.defender.build) && this.defender.build <= (this.attacker.build + 2)) return (this.attacker.meleeManeuvers?.length > 0)
+    return false
   }
 
   get surpriseResolved () {
@@ -250,19 +332,35 @@ export class MeleeAttackCard extends EnhancedChatCard {
 
   async requestAttack (options) {
     this.data.checks.attack.state = this.rollStates.requested
-    if (!this.data.flags.surprised || (this.data.flags.surprised && !this.data.flags.autoHit)) this.data.checks.defense.state = this.rollStates.requested
+    this.data.checks.defense.state = this.defenderCanRespond ? this.rollStates.requested : this.rollStates.closed
     return true
   }
 
   async rollAttackCheck (options) {
+    if (this.data.checks.defense.state >= this.rollStates.locked) return this.resolveCard()
+    ui.notifications.info('Card not resolved')
     return true
   }
 
-  async rollDefenseCheck (options) {
+  async chooseToFightBack (options) {
+    this.data.checks.defense.state = this.rollStates.locked
+    this.data.checks.defense.alternativeSkill = !!options.event.target.dataset.alternative
     return true
   }
 
-  async fightBack (options) {
+  async chooseToManeuver (options) {
+    this.data.checks.defense.state = this.rollStates.locked
+    this.data.checks.defense.alternativeSkill = !!options.event.target.dataset.alternative
+    return true
+  }
+
+  async chooseToDodge (options) {
+    this.data.checks.defense.state = this.rollStates.locked
+    return true
+  }
+
+  async chooseToDoNothing (options) {
+    this.data.checks.defense.state = this.rollStates.locked
     return true
   }
 
@@ -272,5 +370,41 @@ export class MeleeAttackCard extends EnhancedChatCard {
 
   get defenseManeuver () {
     return this.defender.meleeManeuvers.find((mn) => mn.uuid === this.data.checks.defense.name)
+  }
+
+  async resolveCard () {
+    ui.notifications.info('Resolving card')
+    if (
+      this.defenderCanRespond &&
+      this.data.checks.defense.state === this.rollStates.locked &&
+      this.defender) {
+      if (this.data.flags.doNothing) this.data.checks.defense.roll = null
+      else {
+        this.data.checks.defense.roll = new CoC7Check()
+        this.data.checks.defense.roll.actor = this.defender
+        this.data.checks.defense.roll.difficulty = CoC7Check.difficultyLevel.regular
+        if (this.flags.dodge) this.data.checks.skill = this.defender.dodgeSkill
+        else if (this.flags.maneuver) {
+          if (this.defenseManeuver.specialManeuver) {
+            this.data.checks.defense.roll.item = this.defenseManeuver
+          }
+          this.data.checks.defense.roll.skill = this.data.checks.defense.alternativeSkill ? this.defenseManeuver.skills.alternativ : this.defenseManeuver.skills.main
+          if (!isNaN(this.attacker.build) && !isNaN(this.defender.build)) {
+            if (this.defender.build <= this.attacker.build - 2) this.data.checks.defense.roll.diceModifier = -2
+            if (this.defender.build <= this.attacker.build - 1) this.data.checks.defense.roll.diceModifier = -1
+          }
+        } else if (this.flags.fightBack) {
+          this.data.checks.defense.roll.item = this.fightBackWeapon
+          this.data.checks.defense.roll.skill = this.data.checks.defense.alternativeSkill ? this.fightBackWeapon.skills.alternativ : this.fightBackWeapon.skills.main
+        }
+      }
+      await this.data.checks.defense.roll._perform({ forceDSN: true })
+      this.data.checks.defense.state = this.rollStates.rolled
+    }
+    return true
+  }
+
+  get distance () {
+    return (this.attackerToken && this.defenderToken) ? chatHelper.getDistance(this.attackerToken, this.defenderToken) : null
   }
 }

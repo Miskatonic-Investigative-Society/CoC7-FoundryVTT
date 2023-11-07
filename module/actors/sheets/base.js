@@ -6,7 +6,7 @@ import { CoC7Check } from '../../check.js'
 import { CoC7ContentLinkDialog } from '../../apps/coc7-content-link-dialog.js'
 import { COC7 } from '../../config.js'
 import { CoC7Item } from '../../items/item.js'
-import { CoC7MeleeInitiator } from '../../chat/combat/melee-initiator.js'
+// import { CoC7MeleeInitiator } from '../../chat/combat/melee-initiator.js'
 import { CoC7RangeInitiator } from '../../chat/rangecombat.js'
 import { CoC7ConCheck } from '../../chat/concheck.js'
 import { chatHelper, isCtrlKey } from '../../chat/helper.js'
@@ -1628,14 +1628,27 @@ export class CoC7ActorSheet extends ActorSheet {
             ui.notifications.warn(game.i18n.localize('CoC7.WarnTooManyTarget'))
           }
 
-          const card = new CoC7MeleeInitiator(actorKey, itemId, fastForward)
-          card.createChatCard()
+          // const card = new CoC7MeleeInitiator(actorKey, itemId, fastForward)
+          // card.createChatCard()
+          const _actor = this.token ? this.token : this.actor
+          const _isThrown = event.currentTarget.classList.contains('alternativ-skill')
           for (const t of game.user.targets) {
-            const meleeAttackCard = new MeleeAttackCard({ actorUuid: this.actor.uuid, weaponUuid: weapon.uuid, targetUuid: t.actor.uuid, fast: fastForward })
-            meleeAttackCard.toMessage()
+            new MeleeAttackCard({
+              actorUuid: _actor.uuid,
+              weaponUuid: weapon.uuid,
+              targetUuid: t.document.uuid,
+              fast: fastForward,
+              thrown: _isThrown
+            }).toMessage()
           }
           if (proceedWithoutTarget) {
-            new MeleeAttackCard({ actorUuid: this.actor.uuid, weaponUuid: weapon.uuid, targetUuid: null, fast: fastForward }).toMessage()
+            new MeleeAttackCard({
+              actorUuid: _actor.uuid,
+              weaponUuid: weapon.uuid,
+              targetUuid: null,
+              fast: fastForward,
+              thrown: _isThrown
+            }).toMessage()
           }
         }
         if (weapon.system.properties.rngd) {
