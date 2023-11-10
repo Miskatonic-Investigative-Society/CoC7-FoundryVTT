@@ -1293,5 +1293,10 @@
   "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language \"{lang}\", and era \"{era}\". Please check your Era for the world setting.",
 
   "CoC7.CoCIDBatch.title": "Batch set System ID (CoC ID)",
-  "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
+  "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages.",
+
+  "CoC7.TokenCreationRoll.Title": "Rollable detected",
+  "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
+  "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
+  "CoC7.TokenCreationRoll.ButtonAverage": "Average all"
 }

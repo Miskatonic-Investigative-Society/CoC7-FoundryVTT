@@ -1,4 +1,4 @@
-/* global $, ActorSheet, ChatMessage, CONST, Dialog, FormData, foundry, game, getProperty, Hooks, Item, mergeObject, Roll, TextEditor, ui */
+/* global $, ActorSheet, ChatMessage, CONST, Dialog, FormData, foundry, game, getProperty, Hooks, mergeObject, Roll, TextEditor, ui */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7ChatMessage } from '../../apps/coc7-chat-message.js'
@@ -475,13 +475,13 @@ export class CoC7ActorSheet extends ActorSheet {
   }
 
   /* -------------------------------------------- */
-  static parseFormula (formula) {
-    let parsedFormula = formula
-    for (const [key, value] of Object.entries(COC7.formula.actorsheet)) {
-      parsedFormula = parsedFormula.replace(key, value)
-    }
-    return parsedFormula
-  }
+  // static parseFormula (formula) {
+  //   let parsedFormula = formula
+  //   for (const [key, value] of Object.entries(COC7.formula.actorsheet)) {
+  //     parsedFormula = parsedFormula.replace(key, value)
+  //   }
+  //   return parsedFormula
+  // }
 
   get tokenKey () {
     ui.notifications.error('DEPRECATED SHOULD NOT HAPPEN!')
@@ -606,6 +606,13 @@ export class CoC7ActorSheet extends ActorSheet {
       .on('dragstart', this._onDragTokenStart.bind(this))
 
     // Owner Only Listeners
+    if (this.actor.isOwner) {
+      html.find('.lock').click(this._onLockClicked.bind(this))
+      html.find('.flag').click(this._onFlagClicked.bind(this))
+      html.find('.formula').click(this._onFormulaClicked.bind(this))
+    }
+
+    // Owner Only, not available from compendium
     if (this.actor.isOwner && typeof this.actor.compendium === 'undefined') {
       html
         .find('.characteristic-label')
@@ -621,9 +628,6 @@ export class CoC7ActorSheet extends ActorSheet {
         .find('.weapon-name.rollable')
         .contextmenu(this._onOpposedRoll.bind(this))
 
-      html.find('.lock').click(this._onLockClicked.bind(this))
-      html.find('.flag').click(this._onFlagClicked.bind(this))
-      html.find('.formula').click(this._onFormulaClicked.bind(this))
       html
         .find('.roll-characteritics')
         .click(this._onRollCharacteriticsValue.bind(this))
@@ -830,10 +834,10 @@ export class CoC7ActorSheet extends ActorSheet {
      */
     html.find('.test-trigger').click(async event => {
       if (!game.settings.get('CoC7', 'hiddendevmenu')) return null
-      await Item.create({
-        name: '__CoC7InternalItem__',
-        type: 'item'
-      })
+      // await Item.create({
+      //   name: '__CoC7InternalItem__',
+      //   type: 'item'
+      // })
       // const effects = await item.createEmbeddedDocuments('ActiveEffect', [
       //   {
       //     label: game.i18n.localize('CoC7.EffectNew'),
@@ -846,7 +850,7 @@ export class CoC7ActorSheet extends ActorSheet {
       // const effect = effects[0]
       // await effect.sheet.render(true)
       // ui.notifications.info( 'effect created !')
-      ui.notifications.info('effect created !')
+      // ui.notifications.info('effect created !')
     })
 
     html
@@ -1227,9 +1231,9 @@ export class CoC7ActorSheet extends ActorSheet {
     const box = event.currentTarget.parentElement
     const data = {
       CoC7Type: 'link',
-      linkType: 'coc7-link',
+      linkType: 'characteristic',
       check: 'check',
-      type: 'characteristic',
+      type: 'CoC7Link',
       hasPlayerOwner: this.actor.hasPlayerOwner,
       actorKey: this.actor.actorKey,
       name: box.dataset.characteristic,
@@ -1247,9 +1251,9 @@ export class CoC7ActorSheet extends ActorSheet {
     const box = event.currentTarget.parentElement
     const data = {
       CoC7Type: 'link',
-      linkType: 'coc7-link',
+      linkType: 'attribute',
       check: 'check',
-      type: 'attribute',
+      type: 'CoC7Link',
       hasPlayerOwner: this.actor.hasPlayerOwner,
       actorKey: this.actor.actorKey,
       name: box.dataset.attrib,
