@@ -9,7 +9,7 @@ const abandoned = {}
 const source = jsonfile.readFileSync('./lang/en.json')
 const keys = Object.keys(source)
 
-const maxMissingKeys = 153
+const maxMissingKeys = 50
 
 glob('./lang/*.json', {}, async function (er, files) {
   await Promise.all(
@@ -65,11 +65,11 @@ glob('./lang/*.json', {}, async function (er, files) {
       '** translation is currently up to date\n\n'
   }
   if (Object.keys(abandoned).length > 0) {
-    output =
-      output +
-      'The following translations have more than ' + maxMissingKeys + ' untranslated strings **' +
-      Object.keys(abandoned).join('**, **') +
-      '**, [are you able to help?](./ABANDONED.md)\n\n'
+    output = output + 'The following translations have more than ' + maxMissingKeys + ' untranslated strings [are you able to help?](./ABANDONED.md)\n\n'
+    Object.entries(abandoned).forEach(([key, values]) => {
+      output = output + '[' + key + '.json (' + Object.entries(abandoned[key]).length + ' untranslated strings)](./ABANDONED.md#' + (key + '.json').toLowerCase().replace(/[^a-zA-Z0-9]+/g, '') + ')\n\n'
+    })
+    output = output + '\n\n'
   }
   if (missing.length > 0) {
     output = output + '|Key|'
