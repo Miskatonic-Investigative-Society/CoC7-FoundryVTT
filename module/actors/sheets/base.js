@@ -606,7 +606,7 @@ export class CoC7ActorSheet extends ActorSheet {
       .on('dragstart', this._onDragTokenStart.bind(this))
 
     // Owner Only Listeners
-    if (this.actor.isOwner) {
+    if (this.actor.isOwner && !(this.actor.compendium?.locked ?? false)) {
       html.find('.lock').click(this._onLockClicked.bind(this))
       html.find('.flag').click(this._onFlagClicked.bind(this))
       html.find('.formula').click(this._onFormulaClicked.bind(this))
