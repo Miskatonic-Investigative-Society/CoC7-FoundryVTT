@@ -2,21 +2,21 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (378 untranslated strings)](#cnjson)
+[cn.json (382 untranslated strings)](#cnjson)
 
-[cs.json (563 untranslated strings)](#csjson)
+[cs.json (567 untranslated strings)](#csjson)
 
-[es.json (360 untranslated strings)](#esjson)
+[es.json (364 untranslated strings)](#esjson)
 
-[ko.json (160 untranslated strings)](#kojson)
+[ko.json (164 untranslated strings)](#kojson)
 
-[ru.json (1225 untranslated strings)](#rujson)
+[ru.json (1229 untranslated strings)](#rujson)
 
-[sv.json (346 untranslated strings)](#svjson)
+[sv.json (350 untranslated strings)](#svjson)
 
 
 ## cn.json
-378 untranslated strings
+382 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -395,10 +395,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDFlag.error.document-not-found": "Document not found in world or Compendia matching the CoC ID "{cocid}", language "{lang}", and era "{era}". Please check your Era for the world setting.",
 "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language "{lang}", and era "{era}". Please check your Era for the world setting.",
 "CoC7.CoCIDBatch.title": "Batch set System ID (CoC ID)",
-"CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
+"CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages.",
+"CoC7.TokenCreationRoll.Title": "Rollable detected",
+"CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
+"CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
+"CoC7.TokenCreationRoll.ButtonAverage": "Average all"
 ```
 ## cs.json
-563 untranslated strings
+567 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -962,10 +966,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDFlag.error.document-not-found": "Document not found in world or Compendia matching the CoC ID "{cocid}", language "{lang}", and era "{era}". Please check your Era for the world setting.",
 "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language "{lang}", and era "{era}". Please check your Era for the world setting.",
 "CoC7.CoCIDBatch.title": "Batch set System ID (CoC ID)",
-"CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
+"CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages.",
+"CoC7.TokenCreationRoll.Title": "Rollable detected",
+"CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
+"CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
+"CoC7.TokenCreationRoll.ButtonAverage": "Average all"
 ```
 ## es.json
-360 untranslated strings
+364 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -1326,10 +1334,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDFlag.error.document-not-found": "Document not found in world or Compendia matching the CoC ID "{cocid}", language "{lang}", and era "{era}". Please check your Era for the world setting.",
 "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language "{lang}", and era "{era}". Please check your Era for the world setting.",
 "CoC7.CoCIDBatch.title": "Batch set System ID (CoC ID)",
-"CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
+"CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages.",
+"CoC7.TokenCreationRoll.Title": "Rollable detected",
+"CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
+"CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
+"CoC7.TokenCreationRoll.ButtonAverage": "Average all"
 ```
 ## ko.json
-160 untranslated strings
+164 untranslated strings
 ```
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
 "CoC7.RollDifficultyRegularTitle": "Regular difficulty",
@@ -1490,10 +1502,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDFlag.error.document-not-found": "Document not found in world or Compendia matching the CoC ID "{cocid}", language "{lang}", and era "{era}". Please check your Era for the world setting.",
 "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language "{lang}", and era "{era}". Please check your Era for the world setting.",
 "CoC7.CoCIDBatch.title": "Batch set System ID (CoC ID)",
-"CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
+"CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages.",
+"CoC7.TokenCreationRoll.Title": "Rollable detected",
+"CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
+"CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
+"CoC7.TokenCreationRoll.ButtonAverage": "Average all"
 ```
 ## ru.json
-1225 untranslated strings
+1229 untranslated strings
 ```
 "CoC7.title": "Call of Cthulhu 7h Edition",
 "CoC7.Entities.Character": "Character",
@@ -2719,10 +2735,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDFlag.error.document-not-found": "Document not found in world or Compendia matching the CoC ID "{cocid}", language "{lang}", and era "{era}". Please check your Era for the world setting.",
 "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language "{lang}", and era "{era}". Please check your Era for the world setting.",
 "CoC7.CoCIDBatch.title": "Batch set System ID (CoC ID)",
-"CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
+"CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages.",
+"CoC7.TokenCreationRoll.Title": "Rollable detected",
+"CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
+"CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
+"CoC7.TokenCreationRoll.ButtonAverage": "Average all"
 ```
 ## sv.json
-346 untranslated strings
+350 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -3069,5 +3089,9 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDFlag.error.document-not-found": "Document not found in world or Compendia matching the CoC ID "{cocid}", language "{lang}", and era "{era}". Please check your Era for the world setting.",
 "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language "{lang}", and era "{era}". Please check your Era for the world setting.",
 "CoC7.CoCIDBatch.title": "Batch set System ID (CoC ID)",
-"CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
+"CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages.",
+"CoC7.TokenCreationRoll.Title": "Rollable detected",
+"CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
+"CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
+"CoC7.TokenCreationRoll.ButtonAverage": "Average all"
 ```
