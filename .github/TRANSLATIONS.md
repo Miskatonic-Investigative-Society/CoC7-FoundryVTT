@@ -6,7 +6,7 @@ The following translations have more than 153 untranslated strings **cn**, **cs*
 
 |Key|de|fr|it|ja|pl|pt-BR|zh-TW|
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**146**|**3**|**2**|**5**|**3**|**108**|**7**|
+|**Remaining**:|**150**|**7**|**4**|**9**|**7**|**112**|**11**|
 |[CoC7.CoCIDBatch.summary](#coc7cocidbatchsummary)|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
 |[CoC7.CoCIDBatch.title](#coc7cocidbatchtitle)|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
 |[CoC7.CoCIDFlag.documents-in-compendiums](#coc7cocidflagdocumentsincompendiums)|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|
@@ -151,8 +151,12 @@ The following translations have more than 153 untranslated strings **cn**, **cs*
 |[CoC7.SkillRequiresName](#coc7skillrequiresname)|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|
 |[CoC7.SkillSpecializationIsUnique](#coc7skillspecializationisunique)|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#9989;|
 |[CoC7.System.Documentation](#coc7systemdocumentation)|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[SETTINGS.SceneDistanceNotCalcualtedNoError](#settingsscenedistancenotcalcualtednoerror)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[SETTINGS.SceneDistanceNotCalcualtedNoErrorHint](#settingsscenedistancenotcalcualtednoerrorhint)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.TokenCreationRoll.ButtonAverage](#coc7tokencreationrollbuttonaverage)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.TokenCreationRoll.ButtonRoll](#coc7tokencreationrollbuttonroll)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.TokenCreationRoll.Prompt](#coc7tokencreationrollprompt)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.TokenCreationRoll.Title](#coc7tokencreationrolltitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[SETTINGS.SceneDistanceNotCalcualtedNoError](#settingsscenedistancenotcalcualtednoerror)|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[SETTINGS.SceneDistanceNotCalcualtedNoErrorHint](#settingsscenedistancenotcalcualtednoerrorhint)|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 ##### CoC7.CoCIDBatch.summary
 ```  "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages.",```
 ##### CoC7.CoCIDBatch.title
@@ -441,6 +445,14 @@ The following translations have more than 153 untranslated strings **cn**, **cs*
 ```  "CoC7.SkillSpecializationIsUnique": "Unique Specialization",```
 ##### CoC7.System.Documentation
 ```  "CoC7.System.Documentation": "View CoC7 System Manual",```
+##### CoC7.TokenCreationRoll.ButtonAverage
+```  "CoC7.TokenCreationRoll.ButtonAverage": "Average all",```
+##### CoC7.TokenCreationRoll.ButtonRoll
+```  "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",```
+##### CoC7.TokenCreationRoll.Prompt
+```  "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",```
+##### CoC7.TokenCreationRoll.Title
+```  "CoC7.TokenCreationRoll.Title": "Rollable detected",```
 ##### SETTINGS.SceneDistanceNotCalcualtedNoError
 ```  "SETTINGS.SceneDistanceNotCalcualtedNoError": "Don't show error for ranged distance",```
 ##### SETTINGS.SceneDistanceNotCalcualtedNoErrorHint
