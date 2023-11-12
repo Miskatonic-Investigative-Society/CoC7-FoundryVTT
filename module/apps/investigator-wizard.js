@@ -505,6 +505,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
             sheetData.occupationPointsString = CoC7OccupationSheet.occupationPointsString(occupation.system.occupationSkillPoints)
             sheetData.creditRating = occupation.system.creditRating
             sheetData.personal = occupation.system.personal
+            sheetData.personalText = occupation.system.personalText
             sheetData.skills = await this.expandItemArray(occupation.system.skills)
             sheetData.groups = {}
             for (let index = 0; index < occupation.system.groups.length; index++) {
@@ -623,7 +624,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
             })
           }
         }
-        sheetData.max = parseInt(sheetData.default, 10) + parseInt(sheetData.object.personal, 10) + Object.values(sheetData.object.occupationGroups).reduce((s, v) => s + parseInt(v, 10), 0)
+        sheetData.max = (parseInt(sheetData.default, 10) || 0) + (parseInt(sheetData.object.personal, 10) || 0) + Object.values(sheetData.object.occupationGroups).reduce((s, v) => s + (parseInt(v, 10) || 0), 0)
         sheetData.skillItems.sort(CoC7Utilities.sortByNameKey)
         if (sheetData.selected === sheetData.max) {
           sheetData.canNext = true
@@ -981,6 +982,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
         })
       }
       this.object.personal = occupation.system.personal
+      this.object.personalText = occupation.system.personalText
       this.object.creditRating = occupation.system.creditRating
       let items = []
       items = await this.expandItemArray(setup.system.items)
@@ -1862,6 +1864,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
       occupation: '',
       bioSections: [],
       personal: 0,
+      personalText: '',
       creditRating: {
         min: 0,
         max: 0
