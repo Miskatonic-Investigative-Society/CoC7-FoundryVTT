@@ -4,30 +4,31 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 
 The following translations have more than 50 untranslated strings [are you able to help?](./ABANDONED.md)
 
-[cn.json (382 untranslated strings)](./ABANDONED.md#cnjson)
+[cn.json (383 untranslated strings)](./ABANDONED.md#cnjson)
 
-[cs.json (567 untranslated strings)](./ABANDONED.md#csjson)
+[cs.json (568 untranslated strings)](./ABANDONED.md#csjson)
 
-[de.json (150 untranslated strings)](./ABANDONED.md#dejson)
+[de.json (151 untranslated strings)](./ABANDONED.md#dejson)
 
-[es.json (364 untranslated strings)](./ABANDONED.md#esjson)
+[es.json (365 untranslated strings)](./ABANDONED.md#esjson)
 
-[ko.json (164 untranslated strings)](./ABANDONED.md#kojson)
+[ko.json (165 untranslated strings)](./ABANDONED.md#kojson)
 
-[pt-BR.json (112 untranslated strings)](./ABANDONED.md#ptbrjson)
+[pt-BR.json (113 untranslated strings)](./ABANDONED.md#ptbrjson)
 
 [ru.json (1229 untranslated strings)](./ABANDONED.md#rujson)
 
-[sv.json (350 untranslated strings)](./ABANDONED.md#svjson)
+[sv.json (351 untranslated strings)](./ABANDONED.md#svjson)
 
 
 
 |Key|fr|it|ja|pl|zh-TW|
 |:---|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**7**|**4**|**9**|**7**|**11**|
+|**Remaining**:|**8**|**5**|**10**|**8**|**12**|
 |[CoC7.EraRegency](#coc7eraregency)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
 |[CoC7.EraRegencyPulp](#coc7eraregencypulp)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
 |[CoC7.ErrorTokenIncorrect](#coc7errortokenincorrect)|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|
+|[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholder)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.SanityLossType](#coc7sanitylosstype)|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|
 |[CoC7.System.Documentation](#coc7systemdocumentation)|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.TokenCreationRoll.ButtonAverage](#coc7tokencreationrollbuttonaverage)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
@@ -42,6 +43,8 @@ The following translations have more than 50 untranslated strings [are you able 
 ```  "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",```
 ##### CoC7.ErrorTokenIncorrect
 ```  "CoC7.ErrorTokenIncorrect": "Unable to find selected token",```
+##### CoC7.PersonalSpecialityPlaceholder
+```  "CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",```
 ##### CoC7.SanityLossType
 ```  "CoC7.SanityLossType": "Type",```
 ##### CoC7.System.Documentation
