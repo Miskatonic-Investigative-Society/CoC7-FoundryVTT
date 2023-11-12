@@ -2,25 +2,25 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (382 untranslated strings)](#cnjson)
+[cn.json (383 untranslated strings)](#cnjson)
 
-[cs.json (567 untranslated strings)](#csjson)
+[cs.json (568 untranslated strings)](#csjson)
 
-[de.json (150 untranslated strings)](#dejson)
+[de.json (151 untranslated strings)](#dejson)
 
-[es.json (364 untranslated strings)](#esjson)
+[es.json (365 untranslated strings)](#esjson)
 
-[ko.json (164 untranslated strings)](#kojson)
+[ko.json (165 untranslated strings)](#kojson)
 
-[pt-BR.json (112 untranslated strings)](#ptbrjson)
+[pt-BR.json (113 untranslated strings)](#ptbrjson)
 
 [ru.json (1229 untranslated strings)](#rujson)
 
-[sv.json (350 untranslated strings)](#svjson)
+[sv.json (351 untranslated strings)](#svjson)
 
 
 ## cn.json
-382 untranslated strings
+383 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -243,6 +243,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Chase.ChasersMin": "Chasers Min: {value}",
 "CoC7.Chase.ChasersMax": "Chasers Max: {value}",
 "CoC7.Sane": "Sane",
+"CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",
 "CoC7.ErrorUnableToParseFormula": "{value} is not a valid formula",
 "CoC7.ErrorUnableToParseArmorFormula": "Unable to process armor value: {value}. Ignoring armor.",
 "CoC7.ErrorUnableToParseSkillFormula": "Unable to parse formula: {value} for skill {name}",
@@ -406,7 +407,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TokenCreationRoll.ButtonAverage": "Average all"
 ```
 ## cs.json
-567 untranslated strings
+568 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -705,6 +706,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Unreadable": "Unreadable",
 "CoC7.Sane": "Sane",
 "CoC7.EmptyCharacterSkillList": "Add a setup, occupation, or skill by dropping it here.",
+"CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",
 "CoC7.WarnNoTargetsSanCheck": "You have no targets selected. Either select targets or create a link.",
 "CoC7.allActors": "All Actors",
 "CoC7.restTargets": "Rest Targets",
@@ -977,7 +979,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TokenCreationRoll.ButtonAverage": "Average all"
 ```
 ## de.json
-150 untranslated strings
+151 untranslated strings
 ```
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
 "CoC7.EraDarkAgesPulp": "Dark Ages - Pulp",
@@ -1020,6 +1022,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.MonetaryDefaultSuperRich": "Super Rich",
 "CoC7.SanityLossType": "Type",
 "CoC7.ErrorTokenIncorrect": "Unable to find selected token",
+"CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",
 "CoC7.System.Documentation": "View CoC7 System Manual",
 "CoC7.Settings.PulpRules.IgnoreAgePenalties.Name": "Ignore Age Penalties",
 "CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint": "Do not alter movement rate based on age. When using the investigator wizard improvements and characteristic adjustments are not made",
@@ -1131,7 +1134,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TokenCreationRoll.ButtonAverage": "Average all"
 ```
 ## es.json
-364 untranslated strings
+365 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -1337,6 +1340,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Chase.ChasersMin": "Chasers Min: {value}",
 "CoC7.Chase.ChasersMax": "Chasers Max: {value}",
 "CoC7.Sane": "Sane",
+"CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",
 "CoC7.ErrorUnableToParseFormula": "{value} is not a valid formula",
 "CoC7.ErrorUnableToParseArmorFormula": "Unable to process armor value: {value}. Ignoring armor.",
 "CoC7.ErrorUnableToParseSkillFormula": "Unable to parse formula: {value} for skill {name}",
@@ -1499,7 +1503,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TokenCreationRoll.ButtonAverage": "Average all"
 ```
 ## ko.json
-164 untranslated strings
+165 untranslated strings
 ```
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
 "CoC7.RollDifficultyRegularTitle": "Regular difficulty",
@@ -1552,6 +1556,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorTokenIncorrect": "Unable to find selected token",
 "CoC7.RemoveParticipant": "Remove participant",
 "CoC7.RemoveParticipantHint": "Participant will be completely removed from the chase",
+"CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",
 "CoC7.TextFieldInvalidJSON": "Unable to parse the JSON, please try again",
 "CoC7.ActorImporterUploadError": "Import stopped, unable to write image",
 "CoC7.FileUploadError": "Unable to write image, file upload error",
@@ -1667,7 +1672,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TokenCreationRoll.ButtonAverage": "Average all"
 ```
 ## pt-BR.json
-112 untranslated strings
+113 untranslated strings
 ```
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
@@ -1702,6 +1707,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.MonetaryDefaultSuperRich": "Super Rich",
 "CoC7.SanityLossType": "Type",
 "CoC7.ErrorTokenIncorrect": "Unable to find selected token",
+"CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",
 "CoC7.System.Documentation": "View CoC7 System Manual",
 "SETTINGS.SceneDistanceNotCalcualtedNoError": "Don't show error for ranged distance",
 "SETTINGS.SceneDistanceNotCalcualtedNoErrorHint": "When starting a ranged combat if playing theatre of the mind do not show the unable to calculate distance message.",
@@ -2577,7 +2583,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EmptySkillList": "Add a skill by dropping it here.",
 "CoC7.EmptyItemList": "Add an item by dropping it here.",
 "CoC7.EmptyCharacterSkillList": "Add a setup, occupation, or skill by dropping it here.",
-"CoC7.PersonalSpeciality": "Number of personal or era specialty",
+"CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",
 "CoC7.AdditionalSkills": "Additional Skills",
 "CoC7.SkillSelectionWindow": "Select optional skills",
 "CoC7.SelectPersonalSkills": "Select {number} skill(s) as personal interest skills",
@@ -3016,7 +3022,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TokenCreationRoll.ButtonAverage": "Average all"
 ```
 ## sv.json
-350 untranslated strings
+351 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -3211,6 +3217,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Chase.ChasersMin": "Chasers Min: {value}",
 "CoC7.Chase.ChasersMax": "Chasers Max: {value}",
 "CoC7.Sane": "Sane",
+"CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",
 "CoC7.ErrorUnableToParseFormula": "{value} is not a valid formula",
 "CoC7.ErrorUnableToParseArmorFormula": "Unable to process armor value: {value}. Ignoring armor.",
 "CoC7.ErrorUnableToParseSkillFormula": "Unable to parse formula: {value} for skill {name}",
