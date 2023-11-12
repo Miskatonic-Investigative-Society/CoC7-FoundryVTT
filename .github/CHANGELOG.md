@@ -10,6 +10,7 @@ Happy gaming !
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Fix a bug where token image wasn't set properly with generic icon
+- Fix CoC ID filtering by language and era issues, thanks to @Technus, #1418
 - Fix dholehouse importer for characters with a single item on their possesions. Fixes #1423, thanks to @pconcepcion #1424
 - Fix guessing CoC ID on spells doesn't save on first attempt.
 - Fix Lock / Unlock / Roll / mode change not supported on actors in compendium. Fixes #1432
