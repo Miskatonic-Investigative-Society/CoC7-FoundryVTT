@@ -294,7 +294,7 @@ export class CoCID {
    */
   static async fromCoCIDRegexBest ({ cocidRegExp, type, lang = game.i18n.lang, era = true, langFallback = true, showLoading = false } = {}) {
     if (era === false) {
-      ui.notifications.error(game.i18n.format('CoC7.CoCIDFlag.error.unknown-era', { era: '' }))
+      ui.notifications.error(game.i18n.format('CoC7.CoCIDFlag.error.unknown-era', { era: game.i18n.localize('CoC7.Any') }))
       return []
     }
     const allDocuments = await this.fromCoCIDRegexAll({ cocidRegExp, type, lang, era, scope: 'all', langFallback, showLoading })
@@ -314,7 +314,7 @@ export class CoCID {
    */
   static fromCoCID (cocid, lang = game.i18n.lang, era = true, langFallback = true) {
     if (era === false) {
-      ui.notifications.error(game.i18n.format('CoC7.CoCIDFlag.error.unknown-era', { era: '' }))
+      ui.notifications.error(game.i18n.format('CoC7.CoCIDFlag.error.unknown-era', { era: game.i18n.localize('CoC7.Any') }))
       return []
     }
     return CoCID.fromCoCIDBest({ cocid, lang, era, langFallback })
@@ -336,7 +336,7 @@ export class CoCID {
       return []
     }
     if (era === false) {
-      ui.notifications.error(game.i18n.format('CoC7.CoCIDFlag.error.unknown-era', { era: '' }))
+      ui.notifications.error(game.i18n.format('CoC7.CoCIDFlag.error.unknown-era', { era: game.i18n.localize('CoC7.Any') }))
       return []
     }
     const type = cocid.split('.')[0]
