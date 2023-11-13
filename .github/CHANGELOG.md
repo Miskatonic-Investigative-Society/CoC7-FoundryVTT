@@ -19,9 +19,11 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Add optional occupation personal skill text. #1436
 - Add system manual button to Game Settings sidebar tab
 - Add system setting to not trigger an error message for ranged token distance calculations if playing theatre of the mind
+- Add translated characteristics to investigator wizard age reduction headers, thanks to @Technus #1438
 - When an actor that has rollable characteristics or skills is dragged onto a scene prompted whether those should be rolled or averaged.
 - Update to French localization, thanks to @vonv #1415
 - Update to Italian localization, thanks to @Stefano1975t #1419, #1422, and #1429
+- Update to Polish localization, thanks to @Technus #1438
 
 ## Version 0.10.6
 
