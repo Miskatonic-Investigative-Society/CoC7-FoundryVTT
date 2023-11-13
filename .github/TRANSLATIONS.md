@@ -2,6 +2,8 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`. Feel free to create a new `*.json` file for a language that is not shown here!
 
+The **pl** translation is currently up to date
+
 The following translations have more than 50 untranslated strings [are you able to help?](./ABANDONED.md)
 
 [cn.json (383 untranslated strings)](./ABANDONED.md#cnjson)
@@ -22,21 +24,21 @@ The following translations have more than 50 untranslated strings [are you able 
 
 
 
-|Key|fr|it|ja|pl|zh-TW|
-|:---|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**8**|**5**|**10**|**8**|**12**|
-|[CoC7.EraRegency](#coc7eraregency)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.EraRegencyPulp](#coc7eraregencypulp)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
-|[CoC7.ErrorTokenIncorrect](#coc7errortokenincorrect)|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|
-|[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholder)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.SanityLossType](#coc7sanitylosstype)|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|
-|[CoC7.System.Documentation](#coc7systemdocumentation)|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.TokenCreationRoll.ButtonAverage](#coc7tokencreationrollbuttonaverage)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.TokenCreationRoll.ButtonRoll](#coc7tokencreationrollbuttonroll)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.TokenCreationRoll.Prompt](#coc7tokencreationrollprompt)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.TokenCreationRoll.Title](#coc7tokencreationrolltitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[SETTINGS.SceneDistanceNotCalcualtedNoError](#settingsscenedistancenotcalcualtednoerror)|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|
-|[SETTINGS.SceneDistanceNotCalcualtedNoErrorHint](#settingsscenedistancenotcalcualtednoerrorhint)|&#x274C;|&#9989;|&#x274C;|&#x274C;|&#x274C;|
+|Key|fr|it|ja|zh-TW|
+|:---|:---:|:---:|:---:|:---:|
+|**Remaining**:|**8**|**5**|**10**|**12**|
+|[CoC7.EraRegency](#coc7eraregency)|&#9989;|&#9989;|&#9989;|&#x274C;|
+|[CoC7.EraRegencyPulp](#coc7eraregencypulp)|&#9989;|&#9989;|&#9989;|&#x274C;|
+|[CoC7.ErrorTokenIncorrect](#coc7errortokenincorrect)|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholder)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.SanityLossType](#coc7sanitylosstype)|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.System.Documentation](#coc7systemdocumentation)|&#x274C;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.TokenCreationRoll.ButtonAverage](#coc7tokencreationrollbuttonaverage)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.TokenCreationRoll.ButtonRoll](#coc7tokencreationrollbuttonroll)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.TokenCreationRoll.Prompt](#coc7tokencreationrollprompt)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.TokenCreationRoll.Title](#coc7tokencreationrolltitle)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[SETTINGS.SceneDistanceNotCalcualtedNoError](#settingsscenedistancenotcalcualtednoerror)|&#x274C;|&#9989;|&#x274C;|&#x274C;|
+|[SETTINGS.SceneDistanceNotCalcualtedNoErrorHint](#settingsscenedistancenotcalcualtednoerrorhint)|&#x274C;|&#9989;|&#x274C;|&#x274C;|
 ##### CoC7.EraRegency
 ```  "CoC7.EraRegency": "Regency Cthulhu - Standard",```
 ##### CoC7.EraRegencyPulp
