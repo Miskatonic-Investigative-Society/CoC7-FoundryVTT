@@ -75,45 +75,36 @@ class EnhancedChatCardLib {
       style = $('head').find('style')
     }
     style.append(`
-      .ecc-restricted {color: red}
-      .ecc-restricted:hover {cursor: not-allowed}
-      .ecc-dropdown-button {
-        font-size: 10px;
-        border: none;
-        cursor: pointer;
-        display: inline-block;
-        width: 100%;
-        height: 100%;
-      }
-      .ecc-dropdown {
-        position: relative;
-        display: inline-block;
-      }
-      .ecc-dropdown:hover {
-        background-color: lightgray;
-      }
-      .ecc-dropdown a:hover {
-        background-color: #ddd;
-        text-shadow: 0 0 8px red;
-      }
+      .${ECC_CLASS} {
+        .ecc-restricted {color: red}
+        .ecc-restricted:hover {cursor: not-allowed}
+        .ecc-dropdown-button {
+          border: none;
+          cursor: pointer;
+          display: inline-block;
+          width: 100%;
+          height: 100%;
+        }
+        .ecc-dropdown {
+          position: relative;
+          display: inline-block;
+        }
 
-      .ecc-dropdown-content {
-        display: block;
-        visibility: hidden;
-        position: absolute;
-        background-color: #f1f1f1;
-        min-width: 126px;
-        overflow: auto;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-      }
-      .ecc-dropdown-content a {
-        color: black;
-        text-decoration: none;
-        display: block;
-      }
-      .show {
-        visibility: visible;
+        .ecc-dropdown-content {
+          height: auto;
+          display: block;
+          visibility: hidden;
+          position: absolute;
+          min-width: 126px;
+          overflow: auto;
+          z-index: 1;
+        }
+        .ecc-dropdown-content a {
+          display: block;
+        }
+        .show {
+          visibility: visible;
+        }
       }`
     )
   }
@@ -337,8 +328,10 @@ export class EnhancedChatCard {
     //   `.${ECC_CLASS} .ecc-radio-switch`,
     //   this._onToggle.bind(this)
     // )
+    html.on('click', `.${ECC_CLASS} .inactive`, this._onInactive.bind(this))
     html.on('change', 'input,select,textarea', this._onChange.bind(this))
     html.on('click', `.${ECC_CLASS} .ecc-switch:not('.inactive')`, this._onToggle.bind(this))
+    html.on('click', `.${ECC_CLASS} input[type="checkbox"]:not('.inactive')`, this._onToggle.bind(this))
     html.on('click', `.${ECC_CLASS} .submit:not('.inactive')`, this._onSubmit.bind(this))
     html.on('focusout', `.${ECC_CLASS} input:not('.inactive')`, this._onChange.bind(this))
     html.on('click', `.${ECC_CLASS} button:not('.inactive')`, this._onButton.bind(this))
@@ -428,8 +421,7 @@ export class EnhancedChatCard {
   }
 
   setCheckboxState (element) {
-    if (!element || !element.name) return
-    if (!element.dataset.flag) return
+    if (!element || !element.dataset.flag) return
     if (this.flags && typeof this.flags[element.dataset.flag] !== 'undefined') {
       this.flags[element.dataset.flag] ? element.checked = true : element.checked = false
     }
@@ -643,6 +635,11 @@ export class EnhancedChatCard {
     if (this.options.submitOnChange) {
       return this._onSubmit(event)
     }
+  }
+
+  _onInactive (event) {
+    event.stopPropagation()
+    event.preventDefault()
   }
 
   _onSubmit (event) {

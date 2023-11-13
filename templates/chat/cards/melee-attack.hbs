@@ -44,7 +44,10 @@
       </div> 
       {{/if}}
     </div>
-    <div class="card-content suprise">
+    <div class="card-content">
+      <div class="card-section keeper" data-ecc-visibility="gm">
+        {{> "systems/CoC7/templates/chat/cards/parts/melee-attack-keeper.hbs"}}
+      </div>
       <div class="card-section attacker">
         <div>
           <span>ATTACKER : {{card.attacker.name}}</span>
@@ -63,10 +66,6 @@
           {{> "systems/CoC7/templates/chat/cards/parts/melee-attack-surprise.hbs"}}
         {{/if}}
         {{> "systems/CoC7/templates/chat/cards/parts/melee-attack-defender.hbs" }}
-      </div>
-
-      <div class="card-section keeper" data-ecc-visibility="gm">
-        {{> "systems/CoC7/templates/chat/cards/parts/melee-attack-keeper.hbs"}}
       </div>
     </div>
 

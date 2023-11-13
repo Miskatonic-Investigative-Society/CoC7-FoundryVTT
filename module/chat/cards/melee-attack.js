@@ -61,6 +61,18 @@ export class MeleeAttackCard extends EnhancedChatCard {
     ) {
       this.data.checks.detection.roll = CoC7Check.fromData(this.data.checks.detection.roll)
     }
+    if (
+      this.data.checks.attack.roll &&
+      this.data.checks.attack.roll?.constructor?.name === 'Object'
+    ) {
+      this.data.checks.attack.roll = CoC7Check.fromData(this.data.checks.attack.roll)
+    }
+    if (
+      this.data.checks.defense.roll &&
+      this.data.checks.defense.roll?.constructor?.name === 'Object'
+    ) {
+      this.data.checks.defense.roll = CoC7Check.fromData(this.data.checks.defense.roll)
+    }
   }
 
   async getData () {
@@ -73,6 +85,14 @@ export class MeleeAttackCard extends EnhancedChatCard {
     if (this.data.checks.detection.roll && (this.data.checks.detection.state >= this.rollStates.rolled)) {
       data.htmlDetectionCheck = await this.data.checks.detection.roll.getHtmlRoll()
       data.htmlDetectionCheckInline = await this.data.checks.detection.roll.inlineCheck?.outerHTML
+    }
+    if (this.data.checks.attack.roll && (this.data.checks.attack.state >= this.rollStates.rolled)) {
+      data.htmlAttackCheck = await this.data.checks.attack.roll.getHtmlRoll()
+      data.htmlAttackCheckInline = await this.data.checks.attack.roll.inlineCheck?.outerHTML
+    }
+    if (this.data.checks.defense.roll && (this.data.checks.defense.state >= this.rollStates.rolled)) {
+      data.htmlDefenseCheck = await this.data.checks.defense.roll.getHtmlRoll()
+      data.htmlDefenseCheckInline = await this.data.checks.defense.roll.inlineCheck?.outerHTML
     }
     return data
   }

@@ -11,28 +11,33 @@
   {{#if data.flags.doNothing }}<span>{{ localize 'CoC7.NoResponse' }}</span>{{/if}}
 </div>
 {{#if card.defenderCanRespond}}
-  <span>-----DEFENDER CAN RESPOND-----</span>
   {{#if (eq data.checks.defense.state card.rollStates.requested)}}
-    <div class="flexrow">
-      <div class="flex1 toggle-switch ecc-dropdown {{#unless card.defenderCanFightBack}}inactive{{/unless}}" data-name="data.checks.defense.name" data-flag="fightback">
-        <span class="ecc-dropdown-button">{{localize 'CoC7.FightBack'}}</span>
-        <div class="ecc-dropdown-content">
-          {{#each card.defender.meleeWeapons as |weapon|}}
-          <a class="ecc-dropdown-element" data-value="{{weapon.uuid}}">{{weapon.name}} ({{weapon.skills.main.shortName}}:{{weapon.skills.main.value}}%)</a>
-          {{/each}}
+    <div class="section-row radio-switches">
+      {{#if card.defenderCanFightBack}}
+        <div class="flex1 toggle-switch ecc-dropdown" data-name="data.checks.defense.name" data-flag="fightback">
+          <span class="ecc-dropdown-button">{{localize 'CoC7.FightBack'}}</span>
+          <div class="ecc-dropdown-content">
+            {{#each card.defender.meleeWeapons as |weapon|}}
+            <a class="ecc-dropdown-element" data-value="{{weapon.uuid}}">{{weapon.name}} ({{weapon.skills.main.shortName}}:{{weapon.skills.main.value}}%)</a>
+            {{/each}}
+          </div>
         </div>
-      </div>
-      <div class="flex1 toggle-switch ecc-dropdown {{#unless card.defenderCanManeuver}}inactive{{/unless}}" data-name="data.checks.defense.name" data-flag="maneuver">
-        <span class="ecc-dropdown-button">{{localize 'CoC7.Maneuver'}}</span>
-        <div class="ecc-dropdown-content">
-          {{#each card.defender.meleeManeuvers as |maneuver|}}
-          <a class="ecc-dropdown-element" data-value="{{maneuver.uuid}}">{{maneuver.shortName}} ({{maneuver.skills.main.value}}%)</a>
-          {{/each}}
+      {{/if}}
+      {{#if card.defenderCanManeuver}}
+        <div class="flex1 toggle-switch ecc-dropdown" data-name="data.checks.defense.name" data-flag="maneuver">
+          <span class="ecc-dropdown-button">{{localize 'CoC7.Maneuver'}}</span>
+          <div class="ecc-dropdown-content">
+            {{#each card.defender.meleeManeuvers as |maneuver|}}
+            <a class="ecc-dropdown-element" data-value="{{maneuver.uuid}}">{{maneuver.shortName}} ({{maneuver.skills.main.value}}%)</a>
+            {{/each}}
+          </div>
         </div>
-      </div>
-      <div class="flex1 toggle-switch ecc-switch {{#unless card.defenderCanDodge}}inactive{{/unless}}" data-name="data.checks.defense.name" data-flag="dodge">
-        <span class="">{{ localize 'CoC7.Dodge' }}</span>
-      </div>
+      {{/if}}
+      {{#if card.defenderCanDodge}}
+        <div class="flex1 toggle-switch ecc-switch" data-name="data.checks.defense.name" data-flag="dodge">
+          <span class="">{{ localize 'CoC7.Dodge' }}</span>
+        </div>
+      {{/if}}
       <div class="flex1 toggle-switch ecc-switch" data-name="data.checks.defense.name" data-flag="doNothing">
         <span class="">{{ localize 'CoC7.NoResponse' }}</span>
       </div>
@@ -54,4 +59,14 @@
       {{#if data.flags.doNothing}} <button data-action="chooseToDoNothing">{{ localize 'CoC7.NoResponse' }}</button> {{/if}}
     </div>
   {{/if}}
+  {{#if (eq data.checks.defense.state card.rollStates.rolled)}}
+  <div data-roll="defense">
+    {{{htmlDefenseCheck}}}
+  </div>
+  <div class="card-buttons" data-ecc-visibility="gm">
+    <button data-action="closeDefense">{{ localize 'CoC7.CloseDefense' }}</button>
+  </div>
+  {{/if}}
+{{else}}
+<span>{{ localize 'CoC7.DefenderCantRespond' }}</span>
 {{/if}}

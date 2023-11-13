@@ -1,7 +1,13 @@
 {{#if (eq data.checks.attack.state card.rollStates.notRequested)}}
-  <div class="flexrow tooltipster-active" data-description="CoC7.Hint.OverrideRules">
+  <div class="section-row tooltipster-active {{#unless data.flags.overrideRules}}striked{{/unless}}" data-description="CoC7.Hint.OverrideRules">
     {{!-- <input type="checkbox" class="ecc-switch toggle-switch" data-flag="overrideRules"/> --}}
-    <span class="toggle-switch ecc-switch" data-flag="overrideRules">{{localize 'CoC7.OverrideCalc'}}</span>
+    <div class="flex1"><span class="flex1">{{localize 'CoC7.OverrideCalc'}}</span></div>
+    <div class="flex0">
+      <label class="toggle flex0">
+        <input type="checkbox" data-flag="overrideRules">
+        <span class="slider"></span>
+      </label>
+    </div>
   </div>
   {{#if data.flags.overrideRules}}
   <div class="bonus-selection flexrow">
@@ -22,22 +28,38 @@
     </div>
   </div>
   {{else}}
-  <div class="flexrow status-selection">
-    <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.Outnumbered" data-flag="outnumbered">{{localize 'CoC7.OutNumbered'}}</span>
-    {{#if (and data.flags.surprised card.surpriseResolved)}}
-    <span class="flex1 toggle-switch tooltipster-active tooltipstered switched-on inactive" data-description="CoC7.Hint.Surprised" data-flag="surprised">{{localize 'CoC7.combatCard.surprised'}}</span>
-    {{else}}
-    <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.Surprised" data-flag="surprised">{{localize 'CoC7.combatCard.surprised'}}</span>
-    {{/if}}
+  <div class="section-row tooltipster-active {{#unless data.flags.outnumbered}}striked{{/unless}}" data-description="CoC7.Hint.Outnumbered">
+    <div class="flex1"><span class="flex1">{{localize 'CoC7.OutNumbered'}}</span></div>
+    <div class="flex0">
+      <label class="toggle flex0">
+        <input type="checkbox" data-flag="outnumbered">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+  <div class="section-row tooltipster-active tooltipstered  {{#unless data.flags.surprised}}striked{{/unless}} {{#if (and data.flags.surprised card.surpriseResolved)}}inactive{{/if}}" data-description="CoC7.Hint.Surprised">
+    <div class="flex1"><span class="flex1">{{localize 'CoC7.combatCard.surprised'}}</span></div>
+    <div class="flex0">
+      <label class="toggle flex0">
+        <input class="{{#if (and data.flags.surprised card.surpriseResolved)}}inactive{{/if}}" type="checkbox" data-flag="surprised">
+        <span class="slider"></span>
+      </label>
+    </div>
   </div>
     {{#if data.flags.surprised}}
       {{#if (and card.hasTaget (lt data.checks.detection.state card.rollStates.requested))}}
-      <div class="flexrow">
-        <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.CanDetect" data-flag="canDetect">{{localize 'CoC7.CanDetect'}}</span>
+      <div class="section-row tooltipster-active {{#unless data.flags.canDetect}}striked{{/unless}}" data-description="CoC7.Hint.CanDetect">
+      <div class="flex1"><span class="flex1">{{localize 'CoC7.CanDetect'}}</span></div>
+      <div class="flex0">
+        <label class="toggle flex0">
+          <input type="checkbox" data-flag="canDetect">
+          <span class="slider"></span>
+        </label>
+      </div>
       </div>
       {{/if}}
       {{#if (and (not (eq data.checks.detection.state card.rollStates.closed)) (not data.flags.canDetect))}}
-      <div class="flexrow suprised-options ecc-radio">
+      <div class="section-row suprised-options ecc-radio radio-switches">
         <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.AutoHit" data-flag="autoHit">{{localize 'CoC7.combatCard.automaticSuccess'}}</span>
         <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.SuprisedBonusDice" data-flag="suprisedBonusDice">{{localize 'CoC7.Advantage'}}</span>
       </div>
@@ -48,6 +70,7 @@
       {{#if (and data.flags.canDetect (lt data.checks.detection.state card.rollStates.requested))}}
         {{#if card.attacker.hasPlayerOwner}}
           <div class="flexrow detection-check-select">
+            <label>Choose skill</label>
             <input type="text" name="data.checks.detection.name" value="{{data.checks.detection.name}}" list="attacker-check-options-{{card.messageId}}" placeholder="{{ localize 'CoC7.SelectSkill' }}" />
           </div>
           <div class="flexrow">
@@ -91,7 +114,7 @@
         {{#if (eq data.checks.detection.state card.rollStates.rolled)}}
           {{#if card.attacker.hasPlayerOwner}}
             {{#if data.checks.detection.roll.passed}}
-              <div class="flexrow suprised-options ecc-radio">
+              <div class="flexrow suprised-options ecc-radio radio-switches">
                 <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.AutoHit" data-flag="autoHit">{{localize 'CoC7.combatCard.automaticSuccess'}}</span>
                 <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.SuprisedBonusDice" data-flag="suprisedBonusDice">{{localize 'CoC7.Advantage'}}</span>
               </div>
@@ -99,7 +122,7 @@
             {{/if}}
           {{else}}
             {{#if (not data.checks.detection.roll.passed)}}
-              <div class="flexrow suprised-options ecc-radio">
+              <div class="flexrow suprised-options ecc-radio radio-switches">
                 <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.AutoHit" data-flag="autoHit">{{localize 'CoC7.combatCard.automaticSuccess'}}</span>
                 <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.SuprisedBonusDice" data-flag="suprisedBonusDice">{{localize 'CoC7.Advantage'}}</span>
               </div>
