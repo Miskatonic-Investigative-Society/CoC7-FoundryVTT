@@ -422,13 +422,13 @@ export class CoC7InvestigatorWizard extends FormApplication {
           for (const key of this.object.requiresAgeAdjustments.deduct.from) {
             sheetData.deductTotal = sheetData.deductTotal - parseInt(this.object.setupModifiers[key], 10)
           }
-          sheetData.deductFrom = this.object.requiresAgeAdjustments.deduct.from.map(n => n.toLocaleUpperCase()).join(', ').replace(/, ([a-z]+)$/i, ', or $1')
+          sheetData.deductFrom = this.object.requiresAgeAdjustments.deduct.from.map(n => game.i18n.localize('CHARAC.' + n.toUpperCase())).join(', ').replace(/(, )([^,]+)$/, '$1' + game.i18n.localize('CoC7.Or') + ' $2').replace(/^([^,]+),([^,]+)$/, '$1$2')
           if (sheetData.deductTotal !== this.object.requiresAgeAdjustments.deduct.total) {
             sheetData.canNext = false
           }
         }
         if (typeof this.object.requiresAgeAdjustments.reduce !== 'undefined') {
-          sheetData.reduceFrom = this.object.requiresAgeAdjustments.reduce.from.toLocaleUpperCase()
+          sheetData.reduceFrom = game.i18n.localize('CHARAC.' + this.object.requiresAgeAdjustments.reduce.from.toUpperCase())
         }
         if (typeof this.object.requiresAgeAdjustments.luck !== 'undefined') {
           sheetData.luckValue = Math.max(this.object.setupPoints.luck, this.object.setupModifiers.luck)
