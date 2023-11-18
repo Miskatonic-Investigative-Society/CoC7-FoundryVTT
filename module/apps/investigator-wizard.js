@@ -395,7 +395,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
             if (!empties && this.object.age >= 15) {
               if ([sheetData.characteristicsMethods.METHOD_ROLL, sheetData.characteristicsMethods.METHOD_VALUES].includes(sheetData.characteristicsMethod)) {
                 sheetData.canNext = true
-              } else if (sheetData.setup.total.toString() === sheetData.setup.points) {
+              } else if (sheetData.setup.total.toString() === sheetData.setup.points.toString()) {
                 sheetData.canNext = true
               }
             }
