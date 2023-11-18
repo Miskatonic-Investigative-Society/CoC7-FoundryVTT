@@ -355,7 +355,7 @@ export class CoCID {
       const docCoCID = doc.getFlag('CoC7', 'cocidFlag')?.id
       if (docCoCID) {
         const currentDoc = bestMatchDocuments.get(docCoCID)
-        if (currentDoc === undefined) {
+        if (typeof currentDoc === 'undefined') {
           bestMatchDocuments.set(docCoCID, doc)
           continue
         }
@@ -404,14 +404,14 @@ export class CoCID {
         const key = docCoCID + '/' + docEras + '/' + (isNaN(docPriority) ? Number.MIN_SAFE_INTEGER : docPriority)
 
         const currentDoc = bestMatchDocuments.get(key)
-        if (currentDoc === undefined) {
+        if (typeof currentDoc === 'undefined') {
           bestMatchDocuments.set(key, doc)
           continue
         }
 
         const docLang = doc.getFlag('CoC7', 'cocidFlag')?.lang ?? 'en'
-        const currentLang = currentDoc?.getFlag('CoC7', 'cocidFlag')?.lang ?? 'en'
-        if (currentLang === 'en' && currentLang !== docLang) {
+        const existingLang = currentDoc?.getFlag('CoC7', 'cocidFlag')?.lang ?? 'en'
+        if (existingLang === 'en' && existingLang !== docLang) {
           bestMatchDocuments.set(key, doc)
         }
       }
