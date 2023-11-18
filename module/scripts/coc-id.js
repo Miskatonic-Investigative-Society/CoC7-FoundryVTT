@@ -351,24 +351,34 @@ export class CoCID {
    */
   static filterBestCoCID (documents) {
     const bestMatchDocuments = new Map()
-
     for (const doc of documents) {
       const docCoCID = doc.getFlag('CoC7', 'cocidFlag')?.id
       if (docCoCID) {
-        const currentExists = bestMatchDocuments.get(docCoCID)
+        const currentDoc = bestMatchDocuments.get(docCoCID)
+        if (typeof currentDoc === 'undefined') {
+          bestMatchDocuments.set(docCoCID, doc)
+          continue
+        }
+
         // Prefer pack === '' if possible
         const docPack = (doc.pack ?? '')
-        const existingPack = (currentExists?.pack ?? '')
-        const preferWorld = (typeof currentExists === 'undefined' || (docPack === '' && existingPack !== '') || (docPack !== '' && existingPack !== ''))
+        const existingPack = (currentDoc?.pack ?? '')
+        const preferWorld = docPack === '' || existingPack !== ''
+        if (!preferWorld) {
+          continue
+        }
+
         // Prefer highest priority
         let docPriority = parseInt(doc.getFlag('CoC7', 'cocidFlag')?.priority ?? Number.MIN_SAFE_INTEGER, 10)
-        docPriority = (isNaN(docPriority) ? Number.MIN_SAFE_INTEGER : docPriority)
-        let existingPriority = parseInt(currentExists?.priority ?? Number.MIN_SAFE_INTEGER, 10)
-        existingPriority = (isNaN(existingPriority) ? Number.MIN_SAFE_INTEGER : existingPriority)
-        const preferPriority = (typeof currentExists === 'undefined' || docPriority >= existingPriority)
-        if (preferWorld && preferPriority) {
-          bestMatchDocuments.set(docCoCID, doc)
+        docPriority = isNaN(docPriority) ? Number.MIN_SAFE_INTEGER : docPriority
+        let existingPriority = parseInt(currentDoc.getFlag('CoC7', 'cocidFlag')?.priority ?? Number.MIN_SAFE_INTEGER, 10)
+        existingPriority = isNaN(existingPriority) ? Number.MIN_SAFE_INTEGER : existingPriority
+        const preferPriority = docPriority >= existingPriority
+        if (!preferPriority) {
+          continue
         }
+
+        bestMatchDocuments.set(docCoCID, doc)
       }
     }
     return [...bestMatchDocuments.values()]
@@ -389,12 +399,19 @@ export class CoCID {
       const docCoCID = doc.getFlag('CoC7', 'cocidFlag')?.id
       if (docCoCID) {
         const docEras = Object.entries(doc.getFlag('CoC7', 'cocidFlag')?.eras ?? {}).filter(e => e[1]).map(e => e[0]).sort().join('/')
-        const docPriority = parseInt(doc.getFlag('CoC7', 'cocidFlag')?.priority ?? Number.MIN_SAFE_INTEGER, 10)
+        let docPriority = parseInt(doc.getFlag('CoC7', 'cocidFlag')?.priority ?? Number.MIN_SAFE_INTEGER, 10)
+        docPriority = isNaN(docPriority) ? Number.MIN_SAFE_INTEGER : docPriority
         const key = docCoCID + '/' + docEras + '/' + (isNaN(docPriority) ? Number.MIN_SAFE_INTEGER : docPriority)
-        const currentExists = bestMatchDocuments.get(key)
+
+        const currentDoc = bestMatchDocuments.get(key)
+        if (typeof currentDoc === 'undefined') {
+          bestMatchDocuments.set(key, doc)
+          continue
+        }
+
         const docLang = doc.getFlag('CoC7', 'cocidFlag')?.lang ?? 'en'
-        const existingLang = currentExists?.getFlag('CoC7', 'cocidFlag')?.lang ?? 'en'
-        if (typeof currentExists === 'undefined' || (existingLang === 'en' && existingLang !== docLang)) {
+        const existingLang = currentDoc?.getFlag('CoC7', 'cocidFlag')?.lang ?? 'en'
+        if (existingLang === 'en' && existingLang !== docLang) {
           bestMatchDocuments.set(key, doc)
         }
       }
