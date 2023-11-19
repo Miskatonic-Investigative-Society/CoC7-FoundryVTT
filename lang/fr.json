@@ -373,6 +373,8 @@
   "CoC7.EraPulp": "Cthulhu Pulp",
   "CoC7.EraModern": "Moderne",
   "CoC7.EraModernPulp": "Moderne - Pulp",
+  "CoC7.EraRegency": "Regency Cthulhu - Standard",
+  "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
   "CoC7.Eras": "Époques Cthulhiennes",
   "CoC7.EraAvailability": "Disponibilité",
 
@@ -566,6 +568,7 @@
   "CoC7.DeleteSanityLossEncounter": "Supprimer une perte de SAN liée à une Rencontre",
   "CoC7.DeleteSanityLossImmunity": "Supprimer une immunité aux pertes de SAN",
 
+  "CoC7.SanityLossType": "Type",
   "CoC7.SanityLossTypeDialogTitle": "Nouvelle immunité ou perte de SAN liée à une Rencontre",
   "CoC7.SanityLossTypeDialogBody": "Ajouter une Confrontation au Mythe, Perte de SAN, ou Immunité à ce personnage.",
   "CoC7.SanityLossTypeReason": "Raison",
@@ -723,6 +726,7 @@
   "CoC7.ErrorBeneficiaryAtMaxBonus": "le bénéficiaire {name} a déjà le max de dés bonus",
   "CoC7.ErrorParticipantAtMaxBonus": "{participantUuid} a déjà le max de dés bonus",
   "CoC7.ErrorTokenNotOnScene": "Le token n'appartient pas à la scène de cette étape",
+  "CoC7.ErrorTokenIncorrect": "Impossible de trouver le token sélectionné",
   "CoC7.AddParticipant": "Ajouter un protagoniste",
   "CoC7.RemoveParticipant": "Enlever un protagoniste",
   "CoC7.RemoveParticipantHint": "Le protagoniste va être totalement supprimé de la poursuite",

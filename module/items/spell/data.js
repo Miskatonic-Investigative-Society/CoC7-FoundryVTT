@@ -182,7 +182,7 @@ export class CoC7Spell extends CoC7Item {
       }
       this.sheet.render(true)
     } else {
-      super.update(data, context)
+      await super.update(data, context)
     }
   }
 }

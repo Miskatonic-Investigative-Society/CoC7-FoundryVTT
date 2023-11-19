@@ -82,7 +82,10 @@ export class CoCID {
   static eraText (era) {
     if (era === false) {
       return game.i18n.localize('CoC7.Any')
+    } else if (era === true) {
+      era = game.settings.get('CoC7', 'worldEra')
     }
+
     return game.i18n.format(COC7.eras[era] ?? 'CoC7.CoCIDFlag.error.unknown-era', { era })
   }
 
@@ -285,11 +288,15 @@ export class CoCID {
    * @param cocidRegExp regex used on the CoCID
    * @param type the first part of the wanted CoCID, for example 'i', 'a', 'je'
    * @param lang the language to match against ("en", "es", ...)
-   * @param era the eras to match against ('standard', 'modernPulp', ...), true = world default, false = no filter
+   * @param era the eras to match against ('standard', 'modernPulp', ...), true = world default
    * @param langFallback should the system fall back to en incase there is no translation
    * @param showLoading Show loading bar
    */
   static async fromCoCIDRegexBest ({ cocidRegExp, type, lang = game.i18n.lang, era = true, langFallback = true, showLoading = false } = {}) {
+    if (era === false) {
+      ui.notifications.error(game.i18n.format('CoC7.CoCIDFlag.error.unknown-era', { era: game.i18n.localize('CoC7.Any') }))
+      return []
+    }
     const allDocuments = await this.fromCoCIDRegexAll({ cocidRegExp, type, lang, era, scope: 'all', langFallback, showLoading })
     const bestDocuments = this.filterBestCoCID(allDocuments)
     return bestDocuments
@@ -302,10 +309,14 @@ export class CoCID {
    * in compendium packs.
    * @param cocid string CoCID
    * @param lang the language to match against ("en", "es", ...)
-   * @param era the eras to match against ('standard', 'modernPulp', ...), true = world default, false = no filter
+   * @param era the eras to match against ('standard', 'modernPulp', ...), true = world default
    * @param langFallback should the system fall back to en incase there is no translation
    */
   static fromCoCID (cocid, lang = game.i18n.lang, era = true, langFallback = true) {
+    if (era === false) {
+      ui.notifications.error(game.i18n.format('CoC7.CoCIDFlag.error.unknown-era', { era: game.i18n.localize('CoC7.Any') }))
+      return []
+    }
     return CoCID.fromCoCIDBest({ cocid, lang, era, langFallback })
   }
 
@@ -316,12 +327,16 @@ export class CoCID {
    * in compendium packs.
    * @param cocid string CoCID
    * @param lang the language to match against ("en", "es", ...)
-   * @param era the eras to match against ('standard', 'modernPulp', ...), true = world default, false = no filter
+   * @param era the eras to match against ('standard', 'modernPulp', ...), true = world default
    * @param langFallback should the system fall back to en incase there is no translation
    * @param showLoading Show loading bar
    */
   static fromCoCIDBest ({ cocid, lang = game.i18n.lang, era = true, langFallback = true, showLoading = false } = {}) {
     if (!cocid || typeof cocid !== 'string') {
+      return []
+    }
+    if (era === false) {
+      ui.notifications.error(game.i18n.format('CoC7.CoCIDFlag.error.unknown-era', { era: game.i18n.localize('CoC7.Any') }))
       return []
     }
     const type = cocid.split('.')[0]
@@ -330,42 +345,49 @@ export class CoCID {
   }
 
   /**
-   * For an array of documents, returns only those that are the "best" version of their CoCID
+   * For an array of documents already processed by filterAllCoCID, returns only those that are the "best" version of their CoCID
    * @param documents
    * @returns
    */
   static filterBestCoCID (documents) {
     const bestMatchDocuments = new Map()
-
     for (const doc of documents) {
       const docCoCID = doc.getFlag('CoC7', 'cocidFlag')?.id
       if (docCoCID) {
-        const currentExists = bestMatchDocuments.get(docCoCID)?.id
-        const docLang = doc.getFlag('CoC7', 'cocidFlag')?.lang ?? 'en'
-        const existingLang = bestMatchDocuments.get(docCoCID)?.getFlag('CoC7', 'cocidFlag')?.lang ?? 'en'
-        const preferLang = (!currentExists || existingLang === 'en' || existingLang === docLang)
-        // console.log('preferLang', '>', docLang, '< >', existingLang, '<', preferLang)
-        const docPack = (doc.pack ?? '')
-        const existingPack = (bestMatchDocuments.get(docCoCID)?.pack ?? '')
-        const preferWorld = (!currentExists || docPack === '' || existingPack !== '')
-        // console.log('preferWorld', '>', docPack, '< >', existingPack, '<', preferWorld)
-        const docPriority = parseInt(doc.getFlag('CoC7', 'cocidFlag')?.priority, 10)
-        const existingPriority = parseInt(bestMatchDocuments.get(docCoCID)?.getFlag('CoC7', 'cocidFlag')?.priority ?? Number.MIN_SAFE_INTEGER)
-        const preferPriority = (!currentExists || docPriority === existingPriority || docPriority > existingPriority)
-        // console.log('preferPriority', '>', docPriority, '< >', existingPriority, '<', preferPriority)
-        if (preferLang && preferWorld && preferPriority) {
+        const currentDoc = bestMatchDocuments.get(docCoCID)
+        if (typeof currentDoc === 'undefined') {
           bestMatchDocuments.set(docCoCID, doc)
+          continue
         }
+
+        // Prefer pack === '' if possible
+        const docPack = (doc.pack ?? '')
+        const existingPack = (currentDoc?.pack ?? '')
+        const preferWorld = docPack === '' || existingPack !== ''
+        if (!preferWorld) {
+          continue
+        }
+
+        // Prefer highest priority
+        let docPriority = parseInt(doc.getFlag('CoC7', 'cocidFlag')?.priority ?? Number.MIN_SAFE_INTEGER, 10)
+        docPriority = isNaN(docPriority) ? Number.MIN_SAFE_INTEGER : docPriority
+        let existingPriority = parseInt(currentDoc.getFlag('CoC7', 'cocidFlag')?.priority ?? Number.MIN_SAFE_INTEGER, 10)
+        existingPriority = isNaN(existingPriority) ? Number.MIN_SAFE_INTEGER : existingPriority
+        const preferPriority = docPriority >= existingPriority
+        if (!preferPriority) {
+          continue
+        }
+
+        bestMatchDocuments.set(docCoCID, doc)
       }
     }
-
     return [...bestMatchDocuments.values()]
   }
 
   /**
    * For an array of documents, returns filter out en documents if a translated one exists matching the same eras
    * @param documents
-   * @param langFallback should the system fall back to en incase there is no translation
+   * @param langFallback should the system fall back to en in case there is no translation
    * @returns
    */
   static filterAllCoCID (documents, langFallback) {
@@ -373,21 +395,27 @@ export class CoCID {
       return documents
     }
     const bestMatchDocuments = new Map()
-
     for (const doc of documents) {
       const docCoCID = doc.getFlag('CoC7', 'cocidFlag')?.id
-      const docEras = Object.entries(doc.getFlag('CoC7', 'cocidFlag')?.eras ?? {}).filter(e => e[1]).map(e => e[0]).join('/')
       if (docCoCID) {
-        const currentExists = bestMatchDocuments.get(docCoCID)?.id
+        const docEras = Object.entries(doc.getFlag('CoC7', 'cocidFlag')?.eras ?? {}).filter(e => e[1]).map(e => e[0]).sort().join('/')
+        let docPriority = parseInt(doc.getFlag('CoC7', 'cocidFlag')?.priority ?? Number.MIN_SAFE_INTEGER, 10)
+        docPriority = isNaN(docPriority) ? Number.MIN_SAFE_INTEGER : docPriority
+        const key = docCoCID + '/' + docEras + '/' + (isNaN(docPriority) ? Number.MIN_SAFE_INTEGER : docPriority)
+
+        const currentDoc = bestMatchDocuments.get(key)
+        if (typeof currentDoc === 'undefined') {
+          bestMatchDocuments.set(key, doc)
+          continue
+        }
+
         const docLang = doc.getFlag('CoC7', 'cocidFlag')?.lang ?? 'en'
-        const existingLang = bestMatchDocuments.get(docCoCID)?.getFlag('CoC7', 'cocidFlag')?.lang ?? 'en'
-        const preferLang = (!currentExists || existingLang === 'en' || existingLang === docLang)
-        if (preferLang) {
-          bestMatchDocuments.set(docCoCID + '/' + docEras, doc)
+        const existingLang = currentDoc?.getFlag('CoC7', 'cocidFlag')?.lang ?? 'en'
+        if (existingLang === 'en' && existingLang !== docLang) {
+          bestMatchDocuments.set(key, doc)
         }
       }
     }
-
     return [...bestMatchDocuments.values()]
   }
 

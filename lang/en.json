@@ -834,7 +834,7 @@
   "CoC7.EmptySkillList": "Add a skill by dropping it here.",
   "CoC7.EmptyItemList": "Add an item by dropping it here.",
   "CoC7.EmptyCharacterSkillList": "Add a setup, occupation, or skill by dropping it here.",
-  "CoC7.PersonalSpeciality": "Number of personal or era specialty",
+  "CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",
   "CoC7.AdditionalSkills": "Additional Skills",
   "CoC7.SkillSelectionWindow": "Select optional skills",
   "CoC7.SelectPersonalSkills": "Select {number} skill(s) as personal interest skills",
@@ -1004,6 +1004,8 @@
   "CoC7.Migrate.ErrorTable": "Failed CoC7 system migration for Table {name}: {message}",
   "CoC7.Migrate.ErrorItem": "Failed CoC7 system migration for Item {name}: {message}",
   "CoC7.Migrate.ErrorActor": "Failed CoC7 system migration for Actor {name}: {message}",
+
+  "CoC7.System.Documentation": "View CoC7 System Manual",
 
   "CoC7.Settings.CoreRules.Title": "Core Rule Book Optional Rules",
   "CoC7.Settings.Rules.Name": "Variant/Optional Rules",
@@ -1186,6 +1188,8 @@
   "SETTINGS.ChaseShowTokenMovementHint": "Show movement on the grid when a token is moved to the next location.",
   "SETTINGS.UseContextMenus": "Use context menus",
   "SETTINGS.UseContextMenusHint": "[EXPERIMENTAL] Use context menus for rolls instead of key combination.",
+  "SETTINGS.SceneDistanceNotCalcualtedNoError": "Don't show error for ranged distance",
+  "SETTINGS.SceneDistanceNotCalcualtedNoErrorHint": "When starting a ranged combat if playing theatre of the mind do not show the unable to calculate distance message.",
 
   "CoC7.getTheExample": "Copy Example",
   "CoC7.Copied": "Copied the Example Text to Clipboard",
@@ -1289,5 +1293,10 @@
   "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language \"{lang}\", and era \"{era}\". Please check your Era for the world setting.",
 
   "CoC7.CoCIDBatch.title": "Batch set System ID (CoC ID)",
-  "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
+  "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages.",
+
+  "CoC7.TokenCreationRoll.Title": "Rollable detected",
+  "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
+  "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
+  "CoC7.TokenCreationRoll.ButtonAverage": "Average all"
 }

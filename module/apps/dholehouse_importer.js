@@ -219,6 +219,9 @@ export class CoC7DholeHouseActorImporter {
 
   static async extractPossessions (dholehousePossessions, options) {
     const items = []
+    if (!Array.isArray(dholehousePossessions) && dholehousePossessions != null) {
+      dholehousePossessions = [dholehousePossessions]
+    }
     for (const item of dholehousePossessions) {
       const existing = await CoC7Utilities.guessItem('item', item.description, {
         source: options.source

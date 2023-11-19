@@ -40,7 +40,11 @@
         {{/each}}
         {{#if personal}}
           <ol class="skills-list">
+            {{#if personalText}}
+            <li>{{personal}} {{personalText}}</li>
+            {{else}}
             <li>{{localize 'CoC7.InvestigatorWizard.OccupationPersonalThisMany' count=personal}}</li>
+            {{/if}}
           </ol>
         {{/if}}
       </div>

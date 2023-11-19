@@ -1623,13 +1623,13 @@ export class CoCActor extends Actor {
     return this.items.find(i => i.flags?.CoC7?.cocidFlag?.id === cocid)
   }
 
-  parseFormula (formula) {
-    let parsedFormula = formula
-    for (const [key, value] of Object.entries(COC7.formula.actor)) {
-      parsedFormula = parsedFormula.replace(key, value)
-    }
-    return parsedFormula
-  }
+  // parseFormula (formula) {
+  //   let parsedFormula = formula
+  //   for (const [key, value] of Object.entries(COC7.formula.actor)) {
+  //     parsedFormula = parsedFormula.replace(key, value)
+  //   }
+  //   return parsedFormula
+  // }
 
   parseCharacteristics () {
     const parsed = {}
@@ -2800,6 +2800,20 @@ export class CoCActor extends Actor {
 
     // Case 2 - use Actor ID directory
     return game.actors.get(key) || null
+  }
+
+  get hasRollableCharacteristics () {
+    for (const [, value] of Object.entries(this.system.characteristics)) {
+      if (isNaN(Number(value.formula))) return true
+    }
+    return false
+  }
+
+  get hosRollableSkills () {
+    for (const skill of this.skills) {
+      if (isNaN(skill.system?.value)) return true
+    }
+    return false
   }
 
   /**

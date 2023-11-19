@@ -35,6 +35,10 @@ if (typeof Tour !== 'undefined') {
       }
 
       await this.waitForElement(this.currentStep.selector)
+
+      if (typeof this.currentStep.sidebarTab !== 'undefined') {
+        ui.sidebar.activateTab(this.currentStep.sidebarTab)
+      }
     }
 
     async _postStep () {

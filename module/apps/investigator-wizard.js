@@ -395,7 +395,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
             if (!empties && this.object.age >= 15) {
               if ([sheetData.characteristicsMethods.METHOD_ROLL, sheetData.characteristicsMethods.METHOD_VALUES].includes(sheetData.characteristicsMethod)) {
                 sheetData.canNext = true
-              } else if (sheetData.setup.total.toString() === sheetData.setup.points) {
+              } else if (sheetData.setup.total.toString() === sheetData.setup.points.toString()) {
                 sheetData.canNext = true
               }
             }
@@ -422,13 +422,13 @@ export class CoC7InvestigatorWizard extends FormApplication {
           for (const key of this.object.requiresAgeAdjustments.deduct.from) {
             sheetData.deductTotal = sheetData.deductTotal - parseInt(this.object.setupModifiers[key], 10)
           }
-          sheetData.deductFrom = this.object.requiresAgeAdjustments.deduct.from.map(n => n.toLocaleUpperCase()).join(', ').replace(/, ([a-z]+)$/i, ', or $1')
+          sheetData.deductFrom = this.object.requiresAgeAdjustments.deduct.from.map(n => game.i18n.localize('CHARAC.' + n.toUpperCase())).join(', ').replace(/(, )([^,]+)$/, '$1' + game.i18n.localize('CoC7.Or') + ' $2').replace(/^([^,]+),([^,]+)$/, '$1$2')
           if (sheetData.deductTotal !== this.object.requiresAgeAdjustments.deduct.total) {
             sheetData.canNext = false
           }
         }
         if (typeof this.object.requiresAgeAdjustments.reduce !== 'undefined') {
-          sheetData.reduceFrom = this.object.requiresAgeAdjustments.reduce.from.toLocaleUpperCase()
+          sheetData.reduceFrom = game.i18n.localize('CHARAC.' + this.object.requiresAgeAdjustments.reduce.from.toUpperCase())
         }
         if (typeof this.object.requiresAgeAdjustments.luck !== 'undefined') {
           sheetData.luckValue = Math.max(this.object.setupPoints.luck, this.object.setupModifiers.luck)
@@ -505,6 +505,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
             sheetData.occupationPointsString = CoC7OccupationSheet.occupationPointsString(occupation.system.occupationSkillPoints)
             sheetData.creditRating = occupation.system.creditRating
             sheetData.personal = occupation.system.personal
+            sheetData.personalText = occupation.system.personalText
             sheetData.skills = await this.expandItemArray(occupation.system.skills)
             sheetData.groups = {}
             for (let index = 0; index < occupation.system.groups.length; index++) {
@@ -623,7 +624,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
             })
           }
         }
-        sheetData.max = parseInt(sheetData.default, 10) + parseInt(sheetData.object.personal, 10) + Object.values(sheetData.object.occupationGroups).reduce((s, v) => s + parseInt(v, 10), 0)
+        sheetData.max = (parseInt(sheetData.default, 10) || 0) + (parseInt(sheetData.object.personal, 10) || 0) + Object.values(sheetData.object.occupationGroups).reduce((s, v) => s + (parseInt(v, 10) || 0), 0)
         sheetData.skillItems.sort(CoC7Utilities.sortByNameKey)
         if (sheetData.selected === sheetData.max) {
           sheetData.canNext = true
@@ -981,6 +982,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
         })
       }
       this.object.personal = occupation.system.personal
+      this.object.personalText = occupation.system.personalText
       this.object.creditRating = occupation.system.creditRating
       let items = []
       items = await this.expandItemArray(setup.system.items)
@@ -1862,6 +1864,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
       occupation: '',
       bioSections: [],
       personal: 0,
+      personalText: '',
       creditRating: {
         min: 0,
         max: 0

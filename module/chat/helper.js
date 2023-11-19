@@ -319,7 +319,7 @@ export class chatHelper {
           distance.value * distance.value + elevation * elevation
         )
       }
-    } else {
+    } else if (!game.settings.get('CoC7', 'distanceTheatreOfTheMind')) {
       ui.notifications.warn(
         game.i18n.localize('CoC7.MessageDistanceCalculationFailure')
       )

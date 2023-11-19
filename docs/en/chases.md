@@ -41,7 +41,7 @@ Here you can set up your participant. Dragging an actor from the Actors sidebar 
 
 1. Dragging the questionmark onto a token will set the details to that token.
 
-One you drag an actor or select a token you can set up the participant
+Once you drag an actor or select a token you can set up the participant
 
 ![](../../assets/manual/chases/new_participant_setup.webp)
 

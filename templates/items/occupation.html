@@ -234,7 +234,8 @@
           {{ localize "CoC7.AdditionalSkills" }}
         </h3>
         <div class='form-group'>
-          <input type="text" name="system.personal" value="{{data.system.personal}}" data-dtype="Number" placeholder="{{ localize 'CoC7.PersonalSpeciality' }}" />
+          <input type="text" name="system.personal" value="{{data.system.personal}}" data-dtype="Number" placeholder="0" style="flex: 0 0 2rem;" />
+          <input type="text" name="system.personalText" value="{{data.system.personalText}}" placeholder="{{ localize 'CoC7.PersonalSpecialityPlaceholder' }}" />
         </div>
       {{/unless}}
     </div>

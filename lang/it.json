@@ -572,6 +572,7 @@
   "CoC7.DeleteSanityLossEncounter": "Elimina la perdita di Sanità per l'incontro",
   "CoC7.DeleteSanityLossImmunity": "Elimina l'immunità alla perdita di Sanità",
 
+  "CoC7.SanityLossType": "Tipo",
   "CoC7.SanityLossTypeDialogTitle": "Nuova perdita o immunità di Sanità",
   "CoC7.SanityLossTypeDialogBody": "Aggiungi al personaggio un nuovo incontro dei Miti, una perdita di Sanità, o un'immunità alla Sanità.",
   "CoC7.SanityLossTypeReason": "Causa",
@@ -729,6 +730,7 @@
   "CoC7.ErrorBeneficiaryAtMaxBonus": "Il destinatario {name} ha già il massimo dei dadi bonus",
   "CoC7.ErrorParticipantAtMaxBonus": "{participantUuid} ha già il massimo dei dadi bonus",
   "CoC7.ErrorTokenNotOnScene": "La Pedina non appartiene alla scena di questo luogo",
+  "CoC7.ErrorTokenIncorrect": "Impossibile trovare la pedina selezionata",
   "CoC7.AddParticipant": "Aggiungi Partecipante",
   "CoC7.RemoveParticipant": "Rimuovi Partecipante",
   "CoC7.RemoveParticipantHint": "Il Partecipante verrà completamente rimosso dall'inseguimento",
@@ -1007,6 +1009,8 @@
   "CoC7.Migrate.ErrorItem": "E' fallita la migrazione del sistema CoC7 per l'Oggetto {name}: {message}",
   "CoC7.Migrate.ErrorActor": "E' fallita la migrazione del sistema CoC7 per il Personaggio {name}: {message}",
 
+  "CoC7.System.Documentation": "Visione del Manuale del Sistema CoC7",
+  
   "CoC7.Settings.CoreRules.Title": "Regole opzionali del regolamento base",
   "CoC7.Settings.Rules.Name": "Regole opzionali/variazioni",
   "CoC7.Settings.Rules.Label": "Configurazione delle regole opzionali/variazioni",
@@ -1188,6 +1192,8 @@
   "SETTINGS.ChaseShowTokenMovementHint": "Mostra movimento sulla griglia quando una pedina viene mossa nel luogo successivo.",
   "SETTINGS.UseContextMenus": "Usa menu contestuali",
   "SETTINGS.UseContextMenusHint": "[SPERIMENTALE] Usa i menu contestuali per i tiri invece della combinazione di tasti.",
+  "SETTINGS.SceneDistanceNotCalcualtedNoError": "Non mostrare un errore per la distanza",
+  "SETTINGS.SceneDistanceNotCalcualtedNoErrorHint": "Quando si inizia un combattimento a distanza, e si sta usando il teatro della mente, non viene mostrato il messaggio sull'impossibilità di calcolare la distanza.",
 
   "CoC7.getTheExample": "Copia Esempio",
   "CoC7.Copied": "Copiato il testo di esempio negli Appunti",

@@ -9,6 +9,26 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 0.10.7
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix a bug where token image wasn't set properly with generic icon
+- Fix CoC ID filtering by language/era issues, and regression issues caused by #1435, thanks to @Technus #1418 and #1439
+- Fix dholehouse importer for characters with a single item on their possesions. Fixes #1423, thanks to @pconcepcion #1424
+- Fix guessing CoC ID on spells doesn't save on first attempt.
+- Fix investigator wizard occupation skills max if personal skills is blank
+- Fix Lock / Unlock / Roll / mode change not supported on actors in compendium. Fixes #1432
+- Fix targeting system not being able to calculate distance from the minimized sheet #1426
+- Add optional occupation personal skill text. #1436
+- Add system manual button to Game Settings sidebar tab
+- Add system setting to not trigger an error message for ranged token distance calculations if playing theatre of the mind
+- Add translated characteristics to investigator wizard age reduction headers, thanks to @Technus #1438
+- When an actor that has rollable characteristics or skills is dragged onto a scene prompted whether those should be rolled or averaged.
+- Update to French localization, thanks to @vonv #1415
+- Update to Italian localization, thanks to @Stefano1975t #1419, #1422, and #1429
+- Update to Polish localization, thanks to @Technus #1438
+
 ## Version 0.10.6
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.

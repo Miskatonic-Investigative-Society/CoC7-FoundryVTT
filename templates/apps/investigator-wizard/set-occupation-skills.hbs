@@ -21,7 +21,7 @@
       </ol>
     {{/each}}
     <div class="form-group">&nbsp;</div>
-    <div class="form-group">{{localize 'CoC7.InvestigatorWizard.OccupationPickThisMany' count=object.personal}}</div>
+    <div class="form-group">{{#if object.personalText}}{{object.personal}} {{object.personalText}}{{else}}{{localize 'CoC7.InvestigatorWizard.OccupationPickThisMany' count=object.personal}}{{/if}}</div>
     <ol class="skills-list" data-type="occupationOther">
       {{#each skillItems as |skill|}}
         {{#if (eq skill.group 'other')}}

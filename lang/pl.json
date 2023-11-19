@@ -834,7 +834,7 @@
   "CoC7.EmptySkillList": "Dodaj umiejętność, upuszczając ją tutaj.",
   "CoC7.EmptyItemList": "Dodaj przedmiot, upuszczając go tutaj.",
   "CoC7.EmptyCharacterSkillList": "Dodaj ustawienie, zawód lub umiejętność, przeciągając je tutaj.",
-  "CoC7.PersonalSpeciality": "Liczba specjalizacji osobistych lub z epoki",
+  "CoC7.PersonalSpecialityPlaceholder": "z umiejętności osobistych lub epoki",
   "CoC7.AdditionalSkills": "Dowolna Umiejętność",
   "CoC7.SkillSelectionWindow": "Wybierz opcjonalne umiejętności",
   "CoC7.SelectPersonalSkills": "Wybierz {number} umiejętność(i) jako umiejętności związane z zainteresowaniami osobistymi",
@@ -1004,6 +1004,8 @@
   "CoC7.Migrate.ErrorTable": "Migracja Tabeli {name} nie powiodła się: {message}",
   "CoC7.Migrate.ErrorItem": "Migracja Przedmiotu {name} nie powiodła się: {message}",
   "CoC7.Migrate.ErrorActor": "Migracja Aktora {name} nie powiodła się: {message}",
+
+  "CoC7.System.Documentation": "Zajrzyj do Instrukcji Systemu CoC7",
 
   "CoC7.Settings.CoreRules.Title": "Opcjonalne zasady z Podręcznika Podstawowego",
   "CoC7.Settings.Rules.Name": "Alternatywne/opcjonalne Zasady",
@@ -1186,6 +1188,8 @@
   "SETTINGS.ChaseShowTokenMovementHint": "Pokaż ruch tokena na siatce, gdy jest przenoszony do nowej lokacji.",
   "SETTINGS.UseContextMenus": "Używaj menu kontekstowego",
   "SETTINGS.UseContextMenusHint": "[EKSPERYMENTALNE] Używaj menu kontekstowego dla rzutów zamiast kombinacji klawiszy.",
+  "SETTINGS.SceneDistanceNotCalcualtedNoError": "Nie pokazuj błędów dla zasięgu",
+  "SETTINGS.SceneDistanceNotCalcualtedNoErrorHint": "Zaczynając walkę nie wyświetlaj błędów dla obliczania zasięgu jeśli wybrany jest teatr umysłu.",
 
   "CoC7.getTheExample": "Skopiuj przykład",
   "CoC7.Copied": "Skopiowano przykładowy tekst do schowka",
@@ -1241,8 +1245,8 @@
   "CoC7.InvestigatorWizard.AgeRange": "Wiek (15-89):",
   "CoC7.InvestigatorWizard.MakeEDUImprovementCheck": "Wykonaj test rozwoju WYK",
   "CoC7.InvestigatorWizard.MakeEDUImprovementChecks": "Wykonaj {total} testy rozwoju WYK",
-  "CoC7.InvestigatorWizard.DeductPointsFromCharacteristics": "Odejmij {total} punkty z {from}",
-  "CoC7.InvestigatorWizard.ReducePointsFromCharacteristic": "Zmniejsz {from} do {total}",
+  "CoC7.InvestigatorWizard.DeductPointsFromCharacteristics": "Odejmij {total} z {from}",
+  "CoC7.InvestigatorWizard.ReducePointsFromCharacteristic": "Zmniejsz {from} o {total}",
   "CoC7.InvestigatorWizard.RollTwiceForLuck": "Rzuć ponownie na Szczęście",
   "CoC7.InvestigatorWizard.OccupationPage": "Zawód daje Ci dodatkowe punkty, które możesz rozdać między osiem umiejętności i Majętność",
   "CoC7.InvestigatorWizard.OccupationSelect": "Wybierz swój Zawód",
@@ -1289,5 +1293,10 @@
   "CoC7.CoCIDFlag.error.documents-not-found": "Nie znaleziono dokumentów w świecie i komendium dla wybranego CoC ID\"{cocid}\", języka \"{lang}\", i epoki \"{era}\". Sprawdź ustawienia Epoki dla twojego Świata.",
 
   "CoC7.CoCIDBatch.title": "Ustawienia System ID (CoC ID)",
-  "CoC7.CoCIDBatch.summary": "System CoC7 wprowadził CoC ID. Pozwala ono na identyfikowanie dokumentów FoundryVTT, na przykład umiejętności. Ta strona pozwala na ustawienie identyfikatorów dla istniejących dokumentów typu \"{type}\". ID powinno używać angielskiej wersji nazw, żeby umożliwić poprawną lokalizację"
+  "CoC7.CoCIDBatch.summary": "System CoC7 wprowadził CoC ID. Pozwala ono na identyfikowanie dokumentów FoundryVTT, na przykład umiejętności. Ta strona pozwala na ustawienie identyfikatorów dla istniejących dokumentów typu \"{type}\". ID powinno używać angielskiej wersji nazw, żeby umożliwić poprawną lokalizację",
+
+  "CoC7.TokenCreationRoll.Title": "Wykryto formuły rzutów",
+  "CoC7.TokenCreationRoll.Prompt": "Token ma formuły rzutów na cechy i/lub umiejętności.<br>Co chcesz zrobić?",
+  "CoC7.TokenCreationRoll.ButtonRoll": "Rzucaj koścmi",
+  "CoC7.TokenCreationRoll.ButtonAverage": "Wybierz średnią"
 }
