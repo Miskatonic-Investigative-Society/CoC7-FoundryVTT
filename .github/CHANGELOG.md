@@ -9,6 +9,10 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 0.10.7
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
 - Fix a bug where token image wasn't set properly with generic icon
 - Fix CoC ID filtering by language/era issues, and regression issues caused by #1435, thanks to @Technus #1418 and #1439
 - Fix dholehouse importer for characters with a single item on their possesions. Fixes #1423, thanks to @pconcepcion #1424
