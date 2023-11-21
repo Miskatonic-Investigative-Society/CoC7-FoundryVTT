@@ -9,6 +9,8 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Update to German localization, thanks to @Goleraan #1444
+
 ## Version 0.10.7
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
