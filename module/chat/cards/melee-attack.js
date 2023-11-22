@@ -140,7 +140,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
     return this.attacker.getWeaponSkills(this.data.weaponUuid)
   }
 
-  get isAttackManeuver () {
+  get attackIsManeuver () {
     if (!this.attackerWeapon) return false
     if (this.attackerWeapon.type === 'skill') return true
     if (this.attackerWeapon.type === 'weapon') return this.attackerWeapon.system.properties.mnvr
@@ -183,7 +183,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
 
   get statusList () {
     const statusList = []
-    if (this.isAttackManeuver) {
+    if (this.attackIsManeuver) {
       statusList.push({ name: game.i18n.localize('CoC7.AttackManeuver'), css: this.attackerCanManeuver ? 'success' : 'failure' })
       if (this.defender) {
         statusList.push({
@@ -311,6 +311,11 @@ export class MeleeAttackCard extends EnhancedChatCard {
     return totalBonus
   }
 
+  get attackSkill () {
+    if (this.attackerWeapon.type === 'skill') return this.attackerWeapon
+    return this.data.thrown ? this.attackerSkills[1] : this.attackerSkills[0]
+  }
+
   /**
    * Return true if the card has a valid detection check to propose.
    */
@@ -394,6 +399,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
 
   async resolveCard () {
     ui.notifications.info('Resolving card')
+    const rollPromises = []
     if (
       this.defenderCanRespond &&
       this.data.checks.defense.state === this.rollStates.locked &&
@@ -403,24 +409,34 @@ export class MeleeAttackCard extends EnhancedChatCard {
         this.data.checks.defense.roll = new CoC7Check()
         this.data.checks.defense.roll.actor = this.defender
         this.data.checks.defense.roll.difficulty = CoC7Check.difficultyLevel.regular
-        if (this.flags.dodge) this.data.checks.skill = this.defender.dodgeSkill
+        if (this.flags.dodge) this.data.checks.defense.roll.skill = this.defender.dodgeSkill
         else if (this.flags.maneuver) {
           if (this.defenseManeuver.specialManeuver) {
             this.data.checks.defense.roll.item = this.defenseManeuver
           }
           this.data.checks.defense.roll.skill = this.data.checks.defense.alternativeSkill ? this.defenseManeuver.skills.alternativ : this.defenseManeuver.skills.main
           if (!isNaN(this.attacker.build) && !isNaN(this.defender.build)) {
-            if (this.defender.build <= this.attacker.build - 2) this.data.checks.defense.roll.diceModifier = -2
             if (this.defender.build <= this.attacker.build - 1) this.data.checks.defense.roll.diceModifier = -1
+            if (this.defender.build <= this.attacker.build - 2) this.data.checks.defense.roll.diceModifier = -2
           }
-        } else if (this.flags.fightBack) {
+        } else if (this.flags.fightback) {
           this.data.checks.defense.roll.item = this.fightBackWeapon
           this.data.checks.defense.roll.skill = this.data.checks.defense.alternativeSkill ? this.fightBackWeapon.skills.alternativ : this.fightBackWeapon.skills.main
         }
       }
+      // rollPromises.push(this.data.checks.defense.roll._perform({ forceDSN: true }))
       await this.data.checks.defense.roll._perform({ forceDSN: true })
-      this.data.checks.defense.state = this.rollStates.rolled
     }
+    this.data.checks.attack.roll = new CoC7Check()
+    this.data.checks.attack.roll.actor = this.attacker
+    this.data.checks.attack.roll.diceModifier = this.totalAttackBonus
+    this.data.checks.attack.roll.skill = this.attackSkill
+    if (this.attackerWeapon.type !== 'skill') this.data.checks.attack.roll.item = this.attackerWeapon
+    await this.data.checks.attack.roll._perform({ forceDSN: true })
+    // rollPromises.push(this.data.checks.attack.roll._perform({ forceDSN: true }))
+    // Promise.all(rollPromises)
+    this.data.checks.defense.state = this.rollStates.rolled
+    this.data.checks.attack.roll.state = this.rollStates.rolled
     return true
   }
 
