@@ -1,14 +1,17 @@
 <div class="flexcol narration">
+  <span>{{ localize 'CoC7.YourUnderMeleeAttack' }}</span>
   {{#if data.flags.surprised}}
     {{#if card.defenderStartled}}
       {{#if data.flags.suprisedBonusDice}}<span>{{ localize 'CoC7.TakenBySurpriseAttackerBonus' }}</span>{{/if}}
       {{#if data.flags.autoHit}}<span>{{ localize 'CoC7.TakenBySurpriseNoResponse' }}</span>{{/if}}
     {{/if}}
   {{/if}}
-  {{#if data.flags.fightback }}<span>{{ localize 'CoC7.FightBack' }} ({{data.checks.defense.name}})</span>{{/if}}
-  {{#if data.flags.maneuver }}<span>{{ localize 'CoC7.Maneuver' }} ({{data.checks.defense.name}})</span>{{/if}}
-  {{#if data.flags.dodge }}<span>{{ localize 'CoC7.Dodging' }} ({{card.defender.dodgeSkill.name}} ({{card.defender.dodgeSkill.value}}%))</span>{{/if}}
-  {{#if data.flags.doNothing }}<span>{{ localize 'CoC7.NoResponse' }}</span>{{/if}}
+  {{#if (eq data.checks.defense.state card.rollStates.rolled)}}
+    {{#if data.flags.fightback }}<span>{{ localize 'CoC7.ChooseToFightBack' }}</span>{{/if}}
+    {{#if data.flags.maneuver }}<span>{{ localize 'CoC7.ChooseToManeuver' }}</span>{{/if}}
+    {{#if data.flags.dodge }}<span>{{ localize 'CoC7.ChooseToDodge' }}</span>{{/if}}
+    {{#if data.flags.doNothing }}<span>{{ localize 'CoC7.ChooseToDoNothing' }}</span>{{/if}}
+  {{/if}}
 </div>
 {{#if card.defenderCanRespond}}
   {{#if (eq data.checks.defense.state card.rollStates.requested)}}
@@ -43,20 +46,11 @@
       </div>
     </div>
     <div class="card-buttons">
-      {{#if data.flags.fightback}} 
-        <button data-action="chooseToFightBack">{{ card.fightBackWeapon.name }}({{card.fightBackWeapon.skills.main.shortName}}:{{card.fightBackWeapon.skills.main.value}}%)</button> 
-        {{#if card.fightBackWeapon.skills.alternativ}}
-        <button data-action="chooseToFightBack" data-alternative="true">{{ card.fightBackWeapon.name }}({{card.fightBackWeapon.skills.alternativ.shortName}}:{{card.fightBackWeapon.skills.alternativ.value}}%)</button> 
-        {{/if}}
+      {{#if card.defenseChoosen}}
+        {{#each card.defenseOptions as |d|}}
+        <button data-action="lockDefenderResponse" {{#if d.altSkill}}data-alternative="true"{{/if}}>{{ d.buttonText }}</button>
+        {{/each}}
       {{/if}}
-      {{#if data.flags.maneuver}}
-        <button data-action="chooseToManeuver">{{ card.defenseManeuver.name }}{{#if card.defenseManeuver.specialManeuver}}/{{card.defenseManeuver.skills.main.shortName}}{{/if}}:({{card.defenseManeuver.skills.main.value}}%)</button>
-        {{#if card.defenseManeuver.skills.alternativ}}
-        <button data-action="chooseToManeuver" data-alternative="true">{{ card.defenseManeuver.name }}{{#if card.defenseManeuver.specialManeuver}}/{{card.defenseManeuver.skills.alternativ.shortName}}{{/if}}:({{card.defenseManeuver.skills.alternativ.value}}%)</button>
-        {{/if}}
-      {{/if}}
-      {{#if data.flags.dodge}} <button data-action="chooseToDodge">{{ card.defender.dodgeSkill.name }}:{{card.defender.dodgeSkill.value}}%</button> {{/if}}
-      {{#if data.flags.doNothing}} <button data-action="chooseToDoNothing">{{ localize 'CoC7.NoResponse' }}</button> {{/if}}
     </div>
   {{/if}}
   {{#if (eq data.checks.defense.state card.rollStates.rolled)}}

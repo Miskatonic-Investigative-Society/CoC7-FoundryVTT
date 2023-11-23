@@ -20,7 +20,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
    * @override
    */
   async initialize () {
-    // this.data.states = {}
+    this.data.states = {}
     this.data.objects = {}
     this.data.flags.rulesMode = this.hasTaget // By default, automatic mode is enabled
     this.data.flags.manualMode = !this.hasTaget
@@ -358,6 +358,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
   async requestAttack (options) {
     this.data.checks.attack.state = this.rollStates.requested
     this.data.checks.defense.state = this.defenderCanRespond ? this.rollStates.requested : this.rollStates.closed
+    if(!this.defenderCanRespond) return this.resolveCard()
     return true
   }
 
@@ -367,27 +368,72 @@ export class MeleeAttackCard extends EnhancedChatCard {
     return true
   }
 
-  async chooseToFightBack (options) {
+  async lockDefenderResponse (options) {
     this.data.checks.defense.state = this.rollStates.locked
     this.data.checks.defense.alternativeSkill = !!options.event.target.dataset.alternative
-    return true
+    return this.resolveCard()
   }
 
-  async chooseToManeuver (options) {
-    this.data.checks.defense.state = this.rollStates.locked
-    this.data.checks.defense.alternativeSkill = !!options.event.target.dataset.alternative
-    return true
+  get defenseChoosen () {
+    return this.flags.fightback || this.flags.maneuver || this.flags.dodge || this.flags.doNothing
   }
 
-  async chooseToDodge (options) {
-    this.data.checks.defense.state = this.rollStates.locked
-    return true
+  get defenseOptions () {
+    const options = []
+    if (this.flags.fightback) {
+      options.push({
+        buttonText: `${this.fightBackWeapon.name}(${this.fightBackWeapon.skills.main.shortName}: ${this.fightBackWeapon.skills.main.value}%)`,
+        altSkill: false
+      })
+      if (this.fightBackWeapon.skills.alternativ) {
+        options.push({
+          buttonText: `${this.fightBackWeapon.name}(${this.fightBackWeapon.skills.alternativ.shortName}: ${this.fightBackWeapon.skills.alternativ.value}%)`,
+          altSkill: true
+        })
+      }
+    }
+    if (this.flags.maneuver) {
+      options.push({
+        buttonText: `${this.defenseManeuver.name}${this.defenseManeuver?.specialManeuver?' ('+this.defenseManeuver.skills.main.shortName+')':''}: ${this.defenseManeuver.skills.main.value}%`,
+        altSkill: false
+      })
+      if (this.defenseManeuver.skills.alternativ) {
+        options.push({
+          buttonText: `${this.defenseManeuver.name}${this.defenseManeuver?.specialManeuver?' ('+this.defenseManeuver.skills.alternativ.shortName+')':''}: ${this.defenseManeuver.skills.alternativ.value}%`,
+          altSkill: true
+        })
+      }
+    }
+    if (this.flags.dodge) {
+      options.push({
+        buttonText: `${this.defender.dodgeSkill.name}: ${this.defender.dodgeSkill.value}%`,
+        altSkill: false
+      })
+    }
+    if (this.flags.doNothing) {
+      options.push({
+        buttonText: game.i18n.localize('CoC7.NoResponse'),
+        altSkill: false
+      })
+    }
+    return options
   }
 
-  async chooseToDoNothing (options) {
-    this.data.checks.defense.state = this.rollStates.locked
-    return true
-  }
+  // async chooseToManeuver (options) {
+  //   this.data.checks.defense.state = this.rollStates.locked
+  //   this.data.checks.defense.alternativeSkill = !!options.event.target.dataset.alternative
+  //   return this.resolveCard()
+  // }
+
+  // async chooseToDodge (options) {
+  //   this.data.checks.defense.state = this.rollStates.locked
+  //   return this.resolveCard()
+  // }
+
+  // async chooseToDoNothing (options) {
+  //   this.data.checks.defense.state = this.rollStates.locked
+  //   return this.resolveCard()
+  // }
 
   get fightBackWeapon () {
     return this.defender.meleeWeapons.find((wp) => wp.uuid === this.data.checks.defense.name)
@@ -436,11 +482,15 @@ export class MeleeAttackCard extends EnhancedChatCard {
     // rollPromises.push(this.data.checks.attack.roll._perform({ forceDSN: true }))
     // Promise.all(rollPromises)
     this.data.checks.defense.state = this.rollStates.rolled
-    this.data.checks.attack.roll.state = this.rollStates.rolled
+    this.data.checks.attack.state = this.rollStates.rolled
     return true
   }
 
   get distance () {
     return (this.attackerToken && this.defenderToken) ? chatHelper.getDistance(this.attackerToken, this.defenderToken) : null
   }
+
+  async closeDefense (options) {
+    return this.resolveCard(options)
+  } 
 }

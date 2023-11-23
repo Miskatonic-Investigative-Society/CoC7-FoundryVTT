@@ -1,14 +1,12 @@
-{{#if (eq data.checks.attack.state card.rollStates.requested)}}
+<div class="flexcol narration">
   {{#if card.attackIsManeuver}}
   <span>{{card.strings.youPerformManeuver}}</span>
   {{else}}
   <span>{{card.strings.youPerformAttack}}</span>
   {{/if}}
-  {{#if card.defenderResponseValidated}}
-    <div class="card-buttons">
-    {{#each card.attackerSkills as |skill|}}
-      <button data-action="rollAttackCheck" data-uuid="{{skill.uuid}}">{{ localize 'CoC7.Roll' }} - {{ skill.name }} ({{skill.value}}%)</button>
-    {{/each}}
-    </div>
-  {{/if}}
+</div>
+{{#if (eq data.checks.attack.state card.rollStates.rolled)}}
+  <div data-roll="attack">
+    {{{htmlAttackCheck}}}
+  </div>
 {{/if}}
