@@ -1,27 +1,30 @@
-.coc7-link,
-.coc7-inline {
+.coc7-link,.coc7-inline-check {
+  .chatFont();
+  display: inline-flex;
+  align-items: center;
+  height: fit-content;
+  width: fit-content;
   background: #ddd;
-  padding: 1px 4px;
+  padding: 0px 2px;
   border: 1px solid #4b4a44;
   border-radius: 2px;
   white-space: nowrap;
   word-break: break-all;
-  vertical-align: middle;
-  i {
-    vertical-align: middle;
-  }
-}
-.coc7-inline-check {
-  .chatFont();
+  vertical-align: middle;  
   font-size: 0.75rem;
   text-align: left;
+  i {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .coc7.sheet.actor a.coc7-link,
 a.coc7-link {
   display: inline-flex;
   align-items: center;
-  height: 1.5rem;
+  height: fit-content;
+  width: fit-content;
   img {
     flex: 0;
     border: none;

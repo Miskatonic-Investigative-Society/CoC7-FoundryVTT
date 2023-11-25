@@ -100,7 +100,18 @@ export class MeleeAttackCard extends EnhancedChatCard {
   get strings () {
     return {
       youPerformManeuver: () => { return game.i18n.format('CoC7.YouPerformManeuver', { name: this.attackerWeapon.name }) },
-      youPerformAttack: () => { return game.i18n.format('CoC7.YouPerformAttack', { name: this.attackerWeapon.name }) }
+      youPerformAttack: () => { return game.i18n.format('CoC7.YouPerformAttack', { name: this.attackerWeapon.name }) },
+      defenseChoice: () => {
+        if (!this.defenderCanRespond) return game.i18n.localize('CoC7.Card.MeleeAttack.CanNotRespond')
+        if (this.flags.doNothing) return game.i18n.localize('CoC7.Card.MeleeAttack.ChooseToDoNothing')
+        if (this.flags.dodge) return game.i18n.localize('CoC7.Card.MeleeAttack.TryToDodge')
+        if (this.flags.fightback) return game.i18n.format('CoC7.Card.MeleeAttack.ChooseToFightBack')
+        if (this.flags.maneuver) return game.i18n.format('CoC7.Card.MeleeAttack.ChooseToManeuver')
+      },
+      defenseDetails: () => {
+        if (this.defenseOptions.length === 0) return ''
+        return this.defenseOptions[this.data.checks.defense.alternativeSkill ? 1 : 0].name
+      }
     }
   }
 
@@ -355,23 +366,17 @@ export class MeleeAttackCard extends EnhancedChatCard {
     return true
   }
 
-  async requestAttack (options) {
+  async requestDefense (options) {
     this.data.checks.attack.state = this.rollStates.requested
     this.data.checks.defense.state = this.defenderCanRespond ? this.rollStates.requested : this.rollStates.closed
-    if(!this.defenderCanRespond) return this.resolveCard()
-    return true
-  }
-
-  async rollAttackCheck (options) {
-    if (this.data.checks.defense.state >= this.rollStates.locked) return this.resolveCard()
-    ui.notifications.info('Card not resolved')
+    if (!this.defenderCanRespond) return this.rollCard() // If defender can't respond we roll the card.
     return true
   }
 
   async lockDefenderResponse (options) {
     this.data.checks.defense.state = this.rollStates.locked
     this.data.checks.defense.alternativeSkill = !!options.event.target.dataset.alternative
-    return this.resolveCard()
+    return this.rollCard()
   }
 
   get defenseChoosen () {
@@ -382,58 +387,47 @@ export class MeleeAttackCard extends EnhancedChatCard {
     const options = []
     if (this.flags.fightback) {
       options.push({
-        buttonText: `${this.fightBackWeapon.name}(${this.fightBackWeapon.skills.main.shortName}: ${this.fightBackWeapon.skills.main.value}%)`,
+        name: `${this.fightBackWeapon.name}(${this.fightBackWeapon.skills.main.shortName})`,
+        score: this.fightBackWeapon.skills.main.value,
         altSkill: false
       })
       if (this.fightBackWeapon.skills.alternativ) {
         options.push({
-          buttonText: `${this.fightBackWeapon.name}(${this.fightBackWeapon.skills.alternativ.shortName}: ${this.fightBackWeapon.skills.alternativ.value}%)`,
+          name: `${this.fightBackWeapon.name}(${this.fightBackWeapon.skills.alternativ.shortName})`,
+          score: this.fightBackWeapon.skills.alternativ.value,
           altSkill: true
         })
       }
     }
     if (this.flags.maneuver) {
       options.push({
-        buttonText: `${this.defenseManeuver.name}${this.defenseManeuver?.specialManeuver?' ('+this.defenseManeuver.skills.main.shortName+')':''}: ${this.defenseManeuver.skills.main.value}%`,
+        name: `${this.defenseManeuver.name}${this.defenseManeuver?.specialManeuver ? ' (' + this.defenseManeuver.skills.main.shortName + ')' : ''}`,
+        score: this.defenseManeuver.skills.main.value,
         altSkill: false
       })
       if (this.defenseManeuver.skills.alternativ) {
         options.push({
-          buttonText: `${this.defenseManeuver.name}${this.defenseManeuver?.specialManeuver?' ('+this.defenseManeuver.skills.alternativ.shortName+')':''}: ${this.defenseManeuver.skills.alternativ.value}%`,
+          name: `${this.defenseManeuver.name}${this.defenseManeuver?.specialManeuver ? ' (' + this.defenseManeuver.skills.alternativ.shortName + ')' : ''}`,
+          score: this.defenseManeuver.skills.alternativ.value,
           altSkill: true
         })
       }
     }
     if (this.flags.dodge) {
       options.push({
-        buttonText: `${this.defender.dodgeSkill.name}: ${this.defender.dodgeSkill.value}%`,
+        name: this.defender.dodgeSkill.name,
+        score: this.defender.dodgeSkill.value,
         altSkill: false
       })
     }
     if (this.flags.doNothing) {
       options.push({
-        buttonText: game.i18n.localize('CoC7.NoResponse'),
+        name: game.i18n.localize('CoC7.NoResponse'),
         altSkill: false
       })
     }
     return options
   }
-
-  // async chooseToManeuver (options) {
-  //   this.data.checks.defense.state = this.rollStates.locked
-  //   this.data.checks.defense.alternativeSkill = !!options.event.target.dataset.alternative
-  //   return this.resolveCard()
-  // }
-
-  // async chooseToDodge (options) {
-  //   this.data.checks.defense.state = this.rollStates.locked
-  //   return this.resolveCard()
-  // }
-
-  // async chooseToDoNothing (options) {
-  //   this.data.checks.defense.state = this.rollStates.locked
-  //   return this.resolveCard()
-  // }
 
   get fightBackWeapon () {
     return this.defender.meleeWeapons.find((wp) => wp.uuid === this.data.checks.defense.name)
@@ -443,7 +437,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
     return this.defender.meleeManeuvers.find((mn) => mn.uuid === this.data.checks.defense.name)
   }
 
-  async resolveCard () {
+  async rollCard () {
     ui.notifications.info('Resolving card')
     const rollPromises = []
     if (
@@ -470,17 +464,15 @@ export class MeleeAttackCard extends EnhancedChatCard {
           this.data.checks.defense.roll.skill = this.data.checks.defense.alternativeSkill ? this.fightBackWeapon.skills.alternativ : this.fightBackWeapon.skills.main
         }
       }
-      // rollPromises.push(this.data.checks.defense.roll._perform({ forceDSN: true }))
-      await this.data.checks.defense.roll._perform({ forceDSN: true })
+      rollPromises.push(this.data.checks.defense.roll._perform({ forceDSN: true }))
     }
     this.data.checks.attack.roll = new CoC7Check()
     this.data.checks.attack.roll.actor = this.attacker
     this.data.checks.attack.roll.diceModifier = this.totalAttackBonus
     this.data.checks.attack.roll.skill = this.attackSkill
     if (this.attackerWeapon.type !== 'skill') this.data.checks.attack.roll.item = this.attackerWeapon
-    await this.data.checks.attack.roll._perform({ forceDSN: true })
-    // rollPromises.push(this.data.checks.attack.roll._perform({ forceDSN: true }))
-    // Promise.all(rollPromises)
+    rollPromises.push(this.data.checks.attack.roll._perform({ forceDSN: true }))
+    await Promise.all(rollPromises)
     this.data.checks.defense.state = this.rollStates.rolled
     this.data.checks.attack.state = this.rollStates.rolled
     return true
@@ -490,7 +482,22 @@ export class MeleeAttackCard extends EnhancedChatCard {
     return (this.attackerToken && this.defenderToken) ? chatHelper.getDistance(this.attackerToken, this.defenderToken) : null
   }
 
+  get checksRolled () {
+    return this.data.checks.defense.state >= this.rollStates.rolled && this.data.checks.attack.state >= this.rollStates.rolled
+  }
+
+  get checksClosed () {
+    return this.data.checks.defense.state === this.rollStates.closed && this.data.checks.attack.state === this.rollStates.closed
+  }
+
+  async lockRolls (options) {
+    this.data.checks.defense.state = this.rollStates.closed
+    this.data.checks.attack.state = this.rollStates.closed
+    return true
+  }
+
+  /** FOR DEBUG ONLY **/
   async closeDefense (options) {
-    return this.resolveCard(options)
-  } 
+    return this.rollCard(options)
+  }
 }

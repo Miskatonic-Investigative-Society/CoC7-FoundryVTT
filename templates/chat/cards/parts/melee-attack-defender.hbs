@@ -6,11 +6,9 @@
       {{#if data.flags.autoHit}}<span>{{ localize 'CoC7.TakenBySurpriseNoResponse' }}</span>{{/if}}
     {{/if}}
   {{/if}}
-  {{#if (eq data.checks.defense.state card.rollStates.rolled)}}
-    {{#if data.flags.fightback }}<span>{{ localize 'CoC7.ChooseToFightBack' }}</span>{{/if}}
-    {{#if data.flags.maneuver }}<span>{{ localize 'CoC7.ChooseToManeuver' }}</span>{{/if}}
-    {{#if data.flags.dodge }}<span>{{ localize 'CoC7.ChooseToDodge' }}</span>{{/if}}
-    {{#if data.flags.doNothing }}<span>{{ localize 'CoC7.ChooseToDoNothing' }}</span>{{/if}}
+  {{#if card.defenseChoosen}}<span>{{ card.strings.defenseChoice }}</span>{{/if}}
+  {{#if card.checksRolled}}
+    <span>{{ card.strings.defenseDetails }}{{#if card.checksClosed}} {{{htmlDefenseCheckInline}}}{{/if}}</span>
   {{/if}}
 </div>
 {{#if card.defenderCanRespond}}
@@ -48,11 +46,12 @@
     <div class="card-buttons">
       {{#if card.defenseChoosen}}
         {{#each card.defenseOptions as |d|}}
-        <button data-action="lockDefenderResponse" {{#if d.altSkill}}data-alternative="true"{{/if}}>{{ d.buttonText }}</button>
+        <button data-action="lockDefenderResponse" {{#if d.altSkill}}data-alternative="true"{{/if}}>{{ d.name }}{{#if d.score}}: {{d.score}}%{{/if}}</button>
         {{/each}}
       {{/if}}
     </div>
   {{/if}}
+  {{!-- DEBUG --}}
   {{#if (eq data.checks.defense.state card.rollStates.rolled)}}
   <div data-roll="defense">
     {{{htmlDefenseCheck}}}
@@ -61,6 +60,7 @@
     <button data-action="closeDefense">{{ localize 'CoC7.CloseDefense' }}</button>
   </div>
   {{/if}}
+  {{!-- GUBED --}}
 {{else}}
 <span>{{ localize 'CoC7.DefenderCantRespond' }}</span>
 {{/if}}

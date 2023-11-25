@@ -70,22 +70,22 @@ export class CoC7Dice {
     return result
   }
 
-  static async showRollDice3d (roll) {
+  static async showRollDice3d (roll, options = {}) {
     if (game.modules.get('dice-so-nice')?.active) {
-      const syncDice = game.settings.get('CoC7', 'syncDice3d')
-
       const chatData = {
         whisper: null,
-        blind: false
+        blind: (typeof options.blind === 'boolean') ? options.blind : false
       }
-      ChatMessage.applyRollMode(chatData, game.settings.get('core', 'rollMode'))
+      ChatMessage.applyRollMode(chatData, options.rollMode || 'roll')
 
       await game.dice3d.showForRoll(
         roll,
-        game.user,
-        syncDice,
-        chatData.whisper,
-        chatData.blind
+        options.user || game.user,
+        (typeof options.synchronize === 'boolean') ? options.synchronize : game.settings.get('CoC7', 'syncDice3d'),
+        options.whisper || chatData.whisper,
+        chatData.blind,
+        options.messageID || null,
+        options.speaker || null
       )
     }
   }

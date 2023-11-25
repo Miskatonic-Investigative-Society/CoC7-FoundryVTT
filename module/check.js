@@ -794,7 +794,8 @@ export class CoC7Check {
     }
 
     if (options.forceDSN) {
-      await CoC7Dice.showRollDice3d(this.dice.roll)
+      if (!options.user && this.actor.user) options.user = this.actor.user // If no user is passed, we use the actor's user if available
+      await CoC7Dice.showRollDice3d(this.dice.roll, options)
     }
 
     this.dices = {
@@ -1748,7 +1749,7 @@ export class CoC7Check {
     const a = document.createElement('a')
     a.classList.add('coc7-inline-check')
     a.classList.add('coc7-check-result')
-    a.classList.add('coc7-inline')
+    // a.classList.add('coc7-inline')
     a.classList.add(...this.cssClassList)
     a.title = this.tooltipHeader
     a.dataset.roll = escape(this.JSONRollString) // TODO!IMPORTANT!!!

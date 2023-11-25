@@ -140,8 +140,15 @@
 {{/if}}
 {{#if (and (eq data.checks.attack.state card.rollStates.notRequested) card.surpriseResolved)}}
 <div class="card-buttons">
-  <button data-action="requestAttack">{{ localize 'CoC7.RequestAttack' }}</button>
+  <button data-action="requestDefense">{{ localize 'CoC7.RequestDefense' }}</button>
 </div>
+{{/if}}
+{{#if card.checksRolled}}
+  {{#if (not card.checksClosed)}}
+    <div class="card-buttons">
+      <button data-action="lockRolls">{{ localize 'CoC7.LockAllRolls' }}</button>
+    </div>
+  {{/if}}
 {{/if}}
 
 
