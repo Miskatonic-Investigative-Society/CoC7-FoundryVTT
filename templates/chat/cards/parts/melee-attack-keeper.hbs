@@ -1,4 +1,13 @@
 {{#if (eq data.checks.attack.state card.rollStates.notRequested)}}
+  <div class="section-row tooltipster-active {{#unless data.flags.allowLuck}}striked{{/unless}}" data-description="oC7.Card.MeleeAttack.Hint.AllowLuck">
+    <div class="flex1"><span class="flex1">{{localize 'CoC7.AllowLuck'}}</span></div>
+    <div class="flex0">
+      <label class="toggle flex0">
+        <input type="checkbox" data-flag="allowLuck">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
   <div class="section-row tooltipster-active {{#unless data.flags.overrideRules}}striked{{/unless}}" data-description="CoC7.Hint.OverrideRules">
     {{!-- <input type="checkbox" class="ecc-switch toggle-switch" data-flag="overrideRules"/> --}}
     <div class="flex1"><span class="flex1">{{localize 'CoC7.OverrideCalc'}}</span></div>
@@ -146,7 +155,7 @@
 {{#if card.checksRolled}}
   {{#if (not card.checksClosed)}}
     <div class="card-buttons">
-      <button data-action="lockRolls">{{ localize 'CoC7.LockAllRolls' }}</button>
+      <button data-action="resolveCard">{{ localize 'CoC7.LockAllRolls' }}</button>
     </div>
   {{/if}}
 {{/if}}

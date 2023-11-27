@@ -6,8 +6,8 @@
       {{#if data.flags.autoHit}}<span>{{ localize 'CoC7.TakenBySurpriseNoResponse' }}</span>{{/if}}
     {{/if}}
   {{/if}}
-  {{#if card.defenseChoosen}}<span>{{ card.strings.defenseChoice }}</span>{{/if}}
-  {{#if card.checksRolled}}
+  {{#if card.isDefenseChoosen}}<span>{{ card.strings.defenseChoice }}</span>{{/if}}
+  {{#if card.isDefenseLocked}}
     <span>{{ card.strings.defenseDetails }}{{#if card.checksClosed}} {{{htmlDefenseCheckInline}}}{{/if}}</span>
   {{/if}}
 </div>
@@ -44,7 +44,7 @@
       </div>
     </div>
     <div class="card-buttons">
-      {{#if card.defenseChoosen}}
+      {{#if card.isDefenseChoosen}}
         {{#each card.defenseOptions as |d|}}
         <button data-action="lockDefenderResponse" {{#if d.altSkill}}data-alternative="true"{{/if}}>{{ d.name }}{{#if d.score}}: {{d.score}}%{{/if}}</button>
         {{/each}}

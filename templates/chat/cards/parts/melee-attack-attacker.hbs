@@ -1,9 +1,6 @@
 <div class="flexcol narration">
-  {{#if card.attackIsManeuver}}
-  <span>{{card.strings.youPerformManeuver}}</span>
-  {{else}}
-  <span>{{card.strings.youPerformAttack}}</span>
-  {{/if}}
+  <span>{{card.strings.attackChoice}}</span>
+  <span>{{card.strings.attackDetails}}{{#if card.checksClosed}} {{{htmlAttackCheckInline}}}{{/if}}</span>
 </div>
 {{#if (eq data.checks.attack.state card.rollStates.rolled)}}
   <div data-roll="attack">
