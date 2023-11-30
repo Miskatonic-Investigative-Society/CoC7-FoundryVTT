@@ -9,7 +9,7 @@ export function listen () {
     }
 
     // If there is something to roll ask if we should roll it
-    if (tokenDocument._object.actor.hasRollableCharacteristics || tokenDocument._object.actor.hosRollableSkills) {
+    if (tokenDocument._object.actor.type !== 'character' && (tokenDocument._object.actor.hasRollableCharacteristics || tokenDocument._object.actor.hosRollableSkills)) {
       new Dialog(
         {
           title: game.i18n.localize('CoC7.TokenCreationRoll.Title'),
