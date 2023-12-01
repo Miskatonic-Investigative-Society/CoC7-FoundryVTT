@@ -101,9 +101,9 @@ export class MeleeAttackCard extends EnhancedChatCard {
   get strings () {
     return {
       attackChoice: () => {
-        return this.attackIsManeuver
-          ? game.i18n.format('CoC7.YouPerformManeuver', { name: this.attackerWeapon.name })
-          : game.i18n.format('CoC7.YouPerformAttack', { name: this.attackerWeapon.name })
+        return this.isAttackManeuver
+          ? game.i18n.format('CoC7.YouPerformManeuver', { name: this.attackWeapon.name })
+          : game.i18n.format('CoC7.YouPerformAttack', { name: this.attackWeapon.name })
       },
       attackDetails: () => {
         if (!this.lockedAttack) return ''
@@ -149,22 +149,22 @@ export class MeleeAttackCard extends EnhancedChatCard {
     return this.attackerTokenDocument?._object
   }
 
-  get attackerWeapon () {
+  get attackWeapon () {
     if (!this.data.weaponUuid) return undefined
     if (!this._weapon) this._weapon = fromUuidSync(this.data.weaponUuid)
     return this._weapon
   }
 
   get attackerSkills () {
-    if (!this.attackerWeapon) return null
-    if (this.attackerWeapon.type === 'skill') return [this.attackerWeapon]
+    if (!this.attackWeapon) return null
+    if (this.attackWeapon.type === 'skill') return [this.attackWeapon]
     return this.attacker.getWeaponSkills(this.data.weaponUuid)
   }
 
-  get attackIsManeuver () {
-    if (!this.attackerWeapon) return false
-    if (this.attackerWeapon.type === 'skill') return true
-    if (this.attackerWeapon.type === 'weapon') return this.attackerWeapon.system.properties.mnvr
+  get isAttackManeuver () {
+    if (!this.attackWeapon) return false
+    if (this.attackWeapon.type === 'skill') return true
+    if (this.attackWeapon.type === 'weapon') return this.attackWeapon.system.properties.mnvr
     return false
   }
 
@@ -204,7 +204,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
 
   get statusList () {
     const statusList = []
-    if (this.attackIsManeuver) {
+    if (this.isAttackManeuver) {
       statusList.push({ name: game.i18n.localize('CoC7.AttackManeuver'), css: this.attackerCanManeuver ? 'success' : 'failure' })
       if (this.defender) {
         statusList.push({
@@ -333,8 +333,13 @@ export class MeleeAttackCard extends EnhancedChatCard {
   }
 
   get attackSkill () {
-    if (this.attackerWeapon.type === 'skill') return this.attackerWeapon
+    if (this.attackWeapon.type === 'skill') return this.attackWeapon
     return this.data.thrown ? this.attackerSkills[1] : this.attackerSkills[0]
+  }
+
+  get defenseSkill () {
+    if (this.defenseWeapon.type === 'skill') return this.defenseWeapon
+    return this.defensder.getWeaponSkills(this.defenseWeapon.uuid)[this.data.checks.defense.alternativeSkill ? 1 : 0]
   }
 
   /**
@@ -404,9 +409,9 @@ export class MeleeAttackCard extends EnhancedChatCard {
   }
 
   get lockedAttack () {
-    if (this.attackIsManeuver && this.attackerWeapon.system.properties.mnvr) {
+    if (this.isAttackManeuver && this.attackWeapon.system.properties.mnvr) {
       return {
-        name: `${this.attackerWeapon.name}(${this.attackSkill.shortName})`,
+        name: `${this.attackWeapon.name}(${this.attackSkill.shortName})`,
         score: this.attackSkill.value,
         altSkill: this.data.thrown
       }
@@ -472,6 +477,11 @@ export class MeleeAttackCard extends EnhancedChatCard {
     return this.defender.meleeManeuvers.find((mn) => mn.uuid === this.data.checks.defense.name)
   }
 
+  get defenseWeapon () {
+    if (this.flags.doNothing) return null
+    return this.fightBackWeapon || this.defender.dodgeSkill
+  }
+
   async rollCard () {
     ui.notifications.info('Resolving card')
     const rollPromises = []
@@ -507,7 +517,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
     this.data.checks.attack.roll.diceModifier = this.totalAttackBonus
     this.data.checks.attack.roll.skill = this.attackSkill
     this.data.checks.attack.roll.denyLuck = !this.flags.allowLuck
-    if (this.attackerWeapon.type !== 'skill') this.data.checks.attack.roll.item = this.attackerWeapon
+    if (this.attackWeapon.type !== 'skill') this.data.checks.attack.roll.item = this.attackWeapon
     rollPromises.push(this.data.checks.attack.roll._perform({ forceDSN: true }))
     await Promise.all(rollPromises)
     this.data.checks.defense.state = this.rollStates.rolled
@@ -524,13 +534,97 @@ export class MeleeAttackCard extends EnhancedChatCard {
   }
 
   get checksClosed () {
-    return this.data.checks.defense.state === this.rollStates.closed && this.data.checks.attack.state === this.rollStates.closed
+    return (
+      (
+        !this.defender ||
+        this.data.checks.defense.state === this.rollStates.closed
+      ) &&
+      this.data.checks.attack.state === this.rollStates.closed
+    )
   }
 
   async resolveCard (options) {
-    this.data.checks.defense.state = this.rollStates.closed
-    this.data.checks.attack.state = this.rollStates.closed
+    // this.data.checks.defense.state = this.rollStates.closed
+    // this.data.checks.attack.state = this.rollStates.closed
+    // Response: fightback
+    // Response: maneuver
+    // Response: dodge
+    // Response: nothing
+    const prout = this.successDetails
     return true
+  }
+
+  get defenseRoll () {
+    return this.data.checks.defense.roll || null
+  }
+
+  get attackRoll () {
+    return this.data.checks.attack.roll || null
+  }
+
+  get isAttackSuccess () {
+    return (
+      !this.attackRoll.successLevel <= 0 &&
+      (
+        !this.defender ||
+        (this.attackRoll.successLevel > this.defenseRoll.successLevel || (!this.dodge && (this.attackRoll.successLevel === this.defenseRoll.successLevel)))
+      )
+    )
+  }
+
+  get isDefenseSuccess () {
+    return (
+      !this.defenseRoll.successLevel <= 0 &&
+      !this.attackWon
+    )
+  }
+
+  get hasWinner () {
+    return this.isAttackSuccess || this.isDefenseSuccess
+  }
+
+  get successDetails () {
+    if (!this.hasWinner) {
+      return {
+        winner: null,
+        attackWins: false,
+        defenseWins: false,
+        weapon: null,
+        isManeuver: false
+      }
+    }
+
+    const details = {
+      winner: this.isAttackSuccess ? this.attacker : this.defender,
+      attackWins: this.isAttackSuccess,
+      defenseWins: this.isDefenseSuccess,
+      weapon: this.isAttackSuccess ? this.attackWeapon : this.defenseWeapon,
+      isManeuver: this.isAttackSuccess ? this.isAttackManeuver : this.flags.maneuver,
+      skill: this.isAttackSuccess ? this.attackSkill : this.defenseSkill
+    }
+
+    if (details.isManeuver) {
+      if (details.weapon.type === 'skill') {
+        details.damage = {
+          formula: null,
+          special: null
+        }
+      } else {
+        details.damage = {
+          forumla: details.weapon.getDamageFormula({ replaceDamageBonus: true, critical: (this.isAttackSuccess && this.attackRoll.isCritical) }),
+          special: details.weapon.system.properties.spcl ? details.weapon.system.description.special : null
+        }
+      }
+    }
+    return details
+  }
+
+  get outcomeApplied () {
+    return true
+  }
+
+  get resolved () {
+    return this.checksClosed && this.outcomeApplied
   }
 
   /** FOR DEBUG ONLY **/

@@ -34,21 +34,24 @@
   box-shadow: 0 0 10px #000;
   text-shadow: none;
   color: #191813;
-  .roll-icons.success {
-    color: goldenrod;
-  }
-  .roll-icons.critical {
-    color: goldenrod;
-    font-size: 20px;
-    font-weight: bold;
-  }
-  .roll-icons.failure {
-    color: crimson;
-  }
-  .roll-icons.fumble {
-    color: crimson;
-    font-size: 20px;
-    font-weight: bold;
+  .roll-icons {
+    display: flex;
+    &.success {
+      color: goldenrod;
+    }
+    &.critical {
+      color: goldenrod;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    &.failure {
+      color: crimson;
+    }
+    &.fumble {
+      color: crimson;
+      font-size: 20px;
+      font-weight: bold;
+    }
   }
   .dice-rolls {
     display: flex;

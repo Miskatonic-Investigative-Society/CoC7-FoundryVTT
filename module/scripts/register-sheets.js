@@ -1,4 +1,4 @@
-/* global Actors, ActorSheet, Items, ItemSheet, Journal, JournalSheet, MacroConfig, Macros, PlaylistConfig, Playlists, RollTables, RollTableConfig, Scenes, SceneConfig */
+/* global DocumentSheetConfig, Actors, ActorSheet, Items, ItemSheet, Journal, JournalSheet, MacroConfig, Macros, PlaylistConfig, Playlists, RollTables, RollTableConfig, Scenes, SceneConfig, ActiveEffectConfig */
 import { CoC7ArchetypeSheet } from '../items/sheets/archetype.js'
 import { CoC7BookSheet } from '../items/book/sheet.js'
 import { CoC7CharacterSheet } from '../actors/sheets/character.js'
@@ -21,6 +21,8 @@ import { CoC7StatusSheet } from '../items/sheets/status.js'
 import { CoC7TalentSheet } from '../items/sheets/talent.js'
 import { CoC7VehicleSheet } from '../actors/sheets/vehicle.js'
 import { CoC7WeaponSheet } from '../items/sheets/weapon-sheet.js'
+import CoC7ActiveEffect from '../active-effect.js'
+import CoC7ActiveEffectSheet from '../sheets/active-effect-sheet.js'
 
 export function registerSheets () {
   Actors.unregisterSheet('core', ActorSheet)
@@ -116,4 +118,8 @@ export function registerSheets () {
   Playlists.registerSheet('CoC7', CoC7PlaylistConfig, {
     makeDefault: true
   })
+
+  // Manually register sheet for active effects.
+  DocumentSheetConfig.unregisterSheet(CoC7ActiveEffect, 'core', ActiveEffectConfig)
+  DocumentSheetConfig.registerSheet(CoC7ActiveEffect, 'CoC7', CoC7ActiveEffectSheet)
 }

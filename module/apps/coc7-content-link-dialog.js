@@ -1,4 +1,4 @@
-/* global canvas, CONST, FormApplication, game, mergeObject, ui */
+/* global canvas, CONST, FormApplication, game, mergeObject, ui, foundry */
 import { CoCActor } from '../actors/actor.js'
 import { CoC7Check } from '../check.js'
 import { CoC7Link } from './coc7-link.js'
@@ -153,10 +153,9 @@ export class CoC7ContentLinkDialog extends FormApplication {
 
   async _updateObject (event, formData) {
     let hasEffect = false
-    const effect = {
-      duration: {},
-      changes: []
-    }
+    const effect = foundry.utils.expandObject(formData).effect
+    effect.changes = []
+
     for (const key in formData) {
       switch (key) {
         case 'checkName':
@@ -180,32 +179,13 @@ export class CoC7ContentLinkDialog extends FormApplication {
           this.object[key] = formData[key]
           break
         case 'effect.label':
-          effect.label = formData[key]
-          hasEffect = true
-          break
         case 'effect.icon':
-          effect.icon = formData[key]
-          hasEffect = true
-          break
         case 'effect.tint':
-          effect.tint = formData[key]
-          hasEffect = true
-          break
         case 'effect.disabled':
-          effect.disabled = formData[key]
-          hasEffect = true
-          break
         case 'effect.duration.seconds':
-          effect.duration.seconds = formData[key]
-          hasEffect = true
-          break
         case 'effect.duration.rounds':
-          effect.duration.rounds = formData[key]
-          hasEffect = true
-          break
         case 'effect.duration.turns':
-          effect.duration.turns = formData[key]
-          hasEffect = true
+        case 'effect.flags.CoC7.alwaysShow':
           break
         default: {
           const match = key.match(/^effect\.changes\.(\d+)\.key$/)

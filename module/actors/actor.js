@@ -3117,6 +3117,21 @@ export class CoCActor extends Actor {
     }
   }
 
+  /**
+   * Override temporaryEffects to check if an effect should always be displayed
+   */
+  get temporaryEffects () {
+    const effects = super.temporaryEffects
+    for (const effect of this.allApplicableEffects()) {
+      if (
+        (
+          typeof effect.getFlag('CoC7', 'alwaysShow') === 'undefined' || // If flag is undefined show by default
+          effect.getFlag('CoC7', 'alwaysShow')) &&
+        !effects.find(e => e.uuid === effect.uuid)) effects.push(effect)
+    }
+    return effects
+  }
+
   async setCondition (
     conditionName,
     {

@@ -130,7 +130,7 @@ export class CoC7Link {
       difficulty: CoC7Check.difficultyLevel.regular,
       modifier: 0,
       object: {
-        label: game.i18n.localize('CoC7.EffectNew'),
+        label: data.object?.name || game.i18n.localize('CoC7.EffectNew'),
         icon: 'icons/svg/aura.svg',
         changes: []
       }

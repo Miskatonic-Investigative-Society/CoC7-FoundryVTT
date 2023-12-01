@@ -32,11 +32,11 @@
       {{#if displayActorOnCard}}
         <img class="portrait open-actor" data-actor-key="{{card.attacker.uuid}}" src="{{card.attacker.img}}" title="{{card.attacker.name}}"/>
       {{else}}
-        <img class="portrait open-actor" data-actor-key="{{card.attacker.uuid}}" src="{{card.attackerWeapon.img}}" title="{{card.attackerWeapon.name}}"/>
+        <img class="portrait open-actor" data-actor-key="{{card.attacker.uuid}}" src="{{card.attackWeapon.img}}" title="{{card.attackWeapon.name}}"/>
       {{/if}}
       </div>
-      <div class="card-title tooltipster-active" data-document-key="{{card.attackerWeapon.uuid}}">
-        {{card.attackerWeapon.name}}
+      <div class="card-title tooltipster-active" data-document-key="{{card.attackWeapon.uuid}}">
+        {{card.attackWeapon.name}}
       </div>
       {{#if card.hasTaget}}
       <div class="right-portrait">
