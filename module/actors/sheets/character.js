@@ -313,6 +313,9 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
           .find('.sanity-loss-type-delete')
           .click(this._onDeleteSanityLossReason.bind(this))
         html
+          .find('.mythosEncountersTotalLoss')
+          .blur(this._onEditSanityLossReason.bind(this))
+        html
           .find('.toggle-keeper-flags')
           .click(this._onToggleKeeperFlags.bind(this))
         html.find('.add-monetary').click(this._onAddMonetary.bind(this))
@@ -370,6 +373,16 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
       },
       {}
     ).render(true)
+  }
+
+  async _onEditSanityLossReason (event) {
+    const input = $(event.currentTarget)
+    const offset = input.closest('.flexrow').data('offset')
+    if (typeof this.actor.system.sanityLossEvents?.[offset]?.totalLoss !== 'undefined') {
+      const sanityLossEvents = foundry.utils.duplicate(this.actor.system.sanityLossEvents)
+      sanityLossEvents[offset].totalLoss = parseInt(input.val(), 10)
+      this.actor.update({ 'system.sanityLossEvents': sanityLossEvents })
+    }
   }
 
   _onDeleteSanityLossReason (event) {
