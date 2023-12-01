@@ -1,4 +1,7 @@
 .coc7.actor.character.summarized {
+  .flexrow > * {
+    flex-wrap: nowrap;
+  }
   .window-content {
     background: var(--other-sheet-bg);
     background-repeat: repeat;
@@ -44,6 +47,7 @@
       .status {
         color: grey;
         text-align: center;
+        display: flex;
         a {
           &.inative-status {
             &:hover {

@@ -431,11 +431,7 @@ export class CoC7Link {
         return actor.weaponCheck(options, shiftKey)
 
       case CoC7Link.CHECK_TYPE.EFFECT:
-        await actor.createEmbeddedDocuments('ActiveEffect', [{
-          label: options.object.label,
-          icon: options.object.icon,
-          changes: options.object.changes
-        }])
+        await actor.createEmbeddedDocuments('ActiveEffect', [options.object]) // Is Await necessary ?
         break
     }
   }
