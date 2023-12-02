@@ -1,36 +1,29 @@
-## Objetos
+# Objetos
 
-El sistema soporta muchos tipos de objetos distintos, desde objetos simples o armas a habilidades o configuraciones de un tipo de personaje. El compendio que incluye el sistema incluye ejemplos de la mayoría de estos objetos.
+El sistema soporta muchos tipos diferentes de objetos, desde objetos simples o armas hasta habilidades o la configuración completa de un tipo de personaje. Puedes ver ejemplos en el compendio que viene con el sistema.
 
-En todos los casos la creación de objetos comienza de la misma forma.
+Para crear cualquiera de los tipos de objetos, siempre comienzas de la misma manera:
 
-1. Ir a la pestaña _Objetos_
-2. Hacer click en _Crear Objeto_
-   2.1 Darle un nombre al objeto
-   2.2 Seleccionar el _Tipo_ de objeto (ver más abajo los detalles de cada tipo)
-   2.3 Seleccionar la carpeta destino (Opcional)
+1. Ve al directorio de Objetos.
+2. Haz clic en _Crear objeto_
+   - Dale un nombre al objeto.
+   - Selecciona el _Tipo_ del objeto (ver más abajo para detalles sobre cada uno).
+   - Selecciona la carpeta de destino (opcional).
 
-Todos los tipos de objetos comparten también parte de su estructura.
+Y todos tienen una estructura común, así que en todos ellos puedes:
 
-- Todos admiten una descripción textual, que se puede incluir en la pestaña _Descripción_ si hay pestañas, o en la parte de abajo del la ficha del objeto si no las hay.
-- Haciendo click en el _Icono_ se puede seleccionar (o subir) un nuevo icono.
+- Agregar una descripción textual en la pestaña _Descripción_ o directamente en la ventana principal si no tiene pestañas.
+- Hacer clic en el _ícono_, puedes elegir o cargar uno nuevo.
 
-A continuación
-
-## Armas (_weapon_)
-
-## Arquetipos Pulp (_archetype_)
-
-## Configuraciones (_setup_)
-
-## Conjuros (_spell_)
-
-## Estados (_status_)
-
-## Libros (_book_)
-
-## Objetos básicos (_item_)
-
-## Ocupaciones (_occupation_)
-
-## Talentos (_talent_)
+# Tipos de objetos disponibles
+- [Tipo de objeto: Arquetipo](objeto_arquetipo.md)
+- [Tipo de objeto: Libro](objeto_libro.md)
+- [Tipo de objeto: Persecuciones](persecuciones.md)
+- Tipo de objeto: Objeto
+- [Tipo de objeto: Ocupación](objeto_ocupacion.md)
+- [Tipo de objeto: Configuración](objeto_configuracion.md)
+- [Tipo de objeto: Habilidad](objeto_habilidad.md)
+- Tipo de objeto: Hechizo
+- Tipo de objeto: Estado
+- Tipo de objeto: Talento
+- Tipo de objeto: Arma
