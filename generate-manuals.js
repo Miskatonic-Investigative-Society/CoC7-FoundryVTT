@@ -8,6 +8,7 @@ const collisions = {}
 const sources = {
   en: {
     name: 'Call of Cthulhu 7th Edition',
+    priority: 0,
     pages: [
       {
         name: 'System documentation',
@@ -83,8 +84,87 @@ const sources = {
       }
     ]
   },
+  es: {
+    name: 'La Llamada de Cthulhu 7ª Edición',
+    priority: 0,
+    pages: [
+      {
+        name: 'Documentación del sistema',
+        file: 'README.md'
+      },
+      {
+        name: 'Efectos',
+        file: 'efectos.md'
+      },
+      {
+        name: 'Importador de actores',
+        file: 'importador_de_actores.md'
+      },
+      {
+        name: 'Creación de personajes',
+        file: 'creacion_de_personaje.md'
+      },
+      {
+        name: 'Persecuciones',
+        file: 'persecuciones.md'
+      },
+      {
+        name: 'Sistema de CoC ID',
+        file: 'sistema_de_coc_id.md'
+      },
+      {
+        name: 'Combate',
+        file: 'combate.md'
+      },
+      {
+        name: 'Hoja de atajos',
+        file: 'hoja_de_atajos.md'
+      },
+      {
+        name: 'Creating your first investigator',
+        file: 'primer_investigador.md'
+      },
+      {
+        name: 'Objetos',
+        file: 'objetos.md'
+      },
+      {
+        name: 'Tipo de objeto: Arquetipo',
+        file: 'objeto_arquetipo.md'
+      },
+      {
+        name: 'Tipo de objeto: Libro',
+        file: 'objeto_libro.md'
+      },
+      {
+        name: 'Tipo de objeto: Ocupación',
+        file: 'objeto_ocupacion.md'
+      },
+      {
+        name: 'Tipo de objeto: Configuración',
+        file: 'objeto_configuracion.md'
+      },
+      {
+        name: 'Tipo de objeto: Habilidad',
+        file: 'objeto_habilidad.md'
+      },
+      {
+        name: 'Enlaces',
+        file: 'enlaces.md'
+      },
+      {
+        name: 'Herramienta de creación de enlaces',
+        file: 'ventana_de_creacion_de_enlaces.md'
+      },
+      {
+        name: 'Cordura',
+        file: 'cordura.md'
+      }
+    ]
+  },
   fr: {
     name: 'L\'Appel de Cthulhu version 7',
+    priority: 0,
     pages: [
       {
         name: 'Documentation du système',
@@ -173,7 +253,17 @@ try {
     const dbEntry = {
       name: sources[lang].name + ' [' + lang + ']',
       pages: [],
-      _id: id
+      _id: id,
+      flags: {
+        CoC7: {
+          cocidFlag: {
+            eras: {},
+            id: 'je..call-of-cthulhu-7-th-edition-system-documentation',
+            lang,
+            priority: sources[lang].priority
+          }
+        }
+      }
     }
     const links = {}
     const includedPages = []

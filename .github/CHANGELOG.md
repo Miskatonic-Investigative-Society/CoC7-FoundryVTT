@@ -9,6 +9,17 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 0.10.8
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Add system documentation journal entry for Spanish, thanks to @zeedif #1453
+- Don't roll characteristics when creating tokens for investigators
+- Fix manually edited sanity loss reasons not saving
+- Fix status icon positions on investigator summary sheet
+- Update to German localization, thanks to @Goleraan #1444
+- Update to Spanish localization, thanks to @zeedif #1450
+
 ## Version 0.10.7
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.

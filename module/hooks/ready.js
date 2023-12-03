@@ -16,6 +16,7 @@ export function listen () {
     let lang = game.i18n.lang
     const readMe = {
       en: 'sxB2OXbfwV6M0nyQ',
+      es: '35FM7ZOdzC6L2xlj',
       fr: 'tdakyzTVOQsAMdSm'
     }
     if (typeof readMe[lang] === 'undefined') {
