@@ -9,6 +9,10 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 0.10.8
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
 - Add system documentation journal entry for Spanish, thanks to @zeedif #1453
 - Don't roll characteristics when creating tokens for investigators
 - Fix manually edited sanity loss reasons not saving
