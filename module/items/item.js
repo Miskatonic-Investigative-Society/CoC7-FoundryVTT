@@ -847,10 +847,10 @@ export class CoC7Item extends Item {
   getDamageFormula ({ replaceDamageBonus = false, critical = false, range = 'normal' } = {}) {
     if (this.type !== 'weapon') return null
     let formula = this.system?.range[range]?.damage
+
     if (this.system.properties.addb || this.system.properties.ahdb) {
-      let db
       if (replaceDamageBonus) {
-        db = this.parent?.db
+        let db = this.parent?.db
         if (db && isNaN(db)) {
           db = ((db ?? '').toString().trim() === '' ? 0 : db).toString().trim()
           if (!db.startsWith('-')) db = '+' + db
@@ -866,7 +866,7 @@ export class CoC7Item extends Item {
                 else formula = `${formula}${db}`
               }
             } else {
-              formula = `${formula}+${db}/2`
+              formula = `${formula}${db}/2`
             }
           }
         }
@@ -876,19 +876,15 @@ export class CoC7Item extends Item {
       }
     }
 
-    if (critical && replaceDamageBonus) {
-      const maxDamage = Math.floor(new Roll(formula).evaluate({ maximize: true }).total)
-      let rollString
-      if (critical) {
-        if (this.impale) {
-          rollString = formula + '+' + maxDamage
-          return rollString
-        } else {
-          return maxDamage
-        }
+    if (critical) {
+      const validMaxdamage = Roll.validate(formula)
+      const maxDamage = validMaxdamage ? Math.floor(new Roll(formula).evaluate({ maximize: true }).total) : `Max(${formula})`
+      if (this.impale) {
+        return formula + '+' + maxDamage
+      } else {
+        return maxDamage
       }
-    } else {
-      return formula
     }
+    return formula
   }
 }

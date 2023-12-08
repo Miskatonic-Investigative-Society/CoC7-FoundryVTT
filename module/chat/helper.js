@@ -180,7 +180,7 @@ export class chatHelper {
         if (value === 'true') obj[key] = true
         else if (value === 'false') obj[key] = false
         else if (Number(value).toString() === value) obj[key] = Number(value)
-        else obj[key] = value
+        else if (!(value === '')) obj[key] = value
       }
     }
 

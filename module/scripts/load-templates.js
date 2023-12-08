@@ -44,10 +44,12 @@ export const preloadHandlebarsTemplates = async function () {
     'systems/CoC7/templates/apps/investigator-wizard/backstory.hbs',
     'systems/CoC7/templates/apps/investigator-wizard/create.hbs',
 
-    'systems/CoC7/templates/chat/cards/parts/melee-attack-keeper.hbs',
-    'systems/CoC7/templates/chat/cards/parts/melee-attack-surprise.hbs',
-    'systems/CoC7/templates/chat/cards/parts/melee-attack-attacker.hbs',
-    'systems/CoC7/templates/chat/cards/parts/melee-attack-defender.hbs'
+    'systems/CoC7/templates/chat/cards/melee-attack/parts/melee-attack-keeper.hbs',
+    'systems/CoC7/templates/chat/cards/melee-attack/parts/melee-attack-surprise.hbs',
+    'systems/CoC7/templates/chat/cards/melee-attack/parts/melee-attack-attacker.hbs',
+    'systems/CoC7/templates/chat/cards/melee-attack/parts/melee-attack-defender.hbs',
+    'systems/CoC7/templates/chat/cards/melee-attack/parts/melee-attack-resolution.hbs',
+    'systems/CoC7/templates/chat/cards/melee-attack/parts/melee-attack-resolution.hbs'
   ]
 
   /** Load the template parts */

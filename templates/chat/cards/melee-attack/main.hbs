@@ -46,16 +46,16 @@
     </div>
     <div class="card-content">
       <div class="card-section keeper" data-ecc-visibility="gm">
-        {{> "systems/CoC7/templates/chat/cards/parts/melee-attack-keeper.hbs"}}
+        {{> "systems/CoC7/templates/chat/cards/melee-attack/parts/melee-attack-keeper.hbs"}}
       </div>
       <div class="card-section attacker">
         <div>
           <span>ATTACKER : {{card.attacker.name}}</span>
         </div>
         {{#if (and card.hasValidDetectionCheck card.attacker.hasPlayerOwner (gt data.checks.detection.state card.rollStates.notRequested) (not data.flags.overrideRules))}}
-          {{> "systems/CoC7/templates/chat/cards/parts/melee-attack-surprise.hbs"}}
+          {{> "systems/CoC7/templates/chat/cards/melee-attack/parts/melee-attack-surprise.hbs"}}
         {{/if}}
-        {{> "systems/CoC7/templates/chat/cards/parts/melee-attack-attacker.hbs" }}
+        {{> "systems/CoC7/templates/chat/cards/melee-attack/parts/melee-attack-attacker.hbs" }}
       </div>
 
       <div class="card-section defender">
@@ -63,9 +63,15 @@
           <span>DEFENDER : {{card.defender.name}}</span>
         </div>
         {{#if (and card.hasValidDetectionCheck (not card.attacker.hasPlayerOwner)  (gt data.checks.detection.state card.rollStates.notRequested) (not data.flags.overrideRules))}}
-          {{> "systems/CoC7/templates/chat/cards/parts/melee-attack-surprise.hbs"}}
+          {{> "systems/CoC7/templates/chat/cards/melee-attack/parts/melee-attack-surprise.hbs"}}
         {{/if}}
-        {{> "systems/CoC7/templates/chat/cards/parts/melee-attack-defender.hbs" }}
+        {{> "systems/CoC7/templates/chat/cards/melee-attack/parts/melee-attack-defender.hbs" }}
+      </div>
+
+      <div class="card-serction resolution">
+        {{#if card.checksClosed}}
+          {{> "systems/CoC7/templates/chat/cards/melee-attack/parts/melee-attack-resolution.hbs"}}
+        {{/if}}
       </div>
     </div>
 

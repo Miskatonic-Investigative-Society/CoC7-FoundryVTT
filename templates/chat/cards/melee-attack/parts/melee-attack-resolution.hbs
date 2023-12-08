@@ -1,0 +1,25 @@
+<div class="narration">
+  <span>{{ card.strings.resultStatus }}</span>
+</div>
+{{#if card.successDetails.winner}}
+  {{#if card.successDetails.damage.isCritical}}
+  crit damage
+  {{else}}
+  regular damage
+  {{/if}}
+  {{#if card.successDetails.damage.special}}
+    <div>{{{card.successDetails.damage.special}}}</div>
+  {{/if}}
+  {{#if data.damage.rolled}}
+    {{{htmlDamageRoll}}}
+  {{else}}
+    <div class="card-buttons inline">
+    {{#if card.successDetails.damage.normal}}
+      <button data-action="rollNormalDamage" {{#unless card.successDetails.damage.isCritical}}class="active"{{/unless}}>{{ localize 'CoC7.RollNormal' }}</button>
+    {{/if}}
+    {{#if card.successDetails.damage.critical}}
+      <button data-action="rollCriticalDamage" {{#if card.successDetails.damage.isCritical}}class="active"{{/if}}>{{ localize 'CoC7.RollCritical' }}</button>
+    {{/if}}
+    </div>
+  {{/if}}
+{{/if}}

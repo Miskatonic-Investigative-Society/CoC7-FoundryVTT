@@ -118,7 +118,7 @@
       </div>
       {{#unless hideDiceResult}}
         {{#unless options.hideDiceResult}}
-          <h4 class="check-result dice-total {{cssClass}}" title="{{flavor}}: {{resultType}}">{{modifiedResult}}{{#if flatDiceModifier}} ({{flatDiceModifierString}}){{/if}} {{#if pushing}} {{localize 'CoC7.PushedRoll'}}{{/if}} {{#if luckSpent}} - {{ localize 'CoC7.LuckSpentAlt' }} ({{totalLuckSpent}}){{/if}}</h4>
+          <h4 class="check-result dice-total {{cssClass}}" title="{{flavor}}: {{resultType}}">{{modifiedResult}}{{#if flatDiceModifier}} ({{flatDiceModifierString}}){{/if}} {{#if pushing}} {{localize 'CoC7.PushedRoll'}}{{/if}} {{#if luckSpent}} - {{totalLuckSpent}} ({{localize 'CoC7.Luck'}}){{/if}}</h4>
         {{/unless}}
       {{/unless}}
       {{#if hasMalfunction}}

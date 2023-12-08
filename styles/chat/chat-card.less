@@ -179,6 +179,19 @@
       background: rgba(255, 255, 240, 0.8);
       border: 1px solid var(--color-border-light-primary);
     }
+    &.inline {
+      display: flex;
+      flex-direction: row;
+      button{
+        margin: 2px;
+        &.active {
+          box-shadow: 0 0 2px var(--color-shadow-primary);
+          &:hover {
+            box-shadow: 0 0 5px var(--color-shadow-primary);
+          }
+        }
+      }
+    }
   }
   .card-footer {
     &:has(> div){

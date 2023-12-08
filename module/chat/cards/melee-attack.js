@@ -1,4 +1,4 @@
-/* global foundry, game, fromUuidSync, CONFIG, ui */
+/* global foundry, game, fromUuidSync, CONFIG, ui, Roll */
 import { EnhancedChatCard } from '../../common/chatcardlib/src/chatcardlib.js'
 import { CoCID } from '../../../module/scripts/coc-id.js'
 import { CoC7Check } from '../../check.js'
@@ -42,6 +42,9 @@ export class MeleeAttackCard extends EnhancedChatCard {
         state: this.rollStates.notRequested
       }
     } // If the target is surprised, and the GM allows we roll by default Stealth for attack, Listen for defence (player should alsways perform the check)
+    this.data.damage = {
+      ignoreArmor: false
+    }
   }
 
   /**
@@ -50,7 +53,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
    */
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      template: 'systems/CoC7/templates/chat/cards/melee-attack.hbs'
+      template: 'systems/CoC7/templates/chat/cards/melee-attack/main.hbs'
     })
   }
 
@@ -74,6 +77,11 @@ export class MeleeAttackCard extends EnhancedChatCard {
     ) {
       this.data.checks.defense.roll = CoC7Check.fromData(this.data.checks.defense.roll)
     }
+
+    if (
+      this.data.damage.roll &&
+      this.data.damage.roll?.constructor?.name === 'Object'
+    ) this.data.damage.roll = Roll.fromData(this.data.damage.roll)
   }
 
   async getData () {
@@ -94,6 +102,9 @@ export class MeleeAttackCard extends EnhancedChatCard {
     if (this.data.checks.defense.roll && (this.data.checks.defense.state >= this.rollStates.rolled)) {
       data.htmlDefenseCheck = await this.data.checks.defense.roll.getHtmlRoll()
       data.htmlDefenseCheckInline = await this.data.checks.defense.roll.inlineCheck?.outerHTML
+    }
+    if (this.data.damage.roll) {
+      data.htmlDamageRoll = await this.data.damage.roll.render()
     }
     return data
   }
@@ -205,13 +216,10 @@ export class MeleeAttackCard extends EnhancedChatCard {
   get statusList () {
     const statusList = []
     if (this.isAttackManeuver) {
-      statusList.push({ name: game.i18n.localize('CoC7.AttackManeuver'), css: this.attackerCanManeuver ? 'success' : 'failure' })
-      if (this.defender) {
-        statusList.push({
-          name: `${game.i18n.localize('CoC7.Build')}:${this.attacker.build}/${this.defender.build}`,
-          css: this.attackerCanManeuver ? 'success' : 'failure'
-        })
-      }
+      statusList.push({
+        name: `${game.i18n.localize('CoC7.AttackManeuver')}${this.defender ? ':' + this.attacker.build + '/' + this.defender.build : ''}`,
+        css: this.attackerCanManeuver ? 'success' : 'failure'
+      })
     }
     if (this.data.thrown) {
       statusList.push({ name: game.i18n.localize('CoC7.Thrown') })
@@ -244,13 +252,24 @@ export class MeleeAttackCard extends EnhancedChatCard {
       }
     }
 
-    if (this.defenderCanManeuver && this.data.flags.maneuver) {
-      statusList.push({ name: `${game.i18n.localize('CoC7.Build')}:${this.attacker.build}/${this.defender.build}` })
+    if (!this.defenderCanManeuver) {
+      statusList.push({
+        name: `${game.i18n.localize('CoC7.DefenseManeuver')}:${this.defender.build}/${this.attacker.build}`,
+        css: 'failure',
+        hint: game.i18n.localize('CoC7.ManeuverNotPossible')
+      })
     }
 
-    if (this.totalAttackBonus !== 0) {
-      statusList.push({ name: `${game.i18n.localize('CoC7.AttackModifier')}: ${this.totalAttackBonus}` })
+    if (this.flags.maneuver) {
+      statusList.push({
+        name: `${game.i18n.localize('CoC7.DefenseManeuver')}:${this.attacker.build}/${this.defender.build}`,
+        css: this.defenderCanManeuver ? 'success' : 'failure',
+        hint: game.i18n.localize('CoC7.ManeuverPossible')
+      })
     }
+
+    if (this.attackBonus !== 0) statusList.push({ name: `${game.i18n.localize('CoC7.AttackModifier')}: ${this.attackBonus}` })
+    if (this.defenseBonus !== 0) statusList.push({ name: `${game.i18n.localize('CoC7.DefenseModifier')}: ${this.defenseBonus}` })
 
     return statusList
   }
@@ -286,6 +305,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
     if (this.flags.surprised) {
       if (this.defenderStartled && this.flags.autoHit) return false
     }
+    if (!this.defenderCanDodge && !this.defenderCanFightBack && !this.defenderCanManeuver) return false
     return true
   }
 
@@ -323,13 +343,23 @@ export class MeleeAttackCard extends EnhancedChatCard {
     (!this.attacker.hasPlayerOwner && this.data.flags.canDetect && this.data.checks.detection.roll?.isFailure) // Suprise can be avoided, player receive attack, check fail
   }
 
-  get totalAttackBonus () {
+  get attackBonus () {
     if (this.data.flags.overrideRules) return this.data.bonusDice
     if (this.data.flags.surprised && this.data.flags.autoHit) return 0
     let totalBonus = 0
     if (this.attackGetSurpriseBonus && this.data.flags.suprisedBonusDice) totalBonus += 1
-    if (this.data.flags.outnumbered) totalBonus += 1
-    return totalBonus
+    if (this.defender) {
+      if (this.data.flags.outnumbered) totalBonus += 1
+      if (this.isAttackManeuver) totalBonus += Math.max(Math.min(this.attacker.build - this.defender.build, 0), -2)
+    }
+    return Math.max(Math.min(totalBonus, 2), -2)
+  }
+
+  get defenseBonus () {
+    if (!this.defender) return 0
+    // if (this.data.flags.overrideRules) return this.data.defBonusDice
+    if (this.flags.maneuver) return Math.max(Math.min(this.defender.build - this.attacker.build, 0), -2)
+    return 0
   }
 
   get attackSkill () {
@@ -339,7 +369,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
 
   get defenseSkill () {
     if (this.defenseWeapon.type === 'skill') return this.defenseWeapon
-    return this.defensder.getWeaponSkills(this.defenseWeapon.uuid)[this.data.checks.defense.alternativeSkill ? 1 : 0]
+    return this.defender.getWeaponSkills(this.defenseWeapon.uuid)[this.data.checks.defense.alternativeSkill ? 1 : 0]
   }
 
   /**
@@ -385,7 +415,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
   async requestDefense (options) {
     this.data.checks.attack.state = this.rollStates.requested
     this.data.checks.defense.state = this.defenderCanRespond ? this.rollStates.requested : this.rollStates.closed
-    if (!this.defenderCanRespond) return this.rollCard() // If defender can't respond we roll the card.
+    if (!this.defender || !this.defenderCanRespond) return this.rollCard() // If defender can't respond we roll the card.
     return true
   }
 
@@ -479,7 +509,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
 
   get defenseWeapon () {
     if (this.flags.doNothing) return null
-    return this.fightBackWeapon || this.defender.dodgeSkill
+    return this.fightBackWeapon || this.defenseManeuver || this.defender.dodgeSkill
   }
 
   async rollCard () {
@@ -495,6 +525,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
         this.data.checks.defense.roll.actor = this.defender
         this.data.checks.defense.roll.difficulty = CoC7Check.difficultyLevel.regular
         this.data.checks.defense.roll.denyLuck = !this.flags.allowLuck
+        this.data.checks.defense.roll.deyPush = true
         if (this.flags.dodge) this.data.checks.defense.roll.skill = this.defender.dodgeSkill
         else if (this.flags.maneuver) {
           if (this.defenseManeuver.specialManeuver) {
@@ -514,9 +545,10 @@ export class MeleeAttackCard extends EnhancedChatCard {
     }
     this.data.checks.attack.roll = new CoC7Check()
     this.data.checks.attack.roll.actor = this.attacker
-    this.data.checks.attack.roll.diceModifier = this.totalAttackBonus
+    this.data.checks.attack.roll.diceModifier = this.attackBonus
     this.data.checks.attack.roll.skill = this.attackSkill
     this.data.checks.attack.roll.denyLuck = !this.flags.allowLuck
+    this.data.checks.attack.roll.deyPush = true
     if (this.attackWeapon.type !== 'skill') this.data.checks.attack.roll.item = this.attackWeapon
     rollPromises.push(this.data.checks.attack.roll._perform({ forceDSN: true }))
     await Promise.all(rollPromises)
@@ -544,13 +576,13 @@ export class MeleeAttackCard extends EnhancedChatCard {
   }
 
   async resolveCard (options) {
-    // this.data.checks.defense.state = this.rollStates.closed
-    // this.data.checks.attack.state = this.rollStates.closed
-    // Response: fightback
-    // Response: maneuver
-    // Response: dodge
-    // Response: nothing
-    const prout = this.successDetails
+    this.data.checks.defense.state = this.rollStates.closed
+    this.data.checks.attack.state = this.rollStates.closed
+    // const result = this.successDetails
+    if (this.hasWinner) {
+      if (this.isAttackSuccess) this.armor = this.defender?.armor || 0
+      if (this.isDefenseSuccess) this.armor = this.defender?.armor || 0
+    }
     return true
   }
 
@@ -564,17 +596,20 @@ export class MeleeAttackCard extends EnhancedChatCard {
 
   get isAttackSuccess () {
     return (
-      !this.attackRoll.successLevel <= 0 &&
+      !(this.attackRoll.successLevel <= 0) &&
       (
-        !this.defender ||
-        (this.attackRoll.successLevel > this.defenseRoll.successLevel || (!this.dodge && (this.attackRoll.successLevel === this.defenseRoll.successLevel)))
+        (!this.defender || !this.defenseRoll) ||
+        (this.flags.dodge && (this.attackRoll.successLevel > this.defenseRoll.successLevel)) ||
+        (!this.flags.dodge && (this.attackRoll.successLevel === this.defenseRoll.successLevel))
       )
     )
   }
 
   get isDefenseSuccess () {
+    if (!this.defender) return false
+    if (!this.defenseRoll) return false
     return (
-      !this.defenseRoll.successLevel <= 0 &&
+      !this.defenseRoll?.successLevel <= 0 &&
       !this.attackWon
     )
   }
@@ -587,34 +622,30 @@ export class MeleeAttackCard extends EnhancedChatCard {
     if (!this.hasWinner) {
       return {
         winner: null,
-        attackWins: false,
-        defenseWins: false,
         weapon: null,
-        isManeuver: false
+        isManeuver: false,
+        skill: null,
+        damage: null
       }
     }
 
     const details = {
-      winner: this.isAttackSuccess ? this.attacker : this.defender,
-      attackWins: this.isAttackSuccess,
-      defenseWins: this.isDefenseSuccess,
+      winner: this.isAttackSuccess ? this.attacker : this.isDefenseSuccess ? this.defender : null,
       weapon: this.isAttackSuccess ? this.attackWeapon : this.defenseWeapon,
       isManeuver: this.isAttackSuccess ? this.isAttackManeuver : this.flags.maneuver,
-      skill: this.isAttackSuccess ? this.attackSkill : this.defenseSkill
+      skill: this.isAttackSuccess ? this.attackSkill : this.defenseSkill,
+      damage: {
+        isCritical: (this.isAttackSuccess && this.attackRoll.isCritical),
+        normal: null,
+        critical: null,
+        special: null
+      }
     }
 
-    if (details.isManeuver) {
-      if (details.weapon.type === 'skill') {
-        details.damage = {
-          formula: null,
-          special: null
-        }
-      } else {
-        details.damage = {
-          forumla: details.weapon.getDamageFormula({ replaceDamageBonus: true, critical: (this.isAttackSuccess && this.attackRoll.isCritical) }),
-          special: details.weapon.system.properties.spcl ? details.weapon.system.description.special : null
-        }
-      }
+    if (details.weapon?.type === 'weapon') {
+      details.damage.normal = details.weapon.getDamageFormula({ replaceDamageBonus: true, critical: false })
+      details.damage.critical = details.weapon.getDamageFormula({ replaceDamageBonus: true, critical: true })
+      details.damage.special = details.weapon.system.properties.spcl ? details.weapon.system.description.special : null
     }
     return details
   }
@@ -625,6 +656,82 @@ export class MeleeAttackCard extends EnhancedChatCard {
 
   get resolved () {
     return this.checksClosed && this.outcomeApplied
+  }
+
+  /** Damage management */
+  async rollNormalDamage (options) {
+    return this.rollDamage()
+  }
+
+  async rollCriticalDamage (options) {
+    return this.rollDamage({ crit: true })
+  }
+
+  async rollDamage ({ crit = false } = {}) {
+    this.data.damage.formula = this.successDetails.damage[crit ? 'critical' : 'normal']
+    if (this.isValidFormula(this.data.damage.formula)) {
+      this.data.damage.isValid = true
+      if (!isNaN(Number(this.data.damage.formula))) {
+        this.data.damage.total = Number(this.data.damage.formula)
+        this.data.damage.roll = null
+      } else {
+        this.data.damage.roll = await new Roll(this.data.damage.formula).evaluate({ async: true })
+        this.data.damage.total = this.data.damage.roll.total
+      }
+    } else {
+      ui.notifications.error(game.i18n.localize('CoC7.NoValidFormula'))
+    }
+    this.data.damage.rolled = true
+    return true
+  }
+
+  get damageFormula () {
+    return null
+  }
+
+  get armor () {
+    return this.data.damage.armor || 0
+  }
+
+  set armor (x) {
+    this.data.damage.armor = x
+  }
+
+  isValidFormula (formula = '') {
+    if (typeof formula !== 'string') return false
+    if (!isNaN(Number(formula))) return false
+    return Roll.validate(formula)
+  }
+
+  get totalDamageString () {
+    let damage = Number(
+      this.isDamageNumber ? this.damageFormula : this.roll.total
+    )
+    if (!this.ignoreArmor) {
+      if (isNaN(Number(this.armor)) || Number(this.armor) > 0) {
+        damage = damage - Number(this.armor)
+      }
+      if (!isNaN(Number(this.armor))) {
+        if (damage <= 0) {
+          return game.i18n.localize('CoC7.ArmorAbsorbsDamage')
+        }
+      }
+    }
+    return damage
+  }
+
+  get noDamage () {
+    if (this.rolled) {
+      const damage = this.isDamageNumber ? this.damageFormula : this.roll.total
+      if (!this.ignoreArmor) {
+        if (!isNaN(Number(this.armor))) {
+          return !!(damage - Number(this.armor) <= 0)
+        }
+        return false
+      } else {
+        return !!(damage <= 0)
+      }
+    } else return false
   }
 
   /** FOR DEBUG ONLY **/
