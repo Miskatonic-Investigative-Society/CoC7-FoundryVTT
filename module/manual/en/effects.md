@@ -45,7 +45,7 @@ This last tab will includes all changes made to the character sheet.
 An effect includes a list of changes. Each change needs to be addressed with the corresponding system path.
 The available changes are :
 
-- Characteristics: 
+- Characteristics:
   - Strength:
     - system.characteristics.str.value
     - system.characteristics.str.bonusDice
@@ -75,8 +75,8 @@ The available changes are :
     - system.characteristics.lck.value
     - system.characteristics.lck.bonusDice
   - Sanity:
-    - system.characteristics.san.value
-    - system.characteristics.san.bonusDice
+    - system.attribs.san.value
+    - system.attribs.san.bonusDice
   - Movement Rate:
     - system.attribs.mov.value
   - Build:

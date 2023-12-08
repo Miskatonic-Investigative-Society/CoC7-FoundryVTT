@@ -119,7 +119,7 @@ const sources = {
         file: 'hoja_de_atajos.md'
       },
       {
-        name: 'Creating your first investigator',
+        name: 'Creando tu primer investigador',
         file: 'primer_investigador.md'
       },
       {
