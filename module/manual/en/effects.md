@@ -72,8 +72,8 @@ The available changes are :
     - system.characteristics.edu.bonusDice
 - Attributes:
   - Luck:
-    - system.characteristics.lck.value
-    - system.characteristics.lck.bonusDice
+    - system.attribs.lck.value
+    - system.attribs.lck.bonusDice
   - Sanity:
     - system.attribs.san.value
     - system.attribs.san.bonusDice

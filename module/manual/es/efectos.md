@@ -72,8 +72,8 @@ Los cambios disponibles son:
     - system.characteristics.edu.bonusDice
 - Atributos:
   - Suerte:
-    - system.characteristics.lck.value
-    - system.characteristics.lck.bonusDice
+    - system.attribs.lck.value
+    - system.attribs.lck.bonusDice
   - Cordura:
     - system.attribs.san.value
     - system.attribs.san.bonusDice
