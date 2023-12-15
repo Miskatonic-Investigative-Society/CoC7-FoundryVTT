@@ -1,4 +1,4 @@
-/* global canvas, ChatMessage, CONFIG, CONST, duplicate, game, mergeObject, ui */
+/* global canvas, ChatMessage, CONFIG, CONST, foundry, game, ui */
 import { CoCActor } from '../actors/actor.js'
 import { CoC7Check } from '../check.js'
 import { CoC7ContentLinkDialog } from './coc7-content-link-dialog.js'
@@ -72,7 +72,7 @@ export class CoC7Link {
   static _linkFromEvent (event) {
     const a = event.currentTarget
     const i = a.querySelector('[data-link-icon]')
-    const data = duplicate(a.dataset)
+    const data = foundry.utils.duplicate(a.dataset)
 
     const oldType = data.type
 
@@ -123,7 +123,7 @@ export class CoC7Link {
    */
   static async fromDropData (data, options = {}) {
     const cls = new CoC7Link()
-    cls.object = mergeObject({
+    cls.object = foundry.utils.mergeObject({
       type: 'CoC7Link',
       check: CoC7Link.CHECK_TYPE.CHECK,
       linkType: CoC7Link.LINK_TYPE.SKILL,

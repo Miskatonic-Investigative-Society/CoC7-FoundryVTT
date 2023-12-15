@@ -1,5 +1,6 @@
-/* global Actor, Application, CONFIG, CONST, Dialog, Die, duplicate, foundry, fromUuid, fromUuidSync, game, getProperty, Hooks, mergeObject, Roll, TextEditor, Token, ui */
+/* global Actor, Application, CONFIG, CONST, Dialog, Die, foundry, fromUuid, fromUuidSync, game, Hooks, Roll, TextEditor, Token, ui */
 import { COC7 } from '../config.js'
+import CoC7ActiveEffect from '../active-effect.js'
 import { CoC7ChatMessage } from '../apps/coc7-chat-message.js'
 import { CoC7Check } from '../check.js'
 import { CoC7ConCheck } from '../chat/concheck.js'
@@ -226,7 +227,7 @@ export class CoCActor extends Actor {
   /** @override */
   static async create (data, options = {}) {
     if (data.type === 'character') {
-      data.prototypeToken = mergeObject(data.prototypeToken || {}, {
+      data.prototypeToken = foundry.utils.mergeObject(data.prototypeToken || {}, {
         actorLink: true,
         disposition: 1,
         sight: {
@@ -245,7 +246,7 @@ export class CoCActor extends Actor {
       if (typeof data.img === 'undefined' || data.img === 'icons/svg/mystery-man.svg') {
         data.img = 'icons/svg/chest.svg'
       }
-      data.prototypeToken = mergeObject(data.prototypeToken || {}, {
+      data.prototypeToken = foundry.utils.mergeObject(data.prototypeToken || {}, {
         actorLink: true
       })
     }
@@ -813,7 +814,7 @@ export class CoCActor extends Actor {
 
   async createBioSection (title = null) {
     const bio = this.system.biography
-      ? duplicate(this.system.biography)
+      ? foundry.utils.duplicate(this.system.biography)
       : []
     bio.push({
       title,
@@ -823,26 +824,26 @@ export class CoCActor extends Actor {
   }
 
   async updateBioValue (index, content) {
-    const bio = duplicate(this.system.biography)
+    const bio = foundry.utils.duplicate(this.system.biography)
     bio[index].value = content
     await this.update({ 'system.biography': bio }, { render: false })
   }
 
   async updateBioTitle (index, title) {
-    const bio = duplicate(this.system.biography)
+    const bio = foundry.utils.duplicate(this.system.biography)
     bio[index].title = title
     await this.update({ 'system.biography': bio })
   }
 
   async deleteBioSection (index) {
-    const bio = duplicate(this.system.biography)
+    const bio = foundry.utils.duplicate(this.system.biography)
     bio.splice(index, 1)
     await this.update({ 'system.biography': bio })
   }
 
   async moveBioSectionUp (index) {
     if (index === 0) return
-    const bio = duplicate(this.system.biography)
+    const bio = foundry.utils.duplicate(this.system.biography)
     if (index >= bio.length) return
     const elem = bio.splice(index, 1)[0]
     bio.splice(index - 1, 0, elem)
@@ -850,7 +851,7 @@ export class CoCActor extends Actor {
   }
 
   async moveBioSectionDown (index) {
-    const bio = duplicate(this.system.biography)
+    const bio = foundry.utils.duplicate(this.system.biography)
     if (index >= bio.length - 1) return
     const elem = bio.splice(index, 1)[0]
     bio.splice(index + 1, 0, elem)
@@ -1007,19 +1008,19 @@ export class CoCActor extends Actor {
                   const existing = skillList.find(i => i.id === skillData.selected)
                   if (existing) {
                     const flags = data.system?.flags
-                    data = duplicate(existing)
+                    const keepBase = (data.system.properties?.keepbasevalue ?? false)
+                    data = foundry.utils.duplicate(existing)
                     for (const [key, value] of Object.entries(flags)) {
                       if (value) {
                         data.system.flags[key] = true
                       }
                     }
-                    if (!(data.system.properties?.keepbasevalue ?? false)) {
+                    if (keepBase) {
                       if (skillData.baseValue !== '') {
-                        baseCalculated = skillData.baseValue
-                        data.system.value = baseCalculated
-                      } else {
-                        baseValue = data.system.value
+                        data.system.base = skillData.baseValue
                       }
+                      baseValue = skillData.baseValue
+                      baseCalculated = await CoC7Item.calculateBase(this, data)
                     }
                   }
                 }
@@ -1030,11 +1031,10 @@ export class CoCActor extends Actor {
                 )
                 if (!(data.system.properties?.keepbasevalue ?? false)) {
                   if (skillData.baseValue !== '') {
-                    baseCalculated = skillData.baseValue
-                    data.system.value = baseCalculated
-                  } else {
-                    baseValue = data.system.value
+                    data.system.base = skillData.baseValue
                   }
+                  baseValue = skillData.baseValue
+                  baseCalculated = await CoC7Item.calculateBase(this, data)
                 }
                 data.system.skillName = parts.skillName
                 data.name = parts.name
@@ -1047,7 +1047,7 @@ export class CoCActor extends Actor {
               data.system.base = baseCalculated
             }
 
-            processedDataArray.push(duplicate(data))
+            processedDataArray.push(foundry.utils.duplicate(data))
           }
           break
         }
@@ -1107,7 +1107,7 @@ export class CoCActor extends Actor {
             } // TODO : Else : selectionner le skill dans la liste ou en créer un nouveau.
           }
 
-          processedDataArray.push(duplicate(data))
+          processedDataArray.push(foundry.utils.duplicate(data))
           break
         }
 
@@ -1234,7 +1234,7 @@ export class CoCActor extends Actor {
             }
           }
           // refactor this
-          const monetary = mergeObject(this.system.monetary, duplicate(data.system.monetary))
+          const monetary = foundry.utils.mergeObject(this.system.monetary, foundry.utils.duplicate(data.system.monetary))
           const sheet = this.sheet
           let state = false
           do {
@@ -1319,7 +1319,7 @@ export class CoCActor extends Actor {
             data.system.skills = await game.system.api.cocid.expandItemArray({ itemList: data.system.skills })
             await this.addUniqueItems(data.system.skills, 'archetype')
 
-            processedDataArray.push(duplicate(data))
+            processedDataArray.push(foundry.utils.duplicate(data))
             archetype = true
           }
 
@@ -1523,13 +1523,13 @@ export class CoCActor extends Actor {
               'system.adjustments.occupation': Number(data.system.creditRating.min)
             })
 
-            processedDataArray.push(duplicate(data))
+            processedDataArray.push(foundry.utils.duplicate(data))
             occupation = true
           }
           break
 
         default:
-          processedDataArray.push(duplicate(data))
+          processedDataArray.push(foundry.utils.duplicate(data))
       }
     }
     if (processedDataArray.length === 0) {
@@ -1635,7 +1635,7 @@ export class CoCActor extends Actor {
     const parsed = {}
     for (const [key, value] of Object.entries(COC7.formula.actor)) {
       if (key.startsWith('@') && value.startsWith('this.')) {
-        parsed[key.substring(1)] = getProperty(this, value.substring(5))
+        parsed[key.substring(1)] = foundry.utils.getProperty(this, value.substring(5))
       }
     }
     return parsed
@@ -1806,7 +1806,7 @@ export class CoCActor extends Actor {
   async addUniqueItems (skillList, flag = null) {
     const processed = []
     for (let skill of skillList) {
-      skill = duplicate(skill)
+      skill = foundry.utils.duplicate(skill)
       if (flag) {
         if (!Object.prototype.hasOwnProperty.call(skill.system, 'flags')) {
           skill.system.flags = {}
@@ -1840,7 +1840,7 @@ export class CoCActor extends Actor {
         if (!item.system.flags) item.system.flags = {}
         item.system.flags[flag] = true
       }
-      processed.push(duplicate(item))
+      processed.push(foundry.utils.duplicate(item))
     }
     if (processed.length === 0) {
       return
@@ -1904,7 +1904,7 @@ export class CoCActor extends Actor {
 
   setReasonSanLoss (sanReason, sanLoss) {
     if (typeof sanReason === 'string' && sanReason !== '') {
-      const sanityLossEvents = duplicate(this.system.sanityLossEvents)
+      const sanityLossEvents = foundry.utils.duplicate(this.system.sanityLossEvents)
       const index = sanityLossEvents.findIndex(
         r => r.type.toLocaleLowerCase() === sanReason.toLocaleLowerCase()
       )
@@ -2444,7 +2444,7 @@ export class CoCActor extends Actor {
       })
 
       if (create === true) {
-        await this.createEmbeddedDocuments('Item', [duplicate(item)])
+        await this.createEmbeddedDocuments('Item', [foundry.utils.duplicate(item)])
       } else return
 
       skill = this.getSkillsByName(item.name)
@@ -3138,7 +3138,7 @@ export class CoCActor extends Actor {
   ) {
     if (!forceValue && game.settings.get('CoC7', 'enableStatusIcons')) {
       const effects = this.effects
-        .filter(effect => effect.flags.core?.statusId === conditionName)
+        .filter(effect => CoC7ActiveEffect.filterActiveEffects(effect, conditionName))
         .map(effect => effect.id)
       const custom = {}
       switch (conditionName) {
@@ -3181,19 +3181,23 @@ export class CoCActor extends Actor {
           effect => effect.id === conditionName
         )
         if (effect.length === 1) {
-          const effectData = mergeObject(
-            {
-              label: game.i18n.localize(effect[0].label),
-              icon: effect[0].icon,
-              flags: {
-                core: {
-                  statusId: effect[0].id
-                }
-              },
-              disabled: false
-            },
-            custom
-          )
+          const source = {
+            icon: effect[0].icon,
+            disabled: false
+          }
+          if (!foundry.utils.isNewerVersion(game.version, '11')) {
+            // FoundryVTT v10
+            source.label = game.i18n.localize(effect[0].label)
+            source.flags = {
+              core: {
+                statusId: effect[0].id
+              }
+            }
+          } else {
+            source.name = game.i18n.localize(effect[0].name)
+            source.statuses = [effect[0].id]
+          }
+          const effectData = foundry.utils.mergeObject(source, custom)
           await super.createEmbeddedDocuments('ActiveEffect', [effectData])
         } else {
           // This doesn't exist in FoundryVTT ActiveEffects?
@@ -3276,7 +3280,7 @@ export class CoCActor extends Actor {
   async unsetCondition (conditionName, { forceValue = false } = {}) {
     if (!forceValue && game.settings.get('CoC7', 'enableStatusIcons')) {
       const effects = this.effects
-        .filter(effect => effect.flags.core?.statusId === conditionName)
+        .filter(effect => CoC7ActiveEffect.filterActiveEffects(effect, conditionName))
         .map(effect => effect.id)
       if (effects.length > 0) {
         await super.deleteEmbeddedDocuments('ActiveEffect', effects)

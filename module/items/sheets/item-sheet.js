@@ -1,4 +1,4 @@
-/* global mergeObject */
+/* global foundry */
 
 import { CoC7ItemSheetV2 } from './item-sheetV2.js'
 
@@ -11,7 +11,7 @@ export class CoC7ItemSheet extends CoC7ItemSheetV2 {
    * @returns {Object}
    */
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       width: 525,
       height: 506
     })

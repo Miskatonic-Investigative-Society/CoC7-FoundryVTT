@@ -1,4 +1,4 @@
-/* global $, Actor, AudioHelper, ChatMessage, CONFIG, CONST, duplicate, foundry, fromUuid, game, getComputedStyle, Item, mergeObject, renderTemplate, Token, ui */
+/* global $, Actor, AudioHelper, ChatMessage, CONFIG, CONST, foundry, fromUuid, game, getComputedStyle, Item, renderTemplate, Token, ui */
 import { CoC7Dice } from './dice.js'
 import { CoC7Item } from './items/item.js'
 import { chatHelper, CoC7Roll } from './chat/helper.js'
@@ -1551,7 +1551,7 @@ export class CoC7Check {
 
   async getHtmlRollElement (options = {}) {
     const template = 'systems/CoC7/templates/chat/rolls/in-card-roll.html'
-    if (this.options) this.options = mergeObject(this.options, options)
+    if (this.options) this.options = foundry.utils.mergeObject(this.options, options)
     else this.options = options
     const html = await renderTemplate(template, this)
     if (html) return $.parseHTML(html)[0]
@@ -1560,7 +1560,7 @@ export class CoC7Check {
 
   async getHtmlRoll (options = {}) {
     const template = 'systems/CoC7/templates/chat/rolls/in-card-roll.html'
-    if (this.options) this.options = mergeObject(this.options, options)
+    if (this.options) this.options = foundry.utils.mergeObject(this.options, options)
     else this.options = options
     const html = await renderTemplate(template, this)
     return html || undefined
@@ -1615,7 +1615,7 @@ export class CoC7Check {
           }
         }
         if (typeof chatData.speaker !== 'undefined') {
-          chatData.flags.CoC7.originalSpeaker = duplicate(chatData.speaker)
+          chatData.flags.CoC7.originalSpeaker = foundry.utils.duplicate(chatData.speaker)
         }
         if (game.user.isGM) {
           switch (game.settings.get('CoC7', 'selfRollWhisperTarget')) {

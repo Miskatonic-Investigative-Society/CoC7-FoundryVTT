@@ -1,4 +1,4 @@
-/* global $, canvas, Dialog, foundry, game, mergeObject, PIXI, Token, TokenDocument, ui */
+/* global $, canvas, Dialog, foundry, game, PIXI, Token, TokenDocument, ui */
 import { CoCActor } from '../../actors/actor.js'
 import { ChaseObstacleCard } from '../../chat/cards/chase-obstacle.js'
 import { CoC7Check } from '../../check.js'
@@ -667,7 +667,7 @@ export class CoC7Chase extends CoC7Item {
         })
       }
       if (index >= initIndexStart && index - initIndexStart < init.length) {
-        mergeObject(location, init[index - initIndexStart], {
+        foundry.utils.mergeObject(location, init[index - initIndexStart], {
           overwrite: false
         })
 
@@ -1622,7 +1622,7 @@ export class CoC7Chase extends CoC7Item {
    * Should never happen
    */
   // async cleanLocations () {
-  //   const locations = duplicate(this.system.locations.list)
+  //   const locations = foundry.utils.duplicate(this.system.locations.list)
   //   locations.forEach(l => {
   //     const partipantsUuidArray = this.system.participants.map(p => p.uuid)
   //     if (l.participants) {

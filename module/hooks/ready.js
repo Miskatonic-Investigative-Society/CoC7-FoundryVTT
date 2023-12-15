@@ -1,4 +1,4 @@
-/* global CONFIG, game, Hooks, isNewerVersion */
+/* global CONFIG, foundry, game, Hooks */
 import { CoC7Tooltips } from '../apps/tooltips.js'
 // import { CoC7WelcomeMessage } from '../apps/welcome-message.js'
 import { registerTours } from '../scripts/register-tours.js'
@@ -24,7 +24,7 @@ export function listen () {
     }
     CONFIG.CoC7 = CONFIG.CoC7 ?? {}
     CONFIG.CoC7.Manual = readMe[lang]
-    if (isNewerVersion(game.system.version, instructionsVersion ?? '0')) {
+    if (foundry.utils.isNewerVersion(game.system.version, instructionsVersion ?? '0')) {
       (await game.packs.get('CoC7.system-doc').getDocument(CONFIG.CoC7.Manual))?.sheet.render(true)
       game.settings.set('CoC7', 'showInstructions', game.system.version)
     }

@@ -78,11 +78,8 @@ export class CharacRollDialog extends Dialog {
         await this.rollCharacteristic(char)
       }
     }
-    if (
-      action === 'validate' &&
-      !event.currentTarget.classList.contains('inactive')
-    ) {
-      this.checkTotal()
+    this.checkTotal()
+    if (action === 'validate' && this.data.data.validate) {
       this.close()
     }
   }
@@ -168,10 +165,9 @@ export class CharacRollDialog extends Dialog {
         Number(this.data.data.characteristics.points.value)
       ) {
         validation.classList.add('warning')
+        this.data.data.validate = false
       } else {
         validation.classList.remove('warning')
-        const validateButton = this._element[0].querySelector('button.validate')
-        validateButton.classList.remove('inactive')
         this.data.data.validate = true
       }
       const value = validation.querySelector('.value')
@@ -182,16 +178,7 @@ export class CharacRollDialog extends Dialog {
     total.innerText = this.data.data.characteristics.points.total
 
     if (this.data.data.characteristics.rolls.enabled) {
-      if (this.rolled) {
-        this.data.data.validate =
-          !Object.entries(this.rolled).find(el => !el) &&
-          Object.entries(this.rolled).length === 9
-        if (this.data.data.validate) {
-          const validateButton =
-            this._element[0].querySelector('button.validate')
-          validateButton.classList.remove('inactive')
-        }
-      }
+      this.data.data.validate = Object.values(this.data.data.characteristics.values).filter(val => isNaN(parseInt(val))).length === 0
     }
   }
 

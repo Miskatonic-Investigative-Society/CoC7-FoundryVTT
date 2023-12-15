@@ -1,4 +1,4 @@
-/* global CONFIG, duplicate, game, getProperty, Item, Roll, TextEditor, Token, ui, fromUuid */
+/* global CONFIG, foundry, game, Item, Roll, TextEditor, Token, ui, fromUuid */
 import { CoC7Parser } from '../apps/coc7-parser.js'
 import { COC7 } from '../config.js'
 import { CoC7Utilities } from '../utilities.js'
@@ -549,7 +549,7 @@ export class CoC7Item extends Item {
       const parsed = {}
       for (const [key, value] of Object.entries(COC7.formula.actorsheet)) {
         if (key.startsWith('@') && value.startsWith('this.actor.')) {
-          parsed[key.substring(1)] = getProperty(actor, value.substring(11))
+          parsed[key.substring(1)] = foundry.utils.getProperty(actor, value.substring(11))
         }
       }
       let value
@@ -577,7 +577,7 @@ export class CoC7Item extends Item {
       const parsed = {}
       for (const [key, value] of Object.entries(COC7.formula.actorsheet)) {
         if (key.startsWith('@') && value.startsWith('this.')) {
-          parsed[key.substring(1)] = getProperty(this, value.substring(5))
+          parsed[key.substring(1)] = foundry.utils.getProperty(this, value.substring(5))
         }
       }
       let value
@@ -716,7 +716,7 @@ export class CoC7Item extends Item {
   getChatData (htmlOptions = {}) {
     // FoundryVTT v10
     htmlOptions.async = false
-    const data = duplicate(this.system)
+    const data = foundry.utils.duplicate(this.system)
     // Fix : data can have description directly in field, not under value.
     if (typeof data.description === 'string') {
       data.description = {

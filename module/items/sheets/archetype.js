@@ -1,4 +1,4 @@
-/* global $, duplicate, game, ItemSheet, mergeObject, TextEditor */
+/* global $, foundry, game, ItemSheet, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { CoC7Item } from '../item.js'
 import { CoC7Utilities } from '../../utilities.js'
@@ -32,7 +32,7 @@ export class CoC7ArchetypeSheet extends ItemSheet {
     const dataList = await CoC7Utilities.getDataFromDropEvent(event, 'Item')
 
     let useCoCID = 0
-    const collection = this.item.system[collectionName] ? duplicate(this.item.system[collectionName]) : []
+    const collection = this.item.system[collectionName] ? foundry.utils.duplicate(this.item.system[collectionName]) : []
     for (const item of dataList) {
       if (!item || !item.system) continue
       if (![type].includes(item.type)) {
@@ -84,14 +84,14 @@ export class CoC7ArchetypeSheet extends ItemSheet {
     const CoCId = item.data('cocid')
     const itemIndex = this.item.system[collectionName].findIndex(i => (itemId && i._id === itemId) || (CoCId && i === CoCId))
     if (itemIndex > -1) {
-      const collection = this.item.system[collectionName] ? duplicate(this.item.system[collectionName]) : []
+      const collection = this.item.system[collectionName] ? foundry.utils.duplicate(this.item.system[collectionName]) : []
       collection.splice(itemIndex, 1)
       await this.item.update({ [`system.${collectionName}`]: collection })
     }
   }
 
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'occupation'],
       template: 'systems/CoC7/templates/items/archetype.html',
       width: 520,

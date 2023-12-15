@@ -1,9 +1,9 @@
-/* global mergeObject */
+/* global foundry */
 import { CoC7Tour } from '../apps/coc7-tour.js'
 
 export class EnableVariantRulesEn extends CoC7Tour {
   constructor (config) {
-    super(mergeObject({
+    super(foundry.utils.mergeObject({
       title: 'Enable optional/variant rules.',
       description: 'Learn how to enable Pulp Cthulhu rules, or other variant rules',
       canBeResumed: false,

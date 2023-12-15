@@ -1,4 +1,4 @@
-/* global AudioHelper, CONFIG, game, mergeObject */
+/* global AudioHelper, CONFIG, foundry, game */
 import { CoC7Check } from '../../check.js'
 import { CoC7Dice } from '../../dice.js'
 import { RollCard } from './roll-card.js'
@@ -24,7 +24,7 @@ export class CombinedCheckCard extends RollCard {
   }
 
   static get defaultConfig () {
-    return mergeObject(super.defaultConfig, {
+    return foundry.utils.mergeObject(super.defaultConfig, {
       template: 'systems/CoC7/templates/chat/cards/combined-roll.html',
       type: 'combinedCard',
       title: 'CoC7.CombinedRollCard'

@@ -1,4 +1,4 @@
-/* global game, ItemSheet, mergeObject, TextEditor */
+/* global foundry, game, ItemSheet, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import CoC7ActiveEffect from '../../active-effect.js'
 import { COC7 } from '../../config.js'
@@ -11,7 +11,7 @@ export class CoC7StatusSheet extends ItemSheet {
    *
    */
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'status'],
       template: 'systems/CoC7/templates/items/status.html',
       width: 525,
