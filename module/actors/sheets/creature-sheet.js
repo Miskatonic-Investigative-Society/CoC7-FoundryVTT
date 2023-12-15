@@ -1,4 +1,4 @@
-/* global mergeObject */
+/* global foundry */
 import { CoC7NPCSheet } from './npc-sheet.js'
 
 /**
@@ -20,7 +20,7 @@ export class CoC7CreatureSheet extends CoC7NPCSheet {
    * @returns {Object}
    */
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'actor', 'npc', 'creature']
     })
   }

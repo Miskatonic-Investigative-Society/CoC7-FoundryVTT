@@ -1,4 +1,4 @@
-/* global canvas, ChatMessage, CONST, duplicate, fromUuid, game, Ray, Token, ui */
+/* global canvas, ChatMessage, CONST, foundry, fromUuid, game, Ray, Token, ui */
 
 import { CoC7Check } from '../check.js'
 import { CoC7Utilities } from '../utilities.js'
@@ -204,7 +204,7 @@ export class chatHelper {
         const tokenData = scene.getEmbeddedDocument('Token', tokenId)
         if (!tokenData) return null
         const token = new Token(tokenData)
-        if (!token.scene) token.scene = duplicate(scene.document)
+        if (!token.scene) token.scene = foundry.utils.duplicate(scene.document)
         return token
       }
     } else {

@@ -1,4 +1,4 @@
-/* global Dialog, duplicate, game */
+/* global Dialog, foundry, game */
 export class DropCoCID extends Dialog {
   static processForm (response, element, resolve) {
     if (element.find('input').is(':checked')) {
@@ -11,7 +11,7 @@ export class DropCoCID extends Dialog {
     if (response && item.flags?.CoC7?.cocidFlag?.id) {
       return item.flags.CoC7.cocidFlag.id
     }
-    return duplicate(item)
+    return foundry.utils.duplicate(item)
   }
 
   static async create () {

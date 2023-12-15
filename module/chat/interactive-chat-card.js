@@ -1,4 +1,4 @@
-/* global $, ChatMessage, diffObject, expandObject, FormDataExtended, game, mergeObject, renderTemplate, ui */
+/* global $, ChatMessage, FormDataExtended, foundry, game, renderTemplate, ui */
 import { chatHelper } from './helper.js'
 
 export class InteractiveChatCard {
@@ -7,7 +7,7 @@ export class InteractiveChatCard {
   }
 
   get options () {
-    return mergeObject(this.constructor.defaultOptions, this._options)
+    return foundry.utils.mergeObject(this.constructor.defaultOptions, this._options)
   }
 
   get template () {
@@ -25,7 +25,7 @@ export class InteractiveChatCard {
     htmlCardElement.dataset.cardClass = this.constructor.name
     htmlCardElement.classList.add(...this.cssClasses)
 
-    const chatData = mergeObject(
+    const chatData = foundry.utils.mergeObject(
       {
         user: game.user.id,
         flavor: game.i18n.localize(this.options.title),
@@ -148,7 +148,7 @@ export class InteractiveChatCard {
       const form = forms[i]
       const fd = new FormDataExtended(form)
       let data = fd.toObject()
-      data = diffObject(this, expandObject(data))
+      data = foundry.utils.diffObject(this, foundry.utils.expandObject(data))
       for (const [key, value] of Object.entries(data)) {
         this[key] = value
         updates = true

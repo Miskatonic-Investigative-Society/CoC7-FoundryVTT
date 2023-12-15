@@ -1,4 +1,4 @@
-/* global ChatMessage, duplicate, game, renderTemplate, Roll, ui */
+/* global ChatMessage, foundry, game, renderTemplate, Roll, ui */
 import { SanCheckCard } from '../../chat/cards/san-check.js'
 import { CoC7Check } from '../../check.js'
 import { CoC7Item } from '../item.js'
@@ -35,7 +35,7 @@ export class CoC7Book extends CoC7Item {
    */
   async addSpells (spells) {
     const collection = this.system.spells
-      ? duplicate(this.system.spells)
+      ? foundry.utils.duplicate(this.system.spells)
       : []
     for (const spell of spells) {
       collection.push(spell)
@@ -307,7 +307,7 @@ export class CoC7Book extends CoC7Item {
         })
       )
       await this.actor.createEmbeddedDocuments('Item', [
-        duplicate(spelllearned)
+        foundry.utils.duplicate(spelllearned)
       ])
     }
   }
@@ -334,7 +334,7 @@ export class CoC7Book extends CoC7Item {
         )
         if (existingSkill) {
           skill = await this.actor.createEmbeddedDocuments('Item', [
-            duplicate(existingSkill)
+            foundry.utils.duplicate(existingSkill)
           ])
         } else {
           skill = await this.actor.createSkill(development.name, 0)

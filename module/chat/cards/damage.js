@@ -1,4 +1,4 @@
-/* global canvas, ChatMessage, Dialog, game, mergeObject, Roll, ui */
+/* global canvas, ChatMessage, Dialog, foundry, game, Roll, ui */
 import { CoC7Dice } from '../../dice.js'
 import { InteractiveChatCard } from '../interactive-chat-card.js'
 import { createInlineRoll } from '../helper.js'
@@ -9,7 +9,7 @@ export class DamageCard extends InteractiveChatCard {
    * @returns {Object}
    */
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       exclude: [
         '_targetToken',
         '_targetActor',

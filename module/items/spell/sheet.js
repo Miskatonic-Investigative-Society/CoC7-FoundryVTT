@@ -1,9 +1,9 @@
-/* global $, game, ItemSheet, mergeObject, TextEditor */
+/* global $, foundry, game, ItemSheet, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 
 export class CoC7SpellSheet extends ItemSheet {
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       template: 'systems/CoC7/templates/items/spell/main.html',
       classes: ['coc7', 'item', 'spell'],
       width: 500,

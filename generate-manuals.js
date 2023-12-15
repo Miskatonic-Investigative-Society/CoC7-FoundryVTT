@@ -8,6 +8,7 @@ const collisions = {}
 const sources = {
   en: {
     name: 'Call of Cthulhu 7th Edition',
+    priority: 0,
     pages: [
       {
         name: 'System documentation',
@@ -85,6 +86,7 @@ const sources = {
   },
   es: {
     name: 'La Llamada de Cthulhu 7ª Edición',
+    priority: 0,
     pages: [
       {
         name: 'Documentación del sistema',
@@ -162,6 +164,7 @@ const sources = {
   },
   fr: {
     name: 'L\'Appel de Cthulhu version 7',
+    priority: 0,
     pages: [
       {
         name: 'Documentation du système',
@@ -250,7 +253,17 @@ try {
     const dbEntry = {
       name: sources[lang].name + ' [' + lang + ']',
       pages: [],
-      _id: id
+      _id: id,
+      flags: {
+        CoC7: {
+          cocidFlag: {
+            eras: {},
+            id: 'je..call-of-cthulhu-7-th-edition-system-documentation',
+            lang,
+            priority: sources[lang].priority
+          }
+        }
+      }
     }
     const links = {}
     const includedPages = []

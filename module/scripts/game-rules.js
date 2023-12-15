@@ -1,4 +1,4 @@
-/* global $, CONFIG, FormApplication, game, mergeObject */
+/* global $, CONFIG, FormApplication, foundry, game */
 const SETTINGS = {
   pulpRules: {
     name: '',
@@ -121,7 +121,7 @@ function _setInitiativeOptions (rule) {
 
 export class CoC7GameRuleSettings extends FormApplication {
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       title: 'SETTINGS.TitleRules',
       id: 'rules-settings',
       template: 'systems/CoC7/templates/system/rule-settings.html',

@@ -1,4 +1,4 @@
-/* global $, ActorSheet, CONST, Dialog, FormData, game, mergeObject, TextEditor */
+/* global $, ActorSheet, CONST, Dialog, FormData, foundry, game, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { CoC7Link } from '../../apps/coc7-link.js'
 import { CoC7Utilities } from '../../utilities.js'
@@ -9,7 +9,7 @@ export class CoC7ContainerSheet extends ActorSheet {
    * @returns {Object}
    */
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'actor', 'storage'],
       template: 'systems/CoC7/templates/actors/storage-sheet.html',
       width: 672,

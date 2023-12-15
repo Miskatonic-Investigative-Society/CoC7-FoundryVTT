@@ -1,4 +1,4 @@
-/* global duplicate, foundry, game, mergeObject, Roll, ui */
+/* global foundry, game, Roll, ui */
 import { CoC7Check } from '../../check.js'
 import { EnhancedChatCard } from '../../common/chatcardlib/src/chatcardlib.js'
 import { CoC7Dice } from '../../dice.js'
@@ -9,7 +9,7 @@ import { createInlineRoll } from '../helper.js'
 export class ChaseObstacleCard extends EnhancedChatCard {
   /** @override */
   static get defaultOptions () {
-    const options = mergeObject(super.defaultOptions, {
+    const options = foundry.utils.mergeObject(super.defaultOptions, {
       template: 'systems/CoC7/templates/chat/cards/chase-obstacle.html',
       GMUpdate: true
     })
@@ -370,7 +370,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
     }
 
     if (this.data.states.closed) {
-      this.data.movementActionArray = duplicate(
+      this.data.movementActionArray = foundry.utils.duplicate(
         this.participant.movementActionArray
       )
       this.data.EEC_ACTION = { detachData: true }
@@ -437,7 +437,7 @@ export class ChaseObstacleCard extends EnhancedChatCard {
       this.data.flags.hasBonusDice = this.participant.hasBonusDice
     }
 
-    this.data.movementActionArray = duplicate(
+    this.data.movementActionArray = foundry.utils.duplicate(
       this.participant.movementActionArray
     )
     this.data.movementAction = this.participant.currentMovementActions

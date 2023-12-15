@@ -1,4 +1,4 @@
-/* global CONFIG, Dialog, duplicate, expandObject, foundry, game, isNewerVersion, mergeObject, ui */
+/* global CONFIG, Dialog, foundry, game, ui */
 import { CoC7Item } from './items/item.js'
 import { CoCIDBatch } from './apps/coc-id-batch.js'
 
@@ -10,7 +10,7 @@ export class Updater {
       systemUpdateVersion = game.system.version
       await game.settings.set('CoC7', 'systemUpdateVersion', systemUpdateVersion)
     }
-    const runMigrate = isNewerVersion(game.system.version, systemUpdateVersion ?? '0')
+    const runMigrate = foundry.utils.isNewerVersion(game.system.version, systemUpdateVersion ?? '0')
     this.updatedModules = game.settings.get('CoC7', 'systemUpdatedModuleVersion') || {}
     this.currentModules = {}
     for (const pack of game.packs) {
@@ -98,7 +98,7 @@ export class Updater {
 
     await CoCIDBatch.create('skill')
 
-    const settings = mergeObject(this.updatedModules || {}, this.currentModules)
+    const settings = foundry.utils.mergeObject(this.updatedModules || {}, this.currentModules)
     game.settings.set('CoC7', 'systemUpdatedModuleVersion', settings)
     game.settings.set('CoC7', 'systemUpdateVersion', game.system.version)
 
@@ -269,7 +269,7 @@ export class Updater {
         const itemUpdate = Updater.migrateItemData(itemData)
         if (!foundry.utils.isEmpty(itemUpdate)) {
           itemUpdate._id = itemData._id
-          arr.push(expandObject(itemUpdate))
+          arr.push(foundry.utils.expandObject(itemUpdate))
         }
         return arr
       }, [])
@@ -407,11 +407,11 @@ export class Updater {
             const updates = new Map(update[embeddedName].map(u => [u._id, u]))
             t.actorData[embeddedName].forEach(original => {
               const update = updates.get(original._id)
-              if (update) mergeObject(original, update)
+              if (update) foundry.utils.mergeObject(original, update)
             })
             delete update[embeddedName]
           })
-          mergeObject(t.actorData, update)
+          foundry.utils.mergeObject(t.actorData, update)
         }
         return t
       })
@@ -958,7 +958,7 @@ export class Updater {
       updateData['system.monetary.spendingLevel'] = actor.system.credit.spendingLevel
       updateData['system.monetary.cash'] = actor.system.credit.cash
       updateData['system.monetary.assets'] = actor.system.credit.assets
-      updateData['system.monetary.values'] = duplicate(actor.system.monetary.values)
+      updateData['system.monetary.values'] = foundry.utils.duplicate(actor.system.monetary.values)
       if (multiplier !== 1) {
         for (const value of updateData['system.monetary.values']) {
           value.cashValue = multiplier * value.cashValue
@@ -1094,7 +1094,7 @@ export class Updater {
                   changed = true
                 }
                 if (effect.flags.core?.statusId !== statusId) {
-                  effects[i] = mergeObject(effect, {
+                  effects[i] = foundry.utils.mergeObject(effect, {
                     flags: {
                       core: {
                         statusId

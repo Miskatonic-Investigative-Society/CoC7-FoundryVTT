@@ -1,4 +1,4 @@
-/* global ChatMessage, game, mergeObject */
+/* global ChatMessage, foundry, game */
 import { CoC7Check } from '../../check.js'
 import { DamageCard } from './damage.js'
 import { RollCard } from './roll-card.js'
@@ -24,7 +24,7 @@ export class OpposedCheckCard extends RollCard {
   }
 
   static get defaultConfig () {
-    return mergeObject(super.defaultConfig, {
+    return foundry.utils.mergeObject(super.defaultConfig, {
       template: 'systems/CoC7/templates/chat/cards/opposed-roll.html',
       type: 'opposedCard'
     })

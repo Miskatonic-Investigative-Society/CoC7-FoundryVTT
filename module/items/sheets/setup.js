@@ -1,4 +1,4 @@
-/* global $, duplicate, expandObject, game, ItemSheet, mergeObject, TextEditor */
+/* global $, foundry, game, ItemSheet, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { COC7 } from '../../config.js'
 import { CoC7Item } from '../item.js'
@@ -44,7 +44,7 @@ export class CoC7SetupSheet extends ItemSheet {
     const dataList = await CoC7Utilities.getDataFromDropEvent(event, 'Item')
 
     let useCoCID = 0
-    const collection = this.item.system[collectionName] ? duplicate(this.item.system[collectionName]) : []
+    const collection = this.item.system[collectionName] ? foundry.utils.duplicate(this.item.system[collectionName]) : []
     for (const item of dataList) {
       if (!item || !item.system) continue
       if (!['item', 'weapon', 'skill', 'book', 'spell'].includes(item.type)) {
@@ -69,19 +69,19 @@ export class CoC7SetupSheet extends ItemSheet {
   async _onRemoveSection (event) {
     const a = event.currentTarget
     const div = a.closest('.item')
-    const bio = duplicate(this.item.system.bioSections)
+    const bio = foundry.utils.duplicate(this.item.system.bioSections)
     bio.splice(Number(div.dataset.index), 1)
     await this.item.update({ 'system.bioSections': bio })
   }
 
   async _onAddBio () {
-    const bio = this.item.system.bioSections ? duplicate(this.item.system.bioSections) : []
+    const bio = this.item.system.bioSections ? foundry.utils.duplicate(this.item.system.bioSections) : []
     bio.push(null)
     await this.item.update({ 'system.bioSections': bio })
   }
 
   _onAddMonetary () {
-    const values = this.item.system.monetary.values ? duplicate(this.item.system.monetary.values) : []
+    const values = this.item.system.monetary.values ? foundry.utils.duplicate(this.item.system.monetary.values) : []
     values.push({
       name: '',
       min: null,
@@ -99,7 +99,7 @@ export class CoC7SetupSheet extends ItemSheet {
   _onRemoveMonetary (event) {
     const a = event.currentTarget
     const div = a.closest('.item')
-    const values = duplicate(this.item.system.monetary.values)
+    const values = foundry.utils.duplicate(this.item.system.monetary.values)
     values.splice(Number(div.dataset.index), 1)
     this.item.update({ 'system.monetary.values': values })
   }
@@ -136,14 +136,14 @@ export class CoC7SetupSheet extends ItemSheet {
     const CoCId = item.data('cocid')
     const itemIndex = this.item.system[collectionName].findIndex(i => (itemId && i._id === itemId) || (CoCId && i === CoCId))
     if (itemIndex > -1) {
-      const collection = this.item.system[collectionName] ? duplicate(this.item.system[collectionName]) : []
+      const collection = this.item.system[collectionName] ? foundry.utils.duplicate(this.item.system[collectionName]) : []
       collection.splice(itemIndex, 1)
       await this.item.update({ [`system.${collectionName}`]: collection })
     }
   }
 
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'setup'],
       template: 'systems/CoC7/templates/items/setup.html',
       width: 565,
@@ -238,7 +238,7 @@ export class CoC7SetupSheet extends ItemSheet {
   }
 
   _updateObject (event, formData) {
-    const system = expandObject(formData)?.system
+    const system = foundry.utils.expandObject(formData)?.system
     if (system.bioSections) {
       formData['system.bioSections'] = Object.values(
         system.bioSections || []
