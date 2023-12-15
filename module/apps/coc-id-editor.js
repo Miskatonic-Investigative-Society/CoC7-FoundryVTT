@@ -1,10 +1,10 @@
-/* global $, CONFIG, flattenObject, FormApplication, game, mergeObject, TextEditor */
+/* global $, CONFIG, FormApplication, foundry, game, TextEditor */
 import { COC7 } from '../config.js'
 import { CoC7Utilities } from '../utilities.js'
 
 export class CoCIDEditor extends FormApplication {
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'dialog', 'coc-id-editor'],
       template: 'systems/CoC7/templates/apps/coc-id-editor.hbs',
       width: 900,
@@ -42,7 +42,7 @@ export class CoCIDEditor extends FormApplication {
     }
     sheetData.eras.sort(CoC7Utilities.sortByNameKey)
 
-    const CoCIDKeys = flattenObject(game.i18n.translations.CoC7.CoCIDFlag.keys ?? {})
+    const CoCIDKeys = foundry.utils.flattenObject(game.i18n.translations.CoC7.CoCIDFlag.keys ?? {})
     const prefix = new RegExp('^' + CoC7Utilities.quoteRegExp(sheetData.idPrefix))
     sheetData.existingKeys = Object.keys(CoCIDKeys).reduce((obj, k) => {
       if (k.match(prefix)) {

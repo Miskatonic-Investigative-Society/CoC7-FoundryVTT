@@ -1,8 +1,8 @@
-/* global $, FormApplication, game, mergeObject */
+/* global $, FormApplication, foundry, game */
 
 export class SkillSpecializationSelectDialog extends FormApplication {
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'skill-name-dialog'],
       title: '',
       template: 'systems/CoC7/templates/apps/skill-specialization-select.hbs',

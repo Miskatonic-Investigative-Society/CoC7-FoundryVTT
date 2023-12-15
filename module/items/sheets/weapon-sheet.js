@@ -1,4 +1,4 @@
-/* global game, ItemSheet, mergeObject, TextEditor */
+/* global foundry, game, ItemSheet, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { COC7 } from '../../config.js'
 import { isCtrlKey } from '../../chat/helper.js'
@@ -12,7 +12,7 @@ export class CoC7WeaponSheet extends ItemSheet {
    *
    */
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'item'],
       width: 545,
       height: 480,

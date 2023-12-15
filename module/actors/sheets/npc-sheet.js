@@ -1,4 +1,4 @@
-/* global game, mergeObject, TextEditor */
+/* global foundry, game, TextEditor */
 import { CoC7ActorSheet } from './base.js'
 import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7Link } from '../../apps/coc7-link.js'
@@ -210,7 +210,7 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
    */
 
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'actor', 'npc'],
       dragDrop: [{ dragSelector: '.item', dropSelector: null }],
       template: 'systems/CoC7/templates/actors/npc-sheet.html',

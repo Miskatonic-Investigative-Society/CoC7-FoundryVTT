@@ -1,4 +1,4 @@
-/* global Actor, CONFIG, duplicate, game, ui */
+/* global Actor, CONFIG, foundry, game, ui */
 import { CoC7ActorImporterRegExp } from './actor-importer-regexp.js'
 import { CoCActor } from '../actors/actor.js'
 import { CoC7Item } from '../items/item.js'
@@ -830,7 +830,7 @@ export class CoC7ActorImporter {
           if (typeof skill.push !== 'undefined') {
             cloned.system.properties.push = skill.push
           }
-          items.push(duplicate(cloned))
+          items.push(foundry.utils.duplicate(cloned))
         } else {
           const options = {}
           if (typeof skill.push !== 'undefined') {
@@ -849,7 +849,7 @@ export class CoC7ActorImporter {
         if (typeof existing !== 'undefined') {
           const cloned = existing.toObject()
           cloned.system.base = skill.value
-          items.push(duplicate(cloned))
+          items.push(foundry.utils.duplicate(cloned))
         } else {
           items.push(
             CoCActor.emptySkill(skill.name, skill.value, {
@@ -868,7 +868,7 @@ export class CoC7ActorImporter {
         })
         if (typeof existing !== 'undefined') {
           const cloned = existing.toObject()
-          items.push(duplicate(cloned))
+          items.push(foundry.utils.duplicate(cloned))
         } else {
           items.push(CoCActor.emptySpell(name))
         }

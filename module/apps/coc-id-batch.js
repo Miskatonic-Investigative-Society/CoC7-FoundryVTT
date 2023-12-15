@@ -1,9 +1,9 @@
-/* global $, CONFIG, duplicate, expandObject, flattenObject, FormApplication, game, Item, mergeObject */
+/* global $, CONFIG, FormApplication, foundry, game, Item */
 import { CoC7Utilities } from '../utilities.js'
 
 export class CoCIDBatch extends FormApplication {
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'dialog', 'coc-id-editor'],
       template: 'systems/CoC7/templates/apps/coc-id-batch.hbs',
       width: 700,
@@ -79,7 +79,7 @@ export class CoCIDBatch extends FormApplication {
       if (typeof update.cocidFlag.eras === 'undefined') {
         update.cocidFlag.eras = {}
       }
-      const flags = flattenObject({ flags: { CoC7: { cocidFlag: update.cocidFlag } } })
+      const flags = foundry.utils.flattenObject({ flags: { CoC7: { cocidFlag: update.cocidFlag } } })
       if (typeof update.scene !== 'undefined') {
         if (typeof scenes[update.scene] === 'undefined') {
           const scene = game.scenes.get(update.scene)
@@ -89,13 +89,13 @@ export class CoCIDBatch extends FormApplication {
         if (tokenOffset > -1) {
           const itemOffset = scenes[update.scene].tokens[tokenOffset].actorData.items.findIndex(i => i._id === update.item)
           if (itemOffset > -1) {
-            const expandedFlags = expandObject(Object.entries(flags).reduce((out, entry) => {
+            const expandedFlags = foundry.utils.expandObject(Object.entries(flags).reduce((out, entry) => {
               if (entry[0].match(/^flags\.CoC7\.cocidFlag/)) {
                 out[entry[0]] = entry[1]
               }
               return out
             }, {}))
-            scenes[update.scene].tokens[tokenOffset].actorData.items[itemOffset] = mergeObject(scenes[update.scene].tokens[tokenOffset].actorData.items[itemOffset], expandedFlags)
+            scenes[update.scene].tokens[tokenOffset].actorData.items[itemOffset] = foundry.utils.mergeObject(scenes[update.scene].tokens[tokenOffset].actorData.items[itemOffset], expandedFlags)
           }
         }
       } else if (typeof update.actor !== 'undefined') {
@@ -185,7 +185,7 @@ export class CoCIDBatch extends FormApplication {
       const sceneData = scene.toObject()
       for (const token of sceneData.tokens ?? []) {
         if (token.actorId && !token.actorLink) {
-          const actorData = duplicate(token.actorData)
+          const actorData = foundry.utils.duplicate(token.actorData)
           for (const item of actorData.items ?? []) {
             const itemData = item instanceof CONFIG.Item.documentClass ? item.toObject() : item
             if (itemData.type === 'skill') {
@@ -213,7 +213,7 @@ export class CoCIDBatch extends FormApplication {
       for (const item of items) {
         foundKeys[item.name] = item.flags.CoC7.cocidFlag.id
       }
-      for (const key in flattenObject(game.i18n.translations.CoC7.CoCIDFlag.keys ?? {})) {
+      for (const key in foundry.utils.flattenObject(game.i18n.translations.CoC7.CoCIDFlag.keys ?? {})) {
         foundKeys[game.i18n.format('CoC7.CoCIDFlag.keys.' + key)] = key
       }
       for (const name in missingNames) {

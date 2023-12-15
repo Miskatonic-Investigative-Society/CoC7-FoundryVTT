@@ -16,7 +16,7 @@ export class CoC7Parser {
 
   static ParseSheetContent (app, html) {
     // Check in all editors content for a link.
-    for (const element of html.find('div.editor-content > *, p')) {
+    for (const element of html.find('div.editor-content > *, p, li')) {
       if (element.outerHTML.toLocaleLowerCase().includes('@coc7')) {
         element.outerHTML = CoC7Parser.enrichHTML(element.outerHTML)
       }

@@ -1,4 +1,4 @@
-/* global canvas, ChatMessage, CONFIG, CONST, Dialog, duplicate, Folder, fromUuid, fromUuidSync, game, getDocumentClass, Hooks, Macro, Roll, Token, ui */
+/* global canvas, ChatMessage, CONFIG, CONST, Dialog, Folder, foundry, fromUuid, fromUuidSync, game, getDocumentClass, Hooks, Macro, Roll, Token, ui */
 import { COC7 } from './config.js'
 import { CoC7Check } from './check.js'
 import { CoC7Item } from './items/item.js'
@@ -319,7 +319,7 @@ export class CoC7Utilities {
         m => m.name === item.name && m.command === command
       )
       if (!macro) {
-        Macro.create(duplicate({
+        Macro.create(foundry.utils.duplicate({
           name: item.name,
           type: 'script',
           img: item.img,
@@ -811,7 +811,7 @@ export class CoC7Utilities {
       const tokenData = scene.getEmbeddedDocument('Token', tokenId)
       if (!tokenData) return null
       const token = new Token(tokenData)
-      if (!token.scene) token.scene = duplicate(scene)
+      if (!token.scene) token.scene = foundry.utils.duplicate(scene)
       return token
     }
     // Case 2 - use Actor ID directory

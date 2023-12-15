@@ -1,4 +1,4 @@
-/* global $, ChatMessage, deepClone, FormDataExtended, foundry, fromUuid, game, Hooks, mergeObject, renderTemplate, socketlib, ui */
+/* global $, ChatMessage, FormDataExtended, foundry, fromUuid, game, Hooks, renderTemplate, socketlib, ui */
 
 const ECC_CLASS = 'enhanced-chat-card'
 
@@ -162,7 +162,7 @@ export class EnhancedChatCard {
   async initialize () {}
 
   get options () {
-    return mergeObject(this.constructor.defaultOptions, this._options)
+    return foundry.utils.mergeObject(this.constructor.defaultOptions, this._options)
   }
 
   set options (x) {
@@ -207,7 +207,7 @@ export class EnhancedChatCard {
     for (const k of Object.keys(this.data)) {
       const v = this.data[k]
       if (v instanceof Object) {
-        data[k] = v.toObject ? v.toObject() : deepClone(v)
+        data[k] = v.toObject ? v.toObject() : foundry.utils.deepClone(v)
       } else data[k] = v
     }
     return data

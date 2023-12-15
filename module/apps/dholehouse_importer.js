@@ -1,4 +1,4 @@
-/* global Actor, CONFIG, duplicate, game, ui, fetch */
+/* global Actor, CONFIG, foundry, game, ui, fetch */
 import { CoCActor } from '../actors/actor.js'
 import { CoC7DirectoryPicker } from '../scripts/coc7-directory-picker.js'
 import { CoC7Utilities } from '../utilities.js'
@@ -165,7 +165,7 @@ export class CoC7DholeHouseActorImporter {
       })
       let cloned = null
       if (typeof existing !== 'undefined') {
-        cloned = duplicate(existing.toObject())
+        cloned = foundry.utils.duplicate(existing.toObject())
         cloned.name = parts.name
         cloned.system.skillName = parts.skillName
         cloned.system.specialization = parts.specialization
@@ -228,7 +228,7 @@ export class CoC7DholeHouseActorImporter {
       })
       let cloned = null
       if (typeof existing !== 'undefined') {
-        cloned = duplicate(existing.toObject())
+        cloned = foundry.utils.duplicate(existing.toObject())
       } else {
         cloned = {
           name: item.description,
@@ -257,7 +257,7 @@ export class CoC7DholeHouseActorImporter {
       })
       let cloned = null
       if (typeof existing !== 'undefined') {
-        cloned = duplicate(existing.toObject())
+        cloned = foundry.utils.duplicate(existing.toObject())
         cloned.system.skill.main.name = skill?.name ?? ''
         cloned.system.skill.main.id = skill?.id ?? ''
         cloned.system.range = cloned.system.range ?? {}

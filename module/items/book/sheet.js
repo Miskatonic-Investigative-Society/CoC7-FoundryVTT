@@ -1,10 +1,10 @@
-/* global $, duplicate, game, ItemSheet, mergeObject, TextEditor */
+/* global $, foundry, game, ItemSheet, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { CoC7Utilities } from '../../utilities.js'
 
 export class CoC7BookSheet extends ItemSheet {
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       template: 'systems/CoC7/templates/items/book/main.html',
       classes: ['coc7', 'item', 'book'],
       width: 500,
@@ -134,7 +134,7 @@ export class CoC7BookSheet extends ItemSheet {
     const index = element.parents('li').data('index')
     /** Always has to be @type {Array} */
     const spells = this.item.system.spells
-      ? duplicate(this.item.system.spells)
+      ? foundry.utils.duplicate(this.item.system.spells)
       : []
     if (index >= 0) spells.splice(index, 1)
     return await this.item.update({ 'system.spells': spells })
@@ -198,7 +198,7 @@ export class CoC7BookSheet extends ItemSheet {
       /** Always has to be @type {Array} */
     }
     const skills = this.item.system.gains.others
-      ? duplicate(this.item.system.gains.others)
+      ? foundry.utils.duplicate(this.item.system.gains.others)
       : []
     switch (mode) {
       case 'add':

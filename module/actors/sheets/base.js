@@ -1,4 +1,4 @@
-/* global $, ActorSheet, ChatMessage, CONST, Dialog, FormData, foundry, game, getProperty, Hooks, mergeObject, Roll, TextEditor, ui */
+/* global $, ActorSheet, ChatMessage, CONST, Dialog, FormData, foundry, game, Hooks, Roll, TextEditor, ui */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7ChatMessage } from '../../apps/coc7-chat-message.js'
@@ -240,7 +240,7 @@ export class CoC7ActorSheet extends ActorSheet {
                 COC7.formula.actorsheet
               )) {
                 if (key.startsWith('@') && value.startsWith('this.')) {
-                  parsed[key.substring(1)] = getProperty(
+                  parsed[key.substring(1)] = foundry.utils.getProperty(
                     this,
                     value.substring(5)
                   )
@@ -438,7 +438,7 @@ export class CoC7ActorSheet extends ActorSheet {
     // For compat with previous characters test if auto is definied, if not we define it
     if (!['vehicle', 'container'].includes(this.actor.type)) {
       const auto = this.actor.checkUndefinedAuto()
-      sheetData.data.system = mergeObject(sheetData.data.system, auto)
+      sheetData.data.system = foundry.utils.mergeObject(sheetData.data.system, auto)
     } else {
       sheetData.data.system.attribs.hp.auto = false
       sheetData.data.system.attribs.mp.auto = false
@@ -1838,15 +1838,15 @@ export class CoC7ActorSheet extends ActorSheet {
   //  // Create the expanded update data object
   //  const fd = new FormDataExtended(this.form, {editors: this.editors});
   //  let data = fd.toObject();
-  //  if ( updateData ) data = mergeObject(data, updateData);
-  //  else data = expandObject(data);
+  //  if ( updateData ) data = foundry.utils.mergeObject(data, updateData);
+  //  else data = foundry.utils.expandObject(data);
 
   //  // Handle Damage array
   //  const damage = data.data?.damage;
   //  if ( damage ) damage.parts = Object.values(damage?.parts || {}).map(d => [d[0] || '', d[1] || '']);
 
   //  // Return the flattened submission data
-  //  return flattenObject(data);
+  //  return foundry.utils.flattenObject(data);
   // }
 
   /* -------------------------------------------- */
