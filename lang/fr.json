@@ -1293,7 +1293,7 @@
   "CoC7.CoCIDFlag.error.documents-not-found": "Items inconnus dans le monde ou dans les compendiums pour les CoC IDs ({cocids}), langue \"{lang}\", et l'époque \"{era}\". Vérifiez l'époque du monde.",
 
   "CoC7.CoCIDBatch.title": "Automate du System ID (CoC ID)",
-  "CoC7.CoCIDBatch.summary": "Le système CoC7 a ajouté le System ID (CoC ID). Cela permet d'identifier les items FoundryVTT, les compétences par exemple. Cette page vous permettra de positionner l'identifiant pour des '{type}' existant(e)s. Le System ID doit utiliser les traductions anglaises pour pouvoir supporter le portage dans d'autres langues."
+  "CoC7.CoCIDBatch.summary": "Le système CoC7 a ajouté le System ID (CoC ID). Cela permet d'identifier les items FoundryVTT, les compétences par exemple. Cette page vous permettra de positionner l'identifiant pour des '{type}' existant(e)s. Le System ID doit utiliser les traductions anglaises pour pouvoir supporter le portage dans d'autres langues.",
   
   "CoC7.TokenCreationRoll.Title": "Aléatoire détecté",
   "CoC7.TokenCreationRoll.Prompt": "Ce token a des caractéristiques ou compétences aléatoires.<br>Que souhaitez-vous faire ?",
