@@ -22,19 +22,19 @@ The following translations have more than 50 untranslated strings [are you able 
 
 |Key|de|es|fr|it|ja|zh-TW|
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**1**|**1**|**8**|**5**|**10**|**12**|
+|**Remaining**:|**1**|**1**|**1**|**5**|**10**|**12**|
 |[CoC7.EraRegency](#coc7eraregency)|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
 |[CoC7.EraRegencyPulp](#coc7eraregencypulp)|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
 |[CoC7.ErrorTokenIncorrect](#coc7errortokenincorrect)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
 |[CoC7.PersonalSpecialityPlaceholder](#coc7personalspecialityplaceholder)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
 |[CoC7.SanityLossType](#coc7sanitylosstype)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.System.Documentation](#coc7systemdocumentation)|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.TokenCreationRoll.ButtonAverage](#coc7tokencreationrollbuttonaverage)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.TokenCreationRoll.ButtonRoll](#coc7tokencreationrollbuttonroll)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.TokenCreationRoll.Prompt](#coc7tokencreationrollprompt)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.TokenCreationRoll.Title](#coc7tokencreationrolltitle)|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[SETTINGS.SceneDistanceNotCalcualtedNoError](#settingsscenedistancenotcalcualtednoerror)|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
-|[SETTINGS.SceneDistanceNotCalcualtedNoErrorHint](#settingsscenedistancenotcalcualtednoerrorhint)|&#9989;|&#9989;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.System.Documentation](#coc7systemdocumentation)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.TokenCreationRoll.ButtonAverage](#coc7tokencreationrollbuttonaverage)|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.TokenCreationRoll.ButtonRoll](#coc7tokencreationrollbuttonroll)|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.TokenCreationRoll.Prompt](#coc7tokencreationrollprompt)|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.TokenCreationRoll.Title](#coc7tokencreationrolltitle)|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|&#x274C;|
+|[SETTINGS.SceneDistanceNotCalcualtedNoError](#settingsscenedistancenotcalcualtednoerror)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
+|[SETTINGS.SceneDistanceNotCalcualtedNoErrorHint](#settingsscenedistancenotcalcualtednoerrorhint)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
 ##### CoC7.EraRegency
 ```  "CoC7.EraRegency": "Regency Cthulhu - Standard",```
 ##### CoC7.EraRegencyPulp
