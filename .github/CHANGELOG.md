@@ -12,6 +12,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Fix English Guide and Spanish Guide of the System, thanks to @zeedif #1458
 - Resolve issue with dropping a setup on a character sometimes not allowing Validate to be clicked
 - Resolve "Deprecated since Version 11" messages
+- Update to French localization, thanks to @vonv #1462
 
 ## Version 0.10.8
 
