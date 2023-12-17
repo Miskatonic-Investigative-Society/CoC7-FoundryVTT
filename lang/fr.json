@@ -834,6 +834,7 @@
   "CoC7.EmptySkillList": "Ajouter une compétence en la déposant ici.",
   "CoC7.EmptyItemList": "Ajouter un objet en le déposant ici.",
   "CoC7.EmptyCharacterSkillList": "Faîtes glisser un générateur, une occupation ou une compétence ici.",
+  "CoC7.PersonalSpecialityPlaceholder": "autre(s) compétence(s) comme spécialités personnelles ou d'époque",
   "CoC7.PersonalSpeciality": "Nombre de spécialités personnelles ou d'époque",
   "CoC7.AdditionalSkills": "Compétences supplémentaires",
   "CoC7.SkillSelectionWindow": "Sélectionner les compétences optionnelles",
