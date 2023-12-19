@@ -2388,7 +2388,6 @@ export class CoCActor extends Actor {
 
   async skillCheck (skillData, fastForward, options = {}) {
     const skillIdentifier = skillData.name ? skillData.name : skillData
-    console.log(skillIdentifier)
     const isCoCID = !!skillIdentifier.match(/^i\.skill\./)
     let skill = []
     if (isCoCID) {
@@ -2416,6 +2415,7 @@ export class CoCActor extends Actor {
       if (!item) {
         // TODO: Implement retrieval of skill from compendium !!
         // game.settings.get( 'CoC7', 'DefaultCompendium');
+        console.log(skillIdentifier)
         const check = new CoC7Check()
         check._rawValue = '?'
         await check.roll()

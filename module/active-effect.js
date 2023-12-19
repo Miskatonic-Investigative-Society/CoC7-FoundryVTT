@@ -77,8 +77,8 @@ export default class CoC7ActiveEffect extends ActiveEffect {
     if (!foundry.utils.isNewerVersion(game.version, '11')) {
       // FoundryVTT v10
       options = [effect.getFlag('core', 'statusId')]
-    } else {
-      options = effect.statuses.values()
+    } else if (effect.statuses.size > 0) {
+      options = [...effect.statuses.values()]
     }
     return options.find(v => Object.prototype.hasOwnProperty.call(COC7.status, v))
   }
