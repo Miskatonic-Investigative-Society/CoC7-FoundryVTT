@@ -153,6 +153,9 @@ export class CoC7Check {
   }
 
   get rawValueString () {
+    if (this._rawValue === 0) {
+      return '0'
+    }
     if (!this._rawValue) return undefined
     if (
       this.flatThresholdModifier &&
@@ -466,7 +469,7 @@ export class CoC7Check {
 
   get successLevelIcons () {
     if (this.unknownDifficulty) return null
-    if (this.isSimpleRoll) return null
+    if (this.isSimpleRoll && this._rawValue !== 0) return null
     if (this.successLevel >= this.difficulty) {
       const icons = []
       for (
