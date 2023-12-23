@@ -38,18 +38,18 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
       sheetData.options.height = 420
     } else sheetData.options.height = 'auto'
 
-    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
       sheetData.data.system.description.value,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
 
-    sheetData.enrichedDescriptionNotes = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionNotes = await TextEditor.enrichHTML(
       sheetData.data.system.description.notes,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )

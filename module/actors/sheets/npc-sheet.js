@@ -52,18 +52,18 @@ export class CoC7NPCSheet extends CoC7ActorSheet {
       sheetData.showInventoryStatuses ||
       sheetData.showInventoryWeapons
 
-    sheetData.enrichedBiographyPersonalDescription = TextEditor.enrichHTML(
+    sheetData.enrichedBiographyPersonalDescription = await TextEditor.enrichHTML(
       sheetData.data.system.biography.personalDescription?.value,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
 
-    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
       sheetData.data.system.description.keeper,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )

@@ -119,7 +119,7 @@ export class CoC7OccupationSheet extends ItemSheet {
     }
   }
 
-  _onItemSummary (event, collectionName = 'items') {
+  async _onItemSummary (event, collectionName = 'items') {
     event.preventDefault()
     const obj = $(event.currentTarget)
     const li = obj.parents('.item')
@@ -137,14 +137,20 @@ export class CoC7OccupationSheet extends ItemSheet {
     if (!item) {
       return
     }
-    const chatData = item.system.description
+    const chatData = await TextEditor.enrichHTML(
+      item.system.description.value,
+      {
+        async: true,
+        secrets: this.item.editable
+      }
+    )
 
     // Toggle summary
     if (li.hasClass('expanded')) {
       const summary = li.children('.item-summary')
       summary.slideUp(200, () => summary.remove())
     } else {
-      const div = $(`<div class="item-summary">${chatData.value}</div>`)
+      const div = $(`<div class="item-summary">${chatData}</div>`)
       const props = $('<div class="item-properties"></div>')
       // for (const p of chatData.properties) { props.append(`<span class="tag">${p}</span>`) }
       div.append(props)
@@ -234,18 +240,18 @@ export class CoC7OccupationSheet extends ItemSheet {
       }
     }
 
-    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
       sheetData.data.system.description.value,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
 
-    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
       sheetData.data.system.description.keeper,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )

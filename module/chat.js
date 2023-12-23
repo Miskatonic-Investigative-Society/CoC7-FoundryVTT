@@ -1,7 +1,6 @@
 /* global $, ChatMessage, CONST, game, Token, tokenData, ui */
 import { CoC7Check } from './check.js'
 import { COC7 } from './config.js'
-import { CoC7Link } from './apps/coc7-link.js'
 import { CoC7MeleeInitiator } from './chat/combat/melee-initiator.js'
 import { CoC7MeleeTarget } from './chat/combat/melee-target.js'
 import { CoC7MeleeResoltion } from './chat/combat/melee-resolution.js'
@@ -130,8 +129,6 @@ export class CoC7Chat {
     html.on('click', '.target-selector', CoC7Chat._onTargetSelect.bind(this))
 
     html.on('dblclick', '.open-actor', CoC7Chat._onOpenActor.bind(this))
-
-    CoC7Link.bindEventsHandler(html)
 
     html.on('click', 'coc7-inline-result', CoC7Chat._onInline.bind(this))
 

@@ -45,7 +45,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     return headerButtons
   }
 
-  getData (options = {}) {
+  async getData (options = {}) {
     const sheetData = super.getData(options)
 
     sheetData.participants = this.item.participantsObject
@@ -98,10 +98,10 @@ export class CoC7ChaseSheet extends ItemSheet {
 
     sheetData.isKeeper = game.user.isGM
 
-    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
       sheetData.data.system.description.keeper,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
