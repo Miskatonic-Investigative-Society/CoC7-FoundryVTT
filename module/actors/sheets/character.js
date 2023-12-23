@@ -213,18 +213,18 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
       sheetData.showInventoryStatuses ||
       sheetData.showInventoryWeapons
 
-    sheetData.enrichedBackstory = TextEditor.enrichHTML(
+    sheetData.enrichedBackstory = await TextEditor.enrichHTML(
       sheetData.data.system.backstory,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
 
-    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
       sheetData.data.system.description.keeper,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )

@@ -39,26 +39,26 @@ export class CoC7BookSheet extends ItemSheet {
     sheetData.hasOwner = this.item.isEmbedded === true
     sheetData.spellListEmpty = this.item.system.spells.length === 0
 
-    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
       sheetData.data.system.description.value,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
 
-    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
       sheetData.data.system.description.keeper,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
 
-    sheetData.enrichedContent = TextEditor.enrichHTML(
+    sheetData.enrichedContent = await TextEditor.enrichHTML(
       sheetData.data.system.content,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )

@@ -49,7 +49,7 @@ export class CoC7SkillSheet extends ItemSheet {
    * Prepare data for rendering the Item sheet
    * The prepared data object contains both the actor data as well as additional sheet options
    */
-  getData () {
+  async getData () {
     // this.item.checkSkillProperties();
     const sheetData = super.getData()
 
@@ -84,18 +84,18 @@ export class CoC7SkillSheet extends ItemSheet {
       !this.item.system.properties.firearm &&
       !this.item.system.properties.fighting
 
-    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
       sheetData.data.system.description.value,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
 
-    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
       sheetData.data.system.description.keeper,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )

@@ -1,8 +1,7 @@
-/* global $, Actor, ChatMessage, CONST, FormApplication, foundry, game, Hooks, renderTemplate, Roll, ui */
+/* global $, Actor, ChatMessage, CONST, FormApplication, foundry, game, Hooks, renderTemplate, Roll, TextEditor, ui */
 import { COC7 } from '../config.js'
 import { CoCActor } from '../actors/actor.js'
 import { CoC7OccupationSheet } from '../items/sheets/occupation.js'
-import { CoC7Parser } from './coc7-parser.js'
 import { CoC7Utilities } from '../utilities.js'
 import { SkillSpecializationSelectDialog } from '../apps/skill-specialization-select-dialog.js'
 
@@ -219,7 +218,13 @@ export class CoC7InvestigatorWizard extends FormApplication {
             sheetData.object.defaultSetup = ''
             sheetData.object.setup = ''
           } else {
-            sheetData.description = CoC7Parser.enrichHTML(setup.system.description.value)
+            sheetData.description = await TextEditor.enrichHTML(
+              setup.system.description.value,
+              {
+                async: true,
+                secrets: game.user.isGM
+              }
+            )
           }
           sheetData.ownership = {
             [CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE]: 'OWNERSHIP.NONE',
@@ -254,7 +259,13 @@ export class CoC7InvestigatorWizard extends FormApplication {
           if (sheetData.object.setup !== '') {
             setup = sheetData.setups.find(s => s.flags.CoC7.cocidFlag.id === sheetData.object.setup)
             if (typeof setup !== 'undefined') {
-              sheetData.description = CoC7Parser.enrichHTML(setup.system.description.value)
+              sheetData.description = await TextEditor.enrichHTML(
+                setup.system.description.value,
+                {
+                  async: true,
+                  secrets: game.user.isGM
+                }
+              )
               sheetData.canNext = true
             }
           }
@@ -270,7 +281,13 @@ export class CoC7InvestigatorWizard extends FormApplication {
           if (sheetData.object.archetype !== '') {
             archetype = sheetData.archetypes.find(s => s.flags.CoC7.cocidFlag.id === sheetData.object.archetype)
             if (typeof archetype !== 'undefined') {
-              sheetData.description = CoC7Parser.enrichHTML(archetype.system.description.value)
+              sheetData.description = await TextEditor.enrichHTML(
+                archetype.system.description.value,
+                {
+                  async: true,
+                  secrets: game.user.isGM
+                }
+              )
               sheetData.bonusPoints = archetype.system.bonusPoints
               const coreCharacteristics = []
               for (const coreCharacteristic in archetype.system.coreCharacteristics) {
@@ -290,8 +307,20 @@ export class CoC7InvestigatorWizard extends FormApplication {
                 skills.push(skill.name)
               }
               sheetData.skills = skills.join(', ')
-              sheetData.suggestedOccupations = CoC7Parser.enrichHTML(archetype.system.suggestedOccupations)
-              sheetData.suggestedTraits = CoC7Parser.enrichHTML(archetype.system.suggestedTraits)
+              sheetData.suggestedOccupations = await TextEditor.enrichHTML(
+                archetype.system.suggestedOccupations,
+                {
+                  async: true,
+                  secrets: game.user.isGM
+                }
+              )
+              sheetData.suggestedTraits = await TextEditor.enrichHTML(
+                archetype.system.suggestedTraits,
+                {
+                  async: true,
+                  secrets: game.user.isGM
+                }
+              )
               sheetData.canNext = true
             }
           }
@@ -501,7 +530,13 @@ export class CoC7InvestigatorWizard extends FormApplication {
         if (sheetData.object.occupation !== '') {
           occupation = sheetData.occupations.find(s => s.flags.CoC7.cocidFlag.id === sheetData.object.occupation)
           if (typeof occupation !== 'undefined') {
-            sheetData.description = CoC7Parser.enrichHTML(occupation.system.description.value)
+            sheetData.description = await TextEditor.enrichHTML(
+              occupation.system.description.value,
+              {
+                async: true,
+                secrets: game.user.isGM
+              }
+            )
             sheetData.occupationPointsString = CoC7OccupationSheet.occupationPointsString(occupation.system.occupationSkillPoints)
             sheetData.creditRating = occupation.system.creditRating
             sheetData.personal = occupation.system.personal

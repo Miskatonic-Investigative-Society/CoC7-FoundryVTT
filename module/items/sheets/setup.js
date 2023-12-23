@@ -104,7 +104,7 @@ export class CoC7SetupSheet extends ItemSheet {
     this.item.update({ 'system.monetary.values': values })
   }
 
-  _onItemSummary (event, collectionName = 'items') {
+  async _onItemSummary (event, collectionName = 'items') {
     event.preventDefault()
     const li = $(event.currentTarget).parents('.item')
     const item = this.item.system[collectionName].find(s => {
@@ -113,14 +113,20 @@ export class CoC7SetupSheet extends ItemSheet {
     if (!item) {
       return
     }
-    const chatData = item.system.description
+    const chatData = await TextEditor.enrichHTML(
+      item.system.description.value,
+      {
+        async: true,
+        secrets: this.item.editable
+      }
+    )
 
     // Toggle summary
     if (li.hasClass('expanded')) {
       const summary = li.children('.item-summary')
       summary.slideUp(200, () => summary.remove())
     } else {
-      const div = $(`<div class="item-summary">${chatData.value}</div>`)
+      const div = $(`<div class="item-summary">${chatData}</div>`)
       const props = $('<div class="item-properties"></div>')
       // for (const p of chatData.properties) { props.append(`<span class="tag">${p}</span>`) }
       div.append(props)
@@ -209,26 +215,26 @@ export class CoC7SetupSheet extends ItemSheet {
 
     sheetData.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
 
-    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
       sheetData.data.system.description.value,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
 
-    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
       sheetData.data.system.description.keeper,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
 
-    sheetData.enrichedBackstory = TextEditor.enrichHTML(
+    sheetData.enrichedBackstory = await TextEditor.enrichHTML(
       sheetData.data.system.backstory,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )

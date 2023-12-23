@@ -8,7 +8,6 @@ import { CoC7Combat, rollInitiative } from './combat.js'
 import { COC7 } from './config.js'
 import { Updater } from './updater.js'
 import { CoC7Utilities } from './utilities.js'
-import { CoC7Parser } from './apps/coc7-parser.js'
 import { CoC7Check } from './check.js'
 import { CoC7Menu } from './menu.js'
 import { DamageCard } from './chat/cards/damage.js'
@@ -467,15 +466,11 @@ Hooks.on('getSceneControlButtons', (/* controls */) => {
 
 // Hooks.on('renderSceneControls', () => CoC7Utilities.updateCharSheets());
 // Hooks.on('renderSceneNavigation', () => CoC7Utilities.updateCharSheets());
-Hooks.on('renderItemSheet', CoC7Parser.ParseSheetContent)
-Hooks.on('renderJournalPageSheet', CoC7Parser.ParseSheetContent)
-Hooks.on('renderActorSheet', CoC7Parser.ParseSheetContent)
 // Sheet css options
 // Hooks.on('renderCoC7CharacterSheet', CoC7CharacterSheet.renderSheet);
 Hooks.on('renderActorSheet', CoC7CharacterSheet.renderSheet)
 Hooks.on('renderItemSheet', CoC7CharacterSheet.renderSheet)
 
-// Hooks.on('dropCanvasData', CoC7Parser.onDropSomething);
 Hooks.on('getSceneControlButtons', CoC7Menu.getButtons)
 Hooks.on('renderSceneControls', CoC7Menu.renderControls)
 

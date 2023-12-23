@@ -1,5 +1,4 @@
 /* global CONFIG, foundry, game, Item, Roll, TextEditor, Token, ui, fromUuid */
-import { CoC7Parser } from '../apps/coc7-parser.js'
 import { COC7 } from '../config.js'
 import { CoC7Utilities } from '../utilities.js'
 import { CoCIDEditor } from '../apps/coc-id-editor.js'
@@ -713,9 +712,8 @@ export class CoC7Item extends Item {
    * @param {Object} htmlOptions    Options used by the TextEditor.enrichHTML function
    * @return {Object}               An object of chat data to render
    */
-  getChatData (htmlOptions = {}) {
-    // FoundryVTT v10
-    htmlOptions.async = false
+  async getChatData (htmlOptions = {}) {
+    htmlOptions.async = true
     const data = foundry.utils.duplicate(this.system)
     // Fix : data can have description directly in field, not under value.
     if (typeof data.description === 'string') {
@@ -733,16 +731,14 @@ export class CoC7Item extends Item {
     const labels = []
 
     // Rich text description
-    data.description.value = TextEditor.enrichHTML(
+    data.description.value = await TextEditor.enrichHTML(
       data.description.value,
       htmlOptions
     )
-    data.description.value = CoC7Parser.enrichHTML(data.description.value)
-    data.description.special = TextEditor.enrichHTML(
+    data.description.special = await TextEditor.enrichHTML(
       data.description.special,
       htmlOptions
     )
-    data.description.special = CoC7Parser.enrichHTML(data.description.special)
 
     // Item type specific properties
     const props = []

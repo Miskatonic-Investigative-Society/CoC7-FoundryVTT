@@ -417,10 +417,10 @@ export class CoCActor extends Actor {
           if (typeof item !== 'undefined') {
             if (item.system?.type?.phobia) result.phobia = true
             if (item.system?.type?.mania) result.mania = true
-            result.description = `${item.name}:${TextEditor.enrichHTML(
+            result.description = `${item.name}:` + await TextEditor.enrichHTML(
               item.system.description.value,
-              { async: false }
-            )}`
+              { async: true }
+            )
             result.name = item.name
             const itemData = item.toObject()
             delete itemData._id
@@ -435,9 +435,9 @@ export class CoCActor extends Actor {
           CONST.TABLE_RESULT_TYPES.TEXT ===
           result.tableRoll.results[0].type
         ) {
-          result.description = TextEditor.enrichHTML(
+          result.description = await TextEditor.enrichHTML(
             result.tableRoll.results[0].text,
-            { async: false }
+            { async: true }
           )
         }
       } else {

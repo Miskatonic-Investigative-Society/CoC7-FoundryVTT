@@ -35,7 +35,7 @@ export class CoC7TalentSheet extends ItemSheet {
   /* Prepare data for rendering the Item sheet
    * The prepared data object contains both the actor data as well as additional sheet options
    */
-  getData () {
+  async getData () {
     const sheetData = super.getData()
 
     sheetData.itemProperties = []
@@ -48,26 +48,26 @@ export class CoC7TalentSheet extends ItemSheet {
       }
     }
 
-    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
       sheetData.data.system.description.value,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
 
-    sheetData.enrichedDescriptionNotes = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionNotes = await TextEditor.enrichHTML(
       sheetData.data.system.description.notes,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
 
-    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
       sheetData.data.system.description.keeper,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
