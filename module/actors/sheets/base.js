@@ -610,6 +610,7 @@ export class CoC7ActorSheet extends ActorSheet {
       html.find('.lock').click(this._onLockClicked.bind(this))
       html.find('.flag').click(this._onFlagClicked.bind(this))
       html.find('.formula').click(this._onFormulaClicked.bind(this))
+      html.find('.auto-toggle').click(this._onAutoToggle.bind(this))
     }
 
     // Owner Only, not available from compendium
@@ -635,7 +636,6 @@ export class CoC7ActorSheet extends ActorSheet {
         .find('.average-characteritics')
         .click(this._onAverageCharacteriticsValue.bind(this))
       html.find('.toggle-switch').click(this._onToggle.bind(this))
-      html.find('.auto-toggle').click(this._onAutoToggle.bind(this))
 
       // Status monitor
       if (game.user.isGM || game.settings.get('CoC7', 'statusPlayerEditable')) {
