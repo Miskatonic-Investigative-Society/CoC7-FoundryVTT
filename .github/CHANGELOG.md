@@ -9,6 +9,7 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Allow additional Actor sheet interactions when editing in a compendium
 - Fix English Guide and Spanish Guide of the System, thanks to @zeedif #1458
 - Resolve issue with dropping a setup on a character sometimes not allowing Validate to be clicked
 - Resolve "Deprecated since Version 11" messages
