@@ -1,4 +1,4 @@
-/* global mergeObject */
+/* global foundry */
 // TO BE REMOVED FOR PROD
 import { EnhancedChatCard } from '../../common/chatcardlib/src/chatcardlib.js'
 export class TestCard extends EnhancedChatCard {
@@ -7,7 +7,7 @@ export class TestCard extends EnhancedChatCard {
    * @returns {Object}
    */
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       template: 'systems/CoC7/templates/chat/cards/test.html'
     })
   }

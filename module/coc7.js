@@ -1,4 +1,5 @@
-/* global $, Combat, CONFIG, game, Hooks, ItemDirectory */
+/* global $, Combat, CONFIG, foundry, game, Hooks, ItemDirectory */
+import CoC7ActiveEffect from './active-effect.js'
 import { CoC7NPCSheet } from './actors/sheets/npc-sheet.js'
 import { CoC7CreatureSheet } from './actors/sheets/creature-sheet.js'
 import { CoC7CharacterSheet } from './actors/sheets/character.js'
@@ -7,7 +8,6 @@ import { CoC7Combat, rollInitiative } from './combat.js'
 import { COC7 } from './config.js'
 import { Updater } from './updater.js'
 import { CoC7Utilities } from './utilities.js'
-import { CoC7Parser } from './apps/coc7-parser.js'
 import { CoC7Check } from './check.js'
 import { CoC7Menu } from './menu.js'
 import { DamageCard } from './chat/cards/damage.js'
@@ -189,87 +189,87 @@ Hooks.once('setup', function () {
     CONFIG.statusEffects[effectIndex].icon =
       'systems/CoC7/assets/icons/knocked-out-stars.svg'
   }
+  // FoundryVTT v10
+  const effectNameKey = (!foundry.utils.isNewerVersion(game.version, '11') ? 'label' : 'name')
   CONFIG.statusEffects.unshift(
     {
       id: COC7.status.tempoInsane,
-      label: 'CoC7.BoutOfMadnessName',
+      [effectNameKey]: 'CoC7.BoutOfMadnessName',
       icon: 'systems/CoC7/assets/icons/hanging-spider.svg'
     },
     {
       id: COC7.status.indefInsane,
-      label: 'CoC7.InsanityName',
+      [effectNameKey]: 'CoC7.InsanityName',
       icon: 'systems/CoC7/assets/icons/tentacles-skull.svg'
     },
     {
       id: COC7.status.criticalWounds,
-      label: 'CoC7.CriticalWounds',
+      [effectNameKey]: 'CoC7.CriticalWounds',
       icon: 'systems/CoC7/assets/icons/arm-sling.svg'
     },
     {
       id: COC7.status.dying,
-      label: 'CoC7.Dying',
+      [effectNameKey]: 'CoC7.Dying',
       icon: 'systems/CoC7/assets/icons/heart-beats.svg'
     }
   )
 })
 
 Hooks.on('createActiveEffect', (data, options, userId) => {
-  if (
-    game.userId === userId &&
-    typeof data.flags.core !== 'undefined' &&
-    typeof data.flags.core.statusId !== 'undefined'
-  ) {
-    switch (data.flags.core.statusId) {
-      case COC7.status.indefInsane:
-      case COC7.status.unconscious:
-      case COC7.status.criticalWounds:
-      case COC7.status.dying:
-      case COC7.status.prone:
-      case COC7.status.dead:
-        data.parent.setCondition(data.flags.core.statusId, {
-          forceValue: true
-        })
-        break
-      case COC7.status.tempoInsane:
-        {
-          const realTime = data.flags.CoC7?.realTime
-          let duration = null
-          if (realTime === true) {
-            duration = data.duration?.rounds
-          } else if (realTime === false) {
-            duration = data.duration?.seconds
-            if (!isNaN(duration)) {
-              duration = Math.floor(duration / 3600)
-            }
-          }
-          data.parent.setCondition(COC7.status.tempoInsane, {
-            forceValue: true,
-            realTime,
-            duration
+  if (game.userId === userId) {
+    const statusKey = CoC7ActiveEffect.getStatusKey(data)
+    if (statusKey) {
+      switch (statusKey) {
+        case COC7.status.indefInsane:
+        case COC7.status.unconscious:
+        case COC7.status.criticalWounds:
+        case COC7.status.dying:
+        case COC7.status.prone:
+        case COC7.status.dead:
+          data.parent.setCondition(statusKey, {
+            forceValue: true
           })
-        }
-        break
+          break
+        case COC7.status.tempoInsane:
+          {
+            const realTime = data.flags.CoC7?.realTime
+            let duration = null
+            if (realTime === true) {
+              duration = data.duration?.rounds
+            } else if (realTime === false) {
+              duration = data.duration?.seconds
+              if (!isNaN(duration)) {
+                duration = Math.floor(duration / 3600)
+              }
+            }
+            data.parent.setCondition(COC7.status.tempoInsane, {
+              forceValue: true,
+              realTime,
+              duration
+            })
+          }
+          break
+      }
     }
   }
 })
 
 Hooks.on('deleteActiveEffect', (data, options, userId) => {
-  if (
-    game.userId === userId &&
-    typeof data.flags.core !== 'undefined' &&
-    typeof data.flags.core.statusId !== 'undefined'
-  ) {
-    switch (data.flags.core.statusId) {
-      case COC7.status.tempoInsane:
-      case COC7.status.indefInsane:
-      case COC7.status.unconscious:
-      case COC7.status.criticalWounds:
-      case COC7.status.dying:
-      case COC7.status.prone:
-      case COC7.status.dead:
-        data.parent.unsetCondition(data.flags.core.statusId, {
-          forceValue: true
-        })
+  if (game.userId === userId) {
+    const statusKey = CoC7ActiveEffect.getStatusKey(data)
+    if (statusKey) {
+      switch (statusKey) {
+        case COC7.status.tempoInsane:
+        case COC7.status.indefInsane:
+        case COC7.status.unconscious:
+        case COC7.status.criticalWounds:
+        case COC7.status.dying:
+        case COC7.status.prone:
+        case COC7.status.dead:
+          data.parent.unsetCondition(statusKey, {
+            forceValue: true
+          })
+      }
     }
   }
 })
@@ -466,15 +466,11 @@ Hooks.on('getSceneControlButtons', (/* controls */) => {
 
 // Hooks.on('renderSceneControls', () => CoC7Utilities.updateCharSheets());
 // Hooks.on('renderSceneNavigation', () => CoC7Utilities.updateCharSheets());
-Hooks.on('renderItemSheet', CoC7Parser.ParseSheetContent)
-Hooks.on('renderJournalPageSheet', CoC7Parser.ParseSheetContent)
-Hooks.on('renderActorSheet', CoC7Parser.ParseSheetContent)
 // Sheet css options
 // Hooks.on('renderCoC7CharacterSheet', CoC7CharacterSheet.renderSheet);
 Hooks.on('renderActorSheet', CoC7CharacterSheet.renderSheet)
 Hooks.on('renderItemSheet', CoC7CharacterSheet.renderSheet)
 
-// Hooks.on('dropCanvasData', CoC7Parser.onDropSomething);
 Hooks.on('getSceneControlButtons', CoC7Menu.getButtons)
 Hooks.on('renderSceneControls', CoC7Menu.renderControls)
 

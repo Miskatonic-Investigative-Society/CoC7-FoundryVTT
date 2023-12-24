@@ -1,4 +1,6 @@
-/* global ActiveEffect, game */
+/* global ActiveEffect, foundry, game */
+import { COC7 } from './config.js'
+
 export default class CoC7ActiveEffect extends ActiveEffect {
   apply (actor, change) {
     if (change.key === 'system.attribs.armor.value') {
@@ -62,17 +64,27 @@ export default class CoC7ActiveEffect extends ActiveEffect {
     return duration
   }
 
+  static filterActiveEffects (effect, conditionName) {
+    if (!foundry.utils.isNewerVersion(game.version, '11')) {
+      // FoundryVTT v10
+      return effect.flags.core?.statusId === conditionName
+    }
+    return effect.statuses.has(conditionName)
+  }
+
+  static getStatusKey (effect) {
+    let options = []
+    if (!foundry.utils.isNewerVersion(game.version, '11')) {
+      // FoundryVTT v10
+      options = [effect.getFlag('core', 'statusId')]
+    } else if (effect.statuses.size > 0) {
+      options = [...effect.statuses.values()]
+    }
+    return options.find(v => Object.prototype.hasOwnProperty.call(COC7.status, v))
+  }
+
   get isStatus () {
-    const statusId = this.getFlag('core', 'statusId')
-    return [
-      'tempoInsane',
-      'indefInsane',
-      'criticalWounds',
-      'dying',
-      'dead',
-      'unconscious',
-      'prone'
-    ].includes(statusId)
+    return typeof CoC7ActiveEffect.getStatusKey(this) === 'string'
   }
 
   static prepareActiveEffectCategories (effects, { status = true } = {}) {
@@ -110,7 +122,6 @@ export default class CoC7ActiveEffect extends ActiveEffect {
     }
     // Iterate over active effects, classifying them into categories
     for (const e of effects) {
-      e._getSourceName() // Trigger a lookup for the source name
       if (e.isSuppressed) categories.suppressed.effects.push(e)
       else if (e.isStatus) categories.status.effects.push(e)
       else if (e.disabled) categories.inactive.effects.push(e)

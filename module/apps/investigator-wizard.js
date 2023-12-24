@@ -1,14 +1,13 @@
-/* global $, Actor, ChatMessage, CONST, duplicate, FormApplication, game, Hooks, mergeObject, randomID, renderTemplate, Roll, ui */
+/* global $, Actor, ChatMessage, CONST, FormApplication, foundry, game, Hooks, renderTemplate, Roll, TextEditor, ui */
 import { COC7 } from '../config.js'
 import { CoCActor } from '../actors/actor.js'
 import { CoC7OccupationSheet } from '../items/sheets/occupation.js'
-import { CoC7Parser } from './coc7-parser.js'
 import { CoC7Utilities } from '../utilities.js'
 import { SkillSpecializationSelectDialog } from '../apps/skill-specialization-select-dialog.js'
 
 export class CoC7InvestigatorWizard extends FormApplication {
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       id: 'investigator-wizard-application',
       classes: ['coc7', 'dialog', 'investigator-wizard'],
       title: game.i18n.localize('CoC7.InvestigatorWizard.Title'),
@@ -219,7 +218,13 @@ export class CoC7InvestigatorWizard extends FormApplication {
             sheetData.object.defaultSetup = ''
             sheetData.object.setup = ''
           } else {
-            sheetData.description = CoC7Parser.enrichHTML(setup.system.description.value)
+            sheetData.description = await TextEditor.enrichHTML(
+              setup.system.description.value,
+              {
+                async: true,
+                secrets: game.user.isGM
+              }
+            )
           }
           sheetData.ownership = {
             [CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE]: 'OWNERSHIP.NONE',
@@ -254,7 +259,13 @@ export class CoC7InvestigatorWizard extends FormApplication {
           if (sheetData.object.setup !== '') {
             setup = sheetData.setups.find(s => s.flags.CoC7.cocidFlag.id === sheetData.object.setup)
             if (typeof setup !== 'undefined') {
-              sheetData.description = CoC7Parser.enrichHTML(setup.system.description.value)
+              sheetData.description = await TextEditor.enrichHTML(
+                setup.system.description.value,
+                {
+                  async: true,
+                  secrets: game.user.isGM
+                }
+              )
               sheetData.canNext = true
             }
           }
@@ -270,7 +281,13 @@ export class CoC7InvestigatorWizard extends FormApplication {
           if (sheetData.object.archetype !== '') {
             archetype = sheetData.archetypes.find(s => s.flags.CoC7.cocidFlag.id === sheetData.object.archetype)
             if (typeof archetype !== 'undefined') {
-              sheetData.description = CoC7Parser.enrichHTML(archetype.system.description.value)
+              sheetData.description = await TextEditor.enrichHTML(
+                archetype.system.description.value,
+                {
+                  async: true,
+                  secrets: game.user.isGM
+                }
+              )
               sheetData.bonusPoints = archetype.system.bonusPoints
               const coreCharacteristics = []
               for (const coreCharacteristic in archetype.system.coreCharacteristics) {
@@ -290,8 +307,20 @@ export class CoC7InvestigatorWizard extends FormApplication {
                 skills.push(skill.name)
               }
               sheetData.skills = skills.join(', ')
-              sheetData.suggestedOccupations = CoC7Parser.enrichHTML(archetype.system.suggestedOccupations)
-              sheetData.suggestedTraits = CoC7Parser.enrichHTML(archetype.system.suggestedTraits)
+              sheetData.suggestedOccupations = await TextEditor.enrichHTML(
+                archetype.system.suggestedOccupations,
+                {
+                  async: true,
+                  secrets: game.user.isGM
+                }
+              )
+              sheetData.suggestedTraits = await TextEditor.enrichHTML(
+                archetype.system.suggestedTraits,
+                {
+                  async: true,
+                  secrets: game.user.isGM
+                }
+              )
               sheetData.canNext = true
             }
           }
@@ -501,7 +530,13 @@ export class CoC7InvestigatorWizard extends FormApplication {
         if (sheetData.object.occupation !== '') {
           occupation = sheetData.occupations.find(s => s.flags.CoC7.cocidFlag.id === sheetData.object.occupation)
           if (typeof occupation !== 'undefined') {
-            sheetData.description = CoC7Parser.enrichHTML(occupation.system.description.value)
+            sheetData.description = await TextEditor.enrichHTML(
+              occupation.system.description.value,
+              {
+                async: true,
+                secrets: game.user.isGM
+              }
+            )
             sheetData.occupationPointsString = CoC7OccupationSheet.occupationPointsString(occupation.system.occupationSkillPoints)
             sheetData.creditRating = occupation.system.creditRating
             sheetData.personal = occupation.system.personal
@@ -763,9 +798,9 @@ export class CoC7InvestigatorWizard extends FormApplication {
             for (let index = 0, im = skill.rows.length; index < im; index++) {
               const row = skill.rows[index]
               if (!skill.flags.isMultiple || row.selected !== false) {
-                let item = duplicate(skill.item)
+                let item = foundry.utils.duplicate(skill.item)
                 if (row.selected !== false && typeof row.selected !== 'string') {
-                  item = duplicate(row.selected)
+                  item = foundry.utils.duplicate(row.selected)
                 }
                 let base = item.system.base
                 if (!Number.isNumeric(base)) {
@@ -932,11 +967,11 @@ export class CoC7InvestigatorWizard extends FormApplication {
     if (typeof this.object.skillItems[key] === 'undefined') {
       this.object.skillItems[key] = {
         item,
-        flags: mergeObject(flags, { isMultiple }, { inplace: false }),
+        flags: foundry.utils.mergeObject(flags, { isMultiple }, { inplace: false }),
         rows: []
       }
       if (!isMultiple || !(isOccupationDefault === false && inOccupationGroup === false && isArchetypeDefault === false)) {
-        this.object.skillItems[key].rows.push(mergeObject(flags, rows, { inplace: false }))
+        this.object.skillItems[key].rows.push(foundry.utils.mergeObject(flags, rows, { inplace: false }))
       }
     } else {
       if (!isMultiple) {
@@ -944,7 +979,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
           this.object.skillItems[key].rows[0][flag] = this.object.skillItems[key].rows[0][flag] || flags[flag]
         }
       } else {
-        this.object.skillItems[key].rows.push(mergeObject(flags, rows, { inplace: false }))
+        this.object.skillItems[key].rows.push(foundry.utils.mergeObject(flags, rows, { inplace: false }))
       }
       for (const flag in flags) {
         this.object.skillItems[key].flags[flag] = this.object.skillItems[key].flags[flag] || flags[flag]
@@ -965,7 +1000,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
     this.object.skillItems = {}
     this.object.occupationGroups = {}
     this.object.investigatorItems = []
-    this.object.placeable = duplicate(this.object.quickFireValues)
+    this.object.placeable = foundry.utils.duplicate(this.object.quickFireValues)
     const setup = await this.getCacheItemByCoCID(this.object.setup)
     const occupation = await this.getCacheItemByCoCID(this.object.occupation)
     let archetype = false
@@ -1483,7 +1518,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
         }
       }
       this.object.quickFireValues.sort().reverse()
-      this.object.placeable = duplicate(this.object.quickFireValues)
+      this.object.placeable = foundry.utils.duplicate(this.object.quickFireValues)
       if (typeof formData['default-enabled'] === 'string') {
         if (this.object.defaultQuantity.toString() === '0') {
           this.object.defaultQuantity = 1
@@ -1523,7 +1558,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
       if (typeof formData['coc-core-characteristic'] !== 'undefined' && this.object.coreCharacteristic !== formData['coc-core-characteristic']) {
         this.object.coreCharacteristic = formData['coc-core-characteristic']
         this.clearSetupPoints()
-        this.object.placeable = duplicate(this.object.quickFireValues)
+        this.object.placeable = foundry.utils.duplicate(this.object.quickFireValues)
       }
     }
     const flatKeys = ['name', 'age', 'residence', 'birthplace', 'language', 'avatar', 'token']
@@ -1603,9 +1638,9 @@ export class CoC7InvestigatorWizard extends FormApplication {
       for (let index = 0, im = skill.rows.length; index < im; index++) {
         const row = skill.rows[index]
         if (!skill.flags.isMultiple || row.selected !== false) {
-          let item = duplicate(skill.item)
+          let item = foundry.utils.duplicate(skill.item)
           if (row.selected !== false && typeof row.selected !== 'string') {
-            item = duplicate(row.selected)
+            item = foundry.utils.duplicate(row.selected)
             row.selected = false
           }
           if (row.occupationToggle) {
@@ -1643,7 +1678,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
             item.name = item.system.specialization + ' (' + item.system.skillName + ')'
           } else if (typeof row.selected === 'string') {
             item.system.skillName = row.selected
-            item._id = randomID()
+            item._id = foundry.utils.randomID()
             item.name = item.system.specialization + ' (' + item.system.skillName + ')'
             if (typeof item.flags.CoC7?.cocidFlag?.id !== 'undefined') {
               item.flags.CoC7.cocidFlag.id = game.system.api.cocid.guessId(item)
@@ -1661,7 +1696,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
       }
     }
     for (const sourceItem of data.investigatorItems) {
-      const item = duplicate(sourceItem)
+      const item = foundry.utils.duplicate(sourceItem)
       if (item.system.properties.melee) {
         if (typeof weaponSkills.melee[item.system.skill.main.name] !== 'undefined') {
           item.system.skill.main.id = weaponSkills.melee[item.system.skill.main.name]
@@ -1682,7 +1717,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
     let monetary = {}
     const setup = await this.getCacheItemByCoCID(this.object.setup)
     if (setup) {
-      monetary = duplicate(setup.system.monetary)
+      monetary = foundry.utils.duplicate(setup.system.monetary)
     }
     const development = {
       personal: 2 * (parseInt(data.setupPoints.int, 10) + parseInt(data.setupModifiers.int, 10)),
@@ -1820,7 +1855,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
    */
   static async create (options = {}) {
     // Try and prerequst as many CoCIDs due to the way they have to be loaded
-    options = mergeObject({
+    options = foundry.utils.mergeObject({
       step: 0,
       defaultSetup: game.settings.get('CoC7', 'InvestigatorWizardSetup'),
       defaultQuantity: game.settings.get('CoC7', 'InvestigatorWizardQuantity'),
@@ -1829,7 +1864,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
       rerollsEnabled: game.settings.get('CoC7', 'InvestigatorWizardRerolls'),
       enforcePointBuy: game.settings.get('CoC7', 'InvestigatorWizardPointBuy'),
       quickFireValues: game.settings.get('CoC7', 'InvestigatorWizardQuickFire'),
-      placeable: duplicate(game.settings.get('CoC7', 'InvestigatorWizardQuickFire')),
+      placeable: foundry.utils.duplicate(game.settings.get('CoC7', 'InvestigatorWizardQuickFire')),
       cacheCoCID: CoC7InvestigatorWizard.loadCacheItemByCoCID(),
       cacheBackstories: game.system.api.cocid.fromCoCIDRegexBest({ cocidRegExp: /^rt\.\.backstory-/, type: 'rt' }),
       cacheItems: {},

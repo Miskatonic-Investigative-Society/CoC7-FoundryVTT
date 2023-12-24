@@ -1,10 +1,10 @@
-/* global $, CONFIG, flattenObject, FormApplication, game, mergeObject, TextEditor */
+/* global $, CONFIG, FormApplication, foundry, game, TextEditor */
 import { COC7 } from '../config.js'
 import { CoC7Utilities } from '../utilities.js'
 
 export class CoCIDEditor extends FormApplication {
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'dialog', 'coc-id-editor'],
       template: 'systems/CoC7/templates/apps/coc-id-editor.hbs',
       width: 900,
@@ -42,7 +42,7 @@ export class CoCIDEditor extends FormApplication {
     }
     sheetData.eras.sort(CoC7Utilities.sortByNameKey)
 
-    const CoCIDKeys = flattenObject(game.i18n.translations.CoC7.CoCIDFlag.keys ?? {})
+    const CoCIDKeys = foundry.utils.flattenObject(game.i18n.translations.CoC7.CoCIDFlag.keys ?? {})
     const prefix = new RegExp('^' + CoC7Utilities.quoteRegExp(sheetData.idPrefix))
     sheetData.existingKeys = Object.keys(CoCIDKeys).reduce((obj, k) => {
       if (k.match(prefix)) {
@@ -64,7 +64,7 @@ export class CoCIDEditor extends FormApplication {
       })
       const usedEras = {}
       const uniqueWorldPriority = {}
-      sheetData.worldDocumentInfo = worldDocuments.map((d) => {
+      sheetData.worldDocumentInfo = await Promise.all(worldDocuments.map(async (d) => {
         if (d.flags.CoC7.cocidFlag.eras) {
           Object.entries(d.flags.CoC7.cocidFlag.eras).filter(e => e[1]).map(e => {
             if (!Object.prototype.hasOwnProperty.call(uniqueWorldPriority, d.flags.CoC7.cocidFlag.priority + '/' + e[0])) {
@@ -87,10 +87,10 @@ export class CoCIDEditor extends FormApplication {
           }, {}),
           priority: d.flags.CoC7.cocidFlag.priority,
           lang: d.flags.CoC7.cocidFlag.lang ?? 'en',
-          link: TextEditor.enrichHTML(d.link, { async: false }),
+          link: await TextEditor.enrichHTML(d.link, { async: true }),
           folder: d?.folder?.name
         }
-      })
+      }))
       if (Object.entries(uniqueWorldPriority).filter(c => c[1] > 1).length > 0) {
         sheetData.warnDuplicateWorldPriority = true
       }
@@ -102,7 +102,7 @@ export class CoCIDEditor extends FormApplication {
         scope: 'compendiums'
       })
       const uniqueCompendiumPriority = {}
-      sheetData.compendiumDocumentInfo = compendiumDocuments.map((d) => {
+      sheetData.compendiumDocumentInfo = await Promise.all(compendiumDocuments.map(async (d) => {
         if (d.flags.CoC7.cocidFlag.eras) {
           Object.entries(d.flags.CoC7.cocidFlag.eras).filter(e => e[1]).map(e => {
             if (!Object.prototype.hasOwnProperty.call(uniqueCompendiumPriority, d.flags.CoC7.cocidFlag.priority + '/' + e[0])) {
@@ -125,10 +125,10 @@ export class CoCIDEditor extends FormApplication {
           }, {}),
           priority: d.flags.CoC7.cocidFlag.priority,
           lang: d.flags.CoC7.cocidFlag.lang ?? 'en',
-          link: TextEditor.enrichHTML(d.link, { async: false }),
+          link: await TextEditor.enrichHTML(d.link, { async: true }),
           folder: d?.folder?.name ?? ''
         }
-      })
+      }))
       if (Object.entries(uniqueCompendiumPriority).filter(c => c[1] > 1).length > 0) {
         sheetData.warnDuplicateCompendiumPriority = true
       }

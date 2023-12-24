@@ -1,4 +1,4 @@
-/* global $, ActorSheet, ChatMessage, CONST, Dialog, FormData, foundry, game, getProperty, Hooks, mergeObject, Roll, TextEditor, ui */
+/* global $, ActorSheet, ChatMessage, CONST, Dialog, FormData, foundry, game, Hooks, Roll, TextEditor, ui */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { RollDialog } from '../../apps/roll-dialog.js'
 import { CoC7ChatMessage } from '../../apps/coc7-chat-message.js'
@@ -240,7 +240,7 @@ export class CoC7ActorSheet extends ActorSheet {
                 COC7.formula.actorsheet
               )) {
                 if (key.startsWith('@') && value.startsWith('this.')) {
-                  parsed[key.substring(1)] = getProperty(
+                  parsed[key.substring(1)] = foundry.utils.getProperty(
                     this,
                     value.substring(5)
                   )
@@ -438,7 +438,7 @@ export class CoC7ActorSheet extends ActorSheet {
     // For compat with previous characters test if auto is definied, if not we define it
     if (!['vehicle', 'container'].includes(this.actor.type)) {
       const auto = this.actor.checkUndefinedAuto()
-      sheetData.data.system = mergeObject(sheetData.data.system, auto)
+      sheetData.data.system = foundry.utils.mergeObject(sheetData.data.system, auto)
     } else {
       sheetData.data.system.attribs.hp.auto = false
       sheetData.data.system.attribs.mp.auto = false
@@ -503,117 +503,126 @@ export class CoC7ActorSheet extends ActorSheet {
   activateListeners (html) {
     super.activateListeners(html)
 
-    if (game.settings.get('CoC7', 'useContextMenus')) {
-      if (!this.menus) this.menus = []
-
-      const rollMenu = {
-        id: 'skill-roll',
-        classes: 'roll-menu',
-        section: [
-          {
-            classes: 'main',
-            items: [
-              { action: 'roll', label: 'Roll' },
-              { action: 'opposed-roll', label: 'Opposed roll' },
-              { action: 'combined-roll', label: 'Combined roll' }
-            ]
-          },
-          {
-            classes: 'keeper',
-            visibility: 'gm',
-            items: [
-              {
-                label: { icon: 'fas fa-link', text: 'Link' },
-                subMenu: {
-                  items: [
-                    { action: 'link-tool', label: 'Open in link tool' },
-                    { action: 'send-chat', label: 'Send to chat' },
-                    { action: 'copy-to-clipboard', label: 'Copy to clip-board' }
-                  ]
-                }
-              },
-              { action: 'request-roll', label: 'Request roll' }
-            ]
-          }
-        ]
-      }
-
-      const sanMenu = {
-        id: 'san-roll',
-        classes: 'roll-menu',
-        section: [
-          {
-            classes: 'main',
-            items: [
-              { action: 'encounter', label: 'Encounter' },
-              { action: 'roll', label: 'Roll' },
-              { action: 'opposed-roll', label: 'Opposed roll' },
-              { action: 'combined-roll', label: 'Combined roll' }
-            ]
-          },
-          {
-            classes: 'keeper',
-            visibility: 'trusted',
-            items: [
-              { action: 'request-roll', label: 'Request roll' },
-              {
-                label: { icon: 'fas fa-link', text: 'Link' },
-                subMenu: {
-                  items: [
-                    { action: 'link-tool', label: 'Open in link tool' },
-                    { action: 'send-chat', label: 'Send to chat' },
-                    { action: 'copy-to-clipboard', label: 'Copy to clip-board' },
-                    { action: 'link-encounter', label: 'Encounter' }
-                  ]
-                }
-              }
-            ]
-          }
-        ]
-      }
-
-      const rollContextMenu = new CoC7ContextMenu()
-      rollContextMenu.bind(rollMenu, html, this._onContextMenuClick.bind(this))
-      this.menus.push(rollContextMenu)
-
-      const sanContextMenu = new CoC7ContextMenu()
-      sanContextMenu.bind(sanMenu, html, this._onContextMenuClick.bind(this))
-      this.menus.push(sanContextMenu)
-    } else {
-      html
-        .find('.characteristic-label')
-        .contextmenu(this._onOpposedRoll.bind(this))
-      html
-        .find('.skill-name.rollable')
-        .contextmenu(this._onOpposedRoll.bind(this))
-      html
-        .find('.attribute-label.rollable')
-        .contextmenu(this._onOpposedRoll.bind(this))
-    }
-
-    // context menu bind
-    html
-      .find('.characteristic-label')
-      .click(this._onRollCharacteriticTest.bind(this))
-    html.find('.skill-name.rollable').click(this._onRollSkillTest.bind(this))
-    html.find('.skill-image').click(this._onRollSkillTest.bind(this))
-    html
-      .find('.attribute-label.rollable')
-      .click(this._onRollAttribTest.bind(this))
-
-    html
-      .find('.token-drag-handle')
-      .on('dragstart', this._onDragTokenStart.bind(this))
+    html.find('.section-header').click(this._onSectionHeader.bind(this))
+    html.find('.items-header').click(this._onItemHeader.bind(this))
+    html.find('.inventory-header').click(this._onInventoryHeader.bind(this))
+    html.find('.read-only').dblclick(this._toggleReadOnly.bind(this))
+    html.find('.add-ammo').click(this._onAddAmo.bind(this))
+    html.find('.reload-weapon').click(event => this._onReloadWeapon(event))
+    html.find('.reload-weapon').on('contextmenu', event => this._onReloadWeapon(event))
 
     // Owner Only Listeners
     if (this.actor.isOwner && !(this.actor.compendium?.locked ?? false)) {
       html.find('.lock').click(this._onLockClicked.bind(this))
       html.find('.flag').click(this._onFlagClicked.bind(this))
       html.find('.formula').click(this._onFormulaClicked.bind(this))
+      html.find('.auto-toggle').click(this._onAutoToggle.bind(this))
     }
 
     // Owner Only, not available from compendium
     if (this.actor.isOwner && typeof this.actor.compendium === 'undefined') {
+      if (game.settings.get('CoC7', 'useContextMenus')) {
+        if (!this.menus) this.menus = []
+
+        const rollMenu = {
+          id: 'skill-roll',
+          classes: 'roll-menu',
+          section: [
+            {
+              classes: 'main',
+              items: [
+                { action: 'roll', label: 'Roll' },
+                { action: 'opposed-roll', label: 'Opposed roll' },
+                { action: 'combined-roll', label: 'Combined roll' }
+              ]
+            },
+            {
+              classes: 'keeper',
+              visibility: 'gm',
+              items: [
+                {
+                  label: { icon: 'fas fa-link', text: 'Link' },
+                  subMenu: {
+                    items: [
+                      { action: 'link-tool', label: 'Open in link tool' },
+                      { action: 'send-chat', label: 'Send to chat' },
+                      { action: 'copy-to-clipboard', label: 'Copy to clip-board' }
+                    ]
+                  }
+                },
+                { action: 'request-roll', label: 'Request roll' }
+              ]
+            }
+          ]
+        }
+
+        const sanMenu = {
+          id: 'san-roll',
+          classes: 'roll-menu',
+          section: [
+            {
+              classes: 'main',
+              items: [
+                { action: 'encounter', label: 'Encounter' },
+                { action: 'roll', label: 'Roll' },
+                { action: 'opposed-roll', label: 'Opposed roll' },
+                { action: 'combined-roll', label: 'Combined roll' }
+              ]
+            },
+            {
+              classes: 'keeper',
+              visibility: 'trusted',
+              items: [
+                { action: 'request-roll', label: 'Request roll' },
+                {
+                  label: { icon: 'fas fa-link', text: 'Link' },
+                  subMenu: {
+                    items: [
+                      { action: 'link-tool', label: 'Open in link tool' },
+                      { action: 'send-chat', label: 'Send to chat' },
+                      { action: 'copy-to-clipboard', label: 'Copy to clip-board' },
+                      { action: 'link-encounter', label: 'Encounter' }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+
+        const rollContextMenu = new CoC7ContextMenu()
+        rollContextMenu.bind(rollMenu, html, this._onContextMenuClick.bind(this))
+        this.menus.push(rollContextMenu)
+
+        const sanContextMenu = new CoC7ContextMenu()
+        sanContextMenu.bind(sanMenu, html, this._onContextMenuClick.bind(this))
+        this.menus.push(sanContextMenu)
+      } else {
+        html
+          .find('.characteristic-label')
+          .contextmenu(this._onOpposedRoll.bind(this))
+        html
+          .find('.skill-name.rollable')
+          .contextmenu(this._onOpposedRoll.bind(this))
+        html
+          .find('.attribute-label.rollable')
+          .contextmenu(this._onOpposedRoll.bind(this))
+      }
+
+      // context menu bind
+      html
+        .find('.characteristic-label')
+        .click(this._onRollCharacteriticTest.bind(this))
+      html.find('.skill-name.rollable').click(this._onRollSkillTest.bind(this))
+      html.find('.skill-image').click(this._onRollSkillTest.bind(this))
+      html
+        .find('.attribute-label.rollable')
+        .click(this._onRollAttribTest.bind(this))
+
+      html
+        .find('.token-drag-handle')
+        .on('dragstart', this._onDragTokenStart.bind(this))
+
       html
         .find('.characteristic-label')
         .on('dragstart', event => this._onDragCharacteristic(event))
@@ -635,7 +644,6 @@ export class CoC7ActorSheet extends ActorSheet {
         .find('.average-characteritics')
         .click(this._onAverageCharacteriticsValue.bind(this))
       html.find('.toggle-switch').click(this._onToggle.bind(this))
-      html.find('.auto-toggle').click(this._onAutoToggle.bind(this))
 
       // Status monitor
       if (game.user.isGM || game.settings.get('CoC7', 'statusPlayerEditable')) {
@@ -673,17 +681,7 @@ export class CoC7ActorSheet extends ActorSheet {
       html
         .find('.weapon-skill.rollable')
         .click(async event => this._onWeaponSkillRoll(event))
-      html.find('.reload-weapon').click(event => this._onReloadWeapon(event))
-      html
-        .find('.reload-weapon')
-        .on('contextmenu', event => this._onReloadWeapon(event))
-      html.find('.add-ammo').click(this._onAddAmo.bind(this))
-      html.find('.read-only').dblclick(this._toggleReadOnly.bind(this))
       html.on('click', '.weapon-damage', this._onWeaponDamage.bind(this))
-
-      html.find('.inventory-header').click(this._onInventoryHeader.bind(this))
-      html.find('.items-header').click(this._onItemHeader.bind(this))
-      html.find('.section-header').click(this._onSectionHeader.bind(this))
 
       const wheelInputs = html.find('.attribute-value')
       for (const wheelInput of wheelInputs) {
@@ -826,8 +824,6 @@ export class CoC7ActorSheet extends ActorSheet {
         this.actor.deleteEmbeddedDocuments('ActiveEffect', effects)
       }
     })
-
-    CoC7Link.bindEventsHandler(html)
 
     /**
      * This is used for dev purposes only !
@@ -1418,11 +1414,11 @@ export class CoC7ActorSheet extends ActorSheet {
     event.currentTarget.classList.toggle('read-only')
   }
 
-  _onItemSummary (event) {
+  async _onItemSummary (event) {
     event.preventDefault()
     const li = $(event.currentTarget).parents('.item')
     const item = this.actor.items.get(li.data('item-id'))
-    const chatData = item.getChatData({ secrets: this.actor.isOwner })
+    const chatData = await item.getChatData({ secrets: this.actor.isOwner })
 
     // Toggle summary
     if (li.hasClass('expanded')) {
@@ -1462,7 +1458,6 @@ export class CoC7ActorSheet extends ActorSheet {
       div.append(props)
 
       li.append(div.hide())
-      CoC7Link.bindEventsHandler(div)
       div.slideDown(200, () => li.toggleClass('expanded'))
     }
     // $(event.currentTarget).toggleClass('expanded');
@@ -1517,11 +1512,10 @@ export class CoC7ActorSheet extends ActorSheet {
   }
 
   static async popupSkill (skill) {
-    skill.system.description.enrichedValue = TextEditor.enrichHTML(
+    skill.system.description.enrichedValue = await TextEditor.enrichHTML(
       skill.system.description.value,
-      { async: false }
+      { async: true }
     )
-    // game.CoC7.enricher( skill.data.data.description.enrichedValue);
     const dlg = new Dialog(
       {
         title: game.i18n.localize('CoC7.SkillDetailsWindow'),
@@ -1838,15 +1832,15 @@ export class CoC7ActorSheet extends ActorSheet {
   //  // Create the expanded update data object
   //  const fd = new FormDataExtended(this.form, {editors: this.editors});
   //  let data = fd.toObject();
-  //  if ( updateData ) data = mergeObject(data, updateData);
-  //  else data = expandObject(data);
+  //  if ( updateData ) data = foundry.utils.mergeObject(data, updateData);
+  //  else data = foundry.utils.expandObject(data);
 
   //  // Handle Damage array
   //  const damage = data.data?.damage;
   //  if ( damage ) damage.parts = Object.values(damage?.parts || {}).map(d => [d[0] || '', d[1] || '']);
 
   //  // Return the flattened submission data
-  //  return flattenObject(data);
+  //  return foundry.utils.flattenObject(data);
   // }
 
   /* -------------------------------------------- */

@@ -1,9 +1,9 @@
-/* global $, game, ItemSheet, mergeObject, TextEditor */
+/* global $, foundry, game, ItemSheet, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 
 export class CoC7SpellSheet extends ItemSheet {
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       template: 'systems/CoC7/templates/items/spell/main.html',
       classes: ['coc7', 'item', 'spell'],
       width: 500,
@@ -32,18 +32,18 @@ export class CoC7SpellSheet extends ItemSheet {
     sheetData.isKeeper = game.user.isGM
     sheetData.isOwner = this.item.isOwner
 
-    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
       sheetData.data.system.description.value,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
 
-    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
       sheetData.data.system.description.keeper,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )

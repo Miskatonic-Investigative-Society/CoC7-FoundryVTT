@@ -1,6 +1,5 @@
-/* global $, ActorSheet, CONST, Dialog, FormData, game, mergeObject, TextEditor */
+/* global $, ActorSheet, CONST, Dialog, FormData, foundry, game, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
-import { CoC7Link } from '../../apps/coc7-link.js'
 import { CoC7Utilities } from '../../utilities.js'
 
 export class CoC7ContainerSheet extends ActorSheet {
@@ -9,7 +8,7 @@ export class CoC7ContainerSheet extends ActorSheet {
    * @returns {Object}
    */
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'actor', 'storage'],
       template: 'systems/CoC7/templates/actors/storage-sheet.html',
       width: 672,
@@ -106,18 +105,18 @@ export class CoC7ContainerSheet extends ActorSheet {
       sheetData.showInventoryTalents ||
       sheetData.showInventoryWeapons
 
-    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
       sheetData.data.system.description.value,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
 
-    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
       sheetData.data.system.description.keeper,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
@@ -229,11 +228,11 @@ export class CoC7ContainerSheet extends ActorSheet {
     await game.CoC7socket.executeAsGM('gmtradeitemto', message)
   }
 
-  _onItemSummary (event) {
+  async _onItemSummary (event) {
     event.preventDefault()
     const li = $(event.currentTarget).parents('.item')
     const item = this.actor.items.get(li.data('item-id'))
-    const chatData = item.getChatData({ secrets: this.actor.isOwner })
+    const chatData = await item.getChatData({ secrets: this.actor.isOwner })
 
     // Toggle summary
     if (li.hasClass('expanded')) {
@@ -269,7 +268,6 @@ export class CoC7ContainerSheet extends ActorSheet {
       div.append(props)
 
       li.append(div.hide())
-      CoC7Link.bindEventsHandler(div)
       div.slideDown(200)
     }
     li.toggleClass('expanded')

@@ -1,4 +1,4 @@
-/* global Actor, Card, CONFIG, flattenObject, game, Item, JournalEntry, Macro, Playlist, RollTable, Scene, SceneNavigation, ui */
+/* global Actor, Card, CONFIG, foundry, game, Item, JournalEntry, Macro, Playlist, RollTable, Scene, SceneNavigation, ui */
 import { COC7 } from '../config.js'
 import { CoC7Utilities } from '../utilities.js'
 
@@ -137,7 +137,7 @@ export class CoCID {
    */
   static findCocIdInList (cocid, list) {
     let itemName = ''
-    const CoCIDKeys = flattenObject(game.i18n.translations.CoC7.CoCIDFlag.keys)
+    const CoCIDKeys = foundry.utils.flattenObject(game.i18n.translations.CoC7.CoCIDFlag.keys)
     if (typeof CoCIDKeys[cocid] !== 'undefined') {
       itemName = CoCIDKeys[cocid]
     }

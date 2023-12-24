@@ -1,7 +1,7 @@
-/* global $, FormApplication, game, mergeObject */
+/* global $, FormApplication, foundry, game */
 export class CoC7CreateMythosEncounter extends FormApplication {
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7'],
       title: game.i18n.localize('CoC7.SanityLossTypeDialogTitle'),
       template: 'systems/CoC7/templates/apps/sanity-loss-type.hbs',

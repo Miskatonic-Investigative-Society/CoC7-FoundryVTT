@@ -1,9 +1,9 @@
-/* global duplicate, expandObject, game, mergeObject, TextEditor */
+/* global foundry, game, TextEditor */
 import { CoC7ActorSheet } from './base.js'
 
 export class CoC7VehicleSheet extends CoC7ActorSheet {
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheetV2', 'actor', 'item', 'vehicle'],
       width: 555,
       height: 420,
@@ -38,18 +38,18 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
       sheetData.options.height = 420
     } else sheetData.options.height = 'auto'
 
-    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
       sheetData.data.system.description.value,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
 
-    sheetData.enrichedDescriptionNotes = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionNotes = await TextEditor.enrichHTML(
       sheetData.data.system.description.notes,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
@@ -86,7 +86,7 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
   }
 
   async _onAddArmor () {
-    const locations = duplicate(
+    const locations = foundry.utils.duplicate(
       this.actor.system.attribs.armor.locations || []
     )
     locations.push({ name: null, value: null })
@@ -97,7 +97,7 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
     const button = event.currentTarget
     const location = button.closest('.armor')
     const index = location.dataset.index
-    const locations = duplicate(
+    const locations = foundry.utils.duplicate(
       this.actor.system.attribs.armor.locations || null
     )
     if (!locations) return
@@ -114,7 +114,7 @@ export class CoC7VehicleSheet extends CoC7ActorSheet {
   /*  Form Submission                             */
   /* -------------------------------------------- */
   _updateObject (event, formData) {
-    const system = expandObject(formData)?.system
+    const system = foundry.utils.expandObject(formData)?.system
     if (system.attribs.armor.locations) {
       formData['system.attribs.armor.locations'] = Object.values(
         system.attribs.armor.locations || []

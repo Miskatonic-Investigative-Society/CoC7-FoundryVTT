@@ -1,4 +1,4 @@
-/* global $, CONFIG, FormApplication, game, Hooks, mergeObject, ui, FileReader */
+/* global $, CONFIG, FormApplication, foundry, game, Hooks, ui, FileReader */
 
 import { CoC7ActorImporter } from './actor-importer.js'
 import { CoC7DholeHouseActorImporter } from './dholehouse_importer.js'
@@ -8,7 +8,7 @@ import { CoC7Utilities } from '../utilities.js'
 export class CoC7ActorImporterDialog extends FormApplication {
   /** @override */
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'dialog', 'actor-importer'],
       title: game.i18n.localize('CoC7.ActorImporter'),
       template: 'systems/CoC7/templates/apps/actor-importer.html',

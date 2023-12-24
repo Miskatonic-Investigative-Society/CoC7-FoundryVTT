@@ -72,11 +72,11 @@ Los cambios disponibles son:
     - system.characteristics.edu.bonusDice
 - Atributos:
   - Suerte:
-    - system.characteristics.lck.value
-    - system.characteristics.lck.bonusDice
+    - system.attribs.lck.value
+    - system.attribs.lck.bonusDice
   - Cordura:
-    - system.characteristics.san.value
-    - system.characteristics.san.bonusDice
+    - system.attribs.san.value
+    - system.attribs.san.bonusDice
   - Movimiento:
     - system.attribs.mov.value
   - Corpulencia:
@@ -94,6 +94,6 @@ Los cambios disponibles son:
   - Encanto
     - system.skills.Encanto.value
     - system.skills.Encanto.bonusDice
-  - Combate (Pelea)
-    - system.skills.Combate (Pelea).value
-    - system.skills.Combate (Pelea).bonusDice
+  - Combatir (Pelea)
+    - system.skills.Combatir (Pelea).value
+    - system.skills.Combatir (Pelea).bonusDice

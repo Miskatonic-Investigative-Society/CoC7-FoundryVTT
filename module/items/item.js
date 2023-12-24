@@ -1,5 +1,4 @@
-/* global CONFIG, duplicate, game, getProperty, Item, Roll, TextEditor, Token, ui, fromUuid */
-import { CoC7Parser } from '../apps/coc7-parser.js'
+/* global CONFIG, foundry, game, Item, Roll, TextEditor, Token, ui, fromUuid */
 import { COC7 } from '../config.js'
 import { CoC7Utilities } from '../utilities.js'
 import { CoCIDEditor } from '../apps/coc-id-editor.js'
@@ -549,7 +548,7 @@ export class CoC7Item extends Item {
       const parsed = {}
       for (const [key, value] of Object.entries(COC7.formula.actorsheet)) {
         if (key.startsWith('@') && value.startsWith('this.actor.')) {
-          parsed[key.substring(1)] = getProperty(actor, value.substring(11))
+          parsed[key.substring(1)] = foundry.utils.getProperty(actor, value.substring(11))
         }
       }
       let value
@@ -577,7 +576,7 @@ export class CoC7Item extends Item {
       const parsed = {}
       for (const [key, value] of Object.entries(COC7.formula.actorsheet)) {
         if (key.startsWith('@') && value.startsWith('this.')) {
-          parsed[key.substring(1)] = getProperty(this, value.substring(5))
+          parsed[key.substring(1)] = foundry.utils.getProperty(this, value.substring(5))
         }
       }
       let value
@@ -713,10 +712,10 @@ export class CoC7Item extends Item {
    * @param {Object} htmlOptions    Options used by the TextEditor.enrichHTML function
    * @return {Object}               An object of chat data to render
    */
-  getChatData (htmlOptions = {}) {
-    // FoundryVTT v10
-    htmlOptions.async = false
-    const data = duplicate(this.system)
+  async getChatData (htmlOptions = {}) {
+    // FoundryVTT v11
+    htmlOptions.async = true
+    const data = foundry.utils.duplicate(this.system)
     // Fix : data can have description directly in field, not under value.
     if (typeof data.description === 'string') {
       data.description = {
@@ -733,16 +732,14 @@ export class CoC7Item extends Item {
     const labels = []
 
     // Rich text description
-    data.description.value = TextEditor.enrichHTML(
+    data.description.value = await TextEditor.enrichHTML(
       data.description.value,
       htmlOptions
     )
-    data.description.value = CoC7Parser.enrichHTML(data.description.value)
-    data.description.special = TextEditor.enrichHTML(
+    data.description.special = await TextEditor.enrichHTML(
       data.description.special,
       htmlOptions
     )
-    data.description.special = CoC7Parser.enrichHTML(data.description.special)
 
     // Item type specific properties
     const props = []

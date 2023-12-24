@@ -1,4 +1,4 @@
-/* global game, ItemSheet, mergeObject, TextEditor */
+/* global foundry, game, ItemSheet, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import CoC7ActiveEffect from '../../active-effect.js'
 import { COC7 } from '../../config.js'
@@ -11,7 +11,7 @@ export class CoC7StatusSheet extends ItemSheet {
    *
    */
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'status'],
       template: 'systems/CoC7/templates/items/status.html',
       width: 525,
@@ -44,7 +44,7 @@ export class CoC7StatusSheet extends ItemSheet {
   /* Prepare data for rendering the Item sheet
    * The prepared data object contains both the actor data as well as additional sheet options
    */
-  getData () {
+  async getData () {
     const sheetData = super.getData()
     sheetData.effects = CoC7ActiveEffect.prepareActiveEffectCategories(this.item.effects, { status: false })
 
@@ -58,26 +58,26 @@ export class CoC7StatusSheet extends ItemSheet {
       }
     }
 
-    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
       sheetData.data.system.description.value,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
 
-    sheetData.enrichedDescriptionNotes = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionNotes = await TextEditor.enrichHTML(
       sheetData.data.system.description.notes,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
 
-    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
       sheetData.data.system.description.keeper,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )

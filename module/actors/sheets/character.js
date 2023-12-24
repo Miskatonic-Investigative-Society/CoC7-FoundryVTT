@@ -1,4 +1,4 @@
-/* global $, duplicate, expandObject, FontFace, foundry, game, mergeObject, TextEditor, ui */
+/* global $, FontFace, foundry, game, TextEditor, ui */
 import { COC7 } from '../../config.js'
 import { CoCActor } from '../actor.js'
 import { CoC7ActorSheet } from './base.js'
@@ -213,18 +213,18 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
       sheetData.showInventoryStatuses ||
       sheetData.showInventoryWeapons
 
-    sheetData.enrichedBackstory = TextEditor.enrichHTML(
+    sheetData.enrichedBackstory = await TextEditor.enrichHTML(
       sheetData.data.system.backstory,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
 
-    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
       sheetData.data.system.description.keeper,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
@@ -257,7 +257,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
    * @returns {Object}
    */
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheetV2', 'actor', 'character'],
       template: 'systems/CoC7/templates/actors/character/index.html',
       width: 687,
@@ -325,7 +325,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
   }
 
   _onAddMonetary () {
-    const values = this.actor.system.monetary.values ? duplicate(this.actor.system.monetary.values) : []
+    const values = this.actor.system.monetary.values ? foundry.utils.duplicate(this.actor.system.monetary.values) : []
     values.push({
       name: '',
       min: null,
@@ -343,7 +343,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
   _onRemoveMonetary (event) {
     const a = event.currentTarget
     const div = a.closest('.item')
-    const values = duplicate(this.actor.system.monetary.values)
+    const values = foundry.utils.duplicate(this.actor.system.monetary.values)
     values.splice(Number(div.dataset.index), 1)
     this.actor.update({ 'system.monetary.values': values })
   }
@@ -430,7 +430,7 @@ export class CoC7CharacterSheet extends CoC7ActorSheet {
   }
 
   _updateObject (event, formData) {
-    const system = expandObject(formData)?.system
+    const system = foundry.utils.expandObject(formData)?.system
     if (system.monetary?.values) {
       formData['system.monetary.values'] = Object.values(system.monetary.values || [])
     }

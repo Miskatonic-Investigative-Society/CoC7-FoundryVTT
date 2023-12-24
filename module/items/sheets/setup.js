@@ -1,4 +1,4 @@
-/* global $, duplicate, expandObject, game, ItemSheet, mergeObject, TextEditor */
+/* global $, foundry, game, ItemSheet, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import { COC7 } from '../../config.js'
 import { CoC7Item } from '../item.js'
@@ -44,7 +44,7 @@ export class CoC7SetupSheet extends ItemSheet {
     const dataList = await CoC7Utilities.getDataFromDropEvent(event, 'Item')
 
     let useCoCID = 0
-    const collection = this.item.system[collectionName] ? duplicate(this.item.system[collectionName]) : []
+    const collection = this.item.system[collectionName] ? foundry.utils.duplicate(this.item.system[collectionName]) : []
     for (const item of dataList) {
       if (!item || !item.system) continue
       if (!['item', 'weapon', 'skill', 'book', 'spell'].includes(item.type)) {
@@ -69,19 +69,19 @@ export class CoC7SetupSheet extends ItemSheet {
   async _onRemoveSection (event) {
     const a = event.currentTarget
     const div = a.closest('.item')
-    const bio = duplicate(this.item.system.bioSections)
+    const bio = foundry.utils.duplicate(this.item.system.bioSections)
     bio.splice(Number(div.dataset.index), 1)
     await this.item.update({ 'system.bioSections': bio })
   }
 
   async _onAddBio () {
-    const bio = this.item.system.bioSections ? duplicate(this.item.system.bioSections) : []
+    const bio = this.item.system.bioSections ? foundry.utils.duplicate(this.item.system.bioSections) : []
     bio.push(null)
     await this.item.update({ 'system.bioSections': bio })
   }
 
   _onAddMonetary () {
-    const values = this.item.system.monetary.values ? duplicate(this.item.system.monetary.values) : []
+    const values = this.item.system.monetary.values ? foundry.utils.duplicate(this.item.system.monetary.values) : []
     values.push({
       name: '',
       min: null,
@@ -99,12 +99,12 @@ export class CoC7SetupSheet extends ItemSheet {
   _onRemoveMonetary (event) {
     const a = event.currentTarget
     const div = a.closest('.item')
-    const values = duplicate(this.item.system.monetary.values)
+    const values = foundry.utils.duplicate(this.item.system.monetary.values)
     values.splice(Number(div.dataset.index), 1)
     this.item.update({ 'system.monetary.values': values })
   }
 
-  _onItemSummary (event, collectionName = 'items') {
+  async _onItemSummary (event, collectionName = 'items') {
     event.preventDefault()
     const li = $(event.currentTarget).parents('.item')
     const item = this.item.system[collectionName].find(s => {
@@ -113,14 +113,20 @@ export class CoC7SetupSheet extends ItemSheet {
     if (!item) {
       return
     }
-    const chatData = item.system.description
+    const chatData = await TextEditor.enrichHTML(
+      item.system.description.value,
+      {
+        async: true,
+        secrets: this.item.editable
+      }
+    )
 
     // Toggle summary
     if (li.hasClass('expanded')) {
       const summary = li.children('.item-summary')
       summary.slideUp(200, () => summary.remove())
     } else {
-      const div = $(`<div class="item-summary">${chatData.value}</div>`)
+      const div = $(`<div class="item-summary">${chatData}</div>`)
       const props = $('<div class="item-properties"></div>')
       // for (const p of chatData.properties) { props.append(`<span class="tag">${p}</span>`) }
       div.append(props)
@@ -136,14 +142,14 @@ export class CoC7SetupSheet extends ItemSheet {
     const CoCId = item.data('cocid')
     const itemIndex = this.item.system[collectionName].findIndex(i => (itemId && i._id === itemId) || (CoCId && i === CoCId))
     if (itemIndex > -1) {
-      const collection = this.item.system[collectionName] ? duplicate(this.item.system[collectionName]) : []
+      const collection = this.item.system[collectionName] ? foundry.utils.duplicate(this.item.system[collectionName]) : []
       collection.splice(itemIndex, 1)
       await this.item.update({ [`system.${collectionName}`]: collection })
     }
   }
 
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'setup'],
       template: 'systems/CoC7/templates/items/setup.html',
       width: 565,
@@ -209,26 +215,26 @@ export class CoC7SetupSheet extends ItemSheet {
 
     sheetData.oneBlockBackStory = game.settings.get('CoC7', 'oneBlockBackstory')
 
-    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
       sheetData.data.system.description.value,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
 
-    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
       sheetData.data.system.description.keeper,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
 
-    sheetData.enrichedBackstory = TextEditor.enrichHTML(
+    sheetData.enrichedBackstory = await TextEditor.enrichHTML(
       sheetData.data.system.backstory,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
@@ -238,7 +244,7 @@ export class CoC7SetupSheet extends ItemSheet {
   }
 
   _updateObject (event, formData) {
-    const system = expandObject(formData)?.system
+    const system = foundry.utils.expandObject(formData)?.system
     if (system.bioSections) {
       formData['system.bioSections'] = Object.values(
         system.bioSections || []

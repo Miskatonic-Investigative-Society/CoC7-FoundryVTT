@@ -1,4 +1,4 @@
-/* global game, ItemSheet, mergeObject, TextEditor */
+/* global foundry, game, ItemSheet, TextEditor */
 import { addCoCIDSheetHeaderButton } from '../../scripts/coc-id-button.js'
 import CoC7ActiveEffect from '../../active-effect.js'
 import { COC7 } from '../../config.js'
@@ -19,7 +19,7 @@ export class CoC7SkillSheet extends ItemSheet {
    * @returns {Object}
    */
   static get defaultOptions () {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['coc7', 'sheet', 'item'],
       width: 520,
       height: 480,
@@ -49,7 +49,7 @@ export class CoC7SkillSheet extends ItemSheet {
    * Prepare data for rendering the Item sheet
    * The prepared data object contains both the actor data as well as additional sheet options
    */
-  getData () {
+  async getData () {
     // this.item.checkSkillProperties();
     const sheetData = super.getData()
 
@@ -84,18 +84,18 @@ export class CoC7SkillSheet extends ItemSheet {
       !this.item.system.properties.firearm &&
       !this.item.system.properties.fighting
 
-    sheetData.enrichedDescriptionValue = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionValue = await TextEditor.enrichHTML(
       sheetData.data.system.description.value,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
 
-    sheetData.enrichedDescriptionKeeper = TextEditor.enrichHTML(
+    sheetData.enrichedDescriptionKeeper = await TextEditor.enrichHTML(
       sheetData.data.system.description.keeper,
       {
-        async: false,
+        async: true,
         secrets: sheetData.editable
       }
     )
@@ -163,8 +163,8 @@ export class CoC7SkillSheet extends ItemSheet {
    */
   // _updateObject(event, formData) {
   //   // Handle the free-form attributes list
-  //   const ford = expandObject(formData);
-  //   const formAttrs = expandObject(formData).data.attributes || {};
+  //   const ford = foundry.utils.expandObject(formData);
+  //   const formAttrs = foundry.utils.expandObject(formData).data.attributes || {};
   //   const attributes = Object.values(formAttrs).reduce((obj, v) => {
   //     let k = v["key"].trim();
   //     if (/[\s\.]/.test(k)) return ui.notifications.error("Attribute keys may not contain spaces or periods");

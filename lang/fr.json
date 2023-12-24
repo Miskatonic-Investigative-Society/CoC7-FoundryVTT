@@ -834,6 +834,7 @@
   "CoC7.EmptySkillList": "Ajouter une compétence en la déposant ici.",
   "CoC7.EmptyItemList": "Ajouter un objet en le déposant ici.",
   "CoC7.EmptyCharacterSkillList": "Faîtes glisser un générateur, une occupation ou une compétence ici.",
+  "CoC7.PersonalSpecialityPlaceholder": "autre(s) compétence(s) comme spécialités personnelles ou d'époque",
   "CoC7.PersonalSpeciality": "Nombre de spécialités personnelles ou d'époque",
   "CoC7.AdditionalSkills": "Compétences supplémentaires",
   "CoC7.SkillSelectionWindow": "Sélectionner les compétences optionnelles",
@@ -1005,6 +1006,8 @@
   "CoC7.Migrate.ErrorItem": "Échec de la migration du système CoC7 pour l'Objet {name}: {message}",
   "CoC7.Migrate.ErrorActor": "Échec de la migration du système CoC7 pour le Personnage {name}: {message}",
 
+  "CoC7.System.Documentation": "Consulter le manuel du système",
+  
   "CoC7.Settings.CoreRules.Title": "Règles Optionnelles du Livre de Base",
   "CoC7.Settings.Rules.Name": "Variantes/Règles optionnelles",
   "CoC7.Settings.Rules.Label": "Configurer les variantes/règles optionnelles",
@@ -1186,7 +1189,9 @@
   "SETTINGS.ChaseShowTokenMovementHint": "Afficher les mouvements sur la grille quand le token est déplacé vers le prochain lieu.",
   "SETTINGS.UseContextMenus": "Utiliser les menus contextuels",
   "SETTINGS.UseContextMenusHint": "[EXPERIMENTAL] Utiliser les menus contextuels pour les jets à la place des combinaisons de touches.",
-
+  "SETTINGS.SceneDistanceNotCalcualtedNoError": "Ne pas afficher les erreurs pour les distances",
+  "SETTINGS.SceneDistanceNotCalcualtedNoErrorHint": "Au début d'un combat à distance, en mode immersion, ne pas afficher les messages de calcul.",
+  
   "CoC7.getTheExample": "Copier l'Exemple",
   "CoC7.Copied": "Texte de l'Exemple copié dans le presse-papier",
 
@@ -1289,5 +1294,10 @@
   "CoC7.CoCIDFlag.error.documents-not-found": "Items inconnus dans le monde ou dans les compendiums pour les CoC IDs ({cocids}), langue \"{lang}\", et l'époque \"{era}\". Vérifiez l'époque du monde.",
 
   "CoC7.CoCIDBatch.title": "Automate du System ID (CoC ID)",
-  "CoC7.CoCIDBatch.summary": "Le système CoC7 a ajouté le System ID (CoC ID). Cela permet d'identifier les items FoundryVTT, les compétences par exemple. Cette page vous permettra de positionner l'identifiant pour des '{type}' existant(e)s. Le System ID doit utiliser les traductions anglaises pour pouvoir supporter le portage dans d'autres langues."
+  "CoC7.CoCIDBatch.summary": "Le système CoC7 a ajouté le System ID (CoC ID). Cela permet d'identifier les items FoundryVTT, les compétences par exemple. Cette page vous permettra de positionner l'identifiant pour des '{type}' existant(e)s. Le System ID doit utiliser les traductions anglaises pour pouvoir supporter le portage dans d'autres langues.",
+  
+  "CoC7.TokenCreationRoll.Title": "Aléatoire détecté",
+  "CoC7.TokenCreationRoll.Prompt": "Ce token a des caractéristiques ou compétences aléatoires.<br>Que souhaitez-vous faire ?",
+  "CoC7.TokenCreationRoll.ButtonRoll": "Jeter les dés pour toutes",
+  "CoC7.TokenCreationRoll.ButtonAverage": "Prendre les moyennes"
 }
