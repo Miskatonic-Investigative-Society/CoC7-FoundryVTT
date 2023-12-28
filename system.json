@@ -19,6 +19,7 @@
   ],
   "templateVersion": 1,
   "styles": [
+    "https://fonts.googleapis.com/css?family=Noto%20Sans",
     "lib/game-icons/game-icons.css",
     "coc7g.css"
   ],
