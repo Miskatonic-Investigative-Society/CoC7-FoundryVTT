@@ -1,4 +1,5 @@
 /* global Actor, Application, CONFIG, CONST, Dialog, Die, foundry, fromUuid, fromUuidSync, game, Hooks, Roll, TextEditor, Token, ui */
+import { AverageRoll } from '../apps/average-roll.js'
 import { COC7 } from '../config.js'
 import CoC7ActiveEffect from '../active-effect.js'
 import { CoC7ChatMessage } from '../apps/coc7-chat-message.js'
@@ -2844,14 +2845,8 @@ export class CoCActor extends Actor {
     const characteristics = {}
     for (const [key, value] of Object.entries(this.system.characteristics)) {
       if (value.formula && !value.formula.startsWith('@')) {
-        const max = new Roll(value.formula).evaluate({ maximize: true }).total
-        const min = new Roll(value.formula).evaluate({ minimize: true }).total
-        const average = Math.floor((max + min) / 2)
-        const charValue =
-          average % 5 === 0 ? average : Math.round(average / 10) * 10
-        if (charValue) {
-          characteristics[`system.characteristics.${key}.value`] = charValue
-        }
+        const average = new AverageRoll(value.formula).evaluate({ minimize: true, maximize: true }).total
+        characteristics[`system.characteristics.${key}.value`] = average
       }
     }
 
