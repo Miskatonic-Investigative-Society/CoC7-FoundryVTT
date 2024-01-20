@@ -1,6 +1,10 @@
 /* global NumericTerm, Roll, RollTerm */
 
 export class AverageRoll extends Roll {
+  constructor (formula, data = {}, options = {}) {
+    super('(' + formula + ')', data, options)
+  }
+
   /**
    * Evaluate the roll synchronously.
    * A temporary helper method used to migrate behavior from 0.7.x (sync by default) to 0.9.x (async by default).
