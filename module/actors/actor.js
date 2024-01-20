@@ -2845,7 +2845,7 @@ export class CoCActor extends Actor {
     const characteristics = {}
     for (const [key, value] of Object.entries(this.system.characteristics)) {
       if (value.formula && !value.formula.startsWith('@')) {
-        const average = new AverageRoll(value.formula).evaluate({ minimize: true, maximize: true }).total
+        const average = new AverageRoll('(' + value.formula + ')').evaluate({ minimize: true, maximize: true }).total
         characteristics[`system.characteristics.${key}.value`] = average
       }
     }
