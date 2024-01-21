@@ -9,6 +9,14 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 0.10.10
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Change default font for sheetV2 to one more readable on iOS devices
+- Fix average characteristic calculations
+- Update to Italian localization, thanks to @Stefano1975t #1474
+
 ## Version 0.10.9
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.

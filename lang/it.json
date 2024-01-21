@@ -838,6 +838,7 @@
   "CoC7.EmptySkillList": "Aggiungi un'abilità rilasciandola qui.",
   "CoC7.EmptyItemList": "Aggiungi un oggetto rilasciandolo qui.",
   "CoC7.EmptyCharacterSkillList": "Aggiungi una configurazione, una professione o un'abilità rilasciandola qui.",
+  "CoC7.PersonalSpecialityPlaceholder": "altre abilità come specialità personale o del periodo",
   "CoC7.PersonalSpeciality": "Numero di specialità personali o dell'epoca",
   "CoC7.AdditionalSkills": "Abilità aggiuntive",
   "CoC7.SkillSelectionWindow": "Seleziona abilità facoltative",
@@ -1293,5 +1294,10 @@
   "CoC7.CoCIDFlag.error.documents-not-found": "Documenti non trovati nel mondo o nei Compendium corrispondenti ai CoC ID ({cocids}), lingua \"{lang}\", e periodo \"{era}\". Per favore controlla il tuo Periodo per le impostazioni del mondo.",
   
   "CoC7.CoCIDBatch.title": "Impostazione di gruppo dell'ID di Sistema",
-  "CoC7.CoCIDBatch.summary": "Il Sistema CoC7 ha introdotto un ID di Sistema (CoC ID). Questo permette al sistema di identificare i documenti di FoundryVTT per abilità di esempio. Questa pagina ti permetterà di impostare l'id per esistenti documenti {type}. L'ID di Sistema dovrebbe usare la traduzione in inglese del nome per supportare la localizzazione per tutte le lingue."
+  "CoC7.CoCIDBatch.summary": "Il Sistema CoC7 ha introdotto un ID di Sistema (CoC ID). Questo permette al sistema di identificare i documenti di FoundryVTT per abilità di esempio. Questa pagina ti permetterà di impostare l'id per esistenti documenti {type}. L'ID di Sistema dovrebbe usare la traduzione in inglese del nome per supportare la localizzazione per tutte le lingue.",
+
+  "CoC7.TokenCreationRoll.Title": "Lancio di dadi rilevato",
+  "CoC7.TokenCreationRoll.Prompt": "Quest pedina ha caratteristiche o abilità da lancio di dadi.<br>Cosa vuoi fare?",
+  "CoC7.TokenCreationRoll.ButtonRoll": "Lancia dadi per tutto",
+  "CoC7.TokenCreationRoll.ButtonAverage": "Media per tutto"
 }
