@@ -9,6 +9,8 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Prevent cancelling casting spells from overwriting rolls with a fixed value
+
 ## Version 0.10.10
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
