@@ -17,7 +17,7 @@ export class CoC7Spell extends CoC7Item {
       /** This is not owned by any Actor */
       return ui.notifications.error(game.i18n.localize('CoC7.NotOwned'))
     }
-    const costs = this.system.costs
+    const costs = foundry.utils.duplicate(this.system.costs)
     const losses = []
     let convertSurplusIntoHitPoints
     costs.magicPoints = CoC7Utilities.isFormula(costs.magicPoints)
