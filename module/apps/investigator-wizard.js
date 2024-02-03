@@ -1065,6 +1065,14 @@ export class CoC7InvestigatorWizard extends FormApplication {
     }
   }
 
+  _canDragStart (selector) {
+    return true
+  }
+
+  _canDragDrop (selector) {
+    return true
+  }
+
   async _onDrop (event) {
     try {
       const dataList = JSON.parse(event.dataTransfer.getData('text/plain'))
