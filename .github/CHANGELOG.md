@@ -9,6 +9,7 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Reimplement Dice So Nice support to fix other people seeing rolled dice in their selected appearance
 - Prevent cancelling casting spells from overwriting rolls with a fixed value
 
 ## Version 0.10.10
