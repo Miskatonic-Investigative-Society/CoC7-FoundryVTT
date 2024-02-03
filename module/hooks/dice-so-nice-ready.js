@@ -1,6 +1,4 @@
-/* global game, Hooks */
-import { CoC7DecaderDSNFaces } from '../apps/decader-dsn-faces.js'
-
+/* global Hooks */
 export function listen () {
   Hooks.once('diceSoNiceReady', dice3d => {
     dice3d.addDicePreset({
@@ -15,6 +13,5 @@ export function listen () {
       fontScale: 0.75,
       system: 'standard'
     })
-    game.CoC7DecaderDSNFaces = new CoC7DecaderDSNFaces()
   })
 }

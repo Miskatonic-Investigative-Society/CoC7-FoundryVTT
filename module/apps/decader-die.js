@@ -1,9 +1,9 @@
-/* global DiceTerm */
+/* global Die */
 
-export class CoC7DecaderDie extends DiceTerm {
+export class CoC7DecaderDie extends Die {
   constructor (termData) {
+    termData.faces = 10
     super(termData)
-    this.faces = 10
   }
 
   get total () {
