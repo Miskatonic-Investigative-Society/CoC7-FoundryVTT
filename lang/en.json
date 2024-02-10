@@ -1298,5 +1298,7 @@
   "CoC7.TokenCreationRoll.Title": "Rollable detected",
   "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
   "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
-  "CoC7.TokenCreationRoll.ButtonAverage": "Average all"
+  "CoC7.TokenCreationRoll.ButtonAverage": "Average all",
+
+  "CoC7.RealRollDecaderPlaceholderName": "10's"
 }

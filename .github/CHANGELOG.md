@@ -9,6 +9,15 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 0.10.11
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix investigator wizard drag and drop for players
+- Label decaders in Real Dice - Manual Rolling module
+- Prevent cancelling casting spells from overwriting rolls with a fixed value
+- Reimplement Dice So Nice support to fix other people seeing rolled dice in their selected appearance
+
 ## Version 0.10.10
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.

@@ -2,21 +2,21 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (383 untranslated strings)](#cnjson)
+[cn.json (384 untranslated strings)](#cnjson)
 
-[cs.json (568 untranslated strings)](#csjson)
+[cs.json (569 untranslated strings)](#csjson)
 
-[ko.json (165 untranslated strings)](#kojson)
+[ko.json (166 untranslated strings)](#kojson)
 
-[pt-BR.json (113 untranslated strings)](#ptbrjson)
+[pt-BR.json (114 untranslated strings)](#ptbrjson)
 
-[ru.json (1229 untranslated strings)](#rujson)
+[ru.json (1230 untranslated strings)](#rujson)
 
-[sv.json (351 untranslated strings)](#svjson)
+[sv.json (352 untranslated strings)](#svjson)
 
 
 ## cn.json
-383 untranslated strings
+384 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -400,10 +400,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TokenCreationRoll.Title": "Rollable detected",
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
 "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
-"CoC7.TokenCreationRoll.ButtonAverage": "Average all"
+"CoC7.TokenCreationRoll.ButtonAverage": "Average all",
+"CoC7.RealRollDecaderPlaceholderName": "10's"
 ```
 ## cs.json
-568 untranslated strings
+569 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -972,10 +973,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TokenCreationRoll.Title": "Rollable detected",
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
 "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
-"CoC7.TokenCreationRoll.ButtonAverage": "Average all"
+"CoC7.TokenCreationRoll.ButtonAverage": "Average all",
+"CoC7.RealRollDecaderPlaceholderName": "10's"
 ```
 ## ko.json
-165 untranslated strings
+166 untranslated strings
 ```
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
 "CoC7.RollDifficultyRegularTitle": "Regular difficulty",
@@ -1141,10 +1143,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TokenCreationRoll.Title": "Rollable detected",
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
 "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
-"CoC7.TokenCreationRoll.ButtonAverage": "Average all"
+"CoC7.TokenCreationRoll.ButtonAverage": "Average all",
+"CoC7.RealRollDecaderPlaceholderName": "10's"
 ```
 ## pt-BR.json
-113 untranslated strings
+114 untranslated strings
 ```
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
@@ -1258,10 +1261,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TokenCreationRoll.Title": "Rollable detected",
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
 "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
-"CoC7.TokenCreationRoll.ButtonAverage": "Average all"
+"CoC7.TokenCreationRoll.ButtonAverage": "Average all",
+"CoC7.RealRollDecaderPlaceholderName": "10's"
 ```
 ## ru.json
-1229 untranslated strings
+1230 untranslated strings
 ```
 "CoC7.title": "Call of Cthulhu 7h Edition",
 "CoC7.Entities.Character": "Character",
@@ -2491,10 +2495,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TokenCreationRoll.Title": "Rollable detected",
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
 "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
-"CoC7.TokenCreationRoll.ButtonAverage": "Average all"
+"CoC7.TokenCreationRoll.ButtonAverage": "Average all",
+"CoC7.RealRollDecaderPlaceholderName": "10's"
 ```
 ## sv.json
-351 untranslated strings
+352 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -2846,5 +2851,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TokenCreationRoll.Title": "Rollable detected",
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
 "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
-"CoC7.TokenCreationRoll.ButtonAverage": "Average all"
+"CoC7.TokenCreationRoll.ButtonAverage": "Average all",
+"CoC7.RealRollDecaderPlaceholderName": "10's"
 ```
