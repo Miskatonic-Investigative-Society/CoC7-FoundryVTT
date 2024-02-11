@@ -1251,7 +1251,7 @@
   "CoC7.InvestigatorWizard.OccupationPersonalThisMany": "{count} 個の個人的な技能",
   "CoC7.InvestigatorWizard.CharacterAvatarImage": "自画像",
   "CoC7.InvestigatorWizard.CharacterTokenImage": "コマの画像",
-  "CoC7.InvestigatorWizard.OccupationDefaultSkills": "All {count} of the following skill(s)",
+  "CoC7.InvestigatorWizard.OccupationDefaultSkills": "以下の {count} つの技能",
   "CoC7.InvestigatorWizard.SkillSpendOccupationCountIncorrect": "あなたは {count} ／ {max} の職業技能を選択した。通常の職業技能を取り除く前にキーパーに確認すること。",
   "CoC7.InvestigatorWizard.ArchetypeDefaultSkills": "全 {count} 個の、以下の技能",
   "CoC7.InvestigatorWizard.ArchetypeOptionalSkills": "以下の技能を選ぶ前にキーパーに確認すること",
