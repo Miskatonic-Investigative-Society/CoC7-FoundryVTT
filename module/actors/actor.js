@@ -2520,8 +2520,6 @@ export class CoCActor extends Actor {
     if (!fastForward) {
       if (undefined === options.difficulty || undefined === options.modifier) {
         const usage = await RollDialog.create(options)
-        console.log('usage', usage, check)
-        check.pushing = true
         if (usage) {
           check.diceModifier = Number(usage.get('bonusDice'))
           check.difficulty = Number(usage.get('difficulty'))
@@ -2538,7 +2536,7 @@ export class CoCActor extends Actor {
     if (options.blind === 'false') check.isBlind = false
     else check.isBlind = !!options.blind
     await check.roll()
-    check.toMessage(true)
+    check.toMessage()
   }
 
   async weaponCheck (weaponData, fastForward = false) {
