@@ -2387,6 +2387,52 @@ export class CoCActor extends Actor {
     check.toMessage()
   }
 
+  static toolTipSkillText () {
+    if (
+      typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' &&
+      game.CoC7Tooltips.ToolTipHover !== null
+    ) {
+      const isCombat = game.CoC7Tooltips.ToolTipHover.classList?.contains(
+        'combat'
+      )
+      const skillId = game.CoC7Tooltips.ToolTipHover.closest('.item')?.dataset.skillId
+      const actorAppId = game.CoC7Tooltips.ToolTipHover.closest('.window-app')?.dataset?.appid
+      if (typeof skillId !== 'undefined' && typeof actorAppId !== 'undefined' && typeof ui.windows[actorAppId]?.actor?.id !== 'undefined') {
+        const actorId = ui.windows[actorAppId].actor.id
+        const actor = game.actors.get(actorId)
+        if (actor) {
+          const skill = actor.items.get(skillId)
+          if (skill) {
+            let toolTip = game.i18n.format(
+              isCombat ? 'CoC7.ToolTipCombat' : 'CoC7.ToolTipSkill',
+              {
+                skill: skill.name,
+                regular: skill.value,
+                hard: Math.floor(skill.value / 2),
+                extreme: Math.floor(skill.value / 5)
+              }
+            )
+            if (game.user.isGM) {
+              toolTip =
+                toolTip +
+                game.i18n.format('CoC7.ToolTipKeeperSkill', {
+                  other:
+                    game.settings.get('CoC7', 'stanbyGMRolls') &&
+                    actor.hasPlayerOwner
+                      ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
+                        name: actor.name
+                      })
+                      : ''
+                })
+            }
+            return toolTip
+          }
+        }
+      }
+    }
+    return false
+  }
+
   async skillCheck (skillData, fastForward, options = {}) {
     const skillIdentifier = skillData.name ? skillData.name : skillData
     const isCoCID = !!skillIdentifier.match(/^i\.skill\./)

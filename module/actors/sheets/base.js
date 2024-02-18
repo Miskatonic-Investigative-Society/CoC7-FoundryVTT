@@ -879,44 +879,11 @@ export class CoC7ActorSheet extends ActorSheet {
   toolTipSkillEnter (event) {
     const delay = parseInt(game.settings.get('CoC7', 'toolTipDelay'))
     if (delay > 0) {
-      const sheet = this
       game.CoC7Tooltips.ToolTipHover = event.currentTarget
-      game.CoC7Tooltips.toolTipTimer = setTimeout(function () {
-        if (
-          typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' &&
-          game.CoC7Tooltips.ToolTipHover !== null
-        ) {
-          const isCombat = game.CoC7Tooltips.ToolTipHover.classList?.contains(
-            'combat'
-          )
-          const item = game.CoC7Tooltips.ToolTipHover.closest('.item')
-          if (typeof item !== 'undefined') {
-            const skillId = item.dataset.skillId
-            const skill = sheet.actor.items.get(skillId)
-            let toolTip = game.i18n.format(
-              isCombat ? 'CoC7.ToolTipCombat' : 'CoC7.ToolTipSkill',
-              {
-                skill: skill.name,
-                regular: skill.value,
-                hard: Math.floor(skill.value / 2),
-                extreme: Math.floor(skill.value / 5)
-              }
-            )
-            if (game.user.isGM) {
-              toolTip =
-                toolTip +
-                game.i18n.format('CoC7.ToolTipKeeperSkill', {
-                  other:
-                    game.settings.get('CoC7', 'stanbyGMRolls') &&
-                    sheet.actor.hasPlayerOwner
-                      ? game.i18n.format('CoC7.ToolTipKeeperStandbySkill', {
-                        name: sheet.actor.name
-                      })
-                      : ''
-                })
-            }
-            game.CoC7Tooltips.displayToolTip(toolTip)
-          }
+      game.CoC7Tooltips.toolTipTimer = setTimeout(() => {
+        const toolTip = game.actors.documentClass.toolTipSkillText()
+        if (toolTip !== false) {
+          game.CoC7Tooltips.displayToolTip(toolTip)
         }
       }, delay)
     }
