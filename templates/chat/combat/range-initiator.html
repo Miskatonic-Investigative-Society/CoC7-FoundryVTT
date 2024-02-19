@@ -86,7 +86,7 @@
             <span class="{{#if trgt.extremeRange}}tag{{else}}invisible{{/if}}" title="{{localize 'CoC7.rangeCombatCard.ExtremeRange'}}">{{localize 'CoC7.rangeCombatCard.ExtremeRange'}}</span>
             <span class="{{#if trgt.outOfRange}}tag{{else}}invisible{{/if}}" title="{{localize 'CoC7.rangeCombatCard.OutOfRange'}}">{{localize 'CoC7.rangeCombatCard.OutOfRange'}}</span>
             <span class="{{#if trgt.cover}}tag{{else}}invisible{{/if}}" title="{{localize 'CoC7.rangeCombatCard.CoverTitle'}}">{{localize 'CoC7.rangeCombatCard.Cover'}}</span>
-            <span class="{{#if trgt.surprised}}tag{{else}}invisible{{/if}}" title="{{localize 'CoC7.TitleSurprised'}}">{{localize 'CoC7.combatCard.surprised'}}</span>
+            <span class="{{#if trgt.surprised}}tag{{else}}invisible{{/if}}" title="{{localize 'CoC7.rangeCombatCard.SurprisedTargetTitle'}}">{{localize 'CoC7.combatCard.surprised'}}</span>
             <span class="{{#if trgt.pointBlankRange}}tag{{else}}invisible{{/if}}" title="{{localize 'CoC7.rangeCombatCard.PointBlankRangeTitle'}}">{{localize 'CoC7.rangeCombatCard.PointBlankRange'}}</span>
             <span class="{{#if trgt.big}}tag{{else}}invisible{{/if}}" title="{{localize 'CoC7.rangeCombatCard.BigTargetTitle'}}">{{localize 'CoC7.rangeCombatCard.BigTarget'}}</span>
             <span class="{{#if trgt.small}}tag{{else}}invisible{{/if}}" title="{{localize 'CoC7.rangeCombatCard.SmallTargetTitle'}}">{{localize 'CoC7.combatCard.SmallTarget'}}</span>
@@ -101,7 +101,7 @@
 
             <div class="flexrow bonus-selection">
               <span class="flex1 toggle-switch cover target-flag {{#unless ../rolled}}simple-flag{{/unless}} {{#if trgt.cover}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.rangeCombatCard.CoverTitle'}}" style="text-align:center" data-flag="cover" data-selected={{trgt.cover}}>{{localize 'CoC7.rangeCombatCard.Cover'}}</span>
-              <span class="flex1 toggle-switch surprised target-flag {{#unless ../rolled}}simple-flag{{/unless}} {{#if trgt.surprised}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.TitleSurprised'}}" style="text-align:center" data-flag="surprised" data-selected={{trgt.surprised}}>{{localize 'CoC7.combatCard.surprised'}}</span>
+              <span class="flex1 toggle-switch surprised target-flag {{#unless ../rolled}}simple-flag{{/unless}} {{#if trgt.surprised}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.rangeCombatCard.SurprisedTargetTitle'}}" style="text-align:center" data-flag="surprised" data-selected={{trgt.surprised}}>{{localize 'CoC7.combatCard.surprised'}}</span>
               <span class="flex1 toggle-switch pointBlankRange target-flag {{#unless ../rolled}}simple-flag{{/unless}} {{#if trgt.pointBlankRange}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.rangeCombatCard.PointBlankRangeTitle'}}" style="text-align:center" data-flag="point-blank-range" data-selected={{trgt.pointBlankRange}}>{{localize 'CoC7.rangeCombatCard.PointBlankRange'}}</span>
             </div>
 
