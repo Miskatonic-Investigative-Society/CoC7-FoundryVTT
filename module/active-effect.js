@@ -92,24 +92,24 @@ export default class CoC7ActiveEffect extends ActiveEffect {
     const categories = {
       temporary: {
         type: 'temporary',
-        label: game.i18n.localize('Temporary'),
+        label: game.i18n.localize('CoC7.Temporary'),
         effects: []
       },
       passive: {
         type: 'passive',
-        label: game.i18n.localize('Passive'),
+        label: game.i18n.localize('CoC7.Passive'),
         effects: []
       },
       inactive: {
         type: 'inactive',
-        label: game.i18n.localize('Inactive'),
+        label: game.i18n.localize('CoC7.Inactive'),
         effects: []
       },
       suppressed: {
         type: 'suppressed',
-        label: game.i18n.localize('Suppressed'),
+        label: game.i18n.localize('CoC7.Suppressed'),
         effects: [],
-        info: [game.i18n.localize('Unavailable')]
+        info: [game.i18n.localize('CoC7.Unavailable')]
       }
     }
 
