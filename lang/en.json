@@ -1300,5 +1300,11 @@
   "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
   "CoC7.TokenCreationRoll.ButtonAverage": "Average all",
 
-  "CoC7.RealRollDecaderPlaceholderName": "10's"
+  "CoC7.RealRollDecaderPlaceholderName": "10's",
+
+  "CoC7.Temporary": "Temporary",
+  "CoC7.Passive": "Passive",
+  "CoC7.Inactive": "Inactive",
+  "CoC7.Suppressed": "Suppressed",
+  "CoC7.Unavailable": "Unavailable"
 }
