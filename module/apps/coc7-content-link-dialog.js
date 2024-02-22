@@ -179,6 +179,9 @@ export class CoC7ContentLinkDialog extends FormApplication {
         case 'hasIcon':
           this.object[key] = formData[key]
           break
+        case 'pushing':
+          this.object.link.setValue(key, formData[key] === true)
+          break
         case 'effect.label':
           effect.label = formData[key]
           hasEffect = true
@@ -311,7 +314,7 @@ export class CoC7ContentLinkDialog extends FormApplication {
     } else if (link.id !== '') {
       this.object.hasID = 'fromDirectory'
     }
-    if (link.difficulty !== CoC7Check.difficultyLevel.regular || parseInt(link.modifier, 10) !== 0) {
+    if (link.difficulty !== CoC7Check.difficultyLevel.regular || parseInt(link.modifier, 10) !== 0 || link.isPushing === true) {
       this.object.hasModifiers = true
     }
     if (link.displayName !== '') {
