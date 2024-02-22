@@ -231,7 +231,21 @@ export function registerSettings () {
     default: false,
     type: Boolean
   })
-
+  /** Default behavior when NPC is created on a scene */
+  game.settings.register('CoC7', 'tokenDropMode', {
+    name: 'SETTINGS.TokenDropMode',
+    hint: 'SETTINGS.TokenDropModeHint',
+    scope: 'world',
+    config: true,
+    default: 'ask',
+    type: String,
+    choices: {
+      ask: 'SETTINGS.TokenDropModeAsk',
+      roll: 'SETTINGS.TokenDropModeRoll',
+      average: 'SETTINGS.TokenDropModeAverage',
+      ignore: 'SETTINGS.TokenDropModeIgnore'
+    }
+  })
   /**
    * Game Artwork Settings
    */

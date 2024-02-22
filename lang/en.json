@@ -1176,6 +1176,12 @@
   "SETTINGS.AdviseAllPlayer": "Notify all players",
   "SETTINGS.OneBlockBackStory": "One block backstory",
   "SETTINGS.OneBlockBackStoryHint": "Turn backstory to one editor block, but you can format/add links.",
+  "SETTINGS.TokenDropMode": "When creating NPC :",
+  "SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
+  "SETTINGS.TokenDropModeAsk": "Ask what to do",
+  "SETTINGS.TokenDropModeRoll": "Roll what you can",
+  "SETTINGS.TokenDropModeAverage": "Average rolls",
+  "SETTINGS.TokenDropModeIgnore": "Do nothing",
   "SETTINGS.EnableStatusIcons": "Enable status icons",
   "SETTINGS.EnableStatusIconsHint": "Set if combat and sanity effects icons are shown in tokens.",
   "SETTINGS.ShowExperimentalFeatures": "Show Experimental Features",
@@ -1299,6 +1305,9 @@
   "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
   "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
   "CoC7.TokenCreationRoll.ButtonAverage": "Average all",
+  "CoC7.TokenCreationRoll.Rolled": "{name} characteristics and skills rolled",
+  "CoC7.TokenCreationRoll.Averaged": "{name} characteristics and skills averaged",
+  
 
   "CoC7.RealRollDecaderPlaceholderName": "10's"
 }
