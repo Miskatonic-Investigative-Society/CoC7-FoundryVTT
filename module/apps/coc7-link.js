@@ -103,7 +103,7 @@ export class CoC7Link {
     if (data.difficulty) {
       data.difficulty = CoC7Utilities.convertDifficulty(data.difficulty)
     }
-    data.pushing = (data.pushing == true || (data.pushing ?? '').toString().toLowerCase() === 'true')
+    data.pushing = (data.pushing === true || (data.pushing ?? '').toString().toLowerCase() === 'true')
     return data
   }
 
@@ -306,7 +306,7 @@ export class CoC7Link {
           options += `,modifier:${eventData.modifier}`
         }
         if (typeof eventData.pushing !== 'undefined' && eventData.pushing === true) {
-          options += `,pushing:true`
+          options += ',pushing:true'
         }
         if (eventData.icon) {
           const parts = eventData.icon.match(/^(https?):\/\/(.+)$/)
