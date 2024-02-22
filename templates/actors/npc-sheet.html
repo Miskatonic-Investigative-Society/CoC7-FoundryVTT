@@ -216,7 +216,7 @@
 
         <div class="condition-monitors flexrow">
           {{#if isDying}}
-            <a class='dying-check' style="text-align: center;font-size: 20px;" title="Check if you'll die immediately"><i class="fas fa-dice-d20"></i></a>
+            <a class='dying-check' style="text-align: center;font-size: 20px;" title="{{localize 'CoC7.DyingCheck'}}"><i class="fas fa-dice-d20"></i></a>
           {{else}}
             <a class="condition-monitor {{#if data.system.conditions.prone.value}}status-on{{/if}}" title="{{localize 'CoC7.Prone'}}" data-condition='prone'> <i class="game-icon game-icon-falling"></i></a>
             <a class="condition-monitor {{#if data.system.conditions.unconscious.value}}status-on{{/if}}" title="{{localize 'CoC7.Unconsious'}}" data-condition="unconscious"> <i class="game-icon game-icon-knocked-out-stars"></i></a>
@@ -262,9 +262,9 @@
                 <a class="lock" style="flex: 0 0 16px;" title="{{localize 'CoC7.LockActor'}}" data-locked="false"> <i class="fas fa-lock-open"></i></a>
                 {{#if allowFormula}}
                   {{#if displayFormula}}
-                    <a class="formula" style="flex: 0 0 16px;" title="{{localize 'CoC7.NpcCharacteristicsFormula'}}" data-locked="true"> <i class="fas fa-square-root-alt"></i></a>
+                    <a class="formula" style="flex: 0 0 16px;" title="{{localize 'CoC7.NpcCharacteristicsValues'}}" data-locked="true"> <i class="fas fa-user-edit"></i></a>
                   {{else}}
-                    <a class="formula" style="flex: 0 0 16px;" title="{{localize 'CoC7.NpcCharacteristicsValues'}}" data-locked="false"> <i class="fas fa-user-edit"></i></a>
+                    <a class="formula" style="flex: 0 0 16px;" title="{{localize 'CoC7.NpcCharacteristicsFormula'}}" data-locked="false"> <i class="fas fa-square-root-alt"></i></a>
                   {{/if}}
                 {{/if}}
               {{/if}}

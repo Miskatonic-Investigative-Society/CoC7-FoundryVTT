@@ -4,15 +4,15 @@
       <div class="item-name" style="display: flex; flex-direction: row; height: 24px;">
         <input type="hidden" name="name" value="{{item.name}}" />
         {{#if isSpecialized}}
-          <input class="item-class" style="flex: 1;" type="text" name="system.skillName" value="{{data.system.skillName}}" placeholder="name" />
+          <input class="item-class" style="flex: 1;" type="text" name="system.skillName" value="{{data.system.skillName}}" placeholder="{{localize 'CoC7.Name'}}" />
           <span style="line-height: 22px;padding-right: 3px;">/</span>
           {{#if canModifySpec}}
-            <input class="item-subclass" style="flex: 1;" type="text" name="system.specialization" value="{{data.system.specialization}}" placeholder="specialization" />
+            <input class="item-subclass" style="flex: 1;" type="text" name="system.specialization" value="{{data.system.specialization}}" placeholder="{{localize 'CoC7.SkillSpecial'}}" />
           {{else}}
             <div class="item-subclass" style="flex: 1;line-height: 22px;">{{data.system.specialization}}</div>
           {{/if}}
         {{else}}
-          <input class="item-class" style="flex: 1;" type="text" name="system.skillName" value="{{data.system.skillName}}" placeholder="name" />
+          <input class="item-class" style="flex: 1;" type="text" name="system.skillName" value="{{data.system.skillName}}" placeholder="{{localize 'CoC7.Name'}}" />
         {{/if}}
         {{#if hadNonCharacterOwner}}
           <label>{{localize 'CoC7.Value'}}</label>
