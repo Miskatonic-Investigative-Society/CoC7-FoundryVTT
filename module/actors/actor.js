@@ -2509,16 +2509,17 @@ export class CoCActor extends Actor {
     }
 
     const check = new CoC7Check()
+    const isPushing = (options.pushing ?? '').toString().toLowerCase() === 'true'
 
-    if (undefined !== options.modifier) {
+    if (typeof options.modifier !== 'undefined') {
       check.diceModifier = Number(options.modifier)
     }
-    if (undefined !== options.difficulty) {
+    if (typeof options.difficulty !== 'undefined') {
       check.difficulty = CoC7Utilities.convertDifficulty(options.difficulty)
     }
 
     if (!fastForward) {
-      if (undefined === options.difficulty || undefined === options.modifier) {
+      if (typeof options.difficulty === 'undefined' || typeof options.modifier === 'undefined') {
         const usage = await RollDialog.create(options)
         if (usage) {
           check.diceModifier = Number(usage.get('bonusDice'))
@@ -2535,8 +2536,11 @@ export class CoCActor extends Actor {
     check.skill = skill[0].id
     if (options.blind === 'false') check.isBlind = false
     else check.isBlind = !!options.blind
+    if (isPushing) {
+      check.pushing = true
+    }
     await check.roll()
-    check.toMessage()
+    check.toMessage(isPushing)
   }
 
   async weaponCheck (weaponData, fastForward = false) {

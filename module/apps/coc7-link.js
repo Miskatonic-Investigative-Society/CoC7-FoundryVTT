@@ -26,8 +26,9 @@ import { chatHelper, isCtrlKey } from '../chat/helper.js'
  *   name: name of the skill/characteristic.
  *   [difficulty]: ? (blind), 0 (regular), + (hard), ++ (extreme), +++ (critical).
  *   [modifier]: -x (x penalty dice), +x (x bonus dice), 0 (no modifier).
- *   [icon]: icon tu use (font awsome).
+ *   [icon]: icon to use (font awsome).
  *   [blind]: will trigger a blind roll.
+ *   [pushing]: true means is a pushed roll
  *
  * [DISPLAYED_NAME: name to display.]
  *
@@ -102,6 +103,7 @@ export class CoC7Link {
     if (data.difficulty) {
       data.difficulty = CoC7Utilities.convertDifficulty(data.difficulty)
     }
+    data.pushing = (data.pushing === true || (data.pushing ?? '').toString().toLowerCase() === 'true')
     return data
   }
 
@@ -129,6 +131,7 @@ export class CoC7Link {
       linkType: CoC7Link.LINK_TYPE.SKILL,
       difficulty: CoC7Check.difficultyLevel.regular,
       modifier: 0,
+      pushing: false,
       object: {
         label: game.i18n.localize('CoC7.EffectNew'),
         icon: 'icons/svg/aura.svg',
@@ -137,6 +140,9 @@ export class CoC7Link {
     }, data)
     for (const key of ['name', 'displayName', 'icon', 'id', 'pack', 'sanMin', 'sanMax', 'sanReason']) {
       cls.object[key] = cls.object[key] ?? ''
+    }
+    for (const key of ['pushing']) {
+      cls.object[key] = (cls.object[key] ?? '').toString().toLowerCase() === 'true'
     }
     if (typeof cls.object.object.icon !== 'undefined' && typeof cls.object.object.external !== 'undefined' && ['http', 'https'].includes(cls.object.object.external)) {
       cls.object.object.icon = cls.object.object.external + '://' + cls.object.object.icon
@@ -201,7 +207,7 @@ export class CoC7Link {
           humanName = CoC7Utilities.getCharacteristicNames(data.dataset.name)?.label
         }
         title = game.i18n.format(
-          `CoC7.LinkCheck${!data.dataset.difficulty ? '' : 'Diff'}${!data.dataset.modifier ? '' : 'Modif'}`,
+          `CoC7.LinkCheck${!data.dataset.difficulty ? '' : 'Diff'}${!data.dataset.modifier ? '' : 'Modif'}${!data.dataset.pushing ? '' : 'Pushing'}`,
           {
             difficulty,
             modifier: data.dataset.modifier,
@@ -298,6 +304,9 @@ export class CoC7Link {
         }
         if (typeof eventData.modifier !== 'undefined' && eventData.modifier !== 0) {
           options += `,modifier:${eventData.modifier}`
+        }
+        if (typeof eventData.pushing !== 'undefined' && eventData.pushing === true) {
+          options += ',pushing:true'
         }
         if (eventData.icon) {
           const parts = eventData.icon.match(/^(https?):\/\/(.+)$/)
@@ -619,5 +628,9 @@ export class CoC7Link {
 
   get isBlind () {
     return this.isCheck && this.object.blind
+  }
+
+  get isPushing () {
+    return this.object.pushing === true
   }
 }
