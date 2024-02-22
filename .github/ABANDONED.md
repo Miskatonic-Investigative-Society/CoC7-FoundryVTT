@@ -2,21 +2,21 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (384 untranslated strings)](#cnjson)
+[cn.json (401 untranslated strings)](#cnjson)
 
-[cs.json (569 untranslated strings)](#csjson)
+[cs.json (586 untranslated strings)](#csjson)
 
-[ko.json (166 untranslated strings)](#kojson)
+[ko.json (183 untranslated strings)](#kojson)
 
-[pt-BR.json (114 untranslated strings)](#ptbrjson)
+[pt-BR.json (131 untranslated strings)](#ptbrjson)
 
-[ru.json (1230 untranslated strings)](#rujson)
+[ru.json (1247 untranslated strings)](#rujson)
 
-[sv.json (352 untranslated strings)](#svjson)
+[sv.json (369 untranslated strings)](#svjson)
 
 
 ## cn.json
-384 untranslated strings
+401 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -71,6 +71,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CleanSkillListHint": "<p>This will Clean your skill list by removing specialization from skill name.</p> <p>This will avoid to display skill as : 'specialization(specialization(skill))'</p>",
 "CoC7.ReduceSanityLimits": "Reduced all sanity limits by one",
 "CoC7.WeaponSkillMain": "Main skill",
+"CoC7.LinkCheckPushing": " {name} check - pushing",
+"CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
+"CoC7.LinkCheckModifPushing": " {name} check - pushing({modifier})",
+"CoC7.LinkCheckDiffModifPushing": "[{difficulty}] {name} check - pushing({modifier})",
 "CoC7.MonetaryTitle": "Cash and Assets",
 "CoC7.MonetaryTypeNone": "None",
 "CoC7.MonetaryTypeDeniers": "Deniers / Pennies",
@@ -298,6 +302,12 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.TrustedCanModfyChatCardHint": "Enabling this setting will give permission to trusted users to select options on chat card. The GM only section will still not be visible to them",
 "SETTINGS.TrustedCanSeeChatCard": "Allow trusted user to see GM only sections",
 "SETTINGS.TrustedCanSeeChatCardHint": "Enabling this setting will give permission to trusted users to see GM only section on chat card. Use this with caution!",
+"SETTINGS.TokenDropMode": "When creating NPC :",
+"SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
+"SETTINGS.TokenDropModeAsk": "Ask what to do",
+"SETTINGS.TokenDropModeRoll": "Roll what you can",
+"SETTINGS.TokenDropModeAverage": "Average rolls",
+"SETTINGS.TokenDropModeIgnore": "Do nothing",
 "SETTINGS.ChaseShowTokenMovement": "Show token movement.",
 "SETTINGS.ChaseShowTokenMovementHint": "Show movement on the grid when a token is moved to the next location.",
 "SETTINGS.UseContextMenus": "Use context menus",
@@ -401,10 +411,17 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
 "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
 "CoC7.TokenCreationRoll.ButtonAverage": "Average all",
-"CoC7.RealRollDecaderPlaceholderName": "10's"
+"CoC7.TokenCreationRoll.Rolled": "{name} characteristics and skills rolled",
+"CoC7.TokenCreationRoll.Averaged": "{name} characteristics and skills averaged",
+"CoC7.RealRollDecaderPlaceholderName": "10's",
+"CoC7.Temporary": "Temporary",
+"CoC7.Passive": "Passive",
+"CoC7.Inactive": "Inactive",
+"CoC7.Suppressed": "Suppressed",
+"CoC7.Unavailable": "Unavailable"
 ```
 ## cs.json
-569 untranslated strings
+586 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -509,6 +526,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.AddSpell": "Add spell",
 "CoC7.WeaponSkillMain": "Main skill",
 "CoC7.InventoryIsCurrentlyEmpty": "Inventory is currently empty.",
+"CoC7.LinkCheckPushing": " {name} check - pushing",
+"CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
+"CoC7.LinkCheckModifPushing": " {name} check - pushing({modifier})",
+"CoC7.LinkCheckDiffModifPushing": "[{difficulty}] {name} check - pushing({modifier})",
 "CoC7.MonetaryTitle": "Cash and Assets",
 "CoC7.MonetaryTypeNone": "None",
 "CoC7.MonetaryTypeDeniers": "Deniers / Pennies",
@@ -860,6 +881,12 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.ArtPauseTextHint": "Leave blank for default",
 "SETTINGS.StanbyGMRolls": "Standby Keeper rolls",
 "SETTINGS.StanbyGMRollsHint": "When the Keeper is making a roll from an assigned character sheet, display a roll button instead of rolling",
+"SETTINGS.TokenDropMode": "When creating NPC :",
+"SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
+"SETTINGS.TokenDropModeAsk": "Ask what to do",
+"SETTINGS.TokenDropModeRoll": "Roll what you can",
+"SETTINGS.TokenDropModeAverage": "Average rolls",
+"SETTINGS.TokenDropModeIgnore": "Do nothing",
 "SETTINGS.EnableStatusIcons": "Enable status icons",
 "SETTINGS.EnableStatusIconsHint": "Set if combat and sanity effects icons are shown in tokens.",
 "SETTINGS.ShowExperimentalFeatures": "Show Experimental Features",
@@ -974,10 +1001,17 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
 "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
 "CoC7.TokenCreationRoll.ButtonAverage": "Average all",
-"CoC7.RealRollDecaderPlaceholderName": "10's"
+"CoC7.TokenCreationRoll.Rolled": "{name} characteristics and skills rolled",
+"CoC7.TokenCreationRoll.Averaged": "{name} characteristics and skills averaged",
+"CoC7.RealRollDecaderPlaceholderName": "10's",
+"CoC7.Temporary": "Temporary",
+"CoC7.Passive": "Passive",
+"CoC7.Inactive": "Inactive",
+"CoC7.Suppressed": "Suppressed",
+"CoC7.Unavailable": "Unavailable"
 ```
 ## ko.json
-166 untranslated strings
+183 untranslated strings
 ```
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
 "CoC7.RollDifficultyRegularTitle": "Regular difficulty",
@@ -998,6 +1032,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SkillPickNameOnly": "Select Specialization",
 "CoC7.SkillSpecializationIsUnique": "Unique Specialization",
 "CoC7.UnarmedWeaponName": "Unarmed",
+"CoC7.LinkCheckPushing": " {name} check - pushing",
+"CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
+"CoC7.LinkCheckModifPushing": " {name} check - pushing({modifier})",
+"CoC7.LinkCheckDiffModifPushing": "[{difficulty}] {name} check - pushing({modifier})",
 "CoC7.MonetaryTitle": "Cash and Assets",
 "CoC7.MonetaryTypeNone": "None",
 "CoC7.MonetaryTypeDeniers": "Deniers / Pennies",
@@ -1047,6 +1085,12 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Settings.DropCoCID.UseCoCID": "Use CoC ID Where Possible",
 "CoC7.Settings.DropCoCID.IgnoreCoCID": "Do Not Use CoC ID",
 "SETTINGS.DefaultDifficulty": "Default check difficulty",
+"SETTINGS.TokenDropMode": "When creating NPC :",
+"SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
+"SETTINGS.TokenDropModeAsk": "Ask what to do",
+"SETTINGS.TokenDropModeRoll": "Roll what you can",
+"SETTINGS.TokenDropModeAverage": "Average rolls",
+"SETTINGS.TokenDropModeIgnore": "Do nothing",
 "SETTINGS.SceneDistanceNotCalcualtedNoError": "Don't show error for ranged distance",
 "SETTINGS.SceneDistanceNotCalcualtedNoErrorHint": "When starting a ranged combat if playing theatre of the mind do not show the unable to calculate distance message.",
 "CoC7.InvestigatorWizard.Title": "Investigator Creation Wizard",
@@ -1144,14 +1188,25 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
 "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
 "CoC7.TokenCreationRoll.ButtonAverage": "Average all",
-"CoC7.RealRollDecaderPlaceholderName": "10's"
+"CoC7.TokenCreationRoll.Rolled": "{name} characteristics and skills rolled",
+"CoC7.TokenCreationRoll.Averaged": "{name} characteristics and skills averaged",
+"CoC7.RealRollDecaderPlaceholderName": "10's",
+"CoC7.Temporary": "Temporary",
+"CoC7.Passive": "Passive",
+"CoC7.Inactive": "Inactive",
+"CoC7.Suppressed": "Suppressed",
+"CoC7.Unavailable": "Unavailable"
 ```
 ## pt-BR.json
-114 untranslated strings
+131 untranslated strings
 ```
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
 "CoC7.SkillSpecializationIsUnique": "Unique Specialization",
+"CoC7.LinkCheckPushing": " {name} check - pushing",
+"CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
+"CoC7.LinkCheckModifPushing": " {name} check - pushing({modifier})",
+"CoC7.LinkCheckDiffModifPushing": "[{difficulty}] {name} check - pushing({modifier})",
 "CoC7.MonetaryTitle": "Cash and Assets",
 "CoC7.MonetaryTypeNone": "None",
 "CoC7.MonetaryTypeDeniers": "Deniers / Pennies",
@@ -1184,6 +1239,12 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorTokenIncorrect": "Unable to find selected token",
 "CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",
 "CoC7.System.Documentation": "View CoC7 System Manual",
+"SETTINGS.TokenDropMode": "When creating NPC :",
+"SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
+"SETTINGS.TokenDropModeAsk": "Ask what to do",
+"SETTINGS.TokenDropModeRoll": "Roll what you can",
+"SETTINGS.TokenDropModeAverage": "Average rolls",
+"SETTINGS.TokenDropModeIgnore": "Do nothing",
 "SETTINGS.SceneDistanceNotCalcualtedNoError": "Don't show error for ranged distance",
 "SETTINGS.SceneDistanceNotCalcualtedNoErrorHint": "When starting a ranged combat if playing theatre of the mind do not show the unable to calculate distance message.",
 "CoC7.InvestigatorWizard.Title": "Investigator Creation Wizard",
@@ -1262,10 +1323,17 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
 "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
 "CoC7.TokenCreationRoll.ButtonAverage": "Average all",
-"CoC7.RealRollDecaderPlaceholderName": "10's"
+"CoC7.TokenCreationRoll.Rolled": "{name} characteristics and skills rolled",
+"CoC7.TokenCreationRoll.Averaged": "{name} characteristics and skills averaged",
+"CoC7.RealRollDecaderPlaceholderName": "10's",
+"CoC7.Temporary": "Temporary",
+"CoC7.Passive": "Passive",
+"CoC7.Inactive": "Inactive",
+"CoC7.Suppressed": "Suppressed",
+"CoC7.Unavailable": "Unavailable"
 ```
 ## ru.json
-1230 untranslated strings
+1247 untranslated strings
 ```
 "CoC7.title": "Call of Cthulhu 7h Edition",
 "CoC7.Entities.Character": "Character",
@@ -1740,6 +1808,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.LinkCheckDiff": "[{difficulty}] {name} check",
 "CoC7.LinkCheckModif": " {name} check({modifier})",
 "CoC7.LinkCheckDiffModif": "[{difficulty}] {name} check({modifier})",
+"CoC7.LinkCheckPushing": " {name} check - pushing",
+"CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
+"CoC7.LinkCheckModifPushing": " {name} check - pushing({modifier})",
+"CoC7.LinkCheckDiffModifPushing": "[{difficulty}] {name} check - pushing({modifier})",
 "CoC7.LinkSanLoss": " SAN loss ({sanMin}/{sanMax})",
 "CoC7.LinkSanLossDiff": "[{difficulty}] SAN loss ({sanMin}/{sanMax})",
 "CoC7.LinkSanLossModif": " SAN loss({modifier}) ({sanMin}/{sanMax})",
@@ -2379,6 +2451,12 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.AdviseAllPlayer": "Notify all players",
 "SETTINGS.OneBlockBackStory": "One block backstory",
 "SETTINGS.OneBlockBackStoryHint": "Turn backstory to one editor block, but you can format/add links.",
+"SETTINGS.TokenDropMode": "When creating NPC :",
+"SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
+"SETTINGS.TokenDropModeAsk": "Ask what to do",
+"SETTINGS.TokenDropModeRoll": "Roll what you can",
+"SETTINGS.TokenDropModeAverage": "Average rolls",
+"SETTINGS.TokenDropModeIgnore": "Do nothing",
 "SETTINGS.EnableStatusIcons": "Enable status icons",
 "SETTINGS.EnableStatusIconsHint": "Set if combat and sanity effects icons are shown in tokens.",
 "SETTINGS.ShowExperimentalFeatures": "Show Experimental Features",
@@ -2496,10 +2574,17 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
 "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
 "CoC7.TokenCreationRoll.ButtonAverage": "Average all",
-"CoC7.RealRollDecaderPlaceholderName": "10's"
+"CoC7.TokenCreationRoll.Rolled": "{name} characteristics and skills rolled",
+"CoC7.TokenCreationRoll.Averaged": "{name} characteristics and skills averaged",
+"CoC7.RealRollDecaderPlaceholderName": "10's",
+"CoC7.Temporary": "Temporary",
+"CoC7.Passive": "Passive",
+"CoC7.Inactive": "Inactive",
+"CoC7.Suppressed": "Suppressed",
+"CoC7.Unavailable": "Unavailable"
 ```
 ## sv.json
-352 untranslated strings
+369 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -2544,6 +2629,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CleanSkillList": "Clean skill list",
 "CoC7.CleanSkillListHint": "<p>This will Clean your skill list by removing specialization from skill name.</p> <p>This will avoid to display skill as : 'specialization(specialization(skill))'</p>",
 "CoC7.WeaponSkillMain": "Main skill",
+"CoC7.LinkCheckPushing": " {name} check - pushing",
+"CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
+"CoC7.LinkCheckModifPushing": " {name} check - pushing({modifier})",
+"CoC7.LinkCheckDiffModifPushing": "[{difficulty}] {name} check - pushing({modifier})",
 "CoC7.MonetaryTitle": "Cash and Assets",
 "CoC7.MonetaryTypeNone": "None",
 "CoC7.MonetaryTypeDeniers": "Deniers / Pennies",
@@ -2749,6 +2838,12 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.TrustedCanModfyChatCardHint": "Enabling this setting will give permission to trusted users to select options on chat card. The GM only section will still not be visible to them",
 "SETTINGS.TrustedCanSeeChatCard": "Allow trusted user to see GM only sections",
 "SETTINGS.TrustedCanSeeChatCardHint": "Enabling this setting will give permission to trusted users to see GM only section on chat card. Use this with caution!",
+"SETTINGS.TokenDropMode": "When creating NPC :",
+"SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
+"SETTINGS.TokenDropModeAsk": "Ask what to do",
+"SETTINGS.TokenDropModeRoll": "Roll what you can",
+"SETTINGS.TokenDropModeAverage": "Average rolls",
+"SETTINGS.TokenDropModeIgnore": "Do nothing",
 "SETTINGS.ChaseShowTokenMovement": "Show token movement.",
 "SETTINGS.ChaseShowTokenMovementHint": "Show movement on the grid when a token is moved to the next location.",
 "SETTINGS.UseContextMenus": "Use context menus",
@@ -2852,5 +2947,12 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
 "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
 "CoC7.TokenCreationRoll.ButtonAverage": "Average all",
-"CoC7.RealRollDecaderPlaceholderName": "10's"
+"CoC7.TokenCreationRoll.Rolled": "{name} characteristics and skills rolled",
+"CoC7.TokenCreationRoll.Averaged": "{name} characteristics and skills averaged",
+"CoC7.RealRollDecaderPlaceholderName": "10's",
+"CoC7.Temporary": "Temporary",
+"CoC7.Passive": "Passive",
+"CoC7.Inactive": "Inactive",
+"CoC7.Suppressed": "Suppressed",
+"CoC7.Unavailable": "Unavailable"
 ```
