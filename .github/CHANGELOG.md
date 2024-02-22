@@ -9,6 +9,11 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Created links can now be set a pushed rolls
+- Swap icons for enter formula/values on NPC sheet and message localization improvements, thanks to zeedif #1497
+- Fix players see "Rollable detected" even without permission for actor
+- Update to Japanese localization, thanks to @doumoku #1496
+
 ## Version 0.10.11
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
