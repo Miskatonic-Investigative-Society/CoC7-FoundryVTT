@@ -45,7 +45,7 @@
 
     {{#unless (or rolled notResponding)}}
       <div class="flexrow advantage-selection">
-        <span class="flex1 toggle-switch advantage {{#unless rolled}}simple-flag{{/unless}} {{#if advantage}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.BonusDieAssailantRestrained'}}" style="text-align:center" data-flag="advantage" data-selected={{advantage}}>{{localize 'CoC7.Advantage'}}</span>
+        <span class="flex1 toggle-switch advantage {{#unless rolled}}simple-flag{{/unless}} {{#if advantage}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.BonusDieAssailantReason'}}" style="text-align:center" data-flag="advantage" data-selected={{advantage}}>{{localize 'CoC7.Advantage'}}</span>
         <span class="flex1 toggle-switch disadvantage {{#unless rolled}}simple-flag{{/unless}} {{#if disadvantage}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.PenaltyDieSelfReason'}}" style="text-align:center" data-flag="disadvantage" data-selected={{disadvantage}}>{{localize 'CoC7.Disadvantage'}}</span>
       </div>
     {{/unless}}
