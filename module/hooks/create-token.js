@@ -1,8 +1,8 @@
-/* global Hooks, Dialog, game */
+/* global Hooks, Dialog, game, ui */
 export function listen () {
   Hooks.on('createToken', async (tokenDocument, options, craetorId) => {
     // Only token creator can roll
-    if( game.user.id !== craetorId) return
+    if (game.user.id !== craetorId) return
     // Set token icon correctly
     if (
       tokenDocument.texture.src === 'icons/svg/mystery-man.svg' &&
@@ -21,9 +21,9 @@ export function listen () {
               buttons: {
                 roll: {
                   label: game.i18n.localize('CoC7.TokenCreationRoll.ButtonRoll'),
-                  callback: async () => { 
+                  callback: async () => {
                     await tokenDocument._object.actor.rollCharacteristicsValue()
-                    ui.notifications.info(game.i18n.format('CoC7.TokenCreationRoll.Rolled', { name: tokenDocument.object.actor.name} ))
+                    ui.notifications.info(game.i18n.format('CoC7.TokenCreationRoll.Rolled', { name: tokenDocument.object.actor.name }))
                     tokenDocument._object.actor.locked = true
                   }
                 },
@@ -31,7 +31,7 @@ export function listen () {
                   label: game.i18n.localize('CoC7.TokenCreationRoll.ButtonAverage'),
                   callback: async () => {
                     await tokenDocument._object.actor.averageCharacteristicsValue()
-                    ui.notifications.info(game.i18n.format('CoC7.TokenCreationRoll.Averaged', { name: tokenDocument.object.actor.name} ))
+                    ui.notifications.info(game.i18n.format('CoC7.TokenCreationRoll.Averaged', { name: tokenDocument.object.actor.name }))
                     tokenDocument._object.actor.locked = true
                   }
                 },
@@ -40,23 +40,23 @@ export function listen () {
                 }
               }
             }).render(true)
-          break;
-        
+          break
+
         case 'roll':
           tokenDocument._object.actor.rollCharacteristicsValue()
-          ui.notifications.info(game.i18n.format('CoC7.TokenCreationRoll.Rolled', { name: tokenDocument.object.actor.name} ))
+          ui.notifications.info(game.i18n.format('CoC7.TokenCreationRoll.Rolled', { name: tokenDocument.object.actor.name }))
           tokenDocument._object.actor.locked = true
-          break;
+          break
 
         case 'average':
           tokenDocument._object.actor.averageCharacteristicsValue()
-          ui.notifications.info(game.i18n.format('CoC7.TokenCreationRoll.Averaged', { name: tokenDocument.object.actor.name} ))
+          ui.notifications.info(game.i18n.format('CoC7.TokenCreationRoll.Averaged', { name: tokenDocument.object.actor.name }))
           tokenDocument._object.actor.locked = true
-          break;
-  
+          break
+
         case 'ignore':
-          break;
-      } 
+          break
+      }
     }
   })
 }
