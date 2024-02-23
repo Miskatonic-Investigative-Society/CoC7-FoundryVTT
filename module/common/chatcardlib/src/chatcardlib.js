@@ -1,4 +1,4 @@
-/* global $, ChatMessage, deepClone, FormDataExtended, foundry, fromUuid, game, Hooks, mergeObject, renderTemplate, socketlib, ui */
+/* global $, ChatMessage, deepClone, FormDataExtended, foundry, fromUuid, game, Hooks, renderTemplate, socketlib, ui */
 
 const ECC_CLASS = 'enhanced-chat-card'
 
@@ -192,7 +192,7 @@ export class EnhancedChatCard {
   async initialize () {}
 
   get options () {
-    return mergeObject(this.constructor.defaultOptions, this._options)
+    return foundry.utils.mergeObject(this.constructor.defaultOptions, this._options)
   }
 
   set options (x) {
@@ -204,7 +204,7 @@ export class EnhancedChatCard {
   }
 
   get cssClasses () {
-    return this.options.classes?.join(' ')
+    return this.options.classes.concat([ECC_CLASS]).join(' ')
   }
 
   get speaker () {
@@ -257,7 +257,7 @@ export class EnhancedChatCard {
       htmlCardElement.dataset.object = escape(this.objectDataString)
     }
     htmlCardElement.dataset.eccClass = this.constructor.name
-    htmlCardElement.classList.add(...this.options.classes)
+    htmlCardElement.classList.add(...this.options.classes.concat([ECC_CLASS]))
 
     const speaker =
       this.options.speaker && !this.options.ooc
@@ -304,7 +304,7 @@ export class EnhancedChatCard {
         htmlCardElement.dataset.object = escape(this.objectDataString)
       }
       htmlCardElement.dataset.eccClass = this.constructor.name
-      htmlCardElement.classList.add(...this.options.classes)
+      htmlCardElement.classList.add(...this.options.classes.concat([ECC_CLASS]))
 
       // Update the message.
       game.enhancedChatCardsLib.socket.executeAsGM(
@@ -704,7 +704,7 @@ export class EnhancedChatCard {
   static get defaultOptions () {
     return {
       attachObject: true,
-      classes: [ECC_CLASS],
+      classes: [],
       exclude: [],
       excludeStartWith: '_',
       submitOnChange: true,

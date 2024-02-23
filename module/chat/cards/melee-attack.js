@@ -53,7 +53,8 @@ export class MeleeAttackCard extends EnhancedChatCard {
    */
   static get defaultOptions () {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      template: 'systems/CoC7/templates/chat/cards/melee-attack/main.hbs'
+      template: 'systems/CoC7/templates/chat/cards/melee-attack/main.hbs',
+      classes: ['prout', 'pouet']
     })
   }
 
@@ -270,6 +271,13 @@ export class MeleeAttackCard extends EnhancedChatCard {
 
     if (this.attackBonus !== 0) statusList.push({ name: `${game.i18n.localize('CoC7.AttackModifier')}: ${this.attackBonus}` })
     if (this.defenseBonus !== 0) statusList.push({ name: `${game.i18n.localize('CoC7.DefenseModifier')}: ${this.defenseBonus}` })
+    if (this.isAttackSuccess && this.attackRoll?.isCritical) {
+      statusList.push({
+        name: game.i18n.localize('CoC7.CritDamage'),
+        css: this.successDetails.damage.validCritFormula ? 'success' : 'failure',
+        hint: this.successDetails.damage.validCritFormula ? null : game.i18n.localize('CoC7.hint.InvalidFormula')
+      })
+    }
 
     return statusList
   }
@@ -595,6 +603,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
   }
 
   get isAttackSuccess () {
+    if (!this.attackRoll) return false
     return (
       !(this.attackRoll.successLevel <= 0) &&
       (
@@ -644,7 +653,9 @@ export class MeleeAttackCard extends EnhancedChatCard {
 
     if (details.weapon?.type === 'weapon') {
       details.damage.normal = details.weapon.getDamageFormula({ replaceDamageBonus: true, critical: false })
+      details.damage.validNormalFormula = this.isValidFormula(details.damage.normal)
       details.damage.critical = details.weapon.getDamageFormula({ replaceDamageBonus: true, critical: true })
+      details.damage.validCritFormula = this.isValidFormula(details.damage.critical)
       details.damage.special = details.weapon.system.properties.spcl ? details.weapon.system.description.special : null
     }
     return details
@@ -660,15 +671,17 @@ export class MeleeAttackCard extends EnhancedChatCard {
 
   /** Damage management */
   async rollNormalDamage (options) {
+    this.data.damage.crit = false
     return this.rollDamage()
   }
 
   async rollCriticalDamage (options) {
-    return this.rollDamage({ crit: true })
+    this.data.damage.crit = true
+    return this.rollDamage()
   }
 
   async rollDamage ({ crit = false } = {}) {
-    this.data.damage.formula = this.successDetails.damage[crit ? 'critical' : 'normal']
+    this.data.damage.formula = this.successDetails.damage[this.data.damage.crit ? 'critical' : 'normal']
     if (this.isValidFormula(this.data.damage.formula)) {
       this.data.damage.isValid = true
       if (!isNaN(Number(this.data.damage.formula))) {

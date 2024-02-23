@@ -153,7 +153,7 @@ export class CoC7ContentLinkDialog extends FormApplication {
 
   async _updateObject (event, formData) {
     let hasEffect = false
-    const effect = foundry.utils.expandObject(formData).effect
+    const effect = foundry.utils.expandObject(formData).effect || {}
     effect.changes = []
 
     for (const key in formData) {

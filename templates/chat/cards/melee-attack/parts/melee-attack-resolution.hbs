@@ -12,12 +12,25 @@
   {{/if}}
   {{#if data.damage.rolled}}
     {{{htmlDamageRoll}}}
+    <div class='card-result'>{{ localize 'CoC7.TotalDamage' }} : {{totalDamageString}}
+      <div class="die-result-overlay-br">
+        <span>
+          <button data-action="dealDamageToSelectedTarget">
+            <i class="fas fa-user-minus noRemove"></i>
+          </button>
+        </span>
+      </div>
+      </div>
   {{else}}
     <div class="card-buttons inline">
-    {{#if card.successDetails.damage.normal}}
-      <button data-action="rollNormalDamage" {{#unless card.successDetails.damage.isCritical}}class="active"{{/unless}}>{{ localize 'CoC7.RollNormal' }}</button>
+    {{#if (and card.successDetails.damage.normal card.successDetails.damage.validNormalFormula)}}
+      <button
+        data-action="rollNormalDamage"
+        {{#unless card.successDetails.damage.isCritical}}class="active"{{/unless}}>
+          {{ localize 'CoC7.RollNormal' }}
+      </button>
     {{/if}}
-    {{#if card.successDetails.damage.critical}}
+    {{#if (and card.successDetails.damage.critical card.successDetails.damage.validCritFormula)}}
       <button data-action="rollCriticalDamage" {{#if card.successDetails.damage.isCritical}}class="active"{{/if}}>{{ localize 'CoC7.RollCritical' }}</button>
     {{/if}}
     </div>
