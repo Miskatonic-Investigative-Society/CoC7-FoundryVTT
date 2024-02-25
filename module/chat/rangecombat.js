@@ -318,6 +318,7 @@ export class CoC7RangeInitiator {
     if (this.reload) modifier--
     if (this.multipleShots && !this.fullAuto) modifier--
     if (this.fullAuto) modifier -= this.currentShotRank - 1
+    modifier = Math.min(modifier, 2)
     if (modifier < -2) {
       const excess = Math.abs(modifier + 2)
       difficulty += excess
