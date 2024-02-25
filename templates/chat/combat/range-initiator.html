@@ -1,4 +1,4 @@
-<div class="coc7 chat-card range initiator" data-actor-key="{{actorKey}}" data-item-id="{{item.id}}" data-fast-forward="{{fastForward}}" data-resolved="{{resolved}}" data-rolled="{{rolled}}" data-cover="{{cover}}" data-surprised="{{surprised}}" data-auto-success="{{autoSuccess}}" data-single-shot="{{singleShot}}" data-multiple-shots="{{multipleShots}}" data-burst="{{burst}}" data-full-auto="{{fullAuto}}" data-advantage="{{advantage}}" data-disadvantage="{{disadvantage}}" data-aiming={{aiming}} data-is-GM="{{isKeeper}}" data-aimed="{{aimed}}" data-damage-rolled="{{damageRolled}}" data-damage-dealt="{{damageDealt}}" data-total-bullets-fired="{{totalBulletsFired}}" data-roll-mode="{{rollMode}}" data-is-blind="false" data-volley-size="{{volleySize}}">
+<div class="coc7 chat-card range initiator" data-actor-key="{{actorKey}}" data-item-id="{{item.id}}" data-fast-forward="{{fastForward}}" data-resolved="{{resolved}}" data-rolled="{{rolled}}" data-cover="{{cover}}" data-surprised="{{surprised}}" data-auto-success="{{autoSuccess}}" data-single-shot="{{singleShot}}" data-multiple-shots="{{multipleShots}}" data-burst="{{burst}}" data-full-auto="{{fullAuto}}" data-advantage="{{advantage}}" data-disadvantage="{{disadvantage}}" data-aiming={{aiming}} data-is-GM="{{isKeeper}}" data-aimed="{{aimed}}" data-damage-rolled="{{damageRolled}}" data-damage-dealt="{{damageDealt}}" data-total-bullets-fired="{{totalBulletsFired}}" data-roll-mode="{{rollMode}}" data-is-blind="false" data-volley-size="{{volleySize}}" data-bonus-dice="{{bonusDice}}">
   <header class="card-header flexcol">
     <div class="flexrow">
       {{#if displayActorOnCard}}
@@ -56,6 +56,21 @@
         <span class="flex1 toggle-switch disadvantage {{#unless rolled}}simple-flag{{/unless}} {{#if disadvantage}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.TitleDisadvantage'}}" style="text-align:center" data-flag="disadvantage" data-selected={{disadvantage}}>{{localize 'CoC7.Disadvantage'}}</span>
         <span class="flex1 toggle-switch aiming {{#unless rolled}}simple-flag{{/unless}} {{#if aiming}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.rangeCombatCard.AimingTitle'}}" style="text-align:center" data-flag="aiming" data-selected={{aiming}}>{{localize 'CoC7.rangeCombatCard.aiming'}}</span>
       </div>
+      <div class="flexcol">
+        <div class="flexrow">
+          <span style="flex: 1; text-align: left;">-2</span>
+          <span style="flex: 1; text-align: center;"></span>
+          <span style="flex: 1; text-align: center;">-1</span>
+          <span style="flex: 1; text-align: center;"></span>
+          <span style="flex: 1; text-align: center;">0</span>
+          <span style="flex: 1; text-align: center;"></span>
+          <span style="flex: 1; text-align: center;">+1</span>
+          <span style="flex: 1; text-align: center;"></span>
+          <span style="flex: 1; text-align: right;">+2</span>
+        </div>
+        <input class="flex2 slider gm-select-only" type="range" data-flag="bonusDice" min="-2" max="2" value="{{#if bonusDice}}{{bonusDice}}{{else}}0{{/if}}">
+      </div>
+
     {{/if}}
   </header>
 

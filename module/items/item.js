@@ -28,6 +28,8 @@ export class CoC7Item extends Item {
         data.img = 'icons/svg/aura.svg'
       } else if (data.type === 'weapon') {
         data.img = 'icons/svg/sword.svg'
+      } else if (data.type === 'talent') {
+        data.img = 'systems/CoC7/assets/icons/dice-fire.svg'
       }
     }
     /** Default behavior, just call super() and do all the default Item inits */

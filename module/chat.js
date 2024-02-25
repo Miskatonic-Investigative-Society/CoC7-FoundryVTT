@@ -116,6 +116,11 @@ export class CoC7Chat {
       '.simple-flag',
       CoC7Chat._onChatCardToggleSwitch.bind(this)
     )
+    html.on(
+      'change',
+      '.slider',
+      CoC7Chat._onSliderChanged.bind(this)
+    )
     html.on('click', '.volley-size', CoC7Chat._onChatCardVolleySize.bind(this))
 
     html.on(
@@ -356,6 +361,7 @@ export class CoC7Chat {
         for (const select of gmSelectOnly) {
           select.classList.add('inactive')
           select.classList.remove('simple-flag')
+          select.disabled = true
         }
       }
     }
@@ -543,6 +549,19 @@ export class CoC7Chat {
         } else if (event.currentTarget.classList.contains('decrease')) {
           rangeCard.changeVolleySize(-1)
         }
+      }
+    }
+  }
+
+  static async _onSliderChanged (event) {
+    event.preventDefault()
+
+    if (event.currentTarget.classList.contains('inactive')) return
+
+    const card = event.currentTarget.closest('.chat-card')
+    if (card.classList.contains('range')) {
+      if (card.classList.contains('initiator')) {
+        CoC7RangeInitiator.updateBonusSelection(event)
       }
     }
   }

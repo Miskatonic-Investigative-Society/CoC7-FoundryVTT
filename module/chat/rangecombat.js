@@ -24,6 +24,7 @@ export class CoC7RangeInitiator {
     this.tokenKey = null
     this.aimed = false
     this.totalBulletsFired = 0
+    this.bonusDice = 0
     this._targets = []
     for (const t of [...game.user.targets]) {
       const target = new CoC7RangeTarget(`${t.scene.id}.${t.id}`) //
@@ -593,6 +594,22 @@ export class CoC7RangeInitiator {
   changeVolleySize (x) {
     this.volleySize = this.volleySize + x
     this.updateChatCard()
+  }
+
+  static updateBonusSelection (event, publishUpdate = true) {
+    const card = event.currentTarget.closest('.range.initiator')
+    const flag = event.currentTarget.dataset.flag
+    const camelFlag = chatHelper.hyphenToCamelCase(flag)
+
+    // update only for local player
+    if (!publishUpdate) {
+      card.dataset[camelFlag] = parseInt(event.currentTarget.value)
+    } else {
+      // update card for all player
+      const initiator = CoC7RangeInitiator.getFromCard(card)
+      initiator[camelFlag] = parseInt(event.currentTarget.value)
+      initiator.updateChatCard()
+    }
   }
 
   static updateCardSwitch (event, publishUpdate = true) {
