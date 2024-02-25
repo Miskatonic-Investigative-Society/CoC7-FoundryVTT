@@ -497,10 +497,11 @@ export class CoC7RangeInitiator {
     if (this.multiTarget) {
       let weaponMalfunction = false
       let index = 0
+      const rollPromises = []
       while (!weaponMalfunction && this.shots.length > index) {
         const roll = await this.shootAtTarget(this.shots[index])
         if (roll.dice?.roll) {
-          await CoC7Dice.showRollDice3d(roll.dice.roll)
+          rollPromises.push(CoC7Dice.showRollDice3d(roll.dice.roll))
         }
         await this.weapon.shootBullets(
           parseInt(this.shots[index].bulletsShot) +
@@ -513,6 +514,7 @@ export class CoC7RangeInitiator {
         index++
         this.rolls.push(roll)
       }
+      await Promise.all(rollPromises)
     } else {
       const roll = await this.shootAtTarget()
       if (roll.dice?.roll) {
@@ -727,6 +729,8 @@ export class CoC7RangeInitiator {
     //  if(volleySize < 3) volleySize = 3;
     // }
     // if( this.burst) volleySize = parseInt(this.weapon.data.data.usesPerRound.burst);
+    const rollPromises = []
+
     for (let i = 0; i < hits.length; i++) {
       const h = hits[i]
       const volleySize = parseInt(h.shot.bulletsShot)
@@ -771,7 +775,7 @@ export class CoC7RangeInitiator {
           const roll = new Roll(damageFormula)
           /** MODIF 0.8.x **/
           await roll.evaluate({ async: true })
-          await CoC7Dice.showRollDice3d(roll)
+          rollPromises.push(CoC7Dice.showRollDice3d(roll))
           /*****************/
           damageRolls.push({
             formula: damageFormula,
@@ -785,7 +789,7 @@ export class CoC7RangeInitiator {
           const roll = new Roll(criticalDamageFormula)
           /** MODIF 0.8.x **/
           await roll.evaluate({ async: true })
-          await CoC7Dice.showRollDice3d(roll)
+          rollPromises.push(CoC7Dice.showRollDice3d(roll))
           /*****************/
           damageRolls.push({
             formula: criticalDamageFormula,
@@ -815,6 +819,7 @@ export class CoC7RangeInitiator {
         })
       }
     }
+    await Promise.all(rollPromises)
 
     this.damageRolled = this.damage.length !== 0
     this.updateChatCard()
