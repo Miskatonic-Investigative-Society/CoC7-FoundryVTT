@@ -51,13 +51,13 @@
         {{/if}}
       </div>
 
-      <div class="flexrow advantage-selection">
+      <!-- <div class="flexrow advantage-selection">
         <span class="flex1 toggle-switch advantage {{#unless rolled}}simple-flag{{/unless}} {{#if advantage}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.TitleAdvantage'}}" style="text-align:center" data-flag="advantage" data-selected={{advantage}}>{{localize 'CoC7.Advantage'}}</span>
         <span class="flex1 toggle-switch disadvantage {{#unless rolled}}simple-flag{{/unless}} {{#if disadvantage}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.TitleDisadvantage'}}" style="text-align:center" data-flag="disadvantage" data-selected={{disadvantage}}>{{localize 'CoC7.Disadvantage'}}</span>
         <span class="flex1 toggle-switch aiming {{#unless rolled}}simple-flag{{/unless}} {{#if aiming}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.rangeCombatCard.AimingTitle'}}" style="text-align:center" data-flag="aiming" data-selected={{aiming}}>{{localize 'CoC7.rangeCombatCard.aiming'}}</span>
-      </div>
+      </div> -->
       <div class="flexrow">
-        <div class="flex1"><span>Bonus</span></div>
+        <label class="flex0" style="font-size: large;">Bonus : </label>
         <div class="flexcol flex3">
           <div class="flexrow">
             <span style="flex: none; display: block;">-2</span>
@@ -72,7 +72,7 @@
           </div>
           <input class="flex2 slider gm-select-only" type="range" data-flag="bonusDice" min="-2" max="2" value="{{#if bonusDice}}{{bonusDice}}{{else}}0{{/if}}">
         </div>
-        <div class="flex0"><i class="fas fa-crosshairs"></i> </div>
+        <div class="flex0 toggle-switch {{#unless rolled}}simple-flag{{/unless}} {{#if aiming}}switched-on{{/if}} gm-select-only" style="font-size: large;"  title="{{localize 'CoC7.rangeCombatCard.aiming'}}: {{localize 'CoC7.rangeCombatCard.AimingTitle'}}" data-flag="aiming"><i class="fas fa-crosshairs"></i> </div>
       </div>
 
     {{/if}}

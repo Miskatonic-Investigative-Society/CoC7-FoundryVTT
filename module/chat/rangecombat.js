@@ -12,8 +12,8 @@ export class CoC7RangeInitiator {
     this.cover = false
     this.surprised = false
     this.autoSuccess = false
-    this.advantage = false
-    this.disadvantage = false
+    // this.advantage = false
+    // this.disadvantage = false
     this.messageId = null
     this.targetCard = null
     this.rolled = false
@@ -312,8 +312,9 @@ export class CoC7RangeInitiator {
       : (difficulty = target.difficulty)
     let difficultyName = ''
     if (this.aiming && this.currentShotRank === 1) modifier++
-    if (this.advantage) modifier++
-    if (this.disadvantage) modifier--
+    modifier += this.bonusDice
+    // if (this.advantage) modifier++
+    // if (this.disadvantage) modifier--
     if (this.reload) modifier--
     if (this.multipleShots && !this.fullAuto) modifier--
     if (this.fullAuto) modifier -= this.currentShotRank - 1
