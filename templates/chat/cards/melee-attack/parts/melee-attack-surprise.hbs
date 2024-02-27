@@ -1,6 +1,6 @@
 <div><span>-----SURPRISE-----</span></div>
 <div class="flexcol surprise-check">
-  {{#if card.attacker.hasPlayerOwner}} <span>{{ localize 'CoC7.YouTryToSurprise' }}</span>
+  {{#if card.attackIsRollingForSurprise}} <span>{{ localize 'CoC7.YouTryToSurprise' }}</span>
   {{else}} <span>{{ localize 'CoC7.SomeoneTryingToSurpriseYou' }}</span> {{/if}}
   {{#if (eq data.checks.detection.state card.rollStates.requested)}}
     <div class="card-buttons">
@@ -13,7 +13,7 @@
     </div>
   {{/if}}
   {{#if (eq data.checks.detection.state card.rollStates.closed)}}
-    {{#if card.attacker.hasPlayerOwner}}
+    {{#if card.attackIsRollingForSurprise}}
       {{#if card.defenderStartled}}
         <span>{{ localize 'CoC7.YouTakeBySurprise' }} {{#if data.checks.detection.roll}} ({{{htmlDetectionCheckInline}}}) {{/if}}</span>
         {{#if data.flags.autoHit}}

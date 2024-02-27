@@ -52,7 +52,7 @@
         <div>
           <span>ATTACKER : {{card.attacker.name}}</span>
         </div>
-        {{#if (and card.hasValidDetectionCheck card.attacker.hasPlayerOwner (gt data.checks.detection.state card.rollStates.notRequested) (not data.flags.overrideRules))}}
+        {{#if (and card.hasValidDetectionCheck card.attackIsRollingForSurprise (gt data.checks.detection.state card.rollStates.notRequested) (not data.flags.overrideRules))}}
           {{> "systems/CoC7/templates/chat/cards/melee-attack/parts/melee-attack-surprise.hbs"}}
         {{/if}}
         {{> "systems/CoC7/templates/chat/cards/melee-attack/parts/melee-attack-attacker.hbs" }}
@@ -62,7 +62,7 @@
         <div>
           <span>DEFENDER : {{card.defender.name}}</span>
         </div>
-        {{#if (and card.hasValidDetectionCheck (not card.attacker.hasPlayerOwner)  (gt data.checks.detection.state card.rollStates.notRequested) (not data.flags.overrideRules))}}
+        {{#if (and card.hasValidDetectionCheck (not card.attackIsRollingForSurprise)  (gt data.checks.detection.state card.rollStates.notRequested) (not data.flags.overrideRules))}}
           {{> "systems/CoC7/templates/chat/cards/melee-attack/parts/melee-attack-surprise.hbs"}}
         {{/if}}
         {{> "systems/CoC7/templates/chat/cards/melee-attack/parts/melee-attack-defender.hbs" }}

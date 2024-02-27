@@ -27,11 +27,15 @@ export class MeleeAttackCard extends EnhancedChatCard {
     this.data.flags.outnumbered = (this.defender && this.defender.isOutnumbered) // Check if there's a target and that taget is outnumbered already
     this.data.flags.autoHit = true // By default, surprise attacks hit automatically
     this.data.flags.allowLuck = true // Allow luck by default
-    const skill = this.attacker.hasPlayerOwner ? await CoCID.fromCoCID('i.skill.stealth') : await CoCID.fromCoCID('i.skill.spot-hidden')
-    const skillName = skill.length > 0 ? skill[0].name : ''
+    const defaultDetectionSkill = this.attackIsRollingForSurprise ? await CoCID.fromCoCID('i.skill.stealth') : await CoCID.fromCoCID('i.skill.spot-hidden')
+    const detectionSkillName = defaultDetectionSkill.length > 0 ?
+                                this.detectionCheckActor?.getSkillsByName(defaultDetectionSkill[0].name)?.length > 0 ?
+                                defaultDetectionSkill[0].name 
+                                  : ''
+                                : ''
     this.data.checks = {
       detection: {
-        name: skillName,
+        name: detectionSkillName,
         difficulty: CoC7Check.difficultyLevel.regular,
         state: this.rollStates.notRequested
       },
@@ -208,6 +212,11 @@ export class MeleeAttackCard extends EnhancedChatCard {
     return undefined !== this.defender.type
   }
 
+  /**
+   * Determine who is rolling for surprise
+   * If one of the side is a PC that side is always rolling for surprise
+   * By default attacker is rolling
+   */
   get detectionCheckActor () {
     if (this.attacker.hasPlayerOwner) return this.attacker
     if (this.defender?.hasPlayerOwner) return this.defender
@@ -236,7 +245,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
     if (this.data.flags.surprised) {
       statusList.push({ name: game.i18n.localize('CoC7.SurpriseAttack'), hint: game.i18n.localize('CoC7.hint.SurpriseAttack') })
       if (this.data.flags.canDetect) {
-        if (this.attacker.hasPlayerOwner) statusList.push({ name: game.i18n.localize('CoC7.PlayerTryToSurprise'), hint: game.i18n.localize('CoC7.hint.PlayerShouldBeRolling') })
+        if (this.attackIsRollingForSurprise) statusList.push({ name: game.i18n.localize('CoC7.PlayerTryToSurprise'), hint: game.i18n.localize('CoC7.hint.PlayerShouldBeRolling') })
         else statusList.push({ name: game.i18n.localize('CoC7.PlayerTryToDetect'), hint: game.i18n.localize('CoC7.hint.PlayerShouldBeRolling') })
         if (this.data.checks.detection.state > this.rollStates.notRequested) {
           if (this.hasValidDetectionCheck) statusList.push({ name: `${game.i18n.format('CoC7.Roll')}: ${this.data.checks.detection.name}` })
@@ -294,13 +303,19 @@ export class MeleeAttackCard extends EnhancedChatCard {
     return null
   }
 
+  get attackIsRollingForSurprise () {
+    const actor = this.detectionCheckActor
+    if(actor.id === this.attacker.id) return true
+    return false
+  }
+
   // Surprise is a success, defender is startled and attacker get a bonus
   get defenderStartled () {
     if (!this.flags.surprised) return false
     if (this.data.checks.detection.state !== this.rollStates.closed) return false
     if (this.flags.canDetect) {
-      if (this.attacker.hasPlayerOwner && this.data.checks.detection.roll?.passed) return true // Attacker try to surprise and succeed
-      if (!this.attacker.hasPlayerOwner && !this.data.checks.detection.roll?.passed) return true // Defender is surprised but see the attack
+      if (this.attackIsRollingForSurprise && this.data.checks.detection.roll?.passed) return true // Attacker try to surprise and succeed
+      if (!this.attackIsRollingForSurprise && !this.data.checks.detection.roll?.passed) return true // Defender is surprised but see the attack
       return false
     }
     return true
@@ -347,8 +362,8 @@ export class MeleeAttackCard extends EnhancedChatCard {
 
   get attackGetSurpriseBonus () {
     return (this.data.flags.surprised && !this.data.flags.canDetect) || // Suprise can't be avoided
-    (this.attacker.hasPlayerOwner && this.data.flags.canDetect && this.data.checks.detection.roll?.passed) || // Suprise can be avoided, player initiate attack, check success
-    (!this.attacker.hasPlayerOwner && this.data.flags.canDetect && this.data.checks.detection.roll?.isFailure) // Suprise can be avoided, player receive attack, check fail
+    (this.attackIsRollingForSurprise && this.data.flags.canDetect && this.data.checks.detection.roll?.passed) || // Suprise can be avoided, player initiate attack, check success
+    (!this.attackIsRollingForSurprise && this.data.flags.canDetect && this.data.checks.detection.roll?.isFailure) // Suprise can be avoided, player receive attack, check fail
   }
 
   get attackBonus () {
@@ -623,7 +638,7 @@ export class MeleeAttackCard extends EnhancedChatCard {
     )
   }
 
-  get hasWinner () {
+  get hasWinner () { //NEXT ITERATION HERE
     return this.isAttackSuccess || this.isDefenseSuccess
   }
 

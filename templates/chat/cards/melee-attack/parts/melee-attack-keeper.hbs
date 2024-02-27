@@ -77,7 +77,7 @@
       </div>
       {{/if}}
       {{#if (and data.flags.canDetect (lt data.checks.detection.state card.rollStates.requested))}}
-        {{#if card.attacker.hasPlayerOwner}}
+        {{#if card.attackIsRollingForSurprise}}
           <div class="flexrow detection-check-select">
             <label>Choose skill</label>
             <input type="text" name="data.checks.detection.name" value="{{data.checks.detection.name}}" list="attacker-check-options-{{card.messageId}}" placeholder="{{ localize 'CoC7.SelectSkill' }}" />
@@ -121,7 +121,7 @@
       {{/if}}
       {{#if (gte data.checks.detection.state card.rollStates.rolled)}}
         {{#if (eq data.checks.detection.state card.rollStates.rolled)}}
-          {{#if card.attacker.hasPlayerOwner}}
+          {{#if card.attackIsRollingForSurprise}}
             {{#if data.checks.detection.roll.passed}}
               <div class="flexrow suprised-options ecc-radio radio-switches">
                 <span class="flex1 toggle-switch ecc-switch tooltipster-active" data-description="CoC7.Hint.AutoHit" data-flag="autoHit">{{localize 'CoC7.combatCard.automaticSuccess'}}</span>
