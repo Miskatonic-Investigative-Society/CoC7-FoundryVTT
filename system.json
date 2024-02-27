@@ -39,13 +39,6 @@
       "system": "CoC7"
     },
     {
-      "label": "Pulp Talents",
-      "type": "Item",
-      "name": "pulp-talents",
-      "path": "./packs/pulp-talents.db",
-      "system": "CoC7"
-    },
-    {
       "label": "Examples",
       "type": "Actor",
       "name": "examples",
