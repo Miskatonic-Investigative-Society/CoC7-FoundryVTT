@@ -2439,14 +2439,63 @@ export class CoCActor extends Actor {
     let skill = []
     if (isCoCID) {
       // Attempt to load from actor from CoC ID
-      const item = this.getFirstSkillByCoCID(skillIdentifier)
+      let item = this.getFirstSkillByCoCID(skillIdentifier)
+      if (!item) {
+        const newSkills = await game.system.api.cocid.fromCoCIDBest({ cocid: skillIdentifier, showLoading: true })
+        if (newSkills.length === 1) {
+          await this.createEmbeddedDocuments('Item', newSkills)
+          item = this.getFirstSkillByCoCID(skillIdentifier)
+          if (item) {
+            ui.notifications.info(game.i18n.format('CoC7.InfoSkillAddedAtBase', {
+              name: item.name,
+              percent: item.value
+            }))
+          }
+        }
+      }
       if (item) {
+        options.name = item.name
         skill.push(item)
       }
     }
     if (!skill.length) {
       // Attempt to load for actor by name
       skill = this.getSkillsByName(skillIdentifier)
+      if (!skill.length) {
+        // Attempt to load skill from world
+        const newSkill = game.items.getName(skillIdentifier)
+        if (newSkill) {
+          skill.push(newSkill)
+        }
+        if (skill.length === 0) {
+          // Attempt to load skill from compendiums
+          const era = game.settings.get('CoC7', 'worldEra')
+          for (const pack of game.packs) {
+            if (pack.metadata?.type === 'Item') {
+              await pack.getIndex()
+              const newSkill = pack.getName(skillIdentifier)
+              if (newSkill) {
+                const eras = newSkill.flags?.CoC7?.cocidFlag?.eras
+                if (eras && Object.keys(eras).length > 0 && !(eras[era] ?? false)) {
+                  // NOP
+                } else {
+                  skill.push(newSkill)
+                }
+              }
+            }
+          }
+        }
+        if (skill.length === 1) {
+          await this.createEmbeddedDocuments('Item', skill)
+          skill = this.getSkillsByName(skillIdentifier)
+          if (skill.length === 1) {
+            ui.notifications.info(game.i18n.format('CoC7.InfoSkillAddedAtBase', {
+              name: skill[0].name,
+              percent: skill[0].value
+            }))
+          }
+        }
+      }
     }
     if (!skill.length) {
       let item = null
@@ -2462,7 +2511,6 @@ export class CoCActor extends Actor {
       if (!item) {
         // TODO: Implement retrieval of skill from compendium !!
         // game.settings.get( 'CoC7', 'DefaultCompendium');
-        console.log(skillIdentifier)
         const check = new CoC7Check()
         check._rawValue = '?'
         await check.roll()
@@ -2472,7 +2520,7 @@ export class CoCActor extends Actor {
         return ui.notifications.warn(
           game.i18n.format('CoC7.NoSkill') + ' ' +
             game.i18n.format('CoC7.ErrorNotFoundForActor', {
-              missing: skillData.name ? skillData.name : skillData,
+              missing: skillIdentifier,
               actor: this.name
             })
         )
