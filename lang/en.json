@@ -916,6 +916,7 @@
   "CoC7.ErrorNoTokensSelected": "No tokens selected",
   "CoC7.ErrorEvaluatingDamage": "Error evaluating damage",
 
+  "CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
   "CoC7.InfoLessSkillThanOptions": "There's only {skillCount} and {optionsCount} options, adding all of them",
   "CoC7.InfoAllSkillsAlreadySelected": "All skills are already selected.",
 
@@ -1311,7 +1312,7 @@
   "CoC7.TokenCreationRoll.ButtonAverage": "Average all",
   "CoC7.TokenCreationRoll.Rolled": "{name} characteristics and skills rolled",
   "CoC7.TokenCreationRoll.Averaged": "{name} characteristics and skills averaged",
-  
+
 
   "CoC7.RealRollDecaderPlaceholderName": "10's",
 
