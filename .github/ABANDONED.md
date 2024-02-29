@@ -2,21 +2,21 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (401 untranslated strings)](#cnjson)
+[cn.json (402 untranslated strings)](#cnjson)
 
-[cs.json (586 untranslated strings)](#csjson)
+[cs.json (587 untranslated strings)](#csjson)
 
-[ko.json (183 untranslated strings)](#kojson)
+[ko.json (184 untranslated strings)](#kojson)
 
-[pt-BR.json (131 untranslated strings)](#ptbrjson)
+[pt-BR.json (132 untranslated strings)](#ptbrjson)
 
-[ru.json (53 untranslated strings)](#rujson)
+[ru.json (54 untranslated strings)](#rujson)
 
-[sv.json (369 untranslated strings)](#svjson)
+[sv.json (370 untranslated strings)](#svjson)
 
 
 ## cn.json
-401 untranslated strings
+402 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -253,6 +253,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorUnexpectedSkillsText": "Unexpected skills text, please raise a bug report with the text you are attempting to import",
 "CoC7.ErrorNoTokensSelected": "No tokens selected",
 "CoC7.ErrorEvaluatingDamage": "Error evaluating damage",
+"CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
 "CoC7.MessageRollingCharacteristic": "Rolling characteristic {label}: {formula}",
 "CoC7.DamageDealTo": "Damage {name} {damage}HP",
 "CoC7.Add": "Add",
@@ -421,7 +422,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Unavailable": "Unavailable"
 ```
 ## cs.json
-586 untranslated strings
+587 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -737,6 +738,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorUnexpectedSkillsText": "Unexpected skills text, please raise a bug report with the text you are attempting to import",
 "CoC7.ErrorNoTokensSelected": "No tokens selected",
 "CoC7.ErrorEvaluatingDamage": "Error evaluating damage",
+"CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
 "CoC7.MessageTitleSelectSingleUserForTarget": "Which user can respond to this attack",
 "CoC7.MessageSelectSingleUserForTarget": "This token is controlled by multiple users, please select which user can respond to this attack.",
 "CoC7.MessageBoutOfMadnessTableNotFound": "The result from the madness table was not found, please check all your roll tables are created",
@@ -1011,7 +1013,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Unavailable": "Unavailable"
 ```
 ## ko.json
-183 untranslated strings
+184 untranslated strings
 ```
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
 "CoC7.RollDifficultyRegularTitle": "Regular difficulty",
@@ -1069,6 +1071,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.RemoveParticipant": "Remove participant",
 "CoC7.RemoveParticipantHint": "Participant will be completely removed from the chase",
 "CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",
+"CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
 "CoC7.TextFieldInvalidJSON": "Unable to parse the JSON, please try again",
 "CoC7.ActorImporterUploadError": "Import stopped, unable to write image",
 "CoC7.FileUploadError": "Unable to write image, file upload error",
@@ -1198,7 +1201,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Unavailable": "Unavailable"
 ```
 ## pt-BR.json
-131 untranslated strings
+132 untranslated strings
 ```
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
@@ -1238,6 +1241,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SanityLossType": "Type",
 "CoC7.ErrorTokenIncorrect": "Unable to find selected token",
 "CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",
+"CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
 "CoC7.System.Documentation": "View CoC7 System Manual",
 "SETTINGS.TokenDropMode": "When creating NPC :",
 "SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
@@ -1333,7 +1337,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Unavailable": "Unavailable"
 ```
 ## ru.json
-53 untranslated strings
+54 untranslated strings
 ```
 "CoC7.LinkCheckPushing": " {name} check - pushing",
 "CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
@@ -1373,6 +1377,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorUnexpectedSkillsText": "Unexpected skills text, please raise a bug report with the text you are attempting to import",
 "CoC7.ErrorNoTokensSelected": "No tokens selected",
 "CoC7.ErrorEvaluatingDamage": "Error evaluating damage",
+"CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
 "CoC7.InfoLessSkillThanOptions": "There's only {skillCount} and {optionsCount} options, adding all of them",
 "CoC7.InfoAllSkillsAlreadySelected": "All skills are already selected.",
 "SETTINGS.TokenDropMode": "When creating NPC :",
@@ -1390,7 +1395,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Unavailable": "Unavailable"
 ```
 ## sv.json
-369 untranslated strings
+370 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -1599,6 +1604,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorUnexpectedSkillsText": "Unexpected skills text, please raise a bug report with the text you are attempting to import",
 "CoC7.ErrorNoTokensSelected": "No tokens selected",
 "CoC7.ErrorEvaluatingDamage": "Error evaluating damage",
+"CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
 "CoC7.MessageRollingCharacteristic": "Rolling characteristic {label}: {formula}",
 "CoC7.DamageDealTo": "Damage {name} {damage}HP",
 "CoC7.Add": "Add",
