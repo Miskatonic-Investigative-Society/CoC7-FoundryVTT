@@ -28,7 +28,7 @@ import { chatHelper, isCtrlKey } from '../chat/helper.js'
  *   [modifier]: -x (x penalty dice), +x (x bonus dice), 0 (no modifier).
  *   [icon]: icon to use (font awsome).
  *   [blind]: will trigger a blind roll.
- *   [pushing]: true means is a pushed roll
+ *   [pushing]: will trigger a pushed roll
  *
  * [DISPLAYED_NAME: name to display.]
  *
@@ -103,7 +103,6 @@ export class CoC7Link {
     if (data.difficulty) {
       data.difficulty = CoC7Utilities.convertDifficulty(data.difficulty)
     }
-    data.pushing = (data.pushing === true || (data.pushing ?? '').toString().toLowerCase() === 'true')
     return data
   }
 
@@ -131,7 +130,6 @@ export class CoC7Link {
       linkType: CoC7Link.LINK_TYPE.SKILL,
       difficulty: CoC7Check.difficultyLevel.regular,
       modifier: 0,
-      pushing: false,
       object: {
         label: game.i18n.localize('CoC7.EffectNew'),
         icon: 'icons/svg/aura.svg',
@@ -140,9 +138,6 @@ export class CoC7Link {
     }, data)
     for (const key of ['name', 'displayName', 'icon', 'id', 'pack', 'sanMin', 'sanMax', 'sanReason']) {
       cls.object[key] = cls.object[key] ?? ''
-    }
-    for (const key of ['pushing']) {
-      cls.object[key] = (cls.object[key] ?? '').toString().toLowerCase() === 'true'
     }
     if (typeof cls.object.object.icon !== 'undefined' && typeof cls.object.object.external !== 'undefined' && ['http', 'https'].includes(cls.object.object.external)) {
       cls.object.object.icon = cls.object.object.external + '://' + cls.object.object.icon
@@ -177,9 +172,14 @@ export class CoC7Link {
         if (key === 'icon') {
           data.icon = value
         }
-        if (key === 'blind' && typeof value === 'undefined') {
-          value = true
-          data.blind = true && [CoC7Link.CHECK_TYPE.CHECK].includes(type.toLowerCase())
+        if (typeof value === 'undefined') {
+          if (key === 'blind') {
+            value = true
+            data.blind = true && [CoC7Link.CHECK_TYPE.CHECK].includes(type.toLowerCase())
+          } else if (key === 'pushing') {
+            value = true
+            data.pushing = true && [CoC7Link.CHECK_TYPE.CHECK].includes(type.toLowerCase())
+          }
         }
         data.dataset[key] = value
       }
@@ -207,7 +207,7 @@ export class CoC7Link {
           humanName = CoC7Utilities.getCharacteristicNames(data.dataset.name)?.label
         }
         title = game.i18n.format(
-          `CoC7.LinkCheck${!data.dataset.difficulty ? '' : 'Diff'}${!data.dataset.modifier ? '' : 'Modif'}${!data.dataset.pushing ? '' : 'Pushing'}`,
+          `CoC7.LinkCheck${!data.dataset.difficulty ? '' : 'Diff'}${!data.dataset.modifier ? '' : 'Modif'}${data.pushing ? 'Pushing' : ''}`,
           {
             difficulty,
             modifier: data.dataset.modifier,
@@ -298,15 +298,12 @@ export class CoC7Link {
         if (!eventData.linkType || !eventData.name) {
           return ''
         }
-        let options = `${eventData.blind ? 'blind,' : ''}type:${eventData.linkType},name:${eventData.name}`
+        let options = `${eventData.blind ? 'blind,' : ''}${eventData.pushing ? 'pushing,' : ''}type:${eventData.linkType},name:${eventData.name}`
         if (typeof eventData.difficulty !== 'undefined' && eventData.difficulty !== CoC7Check.difficultyLevel.regular) {
           options += `,difficulty:${eventData.difficulty}`
         }
         if (typeof eventData.modifier !== 'undefined' && eventData.modifier !== 0) {
           options += `,modifier:${eventData.modifier}`
-        }
-        if (typeof eventData.pushing !== 'undefined' && eventData.pushing === true) {
-          options += ',pushing:true'
         }
         if (eventData.icon) {
           const parts = eventData.icon.match(/^(https?):\/\/(.+)$/)
@@ -627,10 +624,12 @@ export class CoC7Link {
   }
 
   get isBlind () {
+    console.log(this.isCheck, this.object.blind)
     return this.isCheck && this.object.blind
   }
 
   get isPushing () {
-    return this.object.pushing === true
+    console.log(this.isCheck, this.object.pushing)
+    return this.isCheck && this.object.pushing
   }
 }

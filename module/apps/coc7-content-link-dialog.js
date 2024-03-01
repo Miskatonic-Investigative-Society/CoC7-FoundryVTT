@@ -163,6 +163,7 @@ export class CoC7ContentLinkDialog extends FormApplication {
           this.object.link.setValue('name', formData.checkName)
           break
         case 'blind':
+        case 'pushing':
         case 'difficulty':
         case 'displayName':
         case 'icon':
@@ -178,9 +179,6 @@ export class CoC7ContentLinkDialog extends FormApplication {
         case 'hasLabel':
         case 'hasIcon':
           this.object[key] = formData[key]
-          break
-        case 'pushing':
-          this.object.link.setValue(key, formData[key] === true)
           break
         case 'effect.label':
           effect.label = formData[key]
@@ -314,8 +312,11 @@ export class CoC7ContentLinkDialog extends FormApplication {
     } else if (link.id !== '') {
       this.object.hasID = 'fromDirectory'
     }
-    if (link.difficulty !== CoC7Check.difficultyLevel.regular || parseInt(link.modifier, 10) !== 0 || link.isPushing === true) {
+    console.log(link)
+    if (link.difficulty !== CoC7Check.difficultyLevel.regular || parseInt(link.modifier, 10) !== 0 || link.isPushing) {
       this.object.hasModifiers = true
+    } else {
+      this.object.hasModifiers = false
     }
     if (link.displayName !== '') {
       this.object.hasLabel = true

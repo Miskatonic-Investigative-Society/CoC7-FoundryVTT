@@ -2557,7 +2557,6 @@ export class CoCActor extends Actor {
     }
 
     const check = new CoC7Check()
-    const isPushing = (options.pushing ?? '').toString().toLowerCase() === 'true'
 
     if (typeof options.modifier !== 'undefined') {
       check.diceModifier = Number(options.modifier)
@@ -2584,11 +2583,10 @@ export class CoCActor extends Actor {
     check.skill = skill[0].id
     if (options.blind === 'false') check.isBlind = false
     else check.isBlind = !!options.blind
-    if (isPushing) {
-      check.pushing = true
-    }
+    if (options.pushing === 'false') check.pushing = false
+    else check.pushing = !!options.pushing
     await check.roll()
-    check.toMessage(isPushing)
+    check.toMessage(check.pushing)
   }
 
   async weaponCheck (weaponData, fastForward = false) {
