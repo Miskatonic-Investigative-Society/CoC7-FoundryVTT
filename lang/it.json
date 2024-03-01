@@ -921,6 +921,7 @@
   "CoC7.ErrorNoTokensSelected": "Nessuna Pedina selezionata",
   "CoC7.ErrorEvaluatingDamage": "Errore nel valutare il danno",
 
+  "CoC7.InfoSkillAddedAtBase": "Questa abilità {name} è stata aggiunta al {percent}%",
   "CoC7.InfoLessSkillThanOptions": "Ci sono solo {skillCount} e {optionsCount} opzioni, le aggiungo tutte quante",
   "CoC7.InfoAllSkillsAlreadySelected": "Tutte le abilità sono già selezionate.",
 
