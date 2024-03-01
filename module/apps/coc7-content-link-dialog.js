@@ -312,7 +312,6 @@ export class CoC7ContentLinkDialog extends FormApplication {
     } else if (link.id !== '') {
       this.object.hasID = 'fromDirectory'
     }
-    console.log(link)
     if (link.difficulty !== CoC7Check.difficultyLevel.regular || parseInt(link.modifier, 10) !== 0 || link.isPushing) {
       this.object.hasModifiers = true
     } else {

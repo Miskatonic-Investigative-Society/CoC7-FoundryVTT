@@ -624,12 +624,10 @@ export class CoC7Link {
   }
 
   get isBlind () {
-    console.log(this.isCheck, this.object.blind)
     return this.isCheck && this.object.blind
   }
 
   get isPushing () {
-    console.log(this.isCheck, this.object.pushing)
     return this.isCheck && this.object.pushing
   }
 }
