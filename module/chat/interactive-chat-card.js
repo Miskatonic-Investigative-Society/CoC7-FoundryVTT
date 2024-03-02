@@ -147,7 +147,7 @@ export class InteractiveChatCard {
     for (let i = 0; i < forms.length; i++) {
       const form = forms[i]
       const fd = new FormDataExtended(form)
-      let data = fd.toObject()
+      let data = fd.object
       data = foundry.utils.diffObject(this, foundry.utils.expandObject(data))
       for (const [key, value] of Object.entries(data)) {
         this[key] = value

@@ -2433,8 +2433,7 @@ export class CoCActor extends Actor {
     return false
   }
 
-  async skillCheck (skillData, fastForward, options = {}) {
-    const skillIdentifier = skillData.name ? skillData.name : skillData
+  async getSkillOrAdd (skillIdentifier) {
     const isCoCID = !!skillIdentifier.match(/^i\.skill\./)
     let skill = []
     if (isCoCID) {
@@ -2454,7 +2453,6 @@ export class CoCActor extends Actor {
         }
       }
       if (item) {
-        options.name = item.name
         skill.push(item)
       }
     }
@@ -2496,6 +2494,15 @@ export class CoCActor extends Actor {
           }
         }
       }
+    }
+    return skill
+  }
+
+  async skillCheck (skillData, fastForward, options = {}) {
+    const skillIdentifier = skillData.name ? skillData.name : skillData
+    let skill = await this.getSkillOrAdd(skillIdentifier)
+    if (skill.length) {
+      options.name = skill[0].name
     }
     if (!skill.length) {
       let item = null
