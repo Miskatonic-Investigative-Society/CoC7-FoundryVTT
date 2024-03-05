@@ -1,10 +1,8 @@
-/* global $, AudioHelper, canvas, ChatMessage, CONFIG, CONST, foundry, game, ui */
+/* global $, canvas, ChatMessage, CONFIG, CONST, foundry, game, ui */
 import { CoCActor } from '../actors/actor.js'
 import { CoC7Check } from '../check.js'
 import { CoC7ContentLinkDialog } from './coc7-content-link-dialog.js'
-import { CoC7Dice } from '../dice.js'
 import { CoC7Utilities } from '../utilities.js'
-import { CombinedCheckCard } from '../chat/cards/combined-roll.js'
 import { SanCheckCard } from '../chat/cards/san-check.js'
 import { chatHelper, isCtrlKey } from '../chat/helper.js'
 
@@ -305,6 +303,9 @@ export class CoC7Link {
           options += `,name:${eventData.name}`
         } else if (eventData.what) {
           options += `,what:${eventData.what}`
+          if (eventData.against) {
+            options += `,against:${eventData.against}`
+          }
         }
         if (typeof eventData.difficulty !== 'undefined' && eventData.difficulty !== CoC7Check.difficultyLevel.regular) {
           options += `,difficulty:${eventData.difficulty}`
@@ -433,67 +434,10 @@ export class CoC7Link {
           return actor.attributeCheck(options.name, shiftKey, options)
         }
         if (['combinedall', 'combinedany'].includes(options.linkType.toLowerCase())) {
-          const what = options.what.split('&&')
-          CombinedCheckCard.resolveOld(game.user.id)
-          const data = {
-            rolls: [],
-            initiator: game.user.id,
-            _rollMode: game.settings.get('core', 'rollMode')
-          }
-          const pool = {}
-          for (const roll of what) {
-            const [rollKey, rollValue, rollDifficulty, rollBonus] = roll.split('#')
-            const rollData = {
-              actorKey: actor.actorKey,
-              flatDiceModifier: 0,
-              flatThresholdModifier: 0,
-              initiator: data.initiator,
-              pushing: false,
-              _diceModifier: rollBonus ?? 0,
-              _difficulty: rollDifficulty ?? 1,
-              _rawValue: 0,
-              _rollMode: data._rollMode
-            }
-            let add = true
-            switch (rollKey) {
-              case 'characteristic':
-                rollData.characteristic = rollValue
-                break
-              case 'attribute':
-                rollData.attribute = rollValue
-                break
-              case 'skill':
-                {
-                  const skills = await actor.getSkillOrAdd(rollValue)
-                  if (skills.length) {
-                    rollData.skillId = skills[0].id
-                  } else {
-                    add = false
-                  }
-                }
-                break
-              default:
-                add = false
-            }
-            if (add) {
-              data.rolls.push(Object.assign(new CoC7Check(), rollData))
-              pool[rollData._diceModifier] = false
-            }
-          }
-          const chatCard = await CombinedCheckCard.fromData(data)
-          chatCard.any = options.linkType.toLowerCase() === 'combinedany'
-          chatCard.all = options.linkType.toLowerCase() === 'combinedall'
-          const roll = await CoC7Dice.combinedRoll({ pool })
-          roll.initiator = game.user.id
-          const proccessData = {
-            type: CombinedCheckCard.defaultConfig.type,
-            action: 'assignRoll',
-            fromGM: game.user.isGM,
-            roll
-          }
-          AudioHelper.play({ src: CONFIG.sounds.dice }, true)
-          chatCard.closeCard()
-          chatCard.process(proccessData)
+          return actor.combinedCheck(options.linkType.toLowerCase(), options.what.split('&&'))
+        }
+        if (['opposed'].includes(options.linkType.toLowerCase())) {
+          return actor.opposedCheck(options.what, options.against)
         }
         break
 

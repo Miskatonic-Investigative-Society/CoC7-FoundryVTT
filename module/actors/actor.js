@@ -1,4 +1,4 @@
-/* global Actor, Application, CONFIG, CONST, Dialog, Die, foundry, fromUuid, fromUuidSync, game, Hooks, Roll, TextEditor, Token, ui */
+/* global Actor, Application, AudioHelper, CONFIG, CONST, Dialog, Die, foundry, fromUuid, fromUuidSync, game, Hooks, Roll, TextEditor, Token, ui */
 import { AverageRoll } from '../apps/average-roll.js'
 import { COC7 } from '../config.js'
 import CoC7ActiveEffect from '../active-effect.js'
@@ -19,6 +19,8 @@ import { chatHelper } from '../chat/helper.js'
 import { CoC7Dice } from '../dice.js'
 import { CoC7Item } from '../items/item.js'
 import { CoC7Utilities } from '../utilities.js'
+import { CombinedCheckCard } from '../chat/cards/combined-roll.js'
+import { OpposedCheckCard } from '../chat/cards/opposed-roll.js'
 
 /**
  * Extend the base Actor class to implement additional logic specialized for CoC 7th.
@@ -2385,6 +2387,120 @@ export class CoCActor extends Actor {
     else check.isBlind = !!options.blind
     await check.rollCharacteristic(char.key)
     check.toMessage()
+  }
+
+  async groupCheckData (data, key, value, rollBonus, rollDifficulty) {
+    let add = true
+    const check = {
+      actorKey: this.actorKey,
+      flatDiceModifier: 0,
+      flatThresholdModifier: 0,
+      initiator: data.initiator,
+      pushing: false,
+      _diceModifier: rollBonus ?? 0,
+      _difficulty: rollDifficulty ?? 1,
+      _rawValue: 0,
+      _rollMode: data._rollMode
+    }
+    switch (key) {
+      case 'characteristic':
+        check.characteristic = value
+        break
+      case 'attribute':
+        check.attribute = value
+        break
+      case 'skill':
+        {
+          const skills = await this.getSkillOrAdd(value)
+          if (skills.length) {
+            check.skillId = skills[0].id
+          } else {
+            add = false
+          }
+        }
+        break
+      default:
+        add = false
+    }
+    return { add, check }
+  }
+
+  async combinedCheck (linkType, what) {
+    CombinedCheckCard.resolveOld(game.user.id)
+    const data = {
+      rolls: [],
+      initiator: game.user.id,
+      _rollMode: game.settings.get('core', 'rollMode')
+    }
+    const pool = {}
+    for (const roll of what) {
+      const [rollKey, rollValue, rollDifficulty, rollBonus] = roll.split('#')
+      const rollData = await this.groupCheckData(data, rollKey, rollValue, rollBonus, rollDifficulty)
+      if (rollData.add) {
+        data.rolls.push(Object.assign(new CoC7Check(), rollData.check))
+        pool[rollData._diceModifier] = false
+      }
+    }
+    const chatCard = await CombinedCheckCard.fromData(data)
+    chatCard.any = linkType.toLowerCase() === 'combinedany'
+    chatCard.all = linkType.toLowerCase() === 'combinedall'
+    const roll = await CoC7Dice.combinedRoll({ pool })
+    roll.initiator = game.user.id
+    const proccessData = {
+      type: CombinedCheckCard.defaultConfig.type,
+      action: 'assignRoll',
+      fromGM: game.user.isGM,
+      roll
+    }
+    AudioHelper.play({ src: CONFIG.sounds.dice }, true)
+    chatCard.closeCard()
+    chatCard.process(proccessData)
+    return null
+  }
+
+  async opposedCheck (what, against) {
+    const [rollKey, rollValue, rollDifficulty, rollBonus] = what.split('#')
+    const [actorKey, againstRollKey, againstRollValue, againstRollDifficulty, againstRollBonus] = against.split('#')
+    const other = game.actors.get(actorKey)
+    if (other) {
+      OpposedCheckCard.resolveOld(game.user.id)
+      const data = {
+        rolls: [],
+        initiator: game.user.id,
+        _rollMode: game.settings.get('core', 'rollMode'),
+        closed: true
+      }
+      let rollData = await this.groupCheckData(data, rollKey, rollValue, rollBonus, rollDifficulty)
+      if (rollData.add) {
+        const check = new CoC7Check()
+        check.actor = rollData.check.actorKey
+        check.characteristic = rollData.check.characteristic
+        check.attribute = rollData.check.attribute
+        check.skillId = rollData.check.skillId
+        check.rollMode = rollData.check._rollMode
+        check.initiator = rollData.check.initiator
+        check.denyPush = true // Opposed rolled can't be pushed.
+        await check._perform()
+        data.rolls.push(check.JSONRollData)
+      }
+      rollData = await other.groupCheckData(data, againstRollKey, againstRollValue, againstRollBonus, againstRollDifficulty)
+      if (rollData.add) {
+        const check = new CoC7Check()
+        check.actor = rollData.check.actorKey
+        check.characteristic = rollData.check.characteristic
+        check.attribute = rollData.check.attribute
+        check.skillId = rollData.check.skillId
+        check.rollMode = rollData.check._rollMode
+        check.initiator = rollData.check.initiator
+        check.denyPush = true // Opposed rolled can't be pushed.
+        await check._perform()
+        data.rolls.push(check.JSONRollData)
+      }
+      const chatCard = await OpposedCheckCard.fromData(data)
+      chatCard.toMessage()
+    } else {
+      ui.notifications.error('CoC7.ErrorActor', { localize: true })
+    }
   }
 
   static toolTipSkillText () {
