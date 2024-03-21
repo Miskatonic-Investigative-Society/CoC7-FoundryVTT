@@ -1306,4 +1306,19 @@
   "CoC7.CoCIDBatch.title": "Batch set System ID (CoC ID)",
   "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages."
 
+  "CoC7.TokenCreationRoll.Title": "Rollable detected",
+  "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
+  "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
+  "CoC7.TokenCreationRoll.ButtonAverage": "Average all",
+  "CoC7.TokenCreationRoll.Rolled": "{name} characteristics and skills rolled",
+  "CoC7.TokenCreationRoll.Averaged": "{name} characteristics and skills averaged",
+
+
+  "CoC7.RealRollDecaderPlaceholderName": "10's",
+
+  "CoC7.Temporary": "一時的",
+  "CoC7.Passive": "受動",
+  "CoC7.Inactive": "Inactive",
+  "CoC7.Suppressed": "Suppressed",
+  "CoC7.Unavailable": "Unavailable"
 }
