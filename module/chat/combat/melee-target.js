@@ -179,13 +179,16 @@ export class CoC7MeleeTarget extends ChatCardActor {
             '<p>' + game.i18n.localize('CoC7.MessageSelectSingleUserForTarget')
           content = content + '<form id="selectform"><select name="user">'
           for (const k of owners) {
-            content =
-              content +
-              '<option value="' +
-              k +
-              '">' +
-              game.users.get(k).name +
-              '</option>'
+            const user = game.users.get(k)
+            if (user) {
+              content =
+                content +
+                '<option value="' +
+                k +
+                '">' +
+                user.name +
+                '</option>'
+            }
           }
           content = content + '</select></form></p>'
           await Dialog.prompt({

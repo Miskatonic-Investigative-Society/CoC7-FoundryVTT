@@ -1,0 +1,14 @@
+<div class="directory flexcol">
+  <p style="flex: 0 0 auto;">{{localize 'CoC7.PickWhichActorDesc'}}</p>
+  <ol class="directory-list">
+    {{#each object.options}}
+    <li class="directory-item document actor flexrow{{#if (eq ../object.selected this.uuid)}} picked{{/if}}{{#if this.canPing}} can-ping{{/if}}" data-entry-uuid="{{this.uuid}}">
+      <img class="thumbnail" title="{{this.name}}" src="{{this.img}}">
+      <h4 class="entry-name document-name">{{this.name}}</h4>
+    </li>
+    {{/each}}
+  </ol>
+</div>
+<div class="dialog-buttons">
+  <button class="submit-button" data-button="close">{{localize 'PLAYERS.CharSelected'}}</button>
+</div>

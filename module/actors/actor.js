@@ -1,4 +1,4 @@
-/* global Actor, Application, AudioHelper, CONFIG, CONST, Dialog, Die, foundry, fromUuid, fromUuidSync, game, Hooks, Roll, TextEditor, Token, ui */
+/* global Actor, Application, CONFIG, CONST, Dialog, Die, foundry, fromUuid, fromUuidSync, game, Hooks, Roll, TextEditor, Token, ui */
 import { AverageRoll } from '../apps/average-roll.js'
 import { COC7 } from '../config.js'
 import CoC7ActiveEffect from '../active-effect.js'
@@ -19,8 +19,6 @@ import { chatHelper } from '../chat/helper.js'
 import { CoC7Dice } from '../dice.js'
 import { CoC7Item } from '../items/item.js'
 import { CoC7Utilities } from '../utilities.js'
-import { CombinedCheckCard } from '../chat/cards/combined-roll.js'
-import { OpposedCheckCard } from '../chat/cards/opposed-roll.js'
 
 /**
  * Extend the base Actor class to implement additional logic specialized for CoC 7th.
@@ -1622,7 +1620,7 @@ export class CoCActor extends Actor {
     return skillList
   }
 
-  getFirstSkillByCoCID (cocid) {
+  getFirstItemByCoCID (cocid) {
     return this.items.find(i => i.flags?.CoC7?.cocidFlag?.id === cocid)
   }
 
@@ -2389,120 +2387,6 @@ export class CoCActor extends Actor {
     check.toMessage()
   }
 
-  async groupCheckData (data, key, value, rollBonus, rollDifficulty) {
-    let add = true
-    const check = {
-      actorKey: this.actorKey,
-      flatDiceModifier: 0,
-      flatThresholdModifier: 0,
-      initiator: data.initiator,
-      pushing: false,
-      _diceModifier: rollBonus ?? 0,
-      _difficulty: rollDifficulty ?? 1,
-      _rawValue: 0,
-      _rollMode: data._rollMode
-    }
-    switch (key) {
-      case 'characteristic':
-        check.characteristic = value
-        break
-      case 'attribute':
-        check.attribute = value
-        break
-      case 'skill':
-        {
-          const skills = await this.getSkillOrAdd(value)
-          if (skills.length) {
-            check.skillId = skills[0].id
-          } else {
-            add = false
-          }
-        }
-        break
-      default:
-        add = false
-    }
-    return { add, check }
-  }
-
-  async combinedCheck (linkType, what) {
-    CombinedCheckCard.resolveOld(game.user.id)
-    const data = {
-      rolls: [],
-      initiator: game.user.id,
-      _rollMode: game.settings.get('core', 'rollMode')
-    }
-    const pool = {}
-    for (const roll of what) {
-      const [rollKey, rollValue, rollDifficulty, rollBonus] = roll.split('#')
-      const rollData = await this.groupCheckData(data, rollKey, rollValue, rollBonus, rollDifficulty)
-      if (rollData.add) {
-        data.rolls.push(Object.assign(new CoC7Check(), rollData.check))
-        pool[rollData._diceModifier] = false
-      }
-    }
-    const chatCard = await CombinedCheckCard.fromData(data)
-    chatCard.any = linkType.toLowerCase() === 'combinedany'
-    chatCard.all = linkType.toLowerCase() === 'combinedall'
-    const roll = await CoC7Dice.combinedRoll({ pool })
-    roll.initiator = game.user.id
-    const proccessData = {
-      type: CombinedCheckCard.defaultConfig.type,
-      action: 'assignRoll',
-      fromGM: game.user.isGM,
-      roll
-    }
-    AudioHelper.play({ src: CONFIG.sounds.dice }, true)
-    chatCard.closeCard()
-    chatCard.process(proccessData)
-    return null
-  }
-
-  async opposedCheck (what, against) {
-    const [rollKey, rollValue, rollDifficulty, rollBonus] = what.split('#')
-    const [actorKey, againstRollKey, againstRollValue, againstRollDifficulty, againstRollBonus] = against.split('#')
-    const other = game.actors.get(actorKey)
-    if (other) {
-      OpposedCheckCard.resolveOld(game.user.id)
-      const data = {
-        rolls: [],
-        initiator: game.user.id,
-        _rollMode: game.settings.get('core', 'rollMode'),
-        closed: true
-      }
-      let rollData = await this.groupCheckData(data, rollKey, rollValue, rollBonus, rollDifficulty)
-      if (rollData.add) {
-        const check = new CoC7Check()
-        check.actor = rollData.check.actorKey
-        check.characteristic = rollData.check.characteristic
-        check.attribute = rollData.check.attribute
-        check.skillId = rollData.check.skillId
-        check.rollMode = rollData.check._rollMode
-        check.initiator = rollData.check.initiator
-        check.denyPush = true // Opposed rolled can't be pushed.
-        await check._perform()
-        data.rolls.push(check.JSONRollData)
-      }
-      rollData = await other.groupCheckData(data, againstRollKey, againstRollValue, againstRollBonus, againstRollDifficulty)
-      if (rollData.add) {
-        const check = new CoC7Check()
-        check.actor = rollData.check.actorKey
-        check.characteristic = rollData.check.characteristic
-        check.attribute = rollData.check.attribute
-        check.skillId = rollData.check.skillId
-        check.rollMode = rollData.check._rollMode
-        check.initiator = rollData.check.initiator
-        check.denyPush = true // Opposed rolled can't be pushed.
-        await check._perform()
-        data.rolls.push(check.JSONRollData)
-      }
-      const chatCard = await OpposedCheckCard.fromData(data)
-      chatCard.toMessage()
-    } else {
-      ui.notifications.error('CoC7.ErrorActor', { localize: true })
-    }
-  }
-
   static toolTipSkillText () {
     if (
       typeof game.CoC7Tooltips.ToolTipHover !== 'undefined' &&
@@ -2549,74 +2433,130 @@ export class CoCActor extends Actor {
     return false
   }
 
-  async getSkillOrAdd (skillIdentifier) {
-    const isCoCID = !!skillIdentifier.match(/^i\.skill\./)
-    let skill = []
-    if (isCoCID) {
-      // Attempt to load from actor from CoC ID
-      let item = this.getFirstSkillByCoCID(skillIdentifier)
+  async getItemOrAdd (itemIdentifier, type = 'skill') {
+    const typeCoCID = itemIdentifier.match(/^i\.([^\\.]+)\../)
+    if (typeCoCID) {
+      // Attempt to load from actor by CoC ID
+      let item = this.getFirstItemByCoCID(itemIdentifier)
       if (!item) {
-        const newSkills = await game.system.api.cocid.fromCoCIDBest({ cocid: skillIdentifier, showLoading: true })
-        if (newSkills.length === 1) {
-          await this.createEmbeddedDocuments('Item', newSkills)
-          item = this.getFirstSkillByCoCID(skillIdentifier)
+        const newItems = await game.system.api.cocid.fromCoCIDBest({ cocid: itemIdentifier, showLoading: true })
+        if (newItems.length === 1) {
+          await this.createEmbeddedDocuments('Item', newItems)
+          item = this.getFirstItemByCoCID(itemIdentifier)
           if (item) {
-            ui.notifications.info(game.i18n.format('CoC7.InfoSkillAddedAtBase', {
-              name: item.name,
-              percent: item.value
-            }))
-          }
-        }
-      }
-      if (item) {
-        skill.push(item)
-      }
-    }
-    if (!skill.length) {
-      // Attempt to load for actor by name
-      skill = this.getSkillsByName(skillIdentifier)
-      if (!skill.length) {
-        // Attempt to load skill from world
-        const newSkill = game.items.getName(skillIdentifier)
-        if (newSkill) {
-          skill.push(newSkill)
-        }
-        if (skill.length === 0) {
-          // Attempt to load skill from compendiums
-          const era = game.settings.get('CoC7', 'worldEra')
-          for (const pack of game.packs) {
-            if (pack.metadata?.type === 'Item') {
-              await pack.getIndex()
-              const newSkill = pack.getName(skillIdentifier)
-              if (newSkill) {
-                const eras = newSkill.flags?.CoC7?.cocidFlag?.eras
-                if (eras && Object.keys(eras).length > 0 && !(eras[era] ?? false)) {
-                  // NOP
-                } else {
-                  skill.push(newSkill)
+            if (item.type === 'skill') {
+              ui.notifications.info(game.i18n.format('CoC7.InfoSkillAddedAtBase', {
+                name: item.name,
+                percent: item.value
+              }))
+            } else if (item.type === 'weapon') {
+              await item.reload()
+              const updates = {}
+              if (item.system.skill.main.id === '' && item.system.skill.main.name !== '') {
+                const skill = await this.getItemOrAdd(item.system.skill.main.name, 'skill')
+                if (skill.length) {
+                  updates['system.skill.main.id'] = skill[0].id
+                  updates['system.skill.main.name'] = skill[0].name
                 }
+              }
+              if (item.system.skill.alternativ.id === '' && item.system.skill.alternativ.name !== '') {
+                const skill = await this.getItemOrAdd(item.system.skill.alternativ.name, 'skill')
+                if (skill.length) {
+                  updates['system.skill.alternativ.id'] = skill[0].id
+                  updates['system.skill.alternativ.name'] = skill[0].name
+                }
+              }
+              if (Object.keys(updates).length) {
+                await item.update(updates)
               }
             }
           }
         }
-        if (skill.length === 1) {
-          await this.createEmbeddedDocuments('Item', skill)
-          skill = this.getSkillsByName(skillIdentifier)
-          if (skill.length === 1) {
+      }
+      if (item) {
+        return [item]
+      }
+    }
+    // Attempt to load for actor by name
+    let myItems = this.getSkillsByName(itemIdentifier)
+    if (!myItems.length) {
+      const era = game.settings.get('CoC7', 'worldEra')
+      // Attempt to load item from world
+      const newItem = game.items.find((d) => {
+        if (d.type === type && d.name === itemIdentifier) {
+          const eras = newItem.flags?.CoC7?.cocidFlag?.eras
+          if (eras && Object.keys(eras).length > 0 && !(eras[era] ?? false)) {
+            return false
+          } else {
+            return true
+          }
+        }
+        return false
+      })
+      if (newItem) {
+        myItems.push(newItem)
+      }
+      if (myItems.length === 0) {
+        // Attempt to load item from compendiums
+        for (const pack of game.packs) {
+          if (pack.metadata?.type === 'Item') {
+            await pack.getDocuments()
+            const newItem = game.items.find((d) => {
+              if (d.type === type && d.name === itemIdentifier) {
+                const eras = newItem.flags?.CoC7?.cocidFlag?.eras
+                if (eras && Object.keys(eras).length > 0 && !(eras[era] ?? false)) {
+                  return false
+                } else {
+                  return true
+                }
+              }
+              return false
+            })
+            if (newItem) {
+              myItems.push(newItem)
+            }
+          }
+        }
+      }
+      if (myItems.length === 1) {
+        await this.createEmbeddedDocuments('Item', myItems)
+        myItems = this.getSkillsByName(itemIdentifier)
+        if (myItems.length === 1) {
+          if (myItems[0].type === 'skill') {
             ui.notifications.info(game.i18n.format('CoC7.InfoSkillAddedAtBase', {
-              name: skill[0].name,
-              percent: skill[0].value
+              name: myItems[0].name,
+              percent: myItems[0].value
             }))
+          } else if (myItems[0].type === 'weapon') {
+            await myItems[0].reload()
+            const updates = {}
+            if (myItems[0].system.skill.main.id === '' && myItems[0].system.skill.main.name !== '') {
+              const skill = await this.getItemOrAdd(myItems[0].system.skill.main.name, 'skill')
+              if (skill.length) {
+                updates['system.skill.main.id'] = skill[0].id
+                updates['system.skill.main.name'] = skill[0].name
+              }
+            }
+            if (myItems[0].system.skill.alternativ.id === '' && myItems[0].system.skill.alternativ.name !== '') {
+              const skill = await this.getItemOrAdd(myItems[0].system.skill.alternativ.name, 'skill')
+              if (skill.length) {
+                updates['system.skill.alternativ.id'] = skill[0].id
+                updates['system.skill.alternativ.name'] = skill[0].name
+              }
+            }
+            if (Object.keys(updates).length) {
+              await myItems[0].update(updates)
+            }
           }
         }
       }
     }
-    return skill
+    return myItems
   }
 
   async skillCheck (skillData, fastForward, options = {}) {
     const skillIdentifier = skillData.name ? skillData.name : skillData
-    let skill = await this.getSkillOrAdd(skillIdentifier)
+    let skill = await this.getItemOrAdd(skillIdentifier, 'skill')
     if (skill.length) {
       options.name = skill[0].name
     }
@@ -3588,7 +3528,7 @@ export class CoCActor extends Actor {
   }
 
   get dodgeSkill () {
-    const skill = this.getFirstSkillByCoCID('i.skill.dodge')
+    const skill = this.getFirstItemByCoCID('i.skill.dodge')
     if (skill) {
       return skill
     }
@@ -3600,7 +3540,7 @@ export class CoCActor extends Actor {
   }
 
   get creditRatingSkill () {
-    const skill = this.getFirstSkillByCoCID('i.skill.credit-rating')
+    const skill = this.getFirstItemByCoCID('i.skill.credit-rating')
     if (skill) {
       return skill
     }
@@ -3612,7 +3552,7 @@ export class CoCActor extends Actor {
   }
 
   get cthulhuMythosSkill () {
-    const skill = this.getFirstSkillByCoCID('i.skill.cthulhu-mythos')
+    const skill = this.getFirstItemByCoCID('i.skill.cthulhu-mythos')
     if (skill) {
       return skill
     }
