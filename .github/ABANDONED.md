@@ -2,21 +2,21 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (402 untranslated strings)](#cnjson)
+[cn.json (409 untranslated strings)](#cnjson)
 
-[cs.json (587 untranslated strings)](#csjson)
+[cs.json (594 untranslated strings)](#csjson)
 
-[ko.json (184 untranslated strings)](#kojson)
+[ko.json (191 untranslated strings)](#kojson)
 
-[pt-BR.json (132 untranslated strings)](#ptbrjson)
+[pt-BR.json (139 untranslated strings)](#ptbrjson)
 
-[ru.json (54 untranslated strings)](#rujson)
+[ru.json (61 untranslated strings)](#rujson)
 
-[sv.json (370 untranslated strings)](#svjson)
+[sv.json (377 untranslated strings)](#svjson)
 
 
 ## cn.json
-402 untranslated strings
+409 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -419,10 +419,17 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Passive": "Passive",
 "CoC7.Inactive": "Inactive",
 "CoC7.Suppressed": "Suppressed",
-"CoC7.Unavailable": "Unavailable"
+"CoC7.Unavailable": "Unavailable",
+"CoC7.PickWhichActorTitle": "Pick who to roll as",
+"CoC7.PickWhichActorDesc": "You have Owner permissions for multiple Actors please pick which to roll as",
+"CoC7.WaitingOnUser": "Waiting On User",
+"CoC7.ErrorRollAlreadyCompleted": "This roll has already been completed",
+"CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
+"CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
+"CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## cs.json
-587 untranslated strings
+594 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -1010,10 +1017,17 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Passive": "Passive",
 "CoC7.Inactive": "Inactive",
 "CoC7.Suppressed": "Suppressed",
-"CoC7.Unavailable": "Unavailable"
+"CoC7.Unavailable": "Unavailable",
+"CoC7.PickWhichActorTitle": "Pick who to roll as",
+"CoC7.PickWhichActorDesc": "You have Owner permissions for multiple Actors please pick which to roll as",
+"CoC7.WaitingOnUser": "Waiting On User",
+"CoC7.ErrorRollAlreadyCompleted": "This roll has already been completed",
+"CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
+"CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
+"CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## ko.json
-184 untranslated strings
+191 untranslated strings
 ```
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
 "CoC7.RollDifficultyRegularTitle": "Regular difficulty",
@@ -1198,10 +1212,17 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Passive": "Passive",
 "CoC7.Inactive": "Inactive",
 "CoC7.Suppressed": "Suppressed",
-"CoC7.Unavailable": "Unavailable"
+"CoC7.Unavailable": "Unavailable",
+"CoC7.PickWhichActorTitle": "Pick who to roll as",
+"CoC7.PickWhichActorDesc": "You have Owner permissions for multiple Actors please pick which to roll as",
+"CoC7.WaitingOnUser": "Waiting On User",
+"CoC7.ErrorRollAlreadyCompleted": "This roll has already been completed",
+"CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
+"CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
+"CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## pt-BR.json
-132 untranslated strings
+139 untranslated strings
 ```
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
@@ -1334,10 +1355,17 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Passive": "Passive",
 "CoC7.Inactive": "Inactive",
 "CoC7.Suppressed": "Suppressed",
-"CoC7.Unavailable": "Unavailable"
+"CoC7.Unavailable": "Unavailable",
+"CoC7.PickWhichActorTitle": "Pick who to roll as",
+"CoC7.PickWhichActorDesc": "You have Owner permissions for multiple Actors please pick which to roll as",
+"CoC7.WaitingOnUser": "Waiting On User",
+"CoC7.ErrorRollAlreadyCompleted": "This roll has already been completed",
+"CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
+"CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
+"CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## ru.json
-54 untranslated strings
+61 untranslated strings
 ```
 "CoC7.LinkCheckPushing": " {name} check - pushing",
 "CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
@@ -1392,10 +1420,17 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Passive": "Passive",
 "CoC7.Inactive": "Inactive",
 "CoC7.Suppressed": "Suppressed",
-"CoC7.Unavailable": "Unavailable"
+"CoC7.Unavailable": "Unavailable",
+"CoC7.PickWhichActorTitle": "Pick who to roll as",
+"CoC7.PickWhichActorDesc": "You have Owner permissions for multiple Actors please pick which to roll as",
+"CoC7.WaitingOnUser": "Waiting On User",
+"CoC7.ErrorRollAlreadyCompleted": "This roll has already been completed",
+"CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
+"CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
+"CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## sv.json
-370 untranslated strings
+377 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -1766,5 +1801,12 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Passive": "Passive",
 "CoC7.Inactive": "Inactive",
 "CoC7.Suppressed": "Suppressed",
-"CoC7.Unavailable": "Unavailable"
+"CoC7.Unavailable": "Unavailable",
+"CoC7.PickWhichActorTitle": "Pick who to roll as",
+"CoC7.PickWhichActorDesc": "You have Owner permissions for multiple Actors please pick which to roll as",
+"CoC7.WaitingOnUser": "Waiting On User",
+"CoC7.ErrorRollAlreadyCompleted": "This roll has already been completed",
+"CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
+"CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
+"CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
