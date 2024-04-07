@@ -248,3 +248,43 @@ html {
     }
   }
 }
+// .coc7.actor {
+//   .skill-name.rollable,
+//   .characteristic-label,
+//   .attribute-label.rollable,
+//   .auto-toggle,
+//   .item-control.development-flag {
+//     cursor: help;
+//   }
+// }
+.actor-picker {
+  ol.directory-list {
+    border: 1px solid var(--color-border-dark-3);
+
+    li.directory-item.document.actor {
+      border-top: none;
+      padding: 0.2rem;
+      display: flex;
+      cursor: pointer;
+
+      &:last-child {
+        border-top: none;
+      }
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.16);
+      }
+
+      &.picked {
+        background: rgba(0, 0, 0, 0.1);
+        font-weight: bold;
+        box-shadow: 0 0 6px inset var(--color-shadow-highlight);
+      }
+    }
+  }
+
+  .dialog-buttons {
+    flex-grow: initial;
+    margin-top: 1rem;
+  }
+}

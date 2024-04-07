@@ -42,7 +42,10 @@ export const preloadHandlebarsTemplates = async function () {
     'systems/CoC7/templates/apps/investigator-wizard/set-archetype-skills.hbs',
     'systems/CoC7/templates/apps/investigator-wizard/points-skills.hbs',
     'systems/CoC7/templates/apps/investigator-wizard/backstory.hbs',
-    'systems/CoC7/templates/apps/investigator-wizard/create.hbs'
+    'systems/CoC7/templates/apps/investigator-wizard/create.hbs',
+
+    'systems/CoC7/templates/chat/messages/roll-container.hbs',
+    'systems/CoC7/templates/chat/messages/roll-dice.hbs'
   ]
 
   /** Load the template parts */

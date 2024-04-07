@@ -2,6 +2,7 @@
 import { CoCActor } from '../actors/actor.js'
 import { CoC7Check } from '../check.js'
 import { CoC7ContentLinkDialog } from './coc7-content-link-dialog.js'
+import { CoC7GroupMessage } from './coc7-group-message.js'
 import { CoC7Utilities } from '../utilities.js'
 import { SanCheckCard } from '../chat/cards/san-check.js'
 import { chatHelper, isCtrlKey } from '../chat/helper.js'
@@ -179,6 +180,9 @@ export class CoC7Link {
           } else if (key === 'pushing') {
             value = true
             data.pushing = true && [CoC7Link.CHECK_TYPE.CHECK].includes(type.toLowerCase())
+          } else if (key === 'combat') {
+            value = true
+            data.combat = true && [CoC7Link.CHECK_TYPE.CHECK].includes(type.toLowerCase())
           }
         }
         data.dataset[key] = value
@@ -295,16 +299,16 @@ export class CoC7Link {
         // @coc7.check[blind,type:characteristic,name:str,difficulty:1,modifier:0,icon:fa fa-link]{Strength}
         // @coc7.check[blind,type:attribute,name:lck,difficulty:1,modifier:0,icon:fa fa-link]{Luck}
         // @coc7.check[blind,type:skill,name:Law,difficulty:1,modifier:0,icon:fa fa-link]{Law}
-        if (!eventData.linkType || (!eventData.name && !eventData.what)) {
+        if (!eventData.linkType || (!eventData.name && !eventData.rolls)) {
           return ''
         }
         let options = `${eventData.blind ? 'blind,' : ''}${eventData.pushing ? 'pushing,' : ''}type:${eventData.linkType}`
         if (eventData.name) {
           options += `,name:${eventData.name}`
-        } else if (eventData.what) {
-          options += `,what:${eventData.what}`
-          if (eventData.against) {
-            options += `,against:${eventData.against}`
+        } else if (eventData.rolls) {
+          options += `,rolls:${eventData.rolls}`
+          if (eventData.combat) {
+            options += ',combat'
           }
         }
         if (typeof eventData.difficulty !== 'undefined' && eventData.difficulty !== CoC7Check.difficultyLevel.regular) {
@@ -433,11 +437,12 @@ export class CoC7Link {
         if (['attributes', 'attribute', 'attrib', 'attribs'].includes(options.linkType.toLowerCase())) {
           return actor.attributeCheck(options.name, shiftKey, options)
         }
-        if (['combinedall', 'combinedany'].includes(options.linkType.toLowerCase())) {
-          return actor.combinedCheck(options.linkType.toLowerCase(), options.what.split('&&'))
-        }
-        if (['opposed'].includes(options.linkType.toLowerCase())) {
-          return actor.opposedCheck(options.what, options.against)
+        if (['combinedall', 'combinedany', 'opposed'].includes(options.linkType.toLowerCase())) {
+          return CoC7GroupMessage.createGroupMessage({
+            type: options.linkType.toLowerCase(),
+            rollRequisites: options.rolls.split('&&'),
+            isCombat: Boolean(options.combat ?? false)
+          })
         }
         break
 
@@ -532,9 +537,14 @@ export class CoC7Link {
       const speaker = ChatMessage.getSpeaker()
       let actor = ChatMessage.getSpeakerActor(speaker)
       if (!actor) {
-        const actors = game.actors.filter(a => (a.ownership[game.user.id] ?? a.ownership.default) >= CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER)
+        const actors = game.actors.filter(a => (a.ownership[game.user.id] ?? a.ownership.default) === CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)
         if (actors.length === 1) {
           actor = actors[0]
+        } else {
+          const actors = game.actors.filter(a => (a.ownership[game.user.id] ?? a.ownership.default) === CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER)
+          if (actors.length === 1) {
+            actor = actors[0]
+          }
         }
       }
       if (actor) {

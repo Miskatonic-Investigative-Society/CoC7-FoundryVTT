@@ -355,7 +355,7 @@ export class CoC7ChatMessage {
           }
         } else if (typeof config.options.itemId !== 'undefined') {
           const itemModifiers = Object.values(config.options.actor.system.skills).find(k => k.foundryID === config.options.itemId)
-          if (typeof itemModifiers.bonusDice !== 'undefined') {
+          if (typeof itemModifiers?.bonusDice !== 'undefined') {
             config.dialogOptions.modifier = itemModifiers.bonusDice
           }
         }
