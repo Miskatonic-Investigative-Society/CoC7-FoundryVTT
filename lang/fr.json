@@ -501,6 +501,10 @@
   "CoC7.LinkCheckDiff": "[{difficulty}] test de {name}",
   "CoC7.LinkCheckModif": " test de {name} ({modifier})",
   "CoC7.LinkCheckDiffModif": "[{difficulty}] test de {name} ({modifier})",
+  "CoC7.LinkCheckPushing": " test de {name} - redoublé",
+  "CoC7.LinkCheckDiffPushing": " test [{difficulty}] de {name} - redoublé",
+  "CoC7.LinkCheckModifPushing": " test de {name} - redoublé({modifier})",
+  "CoC7.LinkCheckDiffModifPushing": "test [{difficulty}] de {name} - redoublé({modifier})",
   "CoC7.LinkSanLoss": " Perte de SAN ({sanMin}/{sanMax})",
   "CoC7.LinkSanLossDiff": "[{difficulty}] SAN ({sanMin}/{sanMax})",
   "CoC7.LinkSanLossModif": " SAN ({modifier}) ({sanMin}/{sanMax})",
@@ -835,7 +839,6 @@
   "CoC7.EmptyItemList": "Ajouter un objet en le déposant ici.",
   "CoC7.EmptyCharacterSkillList": "Faîtes glisser un générateur, une occupation ou une compétence ici.",
   "CoC7.PersonalSpecialityPlaceholder": "autre(s) compétence(s) comme spécialités personnelles ou d'époque",
-  "CoC7.PersonalSpeciality": "Nombre de spécialités personnelles ou d'époque",
   "CoC7.AdditionalSkills": "Compétences supplémentaires",
   "CoC7.SkillSelectionWindow": "Sélectionner les compétences optionnelles",
   "CoC7.SelectPersonalSkills": "Sélectionner {number} de compétences comme compétences d'intérêt personnel",
@@ -913,6 +916,7 @@
   "CoC7.ErrorNoTokensSelected": "Pas de token sélectionné",
   "CoC7.ErrorEvaluatingDamage": "Erreur à l'évaluation des dommages",
 
+  "CoC7.InfoSkillAddedAtBase": "Cette compétence skill {name} a été ajoutée à {percent}%",
   "CoC7.InfoLessSkillThanOptions": "Seulement {skillCount} compétences pour {optionsCount} options. Toutes les compétences seront ajoutées",
   "CoC7.InfoAllSkillsAlreadySelected": "Toutes les compétences sont déjà sélectionnées.",
 
@@ -1177,6 +1181,12 @@
   "SETTINGS.AdviseAllPlayer": "Révéler à tous les joueurs",
   "SETTINGS.OneBlockBackStory": "Historique en un bloc",
   "SETTINGS.OneBlockBackStoryHint": "Transformer l'historique en un bloc éditable unique, mais vous pouvez y formater/ajouter des liens",
+  "SETTINGS.TokenDropMode": "En créationde PNJ :",
+  "SETTINGS.TokenDropModeHint": "Pécisez le comportement par défaut d'un PNJ avec des caractéristiques ou des compétences aléatoires lorsqu'il est lâché sur une scène.",
+  "SETTINGS.TokenDropModeAsk": "Demander quoi faire",
+  "SETTINGS.TokenDropModeRoll": "Jets de dés quand c'est possible",
+  "SETTINGS.TokenDropModeAverage": "Moyennes des dés à jeter",
+  "SETTINGS.TokenDropModeIgnore": "Ne rien faire",
   "SETTINGS.EnableStatusIcons": "Active les icônes d'état",
   "SETTINGS.EnableStatusIconsHint": "Définit si les icônes d'état de combat et de santé mentale sont affichées dans les tokens.",
   "SETTINGS.ShowExperimentalFeatures": "Montrer les Fonctionnalités Expérimentales",
@@ -1299,5 +1309,24 @@
   "CoC7.TokenCreationRoll.Title": "Aléatoire détecté",
   "CoC7.TokenCreationRoll.Prompt": "Ce token a des caractéristiques ou compétences aléatoires.<br>Que souhaitez-vous faire ?",
   "CoC7.TokenCreationRoll.ButtonRoll": "Jeter les dés pour toutes",
-  "CoC7.TokenCreationRoll.ButtonAverage": "Prendre les moyennes"
+  "CoC7.TokenCreationRoll.ButtonAverage": "Prendre les moyennes",
+  "CoC7.TokenCreationRoll.Rolled": "Caractéristiques et compétences {name} jetées",
+  "CoC7.TokenCreationRoll.Averaged": "Caractéristiques et compétences {name} moyennées",
+
+
+  "CoC7.RealRollDecaderPlaceholderName": "10's",
+
+  "CoC7.Temporary": "Temporaire",
+  "CoC7.Passive": "Passif",
+  "CoC7.Inactive": "Inactif",
+  "CoC7.Suppressed": "Supprimé",
+  "CoC7.Unavailable": "Indisponible",
+
+  "CoC7.PickWhichActorTitle": "Choisissez à la place de qui faire le jet ",
+  "CoC7.PickWhichActorDesc": "Vous êtes Propriétaire de plusieurs Acteurs, choisissez à la place de qui faire le jet",
+  "CoC7.WaitingOnUser": "En attente de l'utilisateur",
+  "CoC7.ErrorRollAlreadyCompleted": "Ce jet a déjà été fait",
+  "CoC7.ErrorNoActorPermission": "Vous n'êtes pes le Proriétaire de cet Acteur",
+  "CoC7.ErrorCombinedRollsRequireSingleActor": "Vous ne pouvez pas avoir plus d'un acteur dans un jet combiné",
+  "CoC7.ErrorOpposedRollsLimitedToTwoActors": "Une carte de jet opposé demandes deux acteurs"
 }
