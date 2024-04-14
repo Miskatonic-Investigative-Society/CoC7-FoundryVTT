@@ -103,6 +103,24 @@ export class RollCard {
     } else game.socket.emit('system.CoC7', data)
   }
 
+  static async resolveOld (userId) {
+    const messages = ui.chat.collection.filter(message => {
+      if (this.defaultConfig.type === message.getFlag('CoC7', 'type') && message.getFlag('CoC7', 'state') !== 'resolved') {
+        if (['combinedCard'].includes(this.defaultConfig.type)) {
+          return message.getFlag('CoC7', 'initiator') === userId
+        }
+        return true
+      }
+      return false
+    })
+    if (messages.length) {
+      await messages[0].setFlag('CoC7', 'state', 'resolved')
+      const card = await this.fromMessage(messages[0])
+      card.closeCard()
+      await card.updateChatCard()
+    }
+  }
+
   async toMessage () {
     const html = await renderTemplate(this.config.template, this)
     const htmlCardElement = $(html)

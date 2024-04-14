@@ -9,6 +9,20 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 0.10.12
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Add width and height attributes to SVG images as the current images can break scenes in browsers that require the attributes
+- Created links can now be set as pushed rolls
+- Swap icons for enter formula/values on NPC sheet and message localization improvements, thanks to zeedif #1497
+- Fix players see "Rollable detected" even without permission for actor
+- If attempting a skill the character does not have, attempt to find and add it
+- Update to French localization, thanks to @vonv #1521
+- Update to Italian localization, thanks to @Stefano1975t #1505 and #1510
+- Update to Japanese localization, thanks to @doumoku #1496 and #1516
+- Update to Russian localization, thanks to @k0ccc #1493
+
 ## Version 0.10.11
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.

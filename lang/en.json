@@ -501,6 +501,10 @@
   "CoC7.LinkCheckDiff": "[{difficulty}] {name} check",
   "CoC7.LinkCheckModif": " {name} check({modifier})",
   "CoC7.LinkCheckDiffModif": "[{difficulty}] {name} check({modifier})",
+  "CoC7.LinkCheckPushing": " {name} check - pushing",
+  "CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
+  "CoC7.LinkCheckModifPushing": " {name} check - pushing({modifier})",
+  "CoC7.LinkCheckDiffModifPushing": "[{difficulty}] {name} check - pushing({modifier})",
   "CoC7.LinkSanLoss": " SAN loss ({sanMin}/{sanMax})",
   "CoC7.LinkSanLossDiff": "[{difficulty}] SAN loss ({sanMin}/{sanMax})",
   "CoC7.LinkSanLossModif": " SAN loss({modifier}) ({sanMin}/{sanMax})",
@@ -912,6 +916,7 @@
   "CoC7.ErrorNoTokensSelected": "No tokens selected",
   "CoC7.ErrorEvaluatingDamage": "Error evaluating damage",
 
+  "CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
   "CoC7.InfoLessSkillThanOptions": "There's only {skillCount} and {optionsCount} options, adding all of them",
   "CoC7.InfoAllSkillsAlreadySelected": "All skills are already selected.",
 
@@ -1176,6 +1181,12 @@
   "SETTINGS.AdviseAllPlayer": "Notify all players",
   "SETTINGS.OneBlockBackStory": "One block backstory",
   "SETTINGS.OneBlockBackStoryHint": "Turn backstory to one editor block, but you can format/add links.",
+  "SETTINGS.TokenDropMode": "When creating NPC :",
+  "SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
+  "SETTINGS.TokenDropModeAsk": "Ask what to do",
+  "SETTINGS.TokenDropModeRoll": "Roll what you can",
+  "SETTINGS.TokenDropModeAverage": "Average rolls",
+  "SETTINGS.TokenDropModeIgnore": "Do nothing",
   "SETTINGS.EnableStatusIcons": "Enable status icons",
   "SETTINGS.EnableStatusIconsHint": "Set if combat and sanity effects icons are shown in tokens.",
   "SETTINGS.ShowExperimentalFeatures": "Show Experimental Features",
@@ -1299,6 +1310,23 @@
   "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
   "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
   "CoC7.TokenCreationRoll.ButtonAverage": "Average all",
+  "CoC7.TokenCreationRoll.Rolled": "{name} characteristics and skills rolled",
+  "CoC7.TokenCreationRoll.Averaged": "{name} characteristics and skills averaged",
 
-  "CoC7.RealRollDecaderPlaceholderName": "10's"
+
+  "CoC7.RealRollDecaderPlaceholderName": "10's",
+
+  "CoC7.Temporary": "Temporary",
+  "CoC7.Passive": "Passive",
+  "CoC7.Inactive": "Inactive",
+  "CoC7.Suppressed": "Suppressed",
+  "CoC7.Unavailable": "Unavailable",
+
+  "CoC7.PickWhichActorTitle": "Pick who to roll as",
+  "CoC7.PickWhichActorDesc": "You have Owner permissions for multiple Actors please pick which to roll as",
+  "CoC7.WaitingOnUser": "Waiting On User",
+  "CoC7.ErrorRollAlreadyCompleted": "This roll has already been completed",
+  "CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
+  "CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
+  "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 }

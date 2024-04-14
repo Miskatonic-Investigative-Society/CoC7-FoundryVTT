@@ -1,4 +1,5 @@
 /* global fromUuid, game, ui */
+import { CoC7GroupMessage } from './coc7-group-message.js'
 import { CoC7InvestigatorWizard } from './investigator-wizard.js'
 import { CoC7Utilities } from '../utilities.js'
 import { CombinedCheckCard } from '../chat/cards/combined-roll.js'
@@ -20,6 +21,15 @@ export class CoC7SystemSocket {
             break
           case 'open-character':
             game.actors.get(data.payload).sheet.render(true)
+            break
+          case 'group-message-new':
+            CoC7GroupMessage.newGroupMessage(data)
+            break
+          case 'group-message-roll':
+            CoC7GroupMessage.performMyRolls(data)
+            break
+          case 'group-message-update':
+            CoC7GroupMessage.updateTheMessage(data)
             break
         }
       }

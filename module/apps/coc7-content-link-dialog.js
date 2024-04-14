@@ -163,6 +163,7 @@ export class CoC7ContentLinkDialog extends FormApplication {
           this.object.link.setValue('name', formData.checkName)
           break
         case 'blind':
+        case 'pushing':
         case 'difficulty':
         case 'displayName':
         case 'icon':
@@ -311,8 +312,10 @@ export class CoC7ContentLinkDialog extends FormApplication {
     } else if (link.id !== '') {
       this.object.hasID = 'fromDirectory'
     }
-    if (link.difficulty !== CoC7Check.difficultyLevel.regular || parseInt(link.modifier, 10) !== 0) {
+    if (link.difficulty !== CoC7Check.difficultyLevel.regular || parseInt(link.modifier, 10) !== 0 || link.isPushing) {
       this.object.hasModifiers = true
+    } else {
+      this.object.hasModifiers = false
     }
     if (link.displayName !== '') {
       this.object.hasLabel = true

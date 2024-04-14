@@ -192,7 +192,7 @@ export class CombinedCheckCard extends RollCard {
     if (!this._roll) return
 
     this.rolls = this.rolls.filter(roll => {
-      return typeof roll.actor.data !== 'undefined' // remove any actors that no longer exist
+      return typeof roll.actor.system !== 'undefined' // remove any actors that no longer exist
     })
 
     for (const r of this.rolls) {

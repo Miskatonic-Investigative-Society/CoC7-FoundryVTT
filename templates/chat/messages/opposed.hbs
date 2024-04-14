@@ -1,0 +1,56 @@
+<div class="coc7 chat-card chat-card-v2 roll-card-v2 opposed{{#if isCombat}} combat{{/if}}">
+  <div class="title flexrow">
+    <div class="opposed-card-flag visible-only-gm{{#if isCombat}} active{{/if}}">
+      {{#if isEditable}}
+        <a class="toggle-link select-only-gm" data-key="isCombat"><i class="game-icon game-icon-crossed-swords"></i></a>
+      {{else}}
+        <span><i class="game-icon game-icon-crossed-swords"></i></span>
+      {{/if}}
+    </div>
+    <div>{{localize 'CoC7.SkillCombat'}}{{#if isCombat}} ({{localize 'CoC7.AttackManeuver'}}){{/if}}</div>
+  </div>
+  {{#if isCombat}}
+    {{#if (and isEditable allRollsCompleted)}}
+      {{#if needsTieBreaker}}
+        <div class="flexrow toggle visible-only-gm">
+          <button class="flex1 toggle-switch select-only-gm{{#if advantageAttacker}} switched-on{{/if}}" title="{{localize 'CoC7.AdvantageAttacker'}}" data-key="advantageAttacker">{{localize 'CoC7.AdvantageAttacker'}}</button>
+          <button class="flex1 toggle-switch select-only-gm{{#if advantageDefender}} switched-on{{/if}}" title="{{localize 'CoC7.AdvantageDefender'}}" data-key="advantageDefender">{{localize 'CoC7.AdvantageDefender'}}</button>
+        </div>
+        <div class="hidden-only-gm">
+          {{#if advantageAttacker}}
+            <span class="tag">{{localize 'CoC7.AdvantageAttacker'}}</span>
+          {{else if advantageDefender}}
+            <span class="tag">{{localize 'CoC7.AdvantageDefender'}}</span>
+          {{/if}}
+        </div>
+      {{/if}}
+    {{else}}
+      <div>
+        {{#if isTie}}<span class="tag">{{localize 'CoC7.Tie'}}</span>{{/if}}
+        {{#if needsTieBreaker}}
+          {{#if advantageAttacker}}<span class="tag">{{localize 'CoC7.AdvantageAttacker'}}</span>{{/if}}
+          {{#if advantageDefender}}<span class="tag">{{localize 'CoC7.AdvantageDefender'}}</span>{{/if}}
+        {{/if}}
+        {{#if defenderIsDodging}}<span class="tag">Defender is dodging</span>{{/if}}
+      </div>
+    {{/if}}
+  {{else}}
+    <div>
+      {{#if isTie}}<span class="tag">{{localize 'CoC7.Tie'}}</span>{{/if}}
+    </div>
+  {{/if}}
+  <ol>
+    {{#each rollOrder as |which|}}
+    {{~> 'systems/CoC7/templates/chat/messages/roll-container.hbs' which=which rollStatus=(lookup ../rollStatuses which) roll=(lookup ../rollData which) parent=../this}}
+    {{/each}}
+  </ol>
+  {{#if (and isCombat allRollsCompleted resultText)}}
+    <div class='card-result'>{{resultText}}</div>
+  {{/if}}
+  {{#if (and isEditable allRollsCompleted)}}
+    {{!-- NYI Winner Weapon Rolls Damage --}}
+    <div class='card-buttons visible-only-gm'>
+      <button data-action="toggle" data-key="isEditable">{{localize 'CoC7.CloseCard'}}</button>
+    </div>
+  {{/if}}
+</div>

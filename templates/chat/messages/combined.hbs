@@ -1,0 +1,31 @@
+<div class="coc7 chat-card chat-card-v2 roll-card-v2 combined">
+  <div>{{localize 'CoC7.CombinedRollCard'}}{{#if (eq combined 'any')}} ({{localize 'CoC7.Any'}}){{else if (eq combined 'all')}} ({{localize 'CoC7.All'}}){{/if}}</div>
+  {{#if isEditable}}
+  <div class='flexrow toggle visible-only-gm'>
+    <button class="flex1 toggle-switch select-only-gm{{#if (eq combined 'any')}} switched-on{{/if}}" title="{{localize 'CoC7.CombinedAnyHint'}}" data-key="combined" data-value="any">{{localize 'CoC7.Any'}}</button>
+    <button class="flex1 toggle-switch select-only-gm{{#if (eq combined 'all')}} switched-on{{/if}}" title="{{localize 'CoC7.CombinedAllHint'}}" data-key="combined" data-value="all">{{localize 'CoC7.All'}}</button>
+  </div>
+  {{/if}}
+  <ol>
+    {{#each rollOrder as |which|}}
+    {{~> 'systems/CoC7/templates/chat/messages/roll-container.hbs' which=which rollStatus=(lookup ../rollStatuses which) roll=(lookup ../rollData which) parent=../this}}
+    {{/each}}
+  </ol>
+  {{#unless allRollsCompleted}}
+  <div class="card-buttons visible-only-any">
+    <button data-action="roll-once">{{localize 'CoC7.RollDice'}}</button>
+  </div>
+  {{/unless}}
+
+  {{#if isSuccess}}
+    <h4 class="card-result success">{{localize 'CoC7.Success'}}{{#if wasPushed}} {{localize 'CoC7.PushedRoll'}}{{/if}}</h4>
+  {{else if isFailure}}
+    <h4 class="card-result failure">{{localize 'CoC7.Failure'}}{{#if wasPushed}} {{localize 'CoC7.PushedRoll'}}{{/if}}</h4>
+  {{/if}}
+
+  {{#if (and isEditable (or isSuccess isFailure))}}
+    <div class='card-buttons visible-only-gm'>
+      <button data-action="toggle" data-key="isEditable">{{localize 'CoC7.CloseCard'}}</button>
+    </div>
+  {{/if}}
+</div>

@@ -84,7 +84,7 @@ export class CoC7Dice {
         roll,
         game.user,
         syncDice,
-        chatData.whisper,
+        (chatData.whisper.length === 0 ? null : chatData.whisper),
         chatData.blind
       )
     }
@@ -105,7 +105,7 @@ export class CoC7Dice {
       pool.push(
         (hasDSN
           ? '+1do[' + game.settings.get('CoC7', 'tenDiePenalty') + ']'
-          : '1dt'
+          : '+1dt'
         ).repeat(Math.abs(penaltyDice))
       )
     }
@@ -113,7 +113,7 @@ export class CoC7Dice {
       pool.push(
         (hasDSN
           ? '+1do[' + game.settings.get('CoC7', 'tenDieBonus') + ']'
-          : '1dt'
+          : '+1dt'
         ).repeat(Math.abs(bonusDice))
       )
     }

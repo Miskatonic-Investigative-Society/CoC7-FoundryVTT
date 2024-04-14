@@ -946,4 +946,16 @@ export class CoC7Utilities {
           .toLocaleLowerCase()
       )
   }
+
+  static getAnIdForGm () {
+    const keepers = game.users.filter(u => u.active && u.isGM && u.id !== game.user.id)
+    switch (keepers.length) {
+      case 0:
+        ui.notifications.error('CoC7.ErrorMissingKeeperUser', { localize: true })
+        return false
+      case 1:
+        return keepers[0].id
+    }
+    return keepers[Math.floor(Math.random() * keepers.length)].id
+  }
 }

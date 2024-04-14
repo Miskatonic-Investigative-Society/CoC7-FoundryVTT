@@ -505,6 +505,10 @@
   "CoC7.LinkCheckDiff": "[Tiro {difficulty}] {name}",
   "CoC7.LinkCheckModif": " Tiro {name} ({modifier})",
   "CoC7.LinkCheckDiffModif": "[Tiro {difficulty}] {name} ({modifier})",
+  "CoC7.LinkCheckPushing": " tiro {name} - forzato",
+  "CoC7.LinkCheckDiffPushing": "[Tiro {difficulty}] {name} - forzato",
+  "CoC7.LinkCheckModifPushing": " tiro {name} - forzato ({modifier})",
+  "CoC7.LinkCheckDiffModifPushing": "[Tiro {difficulty}] {name} - forzato ({modifier})",
   "CoC7.LinkSanLoss": " Perdita SAN ({sanMin}/{sanMax})",
   "CoC7.LinkSanLossDiff": "[{difficulty}] perdita SAN ({sanMin}/{sanMax})",
   "CoC7.LinkSanLossModif": " Perdita SAN ({modifier}) ({sanMin}/{sanMax})",
@@ -917,6 +921,7 @@
   "CoC7.ErrorNoTokensSelected": "Nessuna Pedina selezionata",
   "CoC7.ErrorEvaluatingDamage": "Errore nel valutare il danno",
 
+  "CoC7.InfoSkillAddedAtBase": "Questa abilità {name} è stata aggiunta al {percent}%",
   "CoC7.InfoLessSkillThanOptions": "Ci sono solo {skillCount} e {optionsCount} opzioni, le aggiungo tutte quante",
   "CoC7.InfoAllSkillsAlreadySelected": "Tutte le abilità sono già selezionate.",
 
@@ -1181,6 +1186,12 @@
   "SETTINGS.AdviseAllPlayer": "Avvisa tutti i giocatori",
   "SETTINGS.OneBlockBackStory": "Un blocco di trascorsi",
   "SETTINGS.OneBlockBackStoryHint": "Trasforma i trascorsi in un blocco editabile, ma puoi formattare/aggiungere collegamenti.",
+  "SETTINGS.TokenDropMode": "Quando crei un PNG:",
+  "SETTINGS.TokenDropModeHint": "Definisci la procedura standard quando un PNG con caratteristiche o abilità definibili dal lancio di dadi viene posizionato in una Scena.",
+  "SETTINGS.TokenDropModeAsk": "Chiedi cosa fare",
+  "SETTINGS.TokenDropModeRoll": "Lancia i dadi per quello che puoi",
+  "SETTINGS.TokenDropModeAverage": "Usa la Media",
+  "SETTINGS.TokenDropModeIgnore": "Non fare nulla",
   "SETTINGS.EnableStatusIcons": "Abilita icone di condizione",
   "SETTINGS.EnableStatusIconsHint": "Imposta se le icone degli effetti di combattimento e di sanità vengono mostrate nelle pedine.",
   "SETTINGS.ShowExperimentalFeatures": "Mostra caratteristiche sperimentali",
@@ -1299,5 +1310,15 @@
   "CoC7.TokenCreationRoll.Title": "Lancio di dadi rilevato",
   "CoC7.TokenCreationRoll.Prompt": "Quest pedina ha caratteristiche o abilità da lancio di dadi.<br>Cosa vuoi fare?",
   "CoC7.TokenCreationRoll.ButtonRoll": "Lancia dadi per tutto",
-  "CoC7.TokenCreationRoll.ButtonAverage": "Media per tutto"
+  "CoC7.TokenCreationRoll.ButtonAverage": "Media per tutto",
+  "CoC7.TokenCreationRoll.Rolled": "Caratteristiche e abilità di {name} tirate",
+  "CoC7.TokenCreationRoll.Averaged": "Caratteristiche e abilità medie di {name}",
+
+  "CoC7.RealRollDecaderPlaceholderName": "10",
+
+  "CoC7.Temporary": "Temporaneo",
+  "CoC7.Passive": "Passivo",
+  "CoC7.Inactive": "Inattivo",
+  "CoC7.Suppressed": "Eliminato",
+  "CoC7.Unavailable": "Non Disponibile"
 }

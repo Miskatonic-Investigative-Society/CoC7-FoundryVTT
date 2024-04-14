@@ -845,6 +845,41 @@ export class CoC7Check {
     this.computeCheck()
   }
 
+  async increaseLuckSpend (luckAmount) {
+    const spendingAmount = parseInt(luckAmount, 10)
+    this.totalLuckSpent = parseInt(this.totalLuckSpent ?? 0, 10) + spendingAmount
+    const modifiedResult = Math.max(1, this.modifiedResult - this.totalLuckSpent)
+    if (modifiedResult === 1) {
+      this.successLevel = CoC7Check.successLevel.critical
+    } else if (modifiedResult <= this.extremeThreshold) {
+      this.successLevel = CoC7Check.successLevel.extreme
+    } else if (modifiedResult <= this.hardThreshold) {
+      this.successLevel = CoC7Check.successLevel.hard
+    } else if (modifiedResult <= this.rawValue) {
+      this.successLevel = CoC7Check.successLevel.regular
+    } else if (this.fumbleThreshold <= modifiedResult) {
+      this.successLevel = CoC7Check.successLevel.fumble
+    } else if (modifiedResult > this.rawValue) {
+      this.successLevel = CoC7Check.successLevel.failure
+    }
+    if (this.difficulty <= this.successLevel) {
+      this.isSuccess = true
+      this.isFailure = false
+    }
+    this.luckSpent = true
+    let remove = 0
+    for (let index = 0, maxIndex = this.increaseSuccess.length; index < maxIndex; index++) {
+      this.increaseSuccess[index].luckToSpend = this.increaseSuccess[index].luckToSpend - spendingAmount
+      if (this.increaseSuccess[index].luckToSpend < 1) {
+        remove++
+      }
+    }
+    for (let index = 0; index < remove; index++) {
+      this.increaseSuccess.shift()
+    }
+    this.computeCheck()
+  }
+
   async computeCheck () {
     this.isUnknown = this.unknownDifficulty
 
