@@ -9,6 +9,10 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 0.10.12
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
 - Add width and height attributes to SVG images as the current images can break scenes in browsers that require the attributes
 - Created links can now be set as pushed rolls
 - Swap icons for enter formula/values on NPC sheet and message localization improvements, thanks to zeedif #1497
