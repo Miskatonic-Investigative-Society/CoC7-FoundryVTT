@@ -19,7 +19,7 @@
           {{#each itemsByType.item as |item id|}}
             <li class="item flexrow" data-item-id="{{item._id}}">
               <div class="item-image" style="background-image: url({{item.img}})"></div>
-              <h4 class="item-name show-detail">{{item.name}}</h4>
+              <h4 class="item-name show-detail">{{#unless (eq system.quantity 1)}}{{system.quantity}} x {{/unless}}{{item.name}}</h4>
               <div class="item-controls">
                 <a class="item-control item-trade" title="{{localize 'CoC7.TradeItem'}}"><i class="game-icon game-icon-trade"></i></a>
                 <a class="item-control item-edit" title="{{localize 'CoC7.EditItem'}}"><i class="fas fa-edit"></i></a>
