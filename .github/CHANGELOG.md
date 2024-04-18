@@ -9,6 +9,9 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix Dhole House Importer for premade investigators
+- Update to German localization, thanks to @MrViso #1525
+
 ## Version 0.10.12
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
