@@ -1932,9 +1932,7 @@ export class CoCActor extends Actor {
   }
 
   maxLossToSanReason (sanReason, sanMaxFormula) {
-    const sanMax = new Roll(sanMaxFormula.toString()).evaluate({
-      maximize: true
-    }).total
+    const sanMax = new Roll(sanMaxFormula.toString())[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ maximize: true }).total
     const sanityLossEvent = this.getReasonSanLoss(sanReason)
     if (sanityLossEvent.immunity) {
       return 0
@@ -1970,9 +1968,7 @@ export class CoCActor extends Actor {
       if (!isNaN(Number(this.sanLossCheckFailled))) {
         return Number(this.sanLossCheckFailled)
       }
-      return new Roll(this.sanLossCheckFailled).evaluate({
-        maximize: true
-      }).total
+      return new Roll(this.sanLossCheckFailled)[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ maximize: true }).total
     }
     return 0
   }
@@ -1982,9 +1978,7 @@ export class CoCActor extends Actor {
       if (!isNaN(Number(this.sanLossCheckPassed))) {
         return Number(this.sanLossCheckPassed)
       }
-      return new Roll(this.sanLossCheckPassed).evaluate({
-        maximize: true
-      }).total
+      return new Roll(this.sanLossCheckPassed)[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ maximize: true }).total
     }
     return 0
   }
@@ -3004,7 +2998,7 @@ export class CoCActor extends Actor {
     const characteristics = {}
     for (const [key, value] of Object.entries(this.system.characteristics)) {
       if (value.formula && !value.formula.startsWith('@')) {
-        const average = new AverageRoll('(' + value.formula + ')').evaluate({ minimize: true, maximize: true }).total
+        const average = new AverageRoll('(' + value.formula + ')')[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ minimize: true, maximize: true }).total
         characteristics[`system.characteristics.${key}.value`] = average
       }
     }
@@ -3025,7 +3019,7 @@ export class CoCActor extends Actor {
           charValue = new Roll(
             value.formula,
             this.parseCharacteristics()
-          ).evaluate({ maximize: true }).total
+          )[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ maximize: true }).total
         } catch (err) {
           charValue = null
         }

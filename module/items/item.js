@@ -554,9 +554,7 @@ export class CoC7Item extends Item {
       let value
       try {
         value = Math.floor(
-          new Roll(data.system.base, parsed).evaluate({
-            maximize: true
-          }).total
+          new Roll(data.system.base, parsed)[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ maximize: true }).total
         )
       } catch (err) {
         value = 0
@@ -582,9 +580,7 @@ export class CoC7Item extends Item {
       let value
       try {
         value = Math.floor(
-          new Roll(this.system.base, parsed).evaluate({
-            maximize: true
-          }).total
+          new Roll(this.system.base, parsed)[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ maximize: true }).total
         )
       } catch (err) {
         value = 0

@@ -247,7 +247,7 @@ export class DamageCard extends InteractiveChatCard {
     if (this.weapon.system.properties.ahdb) formula = formula + '+ floor(' + db + '/2)'
 
     if (formula) {
-      const maxDamage = new Roll(formula).evaluate({ maximize: true }).total
+      const maxDamage = new Roll(formula)[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ maximize: true }).total
       let rollString
       if (this.critical) {
         if (this.impale) {

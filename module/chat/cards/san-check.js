@@ -1,4 +1,4 @@
-/* global $, game, renderTemplate, Roll, ui */
+/* global $, foundry, game, renderTemplate, Roll, ui */
 import { COC7 } from '../../config.js'
 import { CoC7Check } from '../../check.js'
 import { CoC7Dice } from '../../dice.js'
@@ -105,9 +105,7 @@ export class SanCheckCard extends ChatCardActor {
   }
 
   get maxSanLoss () {
-    return new Roll(this.sanData.sanMax.toString()).evaluate({
-      maximize: true
-    }).total
+    return new Roll(this.sanData.sanMax.toString())[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ maximize: true }).total
   }
 
   get sanLossReasonEncountered () {
@@ -289,9 +287,7 @@ export class SanCheckCard extends ChatCardActor {
         this.sanData.sanMax
       )
     } else if (this.sanData.sanReason) {
-      const min = new Roll(this.sanLossFormula).evaluate({
-        minimize: true
-      }).total
+      const min = new Roll(this.sanLossFormula)[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ minimize: true }).total
       const max = this.actor.maxLossToSanReason(
         this.sanData.sanReason,
         this.sanData.sanMax
