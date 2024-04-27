@@ -1,4 +1,4 @@
-/* global $, ChatMessage, game, renderTemplate, Roll, ui */
+/* global $, ChatMessage, foundry, game, renderTemplate, Roll, ui */
 import { CoC7Dice } from '../dice.js'
 import { CoC7Check } from '../check.js'
 import { chatHelper, CoC7Roll, CoC7Damage } from './helper.js'
@@ -717,9 +717,7 @@ export class CoC7RangeInitiator {
         let damageFormula = String(h.shot.damage)
         if (!damageFormula || damageFormula === '') damageFormula = '0'
         const damageDie = CoC7Damage.getMainDie(damageFormula)
-        const maxDamage = new Roll(damageFormula).evaluate({
-          maximize: true
-        }).total
+        const maxDamage = new Roll(damageFormula)[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ maximize: true }).total
         const criticalDamageFormula = this.weapon.impale
           ? `${damageFormula} + ${maxDamage}`
           : `${maxDamage}`
