@@ -19,7 +19,7 @@ COC7.eras = {
   darkAgesPulp: 'CoC7.EraDarkAgesPulp',
   regency: 'CoC7.EraRegency',
   regencyPulp: 'CoC7.EraRegencyPulp',
-  // Reign of Terror
+  reignOfTerror: 'CoC7.EraReignOfTerror',
   gasLight: 'CoC7.EraGasLight',
   invictus: 'CoC7.EraInvictus'
 }

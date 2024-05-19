@@ -225,7 +225,9 @@ export class CoCIDEditor extends FormApplication {
     event.preventDefault()
     const propertyId = event.currentTarget.dataset.property
     await CoCIDEditor.eraToggle(this.object, propertyId)
-    this.render()
+    const options = foundry.utils.duplicate(this.options)
+    await this.close()
+    await this.render(true, options)
   }
 
   async _updateObject (event, formData) {
