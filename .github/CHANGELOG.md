@@ -9,6 +9,7 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Add found CoC ID name on links that use CoC ID as the selector
 - Add filter byt era to occupation in the Item Compendium
 - Add Reign Of Terror era key
 - Fix Dhole House Importer for premade investigators
