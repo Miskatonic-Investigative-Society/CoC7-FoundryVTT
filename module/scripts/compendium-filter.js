@@ -1,25 +1,34 @@
-/* global $, game, Hooks */
+/* global $, game, Hooks, ui */
 import { COC7 } from '../config.js'
 import { CoC7Utilities } from '../utilities.js'
 
-async function performFilter (e) {
-  const appId = e.currentTarget.name.replace(/^coc7[^0-9]+(\d+)$/, '$1')
-  const app = $('div.app[data-appid=' + appId + ']')
-  const type = app.find('select[name=coc7type' + appId + ']').val()
-  const name = app.find('input[name=search]').val()
-  const eraElement = app.find('select[name=coc7era' + appId + ']')
+async function performFilter (app) {
+  const appHtml = $('div.app[data-appid=' + app.appId + ']')
+  const type = appHtml.find('select[name=coc7type' + app.appId + ']').val()
+  const name = appHtml.find('input[name=search]').val()
+  const eraElement = appHtml.find('select[name=coc7era' + app.appId + ']')
+  let setEra = false
+  let setType = false
   let era = ''
   switch (type) {
+    case 'occupation':
     case 'setup':
     case 'skill':
     case 'weapon':
       eraElement.closest('div.era_select').show()
       era = eraElement.val()
+      setType = true
+      setEra = true
       break
     default:
       eraElement.closest('div.era_select').hide()
+      setType = true
   }
-  const items = await game.packs.get(app.data('packId'))?.getDocuments()
+  app.options.filterCoC7 = {
+    type: (setType ? type : null),
+    era: (setEra ? era : null)
+  }
+  const items = await game.packs.get(appHtml.data('packId'))?.getDocuments()
   if (typeof items === 'undefined') {
     return
   }
@@ -43,91 +52,87 @@ async function performFilter (e) {
       show.push(item.id)
     }
   }
-  app.find('ol.directory-list li').each(function () {
+  appHtml.find('ol.directory-list li').each(function () {
     this.style.display = show.includes(this.dataset.documentId)
       ? 'flex'
       : 'none'
   })
 }
 
+async function triggerFilterEvent (e) {
+  let appId = e.currentTarget.name.replace(/^coc7[^0-9]+(\d+)$/, '$1')
+  if (appId === 'search') {
+    appId = $(e.currentTarget).closest('div.app').data('appid')
+  }
+  if (ui.windows[appId] ?? false) {
+    performFilter(ui.windows[appId])
+  }
+}
+
 export function compendiumFilter () {
   Hooks.on('renderCompendium', async (app, html, data) => {
     if (app.collection.documentName === 'Item') {
+      const input = $('input[name=search]', html)
+      input.after(input.clone())
+      input.remove()
       await app.collection.getIndex()
       const types = [...new Set(data.index.filter(i => i.name !== '#[CF_tempEntity]').map(item => item.type))]
       const select = []
+      const selectedType = (app.options.filterCoC7?.type ?? '')
+      const selectedEra = (app.options.filterCoC7?.era ?? '')
       select.push(
         '<option value="">' + game.i18n.localize('CoC7.All') + '</option>'
       )
-      if (types.includes('archetype')) {
-        select.push(
-          '<option value="archetype">' +
-            game.i18n.localize('CoC7.Entities.Archetype') +
-            '</option>'
-        )
-      }
-      if (types.includes('book')) {
-        select.push(
-          '<option value="book">' +
-            game.i18n.localize('CoC7.Entities.Book') +
-            '</option>'
-        )
-      }
-      if (types.includes('item')) {
-        select.push(
-          '<option value="item">' +
-            game.i18n.localize('CoC7.Entities.Item') +
-            '</option>'
-        )
-      }
-      if (types.includes('occupation')) {
-        select.push(
-          '<option value="occupation">' +
-            game.i18n.localize('CoC7.Entities.Occupation') +
-            '</option>'
-        )
-      }
-      if (types.includes('setup')) {
-        select.push(
-          '<option value="setup">' +
-            game.i18n.localize('CoC7.Entities.Setup') +
-            '</option>'
-        )
-      }
-      if (types.includes('skill')) {
-        select.push(
-          '<option value="skill">' +
-            game.i18n.localize('CoC7.Entities.Skill') +
-            '</option>'
-        )
-      }
-      if (types.includes('spell')) {
-        select.push(
-          '<option value="spell">' +
-            game.i18n.localize('CoC7.Entities.Spell') +
-            '</option>'
-        )
-      }
-      if (types.includes('status')) {
-        select.push(
-          '<option value="status">' +
-            game.i18n.localize('CoC7.Entities.Status') +
-            '</option>'
-        )
-      }
-      if (types.includes('talent')) {
-        select.push(
-          '<option value="talent">' +
-            game.i18n.localize('CoC7.Entities.Talent') +
-            '</option>'
-        )
-      }
-      if (types.includes('weapon')) {
-        select.push(
-          '<option value="weapon">' +
-            game.i18n.localize('CoC7.Entities.Weapon') +
-            '</option>'
-        )
+      const groupTypes = [
+        {
+          key: 'archetype',
+          name: 'CoC7.Entities.Archetype'
+        },
+        {
+          key: 'book',
+          name: 'CoC7.Entities.Book'
+        },
+        {
+          key: 'item',
+          name: 'CoC7.Entities.Item'
+        },
+        {
+          key: 'occupation',
+          name: 'CoC7.Entities.Occupation'
+        },
+        {
+          key: 'setup',
+          name: 'CoC7.Entities.Setup'
+        },
+        {
+          key: 'skill',
+          name: 'CoC7.Entities.Skill'
+        },
+        {
+          key: 'spell',
+          name: 'CoC7.Entities.Spell'
+        },
+        {
+          key: 'status',
+          name: 'CoC7.Entities.Status'
+        },
+        {
+          key: 'talent',
+          name: 'CoC7.Entities.Talent'
+        },
+        {
+          key: 'weapon',
+          name: 'CoC7.Entities.Weapon'
+        }
+      ]
+      for (const groupType of groupTypes) {
+        if (types.includes(groupType.key)) {
+          select.push(
+            '<option value="' + groupType.key + '"' + (selectedType === groupType.key ? ' selected="selected"' : '') + '>' +
+              game.i18n.localize(groupType.name) +
+              '</option>'
+          )
+        }
       }
       const eras = []
       eras.push(
@@ -137,7 +142,7 @@ export function compendiumFilter () {
         eras.push(
           '<option value="' +
             era.id +
-            '">' +
+            '"' + (selectedEra === era.id ? ' selected="selected"' : '') + '>' +
             era.name +
             '</option>'
         )
@@ -168,8 +173,11 @@ export function compendiumFilter () {
           '<div class="header-search flexrow era_select" style="display:none"><i class="fas fa-layer-group"></i><select name="coc7era' + app.appId + '" style="">' + eras.join('') + '</select></div>' +
           '</div>'
         )
-      html.find('select').change(performFilter.bind(this))
-      html.find('input').keyup(performFilter.bind(this))
+      html.find('select').change(triggerFilterEvent.bind(this))
+      html.find('input').keyup(triggerFilterEvent.bind(this))
+      if (selectedType !== '') {
+        performFilter(app)
+      }
     }
   })
 }
