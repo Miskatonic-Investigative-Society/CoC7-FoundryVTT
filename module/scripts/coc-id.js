@@ -487,7 +487,7 @@ export class CoCID {
     }
     const eraText = CoCID.eraText(era)
 
-    const documentType = CoCID.getDocumentType(type).schema.name
+    const documentType = CoCID.getDocumentType(type).name
     const candidateDocuments = []
 
     let count = 1
