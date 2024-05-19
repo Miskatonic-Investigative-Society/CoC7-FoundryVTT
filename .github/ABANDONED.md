@@ -2,21 +2,21 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (409 untranslated strings)](#cnjson)
+[cn.json (417 untranslated strings)](#cnjson)
 
-[cs.json (594 untranslated strings)](#csjson)
+[cs.json (602 untranslated strings)](#csjson)
 
-[ko.json (191 untranslated strings)](#kojson)
+[ko.json (199 untranslated strings)](#kojson)
 
-[pt-BR.json (139 untranslated strings)](#ptbrjson)
+[pt-BR.json (147 untranslated strings)](#ptbrjson)
 
-[ru.json (61 untranslated strings)](#rujson)
+[ru.json (69 untranslated strings)](#rujson)
 
-[sv.json (377 untranslated strings)](#svjson)
+[sv.json (385 untranslated strings)](#svjson)
 
 
 ## cn.json
-409 untranslated strings
+417 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -58,6 +58,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EraModernPulp": "Modern - Pulp",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
+"CoC7.EraReignOfTerror": "Reign Of Terror",
 "CoC7.SkillXpGainDisabled": "XP Gain disabled.",
 "CoC7.SkillRarityShort": "[UC]",
 "CoC7.SkillRequiresName": "Requires Name",
@@ -98,11 +99,18 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.MonetaryFormatLsd": "£sd",
 "CoC7.MonetaryFormatRoman": "Roman",
 "CoC7.MonetaryDefaultPenniless": "Penniless",
+"CoC7.MonetaryDefaultDestitute": "Destitute",
 "CoC7.MonetaryDefaultPoor": "Poor",
 "CoC7.MonetaryDefaultAverage": "Average",
+"CoC7.MonetaryDefaultLower": "Lower-Class",
+"CoC7.MonetaryDefaultMiddle": "Emerging Middle-Class / Starting Professional",
 "CoC7.MonetaryDefaultWealthy": "Wealthy",
+"CoC7.MonetaryDefaultEstablished": "Poor Gentry / Established Professional",
+"CoC7.MonetaryDefaultProfessional": "Average Gentry / Wealthy Professional",
+"CoC7.MonetaryDefaultGentry": "Wealthy Gentry",
 "CoC7.MonetaryDefaultRich": "Rich",
 "CoC7.MonetaryDefaultSuperRich": "Super Rich",
+"CoC7.MonetaryDefaultAristocracy": "Aristocracy",
 "CoC7.BackgroundEncounters": "Losses from Strange Entities",
 "CoC7.BackgroundFlags": "Flags",
 "CoC7.BackgroundFlagsMythosExperienced": "5% Insanity Mythos Awarded",
@@ -429,7 +437,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## cs.json
-594 untranslated strings
+602 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -508,6 +516,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EraModernPulp": "Modern - Pulp",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
+"CoC7.EraReignOfTerror": "Reign Of Terror",
 "CoC7.EraAvailability": "Availability",
 "CoC7.SkillXpGainDisabled": "XP Gain disabled.",
 "CoC7.SkillRarityShort": "[UC]",
@@ -561,11 +570,18 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.MonetaryFormatLsd": "£sd",
 "CoC7.MonetaryFormatRoman": "Roman",
 "CoC7.MonetaryDefaultPenniless": "Penniless",
+"CoC7.MonetaryDefaultDestitute": "Destitute",
 "CoC7.MonetaryDefaultPoor": "Poor",
 "CoC7.MonetaryDefaultAverage": "Average",
+"CoC7.MonetaryDefaultLower": "Lower-Class",
+"CoC7.MonetaryDefaultMiddle": "Emerging Middle-Class / Starting Professional",
 "CoC7.MonetaryDefaultWealthy": "Wealthy",
+"CoC7.MonetaryDefaultEstablished": "Poor Gentry / Established Professional",
+"CoC7.MonetaryDefaultProfessional": "Average Gentry / Wealthy Professional",
+"CoC7.MonetaryDefaultGentry": "Wealthy Gentry",
 "CoC7.MonetaryDefaultRich": "Rich",
 "CoC7.MonetaryDefaultSuperRich": "Super Rich",
+"CoC7.MonetaryDefaultAristocracy": "Aristocracy",
 "CoC7.BackgroundEncounters": "Losses from Strange Entities",
 "CoC7.BackgroundFlags": "Flags",
 "CoC7.BackgroundFlagsMythosExperienced": "5% Insanity Mythos Awarded",
@@ -1027,7 +1043,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## ko.json
-191 untranslated strings
+199 untranslated strings
 ```
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
 "CoC7.RollDifficultyRegularTitle": "Regular difficulty",
@@ -1042,6 +1058,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EraModernPulp": "Modern - Pulp",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
+"CoC7.EraReignOfTerror": "Reign Of Terror",
 "CoC7.SkillRarityShort": "[UC]",
 "CoC7.SkillRequiresName": "Requires Name",
 "CoC7.SkillKeepBaseValue": "Keep Base Value",
@@ -1075,11 +1092,18 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.MonetaryFormatLsd": "£sd",
 "CoC7.MonetaryFormatRoman": "Roman",
 "CoC7.MonetaryDefaultPenniless": "Penniless",
+"CoC7.MonetaryDefaultDestitute": "Destitute",
 "CoC7.MonetaryDefaultPoor": "Poor",
 "CoC7.MonetaryDefaultAverage": "Average",
+"CoC7.MonetaryDefaultLower": "Lower-Class",
+"CoC7.MonetaryDefaultMiddle": "Emerging Middle-Class / Starting Professional",
 "CoC7.MonetaryDefaultWealthy": "Wealthy",
+"CoC7.MonetaryDefaultEstablished": "Poor Gentry / Established Professional",
+"CoC7.MonetaryDefaultProfessional": "Average Gentry / Wealthy Professional",
+"CoC7.MonetaryDefaultGentry": "Wealthy Gentry",
 "CoC7.MonetaryDefaultRich": "Rich",
 "CoC7.MonetaryDefaultSuperRich": "Super Rich",
+"CoC7.MonetaryDefaultAristocracy": "Aristocracy",
 "CoC7.SanityLossType": "Type",
 "CoC7.ErrorTokenIncorrect": "Unable to find selected token",
 "CoC7.RemoveParticipant": "Remove participant",
@@ -1222,10 +1246,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## pt-BR.json
-139 untranslated strings
+147 untranslated strings
 ```
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
+"CoC7.EraReignOfTerror": "Reign Of Terror",
 "CoC7.SkillSpecializationIsUnique": "Unique Specialization",
 "CoC7.LinkCheckPushing": " {name} check - pushing",
 "CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
@@ -1254,11 +1279,18 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.MonetaryFormatLsd": "£sd",
 "CoC7.MonetaryFormatRoman": "Roman",
 "CoC7.MonetaryDefaultPenniless": "Penniless",
+"CoC7.MonetaryDefaultDestitute": "Destitute",
 "CoC7.MonetaryDefaultPoor": "Poor",
 "CoC7.MonetaryDefaultAverage": "Average",
+"CoC7.MonetaryDefaultLower": "Lower-Class",
+"CoC7.MonetaryDefaultMiddle": "Emerging Middle-Class / Starting Professional",
 "CoC7.MonetaryDefaultWealthy": "Wealthy",
+"CoC7.MonetaryDefaultEstablished": "Poor Gentry / Established Professional",
+"CoC7.MonetaryDefaultProfessional": "Average Gentry / Wealthy Professional",
+"CoC7.MonetaryDefaultGentry": "Wealthy Gentry",
 "CoC7.MonetaryDefaultRich": "Rich",
 "CoC7.MonetaryDefaultSuperRich": "Super Rich",
+"CoC7.MonetaryDefaultAristocracy": "Aristocracy",
 "CoC7.SanityLossType": "Type",
 "CoC7.ErrorTokenIncorrect": "Unable to find selected token",
 "CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",
@@ -1365,12 +1397,20 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## ru.json
-61 untranslated strings
+69 untranslated strings
 ```
+"CoC7.EraReignOfTerror": "Reign Of Terror",
 "CoC7.LinkCheckPushing": " {name} check - pushing",
 "CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
 "CoC7.LinkCheckModifPushing": " {name} check - pushing({modifier})",
 "CoC7.LinkCheckDiffModifPushing": "[{difficulty}] {name} check - pushing({modifier})",
+"CoC7.MonetaryDefaultDestitute": "Destitute",
+"CoC7.MonetaryDefaultLower": "Lower-Class",
+"CoC7.MonetaryDefaultMiddle": "Emerging Middle-Class / Starting Professional",
+"CoC7.MonetaryDefaultEstablished": "Poor Gentry / Established Professional",
+"CoC7.MonetaryDefaultProfessional": "Average Gentry / Wealthy Professional",
+"CoC7.MonetaryDefaultGentry": "Wealthy Gentry",
+"CoC7.MonetaryDefaultAristocracy": "Aristocracy",
 "CoC7.MythosAlreadyEncountered": "Award Mythos Experience (+1%)",
 "CoC7.DisregardMythosGain": "No Mythos gain",
 "CoC7.MythosGain": "Mythos gain",
@@ -1430,7 +1470,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## sv.json
-377 untranslated strings
+385 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -1465,6 +1505,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EraModernPulp": "Modern - Pulp",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
+"CoC7.EraReignOfTerror": "Reign Of Terror",
 "CoC7.SkillXpGainDisabled": "XP Gain disabled.",
 "CoC7.SkillRarityShort": "[UC]",
 "CoC7.SkillRequiresName": "Requires Name",
@@ -1502,11 +1543,18 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.MonetaryFormatLsd": "£sd",
 "CoC7.MonetaryFormatRoman": "Roman",
 "CoC7.MonetaryDefaultPenniless": "Penniless",
+"CoC7.MonetaryDefaultDestitute": "Destitute",
 "CoC7.MonetaryDefaultPoor": "Poor",
 "CoC7.MonetaryDefaultAverage": "Average",
+"CoC7.MonetaryDefaultLower": "Lower-Class",
+"CoC7.MonetaryDefaultMiddle": "Emerging Middle-Class / Starting Professional",
 "CoC7.MonetaryDefaultWealthy": "Wealthy",
+"CoC7.MonetaryDefaultEstablished": "Poor Gentry / Established Professional",
+"CoC7.MonetaryDefaultProfessional": "Average Gentry / Wealthy Professional",
+"CoC7.MonetaryDefaultGentry": "Wealthy Gentry",
 "CoC7.MonetaryDefaultRich": "Rich",
 "CoC7.MonetaryDefaultSuperRich": "Super Rich",
+"CoC7.MonetaryDefaultAristocracy": "Aristocracy",
 "CoC7.SanityLossType": "Type",
 "CoC7.AlreadyEncounteredInformation": "Already encountered: {reason} lost {lost}/{max}",
 "CoC7.InsertLocation": "Insert location",
