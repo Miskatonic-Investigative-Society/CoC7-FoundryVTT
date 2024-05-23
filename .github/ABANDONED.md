@@ -2,21 +2,21 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (417 untranslated strings)](#cnjson)
+[cn.json (419 untranslated strings)](#cnjson)
 
-[cs.json (602 untranslated strings)](#csjson)
+[cs.json (604 untranslated strings)](#csjson)
 
-[ko.json (199 untranslated strings)](#kojson)
+[ko.json (201 untranslated strings)](#kojson)
 
-[pt-BR.json (147 untranslated strings)](#ptbrjson)
+[pt-BR.json (149 untranslated strings)](#ptbrjson)
 
-[ru.json (69 untranslated strings)](#rujson)
+[ru.json (71 untranslated strings)](#rujson)
 
-[sv.json (385 untranslated strings)](#svjson)
+[sv.json (387 untranslated strings)](#svjson)
 
 
 ## cn.json
-417 untranslated strings
+419 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -61,6 +61,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EraReignOfTerror": "Reign Of Terror",
 "CoC7.SkillXpGainDisabled": "XP Gain disabled.",
 "CoC7.SkillRarityShort": "[UC]",
+"CoC7.SkillRanged": "Ranged",
 "CoC7.SkillRequiresName": "Requires Name",
 "CoC7.SkillKeepBaseValue": "Keep Base Value",
 "CoC7.SkillPickNameOnly": "Select Specialization",
@@ -68,6 +69,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorInvalidCardType": "Card Type",
 "CoC7.ErrorInvalidRollType": "Roll Type",
 "CoC7.UnarmedWeaponName": "Unarmed",
+"CoC7.RangedSpecializationName": "Ranged",
 "CoC7.CleanSkillList": "Clean skill list",
 "CoC7.CleanSkillListHint": "<p>This will Clean your skill list by removing specialization from skill name.</p> <p>This will avoid to display skill as : 'specialization(specialization(skill))'</p>",
 "CoC7.ReduceSanityLimits": "Reduced all sanity limits by one",
@@ -437,7 +439,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## cs.json
-602 untranslated strings
+604 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -520,6 +522,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EraAvailability": "Availability",
 "CoC7.SkillXpGainDisabled": "XP Gain disabled.",
 "CoC7.SkillRarityShort": "[UC]",
+"CoC7.SkillRanged": "Ranged",
 "CoC7.SkillRequiresName": "Requires Name",
 "CoC7.SkillKeepBaseValue": "Keep Base Value",
 "CoC7.SkillPickNameOnly": "Select Specialization",
@@ -527,6 +530,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorInvalidCardType": "Card Type",
 "CoC7.ErrorInvalidRollType": "Roll Type",
 "CoC7.UnarmedWeaponName": "Unarmed",
+"CoC7.RangedSpecializationName": "Ranged",
 "CoC7.CleanSkillList": "Clean skill list",
 "CoC7.CleanSkillListHint": "<p>This will Clean your skill list by removing specialization from skill name.</p> <p>This will avoid to display skill as : 'specialization(specialization(skill))'</p>",
 "CoC7.SanGained": "Gained 2d6 ({results} = <strong>{sanGained}</strong>) Sanity after mastering <strong>{skill}</strong> with a <strong>{skillValue}%</strong>",
@@ -1043,7 +1047,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## ko.json
-199 untranslated strings
+201 untranslated strings
 ```
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
 "CoC7.RollDifficultyRegularTitle": "Regular difficulty",
@@ -1060,11 +1064,13 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
 "CoC7.EraReignOfTerror": "Reign Of Terror",
 "CoC7.SkillRarityShort": "[UC]",
+"CoC7.SkillRanged": "Ranged",
 "CoC7.SkillRequiresName": "Requires Name",
 "CoC7.SkillKeepBaseValue": "Keep Base Value",
 "CoC7.SkillPickNameOnly": "Select Specialization",
 "CoC7.SkillSpecializationIsUnique": "Unique Specialization",
 "CoC7.UnarmedWeaponName": "Unarmed",
+"CoC7.RangedSpecializationName": "Ranged",
 "CoC7.LinkCheckPushing": " {name} check - pushing",
 "CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
 "CoC7.LinkCheckModifPushing": " {name} check - pushing({modifier})",
@@ -1246,12 +1252,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## pt-BR.json
-147 untranslated strings
+149 untranslated strings
 ```
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
 "CoC7.EraReignOfTerror": "Reign Of Terror",
+"CoC7.SkillRanged": "Ranged",
 "CoC7.SkillSpecializationIsUnique": "Unique Specialization",
+"CoC7.RangedSpecializationName": "Ranged",
 "CoC7.LinkCheckPushing": " {name} check - pushing",
 "CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
 "CoC7.LinkCheckModifPushing": " {name} check - pushing({modifier})",
@@ -1397,9 +1405,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## ru.json
-69 untranslated strings
+71 untranslated strings
 ```
 "CoC7.EraReignOfTerror": "Reign Of Terror",
+"CoC7.SkillRanged": "Ranged",
+"CoC7.RangedSpecializationName": "Ranged",
 "CoC7.LinkCheckPushing": " {name} check - pushing",
 "CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
 "CoC7.LinkCheckModifPushing": " {name} check - pushing({modifier})",
@@ -1470,7 +1480,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## sv.json
-385 untranslated strings
+387 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -1508,11 +1518,13 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.EraReignOfTerror": "Reign Of Terror",
 "CoC7.SkillXpGainDisabled": "XP Gain disabled.",
 "CoC7.SkillRarityShort": "[UC]",
+"CoC7.SkillRanged": "Ranged",
 "CoC7.SkillRequiresName": "Requires Name",
 "CoC7.SkillKeepBaseValue": "Keep Base Value",
 "CoC7.SkillPickNameOnly": "Select Specialization",
 "CoC7.SkillSpecializationIsUnique": "Unique Specialization",
 "CoC7.UnarmedWeaponName": "Unarmed",
+"CoC7.RangedSpecializationName": "Ranged",
 "CoC7.CleanSkillList": "Clean skill list",
 "CoC7.CleanSkillListHint": "<p>This will Clean your skill list by removing specialization from skill name.</p> <p>This will avoid to display skill as : 'specialization(specialization(skill))'</p>",
 "CoC7.WeaponSkillMain": "Main skill",
