@@ -3501,7 +3501,7 @@ export class CoCActor extends Actor {
   get firearmSkills () {
     const skillList = []
     for (const value of this.items) {
-      if (value.type === 'skill' && value.system.properties.firearm) {
+      if (value.type === 'skill' && (value.system.properties.firearm || value.system.properties.ranged)) {
         skillList.push(value)
       }
     }

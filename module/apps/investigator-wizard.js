@@ -1695,7 +1695,7 @@ export class CoC7InvestigatorWizard extends FormApplication {
           if (item.system.properties?.fighting) {
             weaponSkills.melee[item.name] = item._id
             weaponSkills.melee[item.system.skillName] = item._id
-          } else if (item.system.properties?.firearm) {
+          } else if (item.system.properties?.firearm || item.system.properties?.ranged) {
             weaponSkills.rngd[item.name] = item._id
             weaponSkills.rngd[item.system.skillName] = item._id
           }
