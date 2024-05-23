@@ -230,6 +230,11 @@ export class CoC7ActorSheet extends ActorSheet {
                 'CoC7.FirearmSpecializationName'
               )
             }
+            if (item.system.properties.ranged) {
+              item.system.specialization = game.i18n.localize(
+                'CoC7.RangedSpecializationName'
+              )
+            }
           }
 
           if (this.actor.type !== 'character') {
@@ -338,7 +343,7 @@ export class CoC7ActorSheet extends ActorSheet {
       sheetData.rangeSkills = sheetData.skills.filter(
         skill =>
           skill.system.properties.combat === true &&
-          skill.system.properties.firearm === true
+          (skill.system.properties.firearm === true || skill.system.properties.ranged === true)
       )
 
       const cbtSkills = sheetData.skills.filter(
