@@ -9,6 +9,9 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix calculated base values in Investigator Wizard in FoundryVTT v12
+- Update to German localization, thanks to @MrViso #1539
+
 ## Version 0.10.13
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
