@@ -147,7 +147,7 @@ export class CoC7Link {
     return cls
   }
 
-  static _createLink (match) {
+  static async _createLink (match) {
     const name = match[4] ?? undefined
     const options = match[3] ?? undefined
     const type = match[2] ?? undefined
@@ -206,9 +206,15 @@ export class CoC7Link {
           if (data.dataset.name === 'san') {
             humanName = game.i18n.localize('CoC7.Sanity')
           }
-        }
-        if (['charac', 'char', 'characteristic', 'characteristics'].includes(data.dataset.type?.toLowerCase())) {
+        } else if (['charac', 'char', 'characteristic', 'characteristics'].includes(data.dataset.type?.toLowerCase())) {
           humanName = CoC7Utilities.getCharacteristicNames(data.dataset.name)?.label
+        } else {
+          if (!name && data.dataset.name.match(/^.\.[^\\.]*\..+$/)) {
+            const cocIdName = (await game.system.api.cocid.fromCoCID(data.dataset.name))?.[0]?.name
+            if (cocIdName) {
+              humanName = cocIdName
+            }
+          }
         }
         title = game.i18n.format(
           `CoC7.LinkCheck${!data.dataset.difficulty ? '' : 'Diff'}${!data.dataset.modifier ? '' : 'Modif'}${data.pushing ? 'Pushing' : ''}`,

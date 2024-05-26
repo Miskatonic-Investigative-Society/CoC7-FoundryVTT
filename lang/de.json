@@ -501,6 +501,10 @@
   "CoC7.LinkCheckDiff": "[{difficulty}] {name} Probe",
   "CoC7.LinkCheckModif": " {name} Probe({modifier})",
   "CoC7.LinkCheckDiffModif": "[{difficulty}] {name} Probe({modifier})",
+  "CoC7.LinkCheckPushing": " {name} Probe - Forcieren",
+  "CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} Probe - Forcieren",
+  "CoC7.LinkCheckModifPushing": " {name} Probe - Forcieren({modifier})",
+  "CoC7.LinkCheckDiffModifPushing": "[{difficulty}] {name} Probe - Forcieren({modifier})",
   "CoC7.LinkSanLoss": " SAN loss ({sanMin}/{sanMax})",
   "CoC7.LinkSanLossDiff": "[{difficulty}] Stabilitätsverlust ({sanMin}/{sanMax})",
   "CoC7.LinkSanLossModif": " Stabilitätsverlust ({modifier}) ({sanMin}/{sanMax})",
@@ -834,7 +838,7 @@
   "CoC7.EmptySkillList": "Füge eine Fertigkeit hinzu, indem du sie hier ablegst.",
   "CoC7.EmptyItemList": "Füge einen Gegenstand hinzu, indem du ihn hier ablegst.",
   "CoC7.EmptyCharacterSkillList": "Füge ein Setup, einen Beruf oder eine Fertigkeit hinzu, indem du sie hier ablegst.",
-  "CoC7.PersonalSpeciality": "Anzahl der Hobby- oder Ära-Spezialisierungen",
+  "CoC7.PersonalSpecialityPlaceholder": "andere Fertigkeiten als Hobby- oder Ära-Spezialisierung",
   "CoC7.AdditionalSkills": "Zusätzliche Fertigkeiten",
   "CoC7.SkillSelectionWindow": "Wähle zusätzliche Fertigkeiten",
   "CoC7.SelectPersonalSkills": "Wähle {number} Fertigkeit(en) als Hobbyfertigkeiten",
@@ -912,6 +916,7 @@
   "CoC7.ErrorNoTokensSelected": "Keine Tokens ausgewählt",
   "CoC7.ErrorEvaluatingDamage": "Fehler beim Berechnen des Schadens",
 
+  "CoC7.InfoSkillAddedAtBase": "Die Fertigkeit {name} wurde mit {percent}%",
   "CoC7.InfoLessSkillThanOptions": "Es gibt nur {skillCount} und {optionsCount} Optionen, füge alle hinzu.",
   "CoC7.InfoAllSkillsAlreadySelected": "Alle Fertigkeiten sind bereits ausgewählt.",
 
@@ -1176,6 +1181,12 @@
   "SETTINGS.AdviseAllPlayer": "Benachrichtige alle Spieler",
   "SETTINGS.OneBlockBackStory": "Hintergrundgeschichte in einem Textblock",
   "SETTINGS.OneBlockBackStoryHint": "Wandle den Bereich für die Hintergrundgeschichte in einen Textblock. Dies erlaubt es zu formatieren und Links hinzuzufügen.",
+  "SETTINGS.TokenDropMode": "Während der NPC Erstellung :",
+  "SETTINGS.TokenDropModeHint": "Definieren Sie das Standardverhalten, wenn ein NPC mit würfelbaren Eigenschaften oder Fertigkeiten auf einer Szene platziert wird.",
+  "SETTINGS.TokenDropModeAsk": "Frage was gemacht werden soll",
+  "SETTINGS.TokenDropModeRoll": "Würfel was du kannst",
+  "SETTINGS.TokenDropModeAverage": "Durchschnittlicher Wurf",
+  "SETTINGS.TokenDropModeIgnore": "Tue nichts",
   "SETTINGS.EnableStatusIcons": "Status Icons anschalten",
   "SETTINGS.EnableStatusIconsHint": "Bestimmt, ob Kampf- und Stabilitätsicons bei Tokens dargestellt werden.",
   "SETTINGS.ShowExperimentalFeatures": "Experimentelle Features zeigen",
@@ -1298,5 +1309,24 @@
   "CoC7.TokenCreationRoll.Title": "Auswürfelbare Werte erkannt",
   "CoC7.TokenCreationRoll.Prompt": "Dieses Token hat auswürfelbare Attribute oder Fertigkeiten.<br>Was möchtest du tun?",
   "CoC7.TokenCreationRoll.ButtonRoll": "Alle würfeln",
-  "CoC7.TokenCreationRoll.ButtonAverage": "Mittelwerte verwenden"
+  "CoC7.TokenCreationRoll.ButtonAverage": "Mittelwerte verwenden",
+  "CoC7.TokenCreationRoll.Rolled": "{name} characteristics and skills rolled",
+  "CoC7.TokenCreationRoll.Averaged": "{name} characteristics and skills averaged",
+
+
+  "CoC7.RealRollDecaderPlaceholderName": "10's",
+
+  "CoC7.Temporary": "Temporär",
+  "CoC7.Passive": "Passiv",
+  "CoC7.Inactive": "Inaktiv",
+  "CoC7.Suppressed": "Unterdrückt",
+  "CoC7.Unavailable": "Nicht verfügbar",
+
+  "CoC7.PickWhichActorTitle": "Wähle für wen du würfeln möchtest",
+  "CoC7.PickWhichActorDesc": "Du hast Besitzer-Rechte für mehrere Figuren, bitte wähle für wen du würfeln möchtest.",
+  "CoC7.WaitingOnUser": "Warten auf Benutzer",
+  "CoC7.ErrorRollAlreadyCompleted": "Der Wurf wurde bereits abgeschlossen",
+  "CoC7.ErrorNoActorPermission": "Du besitzt diese Figur nicht",
+  "CoC7.ErrorCombinedRollsRequireSingleActor": "Du kannst nicht mehr als eine Figur in einem gemeinsamen Wurf einsetzen",
+  "CoC7.ErrorOpposedRollsLimitedToTwoActors": "Ein gegenüberstellender Wurf benötigt zwei Figuren"
 }

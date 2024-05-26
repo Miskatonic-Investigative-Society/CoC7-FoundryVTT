@@ -19,7 +19,7 @@ COC7.eras = {
   darkAgesPulp: 'CoC7.EraDarkAgesPulp',
   regency: 'CoC7.EraRegency',
   regencyPulp: 'CoC7.EraRegencyPulp',
-  // Reign of Terror
+  reignOfTerror: 'CoC7.EraReignOfTerror',
   gasLight: 'CoC7.EraGasLight',
   invictus: 'CoC7.EraInvictus'
 }
@@ -117,6 +117,7 @@ COC7.skillProperties = {
   combat: 'CoC7.SkillCombat',
   fighting: 'CoC7.SkillFighting',
   firearm: 'CoC7.SkillFirearm',
+  ranged: 'CoC7.SkillRanged',
   requiresname: 'CoC7.SkillRequiresName',
   keepbasevalue: 'CoC7.SkillKeepBaseValue',
   picknameonly: 'CoC7.SkillPickNameOnly',
@@ -227,6 +228,7 @@ COC7.creatureFightingSkill = 'CoC7.creatureFightingSkill'
 
 COC7.fightingSpecializationName = 'CoC7.FightingSpecializationName'
 COC7.firearmSpecializationName = 'CoC7.FirearmSpecializationName'
+COC7.rangedSpecializationName = 'CoC7.RangedSpecializationName'
 
 COC7.combatCards = {
   fightBack: 'CoC7.FightBack',

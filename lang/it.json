@@ -375,6 +375,7 @@
   "CoC7.EraModernPulp": "Moderno - Pulp",
   "CoC7.EraRegency": "Regency Cthulhu - Standard",
   "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
+  "CoC7.EraReignOfTerror": "Regno del Terrore",
   "CoC7.Eras": "Tipologie di Cthulhu",
   "CoC7.EraAvailability": "Disponibilità",
 
@@ -550,11 +551,18 @@
   "CoC7.MonetaryFormatLsd": "Sterline",
   "CoC7.MonetaryFormatRoman": "Romani",
   "CoC7.MonetaryDefaultPenniless": "Squattrinato",
+  "CoC7.MonetaryDefaultDestitute": "Indigente",
   "CoC7.MonetaryDefaultPoor": "Povero",
   "CoC7.MonetaryDefaultAverage": "Medio",
+  "CoC7.MonetaryDefaultLower": "Proletariato",
+  "CoC7.MonetaryDefaultMiddle": "Borghesia Emergente / Professionista Alle Prime Armi",
   "CoC7.MonetaryDefaultWealthy": "Benestante",
+  "CoC7.MonetaryDefaultEstablished": "Nobiltà Minore Povera / Professionista Affermato",
+  "CoC7.MonetaryDefaultProfessional": "Nobiltà Minore Nella Media / Professionista Benestante",
+  "CoC7.MonetaryDefaultGentry": "Nobiltà Minore Benestante",
   "CoC7.MonetaryDefaultRich": "Ricco",
   "CoC7.MonetaryDefaultSuperRich": "Super ricco",
+  "CoC7.MonetaryDefaultAristocracy": "Aristocrazia",
 
   "CoC7.PossessionsNotes": "Note :",
   "CoC7.PossessionsNotesHolder": "Note",
@@ -1320,5 +1328,13 @@
   "CoC7.Passive": "Passivo",
   "CoC7.Inactive": "Inattivo",
   "CoC7.Suppressed": "Eliminato",
-  "CoC7.Unavailable": "Non Disponibile"
+  "CoC7.Unavailable": "Non Disponibile",
+
+  "CoC7.PickWhichActorTitle": "Scegli per quale vuoi tirare",
+  "CoC7.PickWhichActorDesc": "Hai il permesso di Proprietario per diversi Personaggi. Scegli per quale vuoi tirare",
+  "CoC7.WaitingOnUser": "In attesa dell'Utente",
+  "CoC7.ErrorRollAlreadyCompleted": "Questo tiro è già stato completato",
+  "CoC7.ErrorNoActorPermission": "Non sei il Proprietario di questo Personaggio",
+  "CoC7.ErrorCombinedRollsRequireSingleActor": "Non puoi avere più di un personaggio in un tiro combinato",
+  "CoC7.ErrorOpposedRollsLimitedToTwoActors": "Una carta contrapposta richiede due personaggi"
 }

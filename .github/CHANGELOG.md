@@ -9,6 +9,19 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 0.10.13
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Add found CoC ID name on links that use CoC ID as the selector
+- Add filter byt era to occupation in the Item Compendium
+- Add Reign Of Terror era key
+- Fix Dhole House Importer for premade investigators
+- Start implementation of Dark Ages ranged combat property
+- Add Ukrainian localization, thanks to @JornieNonsubia #1529
+- Update to German localization, thanks to @MrViso #1525
+- Update to Italian localization, thanks to @Stefano1975t #1534
+
 ## Version 0.10.12
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.

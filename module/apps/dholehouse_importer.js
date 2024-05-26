@@ -61,7 +61,7 @@ export class CoC7DholeHouseActorImporter {
     }
     dholeHouseData = dholeHouseData.Investigator
     const backstories = CoC7DholeHouseActorImporter.getBackstory(
-      dholeHouseData.Backstory
+      dholeHouseData.Backstory ?? {}
     )
     const cData = {
       name: dholeHouseData.PersonalDetails.Name,
@@ -147,12 +147,7 @@ export class CoC7DholeHouseActorImporter {
   static async extractSkills (dholeHouseskills, options) {
     const skills = []
     for (const skill of dholeHouseskills) {
-      if (
-        skill.subskill === 'None' &&
-        skill.value === '1' &&
-        skill.half === '0' &&
-        skill.fifth === '0'
-      ) {
+      if (skill.subskill === 'None') {
         continue
       }
       const parts = CoC7DholeHouseActorImporter.makeSkillName(
@@ -169,6 +164,12 @@ export class CoC7DholeHouseActorImporter {
         cloned.name = parts.name
         cloned.system.skillName = parts.skillName
         cloned.system.specialization = parts.specialization
+        if (cloned.system.properties?.requiresname ?? false) {
+          cloned.system.properties.requiresname = false
+        }
+        if (cloned.system.properties?.picknameonly ?? false) {
+          cloned.system.properties.picknameonly = false
+        }
       } else {
         cloned = CoCActor.emptySkill(
           parts.skillName,

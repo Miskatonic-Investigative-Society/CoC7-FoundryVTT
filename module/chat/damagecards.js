@@ -1,4 +1,4 @@
-/* global ChatMessage, game, renderTemplate, Roll, ui */
+/* global ChatMessage, foundry, game, renderTemplate, Roll, ui */
 
 // import { chatHelper } from './helper.js';
 import { CoC7Dice } from '../dice.js'
@@ -33,7 +33,7 @@ export class CoC7DamageRoll extends ChatCardActor {
       this.rollString = this.rollString + '+' + this.actor.db + '/2'
     }
 
-    this.maxDamage = new Roll(this.rollString).evaluate({ maximize: true })
+    this.maxDamage = new Roll(this.rollString)[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ maximize: true })
     /******************/
     this.roll = null
     if (this.critical) {

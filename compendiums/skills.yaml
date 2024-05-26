@@ -22,6 +22,7 @@ flags:
       gasLight: true
       regency: true
       regencyPulp: true
+      reignOfTerror: true
     priority: 0
 ---
 _id: dQ4zUjSteT3sgwKx
@@ -44,6 +45,7 @@ flags:
       modern: true
       modernPulp: true
       pulp: true
+      reignOfTerror: true
     priority: 0
 ---
 _id: ovIp66Luwfwbq28F
@@ -68,6 +70,7 @@ flags:
       gasLight: true
       regency: true
       regencyPulp: true
+      reignOfTerror: true
     priority: 0
 ---
 _id: wOs3gryeGRPkGoWD
@@ -274,6 +277,19 @@ flags:
   cocidFlag:
     id: i.skill.climb
     lang: en
+    eras:
+      standard: true
+      modern: true
+      modernPulp: true
+      pulp: true
+      downDarkerTrails: true
+      downDarkerTrailsPulp: true
+      darkAges: true
+      darkAgesPulp: true
+      regency: true
+      regencyPulp: true
+      reignOfTerror: true
+      gasLight: true
     priority: 0
 ---
 _id: VZSv9eodMQ4ZPcrO
@@ -318,6 +334,7 @@ flags:
       downDarkerTrails: true
       downDarkerTrailsPulp: true
       gasLight: true
+      reignOfTerror: true
     priority: 0
 ---
 _id: WJky66ezt2ef5ksH
@@ -387,6 +404,7 @@ flags:
       gasLight: true
       regency: true
       regencyPulp: true
+      reignOfTerror: true
     priority: 0
 ---
 _id: 4lN6yD6zwbjX6BFp
@@ -423,6 +441,19 @@ flags:
   cocidFlag:
     id: i.skill.dodge
     lang: en
+    eras:
+      standard: true
+      modern: true
+      modernPulp: true
+      pulp: true
+      downDarkerTrails: true
+      downDarkerTrailsPulp: true
+      darkAges: true
+      darkAgesPulp: true
+      regency: true
+      regencyPulp: true
+      reignOfTerror: true
+      gasLight: true
     priority: 0
 ---
 _id: Og2OWQH93aSDWAMZ
@@ -760,6 +791,7 @@ flags:
       gasLight: true
       regency: true
       regencyPulp: true
+      reignOfTerror: true
     priority: 0
 ---
 _id: Pb3QI7x9xJVeXi8a
@@ -821,6 +853,7 @@ flags:
       modern: true
       modernPulp: true
       pulp: true
+      reignOfTerror: true
     priority: 0
 ---
 _id: VwGWZ2LBOwtMaw08
@@ -1044,6 +1077,7 @@ flags:
       gasLight: true
       regency: true
       regencyPulp: true
+      reignOfTerror: true
     priority: 0
 ---
 _id: mEblnQjptKvKCeIg
@@ -1110,6 +1144,7 @@ flags:
       gasLight: true
       regency: true
       regencyPulp: true
+      reignOfTerror: true
     priority: 0
 ---
 _id: Yu3Xk8kZBlz0G82y
@@ -1174,6 +1209,7 @@ flags:
       gasLight: true
       regency: true
       regencyPulp: true
+      reignOfTerror: true
     priority: 0
 ---
 _id: BcWHh8EhmyKj7bNk
@@ -1200,6 +1236,7 @@ flags:
       gasLight: true
       regency: true
       regencyPulp: true
+      reignOfTerror: true
     priority: 0
 ---
 _id: MoAB0NRNlpEc2qWr
@@ -1226,6 +1263,7 @@ flags:
       gasLight: true
       regency: true
       regencyPulp: true
+      reignOfTerror: true
     priority: 0
 ---
 _id: MRbFH52Zh9TzhLBh
@@ -1252,6 +1290,7 @@ flags:
       gasLight: true
       regency: true
       regencyPulp: true
+      reignOfTerror: true
     priority: 0
 ---
 _id: rCJKGay6D0ucqgeg
@@ -1422,6 +1461,7 @@ flags:
       gasLight: true
       regency: true
       regencyPulp: true
+      reignOfTerror: true
     priority: 0
 ---
 _id: uQsVn8K6XRXQmtaI
@@ -1495,6 +1535,7 @@ flags:
       gasLight: true
       regency: true
       regencyPulp: true
+      reignOfTerror: true
     priority: 0
 ---
 _id: SL2OorS0Xx6ty02A
@@ -1890,6 +1931,7 @@ flags:
       gasLight: true
       regency: true
       regencyPulp: true
+      reignOfTerror: true
     priority: 0
 ---
 _id: nHaWNwtW3Lg0sqYJ
@@ -1934,6 +1976,7 @@ flags:
       gasLight: true
       regency: true
       regencyPulp: true
+      reignOfTerror: true
     priority: 0
 ---
 _id: X99v5MtRlfTNjL3B
@@ -1962,6 +2005,7 @@ flags:
       gasLight: true
       regency: true
       regencyPulp: true
+      reignOfTerror: true
     priority: 0
 ---
 _id: 1zSIeY0eat2AxQok
@@ -1988,6 +2032,7 @@ flags:
       gasLight: true
       regency: true
       regencyPulp: true
+      reignOfTerror: true
     priority: 0
 ---
 _id: AcUIbZFhfoXqQP2m

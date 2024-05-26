@@ -35,7 +35,8 @@ export class CoC7Skill extends CoC7Item {
       output.name = specialization + ' (' + output.skillName + ')'
       output.fighting = specialization === game.i18n.localize('CoC7.FightingSpecializationName')
       output.firearm = specialization === game.i18n.localize('CoC7.FirearmSpecializationName')
-      output.combat = output.fighting || output.firearm
+      output.ranged = specialization === game.i18n.localize('CoC7.RangedSpecializationName')
+      output.combat = output.fighting || output.firearm || output.ranged
     }
     return output
   }
