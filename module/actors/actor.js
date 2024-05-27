@@ -1644,9 +1644,9 @@ export class CoCActor extends Actor {
 
   static getCharacteristicDefinition () {
     const characteristics = []
-    for (const [key, value] of Object.entries(
-      game.system.template.Actor.templates.characteristics.characteristics
-    )) {
+    // FoundryVTT v11
+    const characteristicList = (!foundry.utils.isNewerVersion(game.version, '12') ? game.system.template.Actor.templates.characteristics.characteristics : game.system.template.Actor.character.characteristics)
+    for (const [key, value] of Object.entries(characteristicList)) {
       characteristics.push({
         key,
         shortName: game.i18n.localize(value.short),

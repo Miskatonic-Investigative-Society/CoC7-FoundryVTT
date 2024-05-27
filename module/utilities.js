@@ -201,9 +201,8 @@ export class CoC7Utilities {
           label: game.i18n.localize('CoC7.Luck')
         }
       default: {
-        for (const [, value] of Object.entries(
-          game.system.template.Actor.templates.characteristics.characteristics
-        )) {
+        const characteristicList = (!foundry.utils.isNewerVersion(game.version, '12') ? game.system.template.Actor.templates.characteristics.characteristics : game.system.template.Actor.character.characteristics)
+        for (const [, value] of Object.entries(characteristicList)) {
           if (charKey === game.i18n.localize(value.short).toLowerCase()) {
             return {
               short: game.i18n.localize(value.short),
