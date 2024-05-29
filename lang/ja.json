@@ -1321,4 +1321,12 @@
   "CoC7.Inactive": "非活性",
   "CoC7.Suppressed": "抑制",
   "CoC7.Unavailable": "使用不可"
+
+  "CoC7.PickWhichActorTitle": "Pick who to roll as",
+  "CoC7.PickWhichActorDesc": "You have Owner permissions for multiple Actors please pick which to roll as",
+  "CoC7.WaitingOnUser": "Waiting On User",
+  "CoC7.ErrorRollAlreadyCompleted": "This roll has already been completed",
+  "CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
+  "CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
+  "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 }
