@@ -2,21 +2,23 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (419 untranslated strings)](#cnjson)
+[cn.json (428 untranslated strings)](#cnjson)
 
-[cs.json (604 untranslated strings)](#csjson)
+[cs.json (613 untranslated strings)](#csjson)
 
-[ko.json (201 untranslated strings)](#kojson)
+[ko.json (210 untranslated strings)](#kojson)
 
-[pt-BR.json (149 untranslated strings)](#ptbrjson)
+[pt-BR.json (158 untranslated strings)](#ptbrjson)
 
-[ru.json (71 untranslated strings)](#rujson)
+[ru.json (80 untranslated strings)](#rujson)
 
-[sv.json (387 untranslated strings)](#svjson)
+[sv.json (396 untranslated strings)](#svjson)
+
+[zh-TW.json (57 untranslated strings)](#zhtwjson)
 
 
 ## cn.json
-419 untranslated strings
+428 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -70,6 +72,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorInvalidRollType": "Roll Type",
 "CoC7.UnarmedWeaponName": "Unarmed",
 "CoC7.RangedSpecializationName": "Ranged",
+"CoC7.LanguageSpecializationName": "Language",
+"CoC7.SkillNameHandgun": "Handgun",
+"CoC7.SkillNameRifle": "Rifle",
+"CoC7.SkillNameShotgun": "Shotgun",
+"CoC7.SkillNameRifleShotgun": "Rifle/Shotgun",
+"CoC7.SkillNameSmb": "Submachine Gun",
+"CoC7.SkillNameMachinGun": "Machine Gun",
+"CoC7.SkillNameLaunch": "Launch",
 "CoC7.CleanSkillList": "Clean skill list",
 "CoC7.CleanSkillListHint": "<p>This will Clean your skill list by removing specialization from skill name.</p> <p>This will avoid to display skill as : 'specialization(specialization(skill))'</p>",
 "CoC7.ReduceSanityLimits": "Reduced all sanity limits by one",
@@ -274,6 +284,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TextFieldInvalidJSON": "Unable to parse the JSON, please try again",
 "CoC7.ActorImporterUploadError": "Import stopped, unable to write image",
 "CoC7.FileUploadError": "Unable to write image, file upload error",
+"CoC7.Japanese": "Japanese",
 "CoC7.PickDirectory": "Pick Directory",
 "CoC7.ActorImported": "New {actorType} imported: {actorName}",
 "CoC7.DholeHouseActorImporter": "The Dhole's House Actor Importer JSON",
@@ -439,7 +450,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## cs.json
-604 untranslated strings
+613 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -531,6 +542,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorInvalidRollType": "Roll Type",
 "CoC7.UnarmedWeaponName": "Unarmed",
 "CoC7.RangedSpecializationName": "Ranged",
+"CoC7.LanguageSpecializationName": "Language",
+"CoC7.SkillNameHandgun": "Handgun",
+"CoC7.SkillNameRifle": "Rifle",
+"CoC7.SkillNameShotgun": "Shotgun",
+"CoC7.SkillNameRifleShotgun": "Rifle/Shotgun",
+"CoC7.SkillNameSmb": "Submachine Gun",
+"CoC7.SkillNameMachinGun": "Machine Gun",
+"CoC7.SkillNameLaunch": "Launch",
 "CoC7.CleanSkillList": "Clean skill list",
 "CoC7.CleanSkillListHint": "<p>This will Clean your skill list by removing specialization from skill name.</p> <p>This will avoid to display skill as : 'specialization(specialization(skill))'</p>",
 "CoC7.SanGained": "Gained 2d6 ({results} = <strong>{sanGained}</strong>) Sanity after mastering <strong>{skill}</strong> with a <strong>{skillValue}%</strong>",
@@ -789,6 +808,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.German": "German",
 "CoC7.Polish": "Polish",
 "CoC7.TraditionalChinese": "Traditional Chinese",
+"CoC7.Japanese": "Japanese",
 "CoC7.ImportedUnnamedCharacter": "Imported unnamed character",
 "CoC7.CreatedImportedCharactersFolder": "Created 'Imported Characters' folder",
 "CoC7.ImportedCharactersFolder": "Imported characters",
@@ -1047,7 +1067,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## ko.json
-201 untranslated strings
+210 untranslated strings
 ```
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
 "CoC7.RollDifficultyRegularTitle": "Regular difficulty",
@@ -1071,6 +1091,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SkillSpecializationIsUnique": "Unique Specialization",
 "CoC7.UnarmedWeaponName": "Unarmed",
 "CoC7.RangedSpecializationName": "Ranged",
+"CoC7.LanguageSpecializationName": "Language",
+"CoC7.SkillNameHandgun": "Handgun",
+"CoC7.SkillNameRifle": "Rifle",
+"CoC7.SkillNameShotgun": "Shotgun",
+"CoC7.SkillNameRifleShotgun": "Rifle/Shotgun",
+"CoC7.SkillNameSmb": "Submachine Gun",
+"CoC7.SkillNameMachinGun": "Machine Gun",
+"CoC7.SkillNameLaunch": "Launch",
 "CoC7.LinkCheckPushing": " {name} check - pushing",
 "CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
 "CoC7.LinkCheckModifPushing": " {name} check - pushing({modifier})",
@@ -1119,6 +1147,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TextFieldInvalidJSON": "Unable to parse the JSON, please try again",
 "CoC7.ActorImporterUploadError": "Import stopped, unable to write image",
 "CoC7.FileUploadError": "Unable to write image, file upload error",
+"CoC7.Japanese": "Japanese",
 "CoC7.System.Documentation": "View CoC7 System Manual",
 "CoC7.Settings.PulpRules.IgnoreAgePenalties.Name": "Ignore Age Penalties",
 "CoC7.Settings.PulpRules.IgnoreAgePenalties.Hint": "Do not alter movement rate based on age. When using the investigator wizard improvements and characteristic adjustments are not made",
@@ -1252,7 +1281,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## pt-BR.json
-149 untranslated strings
+158 untranslated strings
 ```
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
@@ -1260,6 +1289,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SkillRanged": "Ranged",
 "CoC7.SkillSpecializationIsUnique": "Unique Specialization",
 "CoC7.RangedSpecializationName": "Ranged",
+"CoC7.LanguageSpecializationName": "Language",
+"CoC7.SkillNameHandgun": "Handgun",
+"CoC7.SkillNameRifle": "Rifle",
+"CoC7.SkillNameShotgun": "Shotgun",
+"CoC7.SkillNameRifleShotgun": "Rifle/Shotgun",
+"CoC7.SkillNameSmb": "Submachine Gun",
+"CoC7.SkillNameMachinGun": "Machine Gun",
+"CoC7.SkillNameLaunch": "Launch",
 "CoC7.LinkCheckPushing": " {name} check - pushing",
 "CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
 "CoC7.LinkCheckModifPushing": " {name} check - pushing({modifier})",
@@ -1303,6 +1340,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorTokenIncorrect": "Unable to find selected token",
 "CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",
 "CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
+"CoC7.Japanese": "Japanese",
 "CoC7.System.Documentation": "View CoC7 System Manual",
 "SETTINGS.TokenDropMode": "When creating NPC :",
 "SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
@@ -1405,11 +1443,19 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## ru.json
-71 untranslated strings
+80 untranslated strings
 ```
 "CoC7.EraReignOfTerror": "Reign Of Terror",
 "CoC7.SkillRanged": "Ranged",
 "CoC7.RangedSpecializationName": "Ranged",
+"CoC7.LanguageSpecializationName": "Language",
+"CoC7.SkillNameHandgun": "Handgun",
+"CoC7.SkillNameRifle": "Rifle",
+"CoC7.SkillNameShotgun": "Shotgun",
+"CoC7.SkillNameRifleShotgun": "Rifle/Shotgun",
+"CoC7.SkillNameSmb": "Submachine Gun",
+"CoC7.SkillNameMachinGun": "Machine Gun",
+"CoC7.SkillNameLaunch": "Launch",
 "CoC7.LinkCheckPushing": " {name} check - pushing",
 "CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
 "CoC7.LinkCheckModifPushing": " {name} check - pushing({modifier})",
@@ -1458,6 +1504,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
 "CoC7.InfoLessSkillThanOptions": "There's only {skillCount} and {optionsCount} options, adding all of them",
 "CoC7.InfoAllSkillsAlreadySelected": "All skills are already selected.",
+"CoC7.Japanese": "Japanese",
 "SETTINGS.TokenDropMode": "When creating NPC :",
 "SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
 "SETTINGS.TokenDropModeAsk": "Ask what to do",
@@ -1480,7 +1527,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## sv.json
-387 untranslated strings
+396 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -1525,6 +1572,14 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SkillSpecializationIsUnique": "Unique Specialization",
 "CoC7.UnarmedWeaponName": "Unarmed",
 "CoC7.RangedSpecializationName": "Ranged",
+"CoC7.LanguageSpecializationName": "Language",
+"CoC7.SkillNameHandgun": "Handgun",
+"CoC7.SkillNameRifle": "Rifle",
+"CoC7.SkillNameShotgun": "Shotgun",
+"CoC7.SkillNameRifleShotgun": "Rifle/Shotgun",
+"CoC7.SkillNameSmb": "Submachine Gun",
+"CoC7.SkillNameMachinGun": "Machine Gun",
+"CoC7.SkillNameLaunch": "Launch",
 "CoC7.CleanSkillList": "Clean skill list",
 "CoC7.CleanSkillListHint": "<p>This will Clean your skill list by removing specialization from skill name.</p> <p>This will avoid to display skill as : 'specialization(specialization(skill))'</p>",
 "CoC7.WeaponSkillMain": "Main skill",
@@ -1710,6 +1765,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.TextFieldInvalidJSON": "Unable to parse the JSON, please try again",
 "CoC7.ActorImporterUploadError": "Import stopped, unable to write image",
 "CoC7.FileUploadError": "Unable to write image, file upload error",
+"CoC7.Japanese": "Japanese",
 "CoC7.PickDirectory": "Pick Directory",
 "CoC7.ActorImported": "New {actorType} imported: {actorName}",
 "CoC7.DholeHouseActorImporter": "The Dhole's House Actor Importer JSON",
@@ -1850,6 +1906,67 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language "{lang}", and era "{era}". Please check your Era for the world setting.",
 "CoC7.CoCIDBatch.title": "Batch set System ID (CoC ID)",
 "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages.",
+"CoC7.TokenCreationRoll.Title": "Rollable detected",
+"CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
+"CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
+"CoC7.TokenCreationRoll.ButtonAverage": "Average all",
+"CoC7.TokenCreationRoll.Rolled": "{name} characteristics and skills rolled",
+"CoC7.TokenCreationRoll.Averaged": "{name} characteristics and skills averaged",
+"CoC7.RealRollDecaderPlaceholderName": "10's",
+"CoC7.Temporary": "Temporary",
+"CoC7.Passive": "Passive",
+"CoC7.Inactive": "Inactive",
+"CoC7.Suppressed": "Suppressed",
+"CoC7.Unavailable": "Unavailable",
+"CoC7.PickWhichActorTitle": "Pick who to roll as",
+"CoC7.PickWhichActorDesc": "You have Owner permissions for multiple Actors please pick which to roll as",
+"CoC7.WaitingOnUser": "Waiting On User",
+"CoC7.ErrorRollAlreadyCompleted": "This roll has already been completed",
+"CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
+"CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
+"CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
+```
+## zh-TW.json
+57 untranslated strings
+```
+"CoC7.EraRegency": "Regency Cthulhu - Standard",
+"CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
+"CoC7.EraReignOfTerror": "Reign Of Terror",
+"CoC7.SkillRanged": "Ranged",
+"CoC7.RangedSpecializationName": "Ranged",
+"CoC7.LanguageSpecializationName": "Language",
+"CoC7.SkillNameHandgun": "Handgun",
+"CoC7.SkillNameRifle": "Rifle",
+"CoC7.SkillNameShotgun": "Shotgun",
+"CoC7.SkillNameRifleShotgun": "Rifle/Shotgun",
+"CoC7.SkillNameSmb": "Submachine Gun",
+"CoC7.SkillNameMachinGun": "Machine Gun",
+"CoC7.SkillNameLaunch": "Launch",
+"CoC7.LinkCheckPushing": " {name} check - pushing",
+"CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
+"CoC7.LinkCheckModifPushing": " {name} check - pushing({modifier})",
+"CoC7.LinkCheckDiffModifPushing": "[{difficulty}] {name} check - pushing({modifier})",
+"CoC7.MonetaryDefaultDestitute": "Destitute",
+"CoC7.MonetaryDefaultLower": "Lower-Class",
+"CoC7.MonetaryDefaultMiddle": "Emerging Middle-Class / Starting Professional",
+"CoC7.MonetaryDefaultEstablished": "Poor Gentry / Established Professional",
+"CoC7.MonetaryDefaultProfessional": "Average Gentry / Wealthy Professional",
+"CoC7.MonetaryDefaultGentry": "Wealthy Gentry",
+"CoC7.MonetaryDefaultAristocracy": "Aristocracy",
+"CoC7.SanityLossType": "Type",
+"CoC7.ErrorTokenIncorrect": "Unable to find selected token",
+"CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",
+"CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
+"CoC7.Japanese": "Japanese",
+"CoC7.System.Documentation": "View CoC7 System Manual",
+"SETTINGS.TokenDropMode": "When creating NPC :",
+"SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
+"SETTINGS.TokenDropModeAsk": "Ask what to do",
+"SETTINGS.TokenDropModeRoll": "Roll what you can",
+"SETTINGS.TokenDropModeAverage": "Average rolls",
+"SETTINGS.TokenDropModeIgnore": "Do nothing",
+"SETTINGS.SceneDistanceNotCalcualtedNoError": "Don't show error for ranged distance",
+"SETTINGS.SceneDistanceNotCalcualtedNoErrorHint": "When starting a ranged combat if playing theatre of the mind do not show the unable to calculate distance message.",
 "CoC7.TokenCreationRoll.Title": "Rollable detected",
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
 "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
