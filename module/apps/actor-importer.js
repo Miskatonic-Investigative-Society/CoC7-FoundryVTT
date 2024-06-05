@@ -653,7 +653,7 @@ export class CoC7ActorImporter {
       name: characterData.name,
       type: entityType,
       folder: importedCharactersFolder.id,
-      data: characterData.actor
+      system: characterData.actor
     }
     const npc = await Actor.create(actorData)
     await npc.createEmbeddedDocuments('Item', characterData.items, {
@@ -744,7 +744,7 @@ export class CoC7ActorImporter {
    * @returns {Object} formatted Actor data
    */
   actorData (pc) {
-    const data = {
+    const system = {
       characteristics: {},
       attribs: {},
       infos: {},
@@ -768,43 +768,43 @@ export class CoC7ActorImporter {
       'edu'
     ]) {
       if (typeof pc[key] !== 'undefined') {
-        data.characteristics[key] = {
+        system.characteristics[key] = {
           value: Number(pc[key])
         }
       }
     }
     for (const key of ['san', 'mov', 'build', 'armor', 'lck', 'hp', 'mp']) {
       if (typeof pc[key] !== 'undefined') {
-        data.attribs[key] = {
+        system.attribs[key] = {
           value: Number(pc[key])
         }
       }
     }
     if (typeof pc.db !== 'undefined') {
-      data.attribs.db = {
+      system.attribs.db = {
         value: pc.db
       }
     }
     for (const key of ['age', 'occupation']) {
       if (typeof pc[key] !== 'undefined') {
-        data.infos[key] = pc[key]
+        system.infos[key] = pc[key]
       }
     }
     if (typeof pc.sanLoss !== 'undefined') {
       const [passed, failed] = pc.sanLoss.split(/[/／]/)
-      data.special.sanLoss = {
+      system.special.sanLoss = {
         checkPassed: passed,
         checkFailled: failed
       }
     }
     if (typeof pc.attacksPerRound !== 'undefined') {
-      data.special.attacksPerRound = Number(pc.attacksPerRound)
+      system.special.attacksPerRound = Number(pc.attacksPerRound)
     }
-    data.description.keeper = pc.gmnotes
+    system.description.keeper = pc.gmnotes
     if (CONFIG.debug.CoC7Importer) {
-      console.debug('actorData:', data)
+      console.debug('actorData:', system)
     }
-    return data
+    return system
   }
 
   /**
