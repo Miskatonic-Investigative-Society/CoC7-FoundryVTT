@@ -9,6 +9,9 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Update Actor Importer localization, thanks to @ryotai-trpg #1545
+- Update to French localization, thanks to @vonv #1546
+
 ## Version 0.10.14
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
