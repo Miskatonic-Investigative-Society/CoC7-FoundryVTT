@@ -9,8 +9,10 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix Actor Importer not storing characteristics
 - Update Actor Importer localization, thanks to @ryotai-trpg #1545
 - Update to French localization, thanks to @vonv #1546
+- Update to Italian localization, thanks to @Stefano1975t #1552
 
 ## Version 0.10.14
 
