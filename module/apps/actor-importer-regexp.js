@@ -54,7 +54,7 @@ import { CoC7Utilities } from '../utilities.js'
  * If there is new functionality check for this string in the translations / keys for your language "NEW KEY BELOW - TRANSLATION REQUIRED"
  */
 const nameCharacters =
-  '\\u3000\\u3400-\\u4DBF\\u4E00-\\u9FFF\\w\\(\\)\\-\\/&"\'' +
+  '\\u3000\\u3400-\\u4DBF\\u3040-\\u30FF\\u4E00-\\u9FFF\\w\\(\\)\\-\\/&"\'･（）／' +
   CoC7Utilities.quoteRegExp(
     'áéíóàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃĀÑÕäëïöüÿÄËÏÖÜŸàèçÇßØøÅåÆæœ“”«»ąćęłńóśźżĄĆĘŁŃÓŚŹŻ'
   )
@@ -224,6 +224,36 @@ const keys = {
     launched: '(?<type>' + 'Molotov|Grenade|Dynamite爆炸物|手榴彈|重武器' + ')',
     example:
       '示範角色, 年齡 27\n力量 75 體質 60 體型 80 敏捷 70 外貎 60 智力 80\n意志 50 教育 85 SAN 55 HP 14 DB: 1D4\n體格: 1 Move: 7 MP: 10 幸運: 40 護甲: 1\n攻擊次數: 3 理智喪失: 1d4/1d8\n戰鬥列表\n咬 50% (25/10), 傷害 1D6\n空手 30% (15/6), 傷害 1D3\n手槍 40% (20/8), 傷害 1D8+1\n閃避 50% (25/10)\n技能列表\n動物馴養 55%, 取悅 30%, 急救 25%, 潛行 20%,\n聆聽 50%, 藥學 45%, 精神分析 25%, 心理學 75%,\n科學 (司法科學) 90%, 科學 (密碼學) 35%, \n偵查 35%, 喬裝 10%\n語言: 粵語 80%, 讀唇 5%.\n咒文: 召喚 NPC, 指揮 NPC.'
+  },
+  ja: {
+    description: 'CoC7.Japanese',
+    dbNone: 'なし',
+    armorNone: 'なし',
+    attacksPerRoundNone: 'なし',
+    sanLossNone: 'なし',
+    fulldb: '(' + 'Damage Bonus|DB|db|ダメージ(・|･)?ボーナス' + ')',
+    /* NEW KEY BELOW - TRANSLATION REQUIRED */
+    halfdb: '(' + '½|half' + ')',
+    sectionCombats:
+      '\n(?:' + 'combat|fighting attacks|戦闘|武器' + ')[:：\n]',
+    newCombatHeader: '\n' + '戦闘' + '\n',
+    sectionSkills:
+      '\n(?:' + '(?:Skills|技能)' + '\\s*(?:\\s*\\([^\\)]+\\))?)[:：\n]',
+    sectionLangauges: '\n(?:' + 'Languages|言語' + ')\\s*[:：\n]',
+    sectionSpells: '\n(?:' + 'spells|呪文' + ')\\s*[:：\n]',
+    handgun:
+      '(?<type>' +
+      '拳銃|オートマチック|リボルバー|デリンジャー|ベレッタ|ルガー|デザート(・|･)?イーグル|Gun|Revolver|Pistol|Handgun|Derringer|Beretta|Luger|Desert Eagle| \\.38' +
+      ')',
+    rifle:
+      '(?<type>' +
+      'ライフル|ショットガン|カービン|ゲージ|リー＝エンフィールド|エレファント(・|･)?ガン|Rifle|Shotgun|Carbine|Gauge |Lee-Enfield|Elephant' +
+      ')',
+    smb: '(?<type>' + 'サブマシンガン|トンプソン|Submachine Gun|Thompson' + ')',
+    machineGun: '(?<type>' + 'ブローニング|ヴッカース|マシンガン|Browning|Vickers' + ')',
+    launched: '(?<type>' + 'モロトフ|グレネード|ダイナマイト|Molotov|Grenade|Dynamite' + ')',
+    example:
+      'サンプル 太郎、27歳、記者\nSTR 75 CON 60 SIZ 80 DEX 70 APP 60 INT 80\nPOW 50 EDU 85 正気度 55 耐久力 14 ダメージ・ボーナス：1D4\nビルド：1 移動：7 マジック・ポイント：10 幸運：40 装甲：1\n1ラウンドの攻撃回数：3 正気度喪失：1D4/1D8\n戦闘\n噛みつき 50% (25/10)、ダメージ 1D6\n格闘 30% (15/6)、ダメージ 1D3+DB\nデリンジャー 40% (20/8)、ダメージ 1D8+1\n回避 50% (25/10)\n技能\n言いくるめ 25%、医学 45%、隠密 10%、\n聞き耳 50%、説得 25%、心理学 75%、\n科学 (天文学) 90%、科学 (植物学) 35%、科学 (動物学) 10%、\n動物使い 55%、変装 20%、目星 35%、魅惑 30%。\n言語：英語 80%、アクロ語 5%。\n呪文：NPCの召喚、NPCの退散。'
   }
 }
 
@@ -744,6 +774,92 @@ const translations = {
       keys['zh-TW'].sectionLangauges +
       '|' +
       keys['zh-TW'].sectionSpells +
+      ')'
+  },
+  ja: {
+    age: '[(（]?(?<age>\\d+)' + '(\\s+)*(?:' + '歳|才' + ')[)）]?[,、\\s]*',
+    /* NEW KEY BELOW - TRANSLATION REQUIRED */
+    occupation:
+      '[,、\\s]*' + '(職業)?' + '(\\s*[:：])?\\s+(?<occupation>.+)[,、\\s\n]*',
+    str: '(?<![a-z])' + 'STR' + '(\\s*[:：])?\\s*(?<str>\\d+|-)[,、\\s\n]*',
+    con: '(?<![a-z])' + 'CON' + '(\\s*[:：])?\\s*(?<con>\\d+|-)[,、\\s\n]*',
+    siz: '(?<![a-z])' + 'SIZ' + '(\\s*[:：])?\\s*(?<siz>\\d+|-)[,、\\s\n]*',
+    int: '(?<![a-z])' + 'INT' + '(\\s*[:：])?\\s*(?<int>\\d+|-)[,、\\s\n]*',
+    pow: '(?<![a-z])' + 'POW' + '(\\s*[:：])?\\s*(?<pow>\\d+|-)[,、\\s\n]*',
+    dex: '(?<![a-z])' + 'DEX' + '(\\s*[:：])?\\s*(?<dex>\\d+|-)[,、\\s\n]*',
+    app: '(?<![a-z])' + 'APP' + '(\\s*[:：])?\\s*(?<app>\\d+|-)[,、\\s\n]*',
+    edu: '(?<![a-z])' + 'EDU' + '(\\s*[:：])?\\s*(?<edu>\\d+|-)[,、\\s\n]*',
+    san:
+      '(?<![a-z])(?:' +
+      '(SAN|Sanity|正気度)' +
+      ')(\\s*[:：])?\\s*(?<san>\\d+|-)[,、\\s\n]*',
+    hp:
+      '(?<![a-z])(?:' +
+      '(HP|Hit points|耐久力|ヒット(・|･)?ポイント)' +
+      ')(\\s*[:：])?\\s*(?<hp>\\d+|-)[,、\\s\n]*',
+    mp:
+      '(?<![a-z])(?:' +
+      '(MP|Magic points|マジック(・|･)?ポイント)' +
+      ')(\\s*[:：])?\\s*(?<mp>\\d+|-)[,、\\s\n]*',
+    db:
+      '(?<![a-z])(?:' +
+      keys.ja.fulldb +
+      ')(\\s*[:：])?\\s*(?<db>[+-]?\\s*\\d+(?:d\\d+|D\\d+)?|' +
+      keys.ja.dbNone +
+      ')[,、\\s\n]*',
+    build:
+      '(?<![a-z])' + '(Build|ビルド)' + '(\\s*[:：])?\\s*(?<build>[+-]?\\d+)[,、\\s\n]*',
+    armor:
+      '(?<![a-z])' +
+      '(Armor|装甲)' +
+      '(\\s*[:：])?\\s*(?<armor>' +
+      keys.ja.armorNone +
+      '|\\d+)[,、\\s\n]*',
+    mov: '(?<![a-z])' + '(Move|MOV|移動率?)' + '(\\s*[:：])?\\s*(?<mov>\\d+)[,、\\s\n]*',
+    lck: '(?<![a-z])' + '(Luck|幸運)' + '(\\s*[:：])?\\s*(?<lck>\\d+|-)[,、\\s\n]*',
+    attacksPerRound:
+      '(?<![a-z])(?:' +
+      '(Attacks per round|# Attacks|((1|1 |１)ラウンドの)?攻撃回数)' +
+      ')(\\s*[:：])?\\s*(?<attacksPerRound>' +
+      keys.ja.attacksPerRoundNone +
+      '|\\d+(?!d))[,、\\s\n]*',
+    sanLoss:
+      '(?<![a-z])(?:' +
+      '(Sanity loss|SAN loss|正気度喪失)' +
+      ')(\\s*[:：]\\D*)?\\s*(?<sanLoss>' +
+      keys.ja.sanLossNone +
+      '|\\dD?[+\\d]*[\\/／]\\dD?[+\\d]*)[,、\\s\n]*',
+    weapon:
+      '(^|\\n)(?<name>[.\\t\\w ' +
+      nameCharacters +
+      ']+)(\\**[,、]?\\s+|\\*)(?:\\(|(?<percentage>\\d+)[%％][,、]?(?:\\s*[\\(（]\\d+[\\/／]\\d+[\\)）]\\s*[,、]?)?)?(\\s*(?:' +
+      'damage|ダメージ' +
+      '))?\\s*(?<damage>(:?\\d+[dD])?\\d+(\\s*/\\s*|\\s*[+-]\\s*(?:' +
+      keys.ja.fulldb +
+      '|' +
+      keys.ja.halfdb +
+      ')\\s*|\\s*[+-]\\s*(:?\\d+[dD])?\\d+)*)\\)?',
+    weaponDodge:
+      '(?<name>' +
+      '(Dodge|回避)' +
+      ')(\\s*[:：])?\\s*\\(?(?<percentage>\\d+)\\)?\\s*[%％]?(?:\\s*[\\(（]\\d+[\\/／]\\d+[\\)）])?',
+    skill:
+      '^(?<name>[:\\*.\\s' +
+      nameCharacters +
+      ']+(?<!' +
+      'The player has|but they regenerate|\\d' +
+      '))[\\s:：]*\\(?(?<percentage>\\d+)[^d][%％]?\\)?(\\s*[\\(（]\\d+[\\/／]\\d+[\\)）])?\\s?[\\.,、]?\\s*',
+    guessStartCombat: '(^|(?<!,)\n)(' + '近接(戦闘|格闘)|格闘|攻撃|素手|噛みつき|射撃|Brawl|Bite' + ')',
+    name: '^(?<name>[\\.\\s' + nameCharacters + ']+)[,、\\s\n]+',
+    sections:
+      '(' +
+      keys.ja.sectionCombats +
+      '|' +
+      keys.ja.sectionSkills +
+      '|' +
+      keys.ja.sectionLangauges +
+      '|' +
+      keys.ja.sectionSpells +
       ')'
   }
 }
