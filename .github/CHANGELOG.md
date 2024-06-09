@@ -9,6 +9,12 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 0.10.16
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix melee resolution card on FoundryVTT v12
+
 ## Version 0.10.15
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
