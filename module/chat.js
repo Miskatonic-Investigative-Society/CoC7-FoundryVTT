@@ -151,7 +151,7 @@ export class CoC7Chat {
 
     // if( chatMessage.getFlag( 'CoC7', 'reveled')){
     // }
-    if (game.user.isGM && chatMessage.type === 0) {
+    if (game.user.isGM && (chatMessage.type === 0 /* // FoundryVTT v11 */ || chatMessage.style === 0 /* // FoundryVTT v12 */)) {
       const card = $(chatMessage.content)[0]
       if (card.classList.contains('melee')) {
         if (card.dataset.resolved === 'true') {
