@@ -927,7 +927,7 @@ export class CoC7ChaseSheet extends ItemSheet {
       participant.data.rollUuid = roll.uuid
     }
 
-    await this.item.update({ 'data.participants': participants })
+    await this.item.update({ 'system.participants': participants })
   }
 
   _onDragEnterParticipant (event) {
@@ -952,7 +952,7 @@ export class CoC7ChaseSheet extends ItemSheet {
       ? foundry.utils.duplicate(this.item.system.participants)
       : []
     participants[index].chaser = !participants[index].chaser
-    await this.item.update({ 'data.participants': participants })
+    await this.item.update({ 'system.participants': participants })
   }
 
   async _onDeleteDriver (event) {
@@ -965,7 +965,7 @@ export class CoC7ChaseSheet extends ItemSheet {
       : []
     const participant = participants[index]
     delete participant.docUuid
-    await this.item.update({ 'data.participants': participants })
+    await this.item.update({ 'system.participants': participants })
   }
 
   async _onDeleteParticipant (event) {
@@ -977,7 +977,7 @@ export class CoC7ChaseSheet extends ItemSheet {
       ? foundry.utils.duplicate(this.item.system.participants)
       : []
     participants.splice(index, 1)
-    await this.item.update({ 'data.participants': participants })
+    await this.item.update({ 'system.participants': participants })
   }
 
   async _onResetRoll (event) {
@@ -989,7 +989,7 @@ export class CoC7ChaseSheet extends ItemSheet {
       ? foundry.utils.duplicate(this.item.system.participants)
       : []
     delete participants[index].speedCheck.rollDataString
-    await this.item.update({ 'data.participants': participants })
+    await this.item.update({ 'system.participants': participants })
   }
 
   async alterParticipant (data, uuid) {
@@ -1054,7 +1054,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     const oldParticipant = participants[index]
     if (oldParticipant.mov) delete oldParticipant.mov
     foundry.utils.mergeObject(oldParticipant, participant)
-    await this.item.update({ 'data.participants': participants })
+    await this.item.update({ 'system.participants': participants })
   }
 
   async clearActiveLocationCoordinates () {
@@ -1160,7 +1160,7 @@ export class CoC7ChaseSheet extends ItemSheet {
     }
 
     participants.push(participant)
-    await this.item.update({ 'data.participants': participants })
+    await this.item.update({ 'system.participants': participants })
   }
 
   async toggleParticipantGun (participantUuid) {
