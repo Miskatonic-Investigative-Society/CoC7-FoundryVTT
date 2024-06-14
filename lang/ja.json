@@ -279,9 +279,9 @@
   "CoC7.DamageInflicted": "ダメージを与えた",
   "CoC7.Damage": "ダメージ",
   "CoC7.TotalDamage": "ダメージ合計",
-  "CoC7.CheckFailed": "Check failed",
-  "CoC7.CheckPassed": "Check passed",
-  "CoC7.CheckMemoryRepressed": "Memory repressed",
+  "CoC7.CheckFailed": "チェック失敗",
+  "CoC7.CheckPassed": "チェック成功",
+  "CoC7.CheckMemoryRepressed": "記憶は抑圧された",
 
   "CoC7.combatCard.dive4cover": "掩蔽に飛び込む",
 
@@ -1340,7 +1340,7 @@
   "CoC7.Passive": "受動",
   "CoC7.Inactive": "非活性",
   "CoC7.Suppressed": "抑制",
-  "CoC7.Unavailable": "使用不可"
+  "CoC7.Unavailable": "使用不可",
 
   "CoC7.PickWhichActorTitle": "ロールする者を選択",
   "CoC7.PickWhichActorDesc": "あなたは複数人のアクターの所有者権限を持っている。ロールする者を選択すること",
