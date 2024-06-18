@@ -1684,7 +1684,12 @@ export class CoC7Check {
 
     // ChatMessage.applyRollMode( chatData, this.rollMode);
     if (this.dice?.roll && !this.dice?.hideDice) {
-      chatData.roll = this.dice.roll
+      // FoundryVTT v11
+      if (foundry.utils.isNewerVersion(game.version, '11')) {
+        chatData.rolls = [this.dice.roll]
+      } else {
+        chatData.roll = this.dice.roll
+      }
       chatData.type = CONST.CHAT_MESSAGE_TYPES.ROLL
       chatData.rollMode = this.isBlind ? 'blindroll' : this.rollMode
     }
