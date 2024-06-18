@@ -279,9 +279,9 @@
   "CoC7.DamageInflicted": "ダメージを与えた",
   "CoC7.Damage": "ダメージ",
   "CoC7.TotalDamage": "ダメージ合計",
-  "CoC7.CheckFailed": "Check failed",
-  "CoC7.CheckPassed": "Check passed",
-  "CoC7.CheckMemoryRepressed": "Memory repressed",
+  "CoC7.CheckFailed": "チェック失敗",
+  "CoC7.CheckPassed": "チェック成功",
+  "CoC7.CheckMemoryRepressed": "記憶は抑圧された",
 
   "CoC7.combatCard.dive4cover": "掩蔽に飛び込む",
 
@@ -375,6 +375,7 @@
   "CoC7.EraModernPulp": "現代（パルプ）",
   "CoC7.EraRegency": "Regency Cthulhu - Standard",
   "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
+  "CoC7.EraReignOfTerror": "Reign Of Terror",
   "CoC7.Eras": "対応サプリメント",
   "CoC7.EraAvailability": "出典",
 
@@ -388,6 +389,7 @@
   "CoC7.SkillCombat": "戦闘",
   "CoC7.SkillFighting": "近接格闘",
   "CoC7.SkillFirearm": "射撃",
+  "CoC7.SkillRanged": "遠隔",
   "CoC7.SkillRequiresName": "名前が必要",
   "CoC7.SkillKeepBaseValue": "初期値を保持",
   "CoC7.SkillPickNameOnly": "専門分野を選択",
@@ -428,6 +430,7 @@
   "CoC7.FightingSpecializationName": "近接格闘",
   "CoC7.UnarmedWeaponName": "素手",
   "CoC7.FirearmSpecializationName": "射撃",
+  "CoC7.RangedSpecializationName": "遠隔",
   "CoC7.DriveSpecializationName": "運転",
   "CoC7.PilotSpecializationName": "操縦",
   "CoC7.LanguageSpecializationName": "言語",
@@ -555,11 +558,18 @@
   "CoC7.MonetaryFormatLsd": "ポンド",
   "CoC7.MonetaryFormatRoman": "ローマ",
   "CoC7.MonetaryDefaultPenniless": "無一文",
+  "CoC7.MonetaryDefaultDestitute": "貧困層",
   "CoC7.MonetaryDefaultPoor": "貧乏",
   "CoC7.MonetaryDefaultAverage": "平均",
+  "CoC7.MonetaryDefaultLower": "下層階級",
+  "CoC7.MonetaryDefaultMiddle": "途上中流階級 / 見習い専門家",
   "CoC7.MonetaryDefaultWealthy": "裕福",
+  "CoC7.MonetaryDefaultEstablished": "下流紳士階級 / 確立専門家",
+  "CoC7.MonetaryDefaultProfessional": "中流紳士階級 / 富裕専門家",
+  "CoC7.MonetaryDefaultGentry": "上流紳士階級",
   "CoC7.MonetaryDefaultRich": "富豪",
   "CoC7.MonetaryDefaultSuperRich": "大富豪",
+  "CoC7.MonetaryDefaultAristocracy": "貴族",
 
   "CoC7.PossessionsNotes": "メモ :",
   "CoC7.PossessionsNotesHolder": "メモ",
@@ -1330,5 +1340,13 @@
   "CoC7.Passive": "受動",
   "CoC7.Inactive": "非活性",
   "CoC7.Suppressed": "抑制",
-  "CoC7.Unavailable": "使用不可"
+  "CoC7.Unavailable": "使用不可",
+
+  "CoC7.PickWhichActorTitle": "ロールする者を選択",
+  "CoC7.PickWhichActorDesc": "あなたは複数人のアクターの所有者権限を持っている。ロールする者を選択すること",
+  "CoC7.WaitingOnUser": "ユーザーの待機中：",
+  "CoC7.ErrorRollAlreadyCompleted": "このロールはすでに完了している",
+  "CoC7.ErrorNoActorPermission": "あなたはこのアクターの所有者ではない",
+  "CoC7.ErrorCombinedRollsRequireSingleActor": "複合ロールでは１人より多いアクターは参加できない",
+  "CoC7.ErrorOpposedRollsLimitedToTwoActors": "対抗カードには２名のアクターが必要"
 }
