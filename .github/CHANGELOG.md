@@ -9,6 +9,9 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Fix chat message rolls for Dice So Nice
+- Update to Japanese localization, thanks to @doumoku #1563
+
 ## Version 0.10.17
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
