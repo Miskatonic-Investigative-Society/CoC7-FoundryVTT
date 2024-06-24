@@ -2,23 +2,23 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (428 untranslated strings)](#cnjson)
+[cn.json (431 untranslated strings)](#cnjson)
 
-[cs.json (613 untranslated strings)](#csjson)
+[cs.json (616 untranslated strings)](#csjson)
 
-[ko.json (210 untranslated strings)](#kojson)
+[ko.json (213 untranslated strings)](#kojson)
 
-[pt-BR.json (158 untranslated strings)](#ptbrjson)
+[pt-BR.json (161 untranslated strings)](#ptbrjson)
 
-[ru.json (80 untranslated strings)](#rujson)
+[ru.json (83 untranslated strings)](#rujson)
 
-[sv.json (396 untranslated strings)](#svjson)
+[sv.json (399 untranslated strings)](#svjson)
 
-[zh-TW.json (57 untranslated strings)](#zhtwjson)
+[zh-TW.json (60 untranslated strings)](#zhtwjson)
 
 
 ## cn.json
-428 untranslated strings
+431 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -34,6 +34,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Restart": "Restart",
 "CoC7.Reset": "Reset",
 "CoC7.Initiative": "Initiative",
+"CoC7.CastHidden": "Cast Hidden",
 "CoC7.PenaltyDice": "Penalty Dice",
 "CoC7.LuckNotEnough": "{name} didn't have enough luck to pass the check",
 "CoC7.UpgradeSuccessWithLuck": "Upgrade to {difficultyName} success for {luckToSpend} luck.",
@@ -324,6 +325,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.TrustedCanModfyChatCardHint": "Enabling this setting will give permission to trusted users to select options on chat card. The GM only section will still not be visible to them",
 "SETTINGS.TrustedCanSeeChatCard": "Allow trusted user to see GM only sections",
 "SETTINGS.TrustedCanSeeChatCardHint": "Enabling this setting will give permission to trusted users to see GM only section on chat card. Use this with caution!",
+"SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
+"SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
 "SETTINGS.TokenDropMode": "When creating NPC :",
 "SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
 "SETTINGS.TokenDropModeAsk": "Ask what to do",
@@ -450,7 +453,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## cs.json
-613 untranslated strings
+616 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -487,6 +490,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Reset": "Reset",
 "CoC7.Initiative": "Initiative",
 "CoC7.Cast": "Cast",
+"CoC7.CastHidden": "Cast Hidden",
 "CoC7.SanityCost": "Sanity Cost",
 "CoC7.PowerCost": "Power Cost",
 "CoC7.HitPointsCost": "Hit Points Cost",
@@ -921,6 +925,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.TrustedCanModfyChatCardHint": "Enabling this setting will give permission to trusted users to select options on chat card. The GM only section will still not be visible to them",
 "SETTINGS.TrustedCanSeeChatCard": "Allow trusted user to see GM only sections",
 "SETTINGS.TrustedCanSeeChatCardHint": "Enabling this setting will give permission to trusted users to see GM only section on chat card. Use this with caution!",
+"SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
+"SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
 "SETTINGS.displayPlayerNameOnSheet": "Display player's name on sheet",
 "SETTINGS.OverrideGameArtwork": "Override game Artwork",
 "SETTINGS.OverrideGameArtworkHint": "!!RESTART REQUIRED!! gives access to advance game config, leave blank for default",
@@ -1067,9 +1073,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## ko.json
-210 untranslated strings
+213 untranslated strings
 ```
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
+"CoC7.CastHidden": "Cast Hidden",
 "CoC7.RollDifficultyRegularTitle": "Regular difficulty",
 "CoC7.RollDifficultyHardTitle": "Hard difficulty",
 "CoC7.RollDifficultyExtremeTitle": "Extreme difficulty",
@@ -1161,6 +1168,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Settings.DropCoCID.UseCoCID": "Use CoC ID Where Possible",
 "CoC7.Settings.DropCoCID.IgnoreCoCID": "Do Not Use CoC ID",
 "SETTINGS.DefaultDifficulty": "Default check difficulty",
+"SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
+"SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
 "SETTINGS.TokenDropMode": "When creating NPC :",
 "SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
 "SETTINGS.TokenDropModeAsk": "Ask what to do",
@@ -1281,8 +1290,9 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## pt-BR.json
-158 untranslated strings
+161 untranslated strings
 ```
+"CoC7.CastHidden": "Cast Hidden",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
 "CoC7.EraReignOfTerror": "Reign Of Terror",
@@ -1342,6 +1352,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
 "CoC7.Japanese": "Japanese",
 "CoC7.System.Documentation": "View CoC7 System Manual",
+"SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
+"SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
 "SETTINGS.TokenDropMode": "When creating NPC :",
 "SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
 "SETTINGS.TokenDropModeAsk": "Ask what to do",
@@ -1443,8 +1455,9 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## ru.json
-80 untranslated strings
+83 untranslated strings
 ```
+"CoC7.CastHidden": "Cast Hidden",
 "CoC7.EraReignOfTerror": "Reign Of Terror",
 "CoC7.SkillRanged": "Ranged",
 "CoC7.RangedSpecializationName": "Ranged",
@@ -1505,6 +1518,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.InfoLessSkillThanOptions": "There's only {skillCount} and {optionsCount} options, adding all of them",
 "CoC7.InfoAllSkillsAlreadySelected": "All skills are already selected.",
 "CoC7.Japanese": "Japanese",
+"SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
+"SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
 "SETTINGS.TokenDropMode": "When creating NPC :",
 "SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
 "SETTINGS.TokenDropModeAsk": "Ask what to do",
@@ -1527,7 +1542,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## sv.json
-396 untranslated strings
+399 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -1541,6 +1556,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.Restart": "Restart",
 "CoC7.Reset": "Reset",
 "CoC7.Initiative": "Initiative",
+"CoC7.CastHidden": "Cast Hidden",
 "CoC7.PenaltyDice": "Penalty Dice",
 "CoC7.LuckNotEnough": "{name} didn't have enough luck to pass the check",
 "CoC7.UpgradeSuccessWithLuck": "Upgrade to {difficultyName} success for {luckToSpend} luck.",
@@ -1801,6 +1817,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.TrustedCanModfyChatCardHint": "Enabling this setting will give permission to trusted users to select options on chat card. The GM only section will still not be visible to them",
 "SETTINGS.TrustedCanSeeChatCard": "Allow trusted user to see GM only sections",
 "SETTINGS.TrustedCanSeeChatCardHint": "Enabling this setting will give permission to trusted users to see GM only section on chat card. Use this with caution!",
+"SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
+"SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
 "SETTINGS.TokenDropMode": "When creating NPC :",
 "SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
 "SETTINGS.TokenDropModeAsk": "Ask what to do",
@@ -1927,8 +1945,9 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## zh-TW.json
-57 untranslated strings
+60 untranslated strings
 ```
+"CoC7.CastHidden": "Cast Hidden",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
 "CoC7.EraRegencyPulp": "Regency Cthulhu - Pulp",
 "CoC7.EraReignOfTerror": "Reign Of Terror",
@@ -1959,6 +1978,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
 "CoC7.Japanese": "Japanese",
 "CoC7.System.Documentation": "View CoC7 System Manual",
+"SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
+"SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
 "SETTINGS.TokenDropMode": "When creating NPC :",
 "SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
 "SETTINGS.TokenDropModeAsk": "Ask what to do",
