@@ -21,11 +21,18 @@
     <div class="aside">
       {{#if (and hasOwner (or isKeeper isOwner))}}
         <div class="flexrow">
-          <span id="cast-spell">
+          <span id="cast-spell" class="cast-button">
             <label>
               {{localize "CoC7.Cast"}}
             </label>
           </span>
+          {{#if isKeeper}}
+            <span id="cast-spell-hidden" class="cast-button">
+              <label>
+                {{localize "CoC7.CastHidden"}}
+              </label>
+            </span>
+          {{/if}}
         </div>
       {{/if}}
     </div>

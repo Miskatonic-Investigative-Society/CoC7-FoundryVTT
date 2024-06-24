@@ -339,7 +339,7 @@ export class CoC7DholeHouseActorImporter {
       name: characterData.name,
       type: 'character',
       folder: importedCharactersFolder.id,
-      data: characterData.actor
+      system: characterData.actor
     }
     const npc = await Actor.create(actorData)
     // If possible upload the image portrait
