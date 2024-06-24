@@ -29,6 +29,14 @@ const SETTINGS = {
     default: false,
     type: Boolean
   },
+  allowMythosHardened: {
+    name: 'SETTINGS.allowMythosHardenedTitle',
+    hint: 'SETTINGS.allowMythosHardenedHint',
+    scope: 'world',
+    config: false,
+    default: false,
+    type: Boolean
+  },
   pulpRuleDoubleMaxHealth: {
     name: 'CoC7.Settings.PulpRules.DoubleMaxHealth.Name',
     hint: 'CoC7.Settings.PulpRules.DoubleMaxHealth.Hint',

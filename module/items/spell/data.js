@@ -100,7 +100,7 @@ export class CoC7Spell extends CoC7Item {
         break
       case 'sanity':
         characteristicName = game.i18n.localize('CoC7.SanityPoints')
-        this.grantSanityLoss(loss, priv)
+        loss = await this.grantSanityLoss(loss, priv)
         break
       case 'magicPoints':
         characteristicName = game.i18n.localize('CoC7.MagicPoints')
@@ -149,7 +149,8 @@ export class CoC7Spell extends CoC7Item {
       const sanityCheck = SanCheckCard.getFromCard(html)
       await sanityCheck.bypassRollSan()
       await sanityCheck.rollSanLoss()
-      sanityCheck.updateChatCard()
+      await sanityCheck.updateChatCard()
+      return sanityCheck.sanLoss
     }
   }
 
