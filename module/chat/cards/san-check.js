@@ -218,10 +218,10 @@ export class SanCheckCard extends ChatCardActor {
         this.state.cthulhuMythosAwarded = true
         const cthulhuMythosSkill = this.actor.cthulhuMythosSkill
         const oldValue =
-          cthulhuMythosSkill.data.data.adjustments.experience || 0
+          cthulhuMythosSkill.system.adjustments.experience || 0
         if (cthulhuMythosSkill) {
           await cthulhuMythosSkill.update({
-            'data.adjustments.experience': oldValue + amountGained
+            'system.adjustments.experience': oldValue + amountGained
           })
         }
         this.mythosGain = amountGained
@@ -247,8 +247,8 @@ export class SanCheckCard extends ChatCardActor {
     this.sanLoss = this.applyMythosHardened(this.preHardenedSanLoss)
   }
 
-  applyMythosHardened(sanLoss) {
-    return this.actor.mythosHardened ? Math.ceil(sanLoss / 2) : sanLoss;
+  applyMythosHardened (sanLoss) {
+    return this.actor.useMythosHardened ? Math.floor(sanLoss / 2) : sanLoss
   }
 
   async rollSan () {
@@ -272,7 +272,7 @@ export class SanCheckCard extends ChatCardActor {
       this.state.intRolled = true
       this.state.insanity = false
       this.preHardenedSanLoss = 0
-      this.originalSanLoss = 0;
+      this.originalSanLoss = 0
     } else if (typeof this.sanLossFormula === 'number') {
       this.state.sanLossRolled = true
       this.originalSanLoss = this.sanLossFormula

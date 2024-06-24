@@ -3571,6 +3571,10 @@ export class CoCActor extends Actor {
     return this.getFlag('CoC7', 'mythosHardened') || false
   }
 
+  get useMythosHardened () {
+    return this.mythosHardened && game.settings.get('CoC7', 'allowMythosHardened')
+  }
+
   async setMythosHardened () {
     await this.setFlag('CoC7', 'mythosHardened', true)
   }
