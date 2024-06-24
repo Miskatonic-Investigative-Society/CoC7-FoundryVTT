@@ -1,4 +1,4 @@
-/* global ChatMessage, CONST, Dialog, foundry, game, Roll, renderTemplate, ui */
+/* global ChatMessage, Dialog, foundry, game, Roll, renderTemplate, ui */
 import { CoC7Utilities } from '../../utilities.js'
 import { CoC7Item } from '../item.js'
 import { SanCheckCard } from '../../chat/cards/san-check.js'
