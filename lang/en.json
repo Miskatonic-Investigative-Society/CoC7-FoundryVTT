@@ -135,6 +135,7 @@
   "CoC7.Initiative": "Initiative",
 
   "CoC7.Cast": "Cast",
+  "CoC7.CastHidden": "Cast Hidden",
   "CoC7.SanityCost": "Sanity Cost",
   "CoC7.PowerCost": "Power Cost",
   "CoC7.HitPointsCost": "Hit Points Cost",
