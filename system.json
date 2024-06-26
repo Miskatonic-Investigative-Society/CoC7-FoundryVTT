@@ -145,6 +145,8 @@
     }
   ],
   "socket": true,
+  "gridDistance": 5,
+  "gridUnits": "ft",
   "grid": {
     "distance": 5,
     "units": "ft"
