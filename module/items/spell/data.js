@@ -12,7 +12,7 @@ export class CoC7Spell extends CoC7Item {
     this.context = context
   }
 
-  async cast () {
+  async cast (priv) {
     if (!this.isOwned) {
       /** This is not owned by any Actor */
       return ui.notifications.error(game.i18n.localize('CoC7.NotOwned'))
@@ -67,20 +67,24 @@ export class CoC7Spell extends CoC7Item {
     }
     for (const [key, value] of Object.entries(costs)) {
       if (!value || Number(value) === 0) continue
-      losses.push(await this.resolveLosses(key, value))
+      losses.push(await this.resolveLosses(key, value, priv))
     }
     const template = 'systems/CoC7/templates/items/spell/chat.html'
     const description = this.system.description.value
     const html = await renderTemplate(template, { description, losses })
-    return await ChatMessage.create({
+    let chatData = {
       user: game.user.id,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       flavor: this.name,
       content: html
-    })
+    }
+    if (priv) {
+      chatData = ChatMessage.applyRollMode(chatData, 'gmroll')
+    }
+    return await ChatMessage.create(chatData)
   }
 
-  async resolveLosses (characteristic, value) {
+  async resolveLosses (characteristic, value, priv) {
     let characteristicName
     let loss
     if (CoC7Utilities.isFormula(value)) {
@@ -96,7 +100,7 @@ export class CoC7Spell extends CoC7Item {
         break
       case 'sanity':
         characteristicName = game.i18n.localize('CoC7.SanityPoints')
-        this.grantSanityLoss(loss)
+        loss = await this.grantSanityLoss(loss, priv)
         break
       case 'magicPoints':
         characteristicName = game.i18n.localize('CoC7.MagicPoints')
@@ -113,17 +117,21 @@ export class CoC7Spell extends CoC7Item {
   }
 
   /** Bypass the Sanity check and just roll the damage */
-  async grantSanityLoss (value) {
+  async grantSanityLoss (value, priv) {
     const template = SanCheckCard.template
     let html = await renderTemplate(template, {})
-    const message = await ChatMessage.create({
+    let chatData = {
       user: game.user.id,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       flavor: game.i18n.format('CoC7.CastingSpell', {
         spell: this.name
       }),
       content: html
-    })
+    }
+    if (priv) {
+      chatData = ChatMessage.applyRollMode(chatData, 'gmroll')
+    }
+    const message = await ChatMessage.create(chatData)
     const card = await message.getHTML()
     if (typeof card.length !== 'undefined' && card.length === 1) {
       const sanityLoss = value
@@ -141,7 +149,8 @@ export class CoC7Spell extends CoC7Item {
       const sanityCheck = SanCheckCard.getFromCard(html)
       await sanityCheck.bypassRollSan()
       await sanityCheck.rollSanLoss()
-      sanityCheck.updateChatCard()
+      await sanityCheck.updateChatCard()
+      return sanityCheck.sanLoss
     }
   }
 

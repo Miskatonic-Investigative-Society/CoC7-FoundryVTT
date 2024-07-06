@@ -9,6 +9,16 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+## Version 0.10.19
+
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+- Fix Dhole House Actor Importer
+- Keeper button to cast spells as gmroll, thanks to @michalwy #1573
+- Use Mythos Hardened flag in Sanity workflow, thanks to @michalwy #1569
+- Update to French localization, thanks to @vonv #1570
+- Update to Polish localization, thanks to @michalwy #1576
+
 ## Version 0.10.18
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.

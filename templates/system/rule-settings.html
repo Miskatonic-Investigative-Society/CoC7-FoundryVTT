@@ -19,6 +19,13 @@
     </div>
     <p class="notes">{{localize 'SETTINGS.InitiativeRuleHint'}}</p>
   </div>
+  <div class="form-group">
+    <label>{{localize 'SETTINGS.allowMythosHardenedTitle'}}</label>
+    <div class="form-fields" style="flex: 1;">
+      <input type="checkbox" {{checked allowMythosHardened.value}} name="allowMythosHardened">
+    </div>
+    <p class="notes">{{localize 'SETTINGS.allowMythosHardenedHint'}}</p>
+  </div>
 
   <h2>{{localize 'SETTINGS.PulpRules'}}</h2>
   <div class="form-group">

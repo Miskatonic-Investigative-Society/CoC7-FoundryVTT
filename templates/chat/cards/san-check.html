@@ -77,9 +77,19 @@
         {{#if state.sanLossRolled}}
           {{#if state.sanLossApplied}}
             {{#if state.actorLostSan}}
-              <div class='info'>{{ localize 'CoC7.SanityLost' }}: {{#if __inlineSanLossRoll}}{{{__inlineSanLossRoll}}}{{else}}{{sanLoss}}{{/if}}</div>
+              <div class='info'>
+                {{ localize 'CoC7.SanityLost' }}:
+                {{#if __inlineSanLossRoll}}
+                  {{{__inlineSanLossRoll}}}
+                {{else}}
+                  {{originalSanLoss}}
+                {{/if}}
+              </div>
               {{#if state.limitedLossToCreature}}
-                <div class='info'>{{ localize 'CoC7.GrowingAccustomedToAwfulness' }}: {{sanLoss}}</div>
+                <div class='info'>{{ localize 'CoC7.GrowingAccustomedToAwfulness' }}: {{preHardenedSanLoss}}</div>
+              {{/if}}
+              {{#if actor.useMythosHardened}}
+                <div class='info'>{{ localize 'CoC7.BackgroundFlagsMythosHardened' }}: {{preHardenedSanLoss}} / 2 = {{sanLoss}}</div>
               {{/if}}
             {{else}}
               {{#if state.immuneAlreadyInBout}}
@@ -205,6 +215,10 @@
 
     {{#if actor.hasTempoInsane}}
       <div class="status">{{ localize 'CoC7.BoutActive'}}</div>
+    {{/if}}
+
+    {{#if actor.useMythosHardened}}
+      <div class="status">{{ localize 'CoC7.BackgroundFlagsMythosHardened'}}</div>
     {{/if}}
 
     {{#if sanData.sanReason}}

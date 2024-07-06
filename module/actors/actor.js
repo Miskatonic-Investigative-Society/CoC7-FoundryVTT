@@ -1944,7 +1944,7 @@ export class CoCActor extends Actor {
     const sanityLossEvent = this.getReasonSanLoss(sanReason)
     if (!sanityLossEvent.immunity) {
       await this.setSan(this.san - sanLoss)
-      this.setReasonSanLoss(sanReason, sanLoss)
+      if (sanLoss > 0) this.setReasonSanLoss(sanReason, sanLoss)
       return sanLoss
     }
     return 0
@@ -3569,6 +3569,10 @@ export class CoCActor extends Actor {
 
   get mythosHardened () {
     return this.getFlag('CoC7', 'mythosHardened') || false
+  }
+
+  get useMythosHardened () {
+    return this.mythosHardened && game.settings.get('CoC7', 'allowMythosHardened')
   }
 
   async setMythosHardened () {

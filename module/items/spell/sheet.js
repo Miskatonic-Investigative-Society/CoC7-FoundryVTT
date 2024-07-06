@@ -56,7 +56,11 @@ export class CoC7SpellSheet extends ItemSheet {
     html.find('.option').click(event => this.modifyType(event))
     html.find('#cast-spell').click(event => {
       event.preventDefault()
-      this.item.cast()
+      this.item.cast(false)
+    })
+    html.find('#cast-spell-hidden').click(event => {
+      event.preventDefault()
+      this.item.cast(true)
     })
   }
 
