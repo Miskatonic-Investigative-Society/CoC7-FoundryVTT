@@ -135,6 +135,7 @@
   "CoC7.Initiative": "Initiative",
 
   "CoC7.Cast": "Jet",
+    "CoC7.CastHidden": "Jet Caché",
   "CoC7.SanityCost": "Coût en SAN",
   "CoC7.PowerCost": "Coût en Pouvoir",
   "CoC7.HitPointsCost": "Coût en Points de Vie",
@@ -412,8 +413,8 @@
   "CoC7.WeaponBlst": "À Souffle",
   "CoC7.WeaponStun": "Étourdissante",
   "CoC7.Weapon.Property.Melee": "Mêlée",
-  "CoC7.Weapon.Property.Thrown": "Jeter",
-  "CoC7.Weapon.Property.Burn": "Brûlante",
+  "CoC7.Weapon.Property.Thrown": "Lancé",
+  "CoC7.Weapon.Property.Burn": "Brûle",
   "CoC7.Weapon.Property.Shotgun": "Fusil à pompe",
 
   "CoC7.ErrorItem": "Objet introuvable",
@@ -1031,7 +1032,7 @@
   "CoC7.Migrate.ErrorActor": "Échec de la migration du système CoC7 pour le Personnage {name}: {message}",
 
   "CoC7.System.Documentation": "Consulter le manuel du système",
-  
+
   "CoC7.Settings.CoreRules.Title": "Règles Optionnelles du Livre de Base",
   "CoC7.Settings.Rules.Name": "Variantes/Règles optionnelles",
   "CoC7.Settings.Rules.Label": "Configurer les variantes/règles optionnelles",
@@ -1128,6 +1129,8 @@
   "SETTINGS.PulpRulesHint": "Permettre l'utilisation des règles Pulp (archétype, talent, PV)",
   "SETTINGS.developmentRollForLuck": "Points de Chance récupérables",
   "SETTINGS.developmentRollForLuckHint": "Chaque joueur peut faire un jet de développement pour sa Chance durant la phase de développement",
+  "SETTINGS.allowMythosHardenedTitle": "Résistant au Mythe",
+  "SETTINGS.allowMythosHardenedHint": "Permet de réduire les pertes de SAN pour des Résistants au Mythe",
   "SETTINGS.displayPlayerNameOnSheet": "Afficher le nom du joueur sur la fiche",
   "SETTINGS.DisregardAmmo": "Ne pas tenir compte du nombre de munitions.",
   "SETTINGS.DisregardAmmoHint": "Si activé le système ne tiendra pas compte du nombre de balles chargées dans le pistolet",
@@ -1221,13 +1224,13 @@
   "SETTINGS.UseContextMenusHint": "[EXPERIMENTAL] Utiliser les menus contextuels pour les jets à la place des combinaisons de touches.",
   "SETTINGS.SceneDistanceNotCalcualtedNoError": "Ne pas afficher les erreurs pour les distances",
   "SETTINGS.SceneDistanceNotCalcualtedNoErrorHint": "Au début d'un combat à distance, en mode immersion, ne pas afficher les messages de calcul.",
-  
+
   "CoC7.getTheExample": "Copier l'Exemple",
   "CoC7.Copied": "Texte de l'Exemple copié dans le presse-papier",
 
   "CoC7.EffectNew": "Nouvel effet",
   "CoC7.EffectAppliedCantOverride": "Un effet actif est applicable. Vous de pouvez modifier [{name}]. Désactivez cet effet pour pouvoir modifier cette valeur.",
-  
+
   "CoC7.InvestigatorWizard.Title": "Création de Personnage guidée",
   "CoC7.InvestigatorWizard.TitleKeeperConfiguration": "Configuration du Gardien",
   "CoC7.InvestigatorWizard.TitleSelectSetup": "Configuration de l'Investigateur",
@@ -1325,7 +1328,7 @@
 
   "CoC7.CoCIDBatch.title": "Automate du System ID (CoC ID)",
   "CoC7.CoCIDBatch.summary": "Le système CoC7 a ajouté le System ID (CoC ID). Cela permet d'identifier les items FoundryVTT, les compétences par exemple. Cette page vous permettra de positionner l'identifiant pour des '{type}' existant(e)s. Le System ID doit utiliser les traductions anglaises pour pouvoir supporter le portage dans d'autres langues.",
-  
+
   "CoC7.TokenCreationRoll.Title": "Aléatoire détecté",
   "CoC7.TokenCreationRoll.Prompt": "Ce token a des caractéristiques ou compétences aléatoires.<br>Que souhaitez-vous faire ?",
   "CoC7.TokenCreationRoll.ButtonRoll": "Jeter les dés pour toutes",
