@@ -9,6 +9,8 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Update to French localization, thanks to @vonv #1580 and #1581
+
 ## Version 0.10.19
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
