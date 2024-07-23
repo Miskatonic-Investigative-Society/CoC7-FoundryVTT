@@ -9,6 +9,7 @@ Happy gaming !
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
+- Explicitly set FoundryVTT v12 version of grid values, thanks to @Vicnasc #1564
 - Update to French localization, thanks to @vonv #1580 and #1581
 
 ## Version 0.10.19
