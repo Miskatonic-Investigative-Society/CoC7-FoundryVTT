@@ -142,7 +142,7 @@
   "CoC7.MagicPointsCost": "MPコスト",
   "CoC7.OtherCosts": "その他のコスト",
   "CoC7.CastingSpell": "<i>{spell}</i> 呪文を詠唱。",
-  "CoC7.NotEnoughMagicPoints": "{spell} 呪文のコストとしてMPを{originalMagicPoints}ポイント消費する必要がある。しかし君は{actorMagicPoints}ポイントのMPしかないため、不足分である{convertedHitPoints}ポイントのコストを、君の耐久力から支払うことが可能だ。そうした場合、{convertedHitPoints} ダメージを受ける。",
+  "CoC7.NotEnoughMagicPoints": "{spell} 呪文のコストとしてMPが{originalMagicPoints}ポイント必要だ。だが今君のMPは{actorMagicPoints}ポイントしかなく、不足分である{convertedHitPoints}ポイントのコストを、君の耐久力から支払うことが可能だ。そうしたなら、{convertedHitPoints} ダメージを受ける。",
 
   "CoC7.CopyToClipboard": "クリップボードにコピー",
   "CoC7.WhisperToSelection": "選択したコマに秘匿送信",
@@ -1229,7 +1229,7 @@
   "CoC7.Copied": "例をクリップボードにコピー",
 
   "CoC7.EffectNew": "新規エフェクト",
-  "CoC7.EffectAppliedCantOverride": "An active effect is applies. You can't modify [{name}]. Deactivate the corresponding effect to modify this value.",
+  "CoC7.EffectAppliedCantOverride": "エフェクトが適用されています。[{name}]を変更できません。この値を変更するには対応するエフェクトを無効化してください。",
 
   "CoC7.InvestigatorWizard.Title": "探索者作成ウィザード",
   "CoC7.InvestigatorWizard.TitleKeeperConfiguration": "キーパー設定",
@@ -1310,12 +1310,12 @@
   "CoC7.CoCIDFlag.keys.i.skill.dodge": "回避",
   "CoC7.CoCIDFlag.keys.i.skill.cthulhu-mythos": "クトゥルフ神話",
   "CoC7.CoCIDFlag.keys.i.skill.credit-rating": "信用",
-  "CoC7.CoCIDFlag.new": "- Custom System ID -",
+  "CoC7.CoCIDFlag.new": "- CustomシステムID -",
   "CoC7.CoCIDFlag.guess": "Create System ID (CoC ID) based on current document.",
-  "CoC7.CoCIDFlag.priority": "System ID Priority",
+  "CoC7.CoCIDFlag.priority": "システムID優先度（Priority）",
   "CoC7.CoCIDFlag.others": "Other documents with this CoC ID and language (excluding documents in other actors and items)",
-  "CoC7.CoCIDFlag.documents-in-world": "{count} documents in the world",
-  "CoC7.CoCIDFlag.documents-in-compendiums": "{count} documents in compendiums",
+  "CoC7.CoCIDFlag.documents-in-world": "ドキュメント{count}件がワールド内に存在",
+  "CoC7.CoCIDFlag.documents-in-compendiums": "ドキュメント{count}件が辞典に存在",
   "CoC7.CoCIDFlag.foundry-id": "Foundry ID",
   "CoC7.CoCIDFlag.foundry-uuid": "Foundry UUID",
   "CoC7.CoCIDFlag.get-this-document": "このドキュメントを取得",
@@ -1326,7 +1326,7 @@
   "CoC7.CoCIDFlag.error.document-not-found": "Document not found in world or Compendia matching the CoC ID \"{cocid}\", language \"{lang}\", and era \"{era}\". Please check your Era for the world setting.",
   "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language \"{lang}\", and era \"{era}\". Please check your Era for the world setting.",
 
-  "CoC7.CoCIDBatch.title": "Batch set System ID (CoC ID)",
+  "CoC7.CoCIDBatch.title": "Batch set システムID (CoC ID)をバッチ適用",
   "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages.",
 
   "CoC7.TokenCreationRoll.Title": "ロール可能を検知",
