@@ -584,6 +584,8 @@
   "CoC7.IntCheck": "Tirada de INT",
   "CoC7.NoSanLoss": "Sin pérdida de COR",
   "CoC7.SANLoss": "Pérdida de COR",
+  "CoC7.SANLossPass": "Pasada",
+  "CoC7.SANLossFail": "Fallada",
   "CoC7.SanityCheckPerformed": "Has experimentado un evento traumático",
   "CoC7.InvoluntaryActionPerformed": "Pierdes el autocontrol durante unos instantes",
   "CoC7.SanityLost": "Puntos de COR perdidos",
