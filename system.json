@@ -23,6 +23,14 @@
     "lib/game-icons/game-icons.css",
     "coc7g.css"
   ],
+  "packFolders": [
+    {
+      "name": "Call of Cthulhu 7",
+      "sorting": "a",
+      "color": "#3a3b71",
+      "packs": ["skills", "items", "examples", "roll-requests", "sanity-tables-examples", "system-doc"]
+    }
+  ],
   "packs": [
     {
       "label": "Skills",
