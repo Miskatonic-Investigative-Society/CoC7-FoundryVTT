@@ -2,23 +2,23 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (431 untranslated strings)](#cnjson)
+[cn.json (433 untranslated strings)](#cnjson)
 
-[cs.json (616 untranslated strings)](#csjson)
+[cs.json (618 untranslated strings)](#csjson)
 
-[ko.json (213 untranslated strings)](#kojson)
+[ko.json (215 untranslated strings)](#kojson)
 
-[pt-BR.json (161 untranslated strings)](#ptbrjson)
+[pt-BR.json (163 untranslated strings)](#ptbrjson)
 
-[ru.json (83 untranslated strings)](#rujson)
+[ru.json (85 untranslated strings)](#rujson)
 
-[sv.json (399 untranslated strings)](#svjson)
+[sv.json (401 untranslated strings)](#svjson)
 
-[zh-TW.json (60 untranslated strings)](#zhtwjson)
+[zh-TW.json (62 untranslated strings)](#zhtwjson)
 
 
 ## cn.json
-431 untranslated strings
+433 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -141,6 +141,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SanityLossTypeValue": "Sanity points lost",
 "CoC7.SanityLossEncounter": "Sanity loss encounter",
 "CoC7.SanityLossImmunity": "Sanity loss immunity",
+"CoC7.SANLossPass": "pass",
+"CoC7.SANLossFail": "fail",
 "CoC7.AlreadyEncountered": "Already encountered",
 "CoC7.AlreadyEncounteredInformation": "Already encountered: {reason} lost {lost}/{max}",
 "CoC7.MaxPossibleSanLoss": "Max Possible loss",
@@ -453,7 +455,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## cs.json
-616 untranslated strings
+618 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -626,6 +628,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.SanityLossTypeValue": "Sanity points lost",
 "CoC7.SanityLossEncounter": "Sanity loss encounter",
 "CoC7.SanityLossImmunity": "Sanity loss immunity",
+"CoC7.SANLossPass": "pass",
+"CoC7.SANLossFail": "fail",
 "CoC7.AlreadyEncountered": "Already encountered",
 "CoC7.AlreadyEncounteredInformation": "Already encountered: {reason} lost {lost}/{max}",
 "CoC7.MaxPossibleSanLoss": "Max Possible loss",
@@ -1073,7 +1077,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## ko.json
-213 untranslated strings
+215 untranslated strings
 ```
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
 "CoC7.CastHidden": "Cast Hidden",
@@ -1146,6 +1150,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.MonetaryDefaultSuperRich": "Super Rich",
 "CoC7.MonetaryDefaultAristocracy": "Aristocracy",
 "CoC7.SanityLossType": "Type",
+"CoC7.SANLossPass": "pass",
+"CoC7.SANLossFail": "fail",
 "CoC7.ErrorTokenIncorrect": "Unable to find selected token",
 "CoC7.RemoveParticipant": "Remove participant",
 "CoC7.RemoveParticipantHint": "Participant will be completely removed from the chase",
@@ -1290,7 +1296,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## pt-BR.json
-161 untranslated strings
+163 untranslated strings
 ```
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
@@ -1347,6 +1353,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.MonetaryDefaultSuperRich": "Super Rich",
 "CoC7.MonetaryDefaultAristocracy": "Aristocracy",
 "CoC7.SanityLossType": "Type",
+"CoC7.SANLossPass": "pass",
+"CoC7.SANLossFail": "fail",
 "CoC7.ErrorTokenIncorrect": "Unable to find selected token",
 "CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",
 "CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
@@ -1455,7 +1463,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## ru.json
-83 untranslated strings
+85 untranslated strings
 ```
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.EraReignOfTerror": "Reign Of Terror",
@@ -1480,6 +1488,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.MonetaryDefaultProfessional": "Average Gentry / Wealthy Professional",
 "CoC7.MonetaryDefaultGentry": "Wealthy Gentry",
 "CoC7.MonetaryDefaultAristocracy": "Aristocracy",
+"CoC7.SANLossPass": "pass",
+"CoC7.SANLossFail": "fail",
 "CoC7.MythosAlreadyEncountered": "Award Mythos Experience (+1%)",
 "CoC7.DisregardMythosGain": "No Mythos gain",
 "CoC7.MythosGain": "Mythos gain",
@@ -1542,7 +1552,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## sv.json
-399 untranslated strings
+401 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -1639,6 +1649,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.MonetaryDefaultSuperRich": "Super Rich",
 "CoC7.MonetaryDefaultAristocracy": "Aristocracy",
 "CoC7.SanityLossType": "Type",
+"CoC7.SANLossPass": "pass",
+"CoC7.SANLossFail": "fail",
 "CoC7.AlreadyEncounteredInformation": "Already encountered: {reason} lost {lost}/{max}",
 "CoC7.InsertLocation": "Insert location",
 "CoC7.RemoveLocation": "Remove location",
@@ -1945,7 +1957,7 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
 ```
 ## zh-TW.json
-60 untranslated strings
+62 untranslated strings
 ```
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
@@ -1973,6 +1985,8 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.MonetaryDefaultGentry": "Wealthy Gentry",
 "CoC7.MonetaryDefaultAristocracy": "Aristocracy",
 "CoC7.SanityLossType": "Type",
+"CoC7.SANLossPass": "pass",
+"CoC7.SANLossFail": "fail",
 "CoC7.ErrorTokenIncorrect": "Unable to find selected token",
 "CoC7.PersonalSpecialityPlaceholder": "other skill(s) as personal or era specialties",
 "CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
