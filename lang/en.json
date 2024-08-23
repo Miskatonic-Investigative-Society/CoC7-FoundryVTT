@@ -608,6 +608,8 @@
   "CoC7.IntCheck": "Intelligence check",
   "CoC7.NoSanLoss": "No SAN loss",
   "CoC7.SANLoss": "Sanity Loss",
+  "CoC7.SANLossPass": "pass",
+  "CoC7.SANLossFail": "fail",
   "CoC7.SanityCheckPerformed": "You were exposed to a traumatic event.",
   "CoC7.InvoluntaryActionPerformed": "You lost self-control for a moment.",
   "CoC7.SanityLost": "Sanity points lost",
