@@ -1024,12 +1024,12 @@
 
   "CoC7.Migrate.UpdateCurrentScene": "現在シーンの移行",
   "CoC7.Migrate.Complete": "データ移行完了",
-  "CoC7.Migrate.ErrorDocumentPack": "Failed CoC7 system migration for document {name} in pack {collection}: {message}",
+  "CoC7.Migrate.ErrorDocumentPack": "{collection} packの資料 {name} に対するCoCシステムマイグレーションに失敗しました: {message}",
   "CoC7.Migrate.ErrorScene": "Failed CoC7 system migration for Scene {name}: {message}",
   "CoC7.Migrate.ErrorMacro": "Failed CoC7 system migration for Macro {name}: {message}",
   "CoC7.Migrate.ErrorTable": "Failed CoC7 system migration for Table {name}: {message}",
-  "CoC7.Migrate.ErrorItem": "Failed CoC7 system migration for Item {name}: {message}",
-  "CoC7.Migrate.ErrorActor": "Failed CoC7 system migration for Actor {name}: {message}",
+  "CoC7.Migrate.ErrorItem": "Failed CoC7 system migration for アイテム{name}: {message}",
+  "CoC7.Migrate.ErrorActor": "Failed CoC7 system migration for アクター{name}: {message}",
 
   "CoC7.System.Documentation": "CoC7 システムマニュアルを閲覧",
 
