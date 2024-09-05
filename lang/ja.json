@@ -388,7 +388,7 @@
   "CoC7.SkillRarityShort": "[UC]",
   "CoC7.SkillPush": "プッシュ可能",
   "CoC7.SkillCombat": "戦闘",
-  "CoC7.SkillFighting": "近接格闘",
+  "CoC7.SkillFighting": "近接戦闘",
   "CoC7.SkillFirearm": "射撃",
   "CoC7.SkillRanged": "遠隔",
   "CoC7.SkillRequiresName": "名前が必要",
@@ -428,7 +428,7 @@
 
   "CoC7.NewBioSectionName": "新規セクション",
 
-  "CoC7.FightingSpecializationName": "近接格闘",
+  "CoC7.FightingSpecializationName": "近接戦闘",
   "CoC7.UnarmedWeaponName": "素手",
   "CoC7.FirearmSpecializationName": "射撃",
   "CoC7.RangedSpecializationName": "遠隔",
@@ -608,6 +608,8 @@
   "CoC7.IntCheck": "INTロール",
   "CoC7.NoSanLoss": "正気度ポイントは喪失しない",
   "CoC7.SANLoss": "正気度喪失",
+  "CoC7.SANLossPass": "成功",
+  "CoC7.SANLossFail": "失敗",
   "CoC7.SanityCheckPerformed": "君は衝撃的な経験をした。",
   "CoC7.InvoluntaryActionPerformed": "君はしばらく自制心を失った。",
   "CoC7.SanityLost": "正気度ポイントを喪失",
@@ -1024,12 +1026,12 @@
 
   "CoC7.Migrate.UpdateCurrentScene": "現在シーンの移行",
   "CoC7.Migrate.Complete": "データ移行完了",
-  "CoC7.Migrate.ErrorDocumentPack": "Failed CoC7 system migration for document {name} in pack {collection}: {message}",
-  "CoC7.Migrate.ErrorScene": "Failed CoC7 system migration for Scene {name}: {message}",
-  "CoC7.Migrate.ErrorMacro": "Failed CoC7 system migration for Macro {name}: {message}",
-  "CoC7.Migrate.ErrorTable": "Failed CoC7 system migration for Table {name}: {message}",
-  "CoC7.Migrate.ErrorItem": "Failed CoC7 system migration for Item {name}: {message}",
-  "CoC7.Migrate.ErrorActor": "Failed CoC7 system migration for Actor {name}: {message}",
+  "CoC7.Migrate.ErrorDocumentPack": "{collection} packの資料 {name} に対するCoC7システムマイグレーションに失敗しました：{message}",
+  "CoC7.Migrate.ErrorScene": "シーン「{name}」のCoC7システムマイグレーションに失敗しました：{message}",
+  "CoC7.Migrate.ErrorMacro": "マクロ「{name}」のCoC7システムマイグレーションに失敗しました：{message}",
+  "CoC7.Migrate.ErrorTable": "ロール表「{name}」のCoC7システムマイグレーションに失敗しました：{message}",
+  "CoC7.Migrate.ErrorItem": "アイテム「{name}」のCoC7システムマイグレーションに失敗しました：{message}",
+  "CoC7.Migrate.ErrorActor": "アクター「{name}」のCoC7システムマイグレーションに失敗しました：{message}",
 
   "CoC7.System.Documentation": "CoC7 システムマニュアルを閲覧",
 
