@@ -14,7 +14,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Add placeholders for SAN loss to localization, thanks to @lozanoje #1587
 - Explicitly set FoundryVTT v12 version of grid values, thanks to @Vicnasc #1564
 - Update to French localization, thanks to @vonv #1580 and #1581
-- Update to Japanese localization, thanks to @doumoku #1586
+- Update to Japanese localization, thanks to @doumoku #1586 and #1591
 - Update to Spanish localization, thanks to @lozanoje #1587
 
 ## Version 0.10.19
