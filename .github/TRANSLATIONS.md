@@ -24,7 +24,7 @@ The following translations have more than 50 untranslated strings [are you able 
 
 |Key|de|fr|it|ja|pl|uk|
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|
-|**Remaining**:|**14**|**2**|**5**|**3**|**13**|**50**|
+|**Remaining**:|**14**|**2**|**5**|**1**|**13**|**50**|
 |[CoC7.CastHidden](#coc7casthidden)|&#x274C;|&#9989;|&#x274C;|&#9989;|&#9989;|&#x274C;|
 |[CoC7.EraReignOfTerror](#coc7erareignofterror)|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
 |[CoC7.ErrorCombinedRollsRequireSingleActor](#coc7errorcombinedrollsrequiresingleactor)|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
@@ -52,8 +52,8 @@ The following translations have more than 50 untranslated strings [are you able 
 |[CoC7.PickWhichActorTitle](#coc7pickwhichactortitle)|&#9989;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
 |[CoC7.RangedSpecializationName](#coc7rangedspecializationname)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
 |[CoC7.RealRollDecaderPlaceholderName](#coc7realrolldecaderplaceholdername)|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|&#x274C;|
-|[CoC7.SANLossFail](#coc7sanlossfail)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
-|[CoC7.SANLossPass](#coc7sanlosspass)|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|&#x274C;|
+|[CoC7.SANLossFail](#coc7sanlossfail)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
+|[CoC7.SANLossPass](#coc7sanlosspass)|&#x274C;|&#x274C;|&#x274C;|&#9989;|&#x274C;|&#x274C;|
 |[CoC7.SkillNameHandgun](#coc7skillnamehandgun)|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
 |[CoC7.SkillNameLaunch](#coc7skillnamelaunch)|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
 |[CoC7.SkillNameMachinGun](#coc7skillnamemachingun)|&#x274C;|&#9989;|&#9989;|&#9989;|&#9989;|&#x274C;|
