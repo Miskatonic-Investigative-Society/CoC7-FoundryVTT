@@ -12,7 +12,12 @@ Happy gaming !
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
 
 - Add placeholders for SAN loss to localization, thanks to @lozanoje #1587
+- Allow weapon ranges to be based on characteristics
 - Explicitly set FoundryVTT v12 version of grid values, thanks to @Vicnasc #1564
+- Fix compendium filtering
+- Workaround for DsN 5.0.0 to 5.0.5 bonus dice, replace bronze dice withl bronze01 dice
+- Update CoC ID functionality as per ticket #1584
+- Update token art if default and the actor image is changed 
 - Update to French localization, thanks to @vonv #1580 and #1581
 - Update to Japanese localization, thanks to @doumoku #1586 and #1591
 - Update to Spanish localization, thanks to @lozanoje #1587
