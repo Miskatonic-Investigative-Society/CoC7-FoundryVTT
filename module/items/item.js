@@ -542,15 +542,36 @@ export class CoC7Item extends Item {
   }
 
   get baseRange () {
-    return parseInt(this.system.range.normal.value)
+    const result = parseInt(this.system.range.normal.value)
+    if (!isNaN(result)) {
+      return result
+    }
+    return new Roll(
+      this.system.range.normal.value,
+      this.parent?.parseCharacteristics() ?? {}
+    ).evaluateSync().total
   }
 
   get longRange () {
-    return parseInt(this.system.range.long.value)
+    const result = parseInt(this.system.range.long.value)
+    if (!isNaN(result)) {
+      return result
+    }
+    return new Roll(
+      this.system.range.long.value,
+      this.parent?.parseCharacteristics() ?? {}
+    ).evaluateSync().total
   }
 
   get extremeRange () {
-    return parseInt(this.system.range.extreme.value)
+    const result = parseInt(this.system.range.extreme.value)
+    if (!isNaN(result)) {
+      return result
+    }
+    return new Roll(
+      this.system.range.extreme.value,
+      this.parent?.parseCharacteristics() ?? {}
+    ).evaluateSync().total
   }
 
   get skillProperties () {

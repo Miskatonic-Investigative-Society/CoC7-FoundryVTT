@@ -4,6 +4,7 @@ import { CoC7Utilities } from './utilities.js'
 import { CoC7ActorImporterDialog } from './apps/actor-importer-dialog.js'
 import { CoC7ContentLinkDialog } from './apps/coc7-content-link-dialog.js'
 import { CoC7InvestigatorWizard } from './apps/investigator-wizard.js'
+import CoCIDActorUpdateItems from './apps/coc-id-actor-update-items.js'
 
 class CoC7MenuLayer extends PlaceablesLayer {
   constructor () {
@@ -55,6 +56,13 @@ export class CoC7Menu {
           title: 'CoC7.CharCreationMode',
           onClick: async toggle =>
             await CoC7Utilities.toggleCharCreation(toggle)
+        },
+        {
+          button: true,
+          icon: 'fas fa-fingerprint',
+          name: 'actor-coc-id-best',
+          title: 'CoC7.ActorCoCIDItemsBest',
+          onClick: async () => await CoCIDActorUpdateItems.create()
         },
         {
           button: true,

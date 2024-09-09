@@ -59,8 +59,8 @@
 
   <fieldset class="item-sheet-properties">
     <legend>Info</legend>
+    <label>{{localize 'CoC7.CoCIDFlag.others'}}:</label>
     <div class="form-group">
-      <label>{{localize 'CoC7.CoCIDFlag.others'}}:</label>
       <div>
         <details>
           <summary>{{localize 'CoC7.CoCIDFlag.documents-in-world' count=worldDuplicates}}{{#if warnDuplicateWorldPriority}} <span class="warning"><i class="fas fa-exclamation-triangle"></i>{{localize 'CoC7.CoCIDFlag.error.duplicate'}}</span>{{/if}}</summary>
@@ -69,10 +69,10 @@
               {{#each usedEras as |era|}}
                 <td class="eracolumn"><a title="{{era.name}}"><i class="fas fa-info-circle"></i></a></td>
               {{/each}}
-              <td class="shorttext"><b>Priority</b></td>
-              <td class="shorttext"><b>Lang</b></td>
-              <td><b>Link</b></td>
-              <td><b>Folder</b></td>
+              <td class="shorttext"><b>{{localize 'CoC7.CoCIDFlag.priority'}}</b></td>
+              <td class="shorttext"><b>{{localize 'CoC7.language'}}</b></td>
+              <td><b>{{localize 'DOCUMENT.Document'}}</b></td>
+              <td><b>{{localize 'DOCUMENT.Folder'}}</b></td>
             </tr>
             {{#each worldDocumentInfo}}
               <tr>
@@ -88,7 +88,7 @@
                 <td class="shorttext">{{priority}}</td>
                 <td class="shorttext">{{lang}}</td>
                 <td>{{{link}}}</td>
-                <td>{{folder}}</td>
+                <td>{{{folder}}}</td>
               </tr>
             {{/each}}
           </table>
@@ -100,10 +100,10 @@
               {{#each usedEras as |era|}}
                 <td class="eracolumn"><a title="{{era.name}}"><i class="fas fa-info-circle"></i></a></td>
               {{/each}}
-              <td class="shorttext"><b>Priority</b></td>
-              <td class="shorttext"><b>Lang</b></td>
-              <td><b>Link</b></td>
-              <td><b>Folder</b></td>
+              <td class="shorttext"><b>{{localize 'CoC7.CoCIDFlag.priority'}}</b></td>
+              <td class="shorttext"><b>{{localize 'CoC7.language'}}</b></td>
+              <td><b>{{localize 'DOCUMENT.Document'}}</b></td>
+              <td><b>{{localize 'COMPENDIUM.Name'}}</b></td>
             </tr>
             {{#each compendiumDocumentInfo}}
               <tr>
@@ -119,7 +119,7 @@
                 <td class="shorttext">{{priority}}</td>
                 <td class="shorttext">{{lang}}</td>
                 <td>{{{link}}}</td>
-                <td>{{folder}}</td>
+                <td>{{{folder}}}</td>
               </tr>
             {{/each}}
           </table>

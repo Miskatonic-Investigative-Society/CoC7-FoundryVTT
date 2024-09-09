@@ -225,6 +225,17 @@ export class CoCActor extends Actor {
     }
   }
 
+  static defaultImg (type) {
+    switch (type) {
+      case 'container':
+        return 'icons/svg/chest.svg'
+      case 'creature':
+        return 'systems/CoC7/assets/icons/floating-tentacles.svg'
+      case 'npc':
+        return 'systems/CoC7/assets/icons/cultist.svg'
+    }
+  }
+
   /** @override */
   static async create (data, options = {}) {
     if (data.type === 'character') {
@@ -237,15 +248,15 @@ export class CoCActor extends Actor {
       })
     } else if (data.type === 'npc') {
       if (typeof data.img === 'undefined' || data.img === 'icons/svg/mystery-man.svg') {
-        data.img = 'systems/CoC7/assets/icons/cultist.svg'
+        data.img = CoCActor.defaultImg(data.type)
       }
     } else if (data.type === 'creature') {
       if (typeof data.img === 'undefined' || data.img === 'icons/svg/mystery-man.svg') {
-        data.img = 'systems/CoC7/assets/icons/floating-tentacles.svg'
+        data.img = CoCActor.defaultImg(data.type)
       }
     } else if (data.type === 'container') {
       if (typeof data.img === 'undefined' || data.img === 'icons/svg/mystery-man.svg') {
-        data.img = 'icons/svg/chest.svg'
+        data.img = CoCActor.defaultImg(data.type)
       }
       data.prototypeToken = foundry.utils.mergeObject(data.prototypeToken || {}, {
         actorLink: true
@@ -3501,7 +3512,7 @@ export class CoCActor extends Actor {
   get firearmSkills () {
     const skillList = []
     for (const value of this.items) {
-      if (value.type === 'skill' && (value.system.properties.firearm || value.system.properties.ranged)) {
+      if (value.type === 'skill' && (value.system.properties.firearm || value.system.properties.ranged || value.flags.CoC7?.cocidFlag?.id === 'i.skill.fighting-throw')) {
         skillList.push(value)
       }
     }

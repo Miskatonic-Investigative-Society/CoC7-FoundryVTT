@@ -1,4 +1,4 @@
-/* global Actor, Card, CONFIG, foundry, game, Item, JournalEntry, Macro, Playlist, RollTable, Scene, SceneNavigation, ui */
+/* global Actor, Card, CONFIG, foundry, fromUuid, game, Item, JournalEntry, Macro, Playlist, RollTable, Scene, SceneNavigation, ui */
 import { COC7 } from '../config.js'
 import { CoC7Utilities } from '../utilities.js'
 
@@ -203,7 +203,6 @@ export class CoCID {
    * @param era the eras to match against ('standard', 'modernPulp', ...), true = world default, false = no filter
    * @param lang the language to match against ('en', 'es', ...)
    * @param scope defines where it will look:
-   * **match** same logic as fromCoCID function,
    * **all**: find in both world & compendia,
    * **world**: only search in world,
    * **compendiums**: only search in compendiums
@@ -211,44 +210,13 @@ export class CoCID {
    * @param showLoading Show loading bar
    * @returns array
    */
-  static async fromCoCIDRegexAll ({ cocidRegExp, type, lang = game.i18n.lang, era = false, scope = 'match', langFallback = true, showLoading = false } = {}) {
-    if (!cocidRegExp) {
-      return []
+  static async fromCoCIDRegexAll ({ cocidRegExp, type, lang = game.i18n.lang, era = false, scope = 'all', langFallback = true, showLoading = false } = {}) {
+    let candidates = await CoCID.fromCoCIDRegexAllMixed({ cocidRegExp, type, lang, era, scope, langFallback, showLoading })
+    if (langFallback && lang !== 'en') {
+      candidates = CoCID.filterByLanguage(candidates, lang)
     }
-    const result = []
-
-    let count = 0
-    if (showLoading) {
-      if (['match', 'all', 'world'].includes(scope)) {
-        count++
-      }
-      if (['match', 'all', 'compendiums'].includes(scope)) {
-        count = count + game.packs.size
-      }
-    }
-
-    if (['match', 'all', 'world'].includes(scope)) {
-      const worldDocuments = await CoCID.documentsFromWorld({ cocidRegExp, type, lang, era, langFallback, progressBar: count })
-      if (scope === 'match' && worldDocuments.length) {
-        if (showLoading) {
-          SceneNavigation.displayProgressBar({ label: game.i18n.localize('SETUP.PackagesLoading'), pct: 100 })
-        }
-        return this.filterAllCoCID(worldDocuments, langFallback && lang !== 'en')
-      }
-      result.splice(0, 0, ...worldDocuments)
-    }
-
-    if (['match', 'all', 'compendiums'].includes(scope)) {
-      const compendiaDocuments = await CoCID.documentsFromCompendia({ cocidRegExp, type, lang, era, langFallback, progressBar: count })
-
-      result.splice(result.length, 0, ...compendiaDocuments)
-    }
-
-    if (showLoading) {
-      SceneNavigation.displayProgressBar({ label: game.i18n.localize('SETUP.PackagesLoading'), pct: 100 })
-    }
-
-    return this.filterAllCoCID(result, langFallback && lang !== 'en')
+    candidates.sort(CoCID.compareCoCIDPrio)
+    return await CoCID.onlyDocuments(candidates, showLoading)
   }
 
   /**
@@ -258,7 +226,6 @@ export class CoCID {
    * @param lang the language to match against ('en', 'es', ...)
    * @param era the eras to match against ('standard', 'modernPulp', ...), true = world default, false = no filter
    * @param scope defines where it will look:
-   * **match** same logic as fromCoCID function,
    * **all**: find in both world & compendia,
    * **world**: only search in world,
    * **compendiums**: only search in compendiums
@@ -266,7 +233,7 @@ export class CoCID {
    * @param showLoading Show loading bar
    * @returns array
    */
-  static async fromCoCIDAll ({ cocid, lang = game.i18n.lang, era = false, scope = 'match', langFallback = true, showLoading = false } = {}) {
+  static async fromCoCIDAll ({ cocid, lang = game.i18n.lang, era = false, scope = 'all', langFallback = true, showLoading = false } = {}) {
     if (!cocid || typeof cocid !== 'string') {
       return []
     }
@@ -297,9 +264,18 @@ export class CoCID {
       ui.notifications.error(game.i18n.format('CoC7.CoCIDFlag.error.unknown-era', { era: game.i18n.localize('CoC7.Any') }))
       return []
     }
-    const allDocuments = await this.fromCoCIDRegexAll({ cocidRegExp, type, lang, era, scope: 'all', langFallback, showLoading })
-    const bestDocuments = this.filterBestCoCID(allDocuments)
-    return bestDocuments
+    let candidates = await this.fromCoCIDRegexAllMixed({ cocidRegExp, type, lang, era, scope: 'all', langFallback, showLoading })
+    if (langFallback && lang !== 'en') {
+      candidates = CoCID.filterByLanguage(candidates, lang)
+    }
+    candidates.sort(CoCID.compareCoCIDPrio)
+    const ids = {}
+    for (const candidate of candidates) {
+      if (!Object.prototype.hasOwnProperty.call(ids, candidate.flags.CoC7.cocidFlag.id)) {
+        ids[candidate.flags.CoC7.cocidFlag.id] = candidate
+      }
+    }
+    return await CoCID.onlyDocuments(Object.values(ids), showLoading)
   }
 
   /**
@@ -345,78 +321,50 @@ export class CoCID {
   }
 
   /**
-   * For an array of documents already processed by filterAllCoCID, returns only those that are the "best" version of their CoCID
-   * @param documents
-   * @returns
+   * Returns all documents or indexes with an CoCID matching the regex and matching the document type
+   * and language, from the specified scope.
+   * Empty array return for no matches
+   * @param cocidRegExp regex used on the CoCID
+   * @param type the first part of the wanted CoCID, for example 'i', 'a', 'je'
+   * @param era the eras to match against ('standard', 'modernPulp', ...), true = world default, false = no filter
+   * @param lang the language to match against ('en', 'es', ...)
+   * @param scope defines where it will look:
+   * **all**: find in both world & compendia,
+   * **world**: only search in world,
+   * **compendiums**: only search in compendiums
+   * @param langFallback should the system fall back to en incase there is no translation
+   * @param showLoading Show loading bar
+   * @returns array
    */
-  static filterBestCoCID (documents) {
-    const bestMatchDocuments = new Map()
-    for (const doc of documents) {
-      const docCoCID = doc.getFlag('CoC7', 'cocidFlag')?.id
-      if (docCoCID) {
-        const currentDoc = bestMatchDocuments.get(docCoCID)
-        if (typeof currentDoc === 'undefined') {
-          bestMatchDocuments.set(docCoCID, doc)
-          continue
-        }
+  static async fromCoCIDRegexAllMixed ({ cocidRegExp, type, lang = game.i18n.lang, era = false, scope = 'all', langFallback = true, showLoading = false } = {}) {
+    if (!cocidRegExp) {
+      return []
+    }
 
-        // Prefer pack === '' if possible
-        const docPack = (doc.pack ?? '')
-        const existingPack = (currentDoc?.pack ?? '')
-        const preferWorld = docPack === '' || existingPack !== ''
-        if (!preferWorld) {
-          continue
-        }
+    let results = []
 
-        // Prefer highest priority
-        let docPriority = parseInt(doc.getFlag('CoC7', 'cocidFlag')?.priority ?? Number.MIN_SAFE_INTEGER, 10)
-        docPriority = isNaN(docPriority) ? Number.MIN_SAFE_INTEGER : docPriority
-        let existingPriority = parseInt(currentDoc.getFlag('CoC7', 'cocidFlag')?.priority ?? Number.MIN_SAFE_INTEGER, 10)
-        existingPriority = isNaN(existingPriority) ? Number.MIN_SAFE_INTEGER : existingPriority
-        const preferPriority = docPriority >= existingPriority
-        if (!preferPriority) {
-          continue
-        }
-
-        bestMatchDocuments.set(docCoCID, doc)
+    let count = 0
+    if (showLoading) {
+      if (['all', 'world'].includes(scope)) {
+        count++
+      }
+      if (['all', 'compendiums'].includes(scope)) {
+        count = count + game.packs.size
       }
     }
-    return [...bestMatchDocuments.values()]
-  }
 
-  /**
-   * For an array of documents, returns filter out en documents if a translated one exists matching the same eras
-   * @param documents
-   * @param langFallback should the system fall back to en in case there is no translation
-   * @returns
-   */
-  static filterAllCoCID (documents, langFallback) {
-    if (!langFallback) {
-      return documents
+    if (['all', 'world'].includes(scope)) {
+      results = results.concat(await CoCID.docsFromWorld({ cocidRegExp, type, lang, era, langFallback, progressBar: count }))
     }
-    const bestMatchDocuments = new Map()
-    for (const doc of documents) {
-      const docCoCID = doc.getFlag('CoC7', 'cocidFlag')?.id
-      if (docCoCID) {
-        const docEras = Object.entries(doc.getFlag('CoC7', 'cocidFlag')?.eras ?? {}).filter(e => e[1]).map(e => e[0]).sort().join('/')
-        let docPriority = parseInt(doc.getFlag('CoC7', 'cocidFlag')?.priority ?? Number.MIN_SAFE_INTEGER, 10)
-        docPriority = isNaN(docPriority) ? Number.MIN_SAFE_INTEGER : docPriority
-        const key = docCoCID + '/' + docEras + '/' + (isNaN(docPriority) ? Number.MIN_SAFE_INTEGER : docPriority)
 
-        const currentDoc = bestMatchDocuments.get(key)
-        if (typeof currentDoc === 'undefined') {
-          bestMatchDocuments.set(key, doc)
-          continue
-        }
-
-        const docLang = doc.getFlag('CoC7', 'cocidFlag')?.lang ?? 'en'
-        const existingLang = currentDoc?.getFlag('CoC7', 'cocidFlag')?.lang ?? 'en'
-        if (existingLang === 'en' && existingLang !== docLang) {
-          bestMatchDocuments.set(key, doc)
-        }
-      }
+    if (['all', 'compendiums'].includes(scope)) {
+      results = results.concat(await CoCID.indexesFromCompendia({ cocidRegExp, type, lang, era, langFallback, progressBar: count }))
     }
-    return [...bestMatchDocuments.values()]
+
+    if (showLoading) {
+      SceneNavigation.displayProgressBar({ label: game.i18n.localize('SETUP.PackagesLoading'), pct: 100 })
+    }
+    return results
   }
 
   /**
@@ -430,7 +378,7 @@ export class CoCID {
    * @param progressBar If greater than zero show percentage
    * @returns array
    */
-  static async documentsFromWorld ({ cocidRegExp, type, lang = game.i18n.lang, era = false, langFallback = true, progressBar = 0 } = {}) {
+  static async docsFromWorld ({ cocidRegExp, type, lang = game.i18n.lang, era = false, langFallback = true, progressBar = 0 } = {}) {
     if (!cocidRegExp) {
       return []
     }
@@ -461,12 +409,11 @@ export class CoCID {
       return []
     }
 
-    return candidateDocuments.sort(CoCID.compareCoCIDPrio)
+    return candidateDocuments
   }
 
   /**
-   * Get a list of all documents matching the CoCID regex, language, and era from the compendiums.
-   * The document list is sorted with the highest priority first.
+   * Get a list of all indexes matching the CoCID regex, language, and era from the compendiums.
    * @param cocidRegExp regex used on the CoCID
    * @param type the first part of the wanted CoCID, for example 'i', 'a', 'je'
    * @param era the eras to match against ('standard', 'modernPulp', ...), true = world default, false = no filter
@@ -475,7 +422,7 @@ export class CoCID {
    * @param progressBar If greater than zero show percentage
    * @returns array
    */
-  static async documentsFromCompendia ({ cocidRegExp, type, lang = game.i18n.lang, era = false, langFallback = true, progressBar = 0 }) {
+  static async indexesFromCompendia ({ cocidRegExp, type, lang = game.i18n.lang, era = false, langFallback = true, progressBar = 0 }) {
     if (!cocidRegExp) {
       return []
     }
@@ -485,10 +432,9 @@ export class CoCID {
     if (era === true) {
       era = game.settings.get('CoC7', 'worldEra')
     }
-    const eraText = CoCID.eraText(era)
 
     const documentType = CoCID.getDocumentType(type).name
-    const candidateDocuments = []
+    let indexDocuments = []
 
     let count = 1
     for (const pack of game.packs) {
@@ -500,45 +446,38 @@ export class CoCID {
         if (!pack.indexed) {
           await pack.getIndex()
         }
-        const indexInstances = pack.index.filter((i) => {
-          const cocidFlag = i.flags?.CoC7?.cocidFlag
-          if (typeof cocidFlag === 'undefined') {
+        indexDocuments = indexDocuments.concat(pack.index.filter((i) => {
+          if (typeof i.flags?.CoC7?.cocidFlag?.id !== 'string') {
             return false
           }
-          const eras = (cocidFlag.eras ?? [])
+          const eras = (i.flags.CoC7.cocidFlag.eras ?? {})
           const matchingEras = (era === false || Object.entries(eras).length === 0 || (Object.prototype.hasOwnProperty.call(eras, era) && eras[era]))
-          return cocidRegExp.test(cocidFlag.id) && [lang, (langFallback ? 'en' : '-')].includes(cocidFlag.lang) && matchingEras
-        })
-        for (const index of indexInstances) {
-          const document = await pack.getDocument(index._id)
-          if (!document) {
-            const msg = game.i18n.format('CoC7.CoCIDFlag.error.document-not-found', {
-              cocid: cocidRegExp,
-              lang,
-              era: eraText
-            })
-            ui.notifications.error(msg)
-            console.log('CoC7 |', msg, index)
-            throw new Error()
-          } else {
-            candidateDocuments.push(document)
-          }
-        }
+          return cocidRegExp.test(i.flags.CoC7.cocidFlag.id) && [lang, (langFallback ? 'en' : '-')].includes(i.flags.CoC7.cocidFlag.lang) && matchingEras
+        }))
       }
     }
-    return candidateDocuments.sort(CoCID.compareCoCIDPrio)
+    return indexDocuments
   }
 
   /**
    * Sort a list of document on CoCID priority - the highest first.
+   * If priority is the same use world over compendiums
    * @example
    * aListOfDocuments.sort(CoCID.compareCoCIDPrio)
    */
   static compareCoCIDPrio (a, b) {
-    return (
-      b.getFlag('CoC7', 'cocidFlag')?.priority -
-      a.getFlag('CoC7', 'cocidFlag')?.priority
-    )
+    const ap = parseInt(a.flags.CoC7.cocidFlag.priority, 10)
+    const bp = parseInt(b.flags.CoC7.cocidFlag.priority, 10)
+    if (ap === bp) {
+      const ao = a instanceof foundry.abstract.DataModel
+      const bo = b instanceof foundry.abstract.DataModel
+      if (ao === bo) {
+        return 0
+      } else {
+        return (ao ? -1 : 1)
+      }
+    }
+    return bp - ap
   }
 
   /**
@@ -595,5 +534,80 @@ export class CoCID {
       rt: RollTable,
       s: Scene
     }
+  }
+
+  /**
+   * Replace indexes with their documents
+   */
+  static async onlyDocuments (candidates, showLoading) {
+    const len = candidates.length
+    let count = 0
+    for (const offset in candidates) {
+      if (showLoading) {
+        SceneNavigation.displayProgressBar({ label: game.i18n.localize('SETUP.PackagesLoading'), pct: Math.floor(count / len) })
+        count = count + 100
+      }
+      if (!(candidates[offset] instanceof foundry.abstract.DataModel)) {
+        candidates[offset] = await fromUuid(candidates[offset].uuid)
+      }
+    }
+    if (showLoading) {
+      SceneNavigation.displayProgressBar({ label: game.i18n.localize('SETUP.PackagesLoading'), pct: 100 })
+    }
+    return candidates
+  }
+
+  /**
+   * Filter an array of index or documents.
+   * If a CoCID has a version lang then remove the en versions
+   */
+  static filterByLanguage (indexes, lang) {
+    const ids = indexes.reduce((c, i) => {
+      c[i.flags.CoC7.cocidFlag.id] = c[i.flags.CoC7.cocidFlag.id] || i.flags.CoC7.cocidFlag.lang === lang
+      return c
+    }, {})
+    return indexes.filter(i => i.flags.CoC7.cocidFlag.lang !== 'en' || !ids[i.flags.CoC7.cocidFlag.id])
+  }
+
+  /**
+   * Get a list of all documents matching the CoCID regex, language, and era from the world.
+   * The document list is sorted with the highest priority first.
+   * @param cocidRegExp regex used on the CoCID
+   * @param type the first part of the wanted CoCID, for example 'i', 'a', 'je'
+   * @param era the eras to match against ('standard', 'modernPulp', ...), true = world default, false = no filter
+   * @param lang the language to match against ('en', 'es', ...)
+   * @param langFallback should the system fall back to en incase there is no translation
+   * @param progressBar If greater than zero show percentage
+   * @returns array
+   */
+  static async documentsFromWorld ({ cocidRegExp, type, lang = game.i18n.lang, era = false, langFallback = true, progressBar = 0 } = {}) {
+    console.warn('Calling documentsFromWorld directly is depreciated')
+    let documents = await CoCID.docsFromWorld({ cocidRegExp, type, lang, era, langFallback, progressBar })
+    if (langFallback && lang !== 'en') {
+      documents = CoCID.filterByLanguage(documents, lang)
+    }
+    documents.sort(CoCID.compareCoCIDPrio)
+    return documents
+  }
+
+  /**
+   * Get a list of all documents matching the CoCID regex, language, and era from the compendiums.
+   * The document list is sorted with the highest priority first.
+   * @param cocidRegExp regex used on the CoCID
+   * @param type the first part of the wanted CoCID, for example 'i', 'a', 'je'
+   * @param era the eras to match against ('standard', 'modernPulp', ...), true = world default, false = no filter
+   * @param lang the language to match against ('en', 'es', ...)
+   * @param langFallback should the system fall back to en incase there is no translation
+   * @param progressBar If greater than zero show percentage
+   * @returns array
+   */
+  static async documentsFromCompendia ({ cocidRegExp, type, lang = game.i18n.lang, era = false, langFallback = true, progressBar = 0 }) {
+    console.warn('Calling documentsFromCompendia directly is depreciated')
+    let indexes = await CoCID.indexesFromCompendia({ cocidRegExp, type, lang, era, langFallback, progressBar })
+    if (langFallback && lang !== 'en') {
+      indexes = CoCID.filterByLanguage(indexes, lang)
+    }
+    indexes.sort(CoCID.compareCoCIDPrio)
+    return await CoCID.onlyDocuments(indexes, progressBar > 0)
   }
 }

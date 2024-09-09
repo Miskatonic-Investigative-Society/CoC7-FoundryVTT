@@ -80,6 +80,12 @@ export class CoCIDEditor extends FormApplication {
         for (const era of eras) {
           usedEras[era] = COC7.eras[era] ?? '?'
         }
+        const folders = []
+        let e = d?.folder
+        while (e?.name) {
+          folders.unshift(e?.name)
+          e = e.folder
+        }
         return {
           eras: eras.reduce(function (all, current) {
             all[current] = true
@@ -88,7 +94,7 @@ export class CoCIDEditor extends FormApplication {
           priority: d.flags.CoC7.cocidFlag.priority,
           lang: d.flags.CoC7.cocidFlag.lang ?? 'en',
           link: await TextEditor.enrichHTML(d.link, { async: true }),
-          folder: d?.folder?.name
+          folder: folders.map(n => n.indexOf(' ') > -1 ? '"' + n + '"' : n).join(' &gt; ')
         }
       }))
       if (Object.entries(uniqueWorldPriority).filter(c => c[1] > 1).length > 0) {
@@ -118,6 +124,18 @@ export class CoCIDEditor extends FormApplication {
         for (const era of eras) {
           usedEras[era] = COC7.eras[era] ?? '?'
         }
+        const folders = []
+        let e = d?.folder
+        while (e?.name) {
+          folders.unshift(e?.name)
+          e = e.folder
+        }
+        folders.unshift(d.compendium.metadata.label)
+        e = d?.compendium.folder
+        while (e?.name) {
+          folders.unshift(e?.name)
+          e = e.folder
+        }
         return {
           eras: eras.reduce(function (all, current) {
             all[current] = true
@@ -126,7 +144,7 @@ export class CoCIDEditor extends FormApplication {
           priority: d.flags.CoC7.cocidFlag.priority,
           lang: d.flags.CoC7.cocidFlag.lang ?? 'en',
           link: await TextEditor.enrichHTML(d.link, { async: true }),
-          folder: d?.folder?.name ?? ''
+          folder: folders.map(n => n.indexOf(' ') > -1 ? '"' + n + '"' : n).join(' &gt; ')
         }
       }))
       if (Object.entries(uniqueCompendiumPriority).filter(c => c[1] > 1).length > 0) {

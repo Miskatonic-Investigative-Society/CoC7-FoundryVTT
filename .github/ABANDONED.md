@@ -2,23 +2,25 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (433 untranslated strings)](#cnjson)
+[cn.json (445 untranslated strings)](#cnjson)
 
-[cs.json (618 untranslated strings)](#csjson)
+[cs.json (630 untranslated strings)](#csjson)
 
-[ko.json (215 untranslated strings)](#kojson)
+[ko.json (227 untranslated strings)](#kojson)
 
-[pt-BR.json (163 untranslated strings)](#ptbrjson)
+[pt-BR.json (175 untranslated strings)](#ptbrjson)
 
-[ru.json (85 untranslated strings)](#rujson)
+[ru.json (97 untranslated strings)](#rujson)
 
-[sv.json (401 untranslated strings)](#svjson)
+[sv.json (413 untranslated strings)](#svjson)
 
-[zh-TW.json (62 untranslated strings)](#zhtwjson)
+[uk.json (62 untranslated strings)](#ukjson)
+
+[zh-TW.json (74 untranslated strings)](#zhtwjson)
 
 
 ## cn.json
-433 untranslated strings
+445 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -434,6 +436,17 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language "{lang}", and era "{era}". Please check your Era for the world setting.",
 "CoC7.CoCIDBatch.title": "Batch set System ID (CoC ID)",
 "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages.",
+"CoC7.ActorCoCIDItemsBest": "CoC ID: Actor Item replacement",
+"CoC7.ActorCoCIDItemsWarning": "This action can not be undone, please backup your world before updating your Actors",
+"CoC7.ActorCoCIDItemsWhich": "Check Item's CoC ID in active compendiums, world compendiums, and Items directory replacing the Actor's Items with the best choice based on these rules",
+"CoC7.ActorCoCIDItemsRules1": "The Item must match the the current era "{era}" or have no eras selected",
+"CoC7.ActorCoCIDItemsRules2": "Check Item's that match the language "{lang}" or "English" if no translated Items exist",
+"CoC7.ActorCoCIDItemsRules3": "Select the Item with the highest priority",
+"CoC7.ActorCoCIDItemsSceneTokens": "Update all tokens on this scene",
+"CoC7.ActorCoCIDItemsUnlinkedToken": "Update unlinked Actor in directory for each Token first",
+"CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
+"CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
+"CoC7.ActorCoCIDItemsUpdate": "Update",
 "CoC7.TokenCreationRoll.Title": "Rollable detected",
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
 "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
@@ -452,10 +465,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorRollAlreadyCompleted": "This roll has already been completed",
 "CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
 "CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
-"CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
+"CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors",
+"CoC7.PauseName": "Time Stop"
 ```
 ## cs.json
-618 untranslated strings
+630 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -1056,6 +1070,17 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language "{lang}", and era "{era}". Please check your Era for the world setting.",
 "CoC7.CoCIDBatch.title": "Batch set System ID (CoC ID)",
 "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages.",
+"CoC7.ActorCoCIDItemsBest": "CoC ID: Actor Item replacement",
+"CoC7.ActorCoCIDItemsWarning": "This action can not be undone, please backup your world before updating your Actors",
+"CoC7.ActorCoCIDItemsWhich": "Check Item's CoC ID in active compendiums, world compendiums, and Items directory replacing the Actor's Items with the best choice based on these rules",
+"CoC7.ActorCoCIDItemsRules1": "The Item must match the the current era "{era}" or have no eras selected",
+"CoC7.ActorCoCIDItemsRules2": "Check Item's that match the language "{lang}" or "English" if no translated Items exist",
+"CoC7.ActorCoCIDItemsRules3": "Select the Item with the highest priority",
+"CoC7.ActorCoCIDItemsSceneTokens": "Update all tokens on this scene",
+"CoC7.ActorCoCIDItemsUnlinkedToken": "Update unlinked Actor in directory for each Token first",
+"CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
+"CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
+"CoC7.ActorCoCIDItemsUpdate": "Update",
 "CoC7.TokenCreationRoll.Title": "Rollable detected",
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
 "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
@@ -1074,10 +1099,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorRollAlreadyCompleted": "This roll has already been completed",
 "CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
 "CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
-"CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
+"CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors",
+"CoC7.PauseName": "Time Stop"
 ```
 ## ko.json
-215 untranslated strings
+227 untranslated strings
 ```
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
 "CoC7.CastHidden": "Cast Hidden",
@@ -1275,6 +1301,17 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language "{lang}", and era "{era}". Please check your Era for the world setting.",
 "CoC7.CoCIDBatch.title": "Batch set System ID (CoC ID)",
 "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages.",
+"CoC7.ActorCoCIDItemsBest": "CoC ID: Actor Item replacement",
+"CoC7.ActorCoCIDItemsWarning": "This action can not be undone, please backup your world before updating your Actors",
+"CoC7.ActorCoCIDItemsWhich": "Check Item's CoC ID in active compendiums, world compendiums, and Items directory replacing the Actor's Items with the best choice based on these rules",
+"CoC7.ActorCoCIDItemsRules1": "The Item must match the the current era "{era}" or have no eras selected",
+"CoC7.ActorCoCIDItemsRules2": "Check Item's that match the language "{lang}" or "English" if no translated Items exist",
+"CoC7.ActorCoCIDItemsRules3": "Select the Item with the highest priority",
+"CoC7.ActorCoCIDItemsSceneTokens": "Update all tokens on this scene",
+"CoC7.ActorCoCIDItemsUnlinkedToken": "Update unlinked Actor in directory for each Token first",
+"CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
+"CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
+"CoC7.ActorCoCIDItemsUpdate": "Update",
 "CoC7.TokenCreationRoll.Title": "Rollable detected",
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
 "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
@@ -1293,10 +1330,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorRollAlreadyCompleted": "This roll has already been completed",
 "CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
 "CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
-"CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
+"CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors",
+"CoC7.PauseName": "Time Stop"
 ```
 ## pt-BR.json
-163 untranslated strings
+175 untranslated strings
 ```
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
@@ -1442,6 +1480,17 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.InvestigatorWizard.CreatingInvestigator": "Please wait while the keeper creates your investigator.",
 "CoC7.CoCIDBatch.title": "Batch set System ID (CoC ID)",
 "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages.",
+"CoC7.ActorCoCIDItemsBest": "CoC ID: Actor Item replacement",
+"CoC7.ActorCoCIDItemsWarning": "This action can not be undone, please backup your world before updating your Actors",
+"CoC7.ActorCoCIDItemsWhich": "Check Item's CoC ID in active compendiums, world compendiums, and Items directory replacing the Actor's Items with the best choice based on these rules",
+"CoC7.ActorCoCIDItemsRules1": "The Item must match the the current era "{era}" or have no eras selected",
+"CoC7.ActorCoCIDItemsRules2": "Check Item's that match the language "{lang}" or "English" if no translated Items exist",
+"CoC7.ActorCoCIDItemsRules3": "Select the Item with the highest priority",
+"CoC7.ActorCoCIDItemsSceneTokens": "Update all tokens on this scene",
+"CoC7.ActorCoCIDItemsUnlinkedToken": "Update unlinked Actor in directory for each Token first",
+"CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
+"CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
+"CoC7.ActorCoCIDItemsUpdate": "Update",
 "CoC7.TokenCreationRoll.Title": "Rollable detected",
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
 "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
@@ -1460,10 +1509,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorRollAlreadyCompleted": "This roll has already been completed",
 "CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
 "CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
-"CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
+"CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors",
+"CoC7.PauseName": "Time Stop"
 ```
 ## ru.json
-85 untranslated strings
+97 untranslated strings
 ```
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.EraReignOfTerror": "Reign Of Terror",
@@ -1536,6 +1586,17 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.TokenDropModeRoll": "Roll what you can",
 "SETTINGS.TokenDropModeAverage": "Average rolls",
 "SETTINGS.TokenDropModeIgnore": "Do nothing",
+"CoC7.ActorCoCIDItemsBest": "CoC ID: Actor Item replacement",
+"CoC7.ActorCoCIDItemsWarning": "This action can not be undone, please backup your world before updating your Actors",
+"CoC7.ActorCoCIDItemsWhich": "Check Item's CoC ID in active compendiums, world compendiums, and Items directory replacing the Actor's Items with the best choice based on these rules",
+"CoC7.ActorCoCIDItemsRules1": "The Item must match the the current era "{era}" or have no eras selected",
+"CoC7.ActorCoCIDItemsRules2": "Check Item's that match the language "{lang}" or "English" if no translated Items exist",
+"CoC7.ActorCoCIDItemsRules3": "Select the Item with the highest priority",
+"CoC7.ActorCoCIDItemsSceneTokens": "Update all tokens on this scene",
+"CoC7.ActorCoCIDItemsUnlinkedToken": "Update unlinked Actor in directory for each Token first",
+"CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
+"CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
+"CoC7.ActorCoCIDItemsUpdate": "Update",
 "CoC7.TokenCreationRoll.Rolled": "{name} characteristics and skills rolled",
 "CoC7.TokenCreationRoll.Averaged": "{name} characteristics and skills averaged",
 "CoC7.Temporary": "Temporary",
@@ -1549,10 +1610,11 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorRollAlreadyCompleted": "This roll has already been completed",
 "CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
 "CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
-"CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
+"CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors",
+"CoC7.PauseName": "Time Stop"
 ```
 ## sv.json
-401 untranslated strings
+413 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -1936,6 +1998,17 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.CoCIDFlag.error.documents-not-found": "Documents were not found in world or Compendia matching the CoC IDs ({cocids}), language "{lang}", and era "{era}". Please check your Era for the world setting.",
 "CoC7.CoCIDBatch.title": "Batch set System ID (CoC ID)",
 "CoC7.CoCIDBatch.summary": "The CoC7 System has introduced a System ID (CoC ID). This allows the system to identify FoundryVTT documents for example skills. This page will allow you to set the id for existing {type} documents. The System ID should use the English translation of the name to support localization across all languages.",
+"CoC7.ActorCoCIDItemsBest": "CoC ID: Actor Item replacement",
+"CoC7.ActorCoCIDItemsWarning": "This action can not be undone, please backup your world before updating your Actors",
+"CoC7.ActorCoCIDItemsWhich": "Check Item's CoC ID in active compendiums, world compendiums, and Items directory replacing the Actor's Items with the best choice based on these rules",
+"CoC7.ActorCoCIDItemsRules1": "The Item must match the the current era "{era}" or have no eras selected",
+"CoC7.ActorCoCIDItemsRules2": "Check Item's that match the language "{lang}" or "English" if no translated Items exist",
+"CoC7.ActorCoCIDItemsRules3": "Select the Item with the highest priority",
+"CoC7.ActorCoCIDItemsSceneTokens": "Update all tokens on this scene",
+"CoC7.ActorCoCIDItemsUnlinkedToken": "Update unlinked Actor in directory for each Token first",
+"CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
+"CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
+"CoC7.ActorCoCIDItemsUpdate": "Update",
 "CoC7.TokenCreationRoll.Title": "Rollable detected",
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
 "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
@@ -1954,10 +2027,77 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorRollAlreadyCompleted": "This roll has already been completed",
 "CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
 "CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
-"CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
+"CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors",
+"CoC7.PauseName": "Time Stop"
+```
+## uk.json
+62 untranslated strings
+```
+"CoC7.CastHidden": "Cast Hidden",
+"CoC7.EraReignOfTerror": "Reign Of Terror",
+"CoC7.SkillRanged": "Ranged",
+"CoC7.RangedSpecializationName": "Ranged",
+"CoC7.LanguageSpecializationName": "Language",
+"CoC7.SkillNameHandgun": "Handgun",
+"CoC7.SkillNameRifle": "Rifle",
+"CoC7.SkillNameShotgun": "Shotgun",
+"CoC7.SkillNameRifleShotgun": "Rifle/Shotgun",
+"CoC7.SkillNameSmb": "Submachine Gun",
+"CoC7.SkillNameMachinGun": "Machine Gun",
+"CoC7.SkillNameLaunch": "Launch",
+"CoC7.LinkCheckPushing": " {name} check - pushing",
+"CoC7.LinkCheckDiffPushing": "[{difficulty}] {name} check - pushing",
+"CoC7.LinkCheckModifPushing": " {name} check - pushing({modifier})",
+"CoC7.LinkCheckDiffModifPushing": "[{difficulty}] {name} check - pushing({modifier})",
+"CoC7.MonetaryDefaultDestitute": "Destitute",
+"CoC7.MonetaryDefaultLower": "Lower-Class",
+"CoC7.MonetaryDefaultMiddle": "Emerging Middle-Class / Starting Professional",
+"CoC7.MonetaryDefaultEstablished": "Poor Gentry / Established Professional",
+"CoC7.MonetaryDefaultProfessional": "Average Gentry / Wealthy Professional",
+"CoC7.MonetaryDefaultGentry": "Wealthy Gentry",
+"CoC7.MonetaryDefaultAristocracy": "Aristocracy",
+"CoC7.SANLossPass": "pass",
+"CoC7.SANLossFail": "fail",
+"CoC7.InfoSkillAddedAtBase": "This skill {name} has been added at {percent}%",
+"CoC7.Japanese": "Japanese",
+"SETTINGS.allowMythosHardenedTitle": "Mythos Hardened",
+"SETTINGS.allowMythosHardenedHint": "Allow Mythos Hardened sanity loss reductions",
+"SETTINGS.TokenDropMode": "When creating NPC :",
+"SETTINGS.TokenDropModeHint": "Define the default behavior when an NPC with rollable characteristics or skills is dropped on a scene.",
+"SETTINGS.TokenDropModeAsk": "Ask what to do",
+"SETTINGS.TokenDropModeRoll": "Roll what you can",
+"SETTINGS.TokenDropModeAverage": "Average rolls",
+"SETTINGS.TokenDropModeIgnore": "Do nothing",
+"CoC7.ActorCoCIDItemsBest": "CoC ID: Actor Item replacement",
+"CoC7.ActorCoCIDItemsWarning": "This action can not be undone, please backup your world before updating your Actors",
+"CoC7.ActorCoCIDItemsWhich": "Check Item's CoC ID in active compendiums, world compendiums, and Items directory replacing the Actor's Items with the best choice based on these rules",
+"CoC7.ActorCoCIDItemsRules1": "The Item must match the the current era "{era}" or have no eras selected",
+"CoC7.ActorCoCIDItemsRules2": "Check Item's that match the language "{lang}" or "English" if no translated Items exist",
+"CoC7.ActorCoCIDItemsRules3": "Select the Item with the highest priority",
+"CoC7.ActorCoCIDItemsSceneTokens": "Update all tokens on this scene",
+"CoC7.ActorCoCIDItemsUnlinkedToken": "Update unlinked Actor in directory for each Token first",
+"CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
+"CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
+"CoC7.ActorCoCIDItemsUpdate": "Update",
+"CoC7.TokenCreationRoll.Rolled": "{name} characteristics and skills rolled",
+"CoC7.TokenCreationRoll.Averaged": "{name} characteristics and skills averaged",
+"CoC7.RealRollDecaderPlaceholderName": "10's",
+"CoC7.Temporary": "Temporary",
+"CoC7.Passive": "Passive",
+"CoC7.Inactive": "Inactive",
+"CoC7.Suppressed": "Suppressed",
+"CoC7.Unavailable": "Unavailable",
+"CoC7.PickWhichActorTitle": "Pick who to roll as",
+"CoC7.PickWhichActorDesc": "You have Owner permissions for multiple Actors please pick which to roll as",
+"CoC7.WaitingOnUser": "Waiting On User",
+"CoC7.ErrorRollAlreadyCompleted": "This roll has already been completed",
+"CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
+"CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
+"CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors",
+"CoC7.PauseName": "Time Stop"
 ```
 ## zh-TW.json
-62 untranslated strings
+74 untranslated strings
 ```
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
@@ -2002,6 +2142,17 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "SETTINGS.TokenDropModeIgnore": "Do nothing",
 "SETTINGS.SceneDistanceNotCalcualtedNoError": "Don't show error for ranged distance",
 "SETTINGS.SceneDistanceNotCalcualtedNoErrorHint": "When starting a ranged combat if playing theatre of the mind do not show the unable to calculate distance message.",
+"CoC7.ActorCoCIDItemsBest": "CoC ID: Actor Item replacement",
+"CoC7.ActorCoCIDItemsWarning": "This action can not be undone, please backup your world before updating your Actors",
+"CoC7.ActorCoCIDItemsWhich": "Check Item's CoC ID in active compendiums, world compendiums, and Items directory replacing the Actor's Items with the best choice based on these rules",
+"CoC7.ActorCoCIDItemsRules1": "The Item must match the the current era "{era}" or have no eras selected",
+"CoC7.ActorCoCIDItemsRules2": "Check Item's that match the language "{lang}" or "English" if no translated Items exist",
+"CoC7.ActorCoCIDItemsRules3": "Select the Item with the highest priority",
+"CoC7.ActorCoCIDItemsSceneTokens": "Update all tokens on this scene",
+"CoC7.ActorCoCIDItemsUnlinkedToken": "Update unlinked Actor in directory for each Token first",
+"CoC7.ActorCoCIDItemsActorSheets": "Update open Actor sheets",
+"CoC7.ActorCoCIDItemsActorDirectory": "Update all Actors in directory",
+"CoC7.ActorCoCIDItemsUpdate": "Update",
 "CoC7.TokenCreationRoll.Title": "Rollable detected",
 "CoC7.TokenCreationRoll.Prompt": "This token has rollables characteristics or skills.<br>What do you want to do ?",
 "CoC7.TokenCreationRoll.ButtonRoll": "Roll all",
@@ -2020,5 +2171,6 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorRollAlreadyCompleted": "This roll has already been completed",
 "CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
 "CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
-"CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors"
+"CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors",
+"CoC7.PauseName": "Time Stop"
 ```
