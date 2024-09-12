@@ -1363,6 +1363,6 @@
   "CoC7.ErrorRollAlreadyCompleted": "Der Wurf wurde bereits abgeschlossen",
   "CoC7.ErrorNoActorPermission": "Du besitzt diese Figur nicht",
   "CoC7.ErrorCombinedRollsRequireSingleActor": "Du kannst nicht mehr als eine Figur in einem gemeinsamen Wurf einsetzen",
-  "CoC7.ErrorOpposedRollsLimitedToTwoActors": "Ein gegenüberstellender Wurf benötigt zwei Figuren"
+  "CoC7.ErrorOpposedRollsLimitedToTwoActors": "Ein gegenüberstellender Wurf benötigt zwei Figuren",
   "CoC7.PauseName": "Zeitstopp"
 }
