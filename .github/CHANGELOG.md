@@ -17,6 +17,7 @@ When not specified, all changes were made by @castanhocorreia, @HavlockV, and @s
 - Fix compendium filtering
 - Fix db/2 calculation, thanks to @lozanoje #1601
 - Fix ranged weapons not adding DB/2
+- Preparing the system for upcoming premium content.
 - Workaround for DsN 5.0.0 to 5.0.5 bonus dice, replace bronze dice withl bronze01 dice
 - Update CoC ID functionality as per ticket #1584
 - Update token art if default and the actor image is changed
