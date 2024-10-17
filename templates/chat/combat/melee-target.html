@@ -1,4 +1,4 @@
-<div class="coc7 chat-card melee target" data-actor-key="{{actorKey}}" data-initiator-key="{{initiatorKey}}" data-fast-forward="{{fastForward}}" data-resolved="{{resolved}}" data-outnumbered="{{outnumbered}}" data-surprised="{{surprised}}" data-auto-success="{{autoSuccess}}" data-advantage="{{advantage}}" data-disadvantage="{{disadvantage}}" data-parent-message-id="{{parentMessageId}}" data-skill-id="{{skillId}}" data-item-id="{{itemId}}" data-dodging="{{dodging}}" data-not-responding="{{notResponding}}" data-fighting-back="{{fightingBack}}" data-maneuvering="{{maneuvering}}" data-resolution-card="{{resolutionCard}}" data-is-blind="false">
+<div class="coc7 chat-card melee target" data-actor-key="{{actorKey}}" data-initiator-key="{{initiatorKey}}" data-fast-forward="{{fastForward}}" data-resolved="{{resolved}}" data-outnumbered="{{outnumbered}}" data-surprised="{{surprised}}" data-auto-success="{{autoSuccess}}" data-dice-modifier="{{diceModifier}}" data-parent-message-id="{{parentMessageId}}" data-skill-id="{{skillId}}" data-item-id="{{itemId}}" data-dodging="{{dodging}}" data-not-responding="{{notResponding}}" data-fighting-back="{{fightingBack}}" data-maneuvering="{{maneuvering}}" data-resolution-card="{{resolutionCard}}" data-is-blind="false">
 
   <header class="card-header flexcol">
     <div class="flexrow">
@@ -36,20 +36,10 @@
             {{#if dodging}}<span class="tag" title="{{actor.dodgeSkill.name}}">{{localize 'CoC7.Dodge'}}</span>{{/if}}
             {{#if fightingBack}}<span class="tag" title="{{weapon.name}}">{{localize 'CoC7.FightBack'}}</span>{{/if}}
             {{#if maneuvering}}<span class="tag" title="{{skill.name}}">{{localize 'CoC7.Maneuver'}}</span>{{/if}}
-            {{#if advantage}}<span class="tag" title="{{localize 'CoC7.Advantage'}}">{{localize 'CoC7.Advantage'}}</span>{{/if}}
-            {{#if disadvantage}}<span class="tag" title="{{localize 'CoC7.Disadvantage'}}">{{localize 'CoC7.Disadvantage'}}</span>{{/if}}
           </div>
         {{/if}}
       </div>
     {{/unless}}
-
-    {{#unless (or rolled notResponding)}}
-      <div class="flexrow advantage-selection">
-        <span class="flex1 toggle-switch advantage {{#unless rolled}}simple-flag{{/unless}} {{#if advantage}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.BonusDieAssailantReason'}}" style="text-align:center" data-flag="advantage" data-selected={{advantage}}>{{localize 'CoC7.Advantage'}}</span>
-        <span class="flex1 toggle-switch disadvantage {{#unless rolled}}simple-flag{{/unless}} {{#if disadvantage}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.PenaltyDieSelfReason'}}" style="text-align:center" data-flag="disadvantage" data-selected={{disadvantage}}>{{localize 'CoC7.Disadvantage'}}</span>
-      </div>
-    {{/unless}}
-
   </header>
 
   {{#unless rolled}}
@@ -74,6 +64,27 @@
           {{/each}}
         </div>
       </div>
+    </div>
+  {{/unless}}
+  {{#unless (or rolled notResponding)}}
+    <div class="owner-only" style="flex: 1;display: flex;flex-direction: column;margin: 0.5rem 1rem 0;opacity:0.6">
+      <div class="flexrow">
+        <span style="flex: 4; text-align: left">{{localize 'CoC7.PenaltyDice'}}</span>
+        <span style="flex: 1">&nbsp;</span>
+        <span style="flex: 4; text-align: right">{{localize 'CoC7.BonusDice'}}</span>
+      </div>
+      <div class="flexrow">
+        <span style="flex: 1; text-align: left;">-2</span>
+        <span style="flex: 1; text-align: center;"></span>
+        <span style="flex: 1; text-align: center;">-1</span>
+        <span style="flex: 1; text-align: center;"></span>
+        <span style="flex: 1; text-align: center;">0</span>
+        <span style="flex: 1; text-align: center;"></span>
+        <span style="flex: 1; text-align: center;">+1</span>
+        <span style="flex: 1; text-align: center;"></span>
+        <span style="flex: 1; text-align: right;">+2</span>
+      </div>
+      <input type="range" name="diceModifier" min="-2" max="2" value="{{diceModifier}}" class="slider gm-range-only">
     </div>
   {{/unless}}
 

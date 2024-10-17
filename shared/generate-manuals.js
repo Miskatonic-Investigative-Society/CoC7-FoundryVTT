@@ -1,7 +1,13 @@
 import * as crypto from 'crypto'
-import { Remarkable } from 'remarkable'
 import * as fs from 'fs'
-import write from './node_modules/write/index.js'
+import * as path from 'path'
+import * as url from 'url'
+import { ClassicLevel } from 'classic-level'
+import { Remarkable } from 'remarkable'
+
+const FOLDER_ID = 'CoC7'
+
+const rootFolder = fs.realpathSync(path.dirname(url.fileURLToPath(import.meta.url)) + '/..')
 
 const collisions = {}
 
@@ -246,46 +252,54 @@ const sources = {
   }
 }
 
-const dbFile = []
+const dbFile = {}
 try {
   for (const lang in sources) {
     const id = generateBuildConsistentID('manual' + lang)
-    const dbEntry = {
+    collisions[id] = true
+    const journalKey = '!journal!' + id
+    const journalPagePrefixKey = '!journal.pages!' + id + '.'
+    dbFile[journalKey] = {
       name: sources[lang].name + ' [' + lang + ']',
       pages: [],
       _id: id,
       flags: {
-        CoC7: {
+        [FOLDER_ID]: {
           cocidFlag: {
             eras: {},
             id: 'je..call-of-cthulhu-7-th-edition-system-documentation',
             lang,
             priority: sources[lang].priority
-          }
+          },
+          'css-adventure-entry': true
         }
       }
     }
     const links = {}
-    const includedPages = []
     for (const source of sources[lang].pages) {
       const id = generateBuildConsistentID('manual' + lang + source.file)
       collisions[id] = true
       links[source.file] = id
     }
+
+    if (!fs.existsSync(rootFolder + '/docs/')) {
+      fs.mkdirSync(rootFolder + '/docs/')
+    }
+
     for (const page in sources[lang].pages) {
       const md = new Remarkable()
-      let input = fs.readFileSync(
-        './module/manual/' + lang + '/' + sources[lang].pages[page].file,
-        'utf8'
-      )
-      includedPages.push(' - "' + sources[lang].pages[page].name + '" from module/manual/' + lang + '/' + sources[lang].pages[page].file)
+      let input = fs.readFileSync(rootFolder + '/module/manual/' + lang + '/' + sources[lang].pages[page].file, 'utf8')
 
       const mdFile = input
         .replace(/\[(fas fa-[^\]]+|game-icon game-icon-[^\]]+)\]/g, '')
         .replace(/@@coc7./g, '@coc7.')
         .replace(/@Compendium\[[^\]]+\.[^\\.]+\]{([^}]+)}/g, '[_$1_]')
 
-      write('./docs/' + lang + '/' + sources[lang].pages[page].file, mdFile)
+      if (!fs.existsSync(rootFolder + '/docs/' + lang + '/')) {
+        fs.mkdirSync(rootFolder + '/docs/' + lang + '/')
+      }
+
+      fs.writeFileSync(rootFolder + '/docs/' + lang + '/' + sources[lang].pages[page].file, mdFile, { flag: 'w+' })
 
       const matches = input.matchAll(/\[(.+?)\]\(((?![a-z]{1,10}:)(.+?))\)/g)
       for (const match of matches) {
@@ -305,7 +319,8 @@ try {
         .replace(/\n\s*/g, '\n')
         .replace(/@@coc7./g, '<span>@</span>coc7.')
 
-      dbEntry.pages.push({
+      dbFile[journalKey].pages.push(links[sources[lang].pages[page].file])
+      dbFile[journalPagePrefixKey + links[sources[lang].pages[page].file]] = {
         name: sources[lang].pages[page].name,
         type: 'text',
         _id: links[sources[lang].pages[page].file],
@@ -319,17 +334,25 @@ try {
           markdown: ''
         },
         sort: Number(page)
-      })
+      }
     }
-    dbFile.push(JSON.stringify(dbEntry))
-    console.log('Created: ' + dbEntry.name)
-    console.log(includedPages.join('\n'))
   }
+
+  const batch = Object.keys(dbFile).reduce((c, i) => {
+    c.push({ type: 'put', key: i, value: dbFile[i], valueEncoding: 'json' })
+    return c
+  }, [])
+
+  if (fs.existsSync(rootFolder + '/packs/system-doc')) {
+    await ClassicLevel.destroy(rootFolder + '/packs/system-doc')
+  }
+  const db = new ClassicLevel(rootFolder + '/packs/system-doc', { keyEncoding: 'utf8', valueEncoding: 'json' })
+  await db.batch(batch, { valueEncoding: 'utf8' })
+  await db.close()
+  console.log('Generated: ./packs/system-doc')
 } catch (e) {
   console.log('EXCEPTION:', e)
 }
-
-write('./packs/system-doc.db', dbFile.join('\n'))
 
 /**
  * generateBuildConsistentID uses idSource to generate an id that will be consistent across builds.

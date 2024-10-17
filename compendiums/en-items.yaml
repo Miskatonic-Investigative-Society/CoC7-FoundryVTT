@@ -61,12 +61,13 @@ system:
    - Treasured Possessions
    - Traits
 flags:
-  cocidFlag:
-    id: i.setup.standard
-    lang: en
-    eras:
-      standard: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.setup.standard
+      lang: en
+      eras:
+        standard: true
+      priority: 0
 ---
 _id: lu04TIRrg9P3vRqY
 name: Peacemaker
@@ -93,10 +94,11 @@ system:
    - i.skill.psychology
    - i.skill.spot-hidden
 flags:
-  cocidFlag:
-    id: i.archetype.peacemaker
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.archetype.peacemaker
+      lang: en
+      priority: 0
 ---
 _id: zyCszwqyTg21l9E2
 name: Death ray (prototype)
@@ -141,24 +143,6 @@ system:
     brst: true
     spcl: true
 ---
-_id: DVdvEDizPZPux1pK
-name: Mania 1
-type: status
-img: icons/svg/aura.svg
-system:
-  source: ''
-  type:
-    mania: true
----
-_id: Vm9OzZnAVOpDdwfB
-name: Mania 2
-type: status
-img: icons/svg/aura.svg
-system:
-  source: ''
-  type:
-    mania: true
----
 _id: NOsh6EdNSjpjahDF
 name: Street Vendor
 type: occupation
@@ -197,28 +181,11 @@ system:
       - i.skill.sleight-of-hand
   personal: 0
 flags:
-  cocidFlag:
-    id: i.occupation.street-vendor
-    lang: en
-    priority: 0
----
-_id: PFpgtSKUcBDLVLY6
-name: Phobia 1
-type: status
-img: icons/svg/aura.svg
-system:
-  source: ''
-  type:
-    phobia: true
----
-_id: 2dqgtyGfwr8M60he
-name: Phobia 2
-type: status
-img: icons/svg/aura.svg
-system:
-  source: ''
-  type:
-    phobia: true
+  CoC7:
+    cocidFlag:
+      id: i.occupation.street-vendor
+      lang: en
+      priority: 0
 ---
 _id: 3elxAwnv7WCUNwng
 name: Punch
@@ -239,10 +206,11 @@ system:
     melee: true
     addb: true
 flags:
-  cocidFlag:
-    id: i.weapon.brawl
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.weapon.brawl
+      lang: en
+      priority: 0
 ---
 _id: yqvwz769ZeJplOW7
 name: Talent 1

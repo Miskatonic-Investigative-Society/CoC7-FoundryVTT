@@ -14,8 +14,7 @@ export class CoC7MeleeInitiator extends ChatCardActor {
     this.outnumbered = false
     this.surprised = false
     this.autoSuccess = false
-    this.advantage = false
-    this.disadvantage = false
+    this.diceModifier = 0
     this.messageId = null
     this.targetCard = null
     this.rolled = false
@@ -76,6 +75,12 @@ export class CoC7MeleeInitiator extends ChatCardActor {
       ? chatHelper.hyphenToCamelCase(flagName)
       : flagName
     this[flag] = !this[flag]
+    switch (flag) {
+      case 'outnumbered':
+      case 'surprised':
+        this.diceModifier = Math.max(-2, Math.min(2, parseInt(this.diceModifier, 10) + (this[flag] ? 1 : -1)))
+        break
+    }
   }
 
   async performSkillCheck (skillId = null, publish = false) {
@@ -96,10 +101,7 @@ export class CoC7MeleeInitiator extends ChatCardActor {
     if (game.user.isGM) this.checkRevealed = false
     else this.checkRevealed = true
 
-    if (this.outnumbered) check.diceModifier += 1
-    if (this.surprised) check.diceModifier += 1
-    if (this.disadvantage) check.diceModifier -= 1
-    if (this.advantage) check.diceModifier += 1
+    if (this.diceModifier) check.diceModifier = this.diceModifier
 
     await check.roll()
     this.check = check

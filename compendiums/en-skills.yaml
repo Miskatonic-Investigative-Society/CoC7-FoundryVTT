@@ -9,21 +9,22 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.accounting
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      gasLight: true
-      regency: true
-      regencyPulp: true
-      reignOfTerror: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.accounting
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
 ---
 _id: dQ4zUjSteT3sgwKx
 name: Animal Handling
@@ -37,16 +38,17 @@ system:
     push: true
     rarity: true
 flags:
-  cocidFlag:
-    id: i.skill.animal-handling
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      reignOfTerror: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.animal-handling
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        reignOfTerror: true
+      priority: 0
 ---
 _id: ovIp66Luwfwbq28F
 name: Anthropology
@@ -59,19 +61,20 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.anthropology
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      gasLight: true
-      regency: true
-      regencyPulp: true
-      reignOfTerror: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.anthropology
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
 ---
 _id: wOs3gryeGRPkGoWD
 name: Appraise
@@ -84,10 +87,11 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.appraise
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.appraise
+      lang: en
+      priority: 0
 ---
 _id: GHhkcJUqjcP4lToY
 name: Archaeology
@@ -100,18 +104,19 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.archaeology
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      gasLight: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.archaeology
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+      priority: 0
 ---
 _id: m6V53lyfz7zh95FE
 name: Art/Craft (Acting)
@@ -125,18 +130,19 @@ system:
     special: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.art-craft-acting
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      gasLight: true
-      regencyPulp: true
-      regency: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.art-craft-acting
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        gasLight: true
+        regencyPulp: true
+        regency: true
+      priority: 0
 ---
 _id: HAuFBG4ZT2yO9yn7
 name: Art/Craft (Any)
@@ -151,10 +157,11 @@ system:
     requiresname: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.art-craft-any
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.art-craft-any
+      lang: en
+      priority: 0
 ---
 _id: m8sBJxvuUdtQ2mDU
 name: Art/Craft (Fine Art)
@@ -168,18 +175,19 @@ system:
     special: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.art-craft-fine-art
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      gasLight: true
-      regency: true
-      regencyPulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.art-craft-fine-art
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+      priority: 0
 ---
 _id: zcvnv8qY4GrVwwTL
 name: Art/Craft (Forgery)
@@ -193,18 +201,19 @@ system:
     special: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.art-craft-forgery
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      gasLight: true
-      regency: true
-      regencyPulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.art-craft-forgery
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+      priority: 0
 ---
 _id: WLYZNASZ2YP8zN3g
 name: Art/Craft (Photography)
@@ -218,16 +227,17 @@ system:
     special: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.art-craft-photography
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      gasLight: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.art-craft-photography
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        gasLight: true
+      priority: 0
 ---
 _id: JgtxiN3KzooOWIQV
 name: Charm
@@ -240,10 +250,11 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.charm
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.charm
+      lang: en
+      priority: 0
 ---
 _id: I80gmmo830LuOBKl
 name: Civics
@@ -256,12 +267,13 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.civics
-    lang: en
-    eras:
-      invictus: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.civics
+      lang: en
+      eras:
+        invictus: true
+      priority: 0
 ---
 _id: oh5eFj00Wohnx1My
 name: Climb
@@ -274,23 +286,24 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.climb
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      darkAges: true
-      darkAgesPulp: true
-      regency: true
-      regencyPulp: true
-      reignOfTerror: true
-      gasLight: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.climb
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        darkAges: true
+        darkAgesPulp: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+        gasLight: true
+      priority: 0
 ---
 _id: VZSv9eodMQ4ZPcrO
 name: Computer Use
@@ -303,13 +316,14 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.computer-use
-    lang: en
-    eras:
-      modern: true
-      modernPulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.computer-use
+      lang: en
+      eras:
+        modern: true
+        modernPulp: true
+      priority: 0
 ---
 _id: vYrJ5h9cIQBzvw8E
 name: Credit Rating
@@ -323,19 +337,20 @@ system:
     noxpgain: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.credit-rating
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      gasLight: true
-      reignOfTerror: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.credit-rating
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        reignOfTerror: true
+      priority: 0
 ---
 _id: WJky66ezt2ef5ksH
 name: Cthulhu Mythos
@@ -349,10 +364,11 @@ system:
     noadjustments: true
     noxpgain: true
 flags:
-  cocidFlag:
-    id: i.skill.cthulhu-mythos
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.cthulhu-mythos
+      lang: en
+      priority: 0
 ---
 _id: bJt90h73GqdP7ti6
 name: Demolitions
@@ -366,17 +382,18 @@ system:
     rarity: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.demolitions
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.demolitions
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+      priority: 0
 ---
 _id: gzNPM9gbx0EZffBV
 name: Disguise
@@ -389,23 +406,24 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.disguise
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      darkAges: true
-      darkAgesPulp: true
-      gasLight: true
-      regency: true
-      regencyPulp: true
-      reignOfTerror: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.disguise
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        darkAges: true
+        darkAgesPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
 ---
 _id: 4lN6yD6zwbjX6BFp
 name: Diving
@@ -419,15 +437,16 @@ system:
     push: true
     rarity: true
 flags:
-  cocidFlag:
-    id: i.skill.diving
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.diving
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+      priority: 0
 ---
 _id: wK8XxNj9QwXlGFEb
 name: Dodge
@@ -438,23 +457,24 @@ system:
     value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
   base: 1/2*@DEX
 flags:
-  cocidFlag:
-    id: i.skill.dodge
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      darkAges: true
-      darkAgesPulp: true
-      regency: true
-      regencyPulp: true
-      reignOfTerror: true
-      gasLight: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.dodge
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        darkAges: true
+        darkAgesPulp: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+        gasLight: true
+      priority: 0
 ---
 _id: Og2OWQH93aSDWAMZ
 name: Drive Auto
@@ -467,15 +487,16 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.drive-auto
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.drive-auto
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: Sxviv60td6kbS4kp
 name: Drive Carriage
@@ -488,14 +509,15 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.drive-carriage
-    lang: en
-    eras:
-      gasLight: true
-      regency: true
-      regencyPulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.drive-carriage
+      lang: en
+      eras:
+        gasLight: true
+        regency: true
+        regencyPulp: true
+      priority: 0
 ---
 _id: rAK5soSX1n3jXj2A
 name: Drive Horse / Oxen
@@ -508,14 +530,15 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.drive-horse-oxen
-    lang: en
-    eras:
-      darkAges: true
-      darkAgesPulp: true
-      invictus: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.drive-horse-oxen
+      lang: en
+      eras:
+        darkAges: true
+        darkAgesPulp: true
+        invictus: true
+      priority: 0
 ---
 _id: sqenne0VZoF54W5k
 name: Drive Wagon / Coach
@@ -528,13 +551,14 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.drive-wagon-coach
-    lang: en
-    eras:
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.drive-wagon-coach
+      lang: en
+      eras:
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+      priority: 0
 ---
 _id: NBkq8oCGM1FjmsyF
 name: Electrical Repair
@@ -547,15 +571,16 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.electrical-repair
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.electrical-repair
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: oEfvPMTx0cgyPlgV
 name: Electronics
@@ -568,13 +593,14 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.electronics
-    lang: en
-    eras:
-      modern: true
-      modernPulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.electronics
+      lang: en
+      eras:
+        modern: true
+        modernPulp: true
+      priority: 0
 ---
 _id: t7uiYybrk8dHFdjp
 name: Empire
@@ -587,12 +613,13 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.empire
-    lang: en
-    eras:
-      invictus: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.empire
+      lang: en
+      eras:
+        invictus: true
+      priority: 0
 ---
 _id: ld78TITwKNFPpanQ
 name: Fast Talk
@@ -605,10 +632,11 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.fast-talk
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.fast-talk
+      lang: en
+      priority: 0
 ---
 _id: 4y7D44TpkHVKxA7s
 name: Fighting (Any)
@@ -624,10 +652,11 @@ system:
     special: true
     picknameonly: true
 flags:
-  cocidFlag:
-    id: i.skill.fighting-any
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.fighting-any
+      lang: en
+      priority: 0
 ---
 _id: T8fSLCwSD8C0iK8t
 name: Fighting (Axe)
@@ -642,10 +671,11 @@ system:
     combat: true
     special: true
 flags:
-  cocidFlag:
-    id: i.skill.fighting-axe
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.fighting-axe
+      lang: en
+      priority: 0
 ---
 _id: vS8bsPWFlwgOecoB
 name: Fighting (Brawl)
@@ -660,10 +690,11 @@ system:
     combat: true
     special: true
 flags:
-  cocidFlag:
-    id: i.skill.fighting-brawl
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.fighting-brawl
+      lang: en
+      priority: 0
 ---
 _id: Ed8OShyl7D834Ihk
 name: Fighting (Chainsaw)
@@ -678,15 +709,16 @@ system:
     combat: true
     special: true
 flags:
-  cocidFlag:
-    id: i.skill.fighting-chainsaw
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.fighting-chainsaw
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: OcnZzOYWaP4VsjXS
 name: Fighting (Flail)
@@ -701,15 +733,16 @@ system:
     combat: true
     special: true
 flags:
-  cocidFlag:
-    id: i.skill.fighting-flail
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.fighting-flail
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: TPOu48DT4QIrqE68
 name: Fighting (Garrote)
@@ -724,10 +757,11 @@ system:
     combat: true
     special: true
 flags:
-  cocidFlag:
-    id: i.skill.fighting-garrote
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.fighting-garrote
+      lang: en
+      priority: 0
 ---
 _id: IttOdCAGTeE6VU3F
 name: Fighting (Spear)
@@ -742,10 +776,11 @@ system:
     combat: true
     special: true
 flags:
-  cocidFlag:
-    id: i.skill.fighting-spear
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.fighting-spear
+      lang: en
+      priority: 0
 ---
 _id: hRPbMl2N0t6aBlyc
 name: Fighting (Sword)
@@ -760,10 +795,11 @@ system:
     combat: true
     special: true
 flags:
-  cocidFlag:
-    id: i.skill.fighting-sword
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.fighting-sword
+      lang: en
+      priority: 0
 ---
 _id: sWt5Q3ZXd6NlwhXU
 name: Fighting (Throw)
@@ -778,21 +814,22 @@ system:
     combat: true
     special: true
 flags:
-  cocidFlag:
-    id: i.skill.fighting-throw
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      gasLight: true
-      regency: true
-      regencyPulp: true
-      reignOfTerror: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.fighting-throw
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
 ---
 _id: Pb3QI7x9xJVeXi8a
 name: Fighting (Whip)
@@ -807,10 +844,11 @@ system:
     combat: true
     special: true
 flags:
-  cocidFlag:
-    id: i.skill.fighting-whip
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.fighting-whip
+      lang: en
+      priority: 0
 ---
 _id: YPiD2ubZensxjKGU
 name: Firearms (Any)
@@ -826,10 +864,11 @@ system:
     special: true
     picknameonly: true
 flags:
-  cocidFlag:
-    id: i.skill.firearms-any
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.firearms-any
+      lang: en
+      priority: 0
 ---
 _id: qET2wCGGdy3z18Gc
 name: Firearms (Artillery)
@@ -845,16 +884,17 @@ system:
     special: true
     rarity: true
 flags:
-  cocidFlag:
-    id: i.skill.firearms-artillery
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      reignOfTerror: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.firearms-artillery
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        reignOfTerror: true
+      priority: 0
 ---
 _id: VwGWZ2LBOwtMaw08
 name: Firearms (Bow)
@@ -869,10 +909,11 @@ system:
     combat: true
     special: true
 flags:
-  cocidFlag:
-    id: i.skill.firearms-bow
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.firearms-bow
+      lang: en
+      priority: 0
 ---
 _id: 35dvJDsrY8JipXRU
 name: Firearms (Flamethrower)
@@ -887,15 +928,16 @@ system:
     combat: true
     special: true
 flags:
-  cocidFlag:
-    id: i.skill.firearms-flamethrower
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.firearms-flamethrower
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: KmDGtn7ukUFVb265
 name: Firearms (Handgun)
@@ -910,18 +952,19 @@ system:
     combat: true
     special: true
 flags:
-  cocidFlag:
-    id: i.skill.firearms-handgun
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      gasLight: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.firearms-handgun
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+      priority: 0
 ---
 _id: 23vdyJDDfjyneH3I
 name: Firearms (Heavy Weapons)
@@ -936,15 +979,16 @@ system:
     combat: true
     special: true
 flags:
-  cocidFlag:
-    id: i.skill.firearms-heavy-weapons
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.firearms-heavy-weapons
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: QcomAOgmOS5g3dsh
 name: Firearms (Machine Gun)
@@ -959,15 +1003,16 @@ system:
     combat: true
     special: true
 flags:
-  cocidFlag:
-    id: i.skill.firearms-machine-gun
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.firearms-machine-gun
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: m2pYjKk4Gk3FcEBL
 name: Firearms (Rifle/Shotgun)
@@ -982,18 +1027,19 @@ system:
     combat: true
     special: true
 flags:
-  cocidFlag:
-    id: i.skill.firearms-rifle-shotgun
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      gasLight: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.firearms-rifle-shotgun
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+      priority: 0
 ---
 _id: gRUXG91zIJXOLye1
 name: Firearms (Submachine Gun)
@@ -1008,15 +1054,16 @@ system:
     combat: true
     special: true
 flags:
-  cocidFlag:
-    id: i.skill.firearms-submachine-gun
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.firearms-submachine-gun
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: nZ8rdL4PLb7A7f5B
 name: First Aid
@@ -1029,10 +1076,11 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.first-aid
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.first-aid
+      lang: en
+      priority: 0
 ---
 _id: SflwB1bbjaQebiPQ
 name: Gambling
@@ -1045,13 +1093,14 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.gambling
-    lang: en
-    eras:
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.gambling
+      lang: en
+      eras:
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+      priority: 0
 ---
 _id: URo2NSSJSNdvOqXU
 name: History
@@ -1064,21 +1113,22 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.history
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      gasLight: true
-      regency: true
-      regencyPulp: true
-      reignOfTerror: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.history
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
 ---
 _id: mEblnQjptKvKCeIg
 name: Hypnosis
@@ -1092,17 +1142,18 @@ system:
     rarity: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.hypnosis
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.hypnosis
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+      priority: 0
 ---
 _id: hDr4eUbS398oniTa
 name: Intimidate
@@ -1115,10 +1166,11 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.intimidate
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.intimidate
+      lang: en
+      priority: 0
 ---
 _id: c5utlFbDM7J8TA8b
 name: Jump
@@ -1131,21 +1183,22 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.jump
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      gasLight: true
-      regency: true
-      regencyPulp: true
-      reignOfTerror: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.jump
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
 ---
 _id: Yu3Xk8kZBlz0G82y
 name: Language (Any)
@@ -1160,10 +1213,11 @@ system:
     requiresname: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.language-any
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.language-any
+      lang: en
+      priority: 0
 ---
 _id: rhJ1Q9OB3uTUZmjD
 name: Language (Own)
@@ -1180,10 +1234,11 @@ system:
     keepbasevalue: true
     onlyone: true
 flags:
-  cocidFlag:
-    id: i.skill.language-own
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.language-own
+      lang: en
+      priority: 0
 ---
 _id: 64hnBZNC8FM7oTkg
 name: Law
@@ -1196,21 +1251,22 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.law
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      gasLight: true
-      regency: true
-      regencyPulp: true
-      reignOfTerror: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.law
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
 ---
 _id: BcWHh8EhmyKj7bNk
 name: Library Use
@@ -1223,21 +1279,22 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.library-use
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      gasLight: true
-      regency: true
-      regencyPulp: true
-      reignOfTerror: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.library-use
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
 ---
 _id: MoAB0NRNlpEc2qWr
 name: Listen
@@ -1250,21 +1307,22 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.listen
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      gasLight: true
-      regency: true
-      regencyPulp: true
-      reignOfTerror: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.listen
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
 ---
 _id: MRbFH52Zh9TzhLBh
 name: Locksmith
@@ -1277,21 +1335,22 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.locksmith
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      gasLight: true
-      regency: true
-      regencyPulp: true
-      reignOfTerror: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.locksmith
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
 ---
 _id: rCJKGay6D0ucqgeg
 name: Lore (Any)
@@ -1307,13 +1366,14 @@ system:
     rarity: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.lore-any
-    lang: en
-    eras:
-      standard: true
-      modern: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.lore-any
+      lang: en
+      eras:
+        standard: true
+        modern: true
+      priority: 0
 ---
 _id: 0qCTuRFUCACSEsWj
 name: Mechanical Repair
@@ -1326,20 +1386,21 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.mechanical-repair
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      gasLight: true
-      regency: true
-      regencyPulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.mechanical-repair
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+      priority: 0
 ---
 _id: Xmg7oAy70DKpv4kq
 name: Medicine
@@ -1352,10 +1413,11 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.medicine
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.medicine
+      lang: en
+      priority: 0
 ---
 _id: jTcu6Ni2ek7Yz5q3
 name: Natural World
@@ -1368,18 +1430,19 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.natural-world
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      gasLight: true
-      regency: true
-      regencyPulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.natural-world
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+      priority: 0
 ---
 _id: 1c3fdvpQtvZf5YXK
 name: Navigate
@@ -1392,10 +1455,11 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.navigate
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.navigate
+      lang: en
+      priority: 0
 ---
 _id: 6pSfZVS68jSHxa5T
 name: Occult
@@ -1408,10 +1472,11 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.occult
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.occult
+      lang: en
+      priority: 0
 ---
 _id: cuExWy1130KUwuWz
 name: Operate Heavy Machinery
@@ -1424,18 +1489,19 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.operate-heavy-machinery
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      gasLight: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.operate-heavy-machinery
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+      priority: 0
 ---
 _id: uMzSNURmZqjxr7mU
 name: Persuade
@@ -1448,21 +1514,22 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.persuade
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      gasLight: true
-      regency: true
-      regencyPulp: true
-      reignOfTerror: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.persuade
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
 ---
 _id: uQsVn8K6XRXQmtaI
 name: Pilot (Any)
@@ -1477,18 +1544,19 @@ system:
     requiresname: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.pilot-any
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      gasLight: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.pilot-any
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+      priority: 0
 ---
 _id: rXBU2GofiO2qOsGv
 name: Psychoanalysis
@@ -1501,15 +1569,16 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.psychoanalysis
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.psychoanalysis
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: MFR4eR79niGaLfph
 name: Psychology
@@ -1522,21 +1591,22 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.psychology
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      gasLight: true
-      regency: true
-      regencyPulp: true
-      reignOfTerror: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.psychology
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
 ---
 _id: SL2OorS0Xx6ty02A
 name: Read Lips
@@ -1550,15 +1620,16 @@ system:
     rarity: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.read-lips
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.read-lips
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: o7TdzbuSP7ticONf
 name: Ride
@@ -1571,18 +1642,19 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.ride
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      gasLight: true
-      regency: true
-      regencyPulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.ride
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+      priority: 0
 ---
 _id: EMA6uEtQBgJtBcPl
 name: Rope Use
@@ -1595,13 +1667,14 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.rope-use
-    lang: en
-    eras:
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.rope-use
+      lang: en
+      eras:
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+      priority: 0
 ---
 _id: KvZuYcg3AmVrwKi2
 name: Science (Any)
@@ -1616,10 +1689,11 @@ system:
     requiresname: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.science-any
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-any
+      lang: en
+      priority: 0
 ---
 _id: hhvqA2BOljk1FHVg
 name: Science (Astronomy)
@@ -1633,15 +1707,16 @@ system:
     push: true
     special: true
 flags:
-  cocidFlag:
-    id: i.skill.science-astronomy
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-astronomy
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: IBSDR6U4dE1uejVp
 name: Science (Biology)
@@ -1655,15 +1730,16 @@ system:
     special: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.science-biology
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-biology
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: ShPoibiLsd07AtZv
 name: Science (Botany)
@@ -1677,15 +1753,16 @@ system:
     special: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.science-botany
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-botany
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: 8twBT7nbyh5dEp3J
 name: Science (Chemistry)
@@ -1699,15 +1776,16 @@ system:
     special: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.science-chemistry
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-chemistry
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: UASTWOvgCYi8G1QQ
 name: Science (Cryptography)
@@ -1721,15 +1799,16 @@ system:
     special: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.science-cryptography
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-cryptography
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: 9zy7PLmTLXknFce4
 name: Science (Engineering)
@@ -1743,15 +1822,16 @@ system:
     special: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.science-engineering
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-engineering
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: Nw5tSvi2Knxlqmg1
 name: Science (Forensics)
@@ -1765,15 +1845,16 @@ system:
     special: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.science-forensics
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-forensics
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: QwaL3UC3Gvjd3hmF
 name: Science (Geology)
@@ -1787,15 +1868,16 @@ system:
     special: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.science-geology
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-geology
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: TwYYqLHe1PXnOCDF
 name: Science (Mathematics)
@@ -1809,15 +1891,16 @@ system:
     special: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.science-mathematics
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-mathematics
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: w7hWVU14syjweIH2
 name: Science (Meteorology)
@@ -1831,15 +1914,16 @@ system:
     special: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.science-meteorology
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-meteorology
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: V9ulAwDyLVqqQ0su
 name: Science (Pharmacy)
@@ -1853,15 +1937,16 @@ system:
     special: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.science-pharmacy
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-pharmacy
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: Dh6sHWep0qKQmi3I
 name: Science (Physics)
@@ -1875,15 +1960,16 @@ system:
     special: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.science-physics
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-physics
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: 0rlp7EuZDzQGjIYf
 name: Science (Zoology)
@@ -1897,15 +1983,16 @@ system:
     special: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.science-zoology
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.science-zoology
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+      priority: 0
 ---
 _id: KKFNX5M4LtEtiuxs
 name: Sleight of Hand
@@ -1918,21 +2005,22 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.sleight-of-hand
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      gasLight: true
-      regency: true
-      regencyPulp: true
-      reignOfTerror: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.sleight-of-hand
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
 ---
 _id: nHaWNwtW3Lg0sqYJ
 name: Spot Hidden
@@ -1945,10 +2033,11 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.spot-hidden
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.spot-hidden
+      lang: en
+      priority: 0
 ---
 _id: DcV524K0jNfjDEZC
 name: Stealth
@@ -1961,23 +2050,24 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.stealth
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      darkAges: true
-      darkAgesPulp: true
-      gasLight: true
-      regency: true
-      regencyPulp: true
-      reignOfTerror: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.stealth
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        darkAges: true
+        darkAgesPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
 ---
 _id: X99v5MtRlfTNjL3B
 name: Survival (Any)
@@ -1992,21 +2082,22 @@ system:
     requiresname: true
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.survival-any
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      gasLight: true
-      regency: true
-      regencyPulp: true
-      reignOfTerror: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.survival-any
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
 ---
 _id: 1zSIeY0eat2AxQok
 name: Swim
@@ -2019,21 +2110,22 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.swim
-    lang: en
-    eras:
-      standard: true
-      modern: true
-      modernPulp: true
-      pulp: true
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-      gasLight: true
-      regency: true
-      regencyPulp: true
-      reignOfTerror: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.swim
+      lang: en
+      eras:
+        standard: true
+        modern: true
+        modernPulp: true
+        pulp: true
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+        gasLight: true
+        regency: true
+        regencyPulp: true
+        reignOfTerror: true
+      priority: 0
 ---
 _id: AcUIbZFhfoXqQP2m
 name: Track
@@ -2046,10 +2138,11 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.track
-    lang: en
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.track
+      lang: en
+      priority: 0
 ---
 _id: HzOGu2yLcL9obry3
 name: Trap
@@ -2062,11 +2155,12 @@ system:
   properties:
     push: true
 flags:
-  cocidFlag:
-    id: i.skill.trap
-    lang: en
-    eras:
-      downDarkerTrails: true
-      downDarkerTrailsPulp: true
-    priority: 0
+  CoC7:
+    cocidFlag:
+      id: i.skill.trap
+      lang: en
+      eras:
+        downDarkerTrails: true
+        downDarkerTrailsPulp: true
+      priority: 0
 ---

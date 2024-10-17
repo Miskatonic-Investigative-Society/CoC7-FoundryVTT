@@ -1,4 +1,4 @@
-# System documentation for version 0.10.0
+# System documentation for version 7.0
 
 This document is a work in progress overview of the CoC7 system it is not a tutorial for how to use FoundryVTT.
 
@@ -18,10 +18,7 @@ This documentation can be reopened under [fas fa-cogs]Game Settings -> Help and 
 
 For a full list of changes checkout the [changelog](https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/blob/develop/.github/CHANGELOG.md) on GitHub
 
- - [CoC ID system](coc-id-system.md) - Set tags on documents for example i.skill.dodge to find dodge skills on actors
- - Investigator Wizard - Use CoC ID Items to create investigators
- - [Pulp Rules](#settings-overview) - Implement optional pulp rule to ignore age when calculating movement speed
- - [Active effects](effects.md) - Add support for bonus/penalty dice when rolling from the Actor sheets
+ - [CoC ID system](coc-id-system.md) - Priority now has more importance over location.
 
 # Overview sections below
 
@@ -85,7 +82,7 @@ Foundry VTT is based in actors and items. This module includes a number of syste
 - _Setup_ - A set of default configurations for character, creature, or NPC creation. @Compendium[CoC7.items.CcH7CdXGtGTjMSCg]{Example Setup}
 - _Skill_ - A skill with a base percentage and some tags. @Compendium[CoC7.skills.UOuN0gESXPp2HXwH]{Example Skill}
 - _Spell_ - A magic spell.
-- _Status_ - An phobia or mania condition. @Compendium[CoC7.items.DVdvEDizPZPux1pK]{Example Mania}
+- _Status_ - An phobia or mania condition. @Compendium[CoC7.en-wiki-phobias-and-manias.Item.RSBgVRZFUDDCNhXo]{Example Mania}
 - _Talent_ -A special power for Pulp Cthulhu. These do not trigger automation in the system. @Compendium[CoC7.items.yqvwz769ZeJplOW7]{Example Talent}
 - _Weapon_ - An item with weapon statistics (this includes unarmed attacks). @Compendium[CoC7.items.3elxAwnv7WCUNwng]{Example Weapon}
 

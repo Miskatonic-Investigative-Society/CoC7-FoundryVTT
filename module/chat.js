@@ -94,6 +94,11 @@ export class CoC7Chat {
       '.card-buttons button',
       CoC7Chat._onChatCardAction.bind(this)
     )
+    html.on(
+      'change',
+      'input[type=range].slider',
+      CoC7Chat._onChatCardRange.bind(this)
+    )
     // html.on('click', '.card-buttons button', CoC7Chat._onChatCardTest.bind(this));
     html.on(
       'click',
@@ -356,6 +361,13 @@ export class CoC7Chat {
         for (const select of gmSelectOnly) {
           select.classList.add('inactive')
           select.classList.remove('simple-flag')
+        }
+      }
+
+      const gmRangeOnly = html.find('.gm-range-only')
+      if (!(game.user.isTrusted && game.settings.get('CoC7', 'trustedCanModfyChatCard'))) {
+        for (const range of gmRangeOnly) {
+          range.disabled = true
         }
       }
     }
@@ -686,6 +698,30 @@ export class CoC7Chat {
     const msg = await message.update({ content: card.outerHTML })
     await ui.chat.updateMessage(msg, false)
     return msg
+  }
+
+  static async _onChatCardRange (event) {
+    event.preventDefault()
+
+    const button = event.currentTarget
+    const card = button.closest('.chat-card')
+    if (!card) return
+
+    if (!CoC7Chat._getChatCardActor(card)) return
+
+    const messageId = card.closest('.message').dataset.messageId
+
+    let messageCard
+    if (card.classList.contains('range')) {
+      messageCard = CoC7RangeInitiator.getFromCard(card)
+    } else if (card.classList.contains('target')) {
+      messageCard = CoC7MeleeTarget.getFromCard(card)
+    } else if (card.classList.contains('initiator')) {
+      messageCard = CoC7MeleeInitiator.getFromCard(card)
+    }
+    messageCard.diceModifier = event.currentTarget.value
+    await messageCard.updateChatCard()
+    document.querySelector('[data-message-id="' + messageId + '"]').querySelector('input[type=range][name="' + button.name + '"]').focus()
   }
 
   static async _onChatCardAction (event) {
