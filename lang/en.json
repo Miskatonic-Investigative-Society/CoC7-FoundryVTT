@@ -1364,5 +1364,11 @@
   "CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
   "CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
   "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors",
-  "CoC7.PauseName": "Time Stop"
+  "CoC7.PauseName": "Time Stop",
+
+  "CoC7.ClickableEvents.MouseOver.Title": "Permission to click",
+  "CoC7.ClickableEvents.MouseOver.Hint": "Return boolean if should allow click and show mouse cursor",
+  "CoC7.ClickableEvents.LeftClick.Title": "Left Click Script",
+  "CoC7.ClickableEvents.RightClick.Title": "Right Click Script",
+  "TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 }

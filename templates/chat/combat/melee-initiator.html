@@ -1,4 +1,4 @@
-<div class="coc7 chat-card melee initiator" data-actor-key="{{actorKey}}" data-target-key="{{targetKey}}" data-item-id="{{item.id}}" data-fast-forward="{{fastForward}}" data-resolved="{{resolved}}" data-outnumbered="{{outnumbered}}" data-surprised="{{surprised}}" data-auto-success="{{autoSuccess}}" data-advantage="{{advantage}}" data-disadvantage="{{disadvantage}}" data-target-card="{{targetCard}}" data-resolution-card="{{resolutionCard}}" data-check-revealed="{{checkRevealed}}" data-is-blind="false">
+<div class="coc7 chat-card melee initiator" data-actor-key="{{actorKey}}" data-target-key="{{targetKey}}" data-item-id="{{item.id}}" data-fast-forward="{{fastForward}}" data-resolved="{{resolved}}" data-outnumbered="{{outnumbered}}" data-surprised="{{surprised}}" data-auto-success="{{autoSuccess}}" data-dice-modifier="{{diceModifier}}" data-target-card="{{targetCard}}" data-resolution-card="{{resolutionCard}}" data-check-revealed="{{checkRevealed}}" data-is-blind="false">
 
   <div class="roll"></div>
 
@@ -19,10 +19,6 @@
         {{{this.item.system.description.special}}}
       {{/if}}
       {{#if rolled}}
-        <div class="flex0 advantage-selection">
-          {{#if advantage}}<span class="tag" title="{{localize 'CoC7.Advantage'}}">{{localize 'CoC7.Advantage'}}</span>{{/if}}
-          {{#if disadvantage}}<span class="tag" title="{{localize 'CoC7.Disadvantage'}}">{{localize 'CoC7.Disadvantage'}}</span>{{/if}}
-        </div>
         <div class="flex0 bonus-selection">
           {{#if target}}
             <span class="tag">{{targetName}} :</span>
@@ -33,13 +29,6 @@
         </div>
       {{/if}}
     </div>
-
-    {{#unless rolled}}
-      <div class="flexrow advantage-selection">
-        <span class="flex1 toggle-switch advantage {{#unless rolled}}simple-flag{{/unless}} {{#if advantage}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.TitleAdvantage'}}" style="text-align:center" data-flag="advantage" data-selected={{advantage}}>{{localize 'CoC7.Advantage'}}</span>
-        <span class="flex1 toggle-switch disadvantage {{#unless rolled}}simple-flag{{/unless}} {{#if disadvantage}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.TitleDisadvantage'}}" style="text-align:center" data-flag="disadvantage" data-selected={{disadvantage}}>{{localize 'CoC7.Disadvantage'}}</span>
-      </div>
-    {{/unless}}
   </header>
 
   {{#unless rolled}}
@@ -54,6 +43,26 @@
       <span class="flex1 toggle-switch outnumbered {{#unless rolled}}simple-flag{{/unless}} {{#if outnumbered}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.TitleOutNumbered'}}" style="text-align:center" data-flag="outnumbered" data-selected={{outnumbered}}>{{localize 'CoC7.OutNumbered'}}</span>
       <span class="flex1 toggle-switch surprised {{#unless rolled}}simple-flag{{/unless}} {{#if surprised}}switched-on{{/if}} gm-select-only" title="{{localize 'CoC7.TitleSurprised'}}" style="text-align:center" data-flag="surprised" data-selected={{surprised}}>{{localize 'CoC7.combatCard.surprised'}}</span>
       <span class="flex1 toggle-switch auto-success {{#unless rolled}}simple-flag{{/unless}} {{#if autoSuccess}}switched-on{{/if}} gm-visible-only" title="{{localize 'CoC7.TitleAutoSuccess'}}" style="text-align:center" data-flag="auto-success" data-selected={{autoSuccess}}>{{localize 'CoC7.combatCard.autoSuccess'}}</span>
+    </div>
+
+    <div style="flex: 1;display: flex;flex-direction: column;margin: 0.5rem 1rem 0;opacity:0.6">
+      <div class="flexrow">
+        <span style="flex: 4; text-align: left">{{localize 'CoC7.PenaltyDice'}}</span>
+        <span style="flex: 1">&nbsp;</span>
+        <span style="flex: 4; text-align: right">{{localize 'CoC7.BonusDice'}}</span>
+      </div>
+      <div class="flexrow">
+        <span style="flex: 1; text-align: left;">-2</span>
+        <span style="flex: 1; text-align: center;"></span>
+        <span style="flex: 1; text-align: center;">-1</span>
+        <span style="flex: 1; text-align: center;"></span>
+        <span style="flex: 1; text-align: center;">0</span>
+        <span style="flex: 1; text-align: center;"></span>
+        <span style="flex: 1; text-align: center;">+1</span>
+        <span style="flex: 1; text-align: center;"></span>
+        <span style="flex: 1; text-align: right;">+2</span>
+      </div>
+      <input type="range" name="diceModifier" min="-2" max="2" value="{{diceModifier}}" class="slider gm-range-only">
     </div>
   {{/unless}}
 

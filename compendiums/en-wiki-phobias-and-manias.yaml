@@ -1,0 +1,329 @@
+_id: P5nXnVY3u52GwN1X
+name: Phobias
+type: folder
+color: '#75844c'
+---
+_id: S9nXnVY3u52GwN0T
+name: Manias
+type: folder
+color: '#75844c'
+---
+name: Agathomania
+type: status
+img: icons/svg/ice-aura.svg
+folder: S9nXnVY3u52GwN0T
+system:
+  description:
+    value: '<p>Pathological kindness</p>'
+  type:
+    mania: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.agathomania
+      lang: en
+      priority: 0
+---
+name: Algomania
+type: status
+img: icons/svg/ice-aura.svg
+folder: S9nXnVY3u52GwN0T
+system:
+  description:
+    value: '<p>Obsession with pain</p>'
+  type:
+    mania: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.algomania
+      lang: en
+      priority: 0
+---
+name: Amenomania
+type: status
+img: icons/svg/ice-aura.svg
+folder: S9nXnVY3u52GwN0T
+system:
+  description:
+    value: '<p>Irrational cheerfulness</p>'
+  type:
+    mania: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.amenomania
+      lang: en
+      priority: 0
+---
+name: Bibliokleptomania
+type: status
+img: icons/svg/ice-aura.svg
+folder: S9nXnVY3u52GwN0T
+system:
+  description:
+    value: '<p>Compulsion for stealing books</p>'
+  type:
+    mania: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.bibliokleptomania
+      lang: en
+      priority: 0
+---
+name: Dikemania
+type: status
+img: icons/svg/ice-aura.svg
+folder: S9nXnVY3u52GwN0T
+system:
+  description:
+    value: '<p>Obsession to see justice done</p>'
+  type:
+    mania: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.dikemania
+      lang: en
+      priority: 0
+---
+name: Geliomania
+type: status
+img: icons/svg/ice-aura.svg
+folder: S9nXnVY3u52GwN0T
+system:
+  description:
+    value: '<p>Uncontrollable compulsion to laugh</p>'
+  type:
+    mania: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.geliomania
+      lang: en
+      priority: 0
+---
+name: Klazomania
+type: status
+img: icons/svg/ice-aura.svg
+folder: S9nXnVY3u52GwN0T
+system:
+  description:
+    value: '<p>Irrational compulsion to shout</p>'
+  type:
+    mania: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.klazomania
+      lang: en
+      priority: 0
+---
+name: Kleptomania
+type: status
+img: icons/svg/ice-aura.svg
+folder: S9nXnVY3u52GwN0T
+system:
+  description:
+    value: '<p>Irrational compulsion for stealing</p>'
+  type:
+    mania: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.kleptomania
+      lang: en
+      priority: 0
+---
+name: Nosomania
+type: status
+img: icons/svg/ice-aura.svg
+folder: S9nXnVY3u52GwN0T
+system:
+  description:
+    value: '<p>Delusion of suffering from an imagined disease</p>'
+  type:
+    mania: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.nosomania
+      lang: en
+      priority: 0
+---
+name: Pseudomania
+type: status
+img: icons/svg/ice-aura.svg
+folder: S9nXnVY3u52GwN0T
+system:
+  description:
+    value: '<p>Irrational compulsion for lying</p>'
+  type:
+    mania: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.pseudomania
+      lang: en
+      priority: 0
+---
+name: Acrophobia
+type: status
+img: icons/svg/aura.svg
+folder: P5nXnVY3u52GwN1X
+system:
+  description:
+    value: '<p>Fear of heights</p>'
+  type:
+    phobia: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.acrophobia
+      lang: en
+      priority: 0
+---
+name: Arachnophobia
+type: status
+img: icons/svg/aura.svg
+folder: P5nXnVY3u52GwN1X
+system:
+  description:
+    value: '<p>Fear of spiders</p>'
+  type:
+    phobia: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.arachnophobia
+      lang: en
+      priority: 0
+---
+name: Bibliophobia
+type: status
+img: icons/svg/aura.svg
+folder: P5nXnVY3u52GwN1X
+system:
+  description:
+    value: '<p>Fear of books</p>'
+  type:
+    phobia: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.bibliophobia
+      lang: en
+      priority: 0
+---
+name: Eisoptrophobia
+type: status
+img: icons/svg/aura.svg
+folder: P5nXnVY3u52GwN1X
+system:
+  description:
+    value: '<p>Fear of mirrors</p>'
+  type:
+    phobia: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.eisoptrophobia
+      lang: en
+      priority: 0
+---
+name: Hemaphobia
+type: status
+img: icons/svg/aura.svg
+folder: P5nXnVY3u52GwN1X
+system:
+  description:
+    value: '<p>Fear of blood</p>'
+  type:
+    phobia: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.hemaphobia
+      lang: en
+      priority: 0
+---
+name: Necrophobia
+type: status
+img: icons/svg/aura.svg
+folder: P5nXnVY3u52GwN1X
+system:
+  description:
+    value: '<p>Fear of dead things</p>'
+  type:
+    phobia: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.necrophobia
+      lang: en
+      priority: 0
+---
+name: Odontophobia
+type: status
+img: icons/svg/aura.svg
+folder: P5nXnVY3u52GwN1X
+system:
+  description:
+    value: '<p>Fear of teeth</p>'
+  type:
+    phobia: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.odontophobia
+      lang: en
+      priority: 0
+---
+name: Pyrophobia
+type: status
+img: icons/svg/aura.svg
+folder: P5nXnVY3u52GwN1X
+system:
+  description:
+    value: '<p>Fear of fire</p>'
+  type:
+    phobia: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.pyrophobia
+      lang: en
+      priority: 0
+---
+name: Telephonophobia
+type: status
+img: icons/svg/aura.svg
+folder: P5nXnVY3u52GwN1X
+system:
+  description:
+    value: '<p>Fear of telephones</p>'
+  type:
+    phobia: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.telephonophobia
+      lang: en
+      priority: 0
+---
+name: Xenophobia
+type: status
+img: icons/svg/aura.svg
+folder: P5nXnVY3u52GwN1X
+system:
+  description:
+    value: '<p>Fear of strangers or foreigners</p>'
+  type:
+    phobia: true
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.xenophobia
+      lang: en
+      priority: 0

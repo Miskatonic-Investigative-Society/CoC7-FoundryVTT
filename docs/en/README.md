@@ -1,4 +1,4 @@
-# System documentation for version 0.10.0
+# System documentation for version 7.0
 
 This document is a work in progress overview of the CoC7 system it is not a tutorial for how to use FoundryVTT.
 
@@ -18,10 +18,7 @@ This documentation can be reopened under Game Settings -> Help and Documentation
 
 For a full list of changes checkout the [changelog](https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/blob/develop/.github/CHANGELOG.md) on GitHub
 
- - [CoC ID system](coc-id-system.md) - Set tags on documents for example i.skill.dodge to find dodge skills on actors
- - Investigator Wizard - Use CoC ID Items to create investigators
- - [Pulp Rules](#settings-overview) - Implement optional pulp rule to ignore age when calculating movement speed
- - [Active effects](effects.md) - Add support for bonus/penalty dice when rolling from the Actor sheets
+ - [CoC ID system](coc-id-system.md) - Priority now has more importance over location.
 
 # Overview sections below
 

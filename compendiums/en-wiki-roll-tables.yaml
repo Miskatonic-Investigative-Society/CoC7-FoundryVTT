@@ -1,0 +1,29 @@
+name: Bouts of Madness Table (Realtime)
+formula: 1d10
+results:
+  - type: text
+    text: '<strong>Amnesia</strong>: the investigator has no memory of events that have taken place since they were last in a place of safety. It seems to them that one moment they were eating breakfast and the next they are facing a monster. This lasts for [[/r 1D10]] rounds.'
+  - type: text
+    text: '<strong>Psychosomatic Disability</strong>: the investigator suffers psychosomatic blindness, deafness, or loss of the use of a limb for [[/r 1D10]] rounds.'
+  - type: text
+    text: '<strong>Violence</strong>: a red mist of rage descends on the afflicted investigator and they explode in a spree of uncontrolled violence and destruction directed at their surroundings, allies and foes alike, for [[/r 1D10]] rounds.'
+  - type: text
+    text: '<strong>Paranoia</strong>: the investigator suffers severe paranoia for [[/r 1D10]] rounds. Everyone is out to get them! No one can be trusted! They are being spied on; someone has betrayed them; what they are seeing is a trick.'
+  - type: text
+    text: '<strong>Significant Person</strong>: review the investigator’s backstory entry for Significant People. The investigator mistakes another person in the scene for their significant person. Consider the nature of the relationship; the investigator acts upon it. This lasts [[/r 1D10]] rounds.'
+  - type: text
+    text: '<strong>Faint</strong>: the investigator faints, recovering after [[/r 1D10]] rounds.'
+  - type: text
+    text: '<strong>Flee in Panic</strong>: the investigator is compelled to get as far away as possible by whatever method available, even if it means taking the only vehicle and leaving everyone else behind. They flee for [[/r 1D10]] rounds.'
+  - type: text
+    text: '<strong>Physical Hysterics or Emotional Outburst</strong>: the investigator is incapacitated laughing, crying, screaming, etc. for [[/r 1D10]] rounds.'
+  - type: text
+    text: '<strong>Phobia</strong>: the investigator gains a new phobia, such as claustrophobia (fear of confined spaces), demonophobia (fear of spirits or demons), or katsaridaphobia (fear of cockroaches). Even if the source of the phobia is not present, the investigator imagines it is there for the next [[/r 1D10]] rounds, and all actions suffer a penalty die while the bout continues.'
+  - type: text
+    text: '<strong>Mania</strong>: the investigator gains a new mania, such as ablutomania (compulsion for washing oneself), pseudomania (irrational compulsion for lying), or helminthomania (an excessive liking for worms). The investigator seeks to indulge in this new mania for the next [[/r 1D10]] rounds, and all actions suffer a penalty die while the bout continues.'
+flags:
+  CoC7:
+    cocidFlag:
+      id: i.status.bouts-of-madness-table-realtime
+      lang: en
+      priority: 0

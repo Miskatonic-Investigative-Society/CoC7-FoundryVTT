@@ -2,7 +2,7 @@
   "id": "CoC7",
   "title": "Call of Cthulhu 7th Edition",
   "description": "An implementation of the Call of Cthulhu 7th Edition game system for Foundry Virtual Tabletop.",
-  "version": "0.10.19",
+  "version": "7.0",
   "authors": [
     {
       "name": "Miskatonic Investigative Society"
@@ -17,53 +17,105 @@
     "lib/socketlib/src/socketlib.js",
     "bundle.js"
   ],
-  "templateVersion": 1,
   "styles": [
-    "https://fonts.googleapis.com/css?family=Noto%20Sans",
+    "https://fonts.googleapis.com/css?family=Noto%20Sans|Voltaire|Lusitana",
     "lib/game-icons/game-icons.css",
     "coc7g.css"
+  ],
+  "packFolders": [
+    {
+      "name": "Cthulhuwiki | en",
+      "sorting": "a",
+      "color": "#75844c",
+      "packs": [
+        "en-wiki-phobias-and-manias",
+        "en-wiki-roll-tables",
+        "en-wiki-weapons"
+      ]
+    },
+    {
+      "name": "System Examples | en",
+      "sorting": "a",
+      "color": "#75844c",
+      "packs": [
+        "examples",
+        "items",
+        "roll-requests",
+        "sanity-tables-examples",
+        "skills"
+      ]
+    },
+    {
+      "name": "System Manuals",
+      "sorting": "a",
+      "color": "#75844c",
+      "packs": [
+        "system-doc"
+      ]
+    }
   ],
   "packs": [
     {
       "label": "Skills",
       "type": "Item",
       "name": "skills",
-      "path": "./packs/skills.db",
+      "path": "packs/en-skills",
       "system": "CoC7"
     },
     {
       "label": "Items Examples",
       "type": "Item",
       "name": "items",
-      "path": "./packs/items.db",
+      "path": "packs/en-items",
       "system": "CoC7"
     },
     {
       "label": "Examples",
       "type": "Actor",
       "name": "examples",
-      "path": "./packs/examples.db",
+      "path": "packs/en-examples",
       "system": "CoC7"
     },
     {
       "label": "Roll Requests",
       "type": "JournalEntry",
       "name": "roll-requests",
-      "path": "./packs/roll-requests.db",
+      "path": "packs/roll-requests",
       "system": "CoC7"
     },
     {
       "label": "Sanity Roll Table",
       "type": "RollTable",
       "name": "sanity-tables-examples",
-      "path": "./packs/sanity-tables-examples.db",
+      "path": "packs/en-sanity-tables-examples",
       "system": "CoC7"
     },
     {
-      "label": "System manual",
+      "label": "System manuals",
       "type": "JournalEntry",
       "name": "system-doc",
-      "path": "./packs/system-doc.db",
+      "path": "packs/system-doc",
+      "system": "CoC7"
+    },
+    {
+      "label": "Phobias and Manias | en",
+      "type": "Item",
+      "name": "en-wiki-phobias-and-manias",
+      "path": "packs/en-wiki-phobias-and-manias",
+      "system": "CoC7"
+    },
+    {
+      "label": "Roll Tables | en",
+      "type": "RollTable",
+      "name": "en-wiki-roll-tables",
+      "path": "packs/en-wiki-roll-tables",
+      "system": "CoC7"
+    },
+    {
+      "label": "Weapons | en",
+      "type": "Item",
+      "name": "en-wiki-weapons",
+      "path": "packs/en-wiki-weapons",
       "system": "CoC7"
     }
   ],
@@ -155,5 +207,17 @@
   "secondaryTokenAttribute": "attribs.san",
   "url": "https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT",
   "manifest": "https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/releases/latest/download/system.json",
-  "download": "https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/releases/download/0.10.19/system.zip"
+  "download": "https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT/releases/download/0.10.19/system.zip",
+  "media": [
+    {
+      "type": "setup",
+      "thumbnail": "systems/CoC7/assets/images/system-thumbnail.jpg"
+    }
+  ],
+  "background": "systems/CoC7/assets/images/system-background.jpg",
+  "documentTypes": {
+    "RegionBehavior": {
+      "coc7ClickableEvents": {}
+    }
+  }
 }

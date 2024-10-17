@@ -2,25 +2,25 @@
 
 Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry VTT better! Below is a list of translations keys on existing files that still need translated, based on `en.json`.
 
-[cn.json (445 untranslated strings)](#cnjson)
+[cn.json (450 untranslated strings)](#cnjson)
 
-[cs.json (630 untranslated strings)](#csjson)
+[cs.json (635 untranslated strings)](#csjson)
 
-[ko.json (227 untranslated strings)](#kojson)
+[ko.json (232 untranslated strings)](#kojson)
 
-[pt-BR.json (175 untranslated strings)](#ptbrjson)
+[pt-BR.json (180 untranslated strings)](#ptbrjson)
 
-[ru.json (97 untranslated strings)](#rujson)
+[ru.json (102 untranslated strings)](#rujson)
 
-[sv.json (413 untranslated strings)](#svjson)
+[sv.json (418 untranslated strings)](#svjson)
 
-[uk.json (62 untranslated strings)](#ukjson)
+[uk.json (67 untranslated strings)](#ukjson)
 
-[zh-TW.json (74 untranslated strings)](#zhtwjson)
+[zh-TW.json (79 untranslated strings)](#zhtwjson)
 
 
 ## cn.json
-445 untranslated strings
+450 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -466,10 +466,15 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
 "CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors",
-"CoC7.PauseName": "Time Stop"
+"CoC7.PauseName": "Time Stop",
+"CoC7.ClickableEvents.MouseOver.Title": "Permission to click",
+"CoC7.ClickableEvents.MouseOver.Hint": "Return boolean if should allow click and show mouse cursor",
+"CoC7.ClickableEvents.LeftClick.Title": "Left Click Script",
+"CoC7.ClickableEvents.RightClick.Title": "Right Click Script",
+"TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## cs.json
-630 untranslated strings
+635 untranslated strings
 ```
 "CoC7.Entities.Character": "Character",
 "CoC7.Entities.Container": "Container",
@@ -1100,10 +1105,15 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
 "CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors",
-"CoC7.PauseName": "Time Stop"
+"CoC7.PauseName": "Time Stop",
+"CoC7.ClickableEvents.MouseOver.Title": "Permission to click",
+"CoC7.ClickableEvents.MouseOver.Hint": "Return boolean if should allow click and show mouse cursor",
+"CoC7.ClickableEvents.LeftClick.Title": "Left Click Script",
+"CoC7.ClickableEvents.RightClick.Title": "Right Click Script",
+"TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ko.json
-227 untranslated strings
+232 untranslated strings
 ```
 "CoC7.CustomSpecialisationLabel": "Custom label - {specialisation}",
 "CoC7.CastHidden": "Cast Hidden",
@@ -1331,10 +1341,15 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
 "CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors",
-"CoC7.PauseName": "Time Stop"
+"CoC7.PauseName": "Time Stop",
+"CoC7.ClickableEvents.MouseOver.Title": "Permission to click",
+"CoC7.ClickableEvents.MouseOver.Hint": "Return boolean if should allow click and show mouse cursor",
+"CoC7.ClickableEvents.LeftClick.Title": "Left Click Script",
+"CoC7.ClickableEvents.RightClick.Title": "Right Click Script",
+"TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## pt-BR.json
-175 untranslated strings
+180 untranslated strings
 ```
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
@@ -1510,10 +1525,15 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
 "CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors",
-"CoC7.PauseName": "Time Stop"
+"CoC7.PauseName": "Time Stop",
+"CoC7.ClickableEvents.MouseOver.Title": "Permission to click",
+"CoC7.ClickableEvents.MouseOver.Hint": "Return boolean if should allow click and show mouse cursor",
+"CoC7.ClickableEvents.LeftClick.Title": "Left Click Script",
+"CoC7.ClickableEvents.RightClick.Title": "Right Click Script",
+"TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## ru.json
-97 untranslated strings
+102 untranslated strings
 ```
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.EraReignOfTerror": "Reign Of Terror",
@@ -1611,10 +1631,15 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
 "CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors",
-"CoC7.PauseName": "Time Stop"
+"CoC7.PauseName": "Time Stop",
+"CoC7.ClickableEvents.MouseOver.Title": "Permission to click",
+"CoC7.ClickableEvents.MouseOver.Hint": "Return boolean if should allow click and show mouse cursor",
+"CoC7.ClickableEvents.LeftClick.Title": "Left Click Script",
+"CoC7.ClickableEvents.RightClick.Title": "Right Click Script",
+"TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## sv.json
-413 untranslated strings
+418 untranslated strings
 ```
 "CoC7.ActorIsTokenHint": "Actor is a token",
 "CoC7.ActorDataLinked": "Actor data are linked",
@@ -2028,10 +2053,15 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
 "CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors",
-"CoC7.PauseName": "Time Stop"
+"CoC7.PauseName": "Time Stop",
+"CoC7.ClickableEvents.MouseOver.Title": "Permission to click",
+"CoC7.ClickableEvents.MouseOver.Hint": "Return boolean if should allow click and show mouse cursor",
+"CoC7.ClickableEvents.LeftClick.Title": "Left Click Script",
+"CoC7.ClickableEvents.RightClick.Title": "Right Click Script",
+"TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## uk.json
-62 untranslated strings
+67 untranslated strings
 ```
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.EraReignOfTerror": "Reign Of Terror",
@@ -2094,10 +2124,15 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
 "CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors",
-"CoC7.PauseName": "Time Stop"
+"CoC7.PauseName": "Time Stop",
+"CoC7.ClickableEvents.MouseOver.Title": "Permission to click",
+"CoC7.ClickableEvents.MouseOver.Hint": "Return boolean if should allow click and show mouse cursor",
+"CoC7.ClickableEvents.LeftClick.Title": "Left Click Script",
+"CoC7.ClickableEvents.RightClick.Title": "Right Click Script",
+"TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```
 ## zh-TW.json
-74 untranslated strings
+79 untranslated strings
 ```
 "CoC7.CastHidden": "Cast Hidden",
 "CoC7.EraRegency": "Regency Cthulhu - Standard",
@@ -2172,5 +2207,10 @@ Thank you for being interested in making Call of Cthulhu 7th Edition for Foundry
 "CoC7.ErrorNoActorPermission": "You are not the Owner of this Actor",
 "CoC7.ErrorCombinedRollsRequireSingleActor": "You can not have more than one actor in a combined roll",
 "CoC7.ErrorOpposedRollsLimitedToTwoActors": "An opposed card requires two actors",
-"CoC7.PauseName": "Time Stop"
+"CoC7.PauseName": "Time Stop",
+"CoC7.ClickableEvents.MouseOver.Title": "Permission to click",
+"CoC7.ClickableEvents.MouseOver.Hint": "Return boolean if should allow click and show mouse cursor",
+"CoC7.ClickableEvents.LeftClick.Title": "Left Click Script",
+"CoC7.ClickableEvents.RightClick.Title": "Right Click Script",
+"TYPES.RegionBehavior.coc7ClickableEvents": "Clickable Events"
 ```

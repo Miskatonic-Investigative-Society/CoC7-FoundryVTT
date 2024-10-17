@@ -1,0 +1,1478 @@
+name: 'Goon'
+type: 'npc'
+img: 'systems/CoC7/assets/icons/cultist.svg'
+system:
+  characteristics:
+    str:
+      formula: '5*2d6+6'
+    con:
+      formula: '5*3d6'
+    siz:
+      formula: '5*3d6'
+    dex:
+      formula: '5*3d6'
+    app:
+      formula: '5*1d6'
+    int:
+      formula: '5*1d6'
+    pow:
+      formula: '0'
+    edu:
+      formula: '0'
+  attribs:
+    mp:
+      value: 0
+      max: 0
+    lck:
+      value: 0
+    armor:
+      value: 0
+  special:
+    sanLoss:
+      checkPassed: ''
+      checkFailled: ''
+    attacksPerRound: 1
+  infos:
+    occupation: 'Obey to the villain'
+    age: '30'
+  flags:
+    locked: true
+    displayFormula: false
+prototypeToken:
+  texture:
+    src: systems/CoC7/assets/icons/cultist.svg
+items:
+  - name: 'Orders'
+    type: 'item'
+    img: 'icons/svg/item-bag.svg'
+    _id: 'QXaAdZrzIlpR65b4'
+  - name: 'Secret documents'
+    type: 'item'
+    img: 'icons/svg/item-bag.svg'
+    _id: '3GYcAo139cyCy9fA'
+  - name: 'Be a pain'
+    type: 'skill'
+    img: 'systems/CoC7/assets/icons/skills.svg'
+    _id: 'PSkJAIU89V7wn2Bb'
+    system:
+      base: '0'
+      value: '50'
+      properties:
+        push: true
+  - name: 'Dodge'
+    type: 'skill'
+    img: 'systems/CoC7/assets/icons/skills/dodge.svg'
+    _id: 'AvGHgRlHt0R3Ed4S'
+    system:
+      description:
+        value: '<p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>'
+      base: '32'
+      value: '32'
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.dodge
+          lang: en
+          priority: 0
+  - name: 'Fighting (Brawl)'
+    type: 'skill'
+    img: 'systems/CoC7/assets/icons/skills/fighting_brawl.svg'
+    _id: 'PR4ptRvBvRso7GLJ'
+    system:
+      description:
+        value: '<p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>'
+      base: 25
+      value: 25
+      properties:
+        fighting: true
+        combat: true
+        special: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.fighting-brawl
+          lang: en
+          priority: 0
+  - name: 'Firearms (Rifle/Shotgun)'
+    type: 'skill'
+    img: 'systems/CoC7/assets/icons/skills/firearms_rifle_shotgun.svg'
+    _id: '3fVH7wgc0f7cYPS6'
+    system:
+      description:
+        value: '<p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>'
+      base: 25
+      value: 25
+      properties:
+        firearm: true
+        combat: true
+        special: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.firearms-rifle-shotgun
+          lang: en
+          priority: 0
+  - name: 'Language (English)'
+    type: 'skill'
+    img: 'systems/CoC7/assets/icons/skills/language.svg'
+    _id: 'aHoy9l8GnDaUZOYW'
+    system:
+      description:
+        value: '<p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>'
+      base: 0
+      value: 0
+      properties:
+        push: true
+        special: true
+        requiresname: true
+        keepbasevalue: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.language-own
+          lang: en
+          priority: 0
+  - name: 'Receive orders'
+    type: 'skill'
+    img: 'systems/CoC7/assets/icons/skills.svg'
+    _id: 'uPgX46VUlJXStTpn'
+    system:
+      base: '0'
+      value: '95'
+      properties:
+        push: true
+  - name: 'Try hard'
+    type: 'skill'
+    img: 'systems/CoC7/assets/icons/skills.svg'
+    _id: 'UoYy6krp3cyOCqSk'
+    system:
+      base: '0'
+      value: '10'
+      properties:
+        push: true
+  - name: 'Club'
+    type: 'weapon'
+    img: 'icons/svg/sword.svg'
+    system:
+      skill:
+        main:
+          id: 'PR4ptRvBvRso7GLJ'
+      range:
+        normal:
+          damage: '1D4'
+      properties:
+        melee: true
+        ahdb: true
+        slnt: true
+        stun: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.weapon.club
+          lang: en
+          priority: 0
+    _id: 'Jlewd3ifpDQ8VBuI'
+  - name: 'Punch'
+    type: 'weapon'
+    img: 'systems/CoC7/assets/icons/skills/fighting_brawl.svg'
+    system:
+      skill:
+        main:
+          id: 'PR4ptRvBvRso7GLJ'
+      range:
+        normal:
+          damage: '1D3'
+      properties:
+        melee: true
+        addb: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.weapon.brawl
+          lang: en
+          priority: 0
+    _id: 'kbiJM1yWKYP1tVdK'
+  - name: 'Shotgun'
+    type: 'weapon'
+    img: 'icons/svg/sword.svg'
+    system:
+      description:
+        value: '<p>Description of the weapon</p><p>selecting "Area of effect" will enable 3 different damage and range</p><p>selecting "Full-auto" will allow 2 different skills to be selected for the weapon</p><p>selecting "Special" will activate the special input field</p><p>In the combat tab, if the icons are with a red background, it means that no skill have been selected for that weapon</p><p>Edit the weapon and select the correct skill.</p>'
+      skill:
+        main:
+          id: '3fVH7wgc0f7cYPS6'
+      range:
+        normal:
+          value: 15
+          damage: '1D6'
+      properties:
+        rngd: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.weapon.shotgun
+          lang: en
+          priority: 0
+    _id: 'Hhs2rs3HsTO3opFQ'
+_id: 'KgyqcEJZZztYfpEr'
+flags:
+  CoC7:
+    cocidFlag:
+      id: a.npc.goon
+      lang: en
+      priority: 0
+---
+name: 'Villain example'
+type: 'npc'
+img: 'systems/CoC7/assets/icons/cultist.svg'
+system:
+  characteristics:
+    str:
+      value: 50
+    con:
+      value: 50
+    siz:
+      value: 50
+    dex:
+      value: 50
+    app:
+      value: 50
+    int:
+      value: 50
+    pow:
+      value: 50
+    edu:
+      value: 50
+  attribs:
+    hp:
+      value: 10
+      max: 10
+    mp:
+      value: 10
+      max: 10
+    lck:
+      value: 50
+    san:
+      value: 99
+      max: 99
+    mov:
+      value: 8
+      auto: false
+    armor:
+      value: 0
+  special:
+    sanLoss:
+      checkPassed: ''
+      checkFailled: ''
+    attacksPerRound: 1
+  infos:
+    occupation: 'Be a villain'
+    age: '100'
+  flags:
+    locked: true
+    displayFormula: false
+prototypeToken:
+  texture:
+    src: 'systems/CoC7/assets/icons/cultist.svg'
+items:
+  - name: 'Very mean sidekick'
+    type: 'item'
+    img: 'icons/svg/item-bag.svg'
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.item.very-mean-sidekick
+          lang: en
+          priority: 0
+    _id: 'L8smYdMt8ikmRHx6'
+  - name: 'Plan to enslave humanity'
+    type: 'item'
+    img: 'icons/svg/item-bag.svg'
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.item.plan-to-enslave-humanity
+          lang: en
+          priority: 0
+    _id: '8g01NwyUAwvTHb3E'
+  - name: 'Bark orders'
+    type: 'skill'
+    img: 'systems/CoC7/assets/icons/skills.svg'
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.bark-orders
+          lang: en
+          priority: 0
+    _id: 'QGfaG02IPLjpBpJL'
+    system:
+      value: 45
+      properties:
+        push: true
+  - name: 'Be a pain'
+    type: 'skill'
+    img: 'systems/CoC7/assets/icons/skills.svg'
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.be-a-pain
+          lang: en
+          priority: 0
+    _id: 'KyVm9jlTiIu9vNVv'
+    system:
+      value: 0
+      properties:
+        push: true
+  - name: 'Dodge'
+    type: 'skill'
+    img: 'systems/CoC7/assets/icons/skills/dodge.svg'
+    _id: 'AvGHgRlHt0R3Ed4S'
+    system:
+      description:
+        value: '<p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>'
+      base: '25'
+      value: '25'
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.dodge
+          lang: en
+          priority: 0
+  - name: 'Fighting (Brawl)'
+    type: 'skill'
+    img: 'systems/CoC7/assets/icons/skills/fighting_brawl.svg'
+    _id: 'PR4ptRvBvRso7GLJ'
+    system:
+      description:
+        value: '<p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>'
+      base: 25
+      value: 25
+      properties:
+        fighting: true
+        combat: true
+        special: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.fighting-brawl
+          lang: en
+          priority: 0
+  - name: 'Firearms (Rifle/Shotgun)'
+    type: 'skill'
+    img: 'systems/CoC7/assets/icons/skills/firearms_rifle_shotgun.svg'
+    _id: '3fVH7wgc0f7cYPS6'
+    system:
+      description:
+        value: '<p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>'
+      base: 25
+      value: 25
+      properties:
+        firearm: true
+        combat: true
+        special: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.firearms-rifle-shotgun
+          lang: en
+          priority: 0
+  - name: 'Language (English)'
+    type: 'skill'
+    img: 'systems/CoC7/assets/icons/skills/language.svg'
+    _id: 'aHoy9l8GnDaUZOYW'
+    system:
+      description:
+        value: '<p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>'
+      base: 50
+      value: 50
+      properties:
+        push: true
+        special: true
+        requiresname: true
+        keepbasevalue: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.language-own
+          lang: en
+          priority: 0
+  - name: 'Takeover the world'
+    type: 'skill'
+    img: 'systems/CoC7/assets/icons/skills.svg'
+    _id: 'qPH6Yf5B82vN4RHu'
+    system:
+      value: 80
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.takeover-the-world
+          lang: en
+          priority: 0
+  - name: 'Torment the PC'
+    type: 'skill'
+    img: 'systems/CoC7/assets/icons/skills.svg'
+    _id: 'CxqOOhOKLcEi2hRQ'
+    system:
+      value: 75
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.torment-the-pc
+          lang: en
+          priority: 0
+  - name: 'Punch'
+    type: 'weapon'
+    img: 'systems/CoC7/assets/icons/skills/fighting_brawl.svg'
+    system:
+      skill:
+        main:
+          id: 'PR4ptRvBvRso7GLJ'
+      range:
+        normal:
+          damage: '1D3'
+      properties:
+        melee: true
+        addb: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.weapon.brawl
+          lang: en
+          priority: 0
+    _id: 'DP1t8zpvBW8OQB5Q'
+  - name: 'My test weapon'
+    type: 'weapon'
+    img: 'icons/svg/sword.svg'
+    system:
+      description:
+        value: '<p>Description of the weapon</p><p>selecting "Area of effect" will enable 3 different damage and range</p><p>selecting "Full-auto" will allow 2 different skills to be selected for the weapon</p><p>selecting "Special" will activate the special input field</p><p>In the combat tab, if the icons are with a red background, it means that no skill have been selected for that weapon</p><p>Edit the weapon and select the correct skill.</p>'
+      skill:
+        main:
+          id: '3fVH7wgc0f7cYPS6'
+        alternativ:
+          id: '3fVH7wgc0f7cYPS6'
+      range:
+        normal:
+          value: '15'
+          damage: '1D6'
+      ammo: 1
+      properties:
+        rngd: true
+        brst: true
+        auto: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.weapon.my-test-weapon
+          lang: en
+          priority: 0
+    _id: 'ZlhAHCkDQrp9cyxt'
+_id: 4kSvDc4n13oFx8RG
+flags:
+  CoC7:
+    cocidFlag:
+      id: a.npc.villain-example
+      lang: en
+      priority: 0
+---
+name: '1920 Character'
+type: 'character'
+img: 'icons/svg/mystery-man.svg'
+prototypeToken:
+  actorLink: true
+  disposition: 1
+  sight:
+    enabled: true
+system:
+  characteristics:
+    str:
+      value: 50
+    con:
+      value: 50
+    siz:
+      value: 65
+    dex:
+      value: 50
+    app:
+      value: 50
+    int:
+      value: 65
+    pow:
+      value: 50
+    edu:
+      value: 65
+  attribs:
+    hp:
+      value: 11
+      max: 11
+    mp:
+      value: 10
+      max: 10
+    lck:
+      value: 50
+    san:
+      value: 50
+      max: 99
+      dailyLimit: 10
+  infos:
+    age: '26'
+  biography:
+   - title: Personal Description
+     value: null
+   - title: Ideology/Beliefs
+     value: null
+   - title: Significant People
+     value: null
+   - title: Meaningful Locations
+     value: null
+   - title: Treasured Possessions
+     value: null
+   - title: Traits
+     value: null
+items:
+  - _id: UOuN0gESXPp2HXwH
+    name: Accounting
+    type: skill
+    img: systems/CoC7/assets/icons/skills/accounting.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 5
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.accounting
+          lang: en
+          priority: 0
+  - _id: ovIp66Luwfwbq28F
+    name: Anthropology
+    type: skill
+    img: systems/CoC7/assets/icons/skills/anthropology.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 1
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.anthropology
+          lang: en
+          priority: 0
+  - _id: wOs3gryeGRPkGoWD
+    name: Appraise
+    type: skill
+    img: systems/CoC7/assets/icons/skills/appraise.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 5
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.appraise
+          lang: en
+          priority: 0
+  - _id: GHhkcJUqjcP4lToY
+    name: Archaeology
+    type: skill
+    img: systems/CoC7/assets/icons/skills/archaeology.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 1
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.archaeology
+          lang: en
+          priority: 0
+  - _id: m6V53lyfz7zh95FE
+    name: Art/Craft (Acting)
+    type: skill
+    img: systems/CoC7/assets/icons/skills/art_craft_acting.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 5
+      value: null
+      properties:
+        special: true
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.art-craft-acting
+          lang: en
+          priority: 0
+  - _id: JgtxiN3KzooOWIQV
+    name: Charm
+    type: skill
+    img: systems/CoC7/assets/icons/skills/charm.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 15
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.charm
+          lang: en
+          priority: 0
+  - _id: oh5eFj00Wohnx1My
+    name: Climb
+    type: skill
+    img: systems/CoC7/assets/icons/skills/climb.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 20
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.climb
+          lang: en
+          priority: 0
+  - _id: vYrJ5h9cIQBzvw8E
+    name: Credit Rating
+    type: skill
+    img: systems/CoC7/assets/icons/skills/credit_rating.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 0
+      value: null
+      properties:
+        noxpgain: true
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.credit-rating
+          lang: en
+          priority: 0
+  - _id: WJky66ezt2ef5ksH
+    name: Cthulhu Mythos
+    type: skill
+    img: systems/CoC7/assets/icons/skills/cthulhu_mythos.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 0
+      value: null
+      properties:
+        noadjustments: true
+        noxpgain: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.cthulhu-mythos
+          lang: en
+          priority: 0
+  - _id: gzNPM9gbx0EZffBV
+    name: Disguise
+    type: skill
+    img: systems/CoC7/assets/icons/skills/disguise.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 5
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.disguise
+          lang: en
+          priority: 0
+  - _id: wK8XxNj9QwXlGFEb
+    name: Dodge
+    type: skill
+    img: systems/CoC7/assets/icons/skills/dodge.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 25
+      value: null
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.dodge
+          lang: en
+          priority: 0
+  - _id: Og2OWQH93aSDWAMZ
+    name: Drive Auto
+    type: skill
+    img: systems/CoC7/assets/icons/skills/drive_auto.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 20
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.drive-auto
+          lang: en
+          priority: 0
+  - _id: NBkq8oCGM1FjmsyF
+    name: Electrical Repair
+    type: skill
+    img: systems/CoC7/assets/icons/skills/electrical_repair.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 10
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.electrical-repair
+          lang: en
+          priority: 0
+  - _id: ld78TITwKNFPpanQ
+    name: Fast Talk
+    type: skill
+    img: systems/CoC7/assets/icons/skills/fast_talk.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 5
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.fast-talk
+          lang: en
+          priority: 0
+  - _id: vS8bsPWFlwgOecoB
+    name: Fighting (Brawl)
+    type: skill
+    img: systems/CoC7/assets/icons/skills/fighting_brawl.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 25
+      value: null
+      properties:
+        fighting: true
+        combat: true
+        special: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.fighting-brawl
+          lang: en
+          priority: 0
+  - _id: sWt5Q3ZXd6NlwhXU
+    name: Fighting (Throw)
+    type: skill
+    img: systems/CoC7/assets/icons/skills/fighting_throw.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 20
+      value: null
+      properties:
+        fighting: true
+        combat: true
+        special: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.fighting-throw
+          lang: en
+          priority: 0
+  - _id: KmDGtn7ukUFVb265
+    name: Firearms (Handgun)
+    type: skill
+    img: systems/CoC7/assets/icons/skills/firearms_handgun.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 20
+      value: null
+      properties:
+        firearm: true
+        combat: true
+        special: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.firearms-handgun
+          lang: en
+          priority: 0
+  - _id: m2pYjKk4Gk3FcEBL
+    name: Firearms (Rifle/Shotgun)
+    type: skill
+    img: systems/CoC7/assets/icons/skills/firearms_rifle_shotgun.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 25
+      value: null
+      properties:
+        firearm: true
+        combat: true
+        special: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.firearms-rifle-shotgun
+          lang: en
+          priority: 0
+  - _id: nZ8rdL4PLb7A7f5B
+    name: First Aid
+    type: skill
+    img: systems/CoC7/assets/icons/skills/first_aid.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 30
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.first-aid
+          lang: en
+          priority: 0
+  - _id: URo2NSSJSNdvOqXU
+    name: History
+    type: skill
+    img: systems/CoC7/assets/icons/skills/history.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 5
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.history
+          lang: en
+          priority: 0
+  - _id: hDr4eUbS398oniTa
+    name: Intimidate
+    type: skill
+    img: systems/CoC7/assets/icons/skills/intimidate.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 15
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.intimidate
+          lang: en
+          priority: 0
+  - _id: c5utlFbDM7J8TA8b
+    name: Jump
+    type: skill
+    img: systems/CoC7/assets/icons/skills/jump.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 20
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.jump
+          lang: en
+          priority: 0
+  - _id: Blk22r9FRJetJ0e8
+    name: Language (English)
+    type: skill
+    img: systems/CoC7/assets/icons/skills/language.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 65
+      value: null
+      properties:
+        push: true
+        special: true
+        requiresname: true
+        keepbasevalue: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.language-own
+          lang: en
+          priority: 0
+  - _id: 64hnBZNC8FM7oTkg
+    name: Law
+    type: skill
+    img: systems/CoC7/assets/icons/skills/law.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 5
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.law
+          lang: en
+          priority: 0
+  - _id: BcWHh8EhmyKj7bNk
+    name: Library Use
+    type: skill
+    img: systems/CoC7/assets/icons/skills/library_use.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 20
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.library-use
+          lang: en
+          priority: 0
+  - _id: MoAB0NRNlpEc2qWr
+    name: Listen
+    type: skill
+    img: systems/CoC7/assets/icons/skills/listen.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 20
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.listen
+          lang: en
+          priority: 0
+  - _id: MRbFH52Zh9TzhLBh
+    name: Locksmith
+    type: skill
+    img: systems/CoC7/assets/icons/skills/locksmith.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 1
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.locksmith
+          lang: en
+          priority: 0
+  - _id: 0qCTuRFUCACSEsWj
+    name: Mechanical Repair
+    type: skill
+    img: systems/CoC7/assets/icons/skills/mechanical_repair.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 10
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.mechanical-repair
+          lang: en
+          priority: 0
+  - _id: Xmg7oAy70DKpv4kq
+    name: Medicine
+    type: skill
+    img: systems/CoC7/assets/icons/skills/medicine.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 1
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.medicine
+          lang: en
+          priority: 0
+  - _id: jTcu6Ni2ek7Yz5q3
+    name: Natural World
+    type: skill
+    img: systems/CoC7/assets/icons/skills/natural_world.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 10
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.natural-world
+          lang: en
+          priority: 0
+  - _id: 1c3fdvpQtvZf5YXK
+    name: Navigate
+    type: skill
+    img: systems/CoC7/assets/icons/skills/navigate.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 10
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.navigate
+          lang: en
+          priority: 0
+  - _id: 6pSfZVS68jSHxa5T
+    name: Occult
+    type: skill
+    img: systems/CoC7/assets/icons/skills/occult.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 5
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.occult
+          lang: en
+          priority: 0
+  - _id: cuExWy1130KUwuWz
+    name: Operate Heavy Machinery
+    type: skill
+    img: systems/CoC7/assets/icons/skills/operate_heavy_machinery.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 1
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.operate-heavy-machinery
+          lang: en
+          priority: 0
+  - _id: uMzSNURmZqjxr7mU
+    name: Persuade
+    type: skill
+    img: systems/CoC7/assets/icons/skills/persuade.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 10
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.persuade
+          lang: en
+          priority: 0
+  - _id: rXBU2GofiO2qOsGv
+    name: Psychoanalysis
+    type: skill
+    img: systems/CoC7/assets/icons/skills/psychoanalysis.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 1
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.psychoanalysis
+          lang: en
+          priority: 0
+  - _id: MFR4eR79niGaLfph
+    name: Psychology
+    type: skill
+    img: systems/CoC7/assets/icons/skills/psychology.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 10
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.psychology
+          lang: en
+          priority: 0
+  - _id: o7TdzbuSP7ticONf
+    name: Ride
+    type: skill
+    img: systems/CoC7/assets/icons/skills/ride.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 5
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.ride
+          lang: en
+          priority: 0
+  - _id: 8twBT7nbyh5dEp3J
+    name: Science (Chemistry)
+    type: skill
+    img: systems/CoC7/assets/icons/skills/science_chemistry.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 1
+      value: null
+      properties:
+        special: true
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.science-chemistry
+          lang: en
+          priority: 0
+  - _id: KKFNX5M4LtEtiuxs
+    name: Sleight of Hand
+    type: skill
+    img: systems/CoC7/assets/icons/skills/sleight_of_hand.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 10
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.sleight-of-hand
+          lang: en
+          priority: 0
+  - _id: nHaWNwtW3Lg0sqYJ
+    name: Spot Hidden
+    type: skill
+    img: systems/CoC7/assets/icons/skills/spot_hidden.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 25
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.spot-hidden
+          lang: en
+          priority: 0
+  - _id: DcV524K0jNfjDEZC
+    name: Stealth
+    type: skill
+    img: systems/CoC7/assets/icons/skills/stealth.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 20
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.stealth
+          lang: en
+          priority: 0
+  - _id: 1zSIeY0eat2AxQok
+    name: Swim
+    type: skill
+    img: systems/CoC7/assets/icons/skills/swim.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 20
+      value: null
+      properties:
+        push: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.swim
+          lang: en
+          priority: 0
+  - name: 'Punch'
+    type: 'weapon'
+    img: 'systems/CoC7/assets/icons/skills/fighting_brawl.svg'
+    system:
+      skill:
+        main:
+          id: 'vS8bsPWFlwgOecoB'
+      range:
+        normal:
+          damage: '1D3'
+      properties:
+        melee: true
+        addb: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.weapon.brawl
+          lang: en
+          priority: 0
+    _id: 'kbiJM1yWKYP1tVdK'
+_id: 'JuI2aWDSEuQNKeUI'
+flags:
+  CoC7:
+    skillListMode: false
+    skillShowUncommon: true
+    cocidFlag:
+      id: a.character.1920-character
+      lang: en
+      priority: 0
+---
+name: 'Cupboard'
+type: 'container'
+img: icons/svg/chest.svg
+prototypeToken:
+  actorLink: true
+  texture:
+    src: icons/svg/chest.svg
+_id: 'r7bDSY4OYKxQYEas'
+flags:
+  CoC7:
+    cocidFlag:
+      id: a.container.cupboard
+      lang: en
+      priority: 0
+items:
+  - _id: 'Zf5qG2ADNdIVdSTi'
+    name: 'Rapier'
+    type: 'weapon'
+    img: 'icons/svg/sword.svg'
+    system:
+      skill:
+        main:
+          name: 'Fighting (Sword)'
+      range:
+        normal:
+          damage: '1D6+1'
+      properties:
+        melee: true
+        addb: true
+---
+name: 'Creature example'
+type: 'creature'
+img: systems/CoC7/assets/icons/floating-tentacles.svg
+system:
+  characteristics:
+    str:
+      value: 1
+      formula: '1D6'
+    con:
+      value: 10
+      formula: '2D6'
+    siz:
+      value: 50
+      formula: '(3D6)*5'
+    dex:
+      value: 10
+      formula: '4D6'
+    app:
+      value: 20
+      formula: '5D6'
+    int:
+      value: 20
+      formula: '6D6'
+    pow:
+      formula: '0'
+    edu:
+      formula: '0'
+  attribs:
+    hp:
+      value: 6
+      max: 6
+    mp:
+      value: 0
+      max: 0
+    lck:
+      value: 0
+    san:
+      value: 0
+    armor:
+      value: 0
+  special:
+    sanLoss:
+      checkPassed: '1D2'
+      checkFailled: '1D6'
+  infos:
+    type: 'Phorusrhacid'
+  flags:
+    locked: true
+    displayFormula: false
+  biography:
+    personalDescription:
+      value: '<p>Clicking the lock will allow modification of the sheet.</p><p>When sheet is unlock you can modify things directly from the sheet. You can also open the entities sheets and delete things.</p><p>In that mode you can create skills/possessions by clicking the + icon. Holding shift will bypass the opening of the corresponding sheet.</p><p>You can enter characteristics as numbers and as formulas. Click the right icon to toggle modes. Clicking the red dice will roll the formula when possible. So you can have your creature with defined values, or roll/reroll the value on demand.</p>'
+  pannel:
+    inventory:
+      expanded: true
+prototypeToken:
+  texture:
+    src: 'systems/CoC7/assets/icons/floating-tentacles.svg'
+_id: 'XE2vjLG03wGfnYLw'
+items:
+  - _id: '0oDo0HjUAx36Grvo'
+    name: 'Pile of junk'
+    type: 'item'
+    img: 'icons/svg/item-bag.svg'
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.item.pile-of-junk
+          lang: en
+          priority: 0
+  - _id: vS8bsPWFlwgOecoB
+    name: Fighting (Brawl)
+    type: skill
+    img: systems/CoC7/assets/icons/skills/fighting_brawl.svg
+    system:
+      description:
+        value: <p>See the Call of Cthulhu - 7th Ed Core Rulebook</p>
+      base: 25
+      value: 50
+      properties:
+        fighting: true
+        combat: true
+        special: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.fighting-brawl
+          lang: en
+          priority: 0
+  - name: Fighting (Slice PCs in small cubes)
+    type: skill
+    img: systems/CoC7/assets/icons/skills.svg
+    system:
+      base: 0
+      value: 75
+      properties:
+        special: true
+        fighting: true
+        combat: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.skill.fighting-slice-pcs-in-small-cubes
+          lang: en
+          priority: 0
+    _id: 'y9jyY07ixD2xDkfm'
+  - name: 'Deadly beak'
+    type: 'weapon'
+    img: 'icons/svg/sword.svg'
+    system:
+      description:
+        special: '<p>You can add special description or slugs there :</p><p>Slug 1 : [[/r 2d17kh]]</p>'
+      skill:
+        main:
+          id: 'y9jyY07ixD2xDkfm'
+      range:
+        normal:
+          damage: '10D6'
+      properties:
+        melee: true
+        spcl: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.weapon.deadly-beak
+          lang: en
+          priority: 0
+    _id: 'H0nWT8ljuKqVkcgc'
+  - name: 'Innate attack'
+    type: 'weapon'
+    img: 'icons/svg/sword.svg'
+    system:
+      description:
+        value: "<p>Creature's natural attack</p>"
+      skill:
+        main:
+          id: 'vS8bsPWFlwgOecoB'
+      range:
+        normal:
+          damage: '1D3'
+      properties:
+        melee: true
+        addb: true
+        slnt: true
+    flags:
+      CoC7:
+        cocidFlag:
+          id: i.weapon.innate-attack
+          lang: en
+          priority: 0
+    _id: '0KsCeV1S9WmxNq5M'
+flags:
+  CoC7:
+    cocidFlag:
+      id: a.container.creature-example
+      lang: en
+      priority: 0

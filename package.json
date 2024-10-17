@@ -4,6 +4,9 @@
   "description": "An implementation of Call of Cthulhu 7th Edition system for Foundry VTT.",
   "scripts": {
     "build": "webpack --mode production",
+    "build-compendiums": "node shared/build-compendiums.js",
+    "build-manuals": "node shared/generate-manuals.js",
+    "build-roll-requests": "node shared/generate-roll-requests.js",
     "format": "standard --fix",
     "watch": "webpack --mode development"
   },
@@ -20,6 +23,7 @@
   "homepage": "https://github.com/Miskatonic-Investigative-Society/CoC7-FoundryVTT#readme",
   "type": "module",
   "devDependencies": {
+    "classic-level": "^1.4.1",
     "copy-webpack-plugin": "^12.0.0",
     "css-loader": "^7.1.1",
     "css-minimizer-webpack-plugin": "^7.0.0",
