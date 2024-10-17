@@ -716,6 +716,12 @@ export class CoC7RangeInitiator {
       if (volleySize > 0) {
         let damageFormula = String(h.shot.damage)
         if (!damageFormula || damageFormula === '') damageFormula = '0'
+        if (this.item.system.properties.addb) {
+          damageFormula = damageFormula + '+' + this.actor.db
+        }
+        if (this.item.system.properties.ahdb) {
+          damageFormula = damageFormula + '+ceil(' + this.actor.db + '/2)'
+        }
         const damageDie = CoC7Damage.getMainDie(damageFormula)
         const maxDamage = new Roll(damageFormula)[(!foundry.utils.isNewerVersion(game.version, '12') ? 'evaluate' : 'evaluateSync')/* // FoundryVTT v11 */]({ maximize: true }).total
         const criticalDamageFormula = this.weapon.impale
@@ -752,10 +758,20 @@ export class CoC7RangeInitiator {
           await roll.evaluate({ async: true })
           await CoC7Dice.showRollDice3d(roll)
           /*****************/
+          const dice = []
+          for (const die of roll.dice) {
+            for (const result of die.results) {
+              dice.push({
+                faces: die.faces,
+                result: result.result
+              })
+            }
+          }
           damageRolls.push({
             formula: damageFormula,
             total: roll.total,
             die: damageDie,
+            dice,
             critical: false
           })
           total += roll.total
@@ -766,10 +782,20 @@ export class CoC7RangeInitiator {
           await roll.evaluate({ async: true })
           await CoC7Dice.showRollDice3d(roll)
           /*****************/
+          const dice = []
+          for (const die of roll.dice) {
+            for (const result of die.results) {
+              dice.push({
+                faces: die.faces,
+                result: result.result
+              })
+            }
+          }
           damageRolls.push({
             formula: criticalDamageFormula,
             total: roll.total,
             die: criticalDamageDie,
+            dice,
             critical: true
           })
           total += roll.total
