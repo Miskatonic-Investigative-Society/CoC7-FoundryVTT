@@ -7,6 +7,10 @@ Happy gaming !
 
 ## Upcoming Release
 
+When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
+
+## Version 7.0
+
 **_!! FoundryVTT v10 is no longer supported !!_**
 
 When not specified, all changes were made by @castanhocorreia, @HavlockV, and @snap01.
